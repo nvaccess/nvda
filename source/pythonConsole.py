@@ -173,6 +173,7 @@ class ConsoleUI(wx.Frame):
 
 		self.console = PythonConsole(outputFunc=self.output, echoFunc=self.echo, setPromptFunc=self.setPrompt, exitFunc=self.Close)
 		self.completer = rlcompleter.Completer(namespace=self.console.namespace)
+		self.completionAmbiguous = False
 		# Even the most recent line has a position in the history, so initialise with one blank line.
 		self.inputHistory = [""]
 		self.inputHistoryPos = 0
@@ -237,6 +238,7 @@ class ConsoleUI(wx.Frame):
 		completed = self._findBestCompletion(original, completions)
 		if not completed:
 			return False
+		self.completionAmbiguous = len(completions) > 1
 		self._insertCompletion(original, completed)
 		return True
 
@@ -283,6 +285,16 @@ class ConsoleUI(wx.Frame):
 
 	def onInputChar(self, evt):
 		key = evt.GetKeyCode()
+
+		if key == wx.WXK_TAB:
+			line = self.inputCtrl.GetValue()
+			if line and not line.isspace():
+				if not self.complete() or self.completionAmbiguous:
+					wx.Bell()
+				return
+		# This is something other than autocompletion, so reset autocompletion state.
+		self.completionAmbiguous = False
+
 		if key == wx.WXK_RETURN:
 			self.execute()
 			return
@@ -292,10 +304,6 @@ class ConsoleUI(wx.Frame):
 		elif key == wx.WXK_F6:
 			self.outputCtrl.SetFocus()
 			return
-		elif key == wx.WXK_TAB:
-			line = self.inputCtrl.GetValue()
-			if line and not line.isspace() and self.complete():
-				return
 		elif key == wx.WXK_ESCAPE:
 			self.Close()
 			return
