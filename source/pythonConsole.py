@@ -235,12 +235,23 @@ class ConsoleUI(wx.Frame):
 			return False
 
 		completions = list(self._getCompletions(original))
+		if self.completionAmbiguous:
+			menu = wx.Menu()
+			for comp in completions:
+				item = menu.Append(wx.ID_ANY, comp)
+				self.Bind(wx.EVT_MENU,
+					lambda evt, completion=comp: self._insertCompletion(original, completion),
+					item)
+			self.PopupMenu(menu)
+			menu.Destroy()
+			return True
+		self.completionAmbiguous = len(completions) > 1
+
 		completed = self._findBestCompletion(original, completions)
 		if not completed:
 			return False
-		self.completionAmbiguous = len(completions) > 1
 		self._insertCompletion(original, completed)
-		return True
+		return not self.completionAmbiguous
 
 	def _getCompletions(self, original):
 		for state in itertools.count():
@@ -278,7 +289,10 @@ class ConsoleUI(wx.Frame):
 		return None
 
 	def _insertCompletion(self, original, completed):
+		self.completionAmbiguous = False
 		insert = completed[len(original):]
+		if not insert:
+			return
 		self.inputCtrl.SetValue(self.inputCtrl.GetValue() + insert)
 		queueHandler.queueFunction(queueHandler.eventQueue, speech.speakText, insert)
 		self.inputCtrl.SetInsertionPointEnd()
@@ -289,7 +303,7 @@ class ConsoleUI(wx.Frame):
 		if key == wx.WXK_TAB:
 			line = self.inputCtrl.GetValue()
 			if line and not line.isspace():
-				if not self.complete() or self.completionAmbiguous:
+				if not self.complete():
 					wx.Bell()
 				return
 		# This is something other than autocompletion, so reset autocompletion state.
