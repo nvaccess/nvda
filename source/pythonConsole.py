@@ -1,3 +1,9 @@
+#pythonConsole.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2008-2013 NV Access Limited
+
 """Provides an interactive Python console which can be run from within NVDA.
 To use, call L{initialize} to create a singleton instance of the console GUI. This can then be accessed externally as L{consoleUI}.
 """
@@ -242,12 +248,32 @@ class ConsoleUI(wx.Frame):
 			yield completion
 
 	def _findBestCompletion(self, original, completions):
-		# Just return the first possible completion for now.
-		# TODO: Return the best possible completion instead.
-		try:
-			return completions[0]
-		except IndexError:
+		if not completions:
 			return None
+		if len(completions) == 1:
+			return completions[0]
+
+		# Find the longest completion.
+		longestComp = None
+		longestCompLen = 0
+		for comp in completions:
+			compLen = len(comp)
+			if compLen > longestCompLen:
+				longestComp = comp
+				longestCompLen = compLen
+		# Find the longest common prefix.
+		for prefixLen in xrange(longestCompLen, 0, -1):
+			prefix = comp[:prefixLen]
+			for comp in completions:
+				if not comp.startswith(prefix):
+					break
+			else:
+				# This prefix is common to all completions.
+				if prefix == original:
+					# We didn't actually complete anything.
+					return None
+				return prefix
+		return None
 
 	def _insertCompletion(self, original, completed):
 		insert = completed[len(original):]
