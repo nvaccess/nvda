@@ -1,5 +1,5 @@
 !include "MUI2.nsh"
-!include "uac.nsh"
+!include "..\miscDeps\uninstaller\uac.nsh"
 
 !define appName "NVDA"
 
@@ -12,8 +12,8 @@ XPStyle on
 InstProgressFlags Smooth
 RequestExecutionLevel user
 
-!addplugindir "."
-ReserveFile "UAC.dll"
+!addplugindir "..\miscDeps\uninstaller"
+ReserveFile "..\miscDeps\uninstaller\UAC.dll"
 
 Name "${appName}"
 VIProductVersion "0.0.0.0" ;Needs to be here so other version info shows up
