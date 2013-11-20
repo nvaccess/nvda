@@ -31,7 +31,7 @@ release=env['release']
 env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${nvdaHelperLogLevel}'),('_WIN32_WINNT','_WIN32_WINNT_WINXP')])
 env.Append(CCFLAGS=['/W3','/WX'])
 env.Append(CXXFLAGS=['/EHsc'])
-env.Append(CPPPATH=['#/include',Dir('.').abspath])
+env.Append(CPPPATH=['#/include','#/miscDeps/include',Dir('.').abspath])
 env.Append(LINKFLAGS=['/incremental:no','/WX'])
 env.Append(LINKFLAGS='/release') #We always want a checksum in the header
 env.Append(MIDLFLAGS='/x64' if TARGET_ARCH=='x86_64' else '/win32')

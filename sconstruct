@@ -53,7 +53,7 @@ except WindowsError:
 	makensis = "makensis"
 
 # Get the path to xgettext.
-XGETTEXT = os.path.abspath(os.path.join("tools", "xgettext.exe"))
+XGETTEXT = os.path.abspath(os.path.join("miscDeps", "tools", "xgettext.exe"))
 
 # Get the path to epydoc.
 EPYDOC = os.path.join(sys.exec_prefix, "scripts", "epydoc.py")
