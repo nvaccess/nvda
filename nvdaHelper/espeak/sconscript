@@ -33,7 +33,7 @@ def _compilePhonemeAndDictData_buildEmitter(target,source,env):
 
 env['BUILDERS']['compileEspeakPhonemeAndDictData']=Builder(
 	action=[
-		[File("#include/espeakedit.exe"),"--compile"]
+		[File("#miscDeps/tools/espeakedit.exe"),"--compile"]
 	],
 	emitter=_compilePhonemeAndDictData_buildEmitter,
 )
