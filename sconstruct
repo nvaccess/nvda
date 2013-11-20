@@ -136,6 +136,8 @@ outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot
 outputDir=Dir(env['outputDir'])
 devDocsOutputDir=outputDir.Dir('devDocs')
 
+#Fill sourceDir with anything provided for it by miscDeps
+env.recursiveCopy(sourceDir,Dir('miscdeps/source'))
 
 env.SConscript('source/comInterfaces_sconscript',exports=['env'])
 
