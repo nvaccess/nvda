@@ -7,19 +7,6 @@ import os
 import ctypes
 from glob import glob
 
-def recursiveCopy(sourceDir,targetDir):
-	targets=[]
-	for topDir,subDirs,files in os.walk(sourceDir.abspath):
-		relTopDir=os.path.relpath(topDir,sourceDir.abspath)
-		for f in files:
-			fNode=targetDir.Dir(relTopDir).File(f)
-			env.Command(fNode,Dir(topDir).File(f),Copy('$TARGET','$SOURCE'))
-			targets.append(fNode)
-		if len(files)==0:
-			dNode=targetDir.Dir(relTopDir)
-			env.Command(dNode,Dir(topDir),Mkdir('$TARGET'))
-			targets.append(dNode)
-	return targets
 
 def _compilePhonemeAndDictData_buildEmitter(target,source,env):
 	#dictSources=[File(x) for x in glob(source[0].abspath+"\\*_*")]
@@ -125,7 +112,7 @@ tempPhonemeAndDictDataFiles=env.compileEspeakPhonemeAndDictData(espeakRepo.Dir('
 phonemeAndDictDataFiles=[env.Command(espeakDataDir.File(f.name),f,Copy('$TARGET','$SOURCE')) for f in tempPhonemeAndDictDataFiles]
 
 # copy voices from espeak repository to synthDrivers 
-recursiveCopy(espeakRepo.Dir('espeak-data\\voices'),espeakDataDir.Dir('voices'))
+env.recursiveCopy(espeakDataDir.Dir('voices'),espeakRepo.Dir('espeak-data\\voices'))
 
 #Copy in the extra variants
 for f in env.Glob(Dir('variants').abspath+'/*'):

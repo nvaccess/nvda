@@ -17,6 +17,20 @@ import os
 import _winreg
 from glob import glob
 
+def recursiveCopy(env,targetDir,sourceDir):
+	targets=[]
+	for topDir,subDirs,files in os.walk(sourceDir.abspath):
+		relTopDir=os.path.relpath(topDir,sourceDir.abspath)
+		for f in files:
+			fNode=targetDir.Dir(relTopDir).File(f)
+			env.Command(fNode,Dir(topDir).File(f),Copy('$TARGET','$SOURCE'))
+			targets.append(fNode)
+		if len(files)==0:
+			dNode=targetDir.Dir(relTopDir)
+			env.Command(dNode,Dir(topDir),Mkdir('$TARGET'))
+			targets.append(dNode)
+	return targets
+
 # Import NVDA's versionInfo module.
 import gettext
 gettext.install("nvda", unicode=True)
@@ -90,6 +104,9 @@ vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see
 #Base environment for this and sub sconscripts
 env = Environment(variables=vars,tools=["textfile","gettext","t2t",keyCommandsDocTool,'doxygen'])
 
+#Make our recursiveCopy function available to any script using this environment
+env.AddMethod(recursiveCopy)
+
 #Check for any unknown variables
 unknown=vars.UnknownVariables().keys()
 if len(unknown)>0:
@@ -118,6 +135,7 @@ buildDir = Dir("build")
 outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot", version=version)
 outputDir=Dir(env['outputDir'])
 devDocsOutputDir=outputDir.Dir('devDocs')
+
 
 env.SConscript('source/comInterfaces_sconscript',exports=['env'])
 
