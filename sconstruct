@@ -104,6 +104,9 @@ vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see
 #Base environment for this and sub sconscripts
 env = Environment(variables=vars,tools=["textfile","gettext","t2t",keyCommandsDocTool,'doxygen'])
 
+# speed up subsiquent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
+env.Decider('MD5-timestamp')
+
 #Make our recursiveCopy function available to any script using this environment
 env.AddMethod(recursiveCopy)
 
