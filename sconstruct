@@ -59,12 +59,7 @@ if szKey:
 else:
 	sz = "7z"
 
-# Get the path to makensis.
-try:
-	with _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\NSIS") as nsisKey:
-		makensis = os.path.join(_winreg.QueryValueEx(nsisKey, None)[0], "makensis.exe")
-except WindowsError:
-	makensis = "makensis"
+makensis = "miscDeps\\tools\\NSIS\\makensis"
 
 # Get the path to xgettext.
 XGETTEXT = os.path.abspath(os.path.join("miscDeps", "tools", "xgettext.exe"))
