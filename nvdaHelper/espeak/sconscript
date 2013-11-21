@@ -7,15 +7,20 @@ import os
 import ctypes
 from glob import glob
 
+env=env.Clone()
+env.Append(CPPDEFINES='/DLIBRARY')
 
 def _compilePhonemeAndDictData_buildEmitter(target,source,env):
-	#dictSources=[File(x) for x in glob(source[0].abspath+"\\*_*")]
-	#dictSources=env.Glob(source[0].abspath+'\\*_*')
-	phsource=env.Flatten([[Dir(topDir).File(f) for f in files] for topDir,subdirs,files in os.walk(source[1].abspath)])
-	sources=[phsource]
+	dictSources=env.Flatten([env.Glob(source[0].abspath+'\\*_%s'%ext) for ext in ('rules','list','listx','extra')])
+	phSourceIgnores=['error_log','error_intonation','compile_prog_log','compile_report','envelopes.png']
+	phSources=env.Flatten([[Dir(topDir).File(f) for f in files if f not in phSourceIgnores] for topDir,subdirs,files in os.walk(source[1].abspath)])
+	sources=env.Flatten([phSources])
 	targets=[target[0].File(f) for f in ['intonations','phondata','phondata-manifest','phonindex','phontab']]
-	if False: #for dictName in set(f.name.split('_')[0] for f in dictSources):
-		targets.append(target[0].File('%s_dict'%dictName))
+	dictSideEffects=[target[0].File('%s_dict'%dictName) for dictName in set(f.name.split('_')[0] for f in dictSources)]
+	dictSideEffects.extend([source[0].File(x) for x in ('dict_log','dict_phonemes')])
+	env.SideEffect(dictSideEffects,targets)
+	phSideEffects=[source[1].File(x) for x in phSourceIgnores]
+	env.SideEffect(phSideEffects,targets)
 	return targets,sources
 
 env['BUILDERS']['compileEspeakPhonemeAndDictData']=Builder(
@@ -110,6 +115,9 @@ espeakLib=env.SharedLibrary(
 #Compile phoneme data
 tempPhonemeAndDictDataFiles=env.compileEspeakPhonemeAndDictData(espeakRepo.Dir('espeak-data'),[espeakRepo.Dir('dictsource'),espeakRepo.Dir('phsource')],ENV={'ESPEAK_DATA_PATH':espeakRepo.abspath})
 phonemeAndDictDataFiles=[env.Command(espeakDataDir.File(f.name),f,Copy('$TARGET','$SOURCE')) for f in tempPhonemeAndDictDataFiles]
+#Ensure these don't try to get built in paralell
+for f in phonemeAndDictDataFiles:
+	env.SideEffect('_espeak_compileDict',f)
 
 # copy voices from espeak repository to synthDrivers 
 env.recursiveCopy(espeakDataDir.Dir('voices'),espeakRepo.Dir('espeak-data\\voices'))
@@ -120,11 +128,11 @@ for f in env.Glob(Dir('variants').abspath+'/*'):
 
 #Compile all dictionaries
 for f in env.Glob(espeakRepo.abspath+'/dictsource/*_rules'):
-	extraSources=[] #[f.File(f.name.split('_')[0]+x) for x in '_list','_listx']
+	extraSources=[f.File(f.name.split('_')[0]+x) for x in '_list','_listx','_extra']
 	dictFile=env.Command(espeakDataDir.File(f.name.split('_')[0]+'_dict'),[f,[x for x in extraSources if os.path.isfile(x.abspath)]],espeak_compileDict_action)
 	env.Depends(dictFile,[espeakLib,espeakDataDir.Dir('voices'),phonemeAndDictDataFiles])
 	#Dictionaries can not be compiled in parallel, force SCons not to do this
-	#env.SideEffect('_espeak_compileDict',dictFile)
+	env.SideEffect('_espeak_compileDict',dictFile)
 
 env.Requires(synthDriversDir,espeakDataDir)
 env.Install(synthDriversDir,espeakLib)
