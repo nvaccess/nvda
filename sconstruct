@@ -64,9 +64,6 @@ makensis = "miscDeps\\tools\\NSIS\\makensis"
 # Get the path to xgettext.
 XGETTEXT = os.path.abspath(os.path.join("miscDeps", "tools", "xgettext.exe"))
 
-# Get the path to epydoc.
-EPYDOC = os.path.join(sys.exec_prefix, "scripts", "epydoc.py")
-
 def keyCommandsDocTool(env):
 	import keyCommandsDoc
 	kcdAction=env.Action(
@@ -316,7 +313,7 @@ env.Clean('devDocs_nvdaHelper', devDocs_nvdaHelper)
 
 devDocs_nvda = env.Command(devDocsOutputDir.Dir("nvda"), None, [[
 	"cd", sourceDir.path, "&&",
-	sys.executable, EPYDOC,
+	sys.executable, "-c", "import sourceEnv; from epydoc.cli import cli; cli()",
 	"--output", "${TARGET.abspath}",
 	"--quiet", "--html", "--include-log", "--no-frames",
 	"--name", "NVDA", "--url", "http://www.nvda-project.org/",
