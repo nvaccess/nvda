@@ -1101,6 +1101,11 @@ class DocumentFormattingDialog(SettingsDialog):
 		item=self.framesCheckBox=wx.CheckBox(self,label=_("Report fra&mes"))
 		item.Value=config.conf["documentFormatting"]["reportFrames"]
 		settingsSizer.Add(item,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
+		item=self.clickableCheckBox=wx.CheckBox(self,label=_("Report if &clickable"))
+		item.Value=config.conf["documentFormatting"]["reportClickable"]
+		settingsSizer.Add(item,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
 		self.detectFormatAfterCursorCheckBox.SetFocus()
@@ -1127,6 +1132,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportBlockQuotes"]=self.blockQuotesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLandmarks"]=self.landmarksCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFrames"]=self.framesCheckBox.Value
+		config.conf["documentFormatting"]["reportClickable"]=self.clickableCheckBox.Value
 		super(DocumentFormattingDialog, self).onOk(evt)
 
 class DictionaryEntryDialog(wx.Dialog):
