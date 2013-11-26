@@ -56,6 +56,12 @@ class ExitConsoleCommand(object):
 #: The singleton Python console UI instance.
 consoleUI = None
 
+class Completer(rlcompleter.Completer):
+
+	def _callable_postfix(self, val, word):
+		# Just because something is callable doesn't always mean we want to call it.
+		return word
+
 class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 	"""An interactive Python console for NVDA which directs output to supplied functions.
 	This is necessary for a Python console with input/output other than stdin/stdout/stderr.
@@ -172,7 +178,7 @@ class ConsoleUI(wx.Frame):
 		mainSizer.Fit(self)
 
 		self.console = PythonConsole(outputFunc=self.output, echoFunc=self.echo, setPromptFunc=self.setPrompt, exitFunc=self.Close)
-		self.completer = rlcompleter.Completer(namespace=self.console.namespace)
+		self.completer = Completer(namespace=self.console.namespace)
 		self.completionAmbiguous = False
 		# Even the most recent line has a position in the history, so initialise with one blank line.
 		self.inputHistory = [""]
