@@ -329,7 +329,13 @@ class TriggersDialog(wx.Dialog):
 
 	def onTriggerListChoice(self, evt):
 		trig = self.triggers[self.triggerList.Selection]
-		self.profileList.Selection = self.Parent.profileNames.index(trig.profile)
+		try:
+			self.profileList.Selection = self.Parent.profileNames.index(trig.profile)
+		except ValueError:
+			log.error("Trigger %s: invalid profile %s"
+				% (trig.spec, trig.profile))
+			self.profileList.Selection = 0
+			trig.profile = None
 
 	def onProfileListChoice(self, evt):
 		trig = self.triggers[self.triggerList.Selection]
