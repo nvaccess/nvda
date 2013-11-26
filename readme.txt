@@ -27,7 +27,7 @@ The following dependencies are included in Git submodules:
 * ConfigObj, version 4.6.0: http://www.voidspace.org.uk/python/configobj.html
 * liblouis, version 2.5.3: http://www.liblouis.org/
 * NVDA images and sounds
-* System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest:
+* System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest
 * Adobe Acrobat accessibility interface, version XI: http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip
 * Adobe FlashAccessibility interface typelib
 * txt2tags, version 2.5: http://txt2tags.sourceforge.net/
@@ -45,6 +45,7 @@ The following dependencies are included in Git submodules:
 * Nulsoft Install System, version 2.46: http://nsis.sourceforge.net/
 * NSIS UAC plug-in, version 0.2.4, ansi: http://nsis.sourceforge.net/UAC_plug-in
 * xgettext and msgfmt from GNU gettext: http://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/
+* epydoc, version 3.0.1 with patch for bug #303: http://epydoc.sourceforge.net/
 
 === Other Dependencies ===
 These dependencies are not included in Git submodules, but aren't needed by most people.
