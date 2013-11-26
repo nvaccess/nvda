@@ -317,6 +317,13 @@ class AppModule(baseObject.ScriptableObject):
 		self.is64BitProcess = not res
 		return self.is64BitProcess
 
+	def isBadUIAWindow(self,hwnd):
+		"""
+		returns true if the UIA implementation of the given window must be ignored due to it being broken in some way.
+		Warning: this may be called outside of NVDA's main thread, therefore do not try accessing NVDAObjects and such, rather just check window  class names.
+		"""
+		return False
+
 class AppProfileTrigger(config.ProfileTrigger):
 	"""A configuration profile trigger for when a particular application has focus.
 	"""

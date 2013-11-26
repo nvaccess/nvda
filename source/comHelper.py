@@ -8,6 +8,7 @@
 """
 
 import subprocess
+import ctypes
 import comtypes.client.dynamic
 from comtypes import IUnknown
 from comtypes.automation import IDispatch
@@ -23,11 +24,25 @@ def _lresultFromGetActiveObject(progid, dynamic):
 		o = o._comobj
 	return oleacc.LresultFromObject(0, o)
 
-def getActiveObject(progid, dynamic=False):
+def getActiveObject(progid, dynamic=False,appModule=None):
 	"""Get an active COM object, handling privilege issues.
 	This is similar to comtypes.client.GetActiveObject
 	except that it can retrieve objects from normal processes when NVDA is running with uiAccess.
 	"""
+	if appModule:
+		if not appModule.helperLocalBindingHandle:
+			raise ValueError("appModule does not have a binding handle")
+		import NVDAHelper
+		p=ctypes.POINTER(comtypes.IUnknown)()
+		res=NVDAHelper.localLib.nvdaInProcUtils_getActiveObject(appModule.helperLocalBindingHandle,progid,ctypes.byref(p))
+		if res!=0:
+			raise ctypes.WinError(res)
+		if not p:
+			raise RuntimeError("NULL IUnknown pointer")
+		if dynamic:
+			return comtypes.client.dynamic.Dispatch(p.QueryInterface(IDispatch))
+		else:
+			return comtypes.client.GetBestInterface(p)
 	try:
 		return comtypes.client.GetActiveObject(progid, dynamic=dynamic)
 	except WindowsError as e:
