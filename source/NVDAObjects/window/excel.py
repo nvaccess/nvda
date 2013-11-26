@@ -50,6 +50,25 @@ class ExcelBase(Window):
 			text=_("{start} through {end}").format(start=textList[0], end=textList[1])
 		return text
 
+	def _getDropdown(self):
+		w=winUser.getAncestor(self.windowHandle,winUser.GA_ROOT)
+		if not w:
+			log.debugWarning("Could not get ancestor window (GA_ROOT)")
+			return
+		obj=Window(windowHandle=w,chooseBestAPI=False)
+		if not obj:
+			log.debugWarning("Could not instnaciate NVDAObject for ancestor window")
+			return
+		threadID=obj.windowThreadID
+		while not eventHandler.isPendingEvents("gainFocus"):
+			obj=obj.previous
+			if not obj or not isinstance(obj,Window) or obj.windowThreadID!=threadID:
+				log.debugWarning("Could not locate dropdown list in previous objects")
+				return
+			if obj.windowClassName=='EXCEL:':
+				break
+		return obj
+
 	def _getSelection(self):
 		selection=self.excelWindowObject.Selection
 		try:
@@ -72,6 +91,12 @@ class Excel7Window(ExcelBase):
 
 	def event_gainFocus(self):
 		selection=self._getSelection()
+		dropdown=self._getDropdown()
+		if dropdown:
+			if selection:
+				dropdown.parent=selection
+			eventHandler.executeEvent('gainFocus',dropdown)
+			return
 		if selection:
 			eventHandler.executeEvent('gainFocus',selection)
 
@@ -201,25 +226,6 @@ class ExcelCell(ExcelBase):
 		rowHeaderColumn=self.rowHeaderColumns.get(tableID) or None
 		if rowHeaderColumn and columnNumber>rowHeaderColumn:
 			return self.excelCellObject.parent.cells(rowNumber,rowHeaderColumn).text
-
-	def _getDropdown(self):
-		w=winUser.getAncestor(self.windowHandle,winUser.GA_ROOT)
-		if not w:
-			log.debugWarning("Could not get ancestor window (GA_ROOT)")
-			return
-		obj=Window(windowHandle=w,chooseBestAPI=False)
-		if not obj:
-			log.debugWarning("Could not instnaciate NVDAObject for ancestor window")
-			return
-		threadID=obj.windowThreadID
-		while not eventHandler.isPendingEvents("gainFocus"):
-			obj=obj.previous
-			if not obj or not isinstance(obj,Window) or obj.windowThreadID!=threadID:
-				log.debugWarning("Could not locate dropdown list in previous objects")
-				return
-			if obj.windowClassName=='EXCEL:':
-				break
-		return obj
 
 	def script_openDropdown(self,gesture):
 		gesture.send()
