@@ -438,7 +438,7 @@ the NVDAObject for IAccessible
 			from . import mozilla
 			mozilla.findExtraOverlayClasses(self, clsList)
 		elif windowClassName.startswith('bosa_sdm'):
-			if role==oleacc.ROLE_SYSTEM_GRAPHIC:
+			if role==oleacc.ROLE_SYSTEM_GRAPHIC and controlTypes.STATE_FOCUSED in self.states:
 				from .msOffice import SDMSymbols
 				clsList.append(SDMSymbols)
 			else:

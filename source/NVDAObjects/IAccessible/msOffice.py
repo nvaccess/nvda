@@ -81,15 +81,20 @@ class BrokenMsoCommandBar(IAccessible):
 		return name
 
 class SDMSymbols(SDM):
-	def _get_name(self):
-		description=self.parent.description.split("\n")[-3:-2]
-		if description:
-			return description[0]
-		return None
+
+	def _get_value(self):
+		#The value (symbol) is in a static text field somewhere in the direction of next.
+		# There can be multiple symbol lists all in a row, and these lists have their own static text labels, yet the active list's value field is always after them all.
+		# static text labels for these lists seem to have a keyboardShortcut, therefore we can skip over those.
+		next=self.next
+		while next:
+			if not next.keyboardShortcut and next.role==controlTypes.ROLE_STATICTEXT:
+				return next.name
+			next=next.next
 
 	def script_selectGraphic(self, gesture):
 		gesture.send()
-		eventHandler.queueEvent("nameChange",self)
+		eventHandler.queueEvent("valueChange",self)
 
 	__gestures = {
 		"kb:downArrow": "selectGraphic",
