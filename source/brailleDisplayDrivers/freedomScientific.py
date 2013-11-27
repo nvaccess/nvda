@@ -167,7 +167,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 		elif port == "bluetooth":
 			portsToTry = self._getBluetoothPorts()
 		else: # USB
-			portsToTry = [port]
+			portsToTry = ["USB"]
 		fbHandle=-1
 		for port in portsToTry:
 			fbHandle=fbOpen(port,self._messageWindow,nvdaFsBrlWm)
