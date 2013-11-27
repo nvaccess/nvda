@@ -174,6 +174,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 			if fbHandle!=-1:
 				break
 		if fbHandle==-1:
+			windll.user32.DestroyWindow(self._messageWindow)
+			windll.user32.UnregisterClassW(self._messageWindowClassAtom,appInstance)
 			raise RuntimeError("No display found")
 		self.fbHandle=fbHandle
 		self._configureDisplay()
