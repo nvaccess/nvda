@@ -11,11 +11,12 @@ import oleacc
 from NVDAObjects.behaviors import Terminal
 from NVDAObjects.window import DisplayModelEditableText, DisplayModelLiveText
 import appModuleHandler
+from NVDAObjects.IAccessible import IAccessible
 
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.windowClassName == "PuTTY" and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT:
+		if obj.windowClassName == "PuTTY" and isinstance(obj,IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT:
 			try:
 				clsList.remove(DisplayModelEditableText)
 			except ValueError:
