@@ -36,6 +36,7 @@
 - The browse mode cursor is no longer positioned incorrectly when leaving a dialog or application inside the document. (#3145)
 - Fixed an issue where the HumanWare Brailliant BI/B series braille display driver wasn't presented as an option in the Braille Settings dialog on some systems, even though such a display was connected via USB.
 - NVDA no longer fails  to switch to screen review when the navigator object has no actual screen location. In this case the review cursor is now placed at the top of the screen. (#3454)
+- Fixed an issue which caused the Freedom Scientific braille display driver to fail when the port was set to USB in some circumstances. (#3509, #3662)
 
 
 == Changes for Developers ==
