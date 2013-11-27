@@ -251,7 +251,6 @@ connection could not be established"""
 		self.numCells = 0
 		self._nlk = 0
 		self._nrk = 0
-		self._r1next = itertools.cycle(('r1a', 'r1b'))
 		self.decodedkeys = []
 		self._baud = 0
 		self._dev = None
@@ -423,7 +422,6 @@ connection could not be established"""
 
 	def executeGesture(self,gesture):
 		"""executes a gesture"""
-		if(gesture.id == 'r1'):  gesture.id = next(self._r1next)
 		if gesture.id or (gesture.dots or gesture.space): inputCore.manager.executeGesture(gesture)
 
 	def _handleKeyPresses(self):
@@ -469,10 +467,8 @@ connection could not be established"""
 			"braille_nextLine": ("br(papenmeier):dn",),
 			"braille_routeTo": ("br(papenmeier):route",),
 
-			"navigatorObject_moveToFlatReviewAtObjectPosition": ("br(papenmeier):r1a",),
 			"braille_toggleTether": ("br(papenmeier):r2",),
 			"review_currentCharacter": ("br(papenmeier):l1",),
-			"navigatorObject_toFocus":("br(papenmeier):r1b",),
 			"review_activate": ("br(papenmeier):l2",),
 
 			"navigatorObject_previous": ("br(papenmeier):left2",),
