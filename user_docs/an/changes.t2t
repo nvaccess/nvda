@@ -6,20 +6,41 @@ Qué bi ha de Nuevo en NVDA
 = 2013.3 =
 
 == Nuevas Caracteristicas ==
-- Os campos de formulario  agora s'anuncian en os documentos de Microsoft word. (2295)
-- As listas desplegables en Microsoft Excel 2003 dica lo 2010 agora s'anuncian en que s'ubren y navegan. (3382)
+- Os campos de formulario  agora s'anuncian en os documentos de Microsoft word. (#2295)
+- As listas desplegables en Microsoft Excel 2003 dica lo 2010 agora s'anuncian en que s'ubren y navegan. (#3382)
+- Una nueva opción 'Permitir a Lectura superficial en charrar-lo Tot' en o dialogo Opcions de Teclau permite a navegación por un documento con as ordens de navegación rapida d'o modo navegación y movimientos de linia / paragrafo, mientras remaneix leyendo-lo tot. Ista opción ye desactivada de traza predeterminada. (#2766) 
+- Agora bi ha un dialogo Cenyos de Dentrada ta permitir a facil personalización d'os cenyos de dentrada(tals como teclas en o teclau) ta ordens de NVDA. (#1532)
+- Agora puetz tener diferents opcions ta diferents situacions fendo servir perfils de configuración. Os perfils se pueden enchegar de traza manual u automatica(eix.: ta una aplicación en particular). (#87, #667, #1913)
+- En o Microsoft Excel, as celdas que son vinclos agora s'anuncian como vinclos. (#3042)
+- En o Microsoft Excel, os comentarios que bi haiga en as celdas agora se l'anuncian a l'usuario. (#2921)
 
 
 == Corrección d'errors ==
-- O Zend Studio agora funciona igual que l'Eclipse. (3420)
-- O cambeo d'estau de bellas caixetas de verificación en o dialogo de reglas de correu de Microsoft Outlook 2010 agora s'anuncia automaticament. (3063)
-- NVDA agora anunciará o estau fixau ta controls fixos tals como  pestanyas en Mozilla Firefox. (3372)
-- NVDA agora puet anunciar a información de revisión en Microsoft Word quan o Control de Cambeos  siga habilitau. para cuenta que Anunciar as revisions d'o editor debe estar habilitau en o dialogo de formatiau de documentos de NVDA (desactivau predeterminadament) tamién ta que sigan anunciaus. (1670)
-- Agora ye posible vincular scripts a cenyos de teclau que contiengan as teclas Alt y/u Windows como modificaderas. Anteriorment, si se feba isto, a execución d'o script causaba l'activación d'o menú Encieto u d'a barra de menú. (3472)
-- A lo seleccionar texto en documentos en modo navegación (por eixemplo a lo emplegar control+shift+fin) ya no causa que se cambee a distribución de teclau en sistemas con quantas distribucions de teclau instaladas. (3472)
-- Internet Explorer ya no habría a penchar-se u tornar-se inusable  quan se zarra NVDA. (3397)
-- O movimiento fisico y atros eventos en qualques ordinadors modernos ya  no se tracta como pulsacions de teclas inadequadas. Anteriorment, isto silenciaba a voz y qualques vegadas feba funcionar ordens de NVDA. (3468)
-- NVDA agora se comporta como s'asperaba enPoedit 1.5.7. Os usuarios que en faigan servir versions anteriors amenesterán actualizar-ne. (3485)
+- O Zend Studio agora funciona igual que l'Eclipse. (#3420)
+- O cambeo d'estau de bellas caixetas de verificación en o dialogo de reglas de correu de Microsoft Outlook 2010 agora s'anuncia automaticament. (#3063)
+- NVDA agora anunciará o estau fixau ta controls fixos tals como  pestanyas en Mozilla Firefox. (#3372)
+- NVDA agora puet anunciar a información de revisión en Microsoft Word quan o Control de Cambeos  siga habilitau. para cuenta que Anunciar as revisions d'o editor debe estar habilitau en o dialogo de formatiau de documentos de NVDA (desactivau predeterminadament) tamién ta que sigan anunciaus. (#1670)
+- Agora ye posible vincular scripts a cenyos de teclau que contiengan as teclas Alt y/u Windows como modificaderas. Anteriorment, si se feba isto, a execución d'o script causaba l'activación d'o menú Encieto u d'a barra de menú. (#3472)
+- A lo seleccionar texto en documentos en modo navegación (por eixemplo a lo emplegar control+shift+fin) ya no causa que se cambee a distribución de teclau en sistemas con quantas distribucions de teclau instaladas. (#3472)
+- Internet Explorer ya no habría a penchar-se u tornar-se inusable  quan se zarra NVDA. (#3397)
+- O movimiento fisico y atros eventos en qualques ordinadors modernos ya  no se tracta como pulsacions de teclas inadequadas. Anteriorment, isto silenciaba a voz y qualques vegadas feba funcionar ordens de NVDA. (#3468)
+- NVDA agora se comporta como s'asperaba enPoedit 1.5.7. Os usuarios que en faigan servir versions anteriors amenesterán actualizar-ne. (#3485)
+- NVDA agora puet leyer documentos protechius en Microsoft Word 2010,  no causando ya que se'n bloque. (#1686)
+- Si se da un parametro de linia de comando desconoixiu en executar o paquet de distribución de NVDA, ya no se provoca un bucle sin fin de dialogos de mensaches d'error. (#3463).
+-NVDA ya no falla en anunciar o texto alternativo d'os graficos y obchectos en Microsoft Word si o texto alternativo contién cometas u atros caracters no estandar. (#3579)
+- O numero d'elementos de bellas listas horizontals en modo navegación agora ye correcto. Anteriorment podeba haber estau o dople d'a cantidat real. (#2151)
+- A lo pretar control+e en una fuella de calculo de Microsoft Excel, agora s'anunciará a selección esviellada. (#3043)
+- NVDA agora puet leyer correctament os documentos XHTML en Microsoft Internet Explorer y belatros controls 	MSHTML. (#3542)
+- Dialogo d'Opcions de teclau: si no s'ha seleccionau garra tecla ta fer-la servir como a tecla NVDA, se presienta una error a l'usuario en  que se zarra o dialogo. A lo menos cal seleccionar una d'as teclas ta l'emplego apropiau de NVDA. (#2871)
+- En o Microsoft Excel, agora o NVDA anuncia as celdas mezcladas de traza diferent que as celdas multiples seleccionadas. (#3567)
+- O cursor de modo navegación  ya no se mete incorrectament quan se deixa un dialogo u una aplicación adentro d'o documento. (#3145)
+- S'ha apanyau un problema por o qual o controlador de pantalla HumanWare Brailliant BI / B series braille no s'amostraba como una opción en o quadro de dialogo Configuración de Braille en bells sistemas, anque dita pantalla se connectase a traviés de l'USB.
+
+
+== Cambeos ta Desembolicadors ==
+- Puetz especificar a categoría a amostrar a l'usuario por os scripts fendo servir l'atributo scriptCategory en clases ScriptableObject y l'atributo category en metodos de script. Mira la documentación ta baseObject.ScriptableObject ta mas detalles. (#1532)
+- O config.save ye obsoleto y talment s'esborre en bella versión esvenidera. Fe servir o config.conf.save en cuenta. (#667)
+- O config.validateConfig ye obsoleto y talment s'esborre en bella versión esvenidera. Os complementos que l'amenestan pueden 	furnir a suya propia implementación. (#667, #3632)
 
 
 = 2013.2 =

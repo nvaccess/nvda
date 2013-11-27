@@ -227,7 +227,7 @@ Vous pouvez également y accéder par la barre des tâches système.
 Faites un clic droit sur l'icône de NVDA située dans la barre des tâches système, ou accédez à la barre des tâches système en appuyant sur Windows+b,,Appuyez sur flècheBas jusqu'à atteindre l'icône NVDA puis appuyez sur la touche Application généralement située à côté de la touche Control de droite.
  Quand le menu apparaît, vous pouvez utiliser les flèches pour naviguer dans le menu, et la touche entrée pour activer un élément.
 
-++ Commande de base ++
+++ Commandes de base ++
 %kc:beginInclude
 || Nom | Ordinateur de bureau | Ordinateur portable | Tactile | Description |
 | Arrêt parole | Control | Control | Clic 2-doigts | Arrêt instantané de la parole |
@@ -520,7 +520,7 @@ Une touche de commande permet de retourner à la page contenant l'objet embarqu�
 | Aller au document contenant l'objet | NVDA+control+espace | Retire le focus à l'objet embarqué en cours et le rend au document contenant l'objet |
 %kc:endInclude
 
-+ Commandes NVDA Spécifiques à Certaines Applictions +
++ Commandes NVDA Spécifiques à Certaines Applications +
 NVDA fournit ses propres commandes additionnelles dans quelques applications pour rendre certaines tâches plus faciles ou pour donner accès à certaines fonctions qui ne seraient pas accessibles autrement.
 
 ++ Microsoft Excel ++
@@ -554,7 +554,7 @@ Note : Le raccourci Annonce du temps restant fonctionne seulement avec le format
 %kc:beginInclude
 || Nom | Touche | Description |
 | Annonce de la fenêtre de commentaires | control+maj+c | Annonce tout commentaire dans la fenêtre de commentaires. |
-| Annonce de la fenêtre de commentaires automatiques | control+maj+a | Annonce tout commentaire dans la fenêtre de commentaires automatiques. |
+| Annonce des notes pour les traducteurs | control+maj+a | Annonce les notes pour les traducteurs. |
 %kc:endInclude
 
 + Configurer NVDA +
@@ -782,6 +782,10 @@ Quand cette case est cochée, Insert du clavier étendu, généralement situé a
 ==== Utiliser insert du pavé numérique comme touche NVDA ====
 Si cette case est cochée, la touche Insert du pavé numérique peut être utilisée comme touche NVDA.
 
+Si aucune touche n'est choisie pour être la touche NVDA, il peut être impossible d'accéder à certaines commandes NVDA.
+Par conséquent, la boîte de dialogue Paramètres du clavier affichera un message d'erreur si aucune touche n'est sélectionnée en appuyant sur OK.
+Après avoir fermé le message d'erreur, vous devrez sélectionner au moins une touche avant de pouvoir appuyer sur OK pour fermer la boîte de dialogue correctement.
+
 %kc:setting
 ==== Echo clavier par caractère ====
 Touche : NVDA+2
@@ -800,7 +804,10 @@ Si cette option est activée, la parole sera interrompue à chaque fois qu'un ca
 ==== Interruption de la parole à l'appui de la touche entrer ====
 Si cette option est activée, la parole sera interrompue à chaque fois que la touche entrer est appuyée. Cette option est activée par défaut.
 
-==== Émettre un bip si on entre une lettre minuscule quand le verrouillage majuscule est activé ====
+==== Permettre le survol en mode dire tout ====
+Si cette option est activée, certaines commandes de navigation (telles que les touches de navigation rapide en mode navigation ou l'exploration par ligne ou par paragraphe) n'arrêtent pas dire tout, qui reprend plutôt la lecture à la nouvelle position.
+
+==== Émettre un bip à la frappe d'un caractère minuscule quand le verrouillage majuscule est activé ====
 Quand cette case est cochée, un bip d'avertissement est émis si on entre une lettre en combinaison avec la touche maj alors que le verrouillage majuscule est activé.
 Généralement, cela n'est pas intentionnel est provient du fait qu'on a oublié que le verrouillage majuscule était activé.
 Cela peut donc être utile d'en être averti.
@@ -1057,6 +1064,25 @@ En utilisant le champ Niveau, vous pouvez ajuster le niveau minimum auquel ce sy
 
 Quand vous avez fini, cliquez sur le bouton Accepter pour sauvegarder vos modifications, ou le bouton Annuler pour les supprimer.
 
++++ Gestes d'entrée +++
+Dans cette boîte de dialogue, vous pouvez configurer les gestes d'entrée (raccourcis clavier, boutons d'un afficheur braille etc) pour les commandes NVDA.
+
+Seules les commandes qui sont applicables immédiatement avant l'ouverture de la boîte de dialogue sont affichées.
+Par exemple, si vous souhaitez personnaliser des commandes liées au mode navigation, vous devez ouvrir le dialogue des gestes d'entrée lorsque vous êtes en mode navigation.
+
+L'arborescence de cette boîte de dialogue répertorie toutes les commandes NVDA applicables regroupés par catégorie.
+Tous les gestes associés à une commande sont énumérés au niveau suivant la commande.
+
+Pour ajouter un geste d'entrée à une commande, sélectionnez la commande et appuyez sur le bouton Ajouter.
+Ensuite, effectuez le geste d'entrée que vous souhaitez associer, par exemple appuyez sur une touche du clavier ou un bouton sur l'afficheur braille.
+Parfois, un geste peut être interprété de plusieurs façons.
+Par exemple, si vous avez appuyé sur une touche du clavier, vous voudrez peut-être qu'elle soit spécifique à la configuration du clavier actuel (par exemple, ordinateur de bureau ou portable) ou vous voudrez peut-être l'appliquer pour toutes les configurations.
+Dans ce cas, un menu apparaît, vous permettant de sélectionner l'option désirée.
+
+Pour supprimer un geste d'une commande, sélectionnez le geste et appuyez sur le bouton Supprimer.
+
+Lorsque vous avez terminé vos modifications, appuyez sur le bouton Accepter pour les sauvegarder ou sur le bouton Annuler pour les ignorer.
+
 ++ Sauvegarder et recharger la configuration ++
 Par défaut NVDA sauvegarde automatiquement vos paramètres.
 Notez cependant que ce comportement peut être modifié dans le dialogue "Paramètres généraux" du menu "Préférences".
@@ -1072,16 +1098,89 @@ Les touches de commande suivantes sont également utiles :
 | Réinitialiser la configuration | NVDA+control+r | NVDA+control+r | appuyez une fois pour réinitialiser à la configuration qui existait lors de votre dernière sauvegarde. Appuyez trois fois pour revenir à la configuration par défaut de NVDA. |
 %kc:endInclude
 
-++ Fichiers de configuration et profils utilisateur ++
+++ Profils de configuration ++
+Parfois, vous pouvez souhaiter avoir des paramètres différents pour des situations différentes.
+Par exemple, vous pourriez avoir l'annonce d'indentation activée pendant que vous éditez ou l'annonce des attributs de la police activée pendant que vous corrigez.
+NVDA vous permet de faire cela en utilisant des profils de configuration.
+
+Un profil de configuration contient uniquement les paramètres qui sont modifiés alors que le profil est en cours d'édition.
+La plupart des paramètres peuvent être modifiés dans les profils de configuration à l'exception de ceux dans la boîte de dialogue Paramètres généraux, qui s'appliquent à l'ensemble de NVDA.
+
+Les profils de configuration peuvent être activés manuellement.
+Ils peuvent également être activés automatiquement grâce à des déclencheurs tels que le passage à une application particulière.
+
++++ Gestion basique +++
+Vous pouvez gérer les profils de configuration en sélectionnant "profils de configuration" dans le menu NVDA.
+Vous pouvez aussi le faire en utilisant un raccourci clavier :
+%kc:beginInclude
+- NVDA+control+p : Afficher la boîte de dialogue Profils de configuration.
+-
+%kc:endInclude
+
+Le premier élément dans cette boîte de dialogue est la liste des profils à partir de laquelle vous pouvez sélectionner un des profils disponibles.
+Lorsque vous ouvrez la boîte de dialogue, le profil en cours d'édition est sélectionné.
+Des informations complémentaires sont également indiquées pour les profils actifs, indiquant s'ils sont activés manuellement, déclenchés et/ou en cours d'édition.
+
+Pour renommer ou supprimer un profil, appuyez sur le bouton renommer ou supprimer, respectivement.
+
+Appuyez sur le bouton Fermer pour fermer la boîte de dialogue.
+
++++ Création d'un profil +++
+Pour créer un profil, appuyez sur le bouton Nouveau.
+
+Dans la boîte de dialogue Nouveau profil, vous pouvez entrer un nom pour le profil.
+Vous pouvez également choisir comment ce profil doit être utilisé.
+Si vous ne souhaitez utiliser ce profil que manuellement, sélectionnez activation manuelle, qui est la valeur par défaut.
+Sinon, sélectionnez un déclencheur qui doit activer automatiquement ce profil.
+Pour plus de commodité, si vous n'avez pas saisi un nom pour le profil, sélectionner un déclencheur remplira le nom en conséquence.
+Reportez-vous [ci-dessous #ConfigProfileTriggers] pour plus d'information.
+
+Appuyer sur Accepter crée le profil et ferme la boîte de dialogue de configuration de sorte que vous pouvez le modifier.
+
++++ Activation manuelle +++[ConfigProfileManual]
+Vous pouvez activer manuellement un profil en sélectionnant un profil et en cliquant sur le bouton Activation manuelle.
+Une fois activé, d'autres profils peuvent toujours être activés par des déclencheurs, mais les paramètres dans le profil activé manuellement remplacent eux des profiles activés par ces déclencheurs.
+Par exemple, si un profil est déclenché pour l'application actuelle et que l'annonce des liens est activée dans ce profil mais désactivé dans le profil activé manuellement, les liens ne seront pas annoncés.
+Toutefois, si vous avez changé la voix dans le profil déclenchée mais que vous ne l'avez jamais changé dans le profil activé manuellement, la voix du profil déclenchée sera utilisé.
+Tous les paramètres que vous modifier seront sauvegardées dans le profil activé manuellement.
+Pour désactiver un profil activé manuellement, sélectionnez-le dans la boîte de dialogue Profils de configuration et appuyez sur le bouton désactiver manuellement.
+
++++ Déclencheurs +++[ConfigProfileTriggers]
+En appuyant sur le bouton Déclencheurs dans la boîte de dialogue Profils de configuration, vous pouvez modifier les profils qui doivent être activés automatiquement par divers déclencheurs.
+
+La liste des Déclencheurs affiche les déclencheurs disponibles, qui sont comme suit :
+- Application en cours : déclenché lors de l'activation de l'application en cours.
+- Dire tout: déclenchée lors de la lecture avec la commande Dire Tout.
+-
+
+Pour modifier le profil qui doit être automatiquement activé par un déclencheur, sélectionnez le déclencheur, puis sélectionnez le profil désiré dans la liste des profils.
+Vous pouvez sélectionner (configuration normale) si vous ne voulez pas utiliser de profil.
+
+Cliquez sur le bouton Fermer pour revenir à la boîte de dialogue Profils de configuration.
+
++++ éditer un profil +++
+Si vous avez activé manuellement un profil, les paramètres modifiés seront sauvegardés dans ce profil.
+Autrement, tous les paramètres modifiés seront sauvegardés dans le profil le plus récemment déclenché.
+Par exemple, si vous avez associé un profil avec l'application Bloc-notes et vous basculer vers le Bloc-notes, tous les paramètres modifiés seront sauvegardés dans ce profil.
+Enfin, s'il n'y a ni profil activé manuellement, ni profil déclenché, tous les paramètres que vous modifierez seront sauvegardés dans votre configuration normale.
+
+pour éditer le profil utilisé dans Dire Tout, vous devez [activer manuellement #ConfigProfileManual] ce profil.
+
++++ désactiver temporairement tous les déclencheurs +++
+Parfois, il peut être utile de désactiver temporairement les déclencheurs.
+Par exemple, vous voudrez peut-être modifier un profil activé manuellement ou votre configuration normale sans profils déclenchées interférents.
+Vous pouvez le faire en cochant la case Désactiver temporairement tous les déclencheurs dans la boîte de dialogue Profils de configuration.
+
+++ Emplacement des fichiers de configuration ++
 Les versions portables de NVDA enregistrent tous les paramètres, modules d'applications personnalisés et pilotes personnalisés dans un répertoire nommé userConfig situé dans le répertoire de votre copie portable de NVDA.
 
 Les versions installées de NVDA enregistrent tous les paramètres, modules d'applications personnalisés et pilotes personnalisés dans un répertoire spécial de NVDA situé dans votre profil utilisateur Windows.
 Cela signifie que chaque utilisateur du système peut avoir ses propres paramètres NVDA.
 Pour accéder à votre répertoire de paramètres pour une version installée de NVDA, depuis le menu Démarrer vous pouvez aller à Tous les programmes -> NVDA -> Explorer les paramètres utilisateur.
 
-Les paramètres qu'utilise NVDA quand il s'exécute sur l'écran de connexion ou l'écran UAC sont enregistrés dans le répertoire systemConfig situé dans le répertoire nVDA. 
+Les paramètres qu'utilise NVDA quand il s'exécute sur l'écran de connexion ou l'écran UAC sont enregistrés dans le répertoire systemConfig situé dans le répertoire nVDA.
 En général, cette configuration n'a pas à être modifiée.
-Pour modifier cette configuration, configurez nVDA à votre convenance, Sauvegardez la configuration puis cliquez sur  le bouton "Utiliser les paramètres NVDA actuellement sauvegardés pour l'écran de connexion à Windows (nécessite des privilèges administrateur)" dans le dialogue Paramètres généraux.
+Pour modifier cette configuration, configurez nVDA à votre convenance, Sauvegardez la configuration puis cliquez sur le bouton "Utiliser les paramètres NVDA actuellement sauvegardés pour l'écran de connexion à Windows (nécessite des privilèges administrateur)" dans le dialogue Paramètres généraux.
 
 + Outils Additionnels +
 
@@ -1137,7 +1236,7 @@ Il est recommendé de supprimer ces fichiers de votre répertoire de configurati
 La console Python NVDA, située dans Outils du menu NVDA, est un outil de développement utile pour dépanner, inspecter le code ou inspecter la hiérarchie d'accessibilité d'une application.
  Pour plus d'informations, veuillez consulter le Guide du Développeur disponible dans [la section développement du site web de NVDA NVDA_URLwiki/Development].
 
-++ Rechargement des Greffons ++
+++ Rechargement des modules complémentaires ++
 Cet élément, quand on l'active, recharge les modules d'applications et les modules complémentaires généraux sans avoir à redémarrer NVDA ce qui peut être utile pour les développeurs.
 
 + Synthétiseurs de parole pris en charge +[SupportedSpeechSynths]
@@ -1765,75 +1864,6 @@ Veuillez consulter la [documentation tableau des touches de BRLTTY http://mielke
 %kc:endInclude
 
 + Fonctions Avancées +
-
-++ Redéfinir les Assignations de Touches et les Autres Gestes de Commande ++
-L'utilisateur peut ajouter ou réassigner des gestes de commande (telles que des touches de commande) aux scripts dans un fichier spécial situé dans le répertoire de configuration NVDA de l'utilisateur.
-Ce fichier s'appelle gestures.ini.
-
-Ce fichier utilise la syntaxe standard des fichiers .ini.
-Le fichier peut contenir plusieurs sections et chaque section peut contenir une ou plusieurs entrées.
-
-Chaque section contient les assignations pour un script dans un module et une classe python particulier de NVDA.
-- Le nom de la section doit être le nom du module et la classe séparés par un point (.).
-- La clé de chaque entrée est le nom du script auquel le geste de commande doit être assigné.
-Alternativement, on peut utiliser None pour désassigner un geste d'un script auquel il était précédemment assigné.
-Chaque entrée ne peut apparaître qu'une fois par section, y compris None.
-- La valeur de chaque entrée est une liste d'identifiants de gestes séparés par une virgule, pour chaque geste de commande qui doit être assigné.
-Les identifiants de geste terminés par une virgule doivent être entourés de quotes (" ou ').
--
-
-Les identifiants de geste comprennent un code de matériel sur deux lettres (kb pour clavier, br pour terminal braille et ts pour écran tactile), un sous-code une disposition entre parenthèses, le signe deux-points, puis un ou plusieurs noms de touches Braille, clavier ou tactile séparés par le signe plus (+).
-- Pour un raccourci clavier, le code est kb.
-La partie entre parenthèses correspond à la disposition clavier et est optionnelle.
-Si elle n'est pas indiquée, le geste s'appliquera à toutes les configurations clavier.
-La chaîne après la virgule est un ou plusieurs noms de touches du clavier séparées par un signe plus (+).
-- Pour les gestes s'appliquant au terrminal braille, le code est br.
-La partie entre parenthèses indique le terminal braille spécifique est est obligatoire.
-La chaîne après la virgule est un ou plusieurs noms de touches du terminal Braille séparées par un signe plus (+).
-- Pour les gestes tactiles, le code est ts.
-La partie entre parenthèses spécifie le mode tactile à utiliser et est optionnelle.
-La partie après la virgule est un geste tactile comme double_tap (double clic), 2fingerflickUp (Glisser vers le haut 2-doigts), ou 3finger_tap (clic 3-doigt) par exemples.
--
-
-Pour découvrir les identifiants de gestes, les noms de scripts, les noms de classes et de modules qui les contiennent, vous pouvez :
-+ Activer l'aide des commandes.
-+ Activer le geste (appuyez sur la touche, toucher l'écran tactile etc).
-+ Désactiver l'aide des commandes.
-+ Activer la visionneuse de journal dans le menu outils de NVDA.
-+ Examiner les entrées récentes du journal.
-L'une d'entre elle devrait vous donner des informations au sujet du geste de commande que vous venez d'entrer, incluant le module, la classe et le script s'il est assigné.
-+
-
-Voici un exemple de la manière dont vous pourriez assigner NVDA+maj+t au script donnant la date et l'heure.
-
-Pour trouver le nom du script, module.class pour date time, vous devez activer l'aide des commandes puis appuyer sur NVDA+f12 qui est le geste standard pour le script date time.
-Désactivez ensuite l'aide des commandes puis ouvrez la visionneuse de journal.
-
-Vers la fin du journal, vous devriez voir :
-
-```
-INFO - inputCore.InputManager._handleInputHelp (13:17:22):
-Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
-```
-
-Vous pouvez en déduire que le nom du script est dateTime et que le module.class est globalCommands.globalCommands.
-
-Si le fichier n'existe pas encore, vous devez créer un fichier nommé gestures.ini dans le répertoire de configuration utilisateur et y insérer les lignes suivantes :
-
-```
-[globalCommands.GlobalCommands]
-	dateTime = kb:NVDA+maj+t
-```
-
-Cela assignera la combinaison NVDA+maj+t (dans toutes les configurations de clavier) au script dateTime.
-
-Notez que l'assignation originale NVDA+f12 fonctionnera toujours.
-Si vous voulez supprimer cette assignation, ajoutez la ligne suivante :
-
-```
-	None = kb:NVDA+f12
-```
-
 
 ++ Personnalisation Avancée de la Prononciation des Symboles ++
 Il est possible de personnaliser la prononciation des ponctuations et autres symboles au-delà de ce que permet le dialogue [Prononciation des symboles et ponctuations #SymbolPronunciation].

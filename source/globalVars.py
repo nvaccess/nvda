@@ -36,5 +36,4 @@ lastProgressValue=0
 appArgs=None
 settingsRing = None
 speechDictionaryProcessing=True
-configFileError=None
 exitCode=0

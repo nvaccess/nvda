@@ -1,25 +1,46 @@
-﻿What's New in NVDA
+﻿NVDA'da Ne Yeni
 
 
 %!includeconf: ../changes.t2tconf
 
 = 2013.3 =
 
-== New Features ==
-- Form fields are now reported in Microsoft word documents. (#2295)
-- NVDA can now announce revision information in Microsoft Word when Track Changes is enabled. Note that Report editor revisions in NVDA's document settings dialog (off by default) must be enabled also for them to be announced. (#1670)
-- Dropdown lists in Microsoft Excel 2003 through 2010 are now announced when opened and navigated around. (#3382)
+== Yeni Özellikler ==
+- artık Microsoft Word programında form alanları bildiriliyor. (#2295)
+- NVDA Microsoft Word'de Değişiklikleri İzle etkinleştirildiğinde revizyon bilgisini söyler. Varsayılan olarak kapalı olan NVDA Belge formatları iletişim kutusundaki "Editör revizyonlarını bildir" seçeneği açılmalıdır. (#1670)
+- Microsoft Excel 2003 ve 2010 sürümlerinde Açılır listeler artık okunabilir. (#3382)
+- Klavye ayarları iletişim kutusuna yeni eklenen "Tümünü okurken atlamaya izin ver" seçeneği tümünü oku komutu verildiğinde belge içinde dolaşmak için kullanılan kısayol tuşlarının kullanılmasına olanak tanır. Örneğin tarama kipinde görüntülenen bir belgeyi tümünü oku komutu ile okuyorsanız, h harfine bastığınızda okuma sonraki başlıktan, shift+h harfine bastığınızda önceki başlıktan itibaren devam eder. Bu seçenek varsayılan olarak kapalıdır. (#2766) 
+- NVDA komutları olarak kullanılan klavye tuşları vb girdi hareketlerinin -eklentilerinki dahil- kullanıcı tarafından kolaylıkla özelleştirilebilmesi için, Tercihler menüsünün altına Girdi Hareketleri iletişim kutusu eklendi. (#1532)
+- Artık konfigürasyon profillerini kullanarak farklı durumlar için farklı ayarları kullanabilirsiniz. Profiller elle ya da herhangi bir uygulama açıldığında otomatik olarak etkinleştirilebilir. (#87, #667, #1913)
+- Microsoft Excel'de, hücrelerdeki bağlantılar artık normal metin olarak değil, bağlantı olarak okunuyor. (#3042)
+- Microsoft Excel'de, bir hücrede yorumların varlığı artık kullanıcıya bildirilmektedir. (#2921)
 
 
-== Bug Fixes ==
-- Zend Studio now functions the same as Eclipse. (#3420)
-- The changed state of certain checkboxes in the Microsoft Outlook 2010 message rules dialog are now reported automatically. (#3063)
-- NVDA will now report the pinned state for pinned controls such as tabs in Mozilla Firefox. (#3372)
-- It is now possible to bind scripts to keyboard gestures containing Alt and/or Windows keys as modifiers. Previously, if this was done, performing the script would cause the Start Menu or menu bar to be activated. (#3472)
-- Selecting text in browse mode documents (e.g. using control+shift+end) no longer causes the keyboard layout to be switched on systems with multiple keyboard layouts installed. (#3472)
-- Internet Explorer should no longer crash or become unusable when closing NVDA. (#3397)
-- Physical movement and other events on some newer computers are no longer treated as inappropriate key presses. Previously, this silenced speech and sometimes triggered NVDA commands. (#3468)
-- NVDA now behaves as expected in Poedit 1.5.7. Users using earlier versions will need to update. (#3485)
+== Hata Düzeltmeleri ==
+- Zend Studio, şimdi Eclipse gibi çalışmaktadır. (#3420)
+- Microsoft Outlook 2010 ileti kuralları iletişim kutusundaki bazı onay kutularının değişen durumları artık otomatik olarak bildirilir. (#3063)
+- NVDA Şimdi Mozilla Firefox sekmeleri gibi  pin kontrolleri için pin durumunu bildirir. (#3372)
+- Artık alt ve windows tuşlarının NVDA komutları için kısayol tuşu olarak kullanılması mümkün. Önceden bu tuşlar kullanıldığında başlat menüsü açılabiliyor ya da menü çubuğuna giriliyordu. (#3472)
+- Kontrol + shift + end gibi tuşlar kullanarak tarama modundaki belgelerde metin seçmek birden fazla klavye düzeni yüklü sistemlerde Artık klavye düzeninin değişmesine neden olmuyor. (#3472)
+- Internet Explorer artık NVDA kapatıldığında çökmüyor ya da kullanılamaz duruma gelmiyor olmalı. (#3397)
+- Yeni bilgisayarlarda fiziksel hareket ve diğer bazı hareketler artık uygun olmayan tuşlar olarak algılanmıyor. Önceden, bu konuşmayı durdurabiliyor ya da bir NVDA komutu tetiklenmesine yol açabiliyordu. (#3468)
+- NVDA şimdi poEdit 1.5.7 versiyonunda beklendiği gibi  davranıyor. Önceki sürümleri kullanan kullanıcılar PoEdit'i güncellemeli. (#3485)
+- NVDA artık Microsoft Word 2010'da açılan korunmuş belgeleri okuyabiliyor, Word'ün çökmesine neden olmuyor. (#1686)
+- NVDA dağıtım paketi başlatırken bilinmeyen bir komut satırı anahtarı verilmiş ise, artık sonsuz bir hata mesajı diyalogları döngüsüne neden olunmuyor. (#3463)
+- Alt metni tırnak veya diğer standart olmayan karakterler içeriyorsa, NVDA artık Microsoft Word grafikleri ve nesneleri bildirirken hata vermiyor. (#3579)
+- Tarama kipinde bazı yatay listeler için öğe sayısı artık doğru veriliyor. Daha önce gerçek miktarın iki katı olarak verilebiliyordu. (#2151)
+- Kontrol +a'ya basıldığında, Microsoft Excel çalışma sayfasında güncelleştirilmiş seçim artık bildiriliyor. (#3043)
+- NVDA artık Microsoft Internet Explorer ve diğer MSHTML denetimlerinde XHTML belgeleri doğru bir şekilde okuyabiliyor. (#3542)
+- Keyboard settings dialog: if no key has been chosen to be used as the NVDA key, an error is presented to the user when dismissing the dialog. At least one key must be chosen for proper usage of NVDA. (#2871)
+- In Microsoft Excel, NVDA now announces merged cells differently to multiple selected cells. (#3567)
+- The browse mode cursor is no longer positioned incorrectly when leaving a dialog or application inside the document. (#3145)
+- Fixed an issue where the HumanWare Brailliant BI/B series braille display driver wasn't presented as an option in the Braille Settings dialog on some systems, even though such a display was connected via USB.
+
+
+== Changes for Developers ==
+- You can specify the category to be displayed to the user for scripts using the scriptCategory attribute on ScriptableObject classes and the category attribute on script methods. See the documentation for baseObject.ScriptableObject for more details. (#1532)
+- config.save is deprecated and may be removed in a future release. Use config.conf.save instead. (#667)
+- config.validateConfig is deprecated and may be removed in a future release. Add-ons which need this should provide their own implementation. (#667, #3632)
 
 
 = 2013.2 =

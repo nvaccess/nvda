@@ -3,6 +3,8 @@ from comtypes import COMError
 import controlTypes
 import oleacc
 import winUser
+import speech
+import treeInterceptorHandler
 import api
 import eventHandler
 import NVDAObjects.IAccessible
@@ -57,15 +59,16 @@ class WebKitWrapper(NVDAObjects.IAccessible.IAccessible):
 	presentationType = NVDAObjects.IAccessible.IAccessible.presType_layout
 
 	def event_stateChange(self):
+		from logHandler import log
 		# iTunes has indicated that a page has died and been replaced by a new one.
 		focus = api.getFocusObject()
 		if not winUser.isDescendantWindow(self.windowHandle, focus.windowHandle):
-			return
-		if focus.role:
-			# The old document is still alive.
 			return
 		# The new page has the same event params, so we must bypass NVDA's IAccessible caching.
 		obj = NVDAObjects.IAccessible.getNVDAObjectFromEvent(focus.windowHandle, winUser.OBJID_CLIENT, 0)
 		if not obj:
 			return
+		if focus.treeInterceptor:
+			speech.cancelSpeech()
+			treeInterceptorHandler.killTreeInterceptor(focus.treeInterceptor)
 		eventHandler.queueEvent("gainFocus",obj)

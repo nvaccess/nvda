@@ -65,8 +65,11 @@ def getScreenPosition(obj):
 		return pos,pos.obj
 
 modes=[
+	# Translators: One of the review modes.
 	('object',_("Object review"),getObjectPosition),
+	# Translators: One of the review modes.
 	('document',_("Document review"),getDocumentPosition),
+	# Translators: One of the review modes.
 	('screen',_("Screen review"),getScreenPosition),
 ]
 

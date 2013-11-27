@@ -500,7 +500,7 @@ Om naar het eerstvolgende element te springen gebruikt u uitsluitend één van d
 - x: checkbox (selectievakje)
 - c: combo box (vervolgkeuzelijst)
 - r: radio button (keuzerondje)
-- q: block quote (blokcitaat)
+- q: block quote (citaatblok)
 - s: separator (scheiding)
 - m: frame (kader)
 - g: graphic (afbeelding)
@@ -568,8 +568,8 @@ Merk op dat de opdracht "Resterende tijd melden" alleen werkt met de standaard o
 ++ Poedit ++
 %kc:beginInclude
 || Naam | Toets | Omschrijving |
-| Commentaarvenster melden | control+shift+c | Meldt commentaar in het commentaarvenster. |
-| Automatisch commentaarvenster melden | control+shift+a | Meldt commentaar in het automatische commentaarvenster. |
+| Commentaarvenster melden | control+shift+c | Meldt eventueel commentaar in het commentaarvenster. |
+| Opmerkingen voor vertalers melden | control+shift+a | Meldt eventuele opmerkingen voor vertalers.
 %kc:endInclude
 
 + NVDA configureren +
@@ -610,7 +610,7 @@ Als u het selectievakje aanvinkt, zal NVDA automatisch worden gestart zodra u zi
 Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet voor de draagbare versie.
 
 ==== NVDA gebruiken bij Windows aanmelding(administratieve rechten vereist) ====
-Als u zich bij Windows aanmeldt met een gebruikersnaam en een wachtwoord, dan zal  NVDA samen met Windows bij aanmelding worden gestart. Hiervoor moet u het selectievakje aankruisen.
+Als u zich bij Windows aanmeldt met een gebruikersnaam en een wachtwoord, dan zal  NVDA samen met Windows bij aanmelding worden gestart. Hiervoor moet u het selectievakje inschakelen.
 Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet voor de draagbare versie.
 
 ==== De momenteel opgeslagen instellingen gebruiken in het aanmeldvenster en andere beveiligde schermen ====
@@ -787,31 +787,44 @@ U treft er de volgende keuzemogelijkheden aan:
 Dit is een vervolgkeuzelijst waarin u het type toetsenbordindeling kiest dat u wilt gebruiken. Momenteel zijn er in NVDA twee types beschikbaar: desktop en laptop. 
 
 ==== CapsLock als NVDA-toets gebruiken ====
-Als het selectievakje wordt aangekruist, is CapsLock als NVDA-toets ingesteld. 
+Als het selectievakje wordt ingeschakeld, is CapsLock als NVDA-toets ingesteld. 
 
 ==== Uitgebreide Insertt-toets als NVDA-toets gebruiken ====
-Door dit selectievakje aan te kruisen wordt de uitgebreide Insert- (INS-) toets als NVDA-toets gebruikt. De uitgebreide INS-toets zit meestal boven de pijltjestoetsen bij de Home en End-toetsen 
+Door dit selectievakje in te schakelen wordt de uitgebreide Insert- (INS-) toets als NVDA-toets gebruikt. De uitgebreide INS-toets zit meestal boven de pijltjestoetsen bij de Home en End-toetsen 
 
 ==== Numerieke Insert-toets als NVDA-toets gebruiken ====
-Door het selectievakje aan te kruisen wordt de Insert-toets op het numerieke toetsenbord als NVDA-toets ingesteld.
+Door het selectievakje in te schakelen wordt de Insert-toets op het numerieke toetsenbord als NVDA-toets ingesteld.
+
+Als er geen toets als NVDA-toets wordt gekozen, zijn bepaalde 
+commando's mogelijk niet beschikbaar.
+Er zal dan ook een foutmelding verschijnen in het dialoogvenster 
+Muisinstellingen zodra er op OK wordt gedrukt terwijl geen enkele toets 
+is aangevinkt.
+Nadat u via OK het venster met de foutmelding hebt gesloten, moet u 
+van tenminste één toets het selectievakje aanvinken voordat u het dialoogvenster correct kunt 
+afsluiten met de OK-knop.
 
 %kc:setting
 ==== Getypte karakters uitspreken ====
 Toets: NVDA+2
 
-Door het selectievakje aan te kruisen worden alle karakters die u op het toetsenbord typt uitgesproken.
+Door het selectievakje in te schakelen worden alle karakters die u op het toetsenbord typt uitgesproken.
 
 %kc:setting
 ==== Getypte woorden uitspreken ====
 Toets: NVDA+3
 
-Door dit selectievakje aan te kruisen wordt elk woord dat u getypt hebt uitgesproken.
+Door dit selectievakje in te schakelen wordt elk woord dat u getypt hebt uitgesproken.
 
 ==== Spraak onderbreken bij het typen van karakters ====
 Als dit selectievakje is aangevinkt, wordt de spraak onderbroken telkens wanneer er een letterteken wordt getypt. Deze instelling staat standaard "aan".   
 
 ==== Spraak onderbreken  bij drukken van Enter-toets ====
 Als dit selectievakje is aangevinkt, wordt de spraak onderbroken telkens wanneer de Enter-toets wordt ingedrukt. Deze instelling staat standaard "aan".   
+
+==== Skimmen bij Alles Voorlezen toestaan ====
+Als dit selectievakje is aangevinkt,zullen navigatieopdrachten zoals snel navigeren in bladermodus of verplaatsen per regelof alinea er niet toe leiden dat Alles Voorlezen wordt gestopt. 
+Het is veeleer zo dat Alles Voorlezen naar de nieuwe positie springt waar het lezen wordt voortgezet.
 
 ==== Piep bij het typen van kleine letters terwijl capslock is ingeschakeld ====
 Als deze optie is geactiveerd, zal NVDA piepen bij het typen van letters in combinatie met de shift toets als capslock is ingeschakeld.
@@ -822,34 +835,34 @@ Daarom kan het handig zijn om hierover gewaarschuwd te worden.
 ==== Commandotoetsen uitspreken ====
 Toets: NVDA+4
 
-Door het selectievakje aan te kruisen worden alle niet-karaktertoetsen (bij voorbeeld de pijltjestoetsen, de DEL-toets, etc.) uitgesproken. Dit geldt ook voor, bij voorbeeld, de Ctrl-toets in combinatie met een letter. 
+Door het selectievakje in te schakelen worden alle niet-karaktertoetsen (bij voorbeeld de pijltjestoetsen, de DEL-toets, etc.) uitgesproken. Dit geldt ook voor, bij voorbeeld, de Ctrl-toets in combinatie met een letter. 
 
 +++ Muisinstellingen(NVDA+control+m) +++[MouseSettings]
 Het dialoogvenster Muisinstellingen vindt u in het NVDA-menu onder Opties waar u vervolgens Muis selecteert.
 U treft er de volgende keuzemogelijkheden aan:
 
 ==== Veranderingen van muisaanwijzervorm weergeven====
-Als het selectievakje is aangekruist, zal NVDA elke verandering die optreedt in de vorm van de muisaanwijzer melden.
+Als het selectievakje is ingeschakeld, zal NVDA elke verandering die optreedt in de vorm van de muisaanwijzer melden.
 In Windows verandert de vorm van de muisaanwijzer om aan te geven waar de computer mee bezig is, zoals met het laden van iets of om te laten weten dat u tekst kunt invoeren.
 
 %kc:setting
 ==== De muis volgen activeren====
  Toets : NVDA+m |
 
-Door het selectievakje aan te kruisen wordt de tekst gelezen die zich onder de muisaanwijzer bevindt bij verplaatsing van de muis over het scherm. U kunt dus naar iets zoeken door de muis zelf te verplaatsen in plaats van zoeken met objectnavigatie.
+Door het selectievakje in te schakelen wordt de tekst gelezen die zich onder de muisaanwijzer bevindt bij verplaatsing van de muis over het scherm. U kunt dus naar iets zoeken door de muis zelf te verplaatsen in plaats van zoeken met objectnavigatie.
 
 ==== Resolutie van teksteenheid====
 Als u ervoor gekozen hebt om de tekst onder de muis te laten uitspreken, kunt u hier instellen hoeveel tekst moet worden uitgesproken.
 U hebt de keuze uit karakter, woord, regel en alinea.
 
 ==== Rol weergeven wanneer muisaanwijzer zich binnen een object bevind ====
-Als dit selectievakje is aangekruist, zal NVDA de rol (type) van het object weergeven bij verplaatsing van de muis binnen het object.
+Als dit selectievakje is ingeschakeld, zal NVDA de rol (type) van het object weergeven bij verplaatsing van de muis binnen het object.
 
 ==== Geluidscoördinatie gebruiken bij verplaatsen muis====
-Als het selectievakje is aangekruist laat NVDA pieptonen horen bij het verplaatsen van de muis. Met behulp van deze signalen kan de gebruiker bepalen waar de muis zich op het scherm bevindt.
+Als het selectievakje is ingeschakeld laat NVDA pieptonen horen bij het verplaatsen van de muis. Met behulp van deze signalen kan de gebruiker bepalen waar de muis zich op het scherm bevindt.
 
 ==== Schermhelderheid bepaalt Volume audio-coördinatie ====
-Als het selectievakje “geluidscoördinatie gebruiken bij verplaatsen muis” is aangevinkt, dan zal het aankruisen van dit selectievakje ervoor zorgen dat het volume van de pieptonen wordt bepaald door de schermhelderheid onder de muis.
+Als het selectievakje “geluidscoördinatie gebruiken bij verplaatsen muis” is ingeschakeld, dan zal het inschakelen van dit selectievakje ervoor zorgen dat het volume van de pieptonen wordt bepaald door de schermhelderheid onder de muis.
 Deze functies staan standaard uit.
 
 +++ Instellingen review cursor (leescursor)+++
@@ -902,21 +915,21 @@ Als deze optie is ingeschakeld, zal positie-informatie voor meer objecten (zoals
 Vink dit selectievakje niet aan als u, behalve de naam van het object, geen extra informatie hoeft te horen. 
 
 %kc:setting
-==== Weergave voortschrijdingsbalk ====
+==== Weergave voortgangsbalk ====
 Toets : NVDA+u
 
-Via de vervolgkeuzelijst kunt u kiezen hoe u wilt worden geïnformeerd over de voortgang van de voortschrijdingsbalk.
+Via de vervolgkeuzelijst kunt u kiezen hoe u wilt worden geïnformeerd over de voortgang van de voortgangsbalk.
 
 U kunt kiezen uit
-- uit: veranderingen in voortschrijdingsbalken worden niet gemeld.
+- uit: veranderingen in voortgangsbalken worden niet gemeld.
 - uitspreken: u hoort het percentage dat aangeeft hoe ver het proces is gevorderd. Elke verandering wordt gemeld.
-- Pieptoon: Bij elke verandering in de voortschrijdingsbalk zal NVDA een pieptoon laten horen. Hoe hoger de toon, hoe verder de balk gevuld raakt.
+- Pieptoon: Bij elke verandering in de voortgangsbalk zal NVDA een pieptoon laten horen. Hoe hoger de toon, hoe verder de balk gevuld raakt.
 - Pieptonen + uitspreken: U hoort zowel pieptonen  als gesproken info over de voortgang van het proces.
 -
 
-==== Achtergrond voortschrijdingsbalken weergeven ====
-Als dit selectievakje is aangekruist blijft NVDA veranderingen in een voortschrijdingsbalk weergeven, ook als deze niet langer op de voorgrond aanwezig is.
-Als u een venster met een voortschrijdingsbalk minimaliseert of naar een ander venster overschakelt, zal NVDA de veranderingen in de voortschrijdingsbalk toch bijhouden terwijl u met iets anders bezig bent. 
+==== Achtergrond voortgangsbalken weergeven ====
+Als dit selectievakje is ingeschakeld blijft NVDA veranderingen in een voortgangsbalk weergeven, ook als deze niet langer op de voorgrond aanwezig is.
+Als u een venster met een voortgangsbalk minimaliseert of naar een ander venster overschakelt, zal NVDA de veranderingen in de voortgangsbalk toch bijhouden terwijl u met iets anders bezig bent. 
 
 %kc:setting
 ==== Dynamische inhoudsveranderingen melden ====
@@ -970,7 +983,7 @@ Hoewel er in bladermodus eigenlijk geen echte pagina-indeling bestaat, kunt u hi
 ==== Schermlay-out gebruiken ====
 Toets: NVDA+v
 
-Hiermee kunt u bepalen hoe de inhoud van een document in bladermodus moet worden weergegeven. Wilt u dat inhoud zoals links en andere velden op een aparte regel komen te staan of moet alles blijven zoals het wordt getoond. Als het selectievakje is aangekruist blijft alles staan zoals weergegeven. Als u het vinkje weghaalt, worden de velden op aparte regels getoond.
+Hiermee kunt u bepalen hoe de inhoud van een document in bladermodus moet worden weergegeven. Wilt u dat inhoud zoals links en andere velden op een aparte regel komen te staan of moet alles blijven zoals het wordt getoond. Als het selectievakje is ingeschakeld blijft alles staan zoals weergegeven. Als u het vinkje weghaalt, worden de velden op aparte regels getoond.
 
 ==== Automatisch lezen zodra een pagina geladen is ====
 Deze optie bepaalt of een pagina die geladen is in bladermodus automatisch wordt gelezen.
@@ -988,20 +1001,20 @@ Zie de opties in het [dialoogvenster Documentopmaak #DocumentFormattingSettings]
 
 ==== Automatische focusmodus bij focuswijzigingen====
 Hiermee wordt de focusmodus automatisch geactiveerd bij focusveranderingen.
-Als het selectievakje is aangekruist, zal de focusmodus automatisch worden geactiveerd wanneer u in een webpagina bij voorbeeld in een formulierveld terecht komt door op TAB te drukken.
+Als het selectievakje is ingeschakeld, zal de focusmodus automatisch worden geactiveerd wanneer u in een webpagina bij voorbeeld in een formulierveld terecht komt door op TAB te drukken.
 
 ==== Automatische focusmodus bij cursorbeweging====
-Als het selectievakje is aangekruist, zal NVDA de focusmodus vanzelf aanpassen bij gebruik van de pijltjestoetsen.
+Als het selectievakje is ingeschakeld, zal NVDA de focusmodus vanzelf aanpassen bij gebruik van de pijltjestoetsen.
 Als u bij voorbeeld met de pijltjestoetsen door een webpagina bladert en u in een invoerveld belandt, komt u automatisch in de focusmodus. Als u het invoerveld uitgaat, keert u weer terug in de bladermodus (ook wel surfmodus genoemd).  
 
 ==== Audiomarkering voor focus- en surfmodus====
-Als het selectievakje is aangekruist, hoort u een bepaald geluid als gewisseld wordt tussen de focus- en bladermodus in een document. Dit komt dan in de plaats van een uitgesproken wijziging van de focus. 
+Als het selectievakje is ingeschakeld, hoort u een bepaald geluid als gewisseld wordt tussen de focus- en bladermodus in een document. Dit komt dan in de plaats van een uitgesproken wijziging van de focus. 
 
 +++ Documentopmaakinstellingen (NVDA+control+d) +++[DocumentFormattingSettings]
 U vindt het dialoogvenster Documentopmaak in het NVDA-menu onder Opties. 
 
 U kunt de meeste selectievakjes gebruiken om te bepalen welke informatie over de opmaak van een document u wilt horen als u de cursor in het document verplaatst.
-Als u bij voorbeeld Lettertype vermelden aankruist, wordt de naam hiervan gemeld telkens wanneer u bij een ander lettertype terecht komt.
+Als u bij voorbeeld Lettertype vermelden inschakelt, wordt de naam hiervan gemeld telkens wanneer u bij een ander lettertype terecht komt.
 
 U kunt de vermelding laten horen van:
 - Lettertype
@@ -1070,6 +1083,25 @@ Het niveau veld bepaalt het minimumniveau waarop dit symbool wordt uitgesproken.
 
 Als u klaar bent kunnen de wijzigingen met de OK knop worden opgeslagen, of door middel van de Annuleren knop worden teruggedraaid.
 
++++ Invoerkoppelingen +++
+In dit dialoogvenster  kunt u toetsen voor invoerkoppelingen op het toetsenbord,  knoppen op de brailleleesregel, etc. instellen voor het uitvoeren vanNVDA  commando's.
+
+Alleen commando's die toepasbaar zijn vlak voordat u  het dialoogvenster  opent, worden getoond.
+Als u bij voorbeeld commando's wilt instellen die te maken hebben met bladermodus, dan moet u het dialoogvenster  Ïnvoerkoppelingen  openen,wanneer u zich in de bladermodus bevindt.
+
+De boomstructuur in dit dialoogvenster toont alle beschikbare NVDA commando's die per categorie gegroepeerd zijn.
+Onder elk commando treft u de ermee verbonden koppeling aan.
+
+Om een invoerkoppeling aan een commando toe te voegenselecteert u het commando en drukt u op de knop Toevoegen.
+Breng vervolgens de gewenste invoerkoppeling aan; bij voorbeeld door het indrukken van een toets op het toetsenbord of een knop op een brailleleesregel.
+Vaak kan de reikwijdte van een invoerkoppeling verschillen.
+Als u bij voorbeeld een toets op het toetsenbord indrukt,wilt u mogelijk dat dit specifiek voor de huidige toetsenbordindeling geldt (d.w.z. desktop of laptop) of mogelijk wilt u dat dit voor beide geldt.
+Desgewenst kunt u via een menu de relevante optie instellen.
+
+Om de aan een commando verbonden invoerkoppeling ongedaan te maken, selecteert u de invoerkoppeling en drukt u op de knop Ongedaan maken.
+
+Als u klaar bent met het aanbrengen van de wijzigingen drukt u op de knop OK om de wijzigingen op te slaan of op de knop Annuleren als u geen wijzigingen wilt doorvoeren.
+
 ++ De configuratie opslaan en opnieuw laden ++
 Als er wijzigingen worden aangebracht in de instellingen van NVDA worden deze  automatisch opgeslagen bij het afsluiten van het programma.
 Dit is de standaardinstelling, maar u kunt dit veranderen onder Algemeen in het menu Opties.
@@ -1085,7 +1117,80 @@ De volgende toetscombinaties kunnen ook handig zijn:
 | Configuratie terugzetten | NVDA+control+r | NVDA+control+r | Door eenmaal drukken  worden de instellingen hersteld zoals deze waren toen u de configuratie de laatste keer hebt opgeslagen. Bij driemaal drukken worden de fabrieksinstellingen hersteld. |
 %kc:endInclude
 
-++ Configuratiebestanden en gebruikersprofielen ++
+++ Configuratieprofielen ++
+Het kan voorkomen dat u bepaalde instellingen wilt die gelden voor bepaalde situaties.
+Zo kan het zijn dat u wilt dat "inspringen melden" aan staat als u een tekst aan het bewerken bent, of dat het melden van opmaakeigenschappen zoals lettertype, grootte, etc. is ingeschakeld als u tekst naleest ter correctie.
+Dit kunt u in NVDA doen met behulp van configuratieprofielen.
+
+Een configuratieprofiel bevat uitsluitend de instellingen die gewijzigd worden bij het bewerken van het profiel.
+De meeste instellingen kunnen in een configuratieprofiel worden aangepast behalve waar het gaat om instellingen die gelden voor NVDA in zijn geheel. Deze vindt u onder de kop Algemeen bij Opties in het NVDA-menu.
+
+U kunt Configuratieprofielen handmatig activeren.
+Ze kunnen ook automatisch geactiveerd  "worden met behulp van een zogenaamde "trigger". Het overschakelen naar een applicatie, bij voorbeeld, kan de "trigger" zijn die een bepaald configuratieprofiel activeert.
+
++++ Basisbeheer +++
+U kunt configuratieprofielen beheren door in het NVDA-menu Configuratieprofielen te selecteren.
+U kunt hiervoor ook de volgende toetscombinatie gebruiken:
+%kc:beginInclude
+- NVDA+control+p: Het dialoogvenster Configuratieprofielen  weergeven.
+-
+%kc:endInclude
+
+Het eerste element in dit dialoogvenster is de profiellijst waaruit u een van de beschikbare profielen kunt selecteren.
+Bij het openen van het dialoogvenster wordt het profiel dat u aan het bewerken bent, geselecteerd.
+Verder wordt van de actieve profielen aangegeven of ze handmatig, of automatisch (via trigger),  worden aangezet en / of dat ze in bewerking zijn.
+
+U kunt een profiel hernoemen of verwijderen door respectievelijk op de knop "Hernoemen" of "Verwijderen" te drukken.
+
+U sluit het dialoogvenster met de knop "Sluiten".
+
++++ Een Profiel aanmaken +++
+U kunt een profiel aanmaken door op de knop "Nieuw" te drukken.
+
+In het dialoogvenster Nieuw Profiel, kunt u een naam voor het profiel opgeven.
+Hier selecteert u ook hoe dit profiel gebruikt moet worden.
+Als u het profiel uitsluitend handmatig wilt gebruiken, selecteert u "handmatigactiveren", wat de standaardinstelling is.
+In het andere geval selecteert u een trigger die dit profiel automatisch moet activeren.
+Als u geen naam voor het profiel hebt ingevoerd, zal gemakshalve bij het selecteren van een trigger de ermee verbonden naam worden overgenomen.
+Ga naar [ #ConfigProfileTriggers] hierna voor meer informatie over triggers.
+
+Door op OK te drukken wordt het profiel aangemaakt en het dialoogvenster gesloten. Vervolgens kunt u het profiel bewerken.
+
++++ Handmatig activeren +++[ConfigProfileManual]
+U kunt  een profiel handmatig activeren  door een profiel te selecteren en dan op de knop Handmatig Activeren te drukken
+Naast een handmatig geactiveerd profiel blijft het mogelijk met behulp van triggers andere profielen aan te zetten, maar de instellingen van een handmatig geactiveerd profiel krijgen prioriteit ten koste van de automatische instellingen. 
+Als er bij voorbeeld voor de huidige toepassing een profiel automatisch (via een trigger)is geactiveerd en als in dat profiel het melden van links is ingeschakeld terwijl in het handmatig geactiveerde profiel dit niet is gebeurd, dan worden links niet gemeld. 
+Als u echter de stem in het via een trigger geactiveerde profiel hebt veranderd, maar als u die niet gewijzigd hebt in het handmatig geactiveerde profiel, dan zal de stem uit het automatisch (via trigger) geactiveerde profiel worden gebruikt. 
+Instellingen die u wijzigt worden opgeslagen in het handmatig geactiveerde profiel.
+U kunt een dergelijk profiel déactiveren door het te selecteren  en op de knop "Handmatig déactiveren" te drukken.
+
++++ Triggers +++[ConfigProfileTriggers]
+Door in het dialoogvenster Configuratieprofielen op de knop Triggers te drukken, kunt u instellen welke profielen met behulp van de verschillende triggers automatisch geactiveerd moeten worden.
+
+In de lijst staan de volgende beschikbare Triggers: 
+- Huidige toepassing: wordt ingeschakeld wanneer u de toepassing start.
+- Alles voorlezen : wordt geactiveerd bij gebruik van het commando Alles voorlezen.
+-
+
+Om het profiel te wijzigen dat automatisch moet worden geactiveerd voor een bepaalde triggerselecteert u eerst de trigger en vervolgens het gewenste profiel in de lijst met profielen. 
+Als u niet wilt dat er een profiel wordt gebruikt, selecteert u "Normale Configuratie".
+
+Druk op de knop Sluiten om naar het dialoogvenster Configuratieprofielen terug te gaan.
+
++++ Een Profiel bewerken +++
+Als u handmatig een profiel hebt geactiveerd, worden alle door u gewijzigde instellingen in dat profiel opgeslagen.
+Als dat niet het geval is,zullen wijzigingen die u in de instellingen aanbrengt worden opgeslagen in het meest recente door een trigger geactiveerde profiel.
+Als u bij voorbeeld een profiel gekoppeld hebt aan de toepassing Kladblok, dan zullen, zodra u naar Kladblok overschakelt,  gewijzigde instellingen naar dat profiel worden opgeslagen.
+Als er geen handmatig geactiveerd profiel is, en er ook geen sprake is van een automatisch geactiveerd profiel dan worden gewijzigde instellingen opgeslagen in de normale configuratie. 
+
+Om het profiel dat gekoppeld is aan alles voorlezen te bewerken, moet u dat profiel [#ConfigProfileManual handmatig activeren]. 
+
++++ Triggers tijdelijk uitschakelen +++
+Het kan van pas komen dat alle triggers tijdelijk kunnen worden uitgeschakeld. 
+U wilt bij voorbeeld een handmatig geactiveerd profiel of de normale configuratie bewerken zonder last te hebben van door triggers geactiveerde profielen 
+Dit kunt u doen door een vinkje te zetten in het selectievakje bij "Alle triggers tijdelijk uitschakelen" in het dialoogvenster Configuratieprofielen.
+
+++ De Locatie van Configuratiebestanden ++
 Als u een draagbare versie van NVDA hebt, worden alle instellingen, door de gebruiker gedefinieerde app-modules en aangepaste drivers opgeslagen in een sub-map genaamd user config. Deze map bevindt zich in de NVDA hoofdmap.
 
 Als u NVDA op een laptop of pc hebt geïnstalleerd, worden alle instellingen, door de gebruiker gedefinieerde app-modules en aangepaste drivers  opgeslagen in een aparte map die te vinden is in de map van de aangemelde gebruiker onder de Windows gebruikersprofielen.

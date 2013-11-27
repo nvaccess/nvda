@@ -52,6 +52,7 @@ class SettingsDialog(wx.Dialog):
 	_hasInstance=False
 
 	title = ""
+	shouldSuspendConfigProfileTriggers = True
 
 	def __new__(cls, *args, **kwargs):
 		if SettingsDialog._hasInstance:
@@ -275,7 +276,7 @@ class GeneralSettingsDialog(SettingsDialog):
 				# Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 				_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING,self
 			)==wx.OK:
-				config.save()
+				config.conf.save()
 				queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
 		super(GeneralSettingsDialog, self).onOk(evt)
 
@@ -658,6 +659,15 @@ class KeyboardSettingsDialog(SettingsDialog):
 		self.kbdList.SetFocus()
 
 	def onOk(self,evt):
+		# #2871: check wether at least one key is the nvda key.
+		if not self.capsAsNVDAModifierCheckBox.IsChecked() and not self.numpadInsertAsNVDAModifierCheckBox.IsChecked() and not self.extendedInsertAsNVDAModifierCheckBox.IsChecked():
+			log.debugWarning("No NVDA key set")
+			gui.messageBox(
+				# Translators: Message to report wrong configuration of the NVDA key
+				_("At least one key must be used as the NVDA key."), 
+				# Translators: The title of the message box
+				_("Error"), wx.OK|wx.ICON_ERROR,self)
+			return
 		layout=self.kbdNames[self.kbdList.GetSelection()]
 		config.conf['keyboard']['keyboardLayout']=layout
 		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"]=self.capsAsNVDAModifierCheckBox.IsChecked()
@@ -1613,20 +1623,25 @@ class InputGesturesDialog(SettingsDialog):
 				disp = self._formatGesture(gid)
 				item = menu.Append(wx.ID_ANY, disp)
 				self.Bind(wx.EVT_MENU,
-					lambda evt: self._addChoice(treeGes, scriptInfo, gesture, gid, disp),
+					lambda evt, gid=gid, disp=disp: self._addChoice(treeGes, scriptInfo, gid, disp),
 					item)
 			self.PopupMenu(menu)
 			if not self.tree.GetItemPyData(treeGes):
 				# No item was selected, so use the first.
-				self._addChoice(treeGes, scriptInfo, gesture, gids[0],
+				self._addChoice(treeGes, scriptInfo, gids[0],
 					self._formatGesture(gids[0]))
 			menu.Destroy()
 		else:
-			self._addChoice(treeGes, scriptInfo, gesture, gids[0],
+			self._addChoice(treeGes, scriptInfo, gids[0],
 				self._formatGesture(gids[0]))
 
-	def _addChoice(self, treeGes, scriptInfo, gesture, gid, disp):
-		self.pendingAdds.add((gid, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName))
+	def _addChoice(self, treeGes, scriptInfo, gid, disp):
+		entry = (gid, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName)
+		try:
+			# If this was just removed, just undo it.
+			self.pendingRemoves.remove(entry)
+		except KeyError:
+			self.pendingAdds.add(entry)
 		self.tree.SetItemText(treeGes, disp)
 		self.tree.SetItemPyData(treeGes, gid)
 		self.onTreeSelect(None)
@@ -1636,7 +1651,12 @@ class InputGesturesDialog(SettingsDialog):
 		gesture = self.tree.GetItemPyData(treeGes)
 		treeCom = self.tree.GetItemParent(treeGes)
 		scriptInfo = self.tree.GetItemPyData(treeCom)
-		self.pendingRemoves.add((gesture, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName))
+		entry = (gesture, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName)
+		try:
+			# If this was just added, just undo it.
+			self.pendingAdds.remove(entry)
+		except KeyError:
+			self.pendingRemoves.add(entry)
 		self.tree.Delete(treeGes)
 		self.tree.SetFocus()
 
@@ -1665,6 +1685,6 @@ class InputGesturesDialog(SettingsDialog):
 				log.debugWarning("", exc_info=True)
 				# Translators: An error displayed when saving user defined input gestures fails.
 				gui.messageBox(_("Error saving user defined gestures - probably read only file system."),
-					_("Error"), wx.OK | wx.ICON-ERROR)
+					_("Error"), wx.OK | wx.ICON_ERROR)
 
 		super(InputGesturesDialog, self).onOk(evt)

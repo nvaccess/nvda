@@ -18,6 +18,7 @@ import speechDictHandler
 import synthDrivers
 
 _curSynth=None
+_audioOutputDevice=None
 
 def initialize():
 	config.addConfigDirsToPythonPackagePath(synthDrivers)
@@ -27,8 +28,7 @@ def changeVoice(synth, voice):
 	if voice:
 		synth.voice = voice
 	c=config.conf["speech"][synth.name]
-	c.configspec=synth.getConfigSpec()
-	config.conf.validate(config.val, copy = True,section = c)
+	c.spec=synth.getConfigSpec()
 	#start or update the synthSettingsRing
 	if globalVars.settingsRing: globalVars.settingsRing.updateSupportedSettings(synth)
 	else:  globalVars.settingsRing = SynthSettingsRing(synth)
@@ -60,7 +60,7 @@ def getSynth():
 	return _curSynth
 
 def setSynth(name,isFallback=False):
-	global _curSynth
+	global _curSynth,_audioOutputDevice
 	if name is None: 
 		_curSynth.terminate()
 		_curSynth=None
@@ -76,7 +76,7 @@ def setSynth(name,isFallback=False):
 		prevSynthName = None
 	try:
 		newSynth=_getSynthDriver(name)()
-		if name in config.conf["speech"]:
+		if config.conf["speech"].isSet(name):
 			newSynth.loadSettings()
 		else:
 			# Create the new section.
@@ -89,6 +89,7 @@ def setSynth(name,isFallback=False):
 			changeVoice(newSynth,voice)
 			newSynth.saveSettings() #save defaults
 		_curSynth=newSynth
+		_audioOutputDevice=config.conf["speech"]["outputDevice"]
 		if not isFallback:
 			config.conf["speech"]["synth"]=name
 		log.info("Loaded synthDriver %s"%name)
@@ -102,6 +103,13 @@ def setSynth(name,isFallback=False):
 		elif name=='espeak':
 			setSynth('silence',isFallback=True)
 		return False
+
+def handleConfigProfileSwitch():
+	conf = config.conf["speech"]
+	if conf["synth"] != _curSynth.name or conf["outputDevice"] != _audioOutputDevice:
+		setSynth(conf["synth"])
+		return
+	_curSynth.loadSettings(onlyChanged=True)
 
 class SynthSetting(object):
 	"""Represents a synthesizer setting such as voice or variant.
@@ -391,7 +399,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		raise NotImplementedError
 
 	def getConfigSpec(self):
-		spec=deepcopy(config.synthSpec)
+		spec=deepcopy(config.confspec["speech"]["__many__"])
 		for setting in self.supportedSettings:
 			spec[setting.name]=setting.configSpec
 		return spec
@@ -446,24 +454,28 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		for setting in self.supportedSettings:
 			conf[setting.name]=getattr(self,setting.name)
 
-	def loadSettings(self):
+	def loadSettings(self, onlyChanged=False):
 		c=config.conf["speech"][self.name]
 		if self.isSupported("voice"):
 			voice=c.get("voice",None)
-			try:
-				changeVoice(self,voice)
-			except:
-				log.warning("Invalid voice: %s" % voice)
-				# Update the configuration with the correct voice.
-				c["voice"]=self.voice
-				# We need to call changeVoice here so that required initialisation can be performed.
-				changeVoice(self,self.voice)
-		else:
+			if not onlyChanged or self.voice!=voice:
+				try:
+					changeVoice(self,voice)
+				except:
+					log.warning("Invalid voice: %s" % voice)
+					# Update the configuration with the correct voice.
+					c["voice"]=self.voice
+					# We need to call changeVoice here so that required initialisation can be performed.
+					changeVoice(self,self.voice)
+		elif not onlyChanged:
 			changeVoice(self,None)
 		for s in self.supportedSettings:
 			if s.name=="voice" or c[s.name] is None:
 				continue
-			setattr(self,s.name,c[s.name])
+			val=c[s.name]
+			if onlyChanged and getattr(self,s.name)==val:
+				continue
+			setattr(self,s.name,val)
 
 	def _get_initialSettingsRingSetting (self):
 		if not self.isSupported("rate") and len(self.supportedSettings)>0:

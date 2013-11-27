@@ -161,7 +161,7 @@ class MainFrame(wx.Frame):
 			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Cannot save configuration - NVDA in secure mode"))
 			return
 		try:
-			config.save()
+			config.conf.save()
 			# Translators: Reported when current configuration has been saved.
 			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Configuration saved"))
 		except:
@@ -301,6 +301,14 @@ class MainFrame(wx.Frame):
 		InstallerDialog(self).Show()
 		self.postPopup()
 
+	def onConfigProfilesCommand(self, evt):
+		if isInMessageBox:
+			return
+		self.prePopup()
+		from configProfiles import ProfilesDialog
+		ProfilesDialog(gui.mainFrame).Show()
+		self.postPopup()
+
 class SysTrayIcon(wx.TaskBarIcon):
 
 	def __init__(self, frame):
@@ -427,6 +435,9 @@ class SysTrayIcon(wx.TaskBarIcon):
 		# Translators: The label for the Help submenu in NVDA menu.
 		self.menu.AppendMenu(wx.ID_ANY,_("&Help"),menu_help)
 		self.menu.AppendSeparator()
+		# Translators: The label for the menu item to open the Configuration Profiles dialog.
+		item = self.menu.Append(wx.ID_ANY, _("&Configuration profiles..."))
+		self.Bind(wx.EVT_MENU, frame.onConfigProfilesCommand, item)
 		# Translators: The label for the menu item to revert to saved configuration.
 		item = self.menu.Append(wx.ID_ANY, _("&Revert to saved configuration"),_("Reset all settings to saved state"))
 		self.Bind(wx.EVT_MENU, frame.onRevertToSavedConfigurationCommand, item)
@@ -577,45 +588,9 @@ class WelcomeDialog(wx.Dialog):
 			config.setStartAfterLogon(self.startAfterLogonCheckBox.Value)
 		config.conf["general"]["showWelcomeDialogAtStartup"] = self.showWelcomeDialogAtStartupCheckBox.IsChecked()
 		try:
-			config.save()
+			config.conf.save()
 		except:
 			pass
-		self.Close()
-
-	@classmethod
-	def run(cls):
-		"""Prepare and display an instance of this dialog.
-		This does not require the dialog to be instantiated.
-		"""
-		mainFrame.prePopup()
-		d = cls(mainFrame)
-		d.ShowModal()
-		d.Destroy()
-		mainFrame.postPopup()
-
-class ConfigFileErrorDialog(wx.Dialog):
-	"""A configuration file error dialog.
-	This dialog tells the user that their configuration file is broken.
-	"""
-
-	MESSAGE=_("""Your configuration file contains errors. 
-Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.
-""")
-
-	def __init__(self, parent):
-		# Translators: The title of the dialog to tell users that there are erros in the configuration file.
-		super(ConfigFileErrorDialog, self).__init__(parent, wx.ID_ANY, _("Configuration File Error"))
-		mainSizer=wx.BoxSizer(wx.VERTICAL)
-		messageText = wx.StaticText(self, wx.ID_ANY, self.MESSAGE)
-		mainSizer.Add(messageText,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
-		mainSizer.Add(self.CreateButtonSizer(wx.OK|wx.CANCEL),flag=wx.TOP|wx.BOTTOM|wx.ALIGN_CENTER_HORIZONTAL,border=20)
-		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
-		self.SetSizer(mainSizer)
-		mainSizer.Fit(self)
-
-	def onOk(self, evt):
-		globalVars.configFileError=None
-		config.save()
 		self.Close()
 
 	@classmethod
@@ -761,3 +736,18 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 			tones.beep(1760, 40)
 		self.Hide()
 		self.Destroy()
+
+def shouldConfigProfileTriggersBeSuspended():
+	"""Determine whether configuration profile triggers should be suspended in relation to NVDA's GUI.
+	For NVDA configuration dialogs, the configuration should remain the same as it was before the GUI was popped up
+	so the user can change settings in the correct profile.
+	Top-level windows that require this behavior should have a C{shouldSuspendConfigProfileTriggers} attribute set to C{True}.
+	Because these dialogs are often opened via the NVDA menu, this applies to the NVDA menu as well.
+	"""
+	if winUser.getGUIThreadInfo(ctypes.windll.kernel32.GetCurrentThreadId()).flags & 0x00000010:
+		# The NVDA menu is active.
+		return True
+	for window in wx.GetTopLevelWindows():
+		if window.IsShown() and getattr(window, "shouldSuspendConfigProfileTriggers", False):
+			return True
+	return False
