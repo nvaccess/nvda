@@ -27,6 +27,7 @@ import scriptHandler
 
 xlA1 = 1
 xlRC = 2
+xlUnderlineStyleNone=-4142
 
 re_RC=re.compile(r'R(?:\[(\d+)\])?C(?:\[(\d+)\])?')
 
@@ -194,7 +195,8 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 		if formatConfig['reportFontAttributes']:
 			formatField['bold']=fontObj.bold
 			formatField['italic']=fontObj.italic
-			formatField['underline']=fontObj.underline
+			underline=fontObj.underline
+			formatField['underline']=False if underline is None or underline==xlUnderlineStyleNone else True
 		if formatConfig['reportColor']:
 			try:
 				formatField['color']=colors.RGB.fromCOLORREF(int(fontObj.color))
