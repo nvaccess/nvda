@@ -752,7 +752,7 @@ class ConfigManager(object):
 			return
 
 		profile = trigger._profile
-		if not profile:
+		if profile is None:
 			return
 		profile.triggered = False
 		try:
