@@ -149,7 +149,10 @@ bool nodeHasUsefulContent(VBufStorage_fieldNode_t* node) {
 		return true;
 	wstring content;
 	node->getTextInRange(0, length, content, false);
-	if (isWhitespace(content.c_str()))
-		return false;
-	return true;
+	for(wstring::iterator i=content.begin();i!=content.end();++i) {
+		if(!iswspace(*i)&&!isPrivateCharacter(*i)) {
+			return true;
+		}
+	}
+	return false;
 }
