@@ -60,4 +60,8 @@ void multiValueAttribsStringToMap(const std::wstring &attribsString, multiValueA
  */
 bool nodeHasUsefulContent(VBufStorage_fieldNode_t* node);
 
+inline bool isPrivateCharacter(wchar_t ch) {
+	return (ch>=L'\xe000'&&ch<=L'\xf8ff')||(ch==L'\x200b');
+}
+
 #endif
