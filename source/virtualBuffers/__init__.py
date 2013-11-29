@@ -1462,6 +1462,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		self._set_selection(container, reason=self.REASON_QUICKNAV)
 		container.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(container, reason=controlTypes.REASON_FOCUS)
+	script_moveToStartOfContainer.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 	# Translators: Description for the Move to start of container command in browse mode. 
 	script_moveToStartOfContainer.__doc__=_("Moves to the start of the container element, such as a list or table")
 
@@ -1482,6 +1483,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		self._set_selection(container, reason=self.REASON_QUICKNAV)
 		container.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(container, reason=controlTypes.REASON_FOCUS)
+	script_movePastEndOfContainer.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 	# Translators: Description for the Move past end of container command in browse mode. 
 	script_movePastEndOfContainer.__doc__=_("Moves past the end  of the container element, such as a list or table")
 
