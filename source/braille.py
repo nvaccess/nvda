@@ -1308,7 +1308,12 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		cells = list(self._cells)
 		if self._cursorPos is not None and self._cursorBlinkUp:
 			cells[self._cursorPos] |= self.cursorShape
-		self.display.display(cells)
+
+		try:
+			self.display.display(cells)
+		except:
+			log.error("Error displaying cells. Disabling display", exc_info=True)
+			self.setDisplayByName("noBraille", isFallback=True)
 
 	def _blink(self):
 		self._cursorBlinkUp = not self._cursorBlinkUp
