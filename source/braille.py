@@ -314,10 +314,17 @@ def getDisplayList():
 			continue
 		try:
 			display = _getDisplayDriver(name)
+		except:
+			log.error("Error while importing braille display driver %s" % name,
+				exc_info=True)
+			continue
+		try:
 			if display.check():
 				displayList.append((display.name, display.description))
+			else:
+				log.debugWarning("Braille display driver %s reports as unavailable, excluding" % name)
 		except:
-			pass
+			log.error("", exc_info=True)
 	return displayList
 
 class Region(object):
@@ -1301,7 +1308,12 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		cells = list(self._cells)
 		if self._cursorPos is not None and self._cursorBlinkUp:
 			cells[self._cursorPos] |= self.cursorShape
-		self.display.display(cells)
+
+		try:
+			self.display.display(cells)
+		except:
+			log.error("Error displaying cells. Disabling display", exc_info=True)
+			self.setDisplayByName("noBraille", isFallback=True)
 
 	def _blink(self):
 		self._cursorBlinkUp = not self._cursorBlinkUp
