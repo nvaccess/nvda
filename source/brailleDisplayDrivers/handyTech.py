@@ -53,7 +53,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		try:
 			GUID.from_progid(COM_CLASS)
 			return True
-		except comtypes.COMError:
+		except WindowsError:
 			return False
 
 	def __init__(self):
