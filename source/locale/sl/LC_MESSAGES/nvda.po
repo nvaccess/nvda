@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5895\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-11-13 19:08+1000\n"
-"PO-Revision-Date: 2013-11-13 20:25+0100\n"
+"PO-Revision-Date: 2013-11-16 18:40+0100\n"
 "Last-Translator: Jožef Gregorc <jozko.gregorc[@]guest.arnes.si\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: Slovenian\n"
@@ -824,11 +824,11 @@ msgstr "element v pogledu drevesa"
 #. Translators: The word presented for tabs in a tab enabled window.
 msgctxt "controlType"
 msgid "tab"
-msgstr "tabulator"
+msgstr "zavihek"
 
 #. Translators: Identifies a tab control such as webpage tabs in web browsers.
 msgid "tab control"
-msgstr "nadzor tabulatorja"
+msgstr "nadzor zavihkov"
 
 #. Translators: Identifies a slider such as volume slider.
 msgid "slider"
@@ -844,7 +844,7 @@ msgstr "vrstica vrtenja"
 
 #. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
 msgid "status bar"
-msgstr "statusna vrstica"
+msgstr "vrstica stanja"
 
 #. Translators: Identifies a table such as ones used in various websites.
 msgid "table"
@@ -2091,10 +2091,10 @@ msgid ""
 "its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
 "Stikalo med načinom govorjenja, ki je izključen, oddajanjem zvočnega piska, "
-"govorjenjen in hkratnim oddajanjem zvočnega signala in govorjenjem. Ko ga "
-"postavite na izključen, bo NVDA čisto tiho. Ko nastavite na oddajanje "
-"zvočnega signala, se bo sprožil zvok zmeraj, ko mora NVDA podati neko "
-"informacijo in ko je na govoru, NVDA govori normalno."
+"govorjenjen in hkratnim oddajanjem piska in govorjenjem. Ko ga postavite na "
+"izključen, bo NVDA čisto tiho. Ko nastavite na pisk, se bo sprožil zvok "
+"zmeraj, ko mora NVDA podati neko informacijo in ko je na govoru, NVDA govori "
+"normalno."
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
@@ -2154,13 +2154,12 @@ msgstr "poroča o predmetu, kjer je žarišče"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
-msgstr "Statusna vrstica se ni našla"
+msgstr "Vrstica stanja se ni našla"
 
 #. Translators: Input help mode message for report status line text command.
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr ""
-"prebere trenutno stanje v statusni vrstici programa in tja premakne "
-"krmarjenje"
+"prebere trenutno stanje v vrstici stanja programa in tja premakne krmarjenje"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -2488,7 +2487,7 @@ msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
 msgstr ""
-"Premakne se na naslednji predmet v nestrukturiranemu pogledu hierarhije "
+"Premakne se na naslednji predmet v nestrukturiranem pogledu hierarhije "
 "krmarjenja predmetov"
 
 # nestrukturiran (preglej pravopis)
@@ -2497,7 +2496,7 @@ msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
 "hierarchy"
 msgstr ""
-"Premakne se na predhodni predmet v nestrukturiranemu pogledu hierarhije "
+"Premakne se na predhodni predmet v nestrukturiranem pogledu hierarhije "
 "krmarjenja predmetov"
 
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
@@ -4120,7 +4119,7 @@ msgstr "Paket"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
 msgid "Status"
-msgstr "Status"
+msgstr "Stanje"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's version (example: version is 0.3).
 msgid "Version"

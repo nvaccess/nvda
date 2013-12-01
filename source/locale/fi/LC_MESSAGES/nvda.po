@@ -5,10 +5,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-10-31 21:09+0200\n"
+"POT-Creation-Date: 2013-11-28 19:08+1000\n"
+"PO-Revision-Date: 2013-11-30 10:49+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1431,6 +1432,15 @@ msgstr "pitkä kuvaus saatavilla"
 msgid "pinned"
 msgstr "Kiinnitetty"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "sisältää kaavan"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "sisältää kommentin"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "ei valittu"
@@ -2064,7 +2074,8 @@ msgstr ""
 "Vaihtaa selaus- ja vuorovaikutustilojen välillä. Vuorovaikutustilassa "
 "näppäinten painallukset välitetään suoraan nykyiselle sovellukselle, mikä "
 "mahdollistaa suoran vuorovaikutuksen säädinten kanssa. Selaustilassa "
-"asiakirjassa voidaan liikkua kohdistimella, pikanavigointinäppäimillä jne."
+"ollessasi voit liikkua asiakirjassa kohdistimella, pikanavigointinäppäimillä "
+"jne."
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
@@ -2256,8 +2267,8 @@ msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
 msgstr ""
-"NVDA ei käsittele lainkaan seuraavaksi painettua näppäintä, vaan se "
-"välitetään suoraan Windowsille."
+"NVDA ei käsittele seuraavaksi painettua näppäintä, vaan se välitetään "
+"suoraan Windowsille."
 
 #. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
@@ -2281,43 +2292,35 @@ msgstr "Lukee aktiivisen sovelluksen tiedostonimen ja ladatun sovellusmoduulin"
 
 #. Translators: Input help mode message for go to general settings dialog command.
 msgid "Shows the NVDA general settings dialog"
-msgstr "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n yleisiä asetuksia"
+msgstr "Avaa NVDA:n Yleiset asetukset -valintaikkunan."
 
 #. Translators: Input help mode message for go to synthesizer dialog command.
 msgid "Shows the NVDA synthesizer dialog"
-msgstr ""
-"Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n käyttämää "
-"puhesyntetisaattoria"
+msgstr "Avaa NVDA:n puhesyntetisaattorin asetusten valintaikkunan."
 
 #. Translators: Input help mode message for go to voice settings dialog command.
 msgid "Shows the NVDA voice settings dialog"
-msgstr ""
-"Avaa valintaikkunan, jossa voidaan muuttaa käytettävän syntetisaattorin "
-"puheääniasetuksia"
+msgstr "Avaa NVDA:n Puheäänen asetukset -valintaikkunan."
 
 #. Translators: Input help mode message for go to keyboard settings dialog command.
 msgid "Shows the NVDA keyboard settings dialog"
-msgstr "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n näppäimistöasetuksia"
+msgstr "Avaa NVDA:n Näppäimistöasetukset -valintaikkunan."
 
 #. Translators: Input help mode message for go to mouse settings dialog command.
 msgid "Shows the NVDA mouse settings dialog"
-msgstr "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n hiiriasetuksia"
+msgstr "Avaa NVDA:n Hiiriasetukset-valintaikkunan."
 
 #. Translators: Input help mode message for go to object presentation dialog command.
 msgid "Shows the NVDA object presentation settings dialog"
-msgstr ""
-"Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n objektien lukuasetuksia"
+msgstr "Avaa NVDA:n objektien lukemisen asetusten valintaikkunan."
 
 #. Translators: Input help mode message for go to browse mode dialog command.
 msgid "Shows the NVDA browse mode settings dialog"
-msgstr ""
-"Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n selaustilan asetuksia"
+msgstr "Avaa NVDA:n selaustilan asetusten valintaikkunan."
 
 #. Translators: Input help mode message for go to document formatting dialog command.
 msgid "Shows the NVDA document formatting settings dialog"
-msgstr ""
-"Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n asiakirjojen "
-"muotoiluasetuksia"
+msgstr "Avaa NVDA:n asiakirjojen muotoiluasetusten valintaikkunan."
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
@@ -3071,10 +3074,6 @@ msgstr "tasaus molemmissa reunoissa"
 msgid "align default"
 msgstr "oletustasaus"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "sisältää kommentin"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "kirjoitusvirhe"
@@ -3572,10 +3571,6 @@ msgstr "Pikkukuvat"
 msgid "Master Thumbnails"
 msgstr "Perustyylin pikkukuvat"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "Odotetaan PowerPointia..."
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Dia {slideNumber}"
@@ -3587,8 +3582,8 @@ msgid ""
 "read with NVDA"
 msgstr ""
 "Vaihtaa esittäjän muistiinpanojen tai varsinaisen dian sisällön lukemisen "
-"välillä. Tämä ei muuta sitä, mitä näytöllä näkyy, vaan sitä, mitä NVDA:lla "
-"voidaan lukea."
+"välillä. Tämä ei muuta sitä, mitä näytöllä näkyy, vaan sitä, mitä käyttäjä "
+"voi NVDA:n avulla lukea."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
 msgid "Slide show notes - {slideName}"
@@ -3609,6 +3604,10 @@ msgstr "Ei muistiinpanoja"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "Tyhjä dia"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "Odotetaan PowerPointia..."
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -3780,14 +3779,14 @@ msgstr "Vaihda käytettävää syntetisaattoria"
 
 #. Translators: The label for the menu item to open Voice Settings dialog.
 msgid "&Voice settings..."
-msgstr "&Ääni..."
+msgstr "&Puheääni..."
 
 msgid "Choose the voice, rate, pitch and volume to use"
 msgstr "Valitse käytettävä puheääni, nopeus, korkeus ja voimakkuus"
 
 #. Translators: The label for the menu item to open Braille Settings dialog.
 msgid "B&raille settings..."
-msgstr "&Pistenäyttö..."
+msgstr "P&istenäyttö..."
 
 #. Translators: The label for the menu item to open Keyboard Settings dialog.
 msgid "&Keyboard settings..."
@@ -3855,7 +3854,7 @@ msgstr "&Oletus..."
 msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
 "to the list"
-msgstr "Valintaikkuna, jossa voidaan lisätä sanastomerkintöjä oletussanastoon"
+msgstr "Valintaikkuna, jossa voit lisätä sanastomerkintöjä oletussanastoon."
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 msgid "&Voice dictionary..."
@@ -3865,8 +3864,8 @@ msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
 msgstr ""
-"Valintaikkuna, jossa voidaan lisätä sanastomerkintöjä puheäänikohtaiseen "
-"sanastoon"
+"Valintaikkuna, jossa voit lisätä sanastomerkintöjä puheäänikohtaiseen "
+"sanastoon."
 
 #. Translators: The label for the menu item to open Temporary speech dictionary dialog.
 msgid "&Temporary dictionary..."
@@ -3876,7 +3875,7 @@ msgid ""
 "A dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
 msgstr ""
-"Valintaikkuna, jossa voidaan lisätä sanastomerkintöjä tilapäissanastoon"
+"Valintaikkuna, jossa voit lisätä sanastomerkintöjä tilapäiseen sanastoon."
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
@@ -4006,9 +4005,9 @@ msgstr ""
 "näppäimen painamista samaan aikaan muiden näppäinten kanssa.\n"
 "Oletusarvoisesti sekä normaalia että numeronäppäimistön Insert-näppäintä "
 "voidaan käyttää NVDA-näppäimenä.\n"
-"NVDA voidaan myös määrittää käyttämään CapsLockia NVDA-näppäimenä.\n"
-"Paina NVDA+N avataksesi NVDA-valikon milloin tahansa.\n"
-"Tästä valikosta voidaan määrittää NVDA:n asetuksia, lukea ohjeita ja käyttää "
+"Voit määrittää NVDA:n käyttämään myös CapsLockia NVDA-näppäimenä.\n"
+"Paina milloin tahansa NVDA+N avataksesi NVDA-valikon.\n"
+"Tästä valikosta voit määrittää NVDA:n asetuksia, lukea ohjeita ja käyttää "
 "muita toimintoja.\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
@@ -4226,7 +4225,7 @@ msgstr "&Poista"
 #. in the Configuration Profiles dialog.
 #. See the Configuration Profiles section of the User Guide for details.
 msgid "&Triggers..."
-msgstr "&Käynnistimet..."
+msgstr "Kä&ynnistimet..."
 
 #. Translators: The label of a checkbox in the Configuration Profiles dialog.
 msgid "Temporarily d&isable all triggers"
@@ -4271,7 +4270,7 @@ msgstr "Virhe poistettaessa profiilia."
 #. Translators: The label of the button to manually deactivate the selected profile
 #. in the Configuration Profiles dialog.
 msgid "Manual deactivate"
-msgstr "P&oista käytöstä manuaalisesti"
+msgstr "&Ei manuaalista käyttöä"
 
 #. Translators: The label of the button to manually activate the selected profile
 #. in the Configuration Profiles dialog.
@@ -5087,7 +5086,7 @@ msgstr "Lue rivi&numerot"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#.
+#. 
 msgid "Report l&ine indentation"
 msgstr "Lue ri&vien sisennykset"
 
@@ -5950,10 +5949,6 @@ msgid ""
 msgstr ""
 "Määrittää kerran painettaessa nykyisen sarakkeen riviotsikoiden sarakkeeksi. "
 "Kahdesti painettaessa asetus nollataan."
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "sisältää kaavan"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"

@@ -3,6 +3,24 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.1 =
+
+== Yeni Özellikler ==
+- Microsoft PowerPoint 2013 için destek. [Korumalı görünüm desteklenmiyor]. (#3578)
+
+
+== Hata Düzeltmeleri ==
+- Microsoft Excel'de hücreleri dolaşırken veya seçerken, NVDA artık yeni seçimi ya da konumu Microsoft Excel yavaş tepki verdiğinde de bildirebiliyor. (#3558)
+- NVDA artık Microsoft Excel hücrelerindeki açılır listelerin bağlam menüsünden açılmasını sağlyabiliyor. (#3586)
+- Mağazada bir bağlantıyı izlerken veya başlangıçta mağazayı açarken ITunes 11 mağazası sayfalarında yeni sayfa içeriği tarama kipinde doğru olarak gösteriliyor. (#3625)
+- ITunes 11 mağaza şarkıları önizleme düğmelerinin etiketleri artık tarama kipinde doğru şekilde gösteriliyor. (#3638)
+- Google Chrome'da tarama kipinde, onay kutuları ve seçim düğmelerinin etiketleri doğru olarak söyleniyor. (#1562)
+- Instantbird kullanılırken, NVDA kişi listesinde dolaştığınızda artık  anlamsız bilgiler aktarmıyor. (#2667)
+- In browse mode in Adobe Reader, the correct text is now rendered for buttons, etc. where the label has been overridden using a tooltip or other means. (#3640)
+- In browse mode in Adobe Reader, extraneous graphics containing the text "mc-ref" will no longer be rendered. (#3645)
+- NVDA no longer reports all cells in Microsoft Excel as underlined in their formatting information. (#3669)
+
+
 = 2013.3 =
 
 == Yeni Özellikler ==
@@ -31,10 +49,11 @@
 - Tarama kipinde bazı yatay listeler için öğe sayısı artık doğru veriliyor. Daha önce gerçek miktarın iki katı olarak verilebiliyordu. (#2151)
 - Kontrol +a'ya basıldığında, Microsoft Excel çalışma sayfasında güncelleştirilmiş seçim artık bildiriliyor. (#3043)
 - NVDA artık Microsoft Internet Explorer ve diğer MSHTML denetimlerinde XHTML belgeleri doğru bir şekilde okuyabiliyor. (#3542)
-- Keyboard settings dialog: if no key has been chosen to be used as the NVDA key, an error is presented to the user when dismissing the dialog. At least one key must be chosen for proper usage of NVDA. (#2871)
-- In Microsoft Excel, NVDA now announces merged cells differently to multiple selected cells. (#3567)
-- The browse mode cursor is no longer positioned incorrectly when leaving a dialog or application inside the document. (#3145)
-- Fixed an issue where the HumanWare Brailliant BI/B series braille display driver wasn't presented as an option in the Braille Settings dialog on some systems, even though such a display was connected via USB.
+- Klavye ayarları iletişim kutusu: hiçbir tuş NVDA tuşu olarak kullanılmak üzere seçilmediyse, kullanıcıya bir hata mesajı gösterilmektedir. NVDA'nın uygun bir şekilde kullanılabilmesi için En az bir tuş NVDA tuşu olarak belirlenmelidir. (#2871)
+- Microsoft Excel'de, NVDA artık birleştirilmiş hücreleri daha kullanıcı dostu bir şekilde bildiriyor. (#3567)
+- Tarama kipi imleci, belge içindeki bir diyalog veya uygulama kapatıldığında artık yanlış konumlanmıyor. (#3145)
+- Brailliant BI / B serisi braille ekranlar USB üzerinden bağlı oldukları  halde, bazı sistemlerde Braille Ayarları iletişim kutusunda bir seçenek olarak gözükmemesi  sorunu düzeltildi.
+- NVDA artık nesne sunucusunun  gerçek ekran konumu yoksa ekran inceleme kipine geçildiğinde hata vermiyor. Bu durumda, inceleme imleci ekranın en üstüne gidiyor. (#3454)
 
 
 == Changes for Developers ==

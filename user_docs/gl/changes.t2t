@@ -3,6 +3,24 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.1 =
+
+== Novas Características ==
+- Soporte para o Microsoft PowerPoint 2013. [Vista protexida non soportada]. (#3578)
+
+
+== Corrección de Fallos ==
+- Cando te movas ou seleciones  celdas no Microsoft Excel, NVDA xa non debería  anunciar inapropriadamente a antiga celda en lugar da nova celda cando Microsoft Excel estea lento ó mover a seleción. (#3558)
+- NVDA manella adecuadamente a apertura dunha lista despregable nunha celda no Microsoft Excel mediante o menú contextual. (#3586)
+- Agora amósase apropriadamente o Novo contido da páxina nas páxinas da tenda en iTunes 11 en modo navegación cando se siga unha liga na tenda ou ó abrir a tenda inicialmente. (#3625)
+- Os botóns para a vista previa das cancións na tenda de iTunes 11 agora amosan a súa etiqueta en modo navegación. (#3638)
+- No modo navegación en Google Chrome, as etiquetas das casiñas de verificación e dos botóns de opción agora procésanse correctamente. (#1562)
+- En Instantbird, NVDA xa non anuncia información inútil cada vez que te movas a un contacto da lista de contactos. (#2667)
+- En modo navegación no Adobe Reader, agora procésase o texto correcto para os botóns, etc. Onde a etiqueta reemplazouse polo uso dun tooltip ou outro recurso. (#3640)
+- En modo navegación no Adobe Reader, os gráficos extranos que conteñen o texto "mc-ref" xa non se procesan. (#3645)
+- NVDA xa non anuncia todas as celdas no Microsoft Excel como subliñadas na súa información de formato. (#3669)
+
+
 = 2013.3 =
 
 == Novas Características ==
@@ -35,6 +53,9 @@ Que hai de Novo no NVDA
 - No Microsoft Excel, NVDA agora anuncia celdas fusionadas de xeito diferente ás múltiples celdas seleccionadas. (#3567)
 - El cursor de modo navegación  ya no se coloca incorrectamente cuando se abandona un diálogo o aplicación dentro del documento. (#3145)
 - Solucionouse un problema polo que o controlador das pantallas braille series da HumanWare Brailliant BI / B non se presenta como unha opción no cadro de diálogo Opcións de Braille nalgúns sistemas, a pesares de que dita pantalla se conecte a través do USB.
+- NVDA xa non falla  ó cambiar a revisión de pantalla cando o navegador de obxectos non teña ningunha ubicación real na pantalla. Neste caso o cursor de revisión agora colócase na parte superior da pantalla. (#3454)
+- Solucionouse un problema polo que o controlador da pantalla braille de Freedom Scientific falla cando o porto establécese en USB, nalgunhas circunstancias. (#3509, #3662)
+- Solucionouse un problema polo que non se detectaron teclas en braille de Freedom Scientific nalgunhas circunstancias. (#3401, #3662)
 
 
 == Cambios para Desenvolvedores ==

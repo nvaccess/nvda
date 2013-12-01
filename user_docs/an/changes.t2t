@@ -3,6 +3,24 @@ Qué bi ha de Nuevo en NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.1 =
+
+== Nuevas Caracteristicas ==
+- Suporte ta Microsoft PowerPoint 2013. [L'anvista protechida no ye suportada]. (#3578)
+
+
+== Corrección d'errors ==
+- En que te muevas u selecciones  celdas en o Microsoft Excel, NVDA ya no habría d'anunciar  inadequadament l'antiga celda en cuenta d'a nueva celda quan o Microsoft Excel siga lento en mover a selección. (#3558)
+- O NVDA manella adequadament a obridura d'una lista desplegable en una celda en o Microsoft Excel por meyo d'o menú contextual. (#3586)
+- Agora s'amuestra apropiadament o Nuevo conteniu d'a pachina en as pachinas d'a botiga en l'iTunes 11 en o modo navegación quan se siga un vinclo en a botiga u en ubrir-la inicialment. (#3625)
+- Os botons ta l'anvista previa d'as cantas en a botiga de l'iTunes 11 agora amuestran a suya etiqueta en o modo navegación. (#3638)
+- En o modo navegación en o Google Chrome, as etiquetas d'as caixetas de verificación y d'os botons d'opción agora se procesan correctament. (#1562)
+- En l'Instantbird, o NVDA ya no anuncia información inutil cada vegada que te muevas ta un contacto d'a lista de contactos. (#2667)
+- En o modo navegación en l'Adobe Reader, agora se procesa o texto correcto ta los botons, etc. an a etiqueta s'ha substituiu por l'uso d'un tooltip u unatro recurso. (#3640)
+- En o modo navegación en l'Adobe Reader, os graficos extranyos que contienen o texto "mc-ref" ya no se procesan. (#3645)
+- O NVDA ya no anuncia todas as celdas en o Microsoft Excel como subrayadas en a información de formato d'ellas. (#3669)
+
+
 = 2013.3 =
 
 == Nuevas Caracteristicas ==
@@ -24,10 +42,10 @@ Qué bi ha de Nuevo en NVDA
 - A lo seleccionar texto en documentos en modo navegación (por eixemplo a lo emplegar control+shift+fin) ya no causa que se cambee a distribución de teclau en sistemas con quantas distribucions de teclau instaladas. (#3472)
 - Internet Explorer ya no habría a penchar-se u tornar-se inusable  quan se zarra NVDA. (#3397)
 - O movimiento fisico y atros eventos en qualques ordinadors modernos ya  no se tracta como pulsacions de teclas inadequadas. Anteriorment, isto silenciaba a voz y qualques vegadas feba funcionar ordens de NVDA. (#3468)
-- NVDA agora se comporta como s'asperaba enPoedit 1.5.7. Os usuarios que en faigan servir versions anteriors amenesterán actualizar-ne. (#3485)
-- NVDA agora puet leyer documentos protechius en Microsoft Word 2010,  no causando ya que se'n bloque. (#1686)
+- O NVDA agora se comporta como s'asperaba enPoedit 1.5.7. Os usuarios que en faigan servir versions anteriors amenesterán actualizar-ne. (#3485)
+- O NVDA agora puet leyer documentos protechius en Microsoft Word 2010,  no causando ya que se'n bloque. (#1686)
 - Si se da un parametro de linia de comando desconoixiu en executar o paquet de distribución de NVDA, ya no se provoca un bucle sin fin de dialogos de mensaches d'error. (#3463).
--NVDA ya no falla en anunciar o texto alternativo d'os graficos y obchectos en Microsoft Word si o texto alternativo contién cometas u atros caracters no estandar. (#3579)
+-O NVDA ya no falla en anunciar o texto alternativo d'os graficos y obchectos en Microsoft Word si o texto alternativo contién cometas u atros caracters no estandar. (#3579)
 - O numero d'elementos de bellas listas horizontals en modo navegación agora ye correcto. Anteriorment podeba haber estau o dople d'a cantidat real. (#2151)
 - A lo pretar control+e en una fuella de calculo de Microsoft Excel, agora s'anunciará a selección esviellada. (#3043)
 - NVDA agora puet leyer correctament os documentos XHTML en Microsoft Internet Explorer y belatros controls 	MSHTML. (#3542)
@@ -35,6 +53,7 @@ Qué bi ha de Nuevo en NVDA
 - En o Microsoft Excel, agora o NVDA anuncia as celdas mezcladas de traza diferent que as celdas multiples seleccionadas. (#3567)
 - O cursor de modo navegación  ya no se mete incorrectament quan se deixa un dialogo u una aplicación adentro d'o documento. (#3145)
 - S'ha apanyau un problema por o qual o controlador de pantalla HumanWare Brailliant BI / B series braille no s'amostraba como una opción en o quadro de dialogo Configuración de Braille en bells sistemas, anque dita pantalla se connectase a traviés de l'USB.
+- O NVDA ya no falla  en que s'esleye a revisión de pantalla quan o navegador d'obchectos  no i tien un puesto real. En iste caso o cursor de revisión agora se  mete en l'alto d'a pantalla. (#3454)
 
 
 == Cambeos ta Desembolicadors ==
