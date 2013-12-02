@@ -10,6 +10,8 @@
 """
 
 import itertools
+import array
+import ctypes
 import ctypes.wintypes
 import os
 import sys
@@ -267,9 +269,67 @@ class AppModule(baseObject.ScriptableObject):
 		#: The application name.
 		#: @type: str
 		self.appName=appName
-		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
+		if sys.getwindowsversion().major > 5:
+			self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
+		else:
+			self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION|winKernel.PROCESS_VM_READ,False,processID)
 		self.helperLocalBindingHandle=None
 		self._inprocRegistrationHandle=None
+
+	def _setProductInfo(self):
+		"""Set productName and productVersion attributes.
+		"""
+		# Sometimes (I.E. when NVDA starts) handle is 0, so stop if it is the case
+		if not self.processHandle:
+			raise RuntimeError("processHandle is 0")
+		# Choose the right function to use to get the executable file name
+		if sys.getwindowsversion().major > 5:
+			# For Windows Vista and higher, use QueryFullProcessImageName function
+			GetModuleFileName = ctypes.windll.Kernel32.QueryFullProcessImageNameW
+		else:
+			GetModuleFileName = ctypes.windll.psapi.GetModuleFileNameExW
+		# Create the buffer to get the executable name
+		exeFileName = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
+		length = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
+		if not GetModuleFileName(self.processHandle, 0, exeFileName, ctypes.byref(length)):
+			raise ctypes.WinError()
+		fileName = exeFileName.value
+		# Get size needed for buffer (0 if no info)
+		size = ctypes.windll.version.GetFileVersionInfoSizeW(fileName, None)
+		if not size:
+			raise RuntimeError("No version information")
+		# Create buffer
+		res = ctypes.create_string_buffer(size)
+		# Load file informations into buffer res
+		ctypes.windll.version.GetFileVersionInfoW(fileName, None, size, res)
+		r = ctypes.c_uint()
+		l = ctypes.c_uint()
+		# Look for codepages
+		ctypes.windll.version.VerQueryValueW(res, u'\\VarFileInfo\\Translation',
+		ctypes.byref(r), ctypes.byref(l))
+		if not l.value:
+			raise RuntimeError("No codepage")
+		# Take the first codepage (what else ?)
+		codepage = array.array('H', ctypes.string_at(r.value, 4))
+		codepage = "%04x%04x" % tuple(codepage)
+		# Extract product name and put it to self.productName
+		ctypes.windll.version.VerQueryValueW(res,
+			u'\\StringFileInfo\\%s\\ProductName' % codepage,
+			ctypes.byref(r), ctypes.byref(l))
+		self.productName = ctypes.wstring_at(r.value, l.value-1)
+		# Extract product version and put it to self.productVersion
+		ctypes.windll.version.VerQueryValueW(res,
+			u'\\StringFileInfo\\%s\\ProductVersion' % codepage,
+			ctypes.byref(r), ctypes.byref(l))
+		self.productVersion = ctypes.wstring_at(r.value, l.value-1)
+
+	def _get_productName(self):
+		self._setProductInfo()
+		return self.productName
+
+	def _get_productVersion(self):
+		self._setProductInfo()
+		return self.productVersion
 
 	def __repr__(self):
 		return "<%r (appName %r, process ID %s) at address %x>"%(self.appModuleName,self.appName,self.processID,id(self))
