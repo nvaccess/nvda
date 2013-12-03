@@ -108,6 +108,7 @@ def readTextHelper_generator(cursor):
 	lastReceivedIndex=0
 	cursorIndexMap={}
 	keepReading=True
+	speakTextInfoState=speech.SpeakTextInfoState(reader.obj)
 	with SayAllProfileTrigger():
 		while True:
 			if not reader.obj:
@@ -124,9 +125,9 @@ def readTextHelper_generator(cursor):
 						speech.speakWithoutPauses(None)
 						keepReading=False
 						continue
-					speech.speakTextInfo(reader,unit=textInfos.UNIT_READINGCHUNK,reason=controlTypes.REASON_SAYALL,index=index)
+					speech.speakTextInfo(reader,unit=textInfos.UNIT_READINGCHUNK,reason=controlTypes.REASON_SAYALL,index=index,useCache=speakTextInfoState)
 					lastSentIndex=index
-					cursorIndexMap[index]=bookmark
+					cursorIndexMap[index]=(bookmark,speakTextInfoState.copy())
 					try:
 						reader.collapse(end=True)
 					except RuntimeError: #MS Word when range covers end of document
@@ -141,7 +142,9 @@ def readTextHelper_generator(cursor):
 			receivedIndex=speech.getLastSpeechIndex()
 			if receivedIndex!=lastReceivedIndex and (lastReceivedIndex!=0 or receivedIndex!=None): 
 				lastReceivedIndex=receivedIndex
-				bookmark=cursorIndexMap.get(receivedIndex,None)
+				bookmark,state=cursorIndexMap.get(receivedIndex,(None,None))
+				if state:
+					state.updateObj()
 				if bookmark is not None:
 					updater=reader.obj.makeTextInfo(bookmark)
 					if cursor==CURSOR_CARET:
