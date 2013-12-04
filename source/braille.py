@@ -1624,38 +1624,50 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 inputCore.registerGestureSource("br", BrailleDisplayGesture)
 
 class BrailleDisplayProber(object):
-	""" Probes for braille displays connected to the user machine. """
-	def __init__(self, active=False):
+	""" Probes for braille displays connected to the user's machine.
+	"""
+
+	def __init__(self, active=False, foundDisplayCallback=None, noDisplayCallback=None):
+		"""Constructor.
+		@param active: Whether to probe ports (such as serial ports) that might not be associated with displays.
+		@type active: bool
+		@param foundDisplayCallback: Called if a display is found with arguments
+			(displayClass, port, portDescription, numCells)
+		@type foundDisplayCallback: callable
+		@param noDisplayCallback: Called when probing is complete if no display was found with no arguments.
+		@type noDisplayCallback: None
+		"""
 		super(BrailleDisplayProber, self).__init__()
 		self._active = active
-		if active:
-			self._filter = lambda port : port != BrailleDisplayDriver.AUTOMATIC_PORT
-		else:
-			# Some drivers are returning capitalized versions of these.
-			self._filter = lambda port : port.lower() in ("usb", "bluetooth")
 		self._thread = None
 		self._stop = False
-		self.foundDisplayCallback = None
-		self.endProbingCallback = None
+		self.foundDisplayCallback = foundDisplayCallback
+		self.noDisplayCallback = noDisplayCallback
 
 	def probeGenerator(self):
+		active = self._active
 		for name, description in getDisplayList():
 			if self._stop:
-				raise StopIteration()
+				return
 			cls = _getDisplayDriver(name)
 			if not cls.canProbe:
 				continue
-			log.debug("Probing braille display %s", cls.name)
+			try:
+				if not cls.check():
+					continue
+			except:
+				pass
+			log.debug("Probing braille display %s", name)
 			try:
 				for port, portDescription in cls.getPossiblePorts().iteritems():
-					# If stoped, get out of here.
+					# If stopped, get out of here.
 					if self._stop:
-						raise StopIteration()
-					if not self._filter(port):
+						return
+					if not active and port != BrailleDisplayDriver.AUTOMATIC_PORT[0]:
 						continue
 					try:
 						display = cls(port=port)
-					except RuntimeError:
+					except:
 						continue
 					# Found one
 					numCells = display.numCells
@@ -1665,7 +1677,7 @@ class BrailleDisplayProber(object):
 				# Fallback to old drivers that don't support port selection
 				try:
 					display = cls()
-				except RuntimeError:
+				except:
 					continue
 				numCells = display.numCells
 				display.terminate()
@@ -1676,6 +1688,9 @@ class BrailleDisplayProber(object):
 		for cls, port, portDescription, numCells in self.probeGenerator():
 			if self.foundDisplayCallback:
 				wx.CallAfter(self.foundDisplayCallback, cls, port, portDescription, numCells)
+			break
+		else:
+			wx.CallAfter(self.noDisplayCallback)
 		log.debug("End probing for braille displays")
 
 	def startProbing(self):
