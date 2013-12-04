@@ -583,7 +583,11 @@ inline int generateInlineShapeXML(IDispatch* pDispatchRange, wostringstream& XML
 	if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_ALTERNATIVETEXT,VT_BSTR,&altText)!=S_OK) {
 		return 0;
 	}
-	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<(shapeType==3?L"graphic":L"object")<<L"\" value=\""<<(altText?altText:L"")<<L"\">";
+	wstring altTextStr=L"";
+	if(altText) for(int i=0;altText[i]!='\0';++i) {
+		appendCharToXML(altText[i],altTextStr,true);
+	}
+	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<(shapeType==3?L"graphic":L"object")<<L"\" value=\""<<altTextStr<<L"\">";
 	if(altText) SysFreeString(altText);
 	return count;
 }

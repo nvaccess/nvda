@@ -7,7 +7,7 @@
 from . import VirtualBuffer, VirtualBufferTextInfo
 import controlTypes
 import NVDAObjects.IAccessible
-from NVDAObjects.IAccessible.adobeAcrobat import normalizeStdName
+from NVDAObjects.IAccessible.adobeAcrobat import normalizeStdName, AcrobatNode
 import winUser
 import IAccessibleHandler
 import oleacc
@@ -76,6 +76,8 @@ class AdobeAcrobat(VirtualBuffer):
 		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
 
 	def getIdentifierFromNVDAObject(self,obj):
+		if not isinstance(obj,AcrobatNode):
+			raise LookupError
 		return obj.windowHandle, obj.accID
 
 	def _searchableAttribsForNodeType(self,nodeType):

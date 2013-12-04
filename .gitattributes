@@ -1,0 +1,5 @@
+# Try to ensure that po files in the repo does not include
+# source code line numbers.
+# Every person expected to commit po files should change their personal config file as described here:
+# https://mail.gnome.org/archives/kupfer-list/2010-June/msg00002.html
+*.po filter=cleanpo

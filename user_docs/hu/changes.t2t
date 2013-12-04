@@ -3,6 +3,40 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.3 =
+
+== Újdonságok ==
+- A Microsoft Word dokumentumokban az űrlapmezők már felolvasásra kerülnek. (#2295)
+- Az NVDA képes jelezni a dokumentumban történt változásokat (ha ez engedélyezve van a Microsoft Word programban). Alapértelmezetten ezt az NVDA nem jelzi, bekapcsolni a Dokumentum formázás párbeszédpanelen lehet a szerkesztői változások jelölőnégyzet bepipálásával. (#1670)
+- A legördülő listákat már jól kezeli az NVDA a Microsoft Excel 2003-2010 verziójú programokban. (#3382)
+- Az átfutás engedélyezése a folyamatos felolvasáskor funkció használatakor lehetőség van a gyors navigációs billentyűkkel mozogni a dokumentumban úgy, hogy a felolvasás nem áll le. Alapértelmezetten ez a funkció ki van kapcsolva, bekapcsolható a billentyűzet beállítások párbeszédpanelén. (#2766) 
+- Mostantól megváltoztathatóak az NVDA parancsai a beállítások - beviteli parancsok párbeszédpanelén. (#1532)
+- Készíthet különböző szituációkhoz különböző beállításokat a profilok létrehozásával. Ezek kézzel is, de akár egy program fókuszba kerülésével is aktiválhatók. (#87, #667, #1913)
+- Ha a Microsoft Excel cellájában link található, az mostantól hivatkozásként kerül bemondásra. (#3042)
+- A Microsoft Excel programban, ha egy cellához tartozik megjegyzés, akkor ez bemondásra kerül. (#2921)
+
+
+== Hiba javítások ==
+- A Zend Studio mostantól ugyanúgy működik mint az Eclipse. (#3420)
+- A Microsoft Outlook 2010-ben az üzenetszabály párbeszéd ablakán a változó állapotú jelölőnégyzetek már automatikusan elhangoznak. (#3063)
+- Az NVDA már jelzi a rögzített állapotot az olyan rögzített vezérlőelemek esetében, mint például a lapfüleknél a Mozilla Firefoxban. (#3372)
+- Most már lehetőség van a scriptekhez olyan billentyűparancsokat hozzárendelni, amelyek az Alt, és/vagy a Windows billentyűt tartalmazzák módosítóbillentyűként. Korábban egy ilyen script futtatása a Start menü, vagy a menüsor aktiválódását okozhatta. (#3472)
+- A szöveg kijelölése böngésző módú dokumentumok esetében (pl.: ctrl+shift+end billentyűparanccsal) már nem okozza   a billentyűzetkiosztás megváltozását az olyan rendszerek esetében, ahol többféle billentyűzetkiosztás van telepítve. (#3472)
+- Az Internet Explorer már nem omlik össze, már nem válik használhatatlanná az NVDA bezárásakor. (#3397)
+- Physical movement and other events on some newer computers are no longer treated as inappropriate key presses. Previously, this silenced speech and sometimes triggered NVDA commands. (#3468)
+- Az NVDA már az elvárt módon viselkedik a Poedit 1.5.7. verziójában, a korábbi verziókkal dolgozó felhasználóknak frissiteniük kell a szoftverüket. (#3485)
+- Az NVDA már tudja olvasni a védett dokumentumokat a Microsoft Word 2010-ben,  már nem okozza a Microsoft Word összeomlását. (#1686)
+- Ha az NVDA nem létező parancsori argumentumot kap az indításkor, már nem jelenik meg végtelenszer az ezt jelző hibaüzenet ablak. (#3463)
+-Az NVDA már felolvassa a beágyazott objektum alt szövegét a Microsoft Word alkalmazásban akkor is, ha ez idézőjelet vagy egyéb nem szabványos karaktert tartalmaz. (#3579)
+- Az elemek száma bizonyos vízszintes listák esetében böngésző módban már helyesen van jelezve. Korábban ez a valós érték duplája is lehetett. (#2151)
+- A control+a billentyűparancs használatakor egy Microsoft Excel munkalapon már az új kijelölés van jelezve. (#3043)
+- Az NVDA már helyesen olvassa az XHTML dokumentumokat a Microsoft Internet Explorer programban és más MSHTML vezérlőkben. (#3542)
+- Billentyűzet beállítások párbeszédpanel: Amennyiben nincs kiválasztva az NVDA gombként használni kívánt billentyű, egy hibaüzenet figyelmezteti a felhasználót a párbeszédpanel elhagyásakor. Legalább egy billentyűt ki kell választani az NVDA rendeltetésszerű használatához. (#2871)
+- A Microsoft Excel programban az NVDA most már egymástól megkülönböztetve jelzi az egyesített cellákat és az együttesen kijelölt cellákat. (#3567)
+- A böngészőód kurzora most már jó helyre kerül egy a dokumentum belsejében található alkalmazás, vagy párbeszédablakból való visszalépéskor. (#3145)
+- Javításra került az a hiba, ami miatt Egyes konfiguráción nem jelent meg a HumanWare Brailliant BI/B series braille kijelző a Braille beállítások párbeszédablakában.
+
+
 = 2013.2 =
 
 == Újdonságok ==

@@ -148,7 +148,7 @@ Mit dem dritten Kontrollkästchen legen Sie fest, ob bei jedem Start der Willkom
 
 ++ Über die NVDA-Tastenkombinationen ++
 
-+++ Die NVDA-Modifikationstaste +++
++++ Die NVDA-modifikationstaste +++
 In NVDA bestehen die Tastenkombinationen zumeist aus einer oder mehreren Tasten in Kombination mit der sog. NVDA-Modifikationstaste.
 Die Befehle zum Lesen von Text werden auf Desktop-Tastaturen hingegen mit den Tasten des Nummernblocks bedient. Des weiteren gibt es einige weitere Ausnahmen.
 
@@ -596,7 +596,7 @@ Hinweis: Der Befehl "verbleibende Zeit ausgeben" funktioniert nur, wenn die Stan
 %kc:beginInclude
 || Name | Tastenkombination | Beschreibung |
 | Kommentare ausgeben | Steuerung+Umschalt+c | Gibt alle Kommentare aus. |
-| Automatische Kommentare ausgeben | Steuerung+Umschalt+a | Gibt alle automatischen Kommentare aus. |
+| Anmerkungen für Übersetzer ausgeben | Steuerung+Umschalt+a | Gibt alle Anmerkungen für Übersetzer aus. |
 %kc:endInclude
 
 + bekannte Probleme +
@@ -853,6 +853,11 @@ Wenn dieses Kontrollfeld aktiviert ist, können Sie die Einfüge-Taste der erwei
 ==== Einfügetaste des Nummernblocks als NVDA-Taste verwenden ====
 Wenn dieses Kontrollfeld aktiviert ist, können Sie die Einfüge-Taste des Nummernblocks als NVDA-Taste verwenden.
 
+Wenn Sie keine dieser Tasten als NVDA-Tasten festlegen, können Sie nicht mehr auf bestimmte Funktionen von NVDA zugreifen.
+Aus diesem Grund wird eine Fehlermeldung angezeigt, wenn Sie keine Taste als NVDA-Taste verwenden. 
+Legen Sie daher immer mindestens eine Taste als NVDA-Taste fest, nachdem Sie die Fehlermeldung mit OK geschlossen haben.
+
+
 %kc:setting
 ==== Eingegebene Zeichen ansagen ====
 Tastenkombination: NVDA+2
@@ -872,6 +877,9 @@ Wenn diese Option aktiviert ist, wird die Sprache jedesmal unterbrochen, wenn Si
 ==== Sprache beim Drücken der Eingabetaste unterbrechen ====
 Ist diese Option aktiviert, so wird die Sprache jedesmal unterbrochen, wenn Sie die Eingabetaste drücken. Diese Option ist standardmäßig aktiviert.
 
+==== Navigation während "alles lesen" erlauben ====
+Wenn diese Option aktiviert ist, Unterbrechen Navigationsbefehle nun nicht mehr den Lesevorgang beim Lesen eines Dokuments mit nvda+Pfeil ab. Hierzu gehören sowohl die Schnellnavigationstasten als auch die Befehle zum Navigieren zwischen Zeilen und  Absätzen. Diese Option ist standardmäßig deaktiviert.
+ 
 ==== Signaltöne beim Eingeben von Kleinbuchstaben abspielen, wenn die Dauergroßschreibung aktiv ist ====
 Wenn aktiviert, hören Sie einen Warnton, wenn Sie einen Buchstaben mit der Umschalttaste drücken, während die Dauergroßschreibung eingeschaltet ist.
 Es ist generell nicht gebräuchlich, Buchstaben mittels der Umschalttaste groß zu schreiben, während die Dauergroßschreibung aktiviert ist und geschieht meistens nur deshalb, weil man nicht erkennt, dass die Dauergroßschreibung aktiv ist. Somit kann es hilfreich sein, wenn man diesbezüglich gewarnt wird.
@@ -1064,6 +1072,7 @@ Konfigurieren können Sie die Meldungen von:
 - Schriftattribute
 - Ausrichtung
 - Farben
+- Editor-Revisionen
 - Layout
 - Rechtschreibfehler
 - Seitenwechsel
@@ -1132,6 +1141,24 @@ In diesem Kombinationsfeld kann eingestellt werden, ab welcher Stufe die Satzzei
 
 Anmerkung: Das Dialogfeld erlaubt lediglich ein Bearbeiten der vorhandenen Sonderzeichen. Um neue Sonderzeichen hinzuzufügen oder vorhandene zu entfernen, müssen Sie die sprachspezifische Datei "Symbols-xx.dic" von Hand bearbeiten. "xx" steht hierbei für den zweistelligen Sprachcode. Weitere Informationen über das Format der Datei finden sie im Abschnitt «Aussprache von Sonderzeichen» im nvda-Entwicklerhandbuch. Dieses ist im [Teilbereich Entwicklung der nvda-Webseite NVDA_URLwiki/Development] zu finden. Die Definition neuer komplexer Symbole ist jedoch nicht möglich. 
 
++++ Eingaben +++
+In diesem Dialog können Sie Eingaben (Tastenkombinationen, Tasten an einer Braillezeile, Aktionen an einem Touchscreen) an NVDA-Befehle zuweisen.
+
+Es werden nur unmittelbar zuweisbare Befehle angezeigt.
+Wenn Sie beispielsweise einen Befehl neu zuweisen wollen, der sich auf den Lesemodus bezieht, sollten Sie den dialog aufrufen, während Sie sich im Lesemodus befinden.
+
+Die Baumansicht im Dialog Zeigt alle verfügbaren NVDA-Befehle - gruppiert nach Kategorien an.
+Unterhalb eines jeden Befehls werden die zugewiesenen Eingabeaktionen angezeigt (sofern vorhanden).
+
+um eine Eingabe an einen Befehl hinzuzufügen, wählen Sie den Befehl aus und drücken Sie den Schalter "hinzufügen".
+Führen sie anschließend die zuzuweisende Aktion durch (Drücken Sie die entsprechende Tastenkombination oder die Tasten an der Braillezeile)
+Oft kann ein NVDA-Befehl durch mehr als eine Tastenkombination ausgeführt werden.
+Bei Tastenkombinationen kann es beispielsweise sinnvoll sein, das Tastaturschema anzugeben, in dem diese Tastenkombination wirksam werden soll (Desktop/Laptop) in solchen Fällen wird ein Menü angezeigt, in dem Sie die entsprechende Option ausählen können.
+
+Um eine Tastenkombination von einem Befehl zu entfernen, wählen Sie sie aus und drücken Sie anschließend den Schalter "Entfernen".
+
+Um die Änderungen zu übernehmen, drücken Sie "ok" oder drücken Sie "abbrechen", um die Änderungen zu verwerfen.
+
 
 ++ laden und speichern der Konfiguration ++
 Standardmäßig speichert NVDA die Einstellungen automatisch. 
@@ -1149,7 +1176,77 @@ Die folgenden Tastenbefehle sind auch hilfreich:
 | Konfiguration zurücksetzen | NVDA+STRG+R | NVDA+STRG+R | Setzt bei einmaligem Drücken die NVDA-Einstellungen auf den letzten gespeicherten Stand zurück, bei dreimaligem Drücken wird die Werkseinstellung wiederhergestellt. |
 %kc:endInclude
 
-++ Die Konfigurationsdateien und Benutzerprofile ++
+++ Konfigurationsprofile ++
+Manchmal möchten Sie unterschiedliche Einstellungen in unterschiedlichen Situationen verwenden.
+Zum Korrekturlesen ist es beispielsweise sinnvoll, Einrückungen und Schriftattribute angesagt zu bekommen.
+In NVDA können sie hierfür Konfigurationsprofile verwenden.
+
+Ein Konfigurationsprofil enthält nur die geänderten Einstellungen.
+In Konfigurationsprofilen können die meisten Einstellungen geändert werden. Eine Ausnahme sind die allgemeinen Einstellungen, da diese NVDA generell betreffen.
+
+Konfigurationsprofile können manuell aktiviert werden.
+Außerdem können Sie solche Profile aber auch automatisch aktivieren (beispielsweise beim Wechsel in eine bestimmte Anwendung).
+
++++ Verwalten von Konfigurationsprofilen +++
+Konfigurationsprofile werden über den Menüpunkt "Konfigurationsprofile" im NVDA-Menü verwaltet. 
+Dieser Dialog ist auch über eine Tastenkombination erreichbar:
+%kc:beginInclude
+- NVDA+strg+p: zeigt den Dialog Konfigurationsprofile an.
+-
+%kc:endInclude
+
+Wenn Sie den Dialog öffnen, wird Ihnen eine Liste der vorhandenen Profile angezeigt und das aktive Profil ausgewählt.
+Außerdem werden Ihnen noch zusätzliche Informationen angezeigt wie z.B. die eingestellte Aktivierungsmethode (manuell oder per Auslöser) oder der Bearbeitungsstatus.
+
+Über die Schalter "umbenennen" oder "löschen" können Sie ein Profil umbenennen oder löschen.
+
+Über den Schalter "Schließen" können Sie den Dialog schließen.
+
++++ erstellen eines Konfigurationsprofils +++
+Um ein neues Profil zu erstellen, drücken Sie den Schalter "neu".
+
+Über den erscheinenden Dialog können Sie einen Namen für das Profil vergeben.
+Außerdem können Sie bestimmen, wie dieses Profil verwendet werden soll.
+Wenn sie vorhaben, das Profil manuell zu aktivieren, wählen Sie "manuelle Aktivierung" aus.
+Wählen Sie anderenfalls einen Auslöser aus, durch den das Profil automatisch aktiviert werden soll.
+Wenn Sie keinen Namen vergeben und einen Auslöser auswählen, wird automatisch ein passender name für das Profil eingetragen.
+Weitere Informationen über Auslöser finden Sie  [weiter unten #ConfigProfileTriggers].
+
+Wenn Sie den Dialog mit OK schließen, wird das Profil erstellt und der Dialog Konfigurationsprofile geschlossen, sodass sie das Profil bearbeiten können.
+
++++ manuelle Aktivierung +++[ConfigProfileManual]
+Sie können ein Konfigurationsprofil manuell aktivieren, indem Sie den Schalter "manuell aktivieren" verwenden.
+Wenn Sie einmal ein Profil manuell aktiviert haben, sind Auslöser für automatisch aktivierte profile zwar weiterhin aktiv, Einstellungen in manuell aktivierten Profilen haben jedoch Vorrang.
+Beispiel 1: gegeben sei ein automatisch aktiviertes Profil für die aktuelle Anwendung, in dem die Ansage von Links aktiviert ist. Außerdem sei ein manuell aktiviertes Profil gegeben, in dem die Ansage von Links deaktiviert ist. In diesem Fall werden Links nicht angesagt.
+Beispiel 2: Sie haben in einem automatisch aktivierten Profil für die aktuelle Anwendung die Stimmeneinstellungen geändert. In einem manuell aktivierten (und momentan aktiven) Profil haben Sie die Stimmeneinstellungen jedoch noch nie aufgerufen. In diesem Fall wird die Stimme ausgelöst durch das automatisch aktivierte Profil geändert.
+Jegliche Einstellungen, die sie ab sofort ändern, werden im manuell aktivierten Profil gespeichert.
+Um ein manuell aktiviertes Profil wieder zu deaktivieren, drücken Sie den Schalter "manuell deaktivieren".
+
++++ Auslöser +++[ConfigProfileTriggers]
+Mit diesem  Schalter können Sie einen Auslöser bestimmen, über den ein Profil automatisch aktiviert werden soll.
+
+Folgende Auslöser stehen zur Verfügung:
+- aktuelle Anwendung; wird ausgelöst, wenn Sie in die aktuelle Anwendung wechseln
+- alles lesen: wird ausgelöst, sobald Sie den Befehl "alles lesen" verwenden.
+-
+
+Um das Profil zu bestimmen, das durch einen bestimmten Auslöser aktiviert werden soll, wählen Sie zunächst den auslöser und anschließend das Profil aus.
+Wenn Sie nicht möchten, dass ein bestimmtes Profil ausgewählt wird, wählen Sie "Standardkonfiguration" aus.
+
+Über den Schalter "Schließen" können Sie den Konfigurationsprofil-Dialog schließen.
+
++++ bearbeiten eines Konfigurationsprofils +++
+Wenn Sie ein Konfigurationsprofil manuell aktiviert haben, werden sämtliche Einstellungen in diesem Profil gespeichert.
+Andernfalls werden alle Einstellungen in jenem Profil gespeichert, das zuletztdurch einen Auslöser aktiviert wurde.
+Wenn Sie beispielsweise ein Profil für den Editor erstellt haben und sich momentan im Editor befinden, werden alle Einstellungen in diesem Profil gespeichert.
+Wenn Sie weder ein manuell aktiviertes noch ein durch einen Auslöser aktiviertes Profil erstellt haben, werden alle einstellungen in der Standardkonfiguration gespeichert.
+
+Um ein Profil zu bearbeiten, das an den auslöser "alles lesen" gekoppelt ist, müssen Sie dieses Profil zuvor  [manuell aktivieren #ConfigProfileManual].
+
++++ Auslöser vorübergehend abschalten +++
+Wenn Sie ein manuell aktiviertes Profil bearbeiten wollen oder wenn Sie die Standardkonfiguration bearbeiten wollen, ohne von automatisch aktivierten Profilen gestört zu werden, können Sie über dieses Kontrollfeld alle Auslöser vorübergehend deaktivieren.
+
+++ Speicherorte für Konfigurationsdateien ++
 In der Portablen Edition von NVDA werden sämtliche Einstellungen, die benutzerdefinierten Anwendungsmodule und die angepassten Treiber im Ordner "userConfig" unterhalb des Stammordners von NVDA abgelegt.
 
 Bei den installierten Versionen von NVDA werden sämtliche Einstellungen, die benutzerdefinierten Anwendungsmodule und die angepassten Treiber in einem speziellen Ordner in dem Ordner des angemeldeten Benutzers in dessen Windows-Profil abgelegt.
@@ -1886,94 +1983,6 @@ Bitte lesen Sie die  [BRLTTY-Dokumentation für Tastaturtabellen http://mielke.c
 
 
 + Erweiterte Themen +
-
-++ Tastenkombinationen und andere Eingabemethoden neu zuweisen ++
-Anwender können Eingabemethoden (wie z. B. Tastenanschläge) an Skripte mit Hilfe einer speziellen Datei - namens gestures.ini - zuweisen. Diese Datei muss sich im Konfigurationsverzeichnis von NVDA des Anwenders befinden.
-
-Diese Datei hat das Standardformat für Ini-Dateien.
-Jeder Abschnitt enthält Zuweisungen für Skripte innerhalb eines bestimmten Anwendungsmoduls und innerhalb einer bestimmten Klasse in NVDA.
-Die Datei kann mehrere Abschnitte enthalten, wobei jeder Abschnitt aus einem oder mehreren Einträgen bestehen kann.
-- Der Name eines Abschnitts muss aus dem Modulnamen und dem Namen der Klasse, getrennt durch einen Punkt, bestehen.
-- Die Schlüsselnamen innerhalb der Abschnitte entsprechen den Skriptnamen, die sie zuweisen möchten. Alternativ kann auch der Name "None" verwendet werden, um eine Eingabemethodenzuweisung zu entfernen.
-- Der Wert eines Schlüssels ist eine Komma-getrennte Liste von Eingabemethoden, die einem Skript zugeordnet werden sollen.
--
-
-Die Namen der Eingabemethoden bestehen aus:
-- einem zweistelligen Geräte-Code ("kb" für die Tastatur, "br" für die Braillezeile oder "ts" für den Touchscreen),
-- einem untergeordneten Geräte-Code, einem Touchscreen-arbeitsmodus oder einem Tastaturschema in Klammern,
-- einem Doppelpunkt und schließlich 
-- einem oder mehreren Tastenbezeichnern oder touchscreen-gesten getrennt durch ein Plus-Zeichen.
--
-
-Für Tastenkombinationen repräsentiert der Teil in Klammern den Namen eines Tastaturschemas und ist optional. Fehlt er, so wird die Eingabemethode in allen Tastaturschemen wirksam. 
-Für Braillezeilen repräsentiert der Teil in Klammern den Namen der Braillezeile und ist zwingend notwendig.
-Für Touchscreen repräsentiert der Teil in Klammern den Namen eines Arbeitsmodus. Gültige Werte sind hier "text" und "object". Fehlt er, so funktioniert die Zuweisung in allen Arbeitsmodi.
-
-Um die Skriptnamen, Anwendungsmodule, Klassen und Eingabemethoden zu ermitteln, können Sie folgendermaßen vorgehen:
-+ Aktivieren sie die Eingabehilfe durch Drücken von nvda+1.
-+ Drücken Sie die Tastenkombination, bzw. führen Sie die Geste aus, die Sie neu zuweisen möchten.
-+ Deaktivieren Sie die Eingabehilfe durch nochmaliges Drücken von NVDA+1.
-+ Öffnen Sie den Protokollbetrachter über den Befehl Extras -> Protokollbetrachter im Kontextmenü des NVDA-Symbols.
-+ Untersuchen Sie die Protokolleinträge. Einer von denen sollte Informationen über die soeben verwendete Eingabemethode sowie das Anwendungsmodul, die Klasse und das Skript enthalten, sofern das Skript bereits zugewiesen wurde.
-+
-
-Das folgende Beispiel zeigt, wie Sie die Tastenkombination NVDA+Umschalt+T an das Skript binden können, dass das Datum und die Uhrzeit anzeigt:
-
-Um den Namen des Skripts herauszufinden, dass das Datum und die Uhrzeit anzeigt, schalten Sie die Eingabehilfe ein und drücken Sie NVDA+F12 (welches die Standard-Tastenkombination zum Anzeigen von Datum und Uhrzeit sein sollte).
-Schalten Sie anschließend die Eingabehilfe aus und schauen Sie sich das NVDA-Protokoll an.
-
-Am Ende des Protokolls sollten Sie nun Folgendes sehen:
-
-```
-INFO - inputCore.InputManager._handleInputHelp (13:17:22):
-Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
-```
-
-Hierbei können Sie erkennen, dass der Skriptname "dateTime" und das Modul und Klasse globalCommands.GlobalCommands lauten.
-
-Falls noch nicht vorhanden, sollten Sie eine Datei namens gestures.ini in Ihrem Konfigurationsverzeichnis von NVDA erstellen, die folgenden Inhalt hat:
-
-```
-[globalCommands.GlobalCommands]
-	dateTime = kb:NVDA+shift+t
-```
-
-Dieses weist die Tastenkombination NVDA+Umschalt+T (in jedem Tastaturschema) das Skript "dateTime" zu.
-Anmerkung: Die Original-Tastenkombination NVDA+F12 zum Anzeigen der Uhrzeit und des Datums funktioniert immer noch. Um diese Zuweisung zu entfernen, fügen Sie folgende Zeile hinzu:
-
-```
-	None = kb:NVDA+f12
-```
-
-
-+++ Hinweise zur Zusammensetzung von Touchscreen-Gestennamen +++
-Wenn Sie eine Touchscren-Geste an ein Script zuweisen wollen, müssen Sie den namen der Geste wie folgt zusammensetzen:
-[Finger]_[Anzahl]_Aktion
-Hierbei Gilt:
-- Finger: Gibt die Anzahl der Finger an, mit denen die Geste ausgeführt werden muss. Fehlt dieser Teil, wird eine Geste mit einem einzigen Finger angenommen. Die angabe der Anzahl der Finger muss in der Form Nfinger erfolgen, wobei N 1 oder größer sein kann.
-- Anzahl: Gibt die Zahl der Aktionen an, die zu einer Touchscreen-Geste gehören. Fehlt dieses Argument, wird eine Geste angenommen, die aus einer einzelnen Aktion besteht. Gültige Werte sind:
- - single: Die Geste besteht aus einer Aktion. Dies ist der Standard.
- - double: Die Geste besteht aus zwei Aktionen (z.B. Double_Tap für ein doppeltes Tippen).
- - tripple: Die Geste besteht aus drei Aktionen.
- - quodruple: Die Geste besteht aus vier Aktionen.
-- Aktion: Gibt die Aktion an, die mit dem Touchscreen auszuführen ist. Dieser Teil ist Pflicht. Gültige Werte sind:
- - tap: Tippen
- - tapAndHold: Tippen und gedrückt halten
- - flickUp: nach oben streichen
- - flickDown: nach unten streichen
- - flickLeft: nach links streichen
- - flickRight: nach rechts streichen
- - hover: Berühren des Tastschirms
- - unknown: nicht eindeutig zuzuordnende Aktion
- -
--
-
-Beispiele für gültige Gesten:
-- "ts:tap": einfaches Tippen mit einem Finger; funktioniert in allen Arbeitsmodi
-- "ts(text):double_tap": Doppeltippen mit einem Finger; funktioniert nur im textmodus
-- "ts(object):2finger_triple_tap": dreifach Tippen mit zwei Fingern; funktioniert nur im Objektmodus.
-- "ts:3finger_flickdown": mit 3 fingern nach unten streichen; funktioniert in allen Arbeitsmodi.
--
 
 ++ Erweiterte Anpassung der Aussprache von Satz- und Sonderzeichen ++
 Es gibt über den [Dialog zur Aussprache von Satz- und Sonderzeichen #SymbolPronunciation] hinaus noch weitere Möglichkeiten, die Aussprache von Satzzeichen zu beeinflussen. Sie können beispielsweise veranlassen, das bestimmte Zeichen unverarbeitet an die Sprachausgabe weitergegeben werden, um die Betonung zu beeinflussen oder Sie können weitere benutzerdefinierte Symbole hinzufügen.

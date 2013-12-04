@@ -63,7 +63,7 @@ For further details, you can [view the full licence. http://www.gnu.org/licenses
 -
 
 + Getting and Setting Up NVDA +
-If you have not yet got a copy of NVDA, you can download it from [www.nvda-project.org NVDA_URL].
+If you have not yet got a copy of NVDA, you can download it from [www.nvaccess.org NVDA_URL].
 
 Go to the download section and you will find a link to download the latest version of NVDA.
 
@@ -554,7 +554,7 @@ Note: The report remaining time shortcut works only with the default formatting 
 %kc:beginInclude
 || Name | Key | Description |
 | Report Comments Window | control+shift+c | Reports any comments in the comments window. |
-| Report automatic comments window | control+shift+a | Reports any comments in the automatic comments window. |
+| Report notes for translators | control+shift+a | Reports any notes for translators. |
 %kc:endInclude
 
 + Configuring NVDA +
@@ -781,6 +781,10 @@ If this checkbox is checked, the extended insert key (usually found above the ar
 
 ==== Use numpad insert as an NVDA modifier key ====
 If this checkbox is checked, the insert key on the number pad can be used as an NVDA modifier key.
+
+If no key is chosen as the NVDA key it may be impossible to access certain NVDA commands.
+Therefore, The Keyboard Settings dialog will display an error message if all keys are unselected when pressing Ok.
+After dismissing the error message, you must select at least one before being able to press Ok to dismiss the dialog properly.
 
 %kc:setting
 ==== Speak Typed Characters ====
@@ -1094,7 +1098,80 @@ The following NVDA key commands are also useful:
 | Revert  configuration | NVDA+control+r | NVDA+control+r | Pressing once resets your configuration to when you last saved it. Pressing three times will reset it back to factory defaults. |
 %kc:endInclude
 
-++ Configuration files and user profiles ++
+++ Configuration Profiles ++
+Sometimes, you may wish to have different settings for different situations.
+For example, you may wish to have reporting of indentation enabled while you are editing or reporting of font attributes enabled while you are proofreading.
+NVDA allows you to do this using configuration profiles.
+
+A configuration profile contains only those settings which are changed while the profile is being edited.
+Most settings can be changed in configuration profiles except for those in the General Settings dialog, which apply to the entirety of NVDA.
+
+Configuration profiles can be manually activated.
+They can also be activated automatically due to triggers such as switching to a particular application.
+
++++ Basic Management +++
+You manage configuration profiles by selecting "Configuration profiles" in the NVDA menu.
+You can also do this using a key command:
+%kc:beginInclude
+- NVDA+control+p: Show the Configuration Profiles dialog.
+-
+%kc:endInclude
+
+The first control in this dialog is the profile list from which you can select one of the available profiles.
+When you open the dialog, the profile you are currently editing is selected.
+Additional information is also shown for active profiles, indicating whether they are manually activated, triggered and/or being edited.
+
+To rename or delete a profile, press the Rename or Delete buttons, respectively.
+
+Press the Close button to close the dialog.
+
++++ Creating a Profile +++
+To create a profile, press the New button.
+
+In the New Profile dialog, you can enter a name for the profile.
+You can also select how this profile should be used.
+If you only want to use this profile manually, select Manual activation, which is the default.
+Otherwise, select a trigger which should automatically activate this profile.
+For convenience, if you haven't entered a name for the profile, selecting a trigger will fill in the name accordingly.
+See [below #ConfigProfileTriggers] for more information about triggers.
+
+Pressing OK will create the profile and close the Configuration Profiles dialog so you can edit it.
+
++++ Manual Activation +++[ConfigProfileManual]
+You can manually activate a profile by selecting a profile and pressing the Manual activate button.
+Once activated, other profiles can still be activated due to triggers, but any settings in the manually activated profile will override them.
+For example, if a profile is triggered for the current application and reporting of links is enabled in that profile but disabled it in the manually activated profile, links will not be reported.
+However, if you have changed the voice in the triggered profile but have never changed it in the manually activated profile, the voice from the triggered profile will be used.
+Any settings you change will be saved in the manually activated profile.
+To deactivate a manually activated profile, select it in the Configuration Profiles dialog and press the Manual deactivate button.
+
++++ Triggers +++[ConfigProfileTriggers]
+Pressing the Triggers button in the Configuration Profiles dialog allows you to change the profiles which should be automatically activated for various triggers.
+
+The Triggers list shows the available triggers, which are as follows:
+- Current application: Triggered when you switch to the current application.
+- Say all: Triggered while reading with the say all command.
+-
+
+To change the profile which should be automatically activated for a trigger, select the trigger and then select the desired profile from the Profile list.
+You can select (normal configuration) if you don't want a profile to be used.
+
+Press the Close button to return to the Configuration Profiles dialog.
+
++++ Editing a Profile +++
+If you have manually activated a profile, any settings you change will be saved to that profile.
+Otherwise, any settings you change will be saved to the most recently triggered profile.
+For example, if you have associated a profile with the Notepad application and you switch to Notepad, any changed settings will be saved to that profile.
+Finally, if there is neither a manually activated nor a triggered profile, any settings you change will be saved to your normal configuration.
+
+To edit the profile associated with say all, you must [manually activate #ConfigProfileManual] that profile.
+
++++ Temporarily Disabling Triggers +++
+Sometimes, it is useful to temporarily disable all triggers.
+For example, you might wish to edit a manually activated profile or your normal configuration without triggered profiles interfering.
+You can do this by checking the Temporarily disable all triggers checkbox in the Configuration Profiles dialog.
+
+++ Location of Configuration files ++
 Portable versions of NVDA store all settings, custom appModules and custom drivers in a directory called userConfig, found in the NVDA directory.
 
 Installed versions of NVDA store all settings, custom appModules and custom drivers in a special NVDA directory located in your Windows user profile.
@@ -1157,7 +1234,7 @@ It is best to remove these files from your configuration and install  the approp
 
 ++ Python Console ++
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
-For more information, please see the Developer Guide available from [the Development section of the NVDA web site NVDA_URLwiki/Development].
+For more information, please see the Developer Guide available from [the Development section of the NVDA web site http://community.nvda-project.org/wiki/Development].
 
 ++ Reload plugins ++
 This item, once activated, reloads app modules and global plugins without restarting NVDA, which can be useful for developers.
@@ -1228,8 +1305,8 @@ This section contains information about the Braille displays supported by NVDA.
 ++ Freedom Scientific Focus/PAC Mate Series ++
 All Focus and PAC Mate displays from [Freedom Scientific http://www.freedomscientific.com/] are supported when connected via USB or bluetooth.
 You will need the Freedom Scientific braille display drivers installed on your system.
-If you do not have them already, you can obtain them from http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
-Although this page only mentions the Focus 40 Blue display, the drivers support all Freedom Scientific displays.
+If you do not have them already, you can obtain them from http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Although this page only mentions the Focus Blue display, the drivers support all Freedom Scientific Focus and Pacmate displays.
 If your system is running 64 bit Windows and the drivers were already installed by another screen reader, you will probably still need to install the drivers from this link, as the files required by NVDA were probably not installed by the other screen reader.
 
 By default, NVDA can automatically detect and connect to these displays either via USB or bluetooth.
@@ -1462,6 +1539,9 @@ Please see the display's documentation for descriptions of where these keys can 
 ++ HIMS Braille Sense/Braille EDGE Series ++
 NVDA supports Braille Sense and Braille EDGE displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
 If connecting via USB, you will need to install the USB drivers from HIMS on your system.
+You can download these from the HIMS Resource Center: http://www.hims-inc.com/resource-center/
+On this page, select your device and download the driver in the Window-Eyes section.
+Although the section only mentions Window-Eyes, this is a general USB driver which will work with NVDA as well.
 
 Following are the key assignments for these displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -1794,7 +1874,7 @@ For example, you can specify whether the raw symbol should be sent to the synthe
 
 To do this, you must edit the symbol pronunciation information file in your NVDA user configuration directory.
 The file is called symbols-xx.dic, where xx is the language code.
-The format of this file is documented in the Symbol Pronunciation section of the NVDA Developer Guide, which is available from [the Development section of the NVDA web site NVDA_URLwiki/Development].
+The format of this file is documented in the Symbol Pronunciation section of the NVDA Developer Guide, which is available from [the Development section of the NVDA web site http://community.nvda-project.org/wiki/Development].
 However, it is not possible for users to define complex symbols.
 
 + Further Information +

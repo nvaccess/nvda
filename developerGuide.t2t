@@ -359,9 +359,11 @@ Some examples of gesture string identifiers are:
 - "kb(laptop):NVDA+t"
 -
 
-Currently, the only input sources in NVDA are:
-- kb: keyboard input
-- br: braille input
+Currently, the input sources in NVDA are:
+- kb: system keyboard input
+- br: braille display controls
+- ts: touch screen
+- bk: braille keyboard input
 -
 
 When NVDA receives input, it looks for a matching gesture binding in a particular order.
@@ -374,6 +376,19 @@ The order for gesture binding lookup is:
 - NVDA Object with focus
 - Global Commands (built in commands like quitting NVDA, object navigation commands, etc.)
 -
+
+You should specify a description of the script in the function's docstring which describes the command for users.
+For example, this is reported to users when in Input Help mode and shown in the Input Gestures dialog.
+You specify the docstring by setting a "__doc__" attribute on the script function.
+The script will not appear in the Input Gestures dialog unless this is specified.
+
+You can also specify a category for a script so that it can be grouped with other similar scripts.
+For example, a script in a global plugin which adds browse mode quick navigation keys may be categorized under the "Browse mode" category.
+For individual scripts, this is done by setting a "category" attribute on the script function to a string containing the name of the category.
+You can also set the "scriptCategory" attribute on the plugin class, which will be used for scripts which do not specify a category.
+There are constants for common categories prefixed with SCRCAT_ in the inputCore and globalCommands modules.
+The script will be listed under the specified category in the Input Gestures dialog.
+If no category is specified, the script will be categorized under "Miscellaneous".
 
 ++ Example 3: A Global Plugin to Find out Window Class and Control ID ++
 The following Global Plugin allows you to press NVDA+leftArrow to have the window class of the current focus announced, and NVDA+rightArrow to have the window control ID of the current focus announced.
@@ -445,6 +460,7 @@ If an event for an NVDA Object is defined on a Global Plugin, App Module or Tree
 Some common NVDA Object events are:
 - foreground: this NVDA Object has become the new foreground object; i.e. active top-level object
 - gainFocus
+- focusEntered: Focus has moved inside this object; i.e. it is an ancestor of the focus object
 - loseFocus
 - nameChange
 - valueChange

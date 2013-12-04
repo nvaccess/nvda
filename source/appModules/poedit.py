@@ -68,10 +68,15 @@ def fetchObject(obj, path):
 class AppModule(appModuleHandler.AppModule):
 
 	def script_reportAutoCommentsWindow(self,gesture):
-		obj = fetchObject(api.getForegroundObject(), [2, 0, 1, 0, 1, 0, 0, 0])
-		# check the controlid, because in certain situations 
-		# autoComments and comment windows change places.
-		if obj and obj.windowControlID == 102:
+		obj = fetchObject(api.getForegroundObject(), [2, 0, 1, 0, 1, 0, 1])
+		if obj and obj.windowControlID != 101:
+			try:
+				obj = obj.next.firstChild
+			except AttributeError:
+				obj = None
+		elif obj:
+			obj = obj.firstChild
+		if obj:
 			try:
 				ui.message(obj.name + " " + obj.value)
 			except:
@@ -103,7 +108,7 @@ class AppModule(appModuleHandler.AppModule):
 			# comments window in poedit.
 			ui.message(_("No comment."))
 	# Translators: The description of an NVDA command for Poedit.
-	script_reportAutoCommentsWindow.__doc__ = _("Reports any comments in the comments window")
+	script_reportCommentsWindow.__doc__ = _("Reports any comments in the comments window")
 
 	__gestures = {
 		"kb:control+shift+c": "reportCommentsWindow",

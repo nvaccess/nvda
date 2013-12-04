@@ -1,6 +1,6 @@
 %!includeconf: global.t2tconf
 
 % Make ticket references into links.
-%!PreProc: "#([0-9]+)" "[#\1 http://www.nvda-project.org/ticket/\1]"
+%!PreProc: "#([0-9]+)" "[#\1 http://community.nvda-project.org/ticket/\1]"
 % Make links open in a new tab/window.
 %!PostProc(html): '(<A HREF=".*?")>' '\1 target="_blank">'

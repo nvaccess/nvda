@@ -5,7 +5,6 @@ source/userConfig
 build
 build_debug
 dist
-dist_installer
 *.dll
 *.exe
 *.manifest
@@ -28,6 +27,7 @@ dlldata.c
 include/*
 .sconsign.dblite
 user_docs/*/*.html
+extras/controllerClient/x86/nvdaController.h
 extras/controllerClient/x64
 source/_buildVersion.py
 user_docs/*/keyCommands.t2t
