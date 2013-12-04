@@ -1489,6 +1489,15 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# We're reviewing a different object.
 			self._doNewObject(getFocusRegions(reviewPos.obj, review=True))
 
+	def initialDisplay(self):
+		if not self.enabled or not api.getDesktopObject():
+			# Braille is disabled or focus/review hasn't yet been initialised.
+			return
+		if self.tether == self.TETHER_FOCUS:
+			self.handleGainFocus(api.getFocusObject())
+		else:
+			self.handleReviewMove()
+
 	def handleConfigProfileSwitch(self):
 		display = config.conf["braille"]["display"]
 		if display != self.display.name:
@@ -1514,6 +1523,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		except:
 			log.error("Error initializing display driver", exc_info=True)
 			self._autoNoDisplay()
+			return
+		self.initialDisplay()
 
 	def _autoNoDisplay(self):
 		self._autoProber._callLater = wx.CallLater(AUTO_DISPLAY_DETECT_DELAY, self._autoProber.startProbing)
@@ -1524,15 +1535,7 @@ def initialize():
 	log.info("Using liblouis version %s" % louis.version())
 	handler = BrailleHandler()
 	handler.setDisplayByName(config.conf["braille"]["display"])
-
-	# Update the display to the current focus/review position.
-	if not handler.enabled or not api.getDesktopObject():
-		# Braille is disabled or focus/review hasn't yet been initialised.
-		return
-	if handler.tether == handler.TETHER_FOCUS:
-		handler.handleGainFocus(api.getFocusObject())
-	else:
-		handler.handleReviewMove()
+	handler.initialDisplay()
 
 def pumpAll():
 	"""Runs tasks at the end of each core cycle. For now just caret updates."""
