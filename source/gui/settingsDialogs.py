@@ -1280,7 +1280,10 @@ class BrailleSettingsDialog(SettingsDialog):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a setting in braille settings to choose a braille display.
 		label = wx.StaticText(self, wx.ID_ANY, label=_("Braille &display:"))
-		driverList = braille.getDisplayList()
+		# Translators: An option in the braille display list in the Braille Settings dialog
+		# to automatically detect and use a braille display.
+		driverList = [(braille.AUTO_DISPLAY_NAME, _("Automatic"))]
+		driverList.extend(braille.getDisplayList())
 		self.displayNames = [driver[0] for driver in driverList]
 		self.displayList = wx.Choice(self, wx.ID_ANY, choices=[driver[1] for driver in driverList])
 		self.Bind(wx.EVT_CHOICE, self.onDisplayNameChanged, self.displayList)
@@ -1416,12 +1419,13 @@ class BrailleSettingsDialog(SettingsDialog):
 
 	def updatePossiblePorts(self):
 		displayName = self.displayNames[self.displayList.GetSelection()]
-		displayCls = braille._getDisplayDriver(displayName)
 		self.possiblePorts = []
-		try:
-			self.possiblePorts.extend(displayCls.getPossiblePorts().iteritems())
-		except NotImplementedError:
-			pass
+		if displayName != "auto":
+			displayCls = braille._getDisplayDriver(displayName)
+			try:
+				self.possiblePorts.extend(displayCls.getPossiblePorts().iteritems())
+			except NotImplementedError:
+				pass
 		if self.possiblePorts:
 			self.portsList.SetItems([p[1] for p in self.possiblePorts])
 			try:

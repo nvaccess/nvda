@@ -296,6 +296,12 @@ negativeStateLabels = {
 DOT7 = 64
 DOT8 = 128
 
+#: Used in place of a specific braille display driver name to indicate that
+#: braille displays should be automatically detected and used.
+AUTO_DISPLAY_NAME = "auto"
+#: How often (in ms) to automatically scan for braille displays.
+AUTO_DISPLAY_DETECT_DELAY = 10000
+
 def NVDAObjectHasUsefulText(obj):
 	import displayModel
 	role = obj.role
@@ -1226,6 +1232,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cursorBlinkUp = True
 		self._cells = []
 		self._cursorBlinkTimer = None
+		self._autoProber = None
 
 	def terminate(self):
 		if self._messageCallLater:
@@ -1237,6 +1244,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self.display:
 			self.display.terminate()
 			self.display = None
+		self._autoProber = None
 
 	def _get_tether(self):
 		return config.conf["braille"]["tetherTo"]
@@ -1251,41 +1259,46 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		else:
 			self.handleGainFocus(api.getFocusObject())
 
-	def setDisplayByName(self, name, isFallback=False):
-		if not name:
-			self.display = None
-			self.displaySize = 0
-			return
-		# See if the user have defined a specific port to connect to
-		if name not in config.conf["braille"]:
-			# No port was set.
-			config.conf["braille"][name] = {"port" : ""}
-		port = config.conf["braille"][name].get("port")
+	def _setDisplay(self, display, port=None):
 		# Here we try to keep compatible with old drivers that don't support port setting
 		# or situations where the user hasn't set any port.
 		kwargs = {}
 		if port:
 			kwargs["port"] = port
+		if display == self.display.__class__:
+			# This is the same driver as was already set, so just re-initialise it.
+			self.display.terminate()
+			display = self.display
+			display.__init__(**kwargs)
+		else:
+			display = display(**kwargs)
+			if self.display:
+				try:
+					self.display.terminate()
+				except:
+					log.error("Error terminating previous display driver", exc_info=True)
+			self.display = display
+		self.displaySize = display.numCells
+		self.enabled = bool(self.displaySize)
+		log.info("Loaded braille display driver %s, current display has %d cells." % (display.name, self.displaySize))
+
+	def setDisplayByName(self, name, isFallback=False):
+		if name == AUTO_DISPLAY_NAME:
+			self._setAutoDetect(True)
+			return True
+		elif not isFallback:
+			self._setAutoDetect(False)
+
+		# See if the user have defined a specific port to connect to
+		if name not in config.conf["braille"]:
+			# No port was set.
+			config.conf["braille"][name] = {"port" : ""}
+		port = config.conf["braille"][name].get("port")
 		try:
 			newDisplay = _getDisplayDriver(name)
-			if newDisplay == self.display.__class__:
-				# This is the same driver as was already set, so just re-initialise it.
-				self.display.terminate()
-				newDisplay = self.display
-				newDisplay.__init__(**kwargs)
-			else:
-				newDisplay = newDisplay(**kwargs)
-				if self.display:
-					try:
-						self.display.terminate()
-					except:
-						log.error("Error terminating previous display driver", exc_info=True)
-				self.display = newDisplay
-			self.displaySize = newDisplay.numCells
-			self.enabled = bool(self.displaySize)
+			self._setDisplay(newDisplay, port=port)
 			if not isFallback:
 				config.conf["braille"]["display"] = name
-			log.info("Loaded braille display driver %s, current display has %d cells." %(name, self.displaySize))
 			return True
 		except:
 			log.error("Error initializing display driver", exc_info=True)
@@ -1315,6 +1328,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		except:
 			log.error("Error displaying cells. Disabling display", exc_info=True)
 			self.setDisplayByName("noBraille", isFallback=True)
+			self._autoNoDisplay()
 
 	def _blink(self):
 		self._cursorBlinkUp = not self._cursorBlinkUp
@@ -1479,6 +1493,30 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		display = config.conf["braille"]["display"]
 		if display != self.display.name:
 			self.setDisplayByName(display)
+
+	def _setAutoDetect(self, enable):
+		if enable and not self._autoProber:
+			self.setDisplayByName("noBraille", isFallback=True)
+			self._autoProber = BrailleDisplayProber(
+				foundDisplayCallback=self._autoFoundDisplay,
+				noDisplayCallback=self._autoNoDisplay)
+			self._autoProber.startProbing()
+			config.conf["braille"]["display"] = AUTO_DISPLAY_NAME
+		elif not enable and self._autoProber:
+			self._autoProber.stopProbing()
+			self._autoProber._callLater.Stop()
+			self._autoProber = None
+
+	def _autoFoundDisplay(self, displayCls, port, portDesc, numCells):
+		log.info('Detected braille display "%s"' % displayCls.description)
+		try:
+			self._setDisplay(displayCls, port=port)
+		except:
+			log.error("Error initializing display driver", exc_info=True)
+			self._autoNoDisplay()
+
+	def _autoNoDisplay(self):
+		self._autoProber._callLater = wx.CallLater(AUTO_DISPLAY_DETECT_DELAY, self._autoProber.startProbing)
 
 def initialize():
 	global handler
