@@ -113,7 +113,8 @@ class InputGesture(baseObject.AutoPropertyObject):
 		@return: The script to be executed.
 		@rtype: script function
 		"""
-		return scriptHandler.findScript(self)
+		self.script=scriptHandler.findScript(self)
+		return self.script
 
 	def send(self):
 		"""Send this gesture to the operating system.
