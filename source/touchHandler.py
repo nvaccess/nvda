@@ -7,6 +7,7 @@
 import threading
 from ctypes import *
 from ctypes.wintypes import *
+import re
 import sys
 import globalPluginHandler
 import config
@@ -22,6 +23,11 @@ import touchTracker
 import gui
 
 availableTouchModes=['text','object']
+
+touchModeLabels={
+	"text":_("text mode"),
+	"object":_("object mode"),
+}
 
 HWND_MESSAGE=-3
 
@@ -95,6 +101,20 @@ class TouchInputGesture(inputCore.InputGesture):
 
 	counterNames=["single","double","tripple","quodruple"]
 
+	pluralActionLabels={
+		# Translators: a touch screen action performed once 
+		"single":_("single {action}"),
+		# Translators: a touch screen action performed twice
+		"double":_("double {action}"),
+		# Translators: a touch screen action performed 3 times
+		"tripple":_("tripple {action}"),
+		# Translators: a touch screen action performed 4 times
+		"quodruple":_("quadruple {action}"),
+	}
+
+	# Translators: a touch screen action using multiple fingers
+	multiFingerActionLabel=_("{numFingers} finger {action}")
+
 	def _get_speechEffectWhenExecuted(self):
 		if self.tracker.action in (touchTracker.action_hover,touchTracker.action_hoverUp): return None
 		return super(TouchInputGesture,self).speechEffectWhenExecuted
@@ -124,8 +144,39 @@ class TouchInputGesture(inputCore.InputGesture):
 	def _get_identifiers(self):
 		return [x.lower() for x in self._rawIdentifiers] 
 
-	def _get_displayName(self):
-		return " ".join(self._rawIdentifiers[1][3:].split('_'))
+	RE_IDENTIFIER = re.compile(r"^ts(?:\((.+?)\))?:(.*)$")
+
+	@classmethod
+	def getDisplayTextForIdentifier(cls, identifier):
+		mode,IDs=cls.RE_IDENTIFIER.match(identifier).groups()
+		actions=[]
+		for ID in IDs.split('+'):
+			action=None
+			foundAction=foundPlural=False
+			for subID in reversed(ID.split('_')):
+				if not foundAction:
+					action=touchTracker.actionLabels[subID]
+					foundAction=True
+					continue
+				if not foundPlural:
+					pluralActionLabel=cls.pluralActionLabels.get(subID)
+					if pluralActionLabel:
+						action=pluralActionLabel.format(action=action)
+						foundPlural=True
+						continue
+				if subID.endswith('finger'):
+					numFingers=int(subID[:0-len('finger')])
+					if numFingers>1:
+						action=cls.multiFingerActionLabel.format(numFingers=numFingers,action=action)
+				break
+			actions.append(action)
+		# Translators: a touch screen gesture
+		source=_("Touch screen")
+		if mode:
+			source="{source}, {mode}".format(source=source,mode=touchModeLabels[mode])
+		return source," + ".join(actions)
+
+inputCore.registerGestureSource("ts", TouchInputGesture)
 
 class TouchHandler(threading.Thread):
 
