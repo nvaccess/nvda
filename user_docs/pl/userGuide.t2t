@@ -63,7 +63,7 @@ Dokładne brzmienie licencji znajdziesz online: [Pełna treść licencji. http:/
 -
 
 + Pobieranie i instalacja NVDA +
-Program NVDA można pobrać ze strony internetowej znajdującej sie pod adresem: www.nvda-project.org.
+Program NVDA można pobrać ze strony internetowej znajdującej sie pod adresem: [www.nvaccess.org NVDA_URL].
 
 Przejdź na stronie do sekcji "Download" gdzie znajduje się link do najnowszej wersji programu. Możesz udać się także na polską stronę społeczności nvda pod adresem www.nvda.pl
 
@@ -1234,7 +1234,7 @@ Najlepiej byłoby usunąć takie pliki z folderu konfiguracji i zainstalować od
 
 ++ Konsola Pythona ++
 Konsola Pythona NVDA znajduje się w menu Narzędzia  w NVDA. Jest narzędziem dla programistów i jest używana do debugowania, przeglądania wewnątrz NVDA lub sprawdzania hierarchii dostępności aplikacji.
-Więcej informacji znajduje się w podręczniku dla twórców dostępnego w [sekcji Development na stronie NVDA NVDA_URLwiki/Development].
+Więcej informacji znajduje się w podręczniku dla twórców dostępnego w [sekcji Development na stronie NVDA http://community.nvda-project.org/wiki/Development].
 
 ++ przeładuj wtyczki ++
 Po aktywacji tego polecenia wszystkie moduły aplikacji oraz wtyczki zostaną przeładowane bez potrzeby restartu nvda. Jest to użyteczne dla programistów.
@@ -1305,8 +1305,8 @@ Ten rozdział zawiera informacje na temat monitorów brajlowskich wspieranych pr
 ++ Freedom Scientific Focus/PAC Mate Series ++
 Wszystkie monitory Focus i PAC Mate firmy [Freedom Scientific http://www.freedomscientific.com/] są obsługiwane w trybie połączeń USB i Bluetooth.
 Niezbędne są sterowniki brajlowskie Freedom Scientific zainstalowane w systemie.
-Jeśli nie zostały one jeszcze zainstalowane, to należy je pobrać ze strony: http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
-Na podanej stronie wymieniony jest tylko sterownik monitora Focus 40 Blue, ale obsługuje on wszystkie monitory Freedom Scientific.
+Jeśli nie zostały one jeszcze zainstalowane, to należy je pobrać ze strony: http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Na podanej stronie wymieniony jest tylko sterownik monitora Focus Blue, ale obsługuje on wszystkie monitory Freedom Scientific i Pacmate.
 Jeśli używasz 64-bitowego Windowsa i sterowniki zostały zainstalowane przez inny program czytający ekran, prawdopodobnie i tak będziesz musiał zainstalować sterowniki z tego linku, ponieważ pliki wymagane przez NVDA nie zostały prawdopodobnie zainstalowane przez inny program czytający ekran.
 
 Domyślnie NVDA może wykryć i podłączyć się do tych monitorów przez USB lub bluetooth.
@@ -1539,6 +1539,9 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 ++ HIMS Braille Sense/Braille EDGE Series ++
 NVDA obsługuje monitory Braille Sense i Braille EDGE produkcji [Hims http://www.hims-inc.com/] przy połączeniu przez USB i bluetooth. 
 Aby korzystać z połączenia USB, musisz zainstalować sterowniki USB HIMS w swoim systemie.
+Możesz je pobrać z Centrum zasobów HIMS: http://www.hims-inc.com/resource-center/
+Na tej stronie, wybierz swoje urządzenie i pobierz sterownik z sekcji Window-eyes.
+Strona wymienia tylko Window-eyes, jest to jednak sterownik USB ogólnego przeznaczenia i będzie pracował również z NVDA.
 
 Poniżej skróty klawiszowe dla tych monitorów, które działają w nvda.
 Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
@@ -1871,7 +1874,7 @@ Przykładowo, NVDA może przepuścić znak wprost do syntezatora. Możemy w ten 
 
 Aby tego dokonać, musisz wyedytować plik symboli wymowy znajdujący się w folderze konfiguracji użytkownika NVDA.
 Plik nazywa się symbols-xx.dic, gdzie xx jest kodem języka.
-Format tego pliku jest opisany w rozdziale "Symbol Pronunciation" podręcznika dla twórców NVDA , znajdującego się w [sekcji Development na stronie NVDA NVDA_URLwiki/Development].
+Format tego pliku jest opisany w rozdziale "Symbol Pronunciation" podręcznika dla twórców NVDA , znajdującego się w [sekcji Development na stronie NVDA http://community.nvda-project.org/wiki/Development].
 Nie jest możliwe dla użytkowników definiowanie skomplikowanych symboli.
 
 + Dodatkowe Informacje +

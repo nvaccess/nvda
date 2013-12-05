@@ -3,6 +3,24 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.1 =
+
+== Uudet ominaisuudet ==
+- Tuki Microsoft PowerPoint 2013:lle. (Suojattua näkymää ei tueta). (#3578)
+
+
+== Korjatut ohjelmavirheet ==
+- NVDA:n ei pitäisi enää lukea Microsoft Excelissä uuden solun sijasta aiempaa liikuttaessa soluissa tai valittaessa niitä, kun Excel on hidas siirtämään valintaa. (#3558)
+- NVDA käsittelee oikein Microsoft Excelissä solun pudotuslistan avaamisen pikavalikon kautta. (#3586)
+- Uusi sisältö näytetään nyt oikein iTunes 11 storen sivuilla selaustilassa seurattaessa storessa olevaa linkkiä tai avattaessa storea ensimmäistä kertaa. (#3625)
+- iTunes 11 storen kappaleiden  esikuuntelupainikkeiden nimet näkyvät nyt  selaustilassa. (#3638)
+- Valintaruutujen ja valintapainikkeiden nimet hahmonnetaan nyt oikein selaustilassa Google Chromessa. (#1562)
+- NVDA ei enää lue hyödytöntä tietoa Instantbirdissä joka kerran siirtyessäsi kontaktin kohdalle kontaktien listassa. (#2667)
+- Sellaisten painikkeiden jne. teksti, joiden nimet on korvattu työkaluvihjeellä tai muilla keinoin, hahmonnetaan nyt oikein selaustilassa Adobe Readerissa. (#3640)
+- Ylimääräisiä "mc-ref"-tekstiä sisältäviä kuvia ei enää hahmonneta selaustilassa Adobe Readerissa. (#3645)
+- NVDA ei enää ilmoita Microsoft Excelissä kaikkia soluja alleviivatuiksi niiden muotoilutiedoissa. (#3669)
+
+
 = 2013.3 =
 
 == Uudet ominaisuudet ==
@@ -35,6 +53,9 @@
 - NVDA ilmaisee nyt Microsoft Excelissä yhdistetyt solut eri tavalla kuin useat valitut solut. (#3567)
 - Selaustilakohdistinta ei sijoiteta enää virheellisesti poistuttaessa asiakirjan sisäisestä valintaikkunasta tai sovelluksesta. (#3145)
 - Korjattu ongelma, joka aiheutti sen, että joissakin järjestelmissä HumanWare Brailliant BI/B -sarjan pistenäytön ajuria ei näytetty Pistenäytön asetukset -valintaikkunassa, vaikka sellainen näyttö oli liitettynä USB:n kautta.
+- NVDA:n vaihtaminen ruututarkasteluun ei enää epäonnistu, mikäli navigointiobjektilla ei ole ruudulla todellista sijaintia. Tarkastelukohdistin sijoitetaan nyt tällaisessa tapauksessa ruudun yläreunaan. (#3454)
+- Korjattu ongelma, joka aiheutti joissakin tapauksissa Freedom Scientificin pistenäyttöajurin toimimattomuutta, kun portiksi oli määritetty USB. (#3509, #3662)
+- Korjattu ongelma, joka aiheutti joissakin tapauksissa sen, että Freedom Scientificin pistenäyttöjen näppäimiä ei tunnistettu. (#3401, #3662)
 
 
 = 2013.2 =

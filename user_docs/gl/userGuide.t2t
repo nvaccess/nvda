@@ -63,7 +63,7 @@ Para máis detalles, podes [ver a licencia completa.  http://www.gnu.org/license
 -
 
 + Obtendo e Instalando NVDA +
-Se aínda non tes unha copia do NVDA, podes descargala de [www.nvda-project.org NVDA_URL].
+Se aínda non tes unha copia do NVDA, podes descargala de [www.nvaccess.org NVDA_URL].
 
 Vai á sección download e atoparás unha liga para descargar a derradeira versión do NVDA.
 
@@ -1234,7 +1234,7 @@ Aíndaque esta versión do NVDA aínda poderá cargalos, Non se amosarán no Adm
 
 ++ Consola de Python ++
 A consola de Python do NVDA, atopada baixo Ferramentas no menú NVDA, é unha ferramenta de desenrolo que é útil para depuración, inspección xeral do interior  do NVDA ou inspeción da xerarquía de accesibilidade de unha aplicación.
-Para máis información, por favor mira [O artigo The Python Console no sitio Web de NVDA NVDA_URLwiki/PythonConsole].
+Para máis información, por favor olla a Guía do desenvolvedor dispoñible na [sección de desenvolvemento da páxina web do NVDA http://community.nvda-project.org/wiki/Development].
 
 ++ Recargar plugins ++
 Este elemento, unha vez activado, recarga app modules e plugins globais sen reiniciar ó NVDA, o cal é útil para desenroladores.
@@ -1305,8 +1305,8 @@ Esta sección contén información acerca das liñas braille soportadas polo NVD
 ++ Freedom Scientific Focus/PAC Mate Series ++
 Todas as liñas Focus e PAC Mate de [Freedom Scientific http://www.freedomscientific.com/] sopórtanse.
 Necesitarás os controladores de liñas braille de Freedom Scientific instalados no teu sistema.
-Se non os tes aínda, podes obtelos dende http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
-Aíndaque esta páxina só menciona a liña Focus 40 Blue, o controlador soporta todas as liñas de Freedom Scientific.
+Se non os tes aínda, podes obtelos dende http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Aíndaque esta páxina só mencione a liña Focus 40 Blue, o controlador soporta todas as liñas Focus e Pacmate de Freedom Scientific.
 Se o teu sistema executa un Windows de 64 bit e os controladores xa se instalaron por outro lector de pantalla, posiblemente aínda necesitarás instalar os controladores dende esta liga, posto que os ficheiros que require NVDA posiblemente non foron instalados polo outro lector de pantalla.
 
 Predeterminadamente, NVDA pode detectar automáticamente e conectarse a estas líneas tanto a traverso de USB como de bluetooth.
@@ -1539,6 +1539,9 @@ Por favor mira a documentación da liña para descripcións de onde poden atopar
 ++ Series da HIMS Braille Sense/Braille EDGE ++
 NVDA soporta as liñas Braille Sense e Braille EDGE de [Hims http://www.hims-inc.com/] cando se conectan a través do USB ou bluetooth. 
 Se se conectan a través do USB, necesitarás instalar os controladores USB de HIMS no sistema.
+Podes descargar éstos dende o Centro de Recursos de HIMS: http://www.hims-inc.com/resource-center/
+Nesta páxina, selecciona o dispositivo e descarga o controlador na sección Window-Eyes.
+Aíndaque  a sección só mencione a Window-Eyes, este é un controlador USB xeral que funcionará co NVDA tamén.
 
 Seguidamente van as asignacións de teclas para estas liñas co NVDA.
 Por favor mira a documentación das liñas para descripcións de onde poden atoparse estas teclas.
@@ -1871,7 +1874,7 @@ Por exemplo, podes especificar se o símbolo dibuxado debería enviarse ó sinte
 
 Para facer esto, debes editar o ficheiro de información de pronunciación de símbolos no teu directorio de configuración de usuario do NVDA.
 O ficheiro chámase symbols-xx.dic, onde xx é o código de lingua.
-O formato de este ficheiro documentóuse na sección Symbol Pronunciation da Guía de Desenrolo do NVDA, que está dispoñible dende [A sección do desenrolador do sitio Web do NVDA NVDA_URLwiki/Development].
+O formato deste ficheiro documentóuse na sección Symbol Pronunciation da Guía de Desenrolo do NVDA, que está dispoñible dende [a Sección Desenvolvemento do sitio web do NVDA http://community.nvda-project.org/wiki/Development].
 Polo tanto, non é posible para os usuarios definir símbolos comprexos. 
 
 + Información Adicional +

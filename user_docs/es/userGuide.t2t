@@ -63,7 +63,7 @@ Para más detalles, puedes [ver la licencia completa.  http://www.gnu.org/licens
 -
 
 + Obteniendo e Instalando NVDA +
-Si todavía no tienes una copia de NVDA, puedes descargarla de [www.nvda-project.org NVDA_URL].
+Si todavía no tienes una copia de NVDA, puedes descargarla de [www.nvaccess.org NVDA_URL].
 
 Ve a la sección download y encontrarás un enlace para descargar la última versión de NVDA.
 
@@ -1234,7 +1234,7 @@ Es mejor eliminar estos ficheros de tu configuración e instalar el complemento 
 
 ++ Consola de Python ++
 La consola de Python de NVDA, encontrada bajo Herramientas en el menú NVDA, es una herramienta de desarrollo que es útil para depuración, inspección general del interior  de NVDA o inspeción de la jerarquía de accesibilidad  de una aplicación.
-Para más información, por favor mira [el artículo The Python Console en el sitio Web de NVDA NVDA_URLwiki/PythonConsole].
+Para más información, por favor mira la Guía del desarrollador disponible en [la sección de Desarrollo de la página web de NVDA http://community.nvda-project.org/wiki/Development].
 
 ++ Recargar plugins ++
 Este elemento, una vez activado, recarga app modules y plugins globales sin reiniciar a NVDA, lo cual es útil para desarrolladores.
@@ -1305,8 +1305,8 @@ Esta sección contiene información acerca de las pantallas braille soportadas p
 ++ Series de la Freedom Scientific Focus/PAC Mate ++
 Todas las pantallas Focus y PAC Mate de [Freedom Scientific http://www.freedomscientific.com/] están soportadas.
 Necesitarás los controladores de pantallas braille de Freedom Scientific instalados en tu sistema.
-Si no los tienes todavía, puedes obtenerlos desde http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
-Aunque esta página sólo menciona la pantalla Focus 40 Blue, el controlador soporta todas las pantallas de Freedom Scientific.
+Si no los tienes todavía, puedes obtenerlos desde http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Aunque esta página sólo mencione la pantalla Focus 40 Blue, el controlador soporta todas las pantallas Focus y Pacmate de Freedom Scientific.
 Si tu sistema ejecuta un Windows de 64 bit y los controladores ya se instalaron por otro lector de pantalla, posiblemente todavía necesitarás instalar los controladores desde este enlace, puesto que los ficheros que requiere NVDA posiblemente no fueran instalados por el otro lector de pantalla.
 
 De manera predeterminada, NVDA puede detectar automáticamente y conectarse a estas pantallas tanto a través de USB como de bluetooth.
@@ -1539,6 +1539,9 @@ Por favor mira la documentación de la pantalla para descripciones de dónde pue
 ++ Series de la HIMS Braille Sense/Braille EDGE ++
 NVDA soporta las pantallas Braille Sense y Braille EDGE de [Hims http://www.hims-inc.com/] cuando se conectan a través de USB o bluetooth. 
 Si se conectan a través de USB, necesitarás instalar los controladores USB de HIMS en el sistema.
+Puedes descargar éstos desde el Centro de Recursos de HIMS: http://www.hims-inc.com/resource-center/
+En esta página, selecciona el dispositivo y descarga el controlador en la sección Window-Eyes.
+Aunque la sección sólo mencione a Window-Eyes, este es un controlador USB general que funcionará con NVDA también.
 
 Seguidamente van las asignaciones de teclas para estas pantallas con NVDA.
 Por favor mira la documentación de las pantallas para descripciones de dónde pueden encontrarse estas teclas.
@@ -1871,7 +1874,7 @@ Por ejemplo, puedes especificar si el símbolo dibujado debería enviarse al sin
 
 Para hacer esto, debes editar el fichero de información de pronunciación de símbolos en tu directorio de configuración de usuario de NVDA.
 El fichero se llama symbols-xx.dic, donde xx es el código de idioma.
-El formato de este fichero se documentó en la sección Symbol Pronunciation de la Guía de Desarrollo de NVDA, que está disponible desde [La sección del desarrollador del sitio Web de NVDA NVDA_URLwiki/Development].
+El formato de este fichero se documentó en la sección Symbol Pronunciation de la Guía de Desarrollo de NVDA, que está disponible desde [la sección de Desarrollo de la página web de NVDA http://community.nvda-project.org/wiki/Development].
 Por lo tanto, no es posible para los usuarios definir símbolos complejos. 
 
 + Información Adicional +

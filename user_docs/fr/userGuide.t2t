@@ -63,7 +63,7 @@ Pour plus de détails, vous pouvez [lire l'intégralité de la licence http://ww
 -
 
 + Se procurer et installer NVDA +
-Si vous n'avez pas encore une copie de NVDA, vous pouvez la télécharger sur [nvda-project.org NVDA_URL].
+Si vous n'avez pas encore une copie de NVDA, vous pouvez la télécharger sur [www.nvaccess.org NVDA_URL].
 
 Rendez-vous à la section "Download" où vous trouverez un lien pour le téléchargement de la dernière version de NVDA.
 
@@ -1234,7 +1234,7 @@ Il est recommendé de supprimer ces fichiers de votre répertoire de configurati
 
 ++ Console Python ++
 La console Python NVDA, située dans Outils du menu NVDA, est un outil de développement utile pour dépanner, inspecter le code ou inspecter la hiérarchie d'accessibilité d'une application.
- Pour plus d'informations, veuillez consulter le Guide du Développeur disponible dans [la section développement du site web de NVDA NVDA_URLwiki/Development].
+Pour plus d'informations, veuillez consulter le Guide du Développeur disponible dans [la section développement du site Web de NVDA http://community.nvda-project.org/wiki/Development].
 
 ++ Rechargement des modules complémentaires ++
 Cet élément, quand on l'active, recharge les modules d'applications et les modules complémentaires généraux sans avoir à redémarrer NVDA ce qui peut être utile pour les développeurs.
@@ -1305,7 +1305,7 @@ Cette section contient des informations sur les terminaux braille pris en charge
 ++ Les terminaux Focus et PAC Mate de chez Freedom Scientific ++
 Tous les terminaux Focus et PAC Mate de chez [Freedom Scientific http://www.freedomscientific.com/] sont pris en charge quand ils sont connectés en USB ou Bluetooth.
 Vous devrez installer les pilotes de terminaux Braille de Freedom Scientific sur votre système.
-Si vous ne les avez pas déjà, vous pourrez les obtenir sur http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
+Si vous ne les avez pas déjà, vous pourrez les obtenir sur http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Bien que cette page ne mentionne que le terminal Focus 40 Blue, le pilote supporte tous les terminaux de Freedon Scientific.
 Si votre système est sous Windows 64 bits et que les pilotes ont déjà été installés par une autre revue d'écran, vous devrez probablement installer quand-même installer les pilotes car les fichiers nécessaires pour NVDA n'auront probablement été installés par l'autre revue d'écran.
 
@@ -1539,6 +1539,9 @@ Veuillez consulter la documentation du terminal pour savoir où se trouvent ces 
 ++ HIMS Braille Sense/Braille EDGE Series ++
 NVDA supporte les afficheurs braille Braille Sense et Braille EDGE de [Hims http://www.hims-inc.com/] quand ils sont connectés via USB ou bluetooth. 
 Si vous connectez votre afficheur braille par USB, vous devrez installer le driver USB de HIMS dans votre système.
+Vous pouvez le télécharger sur le centre de resources HIMS : http://www.hims-inc.com/resource-center/
+Sur cette page, sélectionnez votre appareil et téléchargez le pilote dans la section Window-Eyes.
+Bien que la section ne mentionne que Window-Eyes, il s'agit d'un pilote USB générale qui fonctionnera avec NVDA.
 
 Voici les assignations de touches pour ce terminal sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se trouvent ces touches.
@@ -1871,7 +1874,7 @@ Par exemple, vous pouvez indiquer si un symbole particulier doit être envoyé a
 
 Pour faire cela, vous devez éditer le fichier contenant les informations de prononciation des symboles dans votre répertoire utilisateur NVDA.
 Le fichier s'appelle symbols-xx.dic où xx est le code de la langue.
-Le format de ce fichier est documenté dans la section Prononciation des Symboles du guide de développement NVDA  disponible dans [la section Développement du site NVDA NVDA_URLwiki/Development].
+Le format de ce fichier est documenté dans la section Prononciation des Symboles du guide de développement NVDA  disponible dans [la section Développement du site NVDA http://community.nvda-project.org/wiki/Development].
 Cependant, l'utilisateur ne peut pas définir de symboles complexes.
 
 + Informations supplémentaires +
