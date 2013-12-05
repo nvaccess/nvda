@@ -1722,7 +1722,7 @@ class BrailleDisplayProber(object):
 					if self._stop:
 						return
 					if not active and port != BrailleDisplayDriver.AUTOMATIC_PORT[0]:
-						continue
+						break
 					try:
 						display = cls(port=port)
 					except:
