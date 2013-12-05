@@ -16,7 +16,7 @@ import review
 import NVDAHelper
 import XMLFormatting
 import scriptHandler
-from scriptHandler import isScriptWaiting
+from scriptHandler import isScriptWaiting, willSayAllResume
 import speech
 import NVDAObjects
 import api
@@ -911,14 +911,15 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			speech.speakMessage(errorMessage)
 			return
 		info = self.makeTextInfo(textInfos.offsets.Offsets(startOffset, endOffset))
-		if readUnit:
-			fieldInfo = info.copy()
-			info.collapse()
-			info.move(readUnit, 1, endPoint="end")
-			if info.compareEndPoints(fieldInfo, "endToEnd") > 0:
-				# We've expanded past the end of the field, so limit to the end of the field.
-				info.setEndPoint(fieldInfo, "endToEnd")
-		speech.speakTextInfo(info, reason=controlTypes.REASON_FOCUS)
+		if not willSayAllResume(gesture):
+			if readUnit:
+				fieldInfo = info.copy()
+				info.collapse()
+				info.move(readUnit, 1, endPoint="end")
+				if info.compareEndPoints(fieldInfo, "endToEnd") > 0:
+					# We've expanded past the end of the field, so limit to the end of the field.
+					info.setEndPoint(fieldInfo, "endToEnd")
+			speech.speakTextInfo(info, reason=controlTypes.REASON_FOCUS)
 		info.collapse()
 		self._set_selection(info, reason=self.REASON_QUICKNAV)
 

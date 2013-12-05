@@ -39,6 +39,7 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 - No Microsoft Excel, o NVDA agora anuncia células mescladas de modo diferente de várias células selecionadas. (#3567)
 - O cursor do modo de navegação já não é posicionado incorretamente quando se encerra um diálogo ou aplicativo dentro do documento. (#3145)
 - Corrigido um problema no qual o driver da linha braile HumanWare Brailliant BI/B series não era apresentado como opção no diálogo de opções de braile em alguns sistemas, mesmo que essa linha estivesse conectada via USB.
+- O NVDA já não deixa de alternar para a exploração de tela quando o objeto de navegação atual não possui localização na tela. Nesse caso, o cursor de exploração agora é colocado no topo da tela. (#3454)
 
 
 == Alterações específicas para desenvolvedores ==
