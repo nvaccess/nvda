@@ -1748,6 +1748,9 @@ class BrailleDisplayProber(object):
 				wx.CallAfter(self.foundDisplayCallback, cls, port, portDescription, numCells)
 			break
 		else:
+			if self._stop:
+				log.debug("Probing for braille displays cancelled")
+				return
 			wx.CallAfter(self.noDisplayCallback)
 		log.debug("End probing for braille displays")
 
