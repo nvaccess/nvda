@@ -396,7 +396,7 @@ windowClassMap={
 	"TTntEdit.UnicodeClass":"Edit",
 	"TMaskEdit":"Edit",
 	"TTntMemo.UnicodeClass":"Edit",
-	"TRichEdit":"Edit",
+	"TRichEdit":"RichEdit20",
 	"TRichViewEdit":"Edit",
 	"TInEdit.UnicodeClass":"Edit",
 	"TInEdit":"Edit",
