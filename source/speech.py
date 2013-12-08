@@ -40,6 +40,8 @@ curWordChars=[]
 from controlTypes import REASON_FOCUS, REASON_FOCUSENTERED, REASON_MOUSE, REASON_QUERY, REASON_CHANGE, REASON_MESSAGE, REASON_SAYALL, REASON_CARET, REASON_ONLYCACHE
 
 #: The string used to separate distinct chunks of text when multiple chunks should be spoken without pauses.
+# #555: Use two spaces so that numbers from adjacent chunks aren't treated as a single number
+# for languages such as French and German which use space as a thousands separator.
 CHUNK_SEPARATOR = "  "
 
 oldTreeLevel=None
@@ -445,7 +447,7 @@ def speak(speechSequence,symbolLevel=None):
 		if autoLanguageSwitching and isinstance(item,LangChangeCommand):
 			curLanguage=item.lang
 		if isinstance(item,basestring):
-			speechSequence[index]=processText(curLanguage,item,symbolLevel)+" "
+			speechSequence[index]=processText(curLanguage,item,symbolLevel)+CHUNK_SEPARATOR
 	getSynth().speak(speechSequence)
 
 def speakSelectionMessage(message,text):
