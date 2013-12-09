@@ -1510,10 +1510,12 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				foundDisplayCallback=self._autoFoundDisplay,
 				noDisplayCallback=self._autoNoDisplay)
 			self._autoProber.startProbing()
+			self._autoProber._callLater = None
 			config.conf["braille"]["display"] = AUTO_DISPLAY_NAME
 		elif not enable and self._autoProber:
 			self._autoProber.stopProbing()
-			self._autoProber._callLater.Stop()
+			if self._autoProber._callLater:
+				self._autoProber._callLater.Stop()
 			self._autoProber = None
 
 	def _autoFoundDisplay(self, displayCls, port, portDesc, numCells):
@@ -1760,7 +1762,7 @@ class BrailleDisplayProber(object):
 		self._stop = False
 		self._thread.start()
 
-	def stopProbing(self, wait=True):
+	def stopProbing(self, wait=False):
 		self._stop = True
 		if wait and self._thread and self._thread.isAlive():
 			self._thread.join()
