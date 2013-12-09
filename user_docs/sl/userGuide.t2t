@@ -52,7 +52,7 @@ Avtorske pravice NVDA_COPYRIGHT_YEARS nad NVDA pripadajo NVDA sodelujočim.
 
 NVDA je zaščitena z GNU Splošno Javno Licenco (druga različica).
 Ta program lahko spreminjate ali delite na okoli, na kakršenkoli način želite,vse dokler ga spremlja omenjena licenca in dajete izvorno kodo na voljo vsakomur, ki to želi.
-To se nanaša tako na pristno izdajo, kot spremenjene kopije tega programa in tudi na derivate.
+To se nanaša tako na pristno izdajo, kot spremenjene kopije tega programa in tudi na izpeljanke.
 Več podrobnosti je na voljo [na strani z besedilom licence. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Sistemske Zahteve +
@@ -63,7 +63,7 @@ Več podrobnosti je na voljo [na strani z besedilom licence. http://www.gnu.org/
 -
 
 + Kako Dobiti in Postaviti NVDA +
-Če še nimate svoje kopije NVDA, jo lahko snamete iz: [www.nvda-project.org NVDA_URL].
+Če še nimate svoje kopije NVDA, jo lahko snamete iz: [www.nvaccess.org NVDA_URL].
 
 Pojdite na razdelek download in tam boste našli povezavo za prenos najnovejše različice NVDA.
 
@@ -542,7 +542,7 @@ NVDA pozna posebej prirejene ukaze za nekatere programe, da omogoči lažjo izve
 | Sporoči preostanek časa | control+shift+r | Sporoča preostanek časa do konca predvajanja trenutne skladbe, če se. |
 %kc:endInclude
 
-Opozorilo: Bližnjica poročaj o preostanku časa dela samo s privzetim oblikovanjem niza za foobar statusno vrstico.
+Opozorilo: Bližnjica poročaj o preostanku časa dela samo s privzetim oblikovanjem niza za foobar vrstico stanja.
 
 ++ Miranda IM ++
 %kc:beginInclude
@@ -1218,12 +1218,12 @@ Ko enkrat pritisnete Odpri, se bo začel potek namestitve.
 Ko se namešča dodatek, vas bo NVDA najprej zaprosila, za potrditev, da  res želite namestiti dodatek.
 Ker je funkcionalnost dodatka znotraj NVDA brez omejitev, kar v teoriji vključuje tudi dostop do vaših osebnih podatkov ali lahko tudi do samega jedra sistema, če je NVDA na sistemu nameščena; je zelo pomembno, da nameščate dodatke samo iz virov, ki jim zaupate.
 Ko se dodatek namesti, morate NVDA ponovno zagnati, da se dodatek spravi v pogon.
-Dokler tega ne naredite, bo status dodatka v seznamu prikazan kot "Namesti".
+Dokler tega ne naredite, bo stanje dodatka v seznamu prikazano kot "Namesti".
 
 Če dodatek želite odstraniti, ga izberite na seznamu z dodatki in pritisnite gumb Odstrani.
 NVDA vas bo vprašala, če res želite to storiti.
 Tako kot pri namestitvi, se mora NVDA znova zagnati, da se dodatek popolnoma odstrani.
-Dokler tega ne naredite, bo status dodatka v seznamu prikazan kot "odstrani".
+Dokler tega ne naredite, bo stanje dodatka v seznamu prikazano kot "odstrani".
 
 Upravitelj dodatkov vsebuje tudi gumb Zapri, s katerim lahko zaprete pogovorno okno.
 Neglede na to, če ste namestili ali odstranili dodatek, vas bo NVDA vprašala, če jo želite ponovno zagnati, da se bodo lahko spremembe, ki ste jih naredili, uveljavile.
@@ -1234,7 +1234,7 @@ Najbolje je, da te datoteke odstranite iz vaše konfiguracije in namestite ustre
 
 ++ Python Konzola ++
 NVDA Python konzola, ki se nahaja v Orodjih menija NVDA, je orodje za razvijalce, ki je uporabno za razhroščevanje, splošno inšpekcijo NVDA notranjosti ali inšpekcijo hierarhije dostopnosti v programu.
-Za več informacij, prosimo, glejte Vodič za Razvijalce dostopen na [odseku za razvijalce na NVDA spletnem mestu NVDA_URLwiki/Development].
+Več informacij, prosimo, poiščite v Vodiču za Razvijalce (v Angleščini), ki se nahaja v [Razvojnem oddelku na spletnem mestu NVDA http://community.nvda-project.org/wiki/Development].
 
 ++ Ponovno Naloži vtičnike ++
 Ta element, ko ga sprožite, ponovno naloži aplikacijske module in globalne vtičnike brez potrebe po ponovnem zagonu NVDA, kar je lahko uporabno za razvijalce.

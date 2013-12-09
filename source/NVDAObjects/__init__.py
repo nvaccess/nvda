@@ -987,6 +987,16 @@ This code is executed if a gain focus event is received by this object.
 			ret = "exception: %s" % e
 		info.append("appModule: %s" % ret)
 		try:
+			ret = repr(self.appModule.productName)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("appModule.productName: %s" % ret)
+		try:
+			ret = repr(self.appModule.productVersion)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("appModule.productVersion: %s" % ret)
+		try:
 			ret = repr(self.TextInfo)
 		except Exception as e:
 			ret = "exception: %s" % e
