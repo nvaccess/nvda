@@ -19,6 +19,7 @@ import api
 import textInfos
 import brailleDisplayDrivers
 import inputCore
+import windowUtils
 
 #: The directory in which liblouis braille tables are located.
 TABLES_DIR = r"louis\tables"
@@ -1211,6 +1212,24 @@ def formatCellsForLog(cells):
 		if cell else "-"
 		for cell in cells])
 
+WM_DEVICECHANGE = 0x0219
+DBT_DEVNODES_CHANGED = 0x0007
+class DeviceChangeListener(windowUtils.CustomWindow):
+	className = u"NVDADeviceChangeListener"
+
+	def __init__(self):
+		super(DeviceChangeListener, self).__init__()
+		self._callLater = None
+
+	def windowProc(self, hwnd, message, wParam, lParam):
+		if message != WM_DEVICECHANGE or wParam != DBT_DEVNODES_CHANGED:
+			return
+		if self._callLater and not self._callLater.HasRun():
+			# There's already a pending call.
+			return
+		# Delay the call to avoid flooding.
+		self._callLater = wx.CallLater(300, handler.handleDeviceChange)
+
 class BrailleHandler(baseObject.AutoPropertyObject):
 	TETHER_FOCUS = "focus"
 	TETHER_REVIEW = "review"
@@ -1233,6 +1252,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cells = []
 		self._cursorBlinkTimer = None
 		self._autoProber = None
+		self._deviceChangeListener = None
 
 	def terminate(self):
 		if self._messageCallLater:
@@ -1244,7 +1264,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self.display:
 			self.display.terminate()
 			self.display = None
-		self._autoProber = None
+		self._setAutoDetect(False)
 
 	def _get_tether(self):
 		return config.conf["braille"]["tetherTo"]
@@ -1509,6 +1529,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._autoProber = BrailleDisplayProber(
 				foundDisplayCallback=self._autoFoundDisplay,
 				noDisplayCallback=self._autoNoDisplay)
+			self._deviceChangeListener = DeviceChangeListener()
 			self._autoProber.startProbing()
 			self._autoProber._callLater = None
 			config.conf["braille"]["display"] = AUTO_DISPLAY_NAME
@@ -1517,6 +1538,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			if self._autoProber._callLater:
 				self._autoProber._callLater.Stop()
 			self._autoProber = None
+			self._deviceChangeListener = None
 
 	def _autoFoundDisplay(self, displayCls, port, portDesc, numCells):
 		log.info('Detected braille display "%s"' % displayCls.description)
@@ -1530,6 +1552,15 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _autoNoDisplay(self):
 		self._autoProber._callLater = wx.CallLater(AUTO_DISPLAY_DETECT_DELAY, self._autoProber.startProbing)
+
+	def handleDeviceChange(self):
+		self._autoProber.stopProbing()
+		if self._autoProber._callLater:
+			self._autoProber._callLater.Stop()
+		self._autoProber = BrailleDisplayProber(
+			foundDisplayCallback=self._autoFoundDisplay,
+			noDisplayCallback=self._autoNoDisplay)
+		self._autoProber.startProbing()
 
 def initialize():
 	global handler
