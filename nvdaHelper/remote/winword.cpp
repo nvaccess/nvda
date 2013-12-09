@@ -712,7 +712,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 						if(i==0) text[i]=L' ';
 						break;
 					}  else if(text[i]==L'\x0007'&&(chunkEndOffset-chunkStartOffset)==1) {
-						text[i]=L'\0';
+						//text[i]=L'\0';
 						//Collecting revision info does not work on cell delimiters
 						curDisabledFormatConfig|=formatConfig_reportRevisions;
 					}
