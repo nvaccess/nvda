@@ -173,8 +173,8 @@ class TouchInputGesture(inputCore.InputGesture):
 		# Translators: a touch screen gesture
 		source=_("Touch screen")
 		if mode:
-			source="{source}, {mode}".format(source=source,mode=touchModeLabels[mode])
-		return source," + ".join(actions)
+			source=u"{source}, {mode}".format(source=source,mode=touchModeLabels[mode])
+		return source,u" + ".join(actions)
 
 inputCore.registerGestureSource("ts", TouchInputGesture)
 
