@@ -108,6 +108,9 @@ if len(unknown)>0:
 	print "Unknown commandline variables: %s"%unknown
 	Exit(1)
 
+#Ensure that any Python subprocesses (such as for py2exe) can find our Python directory in miscDeps
+env['ENV']['PYTHONPATH']=Dir('#miscDeps/python').abspath
+
 env["copyright"]=versionInfo.copyright
 version = env["version"]
 release = env["release"]
