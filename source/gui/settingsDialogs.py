@@ -31,6 +31,7 @@ try:
 except RuntimeError:
 	updateCheck = None
 import inputCore
+import hwPorts
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -1435,22 +1436,21 @@ class BrailleSettingsDialog(SettingsDialog):
 		if displayName != "auto":
 			displayCls = braille._getDisplayDriver(displayName)
 			try:
-				self.possiblePorts.extend(displayCls.getPossiblePorts().iteritems())
+				self.possiblePorts.extend(hwPorts.getUiPorts(displayCls.getPossiblePorts()))
 			except NotImplementedError:
 				pass
 		if self.possiblePorts:
-			self.portsList.SetItems([p[1] for p in self.possiblePorts])
+			self.portsList.SetItems([p.description for p in self.possiblePorts])
 			try:
 				selectedPort = config.conf["braille"][displayName].get("port")
-				portNames = [p[0] for p in self.possiblePorts]
+				portNames = [p.name for p in self.possiblePorts]
 				selection = portNames.index(selectedPort)
 			except (KeyError, ValueError):
 				# Display name not in config or port not valid
 				selection = 0
 			self.portsList.SetSelection(selection)
-		# If no port selection is possible or only automatic selection is available, disable the port selection control
-		enable = len(self.possiblePorts) > 0 and not (len(self.possiblePorts) == 1 and self.possiblePorts[0][0] == "auto")
-		self.portsList.Enable(enable)
+		# If port selection isn't possible, disable the port selection control.
+		self.portsList.Enable(len(self.possiblePorts) > 0)
 
 class SpeechSymbolsDialog(SettingsDialog):
 	# Translators: This is the label for the symbol pronunciation dialog.

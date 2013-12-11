@@ -8,6 +8,7 @@ import itertools
 import os
 import pkgutil
 import threading
+import collections
 import wx
 import louis
 import keyboardHandler
@@ -20,6 +21,7 @@ import textInfos
 import brailleDisplayDrivers
 import inputCore
 import windowUtils
+import hwPorts
 
 #: The directory in which liblouis braille tables are located.
 TABLES_DIR = r"louis\tables"
@@ -313,7 +315,12 @@ def NVDAObjectHasUsefulText(obj):
 		or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY not in obj.states))
 
 def _getDisplayDriver(name):
-	return __import__("brailleDisplayDrivers.%s" % name, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
+	cls = __import__("brailleDisplayDrivers.%s" % name, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
+	if not hasattr(cls, "_getPossiblePortsOrig"):
+		# Support deprecated implementations of getPossiblePorts.
+		cls._getPossiblePortsOrig = cls.getPossiblePorts
+		cls.getPossiblePorts = cls._getPossiblePortsCompat
+	return cls
 
 def getDisplayList():
 	displayList = []
@@ -1279,19 +1286,39 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		else:
 			self.handleGainFocus(api.getFocusObject())
 
+	def _initDisplay(self, display, port, func):
+		# If no port is specified, assume auto.
+		if port == hwPorts.AUTO_PORT.name or not port:
+			try:
+				portsToTry = tuple(port.name for port in hwPorts.getAutoPorts(display.getPossiblePorts()))
+			except NotImplementedError:
+				# The driver doesn't support port specification.
+				return func()
+			if not portsToTry:
+				raise RuntimeError("No automatic ports available for display %s" % display.name)
+		elif port:
+			portsToTry = (port,)
+		if len(portsToTry) == 1:
+			return func(port=portsToTry[0])
+		# There are multiple ports to try.
+		for port in portsToTry:
+			try:
+				res = func(port=port)
+			except:
+				log.debugWarning("Failed to initialize display %s on port %s" % (
+					display.name, port), exc_info=True)
+				continue
+			return res
+		raise RuntimeError("No %s display detected" % display.name)
+
 	def _setDisplay(self, display, port=None):
-		# Here we try to keep compatible with old drivers that don't support port setting
-		# or situations where the user hasn't set any port.
-		kwargs = {}
-		if port:
-			kwargs["port"] = port
 		if display == self.display.__class__:
 			# This is the same driver as was already set, so just re-initialise it.
 			self.display.terminate()
 			display = self.display
-			display.__init__(**kwargs)
+			self._initDisplay(display, port, display.__init__)
 		else:
-			display = display(**kwargs)
+			display = self._initDisplay(display, port, display)
 			if self.display:
 				try:
 					self.display.terminate()
@@ -1540,10 +1567,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._autoProber = None
 			self._deviceChangeListener = None
 
-	def _autoFoundDisplay(self, displayCls, port, portDesc, numCells):
+	def _autoFoundDisplay(self, displayCls, port, numCells):
 		log.info('Detected braille display "%s"' % displayCls.description)
 		try:
-			self._setDisplay(displayCls, port=port)
+			self._setDisplay(displayCls, port=port.name)
 		except:
 			log.error("Error initializing display driver", exc_info=True)
 			self._autoNoDisplay()
@@ -1638,18 +1665,34 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 
 	#: Automatic port constant to be used by braille displays that support the "automatic" port
 	#: @type: Tupple
+	#: @deprecated: Drivers should be updated to use L{USB_PORT}, L{BLUETOOTH_PORT}
+	#: or their own L{BraillePort} instances.
 	# Translators: String representing the automatic port selection for braille displays.
 	AUTOMATIC_PORT = ("auto", _("Automatic"))
 
 	@classmethod
 	def getPossiblePorts(cls):
 		""" Returns possible hardware ports for this driver.
-		If the driver supports automatic port setting it should return as the first port L{brailleDisplayDriver.AUTOMATIC_PORT}
-
-		@return: ordered dictionary of name : description for each port
-		@rtype: OrderedDict
+		The constants L{hwPorts.USB_PORT} and L{hwPorts.BLUETOOTH_PORT}
+		and the function L{hwPorts.getSerialPorts} should be used where appropriate.
+		@return: All available possible ports for this driver.
+		@rtype: iterable of L{hwPorts.HardwarePort} instances
+		@note: This method used to return an C{OrderedDict} mapping port names to descriptions.
+			This is now deprecated.
 		"""
 		raise NotImplementedError
+
+	@classmethod
+	def _getPossiblePortsCompat(cls):
+		# Support deprecated implementations of getPossiblePorts which return an OrderedDict.
+		ports = cls._getPossiblePortsOrig()
+		if not isinstance(ports, collections.OrderedDict):
+			cls.getPossiblePorts = cls._getPossiblePortsOrig
+			return ports
+		out = []
+		for port, desc in ports.iteritems():
+			out.append(hwPorts.HardwarePort(port, desc, hwPorts.PROBE_MANUAL))
+		return out
 
 	#: Does this driver participate in Probing:
 	#: @type: bool
@@ -1723,7 +1766,7 @@ class BrailleDisplayProber(object):
 		@param active: Whether to probe ports (such as serial ports) that might not be associated with displays.
 		@type active: bool
 		@param foundDisplayCallback: Called if a display is found with arguments
-			(displayClass, port, portDescription, numCells)
+			(displayClass, port, numCells)
 		@type foundDisplayCallback: callable
 		@param noDisplayCallback: Called when probing is complete if no display was found with no arguments.
 		@type noDisplayCallback: None
@@ -1750,20 +1793,20 @@ class BrailleDisplayProber(object):
 				pass
 			log.debug("Probing braille display %s", name)
 			try:
-				for port, portDescription in cls.getPossiblePorts().iteritems():
+				for port in cls.getPossiblePorts():
 					# If stopped, get out of here.
 					if self._stop:
 						return
-					if not active and port != BrailleDisplayDriver.AUTOMATIC_PORT[0]:
+					if not active and port.probeType == hwPorts.PROBE_MANUAL:
 						break
 					try:
-						display = cls(port=port)
+						display = cls(port=port.name)
 					except:
 						continue
 					# Found one
 					numCells = display.numCells
 					display.terminate()
-					yield cls, port, portDescription, numCells
+					yield cls, port, numCells
 			except NotImplementedError:
 				# Fallback to old drivers that don't support port selection
 				try:
@@ -1776,9 +1819,9 @@ class BrailleDisplayProber(object):
 
 	def probe(self):
 		log.debug("Start probing for braille displays.")
-		for cls, port, portDescription, numCells in self.probeGenerator():
+		for cls, port, numCells in self.probeGenerator():
 			if self.foundDisplayCallback:
-				wx.CallAfter(self.foundDisplayCallback, cls, port, portDescription, numCells)
+				wx.CallAfter(self.foundDisplayCallback, cls, port, numCells)
 			break
 		else:
 			if self._stop:
