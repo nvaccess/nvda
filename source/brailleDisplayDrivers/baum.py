@@ -14,6 +14,7 @@ import braille
 import inputCore
 from logHandler import log
 import brailleInput
+import hwPorts
 
 TIMEOUT = 0.2
 BAUD_RATE = 19200
@@ -92,57 +93,68 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def check(cls):
-		return True
+		try:
+			next(cls.getPossiblePorts())
+			return True
+		except StopIteration:
+			return False
 
 	@classmethod
 	def getPossiblePorts(cls):
-		ports = OrderedDict()
 		comPorts = list(hwPortUtils.listComPorts(onlyAvailable=True))
 		try:
-			next(cls._getAutoPorts(comPorts))
-			ports.update((cls.AUTOMATIC_PORT,))
+			next(cls._getUsbPorts(comPorts))
+			yield hwPorts.USB_PORT
 		except StopIteration:
 			pass
-		for portInfo in comPorts:
-			# Translators: Name of a serial communications port.
-			ports[portInfo["port"]] = _("Serial: {portName}").format(portName=portInfo["friendlyName"])
-		return ports
+		try:
+			next(cls._getBluetoothPorts(comPorts))
+			yield hwPorts.BLUETOOTH_PORT
+		except StopIteration:
+			pass
+		for port in hwPorts.getSerialPorts():
+			yield port
 
 	@classmethod
-	def _getAutoPorts(cls, comPorts):
-		# Try bluetooth ports last.
-		for portInfo in sorted(comPorts, key=lambda item: "bluetoothName" in item):
+	def _getUsbPorts(cls, comPorts):
+		for portInfo in comPorts:
 			port = portInfo["port"]
 			hwID = portInfo["hardwareID"]
-			if hwID.startswith(r"FTDIBUS\COMPORT"):
-				# USB.
-				portType = "USB"
-				try:
-					usbID = hwID.split("&", 1)[1]
-				except IndexError:
-					continue
-				if usbID not in USB_IDS:
-					continue
-			elif "bluetoothName" in portInfo:
-				# Bluetooth.
-				portType = "bluetooth"
-				btName = portInfo["bluetoothName"]
-				if not any(btName.startswith(prefix) for prefix in BLUETOOTH_NAMES):
-					continue
-			else:
+			if not hwID.startswith(r"FTDIBUS\COMPORT"):
 				continue
-			yield port, portType
+			try:
+				usbID = hwID.split("&", 1)[1]
+			except IndexError:
+				continue
+			if usbID in USB_IDS:
+				yield port
 
-	def __init__(self, port="Auto"):
+	@classmethod
+	def _getBluetoothPorts(cls, comPorts):
+		for portInfo in comPorts:
+			port = portInfo["port"]
+			try:
+				btName = portInfo["bluetoothName"]
+			except KeyError:
+				continue
+			if any(btName.startswith(prefix) for prefix in BLUETOOTH_NAMES):
+				yield port
+
+	def __init__(self, port):
 		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
 		self._deviceID = None
 
-		if port == "auto":
-			tryPorts = self._getAutoPorts(hwPortUtils.listComPorts(onlyAvailable=True))
+		if port == hwPorts.USB_PORT.name:
+			tryPorts = self._getUsbPorts(hwPortUtils.listComPorts(onlyAvailable=True))
+			portType = "USB"
+		elif port == hwPorts.BLUETOOTH_PORT.name:
+			tryPorts = self._getBluetoothPorts(hwPortUtils.listComPorts(onlyAvailable=True))
+			portType = "Bluetooth"
 		else:
-			tryPorts = ((port, "serial"),)
-		for port, portType in tryPorts:
+			tryPorts = (port,)
+			portType = "serial"
+		for port in tryPorts:
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
 			try:
