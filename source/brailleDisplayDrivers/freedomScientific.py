@@ -15,6 +15,7 @@ from baseObject import ScriptableObject
 from winUser import WNDCLASSEXW, WNDPROC, LRESULT, HCURSOR
 from logHandler import log
 import brailleInput
+import hwPorts
 
 #Try to load the fs braille dll
 try:
@@ -124,13 +125,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 
 	@classmethod
 	def getPossiblePorts(cls):
-		ports = OrderedDict([cls.AUTOMATIC_PORT, ("USB", "USB",)])
+		yield hwPorts.USB_PORT
 		try:
 			cls._getBluetoothPorts().next()
-			ports["bluetooth"] = "Bluetooth"
+			yield hwPorts.BLUETOOTH_PORT
 		except StopIteration:
 			pass
-		return ports
 
 	@classmethod
 	def _getBluetoothPorts(cls):
@@ -150,7 +150,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 		(_("line scroll"),("globalCommands","GlobalCommands","braille_previousLine"),("globalCommands","GlobalCommands","braille_nextLine")),
 	]
 
-	def __init__(self, port="auto"):
+	def __init__(self, port):
 		self.leftWizWheelActionCycle=itertools.cycle(self.wizWheelActions)
 		action=self.leftWizWheelActionCycle.next()
 		self.gestureMap.add("br(freedomScientific):leftWizWheelUp",*action[1])
@@ -162,9 +162,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 		super(BrailleDisplayDriver,self).__init__()
 		self._messageWindowClassAtom=windll.user32.RegisterClassExW(byref(nvdaFsBrlWndCls))
 		self._messageWindow=windll.user32.CreateWindowExW(0,self._messageWindowClassAtom,u"nvdaFsBrlWndCls window",0,0,0,0,0,None,None,appInstance,None)
-		if port == "auto":
-			portsToTry = itertools.chain(["USB"], self._getBluetoothPorts())
-		elif port == "bluetooth":
+		if port == hwPorts.BLUETOOTH_PORT.name:
 			portsToTry = self._getBluetoothPorts()
 		else: # USB
 			portsToTry = ["USB"]
