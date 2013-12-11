@@ -302,8 +302,8 @@ DOT8 = 128
 #: Used in place of a specific braille display driver name to indicate that
 #: braille displays should be automatically detected and used.
 AUTO_DISPLAY_NAME = "auto"
-#: How often (in ms) to automatically scan for braille displays.
-AUTO_DISPLAY_DETECT_DELAY = 10000
+#: How often (in ms) to automatically poll for braille displays.
+AUTO_DISPLAY_POLL_INTERVAL = 10000
 
 def NVDAObjectHasUsefulText(obj):
 	import displayModel
@@ -1550,16 +1550,20 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if display != self.display.name:
 			self.setDisplayByName(display)
 
+	def _autoDeviceChangeProbe(self):
+		self._autoProber = BrailleDisplayProber(
+			(hwPorts.PROBE_NOTIFY, hwPorts.PROBE_POLL),
+			foundDisplayCallback=self._autoFoundDisplay,
+			noDisplayCallback=self._autoNoDisplay)
+		self._autoProber.startProbing()
+		self._autoProber._callLater = None
+
 	def _setAutoDetect(self, enable):
 		if enable and not self._autoProber:
-			self.setDisplayByName("noBraille", isFallback=True)
-			self._autoProber = BrailleDisplayProber(
-				foundDisplayCallback=self._autoFoundDisplay,
-				noDisplayCallback=self._autoNoDisplay)
-			self._deviceChangeListener = DeviceChangeListener()
-			self._autoProber.startProbing()
-			self._autoProber._callLater = None
 			config.conf["braille"]["display"] = AUTO_DISPLAY_NAME
+			self.setDisplayByName("noBraille", isFallback=True)
+			self._deviceChangeListener = DeviceChangeListener()
+			self._autoDeviceChangeProbe()
 		elif not enable and self._autoProber:
 			self._autoProber.stopProbing()
 			if self._autoProber._callLater:
@@ -1567,7 +1571,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._autoProber = None
 			self._deviceChangeListener = None
 
-	def _autoFoundDisplay(self, displayCls, port, numCells):
+	def _autoFoundDisplay(self, displayCls, port):
 		log.info('Detected braille display "%s"' % displayCls.description)
 		try:
 			self._setDisplay(displayCls, port=port.name)
@@ -1578,16 +1582,18 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.initialDisplay()
 
 	def _autoNoDisplay(self):
-		self._autoProber._callLater = wx.CallLater(AUTO_DISPLAY_DETECT_DELAY, self._autoProber.startProbing)
+		if self._autoProber.arePortsToPoll():
+			self._autoProber = BrailleDisplayProber(
+				(hwPorts.PROBE_POLL,),
+				foundDisplayCallback=self._autoFoundDisplay,
+				noDisplayCallback=self._autoNoDisplay)
+			self._autoProber._callLater = wx.CallLater(AUTO_DISPLAY_POLL_INTERVAL, self._autoProber.startProbing)
 
 	def handleDeviceChange(self):
 		self._autoProber.stopProbing()
 		if self._autoProber._callLater:
 			self._autoProber._callLater.Stop()
-		self._autoProber = BrailleDisplayProber(
-			foundDisplayCallback=self._autoFoundDisplay,
-			noDisplayCallback=self._autoNoDisplay)
-		self._autoProber.startProbing()
+		self._autoDeviceChangeProbe()
 
 def initialize():
 	global handler
@@ -1761,77 +1767,70 @@ class BrailleDisplayProber(object):
 	""" Probes for braille displays connected to the user's machine.
 	"""
 
-	def __init__(self, active=False, foundDisplayCallback=None, noDisplayCallback=None):
+	def __init__(self, probeTypes, foundDisplayCallback=None, noDisplayCallback=None):
 		"""Constructor.
-		@param active: Whether to probe ports (such as serial ports) that might not be associated with displays.
-		@type active: bool
+		@param probeTypes: The types of probes to perform in order of precedence.
+		@type probeTypes: sequence of C{hwPorts.PROBE_*} constants
 		@param foundDisplayCallback: Called if a display is found with arguments
-			(displayClass, port, numCells)
+			(displayClass, port)
 		@type foundDisplayCallback: callable
 		@param noDisplayCallback: Called when probing is complete if no display was found with no arguments.
 		@type noDisplayCallback: None
 		"""
 		super(BrailleDisplayProber, self).__init__()
-		self._active = active
+		self.probeTypes = probeTypes
 		self._thread = None
 		self._stop = False
 		self.foundDisplayCallback = foundDisplayCallback
 		self.noDisplayCallback = noDisplayCallback
+		self._cachedPorts = None
 
-	def probeGenerator(self):
-		active = self._active
+	def _allPorts(self):
+		if self._cachedPorts is not None:
+			for item in self._cachedPorts:
+				yield item
+			return
+
+		# We only want to iterate through as many displays and ports as necessary.
+		# Therefore, gather them the first time and cache for later.
+		ports = []
 		for name, description in getDisplayList():
-			if self._stop:
-				return
 			cls = _getDisplayDriver(name)
-			if not cls.canProbe:
-				continue
 			try:
 				if not cls.check():
 					continue
 			except:
-				pass
-			log.debug("Probing braille display %s", name)
+				continue
 			try:
-				for port in cls.getPossiblePorts():
-					# If stopped, get out of here.
-					if self._stop:
-						return
-					if not active and port.probeType == hwPorts.PROBE_MANUAL:
-						break
-					try:
-						display = cls(port=port.name)
-					except:
-						continue
-					# Found one
-					numCells = display.numCells
-					display.terminate()
-					yield cls, port, numCells
+				dispPorts = cls.getPossiblePorts()
 			except NotImplementedError:
-				# Fallback to old drivers that don't support port selection
+				continue
+			for port in dispPorts:
+				ports.append((cls, port))
+				yield cls, port
+		self._cachedPorts = ports
+
+	def _probe(self):
+		self._cachedPorts = None
+		for pt in self.probeTypes:
+			for cls, port in self._allPorts():
+				if self._stop:
+					return
+				if port.probeType != pt:
+					continue
 				try:
-					display = cls()
+					display = cls(port=port.name)
 				except:
 					continue
-				numCells = display.numCells
+				# Found one!
 				display.terminate()
-				yield cls, None, None, numCells
-
-	def probe(self):
-		log.debug("Start probing for braille displays.")
-		for cls, port, numCells in self.probeGenerator():
-			if self.foundDisplayCallback:
-				wx.CallAfter(self.foundDisplayCallback, cls, port, numCells)
-			break
-		else:
-			if self._stop:
-				log.debug("Probing for braille displays cancelled")
+				wx.CallAfter(self.foundDisplayCallback, cls, port)
 				return
-			wx.CallAfter(self.noDisplayCallback)
-		log.debug("End probing for braille displays")
+
+		wx.CallAfter(self.noDisplayCallback)
 
 	def startProbing(self):
-		self._thread = threading.Thread(target=self.probe)
+		self._thread = threading.Thread(target=self._probe)
 		self._thread.setDaemon(True)
 		self._stop = False
 		self._thread.start()
@@ -1844,6 +1843,12 @@ class BrailleDisplayProber(object):
 	@property
 	def probing(self):
 		return self._thread and self._thread.isAlive()
+
+	def arePortsToPoll(self):
+		"""Determine whether there are any ports that need to be polled.
+		"""
+		return any(port.probeType == hwPorts.PROBE_POLL
+			for cls, port in self._allPorts())
 
 	def terminate():
 		self.stopProbing()
