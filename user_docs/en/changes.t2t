@@ -7,6 +7,8 @@
 
 == New Features ==
 - Support for Microsoft PowerPoint 2013. Note that protected view is not supported. (#3578)
+- In Microsoft word and Excel, NVDA can now read the selected symbol when choosing symbols using the Insert Symbols dialog. (#3538)
+- It is now possible to choose if content in documents should be identified as clickable, via a new option in the Document Formatting settings dialog. This option is on by default (previous behaviour). (#3556)
 
 
 == Bug Fixes ==
@@ -19,6 +21,8 @@
 - In browse mode in Adobe Reader, the correct text is now rendered for buttons, etc. where the label has been overridden using a tooltip or other means. (#3640)
 - In browse mode in Adobe Reader, extraneous graphics containing the text "mc-ref" will no longer be rendered. (#3645)
 - NVDA no longer reports all cells in Microsoft Excel as underlined in their formatting information. (#3669)
+- No longer show meaningless characters in browse mode documents such as those found in the Unicode private usage range. In some cases these were stopping more useful labels to be shown. (#2963).
+- Input composition for entering east-asian characters no longer fails in PuTTY (#3432)
 
 
 == Changes for Developers ==
