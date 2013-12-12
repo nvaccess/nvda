@@ -10,6 +10,8 @@
 import threading
 from ctypes import *
 from ctypes.wintypes import *
+import time
+import wx
 import winKernel
 import wave
 import config
@@ -19,6 +21,9 @@ __all__ = (
 )
 
 winmm = windll.winmm
+
+ANRUS_PRIORITY_AUDIO_ACTIVE=4
+ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK=8
 
 HWAVEOUT = HANDLE
 LPHWAVEOUT = POINTER(HWAVEOUT)
@@ -94,9 +99,41 @@ class WavePlayer(object):
 	To use, construct an instance and feed it waveform audio using L{feed}.
 	"""
 	#: A lock to prevent WaveOut* functions from being called simultaneously, as this can cause problems even if they are for different HWAVEOUTs.
-	_global_waveout_lock = threading.RLock()
+	_global_waveout_lock = threading.RLock()	
 
-	def __init__(self, channels, samplesPerSec, bitsPerSample, outputDevice=WAVE_MAPPER, closeWhenIdle=True):
+	_global_priorityRefCount=0 #class variable, not instance
+	_global_priorityRefCountLock = threading.RLock()
+	_priorityRequested=False
+
+	def _checkPrioritySupported(self):
+		return config.isInstalledCopy() and hasattr(oledll.oleacc,'AccSetRunningUtilityState')
+
+	@classmethod
+	def _global_requestPriority(cls,switch):
+		with WavePlayer._global_priorityRefCountLock:
+			import gui
+			ATWindow=gui.mainFrame.GetHandle()
+			if switch:
+				WavePlayer._global_priorityRefCount+=1
+				if WavePlayer._global_priorityRefCount==1:
+					oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_PRIORITY_AUDIO_ACTIVE|ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK,ANRUS_PRIORITY_AUDIO_ACTIVE|ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK)
+					time.sleep(0.1)
+			else:
+				WavePlayer._global_priorityRefCount-=1
+				if WavePlayer._global_priorityRefCount==0:
+					oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_PRIORITY_AUDIO_ACTIVE|ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK,0)
+
+	def _requestPriority(self,switch):
+		with WavePlayer._global_priorityRefCountLock:
+			if switch==self._priorityRequested:
+				return
+			if switch:
+				WavePlayer._global_requestPriority(True)
+			else:
+				wx.CallLater(1500,WavePlayer._global_requestPriority,False)
+			self._priorityRequested=switch
+
+	def __init__(self, channels, samplesPerSec, bitsPerSample, outputDevice=WAVE_MAPPER, closeWhenIdle=True,wantPriority=True):
 		"""Constructor.
 		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
 		@type channels: int
@@ -108,6 +145,8 @@ class WavePlayer(object):
 		@type outputDevice: int or basestring
 		@param closeWhenIdle: If C{True}, close the output device when no audio is being played.
 		@type closeWhenIdle: bool
+		@param wantPriority: if true then background audio will be ducked on Windows 8 and higher
+		@type wantPriority: bool
 		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
 		@raise WindowsError: If there was an error opening the audio output device.
 		"""
@@ -117,6 +156,10 @@ class WavePlayer(object):
 		if isinstance(outputDevice, basestring):
 			outputDevice = outputDeviceNameToID(outputDevice, True)
 		self.outputDeviceID = outputDevice
+		if wantPriority and not self._checkPrioritySupported():
+			wantPriority=False
+		self._wantPriority=wantPriority
+		self._priorityRequested=False
 		#: If C{True}, close the output device when no audio is being played.
 		#: @type: bool
 		self.closeWhenIdle = closeWhenIdle
@@ -156,6 +199,7 @@ class WavePlayer(object):
 		@type data: str
 		@raise WindowsError: If there was an error playing the audio.
 		"""
+		if self._wantPriority: self._requestPriority(True)
 		whdr = WAVEHDR()
 		whdr.lpData = data
 		whdr.dwBufferLength = len(data)
@@ -195,6 +239,7 @@ class WavePlayer(object):
 		@param switch: C{True} to pause playback, C{False} to unpause.
 		@type switch: bool
 		"""
+		if self._wantPriority: self._requestPriority(not switch)
 		with self._waveout_lock:
 			if not self._waveout:
 				return
@@ -218,6 +263,7 @@ class WavePlayer(object):
 					return
 				if self.closeWhenIdle:
 					self._close()
+		if self._wantPriority: self._requestPriority(False)
 
 	def stop(self):
 		"""Stop playback.
