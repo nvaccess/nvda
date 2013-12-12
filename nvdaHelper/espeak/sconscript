@@ -5,6 +5,30 @@ Import([
 
 import os
 import ctypes
+from glob import glob
+
+env=env.Clone()
+env.Append(CPPDEFINES='/DLIBRARY')
+
+def _compilePhonemeAndDictData_buildEmitter(target,source,env):
+	dictSources=env.Flatten([env.Glob(source[0].abspath+'\\*_%s'%ext) for ext in ('rules','list','listx','extra')])
+	phSourceIgnores=['error_log','error_intonation','compile_prog_log','compile_report','envelopes.png']
+	phSources=env.Flatten([[Dir(topDir).File(f) for f in files if f not in phSourceIgnores] for topDir,subdirs,files in os.walk(source[1].abspath)])
+	sources=env.Flatten([phSources])
+	targets=[target[0].File(f) for f in ['intonations','phondata','phondata-manifest','phonindex','phontab']]
+	dictSideEffects=[target[0].File('%s_dict'%dictName) for dictName in set(f.name.split('_')[0] for f in dictSources)]
+	dictSideEffects.extend([source[0].File(x) for x in ('dict_log','dict_phonemes')])
+	env.SideEffect(dictSideEffects,targets)
+	phSideEffects=[source[1].File(x) for x in phSourceIgnores]
+	env.SideEffect(phSideEffects,targets)
+	return targets,sources
+
+env['BUILDERS']['compileEspeakPhonemeAndDictData']=Builder(
+	action=[
+		[File("#miscDeps/tools/espeakedit.exe"),"--compile"]
+	],
+	emitter=_compilePhonemeAndDictData_buildEmitter,
+)
 
 class espeak_VOICE(ctypes.Structure):
 	_fields_=[
@@ -19,10 +43,12 @@ class espeak_VOICE(ctypes.Structure):
 		('spare',ctypes.c_void_p),
 	]
 
+espeakRepo=Dir("#include/espeak")
+
 env=env.Clone()
 env.Append(CCFLAGS='/W0')
 env.Append(CPPDEFINES=[('BUILDING_DLL',1)])
-env.Prepend(CPPPATH='#include/espeak/platforms/windows/windows_dll/src')
+env.Prepend(CPPPATH=espeakRepo.Dir('platforms/windows/windows_dll/src'))
 
 def espeak_compileDict_action(target,source,env):
 	# We want the eSpeak dll to be freed after each dictionary.
@@ -51,11 +77,11 @@ tempSrcDir=Dir('src')
 
 #make a temp copy of src, but using the windows dll version of speech.h
 winFiles=['speech.h','stdafx.h']
-for f in env.Glob('#include/espeak/src/*'):
+for f in env.Glob(espeakRepo.abspath+'/src/*'):
 	if f.name.lower() in winFiles: continue
 	env.Command(tempSrcDir.File(f.name),f,Copy('$TARGET','$SOURCE'))
 for f in winFiles:
-	env.Command(tempSrcDir.File(f),File('#include/espeak/platforms/windows/windows_dll/src/%s'%f),Copy('$TARGET','$SOURCE'))
+	env.Command(tempSrcDir.File(f),espeakRepo.File('platforms/windows/windows_dll/src/%s'%f),Copy('$TARGET','$SOURCE'))
 
 espeakLib=env.SharedLibrary(
 	target='espeak',
@@ -86,29 +112,25 @@ espeakLib=env.SharedLibrary(
 	LIBS=['advapi32'],
 )
 
-dictDeps=[espeakLib]
+#Compile phoneme data
+tempPhonemeAndDictDataFiles=env.compileEspeakPhonemeAndDictData(espeakRepo.Dir('espeak-data'),[espeakRepo.Dir('dictsource'),espeakRepo.Dir('phsource')],ENV={'ESPEAK_DATA_PATH':espeakRepo.abspath})
+phonemeAndDictDataFiles=[env.Command(espeakDataDir.File(f.name),f,Copy('$TARGET','$SOURCE')) for f in tempPhonemeAndDictDataFiles]
+#Ensure these don't try to get built in paralell
+for f in phonemeAndDictDataFiles:
+	env.SideEffect('_espeak_compileDict',f)
 
-#Make a copy of espeak-data, though excluding existing precompiled dict files
-sourceDataPath=Dir('#include/espeak/espeak-data').abspath
-for topDir,subDirs,files in os.walk(sourceDataPath):
-	relTopDir=os.path.relpath(topDir,sourceDataPath)
-	for f in files:
-		if(topDir==sourceDataPath) and f.lower().endswith('_dict'): continue
-		fNode=espeakDataDir.Dir(relTopDir).File(f)
-		dictDeps.append(fNode)
-		env.Command(fNode,Dir(topDir).File(f),Copy('$TARGET','$SOURCE'))
-	if len(files)==0:
-		env.Command(espeakDataDir.Dir(relTopDir),Dir(topDir),Mkdir('$TARGET'))
+# copy voices from espeak repository to synthDrivers 
+env.recursiveCopy(espeakDataDir.Dir('voices'),espeakRepo.Dir('espeak-data\\voices'))
 
 #Copy in the extra variants
-for f in env.Glob('variants/*'):
-	env.Command(espeakDataDir.File('voices/!v/%s'%f.name),f,Copy('$TARGET','$SOURCE'))
+for f in env.Glob(Dir('variants').abspath+'/*'):
+	env.Command(espeakDataDir.File('voices\\!v\\%s'%f.name),f,Copy("$TARGET","$SOURCE"))
 
 #Compile all dictionaries
-for f in env.Glob('#include/espeak/dictsource/*_rules'):
-	extras=[f.File(f.name.split('_')[0]+x) for x in '_list','_listx']
-	dictFile=env.Command(espeakDataDir.File(f.name.split('_')[0]+'_dict'),[f,[x for x in extras if os.path.isfile(x.abspath)]],espeak_compileDict_action)
-	env.Depends(dictFile,dictDeps)
+for f in env.Glob(espeakRepo.abspath+'/dictsource/*_rules'):
+	extraSources=[f.File(f.name.split('_')[0]+x) for x in '_list','_listx','_extra']
+	dictFile=env.Command(espeakDataDir.File(f.name.split('_')[0]+'_dict'),[f,[x for x in extraSources if os.path.isfile(x.abspath)]],espeak_compileDict_action)
+	env.Depends(dictFile,[espeakLib,espeakDataDir.Dir('voices'),phonemeAndDictDataFiles])
 	#Dictionaries can not be compiled in parallel, force SCons not to do this
 	env.SideEffect('_espeak_compileDict',dictFile)
 
