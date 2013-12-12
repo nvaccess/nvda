@@ -547,7 +547,25 @@ VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufS
 
 VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, const std::wstring& text) {
 	LOG_DEBUG(L"Add textFieldNode using parent at "<<parent<<L", previous at "<<previous);
-	VBufStorage_textFieldNode_t* textFieldNode=new VBufStorage_textFieldNode_t(text);
+	// #2963: Strip any private area unicode or 0-with spaces from the start and end of the string
+	size_t textLength=text.length();
+	bool needsStrip=false;
+	size_t i;
+	for(i=0;i<textLength;++i) {
+		if(!isPrivateCharacter(text[i])) { 
+			break;
+		}
+		needsStrip=true;
+	}
+	size_t subStart=i;
+	for(i=0;i<textLength;++i) {
+		if(!isPrivateCharacter(text[(textLength-1)-i])) { 
+			break;
+		}
+		needsStrip=true;
+	}
+	size_t subLength=max(textLength-i,subStart)-subStart;
+	VBufStorage_textFieldNode_t* textFieldNode=new VBufStorage_textFieldNode_t(needsStrip?text.substr(subStart,subLength):text);
 	nhAssert(textFieldNode); //controlFieldNode must have been allocated
 	LOG_DEBUG(L"Created textFieldNode: "<<textFieldNode->getDebugInfo());
 	if(addTextFieldNode(parent,previous,textFieldNode)!=textFieldNode) {

@@ -19,6 +19,7 @@
 - In browse mode in Adobe Reader, the correct text is now rendered for buttons, etc. where the label has been overridden using a tooltip or other means. (#3640)
 - In browse mode in Adobe Reader, extraneous graphics containing the text "mc-ref" will no longer be rendered. (#3645)
 - NVDA no longer reports all cells in Microsoft Excel as underlined in their formatting information. (#3669)
+- No longer show meaningless characters in browse mode documents such as those found in the Unicode private usage range. In some cases these were stopping more useful labels to be shown. (#2963).
 
 
 == Changes for Developers ==
