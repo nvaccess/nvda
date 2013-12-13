@@ -174,6 +174,7 @@ confspec = ConfigObj(StringIO(
 	reportBlockQuotes = boolean(default=true)
 	reportLandmarks = boolean(default=true)
 	reportFrames = boolean(default=true)
+	reportClickable = boolean(default=true)
 
 [reviewCursor]
 	simpleReviewMode = boolean(default=True)
