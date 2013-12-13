@@ -184,6 +184,8 @@ STATE_SORTED_DESCENDING=0x200000000
 STATES_SORTED=frozenset([STATE_SORTED,STATE_SORTED_ASCENDING,STATE_SORTED_DESCENDING])
 STATE_HASLONGDESC=0x400000000
 STATE_PINNED=0x800000000
+STATE_HASFORMULA=0x1000000000 #Mostly for spreadsheets
+STATE_HASCOMMENT=0X2000000000
 
 roleLabels={
 	# Translators: The word for an unknown control type.
@@ -341,8 +343,11 @@ roleLabels={
 	ROLE_PAGE:_("page"),
 	# Translators: Identifies a radio menu item.
 	ROLE_RADIOMENUITEM:_("radio menu item"),
+	# Translators: Identifies a layered pane.
 	ROLE_LAYEREDPANE:_("layered pane"),
+	# Translators: Identifies a redundant object.
 	ROLE_REDUNDANTOBJECT:_("redundant object"),
+	# Translators: Identifies a root pane.
 	ROLE_ROOTPANE:_("root pane"),
 	# Translators: May be reported for an editable text object in a toolbar.
 	# This is deprecated and is not often (if ever) used.
@@ -351,6 +356,7 @@ roleLabels={
 	ROLE_TERMINAL:_("terminal"),
 	# Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in addition to text; encountered on webpages and NvDA log viewer).
 	ROLE_RICHEDIT:_("rich edit"),
+	# Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
 	ROLE_RULER:_("ruler"),
 	# Translators: Identifies a scroll pane.
 	ROLE_SCROLLPANE:_("scroll pane"),
@@ -373,22 +379,33 @@ roleLabels={
 	# Translators: Identifies a toggle button (a button used to toggle something).
 	ROLE_TOGGLEBUTTON:_("toggle button"),
 	ROLE_BORDER:_("border"),
+	# Translators: Identifies a caret object.
 	ROLE_CARET:_("caret"),
+	# Translators: Identifies a character field (should not be confused with edit fields).
 	ROLE_CHARACTER:_("character"),
+	# Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
 	ROLE_CHART:_("chart"),
+	# Translators: Identifies a cursor object.
 	ROLE_CURSOR:_("cursor"),
+	# Translators: Identifies a diagram (seen on some websites and on Office documents).
 	ROLE_DIAGRAM:_("diagram"),
+	# Translators: Identifies a dial object.
 	ROLE_DIAL:_("dial"),
+	# Translators: Identifies a drop list.
 	ROLE_DROPLIST:_("drop list"),
+	# Translators: Identifies a split button (a control which performs different actions when different parts are clicked).
 	ROLE_SPLITBUTTON:_("split button"),
+	# Translators: Identifies a menu button (a button which opens a menu of items).
 	ROLE_MENUBUTTON:_("menu button"),
 	# Translators: Reported for a button which expands a grid when it is pressed.
 	ROLE_DROPDOWNBUTTONGRID:_("drop down button grid"),
 	# Translators: Identifies an equation.
 	ROLE_EQUATION:_("equation"),
+	# Translators: Identifies a grip control.
 	ROLE_GRIP:_("grip"),
 	# Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as assigning shortcut for icons on the desktop).
 	ROLE_HOTKEYFIELD:_("hot key field"),
+	# Translators: Identifies an indicator control.
 	ROLE_INDICATOR:_("indicator"),
 	# Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
 	ROLE_SPINBUTTON:_("spin button"),
@@ -404,18 +421,24 @@ roleLabels={
 	ROLE_DESKTOPICON:_("desktop icon"),
 	# Translators: Identifies an alert message such as file download alert in Internet explorer 9 and above.
 	ROLE_ALERT:_("alert"),
+	# Translators: Identifies an internal frame (commonly called iframe; usually seen when browsing some sites with Internet Explorer).
 	ROLE_INTERNALFRAME:_("IFrame"),
 	# Translators: Identifies desktop pane (the desktop window).
 	ROLE_DESKTOPPANE:_("desktop pane"),
+	# Translators: Identifies an option pane.
 	ROLE_OPTIONPANE:_("option pane"),
+	# Translators: Identifies a color chooser.
 	ROLE_COLORCHOOSER:_("color chooser"),
+	# Translators: Identifies a file chooser (to select a file or groups of files from a list).
 	ROLE_FILECHOOSER:_("file chooser"),
 	ROLE_FILLER:_("filler"),
 	# Translators: Identifies a menu such as file menu.
 	ROLE_MENU:_("menu"),
+	# Translators: Identifies a panel control for grouping related options.
 	ROLE_PANEL:_("panel"),
 	# Translators: Identifies a password field (a protected edit field for entering passwords such as when logging into web-based email sites).
 	ROLE_PASSWORDEDIT:_("password edit"),
+	# Translators: Identifies a font chooser.
 	ROLE_FONTCHOOSER:_("font chooser"),
 	ROLE_LINE:_("line"),
 	# Translators: Identifies a font name.
@@ -444,9 +467,11 @@ roleLabels={
 	ROLE_ALIGNMENT:_("alignment"),
 	# Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 	ROLE_ALERT:_("alert"),
+	# Translators: Identifies a data grid control (a grid which displays data).
 	ROLE_DATAGRID:_("data grid"),
 	ROLE_DATAITEM:_("data item"),
 	ROLE_HEADERITEM:_("header item"),
+	# Translators: Identifies a thumb control (a button-like control for changing options).
 	ROLE_THUMB:_("thumb control"),
 	ROLE_CALENDAR:_("calendar"),
 }
@@ -515,8 +540,12 @@ stateLabels={
 	STATE_SORTED_DESCENDING:_("sorted descending"),
 	# Translators: a state that denotes that an object (usually a graphic) has a long description.
 	STATE_HASLONGDESC:_("has long description"),
-	# Translators: a state that denotes that an object is pinned in its current location 
+	# Translators: a state that denotes that an object is pinned in its current location
 	STATE_PINNED:_("pinned"),
+	# Translators: a state that denotes the existance of a formula on a spreadsheet cell
+	STATE_HASFORMULA:_("has formula"),
+	# Translators: a state that denotes the existance of a comment.
+	STATE_HASCOMMENT:_("has comment"),
 }
 
 negativeStateLabels={
@@ -585,9 +614,11 @@ def processPositiveStates(role, states, reason, positiveStates):
 	if role == ROLE_COMBOBOX:
 		# Combo boxes inherently have a popup, so don't report it.
 		positiveStates.discard(STATE_HASPOPUP)
-	if role in (ROLE_LINK, ROLE_BUTTON, ROLE_CHECKBOX, ROLE_RADIOBUTTON, ROLE_TOGGLEBUTTON, ROLE_MENUITEM, ROLE_TAB, ROLE_SLIDER, ROLE_DOCUMENT):
-		# This control is clearly clickable according to its role
-		# or reporting clickable just isn't useful.
+	import config
+	if not config.conf['documentFormatting']['reportClickable'] or role in (ROLE_LINK, ROLE_BUTTON, ROLE_CHECKBOX, ROLE_RADIOBUTTON, ROLE_TOGGLEBUTTON, ROLE_MENUITEM, ROLE_TAB, ROLE_SLIDER, ROLE_DOCUMENT):
+		# This control is clearly clickable according to its role,
+		# or reporting clickable just isn't useful,
+		# or the user has explicitly requested no reporting clickable
 		positiveStates.discard(STATE_CLICKABLE)
 	if reason == REASON_QUERY:
 		return positiveStates

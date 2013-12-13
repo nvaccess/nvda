@@ -1,107 +1,57 @@
 = NVDA Source Code Read Me =
-
-This document describes how to prepare and use the NVDA source code. For more information about NVDA, see the NVDA web site:
-http://www.nvda-project.org/
+This document describes how to prepare and use the NVDA source code.
+For more information about NVDA, see the NVDA web site: http://www.nvaccess.org/
+For information about obtaining the source code, please see http://community.nvda-project.org/wiki/AccessingAndRunningSourceCode
 
 == Dependencies ==
-The NVDA source depends on several other packages to run correctly, as described below.
+The NVDA source depends on several other packages to run correctly.
 
-All directories mentioned are relative to the root of the NVDA source distribution. Please create any directories mentioned that don't already exist.
+=== Installed Dependencies ===
+The following dependencies need to be installed on your system:
+* Python, version 2.7.5, 32 bit: http://www.python.org/
+* Microsoft Windows SDK, version 7.0: http://www.microsoft.com/downloads/en/details.aspx?FamilyID=c17ba869-9671-4330-a63e-1fd44e0e2505&displaylang=en
+	* You need to install both the 32 bit and 64 bit libraries and tools.
 
-If you are running a 64 bit version of Windows, you should install the 32 bit versions of any dependencies that provide both 32 bit and 64 bit versions unless otherwise specified.
+=== Git Submodules ===
+Most of the dependencies are contained in Git submodules.
+If you didn't pass the --recursive option to git clone, you will need to run git submodule update --init.
+Whenever a required submodule commit changes (e.g. after git pull), you will need to run git submodule update.
+If you aren't sure, run git submodule update after every git pull, merge or checkout.
 
-Earlier or later versions of these dependencies may work, but the version listed is the version that has been widely tested and is used for official builds.
+The following dependencies are included in Git submodules:
+* comtypes, version 0.6.2: http://sourceforge.net/projects/comtypes/
+* wxPython, version 2.8.12.1 unicode: http://www.wxpython.org/
+* Python Windows Extensions, build 218: http://sourceforge.net/projects/pywin32/ 
+* eSpeak, version 1.47.11: http://espeak.sourceforge.net/
+* IAccessible2, version 1.3: http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2
+* ConfigObj, version 4.6.0: http://www.voidspace.org.uk/python/configobj.html
+* liblouis, version 2.5.3: http://www.liblouis.org/
+* NVDA images and sounds
+* System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest
+* Adobe Acrobat accessibility interface, version XI: http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip
+* Adobe FlashAccessibility interface typelib
+* txt2tags, version 2.5: http://txt2tags.sourceforge.net/
+* MinHook, rev e21b54a: https://github.com/RaMMicHaeL/minhook
+* SCons, version 2.3.0: http://www.scons.org/
+* brlapi Python bindings, version 0.5.7 or later, distributed with BRLTTY for Windows, version 4.2-2: http://brl.thefreecat.org/brltty/
+* ALVA BC6 generic dll, version 3.0.4.1
+* lilli.dll, version 2.1.0.0
+* Handy Tech Braille SDK, version 1.4.2.0: ftp://ftp.handytech.de/public/Software/BrailleDriver/HTBrailleSDK_1420a.zip
+* pyserial, version 2.5: http://pypi.python.org/pypi/pyserial
+* HanSoneConnect.dll, version 2.0.0.1
+* SyncBraille.dll, version 1.0.0.1
+* Python interface to FTDI driver/chip: http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip
+* Py2Exe, version 0.6.9: http://sourceforge.net/projects/py2exe/
+* Nulsoft Install System, version 2.46: http://nsis.sourceforge.net/
+* NSIS UAC plug-in, version 0.2.4, ansi: http://nsis.sourceforge.net/UAC_plug-in
+* xgettext and msgfmt from GNU gettext: http://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/
+* epydoc, version 3.0.1 with patch for bug #303: http://epydoc.sourceforge.net/
 
-General dependencies:
-	* Python 2.7, version 2.7.5: http://www.python.org/
-	* comtypes, version 0.6.2: http://www.sourceforge.net/projects/comtypes/
-	* wxPython 2.8 unicode (for Python 2.7), version 2.8.12.1: http://www.wxpython.org/
-	* Python Windows Extensions (for Python 2.7), build 218: http://www.sourceforge.net/projects/pywin32/ 
-	* eSpeak, version 1.47.11:
-		* Official web site: http://espeak.sourceforge.net/
-		* Download the espeak source archive. Note that it must be an official source archive from the espeak website containing already compiled phoneme data, not straight from svn. 
-		* Extract it in to include/espeak so that include/espeak/src, include/espeak/dictsource, include/espeak/platforms and include/espeak/espeak-data all exist.
-	* IAccessible2, version 1.3: http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2
-		* Download the merged IDL and copy it to include\ia2\ia2.idl.
-	* ConfigObj, version 4.6.0:
-		* Web site: http://www.voidspace.org.uk/python/configobj.html
-		* Copy configobj.py and validate.py into the global Python site-packages directory.
-	* liblouis, version 2.5.3:
-		* Official web site: http://www.liblouis.org/
-		* This is included as a Git submodule.
-	* NVDA media (images and sounds): http://www.nvda-project.org/nvda-media/
-		* Extract the archive into the root of your NVDA source distribution.
-	* System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest:
-		* If you don't have them already, all of these files have been bundled for convenience at http://www.nvda-project.org/3rdParty/system-dlls.7z
-		* Copy them either into the source directory or into your Windows system32 directory.
-	* Adobe Acrobat accessibility interface, version XI: http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip
-		* Extract the AcrobatAccess.idl file into include\AcrobatAccess.
-	* Adobe FlashAccessibility interface typelib: http://www.nvda-project.org/3rdParty/FlashAccessibility.tlb
-		* Copy FlashAccessibility.tlb into the source\typelibs directory.
-	* txt2tags, version 2.5: http://txt2tags.sourceforge.net/
-		* Copy the txt2tags Python script to the global Python site-packages directory, naming it txt2tags.py.
-	* Microsoft Windows SDK, version 7.0: http://www.microsoft.com/downloads/en/details.aspx?FamilyID=c17ba869-9671-4330-a63e-1fd44e0e2505&displaylang=en
-		* You need to install both the 32 bit and 64 bit libraries and tools.
-	* MinHook, rev e21b54a: http://www.codeproject.com/KB/winsdk/LibMinHook.aspx
-		* This is included as a git submodule
-	* SCons, version 2.2.0: http://www.scons.org/
-		* As the scons command (scons.bat) is installed in to the scripts directory inside the directory where you installed Python, it is necessary to add the scripts  directory to your path variable so that you can run scons from anywhere. The rest of this readme assumes that scons can be run in this way.
-
-To use the brltty braille display driver:
-	* brlapi Python bindings (for Python 2.7), version 0.5.7 or later, distributed with BRLTTY for Windows, version 4.2-2:
-		* You can download BRLTTY for Windows at http://brl.thefreecat.org/brltty/
-		* The brlapi Python bindings can be found in the BRLTTY installation directory and are named brlapi-x.y.z.exe
-
-To use the ALVA BC640/680 braille display driver:
-	* ALVA BC6 generic dll, version 3.0.4.1: http://www.nvda-project.org/3rdParty/alvaw32.dll
-		* Copy alvaw32.dll into the source\brailleDisplayDrivers directory.
-
-To use the MDV Lilli braille display driver:
-	* lilli.dll, version 2.1.0.0: http://www.nvda-project.org/3rdParty/lilli.dll
-		* Copy lilli.dll into the source\brailleDisplayDrivers directory.
-
-To use the Handy Tech braille display driver:
-	* Handy Tech Braille SDK, version 1.4.2.0: ftp://ftp.handytech.de/public/Software/BrailleDriver/HTBrailleSDK_1420a.zip
-		* Copy these files from the SDK's prog directory into NVDA's source\brailleDisplayDrivers\handyTech directory: HtBrailleDriverServer.dll, HtBrailleDriverServer.tlb, sbsupport.dll, dealers.dat
-	* If you want to be able to use this driver when running from source code, you will need to install the Handy Tech universal driver: ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
-
-To use the Baum, BrailleNote, Brailliant B, hedo, Papenmeier and/or Seika braille display drivers:
-	* pyserial (for Python 2.x), version 2.5: http://pypi.python.org/pypi/pyserial
-
-To use the HIMS Braille Sense/Braille EDGE braille display driver:
-	* HanSoneConnect.dll, version 2.0.0.1: http://www.nvda-project.org/3rdParty/HanSoneConnect.dll
-		* Copy HanSoneConnect.dll into the source\brailleDisplayDrivers\hims directory.
-
-To use the HIMS SyncBraille braille display driver:
-	* SyncBraille.dll, version 1.0.0.1: http://www.nvda-project.org/3rdParty/SyncBraille.dll
-		* Copy SyncBraille.dll into the source\brailleDisplayDrivers\syncBraille directory.
-
-To use the Papenmeier braille display driver:
-	* Python interface to FTDI driver/chip: http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip
-		* Download the archive.
-		* Extract ftdi2.py into the global Python site-packages directory.
-
-To build a binary version of NVDA:
-	* Py2Exe (for Python 2.7), version 0.6.9: http://www.sourceforge.net/projects/py2exe/
-	* 7-Zip: http://www.7-zip.org/
-	* Nulsoft Install System, version 2.46: http://nsis.sourceforge.net/
-	* NSIS UAC plug-in, version 0.2.4:
-		* Web site: http://nsis.sourceforge.net/UAC_plug-in
-		* Copy both ansi\uac.dll and uac.nsh into the uninstaller directory.
-
-To generate developer documentation:
-	* epydoc, version 3.0.1:
-		* Official web site: http://epydoc.sourceforge.net/
-		* Epydoc is no longer being maintained, but there is a bug in version 3.0.1 which affects NVDA.
-		* A build including a fix for this bug can be found at: http://files.nvaccess.org/3rdParty/epydoc-3.0.1+bug2585292.win32.exe
-
-To generate developer documentation for nvdaHelper:
-	* Doxygen Windows installer, version 1.7.3: http://www.stack.nl/~dimitri/doxygen/download.html 
-
-To generate a gettext translation template:
-	* xgettext and msgfmt from GNU gettext:
-		* A Windows build is available at http://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/
-		* Copy xgettext.exe and msgfmt.exe into the tools directory.
+=== Other Dependencies ===
+These dependencies are not included in Git submodules, but aren't needed by most people.
+* If you want to be able to use the Handy Tech braille display driver when running from source code, you will need to install the Handy Tech universal driver: ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
+* To create the NVDA controller client and symbols archives: 7-Zip: http://www.7-zip.org/
+* To generate developer documentation for nvdaHelper: Doxygen Windows installer, version 1.7.3: http://www.stack.nl/~dimitri/doxygen/download.html
 
 == Preparing the Source Tree ==
 Before you can run the NVDA source code, you must prepare the source tree.

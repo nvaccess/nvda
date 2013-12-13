@@ -322,7 +322,7 @@ class GlobalGestureMap(object):
 			return
 		if not self.fileName:
 			raise ValueError("No file name")
-		out = configobj.ConfigObj()
+		out = configobj.ConfigObj(encoding="UTF-8")
 		out.filename = self.fileName
 
 		for gesture, scripts in self._map.iteritems():

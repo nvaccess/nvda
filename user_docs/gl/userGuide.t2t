@@ -63,7 +63,7 @@ Para máis detalles, podes [ver a licencia completa.  http://www.gnu.org/license
 -
 
 + Obtendo e Instalando NVDA +
-Se aínda non tes unha copia do NVDA, podes descargala de [www.nvda-project.org NVDA_URL].
+Se aínda non tes unha copia do NVDA, podes descargala de [www.nvaccess.org NVDA_URL].
 
 Vai á sección download e atoparás unha liga para descargar a derradeira versión do NVDA.
 
@@ -220,11 +220,11 @@ Mentres esteas na axuda de entrada, premendo calquera tecla ou realizando calque
 As ordes actuais non se executarán mentres se esté no modo de axuda de entrada.
 
 ++ O Menú NVDA ++
-O menú NVDA permíteche controlar as opcións do NVDA, acceder á axuda, gardar/voltar á túa configuración, Modificar os diccionarios da fala, ler o ficheiro do log, e saír do NVDA.
+O menú NVDA permíteche controlar as opcións do NVDA, acceder á axuda, gardar/voltar á túa configuración, Modificar os diccionarios da fala, ler o ficheiro do rexistro, e saír do NVDA.
 
 Para despregar o menú NVDA dende calquer lugar de Windows mentres NVDA se está a executar, preme NVDA+n no teclado ou realiza un doble toque con 2 dedos na pantalla tactil.
 Tamén podes despregar o menú NVDA a través da bandexa de sistema de windows. 
-Ou facendo clic co o botón dereito sobre o icono NVDA atopado na bandexa de sistema, ou accediendo á bandexa de sistema premendo a tecla co logo de windows+B, flecha abaixo ata o icono de  NVDA e premendo a tecla aplicacións atopada seguidamente á tecla de control da dereita na maioría dos teclados. 
+Ou facendo clic co o botón dereito sobre o icono NVDA atopado na bandexa de sistema, ou accedendo á bandexa de sistema premendo a tecla co logo de windows+B, flecha abaixo ata o icono de  NVDA e premendo a tecla aplicacións atopada seguidamente á tecla de control da dereita na maioría dos teclados. 
 Cando apareza o menú, podes utilizar as teclas de cursor para navegar polo menú, e a tecla intro para activar un elemento. 
 
 ++ Ordes Básicas do NVDA ++
@@ -554,7 +554,7 @@ Nota: El atajo de teclado de anunciado del tiempo restante sólo funciona con la
 %kc:beginInclude
 || Nome | Tecla | Descripción |
 | Anunciar ventá de Comentarios | control+shift+c | Anuncia calquera comentario na ventá de comentarios.  |
-| Anunciar ventá de comentarios automáticos | control+shift+a | Anuncia calquera comentario na ventá de Comentarios automáticos.  |
+| Anunciar notas para traductores | control+shift+a | Anuncia calquera nota para os traductores.  |
 %kc:endInclude
 
 + Configurando NVDA +
@@ -586,8 +586,8 @@ Esta opción é unha casiña de verificación que, cando se marca, di ó NVDA qu
 Esta opción é unha casiña de verificación que che permite elexir se si ou se non apareze un diálogo cando saias do NVDA que che pregunte se che gostaría saír ou non do NVDA. 
 Cando estea marcada, un diálogo aparecerá cando intentes saír do NVDA preguntándoche se queres ou non saír.
 
-==== Nivel do Log ====
-Este é un cadro combinado que che permite elexir canto NVDA porá no log segundo se executa. 
+==== Nivel do Rexistro ====
+Este é un cadro combinado que che permite elexir canto NVDA porá no rexistro segundo se executa. 
 Xeralmente os usuarios non deberían necesitar tocar esto xa que non é demasiado amigable. 
 Sen embargo se queres proporcionar información nun informe sobre un fallo etc, entón poderá ser unha boa opción.
 
@@ -782,6 +782,10 @@ Se esta casiña de verificación está marcada, a tecla insert (normalmente atop
 ==== Utilizar insert do teclado numérico como tecla modificadora de NVDA ====
 Se esta casiña de verificación está marcada, a tecla insert do teclado numérico pode utilizarse como unha tecla modificadora do NVDA.
 
+Se non se escolle ningunha tecla como a tecla NVDA podería ser imposible acceder a certas ordes de NVDA.
+Polo tanto, o diálogo Opcións de Teclado amosará unha mesaxe de erro se todas as teclas están sen seleccionar  cando se prema Aceptar.
+Despois de descartar a mesaxe de erro, debes seleccionar polo menos unha antes de poder premer Aceptar para pechar o diálogo correctamente.
+
 %kc:setting
 ==== Falar caracteres ó se escribir ====
 Tecla: NVDA+2
@@ -799,6 +803,9 @@ Se está activada, esta opción causará que a voz se interrumpa cada vez que se
 
 ==== Interrupción de Voz para a Tecla Intro ====
 Se está activada, esta opción causará que a voz se interrumpa cada vez que se prema a tecla Intro. Esto está activado de maneira predeterminada.
+
+==== Permitir lectura superficial en Falar Todo ====
+Se está activada, certas ordes de navegación (como a navegación rápida en modo navegación ou o movemento por liñas ou por parágrafos) non deteñen  Falar Todo, en cambio  Falar Todo salta  á nova posición e continúa a ler.
 
 ==== Pitar se se Teclean Letras Minúsculas Cando BloqMaius está Activado ====
 Cando está activada, escoitarase un pitido de aviso se se escrebe unha letra ca tecla shift mentres BloqMaius está activada.
@@ -1057,6 +1064,25 @@ Utilizando o campo Nivel, podes axustar o nivel máis baixo do símbolo ó cal e
 
 Cando remates, preme o botón Aceptar para gardar os teus cambios ou o botón Cancelar para descartalos.
 
++++ Xestos de Entrada +++
+En este diálogo, podes persoalizar os xestos de entrada (teclas no teclado, botóns na pantalla braille, etc.) para ordes de NVDA.
+
+Só se amosan as ordes que se apliquen inmediatamente antes de que o diálogo se abra.
+Por exemplo, se queres persoalizar ordes relacionadas co modo navegación, deberías abrir o diálogo Xestos de entrada mentres esteas no modo navegación.
+
+A árbore neste cadro de diálogo amosa todas as ordes do NVDA aplicables agrupadas por categoría.
+Calquer xesto asociado cunha orde lístase baixo a orde.
+
+Para engadir un xesto de entrada a unha orde, selecciona a orde e preme o botón Engadir.
+A continuación, fai o xesto de entrada que desexes asociar, por exemplo, preme unha tecla do teclado ou un botón nunha pantalla Braille.
+A menudo, un xesto pode interpretarse de máis dunha maneira.
+Por exemplo, se premeches unha tecla no teclado, pode que desexes que sexa específica para a distribución de teclado actual (por exemplo, de escritorio ou portátil) ou pode que desexes que se aplique a todas as distribucións.
+Neste caso, aparecerá un menú que che permite seleccionar a opción desexada.
+
+Para borrar un xesto de unha orde, selecciona o xesto e preme o botón Eliminar.
+
+Cando teñas rematado de facer cambios, preme o botón Aceptar para gardalos ou o botón Cancelar para descartalos.
+
 ++ Gardando e Recargando a configuración ++
 De xeito predeterminado NVDA gardará automáticamente as túas opcións ó saír.
 Ten en conta, non obstante, que esta opción predeterminada pode ser cambiada baixo as opcións xerais no menú preferencias. 
@@ -1072,7 +1098,80 @@ As seguintes teclas de ordes de NVDA tamén son útiles:
 | Reverter configuración | NVDA+control+r | NVDA+control+r | Premendo unha vez reinicia a túa configuración a cando a gardaches por derradeira vez. Premendo tres veces reiniciaráa ós valores predeterminados de fábrica. |
 %kc:endInclude
 
-++ Ficheiros de Configuración e Perfiles de Usuario ++
+++ Perfiles de Configuración ++
+Ás veces, é posible que desexes ter diferentes configuracións para diferentes situacións.
+Por exemplo, é posible que desexes ter o anunciado de sangría habilitado mentres estás editando ou o anunciado dos atributos da fonte activado mentres estás correxindo.
+NVDA permíteche facer esto utilizando perfiles de configuración.
+
+Un perfil de configuración contén só as opcións que se cambian mentres que o perfil está a ser editado.
+A maioría das opcións pódense cambiar nos perfiles de configuración con excepción de aquelas que estean no cadro de diálogo da configuración xeral, as que se aplican á totalidade do NVDA.
+
+Os perfiles de configuración poden ser activados manualmente.
+Tamén se poden activar de forma automática debido ós disparadores como o cambio a unha aplicación en particular.
+
++++ Manello Básico +++
+Manellas os perfiles de configuración seleccionando "Perfiles de Configuración" no menú NVDA.
+Tamén podes facer esto utilizando unha orde de teclado:
+%kc:beginInclude
+- NVDA+control+p: Amosa o cadro de diálogo Perfiles de configuración.
+-
+%kc:endInclude
+
+O primeiro control de este diálogo é a lista de perfiles na que se pode seleccionar un dos perfiles dispoñibles.
+Cando abras o diálogo, selecciónase o perfil que esteas a editar actualmente.
+Tamén se amosa información adicional para perfiles activos, indicando se se activaron manualmente, se se dispararon e/ou se están sendo editados.
+
+Para cambiar o nome dun perfil ou eliminalo, preme os botóns Renomear ou Eliminar, respectivamente.
+
+Preme o botón Pechar para pechar o diálogo.
+
++++ Criando un Perfil +++
+Para criar un perfil, preme o botón Novo.
+
+No cadro de diálogo Novo perfil, podes introducir un nome para o perfil.
+Taménn podes seleccionar cómo se debe usar este perfil.
+Se só desexas utilizar este perfil manualmente, selecciona Activación manual, que é o valor predeterminado.
+Pola contra, selecciona o disparador que debería activar automáticamente este perfil.
+Para maior comodidade, se non se introducíu un nome para o perfil, ó seleccionar un disparador rechearáse un nome en consecuencia.
+Mira [máis abaixo #ConfigProfileTriggers] para máis información acerca dos disparadores.
+
+Premendo Aceptar crearase o perfil e pecharase o cadro de diálogo de configuración de perfiles para que podas editalo.
+
++++ Activación Manual +++[ConfigProfileManual]
+Podes activar manualmente un perfil seleccioanndo un perfil e premendo o botón Activación Manual.
+Unha vez activado, aínda se poden activar outros perfiles debido ós disparadores, pero as opcións do perfil activado manualmente teñen prioridade.
+Por exemplo, se un perfil se dispara para a aplicación actual e o anunciado de ligas está activado nese perfil, pero desactivado no perfil activado manualmente, as ligas non se anunciarán.
+Nembargantes, se cambiaches a voz no perfil disparado, pero nunca se cambióu no perfil activado manualmente, utilizarase a voz a partires do perfil disparado.
+Os valores que se modifiquen gardaranse no perfil activado manualmente.
+Para desactivar un perfil activado manualmente, selecciónao no cadro de diálogo Perfiles de configuración e preme o botón desactivar Manual.
+
++++ Disparadores +++[ConfigProfileTriggers]
+Ó premer o botón de Disparadores no cadro de diálogo Perfiles de configuración permíteche cambiar os perfiles que deben ser activados automáticamente por diversos disparadores.
+
+A lista de disparadores amosa os disparadores dispoñibles, que son os seguintes:
+- Aplicación actual: dispárase cando se cambie á aplicación actual.
+- Falar todo: dispárase durante a lectura ca orde falarr Todo.
+-
+
+Para cambiar o perfil que debe ser activado automáticamente por un disparador, selecciona o disparador e logo selecciona o perfil desexado na lista de perfiles.
+Podes seleccionar (configuración normal) se non queres utilizar un perfil.
+
+Preme o botón pechar para voltar ó cadro de diálogo de perfiles de configuración.
+
++++ Editando un Perfil +++
+Si activaches manualmente un perfil, as opcións que modifiques gardaranse nese perfil.
+Pola contra, as opcións que se modifiquen gardaranse no perfil disparado máis recentemente.
+Por exemplo, se asociaches un perfil ca aplicación Bloc de notas e cambias ó Bloc de notas, as opcións modificadas gardaranse nese perfil.
+Por último, se non hai nin un perfil activado manualmente nin un disparado, as opcións que se modifiquen gardaranse na configuración normal.
+
+Para editar o perfil asociado a falar todo, debes [activar manualmente #ConfigProfileManual] ese perfil.
+
++++ Deshabilitar Temporalmente Disparadores +++
+Ás veces, é útil desactivar temporalmente todos os disparadores.
+Por exemplo, poderías desexar editar un perfil activado manualmente ou a configuración normal, sen perfiles disparadores interfirindo.
+Podes facer esto marcando a casiña de verificación Desactivar Temporalmente Todos os Disparadores no cadro de diálogo  de perfiles de configuración.
+
+++ Ubicación dos Ficheiros de Configuración++
 As versións portátiles do NVDA almacenan todas as súas opcións,  appModules persoais e controladores persoais nun directorio chamado userConfig, que se atopa no directorio de NVDA.
 
 As versións instaladas do NVDA almacenan todas as súas opcións, appModules persoais e controladores persoais nun directorio especial de NVDA localizado no teu perfil de usuario de Windows. 
@@ -1085,11 +1184,11 @@ Para cambiar como se configura NVDA nas pantallas de logon/UAC, configura a NVDA
 
 + Ferramentas Extra +
 
-++ Visualizador do Log ++
-O visualizador do log, atopado en Ferramentas no menú NVDA, permítenche ver toda a saída que ocurrira ata agora dende cando iniciaches NVDA por última vez.
+++ Visualizador do Rexistro ++
+O visualizador do rexistro, atopado en Ferramentas no menú NVDA, permítenche ver toda a saída que ocurrira ata agora dende cando iniciaches NVDA por última vez.
 
-Ademáis de ler o contido, tamén podes gardar unha copia do ficheiro do log, ou refrescar o visualizador tal que se amose a saída máis recente dende que o visualizador do Log foi aberto.
-Estas accións están dispoñibles baixo o menú de visualizador do Log.
+Ademáis de ler o contido, tamén podes gardar unha copia do ficheiro do rexistro, ou refrescar o visualizador tal que se amose a saída máis recente dende que o visualizador do rexistro foi aberto.
+Estas accións están dispoñibles baixo o menú de visualizador do Rexistro.
 
 ++ Visualizador de Voz ++
 Para desenroladores de Software videntes ou xente demostrando NVDA a unha audiencia vidente, está dispoñible unha ventá flotante que che permite ver todo o texto que NVDA estea falando actualmente.
@@ -1135,7 +1234,7 @@ Aíndaque esta versión do NVDA aínda poderá cargalos, Non se amosarán no Adm
 
 ++ Consola de Python ++
 A consola de Python do NVDA, atopada baixo Ferramentas no menú NVDA, é unha ferramenta de desenrolo que é útil para depuración, inspección xeral do interior  do NVDA ou inspeción da xerarquía de accesibilidade de unha aplicación.
-Para máis información, por favor mira [O artigo The Python Console no sitio Web de NVDA NVDA_URLwiki/PythonConsole].
+Para máis información, por favor olla a Guía do desenvolvedor dispoñible na [sección de desenvolvemento da páxina web do NVDA http://community.nvda-project.org/wiki/Development].
 
 ++ Recargar plugins ++
 Este elemento, unha vez activado, recarga app modules e plugins globais sen reiniciar ó NVDA, o cal é útil para desenroladores.
@@ -1206,8 +1305,8 @@ Esta sección contén información acerca das liñas braille soportadas polo NVD
 ++ Freedom Scientific Focus/PAC Mate Series ++
 Todas as liñas Focus e PAC Mate de [Freedom Scientific http://www.freedomscientific.com/] sopórtanse.
 Necesitarás os controladores de liñas braille de Freedom Scientific instalados no teu sistema.
-Se non os tes aínda, podes obtelos dende http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
-Aíndaque esta páxina só menciona a liña Focus 40 Blue, o controlador soporta todas as liñas de Freedom Scientific.
+Se non os tes aínda, podes obtelos dende http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Aíndaque esta páxina só mencione a liña Focus 40 Blue, o controlador soporta todas as liñas Focus e Pacmate de Freedom Scientific.
 Se o teu sistema executa un Windows de 64 bit e os controladores xa se instalaron por outro lector de pantalla, posiblemente aínda necesitarás instalar os controladores dende esta liga, posto que os ficheiros que require NVDA posiblemente non foron instalados polo outro lector de pantalla.
 
 Predeterminadamente, NVDA pode detectar automáticamente e conectarse a estas líneas tanto a traverso de USB como de bluetooth.
@@ -1440,6 +1539,9 @@ Por favor mira a documentación da liña para descripcións de onde poden atopar
 ++ Series da HIMS Braille Sense/Braille EDGE ++
 NVDA soporta as liñas Braille Sense e Braille EDGE de [Hims http://www.hims-inc.com/] cando se conectan a través do USB ou bluetooth. 
 Se se conectan a través do USB, necesitarás instalar os controladores USB de HIMS no sistema.
+Podes descargar éstos dende o Centro de Recursos de HIMS: http://www.hims-inc.com/resource-center/
+Nesta páxina, selecciona o dispositivo e descarga o controlador na sección Window-Eyes.
+Aíndaque  a sección só mencione a Window-Eyes, este é un controlador USB xeral que funcionará co NVDA tamén.
 
 Seguidamente van as asignacións de teclas para estas liñas co NVDA.
 Por favor mira a documentación das liñas para descripcións de onde poden atoparse estas teclas.
@@ -1766,81 +1868,13 @@ Por favor mira [a documentación de táboas de teclas de BRLTTY http://mielke.cc
 
 + Temas Avanzados +
 
-++ Remapeando Asignacións de Teclas e outros xestos de Entrada ++
-Os usuarios poderán proporcionar ou sobreescribir mapeados dos xestos de entrada (como premedo de teclas) para scripts nun ficheiro especial no directorio de configuración do usuario do NVDA.
-Este ficheiro chámase gestures.ini.
-
-Este ficheiro utiliza a sintaxis estándar dos ficheiros ini.
-O ficheiro poderá conter múltiples seccións e cada sección poderá ter unha ou máis entradas.
-
-Cada sección proporciona mapeados para scripts nun módulo particular python e clase dentro do NVDA.
-- O nome de sección debería ser o módulo Python e clase separados por un punto (.).
-- A tecla de cada entrada é o nome do script co que desexas que o xesto debería concordar.
-Alternativamente, podes utilizar None para desvincular xestos de entrada dun script ó que estaban vinculados anteriormente.
-Cada entrada de tecla só pode listarse unha vez por sección, incluindo None.
-- O valor de cada tecla é unha lista separada con coma (,) de  identificadores do xesto os que representan os distintos xestos de entrada que deberían concordar con ese script en particular.
-Os identificadores de xesto que rematan nunha coma deben pecharse entre comiñas (" ou ').
--
-
-Os identificadores de xesto consisten nun código de dispositivo de dúas letras; un sub-dispositivo, distribución ou modo entre parénteses; uns dous pontos; e logo un tipo específico de cadea identifycando a entrada actual, como nomes de xestos de tecla ou tactiles.
-- Para xestos de teclado, o código de dispositivo é kb.
-A parte entre parénteses é a distribución de teclado e é opcional.
-Se non se especificou, o xesto aplicarase a todas as distribucións de teclado.
-A cadea despois dos dous pontos é un ou máis nomes de teclas separados por un signo máis (+).
-- Para xestos de liñas braille, o código de dispositivo é br.
-A parte entre parénteses identifica a liña braille específica e é obrigatoria.
-A cadea despois dos dous pontos é un ou máis nomes de tecla separados por un signo máis (+).
-- Para xestos tactiles, o código de dispositivo é ts.
-A parte entre parénteses é o modo tactil e é opcional.
-A cadea despois dos dous pontos é un xesto tactil tal como double_tap, 2fingerflickUp, ou 3finger_tap como nos exemplos.
--
-
-De cara a atopar os identificadores de xesto así coma os nomes de scripts e a clase e o módulo no cal están contidos, podes:
-+ activar a Axuda de entrada
-+ activar o xesto (premer a tecla, tocar a pantalla, etc.) 
-+ desactivar a Axuda de Entrada.
-+ activar Ver log no menú ferramentas 
-+ examinar as entradas recentes do log.
-Unha destas proporcionaría información acerca do xesto de entrada que enviaches, incluíndo o módulo.clase e script se está vinculado a un.
-+
-
-Seguidamente vai un exemplo de cómo poderías vincular NVDA+shift+t ó script data hora.
-
-Para atopar o nome e módulo.clase e script correcto para data hora, activarías Axuda de Entrada e premerías NVDA+f12 (posto que esta é o xesto actual para o script data hora).
-Entón apagarías Axuda de Entrada e examinarías o visualizador do log.
-
-Cara o fondo, poderías ver:
-
-```
-INFO - inputCore.InputManager._handleInputHelp (13:17:22):
-Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
-```
-
-Con esto, podes ver que o nome do script é dateTime e o módulo.clase é globalCommands.GlobalCommands.
-
-Se o ficheiro non existe aínda, crearías un ficheiro de texto chamado gestures.ini no directorio de configuración do usuario e engadirías o contido seguinte:
-
-```
-[globalCommands.GlobalCommands]
-	dateTime = kb:NVDA+shift+t
-```
-
-Esto vincularía o premedo das teclas NVDA+shift+t (en calquera distribución de teclado) ó script dateTime.
-
-Ten en conta que a combinación orixinal NVDA+f12 todavía funcionaría.
-Se quixeras eliminar esta combinación, engadirías a liña seguinte:
-
-```
-	None = kb:NVDA+f12
-```
-
 ++ Persoalización Avanzada da Pronunciación de Símbolos ++
 É posible persoalizar a pronunciación da pontoación e outros símbolos máis aló do que pode facerse utilizando o [diálogo Pronunciación de Pontoación e símbolos #SymbolPronunciation].
 Por exemplo, podes especificar se o símbolo dibuxado debería enviarse ó sintetizador (ex. para causar unha pausa ou cambio na entoación) e podes engadir símbolos persoalizados. 
 
 Para facer esto, debes editar o ficheiro de información de pronunciación de símbolos no teu directorio de configuración de usuario do NVDA.
 O ficheiro chámase symbols-xx.dic, onde xx é o código de lingua.
-O formato de este ficheiro documentóuse na sección Symbol Pronunciation da Guía de Desenrolo do NVDA, que está dispoñible dende [A sección do desenrolador do sitio Web do NVDA NVDA_URLwiki/Development].
+O formato deste ficheiro documentóuse na sección Symbol Pronunciation da Guía de Desenrolo do NVDA, que está dispoñible dende [a Sección Desenvolvemento do sitio web do NVDA http://community.nvda-project.org/wiki/Development].
 Polo tanto, non é posible para os usuarios definir símbolos comprexos. 
 
 + Información Adicional +

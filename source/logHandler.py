@@ -308,6 +308,7 @@ def initialize(shouldDoRemoteLogging=False):
 	redirectStdout(log)
 	sys.excepthook = _excepthook
 	warnings.showwarning = _showwarning
+	warnings.simplefilter("default", DeprecationWarning)
 
 def setLogLevelFromConfig():
 	"""Set the log level based on the current configuration.

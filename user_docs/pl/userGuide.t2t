@@ -48,7 +48,7 @@ Zobacz więcej informacji na temat obsługiwanych monitorów brajlowskich w rozd
 NVDA obsługuje kody Brajla dla wielu języków, w tym brajl zwykły, skróty brajlowskie i brajl komputerowy .
 
 ++ Licencja i Prawa Autorskie ++
-NVDA is copyright NVDA_COPYRIGHT_YEARS autorzy NVDA.
+NVDA copyright NVDA_COPYRIGHT_YEARS autorzy NVDA.
 
 NVDA jest objęty przez GNU General Public License (wersja 2). 
 Możesz za darmo udostępniać ten program i dowolnie zmieniać go, pod warunkiem, że dołączysz do niego tę licencję oraz udostępnisz pełny kod źródłowy każdemu zainteresowanemu. 
@@ -63,23 +63,23 @@ Dokładne brzmienie licencji znajdziesz online: [Pełna treść licencji. http:/
 -
 
 + Pobieranie i instalacja NVDA +
-Program NVDA można pobrać ze strony internetowej znajdującej sie pod adresem: www.nvda-project.org.
+Program NVDA można pobrać ze strony internetowej znajdującej sie pod adresem: [www.nvaccess.org NVDA_URL].
 
 Przejdź na stronie do sekcji "Download" gdzie znajduje się link do najnowszej wersji programu. Możesz udać się także na polską stronę społeczności nvda pod adresem www.nvda.pl
 
 Uruchomienie pobranego pliku spowoduje start tymczasowej kopii programu. 
-Na tym etapie możesz zdecydować czy chcesz zainstalować program na dysku, utworzyć jego kopię przenośną i umieścić ją np na pamięci flash czy kontynuować użycie wersji tymczasowej.
+Na tym etapie możesz zdecydować czy chcesz zainstalować program na dysku, utworzyć jego kopię przenośną i umieścić ją np w pamięci flash czy kontynuować użycie wersji tymczasowej.
 
 Jeśli na aktualnym komputerze planujesz zawsze używać NVDA, prawdopodobnie najlepszym wyjściem będzie instalacja programu w systemie.
-Zainstalowana wersja programu umożliwia dostęp do funkcjonalności nie obecnych w kopii tymczasowej jak start wraz z systemem, dostęp do UAC i ekranów logowania. Po instalacji na twoim pulpicie i w menu start zostaną także utworzone skróty umożliwiające szybkie uruchomienie screenreadera.
+Zainstalowana wersja umożliwia dostęp do funkcjonalności nieobecnych w kopii tymczasowej takich jak start wraz z systemem, dostęp do UAC i ekranów logowania. Po instalacji na twoim pulpicie i w menu start zostaną także utworzone skróty umożliwiające szybkie uruchomienie screenreadera.
 Przy pomocy zainstalowanej wersji będziesz mógł/mogła również utworzyć przenośną kopię programu w dowolnym momencie. 
 
 Jeśli chcesz nosić NVDA ze sobą na Pen Drive lub innym zapisywalnym nośniku, powinieneś wybrać utworzenie kopii przenośnej.
 Kopia przenośna umożliwia również instalację NVDA na dowolnym komputerze w późniejszym czasie.
 Jeżeli jednak chcesz skopiować NVDA na nośnik tylko do odczytu, taki jak płyta CD, powinieneś skopiować sam pakiet instalacyjny.
-Uruchomienie wersji przenośnej z nośnika tylko do odczytu, nie jest w tym momencie wspierane.
+Uruchomienie wersji przenośnej z nośnika tylko do odczytu, nie jest w tym momencie obsługiwane.
 
-Kontynuowanie użycia wersji tymczasowej może być użyteczne do przedstawienia innej osobie możliwości programu. Uruchamianie pliku instalacyjnego za każdym razem może jednak zabierać mnóstwo czasu.
+Kontynuowanie używania wersji tymczasowej może być przydatne do przedstawienia innej osobie możliwości programu. Uruchamianie pliku instalacyjnego za każdym razem może jednak zabierać mnóstwo czasu.
 
 ++ Ograniczenia kopii przenośnej i tymczasowej ++
 Poza brakiem możliwości automatycznego startu po zalogowaniu do systemu, przenośna i tymczasowa kopia NVDA posiada następujące ograniczenia:
@@ -554,7 +554,7 @@ Opisana komenda działa tylko dla domyślnego ustawienia formatowania linii stat
 %kc:beginInclude
 || Działanie | Skrót klawiszowy | Opis |
 | odczytaj okno komentarzy | Control+shift+c | czyta komentarze znajdujące się w oknie komentarzy. |
-| Odczytaj okno automatycznych komentarzy | control+shift+a | Czyta komentarze z okna automatycznych komentarzy. |
+| Odczytaj uwagi dla tłumaczy | control+shift+a | Zgłasza wszelkie uwagi dla tłumaczy. |
 %kc:endInclude
 
 + Konfigurowanie NVDA +
@@ -782,6 +782,10 @@ Jeśli zaznaczysz to pole, dodatkowy Insert (na większości klawiatur znajdują
 ==== Użyj numerycznego Insert jako klawisza NVDA ====
 Jeśli zaznaczysz to pole, Insert na klawiaturze numerycznej będzie pełnić rolę specjalnego klawisza NVDA.
 
+Jeśli żaden klawisz nie został wybrany jako klawisz NVDA, nie będzie możliwy dostęp do niektórych funkcji programu.
+W związku z tym, przy zamykaniu okna dialogowego pojawi się stosowny komunikat o błędzie, jeśli wszystkie pola wyboru klawiszy NVDA są nieoznaczone i naciśnięto przycisk OK.
+Po zamknięciu okna z tym komunikatem, musisz wybrać przynajmniej jeden klawisz NVDA, aby prawidłowo zamknąć okno ustawień klawiatury.
+
 %kc:setting
 ==== Czytaj pisane znaki ====
 Skrót Klawiszowy: NVDA+2
@@ -800,6 +804,9 @@ Jeśli włączona, ta opcja spowoduje przerwanie mowy przy wpisaniu jakiegoś zn
 ==== Przerwa mowy dla klawisza Enter ====
 Jeśli włączona, ta opcja przerywa mowę za każdym razem, gdy naciśnięto klawisz Enter. Opcja domyślnie włączona.
 
+==== Zezwalaj na przeglądanie w trybie czytaj wszystko ====
+Jeśli włączona, niektóre polecenia nawigacyjne (takie jak klawisze szybkiej nawigacji w trybie czytania, albo przechodzenie po liniach i akapitach) nie przerywają odczytywania tekstu od kursora do końca dokumentu, a zamiast tego odczyt tekstu przeskakuje do nowej pozycji i jest kontynuowany.
+ 
 ==== Dźwięk dla małych liter przy włączonym Capslock ====
 Jeśli opcja jest włączona, krótki dźwięk zostanie wygenerowany za każdym razem, gdy wciśnięto literę z shiftem przy włączonym Capslock.
 Na ogół wpisywanie liter z shiftem przy włączonym Capslock nie jest zamierzone i wynika z niewiedzy, że Capslock jest włączony.
@@ -1057,6 +1064,25 @@ Używając listy poziom, można regulować najniższy poziom interpunkcji, na kt
 
 Aby zapisać zmiany kliknij przycisk ok, aby je odrzucić - kliknij Anuluj.
 
++++ Zdarzenia wejścia +++
+W tym oknie dialogowym możesz skonfigurować komendy NVDA uruchamiane przez zdarzenia wejścia (klawisze naciskane na klawiaturze, przyciski na monitorze brajlowskim, etc.).
+
+Pokazywane są tylko polecenia, które mają zastosowanie bezpośrednio przed otwarciem tego okna.
+Dla przykładu, jeśli chcesz skonfigurować polecenia związane z trybem czytania, powinieneś otworzyć okno zdarzeń wejścia, gdy znajdujesz się w trybie czytania.
+
+Drzewo w tym oknie wyświetla wszystkie dostępne polecenia NVDA podzielone na kategorie.
+Jakiekolwiek zdarzenia wejścia powiązane z poleceniem, są wyświetlone poniżej tego polecenia.
+
+Aby dodać zdarzenie wejścia do polecenia, wybierz polecenie i kliknij przycisk "Dodaj".
+Następnie wprowadź zdarzenie wejścia, które chcesz powiązać; np. naciśnij klawisz na klawiaturze, albo przycisk na monitorze brajlowskim.
+Często zdarzenie wejścia może zostać zinterpretowane na wiele sposobów.
+Dla przykładu, jeśli nacisnąłeś klawisz, możesz wymagać, aby był on powiązany z aktualnym układem klawiatury (np. desktop lub laptop) albo stosować go dla wszystkich układów klawiatury.
+W takim przypadku pojawi się menu umożliwiające wybór pożądanej opcji.
+
+Aby usunąć powiązanie zdarzenia wejścia z poleceniem, wybierz to zdarzenie i naciśnij przycisk "Usuń".
+
+Po zakończeniu wprowadzania zmian, naciśnij przycisk OK aby je zachować, albo przycisk Anuluj, aby odrzucić.
+
 ++ Zapisywanie i Przywracanie Ustawień ++
 NVDA domyślnie zapisuje ustawienia automatycznie przy wyjściu z programu.
 To zachowanie może zostać wyłączone w okienku "Ustawienia ogólne".
@@ -1072,7 +1098,80 @@ Przydatne są także następujące klawisze poleceń NVDA:
 | Przywróć zapisane ustawienia | NVDA+kontrol+r | NVDA+kontrol+r | Naciśnięty raz, przywraca ostatnio zapisane ustawienia. Naciśnięty szybko 3-krotnie, przywraca ustawienia fabryczne |
 %kc:endInclude
 
-++ Pliki Konfiguracyjne i Profile Użytkownika ++
+++ Profile konfiguracji ++
+Czasem może być przydatne posiadanie różnych ustawień dla różnych sytuacji.
+Dla przykładu: możesz chcieć mieć włączone ogłaszanie wcięć podczas edycji, albo zgłaszanie atrybutów czcionek podczas poprawiania tekstu.
+NVDA pozwala to osiągnąć za pomocą profili konfiguracyjnych.
+
+Profil konfiguracyjny zawiera tylko te ustawienia, które zostały zmienione podczas edycji profilu.
+Większość ustawień może być zmieniona w profilach konfiguracyjnych, wyłączając ustawienia znajdujące się w oknie Ustawienia ogólne, które mają zastosowanie do całego programu.
+
+Profile konfiguracyjne mogą być aktywowane ręcznie.
+Mogą być również aktywowane automatycznie przez wyzwalacze, takie jak przejście do określonej aplikacji.
+
++++ Podstawowe zarządzanie +++
+Profilami zarządzasz wybierając polecenie "Profile konfiguracji" w menu NVDA.
+Możesz zrobić to również za pomocą skrótu klawiszowego:
+%kc:beginInclude
+- NVDA+control+p: wyświetl okno profili konfiguracji.
+-
+%kc:endInclude
+
+Lista w tym oknie dialogowym, zawiera wszystkie dostępne profile.
+Po otwarciu okna, domyślnie wybrany jest aktualnie edytowany profil.
+Dla profili aktywnych wyświetlane są również dodatkowe informacje, określające, czy są ręcznie aktywowane, aktywowane przez wyzwalacze i/lub będące w trakcie edycji.
+
+Aby zmienić nazwę lub usunąć profil, naciśnij odpowiedni przycisk w oknie dialogowym.
+
+Naciśnij przycisk Zamknij, aby zamknąć okno.
+
++++ Tworzenie profilu +++
+Aby utworzyć profil, naciśnij przycisk "Nowy"..
+
+W oknie nowego profilu, możesz określić jego nazwę.
+Możesz również wybrać, jak ten profil powinien być używany.
+Jeśli chcesz aktywować go tylko ręcznie, wybierz aktywację ręczną (ustawienie domyślne).
+W innym wypadku wybierz wyzwalacz, który powinien uruchamiać ten profil.
+Dla ułatwienia, jeśli nie wybrałeś nazwy profilu, wybór wyzwalacza automatycznie wypełni pole nazwy.
+Zobacz [poniżej #ConfigProfileTriggers] aby uzyskać więcej informacji o wyzwalaczach.
+
+Naciśnięcie przycisku OK spowoduje utworzenie profilu i zamknięcie okna profili konfiguracji abyś mógł edytować utworzony profil.
+
++++ Ręczna aktywacja +++[ConfigProfileManual]
+Możesz ręcznie aktywować profil, wybierając go na liście i naciskając przycisk Aktywuj ręcznie.
+Po aktywacji, inne profile będą mogły być aktywowane przez wyzwalacze, ale każde ustawienie obecne w profilu ręcznie aktywowanym będzie nadrzędne.
+Dla przykładu, jeśli profil został uruchomiony przez wyzwalacz dla aktualnej aplikacji i zgłaszanie linków jest włączone w tym profilu, ale wyłączone w profilu ręcznie aktywowanym, linki nie będą zgłaszane.
+Jeśli jednak zmieniłeś głos w profilu uruchomionym przez wyzwalacz, ale nie zmieniałeś głosu w profilu ręcznie aktywowanym, użyty będzie głos z profilu automatycznie aktywowanego przez wyzwalacz.
+Wszystkie dokonane zmiany zostaną zapisane w profilu ręcznie aktywowanym.
+Aby unieaktywnić ręcznie aktywowany profil, wybierz go w oknie profili konfiguracji i naciśnij przycisk Dezaktywuj.
+
++++ Wyzwalacze +++[ConfigProfileTriggers]
+Naciśnięcie przycisku Wyzwalacze w oknie profili konfiguracji, pozwala zmienić profile, które powinny być aktywowane automatycznie.
+
+Lista wyzwalaczy wyświetla dostępne wyzwalacze, które są następujące:
+- Aktualna aplikacja: uruchamiany, gdy przełączysz się do aktualnej aplikacji.
+- Czytaj wszystko: aktywowany podczas czytania poleceniem Czytaj wszystko.
+-
+
+Aby zmienić profil, który powinien być automatycznie aktywowany przez wyzwalacz, wybierz wyzwalacz, a następnie wybierz pożądany profil na liście profili.
+Możesz wybrać (konfiguracja normalna) jeśli nie chcesz, aby profil był używany.
+
+Naciśnij przycisk Zamknij, aby powrócić do profili konfiguracji.
+
++++ Edycja profilu +++
+Jeśli aktywowałeś ręcznie jakiś profil, każda zmiana ustawień zostanie zapisana w tym profilu.
+W przeciwnym wypadku, każda zmiana ustawień zostanie zapisana do profilu ostatnio aktywowanego przez wyzwalacz.
+Dla przykładu: jeśli masz profil konfiguracyjny skojarzony z Notatnikiem i przełączysz się do notatnika, jakiekolwiek zmienione ustawienie zostanie zapisane do profilu.
+Jeśli żaden profil nie jest aktywowany ręcznie ani automatycznie, wszystkie zmienione ustawienia zostaną zapisane w normalnym pliku konfiguracyjnym.
+
+Aby edytować profil skojarzony z funkcją czytaj wszystko, musisz [aktywować ręcznie #ConfigProfileManual] ten profil.
+
++++ Tymczasowe wyłączenie wyzwalaczy +++
+Czasem jest przydatne czasowe wyłączenie wszystkich wyzwalaczy.
+Dla przykładu: możesz chcieć edytować profil aktywowany ręcznie,  albo plik normalnej konfiguracji, bez wpływu na to profili aktywowanych przez wyzwalacze.
+Możesz to osiągnąć przez oznaczenie pola wyboru Tymczasowo wyłącz wszystkie wyzwalacze w oknie dialogowym profili konfiguracji.
+
+++ Lokalizacja plików konfiguracyjnych ++
 Wszystkie ustawienia wersji przenośnej NVDA, katalog appModules oraz niestandardowe sterowniki znajdują się w katalogu o nazwie userConfig w katalogu głównym NVDA.
 
 Instalacyjna wersja NVDA przechowuje wszystkie ustawienia, takie jak appModules oraz niestandardowe sterowniki w specjalnym katalogu NVDA w profilu użytkownika systemu Windows.
@@ -1135,7 +1234,7 @@ Najlepiej byłoby usunąć takie pliki z folderu konfiguracji i zainstalować od
 
 ++ Konsola Pythona ++
 Konsola Pythona NVDA znajduje się w menu Narzędzia  w NVDA. Jest narzędziem dla programistów i jest używana do debugowania, przeglądania wewnątrz NVDA lub sprawdzania hierarchii dostępności aplikacji.
-Więcej informacji znajduje się w podręczniku dla twórców dostępnego w [sekcji Development na stronie NVDA NVDA_URLwiki/Development].
+Więcej informacji znajduje się w podręczniku dla twórców dostępnego w [sekcji Development na stronie NVDA http://community.nvda-project.org/wiki/Development].
 
 ++ przeładuj wtyczki ++
 Po aktywacji tego polecenia wszystkie moduły aplikacji oraz wtyczki zostaną przeładowane bez potrzeby restartu nvda. Jest to użyteczne dla programistów.
@@ -1206,8 +1305,8 @@ Ten rozdział zawiera informacje na temat monitorów brajlowskich wspieranych pr
 ++ Freedom Scientific Focus/PAC Mate Series ++
 Wszystkie monitory Focus i PAC Mate firmy [Freedom Scientific http://www.freedomscientific.com/] są obsługiwane w trybie połączeń USB i Bluetooth.
 Niezbędne są sterowniki brajlowskie Freedom Scientific zainstalowane w systemie.
-Jeśli nie zostały one jeszcze zainstalowane, to należy je pobrać ze strony: http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
-Na podanej stronie wymieniony jest tylko sterownik monitora Focus 40 Blue, ale obsługuje on wszystkie monitory Freedom Scientific.
+Jeśli nie zostały one jeszcze zainstalowane, to należy je pobrać ze strony: http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Na podanej stronie wymieniony jest tylko sterownik monitora Focus Blue, ale obsługuje on wszystkie monitory Freedom Scientific i Pacmate.
 Jeśli używasz 64-bitowego Windowsa i sterowniki zostały zainstalowane przez inny program czytający ekran, prawdopodobnie i tak będziesz musiał zainstalować sterowniki z tego linku, ponieważ pliki wymagane przez NVDA nie zostały prawdopodobnie zainstalowane przez inny program czytający ekran.
 
 Domyślnie NVDA może wykryć i podłączyć się do tych monitorów przez USB lub bluetooth.
@@ -1440,6 +1539,9 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 ++ HIMS Braille Sense/Braille EDGE Series ++
 NVDA obsługuje monitory Braille Sense i Braille EDGE produkcji [Hims http://www.hims-inc.com/] przy połączeniu przez USB i bluetooth. 
 Aby korzystać z połączenia USB, musisz zainstalować sterowniki USB HIMS w swoim systemie.
+Możesz je pobrać z Centrum zasobów HIMS: http://www.hims-inc.com/resource-center/
+Na tej stronie, wybierz swoje urządzenie i pobierz sterownik z sekcji Window-eyes.
+Strona wymienia tylko Window-eyes, jest to jednak sterownik USB ogólnego przeznaczenia i będzie pracował również z NVDA.
 
 Poniżej skróty klawiszowe dla tych monitorów, które działają w nvda.
 Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
@@ -1766,82 +1868,13 @@ Zobacz [tabele klawiszy w dokumentacji brltty http://mielke.cc/brltty/doc/driver
 
 + dla zaawansowanych +
 
-++ redefiniowanie skrutów klawiszowych ++
-Użytkownicy nvda mogą stworzyć lób zmienić istniejące powiązania pomiędzy wciskanymi klawiszami a modółami nvda, przez edycję pliku konfiguracyjnego w podkatalogu user znajdującym się w folderze instalacji nvda.
-Plik nazywa się gestures.ini.
-
-Plik używa standardowej składni plików ini. 
-Plik może zawierać wiele sekcji, a każda sekcja może zawierać jeden lub więcej wpisów.
-
-Każda sekcja zawiera mapowanie do skryptów w konkretnym module i klasie wewnątrz NVDA.
-- Nazwą sekcji powinny być moduł Pythona i klasa oddzielone kropką (.).
-- Nazwą klucza każdego wpisu jest nazwa skryptu, z którym powinno  zostać powiązane zdarzenie wejścia.
-Możesz użyć None by usunąć powiązania zdarzeń wejścia ze skryptem, z którym były poprzednio powiązane.
-Każdy klucz wpisu włącznie z None może się pojawić tylko raz w każdej sekcji.
-- Wartością wpisu jest rozdzielana przecinkami (,) lista identyfikatorów zdarzeń wejścia które powinny być powiązane.
-Identyfikatory zdarzeń wejścia kończące się przecinkiem muszą zostać zamknięte w cudzysłowach (" albo ').
--
-
-Identyfikatory zdarzeń wejścia składają się z dwuliterowego kodu urządzenia; urządzenia podrzędnego, układu lub trybu w nawiasach; dwukropka; a następnie ciągu zależnego od typu określającego wejście, takiego jak klawisz lub nazwa gestu .
-- dla zdarzeń klawiatury, kodem urządzenia jest kb.
-opcjonalną częścią w nawiasach jest nazwa układu klawiatury.
-Jeśli nie zostanie określona, zdarzenie będzie mieć zastosowanie we wszystkich układach klawiatury.
-Ciąg po dwukropku to jeden lub więcej klawiszy rozdzielonych znakiem plus (+).
-- dla zdarzeń monitora brajlowskiego, kodem urządzenia jest br.
-Część w nawiasach identyfikuje konkretny monitor i jest obowiązkowa.
-Ciąg po dwukropku to jeden lub więcej nazw klawiszy rozdzielonych znakiem plus (+).
-- Dla zdarzeń gestów dotykowych kodem urządzenia jest ts.
-Opcjonalna część w nawiasach to tryb dotyku.
-Ciąg po dwukropku to gest dotykowy; np. double_tap (podwójne stuknięcie), 2fingerflickUp (machnięcie dwoma palcami w górę) albo 3finger_tap (stuknięcie trzema palcami).
--
-
-Aby poznać identyfikatory zdarzeń wejścia, nazwy skryptów, oraz klasę i moduł w których są zawarte, możesz:
-+ Włącz tryb pomocy.
-+ Aktywuj zdarzenie wejścia (naciśnij klawisz, dotknij ekranu, etc.).
-+ Wyłącz tryb pomocy.
-+ Uruchom podgląd logu z menu NVDA: Narzędzia.
-+ Przejrzyj ostatnie wpisy w logu.
-Jeden z nich powinien zawierać informację o aktywowanym wcześniej zdarzeniu wejścia, łącznie z nazwą modułu.klasy i skryptu jeśli było z jakimś powiązane.
-+
-
-Poniżej przykład w jaki sposób powiązać klawisz NVDA+shift+t ze skryptem odczytującym aktualną datę i czas.
-
-Aby ustalić prawidłową nazwę skryptu i modułu.klasy dla komendy wypowiadającej datę i czas, włącz tryb pomocy i naciśnij NVDA+f12 (ponieważ jest to obecnie używany klawisz skrótu dla oznajmienia daty i czasu).
-Następnie wyłącz tryb pomocy i przejrzyj wpisy w podglądzie logu.
-
-U dołu znajdziesz:
-
-```
-INFO - inputCore.InputManager._handleInputHelp (13:17:22):
-Input help: gesture kb(desktop):NVDA+f12, bound to script dateTime on globalCommands.GlobalCommands
-```
-
-Wynika z tego, że nazwa skryptu to dateTime a moduł.klasa to globalCommands.GlobalCommands.
-
-Jeśli plik jeszcze nie istnieje, utwórz plik tekstowy o nazwie gestures.ini w folderze konfiguracji użytkownika NVDA i dołącz do niego poniższą treść:
-
-```
-[globalCommands.GlobalCommands]
-	dateTime = kb:NVDA+shift+t
-```
-
-Spowoduje to powiązanie klawisza NVDA+shift+t (w każdym układzie klawiatury) ze skryptem dateTime.
-
-Zauważ, że oryginalne powiązanie  NVDA+f12 będzie nadal działać.
-Jeśli chcesz usunąć to powiązanie, dodaj poniższą linię:
-
-```
-	None = kb:NVDA+f12
-```
-
-
 ++ Zaawansowana edycja wymowy symboli ++
 Możliwa jest  edycja wymowy symboli wykraczająca poza to, co daje okno dialogowe [Wymowa znaków i symboli #SymbolPronunciation]. 
 Przykładowo, NVDA może przepuścić znak wprost do syntezatora. Możemy w ten sposób wywołać pałzę czy zmianę modulacji. Możesz też zdefiniować własne symbole.
 
 Aby tego dokonać, musisz wyedytować plik symboli wymowy znajdujący się w folderze konfiguracji użytkownika NVDA.
 Plik nazywa się symbols-xx.dic, gdzie xx jest kodem języka.
-Format tego pliku jest opisany w rozdziale "Symbol Pronunciation" podręcznika dla twórców NVDA , znajdującego się w [sekcji Development na stronie NVDA NVDA_URLwiki/Development].
+Format tego pliku jest opisany w rozdziale "Symbol Pronunciation" podręcznika dla twórców NVDA , znajdującego się w [sekcji Development na stronie NVDA http://community.nvda-project.org/wiki/Development].
 Nie jest możliwe dla użytkowników definiowanie skomplikowanych symboli.
 
 + Dodatkowe Informacje +

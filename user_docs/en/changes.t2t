@@ -3,6 +3,32 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.1 =
+
+== New Features ==
+- Support for Microsoft PowerPoint 2013. Note that protected view is not supported. (#3578)
+- In Microsoft word and Excel, NVDA can now read the selected symbol when choosing symbols using the Insert Symbols dialog. (#3538)
+- It is now possible to choose if content in documents should be identified as clickable, via a new option in the Document Formatting settings dialog. This option is on by default (previous behaviour). (#3556)
+
+
+== Bug Fixes ==
+- When moving around or selecting cells in Microsoft Excel, NVDA should no longer inappropriately announce the old cell rather than the new cell when Microsoft Excel is slow to move the selection. (#3558)
+- NVDA properly handles opening a dropdown list for a cell in Microsoft Excel via the context menu. (#3586)
+- New page content in iTunes 11 store pages is now shown properly in browse mode when following a link in the store or when opening the store initially. (#3625)
+- Buttons for previewing songs in the iTunes 11 store now show their label in browse mode. (#3638)
+- In browse mode in Google Chrome, the labels of check boxes and radio buttons are now rendered correctly. (#1562)
+- In Instantbird, NVDA no longer reports useless information every time you move to a contact in the Contacts list. (#2667)
+- In browse mode in Adobe Reader, the correct text is now rendered for buttons, etc. where the label has been overridden using a tooltip or other means. (#3640)
+- In browse mode in Adobe Reader, extraneous graphics containing the text "mc-ref" will no longer be rendered. (#3645)
+- NVDA no longer reports all cells in Microsoft Excel as underlined in their formatting information. (#3669)
+- No longer show meaningless characters in browse mode documents such as those found in the Unicode private usage range. In some cases these were stopping more useful labels to be shown. (#2963).
+- Input composition for entering east-asian characters no longer fails in PuTTY (#3432)
+
+
+== Changes for Developers ==
+- AppModules now contain productName and productVersion properties. This info is also now included in Developer Info (NVDA+f1). (#1625)
+
+
 = 2013.3 =
 
 == New Features ==
@@ -12,6 +38,8 @@
 - a new 'Allow Skim Reading in Say All' option in the Keyboard settings dialog allows navigating through a document with browse mode quick navigation and line / paragraph movement commands, while remaining in say all. This option is off by default. (#2766) 
 - There is now an Input Gestures dialog to allow simpler customization of the input gestures (such as keys on the keyboard) for NVDA commands. (#1532)
 - You can now have different settings for different situations using configuration profiles. Profiles can be activated manually or automatically (e.g. for a particular application). (#87, #667, #1913)
+- In Microsoft Excel, cells that are links are now announced as links. (#3042)
+- In Microsoft Excel, the existance of comments on a cell is now reported to the user. (#2921)
 
 
 == Bug Fixes ==
@@ -25,15 +53,23 @@
 - NVDA now behaves as expected in Poedit 1.5.7. Users using earlier versions will need to update. (#3485)
 - NVDA can now read protected documents in Microsoft Word 2010,  no longer causing Microsoft Word to crash. (#1686)
 - If an unknown command line switch is given when launching the NVDA distribution package, it no longer causes an endless loop of error message dialogs. (#3463)
--NVDA no longer fails to report alt text of graphics and objects in Microsoft Word if the alt text contains quotes or other non-standard characters. (#3579)
+- NVDA no longer fails to report alt text of graphics and objects in Microsoft Word if the alt text contains quotes or other non-standard characters. (#3579)
 - The number of items for certain horizontal lists in Browse mode is now correct. Previously it may have been double the actual amount. (#2151)
 - When pressing control+a in a Microsoft Excel worksheet, the updated selection will now be reported. (#3043)
 - NVDA can now correctly read XHTML documents in Microsoft Internet Explorer and other MSHTML controls. (#3542)
 - Keyboard settings dialog: if no key has been chosen to be used as the NVDA key, an error is presented to the user when dismissing the dialog. At least one key must be chosen for proper usage of NVDA. (#2871)
+- In Microsoft Excel, NVDA now announces merged cells differently to multiple selected cells. (#3567)
+- The browse mode cursor is no longer positioned incorrectly when leaving a dialog or application inside the document. (#3145)
+- Fixed an issue where the HumanWare Brailliant BI/B series braille display driver wasn't presented as an option in the Braille Settings dialog on some systems, even though such a display was connected via USB.
+- NVDA no longer fails  to switch to screen review when the navigator object has no actual screen location. In this case the review cursor is now placed at the top of the screen. (#3454)
+- Fixed an issue which caused the Freedom Scientific braille display driver to fail when the port was set to USB in some circumstances. (#3509, #3662)
+- Fixed an issue where keys on Freedom Scientific braille displays weren't detected in some circumstances. (#3401, #3662)
 
 
 == Changes for Developers ==
 - You can specify the category to be displayed to the user for scripts using the scriptCategory attribute on ScriptableObject classes and the category attribute on script methods. See the documentation for baseObject.ScriptableObject for more details. (#1532)
+- config.save is deprecated and may be removed in a future release. Use config.conf.save instead. (#667)
+- config.validateConfig is deprecated and may be removed in a future release. Add-ons which need this should provide their own implementation. (#667, #3632)
 
 
 = 2013.2 =

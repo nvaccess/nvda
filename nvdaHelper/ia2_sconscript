@@ -14,7 +14,7 @@
 
 Import('env')
 
-idlFile=env.Command("ia2.idl","#/include/ia2/ia2.idl",Copy("$TARGET","$SOURCE"))
+idlFile=env.Command("ia2.idl","#/miscDeps/include/ia2/ia2.idl",Copy("$TARGET","$SOURCE"))
 
 tlbFile,headerFile,iidSourceFile,proxySourceFile,dlldataSourceFile=env.TypeLibrary(source=idlFile)
 

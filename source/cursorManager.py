@@ -261,6 +261,7 @@ class CursorManager(baseObject.ScriptableObject):
 	def script_copyToClipboard(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		if info.isCollapsed:
+			# Translators: Reported when there is no text selected (for copying).
 			speech.speakMessage(_("no selection"))
 			return
 		if info.copyToClipboard():

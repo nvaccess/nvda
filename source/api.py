@@ -209,7 +209,7 @@ def setNavigatorObject(obj,isFocus=False):
 	globalVars.reviewPositionObj=None
 	reviewMode=review.getCurrentMode()
 	# #3320: If in document review yet there is no document to review the mode should be forced to object. 
-	if reviewMode=='document' and (not obj.treeInterceptor or obj.treeInterceptor.passThrough):
+	if reviewMode=='document' and (not obj.treeInterceptor or not obj.treeInterceptor.isReady or obj.treeInterceptor.passThrough):
 		review.setCurrentMode('object',False)
 	elif isFocus and reviewMode=='object' and obj.treeInterceptor and obj.treeInterceptor.isReady and not obj.treeInterceptor.passThrough:
 		review.setCurrentMode('document',False)

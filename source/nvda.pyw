@@ -1,16 +1,27 @@
 #nvda.pyw
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2013 NV Access Limited, Aleksey Sadovoy
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 """The NVDA launcher. It can handle some command-line arguments (including help). It sets up logging, and then starts the core."""
 
+import sys
+import os
+
+if getattr(sys, "frozen", None):
+	# We are running as an executable.
+	# Append the path of the executable to sys so we can import modules from the dist dir.
+	sys.path.append(sys.prefix)
+	os.chdir(sys.prefix)
+else:
+	import sourceEnv
+	#We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
+	os.chdir(os.path.normpath(os.path.dirname(__file__)))
+
 import pythonMonkeyPatches
 
 import ctypes
-import os
-import sys
 import locale
 import gettext
 import time
@@ -40,15 +51,6 @@ class NoConsoleOptionParser(optparse.OptionParser):
 		sys.exit(2)
 
 globalVars.startTime=time.time()
-
-if getattr(sys, "frozen", None):
-	# We are running as an executable.
-	# Append the path of the executable to sys so we can import modules from the dist dir.
-	sys.path.append(sys.prefix)
-	os.chdir(sys.prefix)
-else:
-	#We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
-	os.chdir(os.path.normpath(os.path.dirname(__file__)))
 
 #Localization settings
 locale.setlocale(locale.LC_ALL,'')

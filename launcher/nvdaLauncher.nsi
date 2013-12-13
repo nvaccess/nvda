@@ -10,7 +10,7 @@ CRCCheck on
 
 ReserveFile "${NSISDIR}\Plugins\system.dll"
 ReserveFile "${NSISDIR}\Plugins\banner.dll"
-ReserveFile "nvda_logo.wav"
+ReserveFile "..\miscDeps\launcher\nvda_logo.wav"
 
 Name "NVDA"
 VIProductVersion "0.0.0.0" ;Needs to be here so other version info shows up
@@ -72,7 +72,7 @@ BringToFront
 
 setOutPath "$PLUGINSDIR"
 ;Play NVDA logo sound
-File "nvda_logo.wav"
+File "..\miscDeps\launcher\nvda_logo.wav"
 Push "$PLUGINSDIR\nvda_logo.wav"
 Call PlaySound
 CreateDirectory "$PLUGINSDIR\app"

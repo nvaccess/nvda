@@ -314,10 +314,17 @@ def getDisplayList():
 			continue
 		try:
 			display = _getDisplayDriver(name)
+		except:
+			log.error("Error while importing braille display driver %s" % name,
+				exc_info=True)
+			continue
+		try:
 			if display.check():
 				displayList.append((display.name, display.description))
+			else:
+				log.debugWarning("Braille display driver %s reports as unavailable, excluding" % name)
 		except:
-			pass
+			log.error("", exc_info=True)
 	return displayList
 
 class Region(object):

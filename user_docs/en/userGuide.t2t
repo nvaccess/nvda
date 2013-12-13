@@ -63,7 +63,7 @@ For further details, you can [view the full licence. http://www.gnu.org/licenses
 -
 
 + Getting and Setting Up NVDA +
-If you have not yet got a copy of NVDA, you can download it from [www.nvda-project.org NVDA_URL].
+If you have not yet got a copy of NVDA, you can download it from [www.nvaccess.org NVDA_URL].
 
 Go to the download section and you will find a link to download the latest version of NVDA.
 
@@ -554,7 +554,7 @@ Note: The report remaining time shortcut works only with the default formatting 
 %kc:beginInclude
 || Name | Key | Description |
 | Report Comments Window | control+shift+c | Reports any comments in the comments window. |
-| Report automatic comments window | control+shift+a | Reports any comments in the automatic comments window. |
+| Report notes for translators | control+shift+a | Reports any notes for translators. |
 %kc:endInclude
 
 + Configuring NVDA +
@@ -1138,9 +1138,11 @@ See [below #ConfigProfileTriggers] for more information about triggers.
 Pressing OK will create the profile and close the Configuration Profiles dialog so you can edit it.
 
 +++ Manual Activation +++[ConfigProfileManual]
-You can manually activate a profile by selecting a profile and pressing the Manual activate/edit button.
+You can manually activate a profile by selecting a profile and pressing the Manual activate button.
 Once activated, other profiles can still be activated due to triggers, but any settings in the manually activated profile will override them.
-Also, any settings you change will be saved in that profile.
+For example, if a profile is triggered for the current application and reporting of links is enabled in that profile but disabled it in the manually activated profile, links will not be reported.
+However, if you have changed the voice in the triggered profile but have never changed it in the manually activated profile, the voice from the triggered profile will be used.
+Any settings you change will be saved in the manually activated profile.
 To deactivate a manually activated profile, select it in the Configuration Profiles dialog and press the Manual deactivate button.
 
 +++ Triggers +++[ConfigProfileTriggers]
@@ -1232,7 +1234,7 @@ It is best to remove these files from your configuration and install  the approp
 
 ++ Python Console ++
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
-For more information, please see the Developer Guide available from [the Development section of the NVDA web site NVDA_URLwiki/Development].
+For more information, please see the Developer Guide available from [the Development section of the NVDA web site http://community.nvda-project.org/wiki/Development].
 
 ++ Reload plugins ++
 This item, once activated, reloads app modules and global plugins without restarting NVDA, which can be useful for developers.
@@ -1303,8 +1305,8 @@ This section contains information about the Braille displays supported by NVDA.
 ++ Freedom Scientific Focus/PAC Mate Series ++
 All Focus and PAC Mate displays from [Freedom Scientific http://www.freedomscientific.com/] are supported when connected via USB or bluetooth.
 You will need the Freedom Scientific braille display drivers installed on your system.
-If you do not have them already, you can obtain them from http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
-Although this page only mentions the Focus 40 Blue display, the drivers support all Freedom Scientific displays.
+If you do not have them already, you can obtain them from http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Although this page only mentions the Focus Blue display, the drivers support all Freedom Scientific Focus and Pacmate displays.
 If your system is running 64 bit Windows and the drivers were already installed by another screen reader, you will probably still need to install the drivers from this link, as the files required by NVDA were probably not installed by the other screen reader.
 
 By default, NVDA can automatically detect and connect to these displays either via USB or bluetooth.
@@ -1537,6 +1539,9 @@ Please see the display's documentation for descriptions of where these keys can 
 ++ HIMS Braille Sense/Braille EDGE Series ++
 NVDA supports Braille Sense and Braille EDGE displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
 If connecting via USB, you will need to install the USB drivers from HIMS on your system.
+You can download these from the HIMS Resource Center: http://www.hims-inc.com/resource-center/
+On this page, select your device and download the driver in the Window-Eyes section.
+Although the section only mentions Window-Eyes, this is a general USB driver which will work with NVDA as well.
 
 Following are the key assignments for these displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -1869,7 +1874,7 @@ For example, you can specify whether the raw symbol should be sent to the synthe
 
 To do this, you must edit the symbol pronunciation information file in your NVDA user configuration directory.
 The file is called symbols-xx.dic, where xx is the language code.
-The format of this file is documented in the Symbol Pronunciation section of the NVDA Developer Guide, which is available from [the Development section of the NVDA web site NVDA_URLwiki/Development].
+The format of this file is documented in the Symbol Pronunciation section of the NVDA Developer Guide, which is available from [the Development section of the NVDA web site http://community.nvda-project.org/wiki/Development].
 However, it is not possible for users to define complex symbols.
 
 + Further Information +

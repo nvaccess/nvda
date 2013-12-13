@@ -10,6 +10,7 @@ import controlTypes
 import winUser
 import api
 from . import IAccessible, getNVDAObjectFromEvent
+import eventHandler
 
 """Miscellaneous support for Microsoft Office applications.
 """
@@ -49,7 +50,7 @@ class MSOUNISTAT(IAccessible):
 
 	def _get_role(self):
 		return controlTypes.ROLE_STATICTEXT
- 
+
 class BrokenMsoCommandBar(IAccessible):
 	"""Work around broken IAccessible implementation for Microsoft Office XP-2003 toolbars.
 	For these IAccessibles, accNavigate is rather broken
@@ -78,3 +79,28 @@ class BrokenMsoCommandBar(IAccessible):
 		if name == "MSO Generic Control Container":
 			return None
 		return name
+
+class SDMSymbols(SDM):
+
+	def _get_value(self):
+		#The value (symbol) is in a static text field somewhere in the direction of next.
+		# There can be multiple symbol lists all in a row, and these lists have their own static text labels, yet the active list's value field is always after them all.
+		# static text labels for these lists seem to have a keyboardShortcut, therefore we can skip over those.
+		next=self.next
+		while next:
+			if not next.keyboardShortcut and next.role==controlTypes.ROLE_STATICTEXT:
+				return next.name
+			next=next.next
+
+	def script_selectGraphic(self, gesture):
+		gesture.send()
+		eventHandler.queueEvent("valueChange",self)
+
+	__gestures = {
+		"kb:downArrow": "selectGraphic",
+		"kb:upArrow": "selectGraphic",
+		"kb:home": "selectGraphic",
+		"kb:end": "selectGraphic",
+		"kb:leftArrow": "selectGraphic",
+		"kb:rightArrow": "selectGraphic",
+	}
