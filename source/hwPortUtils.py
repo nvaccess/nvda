@@ -90,8 +90,20 @@ SetupDiGetDeviceRegistryProperty = ctypes.windll.setupapi.SetupDiGetDeviceRegist
 SetupDiGetDeviceRegistryProperty.argtypes = (HDEVINFO, PSP_DEVINFO_DATA, DWORD, PDWORD, ctypes.c_void_p, DWORD, PDWORD)
 SetupDiGetDeviceRegistryProperty.restype = BOOL
 
+SetupDiEnumDeviceInfo = ctypes.windll.setupapi.SetupDiEnumDeviceInfo
+SetupDiEnumDeviceInfo.argtypes = (HDEVINFO, DWORD, PSP_DEVINFO_DATA)
+SetupDiEnumDeviceInfo.restype = BOOL
+
+CM_Get_Device_ID = ctypes.windll.cfgmgr32.CM_Get_Device_IDW
+CM_Get_Device_ID.argtypes = (DWORD, ctypes.c_wchar_p, ULONG, ULONG)
+CM_Get_Device_ID.restype = DWORD
+CR_SUCCESS = 0
+MAX_DEVICE_ID_LEN = 200
+
 GUID_CLASS_COMPORT = GUID(0x86e0d1e0L, 0x8089, 0x11d0,
 	(ctypes.c_ubyte*8)(0x9c, 0xe4, 0x08, 0x00, 0x3e, 0x30, 0x1f, 0x73))
+GUID_DEVINTERFACE_USB_DEVICE = GUID(0xA5DCBF10, 0x6530, 0x11D2,
+	(0x90, 0x1F, 0x00, 0xC0, 0x4F, 0xB9, 0x51, 0xED))
 
 DIGCF_PRESENT = 2
 DIGCF_DEVICEINTERFACE = 16
@@ -306,3 +318,34 @@ def getWidcommBluetoothPortInfo(port):
 				name = winreg.QueryValueEx(itemKey, "BDName")[0]
 				return addr, name
 	raise LookupError
+
+def listUsbDevices(onlyAvailable=True):
+	"""List USB devices on the system.
+	@param onlyAvailable: Only return devices that are currently available.
+	@type onlyAvailable: bool
+	@return: The USB vendor and product IDs in the form "VID_xxxx&PID_xxxx"
+	@rtype: generator of unicode
+	"""
+	flags = DIGCF_DEVICEINTERFACE
+	if onlyAvailable:
+		flags |= DIGCF_PRESENT
+
+	g_hdi = SetupDiGetClassDevs(GUID_DEVINTERFACE_USB_DEVICE, None, NULL, flags)
+	devInfo = SP_DEVINFO_DATA(cbSize=ctypes.sizeof(SP_DEVINFO_DATA))
+	devInstId = ctypes.create_unicode_buffer(MAX_DEVICE_ID_LEN)
+	try:
+		for dwIndex in xrange(256):
+			if not SetupDiEnumDeviceInfo(
+				g_hdi,
+				dwIndex,
+				ctypes.byref(devInfo)
+			):
+				if ctypes.GetLastError() != ERROR_NO_MORE_ITEMS:
+					raise ctypes.WinError()
+				break
+
+			if CM_Get_Device_ID(devInfo.DevInst, devInstId, MAX_DEVICE_ID_LEN, 0) != CR_SUCCESS:
+				continue
+			yield devInstId.value.split("\\")[1]
+	finally:
+		SetupDiDestroyDeviceInfoList(g_hdi)
