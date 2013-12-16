@@ -868,9 +868,9 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		parentNode->updateAncestor=tableInfo->tableNode;
 	}
 
-	parentNode->isHidden=(hidden||dontRender);
 	//We do not want to render any content for dontRender nodes
 	if(dontRender) {
+		parentNode->isHidden=true;
 		return parentNode;
 	}
 
@@ -930,6 +930,8 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			IARole=ROLE_SYSTEM_PUSHBUTTON;
 		} else if(ariaRole.compare(L"dialog")==0) {
 			IARole=ROLE_SYSTEM_DIALOG;
+		} else if(!hidden&&ariaRole.compare(L"presentation")==0) {
+			hidden=true;
 		}
 	} 
 	//IE doesn't seem to support aria-label yet so we want to override IAName with it
@@ -957,8 +959,12 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		LIIndexPtr=NULL;
 	}
 
-	//Collect and update table information
-	tableInfo=fillVBuf_helper_collectAndUpdateTableInfo(parentNode, nodeName, docHandle,ID, tableInfo, attribsMap); 
+	parentNode->isHidden=hidden;
+
+	if(!hidden) {
+		//Collect and update table information
+		tableInfo=fillVBuf_helper_collectAndUpdateTableInfo(parentNode, nodeName, docHandle,ID, tableInfo, attribsMap); 
+	}
 
 	//Generate content for nodes
 	wstring contentString=L"";
@@ -1182,9 +1188,9 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	}
 
 	//Update attributes with table info
-	if(nodeName.compare(L"TABLE")==0) {
+	if(!hidden&&nodeName.compare(L"TABLE")==0) {
 		nhAssert(tableInfo);
-		if(hidden||!tableInfo->definitData) {
+		if(!tableInfo->definitData) {
 			attribsMap[L"table-layout"]=L"1";
 		}
 		for (list<pair<VBufStorage_controlFieldNode_t*, wstring>>::iterator it = tableInfo->nodesWithExplicitHeaders.begin(); it != tableInfo->nodesWithExplicitHeaders.end(); ++it)
