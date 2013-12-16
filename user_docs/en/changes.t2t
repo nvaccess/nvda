@@ -9,6 +9,12 @@
 - Support for Microsoft PowerPoint 2013. Note that protected view is not supported. (#3578)
 - In Microsoft word and Excel, NVDA can now read the selected symbol when choosing symbols using the Insert Symbols dialog. (#3538)
 - It is now possible to choose if content in documents should be identified as clickable, via a new option in the Document Formatting settings dialog. This option is on by default (previous behaviour). (#3556)
+- Support for braille displays connected via Bluetooth on a computer running the Widcomm Bluetooth Software. (#2418)
+- When editing text in PowerPoint, hyperlinks are now reported. (#3416)
+
+
+== Changes ==
+- For Papenmeier braille displays, the move to flat review/focus command has been removed. Users can assign their own keys using the Input Gestures dialog. (#3652)
 
 
 == Bug Fixes ==
@@ -27,6 +33,8 @@
 
 == Changes for Developers ==
 - AppModules now contain productName and productVersion properties. This info is also now included in Developer Info (NVDA+f1). (#1625)
+- In the Python Console, you can now press the tab key to complete the current identifier. (#433)
+ - If there are multiple possibilities, you can press tab a second time to choose from a list.
 
 
 = 2013.3 =
