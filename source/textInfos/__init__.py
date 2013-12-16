@@ -43,7 +43,7 @@ class ControlField(Field):
 		states = self.get("states", set())
 
 		# Honour verbosity configuration.
-		if not formatConfig["includeLayoutTables"] and role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER):
+		if role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER):
 			# The user doesn't want layout tables.
 			# Find the nearest table.
 			if role == controlTypes.ROLE_TABLE:
@@ -57,7 +57,7 @@ class ControlField(Field):
 						break
 				else:
 					table = None
-			if table and table.get("table-layout", None):
+			if table and ((not formatConfig["includeLayoutTables"] and table.get("table-layout", None)) or table.get('isHidden',False)):
 				return self.PRESCAT_LAYOUT
 		if reason in (controlTypes.REASON_CARET, controlTypes.REASON_SAYALL, controlTypes.REASON_FOCUS) and (
 			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"])
