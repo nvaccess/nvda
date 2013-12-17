@@ -59,6 +59,12 @@ try:
 except:
 	gettext.install('nvda',unicode=True)
 
+# Check OS version requirements
+import winVersion
+if not winVersion.canRunVc2010Builds():
+	winUser.MessageBox(0, unicode(ctypes.FormatError(winUser.ERROR_OLD_WIN_VERSION)), None, winUser.MB_ICONERROR)
+	sys.exit(1)
+
 #Process option arguments
 parser=NoConsoleOptionParser()
 parser.add_option('-q','--quit',action="store_true",dest='quit',default=False,help="Quit already running copy of NVDA")
