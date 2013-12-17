@@ -223,6 +223,12 @@ msoShapeTypesToNVDARoles={
 	msoDiagram:controlTypes.ROLE_DIAGRAM,
 }
 
+# PpMouseActivation
+ppMouseClick=1
+
+# PpActionType
+ppActionHyperlink=7
+
 def getBulletText(ppBulletFormat):
 	t=ppBulletFormat.type
 	if t==ppBulletNumbered:
@@ -630,6 +636,8 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 				formatField['text-position']='super'
 		if formatConfig['reportColor']:
 			formatField['color']=colors.RGB.fromCOLORREF(font.color.rgb)
+		if formatConfig["reportLinks"] and curRun.actionSettings(ppMouseClick).action==ppActionHyperlink:
+			formatField["link"]=True
 		return formatField,(startOffset,endOffset)
 
 class Table(Shape):
