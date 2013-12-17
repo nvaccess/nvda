@@ -37,7 +37,7 @@ def fetchSDKVars(targetArch,versionString):
 	try:
 		versionKey=_winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,r'SOFTWARE\Microsoft\Microsoft SDKs\Windows\%s'%versionString)
 	except Exception as e:
-		common.debug("windowsSdk.py, fetchSDKVars: failed to open registry key for version %s: %s"%(v,e))
+		common.debug("windowsSdk.py, fetchSDKVars: failed to open registry key for version %s: %s"%(versionString,e))
 		return
 	try:
 		installDir=_winreg.QueryValueEx(versionKey,"InstallationFolder")[0]
