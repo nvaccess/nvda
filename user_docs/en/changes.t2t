@@ -31,6 +31,7 @@
 - NVDA no longer reports all cells in Microsoft Excel as underlined in their formatting information. (#3669)
 - No longer show meaningless characters in browse mode documents such as those found in the Unicode private usage range. In some cases these were stopping more useful labels to be shown. (#2963).
 - Input composition for entering east-asian characters no longer fails in PuTTY (#3432)
+- Navigating in a document after a canceled sayAll no longer results in NVDA sometimes incorrectly announcing that you have left a field (such as a table) lower in the document that the sayall never actually got around to speaking (#3688)
 
 
 == Changes for Developers ==
