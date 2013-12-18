@@ -140,11 +140,14 @@ def queueScript(script,gesture):
 	_numScriptsQueued+=1
 	queueHandler.queueFunction(queueHandler.eventQueue,_queueScriptCallback,script,gesture)
 
+def willSayAllResume(gesture):
+	return config.conf['keyboard']['allowSkimReadingInSayAll']and gesture.wasInSayAll and getattr(gesture.script,'resumeSayAllMode',None)==sayAllHandler.lastSayAllMode
+
 def executeScript(script,gesture):
 	"""Executes a given script (function) passing it the given gesture.
 	It also keeps track of the execution of duplicate scripts with in a certain amount of time, and counts how many times this happens.
 	Use L{getLastScriptRepeatCount} to find out this count value.
-	@param script: the function or method that should be executed. The function or method must take an argument of 'gesture'.
+	@param script: the function or method that should be executed. The function or method must take an argument of 'gesture'. This must be the same value as gesture.script, but its passed in here purely for performance. 
 	@type script: callable.
 	@param gesture: the input gesture that activated this script
 	@type gesture: L{inputCore.InputGesture}
@@ -157,11 +160,8 @@ def executeScript(script,gesture):
 		return gesture.send()
 	_isScriptRunning=True
 	resumeSayAllMode=None
-	if config.conf['keyboard']['allowSkimReadingInSayAll']and gesture.wasInSayAll and getattr(script,'resumeSayAllMode',None)==sayAllHandler.lastSayAllMode:
+	if willSayAllResume(gesture):
 		resumeSayAllMode=sayAllHandler.lastSayAllMode
-	if resumeSayAllMode is not None:
-		oldSpeechMode=speech.speechMode
-		speech.speechMode=speech.speechMode_off
 	try:
 		scriptTime=time.time()
 		scriptRef=weakref.ref(scriptFunc)
@@ -177,7 +177,6 @@ def executeScript(script,gesture):
 	finally:
 		_isScriptRunning=False
 		if resumeSayAllMode is not None:
-			speech.speechMode=oldSpeechMode
 			sayAllHandler.readText(resumeSayAllMode)
 
 def getLastScriptRepeatCount():
