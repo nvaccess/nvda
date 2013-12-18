@@ -33,6 +33,7 @@
 - Input composition for entering east-asian characters no longer fails in PuTTY (#3432)
 - Navigating in a document after a canceled sayAll no longer results in NVDA sometimes incorrectly announcing that you have left a field (such as a table) lower in the document that the sayall never actually got around to speaking (#3688)
 - When using browse mode quick navigation commands  while in sayAll with skim reading enabled, NVDA more accurately announces the new field (e.g. it now says a heading is a heading, rather than just its text). (#3689)
+- The jump to end or start of container quick navigation commands now honor the skim reading during sayAll setting (i.e. they will no longer cancel the current sayall). (#3675)
 
 
 == Changes for Developers ==
