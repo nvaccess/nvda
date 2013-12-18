@@ -38,13 +38,6 @@ sys.path.append("source")
 import versionInfo
 del sys.path[-1]
 
-# Get the path to signtool.
-try:
-	with _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Microsoft SDKs\Windows") as sdksKey:
-		signtool = os.path.join(_winreg.QueryValueEx(sdksKey, "CurrentInstallFolder")[0], "Bin", "signtool.exe")
-except WindowsError:
-	signtool = "signtool"
-
 # Get the path to 7z.
 try:
 	szKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\7-Zip", 0, _winreg.KEY_READ)
@@ -89,12 +82,11 @@ vars.Add(PathVariable("certFile", "The certificate file with which to sign execu
 vars.Add("certPassword", "The password for the private key in the signing certificate", "")
 vars.Add("certTimestampServer", "The URL of the timestamping server to use to timestamp authenticode signatures", "")
 vars.Add(PathVariable("outputDir", "The directory where the final built archives and such will be placed", "output",PathVariable.PathIsDirCreate))
-vars.Add(ListVariable('targetArchitectures','Which architectures should NVDA support?','all',['x86','x86_64']))
 vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'symbols', ["symbols","debugCRT","RTC","noOptimize"]))
 vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in xrange(60)]))
 
 #Base environment for this and sub sconscripts
-env = Environment(variables=vars,tools=["textfile","gettext","t2t",keyCommandsDocTool,'doxygen'])
+env = Environment(variables=vars,HOST_ARCH='x86',tools=["textfile","gettext","t2t",keyCommandsDocTool,'doxygen'])
 
 # speed up subsiquent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
 env.Decider('MD5-timestamp')
@@ -134,13 +126,21 @@ outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot
 outputDir=Dir(env['outputDir'])
 devDocsOutputDir=outputDir.Dir('devDocs')
 
+#architecture-specific environments
+archTools=['default','windowsSdk','midl','msrpc']
+env32=env.Clone(TARGET_ARCH='x86',tools=archTools)
+env64=env.Clone(TARGET_ARCH='x86_64',tools=archTools)
+env=env32
+
+
 #Fill sourceDir with anything provided for it by miscDeps
 env.recursiveCopy(sourceDir,Dir('miscdeps/source'))
 
 env.SConscript('source/comInterfaces_sconscript',exports=['env'])
 
 #Process nvdaHelper scons files
-env.SConscript('nvdaHelper/sconscript',exports=['env'])
+env32.SConscript('nvdaHelper/archBuild_sconscript',exports={'env':env32,'clientInstallDir':clientDir.Dir('x86'),'libInstallDir':sourceLibDir},variant_dir='build/x86')
+env64.SConscript('nvdaHelper/archBuild_sconscript',exports={'env':env64,'clientInstallDir':clientDir.Dir('x86_64'),'libInstallDir':sourceLibDir64},variant_dir='build/x86_64')
 
 #Allow all NVDA's gettext po files to be compiled in source/locale
 for po in env.Glob(sourceDir.path+'/locale/*/lc_messages/*.po'):
@@ -238,7 +238,7 @@ def SzArchiveGenerator(target, source, env, for_signature):
 env["BUILDERS"]["SzArchive"] = Builder(generator=SzArchiveGenerator)
 
 # An action to sign an executable with certFile.
-signExec = [signtool, "sign", "/f", certFile]
+signExec = ["signtool", "sign", "/f", certFile]
 if certPassword:
 	signExec.extend(("/p", certPassword))
 if certTimestampServer:
