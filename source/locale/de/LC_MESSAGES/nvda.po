@@ -4,15 +4,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-11-21 10:10+0100\n"
-"Last-Translator: René Linke <rene.linke@hamburg.de>\n"
+"POT-Creation-Date: 2013-12-13 09:22+1000\n"
+"PO-Revision-Date: 2013-12-16 10:36+0100\n"
+"Last-Translator: Bernd Dorer <bernd_dorer@yahoo.de>\n"
 "Language-Team: René Linke <rene.linke@blindzeln.de>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.6.2\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: D:\\rechner\\nvda_quellen\\nvda\n"
@@ -1438,6 +1438,15 @@ msgstr "enthält ausführliche Beschreibung"
 #. Translators: a state that denotes that an object is pinned in its current location
 msgid "pinned"
 msgstr "angeheftet"
+
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "hat Formel"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "hat Kommentar"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -3083,10 +3092,6 @@ msgstr "Blocksatz"
 msgid "align default"
 msgstr "Standardausrichtung"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "hat Kommentar"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "Rechtschreibfehler"
@@ -3589,10 +3594,6 @@ msgstr "Miniaturansichten"
 msgid "Master Thumbnails"
 msgstr "Hauptminiaturansichten"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "auf Powerpoint wird gewartet..."
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Folie {slideNumber}"
@@ -3626,6 +3627,10 @@ msgstr "Keine Fußnoten"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "Leere Folie"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "auf Powerpoint wird gewartet..."
 
 # Deutsche Sprachdatei für NVDA
 # Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
@@ -4351,7 +4356,7 @@ msgstr ""
 
 #. Translators: The title of the configuration profile triggers dialog.
 msgid "Profile Triggers"
-msgstr "Pfofilauslöser"
+msgstr "Profilauslöser"
 
 #. Translators: Displayed for a configuration profile trigger for an application.
 #. %s is replaced by the application executable name.
@@ -5194,6 +5199,11 @@ msgstr "S&prungmarken ansagen"
 msgid "Report fra&mes"
 msgstr "Rah&men ansagen"
 
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "anklickbare Elemente ansagen"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "Wörterbucheintrag bearbeiten"
@@ -6012,10 +6022,6 @@ msgstr ""
 "Bei einmaligem Drücken wird die aktuelle Spalte als Spalte festgelegt, in "
 "der sich die Reihenbeschriftungen befinden. Bei zweimaligem Drücken wird die "
 "Zuweisung wieder entfernt."
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "hat Formel"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"

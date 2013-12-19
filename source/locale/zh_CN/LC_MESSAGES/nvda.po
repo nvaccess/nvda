@@ -5,14 +5,14 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-10-16 10:57+0800\n"
-"Last-Translator: vgjh2005 <vgjh2005@gmail.com>\n"
+"PO-Revision-Date: 2013-12-08 15:52+0800\n"
+"Last-Translator: 雪岭冰龙 <vgjh2005@gmail.com>\n"
 "Language-Team: Simplified Chinese translate team <vgjh2005@gmail.com>\n"
-"Language: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.6.1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -101,7 +101,7 @@ msgstr "其他内容区"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
 msgid "content info"
-msgstr "内容信息区"
+msgstr "版权与隐私区"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
 msgid "main"
@@ -118,7 +118,7 @@ msgstr "搜索区"
 #. Translators: Reported for the form landmark, normally found on web pages.
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
-msgstr "表单"
+msgstr "表单区"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1440,13 +1440,13 @@ msgid "not checked"
 msgstr "未选中"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
-#, fuzzy
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
 "to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
-"您的手势映射文件包含错误，如果需要了解此错误的详细信息，请查看日志文件。"
+"您的配置文件包含错误。它已经被重置为默认的出厂设置。如果需要了解此错误的详细"
+"信息，请查看日志文件。"
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 msgid "Configuration File Error"
@@ -2379,9 +2379,8 @@ msgid ""
 msgstr "朗读新对象及其内容（若它与您上次触摸到的不相同）。"
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
-#, fuzzy
 msgid "Shows the NVDA Configuration Profiles dialog"
-msgstr "打开 NVDA “常规设置”对话框"
+msgstr "显示 NVDA “配置管理” 对话框"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -2417,7 +2416,7 @@ msgstr "热键快速参考"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
 msgid "User Guide"
-msgstr "用户指南"
+msgstr "用户指南(&U)"
 
 #. Translators: A file extension label for NVDA add-on package.
 msgid "NVDA add-on package"
@@ -3773,7 +3772,7 @@ msgstr "标点符号读音(&P)..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 msgid "I&nput gestures..."
-msgstr "创建手式...(&N)"
+msgstr "创建手式(&N)..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
@@ -3832,20 +3831,19 @@ msgstr "欢迎窗口(&L)"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
-msgstr "检查更新...(&C)"
+msgstr "检查更新(&C)..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
 msgid "About..."
-msgstr "关于...(&A)"
+msgstr "关于(&A)..."
 
 #. Translators: The label for the Help submenu in NVDA menu.
 msgid "&Help"
 msgstr "帮助(&H)"
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
-#, fuzzy
 msgid "&Configuration profiles..."
-msgstr "配置以应用"
+msgstr "管理配置(&C)..."
 
 #. Translators: The label for the menu item to revert to saved configuration.
 msgid "&Revert to saved configuration"
@@ -4085,158 +4083,146 @@ msgid "Add-on Information"
 msgstr "插件信息"
 
 #. Translators: The title of the Configuration Profiles dialog.
-#, fuzzy
 msgid "Configuration Profiles"
-msgstr "配置以应用"
+msgstr "配置管理"
 
 #. Translators: The label of the profile list in the Configuration Profiles dialog.
 msgid "&Profile"
-msgstr ""
+msgstr "配置"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
-msgstr ""
+msgstr "新建(&N)"
 
 #. Translators: The label of a button to rename a configuration profile.
 msgid "&Rename"
-msgstr ""
+msgstr "重命名(&R)"
 
 #. Translators: The label of a button to delete a configuration profile.
-#, fuzzy
 msgid "&Delete"
-msgstr "delete"
+msgstr "删除(&D)"
 
 #. Translators: The label of a button to manage triggers
 #. in the Configuration Profiles dialog.
 #. See the Configuration Profiles section of the User Guide for details.
 msgid "&Triggers..."
-msgstr ""
+msgstr "关联(&T)"
 
 #. Translators: The label of a checkbox in the Configuration Profiles dialog.
 msgid "Temporarily d&isable all triggers"
-msgstr ""
+msgstr "临时停用所有关联(&D)"
 
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
-#, fuzzy
 msgid "(normal configuration)"
-msgstr "保存设置(&S)"
+msgstr "(normal configuration)"
 
 #. Translators: Reported for a profile which is being edited
 #. in the Configuration Profiles dialog.
-#, fuzzy
 msgid "editing"
-msgstr "编辑框"
+msgstr "正在编辑"
 
 #. Translators: Reported for a profile which has been manually activated
 #. in the Configuration Profiles dialog.
 msgid "manual"
-msgstr ""
+msgstr "手动"
 
 #. Translators: Reported for a profile which is currently triggered
 #. in the Configuration Profiles dialog.
 msgid "triggered"
-msgstr ""
+msgstr "以关联"
 
 #. Translators: An error displayed when activating a configuration profile fails.
-#, fuzzy
 msgid "Error activating profile."
-msgstr "%s 语言文件错误"
+msgstr "激活配置时发生错误。"
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
 msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr ""
+msgstr "您确定要删除此配置吗？请注意，此操作无法恢复。"
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
-#, fuzzy
 msgid "Confirm Deletion"
-msgstr "配置"
+msgstr "确认删除"
 
 #. Translators: An error displayed when deleting a configuration profile fails.
-#, fuzzy
 msgid "Error deleting profile."
-msgstr "下载更新时出错！"
+msgstr "删除配置时出错。"
 
 #. Translators: The label of the button to manually deactivate the selected profile
 #. in the Configuration Profiles dialog.
-#, fuzzy
 msgid "Manual deactivate"
-msgstr "激活"
+msgstr "手动停用"
 
 #. Translators: The label of the button to manually activate the selected profile
 #. in the Configuration Profiles dialog.
-#, fuzzy
 msgid "Manual activate"
-msgstr "激活"
+msgstr "手动激活"
 
 #. Translators: The label of a field to enter a new name for a configuration profile.
 msgid "New name:"
-msgstr ""
+msgstr "新的名称："
 
 #. Translators: The title of the dialog to rename a configuration profile.
 msgid "Rename Profile"
-msgstr ""
+msgstr "重命名配置"
 
 #. Translators: An error displayed when renaming a configuration profile
 #. and a profile with the new name already exists.
 #. Translators: An error displayed when the user attempts to create a configuration profile which already exists.
 msgid "That profile already exists. Please choose a different name."
-msgstr ""
+msgstr "此配置已存在，请换用其他名称。"
 
-#, fuzzy
 msgid "Error renaming profile."
-msgstr "下载更新时出错！"
+msgstr "重命名配置时发生错误。"
 
 #. Translators: Displayed for the configuration profile trigger for the current application.
 #. %s is replaced by the application executable name.
-#, fuzzy, python-format
+#, python-format
 msgid "Current application (%s)"
-msgstr "当前运行的程序为 %s，"
+msgstr "当前程序为 %s，"
 
 #. Translators: Displayed for the configuration profile trigger for say all.
 msgid "Say all"
-msgstr ""
+msgstr "全局通用"
 
 #. Translators: An error displayed when saving configuration profile triggers fails.
-#, fuzzy
 msgid ""
 "Error saving configuration profile triggers - probably read only file system."
-msgstr "保存手式设置时发生错误，文件系统可能处于只读状态"
+msgstr "保存配置修改时发生错误，文件系统可能处于只读状态"
 
 #. Translators: The title of the configuration profile triggers dialog.
 msgid "Profile Triggers"
-msgstr ""
+msgstr "配置关联"
 
 #. Translators: Displayed for a configuration profile trigger for an application.
 #. %s is replaced by the application executable name.
-#, fuzzy, python-format
+#, python-format
 msgid "%s application"
-msgstr "应用程序"
+msgstr "应用程序%s"
 
 #. Translators: The label of the triggers list in the Configuration Profile Triggers dialog.
 msgid "Triggers"
-msgstr ""
+msgstr "关联"
 
 #. Translators: The label of the profile list in the Configuration Profile Triggers dialog.
 msgid "Profile"
-msgstr ""
+msgstr "配置"
 
 #. Translators: The title of the dialog to create a new configuration profile.
 msgid "New Profile"
-msgstr ""
+msgstr "新建配置"
 
 #. Translators: The label of a field to enter the name of a new configuration profile.
 msgid "Profile name:"
-msgstr ""
+msgstr "配置名称："
 
 #. Translators: The label of a radio button to specify that a profile will be used for manual activation
 #. in the new configuration profile dialog.
-#, fuzzy
 msgid "Manual activation"
-msgstr "动画"
+msgstr "手动激活"
 
 msgid "Use this profile for:"
-msgstr ""
+msgstr "此配置的使用条件为："
 
 #. Translators: The confirmation prompt presented when creating a new configuration profile
 #. and the selected trigger is already associated.
@@ -4245,15 +4231,16 @@ msgid ""
 "will be removed from that profile and associated with this one.\n"
 "Are you sure you want to continue?"
 msgstr ""
+"此关联已经与其他配置连接。如果您继续，旧的配置连接将被此连接替换。\n"
+"\v您希望继续吗？"
 
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 msgid "Warning"
 msgstr "警告"
 
 #. Translators: An error displayed when creating a configuration profile fails.
-#, fuzzy
 msgid "Error creating profile - probably read only file system."
-msgstr "保存手式设置时发生错误，文件系统可能处于只读状态"
+msgstr "保存配置时发生错误，文件系统可能处于只读状态"
 
 #. Translators: The prompt asking the user whether they wish to
 #. manually activate a configuration profile that has just been created.
@@ -4263,11 +4250,13 @@ msgid ""
 "usage.\n"
 "Do you wish to manually activate it now?"
 msgstr ""
+"要想编辑此配置，您必须先将其激活。一旦您完成编辑，您必须手动停用它已使此配置"
+"恢复到正常的状态。\n"
+"您希望现在就手动激活它吗？"
 
 #. Translators: The title of the confirmation dialog for manual activation of a created profile.
-#, fuzzy
 msgid "Manual Activation"
-msgstr "动画"
+msgstr "手动激活"
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
 msgid "Updating NVDA"
@@ -4316,7 +4305,7 @@ msgstr "您的NVDA 更新安装已完成。 "
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
 msgid "Please press OK to start the installed copy."
-msgstr "请单击“确定”启动副本的安装。"
+msgstr "请单击“确定”启动安装的副本。"
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
 msgid "Success"
@@ -4676,7 +4665,7 @@ msgstr "按键时中断朗读(&E)"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Allow skim &reading in Say All"
-msgstr "允许文本摘要朗读(&R)"
+msgstr "在全文朗读模式下启用快捷键导航(&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -4690,7 +4679,7 @@ msgstr "读出 NVDA 快捷键(&K)"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
-msgstr ""
+msgstr "至少指定一个案件为 NVDA 键。"
 
 #. Translators: This is the label for the mouse settings dialog.
 msgid "Mouse Settings"
@@ -4718,7 +4707,7 @@ msgstr "文本读出单元(&D)"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "Report &role when mouse enters object"
-msgstr "读出鼠标所指对象类型(&R)"
+msgstr "读出鼠标所指对象的类型(&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -4776,7 +4765,7 @@ msgstr "朗读候选字词时总包含短字符描述(&D)"
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Report changes to the &reading string"
-msgstr "读出包含长描述的字词本身(&R)"
+msgstr "读出包含短描述的字词本身(&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
@@ -4848,7 +4837,7 @@ msgstr "进度蓝提示"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
-msgstr "读出背景进度蓝"
+msgstr "读出后台进度蓝"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -5002,7 +4991,7 @@ msgstr "朗读引用区(&Q)"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report lan&dmarks"
-msgstr "朗读书签(&D)"
+msgstr "朗读路标(&D)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5218,7 +5207,7 @@ msgstr "单词"
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
 msgid "%s landmark"
-msgstr "%s 书签"
+msgstr "%s 路标"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -5233,7 +5222,7 @@ msgstr "标题(&H)"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "Lan&dmarks"
-msgstr "书签(&D)"
+msgstr "路标(&D)"
 
 #. Translators: The title of the browse mode Elements List dialog.
 msgid "Elements List"
@@ -5299,7 +5288,7 @@ msgstr "切换是否根据屏幕布局浏览文档内容"
 
 #. Translators: the description for the elements list dialog script on virtualBuffers.
 msgid "Presents a list of links, headings or landmarks"
-msgstr "显示一个包含链接、标题和书签的列表。"
+msgstr "显示一个包含链接、标题和路标的列表。"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -5721,19 +5710,19 @@ msgstr "链接前没有文本"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next landmark"
-msgstr "移到下一个书签"
+msgstr "移到下一个路标"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next landmark"
-msgstr "往下没有书签"
+msgstr "往下没有路标"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous landmark"
-msgstr "移到上一个书签"
+msgstr "移到上一个路标"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous landmark"
-msgstr "往上没有书签"
+msgstr "往上没有路标"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next embedded object"
@@ -5775,7 +5764,7 @@ msgstr "默认颜色"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
-msgstr ""
+msgstr "{start}到{end}"
 
 #. Translators: a message reported in the SetColumnHeaderRow script for Excel.
 #. Translators: a message reported in the SetRowHeaderColumn script for Excel.

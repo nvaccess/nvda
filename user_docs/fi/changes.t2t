@@ -6,7 +6,9 @@
 = 2014.1 =
 
 == Uudet ominaisuudet ==
-- Tuki Microsoft PowerPoint 2013:lle. (Suojattua näkymää ei tueta). (#3578)
+- Tuki Microsoft PowerPoint 2013:lle. Huomaa, että suojattua näkymää ei tueta. (#3578)
+- NVDA lukee nyt valitun symbolin valittaessa niitä Lisää merkkejä -valintaikkunasta Microsoft wordissa ja Excelissä. (#3538)
+- Asiakirjojen muotoiluasetukset -valintaikkunassa olevalla uudella asetuksella on nyt mahdollista valita, tunnistetaanko asiakirjojen sisältö napsautettavaksi. Asetus on oletusarvoisesti käytössä (toimii kuten aiemmin). (#3556)
 
 
 == Korjatut ohjelmavirheet ==
@@ -19,6 +21,8 @@
 - Sellaisten painikkeiden jne. teksti, joiden nimet on korvattu työkaluvihjeellä tai muilla keinoin, hahmonnetaan nyt oikein selaustilassa Adobe Readerissa. (#3640)
 - Ylimääräisiä "mc-ref"-tekstiä sisältäviä kuvia ei enää hahmonneta selaustilassa Adobe Readerissa. (#3645)
 - NVDA ei enää ilmoita Microsoft Excelissä kaikkia soluja alleviivatuiksi niiden muotoilutiedoissa. (#3669)
+- Selaustila-asiakirjoissa ei enää näytetä tarkoituksettomia merkkejä, kuten esim. Unicode-yksityiskäyttöalueella olevia. Nämä estivät joissakin tapauksissa hyödyllisempien nimien näyttämisen. (#2963).
+- Itäaasialaisten merkkien syöttämiseen tarkoitettu syöttömenetelmä toimii nyt PuTTY:ssä. (#3432)
 
 
 = 2013.3 =

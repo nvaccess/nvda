@@ -1,0 +1,81 @@
+﻿complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"')\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"')\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])'
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	tačka	all	always
+! sentence ending	uzvičnik	all	always
+? sentence ending	upitnik	all	always
+; phrase ending	tačkazarez	most	always
+: phrase ending	dvotačka	most	always
+decimal point	decimalni zarez	none	always
+in-word '	apostrof	all	norep
+
+# Whitespace
+\0	prazno	char
+\t	tabulator
+\n	novi red	char
+\f	nova stranica	none
+\r	kraj reda	char
+ 	razmak	char
+ 	razmak	char	# no-break space
+
+# Standard punctuation/symbols
+!	uzvičnik	all
+"	navodnik	most
+\#	taraba	most
+$	dolar	some
+£	funta	some
+€	evro	some
+%	procenat	some
+&	ampersand	some
+'	apostrof	all
+(	leva zagrada	most
+)	desna zagrada	most
+*	zvezdica	most
++	plus	most
+,	zapeta	all	always
+-	crtica	most
+.	tačka	all
+/	kosa crta	some
+:	dvotačka	most
+;	tačkazarez	most
+<	manje od	most
+>	veće od	most
+=	jednako	most
+?	upitnik	all
+@	et	some
+[	leva uglasta	most
+]	desna uglasta	most
+"	navodnik	most
+\\	obrnuta kosa crta	most
+^	kapica	most
+_	donja crta	most
+`	akcenat	most
+{	leva vitičasta	most
+}	desna vitičasta	most
+|	uspravna crta	most
+~	tilda	most
+
+# Other characters
+•	oznaka	some
+…	tri tačke	all	always
+	oznaka	some
+“	levi navodnik	most
+”	desni navodnik	most
+–	en crtica	most
+—	em crtica	most
+●	kružić	most
+¨	preglas	most
