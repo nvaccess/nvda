@@ -63,7 +63,7 @@ Für weitere Informationen können Sie entweder die [englischsprachige http://ww
 -
 
 + NVDA beziehen und einrichten +
-Falls noch nicht geschehen, können Sie NVDA von  [www.nvda-project.org NVDA_URL] herunterladen.
+Falls noch nicht geschehen, können Sie NVDA von  [www.nvaaccess.org NVDA_URL] herunterladen.
 
 Im Download-Bereich finden Sie einen Link, um die neueste Version herunterzuladen.
 
@@ -1139,7 +1139,7 @@ Hier kann ein Ersatzwort für das im Listenfeld ausgewählte Sonderzeichen einge
 ==== Das Kombinationsfeld "Stufe" ====
 In diesem Kombinationsfeld kann eingestellt werden, ab welcher Stufe die Satzzeichen und die Sonderzeichen eine Ersetzung greifen soll.
 
-Anmerkung: Das Dialogfeld erlaubt lediglich ein Bearbeiten der vorhandenen Sonderzeichen. Um neue Sonderzeichen hinzuzufügen oder vorhandene zu entfernen, müssen Sie die sprachspezifische Datei "Symbols-xx.dic" von Hand bearbeiten. "xx" steht hierbei für den zweistelligen Sprachcode. Weitere Informationen über das Format der Datei finden sie im Abschnitt «Aussprache von Sonderzeichen» im nvda-Entwicklerhandbuch. Dieses ist im [Teilbereich Entwicklung der nvda-Webseite NVDA_URLwiki/Development] zu finden. Die Definition neuer komplexer Symbole ist jedoch nicht möglich. 
+Anmerkung: Das Dialogfeld erlaubt lediglich ein Bearbeiten der vorhandenen Sonderzeichen. Um neue Sonderzeichen hinzuzufügen oder vorhandene zu entfernen, müssen Sie die sprachspezifische Datei "Symbols-xx.dic" von Hand bearbeiten. "xx" steht hierbei für den zweistelligen Sprachcode. Weitere Informationen über das Format der Datei finden sie im Abschnitt «Aussprache von Sonderzeichen» im nvda-Entwicklerhandbuch. Dieses ist im [Teilbereich Entwicklung der nvda-Webseite http://community.nvda-project.org/wiki/Development] zu finden. Die Definition neuer komplexer Symbole ist jedoch nicht möglich. 
 
 +++ Eingaben +++
 In diesem Dialog können Sie Eingaben (Tastenkombinationen, Tasten an einer Braillezeile, Aktionen an einem Touchscreen) an NVDA-Befehle zuweisen.
@@ -1309,7 +1309,7 @@ Es ist daher zu empfehlen, derartig «untergeschobene» Dateien zu entfernen und
 
 ++ Die Python-Konsole ++
 Die in NVDA integrierte Python-Konsole ist im NVDA-Menü unter "Extras" zu finden. Sie ist ein nützliches Entwicklungswerkzeug zum beheben von Fehlern, zum allgemeinen Überprüfen der internen Komponente in NVDA sowie zur Überprüfung der Hierarchie der Zugänglichkeit einer Anwendung.
-Für weitere Informationen sehen Sie sich bitte den [Teilbereich "Entwicklung" auf der englischen Website NVDA_URLwiki/Development] an.
+Für weitere Informationen sehen Sie sich bitte den [Teilbereich "Entwicklung" auf der englischen Website http://community.nvda-project.org/wiki/Development] an.
 
 ++ Plugins erneut laden ++
 Dieser Eintrag, einmal aktiviert, lädt alle Anwendungsmodule sowie globale Plugins neu ohne, dass NVDA extra neu gestartet wird.
@@ -1628,6 +1628,9 @@ Bitte sehen Sie in der Dokumentation der Braillezeile nach wo die entsprechenden
 ++ HIMS Braille Sense/Braille EDGE Serie ++
 NVDA unterstützt die Braillezeilenmodelle Braile Sense und Braille Edge von [Hims http://www.hims-inc.com/], wahlweise mit USB- oder Bluetooth-Anbindung. 
 Wenn Sie die Braillezeile per USB anschließen, müssen Sie noch den USB-Treiber von HIMS auf Ihrem System installieren.
+Sie können diesen Treiber im HIMS Resource Center unter folgender Adresse herunterladen: http://www.hims-inc.com/resource-center/
+Wählen Sie auf der erscheinenden Seite zunächst Ihr Gerät aus und laden Sie anschließend den Treiber aus dem Bereich "Window-Eyes" herunter.
+Auch wenn auf der Webseite ausschließlich Window-Eyes erwähnt wird, handelt es sich bei dem dort angebotenen Treiber um einen generischen USB-Treiber, der ebenfalls mit NVDA funktioniert.
 
 Folgende Tastenkombinationen sind im NVDA verfügbar:
 Bitte sehen Sie in der Dokumentation zur Braillezeile nach, wo sich die entsprechenden Tasten befinden.
@@ -1989,7 +1992,7 @@ Es gibt über den [Dialog zur Aussprache von Satz- und Sonderzeichen #SymbolPron
 
 Hierfür müssen Sie die Symboldefinitionsdatei bearbeiten, die sich im Konfigurationsverzeichnis von NVDA des in Windows angemeldeten Benutzers befindet. 
 Der Name der Datei hat das Format "symbols-xx.dic", wobei xx der zweistellige Sprachencode ist.
-Das Format der Datei ist im Entwicklerhandbuch dokumentiert, welches Sie in englischer Sprache im [Abschnitt für Entwickler auf der NVDA-Webseite NVDA_URLwiki/Development] finden können.
+Das Format der Datei ist im Entwicklerhandbuch dokumentiert, welches Sie in englischer Sprache im [Abschnitt für Entwickler auf der NVDA-Webseite http://community.nvda-project.org/wiki/Development] finden können.
 Hinweis: Es ist Anwendern jedoch nicht möglich, komplexe Symbole zu definieren.
 
 ++ Hinweise zu Java ++

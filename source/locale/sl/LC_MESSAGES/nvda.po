@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5895\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-13 19:08+1000\n"
-"PO-Revision-Date: 2013-11-16 18:40+0100\n"
+"POT-Creation-Date: 2013-12-10 19:14+1000\n"
+"PO-Revision-Date: 2013-12-10 21:48+0100\n"
 "Last-Translator: Jožef Gregorc <jozko.gregorc[@]guest.arnes.si\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
-"Language: Slovenian\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.6.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -1593,6 +1593,7 @@ msgid "Tools"
 msgstr "Orodja"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "Zaslon na dotik"
 
@@ -3159,6 +3160,83 @@ msgstr "&Višina"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "Glasovna &modulacija"
+
+msgid "text mode"
+msgstr "delovanje besedila"
+
+msgid "object mode"
+msgstr "delovanje predmeta"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "enkratno {action}"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "dvakratno {action}"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "trikratno {action}"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "štirikratno {action}"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{numFingers} večprstno {action}"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "dotik"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "dotik in zadržanje"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "zadrži"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr "švig gor"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr "švig dol"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr "švig levo"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr "švig desno"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+#, fuzzy
+msgctxt "touch action"
+msgid "hover down"
+msgstr "glasnost dol"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr ""
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr ""
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -5098,103 +5176,109 @@ msgstr ""
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report font &name"
-msgstr "Poročaj o imen&u pisave"
+msgstr "Sporočaj imen&a pisave"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report font &size"
-msgstr "Poročaj o &Velikosti pisave"
+msgstr "Sporočaj &Velikost pisave"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report font attri&butes"
-msgstr "Poročaj o značilnostih pisav&e"
+msgstr "Sporočaj značilnosti pisav&e"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &alignment"
-msgstr "Poročaj o poravnav&i"
+msgstr "Sporočaj poravna&vo"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &colors"
-msgstr "Poročaj o &Barvah"
+msgstr "Sporočaj &Barve"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &editor revisions"
-msgstr "Poročaj o &uredniških pregledih"
+msgstr "Sporočaj &uredniške popravke"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report st&yle"
-msgstr "Poročaj o s&logu"
+msgstr "Sporočaj s&log"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report spelling errors"
-msgstr "Poročaj o napačnem &črkovanju"
+msgstr "Sporočaj napačno &črkovanje"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &pages"
-msgstr "Poročaj o str&aneh"
+msgstr "Sporočaj str&ani"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &line numbers"
-msgstr "Poročaj o &Številkah vrstic"
+msgstr "Sporočaj &Številke vrstic"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
 #.
 msgid "Report l&ine indentation"
-msgstr "Poročaj o &Zamaknitvi vrstice"
+msgstr "Sporočaj &Zamik vrstice"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &tables"
-msgstr "Poročaj o &Tabelah"
+msgstr "Sporočaj &Tabele"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report table row/column h&eaders"
-msgstr "Poročaj o &glavah stolpcev/vrstic v tabeli"
+msgstr "Sporočaj &glave stolpcev/vrstic v tabeli"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report table cell c&oordinates"
-msgstr "Poročaj o &Koordinatah celice v tabeli"
+msgstr "Sporočaj &Koordinate celice v tabeli"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &links"
-msgstr "Poročaj o &Povezavah"
+msgstr "Sporočaj &Povezave"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &headings"
-msgstr "Poročaj o &naslovih"
+msgstr "Sporočaj &naslove"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report l&ists"
-msgstr "Poročaj o &seznamih"
+msgstr "Sporočaj &sezname"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report block &quotes"
-msgstr "Poročaj o &citatih"
+msgstr "Sporočaj &citate"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report lan&dmarks"
-msgstr "Poročaj o &mejnikih"
+msgstr "Sporočaj &mejnike"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report fra&mes"
-msgstr "Poročaj o &okvirjih"
+msgstr "SPoročaj &okvirje"
+
+# išče se boljši prevod
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "Sporočaj, če je &klikljivo"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"

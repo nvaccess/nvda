@@ -63,7 +63,7 @@ Voor verdere bijzonderheden kan men de volledige licentie bekijken op: http://ww
 -
 
 + NVDA downloaden en uitvoeren +
-Als u het programma nog niet heeft, kunt u het downloaden van [www.nvda-project.org NVDA_URL].
+Als u het programma nog niet heeft, kunt u het downloaden van [www.nvaccess.org NVDA_URL]
 
 Op de downloadpagina vindt u de link naar de nieuwste versie van NVDA.
 
@@ -1253,7 +1253,7 @@ Het is het beste deze bestanden te verwijderen uit uw configuratie en via Add-on
 
 ++ Python Console ++
 Met de Python console die u vindt onder Extra in het NVDA-menu kunnen fouten in de programmacode worden opgespoord en hersteld, algemene inspecties van de programmatuur worden uitgevoerd of de mate van toegankelijkheid van een toepassing worden gecontroleerd.
-Zie voor meer informatie de handleiding voor ontwikkelaars, dit document is beschikbaar in [de sectie voor ontwikkelaars op de NVDA website (Engelstalig) NVDA_URLwiki/Development].
+Zie voor meer informatie de handleiding voor ontwikkelaars, dit document is beschikbaar in [de sectie voor ontwikkelaars op de NVDA website (Engelstalig) http://community.nvda-project.org/wiki/Development].].
 
 ++ Plugins herladen ++
 Zodra deze optie wordt geactiveerd, zullen alle app modules en globale plugins opnieuw worden geladen zonder dat NVDA wordt herstart. Dit is handig voor ontwikkelaars.
@@ -1324,8 +1324,8 @@ In deze rubriek treft u informatie aan over de brailleleesregels die door NVDA w
 ++ Freedom Scientific Focus/PAC Mate Series ++
 Alle Focus en PAC Mate leesregels van [Freedom Scientific http://www.freedomscientific.com/] worden ondersteund.
 De drivers voor de brailleleesregels van Freedom Scientific moeten op uw computer worden geïnstalleerd.
-Zonodig kunt u de drivers downloaden van http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
-Hoewel op deze pagina alleen de Focus 40 Blue wordt genoemd, ondersteunt deze driver alle leesregels van Freedom Scientific.
+Zonodig kunt u de drivers downloaden van http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Hoewel op deze pagina alleen de Focus 40 Blueleesregel  wordt genoemd, ondersteunen deze drivers alleFocus en Packmate  leesregels van Freedom Scientific.
 Wanneer u met een 64-bit versie van Windows werkt, en de drivers door een ander schermlesprogramma reeds geïnstalleerd werden, is het waarschijnlijk toch nodig de drivers van bovenstaande link te installeren omdat de bestanden die NVDA nodig heeft, zeer waarschijnlijk niet door de andere schermlezer zijn geïnstalleerd. 
 
 De standaardinstelling is dat NVDA automatisch deze leesregels detecteert en via USB of bluetooth een verbinding tot stand brengt.
@@ -1558,6 +1558,10 @@ Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van t
 ++ HIMS Braille Sense/Braille EDGE Serie ++
 NVDA ondersteunt de leesregelmodellen Braile Sense en Braille Edge van [Hims http://www.hims-inc.com/], die via USB of Bluetooth kunnen worden aangesloten. 
 Als u  voor de USB-aansluiting kiest, moet u wel eerst de USB-driver van HIMS op uw Systeem installeren.
+Via :http://www.hims-inc.com/resource-center/ , het Resource Center van HIMS, zijn de drivers te downloaden.
+Selecteer hier uw apparaat en download de driver in de rubriek Window Eyes. 
+Hoewel hier alleen Window Eyes wordt vermeld, betreft dit een algemene usb-driver die ook met NVDA werkt.
+
 
 Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
@@ -1882,64 +1886,13 @@ http://mielke.cc/brltty/doc/drivers/] raadplegen.
 
 + Geavanceerde Onderwerpen +
  
-++ Toetscombinaties en andere invoermethodes opnieuw toewijzen ++
-Gebruikers kunnen invoermethodes (zoals bij voorbeeld toetsaanslagen)in scrips  vastleggen. Dergelijke scripts worden bewaard in een speciaal  bestand, gestures. ini genaamd, dat zich in de gebruikersconfiguratiemap  bevindt. 
- 
-De scripts worden opgemaakt in de standaard syntaxis voor ini-bestanden. Het bestand kan uit meer rubrieken bestaan en elke rubriek kan één of meer onderdelen hebben. Elke rubriek bevat toewijzingen voor scripts in een bepaalde Python-module en in een bepaalde klasse binnen NVDA.
-- De naam van een rubriek moet uit de Python-modulenaam en de naam van de klasse bestaan, die door een punt van elkaar worden gescheiden.
-- De sleutelnamen binnen de afzonderlijke onderdelen verwijzen naar de  scripts, die u zou willen toewijzen. Voor het geval dat u een toegewezen invoermethode ongedaan wilt maken, kan de naam "none" gebruikt worden. Een bepaalde sleutel, met inbegrip van “none”, mag slechts eenmaal per rubriek worden gebruikt.  
-- De waarde van een sleutel is een door komma’s gescheiden  lijst met invoermethodes die aan een script moeten worden   toegekend. De invoermethodenamen met de komma aan het einde moeten tussen enkele ( ‘)of dubbele (“) aanhalingstekens staan. 
- 
-De namen van de invoermethodes bestaan uit een apparaatcode van twee letters – “kb” voor keyboard (toetsenbord)en "br" voor de brailleleesregel -, code voor een secundair apparaat of een toetsenbordindeling tussen vierkante haken, een Dubbele punt en tenslotte één of meer toetstekens gescheiden door een plusteken.
-Bij toetsenbordcommando’s heeft het gedeelte tussen vierkante haken betrekking op een toetsenbordindeling en is optioneel. Als dit ontbreekt, geldt de invoermethode voor elke indeling. 
-Bij Brailleleesregels heeft het gedeelte tussen vierkante haken betrekking op de naam van de Brailleleesregel en mag beslist niet ontbreken.
- 
-Om achter de scriptnamen, modules klassen en invoermethodes te komen, kunt u als volgt te werk gaan:
-+ Activeer invoerhulp door op NVDA+1 te drukken.
-+ Druk op de gewenste toetscombinatie.
-+ Zet invoerhulp uit door nogmaals op NVDA+1 te drukken.
-+ Activeer Logboek Weergave onder Extra in het NVDA-menu.
-+ Bekijk de recent opgenomen gegevens.
-Een van deze posten zou informatie moeten bevatten over de zojuist toegepaste invoermethode alsmede over de app-module, de klasse en het script , voor zover het script reeds was toegewezen.
-+
- 
-Het volgende voorbeeld laat zien hoe u de toetscombinatie NVDA+Shift+T kunt toewijzen aan het script dat datum en tijd weergeeft:
- 
-Om te bepalen wat de naam is van het script dat datum en tijd weergeeft, doet u het volgende: 
--schakel invoerhulp in en druk op NVDA+F12 (dit zou de standaard-toetscombinatie voor het weergeven van datum en tijd moeten zijn).
--zet vervolgens invoerhulp weer uit en open logboek weergave.
- 
-Aan het eind van het logboek zou het volgende moeten staan:
- 
-```
-INFO - inputCore.InputManager._handleInputHelp (13:17:22):
-Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
-```
- 
-Hieruit kunt u opmaken dat de scriptnaam "dateTime"  is en de module en klasse “globalCommands.GlobalCommands”.
- 
-Als er nog geen gestures.ini bestand bestaat, moet u dit aanmaken in de gebruikersconfiguratiemap. In gestures.ini moet het volgende staan :
- 
-```
-[globalCommands.GlobalCommands]
-      dateTime = kb:NVDA+shift+t
-```
- 
-Hiermee wordt de toetscombinatie NVDA+Shift+T (voor elke toetsenbordindeling) aan het script "dateTime" toegewezen.
-Opmerking : De oorspronkelijke toetscombinatie NVDA+F12 voor het weergeven datum en tijd functioneert nog steeds. Om deze koppeling te verwijderen, voegt u de volgende regel toe:
- 
-```
-      None = kb:NVDA+f12
-```
- 
-
 ++ Meer uitgebreide aanpassing van de uitspraak van leestekens en  symbolen ++
 Behalve in het [dialoogvenster Uitspraak van Interpunctie en Symbolen #SymbolPronunciation] zijn er nog andere mogelijkheden om de uitspraak van leestekens te beïnvloeden.
 U kunt bij voorbeeld  aangeven dat bepaalde tekens onbewerkt aan de synthesizer worden doorgegeven ( om een pauze in te lassen of het intonatiepatroon te beïnvloeden, etc.) en u kunt aangepaste symbolen toevoegen. 
 
 Hiertoe moet u het bestand met de uitspraakdefinities voor symbolen bewerken. 
 Het bestand met de naam  “symbols-xx.dic”, waar xx de gebruikte taalcode is, bevindt zich in de gebruikersconfiguratiemap.
-Informatie over de opmaak van dit bestand leest u in  de paragraaf over de Uitspraak van Interpunctie/Symbolen  in de NVDA Handleiding voor Ontwikkelaars (alleen in het Engels). De handleiding vindt u [in de rubriek voor ontwikkelaars op de NVDA-Website NVDA_URLwiki/Development].
+Informatie over de opmaak van dit bestand leest u in  de paragraaf over de Uitspraak van Interpunctie/Symbolen  in de NVDA Handleiding voor Ontwikkelaars (alleen in het Engels). De handleiding vindt u [in de rubriek voor ontwikkelaars op de NVDA-Website http://community.nvda-project.org/wiki/Development].
 Door gebruikers kunnen echter geen complexe symbolen worden gedefinieerd.
 
 + Verdere informatie+

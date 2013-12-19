@@ -6,7 +6,9 @@ Qué bi ha de Nuevo en NVDA
 = 2014.1 =
 
 == Nuevas Caracteristicas ==
-- Suporte ta Microsoft PowerPoint 2013. [L'anvista protechida no ye suportada]. (#3578)
+- Suporte ta lo Microsoft PowerPoint 2013. Se note que l'anvista protechida no ye suportada. (#3578)
+- En o Microsoft Word y l'Excel o NVDA agora puet leyer o simbolo trigau en que s'esleigan simbolos en o dialogo Ficar simbolo. (#3538)
+- Agora ye posible trigar si o conteniu en documentos habría d'identificar-se  como clicable, a traviés d'una nueva opción en o dialogo Formatiau de Documentos. Ista opción ye activada por defecto (comportamiento anterior). (#3556)
 
 
 == Corrección d'errors ==
@@ -19,6 +21,12 @@ Qué bi ha de Nuevo en NVDA
 - En o modo navegación en l'Adobe Reader, agora se procesa o texto correcto ta los botons, etc. an a etiqueta s'ha substituiu por l'uso d'un tooltip u unatro recurso. (#3640)
 - En o modo navegación en l'Adobe Reader, os graficos extranyos que contienen o texto "mc-ref" ya no se procesan. (#3645)
 - O NVDA ya no anuncia todas as celdas en o Microsoft Excel como subrayadas en a información de formato d'ellas. (#3669)
+- Ya no s'amuestran caracters desustanciaus  en os documentos en o modo navegación tals como os que se troban en o rango d'uso privau  de l'Unicode. En bells casos istos aturaban l'a lectura d'etiquetas mas utils. (#2963).
+- A composición de dentrada ta la introducción de caracters  asiaticos de l'este ya no falla en o PuTTY. (#3432)
+
+
+== Cambeos ta desembolicadors ==
+- Os AppModules agora contienen as propiedatz productName y productVersion. Ista información tamién s'incluye agora en a información d'o desembolicador (NVDA+f1). (#1625)
 
 
 = 2013.3 =

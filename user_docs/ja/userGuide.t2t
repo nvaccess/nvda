@@ -8,12 +8,12 @@ NVDA NVDA_VERSION ユーザーガイド
 %%toc
 
 + はじめに +
-NonVisual Desktop Access (NVDA) は、無料でオープンソースのMicrosoft Windowsオペレーティングシステム用のスクリーン・リーダーです。
-合成音声や点字によるフィードバックを通して、NVDAは視覚障害者が晴眼者以上に出費をしなくてもWindowsが動作しているコンピューターを使用できるようにします。
+NonVisual Desktop Access (NVDA) は、Microsoft Windowsオペレーティングシステム用の無料でオープンソースのスクリーンリーダーです。
+NVDAによって視覚障害者は、合成音声や点字によるフィードバックを通して、Windowsコンピューターを晴眼者と同じコストで使えるようになります。
 NVDAは、コミュニティーの援助により[NV Access http://www.nvaccess.org/]が開発しました。
 
 ++ 一般的な機能 ++
-NVDAによって、視覚障害者はWindowsオペレーティングシステムやサードパーティー製のアプリケーションを利用できるようになります。
+NVDAによって視覚障害者は、Windowsオペレーティングシステムやサードパーティー製のアプリケーションを使えるようになります。
 
 NVDAの主な特徴は以下の通りです。
 - Webブラウザー、電子メールクライアント、インターネットチャットプログラム及びオフィス関連アプリケーションを含む主要なアプリケーションのサポート
@@ -63,7 +63,7 @@ NVDAはGNU 一般公衆利用許諾契約書 (Version 2) によって保護さ�
 -
 
 + NVDAの入手と設定 +
-まだNVDAを入手していない場合は、[www.nvda-project.org NVDA_URL]からダウンロードしてください。
+まだNVDAを入手していない場合は、[www.nvaccess.org NVDA_URL]からダウンロードしてください。
 
 ダウンロードのページに移動して、NVDAの最新版をダウンロードするためのリンクを選んでください。
 
@@ -604,7 +604,7 @@ OKボタンを押すとNVDAが再起動します。
 すべての設定を確実にコピーするため、最初にNVDA+Ctrl+CまたはNVDAメニュー内の設定情報の保存を実行してください。
 このオプションはインストールされたNVDAでのみ有効です。
 
-==== 更新の自動チェックとNVDAのアップデート ====
+==== 自動的に確認してNVDAを更新する ====
 このオプションを有効にすると、NVDAは新しいバージョンが入手できるかどうかを自動的に確認し、それを通知します。
 NVDAメニュー「ヘルプ」の「更新のチェック」を使って手動で更新のチェックをすることもできます。
 
@@ -1234,7 +1234,7 @@ NVDAメニュー内のツール内にあるログビューワーでは、最後�
 
 ++ Pythonコンソール ++
 NVDAメニュー内のツールにあるPythonコンソールは開発用のツールで、デバッグや一般的なNVDA内部の動作検証、アプリケーションのアクセシビリティ階層構造の検査などに使用できます。
-詳細は、[NVDA Webサイトの開発者向けセクション NVDA_URLwiki/Development]を参照してください。
+詳細は、[NVDA Webサイトの開発者向けセクション http://community.nvda-project.org/wiki/Development]を参照してください。
 
 ++ プラグインの再読み込み ++
 この項目をアクティベートすると、アプリケーションモジュールとグローバルプラグインをNVDAを再起動することなく再読み込みできます。これは開発者にとって便利です。
@@ -1305,8 +1305,8 @@ Nuance Vocalizer for NVDA の詳しい情報と購入方法は、ウェブサイ
 ++ Freedom Scientific社製Focus/PAC Mateシリーズ ++
 すべてのUSBまたはbluetooth接続された[Freedom Scientific http://www.freedomscientific.com/]社製のFocus及びPAC Mateディスプレイをサポートしています。
 使用するには、Freedom Scientific社製の点字ディスプレイ用ドライバーが必要です。
-お持ちでない場合は、http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.aspから入手できます。
-このページではFocus 40 Blueディスプレイにしか言及していませんが、これらのドライバーはすべてのFreedom Scientific社製のディスプレイをサポートしています。
+お持ちでない場合は、 http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp から入手できます。
+このページではFocus Blueディスプレイにしか言及していませんが、これらのドライバーはすべてのFreedom Scientific社製の Focus/PAC Mate ディスプレイをサポートしています。
 64ビット版Windowsが実行されていて、ドライバーがすでに他のスクリーン・リーダーによってインストールされている場合であっても、他のスクリーン・リーダーがNVDAに必要なファイルをインストールしていない可能性もあるため、このリンク先にあるドライバーをインストールする必要があるかもしれません。
 
 NVDAの初期設定では、NVDA はUSBまたはブルートゥースによる接続を自動選択します。
@@ -1539,6 +1539,9 @@ USB接続されている場合、最初に製造元から提供されたUSBド�
 ++ HIMS製 Braille Sense/Braille EDGE シリーズ ++
 [HIMS http://www.hims-inc.com/] 社の Braille Sense と Braille EDGE ディスプレイを USB またはブルートゥースで接続すれば NVDA で利用できます。
 USB 接続のときは HIMS 社が提供する USB ドライバーをインストールしておく必要があります。
+これは HIMS Resource Center からダウンロードできます: http://www.hims-inc.com/resource-center/
+このページで、お使いの機種を選択して、Window-Eyes のセクションからドライバーをダウンロードしてください。
+このセクションでは Window-Eyes について書かれていますが、提供されている USB ドライバーは汎用的なものであり NVDA で利用できます。
 
 NVDA で利用するときのキー割り当ては以下のとおりです。
 キーの場所の説明は点字ディスプレイのマニュアルをお読みください。
@@ -1871,7 +1874,7 @@ BRLTTY用のコマンドが、ディスプレイのコントロールにどの�
 
 実行するには、NVDAのユーザー設定ディレクトリー内の記号の読み方を定義したファイルを編集する必要があります。
 ファイルは、Symbols-xx.dicと呼ばれており、xxは言語コードで置き換えます。
-このファイルの書式は、NVDAの開発者向けガイドの記号の読み上げセクションにあり、[the Development section of the NVDA web site NVDA_URLwiki/Development]から参照できます。
+このファイルの書式は、NVDAの開発者向けガイドの記号の読み上げセクションにあり、[the Development section of the NVDA web site http://community.nvda-project.org/wiki/Development]から参照できます。
 しかし、利用者は複雑な記号を定義することはできません。
 
 + さらに詳細な情報 +

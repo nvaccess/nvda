@@ -2,6 +2,29 @@
 
 
 %!includeconf: ../changes.t2tconf
+= 2014.1 =
+
+== neue Funktionen ==
+- Unterstützung für Microsoft PowerPoint 2013. die geschützte ansicht wird nicht unterstützt. (#3578)
+- Wenn Sie in Microsoft Word oder Excel den Dialog zum Einfügen von Sonderzeichen verwenden, kann NVDA nun das ausgewählte Symbol erkennen.  (#3538)
+- in den Einstellunbgen zur Dokumentformatierung können Sie nun festlegen, ob anklickbare Elemente als solche erkannt werden sollen. Diese Option ist standardmäßig aktiviert. Dies entspricht dem Verhalten älterer NVDA-Versionen. (#3556)
+
+
+== Fehlerbehebungen ==
+- Beim Navigieren durch und Markieren von Zellen in Microsoft Excel wird der markierte Zellenbereich korrekt erkannt, wenn Microsoft Excel langsam reagiert. (#3558)
+- NVDA verhält sich erwartungsgemäß, wenn Sie ein Kombinationsfeld für eine Zelle über das Kontextmenü öffnen. (#3586)
+- Im Itunes Store in Itunes 11 wird der Seiteninhalt aktualisiert, wenn Sie innerhalb des Stores einem Link folgen. (#3625)
+- im Itunes-Store in Itunes 11 werden die Beschriftungen für die Schalter für Musikvorschau korrekt angezeigt. (#3638)
+- im Lesemodus in Google Chrome werden die Beschriftungen von Kontrollkästchen und Auswahlschaltern korrekt angezeigt. (#1562)
+- in Instantbird wird beim Navigieren in der Kontaktliste keine nutzlose Information mehr angezeigt. (#2667)
+- im Lesemodus in Adobe Reader wird die Beschriftung von Schaltern richtig angezeigt, wenn sie durch Minihilfen überschrieben wird. (#3640)
+- im Adobe Reader werden nutzlose Grafiken, die als "mc-ref" beschriftet sind, nicht mehr angezeigt. (#3645)
+- in Microsoft Excel werden nicht mehr fälschlicherweise alle Zellen in den Formatierungsinformationen als unterstrichen angezeigt. (#3669)
+- Problem behoben, wonach bestimmte Unicode-Zeichen im Lesemodus die anzeige von Beschriftungen für Elemente verhindert haben. (#2963).
+- Pboblem behoben, wonach die Eingabe ostasiatischer Sonderzeichen in PUTTY fehlschlug (#3432)
+
+== Änderungen für Entwickler ==
+- Alle Anwendungsmodule enthalten nun die Eigenschaften productName und productVersion. Diese Informationen werden auch in der Entwicklerinfo angezeigt, die mit der Tastenkombination NVDA+f1 abgerufen werden kann. (#1625)
 
 = 2013.3 =
 
@@ -36,6 +59,8 @@
 - Wenn Sie im Lesemodus aus einem Dialog oder einer Anwendung ins Dokument zurückkehren, wird der Cursor nun richtig positioniert. (#3145)
 - Pblem behoben, wonach eine HumanWare Brailliant BI/B-Braillezeile nicht in den Braille-Einstellungen angezeigt wird, auch wenn sie per Usb angeschlossen war.
 - Wenn NVDA beim Wechsel in die Bildschirmdarstellung keine Objektposition erkennen kann, wird der NVDA-Cursor in die obere linke Ecke des Bildschirms gesetzt. (#3454)
+- Problem behoben, wonach der Treiber für Freedom-Scientific-Braillezeilen den Anschluss nicht richtig erkannt hat, wenn der Anschluss auf "usb" eingestellt war. (#3509, #3662)
+- Problem behoben, wonach manchmal bestimmte Tastendrücke an Freedom Scientific-Braillezeilen nicht richtig erkannt wurden. (#3401, #3662)
 
 
 == Änderungen für Entwickler ==

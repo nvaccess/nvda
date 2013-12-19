@@ -17,6 +17,9 @@ complexSymbols:
 decimal point	(?<=\d)\.(?=\d)
 in-word '	(?<=[^\W_])['’]
 negative number	(?<!\w)-(?=[$£€¥]?\d)
+# Treat dash differently when it is sandwitched between a number and a tamil character.
+# tamil unicode range is U+0B80–U+0BFF according to http://en.wikipedia.org/wiki/Tamil_script  
+tamilNumberDash	(?<=[0-9])\-(?=[஀-௿])
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -30,6 +33,8 @@ symbols:
 decimal point	புள்ளி	none	always
 in-word '	ஒற்றை மேற்கோள்	all	norep
 negative number	கழித்தல்	none	norep
+# number dash, tamil letter special case:
+tamilNumberDash	இணைக்கோடு	char	always
 
 # Whitespace
 \0	வெற்றிடம்	char	# null
@@ -110,3 +115,15 @@ _	அடிக்கோடு	most
 →	வலதம்பு	some
 ✓	தேர்வு	some
 ✔	தேர்வு	some
+
+# Special Tamil Characters
+௰	பத்து	none
+௱	நூறு	none
+௲	ஆயிரம்	none
+௳	நாள்	none
+௴	மாதம்	none
+௵	ஆண்டு	none
+௶	பற்று	none
+௷	வரவு	none
+௸	மேலிருப்பது போல்	none
+௺	எண்ணுரு	none

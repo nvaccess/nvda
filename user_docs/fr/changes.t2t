@@ -6,7 +6,9 @@ Quoi de Neuf dans NVDA
 = 2014.1 =
 
 == Nouyvelles fonctionnalités ==
-- Support de Microsoft PowerPoint 2013. [Mode protégé non supporté]. (#3578)
+- Support de Microsoft PowerPoint 2013. Notez que le mode protégé n'est pas supporté. (#3578)
+- Dans Microsoft Word et Excel, NVDA peut maintenant lire le symbole sélectionné en choisissant un symbole dans la boîte de dialogue d'insertion de symbole. (#3538)
+- Il est maintenant possible de définir si du contenu dans des documents peut être identifié comme clicable, via une nouvelle option dans la boîte de dialogue Mise en Forme des Documents. Cette option est activée par défaut (comportement précédant). (#3556)
 
 
 == Corrections de bogues ==
@@ -19,6 +21,12 @@ Quoi de Neuf dans NVDA
 - En mode navigation dans Adobe Reader, le texte correct est maintenant rendu pour les boutons, etc où l'étiquette a été remplacé à l'aide d'une info-bulle ou d'autres moyens. (#3640)
 - En mode navigation dans Adobe Reader, les graphiques étrangers contenant le texte "mc-ref" ne seront plus rendus. (#3645)
 - NVDA ne signale plus toutes les cellules dans Microsoft Excel comme souligné dans leurs informations de formatage. (#3669)
+- NVDA n'affiche plus de caractères illisibles dans les documents en mode de navigation tels que ceux trouvés dans la gamme de l'usage privé Unicode. Dans certains cas, cela empêchait l'affichage de certains intitulés de champs. (#2963).
+- Les langues d'entrée est-asiatiques n'échouent plus dans PuTTY. (#3432)
+
+
+== Changements pour les développeurs ==
+- AppModule contient maintenant les propriétés productName et productVersion. Ces informations sont maintenant également affichées dans les informations pour les développeurs (NVDA+F1). (#1625)
 
 
 = 2013.3 =

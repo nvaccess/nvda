@@ -6,7 +6,9 @@ Que hai de Novo no NVDA
 = 2014.1 =
 
 == Novas Características ==
-- Soporte para o Microsoft PowerPoint 2013. [Vista protexida non soportada]. (#3578)
+- Soporte para o Microsoft PowerPoint 2013. Ten en conta que a Vista protexida non está soportada. (#3578)
+- No Microsoft word e Excel, NVDA agora pode ler o símbolo selecionado cando se escollan símbolos utilizando o diálogo Insertar Símbolos. (#3538)
+- Agora é posible escoller se o contido nos documentos debería identificarse  como cliqueable, a través dunha nova opción no diálogo Formateado de Documentos. Esta opción está activada por defecto (comportamento anterior). (#3556)
 
 
 == Corrección de Fallos ==
@@ -19,6 +21,12 @@ Que hai de Novo no NVDA
 - En modo navegación no Adobe Reader, agora procésase o texto correcto para os botóns, etc. Onde a etiqueta reemplazouse polo uso dun tooltip ou outro recurso. (#3640)
 - En modo navegación no Adobe Reader, os gráficos extranos que conteñen o texto "mc-ref" xa non se procesan. (#3645)
 - NVDA xa non anuncia todas as celdas no Microsoft Excel como subliñadas na súa información de formato. (#3669)
+- Xa non se amosan caracteres sen sentido en documentos de modo navegación como os que se atopan no rango de uso privado do Unicode. Nalgúns casos estos detiñan o amosado de etiquetas máis útiis. (#2963).
+- A composición de entrada para a introducción de caracteres do este asiático xa non falla en PuTTY (#3432)
+
+
+== Cambios para Desenvolvedores ==
+- Os AppModules agora conteñen as propriedades productName e productVersion. Esta información tamén se inclúe agora na Información do desenvolvedor (NVDA+f1). (#1625)
 
 
 = 2013.3 =
