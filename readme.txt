@@ -52,7 +52,6 @@ The following dependencies are included in Git submodules:
 === Other Dependencies ===
 These dependencies are not included in Git submodules, but aren't needed by most people.
 * If you want to be able to use the Handy Tech braille display driver when running from source code, you will need to install the Handy Tech universal driver: ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
-* To create the NVDA controller client and symbols archives: 7-Zip: http://www.7-zip.org/
 * To generate developer documentation for nvdaHelper: Doxygen Windows installer, version 1.7.3: http://www.stack.nl/~dimitri/doxygen/download.html
 
 == Preparing the Source Tree ==
