@@ -154,7 +154,7 @@ def getAvailableAddons(refresh=False):
 	return _availableAddons.itervalues()
 
 def installAddonBundle(bundle):
-	"""Extracts an Addon bundle in to a unique subdirectory of the user addons directory, marking the addon as needing install completion on NVDA restart.""" 
+	"""Extracts an Addon bundle in to a unique subdirectory of the user addons directory, marking the addon as needing install completion on NVDA restart."""
 	addonPath = os.path.join(globalVars.appArgs.configPath, "addons",bundle.manifest['name']+ADDON_PENDINGINSTALL_SUFFIX)
 	bundle.extract(addonPath)
 	addon=Addon(addonPath)
@@ -171,6 +171,24 @@ def installAddonBundle(bundle):
 	state['pendingInstallsSet'].add(bundle.manifest['name'])
 	saveState()
 	return addon
+
+def removeSupersededAddon(oldAddonName):
+	""" Use this to remove an old and incompatible version of an add-on.
+	Expected to be called from the new addon's installTasks.py:OnInstall.
+	@param oldAddonName: The old internal addon name, (non translatable).
+	@type oldAddonName: string
+	@rtype None
+	"""
+	for addon in getAvailableAddons():
+		if addon.manifest['name'] == oldAddonName:
+			if gui.messageBox(
+				# Translators: the label of a message box dialog.
+				_("The add-on you are installing supersedes {name} which is already installed on your system. Do you want to uninstall the old and incompatible version?").format(name=addon.manifest['summary']),
+				# Translators: the title of a message box dialog.
+				_("Uninstall old add-on"),
+				wx.YES|wx.NO|wx.ICON_WARNING) == wx.YES:
+					addon.requestRemove()
+			break
 
 class AddonError(Exception):
 	""" Represents an exception coming from the addon subsystem. """
