@@ -1286,15 +1286,28 @@ class BrailleSettingsDialog(SettingsDialog):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a setting in braille settings to choose a braille display.
 		label = wx.StaticText(self, wx.ID_ANY, label=_("Braille &display:"))
-		# Translators: An option in the braille display list in the Braille Settings dialog
-		# to automatically detect and use a braille display.
-		driverList = [(braille.AUTO_DISPLAY_NAME, _("Automatic"))]
+		curDispName = braille.handler.display.name
+		detectionEnabled = config.conf["braille"]["display"] == braille.AUTO_DISPLAY_NAME
+		driverList = []
+		if not detectionEnabled or curDispName == "noBraille":
+			# Translators: An option in the braille display list in the Braille Settings dialog
+			# to automatically detect and use a braille display.
+			driverList.append((braille.AUTO_DISPLAY_NAME, _("Automatic")))
+		else:
+			# Translators: An option in the braille display list in the Braille Settings dialog
+			# to automatically detect and use a braille display.
+			# %s will be replace dwith the name of the display that is currently being used.
+			driverList.append((braille.AUTO_DISPLAY_NAME,
+				_("Automatic (%s)") % braille.handler.display.description))
 		driverList.extend(braille.getDisplayList())
 		self.displayNames = [driver[0] for driver in driverList]
 		self.displayList = wx.Choice(self, wx.ID_ANY, choices=[driver[1] for driver in driverList])
 		self.Bind(wx.EVT_CHOICE, self.onDisplayNameChanged, self.displayList)
 		try:
-			selection = self.displayNames.index(braille.handler.display.name)
+			if detectionEnabled:
+				selection = 0
+			else:
+				selection = self.displayNames.index(curDispName)
 			self.displayList.SetSelection(selection)
 		except:
 			pass
