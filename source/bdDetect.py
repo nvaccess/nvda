@@ -205,6 +205,15 @@ def getPossibleBluetoothComPortsForDriver(driver):
 		if matchFunc(match):
 			yield match
 
+def arePossibleDevicesForDriver(driver):
+	try:
+		next(itertools.chain(
+			getConnectedUsbDevicesForDriver(driver),
+			getPossibleBluetoothComPortsForDriver(driver)))
+		return True
+	except StopIteration:
+		return False
+
 ### Detection data
 # baum
 addUsbDevices("baum", {
