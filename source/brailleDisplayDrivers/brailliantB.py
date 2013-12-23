@@ -10,11 +10,11 @@ import _winreg
 import itertools
 import wx
 import serial
-import hwPortUtils
 import braille
 import inputCore
 from logHandler import log
 import brailleInput
+import bdDetect
 
 TIMEOUT = 0.2
 BAUD_RATE = 115200
@@ -57,34 +57,23 @@ DOT1_KEY = 2
 DOT8_KEY = 9
 SPACE_KEY = 10
 
-def _getPorts():
-	# USB.
+def _getUsbPorts():
 	try:
 		rootKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Enum\USB\Vid_1c71&Pid_c005")
 	except WindowsError:
 		# A display has never been connected via USB.
-		pass
-	else:
-		with rootKey:
-			for index in itertools.count():
-				try:
-					keyName = _winreg.EnumKey(rootKey, index)
-				except WindowsError:
-					break
-				try:
-					with _winreg.OpenKey(rootKey, os.path.join(keyName, "Device Parameters")) as paramsKey:
-						yield "USB", _winreg.QueryValueEx(paramsKey, "PortName")[0]
-				except WindowsError:
-					continue
-
-	# Bluetooth.
-	for portInfo in hwPortUtils.listComPorts(onlyAvailable=True):
-		try:
-			btName = portInfo["bluetoothName"]
-		except KeyError:
-			continue
-		if btName.startswith("Brailliant B") or btName == "Brailliant 80":
-			yield "bluetooth", portInfo["port"]
+		return
+	with rootKey:
+		for index in itertools.count():
+			try:
+				keyName = _winreg.EnumKey(rootKey, index)
+			except WindowsError:
+				break
+			try:
+				with _winreg.OpenKey(rootKey, os.path.join(keyName, "Device Parameters")) as paramsKey:
+					yield _winreg.QueryValueEx(paramsKey, "PortName")[0]
+			except WindowsError:
+				continue
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "brailliantB"
@@ -93,18 +82,21 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def check(cls):
-		try:
-			next(_getPorts())
-		except StopIteration:
-			# No possible ports found.
-			return False
-		return True
+		return bdDetect.arePossibleDevicesForDriver(cls.name)
 
-	def __init__(self):
+	def __init__(self, port=None):
 		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
 
-		for portType, port in _getPorts():
+		if isinstance(port, bdDetect.UsbDeviceMatch):
+			tryPorts = (("USB", port) for port in _getUsbPorts())
+		elif isinstance(port, bdDetect.BluetoothComPortMatch):
+			tryPorts = (("Bluetooth", port.port),)
+		else:
+			tryPorts = itertools.chain(
+				(("USB", port) for port in _getUsbPorts()),
+				(("Bluetooth", m.port) for m in bdDetect.getPossibleBluetoothComPortsForDriver(self.name)))
+		for portType, port in tryPorts:
 			# Try talking to the display.
 			try:
 				self._ser = serial.Serial(port, baudrate=BAUD_RATE, parity=PARITY, timeout=TIMEOUT, writeTimeout=TIMEOUT)

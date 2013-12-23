@@ -247,6 +247,10 @@ addBluetoothComPorts("baum", lambda m: any(m.name.startswith(prefix) for prefix 
 	"VarioConnect",
 	"BrailleConnect",
 )))
+# brailliantB
+addUsbDevices("brailliantB", {"VID_1C71&PID_C005"})
+addBluetoothComPorts("brailliantB", lambda m:
+	m.name.startswith("Brailliant B") or m.name == "Brailliant 80")
 # freedomScientific
 addUsbDevices("freedomScientific", {
 	"VID_0F4E&PID_0100", # Focus 1
