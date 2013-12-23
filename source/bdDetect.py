@@ -189,6 +189,22 @@ class Detector(object):
 		self._devChangeListener.destroy()
 		self._stopBgScan()
 
+def getConnectedUsbDevicesForDriver(driver):
+	driverUsb = _driverDevices[driver][_KEY_USBDEVS]
+	matching = driverUsb & hwPortUtils.listUsbDevices()
+	for usbId in matching:
+		yield UsbDeviceMatch(usbId)
+
+def getPossibleBluetoothComPortsForDriver(driver):
+	matchFunc = _driverDevices[driver][_KEY_BTCOMS]
+	for port in hwPortUtils.listComPorts():
+		try:
+			match = BluetoothComPortMatch(port["bluetoothAddress"], port["bluetoothName"], port["port"])
+		except KeyError:
+			continue
+		if matchFunc(match):
+			yield match
+
 ### Detection data
 # baum
 addUsbDevices("baum", {
