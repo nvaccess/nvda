@@ -188,3 +188,37 @@ class Detector(object):
 	def terminate(self):
 		self._devChangeListener.destroy()
 		self._stopBgScan()
+
+### Detection data
+# baum
+addUsbDevices("baum", {
+	"VID_0403&PID_FE70", # Vario 40
+	"VID_0403&PID_FE71", # PocketVario
+	"VID_0403&PID_FE72", # SuperVario/Brailliant 40
+	"VID_0403&PID_FE73", # SuperVario/Brailliant 32
+	"VID_0403&PID_FE74", # SuperVario/Brailliant 64
+	"VID_0403&PID_FE75", # SuperVario/Brailliant 80
+	"VID_0403&PID_FE76", # VarioPro 80
+	"VID_0403&PID_FE77", # VarioPro 64
+	"VID_0904&PID_2000", # VarioPro 40
+	"VID_0904&PID_2001", # EcoVario 24
+	"VID_0904&PID_2002", # EcoVario 40
+	"VID_0904&PID_2007", # VarioConnect/BrailleConnect 40
+	"VID_0904&PID_2008", # VarioConnect/BrailleConnect 32
+	"VID_0904&PID_2009", # VarioConnect/BrailleConnect 24
+	"VID_0904&PID_2010", # VarioConnect/BrailleConnect 64
+	"VID_0904&PID_2011", # VarioConnect/BrailleConnect 80
+	"VID_0904&PID_2014", # EcoVario 32
+	"VID_0904&PID_2015", # EcoVario 64
+	"VID_0904&PID_2016", # EcoVario 80
+	"VID_0904&PID_3000", # RefreshaBraille 18
+})
+addBluetoothComPorts("baum", lambda m: any(m.name.startswith(prefix) for prefix in (
+	"Baum SuperVario",
+	"Baum PocketVario",
+	"Baum SVario",
+	"HWG Brailliant",
+	"Refreshabraille",
+	"VarioConnect",
+	"BrailleConnect",
+)))

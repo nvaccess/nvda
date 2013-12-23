@@ -14,6 +14,7 @@ import braille
 import inputCore
 from logHandler import log
 import brailleInput
+import bdDetect
 
 TIMEOUT = 0.2
 BAUD_RATE = 19200
@@ -140,6 +141,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 		if port == "auto":
 			tryPorts = self._getAutoPorts(hwPortUtils.listComPorts(onlyAvailable=True))
+		elif isinstance(port, bdDetect.BluetoothComPortMatch):
+			tryPorts = ((port.port, "bluetooth"),)
 		else:
 			tryPorts = ((port, "serial"),)
 		for port, portType in tryPorts:
