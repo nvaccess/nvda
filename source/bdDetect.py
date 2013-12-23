@@ -86,8 +86,9 @@ def getDriversForConnectedUsbDevices():
 	usbDevs = set(hwPortUtils.listUsbDevices())
 	for driver, devs in _driverDevices.iteritems():
 		driverUsb = devs[_KEY_USBDEVS]
-		if driverUsb & usbDevs:
-			yield driver, ("usbDevice", usbId)
+		matching = driverUsb & usbDevs
+		for usbId in matching:
+			yield driver, UsbDeviceMatch(usbId)
 
 def getDriversForPossibleBluetoothComPorts():
 	btComs = [BluetoothComPortMatch(port["bluetoothAddress"], port["bluetoothName"], port["port"])
