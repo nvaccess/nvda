@@ -113,7 +113,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 
 	@classmethod
 	def check(cls):
-		return bool(fsbLib)
+		return bool(fsbLib) and bdDetect.arePossibleDevicesForDriver(cls.name)
 
 	@classmethod
 	def getPossiblePorts(cls):
