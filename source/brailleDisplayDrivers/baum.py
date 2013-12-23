@@ -5,8 +5,11 @@
 #See the file COPYING for more details.
 #Copyright (C) 2010-2013 NV Access Limited
 
+import os
 import time
 from collections import OrderedDict
+import _winreg
+import itertools
 import wx
 import serial
 import hwPortUtils
@@ -53,39 +56,6 @@ KEY_NAMES = {
 	BAUM_JOYSTICK_KEYS: ("up", "left", "down", "right", "select"),
 }
 
-USB_IDS = frozenset((
-	"VID_0403&PID_FE70", # Vario 40
-	"VID_0403&PID_FE71", # PocketVario
-	"VID_0403&PID_FE72", # SuperVario/Brailliant 40
-	"VID_0403&PID_FE73", # SuperVario/Brailliant 32
-	"VID_0403&PID_FE74", # SuperVario/Brailliant 64
-	"VID_0403&PID_FE75", # SuperVario/Brailliant 80
-	"VID_0403&PID_FE76", # VarioPro 80
-	"VID_0403&PID_FE77", # VarioPro 64
-	"VID_0904&PID_2000", # VarioPro 40
-	"VID_0904&PID_2001", # EcoVario 24
-	"VID_0904&PID_2002", # EcoVario 40
-	"VID_0904&PID_2007", # VarioConnect/BrailleConnect 40
-	"VID_0904&PID_2008", # VarioConnect/BrailleConnect 32
-	"VID_0904&PID_2009", # VarioConnect/BrailleConnect 24
-	"VID_0904&PID_2010", # VarioConnect/BrailleConnect 64
-	"VID_0904&PID_2011", # VarioConnect/BrailleConnect 80
-	"VID_0904&PID_2014", # EcoVario 32
-	"VID_0904&PID_2015", # EcoVario 64
-	"VID_0904&PID_2016", # EcoVario 80
-	"VID_0904&PID_3000", # RefreshaBraille 18
-))
-
-BLUETOOTH_NAMES = (
-	"Baum SuperVario",
-	"Baum PocketVario",
-	"Baum SVario",
-	"HWG Brailliant",
-	"Refreshabraille",
-	"VarioConnect",
-	"BrailleConnect",
-)
-
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "baum"
 	# Translators: Names of braille displays.
@@ -98,41 +68,39 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def getPossiblePorts(cls):
 		ports = OrderedDict()
-		comPorts = list(hwPortUtils.listComPorts(onlyAvailable=True))
 		try:
-			next(cls._getAutoPorts(comPorts))
+			next(itertools.chain(cls._getUsbPorts(),
+				bdDetect.getPossibleBluetoothComPortsForDriver(cls.name)))
 			ports.update((cls.AUTOMATIC_PORT,))
 		except StopIteration:
 			pass
-		for portInfo in comPorts:
+		for portInfo in hwPortUtils.listComPorts():
 			# Translators: Name of a serial communications port.
 			ports[portInfo["port"]] = _("Serial: {portName}").format(portName=portInfo["friendlyName"])
 		return ports
 
 	@classmethod
-	def _getAutoPorts(cls, comPorts):
-		# Try bluetooth ports last.
-		for portInfo in sorted(comPorts, key=lambda item: "bluetoothName" in item):
-			port = portInfo["port"]
-			hwID = portInfo["hardwareID"]
-			if hwID.startswith(r"FTDIBUS\COMPORT"):
-				# USB.
-				portType = "USB"
+	def _getUsbPorts(cls, usbIds=None):
+		if not usbIds:
+			usbIds = bdDetect.getConnectedUsbDevicesForDriver(cls.name)
+		try:
+			rootKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Enum\FTDIBUS")
+		except WindowsError:
+			return
+		with rootKey:
+			for index in itertools.count():
 				try:
-					usbID = hwID.split("&", 1)[1]
-				except IndexError:
+					keyName = _winreg.EnumKey(rootKey, index)
+				except WindowsError:
+					break
+				usbId = "&".join(keyName.split("+", 2)[:2])
+				if usbId not in usbIds:
 					continue
-				if usbID not in USB_IDS:
+				try:
+					with _winreg.OpenKey(rootKey, os.path.join(keyName, "0000", "Device Parameters")) as paramsKey:
+						yield _winreg.QueryValueEx(paramsKey, "PortName")[0]
+				except WindowsError:
 					continue
-			elif "bluetoothName" in portInfo:
-				# Bluetooth.
-				portType = "bluetooth"
-				btName = portInfo["bluetoothName"]
-				if not any(btName.startswith(prefix) for prefix in BLUETOOTH_NAMES):
-					continue
-			else:
-				continue
-			yield port, portType
 
 	def __init__(self, port="Auto"):
 		super(BrailleDisplayDriver, self).__init__()
@@ -140,9 +108,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._deviceID = None
 
 		if port == "auto":
-			tryPorts = self._getAutoPorts(hwPortUtils.listComPorts(onlyAvailable=True))
+			tryPorts = itertools.chain(
+				((p, "USB") for p in self._getUsbPorts()),
+				((m.port, "Bluetooth") for m in bdDetect.getPossibleBluetoothComPortsForDriver(self.name)))
+		elif isinstance(port, bdDetect.UsbDeviceMatch):
+			tryPorts = ((p, "USB") for p in self._getUsbDevices(usbIds=(port.id,)))
 		elif isinstance(port, bdDetect.BluetoothComPortMatch):
-			tryPorts = ((port.port, "bluetooth"),)
+			tryPorts = ((port.port, "Bluetooth"),)
 		else:
 			tryPorts = ((port, "serial"),)
 		for port, portType in tryPorts:
