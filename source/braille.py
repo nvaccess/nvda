@@ -1308,7 +1308,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		cells = list(self._cells)
 		if self._cursorPos is not None and self._cursorBlinkUp:
 			cells[self._cursorPos] |= self.cursorShape
-		self.display.display(cells)
+
+		try:
+			self.display.display(cells)
+		except:
+			self.handleDisplayUnavailable()
 
 	def _blink(self):
 		self._cursorBlinkUp = not self._cursorBlinkUp
@@ -1473,6 +1477,15 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		display = config.conf["braille"]["display"]
 		if display != self.display.name:
 			self.setDisplayByName(display)
+
+	def handleDisplayUnavailable(self):
+		"""Called when the braille display becomes unavailable.
+		This logs an error and disables the display.
+		This is called when displaying cells raises an exception,
+		but drivers can also call it themselves if appropriate.
+		"""
+		log.error("Braille display unavailable. Disabling", exc_info=True)
+		self.setDisplayByName("noBraille", isFallback=True)
 
 def initialize():
 	global handler
