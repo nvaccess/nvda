@@ -191,7 +191,7 @@ class Detector(object):
 
 def getConnectedUsbDevicesForDriver(driver):
 	driverUsb = _driverDevices[driver][_KEY_USBDEVS]
-	matching = driverUsb & hwPortUtils.listUsbDevices()
+	matching = driverUsb & set(hwPortUtils.listUsbDevices())
 	for usbId in matching:
 		yield UsbDeviceMatch(usbId)
 
