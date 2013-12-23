@@ -1522,11 +1522,12 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._detector = bdDetect.Detector()
 		self.setDisplayByName("noBraille", isFallback=True)
 
-	def _terminateDetection(self):
+	def _disableDetection(self):
 		if not self._detectionEnabled:
 			return
-		self._detector.terminate()
-		self._detector = None
+		if self._detector:
+			self._detector.terminate()
+			self._detector = None
 		self._detectionEnabled = False
 
 	def _resumeDetection(self):
