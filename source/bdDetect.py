@@ -58,7 +58,6 @@ def addBluetoothComPorts(driver, matchFunc):
 	devs = _getDriver(driver)
 	devs[_KEY_BTCOMS] = matchFunc
 
-BluetoothComPortMatch = namedtuple("BluetoothComPortMatch", ("address", "name", "port"))
 class BluetoothComPortMatch(
 	namedtuple("BluetoothComPortMatch", ("address", "name", "port"))
 ):
