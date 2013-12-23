@@ -18,6 +18,7 @@ import api
 import textInfos
 import brailleDisplayDrivers
 import inputCore
+import bdDetect
 
 #: The directory in which liblouis braille tables are located.
 TABLES_DIR = r"louis\tables"
@@ -294,6 +295,10 @@ negativeStateLabels = {
 
 DOT7 = 64
 DOT8 = 128
+
+#: Used in place of a specific braille display driver name to indicate that
+#: braille displays should be automatically detected and used.
+AUTO_DISPLAY_NAME = "auto"
 
 def NVDAObjectHasUsefulText(obj):
 	import displayModel
@@ -1225,6 +1230,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cursorBlinkUp = True
 		self._cells = []
 		self._cursorBlinkTimer = None
+		self._detectionEnabled = False
+		self._detector = None
 
 	def terminate(self):
 		if self._messageCallLater:
@@ -1236,6 +1243,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self.display:
 			self.display.terminate()
 			self.display = None
+		self._disableDetection()
 
 	def _get_tether(self):
 		return config.conf["braille"]["tetherTo"]
@@ -1250,23 +1258,31 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		else:
 			self.handleGainFocus(api.getFocusObject())
 
-	def setDisplayByName(self, name, isFallback=False):
-		if not name:
-			self.display = None
-			self.displaySize = 0
-			return
-		# See if the user have defined a specific port to connect to
-		if name not in config.conf["braille"]:
-			# No port was set.
-			config.conf["braille"][name] = {"port" : ""}
-		port = config.conf["braille"][name].get("port")
-		# Here we try to keep compatible with old drivers that don't support port setting
-		# or situations where the user hasn't set any port.
-		kwargs = {}
-		if port:
-			kwargs["port"] = port
+	def setDisplayByName(self, name, isFallback=False, detected=None):
+		if name == AUTO_DISPLAY_NAME:
+			self._enableDetection()
+			return True
+		elif not isFallback and not detected:
+			self._disableDetection()
+
+		if detected:
+			kwargs = {"port": detected}
+		else:
+			# See if the user have defined a specific port to connect to
+			if name not in config.conf["braille"]:
+				# No port was set.
+				config.conf["braille"][name] = {"port" : ""}
+			port = config.conf["braille"][name].get("port")
+			# Here we try to keep compatible with old drivers that don't support port setting
+			# or situations where the user hasn't set any port.
+			kwargs = {}
+			if port:
+				kwargs["port"] = port
+
 		try:
 			newDisplay = _getDisplayDriver(name)
+			if detected:
+				log.info("Detected display '%s'" % newDisplay.description)
 			if newDisplay == self.display.__class__:
 				# This is the same driver as was already set, so just re-initialise it.
 				self.display.terminate()
@@ -1282,7 +1298,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				self.display = newDisplay
 			self.displaySize = newDisplay.numCells
 			self.enabled = bool(self.displaySize)
-			if not isFallback:
+			if isFallback:
+				self._resumeDetection()
+			elif not isFallback and not detected:
 				config.conf["braille"]["display"] = name
 			log.info("Loaded braille display driver %s, current display has %d cells." %(name, self.displaySize))
 			return True
@@ -1486,6 +1504,32 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""
 		log.error("Braille display unavailable. Disabling", exc_info=True)
 		self.setDisplayByName("noBraille", isFallback=True)
+
+	def _enableDetection(self):
+		if self._detectionEnabled:
+			return
+		self._detectionEnabled = True
+		config.conf["braille"]["display"] = AUTO_DISPLAY_NAME
+		self._detector = bdDetect.Detector()
+		self.setDisplayByName("noBraille", isFallback=True)
+
+	def _terminateDetection(self):
+		if not self._detectionEnabled:
+			return
+		self._detector.terminate()
+		self._detector = None
+		self._detectionEnabled = False
+
+	def _resumeDetection(self):
+		if not self._detectionEnabled or self._detector:
+			return
+		self._detector = bdDetect.Detector()
+
+	def handleDetectedDisplay(self, driver, match):
+		# Suspend detection.
+		self._detector.terminate()
+		self._detector = None
+		self.setDisplayByName(driver, detected=match)
 
 def initialize():
 	global handler
