@@ -147,11 +147,11 @@ _textChangeNotificationObjs=[]
 
 def initialize():
 	global _getWindowTextInRect,_requestTextChangeNotificationsForWindow
-	_getWindowTextInRect=CFUNCTYPE(c_long,c_long,c_long,c_int,c_int,c_int,c_int,c_int,c_int,c_bool,POINTER(BSTR),POINTER(BSTR))(('displayModel_getWindowTextInRect',NVDAHelper.localLib),((1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(2,),(2,)))
+	_getWindowTextInRect=CFUNCTYPE(c_long,c_long,c_long,c_bool,c_int,c_int,c_int,c_int,c_int,c_int,c_bool,POINTER(BSTR),POINTER(BSTR))(('displayModel_getWindowTextInRect',NVDAHelper.localLib),((1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(2,),(2,)))
 	_requestTextChangeNotificationsForWindow=NVDAHelper.localLib.displayModel_requestTextChangeNotificationsForWindow
 
-def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace=True):
-	text, cpBuf = watchdog.cancellableExecute(_getWindowTextInRect, bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace)
+def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace=True,includeDescendantWindows=True):
+	text, cpBuf = watchdog.cancellableExecute(_getWindowTextInRect, bindingHandle, windowHandle, includeDescendantWindows, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace)
 	if not text or not cpBuf:
 		return u"",[]
 
@@ -190,6 +190,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	minHorizontalWhitespace=8
 	minVerticalWhitespace=32
 	stripOuterWhitespace=True
+	includeDescendantWindows=True
 
 	def __init__(self, obj, position):
 		if isinstance(position, textInfos.Rect):
@@ -218,7 +219,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			return [],[],[]
 		left,top=windowUtils.physicalToLogicalPoint(self.obj.windowHandle,left,top)
 		right,bottom=windowUtils.physicalToLogicalPoint(self.obj.windowHandle,right,bottom)
-		text,rects=getWindowTextInRect(bindingHandle, self.obj.windowHandle, left, top, right, bottom, self.minHorizontalWhitespace, self.minVerticalWhitespace,self.stripOuterWhitespace)
+		text,rects=getWindowTextInRect(bindingHandle, self.obj.windowHandle, left, top, right, bottom, self.minHorizontalWhitespace, self.minVerticalWhitespace,self.stripOuterWhitespace,self.includeDescendantWindows)
 		if not text:
 			return [],[],[]
 		text="<control>%s</control>"%text
