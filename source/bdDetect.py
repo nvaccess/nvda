@@ -10,9 +10,11 @@
 import itertools
 from collections import namedtuple
 import threading
+import weakref
 import wx
 import hwPortUtils
 import braille
+import windowUtils
 
 #: How often (in ms) to poll for Bluetooth devices.
 POLL_INTERVAL = 10000
@@ -101,11 +103,32 @@ def getDriversForPossibleBluetoothComPorts():
 			if match(port):
 				yield driver, port
 
+WM_DEVICECHANGE = 0x0219
+DBT_DEVNODES_CHANGED = 0x0007
+class DeviceChangeListener(windowUtils.CustomWindow):
+	className = u"NVDADeviceChangeListener"
+
+	def __init__(self, detector):
+		super(DeviceChangeListener, self).__init__()
+		self._detector = weakref.ref(detector)
+		self._callLater = None
+
+	def windowProc(self, hwnd, message, wParam, lParam):
+		if message != WM_DEVICECHANGE or wParam != DBT_DEVNODES_CHANGED:
+			return
+		if self._callLater and not self._callLater.HasRun():
+			# There's already a pending call.
+			return
+		# Delay the call to avoid flooding.
+		self._callLater = wx.CallLater(300, self._detector().handleDeviceChange)
+
 class Detector(object):
 
 	def __init__(self):
 		self._btComs = None
 		self._callLater = None
+		self._thread = None
+		self._devChangeListener = DeviceChangeListener(self)
 		# Perform initial scan.
 		self._startBgScan(dict(usb=True, bluetooth=True))
 
@@ -115,6 +138,8 @@ class Detector(object):
 		self._thread.start()
 
 	def _stopBgScan(self):
+		if not self._thread:
+			return
 		self._stopEvent.set()
 		if self._callLater:
 			self._callLater.Stop()
@@ -131,6 +156,7 @@ class Detector(object):
 		if bluetooth:
 			if self._btComs is None:
 				btComs = getDriversForPossibleBluetoothComPorts()
+				# Cache Bluetooth com ports for next time.
 				btComsCache = []
 			else:
 				btComs = self._btComs
@@ -150,10 +176,15 @@ class Detector(object):
 			if btComsCache is not btComs:
 				self._btComs = btComsCache
 			if btComsCache:
+				# There were possible ports, so poll them periodically.
 				self._callLater = wx.CallLater(POLL_INTERVAL, self._startBgScan, dict(bluetooth=True))
 
+	def handleDeviceChange(self):
+		self._stopBgScan()
+		# A Bluetooth com port might have been added.
+		self._btComs = None
+		self._startBgScan(dict(usb=True, bluetooth=True))
+
 	def terminate(self):
-		if self._callLater:
-			self._callLater.Stop()
-			self._callLater = None
+		self._devChangeListener.destroy()
 		self._stopBgScan()
