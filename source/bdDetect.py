@@ -238,3 +238,16 @@ addBluetoothComPorts("baum", lambda m: any(m.name.startswith(prefix) for prefix 
 	"VarioConnect",
 	"BrailleConnect",
 )))
+# freedomScientific
+addUsbDevices("freedomScientific", {
+	"VID_0F4E&PID_0100", # Focus 1
+	"VID_0F4E&PID_0111", # PAC Mate
+	"VID_0F4E&PID_0112", # Focus 2
+	"VID_0F4E&PID_0114", # Focus Blue
+})
+addBluetoothComPorts("freedomScientific", lambda m: any(
+	m.name == prefix or m.name.startswith(prefix + " ") for prefix in (
+		"F14", "Focus 14 BT",
+		"Focus 40 BT",
+		"Focus 80 BT",
+)))
