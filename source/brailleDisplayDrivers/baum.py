@@ -98,7 +98,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._deviceID = None
 
 		if isinstance(port, bdDetect.UsbDeviceMatch):
-			tryPorts = ((p, "USB") for p in self._getUsbDevices(usbIds=(port.id,)))
+			tryPorts = ((p, "USB") for p in self._getUsbPorts(usbIds=(port.id,)))
 		elif isinstance(port, bdDetect.BluetoothComPortMatch):
 			tryPorts = ((port.port, "Bluetooth"),)
 		else:
