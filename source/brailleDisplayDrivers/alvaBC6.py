@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2011 Optelec B.V. <http://www.optelec.com/>, James Teh <jamie@jantrid.net>
+#Copyright (C) 2009-2013 Optelec B.V., NV Access Limited
 
 import braille
 import queueHandler
@@ -12,6 +12,7 @@ from ctypes.wintypes import *
 import time
 import config
 import inputCore
+import bdDetect
 
 ALVA_RELEASE_MASK = 0x8000
 
@@ -46,9 +47,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def check(cls):
-		return bool(AlvaLib)
+		return bool(AlvaLib) and bdDetect.arePossibleDevicesForDriver(cls.name)
 
-	def __init__(self):
+	def __init__(self, port=None):
 		super(BrailleDisplayDriver,self).__init__()
 		log.debug("ALVA BC6xx Braille init")
 		_AlvaNumDevices=c_int(0)

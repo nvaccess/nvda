@@ -215,6 +215,12 @@ def arePossibleDevicesForDriver(driver):
 		return False
 
 ### Detection data
+# alvaBC6
+addUsbDevices("alvaBC6", {
+	"VID_0798&PID_0640", # BC640
+	"VID_0798&PID_0680", # BC680
+})
+addBluetoothComPorts("alvaBC6", lambda m: m.name.startswith("ALVA "))
 # baum
 addUsbDevices("baum", {
 	"VID_0403&PID_FE70", # Vario 40
