@@ -191,6 +191,38 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	minVerticalWhitespace=32
 	stripOuterWhitespace=True
 
+	def _get_backgroundSelectionColor(self):
+		self.backgroundSelectionColor=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(13))
+		return self.backgroundSelectionColor
+
+	def _get_foregroundSelectionColor(self):
+		self.foregroundSelectionColor=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(14))
+		return self.foregroundSelectionColor
+
+	def _getSelectionOffsets(self):
+		if self.backgroundSelectionColor is not None and self.foregroundSelectionColor is not None:
+			fields=self._storyFieldsAndRects[0]
+			startOffset=None
+			endOffset=None
+			curOffset=0
+			inHighlightChunk=False
+			for item in fields:
+				if isinstance(item,textInfos.FieldCommand) and item.command=="formatChange" and item.field.get('color',None)==self.foregroundSelectionColor and item.field.get('background-color',None)==self.backgroundSelectionColor: 
+					inHighlightChunk=True
+					if startOffset is None:
+						startOffset=curOffset
+				elif isinstance(item,basestring):
+					curOffset+=len(item)
+					if inHighlightChunk:
+						endOffset=curOffset
+				else:
+					inHighlightChunk=False
+			if startOffset is not None and endOffset is not None:
+				return (startOffset,endOffset)
+		# no selection, just use the caret if it exists
+		offset=self._getCaretOffset()
+		return offset,offset
+
 	def __init__(self, obj, position):
 		if isinstance(position, textInfos.Rect):
 			self._location = position.left, position.top, position.right, position.bottom
@@ -501,10 +533,6 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
 		winUser.setCursorPos(oldX,oldY)
-
-	def _getSelectionOffsets(self):
-		offset=self._getCaretOffset()
-		return offset,offset
 
 	def _setSelectionOffsets(self,start,end):
 		if start!=end:
