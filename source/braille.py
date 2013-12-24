@@ -7,6 +7,7 @@
 import itertools
 import os
 import pkgutil
+import collections
 import wx
 import louis
 import keyboardHandler
@@ -299,6 +300,10 @@ DOT8 = 128
 #: Used in place of a specific braille display driver name to indicate that
 #: braille displays should be automatically detected and used.
 AUTO_DISPLAY_NAME = "auto"
+#: A port name which indicates that USB should be used.
+USB_PORT = "usb"
+#: A port name which indicates that Bluetooth should be used.
+BLUETOOTH_PORT = "bluetooth"
 
 def NVDAObjectHasUsefulText(obj):
 	import displayModel
@@ -1258,6 +1263,19 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		else:
 			self.handleGainFocus(api.getFocusObject())
 
+	def _getAutoPort(self, driver, port):
+		iters = []
+		if port in (USB_PORT, BrailleDisplayDriver.AUTOMATIC_PORT[0]):
+			iters.append(bdDetect.getConnectedUsbDevicesForDriver(driver))
+		if port in (BLUETOOTH_PORT, BrailleDisplayDriver.AUTOMATIC_PORT[0]):
+			iters.append(bdDetect.getPossibleBluetoothComPortsForDriver(driver))
+		if not iters:
+			raise ValueError
+		try:
+			return next(itertools.chain(*iters))
+		except (LookupError, StopIteration):
+			raise ValueError
+
 	def setDisplayByName(self, name, isFallback=False, detected=None):
 		if name == AUTO_DISPLAY_NAME:
 			self._enableDetection()
@@ -1276,6 +1294,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# Here we try to keep compatible with old drivers that don't support port setting
 			# or situations where the user hasn't set any port.
 			kwargs = {}
+			try:
+				port = self._getAutoPort(name, port)
+			except ValueError:
+				pass
 			if port:
 				kwargs["port"] = port
 
@@ -1624,10 +1646,43 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	@classmethod
 	def getPossiblePorts(cls):
 		""" Returns possible hardware ports for this driver.
-		If the driver supports automatic port setting it should return as the first port L{brailleDisplayDriver.AUTOMATIC_PORT}
-
+		Generally, drivers shouldn't implement this method directly.
+		Instead, they should provide automatic detection data via L{bdDetect}
+		and implement L{getPossibleManualPorts} if they support manual ports
+		such as serial ports.
 		@return: ordered dictionary of name : description for each port
 		@rtype: OrderedDict
+		"""
+		try:
+			next(bdDetect.getConnectedUsbDevicesForDriver(cls.name))
+			usb = True
+		except (LookupError, StopIteration):
+			usb = False
+		try:
+			next(bdDetect.getPossibleBluetoothComPortsForDriver(cls.name))
+			bluetooth = True
+		except (LookupError, StopIteration):
+			bluetooth = False
+		ports = collections.OrderedDict()
+		if usb or bluetooth:
+			ports.update((cls.AUTOMATIC_PORT,))
+			if usb:
+				ports["usb"] = "USB"
+			if bluetooth:
+				ports["bluetooth"] = "Bluetooth"
+		try:
+			ports.update(cls.getManualPorts())
+		except NotImplementedError:
+			pass
+		return ports
+
+	@classmethod
+	def getManualPorts(cls):
+		"""Get possible manual hardware ports for this driver.
+		This is for ports which cannot be detected automatically
+		such as serial ports.
+		@return: The name and description for each port.
+		@rtype: iterable of basestring, basestring
 		"""
 		raise NotImplementedError
 
@@ -1689,3 +1744,12 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		return handler.display.description, identifier.split(":", 1)[1]
 
 inputCore.registerGestureSource("br", BrailleDisplayGesture)
+
+def getSerialPorts():
+	"""Get available serial ports in a format suitable for L{BrailleDisplayDriver.getManualPorts}}}.
+	"""
+	import hwPortUtils
+	for info in hwPortUtils.listComPorts():
+		# Translators: Name of a serial communications port.
+		yield (info["port"],
+			_("Serial: {portName}").format(portName=info["friendlyName"]))
