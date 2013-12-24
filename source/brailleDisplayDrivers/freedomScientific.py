@@ -115,27 +115,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 	def check(cls):
 		return bool(fsbLib) and bdDetect.arePossibleDevicesForDriver(cls.name)
 
-	@classmethod
-	def getPossiblePorts(cls):
-		ports = OrderedDict()
-		try:
-			next(bdDetect.getConnectedUsbDevicesForDriver(cls.name))
-			usb = True
-		except StopIteration:
-			usb = False
-		try:
-			next(bdDetect.getPossibleBluetoothComPortsForDriver(cls.name))
-			bluetooth = True
-		except StopIteration:
-			bluetooth = False
-		if usb or bluetooth:
-			ports.update((cls.AUTOMATIC_PORT,))
-		if usb:
-			ports["USB"] = "USB"
-		if bluetooth:
-			ports["bluetooth"] = "Bluetooth"
-		return ports
-
 	wizWheelActions=[
 		# Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
 		(_("display scroll"),("globalCommands","GlobalCommands","braille_scrollBack"),("globalCommands","GlobalCommands","braille_scrollForward")),
@@ -155,20 +134,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 		super(BrailleDisplayDriver,self).__init__()
 		self._messageWindowClassAtom=windll.user32.RegisterClassExW(byref(nvdaFsBrlWndCls))
 		self._messageWindow=windll.user32.CreateWindowExW(0,self._messageWindowClassAtom,u"nvdaFsBrlWndCls window",0,0,0,0,0,None,None,appInstance,None)
-		if port == "auto":
-			portsToTry = itertools.chain(("USB",),
-				(m.port for m in bdDetect.getPossibleBluetoothComPortsForDriver(self.name)))
-		elif port == "bluetooth":
-			portsToTry = (m.port for m in bdDetect.getPossibleBluetoothComPortsForDriver(self.name))
-		elif isinstance(port, bdDetect.BluetoothComPortMatch):
-			portsToTry = (port.port,)
+		if isinstance(port, bdDetect.BluetoothComPortMatch):
+			port = port.port
 		else: # USB
-			portsToTry = ["USB"]
+			port = "USB"
 		fbHandle=-1
-		for port in portsToTry:
-			fbHandle=fbOpen(port,self._messageWindow,nvdaFsBrlWm)
-			if fbHandle!=-1:
-				break
+		fbHandle=fbOpen(port,self._messageWindow,nvdaFsBrlWm)
 		if fbHandle==-1:
 			windll.user32.DestroyWindow(self._messageWindow)
 			windll.user32.UnregisterClassW(self._messageWindowClassAtom,appInstance)

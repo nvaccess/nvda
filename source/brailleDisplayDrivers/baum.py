@@ -12,7 +12,6 @@ import _winreg
 import itertools
 import wx
 import serial
-import hwPortUtils
 import braille
 import inputCore
 from logHandler import log
@@ -63,17 +62,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def check(cls):
-		return bool(cls.getPossiblePorts())
+		return (bdDetect.arePossibleDevicesForDriver(cls.name)
+			or bool(cls.getManualPorts()))
 
 	@classmethod
-	def getPossiblePorts(cls):
-		ports = OrderedDict()
-		if bdDetect.arePossibleDevicesForDriver(cls.name):
-			ports.update((cls.AUTOMATIC_PORT,))
-		for portInfo in hwPortUtils.listComPorts():
-			# Translators: Name of a serial communications port.
-			ports[portInfo["port"]] = _("Serial: {portName}").format(portName=portInfo["friendlyName"])
-		return ports
+	def getManualPorts(cls):
+		return braille.getSerialPorts()
 
 	@classmethod
 	def _getUsbPorts(cls, usbIds=None):
@@ -98,16 +92,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				except WindowsError:
 					continue
 
-	def __init__(self, port="Auto"):
+	def __init__(self, port=None):
 		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
 		self._deviceID = None
 
-		if port == "auto":
-			tryPorts = itertools.chain(
-				((p, "USB") for p in self._getUsbPorts()),
-				((m.port, "Bluetooth") for m in bdDetect.getPossibleBluetoothComPortsForDriver(self.name)))
-		elif isinstance(port, bdDetect.UsbDeviceMatch):
+		if isinstance(port, bdDetect.UsbDeviceMatch):
 			tryPorts = ((p, "USB") for p in self._getUsbDevices(usbIds=(port.id,)))
 		elif isinstance(port, bdDetect.BluetoothComPortMatch):
 			tryPorts = ((port.port, "Bluetooth"),)
