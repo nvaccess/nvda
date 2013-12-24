@@ -5,6 +5,12 @@
 #Copyright (C) 2013 NV Access Limited
 
 """Support for braille display detection.
+This allows devices to be automatically detected and used when they become available,
+as well as providing utilities to query for possible devices for a particular driver.
+To support detection for a driver, devices need to be associated
+using the C{add*} functions.
+Drivers distributed with NVDA do this at the bottom of this module.
+For drivers in add-ons, this must be done in a global plugin.
 """
 
 import itertools
@@ -83,6 +89,10 @@ def _isComAvailable(port):
 	return False
 
 def getDriversForConnectedUsbDevices():
+	"""Get any matching drivers for connected USB devices.
+	@return: Pairs of drivers and device information.
+	@rtype: generator of (str, L{UsbDeviceMatch}) tuples
+	"""
 	usbDevs = set(hwPortUtils.listUsbDevices())
 	for driver, devs in _driverDevices.iteritems():
 		driverUsb = devs[_KEY_USBDEVS]
@@ -91,6 +101,10 @@ def getDriversForConnectedUsbDevices():
 			yield driver, UsbDeviceMatch(usbId)
 
 def getDriversForPossibleBluetoothComPorts():
+	"""Get any matching drivers for possible Bluetooth com ports.
+	@return: Pairs of drivers and port information.
+	@rtype: generator of (str, L{BluetoothComPortMatch}) tuples
+	"""
 	btComs = [BluetoothComPortMatch(port["bluetoothAddress"], port["bluetoothName"], port["port"])
 		for port in hwPortUtils.listComPorts()
 		if "bluetoothName" in port]
@@ -105,11 +119,11 @@ def getDriversForPossibleBluetoothComPorts():
 
 WM_DEVICECHANGE = 0x0219
 DBT_DEVNODES_CHANGED = 0x0007
-class DeviceChangeListener(windowUtils.CustomWindow):
+class _DeviceChangeListener(windowUtils.CustomWindow):
 	className = u"NVDADeviceChangeListener"
 
 	def __init__(self, detector):
-		super(DeviceChangeListener, self).__init__()
+		super(_DeviceChangeListener, self).__init__()
 		self._detector = weakref.ref(detector)
 		self._callLater = None
 
@@ -123,12 +137,15 @@ class DeviceChangeListener(windowUtils.CustomWindow):
 		self._callLater = wx.CallLater(300, self._detector().handleDeviceChange)
 
 class Detector(object):
+	"""Automatically detect braille displays.
+	This should only be used by the L{braille} module.
+	"""
 
 	def __init__(self):
 		self._btComs = None
 		self._callLater = None
 		self._thread = None
-		self._devChangeListener = DeviceChangeListener(self)
+		self._devChangeListener = _DeviceChangeListener(self)
 		# Perform initial scan.
 		self._startBgScan(dict(usb=True, bluetooth=True))
 
@@ -190,12 +207,26 @@ class Detector(object):
 		self._stopBgScan()
 
 def getConnectedUsbDevicesForDriver(driver):
+	"""Get any connected USB devices associated with a particular driver.
+	@param driver: The name of the driver.
+	@type driver: str
+	@return: Device information for each device.
+	@rtype: generator of L{UsbDeviceMatch}
+	@raise LookupError: If there is no detection data for this driver.
+	"""
 	driverUsb = _driverDevices[driver][_KEY_USBDEVS]
 	matching = driverUsb & set(hwPortUtils.listUsbDevices())
 	for usbId in matching:
 		yield UsbDeviceMatch(usbId)
 
 def getPossibleBluetoothComPortsForDriver(driver):
+	"""Get any possible Bluetooth com ports associated with a particular driver.
+	@param driver: The name of the driver.
+	@type driver: str
+	@return: Port information for each port.
+	@rtype: generator of L{BluetoothComPortMatch}
+	@raise LookupError: If there is no detection data for this driver.
+	"""
 	matchFunc = _driverDevices[driver][_KEY_BTCOMS]
 	for port in hwPortUtils.listComPorts():
 		try:
@@ -206,6 +237,13 @@ def getPossibleBluetoothComPortsForDriver(driver):
 			yield match
 
 def arePossibleDevicesForDriver(driver):
+	"""Determine whether there are any possible devices associated with a given driver.
+	@param driver: The name of the driver.
+	@type driver: str
+	@return: C{True} if there are possible devices, C{False} otherwise.
+	@rtype: bool
+	@raise LookupError: If there is no detection data for this driver.
+	"""
 	try:
 		next(itertools.chain(
 			getConnectedUsbDevicesForDriver(driver),
