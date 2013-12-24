@@ -92,10 +92,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			tryPorts = (("USB", port) for port in _getUsbPorts())
 		elif isinstance(port, bdDetect.BluetoothComPortMatch):
 			tryPorts = (("Bluetooth", port.port),)
-		else:
-			tryPorts = itertools.chain(
-				(("USB", port) for port in _getUsbPorts()),
-				(("Bluetooth", m.port) for m in bdDetect.getPossibleBluetoothComPortsForDriver(self.name)))
 		for portType, port in tryPorts:
 			# Try talking to the display.
 			try:
