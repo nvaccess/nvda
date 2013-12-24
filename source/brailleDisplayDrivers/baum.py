@@ -63,17 +63,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def check(cls):
-		return bdDetect.arePossibleDevicesForDriver(cls.name)
+		return bool(cls.getPossiblePorts())
 
 	@classmethod
 	def getPossiblePorts(cls):
 		ports = OrderedDict()
-		try:
-			next(itertools.chain(cls._getUsbPorts(),
-				bdDetect.getPossibleBluetoothComPortsForDriver(cls.name)))
+		if bdDetect.arePossibleDevicesForDriver(cls.name):
 			ports.update((cls.AUTOMATIC_PORT,))
-		except StopIteration:
-			pass
 		for portInfo in hwPortUtils.listComPorts():
 			# Translators: Name of a serial communications port.
 			ports[portInfo["port"]] = _("Serial: {portName}").format(portName=portInfo["friendlyName"])
