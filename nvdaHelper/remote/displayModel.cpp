@@ -66,7 +66,7 @@ void displayModelChunk_t::truncate(int truncatePointX, BOOL truncateBefore) {
 	}
 }
 
-displayModel_t::displayModel_t(HWND w): LockableAutoFreeObject(), chunksByYX(), hwnd(w) {
+displayModel_t::displayModel_t(HWND w): LockableAutoFreeObject(), chunksByYX(), hwnd(w), focusRect(NULL)  {
 	LOG_DEBUG(L"created instance at "<<this);
 }
 
@@ -77,6 +77,7 @@ displayModel_t::~displayModel_t() {
 		delete i->second;
 		chunksByYX.erase(i++);
 	}
+	setFocusRect(NULL);
 }
 
 size_t displayModel_t::getChunkCount() {
@@ -114,11 +115,28 @@ void displayModel_t::insertChunk(displayModelChunk_t* chunk) {
 	if(hwnd) chunk->hwnd=hwnd; 
 }
 
+void displayModel_t::setFocusRect(const RECT* rect) {
+	if(!rect&&this->focusRect) {
+		delete this->focusRect;
+		this->focusRect=NULL;
+	} else if(rect) {
+		if(!this->focusRect) this->focusRect=new RECT;
+		memcpy(this->focusRect,rect,sizeof(RECT));
+	}
+}
+
+bool displayModel_t::getFocusRect(RECT* rect) {
+	if(!rect||!this->focusRect) return false;
+	memcpy(rect,this->focusRect,sizeof(RECT));
+	return true;
+}
+
 void displayModel_t::clearAll() {
 	for(displayModelChunksByPointMap_t::iterator i=chunksByYX.begin();i!=chunksByYX.end();) {
 		delete i->second;
 		chunksByYX.erase(i++);
 	}
+	setFocusRect(NULL);
 }
 
 void displayModel_t::clearRectangle(const RECT& rect, BOOL clearForText) {
@@ -126,6 +144,10 @@ void displayModel_t::clearRectangle(const RECT& rect, BOOL clearForText) {
 	set<displayModelChunk_t*> chunksForInsertion;
 	displayModelChunksByPointMap_t::iterator i=chunksByYX.begin();
 	RECT tempRect;
+	//If the rectangle we are clearing completely covers any current focus rectangle, then get rid of the focus rectangle.
+	if(focusRect&&IntersectRect(&tempRect,&rect,focusRect)&&EqualRect(&tempRect,focusRect)) {
+		setFocusRect(NULL);
+	}
 	while(i!=chunksByYX.end()) {
 		displayModelChunksByPointMap_t::iterator nextI=i;
 		++nextI; 
