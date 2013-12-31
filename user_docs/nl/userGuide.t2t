@@ -57,6 +57,8 @@ Voor verdere bijzonderheden kan men de volledige licentie bekijken op: http://ww
 
 + Systeemvereisten +
 - Besturingssysteem: alle 32-bit en 64-bit versies van Windows XP, Windows  Vista, Windows 7 en Windows 8 (inclusief Server besturingssystemen). 
+- Voor Windows XP 32-bit heeft NVDA Service Pack 2 of hoger nodig.
+- Voor Windows Server 2003 heeft NVDA Service Pack 1 of hoger nodig.
 - Geheugen: 256 MB RAM of meer.
 - Processorsnelheid: 1.0 ghz of hoger.
 - Opslagcapaciteit: ongeveer 50 MB vrije ruimte.
@@ -1084,15 +1086,15 @@ Het niveau veld bepaalt het minimumniveau waarop dit symbool wordt uitgesproken.
 Als u klaar bent kunnen de wijzigingen met de OK knop worden opgeslagen, of door middel van de Annuleren knop worden teruggedraaid.
 
 +++ Invoerkoppelingen +++
-In dit dialoogvenster  kunt u toetsen voor invoerkoppelingen op het toetsenbord,  knoppen op de brailleleesregel, etc. instellen voor het uitvoeren vanNVDA  commando's.
+In dit dialoogvenster  kunt u toetsen voor invoerkoppelingen op het toetsenbord,  knoppen op de brailleleesregel, etc. instellen voor het uitvoeren van NVDA  commando's.
 
 Alleen commando's die toepasbaar zijn vlak voordat u  het dialoogvenster  opent, worden getoond.
-Als u bij voorbeeld commando's wilt instellen die te maken hebben met bladermodus, dan moet u het dialoogvenster  Ïnvoerkoppelingen  openen,wanneer u zich in de bladermodus bevindt.
+Als u bij voorbeeld commando's wilt instellen die te maken hebben met bladermodus, dan moet u het dialoogvenster  Invoerkoppelingen  openen,wanneer u zich in de bladermodus bevindt.
 
 De boomstructuur in dit dialoogvenster toont alle beschikbare NVDA commando's die per categorie gegroepeerd zijn.
 Onder elk commando treft u de ermee verbonden koppeling aan.
 
-Om een invoerkoppeling aan een commando toe te voegenselecteert u het commando en drukt u op de knop Toevoegen.
+Om een invoerkoppeling aan een commando toe te voegen selecteert u het commando en drukt u op de knop Toevoegen.
 Breng vervolgens de gewenste invoerkoppeling aan; bij voorbeeld door het indrukken van een toets op het toetsenbord of een knop op een brailleleesregel.
 Vaak kan de reikwijdte van een invoerkoppeling verschillen.
 Als u bij voorbeeld een toets op het toetsenbord indrukt,wilt u mogelijk dat dit specifiek voor de huidige toetsenbordindeling geldt (d.w.z. desktop of laptop) of mogelijk wilt u dat dit voor beide geldt.
@@ -1699,7 +1701,6 @@ De volgende toetscommando's zijn voor Papenmeier-Brailleleesregels beschikbaar:
 | Cursor naar Braillecel verplaatsen | Routing |
 | Teken onder cursor voorlezen | l1 |
 | Huidige navigatorobject activeren | l2 |
-| Naar flat review / focus gaan | r1 |
 | Titel van actieve venster weergeven | l1+omhoog |
 | Statusbalk actieve venster weergeven | l2+omlaag |
 | Navigatorobject naar hoger niveau verplaatsen | omhoog2 |
@@ -1775,7 +1776,6 @@ Toestellen met EAB:
 | Cursor naar Braillecel verplaatsen | Routing |
 | Teken onder cursor voorlezen | l1 |
 | Huidige navigatorobject activeren | l2 |
-| Naar flat review / focus gaan | r1 |
 | Titel van actieve venster weergeven | l1+omhoog |
 | Statusbalk actieve venster weergeven | l2+omlaag |
 | Navigatorobject naar hoger niveau verplaatsen | omhoog2 |
@@ -1792,7 +1792,6 @@ BRAILLEX Tiny:
 | Brailleregel naar vorige regel verplaatsen | omhoog |
 | Brailleregel naar volgende regel verplaatsen | omlaag |
 | Braillevolgmodus wisselen | r2 |
-| Naar flat review / focus gaan | r1 |
 | Navigatorobject naar hoger niveau verplaatsen | r1+up |
 | Navigatorobject één niveau naar beneden verplaatsen | r1+dn |
 | Navigatorobject naar voorafgaand Object verplaatsen | r1+left |
@@ -1806,7 +1805,6 @@ BRAILLEX 2D Screen:
 | Documentopmaak weergeven | reportf |
 | Naar vorige regel gaan | up/omhoog |
 | Leesregel terugscrollen | left/links |
-| Naar flat review / focus gaan | r1 |
 | Leesregel vooruitscrollen| right/rechts |
 | Naar volgende regel gaan | dn/omlaag |
 | Naar volgend object gaan | left2/links2 |

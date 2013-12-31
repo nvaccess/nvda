@@ -57,6 +57,8 @@ NVDA выпускается под лицензией (GNU General Public Licens
 
 + Системные требования +
 - Операционные системы: все 32- и 64-битные версии Windows XP, Windows Vista, Windows 7 и Windows 8 (включая серверные версии операционных систем)
+- Для NVDA требуется при работе в 32-разрядной ОС windows XP сервис пак 2 и выше.
+- Для NVDA требуется при работе в ОС windows server 2003 сервис пак 1 и выше.
 - Оперативная память: 256 мб или более
 - Частота процессора: 1.0 ггц или выше
 - Около 50 мб дискового пространства
@@ -1679,7 +1681,6 @@ Following are the Papenmeier command assignments for NVDA:
 | Route to braille cell | routing |
 | Report current character in review | l1 |
 | Activate current navigator object | l2 |
-| Move to flat review/focus | r1 |
 | Report title | l1+up |
 | Report Status Bar | l2+down |
 | Move to containing object | up2 |
@@ -1756,7 +1757,6 @@ Devices with EAB:
 | Route to braille cell | routing |
 | Report current character in review | l1 |
 | Activate current navigator object | l2 |
-| Move to flat review / focus | r1 |
 | Report title | l1up |
 | Report Status Bar | l2down |
 | Move to containing object | up2 |
@@ -1774,7 +1774,6 @@ BRAILLEX Tiny:
 | Move braille display to previous line | up |
 | Move braille display to next line | dn |
 | Toggle braille tethered to | r2 |
-| Move to flat review / focus | r1 |
 | Move to containing object | r1+up |
 | Move to first contained object | r1+dn |
 | Move to previous object | r1+left |
@@ -1789,7 +1788,6 @@ BRAILLEX 2D Screen:
 | Report text formatting | reportf |
 | Move braille display to previous line | up |
 | Scroll braille display back | left |
-| Move to flat review / focus | r1 |
 | Scroll braille display forward | right |
 | Move braille display to next line | dn |
 | Move to next object | left2 |

@@ -9,6 +9,13 @@ Qué bi ha de Nuevo en NVDA
 - Suporte ta lo Microsoft PowerPoint 2013. Se note que l'anvista protechida no ye suportada. (#3578)
 - En o Microsoft Word y l'Excel o NVDA agora puet leyer o simbolo trigau en que s'esleigan simbolos en o dialogo Ficar simbolo. (#3538)
 - Agora ye posible trigar si o conteniu en documentos habría d'identificar-se  como clicable, a traviés d'una nueva opción en o dialogo Formatiau de Documentos. Ista opción ye activada por defecto (comportamiento anterior). (#3556)
+- Soporte ta las pantallas braille connectadas a traviés de Bluetooth a un ordinador executando lo software de Widcomm Bluetooth. (#2418)
+- Agora s'anuncian os hipervinclos en editar texto en o PowerPoint. (3416)
+
+
+== Cambeos ==
+- Ta las pantallas braille Papenmeier, s'ha eliminau a orden mover a revisión plana/foco. Os usuarios pueden asignar as suyas propias teclas usando o dialogo de cenyos de dentrada. (#3652)
+- O NVDA agora se basa en a versión 11 d'o Microsoft VC runtime, o que significa que ya no puet executar-se en sistemas operativos anteriors a lo Windows XP Service Pack 2 u lo Windows Server 2003 Service Pack 1.
 
 
 == Corrección d'errors ==
@@ -27,6 +34,8 @@ Qué bi ha de Nuevo en NVDA
 
 == Cambeos ta desembolicadors ==
 - Os AppModules agora contienen as propiedatz productName y productVersion. Ista información tamién s'incluye agora en a información d'o desembolicador (NVDA+f1). (#1625)
+- En a consola Python, agora puetz pretar o tabulador ta completar l'identificador actual. (#433)
+ - Si bi ha quantas posibilidatz, puetz pretar o tabulador unatra vegada ta trigar-lo dende una lista.
 
 
 = 2013.3 =

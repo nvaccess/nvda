@@ -57,9 +57,11 @@ Voit [tarkastella koko lisenssiä http://www.gnu.org/licenses/old-licenses/gpl-2
 
 + Järjestelmävaatimukset +
 - Käyttöjärjestelmät: kaikki 32- ja 64-bittiset Windows XP:n, Windows Vistan, Windows 7:n ja Windows 8:n versiot (palvelinversiot mukaan lukien).
+ - 32-bittisessä Windows XP:ssä on oltava Service Pack 2 tai sitä uudempi.
+ - Windows Server 2003:ssa on oltava Service Pack 1 tai sitä uudempi.
 - Muistia (RAM): 256 Mt tai enemmän
-- Prosessori: 1 GHz tai nopeampi
-- Noin 50 Mt levytilaa.
+- Suoritin: 1 GHz tai nopeampi
+- Levytilaa n. 50 Mt.
 -
 
 + NVDA:n hankkiminen ja asentaminen +
@@ -1679,7 +1681,6 @@ Seuraavassa on Papenmeierin näppäinmääritykset NVDA:lle:
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
 | Lue nykyinen merkki | l1 |
 | Aktivoi nykyinen navigointiobjekti | l2 |
-| Siirrä kokonaistarkasteluun/kohdistukseen | r1 |
 | Lue ikkunan nimi | l1+up |
 | Lue tilarivi | l2+down |
 | Siirrä säilöobjektiin | up2 |
@@ -1756,7 +1757,6 @@ Laitteet, joissa on ohjaustankonäppäin (EAB):
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
 | Lue nykyinen merkki | l1 |
 | Aktivoi nykyinen navigointiobjekti | l2 |
-| Siirrä kokonaistarkasteluun / kohdistukseen | r1 |
 | Lue ikkunan nimi | l1up |
 | Lue tilarivi | l2down |
 | Siirrä säilöobjektiin | up2 |
@@ -1774,7 +1774,6 @@ BRAILLEX Tiny:
 | Siirrä pistenäyttö edelliselle riville | up |
 | Siirrä pistenäyttö seuraavalle riville | dn |
 | Vaihda Pistenäyttö seuraa -asetusta | r2 |
-| Siirrä kokonaistarkasteluun / kohdistukseen | r1 |
 | Siirrä säilöobjektiin | r1+up |
 | Siirrä ensimmäiseen sisältöobjektiin | r1+dn |
 | Siirrä edelliseen objektiin | r1+left |
@@ -1789,7 +1788,6 @@ BRAILLEX 2D Screen:
 | Lue tekstin muotoilutiedot | reportf |
 | Siirrä pistenäyttö edelliselle riville | up |
 | Vieritä pistenäyttöä taaksepäin | left |
-| Siirrä kokonaistarkasteluun / kohdistukseen | r1 |
 | Vieritä pistenäyttöä eteenpäin | right |
 | Siirrä pistenäyttö seuraavalle riville | dn |
 | Siirrä seuraavaan objektiin | left2 |
