@@ -57,6 +57,8 @@ Para más detalles, puedes [ver la licencia completa.  http://www.gnu.org/licens
 
 + Requerimientos del Sistema +
 - Sistemas Operativos: todas las versiones de 32 y 64 bits de Windows XP, Windows Vista, Windows 7 y Windows 8 (incluyendo sistemas operativos servidor).
+- Para Windows XP 32 bits, NVDA requiere el Service Pack 2 o superior.
+ - Para Windows Server 2003, NVDA requiere el Service Pack 1 o superior.
 - Memoria: 256 mb o más de RAM
 - Velocidad de Procesador: 1.0 ghz o superior
 - Aproximadamente 50 MB de espacio de almacenamiento.
@@ -1679,7 +1681,6 @@ Seguidamente van las asignaciones de órdenes de la Papenmeier para NVDA:
 | Ir a la celda braille | sensores |
 | Anunciar carácter actual en revisión  | l1 |
 | Activar actual navegador de objetos  | l2 |
-| Mover a revisión plana/foco | r1 |
 | Anunciar título | l1+arriba |
 | Anunciar barra de estado | l2+abajo |
 | Mover al objeto contenido | arriba2 |
@@ -1756,7 +1757,6 @@ Dispositivos con EAB:
 | Ir a la celda braille | sensores |
 | Anunciar carácter actual en revisión | l1 |
 | Activar navegador de objetos actual | l2 |
-| Moverse a la revisión plana / foco | r1 |
 | Anunciar título | l1up |
 | Anunciar Barra de Estado| l2down |
 | Moverse al objeto contenedor | up2 |
@@ -1774,7 +1774,6 @@ BRAILLEX Tiny:
 | Mover pantalla braille a la línea anterior | up |
 | Mover pantalla braille a la línea siguiente | dn |
 | Activar y desactivar seguimiento de braille | r2 |
-| Moverse al modo de revisión pplana / foco | r1 |
 | Moverse al objeto contenedor | r1+up |
 | Moverse al primer objeto contenido | r1+dn |
 | Moverse al objeto anterior | r1+left |
@@ -1789,7 +1788,6 @@ BRAILLEX 2D Screen:
 | Anunciar formato de texto | reportf |
 | Mover pantalla braille a la línea anterior| up |
 | Desplazar pantalla braille atrás | left |
-| Moverse a revisión plana / foco | r1 |
 | Desplazar pantalla braille adelante | right |
 | Mover pantalla braille a la línea siguiente | dn |
 | Moverse al objeto siguiente | left2 |

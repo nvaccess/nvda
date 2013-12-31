@@ -57,6 +57,8 @@ Para máis detalles, podes [ver a licencia completa.  http://www.gnu.org/license
 
 + Requerimentos do Sistema +
 - Sistemas Operativos: todas as versións de 32 e 64 bits de Windows XP, Windows Vista, Windows 7 e Windows 8 (incluíndo sistemas operativos servidor), poderá funcionar parcialmente en Windows 2000.
+- Para o Windows XP 32 bits, NVDA require o Service Pack 2 ou superior.
+ - Para o Windows Server 2003, NVDA require o Service Pack 1 ou superior.
 - Memoria: 256 mb ou máis de RAM
 - Velocidade de Procesador: 1.0 ghz ou superior
 - Aproximadamente 50 MB de espazo de almacenamento.
@@ -1679,7 +1681,6 @@ Seguidamente van as asignacións de ordes da Papenmeier para o NVDA:
 | Ir á celda braille | sensores |
 | Anunciar carácter actual en revisión  | l1 |
 | Activar actual navegador de obxectos  | l2 |
-| Mover a revisión cha/foco | r1 |
 | Anunciar título | l1+arriba |
 | Anunciar barra de estado | l2+abaixo |
 | Mover ó obxecto contido | arriba2 |
@@ -1756,7 +1757,6 @@ Dispositivos co EAB:
 | Ir á celda braille | sensores |
 | Anunciar carácter actual en revisión | l1 |
 | Activar navegador de obxectos actual | l2 |
-| Moverse á revisión chan / foco | r1 |
 | Anunciar título | l1up |
 | Anunciar Barra de Estado| l2down |
 | Moverse ó obxecto contedor | up2 |
@@ -1774,7 +1774,6 @@ BRAILLEX Tiny:
 | Mover liña braille á liña anterior | up |
 | Mover liña braille á liña seguinte | dn |
 | Activar e desactivar seguemento do braille | r2 |
-| Moverse ó modo de revisión chan / foco | r1 |
 | Moverse ó obxecto contedor | r1+up |
 | Moverse ó primeiro obxecto contido | r1+dn |
 | Moverse ó obxecto anterior | r1+left |
@@ -1789,7 +1788,6 @@ BRAILLEX 2D Screen:
 | Anunciar formato de texto | reportf |
 | Mover liña braille á liña anterior| up |
 | Desprazar liña braille atrás | left |
-| Moverse á revisión chan / foco | r1 |
 | Desprazar liña braille adiante | right |
 | Mover liña braille á liña seguinte | dn |
 | Moverse ó obxecto seguinte | left2 |

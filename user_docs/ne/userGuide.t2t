@@ -53,14 +53,16 @@ NVDA प्रतिलिपि अधिकार NVDA योगदान क�
 नेत्रवाणी GNU सामान्य सार्वजनिक इजाजत (संस्करण २) मातहतमा पर्दछ ।
 तपाइ यही इजाजतका “ “सर्तहरू लागू हुने र चाहना गर्ने लाई उपलब्ध हुने गरी सबै श्रोत कोड खुल्ला राखेर यो “ “यन्त्र प्राणलाई आफूले चाहे अनुसार हेरफेर वा बाँडचुँड गर्न स्वतन्त्र हुनु हुन्छ । यो नियम यस यन्त्र “
 “प्राणको सुरुको वा परिवर्तित दुबै प्रतिमा एवम् यसका कुनै पनि सह-उत्पादनमा उतिकै रूपमा लागू ““हुन्छ ।”
-यो इजाजतको पूर्ण पाठ र “विस्तृत जानकारीका लागि http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] मा भ्रमण गर्नु होला ।
+यो इजाजतको पूर्ण पाठ र “विस्तृत जानकारीका लागि http://www.gnu.org/licenses) मा भ्रमण गर्नु होला ।
 
 + आवश्यक प्रणाली +
 - सञ्चालन प्रणाली 32-bit र 64-bit सन्झ्याल संस्करण, XP, Vista र सन्झ्याल ७ (सर्बर प्रणाली सहित) ।
+ - सन्झ्याल XP ३२-विट का लागि, नेत्रवाणीलाई Service Pack २ अथवा  पछिल्लो चाहिन्छ ।
+ - सन्झ्याल सर्बर  २००३ का लागि,  नेत्रवाणीलाई Service Pack 1 अथवा  पछिल्लो चाहिन्छ ।
 - भण्डार: २५६ mb अथवा बढी
 - Processor को गति1.0 ghz अथवा तीव्र
 - कम्तीमा ५० MB को भकारी ।
--
+
 
 + नेत्रवाणीको प्राप्ति र अनुकूलता +
 तपाइले हालसम्म नेत्रवाणीको प्रति पाउनु भएको छैन भने [www.nvaccess.org NVDA_URL] ठेगानामा भ्रमण गर्नु होला ।
@@ -1107,37 +1109,37 @@ This option allows you to choose whether or not NVDA should report new symbols a
 अभियोजन पार्श्वचित्रमा सम्पूर्ण नेत्रवाणीमा लागू हुने सामान्य अनुकूलता पातोमा  उल्लिखित बाहेक प्राय सबै अनुकूलन परिवर्तन गर्न  सकिन्छ ।
 
 अभियोजन पार्श्वचित्रलाई मानविय रुपले  सक्रिय गर्न सकिन्छ ।
-They can also be activated automatically due to triggers such as switching to a particular application.
+कुनै निश्चीत अनुप्रयोगमा गमन जस्ता उतेजकको प्रयोग  गरी यीनिहरूलाई स्वचालित रूपमा सक्रिय गर्न सकिन्छ ।
 
 +++ आधारभूत व्यबस्थापन +++
-You manage configuration profiles by selecting "Configuration profiles" in the NVDA menu.
-You can also do this using a key command:
+तपाइले   नेत्रवाणी मेनुमा रहेको  " पार्श्वचित्रको अभियोजन " लाई चयन गरी  पार्श्वचित्र अभियोजनको व्यबस्थापन गर्न सक्नु हुन्छ ।
+तपाइले यो कार्य कुञ्जी आदेसको पर्योग गरेर पनि  गर्न सक्नु हुन्छ ।
 %kc:beginInclude
-- NVDA+control+p: Show the Configuration Profiles dialog.
+- नेत्रवाणी + control+p: पार्श्वचित्र अभियोजन पातोलाई देखाउने छ ।
 -
 %kc:endInclude
 
-The first control in this dialog is the profile list from which you can select one of the available profiles.
-When you open the dialog, the profile you are currently editing is selected.
-Additional information is also shown for active profiles, indicating whether they are manually activated, triggered and/or being edited.
+यो पातोको पहिलो नियन्त्रक भनेको पार्श्वचित्र सूची हो जहाँ बाट  तपाइले   उपलब्ध कुनै पनि पार्श्वचित्रलाई चयन गर्न सक्नु हुन्छ ।
+तपाइले पातो पल्टाउनु भयो भने वर्तमान सम्पादीत पार्श्वचित्र चयनित हुन्छ ।
+वर्तमान  पार्स्वचित्र मानविय रूपले अथवा उतेजक द्वारा सक्रिय बनाइएका हुन् वा  सम्पादित हुदै छन् भन्ने जस्ता सक्रिय पार्श्वचित्र सम्बन्धी अतिरिक्त सुचनालाई पनि देखाइने छ।
 
-To rename or delete a profile, press the Rename or Delete buttons, respectively.
+नाम बदल्न वा हटाउनका लागि, नामाकरण वा हटाउ भन्नेटाँकलाई क्रमशः दबाउनु होला ।
 
-Press the Close button to close the dialog.
+पातोलाई बन्द गर्न 'बन्द' भन्ने टाँकलाई दबाउनु होस् ।
 
-+++ Creating a Profile +++
-To create a profile, press the New button.
++++ पार्श्वचित्रको सिर्जना +++
+पार्श्वचित्रको सिर्जना गर्न नयाँ टाँकलाई दबाउनु होस् ।
 
-In the New Profile dialog, you can enter a name for the profile.
-You can also select how this profile should be used.
-If you only want to use this profile manually, select Manual activation, which is the default.
-Otherwise, select a trigger which should automatically activate this profile.
-For convenience, if you haven't entered a name for the profile, selecting a trigger will fill in the name accordingly.
-See [below #ConfigProfileTriggers] for more information about triggers.
+नयाँ पार्श्वचित्र पातोमा तपाई नयाँ पार्श्वचित्रको नाम लेख्न सक्नु हुन्छ ।
+यो पार्श्वचित्रलाई कसरी प्रयोग गर्ने भनेर तपाइले चयन गर्न सक्नु हुन्छ ।
+यदि तपाइ यो पार्श्वचित्रलाई मानविय रूपमा मात्र चलाउन चाहनु हुन्छ भने, मानविय सक्रियतालाई चयनगर्नु होला, जो पुर्व निर्धारित गरिएको छ ।
+अन्यथा, उतेजकलाई चयन गर्नु होस्, जसले यो पार्स्वचित्रलाई स्वचालित रुपमा सक्रिय गरोस् ।
+सजिलै  बुझ्नका लागि, यदि तपाइले यो पार्श्वचित्रको नाम प्रविष्टि गर्नु भएको छैन भने, उतेजकलाई चयन गर्दा उक्त नामलाई चढाउँने छ ।
+उतेजक सम्बन्धी थप जानकारीका लागि  [तलको #ConfigProfileTriggers] हेर्नु होला ।
 
-Pressing OK will create the profile and close the Configuration Profiles dialog so you can edit it.
+'ठीक' टाँकलाई दबाउँदा  पार्श्वचित्रको सिर्जना गर्ने छ र  यसलाई सम्पादन गर्न सकियोस् भनेर उक्त पार्श्वचित्रको अभियोजन  पातोलाई बन्द गर्ने छ ।
 
-+++ Manual Activation +++[ConfigProfileManual]
++++ मानविय सक्रियता +++[ConfigProfileManual]
 You can manually activate a profile by selecting a profile and pressing the Manual activate button.
 Once activated, other profiles can still be activated due to triggers, but any settings in the manually activated profile will override them.
 For example, if a profile is triggered for the current application and reporting of links is enabled in that profile but disabled it in the manually activated profile, links will not be reported.
@@ -1145,7 +1147,7 @@ However, if you have changed the voice in the triggered profile but have never c
 Any settings you change will be saved in the manually activated profile.
 To deactivate a manually activated profile, select it in the Configuration Profiles dialog and press the Manual deactivate button.
 
-+++ Triggers +++[ConfigProfileTriggers]
++++ उतेजकहरू+++[ConfigProfileTriggers]
 Pressing the Triggers button in the Configuration Profiles dialog allows you to change the profiles which should be automatically activated for various triggers.
 
 The Triggers list shows the available triggers, which are as follows:
@@ -1162,14 +1164,14 @@ Press the Close button to return to the Configuration Profiles dialog.
 If you have manually activated a profile, any settings you change will be saved to that profile.
 Otherwise, any settings you change will be saved to the most recently triggered profile.
 For example, if you have associated a profile with the Notepad application and you switch to Notepad, any changed settings will be saved to that profile.
-Finally, if there is neither a manually activated nor a triggered profile, any settings you change will be saved to your normal configuration.
+अन्तमा, यदि मानविय रूपले वा उतेजक द्वारा सक्रिय गरिएको पार्श्वचित्र  छैन भने यो सामान्य अभियोजनको रूपमा  बचत हुनेछ ।
 
-To edit the profile associated with say all, you must [manually activate #ConfigProfileManual] that profile.
+सबै पढ भन्ने पार्श्वचित्रको सम्पादन गर्न, तपाइले [मानविय रूपले सक्रिय गर #ConfigProfileManual] भन्ने पार्श्वचित्रलाई सक्रिय गर्नु पर्छ ।
 
-+++ Temporarily Disabling Triggers +++
-Sometimes, it is useful to temporarily disable all triggers.
-For example, you might wish to edit a manually activated profile or your normal configuration without triggered profiles interfering.
-You can do this by checking the Temporarily disable all triggers checkbox in the Configuration Profiles dialog.
++++ उतेजकहरूको अस्थाई निस्क्रियकरण +++
+कहिले कहीं उतेजकहरूलाई अस्थाइ रुपमा निस्क्रिय गर्नु उपयोगी हुन्छ ।
+उदाहरणार्थ,, तपाइले  कुनै मानविय रूपले सक्रिय पार्स्वचित्रलाई अथवा  तपाइको सामान्य अभियोजन लाइ उतेजक पार्श्वचित्रको हस्तक्षेप बिना नै सम्पादन गर्ने चाहना  राख्नु हुन्छ ।
+तपाइले सबै उतेजकहरुलाई निस्क्रिय गर भन्ने  चेक बाकसमा टिक लगाएर यो कार्य गर्न सक्नु हुन्छ । the Temporarily disable all triggers checkbox in the Configuration Profiles dialog.
 
 ++ अभियोजन फाइलहरूको स्थान ++ 
 नेत्रवाणीको फिरन्ते संस्करणले सबै चल्तीका appModules र चल्तीका चालकहरूका अनुकूलताहरूलाई नेत्रवाणीका लागि निर्धारित थैली NVDA भित्र रहेको userConfig नामको घर्रामा बचत गर्ने छ ।
@@ -1679,7 +1681,6 @@ Following are the Papenmeier command assignments for NVDA:
 | Route to braille cell | routing |
 | Report current character in review | l1 |
 | Activate current navigator object | l2 |
-| Move to flat review/focus | r1 |
 | Report title | l1+up |
 | Report Status Bar | l2+down |
 | Move to containing object | up2 |
@@ -1756,7 +1757,6 @@ Devices with EAB:
 | Route to braille cell | routing |
 | Report current character in review | l1 |
 | Activate current navigator object | l2 |
-| Move to flat review / focus | r1 |
 | Report title | l1up |
 | Report Status Bar | l2down |
 | Move to containing object | up2 |
@@ -1774,7 +1774,6 @@ BRAILLEX Tiny:
 | Move braille display to previous line | up |
 | Move braille display to next line | dn |
 | Toggle braille tethered to | r2 |
-| Move to flat review / focus | r1 |
 | Move to containing object | r1+up |
 | Move to first contained object | r1+dn |
 | Move to previous object | r1+left |
@@ -1789,7 +1788,6 @@ BRAILLEX 2D Screen:
 | Report text formatting | reportf |
 | Move braille display to previous line | up |
 | Scroll braille display back | left |
-| Move to flat review / focus | r1 |
 | Scroll braille display forward | right |
 | Move braille display to next line | dn |
 | Move to next object | left2 |

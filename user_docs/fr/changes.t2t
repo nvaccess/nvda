@@ -9,6 +9,13 @@ Quoi de Neuf dans NVDA
 - Support de Microsoft PowerPoint 2013. Notez que le mode protégé n'est pas supporté. (#3578)
 - Dans Microsoft Word et Excel, NVDA peut maintenant lire le symbole sélectionné en choisissant un symbole dans la boîte de dialogue d'insertion de symbole. (#3538)
 - Il est maintenant possible de définir si du contenu dans des documents peut être identifié comme clicable, via une nouvelle option dans la boîte de dialogue Mise en Forme des Documents. Cette option est activée par défaut (comportement précédant). (#3556)
+- Support des afficheurs braille connectés via Bluetooth sur des ordinateurs utilisant Widcomm Bluetooth Software. (#2418)
+- Lors de l'édition de texte dans Powerpoint, les liens sont maintenant rapportés. (#3416)
+
+
+== Changements ==
+- Pour les afficheurs braille Papenmeier, la commande passer en mode revue/focus a été supprimée. Les utilisateurs peuvent assigner leur propre combinaisons en utilisant la boîte de dialogue Geste d'entrée. (#3652)
+- NVDA dépend maintenant des runtimes Microsoft VC version 11, ce qui signifi qu'il ne peut plus être exécuté sur les systèmes d'exploitations plus vieux que Windows XP SP2 ou ou Windows Server 2003 SP1.
 
 
 == Corrections de bogues ==
@@ -27,6 +34,8 @@ Quoi de Neuf dans NVDA
 
 == Changements pour les développeurs ==
 - AppModule contient maintenant les propriétés productName et productVersion. Ces informations sont maintenant également affichées dans les informations pour les développeurs (NVDA+F1). (#1625)
+- Dans la console Python, on peut maintenant appuyer sur Tab pour avoir une auto-complétion. (#433)
+ - S'il y a plusieurs possibilités, on peut appuyer une deuxième fois sur Tab à fin de choisir dans une liste.
 
 
 = 2013.3 =

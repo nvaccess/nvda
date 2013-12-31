@@ -9,6 +9,13 @@ Qué hay de Nuevo en NVDA
 - Soporte para Microsoft PowerPoint 2013. Ten en cuenta que la Vista protegida no está soportada. (#3578)
 - En Microsoft word y Excel, NVDA ahora puede leer el símbolo seleccionado cuando se elijan símbolos utilizando el diálogo Insertar Símbolos. (#3538)
 - Ahora es posible elegir si el contenido en documentos debería identificarse  como cliqueable, a través de una nueva opción en el diálogo Formateado de Documentos. Esta opción está activada por defecto (comportamiento anterior). (#3556)
+- Soporte para pantallas braille conectadas a través de Bluetooth en un ordenador ejecutando el  Software de Widcomm Bluetooth. (#2418)
+- Cuando se edita texto en PowerPoint, ahora se anuncian los hipervínculos. (#3416)
+
+
+== Cambios ==
+- Para las pantallas braille Papenmeier, se ha eliminado la orden mover a revisión plana/foco. Los usuarios pueden asignar sus propias teclas usando el diálogo de gestos de entrada. (#3652)
+- NVDA ahora se basa en la versión 11 del Microsoft VC runtime, lo que significa que ya no se puede ejecutar en sistemas operativos anteriores a Windows XP Service Pack 2 o Windows Server 2003 Service Pack 1.
 
 
 == Corrección de Fallos ==
@@ -27,6 +34,7 @@ Qué hay de Nuevo en NVDA
 
 == Cambios para Desarrolladores ==
 - Los AppModules ahora contienen las propiedades productName y productVersion. Esta información también se incluye ahora en la Información del desarrollador (NVDA+f1). (#1625)
+ - If there are multiple possibilities, you can press tab a second time to choose from a list.
 
 
 = 2013.3 =

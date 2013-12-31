@@ -57,6 +57,8 @@ Pour plus de détails, vous pouvez [lire l'intégralité de la licence http://ww
 
 + Configuration système requise +
 - Systèmes d'exploitation : Toutes les variantes, 32 ou 64 bits, de Windows XP, Windows Vista, Windows 7 et Windows 8 (y compris les versions Serveur).
+ - Pour Windows XP 32-bits, NVDA requière le service pack 2 ou plus récent.
+ - Pour Windows Server 2003, NVDA requière le service pack 1 ou plus récent.
 - Mémoire : 256 mo de RAM ou plus.
 - Vitesse processeur : 1.0 ghz ou plus.
 - Environ 50 MO d'espace disque.
@@ -1679,7 +1681,6 @@ Voici les  commandes assignées pour les afficheurs Papenmeier dans NVDA :
 | Aller à la cellule Braille | routing |
 | Lire le caractère sous le curseur de revue | l1 |
 | Activer l'objet courant du navigateur | l2 |
-| Suivre la revue/le focus | r1 |
 | Lire le titre | l1+up |
 | Lire la barre d'état | l2+down |
 | Aller à l'objet parent | up2 |
@@ -1756,7 +1757,6 @@ Périphériques avec EAB :
 | Joindre à la célule Braille | routing |
 | Annonce le caractère courant sous la revue | l1 |
 | Activer l'objet courant du navigateur | l2 |
-| Ce déplacer à la revue à plat/au focus | r1 |
 | Dire titre | l1up |
 | Lire barre d'état | l2down |
 | Aller à l'objet contenant | up2 |
@@ -1774,7 +1774,6 @@ BRAILLEX Tiny :
 | Déplacer le Braille à la ligne précédante | up |
 | Déplacer le Braille à la ligne suivante | dn |
 | Basculer le suivi du braille | r2 |
-| Ce déplacer à la revue à plat / au focus | r1 |
 | Aller à l'objet contenant | r1+up |
 | Aller au premier objet contenu | r1+dn |
 | Aller à l'objet précédant | r1+left |
@@ -1789,7 +1788,6 @@ BRAILLEX 2D Screen:
 | Annoncer la mise en forme | reportf |
 | Déplacer le Braille à la ligne précédante | up |
 | Défiler le Braille vers l'arrière | left |
-| Ce déplacer à la revue à plat / au focus | r1 |
 | Défiler le Braille vers l'avant | right |
 | Déplacer le Braille à la ligne suivante | dn |
 | Aller à l'objet suivant | left2 |
