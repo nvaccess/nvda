@@ -265,6 +265,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			raise NotImplementedError("position: %s"%position)
 
 	def getTextWithFields(self,formatConfig=None):
+		if self.isCollapsed: return []
 		extraDetail=formatConfig.get('extraDetail',False) if formatConfig else False
 		if not formatConfig:
 			formatConfig=config.conf['documentFormatting']
