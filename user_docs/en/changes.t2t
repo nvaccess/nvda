@@ -33,6 +33,7 @@
 - Input composition for entering east-asian characters no longer fails in PuTTY (#3432)
 - Touch gesture names listed in NVDA's Input Gestures dialog are now friendly and localized. (#3624)
 - NVDA no longer causes certain programs to crash when moving the mouse over their rich edit (TRichEdit) controls. Programs include Jarte 5.1 and BRfácil. (#3693, #3603, #3581)
+- In Internet Explorer and other MSHTML controls, containers such as tables marked as presentation by ARIA are no longer reported to the user. (#3713)
 
 
 == Changes for Developers ==
