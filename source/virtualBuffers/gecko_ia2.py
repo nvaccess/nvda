@@ -113,8 +113,7 @@ class Gecko_ia2(VirtualBuffer):
 		root=self.rootNVDAObject
 		if not root:
 			return False
-		states=root.states
-		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_DEFUNCT in states or controlTypes.STATE_READONLY not in states:
+		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_DEFUNCT in root.states:
 			return False
 		try:
 			if not NVDAObjects.IAccessible.getNVDAObjectFromEvent(root.windowHandle,winUser.OBJID_CLIENT,root.IA2UniqueID):

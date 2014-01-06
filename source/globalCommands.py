@@ -6,6 +6,7 @@
 #Copyright (C) 2006-2012 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista
 
 import time
+import itertools
 import tones
 import touchHandler
 import keyboardHandler
@@ -799,8 +800,31 @@ class GlobalCommands(ScriptableObject):
 	script_moveToParentTreeInterceptor.category=SCRCAT_FOCUS
 
 	def script_toggleVirtualBufferPassThrough(self,gesture):
-		vbuf = api.getFocusObject().treeInterceptor
-		if not vbuf or not isinstance(vbuf, virtualBuffers.VirtualBuffer):
+		focus = api.getFocusObject()
+		vbuf = focus.treeInterceptor
+		if not vbuf:
+			# #2023: Search the focus and its ancestors for an object for which browse mode is optional.
+			for obj in itertools.chain((api.getFocusObject(),), reversed(api.getFocusAncestors())):
+				if obj.shouldCreateTreeInterceptor:
+					continue
+				try:
+					obj.treeInterceptorClass
+				except:
+					continue
+				break
+			else:
+				return
+			# Force the tree interceptor to be created.
+			obj.shouldCreateTreeInterceptor = True
+			ti = treeInterceptorHandler.update(obj)
+			if not ti:
+				return
+			if focus in ti:
+				# Update the focus, as it will have cached that there is no tree interceptor.
+				focus.treeInterceptor = ti
+			return
+
+		if not isinstance(vbuf, virtualBuffers.VirtualBuffer):
 			return
 		# Toggle virtual buffer pass-through.
 		vbuf.passThrough = not vbuf.passThrough

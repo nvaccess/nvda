@@ -96,17 +96,19 @@ class Document(Mozilla):
 	value=None
 
 	def _get_treeInterceptorClass(self):
-		states=self.states
 		ver=getGeckoVersion(self)
 		if (not ver or ver.full.startswith('1.9')) and self.windowClassName!="MozillaContentWindowClass":
 			return super(Document,self).treeInterceptorClass
-		if controlTypes.STATE_READONLY in states:
+		if controlTypes.STATE_EDITABLE not in self.states:
 			import virtualBuffers.gecko_ia2
 			if ver and ver.major < 14:
 				return virtualBuffers.gecko_ia2.Gecko_ia2Pre14
 			else:
 				return virtualBuffers.gecko_ia2.Gecko_ia2
 		return super(Document,self).treeInterceptorClass
+
+	def _get_shouldCreateTreeInterceptor(self):
+		return controlTypes.STATE_READONLY in self.states
 
 class EmbeddedObject(Mozilla):
 
@@ -164,6 +166,9 @@ class GeckoPluginWindowRoot(WindowRoot):
 class TextLeaf(Mozilla):
 	role = controlTypes.ROLE_STATICTEXT
 	beTransparentToMouse = True
+
+class Application(Document):
+	shouldCreateTreeInterceptor = False
 
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Mozilla object.
@@ -239,6 +244,8 @@ _IAccessibleRolesToOverlayClasses = {
 	IAccessibleHandler.IA2_ROLE_EMBEDDED_OBJECT: EmbeddedObject,
 	"embed": EmbeddedObject,
 	"object": EmbeddedObject,
+	oleacc.ROLE_SYSTEM_APPLICATION: Application,
+	oleacc.ROLE_SYSTEM_DIALOG: Application,
 }
 
 #: Roles that mightn't set the focused state when they are focused.
