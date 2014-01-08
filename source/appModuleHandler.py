@@ -16,6 +16,7 @@ import ctypes.wintypes
 import os
 import sys
 import pkgutil
+import threading
 import baseObject
 import globalVars
 from logHandler import log
@@ -34,6 +35,7 @@ runningTable={}
 #: The process ID of NVDA itself.
 NVDAProcessID=None
 _importers=None
+_getAppModuleLock=threading.RLock()
 
 class processEntry32W(ctypes.Structure):
 	_fields_ = [
@@ -87,21 +89,32 @@ def getAppModuleFromProcessID(processID):
 	@returns: the appModule, or None if there isn't one
 	@rtype: appModule 
 	"""
-	mod=runningTable.get(processID)
-	if not mod:
-		appName=getAppNameFromProcessID(processID)
-		mod=fetchAppModule(processID,appName)
+	with _getAppModuleLock:
+		mod=runningTable.get(processID)
 		if not mod:
-			raise RuntimeError("error fetching default appModule")
-		runningTable[processID]=mod
+			appName=getAppNameFromProcessID(processID)
+			mod=fetchAppModule(processID,appName)
+			if not mod:
+				raise RuntimeError("error fetching default appModule")
+			runningTable[processID]=mod
 	return mod
 
 def update(processID,helperLocalBindingHandle=None,inprocRegistrationHandle=None):
-	"""Removes any appModules from the cache whose process has died, and also tries to load a new appModule for the given process ID if need be.
+	"""Tries to load a new appModule for the given process ID if need be.
 	@param processID: the ID of the process.
 	@type processID: int
 	@param helperLocalBindingHandle: an optional RPC binding handle pointing to the RPC server for this process
 	@param inprocRegistrationHandle: an optional rpc context handle representing successful registration with the rpc server for this process
+	"""
+	# This creates a new app module if necessary.
+	mod=getAppModuleFromProcessID(processID)
+	if helperLocalBindingHandle:
+		mod.helperLocalBindingHandle=helperLocalBindingHandle
+	if inprocRegistrationHandle:
+		mod._inprocRegistrationHandle=inprocRegistrationHandle
+
+def cleanup():
+	"""Removes any appModules from the cache whose process has died.
 	"""
 	for deadMod in [mod for mod in runningTable.itervalues() if not mod.isAlive]:
 		log.debug("application %s closed"%deadMod.appName)
@@ -113,12 +126,6 @@ def update(processID,helperLocalBindingHandle=None,inprocRegistrationHandle=None
 			deadMod.terminate()
 		except:
 			log.exception("Error terminating app module %r" % deadMod)
-	# This creates a new app module if necessary.
-	mod=getAppModuleFromProcessID(processID)
-	if helperLocalBindingHandle:
-		mod.helperLocalBindingHandle=helperLocalBindingHandle
-	if inprocRegistrationHandle:
-		mod._inprocRegistrationHandle=inprocRegistrationHandle
 
 def doesAppModuleExist(name):
 	return any(importer.find_module("appModules.%s" % name) for importer in _importers)
