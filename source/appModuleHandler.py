@@ -16,6 +16,7 @@ import ctypes.wintypes
 import os
 import sys
 import pkgutil
+import threading
 import baseObject
 import globalVars
 from logHandler import log
@@ -34,6 +35,7 @@ runningTable={}
 #: The process ID of NVDA itself.
 NVDAProcessID=None
 _importers=None
+_getAppModuleLock=threading.RLock()
 
 class processEntry32W(ctypes.Structure):
 	_fields_ = [
@@ -87,13 +89,14 @@ def getAppModuleFromProcessID(processID):
 	@returns: the appModule, or None if there isn't one
 	@rtype: appModule 
 	"""
-	mod=runningTable.get(processID)
-	if not mod:
-		appName=getAppNameFromProcessID(processID)
-		mod=fetchAppModule(processID,appName)
+	with _getAppModuleLock:
+		mod=runningTable.get(processID)
 		if not mod:
-			raise RuntimeError("error fetching default appModule")
-		runningTable[processID]=mod
+			appName=getAppNameFromProcessID(processID)
+			mod=fetchAppModule(processID,appName)
+			if not mod:
+				raise RuntimeError("error fetching default appModule")
+			runningTable[processID]=mod
 	return mod
 
 def update(processID,helperLocalBindingHandle=None,inprocRegistrationHandle=None):
