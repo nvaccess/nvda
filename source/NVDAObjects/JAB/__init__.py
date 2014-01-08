@@ -278,7 +278,7 @@ class JAB(Window):
 		if self._JABAccContextInfo.childrenCount:
 			return {}
 		parent=self.parent
-		if not isinstance(parent,JAB) or (self.role!=controlTypes.ROLE_RADIOBUTTON and parent.role not in [controlTypes.ROLE_TREEVIEW,controlTypes.ROLE_LIST]):
+		if not isinstance(parent,JAB) or parent.role not in [controlTypes.ROLE_TREEVIEW,controlTypes.ROLE_LIST]:
 			return {}
 		index=self._JABAccContextInfo.indexInParent+1
 		childCount=parent._JABAccContextInfo.childrenCount
