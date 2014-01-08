@@ -67,6 +67,7 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	if globalVars.focusObject: 
 		oldFocusLine.append(globalVars.focusObject)
 	oldAppModules=[o.appModule for o in oldFocusLine if o and o.appModule]
+	appModuleHandler.cleanup()
 	ancestors=[]
 	tempObj=obj
 	matchedOld=False
