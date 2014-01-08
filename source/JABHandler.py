@@ -7,6 +7,7 @@
 import Queue
 from ctypes import *
 from ctypes.wintypes import *
+import time
 import queueHandler
 import speech
 import globalVars
@@ -521,18 +522,33 @@ def event_caret(vmID, accContext):
 	eventHandler.queueEvent("caret", obj)
 
 def event_enterJavaWindow(hwnd):
+	internalQueueFunction(enterJavaWindow_helper,hwnd)
+
+def enterJavaWindow_helper(hwnd):
 	vmID=c_int()
 	accContext=JOBJECT64()
-	try:
-		bridgeDll.getAccessibleContextFromHWND(hwnd,byref(vmID),byref(accContext))
-	except:
-		return
+	gotFocus=False
+	timeout=time.time()+0.2
+	while time.time()<timeout and not eventHandler.isPendingEvents("gainFocus"):
+		try:
+			bridgeDll.getAccessibleContextWithFocus(hwnd,byref(vmID),byref(accContext))
+		except:
+			pass
+		if vmID and accContext:
+			break
+		time.sleep(0.01)
+	if not vmID or not accContext: 
+		try:
+			bridgeDll.getAccessibleContextFromHWND(hwnd,byref(vmID),byref(accContext))
+		except:
+			return
 	vmID=vmID.value
+	accContext=accContext.value
 	vmIDsToWindowHandles[vmID]=hwnd
 	lastFocus=eventHandler.lastQueuedFocusObject
 	if isinstance(lastFocus,NVDAObjects.JAB.JAB) and lastFocus.windowHandle==hwnd:
 		return
-	internalQueueFunction(event_gainFocus,vmID,accContext)
+	event_gainFocus(vmID,accContext)
 
 def isJavaWindow(hwnd):
 	if not bridgeDll or not isRunning:
