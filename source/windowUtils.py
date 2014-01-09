@@ -8,7 +8,10 @@
 """
 
 import ctypes
+import weakref
 import winUser
+from winUser import WNDCLASSEXW, WNDPROC, LRESULT
+from logHandler import log
 
 WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.wintypes.BOOL, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
 def findDescendantWindow(parent, visible=None, controlID=None, className=None):
@@ -42,3 +45,85 @@ def findDescendantWindow(parent, visible=None, controlID=None, className=None):
 		return result[0]
 	except IndexError:
 		raise LookupError("No matching descendant window found")
+
+appInstance = ctypes.windll.kernel32.GetModuleHandleW(None)
+class CustomWindow(object):
+	"""Base class to enable simple implementation of custom windows.
+	Subclasses need only set L{className} and implement L{windowProc}.
+	Simply create an instance to create the window.
+	The window will be destroyed when the instance is deleted,
+	but it can be explicitly destroyed using L{destroy}.
+	"""
+
+	#: The class name of this window.
+	#: @type: unicode
+	className = None
+
+	_hwndsToInstances = weakref.WeakValueDictionary()
+
+	def __init__(self, windowName=None):
+		"""Constructor.
+		@raise WindowsError: If an error occurs.
+		"""
+		if not isinstance(self.className, unicode):
+			raise ValueError("className attribute must be a unicode string")
+		if windowName and not isinstance(windowName, unicode):
+			raise ValueError("windowName must be a unicode string")
+		self._wClass = WNDCLASSEXW(
+			cbSize=ctypes.sizeof(WNDCLASSEXW),
+			lpfnWndProc = CustomWindow._rawWindowProc,
+			hInstance = appInstance,
+			lpszClassName = self.className,
+		)
+		res = self._classAtom = ctypes.windll.user32.RegisterClassExW(ctypes.byref(self._wClass))
+		if res == 0:
+			raise ctypes.WinError()
+		res = ctypes.windll.user32.CreateWindowExW(0, self._classAtom, windowName or self.className, 0, 0, 0, 0, 0, None, None, appInstance, None)
+		if res == 0:
+			raise ctypes.WinError()
+		#: The handle to the created window.
+		#: @type: int
+		self.handle = res
+		self._hwndsToInstances[res] = self
+
+	def destroy(self):
+		"""Destroy the window.
+		This will be called automatically when this instance is deleted,
+		but you may wish to call it earlier.
+		"""
+		ctypes.windll.user32.DestroyWindow(self.handle)
+		self.handle = None
+		ctypes.windll.user32.UnregisterClassW(self._classAtom, appInstance)
+
+	def __del__(self):
+		if self.handle:
+			self.destroy()
+
+	def windowProc(self, hwnd, msg, wParam, lParam):
+		"""Process messages sent to this window.
+		@param hwnd: The handle to this window.
+		@type hwnd: int
+		@param msg: The message.
+		@type msg: int
+		@param wParam: Additional message information.
+		@type wParam: int
+		@param lParam: Additional message information.
+		@type lParam: int
+		@return: The result of the message processing
+			or C{None} to call DefWindowProc.
+		@rtype: int or None
+		"""
+
+	@WNDPROC
+	def _rawWindowProc(hwnd, msg, wParam, lParam):
+		try:
+			inst = CustomWindow._hwndsToInstances[hwnd]
+		except KeyError:
+			return ctypes.windll.user32.DefWindowProcW(hwnd, msg, wParam, lParam)
+		try:
+			res = inst.windowProc(hwnd, msg, wParam, lParam)
+			if res is not None:
+				return res
+		except:
+			log.exception("Error in wndProc")
+		return ctypes.windll.user32.DefWindowProcW(hwnd, msg, wParam, lParam)
