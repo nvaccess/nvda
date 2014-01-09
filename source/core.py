@@ -20,6 +20,7 @@ import sys
 import nvwave
 import os
 import time
+import ctypes
 import logHandler
 import globalVars
 from logHandler import log
@@ -119,6 +120,9 @@ def main():
 This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and installs the core pump timer, which checks the queues and executes functions every 1 ms. Finally, it starts the wx main loop.
 """
 	log.debug("Core starting")
+
+	ctypes.windll.user32.SetProcessDPIAware()
+
 	import config
 	if not globalVars.appArgs.configPath:
 		globalVars.appArgs.configPath=config.getUserDefaultConfigPath(useInstalledPathIfExists=globalVars.appArgs.launcher)
