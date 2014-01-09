@@ -51,8 +51,10 @@ except WindowsError:
 
 jint=c_int
 jfloat=c_float
+jboolean=c_bool
 class JOBJECT64(c_int if legacyAccessBridge else c_int64):
 	pass
+AccessibleTable=JOBJECT64
 
 MAX_STRING_SIZE=1024
 SHORT_STRING_SIZE=256
@@ -174,6 +176,27 @@ class AccessibleActionsToDo(Structure):
 		("actions", AccessibleActionInfo * MAX_ACTIONS_TO_DO),
 	)
 
+class AccessibleTableInfo(Structure):
+	_fields_=[
+		('caption',JOBJECT64),
+		('summary',JOBJECT64),
+		('rowCount',jint),
+		('columnCount',jint),
+		('accessibleContext',JOBJECT64),
+		('accessibleTable',JOBJECT64),
+	]
+
+class AccessibleTableCellInfo(Structure):
+	_fields_=[
+		('accessibleContext',JOBJECT64),
+		('index',jint),
+		('row',jint),
+		('column',jint),
+		('rowExtent',jint),
+		('columnExtent',jint),
+		('isSelected',jboolean),
+	]
+
 AccessBridge_FocusGainedFP=CFUNCTYPE(None,c_long,JOBJECT64,JOBJECT64)
 AccessBridge_PropertyNameChangeFP=CFUNCTYPE(None,c_long,JOBJECT64,JOBJECT64,c_wchar_p,c_wchar_p)
 AccessBridge_PropertyDescriptionChangeFP=CFUNCTYPE(None,c_long,JOBJECT64,JOBJECT64,c_wchar_p,c_wchar_p)
@@ -221,6 +244,11 @@ if bridgeDll:
 	_fixBridgeFunc(BOOL,'getCaretLocation',c_long,JOBJECT64,POINTER(AccessibleTextRectInfo),jint,errcheck=True)
 	_fixBridgeFunc(BOOL,'getAccessibleActions',c_long,JOBJECT64,POINTER(AccessibleActions),errcheck=True)
 	_fixBridgeFunc(BOOL,'doAccessibleActions',c_long,JOBJECT64,POINTER(AccessibleActionsToDo),POINTER(jint),errcheck=True)
+	_fixBridgeFunc(BOOL,'getAccessibleTableInfo',c_long,JOBJECT64,POINTER(AccessibleTableInfo),errcheck=True)
+	_fixBridgeFunc(BOOL,'getAccessibleTableCellInfo',c_long,AccessibleTable,jint,jint,POINTER(AccessibleTableCellInfo),errcheck=True)
+	_fixBridgeFunc(jint,'getAccessibleTableRow',c_long,AccessibleTable,jint)
+	_fixBridgeFunc(jint,'getAccessibleTableColumn',c_long,AccessibleTable,jint)
+	_fixBridgeFunc(jint,'getAccessibleTableIndex',c_long,AccessibleTable,jint,jint)
 
 #NVDA specific code
 
@@ -236,12 +264,11 @@ class JABContext(object):
 
 	def __init__(self,hwnd=None,vmID=None,accContext=None):
 		if hwnd and not vmID:
-			vmID=c_int()
+			vmID=c_long()
 			accContext=JOBJECT64()
 			bridgeDll.getAccessibleContextFromHWND(hwnd,byref(vmID),byref(accContext))
-			vmID=vmID.value
 			#Record  this vm ID and window handle for later use with other objects
-			vmIDsToWindowHandles[vmID]=hwnd
+			vmIDsToWindowHandles[vmID.value]=hwnd
 		elif vmID and not hwnd:
 			hwnd=vmIDsToWindowHandles.get(vmID)
 			if not hwnd:
@@ -249,7 +276,7 @@ class JABContext(object):
 				hwnd=bridgeDll.getHWNDFromAccessibleContext(vmID,topAC)
 				bridgeDll.releaseJavaObject(vmID,topAC)
 				#Record  this vm ID and window handle for later use with other objects
-				vmIDsToWindowHandles[vmID]=hwnd
+				vmIDsToWindowHandles[vmID.value]=hwnd
 		self.hwnd=hwnd
 		self.vmID=vmID
 		self.accContext=accContext
@@ -406,6 +433,21 @@ class JABContext(object):
 		bridgeDll.getAccessibleRelationSet(self.vmID, self.accContext, byref(relations))
 		return relations
 
+	def getAccessibleTableInfo(self):
+		info=AccessibleTableInfo()
+		if bridgeDll.getAccessibleTableInfo(self.vmID,self.accContext,byref(info)):
+			info.jabCaption=JABContext(vmID=self.vmID,accContext=info.caption) if info.caption else None
+			info.jabSummary=JABContext(vmID=self.vmID,accContext=info.summary) if info.summary else None
+			info.jabContext=JABContext(vmID=self.vmID,accContext=info.accessibleContext) if info.accessibleContext else None
+			info.jabTable=JABContext(vmID=self.vmID,accContext=info.accessibleTable) if info.accessibleTable else None
+			return info
+
+	def getAccessibleTableRow(self,index):
+		return bridgeDll.getAccessibleTableRow(self.vmID,self.accContext,index)
+
+	def getAccessibleTableColumn(self,index):
+		return bridgeDll.getAccessibleTableColumn(self.vmID,self.accContext,index)
+
 @AccessBridge_FocusGainedFP
 def internal_event_focusGained(vmID, event,source):
 	internalQueueFunction(event_gainFocus,vmID,source)
@@ -513,7 +555,7 @@ def event_enterJavaWindow(hwnd):
 	internalQueueFunction(enterJavaWindow_helper,hwnd)
 
 def enterJavaWindow_helper(hwnd):
-	vmID=c_int()
+	vmID=c_long()
 	accContext=JOBJECT64()
 	gotFocus=False
 	timeout=time.time()+0.2
@@ -531,7 +573,6 @@ def enterJavaWindow_helper(hwnd):
 		except:
 			return
 	vmID=vmID.value
-	accContext=accContext.value
 	vmIDsToWindowHandles[vmID]=hwnd
 	lastFocus=eventHandler.lastQueuedFocusObject
 	if isinstance(lastFocus,NVDAObjects.JAB.JAB) and lastFocus.windowHandle==hwnd:

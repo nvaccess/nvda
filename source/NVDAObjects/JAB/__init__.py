@@ -182,6 +182,10 @@ class JAB(Window):
 			clsList.append(Dialog)
 		elif role=="combo box":
 			clsList.append(ComboBox)
+		elif role=="table":
+			clsList.append(Table)
+		elif self.parent and isinstance(self.parent,Table) and self.parent._jabTableInfo:
+			clsList.append(TableCell)
 		clsList.append(JAB)
 
 	@classmethod
@@ -509,3 +513,32 @@ class ComboBox(JAB):
 				value=descendant.name
 		return value
 
+class Table(JAB):
+
+	def _get__jabTableInfo(self):
+		info=self.jabContext.getAccessibleTableInfo()
+		if info:
+			self._jabTableInfo=info
+			return info
+
+	def _get_rowCount(self):
+		if self._jabTableInfo:
+			return self._jabTableInfo.rowCount
+
+	def _get_columnCount(self):
+		if self._jabTableInfo:
+			return self._jabTableInfo.columnCount
+
+class TableCell(JAB):
+
+	role=controlTypes.ROLE_TABLECELL
+
+	def _get_table(self):
+		if self.parent and isinstance(self.parent,Table):
+			return self.parent
+
+	def _get_rowNumber(self):
+		return self.table._jabTableInfo.jabTable.getAccessibleTableRow(self.indexInParent)+1
+
+	def _get_columnNumber(self):
+		return self.table._jabTableInfo.jabTable.getAccessibleTableColumn(self.indexInParent)+1
