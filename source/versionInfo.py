@@ -27,7 +27,7 @@ def _updateVersionFromVCS():
 	except:
 		pass
 
-name="NVDA"
+name=u"NVDA"
 longName=_("NonVisual Desktop Access")
 version="2015.1dev"
 publisher="unknown"
