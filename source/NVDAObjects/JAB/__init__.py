@@ -1,5 +1,6 @@
 import ctypes
 import re
+import eventHandler
 import JABHandler
 import controlTypes
 from ..window import Window
@@ -179,6 +180,8 @@ class JAB(Window):
 			clsList.append(EditableTextWithoutAutoSelectDetection)
 		elif role in ("dialog", "alert"):
 			clsList.append(Dialog)
+		elif role=="combo box":
+			clsList.append(ComboBox)
 		clsList.append(JAB)
 
 	@classmethod
@@ -224,7 +227,7 @@ class JAB(Window):
 		return super(JAB,self)._isEqual(other) and self.jabContext==other.jabContext
 
 	def _get_name(self):
-		return self._JABAccContextInfo.name
+		return re_simpleXmlTag.sub(" ", self._JABAccContextInfo.name)
 
 	def _get_JABRole(self):
 		return self._JABAccContextInfo.role_en_US
@@ -422,3 +425,60 @@ class JAB(Window):
 				JABHandler.jint())
 		except (IndexError, RuntimeError):
 			raise NotImplementedError
+
+	def _get_activeDescendant(self):
+		descendantFound=False
+		jabContext=self.jabContext
+		while jabContext:
+			try:
+				tempContext=jabContext.getActiveDescendent()
+			except:
+				break
+			if not tempContext:
+				break
+			try:
+				depth=tempContext.getObjectDepth()
+			except:
+				depth=-1
+			if depth<=0 or tempContext==jabContext: 
+				break
+			jabContext=tempContext
+			descendantFound=True
+		if descendantFound:
+			return JAB(jabContext=jabContext)
+
+	def event_gainFocus(self):
+		if eventHandler.isPendingEvents("gainFocus"):
+			return
+		super(JAB,self).event_gainFocus()
+		if eventHandler.isPendingEvents("gainFocus"):
+			return
+		activeDescendant=self.activeDescendant
+		if activeDescendant:
+			eventHandler.queueEvent("gainFocus",activeDescendant)
+
+class ComboBox(JAB):
+
+	def _get_states(self):
+		states=super(ComboBox,self).states
+		if controlTypes.STATE_COLLAPSED not in states and controlTypes.STATE_EXPANDED not in states:
+			if self.childCount==1 and self.firstChild and self.firstChild.role==controlTypes.ROLE_POPUPMENU:
+				if controlTypes.STATE_INVISIBLE in self.firstChild.states:
+					states.add(controlTypes.STATE_COLLAPSED)
+				else:
+					states.add(controlTypes.STATE_EXPANDED)
+		return states
+
+	def _get_activeDescendant(self):
+		if controlTypes.STATE_COLLAPSED in self.states:
+			return None
+		return super(ComboBox,self).activeDescendant
+
+	def _get_value(self):
+		value=super(ComboBox,self).value
+		if not value and not self.activeDescendant: 
+			descendant=super(ComboBox,self).activeDescendant
+			if descendant:
+				value=descendant.name
+		return value
+

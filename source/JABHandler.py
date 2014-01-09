@@ -279,6 +279,9 @@ class JABContext(object):
 		bridgeDll.getVersionInfo(self.vmID,byref(info))
 		return info
 
+	def getObjectDepth(self):
+		return bridgeDll.getObjectDepth(self.vmID,self.accContext)
+
 	def getAccessibleContextInfo(self):
 		info=AccessibleContextInfo()
 		bridgeDll.getAccessibleContextInfo(self.vmID,self.accContext,byref(info))
@@ -409,21 +412,6 @@ def internal_event_focusGained(vmID, event,source):
 	bridgeDll.releaseJavaObject(vmID,event)
 
 def event_gainFocus(vmID,accContext):
-	tempContext=accContext
-	while tempContext:
-		try:
-			tempContext=bridgeDll.getActiveDescendent(vmID,tempContext)
-		except:
-			tempContext=None
-		try:
-			depth=bridgeDll.getObjectDepth(vmID,tempContext)
-		except:
-			depth=-1
-		if tempContext and (depth<=0 or bridgeDll.isSameObject(vmID,accContext,tempContext)):
-			tempContext=None
-		if tempContext:
-			bridgeDll.releaseJavaObject(vmID,accContext)
-			accContext=tempContext
 	jabContext=JABContext(vmID=vmID,accContext=accContext)
 	if not winUser.isDescendantWindow(winUser.getForegroundWindow(),jabContext.hwnd):
 		return
