@@ -199,19 +199,23 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("Initializing GUI")
 	import gui
 	gui.initialize()
+
 	# initialize wxpython localization support
 	locale = wx.Locale()
 	lang=languageHandler.getLanguage()
-	if '_' in lang:
-		wxLang=lang.split('_')[0]
-	else:
-		wxLang=lang
+	wxLang=locale.FindLanguageInfo(lang)
+	if not wxLang and '_' in lang:
+		wxLang=locale.FindLanguageInfo(lang.split('_')[0])
 	if hasattr(sys,'frozen'):
 		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwdu(),"locale"))
-	try:
-		locale.Init(lang,wxLang)
-	except:
-		pass
+	if wxLang:
+		try:
+			locale.Init(wxLang.Language)
+		except:
+			log.error("Failed to initialize wx locale",exc_info=True)
+	else:
+		log.debugWarning("wx does not support language %s" % lang)
+
 	import api
 	import winUser
 	import NVDAObjects.window
