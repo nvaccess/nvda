@@ -61,12 +61,14 @@ class CustomWindow(object):
 
 	_hwndsToInstances = weakref.WeakValueDictionary()
 
-	def __init__(self):
+	def __init__(self, windowName=None):
 		"""Constructor.
 		@raise WindowsError: If an error occurs.
 		"""
 		if not isinstance(self.className, unicode):
 			raise ValueError("className attribute must be a unicode string")
+		if windowName and not isinstance(windowName, unicode):
+			raise ValueError("windowName must be a unicode string")
 		self._wClass = WNDCLASSEXW(
 			cbSize=ctypes.sizeof(WNDCLASSEXW),
 			lpfnWndProc = CustomWindow._rawWindowProc,
@@ -76,7 +78,7 @@ class CustomWindow(object):
 		res = self._classAtom = ctypes.windll.user32.RegisterClassExW(ctypes.byref(self._wClass))
 		if res == 0:
 			raise ctypes.WinError()
-		res = ctypes.windll.user32.CreateWindowExW(0, self._classAtom, self.className, 0, 0, 0, 0, 0, None, None, appInstance, None)
+		res = ctypes.windll.user32.CreateWindowExW(0, self._classAtom, windowName or self.className, 0, 0, 0, 0, 0, None, None, appInstance, None)
 		if res == 0:
 			raise ctypes.WinError()
 		#: The handle to the created window.
