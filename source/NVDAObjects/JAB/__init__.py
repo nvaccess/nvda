@@ -529,16 +529,59 @@ class Table(JAB):
 		if self._jabTableInfo:
 			return self._jabTableInfo.columnCount
 
+	def _get_tableID(self):
+		return self._jabTableInfo.jabTable.accContext.value
+
 class TableCell(JAB):
 
 	role=controlTypes.ROLE_TABLECELL
 
 	def _get_table(self):
 		if self.parent and isinstance(self.parent,Table):
-			return self.parent
+			self.table=self.parent
+			return self.table
+
+	def _get_tableID(self):
+		return self.table.tableID
 
 	def _get_rowNumber(self):
 		return self.table._jabTableInfo.jabTable.getAccessibleTableRow(self.indexInParent)+1
 
 	def _get_columnNumber(self):
 		return self.table._jabTableInfo.jabTable.getAccessibleTableColumn(self.indexInParent)+1
+
+	def _get_rowHeaderText(self):
+		headerTableInfo=self.table.jabContext.getAccessibleTableRowHeader()
+		if headerTableInfo and headerTableInfo.jabTable:
+			textList=[]
+			row=self.rowNumber-1
+			for col in xrange(headerTableInfo.columnCount):
+				cellInfo=headerTableInfo.jabTable.getAccessibleTableCellInfo(row,col)
+				if cellInfo and cellInfo.jabContext:
+					obj=JAB(jabContext=cellInfo.jabContext)
+					if obj.name: textList.append(obj.name)
+					if obj.description: textList.append(obj.description)
+			jabContext=self.table._jabTableInfo.jabTable.getAccessibleTableRowDescription(row)
+			if jabContext:
+				obj=JAB(jabContext=jabContext)
+				if obj.name: textList.append(obj.name)
+				if obj.description: textList.append(obj.description)
+			return " ".join(textList)
+
+	def _get_columnHeaderText(self):
+		headerTableInfo=self.table.jabContext.getAccessibleTableColumnHeader()
+		if headerTableInfo and headerTableInfo.jabTable:
+			textList=[]
+			col=self.columnNumber-1
+			for row in xrange(headerTableInfo.rowCount):
+				cellInfo=headerTableInfo.jabTable.getAccessibleTableCellInfo(row,col)
+				if cellInfo and cellInfo.jabContext:
+					obj=JAB(jabContext=cellInfo.jabContext)
+					if obj.name: textList.append(obj.name)
+					if obj.description: textList.append(obj.description)
+			jabContext=self.table._jabTableInfo.jabTable.getAccessibleTableColumnDescription(col)
+			if jabContext:
+				obj=JAB(jabContext=jabContext)
+				if obj.name: textList.append(obj.name)
+				if obj.description: textList.append(obj.description)
+			return " ".join(textList)

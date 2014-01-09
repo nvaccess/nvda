@@ -246,6 +246,10 @@ if bridgeDll:
 	_fixBridgeFunc(BOOL,'doAccessibleActions',c_long,JOBJECT64,POINTER(AccessibleActionsToDo),POINTER(jint),errcheck=True)
 	_fixBridgeFunc(BOOL,'getAccessibleTableInfo',c_long,JOBJECT64,POINTER(AccessibleTableInfo),errcheck=True)
 	_fixBridgeFunc(BOOL,'getAccessibleTableCellInfo',c_long,AccessibleTable,jint,jint,POINTER(AccessibleTableCellInfo),errcheck=True)
+	_fixBridgeFunc(BOOL,'getAccessibleTableRowHeader',c_long,JOBJECT64,POINTER(AccessibleTableInfo))
+	_fixBridgeFunc(BOOL,'getAccessibleTableColumnHeader',c_long,JOBJECT64,POINTER(AccessibleTableInfo))
+	_fixBridgeFunc(JOBJECT64,'getAccessibleTableRowDescription',c_long,JOBJECT64,jint)
+	_fixBridgeFunc(JOBJECT64,'getAccessibleTableColumnDescription',c_long,JOBJECT64,jint)
 	_fixBridgeFunc(jint,'getAccessibleTableRow',c_long,AccessibleTable,jint)
 	_fixBridgeFunc(jint,'getAccessibleTableColumn',c_long,AccessibleTable,jint)
 	_fixBridgeFunc(jint,'getAccessibleTableIndex',c_long,AccessibleTable,jint,jint)
@@ -442,11 +446,45 @@ class JABContext(object):
 			info.jabTable=JABContext(vmID=self.vmID,accContext=info.accessibleTable) if info.accessibleTable else None
 			return info
 
+	def getAccessibleTableCellInfo(self,row,col):
+		info=AccessibleTableCellInfo()
+		if bridgeDll.getAccessibleTableCellInfo(self.vmID,self.accContext,row,col,byref(info)):
+			info.jabContext=JABContext(vmID=self.vmID,accContext=info.accessibleContext) if info.accessibleContext else None
+			return info
+
 	def getAccessibleTableRow(self,index):
 		return bridgeDll.getAccessibleTableRow(self.vmID,self.accContext,index)
 
 	def getAccessibleTableColumn(self,index):
 		return bridgeDll.getAccessibleTableColumn(self.vmID,self.accContext,index)
+
+	def getAccessibleTableRowHeader(self):
+		info=AccessibleTableInfo()
+		if bridgeDll.getAccessibleTableRowHeader(self.vmID,self.accContext,byref(info)):
+			info.jabCaption=JABContext(vmID=self.vmID,accContext=info.caption) if info.caption else None
+			info.jabSummary=JABContext(vmID=self.vmID,accContext=info.summary) if info.summary else None
+			info.jabContext=JABContext(vmID=self.vmID,accContext=info.accessibleContext) if info.accessibleContext else None
+			info.jabTable=JABContext(vmID=self.vmID,accContext=info.accessibleTable) if info.accessibleTable else None
+			return info
+
+	def getAccessibleTableRowDescription(self,row):
+		accContext=bridgeDll.getAccessibleTableRowDescription(self.vmID,self.accContext,row)
+		if accContext:
+			return JabContext(vmID=self.vmID,accContext=accContext)
+
+	def getAccessibleTableColumnHeader(self):
+		info=AccessibleTableInfo()
+		if bridgeDll.getAccessibleTableColumnHeader(self.vmID,self.accContext,byref(info)):
+			info.jabCaption=JABContext(vmID=self.vmID,accContext=info.caption) if info.caption else None
+			info.jabSummary=JABContext(vmID=self.vmID,accContext=info.summary) if info.summary else None
+			info.jabContext=JABContext(vmID=self.vmID,accContext=info.accessibleContext) if info.accessibleContext else None
+			info.jabTable=JABContext(vmID=self.vmID,accContext=info.accessibleTable) if info.accessibleTable else None
+			return info
+
+	def getAccessibleTableColumnDescription(self,column):
+		accContext=bridgeDll.getAccessibleTableColumnDescription(self.vmID,self.accContext,column)
+		if accContext:
+			return JabContext(vmID=self.vmID,accContext=accContext)
 
 @AccessBridge_FocusGainedFP
 def internal_event_focusGained(vmID, event,source):
