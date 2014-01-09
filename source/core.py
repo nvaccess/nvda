@@ -200,6 +200,15 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import gui
 	gui.initialize()
 
+	# #3763: In wxPython 3, the class name of frame windows changed from wxWindowClassNR to wxWindowNR.
+	# NVDA uses the main frame to check for and quit another instance of NVDA.
+	# To remain compatible with older versions of NVDA, create our own wxWindowClassNR.
+	# We don't need to do anything else because wx handles WM_QUIT for all windows.
+	import windowUtils
+	class MessageWindow(windowUtils.CustomWindow):
+		className = u"wxWindowClassNR"
+	messageWindow = MessageWindow(versionInfo.name)
+
 	# initialize wxpython localization support
 	locale = wx.Locale()
 	lang=languageHandler.getLanguage()
@@ -320,6 +329,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	app.MainLoop()
 
 	log.info("Exiting")
+	messageWindow.destroy()
 	if updateCheck:
 		_terminate(updateCheck)
 
