@@ -308,47 +308,69 @@ class JAB(Window):
 		parent=self.parent
 		if not isinstance(parent,JAB):
 			return super(JAB,self).next
-		newIndex=self._JABAccContextInfo.indexInParent+1
+		if self.indexInParent is None:
+			return None
+		newIndex=self.indexInParent+1
 		if newIndex>=parent._JABAccContextInfo.childrenCount:
 			return None
 		jabContext=parent.jabContext.getAccessibleChildFromContext(newIndex)
 		if not jabContext:
 			return None
-		childInfo=jabContext.getAccessibleContextInfo()
-		if childInfo.indexInParent==self._JABAccContextInfo.indexInParent:
+		obj=JAB(jabContext=jabContext)
+		if not isinstance(obj.parent,JAB):
+			obj.parent=parent
+		if obj.indexInParent is None:
+			obj.indexInParent=newIndex
+		elif obj.indexInParent<=self.indexInParent: 
 			return None
-		return JAB(jabContext=jabContext)
+		return obj
 
 	def _get_previous(self):
 		parent=self.parent
 		if not isinstance(parent,JAB):
 			return super(JAB,self).previous
-		newIndex=self._JABAccContextInfo.indexInParent-1
+		if self.indexInParent is None:
+			return None
+		newIndex=self.indexInParent-1
 		if newIndex<0:
 			return None
 		jabContext=parent.jabContext.getAccessibleChildFromContext(newIndex)
 		if not jabContext:
 			return None
-		childInfo=jabContext.getAccessibleContextInfo()
-		if childInfo.indexInParent==self._JABAccContextInfo.indexInParent:
+		obj=JAB(jabContext=jabContext)
+		if not isinstance(obj.parent,JAB):
+			obj.parent=parent
+		if obj.indexInParent is None:
+			obj.indexInParent=newIndex
+		elif obj.indexInParent>=self.indexInParent: 
 			return None
-		return JAB(jabContext=jabContext)
+		return obj
 
 	def _get_firstChild(self):
 		if self._JABAccContextInfo.childrenCount<=0:
 			return None
 		jabContext=self.jabContext.getAccessibleChildFromContext(0)
 		if jabContext:
-			return JAB(jabContext=jabContext)
+			obj=JAB(jabContext=jabContext)
+			if not isinstance(obj.parent,JAB):
+				obj.parent=self
+			if obj.indexInParent is None:
+				obj.indexInParent=0
+			return obj
 		else:
 			return None
 
 	def _get_lastChild(self):
 		if self._JABAccContextInfo.childrenCount<=0:
 			return None
-		jabContext=self.jabContext.getAccessibleChildFromContext(self._JABAccContextInfo.childrenCount-1)
+		jabContext=self.jabContext.getAccessibleChildFromContext(self.childCount-1)
 		if jabContext:
-			return JAB(jabContext=jabContext)
+			obj=JAB(jabContext=jabContext)
+			if not isinstance(obj.parent,JAB):
+				obj.parent=self
+			if obj.indexInParent is None:
+				obj.indexInParent=self.childCount-1
+			return obj
 		else:
 			return None
 
@@ -360,7 +382,12 @@ class JAB(Window):
 		for index in xrange(self._JABAccContextInfo.childrenCount):
 			jabContext=self.jabContext.getAccessibleChildFromContext(index)
 			if jabContext:
-				children.append(JAB(jabContext=jabContext))
+				obj=JAB(jabContext=jabContext)
+				if not isinstance(obj.parent,JAB):
+					obj.parent=self
+				if obj.indexInParent is None:
+					obj.indexInParent=index
+				children.append(obj)
 		return children
 
 	def _get_indexInParent(self):
