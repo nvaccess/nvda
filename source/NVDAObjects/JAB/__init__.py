@@ -28,9 +28,9 @@ JABRolesToNVDARoles={
 	"hyperlink":controlTypes.ROLE_LINK,
 	"icon":controlTypes.ROLE_ICON,
 	"label":controlTypes.ROLE_LABEL,
-	"root pane":controlTypes.ROLE_ROOTPANE,
-	"glass pane":controlTypes.ROLE_GLASSPANE,
-	"layered pane":controlTypes.ROLE_LAYEREDPANE,
+	"root pane":controlTypes.ROLE_PANEL,
+	"glass pane":controlTypes.ROLE_PANEL,
+	"layered pane":controlTypes.ROLE_PANEL,
 	"list":controlTypes.ROLE_LIST,
 	"list item":controlTypes.ROLE_LISTITEM,
 	"menu bar":controlTypes.ROLE_MENUBAR,
@@ -244,6 +244,8 @@ class JAB(Window):
 				return controlTypes.ROLE_LISTITEM
 			elif parentRole in (controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_TREEVIEWITEM):
 				return controlTypes.ROLE_TREEVIEWITEM
+		if role==controlTypes.ROLE_LABEL:
+			return controlTypes.ROLE_STATICTEXT
 		return role
 
 	def _get_JABStates(self):
