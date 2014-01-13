@@ -318,6 +318,7 @@ There are also a few simplified navigation properties such as simpleParent, simp
 These are like their respective navigation properties described above, but NVDA filters out unuseful objects.
 These properties are used when NVDA's simple review mode is turned on, which is the default.
 These simple properties may be easier to use, but the real navigation properties more closely reflect the underlying Operating System structure.
+Also, these may change in future versions of NVDA as improvements are made to simple review, so they should generally be avoided when programmatically locating specific objects.
 
 When developing plugins, most of the time, it is not important what toolkit or API backs an NVDA Object, as the plugin will usually only access standard properties such as name, role and value.
 However, as plugins become more advanced, it is certainly possible to delve deeper into NVDA Objects to find out toolkit or API specific information if required.
