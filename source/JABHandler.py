@@ -244,7 +244,7 @@ if bridgeDll:
 	_fixBridgeFunc(BOOL,'getCaretLocation',c_long,JOBJECT64,POINTER(AccessibleTextRectInfo),jint,errcheck=True)
 	_fixBridgeFunc(BOOL,'getAccessibleActions',c_long,JOBJECT64,POINTER(AccessibleActions),errcheck=True)
 	_fixBridgeFunc(BOOL,'doAccessibleActions',c_long,JOBJECT64,POINTER(AccessibleActionsToDo),POINTER(jint),errcheck=True)
-	_fixBridgeFunc(BOOL,'getAccessibleTableInfo',c_long,JOBJECT64,POINTER(AccessibleTableInfo),errcheck=True)
+	_fixBridgeFunc(BOOL,'getAccessibleTableInfo',c_long,JOBJECT64,POINTER(AccessibleTableInfo))
 	_fixBridgeFunc(BOOL,'getAccessibleTableCellInfo',c_long,AccessibleTable,jint,jint,POINTER(AccessibleTableCellInfo),errcheck=True)
 	_fixBridgeFunc(BOOL,'getAccessibleTableRowHeader',c_long,JOBJECT64,POINTER(AccessibleTableInfo))
 	_fixBridgeFunc(BOOL,'getAccessibleTableColumnHeader',c_long,JOBJECT64,POINTER(AccessibleTableInfo))
