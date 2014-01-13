@@ -419,14 +419,6 @@ class JAB(Window):
 	def _get_flowsFrom(self):
 		return self._getJABRelationFirstTarget("flowsFrom")
 
-	def event_stateChange(self):
-		try:
-			self._JABAccContextInfo=self.jabContext.getAccessibleContextInfo()
-		except RuntimeError:
-			log.debugWarning("Error getting accessible context info, probably dead object")
-			return
-		super(JAB,self).event_stateChange()
-
 	def reportFocus(self):
 		parent=self.parent
 		if self.role in [controlTypes.ROLE_LIST] and isinstance(parent,JAB) and parent.role==controlTypes.ROLE_COMBOBOX:
