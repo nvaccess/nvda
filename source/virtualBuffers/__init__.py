@@ -1162,11 +1162,12 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		if not self._hadFirstGainFocus or not focusInfo.isOverlapping(caretInfo):
 			# The virtual buffer caret is not within the focus node.
 			oldPassThrough=self.passThrough
-			if not oldPassThrough:
+			passThrough=self.shouldPassThrough(obj,reason=controlTypes.REASON_FOCUS)
+			if not oldPassThrough and (passThrough or sayAllHandler.isRunning()):
 				# If pass-through is disabled, cancel speech, as a focus change should cause page reading to stop.
 				# This must be done before auto-pass-through occurs, as we want to stop page reading even if pass-through will be automatically enabled by this focus change.
 				speech.cancelSpeech()
-			self.passThrough=self.shouldPassThrough(obj,reason=controlTypes.REASON_FOCUS)
+			self.passThrough=passThrough
 			if not self.passThrough:
 				# We read the info from the buffer instead of the control itself.
 				speech.speakTextInfo(focusInfo,reason=controlTypes.REASON_FOCUS)
