@@ -20,7 +20,7 @@ class AppModule(appModuleHandler.AppModule):
 		global nvdaMenuIaIdentity
 		if not isinstance(obj, IAccessible):
 			return False
-		if obj.IAccessibleIdentity == nvdaMenuIaIdentity:
+		if nvdaMenuIaIdentity and obj.IAccessibleIdentity == nvdaMenuIaIdentity:
 			return True
 		if nvdaMenuIaIdentity is not True:
 			return False
