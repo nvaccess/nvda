@@ -23,6 +23,38 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
+IAccessible2* findAriaAtomic(IAccessible2* pacc2,map<wstring,wstring>& attribsMap) {
+	map<wstring,wstring>::iterator i=attribsMap.find(L"atomic");
+	bool atomic=(i!=attribsMap.end()&&i->second.compare(L"true")==0);
+	IAccessible2* pacc2Atomic=NULL;
+	if(atomic) {
+		pacc2Atomic=pacc2;
+		pacc2Atomic->AddRef();
+	} else {
+		i=attribsMap.find(L"container-atomic");
+		if(i!=attribsMap.end()&&i->second.compare(L"true")==0) {
+			IDispatch* pdispParent=NULL;
+			pacc2->get_accParent(&pdispParent);
+			if(pdispParent) {
+				IAccessible2* pacc2Parent=NULL;
+				if(pdispParent->QueryInterface(IID_IAccessible2,(void**)&pacc2Parent)==S_OK&&pacc2Parent) {
+					BSTR parentAttribs=NULL;
+					pacc2Parent->get_attributes(&parentAttribs);
+					if(parentAttribs) {
+						map<wstring,wstring> parentAttribsMap;
+						IA2AttribsToMap(parentAttribs,parentAttribsMap);
+						SysFreeString(parentAttribs);
+						pacc2Atomic=findAriaAtomic(pacc2Parent,parentAttribsMap);
+					}
+					pacc2Parent->Release();
+				}
+				pdispParent->Release();
+			}
+		}
+	}
+	return pacc2Atomic;
+}
+
 void getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewText=false, bool recurse=true) {
 	IAccessibleText* paccText=NULL;
 	if(pacc2->QueryInterface(IID_IAccessibleText,(void**)&paccText)!=S_OK||!paccText) {
@@ -147,6 +179,8 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	IA2AttribsToMap(attribs,attribsMap);
 	SysFreeString(attribs);
 	map<wstring,wstring>::iterator i;
+	i=attribsMap.find(L"live");
+	bool isRegionRoot=(i!=attribsMap.end());
 	i=attribsMap.find(L"container-live");
 	bool live=(i!=attribsMap.end()&&(i->second.compare(L"polite")==0||i->second.compare(L"assertive")==0||i->second.compare(L"rude")==0));
 	if(!live) {
@@ -156,32 +190,45 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	i=attribsMap.find(L"container-relevant");
 	bool allowAdditions=false;
 	bool allowText=false;
-	//If relevant is not specify we will default to additions and text, if all is specified then we also use additions and text
+	//If relevant is not specifyed we will default to additions and text, if all is specified then we also use additions and text
 	if(i==attribsMap.end()||i->second.compare(L"all")==0) {
 		allowText=allowAdditions=true;
 	} else { //we support additions if its specified, we support text if its specified
 		allowText=(i->second.find(L"text",0)!=wstring::npos);
 		allowAdditions=(i->second.find(L"additions",0)!=wstring::npos);
 	} 
-	//If additions and text are specified, and this is a show event, turn off allowText if this IAccessible's parent doesn't support accessibleText.
-	//This is necessary so that we still announce additions via the show event, rather than waiting for the textInserted event which will never arrive.
-	if(allowText&&allowAdditions&&eventID==EVENT_OBJECT_SHOW) {
+	//Only handle show events if additions are allowed
+	if(eventID==EVENT_OBJECT_SHOW&&!allowAdditions) {
+		pacc2->Release();
+		return;
+	}
+	// If this is a show event and this is not the root of the region and there is a text parent, 
+	// We can ignore this event as there will be text events which can handle this better
+	if(eventID==EVENT_OBJECT_SHOW&&!isRegionRoot) {
+	bool ignoreShowEvent=false;
 		IDispatch* pdispParent=NULL;
 		pacc2->get_accParent(&pdispParent);
 		if(pdispParent) {
 			IAccessibleText* paccTextParent=NULL;
-			if(pdispParent->QueryInterface(IID_IAccessibleText,(void**)&paccTextParent)!=S_OK) {
-				allowText=false;
-			} else {
+			if(pdispParent->QueryInterface(IID_IAccessibleText,(void**)&paccTextParent)==S_OK&&paccTextParent) {
+				ignoreShowEvent=true;
 				paccTextParent->Release();
 			}
 			pdispParent->Release();
 		}
+		if(ignoreShowEvent) {
+			pacc2->Release();
+			return;
+		}
 	}
 	wstring textBuf;
-	if(!allowText&&allowAdditions&&eventID==EVENT_OBJECT_SHOW) {
+	IAccessible2* pacc2Atomic=findAriaAtomic(pacc2,attribsMap);
+	if(pacc2Atomic) {
+		getTextFromIAccessible(textBuf,pacc2Atomic,false,true);
+		pacc2Atomic->Release();
+	} else if(eventID==EVENT_OBJECT_SHOW) {
 		getTextFromIAccessible(textBuf,pacc2,false,true);
-	} else if(allowText&&(eventID==IA2_EVENT_TEXT_INSERTED||eventID==IA2_EVENT_TEXT_UPDATED)) {
+	} else if(eventID==IA2_EVENT_TEXT_INSERTED||eventID==IA2_EVENT_TEXT_UPDATED) {
 		getTextFromIAccessible(textBuf,pacc2,true,allowAdditions);
 	}
 	if(!textBuf.empty()) nvdaController_speakText(textBuf.c_str());
