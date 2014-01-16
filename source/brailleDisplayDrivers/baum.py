@@ -63,16 +63,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def check(cls):
 		return (bdDetect.arePossibleDevicesForDriver(cls.name)
-			or bool(cls.getManualPorts()))
+			or next(cls.getManualPorts(), None) is not None)
 
 	@classmethod
 	def getManualPorts(cls):
 		return braille.getSerialPorts()
 
 	@classmethod
-	def _getUsbPorts(cls, usbIds=None):
-		if not usbIds:
-			usbIds = bdDetect.getConnectedUsbDevicesForDriver(cls.name)
+	def _getUsbPorts(cls, usbId):
 		try:
 			rootKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Enum\FTDIBUS")
 		except WindowsError:
@@ -83,8 +81,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					keyName = _winreg.EnumKey(rootKey, index)
 				except WindowsError:
 					break
-				usbId = "&".join(keyName.split("+", 2)[:2])
-				if usbId not in usbIds:
+				testUsbId = "&".join(keyName.split("+", 2)[:2])
+				if testUsbId != usbId:
 					continue
 				try:
 					with _winreg.OpenKey(rootKey, os.path.join(keyName, "0000", "Device Parameters")) as paramsKey:
@@ -98,7 +96,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._deviceID = None
 
 		if isinstance(port, bdDetect.UsbDeviceMatch):
-			tryPorts = ((p, "USB") for p in self._getUsbPorts(usbIds=(port.id,)))
+			tryPorts = ((p, "USB") for p in self._getUsbPorts(port.id))
 		elif isinstance(port, bdDetect.BluetoothComPortMatch):
 			tryPorts = ((port.port, "Bluetooth"),)
 		else:
