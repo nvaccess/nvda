@@ -121,7 +121,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 """
 	log.debug("Core starting")
 
-	ctypes.windll.user32.SetProcessDPIAware()
+	try:
+		# Windows >= Vista
+		ctypes.windll.user32.SetProcessDPIAware()
+	except AttributeError:
+		pass
 
 	import config
 	if not globalVars.appArgs.configPath:
