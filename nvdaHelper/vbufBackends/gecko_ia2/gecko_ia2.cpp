@@ -427,6 +427,10 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	}
 	parentNode->isBlock=isBlockElement;
 
+	// force   isHidden to True if this has an ARIA role of presentation but its focusble -- Gecko does not hide this itself.
+	if((states&STATE_SYSTEM_FOCUSABLE)&&parentNode->matchAttributes(L"IAccessible2\\:\\:attribute_xml-roles:~wpresentation;")) {
+		parentNode->isHidden=true;
+	}
 	BSTR name=NULL;
 	if(pacc->get_accName(varChild,&name)!=S_OK)
 		name=NULL;
@@ -475,7 +479,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	bool isRoot = ID == this->rootID;
 	// Whether this node is interactive.
 	// Certain objects are never interactive, even if other checks are true.
-	bool isNeverInteractive = !isEditable && (isRoot || role == ROLE_SYSTEM_DOCUMENT || role == IA2_ROLE_INTERNAL_FRAME);
+	bool isNeverInteractive = parentNode->isHidden||(!isEditable && (isRoot || role == ROLE_SYSTEM_DOCUMENT || role == IA2_ROLE_INTERNAL_FRAME));
 	bool isInteractive = !isNeverInteractive && (isEditable || inLink || states & STATE_SYSTEM_FOCUSABLE || states & STATE_SYSTEM_UNAVAILABLE || role == ROLE_SYSTEM_APPLICATION || role == ROLE_SYSTEM_DIALOG || role == IA2_ROLE_EMBEDDED_OBJECT);
 	// We aren't finished calculating isInteractive yet; actions are handled below.
 	// Whether the name is the content of this node.
