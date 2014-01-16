@@ -232,6 +232,12 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 		pacc2->Release();
 		return;
 	}
+	i=attribsMap.find(L"container-busy");
+	bool busy=(i!=attribsMap.end()&&i->second.compare(L"true")==0);
+	if(busy) {
+		pacc2->Release();
+		return;
+	}
 	i=attribsMap.find(L"container-relevant");
 	bool allowAdditions=false;
 	bool allowText=false;
