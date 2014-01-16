@@ -415,11 +415,11 @@ def getAncestor(hwnd,flags):
 	return user32.GetAncestor(hwnd,flags)
 
 def setCursorPos(x,y):
-	user32.SetCursorPos(x,y)
+	user32.SetPhysicalCursorPos(x,y)
 
 def getCursorPos():
 	point=POINT()
-	user32.GetCursorPos(byref(point))
+	user32.GetPhysicalCursorPos(byref(point))
 	return [point.x,point.y]
 
 def getCaretPos():
