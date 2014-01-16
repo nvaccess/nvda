@@ -248,14 +248,14 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 		allowText=(i->second.find(L"text",0)!=wstring::npos);
 		allowAdditions=(i->second.find(L"additions",0)!=wstring::npos);
 	} 
-	//Only handle show events if additions are allowed
-	if(eventID==EVENT_OBJECT_SHOW&&!allowAdditions) {
+	//Only handle show events if additions are allowed and this is not the root of a region.
+	if(eventID==EVENT_OBJECT_SHOW&&(!allowAdditions||isRegionRoot)) {
 		pacc2->Release();
 		return;
 	}
 	// If this is a show event and this is not the root of the region and there is a text parent, 
 	// We can ignore this event as there will be text events which can handle this better
-	if(eventID==EVENT_OBJECT_SHOW&&!isRegionRoot) {
+	if(eventID==EVENT_OBJECT_SHOW) {
 	bool ignoreShowEvent=false;
 		IDispatch* pdispParent=NULL;
 		pacc2->get_accParent(&pdispParent);
