@@ -151,13 +151,6 @@ class VBufStorage_fieldNode_t {
 	VBufStorage_fieldNode_t* nextNodeInTree(int direction, VBufStorage_fieldNode_t* limitNode, int *relativeStartOffset);
 
 /**
- * work out if the attributes in the given string exist on this node.
- * @param attribsString the string containing the attributes, each attribute can have multiple values to match on.
-  * @return true if the attributes exist, false otherwize.
- */
-	bool matchAttributes(const std::wstring& attribsString);
-
-/**
  * Calculates the offset for this node relative to the surrounding tree. 
  * @return the offset of the node.
  */
@@ -225,6 +218,13 @@ class VBufStorage_fieldNode_t {
  * true if this field should cause a line break at its start and end when a buffer is calculating lines.
  */
 	bool isBlock;
+
+	/**
+ * work out if the attributes in the given string exist on this node.
+ * @param attribsString the string containing the attributes, each attribute can have multiple values to match on.
+  * @return true if the attributes exist, false otherwize.
+ */
+	bool matchAttributes(const std::wstring& attribsString);
 
 	/**
 	* True if this node his hidden - searches will not locate this node.
