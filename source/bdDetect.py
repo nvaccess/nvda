@@ -291,6 +291,14 @@ addBluetoothComPorts("baum", lambda m: any(m.name.startswith(prefix) for prefix 
 	"VarioConnect",
 	"BrailleConnect",
 )))
+# brailleNote
+addUsbDevices("brailleNote", {
+	"VID_1C71&PID_C004", # Apex
+})
+addBluetoothComPorts("brailleNote", lambda m:
+	any(first <= m.address <= last for first, last in (
+		(0x0025EC000000, 0x0025EC01869F), # Apex
+	)) or m.name.startswith("Braillenote"))
 # brailliantB
 addUsbDevices("brailliantB", {"VID_1C71&PID_C005"})
 addBluetoothComPorts("brailliantB", lambda m:
