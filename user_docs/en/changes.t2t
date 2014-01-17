@@ -39,6 +39,7 @@
 - In Internet Explorer and other MSHTML controls, containers such as tables marked as presentation by ARIA are no longer reported to the user. (#3713)
 - in Microsoft Word, NVDA no longer inappropriately repeats table row and column information for a cell multiple times. (#3702)
 - In languages which use a space as a digit group/thousands separator such as French and German, numbers from separate chunks of text are no longer pronounced as a single number. This was particularly problematic for table cells containing numbers. (#3698)
+- Braille no longer sometimes fails to update when the system caret is moved in Microsoft Word 2013. (#3784)
 
 
 == Changes for Developers ==
