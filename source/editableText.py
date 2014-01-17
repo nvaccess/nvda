@@ -84,6 +84,7 @@ class EditableText(ScriptableObject):
 		if speakUnit and not willSayAllResume(gesture):
 			info.expand(speakUnit)
 			speech.speakTextInfo(info, unit=speakUnit, reason=controlTypes.REASON_CARET)
+		braille.handler.handleCaretMove(self)
 
 	def _caretMovementScriptHelper(self, gesture, unit):
 		try:
