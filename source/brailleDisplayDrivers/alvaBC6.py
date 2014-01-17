@@ -120,7 +120,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def display(self, cells):
 		cells="".join([chr(x) for x in cells])
-		AlvaLib.AlvaSendBraille(self._devNum, cells, 0, len(cells))
+		res = AlvaLib.AlvaSendBraille(self._devNum, cells, 0, len(cells))
+		if res != 0:
+			raise RuntimeError("Error sending braille: %d" % res)
 
 	def _keyCallback(self, dev, key, userData):
 		group = (key >> 8) & 0x7F
