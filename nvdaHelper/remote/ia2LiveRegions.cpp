@@ -124,8 +124,8 @@ bool getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewTe
 						gotText=true;
 					}
 				}
-				if(paccHypertext) paccHypertext->Release();
 			}
+			if(paccHypertext) paccHypertext->Release();
 			SysFreeString(bstrText);
 			textBuf.append(1,L' ');
 		}
