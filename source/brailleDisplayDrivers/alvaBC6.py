@@ -2,8 +2,10 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2013 Optelec B.V., NV Access Limited
+#Copyright (C) 2009-2014 Optelec B.V., NV Access Limited
 
+import _winreg
+import itertools
 import braille
 import queueHandler
 from logHandler import log
@@ -40,6 +42,28 @@ try:
 except:
 	AlvaLib=None
 
+def _getUsbPaths(usbId):
+	try:
+		rootKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Enum\HID")
+	except WindowsError:
+		return
+	with rootKey:
+		for index in itertools.count():
+			try:
+				devKeyName = _winreg.EnumKey(rootKey, index)
+			except WindowsError:
+				break
+			if not devKeyName.startswith(usbId):
+				continue
+			with _winreg.OpenKey(rootKey, devKeyName) as devKey:
+				for index in itertools.count():
+					try:
+						instKeyName = _winreg.EnumKey(devKey, index)
+					except WindowsError:
+						break
+					yield str(r"\\?\hid#%s#%s#{4d1e55b2-f16f-11cf-88cb-001111000030}" % (
+						devKeyName, instKeyName))
+
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "alvaBC6"
 	# Translators: The name of a braille display.
@@ -51,30 +75,43 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def __init__(self, port=None):
 		super(BrailleDisplayDriver,self).__init__()
-		log.debug("ALVA BC6xx Braille init")
-		_AlvaNumDevices=c_int(0)
-		AlvaLib.AlvaScanDevices(byref(_AlvaNumDevices))
-		if _AlvaNumDevices.value==0:
+		AlvaLib.AlvaInit()
+		devNum = c_int()
+		found = False
+		if isinstance(port, bdDetect.UsbDeviceMatch):
+			for path in _getUsbPaths(port.id):
+				found = AlvaLib.AlvaOpenKnown(1, path, byref(devNum)) == 0
+				if found:
+					break
+		elif isinstance(port, bdDetect.BluetoothComPortMatch):
+			found = AlvaLib.AlvaOpenKnown(2, port.port.encode("mbcs"), byref(devNum)) == 0
+		if not found:
 			raise RuntimeError("No ALVA display found")
-		log.debug("%d devices found" %_AlvaNumDevices.value)
-		AlvaLib.AlvaOpen(0)
+		self._devNum = devNum.value
 		self._alva_NumCells = 0
 		self._keysDown = set()
 		self._ignoreKeyReleases = False
 		self._keyCallbackInst = ALVA_PKEYCALLBACK(self._keyCallback)
-		AlvaLib.AlvaSetKeyCallback(0, self._keyCallbackInst, None)
+		AlvaLib.AlvaSetKeyCallback(devNum, self._keyCallbackInst, None)
 
 	def terminate(self):
+		global AlvaLib
 		super(BrailleDisplayDriver, self).terminate()
-		AlvaLib.AlvaClose(1)
+		AlvaLib.AlvaClose(self._devNum)
 		# Drop the ctypes function instance for the key callback,
 		# as it is holding a reference to an instance method, which causes a reference cycle.
 		self._keyCallbackInst = None
+		# HACK: If we connected to Bluetooth first,
+		# AlvaOpenKnown subsequently always opens Bluetooth even if we ask for USB.
+		# Therefore, completely unload and reload the ALVA library.
+		windll.kernel32.FreeLibrary(AlvaLib._handle)
+		delattr(windll, AlvaLib._name)
+		AlvaLib = windll[AlvaLib._name]
 
 	def _get_numCells(self):
 		if self._alva_NumCells==0:
 			NumCells = c_int(0)
-			AlvaLib.AlvaGetCells(0, byref(NumCells))
+			AlvaLib.AlvaGetCells(self._devNum, byref(NumCells))
 			if NumCells.value==0:
 				raise RuntimeError("Cannot obtain number of cells")
 			self._alva_NumCells = NumCells.value
@@ -83,7 +120,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def display(self, cells):
 		cells="".join([chr(x) for x in cells])
-		AlvaLib.AlvaSendBraille(0, cells, 0, len(cells))
+		AlvaLib.AlvaSendBraille(self._devNum, cells, 0, len(cells))
 
 	def _keyCallback(self, dev, key, userData):
 		group = (key >> 8) & 0x7F
