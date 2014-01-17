@@ -1264,6 +1264,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.handleGainFocus(api.getFocusObject())
 
 	def _getAutoPort(self, driver, port):
+		if not port:
+			port = BrailleDisplayDriver.AUTOMATIC_PORT[0]
 		iters = []
 		if port in (USB_PORT, BrailleDisplayDriver.AUTOMATIC_PORT[0]):
 			iters.append(bdDetect.getConnectedUsbDevicesForDriver(driver))
