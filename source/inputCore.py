@@ -408,7 +408,12 @@ class InputManager(baseObject.AutoPropertyObject):
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.pauseSpeech, speechEffect == gesture.SPEECHEFFECT_PAUSE)
 
 		if log.isEnabledFor(log.IO) and not gesture.isModifier:
-			log.io("Input: %s" % gesture.logIdentifier)
+			# #2003: Don't log directly, as flushing to disk might take some time
+			# and this might be run from a hook which must return fast.
+			# For instance, Windows will kill a keyboard hook if it takes too long.
+			queueHandler.queueFunction(queueHandler.eventQueue,
+				log.io, "Input: %s" % gesture.logIdentifier,
+				codepath="inputCore.InputManager.executeGesture")
 
 		if self._captureFunc:
 			try:
