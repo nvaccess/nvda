@@ -139,8 +139,22 @@ if not mutex or ctypes.windll.kernel32.GetLastError()==ERROR_ALREADY_EXISTS:
 	if mutex: ctypes.windll.kernel32.CloseHandle(mutex)
 	sys.exit(1)
 
+isSecureDesktop = desktopName == "Winlogon"
+if isSecureDesktop:
+	import _winreg
+	try:
+		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, ur"SOFTWARE\NVDA")
+		if not _winreg.QueryValueEx(k, u"serviceDebug")[0]:
+			globalVars.appArgs.secure = True
+	except WindowsError:
+		globalVars.appArgs.secure = True
+	globalVars.appArgs.changeScreenReaderFlag = False
+	globalVars.appArgs.minimal = True
+	globalVars.appArgs.configPath = os.path.join(sys.prefix, "systemConfig")
+
 #os.environ['PYCHECKER']="--limit 10000 -q --changetypes"
 #import pychecker.checker
+
 #Initial logging and logging code
 
 logLevel=globalVars.appArgs.logLevel
