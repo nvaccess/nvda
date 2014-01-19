@@ -174,6 +174,9 @@ except AttributeError:
 	pass
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
+if not isSecureDesktop:
+	import easeOfAccess
+	easeOfAccess.notify(3)
 try:
 	import core
 	core.main()
@@ -181,6 +184,8 @@ except:
 	log.critical("core failure",exc_info=True)
 	sys.exit(1)
 finally:
+	if not isSecureDesktop:
+		easeOfAccess.notify(2)
 	if globalVars.appArgs.changeScreenReaderFlag:
 		winUser.setSystemScreenReaderFlag(False)
 	ctypes.windll.kernel32.CloseHandle(mutex)
