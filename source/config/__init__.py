@@ -288,7 +288,8 @@ def initConfigPath(configPath=None):
 RUN_REGKEY = ur"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 
 def getStartAfterLogon():
-	if easeOfAccess.isSupported and easeOfAccess.willAutoStart(_winreg.HKEY_CURRENT_USER):
+	if (easeOfAccess.isSupported and easeOfAccess.canConfigTerminateOnDesktopSwitch
+			and easeOfAccess.willAutoStart(_winreg.HKEY_CURRENT_USER)):
 		return True
 	try:
 		k = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, RUN_REGKEY)
@@ -300,7 +301,7 @@ def getStartAfterLogon():
 def setStartAfterLogon(enable):
 	if getStartAfterLogon() == enable:
 		return
-	if easeOfAccess.isSupported and isInstalledCopy():
+	if easeOfAccess.isSupported and easeOfAccess.canConfigTerminateOnDesktopSwitch:
 		easeOfAccess.setAutoStart(_winreg.HKEY_CURRENT_USER, enable)
 		if enable:
 			return

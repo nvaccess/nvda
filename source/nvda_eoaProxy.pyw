@@ -7,7 +7,6 @@
 """NVDA proxy process for Ease of Access in Windows Vista/7.
 This version of Ease of Access terminates ATs on every desktop switch,
 but this is bad for NVDA, as state is lost and cleanup isn't performed.
-If NVDA is started from EoA (i.e. NVDA itself isn't already running), this process runs NVDA.
 This process runs while NVDA is running so EoA knows NVDA is running.
 However, when EoA kills this process, it doesn't affect NVDA.
 """
@@ -34,19 +33,9 @@ def isSecureDesktop():
 	ctypes.windll.user32.CloseDesktop(desktop)
 	return name.value == "Winlogon"
 
-CREATE_BREAKAWAY_FROM_JOB = 0x01000000
-def startNvda():
-	import subprocess
-	if isSecureDesktop():
-		subprocess.Popen((os.path.join(sys.prefix, "nvda.exe"),))
-	else:
-		# CreateProcess can't start uiAccess apps when running as a standard user.
-		# Unfortunately, ShellExecute doesn't provide a way to break away from the job.
-		# Therefore, run slave broken away from the job and have it ShellExecute.
-		subprocess.Popen((os.path.join(sys.prefix, "nvda_slave.exe"), "launchNVDA"),
-			creationflags=CREATE_BREAKAWAY_FROM_JOB)
+def waitForNvdaStart():
 	# Wait up to 10 seconds for NVDA to start.
-	for attempt in xrange(10):
+	for attempt in xrange(11):
 		process = getNvdaProcess()
 		if process:
 			return process
@@ -57,9 +46,12 @@ def startNvda():
 def main():
 	process = getNvdaProcess()
 	if not process:
-		process = startNvda()
-		if not process:
-			return
+		if isSecureDesktop():
+			import subprocess
+			subprocess.Popen((os.path.join(sys.prefix, "nvda.exe"),))
+		process = waitForNvdaStart()
+	if not process:
+		return
 	# Wait for NVDA to exit.
 	winKernel.waitForSingleObject(process, winKernel.INFINITE)
 	winKernel.closeHandle(process)
