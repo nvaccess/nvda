@@ -153,7 +153,7 @@ setup(
 			"script": "nvda_slave.pyw",
 			"icon_resources": [(1,"images/nvda.ico")],
 			"version": "0.0.0.0",
-			"description": versionInfo.name,
+			"description": name,
 			"product_version": version,
 			"copyright": copyright,
 			"company_name": publisher,
