@@ -16,6 +16,7 @@ from validate import Validator
 from logHandler import log
 import shlobj
 import baseObject
+import easeOfAccess
 
 def validateConfig(configObj,validator,validationResult=None,keyList=None):
 	"""
@@ -287,6 +288,8 @@ def initConfigPath(configPath=None):
 RUN_REGKEY = ur"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 
 def getStartAfterLogon():
+	if easeOfAccess.isSupported and easeOfAccess.willAutoStart(_winreg.HKEY_CURRENT_USER):
+		return True
 	try:
 		k = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, RUN_REGKEY)
 		val = _winreg.QueryValueEx(k, u"nvda")[0]
@@ -297,11 +300,23 @@ def getStartAfterLogon():
 def setStartAfterLogon(enable):
 	if getStartAfterLogon() == enable:
 		return
+	if easeOfAccess.isSupported and isInstalledCopy():
+		easeOfAccess.setAutoStart(_winreg.HKEY_CURRENT_USER, enable)
+		if enable:
+			return
+		# We're disabling, so ensure the run key is cleared,
+		# as it might have been set by an old version.
+		run = False
+	else:
+		run = enable
 	k = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, RUN_REGKEY, 0, _winreg.KEY_WRITE)
-	if enable:
+	if run:
 		_winreg.SetValueEx(k, u"nvda", None, _winreg.REG_SZ, sys.argv[0])
 	else:
-		_winreg.DeleteValue(k, u"nvda")
+		try:
+			_winreg.DeleteValue(k, u"nvda")
+		except WindowsError:
+			pass
 
 SERVICE_FILENAME = u"nvda_service.exe"
 
@@ -346,6 +361,8 @@ SLAVE_FILENAME = u"nvda_slave.exe"
 NVDA_REGKEY = ur"SOFTWARE\NVDA"
 
 def getStartOnLogonScreen():
+	if easeOfAccess.isSupported and easeOfAccess.willAutoStart(_winreg.HKEY_LOCAL_MACHINE):
+		return True
 	try:
 		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
 		return bool(_winreg.QueryValueEx(k, u"startOnLogonScreen")[0])
@@ -353,8 +370,13 @@ def getStartOnLogonScreen():
 		return False
 
 def _setStartOnLogonScreen(enable):
-	k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY, 0, _winreg.KEY_WRITE)
-	_winreg.SetValueEx(k, u"startOnLogonScreen", None, _winreg.REG_DWORD, int(enable))
+	if easeOfAccess.isSupported:
+		# The installer will have migrated service config to EoA if appropriate,
+		# so we only need to deal with EoA here.
+		easeOfAccess.setAutoStart(_winreg.HKEY_LOCAL_MACHINE, enable)
+	else:
+		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY, 0, _winreg.KEY_WRITE)
+		_winreg.SetValueEx(k, u"startOnLogonScreen", None, _winreg.REG_DWORD, int(enable))
 
 def setSystemConfigToCurrentConfig():
 	fromPath=os.path.abspath(globalVars.appArgs.configPath)

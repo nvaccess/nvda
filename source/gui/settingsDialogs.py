@@ -31,6 +31,7 @@ try:
 except RuntimeError:
 	updateCheck = None
 import inputCore
+import easeOfAccess
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -179,7 +180,8 @@ class GeneralSettingsDialog(SettingsDialog):
 		# Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 		self.startOnLogonScreenCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("Use NVDA on the Windows logon screen (requires administrator privileges)"))
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
-		if globalVars.appArgs.secure or not config.isServiceInstalled():
+		if (globalVars.appArgs.secure or
+				not (easeOfAccess.isSupported or config.isServiceInstalled())):
 			self.startOnLogonScreenCheckBox.Disable()
 		settingsSizer.Add(self.startOnLogonScreenCheckBox)
 		# Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
