@@ -25,7 +25,7 @@ import globalVars
 from logHandler import log
 import addonHandler
 
-pump = None
+_pump = None
 
 def doStartupDialogs():
 	import config
@@ -283,11 +283,12 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	queueHandler.queueFunction(queueHandler.eventQueue, _setInitialFocus)
 	import watchdog
 	import baseObject
+
+	# Doing this here is a bit ugly, but we don't want these modules imported
+	# at module level, including wx.
+	log.debug("Initializing core pump")
 	class CorePump(wx.Timer):
 		"Checks the queues and executes functions."
-		def __init__(self,*args,**kwargs):
-			log.debug("Core pump starting")
-			super(CorePump,self).__init__(*args,**kwargs)
 		def Notify(self):
 			watchdog.alive()
 			try:
@@ -302,10 +303,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				log.exception("errors in this core pump cycle")
 			baseObject.AutoPropertyObject.invalidateCaches()
 			watchdog.asleep()
-	log.debug("starting core pump")
-	global pump
-	pump = CorePump()
+	global _pump
+	_pump = CorePump()
 	requestPump()
+
 	log.debug("Initializing watchdog")
 	watchdog.initialize()
 	try:
@@ -380,6 +381,6 @@ def requestPump():
 	It is delayed slightly so that queues can implement rate limiting,
 	filter extraneous events, etc.
 	"""
-	if not pump or pump.IsRunning():
+	if not _pump or _pump.IsRunning():
 		return
-	pump.Start(10, True)
+	_pump.Start(10, True)
