@@ -9,6 +9,7 @@ from Queue import Queue
 import globalVars
 from logHandler import log
 import watchdog
+import core
 
 eventQueue=Queue()
 eventQueue.__name__="eventQueue"
@@ -33,6 +34,7 @@ def cancelGeneratorObject(generatorObjID):
 
 def queueFunction(queue,func,*args,**kwargs):
 	queue.put_nowait((func,args,kwargs))
+	core.requestPump()
 
 def isRunningGenerators():
 	res=len(generators)>0

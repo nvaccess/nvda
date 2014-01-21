@@ -25,6 +25,8 @@ import globalVars
 from logHandler import log
 import addonHandler
 
+pump = None
+
 def doStartupDialogs():
 	import config
 	import gui
@@ -116,7 +118,7 @@ def _setInitialFocus():
 
 def main():
 	"""NVDA's core main loop.
-This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and installs the core pump timer, which checks the queues and executes functions every 1 ms. Finally, it starts the wx main loop.
+This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and sets up the core pump, which checks the queues and executes functions when requested. Finally, it starts the wx main loop.
 """
 	log.debug("Core starting")
 	import config
@@ -298,8 +300,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			baseObject.AutoPropertyObject.invalidateCaches()
 			watchdog.alive()
 	log.debug("starting core pump")
+	global pump
 	pump = CorePump()
-	pump.Start(1)
+	requestPump()
 	log.debug("Initializing watchdog")
 	watchdog.initialize()
 	try:
@@ -368,3 +371,12 @@ def _terminate(module, name=None):
 	except:
 		log.exception("Error terminating %s" % name)
 
+def requestPump():
+	"""Request a core pump.
+	This will perform any queued activity.
+	It is delayed slightly so that queues can implement rate limiting,
+	filter extraneous events, etc.
+	"""
+	if not pump or pump.IsRunning():
+		return
+	pump.Start(1, True)
