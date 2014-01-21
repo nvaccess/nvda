@@ -380,4 +380,4 @@ def requestPump():
 	"""
 	if not pump or pump.IsRunning():
 		return
-	pump.Start(1, True)
+	pump.Start(10, True)
