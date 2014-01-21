@@ -404,11 +404,11 @@ def registerEaseOfAccess(installDir):
 			versionInfo.name)
 		_winreg.SetValueEx(appKey, "Description", None, _winreg.REG_SZ,
 			versionInfo.longName)
-		_winreg.SetValueEx(appKey, "Profile", None, _winreg.REG_SZ,
-			'<HCIModel><Accommodation type="severe vision"/></HCIModel>')
-		_winreg.SetValueEx(appKey, "SimpleProfile", None, _winreg.REG_SZ,
-			"screenreader")
 		if easeOfAccess.canConfigTerminateOnDesktopSwitch:
+			_winreg.SetValueEx(appKey, "Profile", None, _winreg.REG_SZ,
+				'<HCIModel><Accommodation type="severe vision"/></HCIModel>')
+			_winreg.SetValueEx(appKey, "SimpleProfile", None, _winreg.REG_SZ,
+				"screenreader")
 			_winreg.SetValueEx(appKey, "ATExe", None, _winreg.REG_SZ,
 				"nvda.exe")
 			_winreg.SetValueEx(appKey, "StartExe", None, _winreg.REG_SZ,
@@ -416,6 +416,10 @@ def registerEaseOfAccess(installDir):
 			_winreg.SetValueEx(appKey, "TerminateOnDesktopSwitch", None,
 				_winreg.REG_DWORD, 0)
 		else:
+			# We don't want NVDA to appear in EoA because
+			# starting NVDA from there won't work in this case.
+			# We can do this by not setting Profile and SimpleProfile.
+			# NVDA can still change the EoA logon settings.
 			_winreg.SetValueEx(appKey, "ATExe", None, _winreg.REG_SZ,
 				"nvda_eoaProxy.exe")
 			_winreg.SetValueEx(appKey, "StartExe", None, _winreg.REG_SZ,
