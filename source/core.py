@@ -291,6 +291,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		def Notify(self):
 			watchdog.alive()
 			try:
+				if touchHandler.handler:
+					touchHandler.handler.pump()
 				JABHandler.pumpAll()
 				IAccessibleHandler.pumpAll()
 				queueHandler.pumpAll()
