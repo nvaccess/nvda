@@ -23,6 +23,7 @@ def registerGeneratorObject(generatorObj):
 	lastGeneratorObjID+=1
 	log.debug("Adding generator %d"%lastGeneratorObjID)
 	generators[lastGeneratorObjID]=generatorObj
+	core.requestPump()
 	return lastGeneratorObjID
 
 def cancelGeneratorObject(generatorObjID):
@@ -77,4 +78,6 @@ def pumpAll():
 			del generators[ID]
 		# Lose our reference so Python can destroy the generator if appropriate.
 		del gen
+	if generators:
+		core.requestPump()
 	flushQueue(eventQueue)
