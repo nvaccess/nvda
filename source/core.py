@@ -289,6 +289,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			log.debug("Core pump starting")
 			super(CorePump,self).__init__(*args,**kwargs)
 		def Notify(self):
+			watchdog.alive()
 			try:
 				JABHandler.pumpAll()
 				IAccessibleHandler.pumpAll()
@@ -298,7 +299,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			except:
 				log.exception("errors in this core pump cycle")
 			baseObject.AutoPropertyObject.invalidateCaches()
-			watchdog.alive()
+			watchdog.asleep()
 	log.debug("starting core pump")
 	global pump
 	pump = CorePump()
