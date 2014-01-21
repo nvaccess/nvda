@@ -210,7 +210,8 @@ def unregisterInstallation(keepDesktopShortcut=False):
 		pass
 	if easeOfAccess.isSupported:
 		try:
-			_winreg.DeleteKey(_winreg.HKEY_LOCAL_MACHINE, easeOfAccess.APP_KEY_PATH)
+			_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE, easeOfAccess.APP_KEY_PATH,
+				_winreg.KEY_WOW64_64KEY)
 			easeOfAccess.setAutoStart(_winreg.HKEY_LOCAL_MACHINE, False)
 		except WindowsError:
 			pass
