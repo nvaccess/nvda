@@ -104,6 +104,9 @@ class py2exe(build_exe.py2exe):
 			target["dest_base"] = "nvda_uiAccess"
 			target["uac_info"] = (target["uac_info"][0], True)
 			dist.windows.insert(1, target)
+			# nvda_eoaProxy should have uiAccess.
+			target = dist.windows[3]
+			target["uac_info"] = (target["uac_info"][0], True)
 
 		build_exe.py2exe.run(self)
 
@@ -166,6 +169,17 @@ setup(
 			"icon_resources": [(1,"images/nvda.ico")],
 			"version": "0.0.0.0",
 			"description": name,
+			"product_version": version,
+			"copyright": copyright,
+			"company_name": publisher,
+		},
+		{
+			"script": "nvda_eoaProxy.pyw",
+			# uiAccess will be enabled at runtime if appropriate.
+			"uac_info": ("asInvoker", False),
+			"icon_resources": [(1,"images/nvda.ico")],
+			"version": "0.0.0.0",
+			"description": "NVDA Ease of Access proxy",
 			"product_version": version,
 			"copyright": copyright,
 			"company_name": publisher,
