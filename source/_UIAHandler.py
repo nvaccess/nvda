@@ -139,10 +139,19 @@ class UIAHandler(COMObject):
 		windll.kernel32.CloseHandle(MTAThreadHandle)
 		del self.MTAThread
 
+	def setUIAProxies(self):
+		neededProxyIDs=set(['Microsoft: TreeView Proxy'])
+		mapping=self.clientObject.proxyFactoryMapping
+		for index in reversed(xrange(mapping.count)):
+			entry=mapping.getEntry(index)
+			if entry.proxyFactory.proxyFactoryID not in neededProxyIDs:
+				mapping.removeEntry(index)
+
 	def MTAThreadFunc(self):
 		try:
 			oledll.ole32.CoInitializeEx(None,comtypes.COINIT_MULTITHREADED) 
 			self.clientObject=CoCreateInstance(CUIAutomation._reg_clsid_,interface=IUIAutomation,clsctx=CLSCTX_INPROC_SERVER)
+			self.setUIAProxies()
 			self.windowTreeWalker=self.clientObject.createTreeWalker(self.clientObject.CreateNotCondition(self.clientObject.CreatePropertyCondition(UIA_NativeWindowHandlePropertyId,0)))
 			self.windowCacheRequest=self.clientObject.CreateCacheRequest()
 			self.windowCacheRequest.AddProperty(UIA_NativeWindowHandlePropertyId)
