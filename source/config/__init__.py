@@ -331,6 +331,9 @@ def isServiceInstalled():
 	except (WindowsError, OSError):
 		return False
 
+def canStartOnSecureScreens():
+	return isInstalledCopy() and (easeOfAccess.isSupported or isServiceInstalled())
+
 def execElevated(path, params=None, wait=False,handleAlreadyElevated=False):
 	import subprocess
 	import shellapi
