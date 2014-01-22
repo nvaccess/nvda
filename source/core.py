@@ -26,6 +26,8 @@ import globalVars
 from logHandler import log
 import addonHandler
 
+_pump = None
+
 def doStartupDialogs():
 	import config
 	import gui
@@ -117,7 +119,7 @@ def _setInitialFocus():
 
 def main():
 	"""NVDA's core main loop.
-This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and installs the core pump timer, which checks the queues and executes functions every 1 ms. Finally, it starts the wx main loop.
+This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and sets up the core pump, which checks the queues and executes functions when requested. Finally, it starts the wx main loop.
 """
 	log.debug("Core starting")
 
@@ -289,13 +291,17 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	queueHandler.queueFunction(queueHandler.eventQueue, _setInitialFocus)
 	import watchdog
 	import baseObject
+
+	# Doing this here is a bit ugly, but we don't want these modules imported
+	# at module level, including wx.
+	log.debug("Initializing core pump")
 	class CorePump(wx.Timer):
 		"Checks the queues and executes functions."
-		def __init__(self,*args,**kwargs):
-			log.debug("Core pump starting")
-			super(CorePump,self).__init__(*args,**kwargs)
 		def Notify(self):
+			watchdog.alive()
 			try:
+				if touchHandler.handler:
+					touchHandler.handler.pump()
 				JABHandler.pumpAll()
 				IAccessibleHandler.pumpAll()
 				queueHandler.pumpAll()
@@ -304,10 +310,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			except:
 				log.exception("errors in this core pump cycle")
 			baseObject.AutoPropertyObject.invalidateCaches()
-			watchdog.alive()
-	log.debug("starting core pump")
-	pump = CorePump()
-	pump.Start(1)
+			watchdog.asleep()
+	global _pump
+	_pump = CorePump()
+	requestPump()
+
 	log.debug("Initializing watchdog")
 	watchdog.initialize()
 	try:
@@ -376,3 +383,12 @@ def _terminate(module, name=None):
 	except:
 		log.exception("Error terminating %s" % name)
 
+def requestPump():
+	"""Request a core pump.
+	This will perform any queued activity.
+	It is delayed slightly so that queues can implement rate limiting,
+	filter extraneous events, etc.
+	"""
+	if not _pump or _pump.IsRunning():
+		return
+	_pump.Start(10, True)
