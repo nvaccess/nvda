@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
 #URL: http://www.nvda-project.org/
-#Copyright 2010 James Teh <jamie@jantrid.net>.
+#Copyright 2010-2014 NV Access Limited.
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -299,6 +299,8 @@ def makePot(target, source, env):
 			"--foreign-user",
 			"--add-comments=Translators:",
 			"--keyword=pgettext:1c,2",
+			# Needed because xgettext doesn't recognise the .pyw extension.
+			"--language=python",
 		] + [os.path.relpath(str(f), str(sourceDir)) for f in source]
 	]) != 0:
 		raise RuntimeError("xgettext failed")
@@ -341,7 +343,7 @@ env.Clean('devDocs', [devGuide, devDocs_nvda])
 pot = env.Command(outputDir.File("%s.pot" % outFilePrefix),
 	# Don't use sourceDir as the source, as this depends on comInterfaces and nvdaHelper.
 	# We only depend on the Python files.
-	[f for pattern in ("*.py", r"*\*.py", r"*\*\*.py") for f in env.Glob(os.path.join(sourceDir.path, pattern))],
+	[f for pattern in ("*.py", "*.pyw", r"*\*.py", r"*\*\*.py") for f in env.Glob(os.path.join(sourceDir.path, pattern))],
 	makePot)
 
 env.Alias("pot", pot)
