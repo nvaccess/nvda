@@ -140,7 +140,7 @@ class UIAHandler(COMObject):
 		del self.MTAThread
 
 	def setUIAProxies(self):
-		neededProxyIDs=set(['Microsoft: TreeView Proxy'])
+		neededProxyIDs={'Microsoft: TreeView Proxy'}
 		mapping=self.clientObject.proxyFactoryMapping
 		for index in reversed(xrange(mapping.count)):
 			entry=mapping.getEntry(index)
