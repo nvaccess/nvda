@@ -115,6 +115,55 @@ UIAEventIdsToNVDAEventNames={
 	#UIA_ToolTipClosedEventId:"hide",
 }
 
+class MsaaProxyFactory(COMObject):
+	"""Overrides the default MSAA proxy so it only handles windows for which NVDA uses UIA.
+	Generally, the MSAA proxy isn't needed, as NVDA uses MSAA directly,
+	so UIA proxying is redundant.
+	However, some native UIA implementations depend on the MSAA proxy.
+	"""
+	_com_interfaces_ = [IUIAutomationProxyFactoryEntry, IUIAutomationProxyFactory]
+
+	def __init__(self, baseEntry):
+		self.baseEntry = baseEntry
+		self.baseFactory = baseEntry.ProxyFactory
+		super(MsaaProxyFactory, self).__init__()
+		self.factory = self.QueryInterface(IUIAutomationProxyFactory)
+
+	# Forward most methods.
+	def IUIAutomationProxyFactoryEntry__get_AllowSubstringMatch(self):
+		return self.baseEntry.AllowSubstringMatch
+	def IUIAutomationProxyFactoryEntry__get_CanCheckBaseClass(self):
+		return self.baseEntry.CanCheckBaseClass
+	def IUIAutomationProxyFactoryEntry__get_ClassName(self):
+		return self.baseEntry.ClassName
+	def IUIAutomationProxyFactoryEntry__get_ImageName(self):
+		return self.baseEntry.ImageName
+	def IUIAutomationProxyFactoryEntry__get_NeedsAdviseEvents(self):
+		return self.baseEntry.NeedsAdviseEvents
+
+	def IUIAutomationProxyFactoryEntry_GetWinEventsForAutomationEvent(self, eventId, propertyId):
+		try:
+			return self.baseEntry.GetWinEventsForAutomationEvent(eventId, propertyId)
+		except IndexError:
+			# comtypes can't seem to handle a NULL safearray pointer.
+			return ()
+
+	def IUIAutomationProxyFactoryEntry__get_ProxyFactory(self):
+		return self.factory
+
+	def IUIAutomationProxyFactory__get_ProxyFActoryId(self):
+		return u"NVDA: MSAA Proxy"
+
+	def IUIAutomationProxyFactory_CreateProvider(self, hwnd, idObject, idChild):
+		from UIAHandler import handler
+		if not handler:
+			# Still initialising.
+			return None
+		if not handler.isUIAWindow(hwnd):
+			# NVDA won't use UIA for this window at all, so don't proxy for it.
+			return None
+		return self.baseFactory.CreateProvider(hwnd, idObject, idChild)
+
 class UIAHandler(COMObject):
 	_com_interfaces_=[IUIAutomationEventHandler,IUIAutomationFocusChangedEventHandler,IUIAutomationPropertyChangedEventHandler]
 
@@ -140,12 +189,20 @@ class UIAHandler(COMObject):
 		del self.MTAThread
 
 	def setUIAProxies(self):
-		neededProxyIDs=set(['Microsoft: TreeView Proxy'])
+		neededProxyIDs={'Microsoft: TreeView Proxy'}
 		mapping=self.clientObject.proxyFactoryMapping
+		msaaEntry = None
 		for index in reversed(xrange(mapping.count)):
 			entry=mapping.getEntry(index)
-			if entry.proxyFactory.proxyFactoryID not in neededProxyIDs:
+			pfId = entry.proxyFactory.proxyFactoryId
+			if pfId=="Microsoft: MSAA Proxy":
+				msaaEntry = entry
+			if pfId not in neededProxyIDs:
 				mapping.removeEntry(index)
+
+		if not msaaEntry:
+			return
+		mapping.InsertEntry(mapping.Count, MsaaProxyFactory(msaaEntry))
 
 	def MTAThreadFunc(self):
 		try:
