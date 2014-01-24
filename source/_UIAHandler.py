@@ -151,7 +151,7 @@ class MsaaProxyFactory(COMObject):
 	def IUIAutomationProxyFactoryEntry__get_ProxyFactory(self):
 		return self.factory
 
-	def IUIAutomationProxyFactory__get_ProxyFActoryId(self):
+	def IUIAutomationProxyFactory__get_ProxyFactoryId(self):
 		return u"NVDA: MSAA Proxy"
 
 	def IUIAutomationProxyFactory_CreateProvider(self, hwnd, idObject, idChild):
