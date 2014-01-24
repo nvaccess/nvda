@@ -26,7 +26,10 @@ import globalVars
 from logHandler import log
 import addonHandler
 
+PUMP_MAX_DELAY = 10
+
 _pump = None
+_isPumpPending = False
 
 def doStartupDialogs():
 	import config
@@ -298,6 +301,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	class CorePump(wx.Timer):
 		"Checks the queues and executes functions."
 		def Notify(self):
+			global _isPumpPending
+			_isPumpPending = False
 			watchdog.alive()
 			try:
 				if touchHandler.handler:
@@ -311,6 +316,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				log.exception("errors in this core pump cycle")
 			baseObject.AutoPropertyObject.invalidateCaches()
 			watchdog.asleep()
+			if _isPumpPending and not _pump.IsRunning():
+				# #3803: A pump was requested, but the timer was ignored by a modal loop
+				# because timers aren't re-entrant.
+				# Therefore, schedule another pump.
+				_pump.Start(PUMP_MAX_DELAY, True)
 	global _pump
 	_pump = CorePump()
 	requestPump()
@@ -389,6 +399,8 @@ def requestPump():
 	It is delayed slightly so that queues can implement rate limiting,
 	filter extraneous events, etc.
 	"""
-	if not _pump or _pump.IsRunning():
+	global _isPumpPending
+	if not _pump or _isPumpPending:
 		return
-	_pump.Start(10, True)
+	_isPumpPending = True
+	_pump.Start(PUMP_MAX_DELAY, True)
