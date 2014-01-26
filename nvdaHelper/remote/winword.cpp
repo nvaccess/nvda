@@ -279,7 +279,7 @@ BOOL generateFormFieldXML(IDispatch* pDispatchRange, wostringstream& XMLStream, 
 	return foundFormField;
 }
 
-int generateHeadingXML(IDispatch* pDispatchRange, wostringstream& XMLStream) {
+int generateHeadingXML(IDispatch* pDispatchRange, int startOffset, int endOffset, wostringstream& XMLStream) {
 	IDispatchPtr pDispatchParagraphs=NULL;
 	IDispatchPtr pDispatchParagraph=NULL;
 	int level=0;
@@ -292,7 +292,18 @@ int generateHeadingXML(IDispatch* pDispatchRange, wostringstream& XMLStream) {
 	if(_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_OUTLINELEVEL,VT_I4,&level)!=S_OK||level<=0||level>=7) {
 		return 0;
 	}
-	XMLStream<<L"<control role=\"heading\" level=\""<<level<<L"\">";
+	XMLStream<<L"<control role=\"heading\" level=\""<<level<<L"\" ";
+	IDispatchPtr pDispatchParagraphRange=NULL;
+	if(_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_RANGE,VT_DISPATCH,&pDispatchParagraphRange)==S_OK&&pDispatchParagraphRange) {
+		long iVal=0;
+		if(_com_dispatch_raw_propget(pDispatchParagraphRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal>=startOffset) {
+			XMLStream<<L"_startOfNode=\"1\" ";
+		}
+		if(_com_dispatch_raw_propget(pDispatchParagraphRange,wdDISPID_RANGE_END,VT_I4,&iVal)==S_OK&&iVal<=endOffset) {
+			XMLStream<<L"_endOfNode=\"1\" ";
+		}
+	}
+	XMLStream<<L">";
 	return 1;
 }
 
@@ -671,7 +682,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		neededClosingControlTagCount+=generateTableXML(pDispatchRange,args->startOffset,args->endOffset,XMLStream);
 	}
 	if(initialFormatConfig&formatConfig_reportHeadings) {
-		neededClosingControlTagCount+=generateHeadingXML(pDispatchRange,XMLStream);
+		neededClosingControlTagCount+=generateHeadingXML(pDispatchRange,args->startOffset,args->endOffset,XMLStream);
 	}
 	generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,initialFormatConfig,initialFormatAttribsStream);
 	bool firstLoop=true;
