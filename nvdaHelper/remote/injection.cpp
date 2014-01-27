@@ -141,11 +141,14 @@ BOOL WINAPI fake_OpenClipboard(HWND hwndOwner) {
 //Note that a mutex is used to make sure that there is never more than one copy of this thread in a given process at any given time.
 //I.e. Another copy of NVDA is started  while the first is still running.
 DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
+	HANDLE threadMutex=NULL;
 	//Create a label for the mutex with the processID encoded so that it only affects this process.
-	wostringstream mutexNameStream;
-	mutexNameStream<<L"NVDAHelperRemote_inprocMgrThread_"<<GetCurrentProcessId();
-	//Create/open the mutex and wait to gain access.
-	HANDLE threadMutex=CreateMutex(NULL,FALSE,mutexNameStream.str().c_str()); 
+	{
+		wostringstream mutexNameStream;
+		mutexNameStream<<L"NVDAHelperRemote_inprocMgrThread_"<<GetCurrentProcessId();
+		//Create/open the mutex and wait to gain access.
+		threadMutex=CreateMutex(NULL,FALSE,mutexNameStream.str().c_str()); 
+	}
 	if(!threadMutex) {
 		LOG_ERROR(L"CreateMutex failed, GetLastError returned "<<GetLastError());
 		return 0;

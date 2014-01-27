@@ -326,6 +326,7 @@ class GlyphTranslatorCache : protected LockableObject {
 		}
 		if(gt) gt->incRef();
 		release();
+		free(fh);
 		return gt;
 	}
 
