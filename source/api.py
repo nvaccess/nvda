@@ -110,7 +110,6 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	newAppModules=[o.appModule for o in ancestors if o and o.appModule]
 	#Remove the final new ancestor as this will be the new focus object
 	del ancestors[-1]
-	appModuleHandler.handleAppSwitch(oldAppModules,newAppModules)
 	try:
 		treeInterceptorHandler.cleanup()
 	except watchdog.CallCancelled:
@@ -119,13 +118,20 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	o=None
 	watchdog.alive()
 	for o in ancestors[focusDifferenceLevel:]+[obj]:
-		treeInterceptorObject=treeInterceptorHandler.update(o)
+		try:
+			treeInterceptorObject=treeInterceptorHandler.update(o)
+		except:
+			log.exception("Error updating tree interceptor")
 	#Always make sure that the focus object's treeInterceptor is forced to either the found treeInterceptor (if its in it) or to None
 	#This is to make sure that the treeInterceptor does not have to be looked up, which can cause problems for winInputHook
 	if obj is o or obj in treeInterceptorObject:
 		obj.treeInterceptor=treeInterceptorObject
 	else:
 		obj.treeInterceptor=None
+	# #3804: handleAppSwitch should be called as late as possible,
+	# as triggers must not be out of sync with global focus variables.
+	# setFocusObject shouldn't fail earlier anyway, but it's best to be safe.
+	appModuleHandler.handleAppSwitch(oldAppModules,newAppModules)
 	# Set global focus variables.
 	globalVars.focusDifferenceLevel=focusDifferenceLevel
 	globalVars.focusObject=obj
