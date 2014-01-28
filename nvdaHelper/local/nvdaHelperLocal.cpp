@@ -92,6 +92,7 @@ struct BgSendMessageData {
 };
 BgSendMessageData* bgSendMessageData = NULL;
 std::set<DWORD> unresponsiveThreads;
+CRITICAL_SECTION unresponsiveThreadsLock;
 
 DWORD WINAPI bgMessageThreadProc(LPVOID param) {
 	// Save this because it will change if this thread is abandoned.
@@ -100,7 +101,9 @@ DWORD WINAPI bgMessageThreadProc(LPVOID param) {
 	do {
 		// The main thread shouldn't bother sending messages to this thread
 		// until it has responded to the current message.
+		EnterCriticalSection(&unresponsiveThreadsLock);
 		unresponsiveThreads.insert(data->threadId);
+		LeaveCriticalSection(&unresponsiveThreadsLock);
 		// Even though this is a background thread, we still want a timeout
 		// to minimise the cancelled messages that hit unresponsive threads.
 		// Keep sending this message until the timeout elapses.
@@ -120,7 +123,9 @@ DWORD WINAPI bgMessageThreadProc(LPVOID param) {
 				}
 			}
 		}
+		EnterCriticalSection(&unresponsiveThreadsLock);
 		unresponsiveThreads.erase(data->threadId);
+		LeaveCriticalSection(&unresponsiveThreadsLock);
 		// Tell the main thread that we're done with this message.
 		SetEvent(data->completeEvent);
 		// Wait for the next message or abandonment.
@@ -216,6 +221,7 @@ void nvdaHelperLocal_initialize() {
 	startServer();
 	mainThreadId = GetCurrentThreadId();
 	cancelSendMessageEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	InitializeCriticalSection(&unresponsiveThreadsLock);
 	HMODULE oleacc = LoadLibraryA("oleacc.dll");
 	if (!oleacc)
 		return;
