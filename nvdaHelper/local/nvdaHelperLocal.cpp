@@ -15,6 +15,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <cstdio>
 #include <sstream>
 #include <algorithm>
+#include <set>
 #include <rpc.h>
 #include <sddl.h>
 #include <common/log.h>
@@ -72,35 +73,146 @@ handle_t createRemoteBindingHandle(wchar_t* uuidString) {
 	return bindingHandle;
 }
 
-bool shouldCancelSendMessage;
-const UINT CANCELSENDMESSAGE_CHECK_INTERVAL = 400;
-
+const UINT CANCELSENDMESSAGE_CHECK_INTERVAL = 1000;
+DWORD mainThreadId = 0;
+HANDLE cancelSendMessageEvent = NULL;
 void(__stdcall *_notifySendMessageCancelled)() = NULL;
+struct BgSendMessageData {
+	HANDLE completeEvent;
+	HANDLE execEvent;
+	HWND hwnd;
+	DWORD threadId;
+	UINT Msg;
+	WPARAM wParam;
+	LPARAM lParam;
+	UINT fuFlags;
+	UINT uTimeout;
+	DWORD dwResult;
+	DWORD error;
+};
+BgSendMessageData* bgSendMessageData = NULL;
+std::set<DWORD> unresponsiveThreads;
+LockableObject unresponsiveThreadsLock;
 
-LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult) {
-	fuFlags |= SMTO_ABORTIFHUNG;
-	fuFlags &= ~SMTO_NOTIMEOUTIFNOTHUNG;
-	shouldCancelSendMessage = false;
-	LRESULT ret;
-	for (UINT remainingTimeout = uTimeout; remainingTimeout > 0; remainingTimeout -= (remainingTimeout > CANCELSENDMESSAGE_CHECK_INTERVAL) ? CANCELSENDMESSAGE_CHECK_INTERVAL : remainingTimeout) {
-		if (shouldCancelSendMessage) {
-			if (_notifySendMessageCancelled)
-				_notifySendMessageCancelled();
-			SetLastError(ERROR_CANCELLED);
-			return 0;
+DWORD WINAPI bgSendMessageThreadProc(LPVOID param) {
+	BgSendMessageData* data = (BgSendMessageData*)param;
+	// This thread keeps handling SendMessages until it is abandoned.
+	do {
+		// The main thread shouldn't bother sending messages to this thread
+		// until it has responded to the current message.
+		unresponsiveThreadsLock.acquire();
+		unresponsiveThreads.insert(data->threadId);
+		unresponsiveThreadsLock.release();
+		// Even though this is a background thread, we still want a timeout
+		// to minimise the cancelled messages that hit unresponsive threads.
+		// Keep sending this message until the timeout elapses.
+		LRESULT ret;
+		for (UINT remainingTimeout = data->uTimeout; remainingTimeout > 0; remainingTimeout -= (remainingTimeout > CANCELSENDMESSAGE_CHECK_INTERVAL) ? CANCELSENDMESSAGE_CHECK_INTERVAL : remainingTimeout) {
+			if (WaitForSingleObject(data->execEvent, 0) == WAIT_OBJECT_0)
+				break; // Cancelled.
+			if ((ret = SendMessageTimeoutW(data->hwnd, data->Msg, data->wParam, data->lParam, data->fuFlags, min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), &data->dwResult)) != 0) {
+				// Success.
+				data->error = 0;
+				break;
+			} else {
+				data->error = GetLastError();
+				if (data->error != ERROR_TIMEOUT) {
+					// Error other than timeout.
+					break;
+				}
+			}
 		}
-		if ((ret = SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), lpdwResult)) != 0 || GetLastError() != ERROR_TIMEOUT) {
-			// Success or error other than timeout.
-			return ret;
-		}
-	}
-	// Timeout.
-	SetLastError(ERROR_TIMEOUT);
+		unresponsiveThreadsLock.acquire();
+		unresponsiveThreads.erase(data->threadId);
+		unresponsiveThreadsLock.release();
+		// Tell the main thread that we're done with this message.
+		SetEvent(data->completeEvent);
+		// Wait for the next message or abandonment.
+		WaitForSingleObject(data->execEvent, INFINITE);
+		ResetEvent(data->execEvent);
+	} while (data->hwnd);
+	// If data->hwnd is NULL, this thread has been abandoned.
+	CloseHandle(data->execEvent);
+	CloseHandle(data->completeEvent);
+	delete data;
 	return 0;
 }
 
+LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult) {
+	if (WaitForSingleObject(cancelSendMessageEvent, 0) == WAIT_OBJECT_0) {
+		// Already cancelled, so don't bother going any further.
+		SetLastError(ERROR_CANCELLED);
+		return 0;
+	}
+
+	fuFlags |= SMTO_ABORTIFHUNG;
+	fuFlags &= ~SMTO_NOTIMEOUTIFNOTHUNG;
+	DWORD windowThreadId = GetWindowThreadProcessId(hwnd, NULL);
+
+	if (windowThreadId == mainThreadId || GetCurrentThreadId() != mainThreadId) {
+		// We're sending a message to our own thread
+		// or we're sending from a thread other than the main thread.
+		// We can't do cancellation in this case,
+		// but at least shorten the timeout for other threads.
+		return SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, min(uTimeout, 10000), lpdwResult);
+	}
+
+	if (unresponsiveThreads.find(windowThreadId) != unresponsiveThreads.end()) {
+		// The target thread is unresponsive.
+		SetLastError(ERROR_CANCELLED);
+		return 0;
+	}
+
+	bool newThread = !bgSendMessageData;
+	if (newThread) {
+		// We're creating a new thread, so initialise new data.
+		bgSendMessageData = new BgSendMessageData;
+		bgSendMessageData->execEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
+		bgSendMessageData->completeEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	}
+	bgSendMessageData->hwnd = hwnd;
+	bgSendMessageData->threadId = windowThreadId;
+	bgSendMessageData->Msg = Msg;
+	bgSendMessageData->wParam = wParam;
+	bgSendMessageData->lParam = lParam;
+	bgSendMessageData->fuFlags = fuFlags;
+	bgSendMessageData->uTimeout = uTimeout;
+	bgSendMessageData->dwResult = 0;
+	if (newThread) {
+		// Create a new SendMessage thread.
+		HANDLE thread = CreateThread(NULL, 0, bgSendMessageThreadProc, (LPVOID)bgSendMessageData, 0, NULL);
+		CloseHandle(thread);
+	} else {
+		// Tell the existing SendMessage thread to send this message.
+		SetEvent(bgSendMessageData->execEvent);
+	}
+
+	HANDLE waitHandles[] = {bgSendMessageData->completeEvent, cancelSendMessageEvent};
+	DWORD waitIndex = 0;
+	CoWaitForMultipleHandles(0, INFINITE, 2, waitHandles, &waitIndex);
+	if (waitIndex == 1) {
+		// Cancelled. Abandon the thread.
+		bgSendMessageData->hwnd = NULL;
+		SetEvent(bgSendMessageData->execEvent);
+		// Indicate that a new thread should be created next time.
+		bgSendMessageData = NULL;
+		SetLastError(ERROR_CANCELLED);
+		if (_notifySendMessageCancelled)
+			_notifySendMessageCancelled();
+		return 0;
+	}
+
+	// Got a result.
+	if (bgSendMessageData->error != 0) {
+		SetLastError(bgSendMessageData->error);
+		return 0;
+	}
+	*lpdwResult = bgSendMessageData->dwResult;
+	return 1;
+}
+
 void cancelSendMessage() {
-	shouldCancelSendMessage = true;
+	SetEvent(cancelSendMessageEvent);
 }
 
 LRESULT WINAPI fake_SendMessageW(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam) {
@@ -115,6 +227,8 @@ LRESULT WINAPI fake_SendMessageTimeoutW(HWND hwnd, UINT Msg, WPARAM wParam, LPAR
 
 void nvdaHelperLocal_initialize() {
 	startServer();
+	mainThreadId = GetCurrentThreadId();
+	cancelSendMessageEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
 	HMODULE oleacc = LoadLibraryA("oleacc.dll");
 	if (!oleacc)
 		return;
@@ -145,6 +259,12 @@ void nvdaHelperLocal_terminate() {
 		delete oleaccHooks;
 		oleaccHooks = NULL;
 	}
+	if (bgSendMessageData) {
+		// Terminate the background SendMessage thread.
+		bgSendMessageData->hwnd = NULL;
+		SetEvent(bgSendMessageData->execEvent);
+	}
+	CloseHandle(cancelSendMessageEvent);
 	stopServer();
 }
 
