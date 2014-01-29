@@ -139,6 +139,12 @@ DWORD WINAPI bgMessageThreadProc(LPVOID param) {
 }
 
 LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult) {
+	if (WaitForSingleObject(cancelSendMessageEvent, 0) == WAIT_OBJECT_0) {
+		// Already cancelled, so don't bother going any further.
+		SetLastError(ERROR_CANCELLED);
+		return 0;
+	}
+
 	fuFlags |= SMTO_ABORTIFHUNG;
 	fuFlags &= ~SMTO_NOTIMEOUTIFNOTHUNG;
 	DWORD windowThreadId = GetWindowThreadProcessId(hwnd, NULL);
