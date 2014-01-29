@@ -95,8 +95,7 @@ std::set<DWORD> unresponsiveThreads;
 CRITICAL_SECTION unresponsiveThreadsLock;
 
 DWORD WINAPI bgMessageThreadProc(LPVOID param) {
-	// Save this because it will change if this thread is abandoned.
-	BgSendMessageData* data = bgSendMessageData;
+	BgSendMessageData* data = (BgSendMessageData*)param;
 	// This thread keeps handling SendMessages until it is abandoned.
 	do {
 		// The main thread shouldn't bother sending messages to this thread
@@ -173,7 +172,7 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 		// Create a new SendMessage thread.
 		bgSendMessageData->execEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
 		bgSendMessageData->completeEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-		HANDLE thread = CreateThread(NULL, 0, bgMessageThreadProc, NULL, 0, NULL);
+		HANDLE thread = CreateThread(NULL, 0, bgMessageThreadProc, (LPVOID)bgSendMessageData, 0, NULL);
 		CloseHandle(thread);
 	} else {
 		// Tell the existing SendMessage thread to send this message.
