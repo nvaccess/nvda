@@ -92,17 +92,17 @@ struct BgSendMessageData {
 };
 BgSendMessageData* bgSendMessageData = NULL;
 std::set<DWORD> unresponsiveThreads;
-CRITICAL_SECTION unresponsiveThreadsLock;
+LockableObject unresponsiveThreadsLock;
 
-DWORD WINAPI bgMessageThreadProc(LPVOID param) {
+DWORD WINAPI bgSendMessageThreadProc(LPVOID param) {
 	BgSendMessageData* data = (BgSendMessageData*)param;
 	// This thread keeps handling SendMessages until it is abandoned.
 	do {
 		// The main thread shouldn't bother sending messages to this thread
 		// until it has responded to the current message.
-		EnterCriticalSection(&unresponsiveThreadsLock);
+		unresponsiveThreadsLock.acquire();
 		unresponsiveThreads.insert(data->threadId);
-		LeaveCriticalSection(&unresponsiveThreadsLock);
+		unresponsiveThreadsLock.release();
 		// Even though this is a background thread, we still want a timeout
 		// to minimise the cancelled messages that hit unresponsive threads.
 		// Keep sending this message until the timeout elapses.
@@ -122,9 +122,9 @@ DWORD WINAPI bgMessageThreadProc(LPVOID param) {
 				}
 			}
 		}
-		EnterCriticalSection(&unresponsiveThreadsLock);
+		unresponsiveThreadsLock.acquire();
 		unresponsiveThreads.erase(data->threadId);
-		LeaveCriticalSection(&unresponsiveThreadsLock);
+		unresponsiveThreadsLock.release();
 		// Tell the main thread that we're done with this message.
 		SetEvent(data->completeEvent);
 		// Wait for the next message or abandonment.
@@ -164,8 +164,12 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 	}
 
 	bool newThread = !bgSendMessageData;
-	if (newThread)
+	if (newThread) {
+		// We're creating a new thread, so initialise new data.
 		bgSendMessageData = new BgSendMessageData;
+		bgSendMessageData->execEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
+		bgSendMessageData->completeEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	}
 	bgSendMessageData->hwnd = hwnd;
 	bgSendMessageData->threadId = windowThreadId;
 	bgSendMessageData->Msg = Msg;
@@ -176,9 +180,7 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 	bgSendMessageData->dwResult = 0;
 	if (newThread) {
 		// Create a new SendMessage thread.
-		bgSendMessageData->execEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
-		bgSendMessageData->completeEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-		HANDLE thread = CreateThread(NULL, 0, bgMessageThreadProc, (LPVOID)bgSendMessageData, 0, NULL);
+		HANDLE thread = CreateThread(NULL, 0, bgSendMessageThreadProc, (LPVOID)bgSendMessageData, 0, NULL);
 		CloseHandle(thread);
 	} else {
 		// Tell the existing SendMessage thread to send this message.
@@ -192,6 +194,7 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 		// Cancelled. Abandon the thread.
 		bgSendMessageData->hwnd = NULL;
 		SetEvent(bgSendMessageData->execEvent);
+		// Indicate that a new thread should be created next time.
 		bgSendMessageData = NULL;
 		SetLastError(ERROR_CANCELLED);
 		if (_notifySendMessageCancelled)
@@ -226,7 +229,6 @@ void nvdaHelperLocal_initialize() {
 	startServer();
 	mainThreadId = GetCurrentThreadId();
 	cancelSendMessageEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-	InitializeCriticalSection(&unresponsiveThreadsLock);
 	HMODULE oleacc = LoadLibraryA("oleacc.dll");
 	if (!oleacc)
 		return;
