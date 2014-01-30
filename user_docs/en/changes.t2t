@@ -41,6 +41,7 @@
 - In languages which use a space as a digit group/thousands separator such as French and German, numbers from separate chunks of text are no longer pronounced as a single number. This was particularly problematic for table cells containing numbers. (#3698)
 - Braille no longer sometimes fails to update when the system caret is moved in Microsoft Word 2013. (#3784)
 - When positioned on the first character of a heading in Microsoft Word, the text communicating it is a heading (including the level) no longer disappears off a braille display. (#3701)
+- When a configuration profile is triggered for an application and that application is exited, NVDA no longer sometimes fails to deactivate the profile. (#3732)
 
 
 == Changes for Developers ==
