@@ -4,6 +4,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2012 NV Access Limited
 
+import wx
 import threading
 from ctypes import *
 from ctypes.wintypes import *
@@ -181,6 +182,7 @@ inputCore.registerGestureSource("ts", TouchInputGesture)
 class TouchHandler(threading.Thread):
 
 	def __init__(self):
+		self.pendingEmitsTimer=wx.PyTimer(core.requestPump)
 		super(TouchHandler,self).__init__()
 		self._curTouchMode='object'
 		self.initializedEvent=threading.Event()
@@ -193,6 +195,7 @@ class TouchHandler(threading.Thread):
 	def terminate(self):
 		windll.user32.PostThreadMessageW(self.ident,WM_QUIT,0,0)
 		self.join()
+		self.pendingEmitsTimer.Stop()
 
 	def run(self):
 		try:
@@ -247,6 +250,13 @@ class TouchHandler(threading.Thread):
 				inputCore.manager.executeGesture(gesture)
 			except inputCore.NoInputGestureAction:
 				pass
+		interval=self.trackerManager.pendingEmitInterval
+		if interval and interval>0:
+			# Ensure we are pumpped again by the time more pending multiTouch trackers are ready
+			self.pendingEmitsTimer.Start(interval*1000,True)
+		else:
+			# Stop the timer in case we were pumpped due to something unrelated but just happened to be at the appropriate time to clear any remaining trackers 
+			self.pendingEmitsTimer.Stop()
 
 	def notifyInteraction(self, obj):
 		"""Notify the system that UI interaction is occurring via touch.
