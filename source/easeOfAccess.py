@@ -10,6 +10,7 @@
 import sys
 import _winreg
 import ctypes
+import winUser
 
 winVer = sys.getwindowsversion()
 # Windows >= Vista
@@ -34,13 +35,29 @@ def notify(signal):
 		return
 	with _winreg.CreateKey(_winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows NT\CurrentVersion\AccessibilityTemp") as rkey:
 		_winreg.SetValueEx(rkey, APP_KEY_NAME, None, _winreg.REG_DWORD, signal)
-	keys = (0x5b, 0x55) # leftWindows+u
-	# Press the keys.
-	for vk in keys:
-		ctypes.windll.user32.keybd_event(vk, 0, 0, 0)
-	# Release the keys.
-	for vk in reversed(keys):
-		ctypes.windll.user32.keybd_event(vk, 0, 2, 0)
+	keys = []
+	# The user might be holding unwanted modifiers.
+	for vk in winUser.VK_SHIFT, winUser.VK_CONTROL, winUser.VK_MENU:
+		if winUser.getKeyState(vk) & 32768:
+			keys.append((vk, False))
+	keys.append((0x5B, True)) # leftWindows
+	keys.append((0x55, True)) # u
+	inputs = []
+	# Release unwanted keys and press desired keys.
+	for vk, desired in keys:
+		input = winUser.Input(type=winUser.INPUT_KEYBOARD)
+		input.ii.ki.wVk = vk
+		if not desired:
+			input.ii.ki.dwFlags = winUser.KEYEVENTF_KEYUP
+		inputs.append(input)
+	# Release desired keys and press unwanted keys.
+	for vk, desired in reversed(keys):
+		input = winUser.Input(type=winUser.INPUT_KEYBOARD)
+		input.ii.ki.wVk = vk
+		if desired:
+			input.ii.ki.dwFlags = winUser.KEYEVENTF_KEYUP
+		inputs.append(input)
+	winUser.SendInput(inputs)
 
 def willAutoStart(hkey):
 	try:
