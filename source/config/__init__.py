@@ -17,6 +17,7 @@ from logHandler import log
 import shlobj
 import baseObject
 import easeOfAccess
+import winKernel
 
 def validateConfig(configObj,validator,validationResult=None,keyList=None):
 	"""
@@ -337,7 +338,6 @@ def canStartOnSecureScreens():
 def execElevated(path, params=None, wait=False,handleAlreadyElevated=False):
 	import subprocess
 	import shellapi
-	import winKernel
 	import winUser
 	if params is not None:
 		params = subprocess.list2cmdline(params)
@@ -1134,3 +1134,17 @@ class ProfileTrigger(object):
 
 	def __exit__(self, excType, excVal, traceback):
 		self.exit()
+
+TokenUIAccess = 26
+def hasUiAccess():
+	token = ctypes.wintypes.HANDLE()
+	ctypes.windll.advapi32.OpenProcessToken(ctypes.windll.kernel32.GetCurrentProcess(),
+		winKernel.MAXIMUM_ALLOWED, ctypes.byref(token))
+	try:
+		val = ctypes.wintypes.DWORD()
+		ctypes.windll.advapi32.GetTokenInformation(token, TokenUIAccess,
+			ctypes.byref(val), ctypes.sizeof(ctypes.wintypes.DWORD),
+			ctypes.byref(ctypes.wintypes.DWORD()))
+		return bool(val.value)
+	finally:
+		ctypes.windll.kernel32.CloseHandle(token)
