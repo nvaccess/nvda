@@ -91,6 +91,7 @@ struct BgSendMessageData {
 	DWORD error;
 };
 BgSendMessageData* bgSendMessageData = NULL;
+bool isActiveBgSendMessage = false;
 std::set<DWORD> unresponsiveThreads;
 LockableObject unresponsiveThreadsLock;
 
@@ -166,6 +167,12 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 	}
 	unresponsiveThreadsLock.release();
 
+	if (isActiveBgSendMessage) {
+		// We can't handle reentrancy.
+		SetLastError(ERROR_CANCELLED);
+		return 0;
+	}
+
 	bool newThread = !bgSendMessageData;
 	if (newThread) {
 		// We're creating a new thread, so initialise new data.
@@ -181,6 +188,7 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 	bgSendMessageData->fuFlags = fuFlags;
 	bgSendMessageData->uTimeout = uTimeout;
 	bgSendMessageData->dwResult = 0;
+	isActiveBgSendMessage = true;
 	if (newThread) {
 		// Create a new SendMessage thread.
 		HANDLE thread = CreateThread(NULL, 0, bgSendMessageThreadProc, (LPVOID)bgSendMessageData, 0, NULL);
@@ -193,6 +201,7 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 	HANDLE waitHandles[] = {bgSendMessageData->completeEvent, cancelSendMessageEvent};
 	DWORD waitIndex = 0;
 	CoWaitForMultipleHandles(0, INFINITE, 2, waitHandles, &waitIndex);
+	isActiveBgSendMessage = false;
 	if (waitIndex == 1) {
 		// Cancelled. Abandon the thread.
 		bgSendMessageData->hwnd = NULL;
