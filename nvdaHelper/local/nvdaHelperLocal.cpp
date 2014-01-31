@@ -157,11 +157,14 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 		return SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, min(uTimeout, 10000), lpdwResult);
 	}
 
+	unresponsiveThreadsLock.acquire();
 	if (unresponsiveThreads.find(windowThreadId) != unresponsiveThreads.end()) {
+		unresponsiveThreadsLock.release();
 		// The target thread is unresponsive.
 		SetLastError(ERROR_CANCELLED);
 		return 0;
 	}
+	unresponsiveThreadsLock.release();
 
 	bool newThread = !bgSendMessageData;
 	if (newThread) {
