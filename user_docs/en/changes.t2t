@@ -45,6 +45,9 @@
 - When a configuration profile is triggered for an application and that application is exited, NVDA no longer sometimes fails to deactivate the profile. (#3732)
 - When entering Asian input into a control within NVDA itself (e.g. the browse mode Find dialog), "NVDA" is no longer incorrectly reported in place of the candidate. (#3726)
 - The tabs in the Outlook 2013 options dialog are now reported. (#3826)
+- Improved support for ARIA live regions in Firefox and other Mozilla Gecko applications:
+	- Support for aria-atomic updates and filtering of aria-busy updates (#2640)
+	- Alternative text (such as alt attribute or aria-label) is included if there is no other useful text. (#3329)
 
 
 == Changes for Developers ==
