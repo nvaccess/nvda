@@ -48,6 +48,7 @@
 - Improved support for ARIA live regions in Firefox and other Mozilla Gecko applications:
 	- Support for aria-atomic updates and filtering of aria-busy updates (#2640)
 	- Alternative text (such as alt attribute or aria-label) is included if there is no other useful text. (#3329)
+	- Live region updates are no longer silenced if they occur at the same time as the focus moves. (#3777)
 
 
 == Changes for Developers ==
