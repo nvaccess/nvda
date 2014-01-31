@@ -38,7 +38,7 @@ def notify(signal):
 	keys = []
 	# The user might be holding unwanted modifiers.
 	for vk in winUser.VK_SHIFT, winUser.VK_CONTROL, winUser.VK_MENU:
-		if winUser.getKeyState(vk) & 32768:
+		if winUser.getAsyncKeyState(vk) & 32768:
 			keys.append((vk, False))
 	keys.append((0x5B, True)) # leftWindows
 	keys.append((0x55, True)) # u
