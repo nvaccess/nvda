@@ -14,9 +14,12 @@ from logHandler import log
 
 import inputCore
 import brailleInput
-import ftdi2
 import struct
 
+try:
+	import ftdi2
+except:
+	ftdi2 = None
 #for bluetooth
 import hwPortUtils
 import serial
@@ -255,18 +258,17 @@ connection could not be established"""
 		self._baud = 0
 		self._dev = None
 		self._proto = None
+		devlist = []
 		self.connectBrxCom()
 		if(self._baud == 1): return #brxcom is running, skip bluetooth and USB
 
 		#try to connect to usb device,
 		#if no usb device is found there may be a bluetooth device
-		try:
+		if ftdi2:
 			devlist = ftdi2.list_devices()
-		except:
-			devlist = []
 		if(len(devlist)==0):
 			self.connectBluetooth()
-		else:
+		elif ftdi2:
 			self._baud = 57600
 			self.connectUSB(devlist)
 			if(self._dev is None):
