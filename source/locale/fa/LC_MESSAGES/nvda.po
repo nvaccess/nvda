@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-12-27 12:04+0330\n"
+"POT-Creation-Date: 2014-01-21 19:10+1000\n"
+"PO-Revision-Date: 2014-01-24 23:16+0330\n"
 "Last-Translator: ali aslani\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1432,6 +1432,15 @@ msgstr "آشکارگویه‌ی دراز دارد"
 msgid "pinned"
 msgstr "سنجاق شد"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "فرمول دارد"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "دارای آشکارگویه است"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "گزیده نشده"
@@ -1545,6 +1554,7 @@ msgid "Tools"
 msgstr "ابزار"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "برگه‌ی انگشت‌کشه"
 
@@ -3055,10 +3065,6 @@ msgstr "دوسو طراز"
 msgid "align default"
 msgstr "پیش‌نمودچین"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "دارای آشکارگویه است"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "نادرستی نوشتاری"
@@ -3105,6 +3111,82 @@ msgstr "&زیر و بمی صدا"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "زیر و بر شدن زیر و بمی صدا"
+
+msgid "text mode"
+msgstr "گونه‌ی نوشتاری"
+
+msgid "object mode"
+msgstr "گونه بر پایه‌ی چیزها"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "{action} تنها"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "{action} دوتایی"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "{action} سه‌باره"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "چهارباره (کار بر روی انگشت‌کشه)"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{numFingers} انگشت {action}"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "گوبیدن"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "گوبیدن و فرونگه‌داشتن"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "فرونگه‌داشتن"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr "گردان بالا"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr "گردان پایین"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr "گردان چپ کردن"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr "گردان راست کردن"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+msgctxt "touch action"
+msgid "hover down"
+msgstr "گردش به سوی پایین کردن"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr "گردش کردن"
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr "گردش به سوی بالا"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3271,6 +3353,15 @@ msgstr ""
 "اگر ان‌وی‌دی‌ای را سودمند می‌دانید و می‌خواهید تا پیشرفتش پایدار باشد٬ به سازمان "
 "NV Access ٬ کمک پولی کنید. شما می‌توانید این کار را با گزیدن گزینه‌ی «کمک "
 "پولی» از دستورواره‌ی پایه‌ای ان‌وی‌دی‌ای٬ انجام دهید."
+
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"افزونه‌ی ان‌وی‌دی‌ای نمی‌تواند از {path} ریخته شود.\n"
+"برای آن که بتوانید افزونه‌ها را بر روی ان‌وی‌دی‌ای بریزید٬ باید ان‌وی‌دی‌ای را به "
+"راه انداخته باشید."
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
@@ -3557,10 +3648,6 @@ msgstr "بند انگشتی‌ها"
 msgid "Master Thumbnails"
 msgstr "Master Thumbnails"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "ایستاده برای پاورپوینت"
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "اسلاید {slideNumber}"
@@ -3594,6 +3681,10 @@ msgstr "یادداشتی نیست"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "اسلاید تهی"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "ایستاده برای پاورپوینت"
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -5145,6 +5236,11 @@ msgstr "گزارش کردن مر&زنماها"
 msgid "Report fra&mes"
 msgstr "گزارش کردن &قاب‌ها"
 
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "گزارش کردن هرگاه کلیک شدنی باشد"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "ویرایش واژه‌ی سپارده شده در فرهنگ واژگان"
@@ -5958,10 +6054,6 @@ msgid ""
 msgstr ""
 "با یک‌بار فشار دادن٬ ستون کنونی در جایی که سرنوشته‌ی ردیف باید باشد جای "
 "می‌گیرد. با دو بار فشار دادن٬ سامان‌دهی‌ها پاک می‌شود."
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "فرمول دارد"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"

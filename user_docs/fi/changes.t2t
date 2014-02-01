@@ -11,6 +11,7 @@
 - Asiakirjojen muotoiluasetukset -valintaikkunassa olevalla uudella asetuksella on nyt mahdollista valita, tunnistetaanko asiakirjojen sisältö napsautettavaksi. Asetus on oletusarvoisesti käytössä (toimii kuten aiemmin). (#3556)
 - Tuki Bluetoothin kautta Yhdistettäville pistenäytöille Widcomm Bluetooth -ohjelmistoa käyttävissä tietokoneissa. (#2418)
 - Hyperlinkit luetaan nyt muokattaessa tekstiä PowerPointissa. (#3416)
+- NVDA on nyt mahdollista pakottaa vaihtamaan verkkosivulla selaustilaan NVDA+välilyönti-näppäinyhdistelmällä ARIA-sovelluksissa tai -valintaikkunoissa oltaessa, mikä mahdollistaa niissä liikkumisen kuten tavallisessa asiakirjassa. (#2023)
 
 
 == Muutokset ==
@@ -30,6 +31,15 @@
 - NVDA ei enää ilmoita Microsoft Excelissä kaikkia soluja alleviivatuiksi niiden muotoilutiedoissa. (#3669)
 - Selaustila-asiakirjoissa ei enää näytetä tarkoituksettomia merkkejä, kuten esim. Unicode-yksityiskäyttöalueella olevia. Nämä estivät joissakin tapauksissa hyödyllisempien nimien näyttämisen. (#2963).
 - Itäaasialaisten merkkien syöttämiseen tarkoitettu syöttömenetelmä toimii nyt PuTTY:ssä. (#3432)
+- Asiakirjassa liikkumisesta peruutetun Lue kaikki -toiminnon jälkeen ei enää ole seurauksena ajoittain NVDA:n virheellinen ilmoitus kentästä poistumisesta (kuten alempana asiakirjassa olevasta taulukosta, jota  Lue kaikki -toiminto ei ehtinyt puhua). (#3688)
+- Kun selaustilan pikanavigointikomentoja käytetään Lue kaikki -toiminnon aikana pikaluvun ollessa käytössä, NVDA ilmoittaa nyt tarkemmin uuden kentän, (ts. sanoo otsikkoa otsikoksi sen sijaan, että lukisi vain sen tekstin). (#3689)
+- Säilön loppuun tai alkuun siirtävät pikanavigointikomennot noudattavat nyt Käytä pikalukua Lue kaikki -toiminnossa -asetusta (ts. ne eivät enää keskeytä käynnissä olevaa Lue kaikki -toimintoa). (#3675)
+- NVDA:n Syöte-eleet-valintaikkunassa lueteltujen kosketuseleiden nimet ovat nyt käyttäjäystävällisiä ja lokalisoituja. (#3624)
+- NVDA ei enää aiheuta tiettyjen ohjelmien kaatumista siirrettäessä hiiri niiden rich edit (TRichEdit) -säädinten päälle. Tällaisia ohjelmia ovat mm. Jarte 5.1 sekä BRfácil. (#3693, #3603, #3581)
+- Tiettyjä säilöjä (kuten esim. ARIA:n esittelymääreellä merkittyjä taulukoita) ei enää lueta Internet Explorerissa ja muissa MSHTML-säätimissä. (#3713)
+- NVDA ei enää toista virheellisesti rivien ja sarakkeiden tietoja taulukon solusta useita kertoja Microsoft Wordissa. (#3702)
+- Erillisissä tekstilohkoissa olevia numeroita ei enää lueta yhtenä lukuna sellaisissa kielissä, joissa käytetään välilyöntiä numeroiden ryhmittelyyn/tuhaterottimena (kuten esim. ranska ja saksa). Tämä oli erityisen ongelmallista numeroita sisältävissä taulukon soluissa. (#3698)
+- Pistenäytön päivittäminen ei enää toisinaan epäonnistu, kun järjestelmäkohdistinta liikutetaan Microsoft Word 2013:ssa. (#3784)
 
 
 = 2013.3 =

@@ -11,6 +11,7 @@ Que hai de Novo no NVDA
 - Agora é posible escoller se o contido nos documentos debería identificarse  como cliqueable, a través dunha nova opción no diálogo Formateado de Documentos. Esta opción está activada por defecto (comportamento anterior). (#3556)
 - Soporte para as pantallas braille conectadas a través do Bluetooth nun computador executando o  Software de Widcomm Bluetooth. (#2418)
 - Cando se edita texto no PowerPoint, agora anúncianse os hipervínculos. (#3416)
+- Cando se estea en aplicacións ARIA ou diálogos na web, agora é posible forzar ó NVDA para que cambie a modo navegación con NVDA+espazo seguindo a navegación de estilos de documento da aplicación ou do diálogo. (#2023)
 
 
 == Cambios ==
@@ -30,10 +31,21 @@ Que hai de Novo no NVDA
 - NVDA xa non anuncia todas as celdas no Microsoft Excel como subliñadas na súa información de formato. (#3669)
 - Xa non se amosan caracteres sen sentido en documentos de modo navegación como os que se atopan no rango de uso privado do Unicode. Nalgúns casos estos detiñan o amosado de etiquetas máis útiis. (#2963).
 - A composición de entrada para a introducción de caracteres do este asiático xa non falla en PuTTY (#3432)
+- ó navegar por un documento despois dunha cancelación de falar todo xa non resulta en que NVDA anuncie ás veces incorrectamente que se abandonou un campo (como unha táboa) máis abaixo no documento no que falar todo nunca estivo falando en realidade (#3688)
+- Cando se utilicen ordes rápidas do modo navegación mentres se estea en falar todo ca lectura superficial activada, NVDA anuncia con máis precisión o novo campo (por exemplo, agora di que unha cabeceira é unha cabeceira, e non só o texto). (#3689)
+- No salto ó final ou ó comezo dun contedor as ordes de navegación rápida agora afectan á opción lectura superficial durante falar todo (é dicir, que xa non cancelarán o falar todo actual). (#3675)
+- Os nomes dos xestos táctiles listados no diálogo Xestos de entrada do NVDA agora son máis amigables e están traducidos. (#3624)
+- NVDA xa non fai que certos programas se bloqueen cando se mova o punteiro do rato sobre os seus controis de edición enriquecidos (TRichEdit). Programas incluíndo Jarte 5.1 e BRfácil. (#3693, #3603, #3581)
+- No Internet Explorer e outros controis MSHTML, os contedores como táboas marcadas como presentación por ARIA xa non se informan ó usuario. (#3713)
+- No Microsoft Word, NVDA xa non repite de xeito inapropriado a fila da táboa e a información da columna dunha celda varias veces. (#3702)
+- En linguas que utilicen  un espazo como un díxito separador de grupos de milleiros  como no  Francés e no Alemán, os números de anacos separados de texto xa non se pronuncian como un so número. Esto era particularmente problemático  para as celdas de táboa que contiñan números. (#3698)
+- O braille xa non falla ás veces ó se actualizar cando se move o cursor do sistema no Microsoft Word 2013. (#3784)
 
 
 == Cambios para Desenvolvedores ==
 - Os AppModules agora conteñen as propriedades productName e productVersion. Esta información tamén se inclúe agora na Información do desenvolvedor (NVDA+f1). (#1625)
+- Na consola de Python, agora podes premer  a tecla tab para completar o identificador actual. (#433)
+ - Se hai varias posibilidades, podes premer o tabulador por segunda vez para escoller de entre unha lista.
 
 
 = 2013.3 =

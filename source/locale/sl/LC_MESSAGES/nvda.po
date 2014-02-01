@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5895\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-10 19:14+1000\n"
-"PO-Revision-Date: 2013-12-10 21:48+0100\n"
+"POT-Creation-Date: 2014-01-21 19:10+1000\n"
+"PO-Revision-Date: 2014-01-23 12:15+0100\n"
 "Last-Translator: Jožef Gregorc <jozko.gregorc[@]guest.arnes.si\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.2\n"
+"X-Generator: Poedit 1.6.3\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -3223,20 +3223,20 @@ msgid "flick right"
 msgstr "švig desno"
 
 #. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
-#, fuzzy
 msgctxt "touch action"
 msgid "hover down"
-msgstr "glasnost dol"
+msgstr "začetek lebdenja"
 
 #. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
 msgctxt "touch action"
 msgid "hover"
-msgstr ""
+msgstr "lebdenje"
 
+# več po testu in pripombah
 #. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
 msgctxt "touch action"
 msgid "hover up"
-msgstr ""
+msgstr "konec lebdenja"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3399,6 +3399,14 @@ msgstr ""
 "Če menite, da je NVDA uporabna in želite, da se njen razvoj nadaljuje, "
 "premislite o donaciji NV Access. To lahko storite s pritiskom Prispevaj v "
 "meniju NVDA."
+
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"Ni mogoče namestiti dodatka za NVDAiz {path}.\n"
+"NVDA mora obvezno teči, če želite dodatke nameščati."
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
@@ -6227,6 +6235,12 @@ msgstr "HIMS Braille Sense/Braille EDGE serija"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "has attachment"
+#~ msgstr "s prilogo"
+
+#~ msgid "flagged"
+#~ msgstr "z zastavico"
 
 #, fuzzy
 #~ msgid "%s through %s"

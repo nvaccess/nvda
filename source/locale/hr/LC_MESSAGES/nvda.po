@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-11-08 10:41+0100\n"
+"POT-Creation-Date: 2014-01-21 19:10+1000\n"
+"PO-Revision-Date: 2014-01-29 13:53+0100\n"
 "Last-Translator: Hrvoje Katić <hrvojekatic@gmail.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -1435,6 +1435,15 @@ msgstr "ima dugi opis"
 msgid "pinned"
 msgstr "prikvačeno"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "ima formulu"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "ima komentar"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "nije odabrano"
@@ -1469,7 +1478,7 @@ msgstr "Greška u datoteci s kartom geste"
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
-msgstr "Učitavanje NVDA komponenata. Molim pričekajte..."
+msgstr "NVDA se učitava. Molim pričekajte..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -1552,6 +1561,7 @@ msgid "Tools"
 msgstr "Alati"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "Ekran osjetljiv na dodir"
 
@@ -1586,15 +1596,16 @@ msgstr ""
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
-msgstr "Mod spavanja je isključen"
+msgstr "Način mirovanja je isključen"
 
 #. Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 msgid "Sleep mode on"
-msgstr "Mod spavanja je uključen"
+msgstr "Način mirovanja je uključen"
 
 #. Translators: Input help mode message for toggle sleep mode command.
 msgid "Toggles  sleep mode on and off for  the active application."
-msgstr "Naizmjence uključuje i isključuje mod spavanja za aktivnu aplikaciju."
+msgstr ""
+"Naizmjence uključuje i isključuje način mirovanja za aktivnu aplikaciju."
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
@@ -3074,10 +3085,6 @@ msgstr "omogućeno poravnanje"
 msgid "align default"
 msgstr "početno poravnanje"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "ima komentar"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "pravopisna pogreška"
@@ -3124,6 +3131,82 @@ msgstr "&Visina"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Modulacija"
+
+msgid "text mode"
+msgstr "tekstualni mod"
+
+msgid "object mode"
+msgstr "mod objekta"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "jednostruki {action}"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "dvostruki {action}"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "trostruki {action}"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "četverostruki {action}"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{action} s {numFingers} prsta"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "dodir"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "dodir i zadržavanje"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "držanje"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr "kratko klizanje prema gore"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr "kratko klizanje prema dolje"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr "kratko klizanje prema lijevo"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr "kratko klizanje prema desno"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+msgctxt "touch action"
+msgid "hover down"
+msgstr "prijelaz prema dolje"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr "prijelaz"
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr "prijelaz prema gore"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3289,6 +3372,14 @@ msgstr ""
 "Ukoliko vam se NVDA čini korisnim i želite da se isti nastavi poboljšavati, "
 "molimo uzmite u obzir doniranje NV Access-u. To možete učiniti tako da "
 "odaberete opciju Donirajte iz NVDA izbornika."
+
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"Nije moguće instalirati NVDA dodatak iz {path}.\n"
+"Morate imati pokrenut NVDA da biste mogli instalirati dodatke."
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
@@ -3577,10 +3668,6 @@ msgstr "Sličice"
 msgid "Master Thumbnails"
 msgstr "Sličice u slajdu matrice"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "Čekam Powerpoint..."
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Slajd {slideNumber}"
@@ -3614,6 +3701,10 @@ msgstr "Nema bilješki"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "Prazan slajd"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "Čekam Powerpoint..."
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -5156,6 +5247,11 @@ msgstr "Izvijesti o &orijentirima"
 msgid "Report fra&mes"
 msgstr "Izvijesti o ok&virima"
 
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "Izvijesti ukoliko se radi o &klikajućem objektu"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "Uredite unos u riječnik"
@@ -5970,10 +6066,6 @@ msgstr ""
 "Ukoliko se pritisne jednom, postavit će trenutni stupac kao stupac gdje "
 "treba pronaći zaglavlja retka. Ukoliko se pritisne dvaput, obrisat će "
 "postavku."
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "ima formulu"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"

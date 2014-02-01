@@ -1,15 +1,16 @@
 ﻿complexSymbols:
 # identifier	regexp
 # Sentence endings.
-. sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
-! sentence ending	(?<=[^\s!])\!(?=[\"')\s]|$)
-? sentence ending	(?<=[^\s?])\?(?=[\"')\s]|$)
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
 decimal point	(?<=\d)\.(?=\d)
-in-word '	(?<=[^\W_])'
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -22,6 +23,7 @@ symbols:
 : phrase ending	dvotačka	most	always
 decimal point	decimalni zarez	none	always
 in-word '	apostrof	all	norep
+negative number	minus	none	norep
 
 # Whitespace
 \0	prazno	char
@@ -39,6 +41,8 @@ in-word '	apostrof	all	norep
 $	dolar	some
 £	funta	some
 €	evro	some
+¢	centi	some
+¥	jen	some
 %	procenat	some
 &	ampersand	some
 '	apostrof	all
@@ -59,7 +63,6 @@ $	dolar	some
 @	et	some
 [	leva uglasta	most
 ]	desna uglasta	most
-"	navodnik	most
 \\	obrnuta kosa crta	most
 ^	kapica	most
 _	donja crta	most
@@ -72,10 +75,60 @@ _	donja crta	most
 # Other characters
 •	oznaka	some
 …	tri tačke	all	always
+...	tri tačke	all	always
 	oznaka	some
 “	levi navodnik	most
 ”	desni navodnik	most
+‚	levi jednostruki navodnik	most
+‘	desni jednostruki navodnik	most
 –	en crtica	most
 —	em crtica	most
 ●	kružić	most
 ¨	preglas	most
+■	crni kvadrat	some
+➔	strelica desno	some
+§	paragraf	all
+°	stepeni	some
+«	leva dupla izlomljena zagrada	most
+»	desna dupla izlomljena zagrada	most
+µ	mi	some
+¹	gornji indeks 1	some
+²	gornji indeks 2	some
+³	gornji indeks 3	some
+®	registrovano	some
+™	zaštićeni znak	some
+©	kopirajt	some
+±	plus minus	most
+×	puta	most
+÷	podeljeno sa	most
+←	strelica levo	some
+→	strelica desno	some
+✓	štiklirano	some
+✔	podebljano štiklirano	some
+¡	obrnuti uzvičnik	most
+¦	isprekidana uspravna crta	most
+ª	gornji indeks a	most
+­	razdelnik	most
+´	dugouzlazni akcenat	most
+·	tačka u sredini	most
+¸	cedila	most
+¿	obrnuti upitnik	most
+‡	dupli krst	most
+‰	promil	most
+−	minus	most
+¼	četvrtina	some
+½	polovina	most
+¾	tri četvrtine	most
+⅓	trećina	most
+⅔	dve trećine	most
+√	kvadratni koren	most
+∛	treći koren	most
+∞	beskonačno	most
+≠	nije jednako sa	most
+¬	logička negacija	most
+æ	otvoreno e	char
+þ	torn	some
+₨	rupia	all	norep
+¤	valuta	all	norep
+ß	escet	char
+ə	šva	most

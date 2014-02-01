@@ -8,9 +8,11 @@ Quoi de Neuf dans NVDA
 == Nouyvelles fonctionnalités ==
 - Support de Microsoft PowerPoint 2013. Notez que le mode protégé n'est pas supporté. (#3578)
 - Dans Microsoft Word et Excel, NVDA peut maintenant lire le symbole sélectionné en choisissant un symbole dans la boîte de dialogue d'insertion de symbole. (#3538)
-- Il est maintenant possible de définir si du contenu dans des documents peut être identifié comme clicable, via une nouvelle option dans la boîte de dialogue Mise en Forme des Documents. Cette option est activée par défaut (comportement précédant). (#3556)
+- Il est maintenant possible de définir si du contenu dans des documents peut être identifié comme clicable, via une nouvelle option dans la boîte de dialogue Mise en Forme des Documents. Cette option est activée par défaut (conformément au comportement précédant). (#3556)
 - Support des afficheurs braille connectés via Bluetooth sur des ordinateurs utilisant Widcomm Bluetooth Software. (#2418)
 - Lors de l'édition de texte dans Powerpoint, les liens sont maintenant rapportés. (#3416)
+- Dans les applications ARIA ou les dialogues Web, il est maintenant possible de forcer NVDA à passer en mode navigation avec NVDA+Espace, permettant le parcourt de cette application ou de ce dialogue tel que dans un document. (#2023)
+- Dans Outlook Express / Windows Mail / Windows Live Mail, NVDA annonce maintenant si un message a une pièce jointe ou un drapeau. (#1594)
 
 
 == Changements ==
@@ -30,6 +32,25 @@ Quoi de Neuf dans NVDA
 - NVDA ne signale plus toutes les cellules dans Microsoft Excel comme souligné dans leurs informations de formatage. (#3669)
 - NVDA n'affiche plus de caractères illisibles dans les documents en mode de navigation tels que ceux trouvés dans la gamme de l'usage privé Unicode. Dans certains cas, cela empêchait l'affichage de certains intitulés de champs. (#2963).
 - Les langues d'entrée est-asiatiques n'échouent plus dans PuTTY. (#3432)
+- Naviguer dans un document après avoir annulé Dire Tout n'annonce plus la sortie d'un conteneur dans lequel NVDA n'est pas passé pendant Dire Tout. (#3688)
+- Lorsque l'on utilise les touches de navigation rapide en mode dire tout avec le survole activé, NVDA annonce plus précisément le nouveau champ (ex : il annonce maintenant un titre est un titre au lieux de n'annoncer que son texte). (#3689)
+- Les touches de navigation rapide pour sauter au début ou à la fin d'un conteneur fonctionnent maintenant correctement en mode dire tout quand le survol est activé au lieux d'intérompre la lacture. (#3675)
+- Les noms de gestes tactiles listés dans la boîte de dialogue Gestes d'Entrée de NVDA sont maintenant mieux només et traduits. (#3624)
+- NVDA ne cause plus le plentage de certains programmes lorsque l'on déplace la souris sur leur zone d'édition riche (TRichEdit). Ces programmes incluent Jarte 5.1 et BRfácil. (#3693, #3603, #3581)
+- Dans Internet Explorer et autres composants MSHTML, les conteneurs comme les tableaux marqués comme présentation par ARIA ne sont plus rapportés à l'utilisateur. (#3713)
+- Dans Microsoft Word, NVDA ne répette plus les informations de ligne/collone d'une cellule d'un tableau de manière inappropriée en braille. (#3702)
+- Dans les langues utilisant l'espace comme séparateur de groupes de nombres ou de milliers comme le Français ou l'Allemand, les groupes distints de textes ne sont plus prononcés comme un nombre. Cela était particulièrement problémathique dans les cellules de tableaux. (#3698)
+- Le Braille n'échoue plus à la mise à jours lorsque le curseur système est déplacé dans Microsoft Word 2013. (#3784)
+- Lorsque l'on est sur le premier caractère d'un titre dans Microsoft Word, le texte indiquant qu'il s'agit d'un titre (y compris son niveau) ne disparaît plus de l'afficheur braille.  (#3701)
+- Lorsqu'un profile de configuration est déclenché par une application et que celle-cie est quittée, NVDA n'échoue plus en désactivant le profile. (#3732)
+- Lors de la saisie en langue d'entrée d'Asie dans un contrôle de NVDA lui-même (ex : la boîte de dialogue rechercher en mode navigation), NVDA n'est plus annoncé à la place du candidat. (#3726)
+- Les onglets de la boîte de dialogue des options d'Outlook 2013 sont maintenant signalés. (#3826)
+- Amélioration du support des ARIA Live Regions dans Firefox et les autres applications basées sur Mozilla Gecko :
+	- Support des mise à jours aria-atomic et du filtrage des mise à jours aria-busy (#2640)
+	- Le texte alternatif (comme l'attribut alt ou aria-label) est inclu s'il n'y a aucun autre texte. (#3329)
+	- Les mise à jour de région ARIA-live ne sont plus cilencieuses si elle se produisent en même temps que le focus bouge. (#3777)
+- Certains éléments de présentation dans Firefox et dans les autres applications Mozilla Gecko ne sont plus montrées en mode navigation (spécifiquement quand l'élément est marqué avec aria-presentation mais est aussi activable). (#3781)
+- Amélioration des performances lors de la navigation sur un document dans Microsoft Word avec l'annonce des erreurs d'orthographe activée. (#3785)
 
 
 == Changements pour les développeurs ==

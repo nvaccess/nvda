@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-12-24 19:16+0530\n"
+"POT-Creation-Date: 2014-01-21 19:10+1000\n"
+"PO-Revision-Date: 2014-01-25 13:32+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: Tamil\n"
@@ -1432,6 +1432,15 @@ msgstr "நெடுவிளக்கம் கொண்டது"
 msgid "pinned"
 msgstr "நிலை நிறுத்தப்பட்டது"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "சூத்திரமுள்ளது"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "கருத்துரையுள்ளது"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "தெரிவாகாதது"
@@ -1549,6 +1558,7 @@ msgid "Tools"
 msgstr "கருவிகள்"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "தொடு திரை"
 
@@ -3056,10 +3066,6 @@ msgstr "இருபுற ஒழுங்கு"
 msgid "align default"
 msgstr "இயல்பொழுங்கு"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "கருத்துரையுள்ளது"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "எழுத்துப் பிழை"
@@ -3106,6 +3112,82 @@ msgstr "சுருதி (&P)"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "குரல் ஏற்ற இறக்கம் (&I)"
+
+msgid "text mode"
+msgstr "உரை நிலை"
+
+msgid "object mode"
+msgstr "பொருள் நிலை"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "ஒற்றை {action}"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "இரட்டை {action}"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "மும்முறை {action}"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "நான்முறை {action}"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{numFingers} விரல் {action}"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "தட்டுதல் [ தொடுச் செயல் ]"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "தட்டுதலும் பிடித்தலும் [ தொடுச் செயல் ]"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "பிடித்தல் [ தொடுச் செயல் ]"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr "மேல் சுண்டுதல் [ தொடுச் செயல் ]"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr "கீழ் சுண்டுதல் [ தொடுச் செயல் ]"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr "இடது சுண்டுதல் [ தொடுச் செயல் ]"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr "வலது சுண்டுதல் [ தொடுச் செயல் ]"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+msgctxt "touch action"
+msgid "hover down"
+msgstr "வட்டமிடுதல் நீட்டிப்பு [ தொடுச் செயல் ]"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr "வட்டமிடுதல் [ தொடுச் செயல் ]"
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr "வட்டமிடுதல் விலக்கம் [ தொடுச் செயல் ]"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3270,6 +3352,16 @@ msgstr ""
 "என்விடிஏ பயனுள்ளதாக இருந்து, அது மேலும் மேம்பட வேண்டுமென்று தாங்கள் விரும்பினால், "
 "என்விடிஏவிற்கு நன்கொடை அளிப்பதைப் பற்றி சிந்தியுங்கள். இதற்கு, என்விடிஏ பட்டியலிலுள்ள "
 "'நன்கொடையளியுங்கள்' உருப்படியைத் தேர்ந்தெடுக்கவும்."
+
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"இவ்விடத்திலிருந்து என்விடிஏவின் கூட்டுறுப்பை நிறுவ இயலாது: {path}.\n"
+"கூட்டுறுப்புகளை நிறுவ, தாங்கள் என்விடிஏவை இயக்கத்தில் வைத்திருக்க வேண்டும்.Cannot "
+"install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
@@ -3556,10 +3648,6 @@ msgstr "சிறுபடங்கள்"
 msgid "Master Thumbnails"
 msgstr "தலைமை சிறுபடங்கள்"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "பவர் பாயிண்ட்டிற்காக காத்துக்கொண்டிருக்கிறது..."
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "படவில்லை {slideNumber}"
@@ -3593,6 +3681,10 @@ msgstr "குறிப்புகள் ஏதுமில்லை"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "வெற்றுப் படவில்லை"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "பவர் பாயிண்ட்டிற்காக காத்துக்கொண்டிருக்கிறது..."
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -5132,6 +5224,11 @@ msgstr "நிலக்குறிகளை அறிவிக்கவும�
 msgid "Report fra&mes"
 msgstr "சட்டகங்களை அறிவிக்கவும் (&M)"
 
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "சொடுக்கப்படக்கூடியதாய் இருந்தால் அறிவிக்கவும்"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "அகரமுதலி உள்ளீட்டினைத் தொகுக்கவும்"
@@ -5944,10 +6041,6 @@ msgid ""
 msgstr ""
 "ஒருமுறை அழுத்தினால், தற்போதைய செங்குத்து வரிசையை, கிடைவரிசையின் தலைப்புகள் இருக்க "
 "வேண்டிய செங்குத்து வரிசையாக அமைக்கும். இருமுறை அழுத்தினால், அமைப்புகள் நீக்கப்படும்."
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "சூத்திரமுள்ளது"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
