@@ -3,6 +3,50 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.1 =
+
+== Novità ==
+- Supporto per Microsoft Powerpoint 2013. Si noti che la visualizzazione protetta non è supportata. (#3578)
+- In Microsoft Word ed Excel, NVDA può ora leggere il simbolo selezionato nella scelta dei simboli utilizzando la finestra di dialogo Inserisci simboli. (#3538)
+- è ora possibile stabilire se il contenuto nei documenti debba essere identificato come cliccabile, attraverso una nuova opzione nelle impostazioni formattazione documento. Da impostazioni predefinite il valore è attivo, come da comportamento precedente. (#3556)
+- Supporto per i display braille collegati via Bluetooth su un computer che esegue il software Bluetooth Widcomm. (#2418)
+- Quando si modifica del testo in Powerpoint, vengono segnalati eventuali collegamenti ipertestuali. (#3416)
+- Nelle applicazioni aria o finestre di dialogo web, è ora possibile forzare NVDA ad utilizzare la modalità navigazione con NVDA+spazio permettendo l'esplorazione dell'applicazione o della finestra di dialogo come se si trattasse di un documento web. (#2023)
+
+== Cambiamenti ==
+- Per i display braille Papenmeier, sono stati rimossi i comandi di spostamento al cursore di controllo/focus. Gli utenti potranno definire i propri tasti preferiti nella finestra gesti e tasti di immissione. (#3652)
+- NVDA ora si basa su Microsoft VC runtime versione 11, il che significa che non può più essere eseguito su sistemi operativi precedenti a Windows XP Service Pack 2 o Windows Server 2003 Service Pack 1.
+
+
+== Bug corretti ==
+- Quando ci si sposta o si selezionano le celle in Microsoft Excel, NVDA non dovrebbe più impropriamente annunciare la vecchia cella piuttosto che la nuova cella quando Microsoft Excel è lento nello spostare la selezione. (#3558)
+- NVDA gestisce correttamente l'apertura di un elenco a discesa per una cella in Microsoft Excel tramite il menu contestuale. (#3586)
+- In Itunes 11, vengono gestite correttamente le pagine dello store con nuovi contenuti in modalità navigazione quando si segue il link allo store. (#3625)
+- In Itunes11, i pulsanti usati per l'anteprima dei brani visualizzano correttamente la loro etichetta in modalità navigazione. (#3638)
+- In modalità navigazione in Google Chrome, le etichette delle caselle di controllo e dei pulsanti radio sono ora visualizzate correttamente. (#1562)
+- In Instantbird, NVDA non segnala più informazioni inutili ogni volta che si passa a un contatto nell'elenco contatti. (#2667)
+- In modalità navigazione in Adobe Reader, viene elaborato correttamente il testo in quei pulsanti nei quali l'etichetta è stata resa invisibile da qualche fumetto d'aiuto o simili. (#3640)
+- In modalità navigazione in Adobe Reader, non verranno più annunciati grafici contenente il testo "mc-ref". (#3645)
+- NVDA non segnala più tutte le celle in Microsoft Excel come sottolineate nelle informazioni di formattazione. (#3669)
+- Migliorata la visualizzazione di documenti unicode in modalità navigazione. (#2963).
+- Ora in Putty è possibile immettere correttamente caratteri dell'Asia dell'est. (#3432)
+- Mentre si esplora un documento e si termina la modalità dire tutto, NVDA non annuncerà più che si è abbandonato un elemento del documento (ad esempio un campo in una tabella) che la modalità dire tutto non aveva ancora raggiunto. (#3688)
+- Quando si utilizzano i comandi rapidi di esplorazione in un documento web con la funzione dire tutto, e con lettura veloce attiva, NVDA annuncia in maniera più accurata un nuovo campo. (#3689)
+- I comandi di lettura veloce durante la modalità dire tutto funzionano correttamente anche durante lo spostamento nei contenitori. (#3675)
+- Tutti i nomi dei principali gesti che si trovano nella finestra tasti e gesti di immissione sono stati tradotti nelle varie lingue. (#3624)
+- NVDA non causa più il crash di alcuni programmi quando il mouse veniva posizionato nei controlli richedit (TRichEdit). I programmi comprendono Jarte 5.1 e BRfácil. (#3693, #3603, #3581)
+- In Internet Explorer e altri controlli MSHTML, contenitori come le tabelle contrassegnati come presentazione ARIA non sono annunciati agli utenti. (#3713)
+- In Microsoft Word, NVDA non ripete più per svariate volte le informazioni riga/colonna di una cella. (#3702)
+- In quelle lingue che utilizzano uno spazio come separatore di cifre per le migliaia come francese e tedesco, i numeri contenenti più blocchi di testo non vengono più letti come un singolo numero. Questo risultava molto problematico con le celle contenenti numeri. (#3698)
+- Risolto un problema che non permetteva al braille di aggiornare correttamente la propria posizione al movimento del cursore in Word2013. (#3784)
+
+
+== Cambiamenti per sviluppatori in inglese ==
+- AppModules now contain productName and productVersion properties. This info is also now included in Developer Info (NVDA+f1). (#1625)
+- In the Python Console, you can now press the tab key to complete the current identifier. (#433)
+ - If there are multiple possibilities, you can press tab a second time to choose from a list.
+
+
 = 2013.3 =
 
 == Novità ==

@@ -10,6 +10,8 @@
 - in den Einstellunbgen zur Dokumentformatierung können Sie nun festlegen, ob anklickbare Elemente als solche erkannt werden sollen. Diese Option ist standardmäßig aktiviert. Dies entspricht dem Verhalten älterer NVDA-Versionen. (#3556)
 - Wenn Sie die Widcomm-Bluetoot-Software verwenden, werden nun auch Braillezeilen korrekt erkannt, die per Bluetooth verbunden sind. (#2418)
 - Beim Bearbeiten von Text in Powerpoint werden Links als solche erkannt. (#3416)
+- Um Aria-Dialoge und -Anwendungen im Lesemodus anzuzeigen, können Sie mit nvda+Leertaste in den Lesemodus wechseln, während Sie eine Aria-Anwendung verwenden. (#2023)
+- In Outlook Express / Windows Mail / Windows Live Mail wird die Existenz von Anhängen oder Kennzeichnungen von Nachrichten angezeigt. (#1594)
 
 == Änderungen ==
 - die Befehle zum Umschalten von/in den Flächenmodus wurden aus der Tastenbelegung für Papenmeier-Braillezeilen entfernt. Sie können im Dialog einstellungen/Eingaben jedoch eine eigene Tastenkombination zuweisen. (#3652)
@@ -27,6 +29,26 @@
 - in Microsoft Excel werden nicht mehr fälschlicherweise alle Zellen in den Formatierungsinformationen als unterstrichen angezeigt. (#3669)
 - Problem behoben, wonach bestimmte Unicode-Zeichen im Lesemodus die anzeige von Beschriftungen für Elemente verhindert haben. (#2963).
 - Pboblem behoben, wonach die Eingabe ostasiatischer Sonderzeichen in PUTTY fehlschlug (#3432)
+- Wenn Sie in einem Dokument im Lesemodus navigieren, nachdem Sie das Vorlesen des Dokuments abgebrochen haben, wird nun nicht mehr fälschlicherweise das Ende eines Containerobjektes (z.B. einer Tabelle) gemeldet (#3688).
+- Wenn Sie die Schnellnavigationstasten im Lesemodus verwenden, um das Vorlesen eines Dokumentes zu unterbrechen, während die Option "Navigation während alles Lesen erlauben" aktiviert ist, wird das aktuelle Element an der neuen Position korrekt angesagt. (#3689)
+- Die Navigationsbefehle zum Springen an den Anfang/das Ende eines Containerobjekts berücksichtigen jetzt die Option "Navigation während alles Lesen erlauben" (#3675).
+- Die Namen von Berührungsgesten werden nun im Dialog einstellungen/eingaben in übersetzter Form angezeigt. (#3624)
+- NVDA wird keine Abstürze mehr verursachen, wenn Sie die Maus über die Dokumentfenster (TRichEdit) mancher Programme bewegen. Dies betrifft u.a.  Jarte 5.1 und BRfácil. (#3693, #3603, #3581)
+- Aria-Elemente, die als Präsentation gekennzeichnet sind, werden nicht mehr angezeigt. (#3713)
+- in Microsoft Word-Tabellen werden Spalten- und Reiheninformationen nun nicht mehr mehrfach in Braille angezeigt. (#3702)
+- In Sprachen, in denen das leerzeichen als Tausendertrennzeichen verwendet wird, werden Zahlen, die durch Lerzeichen getrennt sind, nicht mehr irrtümlich zusammengezogen (nützlich bei der Ansage von Tabellenzellen, die nur Zahlen enthalten). (#3698)
+- die Braille-Anzeige wird nun korrekt aktualisiert, wenn Sie in Microsoft Word 2013 den Systemcursor bewegen. (#3784)
+- Wenn Sie sich in Microsoft Word auf dem ersten Zeichen einer Überschrift befinden, wird die Kennzeichnung «Überschift» (einschließlich der Ebene) in Braille angezeigt. (#3701)
+- ein Konfigurationsprofil, das beim Starten einer Anwendung per Auslöser automatisch ausgewählt wird, wird nun deaktiviert, wenn die betreffende Anwendung beendet wird. (#3732)
+- Asiatische Sonderzeichen werden nun korrekt angesagt/angezeigt, wenn Sie sie innerhalb von nvda eingeben (z.B. im Suchdialog im Lesemodus). (#3726)
+- die Registerkarten im Optionendialog von Outlook 2013 werden korrekt angezeigt. (#3826)
+- Verbesserung der Unterstützung von Aria-Live-Regionen in Mozilla-Anwendungen:
+	- automatische Aktualisierung von Live-Regionen (#2640)
+	- alternative Texte (z.B. alt-Attribute) werden verwendet, sofern keine anderweitige Beschriftung vorhanden ist. (#3329)
+	- Aktualisierungen von Live-Regionen werden ausgegeben, wenn Sie gleichzeitig den Fokus bewegen. (#3777)
+- Certain presentation elements in Firefox and other Mozilla Gecko applications are no longer inappropriately shown in browse mode (specifically when the element is marked with aria-presentation but its also focusable). (#3781)
+- A performance improvement when navigating a document in Microsoft Word with spelling errors enabled. (#3785)
+
 
 == Änderungen für Entwickler ==
 - Alle Anwendungsmodule enthalten nun die Eigenschaften productName und productVersion. Diese Informationen werden auch in der Entwicklerinfo angezeigt, die mit der Tastenkombination NVDA+f1 abgerufen werden kann. (#1625)

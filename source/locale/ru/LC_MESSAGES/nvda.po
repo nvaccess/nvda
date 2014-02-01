@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
+"POT-Creation-Date: 2014-01-21 19:10+1000\n"
 "PO-Revision-Date: 2013-11-23 10:43+0400\n"
 "Last-Translator: beqa gozalishvili <beqaprogger@gmail.com>\n"
 "Language-Team: \n"
@@ -1436,6 +1436,15 @@ msgstr "имеет полное описание"
 msgid "pinned"
 msgstr "Зафиксирован"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "Содержит формулу"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "есть коментарий"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "не выделено"
@@ -1553,6 +1562,7 @@ msgid "Tools"
 msgstr "Сервис"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "Сенсорный экран"
 
@@ -3069,10 +3079,6 @@ msgstr "выравнивание по ширине"
 msgid "align default"
 msgstr "Выравнивание поумолчанию"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "есть коментарий"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "Граматическая ошибка"
@@ -3119,6 +3125,91 @@ msgstr "&Высота"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Интонация"
+
+#, fuzzy
+msgid "text mode"
+msgstr "Текстовый фрейм"
+
+#, fuzzy
+msgid "object mode"
+msgstr "Режим редактирования"
+
+#. Translators: a touch screen action performed once
+#, fuzzy
+msgid "single {action}"
+msgstr "Секция"
+
+#. Translators: a touch screen action performed twice
+#, fuzzy
+msgid "double {action}"
+msgstr "Нет действия"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr ""
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr ""
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr ""
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+#, fuzzy
+msgctxt "touch action"
+msgid "tap"
+msgstr "Верхний"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+#, fuzzy
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "Заполнитель картинки"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr ""
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr ""
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr ""
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+#, fuzzy
+msgctxt "touch action"
+msgid "flick left"
+msgstr "выравнивание по левому краю"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+#, fuzzy
+msgctxt "touch action"
+msgid "flick right"
+msgstr "выравнивание по правому краю"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+#, fuzzy
+msgctxt "touch action"
+msgid "hover down"
+msgstr "Убавить громкость"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr ""
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr ""
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3286,6 +3377,12 @@ msgstr ""
 "Если вы находите NVDA полезной и хотите, чтобы она продолжала развиваться, "
 "пожалуйста, рассмотрите возможность пожертвования в пользу NV Access. Это "
 "можно сделать выбрав \"пожертвования\" из меню NVDA."
+
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
@@ -3572,10 +3669,6 @@ msgstr "Миниатюры"
 msgid "Master Thumbnails"
 msgstr "Мастер миниатюр"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "Ожидаем Powerpoint..."
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Слайд {slideNumber}"
@@ -3609,6 +3702,10 @@ msgstr "Нет заметок"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "Пустой слайд"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "Ожидаем Powerpoint..."
 
 # An open-source (and free) Screen Reader for the Windows Operating System
 # Created by Michael Curran, with help from James Teh and others
@@ -5159,6 +5256,12 @@ msgstr "Читать &ориентиры"
 msgid "Report fra&mes"
 msgstr "Читать &фреймы"
 
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#, fuzzy
+msgid "Report if &clickable"
+msgstr "Читать &Таблицы"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "Изменить словарную статью"
@@ -5970,10 +6073,6 @@ msgid ""
 msgstr ""
 "Однократное нажатие установит текущий столбец как столбец, в котором должны "
 "находиться заголовки строк. Двойное нажатие сбрасывает эту установку."
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "Содержит формулу"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"

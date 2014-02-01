@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr 2013.1:6039\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-11-04 08:37+0545\n"
+"POT-Creation-Date: 2014-01-21 19:10+1000\n"
+"PO-Revision-Date: 2014-01-28 20:59+0545\n"
 "Last-Translator: Him Prasad Gautam <drishtibachak@gmail.com>\n"
 "Language-Team: हिम प्रसाद गौतम <himjee@yahoo.com>\n"
-"Language: Nepali\n"
+"Language: ne\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.6.1\n"
 "अनुवाद मिति: २०६९ साल असार १५ गते\n"
 "पुनरावलोकन मिति: २०६९ साल श्रावण १५ गते\n"
 "प्रथम अनुवादक: हिम प्रसाद गौतम(नेपाल) <Urdubachak@gmail.com>, <himjee@yahoo."
@@ -1436,6 +1436,15 @@ msgstr "लामो विवरण युक्त ।"
 msgid "pinned"
 msgstr "टासिएको"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "सूत्र युक्त"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "प्रतिक्रिया युक्त"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "न रोजेको"
@@ -1548,6 +1557,7 @@ msgid "Tools"
 msgstr "औजारहरू"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "स्पर्स पर्दा"
 
@@ -3007,10 +3017,6 @@ msgstr "तटस्थ पङ्‌क्ति"
 msgid "align default"
 msgstr "निर्धारित पङ्‌क्ति"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "प्रतिक्रिया युक्त"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "हिज्जे गल्ती"
@@ -3057,6 +3063,87 @@ msgstr "&पीच"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&उतार-चढाव"
+
+msgid "text mode"
+msgstr "पाठ मुद्रा"
+
+msgid "object mode"
+msgstr "वस्तु मुद्रा"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "एकल क्रिया"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "दोब्बर क्रिया"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "तेब्बर क्रिया"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "चौब्बर क्रिया"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr ""
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+#, fuzzy
+msgctxt "touch action"
+msgid "tap"
+msgstr "सिरान"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+#, fuzzy
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "Bitmap खोपी"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr ""
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr ""
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr ""
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+#, fuzzy
+msgctxt "touch action"
+msgid "flick left"
+msgstr "वाञाँ पङ्‌क्ति"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+#, fuzzy
+msgctxt "touch action"
+msgid "flick right"
+msgstr "दायाँ पङ्‌क्ति "
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+#, fuzzy
+msgctxt "touch action"
+msgid "hover down"
+msgstr "ध्वनी घटाउ"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr ""
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr ""
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3220,6 +3307,12 @@ msgstr ""
 "यदि नेत्रवाणी उपयोगी जस्तो लाग्यो र यसको निरन्तर विकास होस् भन्ने चाहना राख्नु हुन्छ भने, "
 "कृपया NV Access लाई चन्दा दिनु होस् । दान गर्नका लागि तपाइले 'दान गर्नु होस् ' भन्ने मेनु "
 "लाई चयन गर्नु होला ।"
+
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
@@ -3506,10 +3599,6 @@ msgstr "औला काँटी"
 msgid "Master Thumbnails"
 msgstr "मूल अँगुठाछाप "
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "प्रस्तुतिकरणको प्रतिक्षा"
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "प्रस्तुतिपत्र {slideNumber}"
@@ -3542,6 +3631,10 @@ msgstr "टिप्पणी छैन ।"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "खाली प्रस्तुतीपत्र"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "प्रस्तुतिकरणको प्रतिक्षा"
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -4869,12 +4962,12 @@ msgstr "वस्तुको द्रुतमार्ग &कुञ्जी
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report object &position information"
-msgstr "बस्तुको &अवस्थाको जानकारी देउ"
+msgstr "बस्तु अवस्थित &स्थान बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Guess object &position information when unavailable"
-msgstr "बस्तुको &अवस्थाको जानकारी नभए अनुमान गर"
+msgstr "बस्तु अवस्थित &स्थान थाहा नभए अनुमान गर"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -5054,6 +5147,12 @@ msgstr "&कित्ता बताउ"
 #. document formatting settings dialog.
 msgid "Report fra&mes"
 msgstr "&पृष्ट सङ्ख्या बताउ"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#, fuzzy
+msgid "Report if &clickable"
+msgstr "&तालिका बताउ"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -5863,10 +5962,6 @@ msgid ""
 msgstr ""
 "एक पटक दबाउदा जहा हरफ शिर्षक फेला पार्नु छ त्यो महललाई चालु महल बनाउने छ । दुई पटक "
 "दबाउदा अनुकुलतालाई हटाउने छ ।"
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "सूत्र युक्त"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"

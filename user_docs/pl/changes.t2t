@@ -11,6 +11,8 @@
 - W okienku ustawień formatowania dokumentu, możliwe jest obecnie określenie, czy treść w dokumentach powinna być identyfikowana jako klikalna. Ta opcja jest domyślnie włączona(poprzednie zachowanie). (#3556)
 - Wsparcie monitorów brajlowskich połączonych przez Bluetooth na komputerze z uruchomionym oprogramowaniem Widcomm Bluetooth. (#2418)
 - Podczas edycji tekstu w PowerPoint, raportowane są hiperłącza. (#3416)
+- Wewnątrz aplikacji ARIA albo okien dialogowych na stronach www, możliwe jest przełączenie NVDA w tryb czytania klawiszami NVDA+space, co umożliwia nawigację wewnątrz aplikacji lub dialogu tak jak w dokumencie. (#2023)
+- W Outlook Express / Windows Mail / Windows Live Mail, NVDA teraz informuje czy wiadomość ma załącznik lub jest oflagowana. (#1594)
 
 
 == Zmiany ==
@@ -25,11 +27,30 @@
 - Przyciski podglądu piosenek w sklepie iTunes 11 teraz posiadają etykietę w trybie czytania. (#3638)
 - W trybie czytania w Google Chrome, etykiety pól wyboru i przycisków opcji są teraz prawidłowo odczytywane. (#1562)
 - W Instantbird, NVDA nie odczytuje dłużej bezużytecznych informacji po każdym przejściu do kontaktu na liście kontaktów. (#2667)
-- W trybie czytania w Adobe Reader, prawidłowy tekst jest odczytywany for dla przycisków etc., gdy etykieta została nadpisana przy użyciu podpowiedzi lub innych metod. (#3640)
+- W trybie czytania w Adobe Reader, prawidłowy tekst jest odczytywany dla przycisków etc., gdy etykieta została nadpisana przy użyciu podpowiedzi lub innych metod. (#3640)
 - W trybie czytania w Adobe Reader, obce grafiki zawierające tekst "mc-ref" nie będą dłużej odczytywane. (#3645)
 - NVDA nie zgłasza dłużej wszystkich komórek w Microsoft Excel jako podkreślone, odczytując ich informacje o formatowaniu. (#3669)
 - W dokumentach trybu czytania nie są pokazywane pozbawione znaczenia znaki Unikodu np. z zakresu do prywatnego użycia. W niektórych przypadkach blokowało to możliwość pokazania bardziej użytecznych etykiet. (#2963).
 - Wprowadzanie znaków wschodnioazjatyckich nie powodóje dłużej problemów w programie PuTTY (#3432)
+- Nawigowanie w dokumencie po anulowanym czytaniu wszystkiego, nie powoduje od teraz, że  NVDA czasami nieprawidłowo zgłaszał wyjście z pola (takiego jak tabela) które znajdowało się w dokumencie niżej niż miejsce, w którym przerwano czytanie. (#3688)
+- Podczas używania klawiszy szybkiej nawigacji trybu czytania, gdy  aktywna jest funkcja Czytaj wszystko i włączone zezwalanie na przeglądanie podczas czytania wszystkiego, NVDA bardziej dokładnie anonsuje nowe pole (np. teraz mówi że nagłówek to nagłówek, zamiast odczytywać tylko jego tekst). (#3689)
+- Polecenia szybkiej nawigacji przeskoku do początku lub końca kontenera, obecnie honorują ustawienie zezwalania na przeglądanie w trybie czytaj wszystko (tj. nie będą powodować anulowania czytania wszystkiego). (#3675)
+- Nazwy gestów dotykowych wymienione w oknie zdarzeń wejścia NVDA, przedstawiane są obecnie w przyjaznej, przetłumaczonej formie. (#3624)
+- NVDA nie powoduje dłużej awarii niektórych programów podczas przemieszczania myszy po ich kontrolkach rich edit (TRichEdit). Programy te to m.in. Jarte 5.1 i BRfácil. (#3693, #3603, #3581)
+- W Internet Explorer i innych kontrolkach MSHTML, kontenery takie jak tabele, oznaczone przez ARIA jako prezentacje, nie są od teraz zgłaszane użytkownikowi. (#3713)
+- W Microsoft Word, NVDA nie powtarza od teraz na monitorze brajlowskim wielokrotnie informacji o wierszu i kolumnie tabeli dla komórki. (#3702)
+- W językach używających spacji jako separatora grupy liczb / tysięcy (np. niemiecki i francuski), liczby z odrębnych kawałków tekstu nie są od teraz wymawiane jak jedna liczba. Było to szczególnie kłopotliwe dla komórek tabeli zawierających liczby. (#3698)
+- Rozwiązany problem z brakiem aktualizacji brajla przy ruchach kursora, który czasem pojawiał się w Microsoft Word 2013. (#3784)
+- Po ustawieniu kursora na pierwszym znaku nagłówka w Microsoft Word, tekst informujący, że jest to nagłówek (z podaniem jego poziomu) nie znika od teraz z monitora brajlowskiego. (#3701)
+- Gdy został uruchomiony przez wyzwalacz profil dla aplikacji, która następnie została zamknięta, NVDA od teraz prawidłowo dezaktywuje ten profil. (#3732)
+- Podczas wprowadzania znaków azjatyckich w kontrolce samego NVDA (np. okno wyszukiwania w trybie czytania), "NVDA" nie jest dłużej nieprawidłowo odczytywane zamiast znaku kandydującego. (#3726)
+- Zakładki w oknie opcji Outlook 2013 są teraz odczytywane. (#3826)
+- Poprawiona obsługa żywych obszarów ARIA w Firefox i innych aplikacjach Mozilla Gecko :
+	- obsługa aktualizacji aria-atomic i filtrowanie aktualizacji aria-busy (#2640)
+	- Tekst alternatywny (taki jak atrybut alt lub aria-label) jest dołączany, jeśli nie ma innego użytecznego tekstu. (#3329)
+	- Aktualizacje żywych obszarów nie są od teraz wyciszane, jeśli nastąpiły w tym samym momencie co przesunięcie punktu uwagi. (#3777)
+- Niektóre elementy prezentacji w Firefox i innych aplikacjach Mozilla Gecko nie są od teraz nieprawidłowo pokazywane w trybie czytania (szczególnie, gdy element jest oznaczony jako aria-presentation i jednocześnie może posiadać punkt uwagi). (#3781)
+- Poprawka wydajności podczas nawigacji wewnątrz dokumentów w Microsoft Word przy włączonym zgłaszaniu błędów pisowni. (#3785)
 
 
 == Zmiany dla programistów ==

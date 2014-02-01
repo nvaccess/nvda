@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-11-03 20:31+0200\n"
+"POT-Creation-Date: 2014-01-21 19:10+1000\n"
+"PO-Revision-Date: 2014-01-22 20:33+0200\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.6.3\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -1431,6 +1431,15 @@ msgstr "Uzun tarif var"
 msgid "pinned"
 msgstr "tutturulmuş"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "formül var"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "yorum var"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "seçili değil"
@@ -1544,6 +1553,7 @@ msgid "Tools"
 msgstr "A&raçlar"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "Dokunmatik ekran"
 
@@ -1746,8 +1756,8 @@ msgid ""
 "Switches to the next review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"Sonraki inceleme kipine geçer (örneğin, nesne, belge ya da ekran inceleme kipi) ve "
-"inceleme imlecini nesne sunucusunun bulunduğu noktada konumlandırır"
+"Sonraki inceleme kipine geçer (örneğin, nesne, belge ya da ekran inceleme "
+"kipi) ve inceleme imlecini nesne sunucusunun bulunduğu noktada konumlandırır"
 
 #. Translators: reported when there are no  other available review modes for this object
 msgid "No previous review mode"
@@ -1758,8 +1768,8 @@ msgid ""
 "Switches to the previous review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"Önceki inceleme kipine geçer (örneğin, nesne, belge ya da ekran inceleme kipi) ve inceleme "
-"imlecini nesne sunucusunun bulunduğu noktada konumlandırır"
+"Önceki inceleme kipine geçer (örneğin, nesne, belge ya da ekran inceleme "
+"kipi) ve inceleme imlecini nesne sunucusunun bulunduğu noktada konumlandırır"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -1962,9 +1972,7 @@ msgstr "sol"
 msgid ""
 "Moves the review cursor to the first character of the line where it is "
 "situated in the current navigator object and speaks it"
-msgstr ""
-"İnceleme imlecini, konumlandığı satırın başına taşır ve "
-"okur"
+msgstr "İnceleme imlecini, konumlandığı satırın başına taşır ve okur"
 
 #. Translators: Input help mode message for move review cursor to previous character command.
 msgid ""
@@ -1996,9 +2004,7 @@ msgstr "İnceleme imlecini sonraki karaktere taşır ve okur"
 msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
-msgstr ""
-"İnceleme imlecini, konumlandığı satırın sonuna taşır ve "
-"okur"
+msgstr "İnceleme imlecini, konumlandığı satırın sonuna taşır ve okur"
 
 #. Translators: A speech mode which disables speech output.
 msgid "speech mode off"
@@ -3027,10 +3033,6 @@ msgstr "İki yana hizalanmış"
 msgid "align default"
 msgstr "Varsayılan hiza"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "yorum var"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "Yazım hatası"
@@ -3077,6 +3079,82 @@ msgstr "&Ses Perdesi"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Tonlama"
+
+msgid "text mode"
+msgstr "metin kipi"
+
+msgid "object mode"
+msgstr "nesne kipi"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "bir kez {action}"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "iki kez {action}"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "üç kez {action}"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "Dört kez {action}"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{numFingers} parmakla {action}"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "dokun"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "dokun ve tut"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "tutma"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr "yukarı kaydır"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr "aşağı kaydır"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr "sola kaydır"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr "sağa kaydır"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+msgctxt "touch action"
+msgid "hover down"
+msgstr "aşağı it"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr "it"
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr "yukarı it"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3244,6 +3322,12 @@ msgstr ""
 "NVDA'yı yararlı buluyor ve geliştirilmeye devam edilmesini istiyorsanız, "
 "Lütfen NV Access için bağışta bulunmayı değerlendirin. Bunu NVDA menüsü "
 "altında Bağışta bulun seçeneğini kullanarak yapabilirsiniz."
+
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
@@ -3530,10 +3614,6 @@ msgstr "Parmak ucu"
 msgid "Master Thumbnails"
 msgstr "Ana Parmak Ucu"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "Powerpoint bekleniyor..."
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Slayt {slideNumber}"
@@ -3567,6 +3647,10 @@ msgstr "Not bulunamadı"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "Boş slayt"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "Powerpoint bekleniyor..."
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -5100,6 +5184,11 @@ msgstr "Sınır İ&mlerini bildir"
 msgid "Report fra&mes"
 msgstr "Çer&çeveleri Bildir"
 
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "Tıklanabilir olup olmadı&ğını bildir"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "Sözlük Kaydını düzenle"
@@ -5912,10 +6001,6 @@ msgid ""
 msgstr ""
 "Bir kez basıldığında mevcut sütun satır başlık sütunu olarak ayarlanır. İki "
 "kez basıldığında ayar sıfırlanır."
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "formül var"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"

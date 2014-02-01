@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-11-02 20:32+0900\n"
+"POT-Creation-Date: 2014-01-21 19:10+1000\n"
+"PO-Revision-Date: 2014-01-23 21:49+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -1433,6 +1433,15 @@ msgstr "詳細説明あり"
 msgid "pinned"
 msgstr "ピンどめ"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "数式"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "コメント付き"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "選択なし"
@@ -1545,6 +1554,7 @@ msgid "Tools"
 msgstr "ツール"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "タッチスクリーン"
 
@@ -3024,10 +3034,6 @@ msgstr "両端揃え"
 msgid "align default"
 msgstr "デフォルト揃え"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "コメント付き"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "スペルエラー"
@@ -3074,6 +3080,82 @@ msgstr "高さ(&P)"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "抑揚(&I)"
+
+msgid "text mode"
+msgstr "テキストモード"
+
+msgid "object mode"
+msgstr "オブジェクトモード"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "1回 {action}"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "2回 {action}"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "3回 {action}"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "4回 {action}"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{numFingers}本指 {action}"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "タップ"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "タップとホールド"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "ホールド"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr "フリック上"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr "フリック下"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr "フリック左"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr "フリック右"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+msgctxt "touch action"
+msgid "hover down"
+msgstr "長押しで移動"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr "長押し"
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr "長押しの指を離す"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3237,6 +3319,14 @@ msgstr ""
 "もし、NVDAを便利だと感じてくださり、今後の発展をお手伝いいただける場合は、ど"
 "うぞNV Accessへの寄付を検討してください。ご寄付をいただける場合は、NVDAメ"
 "ニュー内の項目、寄付を選択してください。"
+
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"NVDA アドオンを {path} からインストールできません。\n"
+"アドオンのインストールはNVDAの実行中にのみ可能です。"
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
@@ -3523,10 +3613,6 @@ msgstr "サムネイル"
 msgid "Master Thumbnails"
 msgstr "マスターサムネイル"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "パワーポイントの処理を待っています"
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "スライド {slideNumber}"
@@ -3559,6 +3645,10 @@ msgstr "ノートなし"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "空白のスライド"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "パワーポイントの処理を待っています"
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -5076,6 +5166,11 @@ msgstr "ランドマークの通知(&D)"
 msgid "Report fra&mes"
 msgstr "フレームの通知(&M)"
 
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "クリック可能の通知(&C)"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "辞書項目の編集"
@@ -5886,10 +5981,6 @@ msgid ""
 msgstr ""
 "1回押すと現在の列を行見出しの列として設定します。2回押すと設定をクリアしま"
 "す。"
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "数式"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"

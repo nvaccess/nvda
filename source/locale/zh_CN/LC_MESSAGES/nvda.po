@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
+"POT-Creation-Date: 2014-01-21 19:10+1000\n"
 "PO-Revision-Date: 2013-12-28 15:38+0800\n"
 "Last-Translator: 雪岭冰龙 <vgjh2005@gmail.com>\n"
 "Language-Team: Simplified Chinese translate team <vgjh2005@gmail.com>\n"
@@ -1431,6 +1431,15 @@ msgstr "包含长描述"
 msgid "pinned"
 msgstr "已占用"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "有公式"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "有注释"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "未选择"
@@ -1542,6 +1551,7 @@ msgid "Tools"
 msgstr "工具"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "触摸屏"
 
@@ -2969,10 +2979,6 @@ msgstr "两端对齐"
 msgid "align default"
 msgstr "默认对齐"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "有注释"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "拼写错误"
@@ -3019,6 +3025,91 @@ msgstr "音调(&P)"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "语调(&I)"
+
+#, fuzzy
+msgid "text mode"
+msgstr "文本框"
+
+#, fuzzy
+msgid "object mode"
+msgstr "焦点模式"
+
+#. Translators: a touch screen action performed once
+#, fuzzy
+msgid "single {action}"
+msgstr "区块"
+
+#. Translators: a touch screen action performed twice
+#, fuzzy
+msgid "double {action}"
+msgstr "没有默认动作"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr ""
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr ""
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr ""
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+#, fuzzy
+msgctxt "touch action"
+msgid "tap"
+msgstr "顶端"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+#, fuzzy
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "位图占位符"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr ""
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr ""
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr ""
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+#, fuzzy
+msgctxt "touch action"
+msgid "flick left"
+msgstr "左对齐"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+#, fuzzy
+msgctxt "touch action"
+msgid "flick right"
+msgstr "右对齐"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+#, fuzzy
+msgctxt "touch action"
+msgid "hover down"
+msgstr "减小音量"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr ""
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr ""
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3186,6 +3277,12 @@ msgstr ""
 "\n"
 "若您觉的 NVDA 很实用，并希望他可以继续发展，请赞助“NV Access”。您可以通过选择"
 "位于 NVDA 主菜单的“捐赠”菜单打开捐赠页面。"
+
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
@@ -3472,10 +3569,6 @@ msgstr "缩略图"
 msgid "Master Thumbnails"
 msgstr "主缩略图"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "正在等待PowerPoint"
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "幻灯片{slideNumber}"
@@ -3508,6 +3601,10 @@ msgstr "没有注释"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "空白幻灯片"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "正在等待PowerPoint"
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -5002,6 +5099,12 @@ msgstr "朗读路标(&D)"
 msgid "Report fra&mes"
 msgstr "朗读框架(&M)"
 
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#, fuzzy
+msgid "Report if &clickable"
+msgstr "朗读表格(&T)"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "修改字典项目"
@@ -5802,10 +5905,6 @@ msgid ""
 "Pressing once will set the current column as the column where row headers "
 "should be found. Pressing twice clears the setting."
 msgstr "按一次将该栏设置为列标题，按两次清除设定。"
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "有公式"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"

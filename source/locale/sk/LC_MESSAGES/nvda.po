@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-11-12 11:46+0100\n"
+"POT-Creation-Date: 2014-01-21 19:10+1000\n"
+"PO-Revision-Date: 2014-01-26 12:40+0100\n"
 "Last-Translator: Ondrej Rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -1430,6 +1430,15 @@ msgstr "s dlhým popisom"
 msgid "pinned"
 msgstr "pripnuté"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "má vzorec"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "obsahuje komentár"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "nevybraté"
@@ -1545,6 +1554,7 @@ msgid "Tools"
 msgstr "Nástroje"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "Dotyková obrazovka"
 
@@ -1602,8 +1612,7 @@ msgstr "ľavý klik"
 #. Translators: Input help mode message for left mouse click command.
 msgid "Clicks the left mouse button once at the current mouse position"
 msgstr ""
-"Simuluje klik ľavým tlačidlom na mieste, kde sa práve nachádza "
-"kurzor myši."
+"Simuluje klik ľavým tlačidlom na mieste, kde sa práve nachádza kurzor myši."
 
 #. Translators: Reported when right mouse button is clicked.
 msgid "right click"
@@ -1612,8 +1621,7 @@ msgstr "pravý klik"
 #. Translators: Input help mode message for right mouse click command.
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr ""
-"Simuluje klik pravým tlačidlom na mieste, kde sa práve nachádza "
-"kurzor myši."
+"Simuluje klik pravým tlačidlom na mieste, kde sa práve nachádza kurzor myši."
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 msgid "left mouse button unlock"
@@ -1742,8 +1750,8 @@ msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
 msgstr ""
-"Premiestni navigačný objekt na objekt, ktorý sa nachádza pod kurzorom "
-"myši a prečíta ho."
+"Premiestni navigačný objekt na objekt, ktorý sa nachádza pod kurzorom myši a "
+"prečíta ho."
 
 #. Translators: reported when there are no other available review modes for this object
 msgid "No next review mode"
@@ -2044,9 +2052,9 @@ msgid ""
 "will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
-"Prepína režimy reči medzi ticho, pípanie a reč. Ak je nastavené ticho "
-"nvda nebude hovoriť. Ak pípanie, NVDA zapípa vždy, keď by mal niečo povedať. "
-"Reč znamená hlasový výstup."
+"Prepína režimy reči medzi ticho, pípanie a reč. Ak je nastavené ticho nvda "
+"nebude hovoriť. Ak pípanie, NVDA zapípa vždy, keď by mal niečo povedať. Reč "
+"znamená hlasový výstup."
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
@@ -2440,16 +2448,14 @@ msgstr "žiadne ďalšie objekty"
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
-msgstr ""
-"Prejde na nasledujúci objekt v plošnom zobrazení v hierarchii objektov"
+msgstr "Prejde na nasledujúci objekt v plošnom zobrazení v hierarchii objektov"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
 "hierarchy"
 msgstr ""
-"Prejde na predchádzajúci objekt v plošnom zobrazení v hierarchii "
-"objektov"
+"Prejde na predchádzajúci objekt v plošnom zobrazení v hierarchii objektov"
 
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
@@ -3059,10 +3065,6 @@ msgstr "Zarovnané do bloku"
 msgid "align default"
 msgstr "Predvolené zarovnanie"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "obsahuje komentár"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "Pravopisná chyba"
@@ -3109,6 +3111,93 @@ msgstr "&Výška"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Intonácia"
+
+msgid "text mode"
+msgstr "textový režim"
+
+msgid "object mode"
+msgstr "objektový režim"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr ""
+
+#. Translators: a touch screen action performed twice
+#, fuzzy
+msgid "double {action}"
+msgstr "dvojité {action}"
+
+#. Translators: a touch screen action performed 3 times
+#, fuzzy
+msgid "tripple {action}"
+msgstr "trojité {action}"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr ""
+
+#. Translators: a touch screen action using multiple fingers
+#, fuzzy
+msgid "{numFingers} finger {action}"
+msgstr "{action} {numFingers} prstami"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+#, fuzzy
+msgctxt "touch action"
+msgid "tap"
+msgstr "klepnutie"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+#, fuzzy
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "Klepnúť a podržať"
+
+#. Translators: a touch with no release, on a touch screen.
+#, fuzzy
+msgctxt "touch action"
+msgid "hold"
+msgstr "podržať"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+#, fuzzy
+msgctxt "touch action"
+msgid "flick up"
+msgstr "švihnutie hore"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+#, fuzzy
+msgctxt "touch action"
+msgid "flick down"
+msgstr "švihnutie dole"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+#, fuzzy
+msgctxt "touch action"
+msgid "flick left"
+msgstr "švihnutie vľavo"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+#, fuzzy
+msgctxt "touch action"
+msgid "flick right"
+msgstr "švihnutie vpravo"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+#, fuzzy
+msgctxt "touch action"
+msgid "hover down"
+msgstr "ubrať hlasitosť"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr ""
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr ""
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3277,6 +3366,14 @@ msgstr ""
 "užitočných pre nevidiacich a zrakovo postihnutých.\n"
 "Ak je NVDA užitočný aj pre Vás a chcete aby vývoj napredoval, zvášte možnosť "
 "príspevku NV Access. Prispieť môžete z podmenu pomocník."
+
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"Nemôžem nainštalovať doplnok z {path}.\n"
+"pred inštaláciou doplnku spustite NVDA."
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
@@ -3563,10 +3660,6 @@ msgstr "Náhľady"
 msgid "Master Thumbnails"
 msgstr "Predloha s náhľadmi"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "Čakám na Powerpoint..."
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Snímka {slideNumber}"
@@ -3599,6 +3692,10 @@ msgstr "Žiadne poznámky"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "Prázdna snímka"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "Čakám na Powerpoint..."
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -3814,7 +3911,8 @@ msgid ""
 "Configure how NVDA reports input composition and candidate selection for "
 "certain languages"
 msgstr ""
-"Nastavuje oznamovanie zadávania textu skladaním a zoznamu návrhov pre niektoré jazyky"
+"Nastavuje oznamovanie zadávania textu skladaním a zoznamu návrhov pre "
+"niektoré jazyky"
 
 #. Translators: The label for the menu item to open Object Presentation dialog.
 msgid "&Object presentation..."
@@ -5136,6 +5234,11 @@ msgstr "Oznamovať o&blasti stránky"
 msgid "Report fra&mes"
 msgstr "Oznamovať rá&mce"
 
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "Oznamovať &prvok pri kliknutí"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "Upraviť Položku Slovníka"
@@ -5949,10 +6052,6 @@ msgid ""
 msgstr ""
 "Nastaví aktuálny riadok ako hlavičku. Stlačené rýchlo dvakrát vymaže "
 "nastavenie."
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "má vzorec"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
