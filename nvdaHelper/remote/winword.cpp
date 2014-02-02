@@ -286,7 +286,7 @@ bool collectSpellingErrorOffsets(IDispatchPtr pDispatchRange, vector<pair<long,l
 	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_APPLICATION ,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
 		return false;
 	}
-	bool isSandbox = false;
+	BOOL isSandbox = false;
 	// Don't go on if this is sandboxed as collecting spelling errors crashes word
 	_com_dispatch_raw_propget(pDispatchApplication,wdDISPID_APPLICATION_ISSANDBOX ,VT_BOOL,&isSandbox);
 	if(isSandbox ) {
