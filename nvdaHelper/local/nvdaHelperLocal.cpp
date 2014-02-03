@@ -87,7 +87,7 @@ struct BgSendMessageData {
 	LPARAM lParam;
 	UINT fuFlags;
 	UINT uTimeout;
-	DWORD dwResult;
+	DWORD_PTR dwResult;
 	DWORD error;
 };
 BgSendMessageData* bgSendMessageData = NULL;
@@ -140,6 +140,14 @@ DWORD WINAPI bgSendMessageThreadProc(LPVOID param) {
 }
 
 LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult) {
+	if (!hwnd) {
+		// We use HWND NULL to signal that the background thread should die,
+		// so we must return before then.
+		// We may as well do it as early as possible.
+		SetLastError(ERROR_INVALID_WINDOW_HANDLE);
+		return 0;
+	}
+
 	if (WaitForSingleObject(cancelSendMessageEvent, 0) == WAIT_OBJECT_0) {
 		// Already cancelled, so don't bother going any further.
 		SetLastError(ERROR_CANCELLED);
@@ -228,7 +236,7 @@ void cancelSendMessage() {
 }
 
 LRESULT WINAPI fake_SendMessageW(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam) {
-	DWORD_PTR result;
+	DWORD_PTR result = 0;
 	cancellableSendMessageTimeout(hwnd, Msg, wParam, lParam, 0, 60000, &result);
 	return (LRESULT)result;
 }
