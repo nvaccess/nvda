@@ -87,7 +87,7 @@ struct BgSendMessageData {
 	LPARAM lParam;
 	UINT fuFlags;
 	UINT uTimeout;
-	DWORD dwResult;
+	DWORD_PTR dwResult;
 	DWORD error;
 };
 BgSendMessageData* bgSendMessageData = NULL;
