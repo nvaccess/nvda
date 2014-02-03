@@ -208,7 +208,15 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 
 	HANDLE waitHandles[] = {bgSendMessageData->completeEvent, cancelSendMessageEvent};
 	DWORD waitIndex = 0;
-	CoWaitForMultipleHandles(0, INFINITE, 2, waitHandles, &waitIndex);
+	if (fuFlags & SMTO_BLOCK) {
+		waitIndex = WaitForMultipleObjects(2, waitHandles, FALSE, INFINITE);
+	} else {
+		// We need to pump nonqueued messages while waiting.
+		// MsgWaitForMultipleObjects can wake for nonqueued messages,
+		// but we'd have to manage the actual pump ourselves.
+		// CoWaitForMultipleHandles does exactly what we need.
+		CoWaitForMultipleHandles(0, INFINITE, 2, waitHandles, &waitIndex);
+	}
 	isActiveBgSendMessage = false;
 	if (waitIndex == 1) {
 		// Cancelled. Abandon the thread.
