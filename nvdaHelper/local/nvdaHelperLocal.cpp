@@ -228,7 +228,7 @@ void cancelSendMessage() {
 }
 
 LRESULT WINAPI fake_SendMessageW(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam) {
-	DWORD_PTR result;
+	DWORD_PTR result = 0;
 	cancellableSendMessageTimeout(hwnd, Msg, wParam, lParam, 0, 60000, &result);
 	return (LRESULT)result;
 }
