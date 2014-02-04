@@ -17,6 +17,7 @@ import eventHandler
 from logHandler import log
 import config
 import winInputHook
+import core
 
 WM_MOUSEMOVE=0x0200
 WM_LBUTTONDOWN=0x0201
@@ -75,6 +76,7 @@ def internal_mouseEvent(msg,x,y,injected):
 		curMousePos=(x,y)
 		if msg==WM_MOUSEMOVE: 
 			mouseMoved=True
+			core.requestPump()
 		elif msg in (WM_LBUTTONDOWN,WM_RBUTTONDOWN):
 			queueHandler.queueFunction(queueHandler.eventQueue,speech.cancelSpeech)
 	except:
