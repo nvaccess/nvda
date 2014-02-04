@@ -396,3 +396,20 @@ def requestPump():
 		return
 	_isPumpPending = True
 	_pump.Start(PUMP_MAX_DELAY, True)
+
+def callLater(delay, callable, *args, **kwargs):
+	"""Call a callable once after the specified number of milliseconds.
+	This is currently a thin wrapper around C{wx.CallLater},
+	but this should be used instead for calls which aren't just for UI,
+	as it notifies watchdog appropriately.
+	"""
+	import wx
+	return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
+
+def _callLaterExec(callable, args, kwargs):
+	import watchdog
+	watchdog.alive()
+	try:
+		return callable(*args, **kwargs)
+	finally:
+		watchdog.asleep()

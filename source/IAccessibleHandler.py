@@ -695,8 +695,7 @@ def processDesktopSwitchWinEvent(window,objectID,childID):
 	hDesk=windll.user32.OpenInputDesktop(0, False, 0)
 	if hDesk!=0:
 		windll.user32.CloseDesktop(hDesk)
-		import wx
-		wx.CallLater(200, _correctFocus)
+		core.callLater(200, _correctFocus)
 	else:
 		# Switching to a secure desktop.
 		# We don't receive key up events for any keys down before switching to a secure desktop,
@@ -795,8 +794,7 @@ def processFakeFocusWinEvent(eventID, window, objectID, childID):
 	"""
 	# A suitable event for faking the focus has been received with no focus event, so we probably need to find the focus and fake it.
 	# However, it is possible that the focus event has simply been delayed, so wait a bit and only do it if the focus hasn't changed yet.
-	import wx
-	wx.CallLater(50, _fakeFocus, api.getFocusObject())
+	core.callLater(50, _fakeFocus, api.getFocusObject())
 
 def _fakeFocus(oldFocus):
 	if oldFocus is not api.getFocusObject():
