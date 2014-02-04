@@ -107,11 +107,10 @@ DWORD WINAPI bgSendMessageThreadProc(LPVOID param) {
 		// Even though this is a background thread, we still want a timeout
 		// to minimise the cancelled messages that hit unresponsive threads.
 		// Keep sending this message until the timeout elapses.
-		LRESULT ret;
 		for (UINT remainingTimeout = data->uTimeout; remainingTimeout > 0; remainingTimeout -= (remainingTimeout > CANCELSENDMESSAGE_CHECK_INTERVAL) ? CANCELSENDMESSAGE_CHECK_INTERVAL : remainingTimeout) {
 			if (WaitForSingleObject(data->execEvent, 0) == WAIT_OBJECT_0)
 				break; // Cancelled.
-			if ((ret = SendMessageTimeoutW(data->hwnd, data->Msg, data->wParam, data->lParam, data->fuFlags, min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), &data->dwResult)) != 0) {
+			if (SendMessageTimeoutW(data->hwnd, data->Msg, data->wParam, data->lParam, data->fuFlags, min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), &data->dwResult) != 0) {
 				// Success.
 				data->error = 0;
 				break;
