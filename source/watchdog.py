@@ -15,6 +15,7 @@ import comtypes
 import winUser
 import winKernel
 from logHandler import log
+import NVDAHelper
 
 #settings
 #: How often to check whether the core is alive
@@ -50,6 +51,9 @@ class CallCancelled(Exception):
 def alive():
 	"""Inform the watchdog that the core is alive.
 	"""
+	# Stop cancelling calls.
+	windll.kernel32.ResetEvent(ctypes.wintypes.HANDLE.in_dll(
+		NVDAHelper.localLib, "cancelCallEvent"))
 	# Set the timer so the watcher will take action in MIN_CORE_ALIVE_TIMEOUT
 	# if this function or asleep() isn't called.
 	windll.kernel32.SetWaitableTimer(_coreDeadTimer,
@@ -80,20 +84,28 @@ def _watcher():
 			waited += MIN_CORE_ALIVE_TIMEOUT
 			if waited >= NORMAL_CORE_ALIVE_TIMEOUT:
 				break
-		if log.isEnabledFor(log.DEBUGWARNING) and not _isAlive():
+		if _isAlive():
+			continue
+		if log.isEnabledFor(log.DEBUGWARNING):
 			log.debugWarning("Trying to recover from freeze, core stack:\n%s"%
 				"".join(traceback.format_stack(sys._current_frames()[_coreThreadID])))
 		lastTime=time.time()
-		while not _isAlive():
+		isAttemptingRecovery = True
+		# Cancel calls until the core is alive.
+		# This event will be reset by alive().
+		windll.kernel32.SetEvent(ctypes.wintypes.HANDLE.in_dll(
+			NVDAHelper.localLib, "cancelCallEvent"))
+		# Some calls have to be killed individually.
+		while True:
 			curTime=time.time()
 			if curTime-lastTime>FROZEN_WARNING_TIMEOUT:
 				lastTime=curTime
 				log.warning("Core frozen in stack:\n%s"%
 					"".join(traceback.format_stack(sys._current_frames()[_coreThreadID])))
-			# The core is dead, so attempt recovery.
-			isAttemptingRecovery = True
 			_recoverAttempt()
 			time.sleep(RECOVER_ATTEMPT_INTERVAL)
+			if _isAlive():
+				break
 		isAttemptingRecovery = False
 
 def _shouldRecoverAfterMinTimeout():
@@ -120,8 +132,6 @@ def _recoverAttempt():
 		oledll.ole32.CoCancelCall(_coreThreadID,0)
 	except:
 		pass
-	import NVDAHelper
-	NVDAHelper.localLib.cancelSendMessage()
 
 @ctypes.WINFUNCTYPE(ctypes.wintypes.LONG, ctypes.c_void_p)
 def _crashHandler(exceptionInfo):
@@ -162,7 +172,6 @@ def initialize():
 	windll.kernel32.SetUnhandledExceptionFilter(_crashHandler)
 	oledll.ole32.CoEnableCallCancellation(None)
 	# Handle cancelled SendMessage calls.
-	import NVDAHelper
 	NVDAHelper._setDllFuncPointer(NVDAHelper.localLib, "_notifySendMessageCancelled", _notifySendMessageCancelled)
 	# Monkey patch comtypes to specially handle cancelled COM calls.
 	comtypes.COMError.__init__ = _COMError_init
@@ -288,7 +297,6 @@ def cancellableSendMessage(hwnd, msg, wParam, lParam, flags=0, timeout=60000):
 	The call will still be cancelled if appropriate even if the specified timeout has not yet been reached.
 	@raise CallCancelled: If the call was cancelled.
 	"""
-	import NVDAHelper
 	result = ctypes.wintypes.DWORD()
 	NVDAHelper.localLib.cancellableSendMessageTimeout(hwnd, msg, wParam, lParam, flags, timeout, ctypes.byref(result))
 	return result.value

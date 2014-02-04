@@ -75,7 +75,7 @@ handle_t createRemoteBindingHandle(wchar_t* uuidString) {
 
 const UINT CANCELSENDMESSAGE_CHECK_INTERVAL = 1000;
 DWORD mainThreadId = 0;
-HANDLE cancelSendMessageEvent = NULL;
+HANDLE cancelCallEvent = NULL;
 void(__stdcall *_notifySendMessageCancelled)() = NULL;
 struct BgSendMessageData {
 	HANDLE completeEvent;
@@ -148,7 +148,7 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 		return 0;
 	}
 
-	if (WaitForSingleObject(cancelSendMessageEvent, 0) == WAIT_OBJECT_0) {
+	if (WaitForSingleObject(cancelCallEvent, 0) == WAIT_OBJECT_0) {
 		// Already cancelled, so don't bother going any further.
 		SetLastError(ERROR_CANCELLED);
 		return 0;
@@ -206,7 +206,7 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 		SetEvent(bgSendMessageData->execEvent);
 	}
 
-	HANDLE waitHandles[] = {bgSendMessageData->completeEvent, cancelSendMessageEvent};
+	HANDLE waitHandles[] = {bgSendMessageData->completeEvent, cancelCallEvent};
 	DWORD waitIndex = 0;
 	if (fuFlags & SMTO_BLOCK) {
 		waitIndex = WaitForMultipleObjects(2, waitHandles, FALSE, INFINITE);
@@ -239,10 +239,6 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 	return 1;
 }
 
-void cancelSendMessage() {
-	SetEvent(cancelSendMessageEvent);
-}
-
 LRESULT WINAPI fake_SendMessageW(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam) {
 	DWORD_PTR result = 0;
 	cancellableSendMessageTimeout(hwnd, Msg, wParam, lParam, 0, 60000, &result);
@@ -256,7 +252,7 @@ LRESULT WINAPI fake_SendMessageTimeoutW(HWND hwnd, UINT Msg, WPARAM wParam, LPAR
 void nvdaHelperLocal_initialize() {
 	startServer();
 	mainThreadId = GetCurrentThreadId();
-	cancelSendMessageEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	cancelCallEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
 	HMODULE oleacc = LoadLibraryA("oleacc.dll");
 	if (!oleacc)
 		return;
@@ -292,7 +288,7 @@ void nvdaHelperLocal_terminate() {
 		bgSendMessageData->hwnd = NULL;
 		SetEvent(bgSendMessageData->execEvent);
 	}
-	CloseHandle(cancelSendMessageEvent);
+	CloseHandle(cancelCallEvent);
 	stopServer();
 }
 
