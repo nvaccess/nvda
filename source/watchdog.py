@@ -18,8 +18,6 @@ from logHandler import log
 import NVDAHelper
 
 #settings
-#: How often to check whether the core is alive
-CHECK_INTERVAL=0.1
 #: The minimum time to wait for the core to be alive.
 MIN_CORE_ALIVE_TIMEOUT=0.5
 #: How long to wait for the core to be alive under normal circumstances.
@@ -234,23 +232,17 @@ class CancellableCallThread(threading.Thread):
 		self._exc_info = None
 		self._executeEvent.set()
 
+		waitHandles = (ctypes.wintypes.HANDLE * 2)(
+			self._executionDoneEvent, _cancelCallEvent)
+		waitIndex = ctypes.wintypes.DWORD()
 		if pumpMessages:
-			waitHandles = (ctypes.wintypes.HANDLE * 1)(self._executionDoneEvent)
-			waitIndex = ctypes.wintypes.DWORD()
-		timeout = int(1000 * CHECK_INTERVAL)
-		while True:
-			if pumpMessages:
-				try:
-					oledll.ole32.CoWaitForMultipleHandles(0, timeout, 1, waitHandles, ctypes.byref(waitIndex))
-					break
-				except WindowsError:
-					pass
-			else:
-				if windll.kernel32.WaitForSingleObject(self._executionDoneEvent, timeout) != winKernel.WAIT_TIMEOUT:
-					break
-			if isAttemptingRecovery:
-				self.isUsable = False
-				raise CallCancelled
+			oledll.ole32.CoWaitForMultipleHandles(0, winKernel.INFINITE, 2, waitHandles, ctypes.byref(waitIndex))
+		else:
+			waitIndex.value = windll.kernel32.WaitForMultipleObjects(2, waitHandles, False, winKernel.INFINITE)
+		if waitIndex.value == 1:
+			# Cancelled.
+			self.isUsable = False
+			raise CallCancelled
 
 		exc = self._exc_info
 		if exc:
