@@ -43,6 +43,7 @@ _coreDeadTimer = windll.kernel32.CreateWaitableTimerW(None, True, None)
 _suspended = False
 _coreThreadID=windll.kernel32.GetCurrentThreadId()
 _watcherThread=None
+_cancelCallEvent = None
 
 class CallCancelled(Exception):
 	"""Raised when a call is cancelled.
@@ -52,8 +53,7 @@ def alive():
 	"""Inform the watchdog that the core is alive.
 	"""
 	# Stop cancelling calls.
-	windll.kernel32.ResetEvent(ctypes.wintypes.HANDLE.in_dll(
-		NVDAHelper.localLib, "cancelCallEvent"))
+	windll.kernel32.ResetEvent(_cancelCallEvent)
 	# Set the timer so the watcher will take action in MIN_CORE_ALIVE_TIMEOUT
 	# if this function or asleep() isn't called.
 	windll.kernel32.SetWaitableTimer(_coreDeadTimer,
@@ -93,8 +93,7 @@ def _watcher():
 		isAttemptingRecovery = True
 		# Cancel calls until the core is alive.
 		# This event will be reset by alive().
-		windll.kernel32.SetEvent(ctypes.wintypes.HANDLE.in_dll(
-			NVDAHelper.localLib, "cancelCallEvent"))
+		windll.kernel32.SetEvent(_cancelCallEvent)
 		# Some calls have to be killed individually.
 		while True:
 			curTime=time.time()
@@ -164,13 +163,16 @@ def _COMError_init(self, hresult, text, details):
 def initialize():
 	"""Initialize the watchdog.
 	"""
-	global _watcherThread, isRunning
+	global _watcherThread, isRunning, _cancelCallEvent
 	if isRunning:
 		raise RuntimeError("already running") 
 	isRunning=True
 	# Catch application crashes.
 	windll.kernel32.SetUnhandledExceptionFilter(_crashHandler)
 	oledll.ole32.CoEnableCallCancellation(None)
+	# Cache cancelCallEvent.
+	_cancelCallEvent = ctypes.wintypes.HANDLE.in_dll(NVDAHelper.localLib,
+		"cancelCallEvent")
 	# Handle cancelled SendMessage calls.
 	NVDAHelper._setDllFuncPointer(NVDAHelper.localLib, "_notifySendMessageCancelled", _notifySendMessageCancelled)
 	# Monkey patch comtypes to specially handle cancelled COM calls.
