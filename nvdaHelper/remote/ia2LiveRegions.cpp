@@ -55,10 +55,13 @@ IAccessible2* findAriaAtomic(IAccessible2* pacc2,map<wstring,wstring>& attribsMa
 	return pacc2Atomic;
 }
 
-bool getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewText=false, bool recurse=true) {
+bool getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewText=false, bool recurse=true, bool includeTopLevelText=true) {
 	bool gotText=false;
 	IAccessibleText* paccText=NULL;
-	if(pacc2->QueryInterface(IID_IAccessibleText,(void**)&paccText)!=S_OK||!paccText) {
+	if(pacc2->QueryInterface(IID_IAccessibleText,(void**)&paccText)!=S_OK) {
+		paccText=NULL;
+	}
+	if(!paccText&&recurse&&!useNewText) {
 		//no IAccessibleText interface, so try children instead
 		long childCount=0;
 		if(!useNewText&&pacc2->get_accChildCount(&childCount)==S_OK&&childCount>0) {
@@ -68,7 +71,7 @@ bool getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewTe
 				if(varChildren[i].vt==VT_DISPATCH) {
 					IAccessible2* pacc2Child=NULL;
 					if(varChildren[i].pdispVal&&varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)&pacc2Child)==S_OK) {
-						if(getTextFromIAccessible(textBuf,pacc2Child,false,true)) {
+						if(getTextFromIAccessible(textBuf,pacc2Child)) {
 							gotText=true;
 						}
 						pacc2Child->Release();
@@ -78,7 +81,7 @@ bool getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewTe
 			}
 			delete [] varChildren;
 		}
-	} else {
+	} else if(paccText) {
 		//We can use IAccessibleText because it exists
 		BSTR bstrText=NULL;
 		long startOffset=0;
@@ -117,7 +120,7 @@ bool getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewTe
 						}
 					}
 				}
-				if(!charAdded) {
+				if(!charAdded&&includeTopLevelText) {
 					textBuf.append(1,realChar);
 					charAdded=true;
 					if(realChar!=L'\xfffc'&&!iswspace(realChar)) {
@@ -281,7 +284,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	bool gotText=false;
 	IAccessible2* pacc2Atomic=findAriaAtomic(pacc2,attribsMap);
 	if(pacc2Atomic) {
-		gotText=getTextFromIAccessible(textBuf,pacc2Atomic,false,true);
+		gotText=getTextFromIAccessible(textBuf,pacc2Atomic);
 		pacc2Atomic->Release();
 	} else if(eventID==EVENT_OBJECT_NAMECHANGE) {
 		BSTR name=NULL;
@@ -294,7 +297,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 			gotText=true;
 			SysFreeString(name);
 		}
-	} else if(eventID==EVENT_OBJECT_NAMECHANGE) {
+	} else if(eventID==EVENT_OBJECT_DESCRIPTIONCHANGE) {
 		BSTR desc=NULL;
 		VARIANT varChild;
 		varChild.vt=VT_I4;
@@ -306,9 +309,9 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 			SysFreeString(desc);
 		}
 	} else if(eventID==EVENT_OBJECT_SHOW) {
-		gotText=getTextFromIAccessible(textBuf,pacc2,false,true);
+		gotText=getTextFromIAccessible(textBuf,pacc2);
 	} else if(eventID==IA2_EVENT_TEXT_INSERTED||eventID==IA2_EVENT_TEXT_UPDATED) {
-		gotText=getTextFromIAccessible(textBuf,pacc2,true,allowAdditions);
+		gotText=getTextFromIAccessible(textBuf,pacc2,true,allowAdditions,allowText);
 	}
 	if(gotText&&!textBuf.empty()) nvdaController_speakText(textBuf.c_str());
 }
