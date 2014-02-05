@@ -565,6 +565,8 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			# If we send a WM_NULL to this window at this point (which happens in accessibleObjectFromEvent), Messenger will silently exit (#677).
 			# Therefore, completely ignore these events, which is useless to us anyway.
 			return
+		if not eventHandler.shouldAcceptEvent(winEventIDsToNVDAEventNames[eventID], windowHandle=window):
+			return
 		winEventLimiter.addEvent(eventID,window,objectID,childID,threadID)
 	except:
 		log.error("winEventCallback", exc_info=True)
