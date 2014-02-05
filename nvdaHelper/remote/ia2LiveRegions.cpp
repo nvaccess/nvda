@@ -294,7 +294,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 			gotText=true;
 			SysFreeString(name);
 		}
-	} else if(eventID==EVENT_OBJECT_NAMECHANGE) {
+	} else if(eventID==EVENT_OBJECT_DESCRIPTIONCHANGE) {
 		BSTR desc=NULL;
 		VARIANT varChild;
 		varChild.vt=VT_I4;
