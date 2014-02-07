@@ -131,7 +131,7 @@ class MINIDUMP_EXCEPTION_INFORMATION(ctypes.Structure):
 
 @ctypes.WINFUNCTYPE(ctypes.wintypes.LONG, ctypes.c_void_p)
 def _crashHandler(exceptionInfo):
-	threadId = threading.currentThread().ident
+	threadId = ctypes.windll.kernel32.GetCurrentThreadId()
 	# An exception might have been set for this thread.
 	# Clear it so that it doesn't get raised in this function.
 	ctypes.pythonapi.PyThreadState_SetAsyncExc(threadId, None)
