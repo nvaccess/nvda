@@ -1,14 +1,15 @@
 # Copyright (C) 2011
-# Zahari Yurukov <zahari.yurukov@gmail.com>, 2013.
+# Zahari Yurukov <zahari.yurukov@gmail.com>, 2013, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5822\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-08 23:57+1000\n"
-"PO-Revision-Date: 2013-11-13 06:18+0200\n"
+"POT-Creation-Date: 2014-02-07 18:54+1000\n"
+"PO-Revision-Date: 2014-02-04 04:29+0200\n"
 "Last-Translator: Zahari Yurukov <zahari.yurukov@gmail.com>\n"
 "Language-Team: Български <>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1556,6 +1557,7 @@ msgid "Tools"
 msgstr "Инструменти"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "Сензорен екран"
 
@@ -3114,6 +3116,82 @@ msgstr "Висо&чина на гласа"
 msgid "&Inflection"
 msgstr "&Модулация"
 
+msgid "text mode"
+msgstr "текстов режим"
+
+msgid "object mode"
+msgstr "обектен режим"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "еднократно {action}"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "двукратно {action}"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "трикратно {action}"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "четирикратно {action}"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{action} с {numFingers} пръста"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "почукване"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "почукване и задържане"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "задържане"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr "перване нагоре"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr "перване надолу"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr "перване наляво"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr "перване надясно"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+msgctxt "touch action"
+msgid "hover down"
+msgstr "плъзгане надолу"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr "плъзгане"
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr "плъзгане нагоре"
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
 msgstr "Проверка за обновления"
@@ -3279,6 +3357,14 @@ msgstr ""
 "обмислете направата на дарение за NV Access. Това може да направите като "
 "изберете Направи дарение от менюто на NVDA."
 
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"Добавката за NVDA от {path} не може да бъде инсталирана.\n"
+"NVDA трябва да е стартиран за да може да инсталирате добавки."
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "{symbol} като в {description}"
@@ -3340,6 +3426,15 @@ msgstr "Все още няма съобщение"
 #. Translators: The description of an NVDA command to view one of the recent messages.
 msgid "Displays one of the recent messages"
 msgstr "Показва едно от скорошните съобщения"
+
+#. Translators: This Outlook Express message has an attachment
+#, fuzzy
+msgid "has attachment"
+msgstr "прикачен"
+
+#. Translators: this Outlook Express message is flagged
+msgid "flagged"
+msgstr ""
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
@@ -3565,10 +3660,6 @@ msgstr "Плочки"
 msgid "Master Thumbnails"
 msgstr "Основни плочки"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "Изчакване на Powerpoint..."
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Слайд {slideNumber}"
@@ -3602,6 +3693,10 @@ msgstr "Няма бележки"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "Празен слайд"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "Изчакване на Powerpoint..."
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -4307,8 +4402,8 @@ msgstr "Прочитане на всичко"
 msgid ""
 "Error saving configuration profile triggers - probably read only file system."
 msgstr ""
-"Грешка при запазване на превключвателите за профила от настройки - вероятно заради "
-"режим само за четене на файловата система."
+"Грешка при запазване на превключвателите за профила от настройки - вероятно "
+"заради режим само за четене на файловата система."
 
 #. Translators: The title of the configuration profile triggers dialog.
 msgid "Profile Triggers"
@@ -4351,8 +4446,8 @@ msgid ""
 "will be removed from that profile and associated with this one.\n"
 "Are you sure you want to continue?"
 msgstr ""
-"Този превключвател вече е асоцийран с друг профил. Ако продължите, превключвателя ще бъде "
-"премахнат от стария профил и добавен към този.\n"
+"Този превключвател вече е асоцийран с друг профил. Ако продължите, "
+"превключвателя ще бъде премахнат от стария профил и добавен към този.\n"
 "Сигурен ли сте, че желаете да продължите?"
 
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
@@ -5143,6 +5238,11 @@ msgstr "Докладвай маркерите"
 #. document formatting settings dialog.
 msgid "Report fra&mes"
 msgstr "Докладвай &рамките"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "Съобщавай ако е щракаем"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"

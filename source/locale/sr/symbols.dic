@@ -38,27 +38,26 @@ negative number	minus	none	norep
 !	uzvičnik	all
 "	navodnik	most
 \#	taraba	most
-$	dolar	some
-£	funta	some
-€	evro	some
-¢	centi	some
-¥	jen	some
+$	dolar	all	norep
+£	funta	all	norep
+¢	centi	all	norep
+¥	jen	all	norep
 %	procenat	some
 &	ampersand	some
 '	apostrof	all
 (	leva zagrada	most
 )	desna zagrada	most
-*	zvezdica	most
-+	plus	most
+*	zvezdica	some
++	plus	some
 ,	zapeta	all	always
 -	crtica	most
-.	tačka	all
+.	tačka	some
 /	kosa crta	some
-:	dvotačka	most
+:	dvotačka	most	norep
 ;	tačkazarez	most
 <	manje od	most
 >	veće od	most
-=	jednako	most
+=	jednako	some
 ?	upitnik	all
 @	et	some
 [	leva uglasta	most
@@ -73,10 +72,10 @@ _	donja crta	most
 ~	tilda	most
 
 # Other characters
-•	oznaka	some
+•	znak za nabrajanje	some
 …	tri tačke	all	always
 ...	tri tačke	all	always
-	oznaka	some
+	znak za nabrajanje	some
 “	levi navodnik	most
 ”	desni navodnik	most
 ‚	levi jednostruki navodnik	most
@@ -85,12 +84,14 @@ _	donja crta	most
 —	em crtica	most
 ●	kružić	most
 ¨	preglas	most
+‎	oznaka s leva na desno	char
+‏	oznaka s desna na levo	char
 ■	crni kvadrat	some
 ➔	strelica desno	some
 §	paragraf	all
 °	stepeni	some
-«	leva dupla izlomljena zagrada	most
-»	desna dupla izlomljena zagrada	most
+«	leva dupla izlomljena zagrada
+»	desna dupla izlomljena zagrada
 µ	mi	some
 ¹	gornji indeks 1	some
 ²	gornji indeks 2	some

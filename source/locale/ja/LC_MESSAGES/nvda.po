@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-21 19:10+1000\n"
-"PO-Revision-Date: 2014-01-23 21:49+0900\n"
+"POT-Creation-Date: 2014-02-07 18:54+1000\n"
+"PO-Revision-Date: 2014-02-06 21:50+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -1583,8 +1583,8 @@ msgid ""
 "Turns input help on or off. When on, any input such as pressing a key on the "
 "keyboard will tell you what script is associated with that input, if any."
 msgstr ""
-"入力ヘルプのオンオフを切り替えます。オンの場合、例えばキーを押すような、入力"
-"に関連付けられたスクリプトがある場合はそれを通知します。"
+"入力ヘルプモードの切り替え。オンの場合はキーを押すなどの入力と関連付けられた"
+"機能を通知"
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
@@ -1596,16 +1596,14 @@ msgstr "スリープモードオン"
 
 #. Translators: Input help mode message for toggle sleep mode command.
 msgid "Toggles  sleep mode on and off for  the active application."
-msgstr ""
-"アクティブなアプリケーションに対するスリープモードのオンとオフを切り替えます"
+msgstr "アクティブなアプリケーションに対するスリープモードの切り替え"
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
 "twice will spell the current line"
 msgstr ""
-"アプリケーションカーソルのある現在行の通知。このキーを続けて2度押すと、現在行"
-"のスペルを通知します"
+"アプリケーションカーソルのある現在行の通知。2回押すと現在の行のスペルの通知"
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "left click"
@@ -1613,7 +1611,7 @@ msgstr "左クリック"
 
 #. Translators: Input help mode message for left mouse click command.
 msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "現在のマウス位置で左マウスボタンを1度クリックします"
+msgstr "現在のマウス位置で左マウスボタンを1回クリック"
 
 #. Translators: Reported when right mouse button is clicked.
 msgid "right click"
@@ -1621,7 +1619,7 @@ msgstr "右クリック"
 
 #. Translators: Input help mode message for right mouse click command.
 msgid "Clicks the right mouse button once at the current mouse position"
-msgstr "現在のマウス位置で右マウスボタンを1度クリックします"
+msgstr "現在のマウス位置で右マウスボタンを1回クリック"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 msgid "left mouse button unlock"
@@ -1633,7 +1631,7 @@ msgstr "左マウスボタンロック"
 
 #. Translators: Input help mode message for left mouse lock/unlock toggle command.
 msgid "Locks or unlocks the left mouse button"
-msgstr "左マウスボタンをロックまたはロック解除します"
+msgstr "左マウスボタンをロックまたはロック解除"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
 msgid "right mouse button unlock"
@@ -1645,23 +1643,21 @@ msgstr "右マウスボタンをロック"
 
 #. Translators: Input help mode message for right mouse lock/unlock command.
 msgid "Locks or unlocks the right mouse button"
-msgstr "右マウスボタンをロックまたはロック解除します"
+msgstr "右マウスボタンをロックまたはロック解除"
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
 "no selection it says so."
 msgstr ""
-"編集領域及びドキュメント内の選択項目を通知します。もしなにも選択されていなけ"
-"れば、選択なしと通知します。"
+"編集領域やドキュメントの選択中テキストの通知。選択中テキストがなければ選択な"
+"しと通知"
 
 #. Translators: Input help mode message for report date and time command.
 msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
-msgstr ""
-"1度押した場合は現在時刻を通知し、続けて2度押した場合は現在の日付を通知しま"
-"す。"
+msgstr "1回押すと現在時刻を通知、2回押すと現在の日付を通知"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
 msgid "No settings"
@@ -1693,7 +1689,7 @@ msgstr "入力文字読み上げする"
 
 #. Translators: Input help mode message for toggle speaked typed characters command.
 msgid "Toggles on and off the speaking of typed characters"
-msgstr "入力文字読み上げのオンオフの切り替え"
+msgstr "入力文字の読み上げの切り替え"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
@@ -1705,7 +1701,7 @@ msgstr "入力単語読み上げする"
 
 #. Translators: Input help mode message for toggle speak typed words command.
 msgid "Toggles on and off the speaking of typed words"
-msgstr "入力単語読み上げオンオフを切り替える"
+msgstr "入力単語の読み上げの切り替え"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
@@ -1719,7 +1715,7 @@ msgstr "コマンドキー読み上げする"
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
-msgstr "文字だけでなく、押されたキー名称を読み上げるかどうかを切り替える"
+msgstr "コマンドキーの読み上げの切り替え"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -1731,7 +1727,7 @@ msgstr "記号%s"
 #. Translators: Input help mode message for cycle speech symbol level command.
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
-msgstr "記号の読み上げレベルを選択"
+msgstr "記号の読み上げレベルの選択"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
 msgid "object has no location"
@@ -1749,8 +1745,7 @@ msgstr "ナビゲーターオブジェクトをマウス位置に移動"
 msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
-msgstr ""
-"ナビゲーターオブジェクトを現在のマウス位置のオブジェクトに設定して読み上げ"
+msgstr "ナビゲーターオブジェクトをマウス位置のオブジェクトに移動して読み上げ"
 
 #. Translators: reported when there are no other available review modes for this object
 msgid "No next review mode"
@@ -1761,8 +1756,8 @@ msgid ""
 "Switches to the next review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"次のレビューモード（オブジェクト、ドキュメント、画面）に切り替えて、ナビゲー"
-"ターオブジェクトの位置にレビューを移動"
+"レビューモードをオブジェクトレビュー、ドキュメントレビュー、画面レビューの順"
+"に切り替えて、ナビゲーターオブジェクトに移動"
 
 #. Translators: reported when there are no  other available review modes for this object
 msgid "No previous review mode"
@@ -1773,8 +1768,8 @@ msgid ""
 "Switches to the previous review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"前のレビューモード（オブジェクト、ドキュメント、画面）に切り替えて、ナビゲー"
-"ターオブジェクトの位置にレビューを移動"
+"レビューモードを画面レビュー、ドキュメントレビュー、オブジェクトレビューの順"
+"に切り替えて、ナビゲーターオブジェクトに移動"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -1792,9 +1787,8 @@ msgid ""
 "and pressing three times Copies name and value of this  object to the "
 "clipboard"
 msgstr ""
-"現在のナビゲーターオブジェクトについて通知、2回続けて押すとこの情報についてス"
-"ペルを読み上げ、3回続けて押すとこのオブジェクトの名前と値をクリップボードにコ"
-"ピーします"
+"現在のナビゲーターオブジェクトの通知、2回押すとスペルの読み上げ、3回押すとオ"
+"ブジェクトの名前と内容をクリップボードにコピー"
 
 #. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
 msgid "No location information for navigator object"
@@ -1827,8 +1821,8 @@ msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
-"ナビゲーターオブジェクトを現在のフォーカスに設定し、可能であればレビューカー"
-"ソルをそのカレット内の位置に設定します。"
+"ナビゲーターオブジェクトを現在のフォーカスに設定。可能ならレビューカーソルを"
+"オブジェクト内のキャレットの位置に設定"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -1849,8 +1843,8 @@ msgid ""
 "Pressed once Sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
-"一度押すとキーボードフォーカスをナビゲーターオブジェクトに移動し、2度押すとシ"
-"ステムキャレットをレビューカーソル位置にセットします"
+"キーボードフォーカスをナビゲーターオブジェクトに移動、2回押すとシステムキャ"
+"レットをレビューカーソル位置に移動"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
@@ -1897,8 +1891,7 @@ msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
 msgstr ""
-"現在のナビゲーターオブジェクトの初期動作を実行（例：もしそれがボタンであれば"
-"押す）"
+"現在のナビゲーターオブジェクトのデフォルト動作の実行（例：ボタンを押す）"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 msgid "top"
@@ -1925,9 +1918,8 @@ msgid ""
 "situated. If this key is pressed twice, the current line will be spelled. "
 "Pressing three times will spell the line using character descriptions."
 msgstr ""
-"現在レビューカーソルのあるナビゲーターオブジェクトの行を通知します。このキー"
-"が2度押された場合は現在の行をスペル読みします。3度押された場合は文字の説明を"
-"用いて行を通知します。"
+"現在レビューカーソルのあるナビゲーターオブジェクトの行の通知。2回押すと現在の"
+"行のスペルを通知。3回押すと文字説明で行を通知"
 
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
@@ -1963,9 +1955,8 @@ msgid ""
 "situated. Pressing twice spells the word. Pressing three times spells the "
 "word using character descriptions"
 msgstr ""
-"現在レビューカーソルのあるナビゲーターオブジェクトの単語を通知します。この"
-"キーが2度押された場合は現在の単語のスペルを通知します。3度押された場合は文字"
-"の説明を用いて単語のスペル読みを行います。"
+"現在レビューカーソルのあるナビゲーターオブジェクトの単語の通知。2回押すと単語"
+"のスペルを通知。3回押すと文字説明で単語を通知"
 
 #. Translators: Input help mode message for move review cursor to next word command.
 msgid ""
@@ -1998,9 +1989,8 @@ msgid ""
 "character. Pressing three times reports the numeric value of the character "
 "in decimal and hexadecimal"
 msgstr ""
-"現在レビューカーソルのあるナビゲーターオブジェクトの文字を通知します。この"
-"キーが2度押された場合は現在の文字の説明を通知します。3度押された場合は文字"
-"コードを10進と16進で通知します。"
+"現在レビューカーソルのあるナビゲーターオブジェクトの文字の通知。2回押すと文字"
+"説明を通知。3回押すと文字コードを10進と16進で通知"
 
 msgid "right"
 msgstr "右"
@@ -2036,10 +2026,9 @@ msgid ""
 "will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
-"読み上げモードをなし、ビープ、読み上げの順に切り替えます。なしに設定した場"
-"合、NVDAはなにも読み上げません。ビープに設定した場合、NVDAは何か音声を発生す"
-"べき場面でビープ音を鳴らします。読み上げに設定した場合、NVDAは通常通りに読み"
-"上げを行います。"
+"読み上げモードをなし、ビープ、読み上げの順に切り替え。なしに設定するとNVDAは"
+"なにも読み上げない。ビープに設定するとNVDAは音声のかわりにビープ音を鳴らす。"
+"読み上げに設定するとNVDAは通常通り読み上げ"
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
@@ -2052,10 +2041,9 @@ msgid ""
 "with a control. When in browse mode, you can navigate the document with the "
 "cursor, quick navigation keys, etc."
 msgstr ""
-"ブラウズモードとフォーカスモードの切り替え。フォーカスモードでは、押された"
-"キーの情報は直接アプリケーションに渡され、アプリケーションをコントロールでき"
-"ます。ブラウズモードでは、カーソルキーを使ってページ内を移動したり、クイック"
-"ナビゲーションを行ったりすることができます。"
+"ブラウズモードとフォーカスモードの切り替え。フォーカスモードでは押されたキー"
+"は直接アプリケーションに渡されアプリケーションを操作できる。ブラウズモードで"
+"はカーソルキーでページ内の移動やクイックナビゲーションが可能"
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
@@ -2069,13 +2057,13 @@ msgstr "NVDAメニューの表示"
 msgid ""
 "reads from the review cursor  up to end of current text, moving the review "
 "cursor as it goes"
-msgstr "レビューカーソルの位置を移動しながら、テキストを最後まで読み上げます"
+msgstr "レビューカーソルを移動しながらテキストを最後まで読み上げ"
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
 "reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
-msgstr "システムカーソル位置を移動しながら、テキストを最後まで読み上げます"
+msgstr "システムカーソルを移動しながらテキストを最後まで読み上げ"
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 msgid "No formatting information"
@@ -2098,8 +2086,8 @@ msgstr "ステータス行がみつかりません"
 #. Translators: Input help mode message for report status line text command.
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr ""
-"現在起動中のアプリケーションのステータス情報を読み上げ、ナビゲーションカーソ"
-"ルを移動"
+"現在のアプリケーションのステータス情報を読み上げ、ナビゲーションカーソルを移"
+"動"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -2123,9 +2111,8 @@ msgid ""
 "pressed twice, spells the title. If pressed three times, copies the title to "
 "the clipboard"
 msgstr ""
-"現在使用中のアプリケーションまたは、最前面のウインドウのタイトルを通知しま"
-"す。2回続けて押すと、タイトルをスペル読みします。3回続けて押すとタイトルをク"
-"リップボードにコピーします。"
+"現在のアプリケーションまたは最前面のウインドウのタイトルを通知。2回押すと、タ"
+"イトルをスペル読み。3回押すとタイトルをクリップボードにコピー"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 msgid "speaks the current foreground object"
@@ -2136,8 +2123,8 @@ msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
 msgstr ""
-"現在のナビゲーターオブジェクトに関する情報を、開発者に役立つように記録して、"
-"情報が確認できるようにログビューワーを開きます。"
+"現在のナビゲーターオブジェクトの情報を開発者向けに記録してログビューワーを開"
+"く"
 
 #. Translators: A mode where no progress bar updates are given.
 msgid "no progress bar updates"
@@ -2160,8 +2147,8 @@ msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
 msgstr ""
-"プログレスバーの更新通知方法を、ビープ音、読み上げ、ビープ音と読み上げ、オフ"
-"の間で切り替えます"
+"プログレスバーの通知を、ビープ音、読み上げ、ビープ音と読み上げ、なし、の順に"
+"切り替え"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
@@ -2190,9 +2177,7 @@ msgstr "キャレットをレビューカーソルに移動する"
 #. Translators: Input help mode message for toggle caret moves review cursor command.
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr ""
-"キャレットの移動に応じてレビューカーソルを移動する機能のオンオフを切り替えま"
-"す。"
+msgstr "キャレットの移動を追跡するレビューカーソル移動の切り替え"
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
@@ -2205,9 +2190,7 @@ msgstr "フォーカスをナビゲーターオブジェクトに移動する"
 #. Translators: Input help mode message for toggle focus moves navigator object command.
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
-msgstr ""
-"フォーカスの変化に応じてナビゲーターオブジェクトを移動させる機能のオンオフを"
-"切り替え"
+msgstr "フォーカスの変化を追跡するナビゲーターオブジェクト移動の切り替え"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "no system battery"
@@ -2228,7 +2211,7 @@ msgstr "残り{hours:d} 時間 {minutes:d} 分"
 
 #. Translators: Input help mode message for report battery status command.
 msgid "reports battery status and time remaining if AC is not plugged in"
-msgstr "電源未装着時、バッテリー残量と残り時間を通知"
+msgstr "電源に接続していない時にバッテリー残量と残り時間を通知"
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
 msgid "Pass next key through"
@@ -2238,7 +2221,7 @@ msgstr "次に押したキーを直接渡す"
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
-msgstr "次に押したキーはNVDAではなくWindowsに直接渡されます。"
+msgstr "次のキー入力をNVDAではなくアプリケーションに渡す"
 
 #. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
@@ -2302,12 +2285,11 @@ msgstr "現在のNVDAの設定情報を保存"
 msgid ""
 "Pressing once reverts the current configuration to the most recently saved "
 "state. Pressing three times reverts to factory defaults."
-msgstr ""
-"一度押すと設定を前回保存した値に戻します。3回押すと設定を初期状態に戻します。"
+msgstr "1回押すと設定を前回保存した値に戻す。3回押すと設定を初期状態に戻す"
 
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
-msgstr "主に開発に使用されるNVDAのPythonコンソールを開きます"
+msgstr "開発用のNVDA Pythonコンソールを開く"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
@@ -2324,7 +2306,7 @@ msgstr "点字は%sを表示"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
-msgstr "点字のフォーカス位置とレビュー位置の表示切替"
+msgstr "点字表示のフォーカス追従とレビューカーソル追従の切り替え"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -2339,7 +2321,7 @@ msgstr "クリップボードには大きなテキスト情報が含まれてい
 
 #. Translators: Input help mode message for report clipboard text command.
 msgid "Reports the text on the Windows clipboard"
-msgstr "ウインドウズクリップボード内のテキストの通知"
+msgstr "クリップボードテキストの通知"
 
 #. Translators: Indicates start of review cursor text to be copied to clipboard.
 msgid "Start marked"
@@ -2349,20 +2331,19 @@ msgstr "開始位置をマーク"
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "copied"
-msgstr ""
-"レビューカーソルの現在位置を、コピーするテキストの始点としてマークします"
+msgstr "レビューカーソルをコピーの開始位置として指定"
 
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 msgid "No start marker set"
-msgstr "スタートマーカーがセットされていません"
+msgstr "開始位置が設定されていません"
 
 #. Translators: Presented when trying to copy text residing on a different object (that is, start marker is in object 1 but trying to copy text from object 2).
 msgid "The start marker must reside within the same object"
-msgstr "スタートマーカーは同じオブジェクト内に属していなければなりません"
+msgstr "開始位置は同じオブジェクトの中でなければなりません"
 
 #. Translators: Presented when some review text has been copied to clipboard.
 msgid "Review selection copied to clipboard"
-msgstr "レビューカーソルの選択中項目をクリップボードへコピーしました"
+msgstr "レビューの選択範囲をクリップボードへコピーしました"
 
 #. Translators: Presented when there is no text selection to copy from review cursor.
 msgid "No text to copy"
@@ -2373,8 +2354,8 @@ msgid ""
 "Retrieves the text from the previously set start marker up to and including "
 "the current position of the review cursor and copies it to the clipboard"
 msgstr ""
-"直前に設定したスタートマーカーから、レビューカーソルの現在位置までのテキスト"
-"を取得してクリップボードにコピーします"
+"設定されたコピー開始位置からレビューカーソルの現在位置までのテキストをクリッ"
+"プボードにコピー"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
@@ -2386,7 +2367,7 @@ msgstr "点字表示を次にスクロール"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Routes the cursor to or activates the object under this braille cell"
-msgstr "カーソルを移動する、またはこの点字セル上のオブジェクトを有効化する"
+msgstr "カーソル移動または点字セルの位置のオブジェクトをアクティブ化"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
@@ -2409,8 +2390,8 @@ msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
 "Useful for developers"
 msgstr ""
-"appモジュール及びグローバルプラグインをNVDAを再起動しないで再読み込みする(開"
-"発者に便利な機能です)"
+"appモジュールおよびグローバルプラグインをNVDAを再起動しないで再読み込み(開発"
+"者向け機能)"
 
 #. Translators: a message when there is no next object when navigating
 msgid "no next"
@@ -2439,13 +2420,13 @@ msgstr "タッチモードの切り替え"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Reports the object and content directly under your finger"
-msgstr "指で触わっているオブジェクトやコンテンツを通知します。"
+msgstr "指で触わっているオブジェクトやコンテンツの通知"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Reports the new object or content under your finger if different to where "
 "your finger was last"
-msgstr "指で触わっているオブジェクトやコンテンツが変化したときに通知します。"
+msgstr "指で触わっているオブジェクトやコンテンツが変化したときに通知"
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
@@ -3388,6 +3369,15 @@ msgstr "メッセージはまだありません"
 #. Translators: The description of an NVDA command to view one of the recent messages.
 msgid "Displays one of the recent messages"
 msgstr "最新のメッセージを表示"
+
+#. Translators: This Outlook Express message has an attachment
+#, fuzzy
+msgid "has attachment"
+msgstr "添付"
+
+#. Translators: this Outlook Express message is flagged
+msgid "flagged"
+msgstr ""
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
