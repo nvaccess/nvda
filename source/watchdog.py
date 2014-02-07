@@ -137,8 +137,9 @@ def _crashHandler(exceptionInfo):
 	ctypes.pythonapi.PyThreadState_SetAsyncExc(threadId, None)
 
 	# Write a minidump.
+	dumpPath = os.path.abspath(os.path.join(globalVars.appArgs.logFileName, "..", "nvda_crash.dmp"))
 	try:
-		with file(os.path.join(globalVars.appArgs.logFileName, "..", "nvda_crash.dmp"), "w") as mdf:
+		with file(dumpPath, "w") as mdf:
 			mdExc = MINIDUMP_EXCEPTION_INFORMATION(ThreadId=threadId,
 				ExceptionPointers=exceptionInfo, ClientPointers=False)
 			log.info("Writing minidump")
@@ -155,7 +156,7 @@ def _crashHandler(exceptionInfo):
 	except:
 		log.critical("NVDA crashed! Error writing minidump", exc_info=True)
 	else:
-		log.critical("NVDA crashed! Minidump written")
+		log.critical("NVDA crashed! Minidump written to %s" % dumpPath)
 
 	log.info("Restarting due to crash")
 	import core
