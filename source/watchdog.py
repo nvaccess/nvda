@@ -142,7 +142,6 @@ def _crashHandler(exceptionInfo):
 		with file(dumpPath, "w") as mdf:
 			mdExc = MINIDUMP_EXCEPTION_INFORMATION(ThreadId=threadId,
 				ExceptionPointers=exceptionInfo, ClientPointers=False)
-			log.info("Writing minidump")
 			if not ctypes.windll.DbgHelp.MiniDumpWriteDump(
 				ctypes.windll.kernel32.GetCurrentProcess(),
 				os.getpid(),
