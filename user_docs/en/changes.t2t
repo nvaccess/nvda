@@ -13,6 +13,7 @@
 - When editing text in PowerPoint, hyperlinks are now reported. (#3416)
 - When in ARIA applications or dialogs on the web, it is now possible to force NVDA to switch to browse mode with NVDA+space allowing document-style navigation of the application or dialog. (#2023)
 - In Outlook Express / Windows Mail / Windows Live Mail, NVDA now reports if a message has an attachment or is flagged. (#1594)
+- When navigating tables in accessible Java applications, row and column coordinates are now reported, including  column and  row headers if they exist. (#3756)
 
 
 == Changes ==
@@ -52,6 +53,12 @@
 	- Live region updates are no longer silenced if they occur at the same time as the focus moves. (#3777)
 - Certain presentation elements in Firefox and other Mozilla Gecko applications are no longer inappropriately shown in browse mode (specifically when the element is marked with aria-presentation but its also focusable). (#3781)
 - A performance improvement when navigating a document in Microsoft Word with spelling errors enabled. (#3785)
+- Several fixes to the support for accessible Java applications:
+ - The initially focused control in a frame or dialog no longer fails to be reported when the frame or dialog comes to the foreground. (#3753)
+ - Unuseful position information is no longer announced for radio buttons (e.g. 1 of 1). (#3754)
+ - Better reporting of JComboBox controls (html no longer reported, better reporting of expanded and collapsed states). (#3755)
+ - More text is included in automatic dialog caption calculations. (#3857)
+ - - changes to the name, value or description of the focused control is now reported more accurately. (#3770)
 
 
 == Changes for Developers ==
