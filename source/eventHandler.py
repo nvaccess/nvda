@@ -189,5 +189,6 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 	if eventName == "valueChange" and config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]:
 		return True
 	fg = winUser.getForegroundWindow()
-	return (winUser.isDescendantWindow(fg, windowHandle)
-		or winUser.getWindowStyle(windowHandle) & winUser.WS_POPUP)
+	root=winUser.getAncestor(windowHandle,winUser.GA_ROOT)
+	# If this window is  within the foreground window or this window or its root window is  a popup window, or this window's root window is  the highest in the z-order
+	return winUser.isDescendantWindow(fg,windowHandle) or (winUser.getWindowStyle(windowHandle) & winUser.WS_POPUP or winUser.getWindowStyle(root)&winUser.WS_POPUP) or not winUser.getPreviousWindow(root)
