@@ -80,8 +80,8 @@ void(__stdcall *_notifySendMessageCancelled)() = NULL;
 struct BgSendMessageData {
 	HANDLE completeEvent;
 	HANDLE execEvent;
+	bool isActive;
 	HWND hwnd;
-	DWORD threadId;
 	UINT Msg;
 	WPARAM wParam;
 	LPARAM lParam;
@@ -89,44 +89,40 @@ struct BgSendMessageData {
 	UINT uTimeout;
 	DWORD_PTR dwResult;
 	DWORD error;
-};
-BgSendMessageData* bgSendMessageData = NULL;
-bool isActiveBgSendMessage = false;
+} bgSendMessageData;
 
 DWORD WINAPI bgSendMessageThreadProc(LPVOID param) {
-	BgSendMessageData* data = (BgSendMessageData*)param;
 	// Keep handling messages until terminated.
 	for ( ; ; ) {
 		// Wait for the next message or abandonment.
-		WaitForSingleObject(data->execEvent, INFINITE);
-		if (!data->hwnd)
+		WaitForSingleObject(bgSendMessageData.execEvent, INFINITE);
+		if (!bgSendMessageData.hwnd)
 			break; // Terminated.
-		data->fuFlags |= SMTO_BLOCK;
+		bgSendMessageData.fuFlags |= SMTO_BLOCK;
 		// Keep sending this message until the timeout elapses.
-		for (UINT remainingTimeout = data->uTimeout; remainingTimeout > 0; remainingTimeout -= (remainingTimeout > CANCELSENDMESSAGE_CHECK_INTERVAL) ? CANCELSENDMESSAGE_CHECK_INTERVAL : remainingTimeout) {
+		for (UINT remainingTimeout = bgSendMessageData.uTimeout; remainingTimeout > 0; remainingTimeout -= (remainingTimeout > CANCELSENDMESSAGE_CHECK_INTERVAL) ? CANCELSENDMESSAGE_CHECK_INTERVAL : remainingTimeout) {
 			if (WaitForSingleObject(cancelCallEvent, 0) == WAIT_OBJECT_0) {
 				// Cancellation has been requested.
-				data->error = ERROR_CANCELLED;
+				bgSendMessageData.error = ERROR_CANCELLED;
 				break;
 			}
-			if (SendMessageTimeoutW(data->hwnd, data->Msg, data->wParam, data->lParam, data->fuFlags, min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), &data->dwResult) != 0) {
+			if (SendMessageTimeoutW(bgSendMessageData.hwnd, bgSendMessageData.Msg, bgSendMessageData.wParam, bgSendMessageData.lParam, bgSendMessageData.fuFlags, min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), &bgSendMessageData.dwResult) != 0) {
 				// Success.
-				data->error = 0;
+				bgSendMessageData.error = 0;
 				break;
 			} else {
-				data->error = GetLastError();
-				if (data->error != ERROR_TIMEOUT) {
+				bgSendMessageData.error = GetLastError();
+				if (bgSendMessageData.error != ERROR_TIMEOUT) {
 					// Error other than timeout.
 					break;
 				}
 			}
 		}
 		// Tell the main thread that we're done with this message.
-		SetEvent(data->completeEvent);
+		SetEvent(bgSendMessageData.completeEvent);
 	}
-	CloseHandle(data->execEvent);
-	CloseHandle(data->completeEvent);
-	delete data;
+	CloseHandle(bgSendMessageData.execEvent);
+	CloseHandle(bgSendMessageData.completeEvent);
 	return 0;
 }
 
@@ -157,7 +153,7 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 		return SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, min(uTimeout, 10000), lpdwResult);
 	}
 
-	if (isActiveBgSendMessage) {
+	if (bgSendMessageData.isActive) {
 		// We can't handle reentrancy.
 		SetLastError(ERROR_CANCELLED);
 		return 0;
@@ -165,17 +161,16 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 
 	// #3825: SendMessageTimeout can block until the window responds in some cases despite the timeout,
 	// so use a background thread to send messages.
-	bgSendMessageData->hwnd = hwnd;
-	bgSendMessageData->threadId = windowThreadId;
-	bgSendMessageData->Msg = Msg;
-	bgSendMessageData->wParam = wParam;
-	bgSendMessageData->lParam = lParam;
-	bgSendMessageData->fuFlags = fuFlags;
-	bgSendMessageData->uTimeout = uTimeout;
-	bgSendMessageData->dwResult = 0;
-	isActiveBgSendMessage = true;
+	bgSendMessageData.hwnd = hwnd;
+	bgSendMessageData.Msg = Msg;
+	bgSendMessageData.wParam = wParam;
+	bgSendMessageData.lParam = lParam;
+	bgSendMessageData.fuFlags = fuFlags;
+	bgSendMessageData.uTimeout = uTimeout;
+	bgSendMessageData.dwResult = 0;
+	bgSendMessageData.isActive = true;
 	// Notify the background thread to send the message.
-	SetEvent(bgSendMessageData->execEvent);
+	SetEvent(bgSendMessageData.execEvent);
 
 	// Wait for the background thread to send the message.
 	// It will cancel if appropriate.
@@ -183,24 +178,24 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 	// as the caller might free memory used by the message.
 	DWORD waitIndex = 0;
 	if (fuFlags & SMTO_BLOCK) {
-		WaitForSingleObject(bgSendMessageData->completeEvent, INFINITE);
+		WaitForSingleObject(bgSendMessageData.completeEvent, INFINITE);
 	} else {
 		// We need to pump nonqueued messages while waiting.
 		// MsgWaitForMultipleObjects can wake for nonqueued messages,
 		// but we'd have to manage the actual pump ourselves.
 		// CoWaitForMultipleHandles does exactly what we need.
-		CoWaitForMultipleHandles(0, INFINITE, 1, &bgSendMessageData->completeEvent, &waitIndex);
+		CoWaitForMultipleHandles(0, INFINITE, 1, &bgSendMessageData.completeEvent, &waitIndex);
 	}
-	isActiveBgSendMessage = false;
+	bgSendMessageData.isActive = false;
 
 	// Handle the result.
-	if (bgSendMessageData->error != 0) {
-		if (bgSendMessageData->error == ERROR_CANCELLED && _notifySendMessageCancelled)
+	if (bgSendMessageData.error != 0) {
+		if (bgSendMessageData.error == ERROR_CANCELLED && _notifySendMessageCancelled)
 			_notifySendMessageCancelled();
-		SetLastError(bgSendMessageData->error);
+		SetLastError(bgSendMessageData.error);
 		return 0;
 	}
-	*lpdwResult = bgSendMessageData->dwResult;
+	*lpdwResult = bgSendMessageData.dwResult;
 	return 1;
 }
 
@@ -218,10 +213,10 @@ void nvdaHelperLocal_initialize() {
 	startServer();
 	mainThreadId = GetCurrentThreadId();
 	cancelCallEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
-	bgSendMessageData = new BgSendMessageData;
-	bgSendMessageData->execEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-	bgSendMessageData->completeEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-	CloseHandle(CreateThread(NULL, 0, bgSendMessageThreadProc, (LPVOID)bgSendMessageData, 0, NULL));
+	bgSendMessageData.execEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	bgSendMessageData.completeEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	bgSendMessageData.isActive = false;
+	CloseHandle(CreateThread(NULL, 0, bgSendMessageThreadProc, NULL, 0, NULL));
 	HMODULE oleacc = LoadLibraryA("oleacc.dll");
 	if (!oleacc)
 		return;
@@ -252,11 +247,9 @@ void nvdaHelperLocal_terminate() {
 		delete oleaccHooks;
 		oleaccHooks = NULL;
 	}
-	if (bgSendMessageData) {
-		// Terminate the background SendMessage thread.
-		bgSendMessageData->hwnd = NULL;
-		SetEvent(bgSendMessageData->execEvent);
-	}
+	// Terminate the background SendMessage thread.
+	bgSendMessageData.hwnd = NULL;
+	SetEvent(bgSendMessageData.execEvent);
 	CloseHandle(cancelCallEvent);
 	stopServer();
 }
