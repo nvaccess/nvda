@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2008-2014 NV Access Limited.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -73,15 +73,15 @@ handle_t createRemoteBindingHandle(wchar_t* uuidString) {
 	return bindingHandle;
 }
 
-const UINT CANCELSENDMESSAGE_CHECK_INTERVAL = 1000;
+const UINT CANCELSENDMESSAGE_CHECK_INTERVAL = 400;
 DWORD mainThreadId = 0;
 HANDLE cancelCallEvent = NULL;
 void(__stdcall *_notifySendMessageCancelled)() = NULL;
 struct BgSendMessageData {
 	HANDLE completeEvent;
 	HANDLE execEvent;
+	bool isActive;
 	HWND hwnd;
-	DWORD threadId;
 	UINT Msg;
 	WPARAM wParam;
 	LPARAM lParam;
@@ -89,53 +89,40 @@ struct BgSendMessageData {
 	UINT uTimeout;
 	DWORD_PTR dwResult;
 	DWORD error;
-};
-BgSendMessageData* bgSendMessageData = NULL;
-bool isActiveBgSendMessage = false;
-std::set<DWORD> unresponsiveThreads;
-LockableObject unresponsiveThreadsLock;
+} bgSendMessageData;
 
 DWORD WINAPI bgSendMessageThreadProc(LPVOID param) {
-	BgSendMessageData* data = (BgSendMessageData*)param;
-	// This thread keeps handling SendMessages until it is abandoned.
-	do {
-		// The main thread shouldn't bother sending messages to this thread
-		// until it has responded to the current message.
-		unresponsiveThreadsLock.acquire();
-		unresponsiveThreads.insert(data->threadId);
-		unresponsiveThreadsLock.release();
-		// Even though this is a background thread, we still want a timeout
-		// to minimise the cancelled messages that hit unresponsive threads.
+	// Keep handling messages until terminated.
+	for ( ; ; ) {
+		// Wait for the next message or abandonment.
+		WaitForSingleObject(bgSendMessageData.execEvent, INFINITE);
+		if (!bgSendMessageData.hwnd)
+			break; // Terminated.
+		bgSendMessageData.fuFlags |= SMTO_BLOCK;
 		// Keep sending this message until the timeout elapses.
-		LRESULT ret;
-		for (UINT remainingTimeout = data->uTimeout; remainingTimeout > 0; remainingTimeout -= (remainingTimeout > CANCELSENDMESSAGE_CHECK_INTERVAL) ? CANCELSENDMESSAGE_CHECK_INTERVAL : remainingTimeout) {
-			if (WaitForSingleObject(data->execEvent, 0) == WAIT_OBJECT_0)
-				break; // Cancelled.
-			if ((ret = SendMessageTimeoutW(data->hwnd, data->Msg, data->wParam, data->lParam, data->fuFlags, min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), &data->dwResult)) != 0) {
+		for (UINT remainingTimeout = bgSendMessageData.uTimeout; remainingTimeout > 0; remainingTimeout -= (remainingTimeout > CANCELSENDMESSAGE_CHECK_INTERVAL) ? CANCELSENDMESSAGE_CHECK_INTERVAL : remainingTimeout) {
+			if (WaitForSingleObject(cancelCallEvent, 0) == WAIT_OBJECT_0) {
+				// Cancellation has been requested.
+				bgSendMessageData.error = ERROR_CANCELLED;
+				break;
+			}
+			if (SendMessageTimeoutW(bgSendMessageData.hwnd, bgSendMessageData.Msg, bgSendMessageData.wParam, bgSendMessageData.lParam, bgSendMessageData.fuFlags, min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), &bgSendMessageData.dwResult) != 0) {
 				// Success.
-				data->error = 0;
+				bgSendMessageData.error = 0;
 				break;
 			} else {
-				data->error = GetLastError();
-				if (data->error != ERROR_TIMEOUT) {
+				bgSendMessageData.error = GetLastError();
+				if (bgSendMessageData.error != ERROR_TIMEOUT) {
 					// Error other than timeout.
 					break;
 				}
 			}
 		}
-		unresponsiveThreadsLock.acquire();
-		unresponsiveThreads.erase(data->threadId);
-		unresponsiveThreadsLock.release();
 		// Tell the main thread that we're done with this message.
-		SetEvent(data->completeEvent);
-		// Wait for the next message or abandonment.
-		WaitForSingleObject(data->execEvent, INFINITE);
-		ResetEvent(data->execEvent);
-	} while (data->hwnd);
-	// If data->hwnd is NULL, this thread has been abandoned.
-	CloseHandle(data->execEvent);
-	CloseHandle(data->completeEvent);
-	delete data;
+		SetEvent(bgSendMessageData.completeEvent);
+	}
+	CloseHandle(bgSendMessageData.execEvent);
+	CloseHandle(bgSendMessageData.completeEvent);
 	return 0;
 }
 
@@ -166,76 +153,49 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 		return SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, min(uTimeout, 10000), lpdwResult);
 	}
 
-	unresponsiveThreadsLock.acquire();
-	if (unresponsiveThreads.find(windowThreadId) != unresponsiveThreads.end()) {
-		unresponsiveThreadsLock.release();
-		// The target thread is unresponsive.
-		SetLastError(ERROR_CANCELLED);
-		return 0;
-	}
-	unresponsiveThreadsLock.release();
-
-	if (isActiveBgSendMessage) {
+	if (bgSendMessageData.isActive) {
 		// We can't handle reentrancy.
 		SetLastError(ERROR_CANCELLED);
 		return 0;
 	}
 
-	bool newThread = !bgSendMessageData;
-	if (newThread) {
-		// We're creating a new thread, so initialise new data.
-		bgSendMessageData = new BgSendMessageData;
-		bgSendMessageData->execEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
-		bgSendMessageData->completeEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-	}
-	bgSendMessageData->hwnd = hwnd;
-	bgSendMessageData->threadId = windowThreadId;
-	bgSendMessageData->Msg = Msg;
-	bgSendMessageData->wParam = wParam;
-	bgSendMessageData->lParam = lParam;
-	bgSendMessageData->fuFlags = fuFlags;
-	bgSendMessageData->uTimeout = uTimeout;
-	bgSendMessageData->dwResult = 0;
-	isActiveBgSendMessage = true;
-	if (newThread) {
-		// Create a new SendMessage thread.
-		HANDLE thread = CreateThread(NULL, 0, bgSendMessageThreadProc, (LPVOID)bgSendMessageData, 0, NULL);
-		CloseHandle(thread);
-	} else {
-		// Tell the existing SendMessage thread to send this message.
-		SetEvent(bgSendMessageData->execEvent);
-	}
+	// #3825: SendMessageTimeout can block until the window responds in some cases despite the timeout,
+	// so use a background thread to send messages.
+	bgSendMessageData.hwnd = hwnd;
+	bgSendMessageData.Msg = Msg;
+	bgSendMessageData.wParam = wParam;
+	bgSendMessageData.lParam = lParam;
+	bgSendMessageData.fuFlags = fuFlags;
+	bgSendMessageData.uTimeout = uTimeout;
+	bgSendMessageData.dwResult = 0;
+	bgSendMessageData.isActive = true;
+	// Notify the background thread to send the message.
+	SetEvent(bgSendMessageData.execEvent);
 
-	HANDLE waitHandles[] = {bgSendMessageData->completeEvent, cancelCallEvent};
+	// Wait for the background thread to send the message.
+	// It will cancel if appropriate.
+	// This function must not return while the SendMessage is in progress,
+	// as the caller might free memory used by the message.
 	DWORD waitIndex = 0;
 	if (fuFlags & SMTO_BLOCK) {
-		waitIndex = WaitForMultipleObjects(2, waitHandles, FALSE, INFINITE);
+		WaitForSingleObject(bgSendMessageData.completeEvent, INFINITE);
 	} else {
 		// We need to pump nonqueued messages while waiting.
 		// MsgWaitForMultipleObjects can wake for nonqueued messages,
 		// but we'd have to manage the actual pump ourselves.
 		// CoWaitForMultipleHandles does exactly what we need.
-		CoWaitForMultipleHandles(0, INFINITE, 2, waitHandles, &waitIndex);
+		CoWaitForMultipleHandles(0, INFINITE, 1, &bgSendMessageData.completeEvent, &waitIndex);
 	}
-	isActiveBgSendMessage = false;
-	if (waitIndex == 1) {
-		// Cancelled. Abandon the thread.
-		bgSendMessageData->hwnd = NULL;
-		SetEvent(bgSendMessageData->execEvent);
-		// Indicate that a new thread should be created next time.
-		bgSendMessageData = NULL;
-		SetLastError(ERROR_CANCELLED);
-		if (_notifySendMessageCancelled)
-			_notifySendMessageCancelled();
-		return 0;
-	}
+	bgSendMessageData.isActive = false;
 
-	// Got a result.
-	if (bgSendMessageData->error != 0) {
-		SetLastError(bgSendMessageData->error);
+	// Handle the result.
+	if (bgSendMessageData.error != 0) {
+		if (bgSendMessageData.error == ERROR_CANCELLED && _notifySendMessageCancelled)
+			_notifySendMessageCancelled();
+		SetLastError(bgSendMessageData.error);
 		return 0;
 	}
-	*lpdwResult = bgSendMessageData->dwResult;
+	*lpdwResult = bgSendMessageData.dwResult;
 	return 1;
 }
 
@@ -253,6 +213,10 @@ void nvdaHelperLocal_initialize() {
 	startServer();
 	mainThreadId = GetCurrentThreadId();
 	cancelCallEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
+	bgSendMessageData.execEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	bgSendMessageData.completeEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	bgSendMessageData.isActive = false;
+	CloseHandle(CreateThread(NULL, 0, bgSendMessageThreadProc, NULL, 0, NULL));
 	HMODULE oleacc = LoadLibraryA("oleacc.dll");
 	if (!oleacc)
 		return;
@@ -283,11 +247,9 @@ void nvdaHelperLocal_terminate() {
 		delete oleaccHooks;
 		oleaccHooks = NULL;
 	}
-	if (bgSendMessageData) {
-		// Terminate the background SendMessage thread.
-		bgSendMessageData->hwnd = NULL;
-		SetEvent(bgSendMessageData->execEvent);
-	}
+	// Terminate the background SendMessage thread.
+	bgSendMessageData.hwnd = NULL;
+	SetEvent(bgSendMessageData.execEvent);
 	CloseHandle(cancelCallEvent);
 	stopServer();
 }
