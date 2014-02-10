@@ -67,16 +67,18 @@ Though while simply testing or committing changes, it may be faster usually just
 Among other things, preparing the source tree builds the NVDAHelper libraries.  
 If trying to debug nvdaHelper, You can control various  debugging options  with the nvdaHelperDebugFlags command line variable. It takes one or more of the following flags:
 	* debugCRT: the libraries will be linked against the debug C runtime and assertions will be enabled. (By default, the normal CRT is used and assertions are disabled.)
-
 	* RTC: runtime checks (stack corruption, uninitialized variables, etc.) will be enabled. (The default is no runtime checks.)
 The special keywords none and all can also be used in place of the individual flags.
 
 An example follows that enables debug CRT and runtype checks 
 scons source nvdaHelperDebugFlags=debugCRT,RTC
 
-Symbol pdb files are always produced for builds of NVDA independent of the debug flags. However they are not included in the NVDA distribution, instead scons symbolArchive will package an separate archive.
+Symbol pdb files are always produced when building, regardless of the debug flags.
+However, they are not included in the NVDA distribution.
+Instead, scons symbolArchive will package them as a separate archive.
 
-Builds by default also do not use any compiler optimizations. Please see the release keyword argument for what compiler optimizations it will enable.
+By default, builds also do not use any compiler optimizations.
+Please see the release keyword argument for what compiler optimizations it will enable.
 
 == Running the Source Code ==
 To start NVDA from source code, run nvda.pyw located in the source directory.
@@ -112,8 +114,8 @@ scons pot
 Optionally, the build can  be customised by providing variables on the command line:
 	* version: The version of this build.
 	* release: Whether this is a release version.
-		* This enables various c++ compiler optimizations such as /O2 and whole-program optimization
-		* And also instructs Python to generate optimized byte code
+		* This enables various C++ compiler optimizations such as /O2 and whole-program optimization.
+		* It also instructs Python to generate optimized byte code.
 	* publisher: The publisher of this build.
 	* certFile: The certificate file with which to sign executables. The certificate must be in pfx format and contain the private key.
 	* certPassword: The password for the private key in the signing certificate. If omitted, no password will be assumed.

@@ -49,17 +49,18 @@
 - When entering Asian input into a control within NVDA itself (e.g. the browse mode Find dialog), "NVDA" is no longer incorrectly reported in place of the candidate. (#3726)
 - The tabs in the Outlook 2013 options dialog are now reported. (#3826)
 - Improved support for ARIA live regions in Firefox and other Mozilla Gecko applications:
-	- Support for aria-atomic updates and filtering of aria-busy updates (#2640)
-	- Alternative text (such as alt attribute or aria-label) is included if there is no other useful text. (#3329)
-	- Live region updates are no longer silenced if they occur at the same time as the focus moves. (#3777)
-- Certain presentation elements in Firefox and other Mozilla Gecko applications are no longer inappropriately shown in browse mode (specifically when the element is marked with aria-presentation but its also focusable). (#3781)
+ - Support for aria-atomic updates and filtering of aria-busy updates. (#2640)
+ - Alternative text (such as alt attribute or aria-label) is included if there is no other useful text. (#3329)
+ - Live region updates are no longer silenced if they occur at the same time as the focus moves. (#3777)
+- Certain presentation elements in Firefox and other Mozilla Gecko applications are no longer inappropriately shown in browse mode (specifically, when the element is marked with aria-presentation but it is also focusable). (#3781)
 - A performance improvement when navigating a document in Microsoft Word with spelling errors enabled. (#3785)
 - Several fixes to the support for accessible Java applications:
  - The initially focused control in a frame or dialog no longer fails to be reported when the frame or dialog comes to the foreground. (#3753)
  - Unuseful position information is no longer announced for radio buttons (e.g. 1 of 1). (#3754)
  - Better reporting of JComboBox controls (html no longer reported, better reporting of expanded and collapsed states). (#3755)
- - More text is included in automatic dialog caption calculations. (#3857)
+ - More text is included in automatic dialog caption calculations. (#3757)
  - Changes to the name, value or description of the focused control is now reported more accurately. (#3770)
+- Fix a crash in NVDA seen in Windows 8 when focusing on certain RichEdit controls containing large amounts of text (e.g. NVDA's log viewer, windbg). (#3867)
 
 
 == Changes for Developers ==
