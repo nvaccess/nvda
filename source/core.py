@@ -395,7 +395,10 @@ def requestPump():
 	if not _pump or _isPumpPending:
 		return
 	_isPumpPending = True
-	_pump.Start(PUMP_MAX_DELAY, True)
+	# WX timers can not be run outside the main thread
+	# Therefore Have WX start it in the main thread with a CallAfter
+	import wx
+	wx.CallAfter(_pump.Start,PUMP_MAX_DELAY, True)
 
 def callLater(delay, callable, *args, **kwargs):
 	"""Call a callable once after the specified number of milliseconds.
