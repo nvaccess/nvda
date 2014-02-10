@@ -1,6 +1,7 @@
 from ctypes import *
 from ctypes.wintypes import *
 import comtypes.client
+from comtypes.automation import VT_EMPTY
 from comtypes import *
 import weakref
 import threading
@@ -212,6 +213,9 @@ class UIAHandler(COMObject):
 		eventHandler.queueEvent("gainFocus",obj)
 
 	def IUIAutomationPropertyChangedEventHandler_HandlePropertyChangedEvent(self,sender,propertyId,newValue):
+		# #3867: For now manually force this VARIANT type to empty to get around a nasty double free in comtypes/ctypes.
+		# We also don't use the value in this callback.
+		newValue.vt=VT_EMPTY
 		if not self.MTAThreadInitEvent.isSet():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			return
