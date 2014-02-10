@@ -17,6 +17,7 @@ import os
 import sys
 import pkgutil
 import threading
+import tempfile
 import baseObject
 import globalVars
 from logHandler import log
@@ -390,6 +391,16 @@ class AppModule(baseObject.ScriptableObject):
 		Warning: this may be called outside of NVDA's main thread, therefore do not try accessing NVDAObjects and such, rather just check window  class names.
 		"""
 		return False
+
+	def dumpOnCrash(self):
+		"""Request that this process writes a minidump when it crashes for debugging.
+		This should only be called if instructed by a developer.
+		"""
+		path = os.path.join(tempfile.gettempdir(),
+			"nvda_crash_%s_%d.dmp" % (self.appName, self.processID)).decode("mbcs")
+		NVDAHelper.localLib.nvdaInProcUtils_dumpOnCrash(
+			self.helperLocalBindingHandle, path)
+		print "Dump path: %s" % path
 
 class AppProfileTrigger(config.ProfileTrigger):
 	"""A configuration profile trigger for when a particular application has focus.

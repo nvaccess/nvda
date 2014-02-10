@@ -51,4 +51,6 @@ interface NvdaInProcUtils {
 
 	error_status_t getActiveObject([in] handle_t bindingHandle, [in,string] const wchar_t* progid, [out] IUnknown** ppUnknown);
 
+	error_status_t dumpOnCrash([in] handle_t bindingHandle, [in,string] const wchar_t* minidumpPath);
+
 }
