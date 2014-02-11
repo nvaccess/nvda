@@ -28,12 +28,15 @@ BOOL CALLBACK EnumChildWindowsProc(HWND hwnd, LPARAM lParam) {
 	return TRUE;
 }
 
-error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, const long windowHandle, const int left, const int top, const int right, const int bottom, const int minHorizontalWhitespace, const int minVerticalWhitespace, const boolean stripOuterWhitespace, BSTR* textBuf, BSTR* characterLocationsBuf) {
+error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, const long windowHandle, const boolean includeDescendantWindows, const int left, const int top, const int right, const int bottom, const int minHorizontalWhitespace, const int minVerticalWhitespace, const boolean stripOuterWhitespace, BSTR* textBuf, BSTR* characterLocationsBuf) {
 	HWND hwnd=(HWND)windowHandle;
 	deque<HWND> windowDeque;
-	EnumChildWindows(hwnd,EnumChildWindowsProc,(LPARAM)&windowDeque);
-	windowDeque.push_back(hwnd);
-	const bool hasDescendantWindows=(windowDeque.size()>1);
+	bool hasDescendantWindows=false;
+	if(includeDescendantWindows) {
+		EnumChildWindows(hwnd,EnumChildWindowsProc,(LPARAM)&windowDeque);
+		windowDeque.push_back(hwnd);
+		hasDescendantWindows=(windowDeque.size()>1);
+	}
 	RECT textRect={left,top,right,bottom};
 	displayModel_t* tempModel=NULL;
 	if(hasDescendantWindows) {
