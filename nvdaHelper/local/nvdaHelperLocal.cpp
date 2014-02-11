@@ -143,14 +143,37 @@ LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM
 
 	fuFlags |= SMTO_ABORTIFHUNG;
 	fuFlags &= ~SMTO_NOTIMEOUTIFNOTHUNG;
-	DWORD windowThreadId = GetWindowThreadProcessId(hwnd, NULL);
 
-	if (windowThreadId == mainThreadId || GetCurrentThreadId() != mainThreadId) {
-		// We're sending a message to our own thread
-		// or we're sending from a thread other than the main thread.
-		// We can't do cancellation in this case,
-		// but at least shorten the timeout for other threads.
-		return SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, min(uTimeout, 10000), lpdwResult);
+	DWORD currentThreadId = GetCurrentThreadId();
+	if (currentThreadId == mainThreadId && GetWindowThreadProcessId(hwnd, NULL) == mainThreadId) {
+		// We're sending a message to our own thread, so just forward the call.
+		return SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, uTimeout, lpdwResult);
+	}
+
+	if (currentThreadId != mainThreadId) {
+		// We're sending from a thread other than the main thread.
+		// We don't want to use a background thread in this case,
+		// but we can still improve things.
+		if (uTimeout > 10000)
+			uTimeout = 10000;
+		// SMTO_ABORTIFHUNG only aborts if the window is already hung,
+		// not if the window hangs while sending.
+		LRESULT ret;
+		for (UINT remainingTimeout = uTimeout; remainingTimeout > 0; remainingTimeout -= (remainingTimeout > CANCELSENDMESSAGE_CHECK_INTERVAL) ? CANCELSENDMESSAGE_CHECK_INTERVAL : remainingTimeout) {
+			if (WaitForSingleObject(cancelCallEvent, 0) == WAIT_OBJECT_0) {
+				// Note that cancellation is based on whether the *main* thread is alive.
+				if (_notifySendMessageCancelled)
+					_notifySendMessageCancelled();
+				SetLastError(ERROR_CANCELLED);
+				return 0;
+			}
+			if ((ret = SendMessageTimeoutW(hwnd, Msg, wParam, lParam, fuFlags, min(remainingTimeout, CANCELSENDMESSAGE_CHECK_INTERVAL), lpdwResult)) != 0 || GetLastError() != ERROR_TIMEOUT) {
+				// Success or error other than timeout.
+				return ret;
+			}
+		}
+		// Timeout.
+		return ret;
 	}
 
 	if (bgSendMessageData.isActive) {
