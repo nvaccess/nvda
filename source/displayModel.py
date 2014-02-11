@@ -223,10 +223,12 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		offset=self._getCaretOffset()
 		return offset,offset
 
-	def __init__(self, obj, position):
+	def __init__(self, obj, position,limitRect=None):
 		if isinstance(position, textInfos.Rect):
-			self._location = position.left, position.top, position.right, position.bottom
-			position = textInfos.POSITION_ALL
+			limitRect=position
+			position=textInfos.POSITION_ALL
+		if limitRect is not None:
+			self._location = limitRect.left, limitRect.top, limitRect.right, limitRect.bottom
 		else:
 			self._location = None
 		super(DisplayModelTextInfo, self).__init__(obj, position)
