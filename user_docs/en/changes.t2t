@@ -61,6 +61,8 @@
  - When reporting the text of dialogs, some text that was previously missing is now included. (#3757)
  - Changes to the name, value or description of the focused control is now reported more accurately. (#3770)
 - Fix a crash in NVDA seen in Windows 8 when focusing on certain RichEdit controls containing large amounts of text (e.g. NVDA's log viewer, windbg). (#3867)
+- On systems with a high DPI display setting (which occurs by default for many modern screens), NVDA no longer routes the mouse to the wrong location in some applications. (#3758, #3703)
+- Fixed an occasional problem when browsing the web where NVDA would stop working correctly until restarted, even though it didn't crash or freeze. (#3804)
 
 
 == Changes for Developers ==
