@@ -739,8 +739,8 @@ def processForegroundWinEvent(window,objectID,childID):
 
 def processShowWinEvent(window,objectID,childID):
 	# eventHandler.shouldAcceptEvent only accepts show events for a few specific cases.
-	# Narrow this further to only accept events for clients.
-	if objectID==winUser.OBJID_CLIENT:
+	# Narrow this further to only accept events for clients or custom objects.
+	if objectID==winUser.OBJID_CLIENT or objectID>0:
 		NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_SHOW,window,objectID,childID)
 		if NVDAEvent:
 			eventHandler.queueEvent(*NVDAEvent)
