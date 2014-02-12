@@ -284,15 +284,16 @@ class JAB(Window):
 			return False
 
 	def _get_positionInfo(self):
-		if self._JABAccContextInfo.childrenCount:
-			return {}
+		targets=self._getJABRelationTargets('memberOf')
+		for index,target in enumerate(targets):
+			if target==self.jabContext:
+				return {'indexInGroup':index+1,'similarItemsInGroup':len(targets)}
 		parent=self.parent
-		if not isinstance(parent,JAB) or parent.role not in [controlTypes.ROLE_TREEVIEW,controlTypes.ROLE_LIST]:
-			return {}
-		index=self._JABAccContextInfo.indexInParent+1
-		childCount=parent._JABAccContextInfo.childrenCount
-		return {'indexInGroup':index,'similarItemsInGroup':childCount}
-
+		if isinstance(parent,JAB) and self.role in (controlTypes.ROLE_TREEVIEWITEM,controlTypes.ROLE_LISTITEM):
+			index=self._JABAccContextInfo.indexInParent+1
+			childCount=parent._JABAccContextInfo.childrenCount
+			return {'indexInGroup':index,'similarItemsInGroup':childCount}
+		return {}
 
 	def _get_activeChild(self):
 		jabContext=self.jabContext.getActiveDescendent()
@@ -402,22 +403,26 @@ class JAB(Window):
 			return None
 		return index
 
-	def _getJABRelationFirstTarget(self, key):
+	def _getJABRelationTargets(self, key):
 		rs = self.jabContext.getAccessibleRelationSet()
-		targetObj=None
+		targets=[]
 		for relation in rs.relations[:rs.relationCount]:
 			for target in relation.targets[:relation.targetCount]:
-				if not targetObj and relation.key == key:
-					targetObj=JAB(jabContext=JABHandler.JABContext(self.jabContext.hwnd, self.jabContext.vmID, target))
+				if relation.key == key:
+					targets.append(JABHandler.JABContext(self.jabContext.hwnd, self.jabContext.vmID, target))
 				else:
 					JABHandler.bridgeDll.releaseJavaObject(self.jabContext.vmID,target)
-		return targetObj
+		return targets
 
 	def _get_flowsTo(self):
-		return self._getJABRelationFirstTarget("flowsTo")
+		targets=self._getJABRelationTargets("flowsTo")
+		if targets:
+			return targets[0]
 
 	def _get_flowsFrom(self):
-		return self._getJABRelationFirstTarget("flowsFrom")
+		targets=self._getJABRelationTargets("flowsFrom")
+		if targets:
+			return targets[0]
 
 	def reportFocus(self):
 		parent=self.parent
