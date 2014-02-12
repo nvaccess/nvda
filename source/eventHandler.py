@@ -188,9 +188,17 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		return True
 	if eventName == "valueChange" and config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]:
 		return True
+	if eventName == "show":
+		# Only accept 'show' events for tooltips, IMM candidates and notification bars as otherwize we get flooded.
+		return winUser.getClassName(windowHandle) in ("Frame Notification Bar", "tooltips_class32", "mscandui21.candidate", "mscandui40.candidate", "MSCandUIWindow_Candidate")
+	if eventName == "alert" and winUser.getClassName(winUser.getAncestor(windowHandle, winUser.GA_PARENT)) == "ToastChildWindowClass":
+		# Toast notifications.
+		return True
+
+	# Allow events for the foreground application.
 	fg = winUser.getForegroundWindow()
-	# Only allow events for the foreground application.
 	if winUser.isDescendantWindow(fg, windowHandle):
+		# This is definitely in the foreground application.
 		return True
 	if (winUser.getWindowStyle(windowHandle) & winUser.WS_POPUP
 			or winUser.getWindowStyle(winUser.getAncestor(windowHandle, winUser.GA_ROOT)) & winUser.WS_POPUP):
