@@ -189,6 +189,17 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 	if eventName == "valueChange" and config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]:
 		return True
 	fg = winUser.getForegroundWindow()
-	root=winUser.getAncestor(windowHandle,winUser.GA_ROOT)
-	# If this window is  within the foreground window or this window or its root window is  a popup window, or this window's root window is  the highest in the z-order
-	return winUser.isDescendantWindow(fg,windowHandle) or (winUser.getWindowStyle(windowHandle) & winUser.WS_POPUP or winUser.getWindowStyle(root)&winUser.WS_POPUP) or not winUser.getPreviousWindow(root)
+	# Only allow events for the foreground application.
+	if winUser.isDescendantWindow(fg, windowHandle):
+		return True
+	if (winUser.getWindowStyle(windowHandle) & winUser.WS_POPUP
+			or winUser.getWindowStyle(winUser.getAncestor(windowHandle, winUser.GA_ROOT)) & winUser.WS_POPUP):
+		# This window or its root is a pop-up window.
+		# It's possible for it to belong to the foreground application
+		# even though it's not a descendant of the foreground window.
+		proc = winUser.getWindowThreadProcessID(windowHandle)[0]
+		if (proc == winUser.getWindowThreadProcessID(fg)[0]
+				or proc == winUser.getWindowThreadProcessID(winUser.getGUIThreadInfo(0).hwndFocus)[0]):
+			# It's in the same process as the foreground or focus window.
+			return True
+	return  False
