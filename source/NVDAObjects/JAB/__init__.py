@@ -1,6 +1,7 @@
 import ctypes
 import re
 import eventHandler
+import keyLabels
 import JABHandler
 import controlTypes
 from ..window import Window
@@ -229,6 +230,28 @@ class JAB(Window):
 
 	def _isEqual(self,other):
 		return super(JAB,self)._isEqual(other) and self.jabContext==other.jabContext
+
+	def _get_keyboardShortcut(self):
+		bindings=self.jabContext.getAccessibleKeyBindings()
+		if not bindings or bindings.keyBindingsCount<1: 
+			return None
+		shortcutsList=[]
+		for index in xrange(bindings.keyBindingsCount):
+			binding=bindings.keyBindingInfo[index]
+			# We don't support these modifiers
+			if binding.modifiers&(JABHandler.ACCESSIBLE_META_KEYSTROKE|JABHandler.ACCESSIBLE_ALT_GRAPH_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON1_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON2_KEYSTROKE|JABHandler.ACCESSIBLE_BUTTON3_KEYSTROKE):
+				continue
+			keyList=[]
+			# We assume alt  if there are no modifiers at all and its not a menu item as this is clearly a nmonic
+			if (binding.modifiers&JABHandler.ACCESSIBLE_ALT_KEYSTROKE) or (not binding.modifiers and self.role!=controlTypes.ROLE_MENUITEM):
+				keyList.append(keyLabels.localizedKeyLabels['alt'])
+			if binding.modifiers&JABHandler.ACCESSIBLE_CONTROL_KEYSTROKE:
+				keyList.append(keyLabels.localizedKeyLabels['control'])
+			if binding.modifiers&JABHandler.ACCESSIBLE_SHIFT_KEYSTROKE:
+				keyList.append(keyLabels.localizedKeyLabels['shift'])
+			keyList.append(binding.character)
+		shortcutsList.append("+".join(keyList))
+		return ", ".join(shortcutsList)
 
 	def _get_name(self):
 		return re_simpleXmlTag.sub(" ", self._JABAccContextInfo.name)
