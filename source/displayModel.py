@@ -219,9 +219,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 					inHighlightChunk=False
 			if startOffset is not None and endOffset is not None:
 				return (startOffset,endOffset)
-		# no selection, just use the caret if it exists
-		offset=self._getCaretOffset()
-		return offset,offset
+		raise LookupError
 
 	def __init__(self, obj, position,limitRect=None):
 		if isinstance(position, textInfos.Rect):
@@ -535,6 +533,13 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
 		winUser.setCursorPos(oldX,oldY)
+
+	def _getSelectionOffsets(self):
+		try:
+			return super(EditableTextDisplayModelTextInfo,self)._getSelectionOffsets()
+		except LookupError:
+			offset=self._getCaretOffset()
+			return offset,offset
 
 	def _setSelectionOffsets(self,start,end):
 		if start!=end:
