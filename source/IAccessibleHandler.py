@@ -742,9 +742,9 @@ def processForegroundWinEvent(window,objectID,childID):
 	return True
 
 def processShowWinEvent(window,objectID,childID):
-	className=winUser.getClassName(window)
-	#For now we only support 'show' event for tooltips, IMM candidates and notification bars  as otherwize we get flooded
-	if className in ("Frame Notification Bar","tooltips_class32","mscandui21.candidate","mscandui40.candidate","MSCandUIWindow_Candidate") and objectID==winUser.OBJID_CLIENT:
+	# eventHandler.shouldAcceptEvent only accepts show events for a few specific cases.
+	# Narrow this further to only accept events for clients or custom objects.
+	if objectID==winUser.OBJID_CLIENT or objectID>0:
 		NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_SHOW,window,objectID,childID)
 		if NVDAEvent:
 			eventHandler.queueEvent(*NVDAEvent)
