@@ -195,19 +195,13 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		# Toast notifications.
 		return True
 
-	# Allow events for the foreground application.
 	fg = winUser.getForegroundWindow()
 	if winUser.isDescendantWindow(fg, windowHandle):
-		# This is definitely in the foreground application.
+		# This is for the foreground application.
 		return True
-	if (winUser.getWindowStyle(windowHandle) & winUser.WS_POPUP
-			or winUser.getWindowStyle(winUser.getAncestor(windowHandle, winUser.GA_ROOT)) & winUser.WS_POPUP):
-		# This window or its root is a pop-up window.
-		# It's possible for it to belong to the foreground application
-		# even though it's not a descendant of the foreground window.
-		proc = winUser.getWindowThreadProcessID(windowHandle)[0]
-		if (proc == winUser.getWindowThreadProcessID(fg)[0]
-				or proc == winUser.getWindowThreadProcessID(winUser.getGUIThreadInfo(0).hwndFocus)[0]):
-			# It's in the same process as the foreground or focus window.
-			return True
-	return  False
+	if (winUser.user32.GetWindowLongW(windowHandle, winUser.GWL_EXSTYLE) & winUser.WS_EX_TOPMOST
+			or winUser.user32.GetWindowLongW(winUser.getAncestor(windowHandle, winUser.GA_ROOT), winUser.GWL_EXSTYLE) & winUser.WS_EX_TOPMOST):
+		# This window or its root is a topmost window.
+		# This includes menus, combo box pop-ups and the task switching list.
+		return True
+	return False
