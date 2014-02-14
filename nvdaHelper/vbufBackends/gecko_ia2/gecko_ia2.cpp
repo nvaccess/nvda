@@ -483,7 +483,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	bool isInteractive = !isNeverInteractive && (isEditable || inLink || states & STATE_SYSTEM_FOCUSABLE || states & STATE_SYSTEM_UNAVAILABLE || role == ROLE_SYSTEM_APPLICATION || role == ROLE_SYSTEM_DIALOG || role == IA2_ROLE_EMBEDDED_OBJECT);
 	// We aren't finished calculating isInteractive yet; actions are handled below.
 	// Whether the name is the content of this node.
-	bool nameIsContent = role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == IA2_ROLE_TOGGLE_BUTTON || role == ROLE_SYSTEM_MENUITEM || role == ROLE_SYSTEM_GRAPHIC || (role == ROLE_SYSTEM_TEXT && !isEditable) || role == IA2_ROLE_SECTION || role == IA2_ROLE_TEXT_FRAME || role == IA2_ROLE_HEADING || role == ROLE_SYSTEM_PAGETAB || role == ROLE_SYSTEM_BUTTONMENU
+	bool nameIsContent = role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == IA2_ROLE_TOGGLE_BUTTON || role == ROLE_SYSTEM_MENUITEM || role == ROLE_SYSTEM_GRAPHIC || (role == ROLE_SYSTEM_TEXT && !isEditable) || role == IA2_ROLE_HEADING || role == ROLE_SYSTEM_PAGETAB || role == ROLE_SYSTEM_BUTTONMENU
 		|| ((role == ROLE_SYSTEM_CHECKBUTTON || role == ROLE_SYSTEM_RADIOBUTTON) && !isLabelVisible(pacc));
 
 	IAccessibleText* paccText=NULL;
@@ -528,6 +528,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			|| role == IA2_ROLE_EMBEDDED_OBJECT
 			|| (!isRoot && (role == ROLE_SYSTEM_APPLICATION || role == ROLE_SYSTEM_DIALOG))
 			|| role == ROLE_SYSTEM_OUTLINE
+			|| (nameIsContent && (IA2AttribsMapIt = IA2AttribsMap.find(L"explicit-name")) != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true")
 		)
 			renderChildren = false;
 		else {
@@ -778,8 +779,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			}
 		}
 
-		if (nameIsContent && !nodeHasUsefulContent(parentNode)) {
-			// If there is no useful content and the name should be the content,
+		if ((nameIsContent || role == IA2_ROLE_SECTION || role == IA2_ROLE_TEXT_FRAME) && !nodeHasUsefulContent(parentNode)) {
+			// If there is no useful content and the name can be the content,
 			// render the name if there is one.
 			if(name) {
 				tempNode = buffer->addTextFieldNode(parentNode, NULL, name);
