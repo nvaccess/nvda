@@ -146,7 +146,7 @@ _requestTextChangeNotificationsForWindow=None
 _textChangeNotificationObjs=[]
 
 def initialize():
-	global _getWindowTextInRect,_requestTextChangeNotificationsForWindow
+	global _getWindowTextInRect,_requestTextChangeNotificationsForWindow, _getFocusRect
 	_getWindowTextInRect=CFUNCTYPE(c_long,c_long,c_long,c_bool,c_int,c_int,c_int,c_int,c_int,c_int,c_bool,POINTER(BSTR),POINTER(BSTR))(('displayModel_getWindowTextInRect',NVDAHelper.localLib),((1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(2,),(2,)))
 	_requestTextChangeNotificationsForWindow=NVDAHelper.localLib.displayModel_requestTextChangeNotificationsForWindow
 
@@ -160,6 +160,15 @@ def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,mi
 	for cp in cpBufIt:
 		characterLocations.append((ord(cp), ord(next(cpBufIt)), ord(next(cpBufIt)), ord(next(cpBufIt))))
 	return text, characterLocations
+
+def getFocusRect(obj):
+	left=c_long()
+	top=c_long()
+	right=c_long()
+	bottom=c_long()
+	if NVDAHelper.localLib.displayModel_getFocusRect(obj.appModule.helperLocalBindingHandle,obj.windowHandle,byref(left),byref(top),byref(right),byref(bottom))==0:
+		return left.value,top.value,right.value,bottom.value
+	return None
 
 def requestTextChangeNotifications(obj, enable):
 	"""Request or cancel notifications for when the display text changes in an NVDAObject.
