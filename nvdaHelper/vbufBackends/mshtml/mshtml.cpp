@@ -901,9 +901,10 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		IAStates-=STATE_SYSTEM_READONLY;
 	}
 
+	wstring ariaRole;
 	tempIter=attribsMap.find(L"HTMLAttrib::role");
 	if(tempIter!=attribsMap.end()) {
-		const wstring& ariaRole=tempIter->second;
+		ariaRole=tempIter->second;
 		if(ariaRole.compare(L"description")==0||ariaRole.compare(L"search")==0) {
 			//IE gives elements with an ARIA role of description and search a role of edit, probably should be staticText
 			IARole=ROLE_SYSTEM_STATICTEXT;
@@ -971,7 +972,14 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	//Generate content for nodes
 	wstring contentString=L"";
 	bool renderChildren=false;
-	if (nodeName.compare(L"HR")==0) {
+	if ((
+		IARole == ROLE_SYSTEM_LINK || IARole == ROLE_SYSTEM_PUSHBUTTON || IARole == ROLE_SYSTEM_MENUITEM || IARole == ROLE_SYSTEM_GRAPHIC || IARole == ROLE_SYSTEM_PAGETAB
+		|| ariaRole == L"heading" || (nodeName[0] == L'H' && iswdigit(nodeName[1]))
+		|| nodeName == L"OBJECT" || nodeName == L"APPLET" || IARole == ROLE_SYSTEM_APPLICATION || IARole == ROLE_SYSTEM_DIALOG
+	) && (attribsMap.find(L"HTMLAttrib::aria-label") != attribsMap.end() || attribsMap.find(L"HTMLAttrib::aria-labelledby") != attribsMap.end())) {
+		// Explicitly override any content with aria-label(ledby).
+		contentString = IAName;
+	} else if (nodeName.compare(L"HR")==0) {
 		contentString=L" ";
 		isBlock=true;
 		IARole=ROLE_SYSTEM_SEPARATOR;
