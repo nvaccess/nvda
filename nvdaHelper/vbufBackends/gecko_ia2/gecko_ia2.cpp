@@ -385,15 +385,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		}
 	}
 
-	//get keyboardShortcut -- IAccessible accKeyboardShortcut;
-	BSTR keyboardShortcut;
-	if(pacc->get_accKeyboardShortcut(varChild,&keyboardShortcut)==S_OK) {
-		parentNode->addAttribute(L"keyboardShortcut",keyboardShortcut);
-		//Free keyboardShortcut string memory
-		SysFreeString(keyboardShortcut);
-	} else
-		parentNode->addAttribute(L"keyboardShortcut",L"");
-
 	//get IA2Attributes -- IAccessible2 attributes;
 	BSTR IA2Attributes;
 	map<wstring,wstring> IA2AttribsMap;
@@ -435,37 +426,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	if(pacc->get_accName(varChild,&name)!=S_OK)
 		name=NULL;
 
-	wstring description;
-	BSTR rawDesc=NULL;
-	if(pacc->get_accDescription(varChild,&rawDesc)==S_OK) {
-		if(this->hasEncodedAccDescription) {
-			if(wcsncmp(rawDesc,L"Description: ",13)==0)
-				description=&rawDesc[13];
-		} else
-			description=rawDesc;
-		parentNode->addAttribute(L"description",description);
-		SysFreeString(rawDesc);
-	}
-
-	wstring locale;
-	IA2Locale ia2Locale={0};
-	if(pacc->get_locale(&ia2Locale)==S_OK) {
-		if(ia2Locale.language) {
-			locale.append(ia2Locale.language);
-			SysFreeString(ia2Locale.language);
-		}
-		if(ia2Locale.country) {
-			if(!locale.empty()) {
-				locale.append(L"-");
-				locale.append(ia2Locale.country);
-			}
-			SysFreeString(ia2Locale.country);
-		}
-		if(ia2Locale.variant) {
-			SysFreeString(ia2Locale.variant);
-		}
-	}
-
 	long left=0, top=0, width=0, height=0;
 	if(pacc->accLocation(&left,&top,&width,&height,varChild)!=S_OK) {
 		LOG_DEBUG(L"Error getting accLocation");
@@ -490,163 +450,199 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		|| role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == IA2_ROLE_TOGGLE_BUTTON || role == ROLE_SYSTEM_MENUITEM || role == ROLE_SYSTEM_GRAPHIC || (role == ROLE_SYSTEM_TEXT && !isEditable) || role == IA2_ROLE_HEADING || role == ROLE_SYSTEM_PAGETAB || role == ROLE_SYSTEM_BUTTONMENU
 		|| ((role == ROLE_SYSTEM_CHECKBUTTON || role == ROLE_SYSTEM_RADIOBUTTON) && !isLabelVisible(pacc));
 
-	IAccessibleText* paccText=NULL;
-	IAccessibleHypertext* paccHypertext=NULL;
-	//get IAccessibleText interface
-	pacc->QueryInterface(IID_IAccessibleText,(void**)&paccText);
-	//Get IAccessibleHypertext interface
-	pacc->QueryInterface(IID_IAccessibleHypertext,(void**)&paccHypertext);
-	//Get the text from the IAccessibleText interface
-	BSTR IA2Text=NULL;
-	int IA2TextLength=0;
-	if (paccText && paccText->get_text(0, IA2_TEXT_OFFSET_LENGTH, &IA2Text) == S_OK && IA2Text)
-		IA2TextLength=SysStringLen(IA2Text);
-	// Determine whether the text is extraneous whitespace.
-	bool IA2TextIsUnneededSpace=true;
-	// Whitespace isn't extraneous in editable controls.
-	if (IA2TextLength > 0 && !isEditable) {
-		for(int i=0;i<IA2TextLength;++i) {
-			if(IA2Text[i]==L'\n'||IA2Text[i]==L'\xfffc'||!iswspace(IA2Text[i])) {
-				IA2TextIsUnneededSpace=false;
-				break;
-			}
-		}
-	} else
-		IA2TextIsUnneededSpace=false;
-
 	// Whether a node is visible.
 	// An invisible node should not be rendered, but will have a presence in the buffer.
-	bool isVisible = true;
+	// aria-hidden takes precedence.
+	bool isVisible = (IA2AttribsMapIt = IA2AttribsMap.find(L"hidden")) == IA2AttribsMap.end() || IA2AttribsMapIt->second != L"true";
+	long childCount=0;
+	if (isVisible) {
+		isVisible = width > 0 && height > 0;
+		if(pacc->get_accChildCount(&childCount)==S_OK) {
+			if (childCount > 0) {
+				// If a node has children, it's visible.
+				isVisible = true;
+			}
+		} else
+			childCount=0;
+	}
+
 	// Whether to render children, including text content.
 	// Note that we may still render the name, value, etc. even if we don't render children.
-	bool renderChildren = true;
-	long childCount=0;
-	if ((IA2AttribsMapIt = IA2AttribsMap.find(L"hidden")) != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true") {
-		// aria-hidden
-		isVisible = false;
-	} else {
-		isVisible = width > 0 && height > 0;
-		if (IA2TextIsUnneededSpace
-			|| role == ROLE_SYSTEM_COMBOBOX
-			|| (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY))
-			|| isEmbeddedApp
-			|| role == ROLE_SYSTEM_OUTLINE
-			|| (nameIsContent && (IA2AttribsMapIt = IA2AttribsMap.find(L"explicit-name")) != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true")
-		)
+	bool renderChildren = !(
+		role == ROLE_SYSTEM_COMBOBOX
+		|| (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY))
+		|| isEmbeddedApp
+		|| role == ROLE_SYSTEM_OUTLINE
+		|| (nameIsContent && (IA2AttribsMapIt = IA2AttribsMap.find(L"explicit-name")) != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true")
+	);
+	// renderChildren might get set to false below.
+
+	IAccessibleText* paccText=NULL;
+	BSTR IA2Text=NULL;
+	int IA2TextLength=0;
+	if (isVisible && renderChildren) {
+		//get IAccessibleText interface
+		pacc->QueryInterface(IID_IAccessibleText,(void**)&paccText);
+		//Get the text from the IAccessibleText interface
+		if (paccText && paccText->get_text(0, IA2_TEXT_OFFSET_LENGTH, &IA2Text) == S_OK && IA2Text)
+			IA2TextLength=SysStringLen(IA2Text);
+		// Determine whether the text is extraneous whitespace.
+		bool IA2TextIsUnneededSpace=true;
+		// Whitespace isn't extraneous in editable controls.
+		if (IA2TextLength > 0 && !isEditable) {
+			for(int i=0;i<IA2TextLength;++i) {
+				if(IA2Text[i]==L'\n'||IA2Text[i]==L'\xfffc'||!iswspace(IA2Text[i])) {
+					IA2TextIsUnneededSpace=false;
+					break;
+				}
+			}
+		} else
+			IA2TextIsUnneededSpace=false;
+		if (IA2TextIsUnneededSpace)
 			renderChildren = false;
-		else {
-			if(pacc->get_accChildCount(&childCount)==S_OK) {
-				if (childCount > 0) {
-					// If a node has children, it's visible.
-					isVisible = true;
-				}
-			} else
-				childCount=0;
-		}
 	}
-
-	//Expose all available actions
-	IAccessibleAction* paccAction=NULL;
-	pacc->QueryInterface(IID_IAccessibleAction,(void**)&paccAction);
-	if(paccAction) {
-		long nActions=0;
-		paccAction->nActions(&nActions);
-		for(int i=0;i<nActions;++i) {
-			BSTR actionName=NULL;
-			paccAction->get_name(i,&actionName);
-			if(actionName) {
-				wstring attribName=L"IAccessibleAction_";
-				attribName+=actionName;
-				s<<i;
-				parentNode->addAttribute(attribName,s.str());
-				s.str(L"");
-				if(!isNeverInteractive&&(wcscmp(actionName, L"click")==0||wcscmp(actionName, L"showlongdesc")==0)) {
-					isInteractive=true;
-				}
-				SysFreeString(actionName);
-			}
-		}
-		paccAction->Release();
-	}
-
-	// Handle table cell information.
-	IAccessibleTableCell* paccTableCell = NULL;
-	// For IAccessibleTable, we must always be passed the table interface by the caller.
-	// For IAccessibleTable2, we can always obtain the cell interface,
-	// which allows us to handle updates to table cells.
-	if (
-		pacc->QueryInterface(IID_IAccessibleTableCell, (void**)&paccTableCell) == S_OK || // IAccessibleTable2
-		(paccTable && (IA2AttribsMapIt = IA2AttribsMap.find(L"table-cell-index")) != IA2AttribsMap.end()) // IAccessibleTable
-	) {
-		if (paccTableCell) {
-			// IAccessibleTable2
-			this->fillTableCellInfo_IATable2(parentNode, paccTableCell);
-			if (!paccTable2) {
-				// This is an update; we're not rendering the entire table.
-				tableID = updateTableCounts(paccTableCell, this);
-			}
-			paccTableCell->Release();
-			paccTableCell = NULL;
-		} else // IAccessibleTable
-			fillTableCellInfo_IATable(parentNode, paccTable, IA2AttribsMapIt->second);
-		// tableID is the IAccessible2::uniqueID for paccTable.
-		s << tableID;
-		parentNode->addAttribute(L"table-id", s.str());
-		s.str(L"");
-		// We're now within a cell, so descendant nodes shouldn't refer to this table anymore.
-		paccTable = NULL;
-		paccTable2 = NULL;
-		tableID = 0;
-	}
-	// Handle table information.
-	// Don't release the table unless it was created in this call.
-	bool releaseTable = false;
-	// If paccTable is not NULL, we're within a table but not yet within a cell, so don't bother to query for table info.
-	if (!paccTable2 && !paccTable) {
-		// Try to get table information.
-		pacc->QueryInterface(IID_IAccessibleTable2,(void**)&paccTable2);
-		if(!paccTable2)
-			pacc->QueryInterface(IID_IAccessibleTable,(void**)&paccTable);
-		if (paccTable2||paccTable) {
-			// We did the QueryInterface for paccTable, so we must release it after all calls that use it are done.
-			releaseTable = true;
-			// This is a table, so add its information as attributes.
-			if((IA2AttribsMapIt = IA2AttribsMap.find(L"layout-guess")) != IA2AttribsMap.end())
-				parentNode->addAttribute(L"table-layout",L"1");
-			tableID = ID;
-			s << ID;
-			parentNode->addAttribute(L"table-id", s.str());
-			s.str(L"");
-			if(paccTable2)
-				fillTableCounts<IAccessibleTable2>(parentNode, pacc, paccTable2);
-			else
-				fillTableCounts<IAccessibleTable>(parentNode, pacc, paccTable);
-			// Add the table summary if one is present and the table is visible.
-			if (isVisible &&
-				(!description.empty() && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, description))) ||
-				// If there is no caption, the summary (if any) is the name.
-				// There is no caption if the label isn't visible.
-				(name && !isLabelVisible(pacc) && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
-			) {
-				if(!locale.empty()) tempNode->addAttribute(L"language",locale);
-				previousNode = tempNode;
-			}
-		}
-	}
-
-	BSTR value=NULL;
-	if(pacc->get_accValue(varChild,&value)==S_OK) {
-		if(value&&SysStringLen(value)==0) {
-			SysFreeString(value);
-			value=NULL;
-		}
-	}
-
-	//If the name isn't being rendered as the content, then add the name as a field attribute.
-	if (!nameIsContent && name)
-		parentNode->addAttribute(L"name", name);
 
 	if (isVisible) {
+		//get keyboardShortcut -- IAccessible accKeyboardShortcut;
+		BSTR keyboardShortcut;
+		if(pacc->get_accKeyboardShortcut(varChild,&keyboardShortcut)==S_OK) {
+			parentNode->addAttribute(L"keyboardShortcut",keyboardShortcut);
+			//Free keyboardShortcut string memory
+			SysFreeString(keyboardShortcut);
+		} else
+			parentNode->addAttribute(L"keyboardShortcut",L"");
+
+		wstring description;
+		BSTR rawDesc=NULL;
+		if(pacc->get_accDescription(varChild,&rawDesc)==S_OK) {
+			if(this->hasEncodedAccDescription) {
+				if(wcsncmp(rawDesc,L"Description: ",13)==0)
+					description=&rawDesc[13];
+			} else
+				description=rawDesc;
+			parentNode->addAttribute(L"description",description);
+			SysFreeString(rawDesc);
+		}
+
+		wstring locale;
+		IA2Locale ia2Locale={0};
+		if(pacc->get_locale(&ia2Locale)==S_OK) {
+			if(ia2Locale.language) {
+				locale.append(ia2Locale.language);
+				SysFreeString(ia2Locale.language);
+			}
+			if(ia2Locale.country) {
+				if(!locale.empty()) {
+					locale.append(L"-");
+					locale.append(ia2Locale.country);
+				}
+				SysFreeString(ia2Locale.country);
+			}
+			if(ia2Locale.variant) {
+				SysFreeString(ia2Locale.variant);
+			}
+		}
+
+		//Expose all available actions
+		IAccessibleAction* paccAction=NULL;
+		pacc->QueryInterface(IID_IAccessibleAction,(void**)&paccAction);
+		if(paccAction) {
+			long nActions=0;
+			paccAction->nActions(&nActions);
+			for(int i=0;i<nActions;++i) {
+				BSTR actionName=NULL;
+				paccAction->get_name(i,&actionName);
+				if(actionName) {
+					wstring attribName=L"IAccessibleAction_";
+					attribName+=actionName;
+					s<<i;
+					parentNode->addAttribute(attribName,s.str());
+					s.str(L"");
+					if(!isNeverInteractive&&(wcscmp(actionName, L"click")==0||wcscmp(actionName, L"showlongdesc")==0)) {
+						isInteractive=true;
+					}
+					SysFreeString(actionName);
+				}
+			}
+			paccAction->Release();
+		}
+
+		// Handle table cell information.
+		IAccessibleTableCell* paccTableCell = NULL;
+		// For IAccessibleTable, we must always be passed the table interface by the caller.
+		// For IAccessibleTable2, we can always obtain the cell interface,
+		// which allows us to handle updates to table cells.
+		if (
+			pacc->QueryInterface(IID_IAccessibleTableCell, (void**)&paccTableCell) == S_OK || // IAccessibleTable2
+			(paccTable && (IA2AttribsMapIt = IA2AttribsMap.find(L"table-cell-index")) != IA2AttribsMap.end()) // IAccessibleTable
+		) {
+			if (paccTableCell) {
+				// IAccessibleTable2
+				this->fillTableCellInfo_IATable2(parentNode, paccTableCell);
+				if (!paccTable2) {
+					// This is an update; we're not rendering the entire table.
+					tableID = updateTableCounts(paccTableCell, this);
+				}
+				paccTableCell->Release();
+				paccTableCell = NULL;
+			} else // IAccessibleTable
+				fillTableCellInfo_IATable(parentNode, paccTable, IA2AttribsMapIt->second);
+			// tableID is the IAccessible2::uniqueID for paccTable.
+			s << tableID;
+			parentNode->addAttribute(L"table-id", s.str());
+			s.str(L"");
+			// We're now within a cell, so descendant nodes shouldn't refer to this table anymore.
+			paccTable = NULL;
+			paccTable2 = NULL;
+			tableID = 0;
+		}
+		// Handle table information.
+		// Don't release the table unless it was created in this call.
+		bool releaseTable = false;
+		// If paccTable is not NULL, we're within a table but not yet within a cell, so don't bother to query for table info.
+		if (!paccTable2 && !paccTable) {
+			// Try to get table information.
+			pacc->QueryInterface(IID_IAccessibleTable2,(void**)&paccTable2);
+			if(!paccTable2)
+				pacc->QueryInterface(IID_IAccessibleTable,(void**)&paccTable);
+			if (paccTable2||paccTable) {
+				// We did the QueryInterface for paccTable, so we must release it after all calls that use it are done.
+				releaseTable = true;
+				// This is a table, so add its information as attributes.
+				if((IA2AttribsMapIt = IA2AttribsMap.find(L"layout-guess")) != IA2AttribsMap.end())
+					parentNode->addAttribute(L"table-layout",L"1");
+				tableID = ID;
+				s << ID;
+				parentNode->addAttribute(L"table-id", s.str());
+				s.str(L"");
+				if(paccTable2)
+					fillTableCounts<IAccessibleTable2>(parentNode, pacc, paccTable2);
+				else
+					fillTableCounts<IAccessibleTable>(parentNode, pacc, paccTable);
+				// Add the table summary if one is present.
+				if ((!description.empty() && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, description))) ||
+					// If there is no caption, the summary (if any) is the name.
+					// There is no caption if the label isn't visible.
+					(name && !isLabelVisible(pacc) && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
+				) {
+					if(!locale.empty()) tempNode->addAttribute(L"language",locale);
+					previousNode = tempNode;
+				}
+			}
+		}
+
+		BSTR value=NULL;
+		if(pacc->get_accValue(varChild,&value)==S_OK) {
+			if(value&&SysStringLen(value)==0) {
+				SysFreeString(value);
+				value=NULL;
+			}
+		}
+
+		//If the name isn't being rendered as the content, then add the name as a field attribute.
+		if (!nameIsContent && name)
+			parentNode->addAttribute(L"name", name);
+
 		if (role==ROLE_SYSTEM_GRAPHIC&&childCount>0&&name) {
 			// This is an image map with a name. Render the name first.
 			previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
@@ -660,6 +656,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		}
 
 		if (renderChildren && IA2TextLength > 0) {
+			IAccessibleHypertext* paccHypertext=NULL;
+			//Get IAccessibleHypertext interface
+			pacc->QueryInterface(IID_IAccessibleHypertext,(void**)&paccHypertext);
 			// Process IAccessibleText.
 			int chunkStart=0;
 			long attribsStart = 0;
@@ -723,6 +722,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 					childPacc->Release();
 				}
 			}
+			if(paccHypertext)
+				paccHypertext->Release();
 
 		} else if (renderChildren && childCount > 0) {
 			// The object has no text, but we do want to render its children.
@@ -782,7 +783,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			}
 		}
 
-		if ((nameIsContent || role == IA2_ROLE_SECTION || role == IA2_ROLE_TEXT_FRAME) && !nodeHasUsefulContent(parentNode)) {
+		if ((nameIsContent || role == IA2_ROLE_SECTION || role == IA2_ROLE_TEXT_FRAME)
+				&& (!renderChildren || !nodeHasUsefulContent(parentNode))) {
 			// If there is no useful content and the name can be the content,
 			// render the name if there is one.
 			if(name) {
@@ -807,25 +809,24 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
 			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
 		}
+
+		if(value)
+			SysFreeString(value);
+		if (releaseTable) {
+			if(paccTable2)
+				paccTable2->Release();
+			else
+				paccTable->Release();
+		}
 	}
 
 	// Clean up.
 	if(name)
 		SysFreeString(name);
-	if(value)
-		SysFreeString(value);
 	if (IA2Text)
 		SysFreeString(IA2Text);
 	if(paccText)
 		paccText->Release();
-	if(paccHypertext)
-		paccHypertext->Release();
-	if (releaseTable) {
-		if(paccTable2)
-			paccTable2->Release();
-		else
-			paccTable->Release();
-	}
 
 	return parentNode;
 }
