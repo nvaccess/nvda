@@ -12,11 +12,15 @@
 - Tuki Bluetoothin kautta Yhdistettäville pistenäytöille Widcomm Bluetooth -ohjelmistoa käyttävissä tietokoneissa. (#2418)
 - Hyperlinkit luetaan nyt muokattaessa tekstiä PowerPointissa. (#3416)
 - NVDA on nyt mahdollista pakottaa vaihtamaan verkkosivulla selaustilaan NVDA+välilyönti-näppäinyhdistelmällä ARIA-sovelluksissa tai -valintaikkunoissa oltaessa, mikä mahdollistaa niissä liikkumisen kuten tavallisessa asiakirjassa. (#2023)
+- NVDA ilmoittaa nyt Outlook Expressissä, Windows Mailissa ja Windows Live Mailissa, jos viestissä on liite tai jos viesti on merkitty. (#1594)
+- Rivien ja sarakkeiden koordinaatit ilmoitetaan nyt saavutettavien Java-sovellusten taulukoissa liikuttaessa. Myös mahdolliset taulukon sarakkeiden ja rivien otsikot luetaan. (#3756)
 
 
 == Muutokset ==
 - Siirrä kokonaistarkasteluun/kohdistukseen -komento on poistettu Papenmeier-pistenäytöistä. Käyttäjät voivat Määrittää omat näppäimensä Syöte-eleet-valintaikkunaa käyttäen. (#3652)
 - NVDA käyttää nyt Microsoft VC -ajonaikaisten kirjastojen versiota 11, mikä tarkoittaa, että sitä ei voida käyttää Windows XP Service Pack 2:ta tai Windows Server 2003 Service Pack 1:tä vanhemmissa käyttöjärjestelmissä.
+- Tähti (*)- ja plus (+)-merkit puhutaan nyt jotain-välimerkkitasolla, jos NVDA:ta käytetään englanninkielisenä. (#3614)
+- eSpeak päivitetty versioksi 1.48.02, joka sisältää korjauksia moniin kieliin sekä useisiin kaatumisiin. (#3842, #3739)
 
 
 == Korjatut ohjelmavirheet ==
@@ -40,6 +44,26 @@
 - NVDA ei enää toista virheellisesti rivien ja sarakkeiden tietoja taulukon solusta useita kertoja Microsoft Wordissa. (#3702)
 - Erillisissä tekstilohkoissa olevia numeroita ei enää lueta yhtenä lukuna sellaisissa kielissä, joissa käytetään välilyöntiä numeroiden ryhmittelyyn/tuhaterottimena (kuten esim. ranska ja saksa). Tämä oli erityisen ongelmallista numeroita sisältävissä taulukon soluissa. (#3698)
 - Pistenäytön päivittäminen ei enää toisinaan epäonnistu, kun järjestelmäkohdistinta liikutetaan Microsoft Word 2013:ssa. (#3784)
+- Kun Microsoft Wordissa ollaan otsikon ensimmäisen merkin kohdalla, otsikkoa ja sen tasoa ilmaiseva teksti ei enää katoa pistenäytöltä. (#3701)
+- NVDA poistaa nyt asetusprofiilin käytöstä oikein, kun se on otettu käyttöön sovellukselle, joka suljettiin. (#3732)
+- Ehdotuksen sijasta ei enää virheellisesti lueta "NVDA"-sanaa syötettäessä aasialaisia merkkejä NVDA:n omaan säätimeen (esim. selaustilan Etsi-valintaikkunaan). (#3726)
+- Outlook 2013:n asetusvalintaikkunan välilehdet luetaan. (#3826)
+- ARIA:n aktiivisten alueiden tukea paranneltu Firefoxissa ja muissa Mozilla Gecko -sovelluksissa:
+ - Tuki aria-atomic-päivityksille ja aria-busy-päivitysten suodattamiselle. (#2640)
+ - Vaihtoehtoinen teksti (kuten alt-määre tai aria-label) näytetään nyt, mikäli muuta tekstiä ei ole käytettävissä. (#3329)
+ - Aktiivisten alueiden päivityksiä ei enää hylätä, mikäli ne tapahtuvat samaan aikaan kohdistuksen liikkuessa. (#3777)
+- Tiettyjä esityselementtejä ei enää virheellisesti näytetä selaustilassa Firefoxissa ja muissa Mozilla Gecko -sovelluksissa (erityisesti, kun elementti on merkitty aria-presentation-määreellä, mutta sen kohdalle on myös mahdollista siirtyä järjestelmäkohdistimella). (#3781)
+- Suorituskykyä paranneltu liikuttaessa Microsoft Word -asiakirjassa kirjoitusvirheiden lukemisen ollessa käytössä. (#3785)
+- Useita korjauksia saavutettavien Java-sovellusten tukeen:
+ - Kehyksen tai valintaikkunan ensimmäinen aktiivinen säädin luetaan nyt oikein kyseisen kehyksen tai valintaikkunan tullessa etualalle. (#3753)
+ - Valintapainikkeille ei enää lueta hyödytöntä sijaintitietoa (esim. 1 / 1). (#3754)
+ - JComboBox-säätimet luetaan paremmin (enää ei lueta HTML-koodia, avattu- ja suljettu-tilat ilmoitetaan paremmin). (#3755)
+ - Teksti, joka aiemmin puuttui valintaikkunoista niitä luettaessa, sisällytetään nyt niihin. (#3757)
+ - Aktiivisen säätimen nimen, arvon tai kuvauksen muutokset luetaan nyt tarkemmin. (#3770)
+- Korjattu Windows 8:ssa havaittu NVDA:n kaatuminen, kun kohdistus siirretään tiettyihin paljon tekstiä sisältäviin RichEdit-säätimiin (esim. NVDA:n Näytä loki -toiminto ja Windbg). (#3867)
+- NVDA ei enää siirrä hiirtä väärään paikkaan joissakin sovelluksissa sellaisissa järjestelmissä, joissa on korkea DPI-näyttöasetus (koskee oletusarvoisesti monia uusia näyttöjä). (#3758, #3703)
+- Korjattu verkkosivuja selattaessa ongelma, jossa NVDA lakkasi toimimasta kunnolla ellei sitä käynnistetty uudelleen, vaikkei se kaatunutkaan tai jäänytkään jumiin. (#3804)
+- Papenmeier-pistenäyttöä  voidaan nyt käyttää, vaikkei sellaista ole aiemmin USB:n kautta koneeseen kytketty. (#3712)
 
 
 = 2013.3 =
