@@ -233,6 +233,10 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		textList = []
 		landmark = attrs.get("landmark")
 		if formatConfig["reportLandmarks"] and fieldType == "start_addedToControlFieldStack" and landmark:
+			try:
+				textList.append(attrs["name"])
+			except KeyError:
+				pass
 			textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
 		textList.append(super(VirtualBufferTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
 		return " ".join(textList)
@@ -241,6 +245,10 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		textList = []
 		landmark = field.get("landmark")
 		if formatConfig["reportLandmarks"] and reportStart and landmark and field.get("_startOfNode"):
+			try:
+				textList.append(field["name"])
+			except KeyError:
+				pass
 			# Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 			textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
 		text = super(VirtualBufferTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)
@@ -275,7 +283,7 @@ class ElementsListDialog(wx.Dialog):
 		# in the browse mode Elements List dialog.
 		("landmark", _("Lan&dmarks")),
 	)
-	Element = collections.namedtuple("Element", ("textInfo", "text", "parent"))
+	Element = collections.namedtuple("Element", ("textInfo", "docHandle", "id", "text", "parent"))
 
 	lastSelectedElementType=0
 
@@ -354,11 +362,16 @@ class ElementsListDialog(wx.Dialog):
 
 		parentElements = []
 		for node, start, end in self.vbuf._iterNodesByType(elType):
+			docHandle = ctypes.c_int()
+			id = ctypes.c_int()
+			NVDAHelper.localLib.VBuf_getIdentifierFromControlFieldNode(self.vbuf.VBufHandle, node, ctypes.byref(docHandle), ctypes.byref(id))
+			docHandle = docHandle.value
+			id = id.value
 			elInfo = self.vbuf.makeTextInfo(textInfos.offsets.Offsets(start, end))
 
 			# Find the parent element, if any.
 			for parent in reversed(parentElements):
-				if self.isChildElement(elType, parent.textInfo, elInfo):
+				if self.isChildElement(elType, parent, elInfo, docHandle, id):
 					break
 				else:
 					# We're not a child of this parent, so this parent has no more children and can be removed from the stack.
@@ -368,7 +381,8 @@ class ElementsListDialog(wx.Dialog):
 				# Note that parentElements will be empty at this point, as all parents are no longer relevant and have thus been removed from the stack.
 				parent = None
 
-			element = self.Element(elInfo, self.getElementText(elInfo, elType), parent)
+			element = self.Element(elInfo, docHandle, id,
+				self.getElementText(elInfo, docHandle, id, elType), parent)
 			self._elements.append(element)
 
 			if not self._initialElement and elInfo.compareEndPoints(caret, "startToStart") > 0:
@@ -430,36 +444,41 @@ class ElementsListDialog(wx.Dialog):
 			self.activateButton.Enable()
 		self.moveButton.Enable()
 
-	def _getControlFieldAttrib(self, info, attrib):
+	def _getControlFieldAttribs(self, info, docHandle, id):
 		info = info.copy()
 		info.expand(textInfos.UNIT_CHARACTER)
 		for field in reversed(info.getTextWithFields()):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
 				# Not a control field.
 				continue
-			val = field.field.get(attrib)
-			if val:
-				return val
-		return None
+			attrs = field.field
+			if int(attrs["controlIdentifier_docHandle"]) == docHandle and int(attrs["controlIdentifier_ID"]) == id:
+				return attrs
+		raise LookupError
 
-	def getElementText(self, elInfo, elType):
+	def getElementText(self, elInfo, docHandle, id, elType):
 		if elType == "landmark":
-			landmark = self._getControlFieldAttrib(elInfo, "landmark")
+			attrs = self._getControlFieldAttribs(elInfo, docHandle, id)
+			landmark = attrs.get("landmark")
 			if landmark:
-				return aria.landmarkRoles[landmark]
+				name = attrs.get("name", "")
+				if name:
+					name += " "
+				return name + aria.landmarkRoles[landmark]
 
 		else:
 			return elInfo.text.strip()
 
-	def isChildElement(self, elType, parent, child):
-		if parent.isOverlapping(child):
+	def isChildElement(self, elType, parent, childInfo, childDoc, childId):
+		if parent.textInfo.isOverlapping(childInfo):
 			return True
 
 		elif elType == "heading":
 			try:
-				if int(self._getControlFieldAttrib(child, "level")) > int(self._getControlFieldAttrib(parent, "level")):
+				if (int(self._getControlFieldAttribs(childInfo, childDoc, childId)["level"])
+						> int(self._getControlFieldAttribs(parent.textInfo, parent.docHandle, parent.id)["level"])):
 					return True
-			except (ValueError, TypeError):
+			except (KeyError, ValueError, TypeError):
 				return False
 
 		return False
