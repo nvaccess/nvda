@@ -13,11 +13,14 @@
 - Podczas edycji tekstu w PowerPoint, raportowane są hiperłącza. (#3416)
 - Wewnątrz aplikacji ARIA albo okien dialogowych na stronach www, możliwe jest przełączenie NVDA w tryb czytania klawiszami NVDA+space, co umożliwia nawigację wewnątrz aplikacji lub dialogu tak jak w dokumencie. (#2023)
 - W Outlook Express / Windows Mail / Windows Live Mail, NVDA teraz informuje czy wiadomość ma załącznik lub jest oflagowana. (#1594)
+- podczas nawigowania wewnątrz tabeli w dostępnych aplikacjach Java, odczytywane są współrzędne komórki oraz nagłówki wiersza i kolumny, jeśli istnieją. (#3756)
 
 
 == Zmiany ==
 - Dla monitorów brajlowskich Papenmeier, usunięta została komenda przejścia do płaskiego podglądu / punktu uwagi. Użytkownicy mogą przypisać własne klawisze w okienku Zdarzenia wejścia. (#3652)
 - NVDA teraz opiera się na Microsoft VC runtime wersja 11, co oznacza, że nie może dłużej być uruchomiony na systemach operacyjnych starszych niż Windows XP Service Pack 2 lub Windows Server 2003 Service Pack 1.
+- Poziom interpunkcji: Niektóre,  oznajmia od teraz znaki gwiazdka (*) i plus (+). (#3614)
+- Zaktualizowano eSpeak do wersji 1.48.02 zawierającej wiele poprawek języków i kilku awarii. (#3842, #3739)
 
 
 == Poprawki błędów ==
@@ -46,11 +49,21 @@
 - Podczas wprowadzania znaków azjatyckich w kontrolce samego NVDA (np. okno wyszukiwania w trybie czytania), "NVDA" nie jest dłużej nieprawidłowo odczytywane zamiast znaku kandydującego. (#3726)
 - Zakładki w oknie opcji Outlook 2013 są teraz odczytywane. (#3826)
 - Poprawiona obsługa żywych obszarów ARIA w Firefox i innych aplikacjach Mozilla Gecko :
-	- obsługa aktualizacji aria-atomic i filtrowanie aktualizacji aria-busy (#2640)
-	- Tekst alternatywny (taki jak atrybut alt lub aria-label) jest dołączany, jeśli nie ma innego użytecznego tekstu. (#3329)
-	- Aktualizacje żywych obszarów nie są od teraz wyciszane, jeśli nastąpiły w tym samym momencie co przesunięcie punktu uwagi. (#3777)
+ - obsługa aktualizacji aria-atomic i filtrowanie aktualizacji aria-busy (#2640)
+ - Tekst alternatywny (taki jak atrybut alt lub aria-label) jest dołączany, jeśli nie ma innego użytecznego tekstu. (#3329)
+ - Aktualizacje żywych obszarów nie są od teraz wyciszane, jeśli nastąpiły w tym samym momencie co przesunięcie punktu uwagi. (#3777)
 - Niektóre elementy prezentacji w Firefox i innych aplikacjach Mozilla Gecko nie są od teraz nieprawidłowo pokazywane w trybie czytania (szczególnie, gdy element jest oznaczony jako aria-presentation i jednocześnie może posiadać punkt uwagi). (#3781)
 - Poprawka wydajności podczas nawigacji wewnątrz dokumentów w Microsoft Word przy włączonym zgłaszaniu błędów pisowni. (#3785)
+- Kilka poprawek obsługi dostępnych aplikacji Java:
+ - początkowo aktywna kontrolka w ramce lub oknie dialogowym jest od teraz odczytywana gdy ramka lub okno dialogowe przechodzi na pierwszy plan. (#3753)
+ - bezużyteczne informacje o pozycji przycisków radiowych nie są teraz odczytywane (np. 1 z 1). (#3754)
+ - Lepsza obsługa kontrolek typu JComboBox (html nie jest odczytywany, lepsze zgłaszanie stanów rozwinięte / zwinięte). (#3755)
+ - Podczas odczytywania okien dialogowych, czytany jest tekst, który dawniej był pomijany. (#3757)
+ - zmiany nazwy, wartości lub opisu aktywnej kontrolki są teraz zgłaszane bardziej precyzyjnie. (#3770)
+- Naprawiono awarię NVDA w Windows 8 gdy punkt uwagi znajdował się na niektórych kontrolkach RichEdit zawierających dużą ilość tekstu (np. podgląd logów NVDA, windbg). (#3867)
+- W systemach z ustawionym wysokim DPI ekranu (domyślnie ustawianym na wielu współczesnych komputerach), NVDA nie przenosi od teraz wskaźnika myszy do nieprawidłowego miejsca w niektórych aplikacjach. (#3758, #3703)
+- Naprawiono sporadyczny problem podczas przeglądania internetu: NVDA przestawał prawidłowo pracować do czasu restartu, chociaż wcześniej nie zawiesił się, ani nie uległ awarii. (#3804)
+- Monitor brajlowski Papenmeier może teraz być używany, nawet jeśli nie był wcześniej podłączony przez USB. (#3712)
 
 
 == Zmiany dla programistów ==

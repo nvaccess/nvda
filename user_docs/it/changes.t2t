@@ -12,10 +12,15 @@
 - Supporto per i display braille collegati via Bluetooth su un computer che esegue il software Bluetooth Widcomm. (#2418)
 - Quando si modifica del testo in Powerpoint, vengono segnalati eventuali collegamenti ipertestuali. (#3416)
 - Nelle applicazioni aria o finestre di dialogo web, è ora possibile forzare NVDA ad utilizzare la modalità navigazione con NVDA+spazio permettendo l'esplorazione dell'applicazione o della finestra di dialogo come se si trattasse di un documento web. (#2023)
+- In Outlook Express / Windows Mail / Windows Live Mail, ora NVDA è in grado di stabilire se un messaggio contiene un allegato o è stato contrassegnato. (#1594)
+- Durante l'esplorazione delle tabelle nelle applicazioni Java accessibili, ora vengono annunciate le coordinate di riga e colonna, comprese le loro intestazioni se presenti. (#3756)
+
 
 == Cambiamenti ==
 - Per i display braille Papenmeier, sono stati rimossi i comandi di spostamento al cursore di controllo/focus. Gli utenti potranno definire i propri tasti preferiti nella finestra gesti e tasti di immissione. (#3652)
 - NVDA ora si basa su Microsoft VC runtime versione 11, il che significa che non può più essere eseguito su sistemi operativi precedenti a Windows XP Service Pack 2 o Windows Server 2003 Service Pack 1.
+- Se il livello di punteggiatura è impostato su qualcosa, verranno annunciati i caratteri asterisco (*) e più (+) (#3614)
+- Aggiornata eSpeak alla versione 1.48.02 che include numerose correzioni linguistiche e sistema diversi crash. (#3842, #3739)
 
 
 == Bug corretti ==
@@ -39,6 +44,26 @@
 - In Microsoft Word, NVDA non ripete più per svariate volte le informazioni riga/colonna di una cella. (#3702)
 - In quelle lingue che utilizzano uno spazio come separatore di cifre per le migliaia come francese e tedesco, i numeri contenenti più blocchi di testo non vengono più letti come un singolo numero. Questo risultava molto problematico con le celle contenenti numeri. (#3698)
 - Risolto un problema che non permetteva al braille di aggiornare correttamente la propria posizione al movimento del cursore in Word2013. (#3784)
+- Quando ci si posiziona sul primo carattere di un'intestazione in Microsoft Word, il testo che fa capire che si tratta di un'intestazione (ad esempio intestazione di livello 1) non scompare più dai display braille. (#3701)
+- Quando un profilo di configurazione viene associato ad un'applicazione e quell'applicazione termina la sua esecuzione, NVDA non fallisce più nel disattivare quel profilo. (#3732)
+- Quando vengono inseriti caratteri con il metodo di immissione asiatico nei controlli che fanno parte di NVDA (come la finestra trova in un browser), viene letto correttamente il carattere candidato invece che la parola NVDA. (#3726)
+- Vengono ora annunciate correttamente le schede nella finestra di opzioni di Outlook 2013. (#3826)
+- Migliorato il supporto alle regioni Aria in Firefox e ad altre applicazioni Mozilla:
+	- Supporto per gli aggiornamenti  ad aria-atomic e filtraggio degli aggiornamenti di aria-busy (#2640)
+	- Viene annunciato il testo alternativo (ad esempio l'attributo alt o aria-label) se non c'è altro testo utile. (#3329)
+	- Se il focus viene spostato e contemporaneamente viene aggiornato un controllo live-region, quest'ultimo sarà annunciato ugualmente. (#3777)
+- Alcuni elementi di presentazione di Firefox e altre applicazioni Mozilla Gecko non vengono più impropriamente mostrati in modalità navigazione. (#3781)
+- Miglioramento delle prestazioni durante l'esplorazione di un documento di Microsoft Word con il controllo degli errori di ortografia abilitato. (#3785)
+- Diverse correzioni al supporto per le applicazioni Java accessibili:
+ - Non vi sono più problemi nell'annunciare il controllo iniziale su cui si trova il focus, all'interno di un frame o di una finestra di dialogo che torna in primo piano. (#3753)
+ - Non vengono più riportate informazioni inutili riguardo i pulsanti radio, ad esempio  1 di 1. (#3754)
+ - Gestione migliorata dei controlli JComboBox, (html non più annunciato), sistemato anche il rilevamento dello stato espanso/non espanso. (#3755)
+ - Migliorata la lettura di tutto il testo di una finestra di dialogo, in precedenza poteva accadere che alcuni elementi fossero omessi. (#3757)
+ - Vengono annunciate in maniera più corretta le modifiche al nome, alla descrizione o al valore del controllo su cui si trova il focus. (#3770)
+- Risolto un problema che causava il crash di NVDA in Windows8 in concomitanza con controlli contenenti grosse porzioni di testo, come il visualizzatore log di NVDA. (#3867)
+- Nei sistemi con le impostazioni del display settate ad un numero molto alto di DPI, (ossia quasi tutti i pc più moderni), NVDA non ha più problemi nel portare il mouse nella posizione desiderata. (#3758, #3703)
+- Sistemato un fastidioso problema che occasionalmente, provocava l'arresto di NVDA durante la navigazione, inibendone però il riavvio. (#3804)
+- Ora è possibile utilizzare un display braille Papenmeier anche se non era mai stato connesso alla porta USB. (#3712)
 
 
 == Cambiamenti per sviluppatori in inglese ==

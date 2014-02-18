@@ -3,6 +3,69 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.1 =
+
+== Újdonságok ==
+- A Microsoft PowerPoint 2013 program támogatása. Megjegyzés: A védett nézet nem támogatott (#3578)
+- A Microsoft word és Excel programok esetén az NVDA fel tudja olvasni a kijelölt szimbólumot a szimbólum beszúrása párbeszédpanelen. (#3538)
+- Új opció a dokumentum formázás párbeszédpanelen, most már állítható a Kattinthatóként azonosított tartalmak jelzése a dokumentumokban. Ez az opció alapértelmezés szerint be van kapcsolva összhangban a korábbi viselkedéssel. (#3556)
+- A Bluetooth-on keresztül csatlakozó Braille kijelzők támogatása a Widcomm Bluetooth szoftvert futtató számítógépeken. (#2418)
+- Ha a Powerpointban szerkesztünk szöveget, a program felolvassa a hivatkozásokat. (#3416)
+- Egy ARIA alkalmazásban, vagy webes párbeszédpanelen lehetőségünk van böngészőmódra való váltásra az NVDA gomb + szóköz lenyomásával. Ekkor a dokumentumnavigációt tudjuk használni az adott alkalmazás, vagy a párbeszédpanel bejárására. (#2023)
+- Az Outlook Expressben, Windows Mail-ben és Windows Live Mailben az NVDA már felolvassa, ha egy üzenetnek melléklete van, vagy ha az meg van jelölve. (#1594)
+- Az akadálymentes Java alkalmazásokban már elhangoznak a táblázatok sor és oszlop koordinátái, és a sor és oszlop fejlécek (amennyiben elérhetőek). (#3756)
+
+
+== Változások ==
+- A Papenmeier braille kijelzők használata esetén a sík áttekintő módba lépésre szolgáló billentyűparancs eltávolításra került. A felhasználók hozzárendelhetik a kijelző billentyűit a beviteli parancsok párbeszédablakában. (#3652)
+- Az NVDA már a Microsoft VC runtime 11 verzióra támaszkodik, ami azt jelenti, hogy már nem futtatható Windows XP Service Pack 2, vagy Windows Server 2003 Service Pack 1 verziónál régebbi operációs rendszereken.
+- A "Néhány írásjel" szinten  már bemondásra kerülnek a csillag (*) és plusz (+) karakterek. (#3614)
+- Az eSpeak frissült az 1.48.02 verzióra, ami számos nyelvi és egyéb hibajavítást tartalmaz. (#3842, #3739)
+
+
+== Hiba javítások ==
+- A Microsoft Excelben, ha cellák közt navigálunk, vagy cellákat jelölünk ki, az NVDA már helyesen az új értékeket jelenti be, amikor az Excel lassan reagál a kijelölés elmozdulására. (#3558)
+- A Microsoft Excelben az NVDA megfelelően kezeli a legördülő lista megnyitását a cellákhoz a felugró menüből. (#3586)
+- Az iTunes 11 áruház oldalainak tartalma mostmár helyesen, böngészőmódban jelenik meg, amennyiben egy hivatkozást követve megnyitjuk azokat, vagy belépünk az áruházba. (#3625)
+- Az iTunes 11 áruházban a dalokba való belehallgatásra szolgáló gombok címkéi már megjelennek böngésző módban. (#3638)
+- A Google Chrome-ban böngészőmódban a jelölőnégyzetek és választógombok címkéit a program most már helyesen rendezi el. (#1562)
+- Az Instantbird programban az NVDA már nem mond be használhatatlan információkat akkor, amikor egy partnerre navigálunk a partnerlistán. (#2667)
+- Az NVDA az adobe Reader programban böngészőmódban most már helyesen társítja a megfelelő szöveget az adott gombhoz még akkor is, ha a címkét egy eszköztipp vagy más hasonló szöveg írja felül. (#3640)
+- Az Adobe Reader programban a program böngésző módban már nem rendereli a "mc-ref" szöveget tartalmazó ábrákat. (#3645)
+- Az NVDA most már nem olvassa az Excelben az összes cella formázását aláhúzottnak. (#3669)
+- Böngészőmódban az NVDA már nem mutatja a dokumentum jelentéssel nem bíró karaktereit, mint pl. az unikód kódtábla priváthasználatú blokkjainak karakterei. Néhány esetben ezek meggátolták azt, hogy fontos üzenetek jelenjenek meg. (#2963)
+- A kelet-ázsiai karakterek bevitele már nem okoz hibát a PuTTY programban. (#3432)
+- A megszakított folyamatos felolvasás után való dokumentum-navigáció már nem eredményezi azt, hogy az NVDA bejelenti egy mezőből való kilépést (mint pl. táblázatok esetében), holott a folyamatos felolvasás ezeket nem jelenti be. (#3688)
+- Az NVDA most már sokkal pontosabban jelenti be az egyes vezérlőelemeket amikor böngészőmódban folyamatos átfutó olvasásnál a dokumentum-navigációs parancsokat használjuk. (Vagyis most már a címsor esetében címsort mond és nem azt, hogy "szöveg".) (#3689)
+- Az elejére vagy végére ugrató navigációs parancsok most már figyelembe veszik az átfutó folyamatos felolvasás beállítást. (Vagyis nem szakítják meg a felolvasást.) (#3675)
+- A használható gesztusok felhasználóbarát elnevezéseket kaptak és a gesztusok listájában az NVDA nyelvén olvashatók. (#3624)
+- Az NVDA már nem okozza több program összeomlását, abban az esetben, ha az egér a RichhhEdit (TRichEdit) vezérlőelem felett mozog. Azokról a programokról van szó, melyek a Jarte 5.1 és a BRfácil-t használják. (#3693, #3603, #3581)
+- Az Internet  Explorerben, vagy más MSHTML vezérlőelemekben, a konténerek, mint pl. az ARIA által prezentációként megjelölt táblázatok nem kerülnek bejelentésre. (#3713)
+- Microsoft Word, az NVDA már nem ismétli meg kéretlenül egymás után többször egy táblázat cellájának sor-, és oszlopinformációit egy braille kijelzőn. (#3702)
+- Az NVDA már nem olvassa különálló számként a számokat az olyan nyelvekben (mint pl. a francia és a német), amelyekben az ezres elválasztó a szóköz. Ez korábban főleg olyan táblázatoknál jelentett problémát, amelyekben számokat tartalmaztak a cellák. (#3698)
+- A braille kijelző mostmár minden esetben megfelelően frissül, ha Word 2013-ban a rendszerkurzort mozgatjuk. (#3784)
+- A braille kijelzőről nem tűnik el a címsorszint azonosító szövege amennyiben a Microsoft Word programban a kurzort a címsor első karakterére mozgatjuk. (#3701)
+- Ha egy alkalmazáshoz felhasználói profilt társítottunk, és az alkalmazás kilépett, az NVDA most már minden esetben kikapcsolja az alkalmazás profilját. (#3732)
+- Amennyiben az NVDA-ban magában ázsiai karakterbevitelt használunk (mint pl. böngészőmódban a keresőmezőbe való beíráskor), az NVDA már  helyesen jelenti be a karakter alkotóelemeinek helyzetét. (#3726)
+- Az NVDA most már felolvassa az Outlook 2013 programban a Beállítások párbeszédpanel lapfüleit. (#3826)
+Továbbfejlesztett ARIA dinamikus régió támogatás a Firefoxban és más Mozilla Gecko alkalmazásokban:
+- Támogatja az ARIA elemi frissítéseket, valamint az "aria-busy" típusú frissítések szűrését  (#2640)
+- Amennyiben nincs használható szöveg, úgy képes az ALT tulajdonság, vagy ARIA címke alapján alternatív szöveg létrehozására. (#3329)
+- Az ARIA dinamikus régió frissítések, amenyiben a fókusz elmozdulásakor   történnek, már nem némák. (#3777)
+- A Firefoxban és más Mozilla Gecko alkalmazásban néhány bemutatóelem már helyesen jelenik meg böngészőmódban, különösen akkor, ha bár ARIA prezentációként van jelölve, mégis képes a fókusz fogadására. (#3781)
+- Bekapcsolt helyesírás ellenőrzés esetén javult az NvDA teljesítménye a word dokumentumokban való navigáláskor. (#3785)
+Különböző, az akadálymentes Java alkalmazásokat érintő hibajavítások:
+- Egy vezérlőelem-csoport vagy párbeszédpanel először fókuszba kerülő vezérlőelemének bejelentése nem marad el, ha az adott csoport, vagy párbeszédpanel előtérbe kerül. (#3753)
+- A választógombok értelmetlen helyzetinformációi (mint pl. 1/1,) nem kerülnek bejelentésre. (#3754)
+- A JComboBox  vezérlőelem jobb bejelentése. (A HTML már nem kerül bejelentésre, viszont pontosabban jelenti be a lista lenyitott és becsukott állapotát. (#3755)
+- A párbeszédpanelek szövegének felolvasásakor több, eddig elhallgatott szöveget is bejelent az NVDA. (#3757)
+- Az aktív vezérlőelem nevében, értékében, leírásában beálló változásokat az NVDA sokkal pontosabban jelenti (#3770)
+- Ki Lett javítva az a hiba, Mely akkor okozta AZ NVDA összeomlását Windows 8 Alatt, ha Nagy menyiségű szöveget tartalmazó RichEdit vezérlőelem került a fókuszba. (Mint pl.: NVDA naplónéző, windbg). (# 3867)
+- Az NVDA most már nem mozgatja hibás pozícióba az egeret, amennyiben magas DPI felbontással használjuk a monitort. (#3758, #3703)
+- Ki lett javítva egy webböngészés közben, alkalmanként jelentkező probléma, mikoris az NVDA megfelelő működése leállt, és újra kellett indítani a programot, bár az nem fagyott le (#3804)
+- Használható a Papenmeier braille kijelző abban az esetben is, ha a Papenmeier kijelző még nem volt usb-n csatlakoztatva. (#3712)
+
+
 = 2013.3 =
 
 == Újdonságok ==

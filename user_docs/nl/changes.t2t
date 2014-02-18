@@ -7,39 +7,64 @@ Wat is Nieuw in NVDA
 
 == Nieuwe Functies ==
 - Ondersteuning voor Microsoft PowerPoint 2013. Merk op dat beveiligde weergave niet wordt ondersteund. (#3578)
-- In Microsoft word en Excel kan NVDA nu het geselecteerde symbool lezen als het kiezen van symbolen via het dialoogvenster Symbolen Invoegen. (#3538)
+- In Microsoft word en Excel kan NVDA nu het geselecteerde symbool lezen bij het kiezen van symbolen uit het dialoogvenster Symbolen Invoegen. (#3538)
 - U kunt nu kiezen of inhoud in documenten als klikbaar moet worden aangegeven via een nieuwe optie in het dialoogvenster Documentopmaak. Deze optie is standaard ingeschakeld overeenkomstig het vroegere gedrag. (#3556)
 - Ondersteuning voor brailleleesregels die via Bluetooth zijn verbonden met een computer die met de Widcomm Bluetooth Software werkt. (#2418)
 - Bij het bewerken van tekst in PowerPoint worden hyperlinks nu gemeld. (#3416)
-- In ARIA-toepassingen of dialoogvensters op intenret kunt u nu NVDA naar bladermodus laten schakelen met NVDA+spatiebalk. Dit laat documentachtige navigatie toe in de toepassing of het dialoogvenster. (#2023)
+- In ARIA-toepassingen of dialoogvensters op internet kunt u nu NVDA naar bladermodus laten schakelen met NVDA+spatiebalk. Dit laat documentachtige navigatie toe in de toepassing of het dialoogvenster. (#2023)
+- In Outlook Express, Windows Mail en Windows Live Mail meldt NVDA het nu als een bericht een bijlage heeft of gemarkeerd is. (#1594)
+- Bij het navigeren door tabellen in toegankelijke Java toepassingen worden rij- en kolomcoördinaten nu gemeld, inclusief kolom- en rijhoofdingen als die er zijn. (#3756)
 
 
 == Veranderingen ==
 - Voor Papenmeier brailleleesregels is het commando move to flat review/focus verwijderd. Gebruikers kunnen de gewenste toetsen toekennen via het dialoogvenster Invoerhandelingen koppelen. (#3652)
 - NVDA vereist nu Microsoft VC runtime versie 11, wat inhoudt dat het niet langer kan werken op besturingssystemen ouder dan Windows XP Service Pack 2 of Windows Server 2003 Service Pack 1.
+- Als het interpunctieniveau is ingesteld op Sommige, zullen nu de asterisk (*) en het plusteken (+) worden uitgesproken. (#3614)
+- Upgraded eSpeak to version 1.48.02 which includes many language fixes and fixes several crashes. (#3842, #3739)
 
 
 == Opgeloste problemen ==
 - Bij het navigeren tussen of het selecteren van cellen in Microsoft Excel zou NVDA niet langer foutief   de oude cel mogen aankondigen in plaats van de nieuwe cel als Microsoft Excel traag is bij het verplaatsen van de selectie. (#3558)
 - NVDA werkt nu correct als u via het contextmenu een keuzelijst opent binnen een cel in Microsoft Excel. (#3586)
-- New page content in iTunes 11 store pages is now shown properly in bladermodus when following een link in the store or when opening the store initially. (#3625)
-- Buttons for previewing songs in the iTunes 11 store now show their label in bladermodus. (#3638)
-- In bladermodus in Google Chrome, the labels van check boxes en radio buttons are now rendered correctly. (#1562)
-- In Instantbird, NVDA niet langer reports useless information every time you move to een contact in the Contacts list. (#2667)
-- In bladermodus in Adobe Reader, the correct text is now rendered for buttons, etc. where the label has been overridden using een tooltip or other means. (#3640)
-- In bladermodus in Adobe Reader, extraneous graphics containing the text "mc-ref" will niet langer be rendered. (#3645)
-- NVDA niet langer reports all cellen in Microsoft Excel as underlined in their formatting information. (#3669)
-- Niet langer show meaningless characters in bladermodus documents such as those found in the Unicode private usage range. In some cases these were stopping more useful labels from being shown. (#2963)
-- Input composition for entering east-asian characters niet langer fails in PuTTY. (#3432)
-- Navigating in een document after een canceled say all niet langer results in NVDA sometimes incorrectly announcing that you have left een field (such as een table) lower in the document that the say all never actually spoke. (#3688)
-- When using bladermodus quick navigation commands  while in say all with skim reading enabled, NVDA more accurately announces the new field; e.g. it now says een heading is een heading, rather than just its text. (#3689)
-- The jump to end or start of container quick navigation commands now honor the skim reading during say all setting; i.e. they will niet langer cancel the current say all. (#3675)
-- Touch gesture names listed in het dialoogvenster Invoerhandelingen koppelen are nu friendly en localized. (#3624)
-- NVDA niet langer causes certain programs to crash when moving the mouse over their rich edit (TRichEdit) controls. Programs include Jarte 5.1 en BRfácil. (#3693, #3603, #3581)
-- In Internet Explorer en andere MSHTML controls, containers such as tables marked as presentation by ARIA are niet langer reported to the user. (#3713)
+- In winkelpagina's van iTunes 11 wordt nieuwe pagina-inhoud nu juist getoond in bladermodus als u een link volgt in de winkel of bij het initieel openen van de winkel. (#3625)
+- Knoppen om een preview van nummers te krijgen in de iTunes 11 winkel tonen nu hun label in bladermodus. (#3638)
+- In bladermodus in Google Chrome worden de labels van selectievakjes en keuzerondjes nu correct weergegeven. (#1562)
+- In Instantbird meldt NVDA niet langer nutteloze informatie elke keer u naar een contact gaat in de Contactenlijst. (#2667)
+- In bladermodus in Adobe Reader wordt de juiste tekst nu weergegeven voor knoppen, etc. waar het label werd overschreven via een tooltip of op andere manieren. (#3640)
+- In bladermodus in Adobe Reader zullen overbodige afbeeldingen die de tekst "mc-ref" bevatten niet langer worden weergegeven. (#3645)
+- NVDA meldt niet langer alle cellen in Microsoft Excel als onderlijnd bij hun opmaakinformatie. (#3669)
+- Toont niet langer betekenisloze karakters in bladermodus documenten zoals die in de Unicode-reeks voor privé-gebruik. In sommige gevallen verhinderden deze dat zinvoller labels werden getoond. (#2963)
+- Invoersamenstelling voor het invoeren van Oost-Aziatische karakters weigert niet langer in PuTTY. (#3432)
+- Navigeren door een document na afgebroken automatisch lezen leidt er niet langer toe dat NVDA soms foutief aankondigde dat u een veld verliet (zoals een tabel) lager in het document dat het automatisch lezen eigenlijk nooit had uitgesproken. (#3688)
+- Bij gebruik van bladermodus snelnavigatiecommando's tijdens automatisch lezen met doorbladeren ingeschakeld, kondigt NVDA accurater het nieuwe veld aan; b.v. zegt nu dat een kop een kop is, in plaats van enkel zijn tekst. (#3689)
+- De snelnavigationcommando's om te springen naar het einde of begin van een container werken nu met doorbladeren tijdens automatisch lezen; d.w.z. dat ze niet langer het huidige automatisch lezen zullen afbreken. (#3675)
+- Benamingen van invoerhandelingen die voorkomen in het dialoogvenster Invoerhandelingen koppelen zijn nu duidelijker en vertaald. (#3624)
+- NVDA veroorzaakt niet langer het vastlopen van bepaalde programma's bij het bewegen van de muis over hun rich edit (TRichEdit) controls. Het gaat o.a. om de programma's Jarte 5.1 en BRfácil. (#3693, #3603, #3581)
+- In Internet Explorer en andere MSHTML controls worden containers zoals tabellen die zijn gemarkeerd met de ARIA presentation role niet langer gemeld aan de gebruiker. (#3713)
 - In Microsoft Word herhaalt NVDA niet langer meermaals voor een cel de informatie over rijen en kolommen van een tabel. (#3702)
 - In talen zoals Frans en Duits die een spatie gebruiken om duizendtallen te scheiden, worden de cijfers van aparte groepjes niet langer uitgesproken als een enkel getal. Dit was vooral problematisch voor tabelcellen die getallen bevatten. (#3698)
 - Braille weigert niet langer soms te vernieuwen als de systeemcursor beweegt in Microsoft Word 2013. (#3784)
+- Als u gepositioneerd bent op het eerste karakter van een kop in Microsoft Word, verdwijnt de tekst die de kop en zijn niveau aankondigt niet langer van de brailleleesregel. (#3701)
+- Als een programma wordt afgesloten waarvoor een configuratieprofiel actief is, weigert NVDA niet langer soms het profiel uit te schakelen. (#3732)
+- Bij Aziatische invoer in een control binnen NVDA zelf (b.v. het bladermodus dialoogvenster om te zoeken), wordt niet langer foutief "NVDA" gemeld in plaats van de kandidaat. (#3726)
+- De tabbladen in het opties-dialoogvenster van Outlook 2013 worden nu gemeld. (#3826)
+- Verbeterde ondersteuning voor ARIA live regions in Firefox en andere Mozilla Gecko applicaties:
+	- Ondersteuning voor aria-atomic updates en filtering van aria-busy updates (#2640)
+	- Alternatieve tekst (zoals alt-attribuut of aria-label) wordt gebruikt als er geen andere nuttige tekst is. (#3329)
+	- Live region updates worden niet langer onderdrukt als ze gebeuren terwijl de focus beweegt. (#3777)
+- Bepaalde presentatie-elementen worden niet langer foutief getoond in Firefox en andere Mozilla Gecko applicaties in bladermodus (meer bepaald als het element is gemarkeerd met aria-presentation maar ook focus kan krijgen). (#3781)
+- Een performantieverbetering bij het navigeren door een document in Microsoft Word als melden van spelfouten is ingeschakeld. (#3785)
+- Verschillende verbeteringen aan de ondersteuning voor toegankelijke Java toepassingen:
+ - The initially focused control in a frame or dialog no longer fails to be reported when the frame or dialog comes to the foreground. (#3753)
+ - Unuseful position information is no longer announced for radio buttons (e.g. 1 of 1). (#3754)
+ - Better reporting of JComboBox controls (html no longer reported, better reporting of expanded and collapsed states). (#3755)
+ - More text is included in automatic dialog caption calculations. (#3857)
+ - Changes to the name, value or description of the focused control is now reported more accurately. (#3770)
+- Fix a crash in NVDA seen in Windows 8 when focusing on certain RichEdit controls containing large amounts of text (e.g. NVDA's log viewer, windbg). (#3867)
+- On systems with a high DPI display setting (which occurs by default for many modern screens), NVDA no longer routes the mouse to the wrong location in some applications. (#3758, #3703)
+- Fixed an occasional problem when browsing the web where NVDA would stop working correctly until restarted, even though it didn't crash or freeze. (#3804)
+- A Papenmeier braille display can now be used even if a Papenmeier display has never been connected via USB. (#3712)
+- NVDA no longer freezes when the Papenmeier BRAILLEX older models braille display is selected without a display connected.
 
 
 == Veranderingen voor Ontwikkelaars ==

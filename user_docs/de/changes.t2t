@@ -12,10 +12,12 @@
 - Beim Bearbeiten von Text in Powerpoint werden Links als solche erkannt. (#3416)
 - Um Aria-Dialoge und -Anwendungen im Lesemodus anzuzeigen, können Sie mit nvda+Leertaste in den Lesemodus wechseln, während Sie eine Aria-Anwendung verwenden. (#2023)
 - In Outlook Express / Windows Mail / Windows Live Mail wird die Existenz von Anhängen oder Kennzeichnungen von Nachrichten angezeigt. (#1594)
+- beim Navigieren innerhalb von Tabellen in zugänglichen Java-Anwendungen werden Reihen- und Spaltennummern sowie Reihen- und Spaltenüberschriften angezeigt. (#3756)
 
 == Änderungen ==
 - die Befehle zum Umschalten von/in den Flächenmodus wurden aus der Tastenbelegung für Papenmeier-Braillezeilen entfernt. Sie können im Dialog einstellungen/Eingaben jedoch eine eigene Tastenkombination zuweisen. (#3652)
 - NVDA benötigt nun mindestens VC Runtime Version 11. Dies bedeutet, dass nun mindestens Windows xp sp2 oder Windows server 2003 sp1 benötigt wird.
+- In der Satzzeichen- und Symbolebene «einige» werden die Zeichen Stern (*) und Plus (+) angesagt. (#3614)
 
 == Fehlerbehebungen ==
 - Beim Navigieren durch und Markieren von Zellen in Microsoft Excel wird der markierte Zellenbereich korrekt erkannt, wenn Microsoft Excel langsam reagiert. (#3558)
@@ -46,8 +48,14 @@
 	- automatische Aktualisierung von Live-Regionen (#2640)
 	- alternative Texte (z.B. alt-Attribute) werden verwendet, sofern keine anderweitige Beschriftung vorhanden ist. (#3329)
 	- Aktualisierungen von Live-Regionen werden ausgegeben, wenn Sie gleichzeitig den Fokus bewegen. (#3777)
-- Certain presentation elements in Firefox and other Mozilla Gecko applications are no longer inappropriately shown in browse mode (specifically when the element is marked with aria-presentation but its also focusable). (#3781)
-- A performance improvement when navigating a document in Microsoft Word with spelling errors enabled. (#3785)
+- In Firefox und anderen Gecko-Anwendungen werden Elemente, die als aria-Presentation gekennzeichnet sind, korrekt im Lesemodus angezeigt. (#3781)
+- Leistungssteigerungen in Microsoft Word, wenn die Ansage von Rechtsschreibfehlern aktiviert sind. (#3785)
+- Verbesserung der Unterstützung von zugänglichen Java-Anwendungen:
+ - Wenn ein Rahmen oder ein Dialog in den Vordergrund gebracht wird, wird das Steuerelement korrekt erkannt, das innerhalb des Rahmens/Dialogs den Fokus erhalten hat. (#3753)
+ - nutzlose Positionsangaben (wie 1 von 1) für Auswahlschalter werden nicht mehr angezeigt. (#3754)
+ - verbesserte Anzeige von Konbinationsfeldern (es wird kein html mehr angezeigt; der Status [erweitert/reduziert] wird korrekt erkannt). (#3755)
+ - beim automatischen Vorlesen von Dialogfeldern wird mehr Text angezeigt. (#3857)
+ - Die Änderung von Namen, Wert oder Beschreibung des fokussierten Steuerelements wird besser verfolgt. (#3770)
 
 
 == Änderungen für Entwickler ==
