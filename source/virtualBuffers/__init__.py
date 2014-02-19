@@ -201,6 +201,10 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 				textList.append(self.obj.makeTextInfo(textInfos.offsets.Offsets(start, end)).text)
 			attrs["table-%sheadertext" % axis] = "\n".join(textList)
 
+		if attrs.get("landmark") == "region" and not attrs.get("name"):
+			# We only consider region to be a landmark if it has a name.
+			del attrs["landmark"]
+
 		return attrs
 
 	def _normalizeFormatField(self, attrs):
@@ -237,7 +241,11 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 				textList.append(attrs["name"])
 			except KeyError:
 				pass
-			textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
+			if landmark == "region":
+				# The word landmark is superfluous for regions.
+				textList.append(aria.landmarkRoles[landmark])
+			else:
+				textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
 		textList.append(super(VirtualBufferTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
 		return " ".join(textList)
 
@@ -249,8 +257,12 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 				textList.append(field["name"])
 			except KeyError:
 				pass
-			# Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-			textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
+			if landmark == "region":
+				# The word landmark is superfluous for regions.
+				textList.append(aria.landmarkRoles[landmark])
+			else:
+				# Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
+				textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
 		text = super(VirtualBufferTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)
 		if text:
 			textList.append(text)
@@ -459,12 +471,10 @@ class ElementsListDialog(wx.Dialog):
 	def getElementText(self, elInfo, docHandle, id, elType):
 		if elType == "landmark":
 			attrs = self._getControlFieldAttribs(elInfo, docHandle, id)
-			landmark = attrs.get("landmark")
-			if landmark:
-				name = attrs.get("name", "")
-				if name:
-					name += " "
-				return name + aria.landmarkRoles[landmark]
+			name = attrs.get("name", "")
+			if name:
+				name += " "
+			return name + aria.landmarkRoles[attrs["landmark"]]
 
 		else:
 			return elInfo.text.strip()
