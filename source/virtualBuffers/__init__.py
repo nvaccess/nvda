@@ -42,23 +42,53 @@ VBufStorage_findDirection_up=2
 VBufRemote_nodeHandle_t=ctypes.c_ulonglong
 
 
-def VBufStorage_findMatch_word(word):
-	return "~w%s" % word
+class VBufStorage_findMatch_word(unicode):
+	pass
 
-def dictToMultiValueAttribsString(d):
-	mainList=[]
-	for k,v in d.iteritems():
-		k=unicode(k).replace(':','\\:').replace(';','\\;').replace(',','\\,')
-		valList=[]
-		for i in v:
-			if i is None:
-				i=""
+FINDBYATTRIBS_ESCAPE_TABLE = {
+	# Symbols that are escaped in the attributes string.
+	ord(u":"): ur"\\:",
+	ord(u";"): ur"\\;",
+	ord(u"\\"): u"\\\\\\\\",
+}
+# Symbols that must be escaped for a regular expression.
+FINDBYATTRIBS_ESCAPE_TABLE.update({(ord(s), u"\\" + s) for s in u"^$.*+?()[]{}|"})
+def _prepareForFindByAttributes(attribs):
+	escape = lambda text: unicode(text).translate(FINDBYATTRIBS_ESCAPE_TABLE)
+	reqAttrs = []
+	regexp = []
+	if isinstance(attribs, dict):
+		# Single option.
+		attribs = (attribs,)
+	# All options will match against all requested attributes,
+	# so first build the list of requested attributes.
+	for option in attribs:
+		for name in option:
+			reqAttrs.append(unicode(name))
+	# Now build the regular expression.
+	for option in attribs:
+		optRegexp = []
+		for name in reqAttrs:
+			optRegexp.append("%s:" % escape(name))
+			values = option.get(name)
+			if not values:
+				# The value isn't tested for this attribute, so match any value.
+				optRegexp.append(r"(?:\\;|[^;])+;")
+			elif values[0] is None:
+				# There must be no value for this attribute.
+				optRegexp.append(r";")
+			elif isinstance(values[0], VBufStorage_findMatch_word):
+				# Assume all are word matches.
+				optRegexp.append(r"(?:\\;|[^;])*\b(?:")
+				optRegexp.append("|".join(escape(val) for val in values))
+				optRegexp.append(r")\b(?:\\;|[^;])*;")
 			else:
-				i=unicode(i).replace(':','\\:').replace(';','\\;').replace(',','\\,')
-			valList.append(i)
-		attrib="%s:%s"%(k,",".join(valList))
-		mainList.append(attrib)
-	return "%s;"%";".join(mainList)
+				# Assume all are exact matches.
+				optRegexp.append("(?:")
+				optRegexp.append("|".join(escape(val) for val in values))
+				optRegexp.append(");")
+		regexp.append("".join(optRegexp))
+	return u" ".join(reqAttrs), u"|".join(regexp)
 
 class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 
@@ -908,7 +938,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		return self._iterNodesByAttribs(attribs, direction, offset)
 
 	def _iterNodesByAttribs(self, attribs, direction="next", offset=-1):
-		attribs=dictToMultiValueAttribsString(attribs)
+		reqAttrs, regexp = _prepareForFindByAttributes(attribs)
 		startOffset=ctypes.c_int()
 		endOffset=ctypes.c_int()
 		if direction=="next":
@@ -922,7 +952,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		while True:
 			try:
 				node=VBufRemote_nodeHandle_t()
-				NVDAHelper.localLib.VBuf_findNodeByAttributes(self.VBufHandle,offset,direction,attribs,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(node))
+				NVDAHelper.localLib.VBuf_findNodeByAttributes(self.VBufHandle,offset,direction,reqAttrs,regexp,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(node))
 			except:
 				return
 			if not node:
