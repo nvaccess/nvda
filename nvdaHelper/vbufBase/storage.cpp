@@ -19,6 +19,10 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <list>
 #include <set>
 #include <sstream>
+#include <regex>
+#include <vector>
+#include <sstream>
+#include <algorithm>
 #include <common/xml.h>
 #include <common/log.h>
 #include "utils.h"
@@ -130,42 +134,30 @@ VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::nextNodeInTree(int direction, 
 	return tempNode;
 }
 
-bool VBufStorage_fieldNode_t::matchAttributes(const std::wstring& attribsString) {
-	LOG_DEBUG(L"using attributes of "<<attribsString);
-	multiValueAttribsMap attribsMap;
-	multiValueAttribsStringToMap(attribsString,attribsMap);
-	bool outerMatch=true;
-	for(multiValueAttribsMap::iterator i=attribsMap.begin();i!=attribsMap.end();++i) {
-		LOG_DEBUG(L"Checking for attrib "<<i->first);
-		VBufStorage_attributeMap_t::iterator foundIterator=attributes.find(i->first);
-		const std::wstring& foundValue=(foundIterator!=attributes.end())?foundIterator->second:L"";
-		wstring foundValueTrailingSpaces=L" "+foundValue+L" ";
-		LOG_DEBUG(L"node's value for this attribute is "<<foundValue);
-		multiValueAttribsMap::iterator upperBound=attribsMap.upper_bound(i->first);
-		bool innerMatch=false;
-		for(multiValueAttribsMap::iterator j=i;j!=upperBound;++j) { 
-			i=j;
-			if(innerMatch)
-				continue;
-			LOG_DEBUG(L"Checking value "<<j->second);
-			if(
-				// Word match.
-				(j->second.compare(0, 2, L"~w")==0&&foundValueTrailingSpaces.find(L" "+j->second.substr(2)+L" ")!=wstring::npos)
-				// Full match.
-				||(j->second==foundValue)
-			) {
-				LOG_DEBUG(L"values match");
-				innerMatch=true;
-			}
-		}
-		outerMatch=innerMatch;
-		if(!outerMatch) { 
-			LOG_DEBUG(L"given attributes do not match node's attributes, returning false");
-			return false;
+inline void outputEscapedAttribute(wostringstream& out, const wstring& text) {
+	for (wstring::const_iterator it = text.begin(); it != text.end(); ++it) {
+		switch (*it) {
+			case L':':
+			case L';':
+			case L'\\':
+			out << L"\\";
+			default:
+			out << *it;
 		}
 	}
-	LOG_DEBUG(L"Given attributes match node's attributes, returning true");
-	return true;
+}
+
+bool VBufStorage_fieldNode_t::matchAttributes(const std::vector<std::wstring>& attribs, const std::wregex& regexp) {
+	wostringstream test;
+	for (vector<wstring>::const_iterator attribName = attribs.begin(); attribName != attribs.end(); ++attribName) {
+		outputEscapedAttribute(test, *attribName);
+		test << L":";
+		VBufStorage_attributeMap_t::const_iterator foundAttrib = attributes.find(*attribName);
+		if (foundAttrib != attributes.end())
+			outputEscapedAttribute(test, foundAttrib->second);
+		test << L";";
+	}
+	return regex_match(test.str(), regexp);
 }
 
 int VBufStorage_fieldNode_t::calculateOffsetInTree() const {
@@ -896,7 +888,7 @@ VBufStorage_textContainer_t*  VBufStorage_buffer_t::getTextInRange(int startOffs
 	return new VBufStorage_textContainer_t(text);
 }
 
-VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, VBufStorage_findDirection_t direction, const std::wstring& attribsString, int *startOffset, int *endOffset) {
+VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, VBufStorage_findDirection_t direction, const std::wstring& attribs, const std::wstring &regexp, int *startOffset, int *endOffset) {
 	if(this->rootNode==NULL) {
 		LOG_DEBUGWARNING(L"buffer empty, returning NULL");
 		return NULL;
@@ -922,6 +914,18 @@ VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, 
 		LOG_DEBUGWARNING(L"Could not find node at offset "<<offset<<L", returning NULL");
 		return NULL;
 	}
+	// Split attribs at spaces.
+	vector<wstring> attribsList;
+	copy(istream_iterator<wstring, wchar_t, std::char_traits<wchar_t>>(wistringstream(attribs)),
+		istream_iterator<wstring, wchar_t, std::char_traits<wchar_t>>(),
+		back_inserter<vector<wstring> >(attribsList));
+	wregex regexObj;
+	try {
+		regexObj=wregex(regexp);
+	} catch (...) {
+		LOG_ERROR(L"Error in regular expression");
+		return NULL;
+	}
 	LOG_DEBUG(L"starting from node "<<node->getDebugInfo());
 	LOG_DEBUG(L"initial start is "<<bufferStart<<L" and initial end is "<<bufferEnd);
 	if(direction==VBufStorage_findDirection_forward) {
@@ -931,7 +935,7 @@ VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, 
 			bufferEnd=bufferStart+node->length;
 			LOG_DEBUG(L"start is now "<<bufferStart<<L" and end is now "<<bufferEnd);
 			LOG_DEBUG(L"Checking node "<<node->getDebugInfo());
-			if(node->length>0&&!(node->isHidden)&&node->matchAttributes(attribsString)) {
+			if(node->length>0&&!(node->isHidden)&&node->matchAttributes(attribsList,regexObj)) {
 				LOG_DEBUG(L"found a match");
 				break;
 			}
@@ -943,7 +947,7 @@ VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, 
 			bufferStart+=tempRelativeStart;
 			bufferEnd=bufferStart+node->length;
 			LOG_DEBUG(L"start is now "<<bufferStart<<L" and end is now "<<bufferEnd);
-			if(node->length>0&&!(node->isHidden)&&node->matchAttributes(attribsString)) {
+			if(node->length>0&&!(node->isHidden)&&node->matchAttributes(attribsList,regexObj)) {
 				//Skip first containing parent match or parent match where offset hasn't changed 
 				if((bufferStart==offset)||(!skippedFirstMatch&&bufferStart<offset&&bufferEnd>offset)) {
 					LOG_DEBUG(L"skipping initial parent");
@@ -963,7 +967,7 @@ VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, 
 			if(node) {
 				bufferEnd=bufferStart+node->length;
 			}
-		} while(node!=NULL&&(node->isHidden||!node->matchAttributes(attribsString)));
+		} while(node!=NULL&&(node->isHidden||!node->matchAttributes(attribsList,regexObj)));
 		LOG_DEBUG(L"end is now "<<bufferEnd);
 	}
 	if(node==NULL) {
