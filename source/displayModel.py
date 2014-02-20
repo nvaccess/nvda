@@ -449,7 +449,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		return startOffset,endOffset
 
 	def _get_clipboardText(self):
-		return super(DisplayModelTextInfo,self).clipboardText.replace('\0',' ')
+		return "\r\n".join(x.strip('\r\n') for x in self.getTextInChunks(textInfos.UNIT_LINE))
 
 	def getTextInChunks(self,unit):
 		#Specifically handle the line unit as we have the line offsets pre-calculated, and we can not guarantee lines end with \n
