@@ -4,7 +4,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2008-2012 NV Access Limited
 
-from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
+from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import treeInterceptorHandler
 import controlTypes
 import NVDAObjects.IAccessible.mozilla
@@ -217,7 +217,11 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="landmark":
-			attrs={"IAccessible2::attribute_xml-roles":[VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]}
+			attrs = [
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles if lr != "region"]},
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("region")],
+					"name": [VBufStorage_findMatch_notEmpty]}
+				]
 		elif nodeType=="embeddedObject":
 			attrs={"IAccessible2::attribute_tag":self._searchableTagValues(["embed","object","applet"])}
 		else:

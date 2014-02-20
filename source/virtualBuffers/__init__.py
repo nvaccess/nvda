@@ -44,6 +44,7 @@ VBufRemote_nodeHandle_t=ctypes.c_ulonglong
 
 class VBufStorage_findMatch_word(unicode):
 	pass
+VBufStorage_findMatch_notEmpty = object()
 
 FINDBYATTRIBS_ESCAPE_TABLE = {
 	# Symbols that are escaped in the attributes string.
@@ -72,7 +73,10 @@ def _prepareForFindByAttributes(attribs):
 			optRegexp.append("%s:" % escape(name))
 			values = option.get(name)
 			if not values:
-				# The value isn't tested for this attribute, so match any value.
+				# The value isn't tested for this attribute, so match any (or no) value.
+				optRegexp.append(r"(?:\\;|[^;])*;")
+			elif values[0] is VBufStorage_findMatch_notEmpty:
+				# There must be a value for this attribute.
 				optRegexp.append(r"(?:\\;|[^;])+;")
 			elif values[0] is None:
 				# There must be no value for this attribute.
