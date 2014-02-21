@@ -150,6 +150,16 @@ def initialize():
 	_getWindowTextInRect=CFUNCTYPE(c_long,c_long,c_long,c_int,c_int,c_int,c_int,c_int,c_int,c_bool,POINTER(BSTR),POINTER(BSTR))(('displayModel_getWindowTextInRect',NVDAHelper.localLib),((1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(2,),(2,)))
 	_requestTextChangeNotificationsForWindow=NVDAHelper.localLib.displayModel_requestTextChangeNotificationsForWindow
 
+def getCaretRect(obj):
+	left=c_long()
+	top=c_long()
+	right=c_long()
+	bottom=c_long()
+	res=watchdog.cancellableExecute(NVDAHelper.localLib.displayModel_getCaretRect, obj.appModule.helperLocalBindingHandle, obj.windowThreadID, byref(left),byref(top),byref(right),byref(bottom))
+	if res!=0:
+			raise RuntimeError("displayModel_getCaretRect failed with res %d"%res)
+	return RECT(left,top,right,bottom)
+
 def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace=True):
 	text, cpBuf = watchdog.cancellableExecute(_getWindowTextInRect, bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace)
 	if not text or not cpBuf:
@@ -454,24 +464,17 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		raise LookupError
 
 	def _getCaretOffset(self):
-		caretRect = winUser.getGUIThreadInfo(self.obj.windowThreadID).rcCaret
+		caretRect=getCaretRect(self.obj)
 		objLocation=self.obj.location
 		objRect=RECT(objLocation[0],objLocation[1],objLocation[0]+objLocation[2],objLocation[1]+objLocation[3])
-		tempPoint = winUser.POINT()
-		tempPoint.x=caretRect.left
-		tempPoint.y=caretRect.top
-		winUser.user32.ClientToScreen(self.obj.windowHandle, byref(tempPoint))
-		caretRect.left=max(objRect.left,tempPoint.x)
-		caretRect.top=max(objRect.top,tempPoint.y)
-		tempPoint.x=caretRect.right
-		tempPoint.y=caretRect.bottom
-		winUser.user32.ClientToScreen(self.obj.windowHandle, byref(tempPoint))
-		caretRect.right=min(objRect.right,tempPoint.x)
-		caretRect.bottom=min(objRect.bottom,tempPoint.y)
-		caretRect.left,caretRect.top=windowUtils.physicalToLogicalPoint(
-			self.obj.windowHandle,caretRect.left,caretRect.top)
-		caretRect.right,caretRect.bottom=windowUtils.physicalToLogicalPoint(
-			self.obj.windowHandle,caretRect.right,caretRect.bottom)
+		objRect.left,objRect.top=windowUtils.physicalToLogicalPoint(
+			self.obj.windowHandle,objRect.left,objRect.top)
+		objRect.right,objRect.bottom=windowUtils.physicalToLogicalPoint(
+			self.obj.windowHandle,objRect.right,objRect.bottom)
+		caretRect.left=max(objRect.left,caretRect.left)
+		caretRect.top=max(objRect.top,caretRect.top)
+		caretRect.right=min(objRect.right,caretRect.right)
+		caretRect.bottom=min(objRect.bottom,caretRect.bottom)
 		# Find a character offset where the caret overlaps vertically, overlaps horizontally, overlaps the baseline and is totally within or on the correct side for the reading order
 		try:
 			return self._findCaretOffsetFromLocation(caretRect,validateBaseline=True,validateDirection=True)

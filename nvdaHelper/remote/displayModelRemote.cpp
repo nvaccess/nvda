@@ -20,6 +20,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <rpc.h>
 #include "displayModelRemote.h"
 #include "gdiHooks.h"
+#include <common/log.h>
 
 using namespace std;
 
@@ -84,6 +85,20 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 		*characterLocationsBuf=SysAllocStringLen(cpTempBuf,static_cast<UINT>(cpBufSize));
 		free(cpTempBuf);
 	}
+	return 0;
+}
+
+error_status_t displayModelRemote_getCaretRect(handle_t bindingHandle, const long threadID, long* left, long* top, long* right, long* bottom) {
+	GUITHREADINFO info={0};
+	info.cbSize=sizeof(info);
+	if(!GetGUIThreadInfo((DWORD)threadID,&info)) return -1;
+	if(!info.hwndCaret) return -1;
+	if(!ClientToScreen(info.hwndCaret,(POINT*)&(info.rcCaret))) return -1;
+	if(!ClientToScreen(info.hwndCaret,((POINT*)&(info.rcCaret))+1)) return -1;
+	*left=info.rcCaret.left;
+	*top=info.rcCaret.top;
+	*right=info.rcCaret.right;
+	*bottom=info.rcCaret.bottom;
 	return 0;
 }
 
