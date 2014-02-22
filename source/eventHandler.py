@@ -200,7 +200,8 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		return True
 
 	fg = winUser.getForegroundWindow()
-	if winUser.isDescendantWindow(fg, windowHandle):
+	if (winUser.isDescendantWindow(fg, windowHandle)
+			or winUser.isDescendantWindow(fg, winUser.getAncestor(windowHandle, winUser.GA_ROOTOWNER))):
 		# This is for the foreground application.
 		return True
 	if (winUser.user32.GetWindowLongW(windowHandle, winUser.GWL_EXSTYLE) & winUser.WS_EX_TOPMOST
