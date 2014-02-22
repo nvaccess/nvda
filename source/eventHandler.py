@@ -194,9 +194,14 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 	if eventName == "alert" and winUser.getClassName(winUser.getAncestor(windowHandle, winUser.GA_PARENT)) == "ToastChildWindowClass":
 		# Toast notifications.
 		return True
+	if windowHandle == winUser.getDesktopWindow():
+		# #3897: We fire some events such as switchEnd and menuEnd on the desktop window
+		# because the original window is now invalid.
+		return True
 
 	fg = winUser.getForegroundWindow()
-	if winUser.isDescendantWindow(fg, windowHandle):
+	if (winUser.isDescendantWindow(fg, windowHandle)
+			or winUser.isDescendantWindow(fg, winUser.getAncestor(windowHandle, winUser.GA_ROOTOWNER))):
 		# This is for the foreground application.
 		return True
 	if (winUser.user32.GetWindowLongW(windowHandle, winUser.GWL_EXSTYLE) & winUser.WS_EX_TOPMOST
