@@ -12,12 +12,15 @@ Quoi de Neuf dans NVDA
 - Support des afficheurs braille connectés via Bluetooth sur des ordinateurs utilisant Widcomm Bluetooth Software. (#2418)
 - Lors de l'édition de texte dans Powerpoint, les liens sont maintenant rapportés. (#3416)
 - Dans les applications ARIA ou les dialogues Web, il est maintenant possible de forcer NVDA à passer en mode navigation avec NVDA+Espace, permettant le parcourt de cette application ou de ce dialogue tel que dans un document. (#2023)
-- Dans Outlook Express / Windows Mail / Windows Live Mail, NVDA annonce maintenant si un message a une pièce jointe ou un drapeau. (#1594)
+- Dans Outlook Express / Windows Mail / Windows Live Mail, NVDA annonce maintenant si un message a une pièce jointe ou s'il est marqué. (#1594)
+- Lors de la navigation dans des tableaux dans les applications Java accessibles, les coordonnées de lignes et de colonnes sont maintenant signalés, y compris les en-têtes de colonnes et de lignes, si elles existent. (#3756)
 
 
 == Changements ==
 - Pour les afficheurs braille Papenmeier, la commande passer en mode revue/focus a été supprimée. Les utilisateurs peuvent assigner leur propre combinaisons en utilisant la boîte de dialogue Geste d'entrée. (#3652)
 - NVDA dépend maintenant des runtimes Microsoft VC version 11, ce qui signifi qu'il ne peut plus être exécuté sur les systèmes d'exploitations plus vieux que Windows XP SP2 ou ou Windows Server 2003 SP1.
+- Le niveau de symboles et ponctuations Quelques-uns annonce maintenant les caractères astérisque (*) et plus (plus). (#3614)
+- Mise à jour d'eSpeak vers la version 1.48.02 qui inclut de nombreuses corrections de langue et corrige plusieurs plentages. (#3842, #3739)
 
 
 == Corrections de bogues ==
@@ -46,11 +49,22 @@ Quoi de Neuf dans NVDA
 - Lors de la saisie en langue d'entrée d'Asie dans un contrôle de NVDA lui-même (ex : la boîte de dialogue rechercher en mode navigation), NVDA n'est plus annoncé à la place du candidat. (#3726)
 - Les onglets de la boîte de dialogue des options d'Outlook 2013 sont maintenant signalés. (#3826)
 - Amélioration du support des ARIA Live Regions dans Firefox et les autres applications basées sur Mozilla Gecko :
-	- Support des mise à jours aria-atomic et du filtrage des mise à jours aria-busy (#2640)
-	- Le texte alternatif (comme l'attribut alt ou aria-label) est inclu s'il n'y a aucun autre texte. (#3329)
-	- Les mise à jour de région ARIA-live ne sont plus cilencieuses si elle se produisent en même temps que le focus bouge. (#3777)
+ - Support des mise à jours aria-atomic et du filtrage des mise à jours aria-busy (#2640)
+ - Le texte alternatif (comme l'attribut alt ou aria-label) est inclu s'il n'y a aucun autre texte. (#3329)
+ - Les mise à jour de région ARIA-live ne sont plus cilencieuses si elle se produisent en même temps que le focus bouge. (#3777)
 - Certains éléments de présentation dans Firefox et dans les autres applications Mozilla Gecko ne sont plus montrées en mode navigation (spécifiquement quand l'élément est marqué avec aria-presentation mais est aussi activable). (#3781)
 - Amélioration des performances lors de la navigation sur un document dans Microsoft Word avec l'annonce des erreurs d'orthographe activée. (#3785)
+- Plusieurs correctifs pour le support des applications Java accessibles :
+ - Le premier contrôle actif dans un cadre ou dialogue n'échoue plus à être déclarés lorsque le cadre ou dialogue vient au premier plan. (#3753)
+ - Les informations de position inutiles ne sont plus annoncées pour les boutons radio (par exemple 1 sur 1). (#3754)
+ - Meilleur rendu des contrôles JComboBox (html n'est plus rapportée, meilleure communication des États développés et réduits). (#3755)
+ - Lors de l'annonce du texte d'une boîte de dialogue, certains textes menquant jusqu'alors sont maintenant lu. (#3857)
+ - Les changement dans le nom, la valeur ou la description du contrôle ayant le focus sont maintenant rapportés avec plus de précision. (#3770)
+- Correction d'un crash de NVDA sous Windows 8 lors de l'activation de certains contrôles RichEdit contenant de grandes quantités de texte (visionneuse de journaux NVDA, ou dans windbg par exemple). (#3867)
+- Sur les systèmes avec un paramètre d'affichage haute DPI (la plupart des écrans modernes), NVDA ne place plus la souris au mauvais endroit dans certaines applications. (#3758, #3703)
+- Correction d'un problème occasionnel lors de la navigation sur le web où NVDA cessait de fonctionner correctement jusqu'à ce qu'on le redémarres, même si elle ne s'est pas figé ou s'il n'a pas plenté. (#3804)
+- Un afficheur braille Papenmeier peut maintenant être utilisé même si aucun afficheur braille Papenmeier n'a déjà été branché en USB. (#3712)
+- NVDA ne se bloque plus lorsque l'ansien modèle d'afficheur braille Papenmeier BRAILLEX est sélectionné sans qu'un afficheur ne soit connecté.
 
 
 == Changements pour les développeurs ==

@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-21 19:10+1000\n"
-"PO-Revision-Date: 2014-01-26 12:40+0100\n"
+"POT-Creation-Date: 2014-02-07 18:54+1000\n"
+"PO-Revision-Date: 2014-02-08 15:26+0100\n"
 "Last-Translator: Ondrej Rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -3120,84 +3120,73 @@ msgstr "objektový režim"
 
 #. Translators: a touch screen action performed once
 msgid "single {action}"
-msgstr ""
+msgstr "jednoduché {action}"
 
 #. Translators: a touch screen action performed twice
-#, fuzzy
 msgid "double {action}"
 msgstr "dvojité {action}"
 
 #. Translators: a touch screen action performed 3 times
-#, fuzzy
 msgid "tripple {action}"
 msgstr "trojité {action}"
 
 #. Translators: a touch screen action performed 4 times
 msgid "quadruple {action}"
-msgstr ""
+msgstr "štvorité {action}"
 
 #. Translators: a touch screen action using multiple fingers
-#, fuzzy
 msgid "{numFingers} finger {action}"
 msgstr "{action} {numFingers} prstami"
 
 #. Translators: a very quick touch and release of a finger on a touch screen
-#, fuzzy
 msgctxt "touch action"
 msgid "tap"
 msgstr "klepnutie"
 
 #. Translators: a very quick touch and release, then another touch with no release, on a touch screen
-#, fuzzy
 msgctxt "touch action"
 msgid "tap and hold"
 msgstr "Klepnúť a podržať"
 
 #. Translators: a touch with no release, on a touch screen.
-#, fuzzy
 msgctxt "touch action"
 msgid "hold"
 msgstr "podržať"
 
 #. Translators: a quick swipe of a finger in an up direction, on a touch screen.
-#, fuzzy
 msgctxt "touch action"
 msgid "flick up"
 msgstr "švihnutie hore"
 
 #. Translators: a quick swipe of a finger in an down direction, on a touch screen.
-#, fuzzy
 msgctxt "touch action"
 msgid "flick down"
-msgstr "švihnutie dole"
+msgstr "švihnutie dolu"
 
 #. Translators: a quick swipe of a finger in a left direction, on a touch screen.
-#, fuzzy
 msgctxt "touch action"
 msgid "flick left"
 msgstr "švihnutie vľavo"
 
 #. Translators: a quick swipe of a finger in a right direction, on a touch screen.
-#, fuzzy
 msgctxt "touch action"
 msgid "flick right"
 msgstr "švihnutie vpravo"
 
 #. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
-#, fuzzy
 msgctxt "touch action"
 msgid "hover down"
-msgstr "ubrať hlasitosť"
+msgstr "dotknutie"
 
 #. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
 msgctxt "touch action"
 msgid "hover"
-msgstr ""
+msgstr "prechádzanie"
 
 #. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
 msgctxt "touch action"
 msgid "hover up"
-msgstr ""
+msgstr "pustenie"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3372,7 +3361,7 @@ msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
 msgstr ""
-"Nemôžem nainštalovať doplnok z {path}.\n"
+"Nie je možné nainštalovať doplnok z {path}.\n"
 "pred inštaláciou doplnku spustite NVDA."
 
 #. Translators: a message announcing a candidate's character and description.
@@ -3435,6 +3424,14 @@ msgstr "Zatiaľ nebola doručená žiadna správa"
 #. Translators: The description of an NVDA command to view one of the recent messages.
 msgid "Displays one of the recent messages"
 msgstr "Prečíta jednu z naposledy prijatých správ"
+
+#. Translators: This Outlook Express message has an attachment
+msgid "has attachment"
+msgstr "má prílohu"
+
+#. Translators: this Outlook Express message is flagged
+msgid "flagged"
+msgstr "má príznak"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
@@ -3695,7 +3692,7 @@ msgstr "Prázdna snímka"
 
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 msgid "Waiting for Powerpoint..."
-msgstr "Čakám na Powerpoint..."
+msgstr "Čaká sa na spustenie programu Powerpoint..."
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -3820,7 +3817,7 @@ msgstr "Nastavenia uložené."
 #. Translators: Message shown when current configuration cannot be saved such as when running NVDA from a CD.
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
-"Nemôžem uložiť nastavenia. Pravdepodobne je NVDA spustený z systému len na "
+"Nie je možné uložiť nastavenia. Pravdepodobne je NVDA spustený z systému len na "
 "čítanie."
 
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
@@ -4399,7 +4396,7 @@ msgstr "Plynulé čítanie"
 msgid ""
 "Error saving configuration profile triggers - probably read only file system."
 msgstr ""
-"Nemôžem uložiť udalosť. Pravdepodobne je NVDA spustený z systému len na "
+"Nie je možné uložiť udalosť. Pravdepodobne je NVDA spustený z systému len na "
 "čítanie."
 
 #. Translators: The title of the configuration profile triggers dialog.
@@ -4454,7 +4451,7 @@ msgstr "Upozornenie"
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
 msgstr ""
-"Nemôžem vytvoriť profil. Pravdepodobne je NVDA spustený z systému len na "
+"Nie je možné vytvoriť profil. Pravdepodobne je NVDA spustený z systému len na "
 "čítanie."
 
 #. Translators: The prompt asking the user whether they wish to
@@ -4812,7 +4809,7 @@ msgstr "Výstupné zaria&denie:"
 #. synthesizer.
 #, python-format
 msgid "Could not load the %s synthesizer."
-msgstr "Nemôžem spustiť hlasový výstup \"%s\"."
+msgstr "Nie je možné spustiť hlasový výstup \"%s\"."
 
 msgid "Synthesizer Error"
 msgstr "Chyba hlasového výstupu"
@@ -5237,7 +5234,7 @@ msgstr "Oznamovať rá&mce"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report if &clickable"
-msgstr "Oznamovať &prvok pri kliknutí"
+msgstr "Oznamovať udalosť &pri kliknutí"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -5346,7 +5343,7 @@ msgstr "Zabrániť deleniu &slov keď  je to možné"
 
 #, python-format
 msgid "Could not load the %s display."
-msgstr "Nemôžem načítať zobrazovač %s"
+msgstr "Nie je možné načítať zobrazovač %s"
 
 msgid "Braille Display Error"
 msgstr "Chyba braillovského riadku"
@@ -5392,7 +5389,7 @@ msgstr "Zadajte klávesovú skratku:"
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
-"Nemôžem uložiť zmeny klávesových skratiek. Pravdepodobne je NVDA spustený z "
+"Nie je možné uložiť zmeny klávesových skratiek. Pravdepodobne je NVDA spustený z "
 "systému len na čítanie."
 
 #. Translators: Information about NVDA's new laptop keyboard layout.
@@ -5498,7 +5495,7 @@ msgstr "Obnovené"
 
 #. Translators: Reported while loading a document.
 msgid "Loading document..."
-msgstr "Nahrávam dokument..."
+msgstr "Prebieha nahrávanie dokumentu..."
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
@@ -6020,7 +6017,7 @@ msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
 msgstr ""
-"Nemôžem nastaviť hlavičky. Začiarknite oznamovanie hlavičiek stĺpcov/riadkov "
+"Nie je možné nastaviť hlavičky. Začiarknite oznamovanie hlavičiek stĺpcov/riadkov "
 "tabuľky v nastaveniach čítania textu."
 
 #. Translators: a message reported in the SetColumnHeaderRow script for Excel.

@@ -16,7 +16,7 @@ symbols:
 : phrase ending	نقطتين فوقيتين
 decimal point		none
 in-word '	apostrophe
-negative number	ناقط
+negative number	ناقص
 
 # Whitespace
 \0	خالي
@@ -37,43 +37,45 @@ $	دولار
 %	بالمائة
 &	وا
 '	apostrophe
-(	فَتْحُ قَوْسْ
-)	غَلْقْ قَوْسْ
-*	نجمة
-+	زائد
-,	فاصلة
--	شَرطة
-.	نقطة
-/	قاطعة
-:	نقطتين فوقيتين
-;	فاصلة منقوطة
-<	أصغر من
->	أكبر من
-=	يساوي
-?	استفهام
-@	at
-[	فَتْحُ قَوْسٍ مُرَبّعْ
-]	غَلْقُ قَوْسٍ مُرَبّعْ
-\\	قاطعة خلفية
-^	أس
-_	خط سُفْلِي
-`	graav
-{	فَتْحُ قَوْسٍ مُزَخرَف
-}	غَلْقُ قَوْسٍ مُزَخرَف
-|	شريط
-~	tilda
+(	فَتْحُ قَوْسْ	most
+)	غَلْقْ قَوْسْ	most
+*	نجمة	some
++	زائد	some
+,	فاصلة	all	always
+-	شَرطة	most
+.	نقطة	some
+/	قاطعة	some
+:	نقطتين فوقيتين	most	norep
+;	فاصلة منقوطة	most
+<	أصغر من	most
+>	أكبر من	most
+=	يساوي	some
+?	استفهام	all
+@	at	some
+[	فَتْحُ قَوْسٍ مُرَبّعْ	most
+]	غَلْقُ قَوْسٍ مُرَبّعْ	most
+\\	قاطعة خلفية	most
+^	أس	most
+_	خط سُفْلِي	most
+`	graav	most
+{	فَتْحُ قَوْسٍ مُزَخرَف	most
+}	غَلْقُ قَوْسٍ مُزَخرَف	most
+|	شريط	most
+~	tilda	most
 
 # Other characters
-•	bullet
-…	نقطة نقطة نقطة
-...	نقطة نقطة نقطة
-	bullet
-“	فتح تنصيص
-”	غلق تنصيص
-–	en dash
-—	em dash
-●	circle
-¨	diaeresis
+•	bullet	some
+…	نقطة نقطة نقطة	all	always
+...	نقطة نقطة نقطة	all	always
+	bullet	some
+“	فتح تنصيص	most
+”	غلق تنصيص	most
+‘	left tick	most
+’	right tick	most
+–	en dash	most
+—	em dash	most
+●	دائرة	most
+¨	diaeresis	most
 ■	مربع أسود
 ➔	سهم يمين
 →	سهم يمين
@@ -85,6 +87,7 @@ _	خط سُفْلِي
 ±	زائد أو ناقص
 ×	ضرب
 ÷	قسمة
+←	سهم يمين	some
 ✓	معلم
 ✔	معلم
 

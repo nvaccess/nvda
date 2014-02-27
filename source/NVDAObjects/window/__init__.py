@@ -56,6 +56,13 @@ class WindowProcessHandleContainer(object):
 	def __del__(self):
 		winKernel.closeHandle(self.processHandle)
 
+# We want to work with physical points.
+try:
+	# Windows >= Vista
+	_windowFromPoint = ctypes.windll.user32.WindowFromPhysicalPoint
+except AttributeError:
+	_windowFromPoint = ctypes.windll.user32.WindowFromPoint
+
 class Window(NVDAObject):
 	"""
 An NVDAObject for a window
@@ -146,7 +153,7 @@ An NVDAObject for a window
 				threadInfo=winUser.getGUIThreadInfo(threadID)
 				if threadInfo.hwndFocus: windowHandle=threadInfo.hwndFocus
 		elif isinstance(relation,tuple):
-			windowHandle=ctypes.windll.user32.WindowFromPoint(ctypes.wintypes.POINT(relation[0],relation[1]))
+			windowHandle=_windowFromPoint(ctypes.wintypes.POINT(relation[0],relation[1]))
 		if not windowHandle:
 			return False
 		kwargs['windowHandle']=windowHandle

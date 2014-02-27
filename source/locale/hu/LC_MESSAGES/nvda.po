@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-11-10 12:54+0100\n"
-"Last-Translator:  <oaron@nvda.hu>\n"
+"POT-Creation-Date: 2014-02-07 18:54+1000\n"
+"PO-Revision-Date: 2014-02-16 01:11+0100\n"
+"Last-Translator: Ócsvári Áron <oaron1@gmail.com>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Poedit-Bookmarks: 154,168,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -1431,6 +1431,15 @@ msgstr "Bővebb leírással rendelkezik"
 msgid "pinned"
 msgstr "rögzített"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "képletet tartalmaz"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "Megjegyzés"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "Nincs kijelölve"
@@ -1547,6 +1556,7 @@ msgid "Tools"
 msgstr "Eszközök"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "Érintő képernyő"
 
@@ -2451,7 +2461,7 @@ msgstr "Vált a lehetséges érintési módok között"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Reports the object and content directly under your finger"
-msgstr "Bemondja a közvetlenül az ujja alatt lévő elemet, vagy tartalmat"
+msgstr "Bemondja közvetlenül az ujja alatt lévő elemet, vagy tartalmat"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -3055,10 +3065,6 @@ msgstr "sorkizárt igazítás"
 msgid "align default"
 msgstr "alapértelmezett igazítás"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "Megjegyzés"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "Hibás szó"
@@ -3105,6 +3111,82 @@ msgstr "&Magasság"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&intonáció"
+
+msgid "text mode"
+msgstr "szöveges mód"
+
+msgid "object mode"
+msgstr "elem mód"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "egyszeri {action}"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "dupla  {action}"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "Háromszori {action}"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "Négyszeres {action}"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{numFingers} ujjas {action}"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "érintés"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "Érintés és nyomvatartás"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "tartás"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr "pöccintés fel"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr "pöccintés le"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr "balra pöccintés"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr "jobbra pöccintés"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+msgctxt "touch action"
+msgid "hover down"
+msgstr "felderítés kezdete"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr "Felfedezés"
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr "felderítés vége"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3279,6 +3361,14 @@ msgstr ""
 "legyen, kérjük adományozzon az NV Access-nek. Ezt a NVDA menü adományozás "
 "menüpontjával érheti el."
 
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"Nem telepíthető  NVDA kiegészítő erről a helyről: {path}.\n"
+"Futnia kell az NVDA programnak ahhoz, hogy kiegészítőket telepíthessen."
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "{symbol} mint {description}"
@@ -3343,6 +3433,14 @@ msgstr "nincs még üzenet"
 #. Translators: The description of an NVDA command to view one of the recent messages.
 msgid "Displays one of the recent messages"
 msgstr "felolvassa az adott üzenetet"
+
+#. Translators: This Outlook Express message has an attachment
+msgid "has attachment"
+msgstr "Van melléklet"
+
+#. Translators: this Outlook Express message is flagged
+msgid "flagged"
+msgstr "Megjelölve"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
@@ -3568,10 +3666,6 @@ msgstr "Miniatűrök"
 msgid "Master Thumbnails"
 msgstr "Fő miniatűrök"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "Várakozás a Powerpoint-ra..."
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Fólia {slideNumber}"
@@ -3604,6 +3698,10 @@ msgstr "Nincsen lábjegyzet"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "Üres fólia"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "Várakozás a Powerpoint-ra..."
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -3762,25 +3860,25 @@ msgstr "az NVDA névjegye"
 
 #. Translators: The label for the menu item to open general Settings dialog.
 msgid "&General settings..."
-msgstr "á&ltalános beállítások..."
+msgstr "Á&ltalános beállítások..."
 
 msgid "General settings"
 msgstr "Általános beállítások"
 
 #. Translators: The label for the menu item to open Synthesizer settings dialog.
 msgid "&Synthesizer..."
-msgstr "beszéd&szintetizátor..."
+msgstr "Beszéd&szintetizátor..."
 
 msgid "Change the synthesizer to be used"
 msgstr "A használandó beszédszintetizátor kiválasztása"
 
 #. Translators: The label for the menu item to open Voice Settings dialog.
 msgid "&Voice settings..."
-msgstr "&beszéd..."
+msgstr "&Beszéd..."
 
 msgid "Choose the voice, rate, pitch and volume to use"
 msgstr ""
-"a hangkarakter, a beszédsebesség, a hangmagasság és a hangerő beállítása"
+"A hangkarakter, a beszédsebesség, a hangmagasság és a hangerő beállítása"
 
 #. Translators: The label for the menu item to open Braille Settings dialog.
 msgid "B&raille settings..."
@@ -3788,7 +3886,7 @@ msgstr "B&raille kijelző beállítások..."
 
 #. Translators: The label for the menu item to open Keyboard Settings dialog.
 msgid "&Keyboard settings..."
-msgstr "b&illentyűzet beállítások..."
+msgstr "B&illentyűzet beállítások..."
 
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
@@ -3799,11 +3897,11 @@ msgstr ""
 
 #. Translators: The label for the menu item to open Mouse Settings dialog.
 msgid "&Mouse settings..."
-msgstr "&egér..."
+msgstr "&Egér..."
 
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr ""
-"az egérmutató alakjának és a mutatónál lévő elem bemondásának beállítása"
+"Az egérmutató alakjának és a mutatónál lévő elem bemondásának beállítása"
 
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
@@ -3846,7 +3944,7 @@ msgstr "a dokumentumok formázási tulajdonságainak beállítása"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
-msgstr "&alapértelmezett kivételszótár"
+msgstr "&Alapértelmezett kivételszótár"
 
 msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
@@ -3885,7 +3983,7 @@ msgstr "Beviteli &parancsok"
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
-msgstr "&beállítások"
+msgstr "&Beállítások"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 msgid "View log"
@@ -5141,6 +5239,11 @@ msgstr "&jelzőpontok jelzése"
 msgid "Report fra&mes"
 msgstr "kere&tek jelzése"
 
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "Jelzés ha &kattintható"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "A kivételszótár bejegyzés szerkesztése"
@@ -5955,10 +6058,6 @@ msgid ""
 msgstr ""
 "Egyszeri megnyomásra beállítja az oszlopot a sor fejlécek bemondásához. "
 "Kétszeri megnyomásra törli a beállítást."
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "képletet tartalmaz"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
