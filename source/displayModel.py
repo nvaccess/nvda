@@ -147,7 +147,7 @@ _textChangeNotificationObjs=[]
 
 def initialize():
 	global _getWindowTextInRect,_requestTextChangeNotificationsForWindow
-	_getWindowTextInRect=CFUNCTYPE(c_long,c_long,c_long,c_int,c_int,c_int,c_int,c_int,c_int,c_bool,POINTER(BSTR),POINTER(BSTR))(('displayModel_getWindowTextInRect',NVDAHelper.localLib),((1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(2,),(2,)))
+	_getWindowTextInRect=CFUNCTYPE(c_long,c_long,c_long,c_bool,c_int,c_int,c_int,c_int,c_int,c_int,c_bool,POINTER(BSTR),POINTER(BSTR))(('displayModel_getWindowTextInRect',NVDAHelper.localLib),((1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(2,),(2,)))
 	_requestTextChangeNotificationsForWindow=NVDAHelper.localLib.displayModel_requestTextChangeNotificationsForWindow
 
 def getCaretRect(obj):
@@ -160,8 +160,8 @@ def getCaretRect(obj):
 			raise RuntimeError("displayModel_getCaretRect failed with res %d"%res)
 	return RECT(left,top,right,bottom)
 
-def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace=True):
-	text, cpBuf = watchdog.cancellableExecute(_getWindowTextInRect, bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace)
+def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace=True,includeDescendantWindows=True):
+	text, cpBuf = watchdog.cancellableExecute(_getWindowTextInRect, bindingHandle, windowHandle, includeDescendantWindows, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace)
 	if not text or not cpBuf:
 		return u"",[]
 
@@ -200,6 +200,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	minHorizontalWhitespace=8
 	minVerticalWhitespace=32
 	stripOuterWhitespace=True
+	includeDescendantWindows=True
 
 	def _get_backgroundSelectionColor(self):
 		self.backgroundSelectionColor=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(13))
@@ -260,7 +261,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			return [],[],[]
 		left,top=windowUtils.physicalToLogicalPoint(self.obj.windowHandle,left,top)
 		right,bottom=windowUtils.physicalToLogicalPoint(self.obj.windowHandle,right,bottom)
-		text,rects=getWindowTextInRect(bindingHandle, self.obj.windowHandle, left, top, right, bottom, self.minHorizontalWhitespace, self.minVerticalWhitespace,self.stripOuterWhitespace)
+		text,rects=getWindowTextInRect(bindingHandle, self.obj.windowHandle, left, top, right, bottom, self.minHorizontalWhitespace, self.minVerticalWhitespace,self.stripOuterWhitespace,self.includeDescendantWindows)
 		if not text:
 			return [],[],[]
 		text="<control>%s</control>"%text
