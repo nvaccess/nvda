@@ -85,6 +85,7 @@ remoteLib=env.SharedLibrary(
 		"tsf.cpp",
 		"ia2Support.cpp",
 		"ia2LiveRegions.cpp",
+		"mshtmlLiveRegions.cpp",
 		ia2utilsObj,
 		env.Object('_ia2_i',ia2RPCStubs[3]),
 		"rpcSrv.cpp",

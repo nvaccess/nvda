@@ -25,6 +25,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "ime.h"
 #include "IA2Support.h"
 #include "ia2LiveRegions.h"
+#include "mshtmlLiveRegions.h"
 #include <common/log.h>
 #include "gdiHooks.h"
 #include "nvdaHelperRemote.h"
@@ -42,6 +43,7 @@ windowsHookRegistry_t inProcess_registeredGetMessageWindowsHooks;
 void inProcess_initialize() {
 	IA2Support_inProcess_initialize();
 	ia2LiveRegions_inProcess_initialize();
+	mshtmlLiveRegions_inProcess_initialize();
 	typedCharacter_inProcess_initialize();
 	inputLangChange_inProcess_initialize();
 	TSF_inProcess_initialize();
@@ -58,6 +60,7 @@ void inProcess_terminate() {
 	inputLangChange_inProcess_terminate();
 	typedCharacter_inProcess_terminate();
 	ia2LiveRegions_inProcess_terminate();
+	mshtmlLiveRegions_inProcess_terminate();
 	IA2Support_inProcess_terminate();
 }
 
