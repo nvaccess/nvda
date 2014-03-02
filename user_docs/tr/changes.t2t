@@ -64,6 +64,8 @@
 - Fix a crash in NVDA seen in Windows 8 when focusing on certain RichEdit controls containing large amounts of text (e.g. NVDA's log viewer, windbg). (#3867)
 - On systems with a high DPI display setting (which occurs by default for many modern screens), NVDA no longer routes the mouse to the wrong location in some applications. (#3758, #3703)
 - Fixed an occasional problem when browsing the web where NVDA would stop working correctly until restarted, even though it didn't crash or freeze. (#3804)
+- A Papenmeier braille display can now be used even if a Papenmeier display has never been connected via USB. (#3712)
+- NVDA no longer freezes when the Papenmeier BRAILLEX older models braille display is selected without a display connected.
 
 
 == Changes for Developers ==
