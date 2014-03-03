@@ -969,14 +969,15 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		tableInfo=fillVBuf_helper_collectAndUpdateTableInfo(parentNode, nodeName, docHandle,ID, tableInfo, attribsMap); 
 	}
 
+	// Whether the name is the content of this node.
+	bool nameIsContent = (IARole == ROLE_SYSTEM_LINK || IARole == ROLE_SYSTEM_PUSHBUTTON || IARole == ROLE_SYSTEM_MENUITEM || IARole == ROLE_SYSTEM_GRAPHIC || IARole == ROLE_SYSTEM_PAGETAB
+		|| ariaRole == L"heading" || (nodeName[0] == L'H' && iswdigit(nodeName[1]))
+		|| nodeName == L"OBJECT" || nodeName == L"APPLET" || IARole == ROLE_SYSTEM_APPLICATION || IARole == ROLE_SYSTEM_DIALOG);
+
 	//Generate content for nodes
 	wstring contentString=L"";
 	bool renderChildren=false;
-	if ((
-		IARole == ROLE_SYSTEM_LINK || IARole == ROLE_SYSTEM_PUSHBUTTON || IARole == ROLE_SYSTEM_MENUITEM || IARole == ROLE_SYSTEM_GRAPHIC || IARole == ROLE_SYSTEM_PAGETAB
-		|| ariaRole == L"heading" || (nodeName[0] == L'H' && iswdigit(nodeName[1]))
-		|| nodeName == L"OBJECT" || nodeName == L"APPLET" || IARole == ROLE_SYSTEM_APPLICATION || IARole == ROLE_SYSTEM_DIALOG
-	) && (attribsMap.find(L"HTMLAttrib::aria-label") != attribsMap.end() || attribsMap.find(L"HTMLAttrib::aria-labelledby") != attribsMap.end())) {
+	if (nameIsContent && (attribsMap.find(L"HTMLAttrib::aria-label") != attribsMap.end() || attribsMap.find(L"HTMLAttrib::aria-labelledby") != attribsMap.end())) {
 		// Explicitly override any content with aria-label(ledby).
 		contentString = IAName;
 	} else if (nodeName.compare(L"HR")==0) {
@@ -1041,15 +1042,8 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			if(IAStates&STATE_SYSTEM_PROTECTED) {
 				fill(contentString.begin(),contentString.end(),L'*');
 			}
-			if(!IAName.empty()) {
-				attribsMap[L"name"]=IAName;
-			}
 		} else if(IARole==ROLE_SYSTEM_PUSHBUTTON) {
 			contentString=IAName;
-		} else if(IARole==ROLE_SYSTEM_RADIOBUTTON||IARole==ROLE_SYSTEM_CHECKBUTTON) {
-			if(!IAName.empty()) {
-				attribsMap[L"name"]=IAName;
-			}
 		}
 		if(contentString.empty()) {
 			contentString=L" ";
@@ -1065,9 +1059,6 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			contentString=IAValue;
 		} else {
 			contentString=L" ";
-		}
-		if(!IAName.empty()) {
-			attribsMap[L"name"]=IAName;
 		}
 	} else if(nodeName.compare(L"TEXTAREA")==0) {
 		isBlock=true;
@@ -1089,6 +1080,14 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	} else {
 		renderChildren=true;
 	}
+
+	//If the name isn't being rendered as the content, add the name as a field attribute
+	// if it came from the author (not content).
+	if (!nameIsContent && !IAName.empty() && (
+		attribsMap.find(L"HTMLAttrib::aria-label") != attribsMap.end() || attribsMap.find(L"HTMLAttrib::aria-labelledby") != attribsMap.end()
+		|| attribsMap.find(L"HTMLAttrib::title") != attribsMap.end() || attribsMap.find(L"HTMLAttrib::alt") != attribsMap.end()
+	))
+		attribsMap[L"name"]=IAName;
 
 	//Add a textNode to the buffer containing any special content retreaved
 	if(!hidden&&!contentString.empty()) {
