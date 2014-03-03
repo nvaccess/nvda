@@ -15,16 +15,57 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <string>
 #include <sstream>
 #include <map>
+#include <comdef.h>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <oleacc.h>
+#include <mshtml.h>
 #include <common/log.h>
+#include <common/comutils.h>
 #include "nvdaController.h"
 #include "nvdaHelperRemote.h"
 
 using namespace std;
 
+//Provide smart pointers for some useful COM interfaces
+_COM_SMARTPTR_TYPEDEF(IAccessible,_uuidof(IAccessible));
+_COM_SMARTPTR_TYPEDEF(IHTMLElement,_uuidof(IHTMLElement));
+_COM_SMARTPTR_TYPEDEF(IHTMLDOMNode,_uuidof(IHTMLDOMNode));
+_COM_SMARTPTR_TYPEDEF(IHTMLAttributeCollection2,_uuidof(IHTMLAttributeCollection2));
+_COM_SMARTPTR_TYPEDEF(IHTMLDOMAttribute,_uuidof(IHTMLDOMAttribute));
+
 #define EVENT_OBJECT_LIVEREGIONCHANGED 0x8019 
+
+IHTMLDOMNode*  findAtomicDOMNode(IHTMLDOMNode* node) {
+	node->AddRef();
+	do {
+		LOG_INFO(L"isAtomic: node "<<node);
+		IDispatchPtr attribsDisp=NULL;
+		IHTMLAttributeCollection2Ptr attribs=NULL;
+		if(node->get_attributes(&attribsDisp)==S_OK&&attribsDisp) {
+			LOG_INFO(L"attribsDisp: "<<attribsDisp);
+			if(attribsDisp->QueryInterface(IID_IHTMLAttributeCollection2,(void**)&attribs)==S_OK&&attribs) {
+				LOG_INFO(L"attribs: "<<attribs);
+				IHTMLDOMAttributePtr attrib=NULL;
+				if(attribs->getNamedItem(L"aria-atomic",&attrib)==S_OK&&attrib) {
+					LOG_INFO(L"attrib: "<<attrib);
+					VARIANT val;
+					if(attrib->get_nodeValue(&val)==S_OK) {
+						bool isAtomic=((val.vt==VT_BSTR&&val.bstrVal&&wcscmp(val.bstrVal,L"true")==0)||(val.vt==VT_BOOL&&val.bVal)); 
+						LOG_INFO(L"isAtomic="<<isAtomic);
+						VariantClear(&val);
+						if(isAtomic) return node;
+					}
+				}
+			}
+		}
+		IHTMLDOMNode* parent=NULL;
+		node->get_parentNode(&parent);
+		node->Release();
+		node=parent;
+	} while(node);
+	return NULL;
+}
 
 bool getTextFromIAccessible(wstring& textBuf, IAccessible* pacc, VARIANT varChild) {
 	bool gotText=false;
@@ -99,16 +140,31 @@ static void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND 
 	if(!GetClassName(hwnd,className,256)||wcscmp(className,L"Internet Explorer_Server")!=0) return;
 	//Ignore all events but a few types
 	if(eventID!=EVENT_OBJECT_LIVEREGIONCHANGED) return;
-	IAccessible* pacc=NULL;
+	LOG_INFO(L"reorder event in IE");
+	IAccessiblePtr pacc=NULL;
 	VARIANT varChild;
 	//Try getting the IAccessible from the event
 	if(AccessibleObjectFromEvent(hwnd,objectID,childID,&pacc,&varChild)!=S_OK) {
 		return;
 	}
+	LOG_INFO(L"Got pacc "<<pacc);
+	IHTMLDOMNodePtr node=NULL;
+	if(com_queryService(pacc,IID_IHTMLElement,&node)!=S_OK||!node) {
+		return;
+	}
+	LOG_INFO(L"Got node "<<node);
 	wstring textBuf;
 	bool gotText=false;
-	if(varChild.lVal>0) {
-		// The event is for an MSAA simpl child element so just announce it
+	IHTMLDOMNodePtr atomicNode=findAtomicDOMNode(node);
+	if(atomicNode) {
+		IAccessiblePtr atomicPacc=NULL;
+		com_queryService(atomicNode,IID_IAccessible,&atomicPacc);
+		if(atomicPacc) {
+			varChild.lVal=0;
+			gotText=getTextFromIAccessible(textBuf,atomicPacc,varChild);
+		}
+	} else if(varChild.lVal>0) {
+		// The event is for an MSAA simpl child DOMNode so just announce it
 		gotText=getTextFromIAccessible(textBuf,pacc,varChild);
 	} else {
 		// The event is for a real IAccessible.
@@ -121,23 +177,20 @@ static void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND 
 			for(int i=oldChildCount+1;i<=newChildCount;++i) {
 				LOG_INFO(L"trying accChild "<<i);
 				varChild.lVal=i;
-				IDispatch* childDisp=NULL;
+				IDispatchPtr childDisp=NULL;
 				pacc->get_accChild(varChild,&childDisp);
 				if(childDisp) {
 					LOG_INFO(L"got childDisp "<<childDisp);
-					IAccessible* childPacc=NULL;
+					IAccessiblePtr childPacc=NULL;
 					childDisp->QueryInterface(IID_IAccessible,(void**)&childPacc);
 					if(childPacc) {
 						LOG_INFO(L"Got childPacc "<<childPacc);
 						varChild.lVal=0;
 						if(getTextFromIAccessible(textBuf,childPacc,varChild)) gotText=true;
-						childPacc->Release();
 					}
-					childDisp->Release();
 				} else {
-					varChild.lVal=i;
-					LOG_INFO(L"call getTextFromIAccessible with i "<<i);
-					if(getTextFromIAccessible(textBuf,pacc,varChild)) gotText=true;
+					LOG_INFO(L"accChild failed so treeting as simple child DOMNode");
+					if(getTextFromIAccessible(textBuf,pacc,varChild)) gotText=true; 
 				}
 			}
 			oldChildCount=newChildCount;
