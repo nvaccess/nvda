@@ -59,6 +59,7 @@ typedef std::map<std::pair<int,int>,displayModelChunk_t*> displayModelChunksByPo
 class displayModel_t: public LockableAutoFreeObject  {
 	private:
 	displayModelChunksByPointMap_t chunksByYX; //indexes the chunks by y,x
+	RECT* focusRect;
 
 	protected:
 
@@ -95,6 +96,16 @@ class displayModel_t: public LockableAutoFreeObject  {
  * @param clippingRect a optional pointer to a rectangle which if specified will be used to clip the text so that none falls outside this rectangle. 
  */
 	void insertChunk(const RECT& rect, int baseline, const std::wstring& text, POINT* characterExtents, const displayModelFormatInfo_t& formatInfo, int direction, const RECT* clippingRect);
+
+/**
+ * Sets the coordinates of the current focus rectangle
+ */
+	void setFocusRect(const RECT* rect);
+
+/**
+ * Gets the coordinates of the current focus rectangle
+ */
+	bool getFocusRect(RECT* rect);
 
 /**
  * Removes all chunks intersecting the given rectangle. Currently this must be called before inserting chunks as chunks should never overlap.

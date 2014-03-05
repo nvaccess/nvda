@@ -69,3 +69,8 @@ error_status_t(__stdcall *_nvdaControllerInternal_installAddonPackageFromPath)(c
 error_status_t __stdcall nvdaControllerInternal_installAddonPackageFromPath(const wchar_t *addonPath) {
 	return _nvdaControllerInternal_installAddonPackageFromPath(addonPath);
 }
+
+error_status_t(__stdcall *_nvdaControllerInternal_drawFocusRectNotify)(const long, const long, const long, const long, const long);
+error_status_t __stdcall nvdaControllerInternal_drawFocusRectNotify(const long hwnd, const long left, const long top, const long right, const long bottom) { 
+	return _nvdaControllerInternal_drawFocusRectNotify(hwnd,left,top,right,bottom);
+}
