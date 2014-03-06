@@ -91,6 +91,28 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 	return 0;
 }
 
+error_status_t displayModelRemote_getFocusRect(handle_t bindingHandle, const long windowHandle, long* left, long* top, long* right, long* bottom) {
+	HWND hwnd=(HWND)windowHandle;
+	displayModelsByWindow.acquire();
+	displayModelsMap_t<HWND>::iterator i=displayModelsByWindow.find(hwnd);
+	RECT focusRect;
+	bool hasFocusRect=false;
+	if(i!=displayModelsByWindow.end()) {
+		i->second->acquire();
+		hasFocusRect=i->second->getFocusRect(&focusRect);
+		i->second->release();
+	}
+	displayModelsByWindow.release();
+	if(!hasFocusRect) {
+		return -1;
+	}
+	*left=focusRect.left;
+	*top=focusRect.top;
+	*right=focusRect.right;
+	*bottom=focusRect.bottom;
+	return 0;
+}
+
 error_status_t displayModelRemote_getCaretRect(handle_t bindingHandle, const long threadID, long* left, long* top, long* right, long* bottom) {
 	GUITHREADINFO info={0};
 	info.cbSize=sizeof(info);

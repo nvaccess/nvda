@@ -56,8 +56,12 @@
  - verbesserte Anzeige von Konbinationsfeldern (es wird kein html mehr angezeigt; der Status [erweitert/reduziert] wird korrekt erkannt). (#3755)
  - beim automatischen Vorlesen von Dialogfeldern wird mehr Text angezeigt. (#3857)
  - Die Änderung von Namen, Wert oder Beschreibung des fokussierten Steuerelements wird besser verfolgt. (#3770)
-
-
+- Prroblem behoben, wonach NVDA unter Windows 8 manchmal abstürzt, wenn man ein Erweitertes Eingabefeld (wie den Protokollbetrachter oder windbg) in den Fokus nimmt. (#3867)
+- auf Systemen mit modernen Monitoren wird nun die Maus nicht mehr an die falsche Stelle gesetzt. (#3758, #3703)
+- Problem behoben, wonach NVDA beim Lesen einer Webseite nicht richtig funktioniert. (#3804)
+- eine Papenmeier-Braillezeile kann jetzt problemlos verwendet werden, auch wenn sie zuvor noch nie per USB verbunden war. (#3712)
+- nvda wird nicht mehr stehenbleiben, wenn Sie versuchen, den Treiber für ältere Papenmeier-Braillezeilen auszuwählen, obwohl keine Braillezeile angeschlossen ist.
+ 
 == Änderungen für Entwickler ==
 - Alle Anwendungsmodule enthalten nun die Eigenschaften productName und productVersion. Diese Informationen werden auch in der Entwicklerinfo angezeigt, die mit der Tastenkombination NVDA+f1 abgerufen werden kann. (#1625)
 - Sie können nun in der Python-Konsole Tab drücken, um den aktuellen Bezeichner zu vervollständigen. (#433)
