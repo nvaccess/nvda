@@ -77,7 +77,9 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			clsList.append(APIClass)
 		# Allow app modules to choose overlay classes.
 		appModule=obj.appModule
-		if appModule and "chooseNVDAObjectOverlayClasses" in appModule.__class__.__dict__:
+		# optimisation: The base implementation of chooseNVDAObjectOverlayClasses does nothing,
+		# so only call this method if it's been overridden.
+		if appModule and not hasattr(appModule.chooseNVDAObjectOverlayClasses, "_isBase"):
 			appModule.chooseNVDAObjectOverlayClasses(obj, clsList)
 		# Allow global plugins to choose overlay classes.
 		for plugin in globalPluginHandler.runningPlugins:
