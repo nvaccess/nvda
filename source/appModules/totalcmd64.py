@@ -14,4 +14,3 @@ class AppModule(totalcmd.AppModule):
 
 	tcmdListBoxes = ('LCLListBox',)
 	TCList = TCList
-	chooseNVDAObjectOverlayClasses = totalcmd.AppModule.chooseNVDAObjectOverlayClasses
