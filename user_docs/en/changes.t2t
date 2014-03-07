@@ -14,6 +14,7 @@
 == Bug Fixes ==
 - The standard Windows System menu is no longer accidentally silenced in Java applications (#3882)
 - When copying text from screen review, line breaks are no longer ignored. (#3900)
+- Pointless whitespace objects are no longer reported in some applications when the focus changes or when using object navigation with simple review enabled. (#3839)
 
 
 = 2014.1 =
@@ -33,7 +34,7 @@
 - For Papenmeier braille displays, the move to flat review/focus command has been removed. Users can assign their own keys using the Input Gestures dialog. (#3652)
 - NVDA now relies  on the Microsoft VC runtime version 11, which means it can no longer be run on Operating systems older than Windows XP Service Pack 2 or Windows Server 2003 Service Pack 1.
 - Punctuation level Some will now speak star (*) and plus (+) characters. (#3614)
-- Upgraded eSpeak to version 1.48.03 which includes many language fixes and fixes several crashes. (#3842, #3739)
+- Upgraded eSpeak to version 1.48.04 which includes many language fixes and fixes several crashes. (#3842, #3739, #3860)
 
 
 == Bug Fixes ==
