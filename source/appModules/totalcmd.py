@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #appModules/totalcmd.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
+#Copyright (C) 2008-2014 Peter Vágner, NV Access Limited, Marco Zehe
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -11,13 +12,9 @@ import controlTypes
 
 oldActivePannel=0
 
-class AppModule(appModuleHandler.AppModule):
-
-	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.windowClassName in ("TMyListBox", "TMyListBox.UnicodeClass"):
-			clsList.insert(0, TCList)
-
 class TCList(IAccessible):
+
+	expectedCounter=2
 
 	def event_gainFocus(self):
 		global oldActivePannel
@@ -31,7 +28,7 @@ class TCList(IAccessible):
 				obj=obj.previous
 				if obj.windowClassName!="TDrivePanel":
 					counter+=1
-			if counter==2:
+			if counter==self.expectedCounter:
 				speech.speakMessage(_("left"))
 			else:
 				speech.speakMessage(_("right"))
@@ -46,3 +43,13 @@ class TCList(IAccessible):
 			speech.speakMessage(" ".join(speakList))
 		else:
 			super(TCList,self).reportFocus()
+
+class AppModule(appModuleHandler.AppModule):
+
+	tcmdListBoxes=("TMyListBox", "TMyListBox.UnicodeClass")
+	TCList = TCList
+
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if obj.windowClassName in self.tcmdListBoxes:
+			clsList.insert(0, self.TCList)
+
