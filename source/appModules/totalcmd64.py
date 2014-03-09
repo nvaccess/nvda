@@ -1,6 +1,6 @@
 #appModules/totalcmd64.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NVDA Contributors
+#Copyright (C) 2014 Marco Zehe
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 

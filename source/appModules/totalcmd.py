@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #appModules/totalcmd.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
+#Copyright (C) 2008-2014 Peter Vágner, NV Access Limited, Marco Zehe
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
