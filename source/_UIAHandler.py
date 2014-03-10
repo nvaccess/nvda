@@ -2,6 +2,7 @@ from ctypes import *
 from ctypes.wintypes import *
 import comtypes.client
 from comtypes import *
+from comtypes.hresult import E_NOINTERFACE
 import weakref
 import threading
 import time
@@ -121,7 +122,18 @@ class MsaaProxyFactory(COMObject):
 	so UIA proxying is redundant.
 	However, some native UIA implementations depend on the MSAA proxy.
 	"""
-	_com_interfaces_ = [IUIAutomationProxyFactoryEntry, IUIAutomationProxyFactory]
+	_com_interfaces_ = [IUnknown, IUIAutomationProxyFactoryEntry, IUIAutomationProxyFactory]
+
+	def IUnknown_QueryInterface(self, this, riid, ppvObj):
+		res = super(MsaaProxyFactory, self).IUnknown_QueryInterface(this, riid, ppvObj)
+		if res != E_NOINTERFACE:
+			return res
+		# The UIA client requests a private interface on the factory entry object.
+		# If it doesn't get this, IAccessibleEx implementations don't work.
+		try:
+			return self.baseEntry._IUnknown__com_QueryInterface(riid, ppvObj)
+		except COMError as e:
+			return e.hresult
 
 	def __init__(self, baseEntry):
 		self.baseEntry = baseEntry
@@ -140,6 +152,8 @@ class MsaaProxyFactory(COMObject):
 		return self.baseEntry.ImageName
 	def IUIAutomationProxyFactoryEntry__get_NeedsAdviseEvents(self):
 		return self.baseEntry.NeedsAdviseEvents
+	def IUIAutomationProxyFactoryEntry_SetWinEventsForAutomationEvent(self, eventId, propertyId, winEvents):
+		return self.baseEntry.SetWinEventsForAutomationEvent(eventId, propertyId, winEvents)
 
 	def IUIAutomationProxyFactoryEntry_GetWinEventsForAutomationEvent(self, eventId, propertyId):
 		try:
