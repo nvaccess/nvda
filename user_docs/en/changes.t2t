@@ -15,6 +15,7 @@
 - The standard Windows System menu is no longer accidentally silenced in Java applications (#3882)
 - When copying text from screen review, line breaks are no longer ignored. (#3900)
 - Pointless whitespace objects are no longer reported in some applications when the focus changes or when using object navigation with simple review enabled. (#3839)
+- Message boxes and other dialogs produced by NVDA again cause previous speech to be canceled before announcing the dialog. 
 
 
 = 2014.1 =
