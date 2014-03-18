@@ -537,15 +537,13 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			|| (nameIsContent && (IA2AttribsMapIt = IA2AttribsMap.find(L"explicit-name")) != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true")
 		)
 			renderChildren = false;
-		else {
-			if(pacc->get_accChildCount(&childCount)==S_OK) {
-				if (childCount > 0) {
-					// If a node has children, it's visible.
-					isVisible = true;
-				}
-			} else
-				childCount=0;
-		}
+		if(pacc->get_accChildCount(&childCount)==S_OK) {
+			if (childCount > 0) {
+				// If a node has children, it's visible.
+				isVisible = true;
+			}
+		} else
+			childCount=0;
 	}
 
 	//Expose all available actions
