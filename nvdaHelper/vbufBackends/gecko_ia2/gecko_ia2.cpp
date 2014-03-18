@@ -281,6 +281,9 @@ bool isLabelVisible(IAccessible2* acc) {
 	return true;
 }
 
+const vector<wstring>ATTRLIST_ROLES(1, L"IAccessible2::attribute_xml-roles");
+const wregex REGEX_PRESENTATION_ROLE(L"IAccessible2\\\\:\\\\:attribute_xml-roles:.*\\bpresentation\\b.*;");
+
 VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
 	IAccessibleTable* paccTable, IAccessibleTable2* paccTable2, long tableID,
@@ -428,7 +431,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	parentNode->isBlock=isBlockElement;
 
 	// force   isHidden to True if this has an ARIA role of presentation but its focusble -- Gecko does not hide this itself.
-	if((states&STATE_SYSTEM_FOCUSABLE)&&parentNode->matchAttributes(L"IAccessible2\\:\\:attribute_xml-roles:~wpresentation;")) {
+	if((states&STATE_SYSTEM_FOCUSABLE)&&parentNode->matchAttributes(ATTRLIST_ROLES, REGEX_PRESENTATION_ROLE)) {
 		parentNode->isHidden=true;
 	}
 	BSTR name=NULL;
