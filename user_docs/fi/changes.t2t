@@ -3,6 +3,24 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.2 =
+
+== Uudet ominaisuudet ==
+- Tekstin valitsemisen ilmoittaminen on nyt mahdollista joissakin sellaisissa muokkauskentissä, joissa käytetään näytöllä olevaa tietoa. (#770)
+- Sijaintitiedot luetaan nyt saavutettavissa Java -sovelluksissa valintapainikkeille ja muille säätimille, jotka välittävät ryhmätietoja. (#3754)
+- Pikanäppäimet luetaan nyt saavutettavissa Java -sovelluksissa sellaisille säätimille, joilla niitä on. (#3881)
+- Kiintopisteiden nimet luetaan nyt selaustilassa. Ne näytetään myös Elementtilista-valintaikkunassa. (#1195)
+- Nimetyt alueet käsitellään nyt selaustilassa maamerkkeinä. (#3741)
+
+
+== Korjatut ohjelmavirheet ==
+- Standardia Windowsin  järjestelmävalikkoa ei enää vahingossa hiljennetä Java-sovelluksissa. (#3882)
+- Rivinvaihtoja ei enää sivuuteta kopioitaessa tekstiä ruututarkastelusta. (#3900)
+- Hyödyttömiä tyhjätilaobjekteja ei enää lueta joissakin sovelluksissa kohdistuksen muuttuessa tai käytettäessä objektinavigointia Yksinkertaisen objektinavigoinnin ollessa käytössä. (#3839)
+- Ilmoitusruudut ja muut NVDA:n tuottamat valintaikkunat aiheuttavat taas aiemman puheen keskeyttämisen ennen kyseisen valintaikkunan lukemista.
+- Säädinten nimet, kuten  linkit ja painikkeet, hahmonnetaan nyt oikein selaustilassa, jos tekijä on korvannut nimen saavutettavuustarkoituksessa (erityisesti aria-label- tai aria-labelledby-ominaisuuksia käyttäen). (#1354)
+
+
 = 2014.1 =
 
 == Uudet ominaisuudet ==
@@ -20,7 +38,7 @@
 - Siirrä kokonaistarkasteluun/kohdistukseen -komento on poistettu Papenmeier-pistenäytöistä. Käyttäjät voivat Määrittää omat näppäimensä Syöte-eleet-valintaikkunaa käyttäen. (#3652)
 - NVDA käyttää nyt Microsoft VC -ajonaikaisten kirjastojen versiota 11, mikä tarkoittaa, että sitä ei voida käyttää Windows XP Service Pack 2:ta tai Windows Server 2003 Service Pack 1:tä vanhemmissa käyttöjärjestelmissä.
 - Tähti (*)- ja plus (+)-merkit puhutaan nyt jotain-välimerkkitasolla, jos NVDA:ta käytetään englanninkielisenä. (#3614)
-- eSpeak päivitetty versioksi 1.48.02, joka sisältää korjauksia moniin kieliin sekä useisiin kaatumisiin. (#3842, #3739)
+- eSpeak päivitetty versioksi 1.48.04, joka sisältää korjauksia moniin kieliin sekä useisiin kaatumisiin. (#3842, #3739, #3860)
 
 
 == Korjatut ohjelmavirheet ==
@@ -64,7 +82,7 @@
 - NVDA ei enää siirrä hiirtä väärään paikkaan joissakin sovelluksissa sellaisissa järjestelmissä, joissa on korkea DPI-näyttöasetus (koskee oletusarvoisesti monia uusia näyttöjä). (#3758, #3703)
 - Korjattu verkkosivuja selattaessa ongelma, jossa NVDA lakkasi toimimasta kunnolla ellei sitä käynnistetty uudelleen, vaikkei se kaatunutkaan tai jäänytkään jumiin. (#3804)
 - Papenmeier-pistenäyttöä  voidaan nyt käyttää, vaikkei sellaista ole aiemmin kytketty koneeseen USB:n kautta. (#3712)
-- Kun Papenmeier BRAILLEX:n vanhempi malli on valittu pistenäytöksi, NVDA ei jää enää jumiin, mikäli sitä ei ole kytketty koneeseen.
+- NVDA ei jää enää jumiin, kun Papenmeier BRAILLEX:n vanhempi malli on valittu pistenäytöksi ja jos sitä ei ole kytketty koneeseen.
 
 
 = 2013.3 =

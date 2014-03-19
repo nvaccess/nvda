@@ -3,7 +3,20 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.2 =
+
+== Novità ==
+- In alcuni campi editazione personalizzati dove vengono prelevate informazioni dallo schermo, viene annunciata la selezione del testo. (#770)
+- Nelle applicazioni Java accessibili, vengono annunciate le informazioni sulla posizione dei pulsanti radio e altri controlli che espongono informazioni di gruppo. (#3754)
+- Nelle applicazioni Java accessibili, vengono annunciate le scorciatoie da tastiera dei controlli, se presenti. (#3881)
+
+
+== Bug corretti ==
+- Il menu standard Sistema inerente le finestre  non viene più erroneamente silenziato nelle applicazioni Java (#3882)
+
+
 = 2014.1 =
+
 
 == Novità ==
 - Supporto per Microsoft Powerpoint 2013. Si noti che la visualizzazione protetta non è supportata. (#3578)
@@ -20,7 +33,7 @@
 - Per i display braille Papenmeier, sono stati rimossi i comandi di spostamento al cursore di controllo/focus. Gli utenti potranno definire i propri tasti preferiti nella finestra gesti e tasti di immissione. (#3652)
 - NVDA ora si basa su Microsoft VC runtime versione 11, il che significa che non può più essere eseguito su sistemi operativi precedenti a Windows XP Service Pack 2 o Windows Server 2003 Service Pack 1.
 - Se il livello di punteggiatura è impostato su qualcosa, verranno annunciati i caratteri asterisco (*) e più (+) (#3614)
-- Aggiornata eSpeak alla versione 1.48.02 che include numerose correzioni linguistiche e sistema diversi crash. (#3842, #3739)
+- Aggiornata eSpeak alla versione 1.48.03 che include numerose correzioni linguistiche e sistema diversi crash. (#3842, #3739)
 
 
 == Bug corretti ==
@@ -63,7 +76,7 @@
 - Risolto un problema che causava il crash di NVDA in Windows8 in concomitanza con controlli contenenti grosse porzioni di testo, come il visualizzatore log di NVDA. (#3867)
 - Nei sistemi con le impostazioni del display settate ad un numero molto alto di DPI, (ossia quasi tutti i pc più moderni), NVDA non ha più problemi nel portare il mouse nella posizione desiderata. (#3758, #3703)
 - Sistemato un fastidioso problema che occasionalmente, provocava l'arresto di NVDA durante la navigazione, inibendone però il riavvio. (#3804)
-- Ora è possibile utilizzare un display braille Papenmeier anche se non era mai stato connesso alla porta USB. (#3712)
+- NVDA non va più in crash quando si seleziona un vecchio modello di barra braille Braillex Papenmeier senza che quest'ultima sia connessa.
 
 
 == Cambiamenti per sviluppatori in inglese ==

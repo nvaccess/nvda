@@ -4,15 +4,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-21 19:10+1000\n"
-"PO-Revision-Date: 2013-12-28 15:38+0800\n"
+"POT-Creation-Date: 2014-02-07 18:54+1000\n"
+"PO-Revision-Date: 2014-03-17 14:55+0800\n"
 "Last-Translator: 雪岭冰龙 <vgjh2005@gmail.com>\n"
 "Language-Team: Simplified Chinese translate team <vgjh2005@gmail.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.3\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -84,7 +84,7 @@ msgstr "未知输入法"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
 msgid "{language} - {layout}"
-msgstr "{language} - {layout}"
+msgstr "{layout} - {language}"
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -2590,7 +2590,7 @@ msgstr "applications"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "num lock"
-msgstr "num lock"
+msgstr "数字键盘"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "print screen"
@@ -3026,90 +3026,81 @@ msgstr "音调(&P)"
 msgid "&Inflection"
 msgstr "语调(&I)"
 
-#, fuzzy
 msgid "text mode"
-msgstr "文本框"
+msgstr "文本模式"
 
-#, fuzzy
 msgid "object mode"
-msgstr "焦点模式"
+msgstr "对象模式"
 
 #. Translators: a touch screen action performed once
-#, fuzzy
 msgid "single {action}"
-msgstr "区块"
+msgstr "{action}一次"
 
 #. Translators: a touch screen action performed twice
-#, fuzzy
 msgid "double {action}"
-msgstr "没有默认动作"
+msgstr "{action}两次"
 
 #. Translators: a touch screen action performed 3 times
 msgid "tripple {action}"
-msgstr ""
+msgstr "{action}三次"
 
 #. Translators: a touch screen action performed 4 times
 msgid "quadruple {action}"
-msgstr ""
+msgstr "{action}四次"
 
 #. Translators: a touch screen action using multiple fingers
 msgid "{numFingers} finger {action}"
-msgstr ""
+msgstr "{numFingers}指{action}"
 
 #. Translators: a very quick touch and release of a finger on a touch screen
-#, fuzzy
 msgctxt "touch action"
 msgid "tap"
-msgstr "顶端"
+msgstr "轻击"
 
 #. Translators: a very quick touch and release, then another touch with no release, on a touch screen
-#, fuzzy
 msgctxt "touch action"
 msgid "tap and hold"
-msgstr "位图占位符"
+msgstr "轻击后按住"
 
 #. Translators: a touch with no release, on a touch screen.
 msgctxt "touch action"
 msgid "hold"
-msgstr ""
+msgstr "按住"
 
 #. Translators: a quick swipe of a finger in an up direction, on a touch screen.
 msgctxt "touch action"
 msgid "flick up"
-msgstr ""
+msgstr "向上滑动"
 
 #. Translators: a quick swipe of a finger in an down direction, on a touch screen.
 msgctxt "touch action"
 msgid "flick down"
-msgstr ""
+msgstr "向下滑动"
 
 #. Translators: a quick swipe of a finger in a left direction, on a touch screen.
-#, fuzzy
 msgctxt "touch action"
 msgid "flick left"
-msgstr "左对齐"
+msgstr "向左滑动"
 
 #. Translators: a quick swipe of a finger in a right direction, on a touch screen.
-#, fuzzy
 msgctxt "touch action"
 msgid "flick right"
-msgstr "右对齐"
+msgstr "向右滑动"
 
 #. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
-#, fuzzy
 msgctxt "touch action"
 msgid "hover down"
-msgstr "减小音量"
+msgstr "停住"
 
 #. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
 msgctxt "touch action"
 msgid "hover"
-msgstr ""
+msgstr "移动"
 
 #. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
 msgctxt "touch action"
 msgid "hover up"
-msgstr ""
+msgstr "抬起"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3283,14 +3274,16 @@ msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
 msgstr ""
+"无法从{path}安装插件。\n"
+"您必须先运行 NVDA 以使插件可以顺利的安装。"
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
-msgstr "{symbol}{description}"
+msgstr "{description}{number}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
 msgid "{number} {candidate}"
-msgstr "{number}{candidate}"
+msgstr "{candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
@@ -3344,6 +3337,14 @@ msgstr "依然没有新消息"
 #. Translators: The description of an NVDA command to view one of the recent messages.
 msgid "Displays one of the recent messages"
 msgstr "显示最近的一个消息"
+
+#. Translators: This Outlook Express message has an attachment
+msgid "has attachment"
+msgstr "包含附件"
+
+#. Translators: this Outlook Express message is flagged
+msgid "flagged"
+msgstr "已标记"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
@@ -3843,7 +3844,7 @@ msgstr "默认字典(&D)..."
 msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
 "to the list"
-msgstr "默认字典对话框，可以添加和管理默认字典。"
+msgstr "“默认字典”对话框，可以添加和管理默认字典。"
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 msgid "&Voice dictionary..."
@@ -5101,9 +5102,8 @@ msgstr "朗读框架(&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#, fuzzy
 msgid "Report if &clickable"
-msgstr "朗读表格(&T)"
+msgstr "朗读可点击(&C)"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -5369,7 +5369,7 @@ msgstr "无长描述"
 
 #. Translators: the description for the activateLongDescription script on virtualBuffers.
 msgid "Shows the long description at this position if one is found."
-msgstr "显示所指位置的对象的长描述。"
+msgstr "显示所指位置的对象的长描述（如果能找到）。"
 
 #. Translators: the description for the activatePosition script on virtualBuffers.
 msgid "activates the current object in the document"

@@ -2,6 +2,17 @@
 
 
 %!includeconf: ../changes.t2tconf
+ 
+= 2014.2 =
+
+== neue Funktionen ==
+- der Markierte Text in Eingabefeldern wird korrekt erkannt, wenn der angezeigte Text (über die API Displaymodel) benutzt werden muss. (#770)
+- in zugänglichen Java-Anwendungen werden Positionsinformationen (z.B. in Auswahlschaltern) korrekt angezeigt. (#3754)
+- in zugänglichen Java-Anwendungen werden Tastenkombinationen korrekt erkannt. (#3881)
+
+== Fehlerbehebungen ==
+- in zugänglichen Java-Awnwendungen wird das Systemmenü nich mehr unterdrückt (#3882)
+
 = 2014.1 =
 
 == neue Funktionen ==
@@ -18,6 +29,7 @@
 - die Befehle zum Umschalten von/in den Flächenmodus wurden aus der Tastenbelegung für Papenmeier-Braillezeilen entfernt. Sie können im Dialog einstellungen/Eingaben jedoch eine eigene Tastenkombination zuweisen. (#3652)
 - NVDA benötigt nun mindestens VC Runtime Version 11. Dies bedeutet, dass nun mindestens Windows xp sp2 oder Windows server 2003 sp1 benötigt wird.
 - In der Satzzeichen- und Symbolebene «einige» werden die Zeichen Stern (*) und Plus (+) angesagt. (#3614)
+- Espeak auf version 1.48.03 aktualisiert Dadurch werden etliche Fehler beseitigt. (#3842, #3739)
 
 == Fehlerbehebungen ==
 - Beim Navigieren durch und Markieren von Zellen in Microsoft Excel wird der markierte Zellenbereich korrekt erkannt, wenn Microsoft Excel langsam reagiert. (#3558)

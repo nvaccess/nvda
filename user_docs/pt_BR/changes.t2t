@@ -24,7 +24,7 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 - Para as linhas braile Papenmeier, o comando mover para a revisão plana/foco  foi removido. Os usuários poderão atribuir suas próprias teclas usando o Diálogo de Gestos de Entrada. (#3652)
 - O NVDA agora usa o Microsoft VC runtime versão 11, o que significa que já não é mais possível executá-lo em sistemas operacionais mais antigos que o Windows XP Service Pack 2 ou o Windows Server 2003 Service Pack 1.
 - O nível de Pontuação pouco agora falará os caracteres asterisco (*) e mais (+). (#3614)
-- Atualizado o sintetizador eSpeak para a versão 1.48.02, o que inclui muitas correções nos idiomas e resolve vários problemas de instabilidades. (#3842, #3739)
+- Atualizado o sintetizador eSpeak para a versão 1.48.04, o que inclui muitas correções nos idiomas e resolve vários problemas de instabilidades. (#3842, #3739), #3860)
 
 
  == Correção de falhas ==
@@ -40,8 +40,8 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 - Não se mostram mais caracteres sem sentido em documentos no modo de navegação, como aqueles encontrados no intervalo para uso privado do Unicode. Em alguns casos eles estavam impedindo etiquetas mais úteis de serem mostradas. (#2963)
 - A composição de entrada para a introdução de caracteres asiáticos já não falha no PuTTY. (#3432)
 - A navegação em um documento após cancelar a leitura contínua já não resulta em que o NVDA algumas vezes anuncie incorretamente  que você saiu de um campo (tal como uma tabela) no documento que a leitura contínua nunca anunciou. (#3688)
-- Ao usar os comandos de navegação rápida do modo de navegação na leitura contínua com a leitura dinâmica abilitada, o NVDA anuncia o novo campo de modo mais acurado; ex.: diz que um cabeçalho é um cabeçalho e não apenas o texto do mesmo. (#3689)
-- Os comandos de navegação rápida de pular para o fim ou início de elementos que contêm outros agora respeitam a opção de leitura dinâmica ao dizer tudo, quer dizer, não vão mais cancelar a leitura contínua atual. (#3675)
+- Ao usar os comandos de navegação rápida do modo de navegação na leitura contínua com a leitura dinâmica abilitada, o NVDA anuncia o novo campo de modo mais acurado; ex.: anuncia um cabeçalho como cabeçalho e não apenas o texto do mesmo. (#3689)
+- Os comandos de navegação rápida de pular para o fim ou início de elementos que contêm outros agora respeitam a opção de leitura dinâmica durante a leitura contínua, isto é, já não irão cancelar a leitura contínua atual. (#3675)
 - Os nomes de gestos táteis listados no diálogo de gestos para entrada do NVDA agora estão amigáveis e traduzidos. (#3624)
 - O NVDA já não faz com que certos programas travem ao mover o mouse por sobre seus controles de edição rica (TRichEdit). Programas incluem o Jarte 5.1 e o BRFácil. (#3693, #3603, #3581)
 - No Internet Explorer e outros controles MSHTML, continentes como as tabelas marcadas com ARIA como sendo de leiaute não são mais anunciadas ao usuário. (#3713)
