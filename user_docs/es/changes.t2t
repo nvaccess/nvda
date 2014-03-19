@@ -3,6 +3,24 @@ Qué hay de Nuevo en NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.2 =
+
+== Nuevas Características ==
+- Ahora es posible el anunciado de la selección de texto en algunos campos de edición personalizada donde se utiliza información de la pantalla. (#770)
+- En aplicaciones  Java accesibles, ahora se anuncia la información de posición para botones de opción y otros controles que expongan información de grupo. (#3754)
+- En aplicaciones Java accesibles, ahora se anuncian los atajos de teclado para controles que los tengan. (#3881)
+- En modo navegación, las etiquetas  en los puntos de referencia ahora se anuncian. También se incluyen en el diálogo Lista de Elementos. (#1195)
+- En modo navegación, las regiones etiquetadas ahora se tratan como puntos de referencia. (#3741)
+
+
+== Corrección de Fallos ==
+- El menú estándar de sistema de Windows ya no se silencia accidentalmente en aplicaciones Java. (#3882)
+- Cuando se copie texto desde la revisión de pantalla, los saltos de línea ya no se ignoran. (#3900)
+- Los objetos de espacio en blanco sin sentido ya no se anuncian en algunas aplicaciones cuando el foco  cambie o cuando se utilice la navegación de objetos con la revisión simple habilitada. (#3839)
+- Los cuadros de mensaje y otros diálogos producidos por NVDA causan nuevamente la cancelación de la verbalización anterior antes de anunciar el diálogo. 
++- En modo navegación, las etiquetas de controles tales como enlaces y botones ahora se procesan correctamente cuando la etiqueta se haya reemplazado por el autor con fines de accesibilidad (específicamente, la utilización de aria-label o de aria-labelledby). (#1354)
+
+
 = 2014.1 =
 
 == Nuevas Características ==
@@ -20,7 +38,7 @@ Qué hay de Nuevo en NVDA
 - Para las pantallas braille Papenmeier, se ha eliminado la orden mover a revisión plana/foco. Los usuarios pueden asignar sus propias teclas usando el diálogo de gestos de entrada. (#3652)
 - NVDA ahora se basa en la versión 11 del Microsoft VC runtime, lo que significa que ya no se puede ejecutar en sistemas operativos anteriores a Windows XP Service Pack 2 o Windows Server 2003 Service Pack 1.
 - En el nivel de puntuación Alguna ahora se verbalizarán los caracteres asterisco(*) y más (+). (#3614)
-- Actualizado eSpeak a la versión 1.48.02, que incluye muchas correcciones de lenguaje y corrige varios problemas. (# 3842, # 3739)
+- Actualizado eSpeak a la versión 1.48.04, que incluye muchas correcciones de lenguaje y corrige varios problemas. (# 3842, # 3739)
 
 
 == Corrección de Fallos ==

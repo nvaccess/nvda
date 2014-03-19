@@ -1,7 +1,20 @@
-Quoi de Neuf dans NVDA
+﻿Quoi de Neuf dans NVDA
 
 
 %!includeconf: ../changes.t2tconf
+
+= 2014.2 =
+
+== Nouvelles fonctionnalités ==
+- L'annonce du texte sélectionné est maintenant possible dans certains champs de saisie personnalisés où l'information d'affichage est utilisée. (#770)
+- Dans les applications Java accessibles, l'information sur la position est maintenant annoncée pour les boutons radio et les autres contrôles qui ont une information de groupe. (#3754)
+- Dans les applications Java accessibles, les touches de raccourci sont maintenant annoncées lorsque disponibles. (#3881)
+
+
+== Corrections de bogues ==
+- Le menu Système standard de Windows n'est plus accidentellement silencieux dans les applications Java. (#3882)
+
+
 
 = 2014.1 =
 
@@ -20,7 +33,7 @@ Quoi de Neuf dans NVDA
 - Pour les afficheurs braille Papenmeier, la commande passer en mode revue/focus a été supprimée. Les utilisateurs peuvent assigner leur propre combinaison en utilisant la boîte de dialogue Geste d'entrée. (#3652)
 - NVDA dépend maintenant des runtimes Microsoft VC version 11, ce qui signifie qu'il ne peut plus être exécuté sur les systèmes d'exploitation plus vieux que Windows XP SP2 ou Windows Server 2003 SP1.
 - Le niveau de symboles et ponctuations Quelques-uns annonce maintenant les caractères astérisque (*) et plus (plus). (#3614)
-- Mise à jour d'eSpeak vers la version 1.48.02 qui inclut de nombreuses corrections de langue et corrige plusieurs plantages. (#3842, #3739)
+- Mise à jour d'eSpeak vers la version 1.48.03 qui inclut de nombreuses corrections de langue et corrige plusieurs plantages. (#3842, #3739)
 
 
 == Corrections de bogues ==
@@ -1374,9 +1387,9 @@ Les points forts principaux de cette version comprennent le support des édition
  - -c, --config-file: specify an alternative configuration file
  - -h, -help: show a help message listing commandline arguments
 - Fixed bug where punctuation symbols would not be translated to the appropriate language, when using a language other than english, and when speak typed characters was turned on.
-- Added Slovak language files thanks to Peter Vagner
-- Added a Virtual Buffer settings dialog and a Document Formatting settings dialog, from Peter Vagner.
-- Added French translation thanks to Michel Such
+- Ajout des fichiers de la langue Slovaque grâce à Peter Vagner
+- Ajout d'un dialogue de paramétrage du Mode Navigation ainsi qu'un dialogue de Mise en forme du Document, de Peter Vagner.
+- Ajout de la traduction française grâce à Michel Such
 - Added a script to toggle beeping of progress bars on and off (insert+u). Contributed by Peter Vagner.
 - Made more messages in NVDA be translatable for other languages. This includes script descriptions when in keyboard help.
 - Added a find dialog to the virtualBuffers (internet Explorer and Firefox). Pressing control+f when on a page brings up a dialog in which you can type some text to find. Pressing enter will then search for this text and place the virtualBuffer cursor on this line. Pressing f3 will also search for the next occurance of the text.
@@ -1398,19 +1411,19 @@ Les points forts principaux de cette version comprennent le support des édition
 - Added patch from J.J. Meddaugh that makes the toggle report objects under mouse script more like the other toggle scripts (saying on/off rather than changing the whole statement).
 - Added spanish translation (es) contributed by Juan C. buo.
 - Added Hungarian language file from Tamas Gczy.
-- Added Portuguese language file from Rui Batista.
-- Changing the voice in the voice settings dialog now sets the rate, pitch and volume sliders to the new values according to the synthesizer, rather than forcing the synthesizer to be set to the old values. This fixes issues where a synth like eloquence or viavoice seems to speek at a much faster rate than all other synths.
-- Fixed a bug where either speech would stop, or NVDA would entirely crash, when in a Dos console window.
-- If support for a particular language exists, NVDA now automatically can show its interface and speak its messages in the language Windows is set to. A particular language can still be chosen manualy from the user interface settings dialog as well.
-- Added script 'toggleReportDynamicContentChanges' (insert+5). This toggles whether new text, or other dynamic changes should be automatically announced. So far this only works in Dos Console Windows.
-- Added script 'toggleCaretMovesReviewCursor' (insert+6). This toggles whether the review cursor should be automatically repositioned when the system caret moves. This is useful in Dos console windows when trying to read information as the screen is updating.
-- Added script 'toggleFocusMovesNavigatorObject' (insert+7). This toggles whether the navigator object is repositioned on the object with focus as it changes.
-- Added some documentation translated in to various languages. So far there is French, Spannish and Finish.
-- Removed some developer documentation from the binary distribution of NVDA, it is only now in the source version.
-- Fixed a possible bug in Windows Live Messanger and MSN Messenger where arrowing up and down the contact list would cause errors.
-- New messages are now automatically spoken when in a conversation using Windows Live Messenger. (only works for English versions so far)
-- The history window in a Windows Live Messenger conversation can now be read by using the arrow keys. (Only works for English versions so far)
-- Added script 'passNextKeyThrough' (insert+f2). Press this key, and then the next key pressed will be passed straight through to Windows. This is useful if you have to press a certain key in an application but NVDA uses that key for something else.
+- Ajout du fichier de la langue portugaise par Rui Batista.
+- La modification de la voix dans le dialogue Paramètres vocaux définit maintenant les curseurs de débit, de tonalité et de volume aux nouvelles valeurs selon le synthétiseur, plutôt que de forcer ce dernier à se régler sur les anciennes valeurs. Cela résout des problèmes où un synthétiseur de voix comme Eloquence ou viavoice semble parlaient à un rythme beaucoup plus rapide que toutes les autres synthèses.
+- Correction d'un bogue où soit la parole s'arrêtait, soit NVDA cessait de fonctionner tout-à-fait, lorsque dans une fenêtre de console Dos.
+- Si le support d'une telle langue existe, NVDA peut maintenant automatiquement afficher son interface et diffuser ses messages dans la langue définie par Windows. Une langue particulière peut toutefois être choisie manuellement depuis le dialogue Paramètres de l'interface utilisateur également.
+- Ajout du script « toggleReportDynamicContentChanges » (insert + 5). Cela détermine si le nouveau texte ou d'autres changements dynamiques doivent être automatiquement annoncés. Pour le moment, cela ne fonctionne que dans les fenêtres de Console Dos.
+- Ajout du script « toggleCaretMovesReviewCursor » (insert + 6). Cela détermine si le curseur de revue doit être automatiquement repositionné lorsque le curseur système se déplace. Ceci est utile dans les fenêtres de console Dos quand on essaie de lire les informations alors que l'écran est actualisé.
+- Ajout du script « toggleFocusMovesNavigatorObject » (insert + 7). Cela détermine si l'objet de navigation est repositionné sur l'objet ayant le focus lorsqu'il change.
+- Ajout d'une documentation traduite en diverses langues. Jusqu'à présent, il y a le français, l'espagnol et le finnois.
+- Suppression partielle de la documentation développeur de la distribution binaire de NVDA, elle se trouve maintenant dans la version source seulement.
+- Correction d'un bogue possible dans Windows Live Messenger et MSN Messenger, quand l'appui sur flèches haut et bas dans la liste de contacts provoquait des erreurs.
+- Les nouveaux messages sont maintenant lus automatiquement lors d'une conversation Windows Live Messenger. (fonctionne uniquement pour les versions anglaises jusqu'à présent)
+- La fenêtre de l'historique d'une conversation Windows Live Messenger peut maintenant être lue en utilisant les touches fléchées. (Fonctionne uniquement pour les versions anglaises jusqu'à présent)
+- Ajout du script 'passNextKeyThrough' (insert + f2). Appuyez sur cette touche, et la prochaine touche sera passée directement à Windows. Cela est utile si vous devez appuyer sur une certaine touche dans une application mais que NVDA utilise cette touche pour autre chose.
 - NVDA ne gèle plus pendant une minute ou plus à l'ouverture de très gros documents dans MS Word.
 - Correction d'un bogue qui faisait que si on se déplaçait hors d'un tableau sous MS Word, et que l'on y revenait, le nombre de rangées ou de colonnes courantes n'étaient pas annoncé, même si on regagnait exactement la même cellule.
 - Quand on lance NVDA en utilisant une synthèse vocale inexistante ou qui ne fonctionne pas, le moteur SAPI5 sera chargé. Si SAPI55 ne fonctionne pas non plus, alors la parole sera réglée sur silence.
@@ -1418,7 +1431,7 @@ Les points forts principaux de cette version comprennent le support des édition
 - Si une erreur est détectée quand on choisit une langue via la boîte de dialogue Langue de l'interface utilisateur, NVDA alerte l'utilisateur à ce sujet.
 - NVDA demande si la configuration doit être sauvegardée et s'il doit redémarrer lors du changement de langue sous la boîte de dialogue Langue de l'interface utilisateur. NVDA doit être relancé pour que les changements prennent effet.
 - Lorsqu'une synthèse dvocale choisi par l'utilisateur ne peut pas être chargé par le moyen de la boîte de dialogue Synthétiseur, NVDA affiche une alerte à cet effet.
-- Lors du chargement d'un synthétiseur de voix pour la première fois, NVDA permet que ce dernier choisisse les paramètres appropriés de sa voix, son débit et sa tonalité, au lieu de le forcer à utiliser des paramètres par défaut que le lecteur d'écran juge adéquats. Ceci résout un problème où Eloquence et IBM Viavoice Outloud Sapi 4 tendaient à pparler vraiment trop rapidement de prime abord.
+- Lors du chargement d'une synthèse vocale pour la première fois, NVDA permet que ce dernier choisisse les paramètres appropriés de sa voix, son débit et sa tonalité, au lieu de le forcer à utiliser des paramètres par défaut que le lecteur d'écran juge adéquats. Ceci résout un problème où Eloquence et IBM Viavoice Outloud Sapi 4 tendaient à parler vraiment trop rapidement de prime abord.
 
 
 
