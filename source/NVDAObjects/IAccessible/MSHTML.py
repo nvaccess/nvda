@@ -81,6 +81,7 @@ nodeNamesToNVDARoles={
 	"FIELDSET":controlTypes.ROLE_GROUPING,
 	"OPTION":controlTypes.ROLE_LISTITEM,
 	"BLOCKQUOTE":controlTypes.ROLE_BLOCKQUOTE,
+	"MATH":controlTypes.ROLE_EQUATION,
 }
 
 def IAccessibleFromHTMLNode(HTMLNode):
