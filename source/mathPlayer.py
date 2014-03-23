@@ -24,6 +24,8 @@ class MathNVDAObject(Window):
 	"""
 
 	role = controlTypes.ROLE_EQUATION
+	# Override the window name.
+	name = None
 	# Any tree interceptor should not apply here.
 	treeInterceptor = None
 
