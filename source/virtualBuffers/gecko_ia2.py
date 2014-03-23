@@ -280,6 +280,14 @@ class Gecko_ia2(VirtualBuffer):
 			return initialPos
 		return self._initialScrollObj
 
+	def getMathMlForEquation(self, info):
+		obj = info.NVDAObjectAtStart
+		if obj.role != controlTypes.ROLE_EQUATION:
+			raise ValueError
+		from comtypes.gen.ISimpleDOM import ISimpleDOMNode
+		node = obj.IAccessibleObject.QueryInterface(ISimpleDOMNode)
+		return "<math>%s</math>" % node.innerHTML
+
 class Gecko_ia2Pre14(Gecko_ia2):
 
 	def _searchableTagValues(self, values):
