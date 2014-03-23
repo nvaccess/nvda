@@ -20,15 +20,19 @@ import eventHandler
 import api
 
 class MathNVDAObject(Window):
-	_mpSpeech = None
-	_mpNavigation = None
+	"""A fake NVDAObject which is focused while interacting with math.
+	"""
 
 	role = controlTypes.ROLE_EQUATION
+	# Any tree interceptor should not apply here.
+	treeInterceptor = None
+
+	_mpSpeech = None
+	_mpNavigation = None
 
 	def __init__(self, mathMl=None):
 		parent = self.parent = api.getFocusObject()
 		super(MathNVDAObject, self).__init__(windowHandle=parent.windowHandle)
-		self.treeInterceptor = None
 		if not self._mpSpeech:
 			# Cache MathPlayer's interfaces.
 			mpSpeech = MathNVDAObject._mpSpeech = comtypes.client.CreateObject(MPInterface, interface=IMathSpeech)
