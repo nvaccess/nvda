@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2012 NV Access Limited
+#Copyright (C) 2009-2014 NV Access Limited
 
 from comtypes import COMError
 import eventHandler
@@ -317,3 +317,9 @@ class MSHTML(VirtualBuffer):
 		except COMError:
 			pass
 		return super(MSHTML, self).shouldPassThrough(obj, reason)
+
+	def getMathMlForEquation(self, info):
+		obj = info.NVDAObjectAtStart
+		if obj.role != controlTypes.ROLE_EQUATION:
+			raise ValueError
+		return obj.HTMLNode.outerHTML
