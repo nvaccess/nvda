@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2012 NV Access Limited
+#Copyright (C) 2006-2014 NV Access Limited
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -71,7 +71,7 @@ class ControlField(Field):
 			return self.PRESCAT_LAYOUT
 
 		if (
-			role in (controlTypes.ROLE_LINK, controlTypes.ROLE_HEADING, controlTypes.ROLE_BUTTON, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_GRAPHIC, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TAB, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_SLIDER, controlTypes.ROLE_SPINBUTTON, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_TOGGLEBUTTON, controlTypes.ROLE_MENUBUTTON, controlTypes.ROLE_TREEVIEW)
+			role in (controlTypes.ROLE_LINK, controlTypes.ROLE_HEADING, controlTypes.ROLE_BUTTON, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_GRAPHIC, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TAB, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_SLIDER, controlTypes.ROLE_SPINBUTTON, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_TOGGLEBUTTON, controlTypes.ROLE_MENUBUTTON, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_EQUATION)
 			or (role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 		):
