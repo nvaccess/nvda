@@ -412,6 +412,8 @@ def speak(speechSequence,symbolLevel=None):
 	if isPaused:
 		cancelSpeech()
 	beenCanceled=False
+	if symbolLevel is None:
+		symbolLevel=config.conf["speech"]["symbolLevel"]
 	#Filter out redundant LangChangeCommand objects 
 	#And also fill in default values
 	autoLanguageSwitching=config.conf['speech']['autoLanguageSwitching']
@@ -434,20 +436,22 @@ def speak(speechSequence,symbolLevel=None):
 				prevLanguage=curLanguage
 			speechSequence.append(item)
 		else:
+			if isinstance(item,SymbolLevelCommand) and item.level is None:
+				item.level=symbolLevel
 			speechSequence.append(item)
 	if not speechSequence:
 		# After normalisation, the sequence is empty.
 		# There's nothing to speak.
 		return
 	log.io("Speaking %r" % speechSequence)
-	if symbolLevel is None:
-		symbolLevel=config.conf["speech"]["symbolLevel"]
 	curLanguage=defaultLanguage
 	for index in xrange(len(speechSequence)):
 		item=speechSequence[index]
 		if autoLanguageSwitching and isinstance(item,LangChangeCommand):
 			curLanguage=item.lang
-		if isinstance(item,basestring):
+		elif isinstance(item,SymbolLevelCommand):
+			symbolLevel=item.level
+		elif isinstance(item,basestring):
 			speechSequence[index]=processText(curLanguage,item,symbolLevel)+CHUNK_SEPARATOR
 	getSynth().speak(speechSequence)
 
@@ -1367,3 +1371,18 @@ class LangChangeCommand(SpeechCommand):
 
 class BreakCommand(object):
 	"""Forces speakWithoutPauses to flush its buffer and therefore break the sentence at this point."""
+
+class SymbolLevelCommand(SpeechCommand):
+	"""Switches the punctuation/symbol level within speech.
+	"""
+
+	def __init__(self, level):
+		"""
+		@param level: The symbol level to switch to
+			(one of the L{characterProcessing}.C{SYMLVL_*} constants),
+			C{None} to return to the configured symbol level.
+		"""
+		self.level = level
+
+	def __repr__(self):
+		return "SymbolLevelCommand (%r)" % self.level
