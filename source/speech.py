@@ -773,7 +773,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 						relativeSpeechSequence.append(LangChangeCommand(None))
 						lastLanguage=None
 					relativeSpeechSequence.append(fieldText)
-					if command.field.get("role") == controlTypes.ROLE_EQUATION:
+					if command.command == "controlStart" and command.field.get("role") == controlTypes.ROLE_EQUATION:
 						import mathPlayer
 						if mathPlayer.ensureInit():
 							relativeSpeechSequence.extend(mathPlayer.getSpeechForMathMl(info.obj.getMathMlForEquation(command.field)))
