@@ -18,6 +18,36 @@ from keyboardHandler import KeyboardInputGesture
 import ui
 import eventHandler
 import api
+import characterProcessing
+from logHandler import log
+
+_initResult = None
+_mpSpeech = None
+_mpNavigation = None
+
+def ensureInit():
+	"""Initialize MathPlayer if it hasn't been initialized already.
+	@return: Whether MathPlayer is available.
+	@rtype: bool
+	"""
+	global _initResult, _mpSpeech, _mpNavigation
+	if _initResult is not None:
+		return _initResult
+	try:
+		_mpSpeech = comtypes.client.CreateObject(MPInterface, interface=IMathSpeech)
+		_mpNavigation = _mpSpeech.QueryInterface(IMathNavigation)
+		_initResult = True
+	except:
+		log.warning("MathPlayer 2014 not available")
+		_initResult = False
+	return _initResult
+
+def getSpeechForMathMl(mathMl):
+	ensureInit()
+	_mpSpeech.SetMathML(mathMl)
+	return (speech.SymbolLevelCommand(characterProcessing.SYMLVL_NONE),
+		_mpSpeech.GetSpokenText(),
+		speech.SymbolLevelCommand(None))
 
 class MathNVDAObject(Window):
 	"""A fake NVDAObject which is focused while interacting with math.
@@ -29,21 +59,15 @@ class MathNVDAObject(Window):
 	# Any tree interceptor should not apply here.
 	treeInterceptor = None
 
-	_mpSpeech = None
-	_mpNavigation = None
-
 	def __init__(self, mathMl=None):
+		ensureInit()
 		parent = self.parent = api.getFocusObject()
 		super(MathNVDAObject, self).__init__(windowHandle=parent.windowHandle)
-		if not self._mpSpeech:
-			# Cache MathPlayer's interfaces.
-			mpSpeech = MathNVDAObject._mpSpeech = comtypes.client.CreateObject(MPInterface, interface=IMathSpeech)
-			MathNVDAObject._mpNavigation = mpSpeech.QueryInterface(IMathNavigation)
-		self._mpSpeech.SetMathML(mathMl)
+		_mpSpeech.SetMathML(mathMl)
 
 	def reportFocus(self):
 		super(MathNVDAObject, self).reportFocus()
-		speech.speakText(self._mpSpeech.GetSpokenText(), symbolLevel=characterProcessing.SYMLVL_NONE)
+		speech.speakText(_mpSpeech.GetSpokenText(), symbolLevel=characterProcessing.SYMLVL_NONE)
 
 	def getScript(self, gesture):
 		# Pass most keys to MathPlayer. Pretty ugly.
@@ -61,7 +85,7 @@ class MathNVDAObject(Window):
 	def script_navigate(self, gesture):
 		modNames = gesture.modifierNames
 		try:
-			text = self._mpNavigation.DoNavigateKeyPress(gesture.vkCode,
+			text = _mpNavigation.DoNavigateKeyPress(gesture.vkCode,
 				"shift" in modNames, "control" in modNames, "alt" in modNames, False)
 		except COMError:
 			return

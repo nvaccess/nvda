@@ -1384,6 +1384,11 @@ class GlobalCommands(ScriptableObject):
 
 	def script_interactWithMath(self, gesture):
 		import mathPlayer
+		if not mathPlayer.ensureInit():
+			# Translators: Reported when the user attempts math interaction
+			# but MathPlayer is unavailable.
+			ui.message(_("MathPlayer 2014 not available."))
+			return
 		mathPlayer.interactWithMath(api.getReviewPosition())
 	# Translators: Describes a command.
 	script_interactWithMath.__doc__ = _("Begins interaction with math content")
