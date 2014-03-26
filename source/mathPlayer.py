@@ -18,8 +18,8 @@ from keyboardHandler import KeyboardInputGesture
 import ui
 import eventHandler
 import api
-import characterProcessing
 from logHandler import log
+import textInfos
 
 _initResult = None
 _mpSpeech = None
@@ -101,12 +101,20 @@ class MathNVDAObject(Window):
 	}
 
 def interactWithMath(info):
-	try:
-		mathMl = info.obj.getMathMlForEquation(info)
-	except (NotImplementedError, AttributeError, ValueError):
-		# Translators: Reported when the user attempts math interaction
-		# with something that isn't math.
-		ui.message(_("Not math"))
+	info.expand(textInfos.UNIT_CHARACTER)
+	for item in reversed(info.getTextWithFields()):
+		if not isinstance(item, textInfos.FieldCommand) or item.command != "controlStart":
+			continue
+		field = item.field
+		if field.get("role") != controlTypes.ROLE_EQUATION:
+			continue
+		try:
+			mathMl = info.obj.getMathMlForEquation(field)
+		except (NotImplementedError, AttributeError, ValueError):
+			continue
+		eventHandler.executeEvent("gainFocus",
+			MathNVDAObject(mathMl=mathMl))
 		return
-	eventHandler.executeEvent("gainFocus",
-		MathNVDAObject(mathMl=mathMl))
+	# Translators: Reported when the user attempts math interaction
+	# with something that isn't math.
+	ui.message(_("Not math"))

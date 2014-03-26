@@ -319,7 +319,7 @@ class MSHTML(VirtualBuffer):
 		return super(MSHTML, self).shouldPassThrough(obj, reason)
 
 	def getMathMlForEquation(self, info):
-		obj = info.NVDAObjectAtStart
-		if obj.role != controlTypes.ROLE_EQUATION:
-			raise ValueError
+		docHandle = int(field["controlIdentifier_docHandle"])
+		nodeId = int(field["controlIdentifier_ID"])
+		obj = self.getNVDAObjectFromIdentifier(docHandle, nodeId)
 		return obj.HTMLNode.outerHTML
