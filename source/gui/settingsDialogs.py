@@ -654,6 +654,11 @@ class KeyboardSettingsDialog(SettingsDialog):
 		self.commandKeysCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Speak command &keys"))
 		self.commandKeysCheckBox.SetValue(config.conf["keyboard"]["speakCommandKeys"])
 		settingsSizer.Add(self.commandKeysCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# keyboard settings dialog.
+		self.handleInjectedKeysCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Handle keys from other &applications"))
+		self.handleInjectedKeysCheckBox.SetValue(config.conf["keyboard"]["handleInjectedKeys"])
+		settingsSizer.Add(self.handleInjectedKeysCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
 		self.kbdList.SetFocus()
@@ -680,6 +685,7 @@ class KeyboardSettingsDialog(SettingsDialog):
 		config.conf["keyboard"]["allowSkimReadingInSayAll"]=self.skimReadingInSayAllCheckBox.IsChecked()
 		config.conf["keyboard"]["beepForLowercaseWithCapslock"]=self.beepLowercaseCheckBox.IsChecked()
 		config.conf["keyboard"]["speakCommandKeys"]=self.commandKeysCheckBox.IsChecked()
+		config.conf["keyboard"]["handleInjectedKeys"]=self.handleInjectedKeysCheckBox.IsChecked()
 		super(KeyboardSettingsDialog, self).onOk(evt)
 
 class MouseSettingsDialog(SettingsDialog):
