@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-07 18:54+1000\n"
-"PO-Revision-Date: 2014-03-04 00:40+0200\n"
+"PO-Revision-Date: 2014-03-08 12:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -1738,13 +1738,13 @@ msgstr "تحريك مؤشر الفأرة إلى الكائن الحالي"
 
 #. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
 msgid "Move navigator object to mouse"
-msgstr "تحريك الكائن الحالي إلى مؤشر الفأرة"
+msgstr "تحريك مؤشر NVDA إلى مؤشر الفأرة"
 
 #. Translators: Input help mode message for move navigator object to mouse command.
 msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
-msgstr "نقل الكائن الحالي إلى موضع مؤشر الفأرة"
+msgstr "نقل مؤشر NVDA إلى الكائن الواقع تحت مؤشر الفأرة وقراءته"
 
 #. Translators: reported when there are no other available review modes for this object
 msgid "No next review mode"
@@ -1756,7 +1756,7 @@ msgid ""
 "positions the review position at the point of the navigator object"
 msgstr ""
 "ينتقل إلى نمط الاستعراض التالي (على سبيل المثال نمط استعراض الكائن أو "
-"المستند أو الشاشة) ويضع مؤشر الاستعراض عند الكائن الحالي"
+"المستند أو الشاشة) ويضع مؤشر الاستعراض عند مؤشر NVDA"
 
 #. Translators: reported when there are no  other available review modes for this object
 msgid "No previous review mode"
@@ -1768,12 +1768,12 @@ msgid ""
 "positions the review position at the point of the navigator object"
 msgstr ""
 "ينتقل إلى نمط الاستعراض السابق (على سبيل المثال نمط استعراض الكائن أو "
-"المستند أو الشاشة) ويضع مؤشر الاستعراض عند الكائن الحالي"
+"المستند أو الشاشة) ويضع مؤشر الاستعراض عند مؤشر NVDA"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
 msgid "no navigator object"
-msgstr "لا يوجد كائن حالي"
+msgstr "لا يوجد كائن واقع تحت مؤشر NVDA"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
 #, python-format
@@ -1791,11 +1791,11 @@ msgstr ""
 
 #. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
 msgid "No location information for navigator object"
-msgstr "لا توجد بيانات متوفرة عن موضع الكائن الحالي"
+msgstr "لا توجد بيانات متوفرة عن موضع مؤشر NVDA"
 
 #. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
 msgid "No location information for screen"
-msgstr "لا توجد بيانات عن الموضع من الشاشة"
+msgstr "لا توجد بيانات عن أبعاد مؤشر NVDA "
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
 msgid ""
@@ -1809,29 +1809,29 @@ msgstr ""
 
 #. Translators: Input help mode message for report object dimensions command.
 msgid "Reports the hight, width and position of the current navigator object"
-msgstr "قراءة عرض, وارتفاع, وموضع الكائن"
+msgstr "قراءة عرض, وارتفاع, وموضع الكائن الحالي"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
-msgstr "الانتقال للتحديد الحالي"
+msgstr "الانتقال لمؤشر النظام"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
-"وضع مؤشر حركة الكائن عند مؤشر التحديد الحالي ووضع مؤشر الاستعراض عند مؤشر "
-"التحرير بداخله إذا كان ذلك ممكن"
+"وضع مؤشر NVDA عند مؤشر النظام ووضع مؤشر الاستعراض عند مؤشر التحرير بداخله "
+"إذا كان ذلك ممكن"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
 msgid "no focus"
-msgstr "لا يوجد تحديد حالي"
+msgstr "لا يوجد مؤشر نظام"
 
 #. Translators: Reported when attempting to move focus to navigator object.
 msgid "move focus"
-msgstr "نقل التحديد الحاليالتحديد الحالي"
+msgstr "نقل مؤشر النظام"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
 msgid "no caret"
@@ -1842,16 +1842,16 @@ msgid ""
 "Pressed once Sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
-"بالضغط عليه مرة واحدة يقوم بتحريك مؤشر النظام إلى مؤشر حركة الكائن وبالضغط "
-"عليه مرتين يضع مؤشر التحرير (الحركة) في موقع مؤشر الاستعراض"
+"بالضغط عليه مرة واحدة يقوم بتحريك مؤشر النظام إلى مؤشر NVDA وبالضغط عليه "
+"مرتين يضع مؤشر التحرير في موقع مؤشر الاستعراض"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
-msgstr "لا يندرج تحت هذا الكائن كائنات"
+msgstr "هذا أعلى كائن في العرض الشجري"
 
 #. Translators: Input help mode message for move to parent object command.
 msgid "Moves the navigator object to the object containing it"
-msgstr "تحريك الكائن الحالي إلى الكائن الذي يحويه"
+msgstr "تحريك مؤشر NVDA إلى الكائن الأعلى في العرض الشجري"
 
 #. Translators: Reported when there is no next object (current object is the last object).
 msgid "No next"
@@ -1859,7 +1859,7 @@ msgstr "لا يوجد المزيد من الكائنات"
 
 #. Translators: Input help mode message for move to next object command.
 msgid "Moves the navigator object to the next object"
-msgstr "تحريك الكائن الحالي إلى الكائن التالي"
+msgstr "تحريك مؤشر NVDA إلى الكائن التالي"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 msgid "No previous"
@@ -1867,15 +1867,15 @@ msgstr "لا توجد كائنات سابقة"
 
 #. Translators: Input help mode message for move to previous object command.
 msgid "Moves the navigator object to the previous object"
-msgstr "تحريك الكائن الحالي إلى الكائن السابق"
+msgstr "تحريك مؤشر NVDA إلى الكائن السابق"
 
 #. Translators: Reported when there is no contained (first child) object such as inside a document.
 msgid "No objects inside"
-msgstr "لا يوجد مزيد من الكائنات"
+msgstr "لا يتفرع من هذا الكائن كائنات أخرى"
 
 #. Translators: Input help mode message for move to first child object command.
 msgid "Moves the navigator object to the first object inside it"
-msgstr "تحريك الكائن الحالي إلى أول كائن يندرج تحته"
+msgstr "تحريك مؤشر NVDA إلى أول كائن يتفرع منه"
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
 msgid "activate"
@@ -1883,13 +1883,14 @@ msgstr "تنشيط"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 msgid "No action"
-msgstr "لا يوجد فعل "
+msgstr "لا يوجد فعل افتراضي"
 
 #. Translators: Input help mode message for activate current object command.
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
-msgstr "تنفيذ الفعل الخاص بالكائن الحالي"
+msgstr ""
+"تنفيذ الفعل الافتراضي على مؤشر NVDA (على سبيل المثال: الضغط عليه إذا كان زر)."
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 msgid "top"
@@ -1899,13 +1900,13 @@ msgstr "بداية"
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
-msgstr "استعراض السطر الأول من الكائن الحالي"
+msgstr "استعراض السطر الأول من الكائن الحالي وقراءته"
 
 #. Translators: Input help mode message for move review cursor to previous line command.
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
-msgstr "استعراض السطر السابق للكائن الحالي"
+msgstr "استعراض السطر السابق للكائن الحالي وقراءته"
 
 #. Translators: Input help mode message for read current line under review cursor command.
 msgid ""
@@ -2016,7 +2017,7 @@ msgstr "الانتقال بين أنظمة النطق من صفير, وكلام,
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
-msgstr "الرجوع بمؤشر النظام إلى أقرب وثيقة تحتوي على الوثيقة النشطة"
+msgstr "الرجوع إلى المستند الذي يحتوي على الكائن المدرج"
 
 #. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
 msgid ""
