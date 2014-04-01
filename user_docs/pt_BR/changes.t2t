@@ -7,6 +7,24 @@
 Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 
 
+= 2014.2 =
+
+== Novas características ==
+- O anúncio da seleção de texto agora é possível em alguns campos de edição personalizados  onde a informação proveniente da tela é usada. (#770)
+- em aplicativos Java acessíveis, a informação da posição agora é anunciada para botões de opção e outros controles que exibem a informação de grupo.. (#3754)
+- em aplicativos Java acessíveis, as teclas de atalho agora são anunciadas para controles que os possuam. (#3881)
+- No modo de navegação, as etiquetas nas marcas agora são anunciadas. São também incluídas no Diálogo da Lista de Elementos. (#1195)
+- No modo de navegação, as regiões etiquetadas agora são tratadas como marcas. (#3741)
+
+
+ == Correção de falhas ==
+ - O menu sistema padrão do Windows já não é silenciado acidentalmente em aplicativos Java. (#3882)
+  - Ao copiar textos via exploração de tela, as quebras de linha já não são ignoradas. (#3900)
+ - Objetos que constituem-se de espaços em branco sem utilidade já não são anunciados em alguns aplicativos quando o foco muda ou ao usar a navegação de objetos com o modo de revisão simples abilitado. (#3839)
+- Caixas de texto e outros diálogos produzidos pelo NVDA voltam a fazer com que a fala anterior  seja cancelada antes do anúncio do diálogo.
+- No modo de navegação, as etiquetas dos controles tais como links e botões agora são renderizadas corretamente quando a etiqueta tiver sido substituída pelo autor para propósitos de acessibilidade purposes (especificamente, usando aria-label ou aria-labelledby). (#1354)
+
+
 = 2014.1 =
 
 == Novas características ==
