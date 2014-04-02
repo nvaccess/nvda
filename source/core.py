@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #core.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2014 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -17,6 +18,7 @@ comtypes.gen.__path__.append(comInterfaces.__path__[0])
 import comtypesMonkeyPatches
 
 import sys
+import thread
 import nvwave
 import os
 import time
@@ -26,6 +28,9 @@ from logHandler import log
 import addonHandler
 
 PUMP_MAX_DELAY = 10
+
+#: The thread identifier of the main thread.
+mainThreadId = thread.get_ident()
 
 _pump = None
 _isPumpPending = False
@@ -395,8 +400,11 @@ def requestPump():
 	if not _pump or _isPumpPending:
 		return
 	_isPumpPending = True
-	# WX timers can not be run outside the main thread
-	# Therefore Have WX start it in the main thread with a CallAfter
+	if thread.get_ident() == mainThreadId:
+		_pump.Start(PUMP_MAX_DELAY, True)
+		return
+	# This isn't the main thread. wx timers cannot be run outside the main thread.
+	# Therefore, Have wx start it in the main thread with a CallAfter.
 	import wx
 	wx.CallAfter(_pump.Start,PUMP_MAX_DELAY, True)
 
