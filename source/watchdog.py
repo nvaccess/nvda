@@ -15,6 +15,7 @@ import comtypes
 import winUser
 import winKernel
 from logHandler import log
+import core
 
 #settings
 #: How often to check whether the core is alive
@@ -40,7 +41,6 @@ isAttemptingRecovery = False
 
 _coreDeadTimer = windll.kernel32.CreateWaitableTimerW(None, True, None)
 _suspended = False
-_coreThreadID=windll.kernel32.GetCurrentThreadId()
 _watcherThread=None
 
 class CallCancelled(Exception):
@@ -82,14 +82,14 @@ def _watcher():
 				break
 		if log.isEnabledFor(log.DEBUGWARNING) and not _isAlive():
 			log.debugWarning("Trying to recover from freeze, core stack:\n%s"%
-				"".join(traceback.format_stack(sys._current_frames()[_coreThreadID])))
+				"".join(traceback.format_stack(sys._current_frames()[core.mainThreadId])))
 		lastTime=time.time()
 		while not _isAlive():
 			curTime=time.time()
 			if curTime-lastTime>FROZEN_WARNING_TIMEOUT:
 				lastTime=curTime
 				log.warning("Core frozen in stack:\n%s"%
-					"".join(traceback.format_stack(sys._current_frames()[_coreThreadID])))
+					"".join(traceback.format_stack(sys._current_frames()[core.mainThreadId])))
 			# The core is dead, so attempt recovery.
 			isAttemptingRecovery = True
 			_recoverAttempt()
@@ -117,7 +117,7 @@ def _shouldRecoverAfterMinTimeout():
 
 def _recoverAttempt():
 	try:
-		oledll.ole32.CoCancelCall(_coreThreadID,0)
+		oledll.ole32.CoCancelCall(core.mainThreadId,0)
 	except:
 		pass
 	import NVDAHelper
@@ -128,7 +128,6 @@ def _crashHandler(exceptionInfo):
 	# An exception might have been set for this thread.
 	# Clear it so that it doesn't get raised in this function.
 	ctypes.pythonapi.PyThreadState_SetAsyncExc(threading.currentThread().ident, None)
-	import core
 	core.restart()
 	return 1 # EXCEPTION_EXECUTE_HANDLER
 
