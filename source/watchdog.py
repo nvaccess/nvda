@@ -19,6 +19,7 @@ import winKernel
 from logHandler import log
 import NVDAHelper
 import globalVars
+import core
 
 #settings
 #: The minimum time to wait for the core to be alive.
@@ -42,7 +43,6 @@ isAttemptingRecovery = False
 
 _coreDeadTimer = windll.kernel32.CreateWaitableTimerW(None, True, None)
 _suspended = False
-_coreThreadID=windll.kernel32.GetCurrentThreadId()
 _watcherThread=None
 _cancelCallEvent = None
 
@@ -89,7 +89,7 @@ def _watcher():
 			continue
 		if log.isEnabledFor(log.DEBUGWARNING):
 			log.debugWarning("Trying to recover from freeze, core stack:\n%s"%
-				"".join(traceback.format_stack(sys._current_frames()[_coreThreadID])))
+				"".join(traceback.format_stack(sys._current_frames()[core.mainThreadId])))
 		lastTime=time.time()
 		isAttemptingRecovery = True
 		# Cancel calls until the core is alive.
@@ -101,7 +101,7 @@ def _watcher():
 			if curTime-lastTime>FROZEN_WARNING_TIMEOUT:
 				lastTime=curTime
 				log.warning("Core frozen in stack:\n%s"%
-					"".join(traceback.format_stack(sys._current_frames()[_coreThreadID])))
+					"".join(traceback.format_stack(sys._current_frames()[core.mainThreadId])))
 			_recoverAttempt()
 			time.sleep(RECOVER_ATTEMPT_INTERVAL)
 			if _isAlive():
@@ -129,7 +129,7 @@ def _shouldRecoverAfterMinTimeout():
 
 def _recoverAttempt():
 	try:
-		oledll.ole32.CoCancelCall(_coreThreadID,0)
+		oledll.ole32.CoCancelCall(core.mainThreadId,0)
 	except:
 		pass
 
@@ -169,7 +169,6 @@ def _crashHandler(exceptionInfo):
 		log.critical("NVDA crashed! Minidump written to %s" % dumpPath)
 
 	log.info("Restarting due to crash")
-	import core
 	core.restart()
 	return 1 # EXCEPTION_EXECUTE_HANDLER
 
