@@ -535,7 +535,7 @@ NVDA fournit ses propres commandes additionnelles dans quelques applications pou
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
 || Nom | Touche | Description |
-| Basculer l'arrêt de la lecture vocale | control+maj+s | lorsque l'on est dans un diaporama en cour de lecture, cette commande basculera entre la parole pas pour la diaporama et le contenu pour celle-ci. Cela n'affecte que ce que NVDA lira, pas l'affichage à l'écran. |
+| Basculer l'arrêt de la lecture vocale | control+maj+s | lorsque l'on est dans un diaporama en cour de lecture, cette commande basculera entre les notes du commentateur du diaporama et le contenu de celui-ci. Cela n'affecte que ce que NVDA lira, pas l'affichage à l'écran. |
 %kc:endInclude
 
 ++ foobar2000 ++
@@ -1141,7 +1141,7 @@ Appuyer sur Accepter crée le profil et ferme la boîte de dialogue de configura
 
 +++ Activation manuelle +++[ConfigProfileManual]
 Vous pouvez activer manuellement un profil en sélectionnant un profil et en cliquant sur le bouton Activation manuelle.
-Une fois activé, d'autres profils peuvent toujours être activés par des déclencheurs, mais les paramètres dans le profil activé manuellement remplacent eux des profiles activés par ces déclencheurs.
+Une fois activé, d'autres profils peuvent toujours être activés par des déclencheurs, mais les paramètres dans le profil activé manuellement remplacent ceux des profils activés par ces déclencheurs.
 Par exemple, si un profil est déclenché pour l'application actuelle et que l'annonce des liens est activée dans ce profil mais désactivé dans le profil activé manuellement, les liens ne seront pas annoncés.
 Toutefois, si vous avez changé la voix dans le profil déclenchée mais que vous ne l'avez jamais changé dans le profil activé manuellement, la voix du profil déclenchée sera utilisé.
 Tous les paramètres que vous modifier seront sauvegardées dans le profil activé manuellement.
@@ -1509,7 +1509,7 @@ Veuillez consulter la documentation du terminal pour savoir où se trouvent ces 
 %kc:endInclude
 
 ++ HumanWare Séries Brailliant BI/B ++
-Les séries de terminaux Brilliant BI & B de [HumanWare http://www.humanware.com/], incluant le BI 32, BI40 et B 80 sont supportés quand ils sont connectés via USB ou bluetooth.
+Les séries de terminaux Brailliant BI & B de [HumanWare http://www.humanware.com/], incluant le BI 32, BI40 et B 80 sont supportés quand ils sont connectés via USB ou bluetooth.
 S'ils sont connecté en USB, vous devez d'abord installer le pilote USB fourni par le constructeur.
 
 Voici les assignations de touches pour ce terminal sous NVDA.

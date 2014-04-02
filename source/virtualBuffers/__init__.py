@@ -42,23 +42,57 @@ VBufStorage_findDirection_up=2
 VBufRemote_nodeHandle_t=ctypes.c_ulonglong
 
 
-def VBufStorage_findMatch_word(word):
-	return "~w%s" % word
+class VBufStorage_findMatch_word(unicode):
+	pass
+VBufStorage_findMatch_notEmpty = object()
 
-def dictToMultiValueAttribsString(d):
-	mainList=[]
-	for k,v in d.iteritems():
-		k=unicode(k).replace(':','\\:').replace(';','\\;').replace(',','\\,')
-		valList=[]
-		for i in v:
-			if i is None:
-				i=""
+FINDBYATTRIBS_ESCAPE_TABLE = {
+	# Symbols that are escaped in the attributes string.
+	ord(u":"): ur"\\:",
+	ord(u";"): ur"\\;",
+	ord(u"\\"): u"\\\\\\\\",
+}
+# Symbols that must be escaped for a regular expression.
+FINDBYATTRIBS_ESCAPE_TABLE.update({(ord(s), u"\\" + s) for s in u"^$.*+?()[]{}|"})
+def _prepareForFindByAttributes(attribs):
+	escape = lambda text: unicode(text).translate(FINDBYATTRIBS_ESCAPE_TABLE)
+	reqAttrs = []
+	regexp = []
+	if isinstance(attribs, dict):
+		# Single option.
+		attribs = (attribs,)
+	# All options will match against all requested attributes,
+	# so first build the list of requested attributes.
+	for option in attribs:
+		for name in option:
+			reqAttrs.append(unicode(name))
+	# Now build the regular expression.
+	for option in attribs:
+		optRegexp = []
+		for name in reqAttrs:
+			optRegexp.append("%s:" % escape(name))
+			values = option.get(name)
+			if not values:
+				# The value isn't tested for this attribute, so match any (or no) value.
+				optRegexp.append(r"(?:\\;|[^;])*;")
+			elif values[0] is VBufStorage_findMatch_notEmpty:
+				# There must be a value for this attribute.
+				optRegexp.append(r"(?:\\;|[^;])+;")
+			elif values[0] is None:
+				# There must be no value for this attribute.
+				optRegexp.append(r";")
+			elif isinstance(values[0], VBufStorage_findMatch_word):
+				# Assume all are word matches.
+				optRegexp.append(r"(?:\\;|[^;])*\b(?:")
+				optRegexp.append("|".join(escape(val) for val in values))
+				optRegexp.append(r")\b(?:\\;|[^;])*;")
 			else:
-				i=unicode(i).replace(':','\\:').replace(';','\\;').replace(',','\\,')
-			valList.append(i)
-		attrib="%s:%s"%(k,",".join(valList))
-		mainList.append(attrib)
-	return "%s;"%";".join(mainList)
+				# Assume all are exact matches.
+				optRegexp.append("(?:")
+				optRegexp.append("|".join(escape(val) for val in values))
+				optRegexp.append(");")
+		regexp.append("".join(optRegexp))
+	return u" ".join(reqAttrs), u"|".join(regexp)
 
 class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 
@@ -201,6 +235,10 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 				textList.append(self.obj.makeTextInfo(textInfos.offsets.Offsets(start, end)).text)
 			attrs["table-%sheadertext" % axis] = "\n".join(textList)
 
+		if attrs.get("landmark") == "region" and not attrs.get("name"):
+			# We only consider region to be a landmark if it has a name.
+			del attrs["landmark"]
+
 		return attrs
 
 	def _normalizeFormatField(self, attrs):
@@ -233,7 +271,15 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		textList = []
 		landmark = attrs.get("landmark")
 		if formatConfig["reportLandmarks"] and fieldType == "start_addedToControlFieldStack" and landmark:
-			textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
+			try:
+				textList.append(attrs["name"])
+			except KeyError:
+				pass
+			if landmark == "region":
+				# The word landmark is superfluous for regions.
+				textList.append(aria.landmarkRoles[landmark])
+			else:
+				textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
 		textList.append(super(VirtualBufferTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
 		return " ".join(textList)
 
@@ -241,8 +287,16 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		textList = []
 		landmark = field.get("landmark")
 		if formatConfig["reportLandmarks"] and reportStart and landmark and field.get("_startOfNode"):
-			# Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-			textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
+			try:
+				textList.append(field["name"])
+			except KeyError:
+				pass
+			if landmark == "region":
+				# The word landmark is superfluous for regions.
+				textList.append(aria.landmarkRoles[landmark])
+			else:
+				# Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
+				textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
 		text = super(VirtualBufferTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)
 		if text:
 			textList.append(text)
@@ -275,7 +329,7 @@ class ElementsListDialog(wx.Dialog):
 		# in the browse mode Elements List dialog.
 		("landmark", _("Lan&dmarks")),
 	)
-	Element = collections.namedtuple("Element", ("textInfo", "text", "parent"))
+	Element = collections.namedtuple("Element", ("textInfo", "docHandle", "id", "text", "parent"))
 
 	lastSelectedElementType=0
 
@@ -354,11 +408,16 @@ class ElementsListDialog(wx.Dialog):
 
 		parentElements = []
 		for node, start, end in self.vbuf._iterNodesByType(elType):
+			docHandle = ctypes.c_int()
+			id = ctypes.c_int()
+			NVDAHelper.localLib.VBuf_getIdentifierFromControlFieldNode(self.vbuf.VBufHandle, node, ctypes.byref(docHandle), ctypes.byref(id))
+			docHandle = docHandle.value
+			id = id.value
 			elInfo = self.vbuf.makeTextInfo(textInfos.offsets.Offsets(start, end))
 
 			# Find the parent element, if any.
 			for parent in reversed(parentElements):
-				if self.isChildElement(elType, parent.textInfo, elInfo):
+				if self.isChildElement(elType, parent, elInfo, docHandle, id):
 					break
 				else:
 					# We're not a child of this parent, so this parent has no more children and can be removed from the stack.
@@ -368,7 +427,8 @@ class ElementsListDialog(wx.Dialog):
 				# Note that parentElements will be empty at this point, as all parents are no longer relevant and have thus been removed from the stack.
 				parent = None
 
-			element = self.Element(elInfo, self.getElementText(elInfo, elType), parent)
+			element = self.Element(elInfo, docHandle, id,
+				self.getElementText(elInfo, docHandle, id, elType), parent)
 			self._elements.append(element)
 
 			if not self._initialElement and elInfo.compareEndPoints(caret, "startToStart") > 0:
@@ -430,36 +490,39 @@ class ElementsListDialog(wx.Dialog):
 			self.activateButton.Enable()
 		self.moveButton.Enable()
 
-	def _getControlFieldAttrib(self, info, attrib):
+	def _getControlFieldAttribs(self, info, docHandle, id):
 		info = info.copy()
 		info.expand(textInfos.UNIT_CHARACTER)
 		for field in reversed(info.getTextWithFields()):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
 				# Not a control field.
 				continue
-			val = field.field.get(attrib)
-			if val:
-				return val
-		return None
+			attrs = field.field
+			if int(attrs["controlIdentifier_docHandle"]) == docHandle and int(attrs["controlIdentifier_ID"]) == id:
+				return attrs
+		raise LookupError
 
-	def getElementText(self, elInfo, elType):
+	def getElementText(self, elInfo, docHandle, id, elType):
 		if elType == "landmark":
-			landmark = self._getControlFieldAttrib(elInfo, "landmark")
-			if landmark:
-				return aria.landmarkRoles[landmark]
+			attrs = self._getControlFieldAttribs(elInfo, docHandle, id)
+			name = attrs.get("name", "")
+			if name:
+				name += " "
+			return name + aria.landmarkRoles[attrs["landmark"]]
 
 		else:
 			return elInfo.text.strip()
 
-	def isChildElement(self, elType, parent, child):
-		if parent.isOverlapping(child):
+	def isChildElement(self, elType, parent, childInfo, childDoc, childId):
+		if parent.textInfo.isOverlapping(childInfo):
 			return True
 
 		elif elType == "heading":
 			try:
-				if int(self._getControlFieldAttrib(child, "level")) > int(self._getControlFieldAttrib(parent, "level")):
+				if (int(self._getControlFieldAttribs(childInfo, childDoc, childId)["level"])
+						> int(self._getControlFieldAttribs(parent.textInfo, parent.docHandle, parent.id)["level"])):
 					return True
-			except (ValueError, TypeError):
+			except (KeyError, ValueError, TypeError):
 				return False
 
 		return False
@@ -879,7 +942,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		return self._iterNodesByAttribs(attribs, direction, offset)
 
 	def _iterNodesByAttribs(self, attribs, direction="next", offset=-1):
-		attribs=dictToMultiValueAttribsString(attribs)
+		reqAttrs, regexp = _prepareForFindByAttributes(attribs)
 		startOffset=ctypes.c_int()
 		endOffset=ctypes.c_int()
 		if direction=="next":
@@ -893,7 +956,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		while True:
 			try:
 				node=VBufRemote_nodeHandle_t()
-				NVDAHelper.localLib.VBuf_findNodeByAttributes(self.VBufHandle,offset,direction,attribs,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(node))
+				NVDAHelper.localLib.VBuf_findNodeByAttributes(self.VBufHandle,offset,direction,reqAttrs,regexp,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(node))
 			except:
 				return
 			if not node:
@@ -1162,11 +1225,12 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		if not self._hadFirstGainFocus or not focusInfo.isOverlapping(caretInfo):
 			# The virtual buffer caret is not within the focus node.
 			oldPassThrough=self.passThrough
-			if not oldPassThrough:
+			passThrough=self.shouldPassThrough(obj,reason=controlTypes.REASON_FOCUS)
+			if not oldPassThrough and (passThrough or sayAllHandler.isRunning()):
 				# If pass-through is disabled, cancel speech, as a focus change should cause page reading to stop.
 				# This must be done before auto-pass-through occurs, as we want to stop page reading even if pass-through will be automatically enabled by this focus change.
 				speech.cancelSpeech()
-			self.passThrough=self.shouldPassThrough(obj,reason=controlTypes.REASON_FOCUS)
+			self.passThrough=passThrough
 			if not self.passThrough:
 				# We read the info from the buffer instead of the control itself.
 				speech.speakTextInfo(focusInfo,reason=controlTypes.REASON_FOCUS)

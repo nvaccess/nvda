@@ -4,15 +4,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-12-28 15:38+0800\n"
+"POT-Creation-Date: 2014-02-07 18:54+1000\n"
+"PO-Revision-Date: 2014-03-21 09:26+0800\n"
 "Last-Translator: 雪岭冰龙 <vgjh2005@gmail.com>\n"
 "Language-Team: Simplified Chinese translate team <vgjh2005@gmail.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.3\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -84,7 +84,7 @@ msgstr "未知输入法"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
 msgid "{language} - {layout}"
-msgstr "{language} - {layout}"
+msgstr "{layout} - {language}"
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -833,7 +833,7 @@ msgstr "滑块"
 
 #. Translators: Identifies a progress bar such as NvDA update progress.
 msgid "progress bar"
-msgstr "进度蓝"
+msgstr "进度栏"
 
 #. Translators: Identifies a scroll bar.
 msgid "scroll bar"
@@ -1431,6 +1431,15 @@ msgstr "包含长描述"
 msgid "pinned"
 msgstr "已占用"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "有公式"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "有注释"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "未选择"
@@ -1542,6 +1551,7 @@ msgid "Tools"
 msgstr "工具"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "触摸屏"
 
@@ -2092,11 +2102,11 @@ msgstr "无"
 
 #. Translators: A mode where progress bar updates will be spoken.
 msgid "speak progress bar updates"
-msgstr "朗读进度蓝更新"
+msgstr "朗读进度栏更新"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
 msgid "beep for progress bar updates"
-msgstr "用提示音表示进度蓝更新"
+msgstr "用提示音表示进度栏更新"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
 msgid "beep and speak progress bar updates"
@@ -2107,7 +2117,7 @@ msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
 msgstr ""
-"切换进度蓝更新时的提示方式，包括提示音，朗读，朗读并发出提示音和不提示四种模"
+"切换进度栏更新时的提示方式，包括提示音，朗读，朗读并发出提示音和不提示四种模"
 "式。"
 
 #. Translators: presented when the present dynamic changes is toggled.
@@ -2580,7 +2590,7 @@ msgstr "applications"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "num lock"
-msgstr "num lock"
+msgstr "数字键盘"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "print screen"
@@ -2969,10 +2979,6 @@ msgstr "两端对齐"
 msgid "align default"
 msgstr "默认对齐"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "有注释"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "拼写错误"
@@ -3019,6 +3025,82 @@ msgstr "音调(&P)"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "语调(&I)"
+
+msgid "text mode"
+msgstr "文本模式"
+
+msgid "object mode"
+msgstr "对象模式"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "{action}一次"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "{action}两次"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "{action}三次"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "{action}四次"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{numFingers}指{action}"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "轻击"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "轻击后按住"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "按住"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr "向上滑动"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr "向下滑动"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr "向左滑动"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr "向右滑动"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+msgctxt "touch action"
+msgid "hover down"
+msgstr "停住"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr "移动"
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr "抬起"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3187,13 +3269,21 @@ msgstr ""
 "若您觉的 NVDA 很实用，并希望他可以继续发展，请赞助“NV Access”。您可以通过选择"
 "位于 NVDA 主菜单的“捐赠”菜单打开捐赠页面。"
 
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"无法从{path}安装插件。\n"
+"您必须先运行 NVDA 以使插件可以顺利的安装。"
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
-msgstr "{symbol}{description}"
+msgstr "{description}{number}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
 msgid "{number} {candidate}"
-msgstr "{number}{candidate}"
+msgstr "{candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
@@ -3247,6 +3337,14 @@ msgstr "依然没有新消息"
 #. Translators: The description of an NVDA command to view one of the recent messages.
 msgid "Displays one of the recent messages"
 msgstr "显示最近的一个消息"
+
+#. Translators: This Outlook Express message has an attachment
+msgid "has attachment"
+msgstr "包含附件"
+
+#. Translators: this Outlook Express message is flagged
+msgid "flagged"
+msgstr "已标记"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
@@ -3472,10 +3570,6 @@ msgstr "缩略图"
 msgid "Master Thumbnails"
 msgstr "主缩略图"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "正在等待PowerPoint"
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "幻灯片{slideNumber}"
@@ -3508,6 +3602,10 @@ msgstr "没有注释"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "空白幻灯片"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "正在等待PowerPoint"
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -3746,7 +3844,7 @@ msgstr "默认字典(&D)..."
 msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
 "to the list"
-msgstr "默认字典对话框，可以添加和管理默认字典。"
+msgstr "“默认字典”对话框，可以添加和管理默认字典。"
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 msgid "&Voice dictionary..."
@@ -3971,7 +4069,7 @@ msgstr "关于插件...(&A)..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
-msgstr "安装...(&I)"
+msgstr "安装(&I)..."
 
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
@@ -3982,7 +4080,7 @@ msgstr "移除(&R)"
 
 #. Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 msgid "&Get add-ons..."
-msgstr "获取插件...(&G)..."
+msgstr "获取插件(&G)..."
 
 #. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 msgid "Choose Add-on Package File"
@@ -4831,17 +4929,17 @@ msgstr "读出对象描述(&D)"
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
 msgid "Progress &bar output:"
-msgstr "进度蓝更新提示(&B):"
+msgstr "进度栏更新提示(&B):"
 
 #. Translators: This is the name of a combobox in the
 #. object presentation settings dialog.
 msgid "Progress bar output"
-msgstr "进度蓝提示"
+msgstr "进度栏提示"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
-msgstr "读出后台进度蓝"
+msgstr "读出后台进度栏"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -5001,6 +5099,11 @@ msgstr "朗读路标(&D)"
 #. document formatting settings dialog.
 msgid "Report fra&mes"
 msgstr "朗读框架(&M)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "朗读可点击(&C)"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -5266,7 +5369,7 @@ msgstr "无长描述"
 
 #. Translators: the description for the activateLongDescription script on virtualBuffers.
 msgid "Shows the long description at this position if one is found."
-msgstr "显示所指位置的对象的长描述。"
+msgstr "显示所指位置的对象的长描述（如果能找到）。"
 
 #. Translators: the description for the activatePosition script on virtualBuffers.
 msgid "activates the current object in the document"
@@ -5802,10 +5905,6 @@ msgid ""
 "Pressing once will set the current column as the column where row headers "
 "should be found. Pressing twice clears the setting."
 msgstr "按一次将该栏设置为列标题，按两次清除设定。"
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "有公式"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"

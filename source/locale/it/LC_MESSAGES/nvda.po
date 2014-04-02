@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-11-12 12:29+0100\n"
+"POT-Creation-Date: 2014-02-07 18:54+1000\n"
+"PO-Revision-Date: 2014-02-16 09:37+0100\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@juvox.it>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.6.3\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1430,6 +1430,15 @@ msgstr "contiene una descrizione"
 msgid "pinned"
 msgstr "Fisso"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "Con formula"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "Contiene commenti"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "non selezionato"
@@ -1546,6 +1555,7 @@ msgid "Tools"
 msgstr "S&trumenti"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "Touch screen"
 
@@ -3064,10 +3074,6 @@ msgstr "Allineamento giustificato"
 msgid "align default"
 msgstr "Allineamento predefinito"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "Contiene commenti"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "Errore di ortografia"
@@ -3114,6 +3120,82 @@ msgstr "&Tono"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Inflessione"
+
+msgid "text mode"
+msgstr "Modalità testo"
+
+msgid "object mode"
+msgstr "Modalita' oggetti"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "{action} singolo"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "{action} doppio"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "{action} triplo"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "{action} quadruplo"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{action} con {numFingers} dita"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "tap"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "tap prolungato"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "Prolungato"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr "Scorri su"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr "Scorri giù"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr "Scorri a sinistra"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr "Scorri a destra"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+msgctxt "touch action"
+msgid "hover down"
+msgstr "Esplorazione iniziata"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr "Esplorazione"
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr "Esplorazione terminata"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3281,6 +3363,15 @@ msgstr ""
 "continui, considera di effettuare una donazione a NV Access. Puoi farlo "
 "selezionando Fai una donazione dal menu di NVDA."
 
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"Impossibile installare il componente aggiuntivo per NVDA dal percorso "
+"{path}.\n"
+"NVDA deve essere in esecuzione per poter installare componenti aggiuntivi."
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "{symbol} come in {description}"
@@ -3341,6 +3432,14 @@ msgstr "Nessun messaggio"
 #. Translators: The description of an NVDA command to view one of the recent messages.
 msgid "Displays one of the recent messages"
 msgstr "Legge uno dei messaggi recenti"
+
+#. Translators: This Outlook Express message has an attachment
+msgid "has attachment"
+msgstr "Contiene allegati"
+
+#. Translators: this Outlook Express message is flagged
+msgid "flagged"
+msgstr "Contrassegnato"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
@@ -3566,10 +3665,6 @@ msgstr "Miniature"
 msgid "Master Thumbnails"
 msgstr "Miniature principali"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "Attendere elaborazione di Powerpoint..."
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Diapositiva {slideNumber}"
@@ -3603,6 +3698,10 @@ msgstr "Non ci sono note"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "Diapositiva vuota"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "Attendere elaborazione di Powerpoint..."
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -3830,7 +3929,7 @@ msgstr "Configura la lettura degli oggetti"
 
 #. Translators: The label for the menu item to open Browse Mode settings dialog.
 msgid "&Browse mode..."
-msgstr "Modalita' navigazione..."
+msgstr "Modalità navigazione..."
 
 msgid "Change virtual buffers specific settings"
 msgstr "Cambia le impostazioni della modalità navigazione"
@@ -4871,7 +4970,7 @@ msgstr "Coordinate audio quando il mouse si sposta"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "brightness controls audio coordinates volume"
-msgstr "La luminosita' controlla il volume delle coordinate audio "
+msgstr "La luminosità controlla il volume delle coordinate audio"
 
 #. Translators: This is the label for the review cursor settings dialog.
 msgid "Review Cursor Settings"
@@ -5157,6 +5256,11 @@ msgstr "Leggi Sez&ioni"
 #. document formatting settings dialog.
 msgid "Report fra&mes"
 msgstr "Leggi i frame"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "Annuncia se cliccabile"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -5975,10 +6079,6 @@ msgstr ""
 "Una pressione istruisce NVDA a considerare la colonna corrente come "
 "riferimento per le intestazioni riga. La doppia pressione cancellerà tali "
 "impostazioni."
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "Con formula"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"

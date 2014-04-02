@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-11-05 14:59-0300\n"
+"POT-Creation-Date: 2014-02-07 18:54+1000\n"
+"PO-Revision-Date: 2014-03-17 10:48-0300\n"
 "Last-Translator: Cleverson Casarin Uliana <clever92000@yahoo.com.br>\n"
 "Language-Team: Equipe de tradução do NVDA para Português do Brasil "
 "<clever92000@yahoo.com.br>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Poedit-Basepath: e:\\NVDA\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-SearchPath-0: source\n"
@@ -1436,6 +1436,15 @@ msgstr "Tem descrição longa"
 msgid "pinned"
 msgstr "pregado"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "contém fórmula"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "possui comentário"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "não selecionado"
@@ -1553,6 +1562,7 @@ msgid "Tools"
 msgstr "Ferramentas"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "Tela tátil"
 
@@ -3067,10 +3077,6 @@ msgstr "alinhamento justificado"
 msgid "align default"
 msgstr "alinhamento padrão"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "possui comentário"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "erro ortográfico"
@@ -3117,6 +3123,82 @@ msgstr "&tom"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Inflecção"
+
+msgid "text mode"
+msgstr "modo de texto"
+
+msgid "object mode"
+msgstr "modo de objeto"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "{action} único"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "{action} duplo"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "{action} triplo"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "{action} quátruplo"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{action} {numFingers} dedos"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "Tocar  [ touch action ]"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "Tocar e tocar longo  [ touch action ]"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "manter pressionado  [ touch action ]"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr "varredura acima  [ touch action ]"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr "varredura abaixo  [ touch action ]"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr "Varredura esquerda  [ touch action ]"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr "Varredura direita  [ touch action ]"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+msgctxt "touch action"
+msgid "hover down"
+msgstr "Toque longo  [ touch action ]"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr "explorando  [ touch action ]"
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr "Soltar toque longo  [ touch action ]"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3280,6 +3362,14 @@ msgstr ""
 "gentileza uma doação à NV Access; encontra-se para tanto uma opção no menu "
 "do NVDA."
 
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"Não é possível instalar o complemento do NVDA a partir do caminho {path}.\n"
+"Você tem de estar com o NVDA rodando para poder instalar complementos."
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "{symbol} como em {description}"
@@ -3340,6 +3430,14 @@ msgstr "Nenhuma mensagem ainda"
 #. Translators: The description of an NVDA command to view one of the recent messages.
 msgid "Displays one of the recent messages"
 msgstr "Exibe uma mensagem entre as recentes"
+
+#. Translators: This Outlook Express message has an attachment
+msgid "has attachment"
+msgstr "com anexo"
+
+#. Translators: this Outlook Express message is flagged
+msgid "flagged"
+msgstr "sinalizada"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
@@ -3565,10 +3663,6 @@ msgstr "Miniaturas"
 msgid "Master Thumbnails"
 msgstr "Miniaturas mestre"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "Esperando o Powerpoint..."
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Slaid {slideNumber}"
@@ -3602,6 +3696,10 @@ msgstr "Sem notas"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "Slaid vazio"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "Esperando o Powerpoint..."
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -5137,6 +5235,11 @@ msgstr "Anunciar &marcas de seção"
 msgid "Report fra&mes"
 msgstr "Anunciar frei&mes"
 
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "Anunciar quando &clicável"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "Editar entrada"
@@ -5317,7 +5420,7 @@ msgstr "Ler novidades"
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
 msgid "none"
-msgstr "nada"
+msgstr "nenhuma"
 
 #. Translators: This is the name of the rate boost voice toggle
 #. which further increases the speaking rate when enabled.
@@ -5950,10 +6053,6 @@ msgid ""
 msgstr ""
 "Pressionada uma vez, define a coluna atual como aquela onde se devem achar "
 "os cabeçalhos de linha. Pressionada duas vezes, desfaz essa configuração."
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "contém fórmula"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"

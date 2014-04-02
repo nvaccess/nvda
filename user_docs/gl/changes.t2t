@@ -3,6 +3,24 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.2 =
+
+== Novas Características ==
+- Agora é posible o anunciamento da selección do texto nalgúns campos de edición persoalizada onde se utiliza información da pantalla. (#770)
+- En aplicacións  Java accesibles, agora anúnciase a información de posición para botóns de opción e outros controis que expoñan información de grupo. (#3754)
+- En aplicacións Java accesibles, agora anúncianse os atallos de teclado para controis que os teñan. (#3881)
+- No modo navegación, as etiquetas  nos pontos de referencia agora anúncianse. Tamén se inclúen no diálogo Lista de Elementos. (#1195)
+- No modo navegación, as rexións etiquetadas agora trátanse como pontos de referencia. (#3741)
+
+
+== Corrección de Fallos ==
+- O menú estándar de sistema de Windows xa non se silencia accidentalmente en aplicacións Java. (#3882)
+- Cando se copie texto dende a revisión de pantalla, os saltos de liña xa non se ignoran. (#3900)
+- Os obxectos de espazo en branco sen sentido xa non se anuncian nalgunhas aplicacións cando o foco  cambie ou cando se utilice a navegación de obxectos ca revisión simple habilitada. (#3839)
+- Os cadros de mensaxe e outros diálogos producidos polo NVDA causan novamente a cancelación da fala anterior antes de anunciar o diálogo. 
++- No modo navegación, as etiquetas de controis como ligas e botóns agora procésanse correctamente cando a etiqueta se reemplazara polo autor con fins de accesibilidade (específicamente, a utilización de aria-label ou de aria-labelledby). (#1354)
+
+
 = 2014.1 =
 
 == Novas Características ==
@@ -11,11 +29,16 @@ Que hai de Novo no NVDA
 - Agora é posible escoller se o contido nos documentos debería identificarse  como cliqueable, a través dunha nova opción no diálogo Formateado de Documentos. Esta opción está activada por defecto (comportamento anterior). (#3556)
 - Soporte para as pantallas braille conectadas a través do Bluetooth nun computador executando o  Software de Widcomm Bluetooth. (#2418)
 - Cando se edita texto no PowerPoint, agora anúncianse os hipervínculos. (#3416)
+- Cando se estea en aplicacións ARIA ou diálogos na web, agora é posible forzar ó NVDA para que cambie a modo navegación con NVDA+espazo seguindo a navegación de estilos de documento da aplicación ou do diálogo. (#2023)
+- No Outlook Express / Windows Mail / Windows Live Mail, NVDA agora anuncia se unha mensaxe ten un adxunto ou está marcado. (#1594)
+- Ó navegar por táboas en aplicacións Java accesibles, agora anúncianse as coordinadas de fila e columna, incluindo  as cabeceiras de columna e  fila se existen. (#3756)
 
 
 == Cambios ==
 - Para as pantallas braille Papenmeier, eliminouse a orde mover a revisión plana/foco. Os usuarios poden asignar as súas proprias teclas usando o diálogo de Xestos de entrada. (#3652)
 - NVDA agora baséase na versión 11 do Microsoft VC runtime, o que significa que xa non se pode executar en sistemas operativos anteriores ó Windows XP Service Pack 2 ou Windows Server 2003 Service Pack 1.
+- No nível de pontoación Algunha agora falaránse os caracteres asterisco(*) e máis (+). (#3614)
+- Actualizado eSpeak á versión 1.48.04, que inclúe moitas correccións de lingua e corrixe varios problemas. (# 3842, # 3739)
 
 
 == Corrección de Fallos ==
@@ -30,10 +53,41 @@ Que hai de Novo no NVDA
 - NVDA xa non anuncia todas as celdas no Microsoft Excel como subliñadas na súa información de formato. (#3669)
 - Xa non se amosan caracteres sen sentido en documentos de modo navegación como os que se atopan no rango de uso privado do Unicode. Nalgúns casos estos detiñan o amosado de etiquetas máis útiis. (#2963).
 - A composición de entrada para a introducción de caracteres do este asiático xa non falla en PuTTY (#3432)
-
+- ó navegar por un documento despois dunha cancelación de falar todo xa non resulta en que NVDA anuncie ás veces incorrectamente que se abandonou un campo (como unha táboa) máis abaixo no documento no que falar todo nunca estivo falando en realidade (#3688)
+- Cando se utilicen ordes rápidas do modo navegación mentres se estea en falar todo ca lectura superficial activada, NVDA anuncia con máis precisión o novo campo (por exemplo, agora di que unha cabeceira é unha cabeceira, e non só o texto). (#3689)
+- No salto ó final ou ó comezo dun contedor as ordes de navegación rápida agora afectan á opción lectura superficial durante falar todo (é dicir, que xa non cancelarán o falar todo actual). (#3675)
+- Os nomes dos xestos táctiles listados no diálogo Xestos de entrada do NVDA agora son máis amigables e están traducidos. (#3624)
+- NVDA xa non fai que certos programas se bloqueen cando se mova o punteiro do rato sobre os seus controis de edición enriquecidos (TRichEdit). Programas incluíndo Jarte 5.1 e BRfácil. (#3693, #3603, #3581)
+- No Internet Explorer e outros controis MSHTML, os contedores como táboas marcadas como presentación por ARIA xa non se informan ó usuario. (#3713)
+- No Microsoft Word, NVDA xa non repite de xeito inapropriado a fila da táboa e a información da columna dunha celda nunha pantalla braille 
+- En linguas que utilicen  un espazo como un díxito separador de grupos de milleiros  como no  Francés e no Alemán, os números de anacos separados de texto xa non se pronuncian como un so número. Esto era particularmente problemático  para as celdas de táboa que contiñan números. (#3698)
+- O braille xa non falla ás veces ó se actualizar cando se move o cursor do sistema no Microsoft Word 2013. (#3784)
+- Cando se estea posicionado sobre o primeiro carácter dunha cabeceira no Microsoft Word, o texto comunícase como unha cabeceira  (incluindo o nível) e xa non desaparece dunha pantalla braille. (#3701)
+- Cando se dispara un perfil de configuración por unha aplicación e esa aplicación se pecha, NVDA xa non falla ás veces ó desactivar o perfil. (#3732)
+- Cando se escribe ca entrada Asiática nun control dentro do proprio NVDA (ex.: no diálogo Buscar no modo navegación), "NVDA" xa non se anuncia incorrectamente en lugar do candidato. (#3726)
+- Agora anúncianse as pestanas no diálogo Opcións do Outlook 2013. (#3826)
+- Mellorado o soporte  para  rexiones ARIA live en Firefox e outras aplicacións Gecko de Mozilla:
+	- Soporte para actualizacións aria-atomic e filtrado de actualizacións aria-busy (#2640)
+	- Inclúese o texto alternativo (como o atributo alt ou aria-label) se non hai outro texto útil. (#3329)
+	- As actualizacións Live region xa non se silencian se se producen ó mesmo tempo que o desprazamento do foco. (# 3777)
+- Certos elementos de presentación en Firefox e outras aplicacións  Gecko de Mozilla xa non se amosan inapropriadamente en modo navegación (expresamente cando o elemento se marcóu con aria-presentation pero tamén é enfocable). (#3781)
+- Mellora do rendemento ó navegar por un documento en Microsoft Word ca corrección ortográfica activada. (#3785)
+- Varias correccións ó soporte para aplicacións Java accesibles:
+ - O control inicialmente enfocado nun marco ou  diálogo xa non falla ó se anunciar cando o marco ou diálogo pasa a primeiro prano. (#3753)
+ - Xa non se anuncia información de posición inútil para os botóns de opción (por exemplo 1 de 1). (# 3754)
+ - Mellor anunciado dos controis JComboBox (xa non se anuncia html, unha mellor información dos estados expandidos e colapsados). (#3755)
+ - Inclúese máis texto nos cálculos automáticos de título de diálogo. (# 3857)
+ - Os cambios do  nome, valor ou descripción do control enfocado agora anúncianse con maior precisión. (#3770)
+- Arránxase un colgue no NVDA visto en Windows 8 ó se enfocar certos controis RichEdit que conteñen grandes cantidades de texto(por exemplo no Visualizador do rexistro de NVDA, windbg). (#3867)
+- Nos sistemas cunha configuración de pantalla de alta DPI (que se produce de forma predeterminada para moitas pantallas modernas), NVDA xa non leva o rato ó lugar equivocado nalgunhas aplicacións. (#3758, #3703)
+- Arranxouse un problema ocasional ó navegar pola web onde NVDA deixaba de funcionar correctamente ate que se reiniciaba, a pesares de que non se bloqueaba ou se conxelaba. (# 3804)
+- Agora pódeSe utilizar unha pantalla bralle Papenmeier incluso se nunca se conectara a través de USB. (# 3712)
+- NVDA xa non se  colga cando os modelos antigos das pantallas braille Papenmeier BRAILLEX se seleccionan sen unha pantalla conectada.
 
 == Cambios para Desenvolvedores ==
 - Os AppModules agora conteñen as propriedades productName e productVersion. Esta información tamén se inclúe agora na Información do desenvolvedor (NVDA+f1). (#1625)
+- Na consola de Python, agora podes premer  a tecla tab para completar o identificador actual. (#433)
+ - Se hai varias posibilidades, podes premer o tabulador por segunda vez para escoller de entre unha lista.
 
 
 = 2013.3 =

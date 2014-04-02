@@ -109,10 +109,10 @@ int VBufRemote_getIdentifierFromControlFieldNode(VBufRemote_bufferHandle_t buffe
 	return res;
 }
 
-int VBufRemote_findNodeByAttributes(VBufRemote_bufferHandle_t buffer, int offset, int direction, const wchar_t* attribsString, int *startOffset, int *endOffset, VBufRemote_nodeHandle_t* foundNode) { 
+int VBufRemote_findNodeByAttributes(VBufRemote_bufferHandle_t buffer, int offset, int direction, const wchar_t* attribs, const wchar_t* regexp, int *startOffset, int *endOffset, VBufRemote_nodeHandle_t* foundNode) { 
 	VBufBackend_t* backend=(VBufBackend_t*)buffer;
 	backend->lock.acquire();
-	*foundNode=(VBufRemote_nodeHandle_t)(backend->findNodeByAttributes(offset,(VBufStorage_findDirection_t)direction,attribsString,startOffset,endOffset));
+	*foundNode=(VBufRemote_nodeHandle_t)(backend->findNodeByAttributes(offset,(VBufStorage_findDirection_t)direction,attribs,regexp,startOffset,endOffset));
 	backend->lock.release();
 	return (*foundNode)!=0;
 }

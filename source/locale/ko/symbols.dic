@@ -53,8 +53,8 @@ $	달러	all	norep
 '	어퍼스트로피	all
 (	괄호열기	most
 )	괄호닫기	most
-*	star	most
-+	plus	most
+*	star	some
++	plus	some
 ,	콤마	all	always
 -	다시	most
 .	점	some
@@ -63,7 +63,7 @@ $	달러	all	norep
 ;	세미콜런	most
 <	less	most
 >	greater	most
-=	등호	most
+=	등호	some
 ?	물음표	all
 @	골뱅이	some
 [	대괄호열기	most
@@ -93,6 +93,7 @@ _	언더바	most
 ■	black square	some
 ‎	left to right mark	char
 ‏	right to left mark	char
+←	left arrow	some
 ➔	right arrow	some
 §	section	all
 °	degrees	some
@@ -108,6 +109,7 @@ _	언더바	most
 ±	Plus or Minus	most
 ×	times	most
 ÷	divide by	most
+←	left arrow	some
 →	right arrow	some
 ✓	check	some
 ✔	check	some

@@ -26,6 +26,7 @@ import config
 
 #Window messages
 LVM_FIRST=0x1000
+LVM_GETITEMW=LVM_FIRST+75
 LVM_GETITEMSTATE=LVM_FIRST+44
 LVM_GETFOCUSEDGROUP=LVM_FIRST+93
 LVM_GETITEMCOUNT=LVM_FIRST+4
@@ -330,6 +331,23 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 
 	def _getColumnContent(self, column):
 		return self._getColumnContentRaw(self.parent._columnOrderArray[column - 1])
+
+	def _getColumnImageIDRaw(self, index):
+		processHandle=self.processHandle
+		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(self.LVITEM),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		try:
+			item=self.LVITEM(iItem=self.IAccessibleChildID-1,mask=LVIF_IMAGE|LVIF_COLUMNS,iSubItem=index)
+			winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)
+			item.mask=LVIF_IMAGE|LVIF_COLUMNS
+			winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)
+			watchdog.cancellableSendMessage(self.windowHandle,LVM_GETITEMW, 0, internalItem)
+			winKernel.readProcessMemory(processHandle,internalItem,byref(item),sizeof(item),None)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalItem,0,winKernel.MEM_RELEASE)
+		return item.iImage
+
+	def _getColumnImageID(self, column):
+		return self._getColumnImageIDRaw(self.parent._columnOrderArray[column - 1])
 
 	def _getColumnHeaderRaw(self,index):
 		buffer=None

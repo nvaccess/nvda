@@ -634,7 +634,7 @@ def processFocusWinEvent(window,objectID,childID,force=False):
 	#Notify appModuleHandler of this new foreground window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	#If Java access bridge is running, and this is a java window, then pass it to java and forget about it
-	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
+	if childID==0 and objectID==winUser.OBJID_CLIENT and JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		JABHandler.event_enterJavaWindow(window)
 		return True
 	#Convert the win event to an NVDA event

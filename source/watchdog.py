@@ -5,16 +5,19 @@
 #See the file COPYING for more details.
 
 import sys
+import os
 import traceback
 import time
 import threading
 import inspect
 from ctypes import windll, oledll
 import ctypes.wintypes
+import msvcrt
 import comtypes
 import winUser
 import winKernel
 from logHandler import log
+import globalVars
 import core
 
 #settings
@@ -123,11 +126,42 @@ def _recoverAttempt():
 	import NVDAHelper
 	NVDAHelper.localLib.cancelSendMessage()
 
+class MINIDUMP_EXCEPTION_INFORMATION(ctypes.Structure):
+	_fields_ = (
+		("ThreadId", ctypes.wintypes.DWORD),
+		("ExceptionPointers", ctypes.c_void_p),
+		("ClientPointers", ctypes.wintypes.BOOL),
+	)
+
 @ctypes.WINFUNCTYPE(ctypes.wintypes.LONG, ctypes.c_void_p)
 def _crashHandler(exceptionInfo):
+	threadId = ctypes.windll.kernel32.GetCurrentThreadId()
 	# An exception might have been set for this thread.
 	# Clear it so that it doesn't get raised in this function.
-	ctypes.pythonapi.PyThreadState_SetAsyncExc(threading.currentThread().ident, None)
+	ctypes.pythonapi.PyThreadState_SetAsyncExc(threadId, None)
+
+	# Write a minidump.
+	dumpPath = os.path.abspath(os.path.join(globalVars.appArgs.logFileName, "..", "nvda_crash.dmp"))
+	try:
+		with file(dumpPath, "w") as mdf:
+			mdExc = MINIDUMP_EXCEPTION_INFORMATION(ThreadId=threadId,
+				ExceptionPointers=exceptionInfo, ClientPointers=False)
+			if not ctypes.windll.DbgHelp.MiniDumpWriteDump(
+				ctypes.windll.kernel32.GetCurrentProcess(),
+				os.getpid(),
+				msvcrt.get_osfhandle(mdf.fileno()),
+				0, # MiniDumpNormal
+				ctypes.byref(mdExc),
+				None,
+				None
+			):
+				raise ctypes.WinError()
+	except:
+		log.critical("NVDA crashed! Error writing minidump", exc_info=True)
+	else:
+		log.critical("NVDA crashed! Minidump written to %s" % dumpPath)
+
+	log.info("Restarting due to crash")
 	core.restart()
 	return 1 # EXCEPTION_EXECUTE_HANDLER
 

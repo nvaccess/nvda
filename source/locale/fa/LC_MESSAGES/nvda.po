@@ -1,11 +1,9 @@
-# This file is distributed under the same license as the NVDA package.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-12-27 12:04+0330\n"
+"POT-Creation-Date: 2014-02-07 18:54+1000\n"
+"PO-Revision-Date: 2014-02-11 22:33+0330\n"
 "Last-Translator: ali aslani\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1377,7 +1375,7 @@ msgstr "پرکن خودکار دارد"
 
 #. Translators: This is presented when an edit field allows typing multiple lines of text such as comment fields on websites.
 msgid "multi line"
-msgstr "چند خط"
+msgstr "چند خطی"
 
 msgid "iconified"
 msgstr "نشاندار است"
@@ -1432,6 +1430,15 @@ msgstr "آشکارگویه‌ی دراز دارد"
 msgid "pinned"
 msgstr "سنجاق شد"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "فرمول دارد"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "دارای آشکارگویه است"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "گزیده نشده"
@@ -1465,7 +1472,7 @@ msgstr "کژی در پرونده‌ی نشان‌های ویژه"
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
-msgstr "ان‌وی‌دی‌ای دارد بارگذاری می‌شود. خواهش است درنگ کنید!"
+msgstr "NVDA دارد بارگذاری می‌شود. خواهش است درنگ کنید!"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -1545,6 +1552,7 @@ msgid "Tools"
 msgstr "ابزار"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "برگه‌ی انگشت‌کشه"
 
@@ -2035,10 +2043,10 @@ msgid ""
 "will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
-"گونه‌ی گزارش ان‌وی‌دی‌ای را میان خاموش و بیپ و سخنگو٬ جایگردان می‌کند. اگر در "
-"گونه‌ی خاموش باشد٬ ان‌وی‌دی‌ای هیچ سخن نخواهد گفت. اگر در گونه‌ی بیپ باشد٬ هر جا "
-"که می‌بایست ان‌وی‌دی‌ای سخن بگوید٬ به جای سخن گفتن٬ بیپ می‌زند. اگر در گونه‌ی "
-"سخنگو باشد٬ ان‌وی‌دی‌ای به مانند پیش٬ با سخن گفتن می‌خواند."
+"گونه‌ی گزارش NVDA را میان خاموش و بیپ و سخنگو٬ جایگردان می‌کند. اگر در گونه‌ی "
+"خاموش باشد٬ NVDA هیچ سخن نخواهد گفت. اگر در گونه‌ی بیپ باشد٬ هر جا که می‌بایست "
+"NVDA سخن بگوید٬ به جای سخن گفتن٬ بیپ می‌زند. اگر در گونه‌ی سخنگو باشد٬ NVDA به "
+"مانند پیش٬ با سخن گفتن می‌خواند."
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
@@ -2062,7 +2070,7 @@ msgstr "ان وی دی ای را خاموش میکند!"
 
 #. Translators: Input help mode message for show NVDA menu command.
 msgid "Shows the NVDA menu"
-msgstr "دستورواره‌ی ان‌وی‌دی‌ای را نشان میدهد"
+msgstr "دستورواره‌ی NVDA را نشان میدهد"
 
 #. Translators: Input help mode message for say all in review cursor command.
 msgid ""
@@ -2238,15 +2246,15 @@ msgstr ""
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
 msgid "Pass next key through"
-msgstr "کلید فشار داده شده را بی‌هیچ کاری از ان‌وی‌دی‌ای می‌گذراند"
+msgstr "کلید فشار داده شده را بی‌هیچ کاری از NVDA می‌گذراند"
 
 #. Translators: Input help mode message for pass next key through command.
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
 msgstr ""
-"کلیدی که پس از این فشار داده شود٬ برای یک بار ان‌وی‌دی‌ای هیچ گونه با آن کاری "
-"ندارد و آن کلید فشرده شده را برای ویندوز می‌گذراند."
+"کلیدی که پس از این فشار داده شود٬ برای یک بار NVDA هیچ گونه با آن کاری ندارد "
+"و آن کلید فشرده شده را برای ویندوز می‌گذراند."
 
 #. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
@@ -2272,41 +2280,40 @@ msgstr ""
 
 #. Translators: Input help mode message for go to general settings dialog command.
 msgid "Shows the NVDA general settings dialog"
-msgstr "پنجره‌ی گفتگوی پیرامون با سامان‌دهی همگانی ان‌وی‌دی‌ای را نشان می‌دهد"
+msgstr "پنجره‌ی گفتگوی پیرامون با سامان‌دهی همگانی NVDA را نشان می‌دهد"
 
 #. Translators: Input help mode message for go to synthesizer dialog command.
 msgid "Shows the NVDA synthesizer dialog"
-msgstr "پنجره‌ی گفتگوی گزینش نوشتار به صدای ان‌وی‌دی‌ای را نشان می‌دهد"
+msgstr "پنجره‌ی گفتگوی گزینش نوشتار به صدای NVDA را نشان می‌دهد"
 
 #. Translators: Input help mode message for go to voice settings dialog command.
 msgid "Shows the NVDA voice settings dialog"
-msgstr "پنجره‌ی گفتگوی سامان‌دهی به صدا در ان‌وی‌دی‌ای را نشان می‌دهد"
+msgstr "پنجره‌ی گفتگوی سامان‌دهی به صدا در NVDA را نشان می‌دهد"
 
 #. Translators: Input help mode message for go to keyboard settings dialog command.
 msgid "Shows the NVDA keyboard settings dialog"
-msgstr "پنجره‌ی گفتگوی سامان‌دهی به تخته‌کلید در ان‌وی‌دی‌ای را نشان می‌دهد"
+msgstr "پنجره‌ی گفتگوی سامان‌دهی به تخته‌کلید در NVDA را نشان می‌دهد"
 
 #. Translators: Input help mode message for go to mouse settings dialog command.
 msgid "Shows the NVDA mouse settings dialog"
-msgstr "پنجره‌ی گفتگوی سامان‌دهی به موشواره در ان‌وی‌دی‌ای را نشان می‌دهد"
+msgstr "پنجره‌ی گفتگوی سامان‌دهی به موشواره در NVDA را نشان می‌دهد"
 
 #. Translators: Input help mode message for go to object presentation dialog command.
 msgid "Shows the NVDA object presentation settings dialog"
-msgstr "پنجره‌ی گفتگوی سامان‌دهی به نمایان‌سازی چیزها در ان‌وی‌دی‌ای را نشان می‌دهد"
+msgstr "پنجره‌ی گفتگوی سامان‌دهی به نمایان‌سازی چیزها در NVDA را نشان می‌دهد"
 
 #. Translators: Input help mode message for go to browse mode dialog command.
 msgid "Shows the NVDA browse mode settings dialog"
-msgstr "پنجره‌ی گفتگوی سامان‌دهی به گشتار خواندنی ان‌وی‌دی‌ای را نشان می‌دهد"
+msgstr "پنجره‌ی گفتگوی سامان‌دهی به گشتار خواندنی NVDA را نشان می‌دهد"
 
 #. Translators: Input help mode message for go to document formatting dialog command.
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr ""
-"پنجره‌ی گفتگوی سامان‌دهی به ریخت دادن به رسانه‌های نوشتاری ان‌وی‌دی‌ای را نشان "
-"می‌دهد"
+"پنجره‌ی گفتگوی سامان‌دهی به ریخت دادن به رسانه‌های نوشتاری NVDA را نشان می‌دهد"
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
-msgstr "پیکره‌بندی کنونی ان‌وی‌دی‌ای را می‌سپارد"
+msgstr "پیکره‌بندی کنونی NVDA را می‌سپارد"
 
 #. Translators: Input help mode message for apply last saved or default settings command.
 msgid ""
@@ -2320,8 +2327,8 @@ msgstr ""
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr ""
-"میز فرمان پایتون برای ان‌وی‌دی‌ای که بیشتر به کار پیشرفت دادن به برنامه می‌آید "
-"را پیش رو می‌آورد"
+"میز فرمان پایتون برای NVDA که بیشتر به کار پیشرفت دادن به برنامه می‌آید را "
+"پیش رو می‌آورد"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
@@ -2425,8 +2432,8 @@ msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
 "Useful for developers"
 msgstr ""
-"بخش‌های ویژه‌ی سامان‌دهی ان‌وی‌دی‌ای و افزونه‌های همگانی را بی‌آن که ان‌وی‌دی‌ای بخواهد "
-"تا راه‌اندازی دوباره شود٬ از نو بارگذاری می‌کند که می‌تواند برای پیشرفت‌دهندگان٬ "
+"بخش‌های ویژه‌ی سامان‌دهی NVDA و افزونه‌های همگانی را بی‌آن که NVDA بخواهد تا "
+"راه‌اندازی دوباره شود٬ از نو بارگذاری می‌کند که می‌تواند برای پیشرفت‌دهندگان٬ "
 "سودمند باشد"
 
 #. Translators: a message when there is no next object when navigating
@@ -2468,7 +2475,7 @@ msgstr ""
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
-msgstr "پنجره‌ی گفتگوی پیرامون دسته‌های سامان‌دهی ان‌وی‌دی‌ای را نشان می‌دهد"
+msgstr "پنجره‌ی گفتگوی پیرامون دسته‌های سامان‌دهی NVDA را نشان می‌دهد"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -2484,15 +2491,15 @@ msgstr "نمود گشتاری"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
-msgstr "تارنمای ان‌وی‌دی‌ای"
+msgstr "تارنمای NVDA"
 
 #. Translators: A label for a shortcut item in start menu to uninstall NVDA from the computer.
 msgid "Uninstall NVDA"
-msgstr "پاک کردن ان‌وی‌دی‌ای"
+msgstr "پاک کردن NVDA"
 
 #. Translators: A label for a shortcut item in start menu to open current user's NVDA configuration directory.
 msgid "Explore NVDA user configuration directory"
-msgstr "باز کردن پوشه‌ی پیکره‌بندی کاربر برای ان‌وی‌دی‌ای"
+msgstr "باز کردن پوشه‌ی پیکره‌بندی کاربر برای NVDA"
 
 #. Translators: The label of the NVDA Documentation menu in the Start Menu.
 msgid "Documentation"
@@ -2500,7 +2507,7 @@ msgstr "راهنما"
 
 #. Translators: The label of the Start Menu item to open the Commands Quick Reference document.
 msgid "Commands Quick Reference"
-msgstr "فهرست تند‌یاب از کلیدهای فرمان در ان‌وی‌دی‌ای"
+msgstr "فهرست تند‌یاب از کلیدهای فرمان در NVDA"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
 msgid "User Guide"
@@ -2508,7 +2515,7 @@ msgstr "راهنمای کاربری"
 
 #. Translators: A file extension label for NVDA add-on package.
 msgid "NVDA add-on package"
-msgstr "بسته‌ی افزونه‌ی ان‌وی‌دی‌ای"
+msgstr "بسته‌ی افزونه‌ی NVDA"
 
 #. Translators: This is the name of the back key found on multimedia keyboards for controlling the web-browser.
 msgid "back"
@@ -2840,8 +2847,8 @@ msgid ""
 "Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
 "screens."
 msgstr ""
-"راه افتادن ان‌وی‌دی‌ای در برگه‌ی درون شدن به ویندوز و دیگر برگه‌نمایش‌های قفل شده "
-"را کارا می‌کند"
+"راه افتادن NVDA در برگه‌ی درون شدن به ویندوز و دیگر برگه‌نمایش‌های قفل شده را "
+"کارا می‌کند"
 
 msgid "Type help(object) to get help about object."
 msgstr "واژگروه help(object) را برای دریافت کمک پیرامون یک چیز بنویسید"
@@ -2850,7 +2857,7 @@ msgid "Type exit() to exit the console"
 msgstr "برای بیرون رفتن از میز فرمان٬ exit() را بنویسید"
 
 msgid "NVDA Python Console"
-msgstr "میز فرمان پایتون برای ان‌وی‌دی‌ای"
+msgstr "میز فرمان پایتون برای NVDA"
 
 #. Translators: One of the review modes.
 msgid "Object review"
@@ -3055,10 +3062,6 @@ msgstr "دوسو طراز"
 msgid "align default"
 msgstr "پیش‌نمودچین"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "دارای آشکارگویه است"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "نادرستی نوشتاری"
@@ -3076,7 +3079,7 @@ msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "جدولی با {columnCount} ستون و {rowCount} ردیف"
 
 msgid "NVDA Speech Viewer"
-msgstr "سخن‌نمای ان‌وی‌دی‌ای"
+msgstr "سخن‌نمای NVDA"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -3106,6 +3109,82 @@ msgstr "&زیر و بمی صدا"
 msgid "&Inflection"
 msgstr "زیر و بر شدن زیر و بمی صدا"
 
+msgid "text mode"
+msgstr "گونه‌ی نوشتاری"
+
+msgid "object mode"
+msgstr "گونه بر پایه‌ی چیزها"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "{action} تنها"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "{action} دوتایی"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "{action} سه‌باره"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "چهارباره (کار بر روی انگشت‌کشه)"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{numFingers} انگشت {action}"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "گوبیدن"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "گوبیدن و فرونگه‌داشتن"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "فرونگه‌داشتن"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr "گردان بالا"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr "گردان پایین"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr "گردان چپ کردن"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr "گردان راست کردن"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+msgctxt "touch action"
+msgid "hover down"
+msgstr "گردش به سوی پایین کردن"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr "گردش کردن"
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr "گردش به سوی بالا"
+
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
 msgstr "جستجو برای روزامد"
@@ -3126,12 +3205,12 @@ msgstr "کژی"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
 msgid "NVDA Update"
-msgstr "روزامد کردن ان‌وی‌دی‌ای"
+msgstr "روزامد کردن NVDA"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
 msgid "NVDA version {version} is available."
-msgstr "نگارش {version} از ان‌وی‌دی‌ای در دسترس است"
+msgstr "نگارش {version} از NVDA در دسترس است"
 
 #. Translators: A message indicating that no update to NVDA is available.
 msgid "No update available."
@@ -3190,13 +3269,13 @@ msgid ""
 "develops NVDA.\n"
 "Thank you for your support."
 msgstr ""
-"ما برای پیشرفت دادن به ان‌وی‌دی‌ای٬ به یاری شما نیازمندیم.\n"
+"ما برای پیشرفت دادن به NVDA٬ به یاری شما نیازمندیم.\n"
 "این بسته‌ی کاری نخست پشتگرم به کمک‌های پولی و بخشش‌های شما می‌باشد. شما با کمک "
 "پولی کاری می‌کنید که ما بتوانیم با پول دادن٬ پشتیبانی فنی تمام‌وقت را برای "
-"پیشرفت ان‌وی‌دی‌ای داشته باشیم.\n"
+"پیشرفت NVDA داشته باشیم.\n"
 "همانا با ده دلار برای هر بارگیری هم اگر داده شود٬ ما هزینه برای پیش‌برد کار "
 "را خواهیم داشت.\n"
-"هر کمک پولی‌ای به دست سازمان غیر دولتی NV Access که بنیان‌گزار ان‌وی‌دی‌ای است٬ "
+"هر کمک پولی‌ای به دست سازمان غیر دولتی NV Access که بنیان‌گزار NVDA است٬ "
 "می‌رسد.\n"
 "سپاس از پشتیبانی شما!"
 
@@ -3226,7 +3305,7 @@ msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "نرم‌افزاری نوشتار باز و آزاد برای سامانه‌ی کارگر مایکروسافت ویندوز"
 
 msgid "Copyright (C) {years} NVDA Contributors"
-msgstr "حق روگرفت (C) {years} هم‌یاران ان‌وی‌دی‌ای"
+msgstr "حق روگرفت (C) {years} هم‌یاران NVDA"
 
 msgid ""
 "{longName} ({name})\n"
@@ -3259,8 +3338,8 @@ msgstr ""
 "دگرگونی‌ای خواستید و هر جور خواستید می‌توانید آن را در دسترس دیگران بگذارید تا "
 "هنگامی که حق روگرفت بنیانگذاران را نگه داشته باشید. نوشتار و کد برنامه نیز "
 "در دسترس هر کس که بخواهد می‌باشد. این شرط قراردادی٬ به هر نرم‌افزاری که از "
-"دگرگون شدن ان‌وی‌دی‌ای به دست آمده باشد و یا پیامد هر کاری بر پایه‌ی این "
-"نرم‌افزار باشد٬ اعمال می‌گردد.\n"
+"دگرگون شدن NVDA به دست آمده باشد و یا پیامد هر کاری بر پایه‌ی این نرم‌افزار "
+"باشد٬ اعمال می‌گردد.\n"
 "برای دانستن بیشتر پیرامون مقررات پیرامون حق بهره‌برداری از این نرم‌افزار٬ به "
 "بخش حق بهره‌برداری در دستور راهنما بروید.\n"
 "هم‌چنین می‌توانید به این نشانی در اینترنت بروید: http://www.gnu.org/licenses/"
@@ -3268,9 +3347,18 @@ msgstr ""
 "\n"
 "{name} به دست سازمان غیر دولتی NV Access فراوری شده است که برای فراوری "
 "راهکارهای آزاد و رایگان برای نابینایان و کم‌بینایان دست به کار شده است.\n"
-"اگر ان‌وی‌دی‌ای را سودمند می‌دانید و می‌خواهید تا پیشرفتش پایدار باشد٬ به سازمان "
-"NV Access ٬ کمک پولی کنید. شما می‌توانید این کار را با گزیدن گزینه‌ی «کمک "
-"پولی» از دستورواره‌ی پایه‌ای ان‌وی‌دی‌ای٬ انجام دهید."
+"اگر NVDA را سودمند می‌دانید و می‌خواهید تا پیشرفتش پایدار باشد٬ به سازمان NV "
+"Access ٬ کمک پولی کنید. شما می‌توانید این کار را با گزیدن گزینه‌ی «کمک پولی» "
+"از دستورواره‌ی پایه‌ای NVDA٬ انجام دهید."
+
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"افزونه‌ی NVDA نمی‌تواند از {path} ریخته شود.\n"
+"برای آن که بتوانید افزونه‌ها را بر روی NVDA بریزید٬ باید NVDA را به راه "
+"انداخته باشید."
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
@@ -3332,6 +3420,14 @@ msgstr "هنوز پیامی نیست"
 #. Translators: The description of an NVDA command to view one of the recent messages.
 msgid "Displays one of the recent messages"
 msgstr "یکی از پیامهای واپسین را نشان میدهد"
+
+#. Translators: This Outlook Express message has an attachment
+msgid "has attachment"
+msgstr "دارای پیوست است"
+
+#. Translators: this Outlook Express message is flagged
+msgid "flagged"
+msgstr "پرچم‌دار"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
@@ -3557,10 +3653,6 @@ msgstr "بند انگشتی‌ها"
 msgid "Master Thumbnails"
 msgstr "Master Thumbnails"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "ایستاده برای پاورپوینت"
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "اسلاید {slideNumber}"
@@ -3572,7 +3664,7 @@ msgid ""
 "read with NVDA"
 msgstr ""
 "میان یادداشت‌های سخنگو و اندرونه‌ی اسلاید٬ جایگردان می‌کند. این آن چه که در "
-"برگه‌ی نمایش نشان داده می‌شود را دگرگون نمی‌کند؛ و تنها آن چه که با ان‌وی‌دی‌ای "
+"برگه‌ی نمایش نشان داده می‌شود را دگرگون نمی‌کند؛ و تنها آن چه که با NVDA "
 "می‌تواند خوانده شود را دگرگون می‌کند"
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
@@ -3594,6 +3686,10 @@ msgstr "یادداشتی نیست"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "اسلاید تهی"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "ایستاده برای پاورپوینت"
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -3710,8 +3806,8 @@ msgstr "پیکره‌بندی به گونه‌ی کارخانه‌ای بازگ�
 #. Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
 msgid "Cannot save configuration - NVDA in secure mode"
 msgstr ""
-"نمی‌تواند سامان‌دهی‌ها را هنگامی که ان‌وی‌دی‌ای به گونه‌ی پاس‌داشته شده کار می‌کند٬ "
-"سپارش کند"
+"نمی‌تواند سامان‌دهی‌ها را هنگامی که NVDA به گونه‌ی پاس‌داشته شده کار می‌کند٬ سپارش "
+"کند"
 
 #. Translators: Reported when current configuration has been saved.
 msgid "Configuration saved"
@@ -3726,8 +3822,8 @@ msgstr ""
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
 msgstr ""
-"پنجره‌ی گفتگوی سامان‌دهی‌ای از ان‌وی‌دی‌ای از پیش٬ باز شده است. خواهش است نخست آن "
-"را ببندید!"
+"پنجره‌ی گفتگوی سامان‌دهی‌ای از NVDA از پیش٬ باز شده است. خواهش است نخست آن را "
+"ببندید!"
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -3744,14 +3840,14 @@ msgstr "فرهنگ واژگان گذرا"
 
 #. Translators: Message shown to ask if user really wishes to quit NVDA.
 msgid "Are you sure you want to quit NVDA?"
-msgstr "آیا می‌خواهید ان‌وی‌دی‌ای را خاموش کنید؟"
+msgstr "آیا می‌خواهید NVDA را خاموش کنید؟"
 
 msgid "Exit NVDA"
-msgstr "خاموش کردن ان‌وی‌دی‌ای"
+msgstr "خاموش کردن NVDA"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
-msgstr "در باره‌ی ان‌وی‌دی‌ای"
+msgstr "در باره‌ی NVDA"
 
 #. Translators: The label for the menu item to open general Settings dialog.
 msgid "&General settings..."
@@ -3809,8 +3905,8 @@ msgid ""
 "Configure how NVDA reports input composition and candidate selection for "
 "certain languages"
 msgstr ""
-"پیکره‌بندی کردن چگونگی گزارش ان‌وی‌دی‌ای از درون کردن واج‌ها و گزیدن نمادها و "
-"واج‌های ویژه برای زبان‌های ویژه"
+"پیکره‌بندی کردن چگونگی گزارش NVDA از درون کردن واج‌ها و گزیدن نمادها و واج‌های "
+"ویژه برای زبان‌های ویژه"
 
 #. Translators: The label for the menu item to open Object Presentation dialog.
 msgid "&Object presentation..."
@@ -3904,7 +4000,7 @@ msgstr "ساختن روگرفت جا‌به‌جا شدنی..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
-msgstr "ریختن ان‌وی‌دی‌ای در سامانه‌ی کارگر..."
+msgstr "ریختن NVDA در سامانه‌ی کارگر..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
@@ -3919,7 +4015,7 @@ msgid "What's &new"
 msgstr "چه چیزی نو است"
 
 msgid "NVDA &web site"
-msgstr "تارنمای ان‌وی‌دی‌ای"
+msgstr "تارنمای NVDA"
 
 #. Translators: The label for the menu item to view NVDA License document.
 msgid "L&icense"
@@ -3989,19 +4085,19 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"به ان‌وی‌دی‌ای خوش آمدید!\n"
-"بیشتر کلید‌های فرمان در ان‌وی‌دی‌ای به گونه ای است که باید کلید ان‌وی‌دی‌ای را "
-"پایین نگهداشته و کلید یا کلیدهای دیگری را نیز به همراه٬ فشار بدهید.\n"
+"به NVDA خوش آمدید!\n"
+"بیشتر کلید‌های فرمان در NVDA به گونه ای است که باید کلید NVDA را پایین "
+"نگهداشته و کلید یا کلیدهای دیگری را نیز به همراه٬ فشار بدهید.\n"
 "به گونه‌ی پیش‌نمود٬ هردو کلید insert چه در بخش ماشین حسابی و چه روی بخش الفبای "
-"تخته‌کلید٬ کلیدهای ان‌وی‌دی‌هستند.\n"
-"هم‌چنین می‌توانید کلید CapsLock را کلید ان‌وی‌دی‌ای کنید\n"
-"کلید ان‌وی‌دی‌ای +n برای کارا کردن دستورواره‌ی پایه‌ای آن٬ فشار دهید.\n"
-"از این دستورواره می‌توانید ان‌وی‌دی‌ای را سامان داده و از کارکردهای آن بهره "
-"بگیرید و به راهنمای بهره‌گیری از آن٬ دست یابید.\n"
+"تخته‌کلید٬ کلیدهای NVDA هستند.\n"
+"هم‌چنین می‌توانید کلید CapsLock را کلید NVDA کنید\n"
+"کلید NVDA +n برای کارا کردن دستورواره‌ی پایه‌ای آن٬ فشار دهید.\n"
+"از این دستورواره می‌توانید NVDA را سامان داده و از کارکردهای آن بهره بگیرید و "
+"به راهنمای بهره‌گیری از آن٬ دست یابید.\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
-msgstr "به ان‌وی‌دی‌ای خوش آمدید!"
+msgstr "به NVDA خوش آمدید!"
 
 msgid "Options"
 msgstr "گزینه ها"
@@ -4009,18 +4105,18 @@ msgstr "گزینه ها"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use CapsLock as an NVDA modifier key"
-msgstr "کلید Capslock را کلید ان‌وی‌دی‌ای کردن"
+msgstr "کلید Capslock را کلید NVDA کردن"
 
 #. Translators: The label of a check box in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr ""
-"آغاز به کار کردن ان‌وی‌دی‌ای پس از درون شدن من با شناسه‌ی کاربریم در ویندوز به "
-"گونه‌ی خودکار"
+"آغاز به کار کردن NVDA پس از درون شدن من با شناسه‌ی کاربریم در ویندوز به گونه‌ی "
+"خودکار"
 
 #. Translators: This is a label for a checkbox in welcome dialog to show welcome dialog at startup.
 msgid "Show this dialog when NVDA starts"
-msgstr "نشان داده شدن این پنجره‌ی گفتگو هنگام به کار افتادن ان‌وی‌دی‌ای"
+msgstr "نشان داده شدن این پنجره‌ی گفتگو هنگام به کار افتادن NVDA"
 
 #. Translators: The label of the license text which will be shown when NVDA installation program starts.
 msgid "License Agreement"
@@ -4032,7 +4128,7 @@ msgstr "می‌پذیرم"
 
 #. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
 msgid "&Install NVDA on this computer"
-msgstr "ریختن ان‌وی‌دی‌ای بر روی این رایانه"
+msgstr "ریختن NVDA بر روی این رایانه"
 
 #. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
 msgid "Create &portable copy"
@@ -4040,7 +4136,7 @@ msgstr "درست کردن روگرفت &جا‌به‌جا شدنی"
 
 #. Translators: The label of the button in NVDA installation program to continue using the installation program as a temporary copy of NVDA.
 msgid "&Continue running"
-msgstr "با کارا بودن ان‌وی‌دی‌ای به پیش رفتن"
+msgstr "با کارا بودن NVDA به پیش رفتن"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -4095,7 +4191,7 @@ msgstr "گزینش پرونده‌ی بسته‌ی افزونه"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 msgid "NVDA Add-on Package (*.{ext})"
-msgstr "بسته‌ی افزونه‌ی ان‌وی‌دی‌ای (*.{ext})"
+msgstr "بسته‌ی افزونه‌ی NVDA (*.{ext})"
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
@@ -4143,7 +4239,7 @@ msgid "Failed to install add-on  from %s"
 msgstr "ریختن افزونه از  %s با شکست رو‌به‌رو شد"
 
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
-msgstr "آیا می‌خواهید افزونه‌ی گزیده شده را از ان‌وی‌دی‌ای پاک کنید؟"
+msgstr "آیا می‌خواهید افزونه‌ی گزیده شده را از NVDA پاک کنید؟"
 
 msgid "Remove Add-on"
 msgstr "پاک کردن افزونه"
@@ -4165,12 +4261,12 @@ msgid ""
 "Add-ons have been added or removed. You must restart NVDA for these changes "
 "to take effect. Would you like to restart now?"
 msgstr ""
-"افزونه‌ها پاک یا ریخته شده اند. شما باید ان‌وی‌دی‌ای را برای کارا شدن این "
-"دگرگونی‌ها٬ از نو راه‌اندازی کنید. آیا می‌خواهید از نو راه‌اندازی کنید؟"
+"افزونه‌ها پاک یا ریخته شده اند. شما باید NVDA را برای کارا شدن این دگرگونی‌ها٬ "
+"از نو راه‌اندازی کنید. آیا می‌خواهید از نو راه‌اندازی کنید؟"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
-msgstr "از نو راه‌انداختن ان‌وی‌دی‌ای"
+msgstr "از نو راه‌انداختن NVDA"
 
 #. Translators: message shown in the Addon Information dialog.
 msgid ""
@@ -4378,19 +4474,19 @@ msgstr "کارا کردن دستی"
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
 msgid "Updating NVDA"
-msgstr "روزامد سازی ان‌وی‌دی‌ای"
+msgstr "روزامد سازی NVDA"
 
 #. Translators: The title of the dialog presented while NVDA is being installed.
 msgid "Installing NVDA"
-msgstr "ریختن ان‌وی‌دی‌ای"
+msgstr "ریختن NVDA"
 
 #. Translators: The message displayed while NVDA is being updated.
 msgid "Please wait while your previous installation of NVDA is being updated."
-msgstr "تا نگارش پیشین ریخته‌شده‌ی ان‌وی‌دی‌ای روزامد می‌شود٬ خواهش است درنگ کنید!"
+msgstr "تا نگارش پیشین ریخته‌شده‌ی NVDA روزامد می‌شود٬ خواهش است درنگ کنید!"
 
 #. Translators: The message displayed while NVDA is being installed.
 msgid "Please wait while NVDA is being installed"
-msgstr "تا ان‌وی‌دی‌ای ریخته می‌شود٬ خواهش است درنگ کنید!"
+msgstr "تا NVDA ریخته می‌شود٬ خواهش است درنگ کنید!"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
 msgid ""
@@ -4398,9 +4494,9 @@ msgid ""
 "NVDA may be running on another logged-on user account. Please make sure all "
 "installed copies of NVDA are shut down and try the installation again."
 msgstr ""
-"پاک کردن یا بازنویسی پرونده‌ای انجام شدنی نیست. روگرفتی از ان‌وی‌دی‌ای از همین "
-"پوشه شاید با کاربری دیگری در ویندوز٬ راه‌اندازی شده باشد. نگاه کنید که همه‌ی "
-"روگرفت‌های ان‌وی‌دی‌ای خاموش هستند سپس ریختن برنامه را از سر بگیرید."
+"پاک کردن یا بازنویسی پرونده‌ای انجام شدنی نیست. روگرفتی از NVDA از همین پوشه "
+"شاید با کاربری دیگری در ویندوز٬ راه‌اندازی شده باشد. نگاه کنید که همه‌ی "
+"روگرفت‌های NVDA خاموش هستند سپس ریختن برنامه را از سر بگیرید."
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
@@ -4412,16 +4508,16 @@ msgid ""
 "The installation of NVDA failed. Please check the Log Viewer for more "
 "information."
 msgstr ""
-"ریختن برنامه‌ی ان‌وی‌دی‌ای با شکست رو‌به‌رو شد. برای آگاهی بیشتر٬ به گاه‌نگار نگاه "
+"ریختن برنامه‌ی NVDA با شکست رو‌به‌رو شد. برای آگاهی بیشتر٬ به گاه‌نگار نگاه "
 "بی‌اندازید."
 
 #. Translators: The message displayed when NVDA has been successfully installed.
 msgid "Successfully installed NVDA. "
-msgstr "ریخته شدن ان‌وی‌دی‌ای به درستی فرجامید! "
+msgstr "ریخته شدن NVDA به درستی فرجامید! "
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 msgid "Successfully updated your installation of NVDA. "
-msgstr "نگارش ان‌وی‌دی‌ای ریخته‌شده‌ی شما به درستی روزامد شد!"
+msgstr "نگارش NVDA ریخته‌شده‌ی شما به درستی روزامد شد!"
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
@@ -4434,29 +4530,29 @@ msgstr "فرجامش"
 
 #. Translators: The title of the Install NVDA dialog.
 msgid "Install NVDA"
-msgstr "ریختن ان‌وی‌دی‌ای در سامانه‌ی کارگر"
+msgstr "ریختن NVDA در سامانه‌ی کارگر"
 
 #. Translators: An informational message in the Install NVDA dialog.
 msgid "To install NVDA to your hard drive, please press the Continue button."
-msgstr "برای ریخته شدن ان‌وی‌دی‌ای روی دیسک سخت٬ دکمه‌ی «پیش رفتن» را فشار دهید."
+msgstr "برای ریخته شدن NVDA روی دیسک سخت٬ دکمه‌ی «پیش رفتن» را فشار دهید."
 
 #. Translators: An informational message in the Install NVDA dialog.
 msgid ""
 "A previous copy of NVDA has been found on your system. This copy will be "
 "updated."
 msgstr ""
-"روگرفت از پیش ریخته شده از ان‌وی‌دی‌ای در سامانه‌ی شما یافت شد. این روگرفت٬ "
-"روزامد خواهد شد."
+"روگرفت از پیش ریخته شده از NVDA در سامانه‌ی شما یافت شد. این روگرفت٬ روزامد "
+"خواهد شد."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
-msgstr "جای ریخته شدن ان‌وی‌دی‌ای دگرگون شد. اکنون در نشانی {path} ریخته می‌شود."
+msgstr "جای ریخته شدن NVDA دگرگون شد. اکنون در نشانی {path} ریخته می‌شود."
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Use NVDA on the Windows &logon screen"
-msgstr "به کار گیری ان‌وی‌دی‌ای در برگه‌ی آغازین برای درون شدن به ویندوز"
+msgstr "به کار گیری NVDA در برگه‌ی آغازین برای درون شدن به ویندوز"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "&Keep existing desktop shortcut"
@@ -4464,7 +4560,7 @@ msgstr "نگهداشتن میانبر کنونی در میز کار"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
-msgstr "ساختن نشانی از ان‌وی‌دی‌ای با کلید میانبر ctrl+alt+n بر روی میز کار"
+msgstr "ساختن نشانی از NVDA با کلید میانبر ctrl+alt+n بر روی میز کار"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Copy &portable configuration to current user account"
@@ -4478,15 +4574,15 @@ msgstr "&پیش رفتن"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
-msgstr "ساختن ان‌وی‌دی‌ای جا‌به‌جا شدنی"
+msgstr "ساختن NVDA جا‌به‌جا شدنی"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 msgid ""
 "To create a portable copy of NVDA, please select the path and other options "
 "and then press Continue"
 msgstr ""
-"برای ساختن روگرفت جا‌به‌جا شدنی از ان‌وی‌دی‌ای٬ پوشه و دیگر گزینه‌ها را برگزیده "
-"سپس دکمه‌ی «پیش رفتن» را بزنید"
+"برای ساختن روگرفت جا‌به‌جا شدنی از NVDA٬ پوشه و دیگر گزینه‌ها را برگزیده سپس "
+"دکمه‌ی «پیش رفتن» را بزنید"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
@@ -4525,11 +4621,11 @@ msgstr "روگرفت جا‌به‌جا شدنی دارد ساخته می‌شو
 
 #. Translators: The message displayed while a portable copy of NVDA is bieng created.
 msgid "Please wait while a portable copy of NVDA is created."
-msgstr "تا روگرفت جا‌به‌جا شدنی از ان‌وی‌دی‌ای دارد ساخته می‌شود٬ درنگ کنید"
+msgstr "تا روگرفت جا‌به‌جا شدنی از NVDA دارد ساخته می‌شود٬ درنگ کنید"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
 msgid "NVDA is unable to remove or overwrite a file."
-msgstr "ان‌وی‌دی‌ای ناتوان از پاک کردن یا بازنویسی یک پرونده است."
+msgstr "NVDA ناتوان از پاک کردن یا بازنویسی یک پرونده است."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. %s will be replaced with the specific error message.
@@ -4541,11 +4637,11 @@ msgstr "ساخته شدن روگرفت جا‌به‌جا شدنی با شکست
 #. %s will be replaced with the destination directory.
 #, python-format
 msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "فرایند ساخت روگرفت جا‌به‌جا شدنی از ان‌وی‌دی‌ای در %s به فرجام رسید"
+msgstr "فرایند ساخت روگرفت جا‌به‌جا شدنی از NVDA در %s به فرجام رسید"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
-msgstr "گاه‌نگارنمای ان‌وی‌دی‌ای"
+msgstr "گاه‌نگارنمای NVDA"
 
 #. Translators: The label for a menu item in NVDA log viewer to refresh log messages.
 msgid "Refresh\tF5"
@@ -4598,7 +4694,7 @@ msgstr "سپاردن پیکره‌بندی کنونی پیش از خاموش ش�
 
 #. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
 msgid "&Warn before exiting NVDA"
-msgstr "هشدار کردن پیش از خاموش کردن ان‌وی‌دی‌ای"
+msgstr "هشدار کردن پیش از خاموش کردن NVDA"
 
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
@@ -4612,8 +4708,8 @@ msgstr "گام گاه‌نگاشتن"
 msgid ""
 "Use NVDA on the Windows logon screen (requires administrator privileges)"
 msgstr ""
-"به کار افتادن ان‌وی‌دی‌ای در برگه‌ی درون شدن به ویندوز (نیازمند توانمندی‌های "
-"مدیریتی است)"
+"به کار افتادن NVDA در برگه‌ی درون شدن به ویندوز (نیازمند توانمندی‌های مدیریتی "
+"است)"
 
 #. Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
 msgid ""
@@ -4625,7 +4721,7 @@ msgstr ""
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
-msgstr "یافتن خودکار روزامد برای ان‌وی‌دی‌ای"
+msgstr "یافتن خودکار روزامد برای NVDA"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -4660,11 +4756,11 @@ msgstr "شکست در روگیری"
 
 #. Translators: The message displayed when errors were found while trying to copy current configuration to system settings.
 msgid "Error copying NVDA user settings"
-msgstr "شکست در روگیری از سامان‌دهی‌های کاربر برای ان‌وی‌دی‌ای"
+msgstr "شکست در روگیری از سامان‌دهی‌های کاربر برای NVDA"
 
 #. Translators: The message displayed when copying configuration to system settings was successful.
 msgid "Successfully copied NVDA user settings"
-msgstr "روگیری از سامان‌دهی‌های کاربر برای ان‌وی‌دی‌ای به درستی فرجامید"
+msgstr "روگیری از سامان‌دهی‌های کاربر برای NVDA به درستی فرجامید"
 
 #, python-format
 msgid "Error in %s language file"
@@ -4685,10 +4781,10 @@ msgid ""
 "NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
 "manually save and exit at a later time."
 msgstr ""
-"برای کارا شدن زبان نو گزیده شده٬ باید پیکره‌بندی‌ها سپارده شده و ان‌وی‌دی‌ای از "
-"نو راه‌اندازی شود. کلید enter را برای سپارده شدن و از نو راه‌اندازی شدن فشار "
-"دهید یا این که دکمه‌ی cancel را برای سپارده شدن یا راه‌اندازی نو در هنگامی "
-"پَس‌تر فشار دهید."
+"برای کارا شدن زبان نو گزیده شده٬ باید پیکره‌بندی‌ها سپارده شده و NVDA از نو "
+"راه‌اندازی شود. کلید enter را برای سپارده شدن و از نو راه‌اندازی شدن فشار دهید "
+"یا این که دکمه‌ی cancel را برای سپارده شدن یا راه‌اندازی نو در هنگامی پَس‌تر "
+"فشار دهید."
 
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 msgid "Language Configuration Change"
@@ -4775,14 +4871,14 @@ msgstr "چیده‌مان تخته‌کلید"
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr ""
-"به کار گرفتن کلید 'Insert' در بخش شمارگان روی تخته‌کلید به سان کلید ان‌وی‌دی‌ای"
+"به کار گرفتن کلید 'Insert' در بخش شمارگان روی تخته‌کلید به سان کلید NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr ""
 "به کار گرفتن کلید 'Insert' در هر دو بخش شمارگان و الفبا روی تخته‌کلید به سان "
-"کلید ان‌وی‌دی‌ای"
+"کلید NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -4822,7 +4918,7 @@ msgstr "خواندن کلیدهای فرمان"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
-msgstr "دست کم یک کلید باید برای کلید ان‌وی‌دی‌ای ویژه شود."
+msgstr "دست کم یک کلید باید برای کلید NVDA ویژه شود."
 
 #. Translators: This is the label for the mouse settings dialog.
 msgid "Mouse Settings"
@@ -5145,6 +5241,11 @@ msgstr "گزارش کردن مر&زنماها"
 msgid "Report fra&mes"
 msgstr "گزارش کردن &قاب‌ها"
 
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "گزارش کردن هرگاه کلیک شدنی باشد"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "ویرایش واژه‌ی سپارده شده در فرهنگ واژگان"
@@ -5310,8 +5411,8 @@ msgid ""
 "If you use the laptop layout, please see the What's New document for more "
 "information."
 msgstr ""
-"در ان‌وی‌دی‌ای ۲۰۱۳.۱ ٬ چیده‌مان تخته‌کلید رایانه‌ی کیفی٬ بازسازی و بازفراوری شده "
-"است تا سازگاری و سادگی بیشتری را فراهم آورد.\n"
+"در NVDA ۲۰۱۳.۱ ٬ چیده‌مان تخته‌کلید رایانه‌ی کیفی٬ بازسازی و بازفراوری شده است "
+"تا سازگاری و سادگی بیشتری را فراهم آورد.\n"
 "اگر از رایانه‌ی کیفی بهره می‌گیرید٬ رسانه‌ی پیرامون آن‌چه نو است را نگاه کنید."
 
 #. Translators: The title of a dialog providing information about NVDA's new laptop keyboard layout.
@@ -5958,10 +6059,6 @@ msgid ""
 msgstr ""
 "با یک‌بار فشار دادن٬ ستون کنونی در جایی که سرنوشته‌ی ردیف باید باشد جای "
 "می‌گیرد. با دو بار فشار دادن٬ سامان‌دهی‌ها پاک می‌شود."
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "فرمول دارد"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"

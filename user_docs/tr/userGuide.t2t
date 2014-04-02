@@ -57,6 +57,8 @@ Daha fazla detay için [Tam lisansı görüntüleyebilirsiniz. http://www.gnu.or
 
 + Sistem Gereksinimleri +
 - İşletim Sistemleri: Windows XP, Windows Vista, Windows 7 ve windows 8 (Server işletim sistemleri dahil) işletim sistemlerinin tüm 32 ve 64 bit sürümleri.
+- Windows XP 32-bit için, NVDA Service Pack 2 veya daha yüksek bir sürüme ihtiyaç duyar.
+- Windows Server 2003 için, NVDA Service Pack 1 veya daha yüksek bir sürüme ihtiyaç duyar.
 - Hafıza: 256 mb Veya daha fazla ram
 - İşlemci Hızı: 1.0 ghz veya yukarısı
 - Yaklaşık 50 MB depolama alanı.
@@ -1679,7 +1681,6 @@ Following are the Papenmeier command assignments for NVDA:
 | Route to braille cell | routing |
 | Report current character in review | l1 |
 | Activate current navigator object | l2 |
-| Move to flat review/focus | r1 |
 | Report title | l1+up |
 | Report Status Bar | l2+down |
 | Move to containing object | up2 |
@@ -1756,7 +1757,6 @@ Devices with EAB:
 | Route to braille cell | routing |
 | Report current character in review | l1 |
 | Activate current navigator object | l2 |
-| Move to flat review / focus | r1 |
 | Report title | l1up |
 | Report Status Bar | l2down |
 | Move to containing object | up2 |
@@ -1774,7 +1774,6 @@ BRAILLEX Tiny:
 | Move braille display to previous line | up |
 | Move braille display to next line | dn |
 | Toggle braille tethered to | r2 |
-| Move to flat review / focus | r1 |
 | Move to containing object | r1+up |
 | Move to first contained object | r1+dn |
 | Move to previous object | r1+left |
@@ -1789,7 +1788,6 @@ BRAILLEX 2D Screen:
 | Report text formatting | reportf |
 | Move braille display to previous line | up |
 | Scroll braille display back | left |
-| Move to flat review / focus | r1 |
 | Scroll braille display forward | right |
 | Move braille display to next line | dn |
 | Move to next object | left2 |
