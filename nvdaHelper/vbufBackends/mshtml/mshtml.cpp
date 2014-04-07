@@ -770,6 +770,8 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	bool isBlock=true;
 	wstring listStyle;
 	getCurrentStyleInfoFromHTMLDOMNode(pHTMLDOMNode, dontRender, isBlock,hidden,listStyle);
+	// #4031: nodes hidden due to style (not role="presentation") should have their direct text nodes skipped
+	if(hidden) shouldSkipText=true;
 	LOG_DEBUG(L"Trying to get IHTMLDOMNode::nodeName");
 	if(pHTMLDOMNode->get_nodeName(&tempBSTR)!=S_OK||!tempBSTR) {
 		LOG_DEBUG(L"Failed to get IHTMLDOMNode::nodeName");
@@ -1126,7 +1128,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 				IHTMLDOMNode* childPHTMLDOMNode=NULL;
 				getHTMLSubdocumentBodyFromIAccessibleFrame(pacc,&childPHTMLDOMNode);
 				if(childPHTMLDOMNode) {
-					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfo,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText,hidden);
+					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfo,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText,shouldSkipText);
 					childPHTMLDOMNode->Release();
 				}
 			}
@@ -1150,7 +1152,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 						}
 						IHTMLDOMNode* childPHTMLDOMNode=NULL;
 						if(childPDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode)==S_OK) {
-							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfo,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText,hidden);
+							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfo,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText,shouldSkipText);
 							if(tempNode) {
 								previousNode=tempNode;
 							}
