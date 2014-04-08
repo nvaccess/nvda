@@ -318,7 +318,7 @@ class MSHTML(VirtualBuffer):
 			pass
 		return super(MSHTML, self).shouldPassThrough(obj, reason)
 
-	def getMathMlForEquation(self, info):
+	def getMathMlForEquation(self, field):
 		docHandle = int(field["controlIdentifier_docHandle"])
 		nodeId = int(field["controlIdentifier_ID"])
 		obj = self.getNVDAObjectFromIdentifier(docHandle, nodeId)
