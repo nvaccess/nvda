@@ -777,7 +777,8 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		This is different to L{event_gainFocus}, which is fired when an object inside this buffer gains focus, even if that object is in the same buffer.
 		"""
 		doSayAll=False
-		if not self._hadFirstGainFocus:
+		hadFirstGainFocus=self._hadFirstGainFocus
+		if not hadFirstGainFocus:
 			# This buffer is gaining focus for the first time.
 			# Fake a focus event on the focus object, as the buffer may have missed the actual focus event.
 			focus = api.getFocusObject()
@@ -799,7 +800,20 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 				sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
 			else:
 				# Speak it like we would speak focus on any other document object.
-				speech.speakObject(self.rootNVDAObject, reason=controlTypes.REASON_FOCUS)
+				# This includes when entering the treeInterceptor for the first time:
+				if not hadFirstGainFocus:
+					speech.speakObject(self.rootNVDAObject, reason=controlTypes.REASON_FOCUS)
+				else:
+					# And when coming in from an outside object
+					# #4069 But not when coming up from a non-rendered descendant.
+					ancestors=api.getFocusAncestors()
+					fdl=api.getFocusDifferenceLevel()
+					try:
+						tl=ancestors.index(self.rootNVDAObject)
+					except ValueError:
+						tl=len(ancestors)
+					if fdl<tl:
+						speech.speakObject(self.rootNVDAObject, reason=controlTypes.REASON_FOCUS)
 				info = self.selection
 				if not info.isCollapsed:
 					speech.speakSelectionMessage(_("selected %s"), info.text)
