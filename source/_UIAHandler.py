@@ -270,7 +270,8 @@ class UIAHandler(COMObject):
 		if windowClass=="NetUIHWND":
 			parentHwnd=winUser.getAncestor(hwnd,winUser.GA_ROOT)
 			# #2816: Outlook 2010 auto complete does not fire enough UIA events, IAccessible is better.
-			if winUser.getClassName(parentHwnd)=="Net UI Tool Window":
+			# #4056: Combo boxes in Office 2010 Options dialogs don't expose a name via UIA, but do via MSAA.
+			if winUser.getClassName(parentHwnd) in {"Net UI Tool Window","NUIDialog"}:
 				return False
 		# allow the appModule for the window to also choose if this window is bad
 		appModule=appModuleHandler.getAppModuleFromProcessID(processID)
