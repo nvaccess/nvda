@@ -3,6 +3,24 @@ Qué bi ha de Nuevo en o NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.2 =
+
+== Nuevas Caracteristicas ==
+- Agora ye posible l'anunciau d'a selección de texto en qualques campos d'edición personalizada an se fa servir información d'a pantalla. (#770)
+- En as aplicacions  Java accesibles agora s'anuncia a información de posición ta os botons d'opción y atros controls que exposan información de grupo. (#3754)
+- En as aplicacions Java accesibles agora s'anuncian os alcorces de teclau ta os controls que'n tiengan. (#3881)
+- En o modo navegación as etiquetas  en os puntos de referencia agora s'anuncian. Tamién s'incluyen en o dialogo Lista d'Elementos. (#1195)
+- En o modo navegación as rechions etiquetadas agora se tractan como puntos de referencia. (#3741)
+
+
+== Corrección d'errors ==
+- O menú estandar d'o sistema Windows ya no se silencia accidentalment en as aplicacions Java. (#3882)
+- En que se copia texto dende a revisión de pantalla os blincos de linia ya no s'ignoran. (#3900)
+- Os obchectos d'espacio en blanco sin sentiu ya no s'anuncian en qualques aplicacions en que o foco  cambee u en que se faiga servir a navegación d'obchectos con a revisión simpla enchegada. (#3839)
+- Os quadros de mensache y belatros dialogos producius por o NVDA causan atra vegada a cancelación d'a fabla anterior antis d'anunciar o dialogo. 
+- En o modo navegación as etiquetas de controls tals como vinclos y botons agora se procesan correctament quan a etiqueta s'haiga substituiu por l'autor con fins d'accesibilidat (especificament, l'emplego d'aria-label u d'aria-labelledby). (#1354)
+
+
 = 2014.1 =
 
 == Nuevas Caracteristicas ==
@@ -20,7 +38,7 @@ Qué bi ha de Nuevo en o NVDA
 - Ta las pantallas braille Papenmeier, s'ha eliminau a orden mover a revisión plana/foco. Os usuarios pueden asignar as suyas propias teclas usando o dialogo de cenyos de dentrada. (#3652)
 - O NVDA agora se basa en a versión 11 d'o Microsoft VC runtime, o que significa que ya no puet executar-se en sistemas operativos anteriors a lo Windows XP Service Pack 2 u lo Windows Server 2003 Service Pack 1.
 - O libel de puntuación beluna agora diz os caracters asterisco (*) y mas (+). (#3614)
-- Esviellau o eSpeak a la versión 1.48.02, que inclui muitas correccions d'idiomas y corriche quantos problemas. (#3842, #3739)
+- Esviellau o eSpeak Ta la versión 1.48.04, que inclui muitas correccions d'idiomas y corriche quantos problemas. (#3842, #3739)
 
 
 == Corrección d'errors ==

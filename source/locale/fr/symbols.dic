@@ -52,7 +52,7 @@ in-word -	tiret	all	norep	# - dans un mot
 \f	saut de page
 \r	retour chariot
  	espace
- 	espace insécable	# espace insécable
+ 	espace insécable	char	# espace insécable
 
 # Standard punctuation/symbols
 !	point dexclamation
@@ -64,12 +64,12 @@ $	dollar
 ¢	Centimes
 ¥	Yen
 %	pour cent
-&	et
+&	et commercial	some	norep
 '	apostrophe
 (	parenthèse gauche
 )	parenthèse droite
 *	astérisque
-+	pluce
++	pluce	some	norep
 ,	virgule
 -	tiret
 .	point
@@ -81,7 +81,7 @@ $	dollar
 =	égal
 ?	point dinterrogation
 ¿	point dinterrogation renversé	some
-@	arobase
+@	arobase	none
 [	crochet gauche
 ]	crochet droit
 "	guillemet
@@ -117,7 +117,7 @@ _	souligné
 „	guillemet vers le bas	none
 ∞	infini	none
 ➔	flèche droite
-°	degrés
+°	degré	some	norep
 «	guillemet ouvert
 »	guillemet fermé
 µ	micro
