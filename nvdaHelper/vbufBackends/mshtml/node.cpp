@@ -122,6 +122,10 @@ class CDispatchChangeSink : public IDispatch {
 	HRESULT STDMETHODCALLTYPE IDispatch::Invoke(DISPID  dispIdMember, REFIID  riid, LCID  lcid, WORD  wFlags, DISPPARAMS FAR*  pDispParams, VARIANT FAR*  pVarResult, EXCEPINFO FAR*  pExcepInfo, unsigned int FAR*  puArgErr) {
 		if(dispIdMember==DISPID_EVMETH_ONPROPERTYCHANGE||dispIdMember==DISPID_EVMETH_ONLOAD) {
 			this->storageNode->backend->invalidateSubtree(this->storageNode);
+			// Force the update to happen with no delay if we happen to be in a live region
+			if(this->storageNode->ariaLiveNode&&this->storageNode->ariaLiveNode!=this->storageNode&&!this->storageNode->ariaLiveIsBusy&&(this->storageNode->ariaLiveIsTextRelevant||this->storageNode->ariaLiveIsAdditionsRelevant)) {
+				this->storageNode->backend->forceUpdate();
+			}
 			return S_OK;
 		}
 		return E_FAIL;
@@ -256,6 +260,11 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 		}
 		if(invalidNode) {
 			this->storageNode->backend->invalidateSubtree(invalidNode);
+			MshtmlVBufStorage_controlFieldNode_t* invalidMshtmlNode=(MshtmlVBufStorage_controlFieldNode_t*)invalidNode;
+			// Force the update to happen with no delay if we happen to be in a live region
+			if(invalidMshtmlNode->ariaLiveNode&&invalidMshtmlNode->ariaLiveNode!=invalidMshtmlNode&&!invalidMshtmlNode->ariaLiveIsBusy&&(invalidMshtmlNode->ariaLiveIsTextRelevant||invalidMshtmlNode->ariaLiveIsAdditionsRelevant)) {
+				this->storageNode->backend->forceUpdate();
+			}
 		}
 		LOG_DEBUG(L"notify done, returning S_OK");
 		return S_OK;
