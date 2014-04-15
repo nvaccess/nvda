@@ -36,6 +36,7 @@ class MshtmlVBufStorage_controlFieldNode_t : public VBufStorage_controlFieldNode
 	bool ariaLiveIsAdditionsRelevant;
 	bool ariaLiveIsBusy;
 	VBufStorage_controlFieldNode_t*  ariaLiveAtomicNode;
+	void reportLiveText(std::wstring& text);
 	void reportLiveAddition();
 	void preProcessLiveRegion(const MshtmlVBufStorage_controlFieldNode_t* parent, const std::map<std::wstring,std::wstring>& attribsMap);
 	void postProcessLiveRegion(VBufStorage_controlFieldNode_t* oldNode, std::set<VBufStorage_controlFieldNode_t*>& atomicNodes);

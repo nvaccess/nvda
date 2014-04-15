@@ -367,10 +367,19 @@ void MshtmlVBufStorage_controlFieldNode_t::preProcessLiveRegion(const MshtmlVBuf
 	//LOG_INFO(L"preProcessLiveRegion: ariaLiveNode "<<ariaLiveNode<<L", ariaLiveIsTextRelevant "<<ariaLiveIsTextRelevant<<L", ariaLiveIsAdditionsRelevant "<<ariaLiveIsAdditionsRelevant<<L", ariaLiveIsBusy "<<ariaLiveIsBusy<<L", ariaLiveAtomicNode "<<ariaLiveAtomicNode);
 }
 
+void MshtmlVBufStorage_controlFieldNode_t::reportLiveText(wstring& text) {
+	for(auto c: text) {
+		if(!iswspace(c)) {
+			nvdaController_speakText(text.c_str());
+			break;
+		}
+	}
+}
+
 void MshtmlVBufStorage_controlFieldNode_t::reportLiveAddition() {
 	wstring text; //=(this->ariaLiveAtomicNode==this)?L"atomic: ":L"additions: ";
 	this->getTextInRange(0,this->getLength(),text,false);
-	nvdaController_speakText(text.c_str());
+	this->reportLiveText(text);
 }
 
 void MshtmlVBufStorage_controlFieldNode_t::postProcessLiveRegion(VBufStorage_controlFieldNode_t* oldNode, set<VBufStorage_controlFieldNode_t*>& atomicNodes) {
@@ -406,6 +415,6 @@ void MshtmlVBufStorage_controlFieldNode_t::postProcessLiveRegion(VBufStorage_con
 	} else if(reportNode) {
 		this->reportLiveAddition();
 	} else if(!newChildrenText.empty()) {
-		nvdaController_speakText(newChildrenText.c_str());
+		this->reportLiveText(newChildrenText);
 	}
 }
