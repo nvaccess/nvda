@@ -154,6 +154,11 @@ class GeneralSettingsDialog(SettingsDialog):
 		self.askToExitCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Warn before exiting NVDA"))
 		self.askToExitCheckBox.SetValue(config.conf["general"]["askToExit"])
 		settingsSizer.Add(self.askToExitCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
+		self.playStartAndExitSoundCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Play sounds when starting or exiting NVDA"))
+		self.playStartAndExitSoundCheckBox.SetValue(config.conf["general"]["playStartAndExitSound"])
+		settingsSizer.Add(self.playStartAndExitSoundCheckBox,border=10,flag=wx.BOTTOM)
+		
 		logLevelSizer=wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 		logLevelLabel=wx.StaticText(self,-1,label=_("L&ogging level:"))
@@ -255,6 +260,7 @@ class GeneralSettingsDialog(SettingsDialog):
 		config.conf["general"]["language"]=newLanguage
 		config.conf["general"]["saveConfigurationOnExit"]=self.saveOnExitCheckBox.IsChecked()
 		config.conf["general"]["askToExit"]=self.askToExitCheckBox.IsChecked()
+		config.conf["general"]["playStartAndExitSound"]=self.playStartAndExitSoundCheckBox.IsChecked()
 		logLevel=self.LOG_LEVELS[self.logLevelList.GetSelection()][0]
 		config.conf["general"]["loggingLevel"]=logHandler.levelNames[logLevel]
 		logHandler.setLogLevelFromConfig()
