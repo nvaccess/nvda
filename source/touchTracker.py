@@ -197,12 +197,14 @@ class TrackerManager(object):
 			if tracker.action!=action_hoverDown:
 				self.multiTouchTrackers.append(tracker)
 
+	pendingEmitInterval=None #: If set: how long to wait before calling emitTrackers again as trackers are still in the queue 
 	def emitTrackers(self):
 		"""
 		Yields queued trackers that have existed in the queue for long enough to not be connected with other trackers.
 		A part from a timeout, trackers are also not emitted if there are other fingers touching that still have an unknown action. 
 		If there are no queued trackers to yield but there is a hover tracker, a hover action is yielded instead.
 		"""
+		self.pendingEmitInterval=None
 		t=time.time()
 		hasUnknownTrackers=False
 		lastHoverTracker=None
@@ -217,10 +219,13 @@ class TrackerManager(object):
 		if not hasUnknownTrackers:
 			for tracker in list(self.multiTouchTrackers):
 				#All trackers can be emitted with no delay except for tap which must wait for the timeout (to detect plural taps)
-				if tracker.action!=action_tap or (tracker.startTime+multitouchTimeout)<=t:
+				trackerTimeout=(tracker.startTime+multitouchTimeout)-t if tracker.action==action_tap else 0 
+				if trackerTimeout<=0: 
 					self.multiTouchTrackers.remove(tracker)
 					foundTrackers=True
 					yield tracker
+				else:
+					self.pendingEmitInterval=min(self.pendingEmitInterval,trackerTimeout) if self.pendingEmitInterval else trackerTimeout
 		#If no tracker could be emitted, at least emit the most recent  hover tracker if there is one
 		if not foundTrackers and lastHoverTracker:
 			yield MultiTouchTracker(lastHoverTracker.action,lastHoverTracker.x,lastHoverTracker.y,lastHoverTracker.startTime,t,1,1,self.numHeldFingers-1)
