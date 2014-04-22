@@ -102,6 +102,8 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, MessageList_pre2003)
 			elif obj.event_objectID==winUser.OBJID_CLIENT and obj.event_childID==0:
 				clsList.insert(0,SuperGridClient2010)
+		if windowClassName == "AfxWndW" and controlID == 109:
+			clsList.insert(0,CalendarDayView)
 
 class REListBox20W_CheckBox(IAccessible):
 
@@ -229,3 +231,22 @@ class AutoCompleteListItem(IAccessible):
 		if (focus.role==controlTypes.ROLE_EDITABLETEXT or focus.role==controlTypes.ROLE_BUTTON) and controlTypes.STATE_SELECTED in states and controlTypes.STATE_INVISIBLE not in states and controlTypes.STATE_UNAVAILABLE not in states and controlTypes.STATE_OFFSCREEN not in states:
 			speech.cancelSpeech()
 			ui.message(self.name)
+
+class CalendarDayView(IAccessible):
+	"""Support for day view in Outlook Calendar.
+	"""
+	def script_moveByEntry(self,gesture):
+		gesture.send()
+		self.event_valueChange()
+
+	__moveByEntryGestures = (
+		"kb:downArrow",
+		"kb:upArrow",
+		"kb:home",
+		"kb:end",
+		"kb:delete",
+	)
+
+	def initOverlayClass(self):
+		for gesture in self.__moveByEntryGestures:
+			self.bindGesture(gesture, "moveByEntry")
