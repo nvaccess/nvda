@@ -245,6 +245,8 @@ class CalendarDayView(IAccessible):
 		"kb:home",
 		"kb:end",
 		"kb:delete",
+		"kb:tab",
+		"kb:shift+tab",
 	)
 
 	def initOverlayClass(self):
