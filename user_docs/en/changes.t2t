@@ -20,6 +20,7 @@
 - Message boxes and other dialogs produced by NVDA again cause previous speech to be canceled before announcing the dialog.
 - In browse mode, the labels of controls such as links and buttons are now rendered correctly where the label has been overridden by the author for accessibility purposes (specifically, using aria-label or aria-labelledby). (#1354)
 - In Browse mode in Internet Explorer, text contained within an element marked as presentational (aria-presentation) is no longer inappropriately ignored. (#4031)
+- It is now again possible to type Vietnamese text using the Unikey software. To do this, uncheck the Handle keys from other applications checkbox, added to NVDA's Keyboard settings dialog. (#4043) 
 
 
 = 2014.1 =
