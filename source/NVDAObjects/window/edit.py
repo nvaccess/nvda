@@ -8,6 +8,7 @@ import sys
 import comtypes.client
 import struct
 import ctypes
+from comtypes import COMError
 import pythoncom
 import win32clipboard
 import oleTypes
@@ -822,6 +823,18 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 
 class RichEdit(Edit):
 	editAPIVersion=1
+
+	def makeTextInfo(self,position):
+		if self.TextInfo is not ITextDocumentTextInfo:
+			return super(RichEdit,self).makeTextInfo(position)
+		# #4090: Sometimes ITextDocument support can fail (security restrictions in Outlook 2010)
+		# We then fall back to normal Edit support.
+		try:
+			return self.TextInfo(self,position)
+		except COMError:
+			log.debugWarning("Could not instanciate ITextDocumentTextInfo",exc_info=True)
+			self.TextInfo=EditTextInfo
+			return self.TextInfo(self,position)
 
 class RichEdit20(RichEdit):
 	editAPIVersion=2
