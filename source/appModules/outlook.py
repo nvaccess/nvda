@@ -239,4 +239,4 @@ class MsoCommandBarToolBar(IAccessible):
 		# Therefore suppress reporting of these toolbars in focus ancestry if they only have one child.
 		if self.childCount==1:
 			return False
-		return super(MsoCommandBar,self).isPresentableFocusAncestor
+		return super(MsoCommandBarToolBar,self).isPresentableFocusAncestor
