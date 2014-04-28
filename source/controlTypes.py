@@ -615,7 +615,7 @@ def processPositiveStates(role, states, reason, positiveStates):
 		# Combo boxes inherently have a popup, so don't report it.
 		positiveStates.discard(STATE_HASPOPUP)
 	import config
-	if not config.conf['documentFormatting']['reportClickable'] or role in (ROLE_LINK, ROLE_BUTTON, ROLE_CHECKBOX, ROLE_RADIOBUTTON, ROLE_TOGGLEBUTTON, ROLE_MENUITEM, ROLE_TAB, ROLE_SLIDER, ROLE_DOCUMENT):
+	if not config.conf['documentFormatting']['reportClickable'] or role in (ROLE_LINK, ROLE_BUTTON, ROLE_CHECKBOX, ROLE_RADIOBUTTON, ROLE_TOGGLEBUTTON, ROLE_MENUITEM, ROLE_TAB, ROLE_SLIDER, ROLE_DOCUMENT, ROLE_CHECKMENUITEM, ROLE_RADIOMENUITEM):
 		# This control is clearly clickable according to its role,
 		# or reporting clickable just isn't useful,
 		# or the user has explicitly requested no reporting clickable
