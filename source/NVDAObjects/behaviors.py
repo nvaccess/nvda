@@ -112,7 +112,7 @@ class Dialog(NVDAObject):
 			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW,controlTypes.ROLE_PANE,controlTypes.ROLE_BUTTON) and children[index+1].name==childName:
 				# This is almost certainly the label for the next object, so skip it.
 				continue
-			isNameIncluded=child.TextInfo is NVDAObjectTextInfo or childRole==controlTypes.ROLE_LABEL
+			isNameIncluded=child.TextInfo is NVDAObjectTextInfo or childRole in (controlTypes.ROLE_LABEL,controlTypes.ROLE_STATICTEXT)
 			childText=child.makeTextInfo(textInfos.POSITION_ALL).text
 			if not childText or childText.isspace() and child.TextInfo is not NVDAObjectTextInfo:
 				childText=child.basicText
