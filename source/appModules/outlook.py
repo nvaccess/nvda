@@ -9,13 +9,17 @@ import comtypes.client
 import winUser
 import appModuleHandler
 import eventHandler
+import UIAHandler
 import api
 import controlTypes
+import config
 import speech
 import ui
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible.MSHTML import MSHTML
+from NVDAObjects.behaviors import RowWithFakeNavigation
+from NVDAObjects.UIA import UIA
 
 def getContactString(obj):
 		return ", ".join([x for x in [obj.fullName,obj.companyName,obj.jobTitle,obj.email1address] if x and not x.isspace()])
@@ -83,6 +87,8 @@ class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		# Currently all our custom classes are IAccessible
+		if isinstance(obj,UIA) and obj.UIAElement.cachedClassName in ("LeafRow","ThreadItem","ThreadHeader"):
+			clsList.insert(0,UIAGridRow)
 		if not isinstance(obj,IAccessible):
 			return
 		role=obj.role
@@ -117,6 +123,21 @@ class SuperGridClient2010(IAccessible):
 
 	def isDuplicateIAccessibleEvent(self,obj):
 		return False
+
+	def event_gainFocus(self):
+		# #3834: UIA has a much better implementation for rows, so use it if available.
+		if self.appModule.outlookVersion==14 and UIAHandler.handler:
+			try:
+				kwargs = {}
+				UIA.kwargsFromSuper(kwargs, relation="focus")
+				obj=UIA(**kwargs)
+			except:
+				log.debugWarning("Retrieving UIA focus failed", exc_info=True)
+				return super(SuperGridClient2010,self).event_gainFocus()
+		if not isinstance(obj,UIAGridRow):
+			return super(SuperGridClient2010,self).event_gainFocus()
+		obj.parent=self.parent
+		eventHandler.executeEvent("gainFocus",obj)
 
 class MessageList_pre2003(IAccessible):
 
@@ -229,3 +250,61 @@ class AutoCompleteListItem(IAccessible):
 		if (focus.role==controlTypes.ROLE_EDITABLETEXT or focus.role==controlTypes.ROLE_BUTTON) and controlTypes.STATE_SELECTED in states and controlTypes.STATE_INVISIBLE not in states and controlTypes.STATE_UNAVAILABLE not in states and controlTypes.STATE_OFFSCREEN not in states:
 			speech.cancelSpeech()
 			ui.message(self.name)
+
+class UIAGridRow(RowWithFakeNavigation,UIA):
+
+	# Status fields (Replied, Read, Unread etc) to be ignored (e.g. Read)
+	statusFieldsToIgnore=frozenset([
+		# English:
+		"Read",
+	])
+
+	# Values that should be ignored as they are defaults
+	cellValuesToIgnore=frozenset([
+		# English
+		"Normal","Unknown","None","No","Header",
+	])
+
+	# Values which should cause the header to be used instead (e.g. Yes in the Attachment column)
+	positiveCellValues=frozenset([
+		# English
+		"Yes",
+	])
+
+	rowHeaderText=None
+	columnHeaderText=None
+
+	def _get_name(self):
+		textList=[]
+		if self.appModule.outlookVersion>=15:
+			status=super(UIAGridRow,self).value
+		else:
+			status=super(UIAGridRow,self).name
+		if status:
+			for chunk in status.split(' ')[1:]:
+				if chunk in self.statusFieldsToIgnore: continue
+				textList.append(chunk)
+		for child in self.children:
+			if not child.name: continue
+			text=None
+			if child.role==controlTypes.ROLE_GRAPHIC:
+				if child.name in self.cellValuesToIgnore:
+					continue
+				if child.name in self.positiveCellValues:
+					text=child.columnHeaderText
+			if not text:
+				if config.conf['documentFormatting']['reportTableHeaders'] and child.columnHeaderText:
+					text=u"{header} {name}".format(header=child.columnHeaderText,name=child.name)
+				else:
+					text=child.name
+			if text:
+				if child.role!=controlTypes.ROLE_GRAPHIC:
+					text+=","
+				textList.append(text)
+		return " ".join(textList)
+
+	value=None
+
+	def setFocus(self):
+		super(UIAGridRow,self).setFocus()
+		eventHandler.queueEvent("gainFocus",self)
