@@ -236,9 +236,15 @@ class CalendarDayView(IAccessible):
 	"""Support for day view in Outlook Calendar.
 	"""
 	def script_moveByEntry(self,gesture):
+		oldName=self._get_name()
+		oldValue=self._get_value()
 		gesture.send()
 		api.processPendingEvents(processEventQueue=False)
-		if not eventHandler.isPendingEvents("gainFocus"):
+		if eventHandler.isPendingEvents("gainFocus"):
+			return
+		if self.name!=oldName:
+			self.event_nameChange()
+		if self.value!=oldValue:
 			self.event_valueChange()
 
 	__moveByEntryGestures = (
