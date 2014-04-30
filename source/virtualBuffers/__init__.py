@@ -239,6 +239,12 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 			# We only consider region to be a landmark if it has a name.
 			del attrs["landmark"]
 
+		# Expose a unique ID on the controlField for quick and safe comparison using the virtualBuffer field's docHandle and ID
+		docHandle=attrs.get('controlIdentifier_docHandle')
+		ID=attrs.get('controlIdentifier_ID')
+		if docHandle is not None and ID is not None:
+			attrs['uniqueID']=(docHandle,ID)
+
 		return attrs
 
 	def _normalizeFormatField(self, attrs):
