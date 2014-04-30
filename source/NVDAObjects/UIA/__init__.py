@@ -543,11 +543,39 @@ class UIA(Window):
 			return val+1
 		raise NotImplementedError
 
+	def _get_rowHeaderText(self):
+		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_TableItemRowHeaderItemsPropertyId ,True)
+		if val==UIAHandler.handler.reservedNotSupportedValue:
+			raise NotImplementedError
+		val=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
+		textList=[]
+		for i in xrange(val.length):
+			e=val.getElement(i)
+			obj=UIA(windowHandle=self.windowHandle,UIAElement=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
+			if not obj: continue
+			text=obj.makeTextInfo(textInfos.POSITION_ALL).text
+			textList.append(text)
+		return " ".join(textList)
+
 	def _get_columnNumber(self):
 		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridItemColumnPropertyId,True)
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return val+1
 		raise NotImplementedError
+
+	def _get_columnHeaderText(self):
+		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId ,True)
+		if val==UIAHandler.handler.reservedNotSupportedValue:
+			raise NotImplementedError
+		val=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
+		textList=[]
+		for i in xrange(val.length):
+			e=val.getElement(i)
+			obj=UIA(windowHandle=self.windowHandle,UIAElement=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
+			if not obj: continue
+			text=obj.makeTextInfo(textInfos.POSITION_ALL).text
+			textList.append(text)
+		return " ".join(textList)
 
 	def _get_rowCount(self):
 		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridRowCountPropertyId,True)
@@ -559,6 +587,12 @@ class UIA(Window):
 		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridColumnCountPropertyId,True)
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return val
+		raise NotImplementedError
+
+	def _get_table(self):
+		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridItemContainingGridPropertyId ,True)
+		if val!=UIAHandler.handler.reservedNotSupportedValue:
+			return UIA(UIAElement=val)
 		raise NotImplementedError
 
 	def _get_processID(self):
