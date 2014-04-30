@@ -11,6 +11,7 @@
 - In accessible Java applications, keyboard shortcuts are now announced for controls that have them. (#3881)
 - In browse mode, labels on landmarks are now reported. They are also included in the Elements List dialog. (#1195)
 - In browse mode, labelled regions are now treated as landmarks. (#3741)
+- In Internet Explorer documents and applications, Live Regions (part of the W3c ARIA standard) are now supported, thus allowing web authors to mark particular content to be automatically spoken as it changes. (#1846)
 
 
 == Changes ==
@@ -30,6 +31,8 @@
 - In Microsoft PowerPoint with speaking of typed words enabled, characters erased with backspace are no longer announced as part of the typed word. (#3231)
 - In Microsoft Office 2010 Options dialogs, the labels of combo boxes are reported correctly. (#4056)
 - In browse mode in Mozilla applications, using quick navigation commands to move to the next or previous button or form field now includes toggle buttons as expected. (#4098)
+- The content of alerts in Mozilla applications is no longer reported twice. (#3481)
+- In browse mode, containers and landmarks are no longer inappropriately repeated while navigating within them at the same time as page content is changing (e.g. navigating the Facebook and Twitter websites). (#2199)
 
 
 = 2014.1 =
