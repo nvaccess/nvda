@@ -285,6 +285,7 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				if chunk in self.statusFieldsToIgnore: continue
 				textList.append(chunk)
 		for child in self.children:
+			if isinstance(child,UIAGridRow): continue
 			if not child.name: continue
 			text=None
 			if child.role==controlTypes.ROLE_GRAPHIC:
