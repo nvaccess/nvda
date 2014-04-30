@@ -237,11 +237,15 @@ class CalendarDayView(IAccessible):
 	"""
 	def script_moveByEntry(self,gesture):
 		gesture.send()
-		self.event_valueChange()
+		api.processPendingEvents(processEventQueue=False)
+		if not eventHandler.isPendingEvents("gainFocus"):
+			self.event_valueChange()
 
 	__moveByEntryGestures = (
 		"kb:downArrow",
 		"kb:upArrow",
+		"kb:leftArrow",
+		"kb:rightArrow",
 		"kb:home",
 		"kb:end",
 		"kb:delete",
