@@ -485,6 +485,10 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	macro_addHTMLAttributeToMap(L"aria-multiline",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-label",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-hidden",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-live",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-relevant",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-busy",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-atomic",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	pHTMLAttributeCollection2->Release();
 }
 
@@ -738,7 +742,7 @@ wostringstream tempStringStream;
 	return tableInfo;
 }
 
-VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfo, int* LIIndexPtr, bool ignoreInteractiveUnlabelledGraphics, bool allowPreformattedText, bool shouldSkipText) {
+VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, VBufStorage_controlFieldNode_t* oldNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfo, int* LIIndexPtr, bool ignoreInteractiveUnlabelledGraphics, bool allowPreformattedText, bool shouldSkipText, bool inNewSubtree,set<VBufStorage_controlFieldNode_t*>& atomicNodes) {
 	BSTR tempBSTR=NULL;
 	wostringstream tempStringStream;
 
@@ -858,8 +862,15 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		language=static_cast<MshtmlVBufStorage_controlFieldNode_t*>(parentNode)->language;
 	}
 
-	//Add the node to the buffer
 	VBufStorage_controlFieldNode_t* node=new MshtmlVBufStorage_controlFieldNode_t(docHandle,ID,isBlock,this,pHTMLDOMNode,language);
+	((MshtmlVBufStorage_controlFieldNode_t*)node)->preProcessLiveRegion((MshtmlVBufStorage_controlFieldNode_t*)(oldNode?oldNode->getParent():parentNode),attribsMap);
+	bool wasInNewSubtree=inNewSubtree;
+	if(!wasInNewSubtree&&!oldNode) {
+		oldNode=this->getControlFieldNodeWithIdentifier(docHandle,ID);
+		if(oldNode&&oldNode->isHidden) oldNode=NULL;
+		inNewSubtree=!oldNode;
+	}
+	//Add the node to the buffer
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,node);
 	nhAssert(parentNode);
 	previousNode=NULL;
@@ -1128,7 +1139,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 				IHTMLDOMNode* childPHTMLDOMNode=NULL;
 				getHTMLSubdocumentBodyFromIAccessibleFrame(pacc,&childPHTMLDOMNode);
 				if(childPHTMLDOMNode) {
-					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfo,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText,shouldSkipText);
+					previousNode=this->fillVBuf(buffer,parentNode,previousNode,NULL,childPHTMLDOMNode,docHandle,tableInfo,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText,shouldSkipText,inNewSubtree,atomicNodes);
 					childPHTMLDOMNode->Release();
 				}
 			}
@@ -1152,7 +1163,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 						}
 						IHTMLDOMNode* childPHTMLDOMNode=NULL;
 						if(childPDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode)==S_OK) {
-							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfo,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText,shouldSkipText);
+							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,NULL,childPHTMLDOMNode,docHandle,tableInfo,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText,shouldSkipText,inNewSubtree,atomicNodes);
 							if(tempNode) {
 								previousNode=tempNode;
 							}
@@ -1239,6 +1250,16 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		parentNode->addAttribute(tempIter->first,tempIter->second);
 	}
 
+	// Report any live region update for this node
+	if(!wasInNewSubtree&&!hidden) {
+		((MshtmlVBufStorage_controlFieldNode_t*)parentNode)->postProcessLiveRegion(oldNode,atomicNodes);
+		auto i=atomicNodes.find(parentNode);
+		if(i!=atomicNodes.end()) {
+			((MshtmlVBufStorage_controlFieldNode_t*)(*i))->reportLiveAddition();
+			atomicNodes.erase(i);
+		}
+	}
+
 	return parentNode;
 }
 
@@ -1279,7 +1300,11 @@ void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, in
 		pHTMLElement->Release();
 	}
 	nhAssert(pHTMLDOMNode);
-	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle,NULL,NULL,false,false,false);
+	set<VBufStorage_controlFieldNode_t*> atomicNodes;
+	this->fillVBuf(buffer,NULL,NULL,oldNode,pHTMLDOMNode,docHandle,NULL,NULL,false,false,false,false,atomicNodes);
+	for(auto& i: atomicNodes) {
+		((MshtmlVBufStorage_controlFieldNode_t*)i)->reportLiveAddition();
+	}
 	pHTMLDOMNode->Release();
 }
 
