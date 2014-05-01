@@ -6,6 +6,7 @@
 
 from comtypes import COMError
 import comtypes.client
+import comHelper
 import winUser
 import appModuleHandler
 import eventHandler
@@ -49,7 +50,7 @@ class AppModule(appModuleHandler.AppModule):
 	def _get_nativeOm(self):
 		if not getattr(self,'_nativeOm',None):
 			try:
-				nativeOm=comtypes.client.GetActiveObject("outlook.application",dynamic=True)
+				nativeOm=comHelper.getActiveObject("outlook.application",dynamic=True)
 			except (COMError,WindowsError):
 				nativeOm=None
 			self._nativeOm=nativeOm
