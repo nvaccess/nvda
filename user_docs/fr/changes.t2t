@@ -9,7 +9,7 @@ Quoi de Neuf dans NVDA
 - L'annonce du texte sélectionné est maintenant possible dans certains champs de saisie personnalisés où l'information d'affichage est utilisée. (#770)
 - Dans les applications Java accessibles, l'information sur la position est maintenant annoncée pour les boutons radio et les autres contrôles qui ont une information de groupe. (#3754)
 - Dans les applications Java accessibles, les touches de raccourci sont maintenant annoncées lorsque disponibles. (#3881)
-- En mode navigation, les étiquettes des régions sont maintenant annoncées. Elles sont maintenant incluses dans la boîte de dialogue de liste des éléments. (#1195)
+- En mode navigation, les étiquettes des régions sont maintenant annoncées. Elles sont maintenant incluses dans le dialogue de liste des éléments. (#1195)
 - En mode navigation, les régions labellisées sont maintenant traitées comme des régions. (#3741)
 
 
@@ -17,8 +17,10 @@ Quoi de Neuf dans NVDA
 - Le menu Système standard de Windows n'est plus accidentellement silencieux dans les applications Java. (#3882)
 - Lorsque l'on copie du texte avec la revue d'écran, les sauts de ligne ne sont plus ignorés. (#3900)
 - Les objets vides inutiles ne sont plus annoncés dans certaines applications lorsque le focus change ou lors de l'utilisation du navigateur d'objets en mode de revue simple. (#3839)
-- Les boîtes de dialogues de messages et les autres boîtes de dialogues créées par NVDA causent à nouveau l'arrêt de la parole avant l'annonce de celle-ci.
-- En mode navigation, l'étiquette des liens et boutons sont maintenant affichés correctement là où il a été défini par l'autheur pour l'accessibilité (spécifiquement, l'utilisation de aria-label ou aria-labelledby). (#1354)
+- Les dialogues de messages et les autres dialogues créés par NVDA causent à nouveau l'arrêt de la parole avant leur annonce.
+- En mode navigation, les étiquettes des liens et boutons sont maintenant affichées correctement là où il a été défini par l'auteur pour l'accessibilité (spécifiquement, l'utilisation de aria-label ou aria-labelledby). (#1354)
+- En mode navigation dans Internet Explorer, le texte contenu dans un élément marqué comme étant pour la présentation (aria-presentation) n'est plus ignoré de manière inappropriée. (#4031)
+- Il est maintenant possible de saisir du texte en vietnamien avec le logiciel Unikey. Pour ce faire, décochez la case Exécuter les touches d'autres applications ajoutée dans le dialogue Paramètre du Clavier de NVDA. (#4043)
 
 
 = 2014.1 =
