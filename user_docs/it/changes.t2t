@@ -3,6 +3,25 @@
 
 %!includeconf: ../changes.t2tconf
 
+
+= 2014.2 =
+
+== Novità ==
+- è ora possibile ascoltare la selezione del testo in alcuni campi editazione personalizzati, dove viene ancora utilizzata la modalità di prelevare informazioni dallo schermo. (#770)
+- Nelle applicazioni Java accessibili, ora vengono annunciate le informazioni sulla posizione di pulsanti radio e altri controlli che espongono queste informazioni in gruppo. (#3854)
+- Nelle applicazioni Java accessibili, ora vengono lette le scorciatoie da tastiera per i controlli che ne fanno uso. (#3881)
+- In modalità navigazione, vengono annunciate le etichette nelle sezioni. Questi elementi sono anche presenti nella finestra che si ottiene premendo NVDA+f7. (#1195)
+- In modalità navigazione, le regioni etichettate vengono ora trattate come sezioni. #3741)
+
+
+== Bug corretti ==
+- il menu di sistema standard che si ottiene con la combinazione alt+spazio non viene più accidentalmente silenziato nelle applicazioni java. (#3882)
+- Durante la copia del testo dalla modalità di controllo, non verranno più ignorate le interruzioni di riga. (#3900)
+- Non vengono più annunciati oggetti formati solo da spazi vuoti o bianchi in alcune applicazioni durante il cambiamento del focus. (#3839)
+- Corretto un bug che impediva la corretta gestione della sintesi vocale all'apertura improvvisa di finestre di dialogo di NVDA.
+- In modalità navigazione, le etichette di controlli quali link e bottoni vengono ora gestite correttamente laddove l'etichetta è stata sovrascritta dall'autore, con lo scopo di aumentarne l'accessibilità. (#1354)
+
+
 = 2014.2 =
 
 == Novità ==
