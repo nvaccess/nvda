@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr 2013.1:6039\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-07 18:54+1000\n"
+"POT-Creation-Date: 2014-04-22 19:10+1000\n"
 "PO-Revision-Date: 2014-03-22 09:35+0545\n"
 "Last-Translator: Him Prasad Gautam <drishtibachak@gmail.com>\n"
 "Language-Team: हिम प्रसाद गौतम <himjee@yahoo.com>\n"
@@ -124,6 +124,10 @@ msgstr "खोजी"
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
 msgstr "फाराम"
+
+#. Translators: Reported for a significant region, normally found on web pages.
+msgid "region"
+msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2466,7 +2470,7 @@ msgstr "आदेशको छरितो सन्दर्भसूची"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
 msgid "User Guide"
-msgstr "उपभोक्ता निर्देशिका"
+msgstr "उपयोग निर्देशिका"
 
 #. Translators: A file extension label for NVDA add-on package.
 msgid "NVDA add-on package"
@@ -2514,11 +2518,11 @@ msgstr "ध्वनी बढाउ"
 
 #. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
 msgid "next track"
-msgstr "अर्को ट्रयाक"
+msgstr "अर्को धुन"
 
 #. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
 msgid "previous track"
-msgstr "पछिल्लो ट्रयाक"
+msgstr "पछिल्लो धुन"
 
 #. Translators: This is the name of the stop key found on multimedia keyboards to stop the current playing track in the mediaplayer.
 msgid "stop"
@@ -3803,7 +3807,7 @@ msgstr "सामान्य अनुकूलता"
 
 #. Translators: The label for the menu item to open Synthesizer settings dialog.
 msgid "&Synthesizer..."
-msgstr "&संश्लेषकको चयन ... "
+msgstr "&संश्लेषकको अनुकूलता..."
 
 msgid "Change the synthesizer to be used"
 msgstr "प्रयोग गर्नु पर्ने संश्लेषक फेर ।"
@@ -3979,7 +3983,7 @@ msgstr "मेरो बारेमा"
 
 #. Translators: The label for the Help submenu in NVDA menu.
 msgid "&Help"
-msgstr "&सहयोग"
+msgstr "&सहायता"
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
 msgid "&Configuration profiles..."
@@ -4831,6 +4835,11 @@ msgstr "caps चाबी लगाएर साना वर्ण लेख्
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "आदेश &कुञ्जी बताउ"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Handle keys from other &applications"
+msgstr ""
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
@@ -6093,60 +6102,3 @@ msgstr "HIMS ब्रेल चेतना/ब्रेल किनारा 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "%s %s देखि %s %s सम्म"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "तपाईको अभियोजन फाइलमा गल्ती छ ।\n"
-#~ " अहिले नै गल्ती सच्याउने हो भने 'ठीक' टाँक र पछि आफैँले अभियोजन फाइल सम्पादन गर्ने हो "
-#~ "भने 'रद्द' टाँक दबाउनु होला । गल्तीको विस्तृत विवरण लगत पुस्तिकामा छ ।\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "कुनै स्वचालित प्रतिक्रिया छैन ।"
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "स्वचालित प्रतिक्रिया विन्डो भेटिएन ।"
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "स्वतः प्रतिक्रिया लेख्ने बाकसमा प्रतिक्रिया जनाउने छ ।"
-
-#~ msgid "Automatic comments:"
-#~ msgstr "स्वचालित प्रतिक्रियाहरू "
-
-#~ msgid "Translation:"
-#~ msgstr "संस्थाः"
-
-#~ msgid "Comments:"
-#~ msgstr "प्रतिक्रियाहरू:"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "यो वस्तुको पुर्ण समीक्षा  छैन"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "पुर्ण समीक्षा अवस्थामा कुनै वस्तु छैन"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "पुर्ण समीक्षा भित्रको समीक्षा कर्सर बसेको पाठले प्रतिनिधित्व गरेको वस्तुमा विचरण वस्तु "
-#~ "जान्छ ।"
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "सबैभन्दा पहिले नेत्रवाणीको अरू अनुकूलता पातोलाई बन्द गर्नु होला"
-
-#~ msgid "Translation &table:"
-#~ msgstr "अनुवाद &तालिका"
-
-#~ msgid "beeps"
-#~ msgstr "टीँ गर्छ ।"
-
-#~ msgid "talk"
-#~ msgstr "बोल्छ"

@@ -22,9 +22,6 @@ dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{
 
 after-number %	(?<=\d)((\%)|(\s\%))(?=\W|$)
 
-# Fix pronunciation for some words
-no francs	F(?=\d|\s\d)
-
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
@@ -138,9 +135,6 @@ _	souligné
 ↓	flèche bas	some
 ✓	coché
 ✔	coché
-
-# Fix pronunciation of some words
-no francs	f	none	norep 
 
 # Fixes for some synthesizers
 ô	o circonflexe	char	norep
