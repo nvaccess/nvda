@@ -18,7 +18,9 @@
 - Rivinvaihtoja ei enää sivuuteta kopioitaessa tekstiä ruututarkastelusta. (#3900)
 - Hyödyttömiä tyhjätilaobjekteja ei enää lueta joissakin sovelluksissa kohdistuksen muuttuessa tai käytettäessä objektinavigointia Yksinkertaisen objektinavigoinnin ollessa käytössä. (#3839)
 - Ilmoitusruudut ja muut NVDA:n tuottamat valintaikkunat aiheuttavat taas aiemman puheen keskeyttämisen ennen kyseisen valintaikkunan lukemista.
-- Säädinten nimet, kuten  linkit ja painikkeet, hahmonnetaan nyt oikein selaustilassa, jos tekijä on korvannut nimen saavutettavuustarkoituksessa (erityisesti aria-label- tai aria-labelledby-ominaisuuksia käyttäen). (#1354)
+- Säädinten nimet, kuten  linkit ja painikkeet, hahmonnetaan nyt oikein selaustilassa, jos tekijä on korvannut nimen saavutettavuustarkoituksessa (erityisesti aria-label- tai aria-labeledby-ominaisuuksia käyttäen). (#1354)
+- Elementin sisällä olevaa esitykselliseksi  (aria-presentation) merkittyä tekstiä ei enää jätetä virheellisesti huomiotta selaustilassa Internet Explorerissa. (#4031)
+- Vietnaminkielisen tekstin kirjoittaminen on taas mahdollista Unikey-ohjelmistoa käyttäen. Tee tämä poistamalla valinta Käsittele muiden sovellusten näppäinpainallukset -valintaruudusta, joka on lisätty NVDA:n Näppäimistöasetukset-valintaikkunaan. (#4043) 
 
 
 = 2014.1 =

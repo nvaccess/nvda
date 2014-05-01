@@ -18,6 +18,8 @@
 - Wenn die vereinfachte Darstellung aktiviert ist, werden Objekte ohne Standortinformationen und Beschriftung nicht mehr angezeigt. (#3839)
 - Wenn NVDA-Meldungsfenster und -Dialoge erscheinen, wird die Sprache unterbrochen.
 - Wenn ein Webentwickler aus Gründen der Barrierefreiheit die Attribute aria-label oder aria-labelledby verwendet hat, um die Beschriftung eines Links oder Schalters zu überschreiben, werden diese Beschriftungen korrekt angezeigt. (#1354)
+- Wenn im Lesemodus im Internet Explorer ein Element als gestaltendes Element markiert wurde  (indem aria-presentation verwendet wird), wird der enthaltene Text nicht mehr ignoriert. (#4031)
+- Sie können nun wieder das Programm Unikey verwenden, um vietnamesische Sonderzeichen einzugeben. Deaktivieren Sie hierzu die neu hinzugekommene Option "Tastendrücke anderer Anwendungen verarbeiten" in den Tastatureinstellungen. (#4043) 
 
 = 2014.1 =
 
