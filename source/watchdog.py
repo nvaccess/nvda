@@ -20,6 +20,7 @@ from logHandler import log
 import NVDAHelper
 import globalVars
 import core
+import NVDAHelper
 
 #settings
 #: The minimum time to wait for the core to be alive.
