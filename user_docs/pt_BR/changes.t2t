@@ -17,12 +17,21 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 - No modo de navegação, as regiões etiquetadas agora são tratadas como marcas. (#3741)
 
 
+== Alterações ==
+- Ao sair de um diálogo ou aplicação contida em um documento do modo de navegação, o nome e tipo do documento do modo de navegação já não são anunciados. (#4069)
+
+
 == Correção de falhas ==
 - O menu sistema padrão do Windows já não é silenciado acidentalmente em aplicativos Java. (#3882)
 - Ao copiar textos via exploração de tela, as quebras de linha já não são ignoradas. (#3900)
 - Objetos que constituem-se de espaços em branco sem utilidade já não são anunciados em alguns aplicativos quando o foco muda ou ao usar a navegação de objetos com o modo de revisão simples abilitado. (#3839)
 - Caixas de texto e outros diálogos produzidos pelo NVDA voltam a fazer com que a fala anterior  seja cancelada antes do anúncio do diálogo.
 - No modo de navegação, as etiquetas dos controles tais como links e botões agora são renderizadas corretamente quando a etiqueta tiver sido substituída pelo autor para propósitos de acessibilidade purposes (especificamente, usando aria-label ou aria-labelledby). (#1354)
+- NO modo de navegação, os itens de rádio e itens de menu de seleção são agora anunciados como controles em lugar de o serem apenas como texto clicável. (#4092)
+- O NVDA já não alterna incorretamente do modo de foco para o modo de navegação quando um item de radio ou de menu de seleção recebe foco. (#4092)
+- No Microsoft PowerPoint com o anúncio de palavras digitadas ativado, caracteres deletados usando backspace já não são anunciados como parte da palavra digitada. (#3231)
+- No Diálogo de Opções do Microsoft Office 2010, as etiquetas das caixas de combinação agora são anunciadas corretamente. (#4056)
+- No modo de navegação em aplicativos da Mozilla, usando-se os comandos de navegação  rápida para mover-se para o próximo ou anterior botão ou campo de formulário, agora inclui botões de altenância como é esperado. (#4098)
 
 
 = 2014.1 =
