@@ -250,7 +250,7 @@ class AutoCompleteListItem(IAccessible):
 			ui.message(self.name)
 
 class CalendarView(IAccessible):
-	"""Support for day view in Outlook Calendar.
+	"""Support for announcing time slots and appointments in Outlook Calendar.
 	"""
 
 	_lastStartDate=None
