@@ -126,14 +126,15 @@ class SuperGridClient2010(IAccessible):
 
 	def event_gainFocus(self):
 		# #3834: UIA has a much better implementation for rows, so use it if available.
-		if self.appModule.outlookVersion==14 and UIAHandler.handler:
-			try:
-				kwargs = {}
-				UIA.kwargsFromSuper(kwargs, relation="focus")
-				obj=UIA(**kwargs)
-			except:
-				log.debugWarning("Retrieving UIA focus failed", exc_info=True)
-				return super(SuperGridClient2010,self).event_gainFocus()
+		if self.appModule.outlookVersion<14 or not UIAHandler.handler:
+			return super(SuperGridClient2010,self).event_gainFocus()
+		try:
+			kwargs = {}
+			UIA.kwargsFromSuper(kwargs, relation="focus")
+			obj=UIA(**kwargs)
+		except:
+			log.debugWarning("Retrieving UIA focus failed", exc_info=True)
+			return super(SuperGridClient2010,self).event_gainFocus()
 		if not isinstance(obj,UIAGridRow):
 			return super(SuperGridClient2010,self).event_gainFocus()
 		obj.parent=self.parent
