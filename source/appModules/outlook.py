@@ -21,6 +21,13 @@ from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation
 from NVDAObjects.UIA import UIA
 
+importanceLabels={
+	# Translators: for a high importance email
+	2:_("high importance"),
+	# Translators: For a low importance email
+	0:_("low importance"),
+}
+
 def getContactString(obj):
 		return ", ".join([x for x in [obj.fullName,obj.companyName,obj.jobTitle,obj.email1address] if x and not x.isspace()])
 
@@ -254,54 +261,46 @@ class AutoCompleteListItem(IAccessible):
 
 class UIAGridRow(RowWithFakeNavigation,UIA):
 
-	# Status fields (Replied, Read, Unread etc) to be ignored (e.g. Read)
-	statusFieldsToIgnore=frozenset([
-		# English:
-		"Read",
-	])
-
-	# Values that should be ignored as they are defaults
-	cellValuesToIgnore=frozenset([
-		# English
-		"Normal","Unknown","None","No","Header",
-	])
-
-	# Values which should cause the header to be used instead (e.g. Yes in the Attachment column)
-	positiveCellValues=frozenset([
-		# English
-		"Yes",
-	])
-
 	rowHeaderText=None
 	columnHeaderText=None
 
 	def _get_name(self):
 		textList=[]
-		if self.appModule.outlookVersion>=15:
-			status=super(UIAGridRow,self).value
-		else:
-			status=super(UIAGridRow,self).name
-		if status:
-			for chunk in status.split(' ')[1:]:
-				if chunk in self.statusFieldsToIgnore: continue
-				textList.append(chunk)
+		selection=None
+		if self.appModule.nativeOm:
+			try:
+				selection=self.appModule.nativeOm.activeExplorer().selection.item(1)
+			except COMError:
+				pass
+		if selection:
+			try:
+				unread=selection.unread
+			except COMError:
+				unread=False
+			# Translators: when an email is unread
+			if unread: textList.append(_("unread"))
+			try:
+				attachmentCount=selection.attachments.count
+			except COMError:
+				attachmentCount=0
+			# Translators: when an email has attachments
+			if attachmentCount>0: textList.append(_("has attachment"))
+			try:
+				importance=selection.importance
+			except COMError:
+				importance=1
+			importanceLabel=importanceLabels.get(importance)
+			if importanceLabel: textList.append(importanceLabel)
 		for child in self.children:
-			if isinstance(child,UIAGridRow): continue
-			if not child.name: continue
+			if isinstance(child,UIAGridRow) or child.role==controlTypes.ROLE_GRAPHIC or not child.name:
+				continue
 			text=None
-			if child.role==controlTypes.ROLE_GRAPHIC:
-				if child.name in self.cellValuesToIgnore:
-					continue
-				if child.name in self.positiveCellValues:
-					text=child.columnHeaderText
-			if not text:
-				if config.conf['documentFormatting']['reportTableHeaders'] and child.columnHeaderText:
-					text=u"{header} {name}".format(header=child.columnHeaderText,name=child.name)
-				else:
-					text=child.name
+			if config.conf['documentFormatting']['reportTableHeaders'] and child.columnHeaderText:
+				text=u"{header} {name}".format(header=child.columnHeaderText,name=child.name)
+			else:
+				text=child.name
 			if text:
-				if child.role!=controlTypes.ROLE_GRAPHIC:
-					text+=","
+				text+=","
 				textList.append(text)
 		return " ".join(textList)
 
