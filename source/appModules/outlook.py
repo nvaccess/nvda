@@ -6,7 +6,12 @@
 
 from comtypes import COMError
 import comtypes.client
+from hwPortUtils import SYSTEMTIME
+import scriptHandler
+import winKernel
+import comHelper
 import winUser
+from logHandler import log
 import appModuleHandler
 import eventHandler
 import api
@@ -49,7 +54,7 @@ class AppModule(appModuleHandler.AppModule):
 	def _get_nativeOm(self):
 		if not getattr(self,'_nativeOm',None):
 			try:
-				nativeOm=comtypes.client.GetActiveObject("outlook.application",dynamic=True)
+				nativeOm=comHelper.getActiveObject("outlook.application",dynamic=True)
 			except (COMError,WindowsError):
 				nativeOm=None
 			self._nativeOm=nativeOm
@@ -62,6 +67,11 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			outlookVersion=0
 		return outlookVersion
+
+	def isBadUIAWindow(self,hwnd):
+		if winUser.getClassName(hwnd) in ("WeekViewWnd","DayViewWnd"):
+			return True
+		return False
 
 	def event_NVDAObject_init(self,obj):
 		role=obj.role
@@ -104,6 +114,8 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, MessageList_pre2003)
 			elif obj.event_objectID==winUser.OBJID_CLIENT and obj.event_childID==0:
 				clsList.insert(0,SuperGridClient2010)
+		if (windowClassName == "AfxWndW" and controlID==109) or (windowClassName in ("WeekViewWnd","DayViewWnd")):
+			clsList.insert(0,CalendarView)
 
 class REListBox20W_CheckBox(IAccessible):
 
@@ -119,6 +131,13 @@ class SuperGridClient2010(IAccessible):
 
 	def isDuplicateIAccessibleEvent(self,obj):
 		return False
+
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		# The window must really have focus.
+		# Outlook can sometimes fire invalid focus events when showing daily tasks within the calendar.
+		if winUser.getGUIThreadInfo(self.windowThreadID).hwndFocus!=self.windowHandle:
+			return False
+		return super(SuperGridClient2010,self).shouldAllowIAccessibleFocusEvent
 
 class MessageList_pre2003(IAccessible):
 
@@ -254,3 +273,76 @@ class MsoCommandBarToolBar(IAccessible):
 		if description and description.startswith('MSO Generic Control Container'):
 			description=u""
 		return description
+
+class CalendarView(IAccessible):
+	"""Support for announcing time slots and appointments in Outlook Calendar.
+	"""
+
+	_lastStartDate=None
+
+	def _generateTimeRangeText(self,startTime,endTime):
+		startText=winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, startTime, None)
+		endText=winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, endTime, None)
+		startDate=startTime.date()
+		endDate=endTime.date()
+		if not CalendarView._lastStartDate or startDate!=CalendarView._lastStartDate or endDate!=startDate: 
+			startText="%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, startTime, None),startText)
+		if endDate!=startDate:
+			endText="%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, endTime, None),endText)
+		CalendarView._lastStartDate=startDate
+		return "%s to %s"%(startText,endText)
+
+	def script_moveByEntry(self,gesture):
+		gesture.send()
+		api.processPendingEvents(processEventQueue=False)
+		if eventHandler.isPendingEvents('gainFocus'):
+			return
+		eventHandler.executeEvent("gainFocus",self)
+
+	def reportFocus(self):
+		if self.appModule.outlookVersion>=13 and self.appModule.nativeOm:
+			e=self.appModule.nativeOm.activeExplorer()
+			s=e.selection
+			if s.count>0:
+				p=s.item(1)
+				t=self._generateTimeRangeText(p.start,p.end)
+				speech.speakMessage("Appointment %s, %s"%(p.subject,t))
+			else:
+				v=e.currentView
+				selectedStartTime=v.selectedStartTime
+				selectedEndTime=v.selectedEndTime
+				timeSlotText=self._generateTimeRangeText(selectedStartTime,selectedEndTime)
+				startLimit="%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedStartTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedStartTime, None))
+				endLimit="%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedEndTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedEndTime, None))
+				query='[Start] < "{endLimit}" And [End] > "{startLimit}"'.format(startLimit=startLimit,endLimit=endLimit)
+				log.info(query)
+				i=e.currentFolder.items
+				i.sort('[Start]')
+				i.IncludeRecurrences =True
+				if i.find(query):
+					timeSlotText="has appointment "+timeSlotText
+				speech.speakMessage(timeSlotText)
+		else:
+			self.event_valueChange()
+
+	__moveByEntryGestures = (
+		"kb:downArrow",
+		"kb:upArrow",
+		"kb:leftArrow",
+		"kb:rightArrow",
+		"kb:control+leftArrow",
+		"kb:control+rightArrow",
+		"kb:home",
+		"kb:end",
+		"kb:control+home",
+		"kb:control+end",
+		"kb:pageUp",
+		"kb:pageDown",
+		"kb:delete",
+		"kb:tab",
+		"kb:shift+tab",
+	)
+
+	def initOverlayClass(self):
+		for gesture in self.__moveByEntryGestures:
+			self.bindGesture(gesture, "moveByEntry")
