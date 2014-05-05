@@ -306,6 +306,22 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 
 	value=None
 
+	def _get_positionInfo(self):
+		info=super(UIAGridRow,self).positionInfo
+		if info is None: info={}
+		UIAClassName=self.UIAElement.cachedClassName
+		if UIAClassName=="ThreadHeader":
+			info['level']=1
+		elif UIAClassName=="ThreadItem" and isinstance(super(UIAGridRow,self).parent,UIAGridRow):
+			info['level']=2
+		return info
+
+	def _get_role(self):
+		role=super(UIAGridRow,self).role
+		if role==controlTypes.ROLE_TREEVIEW:
+			role=controlTypes.ROLE_TREEVIEWITEM
+		return role
+
 	def setFocus(self):
 		super(UIAGridRow,self).setFocus()
 		eventHandler.queueEvent("gainFocus",self)
