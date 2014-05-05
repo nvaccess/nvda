@@ -14,13 +14,24 @@ import winUser
 from logHandler import log
 import appModuleHandler
 import eventHandler
+import UIAHandler
 import api
 import controlTypes
+import config
 import speech
 import ui
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible.MSHTML import MSHTML
+from NVDAObjects.behaviors import RowWithFakeNavigation
+from NVDAObjects.UIA import UIA
+
+importanceLabels={
+	# Translators: for a high importance email
+	2:_("high importance"),
+	# Translators: For a low importance email
+	0:_("low importance"),
+}
 
 def getContactString(obj):
 		return ", ".join([x for x in [obj.fullName,obj.companyName,obj.jobTitle,obj.email1address] if x and not x.isspace()])
@@ -93,6 +104,8 @@ class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		# Currently all our custom classes are IAccessible
+		if isinstance(obj,UIA) and obj.UIAElement.cachedClassName in ("LeafRow","ThreadItem","ThreadHeader"):
+			clsList.insert(0,UIAGridRow)
 		if not isinstance(obj,IAccessible):
 			return
 		role=obj.role
@@ -138,6 +151,22 @@ class SuperGridClient2010(IAccessible):
 		if winUser.getGUIThreadInfo(self.windowThreadID).hwndFocus!=self.windowHandle:
 			return False
 		return super(SuperGridClient2010,self).shouldAllowIAccessibleFocusEvent
+
+	def event_gainFocus(self):
+		# #3834: UIA has a much better implementation for rows, so use it if available.
+		if self.appModule.outlookVersion<14 or not UIAHandler.handler:
+			return super(SuperGridClient2010,self).event_gainFocus()
+		try:
+			kwargs = {}
+			UIA.kwargsFromSuper(kwargs, relation="focus")
+			obj=UIA(**kwargs)
+		except:
+			log.debugWarning("Retrieving UIA focus failed", exc_info=True)
+			return super(SuperGridClient2010,self).event_gainFocus()
+		if not isinstance(obj,UIAGridRow):
+			return super(SuperGridClient2010,self).event_gainFocus()
+		obj.parent=self.parent
+		eventHandler.executeEvent("gainFocus",obj)
 
 class MessageList_pre2003(IAccessible):
 
@@ -346,3 +375,75 @@ class CalendarView(IAccessible):
 	def initOverlayClass(self):
 		for gesture in self.__moveByEntryGestures:
 			self.bindGesture(gesture, "moveByEntry")
+
+class UIAGridRow(RowWithFakeNavigation,UIA):
+
+	rowHeaderText=None
+	columnHeaderText=None
+
+	def _get_name(self):
+		textList=[]
+		if controlTypes.STATE_EXPANDED in self.states:
+			textList.append(controlTypes.stateLabels[controlTypes.STATE_EXPANDED])
+		elif controlTypes.STATE_COLLAPSED in self.states:
+			textList.append(controlTypes.stateLabels[controlTypes.STATE_COLLAPSED])
+		selection=None
+		if self.appModule.nativeOm:
+			try:
+				selection=self.appModule.nativeOm.activeExplorer().selection.item(1)
+			except COMError:
+				pass
+		if selection:
+			try:
+				unread=selection.unread
+			except COMError:
+				unread=False
+			# Translators: when an email is unread
+			if unread: textList.append(_("unread"))
+			try:
+				attachmentCount=selection.attachments.count
+			except COMError:
+				attachmentCount=0
+			# Translators: when an email has attachments
+			if attachmentCount>0: textList.append(_("has attachment"))
+			try:
+				importance=selection.importance
+			except COMError:
+				importance=1
+			importanceLabel=importanceLabels.get(importance)
+			if importanceLabel: textList.append(importanceLabel)
+		for child in self.children:
+			if isinstance(child,UIAGridRow) or child.role==controlTypes.ROLE_GRAPHIC or not child.name:
+				continue
+			text=None
+			if config.conf['documentFormatting']['reportTableHeaders'] and child.columnHeaderText:
+				text=u"{header} {name}".format(header=child.columnHeaderText,name=child.name)
+			else:
+				text=child.name
+			if text:
+				text+=","
+				textList.append(text)
+		return " ".join(textList)
+
+	value=None
+
+	def _get_positionInfo(self):
+		info=super(UIAGridRow,self).positionInfo
+		if info is None: info={}
+		UIAClassName=self.UIAElement.cachedClassName
+		if UIAClassName=="ThreadHeader":
+			info['level']=1
+		elif UIAClassName=="ThreadItem" and isinstance(super(UIAGridRow,self).parent,UIAGridRow):
+			info['level']=2
+		return info
+
+	def _get_role(self):
+		role=super(UIAGridRow,self).role
+		if role==controlTypes.ROLE_TREEVIEW:
+			role=controlTypes.ROLE_TREEVIEWITEM
+		return role
+
+	def setFocus(self):
+		super(UIAGridRow,self).setFocus()
+		eventHandler.queueEvent("gainFocus",self)
+
