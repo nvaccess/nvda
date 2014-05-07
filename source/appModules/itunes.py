@@ -12,14 +12,17 @@ import NVDAObjects.IAccessible
 class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
-		if isinstance(obj,NVDAObjects.IAccessible.IAccessible) and not isinstance(obj,WebKitWrapper):
-			obj.shouldAllowIAccessibleFocusEvent=True
+		if isinstance(obj,NVDAObjects.IAccessible.IAccessible):
 			if obj.windowClassName=="WebViewWindowClass":
 				if obj.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
 					#Disable a safety mechonism in our IAccessible support as in iTunes it causes an infinit ancestry.
 					obj.parentUsesSuperOnWindowRootIAccessible=False
 				else:
 					obj.hasEncodedAccDescription=True
+			elif obj.role==controlTypes.ROLE_BUTTON:
+				# iTunes seems to put some controls inside a button.
+				# Don't report this weirdness to the user.
+				obj.isPresentableFocusAncestor=False
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClassName=obj.windowClassName
@@ -28,6 +31,8 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, ITunesItem)
 		elif windowClassName=="iTunesWebViewControl" and role==controlTypes.ROLE_DOCUMENT:
 			clsList.insert(0,WebKitWrapper)
+		elif windowClassName=="iTunes" and obj.IAccessibleRole==oleacc.ROLE_SYSTEM_CLIENT:
+			clsList.insert(0, TopLevelClient)
 
 class ITunesItem(NVDAObjects.IAccessible.IAccessible):
 	"""Retreaves position information encoded in the accDescription"""
@@ -51,6 +56,12 @@ class ITunesItem(NVDAObjects.IAccessible.IAccessible):
 			previous=NVDAObjects.IAccessible.IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=self.IAccessibleChildID-1)
 		return previous
 
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		# These items can fire spurious focus events; e.g. when tabbing out of the Music list.
+		# The list reports that it's focused even when it isn't.
+		# Thankfully, the list items don't.
+		return self.hasFocus
+
 class WebKitWrapper(NVDAObjects.IAccessible.IAccessible):
 	"""An iTunes wrapper around a WebKit document.
 	"""
@@ -59,7 +70,6 @@ class WebKitWrapper(NVDAObjects.IAccessible.IAccessible):
 	presentationType = NVDAObjects.IAccessible.IAccessible.presType_layout
 
 	def event_stateChange(self):
-		from logHandler import log
 		# iTunes has indicated that a page has died and been replaced by a new one.
 		focus = api.getFocusObject()
 		if not winUser.isDescendantWindow(self.windowHandle, focus.windowHandle):
@@ -72,3 +82,13 @@ class WebKitWrapper(NVDAObjects.IAccessible.IAccessible):
 			speech.cancelSpeech()
 			treeInterceptorHandler.killTreeInterceptor(focus.treeInterceptor)
 		eventHandler.queueEvent("gainFocus",obj)
+
+class TopLevelClient(NVDAObjects.IAccessible.IAccessible):
+
+	def _isEqual(self, other):
+		# The location seems to be reported differently depending on how you get to this object.
+		# This causes the focus ancestry to change when it really hasn't,
+		# which in turn causes spurious reporting.
+		if self.IAccessibleIdentity == other.IAccessibleIdentity:
+			return True
+		return super(TopLevelClient, self)._isEqual(other)
