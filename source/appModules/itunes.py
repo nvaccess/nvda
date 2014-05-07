@@ -37,13 +37,15 @@ class ITunesItem(NVDAObjects.IAccessible.IAccessible):
 
 	def _get_next(self):
 		next=super(ITunesItem,self).next
+		if next:
+			return next
 		try:
-			parentChildCount=self.IAccessibleObject.accParent.accChildCount
+			parentChildCount=self.IAccessibleObject.accChildCount
 		except COMError:
 			parentChildCount=0
-		if not next and self.IAccessibleChildID>0 and self.IAccessibleChildID<parentChildCount:
-			next=NVDAObjects.IAccessible.IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=self.IAccessibleChildID+1)
-		return next
+		if self.IAccessibleChildID>0 and self.IAccessibleChildID<parentChildCount:
+			return NVDAObjects.IAccessible.IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=self.IAccessibleChildID+1)
+		return None
 
 	def _get_previous(self):
 		previous=super(ITunesItem,self).previous
