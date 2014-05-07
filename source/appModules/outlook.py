@@ -280,7 +280,12 @@ class CalendarView(IAccessible):
 			s=e.selection
 			if s.count>0:
 				p=s.item(1)
-				t=self._generateTimeRangeText(p.start,p.end)
+				try:
+					start=p.start
+					end=p.end
+				except COMError:
+					return super(CalendarView,self).reportFocus()
+				t=self._generateTimeRangeText(start,end)
 				speech.speakMessage("Appointment %s, %s"%(p.subject,t))
 			else:
 				v=e.currentView
