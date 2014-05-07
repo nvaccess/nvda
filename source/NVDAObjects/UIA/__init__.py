@@ -237,8 +237,6 @@ class UIATextInfo(textInfos.TextInfo):
 
 class UIA(Window):
 
-	liveNVDAObjectTable=weakref.WeakValueDictionary()
-
 	def findOverlayClasses(self,clsList):
 		if self.TextInfo==UIATextInfo:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
@@ -303,30 +301,11 @@ class UIA(Window):
 		kwargs['UIAElement']=UIAElement
 		return True
 
-	def __new__(cls,relation=None,windowHandle=None,UIAElement=None):
-		try:
-			runtimeId=UIAElement.getRuntimeId()
-		except COMError:
-			log.debugWarning("Could not get UIA element runtime Id",exc_info=True)
-			runtimeId=None
-
-		obj=cls.liveNVDAObjectTable.get(runtimeId,None) if runtimeId else None
-		if not obj:
-			obj=super(UIA,cls).__new__(cls)
-			if not obj:
-				return None
-			obj.UIARuntimeId=runtimeId
-		obj.UIAElement=UIAElement
-		return obj
-
 	def __init__(self,windowHandle=None,UIAElement=None):
-		if getattr(self,"_doneInit",False):
-			# This instance was retrieved from the cache by __new__ and has already been constructed.
-			return
-		self._doneInit=True
-
 		if not UIAElement:
 			raise ValueError("needs a UIA element")
+
+		self.UIAElement=UIAElement
 
 		UIACachedWindowHandle=UIAElement.cachedNativeWindowHandle
 		self.UIAIsWindowElement=bool(UIACachedWindowHandle)
@@ -337,12 +316,6 @@ class UIA(Window):
 		if not windowHandle:
 			raise InvalidNVDAObject("no windowHandle")
 		super(UIA,self).__init__(windowHandle=windowHandle)
-
-		# UIARuntimeId is set by __new__.
-		if self.UIARuntimeId:
-			# This must be the last thing in the constructor,
-			# as this object should only be cached if construction succeeds.
-			self.liveNVDAObjectTable[self.UIARuntimeId]=self
 
 	def _isEqual(self,other):
 		if not isinstance(other,UIA):

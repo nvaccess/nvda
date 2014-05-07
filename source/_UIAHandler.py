@@ -185,6 +185,9 @@ class UIAHandler(COMObject):
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if not obj or (NVDAEventName=="gainFocus" and not obj.shouldAllowUIAFocusEvent):
 			return
+		focus=api.getFocusObject()
+		if obj==focus:
+			obj=focus
 		eventHandler.queueEvent(NVDAEventName,obj)
 
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
@@ -228,6 +231,9 @@ class UIAHandler(COMObject):
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if not obj:
 			return
+		focus=api.getFocusObject()
+		if obj==focus:
+			obj=focus
 		eventHandler.queueEvent(NVDAEventName,obj)
 
 	def _isUIAWindowHelper(self,hwnd):
