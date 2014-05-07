@@ -417,6 +417,13 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 				importance=1
 			importanceLabel=importanceLabels.get(importance)
 			if importanceLabel: textList.append(importanceLabel)
+			try:
+				messageClass=selection.messageClass
+			except COMError:
+				messageClass=None
+			if messageClass=="IPM.Schedule.Meeting.Request":
+				# Translators: the email is a meeting request
+				textList.append(_("meeting request"))
 		for child in self.children:
 			if isinstance(child,UIAGridRow) or child.role==controlTypes.ROLE_GRAPHIC or not child.name:
 				continue
