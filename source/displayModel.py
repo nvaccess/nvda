@@ -540,7 +540,7 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		left,top,right,bottom=rects[offset]
 		x=left #+(right-left)/2
 		y=top+(bottom-top)/2
-		x,y=windowUtils.logicalToPhysicalPoint(x,y)
+		x,y=windowUtils.logicalToPhysicalPoint(self.obj.windowHandle,x,y)
 		oldX,oldY=winUser.getCursorPos()
 		winUser.setCursorPos(x,y)
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
