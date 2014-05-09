@@ -780,6 +780,31 @@ This means that you do not have to scroll the display at the end of each line ev
 This may allow for more fluent reading of large amounts of text.
 It is disabled by default.
 
++++ Braille abbreviations used in NVDA +++
+In order to fit as much information about a control as possible on a braille display, NVDA uses abbreviations to indicate the type and state of the current control.
+This includes abbreviations for controls such as menus and combo boxes, as well as whether a check box is checked and so on.
+
+Below is a list of braille abbreviations used in NVDA:
+- edt: edit.
+- lst: list.
+- mnubar: menu bar.
+- mnu: menu.
+- btn: button.
+- chk: check box.
+- rbtn: radio button.
+- cbo: combo box.
+- lnk: link.
+-dlg: dialog.
+- tv: treeview.
+- tb: table.
+- gra: graphic.
+- submnu: submenu.
+- clk: clickable.
+- vlnk: visited link.
+- hN: heading level N (for example, h1 for heading level 1).
+- lv: level.
+-
+
 +++ Keyboard Settings (NVDA+control+k) +++
 This dialog box is found in the Preferences menu, under "Keyboard settings...".
 It contains the following options:
