@@ -57,13 +57,15 @@ Pre viac informácií si môžete pozrieť [kompletnú licenciu (anglicky) http:
 
 + Systémové požiadavky +
 - NVDA spustíte v 32 aj 64 bitových verziách systémov Windows XP, Vista, 7, 8 a tiež v serverových edíciách Windows.
+- V 32-bitových  verziách Windows XP musí byť nainštalovaný Service Pack 2 alebo novší.
+ - V systémoch Windows Server 2003 musí byť nainštalovaný Service Pack 1 alebo novší.
 - Mali by ste mať najmenej 256 MB operačnej pamäte
 - Výkonnosť procesora sa odhaduje na 1 GHZ alebo rýchlejší. Spustíte ho i na pomalších počítačoch, ale štart programu bude pomalý, prejaví sa to najmä na načítaní internetových stránok.
 - Mali by ste mať aspoň 50 MB voľného miesta na disku
 -
 
 + Získanie a inštalácia programu NVDA +
-Ak ešte nemáte kópiu NVDA, môžete si ju stiahnuť z web stránky: [www.nvda-project.org NVDA_URL].
+Ak ešte nemáte kópiu NVDA, môžete si ju stiahnuť z web stránky: [www.nvaccess.org NVDA_URL].
 
 Vstúpte do sekcie download, kde nájdete priamy odkaz na stiahnutie najnovšej verzie.
 
@@ -1234,7 +1236,7 @@ Najlepšie je tieto súbory odstrániť a nahradiť ich skutočnými doplnkami h
 
 ++ Python konzola ++
 Python konzola programu NVDA, dostupná z podmenu nástroje, je nástroj pre vývojárov, ktorý umožňuje kontrolovať správnosť behu NVDA, zisťovať stav vnútorných premenných NVDA a tiež skúmať hierarchiu prístupnosti aplikácií.
-Viac informácií je dostupných v príručke pre vývojárov, ktorú nájdete na stránke NVDA v časti [vývoj (anglicky) NVDA_URLwiki/Development].
+Viac informácií je dostupných v príručke pre vývojárov, ktorú nájdete na stránke NVDA v časti [vývoj (anglicky) http://community.nvda-project.org/wiki/Development].
 
 ++ Načítať pluginy ++
 Po aktivovaní tejto položky NVDA znovu načíta pluginy a aplikačné moduly bez nutnosti reštartu. Môže byť užitočné pre vývojárov.
@@ -1305,8 +1307,8 @@ Táto sekcia obsahuje informácie o braillovských zobrazovačoch, ktoré môže
 ++ Riadky Focus/PAC Mate od spoločnosti Freedom Scientific ++
 Podporované sú všetky braillovské riadky Focus a PAC Mate od spoločnosti [Freedom Scientific http://www.freedomscientific.com/], ktoré sú k počítaču pripojené cez USB alebo bluetooth.
 Pre správnu funkčnosť musíte mať v systéme nainštalované ovládače braillovských riadkov Freedom scientific.
-Ak ich ešte nemáte, môžete ich stiahnuť zo stránky: http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
-Aj keď na stránke sa píše len o riadku Focus 40 Blue, ovládač spolupracuje so všetkými zobrazovačmi Freedom scientific.
+Ak ich ešte nemáte, môžete ich stiahnuť zo stránky http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Aj keď na stránke sa píše len o riadku Focus Blue, ovládač spolupracuje so všetkými zobrazovačmi Freedom scientific.
 Ak máte nainštalovanú 64 bitovú edíciu Windows a používate aj iný čítač obrazovky, budete pravdepodobne musieť tiež nainštalovať ovládač, pretože potrebné súbory sa nemuseli nainštalovať počas inštalácie iného čítača.
 
 NVDA sa dokáže predvolene k týmto zobrazovačom pripojiť cez USB alebo Bluetooth rozhranie.
@@ -1539,6 +1541,9 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 ++ HIMS Braille Sense/Braille EDGE Series ++
 NVDA podporuje riadky Braille Sense a Braille EDGE od spoločnosti [Hims http://www.hims-inc.com/]. Je potrebné ich pripájať cez USB alebo bluetooth rozhranie.
 Ak máte riadok pripojený cez USB, je potrebné nainštalovať ovládač dodávaný HIMS.
+Ovládače si môžete stiahnuť z centra podpory pre zariadenia HIMS http://www.hims-inc.com/resource-center/ (anglicky)
+Na tejto stránke vyberte váš typ zariadenia a stiahnite si ovládač zo sekcie Window-Eyes.
+Hoci sa v tejto časti spomína len program Window-Eyes, ide o všeobecný ovládač, ktorý bude spolupracovať aj s NVDA.
 
 Nasleduje zoznam klávesových príkazov pre tieto typy riadkov.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením  na zistenie rozmiestnenia klávesov.
@@ -1676,7 +1681,6 @@ Nasleduje zoznam klávesových príkazov pre tieto typy riadkov:
 | Prejsť na znak v brailly | smerové tlačidlá |
 | Aktuálny znak prezeracieho kurzora | l1 |
 | Aktivovať prvok zameraný objektovou navigáciou | l2 |
-| Prepnúť režim prezerania | r1 |
 | Názov okna | l1+up |
 | Stavový riadok | l2+down |
 | Nadradený objekt | up2 |
@@ -1753,7 +1757,6 @@ Zariadenia s panelom rýchleho prístupu:
 | Prejsť na znak v brailly | smerové tlačidlá |
 | Aktuálny znak prezeracieho kurzora | l1 |
 | Aktivovať prvok zameraný objektovou navigáciou | l2 |
-| Prepnúť režim prezerania | r1 |
 | Názov okna | l1+up |
 | Stavový riadok | l2+down |
 | Nadradený objekt | up2 |
@@ -1771,7 +1774,6 @@ BRAILLEX Tiny:
 | Predchádzajúci riadok | up |
 | Nasledujúci riadok | dn |
 | Prepnúť nastavenie braillovský kurzor zviazaný s | r2 |
-| Prepnúť režim prezerania | r1 |
 | Nadradený objekt | r1+up |
 | Prvý podradený objekt | r1+dn |
 | Predchádzajúci objekt | r1+left |
@@ -1786,7 +1788,6 @@ BRAILLEX 2D Screen:
 | Formátovanie textu | reportf |
 | Predchádzajúci riadok | up |
 | Posunúť riadok späť | left |
-| Prepnúť režim prezerania | r1 |
 | Posunúť riadok vpred | right |
 | Nasledujúci riadok | dn |
 | Nasledujúci objekt | left2 |
@@ -1871,7 +1872,7 @@ Napríklad je možné vybrať, či sa hlasovému výstupu bude posielať aj pôv
 
 Tieto zmeny je potrebné zapisovať ručne do súboru s nastaveniami symbolov v priečinku s ostatnými súbormi nastavení NVDA.
 Súbor je nazvaný symbols-xx.dic, kde xx je kód jazyka.
-Formát tohoto súboru je zdokumentovaný v príručke pre vývojárov, ktorú je možné získať zo stránky NVDA v časti [vývoj (anglicky) NVDA_URLwiki/Development].
+Formát tohoto súboru je zdokumentovaný v príručke pre vývojárov, ktorú je možné získať zo stránky NVDA v časti [vývoj (anglicky) http://community.nvda-project.org/wiki/Development].
 Používatelia ale nemôžu pridávať vlastné komplexné symboly.
 
 + Ako získať viac informácií +

@@ -1,6 +1,6 @@
 #aria.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2009-2012 NV Access Limited
+#Copyright (C) 2009-2014 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -79,4 +79,7 @@ landmarkRoles = {
 	"search": _("search"),
 	# Translators: Reported for the form landmark, normally found on web pages.
 	"form": _("form"),
+	# Strictly speaking, region isn't a landmark, but it is very similar.
+	# Translators: Reported for a significant region, normally found on web pages.
+	"region": _("region"),
 }

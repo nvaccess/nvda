@@ -82,6 +82,9 @@ class AppModule(appModuleHandler.AppModule):
 			obj.role=controlTypes.ROLE_LISTITEM
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		# Currently all our custom classes are IAccessible
+		if not isinstance(obj,IAccessible):
+			return
 		role=obj.role
 		windowClassName=obj.windowClassName
 		states=obj.states
@@ -97,7 +100,7 @@ class AppModule(appModuleHandler.AppModule):
 			outlookVersion=self.outlookVersion
 			if outlookVersion and outlookVersion<=9:
 				clsList.insert(0, MessageList_pre2003)
-			elif isinstance(obj,IAccessible) and obj.event_objectID==winUser.OBJID_CLIENT and obj.event_childID==0:
+			elif obj.event_objectID==winUser.OBJID_CLIENT and obj.event_childID==0:
 				clsList.insert(0,SuperGridClient2010)
 
 class REListBox20W_CheckBox(IAccessible):

@@ -15,6 +15,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define WIN32_LEAN_AND_MEAN 
 
 #include <sstream>
+#include <vector>
 #include <comdef.h>
 #include <windows.h>
 #include <oleacc.h>
@@ -67,6 +68,7 @@ using namespace std;
 #define wdDISPID_CONTENTCONTROL_TITLE 12
 #define wdDISPID_STYLE_NAMELOCAL 0
 #define wdDISPID_RANGE_SPELLINGERRORS 316
+#define wdDISPID_SPELLINGERRORS_ITEM 0
 #define wdDISPID_SPELLINGERRORS_COUNT 1
 #define wdDISPID_RANGE_APPLICATION 1000
 #define wdDISPID_APPLICATION_ISSANDBOX 492
@@ -279,7 +281,42 @@ BOOL generateFormFieldXML(IDispatch* pDispatchRange, wostringstream& XMLStream, 
 	return foundFormField;
 }
 
-int generateHeadingXML(IDispatch* pDispatchRange, wostringstream& XMLStream) {
+bool collectSpellingErrorOffsets(IDispatchPtr pDispatchRange, vector<pair<long,long>>& errorVector) {
+	IDispatchPtr pDispatchApplication=NULL;
+	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_APPLICATION ,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
+		return false;
+	}
+	BOOL isSandbox = false;
+	// Don't go on if this is sandboxed as collecting spelling errors crashes word
+	_com_dispatch_raw_propget(pDispatchApplication,wdDISPID_APPLICATION_ISSANDBOX ,VT_BOOL,&isSandbox);
+	if(isSandbox ) {
+		return false;
+	}
+	IDispatchPtr pDispatchSpellingErrors=NULL;
+	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_SPELLINGERRORS,VT_DISPATCH,&pDispatchSpellingErrors)!=S_OK||!pDispatchSpellingErrors) {
+		return false;
+	}
+	long iVal=0;
+	_com_dispatch_raw_propget(pDispatchSpellingErrors,wdDISPID_SPELLINGERRORS_COUNT,VT_I4,&iVal);
+	for(int i=1;i<=iVal;++i) {
+		IDispatchPtr pDispatchErrorRange=NULL;
+		if(_com_dispatch_raw_method(pDispatchSpellingErrors,wdDISPID_SPELLINGERRORS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchErrorRange,L"\x0003",i)!=S_OK||!pDispatchErrorRange) {
+			return false;
+		}
+		long start=0;
+		if(_com_dispatch_raw_propget(pDispatchErrorRange,wdDISPID_RANGE_START,VT_I4,&start)!=S_OK) {
+			return false;
+		}
+		long end=0;
+		if(_com_dispatch_raw_propget(pDispatchErrorRange,wdDISPID_RANGE_END,VT_I4,&end)!=S_OK) {
+			return false;
+		}
+		errorVector.push_back(make_pair(start,end));
+	}
+	return !errorVector.empty();
+}
+
+int generateHeadingXML(IDispatch* pDispatchRange, int startOffset, int endOffset, wostringstream& XMLStream) {
 	IDispatchPtr pDispatchParagraphs=NULL;
 	IDispatchPtr pDispatchParagraph=NULL;
 	int level=0;
@@ -292,7 +329,18 @@ int generateHeadingXML(IDispatch* pDispatchRange, wostringstream& XMLStream) {
 	if(_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_OUTLINELEVEL,VT_I4,&level)!=S_OK||level<=0||level>=7) {
 		return 0;
 	}
-	XMLStream<<L"<control role=\"heading\" level=\""<<level<<L"\">";
+	XMLStream<<L"<control role=\"heading\" level=\""<<level<<L"\" ";
+	IDispatchPtr pDispatchParagraphRange=NULL;
+	if(_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_RANGE,VT_DISPATCH,&pDispatchParagraphRange)==S_OK&&pDispatchParagraphRange) {
+		long iVal=0;
+		if(_com_dispatch_raw_propget(pDispatchParagraphRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal>=startOffset) {
+			XMLStream<<L"_startOfNode=\"1\" ";
+		}
+		if(_com_dispatch_raw_propget(pDispatchParagraphRange,wdDISPID_RANGE_END,VT_I4,&iVal)==S_OK&&iVal<=endOffset) {
+			XMLStream<<L"_endOfNode=\"1\" ";
+		}
+	}
+	XMLStream<<L">";
 	return 1;
 }
 
@@ -518,24 +566,6 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 			}
 		}
 	} 
-	if(formatConfig&formatConfig_reportSpellingErrors) {
-		IDispatchPtr pDispatchApplication=NULL;
-		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_APPLICATION ,VT_DISPATCH,&pDispatchApplication)==S_OK && pDispatchApplication) {
-			bool isSandbox = true;
-			// We need to ironically enter the if block if the call to get IsSandbox property fails
-			// for backward compatibility because IsSandbox was introduced with word 2010 and earlier versions will return a failure for this property access.
-			// This however, means that if this property access fails for some reason in word 2010, then we will incorrectly enter this section.
-			if(_com_dispatch_raw_propget(pDispatchApplication,wdDISPID_APPLICATION_ISSANDBOX ,VT_BOOL,&isSandbox)!=S_OK || !isSandbox ) {
-				IDispatchPtr pDispatchSpellingErrors=NULL;
-				if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_SPELLINGERRORS,VT_DISPATCH,&pDispatchSpellingErrors)==S_OK&&pDispatchSpellingErrors) {
-					_com_dispatch_raw_propget(pDispatchSpellingErrors,wdDISPID_SPELLINGERRORS_COUNT,VT_I4,&iVal);
-					if(iVal>0) {
-						formatAttribsStream<<L"invalid-spelling=\""<<iVal<<L"\" ";
-					}
-				}
-			}
-		}
-	}
 	if (formatConfig&formatConfig_reportLanguage) {
 		int languageId = 0;
 		if (_com_dispatch_raw_propget(pDispatchRange,	wdDISPID_RANGE_LANGUAGEID, VT_I4, &languageId)==S_OK) {
@@ -662,6 +692,10 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	}
 	//Check for any inline shapes in the entire range to work out whether its worth checking for them by word
 	bool hasInlineShapes=(getInlineShapesCount(pDispatchRange)>0);
+	vector<pair<long,long> > errorVector;
+	if(formatConfig&formatConfig_reportSpellingErrors) {
+		collectSpellingErrorOffsets(pDispatchRange,errorVector);
+	}
 	_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseStart);
 	int chunkStartOffset=args->startOffset;
 	int chunkEndOffset=chunkStartOffset;
@@ -671,7 +705,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		neededClosingControlTagCount+=generateTableXML(pDispatchRange,args->startOffset,args->endOffset,XMLStream);
 	}
 	if(initialFormatConfig&formatConfig_reportHeadings) {
-		neededClosingControlTagCount+=generateHeadingXML(pDispatchRange,XMLStream);
+		neededClosingControlTagCount+=generateHeadingXML(pDispatchRange,args->startOffset,args->endOffset,XMLStream);
 	}
 	generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,initialFormatConfig,initialFormatAttribsStream);
 	bool firstLoop=true;
@@ -745,6 +779,12 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			XMLStream<<L"<text _startOffset=\""<<chunkStartOffset<<L"\" _endOffset=\""<<chunkEndOffset<<L"\" ";
 			XMLStream<<initialFormatAttribsStream.str();
 			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,formatConfig&(~curDisabledFormatConfig),XMLStream);
+			for(vector<pair<long,long>>::iterator i=errorVector.begin();i!=errorVector.end();++i) {
+				if(chunkStartOffset>=i->first&&chunkStartOffset<i->second) {
+					XMLStream<<L" invalid-spelling=\"1\" ";
+					break;
+				}
+			}
 			XMLStream<<L">";
 			if(firstLoop) {
 				formatConfig&=(~formatConfig_reportLists);

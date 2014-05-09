@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-11-01 00:46+0100\n"
+"POT-Creation-Date: 2014-02-07 18:54+1000\n"
+"PO-Revision-Date: 2014-02-07 11:30+0100\n"
 "Last-Translator: Martina Letochová <letochova@seznam.cz>\n"
 "Language-Team: CS <http://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
@@ -1433,6 +1433,15 @@ msgstr "obsahuje dlouhý popis"
 msgid "pinned"
 msgstr "připnuto"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "obsahuje vzorec"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "obsahuje komentář"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "nevybráno"
@@ -1546,6 +1555,7 @@ msgid "Tools"
 msgstr "Nás&troje"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "Dotyková obrazovka"
 
@@ -3044,10 +3054,6 @@ msgstr "zarovnání do bloku"
 msgid "align default"
 msgstr "výchozí zarovnání"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "obsahuje komentář"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "pravopisná chyba"
@@ -3094,6 +3100,82 @@ msgstr "&Výška"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Intonace"
+
+msgid "text mode"
+msgstr "textový režim"
+
+msgid "object mode"
+msgstr "objektový režim"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "jedno {action}"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "dvojité {action}"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "trojité {action}"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "čtyřnásobné {action}"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{numFingers} prsty {action}"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "klepnutí"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "klepnutí a podržení"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "podržení"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr "švihnutí nahoru"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr "švihnutí dolů"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr "švihnutí vlevo"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr "švihnutí vpravo"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+msgctxt "touch action"
+msgid "hover down"
+msgstr "přemístění dolů"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr "přemístění"
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr "přemístění nahoru"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3261,6 +3343,14 @@ msgstr ""
 "zvažte prosím možnost příspěvku společnosti NV Access. Přispět můžete z "
 "hlavní nabídky NVDA."
 
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"Doplněk z {path} nelze nainstalovat.\n"
+"Pro instalaci doplňků je třeba používat NVDA."
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "{symbol} jako v {description}"
@@ -3321,6 +3411,14 @@ msgstr "Zatím žádná zpráva"
 #. Translators: The description of an NVDA command to view one of the recent messages.
 msgid "Displays one of the recent messages"
 msgstr "Přečte jednu z posledních zpráv"
+
+#. Translators: This Outlook Express message has an attachment
+msgid "has attachment"
+msgstr "příloha"
+
+#. Translators: this Outlook Express message is flagged
+msgid "flagged"
+msgstr "označeno"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
@@ -3546,10 +3644,6 @@ msgstr "Náhledy"
 msgid "Master Thumbnails"
 msgstr "Předloha s náhledy"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "Čekám na Powerpoint..."
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Snímek {slideNumber}"
@@ -3582,6 +3676,10 @@ msgstr "Žádné poznámky"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "Prázdný snímek"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "Čekám na Powerpoint..."
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -5109,6 +5207,11 @@ msgstr "H&lásit oblasti"
 msgid "Report fra&mes"
 msgstr "Hlásit &rámce"
 
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "Hlásit &kliknutelné"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "Upravit položku slovníku"
@@ -5917,10 +6020,6 @@ msgid ""
 msgstr ""
 "Stiskne-li se jednou, bude aktuální sloupec nastaven jako sloupec, kde by "
 "měla být záhlaví řádků. Dvojitý stisk nastavení zruší."
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "obsahuje vzorec"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"

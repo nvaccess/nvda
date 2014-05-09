@@ -6,7 +6,7 @@
 
 from comtypes import COMError
 import eventHandler
-from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
+from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import controlTypes
 import NVDAObjects.IAccessible.MSHTML
 import winUser
@@ -141,6 +141,11 @@ class MSHTML(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(MSHTML,self).__init__(rootNVDAObject,backendName="mshtml")
+		# As virtualBuffers must be created at all times for MSHTML to support live regions,
+		# Force focus mode for anything other than a document (e.g. dialog, application)
+		if rootNVDAObject.role!=controlTypes.ROLE_DOCUMENT:
+			self.disableAutoPassThrough=True
+			self.passThrough=True
 
 	def _getInitialCaretPos(self):
 		initialPos = super(MSHTML,self)._getInitialCaretPos()
@@ -261,7 +266,11 @@ class MSHTML(VirtualBuffer):
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="landmark":
-			attrs={"HTMLAttrib::role":[VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]}
+			attrs = [
+				{"HTMLAttrib::role": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles if lr != "region"]},
+				{"HTMLAttrib::role": [VBufStorage_findMatch_word("region")],
+					"name": [VBufStorage_findMatch_notEmpty]}
+				]
 		elif nodeType == "embeddedObject":
 			attrs = {"IHTMLDOMNode::nodeName": ["OBJECT","EMBED","APPLET"]}
 		elif nodeType == "separator":

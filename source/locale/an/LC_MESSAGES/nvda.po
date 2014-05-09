@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
+"POT-Creation-Date: 2014-04-22 19:10+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jorge Pérez Pérez <jorgtum@gmail.com>\n"
 "Language-Team: Softaragonés\n"
+"Language: an\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.2\n"
-"Language: an\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -118,6 +118,10 @@ msgstr "mirar"
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
 msgstr "formulario"
+
+#. Translators: Reported for a significant region, normally found on web pages.
+msgid "region"
+msgstr "Rechión"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -884,7 +888,7 @@ msgstr "reloch"
 
 #. Translators: Identifies a separator (a horizontal line drawn on the screen).
 msgid "separator"
-msgstr "separador"
+msgstr "deseparador"
 
 #. Translators: Identifies a heading (a bold text used for identifying a section).
 msgid "heading"
@@ -1430,6 +1434,15 @@ msgstr "Como una descripción larga"
 msgid "pinned"
 msgstr "fixau"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "tien formula"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "tien comentario"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "no trigau"
@@ -1548,6 +1561,7 @@ msgid "Tools"
 msgstr "Ferramientas"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "Pantalla tactil"
 
@@ -1671,13 +1685,13 @@ msgstr ""
 #. Translators: Input help mode message for next synth setting command.
 msgid "Moves to the next available setting in the synth settings ring"
 msgstr ""
-"Se mueve ta la siguient opción disponible en o grupo d'opcions d'o "
+"Se'n mueve ta la siguient opción disponible en o grupo d'opcions d'o "
 "sintetizador"
 
 #. Translators: Input help mode message for previous synth setting command.
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr ""
-"Se mueve ta la opción anterior disponible en o grupo d'opcions d'o "
+"Se'n mueve ta la opción anterior disponible en o grupo d'opcions d'o "
 "sintetizador"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
@@ -2221,11 +2235,11 @@ msgstr ""
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
-msgstr "o foco se mueve t'o navegador d'obchectos desactivau"
+msgstr "o foco se'n mueve ta lonavegador d'obchectos desactivau"
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object on"
-msgstr "o foco se mueve t'o navegador d'obchectos activau"
+msgstr "o foco se'n mueve ta lonavegador d'obchectos activau"
 
 #. Translators: Input help mode message for toggle focus moves navigator object command.
 msgid ""
@@ -2457,7 +2471,7 @@ msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
 msgstr ""
-"Se mueve ta lo siguient obchecto en una anvista plana d'a hierarquía de "
+"Se'n mueve ta lo siguient obchecto en una anvista plana d'a hierarquía de "
 "navegación d'obchectos"
 
 #. Translators: Input help mode message for a touchscreen gesture.
@@ -2465,7 +2479,7 @@ msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
 "hierarchy"
 msgstr ""
-"Se mueve ta l'anterior obchecto en una anvista plana d'a hierarquía de "
+"Se'n mueve ta l'anterior obchecto en una anvista plana d'a hierarquía de "
 "navegación d'obchectos"
 
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
@@ -3078,10 +3092,6 @@ msgstr "aliniación chustificada"
 msgid "align default"
 msgstr "aliniación predeterminada"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "tien comentario"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "error d'ortografía"
@@ -3128,6 +3138,82 @@ msgstr "&Ton"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Entonación"
+
+msgid "text mode"
+msgstr "modo de texto"
+
+msgid "object mode"
+msgstr "modo d'obchecto"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "{action} simpla"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "{action} dople"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "triple {action}"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "quadruple {action}"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{action} de {numFingers} didos"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "tocar"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "tocar y mantener"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "mantener"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr "eslizar enta alto"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr "eslizar enta abaixo"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr "eslizar enta la cucha"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr "eslizar enta la dreita"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+msgctxt "touch action"
+msgid "hover down"
+msgstr "esvolastriando"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr "esvolastriar"
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr "deixar d'esvolastriar"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3293,6 +3379,14 @@ msgstr ""
 "a posibilidat de fer una donación a NV Access. Puetz fer-lo trigando \"Fer "
 "una donación\" dende o menú de NVDA."
 
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"No se puet instalar o complemento d'o NVDA dende {path}.\n"
+"Cal que sigas executando loNVDA ta poder instalar complementos."
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "{symbol} como en {description}"
@@ -3355,6 +3449,14 @@ msgstr "No bi ha encara garra mensache"
 #. Translators: The description of an NVDA command to view one of the recent messages.
 msgid "Displays one of the recent messages"
 msgstr "Amostrar un d'os mensaches recients"
+
+#. Translators: This Outlook Express message has an attachment
+msgid "has attachment"
+msgstr "tien adchunto"
+
+#. Translators: this Outlook Express message is flagged
+msgid "flagged"
+msgstr "marcau"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
@@ -3580,10 +3682,6 @@ msgstr "Miniaturas"
 msgid "Master Thumbnails"
 msgstr "Miniaturas mayestras"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "Se ye asperando a lo Powerpoint"
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Diapositiva {slideNumber}"
@@ -3617,6 +3715,10 @@ msgstr "No bi ha notas"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "Diapositiva vueda"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "Se ye asperando a lo Powerpoint"
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -4836,6 +4938,11 @@ msgstr "Chuflar si se tecleyan letras minusclas quan o BloqMayus siga activau"
 msgid "Speak command &keys"
 msgstr "Charrar as &teclas d'ordens"
 
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Handle keys from other &applications"
+msgstr "Teclas de maneyo d'atras &aplicacions"
+
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
 msgstr "A lo menos cal fer servir una tecla como a tecla NVDA"
@@ -5162,6 +5269,11 @@ msgstr "Anunciar as &zonas"
 msgid "Report fra&mes"
 msgstr "Anunciar os &marcos"
 
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "Anunciar si ye &clicable"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "Edición de Dentrada de Diccionario"
@@ -5467,19 +5579,19 @@ msgstr "No yes en una celda de tabla"
 
 #. Translators: the description for the next table row script on virtualBuffers.
 msgid "moves to the next table row"
-msgstr "se mueve t'a siguient ringlera d'a tabla"
+msgstr "se'n mueve ta la siguient ringlera d'a tabla"
 
 #. Translators: the description for the previous table row script on virtualBuffers.
 msgid "moves to the previous table row"
-msgstr "se mueve ta l'anterior ringlera d'a tabla"
+msgstr "se'n mueve ta l'anterior ringlera d'a tabla"
 
 #. Translators: the description for the next table column script on virtualBuffers.
 msgid "moves to the next table column"
-msgstr "se mueve t'a siguient columna d'a tabla"
+msgstr "se'n mueve ta la siguient columna d'a tabla"
 
 #. Translators: the description for the previous table column script on virtualBuffers.
 msgid "moves to the previous table column"
-msgstr "se mueve ta l'anterior columna d'a tabla"
+msgstr "se'n mueve ta l'anterior columna d'a tabla"
 
 #. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
 #. But there is no container.
@@ -5489,16 +5601,17 @@ msgstr "No yes en un contenedor"
 #. Translators: Description for the Move to start of container command in browse mode.
 msgid "Moves to the start of the container element, such as a list or table"
 msgstr ""
-"Se mueve ta l'empecipio d'un elemento contenedor, tal como una lista u tabla"
+"Se'n mueve ta l'empecipio d'un elemento contenedor, tal como una lista u "
+"tabla"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr ""
-"Se mueve ta la fin de l'elemento contenedor, tal como una lista u tabla"
+"Se'n mueve ta la fin de l'elemento contenedor, tal como una lista u tabla"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
-msgstr "se mueve t'o siguient capitero"
+msgstr "se'n mueve ta losiguient capitero"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading"
@@ -5506,7 +5619,7 @@ msgstr "no bi ha siguient capitero"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading"
-msgstr "se mueve ta l'anterior capitero"
+msgstr "se'n mueve ta l'anterior capitero"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading"
@@ -5514,7 +5627,7 @@ msgstr "no bi ha anterior capitero"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 1"
-msgstr "se mueve t'o siguient capitero de libel 1"
+msgstr "se'n mueve ta losiguient capitero de libel 1"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 1"
@@ -5522,7 +5635,7 @@ msgstr "no bi ha siguient capitero de libel 1"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 1"
-msgstr "se mueve ta l'anterior capitero de libel 1"
+msgstr "se'n mueve ta l'anterior capitero de libel 1"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 1"
@@ -5530,7 +5643,7 @@ msgstr "no bi ha anterior capitero de libel 1"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 2"
-msgstr "se mueve t'o siguient capitero de libel 2"
+msgstr "se'n mueve ta losiguient capitero de libel 2"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 2"
@@ -5538,7 +5651,7 @@ msgstr "no bi ha siguient capitero de libel 2"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 2"
-msgstr "se mueve ta l'anterior capitero de libel 2"
+msgstr "se'n mueve ta l'anterior capitero de libel 2"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 2"
@@ -5546,7 +5659,7 @@ msgstr "no bi ha anterior capitero de libel 2"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 3"
-msgstr "se mueve t'o siguient capitero de libel 3"
+msgstr "se'n mueve ta losiguient capitero de libel 3"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 3"
@@ -5554,7 +5667,7 @@ msgstr "no bi ha siguient capitero de libel 3"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 3"
-msgstr "se mueve ta l'anterior capitero de libel 3"
+msgstr "se'n mueve ta l'anterior capitero de libel 3"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 3"
@@ -5562,7 +5675,7 @@ msgstr "no bi ha anterior capitero de libel 3"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 4"
-msgstr "se mueve t'o siguient capitero de libel 4"
+msgstr "se'n mueve ta losiguient capitero de libel 4"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 4"
@@ -5570,7 +5683,7 @@ msgstr "no bi ha siguient capitero de libel 4"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 4"
-msgstr "se mueve ta l'anterior capitero de libel 4"
+msgstr "se'n mueve ta l'anterior capitero de libel 4"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 4"
@@ -5578,7 +5691,7 @@ msgstr "no bi ha anterior capitero de libel 4"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 5"
-msgstr "se mueve t'o siguient capitero de libel 5"
+msgstr "se'n mueve ta losiguient capitero de libel 5"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 5"
@@ -5586,7 +5699,7 @@ msgstr "no bi ha siguient capitero de libel 5"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 5"
-msgstr "se mueve ta l'anterior capitero de libel 5"
+msgstr "se'n mueve ta l'anterior capitero de libel 5"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 5"
@@ -5594,7 +5707,7 @@ msgstr "no bi ha anterior capitero de libel 5"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 6"
-msgstr "se mueve t'o siguient capitero de libel 6"
+msgstr "se'n mueve ta losiguient capitero de libel 6"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 6"
@@ -5602,7 +5715,7 @@ msgstr "no bi ha siguient capitero de libel 6"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 6"
-msgstr "se mueve ta l'anterior capitero de libel 6"
+msgstr "se'n mueve ta l'anterior capitero de libel 6"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 6"
@@ -5610,7 +5723,7 @@ msgstr "no bi ha anterior capitero de libel 6"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next table"
-msgstr "se mueve t'a siguient tabla"
+msgstr "se'n mueve ta la siguient tabla"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next table"
@@ -5618,7 +5731,7 @@ msgstr "no bi ha siguient tabla"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous table"
-msgstr "se mueve t'a tabla anterior"
+msgstr "se'n mueve ta la tabla anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous table"
@@ -5626,7 +5739,7 @@ msgstr "no bi ha anterior tabla"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next link"
-msgstr "se mueve t'o vinclo siguient"
+msgstr "se'n mueve ta lovinclo siguient"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next link"
@@ -5634,7 +5747,7 @@ msgstr "no bi ha siguient vinclo"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous link"
-msgstr "se mueve t'o vinclo anterior"
+msgstr "se'n mueve ta lovinclo anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous link"
@@ -5642,7 +5755,7 @@ msgstr "no bi ha vinclo anterior"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next visited link"
-msgstr "se mueve t'o siguient vinclo visitau"
+msgstr "se'n mueve ta losiguient vinclo visitau"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next visited link"
@@ -5650,7 +5763,7 @@ msgstr "no bi ha siguient vinclo visitau"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous visited link"
-msgstr "se mueve ta l'anterior vinclo visitau"
+msgstr "se'n mueve ta l'anterior vinclo visitau"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous visited link"
@@ -5658,7 +5771,7 @@ msgstr "no bi ha anterior vinclo visitau"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next unvisited link"
-msgstr "se mueve t'o siguient vinclo sin visitar"
+msgstr "se'n mueve ta losiguient vinclo sin visitar"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next unvisited link"
@@ -5666,7 +5779,7 @@ msgstr "no bi ha siguient vinclo sin visitar"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous unvisited link"
-msgstr "se mueve ta l'anterior vinclo sin visitar"
+msgstr "se'n mueve ta l'anterior vinclo sin visitar"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous unvisited link"
@@ -5674,7 +5787,7 @@ msgstr "no bi ha anterior vinclo sin visitar"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next form field"
-msgstr "se mueve t'o siguient campo de formulario"
+msgstr "se'n mueve ta losiguient campo de formulario"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next form field"
@@ -5682,7 +5795,7 @@ msgstr "no bi ha siguient campo de formulario"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous form field"
-msgstr "se mueve ta l'anterior campo de formulario"
+msgstr "se'n mueve ta l'anterior campo de formulario"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous form field"
@@ -5690,7 +5803,7 @@ msgstr "no bi ha anterior campo de formulario"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next list"
-msgstr "se mueve t'a lista siguient"
+msgstr "se'n mueve ta la lista siguient"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next list"
@@ -5698,7 +5811,7 @@ msgstr "no bi ha siguient lista"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous list"
-msgstr "se mueve t'a lista anterior"
+msgstr "se'n mueve ta la lista anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous list"
@@ -5706,7 +5819,7 @@ msgstr "no bi ha lista anterior"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next list item"
-msgstr "se mueve t'o siguient elemento de lista"
+msgstr "se'n mueve ta losiguient elemento de lista"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next list item"
@@ -5714,7 +5827,7 @@ msgstr "no bi ha siguient elemento de lista"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous list item"
-msgstr "se mueve ta l'anterior elemento de lista"
+msgstr "se'n mueve ta l'anterior elemento de lista"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous list item"
@@ -5722,7 +5835,7 @@ msgstr "no bi ha anterior elemento de lista"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next button"
-msgstr "se mueve t'o siguient botón"
+msgstr "se'n mueve ta losiguient botón"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next button"
@@ -5730,7 +5843,7 @@ msgstr "no bi ha siguient botón"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous button"
-msgstr "se mueve t'o botón anterior"
+msgstr "se'n mueve ta lobotón anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous button"
@@ -5738,7 +5851,7 @@ msgstr "no bi ha botón anterior"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next edit field"
-msgstr "se mueve t'o siguient campo d'edición"
+msgstr "se'n mueve ta losiguient campo d'edición"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next edit field"
@@ -5746,7 +5859,7 @@ msgstr "no bi ha siguient campo d'edición"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous edit field"
-msgstr "se mueve ta l'anterior campo d'edición"
+msgstr "se'n mueve ta l'anterior campo d'edición"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous edit field"
@@ -5754,7 +5867,7 @@ msgstr "no bi ha anterior campo d'edición"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next frame"
-msgstr "se mueve t'o siguient marco"
+msgstr "se'n mueve ta losiguient marco"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next frame"
@@ -5762,7 +5875,7 @@ msgstr "no bi ha siguient marco"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous frame"
-msgstr "se mueve t'o marco anterior"
+msgstr "se'n mueve ta lomarco anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous frame"
@@ -5770,23 +5883,23 @@ msgstr "no bi ha marco anterior"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next separator"
-msgstr "se mueve t'o siguient separador"
+msgstr "se'n mueve ta lo siguient deseparador"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next separator"
-msgstr "no bi ha siguient separador"
+msgstr "no bi ha siguient deseparador"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous separator"
-msgstr "se mueve t'o separador anterior"
+msgstr "se'n mueve ta lo deseparador anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous separator"
-msgstr "no bi ha anterior separador"
+msgstr "no bi ha anterior deseparador"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next radio button"
-msgstr "se mueve t'o siguient botón d'opción"
+msgstr "se'n mueve ta losiguient botón d'opción"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next radio button"
@@ -5794,7 +5907,7 @@ msgstr "no bi ha siguient botón d'opción"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous radio button"
-msgstr "se mueve ta l'anterior botón d'opción"
+msgstr "se'n mueve ta l'anterior botón d'opción"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous radio button"
@@ -5802,7 +5915,7 @@ msgstr "no bi ha anterior botón d'opción"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next combo box"
-msgstr "se mueve t'o siguient quadro combinau"
+msgstr "se'n mueve ta losiguient quadro combinau"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next combo box"
@@ -5810,7 +5923,7 @@ msgstr "no bi ha siguient quadro combinau"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous combo box"
-msgstr "se mueve ta l'anterior quadro combinau"
+msgstr "se'n mueve ta l'anterior quadro combinau"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous combo box"
@@ -5818,7 +5931,7 @@ msgstr "no bi ha anterior quadro combinau"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next check box"
-msgstr "se mueve t'a siguient caixeta de verificación"
+msgstr "se'n mueve ta la siguient caixeta de verificación"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next check box"
@@ -5826,7 +5939,7 @@ msgstr "no bi ha siguient caixeta de verificación"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous check box"
-msgstr "se mueve ta l'anterior caixeta de verificación"
+msgstr "se'n mueve ta l'anterior caixeta de verificación"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous check box"
@@ -5834,7 +5947,7 @@ msgstr "no bi ha anterior caixeta de verificación"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next graphic"
-msgstr "se mueve t'o siguient grafico"
+msgstr "se'n mueve ta losiguient grafico"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next graphic"
@@ -5842,7 +5955,7 @@ msgstr "no bi ha siguient grafico"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous graphic"
-msgstr "se mueve ta l'anterior grafico"
+msgstr "se'n mueve ta l'anterior grafico"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous graphic"
@@ -5850,7 +5963,7 @@ msgstr "no bi ha anterior grafico"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next block quote"
-msgstr "se mueve t'a siguient cita"
+msgstr "se'n mueve ta la siguient cita"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next block quote"
@@ -5858,7 +5971,7 @@ msgstr "no bi ha siguient cita"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous block quote"
-msgstr "se mueve t'a cita anterior"
+msgstr "se'n mueve ta la cita anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous block quote"
@@ -5882,7 +5995,7 @@ msgstr "no bi ha mas texto antis d'un bloque de vinclos"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next landmark"
-msgstr "se mueve t'a siguient zona"
+msgstr "se'n mueve ta la siguient zona"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next landmark"
@@ -5890,7 +6003,7 @@ msgstr "no bi ha siguient zona"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous landmark"
-msgstr "se mueve ta la zona anterior"
+msgstr "se'n mueve ta la zona anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous landmark"
@@ -5898,7 +6011,7 @@ msgstr "no bi ha zona anterior"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next embedded object"
-msgstr "se mueve t'o siguient obchecto integrau"
+msgstr "se'n mueve ta losiguient obchecto integrau"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next embedded object"
@@ -5906,7 +6019,7 @@ msgstr "no bi ha siguient obchecto integrau"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous embedded object"
-msgstr "se mueve ta l'anterior obchecto integrau"
+msgstr "se'n mueve ta l'anterior obchecto integrau"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous embedded object"
@@ -5976,10 +6089,6 @@ msgid ""
 msgstr ""
 "Pretando una vez configurará a columna actual como a columna an se habrían "
 "de trobar os capiters de ringlera. Pretando dos veces limpia a opción."
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "tien formula"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"

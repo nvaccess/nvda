@@ -24,17 +24,17 @@ As características principais são:
 - Tem um instalador com voz e fácil de usar
 - Está traduzido em 44 idiomas
 - Suporta os Sistemas Operativos Windows mais actuais, quer nas arquitecturas de 32 quer nas de 64 bits
-- Possibilidade de funcionar nas janelas de início de sessão e outros ecrãs de ambiente seguro
+- Tem a possibilidade de funcionar nas janelas de início de sessão e noutros ecrãs de ambiente seguro
 - Suporta as interfaces de acessibilidade mais comuns, tais como o Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation (o UI Automation é somente suportado no Windows 7 ou posteriores)
 - Suporta a Linha de Comandos do Windows e aplicações de consola
 -
 
 ++ Internacionalização ++
-É importante que as pessoas tenham o mesmo acesso às tecnologias, em qualquer parte do mundo, independentemente do idioma que falem.
-Para além do Inglês, o NVDA está traduzido em 44 idiomas, incluindo: Africânder, Albanês, Alemão, Amárico, Árabe, Aragonês, Búlgaro, Castelhano, Checo, Chinês Tradicional e simplificado, Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Finlandês, Francês, Galego, Grego, Georgiano, Hebraico, Holandês, Húngaro, Indiano, Islandês, Irlandês,, Italiano, Japonês, Nepalês, Norueguês, Perça, Polaco, Português de Portugal, Português do Brasil, Romeno, Russo, Sérvio, Sueco, Tailandês, Tamil, Turco, Ucraniano e Vietnamita.
+É importante que os indivíduos tenham o mesmo acesso às tecnologias, em qualquer parte do mundo, independentemente do idioma que falem.
+Para além do Inglês, o NVDA está traduzido em 44 idiomas, incluindo: Africânder, Albanês, Alemão, Amárico, Árabe, Aragonês, Búlgaro, Castelhano, Checo, Chinês Tradicional e simplificado, Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Finlandês, Francês, Galego, Grego, Georgiano, Hebraico, Holandês, Húngaro, Indiano, Islandês, Irlandês, Italiano, Japonês, Nepalês, Norueguês, Perça, Polaco, Português de Portugal, Português do Brasil, Romeno, Russo, Sérvio, Sueco, Tailandês, Tamil, Turco, Ucraniano e Vietnamita.
 
 ++ Suporte de Sintetizadores de Voz ++
-Para além de fornecer as mensagens e interface em diversos idiomas, o NVDA também pode permitir ao utilizador a leitura em qualquer idioma, desde  que tenha um sintetizador de voz, que possa falar esse idioma.
+Para além de fornecer as mensagens e interface em diversos idiomas, o NVDA também pode permitir ao utilizador a leitura em qualquer idioma, desde  que tenha um sintetizador de voz, que o possa falar.
 
 O NVDA trás incluso o [eSpeak http://espeak.sourceforge.net/], um sintetizador de voz livre, de código aberto e multi-idioma. 
 
@@ -56,13 +56,15 @@ Para mais detalhes, pode [ver a licença completa. http://www.gnu.org/licenses/o
 
 + Requisitos Do Sistema +
 - Sistemas Operativos: Todas as versões 32-bit e 64-bit do Windows XP, Windows Vista, Windows 7 e Windows 8 (incluindo as versões Server 2003 e 2008).
+- Em Windows XP 32-bit, o NVDA requer o Service Pack 2 ou superior.
+- Em Windows Server 2003, o NVDA requer o Service Pack 1 ou superior.
 - Memória: 256 MB ou mais de RAM
 - Velocidade do processador: 1.0 GHz ou superior
 - Aproximadamente 50 MB de espaço livre.
 -
 
 + Obter e Instalar O NVDA +
-Se ainda não tem uma cópia do NVDA, pode descarregá-la de [www.nvda-project.org NVDA_URL].
+Se ainda não tem uma cópia do NVDA, pode descarregá-la de [www.nvaccess.org NVDA_URL].
 
 Entre na secção "download" e encontrará o link para transferir a última versão do NVDA.
 
@@ -70,25 +72,25 @@ Executando o ficheiro que descarregou, irá iniciar uma cópia temporária do NV
 Será então questionado se deseja instalar o NVDA, criar uma cópia portátil ou somente continuar a usar a cópia temporária.
 
 Se planeia usar sempre o NVDA neste computador, deverá escolher instalar o NVDA.
-Instalar o NVDA permitirá usufruir de funcionalidades adicionais como: execussão automática, após iniciar sessão, leitura do ecrã de início de sessão e ecrãs em de ambiente seguro do Windows (o que não pode ser feito com cópias portáteis ou temporárias), bem como a criação automática de atalhos no menu iniciar e no ambiente de trabalho.
-A cópia instalada é igualmente capaz de criar uma cópia portátil, em qualquer altura.
+Instalar o NVDA permitirá usufruir de funcionalidades adicionais como: execussão automática, após iniciar sessão, leitura do ecrã de início de sessão e ecrãs em de ambiente seguro do Windows (o que não pode ser feito com cópias portáteis ou temporárias), bem como a criação automática de atalhos, no menu iniciar e no ambiente de trabalho.
+A partir da cópia instalada, terá a possibilidade de criar uma cópia portátil, em qualquer altura.
 
-Se quer levar o NVDA consigo, numa pen USB ou outro dispositivo passível de ser escrito, então  deverá escolher "criar uma cópia portátil".
+Se quer levar o NVDA consigo, numa pen USB ou noutro dispositivo passível de ser escrito, então deverá escolher "criar uma cópia portátil".
 A cópia portátil é igualmente capaz de se instalar a si mesma, em qualquer computador, mais tarde.
-Porém, se deseja copiar o NVDA para um suporte apenas de leitura, como um CD, deverá  copiar somente o pacote descarregado.
-A execução da versão portátil a partir de dispositivos apenas de leitura actualmente não é suportada.
+Porém, se deseja copiar o NVDA para um suporte apenas de leitura, como um CD, deverá copiar somente o pacote descarregado.
+A execução da versão portátil, a partir de dispositivos apenas de leitura, actualmente não é suportada.
 
 Usar a cópia temporária do NVDA é também uma opção (por exemplo, com a finalidade de demonstração); contudo, iniciar sempre o NVDA deste modo poderá consumir bastante tempo.
 
 ++ Restrições das versões Portáteis e Temporárias ++
 Para além da impossibilidade de arrancar automaticamente com o windows, as cópias portáteis e temporárias do NVDA têm também as seguintes restrições:
-- Impossibilidade de interagir com aplicações executadas com previlégios de administrador, a 	menos que o NVDA esteja também a ser executado com os mesmos previlégios, (o que não é recomendado).
-- Impossibilidade de ler as janelas do Controlo de Conta de Utilizador (UAC), ao tentar iniciar uma aplicação com previlégios de administrador.
-- Windows 8: Impo	ssibilidade de suportar a utilização do ecrã táctil.
+- Impossibilidade de interagir com aplicações executadas com privilégios de administrador, a 	menos que o NVDA esteja também a ser executado com os mesmos privilégios, (o que não é recomendado).
+- Impossibilidade de ler as janelas do Controlo de Conta de Utilizador (UAC), ao tentar iniciar uma aplicação com privilégios de administrador.
+- Windows 8: Impossibilidade de suportar a utilização do ecrã táctil.
 - Windows 8: Impossibilidade de usar as funcionalidades de modo de navegação e de anunciar os caracteres escritos nas aplicações Windows Store.
 -
 
-++ Instalar O NVDA ++
+++ Instalar O NVDA ++ */*
 Se está a instalar o NVDA directamente do pacote descarregado, pressione o butão "instalar o NVDA".
 Se já fechou esse diálogo ou quer instalar a partir duma cópia portátil, por favor, seleccione instalar o NVDA, que se encontra em ferramentas no menu do NVDA.
 O diálogo de instalação que aparece confirmará se deseja instalar o NVDA e dir-lhe-á igualmente se esta instalação actualizará uma instalação anterior.
@@ -550,7 +552,7 @@ Nota: O comando para anunciar o tempo restante funciona somente com a cadeia de 
 %kc:beginInclude
 || Nome | Comando de Teclado | Descrição |
 | Anunciar Janela de Comentários | control+shift+c | Anuncia quaisquer comentários na janela de comentários. |
-| Anunciar Janela de Comentários Automáticos | control+shift+a | Anuncia quaisquer comentários na janela de comentários automáticos. |
+| Anunciar notas para tradutores | control+shift+a | Anuncia quaisquer notas para os tradutores. |
 %kc:endInclude
 
 + Configurar O NVDA +
@@ -1229,7 +1231,7 @@ Será melhor remover estes ficheiros das suas configurações e instalar o extra
 
 ++ Consola de Python ++
 A Consola de Python do NVDA encontra-se dentro das Ferramentas do Menu do NVDA. É uma ferramenta de programação muito útil para deporação, inspecção interna geral do NVDA ou exploração da hierarquia de acessibilidade de uma aplicação.
-Para mais informação, consulte por favor a secção de desenvolvimento na página Internet do NVDA NVDA_URLwiki/Development].
+Para mais informação, consulte por favor a secção de desenvolvimento na página Internet do NVDA http://community.nvda-project.org/wiki/Development].
 
 ++ Recarregar Plugins ++
 Este item, uma vez activado, recarrega todos os plugins globais e módulos de aplicação, sem reiniciar o NVDA, o que pode ser útil para programadores.
@@ -1299,8 +1301,8 @@ Esta secção contém informação sobre as linhas Braille suportadas pelo NVDA.
 ++ Freedom Scientific Focus/PAC Mate Series ++
 Todas as linhas Focus e PAC Mate da [Freedom Scientific http://www.freedomscientific.com/] são suportadas, quando conectadas via USB ou bluetooth.
 Necessitará dos drivers das linhas Braille da Freedom Scientific instalados no seu sistema.
-Se ainda não tem os mesmos, pode obtê-los em http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
-Apesar desta página apenas mensionar a linha Focus 40 Blue, os drivers suportam todas as linhas da Freedom Scientific.
+Se ainda não tem os mesmos, pode obtê-los em http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Apesar desta página apenas mensionar as linhas Focus Blue, os drivers suportam todas as linhas da Freedom Scientific.
 Se o seu sistema está a correr um Windows de 64 bits e os drivers já foram instalados, por outro leitor de ecrã, irá, provavelmente, necessitar de os reinstalar a partir deste link, visto que, com alguma probabilidade, os ficheiros necessários ao NVDA ainda não foram instalados por qualquer outro leitor de ecrã.
 
 Por padrão, o NVDA detecta e liga-se, automaticamente, a estas linhas, quer via USB, quer por Bluetooth.
@@ -1533,6 +1535,9 @@ Por favor consulte a documentação da sua linha braille para obter a descriçã
 ++ HIMS Braille Sense/Braille EDGE Series ++
 O NVDA suporta as linhas Braille Sense e Braille EDGE da [Hims http://www.hims-inc.com/] quando conectadas via USB ou bluetooth. 
 Se ligar a linha via USB, necessitará de instalar os drivers USB, da HIMS, no seu sistema.
+Pode fazer o download desses drivers do centro de recursos da HIMS http://www.hims-inc.com/resource-center/
+Nesta página, seleccione o seu modelo e faça o download do driver na secção Window-Eyes.
+Apesar da secção apenas referir o Window-Eyes, este é um driver USB geral, que também funciona com o NVDA.
 
 Seguem-se as associações de teclas para estas linhas braille com o NVDA.
 Por favor consulte a documentação da sua linha braille para obter a descrição de onde estas teclas podem ser encontradas.
@@ -1671,7 +1676,6 @@ Seguem-se as associações de comandos da Papenmeier para o NVDA:
 | Encaminhar para a célula braille | routing |
 | Anuncia o caracter actual em revisão | l1 |
 | Activa o objecto de navegação actual | l2 |
-| Move para a revisão plana ou para o foco | r1 |
 | Anuncia o título | l1+up |
 | Anuncia a barra de estado | l2+down |
 | Move para o objecto que contem | up2 |
@@ -1748,7 +1752,6 @@ Dispositivos com EAB
 | Encaminhar para a célula braille | routing |
 | Anuncia o caracter actual em revisão | l1 |
 | Activa o objecto de navegação actual | l2 |
-| Move para a revisão plana ou para o foco | r1 |
 | Anuncia o título | l1+up |
 | Anuncia a barra de estado | l2+down |
 | Move para o objecto que contem | up2 |
@@ -1765,7 +1768,6 @@ BRAILLEX Tiny:
 | Move a linha braille para a linha seguinte | dn |
 | Anuncia o caracter actual em revisão | l1 |
 | Activa o objecto de navegação actual | l2 |
-| Move para a revisão plana ou para o foco | r1 |
 | Alternar Braille fixado para | r2 |
 | Move para o objecto que contem | r1+up |
 | Move para o primeiro objecto contido | r1+dn |
@@ -1781,7 +1783,6 @@ BRAILLEX 2D Screen:
 | Move a linha braille para a linha seguinte | dn |
 | Anuncia o caracter actual em revisão | l1 |
 | Activa o objecto de navegação actual | l2 |
-| Move para a revisão plana ou para o foco | r1 |
 | Alternar Braille fixado para | r2 |
 | Move para o objecto que contem | up2 |
 | Move para o primeiro objecto contido | dn2 |
@@ -1866,7 +1867,7 @@ Por exemplo, pode especificar se o símbolo propriamente dito deverá ser enviad
 
 Para o fazer, deve editar o ficheiro de informação de pronúncia de símbolos, na sua pasta de configurações do NVDA.
 o ficheiro chama-se symbols-XX.dic, onde XX é o código do idioma.
-O formato deste ficheiro está documentado no manual do NVDA para programadores, que está disponível na secção de desenvolvimento da página Internet do NVDA NVDA_URLwiki/Development].
+O formato deste ficheiro está documentado no manual do NVDA para programadores, que está disponível na secção de desenvolvimento da página Internet do NVDA http://community.nvda-project.org/wiki/Development].
 Contudo, não é possível aos utilizadores definirem símbolos complexos.
 
 + Mais Informações +

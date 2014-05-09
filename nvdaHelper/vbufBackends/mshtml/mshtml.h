@@ -49,7 +49,7 @@ class MshtmlVBufBackend_t: public VBufBackend_t {
 
 	virtual void render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode=NULL);
 
-	VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr, bool ignoreInteractiveUnlabelledGraphics, bool allowPreformattedText, bool shouldSkipText);
+	VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, VBufStorage_controlFieldNode_t* oldNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr, bool ignoreInteractiveUnlabelledGraphics, bool allowPreformattedText, bool shouldSkipText, bool inNewSubtree, std::set<VBufStorage_controlFieldNode_t*>& atomicNodes);
 
 	virtual ~MshtmlVBufBackend_t();
 

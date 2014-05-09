@@ -3,6 +3,25 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.2 =
+
+== Nowe funkcje ==
+- Oznajmianie zaznaczania tekstu jest teraz możliwe w niektórych nietypowych polach edycyjnych, w których używana jest informacja o wyświetlaniu. (#770)
+- W dostępnych aplikacjach Java, oznajmiana jest teraz informacja o pozycji dla przycisków opcji i innych kontrolek, które udostępniają te informacje. (#3754)
+- W dostępnych aplikacjach Java, oznajmiane są teraz skróty klawiszowe dla kontrolek, które je posiadają. (#3881)
+- W trybie czytania, zgłaszane są od teraz etykiety punktów orientacyjnych. Są również uwzględniane na liście elementów. (#1195)
+- W trybie czytania, nazwane obszary są teraz traktowane jak punkty orientacyjne. (#3741)
+
+
+== Poprawki błędów ==
+- Standardowe menu systemowe okien nie jest od teraz przypadkowo wyciszane w aplikacjach Java. (#3882)
+- Podczas kopiowania tekstu z przeglądu ekranu, nie jest ignorowane łamanie linii. (#3900)
+- Bezsensowne obiekty złożone ze spacji nie są od teraz zgłaszane w niektórych aplikacjach, przy zmianie punktu uwagi, albo podczas używania nawigatora obiektów z włączonym trybem prostego przeglądania. (#3839)
+- Okna informacji i inne okienka dialogowe NVDA ponownie powodują anulowanie poprzedniej wypowiedzi przed odczytaniem okna. 
+- W trybie czytania, etykiety kontrolek takich jak linki i przyciski są teraz prawidłowo odczytywane w sytuacji, gdy etykieta została nadpisana przez autora dla celów dostępności (szczególnie przy użyciu aria-label lub aria-labelledby). (#1354)
+
+
+
 = 2014.1 =
 
 == Nowe funkcje ==
@@ -11,11 +30,16 @@
 - W okienku ustawień formatowania dokumentu, możliwe jest obecnie określenie, czy treść w dokumentach powinna być identyfikowana jako klikalna. Ta opcja jest domyślnie włączona(poprzednie zachowanie). (#3556)
 - Wsparcie monitorów brajlowskich połączonych przez Bluetooth na komputerze z uruchomionym oprogramowaniem Widcomm Bluetooth. (#2418)
 - Podczas edycji tekstu w PowerPoint, raportowane są hiperłącza. (#3416)
+- Wewnątrz aplikacji ARIA albo okien dialogowych na stronach www, możliwe jest przełączenie NVDA w tryb czytania klawiszami NVDA+space, co umożliwia nawigację wewnątrz aplikacji lub dialogu tak jak w dokumencie. (#2023)
+- W Outlook Express / Windows Mail / Windows Live Mail, NVDA teraz informuje czy wiadomość ma załącznik lub jest oflagowana. (#1594)
+- podczas nawigowania wewnątrz tabeli w dostępnych aplikacjach Java, odczytywane są współrzędne komórki oraz nagłówki wiersza i kolumny, jeśli istnieją. (#3756)
 
 
 == Zmiany ==
 - Dla monitorów brajlowskich Papenmeier, usunięta została komenda przejścia do płaskiego podglądu / punktu uwagi. Użytkownicy mogą przypisać własne klawisze w okienku Zdarzenia wejścia. (#3652)
 - NVDA teraz opiera się na Microsoft VC runtime wersja 11, co oznacza, że nie może dłużej być uruchomiony na systemach operacyjnych starszych niż Windows XP Service Pack 2 lub Windows Server 2003 Service Pack 1.
+- Poziom interpunkcji: Niektóre,  oznajmia od teraz znaki gwiazdka (*) i plus (+). (#3614)
+- Zaktualizowano eSpeak do wersji 1.48.03 zawierającej wiele poprawek języków i kilku awarii. (#3842, #3739)
 
 
 == Poprawki błędów ==
@@ -25,11 +49,41 @@
 - Przyciski podglądu piosenek w sklepie iTunes 11 teraz posiadają etykietę w trybie czytania. (#3638)
 - W trybie czytania w Google Chrome, etykiety pól wyboru i przycisków opcji są teraz prawidłowo odczytywane. (#1562)
 - W Instantbird, NVDA nie odczytuje dłużej bezużytecznych informacji po każdym przejściu do kontaktu na liście kontaktów. (#2667)
-- W trybie czytania w Adobe Reader, prawidłowy tekst jest odczytywany for dla przycisków etc., gdy etykieta została nadpisana przy użyciu podpowiedzi lub innych metod. (#3640)
+- W trybie czytania w Adobe Reader, prawidłowy tekst jest odczytywany dla przycisków etc., gdy etykieta została nadpisana przy użyciu podpowiedzi lub innych metod. (#3640)
 - W trybie czytania w Adobe Reader, obce grafiki zawierające tekst "mc-ref" nie będą dłużej odczytywane. (#3645)
 - NVDA nie zgłasza dłużej wszystkich komórek w Microsoft Excel jako podkreślone, odczytując ich informacje o formatowaniu. (#3669)
 - W dokumentach trybu czytania nie są pokazywane pozbawione znaczenia znaki Unikodu np. z zakresu do prywatnego użycia. W niektórych przypadkach blokowało to możliwość pokazania bardziej użytecznych etykiet. (#2963).
 - Wprowadzanie znaków wschodnioazjatyckich nie powodóje dłużej problemów w programie PuTTY (#3432)
+- Nawigowanie w dokumencie po anulowanym czytaniu wszystkiego, nie powoduje od teraz, że  NVDA czasami nieprawidłowo zgłaszał wyjście z pola (takiego jak tabela) które znajdowało się w dokumencie niżej niż miejsce, w którym przerwano czytanie. (#3688)
+- Podczas używania klawiszy szybkiej nawigacji trybu czytania, gdy  aktywna jest funkcja Czytaj wszystko i włączone zezwalanie na przeglądanie podczas czytania wszystkiego, NVDA bardziej dokładnie anonsuje nowe pole (np. teraz mówi że nagłówek to nagłówek, zamiast odczytywać tylko jego tekst). (#3689)
+- Polecenia szybkiej nawigacji przeskoku do początku lub końca kontenera, obecnie honorują ustawienie zezwalania na przeglądanie w trybie czytaj wszystko (tj. nie będą powodować anulowania czytania wszystkiego). (#3675)
+- Nazwy gestów dotykowych wymienione w oknie zdarzeń wejścia NVDA, przedstawiane są obecnie w przyjaznej, przetłumaczonej formie. (#3624)
+- NVDA nie powoduje dłużej awarii niektórych programów podczas przemieszczania myszy po ich kontrolkach rich edit (TRichEdit). Programy te to m.in. Jarte 5.1 i BRfácil. (#3693, #3603, #3581)
+- W Internet Explorer i innych kontrolkach MSHTML, kontenery takie jak tabele, oznaczone przez ARIA jako prezentacje, nie są od teraz zgłaszane użytkownikowi. (#3713)
+- W Microsoft Word, NVDA nie powtarza od teraz na monitorze brajlowskim wielokrotnie informacji o wierszu i kolumnie tabeli dla komórki. (#3702)
+- W językach używających spacji jako separatora grupy liczb / tysięcy (np. niemiecki i francuski), liczby z odrębnych kawałków tekstu nie są od teraz wymawiane jak jedna liczba. Było to szczególnie kłopotliwe dla komórek tabeli zawierających liczby. (#3698)
+- Rozwiązany problem z brakiem aktualizacji brajla przy ruchach kursora, który czasem pojawiał się w Microsoft Word 2013. (#3784)
+- Po ustawieniu kursora na pierwszym znaku nagłówka w Microsoft Word, tekst informujący, że jest to nagłówek (z podaniem jego poziomu) nie znika od teraz z monitora brajlowskiego. (#3701)
+- Gdy został uruchomiony przez wyzwalacz profil dla aplikacji, która następnie została zamknięta, NVDA od teraz prawidłowo dezaktywuje ten profil. (#3732)
+- Podczas wprowadzania znaków azjatyckich w kontrolce samego NVDA (np. okno wyszukiwania w trybie czytania), "NVDA" nie jest dłużej nieprawidłowo odczytywane zamiast znaku kandydującego. (#3726)
+- Zakładki w oknie opcji Outlook 2013 są teraz odczytywane. (#3826)
+- Poprawiona obsługa żywych obszarów ARIA w Firefox i innych aplikacjach Mozilla Gecko :
+ - obsługa aktualizacji aria-atomic i filtrowanie aktualizacji aria-busy (#2640)
+ - Tekst alternatywny (taki jak atrybut alt lub aria-label) jest dołączany, jeśli nie ma innego użytecznego tekstu. (#3329)
+ - Aktualizacje żywych obszarów nie są od teraz wyciszane, jeśli nastąpiły w tym samym momencie co przesunięcie punktu uwagi. (#3777)
+- Niektóre elementy prezentacji w Firefox i innych aplikacjach Mozilla Gecko nie są od teraz nieprawidłowo pokazywane w trybie czytania (szczególnie, gdy element jest oznaczony jako aria-presentation i jednocześnie może posiadać punkt uwagi). (#3781)
+- Poprawka wydajności podczas nawigacji wewnątrz dokumentów w Microsoft Word przy włączonym zgłaszaniu błędów pisowni. (#3785)
+- Kilka poprawek obsługi dostępnych aplikacji Java:
+ - początkowo aktywna kontrolka w ramce lub oknie dialogowym jest od teraz odczytywana gdy ramka lub okno dialogowe przechodzi na pierwszy plan. (#3753)
+ - bezużyteczne informacje o pozycji przycisków radiowych nie są teraz odczytywane (np. 1 z 1). (#3754)
+ - Lepsza obsługa kontrolek typu JComboBox (html nie jest odczytywany, lepsze zgłaszanie stanów rozwinięte / zwinięte). (#3755)
+ - Podczas odczytywania okien dialogowych, czytany jest tekst, który dawniej był pomijany. (#3757)
+ - zmiany nazwy, wartości lub opisu aktywnej kontrolki są teraz zgłaszane bardziej precyzyjnie. (#3770)
+- Naprawiono awarię NVDA w Windows 8 gdy punkt uwagi znajdował się na niektórych kontrolkach RichEdit zawierających dużą ilość tekstu (np. podgląd logów NVDA, windbg). (#3867)
+- W systemach z ustawionym wysokim DPI ekranu (domyślnie ustawianym na wielu współczesnych komputerach), NVDA nie przenosi od teraz wskaźnika myszy do nieprawidłowego miejsca w niektórych aplikacjach. (#3758, #3703)
+- Naprawiono sporadyczny problem podczas przeglądania internetu: NVDA przestawał prawidłowo pracować do czasu restartu, chociaż wcześniej nie zawiesił się, ani nie uległ awarii. (#3804)
+- Monitor brajlowski Papenmeier może teraz być używany, nawet jeśli nie był wcześniej podłączony przez USB. (#3712)
+- NVDA nie zawiesza się teraz, gdy wybrano starsze modele monitora brajlowskiego Papenmeier BRAILLEX, a urządzenie nie jest podłączone.
 
 
 == Zmiany dla programistów ==

@@ -26,6 +26,7 @@ STX = 0x02 #Start of Text
 ETX = 0x03 #End of Text
 
 KEY_CHECK_INTERVAL = 10
+TIMEOUT = 0.5
 
 def brl_auto_id(): 
 	"""send auto id command to braille display"""
@@ -91,7 +92,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		#try to connect to braille display
 		for baud in (19200, 38400):
 			if(self._dev is None):
-				self._dev = serial.Serial(self._port, baudrate=baud)
+				self._dev = serial.Serial(self._port, baudrate = baud, timeout=TIMEOUT, writeTimeout=TIMEOUT)
 				self._dev.write(brl_auto_id())
 				if (baud == 19200): time.sleep(0.2)
 				else: time.sleep(0.03)

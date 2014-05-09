@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-11-23 10:43+0400\n"
-"Last-Translator: beqa gozalishvili <beqaprogger@gmail.com>\n"
+"POT-Creation-Date: 2014-04-22 19:10+1000\n"
+"PO-Revision-Date: 2014-04-26 16:07+0300\n"
+"Last-Translator: Ruslan Kolodyazhni <eye0@rambler.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 "Initial-Author: Dmitry Kaslin <dak1968@gmail.com>\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.5.4\n"
 "X-Poedit-Bookmarks: 343,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -121,6 +121,10 @@ msgstr "Поиск"
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
 msgstr "Форма"
+
+#. Translators: Reported for a significant region, normally found on web pages.
+msgid "region"
+msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1436,6 +1440,15 @@ msgstr "имеет полное описание"
 msgid "pinned"
 msgstr "Зафиксирован"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "Содержит формулу"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "есть коментарий"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "не выделено"
@@ -1553,6 +1566,7 @@ msgid "Tools"
 msgstr "Сервис"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "Сенсорный экран"
 
@@ -2457,7 +2471,7 @@ msgstr "режим %s"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "cycles between available touch modes"
-msgstr "циклирует между доступными  сенсорными режимами"
+msgstr "переключает между доступными  сенсорными режимами"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Reports the object and content directly under your finger"
@@ -3069,10 +3083,6 @@ msgstr "выравнивание по ширине"
 msgid "align default"
 msgstr "Выравнивание поумолчанию"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "есть коментарий"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "Граматическая ошибка"
@@ -3119,6 +3129,82 @@ msgstr "&Высота"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Интонация"
+
+msgid "text mode"
+msgstr "текстовый режим"
+
+msgid "object mode"
+msgstr "объектный режим"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "однократно {action}"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "двукратно {action}"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "трёхкратно {action}"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "четырёхкратно {action}"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{action} {numFingers} пальцами"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "касание"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "касание и удержание"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "удержание"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr ""
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr ""
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr ""
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr ""
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+msgctxt "touch action"
+msgid "hover down"
+msgstr ""
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr ""
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr ""
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3287,6 +3373,14 @@ msgstr ""
 "пожалуйста, рассмотрите возможность пожертвования в пользу NV Access. Это "
 "можно сделать выбрав \"пожертвования\" из меню NVDA."
 
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"Невозможно установить дополнение NVDA из {path}.\n"
+"NVDA должна быть запущена для установки дополнений."
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "{symbol} как в {description}"
@@ -3318,12 +3412,12 @@ msgstr "Устанавливает объект навигатора на пре
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
-msgstr ""
+msgstr "Формирование ввода"
 
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 msgid "Candidate"
-msgstr ""
+msgstr "Вариант"
 
 msgid "Display"
 msgstr "Дисплей"
@@ -3347,6 +3441,14 @@ msgstr "Нет сообщения"
 #. Translators: The description of an NVDA command to view one of the recent messages.
 msgid "Displays one of the recent messages"
 msgstr "Отображает одно из последних сообщений"
+
+#. Translators: This Outlook Express message has an attachment
+msgid "has attachment"
+msgstr "содержит вложение"
+
+#. Translators: this Outlook Express message is flagged
+msgid "flagged"
+msgstr ""
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
@@ -3398,7 +3500,7 @@ msgstr "Ключевые слова:"
 
 #. Translators: This is presented in outlook or live mail, email blind carbon copy
 msgid "BCC:"
-msgstr "Слепая копия:"
+msgstr "Скрытая Копия:"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
 msgid "unread"
@@ -3572,10 +3674,6 @@ msgstr "Миниатюры"
 msgid "Master Thumbnails"
 msgstr "Мастер миниатюр"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "Ожидаем Powerpoint..."
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Слайд {slideNumber}"
@@ -3609,6 +3707,10 @@ msgstr "Нет заметок"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "Пустой слайд"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "Ожидаем Powerpoint..."
 
 # An open-source (and free) Screen Reader for the Windows Operating System
 # Created by Michael Curran, with help from James Teh and others
@@ -4836,6 +4938,11 @@ msgstr "Звуковой сигнал при наборе маленьких б�
 msgid "Speak command &keys"
 msgstr "Читать &Командные клавиши"
 
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Handle keys from other &applications"
+msgstr "Обрабатывать клавиши из &других приложений"
+
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
 msgstr ""
@@ -5158,6 +5265,11 @@ msgstr "Читать &ориентиры"
 #. document formatting settings dialog.
 msgid "Report fra&mes"
 msgstr "Читать &фреймы"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "Читать &Интерактивные элементы"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -5970,10 +6082,6 @@ msgid ""
 msgstr ""
 "Однократное нажатие установит текущий столбец как столбец, в котором должны "
 "находиться заголовки строк. Двойное нажатие сбрасывает эту установку."
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "Содержит формулу"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"

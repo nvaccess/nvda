@@ -690,16 +690,6 @@ the NVDAObject for IAccessible
 			res=self.IAccessibleObject.accName(self.IAccessibleChildID)
 		except COMError:
 			res=None
-		if not res and hasattr(self,'IAccessibleTextObject'):
-			try:
-				res=self.makeTextInfo(textInfos.POSITION_CARET).text
-				if res:
-					return
-			except (NotImplementedError, RuntimeError):
-				try:
-					res=self.makeTextInfo(textInfos.POSITION_ALL).text
-				except (NotImplementedError, RuntimeError):
-					res=None
 		return res if isinstance(res,basestring) and not res.isspace() else None
 
 	def _get_value(self):
@@ -920,7 +910,7 @@ the NVDAObject for IAccessible
 				#Hack around bad MSAA implementations that deliberately skip the window root IAccessible in the ancestry (Skype, iTunes)
 				if parentObj.windowHandle!=self.windowHandle and self.IAccessibleRole!=oleacc.ROLE_SYSTEM_WINDOW and winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)==parentObj.windowHandle:
 					windowObj=Window(windowHandle=self.windowHandle)
-					if windowObj and windowObj.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW and windowObj.parent==parentObj:
+					if windowObj and isinstance(windowObj,IAccessible) and windowObj.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW and windowObj.parent==parentObj:
 						return windowObj
 			return self.correctAPIForRelation(parentObj,relation="parent") or super(IAccessible,self).parent
 		return super(IAccessible,self).parent

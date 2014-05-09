@@ -686,6 +686,12 @@ class TextFrame(EditableTextWithoutAutoSelectDetection,PpObject):
 		if parent:
 			return Shape(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=parent)
 
+	def script_caret_backspaceCharacter(self, gesture):
+		super(TextFrame, self).script_caret_backspaceCharacter(gesture)
+		# #3231: The typedCharacter event is never fired for the backspace key.
+		# Call it here so that speak typed words works as expected.
+		self.event_typedCharacter(u"\b")
+
 class TableCellTextFrame(TextFrame):
 	"""Represents a text frame inside a table cell in Powerpoint. Specifially supports the caret jumping into another cell with tab or arrows."""
 

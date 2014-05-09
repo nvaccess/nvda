@@ -57,6 +57,8 @@ vagy nézze meg a szoftverhez mellékelt Copying.txt fájlt.
 + Rendszerkövetelmények +
 
 - Operációs rendszerek: a Windows XP, Windows Vista, Windows 7, és Windows 8  bármely verziója (beleértve a szerver operációs rendszereket is)
+- Windows XP 32-bit esetén az NVDA igényli a Szerviz csomag 2 vagy újabb meglétét.
+- Windows Server 2003 esetén az NVDA igényli a Szerviz csomag 1 vagy újabb meglétét.
 - Memória: 256 mb vagy több
 - Processzor sebesség: 1.0 ghz vagy gyorsabb
 - Kb. 50 mb szabad hely a merevlemezen.
@@ -523,7 +525,7 @@ Megjegyzés: A hátralévő idő bemondása csak akkor lehetséges, ha a Foobar 
 %kc:beginInclude
 || Funkció | Billentyűparancs | Leírás |
 | A megjegyzés ablak felolvasása | control+shift+c | Felolvassa a megjegyzés ablak tartalmát. |
-| Az automatikus megjegyzés ablak felolvasása | control+shift+a | Felolvassa az automatikus megjegyzés ablak tartalmát. |
+| A megjegyzések fordítóknak felolvasása | control+shift+a | Felolvassa a fordítóknak szánt megjegyzéseket. |
 %kc:endInclude
 
 + Az NVDA Beállítása+
@@ -1056,7 +1058,9 @@ Az ok gomb megnyomásával a profil létrejön és a párbeszédpanel bezáródi
 
 +++ A profil kézi bekapcsolása +++
 
-a profilt úgy lehet kézzel bekapcsolni, hogy a profilok testreszabása párbeszédpanelen kiválasztjuk, és megnyomjuk a kézi aktiválás gombot. Ha a profil aktív, további profilokat is bekapcsolhat a program, ha fennállnak annak feltételei, azonban ha megváltoztatunk egy beállítást, az csak a kézi profilban változik meg, valamint a program a kézi profilba menti el a változtatást.
+a profilt úgy lehet kézzel bekapcsolni, hogy a profilok testreszabása párbeszédpanelen kiválasztjuk, és megnyomjuk a kézi aktiválás gombot. Ha a profil aktív, további profilokat is bekapcsolhat a program, ha fennállnak annak feltételei, azonban a kézzel aktivált profil beállításai élveznek előnyt. Így pl. ha van nekünk egy az aktuális alkalmazáshoz rendelt profilunk amiben a hivatkozások jelzése be van kapcsolva, de a kézzel aktivált profilban ez ki van kapcsolva, akkor  a linkek nem kerülnek bemondásra.
+Ha megváltoztatta a beszéd paramétereit a feltételhez kötött profilban, de a kézzel aktiváltban ezen nem módosított, akkor a feltétel kiváltásakor a feltételhez kötött profil beszédparaméterei lépnek életbe.
+Minden beállítás módosítás a kézzel aktivált profilba kerül elmentésre.
 
 A kézi profil kikapcsolásához a profilok testreszabása párbeszédpanelen válasszuk ki azt, majd nyomjuk meg a kézi kikapcsolás gombot. 
 
@@ -1126,7 +1130,7 @@ Az NVDA kiegészítő fájl megjelenése előtt is lehetőség volt egyes kiegé
 
 ++ Python Konzol ++
 Az NVDA Python konzol, mely az NVDA eszközök menüjében található, egy fejlesztői eszköz mely hasznos az NVDA összetevőinek futás közbeni megvizsgálásakor, esetenként egy alkalmazás hozzáférhetőségi hierarchiájának megállapításakor.
-Részletes információért tekintse meg az angol nyelvű [Python Konzol cikket az NVDA weboldalán NVDA_URLwiki/PythonConsole].
+Részletes információért tekintse meg az angol nyelvű [NVDA fejlesztői dokumentációt http://community.nvda-project.org/wiki/Development].
 
 ++ A bővitmények újratöltése ++
 
@@ -1165,8 +1169,8 @@ Ebben a fejezetben az NVDA által támogatott braille kijelzőkről olvashat.
 
 ++ Freedom Scientific Focus/Pacmate kijelzők ++
 
-A Freedom Scientific Focus/Pacmate kijelzőket tudja használni az NVDA programmal. Csak akkor jelenik meg a kijelzők listájában, ha fel van telepítve a Freedom Scientific braille driver. Ezeket a [Freedom Scientific hivatalos braille driverek angol nyelvű oldalán http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp] érheti el, a driverek telepítési információival együtt.
-Ez ugyan a Focus 40 Blue kijelzőkhöz készült, de támogatja az összes többi Freedom Scientific terméket is.
+A Freedom Scientific Focus/Pacmate kijelzőket tudja használni az NVDA programmal. Csak akkor jelenik meg a kijelzők listájában, ha fel van telepítve a Freedom Scientific braille driver. Ezeket a [Freedom Scientific hivatalos braille driverek angol nyelvű oldalán http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp] érheti el, a driverek telepítési információival együtt.
+Ez ugyan a Focus  Blue kijelzőkhöz készült, de támogatja az összes többi Freedom Scientific terméket is.
 Megjegyzés: Ha ön 64 bites operációs rendszert használ, amire már fel van telepítve a kijelző drivere egy másik képernyőolvasóval együtt, az NVDA programhoz külön telepíteniekell az eszköz illesztőprogramját.
 
 Alapbeálítás szerint az NVDA ezeket a kijelzőket képes automatikusan felismerni és csatlakoztatni usb-n és bluetoothon keresztül is.
@@ -1346,7 +1350,8 @@ Az alábbiakban felsoroljuk azokat a kijelzőn lévő parancsbillentyűket (és 
 
 ++ HIMS Braille Sense/Braille EDGE sorozat ++
 Az NVDA támogatja a Braille Sense és Braille EDGE kijelzőket (gyártó: [Hims http://www.hims-inc.com/]), mind USB, mind bluetooth csatlakoztatási módban.
-Ha a kijelzőt USB-n keresztül csatlakoztatja, használat előtt telepítse a gyártótól kapott USB vezérlőprogramot.
+Ha a kijelzőt USB-n keresztül csatlakoztatja, használat előtt telepítse a gyártótól kapott USB vezérlőprogramot. Ezt letöltheti a HIMS Resource Centerből: http://www.hims-inc.com/resource-center/
+Válassza ki az eszközét, majd töltse le a hozzátartozó drivert a Window-eyes szekcióból. Ez egy általános usb driver, így a felteleíptés után a kijelző működik az NVDA-val.
 
 Az alábbiakban felsoroljuk azokat a kijelzőn lévő parancsbillentyűket (és a hozzájuk tartozó parancsokat), amiket az NVDA programban használhat. A kijelző dokumentációjában találhatja meg, hogy ezek a billentyűk hol helyezkednek el.
 %kc:beginInclude
@@ -1480,7 +1485,6 @@ Az NVDA-val az alábbi Papermeier parancsbillentyűket használhatja:
 | Braille cella aktiválása | cellákhoz tartozó gombok |
 | Megmutatja az áttekintő kurzornál lévő karaktert | l1 |
 | Aktiválja a navigátor kurzornál lévő elemet | l2 |
-| Sík áttekintő módba lép a navigátor kurzornál lévő elemnél | r1 |
 | Kiírja az ablak címét | l1+up |
 | Megjeleníti az állapotsort | l2+down |
 | Az aktuális elemet magában foglaló elemhez lép | up2 |
@@ -1514,7 +1518,7 @@ Beállíthatja, hogy egy adott írásjel átadódjon a beszédszintetizátornak 
 
 Ehhez az NVDA írásjel konfigurációs fájl szerkesztése szükséges, melyet az NVDA felhasználói beállítások könyvtárában talál.
 A fájl neve symbols-xx.dic, ahol xx a nyelvi kódot helyettesíti (pl. hu).
-A fájl formája az NVDA fejlesztői útmutatójának Írásjelkiejtés fejezetében található [az NVDA weboldalának fejlesztői címén NVDA_URLwiki/Development].
+A fájl formája az NVDA fejlesztői útmutatójának Írásjelkiejtés fejezetében található, olvassa el hozzá az [[NVDA fejlesztői dokumentációt http://community.nvda-project.org/wiki/Development].
 Érdemes megjegyezni, hogy összetett szimbólumok megadása jelenleg nem lehetséges.
 
 

@@ -16,6 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <sstream>
 #include <rpc.h>
 #include <sddl.h>
+#include <DbgHelp.h>
 #include "nvdaControllerInternal.h"
 #include <common/log.h>
 #include "vbufRemote.h"
@@ -127,4 +128,32 @@ error_status_t nvdaInProcUtils_getActiveObject(handle_t bindingHandle, const wch
 		return res;
 	}
 	return GetActiveObject(clsid,NULL,ppUnknown);
+}
+
+std::wstring minidumpPath;
+
+LONG WINAPI crashHandler(LPEXCEPTION_POINTERS exceptionInfo) {
+	HANDLE mdf = CreateFile(minidumpPath.c_str(), GENERIC_WRITE, 0, NULL,
+		CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (mdf == INVALID_HANDLE_VALUE)
+		return EXCEPTION_CONTINUE_SEARCH;
+	MINIDUMP_EXCEPTION_INFORMATION mdExc;
+	mdExc.ThreadId = GetCurrentThreadId();
+	mdExc.ExceptionPointers = exceptionInfo;
+	mdExc.ClientPointers = FALSE;
+	MiniDumpWriteDump(
+		GetCurrentProcess(), GetCurrentProcessId(),
+		mdf,
+		MiniDumpNormal,
+		&mdExc, NULL, NULL);
+	CloseHandle(mdf);
+	return EXCEPTION_CONTINUE_SEARCH;
+}
+
+error_status_t nvdaInProcUtils_dumpOnCrash(handle_t bindingHandle, const wchar_t* path) {
+	if (!path)
+		return E_FAIL;
+	minidumpPath = path;
+	SetUnhandledExceptionFilter(crashHandler);
+	return S_OK;
 }

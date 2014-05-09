@@ -57,8 +57,8 @@ Für weitere Informationen können Sie entweder die [englischsprachige http://ww
 
 + Systemvoraussetzungen +
 - Betriebssystem: Microsoft Windows XP, Windows Vista, Windows 7 und Windows 8 (alle 32-/64-Bit-Versionen, inkl. Server-Betriebssysteme).
-  - Für Windows XP wird mindestens SP2 benötigt.
-  - für Windows Server 2003 wird mindestens SP1 benötigt.
+  - Für Windows XP wird mindestens Service Pack 2 benötigt.
+  - Für Windows Server 2003 wird mindestens Service Pack 1 benötigt.
 - Speicher: Mindestens 256 Megabyte RAM oder mehr.
 - Prozessorgeschwindigkeit: 1,0 Gigahertz oder schneller.
 - Mindestens 50 Megabyte Festplattenspeicher.
@@ -891,6 +891,10 @@ Es ist generell nicht gebräuchlich, Buchstaben mittels der Umschalttaste groß 
 Tastenkombination: NVDA+4
 
 Wenn dieses Kontrollfeld aktiviert ist, gibt NVDA alle Tasten wieder, die nicht mit einem Zeichen belegt  sind. Das können Tastenkombination wie z. B. "Steuerung+Buchstabe" sein.
+
+==== Tastendrücke von anderen Anwendungen verarbeiten ====
+Mit dieser Option legen Sie fest, ob per Software emulierte Tastendrücke von NVDA verarbeitet werden sollen. Hierzu zählen beispielsweise Tastendrücke auf einer Bildschirmtastatur oder per Spracherkennung erkannte Zeichen.
+Diese Option ist zwar standardmäßig aktiviert, dennoch kann es sinnvoll sein, sie in bestimmte Fällen zu deaktivieren. Wenn Sie zum Beispiel mit Hilfe der Software Unikey vietnamesische Zeichen eingeben wollen, kann dies zu falsch erkannten Zeichen führen, wenn die Option eingeschaltet ist.
 
 +++ Mauseinstellungen (NVDA+STRG+M) +++[MouseSettings]
 

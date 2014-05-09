@@ -127,3 +127,52 @@ class CustomWindow(object):
 		except:
 			log.exception("Error in wndProc")
 		return ctypes.windll.user32.DefWindowProcW(hwnd, msg, wParam, lParam)
+
+try:
+	# Windows >= 8.1
+	_logicalToPhysicalPoint = ctypes.windll.user32.LogicalToPhysicalPointForPerMonitorDPI
+	_physicalToLogicalPoint = ctypes.windll.user32.PhysicalToLogicalPointForPerMonitorDPI
+except AttributeError:
+	try:
+		# Windows Vista..Windows 8
+		_logicalToPhysicalPoint = ctypes.windll.user32.LogicalToPhysicalPoint
+		_physicalToLogicalPoint = ctypes.windll.user32.PhysicalToLogicalPoint
+	except AttributeError:
+		# Windows <= XP
+		_logicalToPhysicalPoint = None
+		_physicalToLogicalPoint = None
+
+def logicalToPhysicalPoint(window, x, y):
+	"""Converts the logical coordinates of a point in a window to physical coordinates.
+	This should be used when points are received directly from a window that is not DPI aware.
+	@param window: The window handle.
+	@param x: The logical x coordinate.
+	@type x: int
+	@param y: The logical y coordinate.
+	@type y: int
+	@return: The physical x and y coordinates.
+	@rtype: tuple of (int, int)
+	"""
+	if not _logicalToPhysicalPoint:
+		return x, y
+	point = ctypes.wintypes.POINT(x, y)
+	_logicalToPhysicalPoint(window, ctypes.byref(point))
+	return point.x, point.y
+
+def physicalToLogicalPoint(window, x, y):
+	"""Converts the physical coordinates of a point in a window to logical coordinates.
+	This should be used when sending points directly to a window that is not DPI aware.
+	@param window: The window handle.
+	@param x: The physical x coordinate.
+	@type x: int
+	@param y: The physical y coordinate.
+	@type y: int
+	@return: The logical x and y coordinates.
+	@rtype: tuple of (int, int)
+	"""
+	if not _physicalToLogicalPoint:
+		return x, y
+	point = ctypes.wintypes.POINT(x, y)
+	_physicalToLogicalPoint(window, ctypes.byref(point))
+	return point.x, point.y
+

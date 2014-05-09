@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr 2013.1:6039\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-11-04 08:37+0545\n"
+"POT-Creation-Date: 2014-04-22 19:10+1000\n"
+"PO-Revision-Date: 2014-03-22 09:35+0545\n"
 "Last-Translator: Him Prasad Gautam <drishtibachak@gmail.com>\n"
 "Language-Team: हिम प्रसाद गौतम <himjee@yahoo.com>\n"
-"Language: Nepali\n"
+"Language: ne\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.6.1\n"
 "अनुवाद मिति: २०६९ साल असार १५ गते\n"
 "पुनरावलोकन मिति: २०६९ साल श्रावण १५ गते\n"
 "प्रथम अनुवादक: हिम प्रसाद गौतम(नेपाल) <Urdubachak@gmail.com>, <himjee@yahoo."
@@ -124,6 +124,10 @@ msgstr "खोजी"
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
 msgstr "फाराम"
+
+#. Translators: Reported for a significant region, normally found on web pages.
+msgid "region"
+msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1436,6 +1440,15 @@ msgstr "लामो विवरण युक्त ।"
 msgid "pinned"
 msgstr "टासिएको"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "सूत्र युक्त"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "प्रतिक्रिया युक्त"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "न रोजेको"
@@ -1548,6 +1561,7 @@ msgid "Tools"
 msgstr "औजारहरू"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "स्पर्स पर्दा"
 
@@ -2456,7 +2470,7 @@ msgstr "आदेशको छरितो सन्दर्भसूची"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
 msgid "User Guide"
-msgstr "उपभोक्ता निर्देशिका"
+msgstr "उपयोग निर्देशिका"
 
 #. Translators: A file extension label for NVDA add-on package.
 msgid "NVDA add-on package"
@@ -2504,11 +2518,11 @@ msgstr "ध्वनी बढाउ"
 
 #. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
 msgid "next track"
-msgstr "अर्को ट्रयाक"
+msgstr "अर्को धुन"
 
 #. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
 msgid "previous track"
-msgstr "पछिल्लो ट्रयाक"
+msgstr "पछिल्लो धुन"
 
 #. Translators: This is the name of the stop key found on multimedia keyboards to stop the current playing track in the mediaplayer.
 msgid "stop"
@@ -3007,10 +3021,6 @@ msgstr "तटस्थ पङ्‌क्ति"
 msgid "align default"
 msgstr "निर्धारित पङ्‌क्ति"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "प्रतिक्रिया युक्त"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "हिज्जे गल्ती"
@@ -3057,6 +3067,82 @@ msgstr "&पीच"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&उतार-चढाव"
+
+msgid "text mode"
+msgstr "पाठ मुद्रा"
+
+msgid "object mode"
+msgstr "वस्तु मुद्रा"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "एकल क्रिया"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "दोब्बर क्रिया"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "तेब्बर क्रिया"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "चौब्बर क्रिया"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{numFingers} औंला {action}"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "धाप"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "धाप र रोकाइ"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "रोकाइ"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr "माथि सार्नु"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr "तल सार्नु"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr "दायाँ सार्नु"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr "वायाँ सार्नु"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+msgctxt "touch action"
+msgid "hover down"
+msgstr "तल ढाक्नु"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr "ढाक्नु"
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr "माथि ढाक्नु"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3221,6 +3307,14 @@ msgstr ""
 "कृपया NV Access लाई चन्दा दिनु होस् । दान गर्नका लागि तपाइले 'दान गर्नु होस् ' भन्ने मेनु "
 "लाई चयन गर्नु होला ।"
 
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"{path} बाट नेत्रवाणी थप शाधन भित्र्याउन सकिएन ।\n"
+"तपाइले नेत्रवाणी थप-साधन भित्र्याएको हुनु पर्छ ।"
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "जस्तै {description} मा {symbol} "
@@ -3281,6 +3375,14 @@ msgstr "हालसम्म कुनै सन्देश छैन"
 #. Translators: The description of an NVDA command to view one of the recent messages.
 msgid "Displays one of the recent messages"
 msgstr "हालैको सन्देशहरू मद्ये कुनैलाई देखाउने छ ।"
+
+#. Translators: This Outlook Express message has an attachment
+msgid "has attachment"
+msgstr "संलग्न उपलब्ध"
+
+#. Translators: this Outlook Express message is flagged
+msgid "flagged"
+msgstr "झण्डाged"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
@@ -3506,10 +3608,6 @@ msgstr "औला काँटी"
 msgid "Master Thumbnails"
 msgstr "मूल अँगुठाछाप "
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "प्रस्तुतिकरणको प्रतिक्षा"
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "प्रस्तुतिपत्र {slideNumber}"
@@ -3542,6 +3640,10 @@ msgstr "टिप्पणी छैन ।"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "खाली प्रस्तुतीपत्र"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "प्रस्तुतिकरणको प्रतिक्षा"
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -3705,7 +3807,7 @@ msgstr "सामान्य अनुकूलता"
 
 #. Translators: The label for the menu item to open Synthesizer settings dialog.
 msgid "&Synthesizer..."
-msgstr "&संश्लेषकको चयन ... "
+msgstr "&संश्लेषकको अनुकूलता..."
 
 msgid "Change the synthesizer to be used"
 msgstr "प्रयोग गर्नु पर्ने संश्लेषक फेर ।"
@@ -3881,7 +3983,7 @@ msgstr "मेरो बारेमा"
 
 #. Translators: The label for the Help submenu in NVDA menu.
 msgid "&Help"
-msgstr "&सहयोग"
+msgstr "&सहायता"
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
 msgid "&Configuration profiles..."
@@ -4734,6 +4836,11 @@ msgstr "caps चाबी लगाएर साना वर्ण लेख्
 msgid "Speak command &keys"
 msgstr "आदेश &कुञ्जी बताउ"
 
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Handle keys from other &applications"
+msgstr ""
+
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
 msgstr "कम्तिमा एउटा कुञ्जीलाई नेत्रवाणी कुञ्जी बनाउनै पर्छ ।"
@@ -4869,12 +4976,12 @@ msgstr "वस्तुको द्रुतमार्ग &कुञ्जी
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report object &position information"
-msgstr "बस्तुको &अवस्थाको जानकारी देउ"
+msgstr "बस्तु अवस्थित &स्थान बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Guess object &position information when unavailable"
-msgstr "बस्तुको &अवस्थाको जानकारी नभए अनुमान गर"
+msgstr "बस्तु अवस्थित &स्थान थाहा नभए अनुमान गर"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -5054,6 +5161,11 @@ msgstr "&कित्ता बताउ"
 #. document formatting settings dialog.
 msgid "Report fra&mes"
 msgstr "&पृष्ट सङ्ख्या बताउ"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "&किटिक्क गर्न मिल्ने भए जानकारी देउ"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -5864,10 +5976,6 @@ msgstr ""
 "एक पटक दबाउदा जहा हरफ शिर्षक फेला पार्नु छ त्यो महललाई चालु महल बनाउने छ । दुई पटक "
 "दबाउदा अनुकुलतालाई हटाउने छ ।"
 
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "सूत्र युक्त"
-
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} देखि {lastAddress} {lastContent} सम्म"
@@ -5994,60 +6102,3 @@ msgstr "HIMS ब्रेल चेतना/ब्रेल किनारा 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "%s %s देखि %s %s सम्म"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "तपाईको अभियोजन फाइलमा गल्ती छ ।\n"
-#~ " अहिले नै गल्ती सच्याउने हो भने 'ठीक' टाँक र पछि आफैँले अभियोजन फाइल सम्पादन गर्ने हो "
-#~ "भने 'रद्द' टाँक दबाउनु होला । गल्तीको विस्तृत विवरण लगत पुस्तिकामा छ ।\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "कुनै स्वचालित प्रतिक्रिया छैन ।"
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "स्वचालित प्रतिक्रिया विन्डो भेटिएन ।"
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "स्वतः प्रतिक्रिया लेख्ने बाकसमा प्रतिक्रिया जनाउने छ ।"
-
-#~ msgid "Automatic comments:"
-#~ msgstr "स्वचालित प्रतिक्रियाहरू "
-
-#~ msgid "Translation:"
-#~ msgstr "संस्थाः"
-
-#~ msgid "Comments:"
-#~ msgstr "प्रतिक्रियाहरू:"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "यो वस्तुको पुर्ण समीक्षा  छैन"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "पुर्ण समीक्षा अवस्थामा कुनै वस्तु छैन"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "पुर्ण समीक्षा भित्रको समीक्षा कर्सर बसेको पाठले प्रतिनिधित्व गरेको वस्तुमा विचरण वस्तु "
-#~ "जान्छ ।"
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "सबैभन्दा पहिले नेत्रवाणीको अरू अनुकूलता पातोलाई बन्द गर्नु होला"
-
-#~ msgid "Translation &table:"
-#~ msgstr "अनुवाद &तालिका"
-
-#~ msgid "beeps"
-#~ msgstr "टीँ गर्छ ।"
-
-#~ msgid "talk"
-#~ msgstr "बोल्छ"

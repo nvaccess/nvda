@@ -3,20 +3,58 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.2 =
+
+== New Features ==
+- Announcement of text selection is now possible in some custom edit fields where display information is used. (#770)
+- In accessible Java applications, position information is now announced for radio buttons and other controls that expose group information. (#3754)
+- In accessible Java applications, keyboard shortcuts are now announced for controls that have them. (#3881)
+- In browse mode, labels on landmarks are now reported. They are also included in the Elements List dialog. (#1195)
+- In browse mode, labelled regions are now treated as landmarks. (#3741)
+- In Internet Explorer documents and applications, Live Regions (part of the W3c ARIA standard) are now supported, thus allowing web authors to mark particular content to be automatically spoken as it changes. (#1846)
+
+
+== Changes ==
+- When exiting a dialog or application within a browse mode document, the browse mode document's name and type is no longer announced. (#4069)
+
+
+== Bug Fixes ==
+- The standard Windows System menu is no longer accidentally silenced in Java applications. (#3882)
+- When copying text from screen review, line breaks are no longer ignored. (#3900)
+- Pointless whitespace objects are no longer reported in some applications when the focus changes or when using object navigation with simple review enabled. (#3839)
+- Message boxes and other dialogs produced by NVDA again cause previous speech to be canceled before announcing the dialog.
+- In browse mode, the labels of controls such as links and buttons are now rendered correctly where the label has been overridden by the author for accessibility purposes (specifically, using aria-label or aria-labelledby). (#1354)
+- In Browse mode in Internet Explorer, text contained within an element marked as presentational (ARIA role="presentation") is no longer inappropriately ignored. (#4031)
+- It is now again possible to type Vietnamese text using the Unikey software. To do this, uncheck the new Handle keys from other applications checkbox in NVDA's Keyboard settings dialog. (#4043)
+- In browse mode, radio and check menu items are reported as controls instead of just clickable text. (#4092)
+- NVDA no longer incorrectly switches from focus mode to browse mode when a radio or check menu item is focused. (#4092)
+- In Microsoft PowerPoint with speaking of typed words enabled, characters erased with backspace are no longer announced as part of the typed word. (#3231)
+- In Microsoft Office 2010 Options dialogs, the labels of combo boxes are reported correctly. (#4056)
+- In browse mode in Mozilla applications, using quick navigation commands to move to the next or previous button or form field now includes toggle buttons as expected. (#4098)
+- The content of alerts in Mozilla applications is no longer reported twice. (#3481)
+- In browse mode, containers and landmarks are no longer inappropriately repeated while navigating within them at the same time as page content is changing (e.g. navigating the Facebook and Twitter websites). (#2199)
+- NVDA recovers in more cases when switching away from applications that stop responding. (#3825)
+- The caret (insertion point) again correctly updates when doing a sayAll command while in editable text drawn directly to the screen. (#4125)
+
+
 = 2014.1 =
 
 == New Features ==
 - Support for Microsoft PowerPoint 2013. Note that protected view is not supported. (#3578)
 - In Microsoft word and Excel, NVDA can now read the selected symbol when choosing symbols using the Insert Symbols dialog. (#3538)
-- It is now possible to choose if content in documents should be identified as clickable, via a new option in the Document Formatting settings dialog. This option is on by default (previous behaviour). (#3556)
+- It is now possible to choose if content in documents should be identified as clickable via a new option in the Document Formatting settings dialog. This option is on by default in accordance with the previous behavior. (#3556)
 - Support for braille displays connected via Bluetooth on a computer running the Widcomm Bluetooth Software. (#2418)
 - When editing text in PowerPoint, hyperlinks are now reported. (#3416)
 - When in ARIA applications or dialogs on the web, it is now possible to force NVDA to switch to browse mode with NVDA+space allowing document-style navigation of the application or dialog. (#2023)
+- In Outlook Express / Windows Mail / Windows Live Mail, NVDA now reports if a message has an attachment or is flagged. (#1594)
+- When navigating tables in accessible Java applications, row and column coordinates are now reported, including  column and  row headers if they exist. (#3756)
 
 
 == Changes ==
 - For Papenmeier braille displays, the move to flat review/focus command has been removed. Users can assign their own keys using the Input Gestures dialog. (#3652)
 - NVDA now relies  on the Microsoft VC runtime version 11, which means it can no longer be run on Operating systems older than Windows XP Service Pack 2 or Windows Server 2003 Service Pack 1.
+- Punctuation level Some will now speak star (*) and plus (+) characters. (#3614)
+- Upgraded eSpeak to version 1.48.04 which includes many language fixes and fixes several crashes. (#3842, #3739, #3860)
 
 
 == Bug Fixes ==
@@ -29,15 +67,38 @@
 - In browse mode in Adobe Reader, the correct text is now rendered for buttons, etc. where the label has been overridden using a tooltip or other means. (#3640)
 - In browse mode in Adobe Reader, extraneous graphics containing the text "mc-ref" will no longer be rendered. (#3645)
 - NVDA no longer reports all cells in Microsoft Excel as underlined in their formatting information. (#3669)
-- No longer show meaningless characters in browse mode documents such as those found in the Unicode private usage range. In some cases these were stopping more useful labels to be shown. (#2963).
-- Input composition for entering east-asian characters no longer fails in PuTTY (#3432)
-- Navigating in a document after a canceled sayAll no longer results in NVDA sometimes incorrectly announcing that you have left a field (such as a table) lower in the document that the sayall never actually got around to speaking (#3688)
-- When using browse mode quick navigation commands  while in sayAll with skim reading enabled, NVDA more accurately announces the new field (e.g. it now says a heading is a heading, rather than just its text). (#3689)
-- The jump to end or start of container quick navigation commands now honor the skim reading during sayAll setting (i.e. they will no longer cancel the current sayall). (#3675)
+- No longer show meaningless characters in browse mode documents such as those found in the Unicode private usage range. In some cases these were stopping more useful labels from being shown. (#2963)
+- Input composition for entering east-asian characters no longer fails in PuTTY. (#3432)
+- Navigating in a document after a canceled say all no longer results in NVDA sometimes incorrectly announcing that you have left a field (such as a table) lower in the document that the say all never actually spoke. (#3688)
+- When using browse mode quick navigation commands  while in say all with skim reading enabled, NVDA more accurately announces the new field; e.g. it now says a heading is a heading, rather than just its text. (#3689)
+- The jump to end or start of container quick navigation commands now honor the skim reading during say all setting; i.e. they will no longer cancel the current say all. (#3675)
 - Touch gesture names listed in NVDA's Input Gestures dialog are now friendly and localized. (#3624)
 - NVDA no longer causes certain programs to crash when moving the mouse over their rich edit (TRichEdit) controls. Programs include Jarte 5.1 and BRfácil. (#3693, #3603, #3581)
 - In Internet Explorer and other MSHTML controls, containers such as tables marked as presentation by ARIA are no longer reported to the user. (#3713)
-- in Microsoft Word, NVDA no longer inappropriately repeats table row and column information for a cell multiple times. (#3702)
+- in Microsoft Word, NVDA no longer inappropriately repeats table row and column information for a cell on a braille display multiple times. (#3702)
+- In languages which use a space as a digit group/thousands separator such as French and German, numbers from separate chunks of text are no longer pronounced as a single number. This was particularly problematic for table cells containing numbers. (#3698)
+- Braille no longer sometimes fails to update when the system caret is moved in Microsoft Word 2013. (#3784)
+- When positioned on the first character of a heading in Microsoft Word, the text communicating it is a heading (including the level) no longer disappears off a braille display. (#3701)
+- When a configuration profile is triggered for an application and that application is exited, NVDA no longer sometimes fails to deactivate the profile. (#3732)
+- When entering Asian input into a control within NVDA itself (e.g. the browse mode Find dialog), "NVDA" is no longer incorrectly reported in place of the candidate. (#3726)
+- The tabs in the Outlook 2013 options dialog are now reported. (#3826)
+- Improved support for ARIA live regions in Firefox and other Mozilla Gecko applications:
+ - Support for aria-atomic updates and filtering of aria-busy updates. (#2640)
+ - Alternative text (such as alt attribute or aria-label) is included if there is no other useful text. (#3329)
+ - Live region updates are no longer silenced if they occur at the same time as the focus moves. (#3777)
+- Certain presentation elements in Firefox and other Mozilla Gecko applications are no longer inappropriately shown in browse mode (specifically, when the element is marked with aria-presentation but it is also focusable). (#3781)
+- A performance improvement when navigating a document in Microsoft Word with spelling errors enabled. (#3785)
+- Several fixes to the support for accessible Java applications:
+ - The initially focused control in a frame or dialog no longer fails to be reported when the frame or dialog comes to the foreground. (#3753)
+ - Unuseful position information is no longer announced for radio buttons (e.g. 1 of 1). (#3754)
+ - Better reporting of JComboBox controls (html no longer reported, better reporting of expanded and collapsed states). (#3755)
+ - When reporting the text of dialogs, some text that was previously missing is now included. (#3757)
+ - Changes to the name, value or description of the focused control is now reported more accurately. (#3770)
+- Fix a crash in NVDA seen in Windows 8 when focusing on certain RichEdit controls containing large amounts of text (e.g. NVDA's log viewer, windbg). (#3867)
+- On systems with a high DPI display setting (which occurs by default for many modern screens), NVDA no longer routes the mouse to the wrong location in some applications. (#3758, #3703)
+- Fixed an occasional problem when browsing the web where NVDA would stop working correctly until restarted, even though it didn't crash or freeze. (#3804)
+- A Papenmeier braille display can now be used even if a Papenmeier display has never been connected via USB. (#3712)
+- NVDA no longer freezes when the Papenmeier BRAILLEX older models braille display is selected without a display connected.
 
 
 == Changes for Developers ==
@@ -623,7 +684,7 @@ Highlights of this release include major improvements concerning punctuation and
 - Collapsed is no longer reported for some menu items which have sub-menus.
 - The reportCurrentFormatting script (NVDA+f) now reports the formatting at the position of the review cursor rather than the system caret / focus. As  by default the review cursor follows the caret, most people should not notice a difference. However this now enables the user to find out the formatting when moving the review cursor, such as in flat review.
 
- 
+
 == Bug Fixes ==
 - Collapsing combo boxes in browse mode documents when focus mode has been forced with NVDA+space no longer auto-switches back to browse mode. (#1386)
 - In Gecko (e.g. Firefox) and MSHTML (e.g. Internet Explorer) documents, NVDA now correctly renders certain text on the same line which was previously rendered on separate lines. (#1378)

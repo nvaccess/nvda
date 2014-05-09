@@ -3,6 +3,26 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.2 =
+
+== Uudet ominaisuudet ==
+- Tekstin valitsemisen ilmoittaminen on nyt mahdollista joissakin sellaisissa muokkauskentissä, joissa käytetään näytöllä olevaa tietoa. (#770)
+- Sijaintitiedot luetaan nyt saavutettavissa Java -sovelluksissa valintapainikkeille ja muille säätimille, jotka välittävät ryhmätietoja. (#3754)
+- Pikanäppäimet luetaan nyt saavutettavissa Java -sovelluksissa sellaisille säätimille, joilla niitä on. (#3881)
+- Kiintopisteiden nimet luetaan nyt selaustilassa. Ne näytetään myös Elementtilista-valintaikkunassa. (#1195)
+- Nimetyt alueet käsitellään nyt selaustilassa maamerkkeinä. (#3741)
+
+
+== Korjatut ohjelmavirheet ==
+- Standardia Windowsin  järjestelmävalikkoa ei enää vahingossa hiljennetä Java-sovelluksissa. (#3882)
+- Rivinvaihtoja ei enää sivuuteta kopioitaessa tekstiä ruututarkastelusta. (#3900)
+- Hyödyttömiä tyhjätilaobjekteja ei enää lueta joissakin sovelluksissa kohdistuksen muuttuessa tai käytettäessä objektinavigointia Yksinkertaisen objektinavigoinnin ollessa käytössä. (#3839)
+- Ilmoitusruudut ja muut NVDA:n tuottamat valintaikkunat aiheuttavat taas aiemman puheen keskeyttämisen ennen kyseisen valintaikkunan lukemista.
+- Säädinten nimet, kuten  linkit ja painikkeet, hahmonnetaan nyt oikein selaustilassa, jos tekijä on korvannut nimen saavutettavuustarkoituksessa (erityisesti aria-label- tai aria-labeledby-ominaisuuksia käyttäen). (#1354)
+- Elementin sisällä olevaa esitykselliseksi  (aria-presentation) merkittyä tekstiä ei enää jätetä virheellisesti huomiotta selaustilassa Internet Explorerissa. (#4031)
+- Vietnaminkielisen tekstin kirjoittaminen on taas mahdollista Unikey-ohjelmistoa käyttäen. Tee tämä poistamalla valinta Käsittele muiden sovellusten näppäinpainallukset -valintaruudusta, joka on lisätty NVDA:n Näppäimistöasetukset-valintaikkunaan. (#4043) 
+
+
 = 2014.1 =
 
 == Uudet ominaisuudet ==
@@ -11,11 +31,16 @@
 - Asiakirjojen muotoiluasetukset -valintaikkunassa olevalla uudella asetuksella on nyt mahdollista valita, tunnistetaanko asiakirjojen sisältö napsautettavaksi. Asetus on oletusarvoisesti käytössä (toimii kuten aiemmin). (#3556)
 - Tuki Bluetoothin kautta Yhdistettäville pistenäytöille Widcomm Bluetooth -ohjelmistoa käyttävissä tietokoneissa. (#2418)
 - Hyperlinkit luetaan nyt muokattaessa tekstiä PowerPointissa. (#3416)
+- NVDA on nyt mahdollista pakottaa vaihtamaan verkkosivulla selaustilaan NVDA+välilyönti-näppäinyhdistelmällä ARIA-sovelluksissa tai -valintaikkunoissa oltaessa, mikä mahdollistaa niissä liikkumisen kuten tavallisessa asiakirjassa. (#2023)
+- NVDA ilmoittaa nyt Outlook Expressissä, Windows Mailissa ja Windows Live Mailissa, jos viestissä on liite tai jos viesti on merkitty. (#1594)
+- Rivien ja sarakkeiden koordinaatit ilmoitetaan nyt saavutettavien Java-sovellusten taulukoissa liikuttaessa. Myös mahdolliset taulukon sarakkeiden ja rivien otsikot luetaan. (#3756)
 
 
 == Muutokset ==
 - Siirrä kokonaistarkasteluun/kohdistukseen -komento on poistettu Papenmeier-pistenäytöistä. Käyttäjät voivat Määrittää omat näppäimensä Syöte-eleet-valintaikkunaa käyttäen. (#3652)
 - NVDA käyttää nyt Microsoft VC -ajonaikaisten kirjastojen versiota 11, mikä tarkoittaa, että sitä ei voida käyttää Windows XP Service Pack 2:ta tai Windows Server 2003 Service Pack 1:tä vanhemmissa käyttöjärjestelmissä.
+- Tähti (*)- ja plus (+)-merkit puhutaan nyt jotain-välimerkkitasolla, jos NVDA:ta käytetään englanninkielisenä. (#3614)
+- eSpeak päivitetty versioksi 1.48.04, joka sisältää korjauksia moniin kieliin sekä useisiin kaatumisiin. (#3842, #3739, #3860)
 
 
 == Korjatut ohjelmavirheet ==
@@ -30,6 +55,36 @@
 - NVDA ei enää ilmoita Microsoft Excelissä kaikkia soluja alleviivatuiksi niiden muotoilutiedoissa. (#3669)
 - Selaustila-asiakirjoissa ei enää näytetä tarkoituksettomia merkkejä, kuten esim. Unicode-yksityiskäyttöalueella olevia. Nämä estivät joissakin tapauksissa hyödyllisempien nimien näyttämisen. (#2963).
 - Itäaasialaisten merkkien syöttämiseen tarkoitettu syöttömenetelmä toimii nyt PuTTY:ssä. (#3432)
+- Asiakirjassa liikkumisesta peruutetun Lue kaikki -toiminnon jälkeen ei enää ole seurauksena ajoittain NVDA:n virheellinen ilmoitus kentästä poistumisesta (kuten alempana asiakirjassa olevasta taulukosta, jota  Lue kaikki -toiminto ei ehtinyt puhua). (#3688)
+- Kun selaustilan pikanavigointikomentoja käytetään Lue kaikki -toiminnon aikana pikaluvun ollessa käytössä, NVDA ilmoittaa nyt tarkemmin uuden kentän, (ts. sanoo otsikkoa otsikoksi sen sijaan, että lukisi vain sen tekstin). (#3689)
+- Säilön loppuun tai alkuun siirtävät pikanavigointikomennot noudattavat nyt Käytä pikalukua Lue kaikki -toiminnossa -asetusta (ts. ne eivät enää keskeytä käynnissä olevaa Lue kaikki -toimintoa). (#3675)
+- NVDA:n Syöte-eleet-valintaikkunassa lueteltujen kosketuseleiden nimet ovat nyt käyttäjäystävällisiä ja lokalisoituja. (#3624)
+- NVDA ei enää aiheuta tiettyjen ohjelmien kaatumista siirrettäessä hiiri niiden rich edit (TRichEdit) -säädinten päälle. Tällaisia ohjelmia ovat mm. Jarte 5.1 sekä BRfácil. (#3693, #3603, #3581)
+- Tiettyjä säilöjä (kuten esim. ARIA:n esittelymääreellä merkittyjä taulukoita) ei enää lueta Internet Explorerissa ja muissa MSHTML-säätimissä. (#3713)
+- NVDA ei enää toista virheellisesti rivien ja sarakkeiden tietoja taulukon solusta useita kertoja Microsoft Wordissa. (#3702)
+- Erillisissä tekstilohkoissa olevia numeroita ei enää lueta yhtenä lukuna sellaisissa kielissä, joissa käytetään välilyöntiä numeroiden ryhmittelyyn/tuhaterottimena (kuten esim. ranska ja saksa). Tämä oli erityisen ongelmallista numeroita sisältävissä taulukon soluissa. (#3698)
+- Pistenäytön päivittäminen ei enää toisinaan epäonnistu, kun järjestelmäkohdistinta liikutetaan Microsoft Word 2013:ssa. (#3784)
+- Kun Microsoft Wordissa ollaan otsikon ensimmäisen merkin kohdalla, otsikkoa ja sen tasoa ilmaiseva teksti ei enää katoa pistenäytöltä. (#3701)
+- NVDA poistaa nyt asetusprofiilin käytöstä oikein, kun se on otettu käyttöön sovellukselle, joka suljettiin. (#3732)
+- Ehdotuksen sijasta ei enää virheellisesti lueta "NVDA"-sanaa syötettäessä aasialaisia merkkejä NVDA:n omaan säätimeen (esim. selaustilan Etsi-valintaikkunaan). (#3726)
+- Outlook 2013:n asetusvalintaikkunan välilehdet luetaan. (#3826)
+- ARIA:n aktiivisten alueiden tukea paranneltu Firefoxissa ja muissa Mozilla Gecko -sovelluksissa:
+ - Tuki aria-atomic-päivityksille ja aria-busy-päivitysten suodattamiselle. (#2640)
+ - Vaihtoehtoinen teksti (kuten alt-määre tai aria-label) näytetään nyt, mikäli muuta tekstiä ei ole käytettävissä. (#3329)
+ - Aktiivisten alueiden päivityksiä ei enää hylätä, mikäli ne tapahtuvat samaan aikaan kohdistuksen liikkuessa. (#3777)
+- Tiettyjä esityselementtejä ei enää virheellisesti näytetä selaustilassa Firefoxissa ja muissa Mozilla Gecko -sovelluksissa (erityisesti, kun elementti on merkitty aria-presentation-määreellä, mutta sen kohdalle on myös mahdollista siirtyä järjestelmäkohdistimella). (#3781)
+- Suorituskykyä paranneltu liikuttaessa Microsoft Word -asiakirjassa kirjoitusvirheiden lukemisen ollessa käytössä. (#3785)
+- Useita korjauksia saavutettavien Java-sovellusten tukeen:
+ - Kehyksen tai valintaikkunan ensimmäinen aktiivinen säädin luetaan nyt oikein kyseisen kehyksen tai valintaikkunan tullessa etualalle. (#3753)
+ - Valintapainikkeille ei enää lueta hyödytöntä sijaintitietoa (esim. 1 / 1). (#3754)
+ - JComboBox-säätimet luetaan paremmin (enää ei lueta HTML-koodia, avattu- ja suljettu-tilat ilmoitetaan paremmin). (#3755)
+ - Teksti, joka aiemmin puuttui valintaikkunoista niitä luettaessa, sisällytetään nyt niihin. (#3757)
+ - Aktiivisen säätimen nimen, arvon tai kuvauksen muutokset luetaan nyt tarkemmin. (#3770)
+- Korjattu Windows 8:ssa havaittu NVDA:n kaatuminen, kun kohdistus siirretään tiettyihin paljon tekstiä sisältäviin RichEdit-säätimiin (esim. NVDA:n Näytä loki -toiminto ja Windbg). (#3867)
+- NVDA ei enää siirrä hiirtä väärään paikkaan joissakin sovelluksissa sellaisissa järjestelmissä, joissa on korkea DPI-näyttöasetus (koskee oletusarvoisesti monia uusia näyttöjä). (#3758, #3703)
+- Korjattu verkkosivuja selattaessa ongelma, jossa NVDA lakkasi toimimasta kunnolla ellei sitä käynnistetty uudelleen, vaikkei se kaatunutkaan tai jäänytkään jumiin. (#3804)
+- Papenmeier-pistenäyttöä  voidaan nyt käyttää, vaikkei sellaista ole aiemmin kytketty koneeseen USB:n kautta. (#3712)
+- NVDA ei jää enää jumiin, kun Papenmeier BRAILLEX:n vanhempi malli on valittu pistenäytöksi ja jos sitä ei ole kytketty koneeseen.
 
 
 = 2013.3 =

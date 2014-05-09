@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-10-31 16:00+0100\n"
+"POT-Creation-Date: 2014-04-22 19:10+1000\n"
+"PO-Revision-Date: 2014-05-01 14:38+0100\n"
 "Last-Translator: Juan C. Buño <quetzatl@eresmas.net>\n"
 "Language-Team: Equipo de tradución ó Galego <oprisniki@gmail.com>\n"
 "Language: gl_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -119,6 +119,10 @@ msgstr "procurar"
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
 msgstr "formulário"
+
+#. Translators: Reported for a significant region, normally found on web pages.
+msgid "region"
+msgstr "rexión"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -751,7 +755,7 @@ msgstr "diálogo"
 
 #. Translators: The text used to identify check boxes such as select check box.
 msgid "check box"
-msgstr "cadro de verificación"
+msgstr "caixa de verificación"
 
 #. Translators: The text used to identify radio buttons such as yes or no radio button.
 msgid "radio button"
@@ -763,7 +767,7 @@ msgstr "texto"
 
 #. Translators: The word used to identify edit fields such as subject edit field.
 msgid "edit"
-msgstr "cadro de edición"
+msgstr "caixa de edición"
 
 #. Translators: The word used to identify a button such as OK button.
 msgid "button"
@@ -784,7 +788,7 @@ msgstr "menú"
 
 #. Translators: Used to identify combo boxes such as file type combo box.
 msgid "combo box"
-msgstr "cadro combinado"
+msgstr "caixa combinada"
 
 #. Translators: The word used for lists such as folder list.
 msgid "list"
@@ -951,7 +955,7 @@ msgstr "aplicación"
 
 #. Translators: Identifies a box element.
 msgid "box"
-msgstr "cadro"
+msgstr "caixa"
 
 #. Translators: Identifies a grouping (a number of related items grouped together, such as related options in dialogs).
 msgid "grouping"
@@ -975,7 +979,7 @@ msgstr "elemento de menú verificable"
 
 #. Translators: Identifies a data edit field.
 msgid "date edit"
-msgstr "cadro de edición de data"
+msgstr "caixa de edición de data"
 
 #. Translators: Identifies an icon.
 msgid "icon"
@@ -1057,7 +1061,7 @@ msgstr "terminal"
 
 #. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in addition to text; encountered on webpages and NvDA log viewer).
 msgid "rich edit"
-msgstr "cadro de edición"
+msgstr "caixa de edición"
 
 #. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
 msgid "ruler"
@@ -1216,7 +1220,7 @@ msgstr "panel"
 
 #. Translators: Identifies a password field (a protected edit field for entering passwords such as when logging into web-based email sites).
 msgid "password edit"
-msgstr "cadro de edición de contrasinal"
+msgstr "caixa de edición de contrasinal"
 
 #. Translators: Identifies a font chooser.
 msgid "font chooser"
@@ -1431,6 +1435,15 @@ msgstr "ten descripción longa"
 msgid "pinned"
 msgstr "fixado"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "ten fórmula"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "ten comentario"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "non seleccioado"
@@ -1548,6 +1561,7 @@ msgid "Tools"
 msgstr "Ferramentas"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "Pantalla tactil"
 
@@ -3071,10 +3085,6 @@ msgstr "aliñamento xustificar"
 msgid "align default"
 msgstr "aliñamento predeterminado"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "ten comentario"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "erro de ortografía"
@@ -3121,6 +3131,82 @@ msgstr "&Ton"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Entoación"
+
+msgid "text mode"
+msgstr "modo texto"
+
+msgid "object mode"
+msgstr "modo obxecto"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "só un {action}"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "doble {action}"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "tripla {action}"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "cádrupla {action}"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{numFingers} dedos {action}"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "tocar"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "tocar e manter"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "manter"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr "deslizar arriba"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr "deslizar abaixo"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr "deslizar á esquerda"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr "deslizar á dereita"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+msgctxt "touch action"
+msgid "hover down"
+msgstr "desprazándose"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr "desprazar pola superficie"
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr "deixando de desprazarse"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3287,6 +3373,14 @@ msgstr ""
 "considera doar a NV Access. Podes facer esto seleccionando Doar dende o menú "
 "NVDA."
 
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"Non se pode instalar o complemento de NVDA dende {path}.\n"
+"Debes estar a executar o NVDA para poder instalar os complementos."
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "{symbol} coma en {description}"
@@ -3348,6 +3442,14 @@ msgstr "Non hai mensaxe aínda"
 #. Translators: The description of an NVDA command to view one of the recent messages.
 msgid "Displays one of the recent messages"
 msgstr "Amosa unha das mensaxes recentes"
+
+#. Translators: This Outlook Express message has an attachment
+msgid "has attachment"
+msgstr "ten adxunto"
+
+#. Translators: this Outlook Express message is flagged
+msgid "flagged"
+msgstr "con bandeira"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
@@ -3573,10 +3675,6 @@ msgstr "Miniaturas"
 msgid "Master Thumbnails"
 msgstr "Miniaturas"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "Agardando polo Powerpoint..."
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Diapositiva {slideNumber}"
@@ -3610,6 +3708,10 @@ msgstr "Non hai notas"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "Diapositiva valdeira"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "Agardando polo Powerpoint..."
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -3878,7 +3980,7 @@ msgid ""
 "to the edit box"
 msgstr ""
 "Un diálogo onde podes configurar o diccionario temporalmente engadindo as "
-"entradas do diccionario ó cadro de edición"
+"entradas do diccionario á caixa de edición"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
@@ -4825,6 +4927,11 @@ msgstr "Pitar se se teclean letras en minúsculas cando BloqMaius está activado
 msgid "Speak command &keys"
 msgstr "falar &teclas de ordes"
 
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Handle keys from other &applications"
+msgstr "Manexar teclas dende outras &aplicacións"
+
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
 msgstr "Polo menos débese utilizar unha tecla como a tecla do NVDA."
@@ -5147,6 +5254,11 @@ msgstr "Anunciar pontos de referencia"
 #. document formatting settings dialog.
 msgid "Report fra&mes"
 msgstr "Anunciar &marcos"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "Anunciar &pódese facer clic"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -5787,35 +5899,35 @@ msgstr "non hai anterior botón de opción"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next combo box"
-msgstr "móvese ó seguinte cadro combinado"
+msgstr "móvese á seguinte caixa combinada"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next combo box"
-msgstr "non hai seguinte cadro combinado"
+msgstr "non hai seguinte caixa combinada"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous combo box"
-msgstr "móvese ó anterior cadro combinado"
+msgstr "móvese á anterior caixa combinada"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous combo box"
-msgstr "non hai anterior cadro combinado"
+msgstr "non hai anterior caixa combinada"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next check box"
-msgstr "móveese á seguinte casiña de verificación"
+msgstr "móveese á seguinte caixa de verificación"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next check box"
-msgstr "non hai seguinte casiña de verificación"
+msgstr "non hai seguinte caixa de verificación"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous check box"
-msgstr "móvese á anterior casiña de verificación"
+msgstr "móvese á anterior caixa de verificación"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous check box"
-msgstr "non hai anterior casiña de verificación"
+msgstr "non hai anterior caixa de verificación"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next graphic"
@@ -5961,10 +6073,6 @@ msgid ""
 msgstr ""
 "Premendo unha vez configurará a columna actual como a columna onde deberían "
 "atoparse as cabeceiras de fila. Premendo dúas veces limpa a opción."
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "ten fórmula"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"

@@ -57,13 +57,15 @@ Para mais detalhes, pode [ver a licença completa. http://www.gnu.org/licenses/o
 
 + Requisitos de Sistema +
 - Sistemas Operacionais: Todas as versões de 32 e 64-bit do Windows XP, Windows Vista, Windows 7 e Windows 8 (incluindo versões Server);
+ - Para o Windows XP 32-bit, o NVDA requer Service Pack 2 ou superior.
+ - Para o Windows Server 2003, é requerido o Service Pack 1 ou hsuperior.
 - Memória: 256 mb ou mais de RAM
 - Velocidade do Processador: 1.0 ghz ou superior;
 - Cerca de 50 MB de espaço livre.
 -
 
 + Obttendo e Instalando o NVDA +
-Se não tem uma cópia do NVDA, pode baixá-la em [www.nvda-project.org NVDA_URL].
+Se não tem uma cópia do NVDA, pode baixá-la em [www.nvaccess.org NVDA_URL].
 
 Entre na seção download e encontrará o link para baixar a última versão deste leitor de telas. 
 
@@ -429,7 +431,7 @@ Ainda que um mouse físico ou um touchpad precisem ser utilizados para navegar c
 | Pressionar o botão esquerdo do mouse | shift+barra do teclado numérico | NVDA+control+abre colchetes | Mantém o botão esquerdo do mouse pressionado. Execute-o novamente para desbloqueá-lo. Para arrastar o mouse, pressione esta tecla de atalho e em seguida mova o mouse quer seja fisicamente ou utilizando qualquer comando que o movimente |
 | Clicar com o botão direito do mouse | Asterisco do teclado numérico | NVDA+fecha colchetes | Clica uma vez com o botão direito do mouse |
 | Pressionar o botão direito do mouse | shift+asterisco do teclado numérico | NVDA+control+fecha colchetes | Mantém o botão direito do mouse pressionado. Execute-o novamente para desbloqueá-lo. Para arrastar o mouse, pressione esta tecla de atalho e em seguida mova-o quer seja fisicamente ou utilizando qualquer comando que movimente o mesmo |
-| Mover o mouse para o objeto de navegação atual | NVDA+barra do teclado numérico | NVDA+shift+m | Move o mouse Move o mouse para a localização do objeto de navegação atual e do cursor de exploração |
+| Mover o mouse para o objeto de navegação atual | NVDA+barra do teclado numérico | NVDA+shift+m | Move o mouse para a localização do objeto de navegação atual e do cursor de exploração |
 | Navegar para o objeto sob o mouse | NVDA+asterisco do teclado numérico | NVDA+shift+n | Coloca como objeto de navegação aquele que se encontra sob o ponteiro do mouse |
 %kc:endInclude
 
@@ -1231,9 +1233,9 @@ Embora nessa versão do NVDA continue sendo possível carregá-los, eles não se
 Recomenda-se remover esses arquivos de suas configurações do usuário e instalar o complemento apropriado caso algum esteja disponível.
 
 ++ O Console Python ++
-o Console Python do NVDA encontra-se dentro das Ferramentas, em seu menu.
+o Console Python do NVDA encontra-se dentro das Ferramentas, no menu do NVDA.
 É uma ferramenta de programação muito útil para deporação, inspeção interna geral do NVDA ou exploração da hierarquia de acessibilidade de uma aplicação.
-Para mais informações, consulte por favor o [Guia do Desenvolvedor que encontra-se disponível na seção Desenvolvimento no site do NVDA NVDA_URLwiki/Development].
+Para mais informações, consulte por favor o [Guia do Desenvolvedor que encontra-se disponível na {seção Desenvolvimento no site do NVDA http://community.nvda-project.org/wiki/Development].
 
 ++ Recarregar plugins ++
 Esse item, quando ativado, recarrega app modules e global plugins sem reiniciar o NVDA, o que  pode ser muito útil para desenvolvedores.
@@ -1304,8 +1306,8 @@ Esta seção contém informação sobre as linhas Braille que o NVDA suporta.
 ++ Freedom Scientific Focus/PAC Mate Series ++
 Todas as linhas Focus e PAC Mate da [Freedom Scientific http://www.freedomscientific.com/] são suportadasquando conectadas via USB ou bluetooth.
 Será necessário instalar os drivers para as linhas Braille da Freedom Scientific em seu sistema.
-Se ainda não tem os mesmos, pode obtê-los em http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
-Ainda que esta página mencione somente a linha Focus Blue 40, este driver suporta todos os terminais da Freedom Scientific. 
+Se ainda não tem os mesmos, pode obtê-los em http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Ainda que esta página mencione somente a linha Focus Blue 40, este driver suporta todas as linhas focus e Pacmate da Freedom Scientific. 
 
 Se seu sistema é de 64 bit  e os drivers já foram instalados por outro leitor de telas, provavelmente você continuará necessitando instalar os drivers do link acima, pois os arquivos necessários para o NVDA provavelmente não foram instalados pelo outro leitor de telas.
 
@@ -1547,6 +1549,9 @@ Por favor consulte a documentação da linha para obter descrições de onde ess
 ++ HIMS Braille Sense/Braille EDGE Series ++
 O NVDA suporta as linhas Braille Sense e Braille EDGE disponíveis em [Hims http://www.hims-inc.com/] quando conectadas via USB ou bluetooth. 
 Caso esteja conectando via USB, você precisará instalar os drivers USB da HIMS em seu sistema.
+Pode baixá-los no HIMS Resource Center: http://www.hims-inc.com/resource-center/
+Nesta página, selecione seu dispositivo e baixe o driver na seção Window-Eyes.
+Ainda que a seção mencione apenas o Window-Eyes, esse é um driver USB genérico que também funcionará com o NVDA.
 
 A seguir estão as teclas de comando para esta linha braille com o NVDA.
 Por favor consulte a documentação da linha para obter descrições de onde essas teclas se encontram.
@@ -1857,7 +1862,7 @@ Por exemplo, você pode especificar se um sinal puro deve ser enviado para o sin
 
 Para fazer isso, é necessário editar o arquivo de informação de pronúncia de sinais na pasta de suas configurações do usuário.
 O arquivo é denominado symbols-xx.dic, onde xx representa o código do idioma.
-O formato desse arquivo está documentado na seção sobre Pronúncia de Sinais do Guia do Desenvolvedor que está disponível [na seção de desenvolvimento na página do NVDA NVDA_URLwiki/Development].
+O formato desse arquivo está documentado na seção sobre Pronúncia de Sinais do Guia do Desenvolvedor que está disponível na [seção Desenvolvimento na página do NVDA http://community.vda-project.org/wiki/Development].
 Não é possível, todavia, definir sinais complexos.
 
 + Informação Adicional +
