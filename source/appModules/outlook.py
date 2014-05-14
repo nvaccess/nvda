@@ -285,6 +285,9 @@ class CalendarView(IAccessible):
 		CalendarView._lastStartDate=startDate
 		return "%s to %s"%(startText,endText)
 
+	def isDuplicateIAccessibleEvent(self,obj):
+		return False
+
 	def script_moveByEntry(self,gesture):
 		gesture.send()
 		api.processPendingEvents(processEventQueue=False)
@@ -321,25 +324,3 @@ class CalendarView(IAccessible):
 				speech.speakMessage(timeSlotText)
 		else:
 			self.event_valueChange()
-
-	__moveByEntryGestures = (
-		"kb:downArrow",
-		"kb:upArrow",
-		"kb:leftArrow",
-		"kb:rightArrow",
-		"kb:control+leftArrow",
-		"kb:control+rightArrow",
-		"kb:home",
-		"kb:end",
-		"kb:control+home",
-		"kb:control+end",
-		"kb:pageUp",
-		"kb:pageDown",
-		"kb:delete",
-		"kb:tab",
-		"kb:shift+tab",
-	)
-
-	def initOverlayClass(self):
-		for gesture in self.__moveByEntryGestures:
-			self.bindGesture(gesture, "moveByEntry")
