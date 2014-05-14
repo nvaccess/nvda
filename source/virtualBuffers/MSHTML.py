@@ -141,6 +141,11 @@ class MSHTML(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(MSHTML,self).__init__(rootNVDAObject,backendName="mshtml")
+		# As virtualBuffers must be created at all times for MSHTML to support live regions,
+		# Force focus mode for anything other than a document (e.g. dialog, application)
+		if rootNVDAObject.role!=controlTypes.ROLE_DOCUMENT:
+			self.disableAutoPassThrough=True
+			self.passThrough=True
 
 	def _getInitialCaretPos(self):
 		initialPos = super(MSHTML,self)._getInitialCaretPos()

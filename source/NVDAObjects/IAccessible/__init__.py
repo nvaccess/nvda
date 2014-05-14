@@ -690,16 +690,6 @@ the NVDAObject for IAccessible
 			res=self.IAccessibleObject.accName(self.IAccessibleChildID)
 		except COMError:
 			res=None
-		if not res and hasattr(self,'IAccessibleTextObject'):
-			try:
-				res=self.makeTextInfo(textInfos.POSITION_CARET).text
-				if res:
-					return
-			except (NotImplementedError, RuntimeError):
-				try:
-					res=self.makeTextInfo(textInfos.POSITION_ALL).text
-				except (NotImplementedError, RuntimeError):
-					res=None
 		return res if isinstance(res,basestring) and not res.isspace() else None
 
 	def _get_value(self):

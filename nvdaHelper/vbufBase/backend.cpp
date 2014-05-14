@@ -76,7 +76,7 @@ void CALLBACK VBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID,
 
 void VBufBackend_t::requestUpdate() {
 	if(renderThreadTimerID==0) {
-		renderThreadTimerID=SetTimer(0,0,250,renderThread_timerProc);
+		renderThreadTimerID=SetTimer(0,0,100,renderThread_timerProc);
 		nhAssert(renderThreadTimerID);
 		LOG_DEBUG(L"Set timer with ID "<<renderThreadTimerID);
 	}
