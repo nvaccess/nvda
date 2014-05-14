@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-04-22 19:10+1000\n"
-"PO-Revision-Date: 2014-04-30 13:26+0900\n"
+"PO-Revision-Date: 2014-05-11 21:59+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -38,11 +38,11 @@ msgstr "半角モード"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
 msgid "half alphanumeric"
-msgstr "ハンカクエイスー"
+msgstr "半角エイスー"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
 msgid "half katakana"
-msgstr "ハンカクカタカナ"
+msgstr "半角カタカナ"
 
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
 msgid "alphanumeric"
@@ -58,15 +58,15 @@ msgstr "カタカナ"
 
 #. Translators: For Japanese character input: half katakana roman input mode.
 msgid "half katakana roman"
-msgstr "ハンカクカタカナローマジ"
+msgstr "半角カタカナ ローマ字"
 
 #. Translators: For Japanese character input: Hiragana Roman input mode.
 msgid "hiragana roman"
-msgstr "ヒラガナ ローマジ"
+msgstr "ヒラガナ ローマ字"
 
 #. Translators: For Japanese character input: Katacana Roman input mode.
 msgid "katakana roman"
-msgstr "カタカナ ローマジ"
+msgstr "カタカナ ローマ字"
 
 #. Translators: a message when the IME open status changes to opened
 msgid "IME opened"
@@ -448,7 +448,7 @@ msgstr "中国語(台湾、標準中国語)"
 #. Translators: Displayed in braille for an object which is an
 #. editable text field.
 msgid "edt"
-msgstr "ヘンシュー カノー"
+msgstr "編集可能"
 
 #. Translators: Displayed in braille for an object which is a
 #. list.
@@ -508,24 +508,24 @@ msgstr "テーブル"
 #. Translators: Displayed in braille for an object which is a
 #. separator.
 msgid "-----"
-msgstr "クギリ"
+msgstr "区切り"
 
 #. Translators: Displayed in braille for an object which is a
 #. graphic.
 msgid "gra"
-msgstr "ガゾー"
+msgstr "画像"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is checked.
 msgid "(x)"
-msgstr "チェック アリ"
+msgstr "チェック"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
 msgid "(-)"
-msgstr "イチブ チェック"
+msgstr "一部チェック"
 
 #. Translators: Displayed in braille when an object is selected.
 msgid "sel"
-msgstr "センタク"
+msgstr "選択"
 
 #. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
 msgid "submnu"
@@ -533,37 +533,37 @@ msgstr "サブメニュー"
 
 #. Translators: Displayed in braille when an object supports autocompletion.
 msgid "..."
-msgstr "コウホ アリ"
+msgstr "候補あり"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
 msgid "-"
-msgstr "テンカイ"
+msgstr "展開"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
 msgid "+"
-msgstr "オリタタミ"
+msgstr "折りたたみ"
 
 #. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
 msgid "ro"
-msgstr "ヨミトリ センヨー"
+msgstr "読み取り専用"
 
 #. Translators: Displayed in braille when an object is clickable.
 msgid "clk"
-msgstr "クリック カノー"
+msgstr "クリック可能"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
-msgstr "チェック ナシ"
+msgstr "チェックなし"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
 msgid "h%s"
-msgstr "ミダシ レベル %s"
+msgstr "見出しレベル %s"
 
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
-msgstr "キドク"
+msgstr "既読"
 
 #. Translators: Indicates that a particular state on an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
@@ -571,7 +571,7 @@ msgstr "キドク"
 #. %s will be replaced with the negated state.
 #, python-format
 msgid "not %s"
-msgstr "%sなし"
+msgstr "%s なし"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -598,13 +598,13 @@ msgstr "%s ギョー"
 #. %s is replaced with the column number.
 #, python-format
 msgid "c%s"
-msgstr "列%s"
+msgstr "%s 列"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
 #, python-format
 msgid "%s end"
-msgstr "%sエンド"
+msgstr "%s エンド"
 
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
@@ -733,7 +733,7 @@ msgstr "オレンジ"
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #, python-format
 msgid "selected %s"
-msgstr "%s選択"
+msgstr "%s 選択"
 
 #. Translators: The word for an unknown control type.
 msgid "unknown"
@@ -1534,7 +1534,7 @@ msgstr "オブジェクトナビゲーション"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "System caret"
-msgstr "システムキャレット"
+msgstr "キャレット"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Mouse"
@@ -1848,8 +1848,8 @@ msgid ""
 "Pressed once Sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
-"フォーカスをナビゲーターオブジェクトに移動、2回押すとシステムキャレットをレ"
-"ビューカーソル位置に移動"
+"フォーカスをナビゲーターオブジェクトに移動、2回押すとキャレットをレビューカー"
+"ソル位置に移動"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
@@ -1885,7 +1885,7 @@ msgstr "ナビゲーターオブジェクトを最初の子オブジェクトに
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
 msgid "activate"
-msgstr "アクティベート"
+msgstr "アクティブ化"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 msgid "No action"
@@ -2048,7 +2048,7 @@ msgid ""
 msgstr ""
 "ブラウズモードとフォーカスモードの切り替え。フォーカスモードでは押されたキー"
 "は直接アプリケーションに渡されアプリケーションを操作できる。ブラウズモードで"
-"はカーソルキーでページ内の移動やクイックナビゲーションが可能"
+"はカーソルキーでページ内の移動や一文字ナビゲーションが可能"
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
@@ -2091,8 +2091,8 @@ msgstr "ステータス行がみつかりません"
 #. Translators: Input help mode message for report status line text command.
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr ""
-"現在のアプリケーションのステータス情報を読み上げ、ナビゲーションカーソルを移"
-"動"
+"現在のアプリケーションのステータス情報を読み上げ、ナビゲーターオブジェクトを"
+"移動"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -2272,7 +2272,7 @@ msgstr "NVDAのマウス設定ダイアログを表示"
 
 #. Translators: Input help mode message for go to object presentation dialog command.
 msgid "Shows the NVDA object presentation settings dialog"
-msgstr "NVDAのオブジェクトの説明設定ダイアログを表示"
+msgstr "NVDAのオブジェクト通知設定ダイアログを表示"
 
 #. Translators: Input help mode message for go to browse mode dialog command.
 msgid "Shows the NVDA browse mode settings dialog"
@@ -2855,12 +2855,12 @@ msgstr "%d文字"
 #. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
 #, python-format
 msgid "selecting %s"
-msgstr "%s選択"
+msgstr "%s 選択"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
 #, python-format
 msgid "unselecting %s"
-msgstr "%s選択解除"
+msgstr "%s 選択解除"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4277,7 +4277,7 @@ msgstr "トリガーしました"
 
 #. Translators: An error displayed when activating a configuration profile fails.
 msgid "Error activating profile."
-msgstr "プロファイルのアクティベートのエラーです。"
+msgstr "プロファイルのアクティブ化のエラーです。"
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
 msgid "Are you sure you want to delete this profile? This cannot be undone."
@@ -4294,12 +4294,12 @@ msgstr "プロファイル削除のエラーです。"
 #. Translators: The label of the button to manually deactivate the selected profile
 #. in the Configuration Profiles dialog.
 msgid "Manual deactivate"
-msgstr "手動アクティベート解除"
+msgstr "手動アクティブ化解除"
 
 #. Translators: The label of the button to manually activate the selected profile
 #. in the Configuration Profiles dialog.
 msgid "Manual activate"
-msgstr "手動アクティベート"
+msgstr "手動アクティブ化"
 
 #. Translators: The label of a field to enter a new name for a configuration profile.
 msgid "New name:"
@@ -4364,7 +4364,7 @@ msgstr "プロファイルの名前:"
 #. Translators: The label of a radio button to specify that a profile will be used for manual activation
 #. in the new configuration profile dialog.
 msgid "Manual activation"
-msgstr "手動アクティベート"
+msgstr "手動アクティブ化"
 
 msgid "Use this profile for:"
 msgstr "このプロファイルの適用対象:"
@@ -4398,9 +4398,9 @@ msgid ""
 "usage.\n"
 "Do you wish to manually activate it now?"
 msgstr ""
-"このプロファイルを編集するには、手動アクティベートをしてください。編集が終"
-"わったら、手動アクティベートを解除して、通常の利用に戻してください。\n"
-"手動アクティベートをいま行いますか？"
+"このプロファイルを編集するには、手動アクティブ化をしてください。編集が終わっ"
+"たら、手動アクティブ化解除して、通常の利用に戻してください。\n"
+"手動アクティブ化をいま行いますか？"
 
 #. Translators: The title of the confirmation dialog for manual activation of a created profile.
 msgid "Manual Activation"
@@ -4896,7 +4896,7 @@ msgstr "フォーカスを追跡(&F)"
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Follow System &Caret"
-msgstr "システムキャレットを追跡(&C)"
+msgstr "キャレットを追跡(&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
@@ -5414,7 +5414,7 @@ msgstr "フィルター:(&F)"
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
 msgid "&Activate"
-msgstr "アクティベート(&A)"
+msgstr "アクティブ化(&A)"
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
