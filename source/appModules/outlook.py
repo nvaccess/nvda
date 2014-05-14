@@ -51,14 +51,32 @@ def getSentMessageString(obj):
 
 class AppModule(appModuleHandler.AppModule):
 
+	_hasTriedoutlookAppSwitch=False
+
+	def _registerCOMWithFocusJuggle(self):
+		import wx
+		import gui
+		# Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+		d=wx.Dialog(None,title=_("Waiting for Outlook..."))
+		gui.mainFrame.prePopup()
+		d.Show()
+		self._hasTriedoutlookAppSwitch=True
+		#Make sure NVDA detects and reports focus on the waiting dialog
+		api.processPendingEvents()
+		comtypes.client.PumpEvents(1)
+		d.Destroy()
+		gui.mainFrame.postPopup()
+
 	def _get_nativeOm(self):
-		if not getattr(self,'_nativeOm',None):
-			try:
-				nativeOm=comHelper.getActiveObject("outlook.application",dynamic=True)
-			except (COMError,WindowsError):
-				nativeOm=None
-			self._nativeOm=nativeOm
-		return self._nativeOm
+		try:
+			nativeOm=comHelper.getActiveObject("outlook.application",dynamic=True)
+		except (COMError,WindowsError):
+			nativeOm=None
+		if not nativeOm and not self._hasTriedoutlookAppSwitch:
+			self._registerCOMWithFocusJuggle()
+			return None
+		self.nativeOm=nativeOm
+		return self.nativeOm
 
 	def _get_outlookVersion(self):
 		nativeOm=self.nativeOm
