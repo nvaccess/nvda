@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5895\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-07 18:54+1000\n"
-"PO-Revision-Date: 2014-03-01 11:35+0100\n"
+"POT-Creation-Date: 2014-05-09 19:19+1000\n"
+"PO-Revision-Date: 2014-05-09 12:02+0100\n"
 "Last-Translator: Jožef Gregorc <jozko.gregorc[@]guest.arnes.si\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.6.5\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -119,6 +119,10 @@ msgstr "išči"
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
 msgstr "obrazec"
+
+#. Translators: Reported for a significant region, normally found on web pages.
+msgid "region"
+msgstr "območje"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3471,6 +3475,7 @@ msgid "Displays one of the recent messages"
 msgstr "Prikaže enega od zadnjih sporočil."
 
 #. Translators: This Outlook Express message has an attachment
+#. Translators: when an email has attachments
 msgid "has attachment"
 msgstr "s prilogo"
 
@@ -3531,8 +3536,17 @@ msgid "BCC:"
 msgstr "SKP:"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
+#. Translators: when an email is unread
 msgid "unread"
 msgstr "neprebrano"
+
+#. Translators: for a high importance email
+msgid "high importance"
+msgstr "visoka pomembnost"
+
+#. Translators: For a low importance email
+msgid "low importance"
+msgstr "nizka pomembnost"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3552,6 +3566,10 @@ msgstr "priloga"
 #, python-format
 msgid "sent: %s"
 msgstr "poslano %s"
+
+#. Translators: the email is a meeting request
+msgid "meeting request"
+msgstr "prošnja za sestanek"
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -4964,6 +4982,11 @@ msgstr "Oddaj pisk, ko se pišejo male črke in je Caps log vključen"
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "Izgovarjaj tipke ob prožitvi ukazov"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Handle keys from other &applications"
+msgstr "Obravnavaj pritiske tipk s strani drugih &programov"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."

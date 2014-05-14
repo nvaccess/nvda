@@ -799,17 +799,17 @@ Una casella di controllo che, se attivata, fa in modo che NVDA pronunci tutti i 
 Tasto: NVDA+3
 
 Una casella di controllo che, se attivata, fa in modo che NVDA pronunci tutte le parole che vengono digitate sulla tastiera.
- 
+
 ==== I caratteri digitati interrompono la voce ====
 Questa opzione, se attiva, interrompe la lettura della sintesi vocale non appena viene premuto un tasto. L'opzione è attivata di default.
 
 ==== Il tasto invio interrompe la voce ====
 Questa opzione, se attiva, interrompe la lettura della sintesi vocale non appena viene premuto il tasto invio. L'opzione è attivata di default.
- 
+
 ==== Consentire navigazione rapida in modalità dire tutto ====
  Se attivata, alcuni tasti di navigazione (ad esempio i comandi di navigazione rapida nei browser, oppure lo spostarsi per righe o paragrafi) non fermeranno più la lettura, che continuerà dalla nuova posizione raggiunta.
- 
- ==== Emetti un beep alla scrittura di lettere minuscole quando il tasto blocca maiuscole è attivo ====
+
+==== Emetti un beep alla scrittura di lettere minuscole quando il tasto blocca maiuscole è attivo ====
 Quando abilitato, si udirà un segnale acustico ogni qualvolta verrà digitata una lettera assieme al tasto Shift (maiuscolo) quando il blocca maiuscole è attivo.
 In genere, scrivere le lettere con il tasto Shift mentre la funzione di Blocca Maiuscole è attivata non è prassi comune e si presume sia non intenzionale, magari perché ci si è scordati di averla abilitata in precedenza.
 In ogni caso, può essere d'aiuto saperlo.
@@ -819,8 +819,12 @@ In ogni caso, può essere d'aiuto saperlo.
 Tasto: NVDA+4
 
 Una casella di controllo che, se attivata, fa in modo che NVDA pronunci tutte le combinazioni di tasti che non siano singoli caratteri che vengono digitati, ad esempio premendo il tasto control seguito da una lettera.
- 
-+++ Impostazioni Mouse (NVDA+control+m) +++
+
+==== Gestisci tasti da altre applicazioni ====
+	Quest'opzione permette all'utente di controllare se le pressioni di tasti, generate da programmi che si basano sul riconoscimento vocale o sulle tastiere a schermo, debbano essere processate da NVDA.
+L'opzione risulta attiva di default, sebbene alcuni utenti che utilizzano la lingua di immissione Vietnamita dovrebbero disattivare questa funzione.
+
++++[ Impostazioni Mouse (NVDA+control+m) +++
 Questa finestra di dialogo si trova all'interno del menu preferenze, alla voce impostazioni mouse... 
 Contiene le seguenti opzioni:
 
