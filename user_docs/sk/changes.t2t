@@ -3,6 +3,40 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.2 =
+
+== Nové vlastnosti ==
+- Oznamovanie výberu textu je možné aj v niektorých neštandardných editačných poliach, ak je použitá technológia na získavanie textu z obrazovky. (#770)
+- V prístupných Java aplikáciách je oznamovaná pozícia prepínačov, a iných prvkov, ak je možné získať informáciu o skupine. (#3754)
+- V prístupných Java aplikáciách sú oznamované klávesové skratky, ak ich prvok obsahuje. (#3881)
+- V režime prehliadania sú oznamované popisy pri prvkoch Aria Landmarks. Tieto sú tiež zobrazované aj v zozname prvkov. (#1195)
+- V režime prehliadania sa s oblasťami stránky pracuje rovnako ako s Aria landmarks. (#3741)
+- V dokumentoch a aplikáciách využívajúcich Internet Explorer sú premenlivé oblasti stránky (časť štandardu W3c ARIA) odteraz podporované, čo umožňuje autorom označiť časti stránky, ktoré majú byť oznamované, ak na nich dojde k zmene. (#1846)
+
+
+== Zmeny ==
+- Pri ukončení dialógu alebo aplikácie v režime prehliadania NVDA viac neoznámy názov a typ dokumentu. (#4069)
+
+
+== Opravy ==
+- Štandardné systémové menu nie je náhodne umlčané v Java aplikáciách. (#3882)
+- pri kopírovaní textu v prezeraní obrazovky nie sú viac ignorované zalomenia riadkov. (#3900)
+- Zbytočné objekty obsahujúce len biele znaky nie sú viac oznamované pri niektorých aplikáciách, ak dôjde k zmene fokusu, alebo ak objekty prezeráte v jednoduchom režime objektovej navigácie. (#3839)
+- Správy a dialógy NVDA opäť prerušia tok reči pred prečítaním hlásenia.
+- Názvy prvkov, ako napríklad tlačidiel alebo odkazov, sú správne spracované v režime prehliadania, ak ich autor dokumentu prepísal z dôvodu lepšej prístupnosti (konkrétne použitím aria-label alebo aria-labelledby). (#1354)
+- V režime prehliadania v kombinácii s prehliadačom Internet explorer NVDA neignoruje text označený ako prezentačný (ARIA role="presentation"). (#4031)
+- odteraz je opäť možné písať vo Vietnamčine pomocou programu Unikey. Pre správnu funkčnosť je potrebné v nastaveniach klávesnice odčiarknuť novú položku Spracovať vstup z externých programov. (#4043)
+- V režime prehliadania nie sú viac začiarkávacie a prepínacie položky v menu oznamované ako pri kliknutí, ale ako klasické prvky. (#4092)
+- NVDA sa viac neprepne do režimu fokusu z režimu prehliadania, ak získa fokus prepínacia položka alebo začiarkávacie pole v menu. (#4092)
+- Pri písaní v programe MS Powerpoint a aktívnom čítaní napísaných znakov NVDA viac neoznamuje znaky, ktoré vymažete klávesom backspace, ako súčasť slova. (#3231)
+- V možnostiach programu Microsoft office 2010 sú správne oznamované popisky zoznamových rámikov. (#4056)
+- V režime prehliadania v kombinácii s prehliadačom Mozilla firefox teraz klávesy rýchlej navigácie slúžiace na prechod medzi tlačidlami a prvkami formulárov skáču aj po prepínacích tlačidlách. (#4098)
+- upozornenia v Mozilla aplikáciách nie sú čítané dvakrát. (#3481)
+- V režime prehliadania nie sú viac nevhodne opakované aria Landmarks a skupiny prvkov, ak cez ne prechádzate a mení sa obsah stránky (prejavovalo sa počas navigácie na stránkach Twitter a Facebook). (#2199)
+- NVDA sa dokáže lepšie spamätať, ak opustíte aplikáciu, ktorá neodpovedá. (#3825)
+- Textový kurzor sa správne aktualizuje pri plynulom čítaní v editačných poliach vyobrazených priamo na obrazovke. (#4125)
+
+
 = 2014.1 =
 
 == Nové vlastnosti ==
