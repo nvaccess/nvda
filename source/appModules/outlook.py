@@ -62,14 +62,32 @@ def getSentMessageString(obj):
 
 class AppModule(appModuleHandler.AppModule):
 
+	_hasTriedoutlookAppSwitch=False
+
+	def _registerCOMWithFocusJuggle(self):
+		import wx
+		import gui
+		# Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+		d=wx.Dialog(None,title=_("Waiting for Outlook..."))
+		gui.mainFrame.prePopup()
+		d.Show()
+		self._hasTriedoutlookAppSwitch=True
+		#Make sure NVDA detects and reports focus on the waiting dialog
+		api.processPendingEvents()
+		comtypes.client.PumpEvents(1)
+		d.Destroy()
+		gui.mainFrame.postPopup()
+
 	def _get_nativeOm(self):
-		if not getattr(self,'_nativeOm',None):
-			try:
-				nativeOm=comHelper.getActiveObject("outlook.application",dynamic=True)
-			except (COMError,WindowsError):
-				nativeOm=None
-			self._nativeOm=nativeOm
-		return self._nativeOm
+		try:
+			nativeOm=comHelper.getActiveObject("outlook.application",dynamic=True)
+		except (COMError,WindowsError):
+			nativeOm=None
+		if not nativeOm and not self._hasTriedoutlookAppSwitch:
+			self._registerCOMWithFocusJuggle()
+			return None
+		self.nativeOm=nativeOm
+		return self.nativeOm
 
 	def _get_outlookVersion(self):
 		nativeOm=self.nativeOm
@@ -321,6 +339,9 @@ class CalendarView(IAccessible):
 		CalendarView._lastStartDate=startDate
 		return "%s to %s"%(startText,endText)
 
+	def isDuplicateIAccessibleEvent(self,obj):
+		return False
+
 	def script_moveByEntry(self,gesture):
 		gesture.send()
 		api.processPendingEvents(processEventQueue=False)
@@ -349,7 +370,6 @@ class CalendarView(IAccessible):
 				startLimit="%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedStartTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedStartTime, None))
 				endLimit="%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedEndTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedEndTime, None))
 				query='[Start] < "{endLimit}" And [End] > "{startLimit}"'.format(startLimit=startLimit,endLimit=endLimit)
-				log.info(query)
 				i=e.currentFolder.items
 				i.sort('[Start]')
 				i.IncludeRecurrences =True
@@ -358,28 +378,6 @@ class CalendarView(IAccessible):
 				speech.speakMessage(timeSlotText)
 		else:
 			self.event_valueChange()
-
-	__moveByEntryGestures = (
-		"kb:downArrow",
-		"kb:upArrow",
-		"kb:leftArrow",
-		"kb:rightArrow",
-		"kb:control+leftArrow",
-		"kb:control+rightArrow",
-		"kb:home",
-		"kb:end",
-		"kb:control+home",
-		"kb:control+end",
-		"kb:pageUp",
-		"kb:pageDown",
-		"kb:delete",
-		"kb:tab",
-		"kb:shift+tab",
-	)
-
-	def initOverlayClass(self):
-		for gesture in self.__moveByEntryGestures:
-			self.bindGesture(gesture, "moveByEntry")
 
 class UIAGridRow(RowWithFakeNavigation,UIA):
 
@@ -458,4 +456,3 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 	def setFocus(self):
 		super(UIAGridRow,self).setFocus()
 		eventHandler.queueEvent("gainFocus",self)
-
