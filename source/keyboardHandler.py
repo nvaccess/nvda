@@ -75,7 +75,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	try:
 		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers, keyCounter, stickyNVDAModifier, stickyNVDAModifierLocked
 		# Injected keys should be ignored in some cases.
-		if ignoreInjected and injected:
+		if injected and (ignoreInjected or not config.conf['keyboard']['handleInjectedKeys']):
 			return True
 
 		keyCode = (vkCode, extended)
@@ -168,7 +168,8 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""
 	try:
 		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers
-		if ignoreInjected and injected:
+		# Injected keys should be ignored in some cases.
+		if injected and (ignoreInjected or not config.conf['keyboard']['handleInjectedKeys']):
 			return True
 
 		keyCode = (vkCode, extended)

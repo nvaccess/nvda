@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-07 18:54+1000\n"
-"PO-Revision-Date: 2014-02-15 08:07+0200\n"
+"POT-Creation-Date: 2014-04-22 19:10+1000\n"
+"PO-Revision-Date: 2014-05-12 13:02+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.3\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -120,6 +120,10 @@ msgstr "haku"
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
 msgstr "lomake"
+
+#. Translators: Reported for a significant region, normally found on web pages.
+msgid "region"
+msgstr "alue"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1658,8 +1662,8 @@ msgid ""
 "Announces the current selection in edit controls and documents. If there is "
 "no selection it says so."
 msgstr ""
-"Kertoo nykyisen valinnan muokkaussäätimissä ja asiakirjoissa. Jos valintaa "
-"ei ole, siitä ilmoitetaan."
+"Ilmoittaa nykyisen valinnan muokkauskontrolleissa ja asiakirjoissa. Jos "
+"valintaa ei ole, siitä ilmoitetaan."
 
 #. Translators: Input help mode message for report date and time command.
 msgid ""
@@ -2074,7 +2078,7 @@ msgid ""
 msgstr ""
 "Vaihtaa selaus- ja vuorovaikutustilojen välillä. Vuorovaikutustilassa "
 "näppäinten painallukset välitetään suoraan nykyiselle sovellukselle, mikä "
-"mahdollistaa suoran vuorovaikutuksen säädinten kanssa. Selaustilassa "
+"mahdollistaa suoran vuorovaikutuksen kontrollien kanssa. Selaustilassa "
 "ollessasi voit liikkua asiakirjassa kohdistimella, pikanavigointinäppäimillä "
 "jne."
 
@@ -3872,7 +3876,7 @@ msgstr "Vaihda käytettävää syntetisaattoria"
 
 #. Translators: The label for the menu item to open Voice Settings dialog.
 msgid "&Voice settings..."
-msgstr "&Puheääni..."
+msgstr "&Ääni..."
 
 msgid "Choose the voice, rate, pitch and volume to use"
 msgstr "Valitse käytettävä puheääni, nopeus, korkeus ja voimakkuus"
@@ -4906,6 +4910,11 @@ msgstr ""
 msgid "Speak command &keys"
 msgstr "Lue k&omentonäppäimet"
 
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Handle keys from other &applications"
+msgstr "Käsittele muiden &sovellusten näppäinpainallukset"
+
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
 msgstr "Vähintään yhtä näppäintä on käytettävä NVDA-näppäimenä."
@@ -4946,7 +4955,7 @@ msgstr "Ilmaise hiiren &koordinaatit äänimerkeillä"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "brightness controls audio coordinates volume"
-msgstr "Äänikoordinaattien &voimakkuutta säädetään kirkkauden mukaan"
+msgstr "Äänikoordinaattien &voimakkuutta säädetään ruudun kirkkauden mukaan"
 
 #. Translators: This is the label for the review cursor settings dialog.
 msgid "Review Cursor Settings"

@@ -1,7 +1,7 @@
 EXPORTS
 	createRemoteBindingHandle
 	cancellableSendMessageTimeout
-	cancelSendMessage
+	cancelCallEvent
 	_notifySendMessageCancelled
 	nvdaHelperLocal_initialize
 	nvdaHelperLocal_terminate
@@ -39,11 +39,13 @@ EXPORTS
 	_nvdaControllerInternal_logMessage
 	_nvdaControllerInternal_typedCharacterNotify
 	_nvdaControllerInternal_installAddonPackageFromPath
+	_nvdaControllerInternal_drawFocusRectNotify
 	_nvdaController_brailleMessage
 	_nvdaController_cancelSpeech
 	_nvdaController_speakText
 	_nvdaControllerInternal_vbufChangeNotify
 	displayModel_getWindowTextInRect
+	displayModel_getFocusRect
 	displayModel_getCaretRect
 	displayModel_requestTextChangeNotificationsForWindow
 	calculateWordOffsets

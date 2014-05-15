@@ -810,15 +810,19 @@ Ko je ta zmožnost omogočena, bo NVDA naznanila vse besede, ki jih boste tipkal
 Če je vključeno, precej ukazov za krmarjenje (kot so hitre tipke za krmarjenje v brskalniškem delovanju ali premik po vrstici in odstavku) ne bodo zaustavile branja celotnega besedila, na mesto tega bo NVDA preskočila na nov položaj in od tam nadaljevala z branjem.
 
 ==== Oddaj Zvočni Signal, ko se Pišejo Male Črke  in je Capslock Vključen ====
-Če je to omogočeno, se bo zaslišal opozorilni zvočni signal, ko boste tipkali s Shiftom, ko bo Capslock vključen.
+Če je to omogočeno, se bo zaslišal opozorilni zvočni signal, ko boste tipkali s Shiftom ob tem, ko bo Capslock vključen.
 V splošnem je tipkanje besed z veliko začetnico, ko je Capslock vključen, nenamerno in se običajno zgodi zaradi tega, ker se spregleda, da je Capslock vključen.
-Tako je velikokrat v pomoč, da smo glede tega opozorjeni.
+Tako nam opozorilo velikokrat pomaga in prepreči morebitno napačno črkovanje.
 
 %%fixMe: %kc:setting
 ==== Izgovarjaj Tipke ob Prožitvi Ukazov ====
 Tipka: NVDA+4
 
 Ko je to omogočeno, NVDA naznani vse pritiske na tipkovnici, ki niso nujno povezani s pisanjem črk. To vključuje pritiske kombinacij tipk na primer Control+črka.
+
+==== Obravnavaj pritiske tipk s strani drugih programov ====
+Ta možnost omogoča uporabniku, nadzor nad tem, kako NVDA obravnava pritiske tipk, ki jih prožijo drugi programi, kot so tipkovnice na zaslonu ali programi za prepoznavo govora. Če je možnost vključena, potem to vpliva na delovanje NVDA.
+Ta možnost je ob namestitvi NVDA privzeto vključena, toda nekateri uporabniki jo bodo morda morali izključiti. Taki so uporabniki, ki tipkajo v Vietnamščini, saj ta možnost povzroča napačne vnose v programu Unikey typing.
 
 +++ Nastavitve Miške (NVDA+control+m) +++[MouseSettings]
 Pogovorno okno nastavitev miške se nahaja v meniju Nastavitve pod "Nastavitve miške...".
@@ -927,29 +931,29 @@ Opozarjamo, da zaradi tega, ker se metode vnosa zelo razlikujejo po značilnosti
 
 ==== Samodejno sporoči vse kandidate na voljo ====
 Ta možnost, ki je privzeto vključena, vam omogoča izbiro ali naj NVDA samodejno sporoča vse vidne kandidate na seznamu kandidatov, ko se prikaže, ali na strani, ki je bila spremenjena.
+Uporabno je, če imamo to možnost vključeno za slikovne metode vnosov, kot je nova kitajska ChangJie ali Boshiami, saj lahko samodejno slišimo vse simbole in njihove številke in tako lahko izberemo pravega.
+Vendar za fonetične metode vnosov, kot je nova kitajska fonetika, je verjetno NVDA bolj uporabna, ko je ta možnost izključena saj bodo vsi simboli zveneli enako. Tako bo treba uporabljati puščice za krmarjenje po seznamu simbolov in njihovih opisih, da bomo dobili več informacij o posameznem kandidatu.
 
+==== Naznani Izbranega Kandidata ====
+Ta možnost, ki je privzeto vključena, vam omogoča izbiro ali naj NVDA naznani kandidata, ko se pojavi seznam kandidatov ali takrat, ko se spremeni izbira.
+Za metode vnosa, ker se izbira lahko spremeni s puščicami, kot je nova kitajska fonetika, je to potrebno, ampak za druge metode vnosa je bolje, da je ta možnost izključena.
+Opozarjamo, čeprav je ta možnost izključena, se bo pregledna utripalka še vedno postavila na izbranega kandidata, kar vam bo omogočilo, da uporabite krmarjenje predmeta ali pregleda da boste ročno prebrali tega kandidata ali pa ostale na seznamu.
 
+==== Vedno vključi kratek opis kandidatov ====
+Ta možnost, ki je privzeto vključena, vam omogoča izbiro ali vas mora NVDA oskrbeti s kratkim opisom vsakega znaka v kandidatu, ko je izbran ali pa naj bo samodejno prebran, ko se pojavi seznam kandidatov.
+Opozarjamo, da na prevode, kot je kitajski, ta možnost ne vpliva na naznanitev dodatnih opisov znaka. 
+Ta možnost je uporabna predvsem pri korejskih in japonskih metodah vnosa.
 
+==== Poročaj o spremembah na nizu branja ====
+Nekatere metode vnosa, kot je nova kitajska fonetika in nova ChangJie, imajo niz branja (včasih poznan kot predskladenjski niz).
+S to možnostjo lahko izbirate med tem, ali mora NVDA naznaniti nove znake, ki jih tipkate v ta niz branja.
+Ta možnost je privzeto vključena.
+Opozarjamo, da nekatere starejše metode vnosa, kot je kitajska ChangJie, verjetno ne uporabljajo niza branja za zadržanje predskladenjskih znakov. na mesto tega uporabljajo skladnjo niza neposredno.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+==== Poročaj o spremembah v skladnji niza ====
+Po branju ali, ko so bili predskladenjski podatki združeni v ustrezen slikovni simbol, večina metod vnosa postavi ta simbol v skladnjo niza kot začasen prostor skupaj z ostalimi združenimi simboli preden se končno vstavijo v dokument.
+Ta možnost vam omogoča izbiro ali mora NVDA poročati o novih simbolih, ko se pojavijo v skladnji niza.
+Ta možnost je privzeto vključena.
 
 +++ Nastavitve Brskalniškega Delovanja (NVDA+control+b) +++
 Pogovorno okno nastavitev brskalniškega delovanja lahko najdete v nastavitvah pod "Brskalniško delovanje...".
@@ -1030,148 +1034,148 @@ Privzeto bo NVDA zaznavala spremembe na položaju pregledne utripalke/sistemske 
 Omogočite to možnost v programih, kot je Microsoft Word med postopkom postavitve besedila, kjer je oblikovanje pomembno.
 
 +++ Slovarji govora +++
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Meni slovarjev govora, ki se nahaja v Nastavitvah, vsebuje pogovorna okna, ki vam omogočajo upravljanje, kako NVDA izgovarja različne besede ali fraze.
+Trenutno obstajajo trije različni slovarji govora.
+Ti so:
+- Privzet: Pravila v tem slovarju vplivajo na vsak izgovor v NVDA.
+- Glas: Pravila v tem slovarju vplivajo na govorno sintezo, ki je trenutno v uporabi.
+- Začasen: Pravila v tem slovarju vplivajo na ves govor v NVDA, toda to velja samo za trenutno sejo. Ta pravila so začasna in bodo izgubljena, ko se NVDA ponovno zažene.
+-
+
+Vsa pogovorna okna slovarjev vsebujejo seznam pravil, ki se uporabljajo procesiranje govora.
+Pogovorno okno vsebuje tudi gumbe Dodaj, Uredi in Odstrani.
+
+Če želite dodati novo pravilo v slovar, pritisnite gumb Dodaj, izpolnite polja, ki se prikažejo v pogovornem oknu, nato pritisnite V redu.
+Tako boste svoje pravilo videli v seznamu pravil.
+Toda zaradi zavarovanja, da se je pravilo resnično shranilo, se prepričajte, da ste pritisnili V redu za izhod iz vseh pogovornih oken slovarjev, ko ste končali z dodajanjem in urejanjem pravil.
+
+Pravila NVDA govornega slovarja vam omogočajo spreminjanje enega niza znakov v drugega.
+Preprost primer tega je lahko vaša želja, da NVDA izgovori "žaba" namesto "ptič", vedno, ko naleti na ta niz.
+V pogovornem oknu dodajanja pravila je najlažja pot, da to storite ta, da vnesete ptič v polje vzorca in v polje zanenjave vnesete besedo žaba.
+Kadar želite vnesti opis pravila, lahko storite tudi to tako, da vnesete opis v polje komentarja (nekaj takega kot: menja ptiča v žabo).
+
+Toda Slovarji govora v NVDA zmorejo še več kot preprosto zamenjavo besed.
+Pogovorno okno dodajanja pravila vsebuje tudi izbirnik, s katerim lahko izbirate ali naj bo vaše pravilo občutljivo na velike črke ali ne. To pomeni, da NVDA pravilo obravnava drugače takrat, ko je beseda zapisana z velikimi črkami kot takrat, ko je beseda zapisana z malimi.
+Privzeto NVDA ni občutljiva na velike črke.
+Z naslednjim izbirnikom lahko naznačite, če je beseda "regularni izraz".
+Regularni izraz je vzorec, ki vsebuje posebne simbole, ki omogočajo zapis več kot enega znaka istočasno, ali zapis samo števil, črk in podobno. To je samo nekaj primerov.
+Regularnih izrazov ta uporabniški vodič ne pokriva, ker obstaja precej vodičev v spletu, kjer je na voljo več informacij.
+
++++ Zgovornost/izgovorjava simbolov +++[SymbolPronunciation]
+To pogovorno okno vam omogoča menjavo zgovornosti, kar pomeni, kdaj se določen simbol izgovori. Lahko pa določite tudi, kaj naj se izgovori namesto imena simbola.
+
+Za menjavo simbola, ga najprej izberite s seznama simbolov.
+Polje zamenjave vam omogoča spremembo besedila, ki naj se izgovori ob simbolu.
+Z uporabo polja za nivoje določite najnižji nivo, kjer se mora simbol izgovoriti.
+
+Ko zaključite z delom, pritisnite V redu, da spremembe shranite ali Prekliči, če želite spremembe zavreči.
+
++++ Kretnje Vnosa +++
+V tem pogovornem oknu lahko prilagajate kretnje vnosa, kot so tipke na tipkovnici, gumbi na brajevi vrstici, in podobno ukazom za NVDA.
+
+Pokažejo se samo tisti ukazi, ki so bili na voljo tik preden ste odprli to pogovorno okno.
+Na primer, če želite spremeniti kretnje vnosa, ki se nanašajo na brskalniško delovanje, morate odpreti pogovorno okno kretenj vnosa med tem, ko ste v brskalniškem delovanju.
+
+To pogovorno okno vsebuje drevo, kjer so razvrščeni NVDA ukazi, ki so na voljo ločeni po kategorijah.
+Vsaka kretnja, ki se nanaša na ukaz je razvrščena pod ukazom.
+
+Če želite dodati kretnjo vnosa posameznemu ukazu, izberite ukaz in pritisnite gumb Dodaj.
+Nato izvedite kretnjo, za katero želite, da je povezana s tem ukazom; npr. pritisk tipke na tipkovnici ali gumba na brajevi vrstici.
+Pogosto se kretnja lahko interpretira na več načinov.
+Na primer, ko pritisnete tipko na tipkovnici, lahko določite, da se določi samo za to obliko tipkovnice npr. Prenosnik ali Namizje (običajna razporeditev), lahko pa določite, da kretnja velja za vse postavitve tipkovnice.
+V takem primeru se bo prikazal meni, kjer boste lahko izbrali ustrezno možnost.
+
+Za odstranitev kretnje vnosa s posameznega ukaza, izberite kretnjo in pritisnite gumb Odstrani.
+
+Ko zaključite z delom, pritisnite gumb V redu, da shranite spremembe ali gumb Prekliči, če spremembe želite zavreči.
+
+++ Shranjevanje in ponovno Nalaganje konfiguracije ++
+Privzeto bo NVDA samodejno shranila vaše nastavitve ob izhodu.
+Vendar to lahko spremenite v splošnih možnostih pod Nastavitvami.
+Če želite kadarkoli ročno shraniti nastavitve, izberite element Shrani konfiguracijo v glavnem meniju NVDA (Nastavitve)
+
+Če kadarkoli naredite napako pri vaših nastavitvah in želite, da se NVDA povrne na zadnje shranjeno stanje, izberite element "Vrni na zadnjo shranjeno konfiguracijo" v glavnem meniju NVDA.
+Lahko pa vedno ponastavite NVDA na tovarniške nastavitve z izbiro elementa Ponastavi na tovarniško konfiguracijo, ki se prav tako nahaja v meniju NVDA.
+
+Naslednji NVDA ukazi so tudi na voljo:
+%kc:beginInclude
+|| ime | Običajna razporeditev | razporeditev Prenosnik | Opis |
+| Shrani konfiguracijo | NVDA+control+c | NVDA+control+c | Shrani vašo zadnjo konfiguracijo tako, da ni izgubljena, ko zapustite NVDA. |
+| Povrni konfiguracijo | NVDA+control+r | NVDA+control+r | Enojni pritisk povrne na stanje zadnje shranjene konfiguracije. Trojni pritisk povrne stanje konfiguracije na tovarniško. |
+%kc:endInclude
+
+++ Profili Konfiguracije ++
+Včasih želite različne nastavitve za različne situacije.
+Na primer, da želite, da NVDA poroča o zamikih (imate to možnost vključeno) medtem, ko urejate ali da je vključeno poročanje o lastnostih pisave, ko dokument oblikujete.
+To vam NVDA omogoča skozi uporabo Profilov Konfiguracije.
+
+Profil konfiguracije vsebuje samo tiste nastavitve, ki so se spremenile med tem, ko je bil profil v urejanju.
+V profilih konfiguracije se lahko spremenijo skoraj vse nastavitve razen tistih pod Splošnimi nastavitvami, ki vplivajo na delovanje NVDA v celoti.
+
+Profili konfiguracije se lahko aktivirajo ročno.
+Lahko pa se aktivirajo tudi samodejno glede na prožilec. Prožilec je lahko prehod v izbrano ačlikacijo.
+
++++ Osnovno Upravljanje +++
+S profili konfiguracije lahko upravljate z izbiro Profilov Konfiguracije v meniju NVDA.
+To lahko storite tudi z uporabo sledečega ukaza na tipkovnici:
+%kc:beginInclude
+- NVDA+control+p: Pokaži pogovorno okno Profilov Konfiguracije..
+-
+%kc:endInclude
+
+Prva možnost nadzora je seznam profilov na voljo, med katerimi lahko izbirate.
+Ko odprete pogovorno okno, je izbran profil, ki ga pravkar urejate.
+Dodatne informacije se pokažejo ob aktivnem profilu. Tako lahko ugotovimo, ali je profil aktiviran ročno, preko prožilca in/ali je v stanju urejanja.
+
+Če želite preimenovati ali izbrisati profil, Izberite ustrezen gumb (Odstrani/Preimenuj).
+
+Pritisnite gumb Zapri, da zaprete to pogovorno okno.
+
++++ Ustvarjanje Profila +++
+Če želite ustvariti nov profil, pritisnite gumb Novo.
+
+V pogovornem oknu za nov profil, lahko določite ime novega profila.
+Lahko izberete tudi, kako naj se ta profil uporablja.
+Če ta profil želite aktivirati ročno, izberite ročna aktivacija (privzeta možnost).
+Drugače izberite prožilec, ki bo samodejno aktiviral izbran profil.
+Zaradi udobnejšega delovanja, če polje z imenom pustite prazno, ga bo izpolnil izbran prožilec, ki aktivira profil.
+Glejte [spodaj #ConfigProfileTriggers], če želite dobiti več informacij o prožilcih profilov.
+
+Pritisk gumba V redu bo zaprl pogovorno okno profilov konfiguracije in ustvaril profil z izbranimi značilnostmi.
+
++++ Ročna aktivacija +++[ConfigProfileManual]
+Profil ročno aktivirate tako, da ga izberete in pritisnete gumb Sproži.
+Ko je profil enkrat aktiviran, ga še vedno lahko preglasijo profili s prožilci, vendar bodo nastavitve tega profila prevladale nad tistimi iz profila s prožilcem.
+Na primer, če profil sproži trenuten program in je poročanje povezav omogočeno v tem profilu, vendar je ista nastavitev v profilu, ki se ročno aktivira izključena, NVDA ne bo sporočala povezav.
+Toda, če zamenjate glas v profilu na prožilec in tega niste nikoli storili v profilu, ki se aktivira ročno, bo NVDA upoštevala nastavitev profila na prožilec.
+Vsaka nastavitev, ki jo boste spremenili, se bo shranila v profilu, ki ga aktivirate ročno.
+Za deaktivacijo ročno aktiviranega profila, ga izberite v seznamu pogovornega okna Konfiguracije profilov in pritisnite gumb Ročno deaktiviraj.
+
++++ Prožilci +++[ConfigProfileTriggers]
+Pritisk gumba Prožilci v pogovornem oknu Konfiguracije profilov vam omogoča spreminjanje profilov, ki se morajo aktivirati ob različnih dogodkih. To pomeni, da se aktivirajo različni prožilci.
+
+Seznam prožilcev prikazuje seznam prožilcev, ki so trenutno na voljo. Večinoma so to sledeči:
+- Trenuten program: Ta prožilec aktivira profil, ko se odpre program, ki teče takoj za NVDA nastavitvami. To pomeni, da se prožilec veže na program, s katerega ste odprli nastavitve NVDA. Pozor, Če želite nastaviti prožilec za izbran program, mora program teči v ospredju.
+- Preberi vse: Ta prožilec je vezan na ukaz Preberi vse.
+-
+
+Za spremembo profila, ki naj se navezuje na posamezen prožilec, ki ga samodejno aktivira, izberite prožilec in potem izberite še odgovarjajoč profil iz seznama.
+Lahko izberete tudi (Normalno konfiguracijo), če želite, naj profili ne bodo v uporabi.
+
+Pritisnite gumb Zapri, da se vrnete v glavno pogovorno okno Konfiguracije profilov.
+
++++ Urejanje Profila +++
+Če uporabljate ročno aktiviran profil, bo vsaka nastavitev, ki jo boste spremenili, v ta profil.
+Drugače bo nastavitev shranjena v zadnji samodejno aktiviran profil.
+Na primer, če ste profil povezali s prožilcem Beležnice, in potem Beležnico odprete ali se premaknete vanjo, se bo vsaka sprememba nastavitev shranila v ta profil.
+Če za posamezno situacijo ne obstaja niti profil z ročno aktivacijo niti profil s prožilcem, se bo vsaka sprememba nastavitev shranila v Normalno konfiguracijo.
+
+Za urejanje profila, ki je povezan s prožilcem "Preberi vse", morate [ročno aktivirati #ConfigProfileManual] ta profil.
+
++++ Začasno Onemogočanje Prožilcev +++
+Včasih je uporabno, če lahko začasno onemogočimo vse prožilce.
+Tak primer se pojavi, ko želite urejati profil, ki se aktivira ročnoali Normalno konfiguracijo brez motenj profilov na prožilcu.
+To storite s potrditvijo izbirnika Začasno onemogoči vse prožilce v pogovornem oknu Konfiguracije profilov.
 
 ++ Mesta datotek z Nastavitvami ++
 Prenosljive različice NVDA hranijo vse nastavitve, druge aplikacijske module in druge gonilnike v imeniku z imenom userConfig, ki se nahaja v imeniku NVDA.
@@ -1242,3 +1246,27 @@ Več informacij, prosimo, poiščite v Vodiču za Razvijalce (v Angleščini), k
 Ta element, ko ga sprožite, ponovno naloži aplikacijske module in globalne vtičnike brez potrebe po ponovnem zagonu NVDA, kar je lahko uporabno za razvijalce.
 
 + Podprte Govorne Sinteze +[SupportedSpeechSynths]
+Ta razdelek vsebuje informacije o govornih sintezah, ki jih podpira NVDA.
+Še bolj razširjen seznam tako brezplačnih kot plačljivih govornih sintez, ki jih lahko kupite in prenesete za uporabo z NVDA, je na voljo na strani [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+
+++ eSpeak ++
+Govorna sinteza [eSpeak http://espeak.sourceforge.net/] je vgrajena neposredno v NVDA in ne potrebuje namestitve posebnih gonilnikov ali drugih komponent.
+NVDA privzeto začne uporabljati eSpeak.
+Ker je ta sinteza vgrajena v NVDA, je to čudovita izbira, ko NVDA poganjamo z USB ključka na drugih sistemih.
+
+Vsak glas, ki prihaja z eSpeakom, govori svoj jezik.
+Trenutno eSpeak podpira 43 različnih jezikov.
+
+Na voljo je tudi precej oseb, med katerimi lahko izbirate, da imitirajo zvoke različnih glasov.
+
+++ Microsoft Speech API različice 4 (SAPI 4) ++
+SAPI 4 je starejši Microsoftov standard za programske govorne sinteze.
+Veliko govornih sintez, ki ustrezajo temu standardu, je na voljo brezplačno za posedovanje ali prenos prek različnih družb ali spletnih mest.
+Ko uporabljate to sintezo z NVDA, bodo na voljo vsi glasovi (dostopni prek [pogovornega okna Nastavitev glasu #VoiceSettings] ali prek [Kroga Nastavitev Sinteze #SynthSettingsRing]) iz vseh pogonov, ki jih je NVDA našla na vašem sistemu.
+
+Če imate v sistemu nameščene sinteze različice SAPI 4, vendar se ne pokažejo v seznamu NVDA glasov, prosimo, namestite knjižnico SAPI 4.0 runtime binaries, na voljo na http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+
+++ Microsoft Speech API različice 5 (SAPI 5) ++
+SAPI 5 je trenuten Microsoftov standard za programske govorne sinteze.
+Veliko govornih sintez, ki je združljivih s tem standardom, je na voljo brezplačno za posedovanje ali prenos prek različnih družb ali spletnih mest, čeprav bo vaš sistem verjetno že imel prednameščeno vsaj eno tako sintezo.
+Ko uporabljate to sintezo z NVDA, bodo na voljo vsi glasovi (dostopni prek [pogovornega okna Nastavitev glasu #VoiceSettings] ali prek [Kroga Nastavitev Sinteze #SynthSettingsRing]) iz vseh pogonov, ki jih je NVDA našla na vašem sistemu.

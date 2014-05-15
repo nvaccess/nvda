@@ -146,8 +146,8 @@ _requestTextChangeNotificationsForWindow=None
 _textChangeNotificationObjs=[]
 
 def initialize():
-	global _getWindowTextInRect,_requestTextChangeNotificationsForWindow
-	_getWindowTextInRect=CFUNCTYPE(c_long,c_long,c_long,c_int,c_int,c_int,c_int,c_int,c_int,c_bool,POINTER(BSTR),POINTER(BSTR))(('displayModel_getWindowTextInRect',NVDAHelper.localLib),((1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(2,),(2,)))
+	global _getWindowTextInRect,_requestTextChangeNotificationsForWindow, _getFocusRect
+	_getWindowTextInRect=CFUNCTYPE(c_long,c_long,c_long,c_bool,c_int,c_int,c_int,c_int,c_int,c_int,c_bool,POINTER(BSTR),POINTER(BSTR))(('displayModel_getWindowTextInRect',NVDAHelper.localLib),((1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(2,),(2,)))
 	_requestTextChangeNotificationsForWindow=NVDAHelper.localLib.displayModel_requestTextChangeNotificationsForWindow
 
 def getCaretRect(obj):
@@ -160,8 +160,8 @@ def getCaretRect(obj):
 			raise RuntimeError("displayModel_getCaretRect failed with res %d"%res)
 	return RECT(left,top,right,bottom)
 
-def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace=True):
-	text, cpBuf = watchdog.cancellableExecute(_getWindowTextInRect, bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace)
+def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace=True,includeDescendantWindows=True):
+	text, cpBuf = watchdog.cancellableExecute(_getWindowTextInRect, bindingHandle, windowHandle, includeDescendantWindows, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace)
 	if not text or not cpBuf:
 		return u"",[]
 
@@ -170,6 +170,15 @@ def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,mi
 	for cp in cpBufIt:
 		characterLocations.append((ord(cp), ord(next(cpBufIt)), ord(next(cpBufIt)), ord(next(cpBufIt))))
 	return text, characterLocations
+
+def getFocusRect(obj):
+	left=c_long()
+	top=c_long()
+	right=c_long()
+	bottom=c_long()
+	if NVDAHelper.localLib.displayModel_getFocusRect(obj.appModule.helperLocalBindingHandle,obj.windowHandle,byref(left),byref(top),byref(right),byref(bottom))==0:
+		return left.value,top.value,right.value,bottom.value
+	return None
 
 def requestTextChangeNotifications(obj, enable):
 	"""Request or cancel notifications for when the display text changes in an NVDAObject.
@@ -200,11 +209,44 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	minHorizontalWhitespace=8
 	minVerticalWhitespace=32
 	stripOuterWhitespace=True
+	includeDescendantWindows=True
 
-	def __init__(self, obj, position):
+	def _get_backgroundSelectionColor(self):
+		self.backgroundSelectionColor=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(13))
+		return self.backgroundSelectionColor
+
+	def _get_foregroundSelectionColor(self):
+		self.foregroundSelectionColor=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(14))
+		return self.foregroundSelectionColor
+
+	def _getSelectionOffsets(self):
+		if self.backgroundSelectionColor is not None and self.foregroundSelectionColor is not None:
+			fields=self._storyFieldsAndRects[0]
+			startOffset=None
+			endOffset=None
+			curOffset=0
+			inHighlightChunk=False
+			for item in fields:
+				if isinstance(item,textInfos.FieldCommand) and item.command=="formatChange" and item.field.get('color',None)==self.foregroundSelectionColor and item.field.get('background-color',None)==self.backgroundSelectionColor: 
+					inHighlightChunk=True
+					if startOffset is None:
+						startOffset=curOffset
+				elif isinstance(item,basestring):
+					curOffset+=len(item)
+					if inHighlightChunk:
+						endOffset=curOffset
+				else:
+					inHighlightChunk=False
+			if startOffset is not None and endOffset is not None:
+				return (startOffset,endOffset)
+		raise LookupError
+
+	def __init__(self, obj, position,limitRect=None):
 		if isinstance(position, textInfos.Rect):
-			self._location = position.left, position.top, position.right, position.bottom
-			position = textInfos.POSITION_ALL
+			limitRect=position
+			position=textInfos.POSITION_ALL
+		if limitRect is not None:
+			self._location = limitRect.left, limitRect.top, limitRect.right, limitRect.bottom
 		else:
 			self._location = None
 		super(DisplayModelTextInfo, self).__init__(obj, position)
@@ -228,7 +270,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			return [],[],[]
 		left,top=windowUtils.physicalToLogicalPoint(self.obj.windowHandle,left,top)
 		right,bottom=windowUtils.physicalToLogicalPoint(self.obj.windowHandle,right,bottom)
-		text,rects=getWindowTextInRect(bindingHandle, self.obj.windowHandle, left, top, right, bottom, self.minHorizontalWhitespace, self.minVerticalWhitespace,self.stripOuterWhitespace)
+		text,rects=getWindowTextInRect(bindingHandle, self.obj.windowHandle, left, top, right, bottom, self.minHorizontalWhitespace, self.minVerticalWhitespace,self.stripOuterWhitespace,self.includeDescendantWindows)
 		if not text:
 			return [],[],[]
 		text="<control>%s</control>"%text
@@ -417,7 +459,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		return startOffset,endOffset
 
 	def _get_clipboardText(self):
-		return super(DisplayModelTextInfo,self).clipboardText.replace('\0',' ')
+		return "\r\n".join(x.strip('\r\n') for x in self.getTextInChunks(textInfos.UNIT_LINE))
 
 	def getTextInChunks(self,unit):
 		#Specifically handle the line unit as we have the line offsets pre-calculated, and we can not guarantee lines end with \n
@@ -498,7 +540,7 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		left,top,right,bottom=rects[offset]
 		x=left #+(right-left)/2
 		y=top+(bottom-top)/2
-		x,y=windowUtils.logicalToPhysicalPoint(x,y)
+		x,y=windowUtils.logicalToPhysicalPoint(self.obj.windowHandle,x,y)
 		oldX,oldY=winUser.getCursorPos()
 		winUser.setCursorPos(x,y)
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
@@ -506,8 +548,11 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		winUser.setCursorPos(oldX,oldY)
 
 	def _getSelectionOffsets(self):
-		offset=self._getCaretOffset()
-		return offset,offset
+		try:
+			return super(EditableTextDisplayModelTextInfo,self)._getSelectionOffsets()
+		except LookupError:
+			offset=self._getCaretOffset()
+			return offset,offset
 
 	def _setSelectionOffsets(self,start,end):
 		if start!=end:

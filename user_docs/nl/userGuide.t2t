@@ -379,10 +379,10 @@ Voor het nalezen van tekst kunt u de volgende toetscombinaties gebruiken:
 | In de leesmodus naar begin van een regel gaan | shift+numeriek1 | NVDA+home | geen | De leescursor wordt naar het begin van de huidige regel verplaatst |
 | Ga in de leesmodus naar vorig karakter | numeriek1 | NVDA+pijl links | Veeg links (tekstmodus) | De leescursor wordt naar het vorige karakter in de huidige tekstregel verplaatst |
 | Huidige karakter onder de leescursor weergeven | numeriek2 | NVDA+punt | geen | Noemt het huidige karakter in de tekstregel waar de leescursor zich bevindt. Tweemaal drukken geeft een omschrijving of voorbeeld van het karakter. Drie maal drukken geeft de numerieke waarde in decimalen en hexadecimalen. |
-| In de leesmodus naar het volgende karakter gaan | numeriek3 | NVDA+pijl rechts | Veeg rechts (tekstmodus)| De leescursor wordt naar het volgende karakter verplaatst in de huidige tekstregel|
+| In de leesmodus naar het volgende karakter gaan | numeriek3 | NVDA+pijl rechts | Veeg rechts (tekstmodus) | De leescursor wordt naar het volgende karakter verplaatst in de huidige tekstregel|
 | In de leesmodus naar het einde van de regel gaan | shift+numeriek3 | NVDA+End | geen | De leescursor wordt naar het einde van de huidige tekstregel verplaatst |
 | Alles voorlezen in leesmodus | numeriek Plus | NVDA+shift+a | Veeg omlaag met 3 vingers (tekstmodus) | Leest vanaf de huidige positie van de leescursor waarbij de leescursor zich mee beweegt.  |
-| Vanaf de leescursor kopiëren | NVDA+f9 | NVDA+f9 | geen |Er wordt tekst gekopieerd vanaf de huidige leescursorpositie. Het feitelijke kopiëren gebeurt pas nadat u hebt aangegeven waarheen gekopieerd moet worden |
+| Vanaf de leescursor kopiëren | NVDA+f9 | NVDA+f9 | geen | Er wordt tekst gekopieerd vanaf de huidige leescursorpositie. Het feitelijke kopiëren gebeurt pas nadat u hebt aangegeven waarheen gekopieerd moet worden |
 | Tot leescursor kopiëren | NVDA+f10 | NVDA+f10 | geen | Het tekstgebied dat met NVDA+f9 is gemarkeerd wordt met de opdracht NVDA+f10 naar het klembord gekopieerd. |
 | Tekstopmaak weergeven | NVDA+f | NVDA+f | geen | NVDA laat horen hoe de tekst waarin de leescursor zich bevindt, is opgemaakt |
 %kc:endInclude
@@ -533,7 +533,7 @@ Door op Enter te drukken wordt interactie met zulke objecten mogelijk.
 Als het object toegankelijk is, kunt u het met de TAB-toets verkennen en bewerkingen uitvoeren zoals u dat ook in andere toepassingen gewend bent.
 Er is een toetscombinatie beschikbaar om weer terug te gaan naar de oorspronkelijke pagina waarop zich het object bevindt. 
 %kc:beginInclude
-|| Naam| Toets| Beschrijving |
+|| Naam | Toets | Beschrijving |
 | Terug naar inhoud van document | NVDA+control+spatiebalk | Verplaatst de focus van het huidige ingevoegde object naar “het document waarin het zich bevindt |
 %kc:endInclude
 
@@ -716,8 +716,8 @@ Om spraakinstellingen snel aan te passen zonder dat u gebruik maakt van het dial
 || Naam | Desktoptoets | Laptoptoets | Beschrijving |
 | Naar volgende synthesizerinstelling gaan | NVDA+control+pijl rechts | NVDA+shift+control+pijl rechts | Hiermee wordt steeds een volgende spraakinstelling gekozen. Na de laatst beschikbare instelling begint u weer vooraan enz. |
 | Naar vorige spraakinstelling gaan | NVDA+control+pijl Links | NVDA+shift+control+pijl Links | Hiermee wordt de spraakinstelling gekozen die onmiddellijk voorafgaat aan de huidige. Eenmaal bij de eerste instelling bovenaan de lijst aangekomen begint u weer onderaan enzovoorts. |
-| Oplopend bijstellen van huidige synthesizerinstelling | NVDA+control+Pijl Omhoog | NVDA+shift+control+Pijl Omhoog |Stelt de momenteel gebruikte spraakinstelling naar bovenbij. Verhoogt bij voorbeeld snelheid en volume, selecteert volgende stem. |
-| De huidige synthesizerinstelling aflopend bijstellen | NVDA+control+Pijl Omlaag | NVDA+shift+control+Pijl Omlaag |Stelt momenteel gebruikte spraakinstelling naar beneden bij. Verlaagt bij voorbeeld snelheid en volume, selecteert vorige stem |
+| Oplopend bijstellen van huidige synthesizerinstelling | NVDA+control+Pijl Omhoog | NVDA+shift+control+Pijl Omhoog | Stelt de momenteel gebruikte spraakinstelling naar bovenbij. Verhoogt bij voorbeeld snelheid en volume, selecteert volgende stem. |
+| De huidige synthesizerinstelling aflopend bijstellen | NVDA+control+Pijl Omlaag | NVDA+shift+control+Pijl Omlaag | Stelt momenteel gebruikte spraakinstelling naar beneden bij. Verlaagt bij voorbeeld snelheid en volume, selecteert vorige stem |
 %kc:endInclude
 
 +++ Brailleïnstellingen +++
@@ -829,15 +829,18 @@ Als dit selectievakje is aangevinkt,zullen navigatieopdrachten zoals snel navige
 Het is veeleer zo dat Alles Voorlezen naar de nieuwe positie springt waar het lezen wordt voortgezet.
 
 ==== Piep bij het typen van kleine letters terwijl capslock is ingeschakeld ====
-Als deze optie is geactiveerd, zal NVDA piepen bij het typen van letters in combinatie met de shift toets als capslock is ingeschakeld.
-Meestal is het niet de bedoeling om letters in combinatie met de shift toets te typen als capslock is ingeschakeld, u heeft capslock dan wellicht per ongeluk aangezet.
-Daarom kan het handig zijn om hierover gewaarschuwd te worden.
+Als deze optie is geactiveerd, zal er een waarschuwingssignaal klinken bij het typen van letters in combinatie met de shift toets als capslock is ingeschakeld.
+Meestal is het niet de bedoeling om letters in combinatie met de shift toets te typen als capslock is ingeschakeld. U heeft capslock dan wellicht ingeschakeld zonder dat u zich dat hebt gerealiseerd. 
 
 %kc:setting
 ==== Commandotoetsen uitspreken ====
 Toets: NVDA+4
 
-Door het selectievakje in te schakelen worden alle niet-karaktertoetsen (bij voorbeeld de pijltjestoetsen, de DEL-toets, etc.) uitgesproken. Dit geldt ook voor, bij voorbeeld, de Ctrl-toets in combinatie met een letter. 
+Door het selectievakje in te schakelen worden alle niet-karaktertoetsen (bij voorbeeld de pijltjestoetsen, de DEL-toets, etc.) uitgesproken. Dit geldt ook voor, bij voorbeeld, de Ctrl-toets in combinatie met een letter.
+
+==== Invoer van andere toepassingen beheren ====
+Met deze optie kan de gebruiker bepalen of invoer die afkomstig is van toepassingen zoals virtuele (scherm)toetsenborden of spraakherkenningssoftware door NVDA moet worden verwerkt. 
+Deze optie is standaard ingeschakeld, maar sommige gebruikers,zoals mensen die werken met het Unikey typeprogramma voor Viëtnamees, zullen er wellicht de voorkeur aan geven deze optie uit te zetten omdat er anders invoerfouten ontstaan. 
 
 +++ Muisinstellingen(NVDA+control+m) +++[MouseSettings]
 Het dialoogvenster Muisinstellingen vindt u in het NVDA-menu onder Opties waar u vervolgens Muis selecteert.

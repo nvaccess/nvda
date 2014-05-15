@@ -56,8 +56,8 @@ Para mais detalhes, pode [ver a licença completa. http://www.gnu.org/licenses/o
 
 + Requisitos Do Sistema +
 - Sistemas Operativos: Todas as versões 32-bit e 64-bit do Windows XP, Windows Vista, Windows 7 e Windows 8 (incluindo as versões Server 2003 e 2008).
-- Em Windows XP 32-bit, o NVDA requer o Service Pack 2 ou superior.
-- Em Windows Server 2003, o NVDA requer o Service Pack 1 ou superior.
+- Para Windows XP 32-bit, o NVDA requer o Service Pack 2 ou superior.
+- Para Windows Server 2003, o NVDA requer o Service Pack 1 ou superior.
 - Memória: 256 MB ou mais de RAM
 - Velocidade do processador: 1.0 GHz ou superior
 - Aproximadamente 50 MB de espaço livre.
@@ -90,7 +90,7 @@ Para além da impossibilidade de arrancar automaticamente com o windows, as cóp
 - Windows 8: Impossibilidade de usar as funcionalidades de modo de navegação e de anunciar os caracteres escritos nas aplicações Windows Store.
 -
 
-++ Instalar O NVDA ++ */*
+++ Instalar O NVDA ++
 Se está a instalar o NVDA directamente do pacote descarregado, pressione o butão "instalar o NVDA".
 Se já fechou esse diálogo ou quer instalar a partir duma cópia portátil, por favor, seleccione instalar o NVDA, que se encontra em ferramentas no menu do NVDA.
 O diálogo de instalação que aparece confirmará se deseja instalar o NVDA e dir-lhe-á igualmente se esta instalação actualizará uma instalação anterior.
@@ -552,7 +552,7 @@ Nota: O comando para anunciar o tempo restante funciona somente com a cadeia de 
 %kc:beginInclude
 || Nome | Comando de Teclado | Descrição |
 | Anunciar Janela de Comentários | control+shift+c | Anuncia quaisquer comentários na janela de comentários. |
-| Anunciar notas para tradutores | control+shift+a | Anuncia quaisquer notas para os tradutores. |
+| Anunciar notas para os tradutores | control+shift+a | Anuncia quaisquer notas para os tradutores. |
 %kc:endInclude
 
 + Configurar O NVDA +
@@ -818,6 +818,10 @@ Portanto, poderá ser bastante útil ser avisado disto.
 Tecla: NVDA+4
 
 Se activada, o NVDA irá anunciar todas as teclas, que não sejam caracteres ou pontuações, que pressione no teclado. Isto inclui Control mais uma letra ou as setas direccionais.
+
+==== Tratar teclas enviadas por outras aplicações ====
+Esta opção permite controlar se o pressionar de teclas gerado por outras aplicações, tais como teclados no ecrã e softwares de reconhecimento de voz, devem ser processados pelo NVDA. 
+Esta opção está activada por padrão, embora alguns utilizadores possam preferir desactivá-la, como os utilizadores do "Unikey typing software" pois causará incorreções.
 
 +++ Definições do rato (NVDA+Ctrl+M) +++
 O diálogo das definições do rato encontra-se no menu Preferências, no item "Definições do rato...", e contém as seguintes opções:
@@ -1091,7 +1095,7 @@ Os comandos de teclado do NVDA, que se seguem, também podem ser usados:
 %kc:beginInclude
 || Nome | Comando de Teclado Desktop | Comandos de Teclado Laptop | Descrição |
 | Guardar configuração | NVDA+Ctrl+C | NVDA+Ctrl+C | Guarda permanentemente a sua configuração actual, de forma a que não se perca, quando sair do NVDA |
-| Restaurar para a configuração guardada | NVDA+Ctrl+R | NVDA+Ctrl+R | Premindo uma vez, restaura o NVDA para as definições que existiam, quando guardou, pela última vez, a configuração do NVDA. Premindo três vezes, restaura a configuração para as definições de fábrica por padrão |
+| Restaurar para a configuração guardada | NVDA+Ctrl+R | NVDA+Ctrl+R | Premindo uma vez, restaura o NVDA para as definições que existiam, quando guardou, pela última vez, a configuração do NVDA. Pressionando três vezes, restaura a configuração para as definições de fábrica por padrão |
 %kc:endInclude
 
 ++ Perfis de Configuração ++
@@ -1177,7 +1181,7 @@ Para ir para o directório das suas definições de uma versão instalada do NVD
 
 As definições para o NVDA, quando está a ser executado no ecrã de autenticação ou ecrãs UAC, são armazenadas no directório systemConfig, que se encontra no directório de instalação do NVDA.
 Por norma, não deverá alterar estas definições.
-Para alterar a configuração do NVDA, nos ecrãs de autenticação/ecrãs UAC, configure o NVDA com as suas definições preferidas, com sessão iniciada no Windows, e informe ao NVDA para copiar a configuração para o ecrã de autenticação, através da utilização do botão que se encontra no diálogo das definições gerais.
+Para alterar a configuração do NVDA, nos ecrãs de autenticação/ecrãs UAC, configure o NVDA com as suas definições preferidas, com sessão iniciada no Windows, guarde as configurações e pressione o botão "Utilizar as definições actualmente guardadas no ecrã de início de sessão e noutros ecrãs" do diálogo das definições gerais.
 
 + Ferramentas Adicionais +
 
@@ -1301,7 +1305,7 @@ Esta secção contém informação sobre as linhas Braille suportadas pelo NVDA.
 ++ Freedom Scientific Focus/PAC Mate Series ++
 Todas as linhas Focus e PAC Mate da [Freedom Scientific http://www.freedomscientific.com/] são suportadas, quando conectadas via USB ou bluetooth.
 Necessitará dos drivers das linhas Braille da Freedom Scientific instalados no seu sistema.
-Se ainda não tem os mesmos, pode obtê-los em http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Se ainda não os tem, pode obtê-los em http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Apesar desta página apenas mensionar as linhas Focus Blue, os drivers suportam todas as linhas da Freedom Scientific.
 Se o seu sistema está a correr um Windows de 64 bits e os drivers já foram instalados, por outro leitor de ecrã, irá, provavelmente, necessitar de os reinstalar a partir deste link, visto que, com alguma probabilidade, os ficheiros necessários ao NVDA ainda não foram instalados por qualquer outro leitor de ecrã.
 
@@ -1535,10 +1539,10 @@ Por favor consulte a documentação da sua linha braille para obter a descriçã
 ++ HIMS Braille Sense/Braille EDGE Series ++
 O NVDA suporta as linhas Braille Sense e Braille EDGE da [Hims http://www.hims-inc.com/] quando conectadas via USB ou bluetooth. 
 Se ligar a linha via USB, necessitará de instalar os drivers USB, da HIMS, no seu sistema.
-Pode fazer o download desses drivers do centro de recursos da HIMS http://www.hims-inc.com/resource-center/
-Nesta página, seleccione o seu modelo e faça o download do driver na secção Window-Eyes.
-Apesar da secção apenas referir o Window-Eyes, este é um driver USB geral, que também funciona com o NVDA.
-
+Pode fazer o download dos drivers do Centro de Recursos da HIMS, http://www.hims-inc.com/resource-center/
+Nesta página, seleccione o modelo e faça o download do driver na secção do Window-Eyes.
+Apesar da secção apenas mencionar o Window-Eyes, é um driver USB genérico que também funcionará com o NVDA.
+ 
 Seguem-se as associações de teclas para estas linhas braille com o NVDA.
 Por favor consulte a documentação da sua linha braille para obter a descrição de onde estas teclas podem ser encontradas.
 %kc:beginInclude

@@ -7,6 +7,38 @@
 Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 
 
+= 2014.2 =
+
+== Novas características ==
+- O anúncio da seleção de texto agora é possível em alguns campos de edição personalizados  onde a informação proveniente da tela é usada. (#770)
+- em aplicativos Java acessíveis, a informação da posição agora é anunciada para botões de opção e outros controles que exibem a informação de grupo.. (#3754)
+- em aplicativos Java acessíveis, as teclas de atalho agora são anunciadas para controles que os possuam. (#3881)
+- No modo de navegação, as etiquetas nas marcas agora são anunciadas. São também incluídas no Diálogo da Lista de Elementos. (#1195)
+- No modo de navegação, as regiões etiquetadas agora são tratadas como marcas. (#3741)
+
+
+== Alterações ==
+- Ao sair de um diálogo ou aplicação contida em um documento do modo de navegação, o nome e tipo do documento do modo de navegação já não são anunciados. (#4069)
+
+
+== Correção de falhas ==
+- O menu sistema padrão do Windows já não é silenciado acidentalmente em aplicativos Java. (#3882)
+- Ao copiar textos via exploração de tela, as quebras de linha já não são ignoradas. (#3900)
+- Objetos que constituem-se de espaços em branco sem utilidade já não são anunciados em alguns aplicativos quando o foco muda ou ao usar a navegação de objetos com o modo de revisão simples abilitado. (#3839)
+- Caixas de texto e outros diálogos produzidos pelo NVDA voltam a fazer com que a fala anterior  seja cancelada antes do anúncio do diálogo.
+- No modo de navegação, as etiquetas dos controles tais como links e botões agora são renderizadas corretamente caso a etiqueta tenha sido substituída pelo autor para propósitos de acessibilidade (especificamente, usando aria-label ou aria-labelledby). (#1354)
+- No modo de navegação no Internet Explorer, o texto situado dentro de um elemento marcado como apresentacional (ARIA role="presentation") já não é inapropriadamente ignorado. (#4031)
+- Agora é novamente possível digitar texto em Vietnamês usando o software Unikey. Para tanto, desmarque a nova caixa de seleção "Processar teclas de outros aplicativos" no Diálogo de Opções de Teclado do NVDA. (#4043)
+- NO modo de navegação, os itens de rádio e itens de menu de seleção são agora anunciados como controles em lugar de o serem apenas como texto clicável. (#4092)
+- O NVDA já não alterna incorretamente do modo de foco para o modo de navegação quando um item de radio ou de menu de seleção recebe foco. (#4092)
+- No Microsoft PowerPoint com o anúncio de palavras digitadas ativado, caracteres deletados usando backspace já não são anunciados como parte da palavra digitada. (#3231)
+- No Diálogo de Opções do Microsoft Office 2010, as etiquetas das caixas de combinação agora são anunciadas corretamente. (#4056)
+- No modo de navegação em aplicativos da Mozilla, usando-se os comandos de navegação  rápida para mover-se para o próximo ou anterior botão ou campo de formulário, agora inclui botões de altenância como é esperado. (#4098)
+- O conteúdo das alertas em aplicativos da Mozilla  já não é anunciado duas vezes. (#3481)
+- No modo de navegação, elementos que contém outros, bem como as marcas já não são repetidas inapropriadamente ao navegar dentro dos mesmos, ao mesmo tempo em que o conteúdo das páginas é alterado  (exemplo, quando se navega pela página do Facebook e do Twitter). (#2199)
+- O NVDA agora se recupera em mais casos ao alternar o foco para fora de aplicativos que pararam de responder. (#3825)
+
+
 = 2014.1 =
 
 == Novas características ==
@@ -24,7 +56,7 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 - Para as linhas braile Papenmeier, o comando mover para a revisão plana/foco  foi removido. Os usuários poderão atribuir suas próprias teclas usando o Diálogo de Gestos de Entrada. (#3652)
 - O NVDA agora usa o Microsoft VC runtime versão 11, o que significa que já não é mais possível executá-lo em sistemas operacionais mais antigos que o Windows XP Service Pack 2 ou o Windows Server 2003 Service Pack 1.
 - O nível de Pontuação pouco agora falará os caracteres asterisco (*) e mais (+). (#3614)
-- Atualizado o sintetizador eSpeak para a versão 1.48.02, o que inclui muitas correções nos idiomas e resolve vários problemas de instabilidades. (#3842, #3739)
+- Atualizado o sintetizador eSpeak para a versão 1.48.04, o que inclui muitas correções nos idiomas e resolve vários problemas de instabilidades. (#3842, #3739), #3860)
 
 
  == Correção de falhas ==
@@ -40,8 +72,8 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 - Não se mostram mais caracteres sem sentido em documentos no modo de navegação, como aqueles encontrados no intervalo para uso privado do Unicode. Em alguns casos eles estavam impedindo etiquetas mais úteis de serem mostradas. (#2963)
 - A composição de entrada para a introdução de caracteres asiáticos já não falha no PuTTY. (#3432)
 - A navegação em um documento após cancelar a leitura contínua já não resulta em que o NVDA algumas vezes anuncie incorretamente  que você saiu de um campo (tal como uma tabela) no documento que a leitura contínua nunca anunciou. (#3688)
-- Ao usar os comandos de navegação rápida do modo de navegação na leitura contínua com a leitura dinâmica abilitada, o NVDA anuncia o novo campo de modo mais acurado; ex.: diz que um cabeçalho é um cabeçalho e não apenas o texto do mesmo. (#3689)
-- Os comandos de navegação rápida de pular para o fim ou início de elementos que contêm outros agora respeitam a opção de leitura dinâmica ao dizer tudo, quer dizer, não vão mais cancelar a leitura contínua atual. (#3675)
+- Ao usar os comandos de navegação rápida do modo de navegação na leitura contínua com a leitura dinâmica abilitada, o NVDA anuncia o novo campo de modo mais acurado; ex.: anuncia um cabeçalho como cabeçalho e não apenas o texto do mesmo. (#3689)
+- Os comandos de navegação rápida de pular para o fim ou início de elementos que contêm outros agora respeitam a opção de leitura dinâmica durante a leitura contínua, isto é, já não irão cancelar a leitura contínua atual. (#3675)
 - Os nomes de gestos táteis listados no diálogo de gestos para entrada do NVDA agora estão amigáveis e traduzidos. (#3624)
 - O NVDA já não faz com que certos programas travem ao mover o mouse por sobre seus controles de edição rica (TRichEdit). Programas incluem o Jarte 5.1 e o BRFácil. (#3693, #3603, #3581)
 - No Internet Explorer e outros controles MSHTML, continentes como as tabelas marcadas com ARIA como sendo de leiaute não são mais anunciadas ao usuário. (#3713)

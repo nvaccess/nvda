@@ -1,4 +1,44 @@
-﻿symbols:
+﻿#locale/zh_cn/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011-2012 NVDA Contributors
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# 符号	表达式
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# 其他
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥]?\d)
+
+symbols:
+# 元字符	替换字符[[	级别][	保存]][	# 显示名称]
+
+# 复杂符号
+. sentence ending	点	all	always
+! sentence ending	叹号	all	always
+? sentence ending	问号	all	always
+; phrase ending	分号	most	always
+: phrase ending	冒号	most	always
+点		none	always
+in-word '	点	all	norep
+negative number	负	none	norep
+
+# 空白字符
+\0	空白	char	# null
+\t	制表符
+\n	换行	char
+\f	分页符	none
+\r	回车符	char
+ 	空格	char
+
+symbols:
 $	美元
 /	斜杠
 ;	分号
@@ -36,7 +76,6 @@ _	下划线
 ! sentence ending	惊叹号
 ? sentence ending	问号
 ; phrase ending	分号
-decimal point	点
 in-word '	点标记
 negative number	负
 ✔	选择
@@ -194,14 +233,14 @@ no-break space	空格
 ∣	直線	most
 ／	斜線	some
 ＼	反斜線	most
-￥	日圓	none
+￥	人民币	none
 ￠	先令	none
 ￡	英鎊	none
 ％	啪	some
 ＠	全形小老鼠	some
 ℃	度C	none
 ℉	度F	none
-﹩	錢號all	
+﹩	錢號	all
 ﹪	啪	none
 ﹫	半形小老鼠	none
 ㏕	毫升	none
@@ -220,38 +259,3 @@ no-break space	空格
 嗧	加侖	none
 瓩	千瓦	none
 糎	公分	none
-? sentence ending	问号
-; phrase ending	分号
-decimal point	点
-in-word '	点标记
-negative number	负
-✔	选择
-✓	选择
-©	版权符
-™	商标
-®	已注册
-³	超级脚本3
-²	超级脚本2
-¹	超级脚本1
-µ	百万分之一
-»	右双尖括号
-«	左双尖括号
-➔	右箭头
-‏	右至左符号
-‎	左至右符号
-¨	分音符
-–	短破折号
-·	圆点
-•	着重号
-~	波浪号
-`	反撇号
-^	益阳号
-@	at
-?	问号
->	大于
-<	小于
-¥	元
-¢	分
-€	欧元
-£	英镑
-no-break space	空格

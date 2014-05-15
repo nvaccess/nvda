@@ -3,6 +3,40 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.2 =
+
+== Újdonságok ==
+- A szöveg kijelölések bejelentése már lehetséges néhány olyan egyedi szerkesztőmező esetében, ahol a megjelenő információkat használja az NVDA. (#770)
+- Az akadálymentes Java alkalmazásokban az NVDA már bejelenti a választógombok, és más vezérlőelemek pozícióadatait, amennyiben azok rendelkeznek csoportinformációkkal. (#3754)
+- Az akadálymentes java alkalmazásokban már elhangoznak a vezérlőelemekhez tartozó gyorsbillentyűk. (#3881)
+- Böngészőmódban már elhangoznak a jelzőpontok címkéi. Már az elemlistában is szerepelnek. (#1195)
+- Böngészőmódban a megcímkézett területeket már jelzőpontokként kezeli az NVDA. (#3741)
+- Az Internet Explorer dokumentumokban, és alkalmazásokban a dinamikus területek (a W3c ARIA szabvány részeként) már támogatottak, ez lehetővé teszi, hogy ezeket a tartalmakat a webszerkesztők úgy jelöljék meg, hogy az NVDA automatikusan bejelentse azok változásait. (#1846)
+
+
+== Változások ==
+- Egy böngésző módú dokumentumban egy párbeszédpanel, vagy alkalmazás bezárása után már nem hangzik el a böngésző módú dokumentum neve és típusa. (#4069)
+
+
+== Hiba javítások ==
+- A szabványos Windows rendszer menü már nem hallgat el váratlanul a Java alkalmazásokban. (#3882)
+- Szöveg másolása esetén képernyő áttekintés módban a sortörések már nincsenek figyelmen kívül hagyva. (#3900)
+- Néhány alkalmazás esetében az NVDA már nem jelent be értelmetlen üres elemeket, amikor változik az aktív elem, vagy elem áttekintésnél egyszerű áttekintés engedélyezése mellett. (#3839)
+- Az NVDA saját üzenetpanelei, és más párbeszédpanelei bejelentése előtt a korábbi beszéd ismét megáll.
+- Böngészőmódban a vezérlőelemek (hivatkozások, gombok) címkéit már helyesen kezeli az NVDA, olyan esetekben, amikor a címkéket a készítő felülírja akadálymentesítés céljából. (Különösen aria-label és aria-labelledby használatával). (#1354)
+- Böngészőmódban az Internet Explorerben a prezentációként megjelölt elemekben (ARIA role="presentation") található szövegek már nincsenek hibásan figyelmen kívül hagyva. (#4031)
+- Ismét lehetséges vietnami nyelvű szöveg bevitele az Unikey szoftver használatával. Ehhez meg kell szűntetni a jelölőnégyzet bejelölését az Alkalmazások billentyűleütéseinek kezelése új opciónál az NVDA Billentyűzet beállításai párbeszédpanelén. (#4043)
+- Böngészőmódban a választható, és bejelölhető menüelemek már vezérlőelemekként kerülnek bejelentésre, és nem csak kattintható szövegként. (#4092)
+- Az NVDA már nem vált hibásan interaktív módból böngésző módba, amikor egy választható, vagy bejelölhető menüelem kerül fókuszba. (#4092)
+- A Microsoft PowerPoint-ban a beírt szavak bemondása gépeléskor funkció bekapcsolt állapotában a backspace-szel kitörölt karaktereket az NVDA már nem jelenti be a begépelt szó részeként. (#3231)
+- A Microsoft Office 2010 Beállítás párbeszédpanelein a kombinált listamezők címkéi már helyesen vannak bejelentve. (#4056)
+- Böngészőmódban a Mozilla alkalmazásokban, a gombok, és űrlapmezők közti mozgásra szolgáló navigációs gyorsbillentyűkkel már a többállapotú gombok is kezelhetők, mint  ahogy az elvárható. (#4098)
+- AMozilla alkalmazásokban a figyelmeztetések tartalma már nem kerül kétszer bejelentésre. (#3481)
+- Böngészőmódban az NVDA már nem ismétli meg kéretlenül a tárolók és jelzőpontok tartalmát olyan esetben, amikor a bennük való navigálás közben a weboldal tartalma frissül. Például a Facebook, és a twitter weboldalak böngészésekor. (#2199)
+- Az NVDA több esetben helyreáll, amikor egy lefagyott alkalmazásból kikerül a fókusz. (#3825)
+- A beszúrási kurzor most már helyesen frissül folyamatos felolvasás közben olyan szerkesztőmezők esetén, melyek közvetlenül a képernyőre lettek rajzolva. (#4125)
+
+
 = 2014.1 =
 
 == Újdonságok ==

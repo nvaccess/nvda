@@ -4,6 +4,8 @@
 #See the file COPYING for more details.
 #Copyright (C) 2008-2013 NV Access Limited
 
+import watchdog
+
 """Provides an interactive Python console which can be run from within NVDA.
 To use, call L{initialize} to create a singleton instance of the console GUI. This can then be accessed externally as L{consoleUI}.
 """
@@ -207,7 +209,9 @@ class ConsoleUI(wx.Frame):
 
 	def execute(self):
 		data = self.inputCtrl.GetValue()
+		watchdog.alive()
 		self.console.push(data)
+		watchdog.asleep()
 		if data:
 			# Only add non-blank lines to history.
 			if len(self.inputHistory) > 1 and self.inputHistory[-2] == data:

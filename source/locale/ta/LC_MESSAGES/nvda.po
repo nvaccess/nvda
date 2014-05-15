@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-07 18:54+1000\n"
-"PO-Revision-Date: 2014-02-07 22:07+0530\n"
+"POT-Creation-Date: 2014-04-22 19:10+1000\n"
+"PO-Revision-Date: 2014-05-08 20:16+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: Tamil\n"
@@ -120,6 +120,10 @@ msgstr "தேடுக"
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
 msgstr "படிவம்"
+
+#. Translators: Reported for a significant region, normally found on web pages.
+msgid "region"
+msgstr "மண்டலம்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2815,27 +2819,27 @@ msgstr "விசைப்பலகை; எல்லா வரைவுகளு
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Amharic"
-msgstr "அம்ஹாரிக்"
+msgstr "Amharic"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Aragonese"
-msgstr "அரகனீயம்"
+msgstr "Aragonese"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Arabic"
-msgstr "அரபி"
+msgstr "Arabic"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Nepali"
-msgstr "நேபாளம்"
+msgstr "Nepali"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
 msgid "Serbian (Latin)"
-msgstr "செர்பிய லத்தீனம்"
+msgstr "Serbian (Latin)"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
@@ -3337,11 +3341,11 @@ msgstr ""
 "இணைய முகவரி: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} இது எல்லோருக்குமான இரண்டாம் பதிப்பு பொது உரிமத்தின் கீழ் வருகிறது. இம்மென்பொருளை "
-"தாங்கள் மாற்றவோ பிறருடன் பகிர்ந்துக் கொள்ளவோ தடையில்லை. அப்படி செய்யும்பொழுது, "
-"இம்மென்பொருளின் உரிமத்தையும், திறமூலத்தையும் கேட்பவர்களுக்குக் கொடுக்க வேண்டும். இந்த விதி, "
-"இம்மென்பொருளின் மூலத்திற்கும், மாற்றப்பட்ட வடிவத்திற்கும், இம்மென்பொருளிலிருந்து பெறப்பட்ட "
-"பிற பணிகளுக்கும் பொருந்தும். \n"
+"{name} இது எல்லோருக்குமான இரண்டாம் பதிப்பு பொது உரிமத்தின் கீழ் வருகிறது. "
+"இம்மென்பொருளைத் தங்கள் விருப்பப்படி மாற்றிக் கொள்ளவோ, பிறருடன் பகிர்ந்து கொள்ளவோ தடையில்லை. "
+"அப்படிச் செய்யும்பொழுது, இம்மென்பொருளின் உரிமத்தையும், திறமூலத்தையும் கேட்பவர்களுக்குக் "
+"கொடுக்க வேண்டும். இந்த விதி, இம்மென்பொருளின் மூலத்திற்கும், மாற்றப்பட்ட வடிவத்திற்கும், "
+"இம்மென்பொருளிலிருந்து பெறப்பட்ட பிற பணிகளுக்கும் பொருந்தும். \n"
 "கூடுதல் தகவல்களுக்கு, உதவி பட்டியலிலுள்ள உரிம விவரங்களைக் காணவும்.\n"
 "உரிமத்தைப் படிப்பதற்கான இணைய முகவரி: http://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.html\n"
@@ -4356,12 +4360,12 @@ msgstr "தனியமைப்பினை அழிப்பதில் ப�
 #. Translators: The label of the button to manually deactivate the selected profile
 #. in the Configuration Profiles dialog.
 msgid "Manual deactivate"
-msgstr "கைமுறை இயக்க நிறுத்தம்"
+msgstr "கைமுறை இயக்கத்தை நிறுத்துக"
 
 #. Translators: The label of the button to manually activate the selected profile
 #. in the Configuration Profiles dialog.
 msgid "Manual activate"
-msgstr "கைமுறை இயக்கம்"
+msgstr "கைமுறையில் இயக்குக"
 
 #. Translators: The label of a field to enter a new name for a configuration profile.
 msgid "New name:"
@@ -4908,6 +4912,11 @@ msgstr ""
 msgid "Speak command &keys"
 msgstr "கட்டளை விசைகளைப் பேசுக (&K)"
 
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Handle keys from other &applications"
+msgstr "பிற பயன்பாடுகளின் விசைகளைக் கையாள்க"
+
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
 msgstr "குறைந்தபட்சம் ஒரு விசையாவது என்விடிஏ விசையாக பயன்படுத்தப்பட வேண்டும்."
@@ -5235,7 +5244,7 @@ msgstr "சட்டகங்களை அறிவிக்கவும் (&M)
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report if &clickable"
-msgstr "சொடுக்கப்படக்கூடியதாய் இருந்தால் அறிவிக்கவும்"
+msgstr "சொடுக்கப்படக்கூடியதா என்பதை அறிவிக்கவும்"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"

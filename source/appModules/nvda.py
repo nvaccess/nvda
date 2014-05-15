@@ -47,3 +47,4 @@ class AppModule(appModuleHandler.AppModule):
 	def event_foreground         (self, obj, nextHandler):
 		if not gui.shouldConfigProfileTriggersBeSuspended():
 			config.conf.resumeProfileTriggers()
+		nextHandler()

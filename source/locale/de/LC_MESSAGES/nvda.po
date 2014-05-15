@@ -1,21 +1,17 @@
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-07 18:54+1000\n"
-"PO-Revision-Date: 2014-02-07 17:30+0100\n"
+"POT-Creation-Date: 2014-04-22 19:10+1000\n"
+"PO-Revision-Date: \n"
 "Last-Translator: David Parduhn <xkill85@gmx.net>\n"
-"Language-Team: René Linke <rene.linke@blindzeln.de>\n"
-"Language: de_DE\n"
+"Language-Team: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.3\n"
-"X-Poedit-Basepath: .\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-SearchPath-0: D:\\rechner\\nvda_quellen\\nvda\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -43,7 +39,7 @@ msgstr "halbalphanumerisch"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
 msgid "half katakana"
-msgstr "Japanische Zeichen (Katakana; einzelnd)"
+msgstr "Japanische Zeichen (Katakana; einzeln)"
 
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
 msgid "alphanumeric"
@@ -59,7 +55,7 @@ msgstr "Japanische Zeichen (Katakana; doppelt)"
 
 #. Translators: For Japanese character input: half katakana roman input mode.
 msgid "half katakana roman"
-msgstr "Japanische Zeichen (Katakana Roman; einzelnd)"
+msgstr "Japanische Zeichen (Katakana Roman; einzeln)"
 
 #. Translators: For Japanese character input: Hiragana Roman input mode.
 msgid "hiragana roman"
@@ -122,6 +118,10 @@ msgstr "Suche"
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
 msgstr "Formular"
+
+#. Translators: Reported for a significant region, normally found on web pages.
+msgid "region"
+msgstr "Region"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2082,10 +2082,11 @@ msgid ""
 "with a control. When in browse mode, you can navigate the document with the "
 "cursor, quick navigation keys, etc."
 msgstr ""
-"Schaltet zwischen Fokus- und Lesemodus um. Im Fokusmodus werden alle "
-"betätigten Tasten direkt an die Anwendung weitergereicht. Im Lesemodus "
-"können Sie mit Hilfe der Schnellnavigationstasten durch Dokumente oder "
-"Webseiten navigieren."
+"Schaltet zwischen dem Lesemodus und dem Fokusmodus um. Im Fokusmodus werden "
+"die Tasten direkt an die Anwendung durchgereicht, womit Sie die Anwendung "
+"direkt steuern können. Im Lesemodus können Sie mit den Pfeiltasten durch das "
+"Dokument navigieren. Dabei können Sie u. a. die Schnellnavigationstasten "
+"benutzen."
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
@@ -2349,7 +2350,7 @@ msgstr ""
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
-msgstr "Anzeige"
+msgstr "NVDA-Cursor"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "focus"
@@ -2363,7 +2364,7 @@ msgstr "Braillezeile gekoppelt an %s"
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
-"Koppelt die Braillezeile wahlweise an den Fokus oder an den Anzeige-Cursor."
+"Koppelt die Braillezeile wahlweise an den Fokus oder an den NVDA-Cursor."
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -3202,10 +3203,9 @@ msgid "flick right"
 msgstr "nach rechts streichen"
 
 #. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
-#, fuzzy
 msgctxt "touch action"
 msgid "hover down"
-msgstr "Lautstärke leiser"
+msgstr "Nach unten wischen"
 
 #. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
 msgctxt "touch action"
@@ -3213,10 +3213,9 @@ msgid "hover"
 msgstr "berühren"
 
 #. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
-#, fuzzy
 msgctxt "touch action"
 msgid "hover up"
-msgstr "Lautstärke lauter"
+msgstr "Nach oben wischen"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3863,7 +3862,7 @@ msgstr ""
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
 msgstr ""
-"Es ist bereits ein NVDA-Einstellungsdialog geöffnet. Bitte Schließen sie "
+"Es ist bereits ein NVDA-Einstellungsdialog geöffnet. Bitte Schließen Sie "
 "diesen Dialog zunächst."
 
 #. Translators: Title for default speech dictionary dialog.
@@ -4592,7 +4591,7 @@ msgid ""
 "A previous copy of NVDA has been found on your system. This copy will be "
 "updated."
 msgstr ""
-"Es wurde eine ältere Version von NVDA auf ihrem System gefunden. Diese "
+"Es wurde eine ältere Version von NVDA auf Ihrem System gefunden. Diese "
 "Version wird nun aktualisiert."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
@@ -4968,6 +4967,11 @@ msgstr ""
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "&Funktionstasten sprechen"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Handle keys from other &applications"
+msgstr "Tastendrücke anderer &Anwendungen verarbeiten"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
@@ -5546,7 +5550,7 @@ msgstr "&Filter von:"
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
 msgid "&Activate"
-msgstr "Link &aktivieren"
+msgstr "&aktivieren"
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
@@ -6294,7 +6298,8 @@ msgstr "HIMS SyncBraille"
 #~ "Moves navigator object to the object represented by the text at the "
 #~ "position of the review cursor within flat review"
 #~ msgstr ""
-#~ "Setzt das Navigator-Objekt an die Stelle des nvda-Cursors im Flächenmodus."
+#~ "Setzt das Navigator-Objekt an die Stelle des nvda-Cursors in der "
+#~ "Bildschirmdarstellung."
 
 #~ msgid "Please close the other NVDA settings dialog first"
 #~ msgstr "Bitte schließen Sie zuerst den anderen NVDA-Einstellungsdialog."

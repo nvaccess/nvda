@@ -407,15 +407,18 @@ class GlobalCommands(ScriptableObject):
 		obj=api.getNavigatorObject()
 		if not obj:
 			ui.message(_("no navigator object"))
+			return
 		location=obj.location
 		if not location:
 			# Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
 			ui.message(_("No location information for navigator object"))
+			return
 		(left,top,width,height)=location
 		deskLocation=api.getDesktopObject().location
 		if not deskLocation:
 			# Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
 			ui.message(_("No location information for screen"))
+			return
 		(deskLeft,deskTop,deskWidth,deskHeight)=deskLocation
 		percentFromLeft=(float(left-deskLeft)/deskWidth)*100
 		percentFromTop=(float(top-deskTop)/deskHeight)*100

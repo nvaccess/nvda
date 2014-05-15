@@ -1,7 +1,41 @@
-﻿NVDA'da Ne Yeni
+﻿What's New in NVDA
 
 
 %!includeconf: ../changes.t2tconf
+
+= 2014.2 =
+
+== New Features ==
+- Announcement of text selection is now possible in some custom edit fields where display information is used. (#770)
+- In accessible Java applications, position information is now announced for radio buttons and other controls that expose group information. (#3754)
+- In accessible Java applications, keyboard shortcuts are now announced for controls that have them. (#3881)
+- In browse mode, labels on landmarks are now reported. They are also included in the Elements List dialog. (#1195)
+- In browse mode, labelled regions are now treated as landmarks. (#3741)
+- In Internet Explorer documents and applications, Live Regions (part of the W3c ARIA standard) are now supported, thus allowing web authors to mark particular content to be automatically spoken as it changes. (#1846)
+
+
+== Changes ==
+- When exiting a dialog or application within a browse mode document, the browse mode document's name and type is no longer announced. (#4069)
+
+
+== Bug Fixes ==
+- The standard Windows System menu is no longer accidentally silenced in Java applications. (#3882)
+- When copying text from screen review, line breaks are no longer ignored. (#3900)
+- Pointless whitespace objects are no longer reported in some applications when the focus changes or when using object navigation with simple review enabled. (#3839)
+- Message boxes and other dialogs produced by NVDA again cause previous speech to be canceled before announcing the dialog.
+- In browse mode, the labels of controls such as links and buttons are now rendered correctly where the label has been overridden by the author for accessibility purposes (specifically, using aria-label or aria-labelledby). (#1354)
+- In Browse mode in Internet Explorer, text contained within an element marked as presentational (ARIA role="presentation") is no longer inappropriately ignored. (#4031)
+- It is now again possible to type Vietnamese text using the Unikey software. To do this, uncheck the new Handle keys from other applications checkbox in NVDA's Keyboard settings dialog. (#4043)
+- In browse mode, radio and check menu items are reported as controls instead of just clickable text. (#4092)
+- NVDA no longer incorrectly switches from focus mode to browse mode when a radio or check menu item is focused. (#4092)
+- In Microsoft PowerPoint with speaking of typed words enabled, characters erased with backspace are no longer announced as part of the typed word. (#3231)
+- In Microsoft Office 2010 Options dialogs, the labels of combo boxes are reported correctly. (#4056)
+- In browse mode in Mozilla applications, using quick navigation commands to move to the next or previous button or form field now includes toggle buttons as expected. (#4098)
+- The content of alerts in Mozilla applications is no longer reported twice. (#3481)
+- In browse mode, containers and landmarks are no longer inappropriately repeated while navigating within them at the same time as page content is changing (e.g. navigating the Facebook and Twitter websites). (#2199)
+- NVDA recovers in more cases when switching away from applications that stop responding. (#3825)
+- The caret (insertion point) again correctly updates when doing a sayAll command while in editable text drawn directly to the screen. (#4125)
+
 
 = 2014.1 =
 
@@ -64,6 +98,8 @@
 - Fix a crash in NVDA seen in Windows 8 when focusing on certain RichEdit controls containing large amounts of text (e.g. NVDA's log viewer, windbg). (#3867)
 - On systems with a high DPI display setting (which occurs by default for many modern screens), NVDA no longer routes the mouse to the wrong location in some applications. (#3758, #3703)
 - Fixed an occasional problem when browsing the web where NVDA would stop working correctly until restarted, even though it didn't crash or freeze. (#3804)
+- A Papenmeier braille display can now be used even if a Papenmeier display has never been connected via USB. (#3712)
+- NVDA no longer freezes when the Papenmeier BRAILLEX older models braille display is selected without a display connected.
 
 
 == Changes for Developers ==

@@ -3,6 +3,40 @@ Qué bi ha de Nuevo en o NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.2 =
+
+== Nuevas Caracteristicas ==
+- Agora ye posible l'anunciau d'a selección de texto en qualques campos d'edición personalizada an se fa servir información d'a pantalla. (#770)
+- En as aplicacions  Java accesibles agora s'anuncia a información de posición ta os botons d'opción y atros controls que exposan información de grupo. (#3754)
+- En as aplicacions Java accesibles agora s'anuncian os alcorces de teclau ta os controls que'n tiengan. (#3881)
+- En o modo navegación as etiquetas  en os puntos de referencia agora s'anuncian. Tamién s'incluyen en o dialogo Lista d'Elementos. (#1195)
+- En o modo navegación as rechions etiquetadas agora se tractan como puntos de referencia. (#3741)
+- En os documentos y as aplicacions de l'Internet Explorer, agora se suportan as rechions vivas (parti d'o estandar ARIA d'o W3c), permitindo asinas a los authors d'as webs marcar conteniu particular ta estar charrau automaticament en que cambie. (#1846)
+
+
+== Cambeos ==
+- A lo salir d'un quadro de dialogo u l'aplicación adentro d'un documento d'o modo navegación o nombre y mena de documento d'o modo navegación ya no s'anuncian. (#4069)
+
+
+== Corrección d'errors ==
+- O menú estandar d'o sistema Windows ya no se silencia accidentalment en as aplicacions Java. (#3882)
+- En que se copia texto dende a revisión de pantalla os blincos de linia ya no s'ignoran. (#3900)
+- Os obchectos d'espacio en blanco sin sentiu ya no s'anuncian en qualques aplicacions en que o foco  cambee u en que se faiga servir a navegación d'obchectos con a revisión simpla enchegada. (#3839)
+- Os quadros de mensache y belatros dialogos producius por o NVDA causan atra vegada a cancelación d'a fabla anterior antis d'anunciar o dialogo. 
+- En o modo navegación as etiquetas de controls tals como vinclos y botons agora se procesan correctament quan a etiqueta s'haiga substituiu por l'autor con fins d'accesibilidat (especificament, l'emplego d'aria-label u d'aria-labelledby). (#1354)
+- En o modo navegación en l'Internet Explorer, Ya no s'ignora inapropiadament o texto conteniu adintro d'un elemento marcau como de presentación (ARIA role="presentation"). (#4031)
+- Agora torna a estar posible escribir texto vietnamita fendo servir o software Unikey. Ta fer ixo, desmarca a nueva caixeta de verificación Teclas de maneyo d'atras aplicacions, en o dialogo d'opcions de teclau d'o NVDA. (#4043) 
+- En o modo navegación os elementos de menú que son botons d'opción u caixetas de verificación s'anuncian como controls en cuenta de  nomás texto clicable. (#4092)
+- O NVDA ya no cambea incorrectament dende o modo foco t'o modo navegación en que se triga un elemento de menú que siga botón d'opción u caixeta de verificación. (#4092)
+- En o Microsoft PowerPoint con l'anuncio d'as parolas escritas activau, os caracters eliminaus con a tecla de borrau ya no s'anuncian como una parti d'a parola escrita. (#3231)
+- En os dialogos d'opcions d'o Microsoft Office 2010 as etiquetas d'os quadros combinaus s'anuncian correctament. (#4056)
+- En o modo navegación en as aplicacions de Mozilla fendo servir a navegación rapida, os comandos ta mover-se t'o siguient u l'anterior botón u campo de formulario agora incluyen botons de conmutación como s'asperaba. (#4098)
+- Ya no s'anuncia dos vegadas o conteniu d'as alertas en as aplicacions de Mozilla. (#3481)
+- En o modo navegación os contenedors y puntos de referencia ya no son repetius inapropiadament entre que se navega adentro d'ells a lo mesmo tiempo que o conteniu d'a pachina ye cambiando (p. eix. navegando en as pachinas d'o Facebook y o Twitter). (#2199)
+- O NVDA se recupera en mas casos en que se cambia difuera d'as aplicacions que han deixau de responder. (#3825)
+- O cursor (punto d'inserción) s'esviella correctament unatra vegada en que se fa un comando Charrar-loTot entre que se ye en texto editable dibuixau dreitament en a pantalla. (#4125)
+
+
 = 2014.1 =
 
 == Nuevas Caracteristicas ==
@@ -20,7 +54,7 @@ Qué bi ha de Nuevo en o NVDA
 - Ta las pantallas braille Papenmeier, s'ha eliminau a orden mover a revisión plana/foco. Os usuarios pueden asignar as suyas propias teclas usando o dialogo de cenyos de dentrada. (#3652)
 - O NVDA agora se basa en a versión 11 d'o Microsoft VC runtime, o que significa que ya no puet executar-se en sistemas operativos anteriors a lo Windows XP Service Pack 2 u lo Windows Server 2003 Service Pack 1.
 - O libel de puntuación beluna agora diz os caracters asterisco (*) y mas (+). (#3614)
-- Esviellau o eSpeak a la versión 1.48.02, que inclui muitas correccions d'idiomas y corriche quantos problemas. (#3842, #3739)
+- Esviellau o eSpeak Ta la versión 1.48.04, que inclui muitas correccions d'idiomas y corriche quantos problemas. (#3842, #3739)
 
 
 == Corrección d'errors ==

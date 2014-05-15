@@ -17,6 +17,7 @@ import api
 import eventHandler
 import controlTypes
 import NVDAObjects.JAB
+import core
 
 #Some utility functions to help with function defines
 
@@ -49,6 +50,7 @@ except WindowsError:
 
 #Definitions of access bridge types, structs and prototypes
 
+jchar=c_wchar
 jint=c_int
 jfloat=c_float
 jboolean=c_bool
@@ -197,6 +199,28 @@ class AccessibleTableCellInfo(Structure):
 		('isSelected',jboolean),
 	]
 
+MAX_KEY_BINDINGS=50
+ACCESSIBLE_SHIFT_KEYSTROKE=1
+ACCESSIBLE_CONTROL_KEYSTROKE=2
+ACCESSIBLE_META_KEYSTROKE=4
+ACCESSIBLE_ALT_KEYSTROKE=8
+ACCESSIBLE_ALT_GRAPH_KEYSTROKE=16
+ACCESSIBLE_BUTTON1_KEYSTROKE=32
+ACCESSIBLE_BUTTON2_KEYSTROKE=64
+ACCESSIBLE_BUTTON3_KEYSTROKE=128
+
+class AccessibleKeyBindingInfo(Structure):
+	_fields_=[
+		('character',jchar),
+		('modifiers',jint),
+	]
+
+class AccessibleKeyBindings(Structure):
+	_fields_=[
+		('keyBindingsCount',c_int),
+		('keyBindingInfo',AccessibleKeyBindingInfo*MAX_KEY_BINDINGS),
+	]
+
 AccessBridge_FocusGainedFP=CFUNCTYPE(None,c_long,JOBJECT64,JOBJECT64)
 AccessBridge_PropertyNameChangeFP=CFUNCTYPE(None,c_long,JOBJECT64,JOBJECT64,c_wchar_p,c_wchar_p)
 AccessBridge_PropertyDescriptionChangeFP=CFUNCTYPE(None,c_long,JOBJECT64,JOBJECT64,c_wchar_p,c_wchar_p)
@@ -253,6 +277,7 @@ if bridgeDll:
 	_fixBridgeFunc(jint,'getAccessibleTableRow',c_long,AccessibleTable,jint)
 	_fixBridgeFunc(jint,'getAccessibleTableColumn',c_long,AccessibleTable,jint)
 	_fixBridgeFunc(jint,'getAccessibleTableIndex',c_long,AccessibleTable,jint,jint)
+	_fixBridgeFunc(BOOL,'getAccessibleKeyBindings',c_long,JOBJECT64,POINTER(AccessibleKeyBindings),errcheck=True)
 
 #NVDA specific code
 
@@ -263,6 +288,7 @@ internalFunctionQueue.__name__="JABHandler.internalFunctionQueue"
 
 def internalQueueFunction(func,*args,**kwargs):
 	internalFunctionQueue.put_nowait((func,args,kwargs))
+	core.requestPump()
 
 class JABContext(object):
 
@@ -485,6 +511,11 @@ class JABContext(object):
 		accContext=bridgeDll.getAccessibleTableColumnDescription(self.vmID,self.accContext,column)
 		if accContext:
 			return JabContext(vmID=self.vmID,accContext=accContext)
+
+	def getAccessibleKeyBindings(self):
+		bindings=AccessibleKeyBindings()
+		if bridgeDll.getAccessibleKeyBindings(self.vmID,self.accContext,byref(bindings)):
+			return bindings
 
 @AccessBridge_FocusGainedFP
 def internal_event_focusGained(vmID, event,source):
