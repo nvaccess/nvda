@@ -299,7 +299,7 @@ class MSHTML(VirtualBuffer):
 	def _getNVDAObjectByAnchorName(self,name,HTMLDocument=None):
 		if not HTMLDocument:
 			HTMLDocument=self.rootNVDAObject.HTMLNode.document
-		HTMLNode=HTMLDocument.getElementById(name)
+		HTMLNode=HTMLDocument.all.item(name)
 		if not HTMLNode:
 			log.debugWarning("GetElementById can't find node with ID %s"%name)
 			return None
