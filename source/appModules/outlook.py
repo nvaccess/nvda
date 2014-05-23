@@ -1,6 +1,6 @@
 #appModules/outlook.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2014 NVDA Contributors <http://www.nvaccess.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -81,7 +81,9 @@ class AppModule(appModuleHandler.AppModule):
 	def _get_nativeOm(self):
 		try:
 			nativeOm=comHelper.getActiveObject("outlook.application",dynamic=True)
-		except (COMError,WindowsError):
+		except (COMError,WindowsError,RuntimeError):
+			if self._hasTriedoutlookAppSwitch:
+				log.error("Failed to get native object model",exc_info=True)
 			nativeOm=None
 		if not nativeOm and not self._hasTriedoutlookAppSwitch:
 			self._registerCOMWithFocusJuggle()
@@ -341,13 +343,6 @@ class CalendarView(IAccessible):
 
 	def isDuplicateIAccessibleEvent(self,obj):
 		return False
-
-	def script_moveByEntry(self,gesture):
-		gesture.send()
-		api.processPendingEvents(processEventQueue=False)
-		if eventHandler.isPendingEvents('gainFocus'):
-			return
-		eventHandler.executeEvent("gainFocus",self)
 
 	def reportFocus(self):
 		if self.appModule.outlookVersion>=13 and self.appModule.nativeOm:
