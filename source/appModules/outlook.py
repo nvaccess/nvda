@@ -70,7 +70,9 @@ class AppModule(appModuleHandler.AppModule):
 	def _get_nativeOm(self):
 		try:
 			nativeOm=comHelper.getActiveObject("outlook.application",dynamic=True)
-		except (COMError,WindowsError):
+		except (COMError,WindowsError,RuntimeError):
+			if self._hasTriedoutlookAppSwitch:
+				log.error("Failed to get native object model",exc_info=True)
 			nativeOm=None
 		if not nativeOm and not self._hasTriedoutlookAppSwitch:
 			self._registerCOMWithFocusJuggle()
