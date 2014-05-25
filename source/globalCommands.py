@@ -2229,7 +2229,7 @@ class GlobalCommands(ScriptableObject):
 	script_touch_hoverUp.category=SCRCAT_TOUCH
 
 	def script_touch_rightClick(self, gesture):
-				obj=api.getNavigatorObject() 
+		obj=api.getNavigatorObject() 
 		try:
 			p=api.getReviewPosition().pointAtStart
 		except (NotImplementedError, LookupError):
