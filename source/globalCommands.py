@@ -2228,6 +2228,31 @@ class GlobalCommands(ScriptableObject):
 				obj.doAction()
 	script_touch_hoverUp.category=SCRCAT_TOUCH
 
+	def script_touch_rightClick(self, gesture):
+				obj=api.getNavigatorObject() 
+		try:
+			p=api.getReviewPosition().pointAtStart
+		except (NotImplementedError, LookupError):
+			p=None
+		if p:
+			x=p.x
+			y=p.y
+		else:
+			try:
+				(left,top,width,height)=obj.location
+			except:
+				# Translators: Reported when the object has no location for the mouse to move to it.
+				ui.message(_("object has no location"))
+				return
+			x=left+(width/2)
+			y=top+(height/2)
+		winUser.setCursorPos(x,y)
+		self.script_rightMouseClick(gesture)
+	# Translators: Input help mode message for touch right click command.
+	script_touch_rightClick.__doc__=_("Performs right mouse click action at the current touch position")
+	script_touch_rightClick.category=SCRCAT_TOUCH
+
+
 	def script_activateConfigProfilesDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onConfigProfilesCommand, None)
 	# Translators: Describes the command to open the Configuration Profiles dialog.
@@ -2389,6 +2414,8 @@ class GlobalCommands(ScriptableObject):
 		"ts:3finger_tap":"touch_changeMode",
 		"ts:2finger_double_tap":"showGui",
 		"ts:hoverUp":"touch_hoverUp",
+		"ts:tapAndHold":"touch_rightClick",
+
 		# Review cursor
 		"kb:shift+numpad7": "review_top",
 		"kb(laptop):NVDA+control+home": "review_top",
