@@ -59,7 +59,7 @@ confspec = ConfigObj(StringIO(
 	language = string(default="Windows")
 	saveConfigurationOnExit = boolean(default=True)
 	askToExit = boolean(default=true)
-	playStartAndExitSound = boolean(default=true)
+	playStartAndExitSounds = boolean(default=true)
 	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
 	loggingLevel = string(default="INFO")
 	showWelcomeDialogAtStartup = boolean(default=true)
