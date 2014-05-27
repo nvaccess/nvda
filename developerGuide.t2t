@@ -614,6 +614,7 @@ Otherwise, the add-on will not install.
 - author: The author of this add-on, preferably in the form Full Name <email address>; e.g. Michael Curran <mick@kulgan.net>. (Mandatory)
 - description: A sentence or two describing what the add-on does.
 - url: A URL where this add-on, further info and upgrades can be found.
+- docFileName: The name of the main documentation file for this add-on; e.g. readme.html. See the [Add-on Documentation #AddonDoc] section for more details.
 -
 
 +++ An Example Manifest File +++
@@ -668,6 +669,15 @@ As with the rest of NVDA, an nvda.mo compiled gettext database file should be pl
 to allow plugins in your add-on to access gettext message information via calls to _(), you must initialize  translations at the top of each Python module by calling addonHandler.initTranslation().
 For more information about gettext and NVDA translation in general, please read
 http://www.nvda-project.org/wiki/TranslatingNVDA
+
+++ Add-on Documentation ++[AddonDoc]
+Documentation for an add-on should be placed in a doc directory in the archive.
+Similar to the locale directory, this directory should contain directories for each language in which documentation is available.
+
+Users can access documentation for a particular add-on by opening the Add-ons Manager, selecting the add-on and pressing the Add-on help button.
+This will open the file named in the docFileName parameter of the manifest.
+NVDA will search for this file in the appropriate language directories.
+For example, if docFileName is set to readme.html and the user is using English, NVDA will open doc\en\readme.html.
 
 + NVDA Python Console +[PythonConsole]
 The NVDA Python console emulates the interactive Python interpreter from within NVDA.

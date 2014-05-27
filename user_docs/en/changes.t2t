@@ -7,6 +7,7 @@
 
 == New Features ==
 - The sounds played when NVDA starts and exits can be disabled via a new option in the General Settings dialog. (#834)
+- Help for add-ons can be accessed from the Add-ons Manager for add-ons which support this. (#2694)
 
 
 == Changes ==
@@ -26,6 +27,10 @@
 - Microsoft Word: The first character past the end of a table (including a new blank line) is no longer incorrectly considered to be inside the table. (#4152)
 - Microsoft Word 2010 spell check dialog: more accurate detection of the miss-spelt word. (#3431)
 - In browse mode in Internet Explorer and other MSHTML controls, using single letter navigation to move to editable text fields again reports the label in many cases where it didn't (specifically, where HTML label elements are used). (#4170)
+
+
+== Changes for Developers ==
+- NVDA now has unified support for add-on documentation. See the Add-on Documentation section of the Developer Guide for details. (#2694)
 
 
 = 2014.2 =
