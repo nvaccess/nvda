@@ -259,7 +259,7 @@ class GeneralSettingsDialog(SettingsDialog):
 		config.conf["general"]["language"]=newLanguage
 		config.conf["general"]["saveConfigurationOnExit"]=self.saveOnExitCheckBox.IsChecked()
 		config.conf["general"]["askToExit"]=self.askToExitCheckBox.IsChecked()
-		config.conf["general"]["playStartAndExitSound"]=self.playStartAndExitSoundCheckBox.IsChecked()
+		config.conf["general"]["playStartAndExitSounds"]=self.playStartAndExitSoundsCheckBox.IsChecked()
 		logLevel=self.LOG_LEVELS[self.logLevelList.GetSelection()][0]
 		config.conf["general"]["loggingLevel"]=logHandler.levelNames[logLevel]
 		logHandler.setLogLevelFromConfig()
