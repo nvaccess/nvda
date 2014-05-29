@@ -1,6 +1,6 @@
 #appModules/winamp.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
+#Copyright (C) 2006-2014 NVDA Contributors
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -114,6 +114,8 @@ class winampPlaylistEditor(winampMainWindow):
 			winKernel.readProcessMemory(self.processHandle,internalInfo,byref(info),sizeof(info),None)
 		finally:
 			winKernel.virtualFreeEx(self.processHandle,internalInfo,0,winKernel.MEM_RELEASE)
+		if curIndex==4294967295 and not info.filetitle:
+			return self.windowText
 		return unicode("%d.\t%s\t%s"%(curIndex+1,info.filetitle,info.filelength), errors="replace", encoding=locale.getlocale()[1])
 
 	def _get_role(self):
