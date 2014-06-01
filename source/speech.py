@@ -1190,6 +1190,40 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 				# Translators: Reported when text has reverted to default alignment.
 				text=_("align default")
 			textList.append(text)
+		indentLabels={
+			'left-indent':(
+				# Translators: the label for paragraph format left indent
+				_("left indent"),
+				# Translators: the message when there is no paragraph format left indent
+				_("no left indent"),
+			),
+			'right-indent':(
+				# Translators: the label for paragraph format right indent
+				_("right indent"),
+				# Translators: the message when there is no paragraph format right indent
+				_("no right indent"),
+			),
+			'hanging-indent':(
+				# Translators: the label for paragraph format hanging indent
+				_("hanging indent"),
+				# Translators: the message when there is no paragraph format hanging indent
+				_("no hanging indent"),
+			),
+			'first-line-indent':(
+				# Translators: the label for paragraph format first line indent 
+				_("first line indent"),
+				# Translators: the message when there is no paragraph format first line indent
+				_("no first line indent"),
+			),
+		}
+		for attr,(label,noVal) in indentLabels.iteritems():
+			newVal=attrs.get(attr)
+			oldVal=attrsCache.get(attr) if attrsCache else None
+			if (newVal or oldVal is not None) and newVal!=oldVal:
+				if newVal:
+					textList.append(u"%s %s"%(label,newVal))
+				else:
+					textList.append(noVal)
 	if  formatConfig["reportLinks"]:
 		link=attrs.get("link")
 		oldLink=attrsCache.get("link") if attrsCache is not None else None

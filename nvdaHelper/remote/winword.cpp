@@ -120,6 +120,9 @@ using namespace std;
 #define wdDISPID_COLUMNS_COUNT 2
 #define wdDISPID_TABLE_ROWS 101
 #define wdDISPID_ROWS_COUNT 2
+#define wdDISPID_PARAGRAPHFORMAT_RIGHTINDENT 106
+#define wdDISPID_PARAGRAPHFORMAT_LEFTINDENT 107
+#define wdDISPID_PARAGRAPHFORMAT_FIRSTLINEINDENT 108
 
 #define wdCommentsStory 4
 
@@ -464,6 +467,10 @@ int generateTableXML(IDispatch* pDispatchRange, int startOffset, int endOffset, 
 
 void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset, int endOffset, int formatConfig, wostringstream& formatAttribsStream) {
 	int iVal=0;
+	// #4165: font size is needed to calculate paragraph indenting
+	if(formatConfig&formatConfig_reportAlignment) {
+		formatConfig|=formatConfig_reportFontSize;
+	}
 	if((formatConfig&formatConfig_reportPage)&&(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdActiveEndAdjustedPageNumber)==S_OK)&&iVal>0) {
 		formatAttribsStream<<L"page-number=\""<<iVal<<L"\" ";
 	}
@@ -488,6 +495,22 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 					formatAttribsStream<<L"text-align=\"justified\" ";
 					break;
 				}
+			}
+			float fVal=0.0;
+			if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_RIGHTINDENT,VT_R4,&fVal)==S_OK) {
+				formatAttribsStream<<L"right-indent=\"" << fVal <<L"\" ";
+			}
+			float firstLineIndent=0;
+			if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_FIRSTLINEINDENT,VT_R4,&firstLineIndent)==S_OK) {
+				if(firstLineIndent<0) {
+					formatAttribsStream<<L"hanging-indent=\"" << (0-firstLineIndent) <<L"\" ";
+				} else {
+					formatAttribsStream<<L"first-line-indent=\"" << firstLineIndent <<L"\" ";
+				}
+			}
+			if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_LEFTINDENT,VT_R4,&fVal)==S_OK) {
+				if(firstLineIndent<0) fVal+=firstLineIndent;
+				formatAttribsStream<<L"left-indent=\"" << fVal <<L"\" ";
 			}
 		}
 	}
@@ -542,8 +565,9 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 				formatAttribsStream<<L"font-name=\""<<fontName<<L"\" ";
 				SysFreeString(fontName);
 			}
-			if((formatConfig&formatConfig_reportFontSize)&&(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SIZE,VT_I4,&iVal)==S_OK)) {
-				formatAttribsStream<<L"font-size=\""<<iVal<<L"pt\" ";
+			float fVal=0.0;
+			if((formatConfig&formatConfig_reportFontSize)&&(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SIZE,VT_R4,&fVal)==S_OK)) {
+				formatAttribsStream<<L"font-size=\""<<fVal<<L"pt\" ";
 			}
 			if((formatConfig&formatConfig_reportColor)&&(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_COLOR,VT_I4,&iVal)==S_OK)) {
 				formatAttribsStream<<L"color=\""<<iVal<<L"\" ";
