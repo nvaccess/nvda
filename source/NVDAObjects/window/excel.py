@@ -388,7 +388,25 @@ class ExcelCell(ExcelBase):
 		if previous:
 			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=previous)
 
+	def script_editComment(self,gesture):
+		commentObj=self.excelCellObject.comment
+		d = wx.TextEntryDialog(gui.mainFrame, 
+			# Translators: Dialog text for 
+			_("Editing comment for cell {address}").format(address=self.cellCoordsText),
+			# Translators: Title of a dialog edit an Excel comment 
+			_("Comment"),
+			defaultValue=commentObj.text() if commentObj else u"",
+			style=wx.TE_MULTILINE|wx.OK|wx.CANCEL)
+		def callback(result):
+			if result == wx.ID_OK:
+				if commentObj:
+					commentObj.text(d.Value)
+				else:
+					self.excelCellObject.addComment(d.Value)
+		gui.runScriptModalDialog(d, callback)
+
 	__gestures = {
+		"kb:shift+f2":"editComment",
 		"kb:NVDA+shift+c": "setColumnHeaderRow",
 		"kb:NVDA+shift+r": "setRowHeaderColumn",
 		"kb:alt+downArrow":"openDropdown",
