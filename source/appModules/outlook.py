@@ -290,6 +290,12 @@ class CalendarView(IAccessible):
 	def isDuplicateIAccessibleEvent(self,obj):
 		return False
 
+	def event_nameChange(self):
+		pass
+
+	def event_stateChange(self):
+		pass
+
 	def reportFocus(self):
 		if self.appModule.outlookVersion>=13 and self.appModule.nativeOm:
 			e=self.appModule.nativeOm.activeExplorer()
