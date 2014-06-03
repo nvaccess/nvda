@@ -1,6 +1,6 @@
 #NVDAObjects/excel.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2014 NVDA Contributors <http://www.nvaccess.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -206,7 +206,7 @@ class ExcelWorksheet(ExcelBase):
 		wx.CallAfter(run)
 	script_cellSelectionPopup.canPropagate=True
 	# Translators: the description for a script
-	script_cellSelectionPopup.__doc__=_("Shows a dialog that lists cells with formulars or comments")
+	script_cellSelectionPopup.__doc__=_("Shows a dialog that lists cells with formulas or comments")
 
 	__gestures={
 		"kb:NVDA+f7":"cellSelectionPopup",
@@ -568,14 +568,18 @@ class CellsListDialog(wx.Dialog):
 	modeRegionCell = 2
 	modeCell = 3
 	modes = {
+		# Translators: one of the cell viewing modes in Cell List dialog in Excel.
 		modeCell : _("Cells (Flat)"),
+		# Translators: one of the cell viewing modes in Cell List dialog in Excel.
 		modeRegionCell : _("Area / Cell"),
 		#modeRegionRowCell : _("Area / Row / Cell"),
 		#modeRegionColCell : _("Area / Col / Cell"),
 	}
 
 	types = { 
+		# Translators: one of the cell types to show in Cell List dialog in Excel.
 		xlCellTypeComments : _("comments"),
+		# Translators: one of the cell types to show in Cell List dialog in Excel.
 		xlCellTypeFormulas : _("Formulas"),
 	}
 
@@ -610,15 +614,18 @@ class CellsListDialog(wx.Dialog):
 					item=self.tree.AppendItem(this,text)
 					self.tree.SetItemPyData(item, cell)
 		except (COMError):
+			# Translators: presented when there is no matching cell of cell type in Cell List dialog in Excel.
 			self.tree.AppendItem(self.treeRoot,_("No matching cells"))
 		self.tree.Thaw()
 
 	def __init__(self, cells):
 		self.cells = cells
+		# Translators: the title of a dialog to show list of cells in Excel.
 		super(CellsListDialog, self).__init__(gui.mainFrame, wx.ID_ANY, _("Cell List"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 
 		typeSizer=wx.BoxSizer(wx.HORIZONTAL)                
+		# Translators: label for a combo box in Cells List in Excel.
 		typeLabel=wx.StaticText(self,-1,label=_("Cells to &show:"))
 		self.typeCombo = wx.Choice(self,wx.ID_ANY)
 		for x in self.types.keys():
@@ -630,6 +637,7 @@ class CellsListDialog(wx.Dialog):
 		mainSizer.Add(typeSizer)
 
 		viewSizer=wx.BoxSizer(wx.HORIZONTAL)                
+		# Translators: label for a combo box in Cells List in Excel.
 		viewLabel=wx.StaticText(self,-1,label=_("Viewing &mode"))
 		self.viewCombo = wx.Choice(self,wx.ID_ANY)
 		for x in self.modes.keys():
