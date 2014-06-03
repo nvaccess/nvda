@@ -568,7 +568,7 @@ class CellsListDialog(wx.Dialog):
 	modeRegionCell = 2
 	modeCell = 3
 	modes = {
-		#modeCell : _("Cells (Flat)"),
+		modeCell : _("Cells (Flat)"),
 		modeRegionCell : _("Area / Cell"),
 		#modeRegionRowCell : _("Area / Row / Cell"),
 		#modeRegionColCell : _("Area / Col / Cell"),
@@ -595,12 +595,15 @@ class CellsListDialog(wx.Dialog):
 			thisarea = 0
 			for range in wholerange.Areas:
 				thisarea += 1
-				## Make Node for Range
-				first=range.Item(1).Address(False,False,1,False)
-				last=range.Cells.Item(range.Cells.Count).Address(False,False,1,False)
-				text ="Area from {first} to {last}".format(first=first,last=last)
-				this = self.tree.AppendItem(self.treeRoot,text)
-				self.tree.SetItemPyData(this, range.cells)
+				if mode==self.modeRegionCell:
+					## Make Node for Range
+					first=range.Item(1).Address(False,False,1,False)
+					last=range.Cells.Item(range.Cells.Count).Address(False,False,1,False)
+					text ="Area from {first} to {last}".format(first=first,last=last)
+					this = self.tree.AppendItem(self.treeRoot,text)
+					self.tree.SetItemPyData(this, range.cells)
+				elif mode==self.modeCell:
+					this=self.treeRoot
 				for cell in range.Cells:
 					text= cell.address(False,False,1,False) + " " + fn(cell)
 					item=self.tree.AppendItem(this,text)
@@ -609,7 +612,6 @@ class CellsListDialog(wx.Dialog):
 			self.tree.AppendItem(self.treeRoot,_("No matching cells"))
 
 	def __init__(self, cells):
-		# Translators: The title of the browse mode Elements List dialog.
 		self.cells = cells
 		super(CellsListDialog, self).__init__(gui.mainFrame, wx.ID_ANY, _("Cell List"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -630,7 +632,7 @@ class CellsListDialog(wx.Dialog):
 		self.viewCombo = wx.Choice(self,wx.ID_ANY)
 		for x in self.modes.keys():
 			self.viewCombo.Append(self.modes[x],x)
-		self.viewCombo.SetSelection(0)
+		self.viewCombo.SetSelection(1)
 		self.viewCombo.Bind(wx.EVT_CHOICE,self.populate)
 		viewSizer.Add(viewLabel)
 		viewSizer.Add(self.viewCombo)
