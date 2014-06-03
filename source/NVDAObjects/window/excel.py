@@ -641,8 +641,7 @@ class CellsListDialog(wx.Dialog):
 		mainSizer.Add(viewSizer)
 
 		self.tree = wx.TreeCtrl(self, wx.ID_ANY, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE)
-		#self.tree.Bind(wx.EVT_SET_FOCUS, self.onTreeSetFocus)
-		#self.tree.Bind(wx.EVT_CHAR, self.onTreeChar)
+		self.tree.Bind(wx.EVT_CHAR, self.onTreeChar)
 		self.treeRoot = self.tree.AddRoot("root")
 		mainSizer.Add(self.tree,proportion=7,flag=wx.EXPAND)
 
@@ -661,6 +660,22 @@ class CellsListDialog(wx.Dialog):
 		self.treeRoot = self.tree.AddRoot("Root")
 		self.populate()
 		self.tree.SetFocus()
+
+	def onTreeChar(self, evt):
+		key = evt.KeyCode
+		if key == wx.WXK_RETURN:
+			# The enter key should be propagated to the dialog and thus activate the default button,
+			# but this is broken (wx ticket #3725).
+			# Therefore, we must catch the enter key here.
+			# Activate the current default button.
+			evt = wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED, wx.ID_OK)
+			button = self.FindWindowById(wx.ID_OK)
+			if button.Enabled:
+				button.ProcessEvent(evt)
+			else:
+				wx.Bell()
+		else:
+			evt.Skip()
 
 	def onOk(self, evt):
 		cell=self.tree.GetItemPyData(self.tree.GetSelection())
