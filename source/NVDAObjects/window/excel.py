@@ -579,7 +579,7 @@ class CellsListDialog(wx.Dialog):
 		xlCellTypeFormulas : _("Formulas"),
 	}
 
-	def populate(self,evt):
+	def populate(self,evt=None):
 		type = self.typeCombo.GetClientData(self.typeCombo.GetSelection())
 		mode = self.viewCombo.GetClientData(self.viewCombo.GetSelection())
 		self.tree.DeleteChildren(self.treeRoot)
@@ -600,9 +600,11 @@ class CellsListDialog(wx.Dialog):
 				last=range.Cells.Item(range.Cells.Count).Address(False,False,1,False)
 				text ="Area from {first} to {last}".format(first=first,last=last)
 				this = self.tree.AppendItem(self.treeRoot,text)
+				self.tree.SetItemPyData(this, range.cells)
 				for cell in range.Cells:
 					text= cell.address(False,False,1,False) + " " + fn(cell)
-					self.tree.AppendItem(this,text)
+					item=self.tree.AppendItem(this,text)
+					self.tree.SetItemPyData(item, cell)
 		except (COMError):
 			self.tree.AppendItem(self.treeRoot,_("No matching cells"))
 
@@ -641,6 +643,11 @@ class CellsListDialog(wx.Dialog):
 		mainSizer.Add(self.tree,proportion=7,flag=wx.EXPAND)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label of a button to select a cell 
+		# in the Excel cell list. 
+		self.selectButton = wx.Button(self, wx.ID_OK, _("&Select"))
+		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
+		sizer.Add(self.selectButton)
 		sizer.Add(wx.Button(self, wx.ID_CANCEL))
 		mainSizer.Add(sizer,proportion=1)
 
@@ -648,6 +655,12 @@ class CellsListDialog(wx.Dialog):
 		self.SetSizer(mainSizer)
 
 		self.treeRoot = self.tree.AddRoot("Root")
-		#self.range = range
+		self.populate()
 		#self.tree.ExpandAll()
 		#self.tree.SetFocus()
+
+	def onOk(self, evt):
+		cell=self.tree.GetItemPyData(self.tree.GetSelection())
+		if cell:
+			cell.select()
+		self.EndModal(wx.ID_OK)
