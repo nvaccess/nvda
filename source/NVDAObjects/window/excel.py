@@ -582,6 +582,7 @@ class CellsListDialog(wx.Dialog):
 	def populate(self,evt=None):
 		type = self.typeCombo.GetClientData(self.typeCombo.GetSelection())
 		mode = self.viewCombo.GetClientData(self.viewCombo.GetSelection())
+		self.tree.Freeze()
 		self.tree.DeleteChildren(self.treeRoot)
 		if type == xlCellTypeComments :
 			fn = lambda x: x.Comment.Text()
@@ -610,6 +611,7 @@ class CellsListDialog(wx.Dialog):
 					self.tree.SetItemPyData(item, cell)
 		except (COMError):
 			self.tree.AppendItem(self.treeRoot,_("No matching cells"))
+		self.tree.Thaw()
 
 	def __init__(self, cells):
 		self.cells = cells
@@ -658,8 +660,7 @@ class CellsListDialog(wx.Dialog):
 
 		self.treeRoot = self.tree.AddRoot("Root")
 		self.populate()
-		#self.tree.ExpandAll()
-		#self.tree.SetFocus()
+		self.tree.SetFocus()
 
 	def onOk(self, evt):
 		cell=self.tree.GetItemPyData(self.tree.GetSelection())
