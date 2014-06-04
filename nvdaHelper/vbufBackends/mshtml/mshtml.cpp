@@ -986,6 +986,8 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	bool nameIsContent = (IARole == ROLE_SYSTEM_LINK || IARole == ROLE_SYSTEM_PUSHBUTTON || IARole == ROLE_SYSTEM_MENUITEM || IARole == ROLE_SYSTEM_GRAPHIC || IARole == ROLE_SYSTEM_PAGETAB
 		|| ariaRole == L"heading" || (nodeName[0] == L'H' && iswdigit(nodeName[1]))
 		|| nodeName == L"OBJECT" || nodeName == L"APPLET" || IARole == ROLE_SYSTEM_APPLICATION || IARole == ROLE_SYSTEM_DIALOG);
+	// True if the name definitely came from the author.
+	bool nameFromAuthor=false;
 
 	//Generate content for nodes
 	wstring contentString=L"";
@@ -1055,8 +1057,11 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			if(IAStates&STATE_SYSTEM_PROTECTED) {
 				fill(contentString.begin(),contentString.end(),L'*');
 			}
+			nameFromAuthor=true;
 		} else if(IARole==ROLE_SYSTEM_PUSHBUTTON) {
 			contentString=IAName;
+		} else if(IARole==ROLE_SYSTEM_RADIOBUTTON||IARole==ROLE_SYSTEM_CHECKBUTTON) {
+			nameFromAuthor=true;
 		}
 		if(contentString.empty()) {
 			contentString=L" ";
@@ -1073,6 +1078,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		} else {
 			contentString=L" ";
 		}
+		nameFromAuthor=true;
 	} else if(nodeName.compare(L"TEXTAREA")==0) {
 		isBlock=true;
 		if(!IAValue.empty()) {
@@ -1080,9 +1086,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		} else {
 			contentString=L" ";
 		}
-		if(!IAName.empty()) {
-			attribsMap[L"name"]=IAName;
-		}
+		nameFromAuthor=true;
 	} else if(nodeName.compare(L"BR")==0) {
 		LOG_DEBUG(L"node is a br tag, adding a line feed as its text.");
 		contentString=L"\n";
@@ -1096,10 +1100,10 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 
 	//If the name isn't being rendered as the content, add the name as a field attribute
 	// if it came from the author (not content).
-	if (!nameIsContent && !IAName.empty() && (
+	if (!nameIsContent && !IAName.empty() && (nameFromAuthor || (
 		attribsMap.find(L"HTMLAttrib::aria-label") != attribsMap.end() || attribsMap.find(L"HTMLAttrib::aria-labelledby") != attribsMap.end()
 		|| attribsMap.find(L"HTMLAttrib::title") != attribsMap.end() || attribsMap.find(L"HTMLAttrib::alt") != attribsMap.end()
-	))
+	)))
 		attribsMap[L"name"]=IAName;
 
 	//Add a textNode to the buffer containing any special content retreaved
