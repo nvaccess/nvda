@@ -2,7 +2,8 @@
 Performs miscellaneous tasks which need to be performed in a separate process.
 """
 
-import pythonMonkeyPatches
+# #2729: Should be fixed in Python 2.7.7.
+#import pythonMonkeyPatches
 
 import sys
 import os
