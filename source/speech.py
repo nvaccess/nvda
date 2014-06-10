@@ -1199,10 +1199,15 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 	if  formatConfig["reportComments"]:
 		comment=attrs.get("comment")
 		oldComment=attrsCache.get("comment") if attrsCache is not None else None
-		if comment and comment!=oldComment:
-			# Translators: Reported when text contains a comment.
-			text=_("has comment")
-			textList.append(text)
+		if (comment or oldComment is not None) and comment!=oldComment:
+			if comment:
+				# Translators: Reported when text contains a comment.
+				text=_("has comment")
+				textList.append(text)
+			elif extraDetail:
+				# Translators: Reported when text no longer contains a comment.
+				text=_("out of comment")
+				textList.append(text)
 	if formatConfig["reportSpellingErrors"]:
 		invalidSpelling=attrs.get("invalid-spelling")
 		oldInvalidSpelling=attrsCache.get("invalid-spelling") if attrsCache is not None else None
