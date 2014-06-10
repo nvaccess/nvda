@@ -629,7 +629,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		# Translators: a message when toggling paragraph formatting in Microsoft Word
 		ui.message(_("Outline level {level}").format(level=val))
 
-	def script_increaseDescreaseFontSize(self,gesture):
+	def script_increaseDecreaseFontSize(self,gesture):
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.size)
 		# Translators: a message when increasing or decreasing font size in Microsoft Word
 		ui.message(_("{size:g} point font").format(size=val))
@@ -709,10 +709,10 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		self._moveInTable(row=False,forward=False)
 
 	__gestures = {
-		"kb:control+[":"increaseDescreaseFontSize",
-		"kb:control+]":"increaseDescreaseFontSize",
-		"kb:control+shift+,":"increaseDescreaseFontSize",
-		"kb:control+shift+.":"increaseDescreaseFontSize",
+		"kb:control+[":"increaseDecreaseFontSize",
+		"kb:control+]":"increaseDecreaseFontSize",
+		"kb:control+shift+,":"increaseDecreaseFontSize",
+		"kb:control+shift+.":"increaseDecreaseFontSize",
 		"kb:control+b":"toggleBold",
 		"kb:control+i":"toggleItalic",
 		"kb:control+u":"toggleUnderline",
