@@ -5,6 +5,7 @@
 #See the file COPYING for more details.
 
 import ctypes
+import time
 from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
@@ -556,6 +557,82 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			self._WinwordSelectionObject=windowObject.selection
 		return self._WinwordSelectionObject
 
+	def _WaitForValueChangeForAction(self,action,fetcher,timeout=0.15):
+		oldVal=fetcher()
+		action()
+		startTime=curTime=time.time()
+		curVal=fetcher()
+		while curVal==oldVal and (curTime-startTime)<timeout:
+			time.sleep(0.01)
+			curVal=fetcher()
+			curTime=time.time()
+		return curVal
+
+	def script_toggleBold(self,gesture):
+		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.bold)
+		if val:
+			# Translators: a message when toggling formatting in Microsoft word
+			ui.message(_("Bold on"))
+		else:
+			# Translators: a message when toggling formatting in Microsoft word
+			ui.message(_("Bold off"))
+
+	def script_toggleItalic(self,gesture):
+		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.italic)
+		if val:
+			# Translators: a message when toggling formatting in Microsoft word
+			ui.message(_("Italic on"))
+		else:
+			# Translators: a message when toggling formatting in Microsoft word
+			ui.message(_("Italic off"))
+
+	def script_toggleUnderline(self,gesture):
+		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.underline)
+		if val:
+			# Translators: a message when toggling formatting in Microsoft word
+			ui.message(_("Underline on"))
+		else:
+			# Translators: a message when toggling formatting in Microsoft word
+			ui.message(_("Underline off"))
+
+	def script_toggleAlignment(self,gesture):
+		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.paragraphFormat.alignment)
+		alignmentMessages={
+			# Translators: a an alignment in Microsoft Word 
+			wdAlignParagraphLeft:_("Left aligned"),
+			# Translators: a an alignment in Microsoft Word 
+			wdAlignParagraphCenter:_("centered"),
+			# Translators: a an alignment in Microsoft Word 
+			wdAlignParagraphRight:_("Right aligned"),
+			# Translators: a an alignment in Microsoft Word 
+			wdAlignParagraphJustify:_("Justified"),
+		}
+		msg=alignmentMessages.get(val)
+		if msg:
+			ui.message(msg)
+
+	def script_toggleSuperscriptSubscript(self,gesture):
+		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: (self.WinwordSelectionObject.font.superscript,self.WinwordSelectionObject.font.subscript))
+		if val[0]:
+			# Translators: a message when toggling formatting in Microsoft word
+			ui.message(_("superscript"))
+		elif val[1]:
+			# Translators: a message when toggling formatting in Microsoft word
+			ui.message(_("subscript"))
+		else:
+			# Translators: a message when toggling formatting in Microsoft word
+			ui.message(_("baseline"))
+
+	def script_increaseDecreaseOutlineLevel(self,gesture):
+		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.paragraphFormat.outlineLevel)
+		# Translators: a message when toggling paragraph formatting in Microsoft Word
+		ui.message(_("Outline level {level}").format(level=val))
+
+	def script_increaseDescreaseFontSize(self,gesture):
+		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.size)
+		# Translators: a message when increasing or decreasing font size in Microsoft Word
+		ui.message(_("{size:g} point font").format(size=val))
+
 	def script_tab(self,gesture):
 		gesture.send()
 		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -631,6 +708,21 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		self._moveInTable(row=False,forward=False)
 
 	__gestures = {
+		"kb:control+[":"increaseDescreaseFontSize",
+		"kb:control+]":"increaseDescreaseFontSize",
+		"kb:control+shift+,":"increaseDescreaseFontSize",
+		"kb:control+shift+.":"increaseDescreaseFontSize",
+		"kb:control+b":"toggleBold",
+		"kb:control+i":"toggleItalic",
+		"kb:control+u":"toggleUnderline",
+		"kb:control+=":"toggleSuperscriptSubscript",
+		"kb:control+shift+=":"toggleSuperscriptSubscript",
+		"kb:control+l":"toggleAlignment",
+		"kb:control+e":"toggleAlignment",
+		"kb:control+r":"toggleAlignment",
+		"kb:control+j":"toggleAlignment",
+		"kb:alt+shift+rightArrow":"increaseDecreaseOutlineLevel",
+		"kb:alt+shift+leftArrow":"increaseDecreaseOutlineLevel",
 		"kb:tab": "tab",
 		"kb:shift+tab": "tab",
 		"kb:control+alt+upArrow": "previousRow",
