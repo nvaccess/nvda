@@ -35,10 +35,12 @@ class HeaderCellTracker(object):
 	def getHeaderCellInfoAt(self,rowNumber,columnNumber):
 		return self.infosDict.get((rowNumber,columnNumber))
 
-	def iterPossibleHeaderCellInfosFor(self,rowNumber,columnNumber,columnHeader=False):
-		for key in (self.listByColumn if columnHeader else self.listByRow):
+	def iterPossibleHeaderCellInfosFor(self,rowNumber,columnNumber,minRowNumber=None,maxRowNumber=None,minColumnNumber=None,maxColumnNumber=None,columnHeader=False):
+		for key in (self.listByRow if columnHeader else self.listByColumn):
 			info=self.infosDict[key]
 			if (info.minColumnNumber and info.minColumnNumber>columnNumber) or (info.maxColumnNumber and info.maxColumnNumber<columnNumber) or (info.minRowNumber and info.minRowNumber>rowNumber) or (info.maxRowNumber and info.maxRowNumber<rowNumber):
+				continue
+			if (minColumnNumber and minColumnNumber>info.columnNumber) or (maxColumnNumber and maxColumnNumber<info.columnNumber) or (minRowNumber and minRowNumber>info.rowNumber) or (maxRowNumber and maxRowNumber<info.rowNumber):
 				continue
 			if (columnHeader and info.isColumnHeader and (info.rowNumber+info.rowSpan-1)<rowNumber and info.columnNumber<=columnNumber) or (not columnHeader and info.isRowHeader and (info.columnNumber+info.colSpan-1)<columnNumber and info.rowNumber<=rowNumber):
 				yield info

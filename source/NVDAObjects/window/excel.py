@@ -32,7 +32,7 @@ xlA1 = 1
 xlRC = 2
 xlUnderlineStyleNone=-4142
 
-re_RC=re.compile(r'R(?:\[(\d+)\])?C(?:\[(\d+)\])?')
+re_absRC=re.compile(r'^R(\d+)C(\d+)(?::R(\d+)C(\d+))?$')
 
 class ExcelBase(Window):
 	"""A base that all Excel NVDAObjects inherit from, which contains some useful methods."""
@@ -215,10 +215,14 @@ class ExcelWorksheet(ExcelBase):
 		return True
 
 	def fetchAssociatedHeaderCellText(self,cell,columnHeader=False):
-		for info in self.headerCellTracker.iterPossibleHeaderCellInfosFor(cell.rowNumber,cell.columnNumber,columnHeader):
-			firstHeaderCell=self.excelWorksheetObject.cells(info.rowNumber,info.columnNumber)
-			if not self.excelApplicationObject.intersect(cell.excelCellObject.currentRegion,firstHeaderCell):
-				continue
+		cellRegion=cell.excelCellObject.currentRegion
+		if cellRegion.count==1:
+			minRow=maxRow=minColumn=maxColumn=None
+		else:
+			rc=cellRegion.address(True,True,xlRC,False)
+			g=[int(x) for x in re_absRC.match(rc).groups()]
+			minRow,maxRow,minColumn,maxColumn=min(g[0],g[2]),max(g[0],g[2]),min(g[1],g[3]),max(g[1],g[3])
+		for info in self.headerCellTracker.iterPossibleHeaderCellInfosFor(cell.rowNumber,cell.columnNumber,minRowNumber=minRow,maxRowNumber=maxRow,minColumnNumber=minColumn,maxColumnNumber=maxColumn,columnHeader=columnHeader):
 			textList=[]
 			if columnHeader:
 				for headerRowNumber in xrange(info.rowNumber,info.rowNumber+info.rowSpan): 
@@ -228,7 +232,9 @@ class ExcelWorksheet(ExcelBase):
 				for headerColumnNumber in xrange(info.columnNumber,info.columnNumber+info.colSpan): 
 					headerCell=self.excelWorksheetObject.cells(cell.rowNumber,headerColumnNumber)
 					textList.append(headerCell.text)
-			return " ".join(textList)
+			text=" ".join(textList)
+			if text:
+				return text
 
 	def __init__(self,windowHandle=None,excelWindowObject=None,excelWorksheetObject=None):
 		self.excelWindowObject=excelWindowObject
@@ -458,8 +464,8 @@ class ExcelCell(ExcelBase):
 		return self.getCellAddress(self.excelCellObject)
 
 	def _get__rowAndColumnNumber(self):
-		rc=self.excelCellObject.address(False,False,xlRC,False)
-		return [int(x)+1 if x else 1 for x in re_RC.match(rc).groups()]
+		rc=self.excelCellObject.address(True,True,xlRC,False)
+		return [int(x) if x else 1 for x in re_absRC.match(rc).groups()]
 
 	def _get_rowNumber(self):
 		return self._rowAndColumnNumber[0]
