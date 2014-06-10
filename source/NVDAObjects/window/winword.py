@@ -219,6 +219,7 @@ formatConfigFlagsMap={
 	"reportHeadings":8192,
 	"autoLanguageSwitching":16384,	
 	"reportRevisions":32768,
+	"reportParagraphIndentation":65536,
 }
 
 class WordDocumentTextInfo(textInfos.TextInfo):

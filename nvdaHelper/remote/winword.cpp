@@ -167,6 +167,7 @@ using namespace std;
 #define formatConfig_reportHeadings 8192
 #define formatConfig_reportLanguage 16384
 #define formatConfig_reportRevisions 32768
+#define formatConfig_reportParagraphIndentation 65536
 
 #define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor)
 #define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings)
@@ -478,7 +479,7 @@ int generateTableXML(IDispatch* pDispatchRange, int startOffset, int endOffset, 
 void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset, int endOffset, int formatConfig, wostringstream& formatAttribsStream) {
 	int iVal=0;
 	// #4165: font size is needed to calculate paragraph indenting
-	if(formatConfig&formatConfig_reportAlignment) {
+	if(formatConfig&formatConfig_reportParagraphIndentation) {
 		formatConfig|=formatConfig_reportFontSize;
 	}
 	if((formatConfig&formatConfig_reportPage)&&(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdActiveEndAdjustedPageNumber)==S_OK)&&iVal>0) {
@@ -487,40 +488,44 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 	if((formatConfig&formatConfig_reportLineNumber)&&(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdFirstCharacterLineNumber)==S_OK)) {
 		formatAttribsStream<<L"line-number=\""<<iVal<<L"\" ";
 	}
-	if(formatConfig&formatConfig_reportAlignment) {
+	if((formatConfig&formatConfig_reportAlignment)||(formatConfig&formatConfig_reportParagraphIndentation)) {
 		IDispatchPtr pDispatchParagraphFormat=NULL;
 		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHFORMAT,VT_DISPATCH,&pDispatchParagraphFormat)==S_OK&&pDispatchParagraphFormat) {
-			if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_ALIGNMENT,VT_I4,&iVal)==S_OK) {
-				switch(iVal) {
-					case wdAlignParagraphLeft:
-					formatAttribsStream<<L"text-align=\"left\" ";
-					break;
-					case wdAlignParagraphCenter:
-					formatAttribsStream<<L"text-align=\"center\" ";
-					break;
-					case wdAlignParagraphRight:
-					formatAttribsStream<<L"text-align=\"right\" ";
-					break;
-					case wdAlignParagraphJustify:
-					formatAttribsStream<<L"text-align=\"justified\" ";
-					break;
+			if(formatConfig&formatConfig_reportAlignment) {
+				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_ALIGNMENT,VT_I4,&iVal)==S_OK) {
+					switch(iVal) {
+						case wdAlignParagraphLeft:
+						formatAttribsStream<<L"text-align=\"left\" ";
+						break;
+						case wdAlignParagraphCenter:
+						formatAttribsStream<<L"text-align=\"center\" ";
+						break;
+						case wdAlignParagraphRight:
+						formatAttribsStream<<L"text-align=\"right\" ";
+						break;
+						case wdAlignParagraphJustify:
+						formatAttribsStream<<L"text-align=\"justified\" ";
+						break;
+					}
 				}
 			}
-			float fVal=0.0;
-			if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_RIGHTINDENT,VT_R4,&fVal)==S_OK) {
-				formatAttribsStream<<L"right-indent=\"" << fVal <<L"\" ";
-			}
-			float firstLineIndent=0;
-			if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_FIRSTLINEINDENT,VT_R4,&firstLineIndent)==S_OK) {
-				if(firstLineIndent<0) {
-					formatAttribsStream<<L"hanging-indent=\"" << (0-firstLineIndent) <<L"\" ";
-				} else {
-					formatAttribsStream<<L"first-line-indent=\"" << firstLineIndent <<L"\" ";
+			if(formatConfig&formatConfig_reportParagraphIndentation) {
+				float fVal=0.0;
+				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_RIGHTINDENT,VT_R4,&fVal)==S_OK) {
+					formatAttribsStream<<L"right-indent=\"" << fVal <<L"\" ";
 				}
-			}
-			if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_LEFTINDENT,VT_R4,&fVal)==S_OK) {
-				if(firstLineIndent<0) fVal+=firstLineIndent;
-				formatAttribsStream<<L"left-indent=\"" << fVal <<L"\" ";
+				float firstLineIndent=0;
+				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_FIRSTLINEINDENT,VT_R4,&firstLineIndent)==S_OK) {
+					if(firstLineIndent<0) {
+						formatAttribsStream<<L"hanging-indent=\"" << (0-firstLineIndent) <<L"\" ";
+					} else {
+						formatAttribsStream<<L"first-line-indent=\"" << firstLineIndent <<L"\" ";
+					}
+				}
+				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_LEFTINDENT,VT_R4,&fVal)==S_OK) {
+					if(firstLineIndent<0) fVal+=firstLineIndent;
+					formatAttribsStream<<L"left-indent=\"" << fVal <<L"\" ";
+				}
 			}
 		}
 	}

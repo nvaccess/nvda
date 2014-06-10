@@ -1190,6 +1190,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 				# Translators: Reported when text has reverted to default alignment.
 				text=_("align default")
 			textList.append(text)
+	if formatConfig["reportParagraphIndentation"]:
 		indentLabels={
 			'left-indent':(
 				# Translators: the label for paragraph format left indent
