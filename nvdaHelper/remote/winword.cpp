@@ -107,6 +107,8 @@ using namespace std;
 #define wdDISPID_HYPERLINKS_COUNT 1
 #define wdDISPID_RANGE_COMMENTS 56
 #define wdDISPID_COMMENTS_COUNT 2
+#define wdDISPID_COMMENTS_ITEM 0
+#define wdDISPID_COMMENT_SCOPE 1005
 #define wdDISPID_RANGE_TABLES 50
 #define wdDISPID_TABLES_ITEM 0
 #define wdDISPID_TABLE_NESTINGLEVEL 108
@@ -320,22 +322,13 @@ bool collectSpellingErrorOffsets(IDispatchPtr pDispatchRange, vector<pair<long,l
 	return !errorVector.empty();
 }
 
-int generateHeadingXML(IDispatch* pDispatchRange, int startOffset, int endOffset, wostringstream& XMLStream) {
-	IDispatchPtr pDispatchParagraphs=NULL;
-	IDispatchPtr pDispatchParagraph=NULL;
+int generateHeadingXML(IDispatch* pDispatchParagraph, IDispatch* pDispatchParagraphRange, int startOffset, int endOffset, wostringstream& XMLStream) {
 	int level=0;
-	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHS,VT_DISPATCH,&pDispatchParagraphs)!=S_OK||!pDispatchParagraphs) {
-		return 0;
-	}
-	if(_com_dispatch_raw_method(pDispatchParagraphs,wdDISPID_PARAGRAPHS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchParagraph,L"\x0003",1)!=S_OK||!pDispatchParagraph) {
-		return 0;
-	}
-	if(_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_OUTLINELEVEL,VT_I4,&level)!=S_OK||level<=0||level>=7) {
+	if(!pDispatchParagraph||_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_OUTLINELEVEL,VT_I4,&level)!=S_OK||level<=0||level>=7) {
 		return 0;
 	}
 	XMLStream<<L"<control role=\"heading\" level=\""<<level<<L"\" ";
-	IDispatchPtr pDispatchParagraphRange=NULL;
-	if(_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_RANGE,VT_DISPATCH,&pDispatchParagraphRange)==S_OK&&pDispatchParagraphRange) {
+	if(pDispatchParagraphRange) {
 		long iVal=0;
 		if(_com_dispatch_raw_propget(pDispatchParagraphRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal>=startOffset) {
 			XMLStream<<L"_startOfNode=\"1\" ";
@@ -379,16 +372,33 @@ int getHyperlinkCount(IDispatch* pDispatchRange) {
 	return count;
 }
 
-int getCommentCount(IDispatch* pDispatchRange) {
+bool collectCommentOffsets(IDispatchPtr pDispatchRange, vector<pair<long,long>>& commentVector) {
 	IDispatchPtr pDispatchComments=NULL;
-	int count=0;
 	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_COMMENTS,VT_DISPATCH,&pDispatchComments)!=S_OK||!pDispatchComments) {
-		return 0;
+		return false;
 	}
-	if(_com_dispatch_raw_propget(pDispatchComments,wdDISPID_COMMENTS_COUNT,VT_I4,&count)!=S_OK||count<=0) {
-		return 0;
+	long iVal=0;
+	_com_dispatch_raw_propget(pDispatchComments,wdDISPID_COMMENTS_COUNT,VT_I4,&iVal);
+	for(int i=1;i<=iVal;++i) {
+		IDispatchPtr pDispatchComment=NULL;
+		if(_com_dispatch_raw_method(pDispatchComments,wdDISPID_COMMENTS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchComment,L"\x0003",i)!=S_OK||!pDispatchComment) {
+			return false;
+		}
+		IDispatchPtr pDispatchCommentScope=NULL;
+		if(_com_dispatch_raw_propget(pDispatchComment,wdDISPID_COMMENT_SCOPE,VT_DISPATCH,&pDispatchCommentScope)!=S_OK||!pDispatchCommentScope) {
+			return false;
+		}
+		long start=0;
+		if(_com_dispatch_raw_propget(pDispatchCommentScope,wdDISPID_RANGE_START,VT_I4,&start)!=S_OK) {
+			return false;
+		}
+		long end=0;
+		if(_com_dispatch_raw_propget(pDispatchCommentScope,wdDISPID_RANGE_END,VT_I4,&end)!=S_OK) {
+			return false;
+		}
+		commentVector.push_back(make_pair(start,end));
 	}
-	return count;
+	return !commentVector.empty();
 }
 
 bool fetchTableInfo(IDispatch* pDispatchTable, int* rowCount, int* columnCount, int* nestingLevel) {
@@ -569,9 +579,6 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 			}
 		}
 	}
-	if((formatConfig&formatConfig_reportComments)&&getCommentCount(pDispatchRange)>0) {
-		formatAttribsStream<<L"comment=\"1\" ";
-	}
 	if(formatConfig&formatConfig_fontFlags) {
 		IDispatchPtr pDispatchFont=NULL;
 		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_FONT,VT_DISPATCH,&pDispatchFont)==S_OK&&pDispatchFont) {
@@ -726,7 +733,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	if((formatConfig&formatConfig_reportLinks)&&getHyperlinkCount(pDispatchRange)==0) {
 		formatConfig&=~formatConfig_reportLinks;
 	}
-	if((formatConfig&formatConfig_reportComments)&&(storyType==wdCommentsStory||getCommentCount(pDispatchRange)==0)) {
+	if((formatConfig&formatConfig_reportComments)&&(storyType==wdCommentsStory)) {
 		formatConfig&=~formatConfig_reportComments;
 	}
 	//Check for any inline shapes in the entire range to work out whether its worth checking for them by word
@@ -743,8 +750,22 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	if(initialFormatConfig&formatConfig_reportTables) {
 		neededClosingControlTagCount+=generateTableXML(pDispatchRange,args->startOffset,args->endOffset,XMLStream);
 	}
+		IDispatchPtr pDispatchParagraphs=NULL;
+	IDispatchPtr pDispatchParagraph=NULL;
+	IDispatchPtr pDispatchParagraphRange=NULL;
+	if(formatConfig&formatConfig_reportComments||initialFormatConfig&formatConfig_reportHeadings) {
+		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHS,VT_DISPATCH,&pDispatchParagraphs)==S_OK&&pDispatchParagraphs) {
+			if(_com_dispatch_raw_method(pDispatchParagraphs,wdDISPID_PARAGRAPHS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchParagraph,L"\x0003",1)==S_OK&&pDispatchParagraph) {
+				_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_RANGE,VT_DISPATCH,&pDispatchParagraphRange);
+			}
+		}
+	}
+	vector<pair<long,long> > commentVector;
+	if(formatConfig&formatConfig_reportComments) {
+		collectCommentOffsets(pDispatchParagraphRange,commentVector);
+	}
 	if(initialFormatConfig&formatConfig_reportHeadings) {
-		neededClosingControlTagCount+=generateHeadingXML(pDispatchRange,args->startOffset,args->endOffset,XMLStream);
+		neededClosingControlTagCount+=generateHeadingXML(pDispatchParagraph,pDispatchParagraphRange,args->startOffset,args->endOffset,XMLStream);
 	}
 	generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,initialFormatConfig,initialFormatAttribsStream);
 	bool firstLoop=true;
@@ -821,6 +842,12 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			for(vector<pair<long,long>>::iterator i=errorVector.begin();i!=errorVector.end();++i) {
 				if(chunkStartOffset>=i->first&&chunkStartOffset<i->second) {
 					XMLStream<<L" invalid-spelling=\"1\" ";
+					break;
+				}
+			}
+			for(vector<pair<long,long>>::iterator i=commentVector.begin();i!=commentVector.end();++i) {
+				if(!(chunkStartOffset>=i->second||chunkEndOffset<=i->first)) {
+					XMLStream<<L" comment=\""<<(i->second)<<L"\" ";
 					break;
 				}
 			}
