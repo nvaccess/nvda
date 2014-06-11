@@ -114,10 +114,13 @@ class EditableText(ScriptableObject):
 		bookmark=info.bookmark
 		gesture.send()
 		caretMoved,newInfo=self._hasCaretMoved(bookmark) 
-		if not caretMoved:
+		if not caretMoved or not newInfo:
 			return
-		newInfo=self.makeTextInfo(textInfos.POSITION_CARET)
-		lineInfo=self.makeTextInfo(textInfos.POSITION_CARET)
+		# newInfo.copy should be good enough here, but in MS Word we get strange results.
+		try:
+			lineInfo=self.makeTextInfo(textInfos.POSITION_CARET)
+		except (RuntimeError,NotImplementedError):
+			return
 		lineInfo.expand(textInfos.UNIT_LINE)
 		lineInfo.setEndPoint(newInfo,"endToStart")
 		if lineInfo.isCollapsed:
@@ -125,7 +128,7 @@ class EditableText(ScriptableObject):
 			onlyInitial=True
 		else:
 			onlyInitial=False
-		speech.speakTextInfo(lineInfo,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET,onlyInitialFields=onlyInitial)
+		speech.speakTextInfo(lineInfo,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET,onlyInitialFields=onlyInitial,suppressBlanks=True)
 
 	def script_caret_moveByLine(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_LINE)
