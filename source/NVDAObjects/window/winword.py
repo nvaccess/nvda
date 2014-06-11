@@ -627,8 +627,9 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 
 	def script_increaseDecreaseOutlineLevel(self,gesture):
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.paragraphFormat.outlineLevel)
-		# Translators: a message when toggling paragraph formatting in Microsoft Word
-		ui.message(_("Outline level {level}").format(level=val))
+		style=self.WinwordSelectionObject.style.nameLocal
+		# Translators: the message when the outline level / style is changed in Microsoft word
+		ui.message(_("{styleName} style, outline level {outlineLevel}").format(styleName=style,outlineLevel=val))
 
 	def script_increaseDecreaseFontSize(self,gesture):
 		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.size)
@@ -747,6 +748,10 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		"kb:control+j":"toggleAlignment",
 		"kb:alt+shift+rightArrow":"increaseDecreaseOutlineLevel",
 		"kb:alt+shift+leftArrow":"increaseDecreaseOutlineLevel",
+		"kb:control+shift+n":"increaseDecreaseOutlineLevel",
+		"kb:control+alt+1":"increaseDecreaseOutlineLevel",
+		"kb:control+alt+2":"increaseDecreaseOutlineLevel",
+		"kb:control+alt+3":"increaseDecreaseOutlineLevel",
 		"kb:tab": "tab",
 		"kb:shift+tab": "tab",
 		"kb:control+alt+upArrow": "previousRow",
