@@ -355,8 +355,14 @@ def windowFromAccessibleObject(ia):
 		return 0
 
 def accessibleChildren(ia,startIndex,numChildren):
+	# #4091: AccessibleChildren can throw WindowsError (blocked by callee) e.g. Outlook 2010 Email setup and new profiles dialogs
+	try:
+		rawChildren=oleacc.AccessibleChildren(ia,startIndex,numChildren)
+	except (WindowsError,COMError):
+		log.debugWarning("AccessibleChildren failed",exc_info=True)
+		return []
 	children=[]
-	for child in oleacc.AccessibleChildren(ia,startIndex,numChildren):
+	for child in rawChildren:
 		if child is None:
 			# This is a bug in the server.
 			# Filtering these out here makes life easier for the caller.

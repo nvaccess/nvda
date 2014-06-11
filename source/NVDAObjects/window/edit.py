@@ -8,6 +8,7 @@ import sys
 import comtypes.client
 import struct
 import ctypes
+from comtypes import COMError
 import pythoncom
 import win32clipboard
 import oleTypes
@@ -360,6 +361,11 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				text=ctypes.cast(buf,ctypes.c_wchar_p).value
 			else:
 				text=unicode(ctypes.cast(buf,ctypes.c_char_p).value, errors="replace", encoding=locale.getlocale()[1])
+			# #4095: Some protected richEdit controls do not hide their password characters.
+			# We do this specifically.
+			# Note that protected standard edit controls get characters hidden in _getStoryText.
+			if text and controlTypes.STATE_PROTECTED in self.obj.states:
+				text=u'*'*len(text)
 		else:
 			text=self._getStoryText()[start:end]
 		return text
@@ -822,6 +828,18 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 
 class RichEdit(Edit):
 	editAPIVersion=1
+
+	def makeTextInfo(self,position):
+		if self.TextInfo is not ITextDocumentTextInfo:
+			return super(RichEdit,self).makeTextInfo(position)
+		# #4090: Sometimes ITextDocument support can fail (security restrictions in Outlook 2010)
+		# We then fall back to normal Edit support.
+		try:
+			return self.TextInfo(self,position)
+		except COMError:
+			log.debugWarning("Could not instanciate ITextDocumentTextInfo",exc_info=True)
+			self.TextInfo=EditTextInfo
+			return self.TextInfo(self,position)
 
 class RichEdit20(RichEdit):
 	editAPIVersion=2
