@@ -586,7 +586,7 @@ class SpeakTextInfoState(object):
 	def copy(self):
 		return self.__class__(self)
 
-def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlTypes.REASON_QUERY,index=None,onlyInitialFields=False):
+def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlTypes.REASON_QUERY,index=None,onlyInitialFields=False,suppressBlanks=False):
 	if isinstance(useCache,SpeakTextInfoState):
 		speakTextInfoState=useCache
 	elif useCache:
@@ -803,7 +803,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 				isTextBlank=False
 
 	# If there is nothing  that should cause the TextInfo to be considered non-blank, blank should be reported, unless we are doing a say all.
-	if reason != controlTypes.REASON_SAYALL and isTextBlank:
+	if not suppressBlanks and reason != controlTypes.REASON_SAYALL and isTextBlank:
 		# Translators: This is spoken when the line is considered blank.
 		speechSequence.append(_("blank"))
 
