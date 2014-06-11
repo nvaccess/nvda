@@ -39,6 +39,9 @@ class EditableText(ScriptableObject):
 	#: Whether to fire caretMovementFailed events when the caret doesn't move in response to a caret movement key.
 	shouldFireCaretMovementFailedEvents = False
 
+	#: Whether or not to announce text found before the caret on a new line (e.g. auto numbering)
+	announceNewLineText=True
+
 	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=0.03):
 		"""
 		Waits for the caret to move, for a timeout to elapse, or for a new focus event or script to be queued.
@@ -99,6 +102,31 @@ class EditableText(ScriptableObject):
 			eventHandler.executeEvent("caretMovementFailed", self, gesture=gesture)
 		self._caretScriptPostMovedHelper(unit,gesture,newInfo)
 
+	def script_enter(self,gesture):
+		if not self.announceNewLineText:
+			gesture.send()
+			return
+		try:
+			info=self.makeTextInfo(textInfos.POSITION_CARET)
+		except:
+			gesture.send()
+			return
+		bookmark=info.bookmark
+		gesture.send()
+		caretMoved,newInfo=self._hasCaretMoved(bookmark) 
+		if not caretMoved:
+			return
+		newInfo=self.makeTextInfo(textInfos.POSITION_CARET)
+		lineInfo=self.makeTextInfo(textInfos.POSITION_CARET)
+		lineInfo.expand(textInfos.UNIT_LINE)
+		lineInfo.setEndPoint(newInfo,"endToStart")
+		if lineInfo.isCollapsed:
+			lineInfo.expand(textInfos.UNIT_CHARACTER)
+			onlyInitial=True
+		else:
+			onlyInitial=False
+		speech.speakTextInfo(lineInfo,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET,onlyInitialFields=onlyInitial)
+
 	def script_caret_moveByLine(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_LINE)
 	script_caret_moveByLine.resumeSayAllMode=sayAllHandler.CURSOR_CARET
@@ -158,6 +186,7 @@ class EditableText(ScriptableObject):
 		braille.handler.handleCaretMove(self)
 
 	__gestures = {
+		"kb:enter":"enter",
 		"kb:upArrow": "caret_moveByLine",
 		"kb:downArrow": "caret_moveByLine",
 		"kb:leftArrow": "caret_moveByCharacter",

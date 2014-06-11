@@ -191,6 +191,8 @@ class LiveText(NVDAObject):
 	# If the text is live, this is definitely content.
 	presentationType = NVDAObject.presType_content
 
+	announceNewLineText=False
+
 	def initOverlayClass(self):
 		self._event = threading.Event()
 		self._monitorThread = None
