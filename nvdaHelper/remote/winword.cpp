@@ -103,6 +103,7 @@ using namespace std;
 #define wdDISPID_INLINESHAPES_ITEM 0 
 #define wdDISPID_INLINESHAPE_TYPE 6
 #define wdDISPID_INLINESHAPE_ALTERNATIVETEXT 131
+#define wdDISPID_INLINESHAPE_TITLE 158
 #define wdDISPID_RANGE_HYPERLINKS 156
 #define wdDISPID_HYPERLINKS_COUNT 1
 #define wdDISPID_RANGE_COMMENTS 56
@@ -620,15 +621,21 @@ inline int generateInlineShapeXML(IDispatch* pDispatchRange, wostringstream& XML
 	if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_TYPE,VT_I4,&shapeType)!=S_OK) {
 		return 0;
 	}
-	if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_ALTERNATIVETEXT,VT_BSTR,&altText)!=S_OK) {
-		return 0;
-	}
 	wstring altTextStr=L"";
-	if(altText) for(int i=0;altText[i]!='\0';++i) {
-		appendCharToXML(altText[i],altTextStr,true);
+	if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_ALTERNATIVETEXT,VT_BSTR,&altText)==S_OK&&altText) {
+		for(int i=0;altText[i]!='\0';++i) {
+			appendCharToXML(altText[i],altTextStr,true);
+		}
+		SysFreeString(altText);
+	}
+	altText=NULL;
+	if(altTextStr.empty()&&_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_TITLE,VT_BSTR,&altText)==S_OK&&altText) {
+		for(int i=0;altText[i]!='\0';++i) {
+			appendCharToXML(altText[i],altTextStr,true);
+		}
+		SysFreeString(altText);
 	}
 	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<(shapeType==3?L"graphic":L"object")<<L"\" value=\""<<altTextStr<<L"\">";
-	if(altText) SysFreeString(altText);
 	return count;
 }
 
