@@ -6,6 +6,7 @@
 class HeaderCellInfo(object):
 	__slots__=['rowNumber','columnNumber','rowSpan','colSpan','minRowNumber','maxRowNumber','minColumnNumber','maxColumnNumber','name','isRowHeader','isColumnHeader']
 	def __init__(self,**kwargs):
+		self.rowSpan=self.colSpan=1
 		self.minColumnNumber=self.maxColumnNumber=self.minRowNumber=self.maxRowNumber=None
 		for  name,value in kwargs.iteritems():
 			setattr(self,name,value)
