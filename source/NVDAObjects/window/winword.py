@@ -8,9 +8,11 @@ import ctypes
 from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
+import uuid
 import operator
 import locale
 import braille
+import scriptHandler
 import languageHandler
 import ui
 import NVDAHelper
@@ -25,6 +27,7 @@ import textInfos
 import textInfos.offsets
 import colors
 import controlTypes
+from tableUtils import HeaderCellInfo, HeaderCellTracker
 from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
  
@@ -348,7 +351,18 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				field['name']=name
 				field['alwaysReportName']=True
 				field['role']=controlTypes.ROLE_FRAME
-		return field
+		# Hack support for lazy fetching of row and column header text values
+		class ControlField(textInfos.ControlField): 
+			def get(d,name,default=None):
+				if name=="table-rowheadertext":
+					return self.obj.fetchAssociatedHeaderCellText(self._rangeObj.cells[1],False)
+				elif name=="table-columnheadertext":
+					return self.obj.fetchAssociatedHeaderCellText(self._rangeObj.cells[1],True)
+				else:
+					return super(ControlField,d).get(name,default)
+		newField=ControlField()
+		newField.update(field)
+		return newField
 
 	def _normalizeFormatField(self,field,extraDetail=False):
 		_startOffset=int(field.pop('_startOffset'))
@@ -508,6 +522,168 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		states.add(controlTypes.STATE_MULTILINE)
 		return states
 
+	def populateHeaderCellTrackerFromBookmarks(self,headerCellTracker,bookmarks):
+		for x in bookmarks: 
+			name=x.name
+			lowerName=name.lower()
+			isColumnHeader=isRowHeader=False
+			if lowerName.startswith('title'):
+				isColumnHeader=isRowHeader=True
+			elif lowerName.startswith('columntitle'):
+				isColumnHeader=True
+			elif lowerName.startswith('rowtitle'):
+				isRowHeader=True
+			else:
+				continue
+			try:
+				headerCell=x.range.cells.item(1)
+			except COMError:
+				continue
+			headerCellTracker.addHeaderCellInfo(rowNumber=headerCell.rowIndex,columnNumber=headerCell.columnIndex,name=name,isColumnHeader=isColumnHeader,isRowHeader=isRowHeader)
+
+	_curHeaderCellTrackerTable=None
+	_curHeaderCellTracker=None
+	def getHeaderCellTrackerForTable(self,table):
+		tableRange=table.range
+		if not self._curHeaderCellTrackerTable or not tableRange.isEqual(self._curHeaderCellTrackerTable.range):
+			self._curHeaderCellTracker=HeaderCellTracker()
+			self.populateHeaderCellTrackerFromBookmarks(self._curHeaderCellTracker,tableRange.bookmarks)
+			self._curHeaderCellTrackerTable=table
+		return self._curHeaderCellTracker
+
+	def setAsHeaderCell(self,cell,isColumnHeader=False,isRowHeader=False):
+		rowNumber=cell.rowIndex
+		columnNumber=cell.columnIndex
+		headerCellTracker=self.getHeaderCellTrackerForTable(cell.range.tables[1])
+		oldInfo=headerCellTracker.getHeaderCellInfoAt(rowNumber,columnNumber)
+		if oldInfo:
+			if isColumnHeader and not oldInfo.isColumnHeader:
+				oldInfo.isColumnHeader=True
+			elif isRowHeader and not oldInfo.isRowHeader:
+				oldInfo.isRowHeader=True
+			else:
+				return False
+			isColumnHeader=oldInfo.isColumnHeader
+			isRowHeader=oldInfo.isRowHeader
+		if isColumnHeader and isRowHeader:
+			name="Title_"
+		elif isRowHeader:
+			name="RowTitle_"
+		elif isColumnHeader:
+			name="ColumnTitle_"
+		else:
+			raise ValueError("One or both of isColumnHeader or isRowHeader must be True")
+		name+=uuid.uuid4().hex
+		if oldInfo:
+			self.WinwordDocumentObject.bookmarks[oldInfo.name].delete()
+			oldInfo.name=name
+		else:
+			headerCellTracker.addHeaderCellInfo(rowNumber=rowNumber,columnNumber=columnNumber,name=name,isColumnHeader=isColumnHeader,isRowHeader=isRowHeader)
+		self.WinwordDocumentObject.bookmarks.add(name,cell.range)
+		return True
+
+	def forgetHeaderCell(self,cell,isColumnHeader=False,isRowHeader=False):
+		rowNumber=cell.rowIndex
+		columnNumber=cell.columnIndex
+		if not isColumnHeader and not isRowHeader: 
+			return False
+		headerCellTracker=self.getHeaderCellTrackerForTable(cell.range.tables[1])
+		info=headerCellTracker.getHeaderCellInfoAt(rowNumber,columnNumber)
+		if not info:
+			return False
+		if isColumnHeader and info.isColumnHeader:
+			info.isColumnHeader=False
+		elif isRowHeader and info.isRowHeader:
+			info.isRowHeader=False
+		else:
+			return False
+		headerCellTracker.removeHeaderCellInfo(info)
+		self.WinwordDocumentObject.bookmarks(info.name).delete()
+		if info.isColumnHeader or info.isRowHeader:
+			self.setAsHeaderCell(cell,isColumnHeader=info.isColumnHeader,isRowHeader=info.isRowHeader)
+		return True
+
+	def fetchAssociatedHeaderCellText(self,cell,columnHeader=False):
+		table=cell.range.tables[1]
+		rowNumber=cell.rowIndex
+		columnNumber=cell.columnIndex
+		headerCellTracker=self.getHeaderCellTrackerForTable(table)
+		for info in headerCellTracker.iterPossibleHeaderCellInfosFor(rowNumber,columnNumber,columnHeader=columnHeader):
+			textList=[]
+			if columnHeader:
+				for headerRowNumber in xrange(info.rowNumber,info.rowNumber+info.rowSpan): 
+					headerCell=table.cell(headerRowNumber,columnNumber)
+					textList.append(headerCell.range.text)
+			else:
+				for headerColumnNumber in xrange(info.columnNumber,info.columnNumber+info.colSpan): 
+					headerCell=table.cell(rowNumber,headerColumnNumber)
+					textList.append(headerCell.range.text)
+			text=" ".join(textList)
+			if text:
+				return text
+
+	def script_setColumnHeader(self,gesture):
+		scriptCount=scriptHandler.getLastScriptRepeatCount()
+		if not config.conf['documentFormatting']['reportTableHeaders']:
+			# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
+			return
+		try:
+			cell=self.WinwordSelectionObject.cells[1]
+		except COMError:
+			# Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+			ui.message(_("Not in a table cell"))
+			return
+		if scriptCount==0:
+			if self.setAsHeaderCell(cell,isColumnHeader=True,isRowHeader=False):
+				# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+				ui.message(_("Set row {rowNumber} column {columnNumber} as start of column headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
+			else:
+				# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+				ui.message(_("Already set row {rowNumber} column {columnNumber} as start of column headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
+		elif scriptCount==1:
+			if self.forgetHeaderCell(cell,isColumnHeader=True,isRowHeader=False):
+				# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+				ui.message(_("Removed row {rowNumber} column {columnNumber}  from column headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
+			else:
+				# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+				ui.message(_("Cannot find row {rowNumber} column {columnNumber}  in column headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
+	script_setColumnHeader.__doc__=_("Pressing once will set this cell as the first column header for any cells lower and to the right of it within this table. Pressing twice will forget the current column header for this cell.")
+
+	def script_setRowHeader(self,gesture):
+		scriptCount=scriptHandler.getLastScriptRepeatCount()
+		if not config.conf['documentFormatting']['reportTableHeaders']:
+			# Translators: a message reported in the SetRowHeader script for Microsoft Word.
+			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
+			return
+		try:
+			cell=self.WinwordSelectionObject.cells[1]
+		except COMError:
+			# Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
+			ui.message(_("Not in a table cell"))
+			return
+		if scriptCount==0:
+			if self.setAsHeaderCell(cell,isColumnHeader=False,isRowHeader=True):
+				# Translators: a message reported in the SetRowHeader script for Microsoft Word.
+				ui.message(_("Set row {rowNumber} column {columnNumber} as start of row headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
+			else:
+				# Translators: a message reported in the SetRowHeader script for Microsoft Word.
+				ui.message(_("Already set row {rowNumber} column {columnNumber} as start of row headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
+		elif scriptCount==1:
+			if self.forgetHeaderCell(cell,isColumnHeader=False,isRowHeader=True):
+				# Translators: a message reported in the SetRowHeader script for Microsoft Word.
+				ui.message(_("Removed row {rowNumber} column {columnNumber}  from row headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
+			else:
+				# Translators: a message reported in the SetRowHeader script for Microsoft Word.
+				ui.message(_("Cannot find row {rowNumber} column {columnNumber}  in row headers").format(rowNumber=cell.rowIndex,columnNumber=cell.columnIndex))
+	script_setRowHeader.__doc__=_("Pressing once will set this cell as the first row header for any cells lower and to the right of it within this table. Pressing twice will forget the current row header for this cell.")
+
+	def script_reportCurrentHeaders(self,gesture):
+		cell=self.WinwordSelectionObject.cells[1]
+		rowText=self.fetchAssociatedHeaderCellText(cell,False)
+		columnText=self.fetchAssociatedHeaderCellText(cell,True)
+		ui.message("Row %s, column %s"%(rowText or "empty",columnText or "empty"))
+
 	def _get_WinwordVersion(self):
 		if not hasattr(self,'_WinwordVersion'):
 			self._WinwordVersion=float(self.WinwordApplicationObject.version)
@@ -614,6 +790,9 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	__gestures = {
 		"kb:tab": "tab",
 		"kb:shift+tab": "tab",
+		"kb:NVDA+shift+c":"setColumnHeader",
+		"kb:NVDA+shift+r":"setRowHeader",
+		"kb:NVDA+shift+h":"reportCurrentHeaders",
 		"kb:control+alt+upArrow": "previousRow",
 		"kb:control+alt+downArrow": "nextRow",
 		"kb:control+alt+leftArrow": "previousColumn",
