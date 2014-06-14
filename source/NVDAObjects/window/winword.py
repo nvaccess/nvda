@@ -10,6 +10,8 @@ import comtypes.client
 import comtypes.automation
 import operator
 import locale
+import sayAllHandler
+import eventHandler
 import braille
 import languageHandler
 import ui
@@ -616,6 +618,16 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	def script_previousColumn(self,gesture):
 		self._moveInTable(row=False,forward=False)
 
+	def script_nextParagraph(self,gesture):
+		self.WinwordSelectionObject.move(wdParagraph,1)
+		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
+	script_nextParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+
+	def script_previousParagraph(self,gesture):
+		self.WinwordSelectionObject.move(wdParagraph,-1)
+		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
+	script_previousParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+
 	__gestures = {
 		"kb:tab": "tab",
 		"kb:shift+tab": "tab",
@@ -623,6 +635,8 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		"kb:control+alt+downArrow": "nextRow",
 		"kb:control+alt+leftArrow": "previousColumn",
 		"kb:control+alt+rightArrow": "nextColumn",
+		"kb:control+downArrow":"nextParagraph",
+		"kb:control+upArrow":"previousParagraph",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 	}
