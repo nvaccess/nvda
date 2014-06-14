@@ -12,6 +12,8 @@ import comtypes.automation
 import uuid
 import operator
 import locale
+import sayAllHandler
+import eventHandler
 import braille
 import scriptHandler
 import languageHandler
@@ -952,6 +954,16 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	def script_previousColumn(self,gesture):
 		self._moveInTable(row=False,forward=False)
 
+	def script_nextParagraph(self,gesture):
+		self.WinwordSelectionObject.move(wdParagraph,1)
+		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
+	script_nextParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+
+	def script_previousParagraph(self,gesture):
+		self.WinwordSelectionObject.move(wdParagraph,-1)
+		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
+	script_previousParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+
 	__gestures = {
 		"kb:control+[":"increaseDecreaseFontSize",
 		"kb:control+]":"increaseDecreaseFontSize",
@@ -981,6 +993,8 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		"kb:control+alt+downArrow": "nextRow",
 		"kb:control+alt+leftArrow": "previousColumn",
 		"kb:control+alt+rightArrow": "nextColumn",
+		"kb:control+downArrow":"nextParagraph",
+		"kb:control+upArrow":"previousParagraph",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 		"kb:NVDA+alt+c":"reportCurrentComment",
