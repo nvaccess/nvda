@@ -34,12 +34,20 @@ from ..behaviors import EditableTextWithoutAutoSelectDetection
  
 #Word constants
 
+# wdMeasurementUnits
+wdInches=0
+wdCentimeters=1
+wdMillimeters=2
+wdPoints=3
+wdPicas=4
+
 wdCollapseEnd=0
 wdCollapseStart=1
 #Indexing
 wdActiveEndAdjustedPageNumber=1
 wdActiveEndPageNumber=3
 wdNumberOfPagesInDocument=4
+wdHorizontalPositionRelativeToPage=5
 wdFirstCharacterLineNumber=10
 wdWithInTable=12
 wdStartOfRangeRowNumber=13
@@ -823,6 +831,42 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		if not isCollapsed:
 			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
 		braille.handler.handleCaretMove(info)
+		if isCollapsed:
+			offset=info._rangeObj.information(wdHorizontalPositionRelativeToPage)
+			msg=self.getLocalizedMeasurementTextForPointSize(offset)
+			ui.message(msg)
+			if info._rangeObj.paragraphs[1].range.start==info._rangeObj.start:
+				info.expand(textInfos.UNIT_LINE)
+				speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+
+	def getLocalizedMeasurementTextForPointSize(self,offset):
+		options=self.WinwordApplicationObject.options
+		useCharacterUnit=options.useCharacterUnit
+		if useCharacterUnit:
+			offset=offset/self.WinwordSelectionObject.font.size
+			# Translators: a measurement in Microsoft Word
+			return _("{offset:.3g} characters".format(offset=offset))
+		else:
+			unit=options.measurementUnit
+			if unit==wdInches:
+				offset=offset/72.0
+				# Translators: a measurement in Microsoft Word
+				return _("{offset:.3g} inches".format(offset=offset))
+			elif unit==wdCentimeters:
+				offset=offset/28.35
+				# Translators: a measurement in Microsoft Word
+				return _("{offset:.3g} centimeters".format(offset=offset))
+			elif unit==wdMillimeters:
+				offset=offset/2.835
+				# Translators: a measurement in Microsoft Word
+				return _("{offset:.3g} millimeters".format(offset=offset))
+			elif unit==wdPoints:
+				# Translators: a measurement in Microsoft Word
+				return _("{offset:.3g} points".format(offset=offset))
+			elif unit==wdPicas:
+				offset=offset/12.0
+				# Translators: a measurement in Microsoft Word
+				return _("{offset:.3g} picas".format(offset=offset))
 
 	def script_reportCurrentComment(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
