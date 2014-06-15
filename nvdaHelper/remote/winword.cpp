@@ -36,6 +36,8 @@ using namespace std;
 #define wdDISPID_SELECTION_RANGE 400
 #define wdDISPID_SELECTION_SETRANGE 100
 #define wdDISPID_SELECTION_STARTISACTIVE 404
+#define wdDISPID_SELECTION_STARTOF 107
+#define wdDISPID_SELECTION_ENDOF 108
 #define wdDISPID_RANGE_INRANGE 126
 #define wdDISPID_RANGE_DUPLICATE 6
 #define wdDISPID_RANGE_REVISIONS 150
@@ -212,10 +214,15 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	//Move the selection to the given range
 	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
 	//Expand the selection to the line
-	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdLine);
-	//Collect the start and end offsets of the selection
+	// #3421: Expand and or extending selection cannot be used due to MS Word bugs on the last line in a table cell, or the first/last line of a table of contents, selecting would select the entire object.  
+	// Therefore do it in two steps
+	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_STARTOF,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",wdLine,0);
 	_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_START,VT_I4,&(args->lineStart));
+	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_ENDOF,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",wdLine,0);
 	_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_END,VT_I4,&(args->lineEnd));
+	// the endOf method has a bug where IPAtEndOfLine gets stuck as true on wrapped lines
+	// So reset the selection to the start of the document to force it to False 
+	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",0,0);
 	//Move the selection back to its original location
 	_com_dispatch_raw_method(pDispatchOldSelRange,wdDISPID_RANGE_SELECT,DISPATCH_METHOD,VT_EMPTY,NULL,NULL);
 	//Restore the old selection direction
