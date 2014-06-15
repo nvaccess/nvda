@@ -213,6 +213,11 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_START,VT_I4,&(args->lineStart));
 	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_ENDOF,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",wdLine,0);
 	_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_END,VT_I4,&(args->lineEnd));
+	// Correct from contridictory situations where the offset is entirely outside the line suggested by MS Word 
+	if((args->lineStart>args->offset)||(args->lineEnd<=args->offset)) {
+		args->lineStart=args->offset;
+		args->lineEnd=args->offset+1;
+	}
 	// the endOf method has a bug where IPAtEndOfLine gets stuck as true on wrapped lines
 	// So reset the selection to the start of the document to force it to False 
 	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",0,0);
