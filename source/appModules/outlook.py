@@ -240,3 +240,17 @@ class MsoCommandBarToolBar(IAccessible):
 		if self.childCount==1:
 			return False
 		return super(MsoCommandBarToolBar,self).isPresentableFocusAncestor
+
+	def _get_name(self):
+		name=super(MsoCommandBarToolBar,self).name
+		# #3407: overly verbose and programmatic toolbar label
+		if name and name.startswith('MSO Generic Control Container'):
+			name=u""
+		return name
+
+	def _get_description(self):
+		description=super(MsoCommandBarToolBar,self).description
+		# #3407: overly verbose and programmatic toolbar description
+		if description and description.startswith('MSO Generic Control Container'):
+			description=u""
+		return description
