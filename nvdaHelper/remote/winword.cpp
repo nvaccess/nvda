@@ -216,18 +216,31 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	//Expand the selection to the line
 	// #3421: Expand and or extending selection cannot be used due to MS Word bugs on the last line in a table cell, or the first/last line of a table of contents, selecting would select the entire object.  
 	// Therefore do it in two steps
-	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_STARTOF,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",wdLine,0);
-	_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_START,VT_I4,&(args->lineStart));
-	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_ENDOF,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",wdLine,0);
-	_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_END,VT_I4,&(args->lineEnd));
-	// Correct from contridictory situations where the offset is entirely outside the line suggested by MS Word 
-	if((args->lineStart>args->offset)||(args->lineEnd<=args->offset)) {
+	bool lineError=false;
+	if(_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_STARTOF,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",wdLine,0)!=S_OK) {
+		lineError=true;
+	} else {
+		_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_START,VT_I4,&(args->lineStart));
+		if(_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_ENDOF,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",wdLine,0)!=S_OK) {
+			lineError=true;
+		} else {
+			_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_END,VT_I4,&(args->lineEnd));
+		}
+		// the endOf method has a bug where IPAtEndOfLine gets stuck as true on wrapped lines
+		// So reset the selection to the start of the document to force it to False 
+		_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",0,0);
+	}
+	// Fall back to the older expand if there was an error getting line bounds
+	if(lineError) {
+		_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
+		_com_dispatch_raw_method(pDispatchSelection,wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdLine);
+		_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_START,VT_I4,&(args->lineStart));
+		_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_END,VT_I4,&(args->lineEnd));
+	} 
+	if(args->lineStart>=args->lineEnd) {
 		args->lineStart=args->offset;
 		args->lineEnd=args->offset+1;
 	}
-	// the endOf method has a bug where IPAtEndOfLine gets stuck as true on wrapped lines
-	// So reset the selection to the start of the document to force it to False 
-	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",0,0);
 	//Move the selection back to its original location
 	_com_dispatch_raw_method(pDispatchOldSelRange,wdDISPID_RANGE_SELECT,DISPATCH_METHOD,VT_EMPTY,NULL,NULL);
 	//Restore the old selection direction
