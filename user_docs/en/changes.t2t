@@ -3,6 +3,26 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.3 =
+
+== Changes ==
+- Updated liblouis braille translator to 2.5.4. (#4103)
+
+
+== Bug Fixes ==
+- In Google Chrome and Chrome-based browsers, certain chunks of text (such as those with emphasis) are no longer repeated when reporting the text of an alert or dialog. (#4066)
+- In browse mode in Mozilla applications, pressing enter on a button, etc. no longer fails to activate it (or activates the wrong control) in certain cases such as the buttons at the top of Facebook. (#4106)
+- Useless information is no longer announced when tabbing in iTunes. (#4128)
+- In certain lists in iTunes such as the Music list, moving to the next item using object navigation now works correctly. (#4129)
+- HTML elements considered headings because of WAI ARIA markup are now included in the Browse mode Elements list and quick navigation for Internet Explorer documents. (#4140)
+- Following same-page links in recent versions of Internet Explorer now correctly moves to and reports the destination position in browse mode  documents. (#4134)
+- Microsoft Outlook 2010 and above: improve over all access to secure dialogs such as the New profiles and mail setup dialogs. (#4090, #4091, #4095)
+- Microsoft Outlook: decrease useless verbosity of command toolbars when navigating through the Signature dialog. (#4096)
+- Microsoft word: tabbing to a blank cell in a table no longer incorrectly announces exiting the table. (#4151)
+- Microsoft Word: The first character past the end of a table (including a new blank line) is no longer incorrectly considered to be inside the table. (#4152)
+- Microsoft Word 2010 spell check dialog: more accurate detection of the miss-spelt word. (#3431)
+
+
 = 2014.2 =
 
 == New Features ==
@@ -11,6 +31,7 @@
 - In accessible Java applications, keyboard shortcuts are now announced for controls that have them. (#3881)
 - In browse mode, labels on landmarks are now reported. They are also included in the Elements List dialog. (#1195)
 - In browse mode, labelled regions are now treated as landmarks. (#3741)
+- In Internet Explorer documents and applications, Live Regions (part of the W3c ARIA standard) are now supported, thus allowing web authors to mark particular content to be automatically spoken as it changes. (#1846)
 
 
 == Changes ==
@@ -18,13 +39,22 @@
 
 
 == Bug Fixes ==
-- The standard Windows System menu is no longer accidentally silenced in Java applications (#3882)
+- The standard Windows System menu is no longer accidentally silenced in Java applications. (#3882)
 - When copying text from screen review, line breaks are no longer ignored. (#3900)
 - Pointless whitespace objects are no longer reported in some applications when the focus changes or when using object navigation with simple review enabled. (#3839)
 - Message boxes and other dialogs produced by NVDA again cause previous speech to be canceled before announcing the dialog.
 - In browse mode, the labels of controls such as links and buttons are now rendered correctly where the label has been overridden by the author for accessibility purposes (specifically, using aria-label or aria-labelledby). (#1354)
-- In Browse mode in Internet Explorer, text contained within an element marked as presentational (aria-presentation) is no longer inappropriately ignored. (#4031)
-- It is now again possible to type Vietnamese text using the Unikey software. To do this, uncheck the Handle keys from other applications checkbox, added to NVDA's Keyboard settings dialog. (#4043) 
+- In Browse mode in Internet Explorer, text contained within an element marked as presentational (ARIA role="presentation") is no longer inappropriately ignored. (#4031)
+- It is now again possible to type Vietnamese text using the Unikey software. To do this, uncheck the new Handle keys from other applications checkbox in NVDA's Keyboard settings dialog. (#4043)
+- In browse mode, radio and check menu items are reported as controls instead of just clickable text. (#4092)
+- NVDA no longer incorrectly switches from focus mode to browse mode when a radio or check menu item is focused. (#4092)
+- In Microsoft PowerPoint with speaking of typed words enabled, characters erased with backspace are no longer announced as part of the typed word. (#3231)
+- In Microsoft Office 2010 Options dialogs, the labels of combo boxes are reported correctly. (#4056)
+- In browse mode in Mozilla applications, using quick navigation commands to move to the next or previous button or form field now includes toggle buttons as expected. (#4098)
+- The content of alerts in Mozilla applications is no longer reported twice. (#3481)
+- In browse mode, containers and landmarks are no longer inappropriately repeated while navigating within them at the same time as page content is changing (e.g. navigating the Facebook and Twitter websites). (#2199)
+- NVDA recovers in more cases when switching away from applications that stop responding. (#3825)
+- The caret (insertion point) again correctly updates when doing a sayAll command while in editable text drawn directly to the screen. (#4125)
 
 
 = 2014.1 =

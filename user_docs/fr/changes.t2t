@@ -9,16 +9,33 @@ Quoi de Neuf dans NVDA
 - L'annonce du texte sélectionné est maintenant possible dans certains champs de saisie personnalisés où l'information d'affichage est utilisée. (#770)
 - Dans les applications Java accessibles, l'information sur la position est maintenant annoncée pour les boutons radio et les autres contrôles qui ont une information de groupe. (#3754)
 - Dans les applications Java accessibles, les touches de raccourci sont maintenant annoncées lorsque disponibles. (#3881)
-- En mode navigation, les étiquettes des régions sont maintenant annoncées. Elles sont maintenant incluses dans la boîte de dialogue de liste des éléments. (#1195)
+- En mode navigation, les étiquettes des régions sont maintenant annoncées. Elles sont maintenant incluses dans le dialogue de liste des éléments. (#1195)
 - En mode navigation, les régions labellisées sont maintenant traitées comme des régions. (#3741)
+- Dans les documents et applications Internet Explorer, les régions live (aria-live dans la norme w3C) sont supportées, ce qui permet aux auteurs de page web de signaler du contenu comme pouvant changer. (#1846)
+
+
+== Changements ==
+- Lorsqu'on quitte un dialogue ou une application dans un document en mode navigation, le nom et le type de ce document ne sont plus annoncés. (#4069)
+
 
 
 == Corrections de bogues ==
 - Le menu Système standard de Windows n'est plus accidentellement silencieux dans les applications Java. (#3882)
 - Lorsque l'on copie du texte avec la revue d'écran, les sauts de ligne ne sont plus ignorés. (#3900)
 - Les objets vides inutiles ne sont plus annoncés dans certaines applications lorsque le focus change ou lors de l'utilisation du navigateur d'objets en mode de revue simple. (#3839)
-- Les boîtes de dialogues de messages et les autres boîtes de dialogues créées par NVDA causent à nouveau l'arrêt de la parole avant l'annonce de celle-ci.
-- En mode navigation, l'étiquette des liens et boutons sont maintenant affichés correctement là où il a été défini par l'autheur pour l'accessibilité (spécifiquement, l'utilisation de aria-label ou aria-labelledby). (#1354)
+- Les dialogues de messages et les autres dialogues créés par NVDA causent à nouveau l'arrêt de la parole avant leur annonce.
+- En mode navigation, les étiquettes des liens et boutons sont maintenant affichées correctement là où il a été défini par l'auteur pour l'accessibilité (spécifiquement, l'utilisation de aria-label ou aria-labelledby). (#1354)
+- En mode navigation dans Internet Explorer, le texte contenu dans un élément marqué comme étant pour la présentation (aria-presentation) n'est plus ignoré de manière inappropriée. (#4031)
+- Il est maintenant possible de saisir du texte en vietnamien avec le logiciel Unikey. Pour ce faire, décochez la case "Exécuter les touches d'autres applications" ajoutée dans le dialogue "Paramètres du Clavier" de NVDA. (#4043)
+- En mode navigation, les boutons radio ou les cases à cocher dans les menus sont annoncés comme des contrôles au lieu de simples textes cliquables. (#4092)
+- NVDA ne passe plus incorrectement du mode focus au mode navigation lorsqu'un menu radio ou à cocher a le focus. (#4092)
+- Dans Microsoft PowerPoint, quand l'écho par mots est activé, les caractères effacés avec la touche retour-arrière ne sont plus annoncés dans le cadre du mot tapé. (#3231)
+- Les étiquettes des zones de listes déroulantes sont maintenant correctement annoncées dans les dialogues d'options de Microsoft Office 2010. (#4056)
+- En mode navigation dans les applications Mozilla, utiliser les touches de navigation rapide pour aller au bouton ou au champ de formulaire précédent/suivant incluera maintenant les boutons bascule comme prévu. (#4098)
+- Le contenu des alertes des applications Mozilla n'est plus annoncé deux fois. (#3481)
+- En mode navigation, les conteneurs et régions ne sont plus répétés pendant qu'on navigue dedans en même temps que le contenu de la page change (ex : les sites de Facebook/Twitter). (#2199)
+- NVDA récupère mieux la main lorsqu'on change d'application à partir des applications qui cessent de répondre. (#3825)
+- Le curseur (point d'insertion) est de nouveau correctement mis à jour lorsqu'on utilise la commande dire tout dans une zone d'édition dessinée directement à l'écran. (#4125)
 
 
 = 2014.1 =
@@ -285,7 +302,7 @@ Veuillez lire le document [Résumé des commandes keyCommands.html] pour les nou
 - Lorsque l'on utilise une table braille abrégé et que l'option Afficher le mot sous le curseur en braille informatique est activée, le curseur braille est maintenant positionné correctement lorsque situé après un mot dans lequel un caractère est représenté par plusieurs cellules brailles (ex : signe majuscule, signe de lettre, signe de nombre, etc.). (#2947)
 - Le texte sélectionné est maintenant correctement affiché en braille dans des applications comme Microsoft Word 2003 et les zone d'édition dans Internet Explorer.
 - Il est à nouveau possible de sélectionner du texte en arrière dans Microsoft Word lorsque le braille est activé.
-- Lorsqu'on lit ou supprime un caractère avec backspace ou suppr dans une zone d'édition Scintilla, NVDA annonce correctement les caractères multibyte. (#2855)
+- Lorsqu'on lit ou supprime un caractère avec retour-arrière ou suppr dans une zone d'édition Scintilla, NVDA annonce correctement les caractères multibyte. (#2855)
 - NVDA n'échouera plus à l'installation lorsque le chemin du profil contient des caractères multibyte. (#2729)
 - L'annonce des groupes dans les vues de liste (SysListview32) dans les applications 64-bits ne cause plus d'erreur.
 - En mode navigation dans les applications Mozilla, le contenu texte n'est plus considéré comme éditable dans de rares cas. (#2959)
@@ -1087,7 +1104,7 @@ Les points forts principaux de cette version comprennent le support des édition
 - Prise en charge améliorée des fenêtre DOS. En concret: NVDA peut maintenant lire le contenu de certaines consoles qu’il considérait vierges habituellement.
 - L'appui sur Ctrl+pause n’arrête plus NVDA.
 - Sous Windows Vista et versions ultérieures, l'installation de NVDA le démarre maintenant avec les privilèges utilisateur normaux lors de la demande d'exécuter NVDA qui s’affiche en fin d’installation.
-- La touche Backspace est maintenant traitées correctement en mode écho clavier par mots. (#306)
+- La touche retour-arrière est maintenant traitées correctement en mode écho clavier par mots. (#306)
 - Ne pas dire de manière incorrecte "Menu Démarrer" en présence des menus contextuels dans l'Explorateur Windows / le shell Windows. (#257)
 - NVDA gère désormais correctement les étiquettes ARIA dans Mozilla Gecko lorsqu'il n'y a pas d'autres contenus utiles. (#156)
 - NVDA ne passe plus automatiquement en mode formulaire de façon incorrecte dans les champs modifiables qui mettent à jour leur valeur lors des changements de focus, comme c’était le cas pour http://tigerdirect.com/. (#220)

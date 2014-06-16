@@ -1,4 +1,44 @@
-﻿symbols:
+﻿#locale/zh_cn/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011-2012 NVDA Contributors
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# 符号	表达式
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# 其他
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥]?\d)
+
+symbols:
+# 元字符	替换字符[[	级别][	保存]][	# 显示名称]
+
+# 复杂符号
+. sentence ending	点	all	always
+! sentence ending	叹号	all	always
+? sentence ending	问号	all	always
+; phrase ending	分号	most	always
+: phrase ending	冒号	most	always
+点		none	always
+in-word '	点	all	norep
+negative number	负	none	norep
+
+# 空白字符
+\0	空白	char	# null
+\t	制表符
+\n	换行	char
+\f	分页符	none
+\r	回车符	char
+ 	空格	char
+
+symbols:
 $	美元
 /	斜杠
 ;	分号

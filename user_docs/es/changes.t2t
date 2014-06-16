@@ -11,6 +11,11 @@ Qué hay de Nuevo en NVDA
 - En aplicaciones Java accesibles, ahora se anuncian los atajos de teclado para controles que los tengan. (#3881)
 - En modo navegación, las etiquetas  en los puntos de referencia ahora se anuncian. También se incluyen en el diálogo Lista de Elementos. (#1195)
 - En modo navegación, las regiones etiquetadas ahora se tratan como puntos de referencia. (#3741)
+- En documentos y aplicaciones en Internet Explorer, las regiones activas (parte del W3c ARIA standard) ahora se soportan, permitiendo así a los autores web  marcar contenido particular para que se verbalice de forma automática según cambia. (#1846)
+
+
+== Cambios ==
+- Al salir de un diálogo o aplicación dentro de un documento en modo navegación, el nombre y tipo del documento en modo navegación ya no se anuncia. (#4069)
 
 
 == Corrección de Fallos ==
@@ -18,7 +23,18 @@ Qué hay de Nuevo en NVDA
 - Cuando se copie texto desde la revisión de pantalla, los saltos de línea ya no se ignoran. (#3900)
 - Los objetos de espacio en blanco sin sentido ya no se anuncian en algunas aplicaciones cuando el foco  cambie o cuando se utilice la navegación de objetos con la revisión simple habilitada. (#3839)
 - Los cuadros de mensaje y otros diálogos producidos por NVDA causan nuevamente la cancelación de la verbalización anterior antes de anunciar el diálogo. 
-+- En modo navegación, las etiquetas de controles tales como enlaces y botones ahora se procesan correctamente cuando la etiqueta se haya reemplazado por el autor con fines de accesibilidad (específicamente, la utilización de aria-label o de aria-labelledby). (#1354)
+- En modo navegación, las etiquetas de controles tales como enlaces y botones ahora se procesan correctamente cuando la etiqueta se haya reemplazado por el autor con fines de accesibilidad (específicamente, la utilización de aria-label o de aria-labelledby). (#1354)
+- En modo Navegación  en Internet Explorer, el texto contenido dentro de un elemento marcado como presentación (aria-presentation) ya no se ignora inapropiadamente. (#4031)
+- Ahora es posible de nuevo teclear texto en vietnamita utilizando el programa Unikey. Para hacer esto, desmarca la casilla de verificación Manejar teclas desde otras aplicaciones, añadido al diálogo Opciones de Teclado de NVDA. (#4043) 
+- En modo navegación, los elementos de menú verificables y de opción se anuncian como controles en lugar de como texto se puede hacer clic. (#4092)
+- NVDA ya no cambia incorrectamente desde modo foco a modo navegación cuando está enfocado un elemento de menú de opción o verificable. (#4092)
+- En Microsoft PowerPoint con Verbalizar palabras al escribir habilitado, los carácteres eliminados con retroceso ya no se anuncian como parte de la palabra escrita. (#3231)
+- En los diálogos de opciones de Microsoft Office 2010, las etiquetas de los cuadros combinados se anuncian correctamente. (#4056)
+- En modo navegación en aplicaciones de Mozilla, la utilización de órdenes de navegación rápida para moverse al botón o al ccampo de edición siguiente o anterior ahora incluye botones conmutables como se esperaba. (#4098)
+- El contenido de alertas en aplicaciones Mozilla ya no se anuncia dos veces. (#3481)
+- En modo navegación, los contenedores  y puntos de referencia ya no se repiten inapropiadamente mientras se navega dentro de ellos al mismo tiempo que el contenido de la página está cambiando (por ejemplo al navegar por los sitios web de Facebook y Twitter). (#2199)
+- NVDA se recupera en más casos al cambiar desde las aplicaciones que dejan de responder. (#3825)
+- El cursor (punto de inserción) se actualiza correctamente de nuevo cuando se da una orden VerbalizarTodo mientras se está en texto editable dibujado directamente en la pantalla. (#4125)
 
 
 = 2014.1 =

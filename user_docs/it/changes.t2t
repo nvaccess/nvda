@@ -3,16 +3,39 @@
 
 %!includeconf: ../changes.t2tconf
 
+
 = 2014.2 =
 
 == Novità ==
-- In alcuni campi editazione personalizzati dove vengono prelevate informazioni dallo schermo, viene annunciata la selezione del testo. (#770)
-- Nelle applicazioni Java accessibili, vengono annunciate le informazioni sulla posizione dei pulsanti radio e altri controlli che espongono informazioni di gruppo. (#3754)
-- Nelle applicazioni Java accessibili, vengono annunciate le scorciatoie da tastiera dei controlli, se presenti. (#3881)
+- è ora possibile ascoltare la selezione del testo in alcuni campi editazione personalizzati, dove viene ancora utilizzata la modalità di prelevare informazioni dallo schermo. (#770)
+- Nelle applicazioni Java accessibili, ora vengono annunciate le informazioni sulla posizione di pulsanti radio e altri controlli che espongono queste informazioni in gruppo. (#3854)
+- Nelle applicazioni Java accessibili, ora vengono lette le scorciatoie da tastiera per i controlli che ne fanno uso. (#3881)
+- In modalità navigazione, vengono annunciate le etichette nelle sezioni. Questi elementi sono anche presenti nella finestra che si ottiene premendo NVDA+f7. (#1195)
+- In modalità navigazione, le regioni etichettate vengono ora trattate come sezioni. #3741)
+- Nei documenti e nelle applicazioni facenti uso di Internet Explorer, vengono ora supportate le live region Aria definite dal W3c, il che permette ai webmaster di marcare quei contenuti che necessitano di essere letti non appena cambiano. (#1846)
+
+
+== Cambiamenti ==
+- Quando si esce da una finestra di dialogo o da un'applicazione che utilizza la modalità navigazione, NVDA non annuncia più il nome del programma e la dicitura "modalità navigazione". (#4069)
 
 
 == Bug corretti ==
-- Il menu standard Sistema inerente le finestre  non viene più erroneamente silenziato nelle applicazioni Java (#3882)
+- il menu di sistema standard che si ottiene con la combinazione alt+spazio non viene più accidentalmente silenziato nelle applicazioni java. (#3882)
+- Durante la copia del testo dalla modalità di controllo, non verranno più ignorate le interruzioni di riga. (#3900)
+- Non vengono più annunciati oggetti formati solo da spazi vuoti o bianchi in alcune applicazioni durante il cambiamento del focus. (#3839)
+- Sistemato un bug che impediva la gestione corretta della sintesi vocale all'apertura improvvisa di finestre di dialogo di NVDA.
+- In modalità navigazione, le etichette di controlli quali link e bottoni vengono ora gestite correttamente laddove l'etichetta è stata sovrascritta dall'autore, con lo scopo di aumentarne l'accessibilità. (#1354)
+- In modalità navigazione in Internet Explorer, il testo contenuto in un elemento marcato con l'attributo (ARIA role="presentation"), non verrà più ignorato erroneamente.
+- è di nuovo possibile utilizzare il software Unikey per scrivere nella lingua Vietnamita. (#4043)
+- In modalità navigazione, gli elementi di menu come pulsanti radio o caselle di controllo vengono riportati come controlli, non come semplice testo cliccabile. (#4092)
+- NVDA non passa più erroneamente dalla modalità focus alla modalità navigazione quando viene evidenziato un elemento di menu come un pulsante radio o una casella di controllo. (#4092)
+- In microsoft Powerpoint, se è attiva la lettura parola per parola, i caratteri eliminati con il Backspace non vengono più annunciati come parte della parola appena scritta. (#3231)
+- Nella finestra di dialogo Opzioni di Microsoft Office 2010, vengono annunciate correttamente le etichette delle caselle combinate. (#4056)
+- In modalità navigazione nelle applicazioni Mozilla, l'uso dei comandi rapidi per spostarsi tra bottoni o form ora include anche i pulsanti toggle. (#4098)
+- Gli avvisi in Firefox e nelle applicazioni Mozilla non vengono più letti due volte di seguito. (#3481)
+- In modalità navigazione, il contenuto delle sezioni e dei contenitori non viene letto più volte quando si naviga all'interno di questi elementi. (#3825)
+- NVDA risulta più reattivo quando si cerca di interagire con applicazioni che hanno smesso di rispondere. (#3825)
+- Risolto un bug che non permetteva l'inseguimento del cursore in modalità dire tutto, nei controlli non standard disegnati a schermo. (#4125)
 
 
 = 2014.1 =

@@ -808,7 +808,7 @@ Jeśli włączona, ta opcja przerywa mowę za każdym razem, gdy naciśnięto kl
 
 ==== Zezwalaj na przeglądanie w trybie czytaj wszystko ====
 Jeśli włączona, niektóre polecenia nawigacyjne (takie jak klawisze szybkiej nawigacji w trybie czytania, albo przechodzenie po liniach i akapitach) nie przerywają odczytywania tekstu od kursora do końca dokumentu, a zamiast tego odczyt tekstu przeskakuje do nowej pozycji i jest kontynuowany.
- 
+
 ==== Dźwięk dla małych liter przy włączonym Capslock ====
 Jeśli opcja jest włączona, krótki dźwięk zostanie wygenerowany za każdym razem, gdy wciśnięto literę z shiftem przy włączonym Capslock.
 Na ogół wpisywanie liter z shiftem przy włączonym Capslock nie jest zamierzone i wynika z niewiedzy, że Capslock jest włączony.
@@ -819,6 +819,10 @@ A zatem ostrzeżenie o tym fakcie może się okazać pomocne.
 Skrót Klawiszowy: NVDA+4
 
 Jeśli zaznaczysz to pole, NVDA będzie wypowiadać naciskane klawisze, którym nie odpowiadają znaki pisarskie, na przykład klawisze funkcyjne lub kombinacje Kontrol+litera.
+
+==== Przetwarzaj klawisze z innych aplikacji ====
+Ta opcja pozwala kontrolować, czy naciśnięcia klawiszy generowane przez aplikacje takie jak klawiatury ekranowe i aplikacje rozpoznawania mowy, powinny być przetwarzane przez NVDA. 
+Opcja jest domyślnie włączona, aczkolwiek niektórzy użytkownicy mogą chcieć ją wyłączyć, np. aby pisać w języku wietnamskim przy użyciu programu Unikey - pozostawienie jej wówczas włączonej powodowałoby wprowadzanie nieprawidłowych znaków.
 
 +++ Ustawienia Myszy (NVDA+kontrol+m) +++
 Okno "Ustawienia myszy..." znajduje się w menu ustawień NVDA.
@@ -924,7 +928,7 @@ Przełącza ogłaszanie nowej treści w niektórych obiektach takich jak termina
 Okno ustawień układu wprowadzania wywoływane jest z menu Ustawienia.
 Ustawienia te pozwalają określić w jaki sposób NVDA kontroluje wprowadzanie znaków azjatyckich za pomocą  IME lub  usług tekstowych.
 Ponieważ metody wprowadzania bardzo się różnią dostępnymi właściwościami oraz sposobem przekazywania informacji, najprawdopodobniej będzie konieczne skonfigurowanie tych opcji indywidualnie dla każdej metody wprowadzania, aby uzyskać największą wygodę pisania.
- 
+
 ==== Automatycznie zgłaszaj wszystkie dostępne znaki kandydujące ====
 Ta opcja, domyślnie włączona,  pozwala określić czy wszystkie widoczne znaki kandydujące powinny być automatycznie odczytane gdy pojawia się lista znaków kandydujących, albo jej strona się zmienia.
 Włączenie tej opcji dla piktograficznych metod wprowadzania, takich jak chińska nowa ChangJie albo Boshiami jest przydatne, ponieważ możesz automatycznie usłyszeć wszystkie symbole, ich numery i od razu któryś wybrać.
@@ -939,7 +943,7 @@ Uwaga: nawet po wyłączeniu tej opcji, punkt przeglądu będzie wciąż umieszc
 Ta opcja, domyślnie włączona, pozwala określić czy NVDA powinien odczytać krótki opis każdego znaku kandydującego, gdy zostanie on zaznaczony, lub będzie odczytany automatycznie po pojawieniu się listy kandydatów.
 Uwaga: dla ustawień regionalnych takich jak chiński, ogłaszanie dodatkowych opisów wybranego znaku kandydującego działa niezależnie od ustawienia tej opcji.
 Ta opcja może być użyteczna dla metod wprowadzania koreańskiego lub japońskiego.
- 
+
 ==== Ogłaszaj zmiany w łańcuchu czytania ====
 Niektóre metody wprowadzania, np. chińska nowa fonetyczna, albo nowa ChangJie posiadają łańcuch czytania (czasem znany jako ciąg prekompozycyjny).
 Dzięki tej opcji możesz określić, czy nowe znaki dodawane do tego łańcucha powinny być odczytywane przez NVDA.

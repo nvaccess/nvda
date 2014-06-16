@@ -653,7 +653,10 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	#Calculate how many fields in the old and new controlFieldStacks are the same
 	commonFieldCount=0
 	for count in xrange(min(len(newControlFieldStack),len(controlFieldStackCache))):
-		if newControlFieldStack[count]==controlFieldStackCache[count]:
+		# #2199: When comparing controlFields try using uniqueID if it exists before resorting to compairing the entire dictionary
+		oldUniqueID=controlFieldStackCache[count].get('uniqueID')
+		newUniqueID=newControlFieldStack[count].get('uniqueID')
+		if ((oldUniqueID is not None or newUniqueID is not None) and newUniqueID==oldUniqueID) or (newControlFieldStack[count]==controlFieldStackCache[count]):
 			commonFieldCount+=1
 		else:
 			break
