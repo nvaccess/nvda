@@ -89,9 +89,7 @@ class AppModule(appModuleHandler.AppModule):
 		windowClassName=obj.windowClassName
 		states=obj.states
 		controlID=obj.windowControlID
-		if windowClassName=="MsoCommandBar" and role==controlTypes.ROLE_TOOLBAR:
-			clsList.insert(0,MsoCommandBarToolBar)
-		elif windowClassName=="REListBox20W" and role==controlTypes.ROLE_CHECKBOX:
+		if windowClassName=="REListBox20W" and role==controlTypes.ROLE_CHECKBOX:
 			clsList.insert(0,REListBox20W_CheckBox)
 		elif role==controlTypes.ROLE_LISTITEM and (windowClassName.startswith("REListBox") or windowClassName.startswith("NetUIHWND")):
 			clsList.insert(0,AutoCompleteListItem)
@@ -232,25 +230,3 @@ class AutoCompleteListItem(IAccessible):
 			speech.cancelSpeech()
 			ui.message(self.name)
 
-class MsoCommandBarToolBar(IAccessible):
-
-	def _get_isPresentableFocusAncestor(self):
-		# #4096: Many single controls in Signature dialog wrapped in their own SmoCommandBar toolbar.
-		# Therefore suppress reporting of these toolbars in focus ancestry if they only have one child.
-		if self.childCount==1:
-			return False
-		return super(MsoCommandBarToolBar,self).isPresentableFocusAncestor
-
-	def _get_name(self):
-		name=super(MsoCommandBarToolBar,self).name
-		# #3407: overly verbose and programmatic toolbar label
-		if name and name.startswith('MSO Generic Control Container'):
-			name=u""
-		return name
-
-	def _get_description(self):
-		description=super(MsoCommandBarToolBar,self).description
-		# #3407: overly verbose and programmatic toolbar description
-		if description and description.startswith('MSO Generic Control Container'):
-			description=u""
-		return description
