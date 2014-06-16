@@ -525,6 +525,17 @@ class ExcelCell(ExcelBase):
 		if previous:
 			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=previous)
 
+	def script_reportComment(self,gesture):
+		commentObj=self.excelCellObject.comment
+		text=commentObj.text() if commentObj else None
+		if text:
+			ui.message(text)
+		else:
+			# Translators: A message in Excel when there is no comment
+			ui.message(_("Not on a comment"))
+	# Translators: the description  for a script for Excel
+	script_reportComment.__doc__=_("Reports the comment on the current cell")
+
 	def script_editComment(self,gesture):
 		commentObj=self.excelCellObject.comment
 		d = wx.TextEntryDialog(gui.mainFrame, 
@@ -547,6 +558,7 @@ class ExcelCell(ExcelBase):
 		"kb:NVDA+shift+c": "setColumnHeader",
 		"kb:NVDA+shift+r": "setRowHeader",
 		"kb:alt+downArrow":"openDropdown",
+		"kb:NVDA+alt+c":"reportComment",
 	}
 
 class ExcelSelection(ExcelBase):
