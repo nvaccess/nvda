@@ -364,6 +364,13 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			formatField['italic']=fontObj.italic
 			underline=fontObj.underline
 			formatField['underline']=False if underline is None or underline==xlUnderlineStyleNone else True
+		if formatConfig['reportStyle']:
+			try:
+				styleName=self.obj.excelCellObject.style.nameLocal
+			except COMError:
+				styleName=None
+			if styleName:
+				formatField['style']=styleName
 		if formatConfig['reportColor']:
 			try:
 				formatField['color']=colors.RGB.fromCOLORREF(int(fontObj.color))
