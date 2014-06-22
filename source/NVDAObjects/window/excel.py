@@ -28,6 +28,25 @@ from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
 
+xlCenter=-4108
+xlJustify=-4130
+xlLeft=-4131
+xlRight=-4152
+xlDistributed=-4117
+xlBottom=-4107
+xlTop=-4160
+
+alignmentLabels={
+	xlCenter:"center",
+	xlJustify:"justify",
+	xlLeft:"left",
+	xlRight:"right",
+	xlDistributed:"distributed",
+	xlBottom:"botom",
+	xlTop:"top",
+	1:"default",
+}
+
 xlA1 = 1
 xlRC = 2
 xlUnderlineStyleNone=-4142
@@ -329,6 +348,13 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		formatField=textInfos.FormatField()
 		fontObj=self.obj.excelCellObject.font
+		if formatConfig['reportAlignment']:
+			value=alignmentLabels.get(self.obj.excelCellObject.horizontalAlignment)
+			if value:
+				formatField['text-align']=value
+			value=alignmentLabels.get(self.obj.excelCellObject.verticalAlignment)
+			if value:
+				formatField['vertical-align']=value
 		if formatConfig['reportFontName']:
 			formatField['font-name']=fontObj.name
 		if formatConfig['reportFontSize']:
