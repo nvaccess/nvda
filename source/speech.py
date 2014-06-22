@@ -1186,6 +1186,10 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 				# Translators: Reported when text is justified.
 				# See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
 				text=_("align justify")
+			elif textAlign=="distribute":
+				# Translators: Reported when text is justified with character spacing (Japanese etc) 
+				# See http://kohei.us/2010/01/21/distributed-text-justification/
+				text=_("align distributed")
 			else:
 				# Translators: Reported when text has reverted to default alignment.
 				text=_("align default")
