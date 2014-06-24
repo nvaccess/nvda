@@ -260,6 +260,10 @@ class TextInfo(baseObject.AutoPropertyObject):
 		""" 
 		return [self.text]
 
+	def _get_locationText(self):
+		"""A message that explains the location of the text position in friendly terms."""
+		return None
+
 	def unitIndex(self,unit):
 		"""
 @param unit: a unit constant for which you want to retreave an index
