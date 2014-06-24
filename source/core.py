@@ -146,7 +146,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("loading config")
 	import config
 	config.initialize()
-	if not globalVars.appArgs.minimal:
+	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
 			nvwave.playWaveFile("waves\\start.wav")
 		except:
@@ -198,7 +198,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		# NVDA will be terminated as soon as this function returns, so save configuration if appropriate.
 		config.saveOnExit()
 		speech.cancelSpeech()
-		if not globalVars.appArgs.minimal:
+		if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 			try:
 				nvwave.playWaveFile("waves\\exit.wav",async=False)
 			except:
@@ -382,7 +382,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	_terminate(speech)
 	_terminate(addonHandler)
 
-	if not globalVars.appArgs.minimal:
+	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
 			nvwave.playWaveFile("waves\\exit.wav",async=False)
 		except:
