@@ -10,6 +10,7 @@ import struct
 import weakref
 from ctypes import *
 from ctypes.wintypes import HANDLE
+import time
 from comtypes import IUnknown, IServiceProvider, COMError
 import comtypes.client
 import comtypes.client.lazybind
@@ -567,9 +568,11 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			#Move up the ancestry to find the real mozilla Window and use that
 			if winUser.getClassName(window)=='MozillaDropShadowWindowClass':
 				return
-		#We never want to see foreground events for the Program Manager or Shell (task bar) 
-		if eventID==winUser.EVENT_SYSTEM_FOREGROUND and windowClassName in ("Progman","Shell_TrayWnd"):
-			return
+		if eventID==winUser.EVENT_SYSTEM_FOREGROUND:
+			#We never want to see foreground events for the Program Manager or Shell (task bar) 
+			winUser._cachedForegroundWindow=(window,time.time())
+			if windowClassName in ("Progman","Shell_TrayWnd"):
+				return
 		if windowClassName=="MSNHiddenWindowClass":
 			# HACK: Events get fired by this window in Windows Live Messenger 2009 when it starts.
 			# If we send a WM_NULL to this window at this point (which happens in accessibleObjectFromEvent), Messenger will silently exit (#677).
