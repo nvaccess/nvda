@@ -8,6 +8,16 @@
 == New Features ==
 - The sounds played when NVDA starts and exits can be disabled via a new option in the General Settings dialog. (#834)
 - Help for add-ons can be accessed from the Add-ons Manager for add-ons which support this. (#2694)
+- Support for the Calendar in Microsoft Outlook 2007 and above
+- The ability to turn off announcement of column headers in the Inbox and other message lists for Outlook 2010 and above. (#3834)
+- Microsoft word: report the title of images if there is no alternative text set. (#4193)
+- Microsoft Word: Report paragraph indenting with  the report formatting command (NVDA+f) and automatically when the new Report Paragraph indenting Document formatting setting is enabled. (#4165)
+- Report automatically inserted text such as a new bullet, number or tab indent when pressing enter in editable documents and text fields. (#4185)
+- Microsoft word: Pressing NVDA+alt+c will report  the text of a comment if the cursor is within one. (#3528)
+- Improved support for automatic column and row header reading in Microsoft Excel (#3568) including:
+ - Support of Excel defined name ranges to identify header cells (compatible with Jaws screen reader) 
+ - The set column header (NVDA+shift+c) and set row header (NVDA+shift+r) commands now store the settings in the worksheet so that they are available the next time the sheet is opened, and will be available to other screen readers that support the defined name range scheme.
+ - These commands can also now be used multiple times per sheet to set different headers for different regions.
 
 
 == Changes ==
@@ -27,6 +37,7 @@
 - Microsoft Word: The first character past the end of a table (including a new blank line) is no longer incorrectly considered to be inside the table. (#4152)
 - Microsoft Word 2010 spell check dialog: more accurate detection of the miss-spelt word. (#3431)
 - In browse mode in Internet Explorer and other MSHTML controls, using single letter navigation to move to editable text fields again reports the label in many cases where it didn't (specifically, where HTML label elements are used). (#4170)
+- Microsoft Word: Reporting the existance and placement of comments is more accurate. (#3528)
 
 
 == Changes for Developers ==
