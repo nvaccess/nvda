@@ -13,6 +13,7 @@
 - Microsoft word: report the title of images if there is no alternative text set. (#4193)
 - Microsoft Word: Report paragraph indenting with  the report formatting command (NVDA+f) and automatically when the new Report Paragraph indenting Document formatting setting is enabled. (#4165)
 - Report automatically inserted text such as a new bullet, number or tab indent when pressing enter in editable documents and text fields. (#4185)
+- Microsoft word: Pressing NVDA+alt+c will report  the text of a comment if the cursor is within one. (#3528)
 
 
 == Changes ==
@@ -32,6 +33,7 @@
 - Microsoft Word: The first character past the end of a table (including a new blank line) is no longer incorrectly considered to be inside the table. (#4152)
 - Microsoft Word 2010 spell check dialog: more accurate detection of the miss-spelt word. (#3431)
 - In browse mode in Internet Explorer and other MSHTML controls, using single letter navigation to move to editable text fields again reports the label in many cases where it didn't (specifically, where HTML label elements are used). (#4170)
+- Microsoft Word: Reporting the existance and placement of comments is more accurate. (#3528)
 
 
 == Changes for Developers ==

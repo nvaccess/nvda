@@ -571,6 +571,28 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
 		braille.handler.handleCaretMove(info)
 
+	def script_reportCurrentComment(self,gesture):
+		info=self.makeTextInfo(textInfos.POSITION_CARET)
+		info.expand(textInfos.UNIT_CHARACTER)
+		fields=info.getTextWithFields(formatConfig={'reportComments':True})
+		for field in reversed(fields):
+			if isinstance(field,textInfos.FieldCommand) and isinstance(field.field,textInfos.FormatField): 
+				commentReference=field.field.get('comment')
+				if commentReference:
+					offset=int(commentReference)
+					range=self.WinwordDocumentObject.range(offset,offset+1)
+					try:
+						text=range.comments[1].range.text
+					except COMError:
+						break
+					if text:
+						ui.message(text)
+						return
+		# Translators: a message when there is no comment to report in Microsoft Word
+		ui.message(_("no comments"))
+	# Translators: a description for a script
+	script_reportCurrentComment.__doc__=_("Reports the text of the comment where the System caret is located.")
+
 	def _moveInTable(self,row=True,forward=True):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		info.expand(textInfos.UNIT_CHARACTER)
@@ -642,5 +664,6 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		"kb:control+alt+rightArrow": "nextColumn",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
+		"kb:NVDA+alt+c":"reportCurrentComment",
 	}
 
