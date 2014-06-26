@@ -1,12 +1,17 @@
 #appModules/outlook.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2014 NVDA Contributors <http://www.nvaccess.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 from comtypes import COMError
 import comtypes.client
+from hwPortUtils import SYSTEMTIME
+import scriptHandler
+import winKernel
+import comHelper
 import winUser
+from logHandler import log
 import appModuleHandler
 import eventHandler
 import api
@@ -46,14 +51,34 @@ def getSentMessageString(obj):
 
 class AppModule(appModuleHandler.AppModule):
 
+	_hasTriedoutlookAppSwitch=False
+
+	def _registerCOMWithFocusJuggle(self):
+		import wx
+		import gui
+		# Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+		d=wx.Dialog(None,title=_("Waiting for Outlook..."))
+		gui.mainFrame.prePopup()
+		d.Show()
+		self._hasTriedoutlookAppSwitch=True
+		#Make sure NVDA detects and reports focus on the waiting dialog
+		api.processPendingEvents()
+		comtypes.client.PumpEvents(1)
+		d.Destroy()
+		gui.mainFrame.postPopup()
+
 	def _get_nativeOm(self):
-		if not getattr(self,'_nativeOm',None):
-			try:
-				nativeOm=comtypes.client.GetActiveObject("outlook.application",dynamic=True)
-			except (COMError,WindowsError):
-				nativeOm=None
-			self._nativeOm=nativeOm
-		return self._nativeOm
+		try:
+			nativeOm=comHelper.getActiveObject("outlook.application",dynamic=True)
+		except (COMError,WindowsError,RuntimeError):
+			if self._hasTriedoutlookAppSwitch:
+				log.error("Failed to get native object model",exc_info=True)
+			nativeOm=None
+		if not nativeOm and not self._hasTriedoutlookAppSwitch:
+			self._registerCOMWithFocusJuggle()
+			return None
+		self.nativeOm=nativeOm
+		return self.nativeOm
 
 	def _get_outlookVersion(self):
 		nativeOm=self.nativeOm
@@ -62,6 +87,11 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			outlookVersion=0
 		return outlookVersion
+
+	def isBadUIAWindow(self,hwnd):
+		if winUser.getClassName(hwnd) in ("WeekViewWnd","DayViewWnd"):
+			return True
+		return False
 
 	def event_NVDAObject_init(self,obj):
 		role=obj.role
@@ -104,6 +134,8 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, MessageList_pre2003)
 			elif obj.event_objectID==winUser.OBJID_CLIENT and obj.event_childID==0:
 				clsList.insert(0,SuperGridClient2010)
+		if (windowClassName == "AfxWndW" and controlID==109) or (windowClassName in ("WeekViewWnd","DayViewWnd")):
+			clsList.insert(0,CalendarView)
 
 class REListBox20W_CheckBox(IAccessible):
 
@@ -119,6 +151,13 @@ class SuperGridClient2010(IAccessible):
 
 	def isDuplicateIAccessibleEvent(self,obj):
 		return False
+
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		# The window must really have focus.
+		# Outlook can sometimes fire invalid focus events when showing daily tasks within the calendar.
+		if winUser.getGUIThreadInfo(self.windowThreadID).hwndFocus!=self.windowHandle:
+			return False
+		return super(SuperGridClient2010,self).shouldAllowIAccessibleFocusEvent
 
 class MessageList_pre2003(IAccessible):
 
@@ -254,3 +293,60 @@ class MsoCommandBarToolBar(IAccessible):
 		if description and description.startswith('MSO Generic Control Container'):
 			description=u""
 		return description
+
+class CalendarView(IAccessible):
+	"""Support for announcing time slots and appointments in Outlook Calendar.
+	"""
+
+	_lastStartDate=None
+
+	def _generateTimeRangeText(self,startTime,endTime):
+		startText=winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, startTime, None)
+		endText=winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, endTime, None)
+		startDate=startTime.date()
+		endDate=endTime.date()
+		if not CalendarView._lastStartDate or startDate!=CalendarView._lastStartDate or endDate!=startDate: 
+			startText="%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, startTime, None),startText)
+		if endDate!=startDate:
+			endText="%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, endTime, None),endText)
+		CalendarView._lastStartDate=startDate
+		return "%s to %s"%(startText,endText)
+
+	def isDuplicateIAccessibleEvent(self,obj):
+		return False
+
+	def event_nameChange(self):
+		pass
+
+	def event_stateChange(self):
+		pass
+
+	def reportFocus(self):
+		if self.appModule.outlookVersion>=13 and self.appModule.nativeOm:
+			e=self.appModule.nativeOm.activeExplorer()
+			s=e.selection
+			if s.count>0:
+				p=s.item(1)
+				try:
+					start=p.start
+					end=p.end
+				except COMError:
+					return super(CalendarView,self).reportFocus()
+				t=self._generateTimeRangeText(start,end)
+				speech.speakMessage("Appointment %s, %s"%(p.subject,t))
+			else:
+				v=e.currentView
+				selectedStartTime=v.selectedStartTime
+				selectedEndTime=v.selectedEndTime
+				timeSlotText=self._generateTimeRangeText(selectedStartTime,selectedEndTime)
+				startLimit=u"%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedStartTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedStartTime, None))
+				endLimit=u"%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedEndTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedEndTime, None))
+				query=u'[Start] < "{endLimit}" And [End] > "{startLimit}"'.format(startLimit=startLimit,endLimit=endLimit)
+				i=e.currentFolder.items
+				i.sort('[Start]')
+				i.IncludeRecurrences =True
+				if i.find(query):
+					timeSlotText="has appointment "+timeSlotText
+				speech.speakMessage(timeSlotText)
+		else:
+			self.event_valueChange()
