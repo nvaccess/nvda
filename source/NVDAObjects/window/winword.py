@@ -5,6 +5,7 @@
 #See the file COPYING for more details.
 
 import ctypes
+import time
 from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
@@ -33,12 +34,20 @@ from ..behaviors import EditableTextWithoutAutoSelectDetection
  
 #Word constants
 
+# wdMeasurementUnits
+wdInches=0
+wdCentimeters=1
+wdMillimeters=2
+wdPoints=3
+wdPicas=4
+
 wdCollapseEnd=0
 wdCollapseStart=1
 #Indexing
 wdActiveEndAdjustedPageNumber=1
 wdActiveEndPageNumber=3
 wdNumberOfPagesInDocument=4
+wdHorizontalPositionRelativeToPage=5
 wdFirstCharacterLineNumber=10
 wdWithInTable=12
 wdStartOfRangeRowNumber=13
@@ -735,6 +744,83 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			self._WinwordSelectionObject=windowObject.selection
 		return self._WinwordSelectionObject
 
+	def _WaitForValueChangeForAction(self,action,fetcher,timeout=0.15):
+		oldVal=fetcher()
+		action()
+		startTime=curTime=time.time()
+		curVal=fetcher()
+		while curVal==oldVal and (curTime-startTime)<timeout:
+			time.sleep(0.01)
+			curVal=fetcher()
+			curTime=time.time()
+		return curVal
+
+	def script_toggleBold(self,gesture):
+		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.bold)
+		if val:
+			# Translators: a message when toggling formatting in Microsoft word
+			ui.message(_("Bold on"))
+		else:
+			# Translators: a message when toggling formatting in Microsoft word
+			ui.message(_("Bold off"))
+
+	def script_toggleItalic(self,gesture):
+		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.italic)
+		if val:
+			# Translators: a message when toggling formatting in Microsoft word
+			ui.message(_("Italic on"))
+		else:
+			# Translators: a message when toggling formatting in Microsoft word
+			ui.message(_("Italic off"))
+
+	def script_toggleUnderline(self,gesture):
+		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.underline)
+		if val:
+			# Translators: a message when toggling formatting in Microsoft word
+			ui.message(_("Underline on"))
+		else:
+			# Translators: a message when toggling formatting in Microsoft word
+			ui.message(_("Underline off"))
+
+	def script_toggleAlignment(self,gesture):
+		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.paragraphFormat.alignment)
+		alignmentMessages={
+			# Translators: a an alignment in Microsoft Word 
+			wdAlignParagraphLeft:_("Left aligned"),
+			# Translators: a an alignment in Microsoft Word 
+			wdAlignParagraphCenter:_("centered"),
+			# Translators: a an alignment in Microsoft Word 
+			wdAlignParagraphRight:_("Right aligned"),
+			# Translators: a an alignment in Microsoft Word 
+			wdAlignParagraphJustify:_("Justified"),
+		}
+		msg=alignmentMessages.get(val)
+		if msg:
+			ui.message(msg)
+
+	def script_toggleSuperscriptSubscript(self,gesture):
+		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: (self.WinwordSelectionObject.font.superscript,self.WinwordSelectionObject.font.subscript))
+		if val[0]:
+			# Translators: a message when toggling formatting in Microsoft word
+			ui.message(_("superscript"))
+		elif val[1]:
+			# Translators: a message when toggling formatting in Microsoft word
+			ui.message(_("subscript"))
+		else:
+			# Translators: a message when toggling formatting in Microsoft word
+			ui.message(_("baseline"))
+
+	def script_increaseDecreaseOutlineLevel(self,gesture):
+		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.paragraphFormat.outlineLevel)
+		style=self.WinwordSelectionObject.style.nameLocal
+		# Translators: the message when the outline level / style is changed in Microsoft word
+		ui.message(_("{styleName} style, outline level {outlineLevel}").format(styleName=style,outlineLevel=val))
+
+	def script_increaseDecreaseFontSize(self,gesture):
+		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.size)
+		# Translators: a message when increasing or decreasing font size in Microsoft Word
+		ui.message(_("{size:g} point font").format(size=val))
+
 	def script_tab(self,gesture):
 		gesture.send()
 		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -746,6 +832,42 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		if not isCollapsed:
 			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
 		braille.handler.handleCaretMove(info)
+		if isCollapsed:
+			offset=info._rangeObj.information(wdHorizontalPositionRelativeToPage)
+			msg=self.getLocalizedMeasurementTextForPointSize(offset)
+			ui.message(msg)
+			if info._rangeObj.paragraphs[1].range.start==info._rangeObj.start:
+				info.expand(textInfos.UNIT_LINE)
+				speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
+
+	def getLocalizedMeasurementTextForPointSize(self,offset):
+		options=self.WinwordApplicationObject.options
+		useCharacterUnit=options.useCharacterUnit
+		if useCharacterUnit:
+			offset=offset/self.WinwordSelectionObject.font.size
+			# Translators: a measurement in Microsoft Word
+			return _("{offset:.3g} characters".format(offset=offset))
+		else:
+			unit=options.measurementUnit
+			if unit==wdInches:
+				offset=offset/72.0
+				# Translators: a measurement in Microsoft Word
+				return _("{offset:.3g} inches".format(offset=offset))
+			elif unit==wdCentimeters:
+				offset=offset/28.35
+				# Translators: a measurement in Microsoft Word
+				return _("{offset:.3g} centimeters".format(offset=offset))
+			elif unit==wdMillimeters:
+				offset=offset/2.835
+				# Translators: a measurement in Microsoft Word
+				return _("{offset:.3g} millimeters".format(offset=offset))
+			elif unit==wdPoints:
+				# Translators: a measurement in Microsoft Word
+				return _("{offset:.3g} points".format(offset=offset))
+			elif unit==wdPicas:
+				offset=offset/12.0
+				# Translators: a measurement in Microsoft Word
+				return _("{offset:.3g} picas".format(offset=offset))
 
 	def script_reportCurrentComment(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -832,6 +954,25 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		self._moveInTable(row=False,forward=False)
 
 	__gestures = {
+		"kb:control+[":"increaseDecreaseFontSize",
+		"kb:control+]":"increaseDecreaseFontSize",
+		"kb:control+shift+,":"increaseDecreaseFontSize",
+		"kb:control+shift+.":"increaseDecreaseFontSize",
+		"kb:control+b":"toggleBold",
+		"kb:control+i":"toggleItalic",
+		"kb:control+u":"toggleUnderline",
+		"kb:control+=":"toggleSuperscriptSubscript",
+		"kb:control+shift+=":"toggleSuperscriptSubscript",
+		"kb:control+l":"toggleAlignment",
+		"kb:control+e":"toggleAlignment",
+		"kb:control+r":"toggleAlignment",
+		"kb:control+j":"toggleAlignment",
+		"kb:alt+shift+rightArrow":"increaseDecreaseOutlineLevel",
+		"kb:alt+shift+leftArrow":"increaseDecreaseOutlineLevel",
+		"kb:control+shift+n":"increaseDecreaseOutlineLevel",
+		"kb:control+alt+1":"increaseDecreaseOutlineLevel",
+		"kb:control+alt+2":"increaseDecreaseOutlineLevel",
+		"kb:control+alt+3":"increaseDecreaseOutlineLevel",
 		"kb:tab": "tab",
 		"kb:shift+tab": "tab",
 		"kb:NVDA+shift+c":"setColumnHeader",
