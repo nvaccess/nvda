@@ -21,6 +21,8 @@
 - Support for automatic column and row header reading in Microsoft Word (#3110) including:
  - Support of MS Word bookmarks to identify header cells (compatible with Jaws screen reader) 
  -  set column header (NVDA+shift+c) and set row header (NVDA+shift+r) commands  while on the first header cell in a table allow you to tell NVDA that these headers should be reported automatically.  Settings are stored in the document so that they are available the next time the document is opened, and will be available to other screen readers that support the bookmark scheme.
+- Microsoft Word: Report the distance from the left edge of the page when the tab key is pressed. (#1353)
+- Microsoft Word: provide feedback in speech and braille for most available formatting shortcut keys (bold, italic, underline, alignment and outline level). (#1353)
 
 
 == Changes ==
