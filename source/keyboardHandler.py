@@ -311,6 +311,10 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		self.isExtended = isExtended
 		super(KeyboardInputGesture, self).__init__()
 
+	def _get_bypassInputHelp(self):
+		# #4226: Numlock must always be handled normally otherwise the Keyboard controller and Windows can get out of synk wih each other in regard to this key state.
+		return self.vkCode==winUser.VK_NUMLOCK
+
 	def _get_isNVDAModifierKey(self):
 		return isNVDAModifierKey(self.vkCode, self.isExtended)
 
