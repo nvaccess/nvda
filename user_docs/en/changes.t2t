@@ -8,10 +8,16 @@
 == New Features ==
 - The sounds played when NVDA starts and exits can be disabled via a new option in the General Settings dialog. (#834)
 - Help for add-ons can be accessed from the Add-ons Manager for add-ons which support this. (#2694)
-- Support for the Calendar in Microsoft Outlook 2007 and above
-- The ability to turn off announcement of column headers in the Inbox and other message lists for Outlook 2010 and above. (#3834)
-- Microsoft word: report the title of images if there is no alternative text set. (#4193)
-- Microsoft Word: Report paragraph indenting with  the report formatting command (NVDA+f) and automatically when the new Report Paragraph indenting Document formatting setting is enabled. (#4165)
+- Support for the Calendar in Microsoft Outlook 2007 and above (#2943) including:
+ - Announcement of the current time when moving around with the arrows,
+ - Indication if the selected time is within any appointments,
+ - announcement of the selected appointment when pressing tab
+ - Smart filtering of the date so as to only announce the date if the new selected time or appointment is on a different day to the last.
+- Enhanced support for the Inbox and other message lists in Outlook 2010 and above (#3834) including:
+ - The ability to silence column headers (from, subject etc) by turning off the Report Table row and column headers option in Document formatting settings,
+ - The ability to use table navigation commands (control + arrows) to move along the individual columns. 
+- Microsoft word: If an inline image has no alternative text set, NVDA will instead report the title of the image if the author has provided one. (#4193)
+- Microsoft Word: Report paragraph indenting with  the report formatting command (NVDA+f) and automatically when the new Report Paragraph indenting Document formatting setting is enabled. (#4165).
 - Report automatically inserted text such as a new bullet, number or tab indent when pressing enter in editable documents and text fields. (#4185)
 - Microsoft word: Pressing NVDA+alt+c will report  the text of a comment if the cursor is within one. (#3528)
 - Improved support for automatic column and row header reading in Microsoft Excel (#3568) including:
@@ -40,7 +46,7 @@
 - Microsoft Outlook: decrease useless verbosity of command toolbars when navigating through  certain dialogs. (#4096, #3407)
 - Microsoft word: tabbing to a blank cell in a table no longer incorrectly announces exiting the table. (#4151)
 - Microsoft Word: The first character past the end of a table (including a new blank line) is no longer incorrectly considered to be inside the table. (#4152)
-- Microsoft Word 2010 spell check dialog: more accurate detection of the miss-spelt word. (#3431)
+- Microsoft Word 2010 spell check dialog: Report the real mis-spelt word rather than  inappropriately just reporting the first bold word. (#3431) 
 - In browse mode in Internet Explorer and other MSHTML controls, using single letter navigation to move to editable text fields again reports the label in many cases where it didn't (specifically, where HTML label elements are used). (#4170)
 - Microsoft Word: Reporting the existance and placement of comments is more accurate. (#3528)
 
