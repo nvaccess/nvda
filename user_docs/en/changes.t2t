@@ -46,7 +46,7 @@
 - Microsoft Outlook: decrease useless verbosity of command toolbars when navigating through  certain dialogs. (#4096, #3407)
 - Microsoft word: tabbing to a blank cell in a table no longer incorrectly announces exiting the table. (#4151)
 - Microsoft Word: The first character past the end of a table (including a new blank line) is no longer incorrectly considered to be inside the table. (#4152)
-- Microsoft Word 2010 spell check dialog: more accurate detection of the miss-spelt word. (#3431)
+- Microsoft Word 2010 spell check dialog: Report the real mis-spelt word rather than  inappropriately just reporting the first bold word. (#3431) 
 - In browse mode in Internet Explorer and other MSHTML controls, using single letter navigation to move to editable text fields again reports the label in many cases where it didn't (specifically, where HTML label elements are used). (#4170)
 - Microsoft Word: Reporting the existance and placement of comments is more accurate. (#3528)
 
