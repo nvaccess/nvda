@@ -29,6 +29,8 @@
  -  set column header (NVDA+shift+c) and set row header (NVDA+shift+r) commands  while on the first header cell in a table allow you to tell NVDA that these headers should be reported automatically.  Settings are stored in the document so that they are available the next time the document is opened, and will be available to other screen readers that support the bookmark scheme.
 - Microsoft Word: Report the distance from the left edge of the page when the tab key is pressed. (#1353)
 - Microsoft Word: provide feedback in speech and braille for most available formatting shortcut keys (bold, italic, underline, alignment and outline level). (#1353)
+- Microsoft Excel: If the selected cell contains comments, they can be now reported by pressing NVDA+alt+c (#2920)
+- Microsoft Excel: Provide an NVDA-specific dialog to edit the comments on the currently selected cell when pressing Excel's shift+f2 command to enter comment editing mode. (#2920)
 
 
 == Changes ==
