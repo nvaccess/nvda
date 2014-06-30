@@ -463,6 +463,9 @@ the NVDAObject for IAccessible
 			from .msOffice import BrokenMsoCommandBar
 			if BrokenMsoCommandBar.appliesTo(self):
 				clsList.append(BrokenMsoCommandBar)
+			if role==oleacc.ROLE_SYSTEM_TOOLBAR:
+				from .msOffice import MsoCommandBarToolBar
+				clsList.append(MsoCommandBarToolBar)
 		if windowClassName.startswith("Internet Explorer_"):
 			from . import MSHTML
 			MSHTML.findExtraIAccessibleOverlayClasses(self, clsList)
