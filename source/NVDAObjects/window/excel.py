@@ -596,9 +596,9 @@ class ExcelCell(ExcelBase):
 		gui.runScriptModalDialog(d, callback)
 
 	__gestures = {
-		"kb:shift+f2":"editComment",
 		"kb:NVDA+shift+c": "setColumnHeader",
 		"kb:NVDA+shift+r": "setRowHeader",
+		"kb:shift+f2":"editComment",
 		"kb:alt+downArrow":"openDropdown",
 		"kb:NVDA+alt+c":"reportComment",
 	}
