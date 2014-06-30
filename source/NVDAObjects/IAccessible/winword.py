@@ -43,8 +43,11 @@ class SpellCheckErrorField(IAccessible,WordDocument):
 				break
 		return u"".join(textList)
 
+	def _get_documentWindowHandle(self):
+		return NVDAHelper.localLib.findWindowWithClassInThread(self.windowThreadID,u"_WwG",True)
+
 	def _get_WinwordWindowObject(self):
-		hwnd=NVDAHelper.localLib.findWindowWithClassInThread(self.windowThreadID,u"_WwG",True)
+		hwnd=self.documentWindowHandle
 		if hwnd:
 			try:
 				window=comtypes.client.dynamic.Dispatch(oleacc.AccessibleObjectFromWindow(hwnd,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch))

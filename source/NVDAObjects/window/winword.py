@@ -239,7 +239,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	def _expandToLineAtCaret(self):
 		lineStart=ctypes.c_int()
 		lineEnd=ctypes.c_int()
-		res=NVDAHelper.localLib.nvdaInProcUtils_winword_expandToLine(self.obj.appModule.helperLocalBindingHandle,self.obj.windowHandle,self._rangeObj.start,ctypes.byref(lineStart),ctypes.byref(lineEnd))
+		res=NVDAHelper.localLib.nvdaInProcUtils_winword_expandToLine(self.obj.appModule.helperLocalBindingHandle,self.obj.documentWindowHandle,self._rangeObj.start,ctypes.byref(lineStart),ctypes.byref(lineEnd))
 		if res!=0 or lineStart.value==lineEnd.value or lineStart.value==-1 or lineEnd.value==-1: 
 			log.debugWarning("winword_expandToLine failed")
 			self._rangeObj.expand(wdParagraph)
@@ -287,7 +287,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		endOffset=self._rangeObj.end
 		text=BSTR()
 		formatConfigFlags=sum(y for x,y in formatConfigFlagsMap.iteritems() if formatConfig.get(x,False))
-		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.windowHandle,startOffset,endOffset,formatConfigFlags,ctypes.byref(text))
+		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.documentWindowHandle,startOffset,endOffset,formatConfigFlags,ctypes.byref(text))
 		if res or not text:
 			log.debugWarning("winword_getTextInRange failed with %d"%res)
 			return [self.text]
@@ -715,10 +715,13 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			self._WinwordVersion=float(self.WinwordApplicationObject.version)
 		return self._WinwordVersion
 
+	def _get_documentWindowHandle(self):
+		return self.windowHandle
+
 	def _get_WinwordWindowObject(self):
 		if not getattr(self,'_WinwordWindowObject',None): 
 			try:
-				pDispatch=oleacc.AccessibleObjectFromWindow(self.windowHandle,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch)
+				pDispatch=oleacc.AccessibleObjectFromWindow(self.documentWindowHandle,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch)
 			except (COMError, WindowsError):
 				log.debugWarning("Could not get MS Word object model",exc_info=True)
 				return None
