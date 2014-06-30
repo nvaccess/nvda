@@ -279,6 +279,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 
 	def getTextWithFields(self,formatConfig=None):
 		if self.isCollapsed: return []
+		if self.obj.ignoreFormatting:
+			return [self.text]
 		extraDetail=formatConfig.get('extraDetail',False) if formatConfig else False
 		if not formatConfig:
 			formatConfig=config.conf['documentFormatting']
@@ -527,6 +529,9 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 
 	TextInfo=WordDocumentTextInfo
+
+	#: True if formatting should be ignored (text only) such as for spellCheck error field
+	ignoreFormatting=False
 
 	def __init__(self,*args,**kwargs):
 		super(WordDocument,self).__init__(*args,**kwargs)
@@ -990,3 +995,15 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		"kb:NVDA+alt+c":"reportCurrentComment",
 	}
 
+class WordDocument_WwN(WordDocument):
+
+	def _get_documentWindowHandle(self):
+		return NVDAHelper.localLib.findWindowWithClassInThread(self.windowThreadID,u"_WwG",True)
+
+	def _get_WinwordWindowObject(self):
+		window=super(WordDocument_WwN,self).WinwordWindowObject
+		try:
+			return window.application.activeWindow.activePane
+		except COMError:
+			log.debugWarning("Unable to get activePane")
+			return window.application.windows[1].activePane

@@ -410,6 +410,9 @@ the NVDAObject for IAccessible
 		# Some special cases.
 		if windowClassName=="Frame Notification Bar" and role==oleacc.ROLE_SYSTEM_CLIENT:
 			clsList.append(IEFrameNotificationBar)
+		elif self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and windowClassName in ("_WwN","_WwO") and self.windowControlID==18:
+			from winword import SpellCheckErrorField
+			clsList.append(SpellCheckErrorField)
 		elif windowClassName=="DirectUIHWND" and role==oleacc.ROLE_SYSTEM_TOOLBAR:
 			parentWindow=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
 			if parentWindow and winUser.getClassName(parentWindow)=="Frame Notification Bar":
@@ -1792,7 +1795,5 @@ _staticMap={
 	("Shell DocObject View",oleacc.ROLE_SYSTEM_CLIENT):"ShellDocObjectView",
 	("listview",oleacc.ROLE_SYSTEM_CLIENT):"ListviewPane",
 	("NUIDialog",oleacc.ROLE_SYSTEM_CLIENT):"NUIDialogClient",
-	("_WwN",oleacc.ROLE_SYSTEM_TEXT):"winword.SpellCheckErrorField",
-	("_WwO",oleacc.ROLE_SYSTEM_TEXT):"winword.SpellCheckErrorField",
 	("_WwB",oleacc.ROLE_SYSTEM_CLIENT):"winword.ProtectedDocumentPane",
 }
