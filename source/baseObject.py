@@ -143,7 +143,7 @@ class ScriptableObject(AutoPropertyObject):
 		#: @type: dict
 		self._gestureMap = {}
 		# Bind gestures specified on the class.
-		for cls in self.__class__.__mro__:
+		for cls in reversed(self.__class__.__mro__):
 			try:
 				self.bindGestures(getattr(cls, "_%s__gestures" % cls.__name__))
 			except AttributeError:
