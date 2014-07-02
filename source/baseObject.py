@@ -143,7 +143,7 @@ class ScriptableObject(AutoPropertyObject):
 		#: @type: dict
 		self._gestureMap = {}
 		# Bind gestures specified on the class.
-		for cls in self.__class__.__mro__:
+		for cls in reversed(self.__class__.__mro__):
 			try:
 				self.bindGestures(getattr(cls, "_%s__gestures" % cls.__name__))
 			except AttributeError:
@@ -167,22 +167,40 @@ class ScriptableObject(AutoPropertyObject):
 		import inputCore
 		self._gestureMap[inputCore.normalizeGestureIdentifier(gestureIdentifier)] = func
 
+	def removeGestureBinding(self,gestureIdentifier):
+		"""
+		Removes the binding for the given gesture identifier if a binding exists.
+		@param gestureIdentifier: The identifier of the input gesture.
+		@type gestureIdentifier: str
+		@raise LookupError: If there is no binding for this gesture 
+		"""
+		# Import late to avoid circular import.
+		import inputCore
+		del self._gestureMap[inputCore.normalizeGestureIdentifier(gestureIdentifier)]
+
 	def clearGestureBindings(self):
 		"""Remove all input gesture bindings from this object.
 		"""
 		self._gestureMap.clear()
 
 	def bindGestures(self, gestureMap):
-		"""Bind multiple input gestures to scripts.
+		"""Bind or unbind multiple input gestures.
 		This is a convenience method which simply calls L{bindGesture} for each gesture and script pair, logging any errors.
+		For the case where script is None, L{removeGestureBinding} is called instead.
 		@param gestureMap: A mapping of gesture identifiers to script names.
 		@type gestureMap: dict of str to str
 		"""
 		for gestureIdentifier, scriptName in gestureMap.iteritems():
-			try:
-				self.bindGesture(gestureIdentifier, scriptName)
-			except LookupError:
-				log.error("Error binding script %s in %r" % (scriptName, self))
+			if scriptName:
+				try:
+					self.bindGesture(gestureIdentifier, scriptName)
+				except LookupError:
+					log.error("Error binding script %s in %r" % (scriptName, self))
+			else:
+				try:
+					self.removeGestureBinding(gestureIdentifier)
+				except LookupError:
+					pass
 
 	def getScript(self,gesture):
 		"""Retrieve the script bound to a given gesture.
