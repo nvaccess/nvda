@@ -1007,3 +1007,9 @@ class WordDocument_WwN(WordDocument):
 		except COMError:
 			log.debugWarning("Unable to get activePane")
 			return window.application.windows[1].activePane
+
+	__gestures={
+		"kb:tab":None,
+		"kb:shift+tab":None,
+	}
+
