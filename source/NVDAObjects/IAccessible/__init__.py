@@ -1282,35 +1282,38 @@ the NVDAObject for IAccessible
 		super(IAccessible, self).event_caret()
 		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_CARET:
 			return
+		# This is a nasty hack to make Mozilla rich text editing at least partially usable.
+		if not hasattr(self,'IAccessibleTextObject'):
+			return
+		if controlTypes.STATE_EDITABLE not in self.states:
+			return
 		focusObject=api.getFocusObject()
-		if self!=focusObject and not self.treeInterceptor and hasattr(self,'IAccessibleTextObject'):
-			inDocument=None
-			for ancestor in reversed(api.getFocusAncestors()+[focusObject]):
-				if ancestor.role==controlTypes.ROLE_DOCUMENT:
-					inDocument=ancestor
-					break
-			if not inDocument:
-				return
-			parent=self
-			caretInDocument=False
-			while parent:
-				if parent==inDocument:
-					caretInDocument=True
-					break
-				parent=parent.parent
-			if not caretInDocument:
-				return
-			try:
-				info=self.makeTextInfo(textInfos.POSITION_CARET)
-			except RuntimeError:
-				return
-			info.expand(textInfos.UNIT_CHARACTER)
-			try:
-				char=ord(info.text)
-			except TypeError:
-				char=0
-			if char!=0xfffc:
-				IAccessibleHandler.processFocusNVDAEvent(self)
+		if self==focusObject:
+			return
+		# Mozilla doesn't focus most objects inside an editable area.
+		# Therefore, we need to fake focus so our caret stuff works.
+		# First, determine whether this is inside a focused editable area.
+		shouldFocus=False
+		obj=self
+		while obj:
+			states=obj.states
+			if controlTypes.STATE_EDITABLE not in states:
+				break
+			if controlTypes.STATE_FOCUSABLE in states:
+				shouldFocus=True
+				break
+			obj=obj.parent
+		if not shouldFocus:
+			return
+		# If the caret is on an embedded object character, this isn't useful.
+		try:
+			info=self.makeTextInfo(textInfos.POSITION_CARET)
+		except RuntimeError:
+			return
+		info.expand(textInfos.UNIT_CHARACTER)
+		if info.text==u'\uFFFC':
+			return
+		eventHandler.executeEvent("gainFocus",self)
 
 	def _get_groupName(self):
 		return None
