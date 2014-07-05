@@ -11,6 +11,7 @@ import languageHandler
 import gui
 from logHandler import log
 import addonHandler
+import globalVars
 
 class AddonsDialog(wx.Dialog):
 	_instance = None
@@ -29,6 +30,11 @@ class AddonsDialog(wx.Dialog):
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		entriesSizer=wx.BoxSizer(wx.VERTICAL)
+		if globalVars.appArgs.disableAddons:
+			addonsDisabledSizer=wx.BoxSizer(wx.VERTICAL)
+			addonsDisabledLabel=wx.StaticText(self,-1,label=_("Addons are disabled, but you still can edit them. To enable addons you must restart NVDA."))
+			addonsDisabledSizer.Add(addonsDisabledLabel)
+			mainSizer.Add(addonsDisabledSizer)
 		# Translators: the label for the installed addons list in the addons manager.
 		entriesLabel=wx.StaticText(self,-1,label=_("Installed Add-ons"))
 		entriesSizer.Add(entriesLabel)
@@ -170,6 +176,9 @@ class AddonsDialog(wx.Dialog):
 		elif addon.isPendingRemove:
 			# Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 			return _("remove")
+		elif globalVars.appArgs.disableAddons:
+			# Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+			return _("suspended")
 		else:
 			# Translators: The status shown for an addon when its currently running in NVDA.
 			return _("running")

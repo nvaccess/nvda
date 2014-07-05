@@ -425,9 +425,10 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	dirs.extend(module.__path__ )
 	module.__path__ = dirs
 	# FIXME: this should not be coupled to the config module....
-	import addonHandler
-	for addon in addonHandler.getRunningAddons():
-		addon.addToPackagePath(module)
+	if not globalVars.appArgs.disableAddons:
+		import addonHandler
+		for addon in addonHandler.getRunningAddons():
+			addon.addToPackagePath(module)
 
 class ConfigManager(object):
 	"""Manages and provides access to configuration.
