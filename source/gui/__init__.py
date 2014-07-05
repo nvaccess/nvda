@@ -194,7 +194,8 @@ class MainFrame(wx.Frame):
 	def onExitCommand(self, evt):
 		if config.conf["general"]["askToExit"]:
 			self.prePopup()
-			self.exitDialog = ExitDialog(self).Show()
+			self.exitDialog = ExitDialog(self)
+			self.exitDialog.Show()
 			self.postPopup()
 		else:
 			wx.GetApp().ExitMainLoop()
@@ -696,7 +697,7 @@ class ExitDialog(wx.Dialog):
 		self.actionsList=wx.Choice(self,actionsListID,name=_("Action"),choices=self.actions)
 		self.actionsList.SetSelection(0)
 		actionSizer.Add(self.actionsList)
-		mainSizer.Add(actionSizer,border=10,flag=wx.BOTTOM)
+		mainSizer.Add(actionSizer,border=10,flag=wx.CENTER)
 
 		mainSizer.Add(self.CreateButtonSizer(wx.OK | wx.CANCEL))
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)

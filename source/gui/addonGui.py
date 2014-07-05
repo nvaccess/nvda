@@ -32,7 +32,7 @@ class AddonsDialog(wx.Dialog):
 		entriesSizer=wx.BoxSizer(wx.VERTICAL)
 		if globalVars.appArgs.disableAddons:
 			addonsDisabledSizer=wx.BoxSizer(wx.VERTICAL)
-			addonsDisabledLabel=wx.StaticText(self,-1,label=_("Addons are disabled, but you still can edit them. To enable addons you must restart NVDA."))
+			addonsDisabledLabel=wx.StaticText(self,-1,label=_("All addons are now disabled. To enable addons you must restart NVDA."))
 			addonsDisabledSizer.Add(addonsDisabledLabel)
 			mainSizer.Add(addonsDisabledSizer)
 		# Translators: the label for the installed addons list in the addons manager.
