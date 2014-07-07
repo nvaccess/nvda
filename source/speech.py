@@ -1256,8 +1256,6 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 					textList.append(u"%s %s"%(label,newVal))
 				else:
 					textList.append(noVal)
-<<<<<<< HEAD
-=======
 		verticalAlign=attrs.get("vertical-align")
 		oldverticalAlign=attrsCache.get("vertical-align") if attrsCache is not None else None
 		if (verticalAlign or oldverticalAlign is not None) and verticalAlign!=oldverticalAlign:
@@ -1284,7 +1282,6 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 				# Translators: Reported when text has reverted to default vertical alignment.
 				text=_("vertical align default")
 			textList.append(text)
->>>>>>> master
 	if  formatConfig["reportLinks"]:
 		link=attrs.get("link")
 		oldLink=attrsCache.get("link") if attrsCache is not None else None
