@@ -1288,6 +1288,10 @@ the NVDAObject for IAccessible
 		if controlTypes.STATE_EDITABLE not in self.states:
 			return
 		focusObject=api.getFocusObject()
+		if not isinstance(focusObject,IAccessible):
+			# This can happen during input composition.
+			# The composition object must remain focused.
+			return
 		if self==focusObject:
 			return
 		# Mozilla doesn't focus most objects inside an editable area.
