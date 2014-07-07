@@ -17,7 +17,7 @@ import textInfos
 import eventHandler
 
 from . import IAccessible
-from NVDAObjects.window.winword import WordDocument_WwN
+from NVDAObjects.window.winword import WordDocument, WordDocument_WwN
 from displayModel import EditableTextDisplayModelTextInfo
 from NVDAObjects.window import DisplayModelEditableText
 
