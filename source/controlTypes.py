@@ -186,6 +186,7 @@ STATE_HASLONGDESC=0x400000000
 STATE_PINNED=0x800000000
 STATE_HASFORMULA=0x1000000000 #Mostly for spreadsheets
 STATE_HASCOMMENT=0X2000000000
+STATE_OBSCURED=0x4000000000
 
 roleLabels={
 	# Translators: The word for an unknown control type.
@@ -546,6 +547,8 @@ stateLabels={
 	STATE_HASFORMULA:_("has formula"),
 	# Translators: a state that denotes the existance of a comment.
 	STATE_HASCOMMENT:_("has comment"),
+	# Translators: a state that denotes that the object is covered partially or fully by another object
+	STATE_OBSCURED:_("obscured"),
 }
 
 negativeStateLabels={

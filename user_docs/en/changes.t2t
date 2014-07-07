@@ -38,8 +38,14 @@
  - Selecting the current region (control+shift+8)
 - Microsoft Excel: report vertical and horizontal  alignment for cells with the report formatting command (NVDA+f) and automatically if Report alignment option in Document Formatting settings is on. (#4212)
 - Microsoft Excel: report the style of a cell with the report formatting command (NVDA+f) and automatically if Report Style option in Document formatting settings is on. (#4213)
+- Microsoft Powerpoint: when moving shapes around a slide with the arrow keys, the shape's current location is now reported (#4214) including:
+ - The distance between the shape and each of the  slide edges is reported
+ - If the shape covers or is covered by another shape, then the distance overlapped, and the other shape are reported. 
+ - To report this information at any time without moving a shape, press the report location command (NVDA+delete)
+ - When selecting a shape, if it is covered by another shape, it will report the Obscured state.
 - The report location command (NVDA+delete) is more context specific in some situations. (#4219):
  - In standard edit fields and browse mode, the cursor position as a percentage through the content, and its screen coordinates are reported.
+ - On shapes in Powerpoint Presentations, position of the shape relative to the slide and other shapes is reported.
  - Pressing this command twice will produce the older behaviour of reporting the location information for the entire control.
 
 
