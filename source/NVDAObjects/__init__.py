@@ -29,6 +29,8 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	The L{NVDAObject.basicText} attribute is used as the text to expose.
 	"""
 
+	locationText=None
+
 	def _get_unit_mouseChunk(self):
 		return textInfos.UNIT_STORY
 
@@ -435,6 +437,21 @@ class NVDAObject(baseObject.ScriptableObject):
 		@rtype: tuple of int
 		"""
 		raise NotImplementedError
+
+	def _get_locationText(self):
+		"""A message that explains the location of the object in friendly terms."""
+		location=self.location
+		if not location:
+			return None
+		(left,top,width,height)=location
+		deskLocation=api.getDesktopObject().location
+		(deskLeft,deskTop,deskWidth,deskHeight)=deskLocation
+		percentFromLeft=(float(left-deskLeft)/deskWidth)*100
+		percentFromTop=(float(top-deskTop)/deskHeight)*100
+		percentWidth=(float(width)/deskWidth)*100
+		percentHeight=(float(height)/deskHeight)*100
+		# Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+		return _("Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of screen, height is {height:.1f} per cent of screen").format(left=percentFromLeft,top=percentFromTop,width=percentWidth,height=percentHeight)
 
 	def _get_parent(self):
 		"""Retreaves this object's parent (the object that contains this object).

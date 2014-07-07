@@ -38,6 +38,9 @@
  - Selecting the current region (control+shift+8)
 - Microsoft Excel: report vertical and horizontal  alignment for cells with the report formatting command (NVDA+f) and automatically if Report alignment option in Document Formatting settings is on. (#4212)
 - Microsoft Excel: report the style of a cell with the report formatting command (NVDA+f) and automatically if Report Style option in Document formatting settings is on. (#4213)
+- The report location command (NVDA+delete) is more context specific in some situations. (#4219):
+ - In standard edit fields and browse mode, the cursor position as a percentage through the content, and its screen coordinates are reported.
+ - Pressing this command twice will produce the older behaviour of reporting the location information for the entire control.
 
 
 == Changes ==
