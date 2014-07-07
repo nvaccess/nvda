@@ -31,6 +31,22 @@
 - Microsoft Word: provide feedback in speech and braille for most available formatting shortcut keys (bold, italic, underline, alignment and outline level). (#1353)
 - Microsoft Excel: If the selected cell contains comments, they can be now reported by pressing NVDA+alt+c (#2920)
 - Microsoft Excel: Provide an NVDA-specific dialog to edit the comments on the currently selected cell when pressing Excel's shift+f2 command to enter comment editing mode. (#2920)
+- Microsoft Excel: speech and braille feedback for many more selection movement shortcuts (#4211) including:
+ - Vertical page movement (pageUp and pageDown)
+ - Horizontal page movement (alt+pageUp and alt+pageDown)
+ - Extend selection (the above keys with Shift added).
+ - Selecting the current region (control+shift+8)
+- Microsoft Excel: report vertical and horizontal  alignment for cells with the report formatting command (NVDA+f) and automatically if Report alignment option in Document Formatting settings is on. (#4212)
+- Microsoft Excel: report the style of a cell with the report formatting command (NVDA+f) and automatically if Report Style option in Document formatting settings is on. (#4213)
+- Microsoft Powerpoint: when moving shapes around a slide with the arrow keys, the shape's current location is now reported (#4214) including:
+ - The distance between the shape and each of the  slide edges is reported
+ - If the shape covers or is covered by another shape, then the distance overlapped, and the other shape are reported. 
+ - To report this information at any time without moving a shape, press the report location command (NVDA+delete)
+ - When selecting a shape, if it is covered by another shape, it will report the Obscured state.
+- The report location command (NVDA+delete) is more context specific in some situations. (#4219):
+ - In standard edit fields and browse mode, the cursor position as a percentage through the content, and its screen coordinates are reported.
+ - On shapes in Powerpoint Presentations, position of the shape relative to the slide and other shapes is reported.
+ - Pressing this command twice will produce the older behaviour of reporting the location information for the entire control.
 
 
 == Changes ==
@@ -52,6 +68,9 @@
 - In browse mode in Internet Explorer and other MSHTML controls, tabbing or using single letter navigation to move to form fields again reports the label in many cases where it didn't (specifically, where HTML label elements are used). (#4170)
 - Microsoft Word: Reporting the existance and placement of comments is more accurate. (#3528)
 - Improve navigation of certain dialogs in MS Office products such as Word, Excel and Outlook by no longer reporting particular control container toolbars which are not useful to the user. (#4198) 
+- Task panes such as clipboard manager or File recovery no longer accidentilly seem to gain focus when opening an application such as Microsoft Word or Excel, which was sometimes causing the user to have to switch away and back to the application to use the document or spreadsheet.  (#4199)
+- NVDA no longer fails to run on recent Windows Operating Systems if the user's Windows language is set to Serbian (Latin). (#4203) 
+- It is no longer necessary to press alt multiple times  in order to activate the Microsoft Office ribbon  the first time it is activated, after opening an Office program such as Word or Excel. (#4207)
 
 
 == Changes for Developers ==
