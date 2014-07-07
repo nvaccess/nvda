@@ -1303,7 +1303,7 @@ the NVDAObject for IAccessible
 			states=obj.states
 			if controlTypes.STATE_EDITABLE not in states:
 				break
-			if controlTypes.STATE_FOCUSABLE in states:
+			if controlTypes.STATE_FOCUSED in states:
 				shouldFocus=True
 				break
 			obj=obj.parent
