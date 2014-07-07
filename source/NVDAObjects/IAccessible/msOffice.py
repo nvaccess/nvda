@@ -17,6 +17,13 @@ import eventHandler
 
 class SDM(IAccessible):
 
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		# #4199: Some SDM controls can incorrectly firefocus when they are not focused
+		# E.g. File recovery pane, clipboard manager pane
+		if winUser.getGUIThreadInfo(0).hwndFocus!=self.windowHandle:
+			return False
+		return super(SDM,self).shouldAllowIAccessibleFocusEvent
+
 	def _get_name(self):
 		name=super(SDM,self).name
 		if not name and self.role==controlTypes.ROLE_LISTITEM:
@@ -38,7 +45,7 @@ class SDM(IAccessible):
 	def _get_SDMChild(self):
 		if controlTypes.STATE_FOCUSED in self.states:
 			hwndFocus=winUser.getGUIThreadInfo(0).hwndFocus
-			if hwndFocus and hwndFocus!=self.windowHandle and not winUser.getClassName(hwndFocus).startswith('bosa_sdm'):
+			if hwndFocus and hwndFocus!=self.windowHandle and winUser.isDescendantWindow(self.windowHandle,hwndFocus) and not winUser.getClassName(hwndFocus).startswith('bosa_sdm'):
 				obj=getNVDAObjectFromEvent(hwndFocus,winUser.OBJID_CLIENT,0)
 				if not obj: return None
 				if getattr(obj,'parentSDMCanOverrideName',True):

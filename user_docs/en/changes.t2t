@@ -52,6 +52,7 @@
 - In browse mode in Internet Explorer and other MSHTML controls, tabbing or using single letter navigation to move to form fields again reports the label in many cases where it didn't (specifically, where HTML label elements are used). (#4170)
 - Microsoft Word: Reporting the existance and placement of comments is more accurate. (#3528)
 - Improve navigation of certain dialogs in MS Office products such as Word, Excel and Outlook by no longer reporting particular control container toolbars which are not useful to the user. (#4198) 
+- Task panes such as clipboard manager or File recovery no longer accidentilly seem to gain focus when opening an application such as Microsoft Word or Excel, which was sometimes causing the user to have to switch away and back to the application to use the document or spreadsheet.  (#4199)
 
 
 == Changes for Developers ==
