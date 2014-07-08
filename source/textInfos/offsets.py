@@ -6,6 +6,7 @@
 
 import re
 import ctypes
+import unicodedata
 import NVDAHelper
 import config
 import textInfos
@@ -61,7 +62,7 @@ def findStartOfLine(text,offset,lineLength=None):
 def findEndOfLine(text,offset,lineLength=None):
 	"""Searches forwards through the given text from the given offset, until it finds the offset that is the start of the next line. With out a set line length, it searches for new line / cariage return characters, with a set line length it simply moves forward to sit on a multiple of the line length.
 @param text: the text to search
-@type text: string
+@type text: unicode
 @param offset: the offset of the text to start at
 @type offset: int
 @param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
@@ -88,7 +89,7 @@ def findEndOfLine(text,offset,lineLength=None):
 def findStartOfWord(text,offset,lineLength=None):
 	"""Searches backwards through the given text from the given offset, until it finds the offset that is the start of the word. It checks to see if a character is alphanumeric, or is another symbol , or is white space.
 @param text: the text to search
-@type text: string
+@type text: unicode
 @param offset: the offset of the text to start at
 @type offset: int
 @param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
@@ -100,17 +101,17 @@ def findStartOfWord(text,offset,lineLength=None):
 		return offset
 	while offset>0 and text[offset].isspace():
 		offset-=1
-	if not text[offset].isalnum():
+	if unicodedata.category(text[offset])[0] not in "LMN":
 		return offset
 	else:
-		while offset>0 and text[offset-1].isalnum():
+		while offset>0 and unicodedata.category(text[offset-1])[0] in "LMN":
 			offset-=1
 	return offset
 
 def findEndOfWord(text,offset,lineLength=None):
 	"""Searches forwards through the given text from the given offset, until it finds the offset that is the start of the next word. It checks to see if a character is alphanumeric, or is another symbol , or is white space.
 @param text: the text to search
-@type text: string
+@type text: unicode
 @param offset: the offset of the text to start at
 @type offset: int
 @param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
@@ -120,10 +121,10 @@ def findEndOfWord(text,offset,lineLength=None):
 """
 	if offset>=len(text):
 		return offset+1
-	if text[offset].isalnum():
-		while offset<len(text) and text[offset].isalnum():
+	if unicodedata.category(text[offset])[0] in "LMN":
+		while offset<len(text) and unicodedata.category(text[offset])[0] in "LMN":
 			offset+=1
-	elif not text[offset].isspace() and not text[offset].isalnum():
+	elif unicodedata.category(text[offset])[0] not in "LMNZ":
 		offset+=1
 	while offset<len(text) and text[offset].isspace():
 		offset+=1
