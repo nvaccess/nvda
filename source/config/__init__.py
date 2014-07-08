@@ -418,6 +418,8 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	@param subdir: The subdirectory to be used, C{None} for the name of C{module}.
 	@type subdir: str
 	"""
+	if globalVars.appArgs.disableAddons:
+		return
 	if not subdir:
 		subdir = module.__name__
 	# Python 2.x doesn't properly handle unicode import paths, so convert them.
@@ -425,10 +427,9 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	dirs.extend(module.__path__ )
 	module.__path__ = dirs
 	# FIXME: this should not be coupled to the config module....
-	if not globalVars.appArgs.disableAddons:
-		import addonHandler
-		for addon in addonHandler.getRunningAddons():
-			addon.addToPackagePath(module)
+	import addonHandler
+	for addon in addonHandler.getRunningAddons():
+		addon.addToPackagePath(module)
 
 class ConfigManager(object):
 	"""Manages and provides access to configuration.
