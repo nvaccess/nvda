@@ -867,6 +867,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			elif unit==wdPicas:
 				offset=offset/12.0
 				# Translators: a measurement in Microsoft Word
+				# See http://support.microsoft.com/kb/76388 for details.
 				return _("{offset:.3g} picas".format(offset=offset))
 
 	def script_reportCurrentComment(self,gesture):
