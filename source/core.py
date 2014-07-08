@@ -379,6 +379,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	else:
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
+		# execute pending update, if any and the user agrees
+		if not globalVars.appArgs.launcher and config.conf["update"]["startupNotification"] and updateCheck.isPendingUpdate() and updateCheck.askInstallUpdateNow():
+			updateCheck.executeUpdate()
 	log.info("NVDA initialized")
 
 	log.debug("entering wx application main loop")

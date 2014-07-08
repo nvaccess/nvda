@@ -7,6 +7,7 @@
 
 import glob
 import os
+import sys
 import copy
 import re
 import wx
@@ -203,6 +204,41 @@ class GeneralSettingsDialog(SettingsDialog):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizer.Add(item)
+			# Translators: The label of a checkbox in general settings to toggle startup notifications for pending updates of NVDA (if not checked, user will not be notified for pending updates).
+			item=self.notifyForPendingUpdatesCheckBox=wx.CheckBox(self,label=_("Notify me for &pending updates on startup"))
+			item.Value=config.conf["update"]["startupNotification"]
+			if globalVars.appArgs.secure:
+				item.Disable()
+			settingsSizer.Add(item)
+			chooseStoreUpdatesDirSizer=wx.BoxSizer(wx.VERTICAL)
+			self.storeUpdatesDir=config.conf["update"]["storeUpdatesDir"] or updateCheck.defaultStoreUpdatesDir
+			# Translators: The label for a setting in general settings to browse for folder where downloaded updates should be stored.
+			self.browseForStoreUpdatesDirLabel=wx.StaticText(self,wx.ID_ANY,label=_("Store updates in:"))
+			chooseStoreUpdatesDirSizer.Add(self.browseForStoreUpdatesDirLabel)
+			self.storeUpdatesDirLocation = wx.TextCtrl(self, wx.ID_ANY, value=self.storeUpdatesDir)
+			chooseStoreUpdatesDirSizer.Add(self.storeUpdatesDirLocation)
+			# Translators: The label for a button in general settings to browse for folder where downloaded updates should be stored.
+			self.browseForStoreUpdatesDirButton= wx.Button(self, wx.ID_ANY, label=_("Browse..."))
+			self.browseForStoreUpdatesDirButton.Bind(wx.EVT_BUTTON,self.onBrowseForStoreUpdatesDir)
+			if globalVars.appArgs.secure:
+				self.browseForStoreUpdatesDirButton.Disable()
+			chooseStoreUpdatesDirSizer.Add(self.browseForStoreUpdatesDirButton)
+			# Translators: The label for a button which (re)sets a perticular setting to its defaults.
+			self.resetStoreUpdatesDirButton= wx.Button(self, wx.ID_ANY, label=_("Use default"))
+			self.resetStoreUpdatesDirButton.Bind(wx.EVT_BUTTON,self.onResetStoreUpdatesDir)
+			if globalVars.appArgs.secure:
+				self.resetStoreUpdatesDirButton.Disable()
+			chooseStoreUpdatesDirSizer.Add(self.resetStoreUpdatesDirButton)
+			settingsSizer.Add(chooseStoreUpdatesDirSizer,border=10,flag=wx.BOTTOM)
+			keepUpdatesSizer = wx.BoxSizer(wx.HORIZONTAL)
+			# Translators: The label of an edit field in general settings to set how long a downloaded update should be kept
+			keepUpdatesSizer.Add(wx.StaticText(self, label=_("Keep downloaded updates for (in days):")))
+			item = self.keepUpdatesFor = wx.SpinCtrl(self, wx.ID_ANY, initial=config.conf["update"]["keepUpdatesFor"], min=0, max=sys.maxint)
+			keepUpdatesSizer.Add(item)
+			if globalVars.appArgs.secure:
+				item.Disable()
+			settingsSizer.Add(keepUpdatesSizer)
+			settingsSizer.Fit(self)
 
 	def postInit(self):
 		self.languageList.SetFocus()
@@ -251,7 +287,27 @@ class GeneralSettingsDialog(SettingsDialog):
 			# Translators: The message displayed when copying configuration to system settings was successful.
 			gui.messageBox(_("Successfully copied NVDA user settings"),_("Success"),wx.OK|wx.ICON_INFORMATION,self)
 
+	def onBrowseForStoreUpdatesDir(self,evt):
+		# Translators: The title of the dialog presented when browsing for the
+		# destination directory for setting the path where to store pending updates.
+		with wx.DirDialog(self, _("Select folder to store pending updates"), defaultPath=self.storeUpdatesDir) as d:
+			if d.ShowModal() == wx.ID_OK:
+				self.storeUpdatesDir = d.Path
+				self.storeUpdatesDirLocation.SetValue(self.storeUpdatesDir)
+
+	def onResetStoreUpdatesDir(self,evt):
+		if updateCheck:
+			self.storeUpdatesDir = updateCheck.defaultStoreUpdatesDir
+			self.storeUpdatesDirLocation.SetValue(self.storeUpdatesDir)
+
 	def onOk(self,evt):
+		if not os.path.isdir(self.storeUpdatesDirLocation.Value) or not os.access(self.storeUpdatesDirLocation.Value, os.W_OK|os.X_OK):
+			gui.messageBox(
+				# Translators: The message displayed when the path for storing downloaded NVDA updates does not exists or is not writable.
+				_("The directory for storing downloaded NVDA updates not exists or is not writable. Please choose another one."),
+				_("Error"),
+				wx.OK|wx.ICON_ERROR,self)
+			return
 		newLanguage=[x[0] for x in self.languageNames][self.languageList.GetSelection()]
 		if newLanguage!=self.oldLanguage:
 			try:
@@ -276,6 +332,18 @@ class GeneralSettingsDialog(SettingsDialog):
 				gui.messageBox(_("This change requires administrator privileges."), _("Insufficient Privileges"), style=wx.OK | wx.ICON_ERROR, parent=self)
 		if updateCheck:
 			config.conf["update"]["autoCheck"]=self.autoCheckForUpdatesCheckBox.IsChecked()
+			config.conf["update"]["startupNotification"]=self.notifyForPendingUpdatesCheckBox.IsChecked()
+			config.conf["update"]["storeUpdatesDir"]=self.storeUpdatesDirLocation.Value
+			if self.storeUpdatesDirLocation.Value != updateCheck.storeUpdatesDir:
+				# move all updates files to the new location
+				try:
+					for file in os.listdir(updateCheck.storeUpdatesDir):
+						f=os.path.join(updateCheck.storeUpdatesDir, file)
+						if file.startswith("nvda_update_") and file.endswith(".exe"):
+							os.renames(f, os.path.join(self.storeUpdatesDirLocation.Value, file))
+				except OSError:
+					log.debug("The file %s can not be moved to the new location %s"%(f, self.storeUpdatesDir))
+			config.conf["update"]["keepUpdatesFor"]=self.keepUpdatesFor.GetValue()
 			updateCheck.terminate()
 			updateCheck.initialize()
 		if self.oldLanguage!=newLanguage:

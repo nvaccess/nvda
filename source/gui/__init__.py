@@ -194,6 +194,18 @@ class MainFrame(wx.Frame):
 		# Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
 		self._popupSettingsDialog(DictionaryDialog,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
 
+	def onExecuteUpdateCommand(self, evt):
+		if updateCheck and updateCheck.isPendingUpdate():
+			updateCheck.executeUpdate()
+
+	def onUpdatePendingUpdatesMenuItemCommand(self, evt):
+		try:
+			self.sysTrayIcon.menu.RemoveItem(self.sysTrayIcon.runPendingUpdatesMenuItem)
+		except:
+			pass
+		if not config.conf["general"]["askToExit"] and updateCheck and updateCheck.isPendingUpdate():
+			self.sysTrayIcon.menu.InsertItem(self.sysTrayIcon.menu.GetMenuItemCount()-2,self.sysTrayIcon.runPendingUpdatesMenuItem)
+
 	def onExitCommand(self, evt):
 		if config.conf["general"]["askToExit"]:
 			self.prePopup()
@@ -452,6 +464,10 @@ class SysTrayIcon(wx.TaskBarIcon):
 			# Translators: The label for the menu item to open donate page.
 			item = self.menu.Append(wx.ID_ANY, _("Donate"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(DONATE_URL), item)
+			# Translators: The label for the menu item to run pending updates.
+			item = self.runPendingUpdatesMenuItem = self.menu.Append(wx.ID_ANY, _("Run pending updates"), _("Start previously downloaded updates, which are still not applyed"))
+			self.Bind(wx.EVT_MENU, frame.onExecuteUpdateCommand, item)
+			self.Bind(wx.EVT_UPDATE_UI, frame.onUpdatePendingUpdatesMenuItemCommand, item)
 		self.menu.AppendSeparator()
 		item = self.menu.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)
@@ -726,8 +742,12 @@ class ExitDialog(wx.Dialog):
 		# Translators: An option in the combo box to choose exit action.
 		_("Restart"),
 		# Translators: An option in the combo box to choose exit action.
-		_("Restart with add-ons disabled")]
-		self.actionsList=wx.Choice(self,actionsListID,choices=self.actions)
+		_("Restart with addons disabled")]
+		if updateCheck and updateCheck.isPendingUpdate():
+			# Translators: An option in the combo box to choose exit action.
+			self.actions.append(_("Run pending updates"))
+		# Translators: A combo box to choose exit action (possible options are exit, restart, restart with addons disabled).
+		self.actionsList=wx.Choice(self,actionsListID,name=_("Action"),choices=self.actions)
 		self.actionsList.SetSelection(0)
 		actionSizer.Add(self.actionsList)
 		mainSizer.Add(actionSizer,border=10,flag=wx.CENTER)
@@ -748,6 +768,9 @@ class ExitDialog(wx.Dialog):
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
 		elif action == 2:
 			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,True)
+		elif action == len(self.actions)-1:
+			if updateCheck:
+				updateCheck.executeUpdate()
 		self.Destroy()
 
 	def onCancel(self, evt):

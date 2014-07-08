@@ -42,6 +42,17 @@ RETRY_INTERVAL = 600 # 10 min
 #: The download block size in bytes.
 DOWNLOAD_BLOCK_SIZE = 8192 # 8 kb
 
+#: directory to store pending update files
+storeUpdatesDir=""
+defaultStoreUpdatesDir=os.path.join(globalVars.appArgs.configPath, 'updates')
+try:
+	os.makedirs(defaultStoreUpdatesDir)
+except OSError:
+	if not os.path.isdir(defaultStoreUpdatesDir):
+		log.debugWarning("Default download path for updates %s could not be created."%defaultStoreUpdatesDir)
+#:  keep downloaded updates for X days
+keepUpdatesFor=0
+
 #: Persistent state information.
 #: @type: dict
 state = None
@@ -93,6 +104,39 @@ def checkForUpdate(auto=False):
 	if not info:
 		return None
 	return info
+
+def isPendingUpdate():
+	try:
+		pendingUpdateFile=state["pendingUpdateFile"]
+	except:
+		pendingUpdateFile=False
+	if not pendingUpdateFile or not os.path.isfile(pendingUpdateFile):
+		return None
+	return pendingUpdateFile
+
+def executeUpdate(destPath=None):
+	if not destPath:
+		destPath=isPendingUpdate()
+	if not destPath:
+		return
+	state["pendingUpdateFile"]=None
+	state["pendingUpdateVersion"]=None
+	saveState()
+	shellapi.ShellExecute(None, None,
+		destPath.decode("mbcs"),
+		u"--install -m" if config.isInstalledCopy() else u"--launcher",
+		None, winUser.SW_SHOWNORMAL)
+
+def askInstallUpdateNow():
+	exitDialogEnabled=config.conf["general"]["askToExit"]
+	return gui.messageBox(
+		# Translators: A message presented when the update has been successfully downloaded asking the user to install or postpone.
+		_("Update is ready to install.\nYou can install it now, or install it later from the exit dialog.\nInstall now?") if exitDialogEnabled else
+		# Translators: A message presented when the update has been successfully downloaded asking the user to install or postpone.
+		_("Update is ready to install.\nYou can install it now, or install it later from the NVDA menu.\nInstall now?"),
+		# Translators: The title of the dialog displayed when the update is about to be installed.
+		_("Install Update"),wx.YES|wx.NO|wx.ICON_WARNING
+	)==wx.YES
 
 class UpdateChecker(object):
 	"""Check for an updated version of NVDA, presenting appropriate user interface.
@@ -181,7 +225,7 @@ class AutoUpdateChecker(UpdateChecker):
 	def _result(self, info):
 		if not info:
 			return
-		if info["version"] == state["dontRemindVersion"]:
+		if (info["version"] == state["dontRemindVersion"]) or (info["version"] == state["pendingUpdateVersion"]):
 			return
 		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, True)
 
@@ -194,21 +238,27 @@ class UpdateResultDialog(wx.Dialog):
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 
 		if updateInfo:
-			self.isInstalled = config.isInstalledCopy()
 			self.urls = updateInfo["launcherUrl"].split(" ")
 			self.fileHash = updateInfo.get("launcherHash")
-			# Translators: A message indicating that an updated version of NVDA is available.
-			# {version} will be replaced with the version; e.g. 2011.3.
-			message = _("NVDA version {version} is available.").format(**updateInfo)
+			if isPendingUpdate() and state["pendingUpdateVersion"] == updateInfo["version"]:
+				message = _("The latest update is already pending to be installed.")
+			else:
+				# Translators: A message indicating that an updated version of NVDA is available.
+				# {version} will be replaced with the version; e.g. 2011.3.
+				message = _("NVDA version {version} is available.").format(**updateInfo)
 		else:
 			# Translators: A message indicating that no update to NVDA is available.
 			message = _("No update available.")
 		mainSizer.Add(wx.StaticText(self, label=message))
 
 		if updateInfo:
-			if self.isInstalled:
-				# Translators: The label of a button to download and install an NVDA update.
-				label = _("Download and &install update")
+			if isPendingUpdate() and state["pendingUpdateVersion"] == updateInfo["version"]:
+				# Translators: The label of a button to install a pending NVDA update.
+				item = wx.Button(self, label=_("&Install update"))
+				item.Bind(wx.EVT_BUTTON, lambda evt: executeUpdate())
+				mainSizer.Add(item)
+				# Translators: The label of a button to re-download a pending NVDA update.
+				label = _("Re-download update")
 			else:
 				# Translators: The label of a button to download an NVDA update.
 				label = _("&Download update")
@@ -217,7 +267,7 @@ class UpdateResultDialog(wx.Dialog):
 
 			mainSizer.Add(item)
 
-			if auto:
+			if auto and (not isPendingUpdate() or state["pendingUpdateVersion"] != updateInfo["version"]):
 				# Translators: The label of a button to remind the user later about performing some action.
 				item = wx.Button(self, label=_("Remind me &later"))
 				item.Bind(wx.EVT_BUTTON, self.onLaterButton)
@@ -241,10 +291,7 @@ class UpdateResultDialog(wx.Dialog):
 		DonateRequestDialog(gui.mainFrame, self._download)
 
 	def _download(self):
-		if self.isInstalled:
-			UpdateDownloader(self.urls, fileHash=self.fileHash).start()
-		else:
-			os.startfile(self.urls[0])
+		UpdateDownloader(self.urls, fileHash=self.fileHash).start()
 		self.Destroy()
 
 	def onLaterButton(self, evt):
@@ -265,6 +312,7 @@ class UpdateDownloader(object):
 		@type fileHash: basestring
 		"""
 		self.urls = urls
+		self.version = version
 		self.destPath = tempfile.mktemp(prefix="nvda_update_", suffix=".exe")
 		self.fileHash = fileHash
 
@@ -385,19 +433,30 @@ class UpdateDownloader(object):
 			wx.OK | wx.ICON_ERROR)
 
 	def _downloadSuccess(self):
+		global storeUpdatesDir, keepUpdatesFor
 		self._stopped()
-		# Translators: The message presented when the update has been successfully downloaded
-		# and is about to be installed.
-		gui.messageBox(_("Update downloaded. It will now be installed."),
-			# Translators: The title of the dialog displayed when the update is about to be installed.
-			_("Install Update"))
-		state["removeFile"] = self.destPath
+		while not os.path.isdir(storeUpdatesDir) or not os.access(storeUpdatesDir, os.W_OK|os.X_OK):
+			with wx.DirDialog(gui.mainFrame, _("Store updates directory not writable. Select a writable one"), defaultPath=storeUpdatesDir) as d:
+				if d.ShowModal() == wx.ID_OK:
+					storeUpdatesDir = d.Path
+				else:
+					break
+		moveDest=os.path.join(storeUpdatesDir, os.path.basename(self.destPath))
+		try:
+			os.renames(self.destPath, moveDest)
+		except:
+			gui.messageBox(
+				# Translators: The message when downloaded update file could not be preserved.
+				_("The downloaded file could not be moved to a safe location and could disappear on the next system restart.\n"
+					"NVDA still can use it during this session, but if you want to preserv it, you can copy it yourselv from:\n"
+					"%s" % self.destPath),
+				_("Error"), wx.OK | wx.ICON_ERROR)
+			moveDest=self.destPath
+		state["pendingUpdateFile"]=moveDest
+		state["pendingUpdateVersion"]=self.version
 		saveState()
-		# #4475: ensure that the new process shows its first window, by providing SW_SHOWNORMAL
-		shellapi.ShellExecute(None, None,
-			self.destPath.decode("mbcs"),
-			u"--install -m",
-			None, winUser.SW_SHOWNORMAL)
+		if askInstallUpdateNow():
+			executeUpdate(moveDest)
 
 class DonateRequestDialog(wx.Dialog):
 	# Translators: The message requesting donations from users.
@@ -451,27 +510,50 @@ class DonateRequestDialog(wx.Dialog):
 
 def saveState():
 	try:
-		cPickle.dump(state, file(_stateFilename, "wb"))
+		with open(_stateFilename, "wb") as sfp:
+			cPickle.dump(state, sfp)
 	except:
 		log.debugWarning("Error saving state", exc_info=True)
 
 def initialize():
-	global state, _stateFilename, autoChecker
+	global state, _stateFilename, autoChecker, storeUpdatesDir, keepUpdatesFor
+	if config.conf["update"]["storeUpdatesDir"] and os.path.isdir(config.conf["update"]["storeUpdatesDir"]):
+		storeUpdatesDir=config.conf["update"]["storeUpdatesDir"]
+	else:
+		storeUpdatesDir=defaultStoreUpdatesDir
+	if config.conf["update"]["keepUpdatesFor"] >= 0:
+		keepUpdatesFor=config.conf["update"]["keepUpdatesFor"]
 	_stateFilename = os.path.join(globalVars.appArgs.configPath, "updateCheckState.pickle")
 	try:
-		state = cPickle.load(file(_stateFilename, "r"))
+		with open(_stateFilename, "r") as sfp:
+			state = cPickle.load(sfp)
 	except:
 		# Defaults.
 		state = {
 			"lastCheck": 0,
 			"dontRemindVersion": None,
+			"pendingUpdateVersion": None,
+			"pendingUpdateFile": None,
 		}
 
-	# If we just updated, remove the updater file.
+	# check the pending version against the current version
 	try:
-		os.remove(state.pop("removeFile"))
-		saveState()
-	except (KeyError, OSError):
+		if state["pendingUpdateVersion"] == versionInfo.version:
+			raise
+	except:
+		state["pendingUpdateFile"] = state["pendingUpdateVersion"] = None
+	# if there is pending update, and it was moved because the storeUpdatesDir was changed - update the path
+	if state["pendingUpdateFile"] and not os.path.isfile(state["pendingUpdateFile"]) and not state["pendingUpdateFile"].startswith(storeUpdatesDir):
+		state["pendingUpdateFile"] = os.path.join(storeUpdatesDir, os.path.basename(state["pendingUpdateFile"]))
+
+	# remove all updates files older than keepUpdatesFor, except the one that is currently pending (if any)
+	try:
+		for file in os.listdir(storeUpdatesDir):
+			f=os.path.join(storeUpdatesDir, file)
+			if file.startswith("nvda_update_") and file.endswith(".exe") and (f != state["pendingUpdateFile"]) and (os.stat(f).st_mtime < time.time() - keepUpdatesFor * 86400):
+				os.remove(f)
+				log.debug("Update file %s removed: older than %s days"%(f,keepUpdatesFor))
+	except OSError:
 		pass
 
 	if config.conf["update"]["autoCheck"] and not globalVars.appArgs.launcher:
