@@ -67,7 +67,7 @@ class AppModule(appModuleHandler.AppModule):
 	def _registerCOMWithFocusJuggle(self):
 		import wx
 		import gui
-		# Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+		# Translators: The title for the dialog shown while Microsoft Outlook initializes.
 		d=wx.Dialog(None,title=_("Waiting for Outlook..."))
 		gui.mainFrame.prePopup()
 		d.Show()
