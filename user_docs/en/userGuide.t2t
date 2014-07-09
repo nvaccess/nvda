@@ -131,6 +131,7 @@ Press OK to dismiss this dialog.
 ++ Launching NVDA ++
 If you have installed NVDA with the installer, then starting NVDA is as simple as either pressing control+alt+n, or choosing NVDA from the NVDA menu under Programs on the Start Menu.
 Additionally you can type NVDA into the Run dialog and press Enter.
+You can also pass some [command line options #CommandLineOptions] which allows you to restart NVDA (-r), quit (-q), disable addons (--disable-addons) and many more.
 
 To start the portable version, go to the directory you unpacked NVDA to, and press enter or double click on nvda.exe.
 
@@ -1921,6 +1922,44 @@ The following state indicators are also defined:
 | submnu | displayed when an object has a popup (usually a sub-menu) |
 
 + Advanced Topics +
+
+++ Command line options ++[CommandLineOptions]
+NVDA can accept one or more additional options when starts, which could change its behaviour. You can pass as many options as you need.
+Those options could be passed when starting from a shortcut (in the shortcut properties), from the Run dialog (StartMenu->Run or WindowsKey+R), or from the command interpretor (command prompt or cmd.exe) and should be separated by themselvs and from the name of NVDA's executable file with spaces.
+For example, the desktop shortcut that NVDA creates after install has the -r option, which tells NVDA to close the currently running copy before starting the new one.
+Another useful option is --disable-addons, which tells NVDA to suspend all running addons, which allows you to recover from bad situations and also helps you to determin the cause of some problem when such appear.
+
+For example, you can exit silently the currently running copy of NVDA by entering the following in the Run dialog:
+
+nvda -q -m
+
+Some of the command line options have a short and a long version, some of them have only one or the another. For those which have a short version, you can combine them like this:
+| nvda -rm | This will exit the currently running copy of NVDA and will start this one with startup sounds off, etc |
+| nvda -rm --disable-addons | Same as above, but with addons disabled |
+
+Some of the command line options accept additional parameters, for example how detailed the logging should be or the path to user config directory.
+Those parameters come right after the option, separated by a space (when using the short version) or an equal sign (=) - when using the long version of the option, for example:
+| nvda -l 10 | Tells NVDA to start with log level set to debug |
+| nvda --log-file=c:\nvda.log |  Tells NVDA to write its log to c:\nvda.log |
+| nvda --log-level=20 -f c:\nvda.log | Tels NVDA to start with log level set to info and to write its log to c:\nvda.log |
+
+Following are the command line options for NVDA:
+%kc:beginInclude
+|| Short | Long | Description |
+| -h | --help | show this help message and exit |
+| -q | --quit | Quit already running copy of NVDA |
+| -r | --replace | Quit already running copy of NVDA and start this one |
+| -k | --check-running | Report whether NVDA is running via the exit code; 0 if running, 1 if not running |
+| -f LOGFILENAME | --log-file=LOGFILENAME | The file where log messages should be written to |
+| -l LOGLEVEL | --log-level=LOGLEVEL | The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning |
+| -c CONFIGPATH | --config-path=CONFIGPATH | The path where all settings for NVDA are stored |
+| -m | --minimal | No sounds, no interface, no start message etc |
+| -s | --secure | Secure mode (disable Python console) |
+| None | --disable-addons | Addons will have no effect |
+| None | --no-sr-flag  | Don't change the global system screen reader flag |
+| None | --install | Silently installs NVDA |
+| None | --launcher | Started from the launcher |
+%kc:endInclude
 
 ++ Advanced Customization of Symbol Pronunciation ++
 It is possible to customize the pronunciation of punctuation and other symbols beyond what can be done using the [Punctuation/symbol pronunciation #SymbolPronunciation] dialog.
