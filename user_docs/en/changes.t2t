@@ -71,6 +71,7 @@
 - Task panes such as clipboard manager or File recovery no longer accidentilly seem to gain focus when opening an application such as Microsoft Word or Excel, which was sometimes causing the user to have to switch away and back to the application to use the document or spreadsheet.  (#4199)
 - NVDA no longer fails to run on recent Windows Operating Systems if the user's Windows language is set to Serbian (Latin). (#4203) 
 - It is no longer necessary to press alt multiple times  in order to activate the Microsoft Office ribbon  the first time it is activated, after opening an Office program such as Word or Excel. (#4207)
+- Pressing numlock while in input help mode now correctly toggles numlock, rather than causing the keyboard and the Operating System to become out of sync in regards to the state of this key. (#4226)
 
 
 == Changes for Developers ==
