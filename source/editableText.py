@@ -102,10 +102,7 @@ class EditableText(ScriptableObject):
 			eventHandler.executeEvent("caretMovementFailed", self, gesture=gesture)
 		self._caretScriptPostMovedHelper(unit,gesture,newInfo)
 
-	def script_enter(self,gesture):
-		if not self.announceNewLineText:
-			gesture.send()
-			return
+	def script_caret_newLine(self,gesture):
 		try:
 			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		except:
@@ -189,7 +186,6 @@ class EditableText(ScriptableObject):
 		braille.handler.handleCaretMove(self)
 
 	__gestures = {
-		"kb:enter":"enter",
 		"kb:upArrow": "caret_moveByLine",
 		"kb:downArrow": "caret_moveByLine",
 		"kb:leftArrow": "caret_moveByCharacter",

@@ -8,6 +8,7 @@
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 """
 
+import os
 import time
 import threading
 import difflib
@@ -147,6 +148,12 @@ class EditableText(editableText.EditableText, NVDAObject):
 	"""
 
 	shouldFireCaretMovementFailedEvents = True
+
+	def initOverlayClass(self):
+		# #4264: the caret_newLine script can only be bound for processes other than NVDA's process
+		# As Pressing enter on an edit field can cause modal dialogs to appear, yet gesture.send and api.processPendingEvents may call.wx.yield which ends in a freeze. 
+		if self.announceNewLineText and self.processID!=os.getpid():
+			self.bindGesture("kb:enter","caret_newLine")
 
 class EditableTextWithAutoSelectDetection(EditableText):
 	"""In addition to L{EditableText}, handles reporting of selection changes for objects which notify of them.
