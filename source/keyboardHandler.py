@@ -455,36 +455,36 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			input = winUser.Input(type=winUser.INPUT_KEYBOARD)
 			input.ii.ki.wVk = mod
 			if not press:
-				input.ii.ki.dwFlags = 2
+				input.ii.ki.dwFlags = winUser.KEYEVENTF_KEYUP
 			inputs.append(input)
 		# Release the main key if its already down so it can be pressed again
 		if mainKeyWasDown:
 			input = winUser.Input(type=winUser.INPUT_KEYBOARD)
 			input.ii.ki.wVk = self.vkCode
-			input.ii.ki.dwFlags =2
+			input.ii.ki.dwFlags = winUser.KEYEVENTF_KEYUP
 			if self.isExtended:
-				input.ii.ki.dwFlags+=1
+				input.ii.ki.dwFlags+=winUser.KEYEVENTF_EXTENDEDKEY
 			inputs.append(input)
 		# Press the main key
 		input = winUser.Input(type=winUser.INPUT_KEYBOARD)
 		input.ii.ki.wVk = self.vkCode
 		if self.isExtended:
-			input.ii.ki.dwFlags+=1
+			input.ii.ki.dwFlags+=winUser.KEYEVENTF_EXTENDEDKEY
 		inputs.append(input)
 		# Release the main key
 		if not mainKeyWasDown:
 			input = winUser.Input(type=winUser.INPUT_KEYBOARD)
 			input.ii.ki.wVk = self.vkCode
-			input.ii.ki.dwFlags=2
+			input.ii.ki.dwFlags = winUser.KEYEVENTF_KEYUP
 			if self.isExtended:
-				input.ii.ki.dwFlags+=1
+				input.ii.ki.dwFlags+=winUser.KEYEVENTF_EXTENDEDKEY
 			inputs.append(input)
 		# Release any needed modifiers that were needed but not originally down, and press any unneeded modifiers that were originally down
 		for mod,press in neededModifiers:
 			input = winUser.Input(type=winUser.INPUT_KEYBOARD)
 			input.ii.ki.wVk = mod
 			if press:
-				input.ii.ki.dwFlags = 2
+				input.ii.ki.dwFlags = winUser.KEYEVENTF_KEYUP
 			inputs.append(input)
 		# Send the input to the Operating System
 		ignoreInjected=True
@@ -492,7 +492,6 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			winUser.SendInput(inputs)
 		finally:
 			ignoreInjected=False
-
 
 	@classmethod
 	def fromName(cls, name):
