@@ -427,37 +427,72 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 	def send(self):
 		global ignoreInjected
-		keys = []
-		for vk, ext in self.generalizedModifiers:
-			if vk == VK_WIN:
-				if winUser.getKeyState(winUser.VK_LWIN) & 32768 or winUser.getKeyState(winUser.VK_RWIN) & 32768:
-					# Already down.
-					continue
-				vk = winUser.VK_LWIN
-			elif winUser.getKeyState(vk) & 32768:
-				# Already down.
+		isWinDown=winUser.getAsyncKeyState(winUser.VK_LWIN)&32768 or winUser.getAsyncKeyState(winUser.VK_RWIN)&32768
+		neededModifiers=[]
+		# Record any currently held modifier keys that must be released while sending this key press
+		for mod in set(x for x in self.NORMAL_MODIFIER_KEYS.itervalues() if x):
+			if (mod,True) in self.generalizedModifiers or (mod,False) in self.generalizedModifiers: continue
+			if mod==VK_WIN:
+				if not isWinDown: continue
+				mod=winUser.VK_LWIN
+			elif not winUser.getAsyncKeyState(mod)&32768: 
 				continue
-			keys.append((vk, 0, ext))
-		keys.append((self.vkCode, self.scanCode, self.isExtended))
-
+			neededModifiers.append((mod,False))
+		# Record any modifiers that must be included for this key press that arn't already held down. 
+		for mod,ext in self.generalizedModifiers:
+			if mod==VK_WIN:
+				if isWinDown: continue
+				mod=winUser.VK_LWIN
+			elif winUser.getAsyncKeyState(mod)&32768:
+				continue
+			neededModifiers.append((mod,True))
+		# Find out if the main key for the key press is already pressed or not
+		mainKeyWasDown=winUser.getAsyncKeyState(self.vkCode)&32768
+		# Prepair the input sequence for sending
+		inputs=[]
+		# Press any modifiers needed but not yet down, and release any modifiers down but not needed
+		for mod,press in neededModifiers:
+			input = winUser.Input(type=winUser.INPUT_KEYBOARD)
+			input.ii.ki.wVk = mod
+			if not press:
+				input.ii.ki.dwFlags = 2
+			inputs.append(input)
+		# Release the main key if its already down so it can be pressed again
+		if mainKeyWasDown:
+			input = winUser.Input(type=winUser.INPUT_KEYBOARD)
+			input.ii.ki.wVk = self.vkCode
+			input.ii.ki.dwFlags =2
+			if self.isExtended:
+				input.ii.ki.dwFlags+=1
+			inputs.append(input)
+		# Press the main key
+		input = winUser.Input(type=winUser.INPUT_KEYBOARD)
+		input.ii.ki.wVk = self.vkCode
+		if self.isExtended:
+			input.ii.ki.dwFlags+=1
+		inputs.append(input)
+		# Release the main key
+		if not mainKeyWasDown:
+			input = winUser.Input(type=winUser.INPUT_KEYBOARD)
+			input.ii.ki.wVk = self.vkCode
+			input.ii.ki.dwFlags=2
+			if self.isExtended:
+				input.ii.ki.dwFlags+=1
+			inputs.append(input)
+		# Release any needed modifiers that were needed but not originally down, and press any unneeded modifiers that were originally down
+		for mod,press in neededModifiers:
+			input = winUser.Input(type=winUser.INPUT_KEYBOARD)
+			input.ii.ki.wVk = mod
+			if press:
+				input.ii.ki.dwFlags = 2
+			inputs.append(input)
+		# Send the input to the Operating System
+		ignoreInjected=True
 		try:
-			ignoreInjected=True
-			if winUser.getKeyState(self.vkCode) & 32768:
-				# This key is already down, so send a key up for it first.
-				winUser.keybd_event(self.vkCode, self.scanCode, self.isExtended + 2, 0)
-
-			# Send key down events for these keys.
-			for vk, scan, ext in keys:
-				winUser.keybd_event(vk, scan, ext, 0)
-			# Send key up events for the keys in reverse order.
-			for vk, scan, ext in reversed(keys):
-				winUser.keybd_event(vk, scan, ext + 2, 0)
-
-			if not queueHandler.isPendingItems(queueHandler.eventQueue):
-				time.sleep(0.01)
-				wx.Yield()
+			winUser.SendInput(inputs)
 		finally:
 			ignoreInjected=False
+
 
 	@classmethod
 	def fromName(cls, name):
