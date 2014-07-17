@@ -49,7 +49,11 @@ inputType_routing=4
 inputType_wizWheel=5
 
 # Names of freedom scientific bluetooth devices
-bluetoothNames = ("Focus 40 BT",)
+bluetoothNames = (
+	"F14", "Focus 14 BT",
+	"Focus 40 BT",
+	"Focus 80 BT",
+)
 
 keysPressed=0
 extendedKeysPressed=0
@@ -130,7 +134,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 
 	@classmethod
 	def _getBluetoothPorts(cls):
-		return (p["port"].encode("mbcs") for p in hwPortUtils.listComPorts() if p.get("bluetoothName") in bluetoothNames)
+		for p in hwPortUtils.listComPorts():
+			try:
+				btName = p["bluetoothName"]
+			except KeyError:
+				continue
+			if not any(btName == prefix or btName.startswith(prefix + " ") for prefix in bluetoothNames):
+				continue
+			yield p["port"].encode("mbcs")
 
 	wizWheelActions=[
 		# Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
@@ -156,13 +167,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 		elif port == "bluetooth":
 			portsToTry = self._getBluetoothPorts()
 		else: # USB
-			portsToTry = [port]
+			portsToTry = ["USB"]
 		fbHandle=-1
 		for port in portsToTry:
 			fbHandle=fbOpen(port,self._messageWindow,nvdaFsBrlWm)
 			if fbHandle!=-1:
 				break
 		if fbHandle==-1:
+			windll.user32.DestroyWindow(self._messageWindow)
+			windll.user32.UnregisterClassW(self._messageWindowClassAtom,appInstance)
 			raise RuntimeError("No display found")
 		self.fbHandle=fbHandle
 		self._configureDisplay()

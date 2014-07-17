@@ -1,3 +1,11 @@
+#pythonConsole.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2008-2013 NV Access Limited
+
+import watchdog
+
 """Provides an interactive Python console which can be run from within NVDA.
 To use, call L{initialize} to create a singleton instance of the console GUI. This can then be accessed externally as L{consoleUI}.
 """
@@ -7,6 +15,9 @@ import os
 import code
 import sys
 import pydoc
+import re
+import itertools
+import rlcompleter
 import wx
 from baseObject import AutoPropertyObject
 import speech
@@ -46,6 +57,12 @@ class ExitConsoleCommand(object):
 
 #: The singleton Python console UI instance.
 consoleUI = None
+
+class Completer(rlcompleter.Completer):
+
+	def _callable_postfix(self, val, word):
+		# Just because something is callable doesn't always mean we want to call it.
+		return word
 
 class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 	"""An interactive Python console for NVDA which directs output to supplied functions.
@@ -163,6 +180,8 @@ class ConsoleUI(wx.Frame):
 		mainSizer.Fit(self)
 
 		self.console = PythonConsole(outputFunc=self.output, echoFunc=self.echo, setPromptFunc=self.setPrompt, exitFunc=self.Close)
+		self.completer = Completer(namespace=self.console.namespace)
+		self.completionAmbiguous = False
 		# Even the most recent line has a position in the history, so initialise with one blank line.
 		self.inputHistory = [""]
 		self.inputHistoryPos = 0
@@ -190,7 +209,9 @@ class ConsoleUI(wx.Frame):
 
 	def execute(self):
 		data = self.inputCtrl.GetValue()
+		watchdog.alive()
 		self.console.push(data)
+		watchdog.asleep()
 		if data:
 			# Only add non-blank lines to history.
 			if len(self.inputHistory) > 1 and self.inputHistory[-2] == data:
@@ -216,8 +237,88 @@ class ConsoleUI(wx.Frame):
 		self.inputCtrl.SetInsertionPointEnd()
 		return True
 
+	RE_COMPLETE_UNIT = re.compile(r"[\w.]*$")
+	def complete(self):
+		try:
+			original = self.RE_COMPLETE_UNIT.search(self.inputCtrl.GetValue()).group(0)
+		except AttributeError:
+			return False
+
+		completions = list(self._getCompletions(original))
+		if self.completionAmbiguous:
+			menu = wx.Menu()
+			for comp in completions:
+				item = menu.Append(wx.ID_ANY, comp)
+				self.Bind(wx.EVT_MENU,
+					lambda evt, completion=comp: self._insertCompletion(original, completion),
+					item)
+			self.PopupMenu(menu)
+			menu.Destroy()
+			return True
+		self.completionAmbiguous = len(completions) > 1
+
+		completed = self._findBestCompletion(original, completions)
+		if not completed:
+			return False
+		self._insertCompletion(original, completed)
+		return not self.completionAmbiguous
+
+	def _getCompletions(self, original):
+		for state in itertools.count():
+			completion = self.completer.complete(original, state)
+			if not completion:
+				break
+			yield completion
+
+	def _findBestCompletion(self, original, completions):
+		if not completions:
+			return None
+		if len(completions) == 1:
+			return completions[0]
+
+		# Find the longest completion.
+		longestComp = None
+		longestCompLen = 0
+		for comp in completions:
+			compLen = len(comp)
+			if compLen > longestCompLen:
+				longestComp = comp
+				longestCompLen = compLen
+		# Find the longest common prefix.
+		for prefixLen in xrange(longestCompLen, 0, -1):
+			prefix = comp[:prefixLen]
+			for comp in completions:
+				if not comp.startswith(prefix):
+					break
+			else:
+				# This prefix is common to all completions.
+				if prefix == original:
+					# We didn't actually complete anything.
+					return None
+				return prefix
+		return None
+
+	def _insertCompletion(self, original, completed):
+		self.completionAmbiguous = False
+		insert = completed[len(original):]
+		if not insert:
+			return
+		self.inputCtrl.SetValue(self.inputCtrl.GetValue() + insert)
+		queueHandler.queueFunction(queueHandler.eventQueue, speech.speakText, insert)
+		self.inputCtrl.SetInsertionPointEnd()
+
 	def onInputChar(self, evt):
 		key = evt.GetKeyCode()
+
+		if key == wx.WXK_TAB:
+			line = self.inputCtrl.GetValue()
+			if line and not line.isspace():
+				if not self.complete():
+					wx.Bell()
+				return
+		# This is something other than autocompletion, so reset autocompletion state.
+		self.completionAmbiguous = False
+
 		if key == wx.WXK_RETURN:
 			self.execute()
 			return

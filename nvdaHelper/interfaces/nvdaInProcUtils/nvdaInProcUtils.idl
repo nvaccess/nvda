@@ -49,4 +49,8 @@ interface NvdaInProcUtils {
 
 	error_status_t sysListView32_getGroupInfo([in] long windowHandle, [in] int groupIndex,  [out,string] BSTR* header, [out,string] BSTR* footer, [out] int* state);
 
+	error_status_t getActiveObject([in] handle_t bindingHandle, [in,string] const wchar_t* progid, [out] IUnknown** ppUnknown);
+
+	error_status_t dumpOnCrash([in] handle_t bindingHandle, [in,string] const wchar_t* minidumpPath);
+
 }

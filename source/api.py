@@ -23,6 +23,7 @@ import win32con
 import eventHandler
 import braille
 import watchdog
+import appModuleHandler
 
 #User functions
 
@@ -65,7 +66,8 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	#add the old focus to the old focus ancestors, but only if its not None (is none at NVDA initialization)
 	if globalVars.focusObject: 
 		oldFocusLine.append(globalVars.focusObject)
-	oldAppModuleSet=set(o.appModule for o in oldFocusLine if o and o.appModule)
+	oldAppModules=[o.appModule for o in oldFocusLine if o and o.appModule]
+	appModuleHandler.cleanup()
 	ancestors=[]
 	tempObj=obj
 	matchedOld=False
@@ -91,7 +93,7 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 				origAncestors=oldFocusLine[0:index+1]
 				#make sure to cache the last old ancestor as a parent on the first new ancestor so as not to leave a broken parent cache
 				if ancestors and origAncestors:
-					ancestors[0].parent=origAncestors[-1]
+					ancestors[0].container=origAncestors[-1]
 				origAncestors.extend(ancestors)
 				ancestors=origAncestors
 				focusDifferenceLevel=index+1
@@ -105,18 +107,9 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 		container=tempObj.container
 		tempObj.container=container # Cache the parent.
 		tempObj=container
+	newAppModules=[o.appModule for o in ancestors if o and o.appModule]
 	#Remove the final new ancestor as this will be the new focus object
 	del ancestors[-1]
-	newAppModuleSet=set(o.appModule for o in ancestors+[obj] if o and o.appModule)
-	for removedMod in oldAppModuleSet-newAppModuleSet:
-		if not removedMod.sleepMode and hasattr(removedMod,'event_appModule_loseFocus'):
-			try:
-				removedMod.event_appModule_loseFocus()
-			except watchdog.CallCancelled:
-				pass
-	for addedMod in newAppModuleSet-oldAppModuleSet:
-		if not addedMod.sleepMode and hasattr(addedMod,'event_appModule_gainFocus'):
-			addedMod.event_appModule_gainFocus()
 	try:
 		treeInterceptorHandler.cleanup()
 	except watchdog.CallCancelled:
@@ -125,13 +118,20 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	o=None
 	watchdog.alive()
 	for o in ancestors[focusDifferenceLevel:]+[obj]:
-		treeInterceptorObject=treeInterceptorHandler.update(o)
+		try:
+			treeInterceptorObject=treeInterceptorHandler.update(o)
+		except:
+			log.exception("Error updating tree interceptor")
 	#Always make sure that the focus object's treeInterceptor is forced to either the found treeInterceptor (if its in it) or to None
 	#This is to make sure that the treeInterceptor does not have to be looked up, which can cause problems for winInputHook
 	if obj is o or obj in treeInterceptorObject:
 		obj.treeInterceptor=treeInterceptorObject
 	else:
 		obj.treeInterceptor=None
+	# #3804: handleAppSwitch should be called as late as possible,
+	# as triggers must not be out of sync with global focus variables.
+	# setFocusObject shouldn't fail earlier anyway, but it's best to be safe.
+	appModuleHandler.handleAppSwitch(oldAppModules,newAppModules)
 	# Set global focus variables.
 	globalVars.focusDifferenceLevel=focusDifferenceLevel
 	globalVars.focusObject=obj
@@ -214,9 +214,12 @@ def setNavigatorObject(obj,isFocus=False):
 	oldPosObj=globalVars.reviewPositionObj
 	globalVars.reviewPosition=None
 	globalVars.reviewPositionObj=None
+	reviewMode=review.getCurrentMode()
 	# #3320: If in document review yet there is no document to review the mode should be forced to object. 
-	if review.getCurrentMode()=='document' and not obj.treeInterceptor:
+	if reviewMode=='document' and (not obj.treeInterceptor or not obj.treeInterceptor.isReady or obj.treeInterceptor.passThrough):
 		review.setCurrentMode('object',False)
+	elif isFocus and reviewMode=='object' and obj.treeInterceptor and obj.treeInterceptor.isReady and not obj.treeInterceptor.passThrough:
+		review.setCurrentMode('document',False)
 	#Specifically handle when the navigator object is set due to a focus change in a virtualBuffer
 	#The focus change may have been becaus the caret was moved, which caused the focus change.
 	#If so, don't clober the review position as it will have been already set to a more accurate position.

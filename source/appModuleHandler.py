@@ -10,10 +10,14 @@
 """
 
 import itertools
+import array
+import ctypes
 import ctypes.wintypes
 import os
 import sys
 import pkgutil
+import threading
+import tempfile
 import baseObject
 import globalVars
 from logHandler import log
@@ -25,12 +29,14 @@ import config
 import NVDAObjects #Catches errors before loading default appModule
 import api
 import appModules
+import watchdog
 
 #Dictionary of processID:appModule paires used to hold the currently running modules
 runningTable={}
 #: The process ID of NVDA itself.
 NVDAProcessID=None
 _importers=None
+_getAppModuleLock=threading.RLock()
 
 class processEntry32W(ctypes.Structure):
 	_fields_ = [
@@ -84,21 +90,32 @@ def getAppModuleFromProcessID(processID):
 	@returns: the appModule, or None if there isn't one
 	@rtype: appModule 
 	"""
-	mod=runningTable.get(processID)
-	if not mod:
-		appName=getAppNameFromProcessID(processID)
-		mod=fetchAppModule(processID,appName)
+	with _getAppModuleLock:
+		mod=runningTable.get(processID)
 		if not mod:
-			raise RuntimeError("error fetching default appModule")
-		runningTable[processID]=mod
+			appName=getAppNameFromProcessID(processID)
+			mod=fetchAppModule(processID,appName)
+			if not mod:
+				raise RuntimeError("error fetching default appModule")
+			runningTable[processID]=mod
 	return mod
 
 def update(processID,helperLocalBindingHandle=None,inprocRegistrationHandle=None):
-	"""Removes any appModules from the cache whose process has died, and also tries to load a new appModule for the given process ID if need be.
+	"""Tries to load a new appModule for the given process ID if need be.
 	@param processID: the ID of the process.
 	@type processID: int
 	@param helperLocalBindingHandle: an optional RPC binding handle pointing to the RPC server for this process
 	@param inprocRegistrationHandle: an optional rpc context handle representing successful registration with the rpc server for this process
+	"""
+	# This creates a new app module if necessary.
+	mod=getAppModuleFromProcessID(processID)
+	if helperLocalBindingHandle:
+		mod.helperLocalBindingHandle=helperLocalBindingHandle
+	if inprocRegistrationHandle:
+		mod._inprocRegistrationHandle=inprocRegistrationHandle
+
+def cleanup():
+	"""Removes any appModules from the cache whose process has died.
 	"""
 	for deadMod in [mod for mod in runningTable.itervalues() if not mod.isAlive]:
 		log.debug("application %s closed"%deadMod.appName)
@@ -110,12 +127,6 @@ def update(processID,helperLocalBindingHandle=None,inprocRegistrationHandle=None
 			deadMod.terminate()
 		except:
 			log.exception("Error terminating app module %r" % deadMod)
-	# This creates a new app module if necessary.
-	mod=getAppModuleFromProcessID(processID)
-	if helperLocalBindingHandle:
-		mod.helperLocalBindingHandle=helperLocalBindingHandle
-	if inprocRegistrationHandle:
-		mod._inprocRegistrationHandle=inprocRegistrationHandle
 
 def doesAppModuleExist(name):
 	return any(importer.find_module("appModules.%s" % name) for importer in _importers)
@@ -176,6 +187,64 @@ def terminate():
 			log.exception("Error terminating app module %r" % app)
 	runningTable.clear()
 
+def handleAppSwitch(oldMods, newMods):
+	newModsSet = set(newMods)
+	processed = set()
+	nextStage = []
+
+	# Determine all apps that are losing focus and fire appropriate events.
+	for mod in reversed(oldMods):
+		if mod in processed:
+			# This app has already been handled.
+			continue
+		processed.add(mod)
+		if mod in newModsSet:
+			# This app isn't losing focus.
+			continue
+		processed.add(mod)
+		# This app is losing focus.
+		nextStage.append(mod)
+		if not mod.sleepMode and hasattr(mod,'event_appModule_loseFocus'):
+			try:
+				mod.event_appModule_loseFocus()
+			except watchdog.CallCancelled:
+				pass
+
+	nvdaGuiLostFocus = nextStage and nextStage[-1].appName == "nvda"
+	if not nvdaGuiLostFocus and (not oldMods or oldMods[-1].appName != "nvda") and newMods[-1].appName == "nvda":
+		# NVDA's GUI just got focus.
+		import gui
+		if gui.shouldConfigProfileTriggersBeSuspended():
+			config.conf.suspendProfileTriggers()
+
+	with config.conf.atomicProfileSwitch():
+		# Exit triggers for apps that lost focus.
+		for mod in nextStage:
+			mod._configProfileTrigger.exit()
+			mod._configProfileTrigger = None
+
+		nextStage = []
+		# Determine all apps that are gaining focus and enter triggers.
+		for mod in newMods:
+			if mod in processed:
+				# This app isn't gaining focus or it has already been handled.
+				continue
+			processed.add(mod)
+			# This app is gaining focus.
+			nextStage.append(mod)
+			trigger = mod._configProfileTrigger = AppProfileTrigger(mod.appName)
+			trigger.enter()
+
+	if nvdaGuiLostFocus:
+		import gui
+		if not gui.shouldConfigProfileTriggersBeSuspended():
+			config.conf.resumeProfileTriggers()
+
+	# Fire appropriate events for apps gaining focus.
+	for mod in nextStage:
+		if not mod.sleepMode and hasattr(mod,'event_appModule_gainFocus'):
+			mod.event_appModule_gainFocus()
+
 #base class for appModules
 class AppModule(baseObject.ScriptableObject):
 	"""Base app module.
@@ -208,9 +277,67 @@ class AppModule(baseObject.ScriptableObject):
 		#: The application name.
 		#: @type: str
 		self.appName=appName
-		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
+		if sys.getwindowsversion().major > 5:
+			self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
+		else:
+			self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION|winKernel.PROCESS_VM_READ,False,processID)
 		self.helperLocalBindingHandle=None
 		self._inprocRegistrationHandle=None
+
+	def _setProductInfo(self):
+		"""Set productName and productVersion attributes.
+		"""
+		# Sometimes (I.E. when NVDA starts) handle is 0, so stop if it is the case
+		if not self.processHandle:
+			raise RuntimeError("processHandle is 0")
+		# Choose the right function to use to get the executable file name
+		if sys.getwindowsversion().major > 5:
+			# For Windows Vista and higher, use QueryFullProcessImageName function
+			GetModuleFileName = ctypes.windll.Kernel32.QueryFullProcessImageNameW
+		else:
+			GetModuleFileName = ctypes.windll.psapi.GetModuleFileNameExW
+		# Create the buffer to get the executable name
+		exeFileName = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
+		length = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
+		if not GetModuleFileName(self.processHandle, 0, exeFileName, ctypes.byref(length)):
+			raise ctypes.WinError()
+		fileName = exeFileName.value
+		# Get size needed for buffer (0 if no info)
+		size = ctypes.windll.version.GetFileVersionInfoSizeW(fileName, None)
+		if not size:
+			raise RuntimeError("No version information")
+		# Create buffer
+		res = ctypes.create_string_buffer(size)
+		# Load file informations into buffer res
+		ctypes.windll.version.GetFileVersionInfoW(fileName, None, size, res)
+		r = ctypes.c_uint()
+		l = ctypes.c_uint()
+		# Look for codepages
+		ctypes.windll.version.VerQueryValueW(res, u'\\VarFileInfo\\Translation',
+		ctypes.byref(r), ctypes.byref(l))
+		if not l.value:
+			raise RuntimeError("No codepage")
+		# Take the first codepage (what else ?)
+		codepage = array.array('H', ctypes.string_at(r.value, 4))
+		codepage = "%04x%04x" % tuple(codepage)
+		# Extract product name and put it to self.productName
+		ctypes.windll.version.VerQueryValueW(res,
+			u'\\StringFileInfo\\%s\\ProductName' % codepage,
+			ctypes.byref(r), ctypes.byref(l))
+		self.productName = ctypes.wstring_at(r.value, l.value-1)
+		# Extract product version and put it to self.productVersion
+		ctypes.windll.version.VerQueryValueW(res,
+			u'\\StringFileInfo\\%s\\ProductVersion' % codepage,
+			ctypes.byref(r), ctypes.byref(l))
+		self.productVersion = ctypes.wstring_at(r.value, l.value-1)
+
+	def _get_productName(self):
+		self._setProductInfo()
+		return self.productName
+
+	def _get_productVersion(self):
+		self._setProductInfo()
+		return self.productVersion
 
 	def __repr__(self):
 		return "<%r (appName %r, process ID %s) at address %x>"%(self.appModuleName,self.appName,self.processID,id(self))
@@ -257,3 +384,27 @@ class AppModule(baseObject.ScriptableObject):
 			return False
 		self.is64BitProcess = not res
 		return self.is64BitProcess
+
+	def isBadUIAWindow(self,hwnd):
+		"""
+		returns true if the UIA implementation of the given window must be ignored due to it being broken in some way.
+		Warning: this may be called outside of NVDA's main thread, therefore do not try accessing NVDAObjects and such, rather just check window  class names.
+		"""
+		return False
+
+	def dumpOnCrash(self):
+		"""Request that this process writes a minidump when it crashes for debugging.
+		This should only be called if instructed by a developer.
+		"""
+		path = os.path.join(tempfile.gettempdir(),
+			"nvda_crash_%s_%d.dmp" % (self.appName, self.processID)).decode("mbcs")
+		NVDAHelper.localLib.nvdaInProcUtils_dumpOnCrash(
+			self.helperLocalBindingHandle, path)
+		print "Dump path: %s" % path
+
+class AppProfileTrigger(config.ProfileTrigger):
+	"""A configuration profile trigger for when a particular application has focus.
+	"""
+
+	def __init__(self, appName):
+		self.spec = "app:%s" % appName

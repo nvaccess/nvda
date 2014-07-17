@@ -7,6 +7,9 @@
 import time
 import weakref
 import inspect
+import config
+import speech
+import sayAllHandler
 import appModuleHandler
 import api
 import queueHandler
@@ -137,11 +140,14 @@ def queueScript(script,gesture):
 	_numScriptsQueued+=1
 	queueHandler.queueFunction(queueHandler.eventQueue,_queueScriptCallback,script,gesture)
 
+def willSayAllResume(gesture):
+	return config.conf['keyboard']['allowSkimReadingInSayAll']and gesture.wasInSayAll and getattr(gesture.script,'resumeSayAllMode',None)==sayAllHandler.lastSayAllMode
+
 def executeScript(script,gesture):
 	"""Executes a given script (function) passing it the given gesture.
 	It also keeps track of the execution of duplicate scripts with in a certain amount of time, and counts how many times this happens.
 	Use L{getLastScriptRepeatCount} to find out this count value.
-	@param script: the function or method that should be executed. The function or method must take an argument of 'gesture'.
+	@param script: the function or method that should be executed. The function or method must take an argument of 'gesture'. This must be the same value as gesture.script, but its passed in here purely for performance. 
 	@type script: callable.
 	@param gesture: the input gesture that activated this script
 	@type gesture: L{inputCore.InputGesture}
@@ -153,6 +159,9 @@ def executeScript(script,gesture):
 	if _isScriptRunning and lastScriptRef==scriptFunc:
 		return gesture.send()
 	_isScriptRunning=True
+	resumeSayAllMode=None
+	if willSayAllResume(gesture):
+		resumeSayAllMode=sayAllHandler.lastSayAllMode
 	try:
 		scriptTime=time.time()
 		scriptRef=weakref.ref(scriptFunc)
@@ -167,6 +176,8 @@ def executeScript(script,gesture):
 		log.exception("error executing script: %s with gesture %r"%(script,gesture.displayName))
 	finally:
 		_isScriptRunning=False
+		if resumeSayAllMode is not None:
+			sayAllHandler.readText(resumeSayAllMode)
 
 def getLastScriptRepeatCount():
 	"""The count of how many times the most recent script has been executed.
@@ -206,3 +217,4 @@ def isCurrentScript(scriptFunc):
 		log.debugWarning("Could not get unbound method from parent frame instance",exc_info=True)
 		return False
 	return givenFunc==realFunc
+

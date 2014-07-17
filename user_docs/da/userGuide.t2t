@@ -9,25 +9,25 @@
 
 + Introduktion +
 NonVisual Desktop Access (NVDA) er en gratis og open source skærmlæser for Microsoft Windows operativsystemet.
-Skærmlæseren gør brug af syntetisk tale og punkt. Programmet giver blinde og svagtseende brugere adgang til computere med Windows for samme pris som det koster en seende bruger.
+Skærmlæseren gør brug af syntetisk tale og punkt. Programmet giver blinde og svagtseende brugere adgang til computere med Windows for en pris, der ikke er højere end den, en seende bruger betaler.
 NVDA er udviklet af [NV Access http://www.nvaccess.org/], med bidrag fra fællesskabet.
 
 ++ Generelle funktioner ++
-NVDA giver blinde og mennesker med nedsat syn mulighed for at få adgang til og interagere med Windows-operativsystemet og mange tredjeparts-applikationer.
+NVDA giver blinde og svagsynede mulighed for at få adgang til og interagere med Windows-operativsystemet og mange tredjeparts-programmer.
 
 Af væsentlige funktioner kan nævnes:
-- Understøttelse for populære applikationer som web browsers, email klienter, internet chat programmer og office suites
+- Understøttelse af populære applikationer som web-browsere, email-programmer, internet-chat- programmer og office suites
 - Indbygget talesyntese der understøtter over 42 sprog
-- Rapportering af tekstuel formatering hvor det er muligt, såsom skrifttype og størrelse, og typografi og stavefejl.
-- Læser automatisk teksten under musen op og kan valgfrit indstille akustisk angivelse af musens position
-- Understøttelse for mange opdaterbare punktdisplays, herunder indtastning af computerbraille for punktdisplays med et punkttastatur
+- Rapportering af tekstformatering hvor det er muligt, såsom skrifttype og størrelse, typografi og stavefejl.
+- Læser automatisk teksten under musen op og kan angive musens position akustisk
+- Understøttelse af mange punktdisplays, herunder indtastning af computerbraille på punktdisplays med et punkttastatur
 - Kan køre fra en USB-stik eller andet bærbart medie uden 	installation
 - En talende installation der er let at bruge
 - Oversat til 43 sprog
-- Understøttelse for moderne Windows operativsystemer herunder 32 og 64 bit varianter
+- Understøttelse af moderne Windows operativsystemer herunder 32 og 64 bit varianter
 - Mulighed for at køre på Windows logon skærmen og andre beskyttede skærme
-- Støtte for almindelige tilgængelighedsgrænseflader såsom Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation kun understøttet i Windows 7 og senere)
-- Understøtter Windows Command Prompt and konsol applikationer
+- understøttelse af almindelige tilgængelighedsgrænseflader såsom Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation kun understøttet i Windows 7 og senere)
+- Understøtter Windows kommandoPrompt and konsol applikationer
 -
 
 ++ Internationalisering ++
@@ -42,10 +42,10 @@ NVDA leveres med [eSpeak http://espeak.sourceforge.net/], en gratis, open-source
 Oplysninger om andre talesynteser som NVDA understøtter kan  findes i [Understøttede Talesynteser #SupportedSpeechSynths] afsnittet.
 
 ++ Understøttelse af punktskrift  ++
-For brugere som ejer et opdaterbart punktdisplay kan man med NVDA ligeledes få teksten ud på punktskrift.
+Brugere, som har et punktdisplay, kan med NVDA ligeledes få teksten ud på punktskrift.
 Se venligst afsnittet [Understøttede punktdisplays #SupportedBrailleDisplays]  for oplysninger om understøttede braille displays.
 
-NVDA understøtter punktskrift koder for mange sprog, herunder forkortet, fuldskrift og computer punkt koder for visse sprog.
+NVDA understøtter punktskrift koder for mange sprog, herunder forkortet, fuldskrift og computer punkt koder for mange sprog.
 
 ++ Licens og Ophavsret ++
 NVDA er ophavsret NVDA_COPYRIGHT_YEARS NVDA bidragydere.
@@ -141,8 +141,10 @@ Venligst tjek på NVDA hjemmesiden for hvordan du gør dette.
 
 Når NVDA starter for første gang, vil du blive mødt af en dialogboks som giver dig nogle grundlæggende oplysninger om NVDA tasten og NVDA menuen.
 (Se efterfølgende afsnit om disse emner).
-Dialogboksen indeholder også to afkrydsningsfelter.
-Den første giver dig mulighed for at bestemme, om NVDA skal bruge capslock som en NVDA tast, og den anden lader dig styre, om denne Velkomstdialog boks skal vises hver gang NVDA starter.
+Dialogboksen indeholder også tre afkrydsningsfelter.
+Det første felt giver dig mulighed for at bestemme, om NVDA skal bruge capslock som en NVDA tast.
+Det andet bestemmer, om NVDA skal starte automatisk, efter du har logget på Windows. Det er kun tilgængeligt i installerede kopier af NVDA.
+Det tredje lader dig styre, om denne Velkomstdialog boks skal vises hver gang NVDA starter.
 
 ++ Om NVDA tastaturkommandoer ++
 
@@ -300,7 +302,7 @@ I disse situationer kan du bruge objektbaseret navigation.
 
 Objektbaseret navigation lader dig bevæge dig mellem og skaffe information om de individuelle [objekter #Objects].
 Når du flytter til et objekt, vil NVDA rapportere det på samme måde som ved systemfokus.
-Du kan også benytte  [flad visning #FlatReview] til at læse teksten præcis som den vises på skærmen.
+Du kan også benytte  [læsetilstanden skærm #ScreenReview] til at læse teksten præcis som den vises på skærmen.
 
 I stedet for at skulle flytte frem og tilbage mellem hvert enkelt objekt i systemet, er objekterne grupperet hierarkisk.
 Dette betyder, at du skal åbne objekterne for at få adgang til objekter inde i det pågældende objekt.
@@ -311,7 +313,7 @@ Derefter kan du bevæge dig forbi listen, hvis du ønsker, at udforske andre obj
 På samme måde forholder det sig, hvis du støder på en værktøjslinje, og du skal ligeledes flytte ind i værktøjslinjen
 
 Det objekt, du er i gang med at gennemse, kaldes for navigatorobjektet.
-Når du navigerer til et objekt, kan du gennemse det ved at benytte [kommandoer til gennemsyn af tekst #ReviewingText].
+Når du navigerer til et objekt, kan du gennemse det ved at benytte [ kommandoerne til gennemsyn af tekst #ReviewingText] når du befinder dig i [ læsetilstanden skærm #ObjectReview].
 Som standard, flytter navigator objektet sammen med System fokus, men denne adfærd kan slås til og fra.
  
 Bemærk, at punkt følger [fokus #SystemFocus] og [systemmarkør #SystemCaret] som standardindstilling, i stedet for objekt navigation og tekstgennemsyn.
@@ -334,8 +336,8 @@ For at navigere imellem objekter, skal du benytte følgende kommandoer:
 
 Bemærk: for at få numpad tasterne til at fungere korrekt, kræver det at det numeriske tastatur er slået fra.
 
-++ Gennemse teksten i det aktuelle objekt ++[ReviewingText]
-NVDA giver dig mulighed for at læse indholdet af det aktuelle [navigator objekt #ObjectNavigation] (herunder [flad visning #FlatReview]) ved  enten at flytte imellem tegn, ord eller linjer.
+++ Gennemsyn af tekst ++[ReviewingText]
+NVDA giver dig mulighed for at læse indholdet af [skærmen #ScreenReview], det aktuelle [dokument #DocumentReview] eller det aktuelle [object #ObjectReview]   ved enten at flytte imellem tegn, ord eller linjer.
 Dette er for det meste nyttigt i Windows kommando konsol vinduer og andre steder, hvor der er en begrænset eller ikke-eksisterende system markør.
 For eksempel, du kan bruge denne markør til at gennemse en lang besked i en dialog.
 
@@ -376,27 +378,35 @@ Layoutet er således illustreret:
 | Forrige ord | Nuværende ord | Næste ord |
 | Forrige tegn | Nuværende tegn | Næste tegn |
 
-++ Flad Visning ++[FlatReview]
-Mens du generelt kun kan gennemse indeholdet af et eneste [objekt #Objects], giver nogle objekter mulighed for at gennemse indeholdet af objekter indeni objekterne.
-Komplekse dokumenter giver dig mulighed for, at gennemse hele dokkumentet, og programvinduer giver dig mulighed for at gennemgå hele skærmen, som den vises visuelt.
-Dette kaldes flad visning.
-Dette er lignende andre metoder som andre skærmlæsere benytter for at gennemse hele skærmen.
+++ Læsetilstande ++[ReviewModes]
+NVDA er i stand til at læse indhold i det aktuelle navigatorobjekt, det aktuelle dokument eller skærm, afhængigt af hvilken læsetilstand der benyttes.
+Læsetilstand er en erstatning for det ældre koncept Flad Visning.
 
-Når du flytter til flad visning, bliver du automatisk placeret på det aktuelle [navigatorobjekt #ObjectNavigation].
-Hvis du ikke endnu har brugt objekt navigation, vil dette typisk være objektet der har [fokus #SystemFocus].
-For eksempel ville du blive placeret på teksten af knappen i flad visning, hvis navigatorobjektet var en knap.
-Derefter kan du gennemse tekste ved brug af [kommandoerne til gennemsyn af tekst #ReviewingText].
-Desuden kan du også gå direkte til objektet der omfatter den aktuelle position af den ubegrænsede markør, hvilket giver dig mulighed for at bruge [objekt navigation #ObjectNavigation] derfra.
-
-Bemærk, at punkt følger [fokus #SystemFocus] og [systemmarkør #SystemCaret] som standardindstilling, i stedet for objekt navigation og tekstgennemsyn.
-Hvis du derimod ønsker at punkt skal følge objekt navigation og tekstgennemsyn, skal du [konfigurere punkt til at være tøjret til #BrailleTether] gennemsyn.
-
-De følgende to kommandoer bruges til at skifte til / fra flad visning:
+Følgende kommandoer skifter mellem læsetilstande:
 %kc:beginInclude
-| | Navn | Desktop tast | Laptop tast | Bevægelse | Beskrivelse |
-| Skift til flad visning | NVDA+numpad7 | NVDA+ALT+7 | Svirp op med to fingre | Flytter til flad visning, hvilket placerer dig i det aktuelle navigator objekt. Her kan du gennemgå skærmen (eller dokumentet, hvis du for øjeblikket befinder dig i et dokument), med kommandoerne til den ubegrænset markør.
-| Flyt til objektet fra flad visning | NVDA+numpad1 | NVDA+Alt+J | Svirp ned med to fingre | Navigerer til objektet der er repræsenteret af teksten på den aktuelle position af den ubegrænset markør i flad visning |
+|| Navn | Desktop tast | Laptoptast | Bevægelse | Beskrivelse |
+| skift til næste læsetilstand | NVDA+numpad7 | NVDA+pageUp | svirp op med to fingre | skifter til den næste tilgængelige læsetilstand. | 
+| skift til forrige læsetilstand | NVDA+numpad1 | NVDA+pageDown | svirp ned med to fingre | skifter til den forrige  tilgængelige læsetilstand. |
 %kc:endInclude
+
++++ Objekt Læsetilstand +++[ObjectReview]
+Når du benytter objekt læsetilstanden, er du kun i stand til at læse indholdet af det aktuelle [ #ObjectNavigation].
+I forhold til objekter som redigeringsfelter eller andre grundlæggende elementer, ville dette typisk være tekstindholdet.
+For andre objekter kan det muligvis være navnet eller dets værdi.
+
++++ Dokument Læsetilstand +++[DocumentReview]
+Når [navigatorobjecktet #ObjectNavigation] befinder sig i et dokument, hvori browse-tilstanden benyttes (f.eks. en webside) eller andre komplekse dokumenter, der indeholder mange objekter (f.eks.  Lotus Symphony dokumenter) er det muligt at skifte til denne læsetilstand.
+Dokument læsetilstanden lader dig gennemsehele dokumentet.
+Når der skiftes fra objekt læsetilstanden til dokument læsetilstanden, placeres markøren i dokumentet ved positionen af det aktuelle navigatorobjekt.
+Når der flyttes rundt i dokumentet ved brug af de rette kommandoer opdateres positionen af navigatorobjektet automatisk, således positionen stemmer overens med positionen af markøren for læsetilstanden.
+Bemærk, at NVDA automatisk vil skifte til dokument læsetilstand fra objekt læsetilstand når der bevæges rundt i dokumenter der kræver browse-tilstand.
+
++++ Skærm Læsetilstand +++[ScreenReview]
+Skærm læsetilstanden lader dig gennemse synligt tekst på skærmen i den aktuelle applikation.
+Denne tilstand kan sammenlignes med lignende funktionalitet i andre skærmlæsere, såsom musetilstande.
+Når der skiftes til Skærm læsetilstand placeres læsemarkøren på skærmposition for det aktuelle [navigatorobjekt #ObjectNavigation].
+Når der bevæges rundt på skærmen ved brug af tilhørende kommandoer bliver navigatorobjektet automatisk opdateret til det dybeste objekt ved læsemarkøren.
+Bemærk, at NVDA muligvis ikke vil se noget eller alt tekst i nogle af applikationer på grund af nyere teknologier brugt til at tegne skærmen. Disse teknologier er umulige at understøtte på nuværende tidspunkt.
 
 ++ Navigering ved brug af musen ++
 Når du bevæger dig rundt med musen, rapporter NVDA  som standard  tekst, der er direkte under musemarkøren, når den bevæger sig over teksten.
@@ -516,6 +526,12 @@ NVDA har sine egne ekstra kommandoer for nogle programmer. Dette er for at gøre
 | Indstil rækkeoverskrifter | NVDA+skift+r | Hvis du udføre denne kommando en gang, fortæller du NVDA at denne kolonne indeholder rækkeoverskrifter. Rækkeoverskrifter vil herefter blive annonceret automatisk når du bevægger dig mellem rækker efter denne kolonne. Trykker du denne tast igen nulstiller du denne indstilling. | 
 %kc:endInclude
 
+++ Microsoft PowerPoint ++
+%kc:beginInclude
+|| Navn | Tast | Beskrivelse |
+| Slå oplæsning af talenoter til/fra | kontrol+skift+s | Når du kører et dias-show, vil denne kommando skifte mellem talenoterne til diasset og diassets indhold. Dette påvirker kun, hvad NVDA læser op, ikke hvad der bliver vist på skærmen. | 
+%kc:endInclude
+
 ++ foobar2000 ++
 %kc:beginInclude
 || Navn | Tast | Beskrivelse |
@@ -632,7 +648,7 @@ Det er en skyderkontrol, der går fra 0 til 100, (0 er den laveste tonehøjde og
 Det er en skyderkontrol, der går fra 0 til 100, (0 laveste lydstyrke, 100 er den højeste).
 
 ==== Inflektion ====
-Denne indstilling er en skyder, som giver mulighed for at bestemme, hvor stort spring i tonehøjde (stigning og fald i tonehøjde) den pågældende talesyntese skal bruge under oplæsning. (Den eneste talesyntese med understøttelse for denne funktion p.t er eSpeak).
+Denne indstilling er en skyder, som giver mulighed for at bestemme, hvor stort spring i tonehøjde (stigning og fald i tonehøjde) den pågældende talesyntese skal bruge under oplæsning. (Den eneste talesyntese med understøttelse af denne funktion p.t er eSpeak).
 
 ==== Automatisk skift af sprog ====
 Dette afkrydsningsfelt bestemmer, om NVDA automatisk skal skifte sprog, når relevant information er til stede i opskrivningen af den læste tekst.
@@ -730,7 +746,8 @@ Denne valgmulighed tillader ordet under cursoren at blive vist i uforkortet comp
 Denne indstillingsmulighed er et felt til indtastning af en talværdi, som giver mulighed for at ændre cursorens blinkhastighed i millisekunder.
 
 ==== Besked vises i (sek) ====
-Denne indstillingsmulighed er et felt til indtastning af en talværdi, som styrer, hvor længe systemmeddelelser vises på punktdisplayet.
+Denne indstillingsmulighed er et felt til indtastning af en talværdi, som styrer, hvor længe NVDA-meddelelser vises på punktdisplayet.
+Hvis du skriver 0 i feltet, slår du visning af disse meddelelser helt fra.
 
 %kc:setting
 ====Punkt tøjret til ====[BrailleTether]
@@ -942,9 +959,12 @@ Denne indstilling giver dig mulighed for at bestemme, om indhold i denne tilstan
 Denne indstilling skifter automatisk læsning af en side i gennemsynstilstand
 Denne indstilling er som standard aktiveret.
 
-==== Indiker layout-tabeller  ====
-Når denne indstilling er slået fra, bevirker den, at NVDA kun annoncerer tabeller med tabeldata, der giver mening for at informere om, at der er tale oom en tabel. 
-Men hvis den er slået til, bevirker det, at NVDA også annoncerer de tabeller, der er brugt udelukkende af hensyn til den visuelle præsentation.
+==== Inkluder layout-tabeller  ====
+Denne indstilling bestemmer, hvordan NVDA håndterer tabeller, som kun er lavet af hensyn til det visuelle layout.
+Når den er slået til, vil NVDA håndtere disse tabeller som normale tabellerog indikere dem afhængigt af [Dokumentformatteringsindstillinger #DocumentFormattingSettings] og finde dem med hurtignavigeringskommandoer.
+Når indstillingern er slået fra, vil layout-tabeller ikke blive indikeret og ikke blive fundet med hurtignavigering.
+Tabellernes indhold vil imidlertid stadig blive læst op som normal tekst.
+Denne indstilling er slået fra som standard.
 
 ==== Konfigurer indikering af felter  som  links og overskrifter  ====
 Hvis du vil konfigurere disse indstillinger til rapportering af områder når du navigerer, så som links, overskrifter og tabeller, skal du åbne dialogboksen  [dialogen Dokument formatering #DocumentFormattingSettings] for at finde disse indstillinger.
@@ -1077,17 +1097,22 @@ Hvis der klikkes i viseren, eller hvis den får fokus, stoppes opdateringen dog 
 
 ++ Administrer add-ons ++
 Du kan administrere dine add-ons for NVDA ved at gå til "Administrer add-ons" under Værktøjer i NVDA-menuen. Dette værktøj giver dig mulighed for at installer tilføjelser til skærmlæseren, samt afinstallere tilføjelserne.
-Disse pakker kan indeholde tilpasset kode der kan ændre eller tilføje funktionalitet i NVDA, såsom understøttelse for bestemte talesynteser eller punktdisplays. Disse pakker er udgivet på betingelse af fællesskabet.
+Disse pakker kan indeholde tilpasset kode der kan ændre eller tilføje funktionalitet i NVDA, såsom understøttelse af bestemte talesynteser eller punktdisplays. Disse pakker er udgivet på betingelse af fællesskabet.
 
 Denne manager indeholder en liste over alle de tilføjelser, du har installeret på nuværende tidspunkt i din NVDA brugerkonfiguration.
 Navnen på pakken, versionen og forfatter er vist for hvert add-on, men du kan læse mere information om tilføjelsen ved at trykke på knappen "Om add-on".
+For at se efter og hente tilføjelsespakker, som er tilgængelige online, tryk på knappen Hent add-ons.Denne knap åbner [siden for NVDA Add-ons http://addons.nvda-project.org/].
+Hvis NVDA er installeret på dit system, kan du åbne tilføjelsespakken direkte fra din browser og starte installationsprocessen som beskrevet nedenfor.
+Ellers skal du gemme tilføjelsespakken og følg instruktionerne nedenfor.
 
-For at installere et add-on, tryk på knappen installer.
+For at installere et add-on, som du tidligere har hentet, skal du trykke på knappen Installer.
 Dette vil give dig mulighed for at gennemse din computer eller et netværk for filtypen .nvda-addon, som er en tilføjelsespakke.
-Når du trykker Åbn, vil NVDA spørge, om du virkelig ønsker at installere dette add-on.
-Eftersom funktionaliteten af add-ons er ubegrænset indeni NVDA, hvilket i teorien kunne omfatte adgang til dine personlige data eller endda hele dit system, er det vigtigt kun at installere add-ons fra kilder du har tillid til.
+Når du trykker Åbn, starter installationsprocessen.
+
+Når en tilføjelsespakke bliver installeret, vil NVDA først spørge, om du virkelig ønsker at installere dette add-on.
+Eftersom funktionaliteten af add-ons er ubegrænset inden i NVDA, hvilket i teorien kunne omfatte adgang til dine personlige data eller endda hele dit system, er det vigtigt kun at installere add-ons fra kilder du har tillid til.
 Når dit add-on er installeret skal du genstarte NVDA for at køre dit add-on.
-Før du udfører denne handling, vil statusen af dit nyinstallerede add-on vise "Installer."
+Indtil du gør dette, vil status for dit nyinstallerede add-on vise "Installer."
 
 For at slette et add-on, skal du trykke på knappen "Fjern".
 NvDA vil bekræfte, om du ønsker at fortsætte med denne handling.
@@ -1172,7 +1197,7 @@ En procentdel af salget af dette produkt doneres til videre udvikling af NVDA sk
 Dette kapitel indeholder oplysninger om de punktdisplays, som NVDA understøtter.
 
 ++ Freedom Scientific Focus/PAC Mate Series ++
-Der er understøttelse for alle Focus og PAC Mate displays fra [Freedom Scientific http://www.freedomscientific.com/] når de kobles til med USB og Bluetooth.
+Der er understøttelse af alle Focus og PAC Mate displays fra [Freedom Scientific http://www.freedomscientific.com/] når de kobles til med USB og Bluetooth.
 Punktdisplay-driverne fra Freedom Scientific skal vær installeret på dit system.
 Hvis du ikke allerede har dem, kan du hente dem fra http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Selvom siden kun henviser til displayet Focus 40 Blue,understøtter driveren alle displays fra Freedom Scientific.
@@ -1233,7 +1258,7 @@ Kun for Focus 80:
 %kc:endInclude
 
 ++ Optelec ALVA BC640/680 ++
-Der er understøttelse for både ALVA BC640 og BC680 punktdisplays fra [Optelec http://www.optelec.com/].
+Der er understøttelse af både ALVA BC640 og BC680 punktdisplays fra [Optelec http://www.optelec.com/].
 Der kræves ingen særskilte drivere installeret for at bruge disse displays.
 Sæt blot displayet til computeren og indstil NVDA til at bruge det.
 

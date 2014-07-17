@@ -63,6 +63,9 @@ TABLES = (
 	("de-de-g2.ctb", _("German grade 2"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("en-gb-comp8.ctb", _("English (U.K.) 8 dot computer braille"), True),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("en-gb-g1.utb", _("English (U.K.) grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
@@ -138,7 +141,10 @@ TABLES = (
 	("it-it-comp8.utb", _("Italian 8 dot computer braille"), True),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("ko.ctb", _("Korean grade 1"), False),
+	("ko-g1.ctb", _("Korean grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("ko-g2.ctb", _("Korean grade 2"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("Lv-Lv-g1.utb", _("Latvian grade 1"), False),
@@ -175,6 +181,9 @@ TABLES = (
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("Pt-Pt-g2.ctb", _("Portuguese grade 2"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("ru-compbrl.ctb", _("Russian braille for computer code"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("ru-ru-g1.utb", _("Russian grade 1"), False),
@@ -305,10 +314,17 @@ def getDisplayList():
 			continue
 		try:
 			display = _getDisplayDriver(name)
+		except:
+			log.error("Error while importing braille display driver %s" % name,
+				exc_info=True)
+			continue
+		try:
 			if display.check():
 				displayList.append((display.name, display.description))
+			else:
+				log.debugWarning("Braille display driver %s reports as unavailable, excluding" % name)
 		except:
-			pass
+			log.error("", exc_info=True)
 	return displayList
 
 class Region(object):
@@ -1453,6 +1469,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# We're reviewing a different object.
 			self._doNewObject(getFocusRegions(reviewPos.obj, review=True))
 
+	def handleConfigProfileSwitch(self):
+		display = config.conf["braille"]["display"]
+		if display != self.display.name:
+			self.setDisplayByName(display)
+
 def initialize():
 	global handler
 	config.addConfigDirsToPythonPackagePath(brailleDisplayDrivers)
@@ -1602,3 +1623,9 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		if isinstance(display, baseObject.ScriptableObject):
 			return display
 		return super(BrailleDisplayGesture, self).scriptableObject
+
+	@classmethod
+	def getDisplayTextForIdentifier(cls, identifier):
+		return handler.display.description, identifier.split(":", 1)[1]
+
+inputCore.registerGestureSource("br", BrailleDisplayGesture)

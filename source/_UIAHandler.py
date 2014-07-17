@@ -1,12 +1,13 @@
 from ctypes import *
 from ctypes.wintypes import *
 import comtypes.client
+from comtypes.automation import VT_EMPTY
 from comtypes import *
 import weakref
 import threading
-import re
 import time
 import api
+import appModuleHandler
 import queueHandler
 import controlTypes
 import NVDAHelper
@@ -24,8 +25,6 @@ StyleId_Heading9=70009
 ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
 ItemCount_Property_GUID=GUID("{ABBF5C45-5CCC-47b7-BB4E-87CB87BBD162}")
 
-re_MSAAProxyProviderDescription=re.compile(r'Microsoft: (Annotation|MSAA) Proxy \(unmanaged:uiautomationcore.dll\)',re.IGNORECASE)
-
 badUIAWindowClassNames=[
 	"SysTreeView32",
 	"WuDuiListView",
@@ -40,6 +39,8 @@ badUIAWindowClassNames=[
 	"RICHEDIT50W",
 	"SysListView32",
 	"_WwG",
+	"EXCEL7",
+	"Button",
 ]
 
 NVDAUnitsToUIAUnits={
@@ -131,11 +132,11 @@ class UIAHandler(COMObject):
 			raise self.MTAThreadInitException
 
 	def terminate(self):
-		MTAThreadHandle=HANDLE(windll.kernel32.OpenThread(self.MTAThread.ident,False,winKernel.SYNCHRONIZE))
+		MTAThreadHandle=HANDLE(windll.kernel32.OpenThread(winKernel.SYNCHRONIZE,False,self.MTAThread.ident))
 		self.MTAThreadStopEvent.set()
-		index=c_int()
-		#Wait for the MTAA thread to die (while still message pumping)
-		windll.user32.MsgWaitForMultipleObjects(1,byref(MTAThreadHandle),False,5000,0)
+		#Wait for the MTA thread to die (while still message pumping)
+		if windll.user32.MsgWaitForMultipleObjects(1,byref(MTAThreadHandle),False,200,0)!=0:
+			log.debugWarning("Timeout or error while waiting for UIAHandler MTA thread")
 		windll.kernel32.CloseHandle(MTAThreadHandle)
 		del self.MTAThread
 
@@ -168,7 +169,7 @@ class UIAHandler(COMObject):
 		self.clientObject.RemoveAllEventHandlers()
 
 	def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
-		if not self.MTAThreadInitEvent.isSet:
+		if not self.MTAThreadInitEvent.isSet():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			return
 		if eventID==UIA_MenuOpenedEventId and eventHandler.isPendingEvents("gainFocus"):
@@ -184,10 +185,13 @@ class UIAHandler(COMObject):
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if not obj or (NVDAEventName=="gainFocus" and not obj.shouldAllowUIAFocusEvent):
 			return
+		focus=api.getFocusObject()
+		if obj==focus:
+			obj=focus
 		eventHandler.queueEvent(NVDAEventName,obj)
 
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
-		if not self.MTAThreadInitEvent.isSet:
+		if not self.MTAThreadInitEvent.isSet():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			return
 		if not self.isNativeUIAElement(sender):
@@ -212,7 +216,10 @@ class UIAHandler(COMObject):
 		eventHandler.queueEvent("gainFocus",obj)
 
 	def IUIAutomationPropertyChangedEventHandler_HandlePropertyChangedEvent(self,sender,propertyId,newValue):
-		if not self.MTAThreadInitEvent.isSet:
+		# #3867: For now manually force this VARIANT type to empty to get around a nasty double free in comtypes/ctypes.
+		# We also don't use the value in this callback.
+		newValue.vt=VT_EMPTY
+		if not self.MTAThreadInitEvent.isSet():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			return
 		NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
@@ -224,21 +231,40 @@ class UIAHandler(COMObject):
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if not obj:
 			return
+		focus=api.getFocusObject()
+		if obj==focus:
+			obj=focus
 		eventHandler.queueEvent(NVDAEventName,obj)
+
+	def _isUIAWindowHelper(self,hwnd):
+		# UIA in NVDA's process freezes in Windows 7 and below
+		processID=winUser.getWindowThreadProcessID(hwnd)[0]
+		if windll.kernel32.GetCurrentProcessId()==processID:
+			return False
+		import NVDAObjects.window
+		windowClass=NVDAObjects.window.Window.normalizeWindowClassName(winUser.getClassName(hwnd))
+		# There are certain window classes that just had bad UIA implementations
+		if windowClass in badUIAWindowClassNames:
+			return False
+		if windowClass=="NetUIHWND":
+			parentHwnd=winUser.getAncestor(hwnd,winUser.GA_ROOT)
+			# #2816: Outlook 2010 auto complete does not fire enough UIA events, IAccessible is better.
+			# #4056: Combo boxes in Office 2010 Options dialogs don't expose a name via UIA, but do via MSAA.
+			if winUser.getClassName(parentHwnd) in {"Net UI Tool Window","NUIDialog"}:
+				return False
+		# allow the appModule for the window to also choose if this window is bad
+		appModule=appModuleHandler.getAppModuleFromProcessID(processID)
+		if appModule and appModule.isBadUIAWindow(hwnd):
+			return False
+		# Ask the window if it supports UIA natively
+		return windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
 
 	def isUIAWindow(self,hwnd):
 		now=time.time()
 		v=self.UIAWindowHandleCache.get(hwnd,None)
 		if not v or (now-v[1])>0.5:
-			import NVDAObjects.window
-			if windll.kernel32.GetCurrentProcessId()==winUser.getWindowThreadProcessID(hwnd)[0]:
-				isUIA=False
-			elif NVDAObjects.window.Window.normalizeWindowClassName(winUser.getClassName(hwnd)) in badUIAWindowClassNames:
-				isUIA=False
-			else:
-				isUIA=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
-			self.UIAWindowHandleCache[hwnd]=(isUIA,now)
-			return isUIA
+			v=self._isUIAWindowHelper(hwnd),now
+			self.UIAWindowHandleCache[hwnd]=v
 		return v[0]
 
 	def getNearestWindowHandle(self,UIAElement):
@@ -260,22 +286,23 @@ class UIAHandler(COMObject):
 			return False
 		if processID==windll.kernel32.GetCurrentProcessId():
 			return False
-		#If the element has a window handle, whether it is a native element depends on whether the window natively supports UIA.
+		# Whether this is a native element depends on whether its window natively supports UIA.
 		try:
 			windowHandle=UIAElement.cachedNativeWindowHandle
 		except COMError:
 			windowHandle=None
-		if windowHandle:
-			return self.isUIAWindow(windowHandle)
-		try:
-			providerDescription=UIAElement.cachedProviderDescription
-		except COMError:
-			return True
-		if re_MSAAProxyProviderDescription.search(providerDescription):
-			# This is an MSAA proxy.
-			# Whether this is a native element depends on whether the nearest window handle natively supports UIA.
+		if not windowHandle:
+			# Some elements report no window handle, so use the nearest ancestor window handle in this case.
 			windowHandle=self.getNearestWindowHandle(UIAElement)
-			if not windowHandle:
-				return False
-			return self.isUIAWindow(windowHandle)
-		return True
+		if windowHandle:
+			if self.isUIAWindow(windowHandle):
+				return True
+			if winUser.getClassName(windowHandle)=="DirectUIHWND" and "IEFRAME.dll" in UIAElement.cachedProviderDescription and UIAElement.currentClassName in ("DownloadBox", "accessiblebutton", "DUIToolbarButton", "PushButton"):
+				# This is the IE 9 downloads list.
+				# #3354: UiaHasServerSideProvider returns false for the IE 9 downloads list window,
+				# so we'd normally use MSAA for this control.
+				# However, its MSAA implementation is broken (fires invalid events) if UIA is initialised,
+				# whereas its UIA implementation works correctly.
+				# Therefore, we must use UIA here.
+				return True
+		return False

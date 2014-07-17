@@ -1,106 +1,115 @@
 ﻿#locale/de/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2012 NVDA contributors.
+#Copyright (c) 2011-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
-# Sonderzeichen	Regulärer Ausdruck
-# Weitere
-date separator	(?<=\d\d)\.(?=\d\d)
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\,(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥]?\d)
+date separator	(?<=\d\d)\:(?=\d\d)
 
 symbols:
-# Identifizierungszeichen	Ersetzungen[[	Ebene][	Bereich]][	# Angezeigter Name]
+# identifier	replacement[[	level][	preserve]][	# display name]
 
-# Komplexe Symbole
-. sentence ending	Punkt
-! sentence ending	Ausrufezeichen
-? sentence ending	Fragezeichen
-; phrase ending	Semikolon
-: phrase ending	Doppelpunkt
-date separator		none	always
-in-word '	Apostroph
+# Complex symbols
+. sentence ending	Punkt	all	always
+! sentence ending	Ausrufezeichen	all	always
+? sentence ending	Fragezeichen	all	always
+; phrase ending	Semikolon	most	always
+: phrase ending	Doppelpunkt	most	always
+decimal point		none	always
+in-word '	Apostroph	all	norep
+negative number	Minus	none	norep
 
-# Unsichtbare Zeichen
-\0	Leer	char	# Null
-\t	Tabulator
-\n	Zeilenumbruch
-\f	Seitenumbruch
-\r	Neue Zeile
- 	Leerzeichen
- 	Leerzeichen	# Geschütztes Leerzeichen
+# Whitespace
+\0	Leer	char	# null
+\t	Tab
+\n	Zeilenumbruch	char
+\f	Seitenumbruch	none
+\r	Neue Zeile	char
+ 	Leerzeichen	char
+ 	Geschütztes Leerzeichen	char	# no-break space
 
-# Standardsymbole und -satzzeichen
-!	Ausrufezeichen
-"	Anführungszeichen
-\#	Nummer
-$	Dollar
-£	Pfund Sterling
-€	Euro
-¢	sent
-¥	Yenn
-%	Prozent
-&	Und
-'	Apostroph
-(	Runde Klammer auf
-)	Runde Klammer zu
-*	Stern
-+	Plus
-,	Komma
--	Bindestrich
-.	Punkt
-/	Schrägstrich
-:	Doppelpunkt
-;	Semikolon
-<	Kleiner als
->	Größer als
-=	Gleich
-?	Fragezeichen
-@	Klammeraffe
-[	Eckige Klammer auf
-]	Eckige Klammer zu
-\\	Backslash
-^	Dach
-_	Unterstrich
-`	Apostroph
-{	Geschweifte Klammer auf
-}	Geschweifte Klammer zu
-|	Senkrechter Strich
-~	Tilde
+# Standard punctuation/symbols
+!	Ausrufezeichen	all
+"	Anführungszeichen	most
+\#	Nummernzeichen	most
+$	Dollar	all	norep
+£	Pfund Sterling	all	norep
+€	Euro	all	norep
+¢	Cents	all	norep
+¥	Yen	all	norep
+%	Prozent	some
+&	Und	some
+'	Apostroph	all
+(	Runde Klammer auf	most
+)	Rechte Klammer zu	most
+*	Stern	some
++	Plus	some
+,	Komma	all	always
+-	Bindestrich	most
+.	Punkt	some
+/	Schrägstrich	some
+:	Doppelpunkt	most	norep
+;	Semikolon	most
+<	Kleiner Als	most
+>	Größer Als	most
+=	Gleichheitszeichen	some
+?	Fragezeichen	all
+@	At	some
+[	Eckige Klammer auf	most
+]	Eckige Klammer zu	most
+\\	Backslash	most
+^	Dach	most
+_	Unterstrich	most
+`	Graav	most
+{	Geschweifte Klammer auf	most
+}	Geschweifte Klammer zu	most
+|	Senkrechter Strich	most
+~	Tilde	most
 
-# Weitere Zeichen
-•	Aufzählungszeichen
-…	Punkt Punkt Punkt
-...	Punkt Punkt Punkt
-	Aufzählungszeichen
-“	Anführungszeichen oben
-”	Anführungszeichen unten	all
-‘	Anführungszeichen oben
-’	Anführungszeichen unten
-„	Anführungszeichen unten	all
-–	Strich
-—	Gedankenstrich
-●	Kreis
-¨	Trema
-‏	Markierung von rechts nach links
-‎	Markierung von links nach rechts
-■	Schwarzes Quadrat
-➔	Pfeil nach rechts
-→	Pfeil nach rechts
-§	Paragraf
-°	Grad
-Þ	Aufzählung	some
-«	Doppelte gewinkelte Klammer auf	most
-»	Doppelte gewinkelte Klammer zu	most
-µ	My
-¹	Hoch Eins
-²	Hoch Zwei
-³	Hoch Drei
-®	Registriertes Warenzeichen
-™	Eingetragenes Warenzeichen
-©	Copyright
-±	Plus Minus
-×	Mal
-÷	Durch
-→	Rechtspfeil	some
+# Other characters
+•	Aufzählungszeichen	some
+…	Punkt Punkt Punkt	all	always
+...	Punkt Punkt Punkt	all	always
+	Aufzählungszeichen	some
+“	Typografisches Anführungszeichen oben	most
+„	Typografisches Anführungszeichen unten	most
+‘	Apostroph links	most
+’	Apostroph rechts	most
+–	Strich	most
+—	Gedankenstrich	most
+●	Kreis	most
+¨	Trema	most
+‎	Pfeil von links nach rechts	char
+‏	Pfeil von rechts nach links	char
+■	Schwarzes Quadrat	some
+➔	Großer, breiter rechtsweisender Pfeil	some
+§	Paragraf	all
+°	Grad	some
+«	Doppelt gewinkelte Klammer zu	some
+»	Doppelt gewinkelte Klammer auf	some
+µ	Mü	some
+¹	Hochgestellte 1	some
+²	Hochgestellte 2	some
+³	Hochgestellte 3	some
+®	Registriertes Warenzeichen	some
+™	Eingetragenes Warenzeichen	some
+©	Copyright	some
+±	Plus Minus	most
+×	Mal	most
+÷	Geteilt durch	most
+←	Pfeil nach links	some
+→	Pfeil nach rechts	some
 ✓	Häkchen	some
-✔	Großes Häkchen	some
+✔	Fettes Häkchen	some

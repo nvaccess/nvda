@@ -10,6 +10,7 @@ import itertools
 import ctypes
 from ctypes.wintypes import BOOL, WCHAR, HWND, DWORD, ULONG, WORD
 import _winreg as winreg
+from winKernel import SYSTEMTIME
 
 def ValidHandle(value):
 	if value == 0:
@@ -198,6 +199,11 @@ def listComPorts(onlyAvailable=True):
 					entry["bluetoothAddress"], entry["bluetoothName"] = getToshibaBluetoothPortInfo(port)
 				except:
 					pass
+			elif hwID == r"{95C7A0A0-3094-11D7-A202-00508B9D7D5A}\BLUETOOTHPORT":
+				try:
+					entry["bluetoothAddress"], entry["bluetoothName"] = getWidcommBluetoothPortInfo(port)
+				except:
+					pass
 			ctypes.windll.advapi32.RegCloseKey(regKey)
 
 			# friendly name
@@ -222,18 +228,6 @@ def listComPorts(onlyAvailable=True):
 
 BLUETOOTH_MAX_NAME_SIZE = 248
 BTH_ADDR = BLUETOOTH_ADDRESS = ULONGLONG
-
-class SYSTEMTIME(ctypes.Structure):
-	_fields_ = (
-		("wYear", WORD),
-		("wMonth", WORD),
-		("wDayOfWeek", WORD),
-		("wDay", WORD),
-		("wHour", WORD),
-		("wMinute", WORD),
-		("wSecond", WORD),
-		("wMilliseconds", WORD)
-	)
 
 class BLUETOOTH_DEVICE_INFO(ctypes.Structure):
 	_fields_ = (
@@ -278,5 +272,26 @@ def getToshibaBluetoothPortInfo(port):
 				# Convert it to a single number.
 				addr = sum(ord(byte) << (byteNum * 8) for byteNum, byte in enumerate(reversed(addr)))
 				name = winreg.QueryValueEx(itemKey, "FRIENDLYNAME")[0].rstrip("\0")
+				return addr, name
+	raise LookupError
+
+def getWidcommBluetoothPortInfo(port):
+	with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Widcomm\BTConfig\AutoConnect") as rootKey:
+		for index in itertools.count():
+			try:
+				keyName = winreg.EnumKey(rootKey, index)
+			except WindowsError:
+				break
+			# The keys are the port number, but might be prefixed by 0s.
+			# For example, COM4 is 0004.
+			if keyName.lstrip("0") != port[3:]:
+				# This isn't the port we're interested in.
+				continue
+			with winreg.OpenKey(rootKey, keyName) as itemKey:
+				addr = winreg.QueryValueEx(itemKey, "BDAddress")[0]
+				# addr is a string of raw bytes.
+				# Convert it to a single number.
+				addr = sum(ord(byte) << (byteNum * 8) for byteNum, byte in enumerate(reversed(addr)))
+				name = winreg.QueryValueEx(itemKey, "BDName")[0]
 				return addr, name
 	raise LookupError

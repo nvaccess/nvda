@@ -318,6 +318,7 @@ There are also a few simplified navigation properties such as simpleParent, simp
 These are like their respective navigation properties described above, but NVDA filters out unuseful objects.
 These properties are used when NVDA's simple review mode is turned on, which is the default.
 These simple properties may be easier to use, but the real navigation properties more closely reflect the underlying Operating System structure.
+Also, these may change in future versions of NVDA as improvements are made to simple review, so they should generally be avoided when programmatically locating specific objects.
 
 When developing plugins, most of the time, it is not important what toolkit or API backs an NVDA Object, as the plugin will usually only access standard properties such as name, role and value.
 However, as plugins become more advanced, it is certainly possible to delve deeper into NVDA Objects to find out toolkit or API specific information if required.
@@ -359,9 +360,11 @@ Some examples of gesture string identifiers are:
 - "kb(laptop):NVDA+t"
 -
 
-Currently, the only input sources in NVDA are:
-- kb: keyboard input
-- br: braille input
+Currently, the input sources in NVDA are:
+- kb: system keyboard input
+- br: braille display controls
+- ts: touch screen
+- bk: braille keyboard input
 -
 
 When NVDA receives input, it looks for a matching gesture binding in a particular order.
@@ -374,6 +377,19 @@ The order for gesture binding lookup is:
 - NVDA Object with focus
 - Global Commands (built in commands like quitting NVDA, object navigation commands, etc.)
 -
+
+You should specify a description of the script in the function's docstring which describes the command for users.
+For example, this is reported to users when in Input Help mode and shown in the Input Gestures dialog.
+You specify the docstring by setting a "__doc__" attribute on the script function.
+The script will not appear in the Input Gestures dialog unless this is specified.
+
+You can also specify a category for a script so that it can be grouped with other similar scripts.
+For example, a script in a global plugin which adds browse mode quick navigation keys may be categorized under the "Browse mode" category.
+For individual scripts, this is done by setting a "category" attribute on the script function to a string containing the name of the category.
+You can also set the "scriptCategory" attribute on the plugin class, which will be used for scripts which do not specify a category.
+There are constants for common categories prefixed with SCRCAT_ in the inputCore and globalCommands modules.
+The script will be listed under the specified category in the Input Gestures dialog.
+If no category is specified, the script will be categorized under "Miscellaneous".
 
 ++ Example 3: A Global Plugin to Find out Window Class and Control ID ++
 The following Global Plugin allows you to press NVDA+leftArrow to have the window class of the current focus announced, and NVDA+rightArrow to have the window control ID of the current focus announced.
@@ -445,6 +461,7 @@ If an event for an NVDA Object is defined on a Global Plugin, App Module or Tree
 Some common NVDA Object events are:
 - foreground: this NVDA Object has become the new foreground object; i.e. active top-level object
 - gainFocus
+- focusEntered: Focus has moved inside this object; i.e. it is an ancestor of the focus object
 - loseFocus
 - nameChange
 - valueChange
@@ -597,6 +614,7 @@ Otherwise, the add-on will not install.
 - author: The author of this add-on, preferably in the form Full Name <email address>; e.g. Michael Curran <mick@kulgan.net>. (Mandatory)
 - description: A sentence or two describing what the add-on does.
 - url: A URL where this add-on, further info and upgrades can be found.
+- docFileName: The name of the main documentation file for this add-on; e.g. readme.html. See the [Add-on Documentation #AddonDoc] section for more details.
 -
 
 +++ An Example Manifest File +++
@@ -651,6 +669,15 @@ As with the rest of NVDA, an nvda.mo compiled gettext database file should be pl
 to allow plugins in your add-on to access gettext message information via calls to _(), you must initialize  translations at the top of each Python module by calling addonHandler.initTranslation().
 For more information about gettext and NVDA translation in general, please read
 http://www.nvda-project.org/wiki/TranslatingNVDA
+
+++ Add-on Documentation ++[AddonDoc]
+Documentation for an add-on should be placed in a doc directory in the archive.
+Similar to the locale directory, this directory should contain directories for each language in which documentation is available.
+
+Users can access documentation for a particular add-on by opening the Add-ons Manager, selecting the add-on and pressing the Add-on help button.
+This will open the file named in the docFileName parameter of the manifest.
+NVDA will search for this file in the appropriate language directories.
+For example, if docFileName is set to readme.html and the user is using English, NVDA will open doc\en\readme.html.
 
 + NVDA Python Console +[PythonConsole]
 The NVDA Python console emulates the interactive Python interpreter from within NVDA.

@@ -31,18 +31,17 @@ release=env['release']
 env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${nvdaHelperLogLevel}'),('_WIN32_WINNT','_WIN32_WINNT_WINXP')])
 env.Append(CCFLAGS=['/W3','/WX'])
 env.Append(CXXFLAGS=['/EHsc'])
-env.Append(CPPPATH=['#/include',Dir('.').abspath])
+env.Append(CPPPATH=['#/include','#/miscDeps/include',Dir('.').abspath])
 env.Append(LINKFLAGS=['/incremental:no','/WX'])
 env.Append(LINKFLAGS='/release') #We always want a checksum in the header
 env.Append(MIDLFLAGS='/x64' if TARGET_ARCH=='x86_64' else '/win32')
 
-if 'noOptimize' in debug:
+if not release: 
 	env.Append(CCFLAGS=['/Od'])
 else:
 	env.Append(CCFLAGS='/O2')
-	if release:
-		env.Append(CCFLAGS='/GL')
-		env.Append(LINKFLAGS=['/LTCG'])
+	env.Append(CCFLAGS='/GL')
+	env.Append(LINKFLAGS=['/LTCG'])
 
 if 'debugCRT' in debug:
 	env.Append(CCFLAGS=['/MTd'])
@@ -53,9 +52,10 @@ else:
 if 'RTC' in debug:
 	env.Append(CCFLAGS=['/RTCsu'])
 
-if 'symbols' in debug:
-	env.Append(PDB='${TARGET}.pdb')
-	env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
+
+#We always want debug symbols
+env.Append(PDB='${TARGET}.pdb')
+env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
 
 Export('env')
 

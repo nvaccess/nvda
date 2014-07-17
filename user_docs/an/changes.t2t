@@ -1,7 +1,236 @@
-Qué bi ha de Nuevo en NVDA
+Qué bi ha de Nuevo en o NVDA
 
 
 %!includeconf: ../changes.t2tconf
+
+= 2014.2 =
+
+== Nuevas Caracteristicas ==
+- Agora ye posible l'anunciau d'a selección de texto en qualques campos d'edición personalizada an se fa servir información d'a pantalla. (#770)
+- En as aplicacions  Java accesibles agora s'anuncia a información de posición ta os botons d'opción y atros controls que exposan información de grupo. (#3754)
+- En as aplicacions Java accesibles agora s'anuncian os alcorces de teclau ta os controls que'n tiengan. (#3881)
+- En o modo navegación as etiquetas  en os puntos de referencia agora s'anuncian. Tamién s'incluyen en o dialogo Lista d'Elementos. (#1195)
+- En o modo navegación as rechions etiquetadas agora se tractan como puntos de referencia. (#3741)
+- En os documentos y as aplicacions de l'Internet Explorer, agora se suportan as rechions vivas (parti d'o estandar ARIA d'o W3c), permitindo asinas a los authors d'as webs marcar conteniu particular ta estar charrau automaticament en que cambie. (#1846)
+
+
+== Cambeos ==
+- A lo salir d'un quadro de dialogo u l'aplicación adentro d'un documento d'o modo navegación o nombre y mena de documento d'o modo navegación ya no s'anuncian. (#4069)
+
+
+== Corrección d'errors ==
+- O menú estandar d'o sistema Windows ya no se silencia accidentalment en as aplicacions Java. (#3882)
+- En que se copia texto dende a revisión de pantalla os blincos de linia ya no s'ignoran. (#3900)
+- Os obchectos d'espacio en blanco sin sentiu ya no s'anuncian en qualques aplicacions en que o foco  cambee u en que se faiga servir a navegación d'obchectos con a revisión simpla enchegada. (#3839)
+- Os quadros de mensache y belatros dialogos producius por o NVDA causan atra vegada a cancelación d'a fabla anterior antis d'anunciar o dialogo. 
+- En o modo navegación as etiquetas de controls tals como vinclos y botons agora se procesan correctament quan a etiqueta s'haiga substituiu por l'autor con fins d'accesibilidat (especificament, l'emplego d'aria-label u d'aria-labelledby). (#1354)
+- En o modo navegación en l'Internet Explorer, Ya no s'ignora inapropiadament o texto conteniu adintro d'un elemento marcau como de presentación (ARIA role="presentation"). (#4031)
+- Agora torna a estar posible escribir texto vietnamita fendo servir o software Unikey. Ta fer ixo, desmarca a nueva caixeta de verificación Teclas de maneyo d'atras aplicacions, en o dialogo d'opcions de teclau d'o NVDA. (#4043) 
+- En o modo navegación os elementos de menú que son botons d'opción u caixetas de verificación s'anuncian como controls en cuenta de  nomás texto clicable. (#4092)
+- O NVDA ya no cambea incorrectament dende o modo foco t'o modo navegación en que se triga un elemento de menú que siga botón d'opción u caixeta de verificación. (#4092)
+- En o Microsoft PowerPoint con l'anuncio d'as parolas escritas activau, os caracters eliminaus con a tecla de borrau ya no s'anuncian como una parti d'a parola escrita. (#3231)
+- En os dialogos d'opcions d'o Microsoft Office 2010 as etiquetas d'os quadros combinaus s'anuncian correctament. (#4056)
+- En o modo navegación en as aplicacions de Mozilla fendo servir a navegación rapida, os comandos ta mover-se t'o siguient u l'anterior botón u campo de formulario agora incluyen botons de conmutación como s'asperaba. (#4098)
+- Ya no s'anuncia dos vegadas o conteniu d'as alertas en as aplicacions de Mozilla. (#3481)
+- En o modo navegación os contenedors y puntos de referencia ya no son repetius inapropiadament entre que se navega adentro d'ells a lo mesmo tiempo que o conteniu d'a pachina ye cambiando (p. eix. navegando en as pachinas d'o Facebook y o Twitter). (#2199)
+- O NVDA se recupera en mas casos en que se cambia difuera d'as aplicacions que han deixau de responder. (#3825)
+- O cursor (punto d'inserción) s'esviella correctament unatra vegada en que se fa un comando Charrar-loTot entre que se ye en texto editable dibuixau dreitament en a pantalla. (#4125)
+
+
+= 2014.1 =
+
+== Nuevas Caracteristicas ==
+- Suporte ta lo Microsoft PowerPoint 2013. Se note que l'anvista protechida no ye suportada. (#3578)
+- En o Microsoft Word y l'Excel o NVDA agora puet leyer o simbolo trigau en que s'esleigan simbolos en o dialogo Ficar simbolo. (#3538)
+- Agora ye posible trigar si o conteniu en documentos puet identificar-se como clicable a traviés d'una nueva opción en o dialogo d'opcions de formatiau de documentos. Ista  opción ye enchegada por defecto d'alcuerdo con o comportamiento anterior. (#3556)
+- Suporte ta las pantallas braille connectadas a traviés de Bluetooth a un ordinador executando lo software de Widcomm Bluetooth. (#2418)
+- Agora s'anuncian os hipervinclos en editar texto en o PowerPoint. (3416)
+- Quan se siga en aplicacions ARIA u dialogos en a web, agora ye posible aforzar a lo NVDA ta que cambee ta lo modo navegación con NVDA+espacio seguindo a navegación d'estilos de documento de l'aplicación u d'o dialogo. (3#2023)
+- En l'Outlook Express / Windows Mail / Windows Live Mail, o NVDA agora anuncia si un mensache tien un adchunto u ye marcau. (#1594)
+- En navegar por tablas en aplicacions Java accesibles agora s'anuncian as coordinadas de ringlera y columna, incluindo  os capiters de columna y ringlera si existen. (#3756)
+
+
+== Cambeos ==
+- Ta las pantallas braille Papenmeier, s'ha eliminau a orden mover a revisión plana/foco. Os usuarios pueden asignar as suyas propias teclas usando o dialogo de cenyos de dentrada. (#3652)
+- O NVDA agora se basa en a versión 11 d'o Microsoft VC runtime, o que significa que ya no puet executar-se en sistemas operativos anteriors a lo Windows XP Service Pack 2 u lo Windows Server 2003 Service Pack 1.
+- O libel de puntuación beluna agora diz os caracters asterisco (*) y mas (+). (#3614)
+- Esviellau o eSpeak Ta la versión 1.48.04, que inclui muitas correccions d'idiomas y corriche quantos problemas. (#3842, #3739)
+
+
+== Corrección d'errors ==
+- En que te muevas u selecciones  celdas en o Microsoft Excel, NVDA ya no habría d'anunciar  inadequadament l'antiga celda en cuenta d'a nueva celda quan o Microsoft Excel siga lento en mover a selección. (#3558)
+- O NVDA manella adequadament a obridura d'una lista desplegable en una celda en o Microsoft Excel por meyo d'o menú contextual. (#3586)
+- Agora s'amuestra apropiadament o Nuevo conteniu d'a pachina en as pachinas d'a botiga en l'iTunes 11 en o modo navegación quan se siga un vinclo en a botiga u en ubrir-la inicialment. (#3625)
+- Os botons ta l'anvista previa d'as cantas en a botiga de l'iTunes 11 agora amuestran a suya etiqueta en o modo navegación. (#3638)
+- En o modo navegación en o Google Chrome, as etiquetas d'as caixetas de verificación y d'os botons d'opción agora se procesan correctament. (#1562)
+- En l'Instantbird, o NVDA ya no anuncia información inutil cada vegada que te muevas ta un contacto d'a lista de contactos. (#2667)
+- En o modo navegación en l'Adobe Reader, agora se procesa o texto correcto ta los botons, etc. an a etiqueta s'ha substituiu por l'uso d'un tooltip u unatro recurso. (#3640)
+- En o modo navegación en l'Adobe Reader, os graficos extranyos que contienen o texto "mc-ref" ya no se procesan. (#3645)
+- O NVDA ya no anuncia todas as celdas en o Microsoft Excel como subrayadas en a información de formato d'ellas. (#3669)
+- Ya no s'amuestran caracters desustanciaus  en os documentos en o modo navegación tals como os que se troban en o rango d'uso privau  de l'Unicode. En bells casos istos aturaban l'a lectura d'etiquetas mas utils. (#2963).
+- A composición de dentrada ta la introducción de caracters  asiaticos de l'este ya no falla en o PuTTY. (#3432)
+- A lo navegar por un documento dimpués d'una cancelación de Verbalizar-lo tot ya no fa que o NVDA anuncie a vegadas incorrectament que s'ha abandonau un campo (tal como una tabla) mas abaixo en o documento en que Verbalizar-lo tot nunca no estió charrando en realidat (#3688)
+- Quan se faigan servir ordens rapidas d'o modo navegación mientras se siga en verbalizar-lo tot con a lectura superficial activada, o NVDA anuncia con mas precisión o nuevo campo (por eixemplo, agora diz que un capitero ye un capitero, y no pas nomás o texto). (#3689)
+- En o blinco ta la fin u ta lo prencipio d'un contenedor as ordens de navegación rapida agora afectan a la opción lectura superficial entre verbalizar-lo tot (ye decir, que ya no cancelarán o verbalizar-lo tot actual). (#3675)
+- Os nombres d'os cenyos tactils listaus en o dialogo Cenyos de dentrada d'o NVDA agora son mas amigables y son traducius. (#3624)
+- O NVDA ya no fa que bells programas se bloquen quan se mueva o puntero d'o churi sobre os controls d'edición enriquius d'ell (TRichEdit). Programas incluindo Jarte 5.1 y BRfácil. (#3693, #3603, #3581)
+- En l'Internet Explorer y atros controls MSHTML, os contenedors tals como tablas marcadas como presentación por ARIA ya no s'anuncian a l'usuario. (#3713)
+- En o Microsoft Word, o NVDA ya no repite inapropiadament a información de ringlera y columna de tabla  ta una celda en una linia braille quantas vegadas. (#3702)
+- En os idiomas que fan servir un espacio como un separador de grupos de cien en os dichitos como lo francés y l'alemán, os trozos de texto separaus de numers ya no se pronuncian como un solo numero. Isto estié particularment problematico ta las celdas de tablas  que contienen numeros . (#3698)
+- O Braille ya no falla a vegadas a lo esviellar-se en que se mueve o cursor d'o sistema en o Microsoft Word 2013. (#3784)
+- En posicionar-se en o primer caracter d'un capitero en o Microsoft Word, o texto que se comunica ye un capitero (incluindo o libel) ya no desapareix d'una linia braille. (#3701)
+- En que  se dispara un perfil de configuración ta una aplicación y se sale d'ixa aplicación, NVDA ya no falla a vegadas en desactivar o perfil. (#3732)
+- En que s'escribe con a dentrada Asiatica en un control adentro d'o propio NVDA (eix.: en o dialogo Mirar en o modo navegación), "NVDA" ya no s'anuncia incorrectament en cuenta d'o candidato. (#3726)
+- Agora s'anuncian as pestanyas en o dialogo d'opcions de l'Outlook 2013. (#3826)
+- Amillorau o suporte  ta  rechions ARIA live en Firefox y atras aplicacions Gecko de Mozilla:
+- Suporte ta actualizacions aria-atomic y filtraus d'actualizacions  aria-busy (#2640)
+- O texto alternativo (como l'atributo alt u l'aria-label) se inclui si no bi ha unatro texto usable. (#3329)
+- As actualizacions Live Region ya no se silencian si occurren a lo mesmo tiempo que se mueve lo foco. (#3777)
+- Qualques elementos de presentación en o Firefox y atras aplicacions Mozilla Gecko ya no  s'amuestran inapropiadament en o modo navegación (especificament quan l'elemento ye marcau con aria-presentation y en ye  tamién enfocable). (#3781)
+- Una millora en o rendimiento en navegar por un documento en o Microsoft Word con as errors d'ortografía enchegadas. (#3785)
+- Qualques apanyos pa o suporte d'aplicacions Java accesibles:
+ - Ya no falla o control enfocau inicialment en un marco u dialogo  en estar anunciau en que o marco u dialogo pasa ta lo primer plan. (#3753)
+ - A información de posición inusable ya no se anuncia ta os botons d'opción (p. eix. 1 de 1). (#3754)
+ - Millor informe d'os controls JComboBox (l'html ya no s'anuncia, millor informe de os estaus de desplegau y plegau). (#3755)
+ - En anunciar o texto d'os dialogos, agora s'inclui bell texto que antis mancaba . (#3757)
+ - Agora s'anuncian os cambeos d'o nombre, a valor u a descripción d'o control enfocau de traza mas precisa. (#3770)
+ - S'Apanya  un penche en o NVDA visto en o Windows 8 en enfocar bells controls RichEdit que contienen grans cantidatz de texto(por eixemplo en o Visualizador de rechistro d'o NVDA, windbg). (#3867)
+- En os sistemas con una configuración de pantalla d'alta DPI (que se produz de traza predeterminada ta muitas pantallas modernas), o NVDA ya no leva o churi ta lo puesto entivocau en qualques aplicacions. (#3758, #3703)
+- S'ha correchiu un problema ocasional en navegar por a web an o NVDA deixaba de funcionar correctament dica que se reenchegaba, tot y que no se blocaba u se conchelaba. (# 3804)
+- Agora Se puet emplegar una pantalla bralle Papenmeier mesmo si nunca s'hese connectau a traviés d'USB. (#3712)
+- O NVDA ya no se conchela en que se trigan linias braille d'os modelos antigos de Papenmeier BRAILLEX sin una pantalla connectada.
+
+
+== Cambeos ta desembolicadors ==
+- Os AppModules agora contienen as propiedatz productName y productVersion. Ista información tamién s'incluye agora en a información d'o desembolicador (NVDA+f1). (#1625)
+- En a consola Python, agora puetz pretar o tabulador ta completar l'identificador actual. (#433)
+ - Si bi ha quantas posibilidatz, puetz pretar o tabulador unatra vegada ta trigar-lo dende una lista.
+
+
+= 2013.3 =
+
+== Nuevas Caracteristicas ==
+- Os campos de formulario  agora s'anuncian en os documentos de Microsoft word. (#2295)
+- As listas desplegables en Microsoft Excel 2003 dica lo 2010 agora s'anuncian en que s'ubren y navegan. (#3382)
+- Una nueva opción 'Permitir a Lectura superficial en charrar-lo Tot' en o dialogo Opcions de Teclau permite a navegación por un documento con as ordens de navegación rapida d'o modo navegación y movimientos de linia / paragrafo, mientras remaneix leyendo-lo tot. Ista opción ye desactivada de traza predeterminada. (#2766) 
+- Agora bi ha un dialogo Cenyos de Dentrada ta permitir a facil personalización d'os cenyos de dentrada(tals como teclas en o teclau) ta ordens de NVDA. (#1532)
+- Agora puetz tener diferents opcions ta diferents situacions fendo servir perfils de configuración. Os perfils se pueden enchegar de traza manual u automatica(eix.: ta una aplicación en particular). (#87, #667, #1913)
+- En o Microsoft Excel, as celdas que son vinclos agora s'anuncian como vinclos. (#3042)
+- En o Microsoft Excel, os comentarios que bi haiga en as celdas agora se l'anuncian a l'usuario. (#2921)
+
+
+== Corrección d'errors ==
+- O Zend Studio agora funciona igual que l'Eclipse. (#3420)
+- O cambeo d'estau de bellas caixetas de verificación en o dialogo de reglas de correu de Microsoft Outlook 2010 agora s'anuncia automaticament. (#3063)
+- NVDA agora anunciará o estau fixau ta controls fixos tals como  pestanyas en Mozilla Firefox. (#3372)
+- NVDA agora puet anunciar a información de revisión en Microsoft Word quan o Control de Cambeos  siga habilitau. para cuenta que Anunciar as revisions d'o editor debe estar habilitau en o dialogo de formatiau de documentos de NVDA (desactivau predeterminadament) tamién ta que sigan anunciaus. (#1670)
+- Agora ye posible vincular scripts a cenyos de teclau que contiengan as teclas Alt y/u Windows como modificaderas. Anteriorment, si se feba isto, a execución d'o script causaba l'activación d'o menú Encieto u d'a barra de menú. (#3472)
+- A lo seleccionar texto en documentos en modo navegación (por eixemplo a lo emplegar control+shift+fin) ya no causa que se cambee a distribución de teclau en sistemas con quantas distribucions de teclau instaladas. (#3472)
+- Internet Explorer ya no habría a penchar-se u tornar-se inusable  quan se zarra NVDA. (#3397)
+- O movimiento fisico y atros eventos en qualques ordinadors modernos ya  no se tracta como pulsacions de teclas inadequadas. Anteriorment, isto silenciaba a voz y qualques vegadas feba funcionar ordens de NVDA. (#3468)
+- O NVDA agora se comporta como s'asperaba enPoedit 1.5.7. Os usuarios que en faigan servir versions anteriors amenesterán actualizar-ne. (#3485)
+- O NVDA agora puet leyer documentos protechius en Microsoft Word 2010,  no causando ya que se'n bloque. (#1686)
+- Si se da un parametro de linia de comando desconoixiu en executar o paquet de distribución de NVDA, ya no se provoca un bucle sin fin de dialogos de mensaches d'error. (#3463).
+-O NVDA ya no falla en anunciar o texto alternativo d'os graficos y obchectos en Microsoft Word si o texto alternativo contién cometas u atros caracters no estandar. (#3579)
+- O numero d'elementos de bellas listas horizontals en modo navegación agora ye correcto. Anteriorment podeba haber estau o dople d'a cantidat real. (#2151)
+- A lo pretar control+e en una fuella de calculo de Microsoft Excel, agora s'anunciará a selección esviellada. (#3043)
+- NVDA agora puet leyer correctament os documentos XHTML en Microsoft Internet Explorer y belatros controls 	MSHTML. (#3542)
+- Dialogo d'Opcions de teclau: si no s'ha seleccionau garra tecla ta fer-la servir como a tecla NVDA, se presienta una error a l'usuario en  que se zarra o dialogo. A lo menos cal seleccionar una d'as teclas ta l'emplego apropiau de NVDA. (#2871)
+- En o Microsoft Excel, agora o NVDA anuncia as celdas mezcladas de traza diferent que as celdas multiples seleccionadas. (#3567)
+- O cursor de modo navegación  ya no se mete incorrectament quan se deixa un dialogo u una aplicación adentro d'o documento. (#3145)
+- S'ha apanyau un problema por o qual o controlador de pantalla HumanWare Brailliant BI / B series braille no s'amostraba como una opción en o quadro de dialogo Configuración de Braille en bells sistemas, anque dita pantalla se connectase a traviés de l'USB.
+- O NVDA ya no falla  en que s'esleye a revisión de pantalla quan o navegador d'obchectos  no i tien un puesto real. En iste caso o cursor de revisión agora se  mete en l'alto d'a pantalla. (#3454)
+
+
+== Cambeos ta Desembolicadors ==
+- Puetz especificar a categoría a amostrar a l'usuario por os scripts fendo servir l'atributo scriptCategory en clases ScriptableObject y l'atributo category en metodos de script. Mira la documentación ta baseObject.ScriptableObject ta mas detalles. (#1532)
+- O config.save ye obsoleto y talment s'esborre en bella versión esvenidera. Fe servir o config.conf.save en cuenta. (#667)
+- O config.validateConfig ye obsoleto y talment s'esborre en bella versión esvenidera. Os complementos que l'amenestan pueden 	furnir a suya propia implementación. (#667, #3632)
+
+
+= 2013.2 =
+
+== Nuevas Caracteristicas ==
+- Suporte ta lo Chromium Embedded Framework, que ye un control de navegador web utilizau en quantas aplicacions. (3108)
+- Nueva variant de voz d'eSpeak: Iven3.
+- En Skype, s'anuncian automaticament os mensaches nuevos de chat mientras a conversación siga enfocada. (2298)
+- Suporte ta Tween, incluindo l'anunciau d'os nombres de pestanya y menor ran de detalle quan se leigan os twits.
+- Agora puetz deshabilitar l'amostrau de mensaches de NVDA en una linia braille configurando a durada d'o mensache a 0 en o dialogo d'Opcions de Braille. (2482)
+- En l'administrador de complementos, agora bi ha un botón Obtener Complementos ta ubrir o puesto web de Complementos de NVDA an puetz examinar y descargar os complementos disponibles. (3209)
+- En o dialogo de bienvenida de NVDA que siempre amaneix a primera vegada que  executas NVDA, agora puetz especificar si NVDA s'encieta automaticament dimpués d'autentificar-te en Windows. (2234)
+- O modo silencioso s'habilita automaticament quan s'emplegue Dolphin Cicero. (2055)
+- Agora se suporta a versión Windows x64 de Miranda IM/Miranda NG. (3296)
+- Agora s'anuncian automaticament as sucherencias de busca en  a pantalla d'inicio de  Windows 8.1. (3322)
+- Suporte ta navegar y editar fuellas de calculo en Microsoft Excel 2013. (3360)
+- As linias braille Freedom Scientific Focus 14 Blue y Focus 80 Blue, asinas como a Focus 40 Blue en bellas configuracions que no se suportaba previament, agora se suporta quan se connecten a traviés de Bluetooth. (3307)
+- Agora s'anuncian as sucherencias d'autocompletau en l'Outlook 2010. (2816)
+- Nuevas tablas de transcripción braille: Braille computerizau anglés (U.K.), Coreán grau 2, braille ruso ta codigo informatico.
+- Nuevo idioma: Farsi. (1427)
+
+
+== Cambeos ==
+- En una pantalla tactil, realizando un eslizamiento con un solo dido a la cucha u a la dreita quan se siga en modo obchecto, agora te mueves enta zaga u enta abant por  totz os obchectos y no solament por aquells que sigan en o mesmo contenedor. Fe servir  un eslizamiento con 2 didos a la cucha u a la dreita ta realizar l'acción orichinal d'anterior/siguient obchecto limitau a l'actual contenedor.
+- A caixeta de verificación Anunciar tablas de disenyo que se troba en o dialogo Opcions de Modo Navegación  agora s'ha renombrau como Incluir Tablas de Disenyo ta refleixar que a navegación rapida no las localizará si a caixeta ye desmarcada. (3140)
+- Realizando un eslizamiento a la cucha u a la dreita con un solo dido quan se siga en modo obchecto agora se mueve a anterior u siguient en una anvista plana d'a navegación d'obchectos. Fe servir un eslizamiento con 2 didos a la cucha u a la dreita ta levar a cabo a orden orichinal d'obchecto anterior/siguient limitada a lo ran  actual.
+- A revisión plana ha estau reemplazada por os modos de revisión d'obchectos, documentos y pantalla. (2996)
+ - A revisión d'obchectos revisa o texto nomás adentro d'o navegador d'obchectos, a revisión de documentos revisa tot o texto en un documento en modo navegación (si bi'n ha belún) y a revisión de pantalla revisa o texto en a pantalla ta l'aplicación actual.
+- As ordens que antis moveban a u dende revisión plana agora cambean entre istos nuevos modos de revisión.
+ - O navegador d'obchectos sigue automaticament a lo cursor de revisión de tal traza que sigue estando l'obchecto mas profundo en a posición d'o cursor de revisión quan se ye en modos de revisión de documentos u de pantalla.
+- Dimpués de cambiar ta lo modo revisión de pantalla, NVDA remanirá en iste modo dica que tornes explicitament ta los modos de revisión de documentos u d'obchectos.
+ - Quan se siga en o modo de revisión de documentos u d'obchectos, NVDA podrá cambiar automaticament entre istos dos modos dependendo de si yes movendo-te por un documento d'o modo navegación u no pas.
+- Esviellau lo transcriptor braille liblouis a 2.5.3. (3371)
+
+
+== Corrección d'errors ==
+- L'activación d'un obchecto agora anuncia l'acción antis de l'activación, en cuenta de l'acción dimpués de l'activación (eix.: desplegar quan se desplega en cuenta de plegar). (2982)
+- Una lectura y seguimiento d'o cursor mas precisos en diversos campos de dentrada ta las zagueras versions de Skype, tals como chat y campos de busca. (1601, 3036)
+- En a lista de conversacions recients de Skype, o numero de nuevos eventos agora se leye en cada conversación, si cal. (1446)
+- Milloras en o control d'o cursor y l'orden de lectura de texto de dreita a cucha en a pantalla. Eix.: Edición de texto en arabe en Microsoft Excel. (1601) 
+- A navegación rapida en botons y campos de formulario agora localizará os vinclos marcaus como botons ta propositos d'accesibilidat en Internet Explorer. (2750)
+- En o modo navegación, o conteniu en l'interior d'anvistas en arbol ya no se procesa como una representación plana, no ye util. Puetz pretar Intro sobre una anvista en arbol ta  interactuar con ella en  o modo foco. (3023)
+- A lo Pretar alt+flecha abaixo u alt+flecha alto ta desplegar un quadro combinau mientras se siga en modo foco ya no cambea incorrectament ta lo modo navegación. (2340)
+- En Internet Explorer 10, as celdas d'a tabla ya no activan o modo foco, de no estar que l'autor d'a web las haiga feitas enfocables explicitament.  (3248)
+- NVDA ya no falla en rancar si a hora d'o sistema ye anterior a la zaguera revisión d'una actualización. (3260)
+- Si una barra de progreso s'amuestra en una linia Braille, o Braille s'esviella quan cambee a barra de progreso. (3258)
+- En o modo navegación en aplicacions de Mozilla, os titols d'as tablas ya no se procesan dos vegadas. Amás, l'indiz se procesa quan bi ha tamién un titol. (3196)
+- A lo cambiar l'idioma de dentrada de Windows 8, NVDA agora charra en l'idioma correcto en cuenta d'en l'anterior.
+- NVDA agora anuncia os cambeos en o modo de conversión de IME en Windows 8.
+- NVDA ya no anuncia a vasuera en o escritorio quan os metodos de dentrada chaponeses Google u IME ATOK son en uso. ;(# 3234)
+- En Windows 7 y superiors, NVDA ya no anuncia indebidament a reconoixencia de voz u a dentrada tactil como un cambeo d'idioma d'o teclau.
+ - NVDA ya no anuncia un caracter especial (0x7f) en pretar control+retroceso en qualques editors mientras Charrar os Caracters en Escribir siga enchegau. (3315)
+- espeak ya no fa cambeos inadequaus en o ton, volumen, etc. quan NVDA leiga texto que contienga bells caracters de control u XML. (3334) (regresión de 437)
+- En as aplicacions Java, os cambeos en o ran u en a valor d'o control enfocau agora s'anuncian automaticament, y se refleixan con a subsiguient salida d'o control. (3119)
+- En os controls Scintilla, as linias agora s'anuncian correctament quan o tallo de parolas ye habilitau. (885)
+- En as aplicacions de Mozilla, o nombre d'os elementos de lista de nomás lectura agora s'anuncia correctament; eix.: quan se navega por twits en modo foco en twitter.com. (3327)
+- En os dialogos de Confirmación en Microsoft Office 2013 agora se leye o suyo conteniu automaticament quan amaneixcan. 
+- Milloras en o rendimiento quan se navega por bellas tablas en Microsoft Word. (3326)
+- As ordens de navegación de tablas de NVDA (control+alt+flechas) funcionan millor en qualques tablas de Microsoft Word quan una celda abarca quantas ringleras.
+- Si l'administrador de complemenhtos ye ya ubierto, activar-lo de nuevo (u dende o menú Ferramientas u ubrindo un fichero de complemento) ya no falla u no imposibilita zarrar dito administrador de complementos. (3351)
+- NVDA ya no se pencha en bells dialogos quan se siga utilizando o IME en Office 2010 con o chaponés u lo chino. (3064)
+- Os espacios multiples ya no se comprimen a un solo espacio en as linias braille. (1366)
+- As Zend Eclipse PHP Developer Tools agora funcionan igual que l'Eclipse. (3353)
+- En Internet Explorer, ya no cal pretar de nuevas o tab ta interactuar con un obchecto integrau (tal como o conteniu Flash) dimpués de pretar intro sobre ell. (3364)
+- A l'editar texto en Microsoft PowerPoint, a zaguera linia ya no se presienta como a linia anterior si a zaguera linia ye en blanco. (3403)
+- En Microsoft PowerPoint, os obchectos ya no se  verbalizan a vegadas  dos vegadas quan los seleccionas u trigas ta editar. (3394)
+- NVDA ya no causa que l'Adobe Reader se bloque u se penche ta bells documentos PDF mal formaus que contiengan ringleras difuera d'as tablas. (3399)
+- NVDA agora detecta correctament a siguient diapositiva con o foco quan s'elimine una en  la  vista de miniaturas en Microsoft PowerPoint. (3415)
+
+
+== Cambeos ta Desembolicadors ==
+- S'ha adhibiu windowUtils.findDescendantWindow ta buscar una finestra descendent (HWND) localizando a visivilidad especificada, identificador d'o control y/u nombre de clase.
+- A consola de python remota ya no aspera dimpués de 10 segundos mientras aguarda por a dentrada. (3126)
+- A inclusión d'o modulo bisect en compilacions binarias ye en desuso y podrá eliminar-se en una versión futura. (3368)
+ - Os complementos que dependan de bisect (incluindo o modulo urllib2) habrían d'actualizar-se ta incluir iste modulo.
+
+
+= 2013.1.1 =
+Ista versión apanya lo problema que feba crebar NVDA  en rancar quan yera configurau ta fer servir l'idioma irlandés.
+
+== Corrección d'errors ==
+- Se producen caracters correctos en escribir en a interficie d'usuario propia de NVDA entre que s'usa un metodo de dentrada coreano u chaponés, mientras siga o metodo por defecto. (# 2909)
+- En Internet Explorer y atros controls MSHTML, os campos marcaus como que contienen una dentrada no valida agora se manean correctament. (# 3256)
+- NVDA ya no se creba en rancar quan s'ha configurau l'idioma irlandés.
+
 
 = 2013.1 =
 Os aspectos mas destacaus d'ista versión incluyen un disenyo de teclau portatil mas intuitivo y consistent, suporte basico ta Microsoft PowerPoint, l'emparo a las descripcions largas en os navegadors web, y l'emparo ta la dentrada de braille d'ordinador ta linias braille que tienen un teclau braille.
@@ -43,7 +272,7 @@ Por favor uella-te o documento [Referencia Rapida d'Ordens keyCommands.html] ta 
 == Cambeos ==
 - Esviellau o transcriptor braille liblouis a 2.5.2. (#2737)
 - A distribución de teclau portatil s'ha redisenyau por completo ta fer-la mas intuitiva y consistent. (#804)
-- Esviellau o sintetizador de voz eSpeak ta la versión 1.47.11. (#2680)
+- Esviellau o sintetizador de voz eSpeak ta la versión 1.47.11. (#2680, #3124, #3132, #3141, #3143, #3172)
 
 == Corrección de Fallos ==
 				- As teclas de navegación rapida ta blincar a o siguient u anterior separador en modo Navegación agora funcionan en Internet Explorer y atros controls MSHTML. (#2781)
@@ -64,7 +293,7 @@ Por favor uella-te o documento [Referencia Rapida d'Ordens keyCommands.html] ta 
 - O controlador d'as linias HumanWare Brailliant BI/Bbraille agora puet  seleccionar-se quan as linias sigan connectadas a traviés de Bluetooth pero nunca no s'haigan connectau a traviés d'USB.
 - O filtrau d'elementos en a Lista d'Elementos d'o modo navegación con o filtro de texto en mayusclas agora devuelve resultaus no sensibles a las mayusclas igual que en minusclas en cuenta de brenca en absoluto. (#2951)
 - En navegadors de Mozilla, o modo navegación puet utilizar-se de nuevo quan s'enfoque conteniu Flash. (#2546)
-- Quan s'utilice una tabla de braille contraito y sía habilitada a opción expandir a braille computerizado ta la parola en o cursor , o cursor braille agora se coloca correctament quan se trobe dimpués d'una  parola an un caracter se  represiente con quantas celdas braille (eix.: signo de mayusclas, signo de dialogo, signo de numero, etc.). (#2947)
+- Quan s'utilice una tabla de braille contraito y sía habilitada a opción expandir a braille computerizau ta la parola en o cursor , o cursor braille agora se coloca correctament quan se trobe dimpués d'una  parola an un caracter se  represiente con quantas celdas braille (eix.: signo de mayusclas, signo de dialogo, signo de numero, etc.). (#2947)
 - A selección de texto agora s'amuestra correctament en una linia braille en aplicacions tals como controls d'edición de Microsoft word 2003 y Internet Explorer.
 - Ye posible de nuevo seleccionar texto en una adreza enta zaga en Microsoft Word mientras siga habilitau o Braille.
 - Quan se siga en revisión,  eliminando caracters con retroceso u suprimir en controls d'edición de Scintilla, NVDA anuncia correctament os caracters multibyte. (#2855)
@@ -77,7 +306,7 @@ Por favor uella-te o documento [Referencia Rapida d'Ordens keyCommands.html] ta 
 - Apanyada la imposibilidat d'emplegar qualques voces de Microsoft Speech API versión 5 como as voces d'a fabla Koba 2(# 2629)
 - En as aplicacions que emplegan o Java Access Bridge, as linias braille agora se esviellan correctament quan o cursor se mueve en os campos de texto editables. (# 3107)
 - Suporte ta los marcadors d'os formularios en os documentos en modo navegación  que suportan marcadors (# 2997)
-- O controlador d'o sintetizador eSpeak agora s'encarga d'a lectura de caracter mas apropiada (por eixemplo, una carta anunciando lo nombre extranchero u d'a suya valor y no solament o suyo son u lo nombre chenerico). (# 3106)
+- O controlador d'o sintetizador eSpeak agora s'encarga d'a lectura de caracter mas apropiada (por eixemplo, una letra anunciando lo nombre extranchero u d'a suya valor y no solament o suyo son u lo nombre chenerico). (# 3106)
 - NVDA ya no falla en copiar a configuración de l'usuario ta usar l'inicio de sesión y atras pantallas seguras quan a rota d'o perfil de l'usuario contién caracters que no son ASCII. (# 3092)	
 - NVDA ya no se conchela en emplegar a dentrada de caracters asiaticos en qualques aplicacions .NET. (# 3005)
 

@@ -189,8 +189,15 @@ VBufStorage_fieldNode_t* WebKitVBufBackend_t::fillVBuf(int docHandle, IAccessibl
 				&& pacc->get_accName(varChild, &tempBstr) == S_OK && tempBstr) {
 			content = tempBstr;
 			SysFreeString(tempBstr);
-		} else if (pacc->get_accValue(varChild, &tempBstr) == S_OK && tempBstr) {
+		} 
+		if (content.empty()&&pacc->get_accValue(varChild, &tempBstr) == S_OK && tempBstr) {
 			content = tempBstr;
+			SysFreeString(tempBstr);
+		}
+		if (content.empty()&&pacc->get_accDescription(varChild, &tempBstr) == S_OK && tempBstr) {
+			if(wcsncmp(tempBstr,L"Description: ",13)==0) {
+				content=&tempBstr[13];
+			}
 			SysFreeString(tempBstr);
 		}
 		if (content.empty() && states & STATE_SYSTEM_FOCUSABLE) {

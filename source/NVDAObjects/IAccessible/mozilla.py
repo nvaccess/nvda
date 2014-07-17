@@ -96,11 +96,11 @@ class Document(Mozilla):
 	value=None
 
 	def _get_treeInterceptorClass(self):
-		states=self.states
 		ver=getGeckoVersion(self)
 		if (not ver or ver.full.startswith('1.9')) and self.windowClassName!="MozillaContentWindowClass":
 			return super(Document,self).treeInterceptorClass
-		if controlTypes.STATE_READONLY in states:
+		states = self.states
+		if controlTypes.STATE_EDITABLE not in states:
 			import virtualBuffers.gecko_ia2
 			if ver and ver.major < 14:
 				return virtualBuffers.gecko_ia2.Gecko_ia2Pre14
@@ -110,6 +110,10 @@ class Document(Mozilla):
 			from compoundDocuments import EmbeddedObjectCompoundDocument
 			return EmbeddedObjectCompoundDocument
 		return super(Document,self).treeInterceptorClass
+
+	def _get_shouldCreateTreeInterceptor(self):
+		states = self.states
+		return controlTypes.STATE_READONLY in states or controlTypes.STATE_EDITABLE in states
 
 class EmbeddedObject(Mozilla):
 
@@ -167,6 +171,9 @@ class GeckoPluginWindowRoot(WindowRoot):
 class TextLeaf(Mozilla):
 	role = controlTypes.ROLE_STATICTEXT
 	beTransparentToMouse = True
+
+class Application(Document):
+	shouldCreateTreeInterceptor = False
 
 class BlockQuote(Mozilla):
 	role = controlTypes.ROLE_BLOCKQUOTE
@@ -247,6 +254,8 @@ _IAccessibleRolesToOverlayClasses = {
 	IAccessibleHandler.IA2_ROLE_EMBEDDED_OBJECT: EmbeddedObject,
 	"embed": EmbeddedObject,
 	"object": EmbeddedObject,
+	oleacc.ROLE_SYSTEM_APPLICATION: Application,
+	oleacc.ROLE_SYSTEM_DIALOG: Application,
 }
 
 #: Roles that mightn't set the focused state when they are focused.

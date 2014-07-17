@@ -26,6 +26,7 @@ STX = 0x02 #Start of Text
 ETX = 0x03 #End of Text
 
 KEY_CHECK_INTERVAL = 10
+TIMEOUT = 0.5
 
 def brl_auto_id(): 
 	"""send auto id command to braille display"""
@@ -83,7 +84,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		"""Initializes braille display driver"""
 		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
-		self._r1next = itertools.cycle(('r1a', 'r1b'))
 		self._lastkey = ''
 		self._dev = None
 		self._repeatcount = 0
@@ -92,7 +92,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		#try to connect to braille display
 		for baud in (19200, 38400):
 			if(self._dev is None):
-				self._dev = serial.Serial(self._port, baudrate=baud)
+				self._dev = serial.Serial(self._port, baudrate = baud, timeout=TIMEOUT, writeTimeout=TIMEOUT)
 				self._dev.write(brl_auto_id())
 				if (baud == 19200): time.sleep(0.2)
 				else: time.sleep(0.03)
@@ -179,7 +179,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		
 	def executeGesture(self,gesture):
 		"""execute a gesture"""
-		if(gesture.id == 'r1'): gesture.id = next(self._r1next)
 		#here you can add other gesture types
 		try:
 			if gesture.id: inputCore.manager.executeGesture(gesture)
@@ -213,10 +212,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"braille_nextLine": ("br(papenmeier_serial):dn",),
 			"braille_routeTo": ("br(papenmeier_serial):route",),
 
-			"navigatorObject_moveToFlatReviewAtObjectPosition": ("br(papenmeier_serial):r1a",),
 			"braille_toggleTether": ("br(papenmeier_serial):r2",),
 			"review_currentCharacter": ("br(papenmeier_serial):l1",),
-			"navigatorObject_toFocus":("br(papenmeier_serial):r1b",),
 			"review_activate": ("br(papenmeier_serial):l2",),
 			"reportFormatting": ("br(papenmeier_serial):reportf",),
 

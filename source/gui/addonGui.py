@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2013 NV Access Limited, Beqa Gozalishvili
+#Copyright (C) 2012-2014 NV Access Limited, Beqa Gozalishvili
 
 import os
 import wx
@@ -16,10 +16,13 @@ class AddonsDialog(wx.Dialog):
 	_instance = None
 	def __new__(cls, *args, **kwargs):
 		if AddonsDialog._instance is None:
-			AddonsDialog._instance = super(AddonsDialog, cls).__new__(cls, *args, **kwargs)
+			return super(AddonsDialog, cls).__new__(cls, *args, **kwargs)
 		return AddonsDialog._instance
 
 	def __init__(self,parent):
+		if AddonsDialog._instance is not None:
+			return
+		AddonsDialog._instance = self
 		# Translators: The title of the Addons Dialog
 		super(AddonsDialog,self).__init__(parent,title=_("Add-ons Manager"))
 		self.needsRestart=False
@@ -47,6 +50,11 @@ class AddonsDialog(wx.Dialog):
 		self.aboutButton.Disable()
 		self.aboutButton.Bind(wx.EVT_BUTTON,self.onAbout)
 		entryButtonsSizer.Add(self.aboutButton)
+		# Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
+		self.helpButton=wx.Button(self,label=_("Add-on &help"))
+		self.helpButton.Disable()
+		self.helpButton.Bind(wx.EVT_BUTTON,self.onHelp)
+		entryButtonsSizer.Add(self.helpButton)
 		# Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 		self.addButton=wx.Button(self,label=_("&Install..."))
 		self.addButton.Bind(wx.EVT_BUTTON,self.OnAddClick)
@@ -183,12 +191,14 @@ class AddonsDialog(wx.Dialog):
 			self.addonsList.SetItemState(activeIndex,wx.LIST_STATE_FOCUSED,wx.LIST_STATE_FOCUSED)
 		else:
 			self.aboutButton.Disable()
+			self.helpButton.Disable()
 			self.removeButton.Disable()
 
 	def onListItemSelected(self, evt):
 		index=evt.GetIndex()
 		addon=self.curAddons[index] if index>=0 else None
 		self.aboutButton.Enable(addon is not None and not addon.isPendingRemove)
+		self.helpButton.Enable(bool(addon is not None and not addon.isPendingRemove and addon.getDocFilePath()))
 		self.removeButton.Enable(addon is not None and not addon.isPendingRemove)
 
 	def onClose(self,evt):
@@ -218,6 +228,13 @@ Description: {description}
 		# Translators: title for the Addon Information dialog
 		title=_("Add-on Information")
 		gui.messageBox(message, title, wx.OK)
+
+	def onHelp(self, evt):
+		index = self.addonsList.GetFirstSelected()
+		if index < 0:
+			return
+		path = self.curAddons[index].getDocFilePath()
+		os.startfile(path)
 
 	def OnGetAddonsClick(self,evt):
 		ADDONS_URL = "http://addons.nvda-project.org"

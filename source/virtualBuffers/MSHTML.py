@@ -6,7 +6,7 @@
 
 from comtypes import COMError
 import eventHandler
-from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
+from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import controlTypes
 import NVDAObjects.IAccessible.MSHTML
 import winUser
@@ -141,6 +141,11 @@ class MSHTML(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(MSHTML,self).__init__(rootNVDAObject,backendName="mshtml")
+		# As virtualBuffers must be created at all times for MSHTML to support live regions,
+		# Force focus mode for anything other than a document (e.g. dialog, application)
+		if rootNVDAObject.role!=controlTypes.ROLE_DOCUMENT:
+			self.disableAutoPassThrough=True
+			self.passThrough=True
 
 	def _getInitialCaretPos(self):
 		initialPos = super(MSHTML,self)._getInitialCaretPos()
@@ -181,9 +186,11 @@ class MSHTML(VirtualBuffer):
 		if not winUser.isDescendantWindow(self.rootDocHandle,obj.windowHandle) and obj.windowHandle!=self.rootDocHandle:
 			return False
 		newObj=obj
-		while  isinstance(newObj,NVDAObjects.IAccessible.MSHTML.MSHTML) and newObj.role not in (controlTypes.ROLE_APPLICATION,controlTypes.ROLE_DIALOG):
+		while  isinstance(newObj,NVDAObjects.IAccessible.MSHTML.MSHTML):
 			if newObj==self.rootNVDAObject:
 				return True
+			if newObj.role in (controlTypes.ROLE_APPLICATION,controlTypes.ROLE_DIALOG):
+				break
 			newObj=newObj.parent 
 		return False
 
@@ -243,9 +250,9 @@ class MSHTML(VirtualBuffer):
 			if not config.conf["documentFormatting"]["includeLayoutTables"]:
 				attrs["table-layout"]=[None]
 		elif nodeType.startswith("heading") and nodeType[7:].isdigit():
-			attrs = {"IHTMLDOMNode::nodeName": ["H%s" % nodeType[7:]]}
+			attrs = [{"IHTMLDOMNode::nodeName": ["H%s" % nodeType[7:]]},{"HTMLAttrib::role":["heading"],"HTMLAttrib::aria-level":[nodeType[7:]]}]
 		elif nodeType == "heading":
-			attrs = {"IHTMLDOMNode::nodeName": ["H1", "H2", "H3", "H4", "H5", "H6"]}
+			attrs = [{"IHTMLDOMNode::nodeName": ["H1", "H2", "H3", "H4", "H5", "H6"]},{"HTMLAttrib::role":["heading"]}]
 		elif nodeType == "list":
 			attrs = {"IHTMLDOMNode::nodeName": ["UL","OL","DL"]}
 		elif nodeType == "listItem":
@@ -259,7 +266,11 @@ class MSHTML(VirtualBuffer):
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="landmark":
-			attrs={"HTMLAttrib::role":[VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]}
+			attrs = [
+				{"HTMLAttrib::role": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles if lr != "region"]},
+				{"HTMLAttrib::role": [VBufStorage_findMatch_word("region")],
+					"name": [VBufStorage_findMatch_notEmpty]}
+				]
 		elif nodeType == "embeddedObject":
 			attrs = {"IHTMLDOMNode::nodeName": ["OBJECT","EMBED","APPLET"]}
 		elif nodeType == "separator":
@@ -276,19 +287,27 @@ class MSHTML(VirtualBuffer):
 	def _activateNVDAObject(self,obj):
 		super(MSHTML,self)._activateNVDAObject(obj)
 		#If we activated a same-page link, then scroll to its anchor
-		if obj.HTMLNodeName=="A":
-			anchorName=getattr(obj.HTMLNode,'hash')
-			if not anchorName:
-				return 
-			obj=self._getNVDAObjectByAnchorName(anchorName[1:],HTMLDocument=obj.HTMLNode.document)
-			if not obj:
+		count=0
+		# #4134: The link may not always be the deepest node
+		while obj and count<3 and isinstance(obj,NVDAObjects.IAccessible.MSHTML.MSHTML):
+			if obj.HTMLNodeName=="A":
+				anchorName=getattr(obj.HTMLNode,'hash')
+				if not anchorName:
+					return 
+				obj=self._getNVDAObjectByAnchorName(anchorName[1:],HTMLDocument=obj.HTMLNode.document)
+				if not obj:
+					return
+				self._handleScrollTo(obj)
 				return
-			self._handleScrollTo(obj)
+			obj=obj.parent
+			count+=1
+
 
 	def _getNVDAObjectByAnchorName(self,name,HTMLDocument=None):
 		if not HTMLDocument:
 			HTMLDocument=self.rootNVDAObject.HTMLNode.document
-		HTMLNode=HTMLDocument.getElementById(name)
+		# #4134: could be name or ID, document.all.item supports both
+		HTMLNode=HTMLDocument.all.item(name)
 		if not HTMLNode:
 			log.debugWarning("GetElementById can't find node with ID %s"%name)
 			return None

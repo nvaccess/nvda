@@ -14,9 +14,12 @@ from logHandler import log
 
 import inputCore
 import brailleInput
-import ftdi2
 import struct
 
+try:
+	import ftdi2
+except:
+	ftdi2 = None
 #for bluetooth
 import hwPortUtils
 import serial
@@ -251,23 +254,21 @@ connection could not be established"""
 		self.numCells = 0
 		self._nlk = 0
 		self._nrk = 0
-		self._r1next = itertools.cycle(('r1a', 'r1b'))
 		self.decodedkeys = []
 		self._baud = 0
 		self._dev = None
 		self._proto = None
+		devlist = []
 		self.connectBrxCom()
 		if(self._baud == 1): return #brxcom is running, skip bluetooth and USB
 
 		#try to connect to usb device,
 		#if no usb device is found there may be a bluetooth device
-		try:
+		if ftdi2:
 			devlist = ftdi2.list_devices()
-		except:
-			devlist = []
 		if(len(devlist)==0):
 			self.connectBluetooth()
-		else:
+		elif ftdi2:
 			self._baud = 57600
 			self.connectUSB(devlist)
 			if(self._dev is None):
@@ -423,7 +424,6 @@ connection could not be established"""
 
 	def executeGesture(self,gesture):
 		"""executes a gesture"""
-		if(gesture.id == 'r1'):  gesture.id = next(self._r1next)
 		if gesture.id or (gesture.dots or gesture.space): inputCore.manager.executeGesture(gesture)
 
 	def _handleKeyPresses(self):
@@ -469,10 +469,8 @@ connection could not be established"""
 			"braille_nextLine": ("br(papenmeier):dn",),
 			"braille_routeTo": ("br(papenmeier):route",),
 
-			"navigatorObject_moveToFlatReviewAtObjectPosition": ("br(papenmeier):r1a",),
 			"braille_toggleTether": ("br(papenmeier):r2",),
 			"review_currentCharacter": ("br(papenmeier):l1",),
-			"navigatorObject_toFocus":("br(papenmeier):r1b",),
 			"review_activate": ("br(papenmeier):l2",),
 
 			"navigatorObject_previous": ("br(papenmeier):left2",),

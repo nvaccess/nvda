@@ -121,6 +121,8 @@ def locateHTMLElementByID(document,ID):
 	except COMError as e:
 		log.debugWarning("document.body.nodeName failed with COMError %s"%e)
 		return None
+	if nodeName:
+		nodeName=nodeName.upper()
 	if nodeName=="FRAMESET":
 		tag="frame"
 	else:
@@ -403,7 +405,7 @@ class MSHTML(IAccessible):
 						pass
 
 	def _get_treeInterceptorClass(self):
-		if self.role==controlTypes.ROLE_DOCUMENT and not self.isContentEditable:
+		if self.role in (controlTypes.ROLE_DOCUMENT, controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG) and not self.isContentEditable:
 			import virtualBuffers.MSHTML
 			return virtualBuffers.MSHTML.MSHTML
 		return super(MSHTML,self).treeInterceptorClass
@@ -805,7 +807,10 @@ class MSHTML(IAccessible):
 			raise NotImplementedError
 		HTMLNode=self.HTMLNode
 		while HTMLNode:
-			if HTMLNode.nodeName=="TABLE": return MSHTML(HTMLNode=HTMLNode)
+			nodeName=HTMLNode.nodeName
+			if nodeName:
+				nodeName=nodeName.upper()
+			if nodeName=="TABLE": return MSHTML(HTMLNode=HTMLNode)
 			HTMLNode=HTMLNode.parentNode
 		raise NotImplementedError
 
@@ -820,6 +825,8 @@ class MSHTML(IAccessible):
 				self._HTMLNodeName=self.HTMLNode.nodeName
 			except (COMError,NameError):
 				return ""
+			if self._HTMLNodeName:
+				self._HTMLNodeName=self._HTMLNodeName.upper()
 		return self._HTMLNodeName
 
 	def _get_devInfo(self):
@@ -859,6 +866,8 @@ class Fieldset(MSHTML):
 			nodeName=child.nodeName
 		except (COMError,NameError):
 			return super(Fieldset,self).name
+		if nodeName:
+			nodeName=nodeName.upper()
 		if nodeName!="LEGEND":
 			return super(Fieldset,self).name
 		try:

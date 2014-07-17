@@ -10,6 +10,7 @@
 """
 
 import time
+import sayAllHandler
 import api
 import review
 from baseObject import ScriptableObject
@@ -17,7 +18,7 @@ import braille
 import speech
 import config
 import eventHandler
-from scriptHandler import isScriptWaiting
+from scriptHandler import isScriptWaiting, willSayAllResume
 import textInfos
 import controlTypes
 
@@ -37,6 +38,9 @@ class EditableText(ScriptableObject):
 
 	#: Whether to fire caretMovementFailed events when the caret doesn't move in response to a caret movement key.
 	shouldFireCaretMovementFailedEvents = False
+
+	#: Whether or not to announce text found before the caret on a new line (e.g. auto numbering)
+	announceNewLineText=True
 
 	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=0.03):
 		"""
@@ -71,7 +75,7 @@ class EditableText(ScriptableObject):
 			elapsed += retryInterval
 		return (False,newInfo)
 
-	def _caretScriptPostMovedHelper(self, speakUnit, info=None):
+	def _caretScriptPostMovedHelper(self, speakUnit, gesture, info=None):
 		if isScriptWaiting():
 			return
 		if not info:
@@ -80,9 +84,10 @@ class EditableText(ScriptableObject):
 			except:
 				return
 		review.handleCaretMove(info)
-		if speakUnit:
+		if speakUnit and not willSayAllResume(gesture):
 			info.expand(speakUnit)
 			speech.speakTextInfo(info, unit=speakUnit, reason=controlTypes.REASON_CARET)
+		braille.handler.handleCaretMove(self)
 
 	def _caretMovementScriptHelper(self, gesture, unit):
 		try:
@@ -95,10 +100,36 @@ class EditableText(ScriptableObject):
 		caretMoved,newInfo=self._hasCaretMoved(bookmark) 
 		if not caretMoved and self.shouldFireCaretMovementFailedEvents:
 			eventHandler.executeEvent("caretMovementFailed", self, gesture=gesture)
-		self._caretScriptPostMovedHelper(unit,newInfo)
+		self._caretScriptPostMovedHelper(unit,gesture,newInfo)
+
+	def script_caret_newLine(self,gesture):
+		try:
+			info=self.makeTextInfo(textInfos.POSITION_CARET)
+		except:
+			gesture.send()
+			return
+		bookmark=info.bookmark
+		gesture.send()
+		caretMoved,newInfo=self._hasCaretMoved(bookmark) 
+		if not caretMoved or not newInfo:
+			return
+		# newInfo.copy should be good enough here, but in MS Word we get strange results.
+		try:
+			lineInfo=self.makeTextInfo(textInfos.POSITION_CARET)
+		except (RuntimeError,NotImplementedError):
+			return
+		lineInfo.expand(textInfos.UNIT_LINE)
+		lineInfo.setEndPoint(newInfo,"endToStart")
+		if lineInfo.isCollapsed:
+			lineInfo.expand(textInfos.UNIT_CHARACTER)
+			onlyInitial=True
+		else:
+			onlyInitial=False
+		speech.speakTextInfo(lineInfo,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET,onlyInitialFields=onlyInitial,suppressBlanks=True)
 
 	def script_caret_moveByLine(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_LINE)
+	script_caret_moveByLine.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
 	def script_caret_moveByCharacter(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_CHARACTER)
@@ -108,6 +139,8 @@ class EditableText(ScriptableObject):
 
 	def script_caret_moveByParagraph(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH)
+	script_caret_moveByParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+
 
 	def _backspaceScriptHelper(self,unit,gesture):
 		try:
@@ -131,7 +164,7 @@ class EditableText(ScriptableObject):
 			speech.speakMessage(delChunk)
 		else:
 			speech.speakSpelling(delChunk)
-		self._caretScriptPostMovedHelper(None,newInfo)
+		self._caretScriptPostMovedHelper(None,gesture,newInfo)
 
 	def script_caret_backspaceCharacter(self,gesture):
 		self._backspaceScriptHelper(textInfos.UNIT_CHARACTER,gesture)
@@ -149,7 +182,7 @@ class EditableText(ScriptableObject):
 		gesture.send()
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
 		caretMoved,newInfo=self._hasCaretMoved(bookmark)
-		self._caretScriptPostMovedHelper(textInfos.UNIT_CHARACTER,newInfo)
+		self._caretScriptPostMovedHelper(textInfos.UNIT_CHARACTER,gesture,newInfo)
 		braille.handler.handleCaretMove(self)
 
 	__gestures = {

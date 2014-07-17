@@ -2,19 +2,27 @@ Import([
 	'env',
 ])
 
+
+minhookPath=Dir('#include/minhook')
+env=env.Clone(CPPPATH=minhookPath.Dir('include'))
+
 HDESourceFile='HDE64/src/HDE64.c' if env['TARGET_ARCH']=='x86_64' else 'HDE32/HDE32.c'
 
 sourceFiles=[
 	HDESourceFile,
 	'buffer.cpp',
 	'export.cpp',
+	'hook.cpp',
 	'thread.cpp',
 	'trampoline.cpp',
 ]
 
-objFiles=[env.Object('_minHook_%s.obj'%x.replace('/','_'),'#/include/libMinHook/src/%s'%x) for x in sourceFiles]
-objFiles.append(env.Object('newHook.cpp',CPPPATH=['#include/libMinHook/src','${CPPPATH}']))
+objFiles=[env.Object('_minHook_%s.obj'%x.replace('/','_'),minhookPath.File('src/%s'%x)) for x in sourceFiles]
+objFiles.append('dllmain.cpp')
 
-minHookLib=env.SharedLibrary('minHook',objFiles+['minHook.def'])
+minHookLib=env.SharedLibrary(
+	target='minHook',
+	source=objFiles+[minhookPath.File('dll_resources/minHook.def')],
+)
 
 Return('minHookLib')

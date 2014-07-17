@@ -24,36 +24,6 @@ EVENT_E_ALL_SUBSCRIBERS_FAILED = -2147220991
 RPC_E_CALL_REJECTED = -2147418111
 RPC_E_DISCONNECTED = -2147417848
 
-moduleCache={}
-
-def makeModulePathFromFilePath(path):
-	"""calculates the pythonic dotted module path from a file path of a python module.
-	@param path: the relative or absolute path to the module
-	@type path: string
-	@returns: the Pythonic dotted module path 
-	@rtype: string
-	"""
-	if path in moduleCache:
-		return moduleCache[path]
-	modPathList = []
-	# Work through the path components from right to left.
-	curPath = path
-	while curPath:
-		curPath, curPathCom = os.path.split(curPath)
-		if not curPathCom:
-			break
-		curPathCom = os.path.splitext(curPathCom)[0]
-		# __init__ is the root module of a package, so skip it.
-		if curPathCom != "__init__":
-			modPathList.insert(0, curPathCom)
-		if curPath in sys.path:
-			# curPath is in the Python search path, so the Pythonic module path is relative to curPath.
-			break
-	modulePath = ".".join(modPathList)
-	if modulePath:
-		moduleCache[path] = modulePath
-	return modulePath
- 
 def getCodePath(f):
 	"""Using a frame object, gets its module path (relative to the current directory).[className.[funcName]]
 	@param f: the frame object to use
@@ -61,7 +31,19 @@ def getCodePath(f):
 	@returns: the dotted module.class.attribute path
 	@rtype: string
 	"""
-	path=makeModulePathFromFilePath(os.path.relpath(f.f_code.co_filename))
+	fn=f.f_code.co_filename
+	if fn[0] != "<" and os.path.isabs(fn) and not fn.startswith(sys.path[0] + "\\"):
+		# This module is external because:
+		# the code comes from a file (fn doesn't begin with "<");
+		# it has an absolute file path (code bundled in binary builds reports relative paths); and
+		# it is not part of NVDA's Python code (not beneath sys.path[0]).
+		path="external:"
+	else:
+		path=""
+	try:
+		path+=f.f_globals["__name__"]
+	except KeyError:
+		path+=fn
 	funcName=f.f_code.co_name
 	if funcName.startswith('<'):
 		funcName=""
@@ -326,6 +308,7 @@ def initialize(shouldDoRemoteLogging=False):
 	redirectStdout(log)
 	sys.excepthook = _excepthook
 	warnings.showwarning = _showwarning
+	warnings.simplefilter("default", DeprecationWarning)
 
 def setLogLevelFromConfig():
 	"""Set the log level based on the current configuration.

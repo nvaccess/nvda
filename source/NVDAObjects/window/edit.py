@@ -8,6 +8,7 @@ import sys
 import comtypes.client
 import struct
 import ctypes
+from comtypes import COMError
 import pythoncom
 import win32clipboard
 import oleTypes
@@ -33,6 +34,8 @@ import braille
 import watchdog
 
 selOffsetsAtLastCaretEvent=None
+
+TA_BOTTOM=8
 
 #Edit control window messages
 EM_GETSEL=176
@@ -358,6 +361,11 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				text=ctypes.cast(buf,ctypes.c_wchar_p).value
 			else:
 				text=unicode(ctypes.cast(buf,ctypes.c_char_p).value, errors="replace", encoding=locale.getlocale()[1])
+			# #4095: Some protected richEdit controls do not hide their password characters.
+			# We do this specifically.
+			# Note that protected standard edit controls get characters hidden in _getStoryText.
+			if text and controlTypes.STATE_PROTECTED in self.obj.states:
+				text=u'*'*len(text)
 		else:
 			text=self._getStoryText()[start:end]
 		return text
@@ -557,6 +565,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			o=None
 		if not o:
 			return None
+		# Outlook >=2007 exposes MSAA on its embedded objects thus we can use accName as the label
 		import oleacc
 		try:
 			label=o.QueryInterface(oleacc.IAccessible).accName(0);
@@ -564,12 +573,20 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			pass
 		if label:
 			return label
+		# Outlook 2003 and Outlook Express write the embedded object text to the display with GDI thus we can use display model 
 		left,top=embedRangeObj.GetPoint(comInterfaces.tom.tomStart)
-		right,bottom=embedRangeObj.GetPoint(comInterfaces.tom.tomEnd)
+		right,bottom=embedRangeObj.GetPoint(comInterfaces.tom.tomEnd|TA_BOTTOM)
+		# Outlook Express bug: when expanding to the first embedded object on lines after the first, the range's start coordinates are the start coordinates of the previous character (on the line above)
+		# Therefore if we detect this, collapse the range and try getting left and top again
+		if left>=right:
+			r=embedRangeObj.duplicate
+			r.collapse(1)
+			left,top=r.GetPoint(comInterfaces.tom.tomStart)
 		import displayModel
-		label=displayModel.DisplayModelTextInfo(self.obj, textInfos.Rect(left, top, right, bottom+10)).text
+		label=displayModel.DisplayModelTextInfo(self.obj, textInfos.Rect(left, top, right, bottom)).text
 		if label and not label.isspace():
 			return label
+		# Windows Live Mail exposes the label via the embedded object's data (IDataObject)
 		try:
 			dataObj=o.QueryInterface(oleTypes.IDataObject)
 		except comtypes.COMError:
@@ -586,6 +603,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 				pass
 		if label:
 			return label
+		# As a final fallback (e.g. could not get display  model text for Outlook Express), use the embedded object's user type (e.g. "recipient").
 		try:
 			oleObj=o.QueryInterface(oleTypes.IOleObject)
 			label=oleObj.GetUserType(1)
@@ -810,6 +828,18 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 
 class RichEdit(Edit):
 	editAPIVersion=1
+
+	def makeTextInfo(self,position):
+		if self.TextInfo is not ITextDocumentTextInfo:
+			return super(RichEdit,self).makeTextInfo(position)
+		# #4090: Sometimes ITextDocument support can fail (security restrictions in Outlook 2010)
+		# We then fall back to normal Edit support.
+		try:
+			return self.TextInfo(self,position)
+		except COMError:
+			log.debugWarning("Could not instanciate ITextDocumentTextInfo",exc_info=True)
+			self.TextInfo=EditTextInfo
+			return self.TextInfo(self,position)
 
 class RichEdit20(RichEdit):
 	editAPIVersion=2

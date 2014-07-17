@@ -4,7 +4,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2008-2012 NV Access Limited
 
-from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
+from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import treeInterceptorHandler
 import controlTypes
 import NVDAObjects.IAccessible.mozilla
@@ -113,8 +113,7 @@ class Gecko_ia2(VirtualBuffer):
 		root=self.rootNVDAObject
 		if not root:
 			return False
-		states=root.states
-		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_DEFUNCT in states or controlTypes.STATE_READONLY not in states:
+		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_DEFUNCT in root.states:
 			return False
 		try:
 			if not NVDAObjects.IAccessible.getNVDAObjectFromEvent(root.windowHandle,winUser.OBJID_CLIENT,root.IA2UniqueID):
@@ -155,23 +154,33 @@ class Gecko_ia2(VirtualBuffer):
 		obj.doAction(index)
 
 	def _activateNVDAObject(self, obj):
-		try:
-			obj.doAction()
-		except:
-			log.debugWarning("could not programmatically activate field, trying mouse")
-			while obj and controlTypes.STATE_OFFSCREEN in obj.states and obj!=self.rootNVDAObject:
-				obj=obj.parent
-			l=obj.location
-			if l:
-				x=(l[0]+l[2]/2)
-				y=l[1]+(l[3]/2) 
-				oldX,oldY=winUser.getCursorPos()
-				winUser.setCursorPos(x,y)
-				winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
-				winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
-				winUser.setCursorPos(oldX,oldY)
-			else:
-				log.debugWarning("no location for field")
+		while obj and obj != self.rootNVDAObject:
+			try:
+				obj.doAction()
+				break
+			except:
+				log.debugWarning("doAction failed")
+			if controlTypes.STATE_OFFSCREEN in obj.states or controlTypes.STATE_INVISIBLE in obj.states:
+				obj = obj.parent
+				continue
+			try:
+				l, t, w, h = obj.location
+			except TypeError:
+				log.debugWarning("No location for object")
+				obj = obj.parent
+				continue
+			if not w or not h:
+				obj = obj.parent
+				continue
+			log.debugWarning("Clicking with mouse")
+			x = l + w / 2
+			y = t + h / 2
+			oldX, oldY = winUser.getCursorPos()
+			winUser.setCursorPos(x, y)
+			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0, None, None)
+			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP, 0, 0, None, None)
+			winUser.setCursorPos(oldX, oldY)
+			break
 
 	def _searchableTagValues(self, values):
 		return values
@@ -192,13 +201,13 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType=="unvisitedLink":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_LINKED:[1],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_TRAVERSED:[None]}
 		elif nodeType=="formField":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_BUTTONMENU,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_OUTLINE,oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]}
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_BUTTONMENU,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_OUTLINE,oleacc.ROLE_SYSTEM_TEXT,IAccessibleHandler.IA2_ROLE_TOGGLE_BUTTON],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]}
 		elif nodeType=="list":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LIST]}
 		elif nodeType=="listItem":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LISTITEM]}
 		elif nodeType=="button":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_BUTTONMENU]}
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_BUTTONMENU,IAccessibleHandler.IA2_ROLE_TOGGLE_BUTTON]}
 		elif nodeType=="edit":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]}
 		elif nodeType=="frame":
@@ -218,7 +227,11 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="landmark":
-			attrs={"IAccessible2::attribute_xml-roles":[VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]}
+			attrs = [
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles if lr != "region"]},
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("region")],
+					"name": [VBufStorage_findMatch_notEmpty]}
+				]
 		elif nodeType=="embeddedObject":
 			attrs={"IAccessible2::attribute_tag":self._searchableTagValues(["embed","object","applet"])}
 		else:

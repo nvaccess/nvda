@@ -23,7 +23,7 @@ Major highlights include:
 - Support for many refreshable braille displays, including input of computer braille for braille displays which have a braille keyboard
 - Ability to run entirely from a USB stick or other portable media without the need for installation
 - Easy to use talking installer
-- Translated into 43 languages
+- Translated into 44 languages
 - Support for modern Windows Operating Systems including both 32 and 64 bit variants
 - Ability to run on Windows logon and other secure screens
 - Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation only supported in Windows 7 and later)
@@ -32,7 +32,7 @@ Major highlights include:
 
 ++ Internationalization ++
 It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
-Besides English, NVDA has been translated into 43 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Brazilian Portuguese, Bulgarian, Croatian, Czech, Danish, Dutch, Finnish, French, Galician, Greek, Georgian, German, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Korean, Nepali, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
+Besides English, NVDA has been translated into 44 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Brazilian Portuguese, Bulgarian, Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Greek, Georgian, German, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Korean, Nepali, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
 
 ++ Speech Synthesizer Support ++
 Apart from providing its messages and interface in several languages, NVDA can also enable the user to read content in any language, as long as they have a speech synthesizer that can speak that language.
@@ -57,13 +57,15 @@ For further details, you can [view the full licence. http://www.gnu.org/licenses
 
 + System Requirements +
 - Operating Systems: all 32-bit and 64-bit versions of Windows XP, Windows Vista, Windows 7 and Windows 8 (including Server operating Systems)
+ - For Windows XP 32-bit, NVDA requires Service Pack 2 or higher.
+ - For Windows Server 2003, NVDA requires Service Pack 1 or higher.
 - Memory: 256 mb or more of RAM
 - Processor speed: 1.0 ghz or above
 - About 50 MB of storage space.
 -
 
 + Getting and Setting Up NVDA +
-If you have not yet got a copy of NVDA, you can download it from [www.nvda-project.org NVDA_URL].
+If you have not yet got a copy of NVDA, you can download it from [www.nvaccess.org NVDA_URL].
 
 Go to the download section and you will find a link to download the latest version of NVDA.
 
@@ -149,8 +151,8 @@ The third lets you control if this Welcome dialog should appear each time NVDA s
 ++ About NVDA keyboard commands ++
 
 +++ The NVDA Modifier Key +++
-Most NVDA-specific keyboard commands usually consist of pressing a particular key called the NVDA modifier key, in conjunction with one or more other keys.
-An exception to this are the text review commands which just use the numpad keys by themselves.
+Most NVDA-specific keyboard commands consist of pressing a particular key called the NVDA modifier key in conjunction with one or more other keys.
+Notable exceptions to this are the text review commands for desktop keyboards which just use the numpad keys by themselves, but there are some other exceptions as well.
 
 NVDA can be configured so that either the numpad Insert, Extended Insert, or capslock key can be used as the NVDA modifier key.
 
@@ -331,7 +333,7 @@ To navigate by object, use the following commands:
 | Move to focus object | NVDA+numpadMinus | NVDA+backspace | none | Moves to the object that currently has the system focus, and also places the review cursor at the position of the System caret, if it is showing |
 | Activate current navigator object | NVDA+numpadEnter | NVDA+enter | double tap | Activates the current navigator object (similar to clicking with the mouse or pressing space when it has the system focus) |
 | Move System focus or caret to current review position | NVDA+shift+numpadMinus | NVDA+shift+backspace | none | pressed once Moves the System focus to the current navigator object, pressed twice moves the system caret to the position of the review cursor |
-| Report navigator object dimensions | NVDA+numpadDelete | NVDA+delete | none | Reports the current navigator object's dimensions on screen in per centages (including distance from left and top of screen, and its width and height) |
+| Report navigator object dimensions | NVDA+numpadDelete | NVDA+delete | none | Reports the location of the review cursor either in application friendly terms such as percentage through the document or distance from the edge of the page, or very least in screen pixels. Pressing twice will report further information.|
 %kc:endInclude
 
 Note: numpad keys require numlock key to be turned off to work properly.
@@ -408,7 +410,7 @@ The screen review mode allows you to review the text of the screen as it appears
 This is similar to the screen review or mouse cursor functionality in many other Windows screen readers.
 
 When switching to screen review mode, the review cursor is placed at the screen position of the current [navigator object #ObjectNavigation].
-When moving around the screen with review commands, the navigator object is automatically updated to the deepest object found at the screen position of the review cursor.
+When moving around the screen with review commands, the navigator object is automatically updated to the object found at the screen position of the review cursor.
 
 Note that in some newer applications, NVDA may not see some or all text displayed on the screen due to the use of newer screen drawing technologies which are impossible to support at this time.
 
@@ -523,11 +525,20 @@ A key command is provided to return to the original page containing the embedded
 + Application Specific NVDA Commands +
 NVDA provides its own extra commands for some applications to make certain tasks easier or to provide access to functionality which is not otherwise accessible to screen reader users.
 
+++ Microsoft Word ++
+%kc:beginInclude
+|| Name | Key | Description |
+| Report current comment | NVDA+Alt+c | Reports the text of the comment at the position of the System Caret. | 
+| Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. | 
+| Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. | 
+%kc:endInclude
+
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Name | Key | Description |
-| Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. | 
-| Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. | 
+| Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. | 
+| Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. | 
+| Report comment | NVDA+alt+c | Reports the comment on the current cell if any. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -554,7 +565,7 @@ Note: The report remaining time shortcut works only with the default formatting 
 %kc:beginInclude
 || Name | Key | Description |
 | Report Comments Window | control+shift+c | Reports any comments in the comments window. |
-| Report automatic comments window | control+shift+a | Reports any comments in the automatic comments window. |
+| Report notes for translators | control+shift+a | Reports any notes for translators. |
 %kc:endInclude
 
 + Configuring NVDA +
@@ -585,6 +596,9 @@ This option is a checkbox that, when checked, tells NVDA to automatically save t
 ==== Warn before exiting NVDA ====
 This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks whether or not you would like to exit.
 When checked, a dialog will appear when you attempt to exit NVDA asking whether or not you want to exit.
+
+==== Play sounds when starting or exiting NVDA ====
+This option is a checkbox that, when checked, tells NVDA to play sounds when it starts or exits.
 
 ==== Logging level ====
 This is a combo box that permits you to choose how much NVDA will log as it's running.
@@ -633,7 +647,7 @@ The Voice Settings dialog box contains the following options:
 ==== Voice ====
 The first option that you land on in this dialog is a combo box listing all the voices of the current synthesizer that you have installed.
 You can use the arrow keys to listen to all the various choices.
-Left and Up arrow take you up in the list, while right and down arrow moves you down in the list.
+Left and Up arrow take you up in the list, while right and down arrow move you down in the list.
 
 ==== Variant ====
 If you are using the Espeak synthesizer that is packaged with NVDA, this is a combo box that lets you select the Variant the synthesizer should speak with.
@@ -782,6 +796,10 @@ If this checkbox is checked, the extended insert key (usually found above the ar
 ==== Use numpad insert as an NVDA modifier key ====
 If this checkbox is checked, the insert key on the number pad can be used as an NVDA modifier key.
 
+If no key is chosen as the NVDA key it may be impossible to access certain NVDA commands.
+Therefore, The Keyboard Settings dialog will display an error message if all keys are unselected when pressing Ok.
+After dismissing the error message, you must select at least one before being able to press Ok to dismiss the dialog properly.
+
 %kc:setting
 ==== Speak Typed Characters ====
 Key: NVDA+2
@@ -800,6 +818,9 @@ If on, this option will cause speech to be interrupted each time a character is 
 ==== Speech interrupt for Enter key ====
 If on, this option will cause speech to be interrupted each time the Enter key is pressed. This is on by default.
 
+==== Allow skim reading in Say All ====
+If on, certain navigation commands (such as quick navigation in browse mode or moving by line or paragraph) do not stop Say All, rather Say All jumps to the new position and continues reading.
+
 ==== Beep if Typing Lowercase Letters when Caps Lock is On ====
 When enabled, a warning beep will be heard if a letter is typed with the shift key while caps lock is on.
 Generally, typing shifted letters with caps lock is unintentional and is usually due to not realising that caps lock is enabled.
@@ -810,6 +831,10 @@ Therefore, it can be quite helpful to be warned about this.
 Key: NVDA+4
 
 When enabled, NVDA will announce all non-character keys you type on the keyboard. This includes key combinations such as control plus another letter.
+
+==== Handle keys from other applications ====
+This option allows the user to control if key presses generated by applications such as on-screen keyboards and speech recognition software should be processed by NVDA. 
+This option is on by default, though certain users may wish to turn this off, such as those typing Vietnamese with the Unikey typing software as it will  cause incorrect character input.
 
 +++ Mouse Settings (NVDA+control+m) +++[MouseSettings]
 The Mouse Settings dialog is found in the Preferences Menu, under "Mouse settings...".
@@ -847,7 +872,7 @@ This dialog contains the following options:
 ==== Follow System Focus ====
 Key: NVDA+7
 
-When enabled, The review cursor will always be placed in the same object as the current system focus as it changes.
+When enabled, The review cursor will always be placed in the same object as the current system focus whenever the focus changes.
 
 %kc:setting
 ==== Follow System Caret ====
@@ -915,7 +940,7 @@ Toggles the announcement of new content in particular objects such as terminals 
 The Input Composition Settings dialog can be found under the Preferences menu.
 This dialog allows you to control how NVDA reports the input of Asian characters, such as with IME or Text Service input methods.
 Note that due to the fact that input methods vary greatly by available features and by how they convey information, it will most likely be necessary to configure these options differently for each input method to get the most efficient typing experience.
- 
+
 ==== Automatically report all available candidates ====
 This option, which is on by default,  allows you to choose whether or not all visible candidates should be reported automatically when a candidate list appears or its page is changed.
 Having this option on for pictographic input methods such as chinese New ChangJie or Boshiami is useful, as you can automatically hear all symbols and their numbers and you can choose one right away.
@@ -930,7 +955,7 @@ Note that even with this option off, the review cursor will still be placed on t
 This option, which is on by default, allows you to choose whether or not NVDA should provide a short description for each character in a candidate, either when its selected or when its automatically read when the candidate list appears.
 Note that for locales such as Chinese, the announcement of extra character descriptions for the selected candidate is not affected by this option.
 This option may be useful for Korean and japanese input methods.
- 
+
 ==== Report changes to the reading string ====
 Some input methods such as Chinese New Phonetic and New ChangJie have a reading string (sometimes known as a precomposition string).
 You can choose whether or not NVDA should announce new characters being typed into this reading string with this option.
@@ -996,11 +1021,13 @@ You can configure reporting of:
 - Font attributes
 - Text alignment
 - Colors
+- editor revisions
 - Text style
 - Spelling errors
 - Page numbers
 - Line numbers
 - Line indentation
+- Paragraph indentation (e.g. hanging indent, first line indent)
 - Tables
 - Table row/column headers
 - Table cell coordinates
@@ -1029,7 +1056,7 @@ They are:
 -
 
 All dictionary dialogs contain a list of rules which will be used for processing the speech.
-The dialog also contains Add, Edit and remove buttons.
+The dialog also contains Add, Edit and Remove buttons.
 
 To add a new rule to the dictionary, press the Add button, and fill in the fields in the dialog box that appears and then press Ok.
 You will then see your new rule in the list of rules.
@@ -1056,6 +1083,25 @@ Using the Level field, you can adjust the lowest symbol level at which this symb
 
 When you are finished, press the OK button to save your changes or the Cancel button to discard them.
 
++++ Input Gestures +++
+In this dialog, you can customize the input gestures (keys on the keyboard, buttons on a braille display, etc.) for NVDA commands.
+
+Only commands that are applicable immediately before the dialog is opened are shown.
+For example, if you want to customize commands related to browse mode, you should open the Input Gestures dialog while you are in browse mode.
+
+The tree in this dialog lists all of the applicable NVDA commands grouped by category.
+Any gestures associated with a command are listed beneath the command.
+
+To add an input gesture to a command, select the command and press the Add button.
+Then, perform the input gesture you wish to associate; e.g. press a key on the keyboard or a button on a braille display.
+Often, a gesture can be interpreted in more than one way.
+For example, if you pressed a key on the keyboard, you may wish it to be specific to the current keyboard layout (e.g. desktop or laptop) or you may wish it to apply for all layouts.
+In this case, a menu will appear allowing you to select the desired option.
+
+To remove a gesture from a command, select the gesture and press the Remove button.
+
+When you are finished making changes, press the OK button to save them or the Cancel button to discard them.
+
 ++ Saving and Reloading the configuration ++
 By default NVDA will automatically save your settings on exit.
 Note, however, that this option can be changed under the general options in the preferences menu.
@@ -1071,16 +1117,89 @@ The following NVDA key commands are also useful:
 | Revert  configuration | NVDA+control+r | NVDA+control+r | Pressing once resets your configuration to when you last saved it. Pressing three times will reset it back to factory defaults. |
 %kc:endInclude
 
-++ Configuration files and user profiles ++
+++ Configuration Profiles ++
+Sometimes, you may wish to have different settings for different situations.
+For example, you may wish to have reporting of indentation enabled while you are editing or reporting of font attributes enabled while you are proofreading.
+NVDA allows you to do this using configuration profiles.
+
+A configuration profile contains only those settings which are changed while the profile is being edited.
+Most settings can be changed in configuration profiles except for those in the General Settings dialog, which apply to the entirety of NVDA.
+
+Configuration profiles can be manually activated.
+They can also be activated automatically due to triggers such as switching to a particular application.
+
++++ Basic Management +++
+You manage configuration profiles by selecting "Configuration profiles" in the NVDA menu.
+You can also do this using a key command:
+%kc:beginInclude
+- NVDA+control+p: Show the Configuration Profiles dialog.
+-
+%kc:endInclude
+
+The first control in this dialog is the profile list from which you can select one of the available profiles.
+When you open the dialog, the profile you are currently editing is selected.
+Additional information is also shown for active profiles, indicating whether they are manually activated, triggered and/or being edited.
+
+To rename or delete a profile, press the Rename or Delete buttons, respectively.
+
+Press the Close button to close the dialog.
+
++++ Creating a Profile +++
+To create a profile, press the New button.
+
+In the New Profile dialog, you can enter a name for the profile.
+You can also select how this profile should be used.
+If you only want to use this profile manually, select Manual activation, which is the default.
+Otherwise, select a trigger which should automatically activate this profile.
+For convenience, if you haven't entered a name for the profile, selecting a trigger will fill in the name accordingly.
+See [below #ConfigProfileTriggers] for more information about triggers.
+
+Pressing OK will create the profile and close the Configuration Profiles dialog so you can edit it.
+
++++ Manual Activation +++[ConfigProfileManual]
+You can manually activate a profile by selecting a profile and pressing the Manual activate button.
+Once activated, other profiles can still be activated due to triggers, but any settings in the manually activated profile will override them.
+For example, if a profile is triggered for the current application and reporting of links is enabled in that profile but disabled it in the manually activated profile, links will not be reported.
+However, if you have changed the voice in the triggered profile but have never changed it in the manually activated profile, the voice from the triggered profile will be used.
+Any settings you change will be saved in the manually activated profile.
+To deactivate a manually activated profile, select it in the Configuration Profiles dialog and press the Manual deactivate button.
+
++++ Triggers +++[ConfigProfileTriggers]
+Pressing the Triggers button in the Configuration Profiles dialog allows you to change the profiles which should be automatically activated for various triggers.
+
+The Triggers list shows the available triggers, which are as follows:
+- Current application: Triggered when you switch to the current application.
+- Say all: Triggered while reading with the say all command.
+-
+
+To change the profile which should be automatically activated for a trigger, select the trigger and then select the desired profile from the Profile list.
+You can select (normal configuration) if you don't want a profile to be used.
+
+Press the Close button to return to the Configuration Profiles dialog.
+
++++ Editing a Profile +++
+If you have manually activated a profile, any settings you change will be saved to that profile.
+Otherwise, any settings you change will be saved to the most recently triggered profile.
+For example, if you have associated a profile with the Notepad application and you switch to Notepad, any changed settings will be saved to that profile.
+Finally, if there is neither a manually activated nor a triggered profile, any settings you change will be saved to your normal configuration.
+
+To edit the profile associated with say all, you must [manually activate #ConfigProfileManual] that profile.
+
++++ Temporarily Disabling Triggers +++
+Sometimes, it is useful to temporarily disable all triggers.
+For example, you might wish to edit a manually activated profile or your normal configuration without triggered profiles interfering.
+You can do this by checking the Temporarily disable all triggers checkbox in the Configuration Profiles dialog.
+
+++ Location of Configuration files ++
 Portable versions of NVDA store all settings, custom appModules and custom drivers in a directory called userConfig, found in the NVDA directory.
 
 Installed versions of NVDA store all settings, custom appModules and custom drivers in a special NVDA directory located in your Windows user profile.
 This means that each user on the system can have their own NVDA settings.
 To get to your settings directory for an installed version of NVDA, on the start menu you can go to programs -> NVDA -> explore user configuration directory.
 
-Settings for NVDA when running on the logon or UAC screens is stored in the systemConfig directory in NVDA's installation directory.
-Usually this configuration should not be touched.
-To change how NVDA is configured on the logon/UAC screens, configure NVDA to how you wish while logged into Windows, and then instruct NVDA to copy the configuration to the logon screen by using the button in the General settings dialog.
+Settings for NVDA when running on the logon or UAC screens are stored in the systemConfig directory in NVDA's installation directory.
+Usually, this configuration should not be touched.
+To change NVDA's configuration on the logon/UAC screens, configure NVDA as you wish while logged into Windows, save the configuration, and then press the "Use currently saved settings on the logon and other secure screens" button in the General Settings dialog.
 
 + Extra Tools +
 
@@ -1105,6 +1224,7 @@ These packages are provided by the community and contain custom code that may ad
 
 The Add-ons Manager contains a list that displays all the add-ons currently installed in your NVDA user configuration. 
 A package name, version and author are shown for each add-on, though further information such as a description and URL can be viewed by selecting the add-on and pressing the About add-on button.
+If there is help available for the selected add-on, you can access it by pressing the Add-on help button.
 
 To browse and download available add-ons online, press the Get add-ons button.
 This button opens the [NVDA Add-ons page http://addons.nvda-project.org/].
@@ -1134,7 +1254,7 @@ It is best to remove these files from your configuration and install  the approp
 
 ++ Python Console ++
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
-For more information, please see the Developer Guide available from [the Development section of the NVDA web site NVDA_URLwiki/Development].
+For more information, please see the Developer Guide available from [the Development section of the NVDA web site http://community.nvda-project.org/wiki/Development].
 
 ++ Reload plugins ++
 This item, once activated, reloads app modules and global plugins without restarting NVDA, which can be useful for developers.
@@ -1205,8 +1325,8 @@ This section contains information about the Braille displays supported by NVDA.
 ++ Freedom Scientific Focus/PAC Mate Series ++
 All Focus and PAC Mate displays from [Freedom Scientific http://www.freedomscientific.com/] are supported when connected via USB or bluetooth.
 You will need the Freedom Scientific braille display drivers installed on your system.
-If you do not have them already, you can obtain them from http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
-Although this page only mentions the Focus 40 Blue display, the drivers support all Freedom Scientific displays.
+If you do not have them already, you can obtain them from http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Although this page only mentions the Focus Blue display, the drivers support all Freedom Scientific Focus and Pacmate displays.
 If your system is running 64 bit Windows and the drivers were already installed by another screen reader, you will probably still need to install the drivers from this link, as the files required by NVDA were probably not installed by the other screen reader.
 
 By default, NVDA can automatically detect and connect to these displays either via USB or bluetooth.
@@ -1439,6 +1559,9 @@ Please see the display's documentation for descriptions of where these keys can 
 ++ HIMS Braille Sense/Braille EDGE Series ++
 NVDA supports Braille Sense and Braille EDGE displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
 If connecting via USB, you will need to install the USB drivers from HIMS on your system.
+You can download these from the HIMS Resource Center: http://www.hims-inc.com/resource-center/
+On this page, select your device and download the driver in the Window-Eyes section.
+Although the section only mentions Window-Eyes, this is a general USB driver which will work with NVDA as well.
 
 Following are the key assignments for these displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -1576,7 +1699,6 @@ Following are the Papenmeier command assignments for NVDA:
 | Route to braille cell | routing |
 | Report current character in review | l1 |
 | Activate current navigator object | l2 |
-| Move to flat review/focus | r1 |
 | Report title | l1+up |
 | Report Status Bar | l2+down |
 | Move to containing object | up2 |
@@ -1653,7 +1775,6 @@ Devices with EAB:
 | Route to braille cell | routing |
 | Report current character in review | l1 |
 | Activate current navigator object | l2 |
-| Move to flat review / focus | r1 |
 | Report title | l1up |
 | Report Status Bar | l2down |
 | Move to containing object | up2 |
@@ -1671,7 +1792,6 @@ BRAILLEX Tiny:
 | Move braille display to previous line | up |
 | Move braille display to next line | dn |
 | Toggle braille tethered to | r2 |
-| Move to flat review / focus | r1 |
 | Move to containing object | r1+up |
 | Move to first contained object | r1+dn |
 | Move to previous object | r1+left |
@@ -1686,7 +1806,6 @@ BRAILLEX 2D Screen:
 | Report text formatting | reportf |
 | Move braille display to previous line | up |
 | Scroll braille display back | left |
-| Move to flat review / focus | r1 |
 | Scroll braille display forward | right |
 | Move braille display to next line | dn |
 | Move to next object | left2 |
@@ -1765,86 +1884,13 @@ Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/driv
 
 + Advanced Topics +
 
-++ Remapping Key Assignments and Other Input Gestures ++
-Users are able to provide or override mappings of input gestures (such as key presses) to scripts in a special file in the user's NVDA configuration directory.
-This file is called gestures.ini.
-
-This file uses standard ini syntax.
-The file may contain multiple sections and each section may have one or more entries.
-
-Each section provides mappings for scripts in a particular Python module and class inside NVDA.
-- The section name should be the Python module and class separated by a dot (.).
-- The key of each entry is the name of the script to which input gestures should be bound.
-Alternatively, you can use None to unbind input gestures from a script to which they were previously bound.
-Each entry key can only be listed once per section, including None.
-- The entry value is a comma (,) separated list of gesture identifiers for the input gestures that should be bound.
-Gesture identifiers ending in a comma must be enclosed in quotes (" or ').
--
-
-Gesture identifiers consist of a two letter device code; a sub-device, layout or mode in brackets; a colon; and then a type-specific string identifying the actual input, such as key or touch gesture names.
-- For keyboard gestures, the device code is kb.
-The part in brackets is the keyboard layout and is optional.
-If not specified, the gesture will apply to all keyboard layouts.
-The string after the colon is one or more key names separated by a plus (+) sign.
-- For braille display gestures, the device code is br.
-The part in brackets identifies the specific braille display and is mandatory.
-The string after the colon is one or more key names separated by a plus (+) sign.
-- For touch gestures, the device code is ts.
-The part in brackets is the touch mode and is optional.
-The string after the colon is a touch gesture; e.g. double_tap, 2fingerflickUp or 3finger_tap.
--
-
-In order to discover gesture identifiers, script names and the class and module in which they are contained, you can:
-+ Turn on Input Help.
-+ Activate the gesture (press the key, touch the screen, etc.).
-+ Turn off input help.
-+ Activate View log in the NVDA Tools menu.
-+ Examine the recent log entries.
-One of these should provide information about the input gesture you sent, including the module.class and script if it is bound to one.
-+
-
-Following is an example of how you could bind NVDA+shift+t to the date time script.
-
-To find out the correct script name and module.class for date time, you would turn on Input Help and press NVDA+f12 (as this is the current gesture for the date time script).
-You would then turn off Input Help and examine the log viewer.
-
-Towards the bottom, you would see:
-
-```
-INFO - inputCore.InputManager._handleInputHelp (13:17:22):
-Input help: gesture kb(desktop):NVDA+f12, bound to script dateTime on globalCommands.GlobalCommands
-```
-
-From this, you can see that the script name is dateTime and the module.class is globalCommands.GlobalCommands.
-
-If the file does not yet exist, you would create a text file called gestures.ini in the user configuration directory and add the following content:
-
-```
-[globalCommands.GlobalCommands]
-	dateTime = kb:NVDA+shift+t
-```
-
-This would bind the key press NVDA+shift+t (in any keyboard layout) to the dateTime script.
-
-Note that the original NVDA+f12 binding would still work.
-If you wanted to remove this binding, you would add the following line:
-
-```
-	None = kb:NVDA+f12
-```
-
-Although you are free to have scripts bound to any available key, it may be problematic to use the alt key on the keyboard.
-NVDA still sends modifier keys (such as shift, control and alt) to the Operating System, even if they eventuate in a script.
-Thus, if you do use alt in a gesture, pressing this key combination may activate the menu bar, as well as executing the script.
-Therefore, it is probably best to just use Shift, control and the NVDA modifier key as modifiers.
-
 ++ Advanced Customization of Symbol Pronunciation ++
 It is possible to customize the pronunciation of punctuation and other symbols beyond what can be done using the [Punctuation/symbol pronunciation #SymbolPronunciation] dialog.
 For example, you can specify whether the raw symbol should be sent to the synthesizer (e.g. to cause a pause or change in inflection) and you can add custom symbols.
 
 To do this, you must edit the symbol pronunciation information file in your NVDA user configuration directory.
 The file is called symbols-xx.dic, where xx is the language code.
-The format of this file is documented in the Symbol Pronunciation section of the NVDA Developer Guide, which is available from [the Development section of the NVDA web site NVDA_URLwiki/Development].
+The format of this file is documented in the Symbol Pronunciation section of the NVDA Developer Guide, which is available from [the Development section of the NVDA web site http://community.nvda-project.org/wiki/Development].
 However, it is not possible for users to define complex symbols.
 
 + Further Information +

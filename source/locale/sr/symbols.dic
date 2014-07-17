@@ -1,0 +1,135 @@
+﻿complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥]?\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	tačka	all	always
+! sentence ending	uzvičnik	all	always
+? sentence ending	upitnik	all	always
+; phrase ending	tačkazarez	most	always
+: phrase ending	dvotačka	most	always
+decimal point	decimalni zarez	none	always
+in-word '	apostrof	all	norep
+negative number	minus	none	norep
+
+# Whitespace
+\0	prazno	char
+\t	tabulator
+\n	novi red	char
+\f	nova stranica	none
+\r	kraj reda	char
+ 	razmak	char
+ 	razmak	char	# no-break space
+
+# Standard punctuation/symbols
+!	uzvičnik	all
+"	navodnik	most
+\#	taraba	most
+$	dolar	all	norep
+£	funta	all	norep
+¢	centi	all	norep
+¥	jen	all	norep
+%	procenat	some
+&	ampersand	some
+'	apostrof	all
+(	leva zagrada	most
+)	desna zagrada	most
+*	zvezdica	some
++	plus	some
+,	zapeta	all	always
+-	crtica	most
+.	tačka	some
+/	kosa crta	some
+:	dvotačka	most	norep
+;	tačkazarez	most
+<	manje od	most
+>	veće od	most
+=	jednako	some
+?	upitnik	all
+@	et	some
+[	leva uglasta	most
+]	desna uglasta	most
+\\	obrnuta kosa crta	most
+^	kapica	most
+_	donja crta	most
+`	akcenat	most
+{	leva vitičasta	most
+}	desna vitičasta	most
+|	uspravna crta	most
+~	tilda	most
+
+# Other characters
+•	znak za nabrajanje	some
+…	tri tačke	all	always
+...	tri tačke	all	always
+	znak za nabrajanje	some
+“	levi navodnik	most
+”	desni navodnik	most
+‚	levi jednostruki navodnik	most
+‘	desni jednostruki navodnik	most
+–	en crtica	most
+—	em crtica	most
+●	kružić	most
+¨	preglas	most
+‎	oznaka s leva na desno	char
+‏	oznaka s desna na levo	char
+■	crni kvadrat	some
+➔	strelica desno	some
+§	paragraf	all
+°	stepeni	some
+«	leva dupla izlomljena zagrada
+»	desna dupla izlomljena zagrada
+µ	mi	some
+¹	gornji indeks 1	some
+²	gornji indeks 2	some
+³	gornji indeks 3	some
+®	registrovano	some
+™	zaštićeni znak	some
+©	kopirajt	some
+±	plus minus	most
+×	puta	most
+÷	podeljeno sa	most
+←	strelica levo	some
+→	strelica desno	some
+✓	štriklirano	some
+✔	podebljano štriklirano	some
+¡	obrnuti uzvičnik	most
+¦	isprekidana uspravna crta	most
+ª	gornji indeks a	most
+­	razdelnik	most
+´	dugouzlazni akcenat	most
+·	tačka u sredini	most
+¸	cedila	most
+¿	obrnuti upitnik	most
+‡	dupli krst	most
+‰	promil	most
+−	minus	most
+¼	četvrtina	some
+½	polovina	most
+¾	tri četvrtine	most
+⅓	trećina	most
+⅔	dve trećine	most
+√	kvadratni koren	most
+∛	treći koren	most
+∞	beskonačno	most
+≠	nije jednako sa	most
+¬	logička negacija	most
+æ	otvoreno e	char
+þ	torn	some
+₨	rupia	all	norep
+¤	valuta	all	norep
+ß	escet	char
+ə	šva	most

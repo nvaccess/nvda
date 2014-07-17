@@ -65,8 +65,11 @@ def getScreenPosition(obj):
 		return pos,pos.obj
 
 modes=[
+	# Translators: One of the review modes.
 	('object',_("Object review"),getObjectPosition),
+	# Translators: One of the review modes.
 	('document',_("Document review"),getDocumentPosition),
+	# Translators: One of the review modes.
 	('screen',_("Screen review"),getScreenPosition),
 ]
 
@@ -154,6 +157,9 @@ def handleCaretMove(pos):
 		if mode not in ('object','document'):
 			return
 		if mode!='document':
+			if obj.passThrough:
+				#if trying to set with a position in a treeInterceptor but passThrough is turned on, ignore it completely
+				return
 			setCurrentMode('document',updateReviewPosition=False)
 	if not info:
 		try:

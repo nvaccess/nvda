@@ -29,6 +29,8 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	The L{NVDAObject.basicText} attribute is used as the text to expose.
 	"""
 
+	locationText=None
+
 	def _get_unit_mouseChunk(self):
 		return textInfos.UNIT_STORY
 
@@ -310,6 +312,15 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError
 
+	#: Whether to create a tree interceptor for this object.
+	#: This is only relevant if L{treeInterceptorClass} is valid.
+	#: Normally, this should be C{True}.
+	#: However, for some objects (e.g. ARIA applications), a tree interceptor shouldn't be used by default,
+	#: but the user may wish to override this.
+	#: In this case, this can be set to C{False} and updated later.
+	#: @type: bool
+	shouldCreateTreeInterceptor = True
+
 	def _get_treeInterceptor(self):
 		"""Retreaves the treeInterceptor associated with this object.
 		If a treeInterceptor has not been specifically set, the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
@@ -426,6 +437,21 @@ class NVDAObject(baseObject.ScriptableObject):
 		@rtype: tuple of int
 		"""
 		raise NotImplementedError
+
+	def _get_locationText(self):
+		"""A message that explains the location of the object in friendly terms."""
+		location=self.location
+		if not location:
+			return None
+		(left,top,width,height)=location
+		deskLocation=api.getDesktopObject().location
+		(deskLeft,deskTop,deskWidth,deskHeight)=deskLocation
+		percentFromLeft=(float(left-deskLeft)/deskWidth)*100
+		percentFromTop=(float(top-deskTop)/deskHeight)*100
+		percentWidth=(float(width)/deskWidth)*100
+		percentHeight=(float(height)/deskHeight)*100
+		# Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+		return _("Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of screen, height is {height:.1f} per cent of screen").format(left=percentFromLeft,top=percentFromTop,width=percentWidth,height=percentHeight)
 
 	def _get_parent(self):
 		"""Retreaves this object's parent (the object that contains this object).
@@ -575,7 +601,7 @@ class NVDAObject(baseObject.ScriptableObject):
 			text=self.makeTextInfo(textInfos.POSITION_ALL).text
 			return self.presType_content if text and not text.isspace() else self.presType_layout
 
-		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_TITLEBAR,controlTypes.ROLE_LABEL):
+		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION, controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_TITLEBAR, controlTypes.ROLE_LABEL, controlTypes.ROLE_WHITESPACE):
 			return self.presType_layout
 		name = self.name
 		description = self.description
@@ -986,6 +1012,16 @@ This code is executed if a gain focus event is received by this object.
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("appModule: %s" % ret)
+		try:
+			ret = repr(self.appModule.productName)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("appModule.productName: %s" % ret)
+		try:
+			ret = repr(self.appModule.productVersion)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("appModule.productVersion: %s" % ret)
 		try:
 			ret = repr(self.TextInfo)
 		except Exception as e:

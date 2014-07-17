@@ -17,6 +17,9 @@ complexSymbols:
 decimal point	(?<=\d)\.(?=\d)
 in-word '	(?<=[^\W_])['’]
 negative number	(?<!\w)-(?=[$£€¥]?\d)
+# Treat dash differently when it is sandwitched between a number and a tamil character.
+# tamil unicode range is U+0B80–U+0BFF according to http://en.wikipedia.org/wiki/Tamil_script  
+tamilNumberDash	(?<=[0-9])\-(?=[஀-௿])
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -30,6 +33,8 @@ symbols:
 decimal point	புள்ளி	none	always
 in-word '	ஒற்றை மேற்கோள்	all	norep
 negative number	கழித்தல்	none	norep
+# number dash, tamil letter special case:
+tamilNumberDash	இணைக்கோடு	char	always
 
 # Whitespace
 \0	வெற்றிடம்	char	# null
@@ -50,10 +55,10 @@ $	டாலர்	all	norep
 %	விழுக்காடு	none
 &	மற்றும்	some
 '	ஒற்றை மேற்கோள்	all
-(	இட பிறை	most
-)	வல பிறை	most
-*	பெருக்கல்	most
-+	கூட்டல்	most
+(	இடப்பிறை	most
+)	வலப்பிறை	most
+*	பெருக்கல்	some
++	கூட்டல்	some
 ,	கால் புள்ளி	all	always
 -	இணைக்கோடு	most
 .	புள்ளி	some
@@ -62,11 +67,11 @@ $	டாலர்	all	norep
 ;	அரைப் புள்ளி	most
 <	குறைவு	most
 >	மிகுதி	most
-=	சமன்பாடு	most
+=	சமம்	some
 ?	கேள்வி?	all
 @	at	some
-[	இட அடைப்பு	most
-]	வல அடைப்பு	most
+[	இடப்பகரம்	most
+]	வலப்பகரம்	most
 \\	பின்சாய்வு	most
 ^	caret	most
 _	அடிக்கோடு	most
@@ -78,15 +83,15 @@ _	அடிக்கோடு	most
 
 # Other characters
 •	தோட்டா	none
-…	புள்ளி புள்ளி புள்ளி	all	always
-...	புள்ளி புள்ளி புள்ளி	all	always
+…	விடுநிலை	all	always
+...	விடுநிலை	all	always
 	தோட்டா	none
 “	இட மேற்கோள்	most
 ”	வல மேற்கோள்	most
 ‘	இட ஒற்றை மேற்கோள்	most
 ’	வல ஒற்றை மேற்கோள்	most
-–	en dash	most
-—	em dash	most
+–	சிறுகோடு	most
+—	சிறுகோடு	most
 ●	வட்டம்	most
 ¨	diaeresis	most
 ‎	left to right mark	char
@@ -104,9 +109,27 @@ _	அடிக்கோடு	most
 ®	பதிவு	some
 ™	வணிகம்	some
 ©	பதிப்புரிமை	some
-±	கூட்டல் அல்லது கழித்தல்	most
+±	கூட்டல் கழித்தல்	most
 ×	தடவை	most
 ÷	வகுத்தல்	most
+←	இடதம்பு	some
 →	வலதம்பு	some
 ✓	தேர்வு	some
 ✔	தேர்வு	some
+
+# Special Tamil Characters
+௰	பத்து	none
+௱	நூறு	none
+௲	ஆயிரம்	none
+௳	நாள்	none
+௴	மாதம்	none
+௵	ஆண்டு	none
+௶	பற்று	none
+௷	வரவு	none
+௸	மேலிருப்பது போல்	none
+௺	எண்ணுரு	none
+ௐ	ஓம்	none
+
+# Other characters
+†	குத்துவாள்	most
+‡	இரட்டைக் குத்துவாள்	most

@@ -155,6 +155,21 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		else:
 			return False
 
+	def _get_locationText(self):
+		textList=[]
+		storyLength=self._getStoryLength() or 1
+		curPercent=(self._startOffset/float(storyLength))*100
+		# Translators: current position in a document as a percentage of the document length
+		textList.append(_("{curPercent:.0f}%").format(curPercent=curPercent))
+		try:
+			curPoint=self.pointAtStart
+		except (NotImplementedError,LookupError):
+			curPoint=None
+		if curPoint is not None:
+			# Translators: the current position's screen coordinates in pixels
+			textList.append(_("at {x},{y}").format(x=curPoint.x,y=curPoint.y))
+		return ", ".join(textList)
+
 	def _getCaretOffset(self):
 		raise NotImplementedError
 

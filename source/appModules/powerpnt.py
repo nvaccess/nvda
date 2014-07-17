@@ -1,6 +1,6 @@
 #appModules/powerpnt.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2012-2013 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -9,11 +9,14 @@ from comtypes.automation import IDispatch
 import comtypes.client
 import ctypes
 import oleacc
+import comHelper
+import ui
 import queueHandler
 import colors
 import api
 import speech
 import sayAllHandler
+import NVDAHelper
 import winUser
 from treeInterceptorHandler import TreeInterceptor
 from NVDAObjects import NVDAObjectTextInfo
@@ -28,6 +31,11 @@ import braille
 from cursorManager import ReviewCursorManager
 import controlTypes
 from logHandler import log
+import scriptHandler
+
+# Window classes where PowerPoint's object model should be used 
+# These also all request to have their (incomplete) UI Automation implementations  disabled. [MS Office 2013]
+objectModelWindowClasses=set(["paneClassDC","mdiClass","screenClass"])
 
 #comtypes COM interface definition for Powerpoint application object's events 
 class EApplication(IDispatch):
@@ -52,7 +60,6 @@ class ppEApplicationSink(comtypes.COMObject):
 		oldFocus.treeInterceptor.rootNVDAObject.handleSlideChange()
 
 	def WindowSelectionChange(self,sel):
-		print sel
 		i=winUser.getGUIThreadInfo(0)
 		oldFocus=api.getFocusObject()
 		if not isinstance(oldFocus,Window) or i.hwndFocus!=oldFocus.windowHandle:
@@ -217,6 +224,12 @@ msoShapeTypesToNVDARoles={
 	msoDiagram:controlTypes.ROLE_DIAGRAM,
 }
 
+# PpMouseActivation
+ppMouseClick=1
+
+# PpActionType
+ppActionHyperlink=7
+
 def getBulletText(ppBulletFormat):
 	t=ppBulletFormat.type
 	if t==ppBulletNumbered:
@@ -224,16 +237,13 @@ def getBulletText(ppBulletFormat):
 	elif t:
 		return unichr(ppBulletFormat.character)
 
-def getPpObjectModel(windowHandle):
-	"""
-	Fetches the Powerpoint object model from a given PaneClassDC window.
-	"""
-	try:
-		pDispatch=oleacc.AccessibleObjectFromWindow(windowHandle,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch)
-	except (comtypes.COMError, WindowsError):
-		log.debugWarning("Could not get MS Powerpoint object model",exc_info=True)
-		return None
-	return comtypes.client.dynamic.Dispatch(pDispatch)
+def walkPpShapeRange(ppShapeRange):
+	for ppShape in ppShapeRange:
+		if ppShape.type==msoGroup:
+			for ppChildShape in walkPpShapeRange(ppShape.groupItems):
+				yield ppChildShape
+		else:
+			yield ppShape
 
 class PaneClassDC(Window):
 	"""Handles fetching of the Powerpoint object model."""
@@ -242,13 +252,6 @@ class PaneClassDC(Window):
 	role=controlTypes.ROLE_PANE
 	value=None
 	TextInfo=DisplayModelTextInfo
-
-	def _get_ppObjectModel(self):
-		"""Fetches and caches the Powerpoint DocumentWindow object for the current presentation."""
-		m=self.appModule.fetchPpObjectModel(self.windowHandle)
-		if m:
-			self.ppObjectModel=m
-			return self.ppObjectModel
 
 	_cache_currentSlide=False
 	def _get_currentSlide(self):
@@ -259,27 +262,9 @@ class PaneClassDC(Window):
 		self.currentSlide=SlideBase(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppSlide)
 		return self.currentSlide
 
-	def event_gainFocus(self):
-		if not self.ppObjectModel and not self.appModule.hasTriedPpAppSwitch:
-			#We failed to get the powerpoint object model, and we havn't yet tried fixing this by switching apps back and forth
-			#As Powerpoint may have just been opened, it can take up to 10 seconds for the object model to be ready.
-			#However, switching away to another application and back again forces the object model to be registered.
-			#This call of ppObjectModel will be None, but the next event_gainFocus should work
-			import wx
-			import gui
-			# Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-			d=wx.Dialog(None,title=_("Waiting for Powerpoint..."))
-			gui.mainFrame.prePopup()
-			d.Show()
-			self.appModule.hasTriedPpAppSwitch=True
-			#Make sure NVDA detects and reports focus on the waiting dialog
-			api.processPendingEvents()
-			comtypes.client.PumpEvents(1)
-			d.Destroy()
-			gui.mainFrame.postPopup()
-			#Focus would have now landed back on this window causing a new event_gainFocus, nothing more to do here.
-			return
-		super(PaneClassDC,self).event_gainFocus()
+	def _get_ppVersionMajor(self):
+		self.ppVersionMajor=int(self.ppObjectModel.application.version.split('.')[0])
+		return self.ppVersionMajor
 
 class DocumentWindow(PaneClassDC):
 	"""Represents the document window for a presentation. Bounces focus to the currently selected slide, shape or text frame."""
@@ -325,9 +310,9 @@ class DocumentWindow(PaneClassDC):
 		"""Fetches an NVDAObject representing the current presentation's selected slide, shape or text frame.""" 
 		sel=self.ppSelection
 		selType=sel.type
-		if selType==0:
+		#MS Powerpoint 2007 and below does not correctly indecate text selection in the notes page when in normal view
+		if selType==0 and self.ppVersionMajor<=12:
 			if self.ppActivePaneViewType==ppViewNotesPage and self.ppDocumentViewType==ppViewNormal:
-				#MS Powerpoint 2007 and below does not correctly indecate text selection in the notes page when in normal view
 				selType=ppSelectionText
 		if selType==ppSelectionShapes: #Shape
 			#The selected shape could be within a group shape
@@ -411,11 +396,19 @@ class DocumentWindow(PaneClassDC):
 
 	def handleSelectionChange(self):
 		"""Pushes focus to the newly selected object."""
-		obj=self.selection
-		if not obj:
-			obj=DocumentWindow(windowHandle=self.windowHandle)
-		if obj and obj!=api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
-			eventHandler.queueEvent("gainFocus",obj)
+		if getattr(self,"_isHandlingSelectionChange",False):
+			# #3394: A COM event can cause this function to run within itself.
+			# This can cause double speaking, so stop here if we're already running.
+			return
+		self._isHandlingSelectionChange=True
+		try:
+			obj=self.selection
+			if not obj:
+				obj=IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=self.IAccessibleChildID)
+			if obj and obj!=eventHandler.lastQueuedFocusObject:
+				eventHandler.queueEvent("gainFocus",obj)
+		finally:
+			self._isHandlingSelectionChange=False
 
 	def event_gainFocus(self):
 		"""Bounces focus to the currently selected slide, shape or Text frame."""
@@ -428,6 +421,8 @@ class DocumentWindow(PaneClassDC):
 
 	def script_selectionChange(self,gesture):
 		gesture.send()
+		if scriptHandler.isScriptWaiting():
+			return
 		self.handleSelectionChange()
 	script_selectionChange.canPropagate=True
 
@@ -438,6 +433,7 @@ class DocumentWindow(PaneClassDC):
 		"kb:pageUp","kb:pageDown",
 		"kb:home","kb:control+home","kb:end","kb:control+end",
 		"kb:shift+home","kb:shift+control+home","kb:shift+end","kb:shift+control+end",
+		"kb:delete","kb:backspace",
 	)}
 
 class OutlinePane(EditableTextWithoutAutoSelectDetection,PaneClassDC):
@@ -494,7 +490,10 @@ class Slide(SlideBase):
 			title=self.ppObject.shapes.title.textFrame.textRange.text
 		except comtypes.COMError:
 			title=None
-		number=self.ppObject.slideNumber
+		try:
+			number=self.ppObject.slideNumber
+		except comtypes.COMError:
+			number=""
 		# Translators: the label for a slide in Microsoft PowerPoint.
 		name=_("Slide {slideNumber}").format(slideNumber=number)
 		if title:
@@ -515,6 +514,191 @@ class Shape(PpObject):
 	"""Represents a single shape (rectangle, group, picture, Text bos etc in Powerpoint."""
 
 	presentationType=Window.presType_content
+
+	def _get__overlapInfo(self):
+		slideWidth=self.appModule._ppApplication.activePresentation.pageSetup.slideWidth
+		slideHeight=self.appModule._ppApplication.activePresentation.pageSetup.slideHeight
+		left=self.ppObject.left
+		top=self.ppObject.top
+		right=left+self.ppObject.width
+		bottom=top+self.ppObject.height
+		name=self.ppObject.name
+		slideShapeRange=self.documentWindow.currentSlide.ppObject.shapes.range()
+		otherIsBehind=True
+		infrontInfo=None
+		behindInfo=None
+		for ppShape in walkPpShapeRange(slideShapeRange):
+			otherName=ppShape.name
+			if otherName==name:
+				otherIsBehind=False
+				continue
+			otherLeft=ppShape.left
+			otherTop=ppShape.top
+			otherRight=otherLeft+ppShape.width
+			otherBottom=otherTop+ppShape.height
+			if otherLeft>=right or otherRight<=left:
+				continue
+			if otherTop>=bottom or otherBottom<=top:
+				continue
+			info={}
+			info['label']=Shape(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=ppShape).name
+			info['otherIsBehind']=otherIsBehind
+			info['overlapsOtherLeftBy']=right-otherLeft if right<otherRight else 0
+			info['overlapsOtherTopBy']=bottom-otherTop if bottom<otherBottom else 0
+			info['overlapsOtherRightBy']=otherRight-left if otherLeft<left else 0
+			info['overlapsOtherBottomBy']=otherBottom-top if otherTop<top else 0
+			if otherIsBehind:
+				behindInfo=info
+			else:
+				infrontInfo=info
+				break
+		self._overlapInfo=behindInfo,infrontInfo
+		return self._overlapInfo
+
+	def _getOverlapText(self):
+		textList=[]
+		for otherInfo in self._overlapInfo:
+			if otherInfo is None:
+				continue
+			otherIsBehind=otherInfo['otherIsBehind']
+			otherLabel=otherInfo['label']
+			total=True
+			overlapsOtherLeftBy=otherInfo['overlapsOtherLeftBy']
+			if overlapsOtherLeftBy>0:
+				total=False
+				if otherIsBehind:
+					# Translators: A message when a shape is infront of another shape on a Powerpoint slide 
+					textList.append(_("covers left of {otherShape} by {distance:.3g} points").format(otherShape=otherLabel,distance=overlapsOtherLeftBy))
+				else:
+					# Translators: A message when a shape is behind  another shape on a powerpoint slide
+					textList.append(_("behind left of {otherShape} by {distance:.3g} points").format(otherShape=otherLabel,distance=overlapsOtherLeftBy))
+			overlapsOtherTopBy=otherInfo['overlapsOtherTopBy']
+			if overlapsOtherTopBy>0:
+				total=False
+				if otherIsBehind:
+					# Translators: A message when a shape is infront of another shape on a Powerpoint slide 
+					textList.append(_("covers top of {otherShape} by {distance:.3g} points").format(otherShape=otherLabel,distance=overlapsOtherTopBy))
+				else:
+					# Translators: A message when a shape is behind another shape on a powerpoint slide
+					textList.append(_("behind top of {otherShape} by {distance:.3g} points").format(otherShape=otherLabel,distance=overlapsOtherTopBy))
+			overlapsOtherRightBy=otherInfo['overlapsOtherRightBy']
+			if overlapsOtherRightBy>0:
+				total=False
+				if otherIsBehind:
+					# Translators: A message when a shape is infront of another shape on a Powerpoint slide 
+					textList.append(_("covers right of {otherShape} by {distance:.3g} points").format(otherShape=otherLabel,distance=overlapsOtherRightBy))
+				else:
+					# Translators: A message when a shape is behind another shape on a powerpoint slide
+					textList.append(_("behind right of {otherShape} by {distance:.3g} points").format(otherShape=otherLabel,distance=overlapsOtherRightBy))
+			overlapsOtherBottomBy=otherInfo['overlapsOtherBottomBy']
+			if overlapsOtherBottomBy>0:
+				total=False
+				if otherIsBehind:
+					# Translators: A message when a shape is infront of another shape on a Powerpoint slide 
+					textList.append(_("covers bottom of {otherShape} by {distance:.3g} points").format(otherShape=otherLabel,distance=overlapsOtherBottomBy))
+				else:
+					# Translators: A message when a shape is behind another shape on a powerpoint slide
+					textList.append(_("behind bottom of {otherShape} by {distance:.3g} points").format(otherShape=otherLabel,distance=overlapsOtherBottomBy))
+			if total:
+				if otherIsBehind:
+					# Translators: A message when a shape is infront of another shape on a Powerpoint slide 
+					textList.append(_("covers  {otherShape}").format(otherShape=otherLabel))
+				else:
+					# Translators: A message when a shape is behind another shape on a powerpoint slide
+					textList.append(_("behind {otherShape}").format(otherShape=otherLabel))
+		return ", ".join(textList)
+
+	def _get__edgeDistances(self):
+		slideWidth=self.appModule._ppApplication.activePresentation.pageSetup.slideWidth
+		slideHeight=self.appModule._ppApplication.activePresentation.pageSetup.slideHeight
+		leftDistance=self.ppObject.left
+		topDistance=self.ppObject.top
+		rightDistance=slideWidth-(leftDistance+self.ppObject.width)
+		bottomDistance=slideHeight-(topDistance+self.ppObject.height)
+		self._edgeDistances=(leftDistance,topDistance,rightDistance,bottomDistance)
+		return self._edgeDistances
+
+	def _getShapeLocationText(self,left=False,top=False,right=False,bottom=False):
+		leftDistance,topDistance,rightDistance,bottomDistance=self._edgeDistances
+		offSlideList=[]
+		onSlideList=[]
+		if left:
+			if leftDistance>=0:
+				# Translators: the distance in points from the edge of a PowerpointSlide
+				onSlideList.append(_("{distance:.3g} points from left slide edge").format(distance=leftDistance))
+			else:
+				# Translators: the distance in points off the edge of a PowerpointSlide
+				offSlideList.append(_("Off left slide edge by {distance:.3g} points").format(distance=leftDistance))
+		if top:
+			if topDistance>=0:
+				# Translators: the distance in points from the edge of a PowerpointSlide
+				onSlideList.append(_("{distance:.3g} points from top slide edge").format(distance=topDistance))
+			else:
+				# Translators: the distance in points off the edge of a PowerpointSlide
+				offSlideList.append(_("Off top slide edge by {distance:.3g} points").format(distance=topDistance))
+		if right:
+			if rightDistance>=0:
+				# Translators: the distance in points from the edge of a PowerpointSlide
+				onSlideList.append(_("{distance:.3g} points from right slide edge").format(distance=rightDistance))
+			else:
+				# Translators: the distance in points off the edge of a PowerpointSlide
+				offSlideList.append(_("Off right slide edge by {distance:.3g} points").format(distance=rightDistance))
+		if bottom:
+			if bottomDistance>=0:
+				# Translators: the distance in points from the edge of a PowerpointSlide
+				onSlideList.append(_("{distance:.3g} points from bottom slide edge").format(distance=bottomDistance))
+			else:
+				# Translators: the distance in points off the edge of a PowerpointSlide
+				offSlideList.append(_("Off bottom slide edge by {distance:.3g} points").format(distance=bottomDistance))
+		return ", ".join(offSlideList+onSlideList)
+
+	def _get_locationText(self):
+		textList=[]
+		text=self._getOverlapText()
+		if text:
+			textList.append(text)
+		text=self._getShapeLocationText(True,True,True,True)
+		if text:
+			textList.append(text)
+		return ", ".join(textList)
+
+	def _clearLocationCache(self):
+		try:
+			del self._overlapInfo
+		except AttributeError:
+			pass
+		try:
+			del self._edgeDistances
+		except AttributeError:
+			pass
+
+	def script_moveHorizontal(self,gesture):
+		gesture.send()
+		if scriptHandler.isScriptWaiting():
+			return
+		self._clearLocationCache()
+		textList=[]
+		text=self._getOverlapText()
+		if text:
+			textList.append(text)
+		text=self._getShapeLocationText(left=True,right=True)
+		if text:
+			textList.append(text)
+		ui.message(", ".join(textList))
+
+	def script_moveVertical(self,gesture):
+		gesture.send()
+		if scriptHandler.isScriptWaiting():
+			return
+		self._clearLocationCache()
+		textList=[]
+		text=self._getOverlapText()
+		if text:
+			textList.append(text)
+		text=self._getShapeLocationText(top=True,bottom=True)
+		if text:
+			textList.append(text)
+		ui.message(", ".join(textList))
 
 	def _get_ppPlaceholderType(self):
 		try:
@@ -570,7 +754,23 @@ class Shape(PpObject):
 		if self.ppObject.hasTextFrame:
 			return self.ppObject.textFrame.textRange.text
 
+	def _get_states(self):
+		states=super(Shape,self).states
+		if self._overlapInfo[1] is not None:
+			states.add(controlTypes.STATE_OBSCURED)
+		if any(x for x in self._edgeDistances if x<0):
+			states.add(controlTypes.STATE_OFFSCREEN)
+		return states
+
 	__gestures={
+		"kb:leftArrow":"moveHorizontal",
+		"kb:rightArrow":"moveHorizontal",
+		"kb:upArrow":"moveVertical",
+		"kb:downArrow":"moveVertical",
+		"kb:shift+leftArrow":"moveHorizontal",
+		"kb:shift+rightArrow":"moveHorizontal",
+		"kb:shift+upArrow":"moveVertical",
+		"kb:shift+downArrow":"moveVertical",
 		"kb:enter":"selectionChange",
 		"kb:f2":"selectionChange",
 	}
@@ -599,7 +799,10 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		#Therefore walk through all the lines until one surrounds  the offset.
 		lines=self.obj.ppObject.textRange.lines()
 		length=lines.length
-		offset=min(offset,length-1)
+		# #3403: handle case where offset is at end of the text in in a control with only one line
+		# The offset should be limited to the last offset in the text, but only if the text does not end in a line feed.
+		if length and offset>=length and self._getTextRange(length-1,length)!='\n':
+			offset=min(offset,length-1)
 		for line in lines:
 			start=line.start-1
 			end=start+line.length
@@ -643,6 +846,8 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 				formatField['text-position']='super'
 		if formatConfig['reportColor']:
 			formatField['color']=colors.RGB.fromCOLORREF(font.color.rgb)
+		if formatConfig["reportLinks"] and curRun.actionSettings(ppMouseClick).action==ppActionHyperlink:
+			formatField["link"]=True
 		return formatField,(startOffset,endOffset)
 
 class Table(Shape):
@@ -691,6 +896,12 @@ class TextFrame(EditableTextWithoutAutoSelectDetection,PpObject):
 		if parent:
 			return Shape(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=parent)
 
+	def script_caret_backspaceCharacter(self, gesture):
+		super(TextFrame, self).script_caret_backspaceCharacter(gesture)
+		# #3231: The typedCharacter event is never fired for the backspace key.
+		# Call it here so that speak typed words works as expected.
+		self.event_typedCharacter(u"\b")
+
 class TableCellTextFrame(TextFrame):
 	"""Represents a text frame inside a table cell in Powerpoint. Specifially supports the caret jumping into another cell with tab or arrows."""
 
@@ -712,6 +923,11 @@ class SlideShowTreeInterceptorTextInfo(NVDAObjectTextInfo):
 
 	def _getStoryText(self):
 		return self.obj.rootNVDAObject.basicText
+
+	def _getOffsetsFromNVDAObject(self,obj):
+		if obj==self.obj.rootNVDAObject:
+			return (0,self._getStoryLength())
+		raise LookupError
 
 class SlideShowTreeInterceptor(TreeInterceptor):
 	"""A TreeInterceptor for showing Slide show content. Has no caret navigation, a CursorManager must be used on top. """
@@ -871,40 +1087,115 @@ class SlideShowWindow(PaneClassDC):
 class AppModule(appModuleHandler.AppModule):
 
 	hasTriedPpAppSwitch=False
-	ppApplication=None
+	_ppApplicationWindow=None
+	_ppApplication=None
 	_ppEApplicationConnectionPoint=None
 
-	def fetchPpObjectModel(self,windowHandle):
-		m=getPpObjectModel(windowHandle)
+	def isBadUIAWindow(self,hwnd):
+		# PowerPoint 2013 implements UIA support for its slides etc on an mdiClass window. However its far from complete.
+		# We must disable it in order to fall back to our own code.
+		if winUser.getClassName(hwnd) in objectModelWindowClasses:
+			return True
+		return super(AppModule,self).isBadUIAWindow(hwnd)
+
+	def _registerCOMWithFocusJuggle(self):
+		import wx
+		import gui
+		# Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+		d=wx.Dialog(None,title=_("Waiting for Powerpoint..."))
+		gui.mainFrame.prePopup()
+		d.Show()
+		self.hasTriedPpAppSwitch=True
+		#Make sure NVDA detects and reports focus on the waiting dialog
+		api.processPendingEvents()
+		comtypes.client.PumpEvents(1)
+		d.Destroy()
+		gui.mainFrame.postPopup()
+
+	def _getPpObjectModelFromWindow(self,windowHandle):
+		"""
+		Fetches the Powerpoint object model from a given window.
+		"""
+		try:
+			pDispatch=oleacc.AccessibleObjectFromWindow(windowHandle,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch)
+			return comtypes.client.dynamic.Dispatch(pDispatch)
+		except: 
+			log.debugWarning("Could not get MS Powerpoint object model",exc_info=True)
+			return None
+
+	_ppApplicationFromROT=None
+
+	def _getPpObjectModelFromROT(self,useRPC=False):
+		if not self._ppApplicationFromROT:
+			try:
+				self._ppApplicationFromROT=comHelper.getActiveObject(u'powerPoint.application',dynamic=True,appModule=self if useRPC else None)
+			except:
+				log.debugWarning("Could not get active object via RPC")
+				return None
+		try:
+			pres=self._ppApplicationFromROT.activePresentation
+		except (comtypes.COMError,NameError,AttributeError):
+			log.debugWarning("No active presentation")
+			return None
+		try:
+			ppSlideShowWindow=pres.slideShowWindow
+		except (comtypes.COMError,NameError,AttributeError):
+			log.debugWarning("Could not get slideShowWindow")
+			ppSlideShowWindow=None
+		isActiveSlideShow=False
+		if ppSlideShowWindow:
+			try:
+				isActiveSlideShow=ppSlideShowWindow.active
+			except comtypes.COMError:
+				log.debugWarning("slideShowWindow.active",exc_info=True)
+		if isActiveSlideShow:
+			return ppSlideShowWindow
+		try:
+			window=pres.windows.item(1)
+		except (comtypes.COMError,NameError,AttributeError):
+			window=None
+		return window
+
+	def _fetchPpObjectModelHelper(self,windowHandle=None):
+		m=None
+		# Its only safe to get the object model from PowerPoint 2003 to 2010 windows.
+		# In PowerPoint 2013 protected mode it causes security/stability issues
+		if windowHandle and winUser.getClassName(windowHandle)=="paneClassDC":
+			m=self._getPpObjectModelFromWindow(windowHandle)
+		if not m:
+			m=self._getPpObjectModelFromROT(useRPC=True)
+		if not m:
+			m=self._getPpObjectModelFromROT()
+		return m
+
+	def fetchPpObjectModel(self,windowHandle=None):
+		m=self._fetchPpObjectModelHelper(windowHandle=windowHandle)
+		if not m and not self.hasTriedPpAppSwitch:
+			self._registerCOMWithFocusJuggle()
+			m=self._fetchPpObjectModelHelper(windowHandle=windowHandle)
 		if m:
-			if not self.ppApplication:
-				self.ppApplication=m.application #Must be held -- not enough to hold the connectionPoint
-			if not self._ppEApplicationConnectionPoint:
+			if windowHandle!=self._ppApplicationWindow or not self._ppApplication:
+				self._ppApplicationWindow=windowHandle
+				self._ppApplication=m.application
 				sink=ppEApplicationSink().QueryInterface(comtypes.IUnknown)
-				self._ppEApplicationConnectionPoint=comtypes.client._events._AdviseConnection(self.ppApplication,EApplication,sink)
+				self._ppEApplicationConnectionPoint=comtypes.client._events._AdviseConnection(self._ppApplication,EApplication,sink)
 		return m
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
-		if obj.windowClassName=="paneClassDC" and isinstance(obj,IAccessible) and not isinstance(obj,PpObject) and obj.event_objectID==winUser.OBJID_CLIENT and controlTypes.STATE_FOCUSED in obj.states:
-			m=self.fetchPpObjectModel(obj.windowHandle)
-			if m:
-				try:
-					ppActivePaneViewType=m.activePane.viewType
-				except comtypes.COMError:
-					ppActivePaneViewType=None
-				if ppActivePaneViewType is None:
-					try:
-						m=m.presentation.slideShowWindow
-					except (AttributeError,COMError):
-						pass
-					if not m: return
-					clsList.insert(0,SlideShowWindow)
-				else:
-					if ppActivePaneViewType==ppViewOutline:
-						clsList.insert(0,OutlinePane)
-					else:
-						clsList.insert(0,DocumentWindow)
-					obj.ppActivePaneViewType=ppActivePaneViewType
+		if obj.windowClassName in objectModelWindowClasses and isinstance(obj,IAccessible) and not isinstance(obj,PpObject) and obj.event_objectID==winUser.OBJID_CLIENT and controlTypes.STATE_FOCUSED in obj.states:
+			m=self.fetchPpObjectModel(windowHandle=obj.windowHandle)
+			if not m:
+				log.debugWarning("no object model")
+				return
+			try:
+				ppActivePaneViewType=m.activePane.viewType
+			except comtypes.COMError:
+				ppActivePaneViewType=None
+			if ppActivePaneViewType is None:
+				clsList.insert(0,SlideShowWindow)
+			elif ppActivePaneViewType==ppViewOutline:
+				clsList.insert(0,OutlinePane)
 			else:
-				clsList.insert(0,PaneClassDC)
+				clsList.insert(0,DocumentWindow)
+			obj.ppActivePaneViewType=ppActivePaneViewType
 			obj.ppObjectModel=m

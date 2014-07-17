@@ -24,13 +24,22 @@ class MshtmlVBufStorage_controlFieldNode_t : public VBufStorage_controlFieldNode
 
 	public:
 	MshtmlVBufBackend_t* backend;
-	IHTMLElement2* pHTMLElement2;
+	IHTMLDOMNode* pHTMLDOMNode;
 	IDispatch* propChangeSink;
 	IDispatch* loadSink;
 	IMarkupContainer2* pMarkupContainer2;
 	IHTMLChangeSink* pHTMLChangeSink;
 	DWORD HTMLChangeSinkCookey;
 	std::wstring language;
+	VBufStorage_controlFieldNode_t*  ariaLiveNode;
+	bool ariaLiveIsTextRelevant;
+	bool ariaLiveIsAdditionsRelevant;
+	bool ariaLiveIsBusy;
+	VBufStorage_controlFieldNode_t*  ariaLiveAtomicNode;
+	void reportLiveText(std::wstring& text);
+	void reportLiveAddition();
+	void preProcessLiveRegion(const MshtmlVBufStorage_controlFieldNode_t* parent, const std::map<std::wstring,std::wstring>& attribsMap);
+	void postProcessLiveRegion(VBufStorage_controlFieldNode_t* oldNode, std::set<VBufStorage_controlFieldNode_t*>& atomicNodes);
 	MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, IHTMLDOMNode* pHTMLDOMNode, const std::wstring& lang);
 	~MshtmlVBufStorage_controlFieldNode_t();
 

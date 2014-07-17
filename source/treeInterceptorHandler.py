@@ -7,6 +7,7 @@
 from logHandler import log
 import baseObject
 import api
+import review
 import config
 import braille
 
@@ -24,6 +25,8 @@ def update(obj):
 	#If this object already has a treeInterceptor, just return that and don't bother trying to create one
 	ti=obj.treeInterceptor
 	if not ti:
+		if not obj.shouldCreateTreeInterceptor:
+			return None
 		try:
 			newClass=obj.treeInterceptorClass
 		except NotImplementedError:
@@ -107,12 +110,17 @@ class TreeInterceptor(baseObject.ScriptableObject):
 			if config.conf['reviewCursor']['followFocus']:
 				focusObj=api.getFocusObject()
 				if self is focusObj.treeInterceptor:
+					if review.getCurrentMode()=='document':
+						# if focus is in this treeInterceptor and review mode is document, turning on passThrough should force object review
+						review.setCurrentMode('object')
 					api.setNavigatorObject(focusObj)
 			braille.handler.handleGainFocus(api.getFocusObject())
 		else:
 			obj=api.getNavigatorObject()
 			if config.conf['reviewCursor']['followCaret'] and self is obj.treeInterceptor: 
-				api.setNavigatorObject(self.rootNVDAObject)
+				if review.getCurrentMode()=='object':
+					# if navigator object is in this treeInterceptor and the review mode is object, then turning off passThrough should force document review 
+					review.setCurrentMode('document',True)
 			braille.handler.handleGainFocus(self)
 
 	_cache_shouldPrepare=True
