@@ -146,13 +146,14 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		try:
 			inputCore.manager.executeGesture(gesture)
 			trappedKeys.add(keyCode)
-			if canModifiersPerformAction(gesture.generalizedModifiers):
+			mods=gesture.generalizedModifiers
+			if canModifiersPerformAction(mods):
 				# #3472: These modifiers can perform an action if pressed alone
 				# and we've just consumed the main key.
 				# Send special reserved vkcode (0xff) to at least notify the app's key state that something happendd.
 				# This allows alt and windows to be bound to scripts and
 				# stops control+shift from switching keyboard layouts in cursorManager selection scripts.
-				KeyboardInputGesture((),0xff,0,False).send()
+				KeyboardInputGesture(mods,0xff,0,False).send()
 			return False
 		except inputCore.NoInputGestureAction:
 			if gesture.isNVDAModifierKey:
