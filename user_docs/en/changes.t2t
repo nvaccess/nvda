@@ -15,7 +15,7 @@
  - Smart filtering of the date so as to only announce the date if the new selected time or appointment is on a different day to the last.
 - Enhanced support for the Inbox and other message lists in Outlook 2010 and above (#3834) including:
  - The ability to silence column headers (from, subject etc) by turning off the Report Table row and column headers option in Document formatting settings,
- - The ability to use table navigation commands (control + arrows) to move along the individual columns. 
+ - The ability to use table navigation commands (control + alt + arrows) to move along the individual columns. 
 - Microsoft word: If an inline image has no alternative text set, NVDA will instead report the title of the image if the author has provided one. (#4193)
 - Microsoft Word: Report paragraph indenting with  the report formatting command (NVDA+f) and automatically when the new Report Paragraph indenting Document formatting setting is enabled. (#4165).
 - Report automatically inserted text such as a new bullet, number or tab indent when pressing enter in editable documents and text fields. (#4185)
@@ -74,10 +74,12 @@
 - In Google Chrome, the title of the document is again reported when switching tabs. In NVDA 2014.2, this did not occur in some cases. (#4222)
 - In Google Chrome and Chrome-based browsers, the URL of the document is no longer reported when reporting the document. (#4223)
 - When running say all with the No speech synthesizer selected (useful for automated testing), say all will now complete instead of stopping after the first few lines. (#4225)
+- Microsoft Outlook's Signature dialog: the Signature editing field is now accessible, allowing for full cursor tracking and format detection. (#3833) 
 
 
 == Changes for Developers ==
 - NVDA now has unified support for add-on documentation. See the Add-on Documentation section of the Developer Guide for details. (#2694)
+- When providing gesture bindings on a ScritableObject via __gestures, it is now possible to provide the None keyword as the script. This unbinds the gesture in any base classes. (#4240)
 
 
 = 2014.2 =
