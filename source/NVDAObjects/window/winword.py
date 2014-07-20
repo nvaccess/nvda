@@ -964,12 +964,16 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		self._moveInTable(row=False,forward=False)
 
 	def script_nextParagraph(self,gesture):
-		self.WinwordSelectionObject.move(wdParagraph,1)
+		info=self.makeTextInfo(textInfos.POSITION_CARET)
+		info.move(textInfos.UNIT_PARAGRAPH,1)
+		info.updateCaret()
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
 	script_nextParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
 	def script_previousParagraph(self,gesture):
-		self.WinwordSelectionObject.move(wdParagraph,-1)
+		info=self.makeTextInfo(textInfos.POSITION_CARET)
+		info.move(textInfos.UNIT_PARAGRAPH,-1)
+		info.updateCaret()
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
 	script_previousParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
