@@ -729,7 +729,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			try:
 				pDispatch=oleacc.AccessibleObjectFromWindow(self.documentWindowHandle,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch)
 			except (COMError, WindowsError):
-				log.debugWarning("Could not get MS Word object model",exc_info=True)
+				log.debugWarning("Could not get MS Word object model from window %s with class %s"%(self.documentWindowHandle,winUser.getClassName(self.documentWindowHandle)),exc_info=True)
 				return None
 			self._WinwordWindowObject=comtypes.client.dynamic.Dispatch(pDispatch)
 		return self._WinwordWindowObject
@@ -1016,10 +1016,15 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 class WordDocument_WwN(WordDocument):
 
 	def _get_documentWindowHandle(self):
-		return NVDAHelper.localLib.findWindowWithClassInThread(self.windowThreadID,u"_WwG",True)
+		w=NVDAHelper.localLib.findWindowWithClassInThread(self.windowThreadID,u"_WwG",True)
+		if not w:
+			log.debugWarning("Could not find window for class _WwG in thread.")
+			w=super(WordDocument_WwN,self).documentWindowHandle
+		return w
 
 	def _get_WinwordWindowObject(self):
 		window=super(WordDocument_WwN,self).WinwordWindowObject
+		if not window: return None
 		try:
 			return window.application.activeWindow.activePane
 		except COMError:

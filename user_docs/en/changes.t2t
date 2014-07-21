@@ -75,11 +75,13 @@
 - In Google Chrome and Chrome-based browsers, the URL of the document is no longer reported when reporting the document. (#4223)
 - When running say all with the No speech synthesizer selected (useful for automated testing), say all will now complete instead of stopping after the first few lines. (#4225)
 - Microsoft Outlook's Signature dialog: the Signature editing field is now accessible, allowing for full cursor tracking and format detection. (#3833) 
+- Microsoft Word: When reading the last line of a table cell, the entire table cell is no longer read. (#3421)
+- Microsoft Word: When reading the first or last line of a table of contents, the entire table of contents is no longer read. (#3421)
 
 
 == Changes for Developers ==
 - NVDA now has unified support for add-on documentation. See the Add-on Documentation section of the Developer Guide for details. (#2694)
-- When providing gesture bindings on a ScritableObject via __gestures, it is now possible to provide the None keyword as the script. This unbinds the gesture in any base classes. (#4240)
+- When providing gesture bindings on a ScriptableObject via __gestures, it is now possible to provide the None keyword as the script. This unbinds the gesture in any base classes. (#4240)
 
 
 = 2014.2 =
