@@ -75,6 +75,8 @@
 - In Google Chrome and Chrome-based browsers, the URL of the document is no longer reported when reporting the document. (#4223)
 - When running say all with the No speech synthesizer selected (useful for automated testing), say all will now complete instead of stopping after the first few lines. (#4225)
 - Microsoft Outlook's Signature dialog: the Signature editing field is now accessible, allowing for full cursor tracking and format detection. (#3833) 
+- Microsoft Word: When reading the last line of a table cell, the entire table cell is no longer read. (#3421)
+- Microsoft Word: When reading the first or last line of a table of contents, the entire table of contents is no longer read. (#3421)
 
 
 == Changes for Developers ==
