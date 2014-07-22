@@ -536,12 +536,12 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 				# Required endpoint(s) have been found, so stop walking.
 				break
 
-			# Either start or end hasn't yet been found,
+			# start and/or end hasn't yet been found,
 			# so it must be higher in the hierarchy.
 			embedTi = obj.embeddingTextInfo
 			if not embedTi:
 				# There is no embedding object.
-				# The unit starts or ends at the start or end of this last object.
+				# The unit starts and/or ends at the start and/or end of this last object.
 				if findStart and not start:
 					start = expandTi
 					startObj = start.obj
@@ -551,7 +551,7 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 						# The unit expands beyond the base point,
 						# so only include the nearest descendant unit.
 						startDescPos = textInfos.POSITION_LAST
-				elif findEnd and not end:
+				if findEnd and not end:
 					end = expandTi
 					endObj = end.obj
 					if baseTi.compareEndPoints(expandTi, "endToEnd") == 0:
