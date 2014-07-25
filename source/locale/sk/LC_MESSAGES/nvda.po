@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-22 19:10+1000\n"
-"PO-Revision-Date: 2014-05-12 17:22+0100\n"
+"POT-Creation-Date: 2014-07-02 19:14+1000\n"
+"PO-Revision-Date: 2014-07-23 10:17+0100\n"
 "Last-Translator: Ondrej Rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -1259,11 +1259,13 @@ msgstr "farba pozadia"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "horný index"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "dolný index"
 
@@ -3045,6 +3047,7 @@ msgstr "Nepodčiarknuté"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "Bez indexov"
 
@@ -3068,6 +3071,51 @@ msgstr "Zarovnané do bloku"
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "Predvolené zarovnanie"
+
+#. Translators: the label for paragraph format left indent
+#, fuzzy
+msgid "left indent"
+msgstr "ľavé odsadenie"
+
+#. Translators: the message when there is no paragraph format left indent
+#, fuzzy
+msgid "no left indent"
+msgstr "bez ľavého odsadenia"
+
+#. Translators: the label for paragraph format right indent
+#, fuzzy
+msgid "right indent"
+msgstr "pravý okraj"
+
+#. Translators: the message when there is no paragraph format right indent
+#, fuzzy
+msgid "no right indent"
+msgstr "bez pravého odsadenia"
+
+#. Translators: the label for paragraph format hanging indent
+#, fuzzy
+msgid "hanging indent"
+msgstr "vysunuté"
+
+#. Translators: the message when there is no paragraph format hanging indent
+#, fuzzy
+msgid "no hanging indent"
+msgstr "Bez vysunutia"
+
+#. Translators: the label for paragraph format first line indent
+#, fuzzy
+msgid "first line indent"
+msgstr "odsadenie prvého riadka"
+
+#. Translators: the message when there is no paragraph format first line indent
+#, fuzzy
+msgid "no first line indent"
+msgstr "bez odsadeného prvého riadka"
+
+#. Translators: Reported when text no longer contains a comment.
+#, fuzzy
+msgid "out of comment"
+msgstr "Koniec komentára"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -3430,6 +3478,7 @@ msgid "Displays one of the recent messages"
 msgstr "Prečíta jednu z naposledy prijatých správ"
 
 #. Translators: This Outlook Express message has an attachment
+#. Translators: when an email has attachments
 msgid "has attachment"
 msgstr "má prílohu"
 
@@ -3490,8 +3539,19 @@ msgid "BCC:"
 msgstr "Skrytá kópia:"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
+#. Translators: when an email is unread
 msgid "unread"
 msgstr "Neprečítané"
+
+#. Translators: for a high importance email
+#, fuzzy
+msgid "high importance"
+msgstr "veľmi dôležitá"
+
+#. Translators: For a low importance email
+#, fuzzy
+msgid "low importance"
+msgstr "málo dôležitá"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3511,6 +3571,16 @@ msgstr "Príloha"
 #, python-format
 msgid "sent: %s"
 msgstr "Odoslané: %s"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+#, fuzzy
+msgid "Waiting for Outlook..."
+msgstr "Čaká sa na spustenie programu outlook..."
+
+#. Translators: the email is a meeting request
+#, fuzzy
+msgid "meeting request"
+msgstr "žiadosť o stretnutie"
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -4176,6 +4246,11 @@ msgstr "Autor"
 msgid "&About add-on..."
 msgstr "O &doplnku..."
 
+#. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
+#, fuzzy
+msgid "Add-on &help"
+msgstr "&Návod"
+
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
 msgstr "Na&inštalovať"
@@ -4699,6 +4774,11 @@ msgstr "&Uložiť nastavenia pri ukončení"
 msgid "&Warn before exiting NVDA"
 msgstr "&Potvrdzovať ukončenie NVDA"
 
+#. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
+#, fuzzy
+msgid "&Play sounds when starting or exiting NVDA"
+msgstr "&Prehrať zvuk pri spustení a ukončení NVDA"
+
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "Úr&oveň záznamu:"
@@ -5195,6 +5275,12 @@ msgstr "Oznamovať čísla ria&dkov"
 msgid "Report l&ine indentation"
 msgstr "&Oznamovať odsadenie"
 
+#. Translators: This message is presented in the document formatting settings dialogue
+#. If this option is selected, NVDA will report paragraph indentation if available.
+#, fuzzy
+msgid "Report &paragraph indentation"
+msgstr "Oznamovať odsadenie od&sekov"
+
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &tables"
@@ -5274,6 +5360,7 @@ msgid "&Dictionary entries"
 msgstr "Položky slovníka"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
+#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr "Komentár"
 
@@ -5542,6 +5629,7 @@ msgstr "Zobrazí zoznam odkazov, nadpisov alebo oblastí stránky"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
 msgstr "nie v bunke tabuľky"
 
@@ -6020,8 +6108,10 @@ msgstr "Predvolená farba"
 msgid "{start} through {end}"
 msgstr "{start} do {end}"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
@@ -6029,35 +6119,80 @@ msgstr ""
 "Nie je možné nastaviť hlavičky. Začiarknite oznamovanie hlavičiek stĺpcov/"
 "riadkov tabuľky v nastaveniach čítania textu."
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Set column header row"
-msgstr "Nastaviť hlavičku stĺpca"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#, fuzzy
+msgid "Set {address} as start of column headers"
+msgstr "{address} nastavené ako začiatok hlavičky pre stĺpce"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Cleared column header row"
-msgstr "hlavička stĺpca vymazaná"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#, fuzzy
+msgid "Already set {address} as start of column headers"
+msgstr "{address} je už nastavené ako začiatok hlavičky pre stĺpce"
 
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#, fuzzy
+msgid "removed {address}    from column headers"
+msgstr "{address}    odstránené ako hlavička pre stĺpce"
+
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#, fuzzy
+msgid "Cannot find {address}    in column headers"
+msgstr "Nie je možné nájsť {address}    v hlavičkách pre stĺpce"
+
+#, fuzzy
 msgid ""
-"Pressing once will set the current row as the row where column headers "
-"should be found. Pressing twice clears the setting."
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this region. Pressing twice will forget "
+"the current column header for this cell."
 msgstr ""
-"Nastaví aktuálny riadok ako hlavičku. Stlačené rýchlo dvakrát vymaže "
-"nastavenie."
+"Stlačené raz nastaví túto bunku ako prvý stĺpec hlavičky pre ostatné bunky, "
+"ktoré sú napravo a nižšie v tejto oblasti. Stlačené dvakrát odstráni "
+"informáciu o hlavičkách pre stĺpce."
 
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Set row header column"
-msgstr "Nastaviť hlavičku riadku"
+#. Translators: a message reported in the SetRowHeader script for Excel.
+#, fuzzy
+msgid "Set {address} as start of row headers"
+msgstr "{address} nastavené ako začiatok hlavičiek pre riadky"
 
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Cleared row header column"
-msgstr "Hlavička riadku vymazaná"
+#. Translators: a message reported in the SetRowHeader script for Excel.
+#, fuzzy
+msgid "Already set {address} as start of row headers"
+msgstr "{address} je už nastavené ako začiatok hlavičky pre riadky"
 
+#. Translators: a message reported in the SetRowHeader script for Excel.
+#, fuzzy
+msgid "removed {address}    from row headers"
+msgstr "{address}    odstranené ako hlavička pre riadky"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+#, fuzzy
+msgid "Cannot find {address}    in row headers"
+msgstr "Nie je možné nájsť {address}    v hlavičkách pre riadky"
+
+#, fuzzy
 msgid ""
-"Pressing once will set the current column as the column where row headers "
-"should be found. Pressing twice clears the setting."
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this region. Pressing twice will forget the "
+"current row header for this cell."
 msgstr ""
-"Nastaví aktuálny riadok ako hlavičku. Stlačené rýchlo dvakrát vymaže "
-"nastavenie."
+"Stlačené raz nastaví túto bunku ako prvý riadok hlavičky pre ostatné bunky, "
+"ktoré sú napravo a nižšie v tejto oblasti. Stlačené dvakrát odstráni "
+"informáciu o hlavičkách pre riadky."
+
+#. Translators: A message in Excel when there is no comment
+#, fuzzy
+msgid "Not on a comment"
+msgstr "Žiadny komentár"
+
+#. Translators: the description  for a script for Excel
+#, fuzzy
+msgid "Reports the comment on the current cell"
+msgstr "Prečíta komentár pre aktuálnu bunku."
+
+#. Translators: Dialog text for
+#, fuzzy
+msgid "Editing comment for cell {address}"
+msgstr "Úprava komentára pre bunku {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
@@ -6170,6 +6305,190 @@ msgstr "neznámy dátum"
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "{revisionType} od {revisionAuthor} dňa {revisionDate}"
 
+#, fuzzy, python-format
+msgid "%g characters"
+msgstr "%g znakov"
+
+#. Translators: the value in points for a paragraph indenting
+#, fuzzy, python-format
+msgid "%g pt"
+msgstr "%g bodov"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, fuzzy
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"riadok {rowNumber} stĺpec {columnNumber} nastavený ako začiatok pre hlavičky "
+"stĺpcov"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, fuzzy
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"riadok {rowNumber} stĺpec {columnNumber} je už nastavený ako začiatok "
+"hlavičky pre stĺpce"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, fuzzy
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr ""
+"Riadok {rowNumber} stĺpec {columnNumber}  odstránený z hlavičiek pre stĺpce"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#, fuzzy
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+"Nie je možné nájsť riadok {rowNumber} stĺpec {columnNumber}  v hlavičkách "
+"pre stĺpce"
+
+#, fuzzy
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"Stlačené raz nastaví túto bunku ako prvý stĺpec hlavičky pre ostatné bunky, "
+"ktoré sú napravo a nižšie v tabuľke. Stlačené dvakrát odstráni informáciu o "
+"hlavičkách pre stĺpce."
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, fuzzy
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Riadok {rowNumber} stĺpec {columnNumber} nastavený ako hlavička pre riadky"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, fuzzy
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Riadok {rowNumber} stĺpec {columnNumber} už nastavený ako začiatok hlavičky "
+"pre riadky"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, fuzzy
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr ""
+"riadok {rowNumber} stĺpec {columnNumber}  odstránený z hlavičky pre riadky"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, fuzzy
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+"Nie je možné nájsť riadok {rowNumber} stĺpec {columnNumber}  v hlavičke pre "
+"riadky"
+
+#, fuzzy
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Stlačené raz nastaví túto bunku ako prvý riadok hlavičky pre ostatné bunky, "
+"ktoré sú napravo a nižšie v tabuľke. Stlačené dvakrát odstráni informáciu o "
+"hlavičkách pre riadky."
+
+#. Translators: a message when toggling formatting in Microsoft word
+#, fuzzy
+msgid "Bold on"
+msgstr "Tučné aktívne"
+
+#. Translators: a message when toggling formatting in Microsoft word
+#, fuzzy
+msgid "Bold off"
+msgstr "Tučné neaktívne"
+
+#. Translators: a message when toggling formatting in Microsoft word
+#, fuzzy
+msgid "Italic on"
+msgstr "kurzíva aktívna"
+
+#. Translators: a message when toggling formatting in Microsoft word
+#, fuzzy
+msgid "Italic off"
+msgstr "kurzíva neaktívna"
+
+#. Translators: a message when toggling formatting in Microsoft word
+#, fuzzy
+msgid "Underline on"
+msgstr "podčiarknutie aktívne"
+
+#. Translators: a message when toggling formatting in Microsoft word
+#, fuzzy
+msgid "Underline off"
+msgstr "podčiarknutie neaktívne"
+
+#. Translators: a an alignment in Microsoft Word
+#, fuzzy
+msgid "Left aligned"
+msgstr "Zarovnané vľavo"
+
+#. Translators: a an alignment in Microsoft Word
+#, fuzzy
+msgid "centered"
+msgstr "zarovnané na stred"
+
+#. Translators: a an alignment in Microsoft Word
+#, fuzzy
+msgid "Right aligned"
+msgstr "Zarovnané vpravo"
+
+#. Translators: a an alignment in Microsoft Word
+#, fuzzy
+msgid "Justified"
+msgstr "Zarovnané  do bloku"
+
+#. Translators: the message when the outline level / style is changed in Microsoft word
+#, fuzzy
+msgid "{styleName} style, outline level {outlineLevel}"
+msgstr "Štýl {styleName}, úroveň {outlineLevel}"
+
+#. Translators: a message when increasing or decreasing font size in Microsoft Word
+#, fuzzy
+msgid "{size:g} point font"
+msgstr "{size:g} bodov písma"
+
+#. Translators: a measurement in Microsoft Word
+#, fuzzy
+msgid "{offset:.3g} characters"
+msgstr "{offset:.3g} znakov"
+
+#. Translators: a measurement in Microsoft Word
+#, fuzzy
+msgid "{offset:.3g} inches"
+msgstr "{offset:.3g} palcov"
+
+#. Translators: a measurement in Microsoft Word
+#, fuzzy
+msgid "{offset:.3g} centimeters"
+msgstr "{offset:.3g} centimetrov"
+
+#. Translators: a measurement in Microsoft Word
+#, fuzzy
+msgid "{offset:.3g} millimeters"
+msgstr "{offset:.3g} milimetrov"
+
+#. Translators: a measurement in Microsoft Word
+#, fuzzy
+msgid "{offset:.3g} points"
+msgstr "{offset:.3g} bodov"
+
+#. Translators: a measurement in Microsoft Word
+#, fuzzy
+msgid "{offset:.3g} picas"
+msgstr "{offset:.3g} picas"
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+#, fuzzy
+msgid "no comments"
+msgstr "Žiadne komentáre"
+
+#. Translators: a description for a script
+#, fuzzy
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "prečíta text komentára pod systémovým kurzorom."
+
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 msgid "Not in table"
@@ -6185,6 +6504,32 @@ msgstr "HIMS Braille Sense/Séria Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Set column header row"
+#~ msgstr "Nastaviť hlavičku stĺpca"
+
+#~ msgid "Cleared column header row"
+#~ msgstr "hlavička stĺpca vymazaná"
+
+#~ msgid ""
+#~ "Pressing once will set the current row as the row where column headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "Nastaví aktuálny riadok ako hlavičku. Stlačené rýchlo dvakrát vymaže "
+#~ "nastavenie."
+
+#~ msgid "Set row header column"
+#~ msgstr "Nastaviť hlavičku riadku"
+
+#~ msgid "Cleared row header column"
+#~ msgstr "Hlavička riadku vymazaná"
+
+#~ msgid ""
+#~ "Pressing once will set the current column as the column where row headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "Nastaví aktuálny riadok ako hlavičku. Stlačené rýchlo dvakrát vymaže "
+#~ "nastavenie."
 
 #, fuzzy
 #~ msgid "%s through %s"
