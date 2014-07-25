@@ -233,20 +233,20 @@ Quan amaneixca o menú, puetz emplegar as teclas de cursor ta navegar por o men�
 %kc:beginInclude
 || Nombre | Tecla | Tactil | Descripción |
 | Aturar a voz | Control | toque con 2 didos | Atura a voz instantaniament |
-| Pausar a Voz | Shift | no | Pausa a voz instantaniament, pretando-la nuevament continará charrando an se detenió (si o pausau se suporta por o sintetizador actual) |
+| Pausar a Voz | Mayus | no | Pausa a voz instantaniament, pretando-la nuevament continará charrando an se detenió (si o pausau se suporta por o sintetizador actual) |
 | Menú NVDA | NVDA+n | dople toque con 2 didos | desplega o menú NVDA ta permitir-te accedir a preferencias, ferramientas y aduya etc. |
 | Commutar o Modo d'Aduya de dentrada | NVDA+1 | no | Pretando qualsiquier tecla  en iste modo s'anunciará a tecla, y a descripción de qualsiquier orden de NVDA asociada con ella | 
 | Commutar o Modo de Voz | NVDA+s | no | Commuta o modo de voz entre charrar, chuflius y desactivau. |
 | Salir de NVDA | NVDA+q | no | Sale de NVDA |
 | Deixar pasar a siguient tecla | NVDA+f2 | no | Diz a NVDA que deixe pasar a siguient tecla pretada dreitament a l'aplicación activa, si ye normalment tractada como una tecla d'ordens de NVDA |
-| activar y desactivar o modo d'aplicación silencioso | NVDA+shift+s | no ! o modo silencioso desactiva todas as ordens de NVDA y a salida de voz/braille ta l'aplicación actual. Isto ye mas util en aplicacions que proporcionan a suya propia voz u caracteristicas de lectura de pantalla. Preta ista orden nuevament ta desactivar o modo silencioso. |
+| activar y desactivar o modo d'aplicación silencioso | NVDA+mayus+s | no ! o modo silencioso desactiva todas as ordens de NVDA y a salida de voz/braille ta l'aplicación actual. Isto ye mas util en aplicacions que proporcionan a suya propia voz u caracteristicas de lectura de pantalla. Preta ista orden nuevament ta desactivar o modo silencioso. |
 %kc:endInclude
 
 ++ Anunciando Información d'o Sistema ++
 %kc:beginInclude
 || Nombre | tecla | Descripción |
 | Anunciar a calendata/hora | NVDA+f12 | Pretando-la una vegada anuncia a hora actual, pretando-la dos vegadas anuncia a calendata. |
-| Anunciar l'estau d'a batería | NVDA+shift+b | Anuncia o estau d'a batería, ye decir si a electricidat ye emplegando-se u o porcentaje actual d'a carga. |
+| Anunciar l'estau d'a batería | NVDA+mayus+b | Anuncia o estau d'a batería, ye decir si a electricidat ye emplegando-se u o porcentaje actual d'a carga. |
 | Anunciar o texto en o portafuellas | NVDA+c | Anuncia o Texto en o portafuellas si bi ha belún. |
 %kc:endInclude
 
@@ -261,7 +261,7 @@ Un obchecto ye un simple elemento tal como un trozo de texto, botón, caixeta de
 O foco d'o sistema, tamién conoixiu simplament como o foco, ye o [obchecto #Objects] que recibe teclas escritas en o teclau.
 Por eixemplo, si yes escribindo en un campo de texto editable, o campo de texto editable tien o foco.
 
-O modo mas común de navegar por Windows con NVDA, ye solament mover-se con as ordens de teclau normals, tals como tab. Y shift tab. Ta mover-se abance y dezaga entre controls, pretando Alt. Ta desplegar a barra de menú y dimpués emplegando as teclas de cursor ta navegar por os menús, emplegando Alt-tab. Ta mover-se entre aplicacions en execución. 
+O modo mas común de navegar por Windows con NVDA, ye solament mover-se con as ordens de teclau normals, tals como tab. Y mayus tab. Ta mover-se abance y dezaga entre controls, pretando Alt. Ta desplegar a barra de menú y dimpués emplegando as teclas de cursor ta navegar por os menús, emplegando Alt-tab. Ta mover-se entre aplicacions en execución. 
 Quan faigas isto, NVDA anunciará información sobre o que tien o foco, tal como o suyo nombre, tipo, valor, estau, descripción, alcorce de teclau y información posicional.
 
 Bi ha qualques ordens de teclau utils quan nos movamos con o foco:
@@ -285,7 +285,7 @@ NVDA proporciona as siguients teclas d'ordens en relación a o cursor d'o sistem
 || Nombre | Tecla | Descripción |
 | Leyer tot | NVDA+Flecha Abaixo | Prencipia a lectura dende a posición actual d'o cursor d'o sistema, movendo-lo seguntes se desplaza |
 | Leyer a linia actual | NVDA+Flecha Alto | Leye a linia an siga situau actualment o cursor d'o sistema. Pretando dos vegadas letreya a linia. |
-| Leyer a selección de texto actual | NVDA+Shift+Flecha Alto | Leye qualsiquier texto seleccionau actualment |
+| Leyer a selección de texto actual | NVDA+Mayus+Flecha Alto | Leye qualsiquier texto seleccionau actualment |
 
 
 Quan sigas en una tabla, as siguients teclas d'ordens tamién son disponibles:
@@ -326,14 +326,14 @@ Ta navegar por obchectos, utiliza as siguients ordens:
 %kc:beginInclude
 || Nombre | Tecla Sobremesa | Tecla Portatil | Tactil | Descripción |
 | Anunciar obchecto actual | NVDA+5 Teclau numerico | NVDA+control+i | no | Anuncia o navegador d'obchectos actual. Pretando dos vegadas letreya a información y pretando 3 vegadas copia iste nombre y valor de l'obchecto a o portafuellas. |
-| Navegar a obchecto contenedor | NVDA+8 teclau numerico | NVDA+shift+i | eslizar alto (Modo obchecto) | Navega a o contenedor d'o navegador d'obchectos actual |
+| Navegar a obchecto contenedor | NVDA+8 teclau numerico | NVDA+mayus+i | eslizar alto (Modo obchecto) | Navega a o contenedor d'o navegador d'obchectos actual |
 | Navegar a l'obchecto anterior | NVDA+4 teclau numerico | NVDA+control+j | eslizar a la cucha (modo obchecto) | Navega a l'obchecto dreitament antis de l'actual navegador d'obchectos |
 | Navegar a o siguient obchecto | NVDA+6 teclau numerico | control+NVDA+l | eslizar a la dreita (modo obchecto) | Navega a l'obchecto dreitament dimpués de l'actual navegador d'obchectos |
-| Navegar a o primer obchecto conteniu | NVDA+2 teclau numerico | NVDA+shift+coma | eslizar abaixo (modo obchecto) | Navega a o primer obchecto conteniu por l'actual navegador d'obchectos |
-| Navegar a fin d'o foco | NVDA+Menos teclau numerico | NVDA+Retroceso | no | Navega a l'obchecto que tien actualment o foco d'o sistema, y tamién coloca o cursor de revisión en a posición d'o cursor d'o Sistema, si s'amuestra |
-| Activar actual navegador d'obchectos | NVDA+Intro teclau numerico | NVDA+Intro | dople toque | Activa l'actual navegador d'obchectos (semellant a fer clic con o churi u pretar espacio quan tien o foco d'o sistema) |
-| Mover foco d'o Sistema a actual navegador d'obchectos | NVDA+shift+Menos teclau numerico | NVDA+shift+retroceso | no | pretau una vegada Mueve o foco d'o Sistema a o navegador d'obchectos actual, pretau dos vegadas mueve o cursor d'o sistema a la posición d'o cursor de revisión |
-| Anunciar dimensions d'o navegador d'obchectos | NVDA+Suprimir teclau numerico | NVDA+suprimir | no | Anuncia as dimensions de l'actual navegador d'obchectos en a pantalla en porcentaches (incluindo distancia dende a cucha y alto d'a pantalla, y a suya amplaria y altura)  |
+| Navegar ta o primer obchecto conteniu | NVDA+2 teclau numerico | NVDA+mayus+coma | eslizar abaixo (modo obchecto) | Navega a o primer obchecto conteniu por l'actual navegador d'obchectos |
+| Navegar ta la fin d'o foco | NVDA+Menos teclau numerico | NVDA+Retroceso | no | Navega a l'obchecto que tien actualment o foco d'o sistema, y tamién coloca o cursor de revisión en a posición d'o cursor d'o Sistema, si s'amuestra |
+| Activar l'actual navegador d'obchectos | NVDA+Intro teclau numerico | NVDA+Intro | dople toque | Activa l'actual navegador d'obchectos (semellant a fer clic con o churi u pretar espacio quan tien o foco d'o sistema) |
+| Mover o foco d'o Sistema ta l'actual navegador d'obchectos | NVDA+mayus+Menos teclau numerico | NVDA+mayus+retroceso | no | pretau una vegada Mueve o foco d'o Sistema ta lo navegador d'obchectos actual, pretau dos vegadas mueve o cursor d'o sistema ta la posición d'o cursor de revisión |
+| Anunciar as dimensions d'o navegador d'obchectos | NVDA+Suprimir teclau numerico | NVDA+suprimir | no | Anuncia a ubicación d'o cursor de revisión siga en os termins amigables de l'aplicación como o porcentache  a traviés d'o documento u a distancia dende o canto d'a pachina u a lo menos en pixels de pantalla. En pretar-ne dos vegadas anunciará mas información. |
 %kc:endInclude
 
 nota: as teclas d'o teclau numerico requieren que a tecla BloqNum siga desactivada ta funcionar apropiadament.
@@ -353,20 +353,20 @@ Si en cuenta quiers siguir a lo navegador d'obchectos y a la revisión de texto,
 As siguients ordens son disponibles ta revisión de texto: 
 %kc:beginInclude
 || Nombre | Tecla Sobremesa | Tecla Portatil | Tactil | Descripción |
-| mover a la linia superior en revisión | shift+7 teclau numerico | NVDA+7 | no | Mueve o cursor de revisión a la linia superior d'o texto |
+| mover a la linia superior en revisión | mayus+7 teclau numerico | NVDA+7 | no | Mueve o cursor de revisión a la linia superior d'o texto |
 | Mover a la linia anterior en revisión | 7 teclau numerico | NVDA+u | eslizar alto (modo texto) | Mueve o cursor de revisión a la linia anterior de texto |
 | Anunciar a linia actual en revisión | 8 teclau numerico | NVDA+i | no | Anuncia a linia actual de texto an siga colocau o cursor de revisión. Pretando dos vegadas letreya a linia, Pretando tres vegadas letreya a linia emplegando descripcions de caracters. |
 | Mover a la linia siguient en revisión | 9 teclau numerico | NVDA+u | eslizar abaixo (modo texto) | Mueve o cursor de revisión a la linia siguient de texto |
-| Mover a la linia inferior en revisión | shift+9 teclau numerico | NVDA+9 | no | Mueve o cursor de revisión a la linia inferior de texto |
+| Mover a la linia inferior en revisión | mayus+9 teclau numerico | NVDA+9 | no | Mueve o cursor de revisión a la linia inferior de texto |
 | Mover a la parola anterior en revisión | 4 teclau numerico | NVDA+j | eslizar con 2 didos a la cucha (modo texto) | Mueve o cursor de revisión a la parola anterior en o texto |
 | Anunciar a parola actual en revisión | 5 teclau numerico | NVDA+k | no | Anuncia a parola actual en o texto an siga posicionau o cursor de revisión. Pretando dos vegadas letreya a parola, pretando tres vegadas letreya a parola emplegando descripcions de caracters. |
 | Mover a la siguient parola en revisión | 6 teclau numerico | NVDA+l | desplazar con 2 didos a la dreita (modo texto) | Mueve o cursor de revisión a la siguient parola en o texto |
-| mover a l'inicio d'a linia en revisión | shift+1 teclau numerico | NVDA+shift+u | no | Mueve o cursor de revisión a o comienzo d'a linia actual en o texto |
+| mover a l'inicio d'a linia en revisión | mayus+1 teclau numerico | NVDA+mayus+u | no | Mueve o cursor de revisión a o comienzo d'a linia actual en o texto |
 | Mover a lo caracter anterior en revisión | 1 teclau numerico | NVDA+m | eslizar a la cucha (modo texto) | Mueve o cursor de revisión a o caracter anterior en a linia actual en o texto |
 | Anunciar o caracter actual en revisión | 2 teclau numerico | NVDA+coma | no | Anuncia o caracter actual en a linia de texto an siga posicionau o cursor de revisión. Pretando dos vegadas anuncia una descripción u eixemplo d'ixe caracter. Pretando tres vegadas anuncia a valor numerica d'o caracter en decimal y hexadecimal. |
 | Mover a lo siguient caracter en revisión | 3 teclau numerico | NVDA+punto | eslizar a la dreita (modo texto) | Mueve o cursor de revisión a o siguient caracter en a linia actual de texto |
-| Mover a la fin d'a linia en revisión | shift+3 teclau numerico | NVDA+shift+u | no | Mueve o cursor de revisión a la fin d'a linia actual de texto |
-| Leyer-lo tot con revisión | Mas teclau numerico | NVDA+shift+Flecha abaixo | eslizar con 3 didos abaixo (modo texto) | Leye dende a posición actual d'o cursor de revisión, movendo-lo seguntes baixa |
+| Mover a la fin d'a linia en revisión | mayus+3 teclau numerico | NVDA+mayus+u | no | Mueve o cursor de revisión a la fin d'a linia actual de texto |
+| Leyer-lo tot con revisión | Mas teclau numerico | NVDA+mayus+Flecha abaixo | eslizar con 3 didos abaixo (modo texto) | Leye dende a posición actual d'o cursor de revisión, movendo-lo seguntes baixa |
 | copiar dende o cursor de revisión | NVDA+f9 | NVDA+f9 | no | Prencipia o copiau de texto dende a posición actual d'o cursor de revisión. La copia actual no se leva a cabo dica que digas a NVDA án copiar |
 | Copiar a lo cursor de revisión | NVDA+f10 | NVDA+f10 | no | Copia dende a posición d'o cursor de revisión actualment fixada con Copiar dende cursor de revisión, a l'actual posición d'o cursor de revisión.  Dimpués de pretar ista tecla, o texto se copiará a o portafuellas de Windows |
 | Anunciar o formato d'o texto | NVDA+f | NVDA+f | no | Informa d'o formato d'o texto an siga situau actualment o cursor de revisión |
@@ -432,11 +432,11 @@ Si bien un churi fisico u un trackpad se podrían emplegar ta navegar con o chur
 %kc:beginInclude
 || Nombre | Tecla Escritorio | Tecla Portatil | Descripción |
 | Clic botón cucho d'o churi | Dividir teclau numerico | NVDA+Flecha cucha | Fa clic en o botón cucho d'o churi una vegada. O común dople clic puet levar-se a cabo pretando ista tecla dos vegadas en rapida succesión |
-| Blocar botón cucho d'o churi | shift+Dividir teclau numerico | NVDA+shift+Flecha cucha | Mantiene pretau o botón cucho d'o churi. Preta-lo de nuevo ta liberar-lo. Ta arrocegar o churi,  preta ista tecla ta blocar o botón cucho y alavez mueve o churi fisicament u utiliza una d'as atras ordens d'enrutamiento d'o churi |
+| Blocar botón cucho d'o churi | mayus+Dividir teclau numerico | NVDA+mayus+Flecha cucha | Mantiene pretau o botón cucho d'o churi. Preta-lo de nuevo ta liberar-lo. Ta arrocegar o churi,  preta ista tecla ta blocar o botón cucho y alavez mueve o churi fisicament u utiliza una d'as atras ordens d'enrutamiento d'o churi |
 | Clic botón dreito d'o churi | Multiplicar teclau numerico | NVDA+flecha dreita | Fa Clic en o botón dreito d'o churi una vegada. |
-| Blocar botón dreito d'o churi | shift+Multiplicar teclau numerico | NVDA+shift+flecha dreita | Mantiene pretau o botón dreito d'o churi. Preta unatra vegada ta liberar-lo. Ta arrocegar o churi,  preta ista tecla  ta blocar o botón dreito y alavez mueve o churi fisicament u utiliza una d'as atras ordens d'enrutamiento d'o churi |
-| Mover churi a navegador d'obchectos actual | NVDA+Dividir teclau numerico | NVDA+shift+f9 | Mueve o churi a la posición d'o navegador d'obchectos actual y cursor de revisión |
-| navegar a l'obchecto baixo o churi | NVDA+Multiplicar teclau numerico | NVDA+shift+f10 | Mete o navegador d'obchectos en l'obchecto localizau en a posición d'o churi |
+| Blocar botón dreito d'o churi | mayus+Multiplicar teclau numerico | NVDA+mayus+flecha dreita | Mantiene pretau o botón dreito d'o churi. Preta unatra vegada ta liberar-lo. Ta arrocegar o churi,  preta ista tecla  ta blocar o botón dreito y alavez mueve o churi fisicament u utiliza una d'as atras ordens d'enrutamiento d'o churi |
+| Mover churi a navegador d'obchectos actual | NVDA+Dividir teclau numerico | NVDA+mayus+f9 | Mueve o churi a la posición d'o navegador d'obchectos actual y cursor de revisión |
+| navegar a l'obchecto baixo o churi | NVDA+Multiplicar teclau numerico | NVDA+mayus+f10 | Mete o navegador d'obchectos en l'obchecto localizau en a posición d'o churi |
 %kc:endInclude
 
 + Modo Navegación +
@@ -463,7 +463,7 @@ Amás, puetz forzar manualment o modo foco, dimpués remanirá efectivo dica que
 | Refrescar o documento en modo navegación | NVDA+f5 | Recarga o conteniu d'o documento actual (util si bells contenius pareixen estar desapareixius d'o documento) |
 | Mirar | NVDA+control+f | Desplega un dialogo en o qual puetz tecleyar bell texto a trobar en  o documento actual |
 | Mirar a siguient | NVDA+f3 | Troba a siguient  ocurrencia d'o texto en o documento que mirés anteriorment |
-| Mirar l'anterior | NVDA+shift+f3 | Troba a ocurrencia anterior d'o texto en o documento buscau anteriorment |
+| Mirar l'anterior | NVDA+mayus+f3 | Troba a ocurrencia anterior d'o texto en o documento buscau anteriorment |
 | ubrir a descripción larga | NVDA+d | Ubre una finestra nueva que contién una descripción larga ta l'elemento sobre o qual sigas si en tien una. | 
 %kc:endInclude
 
@@ -472,7 +472,7 @@ Amás, puetz forzar manualment o modo foco, dimpués remanirá efectivo dica que
 Mientres se siga en modo navegación, ta una navegación mas rapida NVDA tamién proporciona teclas d'un solament caracter ta blincar a bells campos en o documento.
 
 %kc:beginInclude
-As siguients teclas por ell mesmas blincan a o siguient campo, con a tecla shift blincan a l'anterior campo.
+As siguients teclas por ell mesmas blincan a o siguient campo, con a tecla mayus blincan a l'anterior campo.
 - h: Encabezau
 - l: lista
 - i: elemento de lista
@@ -497,7 +497,7 @@ As siguients teclas por ell mesmas blincan a o siguient campo, con a tecla shift
 -
 Ta mover-te a o comienzo u final d'elementos contenedors tals como listas y tablas:
 || Nombre | Tecla | Descripción |
-| Mover a o comienzo d'un contenedor | shift+coma | Se mueve a o comienzo d'o contenedor (lista, tabla etc.) an siga situau o cursor |
+| Mover a o comienzo d'un contenedor | mayus+coma | Se mueve a o comienzo d'o contenedor (lista, tabla etc.) an siga situau o cursor |
 | Mover a la fin d'o contenedor | minche | Se mueve a la fin d'o contenedor (lista, tabla etc.) an siga situau o cursor |
 %kc:endInclude
 
@@ -525,26 +525,35 @@ Se proporciona una orden de teclau ta tornar a la pachina orichinal que contién
 + Ordens de NVDA Especificas ta Aplicación +
 NVDA proporciona as suyas propias ordens extra ta qualques aplicacions ta fer mas facils bells quefers u ta proporcionar acceso a funcionalidat que d'unatro modo no ye accesible ta os usuarios de lector de pantalla.
 
+++ Microsoft Word ++
+%kc:beginInclude
+|| Nombre | Tecla | Descripción |
+| Anunciar o comentario actual | NVDA+Alt+c | Anuncia o texto d'o comentario en a posición d'o Cursor d'o Sistema. | 
+| Fixar o capitero de columnas | NVDA+mayus+c | Pretando isto una vegada diz a lo NVDA que ista ye a primera celda de capitero en a ringlera que contién capiters de columna, que habría d'estar anunciada automaticament en mover-te entre columnas baixo ista ringlera. Pretando dos vegadas sacará ista opción. | 
+| Fixar o capitero de ringleras | NVDA+mayus+r | Pretando isto una vegada diz a lo NVDA que ista ye a primera celda de capitero en a columna que contién capiters de ringlera, que habría d'estar anunciau automaticament quan te desplaces entre as ringleras dimpués d'ista columna. Pretando dos vegadas eliminará ista opción. | 
+%kc:endInclude
+
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| Configurar a ringlera de capiters de columna | NVDA+shift+c | Pretando isto una vegada diz a NVDA que ista ye a ringlera que contién capiters de columna, os quals habrían d'anunciar-se automaticament quan te muevas entre columnas por ista ringlera. Pretando dos vegadas limpiará a opción. | 
-| Configurar a columna de capiters de ringlera | NVDA+shift+r | Pretando isto una vegada  diz a NVDA que ista ye a columna que contién capiters de ringlera, os que s'habrían d'anunciar automaticament  quan te muevas entre ringleras dimpués d'ista columna. Pretando dos vegadas limpiará a opción. | 
+| Configurar a ringlera de capiters de columna | NVDA+mayus+c | Pretando isto una vegada diz a o NVDA que ista ye a ringlera que contién capiters de columna, os quals habrían d'anunciar-se automaticament quan te muevas entre columnas por ista ringlera. Pretando dos vegadas limpiará a opción. | 
+| Configurar a columna de capiters de ringlera | NVDA+mayus+r | Pretando isto una vegada  diz a o NVDA que ista ye a columna que contién capiters de ringlera, que s'habrían d'anunciar automaticament  quan te muevas entre ringleras dimpués d'ista columna. Pretando dos vegadas limpiará a opción. | 
+| Anunciar o comentario | NVDA+alt+c | Anuncia o comentario en a celda actual si bi'n ha belún. |%kc:endInclude
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| commutar a lectura de notas de l'orador | control+shift+s | Quan se ye en una presentación en execución, ista orden commutará entre las notas de l'orador ta la diapositiva y o conteniu d'a diapositiva. Isto solament afecta a o que leye NVDA, no a o que s'amuestra en a pantalla. | 
+| commutar a lectura de notas de l'orador | control+mayus+s | Quan se ye en una presentación en execución, ista orden commutará entre las notas de l'orador ta la diapositiva y o conteniu d'a diapositiva. Isto solament afecta a o que leye NVDA, no a o que s'amuestra en a pantalla. | 
 %kc:endInclude
 
 ++ foobar2000 ++
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| Anunciar tiempo restante | control+shift+r | Anuncia o tiempo restante d'a pista actualment en reproducción, si bi ha beluna. |
+| Anunciar tiempo restante | control+mayus+r | Anuncia o tiempo restante d'a pista actualment en reproducción, si bi ha beluna. |
 %kc:endInclude
 
-Nota: L'alcorce de teclau d'anunciau d'o tiempo restante solament funciona con a cadena de formato predeterminada ta la linia d'estau de foobar.
+Nota: L'alcorce de teclau d'anunciau d'o tiempo restante nomás funciona con a cadena de formato predeterminada ta la linia d'estau de foobar.
 
 ++ Miranda IM ++
 %kc:beginInclude
@@ -555,8 +564,8 @@ Nota: L'alcorce de teclau d'anunciau d'o tiempo restante solament funciona con a
 ++ Poedit ++
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| Anunciar a finestra de Comentarios | control+shift+c | Anuncia qualsiquier comentario en a finestra de comentarios.  |
-| Anunciar as notas ta os traductors | control+shift+a | Anuncia qualsiquier nota ta os traductors.  |
+| Anunciar a finestra de Comentarios | control+mayus+c | Anuncia qualsiquier comentario en a finestra de comentarios.  |
+| Anunciar as notas ta os traductors | control+mayus+a | Anuncia qualsiquier nota ta os traductors.  |
 %kc:endInclude
 
 + Configurando NVDA +
@@ -582,11 +591,14 @@ NVDA te preguntará si deseyas reiniciar si fas cambeos en a selección.
 Preta Acceptar y NVDA se reiniciará. 
 
 ==== Alzar a Configuración en Salir ====
-Ista opción ye una caixeta de verificación que, quan se marca, diz a NVDA que alce automaticament l'actual configuración quan salgas de NVDA. 
+Ista opción ye una caixeta de verificación que quan se marca diz a lo NVDA que alce automaticament l'actual configuración en que salgas d'o NVDA. 
 
-==== Alvertir antis de Salir de NVDA ====
-Ista opción ye una caixeta de verificación que te permite trigar si sí u si no amaneixe un dialogo quan salgas de NVDA que te pregunte si te fería goyo salir u no de NVDA. 
-Quan siga marcada, un dialogo amaneixerá quan intentes salir de NVDA preguntando-te si quiers u no salir.
+==== Alvertir antis de Salir d'o NVDA ====
+Ista opción ye una caixeta de verificación que te permite trigar si sí u si no pas amaneix un dialogo en que salgas d'o NVDA que te pregunte si te fería goyo salir u no pasw d'o NVDA. 
+Quan siga marcada, un dialogo amaneixerá en que intentes salir d'o NVDA preguntando-te si quiers u no pas salir.
+
+==== Reproducir sons en enchegar u desenchegar o NVDA ====
+Ista Opción ye una caixeta de verificación que quan ye marcada diz a lo NVDA que reproduzca sons quan s'enchegue u desenchegue.
 
 ==== Libel de mensaches alzaus en o rechistro ====
 Iste ye un quadro combinau que te permite trigar quánto NVDA meterá en o log seguntes s'executa. 
@@ -810,7 +822,7 @@ Si ye activada, ista opción causará que a voz s'ature cada vegada que se prete
 Si ye activada, bellas ordens de navegación (tals como a navegación rapida en modo navegación u lo movimiento por linias u por paragrafos) no aturan  o charrar-lo Tot, en cuenta charrar-lo Tot blinca  ta la nueva posición y i contina leyendo.
 
 ==== chuflar si se Tecleyan Letras Minusclas Quan o BloqMayus siga Activau ====
-Quan ye activada, s'escuitará un chufliu d'aviso si s'escribe una letra con a tecla shift entre que BloqMayus ye activada.
+Quan ye activada, s'escuitará un chufliu d'aviso si s'escribe una letra con a tecla mayus entre que BloqMayus ye activada.
 Cheneralment, escribir letras en mayusclas con BloqMayus ye desintencionau y normalment ye a causa de no revisar que o BloqMayus siga activau.
 Por tant, puet estar prou util estar alvertiu sobre isto.
 
@@ -1015,11 +1027,12 @@ Puetz configurar l'anunciau de:
 - Numeros de pachina
 - Numeros de linia
 - Sangría de linia
+- Sangría de paragrafo (por eixemplo: sangría francesa, sangría d'a primera linia)
 - Tablas
-- Encabezaus de ringlera/columna de tabla
+- Capiters de ringlera/columna de tabla
 - Coordenadas de celdas de tabla
 - Enlaces
-- Encabezaus
+- >>Capiters
 - Listas
 - Citas
 - Zonas
@@ -1046,7 +1059,7 @@ Totz os dialogos de diccionario contienen una lista de reglas que serán utiliza
 O dialogo tamién contién os botons Adhibir, Editar y Eliminar.
 
 Ta adhibir un nuevo regle a lo diccionario, preta o botón Adhibir, y replena os campos d'o quadro de dialogo que amaneix y allora preta Acceptar. 
-Allora berás o tuya nueva regle en a lista de regles. 
+Allora berás o tuyo nuevo regle en a lista de regles. 
 Asinasmesmo ta asegurar-te que a tuya regla ye actualment alzada, asegura-te de pretar Acceptar ta salir completament d'o dialogo de diccionario Una vegada haigas finalizau d'adhibir/editar reglas.
 
 As reglas ta os diccionarios de voz de NVDA te permiten cambiar una cadena de caracters por unatra. 
@@ -1211,10 +1224,11 @@ Istos paquetz son proporcionaus por a comunidat y contienen codigo personalizau 
 
 L'Administrador de Complementos contién una lista que amuestra totz os complementos instalaus actualment en a tuya configuración d'usuario de NVDA. 
 S'amuestra un nombre de paquet, versión y autor ta cada complemento, encara que se puet veyer mas información tal como una descripción y una URL seleccionando o complemento y pretando o botón Sobre o complemento.
+Si bi ha aduya disponible ta lo complemento seleccionau puetz acceder ta ella pretando o botón d'aduya d'o complemento.
 
 Ta examinar y descargar os complementos disponibles online, preta o botón Obtener Complementos.
 Iste botón ubre a [pachina de complementos de NVDA http://addons.nvda-project.org/].
-Si NVDA ye instalau en o tuyo sistema, puetz ubrir dreitament o complemento dende o examinador ta prencipiar o proceso d'instalación como se describe contino.
+Si o NVDA ye instalau en o tuyo sistema, puetz ubrir dreitament o complemento dende l'examinador ta prencipiar o proceso d'instalación como se describe contino.
 En caso contrario, alza o paquet de complemento y sigue as instruccions mas abaixo.
 
 Ta instalar un complemento que obteniés previament, preta o botón Instalar.
@@ -1337,7 +1351,7 @@ Por favor mira a documentación d'a linia ta descriptciones d'án pueden trobar-
 | Guiar ent'a celda braille | sensor |
 | tecla retroceso | punto7 |
 | tecla intro | punto8 |
-| tecla shift+tab | barra espaciadora braille+punto1+punto2 |
+| tecla mayus+tab | barra espaciadora braille+punto1+punto2 |
 | tecla tab | barra espaciadora braille+punto4+punto5 |
 | tecla flecha abaixo | barra espaciadora braille+punto1 |
 | tecla flecha alto | barra espaciadora braille+punto4 |
@@ -1386,7 +1400,7 @@ Por favor mira a documentación d'a linia ta descripcions d'án pueden trobar-se
 | Mover a linia braille a la linia siguient | t4 |
 | Desplazar linia braille enta debant | t5 |
 | Guiar a la celda braille | sensor |
-| tecla shift+tab | sp1 |
+| tecla mayus+tab | sp1 |
 | tecla alt | sp2 |
 | tecla escape | sp3 |
 | tecla tab | sp4 |
@@ -1416,7 +1430,7 @@ Por favor mira a documentación d'a linia ta descripcions d'án pueden trobar-se
 | Mover a linia braille a la linia anterior | b4 |
 | Mover a linia braille a la linia siguient | b5 |
 | Guiar a la celda braille | sensor |
-| tecla shift+tab | esc |
+| tecla mayus+tab | esc |
 | tecla alt | b2+b4+b5 |
 | tecla escape | b4+b6 |
 | tecla tab | enter |
@@ -1441,10 +1455,10 @@ Porfavor mira a documentación d'a linia ta descripcions d'án se pueden trobar 
 | Mover linia braille a linia anterior | UP |
 | Mover linia braille a linia siguient | DN |
 | Enrotar ent'a celda braille | route |
-| Tecla shift+tab | SLF |
+| Tecla mayus+tab | SLF |
 | Tecla tab | SRG |
 | Tecla alt+tab | SDN |
-| Tecla alt+shift+tab | SUP |
+| Tecla alt+mayus+tab | SUP |
 %kc:endInclude
 
 ++ Linias braille Baum/Humanware/APH ++
@@ -1531,7 +1545,7 @@ Por favor mira a documentación d'a linia ta descripcions d'án pueden trobar-se
 | tecla flecha cucha | espacio+punto3 |
 | tecla flecha dreita | espacio+punto6 |
 | Menú NVDA | c1+c3+c4+c5 (comando n) |
-| tecla shift+tab | espacio+punto1+punto3 |
+| tecla mayus+tab | espacio+punto1+punto3 |
 | tecla tab | espacio+punto4+punto6 |
 | tecla alt | espacio+punto1+punto3+punto4 (espacio+m) |
 | tecla escape | espacio+punto1+punto5 (espacio+y) |
@@ -1558,7 +1572,7 @@ Por favor mira a documentación d'as linias ta descripcions d'án pueden trobar-
 | Mover linia braille a la linia anterior | desplazador cucho alto |
 | Mover linia braille a la linia siguient | desplazador dreito alto|
 | Ir a la celda braille | sensores |
-| tecla shift+tab | punto1+punto2+Espacio |
+| tecla mayus+tab | punto1+punto2+Espacio |
 | tecla alt | punto1+punto3+punto4+Espacio |
 | tecla escape | punto1+punto5+Espacio |
 | tecla tab | punto4+punto5+Espacio |
@@ -1567,36 +1581,36 @@ Por favor mira a documentación d'as linias ta descripcions d'án pueden trobar-
 | tecla flecha alto | punto1+Espacio |
 | Tecla flecha abaixo | punto4+Espacio |
 | bloq mayusclas | punto1+punto3+punto6+Espacio |
-| tecla shift+alt+tab | abance2+abance3+abance1 |
+| tecla mayus+alt+tab | abance2+abance3+abance1 |
 | tecla alt+tab | abance2+abance3 |
 | tecla fin | punto4+punto6+Espacio |
 | tecla Control+fin | punto4+punto5+punto6+Espacio |
 | tecla encieto | punto1+punto3+Espacio |
 | tecla control+encieto | punto1+punto2+punto+Espacio |
 | tecla flecha cucha | punto3+Espacio |
-| tecla control+shift+flecha cucha | punto2+punto8+espacio+abance1 |
+| tecla control+mayus+flecha cucha | punto2+punto8+espacio+abance1 |
 | tecla control+flecha cucha | punto2+Espacio |
-| tecla shift+alt+flecha cucha | punto2+punto7+abance1 |
+| tecla mayus+alt+flecha cucha | punto2+punto7+abance1 |
 | tecla alt+flecha cucha | punto2+punto7 |
 | tecla flecha dreita | punto6+Espacio |
-| tecla control+shift+flecha dreita | punto5+punto+Espacio+abance1 |
+| tecla control+mayus+flecha dreita | punto5+punto+Espacio+abance1 |
 | tecla control+flecha dreita | punto5+espacio |
-| tecla shift+alt+flecha dreita | punto5+punto7+abance1 |
+| tecla mayus+alt+flecha dreita | punto5+punto7+abance1 |
 | tecla alt+flecha dreita | punto5+punto7 |
 | tecla RePág | punto1+punto2+punto6+espacio |
 | tecla control+rePág | punto1+punto2+punto6+punto8+espacio |
-| tecla control+shift+flecha alto | punto2+punto3+punto8+espacio+abance1 |
+| tecla control+mayus+flecha alto | punto2+punto3+punto8+espacio+abance1 |
 | tecla control+flecha alto | punto2+punto3+espacio |
-| tecla shift+alt+flecha alto | punto2+punto3+punto7+abance1 |
+| tecla mayus+alt+flecha alto | punto2+punto3+punto7+abance1 |
 | tecla alt+flecha alto | punto2+punto3+punto7 |
-| tecla shift+flecha alto | desplazador cucho abaixo + espacio |
+| tecla mayus+flecha alto | desplazador cucho abaixo + espacio |
 | tecla avPág | punto3+punto4+punto5+espacio |
 | tecla control+avPág | punto3+punto4+punto5+punto8+espacio |
-| tecla control+shift+flecha abaixo | punto5+punto6+punto8+espacio+abance1 |
+| tecla control+mayus+flecha abaixo | punto5+punto6+punto8+espacio+abance1 |
 | tecla control+flecha abaixo | punto5+punto6+espacio |
-| tecla shift+alt+flecha abaixo | punto5+punto6+punto7+abance1 |
+| tecla mayus+alt+flecha abaixo | punto5+punto6+punto7+abance1 |
 | tecla alt+flecha abaixo | punto5+punto6+punto7 |
-| tecla shift+flecha abaixo | desplazador dreito abaixo + espacio |
+| tecla mayus+flecha abaixo | desplazador dreito abaixo + espacio |
 | tecla suprimir | punto1+punto3+punto5+espacio |
 | tecla f1 | punto1+punto2+punto5+espacio |
 | tecla f3 | punto1+punto2+punto4+punto8 |
@@ -1634,7 +1648,7 @@ Por favor mira a documentación d'a linia ta descripcions d'án se troban istas 
 | Commutar seguimiento d'o braille  | b5 |
 | Leyer tot | b6 |
 | tab | b1 |
-| shift+tab | b2 |
+| mayus+tab | b2 |
 | alt+tab | b1+b2 |
 | Menú NVDA | cucha+dreita |
 | Ir a la celda braille | sensores |
@@ -1842,7 +1856,7 @@ Por favor mira a documentación d'o BrailleNote ta trobar do se localizan istas 
 | Tecla intro | espacio+punto8 |
 | Tecla Retroceso | espacio+punto7 |
 | Tecla Tab | espacio+punto2+punto3+punto4+punto5 (espacio+t) |
-| Teclas Shift+tab | espacio+punto1+punto2punto5+punto6 |
+| Teclas Mayus+tab | espacio+punto1+punto2punto5+punto6 |
 | Tecla Windows | espacio+punto2+punto4+punto5+punto6 (espacio+w) |
 | Tecla Alt | espacio+punto1+punto3+punto4 (espacio+m) |
 | Activar y desactivar l'aduya de dentrada | espacio+punto2+punto3+punto6 (espacio+h) |
