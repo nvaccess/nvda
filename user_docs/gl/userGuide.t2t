@@ -333,7 +333,7 @@ Para navegar por obxectos, utiliza as seguintes ordes:
 | Navegar ó obxecto do foco | NVDA+Menos teclado numérico | NVDA+Retroceso | non | Navega ó obxecto que ten actualmente o foco do sistema, e tamén coloca o cursor de revisión na posición do cursor do Sistema, se é amosado |
 | Activar actual navegador de obxectos | NVDA+Intro teclado numérico | NVDA+Intro | doble toque | Activa o actual navegador de obxectos (similar a facer clic co rato ou premer espazo cando ten o foco do sistema) |
 | Mover foco do Sistema a actual navegador de obxectos | NVDA+shift+Menos teclado numérico | NVDA+shift+retroceso | non | premedo unha vez Move o foco do Sistema ó navegador de obxectos actual, premedo dúas veces move o cursor do sistema á posición do cursor de revisión |
-| Anunciar dimensións do navegador de obxectos | NVDA+Suprimir teclado numérico | NVDA+suprimir | non | Anuncia as dimensións do actual navegador de obxectos na pantalla en porcentaxes (incluíndo distancia dende a esquerda e arriba da pantalla, e a súa anchura e altura)  |
+| Anunciar dimensións do navegador de obxectos | NVDA+Suprimir teclado numérico | NVDA+suprimir | non | Informa da ubicación do cursor de revisión, xa sexa en termos amigables de aplicación como en porcentaxe polo documento ou a distancia dende o borde da páxina, ou como mínimo en píxeles de pantalla. Ó premer dúas veces anunciará máis información. |
 %kc:endInclude
 
 nota: as teclas do teclado numérico requiren que a tecla BloqNum estea desactivada para funcionar apropriadamente.
@@ -525,11 +525,20 @@ Proporciónase unha orde de teclado para regresar á páxina.
 + Ordes de NVDA Específicas para Aplicación +
 NVDA proporciona as súas proprias ordes extra para algunhas aplicacións para facer máis sinxelas certas tarefas ou para proporcionar acceso a funcionalidade que de outra maneira non está accesible para os usuarios do lector de pantalla.
 
+++ Microsoft Word ++
+%kc:beginInclude
+|| Nome | Tecla | Descripción |
+| Anunciar comentario actual | NVDA+Alt+c | Anuncia o texto do comentario na posición do Cursor do Sistema. | 
+| Fixar cabeceira de columnas | NVDA+shift+c | Premendo esto unha vez di ó NVDA que esta é a primeira celda de cabeceira na fila que contén cabeceiras de columna, que debería ser anunciada automáticamente ó moverte entre columnas baixo esta fila. Premendo dúas veces quitará esta opción. | 
+| Fixar cabeceira de filas | NVDA+shift+r | Pulsando esto unha vez di ó NVDA que esta é a primeira celda de cabeceira na columna que contén cabeceiras de fila, que debería ser anunciado automáticamente cando se desplaza entre as filas despois desta columna. Premendo dúas veces eliminará esta opción. | 
+%kc:endInclude
+
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Nome | Tecla | Descripción |
-| Configurar fila de cabeceiras de columna | NVDA+shift+c | Premendo esto unha vez di ó NVDA que esta é a fila que contén cabeceiras de columna, os que deberían anunciarse automáticamente cando te movas entre columnas por esta fila. Premendo dúas veces limpará a opción. | 
-| Configurar columna de cabeceiras de fila | NVDA+shift+r | Premendo esto unha vez  di ó NVDA que esta é a columna que contén cabeceiras de fila, os que se deberían anunciar automáticamente  cando te movas entre filas despois de esta columna. Premendo dúas veces limpará a opción. | 
+| Fixar cabeceira de columnas | NVDA+shift+c | Ó premer esto unha vez dille ó NVDA que é a primeira celda de cabeceira da fila que contén as cabeceiras de columna, que debería ser anunciado automáticamente cando te despraces entre as columnas por embaixo desta fila. Premendo dúas veces eliminarase a opción. | 
+| Fixar cabeceira de filas | NVDA+shift+r | Ó premer esto unha vez dille ó NVDA que é a primeira celda da cabeceira da columna que contén as cabeceiras de fila, que debería ser anunciado automáticamente cando te despraces entre as filas despois desta columna. Premendo dúas veces eliminarás a opción. | 
+| Anunciar comentario | NVDA+alt+c | Anuncia o comentario na celda actual se o hai. |%kc:endInclude
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -587,6 +596,9 @@ Esta opción é unha caixa de verificación que, cando se marca, di ó NVDA que 
 ==== Avisar antes de Saír do NVDA ====
 Esta opción é unha caixa de verificación que che permite elexir se si ou se non apareze un diálogo cando saias do NVDA que che pregunte se che gostaría saír ou non do NVDA. 
 Cando estea marcada, un diálogo aparecerá cando intentes saír do NVDA preguntándoche se queres ou non saír.
+
+==== Reproducir sons ó iniciar ou saír do NVDA ====
+Esta Opción é unha caixa de verificación que, cando está marcada, di ó NVDA que reproduza sons cando se inicie ou saia.
 
 ==== Nivel do Rexistro ====
 Este é unha caixa combinada que che permite elexir canto NVDA porá no rexistro segundo se executa. 
@@ -1015,6 +1027,7 @@ Podes configurar o anunciado de:
 - Números de páxina
 - Números de liña
 - Sangría de liña
+- Sangría de parágrafo (por exemplo: sangría francesa, sangría de primeira liña)
 - Táboas
 - Cabeceiras de fila/columna de táboa
 - Coordinadas de celdas da táboa
@@ -1208,7 +1221,6 @@ Non obstante, se fas clic ou colocas o foco dentro do visualizador,  NVDA deter�
 ++ Administrador de Complementos ++
 O Administrador de Complementos, ó que se accesa seleccionando Administrador de complementos baixo Ferramentas no menú NVDA, permíteche instalar e desinstalar paquetes de complementos para o NVDA.
 Estos paquetes son proporcionados pola comunidade e conteñen código persoalizado que poderá engadir ou cambiar características no NVDA ou tamén proporcionan soporte para liñas Braille ou sintetizadores de voz extra.
-
 O Administrador de Complementos contén unha lista que amosa todos os complementos instalados actualmente na túa configuración do usuario do NVDA. 
 Amósase un nome de paquete, versión e autor para cada complemento, aíndaque se pode ver máis información coma unha descripción e unha URL seleccionando o complemento e premendo o botón Acerca do complemento.
 
