@@ -333,7 +333,7 @@ Nesneler arasında dolaşmak için aşağıdaki komutları kullanın:
 | Odaktaki nesneye gitme | NVDA+numaratörMinus | NVDA+GeriSil | yok | Nesne sunucusunu, sistem odağının üzerinde bulunduğu nesneye taşır ve varsa, inceleme imlecini de sistem düzenleme imlecinin bulunduğu noktaya taşır |
 | Üzerinde bulunulan nesneyi etkinleştirme | NVDA+numaratörEnter | NVDA+enter | çift dokunma | Sistem odağı bir şeyin üzerindeyken oraya fare ile tıklamak veya boşluk çubuğuna basılmasına benzer biçimde, nesne sunucusunun üzerinde bulunduğu nesneyi etkinleştirir |
 | Sistem odağını nesne sunucusuna taşıma | NVDA+şift+numaratörEksi | NVDA+şift+GeriSil | yok | Eğer mümkünse, bir kez basıldığında sistem odağını nesne sunucusunun konumuna; iki kez basıldığında, sistem düzenleme imlecini inceleme imlecinin konumuna taşır |
-| Geçerli nesnenin boyutlarını bildirme | NVDA+numaratörSil | NVDA+Sil | yok | nesne sunucusunun konumundaki nesnenin ekrandaki genişlik, yükseklik, ekranın soluna ve üstüne mesafesi gibi bilgilerini yüzdelik cinsinden belirtir |
+| Geçerli nesnenin boyutlarını bildirme | NVDA+numaratörSil | NVDA+Sil | yok | İnceleme imlecinin konumundaki nesnenin belgenin neresinde ya da sayfanın solundan ya da üstünden ne kadar uzakta olduğuyla ilgili bilgi verir. İki kez basılırsa daha ayrıntılı bilgi sunulabilir |
 %kc:endInclude
 
 Not: Numaratördeki tuşların düzgün çalışabilmesi için, numara kilidi kapalı olmalıdır.
@@ -525,11 +525,20 @@ Gömülü nesneyi barındıran sayfaya geri dönmek için bir kısayol tuşu tan
 + Uygulamaya Özgü NVDA Komutları +
 NVDA çeşitli işlemlerin yapılmasını kolaylaştırmak ya da ekran okuyucu kullanıcıları için erişilebilir olmayan işlevleri onlar için de ulaşılabilir kılmak için bazı uygulamalara özgü özel komutlar sağlamaktadır.
 
+++ Microsoft Word ++
+%kc:beginInclude
+|| Ad | Kısayol | Açıklama |
+| Mevcut açıklamayı oku | NVDA+Alt+c | İmlecin bulunduğu konumdaki açıklamayı okur. | 
+| Sütun başlıklarını ayarla | NVDA+shift+c | Bir kez basıldığında mevcut satır sütun başlığı olarak ayarlanır ve sütunlar arasında dolaşılırken ayarlanan satırdaki bilgi otomatik olarak seslendirilir. İki kez basıldığında ayar sıfırlanır. | 
+| Satır başlıklarını ayarla | NVDA+shift+r | Bir kez basıldığında mevcut sütun satır başlığı olarak ayarlanır ve satırlar arasında dolaşılırken ayarlanan sütundaki bilgi otomatik olarak seslendirilir. İki kez basıldığında ayar sıfırlanır. | 
+%kc:endInclude
+
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Ad | Kısayol Tuşu | Tarif |
 | Sütun başlıklarını ayarla | NVDA+shift+c | Bir kez basıldığında mevcut satır sütun başlığı olarak ayarlanır ve sütunlar arasında dolaşılırken ayarlanan satırdaki bilgi otomatik olarak seslendirilir. İki kez basıldığında ayar sıfırlanır. | 
 | Satır başlıklarını ayarla | NVDA+shift+r | Bir kez basıldığında mevcut sütun satır başlığı olarak ayarlanır ve satırlar arasında dolaşılırken ayarlanan sütundaki bilgi otomatik olarak seslendirilir. İki kez basıldığında ayar sıfırlanır. | 
+| Açıklamayı oku | NVDA+Alt+c | Varsa imlecin bulunduğu hücredeki açıklamayı okur. | 
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -587,6 +596,9 @@ Bu bir onay kutusudur ve işaretlendiğinde, NVDA'ya çıkışta yapılan ayarla
 ==== NVDA'dan Çıkmadan Önce uyar ====
 Bu bir onay kutusudur ve NVDA'yı kapatırken, kapatmak isteyip istemediğinizi soran bir iletişim kutusunun görüntülenip görüntülenmeyeceğini kontrol eder.
 İşaretlendiğinde, NVDA'yı kapatmaya teşebbüs ettiğinizde, gerçekten çıkmak isteyip istemediğinizi soran bir iletişim kutusu açılır.
+
+==== NVDA Açılırken ya da Kapanırken Ses Çal ====
+BU seçenek NVDA açılış ve kapanış sesinin çalınıp çalınmamasıyla ilgili bir onay kutusudur.
 
 ==== Kayıt Tutma (logging) Seviyesi ====
 Bu bir seçim kutusudur ve NVDA çalışırken ne kadar kayıt tutacağınızı ayarlamanızı sağlar.
@@ -1015,6 +1027,7 @@ Buradaki birçok onay kutusu belge içinde imleci hareket ettirirken hangi tür 
 - Sayfa numaraları
 - Satır numaraları
 - Satır girintisi
+- Paragraf girintisi (Örneğin, asılı girinti, ilk satır girintisi)
 - Tablolar
 - Tablo satır/sütun başlıkları
 - Tablo hücre koordinatları
@@ -1211,6 +1224,7 @@ BU paketler camia tarafından sağlanırlar ve NVDA'nın özelliklerini gelişti
 
 Eklenti yöneticisi, mevcut kullanıcı konfigürasyon dizininde kurulu olan tüm eklentileri listeler. 
 Her bir eklenti için, Paket adı, versiyon ve yazar bilgisi gösterilir, Eklenti Hakkında düğmesine basılarak seçili eklentiye dair daha fazla bilgi alınabilir.
+Seçili eklenti için yardım mevcutsa, buna yardım düğmesine basarak ulaşabilirsiniz.
 
 Mevcut eklentileri online olarak inceleyip indirmek için, Eklenti edin düğmesine basın.
 Bu düğme [NVDA Eklenti sayfasını http://addons.nvda-project.org/] açar.
