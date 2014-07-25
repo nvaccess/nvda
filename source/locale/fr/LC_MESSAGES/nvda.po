@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:9675\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-22 19:10+1000\n"
-"PO-Revision-Date: 2014-05-01 13:04+0100\n"
-"Last-Translator: Michel Such <michel.such@free.fr>\n"
+"POT-Creation-Date: 2014-07-02 19:14+1000\n"
+"PO-Revision-Date: 2014-07-09 16:26+0100\n"
+"Last-Translator: Bachir Benanou <ben_bach@yahoo.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.6.6\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -38,11 +38,11 @@ msgstr "Mode demi"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
 msgid "half alphanumeric"
-msgstr "mi alphanumérique"
+msgstr "semi alphanumérique"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
 msgid "half katakana"
-msgstr "mi katakana"
+msgstr "semi katakana"
 
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
 msgid "alphanumeric"
@@ -58,7 +58,7 @@ msgstr "katakana"
 
 #. Translators: For Japanese character input: half katakana roman input mode.
 msgid "half katakana roman"
-msgstr "mi katakana romain"
+msgstr "semi katakana romain"
 
 #. Translators: For Japanese character input: Hiragana Roman input mode.
 msgid "hiragana roman"
@@ -1262,11 +1262,13 @@ msgstr "couleur d'arrière-plan"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "exposant"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "indice"
 
@@ -1715,11 +1717,11 @@ msgstr "Bascule de l'écho clavier par mot"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
-msgstr "écho des touches de commande désactivé"
+msgstr "écho des touches de commandes désactivé"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys on"
-msgstr "écho des touches de commande activé"
+msgstr "écho des touches de commandes activé"
 
 #. Translators: Input help mode message for toggle speak command keys command.
 msgid ""
@@ -3048,6 +3050,7 @@ msgstr "non souligné"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "ligne de base"
 
@@ -3071,6 +3074,42 @@ msgstr "alignement justifié"
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "alignement par défaut"
+
+#. Translators: the label for paragraph format left indent
+msgid "left indent"
+msgstr "indentation gauche"
+
+#. Translators: the message when there is no paragraph format left indent
+msgid "no left indent"
+msgstr "pas d'indentation gauche"
+
+#. Translators: the label for paragraph format right indent
+msgid "right indent"
+msgstr "indentation droite"
+
+#. Translators: the message when there is no paragraph format right indent
+msgid "no right indent"
+msgstr "pas d'indentation droite"
+
+#. Translators: the label for paragraph format hanging indent
+msgid "hanging indent"
+msgstr "indentation en cours"
+
+#. Translators: the message when there is no paragraph format hanging indent
+msgid "no hanging indent"
+msgstr "pas d'indentation suspendue"
+
+#. Translators: the label for paragraph format first line indent
+msgid "first line indent"
+msgstr "indentation de première ligne"
+
+#. Translators: the message when there is no paragraph format first line indent
+msgid "no first line indent"
+msgstr "pas d'indentation de première ligne"
+
+#. Translators: Reported when text no longer contains a comment.
+msgid "out of comment"
+msgstr "hors de commentaire."
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -3429,6 +3468,7 @@ msgid "Displays one of the recent messages"
 msgstr "Affiche l'un des messages récents"
 
 #. Translators: This Outlook Express message has an attachment
+#. Translators: when an email has attachments
 msgid "has attachment"
 msgstr "pièce jointe"
 
@@ -3489,8 +3529,17 @@ msgid "BCC:"
 msgstr "CCI :"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
+#. Translators: when an email is unread
 msgid "unread"
 msgstr "non lu"
+
+#. Translators: for a high importance email
+msgid "high importance"
+msgstr "haute importance"
+
+#. Translators: For a low importance email
+msgid "low importance"
+msgstr "basse importance"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3510,6 +3559,14 @@ msgstr "pièce jointe"
 #, python-format
 msgid "sent: %s"
 msgstr "envoyé : %s"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Outlook..."
+msgstr "En attente d'Outlook"
+
+#. Translators: the email is a meeting request
+msgid "meeting request"
+msgstr "demande de réunion"
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -3887,7 +3944,7 @@ msgid ""
 "keys"
 msgstr ""
 "Configurer la disposition du clavier, l'écho clavier (caractère, mot ou "
-"touches de commande)"
+"touches de commandes)"
 
 #. Translators: The label for the menu item to open Mouse Settings dialog.
 msgid "&Mouse settings..."
@@ -3978,7 +4035,7 @@ msgstr "&Prononciation des symboles et ponctuations..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 msgid "I&nput gestures..."
-msgstr "&Gestes de commande..."
+msgstr "&Gestes de commandes..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
@@ -4173,6 +4230,10 @@ msgstr "Auteur"
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
 msgstr "À propos du &module complémentaire..."
+
+#. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
+msgid "Add-on &help"
+msgstr "&Aide de module complémentaire"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -4702,6 +4763,10 @@ msgstr "&Sauvegarder la configuration en quittant"
 msgid "&Warn before exiting NVDA"
 msgstr "&Avertir avant de quitter NVDA"
 
+#. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
+msgid "&Play sounds when starting or exiting NVDA"
+msgstr "&Jouer des sons au démarrage ou à l'arrêt de NVDA"
+
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "Niveau de &journalisation:"
@@ -4920,7 +4985,7 @@ msgstr ""
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speak command &keys"
-msgstr "Dire les &touches de commande"
+msgstr "Dire les &touches de commandes"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -5208,6 +5273,11 @@ msgstr "annoncer le numéro de &ligne"
 msgid "Report l&ine indentation"
 msgstr "annoncer l'indentation des li&gnes"
 
+#. Translators: This message is presented in the document formatting settings dialogue
+#. If this option is selected, NVDA will report paragraph indentation if available.
+msgid "Report &paragraph indentation"
+msgstr "annoncer l'indentation des &paragraphes"
+
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &tables"
@@ -5276,7 +5346,7 @@ msgstr "&Commentaire"
 
 #. Translators: This is a label for a checkbox in add dictionary entry dialog.
 msgid "Case &sensitive"
-msgstr "Tenir compte de la ca&sse"
+msgstr "Respecter la ca&sse"
 
 #. Translators: This is a label for a checkbox in add dictionary entry dialog.
 msgid "Regular &expression"
@@ -5287,6 +5357,7 @@ msgid "&Dictionary entries"
 msgstr "Entrées du &dictionnaire"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
+#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr "Commentaire"
 
@@ -5396,7 +5467,7 @@ msgstr "&Niveau"
 
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 msgid "Input Gestures"
-msgstr "Gestes de commande"
+msgstr "Gestes de commandes"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -5424,7 +5495,7 @@ msgstr ""
 "Dans NVDA 2013.1, la disposition de clavier pour ordinateur portable a été "
 "entièrement redéfinie dans le but de la rendre plus intuitive et plus "
 "cohérente.\n"
-"Si vous utilisez la disposition clavier pour ordinateur portable,veuillez "
+"Si vous utilisez la disposition clavier pour ordinateur portable, veuillez "
 "lire le document Quoi de Neuf pour plus d'information."
 
 #. Translators: The title of a dialog providing information about NVDA's new laptop keyboard layout.
@@ -5444,7 +5515,7 @@ msgstr "aucune"
 #. Translators: This is the name of the rate boost voice toggle
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
-msgstr "tripler le débi&t"
+msgstr "Tripler le débi&t"
 
 #. Translators: A setting for a speech synthesizer.
 msgid "&Acceleration"
@@ -5491,7 +5562,7 @@ msgstr "R&égions"
 
 #. Translators: The title of the browse mode Elements List dialog.
 msgid "Elements List"
-msgstr "liste d'éléments"
+msgstr "Liste d'éléments"
 
 #. Translators: The label of a group of radio buttons to select the type of element
 #. in the browse mode Elements List dialog.
@@ -5559,6 +5630,7 @@ msgstr "Présente une liste de liens, titres ou régions"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
 msgstr "pas dans une cellule de tableau"
 
@@ -6035,8 +6107,10 @@ msgstr "couleur par défaut"
 msgid "{start} through {end}"
 msgstr "{start} à {end}"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
@@ -6045,35 +6119,67 @@ msgstr ""
 "lignes et colonnes des tableaux dans les paramètres de Mise en Forme des "
 "Documents"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Set column header row"
-msgstr "initialiser la ligne d'en-tête de colonne"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Set {address} as start of column headers"
+msgstr "Définir {address} comme début d'entêtes de colonnes"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Cleared column header row"
-msgstr "Ligne d'en-tête de colonne vide"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Already set {address} as start of column headers"
+msgstr "{address} déjà défini comme début des entêtes de colonnes"
 
-msgid ""
-"Pressing once will set the current row as the row where column headers "
-"should be found. Pressing twice clears the setting."
-msgstr ""
-"Un appui définit la ligne courante comme étant celle où les en-têtes de "
-"colonnes doivent se trouver. Deux appuis suppriment le réglage."
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "removed {address}    from column headers"
+msgstr "{address}    supprimé des entêtes de colonnes"
 
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Set row header column"
-msgstr "Initialiser la colonne d'en-tête de ligne"
-
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Cleared row header column"
-msgstr "Colonne d'en-tête de ligne vide"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Cannot find {address}    in column headers"
+msgstr "{address}    introuvable dans les entêtes de colonnes"
 
 msgid ""
-"Pressing once will set the current column as the column where row headers "
-"should be found. Pressing twice clears the setting."
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this region. Pressing twice will forget "
+"the current column header for this cell."
 msgstr ""
-"Un appui définit la colonne courante comme étant celle où les en-têtes de "
-"lignes doivent se trouver. Deux appuis suppriment le réglage."
+"Un appui définira cette cellule comme premier entête de colonne pour toutes "
+"les cellules situées en dessous et à droite dans cette région. Deux appuis "
+"supprimeront l'entête de colonne en cours pour cette cellule."
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Set {address} as start of row headers"
+msgstr "Définir {address} comme début des entêtes de lignes"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Already set {address} as start of row headers"
+msgstr "{address} déjà défini comme début des entêtes de lignes"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "removed {address}    from row headers"
+msgstr "{address}    supprimé des entêtes de lignes"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Cannot find {address}    in row headers"
+msgstr "{address}    introuvable dans les entêtes de lignes"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this region. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Un appui définira cette cellule comme premier entête de ligne pour toutes "
+"les cellules situées en dessous et à droite dans cette région. Deux appuis "
+"supprimeront l'entête de ligne en cours pour cette cellule."
+
+#. Translators: A message in Excel when there is no comment
+msgid "Not on a comment"
+msgstr "Pas sur un commentaire."
+
+#. Translators: the description  for a script for Excel
+msgid "Reports the comment on the current cell"
+msgstr "Annonce le commentaire de la cellule courante"
+
+#. Translators: Dialog text for
+msgid "Editing comment for cell {address}"
+msgstr "Édition du commentaire pour la cellule {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
@@ -6109,7 +6215,7 @@ msgstr "conflit"
 
 #. Translators: a Microsoft Word revision type (replaced content)
 msgid "replace"
-msgstr "Remplacer"
+msgstr "remplacer"
 
 #. Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
 msgid "paragraph property"
@@ -6154,19 +6260,19 @@ msgid "Endnotes"
 msgstr "Notes de fin"
 
 msgid "Even pages footer"
-msgstr "pied de pages paires"
+msgstr "Pied de pages paires"
 
 msgid "Even pages header"
 msgstr "En-tête de pages paires"
 
 msgid "First page footer"
-msgstr "pied de première page"
+msgstr "Pied de première page"
 
 msgid "First page header"
 msgstr "En-tête de première page"
 
 msgid "Footnotes"
-msgstr "notes de bas de page"
+msgstr "Notes de bas de page"
 
 msgid "Primary footer"
 msgstr "pied de page primaire"
@@ -6186,6 +6292,161 @@ msgstr "date inconnue"
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "{revisionType} par {revisionAuthor} le {revisionDate}"
 
+#, python-format
+msgid "%g characters"
+msgstr "%g caractères"
+
+#. Translators: the value in points for a paragraph indenting
+#, python-format
+msgid "%g pt"
+msgstr "%g pt"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Définir ligne {rowNumber} colonne {columnNumber} comme début des entêtes de "
+"colonnes"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Ligne {rowNumber} colonne {columnNumber} déjà défini comme début des entêtes "
+"de colonnes"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr ""
+"Ligne {rowNumber} colonne {columnNumber}  supprimé des entêtes de colonnes"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+"Ligne {rowNumber} colonne {columnNumber}  introuvable dans les entêtes de "
+"colonnes"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"Un appui définira cette cellule comme premier entête de colonne pour toutes "
+"les cellules situées en dessous et à droite dans ce tableau. Deux appuis "
+"supprimeront l'entête de colonne en cours pour cette cellule."
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Définir ligne {rowNumber} colonne {columnNumber} comme début des entêtes de "
+"lignes"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Ligne {rowNumber} colonne {columnNumber} déjà défini comme début des entêtes "
+"de lignes"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr ""
+"Ligne {rowNumber} colonne {columnNumber}  supprimé des entêtes de lignes"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+"Ligne {rowNumber} colonne {columnNumber}  introuvable dans les entêtes de "
+"lignes"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Un appui définira cette cellule comme premier entête de ligne pour toutes "
+"les cellules situées en dessous et à droite dans ce tableau. Deux appuis "
+"supprimeront l'entête de ligne en cours pour cette cellule."
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "Gras activé"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "Gras désactivé"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "italique activé"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "italique désactivé"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "souligné activé"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "souligné désactivé"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Left aligned"
+msgstr "Aligné à gauche"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "centered"
+msgstr "centré"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Right aligned"
+msgstr "Aligné à droite"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Justified"
+msgstr "Justifié"
+
+#. Translators: the message when the outline level / style is changed in Microsoft word
+msgid "{styleName} style, outline level {outlineLevel}"
+msgstr "style {styleName}, niveau hiérarchique {outlineLevel}"
+
+#. Translators: a message when increasing or decreasing font size in Microsoft Word
+msgid "{size:g} point font"
+msgstr "fonte {size:g} point"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} characters"
+msgstr "{offset:.3g} caractères"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} inches"
+msgstr "{offset:.3g} pouces"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} centimeters"
+msgstr "{offset:.3g} centimètres"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} millimeters"
+msgstr "{offset:.3g} millimètres"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} points"
+msgstr "{offset:.3g} points"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} picas"
+msgstr "{offset:.3g} picas"
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "no comments"
+msgstr "pas de commentaire."
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "Annonce le texte du commentaire à la position du curseur système"
+
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 msgid "Not in table"
@@ -6201,6 +6462,32 @@ msgstr "HIMS Braille séries Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Set column header row"
+#~ msgstr "initialiser la ligne d'en-tête de colonne"
+
+#~ msgid "Cleared column header row"
+#~ msgstr "Ligne d'en-tête de colonne vide"
+
+#~ msgid ""
+#~ "Pressing once will set the current row as the row where column headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "Un appui définit la ligne courante comme étant celle où les en-têtes de "
+#~ "colonnes doivent se trouver. Deux appuis suppriment le réglage."
+
+#~ msgid "Set row header column"
+#~ msgstr "Initialiser la colonne d'en-tête de ligne"
+
+#~ msgid "Cleared row header column"
+#~ msgstr "Colonne d'en-tête de ligne vide"
+
+#~ msgid ""
+#~ "Pressing once will set the current column as the column where row headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "Un appui définit la colonne courante comme étant celle où les en-têtes de "
+#~ "lignes doivent se trouver. Deux appuis suppriment le réglage."
 
 #, fuzzy
 #~ msgid "%s through %s"
