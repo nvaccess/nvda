@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-22 19:10+1000\n"
+"POT-Creation-Date: 2014-07-02 19:14+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jorge Pérez Pérez <jorgtum@gmail.com>\n"
 "Language-Team: Softaragonés\n"
@@ -11,7 +11,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.6.6\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1259,11 +1259,13 @@ msgstr "color de fondo"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "superindiz"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "subindiz"
 
@@ -3068,6 +3070,7 @@ msgstr "no subrayau"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "base"
 
@@ -3091,6 +3094,42 @@ msgstr "aliniación chustificada"
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "aliniación predeterminada"
+
+#. Translators: the label for paragraph format left indent
+msgid "left indent"
+msgstr "sangría cucha"
+
+#. Translators: the message when there is no paragraph format left indent
+msgid "no left indent"
+msgstr "sin sangría cucha"
+
+#. Translators: the label for paragraph format right indent
+msgid "right indent"
+msgstr "sangría dreita"
+
+#. Translators: the message when there is no paragraph format right indent
+msgid "no right indent"
+msgstr "sin sangría dreita"
+
+#. Translators: the label for paragraph format hanging indent
+msgid "hanging indent"
+msgstr "sangría francesa"
+
+#. Translators: the message when there is no paragraph format hanging indent
+msgid "no hanging indent"
+msgstr "sin sangría francesa"
+
+#. Translators: the label for paragraph format first line indent
+msgid "first line indent"
+msgstr "sangría d'a primera linia"
+
+#. Translators: the message when there is no paragraph format first line indent
+msgid "no first line indent"
+msgstr "sin sangría d'a primera linia"
+
+#. Translators: Reported when text no longer contains a comment.
+msgid "out of comment"
+msgstr "difuera d'o comentario"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -3451,6 +3490,7 @@ msgid "Displays one of the recent messages"
 msgstr "Amostrar un d'os mensaches recients"
 
 #. Translators: This Outlook Express message has an attachment
+#. Translators: when an email has attachments
 msgid "has attachment"
 msgstr "tien adchunto"
 
@@ -3511,8 +3551,17 @@ msgid "BCC:"
 msgstr "BCC:"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
+#. Translators: when an email is unread
 msgid "unread"
 msgstr "no leyiu"
+
+#. Translators: for a high importance email
+msgid "high importance"
+msgstr "importancia alta"
+
+#. Translators: For a low importance email
+msgid "low importance"
+msgstr "importancia baixa"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3532,6 +3581,14 @@ msgstr "adchunto"
 #, python-format
 msgid "sent: %s"
 msgstr "ninviau: %s"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Outlook..."
+msgstr "Se ye asperando a l'Outlook..."
+
+#. Translators: the email is a meeting request
+msgid "meeting request"
+msgstr "solicitut de reunión"
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -3718,7 +3775,7 @@ msgstr "Diapositiva vueda"
 
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 msgid "Waiting for Powerpoint..."
-msgstr "Se ye asperando a lo Powerpoint"
+msgstr "Se ye asperando a lo Powerpoint..."
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -4195,6 +4252,10 @@ msgstr "Autor"
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
 msgstr "&Sobre o complemento..."
+
+#. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
+msgid "Add-on &help"
+msgstr "A&duya d'os complementos"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -4719,6 +4780,10 @@ msgstr "&Alzar a configuración en salir"
 msgid "&Warn before exiting NVDA"
 msgstr "&Alvertir antis de salir de NVDA"
 
+#. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
+msgid "&Play sounds when starting or exiting NVDA"
+msgstr "Re&producir sons en enchegar u desenchegar o NVDA"
+
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "Libel de mensaches alzaus en o &rechistro:"
@@ -5224,6 +5289,11 @@ msgstr "Anunciar os &numeros de linia"
 msgid "Report l&ine indentation"
 msgstr "Anunciar a sangría d'a l&ínea"
 
+#. Translators: This message is presented in the document formatting settings dialogue
+#. If this option is selected, NVDA will report paragraph indentation if available.
+msgid "Report &paragraph indentation"
+msgstr "Anunciar a sangría d'o &paragrafo"
+
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &tables"
@@ -5303,6 +5373,7 @@ msgid "&Dictionary entries"
 msgstr "Dentradas d'o &Diccionario"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
+#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr "Comentario"
 
@@ -5574,6 +5645,7 @@ msgstr "Presienta una lista de vinclos, capiters u zonas"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
 msgstr "No yes en una celda de tabla"
 
@@ -6051,8 +6123,10 @@ msgstr "color predeterminada"
 msgid "{start} through {end}"
 msgstr "{start} dica {end}"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
@@ -6060,35 +6134,67 @@ msgstr ""
 "No se pueden configurar os capiters. Por favor activa l'anunciau de capiters "
 "de tabla en Opcions de Formato de Documento"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Set column header row"
-msgstr "Configurar a ringlera de capiters de columna"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Set {address} as start of column headers"
+msgstr "Establir {address} como prencipio d'os capiters de columna"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Cleared column header row"
-msgstr "S'ha limpiau a ringlera de capiters de columna"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Already set {address} as start of column headers"
+msgstr "Ya s'ha establiu {address}  como prencipio d'os capiters de columna"
 
-msgid ""
-"Pressing once will set the current row as the row where column headers "
-"should be found. Pressing twice clears the setting."
-msgstr ""
-"Pretando una vez configurará a ringlera actual como a ringlera an habrían de "
-"trobar os capiters de columna. Pretando dos veces limpia a opción."
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "removed {address}    from column headers"
+msgstr "s'ha borrau {address}   d'os capiters de columna"
 
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Set row header column"
-msgstr "Configurar a columna de capiters de ringlera"
-
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Cleared row header column"
-msgstr "S'ha limpiau a columna de capiters de ringlera"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Cannot find {address}    in column headers"
+msgstr "No s'ha puesto trobar {address}    en os capiters de columna"
 
 msgid ""
-"Pressing once will set the current column as the column where row headers "
-"should be found. Pressing twice clears the setting."
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this region. Pressing twice will forget "
+"the current column header for this cell."
 msgstr ""
-"Pretando una vez configurará a columna actual como a columna an se habrían "
-"de trobar os capiters de ringlera. Pretando dos veces limpia a opción."
+"Pretar-ne una vegada establirá ista celda como o primer capitero de columna "
+"ta cualsiquier celda abaixo y ta la dreita d'ella adintro d'ista rechión. "
+"Pretar-ne dos vegadas ixublidará o capitero de columna actual ta ista celda."
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Set {address} as start of row headers"
+msgstr "Establir {address} como prencipio d'os capiters de ringlera"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Already set {address} as start of row headers"
+msgstr "Ya s'ha establiu {address}  como prencipio d'os capiters de ringlera"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "removed {address}    from row headers"
+msgstr "s'ha borrau {address}    d'os capiters de ringlera"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Cannot find {address}    in row headers"
+msgstr "No s'ha puesto trobar {address}    en os capiters de columna"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this region. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Pretar-ne una vegada establirá ista celda como o primer capitero de ringlera "
+"ta cualsiquier celda abaixo y ta la dreita d'ella adintro d'ista rechión. "
+"Pretar-ne dos vegadas ixublidará o capitero de ringlera actual ta ista celda."
+
+#. Translators: A message in Excel when there is no comment
+msgid "Not on a comment"
+msgstr "no en un comentario"
+
+#. Translators: the description  for a script for Excel
+msgid "Reports the comment on the current cell"
+msgstr "Anuncia o comentario en a celda actual"
+
+#. Translators: Dialog text for
+msgid "Editing comment for cell {address}"
+msgstr "Se son editando os comentarios d'a celda {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
@@ -6201,6 +6307,163 @@ msgstr "calendata desconoixida"
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "{revisionType} por {revisionAuthor} en {revisionDate}"
 
+#, python-format
+msgid "%g characters"
+msgstr "&%g caracters"
+
+#. Translators: the value in points for a paragraph indenting
+#, python-format
+msgid "%g pt"
+msgstr "%g pt"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Establir a ringlera {rowNumber} y a columna {columnNumber} como prencipio "
+"d'os capiters de columna"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Ya s'ha establiu a ringlera {rowNumber} y a columna {columnNumber} como "
+"prencipio d'os capiters de columna"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr ""
+"S'ha borrau a ringlera {rowNumber} y a columna {columnNumber}  d'os capiters "
+"de columna"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+"No s'ha puesto trobar a ringlera {rowNumber} y a columna {columnNumber}  en "
+"os capiters de columna"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"Pretar-ne una vegada establirá ista celda como o primer capitero de columna "
+"ta cualsiquier celda abaixo y ta la dreita d'ella adintro d'ista tabla. "
+"Pretar-ne dos vegadas ixublidará o capitero de columna actual ta ista celda."
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Establir a ringlera {rowNumber} y a columna {columnNumber} como prencipio "
+"d'os capiters de ringlera"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Ya s'ha establiu a ringlera {rowNumber} y a columna {columnNumber} como "
+"prencipio d'os capiters de ringlera"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr ""
+"S'ha borrau a ringlera {rowNumber} y a columna {columnNumber}  d'os capiters "
+"de ringlera"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+"No s'ha puesto trobar a ringlera {rowNumber} y a columna {columnNumber}  en "
+"os capiters de ringlera"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Pretar-ne una vegada establirá ista celda como o primer capitero de ringlera "
+"ta cualsiquier celda abaixo y ta la dreita d'ella adintro d'ista tabla. "
+"Pretar-ne dos vegadas ixublidará o capitero de ringlera actual ta ista celda."
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "Negreta activada"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "Negreta desactivada"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "Cursiva activada"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "Cursiva desactivada"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "subrayau activau"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "Subrayau desactivau"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Left aligned"
+msgstr "aliniau ala cucha"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "centered"
+msgstr "centrau"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Right aligned"
+msgstr "aliniau a la dreita"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Justified"
+msgstr "chustificau"
+
+#. Translators: the message when the outline level / style is changed in Microsoft word
+msgid "{styleName} style, outline level {outlineLevel}"
+msgstr "estilo {styleName}, libel d'esquema {outlineLevel}"
+
+#. Translators: a message when increasing or decreasing font size in Microsoft Word
+msgid "{size:g} point font"
+msgstr "{size:g} puntos de fuent"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} characters"
+msgstr "{offset:.3g} caracters"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} inches"
+msgstr "{offset:.3g} pulgadas"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} centimeters"
+msgstr "{offset:.3g} centimetros"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} millimeters"
+msgstr "{offset:.3g} milimetros"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} points"
+msgstr "{offset:.3g} puntos"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} picas"
+msgstr "{offset:.3g} picas"
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "no comments"
+msgstr "sin comentarios"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "Anuncia o texto d'o comentario an siga ubicau o puntero d'o sistema."
+
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 msgid "Not in table"
@@ -6216,6 +6479,33 @@ msgstr "Serie d'a HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Set column header row"
+#~ msgstr "Configurar a ringlera de capiters de columna"
+
+#~ msgid "Cleared column header row"
+#~ msgstr "S'ha limpiau a ringlera de capiters de columna"
+
+#~ msgid ""
+#~ "Pressing once will set the current row as the row where column headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "Pretando una vez configurará a ringlera actual como a ringlera an habrían "
+#~ "de trobar os capiters de columna. Pretando dos veces limpia a opción."
+
+#~ msgid "Set row header column"
+#~ msgstr "Configurar a columna de capiters de ringlera"
+
+#~ msgid "Cleared row header column"
+#~ msgstr "S'ha limpiau a columna de capiters de ringlera"
+
+#~ msgid ""
+#~ "Pressing once will set the current column as the column where row headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "Pretando una vez configurará a columna actual como a columna an se "
+#~ "habrían de trobar os capiters de ringlera. Pretando dos veces limpia a "
+#~ "opción."
 
 #, fuzzy
 #~ msgid "%s through %s"
