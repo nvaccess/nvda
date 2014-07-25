@@ -333,7 +333,7 @@ Seuraavia komentoja käytetään objekteittain liikkumiseen:
 | Siirrä kohdistusobjektiin | NVDA+numeronäppäimistön miinus | NVDA+askelpalautin | Ei mitään | Siirtää objektiin, jossa järjestelmän kohdistus on tällä hetkellä ja sijoittaa tarkastelukohdistimen järjestelmäkohdistimen kohdalle, mikäli se on näkyvissä. |
 | Aktivoi nykyinen navigointiobjekti | NVDA+numeronäppäimistön Enter | NVDA+Enter | Kaksoisnapautus | Aktivoi nykyisen navigointiobjektin (vastaa hiiren napsauttamista tai välilyönnin painamista, kun järjestelmän kohdistus on siinä). |
 | Siirrä järjestelmäkohdistus tai -kohdistin tarkastelukohtaan | NVDA+Shift+numeronäppäimistön miinus | NVDA+Shift+askelpalautin | Ei mitään | Siirtää kerran painettaessa järjestelmän kohdistuksen nykyiseen navigointiobjektiin, kahdesti painettaessa siirtää järjestelmäkohdistimen  tarkastelukohdistimen kohdalle. |
-| Lue navigointiobjektin mitat | NVDA+numeronäppäimistön delete | NVDA+delete | Ei mitään | Kertoo prosentteina nykyisen navigointiobjektin mitat ruudulla (mukaan lukien etäisyys ruudun vasemmasta ja yläreunasta, sekä sen leveys ja korkeus). |
+| Lue navigointiobjektin mitat | NVDA+numeronäppäimistön delete | NVDA+delete | Ei mitään | Kertoo tarkastelukohdistimen sijainnin joko sovellusystävällisin termein kuten prosentteina asiakirjasta, etäisyytenä sivun reunasta tai vähintään ruudun kuvapisteinä. Kahdesti painettaessa kerrotaan lisätietoja. |
 %kc:endInclude
 
 Huomautus: Numlockin on oltava pois päältä, jotta numeronäppäimistön näppäimet toimisivat oikein.
@@ -525,11 +525,20 @@ Seuraavalla näppäinkomennolla voidaan palata alkuperäiselle upotetun objektin
 + Sovelluskohtaiset komennot +
 NVDA:ssa on joillekin sovelluksille omia lisäkomentoja tiettyjen tehtävien helpottamiseksi tai mahdollistamaan pääsyn sellaisiin toimintoihin, joiden käyttäminen ei ole ruudunlukuohjelman käyttäjille muilla tavoin mahdollista.
 
+++ Microsoft Word ++
+%kc:beginInclude
+|| Nimi | Näppäinkomento | Kuvaus |
+| Lue nykyinen kommentti | NVDA+Alt+C | Lukee kommentin tekstin järjestelmäkohdistimen nykyisestä sijainnista. |
+| Määritä sarakeotsikot | NVDA+Shift+C | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen solu on rivin ensimmäinen otsikkosolu, joka sisältää sarakeotsikoita, jotka luetaan automaattisesti liikuttaessa sarakkeiden välillä kyseisen rivin alapuolella. Kahdesti painaminen nollaa tämän asetuksen. |
+| Määritä riviotsikot | NVDA+Shift+R | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen solu on sarakkeen ensimmäinen otsikkosolu, joka sisältää riviotsikoita, jotka luetaan automaattisesti liikuttaessa rivien välillä kyseisen sarakkeen oikealla puolella. Kahdesti painaminen nollaa tämän asetuksen. |
+%kc:endInclude
+
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
-| Määritä sarakkeen otsikot | NVDA+Shift+C | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen rivi sisältää sarakkeen otsikot, jotka luetaan automaattisesti liikuttaessa sarakkeiden välillä kyseisen rivin alapuolella. Kahdesti painaminen nollaa tämän asetuksen. |
-| Määritä rivin otsikot | NVDA+Shift+R | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen sarake sisältää rivin otsikot, jotka luetaan automaattisesti liikuttaessa rivien välillä kyseisen sarakkeen jälkeen. Kahdesti painaminen nollaa tämän asetuksen. | 
+| Määritä sarakeotsikot | NVDA+Shift+C | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen solu on rivin ensimmäinen otsikkosolu, joka sisältää sarakeotsikoita, jotka luetaan automaattisesti liikuttaessa sarakkeiden välillä kyseisen rivin alapuolella. Kahdesti painaminen nollaa tämän asetuksen. | 
+| Määritä riviotsikot | NVDA+Shift+R | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen solu on sarakkeen ensimmäinen otsikkosolu, joka sisältää riviotsikoita, jotka luetaan automaattisesti liikuttaessa rivien välillä kyseisen sarakkeen jälkeen. Kahdesti painaminen nollaa tämän asetuksen. | 
+| Lue kommentti | NVDA+Alt+C | Lukee nykyisessä solussa olevan kommentin. Jos kommenttia ei ole, siitä ilmoitetaan. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -585,8 +594,11 @@ Hyväksy painamalla OK.
 Jos tämä valintaruutu on valittuna, nykyiset asetukset tallennetaan, kun NVDA suljetaan.
 
 ==== Vahvista sulkeminen ====
-Tällä valintaruudulla voidaan määrittää, halutaanko NVDA:n kysyvän vahvistuksen, kun se suljetaan.
+Tällä valintaruudulla voidaan määrittää, kysyykö NVDA vahvistuksen sitä suljettaessa.
 Kun tämä on valittuna, aina NVDA:ta suljettaessa tulee näkyviin valintaikkuna, jossa kysytään, halutaanko se varmasti sulkea.
+
+==== Toista ääni käynnistettäessä ja suljettaessa ====
+Kun tämä valintaruutu on valittuna, NVDA toistaa äänen käynnistyessään ja sulkeutuessaan.
 
 ==== Lokitaso ====
 Tästä yhdistelmäruudusta voidaan valita, paljonko NVDA kirjaa tietoja lokiin käynnissä ollessaan.
@@ -1015,6 +1027,7 @@ Seuraavien tietojen lukeminen voidaan määrittää:
 - Sivunumerot
 - Rivinumerot
 - Rivien sisennykset
+- Kappaleiden sisennykset (esim. riippuva ja ensimmäisen rivin sisennys)
 - Taulukot
 - Taulukon rivien ja sarakkeiden otsikot
 - Taulukon solun koordinaatit
@@ -1206,11 +1219,12 @@ Kun Näytä puhe -toiminto on käytössä, sen ikkuna päivittyy ajoittain näyt
 Jos ikkunaa kuitenkin napsautetaan hiirellä tai kohdistus siirretään siihen, NVDA keskeyttää  tilapäisesti tekstin päivittämisen, jotta olemassa olevaa sisältöä voidaan helposti valita ja kopioida.
 
 ++ Lisäosien hallinta ++
-Lisäosien hallinnalla, johon päästään NVDA-valikosta Työkalut-valikon alta kohdasta Lisäosien hallinta, voidaan asentaa ja poistaa NVDA:n lisäosia.
-NVDA-yhteisön toimittamat lisäosat saattavat lisätä tai muuttaa ominaisuuksia tai jopa tarjota tuen uusille pistenäytöille tai puhesyntetisaattoreille.
+Lisäosien hallinnalla, johon pääsee NVDA-valikosta Työkalut-valikon alta kohdasta Lisäosien hallinta, voit asentaa ja poistaa NVDA:n lisäosapaketteja.
+Lisäosat, jotka ovat NVDA-yhteisön toimittamia, saattavat lisätä tai muuttaa ominaisuuksia tai jopa tarjota tuen uusille pistenäytöille tai puhesyntetisaattoreille.
 
 Lisäosien hallinnassa on lista, jossa näkyvät kaikki nykyisen käyttäjän asentamat lisäosat.
 Jokaisesta lisäosasta näytetään nimi, versio sekä tekijä, ja lisätietoja kuten kuvausta ja URL-osoitetta voidaan tarkastella valitsemalla haluttu lisäosa ja painamalla Tietoja lisäosasta -painiketta.
+Jos valitulle lisäosalle on saatavana ohje, voit avata sen painamalla Ohje-painiketta.
 
 Verkossa saatavilla olevia lisäosia voidaan selata ja ladata painamalla Hae lisäosia -painiketta.
 Tämä painike avaa [NVDA:n lisäosasivun http://addons.nvda-project.org/].
