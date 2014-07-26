@@ -519,14 +519,24 @@ Se forem acessíveis, pode pressionar Tab para navegar por eles e interagir como
 %kc:endInclude
 
 + Comandos do NVDA PARA Aplicações Específicas +
-O NVDA fornece seus próprios comandos adicionais para alguns aplicativos com vista a executar mais facilmente determinadas tarefas ou para proporcionar acesso a funcionalidades que de outra forma não são acessíveis aos usuários de leitores de telas.
+O NVDA fornece seus próprios comandos adicionais para alguns aplicativos com vistas a executar mais facilmente determinadas tarefas ou para proporcionar acesso a funcionalidades que de outra forma não são acessíveis aos usuários de leitores de telas.
+
+++ Microsoft Word ++
+
+%kc:beginInclude
+|| Nome | Tecla | Descrição |
+| Anunciar comentário atual | NVDA+alt+c | Anuncia o texto do comentário na posição do cursor do sistema.
+| Selecionar os cabeçalhos das colunas | NVDA+shift+c | Pressionado uma vez, informa ao NVDA que esta é a linha que contém os cabeçalhos das colunas, os quais deverão ser anunciados automaticamente ao mover-se entre colunas abaixo dessa linha. Ao pressionar duas vezes, limpará a configuração. |
+| Selecionar os cabeçalhos das linhas | NVDA+shift+r | Pressionando-se uma vez, informa ao NVDA que esta é a coluna que contém os cabeçalhos das linhas, os quais deverão ser anunciados  automaticamente ao mover-se entre linhas dentro desta coluna. Pressione duas vezes e limpará a configuração. |
+%kc:endInclude
 
 ++ Microsoft Excel ++
 
 %kc:beginInclude
 || Nome | Tecla | Descrição |
-| Selecionar os cabeçalhos das colunas | NVDA+shift+c | Pressionado uma vez, informa ao NVDA que esta é a linha que contém os cabeçalhos das colunas, os quais deverão ser anunciados automaticamente ao mover-se entre colunas abaixo dessa linha. Ao pressionar duas vezes, limpará configuração. |
+| Selecionar os cabeçalhos das colunas | NVDA+shift+c | Pressionado uma vez, informa ao NVDA que esta é a linha que contém os cabeçalhos das colunas, os quais deverão ser anunciados automaticamente ao mover-se entre colunas abaixo dessa linha. Ao pressionar duas vezes, limpará a configuração. |
 | Selecionar os cabeçalhos das linhas | NVDA+shift+r | Pressionando-se uma vez, informa ao NVDA que esta é a coluna que contém os cabeçalhos das linhas, os quais deverão ser anunciados  automaticamente ao mover-se entre linhas dentro desta coluna. Pressione duas vezes e limpará a configuração. |
+| Anunciar comentário | NVDA+alt+c | Anuncia o comentário na célula atual, caso haja algum. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -585,11 +595,13 @@ Uma caixa de seleção que quando marcada informa ao leitor de tela para salvar 
 Uma caixa de seleção que lhe permite escolher se pretende ou não que apareça um diálogo com a pergunta se deseja ou não sair quando fechar o programa.
 Se marcada, o diálogo aparecerá quando tentar encerrar o NVDA perguntando se pretende ou não sair.  
 
+==== Tocar Sons ao Iniciar ou Encerrar o NVDA ====
+Esta opção é uma caixa de seleção que, quando marcada, informa ao NVDA para tocar seus sons ao iniciar ou encerrar.
+
 ==== Grau de Informações no Log ====
 Uma caixa de combinação que lhe permite selecionar a quantidade de informação que o NVDA coloca no registo quando está em execução.
 Por norma, os utilizadores não precisam alterar isto já que não é muito amigável.
 Contudo, se desejar adicionar informação ao relatório de erros, etc., é boa ideia ajustá-la para um nível mais elevado. 
-
 
 ==== Iniciar o NVDA Automaticamente Após o Logon no Windows ====
 Se esta opção estiver marcada, o NVDA será executado automaticamente logo que iniciar sessão no Windows.
@@ -1012,6 +1024,7 @@ Pode configurar o anúncio de:
 - Número das Páginas
 - Número das Linhas
 - Indentação das Linhas
+- indentação do Parágrafo (como hanging indent, first line indent)
 - Tabelas
 - Cabeçalhos de Linhas e Colunas das Tabelas
 - Coordenadas de Células em Tabelas

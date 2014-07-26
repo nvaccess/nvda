@@ -88,7 +88,7 @@ Además de la incapacidad de iniciarse automáticamente durante y o después de 
 - La incapacidad para interactuar con aplicaciones que se ejecuten con privilegios de administrador, al menos que, por supuesto, el mismo NVDA también haya sido ejecutado con estos privilegios (no es recomendable).
 - La incapacidad de leer las pantallas del Control de Cuentas de Usuario (UAC) cuando trate de iniciar una aplicación con privilegios de administrador.
 - Windows 8: la incapacidad para soportar la entrada desde una pantalla táctil.
-- Windows 8: la incapacidad de proporcionar características tales como modo navegación y verbalización de caracteres al escribir en Windows Store apps.
+- Windows 8: la incapacidad de proporcionar características tales como modo exploración y verbalización de caracteres al escribir en Windows Store apps.
 
 
 ++ Instalando NVDA ++
@@ -333,7 +333,7 @@ Para navegar por objetos, utiliza las siguientes órdenes:
 | Navegar al objeto del foco | NVDA+Menos teclado numérico | NVDA+Retroceso | no | Navega al objeto que tiene actualmente el foco del sistema, y también coloca el cursor de revisión en la posición del cursor del Sistema, si se muestra |
 | Activar actual navegador de objetos | NVDA+Intro teclado numérico | NVDA+Intro | doble toque | Activa el actual navegador de objetos (similar a hacer clic con el ratón o pulsar espacio cuando tiene el foco del sistema) |
 | Mover foco del Sistema a actual navegador de objetos | NVDA+shift+Menos teclado numérico | NVDA+shift+retroceso | no | pulsado una vez Mueve el foco del Sistema al navegador de objetos actual, pulsado dos veces mueve el cursor del sistema a la posición del cursor de revisión |
-| Anunciar dimensiones del navegador de objetos | NVDA+Suprimir teclado numérico | NVDA+suprimir | no | Anuncia las dimensiones del actual navegador de objetos en la pantalla en porcentajes (incluyendo distancia desde la izquierda y arriba de la pantalla, y su anchura y altura)  |
+| Anunciar dimensiones del navegador de objetos | NVDA+Suprimir teclado numérico | NVDA+suprimir | no | Informa de la ubicación del cursor de revisión, ya sea en términos amigables de aplicación como en porcentaje por el documento o la distancia desde el borde de la página, o como mínimo en píxeles de pantalla. Al pulsar dos veces anunciará más información. |  |
 %kc:endInclude
 
 nota: las teclas del teclado numérico requieren que la tecla BloqNum esté desactivada para funcionar apropiadamente.
@@ -397,13 +397,13 @@ Para objetos tales como campos de edición u otros controles básicos de documen
 Para otros objetos, esto será el nombre y o valor.
 
 +++ Revisión de Documentos +++[DocumentReview]
-Cuando el [navegador de objetos #ObjectNavigation] esté dentro de un documento en modo navegación (ej.: página web) u otro documento complejo que contenga muchos objetos (ej.: documentos de Lotus Symphony), es posible cambiar al modo revisión de documentos.
+Cuando el [navegador de objetos #ObjectNavigation] esté dentro de un documento en modo exploración (ej.: página web) u otro documento complejo que contenga muchos objetos (ej.: documentos de Lotus Symphony), es posible cambiar al modo revisión de documentos.
 El modo revisión de documentos te permite revisar el texto del documento entero.
 
 Cuando se cambie desde revisión de objetos a revisión de documentos, el cursor de revisión se coloca en el documento en la posición del navegador de objetos.
 Al moverse por el documento con los comandos de revisión, el navegador de objetos se actualiza automáticamente al objeto que se encuentra en la  posición actual del cursor de revisión.
 
-Ten en cuenta que NVDA cambiará a revisión de documentos desde revisión de objetos automáticamente cuando te muevas por documentos en modo navegación.
+Ten en cuenta que NVDA cambiará a revisión de documentos desde revisión de objetos automáticamente cuando te muevas por documentos en modo exploración.
 
 +++ Revisión de Pantalla +++[ScreenReview]
 El modo revisión de pantalla te permite revisar el texto tal y como aparezca visualmente en la pantalla dentro de la aplicación actual.
@@ -439,28 +439,28 @@ Si bien un ratón físico o un trackpad se podrían utilizar para navegar con el
 | navegar al objeto bajo el ratón | NVDA+Multiplicar teclado numérico | NVDA+shift+n | Pone el navegador de objetos en el objeto localizado en la posición del ratón |
 %kc:endInclude
 
-+ Modo Navegación +
-Los documentos complejos de sólo lectura, tales como páginas Web, son representados en NVDA con un Modo Navegación. 
++ Modo Exploración +
+Los documentos complejos de sólo lectura, tales como páginas Web, son representados en NVDA con un Modo Exploración. 
 Esto incluye documentos en Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader y Adobe Flash.
 
-En el Modo Navegación, el contenido del documento se hace disponible mediante una representación plana de contenido tal como una página Web, por el que te puedes mover con las teclas de cursor. 
+En el Modo Exploración, el contenido del documento se hace disponible mediante una representación plana de contenido tal como una página Web, por el que te puedes mover con las teclas de cursor. 
 Todas las teclas de órdenes de [cursor del sistema #SystemCaret] de NVDA funcionarán en este modo; ej.: leer todo, anunciar formato, órdenes de navegación de tabla, etc.
 La información tal como si el texto es un enlace,  encabezado, etc. se anuncia junto con el texto según te muevas.
 
 A veces, necesitarás interactuar directamente con controles en estos documentos.
 +Por ejemplo, necesitarás hacer esto para campos de texto editable y listas tal que puedas escribir carácteres y utilizar las teclas de cursor para trabajar con el control.
 Haz esto para cambiar a modo foco, donde casi todas las teclas se pasen al control.
-Cuando se está en modo Navegación, por defecto, NVDA cambiará automáticamente a modo foco si tabulas a o haces clic sobre un control en particular que lo requiera.
-En cambio, tabulando o haciendo clic sobre un control que no requiera modo foco retornará a modo navegación.
+Cuando se está en modo Exploración, por defecto, NVDA cambiará automáticamente a modo foco si tabulas a o haces clic sobre un control en particular que lo requiera.
+En cambio, tabulando o haciendo clic sobre un control que no requiera modo foco retornará a modo exploración.
 También puedes pulsar intro o espacio para cambiar a modo foco en controles que lo requieran.
-Pulsando escape volverás a modo navegación.
+Pulsando escape volverás a modo exploración.
 Además, puedes forzar manualmente el modo foco, después permanecerá efectivo hasta que elijas desactivarlo.
 
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| Conmutar modos navegación/foco | NVDA+espacio | Conmuta entre modo foco y modo navegación |
-| Salir de modo foco | escape | Cambia a modo navegación si el modo foco anteriormente estaba cambiado automáticamente |
-| Refrescar documento en modo navegación | NVDA+f5 | Recarga el contenido del documento actual (útil si ciertos contenidos parecen estar desaparecidos del documento) |
+| Conmutar modos explolración/foco | NVDA+espacio | Conmuta entre modo foco y modo Exploración |
+| Salir de modo foco | escape | Cambia a modo exploración si el modo foco anteriormente estaba cambiado automáticamente |
+| Refrescar documento en modo exploración | NVDA+f5 | Recarga el contenido del documento actual (útil si ciertos contenidos parecen estar desaparecidos del documento) |
 | Buscar | NVDA+control+f | Despliega un diálogo en el que puedes teclear algún texto a encontrar en el  documento actual |
 | Buscar siguiente | NVDA+f3 | Encuentra la siguiente  ocurrencia del texto en el documento que buscaste anteriormente |
 | Buscar anterior | NVDA+shift+f3 | Encuentra la ocurrencia anterior del texto en el documento buscado anteriormente |
@@ -469,7 +469,7 @@ Además, puedes forzar manualmente el modo foco, después permanecerá efectivo 
 
 
 ++ Navegación con una Sola Letra ++
-Mientras se esté en modo navegación, para una navegación más rápida NVDA también proporciona teclas de un solo carácter para saltar a ciertos campos en el documento.
+Mientras se esté en modo exploración, para una navegación más rápida NVDA también proporciona teclas de un solo carácter para saltar a ciertos campos en el documento.
 
 %kc:beginInclude
 Las siguientes teclas por sí mismas saltan al siguiente campo, con la tecla shift saltan al anterior campo.
@@ -508,7 +508,7 @@ Se Proporciona también un campo de edición en el diálogo el cual te permite f
 Una vez hayas elegido un elemento, puedes utilizar los botones proporcionados en el diálogo para moverte a, o activar, ese elemento.
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| Lista de elementos del Modo Navegación | NVDA+f7 | Despliega la lista de elementos que contiene enlaces, encabezados y puntos de referencia ARIA del documento actual |
+| Lista de elementos del Modo Exploración | NVDA+f7 | Despliega la lista de elementos que contiene enlaces, encabezados y puntos de referencia ARIA del documento actual |
 %kc:endInclude
 
 ++ Objetos Integrados ++
@@ -525,12 +525,20 @@ Se proporciona una orden de teclado para regresar a la página original que cont
 + Órdenes de NVDA Específicas para Aplicación +
 NVDA proporciona sus propias órdenes extra para algunas aplicaciones para hacer más fáciles ciertas tareas o para proporcionar acceso a funcionalidad que de otro modo no está accesible para los usuarios de lector de pantalla.
 
+++ Microsoft Word ++
+%kc:beginInclude
+|| Nombre | Tecla | Descripción |
+| Anunciar comentario actual | NVDA+Alt+c | Anuncia el texto del comentario en la posición del Cursor del Sistema. | 
+| Fijar encabezado de columnas | NVDA+shift+c | Pulsando esto una vez dice a NVDA que esta es la primera celda de encabezado en la fila que contiene encabezados de columna, que debería ser anunciada automáticamente al moverte entre columnas bajo esta fila. Pulsando dos veces quitará esta opción. | 
+| Fijar encabezado de filas | NVDA+shift+r | Pulsando esto una vez dice a NVDA que esta es la primera celda de encabezado en la columna que contiene encabezados de fila, que debería ser anunciado automáticamente cuando te desplaces entre las filas después de esta columna. Pulsando dos veces eliminará esta opción. | 
+%kc:endInclude
+
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| Configurar fila de encabezados de columna | NVDA+shift+c | Pulsando esto una vez dice a NVDA que esta es la fila que contiene encabezados de columna, los cuales deberían anunciarse automáticamente cuando te muevas entre columnas por esta fila. Pulsando dos veces limpiará la opción. | 
-| Configurar columna de encabezados de fila | NVDA+shift+r | Pulsando esto una vez  dice a NVDA que esta es la columna que contiene encabezados de fila, los que se deberían anunciar automáticamente  cuando te muevas entre filas después de esta columna. Pulsando dos veces limpiará la opción. | 
-%kc:endInclude
+| Fijar encabezado de columnas | NVDA+shift+c | Al pulsar esto una vez le dice a NVDA que es la primera celda de encabezado de la fila que contiene los encabezados de columna, que debería ser anunciado automáticamente cuando te desplaces entre las columnas por debajo de esta fila. Pulsando dos veces se eliminará la opción. | 
+| Fijar encabezado de filas | NVDA+shift+r | Al pulsar esto una vez le dice a NVDA que es la primera celda del encabezado de la columna que contiene los encabezados de fila, que debería ser anunciado automáticamente cuando te desplaces entre las filas después de esta columna. Pulsando dos veces eliminarás la opción. | 
+| Anunciar comentario | NVDA+alt+c | Anuncia el comentario en la celda actual si lo hay. |%kc:endInclude
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -587,6 +595,9 @@ Esta opción es una casilla de verificación que, cuando se marca, dice a NVDA q
 ==== Avisar antes de Salir de NVDA ====
 Esta opción es una casilla de verificación que te permite elegir si sí o si no aparece un diálogo cuando salgas de NVDA que te pregunte si te gustaría salir o no de NVDA. 
 Cuando esté marcada, un diálogo aparecerá cuando intentes salir de NVDA preguntándote si quieres o no salir.
+
+==== Reproducir sonidos al iniciar o salir de NVDA ====
+Esta Opción es una casilla de verificación que, cuando está marcada, dice a NVDA que reproduzca sonidos cuando se inicie o salga.
 
 ==== Nivel del Registro ====
 Este es un cuadro combinado que te permite elegir cuánta info pondrá NVDA en el registro según se ejecute. 
@@ -807,7 +818,7 @@ Si está activada, esta opción causará que la voz se interrumpa cada vez que s
 Si está activada, esta opción causará que la voz se interrumpa cada vez que se pulse la tecla Intro. Esto está activado de manera predeterminada.
 
 ==== Permitir lectura superficial en Verbalizar Todo ====
-Si está activada, ciertas órdenes de navegación (tales como la navegación rápida en modo navegación o el movimiento por líneas o por párrafos) no detienen  Verbalizar Todo, en su lugar Verbalizar Todo salta  a la nueva posición y continúa leyendo.
+Si está activada, ciertas órdenes de navegación (tales como la navegación rápida en modo exploración o el movimiento por líneas o por párrafos) no detienen  Verbalizar Todo, en su lugar Verbalizar Todo salta  a la nueva posición y continúa leyendo.
 
 ==== Pitar si se Teclean Letras Minúsculas Cuando BloqMayus está Activado ====
 Cuando está activada, se escuchará un pitido de aviso si se escribe una letra con la tecla shift mientras BloqMayus está activada.
@@ -955,8 +966,8 @@ Después de que la lectura o los datos de precomposición hayan sido combinados 
 Esta Opción te permite elegir si NVDA debería anunciar o no símbolos nuevos según aparezcan en la cadena de composición.
 Esta opción está activada por omisión.
 
-+++ Opciones de Modo Navegación (NVDA+control+b) +++
-El diálogo de opciones de los Modos de navegación puede encontrarse en el menú Preferencias, bajo "Modo Navegación"...". 
++++ Opciones de Modo Exploración (NVDA+control+b) +++
+El diálogo de opciones de los Modos de exploración puede encontrarse en el menú Preferencias, bajo "Modo Exploración"...". 
 
 El diálogo contiene las siguientes opciones:
 
@@ -964,16 +975,16 @@ El diálogo contiene las siguientes opciones:
 Este campo pone la anchura máxima de una línea del modo virtual (en carácteres).
 
 ==== Máximo número de Líneas por Página ====
-Este campo ajusta la cantidad de líneas que moverás cuando pulses Avance de página o Retroceso de página mientras estés en modo navegación.
+Este campo ajusta la cantidad de líneas que moverás cuando pulses Avance de página o Retroceso de página mientras estés en modo exploración.
 
 %kc:setting
 ==== Utilizar diseño de pantalla ====
 Tecla: NVDA+v
 
-Esta opción te permite especificar si el contenido en el modo Navegación debería colocar cosas tales como enlaces y otros campos en su propia línea, o si debería conservarlos en el flujo de texto según sea mostrado visualmente. Si la opción está activada, entonces las cosas permanecerán según sean mostradas visualmente, pero si está desactivada, entonces los campos serán colocados en su propia línea.
+Esta opción te permite especificar si el contenido en el modo Exploración debería colocar cosas tales como enlaces y otros campos en su propia línea, o si debería conservarlos en el flujo de texto según sea mostrado visualmente. Si la opción está activada, entonces las cosas permanecerán según sean mostradas visualmente, pero si está desactivada, entonces los campos serán colocados en su propia línea.
 
 ==== Verbalizar Todo Automáticamente al Cargar la Página ====
-Esta casilla de verificación conmuta la verbalización automática de una página después de cargarla en modo navegación.
+Esta casilla de verificación conmuta la verbalización automática de una página después de cargarla en modo exploración.
 Esta opción está activada por defecto.
 
 ==== Incluir Tablas de Diseño ====
@@ -995,7 +1006,7 @@ Esta opción, cuando está marcada, permite a NVDA entrar en y abandonar el modo
 Por ejemplo, si se va pulsando flecha abajo por una página Web y caes sobre un cuadro de edición, NVDA activará automáticamente el modo foco. Si pulsas las flechas para salir del cuadro de edición, NVDA te volverá a poner en modo revisión.
 
 ==== Indicación de Audio de los modos Foco y Navegación ====
-Si esta opción está activada, NVDA reproducirá sonidos especiales cuando cambie entre modo navegación y modo foco en lugar de verbalizar el cambio.
+Si esta opción está activada, NVDA reproducirá sonidos especiales cuando cambie entre modo exploración y modo foco en lugar de verbalizar el cambio.
 
 +++ Opciones de Formato de Documento (NVDA+control+d) +++[DocumentFormattingSettings]
 Este cuadro de diálogo se encuentra en el menú Preferencias, bajo "Formato de Documento...". 
@@ -1015,6 +1026,7 @@ Puedes configurar el anunciado de:
 - Números de página
 - Números de línea
 - Sangría de línea
+- Sangría de párrafo (por ejemplo: sangría francesa, sangría de primera línea)
 - Tablas
 - Encabezados de fila/columna de tabla
 - Coordenadas de celdas de tabla
@@ -1074,7 +1086,7 @@ Cuando termines, pulsa el botón Aceptar para guardar tus cambios o el botón Ca
 En este diálogo, puedes personalizar los gestos de entrada (teclas en el teclado, botones en la pantalla braille, etc.) para órdenes de NVDA.
 
 Sólo se muestran las órdenes que se apliquen inmediatamente antes de que el diálogo se abra.
-Por ejemplo, si quieres personalizar órdenes relacionadas con el modo navegación, deberías abrir el diálogo Gestos de entrada mientras estés en modo navegación.
+Por ejemplo, si quieres personalizar órdenes relacionadas con el modo exploración, deberías abrir el diálogo Gestos de entrada mientras estés en modo exploración.
 
 El árbol en este cuadro de diálogo muestra todas las órdenes de NVDA aplicables agrupadas por categoría.
 Cualquier gesto asociado con una orden se lista bajo la orden.
@@ -1208,7 +1220,6 @@ No obstante, si haces clic o colocas el foco dentro del visualizador,  NVDA dete
 ++ Administrador de Complementos ++
 El Administrador de Complementos, al que se accede seleccionando Administrador de complementos bajo Herramientas en el menú NVDA, te permite instalar y desinstalar paquetes de complementos para NVDA.
 Estos paquetes son proporcionados por la comunidad y contienen código personalizado que podrá añadir o cambiar características en NVDA o también proporcionan soporte para pantallas Braille o sintetizadores de voz extra.
-
 El Administrador de Complementos contiene una lista que muestra todos los complementos instalados actualmente en tu configuración de usuario de NVDA. 
 Se muestra un nombre de paquete, versión y autor para cada complemento, aunque se puede ver más información tal como una descripción y una URL seleccionando el complemento y pulsando el botón Acerca del complemento.
 

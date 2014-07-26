@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-22 19:10+1000\n"
-"PO-Revision-Date: 2014-05-10 04:32-0800\n"
+"POT-Creation-Date: 2014-07-02 19:14+1000\n"
+"PO-Revision-Date: 2014-07-10 11:59-0800\n"
 "Last-Translator: Joseph Lee <joseph.lee22590@gmail,com>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com, nvda-korean@freelists.org>\n"
@@ -1264,11 +1264,13 @@ msgstr "배경 색상"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "superscript"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "subscript"
 
@@ -3018,6 +3020,7 @@ msgstr "및줄 없음"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "baseline"
 
@@ -3041,6 +3044,42 @@ msgstr "정렬하기"
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "기본 정렬"
+
+#. Translators: the label for paragraph format left indent
+msgid "left indent"
+msgstr "왼쪽 들여 쓰기 활성"
+
+#. Translators: the message when there is no paragraph format left indent
+msgid "no left indent"
+msgstr "왼쪽 들여 쓰기 해제"
+
+#. Translators: the label for paragraph format right indent
+msgid "right indent"
+msgstr "오른쪽 들여 쓰기 활성"
+
+#. Translators: the message when there is no paragraph format right indent
+msgid "no right indent"
+msgstr "오른쪽 들여 쓰기 해제"
+
+#. Translators: the label for paragraph format hanging indent
+msgid "hanging indent"
+msgstr "내어쓰기 활성"
+
+#. Translators: the message when there is no paragraph format hanging indent
+msgid "no hanging indent"
+msgstr "내어쓰기 해제"
+
+#. Translators: the label for paragraph format first line indent
+msgid "first line indent"
+msgstr "첫 줄 들여쓰기 활성"
+
+#. Translators: the message when there is no paragraph format first line indent
+msgid "no first line indent"
+msgstr "첫 줄 들여쓰기 해제"
+
+#. Translators: Reported when text no longer contains a comment.
+msgid "out of comment"
+msgstr "주석 끝"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -3396,6 +3435,7 @@ msgid "Displays one of the recent messages"
 msgstr "최근 메시지 중 하나를 보여줍니다. "
 
 #. Translators: This Outlook Express message has an attachment
+#. Translators: when an email has attachments
 msgid "has attachment"
 msgstr "첨부 파일"
 
@@ -3456,8 +3496,17 @@ msgid "BCC:"
 msgstr "BCC:"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
+#. Translators: when an email is unread
 msgid "unread"
 msgstr "읽지 않음"
+
+#. Translators: for a high importance email
+msgid "high importance"
+msgstr ""
+
+#. Translators: For a low importance email
+msgid "low importance"
+msgstr ""
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3477,6 +3526,14 @@ msgstr "첨부 파일"
 #, python-format
 msgid "sent: %s"
 msgstr "sent: %s"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Outlook..."
+msgstr "아우틀룩 여는중..."
+
+#. Translators: the email is a meeting request
+msgid "meeting request"
+msgstr ""
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -4134,6 +4191,10 @@ msgstr "저자"
 msgid "&About add-on..."
 msgstr "추가 기능 정보 (&A)..."
 
+#. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
+msgid "Add-on &help"
+msgstr "도움말 읽기 (&H)"
+
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
 msgstr "설치 (&I)..."
@@ -4651,6 +4712,10 @@ msgstr "NVDA 종료시 환경설정 저장 (&S)"
 msgid "&Warn before exiting NVDA"
 msgstr "NVDA 종료전 경고 알림 (&W)"
 
+#. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
+msgid "&Play sounds when starting or exiting NVDA"
+msgstr "NVDA 시작 및 종료음 재생 (&P)"
+
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "실행 로그 기록 레벨 (&O)"
@@ -5149,6 +5214,11 @@ msgstr "줄수 알림 (&L)"
 msgid "Report l&ine indentation"
 msgstr "줄 들여쓰기 알림 (&I)"
 
+#. Translators: This message is presented in the document formatting settings dialogue
+#. If this option is selected, NVDA will report paragraph indentation if available.
+msgid "Report &paragraph indentation"
+msgstr "문단 들여쓰기 알림 (&P)"
+
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &tables"
@@ -5228,6 +5298,7 @@ msgid "&Dictionary entries"
 msgstr "발음 사전 단어 목록 (&D)"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
+#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr "설명"
 
@@ -5498,6 +5569,7 @@ msgstr "링크, 헤딩과 랜드마크 목록을 보여줍니다. "
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
 msgstr "테이블 셀 아님"
 
@@ -5972,8 +6044,10 @@ msgstr "기본 색상"
 msgid "{start} through {end}"
 msgstr "{start} - {end}"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
@@ -5981,35 +6055,63 @@ msgstr ""
 "머릿말 설정 불가. NvDA 서식 알림 설정에서 테이블 머릿말 알림을 선택해 주세"
 "요. "
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Set column header row"
-msgstr "열 머리말 행 설정"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#, fuzzy
+msgid "Set {address} as start of column headers"
+msgstr "표 행 및 열의 머릿말 알림 (&E)"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Cleared column header row"
-msgstr "열 머리말 행 해제"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Already set {address} as start of column headers"
+msgstr ""
+
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#, fuzzy
+msgid "removed {address}    from column headers"
+msgstr "표 행 및 열의 머릿말 알림 (&E)"
+
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Cannot find {address}    in column headers"
+msgstr ""
 
 msgid ""
-"Pressing once will set the current row as the row where column headers "
-"should be found. Pressing twice clears the setting."
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this region. Pressing twice will forget "
+"the current column header for this cell."
 msgstr ""
-"한번 누르면 현재 행을 열 머릿말 행으로 설정합니다. 두번 누르면 이 설정을 해제"
-"합니다. "
 
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Set row header column"
-msgstr "행 머리말 열 설정"
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Set {address} as start of row headers"
+msgstr ""
 
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Cleared row header column"
-msgstr "행 머릿말 열 해제"
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Already set {address} as start of row headers"
+msgstr ""
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "removed {address}    from row headers"
+msgstr ""
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Cannot find {address}    in row headers"
+msgstr ""
 
 msgid ""
-"Pressing once will set the current column as the column where row headers "
-"should be found. Pressing twice clears the setting."
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this region. Pressing twice will forget the "
+"current row header for this cell."
 msgstr ""
-"한번 누르면 현재 열을 행 머릿말 열로 설정합니다. 두번 누르면 이 설정을 해제합"
-"니다. "
+
+#. Translators: A message in Excel when there is no comment
+msgid "Not on a comment"
+msgstr "셀 주석 없음"
+
+#. Translators: the description  for a script for Excel
+msgid "Reports the comment on the current cell"
+msgstr "셀 주석을 알려줍니다"
+
+#. Translators: Dialog text for
+msgid "Editing comment for cell {address}"
+msgstr ""
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
@@ -6123,6 +6225,141 @@ msgstr "날짜 알 수 없음"
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "리비전: {revisionType}; 저자: {revisionAuthor}; 날짜: {revisionDate}"
 
+#, python-format
+msgid "%g characters"
+msgstr "%g 글자"
+
+#. Translators: the value in points for a paragraph indenting
+#, python-format
+msgid "%g pt"
+msgstr "%g pt"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr ""
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr ""
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "굵기 시작"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "굵기 끝"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "이탤릭 시작"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "이탤릭 끝"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "밑줄 시작"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "밑줄 끝"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Left aligned"
+msgstr "문자 배치 왼쪽"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "centered"
+msgstr "문자 배치 중앙"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Right aligned"
+msgstr "문자 배치 오른쪽"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Justified"
+msgstr ""
+
+#. Translators: the message when the outline level / style is changed in Microsoft word
+msgid "{styleName} style, outline level {outlineLevel}"
+msgstr ""
+
+#. Translators: a message when increasing or decreasing font size in Microsoft Word
+msgid "{size:g} point font"
+msgstr ""
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} characters"
+msgstr "{offset:.3g} 글자"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} inches"
+msgstr ""
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} centimeters"
+msgstr ""
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} millimeters"
+msgstr ""
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} points"
+msgstr ""
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} picas"
+msgstr ""
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "no comments"
+msgstr "주석 없음"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr ""
+
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 msgid "Not in table"
@@ -6138,6 +6375,32 @@ msgstr "HIMS 한소네/브레일 에지"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
+
+#~ msgid "Set column header row"
+#~ msgstr "열 머리말 행 설정"
+
+#~ msgid "Cleared column header row"
+#~ msgstr "열 머리말 행 해제"
+
+#~ msgid ""
+#~ "Pressing once will set the current row as the row where column headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "한번 누르면 현재 행을 열 머릿말 행으로 설정합니다. 두번 누르면 이 설정을 "
+#~ "해제합니다. "
+
+#~ msgid "Set row header column"
+#~ msgstr "행 머리말 열 설정"
+
+#~ msgid "Cleared row header column"
+#~ msgstr "행 머릿말 열 해제"
+
+#~ msgid ""
+#~ "Pressing once will set the current column as the column where row headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "한번 누르면 현재 열을 행 머릿말 열로 설정합니다. 두번 누르면 이 설정을 해"
+#~ "제합니다. "
 
 #, fuzzy
 #~ msgid "%s through %s"
