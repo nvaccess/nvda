@@ -113,5 +113,7 @@ webKitVBufBackend=env.SConscript('vbufBackends/webKit/sconscript')
 env.Install(libInstallDir,webKitVBufBackend)
 
 if TARGET_ARCH=='x86':
+	speechPlayerLib=env.SConscript('speechPlayer_sconscript')
+	Export('speechPlayerLib')
 	env.SConscript('espeak/sconscript')
 	env.SConscript('liblouis/sconscript')

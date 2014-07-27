@@ -1,6 +1,7 @@
 Import([
 	'env',
 	'sourceDir',
+	'speechPlayerLib',
 ])
 
 import os
@@ -85,6 +86,7 @@ for f in env.Glob(espeakRepo.abspath+'/src/*'):
 	env.Command(tempSrcDir.File(f.name),f,Copy('$TARGET','$SOURCE'))
 for f in winFiles:
 	env.Command(tempSrcDir.File(f),espeakRepo.File('platforms/windows/windows_dll/src/%s'%f),Copy('$TARGET','$SOURCE'))
+env.Command(tempSrcDir.File('speechPlayer.cpp'),File('speechPlayer.cpp'),Copy('$TARGET','$SOURCE'))
 
 espeakLib=env.SharedLibrary(
 	target='espeak',
@@ -109,10 +111,10 @@ espeakLib=env.SharedLibrary(
 		"fifo.cpp",
 		"wave.cpp",	"debug.cpp",
 		"phonemelist.cpp",
-		"klatt.cpp",
+		"speechPlayer.cpp",
 		"sonic.cpp",
 	],
-	LIBS=['advapi32'],
+	LIBS=[speechPlayerLib[0],'advapi32'],
 )
 
 #Compile phoneme data
