@@ -20,11 +20,16 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 - Melhorado o suporte para a caixa de entrada e outras listas de mensagens no Outlook 2010 e superiores (#3834) incluindo:
  - Possibilidade de silenciar os cabeçalhos das colunas (como por exemplo assunto, de, etc), desativando a opção Anunciar os cabeçalhos de linhas e colunas das tabelas no Diálogo de Opções de Formatação de Documentos;
  - Possibilidade de usar os comandos de navegação de tabelas (control + alt + setas) para mover-se pelas colunas separadamente.
-Microsoft word: If an inline image has no alternative text set, NVDA will instead report the title of the image if the author has provided one. (#4193)
+- Microsoft word: Quando não houver texto descritivo para uma imagem inserida no texto, o NVDA irá anunciar o título da imagem, caso o autor tenha posto um. (#4193)
 - Microsoft Word: Anúncio da indentação do parágrafo através do comando de anúncio de formatação (NVDA+f) e automaticamente caso a nova opção, Anunciar indentação do parágrafo nas opções de formatação de documentos esteja habilitada. (#4165).
-- Report automatically inserted text such as a new bullet, number or tab indent when pressing enter in editable documents and text fields. (#4185)
+- Anúncio de textos  inseridos automaticamente, tais como um novo marcador, numeração ou indentação com tab ao pressionar enter em documentos editáveis  e campos de texto. (#4185)
 - Microsoft word: ao pressionar NVDA+alt+c irá anunciar o texto do comentário caso o cursor esteja sobre algum. (#3528)
 - Melhorado o suporte para a leitura automática dos cabeçalhos de colunas e linhas no Microsoft Excel (#3568) incluindo:
+- Microsoft Word: Anúncio da distância para a borda esquerda da página quando a tecla tab é pressionada. (#1353)
+- Microsoft Word: obtenção de resposta em voz e braille para grande parte das teclas de atalho disponíveis para formatação  (negrito, itálico, sublinhado, alinhamento e nível de rascunho. ). (#1353)
+- Microsoft Excel: Caso haja comentários na célula selecionada, estes agora podem ser anunciaddos pressionando-se NVDA+alt+c. (#2920)
+- Microsoft Excel: implementado um diálogo específico do NVDA para editar comentários na célula atualmente selecionada ao pressionar o comando shift+f2 do Excel para entrar no modo de edição de comentários. (#2920)
+- Microsoft Excel: resposta em voz e braille para vários atalhos de movimentos de seleção. (#4211) incluindo:
 
 
 == Alterações ==
@@ -35,6 +40,8 @@ Microsoft word: If an inline image has no alternative text set, NVDA will instea
 - No Google Chrome e navegadores baseados neste, certos blocos de texto (tais como os providos de ênfase) já não são repetidos quando é anunciado o texto de uma alerta ou diálogo. (#4066)
 - No modo de navegação em aplicativos Mozilla, pressionando-se enter em um botão, etc. já não falha para ativá-lo (ou ativa o controle errado) em certos casos tais como os botões no topo  do Facebook. (#4106)
 - Informações inúteis já não são anunciadas ao mover-se com tab no iTunes. (#4128)
+- Em certas listas do iTunes tais como a lista Músicas, mover para o próximo item usando a navegação de objetos agora funciona corretamente. (#4129)
+- Elementos HTML considerados cabeçalhos because of WAI ARIA markup are now included in the Browse mode Elements list and quick navigation for Internet Explorer documents. (#4140)
 
 
 == Alterações específicas para desenvolvedores ==
