@@ -413,8 +413,8 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("No location information"))
 			return
 		ui.message(locationText)
-	# Translators: Input help mode message for report object dimensions command.
-	script_navigatorObject_currentDimensions.__doc__=_("Reports location and size information about the text position or object at the review cursor. Pressing twice may provide further detail.") 
+	# Translators: Description for report review cursor location command.
+	script_navigatorObject_currentDimensions.__doc__=_("Reports information about the location of the text or object at the review cursor. Pressing twice may provide further detail.") 
 	script_navigatorObject_currentDimensions.category=SCRCAT_OBJECTNAVIGATION
 
 	def script_navigatorObject_toFocus(self,gesture):
