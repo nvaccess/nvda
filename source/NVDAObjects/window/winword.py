@@ -330,7 +330,12 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		elif role=="graphic":
 			role=controlTypes.ROLE_GRAPHIC
 		elif role=="object":
-			role=controlTypes.ROLE_EMBEDDEDOBJECT
+			progid=field.get("progid")
+			if progid and progid.startswith("Equation.DSMT"):
+				# MathType.
+				role=controlTypes.ROLE_EQUATION
+			else:
+				role=controlTypes.ROLE_EMBEDDEDOBJECT
 		else:
 			fieldType=int(field.pop('wdFieldType',-1))
 			if fieldType!=-1:
@@ -961,6 +966,14 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 
 	def script_previousColumn(self,gesture):
 		self._moveInTable(row=False,forward=False)
+
+	def getMathMlForEquation(self, field):
+		import mathType
+		# fixme: Don't assume the equation at the caret.
+		ti = self.makeTextInfo(textInfos.POSITION_CARET)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		obj = ti._rangeObj.InlineShapes[0].OLEFormat
+		return mathType.getMathMl(obj)
 
 	__gestures = {
 		"kb:control+[":"increaseDecreaseFontSize",

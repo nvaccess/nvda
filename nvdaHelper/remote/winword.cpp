@@ -103,6 +103,7 @@ using namespace std;
 #define wdDISPID_RANGE_INLINESHAPES 319
 #define wdDISPID_INLINESHAPES_COUNT 1
 #define wdDISPID_INLINESHAPES_ITEM 0 
+#define wdDISPID_INLINESHAPE_OLEFORMAT 5
 #define wdDISPID_INLINESHAPE_TYPE 6
 #define wdDISPID_INLINESHAPE_ALTERNATIVETEXT 131
 #define wdDISPID_INLINESHAPE_TITLE 158
@@ -128,6 +129,7 @@ using namespace std;
 #define wdDISPID_PARAGRAPHFORMAT_RIGHTINDENT 106
 #define wdDISPID_PARAGRAPHFORMAT_LEFTINDENT 107
 #define wdDISPID_PARAGRAPHFORMAT_FIRSTLINEINDENT 108
+#define wdDISPID_OLEFORMAT_PROGID 22
 
 #define wdCommentsStory 4
 
@@ -155,6 +157,9 @@ using namespace std;
 #define wdLanguageNone 0  //&H0
 #define wdNoProofing 1024  //&H400
 #define wdLanguageUnknown 9999999
+
+#define wdInlineShapeEmbeddedOLEObject 1
+#define wdInlineShapePicture 3
 
 #define formatConfig_reportFontName 1
 #define formatConfig_reportFontSize 2
@@ -696,7 +701,18 @@ inline int generateInlineShapeXML(IDispatch* pDispatchRange, wostringstream& XML
 		}
 		SysFreeString(altText);
 	}
-	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<(shapeType==3?L"graphic":L"object")<<L"\" value=\""<<altTextStr<<L"\">";
+	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<(shapeType==wdInlineShapePicture?L"graphic":L"object")<<L"\" value=\""<<altTextStr<<L"\"";
+	if(shapeType==wdInlineShapeEmbeddedOLEObject) {
+		IDispatchPtr pOLEFormat=NULL;
+		if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_OLEFORMAT,VT_DISPATCH,&pOLEFormat)==S_OK) {
+			BSTR progId=NULL;
+			if(_com_dispatch_raw_propget(pOLEFormat,wdDISPID_OLEFORMAT_PROGID,VT_BSTR,&progId)==S_OK&&progId) {
+				XMLStream<<L" progid=\""<<progId<<"\"";
+				SysFreeString(progId);
+			}
+		}
+	}
+	XMLStream<<L">";
 	return count;
 }
 
