@@ -333,7 +333,7 @@ To navigate by object, use the following commands:
 | Move to focus object | NVDA+numpadMinus | NVDA+backspace | none | Moves to the object that currently has the system focus, and also places the review cursor at the position of the System caret, if it is showing |
 | Activate current navigator object | NVDA+numpadEnter | NVDA+enter | double tap | Activates the current navigator object (similar to clicking with the mouse or pressing space when it has the system focus) |
 | Move System focus or caret to current review position | NVDA+shift+numpadMinus | NVDA+shift+backspace | none | pressed once Moves the System focus to the current navigator object, pressed twice moves the system caret to the position of the review cursor |
-| Report navigator object dimensions | NVDA+numpadDelete | NVDA+delete | none | Reports the current navigator object's dimensions on screen in per centages (including distance from left and top of screen, and its width and height) |
+| Report review cursor location | NVDA+numpadDelete | NVDA+delete | none | Reports information about the location of the text or object at the review cursor. For example, this might include the percentage through the document, the distance from the edge of the page or the exact screen position. Pressing twice may provide further detail. |
 %kc:endInclude
 
 Note: numpad keys require numlock key to be turned off to work properly.
@@ -525,11 +525,20 @@ A key command is provided to return to the original page containing the embedded
 + Application Specific NVDA Commands +
 NVDA provides its own extra commands for some applications to make certain tasks easier or to provide access to functionality which is not otherwise accessible to screen reader users.
 
+++ Microsoft Word ++
+%kc:beginInclude
+|| Name | Key | Description |
+| Report current comment | NVDA+Alt+c | Reports the text of the comment at the position of the System Caret. | 
+| Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. | 
+| Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. | 
+%kc:endInclude
+
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Name | Key | Description |
-| Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. | 
-| Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. | 
+| Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. | 
+| Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. | 
+| Report comment | NVDA+alt+c | Reports the comment on the current cell if any. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -587,6 +596,9 @@ This option is a checkbox that, when checked, tells NVDA to automatically save t
 ==== Warn before exiting NVDA ====
 This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks whether or not you would like to exit.
 When checked, a dialog will appear when you attempt to exit NVDA asking whether or not you want to exit.
+
+==== Play sounds when starting or exiting NVDA ====
+This option is a checkbox that, when checked, tells NVDA to play sounds when it starts or exits.
 
 ==== Logging level ====
 This is a combo box that permits you to choose how much NVDA will log as it's running.
@@ -808,7 +820,7 @@ If on, this option will cause speech to be interrupted each time the Enter key i
 
 ==== Allow skim reading in Say All ====
 If on, certain navigation commands (such as quick navigation in browse mode or moving by line or paragraph) do not stop Say All, rather Say All jumps to the new position and continues reading.
- 
+
 ==== Beep if Typing Lowercase Letters when Caps Lock is On ====
 When enabled, a warning beep will be heard if a letter is typed with the shift key while caps lock is on.
 Generally, typing shifted letters with caps lock is unintentional and is usually due to not realising that caps lock is enabled.
@@ -819,6 +831,10 @@ Therefore, it can be quite helpful to be warned about this.
 Key: NVDA+4
 
 When enabled, NVDA will announce all non-character keys you type on the keyboard. This includes key combinations such as control plus another letter.
+
+==== Handle keys from other applications ====
+This option allows the user to control if key presses generated by applications such as on-screen keyboards and speech recognition software should be processed by NVDA. 
+This option is on by default, though certain users may wish to turn this off, such as those typing Vietnamese with the Unikey typing software as it will  cause incorrect character input.
 
 +++ Mouse Settings (NVDA+control+m) +++[MouseSettings]
 The Mouse Settings dialog is found in the Preferences Menu, under "Mouse settings...".
@@ -924,7 +940,7 @@ Toggles the announcement of new content in particular objects such as terminals 
 The Input Composition Settings dialog can be found under the Preferences menu.
 This dialog allows you to control how NVDA reports the input of Asian characters, such as with IME or Text Service input methods.
 Note that due to the fact that input methods vary greatly by available features and by how they convey information, it will most likely be necessary to configure these options differently for each input method to get the most efficient typing experience.
- 
+
 ==== Automatically report all available candidates ====
 This option, which is on by default,  allows you to choose whether or not all visible candidates should be reported automatically when a candidate list appears or its page is changed.
 Having this option on for pictographic input methods such as chinese New ChangJie or Boshiami is useful, as you can automatically hear all symbols and their numbers and you can choose one right away.
@@ -939,7 +955,7 @@ Note that even with this option off, the review cursor will still be placed on t
 This option, which is on by default, allows you to choose whether or not NVDA should provide a short description for each character in a candidate, either when its selected or when its automatically read when the candidate list appears.
 Note that for locales such as Chinese, the announcement of extra character descriptions for the selected candidate is not affected by this option.
 This option may be useful for Korean and japanese input methods.
- 
+
 ==== Report changes to the reading string ====
 Some input methods such as Chinese New Phonetic and New ChangJie have a reading string (sometimes known as a precomposition string).
 You can choose whether or not NVDA should announce new characters being typed into this reading string with this option.
@@ -1011,6 +1027,7 @@ You can configure reporting of:
 - Page numbers
 - Line numbers
 - Line indentation
+- Paragraph indentation (e.g. hanging indent, first line indent)
 - Tables
 - Table row/column headers
 - Table cell coordinates
@@ -1039,7 +1056,7 @@ They are:
 -
 
 All dictionary dialogs contain a list of rules which will be used for processing the speech.
-The dialog also contains Add, Edit and remove buttons.
+The dialog also contains Add, Edit and Remove buttons.
 
 To add a new rule to the dictionary, press the Add button, and fill in the fields in the dialog box that appears and then press Ok.
 You will then see your new rule in the list of rules.
@@ -1207,6 +1224,7 @@ These packages are provided by the community and contain custom code that may ad
 
 The Add-ons Manager contains a list that displays all the add-ons currently installed in your NVDA user configuration. 
 A package name, version and author are shown for each add-on, though further information such as a description and URL can be viewed by selecting the add-on and pressing the About add-on button.
+If there is help available for the selected add-on, you can access it by pressing the Add-on help button.
 
 To browse and download available add-ons online, press the Get add-ons button.
 This button opens the [NVDA Add-ons page http://addons.nvda-project.org/].

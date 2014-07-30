@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-07 18:54+1000\n"
-"PO-Revision-Date: 2014-02-07 18:57+0400\n"
+"POT-Creation-Date: 2014-07-02 19:14+1000\n"
+"PO-Revision-Date: 2014-07-16 03:22+0300\n"
 "Last-Translator: Ruslan Kolodyazhni <eye0@rambler.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 "Initial-Author: Dmitry Kaslin <dak1968@gmail.com>\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.5.4\n"
 "X-Poedit-Bookmarks: 343,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -121,6 +121,10 @@ msgstr "Поиск"
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
 msgstr "Форма"
+
+#. Translators: Reported for a significant region, normally found on web pages.
+msgid "region"
+msgstr "область"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -882,7 +886,7 @@ msgstr "Заголовок строки"
 
 #. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 msgid "drop down button"
-msgstr "Нажатая кнопка"
+msgstr "кнопка с выпадающим меню"
 
 #. Translators: Identifies an element.
 msgid "clock"
@@ -1261,11 +1265,13 @@ msgstr "Цвет фона"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "Надстрочный"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "Подстрочный"
 
@@ -2453,12 +2459,16 @@ msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
 msgstr ""
+"Переходит к следующему объекту иерархии объектной навигации в режиме "
+"просмотра экрана"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
 "hierarchy"
 msgstr ""
+"Переходит к предыдущему объекту иерархии объектной навигации в режиме "
+"просмотра экрана"
 
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
@@ -3055,6 +3065,7 @@ msgstr "Не подчёркнутый"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "Базовая линия"
 
@@ -3078,6 +3089,44 @@ msgstr "выравнивание по ширине"
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "Выравнивание поумолчанию"
+
+#. Translators: the label for paragraph format left indent
+msgid "left indent"
+msgstr "отступ слева"
+
+#. Translators: the message when there is no paragraph format left indent
+msgid "no left indent"
+msgstr "без отступа слева"
+
+#. Translators: the label for paragraph format right indent
+msgid "right indent"
+msgstr "отступ справа"
+
+#. Translators: the message when there is no paragraph format right indent
+msgid "no right indent"
+msgstr "без отступа справа"
+
+#. Translators: the label for paragraph format hanging indent
+#, fuzzy
+msgid "hanging indent"
+msgstr "без отступа"
+
+#. Translators: the message when there is no paragraph format hanging indent
+#, fuzzy
+msgid "no hanging indent"
+msgstr "без отступа"
+
+#. Translators: the label for paragraph format first line indent
+msgid "first line indent"
+msgstr "отступ первой строки"
+
+#. Translators: the message when there is no paragraph format first line indent
+msgid "no first line indent"
+msgstr "нет отступа первой строки"
+
+#. Translators: Reported when text no longer contains a comment.
+msgid "out of comment"
+msgstr "Больше нет примечания."
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -3170,22 +3219,22 @@ msgstr "удержание"
 #. Translators: a quick swipe of a finger in an up direction, on a touch screen.
 msgctxt "touch action"
 msgid "flick up"
-msgstr ""
+msgstr "пролистать вверх"
 
 #. Translators: a quick swipe of a finger in an down direction, on a touch screen.
 msgctxt "touch action"
 msgid "flick down"
-msgstr ""
+msgstr "пролистать вниз"
 
 #. Translators: a quick swipe of a finger in a left direction, on a touch screen.
 msgctxt "touch action"
 msgid "flick left"
-msgstr ""
+msgstr "пролистать влево"
 
 #. Translators: a quick swipe of a finger in a right direction, on a touch screen.
 msgctxt "touch action"
 msgid "flick right"
-msgstr ""
+msgstr "пролистать вправо"
 
 #. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
 msgctxt "touch action"
@@ -3408,12 +3457,12 @@ msgstr "Устанавливает объект навигатора на пре
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
-msgstr ""
+msgstr "Формирование ввода"
 
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 msgid "Candidate"
-msgstr ""
+msgstr "Вариант"
 
 msgid "Display"
 msgstr "Дисплей"
@@ -3439,6 +3488,7 @@ msgid "Displays one of the recent messages"
 msgstr "Отображает одно из последних сообщений"
 
 #. Translators: This Outlook Express message has an attachment
+#. Translators: when an email has attachments
 msgid "has attachment"
 msgstr "содержит вложение"
 
@@ -3499,8 +3549,17 @@ msgid "BCC:"
 msgstr "Скрытая Копия:"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
+#. Translators: when an email is unread
 msgid "unread"
 msgstr "Непрочитано"
+
+#. Translators: for a high importance email
+msgid "high importance"
+msgstr ""
+
+#. Translators: For a low importance email
+msgid "low importance"
+msgstr ""
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3521,6 +3580,14 @@ msgstr "Вложение"
 msgid "sent: %s"
 msgstr "Отправлено: %s"
 
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Outlook..."
+msgstr "Ожидаем Outlook..."
+
+#. Translators: the email is a meeting request
+msgid "meeting request"
+msgstr ""
+
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
 msgid "No notes for translators."
@@ -3529,26 +3596,26 @@ msgstr "Нет примечаний для переводчиков."
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'Notes for translators' window in poedit.
 msgid "Could not find Notes for translators window."
-msgstr "Невозможно найти окно комментариев для переводчиков."
+msgstr "Невозможно найти окно замечаний для переводчиков."
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any notes for translators"
-msgstr "Сообщает любые комментарии для переводчиков."
+msgstr "Читает замечания для переводчиков."
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
 msgid "Could not find comment window."
-msgstr "Невозможно найти окно комментариев."
+msgstr "Невозможно найти окно замечаний."
 
 #. Translators: this message is reported when there are no
 #. comments to be presented to the user in the translator
 #. comments window in poedit.
 msgid "No comment."
-msgstr "Нет комментария."
+msgstr "Нет замечаний."
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any comments in the comments window"
-msgstr "Читает комментарий из окна комментариев"
+msgstr "Читает  замечание в соответствующем окне "
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Title placeholder"
@@ -4187,6 +4254,10 @@ msgstr "Автор"
 msgid "&About add-on..."
 msgstr "О дополнении..."
 
+#. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
+msgid "Add-on &help"
+msgstr "Сп&равка"
+
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
 msgstr "&Установить..."
@@ -4720,6 +4791,10 @@ msgstr "&Автосохранение конфигурации при выход
 msgid "&Warn before exiting NVDA"
 msgstr "Запро&с подтверждения при завершении NVDA"
 
+#. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
+msgid "&Play sounds when starting or exiting NVDA"
+msgstr "Воспрои&зводить звуки при запуске или завершении NVDA"
+
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "Уровень записи в файл &отчёта"
@@ -4933,6 +5008,11 @@ msgstr "Звуковой сигнал при наборе маленьких б�
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "Читать &Командные клавиши"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Handle keys from other &applications"
+msgstr "Обрабатывать клавиши из &других приложений"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
@@ -5212,6 +5292,11 @@ msgstr "Читать &Номера строк"
 msgid "Report l&ine indentation"
 msgstr "Читать &отступы"
 
+#. Translators: This message is presented in the document formatting settings dialogue
+#. If this option is selected, NVDA will report paragraph indentation if available.
+msgid "Report &paragraph indentation"
+msgstr "Читать &отступы абзацев"
+
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &tables"
@@ -5291,8 +5376,9 @@ msgid "&Dictionary entries"
 msgstr "&Словарные статьи"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
+#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
-msgstr "Коментарий"
+msgstr "Примечание"
 
 #. Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
 msgid "Pattern"
@@ -5560,6 +5646,7 @@ msgstr "Вызывает диалог со списком ссылок, заго
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
 msgstr "Вне ячейки таблицы"
 
@@ -6034,8 +6121,10 @@ msgstr "цвет поумолчанию"
 msgid "{start} through {end}"
 msgstr "{start} по {end}"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
@@ -6044,35 +6133,71 @@ msgstr ""
 "заголовки строк и столбцов в таблицах\" в настройках \"Форматирование "
 "документа...\""
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Set column header row"
-msgstr "Установить строку в качестве заголовка для столбцов"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#, fuzzy
+msgid "Set {address} as start of column headers"
+msgstr "Читать заголовки строк и столбцов в &таблицах"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Cleared column header row"
-msgstr "Строка с пустым заголовком в столбце"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Already set {address} as start of column headers"
+msgstr ""
+"Координаты {address} уже установлены в качестве заголовков начала столбцов"
+
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#, fuzzy
+msgid "removed {address}    from column headers"
+msgstr "Читать заголовки строк и столбцов в &таблицах"
+
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Cannot find {address}    in column headers"
+msgstr "Невозможно найти в заголовках столбцов координаты {address}"
 
 msgid ""
-"Pressing once will set the current row as the row where column headers "
-"should be found. Pressing twice clears the setting."
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this region. Pressing twice will forget "
+"the current column header for this cell."
 msgstr ""
-"Однократное нажатие установит текущую строку как строку, в которой должны "
-"находиться заголовки столбцов. Двойное нажатие сбрасывает эту установку."
+"одиночное нажатие указывает NVDA, что эта строка содержит заголовки для "
+"столбцов, которые автоматически читаются при перемещении по столбцам под "
+"этой строкой.  Двойное нажатие сбрасывает установку."
 
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Set row header column"
-msgstr "Установить столбец в качестве заголовка для строк"
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Set {address} as start of row headers"
+msgstr "Установка координат {address} в качестве заголовков начала строк"
 
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Cleared row header column"
-msgstr "Столбец с пустым заголовком в строке"
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Already set {address} as start of row headers"
+msgstr ""
+"Координаты {address} уже установлены в качестве заголовков начала строк"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "removed {address}    from row headers"
+msgstr "Удалить координаты {address} из заголовков строк"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Cannot find {address}    in row headers"
+msgstr "Невозможно найти в заголовках строк координаты {address}"
 
 msgid ""
-"Pressing once will set the current column as the column where row headers "
-"should be found. Pressing twice clears the setting."
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this region. Pressing twice will forget the "
+"current row header for this cell."
 msgstr ""
-"Однократное нажатие установит текущий столбец как столбец, в котором должны "
-"находиться заголовки строк. Двойное нажатие сбрасывает эту установку."
+"одиночное нажатие указывает NVDA, что этот столбец содержит заголовки для "
+"строк, которые автоматически читаются при перемещении по строкам за этим "
+"столбцом.  Двойное нажатие сбрасывает установку."
+
+#. Translators: A message in Excel when there is no comment
+msgid "Not on a comment"
+msgstr "Нет примечания"
+
+#. Translators: the description  for a script for Excel
+msgid "Reports the comment on the current cell"
+msgstr "Читает примечание для текущей ячейки"
+
+#. Translators: Dialog text for
+msgid "Editing comment for cell {address}"
+msgstr "Редактирование примечания для ячейки с координатами {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
@@ -6153,16 +6278,16 @@ msgid "Endnotes"
 msgstr "Пояснение"
 
 msgid "Even pages footer"
-msgstr ""
+msgstr "И сноска страниц"
 
 msgid "Even pages header"
-msgstr ""
+msgstr "И заголовок страниц"
 
 msgid "First page footer"
-msgstr ""
+msgstr "Первая сноска страницы"
 
 msgid "First page header"
-msgstr ""
+msgstr "Первый заголовок страницы"
 
 msgid "Footnotes"
 msgstr "Сноски"
@@ -6185,6 +6310,149 @@ msgstr "неизвестная дата"
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "{revisionType} просмотрено {revisionAuthor} в {revisionDate}"
 
+#, python-format
+msgid "%g characters"
+msgstr "%g символов"
+
+#. Translators: the value in points for a paragraph indenting
+#, python-format
+msgid "%g pt"
+msgstr "%g пунктов"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Установка строки {rowNumber} и столбца {columnNumber} в качестве заголовков "
+"начала столбцов"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr ""
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"одиночное нажатие указывает NVDA, что эта строка содержит заголовки для "
+"столбцов, которые автоматически читаются при перемещении по столбцам под "
+"этой строкой.  Двойное нажатие сбрасывает установку."
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr ""
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"одиночное нажатие указывает NVDA, что этот столбец содержит заголовки для "
+"строк, которые автоматически читаются при перемещении по строкам за этим "
+"столбцом.  Двойное нажатие сбрасывает установку."
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "Полужирный включён"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "Полужирный отключён"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "Курсив включён"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "Курсив отключён"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "Подчёркивание включено"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "Подчёркивание отключено"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Left aligned"
+msgstr "Выравнивание по левому краю"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "centered"
+msgstr "выравнивание по центру"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Right aligned"
+msgstr "Выравнивание по правому краю"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Justified"
+msgstr "Выравнивание по ширине"
+
+#. Translators: the message when the outline level / style is changed in Microsoft word
+msgid "{styleName} style, outline level {outlineLevel}"
+msgstr ""
+
+#. Translators: a message when increasing or decreasing font size in Microsoft Word
+msgid "{size:g} point font"
+msgstr ""
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} characters"
+msgstr "{offset:.3g} символов"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} inches"
+msgstr ""
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} centimeters"
+msgstr "{offset:.3g} сантиметров"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} millimeters"
+msgstr "{offset:.3g} миллиметров"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} points"
+msgstr "{offset:.3g} точек"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} picas"
+msgstr ""
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "no comments"
+msgstr "нет примечаний."
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "Читает текст примечания в позиции системной каретки."
+
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 msgid "Not in table"
@@ -6200,6 +6468,33 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Set column header row"
+#~ msgstr "Установить строку в качестве заголовка для столбцов"
+
+#~ msgid "Cleared column header row"
+#~ msgstr "Строка с пустым заголовком в столбце"
+
+#~ msgid ""
+#~ "Pressing once will set the current row as the row where column headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "Однократное нажатие установит текущую строку как строку, в которой должны "
+#~ "находиться заголовки столбцов. Двойное нажатие сбрасывает эту установку."
+
+#~ msgid "Set row header column"
+#~ msgstr "Установить столбец в качестве заголовка для строк"
+
+#~ msgid "Cleared row header column"
+#~ msgstr "Столбец с пустым заголовком в строке"
+
+#~ msgid ""
+#~ "Pressing once will set the current column as the column where row headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "Однократное нажатие установит текущий столбец как столбец, в котором "
+#~ "должны находиться заголовки строк. Двойное нажатие сбрасывает эту "
+#~ "установку."
 
 #, fuzzy
 #~ msgid "%s through %s"

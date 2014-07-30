@@ -1,21 +1,37 @@
 #appModules/outlook.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2014 NVDA Contributors <http://www.nvaccess.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 from comtypes import COMError
 import comtypes.client
+from hwPortUtils import SYSTEMTIME
+import scriptHandler
+import winKernel
+import comHelper
 import winUser
+from logHandler import log
 import appModuleHandler
 import eventHandler
+import UIAHandler
 import api
 import controlTypes
+import config
 import speech
 import ui
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible.MSHTML import MSHTML
+from NVDAObjects.behaviors import RowWithFakeNavigation
+from NVDAObjects.UIA import UIA
+
+importanceLabels={
+	# Translators: for a high importance email
+	2:_("high importance"),
+	# Translators: For a low importance email
+	0:_("low importance"),
+}
 
 def getContactString(obj):
 		return ", ".join([x for x in [obj.fullName,obj.companyName,obj.jobTitle,obj.email1address] if x and not x.isspace()])
@@ -46,14 +62,34 @@ def getSentMessageString(obj):
 
 class AppModule(appModuleHandler.AppModule):
 
+	_hasTriedoutlookAppSwitch=False
+
+	def _registerCOMWithFocusJuggle(self):
+		import wx
+		import gui
+		# Translators: The title for the dialog shown while Microsoft Outlook initializes.
+		d=wx.Dialog(None,title=_("Waiting for Outlook..."))
+		gui.mainFrame.prePopup()
+		d.Show()
+		self._hasTriedoutlookAppSwitch=True
+		#Make sure NVDA detects and reports focus on the waiting dialog
+		api.processPendingEvents()
+		comtypes.client.PumpEvents(1)
+		d.Destroy()
+		gui.mainFrame.postPopup()
+
 	def _get_nativeOm(self):
-		if not getattr(self,'_nativeOm',None):
-			try:
-				nativeOm=comtypes.client.GetActiveObject("outlook.application",dynamic=True)
-			except (COMError,WindowsError):
-				nativeOm=None
-			self._nativeOm=nativeOm
-		return self._nativeOm
+		try:
+			nativeOm=comHelper.getActiveObject("outlook.application",dynamic=True)
+		except (COMError,WindowsError,RuntimeError):
+			if self._hasTriedoutlookAppSwitch:
+				log.error("Failed to get native object model",exc_info=True)
+			nativeOm=None
+		if not nativeOm and not self._hasTriedoutlookAppSwitch:
+			self._registerCOMWithFocusJuggle()
+			return None
+		self.nativeOm=nativeOm
+		return self.nativeOm
 
 	def _get_outlookVersion(self):
 		nativeOm=self.nativeOm
@@ -62,6 +98,11 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			outlookVersion=0
 		return outlookVersion
+
+	def isBadUIAWindow(self,hwnd):
+		if winUser.getClassName(hwnd) in ("WeekViewWnd","DayViewWnd"):
+			return True
+		return False
 
 	def event_NVDAObject_init(self,obj):
 		role=obj.role
@@ -83,6 +124,8 @@ class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		# Currently all our custom classes are IAccessible
+		if isinstance(obj,UIA) and obj.UIAElement.cachedClassName in ("LeafRow","ThreadItem","ThreadHeader"):
+			clsList.insert(0,UIAGridRow)
 		if not isinstance(obj,IAccessible):
 			return
 		role=obj.role
@@ -102,6 +145,8 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, MessageList_pre2003)
 			elif obj.event_objectID==winUser.OBJID_CLIENT and obj.event_childID==0:
 				clsList.insert(0,SuperGridClient2010)
+		if (windowClassName == "AfxWndW" and controlID==109) or (windowClassName in ("WeekViewWnd","DayViewWnd")):
+			clsList.insert(0,CalendarView)
 
 class REListBox20W_CheckBox(IAccessible):
 
@@ -117,6 +162,29 @@ class SuperGridClient2010(IAccessible):
 
 	def isDuplicateIAccessibleEvent(self,obj):
 		return False
+
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		# The window must really have focus.
+		# Outlook can sometimes fire invalid focus events when showing daily tasks within the calendar.
+		if winUser.getGUIThreadInfo(self.windowThreadID).hwndFocus!=self.windowHandle:
+			return False
+		return super(SuperGridClient2010,self).shouldAllowIAccessibleFocusEvent
+
+	def event_gainFocus(self):
+		# #3834: UIA has a much better implementation for rows, so use it if available.
+		if self.appModule.outlookVersion<14 or not UIAHandler.handler:
+			return super(SuperGridClient2010,self).event_gainFocus()
+		try:
+			kwargs = {}
+			UIA.kwargsFromSuper(kwargs, relation="focus")
+			obj=UIA(**kwargs)
+		except:
+			log.debugWarning("Retrieving UIA focus failed", exc_info=True)
+			return super(SuperGridClient2010,self).event_gainFocus()
+		if not isinstance(obj,UIAGridRow):
+			return super(SuperGridClient2010,self).event_gainFocus()
+		obj.parent=self.parent
+		eventHandler.executeEvent("gainFocus",obj)
 
 class MessageList_pre2003(IAccessible):
 
@@ -229,3 +297,138 @@ class AutoCompleteListItem(IAccessible):
 		if (focus.role==controlTypes.ROLE_EDITABLETEXT or focus.role==controlTypes.ROLE_BUTTON) and controlTypes.STATE_SELECTED in states and controlTypes.STATE_INVISIBLE not in states and controlTypes.STATE_UNAVAILABLE not in states and controlTypes.STATE_OFFSCREEN not in states:
 			speech.cancelSpeech()
 			ui.message(self.name)
+
+class CalendarView(IAccessible):
+	"""Support for announcing time slots and appointments in Outlook Calendar.
+	"""
+
+	_lastStartDate=None
+
+	def _generateTimeRangeText(self,startTime,endTime):
+		startText=winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, startTime, None)
+		endText=winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, endTime, None)
+		startDate=startTime.date()
+		endDate=endTime.date()
+		if not CalendarView._lastStartDate or startDate!=CalendarView._lastStartDate or endDate!=startDate: 
+			startText="%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, startTime, None),startText)
+		if endDate!=startDate:
+			endText="%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, endTime, None),endText)
+		CalendarView._lastStartDate=startDate
+		return "%s to %s"%(startText,endText)
+
+	def isDuplicateIAccessibleEvent(self,obj):
+		return False
+
+	def event_nameChange(self):
+		pass
+
+	def event_stateChange(self):
+		pass
+
+	def reportFocus(self):
+		if self.appModule.outlookVersion>=13 and self.appModule.nativeOm:
+			e=self.appModule.nativeOm.activeExplorer()
+			s=e.selection
+			if s.count>0:
+				p=s.item(1)
+				try:
+					start=p.start
+					end=p.end
+				except COMError:
+					return super(CalendarView,self).reportFocus()
+				t=self._generateTimeRangeText(start,end)
+				speech.speakMessage("Appointment %s, %s"%(p.subject,t))
+			else:
+				v=e.currentView
+				selectedStartTime=v.selectedStartTime
+				selectedEndTime=v.selectedEndTime
+				timeSlotText=self._generateTimeRangeText(selectedStartTime,selectedEndTime)
+				startLimit=u"%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedStartTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedStartTime, None))
+				endLimit=u"%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedEndTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedEndTime, None))
+				query=u'[Start] < "{endLimit}" And [End] > "{startLimit}"'.format(startLimit=startLimit,endLimit=endLimit)
+				i=e.currentFolder.items
+				i.sort('[Start]')
+				i.IncludeRecurrences =True
+				if i.find(query):
+					timeSlotText="has appointment "+timeSlotText
+				speech.speakMessage(timeSlotText)
+		else:
+			self.event_valueChange()
+
+class UIAGridRow(RowWithFakeNavigation,UIA):
+
+	rowHeaderText=None
+	columnHeaderText=None
+
+	def _get_name(self):
+		textList=[]
+		if controlTypes.STATE_EXPANDED in self.states:
+			textList.append(controlTypes.stateLabels[controlTypes.STATE_EXPANDED])
+		elif controlTypes.STATE_COLLAPSED in self.states:
+			textList.append(controlTypes.stateLabels[controlTypes.STATE_COLLAPSED])
+		selection=None
+		if self.appModule.nativeOm:
+			try:
+				selection=self.appModule.nativeOm.activeExplorer().selection.item(1)
+			except COMError:
+				pass
+		if selection:
+			try:
+				unread=selection.unread
+			except COMError:
+				unread=False
+			# Translators: when an email is unread
+			if unread: textList.append(_("unread"))
+			try:
+				attachmentCount=selection.attachments.count
+			except COMError:
+				attachmentCount=0
+			# Translators: when an email has attachments
+			if attachmentCount>0: textList.append(_("has attachment"))
+			try:
+				importance=selection.importance
+			except COMError:
+				importance=1
+			importanceLabel=importanceLabels.get(importance)
+			if importanceLabel: textList.append(importanceLabel)
+			try:
+				messageClass=selection.messageClass
+			except COMError:
+				messageClass=None
+			if messageClass=="IPM.Schedule.Meeting.Request":
+				# Translators: the email is a meeting request
+				textList.append(_("meeting request"))
+		for child in self.children:
+			if isinstance(child,UIAGridRow) or child.role==controlTypes.ROLE_GRAPHIC or not child.name:
+				continue
+			text=None
+			if config.conf['documentFormatting']['reportTableHeaders'] and child.columnHeaderText:
+				text=u"{header} {name}".format(header=child.columnHeaderText,name=child.name)
+			else:
+				text=child.name
+			if text:
+				text+=","
+				textList.append(text)
+		return " ".join(textList)
+
+	value=None
+
+	def _get_positionInfo(self):
+		info=super(UIAGridRow,self).positionInfo
+		if info is None: info={}
+		UIAClassName=self.UIAElement.cachedClassName
+		if UIAClassName=="ThreadHeader":
+			info['level']=1
+		elif UIAClassName=="ThreadItem" and isinstance(super(UIAGridRow,self).parent,UIAGridRow):
+			info['level']=2
+		return info
+
+	def _get_role(self):
+		role=super(UIAGridRow,self).role
+		if role==controlTypes.ROLE_TREEVIEW:
+			role=controlTypes.ROLE_TREEVIEWITEM
+		return role
+
+	def setFocus(self):
+		super(UIAGridRow,self).setFocus()
+		eventHandler.queueEvent("gainFocus",self)

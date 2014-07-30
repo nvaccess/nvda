@@ -333,7 +333,7 @@ Pre pohyb po objektoch použite nasledujúce príkazy:
 | navigačný objekt na fokus | NVDA+numpadMínus | NVDA+backspace | Nie je | Premiestni navigačný objekt na prvok, ktorý má systémový fokus. Ak je zobrazený systémový kurzor, pokúsi sa nastaviť na jeho pozíciu aj prezerací kurzor |
 | Aktivovať navigačný objekt | NVDA+numpadEnter | NVDA+enter | Dvojité klepnutie | Aktivuje prvok práve zameraný objektovou navigáciou - rovnaké ako stlačenie klávesu enter alebo dvojité kliknutie po zameraní kurzorom myši. |
 | Fokus alebo systémový kurzor na pozíciu prezeracieho kurzora | NVDA+shift+numpad mínus | NVDA+shift+backspace | Nie je | Po prvom stlačení nastaví fokus na navigačný objekt, po druhom stlačení sa pokúsi umiestniť systémový kurzor na pozíciu prezeracieho kurzora |
-| Súradnice objektu | NVDA+numpadDelete | NVDA+delete | Nie je | Oznamuje súradnice objektu vzhľadom na vlastnosti obrazovky |
+| Súradnice objektu | NVDA+numpadDelete | NVDA+delete | Nie je | OZnamuje polohu prezeracieho kurzoru. V režime prezerania dokumentu je to v percentách, prípadne vzdialenosť od okraja strany a až v poslednom prípade v pixeloch. Podrobnejšie informácie NVDA prečíta po dvojitom stlačení. |
 %kc:endInclude
 
 Všimnite si: Numerický blok musí byť vypnutý, aby všetky skratky fungovali korektne.
@@ -525,11 +525,20 @@ Je možné použiť klávesovú skratku na prechod späť do dokumentu v ktorom 
 + Príkazy NVDA špecifické pre aplikácie +
 NVDA pre niektoré aplikácie implementuje svoje vlastné príkazy, čím buď umožňuje ľahšie vykonávať niektoré úlohy, alebo sprístupňuje časti aplikácií, ktoré nie sú inak prístupné používateľom odkázaným na čítač obrazovky.
 
+++ Microsoft Word ++
+%kc:beginInclude
+|| Názov | Klávesová skratka | popis |
+| Prečítaj komentár | NVDA+Alt+c | preťíta komentár pod systémovým kurzorom. | 
+| Nastaviť hlavičky stĺpcov | NVDA+shift+c | Ak stlačíte raz, NVDA bude vybratý stĺpec a nasledujúce stĺpce považovať za hlavičku tabuľky a bude ich oznamovať pri pohybe v nasledujúcich riadkoch. Nastavenie zrušíte dvojitým stlačením. | 
+| Nastaviť hlavičky riadkov | NVDA+shift+r | Ak stlačíte raz, NVDA bude vybratý stĺpec a stĺpce pod ním považovať za hlavičku tabuľky a bude ich oznamovať pri pohybe v stĺpcoch medzi riadkami. Nastavenie zrušíte dvojitým stlačením. |
+%kc:endInclude
+
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Názov | Klávesová skratka | Popis |
-| Nastaviť hlavičky stĺpcov | NVDA+shift+c | Stlačené raz nastavý aktuálny riadok ako riadok s hlavičkami tabuľky, takže NVDA bude oznamovať hlavičky pri pohybe medzi stĺpcami pod týmto rriadkom. Nastavenie vymažete dvojitým stlačením. |
-| Nastaviť hlavičky riadkov | NVDA+shift+r | Stlačené raz nastavý aktuálny stĺpec ako stĺpec s hlavičkami tabuľky, takže NVDA bude oznamovať hlavičky pri pohybe medzi riadkami. Nastavenie vymažete dvojitým stlačením. |
+| Nastaviť hlavičky stĺpcov | NVDA+shift+c | Ak stlačíte raz, NVDA bude vybratý stĺpec a nasledujúce stĺpce považovať za hlavičku tabuľky a bude ich oznamovať pri pohybe v nasledujúcich riadkoch. Nastavenie zrušíte dvojitým stlačením. | 
+| Nastaviť hlavičky riadkov | NVDA+shift+r | Ak stlačíte raz, NVDA bude vybratý stĺpec a stĺpce pod ním považovať za hlavičku tabuľky a bude ich oznamovať pri pohybe v stĺpcoch medzi riadkami. Nastavenie zrušíte dvojitým stlačením. |
+| prečítaj komentár | NVDA+alt+c | Ak aktuálna bunka obsahuje komentár, prečíta ho. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -587,6 +596,9 @@ Začiarkavacie políčko, ktoré ak začiarknete, bude NVDA pri ukončení autom
 ==== Potvrdzovať ukončenie NVDA ====
 Začiarkávacie políčko, ktorého začiarknutím sa bude NVDA pred ukončením pýtať, či ste si istí, že program NVDA chcete ukončiť.
 Ak je začiarknuté a rozhodnete sa ukončiť NVDA, NVDA vás vyzve, aby ste ukončenie potvrdili.
+
+==== prehrať zvuk pri spustení a ukončení NVDA ====
+začiarkávacie pole. Ak začiarknete, NVDA pri spustení  a pred ukončením prehrá zvuk.
 
 ==== Úroveň záznamu ====
 Zoznamový rámik, ktorý umožňuje používateľovi zvoliť, aké množstvo dát má NVDA  zaznamenať počas svojho vlastného behu.
@@ -820,6 +832,10 @@ Klávesová skratka: NVDA+4
 
 Ak je zapnuté, NVDA bude čítať klávesové skratky použité ako príkazy, teda nie samotné znaky. Do tejto funkcie spadajú kombinácie znakov a klávesov napr. s klávesom Control.
 
+==== Spracovať vstup z externých programov ====
+Táto možnosť určuje, či bude NVDA spracúvať vstupy z aplikácií, akými sú klávesnica na obrazovke, alebo program prevodu reči na text.
+predvolene je možnosť začiarknutá. Niektorí používatelia ju môžu chcieť vypnúť, aby nedochádzalo k nesprávnemu zápisu znakov vo vietnamčine cez program Unikey.
+
 +++ Nastavenia myši (NVDA+control+m) +++[MouseSettings]
 Toto dialógové okno nájdeme v možnostiach programu NVDA.
 Dialóg obsahuje nasledujúce prvky:
@@ -1011,6 +1027,7 @@ Takto môžete nastaviť:
 - Číslovanie strán
 - Číslovanie riadkov
 - Odsadenie textu
+- Odsadenie odseku (napríklad vysunutý riadok a odsadenie prvého riadka)
 - Tabuľky
 - Hlavičky riadku a stĺpca tabuľky
 - Súradnice buniek tabuľky
@@ -1207,6 +1224,7 @@ Tieto doplnky vytvárajú používatelia NVDA. Doplnky môžu meniť alebo dopĺ
 
 V správcovi doplnkov sa nachádza zoznam s doplnkami, ktoré sú nainštalované v aktuálnej konfigurácii NVDA.
 Okrem názvu sa zobrazí aj verzia a autor doplnku. Popis a URL adresu môžete zistiť tak, že doplnok vyberiete a aktivujete tlačidlo O doplnku.
+Ak doplnok obsahuje pomocníka, môžete si ho pozrieť po aktivovaní tlačidla Návod.
 
 Ak si chcete pozrieť dostupné doplnky, aktivujte tlačidlo otvoriť stránku s doplnkami.
 Otvorí sa stránka s [doplnkami pre NVDA http://addons.nvda-project.org/].

@@ -411,9 +411,6 @@ class MSHTML(IAccessible):
 			return virtualBuffers.MSHTML.MSHTML
 		return super(MSHTML,self).treeInterceptorClass
 
-	def _get_shouldCreateTreeInterceptor(self):
-		return self.role == controlTypes.ROLE_DOCUMENT
-
 	def _get_HTMLAttributes(self):
 		return HTMLAttribCache(self.HTMLNode)
 

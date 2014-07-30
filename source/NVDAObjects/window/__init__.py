@@ -126,6 +126,8 @@ An NVDAObject for a window
 			from .winConsole import WinConsole as newCls
 		elif windowClassName=="_WwG":
 			from .winword import WordDocument as newCls
+		elif windowClassName in ("_WwN","_WwO"):
+			from .winword import WordDocument_WwN as newCls
 		elif windowClassName=="EXCEL7":
 			from .excel import Excel7Window as newCls
 		if newCls:

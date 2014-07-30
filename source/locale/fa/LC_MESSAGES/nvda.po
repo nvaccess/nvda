@@ -1,17 +1,18 @@
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-07 18:54+1000\n"
-"PO-Revision-Date: 2014-02-11 22:33+0330\n"
+"POT-Creation-Date: 2014-07-02 19:14+1000\n"
+"PO-Revision-Date: 2014-06-28 18:46+0330\n"
 "Last-Translator: ali aslani\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: LANGUAGE <nvda-translations@freelists.org>\n"
+"Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Poedit-Bookmarks: -1,-1,85,-1,-1,-1,-1,-1,-1,-1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -118,6 +119,10 @@ msgstr "جستجو"
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
 msgstr "فرم"
+
+#. Translators: Reported for a significant region, normally found on web pages.
+msgid "region"
+msgstr "بازه"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1256,11 +1261,13 @@ msgstr "رنگ پس زمینه"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "بالا نویس"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "زیر نویس"
 
@@ -3039,6 +3046,7 @@ msgstr "زیرخط‌دار نیست"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "پایه"
 
@@ -3062,6 +3070,51 @@ msgstr "دوسو طراز"
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "پیش‌نمودچین"
+
+#. Translators: the label for paragraph format left indent
+#, fuzzy
+msgid "left indent"
+msgstr "فرو رفتگی"
+
+#. Translators: the message when there is no paragraph format left indent
+#, fuzzy
+msgid "no left indent"
+msgstr "تورفتگی‌ای نیست"
+
+#. Translators: the label for paragraph format right indent
+#, fuzzy
+msgid "right indent"
+msgstr "ویندوز راست"
+
+#. Translators: the message when there is no paragraph format right indent
+#, fuzzy
+msgid "no right indent"
+msgstr "تورفتگی‌ای نیست"
+
+#. Translators: the label for paragraph format hanging indent
+#, fuzzy
+msgid "hanging indent"
+msgstr "تورفتگی‌ای نیست"
+
+#. Translators: the message when there is no paragraph format hanging indent
+#, fuzzy
+msgid "no hanging indent"
+msgstr "تورفتگی‌ای نیست"
+
+#. Translators: the label for paragraph format first line indent
+#, fuzzy
+msgid "first line indent"
+msgstr "گزارش کردن &تورفتگی خطوط"
+
+#. Translators: the message when there is no paragraph format first line indent
+#, fuzzy
+msgid "no first line indent"
+msgstr "گزارش کردن &تورفتگی خطوط"
+
+#. Translators: Reported when text no longer contains a comment.
+#, fuzzy
+msgid "out of comment"
+msgstr "هیچ آشکارگویه ای نیست"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -3423,6 +3476,7 @@ msgid "Displays one of the recent messages"
 msgstr "یکی از پیامهای واپسین را نشان میدهد"
 
 #. Translators: This Outlook Express message has an attachment
+#. Translators: when an email has attachments
 msgid "has attachment"
 msgstr "دارای پیوست است"
 
@@ -3483,8 +3537,17 @@ msgid "BCC:"
 msgstr "BCC:"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
+#. Translators: when an email is unread
 msgid "unread"
 msgstr "خوانده نشده"
+
+#. Translators: for a high importance email
+msgid "high importance"
+msgstr ""
+
+#. Translators: For a low importance email
+msgid "low importance"
+msgstr ""
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3504,6 +3567,15 @@ msgstr "پیوست"
 #, python-format
 msgid "sent: %s"
 msgstr "فرستاده شده در: %s"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+#, fuzzy
+msgid "Waiting for Outlook..."
+msgstr "ایستاده برای پاورپوینت"
+
+#. Translators: the email is a meeting request
+msgid "meeting request"
+msgstr ""
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -4090,7 +4162,7 @@ msgstr ""
 "بیشتر کلید‌های فرمان در NVDA به گونه ای است که باید کلید NVDA را پایین "
 "نگهداشته و کلید یا کلیدهای دیگری را نیز به همراه٬ فشار بدهید.\n"
 "به گونه‌ی پیش‌نمود٬ هردو کلید insert چه در بخش ماشین حسابی و چه روی بخش الفبای "
-"تخته‌کلید٬ کلیدهای ان‌وی‌دی‌هستند.\n"
+"تخته‌کلید٬ کلیدهای NVDA هستند.\n"
 "هم‌چنین می‌توانید کلید CapsLock را کلید NVDA کنید\n"
 "کلید NVDA +n برای کارا کردن دستورواره‌ی پایه‌ای آن٬ فشار دهید.\n"
 "از این دستورواره می‌توانید NVDA را سامان داده و از کارکردهای آن بهره بگیرید و "
@@ -4170,6 +4242,10 @@ msgstr "سازنده"
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
 msgstr "&در باره‌ی افزونه..."
+
+#. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
+msgid "Add-on &help"
+msgstr ""
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -4697,6 +4773,10 @@ msgstr "سپاردن پیکره‌بندی کنونی پیش از خاموش ش�
 msgid "&Warn before exiting NVDA"
 msgstr "هشدار کردن پیش از خاموش کردن NVDA"
 
+#. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
+msgid "&Play sounds when starting or exiting NVDA"
+msgstr ""
+
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "گام &گاه‌نگاشتن"
@@ -4862,7 +4942,7 @@ msgstr "سامان‌دهی‌های تخته‌کلید"
 #. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
 msgid "&Keyboard layout:"
-msgstr "چیده‌مان تخته‌کلید:"
+msgstr "&چیده‌مان تخته‌کلید:"
 
 #. Translators: This is the name of a combobox in the keyboard settings dialog.
 msgid "Keyboard layout"
@@ -4877,9 +4957,7 @@ msgstr ""
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use extended Insert as an NVDA modifier key"
-msgstr ""
-"به کار گرفتن کلید 'Insert' در هر دو بخش شمارگان و الفبا روی تخته‌کلید به سان "
-"کلید NVDA"
+msgstr "به کار گرفتن کلید 'Insert' در بخش الفبا روی تخته‌کلید به سان کلید NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -4917,6 +4995,11 @@ msgstr ""
 msgid "Speak command &keys"
 msgstr "خواندن کلیدهای فرمان"
 
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Handle keys from other &applications"
+msgstr "کارگزاردن کلیدها از دیگر برنامه‌ها"
+
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
 msgstr "دست کم یک کلید باید برای کلید NVDA ویژه شود."
@@ -4928,19 +5011,17 @@ msgstr "سامان‌دهی‌های موشواره"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "Report mouse &shape changes"
-msgstr "گزارش کردن دگرگونی‌های نمود نشانگر موشواره"
+msgstr "گزارش کردن دگرگونی‌های نمود &نشانگر موشواره"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "Enable mouse &tracking"
-msgstr "کارا کردن پیروی از موشواره"
+msgstr "کارا کردن &پیروی از موشواره"
 
 #. Translators: This is the label for a combobox in the
 #. mouse settings dialog.
 msgid "Text &unit resolution:"
-msgstr ""
-"درازای نوشتاری که واج نشان گرفته شده با نشانگر موشواره بخشی از آن است برای "
-"خوانده شدن"
+msgstr "بازه‌ی &یکای نوشتار"
 
 #. Translators: This is the name of a combobox in the mouse settings dialog.
 msgid "text reporting unit"
@@ -4949,14 +5030,12 @@ msgstr "یکای گزارش نوشتار"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "Report &role when mouse enters object"
-msgstr "گزارش دادن &کارکرد٬ هنگامی که نشانگر موشواره روی چیزی برود"
+msgstr "گزارش دادن &گونه٬ هنگامی که نشانگر موشواره روی چیزی برود"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "play audio coordinates when mouse moves"
-msgstr ""
-"پخش کردن صدای پیرامون هریک از جا‌به‌جایی نشانگر موشواره از راست به چپ یا از "
-"بالا به پایین"
+msgstr "پخش کردن صدای پیرامون با جا‌به‌جایی نشانگر موشواره"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -4970,17 +5049,17 @@ msgstr "سامان‌دهی‌های نشانگر بازبین"
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Follow system &focus"
-msgstr "پیروی از نشان سامانه"
+msgstr "پیروی از &نشان سامانه"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Follow System &Caret"
-msgstr "پیروی از هشتک سامانه"
+msgstr "پیروی از &هشتک سامانه"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Follow &mouse cursor"
-msgstr "پیروی از نشانگر موشواره"
+msgstr "پیروی از نشانگر &موشواره"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
@@ -5041,27 +5120,27 @@ msgstr "خواندن و بیپ زدن"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report &tooltips"
-msgstr "گزارش کردن نوشتارهای راهنما"
+msgstr "گزارش کردن &راهنماهای ابزارها"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report &help balloons"
-msgstr "گزارش کردن بالون‌های راهنما"
+msgstr "گزارش کردن بالون‌های &راهنما"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report object shortcut &keys"
-msgstr "گزارش دادن کلید میان‌بر چیزها"
+msgstr "گزارش دادن &کلید میان‌بر چیزها"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report object &position information"
-msgstr "گزارش دادن جای چیزها"
+msgstr "گزارش دادن &جای چیزها"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Guess object &position information when unavailable"
-msgstr "گمانه زدن داده‌های پیرامون جایگاه  و چگونگی چیزها٬ اگر در دسترس نباشد"
+msgstr "گمانه زدن &جای چیزها اگرچه بیرون از دسترس باشند"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -5197,6 +5276,12 @@ msgstr "گزارش کردن شماره‌ی &خطوط"
 msgid "Report l&ine indentation"
 msgstr "گزارش کردن &تورفتگی خطوط"
 
+#. Translators: This message is presented in the document formatting settings dialogue
+#. If this option is selected, NVDA will report paragraph indentation if available.
+#, fuzzy
+msgid "Report &paragraph indentation"
+msgstr "گزارش کردن &تورفتگی خطوط"
+
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &tables"
@@ -5276,6 +5361,7 @@ msgid "&Dictionary entries"
 msgstr "&فهرست واژگان سپارده شده"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
+#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr "آشکارگویه"
 
@@ -5322,11 +5408,11 @@ msgstr "درگاه:"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
-msgstr "جدول برون‌گیری برای بریل"
+msgstr "جدول &برون‌گیری برای بریل"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 msgid "&Input table:"
-msgstr "جدول درون‌گیری برای بریل"
+msgstr "جدول &درون‌گیری برای بریل"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 msgid "E&xpand to computer braille for the word at the cursor"
@@ -5548,6 +5634,7 @@ msgstr "فهرست پیوندها٬ سرنوشتارها و جانشان‌ها 
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
 msgstr "درون خانه ای از جدول نیست"
 
@@ -6022,8 +6109,10 @@ msgstr "رنگ پیشنمود"
 msgid "{start} through {end}"
 msgstr "{start} تا {end}"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
@@ -6031,35 +6120,65 @@ msgstr ""
 "سرنوشته‌ها را نمی‌تواند سامان‌دهی کند. خواهش است گزارش کردن سرنوشته‌های جدول را "
 "درون سامان‌دهی‌های ریخت‌بندی رسانه‌ی نوشتاری٬ کارا کنید"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Set column header row"
-msgstr "جانشان شدن سرنوشتار برای ستون"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#, fuzzy
+msgid "Set {address} as start of column headers"
+msgstr "گزارش کردن سرن&وشته‌های ردیف‌ها و ستون‌های جدول‌ها"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Cleared column header row"
-msgstr "پاک شدن سرنوشتار برای ستون"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Already set {address} as start of column headers"
+msgstr ""
+
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#, fuzzy
+msgid "removed {address}    from column headers"
+msgstr "گزارش کردن سرن&وشته‌های ردیف‌ها و ستون‌های جدول‌ها"
+
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Cannot find {address}    in column headers"
+msgstr ""
 
 msgid ""
-"Pressing once will set the current row as the row where column headers "
-"should be found. Pressing twice clears the setting."
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this region. Pressing twice will forget "
+"the current column header for this cell."
 msgstr ""
-"با یک بار فشار دادن٬ ردیف کنونی در جایی که سرنوشته‌ی ستون باید باشد جای "
-"می‌گیرد. با دو بار فشار دادن٬ سامان‌دهی‌ها پاک می‌شود."
 
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Set row header column"
-msgstr "جانشان شدن سرنوشتار برای ردیف"
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Set {address} as start of row headers"
+msgstr ""
 
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Cleared row header column"
-msgstr "سرنوشتار برای ردیف پاک شد"
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Already set {address} as start of row headers"
+msgstr ""
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "removed {address}    from row headers"
+msgstr ""
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Cannot find {address}    in row headers"
+msgstr ""
 
 msgid ""
-"Pressing once will set the current column as the column where row headers "
-"should be found. Pressing twice clears the setting."
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this region. Pressing twice will forget the "
+"current row header for this cell."
 msgstr ""
-"با یک‌بار فشار دادن٬ ستون کنونی در جایی که سرنوشته‌ی ردیف باید باشد جای "
-"می‌گیرد. با دو بار فشار دادن٬ سامان‌دهی‌ها پاک می‌شود."
+
+#. Translators: A message in Excel when there is no comment
+#, fuzzy
+msgid "Not on a comment"
+msgstr "هیچ آشکارگویه ای نیست"
+
+#. Translators: the description  for a script for Excel
+#, fuzzy
+msgid "Reports the comment on the current cell"
+msgstr "هر آشکارگویه‌ای را در پنجره‌ی آشکارگویه گزارش می‌دهد"
+
+#. Translators: Dialog text for
+msgid "Editing comment for cell {address}"
+msgstr ""
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
@@ -6172,6 +6291,150 @@ msgstr "تاریخ ناشناس"
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "{revisionType} به دست {revisionAuthor} در {revisionDate}"
 
+#, fuzzy, python-format
+msgid "%g characters"
+msgstr "%d واج"
+
+#. Translators: the value in points for a paragraph indenting
+#, python-format
+msgid "%g pt"
+msgstr ""
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr ""
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr ""
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr ""
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr ""
+
+#. Translators: a message when toggling formatting in Microsoft word
+#, fuzzy
+msgid "Italic on"
+msgstr "کج‌نویس"
+
+#. Translators: a message when toggling formatting in Microsoft word
+#, fuzzy
+msgid "Italic off"
+msgstr "کج‌نویس"
+
+#. Translators: a message when toggling formatting in Microsoft word
+#, fuzzy
+msgid "Underline on"
+msgstr "زیر خط دار"
+
+#. Translators: a message when toggling formatting in Microsoft word
+#, fuzzy
+msgid "Underline off"
+msgstr "زیر خط دار"
+
+#. Translators: a an alignment in Microsoft Word
+#, fuzzy
+msgid "Left aligned"
+msgstr "گزارش کردن &طرازبندی"
+
+#. Translators: a an alignment in Microsoft Word
+#, fuzzy
+msgid "centered"
+msgstr "enter"
+
+#. Translators: a an alignment in Microsoft Word
+#, fuzzy
+msgid "Right aligned"
+msgstr "دگرساز راست"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Justified"
+msgstr ""
+
+#. Translators: the message when the outline level / style is changed in Microsoft word
+msgid "{styleName} style, outline level {outlineLevel}"
+msgstr ""
+
+#. Translators: a message when increasing or decreasing font size in Microsoft Word
+msgid "{size:g} point font"
+msgstr ""
+
+#. Translators: a measurement in Microsoft Word
+#, fuzzy
+msgid "{offset:.3g} characters"
+msgstr "%d واج"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} inches"
+msgstr ""
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} centimeters"
+msgstr ""
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} millimeters"
+msgstr ""
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} points"
+msgstr ""
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} picas"
+msgstr ""
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+#, fuzzy
+msgid "no comments"
+msgstr "هیچ آشکارگویه ای نیست"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr ""
+
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 msgid "Not in table"
@@ -6187,6 +6450,32 @@ msgstr "از سری برجسته‌نگارهای HIMS Braille Sense/Braille EDG
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Set column header row"
+#~ msgstr "جانشان شدن سرنوشتار برای ستون"
+
+#~ msgid "Cleared column header row"
+#~ msgstr "پاک شدن سرنوشتار برای ستون"
+
+#~ msgid ""
+#~ "Pressing once will set the current row as the row where column headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "با یک بار فشار دادن٬ ردیف کنونی در جایی که سرنوشته‌ی ستون باید باشد جای "
+#~ "می‌گیرد. با دو بار فشار دادن٬ سامان‌دهی‌ها پاک می‌شود."
+
+#~ msgid "Set row header column"
+#~ msgstr "جانشان شدن سرنوشتار برای ردیف"
+
+#~ msgid "Cleared row header column"
+#~ msgstr "سرنوشتار برای ردیف پاک شد"
+
+#~ msgid ""
+#~ "Pressing once will set the current column as the column where row headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "با یک‌بار فشار دادن٬ ستون کنونی در جایی که سرنوشته‌ی ردیف باید باشد جای "
+#~ "می‌گیرد. با دو بار فشار دادن٬ سامان‌دهی‌ها پاک می‌شود."
 
 #, fuzzy
 #~ msgid "%s through %s"

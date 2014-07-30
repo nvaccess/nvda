@@ -54,6 +54,10 @@ class InputGesture(baseObject.AutoPropertyObject):
 	#: @type: bool
 	wasInSayAll=False
 
+	#: Indicates that while in Input Help Mode, this gesture should be handled as if Input Help mode was currently off.
+	#: @type: bool
+	bypassInputHelp=False
+
 	def _get_identifiers(self):
 		"""The identifier(s) which will be used in input gesture maps to represent this gesture.
 		These identifiers will be looked up in order until a match is found.
@@ -445,7 +449,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			self._captureFunc = None
 
 	def _inputHelpCaptor(self, gesture):
-		bypass = getattr(gesture.script, "bypassInputHelp", False)
+		bypass = gesture.bypassInputHelp or getattr(gesture.script, "bypassInputHelp", False)
 		queueHandler.queueFunction(queueHandler.eventQueue, self._handleInputHelp, gesture, onlyLog=bypass)
 		return bypass
 

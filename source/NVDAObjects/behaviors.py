@@ -8,6 +8,7 @@
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 """
 
+import os
 import time
 import threading
 import difflib
@@ -112,7 +113,7 @@ class Dialog(NVDAObject):
 			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW,controlTypes.ROLE_PANE,controlTypes.ROLE_BUTTON) and children[index+1].name==childName:
 				# This is almost certainly the label for the next object, so skip it.
 				continue
-			isNameIncluded=child.TextInfo is NVDAObjectTextInfo or childRole==controlTypes.ROLE_LABEL
+			isNameIncluded=child.TextInfo is NVDAObjectTextInfo or childRole in (controlTypes.ROLE_LABEL,controlTypes.ROLE_STATICTEXT)
 			childText=child.makeTextInfo(textInfos.POSITION_ALL).text
 			if not childText or childText.isspace() and child.TextInfo is not NVDAObjectTextInfo:
 				childText=child.basicText
@@ -147,6 +148,12 @@ class EditableText(editableText.EditableText, NVDAObject):
 	"""
 
 	shouldFireCaretMovementFailedEvents = True
+
+	def initOverlayClass(self):
+		# #4264: the caret_newLine script can only be bound for processes other than NVDA's process
+		# As Pressing enter on an edit field can cause modal dialogs to appear, yet gesture.send and api.processPendingEvents may call.wx.yield which ends in a freeze. 
+		if self.announceNewLineText and self.processID!=os.getpid():
+			self.bindGesture("kb:enter","caret_newLine")
 
 class EditableTextWithAutoSelectDetection(EditableText):
 	"""In addition to L{EditableText}, handles reporting of selection changes for objects which notify of them.
@@ -190,6 +197,8 @@ class LiveText(NVDAObject):
 	STABILIZE_DELAY = 0
 	# If the text is live, this is definitely content.
 	presentationType = NVDAObject.presType_content
+
+	announceNewLineText=False
 
 	def initOverlayClass(self):
 		self._event = threading.Event()

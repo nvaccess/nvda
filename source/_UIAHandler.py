@@ -185,6 +185,9 @@ class UIAHandler(COMObject):
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if not obj or (NVDAEventName=="gainFocus" and not obj.shouldAllowUIAFocusEvent):
 			return
+		focus=api.getFocusObject()
+		if obj==focus:
+			obj=focus
 		eventHandler.queueEvent(NVDAEventName,obj)
 
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
@@ -228,6 +231,9 @@ class UIAHandler(COMObject):
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if not obj:
 			return
+		focus=api.getFocusObject()
+		if obj==focus:
+			obj=focus
 		eventHandler.queueEvent(NVDAEventName,obj)
 
 	def _isUIAWindowHelper(self,hwnd):
@@ -243,7 +249,8 @@ class UIAHandler(COMObject):
 		if windowClass=="NetUIHWND":
 			parentHwnd=winUser.getAncestor(hwnd,winUser.GA_ROOT)
 			# #2816: Outlook 2010 auto complete does not fire enough UIA events, IAccessible is better.
-			if winUser.getClassName(parentHwnd)=="Net UI Tool Window":
+			# #4056: Combo boxes in Office 2010 Options dialogs don't expose a name via UIA, but do via MSAA.
+			if winUser.getClassName(parentHwnd) in {"Net UI Tool Window","NUIDialog"}:
 				return False
 		# allow the appModule for the window to also choose if this window is bad
 		appModule=appModuleHandler.getAppModuleFromProcessID(processID)

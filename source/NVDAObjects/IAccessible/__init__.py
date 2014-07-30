@@ -410,6 +410,9 @@ the NVDAObject for IAccessible
 		# Some special cases.
 		if windowClassName=="Frame Notification Bar" and role==oleacc.ROLE_SYSTEM_CLIENT:
 			clsList.append(IEFrameNotificationBar)
+		elif self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and windowClassName in ("_WwN","_WwO") and self.windowControlID==18:
+			from winword import SpellCheckErrorField
+			clsList.append(SpellCheckErrorField)
 		elif windowClassName=="DirectUIHWND" and role==oleacc.ROLE_SYSTEM_TOOLBAR:
 			parentWindow=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
 			if parentWindow and winUser.getClassName(parentWindow)=="Frame Notification Bar":
@@ -463,6 +466,9 @@ the NVDAObject for IAccessible
 			from .msOffice import BrokenMsoCommandBar
 			if BrokenMsoCommandBar.appliesTo(self):
 				clsList.append(BrokenMsoCommandBar)
+			if role==oleacc.ROLE_SYSTEM_TOOLBAR:
+				from .msOffice import MsoCommandBarToolBar
+				clsList.append(MsoCommandBarToolBar)
 		if windowClassName.startswith("Internet Explorer_"):
 			from . import MSHTML
 			MSHTML.findExtraIAccessibleOverlayClasses(self, clsList)
@@ -690,16 +696,6 @@ the NVDAObject for IAccessible
 			res=self.IAccessibleObject.accName(self.IAccessibleChildID)
 		except COMError:
 			res=None
-		if not res and hasattr(self,'IAccessibleTextObject'):
-			try:
-				res=self.makeTextInfo(textInfos.POSITION_CARET).text
-				if res:
-					return
-			except (NotImplementedError, RuntimeError):
-				try:
-					res=self.makeTextInfo(textInfos.POSITION_ALL).text
-				except (NotImplementedError, RuntimeError):
-					res=None
 		return res if isinstance(res,basestring) and not res.isspace() else None
 
 	def _get_value(self):
@@ -1799,7 +1795,5 @@ _staticMap={
 	("Shell DocObject View",oleacc.ROLE_SYSTEM_CLIENT):"ShellDocObjectView",
 	("listview",oleacc.ROLE_SYSTEM_CLIENT):"ListviewPane",
 	("NUIDialog",oleacc.ROLE_SYSTEM_CLIENT):"NUIDialogClient",
-	("_WwN",oleacc.ROLE_SYSTEM_TEXT):"winword.SpellCheckErrorField",
-	("_WwO",oleacc.ROLE_SYSTEM_TEXT):"winword.SpellCheckErrorField",
 	("_WwB",oleacc.ROLE_SYSTEM_CLIENT):"winword.ProtectedDocumentPane",
 }

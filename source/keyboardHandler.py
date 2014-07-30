@@ -75,7 +75,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	try:
 		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers, keyCounter, stickyNVDAModifier, stickyNVDAModifierLocked
 		# Injected keys should be ignored in some cases.
-		if ignoreInjected and injected:
+		if injected and (ignoreInjected or not config.conf['keyboard']['handleInjectedKeys']):
 			return True
 
 		keyCode = (vkCode, extended)
@@ -168,7 +168,8 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""
 	try:
 		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers
-		if ignoreInjected and injected:
+		# Injected keys should be ignored in some cases.
+		if injected and (ignoreInjected or not config.conf['keyboard']['handleInjectedKeys']):
 			return True
 
 		keyCode = (vkCode, extended)
@@ -309,6 +310,10 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		self.scanCode = scanCode
 		self.isExtended = isExtended
 		super(KeyboardInputGesture, self).__init__()
+
+	def _get_bypassInputHelp(self):
+		# #4226: Numlock must always be handled normally otherwise the Keyboard controller and Windows can get out of synk wih each other in regard to this key state.
+		return self.vkCode==winUser.VK_NUMLOCK
 
 	def _get_isNVDAModifierKey(self):
 		return isNVDAModifierKey(self.vkCode, self.isExtended)

@@ -1,7 +1,106 @@
-Qué bi ha de Nuevo en o NVDA
+-Qué bi ha de Nuevo en o NVDA
 
 
 %!includeconf: ../changes.t2tconf
+
+= 2014.3 =
+
+== Nuevas Caracteristicas ==
+- Os sons reproducius en que o NVDA s'enchega y desenchega se pueden desactivar a traviés d'una nueva opción en o dialogo d'as opcions chenerals. (#834)
+- Se puet acceder ta l'aduya d'os complementos dende l'administrador de complementos ta complementos que suporten isto. (#2694)
+- Suporte t'o calandario en o Microsoft Outlook 2007 y superiors (#2943) incluindo: Posibilidat de desactivar l'anuncio d'os capiters de columna en a servilla de dentrada y atras listas de mensaches ta l'Outlook 2010 y superiors. (#3834)
+ - Anuncio d'a hora actual en mover-se arredol con as flechas,
+ - Indicación si a hora seleccionada ye adintro de bella cita,
+ - Anuncio d'a cita seleccionada en pretar o tabulador
+ - Filtrau intelichent d'a calendata de traza que nomás se'n anuncia si a nueva hora u cita seleccionada ye en un diya diferent.
+- Amillorau o suporte t'a servilla de dentrada y atras listas de mensaches en l'Outlook 2010 y superiors (#3834) incluindo:
+ - Posibilidat de silenciar os capiters de columna (de, afer etc) desactivando a opción anunciar capiters de ringlera y columna  de tabla en as opcions de formatiau de documentos,
+  - Posibilidat de fer servir os comandos de navegación de tablas (control + flechas) ta mover-se a lo luengo d'as columnas individuals
+- Microsoft word: Si una imachen en linia no tien establiu garra texto alternativo lo NVDA anunciará en cuenta o titol d'a imachen si l'autor en proporcionó un. (#4193)
+- Microsoft Word: S'anuncia o sangrau d'o paragrafo con o comando d'anuncio de formato (NVDA+f) y automaticament quan ye activada a nueva opción anunciar a sangría de paragrafos   d'o formatiau de documentos. (#4165).
+- Anunciar o texto insertau automaticament tal como una nueva vinyeta, numero u tabulación de sangría en pretar l'intro en os documentos y campos de texto editables. (#4185)
+- Microsoft word: Pretar NVDA+alt+c anunciará  o texto d'un comentario si o cursor en i ye adintro. (#3528)
+- Amillorau o suporte t'a lectura automatica d'os capiters de columna y ringlera en o Microsoft Excel (#3568) incluindo:
+ - Suporte d'os rangos de nombres definius de l'Excel ta identificar as celdas de capitero (compatible con o lector de pantalla Jaws) 
+ - Os comandos d'establir o capitero de columna (NVDA+shift+c) y establir o capitero de ringlera (NVDA+shift+r) agora almagazenan as opcions en a fuella de treballo asinas que en serán disponibles a siguient vegada que s'ubra la fuella, y en serán disponibles t'atros lectors de pantalla que suporten o esquema de rangos de nombres definius.
+ - Istos comandos tamién se pueden fer servir agora quantas vegadas por fuella ta establir capiters diferents ta diferents rechions.
+ - Suporte t'a lectura automatica d'os capiters de columna y ringlera en o Microsoft Word (#3110) incluindo:
+ - Suporte d'os marcapachinas d'o MS Word ta identificar as celdas de capitero(compatible con o lector de pantalla Jaws) 
+ -  Os comandos d'establir  o capitero de columna (NVDA+shift+c) y establir o capitero de ringlera (NVDA+shift+r) entre que sigan en a primera celda de capitero en una tabla te permite dicir-le a lo NVDA que istos capiters pueden anunciar-se automaticament.  As opcions serán almagazenadas en o documento asinas que en serán disponibles a siguient vegada que o documento s'ubra, y en serán disponibles t'atros lectors de pantalla que suporten o esquema de marcapachinas.
+ - Microsoft Word: s'anuncia a distancia dende o canto cucho d'a pachina en pretar a tecla tabulador. (#1353)
+ - Microsoft Word: Se proporciona información por fabla y braille t'a mayor parti d'os alcorces de teclau disponibles de formato  (negreta, cursiva, subrayau, aliniacions y libel d'esquema). (#1353)
+ - Microsoft Excel: Si a celda seleccionada contién comentarios agora en podrán estar anunciaus pretando NVDA+alt+c (#2920)
+- Microsoft Excel: Se proporciona un dialogo especifico d'o NVDA pa editar os comentarios en a celda seleccionada actualment en pretar o comando d'Excel mayus+f2 ta dentrar en o modo d'edición de comentarios. (#2920)
+- Microsoft Excel: información por fabla y braille  ta muitos mas alcorces de teclau t'os movimientos de selección (#4211) incluindo:
+ - Movimiento de pachina Vertical (Re Pach y Av Pach)
+ - Movimiento de pachina Horizontal (alt+RePach y alt+AvPach)
+ - Enamplar a selección (as teclas anteriors adhibindo o mayus).
+ - Selección d'a rechión actual (control+mayus+8)
+ - Microsoft Excel: S'anuncian as aliniacions vertical y horizontal  t'as celdas con o comando d'anunciau de formato (NVDA+f) y automaticament si ye activada a opción d'anunciar l'aliniación en as opcions de formatiau de documentos. (#4212)
+ - Microsoft Excel: S'anuncia o estilo d'una celda con o comando d'anunciau de formato (NVDA+f) y automaticament si ye activadaa oción danunciar o estilo en as opcions de formatiau de documentos. (#4213)
+
+
+== Cambeos ==
+- Esviellau o transcriptor braille liblouis ta 2.5.4. (#4103)
+
+
+== Corrección d'errors ==
+- En o Google Chrome y os navegadors basaus en o Chrome qualques bloques  de texto (tals como ixos con enfasi) ya no se repiten en que s'anuncie o texto d'una alvertencia u d'un dialogo. (#4066)
+- En o modo de navegación en as aplicacions de Mozilla pretar l'intro sobre un botón, etc. ya no falla en activar-lo (u activa un control erronio) en qualques casos tals como os botons en l'alto d'o Facebook. (#4106)
+- Ya no s'anuncia información inutil a lo tabular por o iTunes. (#4128)
+- En qualques listas en o iTunes tals como a lista de mosica agora funciona correctament o mover-se  ta lo siguient elemento fendo servir a navegación d'obchectos . (#4129)
+- Os elementos HTML se consideran capiters  a causa que as marcas WAI ARIA agora son incluidas en a lista d'elementos d'o modo navegación y a navegación rapida d'os documentos de l'Internet Explorer. (#4140)
+- A lo seguir vinclos ta la mesma pachina en as versions recients de l'Internet Explorer agora se i mueve correctament y s'anuncia la posición de destín en os documentos en o modo navegación. (#4134)
+- Microsoft Outlook 2010 y superiors: s'amillora sobre tot l'acceso t'os dialogos seguros tals como os nuevos perfils y quadros de dialogo de configuración de correu. (#4090, #4091, #4095)
+- Microsoft Outlook: Se disminui a verbosidat inutil d'as barras de ferramientas de comando en navegar a traviés de qualques quadros de dialogo. (#4096, #3407)
+- Microsoft word: En tabular por una celda en blanco en una tabla ya no s'anuncia incorrectament salindo d'a tabla. (#4151)
+- Microsoft Word: O primer caracter dillá d'a fin d'una tabla (incluindo una nueva linia en blanco), ya no se considera incorrectament que siga adintro d'a tabla. (4152)
+- Dialogo d'o corrector ortografico d'o Microsoft Word 2010:  Anuncia a parola incorrecta reyal en cuenta de anunciar inapropiadament nomás  a primera parola en negreta. (#3431)
+- En o modo de navegación en l'Internet Explorer y atros controls MSHTML tabulando u fendo servir a navegación d'una sola letra pa ir t'os campos de formulario atra vegada s'anuncia la etiqueta en muitos casos que no se feba (especificament an se fan servir elementos d'a etiqueta HTML). (#4170)
+- Microsoft Word: Anunciar a existencia y  ubicación d'os comentarios ye mas preciso. (#3528)
+- S'amillora la navegación de qualques dialogos en os productos d'o MS Office tals como lo Word, l'Excel y l'Outlook deixando d'anunciar particulars barras de ferramientas contenederas de controls que no son utiles ta l'usuario. (#4198) 
+- Os panels de quefers tals como l'administrador d'o portafuellas u de recuperación de fichers ya no pareixen obtener o foco accidentalment en ubrir una aplicación tal como lo Microsoft Word u l'Excel, o que a vegadas causaba que l'usuario hese de salir y tornar ta l'aplicación ta fer servir o documento u fuella de calculo.  (#4199)
+- O NVDA ya no falla en executar-se en os zaguers sistemas operativos Windows, si l'idioma de Windows de l'usuario s'estableix en Serbio (Latino). (#4203) 
+- Ya no ye necesario pretar l'alt quantas vegadas  t'activar as cintas d'o Microsoft Office  a primer vegada que sigan activadas, dimpués d'ubrir  un programa de l'Office tal como lo Word u l'Excel. (#4207)
+
+
+== Cambeos ta desembolicadors ==
+- O NVDA agora ha unificau o suporte t'a documentación d'os complementos. Vei a sección d'a documentación de complementos d'a guida de l'usuario ta mas detalles. (#2694)
+
+
+= 2014.2 =
+
+== Nuevas Caracteristicas ==
+- Agora ye posible l'anunciau d'a selección de texto en qualques campos d'edición personalizada an se fa servir información d'a pantalla. (#770)
+- En as aplicacions  Java accesibles agora s'anuncia a información de posición ta os botons d'opción y atros controls que exposan información de grupo. (#3754)
+- En as aplicacions Java accesibles agora s'anuncian os alcorces de teclau ta os controls que'n tiengan. (#3881)
+- En o modo navegación as etiquetas  en os puntos de referencia agora s'anuncian. Tamién s'incluyen en o dialogo Lista d'Elementos. (#1195)
+- En o modo navegación as rechions etiquetadas agora se tractan como puntos de referencia. (#3741)
+- En os documentos y as aplicacions de l'Internet Explorer, agora se suportan as rechions vivas (parti d'o estandar ARIA d'o W3c), permitindo asinas a los authors d'as webs marcar conteniu particular ta estar charrau automaticament en que cambie. (#1846)
+
+
+== Cambeos ==
+- A lo salir d'un quadro de dialogo u l'aplicación adentro d'un documento d'o modo navegación o nombre y mena de documento d'o modo navegación ya no s'anuncian. (#4069)
+
+
+== Corrección d'errors ==
+- O menú estandar d'o sistema Windows ya no se silencia accidentalment en as aplicacions Java. (#3882)
+- En que se copia texto dende a revisión de pantalla os blincos de linia ya no s'ignoran. (#3900)
+- Os obchectos d'espacio en blanco sin sentiu ya no s'anuncian en qualques aplicacions en que o foco  cambee u en que se faiga servir a navegación d'obchectos con a revisión simpla enchegada. (#3839)
+- Os quadros de mensache y belatros dialogos producius por o NVDA causan atra vegada a cancelación d'a fabla anterior antis d'anunciar o dialogo. 
+- En o modo navegación as etiquetas de controls tals como vinclos y botons agora se procesan correctament quan a etiqueta s'haiga substituiu por l'autor con fins d'accesibilidat (especificament, l'emplego d'aria-label u d'aria-labelledby). (#1354)
+- En o modo navegación en l'Internet Explorer, Ya no s'ignora inapropiadament o texto conteniu adintro d'un elemento marcau como de presentación (ARIA role="presentation"). (#4031)
+- Agora torna a estar posible escribir texto vietnamita fendo servir o software Unikey. Ta fer ixo, desmarca a nueva caixeta de verificación Teclas de maneyo d'atras aplicacions, en o dialogo d'opcions de teclau d'o NVDA. (#4043) 
+- En o modo navegación os elementos de menú que son botons d'opción u caixetas de verificación s'anuncian como controls en cuenta de  nomás texto clicable. (#4092)
+- O NVDA ya no cambea incorrectament dende o modo foco t'o modo navegación en que se triga un elemento de menú que siga botón d'opción u caixeta de verificación. (#4092)
+- En o Microsoft PowerPoint con l'anuncio d'as parolas escritas activau, os caracters eliminaus con a tecla de borrau ya no s'anuncian como una parti d'a parola escrita. (#3231)
+- En os dialogos d'opcions d'o Microsoft Office 2010 as etiquetas d'os quadros combinaus s'anuncian correctament. (#4056)
+- En o modo navegación en as aplicacions de Mozilla fendo servir a navegación rapida, os comandos ta mover-se t'o siguient u l'anterior botón u campo de formulario agora incluyen botons de conmutación como s'asperaba. (#4098)
+- Ya no s'anuncia dos vegadas o conteniu d'as alertas en as aplicacions de Mozilla. (#3481)
+- En o modo navegación os contenedors y puntos de referencia ya no son repetius inapropiadament entre que se navega adentro d'ells a lo mesmo tiempo que o conteniu d'a pachina ye cambiando (p. eix. navegando en as pachinas d'o Facebook y o Twitter). (#2199)
+- O NVDA se recupera en mas casos en que se cambia difuera d'as aplicacions que han deixau de responder. (#3825)
+- O cursor (punto d'inserción) s'esviella correctament unatra vegada en que se fa un comando Charrar-loTot entre que se ye en texto editable dibuixau dreitament en a pantalla. (#4125)
+
 
 = 2014.1 =
 
@@ -20,7 +119,7 @@ Qué bi ha de Nuevo en o NVDA
 - Ta las pantallas braille Papenmeier, s'ha eliminau a orden mover a revisión plana/foco. Os usuarios pueden asignar as suyas propias teclas usando o dialogo de cenyos de dentrada. (#3652)
 - O NVDA agora se basa en a versión 11 d'o Microsoft VC runtime, o que significa que ya no puet executar-se en sistemas operativos anteriors a lo Windows XP Service Pack 2 u lo Windows Server 2003 Service Pack 1.
 - O libel de puntuación beluna agora diz os caracters asterisco (*) y mas (+). (#3614)
-- Esviellau o eSpeak a la versión 1.48.02, que inclui muitas correccions d'idiomas y corriche quantos problemas. (#3842, #3739)
+- Esviellau o eSpeak Ta la versión 1.48.04, que inclui muitas correccions d'idiomas y corriche quantos problemas. (#3842, #3739)
 
 
 == Corrección d'errors ==
@@ -297,7 +396,7 @@ Lo subrayable d'ista versión incluye o suporte ta la dentrada de caracters asia
  - Anunciau de lectura de cadenas.
 - A presencia de subrayaus y rayaus agora s'anuncia en documentos d'Adobe Reader. (#2410)
 - Quan a función Windows Sticky Keys ye activada, a tecla modificadera de NVDA agora se comportará como as atras teclas modificaderas. Isto te permite utilizar a tecla modificadera de NVDA sin a necesidat de mantener pretada mientras pretas atras teclas. (#230)
-- Agora se suporta l'anunciau automatico de capiters de columna y de ringlera en Microsoft Excel. Preta NVDA+shift+c ta configurar a ringlera que contienga encabezaus de columna y NVDA+shift+r ta la columna que contienga encabezaus de ringlera. Preta o script dos vegadas en succesión rapida ta limpiar a opción. (#1519)
+- Agora se suporta l'anunciau automatico de capiters de columna y de ringlera en Microsoft Excel. Preta NVDA+shift+c ta configurar a ringlera que contienga capiters de columna y NVDA+shift+r ta la columna que contienga capiters de ringlera. Preta o script dos vegadas en succesión rapida ta limpiar a opción. (#1519)
 - Suporte ta las linias braille HIMS Braille Sense, Braille EDGE y SyncBraille. (#1266, #1267)
 - Quan as Notificacions de Windows 8 amaneixcan, NVDA las anunciará si l'anunciau de globos d'aduya ye habilitau. (#2143)
 - Suporte experimental ta pantallas Tactils en Windows 8, incluindo:

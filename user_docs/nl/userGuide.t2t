@@ -540,11 +540,20 @@ Er is een toetscombinatie beschikbaar om weer terug te gaan naar de oorspronkeli
 + Applicatie-specifieke NVDA commando's +
 NVDA beschikt over een aantal applicatie-specifieke commando's om het gebruik van deze applicaties te vergemakkelijken, of om toegang te geven tot functionaliteit die anders niet bruikbaar zou zijn voor screenreader gebruikers.
 
+++ Microsoft Word ++
+%kc:beginInclude
+|| Naam | Toets | Beschrijving |
+| Actueel commentaar melden | NVDA+Alt+c | Meldt commentaartekst op de plaats van de systeemcursor  | 
+|Kolomhoofdingen instellen | NVDA+shift+c | Door eenmaal indrukken weet NVDA dat dit de eerste hoofdingcel is in de rij waar de kolomhoofdingen in staan die automatisch moeten worden gemeld bij het gaan van kolom naar kolom in de rijen eronder. Door tweemaal drukken wordt de instelling opgeheven. | 
+| Rijhoofdingen instellen | NVDA+shift+r | Door eenmaal indrukken weet NVDA dat dit de eerste hoofdingcel is in de kolom waar de rijhoofdingen in staan die automatisch moeten worden gemeld bij het gaan van rij naar rij na deze kolom. Door tweemaal drukken wordt de instelling opgeheven. | 
+%kc:endInclude
+
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Naam | Toets | Beschrijving |
-| Kolomkoppen instellen | NVDA+shift+c | Door eenmaal drukken wordt aan NVDA doorgegeven dat dit de rij met kolomkoppen is, die automatisch moeten worden vermeld bij het gaan van kolom naar kolom  onder deze rij. Bij tweemaal drukken wordt de instelling opgeheven. | 
-| Rijkoppen instellen | NVDA+shift+r | Door eenmaal drukken wordt aan NVDA doorgegeven dat dit de kolom met rijkoppen is, die automatisch moeten worden vermeld bij het gaan van rij naar rij na deze kolom. Bij tweemaal drukken wordt de instelling opgeheven. | 
+|Kolomhoofdingen instellen | NVDA+shift+c | Door eenmaal indrukken weet NVDA dat dit de eerste hoofdingcel is in de rij waar de kolomhoofdingen in staan die automatisch moeten worden gemeld bij het gaan van kolom naar kolom in de rijen eronder. Door tweemaal drukken wordt de instelling opgeheven. | 
+| Rijhoofdingen instellen | NVDA+shift+r | Door eenmaal indrukken weet NVDA dat dit de eerste hoofdingcel is in de kolom waar de rijhoofdingen in staan die automatisch moeten worden gemeld bij het gaan van rij naar rij na deze kolom. Door tweemaal drukken wordt de instelling opgeheven. |
+| Commentaar melden | NVDA+alt+c | Meldt eventueel commentaar bij de actuele cel. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -601,6 +610,9 @@ Als u een vinkje plaatst in het selectievakje zal de huidige configuratie automa
 
 ==== Waarschuwen bij afsluiten NVDA ====
 Als u een vinkje plaatst in dit selectievakje zal NVDA u vragen of u het programma al dan niet wilt afsluiten telkens wanneer u het programma wilt beëindigen. 
+
+==== Geluid afspelen bij het starten of afsluiten van NVDA ====
+Als u een vinkje plaatst in dit selectievakje zal NVDA bij het opstarten of afsluiten geluid afspelen.
 
 ==== Niveau van loggen ====
 Dit is een vervolgkeuzelijst waarmee u het niveau van loggen kiest, met andere worden wat moet NVDA allemaal loggen terwijl het draait.
@@ -829,15 +841,18 @@ Als dit selectievakje is aangevinkt,zullen navigatieopdrachten zoals snel navige
 Het is veeleer zo dat Alles Voorlezen naar de nieuwe positie springt waar het lezen wordt voortgezet.
 
 ==== Piep bij het typen van kleine letters terwijl capslock is ingeschakeld ====
-Als deze optie is geactiveerd, zal NVDA piepen bij het typen van letters in combinatie met de shift toets als capslock is ingeschakeld.
-Meestal is het niet de bedoeling om letters in combinatie met de shift toets te typen als capslock is ingeschakeld, u heeft capslock dan wellicht per ongeluk aangezet.
-Daarom kan het handig zijn om hierover gewaarschuwd te worden.
+Als deze optie is geactiveerd, zal er een waarschuwingssignaal klinken bij het typen van letters in combinatie met de shift toets als capslock is ingeschakeld.
+Meestal is het niet de bedoeling om letters in combinatie met de shift toets te typen als capslock is ingeschakeld. U heeft capslock dan wellicht ingeschakeld zonder dat u zich dat hebt gerealiseerd. 
 
 %kc:setting
 ==== Commandotoetsen uitspreken ====
 Toets: NVDA+4
 
-Door het selectievakje in te schakelen worden alle niet-karaktertoetsen (bij voorbeeld de pijltjestoetsen, de DEL-toets, etc.) uitgesproken. Dit geldt ook voor, bij voorbeeld, de Ctrl-toets in combinatie met een letter. 
+Door het selectievakje in te schakelen worden alle niet-karaktertoetsen (bij voorbeeld de pijltjestoetsen, de DEL-toets, etc.) uitgesproken. Dit geldt ook voor, bij voorbeeld, de Ctrl-toets in combinatie met een letter.
+
+==== Invoer van andere toepassingen beheren ====
+Met deze optie kan de gebruiker bepalen of invoer die afkomstig is van toepassingen zoals virtuele (scherm)toetsenborden of spraakherkenningssoftware door NVDA moet worden verwerkt. 
+Deze optie is standaard ingeschakeld, maar sommige gebruikers,zoals mensen die werken met het Unikey typeprogramma voor Viëtnamees, zullen er wellicht de voorkeur aan geven deze optie uit te zetten omdat er anders invoerfouten ontstaan. 
 
 +++ Muisinstellingen(NVDA+control+m) +++[MouseSettings]
 Het dialoogvenster Muisinstellingen vindt u in het NVDA-menu onder Opties waar u vervolgens Muis selecteert.
@@ -1030,6 +1045,7 @@ U kunt de vermelding laten horen van:
 - Paginanummers
 - Regelnummers
 - Regel inspringen
+- Inspringen alinea (bij voorbeeld verkeerd om , eerste regel)
 - Tabellen
 - Rij- en kolomhoofdingen van tabellen
 - Tabel celcoördinaten
@@ -1080,7 +1096,7 @@ In deze handleiding wordt niet verder ingegaan op “regular expressions”, maa
 In dit dialoogvenster kan de manier waarop interpunctie en symbolen worden gemeld worden aangepast, alsmede het interpunctieniveau waarop deze worden uitgesproken.
 
 Selecteer een symbool uit de symbolenlijst om het aan te passen.
-Het vervangen door veld stelt u in staat om de uitspraak van het symbool aan te passen.
+Het veld "vervangen door" stelt u in staat om de uitspraak van het symbool aan te passen.
 Het niveau veld bepaalt het minimumniveau waarop dit symbool wordt uitgesproken.
 
 Als u klaar bent kunnen de wijzigingen met de OK knop worden opgeslagen, of door middel van de Annuleren knop worden teruggedraaid.
@@ -1225,7 +1241,7 @@ Met "Add-ons Beheren" onder Extra in het NVDA menu kunt u uitbreidingspakketten 
 Deze pakketten worden door de NVDA gemeenschap beschikbaar gesteld en ze bevatten aangepaste programmacode die het mogelijk maakt bepaalde functies van NVDA uit te breiden of te wijzigen. Ook zijn er Add-ons voor ondersteuning van extra brailleleesregels en spraaksynthesizers.
 
 In het dialoogvenster "Add-ons Beheren" vindt u een lijst met alle geïnstalleerde Add-ons die op het moment in uw gebruikersconfiguratiemap staan.
-Van elke Add-on wordt de pakketnaam, versie en auteur weergegeven. Door een Add-on te selecteren en dan op de knop "Over Add-on" te klikken kunt u meer informatie opvragen, zoals een beschrijving  en de URL.
+Van elke Add-on wordt de pakketnaam, versie en auteur weergegeven. Door een Add-on te selecteren en dan op de knop "Over Add-on" te klikken kunt u meer informatie opvragen, zoals een beschrijving  en de URL. Als er voor de geselecteerde Add-on hulpinformatie beschikbaar is, kunt u deze raadplegen door op de knop  "Add-on Help" te drukken.
 
 U kunt op Internet naar beschikbare Add-ons bladeren en deze desgewenst installeren door op de knop "Add-ons toevoegen" te klikken.
 U komt nu op de [NVDA Add-ons pagina http://addons.nvda-project.org/]. 
