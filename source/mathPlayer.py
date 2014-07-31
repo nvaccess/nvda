@@ -52,6 +52,12 @@ def getSpeechForMathMl(mathMl):
 		_mpSpeech.GetSpokenText(),
 		speech.SymbolLevelCommand(None))
 
+def getBrailleForMathMl(mathMl):
+	ensureInit()
+	_mpSpeech.SetMathML(mathMl)
+	_mpBraille.SetBrailleWidth(braille.handler.displaySize)
+	return _mpBraille.GetBraille()
+
 class MathNVDAObject(Window):
 	"""A fake NVDAObject which is focused while interacting with math.
 	"""
