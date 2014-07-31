@@ -13,7 +13,7 @@ complexSymbols:
 ; fim de período	(?<=[^\s;]);(?=\s|$)
 : fim de período	(?<=[^\s:]):(?=\s|$)
 # Others
-ponto decimal	(?<=\d)\.(?=\d)
+ponto decimal	(?<=\d),(?=\d)
 ' em palavra	(?<=[^\W_])['’]
 número negativo	(?<!\w)-(?=[$£€¥]?\d)
 
