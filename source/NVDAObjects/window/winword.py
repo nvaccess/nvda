@@ -531,6 +531,13 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)
 		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.End)
 
+	def getMathMlForEquation(self, field):
+		import mathType
+		range = self._rangeObj.Duplicate
+		range.Start = int(field["shapeoffset"])
+		obj = range.InlineShapes[0].OLEFormat
+		return mathType.getMathMl(obj)
+
 class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 
 	TextInfo=WordDocumentTextInfo
@@ -966,14 +973,6 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 
 	def script_previousColumn(self,gesture):
 		self._moveInTable(row=False,forward=False)
-
-	def getMathMlForEquation(self, field):
-		import mathType
-		# fixme: Don't assume the equation at the caret.
-		ti = self.makeTextInfo(textInfos.POSITION_CARET)
-		ti.expand(textInfos.UNIT_CHARACTER)
-		obj = ti._rangeObj.InlineShapes[0].OLEFormat
-		return mathType.getMathMl(obj)
 
 	__gestures = {
 		"kb:control+[":"increaseDecreaseFontSize",
