@@ -27,7 +27,7 @@ int mixWaveFile(int maxNumSamples, sample* sampleBuf) {
 		} else {
 			val=(signed char)wdata.mix_wavefile[wdata.mix_wavefile_ix]*wdata.mix_wave_scale;
 		}
-		//val*=(wdata.amplitude_v/1024);
+		val*=(wdata.amplitude_v/1024.0);
 		val=(val*wdata.mix_wave_amp)/40;
 		sampleBuf[i].value+=val;
 		++i;
@@ -75,7 +75,7 @@ void fillSpeechPlayerFrame(frame_t * eFrame, speechPlayer_frame_t* spFrame) {
 	spFrame->cb6=1000;
 	spFrame->cbNP=100;
 	spFrame->cbN0=100;
-	spFrame->preFormantGain=2;
+	spFrame->preFormantGain=2*(wdata.amplitude/100.0);
 	spFrame->endVoicePitch=spFrame->voicePitch;
 }
 
