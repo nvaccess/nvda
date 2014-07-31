@@ -9,7 +9,7 @@
 
 import comtypes.client
 from comtypes import COMError
-from comtypes.gen.MathPlayer import MPInterface, IMathSpeech, IMathNavigation
+from comtypes.gen.MathPlayer import MPInterface, IMathSpeech, IMathNavigation, IMathBraille
 from NVDAObjects.window import Window
 import controlTypes
 import speech
@@ -20,22 +20,25 @@ import eventHandler
 import api
 from logHandler import log
 import textInfos
+import braille
 
 _initResult = None
 _mpSpeech = None
 _mpNavigation = None
+_mpBraille = None
 
 def ensureInit():
 	"""Initialize MathPlayer if it hasn't been initialized already.
 	@return: Whether MathPlayer is available.
 	@rtype: bool
 	"""
-	global _initResult, _mpSpeech, _mpNavigation
+	global _initResult, _mpSpeech, _mpNavigation, _mpBraille
 	if _initResult is not None:
 		return _initResult
 	try:
 		_mpSpeech = comtypes.client.CreateObject(MPInterface, interface=IMathSpeech)
 		_mpNavigation = _mpSpeech.QueryInterface(IMathNavigation)
+		_mpBraille = _mpSpeech.QueryInterface(IMathBraille)
 		_initResult = True
 	except:
 		log.warning("MathPlayer 2014 not available")
@@ -68,6 +71,14 @@ class MathNVDAObject(Window):
 	def reportFocus(self):
 		super(MathNVDAObject, self).reportFocus()
 		speech.speakText(_mpSpeech.GetSpokenText(), symbolLevel=characterProcessing.SYMLVL_NONE)
+
+	def getBrailleRegions(self, review=False):
+		yield braille.NVDAObjectRegion(self, appendText=" ")
+		region = braille.Region()
+		region.focusToHardLeft = True
+		_mpBraille.SetBrailleWidth(braille.handler.displaySize)
+		region.rawText = _mpBraille.GetBraille()
+		yield region
 
 	def getScript(self, gesture):
 		# Pass most keys to MathPlayer. Pretty ugly.
