@@ -1189,6 +1189,17 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 	_cachedFocusAncestorsEnd = ancestorsEnd
 
 def getFocusRegions(obj, review=False):
+	# Allow objects to override normal behaviour.
+	try:
+		regions = obj.getBrailleRegions(review=review)
+	except (AttributeError, NotImplementedError):
+		pass
+	else:
+		for region in regions:
+			region.update()
+			yield region
+		return
+
 	# Late import to avoid circular import.
 	from treeInterceptorHandler import TreeInterceptor
 	from cursorManager import CursorManager
