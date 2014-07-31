@@ -37,22 +37,22 @@ negative number	负	none	norep
 \f	分页符	none
 \r	回车符	char
  	空格	char
-
 symbols:
 $	美元
 /	斜杠
 ;	分号
 \\	反斜杠
 |	树杠
-: phrase ending	冒号
 .	点
 :	冒号
 \0	
 \r	航尾
 \n	航头
 \t	制表符
- 	空格
+ 	空格	most
 ,	逗号
+，	逗号	most	always
+。	句号	most	always
 ...	点点点
 !	叹号
 "	双引号
@@ -72,11 +72,6 @@ _	下划线
 {	左花括号
 }	右花括号
 　	空白	all
-. sentence ending	点
-! sentence ending	惊叹号
-? sentence ending	问号
-; phrase ending	分号
-in-word '	点标记
 negative number	负
 ✔	选择
 ✓	选择
@@ -87,35 +82,32 @@ negative number	负
 ²	超级脚本2
 ¹	超级脚本1
 µ	百万分之一
-»	右双尖括号
-«	左双尖括号
-➔	右箭头
-‏	右至左符号
-‎	左至右符号
-¨	分音符
-–	短破折号
-·	圆点
-•	着重号
-~	波浪号
-`	反撇号
-^	益阳号
-@	at
-?	问号
->	大于
-<	小于
-¥	元
-¢	分
-€	欧元
-£	英镑
-no-break space	空格
-、	頓號	all
-。	句號	all
+»	右双尖括号	most
+«	左双尖括号	most
+➔	右箭头	most
+‏	右至左符号	most
+‎	左至右符号	most
+¨	分音符	most
+–	短破折号	most	always
+·	圆点	most	always
+•	着重号	most
+`	反撇号	most
+^	益阳号	most
+?	问号	most	always
+>	大于	most
+<	小于	most
+¥	元	most
+¢	分	most	always
+€	欧元	most	always
+£	英镑	most	always
+no-break space	空格	most
+、	頓號	most	always
 ．	全形點	all
-；	分號	all
-？	問號	all
-！	驚嘆號	all
-：	冒號	all
-…	省略號	most
+；	分號	most	always
+？	問號	most	always
+！	驚嘆號	most	always
+：	冒號	most	always
+…	省略號	most	always
 ‥	刪節號	most
 ︱	直破折號	most
 —	破折號	most
@@ -123,47 +115,47 @@ no-break space	空格
 ╴	左邊直線框	most
 ︴	直波浪符號	most
 ﹏	波浪符號	most
-（	左小括號	most
-）	右小括號	most
-︵	上小括號	most
-︶	下小括號	most
-｛	左大括號	most
-｝	右大括號	most
-︷	上大括號	most
-︸	下大括號	most
-〔	左中括號	most
-〕	右中括號	most
-︹	上中括號	most
-︺	下中括號	most
-【	左粗中括號	most
-】	右粗中括號	most
-︻	上粗中括號	most
-︼	下粗中括號	most
-《	左書名號	most
-》	右書名號	most
-︽	上書名號	most
-︾	下書名號	most
-〈	左單書名號	most
-〉	右單書名號	most
-︿	上角括號	most
-﹀	下角括號	most
-「	左單引號	most
-」	右單引號	most
-『	左雙引號	most
-』	右雙引號	most
+（	左小括號	most	always
+）	右小括號	most	always
+︵	上小括號	most	always
+︶	下小括號	most	always
+｛	左大括號	most	always
+｝	右大括號	most	always
+︷	上大括號	most	always
+︸	下大括號	most	always
+〔	左中括號	most	always
+〕	右中括號	most	always
+︹	上中括號	most	always
+︺	下中括號	most	always
+【	左粗中括號	most	always
+】	右粗中括號	most	always
+︻	上粗中括號	most	always
+︼	下粗中括號	most	always
+《	左書名號	most	always
+》	右書名號	most	always
+︽	上書名號	most	always
+︾	下書名號	most	always
+〈	左單書名號	most	always
+〉	右單書名號	most	always
+︿	上角括號	most	always
+﹀	下角括號	most	always
+「	左單引號	most	always
+」	右單引號	most	always
+『	左雙引號	most	always
+』	右雙引號	most	always
 ﹃	上雙引號	most
 ﹄	下雙引號	most
-﹛	左大括號	most
-﹜	右大括號	most
-﹝	左中括號	most
-﹞	右中括號	most
-‘	左單引號	most
-’	右單引號	most
-“	左雙引號	most
-”	右雙引號	most
-〝	左雙引號	most
-〞	右雙引號	most
-‵	左單引號	most
+﹛	左大括號	most	always
+﹜	右大括號	most	always
+﹝	左中括號	most	always
+﹞	右中括號	most	always
+‘	左單引號	most	always
+’	右單引號	most	always
+“	左雙引號	most	always
+”	右雙引號	most	always
+〝	左雙引號	most	always
+〞	右雙引號	most	always
+‵	左單引號	most	always
 ＃	井字號	most
 ＆	連接號	most
 ＊	星號	most
@@ -204,7 +196,7 @@ no-break space	空格
 ﹤	小於	most
 ﹥	大於	most
 ﹦	等號	most
-～蚯蚓號		most
+～蚯蚓號	most
 ∩	交集	most
 ∪	聯集	most
 ⊥	垂直	most
@@ -259,3 +251,4 @@ no-break space	空格
 嗧	加侖	none
 瓩	千瓦	none
 糎	公分	none
+~	波浪号	most

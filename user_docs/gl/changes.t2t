@@ -15,7 +15,7 @@ Que hai de Novo no NVDA
  - O filtrado intelixente da hora de xeito que só se anuncia a data se a nova hora ou cita seleccionada é nun día diferente á derradeira.
 - Mellorado o soporte para a bandexa de entrada e outras listas de menxases  en Outlook 2010 e superior (#3834) incluíndo:
  - A capacidade de silenciar as cabeceiras de columna (de, Asunto etc) desactivando a opción Anunciar Cabeceiras de Fila e Columna de Táboa nas Opciones de Formateado de Texto,
- - A capacidade de utilizar as ordes de navegación de táboa (control + flechas) para moverse ó longo das columnas individuais. 
+ - A capacidade de utilizar as ordes de navegación de táboa (control + alt + flechas) para moverse ó longo das columnas individuais. 
 - Microsoft word: Se unha imaxe en liña non ten posto ningún texto alternativo, NVDA anunciará o título da imaxe, se o autor proporcionou un. (#4193)
 - Microsoft Word: Anúnciase o sangrado do parágrafo ca orden  Anunciar Formato (NVDA+f) e automáticamente cando a nova opción Anunciar Sangría do Parágrafo en Formateo de Documentos estea activada. (#4165).
 - Anúnciase o texto insertado automáticamente como unha nova viñeta, número ou sangría cando se prema intro en documentos e campos de texto editables. (#4185)
@@ -71,11 +71,17 @@ Que hai de Novo no NVDA
 - Os paneis de tarefas como o administrador do portapapeis ou de recuperación de ficheiros xa non parecen obter o foco accidentalmente ó abrir unha aplicación como Microsoft Word ou Excel, o que ás veces provocaba que o usuario tivera que saír e voltar á aplicación para utilizar o documento ou folla de cálculo.  (#4199)
 - NVDA xa non falla ó executarse nos últimos sistemas operativos Windows, se a lingua do Windows do usuario establécese en Serbio (Latino). (#4203) 
 - Ó premer o BloqueoNumérico mentras se estea no modo Axuda de Entrada agora conmutarase o bloqueoNumérico correctamente, en lugar de que o teclado e o sistema operativo se desincronicen con respecto ó estado desta tecla. (#4226)
+- No Google Chrome, o título do documento anúnciase de novo ó cambiar as pestanas. No NVDA 2014.2, esto no ocurríu nalgúns casos. (#4222)
+- No Google Chrome e navegadores baseados no Chrome, a URL do documento xa non se informa cando se anuncia o documento. (#4223)
+- Ó executar ler todo co sintetizador Sen voz seleccionado (útil para realizar probas automatizadas), ler todo agora completarase en lugar de deterse tralas primeiras poucas liñas. (#4225)
+- Diálogo Firmas de Microsoft Outlook: o campo de edición firma agora é accesible, o que permite o seguemento compreto do cursor e a detección do formato. (#3833) 
+- Microsoft Word: Ó ler a última liña dunha celda de táboa, xa non se le toda a celda da táboa. (#3421)
+- Microsoft Word: Ó ler a primeira ou a última liña dunha táboa de índice, xa non se le toda a táboa de índice. (#3421)
 
 
 == Cambios para Desenvolvedores ==
 - NVDA agora conta co apoio unificado de documentación para os complementos. Ver a sección de complementos da documentación da Guía do desenvolvedor para obter máis información. (#2694)
-
+- Ó proporcionar  vínculos de xestos nun ScriptableObject a través de __gestures, agora é posible proporcionar a palabra chave None como o script. Esto lanza o xesto en calquera clase base. (#4240)
 
 = 2014.2 =
 

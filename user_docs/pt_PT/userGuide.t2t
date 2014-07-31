@@ -1,4 +1,4 @@
-﻿Manual do Utilizador do NVDA NVDA_VERSION
+Manual do Utilizador do NVDA NVDA_VERSION
 Traduzido por: Ângelo Abrantes, Diogo Costa, Elton Lopes, Rui Batista e Rui Fontes
 
 %!includeconf: ../userGuide.t2tconf
@@ -328,7 +328,7 @@ Para navegar pelos objectos, utilize os seguintes comandos:
 | Mover para o objecto em foco | NVDA+Menos do bloco numérico | NVDA+Backspace | Nenhum | Move para o objecto que tem o foco do sistema actual e também posiciona o cursor de revisão na posição do cursor do sistema, se o mesmo estiver visível |
 | Activar o objecto de navegação actual | NVDA+Enter do bloco numérico | NVDA+Enter | Toque duplo | Activa o objecto de navegação actual (semelhante ao clicar com o rato ou pressionar espaço quando o mesmo tem o foco do sistema) |
 | Mover o foco do sistema ou o cursor para o objecto actual da revisão| NVDA+Shift+Menos do bloco numérico | NVDA+Shift+Backspace | Nenhum | Ao pressionar uma vez, move o foco para o objecto de navegação actual, ao pressionar duas vezes, move o cursor do sistema para a posição do cursor de revisão |
-| Anunciar as dimensões do objecto de navegação | NVDA+Delete do bloco numérico | NVDA+Delete | Nenhum | anuncia as dimensões  no ecrã do objecto de navegação actual, em percentagem (incluindo a distância da esquerda e do topo do ecrã, e a sua largura e altura) |
+| Anunciar dimensões do objecto de navegação | NVDA+delete do bloco numérico | NVDA+delete | nenhum | Anuncia a localização do cursor de revisão, seja em  friendly termos amigáveis da aplicação como a percentagem num documento ou a distância para a margem da página, ou, no limite, em pixeis no ecrã. Premindo duas vezes irá anunciar mais informações. |
 %kc:endInclude
 
 Nota: As teclas do bloco numérico requerem que o numlock esteja desligado, para que possam trabalhar adequadamente.
@@ -520,11 +520,20 @@ Se forem acessíveis, pode pressionar Tab para navegar por eles e interagir, com
 + Comandos Específicos do NVDA para Aplicações +
 O NVDA fornece comandos de teclado adicionais para algumas aplicações, que realizam determinadas tarefas ou que dão acesso a funcionalidades que não são acessíveis, de outra forma, aos utilizadores de leitores de ecrã.
 
+++ Microsoft Word ++
+%kc:beginInclude
+|| Nome | Tecla | Descrição |
+| Anuncia o comentário actual | NVDA+Alt+c | Anuncia o texto do comentário na posição actual do cursor do sistema. |
+| Definir cabeçalhos de coluna | NVDA+shift+c | Premindo uma vez, indica ao NVDA que esta é a primeira célula de cabeçalho na linha que contem os cabeçalhos de coluna, que deverão ser automaticamente anunciados ao mover-se entre colunas abaixo desta linha. Premindo duas vezes irá apagar a definição. | 
+| Definir cabeçalhos de linha | NVDA+shift+r | Premindo uma vez, indica ao NVDA que esta é a primeira  célula de cabeçalho na coluna que contem os cabeçalhos de linha, que deverão ser automaticamente anunciados  ao mover-se entre linhas  após esta coluna. Premindo duas vezes apagará a definição. |  
+%kc:endInclude
+
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Nome | Tecla | Descrição |
 | Definir cabeçalhos de coluna | NVDA+shift+c | Pressionar uma vez informa o NVDA de que esta linha contém os cabeçalhos de coluna, que deverão ser automaticamente anunciados ao mover-se entre colunas abaixo desta linha. Pressionar duas vezes apagará esta definição. | 
 | Definir cabeçalhos de linha | NVDA+shift+r | Pressionar uma vez, Informa o NVDA de que esta coluna  contêm os cabeçalhos de linha, que deverão ser automaticamente anunciados ao mover-se por linhas à direita desta coluna. Pressionar duas vezes, apagará a definição. | 
+| Anunciar comentário | NVDA+alt+c | Anuncia o comentário na célula actual, se existir. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -583,6 +592,9 @@ Esta opção é uma caixa de verificação que, quando marcada, indica ao NVDA p
 ==== Alertar ao sair do NVDA ====
 Esta opção é uma caixa de verificação que lhe permite escolher se pretende ou não que apareça um diálogo, quando fechar o programa, questionando-o se deseja ou não sair.
 Quando marcada, um diálogo aparecerá ao tentar fechar o NVDA, a perguntar se deseja sair ou não.
+
+==== Tocar sons ao iniciar e sair do NVDA ====
+Esta opção é uma caixa de verificação que, quando marcada, indica ao NVDA para tocar sons ao iniciar e terminar.
 
 ==== Nível de registo ====
 Esta é uma caixa de combinação que lhe permite seleccionar a quantidade de informação que o NVDA coloca no registo, quando está em execução.
@@ -992,7 +1004,7 @@ Esta opção, quando está marcada, permite que o NVDA entre e saia do modo de f
 Por exemplo, se for pressionando a Seta Abaixo, numa página da Internet e encontrar uma área de edição, o NVDA activará automaticamente o modo de foco. Se pressionar as setas para sair da área de edição, o NVDA voltará a entrar em modo de navegação.
 
 ==== Indicação em áudio dos modos de foco e de navegação ====
-Se esta opção estiver activada, o NVDA reproduzirá sons especiais, quando alternar entre o modo de navegação e modo de foco, em vez de anunciar essa alteração.
+Se esta opção estiver activa, o NVDA reproduzirá sons especiais, quando alternar entre o modo de navegação e modo de foco, em vez de anunciar essa alteração.
 
 +++ Definições de Formatação de Documentos (NVDA+Ctrl+D) +++[DocumentFormattingSettings]
 Esta caixa de diálogo está no menu Preferências, em "Formatação de Documentos...".
@@ -1012,6 +1024,7 @@ Pode configurar o anúncio de:
 - Números de página
 - Números de linha
 - Indentação da linha
+- Indentação do parágrafo (i.e. indentação suspensa, indentação da primeira linha)
 - Tabelas
 - Títulos de linha e coluna na tabela
 - Coordenadas da célula na tabela
@@ -1205,7 +1218,8 @@ O gestor de extras, acessível seleccionando Gerir Extras no menu de ferramentas
 Estes pacotes são fornecidos pela comunidade e contêm código personalizado, que poderá adicionar ou modificar funcionalidades no NVDA, ou mesmo fornecer suporte  para linhas braile ou sintetizadores adicionais.
 
 O gestor de extras contém uma lista que mostra todos os extras actualmente instalados na sua pasta de configurações do NVDA.
-O nome do pacote, versão e autor são mostrados para cada extra, apesar de mais informações como uma descrição e URL poderem ser visualizadas, seleccionando o extra e pressionando o butão àcerca do extra.
+O nome do pacote, versão e autor são mostrados para cada extra, apesar de mais informações como uma descrição e URL poderem ser visualizadas, seleccionando o extra e pressionando o botão acerca do extra.
+Caso exista ajuda disponível para o extra seleccionado, poderá consultá-la premindo o botão de Ajuda de extra.
 
 Para procurar extras disponíveis on-line, pressione o botão Obter Extras.
 Este botão abre a [Página de extras do NVDA http://addons.nvda-project.org/].
