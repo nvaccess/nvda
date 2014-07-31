@@ -423,7 +423,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
 		# Import late to avoid circular import.
 		import braille
-		return braille.getControlFieldBraille(field, ancestors, reportStart, formatConfig)
+		return braille.getControlFieldBraille(self, field, ancestors, reportStart, formatConfig)
 
 	def getEmbeddedObject(self, offset=0):
 		"""Retrieve the embedded object associated with a particular embedded object character.
