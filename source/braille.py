@@ -546,7 +546,7 @@ class NVDAObjectRegion(Region):
 		except NotImplementedError:
 			pass
 
-def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
+def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
 	if reportStart:
 		# If this is a container, only report it if this is the start of the node.
@@ -719,7 +719,7 @@ class TextInfoRegion(Region):
 					self._addFieldText(text)
 				elif cmd == "controlEnd":
 					field = ctrlFields.pop()
-					text = getControlFieldBraille(field, ctrlFields, False, formatConfig)
+					text = info.getControlFieldBraille(field, ctrlFields, False, formatConfig)
 					if not text:
 						continue
 					# Separate this field text from the rest of the text.
