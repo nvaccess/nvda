@@ -75,7 +75,7 @@ void fillSpeechPlayerFrame(frame_t * eFrame, speechPlayer_frame_t* spFrame) {
 	spFrame->cb6=1000;
 	spFrame->cbNP=100;
 	spFrame->cbN0=100;
-	spFrame->preFormantGain=2*(wdata.amplitude/100.0);
+	spFrame->preFormantGain=3*(wdata.amplitude/100.0);
 	spFrame->endVoicePitch=spFrame->voicePitch;
 }
 
