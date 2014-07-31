@@ -323,6 +323,9 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def activate(self):
 		self.obj._activatePosition(self)
 
+	def getMathMlForEquation(self, field):
+		return self.obj.getMathMlForEquation(field)
+
 class ElementsListDialog(wx.Dialog):
 	ELEMENT_TYPES = (
 		# Translators: The label of a radio button to select the type of element

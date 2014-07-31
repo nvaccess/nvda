@@ -700,7 +700,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		if field.get("role") == controlTypes.ROLE_EQUATION:
 			import mathPlayer
 			if mathPlayer.ensureInit():
-				speechSequence.extend(mathPlayer.getSpeechForMathMl(info.obj.getMathMlForEquation(field)))
+				speechSequence.extend(mathPlayer.getSpeechForMathMl(info.getMathMlForEquation(field)))
 		commonFieldCount+=1
 
 	#Fetch the text for format field attributes that have changed between what was previously cached, and this textInfo's initialFormatField.
@@ -780,7 +780,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 					if command.command == "controlStart" and command.field.get("role") == controlTypes.ROLE_EQUATION:
 						import mathPlayer
 						if mathPlayer.ensureInit():
-							relativeSpeechSequence.extend(mathPlayer.getSpeechForMathMl(info.obj.getMathMlForEquation(command.field)))
+							relativeSpeechSequence.extend(mathPlayer.getSpeechForMathMl(info.getMathMlForEquation(command.field)))
 				if autoLanguageSwitching and newLanguage!=lastLanguage:
 					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
 					lastLanguage=newLanguage

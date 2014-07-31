@@ -109,7 +109,7 @@ def interactWithMath(info):
 		if field.get("role") != controlTypes.ROLE_EQUATION:
 			continue
 		try:
-			mathMl = info.obj.getMathMlForEquation(field)
+			mathMl = info.getMathMlForEquation(field)
 		except (NotImplementedError, AttributeError, ValueError):
 			continue
 		eventHandler.executeEvent("gainFocus",
