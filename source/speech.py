@@ -423,6 +423,7 @@ def speak(speechSequence,symbolLevel=None):
 	defaultLanguageRoot=defaultLanguage.split('_')[0]
 	oldSpeechSequence=speechSequence
 	speechSequence=[]
+	stripCommandsPreSynth=False
 	for item in oldSpeechSequence:
 		if isinstance(item,LangChangeCommand):
 			if not autoLanguageSwitching: continue
@@ -436,8 +437,10 @@ def speak(speechSequence,symbolLevel=None):
 				prevLanguage=curLanguage
 			speechSequence.append(item)
 		else:
-			if isinstance(item,SymbolLevelCommand) and item.level is None:
-				item.level=symbolLevel
+			if isinstance(item,SymbolLevelCommand):
+				if item.level is None:
+					item.level=symbolLevel
+				stripCommandsPreSynth=True
 			speechSequence.append(item)
 	if not speechSequence:
 		# After normalisation, the sequence is empty.
@@ -453,6 +456,10 @@ def speak(speechSequence,symbolLevel=None):
 			symbolLevel=item.level
 		elif isinstance(item,basestring):
 			speechSequence[index]=processText(curLanguage,item,symbolLevel)+CHUNK_SEPARATOR
+	if stripCommandsPreSynth:
+		# These commands are used when processing text,
+		# but shouldn't be passed to the synth.
+		speechSequence=[item for item in speechSequence if not isinstance(item,SymbolLevelCommand)]
 	getSynth().speak(speechSequence)
 
 def speakSelectionMessage(message,text):
