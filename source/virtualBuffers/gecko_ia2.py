@@ -295,7 +295,14 @@ class Gecko_ia2(VirtualBuffer):
 		nodeId = int(field["controlIdentifier_ID"])
 		obj = self.getNVDAObjectFromIdentifier(docHandle, nodeId)
 		from comtypes.gen.ISimpleDOM import ISimpleDOMNode
+		from comtypes import BSTR
+		from ctypes import c_short
 		node = obj.IAccessibleObject.QueryInterface(ISimpleDOMNode)
+		# Try the data-mathml attribute.
+		attr = node.attributesForNames(1, (BSTR * 1)("data-mathml"), (c_short * 1)(0,))
+		if attr:
+			return attr
+		# Assume the content is MathML.
 		return "<math>%s</math>" % node.innerHTML
 
 class Gecko_ia2Pre14(Gecko_ia2):
