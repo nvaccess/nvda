@@ -27,7 +27,8 @@ stdNamesToRoles = {
 	"P": controlTypes.ROLE_PARAGRAPH,
 	"H": controlTypes.ROLE_HEADING,
 	# H1 to H6 handled separately
-	# Span, Quote, Note, Reference, BibEntry, Code, Figure, Formula
+	# Span, Quote, Note, Reference, BibEntry, Code, Figure
+	"Formula": controlTypes.ROLE_EQUATION,
 	"Form": controlTypes.ROLE_FORM,
 }
 

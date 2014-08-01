@@ -4,6 +4,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2009-2012 NV Access Limited, Aleksey Sadovoy
 
+from comtypes import COMError
 from . import VirtualBuffer, VirtualBufferTextInfo
 import controlTypes
 import NVDAObjects.IAccessible
@@ -14,6 +15,7 @@ import oleacc
 from logHandler import log
 import textInfos
 import languageHandler
+from comtypes.gen.AcrobatAccessLib import IPDDomElement
 
 class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 
@@ -120,3 +122,26 @@ class AdobeAcrobat(VirtualBuffer):
 			return nextHandler()
 		if not self._handleScrollTo(obj):
 			return nextHandler()
+
+	def _getNodeMathMl(self, node):
+		try:
+			node = node.QueryInterface(IPDDomElement)
+		except COMError:
+			return
+		tag = node.GetTagName()
+		# fixme: Get attributes.
+		yield "<%s>" % tag
+		val = node.GetValue()
+		if val:
+			yield val
+		else:
+			for childNum in xrange(node.GetChildCount()):
+				for sub in self._getNodeMathMl(node.GetChild(childNum)):
+					yield sub
+		yield "</%s>" % tag
+
+	def getMathMlForEquation(self, field):
+		docHandle = int(field["controlIdentifier_docHandle"])
+		nodeId = int(field["controlIdentifier_ID"])
+		obj = self.getNVDAObjectFromIdentifier(docHandle, nodeId)
+		return "".join(self._getNodeMathMl(obj.pdDomNode.GetChild(0)))
