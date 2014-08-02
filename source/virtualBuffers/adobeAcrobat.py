@@ -124,19 +124,25 @@ class AdobeAcrobat(VirtualBuffer):
 			return nextHandler()
 
 	def _getNodeMathMl(self, node):
-		try:
-			node = node.QueryInterface(IPDDomElement)
-		except COMError:
-			return
 		tag = node.GetTagName()
-		# fixme: Get attributes.
-		yield "<%s>" % tag
+		yield "<%s" % tag
+		# Output relevant attributes.
+		if tag == "mfenced":
+			for attr in "open", "close", "separators":
+				val = node.GetAttribute(attr, None)
+				if val:
+					yield ' %s="%s"' % (attr, val)
+		yield ">"
 		val = node.GetValue()
 		if val:
 			yield val
 		else:
 			for childNum in xrange(node.GetChildCount()):
-				for sub in self._getNodeMathMl(node.GetChild(childNum)):
+				try:
+					subNode = node.GetChild(childNum).QueryInterface(IPDDomElement)
+				except COMError:
+					continue
+				for sub in self._getNodeMathMl(subNode):
 					yield sub
 		yield "</%s>" % tag
 
@@ -144,4 +150,12 @@ class AdobeAcrobat(VirtualBuffer):
 		docHandle = int(field["controlIdentifier_docHandle"])
 		nodeId = int(field["controlIdentifier_ID"])
 		obj = self.getNVDAObjectFromIdentifier(docHandle, nodeId)
-		return "".join(self._getNodeMathMl(obj.pdDomNode.GetChild(0)))
+		# There could be other stuff before the math element. Ug.
+		for childNum in xrange(obj.pdDomNode.GetChildCount()):
+			try:
+				child = obj.pdDomNode.GetChild(childNum).QueryInterface(IPDDomElement)
+			except COMError:
+				continue
+			if child.GetTagName() == "math":
+				return "".join(self._getNodeMathMl(child))
+		return ""
