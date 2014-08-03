@@ -129,7 +129,7 @@ class AdobeAcrobat(VirtualBuffer):
 		# Output relevant attributes.
 		if tag == "mfenced":
 			for attr in "open", "close", "separators":
-				val = node.GetAttribute(attr, None)
+				val = node.GetAttribute(attr, "XML-1.00")
 				if val:
 					yield ' %s="%s"' % (attr, val)
 		yield ">"
