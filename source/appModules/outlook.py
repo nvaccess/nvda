@@ -314,7 +314,8 @@ class CalendarView(IAccessible):
 		if endDate!=startDate:
 			endText="%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, endTime, None),endText)
 		CalendarView._lastStartDate=startDate
-		return "%s to %s"%(startText,endText)
+		# Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+		return _("{startTime} to {endTime}").format(startTime=startText,endTime=endText)
 
 	def isDuplicateIAccessibleEvent(self,obj):
 		return False
@@ -337,7 +338,8 @@ class CalendarView(IAccessible):
 				except COMError:
 					return super(CalendarView,self).reportFocus()
 				t=self._generateTimeRangeText(start,end)
-				speech.speakMessage("Appointment %s, %s"%(p.subject,t))
+				# Translators: A message reported when on a calendar appointment in Microsoft Outlook
+				speech.speakMessage(_("Appointment {subject}, {time}").format(subject=p.subject,time=t))
 			else:
 				v=e.currentView
 				selectedStartTime=v.selectedStartTime
@@ -350,7 +352,8 @@ class CalendarView(IAccessible):
 				i.sort('[Start]')
 				i.IncludeRecurrences =True
 				if i.find(query):
-					timeSlotText="has appointment "+timeSlotText
+					# Translators: a message when the current time slot on an Outlook Calendar has an appointment
+					timeSlotText=_("has appointment")+" "+timeSlotText
 				speech.speakMessage(timeSlotText)
 		else:
 			self.event_valueChange()
