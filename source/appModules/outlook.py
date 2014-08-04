@@ -342,8 +342,11 @@ class CalendarView(IAccessible):
 				speech.speakMessage(_("Appointment {subject}, {time}").format(subject=p.subject,time=t))
 			else:
 				v=e.currentView
-				selectedStartTime=v.selectedStartTime
-				selectedEndTime=v.selectedEndTime
+				try:
+					selectedStartTime=v.selectedStartTime
+					selectedEndTime=v.selectedEndTime
+				except COMError:
+					return super(CalendarView,self).reportFocus()
 				timeSlotText=self._generateTimeRangeText(selectedStartTime,selectedEndTime)
 				startLimit=u"%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedStartTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedStartTime, None))
 				endLimit=u"%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedEndTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedEndTime, None))
