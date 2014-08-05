@@ -7,6 +7,7 @@
 """Support for math interaction using MathPlayer 2014.
 """
 
+import re
 import comtypes.client
 from comtypes import COMError
 from comtypes.gen.MathPlayer import MPInterface, IMathSpeech, IMathNavigation, IMathBraille
@@ -45,11 +46,21 @@ def ensureInit():
 		_initResult = False
 	return _initResult
 
+RE_MP_SPEECH_PAUSE = re.compile(r" *[.,](?! $) *")
+def _processMpSpeech(text):
+	# MathPlayer with speech tags set to none uses full stop and comma for pauses
+	# with inconsistent surrounding space.
+	# Full stop doesn't work with eSpeak and probably other synths because
+	# they require a capital letter after a full stop to treat it as a sentence ending.
+	# There must be a space after but not before either mark for some synths to honour it.
+	# Therefore, fix spaces and change most full stops to commas.
+	return RE_MP_SPEECH_PAUSE.sub(", ", text)
+
 def getSpeechForMathMl(mathMl):
 	ensureInit()
 	_mpSpeech.SetMathML(mathMl)
 	return (speech.SymbolLevelCommand(characterProcessing.SYMLVL_NONE),
-		_mpSpeech.GetSpokenText(),
+		_processMpSpeech(_mpSpeech.GetSpokenText()),
 		speech.SymbolLevelCommand(None))
 
 def getBrailleForMathMl(mathMl):
@@ -76,7 +87,8 @@ class MathNVDAObject(Window):
 
 	def reportFocus(self):
 		super(MathNVDAObject, self).reportFocus()
-		speech.speakText(_mpSpeech.GetSpokenText(), symbolLevel=characterProcessing.SYMLVL_NONE)
+		speech.speakText(_processMpSpeech(_mpSpeech.GetSpokenText()),
+			symbolLevel=characterProcessing.SYMLVL_NONE)
 
 	def getBrailleRegions(self, review=False):
 		yield braille.NVDAObjectRegion(self, appendText=" ")
@@ -106,7 +118,8 @@ class MathNVDAObject(Window):
 				"shift" in modNames, "control" in modNames, "alt" in modNames, False)
 		except COMError:
 			return
-		speech.speakText(text, symbolLevel=characterProcessing.SYMLVL_NONE)
+		speech.speakText(_processMpSpeech(text),
+			symbolLevel=characterProcessing.SYMLVL_NONE)
 
 	def script_exit(self, gesture):
 		eventHandler.executeEvent("gainFocus", self.parent)
