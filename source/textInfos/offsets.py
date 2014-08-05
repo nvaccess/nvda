@@ -168,7 +168,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			curPoint=None
 		if curPoint is not None:
 			# Translators: the current position's screen coordinates in pixels
-			textList.append(_("at {x},{y}").format(x=curPoint.x,y=curPoint.y))
+			textList.append(_("at {x}, {y}").format(x=curPoint.x,y=curPoint.y))
 		return ", ".join(textList)
 
 	def _getCaretOffset(self):
