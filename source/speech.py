@@ -701,10 +701,13 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	#Get speech text for any fields that are in both controlFieldStacks, if extra detail is not requested
 	if not extraDetail:
 		for count in xrange(commonFieldCount):
-			text=info.getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"start_inControlFieldStack",formatConfig,extraDetail,reason=reason)
+			field=newControlFieldStack[count]
+			text=info.getControlFieldSpeech(field,newControlFieldStack[0:count],"start_inControlFieldStack",formatConfig,extraDetail,reason=reason)
 			if text:
 				speechSequence.append(text)
 				isTextBlank=False
+				if field.get("role")==controlTypes.ROLE_MATH:
+					_speakTextInfo_addMath(speechSequence,info,field)
 
 	#Get speech text for any fields in the new controlFieldStack that are not in the old controlFieldStack
 	for count in xrange(commonFieldCount,len(newControlFieldStack)):
@@ -713,8 +716,8 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		if text:
 			speechSequence.append(text)
 			isTextBlank=False
-		if field.get("role")==controlTypes.ROLE_MATH:
-			_speakTextInfo_addMath(speechSequence,info,field)
+			if field.get("role")==controlTypes.ROLE_MATH:
+				_speakTextInfo_addMath(speechSequence,info,field)
 		commonFieldCount+=1
 
 	#Fetch the text for format field attributes that have changed between what was previously cached, and this textInfo's initialFormatField.
