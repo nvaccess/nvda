@@ -856,29 +856,29 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		if useCharacterUnit:
 			offset=offset/self.WinwordSelectionObject.font.size
 			# Translators: a measurement in Microsoft Word
-			return _("{offset:.3g} characters".format(offset=offset))
+			return _("{offset:.3g} characters").format(offset=offset)
 		else:
 			unit=options.measurementUnit
 			if unit==wdInches:
 				offset=offset/72.0
 				# Translators: a measurement in Microsoft Word
-				return _("{offset:.3g} inches".format(offset=offset))
+				return _("{offset:.3g} inches").format(offset=offset)
 			elif unit==wdCentimeters:
 				offset=offset/28.35
 				# Translators: a measurement in Microsoft Word
-				return _("{offset:.3g} centimeters".format(offset=offset))
+				return _("{offset:.3g} centimeters").format(offset=offset)
 			elif unit==wdMillimeters:
 				offset=offset/2.835
 				# Translators: a measurement in Microsoft Word
-				return _("{offset:.3g} millimeters".format(offset=offset))
+				return _("{offset:.3g} millimeters").format(offset=offset)
 			elif unit==wdPoints:
 				# Translators: a measurement in Microsoft Word
-				return _("{offset:.3g} points".format(offset=offset))
+				return _("{offset:.3g} points").format(offset=offset)
 			elif unit==wdPicas:
 				offset=offset/12.0
 				# Translators: a measurement in Microsoft Word
 				# See http://support.microsoft.com/kb/76388 for details.
-				return _("{offset:.3g} picas".format(offset=offset))
+				return _("{offset:.3g} picas").format(offset=offset)
 
 	def script_reportCurrentComment(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
