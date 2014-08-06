@@ -595,8 +595,11 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		if role == controlTypes.ROLE_MATH:
 			import mathPlayer
 			if mathPlayer.ensureInit():
-				text += " " + mathPlayer.getBrailleForMathMl(
-					info.getMathMl(field))
+				try:
+					text += " " + mathPlayer.getBrailleForMathMl(
+						info.getMathMl(field))
+				except (NotImplementedError, LookupError):
+					pass
 		return text
 	else:
 		# Translators: Displayed in braille at the end of a control field such as a list or table.

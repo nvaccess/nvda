@@ -597,6 +597,15 @@ class SpeakTextInfoState(object):
 	def copy(self):
 		return self.__class__(self)
 
+def _speakTextInfo_addMath(speechSequence, info, field):
+	import mathPlayer
+	if not mathPlayer.ensureInit():
+		return
+	try:
+		speechSequence.extend(mathPlayer.getSpeechForMathMl(info.getMathMl(field)))
+	except (NotImplementedError, LookupError):
+		return
+
 def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlTypes.REASON_QUERY,index=None,onlyInitialFields=False,suppressBlanks=False):
 	if isinstance(useCache,SpeakTextInfoState):
 		speakTextInfoState=useCache
@@ -704,10 +713,8 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		if text:
 			speechSequence.append(text)
 			isTextBlank=False
-		if field.get("role") == controlTypes.ROLE_MATH:
-			import mathPlayer
-			if mathPlayer.ensureInit():
-				speechSequence.extend(mathPlayer.getSpeechForMathMl(info.getMathMl(field)))
+		if field.get("role")==controlTypes.ROLE_MATH:
+			_speakTextInfo_addMath(speechSequence,info,field)
 		commonFieldCount+=1
 
 	#Fetch the text for format field attributes that have changed between what was previously cached, and this textInfo's initialFormatField.
@@ -784,10 +791,8 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 						relativeSpeechSequence.append(LangChangeCommand(None))
 						lastLanguage=None
 					relativeSpeechSequence.append(fieldText)
-					if command.command == "controlStart" and command.field.get("role") == controlTypes.ROLE_MATH:
-						import mathPlayer
-						if mathPlayer.ensureInit():
-							relativeSpeechSequence.extend(mathPlayer.getSpeechForMathMl(info.getMathMl(command.field)))
+					if command.command=="controlStart" and command.field.get("role")==controlTypes.ROLE_MATH:
+						_speakTextInfo_addMath(relativeSpeechSequence,info,command.field)
 				if autoLanguageSwitching and newLanguage!=lastLanguage:
 					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
 					lastLanguage=newLanguage
