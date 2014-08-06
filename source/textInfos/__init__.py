@@ -451,6 +451,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
 		winUser.setCursorPos(oldX,oldY)
 
+	def getMathMl(self, field):
+		"""Get MathML for a math control field.
+		This will only be called for control fields with a role of L{controlTypes.ROLE_MATH}.
+		@raise LookupError: If MathML can't be retrieved for this field.
+		"""
+		raise NotImplementedError
+
 RE_EOL = re.compile("\r\n|[\n\r]")
 def convertToCrlf(text):
 	"""Convert a string so that it contains only CRLF line endings.
