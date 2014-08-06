@@ -532,11 +532,17 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.End)
 
 	def getMathMl(self, field):
-		import mathType
+		try:
+			import mathType
+		except:
+			raise LookupError("MathType not installed")
 		range = self._rangeObj.Duplicate
 		range.Start = int(field["shapeoffset"])
 		obj = range.InlineShapes[0].OLEFormat
-		return mathType.getMathMl(obj)
+		try:
+			return mathType.getMathMl(obj)
+		except:
+			raise LookupError("Couldn't get MathML from MathType")
 
 class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 
