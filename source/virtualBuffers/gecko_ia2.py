@@ -290,7 +290,7 @@ class Gecko_ia2(VirtualBuffer):
 			return initialPos
 		return self._initialScrollObj
 
-	def getMathMlForEquation(self, field):
+	def getMathMl(self, field):
 		docHandle = int(field["controlIdentifier_docHandle"])
 		nodeId = int(field["controlIdentifier_ID"])
 		obj = self.getNVDAObjectFromIdentifier(docHandle, nodeId)

@@ -146,7 +146,7 @@ class AdobeAcrobat(VirtualBuffer):
 					yield sub
 		yield "</%s>" % tag
 
-	def getMathMlForEquation(self, field):
+	def getMathMl(self, field):
 		docHandle = int(field["controlIdentifier_docHandle"])
 		nodeId = int(field["controlIdentifier_ID"])
 		obj = self.getNVDAObjectFromIdentifier(docHandle, nodeId)

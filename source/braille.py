@@ -592,11 +592,11 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		if level:
 			props["positionInfo"] = {"level": level}
 		text = getBrailleTextForProperties(**props)
-		if role == controlTypes.ROLE_EQUATION:
+		if role == controlTypes.ROLE_MATH:
 			import mathPlayer
 			if mathPlayer.ensureInit():
 				text += " " + mathPlayer.getBrailleForMathMl(
-					info.getMathMlForEquation(field))
+					info.getMathMl(field))
 		return text
 	else:
 		# Translators: Displayed in braille at the end of a control field such as a list or table.

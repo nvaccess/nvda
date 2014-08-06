@@ -704,10 +704,10 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		if text:
 			speechSequence.append(text)
 			isTextBlank=False
-		if field.get("role") == controlTypes.ROLE_EQUATION:
+		if field.get("role") == controlTypes.ROLE_MATH:
 			import mathPlayer
 			if mathPlayer.ensureInit():
-				speechSequence.extend(mathPlayer.getSpeechForMathMl(info.getMathMlForEquation(field)))
+				speechSequence.extend(mathPlayer.getSpeechForMathMl(info.getMathMl(field)))
 		commonFieldCount+=1
 
 	#Fetch the text for format field attributes that have changed between what was previously cached, and this textInfo's initialFormatField.
@@ -784,10 +784,10 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 						relativeSpeechSequence.append(LangChangeCommand(None))
 						lastLanguage=None
 					relativeSpeechSequence.append(fieldText)
-					if command.command == "controlStart" and command.field.get("role") == controlTypes.ROLE_EQUATION:
+					if command.command == "controlStart" and command.field.get("role") == controlTypes.ROLE_MATH:
 						import mathPlayer
 						if mathPlayer.ensureInit():
-							relativeSpeechSequence.extend(mathPlayer.getSpeechForMathMl(info.getMathMlForEquation(command.field)))
+							relativeSpeechSequence.extend(mathPlayer.getSpeechForMathMl(info.getMathMl(command.field)))
 				if autoLanguageSwitching and newLanguage!=lastLanguage:
 					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
 					lastLanguage=newLanguage

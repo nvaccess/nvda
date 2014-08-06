@@ -333,7 +333,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			progid=field.get("progid")
 			if progid and progid.startswith("Equation.DSMT"):
 				# MathType.
-				role=controlTypes.ROLE_EQUATION
+				role=controlTypes.ROLE_MATH
 			else:
 				role=controlTypes.ROLE_EMBEDDEDOBJECT
 		else:
@@ -531,7 +531,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)
 		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.End)
 
-	def getMathMlForEquation(self, field):
+	def getMathMl(self, field):
 		import mathType
 		range = self._rangeObj.Duplicate
 		range.Start = int(field["shapeoffset"])

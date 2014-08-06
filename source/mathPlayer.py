@@ -73,7 +73,7 @@ class MathNVDAObject(Window):
 	"""A fake NVDAObject which is focused while interacting with math.
 	"""
 
-	role = controlTypes.ROLE_EQUATION
+	role = controlTypes.ROLE_MATH
 	# Override the window name.
 	name = None
 	# Any tree interceptor should not apply here.
@@ -136,10 +136,10 @@ def interactWithMath(info):
 		if not isinstance(item, textInfos.FieldCommand) or item.command != "controlStart":
 			continue
 		field = item.field
-		if field.get("role") != controlTypes.ROLE_EQUATION:
+		if field.get("role") != controlTypes.ROLE_MATH:
 			continue
 		try:
-			mathMl = info.getMathMlForEquation(field)
+			mathMl = info.getMathMl(field)
 		except (NotImplementedError, AttributeError, ValueError):
 			continue
 		eventHandler.executeEvent("gainFocus",

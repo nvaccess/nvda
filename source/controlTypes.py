@@ -106,7 +106,8 @@ ROLE_DROPLIST=100
 ROLE_SPLITBUTTON=101
 ROLE_MENUBUTTON=102
 ROLE_DROPDOWNBUTTONGRID=103
-ROLE_EQUATION=104
+ROLE_MATH=104
+ROLE_EQUATION=ROLE_MATH # Deprecated; for backwards compatibility.
 ROLE_GRIP=105
 ROLE_HOTKEYFIELD=106
 ROLE_INDICATOR=107
@@ -400,8 +401,8 @@ roleLabels={
 	ROLE_MENUBUTTON:_("menu button"),
 	# Translators: Reported for a button which expands a grid when it is pressed.
 	ROLE_DROPDOWNBUTTONGRID:_("drop down button grid"),
-	# Translators: Identifies an equation.
-	ROLE_EQUATION:_("equation"),
+	# Translators: Identifies mathematical content.
+	ROLE_MATH:_("math"),
 	# Translators: Identifies a grip control.
 	ROLE_GRIP:_("grip"),
 	# Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as assigning shortcut for icons on the desktop).

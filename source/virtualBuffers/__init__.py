@@ -323,8 +323,8 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def activate(self):
 		self.obj._activatePosition(self)
 
-	def getMathMlForEquation(self, field):
-		return self.obj.getMathMlForEquation(field)
+	def getMathMl(self, field):
+		return self.obj.getMathMl(field)
 
 class ElementsListDialog(wx.Dialog):
 	ELEMENT_TYPES = (
