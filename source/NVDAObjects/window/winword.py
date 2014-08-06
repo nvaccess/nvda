@@ -12,6 +12,8 @@ import comtypes.automation
 import uuid
 import operator
 import locale
+import sayAllHandler
+import eventHandler
 import braille
 import scriptHandler
 import languageHandler
@@ -854,29 +856,29 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		if useCharacterUnit:
 			offset=offset/self.WinwordSelectionObject.font.size
 			# Translators: a measurement in Microsoft Word
-			return _("{offset:.3g} characters".format(offset=offset))
+			return _("{offset:.3g} characters").format(offset=offset)
 		else:
 			unit=options.measurementUnit
 			if unit==wdInches:
 				offset=offset/72.0
 				# Translators: a measurement in Microsoft Word
-				return _("{offset:.3g} inches".format(offset=offset))
+				return _("{offset:.3g} inches").format(offset=offset)
 			elif unit==wdCentimeters:
 				offset=offset/28.35
 				# Translators: a measurement in Microsoft Word
-				return _("{offset:.3g} centimeters".format(offset=offset))
+				return _("{offset:.3g} centimeters").format(offset=offset)
 			elif unit==wdMillimeters:
 				offset=offset/2.835
 				# Translators: a measurement in Microsoft Word
-				return _("{offset:.3g} millimeters".format(offset=offset))
+				return _("{offset:.3g} millimeters").format(offset=offset)
 			elif unit==wdPoints:
 				# Translators: a measurement in Microsoft Word
-				return _("{offset:.3g} points".format(offset=offset))
+				return _("{offset:.3g} points").format(offset=offset)
 			elif unit==wdPicas:
 				offset=offset/12.0
 				# Translators: a measurement in Microsoft Word
 				# See http://support.microsoft.com/kb/76388 for details.
-				return _("{offset:.3g} picas".format(offset=offset))
+				return _("{offset:.3g} picas").format(offset=offset)
 
 	def script_reportCurrentComment(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -962,6 +964,20 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	def script_previousColumn(self,gesture):
 		self._moveInTable(row=False,forward=False)
 
+	def script_nextParagraph(self,gesture):
+		info=self.makeTextInfo(textInfos.POSITION_CARET)
+		info.move(textInfos.UNIT_PARAGRAPH,1)
+		info.updateCaret()
+		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
+	script_nextParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+
+	def script_previousParagraph(self,gesture):
+		info=self.makeTextInfo(textInfos.POSITION_CARET)
+		info.move(textInfos.UNIT_PARAGRAPH,-1)
+		info.updateCaret()
+		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
+	script_previousParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+
 	__gestures = {
 		"kb:control+[":"increaseDecreaseFontSize",
 		"kb:control+]":"increaseDecreaseFontSize",
@@ -991,6 +1007,8 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		"kb:control+alt+downArrow": "nextRow",
 		"kb:control+alt+leftArrow": "previousColumn",
 		"kb:control+alt+rightArrow": "nextColumn",
+		"kb:control+downArrow":"nextParagraph",
+		"kb:control+upArrow":"previousParagraph",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 		"kb:NVDA+alt+c":"reportCurrentComment",

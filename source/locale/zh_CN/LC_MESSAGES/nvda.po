@@ -4,15 +4,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-22 19:10+1000\n"
-"PO-Revision-Date: 2014-04-29 11:01+0800\n"
+"POT-Creation-Date: 2014-07-02 19:14+1000\n"
+"PO-Revision-Date: 2014-07-27 20:11+0800\n"
 "Last-Translator: 雪岭冰龙 <vgjh2005@gmail.com>\n"
 "Language-Team: Simplified Chinese translate team <vgjh2005@gmail.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.6.7\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1260,11 +1260,13 @@ msgstr "背景色"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "上标"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "下标"
 
@@ -2959,6 +2961,7 @@ msgstr "没有加下划线"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "基准线"
 
@@ -2982,6 +2985,42 @@ msgstr "两端对齐"
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "默认对齐"
+
+#. Translators: the label for paragraph format left indent
+msgid "left indent"
+msgstr "左端缩进"
+
+#. Translators: the message when there is no paragraph format left indent
+msgid "no left indent"
+msgstr "没有左端缩进"
+
+#. Translators: the label for paragraph format right indent
+msgid "right indent"
+msgstr "右端缩进"
+
+#. Translators: the message when there is no paragraph format right indent
+msgid "no right indent"
+msgstr "没有右端缩进"
+
+#. Translators: the label for paragraph format hanging indent
+msgid "hanging indent"
+msgstr "悬挂式缩进"
+
+#. Translators: the message when there is no paragraph format hanging indent
+msgid "no hanging indent"
+msgstr "没有悬挂式缩进"
+
+#. Translators: the label for paragraph format first line indent
+msgid "first line indent"
+msgstr "首行缩进"
+
+#. Translators: the message when there is no paragraph format first line indent
+msgid "no first line indent"
+msgstr "没有首行缩进"
+
+#. Translators: Reported when text no longer contains a comment.
+msgid "out of comment"
+msgstr "离开注释。"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -3343,6 +3382,7 @@ msgid "Displays one of the recent messages"
 msgstr "显示最近的一个消息"
 
 #. Translators: This Outlook Express message has an attachment
+#. Translators: when an email has attachments
 msgid "has attachment"
 msgstr "包含附件"
 
@@ -3403,8 +3443,17 @@ msgid "BCC:"
 msgstr "密送:"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
+#. Translators: when an email is unread
 msgid "unread"
 msgstr "未读"
+
+#. Translators: for a high importance email
+msgid "high importance"
+msgstr "高优先级"
+
+#. Translators: For a low importance email
+msgid "low importance"
+msgstr "低优先级"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3424,6 +3473,14 @@ msgstr "附件"
 #, python-format
 msgid "sent: %s"
 msgstr "发送: %s"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Outlook..."
+msgstr "正在等待OutLook..."
+
+#. Translators: the email is a meeting request
+msgid "meeting request"
+msgstr "会议请求"
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -4071,6 +4128,10 @@ msgstr "作者"
 msgid "&About add-on..."
 msgstr "关于插件(&A)..."
 
+#. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
+msgid "Add-on &help"
+msgstr "插件帮助(&H)"
+
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
 msgstr "安装(&I)..."
@@ -4577,6 +4638,10 @@ msgstr "退出时保存设置(&S)"
 msgid "&Warn before exiting NVDA"
 msgstr "退出 NVDA 前发出警告(&W)"
 
+#. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
+msgid "&Play sounds when starting or exiting NVDA"
+msgstr "退出或启用 NVDA 时播放声音(&P)"
+
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "日志记录级别(&O):"
@@ -5064,6 +5129,11 @@ msgstr "朗读行号(&L)"
 msgid "Report l&ine indentation"
 msgstr "朗读缩进(&I)"
 
+#. Translators: This message is presented in the document formatting settings dialogue
+#. If this option is selected, NVDA will report paragraph indentation if available.
+msgid "Report &paragraph indentation"
+msgstr "朗读段落缩进(&P)"
+
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &tables"
@@ -5143,6 +5213,7 @@ msgid "&Dictionary entries"
 msgstr "字典项目(&D)"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
+#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr "注释"
 
@@ -5408,6 +5479,7 @@ msgstr "显示一个包含链接、标题和路标的列表。"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
 msgstr "不在表格的单元格中"
 
@@ -5882,38 +5954,74 @@ msgstr "默认颜色"
 msgid "{start} through {end}"
 msgstr "{start}到{end}"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
 msgstr "无法设置标题。请在“文档格式”对话框起用“读出表格序号”选项。"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Set column header row"
-msgstr "设定此行为列标题"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Set {address} as start of column headers"
+msgstr "设置{address}为列标题的开始单元"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Cleared column header row"
-msgstr "此行的列标题已清除"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Already set {address} as start of column headers"
+msgstr "{address}已被设置成列标题的开始单元"
 
-msgid ""
-"Pressing once will set the current row as the row where column headers "
-"should be found. Pressing twice clears the setting."
-msgstr "按一次将此列设定为行标题，连按两次清除设置。"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "removed {address}    from column headers"
+msgstr "{address}已从列标题中移除"
 
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Set row header column"
-msgstr "设定该列为行标题"
-
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Cleared row header column"
-msgstr "行的列标题已清除"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Cannot find {address}    in column headers"
+msgstr "无法再列标题找到{address}"
 
 msgid ""
-"Pressing once will set the current column as the column where row headers "
-"should be found. Pressing twice clears the setting."
-msgstr "按一次将该列设置为行标题，按两次清除设定。"
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this region. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"按一次设置此单元格为第一个列标题单元，包括其右方和下方的单元在内都属于此区"
+"域，连按两次清除此单元的列标题设置。"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Set {address} as start of row headers"
+msgstr "设置{address} 为航标题开始单元"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Already set {address} as start of row headers"
+msgstr "{address}已被设置成行标题开始单元"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "removed {address}    from row headers"
+msgstr "从行标题中删除{address}"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Cannot find {address}    in row headers"
+msgstr "在行标题未找到{address}    "
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this region. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"按一次设置此单元格为第一个行标题单元，包括其右方和下方的单元在内都属于此区"
+"域，连按两次清除此单元的行标题设置。"
+
+#. Translators: A message in Excel when there is no comment
+msgid "Not on a comment"
+msgstr "不在注释中"
+
+#. Translators: the description  for a script for Excel
+msgid "Reports the comment on the current cell"
+msgstr "读出当前单元的注释"
+
+#. Translators: Dialog text for
+msgid "Editing comment for cell {address}"
+msgstr "正在编辑单元{address}的注释"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
@@ -6026,6 +6134,144 @@ msgstr "未知日期"
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "由{revisionAuthor}在{revisionDate}进行的{revisionType}"
 
+#, python-format
+msgid "%g characters"
+msgstr "%g字符"
+
+#. Translators: the value in points for a paragraph indenting
+#, python-format
+msgid "%g pt"
+msgstr "%g pt"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr "设置行{rowNumber}列{columnNumber}为列标题的开始点"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr "行{rowNumber}列{columnNumber}已被设置成列标题的开始单元"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr "行{rowNumber}列{columnNumber}已从列标题中移除"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr "无法再列标题找到行{rowNumber}列{columnNumber}"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"按一次，设置此单元以及其右边的单元作为在单元格下方形成的表格的表格行标题，按"
+"两次清除此设置。"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr "行{rowNumber}列{columnNumber}作为行标题的开始单元"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr "行{rowNumber}列{columnNumber}已设置为行标题的开始单元"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr "行{rowNumber}列{columnNumber}已从行标题中移除"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr "无法在行标题中找到行{rowNumber}列{columnNumber}"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"按一次，设置此单元作为在其右边和下边形成的表格的表格行标题，按两次清除该设置"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "黑体开"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "黑体关"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "斜体开"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "斜体关"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "下划线开"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "下划线关"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Left aligned"
+msgstr "左对齐"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "centered"
+msgstr "居中"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Right aligned"
+msgstr "右对齐"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Justified"
+msgstr "段落重排"
+
+#. Translators: the message when the outline level / style is changed in Microsoft word
+msgid "{styleName} style, outline level {outlineLevel}"
+msgstr "{styleName} 样式，大纲级别{outlineLevel}"
+
+#. Translators: a message when increasing or decreasing font size in Microsoft Word
+msgid "{size:g} point font"
+msgstr "{size:g} 号字体"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} characters"
+msgstr "{offset:.3g}个字符"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} inches"
+msgstr "{offset:.3g} 英寸"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} centimeters"
+msgstr "{offset:.3g} 厘米"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} millimeters"
+msgstr "{offset:.3g} 毫米"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} points"
+msgstr "{offset:.3g} 号"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} picas"
+msgstr "{offset:.3g} 像素"
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "no comments"
+msgstr "没有注释"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "朗读系统输入焦点所在的注释文本。"
+
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 msgid "Not in table"
@@ -6041,6 +6287,28 @@ msgstr "HIMS Braille Sense/Braille EDGE 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Set column header row"
+#~ msgstr "设定此行为列标题"
+
+#~ msgid "Cleared column header row"
+#~ msgstr "此行的列标题已清除"
+
+#~ msgid ""
+#~ "Pressing once will set the current row as the row where column headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr "按一次将此列设定为行标题，连按两次清除设置。"
+
+#~ msgid "Set row header column"
+#~ msgstr "设定该列为行标题"
+
+#~ msgid "Cleared row header column"
+#~ msgstr "行的列标题已清除"
+
+#~ msgid ""
+#~ "Pressing once will set the current column as the column where row headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr "按一次将该列设置为行标题，按两次清除设定。"
 
 #, fuzzy
 #~ msgid "%s through %s"

@@ -444,4 +444,5 @@ windowClassMap={
 	"TRxRichEdit":"RichEdit20",
 	"ScintillaWindowImpl":"Scintilla",
 	"RICHEDIT60W_WLXPRIVATE":"RICHEDIT50W",
+	"TNumEdit":"Edit",
 }

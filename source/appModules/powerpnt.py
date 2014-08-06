@@ -624,32 +624,32 @@ class Shape(PpObject):
 		onSlideList=[]
 		if left:
 			if leftDistance>=0:
-				# Translators: the distance in points from the edge of a PowerpointSlide
+				# Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge 
 				onSlideList.append(_("{distance:.3g} points from left slide edge").format(distance=leftDistance))
 			else:
-				# Translators: the distance in points off the edge of a PowerpointSlide
-				offSlideList.append(_("Off left slide edge by {distance:.3g} points").format(distance=leftDistance))
+				# Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+				offSlideList.append(_("Off left slide edge by {distance:.3g} points").format(distance=0-leftDistance))
 		if top:
 			if topDistance>=0:
-				# Translators: the distance in points from the edge of a PowerpointSlide
+				# Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge 
 				onSlideList.append(_("{distance:.3g} points from top slide edge").format(distance=topDistance))
 			else:
-				# Translators: the distance in points off the edge of a PowerpointSlide
-				offSlideList.append(_("Off top slide edge by {distance:.3g} points").format(distance=topDistance))
+				# Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+				offSlideList.append(_("Off top slide edge by {distance:.3g} points").format(distance=0-topDistance))
 		if right:
 			if rightDistance>=0:
-				# Translators: the distance in points from the edge of a PowerpointSlide
+				# Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge 
 				onSlideList.append(_("{distance:.3g} points from right slide edge").format(distance=rightDistance))
 			else:
-				# Translators: the distance in points off the edge of a PowerpointSlide
-				offSlideList.append(_("Off right slide edge by {distance:.3g} points").format(distance=rightDistance))
+				# Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+				offSlideList.append(_("Off right slide edge by {distance:.3g} points").format(distance=0-rightDistance))
 		if bottom:
 			if bottomDistance>=0:
-				# Translators: the distance in points from the edge of a PowerpointSlide
+				# Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge 
 				onSlideList.append(_("{distance:.3g} points from bottom slide edge").format(distance=bottomDistance))
 			else:
-				# Translators: the distance in points off the edge of a PowerpointSlide
-				offSlideList.append(_("Off bottom slide edge by {distance:.3g} points").format(distance=bottomDistance))
+				# Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+				offSlideList.append(_("Off bottom slide edge by {distance:.3g} points").format(distance=0-bottomDistance))
 		return ", ".join(offSlideList+onSlideList)
 
 	def _get_locationText(self):

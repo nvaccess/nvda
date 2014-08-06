@@ -8,7 +8,7 @@ The NVDA source depends on several other packages to run correctly.
 
 === Installed Dependencies ===
 The following dependencies need to be installed on your system:
-* Python, version 2.7.6, 32 bit: http://www.python.org/
+* Python, version 2.7.8, 32 bit: http://www.python.org/
 * Microsoft Visual Studio 2012 Update 1 or later (Express for Windows Desktop, or Professional)
 	* Download for Visual Studio Express 2012 (Windows Desktop): http://www.microsoft.com/en-au/download/details.aspx?id=34673
 	* Download for Visual Studio 2012 latest update package: http://go.microsoft.com/fwlink/?LinkId=301713 
