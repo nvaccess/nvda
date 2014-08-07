@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-02 19:14+1000\n"
-"PO-Revision-Date: 2014-07-07 22:31+0900\n"
+"POT-Creation-Date: 2014-08-06 23:27+1000\n"
+"PO-Revision-Date: 2014-08-06 10:19+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -1448,6 +1448,10 @@ msgstr "数式"
 msgid "has comment"
 msgstr "コメント付き"
 
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "隠れています"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "選択なし"
@@ -1797,27 +1801,17 @@ msgstr ""
 "現在のナビゲーターオブジェクトの通知、2回押すとスペルの読み上げ、3回押すとオ"
 "ブジェクトの名前と内容をクリップボードにコピー"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
-msgid "No location information for navigator object"
-msgstr "ナビゲーターオブジェクトに対する位置情報がありません"
+#. Translators: message when there is no location information for the review cursor
+msgid "No location information"
+msgstr "位置情報なし"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
-msgid "No location information for screen"
-msgstr "スクリーンに対する位置情報がありません"
-
-#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#. Translators: Description for report review cursor location command.
 msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
-"screen, height is {height:.1f} per cent of screen"
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
 msgstr ""
-"オブジェクトは、画面左端から{left:.1f}パーセント、上端から{top:.1f}パーセント"
-"にあり、画面の幅の{width:.1f}パーセント、高さの{height:.1f}パーセントを占めて"
-"います"
-
-#. Translators: Input help mode message for report object dimensions command.
-msgid "Reports the hight, width and position of the current navigator object"
-msgstr "現在のナビゲーターオブジェクトの幅、高さ、位置の読み上げ"
+"レビューカーソルのテキストやオブジェクトの位置の通知。2回押すと詳細な情報の通"
+"知。"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -2450,6 +2444,14 @@ msgstr "全般"
 msgid "Browse mode"
 msgstr "ブラウズモード"
 
+#. Translators: The shortcut key used to start NVDA.
+#. This should normally be left as is, but might be changed for some locales
+#. if the default key causes problems for the normal locale keyboard layout.
+#. The key must be formatted as described in this article:
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+msgid "CTRL+ALT+N"
+msgstr ""
+
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
 msgstr "NVDA Webサイト"
@@ -3018,6 +3020,11 @@ msgstr "右揃え"
 msgid "align justify"
 msgstr "両端揃え"
 
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "両端揃え"
+
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "既定の揃え"
@@ -3053,6 +3060,34 @@ msgstr "字下げ"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "字下げなし"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "縦方向 上揃え"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "縦方向 中央揃え"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "縦方向 下揃え"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "縦方向 ベースライン揃え"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "縦方向 両端揃え"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "縦方向 両端揃え"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "縦方向 既定の揃え"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
@@ -3352,6 +3387,16 @@ msgstr ""
 "NVDA アドオンを {path} からインストールできません。\n"
 "アドオンのインストールはNVDAの実行中にのみ可能です。"
 
+#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+msgid ""
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
+msgstr ""
+"オブジェクトは、画面左端から{left:.1f}パーセント、上端から{top:.1f}パーセント"
+"にあり、画面の幅の{width:.1f}パーセント、高さの{height:.1f}パーセントを占めて"
+"います"
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "{description} {symbol}"
@@ -3506,9 +3551,21 @@ msgstr "添付"
 msgid "sent: %s"
 msgstr "送信済み: %s"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+#. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
 msgstr "アウトルックの処理を待っています"
+
+#. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+msgid "{startTime} to {endTime}"
+msgstr "{startTime} から {endTime}"
+
+#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+msgid "Appointment {subject}, {time}"
+msgstr "予定 {subject} {time}"
+
+#. Translators: a message when the current time slot on an Outlook Calendar has an appointment
+msgid "has appointment"
+msgstr "予定あり"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
@@ -3666,6 +3723,78 @@ msgstr "マスターサムネイル"
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "スライド {slideNumber}"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers left of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape}の左の手前にあり距離{distance:.3g}ポイント"
+
+#. Translators: A message when a shape is behind  another shape on a powerpoint slide
+msgid "behind left of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape}の左の奥にあり距離{distance:.3g}ポイント"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers top of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape}の上の手前にあり距離{distance:.3g}ポイント"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind top of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape}の上の奥にあり距離{distance:.3g}ポイント"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers right of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape}の右の手前にあり距離{distance:.3g}ポイント"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind right of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape}の右の奥にあり距離{distance:.3g}ポイント"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers bottom of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape}の下の手前にあり距離{distance:.3g}ポイント"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind bottom of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape}の下の奥にあり距離{distance:.3g}ポイント"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers  {otherShape}"
+msgstr "{otherShape}の手前"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind {otherShape}"
+msgstr "{otherShape}の奥"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+msgid "{distance:.3g} points from left slide edge"
+msgstr "スライド左端から距離{distance:.3g}ポイント"
+
+#. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+msgid "Off left slide edge by {distance:.3g} points"
+msgstr "スライド左端の外側 距離{distance:.3g}ポイント"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+msgid "{distance:.3g} points from top slide edge"
+msgstr "スライド上端から距離{distance:.3g}ポイント"
+
+#. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+msgid "Off top slide edge by {distance:.3g} points"
+msgstr "スライド上端の外側 距離{distance:.3g}ポイント"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+msgid "{distance:.3g} points from right slide edge"
+msgstr "スライド右端から距離{distance:.3g}ポイント"
+
+#. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+msgid "Off right slide edge by {distance:.3g} points"
+msgstr "スライド右端の外側 距離{distance:.3g}ポイント"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+msgid "{distance:.3g} points from bottom slide edge"
+msgstr "スライド下端から距離{distance:.3g}ポイント"
+
+#. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+msgid "Off bottom slide edge by {distance:.3g} points"
+msgstr "スライド下端の外側 距離{distance:.3g}ポイント"
 
 #. Translators: The description for a script
 msgid ""
@@ -4552,7 +4681,9 @@ msgstr "ログオン画面でNVDAを使用する(&L)"
 msgid "&Keep existing desktop shortcut"
 msgstr "デスクトップのショートカットを残す(&K)"
 
-#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
+#. If the shortcut key has been changed for this locale,
+#. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "デスクトップにアイコンとショートカットキー（Ctrl+Alt+N）を作成する(&D)"
 
@@ -5184,7 +5315,7 @@ msgstr "行インデントの通知(&I)"
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "Report &paragraph indentation"
-msgstr "行インデントの通知(&P)"
+msgstr "段落インデントの通知(&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5445,6 +5576,14 @@ msgstr "音声なし"
 
 msgid "word"
 msgstr "単語"
+
+#. Translators: current position in a document as a percentage of the document length
+msgid "{curPercent:.0f}%"
+msgstr "{curPercent:.0f}パーセント"
+
+#. Translators: the current position's screen coordinates in pixels
+msgid "at {x}, {y}"
+msgstr "位置 {x}, {y}"
 
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
@@ -6320,6 +6459,7 @@ msgid "{offset:.3g} points"
 msgstr "{offset:.3g}ポイント"
 
 #. Translators: a measurement in Microsoft Word
+#. See http://support.microsoft.com/kb/76388 for details.
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g}パイカ"
 
@@ -6346,6 +6486,16 @@ msgstr "HIMS社製 Braille Sense/Braille EDGE シリーズ"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS社製 SyncBraille"
+
+#~ msgid "No location information for navigator object"
+#~ msgstr "ナビゲーターオブジェクトに対する位置情報がありません"
+
+#~ msgid "No location information for screen"
+#~ msgstr "スクリーンに対する位置情報がありません"
+
+#~ msgid ""
+#~ "Reports the hight, width and position of the current navigator object"
+#~ msgstr "現在のナビゲーターオブジェクトの幅、高さ、位置の読み上げ"
 
 #~ msgid "Set column header row"
 #~ msgstr "列見出しの行を設定"

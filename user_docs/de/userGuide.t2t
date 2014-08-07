@@ -332,7 +332,7 @@ Mit den folgenden Befehlen navigieren Sie zwischen den Objekten:
 | Zum Fokus-Objekt navigieren | NVDA+Nummerntaste Minus | NVDA+Rücktaste | keine | Navigiert zum aktuell fokussierten Objekt und zieht den NVDA-Cursor zum System-Cursor, sofern dieser sichtbar ist. |
 | Aktuelles Navigator-Objekt aktivieren | NVDA+Nummerntaste Eingabetaste | NVDA+Eingabetaste | Doppeltippen | Aktiviert das aktuelle Navigator-Objekt (ähnlich einem Mausklick oder dem Drücken der Leertaste). |
 | System-Cursor zum aktuellen Navigator-Objekt oder die Einfügemarke zum nvda-cursor ziehen | NVDA+Umschalt+Nummerntaste Minus | NVDA+Umschalt+Rücktaste | keine | Wird diese Tastenkombination einmal gedrückt, wird der Systemfokus zum aktuellen Navigator-Objekt gezogen. Wird sie zweimal gedrückt, so wird die Einfügemarke zum nvda-Cursor gezogen. |
-| Dimensionen des Navigator-Objektes ansagen | NVDA+Nummerntaste Entfernen | NVDA+Entferntaste | keine | Zeigt die Position des NVDA-Cursors relativ zum Inhalt des aktuellen Dokumentes an. Drücken Sie die Tastenkombination zweimal, um weitere Informationen zu erhalten. |
+| Ort des NVDA-Cursors ansagen | NVDA+Nummerntaste Entfernen | NVDA+Entferntaste | keine | Zeigt die Position des NVDA-Cursors relativ zum Inhalt des aktuellen Dokumentes an. Drücken Sie die Tastenkombination zweimal, um weitere Informationen zu erhalten. |
 %kc:endInclude
 
 Hinweis: Um die Tasten auf dem Nummernblock zu benutzen, muss dieser deaktiviert sein!
@@ -1089,6 +1089,7 @@ Konfigurieren können Sie die Meldungen von:
 - Seitenwechsel
 - Zeilennummern
 - Zeileneinrückungen
+- Absatzeinrückungen (z. B. hängender Einzug)
 - Tabellen
 - Spalten- und Reihenüberschriften von Tabellen
 - Zellkoordinaten in Tabellen
@@ -1293,6 +1294,8 @@ Diese Pakete werden von der NVDA-Nutzergemeinde bereitgestellt und können zusä
 
 Der Erweiterungs-manager enthält eine Liste aller Erweiterungen, die bereits in Ihrer benutzerspezifischen Konfiguration installiert sind.
 Für jede Erweiterung wird Ihnen der Name, die Versionsnummer und der Autor angezeigt. Sie können allerdings noch weitere Informationen wie eine Beschreibung und eine Url als Bezugsquelle abrufen. Wählen Sie hierzu die gewünschte Erweiterung aus und drücken Sie anschließend die Schaltfläche "über...".
+Fals für diese Erweiterung eine Hilfedatei verfügbar ist, können Sie diese mit dem Schalter "Hilfe für diese Erweiterung" aufrufen.
+
 Um weitere Erweiterungen herunterzuladen und zu installieren, drücken Sie den Schalter "Erweiterungen herunterladen...".
 Hiermit wird die Webseite für nvda-erweiterungen http://addons.nvda-project.org geöffnet.
 Falls Sie NVDA installiert haben, können Sie Erweiterungen direkt vom Browser aus installieren.
