@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-02 19:14+1000\n"
-"PO-Revision-Date: 2014-07-26 21:57+0530\n"
+"POT-Creation-Date: 2014-08-06 23:27+1000\n"
+"PO-Revision-Date: 2014-08-03 16:58+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: Tamil\n"
@@ -1446,6 +1446,10 @@ msgstr "சூத்திரமுள்ளது"
 msgid "has comment"
 msgstr "கருத்துரையுள்ளது"
 
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "மறைக்கப்பட்டுள்ளது"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "தெரிவாகாதது"
@@ -1812,27 +1816,17 @@ msgstr ""
 "படிக்கும், மும்முறை அழுத்தினால், அப்பொருளின் பெயரையும், மதிப்பையும் பிடிப்புப் பலகைக்கு "
 "படியெடுக்கும்"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
-msgid "No location information for navigator object"
-msgstr "வழிகாட்டிப் பொருளுக்கு எந்த இருப்பிடத் தகவலுமில்லை"
+#. Translators: message when there is no location information for the review cursor
+msgid "No location information"
+msgstr "மறுபரிசீலனைச் சுட்டியின் இருப்பிடத் தகவல் ஏதுமில்லை"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
-msgid "No location information for screen"
-msgstr "திரைக்கு எந்த இருப்பிடத் தகவலுமில்லை"
-
-#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#. Translators: Description for report review cursor location command.
 msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
-"screen, height is {height:.1f} per cent of screen"
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
 msgstr ""
-"பொருளின் விளிம்பு நிலை: திரையின் இடது விளிம்பிலிருந்து {left:.1f} விழுக்காடு, "
-"திரையின் மேல் விளிம்பிலிருந்து {top:.1f} விழுக்காடு, அகலம்: திரையின் அகலத்தில் "
-"{width:.1f விழுக்காடு}, உயரம்: திரையின் உயரத்தில் {height:.1f} விழுக்காடு"
-
-#. Translators: Input help mode message for report object dimensions command.
-msgid "Reports the hight, width and position of the current navigator object"
-msgstr "வழிகாட்டிப் பொருளின் உயரம், அகலம், நிலை ஆகியவைகளை அறிவிக்கும்"
+"மறுபரிசீலனைச் சுட்டியின் கீழிருக்கும் உரை, அல்லது பொறுளின் இருப்பிடம் குறித்த தகவலை "
+"அறிவிக்கும். இரு முறை அழுத்தினால், கூடுதல் தகவல்களை அறிவிக்கும்."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -2498,6 +2492,14 @@ msgstr "இதரவை"
 msgid "Browse mode"
 msgstr "உலாவும் நிலை"
 
+#. Translators: The shortcut key used to start NVDA.
+#. This should normally be left as is, but might be changed for some locales
+#. if the default key causes problems for the normal locale keyboard layout.
+#. The key must be formatted as described in this article:
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+msgid "CTRL+ALT+N"
+msgstr ""
+
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
 msgstr "என்விடிஏ வலைத்தளம் (&W)"
@@ -3068,6 +3070,11 @@ msgstr "வலதொழுங்கு"
 msgid "align justify"
 msgstr "இருபுற ஒழுங்கு"
 
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "பகிரப்பட்ட ஒழுங்கு"
+
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "இயல்பொழுங்கு"
@@ -3103,6 +3110,34 @@ msgstr "முதல் வரியோரச் சீர்மை"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "முதல் வரியோரச் சீர்மையில்லை"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "செங்குத்து மேலொழுங்கு"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "செங்குத்து நடுவொழுங்கு"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "செங்குத்து கீழொழுங்கு"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "செங்குத்து அடித்தளக்கோடொழுங்கு"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "செங்குத்து இருபுற ஒழுங்கு"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "செங்குத்து பகிர்மான ஒழுங்கு"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "செங்குத்து இயல்பொழுங்கு"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
@@ -3401,9 +3436,17 @@ msgid ""
 "You must be running NVDA to be able to install add-ons."
 msgstr ""
 "இவ்விடத்திலிருந்து என்விடிஏவின் கூட்டுறுப்பை நிறுவ இயலாது: {path}.\n"
-"கூட்டுறுப்புகளை நிறுவ, தாங்கள் என்விடிஏவை இயக்கத்தில் வைத்திருக்க வேண்டும்.Cannot "
-"install NVDA add-on from {path}.\n"
-"You must be running NVDA to be able to install add-ons."
+"கூட்டுறுப்புகளை நிறுவ, தாங்கள் என்விடிஏவை இயக்கத்தில் வைத்திருக்க வேண்டும். "
+
+#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+msgid ""
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
+msgstr ""
+"பொருளின் விளிம்பு நிலை: திரையின் இடது விளிம்பிலிருந்து {left:.1f} விழுக்காடு, "
+"திரையின் மேல் விளிம்பிலிருந்து {top:.1f} விழுக்காடு, அகலம்: திரையின் அகலத்தில் "
+"{width:.1f} விழுக்காடு, உயரம்: திரையின் உயரத்தில் {height:.1f} விழுக்காடு"
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
@@ -3559,9 +3602,23 @@ msgstr "இணைப்பு"
 msgid "sent: %s"
 msgstr "அனுப்பப்பட்டது: %s"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+#. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
 msgstr "ஔட்லுக்கிற்காக காத்துக்கொண்டிருக்கிறது..."
+
+#. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+#, fuzzy
+msgid "{startTime} to {endTime}"
+msgstr "{start} முதல் {end} வரை"
+
+#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+msgid "Appointment {subject}, {time}"
+msgstr ""
+
+#. Translators: a message when the current time slot on an Outlook Calendar has an appointment
+#, fuzzy
+msgid "has appointment"
+msgstr "கருத்துரையுள்ளது"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
@@ -3719,6 +3776,90 @@ msgstr "தலைமை சிறுபடங்கள்"
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "படவில்லை {slideNumber}"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers left of {otherShape} by {distance:.3g} points"
+msgstr ""
+"{otherShape} வடிவத்தின் இடப்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
+
+#. Translators: A message when a shape is behind  another shape on a powerpoint slide
+msgid "behind left of {otherShape} by {distance:.3g} points"
+msgstr ""
+"{otherShape} வடிவத்தின் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு இடப்புறமாக "
+"அமைந்துள்ளது"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers top of {otherShape} by {distance:.3g} points"
+msgstr ""
+"{otherShape} வடிவத்தின் மேற்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind top of {otherShape} by {distance:.3g} points"
+msgstr ""
+"{otherShape} வடிவத்தின் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு மேற்புறமாக "
+"அமைந்துள்ளது"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers right of {otherShape} by {distance:.3g} points"
+msgstr ""
+"{otherShape} வடிவத்தின் வலப்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind right of {otherShape} by {distance:.3g} points"
+msgstr ""
+"{otherShape} வடிவத்தின் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு வலப்புறமாக "
+"அமைந்துள்ளது"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers bottom of {otherShape} by {distance:.3g} points"
+msgstr ""
+"{otherShape} வடிவத்தின் கீழ்ப்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind bottom of {otherShape} by {distance:.3g} points"
+msgstr ""
+"{otherShape} வடிவத்தின் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு கீழ்ப்புறமாக "
+"அமைந்துள்ளது"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers  {otherShape}"
+msgstr "{otherShape} வடிவத்தை மறைத்துள்ளது"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind {otherShape}"
+msgstr "{otherShape} வடிவத்தின் பின்னால் அமைந்துள்ளது"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+msgid "{distance:.3g} points from left slide edge"
+msgstr "படவில்லையின் இட விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
+
+#. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+msgid "Off left slide edge by {distance:.3g} points"
+msgstr "படவில்லையின் இட விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+msgid "{distance:.3g} points from top slide edge"
+msgstr "படவில்லையின் மேல் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
+
+#. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+msgid "Off top slide edge by {distance:.3g} points"
+msgstr "படவில்லையின் மேல் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+msgid "{distance:.3g} points from right slide edge"
+msgstr "படவில்லையின் வல விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
+
+#. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+msgid "Off right slide edge by {distance:.3g} points"
+msgstr "படவில்லையின் வல விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+msgid "{distance:.3g} points from bottom slide edge"
+msgstr "படவில்லையின் கீழ் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள்"
+
+#. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+msgid "Off bottom slide edge by {distance:.3g} points"
+msgstr "படவில்லையின் கீழ் விளிம்பிலிருந்து {distance:.3g} புள்ளிகள் விலகியுள்ளது"
 
 #. Translators: The description for a script
 msgid ""
@@ -4340,7 +4481,6 @@ msgstr ""
 "{summary} ({name})\n"
 "பதிப்பு: {version}\n"
 "படைப்பாளர்: {author}\n"
-"இணைய முகவரி: {url}\n"
 "விளக்கம்: {description}\n"
 
 #. Translators: the url part of the About Add-on information
@@ -4619,7 +4759,9 @@ msgstr "சாளர புகுபதிவு திரையில் என
 msgid "&Keep existing desktop shortcut"
 msgstr "தற்போதைய மேசைத்தள குறுக்கு விசையை வைத்துக் கொள்க (&K)"
 
-#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
+#. If the shortcut key has been changed for this locale,
+#. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr ""
 "மேசைத்தள படவுருவையும், கட்டுப்பாடு+என்விடிஏ+n குறுக்கு விசையையும் உருவாக்குக (&D)"
@@ -5526,6 +5668,15 @@ msgstr "பேச்சில்லை"
 msgid "word"
 msgstr "சொல்"
 
+#. Translators: current position in a document as a percentage of the document length
+msgid "{curPercent:.0f}%"
+msgstr "{curPercent:.0f}%"
+
+#. Translators: the current position's screen coordinates in pixels
+#, fuzzy
+msgid "at {x}, {y}"
+msgstr "தற்போதைய திரையின் நிலை {x},{y} படவணுக்கள்"
+
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
 msgid "%s landmark"
@@ -6426,6 +6577,7 @@ msgid "{offset:.3g} points"
 msgstr "{offset:.3g} புள்ளிகள்"
 
 #. Translators: a measurement in Microsoft Word
+#. See http://support.microsoft.com/kb/76388 for details.
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} பிக்காக்கள்"
 
@@ -6452,6 +6604,16 @@ msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிர
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
+
+#~ msgid "No location information for navigator object"
+#~ msgstr "வழிகாட்டிப் பொருளுக்கு எந்த இருப்பிடத் தகவலுமில்லை"
+
+#~ msgid "No location information for screen"
+#~ msgstr "திரைக்கு எந்த இருப்பிடத் தகவலுமில்லை"
+
+#~ msgid ""
+#~ "Reports the hight, width and position of the current navigator object"
+#~ msgstr "வழிகாட்டிப் பொருளின் உயரம், அகலம், நிலை ஆகியவைகளை அறிவிக்கும்"
 
 #~ msgid "Set column header row"
 #~ msgstr "செங்குத்து வரிசையின் கிடைவரிசை தலைப்பு அமைக்கப்பட்டது"
