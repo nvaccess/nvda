@@ -22,10 +22,11 @@ def stripExtraneousXml(xml):
 	# Strip anything before the opening of the math tag.
 	return RE_STRIP_XML_PREFIX.sub("", xml)
 
-def getMathMl(oleFormat):
+def getMathMl(oleFormat, runForConversion=True):
 	"""Get MathML from a MathType OLEFormat object.
 	"""
-	oleFormat.DoVerb(2) # "RunForConversion"
+	if runForConversion:
+		oleFormat.DoVerb(2) # "RunForConversion"
 	mt = oleFormat.object._comobj
 	length = ctypes.c_long()
 	# 2 is get MathML

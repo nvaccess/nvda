@@ -515,6 +515,12 @@ class Shape(PpObject):
 
 	presentationType=Window.presType_content
 
+	def __init__(self, **kwargs):
+		super(Shape, self).__init__(**kwargs)
+		if self.role == controlTypes.ROLE_EMBEDDEDOBJECT:
+			if self.ppObject.OLEFormat.ProgID.startswith("Equation.DSMT"):
+				self.TextInfo = MathTypeTextInfo
+
 	def _get__overlapInfo(self):
 		slideWidth=self.appModule._ppApplication.activePresentation.pageSetup.slideWidth
 		slideHeight=self.appModule._ppApplication.activePresentation.pageSetup.slideHeight
@@ -761,6 +767,20 @@ class Shape(PpObject):
 		if any(x for x in self._edgeDistances if x<0):
 			states.add(controlTypes.STATE_OFFSCREEN)
 		return states
+
+	def reportFocus(self):
+		super(Shape, self).reportFocus()
+		if self.TextInfo is MathTypeTextInfo:
+			speech.speakTextInfo(self.makeTextInfo(textInfos.POSITION_ALL))
+
+	def getBrailleRegions(self, review=False):
+		if self.TextInfo is MathTypeTextInfo:
+			region2 = braille.TextInfoRegion(self)
+		else:
+			region2 = None
+		yield braille.NVDAObjectRegion(self, appendText=" " if region2 else "")
+		if region2:
+			yield region2
 
 	__gestures={
 		"kb:leftArrow":"moveHorizontal",
@@ -1199,3 +1219,36 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0,DocumentWindow)
 			obj.ppActivePaneViewType=ppActivePaneViewType
 			obj.ppObjectModel=m
+
+class MathTypeTextInfo(textInfos.offsets.OffsetsTextInfo):
+	"""Used to present math in a MathType object in Slide view.
+	"""
+
+	def _getStoryLength(self):
+		return 1
+
+	def _getStoryText(self):
+		return u" "
+
+	def getTextWithFields(self, formatConfig=None):
+		if self.isCollapsed:
+			return []
+		return [
+			textInfos.FieldCommand("controlStart",
+				textInfos.ControlField(role=controlTypes.ROLE_MATH, _startOfNode=True)),
+			u" ",
+			textInfos.FieldCommand("controlEnd", None)
+		]
+
+	def getMathMl(self, field):
+		try:
+			import mathType
+		except:
+			raise LookupError("MathType not installed")
+		obj = self.obj.ppObject.OLEFormat
+		try:
+			# Don't call RunForConversion, as this seems to make focus bounce.
+			# We don't seem to need it for PowerPoint anyway.
+			return mathType.getMathMl(obj, runForConversion=False)
+		except:
+			raise LookupError("Couldn't get MathML from MathType")
