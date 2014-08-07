@@ -22,6 +22,7 @@ import api
 from logHandler import log
 import textInfos
 import braille
+import virtualBuffers
 
 _initResult = None
 _mpSpeech = None
@@ -79,9 +80,9 @@ class MathNVDAObject(Window):
 	# Any tree interceptor should not apply here.
 	treeInterceptor = None
 
-	def __init__(self, mathMl=None):
+	def __init__(self, parent=None, mathMl=None):
 		ensureInit()
-		parent = self.parent = api.getFocusObject()
+		self.parent = parent
 		super(MathNVDAObject, self).__init__(windowHandle=parent.windowHandle)
 		_mpSpeech.SetMathML(mathMl)
 
@@ -142,8 +143,15 @@ def interactWithMath(info):
 			mathMl = info.getMathMl(field)
 		except (NotImplementedError, AttributeError, ValueError):
 			continue
+		focus = api.getFocusObject()
+		ti = focus.treeInterceptor
+		if isinstance(ti, virtualBuffers.VirtualBuffer):
+			# Normally, when entering browse mode from a descendant (e.g. dialog),
+			# we want the cursor to move to the focus (#3145).
+			# However, we don't want this for math, as math isn't focusable.
+			ti._enteringFromOutside = True
 		eventHandler.executeEvent("gainFocus",
-			MathNVDAObject(mathMl=mathMl))
+			MathNVDAObject(parent=focus, mathMl=mathMl))
 		return
 	# Translators: Reported when the user attempts math interaction
 	# with something that isn't math.
