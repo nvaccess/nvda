@@ -37,6 +37,8 @@ import scriptHandler
 # These also all request to have their (incomplete) UI Automation implementations  disabled. [MS Office 2013]
 objectModelWindowClasses=set(["paneClassDC","mdiClass","screenClass"])
 
+MATHTYPE_PROGID = "Equation.DSMT"
+
 #comtypes COM interface definition for Powerpoint application object's events 
 class EApplication(IDispatch):
 	_iid_=comtypes.GUID('{914934C2-5A91-11CF-8700-00AA0060263B}')
@@ -518,7 +520,7 @@ class Shape(PpObject):
 	def __init__(self, **kwargs):
 		super(Shape, self).__init__(**kwargs)
 		if self.role == controlTypes.ROLE_EMBEDDEDOBJECT:
-			if self.ppObject.OLEFormat.ProgID.startswith("Equation.DSMT"):
+			if self.ppObject.OLEFormat.ProgID.startswith(MATHTYPE_PROGID):
 				self.TextInfo = MathTypeTextInfo
 
 	def _get__overlapInfo(self):
@@ -949,6 +951,44 @@ class SlideShowTreeInterceptorTextInfo(NVDAObjectTextInfo):
 			return (0,self._getStoryLength())
 		raise LookupError
 
+	def getTextWithFields(self,formatConfig=None):
+		fields = self.obj.rootNVDAObject.basicTextFields
+		text = self.obj.rootNVDAObject.basicText
+		out = []
+		textOffset = self._startOffset
+		for fieldOffset, field in fields:
+			if fieldOffset < self._startOffset:
+				continue
+			elif fieldOffset >= self._endOffset:
+				break
+			# Output any text before the field.
+			chunk = text[textOffset:fieldOffset]
+			if chunk:
+				out.append(chunk)
+			# Output the field.
+			out.extend((
+				# Copy the field so the original isn't modified.
+				textInfos.FieldCommand("controlStart", textInfos.ControlField(field)),
+				u" ", textInfos.FieldCommand("controlEnd", None)))
+			textOffset = fieldOffset + 1
+		# Output any text after all fields in this range.
+		chunk = text[textOffset:self._endOffset]
+		if chunk:
+			out.append(chunk)
+		return out
+
+	def getMathMl(self, field):
+		try:
+			import mathType
+		except:
+			raise LookupError("MathType not installed")
+		try:
+			# Don't call RunForConversion, as this seems to make focus bounce.
+			# We don't seem to need it for PowerPoint anyway.
+			return mathType.getMathMl(field["oleFormat"], runForConversion=False)
+		except:
+			raise LookupError("Couldn't get MathML from MathType")
+
 class SlideShowTreeInterceptor(TreeInterceptor):
 	"""A TreeInterceptor for showing Slide show content. Has no caret navigation, a CursorManager must be used on top. """
 
@@ -1055,6 +1095,12 @@ class SlideShowWindow(PaneClassDC):
 					for chunk in self._getShapeText(cell.shape,cellShape=True):
 						yield chunk
 			return
+		if shapeType==msoEmbeddedOLEObject:
+			oleFormat=shape.OLEFormat
+			if oleFormat.ProgID.startswith(MATHTYPE_PROGID):
+				yield textInfos.ControlField(role=controlTypes.ROLE_MATH,
+					oleFormat=oleFormat, _startOfNode=True)
+			return
 		label=shape.alternativeText
 		if not label:
 			try:
@@ -1075,9 +1121,20 @@ class SlideShowWindow(PaneClassDC):
 		ppObject=self.currentSlide.ppObject
 		if self.notesMode:
 			ppObject=ppObject.notesPage
+		# Maintain a list of fields and the offsets at which they occur.
+		# For now, these are only control fields that consume a space.
+		fields=self.basicTextFields=[]
+		# Incrementation of textLen must include line feed added by join.
+		textLen=0
 		for shape in ppObject.shapes:
 			for chunk in self._getShapeText(shape):
-				chunks.append(chunk)
+				if isinstance(chunk,textInfos.ControlField):
+					fields.append((textLen,chunk))
+					chunks.append(" ")
+					textLen+=2
+				else:
+					chunks.append(chunk)
+					textLen+=len(chunk)+1
 		self.basicText="\n".join(chunks)
 		if not self.basicText:
 			if self.notesMode:
