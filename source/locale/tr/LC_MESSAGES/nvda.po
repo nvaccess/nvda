@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-09 19:11+1000\n"
-"PO-Revision-Date: 2014-07-09 13:57+0200\n"
+"POT-Creation-Date: 2014-08-06 23:27+1000\n"
+"PO-Revision-Date: 2014-08-07 09:41+0200\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
@@ -1801,12 +1801,12 @@ msgstr ""
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
-msgstr "konum bilgisi mevcut değil"
+msgstr "Konum bilgisi mevcut değil"
 
-#. Translators: Input help mode message for report object dimensions command.
+#. Translators: Description for report review cursor location command.
 msgid ""
-"Reports location and size information about the text position or object at "
-"the review cursor. Pressing twice may provide further detail."
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
 msgstr ""
 "İnceleme imlecinin pozisyonundaki metnin ya da nesnenin konum ve boyut "
 "bilgisini seslendirir. İki kez basılırsa daha ayrıntılı bilgi verilir."
@@ -2458,6 +2458,14 @@ msgstr "Çeşitli"
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "Tarama kipi"
+
+#. Translators: The shortcut key used to start NVDA.
+#. This should normally be left as is, but might be changed for some locales
+#. if the default key causes problems for the normal locale keyboard layout.
+#. The key must be formatted as described in this article:
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+msgid "CTRL+ALT+N"
+msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
@@ -3567,6 +3575,18 @@ msgstr "Gönderildi: %s"
 msgid "Waiting for Outlook..."
 msgstr "Outlook bekleniyor..."
 
+#. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+msgid "{startTime} to {endTime}"
+msgstr "{startTime} ile {endTime} arası"
+
+#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+msgid "Appointment {subject}, {time}"
+msgstr "Randevu {subject}, {time}"
+
+#. Translators: a message when the current time slot on an Outlook Calendar has an appointment
+msgid "has appointment"
+msgstr "Randevu var"
+
 #. Translators: the email is a meeting request
 msgid "meeting request"
 msgstr "toplantı isteği"
@@ -3764,35 +3784,35 @@ msgstr "{otherShape} şeklinin önünde"
 msgid "behind {otherShape}"
 msgstr "{otherShape} şeklinin arkasında"
 
-#. Translators: the distance in points from the edge of a PowerpointSlide
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
 msgid "{distance:.3g} points from left slide edge"
 msgstr "slayt sol kenarından {distance:.3g} punto"
 
-#. Translators: the distance in points off the edge of a PowerpointSlide
+#. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "slayt sol kenarından {distance:.3g} punto"
 
-#. Translators: the distance in points from the edge of a PowerpointSlide
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
 msgid "{distance:.3g} points from top slide edge"
 msgstr "slayt üst kenarından {distance:.3g} punto"
 
-#. Translators: the distance in points off the edge of a PowerpointSlide
+#. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "Slayt üst kenarından {distance:.3g} punto"
 
-#. Translators: the distance in points from the edge of a PowerpointSlide
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
 msgid "{distance:.3g} points from right slide edge"
 msgstr "Slayt sağ kenarından {distance:.3g} punto "
 
-#. Translators: the distance in points off the edge of a PowerpointSlide
+#. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "Slayt sağ kenarından {distance:.3g} punto "
 
-#. Translators: the distance in points from the edge of a PowerpointSlide
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "Slayt alt kenarından {distance:.3g} punto "
 
-#. Translators: the distance in points off the edge of a PowerpointSlide
+#. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "Slayt alt kenarından {distance:.3g} punto "
 
@@ -4692,7 +4712,9 @@ msgstr "Windows giriş ekranında NVDA'yı ku&llan"
 msgid "&Keep existing desktop shortcut"
 msgstr "Mevcut masaüstü &kısayolunu değiştirme"
 
-#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
+#. If the shortcut key has been changed for this locale,
+#. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "Masaüstü ikonu ve &kısayol tuşu oluştur (control+alt+n)"
 
@@ -5601,8 +5623,8 @@ msgid "{curPercent:.0f}%"
 msgstr "%{curPercent:.0f}"
 
 #. Translators: the current position's screen coordinates in pixels
-msgid "at {x},{y}"
-msgstr "{x},{y} konumunda"
+msgid "at {x}, {y}"
+msgstr "{x}, {y} konumunda"
 
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
@@ -6489,7 +6511,7 @@ msgstr "{offset:.3g} punto"
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
 msgid "{offset:.3g} picas"
-msgstr "{offset:.3g} picas"
+msgstr "{offset:.3g} pica"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 msgid "no comments"
@@ -6526,12 +6548,8 @@ msgstr "HIMS SyncBraille"
 #~ msgstr ""
 #~ " üzerinde bulunulan nesnenin yüksekliğini, genişliğini ve pozisyonunu okur"
 
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Bir kez basıldığında mevcut satır sütun başlık satırı olarak ayarlanır. "
-#~ "İki kez basıldığında ayar sıfırlanır."
+#~ msgid "Cleared column header row"
+#~ msgstr "sütun için başlık satırı sıfırlandı"
 
 #~ msgid "Cleared row header column"
 #~ msgstr "Satır için başlık sütunu sıfırlandı"
@@ -6543,127 +6561,15 @@ msgstr "HIMS SyncBraille"
 #~ "Bir kez basıldığında mevcut sütun satır başlık sütunu olarak ayarlanır. "
 #~ "İki kez basıldığında ayar sıfırlanır."
 
-#~ msgid "No flat review for this object"
-#~ msgstr "Bu nesne için  ekran inceleme imleci mevcut değil"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "Ekran inceleme imlecinin pozisyonunda nesne yok"
-
-#~ msgid "beeps"
-#~ msgstr "bipleme"
-
-#~ msgid "talk"
-#~ msgstr "konuşma"
-
-#~ msgid "%s device found"
-#~ msgstr "%s adlı cihaz bulundu"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, defaulting to %s"
-
 #~ msgid ""
-#~ "This add-on seems to already be installed. Please remove the existing add-"
-#~ "on and try again."
+#~ "Pressing once will set the current row as the row where column headers "
+#~ "should be found. Pressing twice clears the setting."
 #~ msgstr ""
-#~ "Bu eklenti zaten kurulmuş görünüyor. Lütfen mevcut eklentiyi silip tekrar "
-#~ "deneyin."
+#~ "Bir kez basıldığında mevcut satır sütun başlık satırı olarak ayarlanır. "
+#~ "İki kez basıldığında ayar sıfırlanır."
 
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr "değişiklikleri geri alarak kaydedilmiş konfigürasyonu yükler"
-
-#, fuzzy
 #~ msgid "Set column header row"
-#~ msgstr "sütun başlığı"
+#~ msgstr "Sütun başlık satırı olarak ayarla"
 
-#, fuzzy
-#~ msgid "Cleared column header row"
-#~ msgstr "sütun başlığı"
-
-#, fuzzy
 #~ msgid "Set row header column"
-#~ msgstr "Satır Başlığı"
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "üstü çizili"
-
-#, fuzzy
-#~ msgid "Manual activate/edit"
-#~ msgstr "Manuel etkinleştir"
-
-#, fuzzy
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "Konfigürasyon dosyanızda hatalar var. Konfigürasyon varsayılan fabrika "
-#~ "ayarlarına sıfırlandı.\n"
-#~ "Hatalar hakkında daha fazla ayrıntı log dosyasında bulunabilir."
-
-#, fuzzy
-#~ msgid "No automatic comments."
-#~ msgstr "Açıklama üzerinde değil"
-
-#, fuzzy
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "Açıklama penceresi bulunamadı."
-
-#, fuzzy
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "Açıklama penceresindeki metni okur"
-
-#, fuzzy
-#~ msgid "Automatic comments:"
-#~ msgstr "Açıklama bulunmuyor"
-
-#, fuzzy
-#~ msgid "Translation:"
-#~ msgstr "Organizasyon:"
-
-#, fuzzy
-#~ msgid "Comments:"
-#~ msgstr "Açıklamalar"
-
-#, fuzzy
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "Nesne sunucusunu mevcut odağa taşır. Varsa inceleme imlecini de sistem "
-#~ "düzenleme imlecine taşır."
-
-#, fuzzy
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "NVDA fare ayarları iletişim kutusunu gösterir"
-
-#, fuzzy
-#~ msgid "Translation &table:"
-#~ msgstr "Organizasyon:"
-
-#, fuzzy
-#~ msgid "default action failed"
-#~ msgstr "Varsayılan sözlük"
-
-#, fuzzy
-#~ msgid "layout %s"
-#~ msgstr "%s değil"
-
-#, fuzzy
-#~ msgid "Badly formed configuration file"
-#~ msgstr "(normal konfigürasyon)"
-
-#, fuzzy
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "Konfigürasyon Profilleri"
-
-#, fuzzy
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr "Konfigürasyon Profilleri"
-
-#, fuzzy
-#~ msgid "%s of %s"
-#~ msgstr "%s dışı"
+#~ msgstr "Satır başlık sütunu olarak ayarla"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr 2013.1:6039\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-02 19:14+1000\n"
-"PO-Revision-Date: 2014-07-06 15:55+0545\n"
+"POT-Creation-Date: 2014-08-06 23:27+1000\n"
+"PO-Revision-Date: 2014-08-07 11:02+0545\n"
 "Last-Translator: \n"
 "Language-Team: Him Prasad Gautam <drishtibachak@gmail.com>\n"
 "Language: ne\n"
@@ -1447,6 +1447,10 @@ msgstr "सूत्र युक्त"
 msgid "has comment"
 msgstr "टिप्पणी युक्त"
 
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "अमिल्दो"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "चयन रहीत"
@@ -1794,27 +1798,17 @@ msgstr ""
 "वर्तमान विचरण वश्तुको जानकारी दिनेछ । दुई पटक दबाएमा यसको हिज्जे भन्ने छ र तीन पटक "
 "दबाएमा यो वश्तुको नाम एबम् मान क्लिपपाटीमा उतार्नेछ ।"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
-msgid "No location information for navigator object"
-msgstr "विचरण वस्तु कहाँ छ पत्तो भएन ।"
+#. Translators: message when there is no location information for the review cursor
+msgid "No location information"
+msgstr "स्थानको जानकारी छैन ।"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
-msgid "No location information for screen"
-msgstr "पर्दामा कहाँ निर भनेर पत्तो भएन ।"
-
-#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#. Translators: Description for report review cursor location command.
 msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
-"screen, height is {height:.1f} per cent of screen"
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
 msgstr ""
-"वस्तुको चार किल्ला यस्तो छः वाञाँ छेउ देखि स्क्रिनको {left:.1f} प्रतिशत, सिरान देखि "
-"स्क्रिनको {top:.1f} प्रतिशत, चौडाइ स्क्रिनको {width:.1f} प्रतिशत र उचाइ स्क्रिनको "
-"{height:.1f} प्रतिशत ।"
-
-#. Translators: Input help mode message for report object dimensions command.
-msgid "Reports the hight, width and position of the current navigator object"
-msgstr "चालू विचरण वस्तुको लम्बाइ, चौडाइ र स्थान बताउने छ ।"
+"समीक्षा कर्सर रहेको स्थानको विचरण वस्तु अथवा वर्णको बारेमा जानकारी दिन्छ । दुई पटक "
+"दबाउँदा विस्तृत विवरण बताउँछ ।"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -2439,6 +2433,14 @@ msgstr "विविध"
 msgid "Browse mode"
 msgstr "उघार्ने मुद्रा"
 
+#. Translators: The shortcut key used to start NVDA.
+#. This should normally be left as is, but might be changed for some locales
+#. if the default key causes problems for the normal locale keyboard layout.
+#. The key must be formatted as described in this article:
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+msgid "CTRL+ALT+N"
+msgstr "CTRL+ALT+N"
+
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
 msgstr "नेत्रवाणीको वेभ साइट"
@@ -3009,6 +3011,11 @@ msgstr "दायाँ पङ्‌क्ति "
 msgid "align justify"
 msgstr "तटस्थ पङ्‌क्ति"
 
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "ठाडो पङ्‌क्तिबद्धता - वितरित"
+
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "निर्धारित पङ्‌क्ति"
@@ -3044,6 +3051,34 @@ msgstr "प्रथम पङ्तिकिनारा"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "प्रथम पङ्तिमा फड्को छैन ।"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "ठाडो पङ्तिवद्धता-सिरान ।"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "ठाडो पङ्तिवद्धता-विच"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "ठाडो पङ्तिवद्धता-पूछार"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "ठाडो पङ्तिवद्धता-आधाररेखा"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "ठाडो पङ्तिवद्धता-बराबरी"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "&ठाडो पङ्‌क्तिबद्धता वितरित"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "ठाडो पङ्तिवद्धता-निर्धारित"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
@@ -3343,6 +3378,16 @@ msgstr ""
 "{path} बाट नेत्रवाणी थप शाधन भित्र्याउन सकिएन ।\n"
 "तपाइले नेत्रवाणी थप-साधन भित्र्याएको हुनु पर्छ ।"
 
+#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+msgid ""
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
+msgstr ""
+"वस्तुको चार किल्ला यस्तो छः वाञाँ छेउ देखि स्क्रिनको {left:.1f} प्रतिशत, सिरान देखि "
+"स्क्रिनको {top:.1f} प्रतिशत, चौडाइ स्क्रिनको {width:.1f} प्रतिशत र उचाइ स्क्रिनको "
+"{height:.1f} प्रतिशत ।"
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "जस्तै {description} मा {symbol} "
@@ -3497,9 +3542,21 @@ msgstr "संलग्न"
 msgid "sent: %s"
 msgstr "पठाएको %s "
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+#. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
 msgstr "वाह्यरुपकको प्रतिक्षा"
+
+#. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+msgid "{startTime} to {endTime}"
+msgstr "{startTime} देखि {endTime} सम्म"
+
+#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+msgid "Appointment {subject}, {time}"
+msgstr "भेटघाट {subject}, {time}"
+
+#. Translators: a message when the current time slot on an Outlook Calendar has an appointment
+msgid "has appointment"
+msgstr "भेटघाटको तय भएको छ ।"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
@@ -3657,6 +3714,78 @@ msgstr "मूल अँगुठाछाप "
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "प्रस्तुतिपत्र {slideNumber}"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers left of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} को देब्रे  पट्टीबाट {distance:.3g} विन्दुले ढाक्ने छ । "
+
+#. Translators: A message when a shape is behind  another shape on a powerpoint slide
+msgid "behind left of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} को देब्रे  पट्टीबाट {distance:.3g} विन्दुले छोपिने छ ।"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers top of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} को माथिबाट {distance:.3g} विन्दुले ढाक्ने छ । "
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind top of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} को माथिबाट {distance:.3g} विन्दुले छोपिने छ ।"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers right of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} को दाहिने पट्टीबाट {distance:.3g} विन्दुले ढाक्ने छ । "
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind right of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} को दाहिने पट्टीबाट {distance:.3g} विन्दुले छोपिने छ ।"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers bottom of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} को तलपट्टीबाट {distance:.3g} विन्दुले ढाक्ने छ । "
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind bottom of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} को तल पट्टीबाट {distance:.3g} विन्दुले छोपिने छ ।"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers  {otherShape}"
+msgstr "{otherShape} लाई ढाक्छ ।"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind {otherShape}"
+msgstr "{otherShape} को पछाडि"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+msgid "{distance:.3g} points from left slide edge"
+msgstr "देब्रे सुलुली बाट  {distance:.3g} विन्दु"
+
+#. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+msgid "Off left slide edge by {distance:.3g} points"
+msgstr "देब्रे सुलुलीको किनारा देखि {distance:.3g} विन्दु पर"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+msgid "{distance:.3g} points from top slide edge"
+msgstr "सिरान सुलुलीको किनारा बाट  {distance:.3g} विन्दु"
+
+#. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+msgid "Off top slide edge by {distance:.3g} points"
+msgstr "सिरान सुलुलीको किनारा बाट  {distance:.3g} विन्दु पर"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+msgid "{distance:.3g} points from right slide edge"
+msgstr "दाहिने सुलुलीको किनारा बाट  {distance:.3g} विन्दु"
+
+#. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+msgid "Off right slide edge by {distance:.3g} points"
+msgstr "दाहिने सुलुलीको किनारा बाट  {distance:.3g} विन्दु पर"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+msgid "{distance:.3g} points from bottom slide edge"
+msgstr "पूछार सुलुलीको किनारा बाट  {distance:.3g} विन्दु"
+
+#. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+msgid "Off bottom slide edge by {distance:.3g} points"
+msgstr "पूछार सुलुलीको किनारा बाट  {distance:.3g} विन्दु पर"
 
 #. Translators: The description for a script
 msgid ""
@@ -4540,7 +4669,9 @@ msgstr "सन्झ्याल आरम्भ पर्दामा नेत
 msgid "&Keep existing desktop shortcut"
 msgstr "&डेस्कटप द्रुतमार्ग यथावत् होस्"
 
-#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
+#. If the shortcut key has been changed for this locale,
+#. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "डेस्कटपमा प्रतिमा र द्रुतमार्ग कुञ्जी (control+alt+n सिर्जना गर ।)"
 
@@ -5433,6 +5564,14 @@ msgstr "मौनता"
 msgid "word"
 msgstr "शब्द"
 
+#. Translators: current position in a document as a percentage of the document length
+msgid "{curPercent:.0f}%"
+msgstr "{curPercent:.0f}%"
+
+#. Translators: the current position's screen coordinates in pixels
+msgid "at {x}, {y}"
+msgstr "{x},{y} मा"
+
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
 msgid "%s landmark"
@@ -6058,18 +6197,16 @@ msgstr ""
 "रुपमा बिर्सि दिन्छ ।"
 
 #. Translators: A message in Excel when there is no comment
-#, fuzzy
 msgid "Not on a comment"
-msgstr "प्रतिक्रिया अन्त्य"
+msgstr "टिप्पणीमा होईन ।"
 
 #. Translators: the description  for a script for Excel
-#, fuzzy
 msgid "Reports the comment on the current cell"
-msgstr "प्रतिक्रिया लेख्ने बाकसमा प्रतिक्रिया जनाउने छ ।"
+msgstr "चालू कोशिकामा भएको टिप्पणी बताउनेछ ।"
 
 #. Translators: Dialog text for
 msgid "Editing comment for cell {address}"
-msgstr ""
+msgstr "कोशिका {address} का टिप्पणिको सम्पादन"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
@@ -6249,7 +6386,7 @@ msgstr "मोटायो ।"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold off"
-msgstr "मोटोपन हट्यो ।।"
+msgstr "मोटाएन"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Italic on"
@@ -6312,6 +6449,7 @@ msgid "{offset:.3g} points"
 msgstr "{offset:.3g} विन्दु"
 
 #. Translators: a measurement in Microsoft Word
+#. See http://support.microsoft.com/kb/76388 for details.
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} पिकास"
 
@@ -6338,6 +6476,16 @@ msgstr "HIMS ब्रेल चेतना/ब्रेल किनारा 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "No location information for navigator object"
+#~ msgstr "विचरण वस्तु कहाँ छ पत्तो भएन ।"
+
+#~ msgid "No location information for screen"
+#~ msgstr "पर्दामा कहाँ निर भनेर पत्तो भएन ।"
+
+#~ msgid ""
+#~ "Reports the hight, width and position of the current navigator object"
+#~ msgstr "चालू विचरण वस्तुको लम्बाइ, चौडाइ र स्थान बताउने छ ।"
 
 #~ msgid "Set column header row"
 #~ msgstr "महल शीर्षकको हरफ बनाउ"

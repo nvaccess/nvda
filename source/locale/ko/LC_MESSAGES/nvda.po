@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-02 19:14+1000\n"
-"PO-Revision-Date: 2014-07-30 05:17-0800\n"
+"POT-Creation-Date: 2014-08-06 23:27+1000\n"
+"PO-Revision-Date: 2014-08-06 09:52-0800\n"
 "Last-Translator: Joseph Lee <joseph.lee22590@gmail,com>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com, nvda-korean@freelists.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.5\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1450,6 +1450,10 @@ msgstr "수식 있음"
 msgid "has comment"
 msgstr "주석 있음"
 
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "가려짐"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "선택 안됨"
@@ -1808,28 +1812,17 @@ msgstr ""
 "현재 네비게이터 객체를 읽습니다. 두번 누르면 철자를 읽어 줍니다. 세번 누르면 "
 "객체의 이름과 값을 클립보드에 복사합니다. "
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
-msgid "No location information for navigator object"
-msgstr "화면 탐색 객체에 대한 위치 정보 없음"
+#. Translators: message when there is no location information for the review cursor
+msgid "No location information"
+msgstr "위치 정보 없음"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
-msgid "No location information for screen"
-msgstr "화면에 대한 위치정보 없음"
-
-# Literally means: "Object takes this amount of screen space."
-#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#. Translators: Description for report review cursor location command.
 msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
-"screen, height is {height:.1f} per cent of screen"
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
 msgstr ""
-"객체가 차지하는 위치: 화면 좌측에서 {left:.1f} 퍼센트, 화면 상단에서 "
-"{top:.1f} 퍼센트; 길이: 화면의 {width:.1f} 퍼센트; 높이: 화면의 {height:.1f} "
-"퍼센트"
-
-#. Translators: Input help mode message for report object dimensions command.
-msgid "Reports the hight, width and position of the current navigator object"
-msgstr "현재  화면 탑색 객체의 폭, 넓이, 위치를 읽어 줍니다. "
+"리뷰 커서 위치에 있는 텍스트 또는 객체에 대한 정보를 알려줍니다. 두번 누르면 "
+"ㅜ이치 정보를 더 자세하게 알려줍니다."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -2472,6 +2465,14 @@ msgstr "기타"
 msgid "Browse mode"
 msgstr "브라우즈 모드"
 
+#. Translators: The shortcut key used to start NVDA.
+#. This should normally be left as is, but might be changed for some locales
+#. if the default key causes problems for the normal locale keyboard layout.
+#. The key must be formatted as described in this article:
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+msgid "CTRL+ALT+N"
+msgstr "CTRL+ALT+N"
+
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
 msgstr "NVDA 웹사이트 (&N)"
@@ -3041,6 +3042,12 @@ msgstr "오른쪽으로 정렬"
 msgid "align justify"
 msgstr "정렬하기"
 
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+#, fuzzy
+msgid "align distributed"
+msgstr "오른쪽으로 정렬"
+
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "기본 정렬"
@@ -3076,6 +3083,36 @@ msgstr "첫 줄 들여쓰기 활성"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "첫 줄 들여쓰기 해제"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr ""
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr ""
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr ""
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr ""
+
+#. Translators: Reported when text is vertically justified.
+#, fuzzy
+msgid "vertical align justified"
+msgstr "정렬하기"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr ""
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+#, fuzzy
+msgid "vertical align default"
+msgstr "기본 정렬"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
@@ -3373,6 +3410,17 @@ msgstr ""
 "{path}에서 추가 기능을 설치할 수 없습니다.\n"
 "NVDA를 먼저 설치한 후 추가 기능을 설치하십시오."
 
+# Literally means: "Object takes this amount of screen space."
+#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+msgid ""
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
+msgstr ""
+"객체가 차지하는 위치: 화면 좌측에서 {left:.1f} 퍼센트, 화면 상단에서 "
+"{top:.1f} 퍼센트; 길이: 화면의 {width:.1f} 퍼센트; 높이: 화면의 {height:.1f} "
+"퍼센트"
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr ": {description}"
@@ -3527,9 +3575,21 @@ msgstr "첨부 파일"
 msgid "sent: %s"
 msgstr "sent: %s"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+#. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
 msgstr "아우틀룩 여는중..."
+
+#. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+msgid "{startTime} to {endTime}"
+msgstr "{startTime} - {endTime}"
+
+#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+msgid "Appointment {subject}, {time}"
+msgstr "일정 {subject}, {time}"
+
+#. Translators: a message when the current time slot on an Outlook Calendar has an appointment
+msgid "has appointment"
+msgstr "일정 있음"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
@@ -3688,6 +3748,78 @@ msgstr "Master Thumbnails"
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Slide {slideNumber}"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers left of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is behind  another shape on a powerpoint slide
+msgid "behind left of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers top of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind top of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers right of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind right of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers bottom of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind bottom of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers  {otherShape}"
+msgstr ""
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind {otherShape}"
+msgstr ""
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+msgid "{distance:.3g} points from left slide edge"
+msgstr ""
+
+#. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+msgid "Off left slide edge by {distance:.3g} points"
+msgstr ""
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+msgid "{distance:.3g} points from top slide edge"
+msgstr ""
+
+#. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+msgid "Off top slide edge by {distance:.3g} points"
+msgstr ""
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+msgid "{distance:.3g} points from right slide edge"
+msgstr ""
+
+#. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+msgid "Off right slide edge by {distance:.3g} points"
+msgstr ""
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+msgid "{distance:.3g} points from bottom slide edge"
+msgstr ""
+
+#. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+msgid "Off bottom slide edge by {distance:.3g} points"
+msgstr ""
 
 #. Translators: The description for a script
 msgid ""
@@ -4578,7 +4710,9 @@ msgstr "Windows 로그인 창에서 NVDA 실행 (&L)"
 msgid "&Keep existing desktop shortcut"
 msgstr "이전 바탕화면 핫키 그대로 사용 (&K)"
 
-#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
+#. If the shortcut key has been changed for this locale,
+#. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "바탕 화면에 바로가기 아이콘 및 CTRL+Alt+N 실행키 만들기 (&D)"
 
@@ -5480,6 +5614,14 @@ msgstr "음성 출력 끔"
 msgid "word"
 msgstr "단어"
 
+#. Translators: current position in a document as a percentage of the document length
+msgid "{curPercent:.0f}%"
+msgstr "{curPercent:.0f}%"
+
+#. Translators: the current position's screen coordinates in pixels
+msgid "at {x}, {y}"
+msgstr " {x}, {y}"
+
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
 msgid "%s landmark"
@@ -6057,47 +6199,51 @@ msgstr ""
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "Set {address} as start of column headers"
-msgstr ""
+msgstr "{address}을 열 머릿말의 첫 셀로 지정"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "Already set {address} as start of column headers"
-msgstr ""
+msgstr "이미 {address}을 열 머릿말의 첫 셀로 지정함"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "removed {address}    from column headers"
-msgstr ""
+msgstr "{address}를 열 머릿말에서 제외"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "Cannot find {address}    in column headers"
-msgstr ""
+msgstr "{address}를 열 머릿말에서 찾을 수 없음"
 
 msgid ""
 "Pressing once will set this cell as the first column header for any cells "
 "lower and to the right of it within this region. Pressing twice will forget "
 "the current column header for this cell."
 msgstr ""
+"한번 누르면 특정 셀을 본 구역내의 및 또는 우측 셀의 열 머릿말 셀로 지정합니"
+"다. 두번 누르면 이 설정을 해제합니다."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 msgid "Set {address} as start of row headers"
-msgstr ""
+msgstr "{address}을 행 머릿말의 첫 셀로 지정"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 msgid "Already set {address} as start of row headers"
-msgstr ""
+msgstr "이미 {address}을 행 머릿말의 첫 셀로 지정함"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 msgid "removed {address}    from row headers"
-msgstr ""
+msgstr "{address}를 행 머릿말에서 제외"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 msgid "Cannot find {address}    in row headers"
-msgstr ""
+msgstr "{address}를 행 머릿말에서 찾을 수 없음"
 
 msgid ""
 "Pressing once will set this cell as the first row header for any cells lower "
 "and to the right of it within this region. Pressing twice will forget the "
 "current row header for this cell."
 msgstr ""
+"한번 누르면 특정 셀을 본 구역내의 및 또는 우측 셀의 행 머릿말 셀로 지정합니"
+"다. 두번 누르면 이 설정을 해제합니다."
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -6234,49 +6380,53 @@ msgstr "%g pt"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
+msgstr "{rowNumber}행 {columnNumber}열을 열 머릿말의 첫 셀로 지정"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr ""
+msgstr "이미 {rowNumber}행 {columnNumber}열을 열 머릿말의 첫 셀로 지정함"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr ""
+msgstr "{rowNumber}행 {columnNumber}열을 열 머릿말에서 제외"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr ""
+msgstr "{rowNumber}행 {columnNumber}열을 열 머릿말에서 찾을 수 없음"
 
 msgid ""
 "Pressing once will set this cell as the first column header for any cells "
 "lower and to the right of it within this table. Pressing twice will forget "
 "the current column header for this cell."
 msgstr ""
+"한번 누르면 특정 셀을 본 표 내 및 또는 우측 셀의 열 머릿말 셀로 지정합니다. "
+"두번 누르면 이 설정을 해제합니다."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
+msgstr "{rowNumber}행 {columnNumber}열을 행 머릿말의 첫 셀로 지정"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr ""
+msgstr "이미 {rowNumber}행 {columnNumber}열을 행 머릿말의 첫 셀로 지정함"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr ""
+msgstr "{rowNumber}행 {columnNumber}열을 행 머릿말에서 제외"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr ""
+msgstr "{rowNumber}행 {columnNumber}열을 행 머릿말에서 찾을 수 없음"
 
 msgid ""
 "Pressing once will set this cell as the first row header for any cells lower "
 "and to the right of it within this table. Pressing twice will forget the "
 "current row header for this cell."
 msgstr ""
+"한번 누르면 특정 셀을 본 표 내 및 또는 우측 셀의 행 머릿말 셀로 지정합니다. "
+"두번 누르면 이 설정을 해제합니다."
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -6347,6 +6497,7 @@ msgid "{offset:.3g} points"
 msgstr "{offset:.3g} 포인트"
 
 #. Translators: a measurement in Microsoft Word
+#. See http://support.microsoft.com/kb/76388 for details.
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} 피카"
 
@@ -6373,6 +6524,16 @@ msgstr "HIMS 한소네/브레일 에지"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
+
+#~ msgid "No location information for navigator object"
+#~ msgstr "화면 탐색 객체에 대한 위치 정보 없음"
+
+#~ msgid "No location information for screen"
+#~ msgstr "화면에 대한 위치정보 없음"
+
+#~ msgid ""
+#~ "Reports the hight, width and position of the current navigator object"
+#~ msgstr "현재  화면 탑색 객체의 폭, 넓이, 위치를 읽어 줍니다. "
 
 #~ msgid "Set column header row"
 #~ msgstr "열 머리말 행 설정"

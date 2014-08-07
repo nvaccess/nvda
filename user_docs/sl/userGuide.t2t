@@ -105,9 +105,9 @@ Pritisk na gumb V redu na tej točki bo ponovno zagnal na novo nameščeno kopij
 Ta možnost omogoča, da se lahko NVDA samodejno zažene medtem, ko ste na prijavnem zaslonu, še preden morate vnesti geslo za prijavo v sistem.
 To vključuje tudi NUR nadzor in druge "varne" zaslone.
 
-+++ Ustvari Bližnjico na Namizju (ctrl+alt+n) +++
++++ Ustvari Bližnjico na Namizju (ctrl+alt+a) +++
 Ta možnost omogoča izbiro, če želite, da mora NVDA ustvariti bližnjico na namizju za zagon NVDA.
-Ta bližnjica, če jo boste ustvarili, bo ustvarila tudi kombinacijo bližnjičnih tipk za zagon control+alt+n. S to kombinacijo tipk boste potem lahko NVDA zagnali, kadarkoli boste želeli.
+Ta bližnjica, če jo boste ustvarili, bo ustvarila tudi kombinacijo bližnjičnih tipk za zagon control+alt+a. S to kombinacijo tipk boste potem lahko NVDA zagnali, kadarkoli boste želeli.
 
 +++ Preslikaj Prenosljivo Konfiguracijo na Trenuten Uporabniški Račun +++
 Ta možnost vam omogoča izbiro ali mora ali pa ne NVDA preslikati trenutno uporabniško konfiguracijo v uporabi v konfiguracijo trenutno prijavljenega uporabnika za nameščeno kopijo NVDA.
@@ -129,7 +129,7 @@ Pritisnite V redu, da zaprete to pogovorno okno.
 + Kako začeti z NVDA +
 
 ++ Zagon NVDA ++
-Če ste namestili NVDA z namestitvenega paketa, potem je zagon NVDA preprost. Zaženete ga lahko s pritiskom kombinacije tipk control+alt+n ali pa z izbiro NVDA menija v Start meniju, kjer razprete seznam vseh nameščenih programov.
+Če ste namestili NVDA z namestitvenega paketa, potem je zagon NVDA preprost. Zaženete ga lahko s pritiskom kombinacije tipk control+alt+a ali pa z izbiro NVDA menija v Start meniju, kjer razprete seznam vseh nameščenih programov.
 Kot dodatno možnost lahko uporabite pogovorno okno Zaženi, kjer vnesete NVDA in pritisnete Enter.
 
 Za zagon prenosljive kopije pojdite v imenik, kjer ste ustvarili prenosljivo kopijo NVDA in pritisnite Enter nad NVDA.exe ali to ikono dvakrat kliknite.
@@ -333,7 +333,7 @@ Za pomik po predmetih, uporabite naslednje ukaze:
 | Premakni se na predmet v žarišču | NVDA+številski delMinus | NVDA+vračalka | brez | Premik na predmet, ki vsebuje trenutno sistemsko žarišče ter postavi pregledno utripalko na položaj sistemske kazalke, če se prikazuje |
 | Sproži trenutni predmet krmarjenja | NVDA+številski delEnter | NVDA+enter | dvojni tap | Sproži trenuten predmet krmarjenja (podobno kot pri klikih z miško ali pritisku preslednice, ko vsebuje sistemsko žarišče) |
 | Premakni Sistemsko žarišče ali kazalko na trenuten položaj pregleda | NVDA+shift+številski delMinus | NVDA+shift+vračalka | brez | enojni pritisk Premakne Sistemsko žarišče na trenutni predmet krmarjenja, dvojni pritisk premakne sistemsko kazalko na položaj pregledne utripalke |
-| Sporoči dimenzijo predmeta krmarjenja | NVDA+številski delBriši | NVDA+Briši | brez | Sporoča dimenzije trenutnega predmeta krmarjenja, ki jih zaseda na zaslonu v odstotkih, (vključno z razdaljo od levega in zgornjega roba zaslona ter njegovo višino in širino) |
+| Sporoči položaj pregledne utripalke | NVDA+številski delBriši | NVDA+Briši | brez | Sporoča položaj besedila ali predmeta nad pregledno utripalko. To lahko vključuje na primer odstotke preostanka dokumenta (odstotke razdalje od trenutnega položaja utripalke do konca dokumenta), razdaljo od roba strani ali ali točen položaj na zaslonu. Dvojni pritisk lahko oskrbi dodatne podrobnosti. |
 %kc:endInclude
 
 Opozarjamo, da mora biti številski del izključen za pravilno delovanje tipk na tem delu.
@@ -523,13 +523,22 @@ Za vrnitev na stran, ki vsebuje ta predmet, je na voljo naslednji ukaz:
 %kc:endInclude
 
 + Posebni NVDA Ukazi za Programe +
-NVDA pozna posebej prirejene ukaze za nekatere programe, da omogoči lažjo izvedbo nekaterih opravil ali pa za oskrbo dostopa do funkcionalnosti, ki drugače niso dostopne uporabnikom bralnikov zaslonov.
+NVDA pozna posebej prirejene ukaze za nekatere programe, da omogoči lažjo izvedbo nekaterih opravil ali pa za oskrbo dostopa do funkcionalnosti, ki drugače niso dostopne uporabnikom bralnikov zaslona.
+
+++ Microsoft Word ++
+%kc:beginInclude
+|| Ime | Tipka | Opis |
+| Sporoči trenutni komentar | NVDA+Alt+c | Sporoči besedilo komentarja nad trenutnim položajem Pregledne Utripalke. | 
+| Postavi glave stolpca | NVDA+shift+c | Enojni pritisk pove NVDA, da je to prva celica z glavo v vrstici, ki vsebuje glave stolpca; ta bi morala biti samodejno naznanjena, ko se bomo premikali po stolpcih pod to vrstico. Dvojni pritisk bo zbrisal to nastavitev. | 
+| Postavi glave vrstice | NVDA+shift+r | Enojni pritisk pove NVDA, da je to prva celica z glavo v stolpcu, ki vsebuje glave vrstice; ta bi morala biti samodejno naznanjena, ko se bomo premikali po vrsticah za tem stolpcem. Dvojni pritisk bo zbrisal to nastavitev. | 
+%kc:endInclude
 
 ++ Microsoft Excel ++
 %kc:beginInclude
-|| Ime | Tipka | Opis |
-| Postavi glave stolpca | NVDA+shift+c | Enojni pritisk pove NVDA, da je to vrstica, ki vsebuje glave stolpca. Tako jih mora NVDA samodejno naznaniti, ko se premikamo med njimi v spodnjih vrsticah. Dvojni pritisk bo brisal trenutno nastavitev. | 
-| Postavi glave vrstice | NVDA+shift+r | Enojni pritisk pove NVDA, da je to stolpec, ki vsebuje glave vrstice. Tako jih mora NVDA samodejno naznaniti, ko se premikamo med njimi v drugih stolpcih. Dvojni pritisk bo brisal trenutno nastavitev. | 
+|| Ime | Tipka | Opis | 
+| Postavi glave stolpca | NVDA+shift+c | Enojni pritisk pove NVDA, da je to prva celica v vrstici, ki vsebuje glave stolpca. Tako jih mora NVDA samodejno naznaniti, ko se premikamo med njimi v spodnjih vrsticah. Dvojni pritisk bo brisal trenutno nastavitev. | 
+| Postavi glave vrstice | NVDA+shift+r | Enojni pritisk pove NVDA, da je to prva celica v stolpcu, ki vsebuje glave vrstice. Tako jih mora NVDA samodejno naznaniti, ko se premikamo med njimi v drugih stolpcih. Dvojni pritisk bo brisal trenutno nastavitev. | 
+| Sporoči komentar | NVDA+alt+c | Sporoči comentar nad trenutno celico, če obstaja. | 
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -585,8 +594,11 @@ Pritisnite V redu in NVDA se bo ponovno naložila.
 Ta možnost v obliki izbirnika, ko je izbrana, pove NVDA, da naj ob izhodu trenutno konfiguracijo samodejno shrani.
 
 ==== Opozori pred izhodom iz NVDA ====
-Ta možnost kot izbirnik omogoča, da izberete, ali naj, ali pa naj se pogovorno okno opozorila ob izhodu ne prikaže; ta vas sprašuje, če res želite zapreti NVDA.
+Ta možnost kot izbirnik omogoča izbiro, ali naj se, ali pa naj se pogovorno okno opozorila ob izhodu ne prikaže; ta vas sprašuje, če res želite zapreti NVDA.
 Ko je možnost izbrana, se bo prikazalo pogovorno okno z vprašanjem o zaprtju NVDA, ko boste poskušali zapreti NVDA.
+
+==== Predvajaj zvok ob zagonu in izhodu iz NVDA ====
+Ta možnost je izbirnik, ki pove NVDA, naj, ali pa ne, predvaja zvok ob zagonu NVDA in izhodu iz nje.
 
 ==== Nivo beleženja ====
 To je spustni meni, ki vam dovoljuje izbiro, koliko bo NVDA beležila, med tem, ko bo v uporabi.
@@ -1004,19 +1016,20 @@ Večina izbirnikov v tem pogovornem oknu določa, kako poročati o tipih oblikov
 Na primer, ko izberete izbirnik ime pisave, bo vedno, ko se boste premaknili na besedilo z drugačno pisavo od prejšnje, NVDA sporočila ime pisave v uporabi.
 
 V NVDA lahko nastavite poročanje za:
-- ime Pisave
-- velikost Pisave
-- lastnosti Pisave
-- poravnavo Besedila
+- Ime Pisave
+- Velikost Pisave
+- Lastnosti Pisave
+- Poravnavo Besedila
 - Barve
-- uredniške popravke
-- slog Besedila
+- Uredniške popravke
+- Slog Besedila
 - Napake v črkovanju
-- številke Strani
-- številko Vrstice
-- zamike Vrstice
+- Številke Strani
+- Številke Vrstice
+- Zamike Vrstice
+- Zamike odstavka (viseči zamik, zamik prve vrstice...)
 - Tabele
-- glave in čela Tabel
+- Glave in čela Tabel (glave vrstic in stolpcev)
 - Koordinate celic v tabelah
 - Povezave
 - Naslove
@@ -1210,7 +1223,8 @@ Upravitelj dodatkov dostopen preko izbire Orodij v meniju NVDA vam omogoča name
 Te dodatke je oskrbela skupnost in vsebujejo prilagojeno kodo, ki lahko doda ali spremeni značilnosti v NVDA ali celo doda podporo večim brajevim vrsticam ali govornim sintezam.
 
 Upravitelj dodatkov vsebuje seznam, ki prikazuje vse dodatke trenutno nameščene v vaši NVDA uporabniški konfiguraciji.
-Ime paketa, njegova različica in avtorji se pokažejo ob vsakem paketu, ostale informacije, kot je opis in URL so vidne ob izbiri dodatka in pritisku gumba O dodatku.
+Ime paketa, njegova različica in avtorji se pokažejo ob vsakem paketu, ostale informacije, kot je opis in URL pa so vidne ob izbiri dodatka in pritisku gumba O dodatku.
+Če je pomoč za izbran dodatek na voljo, lahko do nje dostopate tako, da pritisnete gumb Pomoč ob izbranem dodatku.
 
 Za brskanje in prenos dodatkov, ki so na voljo na spletu, pritisnite gumb Pridobi dodatke.
 Ta gumb odpre [stran z dodatki za NVDA http://addons.nvda-project.org/].

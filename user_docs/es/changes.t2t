@@ -15,9 +15,9 @@ Qué hay de Nuevo en NVDA
  - El filtrado inteligente de la hora de manera que sólo se anuncia la fecha si la nueva hora o cita seleccionada es en un día diferente a la última.
 - Mejorado el soporte para la bandeja de entrada y otras listas de mensajes en Outlook 2010 y posterior (#3834) incluyendo:
  - La capacidad de silenciar los encabezados de columna (de, Asunto etc) desactivando la opción Anunciar Encabezados de Fila y Columna de Tabla en Opciones de Formateado de Texto,
- - La capacidad de utilizar las órdenescomandos de navegación de tabla (control + alt + flechas) para moverse a lo largo de las columnas individuales. 
+ - La capacidad de utilizar las órdenes de navegación de tabla (control + alt + flechas) para moverse a lo largo de las columnas individuales. 
 - Microsoft word: Si una imagen en línea no tiene puesto ningún texto alternativo, NVDA anunciará el título de la imagen, si el autor ha proporcionado uno. (#4193)
-- Microsoft Word: Se anuncia el sangrado del párrafo con la orden  Anunciar Formato (NVDA+f) y automáticamente cuando la nueva opción Anunciar Sangría del Párrafo en Formateo de Documentos esté activada. (#4165).
+- Microsoft Word: NVDA ahora puede anunciar el sangrado de párrafo con  la orden anunciar formato (NVDA+f). También puede anunciarse automáticamente cuando la nueva opción Anunciar Sangría de Párrafo esté habilitada en  las opciones de Formato de Documento. (#4165)
 - Se anuncia el texto insertado automáticamente tal como una nueva viñeta, número o sangría cuando se pulse intro en documentos y campos de texto editables. (#4185)
 - Microsoft word: Al pulsar NVDA+alt+c se anunciará el texto de  un comentario si el cursor está dentro de uno. (#3528)
 - Mejorado el soporte para la lectura automática de encabezados de fila y columna en Microsoft Excel (#3568) incluyendo:
@@ -28,7 +28,7 @@ Qué hay de Nuevo en NVDA
  - Soporte de marcas de MS Word para identificar celdas de encabezado (compatible con el lector de pantalla Jaws) 
  -  las órdenes fijar encabezado de columna (NVDA+shift+c) y fijar encabezado de fila (NVDA+shift+r) mientras se esté en la primera celda de encabezado en una tabla permiten decir a NVDA que esos encabezados  deberían anunciarse automáticamente.  Las opciones se almacenan en el documento tal que estén disponibles la siguiente vez que el documento se abra, y estarán disponibles para otros lectores de pantalla que soporten el esquema de marcas.
 - Microsoft Word: Anuncia la distancia desde el borde izquierdo de la página cuando se pulse la tecla tab. (#1353)
-- Microsoft Word: se proporciona información en voz y en braille para la mayoría de teclas de atajo disponibles  para el formato (negrita, cursiva, subrayado,  alineación y nivel de esquema). (#1353)
+- Microsoft Word: se proporciona información en voz y en braille para la mayoría de teclas de atajo disponibles  para el formato (negrita, cursiva, subrayado,  alineación,  nivel de esquema,superíndice, subíndice y tamaño de fuente ). (#1353)
 - Microsoft Excel: Si la celda seleccionada contiene comentarios, pueden ser ahora anunciados pulsando NVDA+alt+c (#2920)
 - Microsoft Excel: se Proporciona un diálogo específico para NVDA para editar los comentarios sobre la celda seleccionada al pulsar la orden de Excel shift + f2 para acceder al modo de edición de comentarios. (#2920)
 - Microsoft Excel: información en voz y en braille  para muchos más atajos de teclado para movimientos de selección (#4211) incluyendo:
@@ -77,6 +77,9 @@ Qué hay de Nuevo en NVDA
 - Diálogo Firmas de Microsoft Outlook: el campo de edición firma ahora es accesible, lo que permite el seguimiento completo de cursor y la detección de formato. (#3833) 
 - Microsoft Word: Al leer la última línea de una celda de tabla, ya no se lee toda la celda de la tabla. (#3421)
 - Microsoft Word: Al leer la primera o la última línea de una tabla de índice, ya no se lee toda la tabla de índice. (#3421)
+- Al verbalizar palabras al escribir y en algunos otros casos, las palabras ya no se separan incorrectamente en marcas tales como signos vocálicos y virama en Idiomas de la India. (#4254)
+- Los campos numéricos  de texto editable en GoldWave ahora se manejan correctamente. (#670)
+- Microsoft Word: al moverse por párafo con control+flecha abajo / control+flecha arriba, ya no es necesario pulsarlos dos veces si nos movemos por listas numeradas o de viñetas. (#3290)
 
 
 == Cambios para Desarrolladores ==

@@ -4,15 +4,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-02 19:14+1000\n"
-"PO-Revision-Date: 2014-07-27 20:11+0800\n"
+"POT-Creation-Date: 2014-08-06 23:27+1000\n"
+"PO-Revision-Date: 2014-08-06 17:10+0800\n"
 "Last-Translator: 雪岭冰龙 <vgjh2005@gmail.com>\n"
 "Language-Team: Simplified Chinese translate team <vgjh2005@gmail.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.7\n"
+"X-Generator: Poedit 1.6.5\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1446,6 +1446,10 @@ msgstr "有公式"
 msgid "has comment"
 msgstr "有注释"
 
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "被覆盖"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "，未选择"
@@ -1788,38 +1792,27 @@ msgstr ""
 "朗读当前查看对象的信息，连按两次拼读该信息，连按三次则拷贝该对象的名称以及属"
 "性的值到剪贴板。"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
-msgid "No location information for navigator object"
-msgstr "没有浏览对象的位置信息"
+#. Translators: message when there is no location information for the review cursor
+#, fuzzy
+msgid "No location information"
+msgstr "没有格式信息"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
-msgid "No location information for screen"
-msgstr "没有屏幕的位置信息"
-
-#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#. Translators: Description for report review cursor location command.
 msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
-"screen, height is {height:.1f} per cent of screen"
-msgstr ""
-"对象与屏幕左边界的距离为百分之{left:.1f}，与屏幕上边界的距离为百分之"
-"{top:.1f}，宽度为百分之{width:.1f}，高度为百分之{height:.1f}"
-
-#. Translators: Input help mode message for report object dimensions command.
-msgid "Reports the hight, width and position of the current navigator object"
-msgstr "读出正在查看对象的大小以及所在位置"
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
+msgstr "朗读浏览光标下文本或对象的位置信息，连按两次获取更详细的信息。"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
-msgstr "移到系统焦点"
+msgstr "移动到焦点"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
-"将浏览光标移到当前系统焦点所在位置，若有输入焦点，则尝试把浏览光标移到输入焦"
-"点所在位置。"
+"将对象导航移到当前系统焦点，把浏览光标移动到输入焦点所在位置（如果可能）。"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -2414,6 +2407,14 @@ msgstr "杂项"
 msgid "Browse mode"
 msgstr "浏览模式"
 
+#. Translators: The shortcut key used to start NVDA.
+#. This should normally be left as is, but might be changed for some locales
+#. if the default key causes problems for the normal locale keyboard layout.
+#. The key must be formatted as described in this article:
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+msgid "CTRL+ALT+N"
+msgstr ""
+
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
 msgstr "NVDA 官方网站"
@@ -2982,6 +2983,12 @@ msgstr "右对齐"
 msgid "align justify"
 msgstr "两端对齐"
 
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+#, fuzzy
+msgid "align distributed"
+msgstr "右对齐"
+
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "默认对齐"
@@ -3017,6 +3024,36 @@ msgstr "首行缩进"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "没有首行缩进"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "垂直上对齐"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "垂直中对其"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "垂直下对齐"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "垂直基准线对齐"
+
+#. Translators: Reported when text is vertically justified.
+#, fuzzy
+msgid "vertical align justified"
+msgstr "两端对齐"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "垂直分布对齐"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+#, fuzzy
+msgid "vertical align default"
+msgstr "默认对齐"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
@@ -3320,6 +3357,15 @@ msgstr ""
 "无法从{path}安装插件。\n"
 "您必须先运行 NVDA 以使插件可以顺利的安装。"
 
+#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+msgid ""
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
+msgstr ""
+"对象与屏幕左边界的距离为百分之{left:.1f}，与屏幕上边界的距离为百分之"
+"{top:.1f}，宽度为百分之{width:.1f}，高度为百分之{height:.1f}"
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "{description}"
@@ -3474,9 +3520,23 @@ msgstr "附件"
 msgid "sent: %s"
 msgstr "发送: %s"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+#. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
 msgstr "正在等待OutLook..."
+
+#. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+#, fuzzy
+msgid "{startTime} to {endTime}"
+msgstr "{start}到{end}"
+
+#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+msgid "Appointment {subject}, {time}"
+msgstr ""
+
+#. Translators: a message when the current time slot on an Outlook Calendar has an appointment
+#, fuzzy
+msgid "has appointment"
+msgstr "有注释"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
@@ -3634,6 +3694,78 @@ msgstr "主缩略图"
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "幻灯片{slideNumber}"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers left of {otherShape} by {distance:.3g} points"
+msgstr "左边被{otherShape}覆盖的距离为{distance:.3g}点"
+
+#. Translators: A message when a shape is behind  another shape on a powerpoint slide
+msgid "behind left of {otherShape} by {distance:.3g} points"
+msgstr "behind left of {otherShape} by {distance:.3g} points"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers top of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind top of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers right of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind right of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers bottom of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind bottom of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers  {otherShape}"
+msgstr ""
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind {otherShape}"
+msgstr ""
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+msgid "{distance:.3g} points from left slide edge"
+msgstr ""
+
+#. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+msgid "Off left slide edge by {distance:.3g} points"
+msgstr ""
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+msgid "{distance:.3g} points from top slide edge"
+msgstr ""
+
+#. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+msgid "Off top slide edge by {distance:.3g} points"
+msgstr ""
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+msgid "{distance:.3g} points from right slide edge"
+msgstr ""
+
+#. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+msgid "Off right slide edge by {distance:.3g} points"
+msgstr ""
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+msgid "{distance:.3g} points from bottom slide edge"
+msgstr ""
+
+#. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+msgid "Off bottom slide edge by {distance:.3g} points"
+msgstr ""
 
 #. Translators: The description for a script
 msgid ""
@@ -4506,7 +4638,9 @@ msgstr "进入 Windows 欢迎界面时启用 NVDA(&L)"
 msgid "&Keep existing desktop shortcut"
 msgstr "保留已存在的桌面图标(&K)"
 
-#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
+#. If the shortcut key has been changed for this locale,
+#. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "创建桌面快捷方式并使用快捷键“Ctrl加Alt加n”(&D)"
 
@@ -4587,7 +4721,7 @@ msgstr "NVDA 日志查看器"
 
 #. Translators: The label for a menu item in NVDA log viewer to refresh log messages.
 msgid "Refresh\tF5"
-msgstr "刷新\tF5"
+msgstr "刷新(\tF5)"
 
 #. Translators: The title of a menu in NVDA Log Viewer.
 msgid "Log"
@@ -4941,7 +5075,7 @@ msgstr "朗读候选字词时总包含短字符描述(&D)"
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Report changes to the &reading string"
-msgstr "朗读 reading 字串(&R)"
+msgstr "朗读预上屏字串(&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
@@ -5390,6 +5524,14 @@ msgstr "关闭语音"
 
 msgid "word"
 msgstr "单词"
+
+#. Translators: current position in a document as a percentage of the document length
+msgid "{curPercent:.0f}%"
+msgstr ""
+
+#. Translators: the current position's screen coordinates in pixels
+msgid "at {x}, {y}"
+msgstr ""
 
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
@@ -6136,7 +6278,7 @@ msgstr "由{revisionAuthor}在{revisionDate}进行的{revisionType}"
 
 #, python-format
 msgid "%g characters"
-msgstr "%g字符"
+msgstr "%g个字符"
 
 #. Translators: the value in points for a paragraph indenting
 #, python-format
@@ -6261,6 +6403,7 @@ msgid "{offset:.3g} points"
 msgstr "{offset:.3g} 号"
 
 #. Translators: a measurement in Microsoft Word
+#. See http://support.microsoft.com/kb/76388 for details.
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} 像素"
 
@@ -6287,6 +6430,16 @@ msgstr "HIMS Braille Sense/Braille EDGE 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "No location information for navigator object"
+#~ msgstr "没有浏览对象的位置信息"
+
+#~ msgid "No location information for screen"
+#~ msgstr "没有屏幕的位置信息"
+
+#~ msgid ""
+#~ "Reports the hight, width and position of the current navigator object"
+#~ msgstr "读出正在查看对象的大小以及所在位置"
 
 #~ msgid "Set column header row"
 #~ msgstr "设定此行为列标题"
