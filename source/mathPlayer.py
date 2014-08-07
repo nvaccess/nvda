@@ -141,7 +141,7 @@ def interactWithMath(info):
 			continue
 		try:
 			mathMl = info.getMathMl(field)
-		except (NotImplementedError, AttributeError, ValueError):
+		except (NotImplementedError, LookupError):
 			continue
 		focus = api.getFocusObject()
 		ti = focus.treeInterceptor
