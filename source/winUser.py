@@ -8,7 +8,6 @@
 
 from ctypes import *
 from ctypes.wintypes import *
-import time
 
 #dll handles
 user32=windll.user32
@@ -366,15 +365,7 @@ def isDescendantWindow(parentHwnd,childHwnd):
 	else:
 		return False
 
-FOREGROUND_WINDOW_CACHE_TIMEOUT = 0.1
-_cachedForegroundWindow = (None, None)
 def getForegroundWindow():
-	global _cachedForegroundWindow
-	fgWindow, fgTime = _cachedForegroundWindow
-	if fgTime:
-		if time.time() - fgTime < FOREGROUND_WINDOW_CACHE_TIMEOUT:
-			return fgWindow
-		_cachedForegroundWindow = (None, None)
 	return user32.GetForegroundWindow()
 
 def setForegroundWindow(hwnd):
