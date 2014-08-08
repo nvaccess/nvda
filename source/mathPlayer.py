@@ -47,7 +47,7 @@ def ensureInit():
 		_initResult = False
 	return _initResult
 
-RE_MP_SPEECH_PAUSE = re.compile(r" *[.,](?! $) *")
+RE_MP_SPEECH_PAUSE = re.compile(r" *, *| *\.(?! $) +")
 def _processMpSpeech(text):
 	# MathPlayer with speech tags set to none uses full stop and comma for pauses
 	# with inconsistent surrounding space.
