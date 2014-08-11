@@ -1,10 +1,9 @@
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-02 19:14+1000\n"
-"PO-Revision-Date: 2014-07-21 11:52+0100\n"
+"POT-Creation-Date: 2014-08-11 19:10+1000\n"
+"PO-Revision-Date: 2014-08-07 12:58+0100\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -1445,6 +1444,10 @@ msgstr "Con formula"
 msgid "has comment"
 msgstr "Contiene commenti"
 
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr ""
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "non selezionato"
@@ -1814,29 +1817,16 @@ msgstr ""
 "per carattere o, se premuto tre volte, copia il nome e il valore "
 "dell'oggetto attuale negli appunti"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
-msgid "No location information for navigator object"
-msgstr "Non ci sono informazioni di posizione per il navigatore di oggetti"
+#. Translators: message when there is no location information for the review cursor
+#, fuzzy
+msgid "No location information"
+msgstr "Nessuna informazione di formattazione"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
-msgid "No location information for screen"
-msgstr "Non ci sono informazioni di posizione a schermo"
-
-#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#. Translators: Description for report review cursor location command.
 msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
-"screen, height is {height:.1f} per cent of screen"
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
 msgstr ""
-"l'oggetto si trova a {left:.1f}  dal lato sinistro dello schermo, a "
-"{top:.1f} dal lato superiore, occupa {width:.1f} della larghezza e "
-"{height:.1f} dell'altezza"
-
-#. Translators: Input help mode message for report object dimensions command.
-msgid "Reports the hight, width and position of the current navigator object"
-msgstr ""
-"Legge l'altezza, la larghezza e la posizione dell'oggetto attuale del "
-"navigatore"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -2507,6 +2497,14 @@ msgstr "Varie"
 msgid "Browse mode"
 msgstr "Modalita' navigazione"
 
+#. Translators: The shortcut key used to start NVDA.
+#. This should normally be left as is, but might be changed for some locales
+#. if the default key causes problems for the normal locale keyboard layout.
+#. The key must be formatted as described in this article:
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+msgid "CTRL+ALT+N"
+msgstr ""
+
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
 msgstr "Sito web di NVDA"
@@ -3077,52 +3075,79 @@ msgstr "Allineamento a destra"
 msgid "align justify"
 msgstr "Allineamento giustificato"
 
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+#, fuzzy
+msgid "align distributed"
+msgstr "Allineamento a destra"
+
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "Allineamento predefinito"
 
 #. Translators: the label for paragraph format left indent
-#, fuzzy
 msgid "left indent"
-msgstr "Rientranza"
+msgstr "Rientro a sinistra"
 
 #. Translators: the message when there is no paragraph format left indent
-#, fuzzy
 msgid "no left indent"
-msgstr "Nessun rientro"
+msgstr "Nessun rientro a sinistra"
 
 #. Translators: the label for paragraph format right indent
-#, fuzzy
 msgid "right indent"
-msgstr "Tasto windows destro"
+msgstr "Rientro di destra"
 
 #. Translators: the message when there is no paragraph format right indent
-#, fuzzy
 msgid "no right indent"
-msgstr "Nessun rientro"
+msgstr "Nessun rientro a destra"
 
 #. Translators: the label for paragraph format hanging indent
-#, fuzzy
 msgid "hanging indent"
-msgstr "Nessun rientro"
+msgstr "Rientro sporgente"
 
 #. Translators: the message when there is no paragraph format hanging indent
-#, fuzzy
 msgid "no hanging indent"
-msgstr "Nessun rientro"
+msgstr "Nessun rientro sporgente"
 
 #. Translators: the label for paragraph format first line indent
-#, fuzzy
 msgid "first line indent"
-msgstr "Annuncia r&ientri riga"
+msgstr "Rientro prima riga"
 
 #. Translators: the message when there is no paragraph format first line indent
-#, fuzzy
 msgid "no first line indent"
-msgstr "Annuncia r&ientri riga"
+msgstr "Nessun rientro prima riga"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr ""
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr ""
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr ""
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr ""
+
+#. Translators: Reported when text is vertically justified.
+#, fuzzy
+msgid "vertical align justified"
+msgstr "Allineamento giustificato"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr ""
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+#, fuzzy
+msgid "vertical align default"
+msgstr "Allineamento predefinito"
 
 #. Translators: Reported when text no longer contains a comment.
-#, fuzzy
 msgid "out of comment"
 msgstr "Non contiene commenti"
 
@@ -3424,6 +3449,16 @@ msgstr ""
 "{path}.\n"
 "NVDA deve essere in esecuzione per poter installare componenti aggiuntivi."
 
+#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+msgid ""
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
+msgstr ""
+"l'oggetto si trova a {left:.1f}  dal lato sinistro dello schermo, a "
+"{top:.1f} dal lato superiore, occupa {width:.1f} della larghezza e "
+"{height:.1f} dell'altezza"
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "{symbol} come in {description}"
@@ -3578,10 +3613,23 @@ msgstr "Allegato"
 msgid "sent: %s"
 msgstr "Inviato: %s"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-#, fuzzy
+#. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
-msgstr "Attendere elaborazione di Powerpoint..."
+msgstr "In attesa di outlook..."
+
+#. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+#, fuzzy
+msgid "{startTime} to {endTime}"
+msgstr "{start} fino a {end}"
+
+#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+msgid "Appointment {subject}, {time}"
+msgstr ""
+
+#. Translators: a message when the current time slot on an Outlook Calendar has an appointment
+#, fuzzy
+msgid "has appointment"
+msgstr "Contiene commenti"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
@@ -3739,6 +3787,78 @@ msgstr "Miniature principali"
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Diapositiva {slideNumber}"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers left of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is behind  another shape on a powerpoint slide
+msgid "behind left of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers top of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind top of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers right of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind right of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers bottom of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind bottom of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers  {otherShape}"
+msgstr ""
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind {otherShape}"
+msgstr ""
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+msgid "{distance:.3g} points from left slide edge"
+msgstr ""
+
+#. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+msgid "Off left slide edge by {distance:.3g} points"
+msgstr ""
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+msgid "{distance:.3g} points from top slide edge"
+msgstr ""
+
+#. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+msgid "Off top slide edge by {distance:.3g} points"
+msgstr ""
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+msgid "{distance:.3g} points from right slide edge"
+msgstr ""
+
+#. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+msgid "Off right slide edge by {distance:.3g} points"
+msgstr ""
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+msgid "{distance:.3g} points from bottom slide edge"
+msgstr ""
+
+#. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+msgid "Off bottom slide edge by {distance:.3g} points"
+msgstr ""
 
 #. Translators: The description for a script
 msgid ""
@@ -4653,7 +4773,9 @@ msgstr "Utilizza NVDA nella finestra di logon"
 msgid "&Keep existing desktop shortcut"
 msgstr "Mantieni collegamento al des&ktop esistente"
 
-#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
+#. If the shortcut key has been changed for this locale,
+#. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "Crea un'icona sul &desktop e il tasto caldo (control+alt+n)"
 
@@ -5298,9 +5420,8 @@ msgstr "Annuncia r&ientri riga"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-#, fuzzy
 msgid "Report &paragraph indentation"
-msgstr "Annuncia r&ientri riga"
+msgstr "Annuncia rientri &paragrafo"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5562,6 +5683,14 @@ msgstr "Nessun sintetizzatore"
 
 msgid "word"
 msgstr "Parola"
+
+#. Translators: current position in a document as a percentage of the document length
+msgid "{curPercent:.0f}%"
+msgstr ""
+
+#. Translators: the current position's screen coordinates in pixels
+msgid "at {x}, {y}"
+msgstr ""
 
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
@@ -6143,25 +6272,21 @@ msgstr ""
 "formattazione documento."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, fuzzy
 msgid "Set {address} as start of column headers"
-msgstr "Leggi le i&ntestazioni riga/colonna delle tabelle"
+msgstr "Imposta {address} come inizio intestazioni colonna"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, fuzzy
 msgid "Already set {address} as start of column headers"
 msgstr "{address} già impostato a inizio intestazioni colonna"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, fuzzy
 msgid "removed {address}    from column headers"
-msgstr "Leggi le i&ntestazioni riga/colonna delle tabelle"
+msgstr "Rimozione di {address} dalle intestazioni colonna"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "Cannot find {address}    in column headers"
 msgstr "Impossibile trovare {address}    nelle intestazioni colonna"
 
-#, fuzzy
 msgid ""
 "Pressing once will set this cell as the first column header for any cells "
 "lower and to the right of it within this region. Pressing twice will forget "
@@ -6170,25 +6295,21 @@ msgstr ""
 "Premendo una volta questa cella sarà impostata come prima intestazione "
 "colonna per ogni cella più bassa e alla destra  di essa all'interno di "
 "questa regione. Pressing twice will forget the current column header for "
-"this cell."
+"this cell. Una doppia pressione rimuoverà l'impostazione."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, fuzzy
 msgid "Set {address} as start of row headers"
 msgstr "Imposta {address} all'inizio  intestazioni riga"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, fuzzy
 msgid "Already set {address} as start of row headers"
 msgstr "{address} già impostato a inizio intestazioni riga"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, fuzzy
 msgid "removed {address}    from row headers"
 msgstr "{address} rimosso dalle intestazioni riga"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
-#, fuzzy
 msgid "Cannot find {address}    in row headers"
 msgstr "Impossibile trovare {address} nelle intestazioni riga"
 
@@ -6197,6 +6318,9 @@ msgid ""
 "and to the right of it within this region. Pressing twice will forget the "
 "current row header for this cell."
 msgstr ""
+"Premuto una volta questa cella verrà impostata come la prima "
+"dell'intestazione riga per tutte le celle più a destra e più in basso in "
+"questa regione. Una doppia pressione rimuoverà l'impostazione."
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -6331,7 +6455,6 @@ msgid "%g pt"
 msgstr "%g pt"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-#, fuzzy
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
 "Imposto riga {rowNumber} colonna {columnNumber} come inizio intestazioni "
@@ -6341,51 +6464,68 @@ msgstr ""
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
+"riga {rowNumber} colonna {columnNumber} già impostate come inizio "
+"intestazioni colonna"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr ""
+"riga {rowNumber} colonna {columnNumber} rimosse da intestazioni colonna"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
+"Impossibile trovare riga {rowNumber} colonna {columnNumber} nelle "
+"intestazioni colonna"
 
 msgid ""
 "Pressing once will set this cell as the first column header for any cells "
 "lower and to the right of it within this table. Pressing twice will forget "
 "the current column header for this cell."
 msgstr ""
+"Premuto una volta questa cella verrà impostata come la prima intestazione "
+"colonna per tutte le celle più a destra e più in basso della tabella "
+"corrente. Una doppia pressione rimuoverà l'impostazione."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
+"Imposta  riga {rowNumber} colonna {columnNumber} come inizio intestazioni "
+"riga"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
+"riga {rowNumber} colonna {columnNumber} già impostate come inizio "
+"intestazioni riga"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr ""
+msgstr "Riga {rowNumber} colonna {columnNumber}  rimosse da intestazioni riga"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
+"Impossibile trovare riga {rowNumber} colonna {columnNumber}  nelle "
+"intestazioni riga"
 
 msgid ""
 "Pressing once will set this cell as the first row header for any cells lower "
 "and to the right of it within this table. Pressing twice will forget the "
 "current row header for this cell."
 msgstr ""
+"Premuto una volta questa cella verrà impostata come la prima intestazione "
+"riga per tutte le celle più a destra e più in basso della tabella corrente. "
+"Una doppia pressione rimuoverà l'impostazione."
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
-msgstr ""
+msgstr "Corsivo attivo"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold off"
-msgstr ""
+msgstr "Corsivo disattivo"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Italic on"
@@ -6417,15 +6557,15 @@ msgstr "Allineato a destra"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Justified"
-msgstr ""
+msgstr "Giustificato"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
 msgid "{styleName} style, outline level {outlineLevel}"
-msgstr ""
+msgstr "Stile {styleName}, livello rientro {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
 msgid "{size:g} point font"
-msgstr ""
+msgstr "{size:g} punti font"
 
 #. Translators: a measurement in Microsoft Word
 msgid "{offset:.3g} characters"
@@ -6433,23 +6573,24 @@ msgstr "{offset:.3g} caratteri"
 
 #. Translators: a measurement in Microsoft Word
 msgid "{offset:.3g} inches"
-msgstr ""
+msgstr "{offset:.3g} pollici"
 
 #. Translators: a measurement in Microsoft Word
 msgid "{offset:.3g} centimeters"
-msgstr ""
+msgstr "{offset:.3g} centimetri"
 
 #. Translators: a measurement in Microsoft Word
 msgid "{offset:.3g} millimeters"
-msgstr ""
+msgstr "{offset:.3g} millimetri"
 
 #. Translators: a measurement in Microsoft Word
 msgid "{offset:.3g} points"
-msgstr ""
+msgstr "{offset:.3g} punti"
 
 #. Translators: a measurement in Microsoft Word
+#. See http://support.microsoft.com/kb/76388 for details.
 msgid "{offset:.3g} picas"
-msgstr ""
+msgstr "{offset:.3g} picas"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 msgid "no comments"
@@ -6457,7 +6598,7 @@ msgstr "Non contiene commenti"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
-msgstr ""
+msgstr "Legge il testo del commento alla posizione del cursore"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
@@ -6475,158 +6616,14 @@ msgstr "HIMS serie Braille Sense/Braille EDGE"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
-#~ msgid "Set column header row"
-#~ msgstr "Colonna impostata per le intestazioni riga"
+#~ msgid "No location information for navigator object"
+#~ msgstr "Non ci sono informazioni di posizione per il navigatore di oggetti"
 
-#~ msgid "Cleared column header row"
-#~ msgstr "Impostazione cancellata"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Una pressione istruisce NVDA a considerare la riga corrente come "
-#~ "riferimento per le intestazioni colonna. La doppia pressione cancellerà "
-#~ "tali impostazioni."
-
-#~ msgid "Set row header column"
-#~ msgstr "Riga impostata per le intestazioni colonna"
-
-#~ msgid "Cleared row header column"
-#~ msgstr "Impostazione cancellata"
+#~ msgid "No location information for screen"
+#~ msgstr "Non ci sono informazioni di posizione a schermo"
 
 #~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
+#~ "Reports the hight, width and position of the current navigator object"
 #~ msgstr ""
-#~ "Una pressione istruisce NVDA a considerare la colonna corrente come "
-#~ "riferimento per le intestazioni riga. La doppia pressione cancellerà tali "
-#~ "impostazioni."
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "%s %s fino a %s %s"
-
-#~ msgid "Manual activate/edit"
-#~ msgstr "Attiva manualmente/modifica"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "Il tuo file di configurazione contiene errori. \n"
-#~ "Premi 'OK' per correggere gli errori o  'Annulla' se vuoi modificare "
-#~ "manualmente il file. Ulteriori dettagli sugli errori sono nel file di "
-#~ "log.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "Non ci sono commenti automatici"
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "Impossibile trovare la finestra commenti automatici"
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "Annuncia i commenti nella finestra commenti automatici"
-
-#~ msgid "Automatic comments:"
-#~ msgstr "Commenti automatici"
-
-#~ msgid "Translation:"
-#~ msgstr "Traduzione"
-
-#~ msgid "Comments:"
-#~ msgstr "Commenti"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "Nessuna navigazione in linea disponibile per questo oggetto"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "Nessun oggetto nella posizione della navigazione in linea"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "Sposta il navigatore ad'oggetti sull'oggetto rappresentato dal testo alla "
-#~ "posizione del cursore di controllo nella navigazione in linea"
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr ""
-#~ "Per favore chiudere prima l'altra finestra di dialogo delle impostazioni "
-#~ "di NVDA"
-
-#~ msgid "Translation &table:"
-#~ msgstr "&Tabella di traduzione"
-
-#~ msgid "beeps"
-#~ msgstr "Beeps"
-
-#~ msgid "talk"
-#~ msgstr "Parlare"
-
-#~ msgid "default action failed"
-#~ msgstr "Azione di default non riuscita"
-
-#~ msgid "layout %s"
-#~ msgstr "Layout %s"
-
-#~ msgid "%s device found"
-#~ msgstr "%s dispositivo trovato"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s per default a %s"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "File di configurazione non corretto"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "Errore nel file di configurazione: %s"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Errori nel file di configurazione '%s':\n"
-#~ "%s"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s di %s"
-
-#~ msgid ""
-#~ "This add-on seems to already be installed. Please remove the existing add-"
-#~ "on and try again."
-#~ msgstr ""
-#~ "Questo componente aggiuntivo sembra già essere stato installato. Si prega "
-#~ "di rimuovere il componente aggiuntivo esistente e riprovare nuovamente."
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr "Carica la configurazione di NVDA, sovrascrivendo quella attuale "
-
-#~ msgid "We need your help in order to continue to improve NVDA.\n"
-#~ msgstr "Abbiamo bisogno del tuo aiuto per continuare a sviluppare NVDA.\n"
-
-#~ msgid "Welcome to NVDA!\n"
-#~ msgstr "Benvenuto in NVDA!\n"
-
-#~ msgid "Your gesture map file contains errors.\n"
-#~ msgstr "Il tuo file della mappatura dei gesti contiene errori\n"
-
-#~ msgid "Follow &keyboard focus"
-#~ msgstr "Segue il focus della &tastiera"
-
-#~ msgid "&Add..."
-#~ msgstr "&Aggiungi..."
-
-#~ msgid "Create an &Autorun file"
-#~ msgstr "Crea un file &Autorun"
-
-#~ msgid "Key Command quick reference"
-#~ msgstr "Elenco tasti rapidi"
-
-#~ msgid "User guide"
-#~ msgstr "Manuale utente"
-
-#~ msgid "Web site"
-#~ msgstr "Sito web"
+#~ "Legge l'altezza, la larghezza e la posizione dell'oggetto attuale del "
+#~ "navigatore"
