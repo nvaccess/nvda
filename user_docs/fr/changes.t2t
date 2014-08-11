@@ -47,6 +47,7 @@ Quoi de Neuf dans NVDA
  - Dans les zones d'édition standards et le mode navigation, la position du curseur a un pourcentage dans le contenu, et ses coordonnées à l'écran sont annoncées.
  - Sur les formes dans les Présentations Powerpoint, la position de la forme par rapport à la diapositive et aux autres forme est annoncée.
  - Un double appui sur cette commande produira l'ancienne façon d'annoncer l'information de position pour l'ensemble du contrôle.
+- Nouvelle langue : Catalan.
 
 
 == Changements ==
@@ -85,7 +86,10 @@ Quoi de Neuf dans NVDA
 == Changements pour les Développeurs ==
 - NVDA possède maintenant un support unifié pour la documentation des modules complémentaires. Consultez la section "Documentation des modules complémentaires" du "Guide de Développement" pour plus de détails. (#2694)
 - Quand on fournit des liens de gestes sur un ScriptableObject via __gestures, il est maintenant possible de fournir le mot clé None comme script. Ceci délie le geste dans toutes les classes de base. (#4240)
-
+-     Il est maintenant possible de changer le raccourci clavier utilisé pour démarrer NVDA pour les localisations où le raccourci normal pose problème. (#2209)
+ - Cela se fait via gettext.
+ - Notez que le texte pour l'option Créer un raccourci sur le bureau dans le dialogue d'installation de NVDA, ainsi que le raccourci clavier dans le Guide de l'Utilisateur doivent aussi être mis à jour.
+ 
 
 = 2014.2 =
 
