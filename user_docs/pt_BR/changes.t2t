@@ -43,7 +43,7 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
  - Selecionar a região atual (control+shift+8).
 - Microsoft Excel: O alinhamento vertical e horizontal das células agora podem ser anunciados com o comando  de anunciar formatação (NVDA+f). Isso também pode ser anunciado automaticamente se a opção Anunciar alinhamento nas Opções de Formatação de Documento  estiver habilitada. (#4212)
 - Microsoft Excel:  O estilo das células agora pode ser anunciado com o comando  de anunciar formatação (NVDA+f). Isso também pode ser anunciado automaticamente se a opção Anunciar estilo nas Opções de Formatação de Documento  estiver habilitada. (#4213)
-- Microsoft PowerPoint: Ao mover formas dentro dum slide usando as setas, a localização atual da forma é agora anunciada (#4214) including:
+- Microsoft PowerPoint: Ao mover formas dentro de um slide usando as setas, a localização atual da forma é agora anunciada (#4214) incluindo:
  - A distância entre a forma e cada borda do slide é anunciada.
  - Se uma forma está encobrindo ou é encoberta por outra, o tamanho da parte sobreposta e a forma que está sendo sobreposta são anunciadas.
  - Para anunciar essa informação a qualquer momento sem se mover para a forma, pressione o comando anunciar localização (NVDA+delete).
@@ -52,6 +52,7 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
  - Em campos padrão de edição e no modo de navegação, são anunciadas a posição do cursor como percentagem do conteúdo e também suas coordenadas de tela.
  - Nas formas em apresentações do PowerPoint , é anunciada a posição da forma em relação ao slide e a outras formas.
  - Pressionando esse comando duas vezes, produzir-se-á o comportamento anterior e anunciará a informação da localização para o controle completo.
+- Novo idioma: Catalão.
 
 
 == Alterações ==
@@ -93,6 +94,9 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 - O NVDA agora possui suporte unificado para a documentação de seus complementos. Consulte a seção Add-on Documentation do Developer Guide para mais detalhes. (#2694)
 When providing gesture bindings on a ScriptableObject via __gestures, it is now possible to provide the None keyword as the script. This unbinds the gesture in any base classes. (#4240)
+-     It is now possible to change the shortcut key used to start NVDA for locales where the normal shortcut causes problems. (#2209)
+ - This is done via gettext.
+ - Note that the text for the Create desktop shortcut option in the Install NVDA dialog, as well as the shortcut key in the User Guide, must also be updated.
 
 
 = 2014.2 =
