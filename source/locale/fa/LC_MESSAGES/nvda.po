@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-02 19:14+1000\n"
-"PO-Revision-Date: 2014-06-28 18:46+0330\n"
+"POT-Creation-Date: 2014-08-06 23:27+1000\n"
+"PO-Revision-Date: 2014-08-09 11:34+0330\n"
 "Last-Translator: ali aslani\n"
 "Language-Team: LANGUAGE <nvda-translations@freelists.org>\n"
 "Language: fa\n"
@@ -1447,6 +1447,10 @@ msgstr "فرمول دارد"
 msgid "has comment"
 msgstr "دارای آشکارگویه است"
 
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "پوشانده شده"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "گزیده نشده"
@@ -1808,27 +1812,17 @@ msgstr ""
 "چیز بازبینی‌شده‌ی کنونی را می‌خواند. دو بار اگر فشار دهید٬ آن را هِجی می‌کند. سه "
 "بار اگر فشار دهید٬ داده‌ی پیرامون آن چیز را در بریده‌دان٬ روگیری می‌کند"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
-msgid "No location information for navigator object"
-msgstr "داده ای پیرامون جای چیز بازبینی‌شده در میان نیست"
+#. Translators: message when there is no location information for the review cursor
+msgid "No location information"
+msgstr "داده ای پیرامون جا در دست نیست"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
-msgid "No location information for screen"
-msgstr "داده ای پیرامون جای برگه‌ی نمایش در میان نیست"
-
-#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#. Translators: Description for report review cursor location command.
 msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
-"screen, height is {height:.1f} per cent of screen"
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
 msgstr ""
-"جایگاه لبه‌های چیز در برگه‌ی نمایش: {left:.1f} درصد لبه‌ی چپ برگه‌ی نمایش٬ "
-"{top:.1f} درصد از لبه‌ی بالای برگه‌ی نمایش٬ پهنای این چیز {width:.1f} درصد از "
-"برگه‌ی نمایش است٬ بلندای این چیز {height:.1f} درصد از بلندای برگه‌ی نمایش است"
-
-#. Translators: Input help mode message for report object dimensions command.
-msgid "Reports the hight, width and position of the current navigator object"
-msgstr "پهنا و بلندا و جایگاه چیز بازبینی‌شده‌ی کنونی را گزارش می‌دهد"
+"جای نوشته یا چیزی که در زیر نشانگر بازبین است را گزارش می‌کند. فشرده شدن این "
+"کلید فرمان برای دو بار٬ ای بسا گزارش موشکافانه‌تری را در پی داشته باشد."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -2497,6 +2491,14 @@ msgstr "گوناگون"
 msgid "Browse mode"
 msgstr "نمود گشتاری"
 
+#. Translators: The shortcut key used to start NVDA.
+#. This should normally be left as is, but might be changed for some locales
+#. if the default key causes problems for the normal locale keyboard layout.
+#. The key must be formatted as described in this article:
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+msgid "CTRL+ALT+N"
+msgstr "CTRL+ALT+N"
+
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
 msgstr "تارنمای NVDA"
@@ -3067,54 +3069,78 @@ msgstr "راست‌چین"
 msgid "align justify"
 msgstr "دوسو طراز"
 
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "دوسوچین شد"
+
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "پیش‌نمودچین"
 
 #. Translators: the label for paragraph format left indent
-#, fuzzy
 msgid "left indent"
-msgstr "فرو رفتگی"
+msgstr "فرو رفتگی از چپ"
 
 #. Translators: the message when there is no paragraph format left indent
-#, fuzzy
 msgid "no left indent"
-msgstr "تورفتگی‌ای نیست"
+msgstr "تورفتگی‌ای از چپ نیست"
 
 #. Translators: the label for paragraph format right indent
-#, fuzzy
 msgid "right indent"
-msgstr "ویندوز راست"
+msgstr "تورفتگی از راست"
 
 #. Translators: the message when there is no paragraph format right indent
-#, fuzzy
 msgid "no right indent"
-msgstr "تورفتگی‌ای نیست"
+msgstr "تورفتگی‌ای از راست نیست"
 
 #. Translators: the label for paragraph format hanging indent
-#, fuzzy
 msgid "hanging indent"
-msgstr "تورفتگی‌ای نیست"
+msgstr ""
 
 #. Translators: the message when there is no paragraph format hanging indent
-#, fuzzy
 msgid "no hanging indent"
-msgstr "تورفتگی‌ای نیست"
+msgstr ""
 
 #. Translators: the label for paragraph format first line indent
-#, fuzzy
 msgid "first line indent"
-msgstr "گزارش کردن &تورفتگی خطوط"
+msgstr "تورفتگی نخستین خط"
 
 #. Translators: the message when there is no paragraph format first line indent
-#, fuzzy
 msgid "no first line indent"
-msgstr "گزارش کردن &تورفتگی خطوط"
+msgstr "تورفتگی‌ای برای نخستین خط نیست"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr ""
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr ""
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr ""
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr ""
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr ""
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr ""
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr ""
 
 #. Translators: Reported when text no longer contains a comment.
-#, fuzzy
 msgid "out of comment"
-msgstr "هیچ آشکارگویه ای نیست"
+msgstr "هیچ دیدگاهی نیست"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -3414,6 +3440,16 @@ msgstr ""
 "برای آن که بتوانید افزونه‌ها را بر روی NVDA بریزید٬ باید NVDA را به راه "
 "انداخته باشید."
 
+#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+msgid ""
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
+msgstr ""
+"جایگاه لبه‌های چیز در برگه‌ی نمایش: {left:.1f} درصد لبه‌ی چپ برگه‌ی نمایش٬ "
+"{top:.1f} درصد از لبه‌ی بالای برگه‌ی نمایش٬ پهنای این چیز {width:.1f} درصد از "
+"برگه‌ی نمایش است٬ بلندای این چیز {height:.1f} درصد از بلندای برگه‌ی نمایش است"
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "{symbol} همسان با {description}"
@@ -3543,11 +3579,11 @@ msgstr "خوانده نشده"
 
 #. Translators: for a high importance email
 msgid "high importance"
-msgstr ""
+msgstr "پیام با اهمیت بالا"
 
 #. Translators: For a low importance email
 msgid "low importance"
-msgstr ""
+msgstr "پیام با اهمیت پایین"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3568,14 +3604,25 @@ msgstr "پیوست"
 msgid "sent: %s"
 msgstr "فرستاده شده در: %s"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-#, fuzzy
+#. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
-msgstr "ایستاده برای پاورپوینت"
+msgstr "ایستاده برای اوت‌لوک"
+
+#. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+msgid "{startTime} to {endTime}"
+msgstr "{startTime} تا {endTime}"
+
+#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+msgid "Appointment {subject}, {time}"
+msgstr "دیدارAppointment {subject}, در {time}"
+
+#. Translators: a message when the current time slot on an Outlook Calendar has an appointment
+msgid "has appointment"
+msgstr "دارای هنگام دیدار است"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
-msgstr ""
+msgstr "پیام در بر دارنده‌ی هنگامی برای نشست"
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -3729,6 +3776,78 @@ msgstr "Master Thumbnails"
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "اسلاید {slideNumber}"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers left of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is behind  another shape on a powerpoint slide
+msgid "behind left of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers top of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind top of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers right of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind right of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers bottom of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind bottom of {otherShape} by {distance:.3g} points"
+msgstr ""
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers  {otherShape}"
+msgstr "نمود دیگری را می‌پوشاند"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind {otherShape}"
+msgstr "پشت نمود دیگری است"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+msgid "{distance:.3g} points from left slide edge"
+msgstr ""
+
+#. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+msgid "Off left slide edge by {distance:.3g} points"
+msgstr ""
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+msgid "{distance:.3g} points from top slide edge"
+msgstr ""
+
+#. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+msgid "Off top slide edge by {distance:.3g} points"
+msgstr ""
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+msgid "{distance:.3g} points from right slide edge"
+msgstr ""
+
+#. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+msgid "Off right slide edge by {distance:.3g} points"
+msgstr ""
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+msgid "{distance:.3g} points from bottom slide edge"
+msgstr ""
+
+#. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+msgid "Off bottom slide edge by {distance:.3g} points"
+msgstr ""
 
 #. Translators: The description for a script
 msgid ""
@@ -4245,7 +4364,7 @@ msgstr "&در باره‌ی افزونه..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr ""
+msgstr "راهنمای پیرامون افزونه"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -4635,7 +4754,9 @@ msgstr "به کار گیری NVDA در برگه‌ی آغازین برای در�
 msgid "&Keep existing desktop shortcut"
 msgstr "نگهداشتن میانبر کنونی در میز کار"
 
-#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
+#. If the shortcut key has been changed for this locale,
+#. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "ساختن نشانی از NVDA با کلید میانبر ctrl+alt+n بر روی میز کار"
 
@@ -4775,7 +4896,7 @@ msgstr "هشدار کردن پیش از خاموش کردن NVDA"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
-msgstr ""
+msgstr "پخش کردن صدا هنگام بالا آمدن و خاموش شدن NVDA"
 
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
@@ -5278,9 +5399,8 @@ msgstr "گزارش کردن &تورفتگی خطوط"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
-#, fuzzy
 msgid "Report &paragraph indentation"
-msgstr "گزارش کردن &تورفتگی خطوط"
+msgstr "گزارش کردن &تورفتگی بند"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5543,6 +5663,15 @@ msgstr "بی‌سخن"
 
 msgid "word"
 msgstr "واژه"
+
+#. Translators: current position in a document as a percentage of the document length
+msgid "{curPercent:.0f}%"
+msgstr "{curPercent:.0f}٪"
+
+#. Translators: the current position's screen coordinates in pixels
+#, fuzzy
+msgid "at {x}, {y}"
+msgstr "در {x}٬ {y}"
 
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
@@ -6121,18 +6250,16 @@ msgstr ""
 "درون سامان‌دهی‌های ریخت‌بندی رسانه‌ی نوشتاری٬ کارا کنید"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, fuzzy
 msgid "Set {address} as start of column headers"
-msgstr "گزارش کردن سرن&وشته‌های ردیف‌ها و ستون‌های جدول‌ها"
+msgstr ""
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "Already set {address} as start of column headers"
 msgstr ""
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, fuzzy
 msgid "removed {address}    from column headers"
-msgstr "گزارش کردن سرن&وشته‌های ردیف‌ها و ستون‌های جدول‌ها"
+msgstr ""
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "Cannot find {address}    in column headers"
@@ -6167,18 +6294,16 @@ msgid ""
 msgstr ""
 
 #. Translators: A message in Excel when there is no comment
-#, fuzzy
 msgid "Not on a comment"
-msgstr "هیچ آشکارگویه ای نیست"
+msgstr "در هیچ دیدگاهی نیست"
 
 #. Translators: the description  for a script for Excel
-#, fuzzy
 msgid "Reports the comment on the current cell"
-msgstr "هر آشکارگویه‌ای را در پنجره‌ی آشکارگویه گزارش می‌دهد"
+msgstr "دیدگاه پیرامون خانه‌ی کنونی را گزارش می‌دهد"
 
 #. Translators: Dialog text for
 msgid "Editing comment for cell {address}"
-msgstr ""
+msgstr "خانه‌ی {address} دارد ویرایش می‌شود"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
@@ -6291,14 +6416,14 @@ msgstr "تاریخ ناشناس"
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "{revisionType} به دست {revisionAuthor} در {revisionDate}"
 
-#, fuzzy, python-format
+#, python-format
 msgid "%g characters"
-msgstr "%d واج"
+msgstr "%g واج"
 
 #. Translators: the value in points for a paragraph indenting
 #, python-format
 msgid "%g pt"
-msgstr ""
+msgstr "%g pt"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -6348,63 +6473,55 @@ msgstr ""
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
-msgstr ""
+msgstr "کلفت‌نویسی روشن شد"
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold off"
-msgstr ""
+msgstr "کلفت‌نویسی خاموش شد"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#, fuzzy
 msgid "Italic on"
-msgstr "کج‌نویس"
+msgstr "کج‌نویس روشن است"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#, fuzzy
 msgid "Italic off"
-msgstr "کج‌نویس"
+msgstr "کج‌نویس خاموش است"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#, fuzzy
 msgid "Underline on"
-msgstr "زیر خط دار"
+msgstr "زیرخط‌نویس روشن است"
 
 #. Translators: a message when toggling formatting in Microsoft word
-#, fuzzy
 msgid "Underline off"
-msgstr "زیر خط دار"
+msgstr "زیرخط‌نویس خاموش است"
 
 #. Translators: a an alignment in Microsoft Word
-#, fuzzy
 msgid "Left aligned"
-msgstr "گزارش کردن &طرازبندی"
+msgstr "چپ‌چین"
 
 #. Translators: a an alignment in Microsoft Word
-#, fuzzy
 msgid "centered"
-msgstr "enter"
+msgstr "میان‌چین"
 
 #. Translators: a an alignment in Microsoft Word
-#, fuzzy
 msgid "Right aligned"
-msgstr "دگرساز راست"
+msgstr "راست‌چین"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Justified"
-msgstr ""
+msgstr "دوسوچین"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
 msgid "{styleName} style, outline level {outlineLevel}"
-msgstr ""
+msgstr "سبک: {styleName}٬ گام نوشتار: {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
 msgid "{size:g} point font"
 msgstr ""
 
 #. Translators: a measurement in Microsoft Word
-#, fuzzy
 msgid "{offset:.3g} characters"
-msgstr "%d واج"
+msgstr ""
 
 #. Translators: a measurement in Microsoft Word
 msgid "{offset:.3g} inches"
@@ -6423,17 +6540,17 @@ msgid "{offset:.3g} points"
 msgstr ""
 
 #. Translators: a measurement in Microsoft Word
+#. See http://support.microsoft.com/kb/76388 for details.
 msgid "{offset:.3g} picas"
 msgstr ""
 
 #. Translators: a message when there is no comment to report in Microsoft Word
-#, fuzzy
 msgid "no comments"
-msgstr "هیچ آشکارگویه ای نیست"
+msgstr "هیچ دیدگاهی نیست"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
-msgstr ""
+msgstr "نوشتار دیدگاهی که هشتک سامانه بر روی آن است را گزارش می‌دهد."
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
@@ -6450,6 +6567,16 @@ msgstr "از سری برجسته‌نگارهای HIMS Braille Sense/Braille EDG
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "No location information for navigator object"
+#~ msgstr "داده ای پیرامون جای چیز بازبینی‌شده در میان نیست"
+
+#~ msgid "No location information for screen"
+#~ msgstr "داده ای پیرامون جای برگه‌ی نمایش در میان نیست"
+
+#~ msgid ""
+#~ "Reports the hight, width and position of the current navigator object"
+#~ msgstr "پهنا و بلندا و جایگاه چیز بازبینی‌شده‌ی کنونی را گزارش می‌دهد"
 
 #~ msgid "Set column header row"
 #~ msgstr "جانشان شدن سرنوشتار برای ستون"

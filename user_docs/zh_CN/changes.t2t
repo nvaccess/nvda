@@ -1,35 +1,35 @@
-﻿What's New in NVDA
+﻿NVDA 最近更新
 
 
 %!includeconf: ../changes.t2tconf
 
 = 2014.3 =
 
-== New Features ==
-- The sounds played when NVDA starts and exits can be disabled via a new option in the General Settings dialog. (#834)
-- Help for add-ons can be accessed from the Add-ons Manager for add-ons which support this. (#2694)
-- Support for the Calendar in Microsoft Outlook 2007 and above (#2943) including:
- - Announcement of the current time when moving around with the arrow keys.
- - Indication if the selected time is within any appointments.
- - announcement of the selected appointment when pressing tab.
- - Smart filtering of the date so as to only announce the date if the new selected time or appointment is on a different day to the last.
-- Enhanced support for the Inbox and other message lists in Microsoft Outlook 2010 and above (#3834) including:
- - The ability to silence column headers (from, subject, etc.) by turning off the Report Table row and column headers option in Document Formatting settings.
- - The ability to use table navigation commands (control + alt + arrows) to move through the individual columns. 
-- Microsoft word: If an inline image has no alternative text set, NVDA will instead report the title of the image if the author has provided one. (#4193)
-- Microsoft Word: NVDA can now report paragraph indenting with  the report formatting command (NVDA+f). It can also be reported automatically when the new Report Paragraph indenting option is enabled in Document Formatting settings. (#4165)
-- Report automatically inserted text such as a new bullet, number or tab indent when pressing enter in editable documents and text fields. (#4185)
-- Microsoft word: Pressing NVDA+alt+c will report  the text of a comment if the cursor is within one. (#3528)
-- Improved support for automatic column and row header reading in Microsoft Excel (#3568) including:
- - Support of Excel defined name ranges to identify header cells (compatible with Jaws screen reader) .
- - The set column header (NVDA+shift+c) and set row header (NVDA+shift+r) commands now store the settings in the worksheet so that they are available the next time the sheet is opened, and will be available to other screen readers that support the defined name range scheme.
- - These commands can also now be used multiple times per sheet to set different headers for different regions.
-- Support for automatic column and row header reading in Microsoft Word (#3110) including:
- - Support of Microsoft Word bookmarks to identify header cells (compatible with Jaws screen reader).
- -  set column header (NVDA+shift+c) and set row header (NVDA+shift+r) commands  while on the first header cell in a table allow you to tell NVDA that these headers should be reported automatically.  Settings are stored in the document so that they are available the next time the document is opened, and will be available to other screen readers that support the bookmark scheme.
-- Microsoft Word: Report the distance from the left edge of the page when the tab key is pressed. (#1353)
-- Microsoft Word: provide feedback in speech and braille for most available formatting shortcut keys (bold, italic, underline, alignment, outline level, superscript, subscript and font size). (#1353)
-- Microsoft Excel: If the selected cell contains comments, they can be now reported by pressing NVDA+alt+c. (#2920)
+== 新特性 ==
+- 启动或退出 NVDA 时播放的声音，可以通过“常规设置”对话框的新选项进行停用。 (#834)
+- 插件带有的帮助可以在“插件管理器”中进行访问 (#2694)
+- 支持 Microsoft Outlook2007以上版本的日历 (#2943) 包括:
+ - 使用光标键在日历中移动时朗读当前时间。
+ - 如果选择的时间以包含在日程中，做出提示。
+ - 使用 tab 键 移动时朗读选中的约会。
+ - 智能日期过滤，仅在选择的约会或时间与上次选择的不同时读出日期。
+- 增强对 Microsoft Outlook 2010和以上版本的收件箱及其他消息列表的支持 (#3834) 包括：
+ - 通过关闭“文档格式设置”对话框的“朗读行列标题”选项，可忽略对行列标题的朗读(如发件人、主题等)。
+ - 允许使用表格导航命令(control + alt + 光标键)在单独的列之间移动。
+- Microsoft word: 如果内嵌图形没有设置内部文本， NVDA 会通过朗读作者设置的图形标题来代替。 (#4193)
+- Microsoft Word: NVDA 可以使用朗读格式命令“NVDA+f”组合键读出段落缩进，您也可以通过启用“文档格式设置”对话框的新选项“朗读段落缩进”使其自动读出。 (#4165)
+- 当您在可编辑文档或文本编辑框按下“回车”键时，朗读自动插入的文本（如新的项目符号、数字和表格标记）。 (#4185)
+- Microsoft word: 按下“NVDA+alt+c”将朗读光标所在的注释文本。 (#3528)
+- 提高 Microsoft Excel 的行列标题自动朗读之匙 (#3568) 包括：
+ - 支持识别标题单元的 Excel 自定义名称范围(与 JAWS 屏幕阅读器兼容)
+ - 使用命令“设置列标题”(NVDA+shift+c)和“设置行标题”(NVDA+shift+r)进行的设置现在存储在工作表内，因而，下次打开此表格时仍旧可用，且与其他支持自定义名称范围方案的屏幕阅读器兼容。
+ - 在每个表格中还可多次使用此命令，为不同的区域设置不同的标题。
+- 支持 Microsoft Word 的自动行列标题朗读 (#3110) 包括:
+ - 支持识别标题单元的 Microsoft Word 标记(与 JAWS 屏幕阅读器兼容)
+ - 当在表格的第一个标题单元时，“设置列标题”(NVDA+shift+c)和“设置行标题”(NVDA+shift+r)命令允许您告诉 NVDA，这些标题应该被自动的读出。设置存储在文档之内，因而，在下次打开此文档时他们仍旧可用，且可用于支持此标记方案的屏幕阅读器。
+- Microsoft Word: 按下“tab”键时读出与页面左边界的距离。 (#1353)
+- Microsoft Word: 为大多数可用的格式快捷键提供语音和盲文反馈(如粗体、斜体、下划线、对齐、大纲级别、超级脚本、子脚本和字体大小)。 (#1353)
+- Microsoft Excel: 如果选择的单元包含注释，可使用“NVDA+alt+c”读出。 (#2920)
 - Microsoft Excel: Provide an NVDA-specific dialog to edit the comments on the currently selected cell when pressing Excel's shift+f2 command to enter comment editing mode. (#2920)
 - Microsoft Excel: speech and braille feedback for many more selection movement shortcuts (#4211) including:
  - Vertical page movement (pageUp and pageDown);
@@ -47,7 +47,6 @@
  - In standard edit fields and browse mode, the cursor position as a percentage through the content and its screen coordinates are reported.
  - On shapes in PowerPoint Presentations, position of the shape relative to the slide and other shapes is reported.
  - Pressing this command twice will produce the previous behaviour of reporting the location information for the entire control.
-- New language: Catalan.
 
 
 == Changes ==
@@ -86,9 +85,6 @@
 == Changes for Developers ==
 - NVDA now has unified support for add-on documentation. See the Add-on Documentation section of the Developer Guide for details. (#2694)
 - When providing gesture bindings on a ScriptableObject via __gestures, it is now possible to provide the None keyword as the script. This unbinds the gesture in any base classes. (#4240)
--     It is now possible to change the shortcut key used to start NVDA for locales where the normal shortcut causes problems. (#2209)
- - This is done via gettext.
- - Note that the text for the Create desktop shortcut option in the Install NVDA dialog, as well as the shortcut key in the User Guide, must also be updated.
 
 
 = 2014.2 =
@@ -127,22 +123,22 @@
 
 = 2014.1 =
 
-== Yeni Özellikler ==
-- Microsoft PowerPoint 2013 için destek. Korumalı görünümün desteklenmediğini not edin. (#3578)
-- Microsoft word ve Excel'de, NVDA artık simge ekle iletişim kutusundaki seçtiğiniz simgeleri seslendiriyo. (#3538)
-- Belge ayarları iletişim kutusuna, Belgelerdeki tıklanabilir ögelerin seslendirilip seslendirilmemesiyle ilgili bir onay kutusu eklendi . Bu onay kutusunun varsayılan durumu işaretlidir. (#3556)
-- Widcomm Bluetooth yazılımı kullanılarak bilgisayarlara bağlanan braille ekranlar için destek. (#2418)
-- PowerPoint'de metin düzenlerken, köprüler artık seslendiriliyor. (#3416)
-- ARIA uygulamalarında ya da  web'deki iletişim kutularında, artık NVDA+aralık ile tarama kipine geçilebiliyor ve  bu sayede iletişim kutusu ya da uygulama belge inceleme stiliyle incelenebiliyor. (#2023)
-- Outlook Express / Windows Mail / Windows Live Mail'de, NVDA artık iletinin ekli ve bayraklı olduğu bilgisini veriyor. (#1594)
-- Erişilebilir java uygulamalarındaki tablolar dolaşılırken, başlıklar dahil satır ve sütün koordinatları seslendiriliyor. (#3756)
+== New Features ==
+- Support for Microsoft PowerPoint 2013. Note that protected view is not supported. (#3578)
+- In Microsoft word and Excel, NVDA can now read the selected symbol when choosing symbols using the Insert Symbols dialog. (#3538)
+- It is now possible to choose if content in documents should be identified as clickable via a new option in the Document Formatting settings dialog. This option is on by default in accordance with the previous behavior. (#3556)
+- Support for braille displays connected via Bluetooth on a computer running the Widcomm Bluetooth Software. (#2418)
+- When editing text in PowerPoint, hyperlinks are now reported. (#3416)
+- When in ARIA applications or dialogs on the web, it is now possible to force NVDA to switch to browse mode with NVDA+space allowing document-style navigation of the application or dialog. (#2023)
+- In Outlook Express / Windows Mail / Windows Live Mail, NVDA now reports if a message has an attachment or is flagged. (#1594)
+- When navigating tables in accessible Java applications, row and column coordinates are now reported, including  column and  row headers if they exist. (#3756)
 
 
-== Değişiklikler ==
+== Changes ==
 - For Papenmeier braille displays, the move to flat review/focus command has been removed. Users can assign their own keys using the Input Gestures dialog. (#3652)
 - NVDA now relies  on the Microsoft VC runtime version 11, which means it can no longer be run on Operating systems older than Windows XP Service Pack 2 or Windows Server 2003 Service Pack 1.
 - Punctuation level Some will now speak star (*) and plus (+) characters. (#3614)
-- Upgraded eSpeak to version 1.48.02 which includes many language fixes and fixes several crashes. (#3842, #3739)
+- Upgraded eSpeak to version 1.48.04 which includes many language fixes and fixes several crashes. (#3842, #3739, #3860)
 
 
 == Bug Fixes ==
@@ -171,17 +167,16 @@
 - When entering Asian input into a control within NVDA itself (e.g. the browse mode Find dialog), "NVDA" is no longer incorrectly reported in place of the candidate. (#3726)
 - The tabs in the Outlook 2013 options dialog are now reported. (#3826)
 - Improved support for ARIA live regions in Firefox and other Mozilla Gecko applications:
-	- Support for aria-atomic updates and filtering of aria-busy updates (#2640)
-	- Alternative text (such as alt attribute or aria-label) is included if there is no other useful text. (#3329)
-	- Live region updates are no longer silenced if they occur at the same time as the focus moves. (#3777)
-- Certain presentation elements in Firefox and other Mozilla Gecko applications are no longer inappropriately shown in browse mode (specifically when the element is marked with aria-presentation but its also focusable). (#3781)
+ - Support for aria-atomic updates and filtering of aria-busy updates. (#2640)
+ - Alternative text (such as alt attribute or aria-label) is included if there is no other useful text. (#3329)
+ - Live region updates are no longer silenced if they occur at the same time as the focus moves. (#3777)
+- Certain presentation elements in Firefox and other Mozilla Gecko applications are no longer inappropriately shown in browse mode (specifically, when the element is marked with aria-presentation but it is also focusable). (#3781)
 - A performance improvement when navigating a document in Microsoft Word with spelling errors enabled. (#3785)
 - Several fixes to the support for accessible Java applications:
  - The initially focused control in a frame or dialog no longer fails to be reported when the frame or dialog comes to the foreground. (#3753)
  - Unuseful position information is no longer announced for radio buttons (e.g. 1 of 1). (#3754)
  - Better reporting of JComboBox controls (html no longer reported, better reporting of expanded and collapsed states). (#3755)
  - When reporting the text of dialogs, some text that was previously missing is now included. (#3757)
- - More text is included in automatic dialog caption calculations. (#3857)
  - Changes to the name, value or description of the focused control is now reported more accurately. (#3770)
 - Fix a crash in NVDA seen in Windows 8 when focusing on certain RichEdit controls containing large amounts of text (e.g. NVDA's log viewer, windbg). (#3867)
 - On systems with a high DPI display setting (which occurs by default for many modern screens), NVDA no longer routes the mouse to the wrong location in some applications. (#3758, #3703)
@@ -196,39 +191,41 @@
  - If there are multiple possibilities, you can press tab a second time to choose from a list.
 
 
-= 	2013.3 =
+= 2013.3 =
 
-== Yeni Özellikler ==
-- artık Microsoft Word programında form alanları bildiriliyor. (#2295)
-- NVDA Microsoft Word'de Değişiklikleri İzle etkinleştirildiğinde revizyon bilgisini söyler. Varsayılan olarak kapalı olan NVDA Belge formatları iletişim kutusundaki "Editör revizyonlarını bildir" seçeneği açılmalıdır. (#1670)
-- Microsoft Excel 2003 ve 2010 sürümlerinde Açılır listeler artık okunabilir. (#3382)
-- Klavye ayarları iletişim kutusuna yeni eklenen "Tümünü okurken atlamaya izin ver" seçeneği tümünü oku komutu verildiğinde belge içinde dolaşmak için kullanılan kısayol tuşlarının kullanılmasına olanak tanır. Örneğin tarama kipinde görüntülenen bir belgeyi tümünü oku komutu ile okuyorsanız, h harfine bastığınızda okuma sonraki başlıktan, shift+h harfine bastığınızda önceki başlıktan itibaren devam eder. Bu seçenek varsayılan olarak kapalıdır. (#2766) 
-- NVDA komutları olarak kullanılan klavye tuşları vb girdi hareketlerinin -eklentilerinki dahil- kullanıcı tarafından kolaylıkla özelleştirilebilmesi için, Tercihler menüsünün altına Girdi Hareketleri iletişim kutusu eklendi. (#1532)
-- Artık konfigürasyon profillerini kullanarak farklı durumlar için farklı ayarları kullanabilirsiniz. Profiller elle ya da herhangi bir uygulama açıldığında otomatik olarak etkinleştirilebilir. (#87, #667, #1913)
-- Microsoft Excel'de, hücrelerdeki bağlantılar artık normal metin olarak değil, bağlantı olarak okunuyor. (#3042)
-- Microsoft Excel'de, bir hücrede yorumların varlığı artık kullanıcıya bildirilmektedir. (#2921)
+== New Features ==
+- Form fields are now reported in Microsoft word documents. (#2295)
+- NVDA can now announce revision information in Microsoft Word when Track Changes is enabled. Note that Report editor revisions in NVDA's document settings dialog (off by default) must be enabled also for them to be announced. (#1670)
+- Dropdown lists in Microsoft Excel 2003 through 2010 are now announced when opened and navigated around. (#3382)
+- a new 'Allow Skim Reading in Say All' option in the Keyboard settings dialog allows navigating through a document with browse mode quick navigation and line / paragraph movement commands, while remaining in say all. This option is off by default. (#2766) 
+- There is now an Input Gestures dialog to allow simpler customization of the input gestures (such as keys on the keyboard) for NVDA commands. (#1532)
+- You can now have different settings for different situations using configuration profiles. Profiles can be activated manually or automatically (e.g. for a particular application). (#87, #667, #1913)
+- In Microsoft Excel, cells that are links are now announced as links. (#3042)
+- In Microsoft Excel, the existance of comments on a cell is now reported to the user. (#2921)
 
 
-== Hata Düzeltmeleri ==
-- Zend Studio, şimdi Eclipse gibi çalışmaktadır. (#3420)
-- Microsoft Outlook 2010 ileti kuralları iletişim kutusundaki bazı onay kutularının değişen durumları artık otomatik olarak bildirilir. (#3063)
-- NVDA Şimdi Mozilla Firefox sekmeleri gibi  pin kontrolleri için pin durumunu bildirir. (#3372)
-- Artık alt ve windows tuşlarının NVDA komutları için kısayol tuşu olarak kullanılması mümkün. Önceden bu tuşlar kullanıldığında başlat menüsü açılabiliyor ya da menü çubuğuna giriliyordu. (#3472)
-- Kontrol + shift + end gibi tuşlar kullanarak tarama modundaki belgelerde metin seçmek birden fazla klavye düzeni yüklü sistemlerde Artık klavye düzeninin değişmesine neden olmuyor. (#3472)
-- Internet Explorer artık NVDA kapatıldığında çökmüyor ya da kullanılamaz duruma gelmiyor olmalı. (#3397)
-- Yeni bilgisayarlarda fiziksel hareket ve diğer bazı hareketler artık uygun olmayan tuşlar olarak algılanmıyor. Önceden, bu konuşmayı durdurabiliyor ya da bir NVDA komutu tetiklenmesine yol açabiliyordu. (#3468)
-- NVDA şimdi poEdit 1.5.7 versiyonunda beklendiği gibi  davranıyor. Önceki sürümleri kullanan kullanıcılar PoEdit'i güncellemeli. (#3485)
-- NVDA artık Microsoft Word 2010'da açılan korunmuş belgeleri okuyabiliyor, Word'ün çökmesine neden olmuyor. (#1686)
-- NVDA dağıtım paketi başlatırken bilinmeyen bir komut satırı anahtarı verilmiş ise, artık sonsuz bir hata mesajı diyalogları döngüsüne neden olunmuyor. (#3463)
-- Alt metni tırnak veya diğer standart olmayan karakterler içeriyorsa, NVDA artık Microsoft Word grafikleri ve nesneleri bildirirken hata vermiyor. (#3579)
-- Tarama kipinde bazı yatay listeler için öğe sayısı artık doğru veriliyor. Daha önce gerçek miktarın iki katı olarak verilebiliyordu. (#2151)
-- Kontrol +a'ya basıldığında, Microsoft Excel çalışma sayfasında güncelleştirilmiş seçim artık bildiriliyor. (#3043)
-- NVDA artık Microsoft Internet Explorer ve diğer MSHTML denetimlerinde XHTML belgeleri doğru bir şekilde okuyabiliyor. (#3542)
-- Klavye ayarları iletişim kutusu: hiçbir tuş NVDA tuşu olarak kullanılmak üzere seçilmediyse, kullanıcıya bir hata mesajı gösterilmektedir. NVDA'nın uygun bir şekilde kullanılabilmesi için En az bir tuş NVDA tuşu olarak belirlenmelidir. (#2871)
-- Microsoft Excel'de, NVDA artık birleştirilmiş hücreleri daha kullanıcı dostu bir şekilde bildiriyor. (#3567)
-- Tarama kipi imleci, belge içindeki bir diyalog veya uygulama kapatıldığında artık yanlış konumlanmıyor. (#3145)
-- Brailliant BI / B serisi braille ekranlar USB üzerinden bağlı oldukları  halde, bazı sistemlerde Braille Ayarları iletişim kutusunda bir seçenek olarak gözükmemesi  sorunu düzeltildi.
-- NVDA artık nesne sunucusunun  gerçek ekran konumu yoksa ekran inceleme kipine geçildiğinde hata vermiyor. Bu durumda, inceleme imleci ekranın en üstüne gidiyor. (#3454)
+== Bug Fixes ==
+- Zend Studio now functions the same as Eclipse. (#3420)
+- The changed state of certain checkboxes in the Microsoft Outlook 2010 message rules dialog are now reported automatically. (#3063)
+- NVDA will now report the pinned state for pinned controls such as tabs in Mozilla Firefox. (#3372)
+- It is now possible to bind scripts to keyboard gestures containing Alt and/or Windows keys as modifiers. Previously, if this was done, performing the script would cause the Start Menu or menu bar to be activated. (#3472)
+- Selecting text in browse mode documents (e.g. using control+shift+end) no longer causes the keyboard layout to be switched on systems with multiple keyboard layouts installed. (#3472)
+- Internet Explorer should no longer crash or become unusable when closing NVDA. (#3397)
+- Physical movement and other events on some newer computers are no longer treated as inappropriate key presses. Previously, this silenced speech and sometimes triggered NVDA commands. (#3468)
+- NVDA now behaves as expected in Poedit 1.5.7. Users using earlier versions will need to update. (#3485)
+- NVDA can now read protected documents in Microsoft Word 2010,  no longer causing Microsoft Word to crash. (#1686)
+- If an unknown command line switch is given when launching the NVDA distribution package, it no longer causes an endless loop of error message dialogs. (#3463)
+- NVDA no longer fails to report alt text of graphics and objects in Microsoft Word if the alt text contains quotes or other non-standard characters. (#3579)
+- The number of items for certain horizontal lists in Browse mode is now correct. Previously it may have been double the actual amount. (#2151)
+- When pressing control+a in a Microsoft Excel worksheet, the updated selection will now be reported. (#3043)
+- NVDA can now correctly read XHTML documents in Microsoft Internet Explorer and other MSHTML controls. (#3542)
+- Keyboard settings dialog: if no key has been chosen to be used as the NVDA key, an error is presented to the user when dismissing the dialog. At least one key must be chosen for proper usage of NVDA. (#2871)
+- In Microsoft Excel, NVDA now announces merged cells differently to multiple selected cells. (#3567)
+- The browse mode cursor is no longer positioned incorrectly when leaving a dialog or application inside the document. (#3145)
+- Fixed an issue where the HumanWare Brailliant BI/B series braille display driver wasn't presented as an option in the Braille Settings dialog on some systems, even though such a display was connected via USB.
+- NVDA no longer fails  to switch to screen review when the navigator object has no actual screen location. In this case the review cursor is now placed at the top of the screen. (#3454)
+- Fixed an issue which caused the Freedom Scientific braille display driver to fail when the port was set to USB in some circumstances. (#3509, #3662)
+- Fixed an issue where keys on Freedom Scientific braille displays weren't detected in some circumstances. (#3401, #3662)
 
 
 == Changes for Developers ==
@@ -770,7 +767,7 @@ Highlights of this release include major improvements concerning punctuation and
 - Collapsed is no longer reported for some menu items which have sub-menus.
 - The reportCurrentFormatting script (NVDA+f) now reports the formatting at the position of the review cursor rather than the system caret / focus. As  by default the review cursor follows the caret, most people should not notice a difference. However this now enables the user to find out the formatting when moving the review cursor, such as in flat review.
 
- 
+
 == Bug Fixes ==
 - Collapsing combo boxes in browse mode documents when focus mode has been forced with NVDA+space no longer auto-switches back to browse mode. (#1386)
 - In Gecko (e.g. Firefox) and MSHTML (e.g. Internet Explorer) documents, NVDA now correctly renders certain text on the same line which was previously rendered on separate lines. (#1378)

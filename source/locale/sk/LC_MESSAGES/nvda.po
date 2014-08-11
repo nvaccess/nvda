@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-02 19:14+1000\n"
-"PO-Revision-Date: 2014-07-23 10:17+0100\n"
+"POT-Creation-Date: 2014-08-06 23:27+1000\n"
+"PO-Revision-Date: 2014-08-10 20:31+0100\n"
 "Last-Translator: Ondrej Rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -1445,6 +1445,11 @@ msgstr "má vzorec"
 msgid "has comment"
 msgstr "obsahuje komentár"
 
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+#, fuzzy
+msgid "obscured"
+msgstr "zakrytý"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "nevybraté"
@@ -1805,27 +1810,19 @@ msgstr ""
 "sebe, vyhláskuje tieto informácie. Ak je stlačené 3 krát rýchlo po sebe, "
 "okopíruje meno a hodnotu objektu do schránky."
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
-msgid "No location information for navigator object"
-msgstr "Žiadna informácia o pozícii pre práve zameraný objekt."
+#. Translators: message when there is no location information for the review cursor
+#, fuzzy
+msgid "No location information"
+msgstr "Žiadne informácie o formátovaní"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
-msgid "No location information for screen"
-msgstr "Žiadna informácia o umiestnení obrazovky"
-
-#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#. Translators: Description for report review cursor location command.
+#, fuzzy
 msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
-"screen, height is {height:.1f} per cent of screen"
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
 msgstr ""
-"Rohy objektu umiestnené {left:.1f} percent od ľavého kraja, {top:.1f} "
-"percent od horného kraja obrazovky, šírka je {width:.1f} percent šírky "
-"obrazovky a víška je {height:.1f} percent výšky obrazovky."
-
-#. Translators: Input help mode message for report object dimensions command.
-msgid "Reports the hight, width and position of the current navigator object"
-msgstr "Oznamuje výšku, šírku a pozíciu navigačného objektu."
+"Oznámy informáciu o pozícii textu alebo objektu, na ktorom je prezerací "
+"kurzor. Stlačené dvakrát poskytne podrobnejšie informácie."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -2498,6 +2495,15 @@ msgstr "Ostatné"
 msgid "Browse mode"
 msgstr "režim prehliadania"
 
+#. Translators: The shortcut key used to start NVDA.
+#. This should normally be left as is, but might be changed for some locales
+#. if the default key causes problems for the normal locale keyboard layout.
+#. The key must be formatted as described in this article:
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+#, fuzzy
+msgid "CTRL+ALT+N"
+msgstr "CTRL+ALT+N"
+
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
 msgstr "Web stránka NVDA"
@@ -3068,6 +3074,12 @@ msgstr "Zarovnané vpravo"
 msgid "align justify"
 msgstr "Zarovnané do bloku"
 
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+#, fuzzy
+msgid "align distributed"
+msgstr "Zarovnané vpravo"
+
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "Predvolené zarovnanie"
@@ -3111,6 +3123,41 @@ msgstr "odsadenie prvého riadka"
 #, fuzzy
 msgid "no first line indent"
 msgstr "bez odsadeného prvého riadka"
+
+#. Translators: Reported when text is vertically top-aligned.
+#, fuzzy
+msgid "vertical align top"
+msgstr "vertikálne zarovnanie nahor"
+
+#. Translators: Reported when text is vertically middle aligned.
+#, fuzzy
+msgid "vertical align middle"
+msgstr "vertikálne zarovnanie nastred"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+#, fuzzy
+msgid "vertical align bottom"
+msgstr "Vertikálne zarovnanie nadol"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+#, fuzzy
+msgid "vertical align baseline"
+msgstr "Vertikálne zarovnanie podľa čiari"
+
+#. Translators: Reported when text is vertically justified.
+#, fuzzy
+msgid "vertical align justified"
+msgstr "Zarovnané do bloku"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+#, fuzzy
+msgid "vertical align distributed"
+msgstr "Vertikálne zarovnanie rozmiestnené"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+#, fuzzy
+msgid "vertical align default"
+msgstr "Predvolené zarovnanie"
 
 #. Translators: Reported when text no longer contains a comment.
 #, fuzzy
@@ -3416,6 +3463,16 @@ msgstr ""
 "Nie je možné nainštalovať doplnok z {path}.\n"
 "pred inštaláciou doplnku spustite NVDA."
 
+#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+msgid ""
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
+msgstr ""
+"Rohy objektu umiestnené {left:.1f} percent od ľavého kraja, {top:.1f} "
+"percent od horného kraja obrazovky, šírka je {width:.1f} percent šírky "
+"obrazovky a víška je {height:.1f} percent výšky obrazovky."
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "{symbol} ako {description}"
@@ -3572,10 +3629,25 @@ msgstr "Príloha"
 msgid "sent: %s"
 msgstr "Odoslané: %s"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+#. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 #, fuzzy
 msgid "Waiting for Outlook..."
 msgstr "Čaká sa na spustenie programu outlook..."
+
+#. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+#, fuzzy
+msgid "{startTime} to {endTime}"
+msgstr "{start} do {end}"
+
+#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+#, fuzzy
+msgid "Appointment {subject}, {time}"
+msgstr "Pripomienka {subject}, {time}"
+
+#. Translators: a message when the current time slot on an Outlook Calendar has an appointment
+#, fuzzy
+msgid "has appointment"
+msgstr "obsahuje komentár"
 
 #. Translators: the email is a meeting request
 #, fuzzy
@@ -3734,6 +3806,96 @@ msgstr "Predloha s náhľadmi"
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Snímka {slideNumber}"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, fuzzy
+msgid "covers left of {otherShape} by {distance:.3g} points"
+msgstr "prekrýva zľava  {otherShape} o {distance:.3g} bodov"
+
+#. Translators: A message when a shape is behind  another shape on a powerpoint slide
+#, fuzzy
+msgid "behind left of {otherShape} by {distance:.3g} points"
+msgstr "Nasleduje zľava za {otherShape} o {distance:.3g} bodov"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, fuzzy
+msgid "covers top of {otherShape} by {distance:.3g} points"
+msgstr "prekrýva zhora {otherShape} o {distance:.3g} bodov"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, fuzzy
+msgid "behind top of {otherShape} by {distance:.3g} points"
+msgstr "Nasleduje zhora za {otherShape} by {distance:.3g} bodov"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, fuzzy
+msgid "covers right of {otherShape} by {distance:.3g} points"
+msgstr "prekrýva zprava {otherShape} o {distance:.3g} bodov"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, fuzzy
+msgid "behind right of {otherShape} by {distance:.3g} points"
+msgstr "Nasleduje zprava za {otherShape} by {distance:.3g} bodov"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, fuzzy
+msgid "covers bottom of {otherShape} by {distance:.3g} points"
+msgstr "prekrýva zdola {otherShape} by {distance:.3g} bodov"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, fuzzy
+msgid "behind bottom of {otherShape} by {distance:.3g} points"
+msgstr "nasleduje zdola za {otherShape} by {distance:.3g} bodov"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+#, fuzzy
+msgid "covers  {otherShape}"
+msgstr "prekrýva {otherShape}"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+#, fuzzy
+msgid "behind {otherShape}"
+msgstr "za {otherShape}"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+#, fuzzy
+msgid "{distance:.3g} points from left slide edge"
+msgstr "{distance:.3g} bodov od ľavého okraja snímky"
+
+#. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+#, fuzzy
+msgid "Off left slide edge by {distance:.3g} points"
+msgstr "za ľavým okrajom snímky o {distance:.3g} bodov"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+#, fuzzy
+msgid "{distance:.3g} points from top slide edge"
+msgstr "{distance:.3g} bodov od horného okraja snímky"
+
+#. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+#, fuzzy
+msgid "Off top slide edge by {distance:.3g} points"
+msgstr "za horným okrajom snímky o {distance:.3g} bodov"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+#, fuzzy
+msgid "{distance:.3g} points from right slide edge"
+msgstr "{distance:.3g} bodov od pravého okraja snímky"
+
+#. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+#, fuzzy
+msgid "Off right slide edge by {distance:.3g} points"
+msgstr "za pravým okrajom snímky o {distance:.3g} bodov"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+#, fuzzy
+msgid "{distance:.3g} points from bottom slide edge"
+msgstr "{distance:.3g} bodov od dolného okraja snímky"
+
+#. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+#, fuzzy
+msgid "Off bottom slide edge by {distance:.3g} points"
+msgstr "Za dolným okrajom snímky o {distance:.3g} bodov"
 
 #. Translators: The description for a script
 msgid ""
@@ -4638,7 +4800,9 @@ msgstr "Spúšťať NVDA pri zobrazení prihlasovacej obrazovky Windows"
 msgid "&Keep existing desktop shortcut"
 msgstr "Po&nechať odkaz na pracovnej ploche"
 
-#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
+#. If the shortcut key has been changed for this locale,
+#. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "Vytvoriť odkaz na &pracovnej ploche so skratkou ctrl+alt+n"
 
@@ -5540,6 +5704,16 @@ msgstr "Bez reči"
 
 msgid "word"
 msgstr "slovo"
+
+#. Translators: current position in a document as a percentage of the document length
+#, fuzzy
+msgid "{curPercent:.0f}%"
+msgstr "{curPercent:.0f}%"
+
+#. Translators: the current position's screen coordinates in pixels
+#, fuzzy
+msgid "at {x}, {y}"
+msgstr "na {x}, {y}"
 
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
@@ -6475,6 +6649,7 @@ msgid "{offset:.3g} points"
 msgstr "{offset:.3g} bodov"
 
 #. Translators: a measurement in Microsoft Word
+#. See http://support.microsoft.com/kb/76388 for details.
 #, fuzzy
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} picas"
@@ -6504,6 +6679,16 @@ msgstr "HIMS Braille Sense/Séria Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "No location information for navigator object"
+#~ msgstr "Žiadna informácia o pozícii pre práve zameraný objekt."
+
+#~ msgid "No location information for screen"
+#~ msgstr "Žiadna informácia o umiestnení obrazovky"
+
+#~ msgid ""
+#~ "Reports the hight, width and position of the current navigator object"
+#~ msgstr "Oznamuje výšku, šírku a pozíciu navigačného objektu."
 
 #~ msgid "Set column header row"
 #~ msgstr "Nastaviť hlavičku stĺpca"

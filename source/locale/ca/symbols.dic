@@ -25,100 +25,100 @@ symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	punto	all	always
-! sentence ending	cerrar exclamación	all	always
-? sentence ending	cerrar interrogación	all	always
-... sentence ending	elipsis	all	always	
-… sentence ending	elipsis	all	always	
-; phrase ending	punto y coma	most	always
-: phrase ending	dos puntos	most	always
+. sentence ending	punt	all	always
+! sentence ending	exclamació	all	always
+? sentence ending	interrogació	all	always
+... sentence ending	el·lipsi	all	always	
+… sentence ending	el·lipsi	all	always	
+; phrase ending	punt i coma	most	always
+: phrase ending	dos punts	most	always
 decimal point		none	always
-in-word '	apóstrofo	all	norep
-in-word -	guión	all	norep
-negative number	menos	none	norep
+in-word '	apòstrof	all	norep
+in-word -	guió	all	norep
+negative number	menys	none	norep
 dates /	 	all	always
 
 # Whitespace
-\0	en blanco	char
-\t	tab
-\n	línea nueva	char
-\f	Salto de página	none
-\r	retorno de carro	char
- 	espacio	char
- 	espacio	char	# no-break space
+\0	en blanc	char
+\t	Tab
+\n	nova línia	char
+\f	Salt de pàgina	none
+\r	retorn de carro	char
+ 	espai	char
+ 	espai	char	# no-break space
 
 # Standard punctuation/symbols
-!	cerrar exclamación	all
-"	comillas	most
-\#	signo de número	most
-$	dólar	all	norep
-£	libras	all	norep
-€	euros	all	norep
-¢	Centavos	all	norep
+!	exclamació	all
+"	cometes	most
+\#	signe de número	most
+$	Dòlar	all	norep
+£	Lliures esterlines	all	norep
+€	Euros	all	norep
+¢	Centaus	all	norep
 ¥	Yen	all	norep
-%	porciento	some
-&	anpersán	some
-'	apóstrofo	all
-(	abrir paréntesis	most
-)	cerrar paréntesis	most
-*	asterisco	some
-+	más	some
+%	percentatge	some
+&	ampersand	some
+'	apòstrof	all
+(	obrir parèntesi	most
+)	tancar parèntesi	most
+*	asterisc	some
++	més	some
 ,	coma	all	always
--	guión	most
-.	punto	some
+-	guió	most
+.	punt	some
 /	barra 	some
-:	dos puntos	most	norep
-;	punto y coma	most
+:	dos punts	most	norep
+;	punt i coma	most
 <	menor que	most
->	mayor que	most
+>	major que	most
 =	igual	some
-?	cerrar interrogación	all
+?	interrogació	all
 @	arroba	some
-[	abrir corchete	most
-]	cerrar corchete	most
+[	obrir claudàtors	most
+]	tancar claudàtors	most
 \\	barra inversa	most
-^	circunflejo	most
-_	subrayado	most
-`	grave	most
-{	abrir llave	most
-}	cerrar llave	most
+^	circumflex	most
+_	guió baix	most
+`	greu	most
+{	obrir clau	most
+}	tancar clau	most
 |	barra vertical	most
 ~	tilde	most
-¿	abrir interrogación	all
-¡	abrir exclamación	all
+¿	obrir interrogació	all
+¡	obrir exclamació	all
 
 # Other characters
-•	viñeta	some
-…	elipsis	all	always
-...	elipsis	all	always
-	viñeta	some
-“	abrir comillas	most
-”	cerrar comillas	most
-‘	apóstrofo	most
-’	apóstrofo	most
-–	guión	most
-—	guión	most
-●	círculo	most
-¨	diéresis	most
-‎	marca de izquierda a derecha	char
-‏	marca de derecha a izquierda	char
-■	Barra vertical cortada	some
-➔	flecha a la derecha	some
-§	Sección	most
-°	grados	some
-«	Abrir Comillas angulares
-»	Cerrar comillas angulares
+•	vinyeta	some
+…	el·lipsi	all	always
+...	el·lipsi	all	always
+	vinyeta	some
+“	obrir cometes dobles	most
+”	tancar cometes dobles	most
+‘	obrir cometes simples	most
+’	tancar cometes simples	most
+–	guió	most
+—	guió llarg	most
+●	cercle	most
+¨	dièresi	most
+‎	marca d'esquerra a dreta	char
+‏	marca de dreta a esquerra	char
+■	Barra vertical escapçada	some
+➔	fletxa dreta	some
+§	Secció	most
+°	graus	some
+«	Obrir cometes tipogràfiques
+»	Tancar cometes tipogràfiques
 µ	micro	some
-¹	1 sobreescrito	some
-²	Al cuadrado	some
-³	al cubo	some
-®	registrado	some
+¹	sobreíndex 1	some
+²	sobreíndex 2	some
+³	sobreíndex 3	some
+®	registrat	some
 ™	Marca registrada	some
 ©	copyright	some	norep
-±	Más o menos	most
-×	multiplicado por	most
+±	Més o menys	most
+×	multiplicat per	most
 ÷	dividido por	most
-←	Flecha izquierda	some
-→	Flecha derecha	some
-✓	marcado	some
-✔	marcado	some
+←	Fletxa esquerra	some
+→	Fletxa dreta	some
+✓	correcte	some
+✔	correcte	some

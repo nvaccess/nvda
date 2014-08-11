@@ -47,7 +47,7 @@ Qué hay de Nuevo en NVDA
  - En los campos de edición estándar y en el modo exploración, se anuncian la posición del cursor como un porcentaje del contenido, y sus coordenadas de pantalla .
  - En formas en presentaciones de Powerpoint, se anuncia la posición de la forma relativa a la diapositiva  y otras formas.
  - Al pulsar   esta orden dos veces se producirá el antiguo comportamiento del anunciado de la información de localización para todo el control.
- 
+- Nuevo idioma: Catalán. 
 
 == Cambios ==
 - Actualizado el transcriptor braille liblouis a 2.5.4. (#4103)
@@ -85,7 +85,11 @@ Qué hay de Nuevo en NVDA
 == Cambios para Desarrolladores ==
 - NVDA ahora cuenta con el apoyo unificado de documentación para los complementos. Véase la sección de complementos de la documentación de la Guía del desarrollador para obtener más información. (#2694)
 - Al proporcionar  vínculos de gestos en un ScriptableObject a través de __gestures, ahora es posible proporcionar la palabra clave None como el script. Esto lanza el gesto en cualquier clase base. (#4240)
+- Ahora es posible cambiar la tecla de atajo utilizada para iniciar NVDA en traducciones donde el atajo normal causa problemas. (#2209)
+ - Esto se hace a través de gettext.
+ - Ten en cuenta que el texto para la opción Crear atajo de escritorio en el diálogo Instalar NVDA, así como el atajo de teclado en la Guía del Usuario, también debe actualizarse.
 
+ 
 = 2014.2 =
 
 == Nuevas Características ==
