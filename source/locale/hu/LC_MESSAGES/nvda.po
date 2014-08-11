@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-02 19:14+1000\n"
-"PO-Revision-Date: 2014-07-17 17:21+0100\n"
+"POT-Creation-Date: 2014-08-06 23:37+1000\n"
+"PO-Revision-Date: 2014-08-08 11:28+0100\n"
 "Last-Translator: Aron Ocsvari <oaron@nvda.hu>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.5\n"
+"X-Generator: Poedit 1.6.7\n"
 "X-Poedit-Bookmarks: 672,168,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -825,7 +825,7 @@ msgstr "fanézetelem"
 #. Translators: The word presented for tabs in a tab enabled window.
 msgctxt "controlType"
 msgid "tab"
-msgstr "tab"
+msgstr "fül"
 
 #. Translators: Identifies a tab control such as webpage tabs in web browsers.
 msgid "tab control"
@@ -1446,6 +1446,10 @@ msgstr "képletet tartalmaz"
 msgid "has comment"
 msgstr "Megjegyzés"
 
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "Átfedésben"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "Nincs kijelölve"
@@ -1806,29 +1810,17 @@ msgstr ""
 "betűzi, háromszor gyorsan megnyomva pedig az elem nevét és értékét a "
 "vágólapra másolja"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
-msgid "No location information for navigator object"
-msgstr "nem lehet a navigátor kurzornál lévő elem helyét meghatározni"
+#. Translators: message when there is no location information for the review cursor
+msgid "No location information"
+msgstr "Nincs pozíció információ"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
-msgid "No location information for screen"
-msgstr "Nem lehet meghatározni a képernyő felbontását."
-
-#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#. Translators: Description for report review cursor location command.
 msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
-"screen, height is {height:.1f} per cent of screen"
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
 msgstr ""
-"Az objektum pozíciója: {left:.1f} százalék a képernyő bal, {top:.1f} a "
-"képernyő felső szélétől, a szélessége {width:.1f} százaléka, a magassága "
-"{height:.1f} százaléka a képernyőnek"
-
-#. Translators: Input help mode message for report object dimensions command.
-msgid "Reports the hight, width and position of the current navigator object"
-msgstr ""
-"Bemondja a navigátor kurzornál lévő elem magasságát, szélességét és "
-"pozícíóját"
+"Az áttekintő kurzornál lévő szövegről, vagy objektumról közöl pozíció "
+"információkat. Kétszeri gyors megnyomásra további információ hangzik el."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -2495,6 +2487,14 @@ msgstr "Egyéb"
 msgid "Browse mode"
 msgstr "Böngésző mód"
 
+#. Translators: The shortcut key used to start NVDA.
+#. This should normally be left as is, but might be changed for some locales
+#. if the default key causes problems for the normal locale keyboard layout.
+#. The key must be formatted as described in this article:
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+msgid "CTRL+ALT+N"
+msgstr "CTRL+ALT+N"
+
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
 msgstr "Honlap"
@@ -3068,9 +3068,42 @@ msgstr "jobbra igazítás"
 msgid "align justify"
 msgstr "sorkizárt igazítás"
 
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "elosztva igazítás"
+
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "alapértelmezett igazítás"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "függőleges igazítás fent"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "függőleges igazítás középre"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "függőleges igazítás lent"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "függőleges igazítás alapvonal"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "függőleges igazítás sorkizárt"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "függőleges igazítás elosztva"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "függőleges igazítás alapértelmezett"
 
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
@@ -3412,6 +3445,16 @@ msgstr ""
 "Nem telepíthető  NVDA kiegészítő erről a helyről: {path}.\n"
 "Futnia kell az NVDA programnak ahhoz, hogy kiegészítőket telepíthessen."
 
+#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+msgid ""
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
+msgstr ""
+"Az objektum pozíciója: {left:.1f} százalék a képernyő bal, {top:.1f} a "
+"képernyő felső szélétől, a szélessége {width:.1f} százaléka, a magassága "
+"{height:.1f} százaléka a képernyőnek"
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "{symbol} mint {description}"
@@ -3570,9 +3613,21 @@ msgstr "Melléklet"
 msgid "sent: %s"
 msgstr "Elküldve: %s"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+#. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
 msgstr "Várakozás az Outlook-ra..."
+
+#. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+msgid "{startTime} to {endTime}"
+msgstr "{startTime}-tól {endTime}-ig"
+
+#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+msgid "Appointment {subject}, {time}"
+msgstr "Esemény {subject}, {time}"
+
+#. Translators: a message when the current time slot on an Outlook Calendar has an appointment
+msgid "has appointment"
+msgstr "Esemény"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
@@ -3730,6 +3785,78 @@ msgstr "Fő miniatűrök"
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Fólia {slideNumber}"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers left of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} felett balról {distance:.3g} pont"
+
+#. Translators: A message when a shape is behind  another shape on a powerpoint slide
+msgid "behind left of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} alatt balról {distance:.3g} pont"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers top of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} felett a tetejétől {distance:.3g} pont"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind top of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} alatt a tetejétől {distance:.3g} pont"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers right of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} felett jobbról {distance:.3g} pont"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind right of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} alatt jobbról {distance:.3g} pont"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers bottom of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} felett az aljától {distance:.3g} pont"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind bottom of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} alatt az aljától {distance:.3g} pont"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers  {otherShape}"
+msgstr "{otherShape} felett"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind {otherShape}"
+msgstr "{otherShape} alatt"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+msgid "{distance:.3g} points from left slide edge"
+msgstr "A fólia bal szélétől {distance:.3g} pont"
+
+#. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+msgid "Off left slide edge by {distance:.3g} points"
+msgstr "A fólia bal szélén kívül {distance:.3g} pont"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+msgid "{distance:.3g} points from top slide edge"
+msgstr "A fólia tetejétől {distance:.3g} pont"
+
+#. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+msgid "Off top slide edge by {distance:.3g} points"
+msgstr "A fólia tetején kívül {distance:.3g} pont"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+msgid "{distance:.3g} points from right slide edge"
+msgstr "A fólia jobb szélétől {distance:.3g} pont"
+
+#. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+msgid "Off right slide edge by {distance:.3g} points"
+msgstr "A fólia jobb szélén kívül {distance:.3g} pont"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+msgid "{distance:.3g} points from bottom slide edge"
+msgstr "A fólia aljától {distance:.3g} pont"
+
+#. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+msgid "Off bottom slide edge by {distance:.3g} points"
+msgstr "A fólia alján kívül {distance:.3g} pont"
 
 #. Translators: The description for a script
 msgid ""
@@ -3998,7 +4125,7 @@ msgstr "A böngészőmód beállítása"
 
 #. Translators: The label for the menu item to open Document Formatting settings dialog.
 msgid "Document &formatting..."
-msgstr "&dokumentum formázás..."
+msgstr "&Dokumentum formázás..."
 
 msgid "Change settings of document properties"
 msgstr "a dokumentumok formázási tulajdonságainak beállítása"
@@ -4234,11 +4361,11 @@ msgstr "Készítő"
 
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
-msgstr "&Bővítmény névjegye..."
+msgstr "Bővítmény &névjegye..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "A bővítmény súgója"
+msgstr "A bővítmény &súgója"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -4627,7 +4754,9 @@ msgstr "Az NVDA elindítása a Windows bejelentkező képernyő használatakor"
 msgid "&Keep existing desktop shortcut"
 msgstr "Meg&lévő parancsikon megtartása"
 
-#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
+#. If the shortcut key has been changed for this locale,
+#. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "Asztali &ikon és billentyűparancs (control+alt+n) létrehozása"
 
@@ -5534,6 +5663,14 @@ msgstr "Csendes üzemmód"
 msgid "word"
 msgstr "szó"
 
+#. Translators: current position in a document as a percentage of the document length
+msgid "{curPercent:.0f}%"
+msgstr "{curPercent:.0f}%"
+
+#. Translators: the current position's screen coordinates in pixels
+msgid "at {x}, {y}"
+msgstr "pozíció: {x}; {y}"
+
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
 msgid "%s landmark"
@@ -6426,6 +6563,7 @@ msgid "{offset:.3g} points"
 msgstr "{offset:.3g} pont"
 
 #. Translators: a measurement in Microsoft Word
+#. See http://support.microsoft.com/kb/76388 for details.
 msgid "{offset:.3g} picas"
 msgstr "{offset:.3g} pika"
 
@@ -6452,6 +6590,18 @@ msgstr "HIMS Braille Sense/Braille EDGE sorozat"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "No location information for navigator object"
+#~ msgstr "nem lehet a navigátor kurzornál lévő elem helyét meghatározni"
+
+#~ msgid "No location information for screen"
+#~ msgstr "Nem lehet meghatározni a képernyő felbontását."
+
+#~ msgid ""
+#~ "Reports the hight, width and position of the current navigator object"
+#~ msgstr ""
+#~ "Bemondja a navigátor kurzornál lévő elem magasságát, szélességét és "
+#~ "pozícíóját"
 
 #~ msgid "Set column header row"
 #~ msgstr "oszlopfejléc sor beállítva"

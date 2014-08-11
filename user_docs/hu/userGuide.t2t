@@ -323,7 +323,7 @@ Az elemek közötti közlekedéshez használja a következő parancsokat:
 | A navigátor kurzor és az áttekintő kurzor áthelyezése | NVDA+minusz a numerikus billentyűzeten | NVDA+backspace | nincs | A navigátor kurzort az aktuális fókuszhoz, az áttekintő kurzort ha lehetséges, a kurzor aktuális pozíciójához helyezi. |
 | Az aktuális objektum aktiválása | NVDA+enter a numerikus billentyűzeten | NVDA+enter | dupla érintés | Aktiválja az aktuális elemet (pl. enter, szimpla vagy dupla kattintás). |
 | A kurzor áthelyezése a navigátor kurzorhoz | NVDA+shift+Minusz a numerikus billentyűzeten | NVDA+shift+backspace | nincs | A kurzort egyszeri lenyomásra a navigátor kurzorhoz, háromszori lenyomásra pedig az áttekintő kurzorhoz helyezi |
-| Elem pozíciójának bemondása | NVDA+delete a numerikus billentyűzeten | NVDA+delete | nincs | Felolvassa az adott elem pozícióját a képernyőn |
+| Elem pozíciójának bemondása | NVDA+delete a numerikus billentyűzeten | NVDA+delete | nincs | Bemondja az áttekintő kurzor alatt található szöveg vagy objektum elhelyeszkedését. Ez tartalmazhatja a szöveg százalékos elhelyezkedését az aktuális dokumentumban, a lapszéltől vett távolságot, vagy a pontos képernyő pozíciót. Kétszeri gyors megnyomásra további információ hangzik el. |
 %kc:endInclude
 
 Megjegyzés: A funkciók megfelelő működéséhez A numlock billentyűnek kikapcsolt állapotban kell lennie.
@@ -501,11 +501,26 @@ A következő billentyűparanccsal visszaléphet a beágyazott objektumot tartal
 + Alkalmazásfüggő NVDA billentyűparancsok +
 Az NVDA néhány alkalmazásban saját billentyűparanccsal rendelkezik, melyek megkönnyítik a szoftverek akadálymentes használatát.
 
+++ Microsoft Word ++
+%kc:beginInclude
+|| Név | Billentyűparancs | Leírás |
+| Aktuális megjegyzés bemondása | NVDA+Alt+c | Bemondja a rendszerkurzornál található megjegyzés szövegét. | 
+| Oszlopfejek beállítása | NVDA+shift+c | Egyszer megnyomva az NVDA-nak megadható, hogy a táblázatnak ez a sora tartalmazza az oszlopfejeket, így az NVDA ezeket automatikusan felolvassa, ha az alatta lévő sorokban oszlopról oszlopra lépünk. Kétszer gyorsan megnyomva törli ezt a beállítást. | 
+| Sorfejek beállítása | NVDA+shift+r | Egyszer megnyomva az NVDA-nak megadható, hogy a táblázatnak ez az oszlopa tartalmazza a sorfejeket, így az NVDA ezeket automatikusan felolvassa, ha az utána álló oszlopokban sorról sorra lépünk. Kétszer gyorsan megnyomva törli ezt a beállítást. | 
+%kc:endInclude
+
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Funkció | Billentyűparancs | Leírás |
 | Oszlopfejek beállítása | NVDA+shift+c | Egyszer megnyomva az NVDA-nak megadható, hogy a táblázatnak ez a sora tartalmazza az oszlopfejeket, így az NVDA ezeket automatikusan felolvassa, ha az alatta lévő sorokban oszlopról oszlopra lépünk. Kétszer gyorsan megnyomva törli ezt a beállítást. | 
-| Sorfejek beállítása | NVDA+shift+r | Egyszer megnyomva az NVDA-nak megadható, hogy a táblázatnak ez az oszlopa tartalmazza a sorfejeket, így az NVDA ezeket automatikusan felolvassa, ha a utána álló oszlopokban sorról sorra lépünk. Kétszer gyorsan megnyomva törli ezt a beállítást. | 
+| Sorfejek beállítása | NVDA+shift+r | Egyszer megnyomva az NVDA-nak megadható, hogy a táblázatnak ez az oszlopa tartalmazza a sorfejeket, így az NVDA ezeket automatikusan felolvassa, ha az utána álló oszlopokban sorról sorra lépünk. Kétszer gyorsan megnyomva törli ezt a beállítást. | 
+| Megjegyzés bemondása | NVDA+alt+c | Bemondja az aktuális cellához tartozó megjegyzést, amennyiben létezik. |
+%kc:endInclude
+
+++ Microsoft PowerPoint ++
+%kc:beginInclude
+|| Név | Billentyűparancs | Leírás |
+| Váltás a beszélő jegyzeteinek olvasására | control+shift+s |Vált a beszélő jegyzetei és az aktuális fólia tartalma között. A képernyő tartalma nem változik, de a felhasználó felolvastathatja az NVDA-val a megjelenő jegyzeteket.  | 
 %kc:endInclude
 
 ++ foobar2000 ++
@@ -553,6 +568,10 @@ Ez egy jelölőnégyzet, amivel vezérelheti az NVDA-t, hogy elmentse-e a beáll
 ===== Figyelmesztetés megjelenítése az NVDA bezárásakor =====
 
 Ennek a jelölőnégyzetnek a bejelölése esetén az NVDA kilépéskor egy figyelmeztető párbeszédpanelt jelenít meg. A nem gombbal tovább használhatja az NVDA-t, az igen gomb hatására a program kilép. Ha ez a jelölőnégyzet nincs bejelölve, az NVDA+Q vagy a menüparancsok hatására az NVDA ereszkedő hangjelzést ad és kérdés nélkül bezárul.
+
+===== Hangjelzés lejátszása az NVDA indításakor és kilépéskor =====
+
+A jelölőnégyzet bejelölésekor az NVDA egy hangjelzést játszik le a program elindításakor és bezárulásakor (ez az alapértelmezett).
 
 ===== Naplózási szint =====
 
@@ -972,7 +991,9 @@ Be lehet állítani a:
 - szerkesztői változások jelzése,
 - helyesírási hibák,
 - oldalszámok,
-- sorok száma,
+- Sorszámok,
+- Sorigazítás,
+- Bekezdés igazítás (pl. változó sorigazítás, első sorigazítás),
 - táblázatok,
 - táblázat sor/oszlop fejlécei,
 - táblázat sor/oszlop koordinátái,
@@ -1122,6 +1143,7 @@ A bővítmény kezelőben (amelyet az NVDA menü -eszközök almenüjében érhe
 Ezeket az NVDA közössége készíti, amivel a program funkcióit igyekeznek kibővíteni. Lehet ez egy egyszerűbb script (időjárás jelentés lekérdező program), vagy egy új beszédszintetizátor támogatása is.
 
 A bővítmény kezelő egy listában jeleníti meg a már feltelepített bővítményeket. A csomag nevét és annak verzióját már a listából is megtudhatja, a kiegészítő hosszabb leírását a "bővítmény névjegye" gomb aktiválásával érheti el.
+Ha tartozik a kiegészítőhöz súgó, azt a "bővítmény súgója" gomb aktiválásával érheti el.
 
 Egy új bővítmény telepítéséhez nyomja meg a "hozzáadás" gombot. Ekkor egy fájlválasztó ablak jelenik meg, ahol kiválaszthatja a telepítendő bővítmény fájlját. Amikor ez megtörtént, a "bezárás" gomb aktiválásával tudja véglegesíteni a műveletet. A bővítmény betöltéséhez az NVDA újraindítása szükséges, ezt a bezárás után fel is ajánlja a program.
 
