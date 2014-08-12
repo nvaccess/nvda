@@ -218,19 +218,12 @@ def setNavigatorObject(obj,isFocus=False):
 	# #3320: If in document review yet there is no document to review the mode should be forced to object. 
 	if reviewMode=='document' and (not obj.treeInterceptor or not obj.treeInterceptor.isReady or obj.treeInterceptor.passThrough):
 		review.setCurrentMode('object',False)
-	elif isFocus and reviewMode=='object' and obj.treeInterceptor and obj.treeInterceptor.isReady and not obj.treeInterceptor.passThrough:
-		review.setCurrentMode('document',False)
-	#Specifically handle when the navigator object is set due to a focus change in a virtualBuffer
-	#The focus change may have been becaus the caret was moved, which caused the focus change.
-	#If so, don't clober the review position as it will have been already set to a more accurate position.
-	if isFocus and oldPos and oldPos.obj is obj.treeInterceptor and isinstance(obj.treeInterceptor,virtualBuffers.VirtualBuffer):
-		try:
-			objPos=obj.treeInterceptor.makeTextInfo(obj)
-		except LookupError:
-			objPos=None
-		if objPos and objPos.isOverlapping(oldPos):
-			globalVars.reviewPosition=oldPos
-			globalVars.reviewPositionObj=oldPosObj
+	elif obj.treeInterceptor and obj.treeInterceptor.isReady and not obj.treeInterceptor.passThrough:
+		if reviewMode=='object':
+			review.setCurrentMode('document',False)
+		if isFocus:
+			globalVars.reviewPosition=obj.treeInterceptor.makeTextInfo(textInfos.POSITION_CARET)
+			globalVars.reviewPositionObj=globalVars.reviewPosition
 	eventHandler.executeEvent("becomeNavigatorObject",obj)
 
 def isTypingProtected():
