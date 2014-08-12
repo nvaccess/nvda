@@ -120,6 +120,8 @@ if certPassword:
 if certTimestampServer:
 	signExecCmd.extend(("/t", certTimestampServer))
 def signExec(target,source,env):
+	print [str(x) for x in target]
+	#sys.exit(1)
 	# #3795: signtool can quite commonly fail with timestamping, so allow it to try up to 3 times with a 1 second delay between each try. 
 	res=0
 	for count in xrange(3):
@@ -215,7 +217,7 @@ def NVDADistGenerator(target, source, env, for_signature):
 		buildCmd.append("--enable-uiAccess")
 	if certFile:
 		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "nvda_service.exe":
-			action.append(lambda target,source,env: signExec([target[0].File(prog)],source,env))
+			action.append(lambda target,source,env, progByVal=prog: signExec([target[0].File(progByVal)],source,env))
 
 	for ext in "", "c", "o":
 		action.append(Delete(buildVersionFn + ext))
