@@ -14,6 +14,7 @@
 
 import sys
 import os
+import time
 import _winreg
 from glob import glob
 
@@ -113,12 +114,20 @@ outputDir=Dir(env['outputDir'])
 devDocsOutputDir=outputDir.Dir('devDocs')
 
 # An action to sign an executable with certFile.
-signExec = ["signtool", "sign", "/f", certFile]
+signExecCmd = ["signtool", "sign", "/f", certFile]
 if certPassword:
-	signExec.extend(("/p", certPassword))
+	signExecCmd.extend(("/p", certPassword))
 if certTimestampServer:
-	signExec.extend(("/t", certTimestampServer))
-signExec.append("$TARGET")
+	signExecCmd.extend(("/t", certTimestampServer))
+def signExec(target,source,env):
+	# #3795: signtool can quite commonly fail with timestamping, so allow it to try up to 3 times with a 1 second delay between each try. 
+	res=0
+	for count in xrange(3):
+		res=env.Execute([signExecCmd+[target[0].abspath]])
+		if not res:
+			return 0 # success
+		time.sleep(1)
+	return res # failed
 #Export via scons environment so other libraries can be signed
 env['signExec']=signExec
 
@@ -205,8 +214,8 @@ def NVDADistGenerator(target, source, env, for_signature):
 	if env.get("uiAccess"):
 		buildCmd.append("--enable-uiAccess")
 	if certFile:
-		for prog in "nvda_noUIAccess", "nvda_uiAccess", "nvda_slave", "nvda_service":
-			action.append(signExec[:-1] + [os.path.join(target[0].path, "%s.exe" % prog)])
+		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "nvda_service.exe":
+			action.append(lambda target,source,env: signExec([target[0].File(prog)],source,env))
 
 	for ext in "", "c", "o":
 		action.append(Delete(buildVersionFn + ext))
