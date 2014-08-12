@@ -112,6 +112,16 @@ outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot
 outputDir=Dir(env['outputDir'])
 devDocsOutputDir=outputDir.Dir('devDocs')
 
+# An action to sign an executable with certFile.
+signExec = ["signtool", "sign", "/f", certFile]
+if certPassword:
+	signExec.extend(("/p", certPassword))
+if certTimestampServer:
+	signExec.extend(("/t", certTimestampServer))
+signExec.append("$TARGET")
+#Export via scons environment so other libraries can be signed
+env['signExec']=signExec
+
 #architecture-specific environments
 archTools=['default','windowsSdk','midl','msrpc']
 env32=env.Clone(TARGET_ARCH='x86',tools=archTools)
@@ -246,14 +256,6 @@ def ZipArchiveAction(target, source, env):
 		zlib.Z_DEFAULT_COMPRESSION = origZDefComp
 
 env["BUILDERS"]["ZipArchive"] = Builder(action=ZipArchiveAction)
-
-# An action to sign an executable with certFile.
-signExec = ["signtool", "sign", "/f", certFile]
-if certPassword:
-	signExec.extend(("/p", certPassword))
-if certTimestampServer:
-	signExec.extend(("/t", certTimestampServer))
-signExec.append("$TARGET")
 
 uninstFile=File("dist/uninstall.exe")
 uninstGen = env.Command(File("uninstaller/uninstGen.exe"), "uninstaller/uninst.nsi",
