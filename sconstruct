@@ -137,8 +137,11 @@ env['signExec']=signExec
 archTools=['default','windowsSdk','midl','msrpc']
 env32=env.Clone(TARGET_ARCH='x86',tools=archTools)
 env64=env.Clone(TARGET_ARCH='x86_64',tools=archTools)
-env=env32
+# Hack around odd bug where some tool [after] msvc states that static and shared objects are different
+env32['STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME'] = 1
+env64['STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME'] = 1
 
+env=env32
 
 #Fill sourceDir with anything provided for it by miscDeps
 env.recursiveCopy(sourceDir,Dir('miscdeps/source'))
