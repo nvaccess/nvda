@@ -14,9 +14,9 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 - A ajuda de add-ons agora pode ser acessada a partir do gerenciador de complementos para complementos que o suportem. (#2694)
 - Suporte para o Calendário no Microsoft Outlook 2007 e posteriores (#2943) incluindo:
  - anúncio da hora atual ao mover-se a ela com as setas;
- - indicação no caso de a hora selecionada se encontrar dentro de algum apontamento;
- - anúncio do apontamento selecionado ao pressionar tab;
- - Filtragem inteligente da data, de modo a anunciar a data somente se a nova hora ou apontamento selecionado  estiver em um dia diferente do último.
+ - indicação no caso de a hora selecionada se encontrar dentro de algum compromisso;
+ - anúncio do compromisso selecionado ao pressionar tab;
+ - Filtragem inteligente da data, de modo a anunciar a data somente se a nova hora ou compromisso selecionado  estiver em um dia diferente do último.
 - Melhorado o suporte para a caixa de entrada e outras listas de mensagens no Outlook 2010 e superiores (#3834) incluindo:
  - Possibilidade de silenciar os cabeçalhos das colunas (como por exemplo assunto, de, etc), desativando a opção Anunciar os cabeçalhos de linhas e colunas das tabelas no Diálogo de Opções de Formatação de Documentos;
  - Possibilidade de usar os comandos de navegação de tabelas (control + alt + setas) para mover-se pelas colunas separadamente.
@@ -25,16 +25,34 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 - Anúncio de textos  inseridos automaticamente, tais como um novo marcador, numeração ou indentação com tab ao pressionar enter em documentos editáveis  e campos de texto. (#4185)
 - Microsoft word: ao pressionar NVDA+alt+c irá anunciar o texto do comentário caso o cursor esteja sobre algum. (#3528)
 - Melhorado o suporte para a leitura automática dos cabeçalhos de colunas e linhas no Microsoft Excel (#3568) incluindo:
- - Support para intervalo com nome definido no Excel para identificar cabeçalhos de células (compatível com o leitor de telas Jaws)
+ - Support para o esquema de intervalo com nome definido no Excel para identificar cabeçalhos de células (compatível com o leitor de telas Jaws)
  - Os comandos para definir cabeçalhos de colunas    (NVDA+shift+c) e definir cabeçalhos de linhas (NVDA+shift+r) agora armazenam as configurações   na planilha, de modo que  estejam disponíveis na próxima vez que esta for aberta, e estarão disponíveis para outros leitores de telas que  suportem o esquema de intervalo com nome definido.
  - Esses comandos também poderão ser usados múltiplas vezes por planilha para definir diferentes cabeçalhos para diferentes regiões.
 - Suporte para leitura automática de cabeçalhos de linhas e colunas das tabelas no Microsoft Word (#3110) incluindo:
-Support of MS Word bookmarks to identify header cells (compatible with Jaws screen reader) - set column header (NVDA+shift+c) and set row header (NVDA+shift+r) commands while on the first header cell in a table allow you to tell NVDA that these headers should be reported automatically. Settings are stored in the document so that they are available the next time the document is opened, and will be available to other screen readers that support the bookmark scheme.
+ - Suporte para marcadores do MS Word para identificar cabeçalhos das células (compatível com o leitor de telas Jaws)
+ - Os comandos para definir cabeçalhos de colunas    (NVDA+shift+c) e definir cabeçalhos de linhas (NVDA+shift+r), caso você esteja sob a primeira célula do cabeçalho em uma tabela, informarão ao NVDA que esses cabeçalhos devem ser anunciados automaticamente.
+ - As configurações serão armazenadas no documento,de modo a estarem disponíveis na próxima vez que o documento for aberto, e estarão disponíveis para outros leitores de telas que suportem o esquema desses marcadores.
 - Microsoft Word: Anúncio da distância para a borda esquerda da página quando a tecla tab é pressionada. (#1353)
 - Microsoft Word: obtenção de resposta em voz e braille para grande parte das teclas de atalho disponíveis para formatação  (negrito, itálico, sublinhado, alinhamento e nível de rascunho. ). (#1353)
 - Microsoft Excel: Caso haja comentários na célula selecionada, estes agora podem ser anunciaddos pressionando-se NVDA+alt+c. (#2920)
 - Microsoft Excel: implementado um diálogo específico do NVDA para editar comentários na célula atualmente selecionada ao pressionar o comando shift+f2 do Excel para entrar no modo de edição de comentários. (#2920)
-- Microsoft Excel: resposta em voz e braille para vários atalhos de movimentos de seleção. (#4211) incluindo:
+- Microsoft Excel: resposta em voz e braille para vários atalhos de movimentos de seleção (#4211) incluindo:
+ - Movimento de página vertical (pageUp e pageDown);
+ - Movimento horizontal de página (alt+pageUp and alt+pageDown);
+ - Estender seleção (teclas supracitadas em conjunto com  Shift); e
+ - Selecionar a região atual (control+shift+8).
+- Microsoft Excel: O alinhamento vertical e horizontal das células agora podem ser anunciados com o comando  de anunciar formatação (NVDA+f). Isso também pode ser anunciado automaticamente se a opção Anunciar alinhamento nas Opções de Formatação de Documento  estiver habilitada. (#4212)
+- Microsoft Excel:  O estilo das células agora pode ser anunciado com o comando  de anunciar formatação (NVDA+f). Isso também pode ser anunciado automaticamente se a opção Anunciar estilo nas Opções de Formatação de Documento  estiver habilitada. (#4213)
+- Microsoft PowerPoint: Ao mover formas dentro de um slide usando as setas, a localização atual da forma é agora anunciada (#4214) incluindo:
+ - A distância entre a forma e cada borda do slide é anunciada.
+ - Se uma forma está encobrindo ou é encoberta por outra, o tamanho da parte sobreposta e a forma que está sendo sobreposta são anunciadas.
+ - Para anunciar essa informação a qualquer momento sem se mover para a forma, pressione o comando anunciar localização (NVDA+delete).
+ - Ao selecionar uma forma, caso esta esteja encoberta por outra forma, o NVDA anunciará que ela está ofuscada.
+- O comando Anunciar localização  (NVDA+delete) agora é mais específico em algumas situações. (#4219)
+ - Em campos padrão de edição e no modo de navegação, são anunciadas a posição do cursor como percentagem do conteúdo e também suas coordenadas de tela.
+ - Nas formas em apresentações do PowerPoint , é anunciada a posição da forma em relação ao slide e a outras formas.
+ - Pressionando esse comando duas vezes, produzir-se-á o comportamento anterior e anunciará a informação da localização para o controle completo.
+- Novo idioma: Catalão.
 
 
 == Alterações ==
@@ -46,7 +64,28 @@ Support of MS Word bookmarks to identify header cells (compatible with Jaws scre
 - No modo de navegação em aplicativos Mozilla, pressionando-se enter em um botão, etc. já não falha para ativá-lo (ou ativa o controle errado) em certos casos tais como os botões no topo  do Facebook. (#4106)
 - Informações inúteis já não são anunciadas ao mover-se com tab no iTunes. (#4128)
 - Em certas listas do iTunes tais como a lista Músicas, mover para o próximo item usando a navegação de objetos agora funciona corretamente. (#4129)
-- Elementos HTML considerados cabeçalhos because of WAI ARIA markup are now included in the Browse mode Elements list and quick navigation for Internet Explorer documents. (#4140)
+- Elementos HTML considerados como cabeçalhos devido a uma marca WAI ARIA agora são incluídos na lista de elementos do modo de navegação  e na navegação rápida para documentos do Internet Explorer. (#4140)
+- Ao ativar links para a mesma página em versões recentes do Internet Explorer, agora move para e anuncia corretamente a posição de destino em documentos do modo de navegação. (#4134)
+- Microsoft Outlook 2010 e superior: Foi melhorado o acesso especial a diálogos seguros como o de novos perfis e configuração de e-mail. (#4090, #4091, #4095)
+- Microsoft Outlook: Anúncios inúteis foram diminuídos em barras de ferramentas de comandos ao navegar por certos diálogos. (#4096, #3407)
+- Microsoft word: Ao mover-se com tab para a célula vazia de uma tabela,já não anuncia incorretamente o fim desta. (#4151)
+- Microsoft Word: O primeiro caractere depois do fim de uma tabela (incluindo uma nova linha em branco) já não é considerado incorretamente como se estivesse dentro da tabela. (#4152)
+- Diálogo de Verificação Ortográfica do Microsoft Word 2010: A atual palavra incorreta é anunciada em lugar de anunciar incorretamente a primeira palavra em negrito. (#3431)
+- No modo de navegação no Internet Explorer e outros controles MSHTML, ao mover-se com tabb ou usando a navegação com um caractere para mover-se para campos de formulário, é novamente anunciada a etiqueta em muitos casos onde tal não ocorria (especificamente, onde são usadas etiquetas de elementos HTML). (#4170)
+- Microsoft Word: O anúncio da existência e da localização de comentários agora é mais acurado. (#3528)
+- A navegação de certos diálogos em produtos do MS Office tais como Word, Excel e Outlook foi melhorada de modo que já não anuncia barras de ferramentas que contém controles em particular sem utilidade para o usuário. (#4198)
+- Os painéis de tarefas, como o gerenciador da área de transferência ou recuperação de arquivos, não mais aparentam ter ganhado foco ao abrir um aplicativo como o Microsoft Word ou Excel, o que às vezes obrigava o usuário a alternar para fora e de volta ao o aplicativo para usar o documento ou planilha. (#4199)
+- O NVDA já não falha ao ser executado  em versões recentes do Windows   quando o idioma do sistema operacional é configurado para Sérvio (Latino). (#4203)
+- Ao pressionar o numlock estando no modo ajuda de entrada agora alterna corretamente o numlock, ao invés de fazer com que o teclado e o Sistema Operacional se descincronizem em relação ao estado dessa tecla. (#4226)
+- No Google Chrome, o título do documento volta a ser anunciado quando se alterna abas. No NVDA 2014.2, isso não ocorria em alguns casos. (#4222)
+- No Google Chrome e navegadores baseados no Chrome, a URL do documento já não é anunciada ao anunciar o documento. (#4223)
+- Ao executar uma leitura contínua com o sintetizador sem fala selecionado (útil para testes automatizados), a leitura contínua agora é completa ao invés de parar após algumas poucas linhas. (#4225)
+- Diálogo de assinatura do Microsoft Outlook: O campo de edição de assinatura agora é acessível, permitindo a completa detecção do cursor e  da formatação. (#3833)
+- Microsoft Word: Ao ler a última linha de uma célula de tabela, a célula já não é lida por completo. (#3421)
+- Microsoft Word: Ao ler a primeira ou a última linha de um índice, o mesmo já não é lido por completo. (#3421)
+- Ao falar palavras digitadas e em alguns outros casos, as palavras já não são quebradas incorretamente  em marcas tais como sinais de vogais e virama em idiomas Indianos. (#4254)
+- Campos de edição de texto numéricos no GoldWave agora são controlados corretamente. (#670)
+- Microsoft Word: ao mover-se por parágrafo usando control+seta abaixo/control+seta acima, já não é necessário pressionar esses comandos  duas vezes para mover-se por listas numeradas ou com marcas. (#3290) 
 
 
 == Alterações específicas para desenvolvedores ==
@@ -54,6 +93,10 @@ Support of MS Word bookmarks to identify header cells (compatible with Jaws scre
 
 Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 - O NVDA agora possui suporte unificado para a documentação de seus complementos. Consulte a seção Add-on Documentation do Developer Guide para mais detalhes. (#2694)
+When providing gesture bindings on a ScriptableObject via __gestures, it is now possible to provide the None keyword as the script. This unbinds the gesture in any base classes. (#4240)
+-     It is now possible to change the shortcut key used to start NVDA for locales where the normal shortcut causes problems. (#2209)
+ - This is done via gettext.
+ - Note that the text for the Create desktop shortcut option in the Install NVDA dialog, as well as the shortcut key in the User Guide, must also be updated.
 
 
 = 2014.2 =

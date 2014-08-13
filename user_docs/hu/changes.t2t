@@ -3,6 +3,84 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.3 =
+
+== Újdonságok ==
+- Az NVDA indításakor, és bezárásakor elhangzó hangjelzés már kikapcsolható az Általános Beállítások párbeszédpanelen elérhetővé vált új opció segítségével. (#834)
+- A Bővítménykezelőben elérhető az olyan bővítmények súgója, amelyek támogatják ezt a lehetőséget. (#2694)
+- A naptár használatának támogatása Microsoft Outlook 2007 és újabb verzióiban (#2943) Új lehetőségek:
+ - Az aktuális idő bemondása nyilakkal történő navigálás során,
+ - jelzés, ha a kijelölt időpont egy eseményen belül van,
+ - a kijelölt esemény bemondása a tabgomb lenyomásakor
+ - Dátumok intelligens szűrése, csak akkor mondja be a dátumot, ha az újonnan kijelölt időpont,vagy esemény eltérő napon van a korábban kielölthöz képest.
+- Továbbfejlesztett támogatás a Bejövő üzenetek, és más üzenetlistákhoz az Outlook 2010 és újabb verzióiban (#3834) Új lehetőségek:
+ - Lehetőség az oszlopfejlécek bemondásának kikapcsolására (feladó, tárgy, stb.) a táblázat sor/oszlop fejléceinek bemondása opció kikapcsolásával az NVDA dokumentum formázás párbeszédpanelén,
+ - Használhatók a táblázat navigációs parancsok (control + nyilak) az egyes oszlopokon belüli mozgásra. 
+- Microsoft word: Ha egy beágyazott képhez nem tartozik szöveges leírás, akkor az NVDA inkább a kép címét fogja bejelenteni, amennyiben a szerző azt megadta. (#4193)
+- Microsoft Word: Bekezdés igazítás bemondása a formázási információk lekérdezésére szolgáló billentyűparanccsal (NVDA+f), és automatikusan az új, Bekezdés igazítás bemondása opció bekapcsolásával a dokumentum formázás párbeszédpanelen. (#4165).
+- Szerkeszthető dokumentumok, és szövegmezők esetében az NVDA már bejelenti az enter billentyű lenyomása után az olyan, automatikusan beillesztett szövegrészeket, mint új felsorolásjel, szám, vagy tabulátor behúzás. (#4185)
+- Microsoft word: Az NVDA+alt+c billentyűparancs hatására elhangzik a megjegyzés szövege, amennyiben a kurzor egy megjegyzésen belül áll. (#3528)
+- Fejlesztett támogatás az automatikus oszlop-, és sorfejlécek felolvasásához a Microsoft Excelben. (#3568) Beleértve:
+ - Az Excelben definiált névtartományok felhasználása a fejlécet tartalmazó cellák megállapításához, (ez kompatibilis a Jaws képernyőolvasóval) 
+ - Az oszlopfejlécek  (NVDA+shift+c) és sorfejlécek (NVDA+shift+r) beállítására szolgáló parancsok már elmentik a szükséges információkat a munkalapon, így azok a munkalap későbbi megnyitásakor is elérhetők lesznek az NVDA számára, ill. azon képernyőolvasók számára is, amelyek támogatják a definiált névtartományok ezen rendszerét.
+ - Ezek a parancsok most már többször is alkalmazhatók egy munkalapon belül, hogy különböző területekhez különböző fejléceket állítsanak be.
+- Automatikus oszlop-, és sorfejlécek felolvasásának támogatása a Microsoft Word-ben (#3110) Beleértve:
+ - Az MS Word könyvjelzők felhasználása a fejléc cellák megállapításához. (ez kompatibilis a Jaws képernyőolvasóval)
+ - Az oszlopfejlécek  (NVDA+shift+c) és sorfejlécek (NVDA+shift+r) beállítására szolgáló parancsok használata az első fejléc cellákban meghatározza az NVDA számára az automatikusan bejelentendő fejlécek körét. Ezek a beállítások mentésre kerülnek a dokumentumban, így azok a dokumentum későbbi megnyitásakor is elérhetők lesznek az NVDA számára, ill. azon képernyőolvasók számára is, amelyek támogatják a könyvjelzők felhasználásának ezen formáját.
+- Microsoft Word: Az NVDA bemondja a lap bal szélétől való távolságot a Tab billentyű lenyomása esetén. (#1353)
+- Microsoft Word: beszéd, és braille visszajelzés a legtöbb elérhető formázási gyorsgombhoz (félkövér, dőlt, aláhúzott, igazítás, és vázlatszint). (#1353)
+- Microsoft Excel: Ha a fókuszban lévő cella tartalmaz megjegyzéseket, akkor azok már meghallgathatók az NVDA+alt+c billentyűparancs használatával. (#2920)
+- Microsoft Excel: Az Excel Shift+F2 megjegyzések szerkesztési módjába váltó billentyűparancsa hatására egy NVDA specifikus párbeszédpanel nyílik meg, ahol a fókuszban lévő cella megjegyzései szerkeszthetők. (#2920)
+- Microsoft Excel: Beszéd és braille visszajelzés sokkal több a kijelölést megváltoztató gyorsgombhoz. (#4211) Beleértve:
+ - Függőleges lapozás (pageUp és pageDown)
+ - Vízszintes lapozás (alt+pageUp és alt+pageDown)
+ - A kijelölés kiterjesztése (a fenti gombok a shift billentyűvel együtt történő használatával).
+ - Az aktuális terület kijelölése (control+shift+8)
+- Microsoft Excel: A cellák függőleges, és vízszintes igazításának bemondása a formázási információk lekérdezésére szolgáló billentyűparanccsal (NVDA+f), és automatikusan, amennyiben az igazítás bemondása opció be van kapcsolva az NVDA dokumentum formázás párbeszédpanelén. (#4212)
+- Microsoft Excel: A cellák stílusának bemondása a formázási információk lekérdezésére szolgáló billentyűparanccsal (NVDA+f), és automatikusan, amennyiben a stílus bemondása opció be van kapcsolva az NVDA dokumentum formázás párbeszédpanelén. (#4213)
+- Microsoft Powerpoint: Egy dián belül egy alakzat nyílbillentyűkkel történő mozgatása során már elhangzik annak aktuális pozíciója. (#4214) beleértve:
+ - Az alakzat távolsága a dia széleitől
+ - Ha az alakzat letakar egy másikat, vagy épp takarásba kerül, akkor az átfedő alakzatok távolsága. 
+ - Ezek az információk bármikor lekérdezhetők az alakzatok mozgatása nélkül is az elemek pozíciójának lekérdezésére szolgáló billentyűparanccsal (NVDA+numerikus delete)
+- Egy másik alakzat által takarásban lévő alakzat kijelölése esetén bejelenti az eltakart állapotot.
+ Az elemek pozíciójának lekérdezésére szolgáló billentyűparancs
+(NVDA+numerikus delete) bizonyos esetekben már sokkal inkább helyzetspecifikus információkat közöl. (#4219):
+ - Szabványos szerkesztőmezőkben, és böngésző módban a kurzor elemen belüli pozícióját százalékban, és a képernyő koordinátáit is bejelenti.
+ - Powerpoint bemutatókon bejelenti egy alakzat relatív pozícióját a dián belül, és más alakzatokhoz viszonyítva.
+ - A parancs kétszeri lenyomása a korábbi viselkedést eredményezi, az egész objektum elhelyezkedését jelenti be.
+
+
+== Változások ==
+- A liblouis braille fordítótábla frissült a  2.5.4 verzióra. (#4103)
+
+
+== Hibajavítások ==
+- A Google Chrome-ban, és a Chrome-alapú böngészőkben, bizonyos hangsúlyos kiemelési kóddal megjelölt szövegrészek már nem ismétlődnek meg egy figyelmeztetés, vagy párbeszédpanel szövegének felolvasásakor. (#4066)
+- Ha a mozilla alkalmazásokban böngészőmódban entert nyomunk egy gombon stb., a program már megfelelően aktiválja azt, illetve már nem aktivál rossz vezérlőelemet, mint például bizonyos esetekben, például a Facebook tetején található gomboknál. (#4106)
+- Már nem hangoznak el szükségtelen információk, ha az Itunesben a tabbal lépkedünk. (#4128)
+- Az Itunes bizonyos listáiban, mint pl. a zenék listája, már megfelelően működik a következő elemre lépés funkciója elem navigációval. (#4129)
+- HTML elemek WAI ARIA jelölővel is tekinthetők címsornak, most már részei a böngésző mód elemek listájának, és gyorsnavigációval is kezelhetőek az Internet Explorer dokumentumokban. (#4140)
+- Az aktuális Internet Explorer verziókban, böngésző módú dokumentumok esetében az oldalhivatkozások követése már helyesen mozdítja el a fókuszt, és a hivatkozott hely bejelentése is megfelelő. (#4134)
+- Microsoft Outlook 2010 és újabb verziói: Fejlesztett hozzáférés az olyan biztonsági párbeszédpanelekhez, mint a profilok, és a fiók beállítások. (#4090, #4091, #4095)
+- Microsoft Outlook: Kevesebb felesleges információ hangzik el bizonyos párbeszédpanelek parancs eszköztárain való navigáláskor. (#4096, #3407)
+- Microsoft word: egy üres táblázatcellába történő tabos navigálás során az NVDA már nem jelenti be a cellát tévesen a táblázat végeként. (#4151)
+- Microsoft Word: A közvetlenül a táblázat után következő első karaktert, beleértve az új üres sort is, Az NVDA már nem jelzi hibásan úgy, minthaaz is a táblázat része lenne. (#4152)
+- Microsoft Word 2010 nyelvi ellenőrzés párbeszédpanel: már csak a ténylegesen hibás szót jelenti be az első vastagbetűs szó helyett. (#3431) 
+- Böngésző módban az Internet Explorerben és más MSHTML vezérlőkben egy űrlapmezőre lépéskor, akár tabbal, akár navigációs gyorsgombbal, ismét elhangzik annak a címkéje. (Különösen HTML címke elemek használata esetén.) (#4170)
+- Microsoft Word: A megjegyzések, és azok helyének bejelentése már sokkal pontosabb. (#3528)
+- Fejlesztett navigáció az MS Office termékek bizonyos párbeszédpanelein, (Word, Excel és Outlook). Az NVDA már nem jelenti be az olyan speciális vezérlő tároló eszköztárakat, amelyek a felhasználók számára irrelevánsak. (#4198) 
+- Az olyan eszköztárak, mint a vágólap, vagy  a fájl visszaállítás panele a Microsoft word, vagy az Excel megnyitásakor már nem ragadják magukhoz a fókuszt, így a felhasználóknak nem kell a fókuszt áthelyezni, majd visszahozni a programra a dokumentum, vagy a munkafüzet szerkesztéséhez. (#4199)
+- Az NVDA már fut az olyan új Windows operációs rendszereken, ahol a felhasználó a Windows nyelvét szerbre (latin) állítja. (#4203) 
+- Már nem szükséges az alt billentyű többszöri lenyomása a Microsoft office ribbon első aktiválásához, Office programok (Word, Excel) megnyitása után már aktiválódik. (#4207)
+- Beviteli súgó módban a numlock lenyomása már helyesen váltja a viselkedést és már nem okozza a billentyűzet, és az operációs rendszer a kijelzett állapottól eltérő viselkedését. (#4226)
+- A Google Chrome-ban a lapfülek között történő váltás során a dokumentumok címe ismét bejelentésre kerül. Az NVDA 2014.2 verziójában bizonyos esetekben ez nem történt meg. (#4222)
+- A Google Chrome-ban, és a Chrome-alapú böngészőkben a dokumentumok bejelentése során már nem hangzik el azok URL címe. (#4223)
+- Csendes üzemmódban a folyamatos felolvasás már rendesen befejeződik, és nem áll le az első néhány sor után. Ez különösen automatizált tesztelés során hasznos. (#4225)
+- Microsoft Outlook Aláírás párbeszédpanel: az aláírás megadására szolgáló szerkesztőmező már akadálymentes, már lehetséges a kurzor teljes körű követése, és a formátum meghatározása. (#3833) 
+- Microsoft Word: Egy táblázatcella utolsó sorának olvasása során a program már nem kezdi el felolvasni az egész cella tartalmát. (#3421)
+- Microsoft Word: A tartalomjegyzék első, és utolsó sorának olvasása során a program már nem kezdi el felolvasni az egész tartalomjegyzéket. (#3421)
+
+
 = 2014.2 =
 
 == Újdonságok ==

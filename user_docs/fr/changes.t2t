@@ -15,12 +15,11 @@ Quoi de Neuf dans NVDA
  - filtrage intelligent de la date pour ne l'annoncer que si la date ou le rendez-vous sélectionnés sont sur un jour différent du dernier
 - Support amélioré de la boîte de réception et des autres listes de messages sous Outlook 2010 et plus récent (#3834) incluant :
  - la possibilité de ne pas annoncer les entêtes de colonnes (de, sujet etc) en désactivant l'annonce des lignes et colonnes d'un tableau dans le dialogue "Mise en forme des documents",
- - la possibilité d'utiliser les commandes de navigation dans un tableau (contrôle + flèches) pour se déplacer dans une colonne particulière. 
- - la possibilité d'utiliser les commandes (contrôle + alt + flèches) pour se déplacer entre les collones. 
+ - la possibilité d'utiliser les commandes de navigation dans un tableau (contrôle + alt + flèches) pour se déplacer dans une colonne particulière. 
 - Microsoft word : si une image incluse n'a pas de texte alternatif défini, NVDA annoncera à la place le titre de l'image si l'auteur en a donné un. (#4193)
 - Microsoft Word : annonce de l'indentation du paragraphe avec la commande d'annonce du format (NVDA+f) et automatiquement quand le nouveau paramètre "Annoncer l'indentation des paragraphes" du dialogue "Mise en Forme des Documents" est activé. (#4165)
 - Annonce du texte inséré automatiquement tel qu'une nouvelle puce, indentation par numéro ou tabulation quand on presse "Entrée" dans les documents éditables et les champs de texte. (#4185)
-- Microsoft word : si le curseur est à l'intérieur d'un commentaire, l'appui sur NVDA+alt+c annoncera le texte de celui-ci. (#3528)
+- Microsoft word : si le curseur est dans un commentaire, l'appui sur NVDA+alt+c annoncera le texte de celui-ci. (#3528)
 - Support amélioré de la lecture automatique des entêtes de lignes et de colonnes sous Microsoft Excel (#3568) incluant :
  - support des jeux de noms définis par Excel pour identifier les cellules d'entête (compatible avec la revue d'écran Jaws) 
  - les commandes de définition d'entête de colonne (NVDA+shift+c) et de définition d'entête de ligne (NVDA+shift+r) stockent maintenant les paramètres dans la feuille de travail pour qu'ils soient disponibles à la prochaine ouverture de la feuille, et qu'ils soient utilisables par les autres revues d'écran supportant les jeux de noms définis.
@@ -48,6 +47,7 @@ Quoi de Neuf dans NVDA
  - Dans les zones d'édition standards et le mode navigation, la position du curseur a un pourcentage dans le contenu, et ses coordonnées à l'écran sont annoncées.
  - Sur les formes dans les Présentations Powerpoint, la position de la forme par rapport à la diapositive et aux autres forme est annoncée.
  - Un double appui sur cette commande produira l'ancienne façon d'annoncer l'information de position pour l'ensemble du contrôle.
+- Nouvelle langue : Catalan.
 
 
 == Changements ==
@@ -78,12 +78,18 @@ Quoi de Neuf dans NVDA
 - Dans le dialogue de signature de Microsoft Outlook, la zone d'édition de la signature est maintenant accessible, permettant le suivi du curseur et la détection du format. (#3833) 
 - Microsoft Word : Quand on lit la dernière ligne d'une cellule de tableau, la cellule entière n'est plus relue. (#3421)
 - Microsoft Word: Quand on lit la première ou la dernière ligne d'une table des matière, la table entière n'est plus relue. (#3421)
+- En mode "écho clavier par mot" et dans quelques autres cas, les mots ne sont plus incorrectement coupés à certains marquages tels que les signes de voyelle ou les viramas dans les langues indiques. (#4254)
+- Sous Goldwave, les champs d'éditions numériques sont maintenant traités correctement. (#670)
+- Microsoft Word : quand on se déplace par paragraphe avec contrôle+flècheBas / contrôle+flècheHaut, deux appuis ne sont plus nécessaires dans les listes numérotées ou à puces. (#3290)
 
  
 == Changements pour les Développeurs ==
 - NVDA possède maintenant un support unifié pour la documentation des modules complémentaires. Consultez la section "Documentation des modules complémentaires" du "Guide de Développement" pour plus de détails. (#2694)
 - Quand on fournit des liens de gestes sur un ScriptableObject via __gestures, il est maintenant possible de fournir le mot clé None comme script. Ceci délie le geste dans toutes les classes de base. (#4240)
-
+-     Il est maintenant possible de changer le raccourci clavier utilisé pour démarrer NVDA pour les localisations où le raccourci normal pose problème. (#2209)
+ - Cela se fait via gettext.
+ - Notez que le texte pour l'option Créer un raccourci sur le bureau dans le dialogue d'installation de NVDA, ainsi que le raccourci clavier dans le Guide de l'Utilisateur doivent aussi être mis à jour.
+ 
 
 = 2014.2 =
 
