@@ -86,8 +86,6 @@ void KlattInit() {
 void KlattReset(int control) {
 	speechPlayer_terminate(speechPlayerHandle);
 	speechPlayerHandle=speechPlayer_initialize(22050);
-	//speechPlayer_queueFrame(speechPlayerHandle,NULL,minFadeLength,1,-1,true);
-	//pendingFrameLength=0;
 }
 
 int Wavegen_Klatt2(int length, int modulation, int resume, frame_t *fr1, frame_t *fr2){
@@ -106,10 +104,14 @@ int Wavegen_Klatt2(int length, int modulation, int resume, frame_t *fr1, frame_t
 		if(fadeOut) {
 			mainLength-=fadeOut;
 		}
-		mainLength=max(mainLength,1);
-		speechPlayer_queueFrame(speechPlayerHandle,&spFrame2,mainLength,mainLength,-1,false);
+		if(mainLength>=1) {
+			speechPlayer_queueFrame(speechPlayerHandle,&spFrame2,mainLength,mainLength,-1,false);
+		}
 		if(fadeOut) {
-			speechPlayer_queueFrame(speechPlayerHandle,NULL,minFadeLength*1.5,minFadeLength,-1,false);
+			spFrame2.voicePitch=spFrame2.endVoicePitch;
+			spFrame2.preFormantGain=0;
+			speechPlayer_queueFrame(speechPlayerHandle,&spFrame2,minFadeLength,minFadeLength,-1,false);
+			speechPlayer_queueFrame(speechPlayerHandle,NULL,1,1,-1,false);
 		}
 	}
 	int maxLength=(out_end-out_ptr)/sizeof(sample);
