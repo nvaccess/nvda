@@ -75,7 +75,8 @@ void fillSpeechPlayerFrame(frame_t * eFrame, speechPlayer_frame_t* spFrame) {
 	spFrame->cb6=1000;
 	spFrame->cbNP=100;
 	spFrame->cbN0=100;
-	spFrame->preFormantGain=3*(wdata.amplitude/100.0);
+	spFrame->preFormantGain=1;
+	spFrame->outputGain=3*(wdata.amplitude/100.0);
 	spFrame->endVoicePitch=spFrame->voicePitch;
 }
 
@@ -110,8 +111,10 @@ int Wavegen_Klatt2(int length, int modulation, int resume, frame_t *fr1, frame_t
 		if(fadeOut) {
 			spFrame2.voicePitch=spFrame2.endVoicePitch;
 			spFrame2.preFormantGain=0;
-			speechPlayer_queueFrame(speechPlayerHandle,&spFrame2,minFadeLength,minFadeLength,-1,false);
-			speechPlayer_queueFrame(speechPlayerHandle,NULL,1,1,-1,false);
+			speechPlayer_queueFrame(speechPlayerHandle,&spFrame2,minFadeLength/2,minFadeLength/2,-1,false);
+			spFrame2.outputGain=0;
+			speechPlayer_queueFrame(speechPlayerHandle,&spFrame2,minFadeLength/2,minFadeLength/2,-1,false);
+			//speechPlayer_queueFrame(speechPlayerHandle,NULL,1,1,-1,false);
 		}
 	}
 	int maxLength=(out_end-out_ptr)/sizeof(sample);
