@@ -57,14 +57,14 @@ void fillSpeechPlayerFrame(frame_t * eFrame, speechPlayer_frame_t* spFrame) {
 	spFrame->cf4=(eFrame->ffreq[4]*wvoice->freq[4]/256.0)+wvoice->freqadd[4];
 	spFrame->cf5=(eFrame->ffreq[5]*wvoice->freq[5]/256.0)+wvoice->freqadd[5];
 	spFrame->cf6=(eFrame->ffreq[6]*wvoice->freq[6]/256.0)+wvoice->freqadd[6];
-	spFrame->cfNP=280;
+	spFrame->cfNP=400;
 	spFrame->cfN0=eFrame->klattp[KLATT_FNZ]*2;
 	if(spFrame->cfN0==0) {
 		spFrame->cfN0=spFrame->cfNP;
 		spFrame->caNP=0;
 	} else {
 		spFrame->cfN0=450;
-		spFrame->cfNP=216;
+		spFrame->cfNP=200;
 		spFrame->caNP=1;
 	}
 	spFrame->cb1=eFrame->bw[1]*2*(wvoice->width[1]/256.0);
