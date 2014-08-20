@@ -9,15 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-22 19:10+1000\n"
-"PO-Revision-Date: 2014-05-13 17:25+0200\n"
+"POT-Creation-Date: 2014-08-06 23:27+1000\n"
+"PO-Revision-Date: 2014-08-19 13:12+0200\n"
 "Last-Translator: Gerasimos Xydas <access@e-rhetor.com>\n"
-"Language-Team: Gerasimos Xydas <access@e-rhetor.com>\n"
+"Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
+"rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
 "Language: el_GR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.5\n"
+"X-Generator: Poedit 1.6.7\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -73,11 +74,11 @@ msgstr ""
 
 #. Translators: a message when the IME open status changes to opened
 msgid "IME opened"
-msgstr "Κλείσιμο επεξεργαστή με μέθοδο εισαγωγής"
+msgstr "Άνοιγμα επεξεργαστή με μέθοδο εισαγωγής"
 
 #. Translators: a message when the IME open status changes to closed
 msgid "IME closed"
-msgstr "Άνοιγμα επεξεργαστή με μέθοδο εισαγωγής"
+msgstr "Κλείσιμο επεξεργαστή με μέθοδο εισαγωγής"
 
 #. Translators: the label for an unknown language when switching input methods.
 msgid "unknown language"
@@ -1266,11 +1267,13 @@ msgstr "χρώμα υποβάθρου"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "εκθέτης"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "δείκτης"
 
@@ -1450,6 +1453,10 @@ msgstr "έχει φόρμουλα"
 msgid "has comment"
 msgstr "έχει σχόλιο"
 
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "Παραμορφωμένο"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "μη επιλεγμένο"
@@ -1459,15 +1466,15 @@ msgid "not checked"
 msgstr "μη επιλεγμένο"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
-#, fuzzy
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
 "to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
-"Το αρχείου του χάρτη χειρονομιών σας περιέχει σφάλματα.\n"
+"Το αρχείο διαμόρφωσης περιέχει σφάλματα. Έγινε επαναφορά εργοστασιακών "
+"ρυθμήσεων.\n"
 "Περισσότερες πληροφορίες σχετικά με τα σφάλματα μπορείτε να βρείτε στο "
-"αρχείο καταγραφής."
+"αρχείο καταγραφής σφαλμάτων."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 msgid "Configuration File Error"
@@ -1829,28 +1836,18 @@ msgstr ""
 "χαρακτήρα αυτή τη πληροφορία, και πατώντας τρεις φορές θα αντιγράψει το "
 "όνομα και την τιμή αυτού του αντικειμένου στο πρόχειρο"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
-msgid "No location information for navigator object"
-msgstr "Δεν υπάρχουν πληροφορίες θέσης για το αντικείμενο πλοήγησης"
+#. Translators: message when there is no location information for the review cursor
+msgid "No location information"
+msgstr "Δεν υπάρχουν πληροφορίες τοποθεσίας"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
-msgid "No location information for screen"
-msgstr "Δεν υπάρχουν πληροφορίες θέσης για την οθόνη"
-
-#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#. Translators: Description for report review cursor location command.
 msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
-"screen, height is {height:.1f} per cent of screen"
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
 msgstr ""
-"Η άκρη του αντικειμένου βρίσκεται {left:.1f} τοις εκατό από την αριστερή "
-"άκρη της οθόνης, {top:.1f} τοις εκατό από την επάνω άκρη της οθόνης, το "
-"πλάτος είναι {width:.1f} τοις εκατό του πλάτους οθόνης και το ύψος είναι "
-"{height:.1f} τοις εκατό του ύψους οθόνης"
-
-#. Translators: Input help mode message for report object dimensions command.
-msgid "Reports the hight, width and position of the current navigator object"
-msgstr "Αναφέρει το ύψος, πλάτος και θέση του τρέχοντος αντικειμένου πλοήγησης"
+"Αναφέρει πληροφορείες σχετικά με την τοποθεσία του κειμένου ή του "
+"αντικειμένου στον δρομέα εξέτασης. Πατώντας δύο φορές ίσως δώσει "
+"περισσότερες πληροφορίες."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -2533,9 +2530,8 @@ msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Εμφανίζει το παράθυρο διαλόγου των Προφίλ Διαμορφώσεων του NVDA"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "Emulated system keyboard keys"
-msgstr "Προσομοιώνει το πάτημα του %s στο πληκτρολόγιο"
+msgstr "Προσομοιώνει το πάτημα των πλήκτρων συστήματος. "
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
@@ -2545,6 +2541,14 @@ msgstr "Διάφορα"
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "Τρόπος πλοήγησης"
+
+#. Translators: The shortcut key used to start NVDA.
+#. This should normally be left as is, but might be changed for some locales
+#. if the default key causes problems for the normal locale keyboard layout.
+#. The key must be formatted as described in this article:
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+msgid "CTRL+ALT+N"
+msgstr ""
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
@@ -2608,11 +2612,11 @@ msgstr "σίγηση"
 
 #. Translators: This is the name of the volume down key found on multimedia keyboards to reduce playback volume.
 msgid "volume down"
-msgstr "αύξηση έντασης"
+msgstr "μείωση έντασης"
 
 #. Translators: This is the name of the volume up key found on multimedia keyboards to increase playback volume.
 msgid "volume up"
-msgstr "μείωση έντασης"
+msgstr "αύξηση έντασης"
 
 #. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
 msgid "next track"
@@ -3097,6 +3101,7 @@ msgstr "μη υπογραμμισμένο"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "γραμμή αναφοράς"
 
@@ -3117,9 +3122,78 @@ msgstr "στοίχιση δεξιά"
 msgid "align justify"
 msgstr "στοίχιση σε όλη την έκταση"
 
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "στοίχιση διαμοιρασμένη"
+
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "προεπιλεγμένη στοίχιση"
+
+#. Translators: the label for paragraph format left indent
+msgid "left indent"
+msgstr "εσοχή στα αριστερά"
+
+#. Translators: the message when there is no paragraph format left indent
+msgid "no left indent"
+msgstr "χωρίς εσοχή στα αριστερά"
+
+#. Translators: the label for paragraph format right indent
+msgid "right indent"
+msgstr "Εσοχή στα δεξιά"
+
+#. Translators: the message when there is no paragraph format right indent
+msgid "no right indent"
+msgstr "χωρίς εσοχή στα δεξιά"
+
+#. Translators: the label for paragraph format hanging indent
+msgid "hanging indent"
+msgstr "Εσοχή κρεμαστή"
+
+#. Translators: the message when there is no paragraph format hanging indent
+msgid "no hanging indent"
+msgstr "χωρίς κρεμαστή εσοχή"
+
+#. Translators: the label for paragraph format first line indent
+msgid "first line indent"
+msgstr "Εσοχή πρώτης γραμμής"
+
+#. Translators: the message when there is no paragraph format first line indent
+msgid "no first line indent"
+msgstr "Χωρίς εσοχή πρώτης γραμμής"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "Κάθετη στοίχιση στην κορυφή"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "Κάθετη στοίχιση στο κέντρο"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "Κάθετη στοίχιση στο τέλος"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "Κάθετη στοίχιση στην τελευταία γραμμή"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "Κάθετη στοίχιση σε όλη την έκταση"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "Κάθετη στοίχιση διαμοιρασμένη"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "προεπιλεγμένη κάθετη στοίχιση"
+
+#. Translators: Reported when text no longer contains a comment.
+msgid "out of comment"
+msgstr "Έξω από σχόλιο."
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -3175,26 +3249,24 @@ msgid "object mode"
 msgstr "λειτουργία αντικειμένου"
 
 #. Translators: a touch screen action performed once
-#, fuzzy
 msgid "single {action}"
-msgstr "τμήμα"
+msgstr "Μεμονωμένο {action}"
 
 #. Translators: a touch screen action performed twice
-#, fuzzy
 msgid "double {action}"
-msgstr "Καμία ενέργεια"
+msgstr "διπλό {action}"
 
 #. Translators: a touch screen action performed 3 times
 msgid "tripple {action}"
-msgstr "Τριπλό άγγιγμα"
+msgstr "Τριπλό {action}"
 
 #. Translators: a touch screen action performed 4 times
 msgid "quadruple {action}"
-msgstr "Τετραπλό άγγιγμα"
+msgstr "Τετραπλό {action}"
 
 #. Translators: a touch screen action using multiple fingers
 msgid "{numFingers} finger {action}"
-msgstr "Άγγιγμα πολλών δαχτύλων"
+msgstr "{numFingers} Δάκτυλο {action}"
 
 # ???
 #. Translators: a very quick touch and release of a finger on a touch screen
@@ -3236,10 +3308,9 @@ msgid "flick right"
 msgstr "απότομο σύρσιμο δεξιά"
 
 #. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
-#, fuzzy
 msgctxt "touch action"
 msgid "hover down"
-msgstr "αύξηση έντασης"
+msgstr "Παρατεταμένο άγγιγμα"
 
 #. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
 msgctxt "touch action"
@@ -3422,8 +3493,19 @@ msgid ""
 "Cannot install NVDA add-on from {path}.\n"
 "You must be running NVDA to be able to install add-ons."
 msgstr ""
-"Δεν είναι δυνατή η εγκατάσταση προσθέτου του NVDA από τη {διαδρομή}.\n"
-"Πρέπει να είναι ενεργοποιημένο το NVDA για να εγκαταστήσετε πρόσθετα. "
+"Δεν είναι δυνατή η εγκατάσταση προσθέτου του NVDA από {path}.\n"
+"Πρέπει να είναι ενεργοποιημένο το NVDA για να εγκαταστήσετε πρόσθετα."
+
+#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+msgid ""
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
+msgstr ""
+"Η άκρη του αντικειμένου βρίσκεται {left:.1f} τοις εκατό από την αριστερή "
+"άκρη της οθόνης, {top:.1f} τοις εκατό από την επάνω άκρη της οθόνης, το "
+"πλάτος είναι {width:.1f} τοις εκατό του πλάτους οθόνης και το ύψος είναι "
+"{height:.1f} τοις εκατό του ύψους οθόνης"
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
@@ -3487,6 +3569,7 @@ msgid "Displays one of the recent messages"
 msgstr "Εμφανίζει ένα από τα πρόσφατα μηνύματα"
 
 #. Translators: This Outlook Express message has an attachment
+#. Translators: when an email has attachments
 msgid "has attachment"
 msgstr "έχει συνημμένο"
 
@@ -3547,8 +3630,17 @@ msgid "BCC:"
 msgstr "Κρυφό αντίγραφο:"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
+#. Translators: when an email is unread
 msgid "unread"
 msgstr "μη διαβασμένο"
+
+#. Translators: for a high importance email
+msgid "high importance"
+msgstr "Υψηλής σημασίας"
+
+#. Translators: For a low importance email
+msgid "low importance"
+msgstr "Χαμιλής σημασίας"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3568,6 +3660,26 @@ msgstr "συνημμένο"
 #, python-format
 msgid "sent: %s"
 msgstr "απεστάλησαν: %s"
+
+#. Translators: The title for the dialog shown while Microsoft Outlook initializes.
+msgid "Waiting for Outlook..."
+msgstr "Αναμονή για το outlook..."
+
+#. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+msgid "{startTime} to {endTime}"
+msgstr "{startTime} έως {endTime}"
+
+#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+msgid "Appointment {subject}, {time}"
+msgstr "Συνάντηση {subject}, {time}"
+
+#. Translators: a message when the current time slot on an Outlook Calendar has an appointment
+msgid "has appointment"
+msgstr "Υπάρχει συνάντηση"
+
+#. Translators: the email is a meeting request
+msgid "meeting request"
+msgstr "Αίτημα για συνάντηση"
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -3724,6 +3836,78 @@ msgstr "Μικρογραφίες του Master"
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Διαφάνεια {slideNumber}"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers left of {otherShape} by {distance:.3g} points"
+msgstr "Καλύπτει στα αριστερά από {otherShape} για {distance:.3g} μονάδες"
+
+#. Translators: A message when a shape is behind  another shape on a powerpoint slide
+msgid "behind left of {otherShape} by {distance:.3g} points"
+msgstr "Πίσω αριστερά από {otherShape} για {distance:.3g} μονάδες"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers top of {otherShape} by {distance:.3g} points"
+msgstr "Καλύπτει την κορυφή από {otherShape} για {distance:.3g} μονάδες"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind top of {otherShape} by {distance:.3g} points"
+msgstr "Πίσω κορυφή από {otherShape} για {distance:.3g} μονάδες"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers right of {otherShape} by {distance:.3g} points"
+msgstr "Καλύπτει στα δεξιά από {otherShape} για {distance:.3g} μονάδες"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind right of {otherShape} by {distance:.3g} points"
+msgstr "Πίσω δεξιά από {otherShape} για {distance:.3g} μονάδες"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers bottom of {otherShape} by {distance:.3g} points"
+msgstr "Καλύπτει το τέλος από {otherShape} για {distance:.3g} μονάδες"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind bottom of {otherShape} by {distance:.3g} points"
+msgstr "Πίσω τέλος από {otherShape} για {distance:.3g} μονάδες"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers  {otherShape}"
+msgstr "Καλύπτει  {otherShape}"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind {otherShape}"
+msgstr "Πίσω {otherShape}"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+msgid "{distance:.3g} points from left slide edge"
+msgstr "{distance:.3g} μονάδες από αριστερό άκρο διαφάνειας"
+
+#. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+msgid "Off left slide edge by {distance:.3g} points"
+msgstr "Στα αριστερά από άκρο διαφάνειας για {distance:.3g} μονάδες"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+msgid "{distance:.3g} points from top slide edge"
+msgstr "{distance:.3g} μονάδες από την κορυφή του άκρου της διαφάνειας"
+
+#. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+msgid "Off top slide edge by {distance:.3g} points"
+msgstr "Κορυφή του άκρου της διαφάνειας για {distance:.3g} μονάδες"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+msgid "{distance:.3g} points from right slide edge"
+msgstr "{distance:.3g} από το δεξί άκρο της διαφάνειας"
+
+#. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+msgid "Off right slide edge by {distance:.3g} points"
+msgstr "Δεξί άκρο της διαφάνειας για {distance:.3g} μονάδες"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+msgid "{distance:.3g} points from bottom slide edge"
+msgstr "{distance:.3g} μονάδες από το κάτω άκρος της διαφάνειας"
+
+#. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+msgid "Off bottom slide edge by {distance:.3g} points"
+msgstr "Κάτω άκρο της διαφάνειας για {distance:.3g} μονάδες"
 
 #. Translators: The description for a script
 msgid ""
@@ -4245,6 +4429,10 @@ msgstr "Συγγραφέας"
 msgid "&About add-on..."
 msgstr "Σχετικά με το πρόσθετο..."
 
+#. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
+msgid "Add-on &help"
+msgstr "Πρόσθετο &Βοήθεια"
+
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
 msgstr "&Εγκατάσταση..."
@@ -4471,12 +4659,11 @@ msgid "Say all"
 msgstr "Εκφώνηση όλων"
 
 #. Translators: An error displayed when saving configuration profile triggers fails.
-#, fuzzy
 msgid ""
 "Error saving configuration profile triggers - probably read only file system."
 msgstr ""
-"Αδυναμία αποθήκευσης της διαμόρφωσης - πιθανώς το αρχείο συστήματος είναι "
-"μόνο για ανάγνωση"
+"Αδυναμία αποθήκευσης του προφίλ διαμόρφωσης - πιθανώς το αρχείο συστήματος "
+"είναι μόνο για ανάγνωση"
 
 #. Translators: The title of the configuration profile triggers dialog.
 msgid "Profile Triggers"
@@ -4528,11 +4715,10 @@ msgid "Warning"
 msgstr "Προειδοποίηση"
 
 #. Translators: An error displayed when creating a configuration profile fails.
-#, fuzzy
 msgid "Error creating profile - probably read only file system."
 msgstr ""
-"Αδυναμία αποθήκευσης της διαμόρφωσης - πιθανώς το αρχείο συστήματος είναι "
-"μόνο για ανάγνωση"
+"Αδυναμία δημηουργίας του προφίλ - πιθανώς το αρχείο συστήματος είναι μόνο "
+"για ανάγνωση"
 
 #. Translators: The prompt asking the user whether they wish to
 #. manually activate a configuration profile that has just been created.
@@ -4642,7 +4828,9 @@ msgstr "Χρήση του NVDA κατά την οθόνη σύνδεσης στ�
 msgid "&Keep existing desktop shortcut"
 msgstr "Διατήρηση υπάρχουσας συντόμευσης στην επιφάνεια εργασίας"
 
-#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
+#. If the shortcut key has been changed for this locale,
+#. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr ""
 "Δημιουργία &εικονιδίου στην επιφάνεια εργασίας και πλήκτρου συντόμευσης "
@@ -4779,6 +4967,10 @@ msgstr "&Αποθήκευση ρυθμίσεων κατά την έξοδο"
 #. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
 msgid "&Warn before exiting NVDA"
 msgstr "&Προειδοποίηση πριν την έξοδο από το NVDA"
+
+#. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
+msgid "&Play sounds when starting or exiting NVDA"
+msgstr "&Να ακούγονται ήχοι κατα το άνοιγμα ή το κλείσιμο του nvda"
 
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
@@ -5289,6 +5481,11 @@ msgstr "Αναφορά &αρίθμησης γραμμών"
 msgid "Report l&ine indentation"
 msgstr "Αναφορά στοίχισης &γραμμής"
 
+#. Translators: This message is presented in the document formatting settings dialogue
+#. If this option is selected, NVDA will report paragraph indentation if available.
+msgid "Report &paragraph indentation"
+msgstr "Αναφορά στοίχισης &παραγράφου"
+
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &tables"
@@ -5336,9 +5533,8 @@ msgstr "Αναφορά &πλαισίων"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#, fuzzy
 msgid "Report if &clickable"
-msgstr "Αναφορά &πινάκων"
+msgstr "Αναφορά αν δύναται να γίνει κλικ"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -5369,6 +5565,7 @@ msgid "&Dictionary entries"
 msgstr "&Εγγραφές λεξικού"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
+#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr "Σχόλιο"
 
@@ -5484,17 +5681,16 @@ msgstr "Χειρονομίες εισόδου"
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
 msgid "{main} ({source})"
-msgstr "{Βασική} ({ πηγή})"
+msgstr "{main} ({source})"
 
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 msgid "Enter input gesture:"
 msgstr "Εισαγωγή χειρονομίας εισόδου"
 
 #. Translators: An error displayed when saving user defined input gestures fails.
-#, fuzzy
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
-"Αδυναμία αποθήκευσης της διαμόρφωσης - πιθανώς το αρχείο συστήματος είναι "
+"Αδυναμία αποθήκευσης των χειρονομιών - πιθανώς το αρχείο συστήματος είναι "
 "μόνο για ανάγνωση"
 
 #. Translators: Information about NVDA's new laptop keyboard layout.
@@ -5550,6 +5746,14 @@ msgstr "Χωρίς ομιλία"
 
 msgid "word"
 msgstr "λέξη"
+
+#. Translators: current position in a document as a percentage of the document length
+msgid "{curPercent:.0f}%"
+msgstr "{curPercent:.0f}%"
+
+#. Translators: the current position's screen coordinates in pixels
+msgid "at {x}, {y}"
+msgstr "Προς {x}, {y}"
 
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
@@ -5642,6 +5846,7 @@ msgstr "Παρουσιάζει μία λίστα από συνδέσμους, ε
 # check
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
 msgstr "Όχι σε κελί πίνακα"
 
@@ -6117,10 +6322,12 @@ msgstr "προεπιλεγμένο χρώμα"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
-msgstr "{Αρχή} έως {τέλος}"
+msgstr "{start} εως {end}"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
@@ -6128,35 +6335,69 @@ msgstr ""
 "Αδυναμία ορισμού κεφαλίδων. Παρακαλώ να ενεργοποιήσετε τη λειτουργία "
 "αναφοράς κεφαλίδων πίνακα στις Ρυθμίσεις Μορφοποίησης Εγγράφου"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Set column header row"
-msgstr "Ορισμός γραμμής με κεφαλίδες στηλών"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Set {address} as start of column headers"
+msgstr "Ορίστηκε {address} σαν αρχή των κεφαλίδων της στήλης"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Cleared column header row"
-msgstr "Καθαρισμός γραμμής με κεφαλίδες στηλών"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Already set {address} as start of column headers"
+msgstr "Έχετε είδη ορίσει {address} ως αρχή των κεφαλίδων της στήλης"
 
-msgid ""
-"Pressing once will set the current row as the row where column headers "
-"should be found. Pressing twice clears the setting."
-msgstr ""
-"Πατώντας μία φορά θέτει την τρέχουσα γραμμή, ως τη γραμμή όπου βρίσκονται οι "
-"κεφαλίδες των στηλών. Πατώντας δύο φορές, αφαιρεί αυτή τη ρύθμιση."
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "removed {address}    from column headers"
+msgstr "Διαγράφηκε {address} από τις κεφαλίδες της στήλης"
 
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Set row header column"
-msgstr "Ορισμός στήλης με κεφαλίδες γραμμών"
-
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Cleared row header column"
-msgstr "Καθαρισμός στήλης με κεφαλίδες γραμμών"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Cannot find {address}    in column headers"
+msgstr "Δεν μπορεί να βρεθεί {address} στις κεφαλίδες της στήλης"
 
 msgid ""
-"Pressing once will set the current column as the column where row headers "
-"should be found. Pressing twice clears the setting."
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this region. Pressing twice will forget "
+"the current column header for this cell."
 msgstr ""
-"Πατώντας μία φορά, θέτει την τρέχουσα στήλη, ως την στήλη όπου βρίσκονται οι "
-"κεφαλίδες των γραμμών. Πατώντας δύο φορές, αφαιρεί αυτή τη ρύθμιση."
+"Πατώντας μιά φορά θα ορίσει αυτό το κελί ως την πρώτη κεφαλίδα της στήλης "
+"και για οποιαδήποτε άλλα κελιά βρήσκονται πιο κάτω ή στα δεξιά αυτής της "
+"περιοχής. Πατώντας δύο φορές θα ξεχαστεί η τρέχουσα κεφαλίδα της στήλης για "
+"αυτό το κελί"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Set {address} as start of row headers"
+msgstr "Ορίστε {address} ως αρχή των κεφαλίδων της σειράς"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Already set {address} as start of row headers"
+msgstr "Είδι ορίστικε {address} ως αρχή των κεφαλίδων της σειράς"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "removed {address}    from row headers"
+msgstr "Διαγράφηκε {address} από τις κεφαλίδες της σειράς"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Cannot find {address}    in row headers"
+msgstr "Δεν μπορεί να βρεθεί {address} στις κεφαλίδες της σειράς"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this region. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Πατώντας μιά φορά θα ορίσει αυτό το κελί ως την πρώτη κεφαλίδα της σειράς "
+"και για οποιαδήποτε άλλα κελιά βρήσκονται πιο κάτω ή στα δεξιά αυτής της "
+"περιοχής. Πατώντας δύο φορές θα ξεχαστεί η τρέχουσα κεφαλίδα της σειράς για "
+"αυτό το κελί"
+
+#. Translators: A message in Excel when there is no comment
+msgid "Not on a comment"
+msgstr "Κανένα σχόλιο"
+
+#. Translators: the description  for a script for Excel
+msgid "Reports the comment on the current cell"
+msgstr "Αναφορά οποιουδήποτε σχολίου στο τρέχον κελί"
+
+#. Translators: Dialog text for
+msgid "Editing comment for cell {address}"
+msgstr "Επεξεργασία σχολίου για {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
@@ -6273,6 +6514,166 @@ msgstr "άγνωστη ημερομηνία"
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "{revisionType} από {revisionAuthor} στις {revisionDate}"
 
+#, python-format
+msgid "%g characters"
+msgstr "%g χαρακτήρες"
+
+#. Translators: the value in points for a paragraph indenting
+#, python-format
+msgid "%g pt"
+msgstr "%g μονάδες"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Ορίστηκε η σειρά {rowNumber} στήλη {columnNumber} ως αρχή των κεφαλίδων της "
+"στήλης"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Είδη ορίστηκε η σειρά {rowNumber} στήλη {columnNumber} ως αρχή των κεφαλίδων "
+"στήλης"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr ""
+"Διαγράφηκε η σειρά {rowNumber} στήλη {columnNumber} από την κεφαλίδα της "
+"στήλης"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+"Δεν μπορεί να βρεθεί σειρά {rowNumber} στήλη {columnNumber} στην κεφαλίδα "
+"της στήλης"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"Πατώντας μιά φορά θα ορίσει αυτό το κελί ως την πρώτη κεφαλίδα της στήλης "
+"και για οποιαδήποτε άλλα κελιά βρήσκονται πιο κάτω ή στα δεξιά αυτού του "
+"πίνακα. Πατώντας δύο φορές θα ξεχαστεί η τρέχουσα κεφαλίδα της στήλης για "
+"αυτό το κελί"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Ορίστηκε η σειρά {rowNumber} στήλη {columnNumber} ως αρχή των κεφαλίδων της "
+"σειράς"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Είδη ορίστηκε η σειρά {rowNumber} στήλη {columnNumber} ως αρχή των κεφαλίδων "
+"της σειράς"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr ""
+"Διαγράφηκε η σειρά {rowNumber} στήλη {columnNumber} από τις κεφαλίδες της "
+"σειράς"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+"Δεν μπορεί να βρεθεί η σειρά {rowNumber} στήλη {columnNumber} στις κεφαλίδες "
+"της σειράς"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Πατώντας μιά φορά θα ορίσει αυτό το κελί ως την πρώτη κεφαλίδα της σειράς "
+"και για οποιαδήποτε άλλα κελιά βρήσκονται πιο κάτω ή στα δεξιά αυτού του "
+"πίνακα. Πατώντας δύο φορές θα ξεχαστεί η τρέχουσα κεφαλίδα της σειράς για "
+"αυτό το κελί"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "Έντονα ενεργοποιημένα"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "Έντονα απενεργοποιημένα"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "πλάγια γράμματα ενεργοποιημένα"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "πλάγια γράμματα απενεργοποιημένα"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "υπογράμμιση ενεργοποιημένη"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "υπογράμμιση απενεργοποιημένη"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Left aligned"
+msgstr "Στοίχιση στα αριστερά"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "centered"
+msgstr "Στοίχιση στο κέντρο"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Right aligned"
+msgstr "Στοίχιση στα δεξιά"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Justified"
+msgstr "Στοιχισμένα"
+
+#. Translators: the message when the outline level / style is changed in Microsoft word
+msgid "{styleName} style, outline level {outlineLevel}"
+msgstr "{styleName} Στυλ, επίπεδο περιγράμματος {outlineLevel}"
+
+#. Translators: a message when increasing or decreasing font size in Microsoft Word
+msgid "{size:g} point font"
+msgstr "{size:g} μονάδα φόντο"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} characters"
+msgstr "{offset:.3g} χαρακτήρες"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} inches"
+msgstr "{offset:.3g} ίντσες"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} centimeters"
+msgstr "{offset:.3g} Εκατοστά"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} millimeters"
+msgstr "{offset:.3g} μιλίμετρα"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} points"
+msgstr "{offset:.3g} Μονάδες"
+
+#. Translators: a measurement in Microsoft Word
+#. See http://support.microsoft.com/kb/76388 for details.
+msgid "{offset:.3g} picas"
+msgstr "{offset:.3g} πίκας"
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "no comments"
+msgstr "Δεν υπάρχουν σχόλια"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "Αναφέρει το κείμενο του σχολίου στο σημείο που βρήσκεται ο δρομέας"
+
 # check
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
@@ -6289,6 +6690,43 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "No location information for navigator object"
+#~ msgstr "Δεν υπάρχουν πληροφορίες θέσης για το αντικείμενο πλοήγησης"
+
+#~ msgid "No location information for screen"
+#~ msgstr "Δεν υπάρχουν πληροφορίες θέσης για την οθόνη"
+
+#~ msgid ""
+#~ "Reports the hight, width and position of the current navigator object"
+#~ msgstr ""
+#~ "Αναφέρει το ύψος, πλάτος και θέση του τρέχοντος αντικειμένου πλοήγησης"
+
+#~ msgid "Set column header row"
+#~ msgstr "Ορισμός γραμμής με κεφαλίδες στηλών"
+
+#~ msgid "Cleared column header row"
+#~ msgstr "Καθαρισμός γραμμής με κεφαλίδες στηλών"
+
+#~ msgid ""
+#~ "Pressing once will set the current row as the row where column headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "Πατώντας μία φορά θέτει την τρέχουσα γραμμή, ως τη γραμμή όπου βρίσκονται "
+#~ "οι κεφαλίδες των στηλών. Πατώντας δύο φορές, αφαιρεί αυτή τη ρύθμιση."
+
+#~ msgid "Set row header column"
+#~ msgstr "Ορισμός στήλης με κεφαλίδες γραμμών"
+
+#~ msgid "Cleared row header column"
+#~ msgstr "Καθαρισμός στήλης με κεφαλίδες γραμμών"
+
+#~ msgid ""
+#~ "Pressing once will set the current column as the column where row headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "Πατώντας μία φορά, θέτει την τρέχουσα στήλη, ως την στήλη όπου βρίσκονται "
+#~ "οι κεφαλίδες των γραμμών. Πατώντας δύο φορές, αφαιρεί αυτή τη ρύθμιση."
 
 #, fuzzy
 #~ msgid "%s through %s"
