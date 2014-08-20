@@ -47,9 +47,12 @@
  - In Eingabefeldern und im Lesemodus wird die Cursorposition relativ zum Feldinhalt und in Form von Bildschirmkoordinaten gemeldet.
  - Bei Powerpoint-Objekten wird die Position des Objekts auf der Folie sowie evtl. vorhandene Überlagerungen gemeldet.
  - Wenn Sie die Tastenkombination zweimal drücken, wird die Position dem alten Verhalten entsprechend gemeldet.
+- neue Sprache: Catalan.
+
 
 == Änderungen ==
 - Braille-Übersetzer Liblouis auf 2.5.4 aktualisiert. (#4103)
+
 
 == Fehlerbehebungen ==
 - In Chrome und Chrome-basierten Browsern werden hervorgehobene Dialogtexte nicht mehr doppelt angesagt. (#4066)
@@ -75,11 +78,19 @@
 - Der Dialog zum Bearbeiten von Signaturen in Outlook ist nun voll zugänglich (Incl. Formaterkennung und Cursorverfolgung). (#3833) 
 - Wenn Sie in Microsoft Word die letzte Zeile einer Tabellenzelle lesen, wird nicht mehr die gesamte Zelle gelesen. (#3421)
 - In Microsoft Word wird nicht mehr das gesamte Inhaltsverzeichnis gelesen, wenn Sie die erste oder letzte Zeile in einem Inhaltsverzeichnis lesen. (#3421)
+- When speaking typed words and in some other cases, words are no longer incorrectly broken at marks such as vowel signs and virama in Indic languages. (#4254)
+- numerische Eingabefelder in Goldwave werden korrekt verarbeitet. (#670)
+- Wenn Sie sich in Microsoft Word absatzweise durch numerierte Listen oder Afufzählungslisten bewegen, müssen Sie die Tastenkonbinationen strg+Pfeil auf/ab nicht mehr zweimal drücken. (#3290)
 
-
+ 
 == Änderungen für Entwickler ==
 - Die Unterstützung für das Beilegen einer Dokumentation zu NVDA-Erweiterungen wurde vereinheitlicht. Sehen Sie sich den Abschnitt zu Dokumentation für Erweiterungen für weitere Informationen an. (#2694)
 - Wenn sie das Wörterbuch __gestures verwenden, um Skripte an Eingabemethoden zuzuweisen, können Sie als Namen für das Skript das Schlüsselword None angeben, um in einer Basisklasse die Zuweisung für eine Tastenkombination zu löschen. (#4240)
+- Falls es in bestimmten Sprachräumen Probleme mit der Standardtastenkombination strg+alt+n zum Starten von NVDA geben sollte, können Sie diese ändern. (#2209)
+ - Dies wird über Getext realisiert.
+ - Bedenken Sie, dass Sie sowohl den Text für die Option zum Erstellen einer Desktop-Verknüpfung als auch die entsprechenden Passagen im Benutzerhandbuch aktualisieren müssen.
+
+ 
 = 2014.2 =
 
 == Neue Funktionen ==
