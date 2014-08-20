@@ -14,8 +14,8 @@ extern unsigned char *out_end;
 speechPlayer_handle_t speechPlayerHandle=NULL;
 #define minFadeLength 110
 
-int mixWaveFile(int maxNumSamples, sample* sampleBuf) {
-	int i=0;
+unsigned int mixWaveFile(unsigned int maxNumSamples, sample* sampleBuf) {
+	unsigned int i=0;
 	for(;wdata.mix_wavefile_ix<wdata.n_mix_wavefile;++wdata.mix_wavefile_ix) {
 		if(i>=maxNumSamples) break;
 		int val;
@@ -117,9 +117,9 @@ int Wavegen_Klatt2(int length, int modulation, int resume, frame_t *fr1, frame_t
 			//speechPlayer_queueFrame(speechPlayerHandle,NULL,1,1,-1,false);
 		}
 	}
-	int maxLength=(out_end-out_ptr)/sizeof(sample);
-	int outLength=speechPlayer_synthesize(speechPlayerHandle,maxLength,(sample*)out_ptr);
-	int waveOutLength=mixWaveFile(outLength,(sample*)out_ptr);
+	unsigned int maxLength=(out_end-out_ptr)/sizeof(sample);
+	unsigned int outLength=speechPlayer_synthesize(speechPlayerHandle,maxLength,(sample*)out_ptr);
+	unsigned int waveOutLength=mixWaveFile(outLength,(sample*)out_ptr);
 	out_ptr=out_ptr+(sizeof(sample)*outLength);
 	if(out_ptr>=out_end) return 1;
 	return 0;
