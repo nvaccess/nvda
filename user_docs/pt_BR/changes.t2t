@@ -93,7 +93,7 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 
 Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 - O NVDA agora possui suporte unificado para a documentação de seus complementos. Consulte a seção Add-on Documentation do Developer Guide para mais detalhes. (#2694)
-When providing gesture bindings on a ScriptableObject via __gestures, it is now possible to provide the None keyword as the script. This unbinds the gesture in any base classes. (#4240)
+- When providing gesture bindings on a ScriptableObject via __gestures, it is now possible to provide the None keyword as the script. This unbinds the gesture in any base classes. (#4240)
 -     It is now possible to change the shortcut key used to start NVDA for locales where the normal shortcut causes problems. (#2209)
  - This is done via gettext.
  - Note that the text for the Create desktop shortcut option in the Install NVDA dialog, as well as the shortcut key in the User Guide, must also be updated.
@@ -339,12 +339,12 @@ Esta versão corrige o problema de o NVDA travar ao iniciar quando configurado p
  
  
 = 2013.1 =
- Entre os destaques desta versão incluem-se um leiaute de teclado mais intuitivo e consistente para laptops; suporte básico  para o Microsoft PowerPoint; suporte para descrições longas  em navegadores web; e suporte para a entrada de braille para computador em linhas que possuam um teclado braille.
+ Entre os destaques desta versão incluem-se um esquema de teclado mais intuitivo e consistente para laptops; suporte básico  para o Microsoft PowerPoint; suporte para descrições longas  em navegadores web; e suporte para a entrada de braille para computador em linhas que possuam um teclado braille.
  
 == Importante ==
 
-=== Novo Leiaute de teclado Laptop ===
-O leiaute de teclado laptop foi completamente redesenhado com vista a tornar-se mais intuitivo e consistente.
+=== Novo esquema de teclado Laptop ===
+O esquema de teclado laptop foi completamente redesenhado, com vistas a tornar-se mais intuitivo e consistente.
 Esse novo esquema usa as setas em combinação com a tecla NVDA e outras teclas modificadoras para os comandos de exploração e navegação de objetos.
 
 
@@ -378,7 +378,7 @@ Por favor consulte o documento da [Referência Rápida de Comandos keyCommands.h
 
 == Alterações ==
 - Atualizado o transcritor braille liblouis para a versão 2.5.2. (#2737)
-- O leiaute de teclado laptop foi completamente redesenhado com vista a tornar-se mais intuitivo e consistente. (#804)
+- O esquema de teclado laptop foi completamente redesenhado com vista a tornar-se mais intuitivo e consistente. (#804)
 - Atualizado o sintetizador eSpeak para a versão 1.47.11. (#2680, #3124, #3132, #3141, #3143), , #3172)
  
 
@@ -787,7 +787,7 @@ Os destaques desta versão incluem maiores implementações no tocante à  pontu
 - Para mover o cursor do sistema para o cursor de exploração, agora é necessário pressionar o script mover o foco para o objeto de navegação (desktop NVDA+shift+numpadMenos, laptop NVDA+shift+backspace) duas vezes em rápida sucessão. Isso torna livres mais comandos de teclado. (#837)
 - Agora para ouvir a representação decimal e hexadecimal do caractere que está sob o cursor de exploração, pressione o comando rever o caractere atual três vezes em lugar de duas, pois duas vezes agora fala a descrição do caractere.
 - Atualizado o Sintetizador de Voz eSpeak para a versão 1.45.03. (#1465)
-- Tabelas de layout já não são anunciadas em aplicações mozilla Gecko enquanto se move o foco no modo de foco ou para fora de um documento.
+- Tabelas de leiaute já não são anunciadas em aplicações mozilla Gecko enquanto se move o foco no modo de foco ou para fora de um documento.
 - No Internet Explorer e outros controles MSHTML, o modo de navegação agora funciona para documentos dentro de aplicações ARIA. (#1452)
 - Atualizado o Transcritor braille Liblouis para a Versão 2.3.0.
 - No modo de navegação, ao saltar para um controle usando a navegação rápida ou o foco, a descrição desse controle é agora anunciada, caso ele tenha alguma.
@@ -812,7 +812,7 @@ Os destaques desta versão incluem maiores implementações no tocante à  pontu
 - Já não ocorrem problemas ao carregar a configuração para sintetizadores que não permitem a configuração de voz tais como o Audiologic Tts3. (#1347)
 - No Skype, o menu Extras agora é lido corretamente. (#648)n
 - Ao marcar a caixa de seleção Brilho controla volume das coordenadas no Diálogo das Opções de Mouse, já não causa um grande atraso dos beeps ao mover o mouse pela tela no Windows Vista/Windows 7 com Aero ativado. (#1183)
-- NVDA+delete agora funciona conforme é documentado para anunciar as dimensões do objeto de navegação atual quando o NVDA está configurado para usar o layout de teclado para computadores portáteis. (#1498)
+- NVDA+delete agora funciona conforme é documentado para anunciar as dimensões do objeto de navegação atual quando o NVDA está configurado para usar o esquema de teclado para computadores portáteis. (#1498)
 - O NVDA agora reconhece apropriadamente o atributo de aria-selected em documentos no Internet Explorer.
 - Quando o NVDA alterna automaticamente para o modo de foco em documentos no modo de navegação, agora ele anuncia a informação sobre o contexto do foco. Por exemplo, se um item como uma caixa de lista recebe o foco, a caixa de lista é anunciada primeiro. (#1491)
 - No Internet Explorer e outros controles MSHTML, controles de caixas de lista ARIA agora são tratados como listas, não mais como itens de lista.
@@ -1045,8 +1045,8 @@ As características mais notáveis desta versão incluen uma grande simplificaç
 - atualizado o sintetizador de voz eSpeak para a versão 1.44.01.
 - Caso o NVDA já esteja sendo executado, ativando o atalho de teclado do NVDA na área de trabalho ( control+alt+n) reiniciará o NVDA.
 - Removida a caixa de seleção anunciar texto sob o mouse do Diálogo Opções de Mouse e substituida por uma caixa de seleção abilitar rastreamento do mouse, que melhora o sincronismo da alteração do script de seguimento do mouse (NVDA+m). 
-- atualizado o layout de teclado laptop de forma que inclui todos os comandos disponíveis no layout desktop e funciona corretamente em teclados não ingleses. (#798, #800)
-- melhoras significativas e atualizações à documentação do usuário, incluindo documentação dos comandos de teclado laptop e sincronização da Referência Rápida de de Teclas de Atalho com a Guía do usuário. (#455)
+- atualizado o esquema de teclado laptop de forma que inclui todos os comandos disponíveis no esquema desktop e funciona corretamente em teclados não ingleses. (#798, #800)
+- melhoras significativas e atualizações na documentação do usuário, incluindo documentação dos comandos de teclado laptop e sincronização da Referência Rápida de Teclas de Atalho com a Guía do usuário. (#455)
 - atualizado o transcritor braille liblouis para a  versão 2.1.0. Notavelmente, isto corrige alguns problemas relacionados com braille Chinês
 -
 
@@ -1123,9 +1123,9 @@ Esta revisão enfóca-se principalmente em Correção de Falhas e melhoras na ex
 - Múltiplas correções de segurança quando se executa o NVDA no Logon do Windows e outras Áreas de Trabalho Seguras.
 - A posição do cursor (cursor do sistema) agora atualiza-se corretamente ao fazer uma leitura Completa na qual se passe do final da tela, em campos de edição padrões do Windows e documentos do Microsoft Word. (#418)
 - nos buffers virtuais, o texto já não é incluído incorretamente por imagens dentro de links e clicáveis que são marcados como irrelevantes para os leitores de tela. (#423)
-- Correções para o layout de teclado laptop. (#517)
+- Correções para o esquema de teclado laptop. (#517)
 - quando o braille está vinculado à exploração, ao enfocar uma janela de console do dos, o cursor de exploração agora pode navegar apropriadamente pelo texto no console.
-- enquanto se trabalha com TeamTalk3 ou TeamTalk4 Classic VU a barra de progresso contador na janela principal já não é anunciada conforme se atualiza. Também os caracteres especiais podem ser lidos apropriadamente na janela de entrada do chat.
+- enquanto se trabalha com TeamTalk3 ou TeamTalk4 Classic VU a barra de progresso contador na janela principal já não é anunciada conforme é atualizada. Também os caracteres especiais podem ser lidos apropriadamente na janela de entrada do chat.
 - Os itens já não são falados dúas vezes no menu iniciar do Windows 7. (#474)
 - Ao ativar links para a mesma página no Firefox 3.6 móve-se o cursor apropriadamente no buffer virtual para o lugar correto na página.
 - corrigido o problema onde alguns textos não eram disponibilizados no Adobe Reader em certos documentos PDF.
@@ -1133,7 +1133,7 @@ Esta revisão enfóca-se principalmente em Correção de Falhas e melhoras na ex
 - No Windows XP, o NVDA já não faz com que o Internet Explorer trave quando se alterna caixas de seleção no Windows Update. (#477)
 - quando se utiliza no sintetizador eSpeak integrado simultaneamente voz e beeps, já não causa travamentos intermitentes em alguns sistemas. Isto era mais evidente, por exemplo, quando se copiava quantidades grandes de dados no Windows Explorer.
 - O NVDA já não anuncia que um documento do Firefox está ocupado (ex.: devido a uma atualização ou recarga) quando esse documento está em segundo plano. Isto também fazia com que a barra de status da aplicação em primeiro plano fosse anunciada falsamente.
-- quando é alterado o layout de teclado do Windows (com control+shift ou alt+shift), o nome completo do layout é anunciado em voz e braille. Anteriormente só se anunciava em voz, e layouts alternativos (ex.: Dvorak) não eram anunciados.
+- quando o leiaute de teclado do Windows é alterado (com control+shift ou alt+shift), o nome completo do leiaute é anunciado em voz e braille. Anteriormente só se anunciava em voz, e leiautes alternativos (ex.: Dvorak) não eram anunciados.
 - Caso o anúncio de tabelas esteja desativado, a informação de tabela já não é anunciada quando o foco muda.
 Certos controles de vista em árvore em aplicações de 64 bit (como o conteúdo de vista em árvore no Microsoft HTML Help) são agora acessíveis. (#473)
 - Resolvidos alguns problemas com o registro de mensagens que contém caracteres não-ASCII. Isso poderia causar falsos erros em alguns casos em sistemas que não estão em inglês. (#581)

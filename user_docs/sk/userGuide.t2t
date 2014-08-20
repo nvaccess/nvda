@@ -528,7 +528,7 @@ NVDA pre niektoré aplikácie implementuje svoje vlastné príkazy, čím buď u
 ++ Microsoft Word ++
 %kc:beginInclude
 || Názov | Klávesová skratka | popis |
-| Prečítaj komentár | NVDA+Alt+c | preťíta komentár pod systémovým kurzorom. | 
+| Prečítaj komentár | NVDA+Alt+c | prečíta komentár pod systémovým kurzorom. | 
 | Nastaviť hlavičky stĺpcov | NVDA+shift+c | Ak stlačíte raz, NVDA bude vybratý stĺpec a nasledujúce stĺpce považovať za hlavičku tabuľky a bude ich oznamovať pri pohybe v nasledujúcich riadkoch. Nastavenie zrušíte dvojitým stlačením. | 
 | Nastaviť hlavičky riadkov | NVDA+shift+r | Ak stlačíte raz, NVDA bude vybratý stĺpec a stĺpce pod ním považovať za hlavičku tabuľky a bude ich oznamovať pri pohybe v stĺpcoch medzi riadkami. Nastavenie zrušíte dvojitým stlačením. |
 %kc:endInclude
@@ -1117,22 +1117,22 @@ Užitočné môžu byť tiež nasledujúce klávesové skratky:
 | Návrat k uloženým nastaveniam | NVDA+control+r | NVDA+control+r | Obnoví nastavenia z času, čo Ste naposledy konfiguráciu uložili. Stlačené trikrát obnoví predvolené nastavenia. |
 %kc:endInclude
 
-++ Používateľské profily ++
+++ Konfiguračné profily ++
 Niekedy môžete potrebovať rôzne nastavenia pre rôzne situácie.
 Môžete napríklad chcieť počuť odsadenie textu pri úpravách, alebo informácie o formátovaní pri korektúre.
-NVDA vám umožňuje urobiť takéto nastavenia pomocou používateľských profilov.
+NVDA vám umožňuje urobiť takéto nastavenia pomocou konfiguračných profilov.
 
-Používateľský profil obsahuje len tie nastavenia, ktoré zmeníte, keď je profil aktívny.
+Konfiguračný profil obsahuje len tie nastavenia, ktoré zmeníte, keď je profil aktívny.
 Zmeniť môžete všetky nastavenia okrem všeobecných nastavení, lebo tie sa týkajú NVDA ako celku.
 
-Používateľské profily môžete aktivovať ručne.
+Konfiguračné profily môžete aktivovať ručne.
 Môžu ich však aktivovať aj rôzne udalosti, ako napríklad prepnutie sa do určitej aplikácie.
 
 +++ Základné nastavenie +++
-Do nastavení profilov sa dostanete z menu NVDA, aktivovaním položky Používateľské profily.
+Do nastavení profilov sa dostanete z menu NVDA, aktivovaním položky Konfiguračné profily.
 Na otvorenie dialógu môžete tiež použiť klávesovú skratku:
 %kc:beginInclude
-- NVDA+ctrl+p: otvorí dialóg s nastaveniami používateľských profilov.
+- NVDA+ctrl+p: otvorí dialóg s nastaveniami konfiguračných profilov.
 -
 %kc:endInclude
 
@@ -1157,15 +1157,15 @@ Pre podrobnosti Čítajte [Ďalej #ConfigProfileTriggers].
 tlačidlom OK vytvoríte nový profil a zatvoríte dialóg s profilmi, a hneď môžete nový profil upraviť.
 
 +++ Ručná aktivácia +++[ConfigProfileManual]
-Profil môžete aktivovať jeho vybratím v dialógu používateľské profily a aktivovaním tlačidla ručne  aktivovať.
+Profil môžete aktivovať jeho vybratím v dialógu konfiguračné profily a aktivovaním tlačidla ručne  aktivovať.
 pri aktívnom profile sa môžu aktivovať iné profily, ak nastane udalosť, ktorá ich aktivuje, vždy však budúzohľadnené nastavenia aktívneho profilu.
 Ak napríklad máte vytvorený profil pre nejakú aplikáciu, v ktorom ste zapli oznamovanie odkazov, ale aktivujete profil, v ktorom je oznamovanie odkazov vypnuté, NVDA nebude odkazy oznamovať.
 Ak však zmeníte nastavenia hlasu v profile pre aplikáciu, ale nezmeníte ich v ručne aktivovanom profile, použijú sa nastavenia hlasu z profilu pre aplikáciu.
 Všetky nastavenia, ktoré zmeníte sa ukladajú do ručne aktivovaného profilu.
-Ak chcete deaktivovať aktívny profil, v dialógu používateľské profily vyberte daný profil a stlačte tlačidlo ručne deaktivovať.
+Ak chcete deaktivovať aktívny profil, v dialógu konfiguračné profily vyberte daný profil a stlačte tlačidlo ručne deaktivovať.
 
 +++ Udalosti +++[ConfigProfileTriggers]
-Ak v dialógu používateľské profily aktivujete tlačidlo udalosti, môžete nastaviť, kedy sa majú profily automaticky spúšťať.
+Ak v dialógu konfiguračné profily aktivujete tlačidlo udalosti, môžete nastaviť, kedy sa majú profily automaticky spúšťať.
 
 Zoznam udalostí zobrazuje dostupné možnosti:
 - aktuálna aplikácia: Profil sa automaticky aktivuje po prepnutí do okna aplikácie.
@@ -1175,7 +1175,7 @@ Zoznam udalostí zobrazuje dostupné možnosti:
 Ak chcete vybrať profil pre danú udalosť, zvoľte požadovanú udalosť a potom zo zoznamu vyberte požadovaný profil.
 Môžete tiež vybrať možnosť (normálna konfigurácia), ak nechcete použiť pre udalosť žiadny profil.
 
-Tlačidlom zatvoriť sa vrátite do dialógu Používateľské profily.
+Tlačidlom zatvoriť sa vrátite do dialógu konfiguračné profily.
 
 +++ upravenie Profilu +++
 Ak ste ručne aktivovali nejaký profil, všetky nastavenia, ktoré zmeníte, sa uložia do tohto profilu.
@@ -1188,7 +1188,7 @@ Ak chcete upraviť profil pre plynulé čítanie, musíte ho [ručne aktivovať 
 +++ Dočasné vypnutie udalostí +++
 Niekedy môže byť užitočné vypnúť všetky udalosti naraz.
 Môžete napríklad chcieť upraviť aktívny profil alebo normálne nastavenia bez toho, aby sa vám nechtiac spustil profil vyvolaný nejakou udalosťou.
-toto docielite začiarknutím možnosti dočasne zakázať všetky udalosti v dialógu používateľské profily.
+toto docielite začiarknutím možnosti dočasne zakázať všetky udalosti v dialógu konfiguračné profily.
 
 ++ Umiestnenie súborov s nastaveniami ++
 Prenosné verzie NVDA si ukladajú všetky nastavenia, vlastné aplikačné moduly, ovládače hlasových a braillovských výstupov v podpriečinku userConfig priečinka NVDA.
