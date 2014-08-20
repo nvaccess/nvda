@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-11 19:10+1000\n"
-"PO-Revision-Date: 2014-08-07 12:58+0100\n"
+"PO-Revision-Date: 2014-08-12 10:02+0100\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.6\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1446,7 +1446,7 @@ msgstr "Contiene commenti"
 
 #. Translators: a state that denotes that the object is covered partially or fully by another object
 msgid "obscured"
-msgstr ""
+msgstr "oscurato"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -1818,15 +1818,17 @@ msgstr ""
 "dell'oggetto attuale negli appunti"
 
 #. Translators: message when there is no location information for the review cursor
-#, fuzzy
 msgid "No location information"
-msgstr "Nessuna informazione di formattazione"
+msgstr "Nessuna informazione sulla posizione"
 
 #. Translators: Description for report review cursor location command.
 msgid ""
 "Reports information about the location of the text or object at the review "
 "cursor. Pressing twice may provide further detail."
 msgstr ""
+"Legge le informazioni sulla posizione del testo o dell'oggetto su cui si "
+"trova il cursore di controllo. Una doppia pressione fornisce se possibile "
+"ulteriori dettagli."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -2503,7 +2505,7 @@ msgstr "Modalita' navigazione"
 #. The key must be formatted as described in this article:
 #. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 msgid "CTRL+ALT+N"
-msgstr ""
+msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
@@ -3077,9 +3079,8 @@ msgstr "Allineamento giustificato"
 
 #. Translators: Reported when text is justified with character spacing (Japanese etc)
 #. See http://kohei.us/2010/01/21/distributed-text-justification/
-#, fuzzy
 msgid "align distributed"
-msgstr "Allineamento a destra"
+msgstr "Allineamento distribuito"
 
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
@@ -3119,33 +3120,31 @@ msgstr "Nessun rientro prima riga"
 
 #. Translators: Reported when text is vertically top-aligned.
 msgid "vertical align top"
-msgstr ""
+msgstr "allineato in alto verticalmente"
 
 #. Translators: Reported when text is vertically middle aligned.
 msgid "vertical align middle"
-msgstr ""
+msgstr "allineato al centro verticalmente"
 
 #. Translators: Reported when text is vertically bottom-aligned.
 msgid "vertical align bottom"
-msgstr ""
+msgstr "allineato in basso verticalmente"
 
 #. Translators: Reported when text is vertically aligned on the baseline.
 msgid "vertical align baseline"
-msgstr ""
+msgstr "allineato verticalmente con la baseline"
 
 #. Translators: Reported when text is vertically justified.
-#, fuzzy
 msgid "vertical align justified"
-msgstr "Allineamento giustificato"
+msgstr "Allineamento giustificato verticale"
 
 #. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
 msgid "vertical align distributed"
-msgstr ""
+msgstr "allineamento distribuito verticalmente"
 
 #. Translators: Reported when text has reverted to default vertical alignment.
-#, fuzzy
 msgid "vertical align default"
-msgstr "Allineamento predefinito"
+msgstr "Allineamento verticale predefinito"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
@@ -3618,18 +3617,16 @@ msgid "Waiting for Outlook..."
 msgstr "In attesa di outlook..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
-#, fuzzy
 msgid "{startTime} to {endTime}"
-msgstr "{start} fino a {end}"
+msgstr "{startTime} fino a {endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
 msgid "Appointment {subject}, {time}"
-msgstr ""
+msgstr "Appuntamento {subject}, {time}"
 
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
-#, fuzzy
 msgid "has appointment"
-msgstr "Contiene commenti"
+msgstr "contiene appuntamenti"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
@@ -3790,75 +3787,79 @@ msgstr "Diapositiva {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers left of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "Si sovrappone a sinistra di {otherShape} a {distance:.3g} punti"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
 msgid "behind left of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "Dietro a sinistra di {otherShape} a {distance:.3g} punti"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers top of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "Si sovrappone in alto di {otherShape} a {distance:.3g} punti"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 msgid "behind top of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "Dietro in alto di {otherShape} a {distance:.3g} punti"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers right of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "Si sovrappone a destra di {otherShape} a {distance:.3g} punti"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 msgid "behind right of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "Dietro in basso di {otherShape} a {distance:.3g} punti"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "Si sovrappone in basso di {otherShape} a {distance:.3g} punti"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "Dietro in basso di {otherShape} a {distance:.3g} punti"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers  {otherShape}"
-msgstr ""
+msgstr "Si sovrappone a  {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 msgid "behind {otherShape}"
-msgstr ""
+msgstr "Dietro a {otherShape}"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
 msgid "{distance:.3g} points from left slide edge"
-msgstr ""
+msgstr "{distance:.3g} punti dal bordo sinistro"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+#, fuzzy
 msgid "Off left slide edge by {distance:.3g} points"
-msgstr ""
+msgstr "Off left slide edge by {distance:.3g} punti"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
 msgid "{distance:.3g} points from top slide edge"
-msgstr ""
+msgstr "{distance:.3g} punti dal bordo superiore"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+#, fuzzy
 msgid "Off top slide edge by {distance:.3g} points"
-msgstr ""
+msgstr "Off top slide edge by {distance:.3g} punti"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
 msgid "{distance:.3g} points from right slide edge"
-msgstr ""
+msgstr "{distance:.3g} punti dal bordo destro"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+#, fuzzy
 msgid "Off right slide edge by {distance:.3g} points"
-msgstr ""
+msgstr "Off right slide edge by {distance:.3g} punti"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
 msgid "{distance:.3g} points from bottom slide edge"
-msgstr ""
+msgstr "{distance:.3g} punti dal bordo inferiore"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+#, fuzzy
 msgid "Off bottom slide edge by {distance:.3g} points"
-msgstr ""
+msgstr "Off bottom slide edge by {distance:.3g} punti"
 
 #. Translators: The description for a script
 msgid ""
@@ -5686,11 +5687,11 @@ msgstr "Parola"
 
 #. Translators: current position in a document as a percentage of the document length
 msgid "{curPercent:.0f}%"
-msgstr ""
+msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
 msgid "at {x}, {y}"
-msgstr ""
+msgstr "a {x}, {y}"
 
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format

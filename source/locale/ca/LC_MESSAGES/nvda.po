@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-06 23:27+1000\n"
-"PO-Revision-Date: 2014-08-10 22:02+0100\n"
+"PO-Revision-Date: 2014-08-15 20:09+0100\n"
 "Last-Translator: Mireia Ribera <ribera@ub.edu>\n"
 "Language-Team: Dr. Mireia Ribera<mireia.ribera@gmail.com , Ruben "
 "Alcaraz<rubenalcarazmartinez@gmail.com>, Santi Moese <santispock@gmail.com> "
@@ -1490,7 +1490,7 @@ msgstr "Error en el fitxer del mapa de gestos"
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
-msgstr "NVDA s'està carregant"
+msgstr "Inici de NVDA en curs..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -1520,7 +1520,7 @@ msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
-"Troba l'ocurrència següent de la cadena de text prèviament entrada, des de "
+"Troba l'ocurrència posterior de la cadena de text prèviament entrada, des de "
 "la posició actual del cursor"
 
 #. Translators: Input help message for find previous command.
@@ -1701,7 +1701,8 @@ msgstr ""
 #. Translators: Input help mode message for next synth setting command.
 msgid "Moves to the next available setting in the synth settings ring"
 msgstr ""
-"Mou al paràmetre disponible següent dins de la configuració del sintetitzador"
+"Mou al paràmetre disponible posterior dins de la configuració del "
+"sintetitzador"
 
 #. Translators: Input help mode message for previous synth setting command.
 msgid "Moves to the previous available setting in the synth settings ring"
@@ -1796,7 +1797,7 @@ msgid ""
 "Switches to the next review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"Canvia al mode de revisió següent (per exemple, objecte, document o "
+"Canvia al mode de revisió posterior (per exemple, objecte, document o "
 "pantalla) i col·loca la posició de revisió en el punt de l'objecte de "
 "navegació"
 
@@ -1848,14 +1849,14 @@ msgstr ""
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
-msgstr "Mou al focus"
+msgstr "mou al focus"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
-"Posa l'objecte de navegació en el focus actual i, si es possible, el cursor "
+"Posa l'objecte de navegació en el focus actual i, si és possible, el cursor "
 "de revisió a la posició del cursor del sistema dins l'objecte."
 
 #. Translators: Reported when:
@@ -1866,7 +1867,7 @@ msgstr "sense focus"
 
 #. Translators: Reported when attempting to move focus to navigator object.
 msgid "move focus"
-msgstr "Mou el focus"
+msgstr "mou el focus"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
 msgid "no caret"
@@ -1895,7 +1896,7 @@ msgstr "No n'hi ha cap més"
 
 #. Translators: Input help mode message for move to next object command.
 msgid "Moves the navigator object to the next object"
-msgstr "Mou l'objecte de navegació a l'objecte següent"
+msgstr "Mou l'objecte de navegació a l'objecte posterior"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 msgid "No previous"
@@ -1971,8 +1972,8 @@ msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
 msgstr ""
-"Mou el cursor de revisió a la línia següent de l'objecte de navegació actual "
-"i verbalitza-la"
+"Mou el cursor de revisió a la línia posterior de l'objecte de navegació "
+"actual i verbalitza-la"
 
 #. Translators: Input help mode message for move review cursor to bottom line command.
 msgid ""
@@ -2005,7 +2006,7 @@ msgid ""
 "Moves the review cursor to the next word of the current navigator object and "
 "speaks it"
 msgstr ""
-"Mou el cursor de revisió a la paraula següent de l'objecte de navegació "
+"Mou el cursor de revisió a la paraula posterior de l'objecte de navegació "
 "actual i la verbalitza"
 
 msgid "left"
@@ -2047,8 +2048,8 @@ msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
 msgstr ""
-"Mou el cursor de revisió al caràcter següent dins de l'objecte de navegació "
-"actual i el verbalitza"
+"Mou el cursor de revisió al caràcter posterior dins de l'objecte de "
+"navegació actual i el verbalitza"
 
 #. Translators: Input help mode message for move review cursor to end of current line command.
 msgid ""
@@ -2286,8 +2287,8 @@ msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
 msgstr ""
-"La següent tecla premuda no serà tractada per NVDA, es passarà directament a "
-"Windows."
+"La següent tecla premuda no serà gestionada per NVDA, es passarà directament "
+"a Windows."
 
 #. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
@@ -2345,7 +2346,7 @@ msgstr "Mostra el diàleg de Configuració de formatació de documents de NVDA"
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
-msgstr "Desa la Configuració actual de NVDA"
+msgstr "Desa la configuració actual de NVDA"
 
 #. Translators: Input help mode message for apply last saved or default settings command.
 msgid ""
@@ -2370,12 +2371,12 @@ msgstr "focus"
 #. Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
 #, python-format
 msgid "Braille tethered to %s"
-msgstr "El Braille segueix a %s"
+msgstr "El braille segueix a %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
-"Commuta entre l’activació i la desactivació del seguiment del Braille entre "
+"Commuta entre l’activació i la desactivació del seguiment del braille entre "
 "el focus i la posició de revisió"
 
 #. Translators: Presented when there is no text on the clipboard.
@@ -2431,28 +2432,28 @@ msgstr ""
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
-msgstr "Desplaça la línia Braille cap enrera"
+msgstr "Desplaça la línia braille cap enrera"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display forward"
-msgstr "Desplaça la línia Braille cap endavant"
+msgstr "Desplaça la línia braille cap endavant"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr ""
-"Guia el cursor a la cel·la Braille o activa l'objecte sota aquesta cel·la"
+"Guia el cursor a la cel·la braille o activa l'objecte sota aquesta cel·la"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
-msgstr "Mou la línia Braille a la línia anterior"
+msgstr "Mou la línia braille a la línia anterior"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the next line"
-msgstr "Mou la línia Braille a la línia següent "
+msgstr "Mou la línia braille a la línia posterior "
 
 #. Translators: Input help mode message for a braille command.
 msgid "Inputs braille dots via the braille keyboard"
-msgstr "Introdueix punts Braille mitjançant el teclat braille"
+msgstr "Introdueix punts braille mitjançant el teclat braille"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -2475,7 +2476,7 @@ msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
 msgstr ""
-"Salta a l’objecte següent en una vista plana de la jerarquia d’objectes de "
+"Salta a l’objecte posterior en una vista plana de la jerarquia d’objectes de "
 "navegació"
 
 #. Translators: Input help mode message for a touchscreen gesture.
@@ -2497,7 +2498,7 @@ msgstr "Avança entre els modes tàctils disponibles"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Reports the object and content directly under your finger"
-msgstr "Informa de l'objecte i del contingut directament sota el dit."
+msgstr "Informa de l'objecte i del contingut directament sota el dit"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -2573,7 +2574,7 @@ msgstr "actualitza"
 
 #. Translators: This is the name of the stop key found on multimedia keyboards for controlling the web-browser.
 msgid "browser stop"
-msgstr "Atura el navegador"
+msgstr "atura el navegador"
 
 #. Translators: This is the name of the back key found on multimedia keyboards to goto the search page of the web-browser.
 msgid "search page"
@@ -2601,7 +2602,7 @@ msgstr "més volum"
 
 #. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
 msgid "next track"
-msgstr "pista següent"
+msgstr "pista posterior"
 
 #. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
 msgid "previous track"
@@ -2649,7 +2650,7 @@ msgstr "Alt"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "shift"
-msgstr "Majúscules"
+msgstr "Maj"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "windows"
@@ -2661,7 +2662,7 @@ msgstr "Retorn"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad enter"
-msgstr "Tecla de Retorn del teclat numèric"
+msgstr "Retorn del teclat numèric"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "escape"
@@ -2669,11 +2670,11 @@ msgstr "Escape"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "page up"
-msgstr "RePag"
+msgstr "Re Pàg"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "page down"
-msgstr "AvPag"
+msgstr "Av Pàg"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "end"
@@ -2685,11 +2686,11 @@ msgstr "Inici"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "delete"
-msgstr "Suprimeix"
+msgstr "Supr"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad delete"
-msgstr "Suprimeix del teclat numèric"
+msgstr "Tecla de supressió del teclat numèric"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left arrow"
@@ -2717,7 +2718,7 @@ msgstr "Bloqueig del teclat numèric"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "print screen"
-msgstr "Imprimeix pantalla"
+msgstr "Impr Pant"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "scroll lock"
@@ -2777,11 +2778,11 @@ msgstr "Suma del teclat numèric"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left control"
-msgstr "Ctrl esquerra"
+msgstr "tecla de Control esquerra"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right control"
-msgstr "Ctrl dret"
+msgstr "tecla de Control dreta"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left windows"
@@ -2939,12 +2940,12 @@ msgstr "%d caràcters"
 #. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
 #, python-format
 msgid "selecting %s"
-msgstr "S'està seleccionant %s"
+msgstr "selecció de %s en curs"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
 #, python-format
 msgid "unselecting %s"
-msgstr "S'està desmarcant %s"
+msgstr "%s no seleccionat"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -3250,12 +3251,12 @@ msgstr "{action} amb {numFingers} dits "
 #. Translators: a very quick touch and release of a finger on a touch screen
 msgctxt "touch action"
 msgid "tap"
-msgstr "copet"
+msgstr "cop"
 
 #. Translators: a very quick touch and release, then another touch with no release, on a touch screen
 msgctxt "touch action"
 msgid "tap and hold"
-msgstr "copet i copet i manté"
+msgstr "cop i manté"
 
 #. Translators: a touch with no release, on a touch screen.
 msgctxt "touch action"
@@ -3303,7 +3304,7 @@ msgstr "Comprovació manual d'actualitzacions"
 
 #. Translators: The progress message displayed while manually checking for an NVDA update.
 msgid "Checking for update"
-msgstr "S'està comprovant si hi ha actualitzacions"
+msgstr "Comprovació d'actualitzacions en curs"
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 msgid "Error checking for update."
@@ -3352,11 +3353,11 @@ msgstr "Descarregant l'actualització"
 
 #. Translators: The progress message indicating that a connection is being established.
 msgid "Connecting"
-msgstr "S'està connectant"
+msgstr "Connexió en curs"
 
 #. Translators: The progress message indicating that a download is in progress.
 msgid "Downloading"
-msgstr "S'està descarregant"
+msgstr "Descàrrega en curs"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
@@ -3496,7 +3497,7 @@ msgstr "final de taula"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
-msgstr "Mou l'objecte de navegació a la columna següent"
+msgstr "Mou l'objecte de navegació a la columna posterior"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the previous column"
@@ -3504,7 +3505,7 @@ msgstr "Mou l'objecte de navegació a la columna anterior"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the next row"
-msgstr "Mou l'objecte de navegació i el focus a la fila següent"
+msgstr "Mou l'objecte de navegació i el focus a la fila posterior"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the previous row"
@@ -3610,11 +3611,11 @@ msgstr "per llegir"
 
 #. Translators: for a high importance email
 msgid "high importance"
-msgstr "Prioritat alta"
+msgstr "prioritat alta"
 
 #. Translators: For a low importance email
 msgid "low importance"
-msgstr "Prioritat baixa"
+msgstr "prioritat baixa"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3624,11 +3625,11 @@ msgstr "assumpte: %s"
 #. Translators: This is presented in outlook or live mail, email received time
 #, python-format
 msgid "received: %s"
-msgstr "Rebut: %s"
+msgstr "rebut: %s"
 
 #. Translators: This is presented in outlook or live mail, indicating email attachments
 msgid "attachment"
-msgstr "adjunt"
+msgstr "adjunció"
 
 #. Translators: This is presented in outlook or live mail, email sent date
 #, python-format
@@ -3658,21 +3659,21 @@ msgstr "sol·licitud de reunió"
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
 msgid "No notes for translators."
-msgstr "Sense notes per als traductors."
+msgstr "Sense anotacions per als traductors."
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'Notes for translators' window in poedit.
 msgid "Could not find Notes for translators window."
-msgstr "No s'han pogut trobar notes per a la finestra dels traductors."
+msgstr "No s'ha pogut trobar la finestra d'anotacions per a traductors."
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any notes for translators"
-msgstr "Informa de qualsevol nota per als traductors"
+msgstr "Informa d'anotacions per als traductors"
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
 msgid "Could not find comment window."
-msgstr "No s'ha pogut trobar cap finestra de comentaris."
+msgstr "No s'ha pogut trobar la finestra de comentaris."
 
 #. Translators: this message is reported when there are no
 #. comments to be presented to the user in the translator
@@ -3686,7 +3687,7 @@ msgstr "Informa de qualsevol comentari a la finestra de comentaris"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Title placeholder"
-msgstr "Espai reservat per a un títol"
+msgstr "Espai reservat per al títol"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Text placeholder"
@@ -3694,7 +3695,7 @@ msgstr "Espai reservat per a un text"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Center Title placeholder"
-msgstr "Espai reservat per un títol centrat"
+msgstr "Espai reservat per a un títol centrat"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Subtitle placeholder"
@@ -3842,7 +3843,7 @@ msgstr "darrera a sota de {otherShape} per {distance:.3g} punts"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers  {otherShape}"
-msgstr "portades  {otherShape}"
+msgstr "cobreix  {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 msgid "behind {otherShape}"
@@ -3854,31 +3855,31 @@ msgstr "{distance:.3g} punts des de la vora esquerra de la diapositiva"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
 msgid "Off left slide edge by {distance:.3g} points"
-msgstr "Fora del límit esquerra de la diapositiva {distance:.3g} punts"
+msgstr "Fora del límit esquerra de la diapositiva per {distance:.3g} punts"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
 msgid "{distance:.3g} points from top slide edge"
-msgstr "{distance:.3g} punts des de la vora superior de la diapositiva"
+msgstr "a {distance:.3g} punts de la vora superior de la diapositiva"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
 msgid "Off top slide edge by {distance:.3g} points"
-msgstr "Fora del límit superior de la diapositiva {distance:.3g} punts"
+msgstr "Fora del límit superior de la diapositiva per {distance:.3g} punts"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
 msgid "{distance:.3g} points from right slide edge"
-msgstr "{distance:.3g} punts des de la vora dreta de la diapositiva"
+msgstr "a {distance:.3g} punts des de la vora dreta de la diapositiva"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
 msgid "Off right slide edge by {distance:.3g} points"
-msgstr "Fora del límit dret de la diapositiva {distance:.3g} punts"
+msgstr "Fora del límit dret de la diapositiva per {distance:.3g} punts"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
 msgid "{distance:.3g} points from bottom slide edge"
-msgstr "{distance:.3g} punts des de la vora inferior de la diapositiva"
+msgstr "a {distance:.3g} punts des de la vora inferior de la diapositiva"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
 msgid "Off bottom slide edge by {distance:.3g} points"
-msgstr "Fora del límit inferior de la diapositiva {distance:.3g} punts"
+msgstr "Fora del límit inferior de la diapositiva per {distance:.3g} punts"
 
 #. Translators: The description for a script
 msgid ""
@@ -3908,7 +3909,7 @@ msgstr "Sense notes"
 
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
-msgstr "diapositiva buida"
+msgstr "Diapositiva buida"
 
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 msgid "Waiting for Powerpoint..."
@@ -3916,7 +3917,7 @@ msgstr "S'està esperant al Powerpoint..."
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
-msgstr "Rebobina"
+msgstr "Rebobinar"
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Fast forward"
@@ -3924,15 +3925,15 @@ msgstr "Avanç ràpid"
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Play"
-msgstr "Reprodueix"
+msgstr "Reproduir"
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Stop"
-msgstr "Atura"
+msgstr "Aturar"
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Record"
-msgstr "Enregistra"
+msgstr "Enregistrar"
 
 #. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
 msgctxt "shuffle"
@@ -3956,7 +3957,7 @@ msgstr "desactivat"
 
 #. Translators: The name of a braille display.
 msgid "ALVA BC640/680 series"
-msgstr "ALVA BC640/680 series"
+msgstr "sèries ALVA BC640/680 "
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH braille displays"
@@ -3973,19 +3974,19 @@ msgstr "HumanWare BrailleNote"
 
 #. Translators: The name of a series of braille displays.
 msgid "HumanWare Brailliant BI/B series"
-msgstr "HumanWare Brailliant BI/B series"
+msgstr "series HumanWare Brailliant BI/B"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
-msgstr "Freedom Scientific Focus/PAC Mate series"
+msgstr "series Freedom Scientific Focus/PAC Mate"
 
 #. Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
 msgid "display scroll"
-msgstr "mostra la barra de desplaçament"
+msgstr "desplaçar línia horitzontal"
 
 #. Translators: The name of a key on a braille display, that scrolls the display to show the next/previous line.
 msgid "line scroll"
-msgstr "línia de desplaçament"
+msgstr "desplaçar línia vertical"
 
 #. Translators: Names of braille displays.
 msgid "Handy Tech braille displays"
@@ -4004,7 +4005,7 @@ msgstr "Sense braille"
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX newer models"
-msgstr "Models moderns de Papenmeier BRAILLEX"
+msgstr "Models més actuals de Papenmeier BRAILLEX"
 
 #. Translators: Describes action of routing buttons on a braille display.
 msgid "Route to and report formatting"
@@ -4012,7 +4013,7 @@ msgstr "Salta a i informa del format"
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
-msgstr "Models antics de Papenmeier BRAILLEX"
+msgstr "Models més antics de Papenmeier BRAILLEX"
 
 #. Translators: Names of braille displays.
 msgid "Seika braille displays"
@@ -4024,7 +4025,7 @@ msgstr "Configuració aplicada"
 
 #. Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 msgid "Configuration restored to factory defaults"
-msgstr "La configuració ha estat restaurada als paràmetres per defecte"
+msgstr "La configuració ha estat restaurada als paràmetres de fàbrica"
 
 #. Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
 msgid "Cannot save configuration - NVDA in secure mode"
@@ -4037,12 +4038,12 @@ msgstr "Configuració desada"
 #. Translators: Message shown when current configuration cannot be saved such as when running NVDA from a CD.
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
-"No s'ha pogut desar la configuració - Probablement es tracta d'un fitxer de "
-"només lectura"
+"No s'ha pogut desar la configuració - Probablement el suport és de només "
+"lectura"
 
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
-msgstr "Ja hi ha un diàleg de paràmetres de NVDA obert. Tanca’l primer."
+msgstr "Ja hi ha un diàleg de configuració de NVDA obert. Tanca’l primer."
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -4059,7 +4060,7 @@ msgstr "Diccionari temporal"
 
 #. Translators: Message shown to ask if user really wishes to quit NVDA.
 msgid "Are you sure you want to quit NVDA?"
-msgstr "Esteu segur que voleu tancar NVDA?"
+msgstr "Estàs segur que vols tancar NVDA?"
 
 msgid "Exit NVDA"
 msgstr "Surt de NVDA"
@@ -4070,10 +4071,10 @@ msgstr "Quant a NVDA"
 
 #. Translators: The label for the menu item to open general Settings dialog.
 msgid "&General settings..."
-msgstr "&Paràmetres generals..."
+msgstr "&Configuració generals..."
 
 msgid "General settings"
-msgstr "Paràmetres generals"
+msgstr "Configuració general"
 
 #. Translators: The label for the menu item to open Synthesizer settings dialog.
 msgid "&Synthesizer..."
@@ -4084,29 +4085,29 @@ msgstr "Canvia el sintetitzador"
 
 #. Translators: The label for the menu item to open Voice Settings dialog.
 msgid "&Voice settings..."
-msgstr "&Paràmetres de la veu"
+msgstr "&Configuració de veu"
 
 msgid "Choose the voice, rate, pitch and volume to use"
 msgstr "Tria la veu, velocitat, to i volum"
 
 #. Translators: The label for the menu item to open Braille Settings dialog.
 msgid "B&raille settings..."
-msgstr "P&aràmetres del braille..."
+msgstr "C&onfiguració del braille..."
 
 #. Translators: The label for the menu item to open Keyboard Settings dialog.
 msgid "&Keyboard settings..."
-msgstr "&Paràmetres del teclat..."
+msgstr "&Configuració de teclat..."
 
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
 msgstr ""
-"Configura la disposició del teclat, la verbalització del caràcters escrits, "
-"paraules o les tecles d'ordre"
+"Configura la disposició del teclat, la verbalització del caràcters  i "
+"paraules escrites o les tecles d'instruccions"
 
 #. Translators: The label for the menu item to open Mouse Settings dialog.
 msgid "&Mouse settings..."
-msgstr "&Paràmetres del ratolí..."
+msgstr "&Configuració del ratolí..."
 
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "Canvia l'infome de la forma del ratolí i de l'objecte sota el ratolí"
@@ -4126,7 +4127,7 @@ msgid ""
 "Configure how NVDA reports input composition and candidate selection for "
 "certain languages"
 msgstr ""
-"Configura com NVDA informa de la composició d'entrada i la selecció de "
+"Configura com NVDA informa de la composició d'entrada i de la selecció de "
 "candidats per a certs idiomes"
 
 #. Translators: The label for the menu item to open Object Presentation dialog.
@@ -4141,14 +4142,14 @@ msgid "&Browse mode..."
 msgstr "&Mode de navegació..."
 
 msgid "Change virtual buffers specific settings"
-msgstr "Canvia els paràmetres específics de la memòria intermèdia virtual"
+msgstr "Canvia la configuració específica de la memòria intermèdia virtual"
 
 #. Translators: The label for the menu item to open Document Formatting settings dialog.
 msgid "Document &formatting..."
 msgstr "&Formatació de documents..."
 
 msgid "Change settings of document properties"
-msgstr "Canvia els paràmetres de les propietats del document"
+msgstr "Canvia la configuració de les propietats del document"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
@@ -4158,8 +4159,8 @@ msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
 "to the list"
 msgstr ""
-"Un quadre de diàleg en el qual pots ajustar el diccionari per defecte, "
-"afegint noves entrades de diccionari a la llista"
+"Un diàleg en el qual pots afegir noves entrades de diccionari a la llista "
+"per ajustar el diccionari per defecte"
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 msgid "&Voice dictionary..."
@@ -4169,8 +4170,8 @@ msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
 msgstr ""
-"Un diàleg on pots ajustar el diccionari per una veu específica afegint "
-"entrades de diccionari a la llista."
+"Un diàleg on pots afegir entrades de diccionari a la llista per ajustar un "
+"diccionari específic per una veu"
 
 #. Translators: The label for the menu item to open Temporary speech dictionary dialog.
 msgid "&Temporary dictionary..."
@@ -4180,8 +4181,8 @@ msgid ""
 "A dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
 msgstr ""
-"Un quadre de diàleg en el qual pots ajustar el diccionari temporal, afegint "
-"noves entrades al quadre d'edició"
+"Un quadre de diàleg en el qual pots afegir noves entrades de diccionari al "
+"quadre d'edició per establir el diccionari temporal"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
@@ -4205,7 +4206,7 @@ msgstr "Veure el registre"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
-msgstr "Visualitzador de veu"
+msgstr "Visor de veu"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -4213,11 +4214,11 @@ msgstr "consola Phyton"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
 msgid "Manage &add-ons"
-msgstr "Gestiona el &complements"
+msgstr "Gestiona els &complements"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create Portable copy..."
-msgstr "Crea una còpia portable..."
+msgstr "Crea una versió portable..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
@@ -4229,7 +4230,7 @@ msgstr "Torna a carregar els connectors"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
-msgstr "Ordres de consulta &ràpida"
+msgstr "Instruccions de consulta &ràpida"
 
 #. Translators: The label for the menu item to open What's New document.
 msgid "What's &new"
@@ -4248,7 +4249,7 @@ msgstr "C&ol·laboradors"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
 msgid "We&lcome dialog"
-msgstr "Diàleg de Ben&vinguda"
+msgstr "Diàleg de ben&vinguda"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
@@ -4306,20 +4307,20 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"Benvinguts a NVDA!\n"
-"Una part de les ordres per controlar NVDA requereixen mantenir premuda la "
-"tecla NVDA mentre polseu altres tecles.\n"
-"Per defecte, la tecla d’inserció del teclat numèric, així com la d’inserció "
-"principal poden ser utilitzades com la tecla NVDA.\n"
-"També podeu configurar NVDA per utilitzar la tecla de bloqueig de majúscules "
-"com la tecla NVDA.\n"
+"Benvingut/da a NVDA!\n"
+"Una part de les instruccions per controlar NVDA requereixen mantenir premuda "
+"la tecla NVDA mentre prems altres tecles.\n"
+"Per defecte, la tecla d’inserció del teclat numèric així com la d’inserció "
+"principal poden ser utilitzades com a tecla NVDA.\n"
+"També pots configurar NVDA per utilitzar la tecla de Bloqueig de majúscules "
+"com a tecla NVDA.\n"
 "Prem NVDA+n en qualsevol moment, per activar el menú NVDA.\n"
-"Des d’aquest menú, pots configurar NVDA, veure la ajuda i accedir a d’altres "
+"Des d’aquest menú, pots configurar NVDA, veure la ajuda i accedir a altres "
 "funcions de NVDA.\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
-msgstr "Benvingut a NVDA"
+msgstr "Benvingut/da a NVDA"
 
 msgid "Options"
 msgstr "Opcions"
@@ -4327,8 +4328,7 @@ msgstr "Opcions"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use CapsLock as an NVDA modifier key"
-msgstr ""
-"Utilitza la tecla de bloqueig de majúscules com a tecla modificadora de NVDA"
+msgstr "Utilitza la Bloq Maj com a tecla modificadora de NVDA"
 
 #. Translators: The label of a check box in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
@@ -4353,7 +4353,7 @@ msgstr "&Instal·la NVDA en aquest equip"
 
 #. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
 msgid "Create &portable copy"
-msgstr "Cre una còpia &portable"
+msgstr "Crea una versió &portable"
 
 #. Translators: The label of the button in NVDA installation program to continue using the installation program as a temporary copy of NVDA.
 msgid "&Continue running"
@@ -4412,7 +4412,7 @@ msgstr "&Aconsegueix connectors..."
 
 #. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 msgid "Choose Add-on Package File"
-msgstr "Tria un fitxer amb el complement"
+msgstr "Tria el fitxer del complement"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 msgid "NVDA Add-on Package (*.{ext})"
@@ -4434,7 +4434,7 @@ msgid ""
 "Addon: {summary} {version}\n"
 "Author: {author}"
 msgstr ""
-"Esteu segur que voleu instal·lar aquest complement? Instal·la complements "
+"Estàs segur que vols instal·lar aquest complement? Instal·la complements "
 "obtinguts de fonts de confiança.\n"
 "Complement: {summary} {version}\n"
 "Autor: {author}"
@@ -4452,7 +4452,7 @@ msgstr ""
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
-msgstr "S'està instal·lant el complement"
+msgstr "Instal.lació de complement en curs"
 
 #. Translators: The message displayed while an addon is being installed.
 msgid "Please wait while the add-on is being installed."
@@ -4464,7 +4464,7 @@ msgid "Failed to install add-on  from %s"
 msgstr "Ha fallat la instal·lació del complement des de %s"
 
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
-msgstr "Esteu segur que voleu eliminar aquest complement de NVDA?"
+msgstr "Estàs segur que vols eliminar aquest complement de NVDA?"
 
 msgid "Remove Add-on"
 msgstr "Elimina el complement"
@@ -4479,14 +4479,14 @@ msgstr "suprimeix"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
-msgstr "s'està executant"
+msgstr "en execució"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
 msgid ""
 "Add-ons have been added or removed. You must restart NVDA for these changes "
 "to take effect. Would you like to restart now?"
 msgstr ""
-"Els complements han estat afegits o eliminats. Heu de reiniciar NVDA per a "
+"Els complements han estat afegits o eliminats. Has de reiniciar NVDA per a "
 "que els canvis tinguin efecte. Vols reiniciar ara?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
@@ -4570,11 +4570,11 @@ msgstr "S'ha produït un error en activar el perfil"
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
 msgid "Are you sure you want to delete this profile? This cannot be undone."
 msgstr ""
-"Esteu segur que voleu eliminar aquest perfil?. L'acció no es pot desfer."
+"Estàs segur que vols eliminar aquest perfil?. L'acció no es pot desfer."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
-msgstr "Confirmació de l'eliminació"
+msgstr "Confirmar eliminació"
 
 #. Translators: An error displayed when deleting a configuration profile fails.
 msgid "Error deleting profile."
@@ -4615,14 +4615,14 @@ msgstr "Aplicació actual (%s)"
 
 #. Translators: Displayed for the configuration profile trigger for say all.
 msgid "Say all"
-msgstr "Digues-ho tot"
+msgstr "Verbalitza-ho tot"
 
 #. Translators: An error displayed when saving configuration profile triggers fails.
 msgid ""
 "Error saving configuration profile triggers - probably read only file system."
 msgstr ""
-"S'ha produït un error en desar el perfil de configuració - probablement es "
-"tracta d'un fitxer només de lectura."
+"S'ha produït un error en desar el perfil de configuració - probablement el "
+"suport és de només lectura."
 
 #. Translators: The title of the configuration profile triggers dialog.
 msgid "Profile Triggers"
@@ -4666,7 +4666,7 @@ msgid ""
 "Are you sure you want to continue?"
 msgstr ""
 "Aquest desencadenador està associat amb un altre perfil. Si continues, "
-"s'eliminarà la relació i s'associarà amb aquest.\n"
+"s'eliminarà la relació amb l'altre perfil i s'associarà amb aquest.\n"
 "Estàs segur de que vols continuar?"
 
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
@@ -4676,8 +4676,8 @@ msgstr "Avís"
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
 msgstr ""
-"S'ha produït un error en desar el perfil - probablement es tracta d'un "
-"fitxer només de lectura."
+"S'ha produït un error en desar el perfil - probablement el suport és de "
+"només lectura."
 
 #. Translators: The prompt asking the user whether they wish to
 #. manually activate a configuration profile that has just been created.
@@ -4687,9 +4687,9 @@ msgid ""
 "usage.\n"
 "Do you wish to manually activate it now?"
 msgstr ""
-"Per editar aquest perfil, l'hauràs d'activar manualment. Una vegada hagis "
-"terminat l'edició, l'hauràs de desactivar manualment per reprendre l'ús "
-"normal.\n"
+"Per editar aquest perfil, l'hauràs d'activar manualment. Un cop hagis "
+"finalitzat l'edició, l'hauràs de desactivar manualment per tornar al "
+"funcionament normal.\n"
 "Vols activar-lo manualment ara?"
 
 #. Translators: The title of the confirmation dialog for manual activation of a created profile.
@@ -4718,8 +4718,8 @@ msgid ""
 "NVDA may be running on another logged-on user account. Please make sure all "
 "installed copies of NVDA are shut down and try the installation again."
 msgstr ""
-"La instal·lació no pot eliminar o sobreescriure un fitxer. Una altra còpia "
-"de NVDA ja s'ha posat en marxa en un altre compte d'usuari. Assegura't de "
+"La instal·lació no pot eliminar o sobreescriure un fitxer. Potser hi ha una "
+"altra còpia de NVDA en execució en un altre compte d'usuari. Assegura't de "
 "que totes les còpies instal·lades de NVDA s'han aturat i torna a executar la "
 "instal·lació."
 
@@ -4747,7 +4747,7 @@ msgstr "NVDA s'ha actualitzat correctament."
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
 msgid "Please press OK to start the installed copy."
-msgstr "Polsa OK per iniciar la còpia instal·lada."
+msgstr "Prem D'Acord per iniciar la còpia instal·lada."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
 msgid "Success"
@@ -4766,8 +4766,7 @@ msgid ""
 "A previous copy of NVDA has been found on your system. This copy will be "
 "updated."
 msgstr ""
-"s'ha trobat una còpia anterior de NVDA en el teu sistema. Aquesta còpia serà "
-"actualitzada."
+"S'ha trobat una còpia anterior de NVDA en el teu sistema. S'actualitzarà."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
 msgid ""
@@ -4788,11 +4787,11 @@ msgstr "&Manté la drecera d'escriptori existent"
 #. If the shortcut key has been changed for this locale,
 #. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
-msgstr "Crea una icona a l'&Escriptori i una tecla de drecera  (control+alt+n)"
+msgstr "Crea una icona a l'&Escriptori i una tecla de drecera  (Ctrl+Alt+n)"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Copy &portable configuration to current user account"
-msgstr "Copia la configuració &portable en aquesta compte d'usuari"
+msgstr "Copia la configuració &portable en aquest compte d'usuari"
 
 #. Translators: The label of a button to continue with the operation.
 msgid "&Continue"
@@ -4800,20 +4799,20 @@ msgstr "&Continua"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
-msgstr "Crea un NVDA portable"
+msgstr "Crea una versió portable de NVDA"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 msgid ""
 "To create a portable copy of NVDA, please select the path and other options "
 "and then press Continue"
 msgstr ""
-"Per crear una còpia portable de NVDA, selecciona el camí i altres opcions i "
-"polsa Continua"
+"Per crear una versió  portable de NVDA, selecciona el camí i altres opcions "
+"i prem Continua"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Portable &directory:"
-msgstr "&Directori portable:"
+msgstr "&Carpeta de la versió portable:"
 
 #. Translators: The label of a button to browse for a directory.
 msgid "Browse..."
@@ -4826,12 +4825,12 @@ msgstr "Copia la configuració actual de l'&usuari"
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
-msgstr "Selecciona un directori portable"
+msgstr "Selecciona la carpeta per a la versió portable"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Please specify a directory in which to create the portable copy."
-msgstr "Especifica el directori on vols crear la còpia portable."
+msgstr "Especifica la carpeta on vols crear la versió portable."
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
@@ -4841,11 +4840,11 @@ msgstr "%s no és una unitat vàlida"
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
 msgid "Creating Portable Copy"
-msgstr "S'està creant una còpia portable"
+msgstr "Creació d'una versió portable en curs"
 
 #. Translators: The message displayed while a portable copy of NVDA is bieng created.
 msgid "Please wait while a portable copy of NVDA is created."
-msgstr "Espera mentre es crea una còpia portàtil de NVDA."
+msgstr "Espera mentre es crea una versió portable de NVDA."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
 msgid "NVDA is unable to remove or overwrite a file."
@@ -4855,13 +4854,13 @@ msgstr "NVDA no pot eliminar o sobreescriure un fitxer."
 #. %s will be replaced with the specific error message.
 #, python-format
 msgid "Failed to create portable copy: %s"
-msgstr "Ha fallat la creació de la còpia portable: %s"
+msgstr "Ha fallat la creació de la versió portable: %s"
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. %s will be replaced with the destination directory.
 #, python-format
 msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "S'ha creat una còpia portable de NVDA en %s"
+msgstr "S'ha creat una versió portable de NVDA en %s"
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
@@ -4886,7 +4885,7 @@ msgstr "S'ha produït un error en desar el registre: %s"
 
 #. Translators: This is the label for the general settings dialog.
 msgid "General Settings"
-msgstr "Paràmetres generals"
+msgstr "Configuració general"
 
 #. Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 msgid "info"
@@ -4894,7 +4893,7 @@ msgstr "informació"
 
 #. Translators: One of the log levels of NVDA (the debug warning shows debugging messages and warnings as NVDA runs).
 msgid "debug warning"
-msgstr "avís de depuració"
+msgstr "depuració i avisos"
 
 #. Translators: One of the log levels of NVDA (the input/output shows keyboard commands and/or braille commands as well as speech and/or braille output of NVDA).
 msgid "input/output"
@@ -4906,11 +4905,11 @@ msgstr "depuració"
 
 #. Translators: The label for a setting in general settings to select NVDA's interface language (once selected, NVDA must be restarted; the option user default means the user's Windows language will be used).
 msgid "&Language (requires restart to fully take effect):"
-msgstr "&Idioma (requereix de reiniciar per tenir efecte):"
+msgstr "&Idioma (cal reiniciar per tenir efecte):"
 
 #. Translators: The list of languages for NVDA.
 msgid "Language"
-msgstr "idioma"
+msgstr "Idiomes"
 
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
@@ -4918,15 +4917,15 @@ msgstr "&Desa la configuració en sortir"
 
 #. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
 msgid "&Warn before exiting NVDA"
-msgstr "&Avisa abans de sortir de NVD"
+msgstr "&Avisa abans de sortir de NVDA"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
-msgstr "&Reprodueix sons en entrar o sortir de NVDA"
+msgstr "&Emet un so en entrar o sortir de NVDA"
 
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
-msgstr "Nivell d'inici de &sessió:"
+msgstr "Nivell de R&egistre:"
 
 #. Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
 msgid "Log level"
@@ -4944,7 +4943,7 @@ msgid ""
 "Use currently saved settings on the logon and other secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"Utilitza els paràmetres desats a la pantalla d'inici de sessió i a d'altres "
+"Utilitza els paràmetres desats a la pantalla d'inici de sessió i a altres "
 "pantalles de seguretat (requereix privilegis d'administrador)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
@@ -4957,13 +4956,13 @@ msgid ""
 "to the system profile could be a security risk. Do you still wish to copy "
 "your settings?"
 msgstr ""
-"S'han detectat connectors personalitzats al directori de paràmetres de "
+"S'han detectat connectors personalitzats a la carpeta de configuració de "
 "l'usuari. Copiar-los al perfil del sistema pot comportar un risc de "
-"seguretat. Encara els vols copiar als teus paràmetres?"
+"seguretat. Encara vols copiar la teva configuració?"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
-msgstr "S'estan copiant els paràmetres"
+msgstr "Còpia de la configuració en curs"
 
 #. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
 msgid "Please wait while settings are copied to the system configuration."
@@ -4974,8 +4973,9 @@ msgid ""
 "Unable to copy a file. Perhaps it is currently being used by another process "
 "or you have run out of disc space on the drive you are copying to."
 msgstr ""
-"No s'ha pogut copiar un fitxer. Potser s'està utilitzant en un altre procés "
-"o no hi hagi espai suficient en el disc de la unitat on s'està copiant."
+"No s'ha pogut copiar un fitxer. Potser el fitxer s'està utilitzant en un "
+"altre procés o no hi ha espai suficient al disc de la unitat on s'està "
+"copiant."
 
 #. Translators: the title of a retry cancel dialog when copying settings  fails
 msgid "Error Copying"
@@ -4983,18 +4983,18 @@ msgstr "S'ha produït un error en copiar"
 
 #. Translators: The message displayed when errors were found while trying to copy current configuration to system settings.
 msgid "Error copying NVDA user settings"
-msgstr "S'ha produït un error en copiar els paràmetres NVDA de l'usuari"
+msgstr "S'ha produït un error en copiar la configuració d'usuari NVDA"
 
 #. Translators: The message displayed when copying configuration to system settings was successful.
 msgid "Successfully copied NVDA user settings"
-msgstr "Els paràmetres d'usuari de NVDA s'han copiat amb èxit"
+msgstr "La configuració d'usuari de NVDA s'ha copiat amb èxit"
 
 #, python-format
 msgid "Error in %s language file"
 msgstr "Hi ha un error en el fitxer d'idioma %s"
 
 msgid "Language Error"
-msgstr "Hi ha un error en el idioma"
+msgstr "Hi ha un error d'idioma"
 
 msgid "This change requires administrator privileges."
 msgstr "Aquest canvi requereix privilegis d'administrador."
@@ -5010,7 +5010,7 @@ msgid ""
 msgstr ""
 "Per a que el nou idioma tingui efecte, s'ha de desar la configuració i "
 "reiniciar NVDA. Prem la tecla retorn per desar i reiniciar NVDA, o cancel•la "
-"per desar automàticament i sortir més tard."
+"per desar manualment i sortir més tard."
 
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 msgid "Language Configuration Change"
@@ -5040,21 +5040,21 @@ msgid "Could not load the %s synthesizer."
 msgstr "No s'ha pogut carregar el sintetitzador %s ."
 
 msgid "Synthesizer Error"
-msgstr "Error del sintetitzador"
+msgstr "Error de sintetitzador"
 
 #. Translators: This is the label for the voice settings dialog.
 msgid "Voice Settings"
-msgstr "Paràmetres de la veu"
+msgstr "Configuració de veu"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, text will be read using the voice for the language of the text).
 msgid "Automatic language switching (when supported)"
-msgstr "Canvi d’idioma automàtic (quan sigui suportat)"
+msgstr "Canvi d’idioma automàtic (si el sintetitzador ho permet)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, different voices for dialects will be used to read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
-msgstr "Canvi de dialecte automàtic (quan sigui suportat)"
+msgstr "Canvi de dialecte automàtic (si el sintetitzador ho permet)"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings dialog (possible choices are none, some, most and all).
@@ -5063,12 +5063,12 @@ msgstr "&Nivell de puntuació i símbols:"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
-msgstr "Percentatge de canvi en el to de les majúscules"
+msgstr "Percentatge de canvi de to a les majúscules"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 msgid "Say &cap before capitals"
-msgstr "Digues &maj abans que majúscules"
+msgstr "Digues &Maj abans de verbalitzar una lletra majúscula"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
@@ -5078,20 +5078,20 @@ msgstr "&Emet un xiulet per les majúscules"
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 msgid "Use &spelling functionality if supported"
-msgstr "Utilitza la funcionalitat de &lletrejar si està suportada"
+msgstr "Utilitza la funcionalitat de &lletrejar si el sintetitzador ho permet"
 
 #. Translators: This is the label for the keyboard settings dialog.
 msgid "Keyboard Settings"
-msgstr "Paràmetres del teclat"
+msgstr "Configuració de teclat"
 
 #. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
 msgid "&Keyboard layout:"
-msgstr "&Disposició del teclat:"
+msgstr "&Disposició de teclat:"
 
 #. Translators: This is the name of a combobox in the keyboard settings dialog.
 msgid "Keyboard layout"
-msgstr "Disposició del teclat"
+msgstr "Disposició de teclat"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -5124,7 +5124,7 @@ msgstr "Interrupció de la veu per als caràcters escrits"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speech interrupt for Enter key"
-msgstr "Interrupció de veu per a la tecla de retorn"
+msgstr "Interrupció de veu per a la tecla de Retorn"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -5135,26 +5135,26 @@ msgstr "Permet la lectura superficial en el perfil Digues-ho tot"
 #. keyboard settings dialog.
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr ""
-"Emet un xiulet a l'escriure lletres minúscules quan el bloqueig de "
-"majúscules està activat"
+"Emet un xiulet en escriure lletres minúscules quan el Bloqueig de majúscules "
+"està activat"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speak command &keys"
-msgstr "Verbalitza les &tecles d'ordre"
+msgstr "Verbalitza les &tecles d'instrucció"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Handle keys from other &applications"
-msgstr "Maneja les tecles des d'altres &aplicacions"
+msgstr "Gestionar les tecles d'altres &aplicacions"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
-msgstr "Almenys una de les tecles ha ser utilitzada com la tecla NVDA."
+msgstr "Almenys una de les tecles ha ser utilitzada com a tecla NVDA."
 
 #. Translators: This is the label for the mouse settings dialog.
 msgid "Mouse Settings"
-msgstr "Paràmetres del ratolí"
+msgstr "Configuració de ratolí"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -5173,7 +5173,7 @@ msgstr "&Unitat de resolució de text:"
 
 #. Translators: This is the name of a combobox in the mouse settings dialog.
 msgid "text reporting unit"
-msgstr "Unitat d'anunciament de text"
+msgstr "Unitat d'anunci del text"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -5183,16 +5183,16 @@ msgstr "Anuncia el &rol quan el ratolí entri dins l'objecte"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "play audio coordinates when mouse moves"
-msgstr "L’àudio es reprodueix en moure’s el ratolí"
+msgstr "Emet les coordenades per àudio quan el ratolí es mou"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "brightness controls audio coordinates volume"
-msgstr "El control de brillantor es coordina amb el control del volum"
+msgstr "La brillantor controla el volum de l'àudio"
 
 #. Translators: This is the label for the review cursor settings dialog.
 msgid "Review Cursor Settings"
-msgstr "Paràmetres del cursor de revisió"
+msgstr "Configuració del cursor de revisió"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
@@ -5202,12 +5202,12 @@ msgstr "Segueix el &focus del sistema"
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Follow System &Caret"
-msgstr "Segueix al &cursor del sistema"
+msgstr "Segueix el &cursor del sistema"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Follow &mouse cursor"
-msgstr "Segueix al cursor del &ratolí"
+msgstr "Segueix el cursor del &ratolí"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
@@ -5216,7 +5216,7 @@ msgstr "Mode de revisió simple"
 
 #. Translators: This is the label for the Input Composition settings dialog.
 msgid "Input Composition Settings"
-msgstr "Paràmetres de la composició d'entrada"
+msgstr "Configuració de la composició d'entrada"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
@@ -5246,13 +5246,13 @@ msgstr "Informa dels canvis a la cadena de &composició"
 
 #. Translators: This is the label for the object presentation dialog.
 msgid "Object Presentation"
-msgstr "Presentació d'objectes"
+msgstr "Presentació d'objecte"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by speaking.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 msgid "Speak"
-msgstr "Parla"
+msgstr "Verbalitza"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by beeping.
@@ -5274,7 +5274,7 @@ msgstr "Informa dels l'&indicadors de funció"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report &help balloons"
-msgstr "Informa dels l'&indicadors de funció"
+msgstr "Informa dels l'&indicadors de funció d'ajuda"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -5284,7 +5284,7 @@ msgstr "Informa de les &tecles de drecera de l'objecte"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report object &position information"
-msgstr "Informa de la informació de &posició de l'objecte"
+msgstr "Informa de la &posició de l'objecte"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -5310,7 +5310,7 @@ msgstr "Sortida de la barra de progrés"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
-msgstr "Informa de la barra de progrés en segon pla"
+msgstr "Informa de les barres de progrés en segon pla"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -5339,12 +5339,12 @@ msgstr "Utilitza la disposició de &pantalla (quan sigui suportada)"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Automatic &Say All on page load"
-msgstr "&Digues-ho tot automàtic en la càrrega de la pàgina"
+msgstr "Automàticament &Verbalitza-ho tot quan una pàgina es carregui"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Include l&ayout tables"
-msgstr "Inclou la d&isposició de les taules"
+msgstr "Inclou les taules de m&aquetació"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -5368,7 +5368,7 @@ msgstr "Formatació de documents"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "Anuncia canvis de format després de cursor (pot provocar un retard)"
+msgstr "Anuncia canvis de format després del cursor (pot provocar un retard)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5439,12 +5439,12 @@ msgstr "Informa de les &taules"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report table row/column h&eaders"
-msgstr "Informa de les c&apçaleres de les files i columnes de les taules"
+msgstr "Informa de les c&apçaleres de les files i columnes de la taula"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report table cell c&oordinates"
-msgstr "Informa de les c&oordenades de la cel·les de la taules"
+msgstr "Informa de les c&oordenades de la cel·les de la taula"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5545,11 +5545,11 @@ msgstr "Afegeix una entrada al diccionari"
 
 #. Translators: This is the label for the braille settings dialog.
 msgid "Braille Settings"
-msgstr "Paràmetres del Braille"
+msgstr "Configuració de braille"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
-msgstr "&Visualització braille:"
+msgstr "línia braille:"
 
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
@@ -5565,7 +5565,7 @@ msgstr "Taula d'&entrada:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr "E&xpandir a braille d'ordinador per a la paraula en el cursor"
+msgstr "E&xpandir a braille d'ordinador la paraula sota el cursor"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
@@ -5581,18 +5581,18 @@ msgstr "El braille segueix a:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
-msgstr "Llegeix per &paràgraf"
+msgstr "Llegeix per &paràgrafs"
 
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
-msgstr "Evita la separació de &paraules quan sigui possible"
+msgstr "Evita la separació de &paraules si és possible"
 
 #, python-format
 msgid "Could not load the %s display."
-msgstr "No s'ha pogut carregar la pantalla %s"
+msgstr "No s'ha pogut carregar la línia %s"
 
 msgid "Braille Display Error"
-msgstr "Error de la pantalla braille"
+msgstr "Error de la línia braille"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 msgid "Symbol Pronunciation"
@@ -5635,8 +5635,8 @@ msgstr "Introdueix un gest d'entrada:"
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
-"S'ha produït un error en desar els gestos definits - probablement es tracta "
-"d'un fitxer només de lectura."
+"S'ha produït un error en desar els gestos definits - probablement el suport "
+"és de només lectura"
 
 #. Translators: Information about NVDA's new laptop keyboard layout.
 msgid ""
@@ -5645,8 +5645,8 @@ msgid ""
 "If you use the laptop layout, please see the What's New document for more "
 "information."
 msgstr ""
-"En NVDA 2013.1, la disposició del teclat dels ordinadors portàtils ha estat "
-"completament redissenyada, per tal de fer-la més intuïtiva i consistent.\n"
+"A NVDA 2013.1, la disposició del teclat dels ordinadors portàtils ha estat "
+"completament redissenyada, per tal de fer-la més intuïtiva i coherent.\n"
 "Si utilitzeu la disposició per a ordinadors portàtils, podeu obtenir més "
 "informació al document Què hi ha de nou."
 
@@ -5657,7 +5657,7 @@ msgstr "Nova disposició de teclat per a ordinador portàtil"
 #. Translators: The label of a button in the New Laptop Keyboard Layout dialog
 #. to open the What's New document.
 msgid "Read What's New"
-msgstr "Assabentat de les novetats"
+msgstr "Llegeix Què hi ha de nou?"
 
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
@@ -5792,28 +5792,28 @@ msgstr "Presenta una llista d'enllaços, encapçalaments o regions"
 #. when the cursor is not within a table.
 #. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
-msgstr "Nou ets en una cel·la de la taula"
+msgstr "No ets en una cel·la de la taula"
 
 #. Translators: the description for the next table row script on virtualBuffers.
 msgid "moves to the next table row"
-msgstr "Salta a la fila següent de la taula"
+msgstr "salta a la fila posterior de la taula"
 
 #. Translators: the description for the previous table row script on virtualBuffers.
 msgid "moves to the previous table row"
-msgstr "Salta a la fila anterior de la taula"
+msgstr "salta a la fila anterior de la taula"
 
 #. Translators: the description for the next table column script on virtualBuffers.
 msgid "moves to the next table column"
-msgstr "Salta a la columna següent de la taula"
+msgstr "salta a la columna posterior de la taula"
 
 #. Translators: the description for the previous table column script on virtualBuffers.
 msgid "moves to the previous table column"
-msgstr "Salta a la columna anterior de la taula"
+msgstr "salta a la columna anterior de la taula"
 
 #. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
 #. But there is no container.
 msgid "Not in a container"
-msgstr "Nou ets en un contenidor"
+msgstr "No ets en un contenidor"
 
 #. Translators: Description for the Move to start of container command in browse mode.
 msgid "Moves to the start of the container element, such as a list or table"
@@ -5825,23 +5825,23 @@ msgstr "Salta passat el final d'un element contenidor, com una llista o taula"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
-msgstr "Salta a l'encapçalament següent"
+msgstr "salta a l'encapçalament posterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading"
-msgstr "No hi ha més encapçalaments"
+msgstr "no hi ha més encapçalaments"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading"
-msgstr "Salta a l'encapçalament anterior"
+msgstr "salta a l'encapçalament anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading"
-msgstr "Aquest és el primer encapçalament"
+msgstr "aquest és el primer encapçalament"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 1"
-msgstr "Salta a l'encapçalament següent de primer nivell"
+msgstr "salta a l'encapçalament posterior de primer nivell"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 1"
@@ -5849,7 +5849,7 @@ msgstr "no hi ha més encapçalaments de primer nivell"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 1"
-msgstr "Salta a l'encapçalament anterior de primer nivell"
+msgstr "salta a l'encapçalament anterior de primer nivell"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 1"
@@ -5857,7 +5857,7 @@ msgstr "Aquest és el primer encapçalament de primer nivell"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 2"
-msgstr "Salta a l'encapçalament següent de segon nivell"
+msgstr "salta a l'encapçalament posterior de segon nivell"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 2"
@@ -5865,15 +5865,15 @@ msgstr "no hi ha més encapçalaments de segon nivell"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 2"
-msgstr "Salta a l'encapçalament anterior de segon nivell"
+msgstr "salta a l'encapçalament anterior de segon nivell"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 2"
-msgstr "Aquest és el primer encapçalament de segon nivell"
+msgstr "aquest és el primer encapçalament de segon nivell"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 3"
-msgstr "Salta a l'encapçalament següent de tercer nivell"
+msgstr "salta a l'encapçalament posterior de tercer nivell"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 3"
@@ -5881,15 +5881,15 @@ msgstr "no hi ha més encapçalaments de tercer nivell"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 3"
-msgstr "Salta a l'encapçalament anterior de tercer nivell"
+msgstr "salta a l'encapçalament anterior de tercer nivell"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 3"
-msgstr "Aquest és el primer encapçalament de tercer nivell"
+msgstr "aquest és el primer encapçalament de tercer nivell"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 4"
-msgstr "Salta a l'encapçalament següent de quart nivell"
+msgstr "salta a l'encapçalament posterior de quart nivell"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 4"
@@ -5897,15 +5897,15 @@ msgstr "no hi ha més encapçalaments de quart nivell"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 4"
-msgstr "Salta a l'encapçalament anterior de quart nivell"
+msgstr "salta a l'encapçalament anterior de quart nivell"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 4"
-msgstr "Aquest és el primer encapçalament de quart nivell"
+msgstr "aquest és el primer encapçalament de quart nivell"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 5"
-msgstr "Salta a l'encapçalament següent de cinquè nivell"
+msgstr "salta a l'encapçalament posterior de cinquè nivell"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 5"
@@ -5913,15 +5913,15 @@ msgstr "no hi ha més encapçalaments de cinquè nivell"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 5"
-msgstr "Salta a l'encapçalament anterior de cinquè nivell"
+msgstr "salta a l'encapçalament anterior de cinquè nivell"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 5"
-msgstr "Aquest és el primer encapçalament de cinquè nivell"
+msgstr "squest és el primer encapçalament de cinquè nivell"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading at level 6"
-msgstr "Salta a l'encapçalament següent de sisè nivell"
+msgstr "salta a l'encapçalament posterior de sisè nivell"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next heading at level 6"
@@ -5929,15 +5929,15 @@ msgstr "no hi ha més encapçalaments de sisè nivell"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous heading at level 6"
-msgstr "Salta a l'encapçalament anterior de sisè nivell"
+msgstr "salta a l'encapçalament anterior de sisè nivell"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous heading at level 6"
-msgstr "Aquest és el primer encapçalament de sisè nivell"
+msgstr "aquest és el primer encapçalament de sisè nivell"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next table"
-msgstr "Salta a la taula següent"
+msgstr "salta a la taula posterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next table"
@@ -5945,15 +5945,15 @@ msgstr "no hi ha més taules"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous table"
-msgstr "Salta a la taula anterior"
+msgstr "salta a la taula anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous table"
-msgstr "Aquesta és la primera taula"
+msgstr "aquesta és la primera taula"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next link"
-msgstr "Salta a l'enllaç següent"
+msgstr "salta a l'enllaç posterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next link"
@@ -5961,15 +5961,15 @@ msgstr "no hi ha més enllaços"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous link"
-msgstr "Salta a l'enllaç anterior"
+msgstr "salta a l'enllaç anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous link"
-msgstr "Aquest és el primer enllaç"
+msgstr "aquest és el primer enllaç"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next visited link"
-msgstr "Salta a l'enllaç visitat següent"
+msgstr "salta a l'enllaç visitat posterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next visited link"
@@ -5977,15 +5977,15 @@ msgstr "no hi ha més enllaços visitats"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous visited link"
-msgstr "Salta a l'enllaç visitat anterior"
+msgstr "salta a l'enllaç visitat anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous visited link"
-msgstr "Aquest és el primer l'enllaç visitat"
+msgstr "aquest és el primer l'enllaç visitat"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next unvisited link"
-msgstr "Salta a l'enllaç sense visitar següent"
+msgstr "salta a l'enllaç sense visitar posterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next unvisited link"
@@ -5993,15 +5993,15 @@ msgstr "no hi ha més enllaços sense visitar"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous unvisited link"
-msgstr "Salta a l'enllaç sense visitar anterior"
+msgstr "salta a l'enllaç sense visitar anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous unvisited link"
-msgstr "Aquest és el primer enllaç sense visitar"
+msgstr "aquest és el primer enllaç sense visitar"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next form field"
-msgstr "Salta al camp de formulari següent"
+msgstr "salta al camp de formulari posterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next form field"
@@ -6009,15 +6009,15 @@ msgstr "no hi ha més camps de formulari"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous form field"
-msgstr "Salta al camp de formulari anterior"
+msgstr "salta al camp de formulari anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous form field"
-msgstr "Aquest és el primer camp de formulari"
+msgstr "aquest és el primer camp de formulari"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next list"
-msgstr "Salta a la llista següent"
+msgstr "salta a la llista posterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next list"
@@ -6025,15 +6025,15 @@ msgstr "no hi ha més llistes"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous list"
-msgstr "Salta a la llista anterior"
+msgstr "salta a la llista anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous list"
-msgstr "Aquesta és la primera llista"
+msgstr "aquesta és la primera llista"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next list item"
-msgstr "Salta a l'element de llista següent"
+msgstr "salta a l'element de llista posterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next list item"
@@ -6041,15 +6041,15 @@ msgstr "no hi ha més elements de llista"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous list item"
-msgstr "Salta a l'element de llista anterior"
+msgstr "salta a l'element de llista anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous list item"
-msgstr "Aquest és el primer element de llista"
+msgstr "aquest és el primer element de llista"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next button"
-msgstr "Salta al botó següent"
+msgstr "salta al botó posterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next button"
@@ -6057,15 +6057,15 @@ msgstr "no hi ha més botons"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous button"
-msgstr "Salta al botó anterior"
+msgstr "salta al botó anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous button"
-msgstr "Aquest és el primer botó"
+msgstr "aquest és el primer botó"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next edit field"
-msgstr "Salta al camp d'edició següent"
+msgstr "salta al camp d'edició posterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next edit field"
@@ -6073,15 +6073,15 @@ msgstr "no hi ha més camps d'edició"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous edit field"
-msgstr "Salta al camp d'edició  anterior"
+msgstr "salta al camp d'edició  anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous edit field"
-msgstr "Aquest és el primer camp d'edició"
+msgstr "aquest és el primer camp d'edició"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next frame"
-msgstr "Salta al marc següent"
+msgstr "salta al marc posterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next frame"
@@ -6089,15 +6089,15 @@ msgstr "no hi ha més marcs"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous frame"
-msgstr "Salta al marc anterior"
+msgstr "salta al marc anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous frame"
-msgstr "Aquest és el primer marc"
+msgstr "aquest és el primer marc"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next separator"
-msgstr "Salta al separador següent"
+msgstr "salta al separador posterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next separator"
@@ -6105,15 +6105,15 @@ msgstr "no hi ha més separadors"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous separator"
-msgstr "Salta al separador anterior"
+msgstr "salta al separador anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous separator"
-msgstr "Aquest és el primer separador"
+msgstr "aquest és el primer separador"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next radio button"
-msgstr "Salta al botó d'opció següent"
+msgstr "salta al botó d'opció posterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next radio button"
@@ -6121,15 +6121,15 @@ msgstr "no hi ha més botons d'opció"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous radio button"
-msgstr "Salta al botó d'opció anterior"
+msgstr "salta al botó d'opció anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous radio button"
-msgstr "Aquest és el primer botó d'opció"
+msgstr "aquest és el primer botó d'opció"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next combo box"
-msgstr "Salta al quadre combinat següent"
+msgstr "salta al quadre combinat posterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next combo box"
@@ -6137,15 +6137,15 @@ msgstr "no hi ha més quadres combinats"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous combo box"
-msgstr "Salta al quadre combinat anterior"
+msgstr "salta al quadre combinat anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous combo box"
-msgstr "Aquest és el primer quadre combinat"
+msgstr "aquest és el primer quadre combinat"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next check box"
-msgstr "Salta a la casella de verificació següent"
+msgstr "salta a la casella de verificació posterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next check box"
@@ -6153,15 +6153,15 @@ msgstr "no hi ha més caselles de verificació"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous check box"
-msgstr "Salta a la casella de verificació anterior"
+msgstr "salta a la casella de verificació anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous check box"
-msgstr "Aquesta és la primera casella de verificació"
+msgstr "aquesta és la primera casella de verificació"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next graphic"
-msgstr "Salta al gràfic següent"
+msgstr "salta al gràfic posterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next graphic"
@@ -6169,15 +6169,15 @@ msgstr "no hi ha més gràfics"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous graphic"
-msgstr "Salta al gràfic anterior"
+msgstr "salta al gràfic anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous graphic"
-msgstr "Aquest és el primer gràfic"
+msgstr "aquest és el primer gràfic"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next block quote"
-msgstr "Salta al bloc de cita següent"
+msgstr "salta al bloc de cita posterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next block quote"
@@ -6185,11 +6185,11 @@ msgstr "no hi ha més blocs de cita"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous block quote"
-msgstr "Salta al bloc de cita anterior"
+msgstr "salta al bloc de cita anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous block quote"
-msgstr "Aquest és el primer bloc de cita"
+msgstr "aquest és el primer bloc de cita"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips forward past a block of links"
@@ -6209,7 +6209,7 @@ msgstr "no hi ha més text abans del bloc d'enllaços"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next landmark"
-msgstr "Salta a la regió següent"
+msgstr "salta a la regió posterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next landmark"
@@ -6217,15 +6217,15 @@ msgstr "no hi ha més regions"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous landmark"
-msgstr "Salta a la regió anterior"
+msgstr "salta a la regió anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous landmark"
-msgstr "Aquesta és la primera regió"
+msgstr "aquesta és la primera regió"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next embedded object"
-msgstr "Salta a l'objecte incrustat següent"
+msgstr "salta a l'objecte incrustat posterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next embedded object"
@@ -6233,11 +6233,11 @@ msgstr "no hi ha més objectes incrustats"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous embedded object"
-msgstr "Salta a l'objecte incrustat anterior"
+msgstr "salta a l'objecte incrustat anterior"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous embedded object"
-msgstr "Aquest és el primer objecte incrustat"
+msgstr "aquest és el primer objecte incrustat"
 
 msgid "focus mode"
 msgstr "mode de focus"
@@ -6253,13 +6253,13 @@ msgid "%s items"
 msgstr "%s elements"
 
 msgid "invoke"
-msgstr "demana"
+msgstr "crida"
 
 msgid "Desktop"
 msgstr "Escriptori"
 
 msgid "default color"
-msgstr "color per defecte"
+msgstr "color predeterminat"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -6274,7 +6274,7 @@ msgid ""
 "Formatting Settings"
 msgstr ""
 "No es poden establir les capçaleres. Activa l'informe de capçaleres de taula "
-"en els Paràmetres de format de document"
+"a la Configuració de formatació de document"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "Set {address} as start of column headers"
@@ -6291,17 +6291,17 @@ msgstr "S'ha eliminat {address}    de les capçaleres de les columnes"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "Cannot find {address}    in column headers"
-msgstr "No s'ha trobat {address}    en les capçaleres de les columnes"
+msgstr "No s'ha trobat {address}    a les capçaleres de les columnes"
 
 msgid ""
 "Pressing once will set this cell as the first column header for any cells "
 "lower and to the right of it within this region. Pressing twice will forget "
 "the current column header for this cell."
 msgstr ""
-"Polsant una vegada s'establirà aquesta cel·la com la primera capçalera de la "
-"columna per a qualsevol cel·la inferior i a la seva dreta dins d'aquesta "
-"regió. Polsant dues vegades s'ometrà l'actual capçalera de la columna per "
-"aquesta cel·la."
+"Si prems una vegada,  dins d'aquesta regió, s'establirà aquesta cel·la com a "
+"primera capçalera de la columna per a qualsevol cel·la inferior o a la seva "
+"dreta. Si prems dues vegades s'ometrà la configuració d'aquesta cel.la com a "
+"capçalera de la columna."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 msgid "Set {address} as start of row headers"
@@ -6324,14 +6324,14 @@ msgid ""
 "and to the right of it within this region. Pressing twice will forget the "
 "current row header for this cell."
 msgstr ""
-"Polsant una vegada s'establirà aquesta cel•la com la primera capçalera de la "
-"fila per a les cel·les inferiors i a la seva dreta dins d'aquesta regió. "
-"Polsant dues vegades s'ometrà l'actual capçalera de la fila per aquesta "
-"cel·la."
+"Si prems una vegada,  dins d'aquesta regió, s'establirà aquesta cel·la com a "
+"primera capçalera de fila per a qualsevol cel·la inferior o a la seva dreta. "
+"Si prems dues vegades s'ometrà la configuració d'aquesta cel.la com a "
+"capçalera de fila."
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
-msgstr "No hi ha cap comentari"
+msgstr "No et trobes dins un comentari"
 
 #. Translators: the description  for a script for Excel
 msgid "Reports the comment on the current cell"
@@ -6359,11 +6359,11 @@ msgstr "propietat"
 
 #. Translators: a Microsoft Word revision type (changed paragraph number)
 msgid "paragraph number"
-msgstr "Número de paràgraf"
+msgstr "número de paràgraf"
 
 #. Translators: a Microsoft Word revision type (display field)
 msgid "display field"
-msgstr "camp de visualització"
+msgstr "mostrar camps"
 
 #. Translators: a Microsoft Word revision type (reconcile)
 msgid "reconcile"
@@ -6375,7 +6375,7 @@ msgstr "conflicte"
 
 #. Translators: a Microsoft Word revision type (replaced content)
 msgid "replace"
-msgstr "reemplaça"
+msgstr "reemplaçar"
 
 #. Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
 msgid "paragraph property"
@@ -6420,10 +6420,10 @@ msgid "Endnotes"
 msgstr "Notes finals"
 
 msgid "Even pages footer"
-msgstr "Inclou els peu de pàgina"
+msgstr "Peu de les pàgines senars"
 
 msgid "Even pages header"
-msgstr "Inclou la capçalera de les pàgines"
+msgstr "Capçalera de les pàgines senars"
 
 msgid "First page footer"
 msgstr "Peu de la primera pàgina"
@@ -6432,7 +6432,7 @@ msgid "First page header"
 msgstr "Capçalera de la primera pàgina"
 
 msgid "Footnotes"
-msgstr "Notes al peu de pàgina"
+msgstr "Notes a peu de pàgina"
 
 msgid "Primary footer"
 msgstr "Peu de pàgina principal"
@@ -6450,7 +6450,7 @@ msgid "unknown date"
 msgstr "data desconeguda"
 
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} per {revisionAuthor} el {revisionDate}"
+msgstr "{revisionType} per {revisionAuthor} el dia {revisionDate}"
 
 #, python-format
 msgid "%g characters"
@@ -6477,13 +6477,13 @@ msgstr ""
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr ""
-"Fila {rowNumber}, columna {columnNumber} eliminada de les capçaleres de la "
+"Fila {rowNumber}, columna {columnNumber} eliminada de les capçaleres de "
 "columna"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
-"No s'ha pogut trobar la fila {rowNumber} column {columnNumber}  en les "
+"No s'ha pogut trobar la fila {rowNumber} column {columnNumber} a les "
 "capçaleres de la columna"
 
 msgid ""
@@ -6491,45 +6491,44 @@ msgid ""
 "lower and to the right of it within this table. Pressing twice will forget "
 "the current column header for this cell."
 msgstr ""
-"Polsant una vegada s'establirà aquesta cel·la com la primera capçalera de la "
-"fila per a qualsevol cel·la inferior i a la seva dreta dins d'aquesta taula. "
-"Polsant dues vegades s'ometrà l'actual capçalera de la columna per aquesta "
-"cel·la."
+"Si prems una vegada,  dins d'aquesta regió, s'establirà aquesta cel·la com a "
+"primera capçalera de columna per a qualsevol cel·la inferior o a la seva "
+"dreta. Si prems dues vegades s'ometrà la configuració d'aquesta cel.la com a "
+"capçalera de columna."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "Estableix la fila {rowNumber} columna {columnNumber} com a inici de les "
-"capçaleres de la fila"
+"capçaleres de fila"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
 "Ja s'ha establert la fila {rowNumber} columna {columnNumber} com a inici de "
-"les capçaleres de la fila"
+"les capçaleres de fila"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr ""
-"Fila {rowNumber}, columna {columnNumber} eliminada de les capçaleres de la "
-"fila"
+"Fila {rowNumber}, columna {columnNumber} eliminada de les capçaleres de fila"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
-"No s'ha pogut trobar la fila {rowNumber} column {columnNumber}  en les "
-"capçaleres de la fila"
+"No s'ha pogut trobar la fila {rowNumber} column {columnNumber}  a les "
+"capçaleres de fila"
 
 msgid ""
 "Pressing once will set this cell as the first row header for any cells lower "
 "and to the right of it within this table. Pressing twice will forget the "
 "current row header for this cell."
 msgstr ""
-"Polsant una vegada s'establirà aquesta cel·la com la primera capçalera de la "
-"fila per a qualsevol cel·la inferior i a la seva dreta dins d'aquesta taula. "
-"Polsant dues vegades s'ometrà l'actual capçalera de la fila per aquesta "
-"cel·la."
+"Si prems una vegada,  dins d'aquesta regió, s'establirà aquesta cel·la com a "
+"primera capçalera de la fila per a qualsevol cel·la inferior o a la seva "
+"dreta. Si prems dues vegades s'ometrà la configuració d'aquesta cel.la com a "
+"capçalera de la fila."
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -6610,19 +6609,20 @@ msgstr "sense comentaris"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
-msgstr "Informa del text del comentari en què es troba el cursor del sistema."
+msgstr ""
+"Informa del text del comentari en el que es troba el cursor del sistema."
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 msgid "Not in table"
-msgstr "No hi ets a la taula"
+msgstr "No et trobes en una taula"
 
 msgid "Edge of table"
 msgstr "Vora de la taula"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS Braille Sense/Braille EDGE series"
+msgstr "sèries HIMS Braille Sense/Braille EDGE"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"

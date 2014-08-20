@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-07 18:54+1000\n"
-"PO-Revision-Date: 2014-02-07 11:02+0100\n"
+"POT-Creation-Date: 2014-08-11 19:10+1000\n"
+"PO-Revision-Date: 2014-08-18 15:38+0100\n"
 "Last-Translator: Hrvoje Katić <hrvojekatic@gmail.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -123,6 +123,10 @@ msgstr "traži"
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
 msgstr "obrazac"
+
+#. Translators: Reported for a significant region, normally found on web pages.
+msgid "region"
+msgstr "regija"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1260,11 +1264,13 @@ msgstr "boja podloge"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "nadpis"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "podpis"
 
@@ -1443,6 +1449,10 @@ msgstr "ima formulu"
 #. Translators: Reported when text contains a comment.
 msgid "has comment"
 msgstr "ima komentar"
+
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "zaklonjeno"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -1813,27 +1823,17 @@ msgstr ""
 "informacija se slovka, a ukoliko se pritisne 3 puta, ime i vrijednost ovog "
 "objekta kopirat će se u međuspremnik"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
-msgid "No location information for navigator object"
-msgstr "Nema informacije olokaciji za navigator objekta"
+#. Translators: message when there is no location information for the review cursor
+msgid "No location information"
+msgstr "Nema podataka o položaju"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
-msgid "No location information for screen"
-msgstr "Nema informacije o lokaciji za prevođenje ekrana"
-
-#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#. Translators: Description for report review cursor location command.
 msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
-"screen, height is {height:.1f} per cent of screen"
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
 msgstr ""
-"Rubovi objekta smješteni {left:.1f} po centimetru od lijevog ruba zaslona, "
-"{top:.1f} po centimetru od gornjeg ruba zaslona, širina je {width:.1f} po "
-"centimetru zaslona, visina je {height:.1f} po centimetru zaslona"
-
-#. Translators: Input help mode message for report object dimensions command.
-msgid "Reports the hight, width and position of the current navigator object"
-msgstr "Izvještava o visini, širini i položaju trenutnog objekta navigatora"
+"Izvještava informaciju o mjestu teksta ili objekta na položaju preglednog "
+"kursora. Pritisak dvaput može pružiti daljnje pojedinosti."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -2512,6 +2512,14 @@ msgstr "Razno"
 msgid "Browse mode"
 msgstr "Mod surfanja"
 
+#. Translators: The shortcut key used to start NVDA.
+#. This should normally be left as is, but might be changed for some locales
+#. if the default key causes problems for the normal locale keyboard layout.
+#. The key must be formatted as described in this article:
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+msgid "CTRL+ALT+N"
+msgstr "CTRL+ALT+SHIFT+N"
+
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
 msgstr "NVDA web stranica"
@@ -3061,6 +3069,7 @@ msgstr "nije podcrtano"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "osnovni pravac"
 
@@ -3081,9 +3090,78 @@ msgstr "desno poravnanje"
 msgid "align justify"
 msgstr "omogućeno poravnanje"
 
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "distribuirano poravnanje"
+
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "početno poravnanje"
+
+#. Translators: the label for paragraph format left indent
+msgid "left indent"
+msgstr "lijeva uvlaka"
+
+#. Translators: the message when there is no paragraph format left indent
+msgid "no left indent"
+msgstr "nema lijeve uvlake"
+
+#. Translators: the label for paragraph format right indent
+msgid "right indent"
+msgstr "desna uvlaka"
+
+#. Translators: the message when there is no paragraph format right indent
+msgid "no right indent"
+msgstr "nema desne uvlake"
+
+#. Translators: the label for paragraph format hanging indent
+msgid "hanging indent"
+msgstr "viseća uvlaka"
+
+#. Translators: the message when there is no paragraph format hanging indent
+msgid "no hanging indent"
+msgstr "nema viseće uvlake"
+
+#. Translators: the label for paragraph format first line indent
+msgid "first line indent"
+msgstr "uvlaka prvog retka"
+
+#. Translators: the message when there is no paragraph format first line indent
+msgid "no first line indent"
+msgstr "nema uvlake prvog retka"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "okomito poravnato po vrhu"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "okomito poravnato po sredini"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "okomito poravnato po dnu"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "okomito poravnato po osnovici"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "okomito poravnato obostrano"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "okomito poravnato distribuirano"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "okomito početno poravnanje"
+
+#. Translators: Reported when text no longer contains a comment.
+msgid "out of comment"
+msgstr "izvan komentara"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -3381,6 +3459,16 @@ msgstr ""
 "Nije moguće instalirati NVDA dodatak iz {path}.\n"
 "Morate imati pokrenut NVDA da biste mogli instalirati dodatke."
 
+#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+msgid ""
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
+msgstr ""
+"Rubovi objekta smješteni {left:.1f} po centimetru od lijevog ruba zaslona, "
+"{top:.1f} po centimetru od gornjeg ruba zaslona, širina je {width:.1f} po "
+"centimetru zaslona, visina je {height:.1f} po centimetru zaslona"
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "{symbol} kao u {description}"
@@ -3445,6 +3533,7 @@ msgid "Displays one of the recent messages"
 msgstr "Prikazuje jednu od nedavnih poruka"
 
 #. Translators: This Outlook Express message has an attachment
+#. Translators: when an email has attachments
 msgid "has attachment"
 msgstr "ima privitak"
 
@@ -3505,8 +3594,17 @@ msgid "BCC:"
 msgstr "Skriveni Primatelj:"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
+#. Translators: when an email is unread
 msgid "unread"
 msgstr "nepročitano"
+
+#. Translators: for a high importance email
+msgid "high importance"
+msgstr "velika važnost"
+
+#. Translators: For a low importance email
+msgid "low importance"
+msgstr "niska važnost"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3526,6 +3624,26 @@ msgstr "prilog"
 #, python-format
 msgid "sent: %s"
 msgstr "poslano: %s"
+
+#. Translators: The title for the dialog shown while Microsoft Outlook initializes.
+msgid "Waiting for Outlook..."
+msgstr "Čekam Outlook..."
+
+#. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+msgid "{startTime} to {endTime}"
+msgstr "Od {startTime} do {endTime}"
+
+#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+msgid "Appointment {subject}, {time}"
+msgstr "Dogovoreni termin {subject}, u {time}"
+
+#. Translators: a message when the current time slot on an Outlook Calendar has an appointment
+msgid "has appointment"
+msgstr "ima dogovoreni termin"
+
+#. Translators: the email is a meeting request
+msgid "meeting request"
+msgstr "Zahtjev za sastanak"
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -3679,6 +3797,78 @@ msgstr "Sličice u slajdu matrice"
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Slajd {slideNumber}"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers left of {otherShape} by {distance:.3g} points"
+msgstr "covers left of {otherShape} by {distance:.3g} points"
+
+#. Translators: A message when a shape is behind  another shape on a powerpoint slide
+msgid "behind left of {otherShape} by {distance:.3g} points"
+msgstr "behind left of {otherShape} by {distance:.3g} points"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers top of {otherShape} by {distance:.3g} points"
+msgstr "covers top of {otherShape} by {distance:.3g} points"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind top of {otherShape} by {distance:.3g} points"
+msgstr "behind top of {otherShape} by {distance:.3g} points"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers right of {otherShape} by {distance:.3g} points"
+msgstr "covers right of {otherShape} by {distance:.3g} points"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind right of {otherShape} by {distance:.3g} points"
+msgstr "behind right of {otherShape} by {distance:.3g} points"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers bottom of {otherShape} by {distance:.3g} points"
+msgstr "covers bottom of {otherShape} by {distance:.3g} points"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind bottom of {otherShape} by {distance:.3g} points"
+msgstr "behind bottom of {otherShape} by {distance:.3g} points"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers  {otherShape}"
+msgstr "covers  {otherShape}"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind {otherShape}"
+msgstr "behind {otherShape}"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+msgid "{distance:.3g} points from left slide edge"
+msgstr "{distance:.3g} points from left slide edge"
+
+#. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+msgid "Off left slide edge by {distance:.3g} points"
+msgstr "Off left slide edge by {distance:.3g} points"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+msgid "{distance:.3g} points from top slide edge"
+msgstr "{distance:.3g} points from top slide edge"
+
+#. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+msgid "Off top slide edge by {distance:.3g} points"
+msgstr "Off top slide edge by {distance:.3g} points"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+msgid "{distance:.3g} points from right slide edge"
+msgstr "{distance:.3g} points from right slide edge"
+
+#. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+msgid "Off right slide edge by {distance:.3g} points"
+msgstr "Off right slide edge by {distance:.3g} points"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+msgid "{distance:.3g} points from bottom slide edge"
+msgstr "{distance:.3g} points from bottom slide edge"
+
+#. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+msgid "Off bottom slide edge by {distance:.3g} points"
+msgstr "Off bottom slide edge by {distance:.3g} points"
 
 #. Translators: The description for a script
 msgid ""
@@ -4191,6 +4381,10 @@ msgstr "Autor"
 msgid "&About add-on..."
 msgstr "&O dodatku..."
 
+#. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
+msgid "Add-on &help"
+msgstr "&Pomoć za dodatak"
+
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
 msgstr "&Instaliraj..."
@@ -4581,7 +4775,9 @@ msgstr "Koristi NVDA pri Windows log-on ekranu"
 msgid "&Keep existing desktop shortcut"
 msgstr "&Zadrži postojeći prečac na radnoj površini"
 
-#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
+#. If the shortcut key has been changed for this locale,
+#. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "Stvori ikonu na &radnoj površini i tipkovni prečac (control+alt+n)"
 
@@ -4717,6 +4913,10 @@ msgstr "&Spremi konfiguraciju pri izlazu"
 #. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
 msgid "&Warn before exiting NVDA"
 msgstr "&Upozorenje prije izlaza iz programa NVDA"
+
+#. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
+msgid "&Play sounds when starting or exiting NVDA"
+msgstr "&Reproduciraj zvukove pri pokretanju ili izlasku iz NVDA programa"
 
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
@@ -4931,6 +5131,11 @@ msgstr "Zvučno signaliziraj pisanje malih slova kada je caps lock uključen"
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "Izgovori naredbene &tipke"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Handle keys from other &applications"
+msgstr "Rukovanje tipkama iz drugih &aplikacija"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
@@ -5210,6 +5415,11 @@ msgstr "Izvijesti o broju  r&etka"
 msgid "Report l&ine indentation"
 msgstr "Izvijesti o uvlačenju &redaka"
 
+#. Translators: This message is presented in the document formatting settings dialogue
+#. If this option is selected, NVDA will report paragraph indentation if available.
+msgid "Report &paragraph indentation"
+msgstr "Izvijesti o poravnanju &odlomaka"
+
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &tables"
@@ -5289,6 +5499,7 @@ msgid "&Dictionary entries"
 msgstr "&Unosi u riječniku"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
+#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr "Komentar"
 
@@ -5471,6 +5682,14 @@ msgstr "bez govora"
 msgid "word"
 msgstr "riječ"
 
+#. Translators: current position in a document as a percentage of the document length
+msgid "{curPercent:.0f}%"
+msgstr "{curPercent:.0f}%"
+
+#. Translators: the current position's screen coordinates in pixels
+msgid "at {x}, {y}"
+msgstr "na {x}, {y}"
+
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
 msgid "%s landmark"
@@ -5561,6 +5780,7 @@ msgstr "Prikazuje popis linkova, naslova ili orijentira"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
 msgstr "nije u ćeliji tablice"
 
@@ -6035,8 +6255,10 @@ msgstr "početna boja"
 msgid "{start} through {end}"
 msgstr "od {start} do {end}"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
@@ -6044,36 +6266,67 @@ msgstr ""
 "Nije moguće postaviti zaglavlja. Molimo omogućite izvještavanje zaglavlja "
 "tablice u postavkama oblikovanja dokumenta."
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Set column header row"
-msgstr "Postavi red zaglavlja stupca"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Set {address} as start of column headers"
+msgstr "Postavi adresu {address} kao početak zaglavlja stupaca"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Cleared column header row"
-msgstr "Obrisan red zaglavlja stupca"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Already set {address} as start of column headers"
+msgstr "Adresa {address} već je postavljena kao početak zaglavlja stupaca"
 
-msgid ""
-"Pressing once will set the current row as the row where column headers "
-"should be found. Pressing twice clears the setting."
-msgstr ""
-"Ukoliko se pritisne jednom, postavit će trenutni red kao red gdje treba "
-"pronaći zaglavlja stupca. Ukoliko se pritisne dvaput, obrisat će postavku."
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "removed {address}    from column headers"
+msgstr "uklonjena adresa {address} iz zaglavlja stupaca"
 
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Set row header column"
-msgstr "Postavi stupac zaglavlja reda"
-
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Cleared row header column"
-msgstr "Obrisan stupac zaglavlja retka"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Cannot find {address}    in column headers"
+msgstr "Ne mogu naći {address} u zaglavljima stupaca"
 
 msgid ""
-"Pressing once will set the current column as the column where row headers "
-"should be found. Pressing twice clears the setting."
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this region. Pressing twice will forget "
+"the current column header for this cell."
 msgstr ""
-"Ukoliko se pritisne jednom, postavit će trenutni stupac kao stupac gdje "
-"treba pronaći zaglavlja retka. Ukoliko se pritisne dvaput, obrisat će "
-"postavku."
+"Kada se pritisne jednom, ova ćelija će se postaviti kao prvo zaglavlje "
+"stupaca za svaku ćeliju niže i desno od nje unutar ove regije. Kada se "
+"pritisne dvaput, zaboravit će se trenutno zaglavlje stupaca za ovu ćeliju."
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Set {address} as start of row headers"
+msgstr "Postavi {address} kao početak zaglavlja redaka"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Already set {address} as start of row headers"
+msgstr "Adresa {address} već je postavljena kao početak zaglavlja redaka"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "removed {address}    from row headers"
+msgstr "Adresa {address} je uklonjena iz zaglavlja redaka"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Cannot find {address}    in row headers"
+msgstr "Ne mogu naći {address} u zaglavljima redaka"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this region. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Kada se pritisne jednom, ova ćelija će se postaviti kao prvo zaglavlje "
+"redaka za svaku ćeliju niže i desno od nje unutar ove regije. Kada se "
+"pritisne dvaput, zaboravit će se trenutno zaglavlje redaka za ovu ćeliju."
+
+#. Translators: A message in Excel when there is no comment
+msgid "Not on a comment"
+msgstr "Nije na komentaru"
+
+#. Translators: the description  for a script for Excel
+msgid "Reports the comment on the current cell"
+msgstr "Izvještava o komentaru na trenutnoj ćeliji"
+
+#. Translators: Dialog text for
+msgid "Editing comment for cell {address}"
+msgstr "Uređivanje komentara za ćeliju {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
@@ -6186,6 +6439,156 @@ msgstr "nepoznat datum"
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "{revisionType} autora {revisionAuthor} na datum {revisionDate}"
 
+#, python-format
+msgid "%g characters"
+msgstr "%g znakova"
+
+#. Translators: the value in points for a paragraph indenting
+#, python-format
+msgid "%g pt"
+msgstr "%g pt"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Postavi redak {rowNumber} stupac {columnNumber} kao početak zaglavlja stupaca"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Već je postavljen redak {rowNumber} stupac {columnNumber} kao početak "
+"zaglavlja stupaca"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr "Uklonjen redak {rowNumber} stupac {columnNumber} iz zaglavlja stupaca"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr "Ne mogu naći {rowNumber} stupac {columnNumber} u zaglavljima stupaca"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"Kada se pritisne jednom, ova ćelija će se postaviti kao prvo zaglavlje "
+"stupaca za svaku ćeliju niže i desno od nje unutar ove tablice. Kada se "
+"pritisne dvaput, zaboravit će se trenutno zaglavlje stupaca za ovu ćeliju."
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Postavi redak {rowNumber} stupac {columnNumber} kao početak zaglavlja redaka"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Već je postavljen redak {rowNumber} stupac {columnNumber} kao početak "
+"zaglavlja redaka"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr "Uklonjen redak {rowNumber} stupac {columnNumber} iz zaglavlja redaka"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+"Ne mogu naći redak {rowNumber} stupac {columnNumber} u zaglavljima redaka"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Kada se pritisne jednom, ova ćelija će se postaviti kao prvo zaglavlje "
+"redaka za svaku ćeliju niže i desno od nje unutar ove tablice. Kada se "
+"pritisne dvaput, zaboravit će se trenutno zaglavlje redaka za ovu ćeliju."
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "Podebljanje je uključeno"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "Podebljanje je isključeno"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "Kurziv je uključen"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "Kurziv je isključen"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "Podcrtavanje je uključeno"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "Podcrtavanje je isključeno"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Left aligned"
+msgstr "Poravnato lijevo"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "centered"
+msgstr "centrirano"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Right aligned"
+msgstr "Poravnato desno"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Justified"
+msgstr "Poravnato obostrano"
+
+#. Translators: the message when the outline level / style is changed in Microsoft word
+msgid "{styleName} style, outline level {outlineLevel}"
+msgstr "Stil {styleName}, razina obrisa {outlineLevel}"
+
+#. Translators: a message when increasing or decreasing font size in Microsoft Word
+msgid "{size:g} point font"
+msgstr "Font {size:g} točaka"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} characters"
+msgstr "{offset:.3g} znakova"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} inches"
+msgstr "{offset:.3g} inča"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} centimeters"
+msgstr "{offset:.3g} centimetara"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} millimeters"
+msgstr "{offset:.3g} milimetara"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} points"
+msgstr "{offset:.3g} točaka"
+
+#. Translators: a measurement in Microsoft Word
+#. See http://support.microsoft.com/kb/76388 for details.
+msgid "{offset:.3g} picas"
+msgstr "{offset:.3g} pica"
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "no comments"
+msgstr "nema komentara"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr ""
+"Izvještava o tekstu komentara na mjestu gdje se nalazi znak za umetanje."
+
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 msgid "Not in table"
@@ -6201,6 +6604,43 @@ msgstr "HIMS Braille Sense/Braille EDGE serija"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "No location information for navigator object"
+#~ msgstr "Nema informacije olokaciji za navigator objekta"
+
+#~ msgid "No location information for screen"
+#~ msgstr "Nema informacije o lokaciji za prevođenje ekrana"
+
+#~ msgid ""
+#~ "Reports the hight, width and position of the current navigator object"
+#~ msgstr "Izvještava o visini, širini i položaju trenutnog objekta navigatora"
+
+#~ msgid "Set column header row"
+#~ msgstr "Postavi red zaglavlja stupca"
+
+#~ msgid "Cleared column header row"
+#~ msgstr "Obrisan red zaglavlja stupca"
+
+#~ msgid ""
+#~ "Pressing once will set the current row as the row where column headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "Ukoliko se pritisne jednom, postavit će trenutni red kao red gdje treba "
+#~ "pronaći zaglavlja stupca. Ukoliko se pritisne dvaput, obrisat će postavku."
+
+#~ msgid "Set row header column"
+#~ msgstr "Postavi stupac zaglavlja reda"
+
+#~ msgid "Cleared row header column"
+#~ msgstr "Obrisan stupac zaglavlja retka"
+
+#~ msgid ""
+#~ "Pressing once will set the current column as the column where row headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "Ukoliko se pritisne jednom, postavit će trenutni stupac kao stupac gdje "
+#~ "treba pronaći zaglavlja retka. Ukoliko se pritisne dvaput, obrisat će "
+#~ "postavku."
 
 #, fuzzy
 #~ msgid "%s through %s"

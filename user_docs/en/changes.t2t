@@ -86,7 +86,7 @@
 == Changes for Developers ==
 - NVDA now has unified support for add-on documentation. See the Add-on Documentation section of the Developer Guide for details. (#2694)
 - When providing gesture bindings on a ScriptableObject via __gestures, it is now possible to provide the None keyword as the script. This unbinds the gesture in any base classes. (#4240)
--     It is now possible to change the shortcut key used to start NVDA for locales where the normal shortcut causes problems. (#2209)
+- It is now possible to change the shortcut key used to start NVDA for locales where the normal shortcut causes problems. (#2209)
  - This is done via gettext.
  - Note that the text for the Create desktop shortcut option in the Install NVDA dialog, as well as the shortcut key in the User Guide, must also be updated.
 
