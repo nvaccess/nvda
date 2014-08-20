@@ -14,6 +14,10 @@ extern unsigned char *out_end;
 speechPlayer_handle_t speechPlayerHandle=NULL;
 #define minFadeLength 110
 
+inline bool needsMixWaveFile() {
+	return wdata.mix_wavefile_ix<wdata.n_mix_wavefile;
+}
+
 unsigned int mixWaveFile(unsigned int maxNumSamples, sample* sampleBuf) {
 	unsigned int i=0;
 	for(;wdata.mix_wavefile_ix<wdata.n_mix_wavefile;++wdata.mix_wavefile_ix) {
@@ -64,7 +68,7 @@ void fillSpeechPlayerFrame(frame_t * eFrame, speechPlayer_frame_t* spFrame) {
 		spFrame->caNP=0;
 	} else {
 		spFrame->cfN0=450;
-		spFrame->cfNP=200;
+		spFrame->cfNP=216;
 		spFrame->caNP=1;
 	}
 	spFrame->cb1=eFrame->bw[1]*2*(wvoice->width[1]/256.0);
@@ -98,6 +102,11 @@ int Wavegen_Klatt2(int length, int modulation, int resume, frame_t *fr1, frame_t
 		wdata.pitch_ix+=(wdata.pitch_inc*(length/STEPSIZE));
 		wdata.pitch=((wdata.pitch_env[min(wdata.pitch_ix>>8,127)]*wdata.pitch_range)>>8)+wdata.pitch_base;
 		spFrame2.endVoicePitch=wdata.pitch/4096;
+		bool willMixWaveFile=needsMixWaveFile();
+		if(willMixWaveFile) {
+			spFrame1.outputGain/=5;
+			spFrame2.outputGain/=5;
+		}
 		int mainLength=length;
 		speechPlayer_queueFrame(speechPlayerHandle,&spFrame1,minFadeLength,minFadeLength,-1,false);
 		mainLength-=minFadeLength;
