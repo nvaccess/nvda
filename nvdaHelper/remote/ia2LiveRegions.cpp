@@ -273,9 +273,9 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 				// Check for useful container-live on parent, as if missing or off, then child must be the root 
 				// Firstly, we assume we are the root of the region and therefore should ignore the event
 				ignoreShowEvent=true;
-				IAccessible2* paccParent=NULL;
-				if(pacc2->QueryInterface(IID_IAccessible2,(void**)&paccParent)==S_OK) {
-					if(paccParent->get_attributes(&attribs)==S_OK&&attribs) {
+				IAccessible2* pacc2Parent=NULL;
+				if(pdispParent->QueryInterface(IID_IAccessible2,(void**)&pacc2Parent)==S_OK) {
+					if(pacc2Parent->get_attributes(&attribs)==S_OK&&attribs) {
 						IA2AttribsToMap(attribs,attribsMap);
 						SysFreeString(attribs);
 						i=attribsMap.find(L"container-live");
@@ -284,7 +284,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 							ignoreShowEvent=false;
 						}
 					}
-					paccParent->Release();
+					pacc2Parent->Release();
 				}
 			}
 			pdispParent->Release();
