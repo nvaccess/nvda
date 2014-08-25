@@ -6,7 +6,7 @@
 
 """Provides an interactive Python console run inside NVDA which can be accessed via TCP.
 To use, call L{initialize} to start the server.
-Then, connect to it using TCP port L{PORT}.
+Then, connect to it using the port specified to L{initialize}.
 The server will only handle one connection at a time.
 """
 
@@ -16,10 +16,6 @@ import wx
 import pythonConsole
 from logHandler import log
 from textInfos import convertToCrlf
-
-#: The TCP port on which the server will run.
-#: @type: int
-PORT = 6832
 
 server = None
 
@@ -74,9 +70,16 @@ class RequestHandler(SocketServer.StreamRequestHandler):
 			# Clean up the console.
 			self.console = None
 
-def initialize():
+def initialize(host="", port=6832):
+	"""Initialize the remote Python console.
+	@param host: The address on which to listen for connections;
+		defaults to all addresses on the system.
+	@type host: str
+	@param port: The port on which to listen for connections; defaults to 6832.
+	@type: int
+	"""
 	global server
-	server = SocketServer.TCPServer(("", PORT), RequestHandler)
+	server = SocketServer.TCPServer((host, port), RequestHandler)
 	server.daemon_threads = True
 	thread = threading.Thread(target=server.serve_forever)
 	thread.daemon = True
