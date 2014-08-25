@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2011 NV Access Inc
+#Copyright (C) 2011-2014 NV Access Limited
 
 """Provides an interactive Python console run inside NVDA which can be accessed via TCP.
 To use, call L{initialize} to start the server.
@@ -15,6 +15,7 @@ import SocketServer
 import wx
 import pythonConsole
 from logHandler import log
+from textInfos import convertToCrlf
 
 #: The TCP port on which the server will run.
 #: @type: int
@@ -29,6 +30,9 @@ class RequestHandler(SocketServer.StreamRequestHandler):
 			# We're about to exit, so don't output the prompt.
 			return
 		self.wfile.write(prompt + " ")
+
+	def output(self, text):
+		self.wfile.write(convertToCrlf(text))
 
 	def exit(self):
 		self._keepRunning = False
@@ -45,8 +49,8 @@ class RequestHandler(SocketServer.StreamRequestHandler):
 		self._keepRunning = True
 
 		try:
-			self.wfile.write("NVDA Remote Python Console\n")
-			self.console = pythonConsole.PythonConsole(outputFunc=self.wfile.write, setPromptFunc=self.setPrompt, exitFunc=self.exit)
+			self.wfile.write("NVDA Remote Python Console\r\n")
+			self.console = pythonConsole.PythonConsole(outputFunc=self.output, setPromptFunc=self.setPrompt, exitFunc=self.exit)
 			self.console.namespace.update({
 				"snap": self.console.updateNamespaceSnapshotVars,
 				"rmSnap": self.console.removeNamespaceSnapshotVars,
