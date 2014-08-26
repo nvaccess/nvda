@@ -386,7 +386,12 @@ class MSHTML(IAccessible):
 			if nodeName=="SELECT" and self.windowStyle&winUser.WS_POPUP:
 				clsList.append(PopupList)
 			elif nodeNamesToNVDARoles.get(nodeName) == controlTypes.ROLE_DOCUMENT:
-				clsList.append(Body)
+				try:
+					isBodyNode=self.HTMLNodeUniqueNumber==self.HTMLNode.document.body.uniqueNumber
+				except (COMError,NameError):
+					isBodyNode=False
+				if isBodyNode:
+					clsList.append(Body)
 			elif nodeName == "OBJECT":
 				clsList.append(Object)
 			elif nodeName=="FIELDSET":
@@ -879,11 +884,12 @@ class Fieldset(MSHTML):
 class Body(MSHTML):
 
 	def _get_parent(self):
-		# The parent of the body accessible is an irrelevant client object (description: MSAAHTML Registered Handler).
+		# The parent of the body accessible may be an irrelevant client object (description: MSAAHTML Registered Handler).
 		# This object isn't returned when requesting OBJID_CLIENT, nor is it returned as a child of its parent.
 		# Therefore, eliminate it from the ancestry completely.
+		# However it is possible that this body is a child document of a parent frame. In this case don't skip it.
 		parent = super(Body, self).parent
-		if parent:
+		if parent and not isinstance(parent,MSHTML):
 			return parent.parent
 		else:
 			return parent
