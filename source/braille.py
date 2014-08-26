@@ -1430,8 +1430,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.update()
 		self.mainBuffer.restoreWindow()
 		if region.brailleCursorPos is not None:
+			# This will call BrailleHandler.update.
 			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
-		if self.buffer is self.mainBuffer:
+		elif self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
 			self._dismissMessage()
