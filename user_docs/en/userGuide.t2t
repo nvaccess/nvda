@@ -780,43 +780,6 @@ This means that you do not have to scroll the display at the end of each line ev
 This may allow for more fluent reading of large amounts of text.
 It is disabled by default.
 
-+++ Braille control type and state abbreviations +++
-In order to fit as much information as possible on a braille display, The folowing abbreviations have been defined to indicate control type and state.
-
-|| Abbreviation | Control type |
-| btn | displayed in braille for an object which is a button |
-| cbo | displayed in braille for an object which is a combo box |
-| chk | displayed in braille for an object which is a check box |
-| dlg | displayed in braille for an object which is a dialog |
-| edt | displayed in braille for an object which is an editable text field |
-| gra | displayed in braille for an object which is a graphic |
-| cN | table column number n, e.g. c1, c2. |
-| rN | table row number n, e.g. r1, r2. |
-| hN | heading at level n, e.g. h1, h2. |
-| lnk | displayed in braille for an object which is a link |
-| lst | displayed in braille for an object which is a list |
-| vlnk | visited link |
-| mnu | displayed in braille for an object which is a menu |
-| mnubar | displayed in braille for an object which is a menu bar |
-| rbtn | displayed in braille for an object which is a radio button |
-| tb | displayed in braille for an object which is a table |
-| tv | displayed in braille for an object which is a treeview |
-| lv N | displayed in braille when an object (e.g. a tree view item) has a hierarchical level |
-| ----- | displayed in braille for an object which is a seperator |
-
-The following state indicators are also defined:
-|| Abbreviation | Control state |
-| ... | displayed in braille when an object supports autocompletion |
-| ( ) | displayed in braille when an object (e.g. a check box) is not checked |
-| (x) | displayed in braille when an object (e.g. a check box) is checked |
-| (-) | displayed in braille when an object (e.g. a check box) is half checked |
-| - | displayed in braille when an object (e.g. a tree view item) is collapsible |
-| + | displayed in braille when an object (e.g. a tree view item) is Expandable |
-| clk | displayed in braille when an object is clickable |
-| ro | displayed in braille when an object (e.g. an editable text field) is read-only |
-| sel | displayed in braille when an object is selected |
-| submnu | displayed in braille when an object has a popup (usually a sub-menu) |
-
 +++ Keyboard Settings (NVDA+control+k) +++
 This dialog box is found in the Preferences menu, under "Keyboard settings...".
 It contains the following options:
@@ -1918,6 +1881,43 @@ Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/driv
 | Move braille display to next line | lndn (go down one line) |
 | Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
+
++ Braille control type and state abbreviations +
+In order to fit as much information as possible on a braille display, The folowing abbreviations have been defined to indicate control type and state.
+
+|| Abbreviation | Control type |
+| btn | button |
+| cbo | combo box |
+| chk | check box |
+| dlg | dialog |
+| edt | editable text field |
+| gra | graphic |
+| cN | table column number n, e.g. c1, c2. |
+| rN | table row number n, e.g. r1, r2. |
+| hN | heading at level n, e.g. h1, h2. |
+| lnk | link |
+| lst | list |
+| vlnk | visited link |
+| mnu | menu |
+| mnubar | menu bar |
+| rbtn | radio button |
+| tb | table |
+| tv | treeview |
+| lv N | a tree view item has a hierarchical level N|
+| ``-----`` | seperator |
+
+The following state indicators are also defined:
+|| Abbreviation | Control state |
+| ... | displayed when an object supports autocompletion |
+| ( ) | displayed when an object (e.g. a check box) is not checked |
+| (x) | displayed when an object (e.g. a check box) is checked |
+| (-) | displayed when an object (e.g. a check box) is half checked |
+| - | displayed when an object (e.g. a tree view item) is collapsible |
+| + | displayed when an object (e.g. a tree view item) is Expandable |
+| clk | displayed when an object is clickable |
+| ro | displayed when an object (e.g. an editable text field) is read-only |
+| sel | displayed when an object is selected |
+| submnu | displayed when an object has a popup (usually a sub-menu) |
 
 + Advanced Topics +
 
