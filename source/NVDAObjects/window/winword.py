@@ -369,9 +369,19 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		class ControlField(textInfos.ControlField): 
 			def get(d,name,default=None):
 				if name=="table-rowheadertext":
-					return self.obj.fetchAssociatedHeaderCellText(self._rangeObj.cells[1],False)
+					try:
+						cell=self._rangeObj.cells[1]
+					except IndexError:
+						log.debugWarning("no cells for table row, possibly on end of cell mark")
+						return super(ControlField,d).get(name,default)
+					return self.obj.fetchAssociatedHeaderCellText(cell,False)
 				elif name=="table-columnheadertext":
-					return self.obj.fetchAssociatedHeaderCellText(self._rangeObj.cells[1],True)
+					try:
+						cell=self._rangeObj.cells[1]
+					except IndexError:
+						log.debugWarning("no cells for table row, possibly on end of cell mark")
+						return super(ControlField,d).get(name,default)
+					return self.obj.fetchAssociatedHeaderCellText(cell,True)
 				else:
 					return super(ControlField,d).get(name,default)
 		newField=ControlField()
