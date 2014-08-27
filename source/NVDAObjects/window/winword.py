@@ -976,14 +976,16 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 
 	def script_nextParagraph(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
-		info.move(textInfos.UNIT_PARAGRAPH,1)
+		# #4375: can't use self.move here as it may check document.chracters.count which can take for ever on large documents.
+		info._rangeObj.move(wdParagraph,1)
 		info.updateCaret()
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
 	script_nextParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
 	def script_previousParagraph(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
-		info.move(textInfos.UNIT_PARAGRAPH,-1)
+		# #4375: keeping cemetrical with nextParagraph script. 
+		info._rangeObj.move(wdParagraph,-1)
 		info.updateCaret()
 		self._caretScriptPostMovedHelper(textInfos.UNIT_PARAGRAPH,gesture,None)
 	script_previousParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
