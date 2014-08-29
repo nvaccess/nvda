@@ -271,7 +271,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			self._rangeObj.SetRange(0,0)
 		elif position==textInfos.POSITION_LAST:
 			self._rangeObj=self.obj.WinwordSelectionObject.range
-			self._rangeObj.moveEnd(wdStory,1)
+			self._rangeObj.endOf(wdStory)
 			self._rangeObj.move(wdCharacter,-1)
 		elif isinstance(position,textInfos.offsets.Offsets):
 			self._rangeObj=self.obj.WinwordSelectionObject.range
