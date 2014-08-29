@@ -2233,7 +2233,6 @@ class GlobalCommands(ScriptableObject):
 		# Ignore invisible or offscreen objects as they cannot even be navigated with touch gestures.
 		if controlTypes.STATE_INVISIBLE in obj.states or controlTypes.STATE_OFFSCREEN in obj.states:
 			return
-		
 		try:
 			p=api.getReviewPosition().pointAtStart
 		except (NotImplementedError, LookupError):
