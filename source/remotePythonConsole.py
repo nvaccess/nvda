@@ -19,7 +19,7 @@ from textInfos import convertToCrlf
 
 server = None
 
-class RequestHandler(SocketServer.StreamRequestHandler):
+class BaseRequestHandler(SocketServer.StreamRequestHandler):
 
 	def setPrompt(self, prompt):
 		if not self._keepRunning:
@@ -69,6 +69,9 @@ class RequestHandler(SocketServer.StreamRequestHandler):
 		finally:
 			# Clean up the console.
 			self.console = None
+
+# Allow for easy overriding by the test harness helper.
+RequestHandler = BaseRequestHandler
 
 def initialize(host="", port=6832):
 	"""Initialize the remote Python console.
