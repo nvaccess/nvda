@@ -441,10 +441,14 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		lang = locale.windows_locale[lcid]
 		if lang:
 			return languageHandler.normalizeLanguage(lang)
-		
+
 	def expand(self,unit):
-		if unit==textInfos.UNIT_LINE and self.basePosition not in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
-			unit=textInfos.UNIT_SENTENCE
+		if unit==textInfos.UNIT_LINE: 
+			try:
+				if self._rangeObj.tables.count>0 and self._rangeObj.cells.count==0:
+					unit=textInfos.UNIT_CHARACTER
+			except COMError:
+				pass
 		if unit==textInfos.UNIT_LINE:
 			self._expandToLineAtCaret()
 		elif unit==textInfos.UNIT_CHARACTER:
@@ -505,25 +509,73 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			text=""
 		return text
 
-	def move(self,unit,direction,endPoint=None):
-		if unit==textInfos.UNIT_LINE:
-			unit=textInfos.UNIT_SENTENCE
+	def _move(self,unit,direction,endPoint=None,_rangeObj=None):
+		if not _rangeObj:
+			_rangeObj=self._rangeObj
 		if unit in NVDAUnitsToWordUnits:
 			unit=NVDAUnitsToWordUnits[unit]
 		else:
 			raise NotImplementedError("unit: %s"%unit)
 		if endPoint=="start":
-			moveFunc=self._rangeObj.MoveStart
+			moveFunc=_rangeObj.MoveStart
 		elif endPoint=="end":
-			moveFunc=self._rangeObj.MoveEnd
+			moveFunc=_rangeObj.MoveEnd
 		else:
-			moveFunc=self._rangeObj.Move
+			moveFunc=_rangeObj.Move
 		res=moveFunc(unit,direction)
 		#units higher than character and word expand to contain the last text plus the insertion point offset in the document
 		#However move from a character before will incorrectly move to this offset which makes move/expand contridictory to each other
 		#Make sure that move fails if it lands on the final offset but the unit is bigger than character/word
-		if direction>0 and endPoint!="end" and unit not in (wdCharacter,wdWord)  and (self._rangeObj.start+1)==self.obj.WinwordDocumentObject.characters.count:
+		if direction>0 and endPoint!="end" and unit not in (wdCharacter,wdWord)  and (_rangeObj.start+1)==self.obj.WinwordDocumentObject.characters.count:
 			return 0
+		return res
+
+	def move(self,unit,direction,endPoint=None):
+		oldCell=None
+		if endPoint is None and unit==textInfos.UNIT_LINE and (direction==1 or direction==-1) and self._rangeObj.tables.count>0:
+			try:
+				cells=self._rangeObj.cells
+			except COMError:
+				cells=None
+			if cells and cells.count==0:
+				unit=textInfos.UNIT_CHARACTER
+			elif cells:
+				oldCell=cells[1]
+		if unit!=textInfos.UNIT_LINE:
+			return self._move(unit,direction,endPoint)
+		res=0
+		oldRange=self._rangeObj if oldCell else None
+		sel=self.obj.WinwordSelectionObject
+		oldSel=sel.range
+		self.obj.WinwordDocumentObject.application.screenUpdating=False
+		try:
+			self._rangeObj.select()
+			if endPoint is None and direction<0:
+				oldStart,oldEnd=sel.start,sel.end
+			res=self._move(unit,direction,endPoint,sel)
+			if res!=0 and endPoint is None and direction==-1 and sel.start==oldStart and sel.end==oldEnd:
+				res=self._move(textInfos.UNIT_CHARACTER,direction,endPoint,sel)
+				self.expand(unit)
+				self.collapse()
+			self._rangeObj=sel.range
+			oldSel.select()
+		finally:
+			self.obj.WinwordDocumentObject.application.screenUpdating=True
+		if oldCell and (direction==1 or direction==-1):
+			try:
+				cell=self._rangeObj.cells[1]
+			except IndexError:
+				cell=None
+			if cell and not oldCell.range.inRange(cell.range):
+				self._rangeObj=oldRange
+				if direction>0:
+					res=self._move(textInfos.UNIT_PARAGRAPH,direction)
+				elif direction<0:
+					self.expand(textInfos.UNIT_CELL)
+					self.collapse()
+					res=self._move(textInfos.UNIT_CHARACTER,direction)
+					self.expand(unit)
+					self.collapse()
 		return res
 
 	def _get_bookmark(self):
