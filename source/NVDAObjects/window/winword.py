@@ -30,6 +30,8 @@ import textInfos
 import textInfos.offsets
 import colors
 import controlTypes
+from treeInterceptorHandler import TreeInterceptor
+from cursorManager import CursorManager, ReviewCursorManager
 from tableUtils import HeaderCellInfo, HeaderCellTracker
 from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
@@ -589,8 +591,41 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)
 		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.End)
 
+class TreeInterceptorWithMakeTextInfo(TreeInterceptor):
+	def makeTextInfo(self,position):
+		return self.TextInfo(self,position)
+
+class WordDocumentTreeInterceptor(ReviewCursorManager,TreeInterceptorWithMakeTextInfo):
+
+	def _get_TextInfo(self):
+		class TextInfo(self.rootNVDAObject.TextInfo):
+			def __init__(self,obj,position):
+				if isinstance(position,WordDocument):
+					position=textInfos.POSITION_CARET
+				super(TextInfo,self).__init__(obj.rootNVDAObject,position)
+		self.TextInfo=TextInfo
+		return TextInfo
+
+	def makeTextInfo(self,position):
+		info=super(WordDocumentTreeInterceptor,self).makeTextInfo(position)
+		if info:
+			info.updateSelection=info.updateCaret=lambda inst, selection: self._set_selection(selection)
+		return info
+
+	def _get_isAlive(self):
+		return winUser.isWindow(self.rootNVDAObject.windowHandle)
+
+	def __contains__(self,obj):
+		return obj==self.rootNVDAObject
+
+	def _set_selection(self,info):
+		super(WordDocumentTreeInterceptor,self)._set_selection(info)
+		info._rangeObj.select()
+
 class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 
+	treeInterceptorClass=WordDocumentTreeInterceptor
+	shouldCreateTreeInterceptor=False
 	TextInfo=WordDocumentTextInfo
 
 	#: True if formatting should be ignored (text only) such as for spellCheck error field
