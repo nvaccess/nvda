@@ -341,7 +341,7 @@ def getStatusBarText(obj):
 	@return: The status bar text.
 	@rtype: str
 	"""
-	text = obj.name
+	text = obj.name + " "
 	if text is None:
 		text = ""
 	return text + " ".join(chunk for child in obj.children for chunk in (child.name, child.value) if chunk and isinstance(chunk, basestring) and not chunk.isspace())
