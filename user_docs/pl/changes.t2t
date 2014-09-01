@@ -47,6 +47,7 @@
  - W polach edycji i trybie czytania, zgłaszana jest pozycja kursora jako procent treści, oraz jego współrzędne na ekranie.
  - Na kształtach w prezentacjach Powerpoint, odczytana zostanie pozycja kształtu w odniesieniu do krawędzi slajdu i innych kształtów.
  - Dwukrotne wywołanie tego polecenia spowoduje dawne zachowanie, czyli odczytanie położenia całej kontrolki.
+- Nowy język: kataloński.
 
 
 == Zmiany ==
@@ -68,7 +69,7 @@
 - Okno sprawdzania pisowni Microsoft Word 2010: NVDA odczytuje teraz błędnie napisane słowo, zamiast jak dawniej pierwsze pogrubione słowo. (#3431)
 - Tryb czytania Internet Explorer i innych kontrolek MSHTML : użycie tabulatora, lub jednoliterowej nawigacji przejścia do pól edycyjnych ponownie zgłasza ich etykietę w wielu przypadkach, gdy to wcześniej nie działało (szczególnie, gdy użyto elementu HTML label). (#4170)
 - Microsoft Word: dokładniejsze zgłaszanie istnienia i położenia komentarzy. (#3528)
-- Poprawiona nawigacja w niektórych oknach produktów MS Office takich jak Word, Excel and Outlook poprzez nieodczytywanie niektórych kontenerów pasków narzędzi, które nie są przydatne dla użytkownika. (#4198) 
+- Poprawiona nawigacja w niektórych oknach produktów MS Office takich jak Word, Excel i Outlook poprzez nieodczytywanie niektórych kontenerów pasków narzędzi, które nie są przydatne dla użytkownika. (#4198) 
 - Okienka zadań takie jak manager schowka lub odzyskiwanie plików, nie otrzymują od teraz przypadkowo punktu uwagi podczas otwierania aplikacji Microsoft Word, albo Excel, co czasem zmuszało użytkownika do przełączania się z i do aplikacji, aby móc używać dokumentu lub arkusza.  (#4199)
 - Rozwiązany problem uruchamiania NVDA na nowszych systemach Windows, jeśli język użytkownika jest ustawiony na serbski (łaciński). (#4203) 
 - Naciśnięcie klawisza numlock w trybie pomocy klawiatury, obecnie prawidłowo przełącza numlock, zamiast powodować rozsynchronizowanie systemu i klawiatury w kwestii stanu tego klawisza. (#4226)
@@ -80,6 +81,7 @@
 - Microsoft Word: podczas czytania pierwszej lub ostatniej linii spisu treści, cały spis treści nie jest od teraz odczytywany. (#3421)
 - Podczas czytania pisanych słów, oraz w niektórych innych sytuacjach, słowa nie są od teraz nieprawidłowo dzielone na znakach samogłosek, albo znakach virama w językach Indyjskich. (#4254)
 - Numeryczne pola edycji w GoldWave są teraz prawidłowo obsługiwane. (#670)
+- Microsoft Word: podczas przemieszczania się po akapitach klawiszami control+strzałka w dół / control+strzałka w górę, nie jest od teraz konieczne naciskanie ich dwukrotnie podczas przechodzenia przez listy numerowane lub punktowane. (#3290)
 
 
 == Zmiany dla programistów ==
