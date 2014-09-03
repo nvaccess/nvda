@@ -341,9 +341,9 @@ def getStatusBarText(obj):
 	@return: The status bar text.
 	@rtype: str
 	"""
-	text = obj.name + " "
-	if text is None:
-		text = ""
+	text = obj.name or ""
+	if text:
+		text += " "
 	return text + " ".join(chunk for child in obj.children for chunk in (child.name, child.value) if chunk and isinstance(chunk, basestring) and not chunk.isspace())
 
 def filterFileName(name):
