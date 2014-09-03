@@ -683,7 +683,7 @@ class ExitDialog(wx.Dialog):
 
 		actionSizer=wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for actions list in the Exit dialog.
-		actionsLabel=wx.StaticText(self,-1,label=_("What to &do:"))
+		actionsLabel=wx.StaticText(self,-1,label=_("What would you like to &do?"))
 		actionSizer.Add(actionsLabel)
 		actionsListID=wx.NewId()
 		self.actions = [
@@ -692,9 +692,8 @@ class ExitDialog(wx.Dialog):
 		# Translators: An option in the combo box to choose exit action.
 		_("Restart"),
 		# Translators: An option in the combo box to choose exit action.
-		_("Restart with addons disabled")]
-		# Translators: A combo box to choose exit action (possible options are exit, restart, restart with addons disabled).
-		self.actionsList=wx.Choice(self,actionsListID,name=_("Action"),choices=self.actions)
+		_("Restart with add-ons disabled")]
+		self.actionsList=wx.Choice(self,actionsListID,choices=self.actions)
 		self.actionsList.SetSelection(0)
 		actionSizer.Add(self.actionsList)
 		mainSizer.Add(actionSizer,border=10,flag=wx.CENTER)

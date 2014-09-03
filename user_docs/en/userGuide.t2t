@@ -131,7 +131,7 @@ Press OK to dismiss this dialog.
 ++ Launching NVDA ++
 If you have installed NVDA with the installer, then starting NVDA is as simple as either pressing control+alt+n, or choosing NVDA from the NVDA menu under Programs on the Start Menu.
 Additionally you can type NVDA into the Run dialog and press Enter.
-You can also pass some [command line options #CommandLineOptions] which allows you to restart NVDA (-r), quit (-q), disable addons (--disable-addons) and many more.
+You can also pass some [command line options #CommandLineOptions] which allows you to restart NVDA (-r), quit (-q), disable add-ons (--disable-addons) and many more.
 
 To start the portable version, go to the directory you unpacked NVDA to, and press enter or double click on nvda.exe.
 
@@ -594,9 +594,9 @@ Press OK, and NVDA will restart.
 ==== Save Configuration on Exit ====
 This option is a checkbox that, when checked, tells NVDA to automatically save the current configuration when you exit NVDA.
 
-==== Show exit options on exiting NVDA ====
+==== Show exit options when exiting NVDA ====
 This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks what action you want to perform.
-When checked, a dialog will appear when you attempt to exit NVDA asking whether you want to exit, restart or restart with addons disabled.
+When checked, a dialog will appear when you attempt to exit NVDA asking whether you want to exit, restart or restart with add-ons disabled.
 When unchecked, NVDA will exit directly.
 
 ==== Play sounds when starting or exiting NVDA ====
@@ -1924,16 +1924,18 @@ The following state indicators are also defined:
 + Advanced Topics +
 
 ++ Command line options ++[CommandLineOptions]
-NVDA can accept one or more additional options when starts, which could change its behaviour. You can pass as many options as you need.
+NVDA can accept one or more additional options when starts, which could change its behaviour.
+You can pass as many options as you need.
 Those options could be passed when starting from a shortcut (in the shortcut properties), from the Run dialog (StartMenu->Run or WindowsKey+R), or from the command interpretor (command prompt or cmd.exe) and should be separated by themselvs and from the name of NVDA's executable file with spaces.
 For example, the desktop shortcut that NVDA creates after install has the -r option, which tells NVDA to close the currently running copy before starting the new one.
-Another useful option is --disable-addons, which tells NVDA to suspend all running addons, which allows you to recover from bad situations and also helps you to determin the cause of some problem when such appear.
+Another useful option is --disable-addons, which tells NVDA to suspend all running add-ons, which allows you to recover from bad situations and also helps you to determin the cause of some problem when such appear.
 
-For example, you can exit silently the currently running copy of NVDA by entering the following in the Run dialog:
+For example, you can exit the currently running copy of NVDA by entering the following in the Run dialog:
 
-nvda -q -m
+nvda -q
 
-Some of the command line options have a short and a long version, some of them have only one or the another. For those which have a short version, you can combine them like this:
+Some of the command line options have a short and a long version, some of them have only one or the another.
+For those which have a short version, you can combine them like this:
 | nvda -rm | This will exit the currently running copy of NVDA and will start this one with startup sounds off, etc |
 | nvda -rm --disable-addons | Same as above, but with addons disabled |
 
@@ -1944,7 +1946,6 @@ Those parameters come right after the option, separated by a space (when using t
 | nvda --log-level=20 -f c:\nvda.log | Tels NVDA to start with log level set to info and to write its log to c:\nvda.log |
 
 Following are the command line options for NVDA:
-%kc:beginInclude
 || Short | Long | Description |
 | -h | --help | show this help message and exit |
 | -q | --quit | Quit already running copy of NVDA |
@@ -1958,8 +1959,6 @@ Following are the command line options for NVDA:
 | None | --disable-addons | Addons will have no effect |
 | None | --no-sr-flag  | Don't change the global system screen reader flag |
 | None | --install | Silently installs NVDA |
-| None | --launcher | Started from the launcher |
-%kc:endInclude
 
 ++ Advanced Customization of Symbol Pronunciation ++
 It is possible to customize the pronunciation of punctuation and other symbols beyond what can be done using the [Punctuation/symbol pronunciation #SymbolPronunciation] dialog.

@@ -151,7 +151,7 @@ class GeneralSettingsDialog(SettingsDialog):
 			self.saveOnExitCheckBox.Disable()
 		settingsSizer.Add(self.saveOnExitCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
-		self.askToExitCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Sho&w exit options on exiting NVDA"))
+		self.askToExitCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Sho&w exit options when exiting NVDA"))
 		self.askToExitCheckBox.SetValue(config.conf["general"]["askToExit"])
 		settingsSizer.Add(self.askToExitCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
