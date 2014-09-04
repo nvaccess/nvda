@@ -226,9 +226,8 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	map<wstring,wstring> attribsMap;
 	IA2AttribsToMap(attribs,attribsMap);
 	SysFreeString(attribs);
+	attribs=NULL;
 	map<wstring,wstring>::iterator i;
-	i=attribsMap.find(L"live");
-	bool isRegionRoot=(i!=attribsMap.end());
 	i=attribsMap.find(L"container-live");
 	bool live=(i!=attribsMap.end()&&(i->second.compare(L"polite")==0||i->second.compare(L"assertive")==0||i->second.compare(L"rude")==0));
 	if(!live) {
@@ -251,22 +250,42 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 		allowText=(i->second.find(L"text",0)!=wstring::npos);
 		allowAdditions=(i->second.find(L"additions",0)!=wstring::npos);
 	} 
-	//Only handle show events if additions are allowed and this is not the root of a region.
-	if(eventID==EVENT_OBJECT_SHOW&&(!allowAdditions||isRegionRoot)) {
+	attribsMap.clear();
+	//Only handle show events if additions are allowed
+	if(eventID==EVENT_OBJECT_SHOW&&!allowAdditions) {
 		pacc2->Release();
 		return;
 	}
 	// If this is a show event and this is not the root of the region and there is a text parent, 
 	// We can ignore this event as there will be text events which can handle this better
 	if(eventID==EVENT_OBJECT_SHOW) {
-	bool ignoreShowEvent=false;
+		bool ignoreShowEvent=false;
 		IDispatch* pdispParent=NULL;
 		pacc2->get_accParent(&pdispParent);
 		if(pdispParent) {
+			// check for text on parent
 			IAccessibleText* paccTextParent=NULL;
 			if(pdispParent->QueryInterface(IID_IAccessibleText,(void**)&paccTextParent)==S_OK&&paccTextParent) {
 				ignoreShowEvent=true;
 				paccTextParent->Release();
+			}
+			if(!ignoreShowEvent) {
+				// Check for useful container-live on parent, as if missing or off, then child must be the root 
+				// Firstly, we assume we are the root of the region and therefore should ignore the event
+				ignoreShowEvent=true;
+				IAccessible2* pacc2Parent=NULL;
+				if(pdispParent->QueryInterface(IID_IAccessible2,(void**)&pacc2Parent)==S_OK) {
+					if(pacc2Parent->get_attributes(&attribs)==S_OK&&attribs) {
+						IA2AttribsToMap(attribs,attribsMap);
+						SysFreeString(attribs);
+						i=attribsMap.find(L"container-live");
+						if(i!=attribsMap.end()&&(i->second.compare(L"polite")==0||i->second.compare(L"assertive")==0||i->second.compare(L"rude")==0)) {
+							// There is a valid container-live that is not off, so therefore the child is definitly not the root
+							ignoreShowEvent=false;
+						}
+					}
+					pacc2Parent->Release();
+				}
 			}
 			pdispParent->Release();
 		}
