@@ -23,7 +23,7 @@ Ses points forts sont :
 - la prise en charge de nombreux afficheurs braille, incluant la saisie du braille informatique pour les afficheurs disposant d'un clavier braille ;
 - la possibilité de s'exécuter entièrement depuis une clé USB ou tout autre média portable sans avoir à installer ;
 - un installateur parlant facile à utiliser ;
-- une traduction dans 44 langues ;
+- une traduction dans 45 langues ;
 - la prise en charge des environnements Windows modernes, incluant les versions 32 et 64 bits ;
 - L'accès à l'écran de connexion à Windows et aux autres écrans sécurisés ;
 - la prise en charge des interfaces d'accessibilité communes telles que, Microsoft Active Accessibility, Java Access Bridge, IAccessible2 et UI Automation (UI Automation n'est supporté qu'à partir de Windows 7) ;
@@ -32,7 +32,7 @@ Ses points forts sont :
 
 ++ Internationalisation ++
 Il est important que chacun, partout dans le monde, quelle que soit sa langue, ait le même accès aux technologies. 
-À ce jour, NVDA a été traduit en 44 langues : l'afrikaans, l'albanais, l'allemand, l'arabe, l'aragonais, le bulgare, le chinois traditionnel et simplifié, le coréen, le croate, le danois, l'espagnol, l'éthiopien, le farsi, le finnois, le français, le galicien, le grec, le géorgien, l'hébreu, le hongrois, l'hindi, l'irlandais, l'islandais, l'italien, le japonais, le néerlandais, le népalais, le norvégien, le polonais, le portugais, le portugais brésilien, le roumain, le russe, le serbe, le slovaque, le slovène, le suédois, le tamoul, le tchèque, le thaï, le turc, l'ukrainien et le vietnamien.
+À ce jour, NVDA a été traduit en 45 langues : l'afrikaans, l'albanais, l'allemand, l'arabe, l'aragonais, le bulgare, le catalan, le chinois traditionnel et simplifié, le coréen, le croate, le danois, l'espagnol, l'éthiopien, le farsi, le finnois, le français, le galicien, le grec, le géorgien, l'hébreu, le hongrois, l'hindi, l'irlandais, l'islandais, l'italien, le japonais, le néerlandais, le népalais, le norvégien, le polonais, le portugais, le portugais brésilien, le roumain, le russe, le serbe, le slovaque, le slovène, le suédois, le tamoul, le tchèque, le thaï, le turc, l'ukrainien et le vietnamien.
 
 ++ Support des synthèses vocales ++
 En plus de proposer ses messages et son interface en plusieurs langues, NVDA permet également à l'utilisateur de lire les contenus dans n'importe quelle langue, dans la mesure où il possède un synthétiseur parlant cette langue.
@@ -80,7 +80,7 @@ Si vous voulez prendre NVDA avec vous sur une clé USB ou un autre support acces
 La copie portable peut aussi être installée sur n'importe quel ordinateur à n'importe quel moment.
 Cependant, si vous souhaitez copier NVDA sur un support en lecture seule comme un CD, vous devriez seulement copier le paquet téléchargé.
 Démarrer directement la copie portable depuis un support en lecture seule n'est pas supporté pour le moment.
-  
+
 Utiliser la version temporaire de NVDA est aussi une option, par exemple pour une démonstration, car démarrer NVDA dans ce mode à chaque fois peut prendre beaucoup de temps.
 
 ++ Restrictions des versions portables et temporaires ++
@@ -126,7 +126,7 @@ Cliquer sur "Continuer" créera la copie portable.
 Dès que la création est terminée, un message s'affiche.
 Cliquez sur "OK" pour fermer ce dialogue.
 
-+ Prendre en main  NVDA +
++ Prendre en main NVDA +
 
 ++ Démarrer NVDA ++
 Si NVDA a été installé à l'aide de l'installateur, alors il suffit, soit de frapper la combinaison contrôle+alt+n, soit de choisir dans le menu Démarrer / Programmes / NVDA / NVDA. 
@@ -333,7 +333,7 @@ Pour naviguer par objet, utilisez les commandes suivantes :
 | Aller à l'objet en focus | NVDA+pavnumMoins | NVDA+retour arrière | Aucun | Va à l'objet ayant le focus système, et place le curseur de revue sur le curseur système s'il est présent |
 | Activer l'objet navigateur courant | NVDA+pavnumEntrer | NVDA+entrer | Double tape | Active l'objet navigateur courant (similaire à un clic de souris ou à appuyer la barre d'espace quand l'objet a le focus système) |
 | Amener le focus système à l'objet navigateur courant | NVDA+maj+pavnumMoins | NVDA+maj+retour arrière | Aucun | Amène le focus système à l'objet navigateur courant si c'est possible |
-| Annoncer les dimensions de l'objet navigateur | NVDA+pavnumEffacement | NVDA+effacement | Aucun | Annonce la position du curseur de revue, soit en termes pratiques tels que le pourcentage dans le document ou la distance au bord de la page, soit en pixels d'écran. Un double appui annonce des informations supplémentaires.|
+| Annoncer la position du curseur de revue | NVDA+pavnumEffacement | NVDA+effacement | Aucun | Annonce la position du texte ou de l'objet sous le curseur de revue. Cela peut inclure, par exemple, le pourcentage dans le document, la distance au bord de la page ou la position exacte sur l'écran. Un double appui annonce éventuellement des informations supplémentaires.|
 %kc:endInclude
 
 Note : Les touches du pavé numérique nécessitent de désactiver le verrouillage numérique pour fonctionner correctement.
@@ -344,7 +344,7 @@ Ceci est particulièrement utile dans la console de commandes Windows et d'autre
 Par exemple, cela peut servir à consulter le texte d'un long message dans un dialogue.
 
 Quand vous déplacez le curseur de revue, le curseur système ne bouge pas, ainsi vous pouvez explorer un texte sans perdre votre position d'édition actuelle.
-Cependant, par défaut,  quand le curseur système bouge, le curseur de revue le suit. 
+Cependant, par défaut, quand le curseur système bouge, le curseur de revue le suit. 
 Ceci peut être désactivé.
 
 Note : Par défaut, le braille suit le [focus #SystemFocus] et le [curseur système #SystemCaret] plutôt que la navigation par objet ou la revue de texte.
@@ -582,8 +582,8 @@ Le dialogue "Paramètres généraux" se trouve dans le menu "Préférences".
 Il contient les options suivantes :
 
 ==== Langue ====
-C'est une liste déroulante qui permet de choisir la langue de l'interface utilisateur et des messages de NVDA.  
-La liste comporte de nombreuses langues et le dernier élément est dénommé "Windows".  
+C'est une liste déroulante qui permet de choisir la langue de l'interface utilisateur et des messages de NVDA.
+La liste comporte de nombreuses langues et le dernier élément est dénommé "Windows".
 Ce choix indique à NVDA d'utiliser la langue de Windows.
 
 Noter qu'il faut relancer NVDA quand on change la langue. 
@@ -718,7 +718,7 @@ Si vous voulez changer rapidement les paramètres vocaux sans passer par le dial
 | Diminuer le paramètre synthétiseur courant | NVDA+contrôle+flèche bas | NVDA+contrôle+maj+flèche bas | diminue le paramètre synthétiseur sur lequel vous vous trouvez. Ex : diminue le débit, choisit la voix précédente, diminue le volume |
 %kc:endInclude
 
-+++  Paramètres braille +++
++++ Paramètres braille +++
 Le dialogue des paramètres braille peut être invoqué en allant dans le menu "Préférences" puis dans l'option "Paramètres braille".
 
 ==== Terminal braille ====
@@ -781,7 +781,7 @@ Cela permet une lecture plus fluide des textes volumineux.
 Par défaut, cette option est désactivée.
 
 +++ Paramètres du clavier (NVDA+contrôle+k) +++
-Ce dialogue se trouve dans le menu "Préférences",  sous "Paramètres du clavier...". 
+Ce dialogue se trouve dans le menu "Préférences", sous "Paramètres du clavier...". 
 Il comprend les options suivantes :
 
 ==== Configuration du clavier ====
@@ -891,7 +891,7 @@ Ce dialogue se trouve dans le menu "Préférences" sous "Présentation des Objet
 Il contient les options suivantes :
 
 ==== Annoncer les suggestions ====
-Quand cette case est cochée,  NVDA annonce les suggestions à leur apparition. 
+Quand cette case est cochée, NVDA annonce les suggestions à leur apparition. 
 De nombreuses fenêtres et commandes font apparaître un court message (ou suggestion) lorsqu'on y déplace la souris ou le focus.
 
 ==== Annoncer les bulles d'aide ====
@@ -921,7 +921,7 @@ Cette option vous présente une liste déroulante qui contrôle la manière dont
 
 Elle propose les options suivantes :
 - Désactivé : L'évolution des barres de progression ne sera pas annoncée.
-- Vocal : Cette option dit à NVDA d'annoncer l'évolution des barres de progression en pourcentage.  Chaque fois que la barre changera, NVDA dira la nouvelle valeur.
+- Vocal : Cette option dit à NVDA d'annoncer l'évolution des barres de progression en pourcentage. Chaque fois que la barre changera, NVDA dira la nouvelle valeur.
 - Par des bips : Cette option dit à NVDA d'émettre un bip à chaque évolution de la barre de progression. Plus le bip est aigu, plus on approche de la fin de la barre.
 - Vocal avec des bips : Cette option dit à NVDA de parler et d'émettre des bips lors de la mise à jour de la barre de progression.
 -
@@ -958,7 +958,7 @@ Cette option est utile pour les méthodes d'entrées coréennes et japonnaises.
 
 ==== Annonce les changements dans la chaîne en cours de lecture ====
 Certains modes de saisie tels que le chinois ChangJie phonétique et Nouveau ChangJie peuvent avoir une chaîne de lecture (parfois connu sous le nom d'une chaîne précomposition).
-Avec cette option, vous pouvez choisir si oui ou non NVDA doit annoncer les nouveaux caractères  saisis dans la chaîne de lecture en cours.
+Avec cette option, vous pouvez choisir si oui ou non NVDA doit annoncer les nouveaux caractères saisis dans la chaîne de lecture en cours.
 Cette option est activée par défaut.
 Notez que certaines anciennes méthodes comme le chinois ChangJie n'utilisent pas la chaîne en cours de lecture pour les caractères de précomposition, utilisez directement la chaîne de composition. Voyez l'option suivante pour configurer l'annonce de la chaîne de composition.
 
@@ -988,7 +988,7 @@ Cette option vous permet d'indiquer si vous voulez que les objets tels que les l
 Cette case à cocher active ou désactive la lecture automatique des pages après leur chargement en mode navigation.
 Cette option est activée par défaut.
 
-==== Annoncer les  tables de visualisation ====
+==== Annoncer les tables de visualisation ====
 Cette option définit ce que NVDA doit faire des tableaux qui ne servent qu'à la présentation.
 Lorsque désactivée, cette option fait que NVDA ne rapporte que les tableaux contenant des données tabulaires (quand il tombe sous le sens qu'il s'agit d'un tableau).
 Les autres tableaux sont affichés sous forme de texte normal.
@@ -1216,7 +1216,7 @@ Pour activer la visionneuse de parole, cochez l'élément de menu "Visionneuse d
 Décochez l'élément de menu pour la désactiver.
 
 Pendant que la visionneuse de parole est active, elle se met constamment à jour, vous permettant de voir les dernières paroles prononcées par NVDA. 
-Cependant, si vous cliquez ou mettez le focus sur la visionneuse,  NVDA arrêtera momentanément de mettre à jour le texte, vous pourrez ainsi sélectionner ou copier le contenu.
+Cependant, si vous cliquez ou mettez le focus sur la visionneuse, NVDA arrêtera momentanément de mettre à jour le texte, vous pourrez ainsi sélectionner ou copier le contenu.
 
 ++ Gestionnaire de modules complémentaires ++
 Le Gestionnaire de modules complémentaires, accessible en sélectionnant "Gestion des Modules Complémentaires" dans le menu "Outils" du menu NVDA, permet d'installer ou de désinstaller des paquets de modules complémentaires pour NVDA.
@@ -1275,15 +1275,15 @@ Vous disposez également d'un grand choix de variantes, permettant de modifier c
 
 ++ Microsoft Speech API version 4 (SAPI 4) ++
 SAPI 4 est un ancien standard Microsoft pour les synthétiseurs de parole logiciels.
-Beaucoup de synthétiseurs de parole compatibles avec ce standard peuvent être  achetés ou téléchargés gratuitement auprès de différentes sociétés ou sites web.
-Quand vous utilisez ce synthétiseur avec NVDA, la liste des voix disponibles (accessibles via [le dialogue "Paramètres vocaux" #VoiceSettings],  ou [la boucle des paramètres synthétiseur #SynthSettingsRing]) contient toutes les voix de tous les synthétiseurs SAPI 4 installés sur votre système.
+Beaucoup de synthétiseurs de parole compatibles avec ce standard peuvent être achetés ou téléchargés gratuitement auprès de différentes sociétés ou sites web.
+Quand vous utilisez ce synthétiseur avec NVDA, la liste des voix disponibles (accessibles via [le dialogue "Paramètres vocaux" #VoiceSettings], ou [la boucle des paramètres synthétiseur #SynthSettingsRing]) contient toutes les voix de tous les synthétiseurs SAPI 4 installés sur votre système.
 
 Si vous avez des voix SAPI 4 installées mais que le synthétiseur n'apparaît pas dans la liste des synthétiseurs de NVDA, veuillez installer SAPI 4.0 runtime binaries, disponible sur http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
 
 ++ Microsoft Speech API version 5 (SAPI 5) ++
 SAPI 5 est un standard Microsoft pour les synthétiseurs de parole logiciels.
-Beaucoup de synthétiseurs de parole compatibles avec ce standard peuvent être  achetés ou téléchargés gratuitement auprès de différentes sociétés ou sites web, mais il est probable que votre système possède déjà une voix SAPI 5 préinstallée.
-Quand vous utilisez ce synthétiseur avec NVDA, la liste des voix disponibles (accessibles via [le dialogue "Paramètres vocaux" #VoiceSettings],  ou [la boucle des paramètres synthétiseur #SynthSettingsRing]) contient toutes les voix de tous les synthétiseurs SAPI 5 installés sur votre système.
+Beaucoup de synthétiseurs de parole compatibles avec ce standard peuvent être achetés ou téléchargés gratuitement auprès de différentes sociétés ou sites web, mais il est probable que votre système possède déjà une voix SAPI 5 préinstallée.
+Quand vous utilisez ce synthétiseur avec NVDA, la liste des voix disponibles (accessibles via [le dialogue "Paramètres vocaux" #VoiceSettings], ou [la boucle des paramètres synthétiseur #SynthSettingsRing]) contient toutes les voix de tous les synthétiseurs SAPI 5 installés sur votre système.
 
 ++ La plate-forme Microsoft Speech ++
 La plate-forme Microsoft Speech fournit des voix pour beaucoup de langues, normalement utilisées dans le développement de serveurs vocaux.
@@ -1461,7 +1461,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Touche alt+maj+tab | SUP |
 %kc:endInclude
 
-++ Les terminaux Baum/Humanware/APH  ++
+++ Les terminaux Baum/Humanware/APH ++
 Plusieurs terminaux [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] et [APH http://www.aph.org/] sont pris en charge quand ils sont connectés via USB ou bluetooth.
 Les terminaux suivants sont pris en charge :
 - Baum: SuperVario, PocketVario
@@ -1493,7 +1493,7 @@ Pour les terminaux possédant un joystick:
 %kc:endInclude
 
 ++ hedo ProfiLine USB ++
-Le terminal hedo ProfiLine USB de [hedo Reha-Technik  http://www.hedo.de/] est supporté.
+Le terminal hedo ProfiLine USB de [hedo Reha-Technik http://www.hedo.de/] est supporté.
 Vous devrez tout d'abord installer le pilote USB fourni par le constructeur.
 
 Voici les assignations de touches pour ce terminal sous NVDA.
@@ -1510,7 +1510,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 %kc:endInclude
 
 ++ hedo MobilLine USB ++
-Le terminal hedo MobilLine USB de [hedo Reha-Technik  http://www.hedo.de/] est supporté.
+Le terminal hedo MobilLine USB de [hedo Reha-Technik http://www.hedo.de/] est supporté.
 Vous devrez tout d'abord installer le pilote USB fourni par le constructeur.
 
 Voici les assignations de touches pour ce terminal sous NVDA.
@@ -1768,8 +1768,8 @@ Les commandes Papenmeier disponibles dans NVDA sont les suivantes :
 %kc:beginInclude
 Périphériques avec EAB :
 || Nom | Touche |
-| Défilement affichage braille  arrière | left |
-| Défilement affichage braille  avant | right |
+| Défilement affichage braille arrière | left |
+| Défilement affichage braille avant | right |
 | Déplacer l'affichage braille vers la ligne précédente | up |
 | Déplacer l'affichage braille vers la ligne suivante | down |
 | Joindre à la célule braille | routing |
@@ -1836,8 +1836,8 @@ Consultez la documentation de votre brailleNote pour savoir où se situent ces t
 
 %kc:beginInclude
 || Nom | touche |
-| Défilement affichage braille  arrière | Arrière |
-| Défilement affichage braille  avant | Avant |
+| Défilement affichage braille arrière | Arrière |
+| Défilement affichage braille avant | Avant |
 | Déplacer l'affichage braille vers la ligne précédente | Précédent |
 | Déplacer l'affichage braille vers la ligne suivante | Suivant |
 | Joindre à la cellule braille | routing |
@@ -1890,7 +1890,7 @@ Par exemple, vous pouvez indiquer si un symbole particulier doit être envoyé a
 
 Pour faire cela, vous devez éditer le fichier contenant les informations de prononciation des symboles dans votre répertoire utilisateur NVDA.
 Le fichier s'appelle symbols-xx.dic où xx est le code de la langue.
-Le format de ce fichier est documenté dans la section "Prononciation des Symboles" du guide de développement NVDA  disponible dans [la section Développement du site NVDA http://community.nvda-project.org/wiki/Development].
+Le format de ce fichier est documenté dans la section "Prononciation des Symboles" du guide de développement NVDA disponible dans [la section Développement du site NVDA http://community.nvda-project.org/wiki/Development].
 Cependant, l'utilisateur ne peut pas définir de symboles complexes.
 
 + Informations complémentaires +

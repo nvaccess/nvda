@@ -9,44 +9,45 @@
 - Dźwięki odtwarzane przy uruchamianiu i zamknięciu NVDA mogą być wyłączone za pomocą nowej opcji w oknie ustawień ogólnych. (#834)
 - Pomoc dodatku może być uruchomiona w zarządzaniu dodatkami dla dodatków wspierających tę funkcję. (#2694)
 - Wsparcie dla kalendarza w Microsoft Outlook 2007 i nowszych (#2943) zawiera:
- - Oznajmianie aktualnego czasu podczas przemieszczania się przy użyciu strzałek,
- - oznajmianie, jeśli wybrany czas jest wewnątrz spotkań,
- - odczytanie wybranego spotkania po wciśnięciu tab
+ - Oznajmianie aktualnego czasu podczas przemieszczania się przy użyciu strzałek.
+ - Oznajmianie, jeśli wybrany czas jest wewnątrz spotkań.
+ - Odczytanie wybranego spotkania po wciśnięciu tab.
  - Inteligentne filtrowanie daty, która zostanie odczytana tylko wtedy, gdy nowy wybrany czas lub spotkanie dotyczy innego dnia niż odczytany poprzednio.
 - Ulepszone wsparcie skrzynki odbiorczej i innych list wiadomości w Outlook 2010 i nowszych (#3834) zawiera:
- - Możliwość wyciszenia nagłówków kolumn (Od, temat itd.) poprzez wyłączenie opcji zgłaszania nagłówków tabeli w ustawieniach formatowania dokumentu,
- - Możliwość użycia komend nawigacji po tabeli (control + strzałki) do przemieszczania się po pojedynczych kolumnach. 
+ - Możliwość wyciszenia nagłówków kolumn (Od, temat itd.) poprzez wyłączenie opcji zgłaszania nagłówków tabeli w ustawieniach formatowania dokumentu.
+ - Możliwość użycia komend nawigacji po tabeli (control + alt + strzałki) do przemieszczania się po pojedynczych kolumnach.
 - Microsoft word: jeżeli obraz nie posiada ustawionego alternatywnego tekstu, NVDA odczyta tytuł obrazka jeśli autor go zdefiniował. (#4193)
-- Microsoft Word: zgłaszaj wcięcie akapitu komendą odczytywania formatowania (NVDA+f), oraz automatycznie, jeśli włączone jest nowe ustawienie zgłaszania wcięcia akapitów w ustawieniach formatowania dokumentu. (#4165)
+- Microsoft Word: NVDA zgłasza wcięcie akapitu komendą odczytywania formatowania (NVDA+f). Ta informacja może być oznajmiana automatycznie, jeśli włączone jest nowe ustawienie zgłaszania wcięcia akapitów w ustawieniach formatowania dokumentu. (#4165)
 - Zgłaszaj tekst wstawiony automatycznie, taki jak nowy punktor, numer lub wcięcie tabulacji, gdy naciśnięto Enter w edytowalnych dokumentach i polach tekstowych. (#4185)
 - Microsoft word: naciśnięcie NVDA+alt+c odczyta tekst komentarza, jeśli kursor się w nim znajduje. (#3528)
 - Ulepszone wsparcie automatycznego odczytywania nagłówków wierszy i kolumn w Microsoft Excel (#3568) zawiera:
- - Wsparcie nazwanych obszarów Excel dla identyfikacji komórek nagłówkowych (kompatybilne z czytnikiem ekranu Jaws) 
+ - Wsparcie nazwanych obszarów Excel dla identyfikacji komórek nagłówkowych (kompatybilne z czytnikiem ekranu Jaws).
  - Polecenia ustaw nagłówek kolumny (NVDA+shift+c) i ustaw nagłówek wiersza (NVDA+shift+r), od teraz przechowują ustawienia w skoroszycie, dzięki czemu będą one dostępne przy następnym otwarciu arkusza, w tym również dla innych czytników ekranu, które wspierają system nazwanych zakresów.
  - Te polecenia mogą teraz być użyte wielokrotnie w arkuszu, dla ustawienia różnych nagłówków w różnych obszarach.
 - Wsparcie automatycznego odczytywania nagłówków kolumn i wierszy w Microsoft Word (#3110) zawiera:
- - Wsparcie zakładek MS Word dla identyfikacji komórek nagłówkowych (kompatybilne z czytnikiem ekranu Jaws) 
+ - Wsparcie zakładek MS Word dla identyfikacji komórek nagłówkowych (kompatybilne z czytnikiem ekranu Jaws).
  -  Polecenia Ustaw nagłówek kolumny (NVDA+shift+c) i ustaw nagłówek wiersza (NVDA+shift+r) na pierwszej komórce nagłówkowej w tabeli, pozwalają ustawić w NVDA, że te nagłówki powinny być zgłaszane automatycznie.  Ustawienia są przechowywane w dokumencie, więc są dostępne po następnym otwarciu dokumentu, również dla innych programów czytania ekranu, które obsługują system zakładek.
 - Microsoft Word: zgłaszaj odległość od lewej krawędzi strony, gdy naciśnięto klawisz tab. (#1353)
-- Microsoft Word: informacja zwrotna mową i brajlem dla większości dostępnych klawiszy skrótu formatowania (pogrubienie, kursywa, podkreślenie, wyrównanie i poziom konspektu). (#1353)
-- Microsoft Excel: jeśli wybrana komórka zawiera komentarze, mogą one zostać odczytane po naciśnięciu NVDA+alt+c (#2920)
+- Microsoft Word: informacja zwrotna mową i brajlem dla większości dostępnych klawiszy skrótu formatowania (pogrubienie, kursywa, podkreślenie, wyrównanie, poziom konspektu, indeks górny, indeks dolny i rozmiar czcionki). (#1353)
+- Microsoft Excel: jeśli wybrana komórka zawiera komentarze, mogą one zostać odczytane po naciśnięciu NVDA+alt+c. (#2920)
 - Microsoft Excel: specyficzne dla NVDA okno edycji komentarzy aktualnie wybranej komórki po naciśnięciu shift+f2 by przejść do trybu edycji komentarzy. (#2920)
 - Microsoft Excel: informacja zwrotna mową i brajlem po użyciu większej liczby skrótów klawiaturowych do nawigacji i zaznaczania komórek (#4211) w tym:
- - Pionowo po stronach (pageUp i pageDown)
- - Poziomo po stronach (alt+pageUp and alt+pageDown)
- - Rozszerzenie zaznaczenia (powyższe klawisze z klawiszem Shift).
- - Zaznaczenie aktualnego obszaru (control+shift+8)
+ - Pionowo po stronach (pageUp i pageDown);
+ - Poziomo po stronach (alt+pageUp and alt+pageDown);
+ - Rozszerzenie zaznaczenia (powyższe klawisze z klawiszem Shift); oraz
+ - Zaznaczenie aktualnego obszaru (control+shift+8).
 - Microsoft Excel: zgłaszaj pionowe i poziome wyrównanie komórek poleceniem odczytania formatowania (NVDA+f) oraz automatycznie, jeśli włączona jest opcja odczytywania wyrównania tekstu w ustawieniach formatowania dokumentu. (#4212)
 - Microsoft Excel: odczytaj styl komórki poleceniem odczytania formatowania (NVDA+f) oraz automatycznie, jeśli włączona jest opcja informowania o stylach w ustawieniach formatowania dokumentu. (#4213)
 - Microsoft Powerpoint: podczas przemieszczania kształtów po slajdzie przy użyciu strzałek, zgłaszane jest teraz położenie kształtu (#4214) w tym:
- - Odczytana jest odległość kształtu od każdej krawędzi slajdu
+ - Odczytana jest odległość kształtu od każdej krawędzi slajdu.
  - Jeśli kształt przysłania, lub jest przysłonięty przez inny kształt, podawany jest rozmiar zachodzenia, oraz inny kształt. 
- - Aby w każdej chwili otrzymać te informacje bez przesuwania kształtu, wywołaj polecenie zgłaszania położenia (NVDA+delete)
- - Podczas zaznaczania kształtu przysłoniętego przez inny kształt, zgłoszony zostanie stan przysłonięcia.
+ - Aby w każdej chwili otrzymać te informacje bez przesuwania kształtu, wywołaj polecenie zgłaszania położenia (NVDA+delete).
+ - Podczas zaznaczania kształtu przysłoniętego przez inny kształt, zgłoszone zostanie, że jest przysłonięty.
 - Polecenie odczytania położenia (NVDA+delete) jest bardziej zależne od kontekstu w niektórych sytuacjach. (#4219):
  - W polach edycji i trybie czytania, zgłaszana jest pozycja kursora jako procent treści, oraz jego współrzędne na ekranie.
  - Na kształtach w prezentacjach Powerpoint, odczytana zostanie pozycja kształtu w odniesieniu do krawędzi slajdu i innych kształtów.
  - Dwukrotne wywołanie tego polecenia spowoduje dawne zachowanie, czyli odczytanie położenia całej kontrolki.
+- Nowy język: kataloński.
 
 
 == Zmiany ==
@@ -54,6 +55,7 @@
 
 
 == Poprawki błędów ==
+- Klawisz tworzonego przez instalator skrótu NVDA na pulpicie, został dla polskiej wersji zmieniony na Ctrl+Alt+D, co rozwiązuje pojawiający się dotychczas problem z wpisywaniem litery "ń" po instalacji NVDA. (#2209)
 - W Google Chrome i przeglądarkach bazujących na Chrome, niektóre fragmenty tekstu (np. podkreślone) nie są od teraz wielokrotnie powtarzane przy zgłaszaniu tekstu powiadomienia lub okna dialogowego. (#4066)
 - W trybie czytania w aplikacjach Mozilla, naciśnięcie Entera na przycisku nie stwarza dłużej problemów z jego aktywowaniem (lub aktywowaniem zamiast tego niewłaściwej kontrolki) co miało miejsce w niektórych wypadkach, np. przyciski na górze Facebooka. (#4106)
 - Bezużyteczne informacje nie są dłużej zgłaszane podczas przechodzenia po kontrolkach w iTunes. (#4128)
@@ -64,13 +66,22 @@
 - Microsoft Outlook: zmniejszona nadmierna gadatliwość komend pasków narzędzi podczas nawigacji w niektórych oknach dialogowych. (#4096, #3407)
 - Microsoft word:  przejście do pustej komórki w tabeli nie powoduje błędnego komunikatu o wyjściu z tabeli. (#4151)
 - Microsoft Word: pierwszy znak poza tabelą (włącznie z nową pustą linią) nie jest od teraz nieprawidłowo oznajmiany jako część tabeli. (#4152)
-- Okno sprawdzania pisowni Microsoft Word 2010: odczytaj błędnie napisane słowo, zamiast jak dawniej pierwsze pogrubione słowo. (#3431)
+- Okno sprawdzania pisowni Microsoft Word 2010: NVDA odczytuje teraz błędnie napisane słowo, zamiast jak dawniej pierwsze pogrubione słowo. (#3431)
 - Tryb czytania Internet Explorer i innych kontrolek MSHTML : użycie tabulatora, lub jednoliterowej nawigacji przejścia do pól edycyjnych ponownie zgłasza ich etykietę w wielu przypadkach, gdy to wcześniej nie działało (szczególnie, gdy użyto elementu HTML label). (#4170)
 - Microsoft Word: dokładniejsze zgłaszanie istnienia i położenia komentarzy. (#3528)
-- Poprawiona nawigacja w niektórych oknach produktów MS Office takich jak Word, Excel and Outlook poprzez nieodczytywanie określonych kontenerów pasków narzędzi, które nie są przydatne dla użytkownika. (#4198) 
-- Okienka zadań takie jak manager schowka lub odzyskiwanie plików, nie otrzymują fokusa podczas otwierania aplikacji Microsoft Word, albo Excel, co czasem zmuszało użytkownika do przełączania się z i do aplikacji, aby móc używać dokumentu lub arkusza.  (#4199)
+- Poprawiona nawigacja w niektórych oknach produktów MS Office takich jak Word, Excel i Outlook poprzez nieodczytywanie niektórych kontenerów pasków narzędzi, które nie są przydatne dla użytkownika. (#4198) 
+- Okienka zadań takie jak manager schowka lub odzyskiwanie plików, nie otrzymują od teraz przypadkowo punktu uwagi podczas otwierania aplikacji Microsoft Word, albo Excel, co czasem zmuszało użytkownika do przełączania się z i do aplikacji, aby móc używać dokumentu lub arkusza.  (#4199)
 - Rozwiązany problem uruchamiania NVDA na nowszych systemach Windows, jeśli język użytkownika jest ustawiony na serbski (łaciński). (#4203) 
 - Naciśnięcie klawisza numlock w trybie pomocy klawiatury, obecnie prawidłowo przełącza numlock, zamiast powodować rozsynchronizowanie systemu i klawiatury w kwestii stanu tego klawisza. (#4226)
+- W Google Chrome, tytuł dokumentu jest ponownie odczytywany podczas przełączania zakładek. W NVDA 2014.2, nie działało to w niektórych przypadkach. (#4222)
+- W Google Chrome i przeglądarkach bazujących na Chrome, adres dokumentu nie jest od teraz odczytywany podczas anonsowania dokumentu. (#4223)
+- Po włączeniu funkcji czytaj wszystko z wybranym syntezatorem "Bez mowy" (użyteczne dla automatycznego testowania), funkcja czytaj wszystko zostanie dokończona zamiast zatrzymać się po pierwszych kilku liniach. (#4225)
+- Okienko podpisu w Microsoft Outlook: pole edycji podpisu jest teraz dostępne z pełnym śledzeniem kursora i wykrywaniem formatowania. (#3833) 
+- Microsoft Word: podczas czytania ostatniej linii komórki tabeli, cała zawartość komórki nie jest od teraz odczytywana. (#3421)
+- Microsoft Word: podczas czytania pierwszej lub ostatniej linii spisu treści, cały spis treści nie jest od teraz odczytywany. (#3421)
+- Podczas czytania pisanych słów, oraz w niektórych innych sytuacjach, słowa nie są od teraz nieprawidłowo dzielone na znakach samogłosek, albo znakach virama w językach Indyjskich. (#4254)
+- Numeryczne pola edycji w GoldWave są teraz prawidłowo obsługiwane. (#670)
+- Microsoft Word: podczas przemieszczania się po akapitach klawiszami control+strzałka w dół / control+strzałka w górę, nie jest od teraz konieczne naciskanie ich dwukrotnie podczas przechodzenia przez listy numerowane lub punktowane. (#3290)
 
 
 == Zmiany dla programistów ==

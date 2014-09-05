@@ -23,7 +23,7 @@ O máis sinalable inclúe:
 - Soporte para moitas liñas de braille efímero incluíndo a entrada de braille computerizado para liñas braille que tenñan un teclado braille
 - Capacidade para executarse compretamente dende unha memoria USB ou outros medios portables sen a necesidade de instalación
 - Instalador parlante sinxelo de utilizar
-- Traducido a 44 linguas
+- Traducido a 45 linguas
 - Soporte para Sistemas Operativos Windows modernos incluíndo variantes de 32 e 64 bit
 - Capacidade para executarse en ventás de autentificación de Windows  e outras pantallas seguras 
 - Soporte para interfaces comuns de accesibilidade como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation
@@ -32,7 +32,7 @@ O máis sinalable inclúe:
 
 ++ Internacionalización ++
 É importante que calquera persoa no mundo, sen importar que lingua fale, teña igual acceso á tecnoloxía. 
-Actualmente NVDA foi traducido a 44 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Búlgaro, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Farsi, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Nepalí, Noruego, Polaco, Portugués, Portugués do Brasil, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
+Actualmente NVDA foi traducido a 45 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Búlgaro, catalán, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Farsi, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Nepalí, Noruego, Polaco, Portugués, Portugués do Brasil, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
 
 ++ Soporte da Síntesis de Voz ++
 Ademáis de proporcionar as súas mensaxes e interface en varias linguas, NVDA tamén pode capacitar ó usuario para ler contidos en calquera lingua, tanto en canto teñan un sintetizador de voz que poida falar esa lingua en particular. 
@@ -333,7 +333,7 @@ Para navegar por obxectos, utiliza as seguintes ordes:
 | Navegar ó obxecto do foco | NVDA+Menos teclado numérico | NVDA+Retroceso | non | Navega ó obxecto que ten actualmente o foco do sistema, e tamén coloca o cursor de revisión na posición do cursor do Sistema, se é amosado |
 | Activar actual navegador de obxectos | NVDA+Intro teclado numérico | NVDA+Intro | doble toque | Activa o actual navegador de obxectos (similar a facer clic co rato ou premer espazo cando ten o foco do sistema) |
 | Mover foco do Sistema a actual navegador de obxectos | NVDA+shift+Menos teclado numérico | NVDA+shift+retroceso | non | premedo unha vez Move o foco do Sistema ó navegador de obxectos actual, premedo dúas veces move o cursor do sistema á posición do cursor de revisión |
-| Anunciar dimensións do navegador de obxectos | NVDA+Suprimir teclado numérico | NVDA+suprimir | non | Informa da ubicación do cursor de revisión, xa sexa en termos amigables de aplicación como en porcentaxe polo documento ou a distancia dende o borde da páxina, ou como mínimo en píxeles de pantalla. Ó premer dúas veces anunciará máis información. |
+| Anunciar dimensións do navegador de obxectos | NVDA+Suprimir teclado numérico | NVDA+suprimir | non | Anuncia información acerca da localización do texto ou obxecto no cursor de revisión. Por exemplo, esto podería incluir a porcentaxe do documento, a distancia dende o borde da páxina ou a posición exacta na pantalla. ó premer dúas veces poderá  proporcionar detalles adicionais.  |
 %kc:endInclude
 
 nota: as teclas do teclado numérico requiren que a tecla BloqNum estea desactivada para funcionar apropriadamente.
@@ -1221,8 +1221,10 @@ Non obstante, se fas clic ou colocas o foco dentro do visualizador,  NVDA deter�
 ++ Administrador de Complementos ++
 O Administrador de Complementos, ó que se accesa seleccionando Administrador de complementos baixo Ferramentas no menú NVDA, permíteche instalar e desinstalar paquetes de complementos para o NVDA.
 Estos paquetes son proporcionados pola comunidade e conteñen código persoalizado que poderá engadir ou cambiar características no NVDA ou tamén proporcionan soporte para liñas Braille ou sintetizadores de voz extra.
+
 O Administrador de Complementos contén unha lista que amosa todos os complementos instalados actualmente na túa configuración do usuario do NVDA. 
 Amósase un nome de paquete, versión e autor para cada complemento, aíndaque se pode ver máis información coma unha descripción e unha URL seleccionando o complemento e premendo o botón Acerca do complemento.
+Se hai axuda dispoñible para o complemento seleccionado, podes acceder a ela premendo o seu botón de Axuda.
 
 Para examinar e descargar os complementos dispoñibles online, preme o botón Obter Complementos.
 Este botón abre a [páxina de complementos do NVDA http://addons.nvda-project.org/].

@@ -23,7 +23,7 @@ Najvýznamnejšie prednosti programu:
 - Podpora množstva braillovských zobrazovačov vrátane písania na riadkoch, ktoré podporujú vstup pomocou 8-bodového počítačového kódu
 - Možnosť spustenia programu z USB kľúča, alebo iného prenosného zariadenia, bez nutnosti inštalácie
 - Ozvučený inštalátor
-- Preložený do 44 jazykov
+- Preložený do 45 jazykov
 - Podpora pre moderné operačné systémy Windows, 32 aj 64 bitové verzie
 - Možnosť spúšťania na prihlasovacej obrazovke a iných zabezpečených obrazovkách Windows
 - Kompatibilita s rôznymi rozhraniami slúžiacimi na sprístupnenie aplikácií: Microsoft Active Accessibility, Java Access Bridge, IAccessible2 a UI Automation (UI Automation len vo Windows 7 a novších)
@@ -32,7 +32,7 @@ Najvýznamnejšie prednosti programu:
 
 ++ Medzinárodná podpora ++
 Je dôležité, aby ľudia na celom svete hovoriaci akýmkoľvek jazykom, mali kdekoľvek prístup k špeciálnym technológiám.
-NVDA bol dodnes okrem angličtiny lokalizovaný do týchto 44 jazykov: Afrikánčina, Albánčina, Arabčina, Aragónčina, Amharčina, Brazílčina, Bulharčina, Čeština, Dánčina, Fínčina, Francúzština, Galícijčina, Gréčtina, Gruzínčina, Hebrejčina,  Hindčina, Holandčina, Chorvátčina, Islandčina, Írčína, Japončina, Kórejčina, Maďarčina, Nemčina, Nepálčina, Nórčina, Perzština, Poľština, Portugalčina, Rumunčina, Ruština, Slovenčina, Slovinčina, Srbčina, Španielčina, Švédčina, Taliančina, Tamilčina, Thajčina, Tradičná čínština, Turečtina, Ukrajinčina, Vietnamčina a Zjednodušená čínština.
+NVDA bol dodnes okrem angličtiny lokalizovaný do týchto 45 jazykov: Afrikánčina, Albánčina, Arabčina, Aragónčina, Amharčina, Brazílčina, Bulharčina, Čeština, Dánčina, Fínčina, Francúzština, Galícijčina, Gréčtina, Gruzínčina, Hebrejčina,  Hindčina, Holandčina, Chorvátčina, Islandčina, Írčina, Japončina, Katalánčina, Kórejčina, Maďarčina, Nemčina, Nepálčina, Nórčina, Perzština, Poľština, Portugalčina, Rumunčina, Ruština, Slovenčina, Slovinčina, Srbčina, Španielčina, Švédčina, Taliančina, Tamilčina, Thajčina, Tradičná čínština, Turečtina, Ukrajinčina, Vietnamčina a Zjednodušená čínština.
 
 ++ Podpora hlasového výstupu ++
 Bez ohľadu na poskytovanie hlásení, a rozhraní v niekoľkých jazykoch, NVDA ponúka možnosť čítania textov v akomkoľvek jazyku, pokiaľ je dostupný hlasový výstup pre daný jazyk.
@@ -333,7 +333,7 @@ Pre pohyb po objektoch použite nasledujúce príkazy:
 | navigačný objekt na fokus | NVDA+numpadMínus | NVDA+backspace | Nie je | Premiestni navigačný objekt na prvok, ktorý má systémový fokus. Ak je zobrazený systémový kurzor, pokúsi sa nastaviť na jeho pozíciu aj prezerací kurzor |
 | Aktivovať navigačný objekt | NVDA+numpadEnter | NVDA+enter | Dvojité klepnutie | Aktivuje prvok práve zameraný objektovou navigáciou - rovnaké ako stlačenie klávesu enter alebo dvojité kliknutie po zameraní kurzorom myši. |
 | Fokus alebo systémový kurzor na pozíciu prezeracieho kurzora | NVDA+shift+numpad mínus | NVDA+shift+backspace | Nie je | Po prvom stlačení nastaví fokus na navigačný objekt, po druhom stlačení sa pokúsi umiestniť systémový kurzor na pozíciu prezeracieho kurzora |
-| Súradnice objektu | NVDA+numpadDelete | NVDA+delete | Nie je | OZnamuje polohu prezeracieho kurzoru. V režime prezerania dokumentu je to v percentách, prípadne vzdialenosť od okraja strany a až v poslednom prípade v pixeloch. Podrobnejšie informácie NVDA prečíta po dvojitom stlačení. |
+ | Súradnice kurzora v režime prezerania | NVDA+numpadDelete | NVDA+delete | Nie je | OZnamuje polohu prezeracieho kurzora. Informácia môže pozostávať z polohy v dokumente uvedenej v percentách, vzdialenosti od začiatku stránky alebo presnej polohy na obrazovke. Podrobnejšie informácie NVDA prečíta po dvojitom stlačení. |
 %kc:endInclude
 
 Všimnite si: Numerický blok musí byť vypnutý, aby všetky skratky fungovali korektne.
@@ -528,7 +528,7 @@ NVDA pre niektoré aplikácie implementuje svoje vlastné príkazy, čím buď u
 ++ Microsoft Word ++
 %kc:beginInclude
 || Názov | Klávesová skratka | popis |
-| Prečítaj komentár | NVDA+Alt+c | preťíta komentár pod systémovým kurzorom. | 
+| Prečítaj komentár | NVDA+Alt+c | prečíta komentár pod systémovým kurzorom. | 
 | Nastaviť hlavičky stĺpcov | NVDA+shift+c | Ak stlačíte raz, NVDA bude vybratý stĺpec a nasledujúce stĺpce považovať za hlavičku tabuľky a bude ich oznamovať pri pohybe v nasledujúcich riadkoch. Nastavenie zrušíte dvojitým stlačením. | 
 | Nastaviť hlavičky riadkov | NVDA+shift+r | Ak stlačíte raz, NVDA bude vybratý stĺpec a stĺpce pod ním považovať za hlavičku tabuľky a bude ich oznamovať pri pohybe v stĺpcoch medzi riadkami. Nastavenie zrušíte dvojitým stlačením. |
 %kc:endInclude
@@ -1117,22 +1117,22 @@ Užitočné môžu byť tiež nasledujúce klávesové skratky:
 | Návrat k uloženým nastaveniam | NVDA+control+r | NVDA+control+r | Obnoví nastavenia z času, čo Ste naposledy konfiguráciu uložili. Stlačené trikrát obnoví predvolené nastavenia. |
 %kc:endInclude
 
-++ Používateľské profily ++
+++ Konfiguračné profily ++
 Niekedy môžete potrebovať rôzne nastavenia pre rôzne situácie.
 Môžete napríklad chcieť počuť odsadenie textu pri úpravách, alebo informácie o formátovaní pri korektúre.
-NVDA vám umožňuje urobiť takéto nastavenia pomocou používateľských profilov.
+NVDA vám umožňuje urobiť takéto nastavenia pomocou konfiguračných profilov.
 
-Používateľský profil obsahuje len tie nastavenia, ktoré zmeníte, keď je profil aktívny.
+Konfiguračný profil obsahuje len tie nastavenia, ktoré zmeníte, keď je profil aktívny.
 Zmeniť môžete všetky nastavenia okrem všeobecných nastavení, lebo tie sa týkajú NVDA ako celku.
 
-Používateľské profily môžete aktivovať ručne.
+Konfiguračné profily môžete aktivovať ručne.
 Môžu ich však aktivovať aj rôzne udalosti, ako napríklad prepnutie sa do určitej aplikácie.
 
 +++ Základné nastavenie +++
-Do nastavení profilov sa dostanete z menu NVDA, aktivovaním položky Používateľské profily.
+Do nastavení profilov sa dostanete z menu NVDA, aktivovaním položky Konfiguračné profily.
 Na otvorenie dialógu môžete tiež použiť klávesovú skratku:
 %kc:beginInclude
-- NVDA+ctrl+p: otvorí dialóg s nastaveniami používateľských profilov.
+- NVDA+ctrl+p: otvorí dialóg s nastaveniami konfiguračných profilov.
 -
 %kc:endInclude
 
@@ -1157,15 +1157,15 @@ Pre podrobnosti Čítajte [Ďalej #ConfigProfileTriggers].
 tlačidlom OK vytvoríte nový profil a zatvoríte dialóg s profilmi, a hneď môžete nový profil upraviť.
 
 +++ Ručná aktivácia +++[ConfigProfileManual]
-Profil môžete aktivovať jeho vybratím v dialógu používateľské profily a aktivovaním tlačidla ručne  aktivovať.
+Profil môžete aktivovať jeho vybratím v dialógu konfiguračné profily a aktivovaním tlačidla ručne  aktivovať.
 pri aktívnom profile sa môžu aktivovať iné profily, ak nastane udalosť, ktorá ich aktivuje, vždy však budúzohľadnené nastavenia aktívneho profilu.
 Ak napríklad máte vytvorený profil pre nejakú aplikáciu, v ktorom ste zapli oznamovanie odkazov, ale aktivujete profil, v ktorom je oznamovanie odkazov vypnuté, NVDA nebude odkazy oznamovať.
 Ak však zmeníte nastavenia hlasu v profile pre aplikáciu, ale nezmeníte ich v ručne aktivovanom profile, použijú sa nastavenia hlasu z profilu pre aplikáciu.
 Všetky nastavenia, ktoré zmeníte sa ukladajú do ručne aktivovaného profilu.
-Ak chcete deaktivovať aktívny profil, v dialógu používateľské profily vyberte daný profil a stlačte tlačidlo ručne deaktivovať.
+Ak chcete deaktivovať aktívny profil, v dialógu konfiguračné profily vyberte daný profil a stlačte tlačidlo ručne deaktivovať.
 
 +++ Udalosti +++[ConfigProfileTriggers]
-Ak v dialógu používateľské profily aktivujete tlačidlo udalosti, môžete nastaviť, kedy sa majú profily automaticky spúšťať.
+Ak v dialógu konfiguračné profily aktivujete tlačidlo udalosti, môžete nastaviť, kedy sa majú profily automaticky spúšťať.
 
 Zoznam udalostí zobrazuje dostupné možnosti:
 - aktuálna aplikácia: Profil sa automaticky aktivuje po prepnutí do okna aplikácie.
@@ -1175,7 +1175,7 @@ Zoznam udalostí zobrazuje dostupné možnosti:
 Ak chcete vybrať profil pre danú udalosť, zvoľte požadovanú udalosť a potom zo zoznamu vyberte požadovaný profil.
 Môžete tiež vybrať možnosť (normálna konfigurácia), ak nechcete použiť pre udalosť žiadny profil.
 
-Tlačidlom zatvoriť sa vrátite do dialógu Používateľské profily.
+Tlačidlom zatvoriť sa vrátite do dialógu konfiguračné profily.
 
 +++ upravenie Profilu +++
 Ak ste ručne aktivovali nejaký profil, všetky nastavenia, ktoré zmeníte, sa uložia do tohto profilu.
@@ -1188,7 +1188,7 @@ Ak chcete upraviť profil pre plynulé čítanie, musíte ho [ručne aktivovať 
 +++ Dočasné vypnutie udalostí +++
 Niekedy môže byť užitočné vypnúť všetky udalosti naraz.
 Môžete napríklad chcieť upraviť aktívny profil alebo normálne nastavenia bez toho, aby sa vám nechtiac spustil profil vyvolaný nejakou udalosťou.
-toto docielite začiarknutím možnosti dočasne zakázať všetky udalosti v dialógu používateľské profily.
+toto docielite začiarknutím možnosti dočasne zakázať všetky udalosti v dialógu konfiguračné profily.
 
 ++ Umiestnenie súborov s nastaveniami ++
 Prenosné verzie NVDA si ukladajú všetky nastavenia, vlastné aplikačné moduly, ovládače hlasových a braillovských výstupov v podpriečinku userConfig priečinka NVDA.

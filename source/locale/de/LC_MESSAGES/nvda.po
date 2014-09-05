@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-08 19:10+1000\n"
+"POT-Creation-Date: 2014-08-11 19:10+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: David Parduhn <xkill85@gmx.net>\n"
+"Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.6\n"
+"X-Generator: Poedit 1.6.7\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1828,13 +1828,13 @@ msgstr ""
 msgid "No location information"
 msgstr "Keine Standortinformationen"
 
-#. Translators: Input help mode message for report object dimensions command.
+#. Translators: Description for report review cursor location command.
 msgid ""
-"Reports location and size information about the text position or object at "
-"the review cursor. Pressing twice may provide further detail."
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
 msgstr ""
-"Gibt Größen- und Positionsinfos zum aktuellen Objekt aus, drücken Sie die "
-"Tastenkombination zweimal für weitere Details"
+"Gibt Größen- und Positionsinformationen zum aktuellen Objekt aus. Für "
+"weitere Details drücken Sie die Tastenkombination zweimal"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -2507,6 +2507,14 @@ msgstr "verschiedenes"
 msgid "Browse mode"
 msgstr "Lesemodus"
 
+#. Translators: The shortcut key used to start NVDA.
+#. This should normally be left as is, but might be changed for some locales
+#. if the default key causes problems for the normal locale keyboard layout.
+#. The key must be formatted as described in this article:
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+msgid "CTRL+ALT+N"
+msgstr "CTRL+ALT+N"
+
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
 msgstr "Internetseite von NVDA"
@@ -3089,9 +3097,8 @@ msgstr "Blocksatz"
 
 #. Translators: Reported when text is justified with character spacing (Japanese etc)
 #. See http://kohei.us/2010/01/21/distributed-text-justification/
-#, fuzzy
 msgid "align distributed"
-msgstr "Ausrichtung verteilt"
+msgstr "Ausrichtung Sperrdruck"
 
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
@@ -3132,37 +3139,30 @@ msgid "no first line indent"
 msgstr "kein Einzug für erste Zeile"
 
 #. Translators: Reported when text is vertically top-aligned.
-#, fuzzy
 msgid "vertical align top"
-msgstr "obenbündig"
+msgstr "vertikal nach oben ausgerichtet"
 
 #. Translators: Reported when text is vertically middle aligned.
-#, fuzzy
 msgid "vertical align middle"
-msgstr "vertikal zentriert"
+msgstr "Vertikal zentriert"
 
 #. Translators: Reported when text is vertically bottom-aligned.
-#, fuzzy
 msgid "vertical align bottom"
-msgstr "untenbündig ausgerichtet"
+msgstr "Vertikal nach unten ausgerichtet"
 
 #. Translators: Reported when text is vertically aligned on the baseline.
-#, fuzzy
 msgid "vertical align baseline"
-msgstr "an Grundlinie ausgerichtet"
+msgstr "Vertikal an Grundlinie ausgerichtet"
 
 #. Translators: Reported when text is vertically justified.
-#, fuzzy
 msgid "vertical align justified"
-msgstr "vertikale Ausrichtung Blocksatz"
+msgstr "Vertikale Ausrichtung Blocksatz"
 
 #. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-#, fuzzy
 msgid "vertical align distributed"
-msgstr "vertikale Ausrichtung verteilt"
+msgstr "Vertikale Ausrichtung Sperrdruck"
 
 #. Translators: Reported when text has reverted to default vertical alignment.
-#, fuzzy
 msgid "vertical align default"
 msgstr "Vertikale Standardausrichtung"
 
@@ -3635,9 +3635,21 @@ msgstr "Anlage"
 msgid "sent: %s"
 msgstr "Gesendet: %s"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+#. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
 msgstr "auf Outlook wird gewartet"
+
+#. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+msgid "{startTime} to {endTime}"
+msgstr "{startTime} bis {endTime}"
+
+#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+msgid "Appointment {subject}, {time}"
+msgstr "Termin für {time}: {subject}"
+
+#. Translators: a message when the current time slot on an Outlook Calendar has an appointment
+msgid "has appointment"
+msgstr "Enthält Termin"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
@@ -3846,35 +3858,35 @@ msgstr "überlagert {otherShape}"
 msgid "behind {otherShape}"
 msgstr "wird von {otherShape} überlagert"
 
-#. Translators: the distance in points from the edge of a PowerpointSlide
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
 msgid "{distance:.3g} points from left slide edge"
 msgstr "{distance:.3g} Bildpunkte vom linken Folienrand entfernt"
 
-#. Translators: the distance in points off the edge of a PowerpointSlide
+#. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
 msgid "Off left slide edge by {distance:.3g} points"
 msgstr "ragt {distance:.3g} Bildpunkte über den linken Folienrand hinaus"
 
-#. Translators: the distance in points from the edge of a PowerpointSlide
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
 msgid "{distance:.3g} points from top slide edge"
 msgstr "{distance:.3g} Bildpunkte vom oberen Folienrand entfernt"
 
-#. Translators: the distance in points off the edge of a PowerpointSlide
+#. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
 msgid "Off top slide edge by {distance:.3g} points"
 msgstr "ragt {distance:.3g} Bildpunkte über den oberen Folienrand hinaus"
 
-#. Translators: the distance in points from the edge of a PowerpointSlide
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
 msgid "{distance:.3g} points from right slide edge"
 msgstr "{distance:.3g} Bildpunkte vom rechten Folienrand entfernt"
 
-#. Translators: the distance in points off the edge of a PowerpointSlide
+#. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
 msgid "Off right slide edge by {distance:.3g} points"
 msgstr "ragt {distance:.3g} Bildpunkte über den rechten Folienrand hinaus"
 
-#. Translators: the distance in points from the edge of a PowerpointSlide
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
 msgid "{distance:.3g} points from bottom slide edge"
 msgstr "{distance:.3g} Bildpunkte vom unteren Folienrand entfernt"
 
-#. Translators: the distance in points off the edge of a PowerpointSlide
+#. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
 msgid "Off bottom slide edge by {distance:.3g} points"
 msgstr "ragt {distance:.3g} Bildpunkte über den unteren Folienrand hinaus"
 
@@ -4800,7 +4812,9 @@ msgstr "NVDA für die Windows-&Anmeldung verwenden"
 msgid "&Keep existing desktop shortcut"
 msgstr "&existierende Desktop-Verknüpfung behalten"
 
-#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
+#. If the shortcut key has been changed for this locale,
+#. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "Desktop-Verknüpfung erstellen (mit der Tastenkombination strg+alt+n)"
 
@@ -5718,7 +5732,7 @@ msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
-msgid "at {x},{y}"
+msgid "at {x}, {y}"
 msgstr "bei {x},{y}"
 
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
@@ -6630,9 +6644,9 @@ msgid "{offset:.3g} points"
 msgstr "{offset:.3g} Punkt"
 
 #. Translators: a measurement in Microsoft Word
-#, fuzzy
+#. See http://support.microsoft.com/kb/76388 for details.
 msgid "{offset:.3g} picas"
-msgstr "{offset:.3g} Zeichen"
+msgstr "{offset:.3g} Pixel"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 msgid "no comments"

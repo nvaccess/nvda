@@ -15,9 +15,9 @@ Que hai de Novo no NVDA
  - O filtrado intelixente da hora de xeito que só se anuncia a data se a nova hora ou cita seleccionada é nun día diferente á derradeira.
 - Mellorado o soporte para a bandexa de entrada e outras listas de menxases  en Outlook 2010 e superior (#3834) incluíndo:
  - A capacidade de silenciar as cabeceiras de columna (de, Asunto etc) desactivando a opción Anunciar Cabeceiras de Fila e Columna de Táboa nas Opciones de Formateado de Texto,
- - A capacidade de utilizar as ordes de navegación de táboa (control + flechas) para moverse ó longo das columnas individuais. 
+ - A capacidade de utilizar as ordes de navegación de táboa (control + alt + flechas) para moverse ó longo das columnas individuais. 
 - Microsoft word: Se unha imaxe en liña non ten posto ningún texto alternativo, NVDA anunciará o título da imaxe, se o autor proporcionou un. (#4193)
-- Microsoft Word: Anúnciase o sangrado do parágrafo ca orden  Anunciar Formato (NVDA+f) e automáticamente cando a nova opción Anunciar Sangría do Parágrafo en Formateo de Documentos estea activada. (#4165).
+- Microsoft Word: NVDA agora pode anunciar o sangrado do parágrafo ca orden anunciar formato (NVDA+f). Tamén pode anunciarse automáticamente cando a nova opción Anunciar Sangría de Parágrafo estea habilitada nas opcións de Formato de Documento. (#4165)
 - Anúnciase o texto insertado automáticamente como unha nova viñeta, número ou sangría cando se prema intro en documentos e campos de texto editables. (#4185)
 - Microsoft word: Ó se premer NVDA+alt+c anunciaráse o texto dun comentario se o cursor está dentro dun. (#3528)
 - Mellorado o soporte para a lectura automática de cabeceiras de fila e columna no Microsoft Excel (#3568) incluíndo:
@@ -28,7 +28,7 @@ Que hai de Novo no NVDA
  - Soporte de marcas de MS Word para identificar celdas de cabeceira (compatible co lector de pantalla Jaws) 
  -  as ordes fixar cabeceira de columna (NVDA+shift+c) e fixar cabeceira de fila (NVDA+shift+r) mentres se estea na primeira celda de cabeceira nunha táboa permiten dicir ó NVDA que esas cabeceiras  deberían anunciarse automáticamente.  As opcións almacénanse no documento tal que estén disponibles a seguinte vez que o documento se abra, e estarán dispoñibles para outros lectores de pantalla que soporten o esquema de marcas.
 - Microsoft Word: Anuncia a distancia dende o borde esquerdo da páxina cando se prema a tecla tab. (#1353)
-- Microsoft Word: proporciónase información en voz e en braille para a maioría de teclas de atallo dispoñibles  para o formato (negriña, cursiva, subliñado,  alineación e nível de esquema). (#1353)
+- Microsoft Word: proporciónase información en voz e en braille para a maioría de teclas de atallo dispoñibles  para o formato (negriña, cursiva, subliñado,  alineación, nível de esquema, superíndice, subíndice e tamaño de fonte ). (#1353)
 - Microsoft Excel: Se a celda seleccionada contén comentarios, poden ser agora anunciados premendo NVDA+alt+c (#2920)
 - Microsoft Excel: proporciónase un diálogo específico para o NVDA para editar os comentarios sobre a celda seleccionada ó premer a orden de Excel shift + f2 para acceder ó modo de edición de comentarios. (#2920)
 - Microsoft Excel: información en voz e en braille  para moitos máis atallos de teclado para movementos de selección (#4211) incluíndo:
@@ -47,7 +47,7 @@ Que hai de Novo no NVDA
  - Nos campos de edición estándar e no modo navegación, anúncianse a posición do cursor como unha porcentaxe do contido, e as súas cordinadas de pantalla .
  - En formas en presentacións de Powerpoint, anúnciase a posición da forma relativa á diapositiva  e outras formas.
  - Ó premer   esta orden dúas veces produciráse o vello comportamento do anunciado da información de localización para todo o control.
- 
+ - Nova lingua: Catalán. 
 
 == Cambios ==
 - Actualizado o transcriptor braille liblouis a 2.5.4. (#4103)
@@ -71,12 +71,25 @@ Que hai de Novo no NVDA
 - Os paneis de tarefas como o administrador do portapapeis ou de recuperación de ficheiros xa non parecen obter o foco accidentalmente ó abrir unha aplicación como Microsoft Word ou Excel, o que ás veces provocaba que o usuario tivera que saír e voltar á aplicación para utilizar o documento ou folla de cálculo.  (#4199)
 - NVDA xa non falla ó executarse nos últimos sistemas operativos Windows, se a lingua do Windows do usuario establécese en Serbio (Latino). (#4203) 
 - Ó premer o BloqueoNumérico mentras se estea no modo Axuda de Entrada agora conmutarase o bloqueoNumérico correctamente, en lugar de que o teclado e o sistema operativo se desincronicen con respecto ó estado desta tecla. (#4226)
+- No Google Chrome, o título do documento anúnciase de novo ó cambiar as pestanas. No NVDA 2014.2, esto no ocurríu nalgúns casos. (#4222)
+- No Google Chrome e navegadores baseados no Chrome, a URL do documento xa non se informa cando se anuncia o documento. (#4223)
+- Ó executar ler todo co sintetizador Sen voz seleccionado (útil para realizar probas automatizadas), ler todo agora completarase en lugar de deterse tralas primeiras poucas liñas. (#4225)
+- Diálogo Firmas de Microsoft Outlook: o campo de edición firma agora é accesible, o que permite o seguemento compreto do cursor e a detección do formato. (#3833) 
+- Microsoft Word: Ó ler a última liña dunha celda de táboa, xa non se le toda a celda da táboa. (#3421)
+- Microsoft Word: Ó ler a primeira ou a última liña dunha táboa de índice, xa non se le toda a táboa de índice. (#3421)
+- Ó falar palabras ó se escreber e nalgúns outros casos, as palabras xa non se separan incorrectamente en marcas como signos vocálicos e virama en linguas da India. (#4254)
+- Os campos numéricos  de texto editable en GoldWave agora manéllanse correctamente. (#670)
++- Microsoft Word: ó nos mover por parágrafo con control+flecha abaixo / control+flecha arriba, xa non é necesario premelos dúas veces se nos movemos por listas numeradas ou de viñetas. (#3290)
 
 
 == Cambios para Desenvolvedores ==
 - NVDA agora conta co apoio unificado de documentación para os complementos. Ver a sección de complementos da documentación da Guía do desenvolvedor para obter máis información. (#2694)
+- Ó proporcionar  vínculos de xestos nun ScriptableObject a través de __gestures, agora é posible proporcionar a palabra chave None como o script. Esto lanza o xesto en calquera clase base. (#4240)
+- Agora é posible cambiar a tecla de atallo utilizada para iniciar NVDA en traducións onde o atallo normal causa problemas. (#2209)
+ - Esto faise a través de gettext.
+ - Ten en conta que o texto para a opción Crear atallo de escritorio no diálogo Instalar NVDA, así coma o atallo de teclado na Guía do Usuario, tamén debe actualizarse.
 
-
+ 
 = 2014.2 =
 
 == Novas Características ==

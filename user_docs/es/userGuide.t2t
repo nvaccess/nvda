@@ -23,7 +23,7 @@ Lo más reseñable incluye:
 - Soporte para muchas pantallas de braille efímero incluyendo la entrada de braille computerizado para pantallas braille que tengan un teclado braille
 - Capacidad para ejecutarse completamente desde una memoria USB u otros medios portables sin la necesidad de instalación
 - Instalador parlante fácil de utilizar
-- Traducido a 44 idiomas
+- Traducido a 45 idiomas
 - Soporte para Sistemas Operativos Windows modernos incluyendo variantes de 32 y 64 bit
 - Capacidad para ejecutarse en ventanas de autentificación de Windows  y otras pantallas seguras 
 - Soporte para interfaces comunes de accesibilidad tales como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 y UI Automation
@@ -32,7 +32,7 @@ Lo más reseñable incluye:
 
 ++ Internacionalización ++
 Es importante que cualquier persona en el mundo, sin importar qué idioma hable, tenga igual acceso a la tecnología. 
-Actualmente NVDA ha sido traducido a 44 idiomas además del idioma inglés incluyendo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Búlgaro, Checo, Chino Mandarín y Chino cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Farsi, Finlandés, Francés, Gallego, Georgiano, Griego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Japonés, Nepalí, Noruego, Polaco, Portugués, Portugués del Brasil, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés, turco y Vietnamita,.
+Actualmente NVDA ha sido traducido a 45 idiomas además del idioma inglés incluyendo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Búlgaro, Catalán, Checo, Chino Mandarín y Chino cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Farsi, Finlandés, Francés, Gallego, Georgiano, Griego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Japonés, Nepalí, Noruego, Polaco, Portugués, Portugués del Brasil, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés, turco y Vietnamita,.
 
 ++ Soporte de Síntesis de Voz ++
 Además de proporcionar sus mensajes e interface en varios idiomas, NVDA también puede posibilitar al usuario para leer contenidos en cualquier idioma, tanto en cuanto tengan un sintetizador de voz que pueda verbalizar ese idioma en particular. 
@@ -333,7 +333,7 @@ Para navegar por objetos, utiliza las siguientes órdenes:
 | Navegar al objeto del foco | NVDA+Menos teclado numérico | NVDA+Retroceso | no | Navega al objeto que tiene actualmente el foco del sistema, y también coloca el cursor de revisión en la posición del cursor del Sistema, si se muestra |
 | Activar actual navegador de objetos | NVDA+Intro teclado numérico | NVDA+Intro | doble toque | Activa el actual navegador de objetos (similar a hacer clic con el ratón o pulsar espacio cuando tiene el foco del sistema) |
 | Mover foco del Sistema a actual navegador de objetos | NVDA+shift+Menos teclado numérico | NVDA+shift+retroceso | no | pulsado una vez Mueve el foco del Sistema al navegador de objetos actual, pulsado dos veces mueve el cursor del sistema a la posición del cursor de revisión |
-| Anunciar dimensiones del navegador de objetos | NVDA+Suprimir teclado numérico | NVDA+suprimir | no | Informa de la ubicación del cursor de revisión, ya sea en términos amigables de aplicación como en porcentaje por el documento o la distancia desde el borde de la página, o como mínimo en píxeles de pantalla. Al pulsar dos veces anunciará más información. |  |
+| Anunciar dimensiones del navegador de objetos | NVDA+Suprimir teclado numérico | NVDA+suprimir | no | Anuncia información acerca de la localización del texto u objeto EN EL cursor DE REVISIÓN. Por ejemplo, esto podría incluir el porcentaje del documento, la distancia desde el borde de la página o la posición exacta en la pantalla. Al pulsar dos veces podrá  proporcionar detalles adicionales. |
 %kc:endInclude
 
 nota: las teclas del teclado numérico requieren que la tecla BloqNum esté desactivada para funcionar apropiadamente.
@@ -528,9 +528,9 @@ NVDA proporciona sus propias órdenes extra para algunas aplicaciones para hacer
 ++ Microsoft Word ++
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| Anunciar comentario actual | NVDA+Alt+c | Anuncia el texto del comentario en la posición del Cursor del Sistema. | 
-| Fijar encabezado de columnas | NVDA+shift+c | Pulsando esto una vez dice a NVDA que esta es la primera celda de encabezado en la fila que contiene encabezados de columna, que debería ser anunciada automáticamente al moverte entre columnas bajo esta fila. Pulsando dos veces quitará esta opción. | 
-| Fijar encabezado de filas | NVDA+shift+r | Pulsando esto una vez dice a NVDA que esta es la primera celda de encabezado en la columna que contiene encabezados de fila, que debería ser anunciado automáticamente cuando te desplaces entre las filas después de esta columna. Pulsando dos veces eliminará esta opción. | 
+| Anunciar comentario actual | NVDA+Alt+c | Anuncia el texto del comentario en la posición del Cursor del Sistema. |
+| Fijar encabezado de columnas | NVDA+shift+c | Pulsando esto una vez dice a NVDA que esta es la primera celda de encabezado en la fila que contiene encabezados de columna, que debería ser anunciada automáticamente al moverte entre columnas bajo esta fila. Pulsando dos veces quitará esta opción. |
+| Fijar encabezado de filas | NVDA+shift+r | Pulsando esto una vez dice a NVDA que esta es la primera celda de encabezado en la columna que contiene encabezados de fila, que debería ser anunciado automáticamente cuando te desplaces entre las filas después de esta columna. Pulsando dos veces eliminará esta opción. |
 %kc:endInclude
 
 ++ Microsoft Excel ++
@@ -538,12 +538,13 @@ NVDA proporciona sus propias órdenes extra para algunas aplicaciones para hacer
 || Nombre | Tecla | Descripción |
 | Fijar encabezado de columnas | NVDA+shift+c | Al pulsar esto una vez le dice a NVDA que es la primera celda de encabezado de la fila que contiene los encabezados de columna, que debería ser anunciado automáticamente cuando te desplaces entre las columnas por debajo de esta fila. Pulsando dos veces se eliminará la opción. | 
 | Fijar encabezado de filas | NVDA+shift+r | Al pulsar esto una vez le dice a NVDA que es la primera celda del encabezado de la columna que contiene los encabezados de fila, que debería ser anunciado automáticamente cuando te desplaces entre las filas después de esta columna. Pulsando dos veces eliminarás la opción. | 
-| Anunciar comentario | NVDA+alt+c | Anuncia el comentario en la celda actual si lo hay. |%kc:endInclude
+| Anunciar comentario | NVDA+alt+c | Anuncia el comentario en la celda actual si lo hay. |
+%kc:endInclude
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| conmutar lectura de notas del orador | control+shift+s | Cuando se está en una presentación en ejecución, esta orden conmutará entre las notas del orador para la diapositiva y el contenido de la diapositiva. Esto sólo afecta a lo que lee NVDA, no a lo que se muestra en la pantalla. | 
+| conmutar lectura de notas del orador | control+shift+s | Cuando se está en una presentación en ejecución, esta orden conmutará entre las notas del orador para la diapositiva y el contenido de la diapositiva. Esto sólo afecta a lo que lee NVDA, no a lo que se muestra en la pantalla. |
 %kc:endInclude
 
 ++ foobar2000 ++
@@ -1220,8 +1221,10 @@ No obstante, si haces clic o colocas el foco dentro del visualizador,  NVDA dete
 ++ Administrador de Complementos ++
 El Administrador de Complementos, al que se accede seleccionando Administrador de complementos bajo Herramientas en el menú NVDA, te permite instalar y desinstalar paquetes de complementos para NVDA.
 Estos paquetes son proporcionados por la comunidad y contienen código personalizado que podrá añadir o cambiar características en NVDA o también proporcionan soporte para pantallas Braille o sintetizadores de voz extra.
+
 El Administrador de Complementos contiene una lista que muestra todos los complementos instalados actualmente en tu configuración de usuario de NVDA. 
 Se muestra un nombre de paquete, versión y autor para cada complemento, aunque se puede ver más información tal como una descripción y una URL seleccionando el complemento y pulsando el botón Acerca del complemento.
+Si hay ayuda disponible para el complemento seleccionado, puedes acceder a ella pulsando su botón de Ayuda.
 
 Para examinar y descargar los complementos disponibles online, pulsa el botón Obtener Complementos.
 Este botón abre la [página de complementos de NVDA http://addons.nvda-project.org/].

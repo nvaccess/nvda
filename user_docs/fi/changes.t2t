@@ -47,6 +47,7 @@
  - Kohdistimen sijainti ilmoitetaan standardinmukaisissa muokkauskentissä ja selaustilassa prosentteina sisällöstä sekä ruudun koordinaatteina.
  - Muodon sijainti luetaan PowerPoint-esityksissä suhteessa diaan sekä muihin muotoihin.
  - Kahdesti painettaessa komento toimii entiseen tapaan lukemalla koko kontrollin sijaintitiedot.
+- Uusi kieli: katalaani.
 
 
 == Muutokset ==
@@ -62,13 +63,13 @@
 - Sivun sisäisten linkkien seuraaminen siirtää nyt kohdesijaintiin sekä lukee sen asianmukaisesti selaustila-asiakirjoissa viimeisimmissä Internet Explorerin versioissa. (#4134)
 - Microsoft Outlook 2010 ja uudemmat:  suojattujen valintaikkunoiden, kuten esim. Uusi profiili- ja sähköpostitilin lisäysvalintaikkunoiden yleistä käytettävyyttä paranneltu. (#4090, #4091, #4095)
 - Microsoft Outlook: komentotyökalurivien tarpeetonta puheliaisuutta vähennetty tietyissä valintaikkunoissa liikuttaessa. (#4096, #3407)
-- Microsoft word: taulukosta poistumista ei enää virheellisesti ilmoiteta siirryttäessä sarkaimella taulukon tyhjään soluun. (#4151)
+- Microsoft word: taulukosta poistumista ei enää ilmoiteta virheellisesti siirryttäessä sarkaimella taulukon tyhjään soluun. (#4151)
 - Microsoft Word: Ensimmäisen taulukon jälkeisen merkin (tyhjä rivi mukaan lukien) ei enää virheellisesti katsota olevan taulukon sisällä. (#4152)
 - Microsoft Word 2010:n oikeinkirjoituksen tarkistuksen valintaikkuna: Todellinen väärin kirjoitettu sana luetaan nyt asianmukaisesti ensimmäisen lihavoidun sanan asemesta. (#3431) 
 - Kun selaustilassa Internet Explorerissa ja muissa MSHTML-kontrolleissa siirrytään sarkaimella tai pikanavigointinäppäimiä käyttäen lomakekenttiin, niiden nimet luetaan taas tilanteissa, joissa niitä ei aiemmin luettu (erityisesti sellaisissa, joissa käytetään HTML-nimielementtejä). (#4170)
 - Microsoft Word: Kommenttien olemassaolon ja niiden sijainnin ilmoittaminen on nyt tarkempaa. (#3528)
 - Tiettyjen Microsoft Office -ohjelmien, kuten Wordin, Excelin ja Outlookin valintaikkunoissa navigointia paranneltu estämällä sellaisten kontrollisäilötyökalurivien lukeminen, joista ei ole hyötyä käyttäjälle. (#4198) 
-- Kohdistus ei enää siirry esim. Microsoft Wordia tai Exceliä avattaessa virheellisesti sellaisiin tehtäväruutuihin kuin Leikepöydän hallinta tai Tiedoston palautus, joka aiheutti sen, että käyttäjän tarvitsi asiakirjan tai laskentataulukon käyttämiseksi siirtyä pois sovelluksesta ja taas takaisin. (#4199)
+- Kohdistus ei enää siirry virheellisesti esim. Microsoft Wordia tai Exceliä avattaessa sellaisiin tehtäväruutuihin kuin Leikepöydän hallinta tai Tiedoston palautus, joka aiheutti sen, että käyttäjän tarvitsi asiakirjan tai laskentataulukon käyttämiseksi siirtyä pois kulloisestakin sovelluksesta ja taas takaisin. (#4199)
 - NVDA käynnistyy nyt asianmukaisesti uusimmissa Windowsin versioissa, jos käyttöjärjestelmän kieleksi on määritetty serbia (latinalainen). (#4203)
 - Numlockin painaminen syöteohjetilassa oltaessa vaihtaa nyt näppäimen tilaa sen sijaan, että näppäimistö ja käyttöjärjestelmä muuttuisivat epäsynkronisiksi tämän näppäimen tilan suhteen. (#4226)
 - Asiakirjan otsikko luetaan taas Google Chromessa välilehteä vaihdettaessa. Otsikkoa ei luettu joissakin tapauksissa NVDA 2014.2:ssa. (#4222)
@@ -77,6 +78,9 @@
 - Microsoft Outlookin Allekirjoitus-valintaikkuna: Allekirjoitus-muokkauskenttä on nyt saavutettava, mikä mahdollistaa tarkan kohdistimen seurannan ja muotoilun havaitsemisen. (#3833) 
 - Microsoft Word: Taulukon koko solua ei enää lueta solun viimeistä riviä luettaessa. (#3421)
 - Microsoft Word: Koko sisällysluetteloa ei enää lueta sen ensimmäistä tai viimeistä riviä luettaessa. (#3421)
+- Sanoja ei enää katkaista virheellisesti esim. vokaalimerkin tai intialaisissa kielissä käytettävän virama-tarkkeen kohdalla kirjoitettuja sanoja luettaessa sekä muutamissa muissakin tapauksissa. (#4254)
+- Numeeriset muokattavat tekstikentät käsitellään nyt oikein GoldWave-äänieditorissa. (#670)
+- Microsoft Word: Kun liikutaan kappaleittain Control+ala- tai Control+ylänuolella, niitä ei tarvitse enää painaa  kahdesti luettelomerkkejä sisältävissä tai numeroiduissa luetteloissa oltaessa. (#3290)
 
 
 = 2014.2 =

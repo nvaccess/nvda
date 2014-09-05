@@ -10,6 +10,7 @@
 
 import itertools
 import weakref
+import unicodedata
 import colors
 import globalVars
 from logHandler import log
@@ -550,7 +551,7 @@ def speakTypedCharacters(ch):
 		realChar="*"
 	else:
 		realChar=ch
-	if ch.isalnum():
+	if unicodedata.category(ch)[0] in "LMN":
 		curWordChars.append(realChar)
 	elif ch=="\b":
 		# Backspace, so remove the last character from our buffer.

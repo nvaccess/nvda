@@ -9,35 +9,45 @@
 - Os sons reproducius en que o NVDA s'enchega y desenchega se pueden desactivar a traviés d'una nueva opción en o dialogo d'as opcions chenerals. (#834)
 - Se puet acceder ta l'aduya d'os complementos dende l'administrador de complementos ta complementos que suporten isto. (#2694)
 - Suporte t'o calandario en o Microsoft Outlook 2007 y superiors (#2943) incluindo: Posibilidat de desactivar l'anuncio d'os capiters de columna en a servilla de dentrada y atras listas de mensaches ta l'Outlook 2010 y superiors. (#3834)
- - Anuncio d'a hora actual en mover-se arredol con as flechas,
- - Indicación si a hora seleccionada ye adintro de bella cita,
- - Anuncio d'a cita seleccionada en pretar o tabulador
- - Filtrau intelichent d'a calendata de traza que nomás se'n anuncia si a nueva hora u cita seleccionada ye en un diya diferent.
-- Amillorau o suporte t'a servilla de dentrada y atras listas de mensaches en l'Outlook 2010 y superiors (#3834) incluindo:
- - Posibilidat de silenciar os capiters de columna (de, afer etc) desactivando a opción anunciar capiters de ringlera y columna  de tabla en as opcions de formatiau de documentos,
-  - Posibilidat de fer servir os comandos de navegación de tablas (control + flechas) ta mover-se a lo luengo d'as columnas individuals
+ - Anuncio d'a hora actual en mover-se arredol con as teclas de flecha.
+ - Indicación si a hora seleccionada ye adintro de bella cita.
+ - Anuncio d'a cita seleccionada en pretar o tabulador.
+ - Filtrau intelichent d'a calendata de traza que nomás se'n anuncia si a nueva hora u cita seleccionada ye en un diya diferent t'o zaguer.
+- Amillorau o suporte t'a servilla de dentrada y atras listas de mensaches en o Microsoft Outlook 2010 y superiors (#3834) incluindo:
+ - Posibilidat de silenciar os capiters de columna (de, afer, etc) desactivando a opción anunciar capiters de ringlera y columna  de tabla en as opcions de formatiau de documentos.
+  - Posibilidat de fer servir os comandos de navegación de tablas (control + alt +flechas) ta mover-se a traviés d'as columnas individuals
 - Microsoft word: Si una imachen en linia no tien establiu garra texto alternativo lo NVDA anunciará en cuenta o titol d'a imachen si l'autor en proporcionó un. (#4193)
-- Microsoft Word: S'anuncia o sangrau d'o paragrafo con o comando d'anuncio de formato (NVDA+f) y automaticament quan ye activada a nueva opción anunciar a sangría de paragrafos   d'o formatiau de documentos. (#4165).
+- Microsoft Word: O NVDA agora puet anunciar o sangrau d'o paragrafo con o comando d'anuncio de formato (NVDA+f). En puet estar anunciau automaticament quan a nueva opción anunciar a sangría de  paragrafos   ye activada en as opcions d'o formatiau de documentos. (#4165).
 - Anunciar o texto insertau automaticament tal como una nueva vinyeta, numero u tabulación de sangría en pretar l'intro en os documentos y campos de texto editables. (#4185)
 - Microsoft word: Pretar NVDA+alt+c anunciará  o texto d'un comentario si o cursor en i ye adintro. (#3528)
 - Amillorau o suporte t'a lectura automatica d'os capiters de columna y ringlera en o Microsoft Excel (#3568) incluindo:
- - Suporte d'os rangos de nombres definius de l'Excel ta identificar as celdas de capitero (compatible con o lector de pantalla Jaws) 
+ - Suporte d'os rangos de nombres definius de l'Excel ta identificar as celdas de capitero (compatible con o lector de pantalla Jaws) .
  - Os comandos d'establir o capitero de columna (NVDA+shift+c) y establir o capitero de ringlera (NVDA+shift+r) agora almagazenan as opcions en a fuella de treballo asinas que en serán disponibles a siguient vegada que s'ubra la fuella, y en serán disponibles t'atros lectors de pantalla que suporten o esquema de rangos de nombres definius.
  - Istos comandos tamién se pueden fer servir agora quantas vegadas por fuella ta establir capiters diferents ta diferents rechions.
  - Suporte t'a lectura automatica d'os capiters de columna y ringlera en o Microsoft Word (#3110) incluindo:
- - Suporte d'os marcapachinas d'o MS Word ta identificar as celdas de capitero(compatible con o lector de pantalla Jaws) 
+ - Suporte d'os marcapachinas d'o Microsoft Word ta identificar as celdas de capitero(compatible con o lector de pantalla Jaws).
  -  Os comandos d'establir  o capitero de columna (NVDA+shift+c) y establir o capitero de ringlera (NVDA+shift+r) entre que sigan en a primera celda de capitero en una tabla te permite dicir-le a lo NVDA que istos capiters pueden anunciar-se automaticament.  As opcions serán almagazenadas en o documento asinas que en serán disponibles a siguient vegada que o documento s'ubra, y en serán disponibles t'atros lectors de pantalla que suporten o esquema de marcapachinas.
  - Microsoft Word: s'anuncia a distancia dende o canto cucho d'a pachina en pretar a tecla tabulador. (#1353)
- - Microsoft Word: Se proporciona información por fabla y braille t'a mayor parti d'os alcorces de teclau disponibles de formato  (negreta, cursiva, subrayau, aliniacions y libel d'esquema). (#1353)
- - Microsoft Excel: Si a celda seleccionada contién comentarios agora en podrán estar anunciaus pretando NVDA+alt+c (#2920)
+ - Microsoft Word: Se proporciona información por fabla y braille t'a mayor parti d'os alcorces de teclau disponibles de formato  (negreta, cursiva, subrayau, aliniacions, libel d'esquema, superindiz, subindiz y mida d'a fuent). (#1353)
+ - Microsoft Excel: Si a celda seleccionada contién comentarios agora en podrán estar anunciaus pretando NVDA+alt+c. (#2920)
 - Microsoft Excel: Se proporciona un dialogo especifico d'o NVDA pa editar os comentarios en a celda seleccionada actualment en pretar o comando d'Excel mayus+f2 ta dentrar en o modo d'edición de comentarios. (#2920)
 - Microsoft Excel: información por fabla y braille  ta muitos mas alcorces de teclau t'os movimientos de selección (#4211) incluindo:
- - Movimiento de pachina Vertical (Re Pach y Av Pach)
- - Movimiento de pachina Horizontal (alt+RePach y alt+AvPach)
- - Enamplar a selección (as teclas anteriors adhibindo o mayus).
- - Selección d'a rechión actual (control+mayus+8)
- - Microsoft Excel: S'anuncian as aliniacions vertical y horizontal  t'as celdas con o comando d'anunciau de formato (NVDA+f) y automaticament si ye activada a opción d'anunciar l'aliniación en as opcions de formatiau de documentos. (#4212)
- - Microsoft Excel: S'anuncia o estilo d'una celda con o comando d'anunciau de formato (NVDA+f) y automaticament si ye activadaa oción danunciar o estilo en as opcions de formatiau de documentos. (#4213)
+ - Movimiento de pachina Vertical (Re Pach y Av Pach);
+ - Movimiento de pachina Horizontal (alt+RePach y alt+AvPach);
+ - Enamplar a selección (as teclas anteriors adhibindo o mayus);
+ - Selección d'a rechión actual (control+mayus+8).
+ - Microsoft Excel: Agora se pueden anunciar as aliniacions vertical y horizontal  t'as celdas con o comando d'anunciau de formato (NVDA+f). En puet estar anunciau automaticament si a opción d'anunciar l'aliniación ye activada en as opcions de formatiau de documentos. (#4212)
+ - Microsoft Excel: Agora se puet anunciar o estilo d'una celda con o comando d'anunciau de formato (NVDA+f). En puet estar anunciau automaticament si a opción danunciar o estilo ye activada en as opcions de formatiau de documentos. (#4213)
+ - Microsoft PowerPoint: En que  se mueven as formas d'una diapositiva con as teclas de flecha agora s'anuncia a ubicación actual d'a forma (#4214) incluindo:
+ - S'anuncia a distancia entre a forma y cadagún d'os cantos d'a diapositiva .
+ - Si a forma cubre u ye cubierta por unatra forma, allora la distancia supermesa y a forma cubierta s'anuncian. 
+ - T'anunciar ista información en qualsiquier inte sin mover una forma, preta o comando d'anunciar a localización (NVDA+suprimir).
+ - En seleccionar una forma, si ye cubierta por unatra forma, o NVDA anunciará que'n ye amagada.
+ - O comando d'anunciar a localización (NVDA+suprimir) ye mas especifico a lo contexto en qualques situacions. (#4219)
+  - En os campos d'edición estandar y en o modo d'exploración s'anuncia la posición d'o cursor como un porcentache d'o conteniu y as suyas coordenadas de pantalla .
+   - En as formas en as presentacions d'o PowerPoint s'anuncia a posición d'a forma relativa a la diapositiva  y atras formas.
+   - En pretar   iste comando dos vegadas se producirá l'anterior comportamiento de l'anunciau d'a información de localización ta tot o control.
+   - Nuevo idioma: Catalán
 
 
 == Cambeos ==
@@ -51,21 +61,34 @@
 - En qualques listas en o iTunes tals como a lista de mosica agora funciona correctament o mover-se  ta lo siguient elemento fendo servir a navegación d'obchectos . (#4129)
 - Os elementos HTML se consideran capiters  a causa que as marcas WAI ARIA agora son incluidas en a lista d'elementos d'o modo navegación y a navegación rapida d'os documentos de l'Internet Explorer. (#4140)
 - A lo seguir vinclos ta la mesma pachina en as versions recients de l'Internet Explorer agora se i mueve correctament y s'anuncia la posición de destín en os documentos en o modo navegación. (#4134)
-- Microsoft Outlook 2010 y superiors: s'amillora sobre tot l'acceso t'os dialogos seguros tals como os nuevos perfils y quadros de dialogo de configuración de correu. (#4090, #4091, #4095)
-- Microsoft Outlook: Se disminui a verbosidat inutil d'as barras de ferramientas de comando en navegar a traviés de qualques quadros de dialogo. (#4096, #3407)
+- Microsoft Outlook 2010 y superiors: S'ha amillorau lacceso cheneral t'os dialogos seguros tals como os nuevos perfils y quadros de dialogo de configuración de correu. (#4090, #4091, #4095)
+- Microsoft Outlook: S'ha disminuiu a verbosidat inutil en as barras de ferramientas de comando en navegar a traviés de qualques quadros de dialogo. (#4096, #3407)
 - Microsoft word: En tabular por una celda en blanco en una tabla ya no s'anuncia incorrectament salindo d'a tabla. (#4151)
 - Microsoft Word: O primer caracter dillá d'a fin d'una tabla (incluindo una nueva linia en blanco), ya no se considera incorrectament que siga adintro d'a tabla. (4152)
-- Dialogo d'o corrector ortografico d'o Microsoft Word 2010:  Anuncia a parola incorrecta reyal en cuenta de anunciar inapropiadament nomás  a primera parola en negreta. (#3431)
+- Dialogo d'o corrector ortografico d'o Microsoft Word 2010:  S'anuncia l'actual parola incorrecta en cuenta de anunciar inapropiadament nomás  a primera parola en negreta. (#3431)
 - En o modo de navegación en l'Internet Explorer y atros controls MSHTML tabulando u fendo servir a navegación d'una sola letra pa ir t'os campos de formulario atra vegada s'anuncia la etiqueta en muitos casos que no se feba (especificament an se fan servir elementos d'a etiqueta HTML). (#4170)
 - Microsoft Word: Anunciar a existencia y  ubicación d'os comentarios ye mas preciso. (#3528)
-- S'amillora la navegación de qualques dialogos en os productos d'o MS Office tals como lo Word, l'Excel y l'Outlook deixando d'anunciar particulars barras de ferramientas contenederas de controls que no son utiles ta l'usuario. (#4198) 
+- S'ha amillorau a navegación de qualques dialogos en os productos d'o MS Office tals como lo Word, l'Excel y l'Outlook deixando d'anunciar particulars barras de ferramientas contenederas de controls que no son utils ta l'usuario. (#4198) 
 - Os panels de quefers tals como l'administrador d'o portafuellas u de recuperación de fichers ya no pareixen obtener o foco accidentalment en ubrir una aplicación tal como lo Microsoft Word u l'Excel, o que a vegadas causaba que l'usuario hese de salir y tornar ta l'aplicación ta fer servir o documento u fuella de calculo.  (#4199)
 - O NVDA ya no falla en executar-se en os zaguers sistemas operativos Windows, si l'idioma de Windows de l'usuario s'estableix en Serbio (Latino). (#4203) 
-- Ya no ye necesario pretar l'alt quantas vegadas  t'activar as cintas d'o Microsoft Office  a primer vegada que sigan activadas, dimpués d'ubrir  un programa de l'Office tal como lo Word u l'Excel. (#4207)
+- En pretar o Bloqueyo numerico mientras se siga en o modo d'Aduya de Dentrada agora se conmutará o bloqueyo numerico correctament en cuenta de que o teclau y o sistema operativo se desincronicen respective a lo estau d'ista tecla. (#4226)
+- En o Google Chrome s'anuncia unatra vegada o titol d'o documento en cambiar de pestanyas. En o NVDA 2014.2 isto no ocurriba en qualques casos. (#4222)
+- En o Google Chrome y os navegadors basaus en o Chrome a URL d'o documento ya no s'anuncia en anunciar o documento. (#4223)
+- En executar o charrar-lo tot con o sintetizador sin voz seleccionau (util ta pruebas automaticas) agora se charrará tot completo en cuenta de aturar-se dimpués d'unas pocas primeras linias. (#4225)
+- Dialogo de sinyatura d'o Microsoft Outlook: O campo editable de sinyatura agora ye accesible permitindo seguimiento completo d'o cursor y detección d'o formato. (#3833) 
+- Microsoft Word: En leyer a zaguera linia d'una celda de tabla ya no se leye a celda completa . (#3421)
+- Microsoft Word: En leyer a primera u a zaguera linia d'una tabla de contenius ya no se leye a tabla de contenius completa. (#3421) 
+- En charrar parolas escritas y en belatros casos, as parolas ya no se deseparan incorrectament en marcas tals como sinyals vocalicas y virama en Idiomas d'a India. (#4254)
+- Os campos numericos  de texto editable en o GoldWave agora se manean correctament. (#670)
+- Microsoft Word: en mover-se por un paragrafo con control+flecha abaixo / control+flecha alto, ya no ye necesario pretar-los dos vegadas si nos movemos por listas numeradas u de viñetas. (#3290)
 
 
 == Cambeos ta desembolicadors ==
 - O NVDA agora ha unificau o suporte t'a documentación d'os complementos. Vei a sección d'a documentación de complementos d'a guida de l'usuario ta mas detalles. (#2694)
+- En furnir vinclos chestuals en un obchecto programable a traviés de __gestures agora ye posible no furnir garra parola  como lo script. Isto desvincula o cenyo en cualsiquier clase base. (#4240)
+- Agora ye posible cambiar l'alcorce de teclau que se fa servir ta enchegar o NVDA t'as localizacions que l'alcorce de teclau normal fa problemas. (#2209)
+ - Isto se fa a traviés de gettext.
+ - Para cuenta que o texto d'a opción Crear acceso dreito d'o escritorio en o quadro de dialogo Instalar o NVDA asinas como a tecla d'acceso dreito en a Guida de l'usuario, tamién s'han d'esviellar.
 
 
 = 2014.2 =
