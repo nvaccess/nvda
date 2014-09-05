@@ -522,6 +522,35 @@ A key command is provided to return to the original page containing the embedded
 | Move to containing browse mode document | NVDA+control+space | Moves the focus out of the current embedded object and into the document that contains it |
 %kc:endInclude
 
++ Reading Mathematical Content +
+Using MathPlayer 4 from Design Science, NVDA can read and interactively navigate supported mathematical content.
+This requires that MathPlayer 4 is installed on the computer.
+NVDA supports the following types of mathematical content:
+- MathML in Mozilla Firefox and Microsoft Internet Explorer.
+- Design Science MathType in Microsoft Word and PowerPoint.
+- MathML in Adobe Reader. Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
+-
+
+When reading a document, NVDA will speak any supported mathematical content where it occurs.
+If you are using a braille display, it will also be displayed in braille.
+
+++ Interactive Navigation ++
+If you are working primarily with speech, in most cases, you will probably wish to examine the expression in smaller segments, rather than hearing the entire expression at once.
+To do this, first move the review cursor to the mathematical content.
+By default, the review cursor follows the system caret, so you can usually use the system caret to move to the desired content.
+Then, activate the following command:
+
+%kc:beginInclude
+|| Name | Key | Description |
+| Interact with math content | NVDA+alt+m | Begins interaction with math content. |
+%kc:endInclude
+
+At this point, you can use MathPlayer commands such as the arrow keys to explore the expression.
+For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
+Please see the MathPlayer documentation for further information.
+
+When you wish to return to the document, simply press the escape key.
+
 + Application Specific NVDA Commands +
 NVDA provides its own extra commands for some applications to make certain tasks easier or to provide access to functionality which is not otherwise accessible to screen reader users.
 
