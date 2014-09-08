@@ -476,7 +476,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		elif which=="startToEnd":
 			self._rangeObj.Start=other._rangeObj.End
 		elif which=="endToStart":
-			print "start %s, end %s, otherStart %s, otherEnd %s"%(self._rangeObj.start,self._rangeObj.end,other._rangeObj.start,other._rangeObj.end)
 			self._rangeObj.End=other._rangeObj.Start
 		elif which=="endToEnd":
 			self._rangeObj.End=other._rangeObj.End
