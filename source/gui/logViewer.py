@@ -20,7 +20,7 @@ class LogViewer(wx.Frame):
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		self.outputCtrl = wx.TextCtrl(self, wx.ID_ANY, size=(500, 500), style=wx.TE_MULTILINE | wx.TE_READONLY|wx.TE_RICH)
-		self.outputCtrl.Bind(wx.EVT_CHAR, self.onOutputChar)
+		self.outputCtrl.Bind(wx.EVT_KEY_DOWN, self.onOutputKeyDown)
 		mainSizer.Add(self.outputCtrl, proportion=1, flag=wx.EXPAND)
 		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)
@@ -78,10 +78,12 @@ class LogViewer(wx.Frame):
 			# Translators: Dialog text presented when NVDA cannot save a log file.
 			gui.messageBox(_("Error saving log: %s") % e.strerror, _("Error"), style=wx.OK | wx.ICON_ERROR, parent=self)
 
-	def onOutputChar(self, evt):
+	def onOutputKeyDown(self, evt):
 		key = evt.GetKeyCode()
+		# #3763: WX 3 no longer passes escape via evt_char in richEdit controls. Therefore evt_key_down must be used.
 		if key == wx.WXK_ESCAPE:
 			self.Close()
+			return
 		evt.Skip()
 
 def activate():
