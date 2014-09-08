@@ -23,7 +23,7 @@ Zu den wichtigsten Funktionen gehören:
 - Unterstützung für zahlreiche Braillezeilen inklusive Unterstützung für die Eingabe von Computerbraille für Braillezeilen, die eine Braille-Tastatur besitzen.
 - Ausführen von einem USB-Stick oder anderen transportablen Medien.
 - Einfache Bedienung während der Installation mit Unterstützung durch Sprachausgaben.
-- Übersetzt in 44 Sprachen.
+- Übersetzt in 45 Sprachen.
 - Unterstützung für moderne Windows-Betriebssystemvarianten (für 32- / 64-Bit).
 - Lauffähig im Windows-Anmeldebildschirm sowie in den Dialogen der Sicherheitshinweise.
 - Unterstützung für übliche Schnittstellen zur Barrierefreiheit wie zum Beispiel Microsoft Active Accessibility, Java Access Bridge, IAccessible2 und UI Automation (UI Automation wird nur unter Windows 7 und höher unterstützt).
@@ -32,7 +32,7 @@ Zu den wichtigsten Funktionen gehören:
 
 ++ Internationalisierung ++
 Bei all den Menschen auf der Welt ist es wichtig, egal welche Sprache sie sprechen, dass sie den gleichen Zugang zu Technologien erhalten.
-NVDA wurde bislang in 44 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, amharisch, Arabisch, argonesisch, Brasilianisches Portugiesisch, Bulgarisch, Kroatisch, tschechisch, dänisch, Niederländisch, Farsi, Finnisch, Französisch, galizisch, Georgisch, griechisch, Deutsch, Hebräisch, Hindi, Ungarisch, irisch, Isländisch, Italienisch, Japanisch, koreanisch, nepalesisch, norwegisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Serbisch, Slowakisch, slovenisch, Spanisch, Schwedisch, Tamil, Thai, Traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
+NVDA wurde bislang in 45 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, amharisch, Arabisch, argonesisch, Brasilianisches Portugiesisch, Bulgarisch, Catalan, Kroatisch, tschechisch, dänisch, Niederländisch, Farsi, Finnisch, Französisch, galizisch, Georgisch, griechisch, Deutsch, Hebräisch, Hindi, Ungarisch, irisch, Isländisch, Italienisch, Japanisch, koreanisch, nepalesisch, norwegisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Serbisch, Slowakisch, slovenisch, Spanisch, Schwedisch, Tamil, Thai, Traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
 
 ++ Unterstützung von Sprachausgaben ++
 Zusätzlich zur Bereitstellung der Benutzeroberfläche in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern dieser  eine Sprachausgabe für die betreffende Sprache verfügt.
@@ -239,7 +239,7 @@ In den Menüs bewegen Sie sich einfach mit den Pfeiltasten. Mit der Eingabetaste
 | Modus der Eingabehilfe umschalten | NVDA+1 | NVDA+1 | keine | Bei Drücken einer Taste in diesem Modus wird die in NVDA assoziierte Taste und die dazugehörige Beschreibung angesagt und in Braille als Blitzmeldungen angezeigt. |
 | NVDA beenden | NVDA+Q | NVDA+Q | keine | Beendet NVDA. |
 | Taste durchreichen | NVDA+F2 | NVDA+F2 | keine | Veranlasst NVDA, dass die nächst betätigte Taste nicht von NVDA abgefangen wird, sondern direkt an die laufende Anwendung weitergereicht wird (sogar wenn es sich um einen Tastenbefehl von NVDA handelt). |
-| Schlafmodus umschalten | NVDA+Umschalt+S | NVDA+Umschalt+Z | keine | legt fest, ob die aktuelle Anwendung eine eigene sprachunterstützung besitzt, nützlich für Programme oder spiele, die im System installierte Sprachausgaben selbsttätig ansteuern (z. B. Speakon oder Klango) oder eine eigene Sprachausgabe zur Verfügung stellen (wie z. B. Spiele wie Shades of Doom, Top Speed, o. ä.) |
+| Schlafmodus umschalten | NVDA+Umschalt+S | NVDA+Umschalt+Z | keine | legt fest, ob die aktuelle Anwendung eine eigene sprachunterstützung besitzt, nützlich für Programme oder spiele, die im System installierte Sprachausgaben selbsttätig ansteuern oder eine eigene Sprachausgabe zur Verfügung stellen |
 %kc:endInclude
 
 ++ Informationen des Systems ausgeben ++
@@ -289,10 +289,10 @@ Folgende Tastenkombinationen stehen im Zusammenhang mit dem System-Cursor zur Ve
 
 Für die Navigation in Tabellen stehen folgende Tastenkombinationen zur Verfügung:
 || Name | Tastenkombination | Beschreibung |
-| Zur vorherigen Spalte springen | Steuerung+Alt+Pfeiltaste nach links | Zieht den System-Cursor zur vorherigen Spalte (bleibt in der gleichen Zeile). |
-| Zur nächsten Spalte springen | Steuerung+Alt+Pfeiltaste nach rechts | Zieht den System-Cursor zur nächsten Spalte (bleibt in der gleichen Zeile). |
-| Zur vorherigen Zeile springen | Steuerung+Alt+Pfeiltaste nach oben | Zieht den System-Cursor zur vorherigen Zeile (bleibt in der gleichen Spalte). |
-| Zur nächsten Zeile springen | Steuerung+Alt+Pfeiltaste nach unten | Zieht den System-Cursor zur nächsten Zeile (bleibt in der gleichen Spalte). |
+| Zur vorherigen Spalte springen | Steuerung+Alt+Pfeiltaste nach links | Zieht den System-Cursor zur vorherigen Spalte in der gleichen Zeile. |
+| Zur nächsten Spalte springen | Steuerung+Alt+Pfeiltaste nach rechts | Zieht den System-Cursor zur nächsten Spalte in der gleichen Zeile. |
+| Zur vorherigen Zeile springen | Steuerung+Alt+Pfeiltaste nach oben | Zieht den System-Cursor zur vorherigen Zeile in der gleichen Spalte. |
+| Zur nächsten Zeile springen | Steuerung+Alt+Pfeiltaste nach unten | Zieht den System-Cursor zur nächsten Zeile in der gleichen Spalte. |
 %kc:endInclude
 
 ++ Objekt-Navigation ++
@@ -332,7 +332,7 @@ Mit den folgenden Befehlen navigieren Sie zwischen den Objekten:
 | Zum Fokus-Objekt navigieren | NVDA+Nummerntaste Minus | NVDA+Rücktaste | keine | Navigiert zum aktuell fokussierten Objekt und zieht den NVDA-Cursor zum System-Cursor, sofern dieser sichtbar ist. |
 | Aktuelles Navigator-Objekt aktivieren | NVDA+Nummerntaste Eingabetaste | NVDA+Eingabetaste | Doppeltippen | Aktiviert das aktuelle Navigator-Objekt (ähnlich einem Mausklick oder dem Drücken der Leertaste). |
 | System-Cursor zum aktuellen Navigator-Objekt oder die Einfügemarke zum nvda-cursor ziehen | NVDA+Umschalt+Nummerntaste Minus | NVDA+Umschalt+Rücktaste | keine | Wird diese Tastenkombination einmal gedrückt, wird der Systemfokus zum aktuellen Navigator-Objekt gezogen. Wird sie zweimal gedrückt, so wird die Einfügemarke zum nvda-Cursor gezogen. |
-| Dimensionen des Navigator-Objektes ansagen | NVDA+Nummerntaste Entfernen | NVDA+Entferntaste | keine | Sagt die aktuellen Größen (Dimensionen) des aktuellen Navigator-Objektes vom Bildschirm in Prozentwerten an (inkl. Abstand vom linken und oberen Bildschirmrand sowie die Breite und Höhe). |
+| Ort des NVDA-Cursors ansagen | NVDA+Nummerntaste Entfernen | NVDA+Entferntaste | keine | Zeigt die Position des NVDA-Cursors relativ zum Inhalt des aktuellen Dokumentes an. Drücken Sie die Tastenkombination zweimal, um weitere Informationen zu erhalten. |
 %kc:endInclude
 
 Hinweis: Um die Tasten auf dem Nummernblock zu benutzen, muss dieser deaktiviert sein!
@@ -567,11 +567,20 @@ Es gibt eine Tastenkombination, um in die Originalansicht der Seite zurückzukeh
 + Anwendungsspezifische Befehle für NVDA +
 Für bestimmte Anwendungen stellt NVDA zusätzliche Tastenkombinationen bereit - etwa um bestimmte Aufgaben zu vereinfachen oder um Informationen zugänglich zu machen, die normalerweise für Anwender von Bildschirmleseprogrammen unerreichbar wären. 
 
+++ Microsoft Word ++
+%kc:beginInclude
+|| Name | Tastenkombination | Beschreibung |
+| aktuellen Kommentar anzeigen | NVDA+Alt+c | Zeigt den Kommentar an, der an der aktuellen Position des Systemcursors hinterlegt ist. | 
+| Spaltenüberschriften festlegen | NVDA+Umschalt+c | Wenn Sie diese Tastenkombination einmal drücken, legen sie die aktuelle Tabellenzeile als Spaltenüberschriften fest. Drücken Sie die Tastenkombination zweimal, um die Zuweisung zu löschen. | 
+| Zeilenbeschriftung festlegen | NVDA+Umschalt+r | Wenn Sie diese Tastenkombination einmal drücken, wird die aktuelle Spalte als Zeilenbeschriftung festgelegt. Drücken Sie die Tastenkonbination zweimal, um die Zuweisung zu löschen. | 
+%kc:endInclude
+
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Name | Tastenkombination | Beschreibung |
 | Spaltenüberschriften festlegen | NVDA+Umschalt+c | Wenn Sie diese Tastenkombination einmal drücken, teilen Sie NVDA mit, dass Sie sich auf derjenigen Zeile befinden, die die Spaltenüberschriften enthält. Diese Spaltenüberschriften werden dann automatisch gelesen, sobald Sie unterhalb dieser Zeile navigieren. Zweimaliges Drücken dieser Tastenkombination löscht diese Zuweisung wieder. | 
 | Zeilenbeschriftungen festlegen | NVDA+Umschalt+r | Wenn Sie diese Tastenkombination einmal drücken, teilen Sie NVDA mit, dass Sie sich auf derjenigen Spalte befinden, die die Beschriftungen für die Zeilen enthält. Diese Beschriftungen werden automatisch gelesen, wenn Sie außerhalb dieser Spalte navigieren. Zweimaliges Drücken dieser Tastenkombination löscht diese Zuweisung. | 
+| Kommentar anzeigen | NVDA+alt+c | Zeigt den Kommentar der aktuellen Zelle an, sofern vorhanden. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -608,13 +617,6 @@ In diesem Abschnitt werden einige bekannte Probleme beschrieben, die beim Umgang
 - Problem: Beim Lesen von Pdf-Dokumenten mit Adobe Reader X kann es in der Werkseinstellung zu Problemen kommen, weil NVDA das Dokument nicht im Lesemodus anzeigt, sondern nur ein Grafikobjekt darstellt. 
 - Ursache: Ursache dieses Problems ist eine Schutzfunktion, die in Adobe Reader X standardmäßig aktiviert ist und NVDA daran hindert, das Pdf-Dokument im Lesemodus aufzubereiten. 
 - Lösung: deaktivieren Sie in den Einstellungen von Adobe Reader X (bearbeiten / Voreinstellungen) in der Kategorie "allgemein" die Option "Geschützten Modus beim Start aktivieren". Es erscheint eine Nachfrage, die Sie darüber informiert, dass die Einstellung erst beim Neustart von Adobe Reader x wirksam wird. Bestätigen Sie diese Nachfrage mit "ja" und starten Sie Adobe Reader X anschließend neu. Jetzt sollte NVDA die im Adobe Reader X angezeigten Pdf-Dokumente im Lesemodus aufbereiten können.
--
-
-
-++ Adobe Reader XI ++
-- Problem: Beim Lesen von Pdf-Dokumenten mit Adobe Reader XI kann es in der Werkseinstellung zu Problemen kommen, weil NVDA das Dokument nicht im Lesemodus anzeigt, sondern nur ein Grafikobjekt darstellt. 
-- Ursache: Ursache dieses Problems ist eine Schutzfunktion, die in Adobe Reader XI standardmäßig aktiviert ist und NVDA daran hindert, das Pdf-Dokument im Lesemodus aufzubereiten. 
-- Lösung: deaktivieren Sie in den Einstellungen von Adobe Reader XI (bearbeiten / Voreinstellungen) in der Kategorie "Sicherheit (erweitert)" die Option "Geschützten Modus beim Start aktivieren". Es erscheint eine Nachfrage, die Sie darüber informiert, dass die Einstellung erst beim Neustart von Adobe Reader XI wirksam wird. Bestätigen Sie diese Nachfrage mit "ja" und starten Sie Adobe Reader XI anschließend neu. Jetzt sollte NVDA die im Adobe Reader XI angezeigten Pdf-Dokumente im Lesemodus aufbereiten können.
 -
 
 
@@ -656,6 +658,9 @@ Diese Option ist ein Kontrollfeld,  wenn aktiviert, speichert NVDA jedes Mal bei
 ==== warnung anzeigen, bevor NVDA beendet wird ====
 Diese Option ist ein Kontrollfeld. Sie können damit festlegen, ob das  Beenden von NVDA bestätigt  werden muss oder nicht. Bei Aktivierung wird ein Fenster mit der Sicherheitsabfrage angezeigt.
 
+
+==== Klänge abspielen, wenn NVDA gestartet oder beendet wird ====
+Dieses Kontrollfeld legt fest, ob NVDA Klänge abspielen soll, wenn es gestartet oder beendet wird. 
 
 ==== Protokollierungsstufe ====
 Mit dieser Option legen Sie die Protokollvariante, die im laufenden Betrieb erstellt wird, fest.
@@ -1084,6 +1089,7 @@ Konfigurieren können Sie die Meldungen von:
 - Seitenwechsel
 - Zeilennummern
 - Zeileneinrückungen
+- Absatzeinrückungen (z. B. hängender Einzug)
 - Tabellen
 - Spalten- und Reihenüberschriften von Tabellen
 - Zellkoordinaten in Tabellen
@@ -1288,6 +1294,8 @@ Diese Pakete werden von der NVDA-Nutzergemeinde bereitgestellt und können zusä
 
 Der Erweiterungs-manager enthält eine Liste aller Erweiterungen, die bereits in Ihrer benutzerspezifischen Konfiguration installiert sind.
 Für jede Erweiterung wird Ihnen der Name, die Versionsnummer und der Autor angezeigt. Sie können allerdings noch weitere Informationen wie eine Beschreibung und eine Url als Bezugsquelle abrufen. Wählen Sie hierzu die gewünschte Erweiterung aus und drücken Sie anschließend die Schaltfläche "über...".
+Fals für diese Erweiterung eine Hilfedatei verfügbar ist, können Sie diese mit dem Schalter "Hilfe für diese Erweiterung" aufrufen.
+
 Um weitere Erweiterungen herunterzuladen und zu installieren, drücken Sie den Schalter "Erweiterungen herunterladen...".
 Hiermit wird die Webseite für nvda-erweiterungen http://addons.nvda-project.org geöffnet.
 Falls Sie NVDA installiert haben, können Sie Erweiterungen direkt vom Browser aus installieren.

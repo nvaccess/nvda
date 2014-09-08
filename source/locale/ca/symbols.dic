@@ -1,0 +1,124 @@
+﻿# Catalan symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2014 NVDA contributors.
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+... sentence ending	(?<=[^\s.])(\s\.|\.)\.\.(?=[\"'”’)\s]|$)
+… sentence ending	(?<=[^\s.])\…(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word -	(?<=[^\W_])[-]
+negative number	(?<!\w)-(?=[$£€¥]?\d)
+dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	punt	all	always
+! sentence ending	exclamació	all	always
+? sentence ending	interrogació	all	always
+... sentence ending	el·lipsi	all	always	
+… sentence ending	el·lipsi	all	always	
+; phrase ending	punt i coma	most	always
+: phrase ending	dos punts	most	always
+decimal point		none	always
+in-word '	apòstrof	all	norep
+in-word -	guió	all	norep
+negative number	menys	none	norep
+dates /	 	all	always
+
+# Whitespace
+\0	en blanc	char
+\t	Tab
+\n	nova línia	char
+\f	Salt de pàgina	none
+\r	retorn de carro	char
+ 	espai	char
+ 	espai	char	# no-break space
+
+# Standard punctuation/symbols
+!	exclamació	all
+"	cometes	most
+\#	signe de número	most
+$	Dòlar	all	norep
+£	Lliures esterlines	all	norep
+€	Euros	all	norep
+¢	Centaus	all	norep
+¥	Yen	all	norep
+%	percentatge	some
+&	ampersand	some
+'	apòstrof	all
+(	obrir parèntesi	most
+)	tancar parèntesi	most
+*	asterisc	some
++	més	some
+,	coma	all	always
+-	guió	most
+.	punt	some
+/	barra 	some
+:	dos punts	most	norep
+;	punt i coma	most
+<	menor que	most
+>	major que	most
+=	igual	some
+?	interrogació	all
+@	arroba	some
+[	obrir claudàtors	most
+]	tancar claudàtors	most
+\\	barra inversa	most
+^	circumflex	most
+_	guió baix	most
+`	greu	most
+{	obrir clau	most
+}	tancar clau	most
+|	barra vertical	most
+~	tilde	most
+¿	obrir interrogació	all
+¡	obrir exclamació	all
+
+# Other characters
+•	vinyeta	some
+…	el·lipsi	all	always
+...	el·lipsi	all	always
+	vinyeta	some
+“	obrir cometes dobles	most
+”	tancar cometes dobles	most
+‘	obrir cometes simples	most
+’	tancar cometes simples	most
+–	guió	most
+—	guió llarg	most
+●	cercle	most
+¨	dièresi	most
+‎	marca d'esquerra a dreta	char
+‏	marca de dreta a esquerra	char
+■	Barra vertical escapçada	some
+➔	fletxa dreta	some
+§	Secció	most
+°	graus	some
+«	Obrir cometes tipogràfiques
+»	Tancar cometes tipogràfiques
+µ	micro	some
+¹	sobreíndex 1	some
+²	sobreíndex 2	some
+³	sobreíndex 3	some
+®	registrat	some
+™	Marca registrada	some
+©	copyright	some	norep
+±	Més o menys	most
+×	multiplicat per	most
+÷	dividido por	most
+←	Fletxa esquerra	some
+→	Fletxa dreta	some
+✓	correcte	some
+✔	correcte	some

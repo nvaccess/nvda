@@ -3,6 +3,93 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.3 =
+
+== Novas Características ==
+- Os sons que se executan cando NVDA arranca e sae pódense desactivar a través dunha nova opción na caixa de diálogo Opcións Xerais. (#834)
+- Pódese acceder á axuda para os complementos dende o Administrador de complementos para os que o soporten. (#2694)
+- Soporte para o Calendario en Microsoft Outlook 2007 e superior (#2943) incluíndo:
+ - O anunciado da hora actual ó te mover cas flechas,
+ - O indicado de se a hora seleccionada está dentro dalgunha cita,
+ - o anuncio da cita seleccionada ó premer tab
+ - O filtrado intelixente da hora de xeito que só se anuncia a data se a nova hora ou cita seleccionada é nun día diferente á derradeira.
+- Mellorado o soporte para a bandexa de entrada e outras listas de menxases  en Outlook 2010 e superior (#3834) incluíndo:
+ - A capacidade de silenciar as cabeceiras de columna (de, Asunto etc) desactivando a opción Anunciar Cabeceiras de Fila e Columna de Táboa nas Opciones de Formateado de Texto,
+ - A capacidade de utilizar as ordes de navegación de táboa (control + alt + flechas) para moverse ó longo das columnas individuais. 
+- Microsoft word: Se unha imaxe en liña non ten posto ningún texto alternativo, NVDA anunciará o título da imaxe, se o autor proporcionou un. (#4193)
+- Microsoft Word: NVDA agora pode anunciar o sangrado do parágrafo ca orden anunciar formato (NVDA+f). Tamén pode anunciarse automáticamente cando a nova opción Anunciar Sangría de Parágrafo estea habilitada nas opcións de Formato de Documento. (#4165)
+- Anúnciase o texto insertado automáticamente como unha nova viñeta, número ou sangría cando se prema intro en documentos e campos de texto editables. (#4185)
+- Microsoft word: Ó se premer NVDA+alt+c anunciaráse o texto dun comentario se o cursor está dentro dun. (#3528)
+- Mellorado o soporte para a lectura automática de cabeceiras de fila e columna no Microsoft Excel (#3568) incluíndo:
+ - Soporte dos rangos de nomes definidos de Excel para identificar as celdas de cabeceira (compatible co lector de pantalla Jaws) 
+ - As ordes fixar cabeceira de columna (NVDA+shift+c) e fixar cabeceira de fila (NVDA+shift+r) agora almacenan as opcións na folla de cálculo para que estén dispoñibles a seguinte vez que a folla se abra  e estarán dispoñibles para outros lectores de pantalla que soporten o esquema de rango de nomes definidos.
+ - Estas ordes agora tamén poden utilizarse múltiples veces por folla para fixar diferentes cabeceiras para diferentes rexións.
+- Soporte para a lectura automática de  cabeceiras de columna e fila en Microsoft Word (#3110) incluíndo:
+ - Soporte de marcas de MS Word para identificar celdas de cabeceira (compatible co lector de pantalla Jaws) 
+ -  as ordes fixar cabeceira de columna (NVDA+shift+c) e fixar cabeceira de fila (NVDA+shift+r) mentres se estea na primeira celda de cabeceira nunha táboa permiten dicir ó NVDA que esas cabeceiras  deberían anunciarse automáticamente.  As opcións almacénanse no documento tal que estén disponibles a seguinte vez que o documento se abra, e estarán dispoñibles para outros lectores de pantalla que soporten o esquema de marcas.
+- Microsoft Word: Anuncia a distancia dende o borde esquerdo da páxina cando se prema a tecla tab. (#1353)
+- Microsoft Word: proporciónase información en voz e en braille para a maioría de teclas de atallo dispoñibles  para o formato (negriña, cursiva, subliñado,  alineación, nível de esquema, superíndice, subíndice e tamaño de fonte ). (#1353)
+- Microsoft Excel: Se a celda seleccionada contén comentarios, poden ser agora anunciados premendo NVDA+alt+c (#2920)
+- Microsoft Excel: proporciónase un diálogo específico para o NVDA para editar os comentarios sobre a celda seleccionada ó premer a orden de Excel shift + f2 para acceder ó modo de edición de comentarios. (#2920)
+- Microsoft Excel: información en voz e en braille  para moitos máis atallos de teclado para movementos de selección (#4211) incluíndo:
+ - Movemento de páxina Vertical (RePáx e AvPáx)
+ - Movemento de páxina Horizontal (alt+RePáx e alt+AvPáx)
+ - Ampliar a selección (as teclas anteriores engadindo Shift).
+ - Selección da rexión actual (control+shift+8)
+- Microsoft Excel: anunciar  alineación vertical e horizontal para as céldas ca orden anunciar formato(NVDA+f) e automáticamente se a opción Anunciar Alineación nas opcións Forrmato de Documentos está activada. (#4212)
+- Microsoft Excel: anunciar o estilo dunha celda ca opción anunciar formato  (NVDA+f) e automáticamente se a opción Anunciar Estilo nas opcións de Formato de documento está activada. (#4213)
+- Microsoft Powerpoint: cando se moven as formas dunha diapositiva cas teclas de flecha, agora anúnciase a ubicación actual da forma (#4214) incluíndo:
+ - Anúnciase a distancia entre a forma e cada un dos bordes da diapositiva 
+ - Se a forma cubre ou está cuberta por outra forma, entón a distancia superposta, e a outra forma anúncianse. 
+ - Para anunciar esta información en calquera momento sen mover unha forma, preme a orden anunciar localización (NVDA+suprimir)
+ - Ó seleccionar unha forma, se está cuberta por outra forma, anunciarase o estado oculto.
+- A orden anunciar localización (NVDA+suprimir) é máis específica ó contexto nalgunhas situacións. (#4219):
+ - Nos campos de edición estándar e no modo navegación, anúncianse a posición do cursor como unha porcentaxe do contido, e as súas cordinadas de pantalla .
+ - En formas en presentacións de Powerpoint, anúnciase a posición da forma relativa á diapositiva  e outras formas.
+ - Ó premer   esta orden dúas veces produciráse o vello comportamento do anunciado da información de localización para todo o control.
+ - Nova lingua: Catalán. 
+
+== Cambios ==
+- Actualizado o transcriptor braille liblouis a 2.5.4. (#4103)
+
+
+== Corrección de Fallos ==
+- Nos navegadores Google Chrome e os baseados nél, certos anacos  de texto (como aqueles con énfase) xa non se repiten cando se anuncie o texto dunha alerta ou diálogo. (#4066)
+- No modo navegación en aplicacións de Mozilla, ó premer intro sobre un botón, etc. xa non falla ó activalo (ou activa o control erróneo) en certos casos coma os botóns na parte superior do Facebook. (#4106)
+- Xa non se anuncia información inútil ó tabular polo iTunes. (#4128)
+- En certas listas en iTunes como a da música, ó moverse ó elemento seguinte utilizando a navegación de obxectos agora funciona correctamente. (#4129)
+- Os elementos HTML considéranse cabeceiras  debido a que as marcas WAI ARIA agora están incluidas na lista de elementos do modo de navegación e a navegación rápida de documentos de Internet Explorer. (#4140)
+- Ó seguir ligas á mesma páxina en versións recentes do Internet Explorer agora movémonos alí correctamente e anúnciase a posición de destiño nos documentos en modo navegación. (#4134)
+- Microsoft Outlook 2010 e superior: mellórase todo o acceso ós diálogos seguros como os novos perfiles e caixas de diálogo de configuración de correo. (#4090, #4091, #4095)
+- Microsoft Outlook: disminúese a verbosidade inútil das barras de Ferramentas de ordes cando se navega a través de certos diálogos. (#4096, #3407)
+- Microsoft word: ó tabular por unha celda en branco nunha táboa xa non se anuncia incorrectamente saíndo de táboa. (#4151)
+- Microsoft Word: O primeiro carácter máis aló do fin dunha táboa (incluíndo unha nova liña en branco), xa non se considera incorrectamente que está dentro da táboa. (#4152)
+- Diálogo do corrector de ortografía do Microsoft Word 2010: Anuncia deletreando a palabra  real en lugar de só a primeira palabra  en negriña. (#3431) 
+- En modo navegación en Internet Explorer e outros controis MSHTML, ó tabular ou utilizar a navegación dunha soa tecla para moverte ós campos  de formulario anuncia a etiqueta de novo en moitos casos onde non debería (en concreto, cando se utilizan elementos da etiqueta HTML). (#4170)
+- Microsoft Word: O anunciado sobre a existenza e ubicación dos comentarios é máis preciso. (#3528)
+- Mellórase a navegación dalgunhas caixas de diálogo nos productos de MS Office como Word, Excel e Outlook xa non se anuncian  barras de ferramentas de control de contedores que non son útiles para o usuario. (#4198) 
+- Os paneis de tarefas como o administrador do portapapeis ou de recuperación de ficheiros xa non parecen obter o foco accidentalmente ó abrir unha aplicación como Microsoft Word ou Excel, o que ás veces provocaba que o usuario tivera que saír e voltar á aplicación para utilizar o documento ou folla de cálculo.  (#4199)
+- NVDA xa non falla ó executarse nos últimos sistemas operativos Windows, se a lingua do Windows do usuario establécese en Serbio (Latino). (#4203) 
+- Ó premer o BloqueoNumérico mentras se estea no modo Axuda de Entrada agora conmutarase o bloqueoNumérico correctamente, en lugar de que o teclado e o sistema operativo se desincronicen con respecto ó estado desta tecla. (#4226)
+- No Google Chrome, o título do documento anúnciase de novo ó cambiar as pestanas. No NVDA 2014.2, esto no ocurríu nalgúns casos. (#4222)
+- No Google Chrome e navegadores baseados no Chrome, a URL do documento xa non se informa cando se anuncia o documento. (#4223)
+- Ó executar ler todo co sintetizador Sen voz seleccionado (útil para realizar probas automatizadas), ler todo agora completarase en lugar de deterse tralas primeiras poucas liñas. (#4225)
+- Diálogo Firmas de Microsoft Outlook: o campo de edición firma agora é accesible, o que permite o seguemento compreto do cursor e a detección do formato. (#3833) 
+- Microsoft Word: Ó ler a última liña dunha celda de táboa, xa non se le toda a celda da táboa. (#3421)
+- Microsoft Word: Ó ler a primeira ou a última liña dunha táboa de índice, xa non se le toda a táboa de índice. (#3421)
+- Ó falar palabras ó se escreber e nalgúns outros casos, as palabras xa non se separan incorrectamente en marcas como signos vocálicos e virama en linguas da India. (#4254)
+- Os campos numéricos  de texto editable en GoldWave agora manéllanse correctamente. (#670)
++- Microsoft Word: ó nos mover por parágrafo con control+flecha abaixo / control+flecha arriba, xa non é necesario premelos dúas veces se nos movemos por listas numeradas ou de viñetas. (#3290)
+
+
+== Cambios para Desenvolvedores ==
+- NVDA agora conta co apoio unificado de documentación para os complementos. Ver a sección de complementos da documentación da Guía do desenvolvedor para obter máis información. (#2694)
+- Ó proporcionar  vínculos de xestos nun ScriptableObject a través de __gestures, agora é posible proporcionar a palabra chave None como o script. Esto lanza o xesto en calquera clase base. (#4240)
+- Agora é posible cambiar a tecla de atallo utilizada para iniciar NVDA en traducións onde o atallo normal causa problemas. (#2209)
+ - Esto faise a través de gettext.
+ - Ten en conta que o texto para a opción Crear atallo de escritorio no diálogo Instalar NVDA, así coma o atallo de teclado na Guía do Usuario, tamén debe actualizarse.
+
+ 
 = 2014.2 =
 
 == Novas Características ==
@@ -34,7 +121,7 @@ Que hai de Novo no NVDA
 - O contido de alertas en aplicacións Mozilla xa non se anuncia dúas veces. (#3481)
 - En modo navegación, os contedores  e pontos de referencia xa non se repiten inapropriadamente mentras se navega dentro deles ó mesmo tempo que o contido da páxina está a cambiar (por exemplo ó navegar polos sitios web de Facebook e Twitter). (#2199)
 - NVDA recupérase en máis casos ó cambiar dende as aplicacións que deixan de responder. (#3825)
-
+- O cursor (punto de inserción) actualízase correctamente de novo cando se da unha orde falarTodo mentras se está en texto editable dibuxado directamente na pantalla. (#4125)
 
 = 2014.1 =
 

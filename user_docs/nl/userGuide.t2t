@@ -23,7 +23,7 @@ Belangrijke functies zijn:
 - Ondersteuning voor veel brailleleesregels, inclusief invoer van computerbraille voor leesregels met een brailletoetsenbord
 - Kan via usb-stick of ander  draagbare media worden gedraaid zonder dat installatie nodig is
 - Eenvoudige installatie dankzij gesproken ondersteuning
-- In 44 talen beschikbaar
+- In 45 talen beschikbaar
 - Ondersteuning van moderne Windows besturingssystemen met inbegrip van 32- en 64-bit versies
 - Werken met beveiligde omgeving van Windows (inloggen e.d.) is mogelijk
 - Ondersteuning van gangbare toegankelijkheidsinterfaces zoals Microsoft Active Accessibility, Java Access Bridge, Iaccessible 2 en UI Automation (UI Automation alleen op Windows 7 of hoger)
@@ -32,7 +32,7 @@ Belangrijke functies zijn:
 
 ++ Internationalisering ++
 Het is belangrijk dat mensen overal ter wereld, ongeacht de taal die zij spreken, gelijke toegang krijgen tot technologie.
-Behalve de Engelse versie van NVDA is het programma beschikbaar in 44 talen, waaronder Afrikaans, Albanees, Amherisch, Arabisch, Braziliaans-Portugees, Bulgaars, Croatisch, Tsjechisch, Deens, Fins, Frans, Galisisch, Georgisch, Duits, Hebreeuws, Hindi, Hongaars, IJslands, Italiaans, Japans, Koreaans, Pools, Portugees, Roemeens, Servisch, Slowaaks, Spaans, Tamil, Zweeds, Nederlands, Thai, Russisch, Vereenvoudigd en Traditioneel Chinees, etc. 
+Behalve de Engelse versie van NVDA is het programma beschikbaar in 45 talen, waaronder Afrikaans, Albanees, Amherisch, Arabisch, Braziliaans-Portugees, Bulgaars, Catalaans, Croatisch, Tsjechisch, Deens, Fins, Frans, Galisisch, Georgisch, Duits, Hebreeuws, Hindi, Hongaars, IJslands, Italiaans, Japans, Koreaans, Pools, Portugees, Roemeens, Servisch, Slowaaks, Spaans, Tamil, Zweeds, Nederlands, Thai, Russisch, Vereenvoudigd en Traditioneel Chinees, etc. 
 
 ++ Ondersteuning voor spraaksynthese++
 U kunt een van de momenteel beschikbare talen kiezen om meldingen van NVDA, de interface of de inhoud van documenten te laten voorlezen. Bovendien is het mogelijk de inhoud van een document te laten voorlezen in een willekeurige andere taal  als op de computer een spraakmodule is geïnstalleerd die die taal spreekt.
@@ -333,7 +333,7 @@ Het object dat op een gegeven moment bekeken wordt in objectnavigatie wordt het 
 Wanneer u naar een object navigeert, kuntu de inhoud ervan bekijken met de [commando's voorhet Nalezen van Tekst #ReviewingText] terwijl u zich in de [objectoverzichtmodus #ObjectReview] bevindt.
 Standaard wordt in NVDA de object navigator tegelijk met de systeemfocus verplaatst, maar deze koppeling kan aan- en uitgezet worden.
 
-Braille volgt normaalgesproken de [focus #SystemFocus] en [systeemcursor #SystemCaret] en niet de objectnavigatie en de review cursor.
+Braille volgt normaal gesproken de [focus #SystemFocus] en [systeemcursor #SystemCaret] en niet de objectnavigatie en de review cursor.
 Als de braille uitvoer de objectnavigatie en tekst review moet volgen, [configureert u braille om de review cursor te volgen #BrailleTether].
 
 Voor objectnavigatie zijn de volgende toetscombinaties beschikbaar:
@@ -348,7 +348,7 @@ Voor objectnavigatie zijn de volgende toetscombinaties beschikbaar:
 | Naar gefocusseerd object gaan | NVDA+numeriek minteken | NVDA+backspace | geen | Hiermee navigeert u naar het object waar de systeemfocus zich momenteel bevindt, en verplaatst u de leescursor (review cursor) naar de positie van de tekstcursor als deze zichtbaar is |
 | Huidige navigator object activeren | NVDA+numeriek entertoets | NVDA+enter | dubbel tikken | Hiermee wordt het huidige navigator object geactiveerd(hetzelfde effect als klikken met de muis of het indrukken van de spatiebalk bij gefocusseerd object) |
 | Verplaats de systeem focus of cursor naar de huidige review positie | NVDA+shift+numeriek minteken | NVDA+shift+backspace | geen | Een maal drukken verplaatst de focus naar het huidige navigator object, twee maal drukken verplaatst de systeem cursor naar de review cursor |
-| Afmetingen van navigator object weergeven | NVDA+numeriek Del | NVDA+del | geen | De afmetingen van het huidige navigator object op het scherm worden met percentages aangegeven(u hoort de afstand vanaf de linker- en bovenkant van het scherm,en hoe breed en hoog het is) |
+| Positie van de leescursor melden | NVDA+numeriek Delete | NVDA+delete | geen | Geeft informatie overde plaats van de tekst of het object bij de leescursor. Er kan, bij voorbeeld, in een percentage aangegeven worden waar     in het document de cursor staat, wat de afstand is ten opzichte van de rand van de pagina of de exacte schermpositie. Door tweemaal te drukken krijgt u meer details. |
 %kc:endInclude |
 
 Let op: voor een goede werking van de numerieke toetsen moet NumLock uitgeschakeld worden.
@@ -540,11 +540,20 @@ Er is een toetscombinatie beschikbaar om weer terug te gaan naar de oorspronkeli
 + Applicatie-specifieke NVDA commando's +
 NVDA beschikt over een aantal applicatie-specifieke commando's om het gebruik van deze applicaties te vergemakkelijken, of om toegang te geven tot functionaliteit die anders niet bruikbaar zou zijn voor screenreader gebruikers.
 
+++ Microsoft Word ++
+%kc:beginInclude
+|| Naam | Toets | Beschrijving |
+| Actuele opmerkingen melden | NVDA+Alt+c | Meldt tekst van opmerking op de plaats van de systeemcursor  | 
+|| Kolomhoofdingen instellen | NVDA+shift+c | Door eenmaal indrukken weet NVDA dat dit de eerste hoofdingcel is in de rij waar de kolomhoofdingen in staan die automatisch moeten worden gemeld bij het gaan van kolom naar kolom in de rijen eronder. Door tweemaal drukken wordt de instelling opgeheven. | 
+| Rijhoofdingen instellen | NVDA+shift+r | Door eenmaal indrukken weet NVDA dat dit de eerste hoofdingcel is in de kolom waar de rijhoofdingen in staan die automatisch moeten worden gemeld bij het gaan van rij naar rij na deze kolom. Door tweemaal drukken wordt de instelling opgeheven. | 
+%kc:endInclude
+
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Naam | Toets | Beschrijving |
-| Kolomkoppen instellen | NVDA+shift+c | Door eenmaal drukken wordt aan NVDA doorgegeven dat dit de rij met kolomkoppen is, die automatisch moeten worden vermeld bij het gaan van kolom naar kolom  onder deze rij. Bij tweemaal drukken wordt de instelling opgeheven. | 
-| Rijkoppen instellen | NVDA+shift+r | Door eenmaal drukken wordt aan NVDA doorgegeven dat dit de kolom met rijkoppen is, die automatisch moeten worden vermeld bij het gaan van rij naar rij na deze kolom. Bij tweemaal drukken wordt de instelling opgeheven. | 
+| Kolomhoofdingen instellen | NVDA+shift+c | Door eenmaal indrukken weet NVDA dat dit de eerste hoofdingcel is in de rij waar de kolomhoofdingen in staan die automatisch moeten worden gemeld bij het gaan van kolom naar kolom in de rijen eronder. Door tweemaal drukken wordt de instelling opgeheven. | 
+| Rijhoofdingen instellen | NVDA+shift+r | Door eenmaal indrukken weet NVDA dat dit de eerste hoofdingcel is in de kolom waar de rijhoofdingen in staan die automatisch moeten worden gemeld bij het gaan van rij naar rij na deze kolom. Door tweemaal drukken wordt de instelling opgeheven. |
+| Opmerking(en) melden | NVDA+alt+c | Meldt eventuele opmerkingen bij de actuele cel. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -601,6 +610,9 @@ Als u een vinkje plaatst in het selectievakje zal de huidige configuratie automa
 
 ==== Waarschuwen bij afsluiten NVDA ====
 Als u een vinkje plaatst in dit selectievakje zal NVDA u vragen of u het programma al dan niet wilt afsluiten telkens wanneer u het programma wilt beëindigen. 
+
+==== Geluid afspelen bij het starten of afsluiten van NVDA ====
+Als u een vinkje plaatst in dit selectievakje zal NVDA bij het opstarten of afsluiten geluid afspelen.
 
 ==== Niveau van loggen ====
 Dit is een vervolgkeuzelijst waarmee u het niveau van loggen kiest, met andere worden wat moet NVDA allemaal loggen terwijl het draait.
@@ -1033,6 +1045,7 @@ U kunt de vermelding laten horen van:
 - Paginanummers
 - Regelnummers
 - Regel inspringen
+- Inspringen alinea (bij voorbeeld verkeerd om , eerste regel)
 - Tabellen
 - Rij- en kolomhoofdingen van tabellen
 - Tabel celcoördinaten
@@ -1083,7 +1096,7 @@ In deze handleiding wordt niet verder ingegaan op “regular expressions”, maa
 In dit dialoogvenster kan de manier waarop interpunctie en symbolen worden gemeld worden aangepast, alsmede het interpunctieniveau waarop deze worden uitgesproken.
 
 Selecteer een symbool uit de symbolenlijst om het aan te passen.
-Het vervangen door veld stelt u in staat om de uitspraak van het symbool aan te passen.
+Het veld "vervangen door" stelt u in staat om de uitspraak van het symbool aan te passen.
 Het niveau veld bepaalt het minimumniveau waarop dit symbool wordt uitgesproken.
 
 Als u klaar bent kunnen de wijzigingen met de OK knop worden opgeslagen, of door middel van de Annuleren knop worden teruggedraaid.
@@ -1228,7 +1241,7 @@ Met "Add-ons Beheren" onder Extra in het NVDA menu kunt u uitbreidingspakketten 
 Deze pakketten worden door de NVDA gemeenschap beschikbaar gesteld en ze bevatten aangepaste programmacode die het mogelijk maakt bepaalde functies van NVDA uit te breiden of te wijzigen. Ook zijn er Add-ons voor ondersteuning van extra brailleleesregels en spraaksynthesizers.
 
 In het dialoogvenster "Add-ons Beheren" vindt u een lijst met alle geïnstalleerde Add-ons die op het moment in uw gebruikersconfiguratiemap staan.
-Van elke Add-on wordt de pakketnaam, versie en auteur weergegeven. Door een Add-on te selecteren en dan op de knop "Over Add-on" te klikken kunt u meer informatie opvragen, zoals een beschrijving  en de URL.
+Van elke Add-on wordt de pakketnaam, versie en auteur weergegeven. Door een Add-on te selecteren en dan op de knop "Over Add-on" te klikken kunt u meer informatie opvragen, zoals een beschrijving  en de URL. Als er voor de geselecteerde Add-on hulpinformatie beschikbaar is, kunt u deze raadplegen door op de knop  "Add-on Help" te drukken.
 
 U kunt op Internet naar beschikbare Add-ons bladeren en deze desgewenst installeren door op de knop "Add-ons toevoegen" te klikken.
 U komt nu op de [NVDA Add-ons pagina http://addons.nvda-project.org/]. 

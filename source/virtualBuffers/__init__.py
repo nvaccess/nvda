@@ -818,7 +818,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 						tl=ancestors.index(self.rootNVDAObject)
 					except ValueError:
 						tl=len(ancestors)
-					if fdl<tl:
+					if fdl<=tl:
 						speech.speakObject(self.rootNVDAObject, reason=controlTypes.REASON_FOCUS)
 				info = self.selection
 				if not info.isCollapsed:

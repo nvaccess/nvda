@@ -1,23 +1,19 @@
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr 2013.1:6039\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-22 19:10+1000\n"
-"PO-Revision-Date: 2014-03-22 09:35+0545\n"
-"Last-Translator: Him Prasad Gautam <drishtibachak@gmail.com>\n"
-"Language-Team: हिम प्रसाद गौतम <himjee@yahoo.com>\n"
+"POT-Creation-Date: 2014-08-11 19:10+1000\n"
+"PO-Revision-Date: 2014-08-07 11:02+0545\n"
+"Last-Translator: \n"
+"Language-Team: Him Prasad Gautam <drishtibachak@gmail.com>\n"
 "Language: ne\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.6.1\n"
-"अनुवाद मिति: २०६९ साल असार १५ गते\n"
-"पुनरावलोकन मिति: २०६९ साल श्रावण १५ गते\n"
-"प्रथम अनुवादक: हिम प्रसाद गौतम(नेपाल) <Urdubachak@gmail.com>, <himjee@yahoo."
-"com>\n"
-"भाषा टोली: हिम प्रसाद गौतम <drishtivachak@gmail.com> मात्रै\n"
-"योजनाको नाम र संस्करण: नेत्रवाणी - १.१.०2\n"
+"प्रथम अनुवाद मिति: २०६९ साल असार १५ गते\n"
+"पुनरावलोकन मिति: २०७१ साल श्रावण १५ गते\n"
+"अनुवादक: हिम प्रसाद गौतम(नेपाल) <drishtibachak@gmail.com>\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -53,7 +49,7 @@ msgstr "वर्णसङ्ख्यकीय"
 
 #. Translators: For Japanese character input: Hiragana input mode.
 msgid "hiragana"
-msgstr "hiragana"
+msgstr "हिरागाना"
 
 #. Translators: For Japanese character input: Katacana input mode.
 msgid "katakana"
@@ -127,7 +123,7 @@ msgstr "फाराम"
 
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
-msgstr ""
+msgstr "क्षेत्र"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -520,7 +516,7 @@ msgstr "ग्रा"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is checked.
 msgid "(x)"
-msgstr "(x)"
+msgstr "(क्ष)"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
 msgid "(-)"
@@ -700,7 +696,7 @@ msgstr "गाढा रातो"
 #. Translators: The color navy blue (dark blue).
 #. For more info see http://en.wikipedia.org/wiki/Navy_blue
 msgid "navy blue"
-msgstr "समुन्द्रे नीलो"
+msgstr "समुन्द्री नीलो"
 
 #. Translators: The color red.
 msgid "red"
@@ -976,11 +972,11 @@ msgstr "क्यानभास"
 
 #. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
 msgid "caption"
-msgstr "शीर्षक"
+msgstr "सुक्ष्म टिपोट"
 
 #. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's name).
 msgid "check menu item"
-msgstr "चेक गरिएका मेनु सामाग्री"
+msgstr "मेनु सामाग्रीको जाँच"
 
 #. Translators: Identifies a data edit field.
 msgid "date edit"
@@ -1265,11 +1261,13 @@ msgstr "पृष्ठभूमिको रङ्ग"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "टाउकोमा"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "पैतालोमा"
 
@@ -1280,7 +1278,7 @@ msgstr "शैली"
 
 #. Translators: Describes text formatting.
 msgid "indent"
-msgstr "indent"
+msgstr "किनारा"
 
 #. Translators: Describes text formatting.
 msgid "alignment"
@@ -1329,7 +1327,7 @@ msgstr "टिक छ"
 
 #. Translators: This is presented when a three state check box is half checked.
 msgid "half checked"
-msgstr "आधा टिक लागेको"
+msgstr "अर्ध टिकयुक्त"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
@@ -1381,7 +1379,7 @@ msgstr "नमुना"
 
 #. Translators: This is presented when a field supports auto completion of entered text such as email address field in Microsoft Outlook.
 msgid "has auto complete"
-msgstr "आफैँ सम्पन्न हुन्छ"
+msgstr "स्वसम्पादीय"
 
 #. Translators: This is presented when an edit field allows typing multiple lines of text such as comment fields on websites.
 msgid "multi line"
@@ -1447,11 +1445,15 @@ msgstr "सूत्र युक्त"
 #. Translators: a state that denotes the existance of a comment.
 #. Translators: Reported when text contains a comment.
 msgid "has comment"
-msgstr "प्रतिक्रिया युक्त"
+msgstr "टिप्पणी युक्त"
+
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "अमिल्दो"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
-msgstr "न रोजेको"
+msgstr "चयन रहीत"
 
 #. Translators: This is presented when a checkbox is not checked.
 msgid "not checked"
@@ -1480,7 +1482,7 @@ msgstr "सङ्केत नक्सा फाइलको त्रुटी
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
-msgstr "नेत्रवाणी सक्रिय हुँदैछ, पर्खनु होस् ।"
+msgstr "एकछिन नेत्रवाणी सक्रियताको प्रतिक्षा गरौं ।"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -1488,7 +1490,7 @@ msgstr "नेत्रवाणी प्रारम्भ भयो"
 
 #. Translators: Dialog text for NvDA's find command.
 msgid "Type the text you wish to find"
-msgstr "फेला पार्नु पर्ने पाठ लेख्नु होस्"
+msgstr "फेला पार्न चाहेको पाठ लेख्नु होस्"
 
 #. Translators: Title of a dialog to find text.
 msgid "Find"
@@ -1509,19 +1511,17 @@ msgstr "चालू कर्सरको स्थानबाट पाठ �
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
-msgstr ""
-" चालू कर्सरको स्थान भन्दा अगाडी रहेको पुर्व लिखित अर्को पाठ पदावलीलाई फेला पार ।"
+msgstr "चालू कर्सरको स्थान भन्दा अगाडी रहेको पुर्व लिखित अर्को पाठ पदावलीलाई फेला पार ।"
 
 #. Translators: Input help message for find previous command.
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
-msgstr ""
-" चालू कर्सरको स्थान भन्दा पछाडी रहेको पुर्व लिखित अर्को पाठ पदावलीलाई फेला पार ।"
+msgstr "चालू कर्सरको स्थान भन्दा पछाडी रहेको पुर्व लिखित अर्को पाठ पदावलीलाई फेला पार ।"
 
 #. Translators: Reported when there is no text selected (for copying).
 msgid "no selection"
-msgstr "कुनै चयन छैन"
+msgstr "अचयनीत"
 
 #. Translators: Message presented when text has been copied to clipboard.
 msgid "copied to clipboard"
@@ -1590,7 +1590,7 @@ msgid ""
 "Turns input help on or off. When on, any input such as pressing a key on the "
 "keyboard will tell you what script is associated with that input, if any."
 msgstr ""
-"सहयोग Input खोल्ने र बन्द गर्ने गर्छ । खोलिएको बेला कुनै input जस्तो कि कुञ्जीपाटीको कुनै "
+"लगानी खोल्ने र बन्द गर्ने गर्छ । खोलिएको बेला कुनै लगानी जस्तो कि कुञ्जीपाटीको कुनै "
 "कुञ्जीलाई दबाउँदा त्यो सङ्ग सम्बद्ध कुनै script रहेछ भने बताई दिने छ ।"
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
@@ -1665,7 +1665,7 @@ msgstr ""
 msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
-msgstr "एक पटक थिच्दा समय र लगातार दुई पटक थिचे मिति बताउने छ"
+msgstr "एक पटक दबाउँदा समय र लगातार दुई पटक थिचे मिति बताउने छ"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
 msgid "No settings"
@@ -1689,27 +1689,27 @@ msgstr "संश्लेषको घण्टी अनुकूलता उ
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
-msgstr "टङ्कण गरेको वर्ण बताउदैन ।"
+msgstr "टङ्कित वर्ण बताउदैन ।"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters on"
-msgstr "टङ्कण गरेको वर्ण बताइन् छ ।"
+msgstr "टङ्कित वर्ण बताइन् छ ।"
 
 #. Translators: Input help mode message for toggle speaked typed characters command.
 msgid "Toggles on and off the speaking of typed characters"
-msgstr "टङ्कण गरेको वर्ण बोल्ने वा नबोल्ने प्रक्रिया लाई उल्टाउने छ ।"
+msgstr "टङ्कित वर्ण बोल्ने वा नबोल्ने प्रक्रिया लाई उल्टाउने छ ।"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
-msgstr "टङ्कण गरेको शब्द बताईदैन ।"
+msgstr "टङ्कित शब्द बताईदैन ।"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words on"
-msgstr "टङ्कण गरेको शब्द बताईनेछ ।"
+msgstr "टङ्कित शब्द बताईनेछ ।"
 
 #. Translators: Input help mode message for toggle speak typed words command.
 msgid "Toggles on and off the speaking of typed words"
-msgstr "टङ्कण गरेको शब्द बोल्ने वा नबोल्ने प्रक्रियालाई उल्टाउने छ ।"
+msgstr "टङ्कित शब्द बोल्ने वा नबोल्ने प्रक्रियालाई उल्टाउने छ ।"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
@@ -1723,8 +1723,7 @@ msgstr "आदेश कुञ्जी बताऊ ।"
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
-msgstr ""
-"वर्ण टङ्कण गरेको मात्रै नभएर दबाएको कुञ्जी बोल्ने वा नबोल्ने प्रक्रियालाई उल्टाउने छ ।"
+msgstr "वर्ण टङ्कित मात्रै नभएर दबाएको कुञ्जी बोल्ने वा नबोल्ने प्रक्रियालाई उल्टाउने छ ।"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -1765,7 +1764,7 @@ msgid ""
 "Switches to the next review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"अघिल्लो समीक्षा मुद्रा(जस्तै वस्तु, कागजात अथवा पर्दा) मा जान्छ  र समीक्षा स्थान विचरण "
+"अघिल्लो समीक्षा मुद्रा(जस्तै वस्तु, कागजात अथवा पर्दा) मा जान्छ र समीक्षा स्थान विचरण "
 "वस्तु रहेको विन्दुमा स्थानान्तरीत हुन्छ ।"
 
 #. Translators: reported when there are no  other available review modes for this object
@@ -1777,13 +1776,13 @@ msgid ""
 "Switches to the previous review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"पछिल्लो समीक्षा मुद्रा(जस्तै वस्तु, कागजात अथवा पर्दा) मा जान्छ  र समीक्षा स्थान विचरण "
+"पछिल्लो समीक्षा मुद्रा(जस्तै वस्तु, कागजात अथवा पर्दा) मा जान्छ र समीक्षा स्थान विचरण "
 "वस्तु रहेको विन्दुमा स्थानान्तरीत हुन्छ ।"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
 msgid "no navigator object"
-msgstr "विचरण वस्तु छैन ।"
+msgstr "विचरक वस्तु छैन ।"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
 #, python-format
@@ -1796,31 +1795,20 @@ msgid ""
 "and pressing three times Copies name and value of this  object to the "
 "clipboard"
 msgstr ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
+"वर्तमान विचरण वश्तुको जानकारी दिनेछ । दुई पटक दबाएमा यसको हिज्जे भन्ने छ र तीन पटक "
+"दबाएमा यो वश्तुको नाम एबम् मान क्लिपपाटीमा उतार्नेछ ।"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
-msgid "No location information for navigator object"
-msgstr "विचरण वस्तु कहाँ छ पत्तो भएन ।"
+#. Translators: message when there is no location information for the review cursor
+msgid "No location information"
+msgstr "स्थानको जानकारी छैन ।"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
-msgid "No location information for screen"
-msgstr "पर्दामा कहाँ निर भनेर पत्तो भएन ।"
-
-#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#. Translators: Description for report review cursor location command.
 msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
-"screen, height is {height:.1f} per cent of screen"
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
 msgstr ""
-"वस्तुको चार किल्ला यस्तो छः वाञाँ छेउ देखि स्क्रिनको {left:.1f} प्रतिशत, सिरान देखि "
-"स्क्रिनको {top:.1f} प्रतिशत, चौडाइ स्क्रिनको {width:.1f} प्रतिशत र उचाइ स्क्रिनको "
-"{height:.1f} प्रतिशत ।"
-
-#. Translators: Input help mode message for report object dimensions command.
-msgid "Reports the hight, width and position of the current navigator object"
-msgstr "चालू विचरण वस्तुको लम्बाइ, चौडाइ र स्थान बताउने छ ।"
+"समीक्षा कर्सर रहेको स्थानको विचरण वस्तु अथवा वर्णको बारेमा जानकारी दिन्छ । दुई पटक "
+"दबाउँदा विस्तृत विवरण बताउँछ ।"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -1853,7 +1841,7 @@ msgid ""
 "Pressed once Sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
-"एक पटक थिच्दा कुञ्जीपाटीको केन्द्रीयता विचरण वस्तुमा र , दुई पटक थिच्दा प्रणाली caret "
+"एक पटक दबाउँदा कुञ्जीपाटीको केन्द्रीयता विचरण वस्तुमा र , दुई पटक दबाउँदा प्रणाली caret "
 "लाइ समीक्षा कर्सरको स्थानमा स्थापित गर्छ ।"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
@@ -1894,7 +1882,7 @@ msgstr "सक्रिय बनाउ"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 msgid "No action"
-msgstr "कुनै क्रिया छैन ।"
+msgstr "क्रिया हीन।"
 
 #. Translators: Input help mode message for activate current object command.
 msgid ""
@@ -2046,7 +2034,7 @@ msgstr ""
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
-msgstr "नेत्रवाणी परित्याग गर्छ!"
+msgstr "नेत्रवाणी त्यागिन्छ!"
 
 #. Translators: Input help mode message for show NVDA menu command.
 msgid "Shows the NVDA menu"
@@ -2056,9 +2044,7 @@ msgstr "नेत्रवाणीको मेनु देखाउ छ ।"
 msgid ""
 "reads from the review cursor  up to end of current text, moving the review "
 "cursor as it goes"
-msgstr ""
-"reads from the review cursor  up to end of current text, moving the review "
-"cursor as it goes"
+msgstr "समीक्षा कर्सर जसरी हिड्छ त्यसरी नै कर्सर देखि चालू पाठको अन्तसम्म पढ्ने छ ।"
 
 #. Translators: Input help mode message for say all with system caret command.
 msgid ""
@@ -2068,7 +2054,7 @@ msgstr "caret हिँडे अनुसार प्रणाली caret द
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 msgid "No formatting information"
-msgstr "स्वरूपको जानकारी छैन ।"
+msgstr "पाठ स्वरूपको जानकारी भएन ।"
 
 #. Translators: Input help mode message for report formatting command.
 msgid ""
@@ -2210,8 +2196,7 @@ msgstr "{hours:d} घण्टा र {minutes:d} मिनेट काम ग�
 
 #. Translators: Input help mode message for report battery status command.
 msgid "reports battery status and time remaining if AC is not plugged in"
-msgstr ""
-"विद्युत् पङ्क्तिमा जोडिएको छैन भने ब्याट्रीको अवस्था र बाकी काम गर्ने समय बताउने छ ।"
+msgstr "विद्युत् प्रवाहीत छैन भने ब्याट्रीको अवस्था र बाकी काम गर्ने समय बताउने छ ।"
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
 msgid "Pass next key through"
@@ -2349,7 +2334,7 @@ msgstr "समीक्षा चयन क्लिप पाटीमा उ�
 
 #. Translators: Presented when there is no text selection to copy from review cursor.
 msgid "No text to copy"
-msgstr "प्रतिलिपि उतार्ने पाठ छैन "
+msgstr "प्रतिलिपि उतारिने पाठ छैन "
 
 #. Translators: Input help mode message for copy selected review cursor text to clipboard command.
 msgid ""
@@ -2385,19 +2370,19 @@ msgstr "ब्रेल कुञ्जीपाटी मार्फत ब्
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
-msgstr "जडान फेरी गरियो"
+msgstr "फेरी जडान गरियो"
 
 #. Translators: Input help mode message for reload plugins command.
 msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
 "Useful for developers"
 msgstr ""
-"app modules र global plugins लाई फेरी नेत्रवाणी सुरु नगरी पुन वहन गर्छ, यो "
+"नेत्रवाणी पुनः सुरुवात नगरी app modules र global plugins लाई वहन गर्छ, यो "
 "विकासकर्तालाई सहयोगी हुन्छ ।"
 
 #. Translators: a message when there is no next object when navigating
 msgid "no next"
-msgstr "no next"
+msgstr "अर्को छैन"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -2448,6 +2433,14 @@ msgstr "विविध"
 msgid "Browse mode"
 msgstr "उघार्ने मुद्रा"
 
+#. Translators: The shortcut key used to start NVDA.
+#. This should normally be left as is, but might be changed for some locales
+#. if the default key causes problems for the normal locale keyboard layout.
+#. The key must be formatted as described in this article:
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+msgid "CTRL+ALT+N"
+msgstr "CTRL+ALT+N"
+
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
 msgstr "नेत्रवाणीको वेभ साइट"
@@ -2466,7 +2459,7 @@ msgstr "कागजातहरूको व्यवस्थापन"
 
 #. Translators: The label of the Start Menu item to open the Commands Quick Reference document.
 msgid "Commands Quick Reference"
-msgstr "आदेशको छरितो सन्दर्भसूची"
+msgstr "द्रुत आदेश अनुसूची"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
 msgid "User Guide"
@@ -2735,11 +2728,11 @@ msgstr "ट्याब"
 
 #. Translators: One of the keyboard layouts for NVDA.
 msgid "desktop"
-msgstr "डेस्कटप"
+msgstr "खाटेपाटी"
 
 #. Translators: One of the keyboard layouts for NVDA.
 msgid "laptop"
-msgstr "ल्यापटप"
+msgstr "काखेपाटी"
 
 #. Translators: Reported for an unknown key press.
 #. %s will be replaced with the key code.
@@ -2794,7 +2787,7 @@ msgstr "सर्बेयाली (Latin)"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
-msgstr "उपभोक्ताद्वारा निर्धारित"
+msgstr "उपभोक्तानिर्धारित"
 
 #. Translators: Reported when mouse cursor shape changes (example output: edit cursor).
 #, python-format
@@ -2832,7 +2825,7 @@ msgstr "पर्दा समीक्षा"
 
 #, python-format
 msgid "Emulates pressing %s on the system keyboard"
-msgstr "%s लाई थिच्दा प्रणाली कुञ्जीपाटीलाई उत्तेजित गर्छ"
+msgstr "%s लाई दबाउँदा प्रणाली कुञ्जीपाटीलाई उत्तेजित गर्छ"
 
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
@@ -2846,7 +2839,7 @@ msgstr "cap %s"
 
 #. Translators: This is spoken when the given line has no indentation.
 msgid "no indent"
-msgstr "indent छैन"
+msgstr "किनारा छैन"
 
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
@@ -2980,12 +2973,12 @@ msgstr "ढल्केको होइन"
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
-msgstr "strikethrough"
+msgstr "काटिएको"
 
 #. Translators: Reported when text is formatted without strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "no strikethrough"
-msgstr "Strikethrough होइन"
+msgstr "नकाटिएको"
 
 #. Translators: Reported when text is underlined.
 msgid "underlined"
@@ -2997,6 +2990,7 @@ msgstr "अदो रेखाङ्कित होइन"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "आधारभूत"
 
@@ -3017,9 +3011,78 @@ msgstr "दायाँ पङ्‌क्ति "
 msgid "align justify"
 msgstr "तटस्थ पङ्‌क्ति"
 
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "ठाडो पङ्‌क्तिबद्धता - वितरित"
+
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "निर्धारित पङ्‌क्ति"
+
+#. Translators: the label for paragraph format left indent
+msgid "left indent"
+msgstr "वायाँ किनारा"
+
+#. Translators: the message when there is no paragraph format left indent
+msgid "no left indent"
+msgstr "वायाँ किनारा छैन"
+
+#. Translators: the label for paragraph format right indent
+msgid "right indent"
+msgstr "दायाँ फड्को"
+
+#. Translators: the message when there is no paragraph format right indent
+msgid "no right indent"
+msgstr "दायाँ किनारा छैन"
+
+#. Translators: the label for paragraph format hanging indent
+msgid "hanging indent"
+msgstr "झुण्डिएको किनारा"
+
+#. Translators: the message when there is no paragraph format hanging indent
+msgid "no hanging indent"
+msgstr "झुण्डिएको किनारा छैन"
+
+#. Translators: the label for paragraph format first line indent
+msgid "first line indent"
+msgstr "प्रथम पङ्तिकिनारा"
+
+#. Translators: the message when there is no paragraph format first line indent
+msgid "no first line indent"
+msgstr "प्रथम पङ्तिमा फड्को छैन ।"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "ठाडो पङ्तिवद्धता-सिरान ।"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "ठाडो पङ्तिवद्धता-विच"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "ठाडो पङ्तिवद्धता-पूछार"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "ठाडो पङ्तिवद्धता-आधाररेखा"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "ठाडो पङ्तिवद्धता-बराबरी"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "&ठाडो पङ्‌क्तिबद्धता वितरित"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "ठाडो पङ्तिवद्धता-निर्धारित"
+
+#. Translators: Reported when text no longer contains a comment.
+msgid "out of comment"
+msgstr "प्रतिक्रिया अन्त्य"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -3027,7 +3090,7 @@ msgstr "हिज्जे गल्ती"
 
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
-msgstr "हिज्जे त्रुटी अन्त"
+msgstr "हिज्जे त्रुटी समाप्त"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -3062,7 +3125,7 @@ msgstr "आय&तन"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
-msgstr "&पीच"
+msgstr "&चर्कोपना"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
@@ -3154,7 +3217,7 @@ msgstr "अद्यावधिकरण निरीक्षण हुँद�
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 msgid "Error checking for update."
-msgstr "नयाँ अद्यावधिकको  निरीक्षण गर्न सकिएउ\tȠ। "
+msgstr "नयाँ अद्यावधिकको निरीक्षण गर्न सकिएन । \t"
 
 #. Translators: The title of an error message dialog.
 #. Translators: The title of a dialog presented when an error occurs.
@@ -3207,7 +3270,7 @@ msgstr "डाउनलोडिङ्ग हुँदैछ ।"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
-msgstr "अद्यावधिक डाउनलोडमा गल्ती "
+msgstr "अद्यावधिक डाउनलोडमा त्रुटी"
 
 #. Translators: The message presented when the update has been successfully downloaded
 #. and is about to be installed.
@@ -3315,6 +3378,16 @@ msgstr ""
 "{path} बाट नेत्रवाणी थप शाधन भित्र्याउन सकिएन ।\n"
 "तपाइले नेत्रवाणी थप-साधन भित्र्याएको हुनु पर्छ ।"
 
+#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+msgid ""
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
+msgstr ""
+"वस्तुको चार किल्ला यस्तो छः वाञाँ छेउ देखि स्क्रिनको {left:.1f} प्रतिशत, सिरान देखि "
+"स्क्रिनको {top:.1f} प्रतिशत, चौडाइ स्क्रिनको {width:.1f} प्रतिशत र उचाइ स्क्रिनको "
+"{height:.1f} प्रतिशत ।"
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "जस्तै {description} मा {symbol} "
@@ -3362,11 +3435,11 @@ msgstr "सुरुवात"
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
-msgstr "कुनै ट्र्याक बजेको छैन"
+msgstr "कुनै ध्वनी बजेको छैन"
 
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
-msgstr "कुनै ट्याक बज्दै छ भने बज्न लाग्ने बाकी समय जनाउने छ"
+msgstr "कुनै ध्वनी बज्दै छ भने बज्न लाग्ने बाकी समय जनाउने छ"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -3377,6 +3450,7 @@ msgid "Displays one of the recent messages"
 msgstr "हालैको सन्देशहरू मद्ये कुनैलाई देखाउने छ ।"
 
 #. Translators: This Outlook Express message has an attachment
+#. Translators: when an email has attachments
 msgid "has attachment"
 msgstr "संलग्न उपलब्ध"
 
@@ -3437,8 +3511,17 @@ msgid "BCC:"
 msgstr "थप बोधार्थः"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
+#. Translators: when an email is unread
 msgid "unread"
 msgstr "नपडेको"
+
+#. Translators: for a high importance email
+msgid "high importance"
+msgstr "उच्च महत्त्व"
+
+#. Translators: For a low importance email
+msgid "low importance"
+msgstr "कम महत्त्व"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3458,6 +3541,26 @@ msgstr "संलग्न"
 #, python-format
 msgid "sent: %s"
 msgstr "पठाएको %s "
+
+#. Translators: The title for the dialog shown while Microsoft Outlook initializes.
+msgid "Waiting for Outlook..."
+msgstr "वाह्यरुपकको प्रतिक्षा"
+
+#. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+msgid "{startTime} to {endTime}"
+msgstr "{startTime} देखि {endTime} सम्म"
+
+#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+msgid "Appointment {subject}, {time}"
+msgstr "भेटघाट {subject}, {time}"
+
+#. Translators: a message when the current time slot on an Outlook Calendar has an appointment
+msgid "has appointment"
+msgstr "भेटघाटको तय भएको छ ।"
+
+#. Translators: the email is a meeting request
+msgid "meeting request"
+msgstr "बैठक आह्वान"
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -3522,7 +3625,7 @@ msgstr "चित्र खोपी"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Bitmap placeholder"
-msgstr "Bitmap खोपी"
+msgstr "थोप्लेचित्र खोपी"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Media Clip placeholder"
@@ -3530,7 +3633,7 @@ msgstr "श्रव्यदृश्य टुक्रा खोपी"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Org Chart placeholder"
-msgstr "Org चित्र खोपी"
+msgstr "संस्था चित्र खोपी"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Table placeholder"
@@ -3611,6 +3714,78 @@ msgstr "मूल अँगुठाछाप "
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "प्रस्तुतिपत्र {slideNumber}"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers left of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} को देब्रे  पट्टीबाट {distance:.3g} विन्दुले ढाक्ने छ । "
+
+#. Translators: A message when a shape is behind  another shape on a powerpoint slide
+msgid "behind left of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} को देब्रे  पट्टीबाट {distance:.3g} विन्दुले छोपिने छ ।"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers top of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} को माथिबाट {distance:.3g} विन्दुले ढाक्ने छ । "
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind top of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} को माथिबाट {distance:.3g} विन्दुले छोपिने छ ।"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers right of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} को दाहिने पट्टीबाट {distance:.3g} विन्दुले ढाक्ने छ । "
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind right of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} को दाहिने पट्टीबाट {distance:.3g} विन्दुले छोपिने छ ।"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers bottom of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} को तलपट्टीबाट {distance:.3g} विन्दुले ढाक्ने छ । "
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind bottom of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape} को तल पट्टीबाट {distance:.3g} विन्दुले छोपिने छ ।"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers  {otherShape}"
+msgstr "{otherShape} लाई ढाक्छ ।"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind {otherShape}"
+msgstr "{otherShape} को पछाडि"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+msgid "{distance:.3g} points from left slide edge"
+msgstr "देब्रे सुलुली बाट  {distance:.3g} विन्दु"
+
+#. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+msgid "Off left slide edge by {distance:.3g} points"
+msgstr "देब्रे सुलुलीको किनारा देखि {distance:.3g} विन्दु पर"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+msgid "{distance:.3g} points from top slide edge"
+msgstr "सिरान सुलुलीको किनारा बाट  {distance:.3g} विन्दु"
+
+#. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+msgid "Off top slide edge by {distance:.3g} points"
+msgstr "सिरान सुलुलीको किनारा बाट  {distance:.3g} विन्दु पर"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+msgid "{distance:.3g} points from right slide edge"
+msgstr "दाहिने सुलुलीको किनारा बाट  {distance:.3g} विन्दु"
+
+#. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+msgid "Off right slide edge by {distance:.3g} points"
+msgstr "दाहिने सुलुलीको किनारा बाट  {distance:.3g} विन्दु पर"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+msgid "{distance:.3g} points from bottom slide edge"
+msgstr "पूछार सुलुलीको किनारा बाट  {distance:.3g} विन्दु"
+
+#. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+msgid "Off bottom slide edge by {distance:.3g} points"
+msgstr "पूछार सुलुलीको किनारा बाट  {distance:.3g} विन्दु पर"
 
 #. Translators: The description for a script
 msgid ""
@@ -3712,7 +3887,7 @@ msgstr "फ्रिडम साइन्टिफिक फोकस/पि 80
 
 #. Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
 msgid "display scroll"
-msgstr "स्क्रोल पट्टी देखाउ"
+msgstr "सार्ने पट्टी देखाउ"
 
 #. Translators: The name of a key on a braille display, that scrolls the display to show the next/previous line.
 msgid "line scroll"
@@ -3789,7 +3964,7 @@ msgstr "अस्ताई ढुकुटी"
 
 #. Translators: Message shown to ask if user really wishes to quit NVDA.
 msgid "Are you sure you want to quit NVDA?"
-msgstr "तपाइले नेत्रवाणीलाई बन्द गर्न चाहनु भएको कुरा पक्का हो?"
+msgstr "के तपाइले नेत्रवाणी बन्द गर्न चाहनु भएको हो?"
 
 msgid "Exit NVDA"
 msgstr "नेत्रवाणीको वहिर्गमन"
@@ -3952,7 +4127,7 @@ msgstr "फेरि पङ्क्तिसित जोडि देउ"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
-msgstr "आदेशको &छरितो सन्दर्भसूची"
+msgstr "द्रुत आदेशको &अनुसूची"
 
 #. Translators: The label for the menu item to open What's New document.
 msgid "What's &new"
@@ -3991,7 +4166,7 @@ msgstr "&अभियोजन पार्श्वचित्र"
 
 #. Translators: The label for the menu item to revert to saved configuration.
 msgid "&Revert to saved configuration"
-msgstr " अभियोजन बचत रूपमै &फर्काउ"
+msgstr "अभियोजन बचत रूपमै &फर्काउ"
 
 msgid "Reset all settings to saved state"
 msgstr "सबै अनुकूलताहरू पुरानै अवस्थामा फर्काउ ।"
@@ -4029,10 +4204,10 @@ msgid ""
 "From this menu, you can configure NVDA, get help and access other NVDA "
 "functions.\n"
 msgstr ""
-"नेत्रवाणीमा तपाई लाई स्वागत छ । अधिकांश नेत्रवाणि नियन्त्रण आदेश जारी गर्न तपाइले "
+"नेत्रवाणीमा तपाई लाई स्वागत छ । अधिकांश नेत्रवाणी नियन्त्रण आदेश जारी गर्न तपाइले "
 "नेत्रवाणी चाबीलाई थिचि राखेर अर्को सम्बन्धित कुञ्जी दबाउनु पर्ने हुन्छ \n"
 "मुख्य insert वा numpad insert कुञ्जीलाई नेत्रवाणी चाबी निर्धारित गरिएको छ तपाइलाई "
-"इच्छा लागेमा CapsLock कुञ्जीलाई पनि नेत्रवाणि चाबी बनाउन सक्नु हुन्छ \n"
+"इच्छा लागेमा CapsLock कुञ्जीलाई पनि नेत्रवाणी चाबी बनाउन सक्नु हुन्छ \n"
 "नेत्रवाणी menu सक्रिय बनाउन जुनसुकै समयमा नेत्रवाणी चाबी +n थिच्नु होला\n"
 "यो menu बाट तपाइले नेत्रवाणीलाई आफ्नो आवश्यकता अनुसार मा सहयोग हेर्न, अनुकूलता बदल्न वा "
 "सिर्जना गर्न र नेत्रवाणीका अन्य सबै कृयाकलाप गर्न गराउन सक्नु हुनेछ\n"
@@ -4060,11 +4235,11 @@ msgstr "नेत्रवाणी सुरु हुँदा यो पा�
 
 #. Translators: The label of the license text which will be shown when NVDA installation program starts.
 msgid "License Agreement"
-msgstr "इजाजतको मन्जुरी"
+msgstr "इजाजत मन्जुरीनामा"
 
 #. Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 msgid "I &agree"
-msgstr "हरियो"
+msgstr "&म मञ्जुर गर्छु ।"
 
 #. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
 msgid "&Install NVDA on this computer"
@@ -4109,6 +4284,10 @@ msgstr "लेखक"
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
 msgstr "&थप-साधनको बारेमा ..."
+
+#. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
+msgid "Add-on &help"
+msgstr "थप-साधन &सहयोग"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -4170,12 +4349,12 @@ msgstr "थप-साधन स्थापना गर्दै छु ।"
 
 #. Translators: The message displayed while an addon is being installed.
 msgid "Please wait while the add-on is being installed."
-msgstr "पर्खनु होस् है, थप-साधनहरू भित्रिँदै छ ।"
+msgstr "पर्खनु होस् है, नेत्रवाणीका थप-साधनहरू भित्रिँदै छ ।"
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #, python-format
 msgid "Failed to install add-on  from %s"
-msgstr "Failed to install add-on  from %s"
+msgstr "%s वाट थप-साधन भित्र्याउन सकिएन ।"
 
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr "के तपाइ नेत्रवाणीबाट चयनित थप-साधन हटाउने कुरामा विश्वस्त हुनु हुन्छ ?"
@@ -4255,7 +4434,7 @@ msgstr "&उतेजना"
 
 #. Translators: The label of a checkbox in the Configuration Profiles dialog.
 msgid "Temporarily d&isable all triggers"
-msgstr "अस्थायी &असक्षम सबै  उतेजकहरू "
+msgstr "अस्थायी &असक्षम सबै उतेजकहरू "
 
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
@@ -4283,7 +4462,7 @@ msgstr "पार्श्वचित्र सक्रियतामा त�
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
 msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr "यो पार्श्वचित्र मेटाउने कुरामा तपाई  पक्का हुनु हुन्छ? यसलाई उल्टाउन सकिदैन ने!"
+msgstr "यो पार्श्वचित्र मेटाउने कुरामा तपाई पक्का हुनु हुन्छ? यसलाई उल्टाउन सकिदैन ने!"
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -4337,7 +4516,7 @@ msgstr "पार्श्वचित्र उतेजक अभियोज�
 
 #. Translators: The title of the configuration profile triggers dialog.
 msgid "Profile Triggers"
-msgstr "उतेजक पार्श्वचित्र"
+msgstr "पार्श्वचित्र उतेजक "
 
 #. Translators: Displayed for a configuration profile trigger for an application.
 #. %s is replaced by the application executable name.
@@ -4398,7 +4577,7 @@ msgid ""
 msgstr ""
 "यो पार्श्वचित्रलाई सम्पादन गर्न यसलाई मानविय रूपले नै सक्रिय बनाउनु पर्छ । सम्पादन सकिए "
 "पछीयसलाई साधारण रूपले काम गर्न तपाईले मानवीय रुपले निस्क्रिय बनाउनु पर्छ ।nके तपाइ "
-"मानवीय रुपले नै  यसलाई सक्रिय बनाउन चाहनु हुन्छ ?"
+"मानवीय रुपले नै यसलाई सक्रिय बनाउन चाहनु हुन्छ ?"
 
 #. Translators: The title of the confirmation dialog for manual activation of a created profile.
 msgid "Manual Activation"
@@ -4414,11 +4593,11 @@ msgstr "नेत्रवाणी स्थापना गर्दै छु
 
 #. Translators: The message displayed while NVDA is being updated.
 msgid "Please wait while your previous installation of NVDA is being updated."
-msgstr "पर्खनु होस् है, तपाइको पुरानो नेत्रवाणी नयाँ बनाइँदै च ।"
+msgstr "पर्खनु होस् है, तपाइको पुरानो नेत्रवाणी नयाँ बनाइँदै छ ।"
 
 #. Translators: The message displayed while NVDA is being installed.
 msgid "Please wait while NVDA is being installed"
-msgstr "पर्खनु होस् है, नेत्रवाणी भित्रिँदै छ ।"
+msgstr "पर्खनु होस् है, तपाइको कल्पयन्त्रमा नेत्रवाणी भित्रिँदै छ ।"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
 msgid ""
@@ -4426,8 +4605,8 @@ msgid ""
 "NVDA may be running on another logged-on user account. Please make sure all "
 "installed copies of NVDA are shut down and try the installation again."
 msgstr ""
-"यो स्थापना पोको ले फाइल हटाउन अथवा मेटाएर फेरी लेख्न सकेन । अर्को फाईलवालाले नेत्र "
-"वाणीको अर्को प्रतिको उपयोग पो गरेको छ कि ? कृपया सबै नेत्रवाणी बन्द भए नभएको यकिन "
+"यो स्थापना पोको ले फाइल हटाउन अथवा मेटाएर फेरी लेख्न सकेन । अर्को फाईलवालाले "
+"नेत्रवाणीको अर्को प्रतिको उपयोग पो गरेको छ कि ? कृपया सबै नेत्रवाणी बन्द भए नभएको यकिन "
 "गरेर फेरी प्रयास गर्नु होस् ।"
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
@@ -4448,12 +4627,12 @@ msgstr "नेत्रवाणी उपभोक्ता अनुकूल�
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 msgid "Successfully updated your installation of NVDA. "
-msgstr "तपाइको नेत्रवानीलाई सफल ताकासाथ अद्यावधि करण गरियो । "
+msgstr "तपाइको कल्पयन्त्रमा नेत्रवाणीको  अद्यावधिकरण सफल भयो । "
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
 msgid "Please press OK to start the installed copy."
-msgstr "भित्रया इएको प्रति सुरु गर्न ठीक टाँक दबाउनु होला ।"
+msgstr "भर्खरै भित्रिएको प्रति सुरु गर्न ठीक भन्ने टाँक दबाउनु होस् ।"
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
 msgid "Success"
@@ -4480,9 +4659,7 @@ msgstr ""
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
-msgstr ""
-"The installation path for NVDA has changed. it will now  be installed in "
-"{path}"
+msgstr "नेत्रवाणी भित्रिने मार्ग बदलियो,  अब यो निम्न मार्गमा भित्रिने छ ।"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Use NVDA on the Windows &logon screen"
@@ -4492,7 +4669,9 @@ msgstr "सन्झ्याल आरम्भ पर्दामा नेत
 msgid "&Keep existing desktop shortcut"
 msgstr "&डेस्कटप द्रुतमार्ग यथावत् होस्"
 
-#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
+#. If the shortcut key has been changed for this locale,
+#. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "डेस्कटपमा प्रतिमा र द्रुतमार्ग कुञ्जी (control+alt+n सिर्जना गर ।)"
 
@@ -4532,7 +4711,7 @@ msgstr "चालू उपभोक्ता अभियोजन &सार�
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
-msgstr "Select portable  directory"
+msgstr "फिरन्ते घर्राको चयन गर्नु होस् ।"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -4551,7 +4730,7 @@ msgstr "फिरन्ते प्रति बनाउँदै छु ।"
 
 #. Translators: The message displayed while a portable copy of NVDA is bieng created.
 msgid "Please wait while a portable copy of NVDA is created."
-msgstr "पर्खनु होस् है, फिरन्ते प्रति बनाउँदै छु ।"
+msgstr "प्रतिक्षा गर्नु होस्, म फिरन्ते नेत्रवाणी बनाउँदै छु ।"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
 msgid "NVDA is unable to remove or overwrite a file."
@@ -4571,11 +4750,11 @@ msgstr "नेत्रवाणीको फिरन्ते प्रति 
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
-msgstr "नेत्रवाणी लगत पुस्तिका दर्सक"
+msgstr "नेत्रवाणी गतिविधी लगत पुस्तिका"
 
 #. Translators: The label for a menu item in NVDA log viewer to refresh log messages.
 msgid "Refresh\tF5"
-msgstr "ताजकी य करण \tF5"
+msgstr "ताजकीकरण\tF5"
 
 #. Translators: The title of a menu in NVDA Log Viewer.
 msgid "Log"
@@ -4625,6 +4804,10 @@ msgstr "ब&हिर्गमन गर्दा अभियोजनलाई
 #. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
 msgid "&Warn before exiting NVDA"
 msgstr "नेत्रवाणी बन्द हुँदा &सचेत गराऊ"
+
+#. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
+msgid "&Play sounds when starting or exiting NVDA"
+msgstr "नेत्रवाणीको आगमन र बहिर्गमन हुँदा ध्वनी बजाउ ।"
 
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
@@ -4706,7 +4889,7 @@ msgid ""
 "NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
 "manually save and exit at a later time."
 msgstr ""
-"नया भाषाले प्रभावकारी रूपमा काम गर्न अभियोजन लाई बचत गरी नेत्रवाणि पुनः सुरुवात गर्नु "
+"नया भाषाले प्रभावकारी रूपमा काम गर्न अभियोजन लाई बचत गरी नेत्रवाणी पुनः सुरुवात गर्नु "
 "पर्छ ।बचत गरी नेत्रवाणी सुरु गर्ने हो भने ठिक टाँकलाई दबाउनु होस्, यदी पछि आफैले अभियोजन "
 "बचत गरेर बहिर्गमन गर्ने हो भने रद्द टाँकलाई दबाउनु होला ।"
 
@@ -4839,7 +5022,7 @@ msgstr "आदेश &कुञ्जी बताउ"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Handle keys from other &applications"
-msgstr ""
+msgstr "अरू&अनुप्रयोग द्वारा कुञ्जीलाई चलाउ"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
@@ -5117,6 +5300,11 @@ msgstr "&लाइन सङ्ख्या बताउ"
 msgid "Report l&ine indentation"
 msgstr "लाइन &indentation बताउ"
 
+#. Translators: This message is presented in the document formatting settings dialogue
+#. If this option is selected, NVDA will report paragraph indentation if available.
+msgid "Report &paragraph indentation"
+msgstr "&अनुच्छेदको फड्को बताउ ।"
+
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &tables"
@@ -5160,12 +5348,12 @@ msgstr "&कित्ता बताउ"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report fra&mes"
-msgstr "&पृष्ट सङ्ख्या बताउ"
+msgstr "&कङ्काल बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report if &clickable"
-msgstr "&किटिक्क गर्न मिल्ने भए जानकारी देउ"
+msgstr "&किटिक्क हुन्छ भने  बताउ"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
@@ -5181,7 +5369,7 @@ msgstr "&प्रतिस्थापन"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Comment"
-msgstr "& प्रतिक्रिया"
+msgstr "&प्रतिक्रिया"
 
 #. Translators: This is a label for a checkbox in add dictionary entry dialog.
 msgid "Case &sensitive"
@@ -5196,6 +5384,7 @@ msgid "&Dictionary entries"
 msgstr "&ढुकुटी प्रविष्टि"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
+#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr "प्रतिक्रिया"
 
@@ -5266,7 +5455,7 @@ msgstr "ब्रेलको मिलान:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
-msgstr " लगातार &अनुच्छेद पढ"
+msgstr "लगातार &अनुच्छेद पढ"
 
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
@@ -5375,6 +5564,14 @@ msgstr "मौनता"
 msgid "word"
 msgstr "शब्द"
 
+#. Translators: current position in a document as a percentage of the document length
+msgid "{curPercent:.0f}%"
+msgstr "{curPercent:.0f}%"
+
+#. Translators: the current position's screen coordinates in pixels
+msgid "at {x}, {y}"
+msgstr "{x},{y} मा"
+
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
 msgid "%s landmark"
@@ -5463,6 +5660,7 @@ msgstr "लिङ्क, शीर्षक र कित्ताको सू�
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
 msgstr "तालिका कोशिकामा छैन ।"
 
@@ -5493,7 +5691,7 @@ msgstr "तालिका वा सूचि जस्ता तत्व ह�
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "सुचि अथवा तालिका  जस्ता विगतका एकाईको अन्तमा जान्छ ।, "
+msgstr "सुचि अथवा तालिका जस्ता विगतका एकाईको अन्तमा जान्छ ।, "
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -5937,8 +6135,10 @@ msgstr "निर्धारित रङ्ग"
 msgid "{start} through {end}"
 msgstr "{start} देखि {end} सम्म"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
@@ -5946,35 +6146,67 @@ msgstr ""
 "शिर्षक तय गर्न सकिदैन । कृपया कागजातको स्वरूप अनुकूलतामा तालिकाको शीर्षकलाई बताउने "
 "परिस्थितिमा राख्नु होला ।"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Set column header row"
-msgstr "महल शीर्षकको हरफ बनाउ"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Set {address} as start of column headers"
+msgstr "{address} लाई महलको शुरु  शिर्षक बनाउ ।"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Cleared column header row"
-msgstr "महल शिर्षक नभएको हरफ"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Already set {address} as start of column headers"
+msgstr "{address} सुरु महलको शिर्षकमा पहिले नै तय गरिएको छ । "
 
-msgid ""
-"Pressing once will set the current row as the row where column headers "
-"should be found. Pressing twice clears the setting."
-msgstr ""
-"एक पटक दबाउदा जहा महल शिर्षक फेला पार्नु छ त्यो हरफलाई चालु हरफ बनाउने छ । दुई पटक "
-"दबाउदा अनुकुलतालाई हटाउने छ ।"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "removed {address}    from column headers"
+msgstr "{address} लाई महल शिर्षकबाट हटाउ ।"
 
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Set row header column"
-msgstr "हरफ शीर्षकको महल बनाउ"
-
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Cleared row header column"
-msgstr "हरफ शीर्षक नभएको महल"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Cannot find {address}    in column headers"
+msgstr "{address} लाई महलको शिर्षकमा पाइएन ।"
 
 msgid ""
-"Pressing once will set the current column as the column where row headers "
-"should be found. Pressing twice clears the setting."
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this region. Pressing twice will forget "
+"the current column header for this cell."
 msgstr ""
-"एक पटक दबाउदा जहा हरफ शिर्षक फेला पार्नु छ त्यो महललाई चालु महल बनाउने छ । दुई पटक "
-"दबाउदा अनुकुलतालाई हटाउने छ ।"
+"एक पटक दबाउँदा, यो कोशिकालाइ उक्त क्षेत्रमा पर्ने यो भन्दा तल र दायाँ पट्टी रहेका "
+"कोशिकाहरूको महलको प्रथम शिर्षक बनाउँछ दुई पटक दबाउँदा यस कोशिकालाइ शिर्षकको रुपमा "
+"बिर्सि दिन्छ ।"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Set {address} as start of row headers"
+msgstr "{address} लाई हरफको सुरु शिर्षक बनाउ ।"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Already set {address} as start of row headers"
+msgstr "{address} लाई हरफको शिर्षक पहिले नै बनाइयो ।"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "removed {address}    from row headers"
+msgstr "{address} लाई    हरफको शिर्षकबाट हटाउ ।"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Cannot find {address}    in row headers"
+msgstr "{address}  लाई हरफ शिर्षकको रुपमा पाइएन ।"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this region. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"एक पटक दबाउँदा, यो कोशिकालाइ उक्त क्षेत्रमा पर्ने यो भन्दा तल र दायाँ पट्टी रहेका "
+"कोशिकाहरूको हरफको प्रथम शिर्षक बनाउँछ दुई पटक दबाउँदा यस कोशिकालाइ हरफ शिर्षकको "
+"रुपमा बिर्सि दिन्छ ।"
+
+#. Translators: A message in Excel when there is no comment
+msgid "Not on a comment"
+msgstr "टिप्पणीमा होईन ।"
+
+#. Translators: the description  for a script for Excel
+msgid "Reports the comment on the current cell"
+msgstr "चालू कोशिकामा भएको टिप्पणी बताउनेछ ।"
+
+#. Translators: Dialog text for
+msgid "Editing comment for cell {address}"
+msgstr "कोशिका {address} का टिप्पणिको सम्पादन"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
@@ -6087,6 +6319,148 @@ msgstr "अज्ञात मिति"
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "{revisionAuthor} द्वारा {revisionDate} मा गरिएको {revisionType}"
 
+#, python-format
+msgid "%g characters"
+msgstr "%g वर्णहरू"
+
+#. Translators: the value in points for a paragraph indenting
+#, python-format
+msgid "%g pt"
+msgstr "%g विन्दु"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr "हरफ {rowNumber} लाई महल {columnNumber} महलको सुरु शिर्षकको रुपमा कायम गर ।"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr "हरफ {rowNumber} त महल {columnNumber} को महल शिर्षक कायम भएकै छ ।"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr "हरफ {rowNumber}लाई महल {columnNumber}  को महल शिर्षकबाट हटाइयो ।"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr "हरफ सङ्ख्या {rowNumber} लाई महल {columnNumber} को शिर्षकमा पाउन सकिएन ।"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"एक पटक दबाउँदा, यो कोशिकालाइ तालिकामा पर्ने यो भन्दा तल र दायाँ पट्टी रहेका "
+"कोशिकाहरूको महलको प्रथम शिर्षक बनाउँछ दुई पटक दबाउँदा, यस कोशिकालाइ महल शिर्षकको "
+"रुपमा बिर्सि दिन्छ ।"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr "हरफ {rowNumber}लाइ  महल {columnNumber} को सुरु हरफ शिर्षक बनाउ ।"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr "हरफ {rowNumber} त महल {columnNumber} को हरफ शिर्षक कायम भएकै छ ।"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr "हरफ {rowNumber}लाई महल {columnNumber}  को हरफ शिर्षकबाट हटाइयो ।"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr "हरफ {rowNumber} महल {columnNumber} मा हरफ शिर्षकको रुपमा पाइएन ।"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"एक पटक दबाउँदा, यो कोशिकालाइ उक्त तालिकाका यो भन्दा तल र दायाँ पट्टी रहेका "
+"कोशिकाहरूको हरफको प्रथम शिर्षक बनाउँछ दुई पटक दबाउँदा, यस कोशिकालाइ हरफ शिर्षकको "
+"रुपमा बिर्सि दिन्छ ।"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "मोटायो ।"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "मोटाएन"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "अक्षर ढल्क्याइयो ।"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "अक्षर सोझ्याइयो ।"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "अदो रेखाङ्कित गरियो ।"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "अदोरेखाङ्कन हटाइयो ।"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Left aligned"
+msgstr "वायाँ पङ्‌क्तिबद्ध"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "centered"
+msgstr "बीचमा"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Right aligned"
+msgstr "दायाँ पङ्तिवद्ध"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Justified"
+msgstr "दुबै तिर"
+
+#. Translators: the message when the outline level / style is changed in Microsoft word
+msgid "{styleName} style, outline level {outlineLevel}"
+msgstr "{styleName} शैली, वाह्यरेखा तह {outlineLevel}"
+
+#. Translators: a message when increasing or decreasing font size in Microsoft Word
+msgid "{size:g} point font"
+msgstr "{size:g} विन्दुको वर्णाकृति"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} characters"
+msgstr "{offset:.3g} characters"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} inches"
+msgstr "{offset:.3g} इन्च"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} centimeters"
+msgstr "{offset:.3g} सेन्टी मिटर"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} millimeters"
+msgstr "{offset:.3g} मिलि मिटर"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} points"
+msgstr "{offset:.3g} विन्दु"
+
+#. Translators: a measurement in Microsoft Word
+#. See http://support.microsoft.com/kb/76388 for details.
+msgid "{offset:.3g} picas"
+msgstr "{offset:.3g} पिकास"
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "no comments"
+msgstr "प्रतिक्रिया छैन"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "प्रणाली caret रहेको स्थानका समीक्षा पाठहरू लाई बताउँछ । "
+
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 msgid "Not in table"
@@ -6102,3 +6476,39 @@ msgstr "HIMS ब्रेल चेतना/ब्रेल किनारा 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "No location information for navigator object"
+#~ msgstr "विचरण वस्तु कहाँ छ पत्तो भएन ।"
+
+#~ msgid "No location information for screen"
+#~ msgstr "पर्दामा कहाँ निर भनेर पत्तो भएन ।"
+
+#~ msgid ""
+#~ "Reports the hight, width and position of the current navigator object"
+#~ msgstr "चालू विचरण वस्तुको लम्बाइ, चौडाइ र स्थान बताउने छ ।"
+
+#~ msgid "Set column header row"
+#~ msgstr "महल शीर्षकको हरफ बनाउ"
+
+#~ msgid "Cleared column header row"
+#~ msgstr "महल शिर्षक नभएको हरफ"
+
+#~ msgid ""
+#~ "Pressing once will set the current row as the row where column headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "एक पटक दबाउदा जहा महल शिर्षक फेला पार्नु छ त्यो हरफलाई चालु हरफ बनाउने छ । दुई "
+#~ "पटक दबाउदा अनुकुलतालाई हटाउने छ ।"
+
+#~ msgid "Set row header column"
+#~ msgstr "हरफ शीर्षकको महल बनाउ"
+
+#~ msgid "Cleared row header column"
+#~ msgstr "हरफ शीर्षक नभएको महल"
+
+#~ msgid ""
+#~ "Pressing once will set the current column as the column where row headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "एक पटक दबाउदा जहा हरफ शिर्षक फेला पार्नु छ त्यो महललाई चालु महल बनाउने छ । दुई "
+#~ "पटक दबाउदा अनुकुलतालाई हटाउने छ ।"

@@ -23,7 +23,7 @@ Major highlights include:
 - Support for many refreshable braille displays, including input of computer braille for braille displays which have a braille keyboard
 - Ability to run entirely from a USB stick or other portable media without the need for installation
 - Easy to use talking installer
-- Translated into 44 languages
+- Translated into 45 languages
 - Support for modern Windows Operating Systems including both 32 and 64 bit variants
 - Ability to run on Windows logon and other secure screens
 - Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation only supported in Windows 7 and later)
@@ -32,7 +32,7 @@ Major highlights include:
 
 ++ Internationalization ++
 It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
-Besides English, NVDA has been translated into 44 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Brazilian Portuguese, Bulgarian, Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Greek, Georgian, German, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Korean, Nepali, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
+Besides English, NVDA has been translated into 45 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Brazilian Portuguese, Bulgarian, Catalan, Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Greek, Georgian, German, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Korean, Nepali, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
 
 ++ Speech Synthesizer Support ++
 Apart from providing its messages and interface in several languages, NVDA can also enable the user to read content in any language, as long as they have a speech synthesizer that can speak that language.
@@ -333,7 +333,7 @@ To navigate by object, use the following commands:
 | Move to focus object | NVDA+numpadMinus | NVDA+backspace | none | Moves to the object that currently has the system focus, and also places the review cursor at the position of the System caret, if it is showing |
 | Activate current navigator object | NVDA+numpadEnter | NVDA+enter | double tap | Activates the current navigator object (similar to clicking with the mouse or pressing space when it has the system focus) |
 | Move System focus or caret to current review position | NVDA+shift+numpadMinus | NVDA+shift+backspace | none | pressed once Moves the System focus to the current navigator object, pressed twice moves the system caret to the position of the review cursor |
-| Report navigator object dimensions | NVDA+numpadDelete | NVDA+delete | none | Reports the current navigator object's dimensions on screen in per centages (including distance from left and top of screen, and its width and height) |
+| Report review cursor location | NVDA+numpadDelete | NVDA+delete | none | Reports information about the location of the text or object at the review cursor. For example, this might include the percentage through the document, the distance from the edge of the page or the exact screen position. Pressing twice may provide further detail. |
 %kc:endInclude
 
 Note: numpad keys require numlock key to be turned off to work properly.
@@ -525,11 +525,20 @@ A key command is provided to return to the original page containing the embedded
 + Application Specific NVDA Commands +
 NVDA provides its own extra commands for some applications to make certain tasks easier or to provide access to functionality which is not otherwise accessible to screen reader users.
 
+++ Microsoft Word ++
+%kc:beginInclude
+|| Name | Key | Description |
+| Report current comment | NVDA+Alt+c | Reports the text of the comment at the position of the System Caret. | 
+| Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. | 
+| Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. | 
+%kc:endInclude
+
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Name | Key | Description |
-| Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. | 
-| Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. | 
+| Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. | 
+| Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. | 
+| Report comment | NVDA+alt+c | Reports the comment on the current cell if any. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -587,6 +596,9 @@ This option is a checkbox that, when checked, tells NVDA to automatically save t
 ==== Warn before exiting NVDA ====
 This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks whether or not you would like to exit.
 When checked, a dialog will appear when you attempt to exit NVDA asking whether or not you want to exit.
+
+==== Play sounds when starting or exiting NVDA ====
+This option is a checkbox that, when checked, tells NVDA to play sounds when it starts or exits.
 
 ==== Logging level ====
 This is a combo box that permits you to choose how much NVDA will log as it's running.
@@ -1015,6 +1027,7 @@ You can configure reporting of:
 - Page numbers
 - Line numbers
 - Line indentation
+- Paragraph indentation (e.g. hanging indent, first line indent)
 - Tables
 - Table row/column headers
 - Table cell coordinates
@@ -1211,6 +1224,7 @@ These packages are provided by the community and contain custom code that may ad
 
 The Add-ons Manager contains a list that displays all the add-ons currently installed in your NVDA user configuration. 
 A package name, version and author are shown for each add-on, though further information such as a description and URL can be viewed by selecting the add-on and pressing the About add-on button.
+If there is help available for the selected add-on, you can access it by pressing the Add-on help button.
 
 To browse and download available add-ons online, press the Get add-ons button.
 This button opens the [NVDA Add-ons page http://addons.nvda-project.org/].
@@ -1704,8 +1718,8 @@ These are (ordered from left to right):
 Currently, the right thumb key is not in use.
 The inner keys are both mapped to space.
 
-%kc:beginInclude
 || Name | Key |
+%kc:beginInclude
 | backspace key | dot 7 |
 | enter key | dot 8 |
 | escape key | space with dot 7 |
@@ -1867,6 +1881,43 @@ Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/driv
 | Move braille display to next line | lndn (go down one line) |
 | Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
+
++ Braille control type and state abbreviations +
+In order to fit as much information as possible on a braille display, The folowing abbreviations have been defined to indicate control type and state.
+
+|| Abbreviation | Control type |
+| btn | button |
+| cbo | combo box |
+| chk | check box |
+| dlg | dialog |
+| edt | editable text field |
+| gra | graphic |
+| cN | table column number n, e.g. c1, c2. |
+| rN | table row number n, e.g. r1, r2. |
+| hN | heading at level n, e.g. h1, h2. |
+| lnk | link |
+| lst | list |
+| vlnk | visited link |
+| mnu | menu |
+| mnubar | menu bar |
+| rbtn | radio button |
+| tb | table |
+| tv | treeview |
+| lv N | a tree view item has a hierarchical level N|
+| ``-----`` | seperator |
+
+The following state indicators are also defined:
+|| Abbreviation | Control state |
+| ... | displayed when an object supports autocompletion |
+| ( ) | displayed when an object (e.g. a check box) is not checked |
+| (x) | displayed when an object (e.g. a check box) is checked |
+| (-) | displayed when an object (e.g. a check box) is half checked |
+| - | displayed when an object (e.g. a tree view item) is collapsible |
+| + | displayed when an object (e.g. a tree view item) is Expandable |
+| clk | displayed when an object is clickable |
+| ro | displayed when an object (e.g. an editable text field) is read-only |
+| sel | displayed when an object is selected |
+| submnu | displayed when an object has a popup (usually a sub-menu) |
 
 + Advanced Topics +
 

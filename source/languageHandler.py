@@ -112,7 +112,22 @@ def setLanguage(lang):
 	try:
 		if lang=="Windows":
 			windowsLCID=ctypes.windll.kernel32.GetUserDefaultUILanguage()
-			localeName=locale.windows_locale[windowsLCID]
+			try:
+				localeName=locale.windows_locale[windowsLCID]
+			except KeyError:
+				# #4203: some locale identifiers from Windows 8 don't exist in Python's list.
+				# Therefore use window' own function to get the locale name.
+				# Eventually this should probably be used all the time.
+				buf=ctypes.create_unicode_buffer(32)
+				try:
+					ctypes.windll.kernel32.LCIDToLocaleName(windowsLCID,buf,32,0)
+				except AttributeError:
+					pass
+				localeName=buf.value
+				if localeName:
+					localeName=normalizeLanguage(localeName)
+				else:
+					localeName="en"
 			trans=gettext.translation('nvda',localedir='locale',languages=[localeName])
 			curLang=localeName
 		else:

@@ -404,30 +404,17 @@ class GlobalCommands(ScriptableObject):
 	script_navigatorObject_current.category=SCRCAT_OBJECTNAVIGATION
 
 	def script_navigatorObject_currentDimensions(self,gesture):
-		obj=api.getNavigatorObject()
-		if not obj:
-			ui.message(_("no navigator object"))
+		count=scriptHandler.getLastScriptRepeatCount()
+		locationText=api.getReviewPosition().locationText if count==0 else None
+		if not locationText:
+			locationText=api.getNavigatorObject().locationText
+		if not locationText:
+			# Translators: message when there is no location information for the review cursor
+			ui.message(_("No location information"))
 			return
-		location=obj.location
-		if not location:
-			# Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
-			ui.message(_("No location information for navigator object"))
-			return
-		(left,top,width,height)=location
-		deskLocation=api.getDesktopObject().location
-		if not deskLocation:
-			# Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
-			ui.message(_("No location information for screen"))
-			return
-		(deskLeft,deskTop,deskWidth,deskHeight)=deskLocation
-		percentFromLeft=(float(left-deskLeft)/deskWidth)*100
-		percentFromTop=(float(top-deskTop)/deskHeight)*100
-		percentWidth=(float(width)/deskWidth)*100
-		percentHeight=(float(height)/deskHeight)*100
-		# Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
-		ui.message(_("Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of screen, height is {height:.1f} per cent of screen").format(left=percentFromLeft,top=percentFromTop,width=percentWidth,height=percentHeight))
-	# Translators: Input help mode message for report object dimensions command.
-	script_navigatorObject_currentDimensions.__doc__=_("Reports the hight, width and position of the current navigator object")
+		ui.message(locationText)
+	# Translators: Description for report review cursor location command.
+	script_navigatorObject_currentDimensions.__doc__=_("Reports information about the location of the text or object at the review cursor. Pressing twice may provide further detail.") 
 	script_navigatorObject_currentDimensions.category=SCRCAT_OBJECTNAVIGATION
 
 	def script_navigatorObject_toFocus(self,gesture):
@@ -866,7 +853,7 @@ class GlobalCommands(ScriptableObject):
 			"detectFormatAfterCursor":False,
 			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,
 			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
-			"reportPage":False,"reportLineNumber":False,"reportTables":False,
+			"reportPage":False,"reportLineNumber":False,"reportParagraphIndentation":True,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
 			"reportBlockQuotes":False,"reportComments":False,
 		}

@@ -23,7 +23,7 @@ O máis sinalable inclúe:
 - Soporte para moitas liñas de braille efímero incluíndo a entrada de braille computerizado para liñas braille que tenñan un teclado braille
 - Capacidade para executarse compretamente dende unha memoria USB ou outros medios portables sen a necesidade de instalación
 - Instalador parlante sinxelo de utilizar
-- Traducido a 44 linguas
+- Traducido a 45 linguas
 - Soporte para Sistemas Operativos Windows modernos incluíndo variantes de 32 e 64 bit
 - Capacidade para executarse en ventás de autentificación de Windows  e outras pantallas seguras 
 - Soporte para interfaces comuns de accesibilidade como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation
@@ -32,7 +32,7 @@ O máis sinalable inclúe:
 
 ++ Internacionalización ++
 É importante que calquera persoa no mundo, sen importar que lingua fale, teña igual acceso á tecnoloxía. 
-Actualmente NVDA foi traducido a 44 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Búlgaro, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Farsi, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Nepalí, Noruego, Polaco, Portugués, Portugués do Brasil, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
+Actualmente NVDA foi traducido a 45 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Búlgaro, catalán, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Farsi, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Nepalí, Noruego, Polaco, Portugués, Portugués do Brasil, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
 
 ++ Soporte da Síntesis de Voz ++
 Ademáis de proporcionar as súas mensaxes e interface en varias linguas, NVDA tamén pode capacitar ó usuario para ler contidos en calquera lingua, tanto en canto teñan un sintetizador de voz que poida falar esa lingua en particular. 
@@ -333,7 +333,7 @@ Para navegar por obxectos, utiliza as seguintes ordes:
 | Navegar ó obxecto do foco | NVDA+Menos teclado numérico | NVDA+Retroceso | non | Navega ó obxecto que ten actualmente o foco do sistema, e tamén coloca o cursor de revisión na posición do cursor do Sistema, se é amosado |
 | Activar actual navegador de obxectos | NVDA+Intro teclado numérico | NVDA+Intro | doble toque | Activa o actual navegador de obxectos (similar a facer clic co rato ou premer espazo cando ten o foco do sistema) |
 | Mover foco do Sistema a actual navegador de obxectos | NVDA+shift+Menos teclado numérico | NVDA+shift+retroceso | non | premedo unha vez Move o foco do Sistema ó navegador de obxectos actual, premedo dúas veces move o cursor do sistema á posición do cursor de revisión |
-| Anunciar dimensións do navegador de obxectos | NVDA+Suprimir teclado numérico | NVDA+suprimir | non | Anuncia as dimensións do actual navegador de obxectos na pantalla en porcentaxes (incluíndo distancia dende a esquerda e arriba da pantalla, e a súa anchura e altura)  |
+| Anunciar dimensións do navegador de obxectos | NVDA+Suprimir teclado numérico | NVDA+suprimir | non | Anuncia información acerca da localización do texto ou obxecto no cursor de revisión. Por exemplo, esto podería incluir a porcentaxe do documento, a distancia dende o borde da páxina ou a posición exacta na pantalla. ó premer dúas veces poderá  proporcionar detalles adicionais.  |
 %kc:endInclude
 
 nota: as teclas do teclado numérico requiren que a tecla BloqNum estea desactivada para funcionar apropriadamente.
@@ -525,11 +525,20 @@ Proporciónase unha orde de teclado para regresar á páxina.
 + Ordes de NVDA Específicas para Aplicación +
 NVDA proporciona as súas proprias ordes extra para algunhas aplicacións para facer máis sinxelas certas tarefas ou para proporcionar acceso a funcionalidade que de outra maneira non está accesible para os usuarios do lector de pantalla.
 
+++ Microsoft Word ++
+%kc:beginInclude
+|| Nome | Tecla | Descripción |
+| Anunciar comentario actual | NVDA+Alt+c | Anuncia o texto do comentario na posición do Cursor do Sistema. | 
+| Fixar cabeceira de columnas | NVDA+shift+c | Premendo esto unha vez di ó NVDA que esta é a primeira celda de cabeceira na fila que contén cabeceiras de columna, que debería ser anunciada automáticamente ó moverte entre columnas baixo esta fila. Premendo dúas veces quitará esta opción. | 
+| Fixar cabeceira de filas | NVDA+shift+r | Pulsando esto unha vez di ó NVDA que esta é a primeira celda de cabeceira na columna que contén cabeceiras de fila, que debería ser anunciado automáticamente cando se desplaza entre as filas despois desta columna. Premendo dúas veces eliminará esta opción. | 
+%kc:endInclude
+
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Nome | Tecla | Descripción |
-| Configurar fila de cabeceiras de columna | NVDA+shift+c | Premendo esto unha vez di ó NVDA que esta é a fila que contén cabeceiras de columna, os que deberían anunciarse automáticamente cando te movas entre columnas por esta fila. Premendo dúas veces limpará a opción. | 
-| Configurar columna de cabeceiras de fila | NVDA+shift+r | Premendo esto unha vez  di ó NVDA que esta é a columna que contén cabeceiras de fila, os que se deberían anunciar automáticamente  cando te movas entre filas despois de esta columna. Premendo dúas veces limpará a opción. | 
+| Fixar cabeceira de columnas | NVDA+shift+c | Ó premer esto unha vez dille ó NVDA que é a primeira celda de cabeceira da fila que contén as cabeceiras de columna, que debería ser anunciado automáticamente cando te despraces entre as columnas por embaixo desta fila. Premendo dúas veces eliminarase a opción. | 
+| Fixar cabeceira de filas | NVDA+shift+r | Ó premer esto unha vez dille ó NVDA que é a primeira celda da cabeceira da columna que contén as cabeceiras de fila, que debería ser anunciado automáticamente cando te despraces entre as filas despois desta columna. Premendo dúas veces eliminarás a opción. | 
+| Anunciar comentario | NVDA+alt+c | Anuncia o comentario na celda actual se o hai. |%kc:endInclude
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -587,6 +596,9 @@ Esta opción é unha caixa de verificación que, cando se marca, di ó NVDA que 
 ==== Avisar antes de Saír do NVDA ====
 Esta opción é unha caixa de verificación que che permite elexir se si ou se non apareze un diálogo cando saias do NVDA que che pregunte se che gostaría saír ou non do NVDA. 
 Cando estea marcada, un diálogo aparecerá cando intentes saír do NVDA preguntándoche se queres ou non saír.
+
+==== Reproducir sons ó iniciar ou saír do NVDA ====
+Esta Opción é unha caixa de verificación que, cando está marcada, di ó NVDA que reproduza sons cando se inicie ou saia.
 
 ==== Nivel do Rexistro ====
 Este é unha caixa combinada que che permite elexir canto NVDA porá no rexistro segundo se executa. 
@@ -1015,6 +1027,7 @@ Podes configurar o anunciado de:
 - Números de páxina
 - Números de liña
 - Sangría de liña
+- Sangría de parágrafo (por exemplo: sangría francesa, sangría de primeira liña)
 - Táboas
 - Cabeceiras de fila/columna de táboa
 - Coordinadas de celdas da táboa
@@ -1211,6 +1224,7 @@ Estos paquetes son proporcionados pola comunidade e conteñen código persoaliza
 
 O Administrador de Complementos contén unha lista que amosa todos os complementos instalados actualmente na túa configuración do usuario do NVDA. 
 Amósase un nome de paquete, versión e autor para cada complemento, aíndaque se pode ver máis información coma unha descripción e unha URL seleccionando o complemento e premendo o botón Acerca do complemento.
+Se hai axuda dispoñible para o complemento seleccionado, podes acceder a ela premendo o seu botón de Axuda.
 
 Para examinar e descargar os complementos dispoñibles online, preme o botón Obter Complementos.
 Este botón abre a [páxina de complementos do NVDA http://addons.nvda-project.org/].

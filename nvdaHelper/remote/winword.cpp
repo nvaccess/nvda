@@ -36,6 +36,8 @@ using namespace std;
 #define wdDISPID_SELECTION_RANGE 400
 #define wdDISPID_SELECTION_SETRANGE 100
 #define wdDISPID_SELECTION_STARTISACTIVE 404
+#define wdDISPID_SELECTION_STARTOF 107
+#define wdDISPID_SELECTION_ENDOF 108
 #define wdDISPID_RANGE_INRANGE 126
 #define wdDISPID_RANGE_DUPLICATE 6
 #define wdDISPID_RANGE_REVISIONS 150
@@ -103,10 +105,13 @@ using namespace std;
 #define wdDISPID_INLINESHAPES_ITEM 0 
 #define wdDISPID_INLINESHAPE_TYPE 6
 #define wdDISPID_INLINESHAPE_ALTERNATIVETEXT 131
+#define wdDISPID_INLINESHAPE_TITLE 158
 #define wdDISPID_RANGE_HYPERLINKS 156
 #define wdDISPID_HYPERLINKS_COUNT 1
 #define wdDISPID_RANGE_COMMENTS 56
 #define wdDISPID_COMMENTS_COUNT 2
+#define wdDISPID_COMMENTS_ITEM 0
+#define wdDISPID_COMMENT_SCOPE 1005
 #define wdDISPID_RANGE_TABLES 50
 #define wdDISPID_TABLES_ITEM 0
 #define wdDISPID_TABLE_NESTINGLEVEL 108
@@ -120,6 +125,9 @@ using namespace std;
 #define wdDISPID_COLUMNS_COUNT 2
 #define wdDISPID_TABLE_ROWS 101
 #define wdDISPID_ROWS_COUNT 2
+#define wdDISPID_PARAGRAPHFORMAT_RIGHTINDENT 106
+#define wdDISPID_PARAGRAPHFORMAT_LEFTINDENT 107
+#define wdDISPID_PARAGRAPHFORMAT_FIRSTLINEINDENT 108
 
 #define wdCommentsStory 4
 
@@ -164,6 +172,7 @@ using namespace std;
 #define formatConfig_reportHeadings 8192
 #define formatConfig_reportLanguage 16384
 #define formatConfig_reportRevisions 32768
+#define formatConfig_reportParagraphIndentation 65536
 
 #define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor)
 #define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings)
@@ -205,10 +214,33 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	//Move the selection to the given range
 	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
 	//Expand the selection to the line
-	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdLine);
-	//Collect the start and end offsets of the selection
-	_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_START,VT_I4,&(args->lineStart));
-	_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_END,VT_I4,&(args->lineEnd));
+	// #3421: Expand and or extending selection cannot be used due to MS Word bugs on the last line in a table cell, or the first/last line of a table of contents, selecting would select the entire object.  
+	// Therefore do it in two steps
+	bool lineError=false;
+	if(_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_STARTOF,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",wdLine,0)!=S_OK) {
+		lineError=true;
+	} else {
+		_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_START,VT_I4,&(args->lineStart));
+		if(_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_ENDOF,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",wdLine,0)!=S_OK) {
+			lineError=true;
+		} else {
+			_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_END,VT_I4,&(args->lineEnd));
+		}
+		// the endOf method has a bug where IPAtEndOfLine gets stuck as true on wrapped lines
+		// So reset the selection to the start of the document to force it to False 
+		_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",0,0);
+	}
+	// Fall back to the older expand if there was an error getting line bounds
+	if(lineError) {
+		_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
+		_com_dispatch_raw_method(pDispatchSelection,wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdLine);
+		_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_START,VT_I4,&(args->lineStart));
+		_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_END,VT_I4,&(args->lineEnd));
+	} 
+	if(args->lineStart>=args->lineEnd) {
+		args->lineStart=args->offset;
+		args->lineEnd=args->offset+1;
+	}
 	//Move the selection back to its original location
 	_com_dispatch_raw_method(pDispatchOldSelRange,wdDISPID_RANGE_SELECT,DISPATCH_METHOD,VT_EMPTY,NULL,NULL);
 	//Restore the old selection direction
@@ -316,22 +348,13 @@ bool collectSpellingErrorOffsets(IDispatchPtr pDispatchRange, vector<pair<long,l
 	return !errorVector.empty();
 }
 
-int generateHeadingXML(IDispatch* pDispatchRange, int startOffset, int endOffset, wostringstream& XMLStream) {
-	IDispatchPtr pDispatchParagraphs=NULL;
-	IDispatchPtr pDispatchParagraph=NULL;
+int generateHeadingXML(IDispatch* pDispatchParagraph, IDispatch* pDispatchParagraphRange, int startOffset, int endOffset, wostringstream& XMLStream) {
 	int level=0;
-	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHS,VT_DISPATCH,&pDispatchParagraphs)!=S_OK||!pDispatchParagraphs) {
-		return 0;
-	}
-	if(_com_dispatch_raw_method(pDispatchParagraphs,wdDISPID_PARAGRAPHS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchParagraph,L"\x0003",1)!=S_OK||!pDispatchParagraph) {
-		return 0;
-	}
-	if(_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_OUTLINELEVEL,VT_I4,&level)!=S_OK||level<=0||level>=7) {
+	if(!pDispatchParagraph||_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_OUTLINELEVEL,VT_I4,&level)!=S_OK||level<=0||level>=7) {
 		return 0;
 	}
 	XMLStream<<L"<control role=\"heading\" level=\""<<level<<L"\" ";
-	IDispatchPtr pDispatchParagraphRange=NULL;
-	if(_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_RANGE,VT_DISPATCH,&pDispatchParagraphRange)==S_OK&&pDispatchParagraphRange) {
+	if(pDispatchParagraphRange) {
 		long iVal=0;
 		if(_com_dispatch_raw_propget(pDispatchParagraphRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal>=startOffset) {
 			XMLStream<<L"_startOfNode=\"1\" ";
@@ -375,16 +398,33 @@ int getHyperlinkCount(IDispatch* pDispatchRange) {
 	return count;
 }
 
-int getCommentCount(IDispatch* pDispatchRange) {
+bool collectCommentOffsets(IDispatchPtr pDispatchRange, vector<pair<long,long>>& commentVector) {
 	IDispatchPtr pDispatchComments=NULL;
-	int count=0;
 	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_COMMENTS,VT_DISPATCH,&pDispatchComments)!=S_OK||!pDispatchComments) {
-		return 0;
+		return false;
 	}
-	if(_com_dispatch_raw_propget(pDispatchComments,wdDISPID_COMMENTS_COUNT,VT_I4,&count)!=S_OK||count<=0) {
-		return 0;
+	long iVal=0;
+	_com_dispatch_raw_propget(pDispatchComments,wdDISPID_COMMENTS_COUNT,VT_I4,&iVal);
+	for(int i=1;i<=iVal;++i) {
+		IDispatchPtr pDispatchComment=NULL;
+		if(_com_dispatch_raw_method(pDispatchComments,wdDISPID_COMMENTS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchComment,L"\x0003",i)!=S_OK||!pDispatchComment) {
+			return false;
+		}
+		IDispatchPtr pDispatchCommentScope=NULL;
+		if(_com_dispatch_raw_propget(pDispatchComment,wdDISPID_COMMENT_SCOPE,VT_DISPATCH,&pDispatchCommentScope)!=S_OK||!pDispatchCommentScope) {
+			return false;
+		}
+		long start=0;
+		if(_com_dispatch_raw_propget(pDispatchCommentScope,wdDISPID_RANGE_START,VT_I4,&start)!=S_OK) {
+			return false;
+		}
+		long end=0;
+		if(_com_dispatch_raw_propget(pDispatchCommentScope,wdDISPID_RANGE_END,VT_I4,&end)!=S_OK) {
+			return false;
+		}
+		commentVector.push_back(make_pair(start,end));
 	}
-	return count;
+	return !commentVector.empty();
 }
 
 bool fetchTableInfo(IDispatch* pDispatchTable, int* rowCount, int* columnCount, int* nestingLevel) {
@@ -405,9 +445,14 @@ int generateTableXML(IDispatch* pDispatchRange, int startOffset, int endOffset, 
 	int iVal=0;
 	IDispatchPtr pDispatchTables=NULL;
 	IDispatchPtr pDispatchTable=NULL;
+	bool inTableCell=false;
 	int rowCount=0;
 	int columnCount=0;
 	int nestingLevel=0;
+	int rowNumber=0;
+	int columnNumber=0;
+	bool startOfCell=false;
+	bool endOfCell=false;
 	if(
 		_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_TABLES,VT_DISPATCH,&pDispatchTables)!=S_OK||!pDispatchTables\
 		||_com_dispatch_raw_method(pDispatchTables,wdDISPID_TABLES_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchTable,L"\x0003",1)!=S_OK||!pDispatchTable\
@@ -415,7 +460,34 @@ int generateTableXML(IDispatch* pDispatchRange, int startOffset, int endOffset, 
 	) {
 		return 0;
 	}
-	numTags+=1;
+	IDispatchPtr pDispatchCells=NULL;
+	IDispatchPtr pDispatchCell=NULL;
+	if(
+		_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_CELLS,VT_DISPATCH,&pDispatchCells)==S_OK&&pDispatchCells\
+		&&_com_dispatch_raw_method(pDispatchCells,wdDISPID_CELLS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchCell,L"\x0003",1)==S_OK&&pDispatchCell\
+	) {
+		_com_dispatch_raw_propget(pDispatchCell,wdDISPID_CELL_ROWINDEX,VT_I4,&rowNumber);
+		_com_dispatch_raw_propget(pDispatchCell,wdDISPID_CELL_COLUMNINDEX,VT_I4,&columnNumber);
+		IDispatchPtr pDispatchCellRange=NULL;
+		if(_com_dispatch_raw_propget(pDispatchCell,wdDISPID_CELL_RANGE,VT_DISPATCH,&pDispatchCellRange)==S_OK&&pDispatchCellRange) {
+			if(_com_dispatch_raw_propget(pDispatchCellRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal>=startOffset) {
+				startOfCell=true;
+			}
+			if(_com_dispatch_raw_propget(pDispatchCellRange,wdDISPID_RANGE_END,VT_I4,&iVal)==S_OK&&iVal<=endOffset) {
+				endOfCell=true;
+			}
+		}
+		inTableCell=true;
+	} else {
+		if((_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&rowNumber,L"\x0003",wdStartOfRangeRowNumber)==S_OK)&&rowNumber>0) {
+			inTableCell=true;
+		}
+		if((_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&columnNumber,L"\x0003",wdStartOfRangeColumnNumber)==S_OK)&&columnNumber>0) {
+			inTableCell=true;
+		}
+	}
+	if(!inTableCell) return numTags;
+	numTags+=2;
 	XMLStream<<L"<control role=\"table\" table-id=\"1\" table-rowcount=\""<<rowCount<<L"\" table-columncount=\""<<columnCount<<L"\" level=\""<<nestingLevel<<L"\" ";
 	IDispatchPtr pDispatchTableRange=NULL;
 	if(_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_RANGE,VT_DISPATCH,&pDispatchTableRange)==S_OK&&pDispatchTableRange) {
@@ -428,35 +500,13 @@ int generateTableXML(IDispatch* pDispatchRange, int startOffset, int endOffset, 
 	}
 	XMLStream<<L">";
 	XMLStream<<L"<control role=\"tableCell\" table-id=\"1\" ";
-	numTags+=1;
-	IDispatchPtr pDispatchCells=NULL;
-	IDispatchPtr pDispatchCell=NULL;
-	if(
-		_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_CELLS,VT_DISPATCH,&pDispatchCells)==S_OK&&pDispatchCells\
-		&&_com_dispatch_raw_method(pDispatchCells,wdDISPID_CELLS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchCell,L"\x0003",1)==S_OK&&pDispatchCell\
-		) {
-		if(_com_dispatch_raw_propget(pDispatchCell,wdDISPID_CELL_ROWINDEX,VT_I4,&iVal)==S_OK) {
-			XMLStream<<L"table-rownumber=\""<<iVal<<L"\" ";
-		}
-		if(_com_dispatch_raw_propget(pDispatchCell,wdDISPID_CELL_COLUMNINDEX,VT_I4,&iVal)==S_OK) {
-			XMLStream<<L"table-columnnumber=\""<<iVal<<L"\" ";
-		}
-		IDispatchPtr pDispatchCellRange=NULL;
-		if(_com_dispatch_raw_propget(pDispatchCell,wdDISPID_CELL_RANGE,VT_DISPATCH,&pDispatchCellRange)==S_OK&&pDispatchCellRange) {
-			if(_com_dispatch_raw_propget(pDispatchCellRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal>=startOffset) {
-				XMLStream<<L"_startOfNode=\"1\" ";
-			}
-			if(_com_dispatch_raw_propget(pDispatchCellRange,wdDISPID_RANGE_END,VT_I4,&iVal)==S_OK&&iVal<=endOffset) {
-				XMLStream<<L"_endOfNode=\"1\" ";
-			}
-		}
-	} else {
-		if((_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdStartOfRangeRowNumber)==S_OK)&&iVal>0) {
-			XMLStream<<L"table-rownumber=\""<<iVal<<L"\" ";
-		}
-		if((_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdStartOfRangeColumnNumber)==S_OK)&&iVal>0) {
-			XMLStream<<L"table-columnnumber=\""<<iVal<<L"\" ";
-		}
+	XMLStream<<L"table-rownumber=\""<<rowNumber<<L"\" ";
+	XMLStream<<L"table-columnnumber=\""<<columnNumber<<L"\" ";
+	if(startOfCell) {
+		XMLStream<<L"_startOfNode=\"1\" ";
+	}
+	if(endOfCell) {
+		XMLStream<<L"_endOfNode=\"1\" ";
 	}
 	XMLStream<<L">";
 	return numTags;
@@ -464,29 +514,53 @@ int generateTableXML(IDispatch* pDispatchRange, int startOffset, int endOffset, 
 
 void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset, int endOffset, int formatConfig, wostringstream& formatAttribsStream) {
 	int iVal=0;
+	// #4165: font size is needed to calculate paragraph indenting
+	if(formatConfig&formatConfig_reportParagraphIndentation) {
+		formatConfig|=formatConfig_reportFontSize;
+	}
 	if((formatConfig&formatConfig_reportPage)&&(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdActiveEndAdjustedPageNumber)==S_OK)&&iVal>0) {
 		formatAttribsStream<<L"page-number=\""<<iVal<<L"\" ";
 	}
 	if((formatConfig&formatConfig_reportLineNumber)&&(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdFirstCharacterLineNumber)==S_OK)) {
 		formatAttribsStream<<L"line-number=\""<<iVal<<L"\" ";
 	}
-	if(formatConfig&formatConfig_reportAlignment) {
+	if((formatConfig&formatConfig_reportAlignment)||(formatConfig&formatConfig_reportParagraphIndentation)) {
 		IDispatchPtr pDispatchParagraphFormat=NULL;
 		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHFORMAT,VT_DISPATCH,&pDispatchParagraphFormat)==S_OK&&pDispatchParagraphFormat) {
-			if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_ALIGNMENT,VT_I4,&iVal)==S_OK) {
-				switch(iVal) {
-					case wdAlignParagraphLeft:
-					formatAttribsStream<<L"text-align=\"left\" ";
-					break;
-					case wdAlignParagraphCenter:
-					formatAttribsStream<<L"text-align=\"center\" ";
-					break;
-					case wdAlignParagraphRight:
-					formatAttribsStream<<L"text-align=\"right\" ";
-					break;
-					case wdAlignParagraphJustify:
-					formatAttribsStream<<L"text-align=\"justified\" ";
-					break;
+			if(formatConfig&formatConfig_reportAlignment) {
+				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_ALIGNMENT,VT_I4,&iVal)==S_OK) {
+					switch(iVal) {
+						case wdAlignParagraphLeft:
+						formatAttribsStream<<L"text-align=\"left\" ";
+						break;
+						case wdAlignParagraphCenter:
+						formatAttribsStream<<L"text-align=\"center\" ";
+						break;
+						case wdAlignParagraphRight:
+						formatAttribsStream<<L"text-align=\"right\" ";
+						break;
+						case wdAlignParagraphJustify:
+						formatAttribsStream<<L"text-align=\"justified\" ";
+						break;
+					}
+				}
+			}
+			if(formatConfig&formatConfig_reportParagraphIndentation) {
+				float fVal=0.0;
+				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_RIGHTINDENT,VT_R4,&fVal)==S_OK) {
+					formatAttribsStream<<L"right-indent=\"" << fVal <<L"\" ";
+				}
+				float firstLineIndent=0;
+				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_FIRSTLINEINDENT,VT_R4,&firstLineIndent)==S_OK) {
+					if(firstLineIndent<0) {
+						formatAttribsStream<<L"hanging-indent=\"" << (0-firstLineIndent) <<L"\" ";
+					} else {
+						formatAttribsStream<<L"first-line-indent=\"" << firstLineIndent <<L"\" ";
+					}
+				}
+				if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_LEFTINDENT,VT_R4,&fVal)==S_OK) {
+					if(firstLineIndent<0) fVal+=firstLineIndent;
+					formatAttribsStream<<L"left-indent=\"" << fVal <<L"\" ";
 				}
 			}
 		}
@@ -531,9 +605,6 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 			}
 		}
 	}
-	if((formatConfig&formatConfig_reportComments)&&getCommentCount(pDispatchRange)>0) {
-		formatAttribsStream<<L"comment=\"1\" ";
-	}
 	if(formatConfig&formatConfig_fontFlags) {
 		IDispatchPtr pDispatchFont=NULL;
 		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_FONT,VT_DISPATCH,&pDispatchFont)==S_OK&&pDispatchFont) {
@@ -542,8 +613,9 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 				formatAttribsStream<<L"font-name=\""<<fontName<<L"\" ";
 				SysFreeString(fontName);
 			}
-			if((formatConfig&formatConfig_reportFontSize)&&(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SIZE,VT_I4,&iVal)==S_OK)) {
-				formatAttribsStream<<L"font-size=\""<<iVal<<L"pt\" ";
+			float fVal=0.0;
+			if((formatConfig&formatConfig_reportFontSize)&&(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SIZE,VT_R4,&fVal)==S_OK)) {
+				formatAttribsStream<<L"font-size=\""<<fVal<<L"pt\" ";
 			}
 			if((formatConfig&formatConfig_reportColor)&&(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_COLOR,VT_I4,&iVal)==S_OK)) {
 				formatAttribsStream<<L"color=\""<<iVal<<L"\" ";
@@ -610,15 +682,21 @@ inline int generateInlineShapeXML(IDispatch* pDispatchRange, wostringstream& XML
 	if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_TYPE,VT_I4,&shapeType)!=S_OK) {
 		return 0;
 	}
-	if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_ALTERNATIVETEXT,VT_BSTR,&altText)!=S_OK) {
-		return 0;
-	}
 	wstring altTextStr=L"";
-	if(altText) for(int i=0;altText[i]!='\0';++i) {
-		appendCharToXML(altText[i],altTextStr,true);
+	if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_ALTERNATIVETEXT,VT_BSTR,&altText)==S_OK&&altText) {
+		for(int i=0;altText[i]!='\0';++i) {
+			appendCharToXML(altText[i],altTextStr,true);
+		}
+		SysFreeString(altText);
+	}
+	altText=NULL;
+	if(altTextStr.empty()&&_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_TITLE,VT_BSTR,&altText)==S_OK&&altText) {
+		for(int i=0;altText[i]!='\0';++i) {
+			appendCharToXML(altText[i],altTextStr,true);
+		}
+		SysFreeString(altText);
 	}
 	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<(shapeType==3?L"graphic":L"object")<<L"\" value=\""<<altTextStr<<L"\">";
-	if(altText) SysFreeString(altText);
 	return count;
 }
 
@@ -687,7 +765,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	if((formatConfig&formatConfig_reportLinks)&&getHyperlinkCount(pDispatchRange)==0) {
 		formatConfig&=~formatConfig_reportLinks;
 	}
-	if((formatConfig&formatConfig_reportComments)&&(storyType==wdCommentsStory||getCommentCount(pDispatchRange)==0)) {
+	if((formatConfig&formatConfig_reportComments)&&(storyType==wdCommentsStory)) {
 		formatConfig&=~formatConfig_reportComments;
 	}
 	//Check for any inline shapes in the entire range to work out whether its worth checking for them by word
@@ -704,8 +782,22 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	if(initialFormatConfig&formatConfig_reportTables) {
 		neededClosingControlTagCount+=generateTableXML(pDispatchRange,args->startOffset,args->endOffset,XMLStream);
 	}
+		IDispatchPtr pDispatchParagraphs=NULL;
+	IDispatchPtr pDispatchParagraph=NULL;
+	IDispatchPtr pDispatchParagraphRange=NULL;
+	if(formatConfig&formatConfig_reportComments||initialFormatConfig&formatConfig_reportHeadings) {
+		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHS,VT_DISPATCH,&pDispatchParagraphs)==S_OK&&pDispatchParagraphs) {
+			if(_com_dispatch_raw_method(pDispatchParagraphs,wdDISPID_PARAGRAPHS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchParagraph,L"\x0003",1)==S_OK&&pDispatchParagraph) {
+				_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_RANGE,VT_DISPATCH,&pDispatchParagraphRange);
+			}
+		}
+	}
+	vector<pair<long,long> > commentVector;
+	if(formatConfig&formatConfig_reportComments) {
+		collectCommentOffsets(pDispatchParagraphRange,commentVector);
+	}
 	if(initialFormatConfig&formatConfig_reportHeadings) {
-		neededClosingControlTagCount+=generateHeadingXML(pDispatchRange,args->startOffset,args->endOffset,XMLStream);
+		neededClosingControlTagCount+=generateHeadingXML(pDispatchParagraph,pDispatchParagraphRange,args->startOffset,args->endOffset,XMLStream);
 	}
 	generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,initialFormatConfig,initialFormatAttribsStream);
 	bool firstLoop=true;
@@ -782,6 +874,12 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			for(vector<pair<long,long>>::iterator i=errorVector.begin();i!=errorVector.end();++i) {
 				if(chunkStartOffset>=i->first&&chunkStartOffset<i->second) {
 					XMLStream<<L" invalid-spelling=\"1\" ";
+					break;
+				}
+			}
+			for(vector<pair<long,long>>::iterator i=commentVector.begin();i!=commentVector.end();++i) {
+				if(!(chunkStartOffset>=i->second||chunkEndOffset<=i->first)) {
+					XMLStream<<L" comment=\""<<(i->second)<<L"\" ";
 					break;
 				}
 			}

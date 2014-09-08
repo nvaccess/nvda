@@ -8,7 +8,7 @@ The NVDA source depends on several other packages to run correctly.
 
 === Installed Dependencies ===
 The following dependencies need to be installed on your system:
-* Python, version 2.7.6, 32 bit: http://www.python.org/
+* Python, version 2.7.8, 32 bit: http://www.python.org/
 * Microsoft Visual Studio 2012 Update 1 or later (Express for Windows Desktop, or Professional)
 	* Download for Visual Studio Express 2012 (Windows Desktop): http://www.microsoft.com/en-au/download/details.aspx?id=34673
 	* Download for Visual Studio 2012 latest update package: http://go.microsoft.com/fwlink/?LinkId=301713 
@@ -27,14 +27,14 @@ The following dependencies are included in Git submodules:
 * eSpeak, version 1.48.03: http://espeak.sourceforge.net/
 * IAccessible2, version 1.3: http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2
 * ConfigObj, version 4.6.0: http://www.voidspace.org.uk/python/configobj.html
-* liblouis, version 2.5.3: http://www.liblouis.org/
+* liblouis, version 2.5.4: http://www.liblouis.org/
 * NVDA images and sounds
 * System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest
 * Adobe Acrobat accessibility interface, version XI: http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip
 * Adobe FlashAccessibility interface typelib
 * txt2tags, version 2.5: http://txt2tags.sourceforge.net/
-* MinHook, rev e21b54a: https://github.com/RaMMicHaeL/minhook
-* SCons, version 2.3.0: http://www.scons.org/
+* MinHook, tagged version 1.2.2: https://github.com/RaMMicHaeL/minhook
+* SCons, version 2.3.2: http://www.scons.org/
 * brlapi Python bindings, version 0.5.7 or later, distributed with BRLTTY for Windows, version 4.2-2: http://brl.thefreecat.org/brltty/
 * ALVA BC6 generic dll, version 3.0.4.1
 * lilli.dll, version 2.1.0.0

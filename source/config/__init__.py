@@ -59,6 +59,7 @@ confspec = ConfigObj(StringIO(
 	language = string(default="Windows")
 	saveConfigurationOnExit = boolean(default=True)
 	askToExit = boolean(default=true)
+	playStartAndExitSounds = boolean(default=true)
 	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
 	loggingLevel = string(default="INFO")
 	showWelcomeDialogAtStartup = boolean(default=true)
@@ -164,6 +165,7 @@ confspec = ConfigObj(StringIO(
 	reportPage = boolean(default=true)
 	reportLineNumber = boolean(default=False)
 	reportLineIndentation = boolean(default=False)
+	reportParagraphIndentation = boolean(default=False)
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)
 	reportTableHeaders = boolean(default=True)

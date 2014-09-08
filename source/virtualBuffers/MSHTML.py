@@ -250,9 +250,9 @@ class MSHTML(VirtualBuffer):
 			if not config.conf["documentFormatting"]["includeLayoutTables"]:
 				attrs["table-layout"]=[None]
 		elif nodeType.startswith("heading") and nodeType[7:].isdigit():
-			attrs = {"IHTMLDOMNode::nodeName": ["H%s" % nodeType[7:]]}
+			attrs = [{"IHTMLDOMNode::nodeName": ["H%s" % nodeType[7:]]},{"HTMLAttrib::role":["heading"],"HTMLAttrib::aria-level":[nodeType[7:]]}]
 		elif nodeType == "heading":
-			attrs = {"IHTMLDOMNode::nodeName": ["H1", "H2", "H3", "H4", "H5", "H6"]}
+			attrs = [{"IHTMLDOMNode::nodeName": ["H1", "H2", "H3", "H4", "H5", "H6"]},{"HTMLAttrib::role":["heading"]}]
 		elif nodeType == "list":
 			attrs = {"IHTMLDOMNode::nodeName": ["UL","OL","DL"]}
 		elif nodeType == "listItem":
@@ -287,19 +287,27 @@ class MSHTML(VirtualBuffer):
 	def _activateNVDAObject(self,obj):
 		super(MSHTML,self)._activateNVDAObject(obj)
 		#If we activated a same-page link, then scroll to its anchor
-		if obj.HTMLNodeName=="A":
-			anchorName=getattr(obj.HTMLNode,'hash')
-			if not anchorName:
-				return 
-			obj=self._getNVDAObjectByAnchorName(anchorName[1:],HTMLDocument=obj.HTMLNode.document)
-			if not obj:
+		count=0
+		# #4134: The link may not always be the deepest node
+		while obj and count<3 and isinstance(obj,NVDAObjects.IAccessible.MSHTML.MSHTML):
+			if obj.HTMLNodeName=="A":
+				anchorName=getattr(obj.HTMLNode,'hash')
+				if not anchorName:
+					return 
+				obj=self._getNVDAObjectByAnchorName(anchorName[1:],HTMLDocument=obj.HTMLNode.document)
+				if not obj:
+					return
+				self._handleScrollTo(obj)
 				return
-			self._handleScrollTo(obj)
+			obj=obj.parent
+			count+=1
+
 
 	def _getNVDAObjectByAnchorName(self,name,HTMLDocument=None):
 		if not HTMLDocument:
 			HTMLDocument=self.rootNVDAObject.HTMLNode.document
-		HTMLNode=HTMLDocument.getElementById(name)
+		# #4134: could be name or ID, document.all.item supports both
+		HTMLNode=HTMLDocument.all.item(name)
 		if not HTMLNode:
 			log.debugWarning("GetElementById can't find node with ID %s"%name)
 			return None

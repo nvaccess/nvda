@@ -17,18 +17,21 @@ import textInfos
 import eventHandler
 
 from . import IAccessible
-from NVDAObjects.window.winword import WordDocument 
+from NVDAObjects.window.winword import WordDocument, WordDocument_WwN
 from displayModel import EditableTextDisplayModelTextInfo
 from NVDAObjects.window import DisplayModelEditableText
 
-class SpellCheckErrorField(IAccessible,WordDocument):
+class SpellCheckErrorField(IAccessible,WordDocument_WwN):
 
 	parentSDMCanOverrideName=False
+	ignoreFormatting=True
 
 	def _get_location(self):
 		return super(IAccessible,self).location
 
 	def _get_errorText(self):
+		if self.WinwordVersion>=13:
+			return self.value 		
 		fields=EditableTextDisplayModelTextInfo(self,textInfos.POSITION_ALL).getTextWithFields()
 		inBold=False
 		textList=[]
@@ -40,20 +43,6 @@ class SpellCheckErrorField(IAccessible,WordDocument):
 			if not inBold and len(textList)>0:
 				break
 		return u"".join(textList)
-
-	def _get_WinwordWindowObject(self):
-		hwnd=NVDAHelper.localLib.findWindowWithClassInThread(self.windowThreadID,u"_WwG",True)
-		if hwnd:
-			try:
-				window=comtypes.client.dynamic.Dispatch(oleacc.AccessibleObjectFromWindow(hwnd,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch))
-			except (COMError, WindowsError):
-				log.debugWarning("Could not get MS Word object model",exc_info=True)
-				return None
-			try:
-				return window.application.activeWindow.activePane
-			except COMError:
-				log.debugWarning("can't use activeWindow, resorting to windows[1]",exc_info=True)
-				return window.application.windows[1].activePane
 
 	def _get_name(self):
 		if self.WinwordVersion<13:
