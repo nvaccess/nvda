@@ -592,8 +592,8 @@ class WelcomeDialog(wx.Dialog):
 		try:
 			config.conf.save()
 		except:
-			pass
-		self.Close()
+			log.debugWarning("could not save",exc_info=True)
+		self.EndModal(wx.ID_OK)
 
 	@classmethod
 	def run(cls):

@@ -22,7 +22,7 @@ If you aren't sure, run git submodule update after every git pull, merge or chec
 
 The following dependencies are included in Git submodules:
 * comtypes, version 0.6.2: http://sourceforge.net/projects/comtypes/
-* wxPython, version 2.8.12.1 unicode: http://www.wxpython.org/
+* wxPython, version 3.0.0.0: http://www.wxpython.org/
 * Python Windows Extensions, build 218: http://sourceforge.net/projects/pywin32/ 
 * eSpeak, version 1.48.03: http://espeak.sourceforge.net/
 * IAccessible2, version 1.3: http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2
