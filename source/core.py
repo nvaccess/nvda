@@ -225,7 +225,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import windowUtils
 	class MessageWindow(windowUtils.CustomWindow):
 		className = u"wxWindowClassNR"
-	messageWindow = MessageWindow(versionInfo.name)
+	messageWindow = MessageWindow(unicode(versionInfo.name))
 
 	# initialize wxpython localization support
 	locale = wx.Locale()
