@@ -18,7 +18,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 	//Process exiting, we must clean up any pending hooks
 	if(reason==DLL_PROCESS_DETACH&&lpReserved) {
-		if(MH_DisableAllHooks()!=MH_ERROR_NOT_INITIALIZED) {
+		if(MH_DisableHook(MH_ALL_HOOKS)!=MH_ERROR_NOT_INITIALIZED) {
 			//Give enough time for all hook functions to complete.
 			Sleep(250);
 			MH_Uninitialize();

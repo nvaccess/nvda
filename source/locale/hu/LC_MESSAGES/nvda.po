@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-06 23:37+1000\n"
-"PO-Revision-Date: 2014-08-08 11:28+0100\n"
+"POT-Creation-Date: 2014-08-11 19:10+1000\n"
+"PO-Revision-Date: 2014-08-18 16:33+0100\n"
 "Last-Translator: Aron Ocsvari <oaron@nvda.hu>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
@@ -2493,7 +2493,7 @@ msgstr "Böngésző mód"
 #. The key must be formatted as described in this article:
 #. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 msgid "CTRL+ALT+N"
-msgstr "CTRL+ALT+N"
+msgstr "CTRL+ALT+SHIFT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
@@ -3077,34 +3077,6 @@ msgstr "elosztva igazítás"
 msgid "align default"
 msgstr "alapértelmezett igazítás"
 
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "függőleges igazítás fent"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "függőleges igazítás középre"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "függőleges igazítás lent"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "függőleges igazítás alapvonal"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "függőleges igazítás sorkizárt"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "függőleges igazítás elosztva"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "függőleges igazítás alapértelmezett"
-
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "Behúzás balról"
@@ -3136,6 +3108,34 @@ msgstr "első sor behúzása"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "első sor nincs behúzva"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "függőleges igazítás fent"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "függőleges igazítás középre"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "függőleges igazítás lent"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "függőleges igazítás alapvonal"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "függőleges igazítás sorkizárt"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "függőleges igazítás elosztva"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "függőleges igazítás alapértelmezett"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
@@ -6236,7 +6236,7 @@ msgstr "alapértelmezett Szín"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
-msgstr "{start} keresztül {end}"
+msgstr "{start}; {end} egyesített cellák"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #. Translators: a message reported in the SetRowHeader script for Excel.

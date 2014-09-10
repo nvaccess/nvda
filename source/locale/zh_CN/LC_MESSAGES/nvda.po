@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-06 23:27+1000\n"
-"PO-Revision-Date: 2014-08-06 17:10+0800\n"
+"PO-Revision-Date: 2014-08-17 02:04+0800\n"
 "Last-Translator: 雪岭冰龙 <vgjh2005@gmail.com>\n"
 "Language-Team: Simplified Chinese translate team <vgjh2005@gmail.com>\n"
 "Language: zh_CN\n"
@@ -1326,7 +1326,7 @@ msgstr "已选中"
 
 #. Translators: This is presented when a three state check box is half checked.
 msgid "half checked"
-msgstr "部分选择"
+msgstr "部分选中"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
@@ -1424,10 +1424,10 @@ msgid "sorted"
 msgstr "排序"
 
 msgid "sorted ascending"
-msgstr "升序"
+msgstr "升序排列"
 
 msgid "sorted descending"
-msgstr "降序"
+msgstr "降序排列"
 
 #. Translators: a state that denotes that an object (usually a graphic) has a long description.
 msgid "has long description"
@@ -1464,8 +1464,8 @@ msgid ""
 "to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
-"您的配置文件包含错误。它已经被重置为默认的出厂设置。如果需要了解此错误的详细"
-"信息，请查看日志文件。"
+"您的配置文件包含错误。您的配置已经被重置为默认的出厂设置。如果需要了解此错误"
+"的详细信息，请查看日志文件。"
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 msgid "Configuration File Error"
@@ -1475,7 +1475,8 @@ msgid ""
 "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
-"您的手势映射文件包含错误，如果需要了解此错误的详细信息，请查看日志文件。"
+"您的手势映射文件包含错误。\n"
+"如果需要了解此错误的详细信息，请查看日志文件。"
 
 msgid "gesture map File Error"
 msgstr "手势映射文件错误"
@@ -1793,9 +1794,8 @@ msgstr ""
 "性的值到剪贴板。"
 
 #. Translators: message when there is no location information for the review cursor
-#, fuzzy
 msgid "No location information"
-msgstr "没有格式信息"
+msgstr "没有位置信息"
 
 #. Translators: Description for report review cursor location command.
 msgid ""
@@ -2413,7 +2413,7 @@ msgstr "浏览模式"
 #. The key must be formatted as described in this article:
 #. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 msgid "CTRL+ALT+N"
-msgstr ""
+msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
@@ -2597,7 +2597,7 @@ msgstr "应用"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "num lock"
-msgstr "数字键盘"
+msgstr "数字"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "print screen"
@@ -2985,9 +2985,8 @@ msgstr "两端对齐"
 
 #. Translators: Reported when text is justified with character spacing (Japanese etc)
 #. See http://kohei.us/2010/01/21/distributed-text-justification/
-#, fuzzy
 msgid "align distributed"
-msgstr "右对齐"
+msgstr "对齐校正"
 
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
@@ -3042,18 +3041,16 @@ msgid "vertical align baseline"
 msgstr "垂直基准线对齐"
 
 #. Translators: Reported when text is vertically justified.
-#, fuzzy
 msgid "vertical align justified"
-msgstr "两端对齐"
+msgstr "垂直对齐校正"
 
 #. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
 msgid "vertical align distributed"
 msgstr "垂直分布对齐"
 
 #. Translators: Reported when text has reverted to default vertical alignment.
-#, fuzzy
 msgid "vertical align default"
-msgstr "默认对齐"
+msgstr "垂直对齐默认"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
@@ -3267,13 +3264,9 @@ msgid ""
 "Thank you for your support."
 msgstr ""
 "我们需要您的帮助，以便更好的改善“NVDA”的功能。\n"
-"\n"
 "此项目主要依赖于捐款，通过捐款进行全职开发。\n"
-"\n"
 "如果每一次下载可以捐赠10美元，将可以提供整个项目所需的全部资金。\n"
-"\n"
 "所有的捐赠“NV Access”都将用于“NVDA”的开发。\n"
-"\n"
 "感谢您对我们的支持。"
 
 #. Translators: The title of the dialog requesting donations from users.
@@ -3327,25 +3320,18 @@ msgid ""
 "menu."
 msgstr ""
 "{longName} ({name})\n"
-"\n"
 "版本: {version}\n"
-"\n"
 "网址: {url}\n"
-"\n"
 "{copyright}\n"
-"\n"
-"\n"
 "\n"
 "{name} 遵循 GNU 通用公共授权协议第二版， 您可以自由分享或者以任何方式修改本软"
 "件， 但在重新发布时必须包含本协议， 同时必须公开原版和修改版的源代码， 并附上"
 "任何用本软件的源代码所产生的软件。\n"
-"\n"
-"关于授权协议的详情请参看以下网页： http://www.gnu.org/licenses/old-licenses/"
-"gpl-2.0.html\n"
+"关于授权协议的详情,您可以通过“帮助”菜单的“授权信息”访问。\n"
+"您也可参看以下网页： http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "\n"
 "{name} 是由非赢利组织“NV Access”开发的一个用于协助视障用户的免费且开放源代码"
 "的解决方案。\n"
-"\n"
 "若您觉的 NVDA 很实用，并希望他可以继续发展，请赞助“NV Access”。您可以通过选择"
 "位于 NVDA 主菜单的“捐赠”菜单打开捐赠页面。"
 
@@ -3413,7 +3399,7 @@ msgstr "开始"
 
 #. Translators: Reported when no track is playing in Foobar 2000.
 msgid "No track playing"
-msgstr "当前没有播放曲目"
+msgstr "没有播放轨道"
 
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
@@ -3525,18 +3511,16 @@ msgid "Waiting for Outlook..."
 msgstr "正在等待OutLook..."
 
 #. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
-#, fuzzy
 msgid "{startTime} to {endTime}"
-msgstr "{start}到{end}"
+msgstr "{startTime}到{endTime}"
 
 #. Translators: A message reported when on a calendar appointment in Microsoft Outlook
 msgid "Appointment {subject}, {time}"
-msgstr ""
+msgstr "日程{subject}，{time}"
 
 #. Translators: a message when the current time slot on an Outlook Calendar has an appointment
-#, fuzzy
 msgid "has appointment"
-msgstr "有注释"
+msgstr "有日程"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
@@ -3697,75 +3681,75 @@ msgstr "幻灯片{slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers left of {otherShape} by {distance:.3g} points"
-msgstr "左边被{otherShape}覆盖的距离为{distance:.3g}点"
+msgstr "覆盖{otherShape}的左边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
 msgid "behind left of {otherShape} by {distance:.3g} points"
-msgstr "behind left of {otherShape} by {distance:.3g} points"
+msgstr "被{otherShape}覆盖的左边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers top of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "覆盖{otherShape}上边的距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 msgid "behind top of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "被{otherShape}覆盖的上边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers right of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "覆盖{otherShape}的右边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 msgid "behind right of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "被{otherShape}覆盖的右边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "覆盖{otherShape}的底边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "被{otherShape}覆盖的底边距离为{distance:.3g}磅"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers  {otherShape}"
-msgstr ""
+msgstr "覆盖着{otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 msgid "behind {otherShape}"
-msgstr ""
+msgstr "被{otherShape}覆盖"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
 msgid "{distance:.3g} points from left slide edge"
-msgstr ""
+msgstr "与幻灯片左边的距离为{distance:.3g}磅"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
 msgid "Off left slide edge by {distance:.3g} points"
-msgstr ""
+msgstr "幻灯片左边的超出距离为{distance:.3g}磅"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
 msgid "{distance:.3g} points from top slide edge"
-msgstr ""
+msgstr "与幻灯片上边的距离为{distance:.3g}"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
 msgid "Off top slide edge by {distance:.3g} points"
-msgstr ""
+msgstr "幻灯片上边的超出距离为{distance:.3g}磅"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
 msgid "{distance:.3g} points from right slide edge"
-msgstr ""
+msgstr "与幻灯片右边的距离为{distance:.3g}"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
 msgid "Off right slide edge by {distance:.3g} points"
-msgstr ""
+msgstr "幻灯片右边的超出距离为{distance:.3g}磅"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
 msgid "{distance:.3g} points from bottom slide edge"
-msgstr ""
+msgstr "与幻灯片底边的距离为{distance:.3g}"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
 msgid "Off bottom slide edge by {distance:.3g} points"
-msgstr ""
+msgstr "幻灯片底边的超出距离为{distance:.3g}磅"
 
 #. Translators: The description for a script
 msgid ""
@@ -4366,11 +4350,8 @@ msgid ""
 "Description: {description}\n"
 msgstr ""
 "{summary} ({name})\n"
-"\n"
 "版本: {version}\n"
-"\n"
 "作者: {author}\n"
-"\n"
 "描述: {description}\n"
 
 #. Translators: the url part of the About Add-on information
@@ -5527,11 +5508,11 @@ msgstr "单词"
 
 #. Translators: current position in a document as a percentage of the document length
 msgid "{curPercent:.0f}%"
-msgstr ""
+msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
 msgid "at {x}, {y}"
-msgstr ""
+msgstr "像素坐标 {x}， {y}"
 
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
@@ -6283,7 +6264,7 @@ msgstr "%g个字符"
 #. Translators: the value in points for a paragraph indenting
 #, python-format
 msgid "%g pt"
-msgstr "%g pt"
+msgstr "%g 磅"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
@@ -6400,7 +6381,7 @@ msgstr "{offset:.3g} 毫米"
 
 #. Translators: a measurement in Microsoft Word
 msgid "{offset:.3g} points"
-msgstr "{offset:.3g} 号"
+msgstr "{offset:.3g} 磅"
 
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
