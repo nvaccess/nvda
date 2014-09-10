@@ -145,6 +145,12 @@ def removeOldProgramFiles(destPath):
 			else:
 				os.remove(fn)
 
+	# #4235: mpr.dll is a Windows system dll accidentally included with
+	# earlier versions of NVDA. Its presence causes problems in Windows Vista.
+	fn = os.path.join(destPath, "mpr.dll")
+	if os.path.isfile(fn):
+		tryRemoveFile(fn)
+
 uninstallerRegInfo={
 	"DisplayName":versionInfo.name,
 	"DisplayVersion":versionInfo.version,
