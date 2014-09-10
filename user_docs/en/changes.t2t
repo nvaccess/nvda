@@ -15,6 +15,7 @@
 - In Mozilla Firefox and other Gecko-based browsers, new content within a live region will be announced even if the new content has a usable ARIA live type different to the parent live region. E.g. Content marked as assertive is added to a live region marked as polite. (#4169).
 - In Internet Explorer and other MSHTML controls, framesets inside framesets no longer cause a new browse mode document to be created for the inner framesets, which was not allowing navigation to outer frames. (#4418)
 - NVDA no longer crashes when attempting to use a Handy Tech braille display in some cases. (#3709)
+- In Windows Vista, a spurious "Entry Point Not Found" dialog is no longer displayed in several cases such as when starting NVDA from the Desktop shortcut or via the shortcut key. (#4235)
 
 
 = 2014.3 =
