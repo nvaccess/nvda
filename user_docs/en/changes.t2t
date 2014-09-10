@@ -13,6 +13,7 @@
 - When moving focus back to a browse mode document (e.g. alt tabbing to an already opened web page) the review cursor is properly positioned at the virtual caret, rather than the focused control (e.g. a near by link). (#4369)
 - In Powerpoint slide shows, the review cursor correctly follows the virtual caret. (#4370)
 - In Mozilla Firefox and other Gecko-based browsers, new content within a live region will be announced even if the new content has a usable ARIA live type different to the parent live region. E.g. Content marked as assertive is added to a live region marked as polite. (#4169).
+- In Internet Explorer and other MSHTML controls, framesets inside framesets no longer cause a new browse mode document to be created for the inner framesets, which was not allowing navigation to outer frames. (#4418)
 
 
 = 2014.3 =

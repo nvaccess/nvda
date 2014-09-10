@@ -239,7 +239,7 @@ void VBufStorage_fieldNode_t::generateMarkupClosingTag(std::wstring& text) {
 	text+=L">";
 }
 
-void VBufStorage_fieldNode_t::getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup) {
+void VBufStorage_fieldNode_t::getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup, bool(*filter)(VBufStorage_fieldNode_t*)) {
 	if(this->length==0) {
 		LOG_DEBUG(L"node has 0 length, not collecting text");
 		return;
@@ -260,9 +260,9 @@ void VBufStorage_fieldNode_t::getTextInRange(int startOffset, int endOffset, std
 		nhAssert(childLength>=0); //length can't be negative
 		childEnd+=childLength;
 		LOG_DEBUG(L"child with offsets of "<<childStart<<L" and "<<childEnd); 
-		if(childEnd>startOffset&&endOffset>childStart) {
+		if(childEnd>startOffset&&endOffset>childStart&&(!filter||filter(child))) {
 			LOG_DEBUG(L"child offsets overlap requested offsets");
-			child->getTextInRange(max(startOffset,childStart)-childStart,min(endOffset-childStart,childLength),text,useMarkup);
+			child->getTextInRange(max(startOffset,childStart)-childStart,min(endOffset-childStart,childLength),text,useMarkup,filter);
 		}
 		childStart+=childLength;
 		LOG_DEBUG(L"childStart is now "<<childStart);
@@ -358,7 +358,7 @@ void VBufStorage_textFieldNode_t::generateMarkupTagName(std::wstring& text) {
 	text+=L"text";
 }
 
-void VBufStorage_textFieldNode_t::getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup) {
+void VBufStorage_textFieldNode_t::getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup, bool(*filter)(VBufStorage_fieldNode_t*)) {
 	LOG_DEBUG(L"getting text between offsets "<<startOffset<<L" and "<<endOffset);
 	if(useMarkup) {
 		this->generateMarkupOpeningTag(text,startOffset,endOffset);
