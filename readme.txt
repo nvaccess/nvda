@@ -39,6 +39,7 @@ The following dependencies are included in Git submodules:
 * ALVA BC6 generic dll, version 3.0.4.1
 * lilli.dll, version 2.1.0.0
 * Handy Tech Braille SDK, version 1.4.2.0: ftp://ftp.handytech.de/public/Software/BrailleDriver/HTBrailleSDK_1420a.zip
+* Updated Handy Tech sbsupport.dll and dealers.dat received on 2014-09-09
 * pyserial, version 2.5: http://pypi.python.org/pypi/pyserial
 * HanSoneConnect.dll, version 2.0.0.1
 * SyncBraille.dll, version 1.0.0.1
