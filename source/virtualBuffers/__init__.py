@@ -25,6 +25,7 @@ import controlTypes
 import textInfos.offsets
 import config
 import cursorManager
+import browseMode
 import gui
 import eventHandler
 import braille
@@ -632,7 +633,7 @@ class ElementsListDialog(wx.Dialog):
 		speech.cancelSpeech()
 		speech.speakTextInfo(element,reason=controlTypes.REASON_FOCUS)
 
-class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInterceptor):
+class VirtualBuffer(cursorManager.CursorManager, browseMode.BrowseModeTreeInterceptor):
 
 	REASON_QUICKNAV = "quickNav"
 
@@ -797,7 +798,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 				initialPos = self._getInitialCaretPos()
 				if initialPos:
 					self.selection = self.makeTextInfo(initialPos)
-				reportPassThrough(self)
+				browseMode.reportPassThrough(self)
 				doSayAll=config.conf['virtualBuffers']['autoSayAllOnPageLoad']
 			self._hadFirstGainFocus = True
 
@@ -828,7 +829,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 					info.expand(textInfos.UNIT_LINE)
 					speech.speakTextInfo(info, reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_LINE)
 
-		reportPassThrough(self)
+		browseMode.reportPassThrough(self)
 		braille.handler.handleGainFocus(self)
 
 	def event_treeInterceptor_loseFocus(self):
@@ -863,7 +864,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		if self.shouldPassThrough(obj):
 			obj.setFocus()
 			self.passThrough = True
-			reportPassThrough(self)
+			browseMode.reportPassThrough(self)
 		elif obj.role == controlTypes.ROLE_EMBEDDEDOBJECT or obj.role in self.APPLICATION_ROLES:
 			obj.setFocus()
 			speech.speakObject(obj, reason=controlTypes.REASON_FOCUS)
@@ -900,7 +901,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 				self._lastProgrammaticScrollTime = time.time()
 		self.passThrough=self.shouldPassThrough(focusObj,reason=reason)
 		# Queue the reporting of pass through mode so that it will be spoken after the actual content.
-		queueHandler.queueFunction(queueHandler.eventQueue, reportPassThrough, self)
+		queueHandler.queueFunction(queueHandler.eventQueue, browseMode.reportPassThrough, self)
 
 	def _shouldSetFocusToObj(self, obj):
 		"""Determine whether an object should receive focus.
@@ -1104,7 +1105,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			return gesture.send()
 		self.passThrough = False
 		self.disableAutoPassThrough = False
-		reportPassThrough(self)
+		browseMode.reportPassThrough(self)
 	script_disablePassThrough.ignoreTreeInterceptorPassThrough = True
 
 	def script_collapseOrExpandControl(self, gesture):
@@ -1115,7 +1116,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			self.passThrough = True
 		elif not self.disableAutoPassThrough:
 			self.passThrough = False
-		reportPassThrough(self)
+		browseMode.reportPassThrough(self)
 	script_collapseOrExpandControl.ignoreTreeInterceptorPassThrough = True
 
 	def _tabOverride(self, direction):
@@ -1235,7 +1236,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			# Automatic pass through should be enabled in certain circumstances where this occurs.
 			if not self.passThrough and self.shouldPassThrough(obj,reason=controlTypes.REASON_FOCUS):
 				self.passThrough=True
-				reportPassThrough(self)
+				browseMode.reportPassThrough(self)
 				self._replayFocusEnteredEvents()
 			return nextHandler()
 
@@ -1851,20 +1852,3 @@ qn("embeddedObject", key="o",
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous embedded object"))
 del qn
-
-def reportPassThrough(virtualBuffer):
-	"""Reports the virtual buffer pass through mode if it has changed.
-	@param virtualBuffer: The current virtual buffer.
-	@type virtualBuffer: L{virtualBuffers.VirtualBuffer}
-	"""
-	if virtualBuffer.passThrough != reportPassThrough.last:
-		if config.conf["virtualBuffers"]["passThroughAudioIndication"]:
-			sound = r"waves\focusMode.wav" if virtualBuffer.passThrough else r"waves\browseMode.wav"
-			nvwave.playWaveFile(sound)
-		else:
-			if virtualBuffer.passThrough:
-				speech.speakMessage(_("focus mode"))
-			else:
-				speech.speakMessage(_("browse mode"))
-		reportPassThrough.last = virtualBuffer.passThrough
-reportPassThrough.last = False
