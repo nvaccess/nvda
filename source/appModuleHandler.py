@@ -1,4 +1,4 @@
-﻿# -*- coding: UTF-8 -*-
+# -*- coding: UTF-8 -*-
 #appModuleHandler.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda
