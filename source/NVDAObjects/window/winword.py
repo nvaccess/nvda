@@ -30,7 +30,7 @@ import textInfos
 import textInfos.offsets
 import colors
 import controlTypes
-from treeInterceptorHandler import TreeInterceptor
+from browseMode import BrowseModeTreeInterceptor
 from cursorManager import CursorManager, ReviewCursorManager
 from tableUtils import HeaderCellInfo, HeaderCellTracker
 from . import Window
@@ -591,11 +591,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)
 		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.End)
 
-class TreeInterceptorWithMakeTextInfo(TreeInterceptor):
+class BrowseModeTreeInterceptorWithMakeTextInfo(BrowseModeTreeInterceptor):
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
 
-class WordDocumentTreeInterceptor(ReviewCursorManager,TreeInterceptorWithMakeTextInfo):
+class WordDocumentTreeInterceptor(ReviewCursorManager,BrowseModeTreeInterceptorWithMakeTextInfo):
 
 	def _get_TextInfo(self):
 		class TextInfo(self.rootNVDAObject.TextInfo):
