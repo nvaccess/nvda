@@ -116,6 +116,8 @@ using namespace std;
 #define wdDISPID_TABLES_ITEM 0
 #define wdDISPID_TABLE_NESTINGLEVEL 108
 #define wdDISPID_TABLE_RANGE 0
+#define wdDISPID_TABLE_BORDERS 1100
+#define wdDISPID_BORDERS_ENABLE 2
 #define wdDISPID_RANGE_CELLS 57
 #define wdDISPID_CELLS_ITEM 0
 #define wdDISPID_CELL_RANGE 0
@@ -173,9 +175,10 @@ using namespace std;
 #define formatConfig_reportLanguage 16384
 #define formatConfig_reportRevisions 32768
 #define formatConfig_reportParagraphIndentation 65536
-
+#define formatConfig_includeLayoutTables 131072
+ 
 #define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor)
-#define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings)
+#define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings|formatConfig_includeLayoutTables)
 
 UINT wm_winword_expandToLine=0;
 typedef struct {
@@ -427,9 +430,16 @@ bool collectCommentOffsets(IDispatchPtr pDispatchRange, vector<pair<long,long>>&
 	return !commentVector.empty();
 }
 
-bool fetchTableInfo(IDispatch* pDispatchTable, int* rowCount, int* columnCount, int* nestingLevel) {
+bool fetchTableInfo(IDispatch* pDispatchTable, bool includeLayoutTables, int* rowCount, int* columnCount, int* nestingLevel) {
 	IDispatchPtr pDispatchRows=NULL;
 	IDispatchPtr pDispatchColumns=NULL;
+	IDispatchPtr pDispatchBorders=NULL;
+	if(!includeLayoutTables&&_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_BORDERS,VT_DISPATCH,&pDispatchBorders)==S_OK&&pDispatchBorders) {
+		BOOL isEnabled=true;
+		if(_com_dispatch_raw_propget(pDispatchBorders,wdDISPID_BORDERS_ENABLE,VT_BOOL,&isEnabled)==S_OK&&!isEnabled) {
+			return false;
+		}
+	}
 	if(_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_ROWS,VT_DISPATCH,&pDispatchRows)==S_OK&&pDispatchRows) {
 		_com_dispatch_raw_propget(pDispatchRows,wdDISPID_ROWS_COUNT,VT_I4,rowCount);
 	}
@@ -440,7 +450,7 @@ bool fetchTableInfo(IDispatch* pDispatchTable, int* rowCount, int* columnCount, 
 	return true;
 }
 
-int generateTableXML(IDispatch* pDispatchRange, int startOffset, int endOffset, wostringstream& XMLStream) {
+int generateTableXML(IDispatch* pDispatchRange, bool includeLayoutTables, int startOffset, int endOffset, wostringstream& XMLStream) {
 	int numTags=0;
 	int iVal=0;
 	IDispatchPtr pDispatchTables=NULL;
@@ -456,7 +466,7 @@ int generateTableXML(IDispatch* pDispatchRange, int startOffset, int endOffset, 
 	if(
 		_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_TABLES,VT_DISPATCH,&pDispatchTables)!=S_OK||!pDispatchTables\
 		||_com_dispatch_raw_method(pDispatchTables,wdDISPID_TABLES_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchTable,L"\x0003",1)!=S_OK||!pDispatchTable\
-		||!fetchTableInfo(pDispatchTable,&rowCount,&columnCount,&nestingLevel)\
+		||!fetchTableInfo(pDispatchTable,includeLayoutTables,&rowCount,&columnCount,&nestingLevel)\
 	) {
 		return 0;
 	}
@@ -780,7 +790,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	int unitsMoved=0;
 	BSTR text=NULL;
 	if(initialFormatConfig&formatConfig_reportTables) {
-		neededClosingControlTagCount+=generateTableXML(pDispatchRange,args->startOffset,args->endOffset,XMLStream);
+		neededClosingControlTagCount+=generateTableXML(pDispatchRange,(initialFormatConfig&formatConfig_includeLayoutTables)!=0,args->startOffset,args->endOffset,XMLStream);
 	}
 		IDispatchPtr pDispatchParagraphs=NULL;
 	IDispatchPtr pDispatchParagraph=NULL;

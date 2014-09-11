@@ -237,8 +237,13 @@ formatConfigFlagsMap={
 	"reportRevisions":32768,
 	"reportParagraphIndentation":65536,
 }
+formatConfigFlag_includeLayoutTables=131072
 
 class WordDocumentTextInfo(textInfos.TextInfo):
+
+	forceShouldIncludeLayoutTables=True #: layout tables should always be included (no matter the user's browse mode setting).
+	def _get_shouldIncludeLayoutTables(self):
+		return self.forceShouldIncludeLayoutTables or config.conf['documentFormatting']['includeLayoutTables']
 
 	def _expandToLineAtCaret(self):
 		lineStart=ctypes.c_int()
@@ -293,6 +298,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		endOffset=self._rangeObj.end
 		text=BSTR()
 		formatConfigFlags=sum(y for x,y in formatConfigFlagsMap.iteritems() if formatConfig.get(x,False))
+		if self.shouldIncludeLayoutTables:
+			formatConfigFlags+=formatConfigFlag_includeLayoutTables
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.documentWindowHandle,startOffset,endOffset,formatConfigFlags,ctypes.byref(text))
 		if res or not text:
 			log.debugWarning("winword_getTextInRange failed with %d"%res)
@@ -503,7 +510,9 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			raise RuntimeError
 
 	def copy(self):
-		return WordDocumentTextInfo(self.obj,None,_rangeObj=self._rangeObj)
+		info=WordDocumentTextInfo(self.obj,None,_rangeObj=self._rangeObj)
+		info.forceShouldIncludeLayoutTables=self.forceShouldIncludeLayoutTables
+		return info
 
 	def _get_text(self):
 		text=self._rangeObj.text
@@ -609,6 +618,7 @@ class WordDocumentTreeInterceptor(ReviewCursorManager,BrowseModeTreeInterceptorW
 	def makeTextInfo(self,position):
 		info=super(WordDocumentTreeInterceptor,self).makeTextInfo(position)
 		if info:
+			info.forceShouldIncludeLayoutTables=False
 			info.updateSelection=info.updateCaret=lambda inst, selection: self._set_selection(selection)
 		return info
 
