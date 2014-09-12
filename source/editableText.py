@@ -42,7 +42,7 @@ class EditableText(ScriptableObject):
 	#: Whether or not to announce text found before the caret on a new line (e.g. auto numbering)
 	announceNewLineText=True
 
-	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=0.03):
+	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=0.05):
 		"""
 		Waits for the caret to move, for a timeout to elapse, or for a new focus event or script to be queued.
 		@param bookmark: a bookmark representing the position of the caret before  it was instructed to move
