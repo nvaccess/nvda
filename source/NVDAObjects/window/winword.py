@@ -241,9 +241,7 @@ formatConfigFlag_includeLayoutTables=131072
 
 class WordDocumentTextInfo(textInfos.TextInfo):
 
-	forceShouldIncludeLayoutTables=True #: layout tables should always be included (no matter the user's browse mode setting).
-	def _get_shouldIncludeLayoutTables(self):
-		return self.forceShouldIncludeLayoutTables or config.conf['documentFormatting']['includeLayoutTables']
+	shouldIncludeLayoutTables=True #: layout tables should always be included (no matter the user's browse mode setting).
 
 	def _expandToLineAtCaret(self):
 		lineStart=ctypes.c_int()
@@ -510,9 +508,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			raise RuntimeError
 
 	def copy(self):
-		info=WordDocumentTextInfo(self.obj,None,_rangeObj=self._rangeObj)
-		info.forceShouldIncludeLayoutTables=self.forceShouldIncludeLayoutTables
-		return info
+		return WordDocumentTextInfo(self.obj,None,_rangeObj=self._rangeObj)
 
 	def _get_text(self):
 		text=self._rangeObj.text
@@ -604,33 +600,37 @@ class BrowseModeTreeInterceptorWithMakeTextInfo(BrowseModeTreeInterceptor):
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
 
+class BrowseModeWordDocumentTextInfo(WordDocumentTextInfo):
+
+	def __init__(self,obj,position,_rangeObj=None):
+		if isinstance(position,WordDocument):
+			position=textInfos.POSITION_CARET
+		super(BrowseModeWordDocumentTextInfo,self).__init__(obj.rootNVDAObject,position,_rangeObj=_rangeObj)
+
+	def copy(self):
+		return BrowseModeWordDocumentTextInfo(self.obj.treeInterceptor,None,_rangeObj=self._rangeObj)
+
+	def _get_shouldIncludeLayoutTables(self):
+		return config.conf['documentFormatting']['includeLayoutTables']
+
+	def updateSelection(self):
+		self.obj.treeInterceptor.selection=self
+		super(BrowseModeWordDocumentTextInfo,self).updateSelection()
+
+	def updateCaret(self):
+		self.obj.treeInterceptor.selection=self
+		super(BrowseModeWordDocumentTextInfo,self).updateSelection()
+
 class WordDocumentTreeInterceptor(ReviewCursorManager,BrowseModeTreeInterceptorWithMakeTextInfo):
 
-	def _get_TextInfo(self):
-		class TextInfo(self.rootNVDAObject.TextInfo):
-			def __init__(self,obj,position):
-				if isinstance(position,WordDocument):
-					position=textInfos.POSITION_CARET
-				super(TextInfo,self).__init__(obj.rootNVDAObject,position)
-		self.TextInfo=TextInfo
-		return TextInfo
-
-	def makeTextInfo(self,position):
-		info=super(WordDocumentTreeInterceptor,self).makeTextInfo(position)
-		if info:
-			info.forceShouldIncludeLayoutTables=False
-			info.updateSelection=info.updateCaret=lambda inst, selection: self._set_selection(selection)
-		return info
+	TextInfo=BrowseModeWordDocumentTextInfo
+	needsReviewCursorTextInfoWrapper=False
 
 	def _get_isAlive(self):
 		return winUser.isWindow(self.rootNVDAObject.windowHandle)
 
 	def __contains__(self,obj):
 		return obj==self.rootNVDAObject
-
-	def _set_selection(self,info):
-		super(WordDocumentTreeInterceptor,self)._set_selection(info)
-		info._rangeObj.select()
 
 class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 
