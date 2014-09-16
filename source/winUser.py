@@ -564,6 +564,7 @@ class Input(Structure):
              ("ii", Input_I)]
 
 INPUT_KEYBOARD = 1
+KEYEVENTF_KEYUP = 0x0002
 KEYEVENTF_UNICODE = 0x04
 # END SENDINPUT TYPE DECLARATIONS
 
