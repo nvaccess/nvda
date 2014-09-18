@@ -487,7 +487,16 @@ def initialize():
 
 def terminate():
 	global mainFrame
+	# This is called after the main loop exits because WM_QUIT exits the main loop
+	# without destroying all objects correctly and we need to support WM_QUIT.
+	# Therefore, any request to exit should exit the main loop.
 	mainFrame.Destroy()
+	# #4460: We need another iteration of the main loop
+	# so that everything (especially the TaskBarIcon) is cleaned up properly.
+	# ProcessPendingEvents doesn't seem to work, but MainLoop does.
+	# Because the top window has been destroyed,
+	# MainLoop thankfully returns pretty quickly.
+	wx.GetApp().MainLoop()
 
 def showGui():
  	wx.CallAfter(mainFrame.showGui)
