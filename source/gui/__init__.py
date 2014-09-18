@@ -681,6 +681,11 @@ class ExitDialog(wx.Dialog):
 		super(ExitDialog, self).__init__(parent, title=_("Exit NVDA"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 
+		if globalVars.appArgs.disableAddons:
+			# Translators: A message in the exit Dialog shown when all add-ons are disabled.
+			addonsDisabledLabel=wx.StaticText(self,-1,label=_("All add-ons are now disabled. They will be reenabled on the next restart, unless you choose to disable them again."))
+			mainSizer.Add(addonsDisabledLabel)
+
 		actionSizer=wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for actions list in the Exit dialog.
 		actionsLabel=wx.StaticText(self,-1,label=_("What would you like to &do?"))
