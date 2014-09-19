@@ -173,8 +173,11 @@ def installAddonBundle(bundle):
 	saveState()
 	return addon
 
-def removeSupersededAddon(oldAddonName):
-	""" Use this to remove an old and incompatible version of an add-on.
+def removeReplacedAddon(oldAddonName):
+	""" Use this to remove a previously published addon.
+
+	This should only be needed when the addon name has changed, such as might
+	be needed when following nvda community addon guidelines.
 	Expected to be called from the new addon's installTasks.py:OnInstall.
 	@param oldAddonName: The old internal addon name, (non translatable).
 	@type oldAddonName: string
@@ -184,7 +187,7 @@ def removeSupersededAddon(oldAddonName):
 		if addon.manifest['name'] == oldAddonName:
 			if gui.messageBox(
 				# Translators: the label of a message box dialog.
-				_("The add-on you are installing supersedes {name} which is already installed on your system. Do you want to uninstall the old and incompatible version?").format(name=addon.manifest['summary']),
+				_("The add-on you are installing replaces {name} which is already installed on your system. It is recommended that the old addon is uninstalled, should this be done automatically?").format(name=addon.manifest['summary']),
 				# Translators: the title of a message box dialog.
 				_("Uninstall old add-on"),
 				wx.YES|wx.NO|wx.ICON_WARNING) == wx.YES:
