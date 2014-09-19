@@ -9,14 +9,15 @@ from collections import OrderedDict
 
 #Possible actions (single trackers)
 action_tap="tap"
-action_tapAndHold="tapAndHold"
-action_flickUp="flickUp"
-action_flickDown="flickDown"
-action_flickLeft="flickLeft"
-action_flickRight="flickRight"
-action_hoverDown="hoverDown"
+action_hold="hold"
+action_tapAndHold="tapandhold"
+action_flickUp="flickup"
+action_flickDown="flickdown"
+action_flickLeft="flickleft"
+action_flickRight="flickright"
+action_hoverDown="hoverdown"
 action_hover="hover"
-action_hoverUp="hoverUp"
+action_hoverUp="hoverup"
 action_unknown="unknown"
 hoverActions=(action_hoverDown,action_hover,action_hoverUp)
 #timeout for detection of flicks and plural trackers 
@@ -25,6 +26,29 @@ multitouchTimeout=0.25
 minFlickDistance=50
 #How far a finger is allowed to drift purpandicular to a flick direction to make the flick impossible
 maxAccidentalDrift=10
+
+actionLabels={
+	# Translators: a very quick touch and release of a finger on a touch screen 
+	action_tap:pgettext("touch action","tap"),
+	# Translators: a very quick touch and release, then another touch with no release, on a touch screen
+	action_tapAndHold:pgettext("touch action","tap and hold"),
+	# Translators: a touch with no release, on a touch screen. 
+	action_hold:pgettext("touch action","hold"),
+	# Translators: a quick swipe of a finger in an up direction, on a touch screen. 
+	action_flickUp:pgettext("touch action","flick up"),
+	# Translators: a quick swipe of a finger in an down direction, on a touch screen. 
+	action_flickDown:pgettext("touch action","flick down"),
+	# Translators: a quick swipe of a finger in a left direction, on a touch screen. 
+	action_flickLeft:pgettext("touch action","flick left"),
+	# Translators: a quick swipe of a finger in a right direction, on a touch screen. 
+	action_flickRight:pgettext("touch action","flick right"),
+	# Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+	action_hoverDown:pgettext("touch action","hover down"),
+	# Translators: A finger is still touching the touch screen and is moving around with out breaking contact. 
+	action_hover:pgettext("touch action","hover"),
+	# Translators: a finger that was hovering (touching the touch screen for a long time) has been released 
+	action_hoverUp:pgettext("touch action","hover up"),
+}
 
 class SingleTouchTracker(object):
 	"""
@@ -173,12 +197,14 @@ class TrackerManager(object):
 			if tracker.action!=action_hoverDown:
 				self.multiTouchTrackers.append(tracker)
 
+	pendingEmitInterval=None #: If set: how long to wait before calling emitTrackers again as trackers are still in the queue 
 	def emitTrackers(self):
 		"""
 		Yields queued trackers that have existed in the queue for long enough to not be connected with other trackers.
 		A part from a timeout, trackers are also not emitted if there are other fingers touching that still have an unknown action. 
 		If there are no queued trackers to yield but there is a hover tracker, a hover action is yielded instead.
 		"""
+		self.pendingEmitInterval=None
 		t=time.time()
 		hasUnknownTrackers=False
 		lastHoverTracker=None
@@ -193,10 +219,13 @@ class TrackerManager(object):
 		if not hasUnknownTrackers:
 			for tracker in list(self.multiTouchTrackers):
 				#All trackers can be emitted with no delay except for tap which must wait for the timeout (to detect plural taps)
-				if tracker.action!=action_tap or (tracker.startTime+multitouchTimeout)<=t:
+				trackerTimeout=(tracker.startTime+multitouchTimeout)-t if tracker.action==action_tap else 0 
+				if trackerTimeout<=0: 
 					self.multiTouchTrackers.remove(tracker)
 					foundTrackers=True
 					yield tracker
+				else:
+					self.pendingEmitInterval=min(self.pendingEmitInterval,trackerTimeout) if self.pendingEmitInterval else trackerTimeout
 		#If no tracker could be emitted, at least emit the most recent  hover tracker if there is one
 		if not foundTrackers and lastHoverTracker:
 			yield MultiTouchTracker(lastHoverTracker.action,lastHoverTracker.x,lastHoverTracker.y,lastHoverTracker.startTime,t,1,1,self.numHeldFingers-1)

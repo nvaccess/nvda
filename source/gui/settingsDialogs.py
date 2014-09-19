@@ -154,6 +154,10 @@ class GeneralSettingsDialog(SettingsDialog):
 		self.askToExitCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Warn before exiting NVDA"))
 		self.askToExitCheckBox.SetValue(config.conf["general"]["askToExit"])
 		settingsSizer.Add(self.askToExitCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
+		self.playStartAndExitSoundsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Play sounds when starting or exiting NVDA"))
+		self.playStartAndExitSoundsCheckBox.SetValue(config.conf["general"]["playStartAndExitSounds"])
+		settingsSizer.Add(self.playStartAndExitSoundsCheckBox,border=10,flag=wx.BOTTOM)
 		logLevelSizer=wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 		logLevelLabel=wx.StaticText(self,-1,label=_("L&ogging level:"))
@@ -255,6 +259,7 @@ class GeneralSettingsDialog(SettingsDialog):
 		config.conf["general"]["language"]=newLanguage
 		config.conf["general"]["saveConfigurationOnExit"]=self.saveOnExitCheckBox.IsChecked()
 		config.conf["general"]["askToExit"]=self.askToExitCheckBox.IsChecked()
+		config.conf["general"]["playStartAndExitSounds"]=self.playStartAndExitSoundsCheckBox.IsChecked()
 		logLevel=self.LOG_LEVELS[self.logLevelList.GetSelection()][0]
 		config.conf["general"]["loggingLevel"]=logHandler.levelNames[logLevel]
 		logHandler.setLogLevelFromConfig()
@@ -654,6 +659,11 @@ class KeyboardSettingsDialog(SettingsDialog):
 		self.commandKeysCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Speak command &keys"))
 		self.commandKeysCheckBox.SetValue(config.conf["keyboard"]["speakCommandKeys"])
 		settingsSizer.Add(self.commandKeysCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# keyboard settings dialog.
+		self.handleInjectedKeysCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Handle keys from other &applications"))
+		self.handleInjectedKeysCheckBox.SetValue(config.conf["keyboard"]["handleInjectedKeys"])
+		settingsSizer.Add(self.handleInjectedKeysCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
 		self.kbdList.SetFocus()
@@ -680,6 +690,7 @@ class KeyboardSettingsDialog(SettingsDialog):
 		config.conf["keyboard"]["allowSkimReadingInSayAll"]=self.skimReadingInSayAllCheckBox.IsChecked()
 		config.conf["keyboard"]["beepForLowercaseWithCapslock"]=self.beepLowercaseCheckBox.IsChecked()
 		config.conf["keyboard"]["speakCommandKeys"]=self.commandKeysCheckBox.IsChecked()
+		config.conf["keyboard"]["handleInjectedKeys"]=self.handleInjectedKeysCheckBox.IsChecked()
 		super(KeyboardSettingsDialog, self).onOk(evt)
 
 class MouseSettingsDialog(SettingsDialog):
@@ -1056,6 +1067,11 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.lineIndentationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report l&ine indentation"))
 		self.lineIndentationCheckBox.SetValue(config.conf["documentFormatting"]["reportLineIndentation"])
 		settingsSizer.Add(self.lineIndentationCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This message is presented in the document formatting settings dialogue
+		# If this option is selected, NVDA will report paragraph indentation if available. 
+		self.paragraphIndentationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &paragraph indentation"))
+		self.paragraphIndentationCheckBox.SetValue(config.conf["documentFormatting"]["reportParagraphIndentation"])
+		settingsSizer.Add(self.paragraphIndentationCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
 		self.tablesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &tables"))
@@ -1123,6 +1139,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportPage"]=self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"]=self.lineNumberCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineIndentation"]=self.lineIndentationCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportParagraphIndentation"]=self.paragraphIndentationCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTables"]=self.tablesCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTableHeaders"]=self.tableHeadersCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportTableCellCoords"]=self.tableCellCoordsCheckBox.IsChecked() 

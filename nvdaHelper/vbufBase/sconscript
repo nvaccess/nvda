@@ -8,6 +8,6 @@ vbufBaseObjs=[env.Object(x) for x in (
 		"utils.cpp",
 		"backend.cpp",
 )]
-vbufBaseObjs.append(remoteLib[1] if 'symbols' not in env['nvdaHelperDebugFlags'] else remoteLib[2])
+vbufBaseObjs.append(remoteLib[2])
 
 Return('vbufBaseObjs')

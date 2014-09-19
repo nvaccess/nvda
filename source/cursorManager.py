@@ -13,6 +13,7 @@ import wx
 import baseObject
 import gui
 import sayAllHandler
+import review
 from scriptHandler import willSayAllResume
 import textInfos
 import api
@@ -343,4 +344,5 @@ class ReviewCursorManager(CursorManager):
 
 	def _set_selection(self, info):
 		self._selection = info.copy()
+		review.handleCaretMove(info)
 		braille.handler.handleCaretMove(self)

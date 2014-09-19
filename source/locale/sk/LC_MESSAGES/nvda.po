@@ -3,10 +3,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-11-12 11:46+0100\n"
+"POT-Creation-Date: 2014-08-11 19:10+1000\n"
+"PO-Revision-Date: 2014-08-18 18:08+0100\n"
 "Last-Translator: Ondrej Rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -118,6 +119,10 @@ msgstr "vyhľadávanie"
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
 msgstr "formulár"
+
+#. Translators: Reported for a significant region, normally found on web pages.
+msgid "region"
+msgstr "oblasť"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1255,11 +1260,13 @@ msgstr "farba pozadia"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "horný index"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "dolný index"
 
@@ -1430,6 +1437,19 @@ msgstr "s dlhým popisom"
 msgid "pinned"
 msgstr "pripnuté"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "má vzorec"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "obsahuje komentár"
+
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "zakrytý"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "nevybraté"
@@ -1545,6 +1565,7 @@ msgid "Tools"
 msgstr "Nástroje"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "Dotyková obrazovka"
 
@@ -1602,8 +1623,7 @@ msgstr "ľavý klik"
 #. Translators: Input help mode message for left mouse click command.
 msgid "Clicks the left mouse button once at the current mouse position"
 msgstr ""
-"Simuluje klik ľavým tlačidlom na mieste, kde sa práve nachádza "
-"kurzor myši."
+"Simuluje klik ľavým tlačidlom na mieste, kde sa práve nachádza kurzor myši."
 
 #. Translators: Reported when right mouse button is clicked.
 msgid "right click"
@@ -1612,8 +1632,7 @@ msgstr "pravý klik"
 #. Translators: Input help mode message for right mouse click command.
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr ""
-"Simuluje klik pravým tlačidlom na mieste, kde sa práve nachádza "
-"kurzor myši."
+"Simuluje klik pravým tlačidlom na mieste, kde sa práve nachádza kurzor myši."
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 msgid "left mouse button unlock"
@@ -1742,8 +1761,8 @@ msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
 msgstr ""
-"Premiestni navigačný objekt na objekt, ktorý sa nachádza pod kurzorom "
-"myši a prečíta ho."
+"Premiestni navigačný objekt na objekt, ktorý sa nachádza pod kurzorom myši a "
+"prečíta ho."
 
 #. Translators: reported when there are no other available review modes for this object
 msgid "No next review mode"
@@ -1791,27 +1810,17 @@ msgstr ""
 "sebe, vyhláskuje tieto informácie. Ak je stlačené 3 krát rýchlo po sebe, "
 "okopíruje meno a hodnotu objektu do schránky."
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
-msgid "No location information for navigator object"
-msgstr "Žiadna informácia o pozícii pre práve zameraný objekt."
+#. Translators: message when there is no location information for the review cursor
+msgid "No location information"
+msgstr "Žiadne informácie o formátovaní"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
-msgid "No location information for screen"
-msgstr "Žiadna informácia o umiestnení obrazovky"
-
-#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#. Translators: Description for report review cursor location command.
 msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
-"screen, height is {height:.1f} per cent of screen"
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
 msgstr ""
-"Rohy objektu umiestnené {left:.1f} percent od ľavého kraja, {top:.1f} "
-"percent od horného kraja obrazovky, šírka je {width:.1f} percent šírky "
-"obrazovky a víška je {height:.1f} percent výšky obrazovky."
-
-#. Translators: Input help mode message for report object dimensions command.
-msgid "Reports the hight, width and position of the current navigator object"
-msgstr "Oznamuje výšku, šírku a pozíciu navigačného objektu."
+"Oznámy informáciu o pozícii textu alebo objektu, na ktorom je prezerací "
+"kurzor. Stlačené dvakrát poskytne podrobnejšie informácie."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -2044,9 +2053,9 @@ msgid ""
 "will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
-"Prepína režimy reči medzi ticho, pípanie a reč. Ak je nastavené ticho "
-"nvda nebude hovoriť. Ak pípanie, NVDA zapípa vždy, keď by mal niečo povedať. "
-"Reč znamená hlasový výstup."
+"Prepína režimy reči medzi ticho, pípanie a reč. Ak je nastavené ticho nvda "
+"nebude hovoriť. Ak pípanie, NVDA zapípa vždy, keď by mal niečo povedať. Reč "
+"znamená hlasový výstup."
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
@@ -2440,16 +2449,14 @@ msgstr "žiadne ďalšie objekty"
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
-msgstr ""
-"Prejde na nasledujúci objekt v plošnom zobrazení v hierarchii objektov"
+msgstr "Prejde na nasledujúci objekt v plošnom zobrazení v hierarchii objektov"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
 "hierarchy"
 msgstr ""
-"Prejde na predchádzajúci objekt v plošnom zobrazení v hierarchii "
-"objektov"
+"Prejde na predchádzajúci objekt v plošnom zobrazení v hierarchii objektov"
 
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
@@ -2472,7 +2479,7 @@ msgstr "prečíta nový objekt alebo text pod prstom, ak sa zmenila poloha prsta
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
-msgstr "Zobrazí dialóg s nastaveniami používateľských profilov."
+msgstr "Zobrazí dialóg s nastaveniami konfiguračných profilov."
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -2485,6 +2492,14 @@ msgstr "Ostatné"
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "režim prehliadania"
+
+#. Translators: The shortcut key used to start NVDA.
+#. This should normally be left as is, but might be changed for some locales
+#. if the default key causes problems for the normal locale keyboard layout.
+#. The key must be formatted as described in this article:
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+msgid "CTRL+ALT+N"
+msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
@@ -3035,6 +3050,7 @@ msgstr "Nepodčiarknuté"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "Bez indexov"
 
@@ -3055,13 +3071,78 @@ msgstr "Zarovnané vpravo"
 msgid "align justify"
 msgstr "Zarovnané do bloku"
 
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "rovnomerne zarovnané"
+
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "Predvolené zarovnanie"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "obsahuje komentár"
+#. Translators: the label for paragraph format left indent
+msgid "left indent"
+msgstr "ľavé odsadenie"
+
+#. Translators: the message when there is no paragraph format left indent
+msgid "no left indent"
+msgstr "bez ľavého odsadenia"
+
+#. Translators: the label for paragraph format right indent
+msgid "right indent"
+msgstr "pravý okraj"
+
+#. Translators: the message when there is no paragraph format right indent
+msgid "no right indent"
+msgstr "bez pravého odsadenia"
+
+#. Translators: the label for paragraph format hanging indent
+msgid "hanging indent"
+msgstr "vysunuté"
+
+#. Translators: the message when there is no paragraph format hanging indent
+msgid "no hanging indent"
+msgstr "Bez vysunutia"
+
+#. Translators: the label for paragraph format first line indent
+msgid "first line indent"
+msgstr "odsadenie prvého riadka"
+
+#. Translators: the message when there is no paragraph format first line indent
+msgid "no first line indent"
+msgstr "bez odsadeného prvého riadka"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "vertikálne zarovnanie nahor"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "vertikálne zarovnanie nastred"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "Vertikálne zarovnanie nadol"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "Vertikálne zarovnanie podľa čiari"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "vertikálne zarovnané do bloku"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "Vertikálne zarovnanie rozmiestnené"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "Predvolené zarovnanie"
+
+#. Translators: Reported when text no longer contains a comment.
+msgid "out of comment"
+msgstr "Koniec komentára"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -3109,6 +3190,82 @@ msgstr "&Výška"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Intonácia"
+
+msgid "text mode"
+msgstr "textový režim"
+
+msgid "object mode"
+msgstr "objektový režim"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "jednoduché {action}"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "dvojité {action}"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "trojité {action}"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "štvorité {action}"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{action} {numFingers} prstami"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "klepnutie"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "Klepnúť a podržať"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "podržať"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr "švihnutie hore"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr "švihnutie dolu"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr "švihnutie vľavo"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr "švihnutie vpravo"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+msgctxt "touch action"
+msgid "hover down"
+msgstr "dotknutie"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr "prechádzanie"
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr "pustenie"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3278,6 +3435,24 @@ msgstr ""
 "Ak je NVDA užitočný aj pre Vás a chcete aby vývoj napredoval, zvášte možnosť "
 "príspevku NV Access. Prispieť môžete z podmenu pomocník."
 
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"Nie je možné nainštalovať doplnok z {path}.\n"
+"pred inštaláciou doplnku spustite NVDA."
+
+#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+msgid ""
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
+msgstr ""
+"Rohy objektu umiestnené {left:.1f} percent od ľavého kraja, {top:.1f} "
+"percent od horného kraja obrazovky, šírka je {width:.1f} percent šírky "
+"obrazovky a víška je {height:.1f} percent výšky obrazovky."
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "{symbol} ako {description}"
@@ -3339,6 +3514,15 @@ msgstr "Zatiaľ nebola doručená žiadna správa"
 msgid "Displays one of the recent messages"
 msgstr "Prečíta jednu z naposledy prijatých správ"
 
+#. Translators: This Outlook Express message has an attachment
+#. Translators: when an email has attachments
+msgid "has attachment"
+msgstr "má prílohu"
+
+#. Translators: this Outlook Express message is flagged
+msgid "flagged"
+msgstr "má príznak"
+
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
 msgstr "Prílohy"
@@ -3392,8 +3576,17 @@ msgid "BCC:"
 msgstr "Skrytá kópia:"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
+#. Translators: when an email is unread
 msgid "unread"
 msgstr "Neprečítané"
+
+#. Translators: for a high importance email
+msgid "high importance"
+msgstr "veľmi dôležitá"
+
+#. Translators: For a low importance email
+msgid "low importance"
+msgstr "málo dôležitá"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3413,6 +3606,26 @@ msgstr "Príloha"
 #, python-format
 msgid "sent: %s"
 msgstr "Odoslané: %s"
+
+#. Translators: The title for the dialog shown while Microsoft Outlook initializes.
+msgid "Waiting for Outlook..."
+msgstr "Čaká sa na spustenie programu outlook..."
+
+#. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+msgid "{startTime} to {endTime}"
+msgstr "{startTime} do {endTime}"
+
+#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+msgid "Appointment {subject}, {time}"
+msgstr "Pripomienka {subject}, {time}"
+
+#. Translators: a message when the current time slot on an Outlook Calendar has an appointment
+msgid "has appointment"
+msgstr "pripomienka"
+
+#. Translators: the email is a meeting request
+msgid "meeting request"
+msgstr "žiadosť o stretnutie"
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -3563,13 +3776,81 @@ msgstr "Náhľady"
 msgid "Master Thumbnails"
 msgstr "Predloha s náhľadmi"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "Čakám na Powerpoint..."
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Snímka {slideNumber}"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers left of {otherShape} by {distance:.3g} points"
+msgstr "prekrýva zľava  {otherShape} o {distance:.3g} bodov"
+
+#. Translators: A message when a shape is behind  another shape on a powerpoint slide
+msgid "behind left of {otherShape} by {distance:.3g} points"
+msgstr "Nasleduje zľava za {otherShape} o {distance:.3g} bodov"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers top of {otherShape} by {distance:.3g} points"
+msgstr "prekrýva zhora {otherShape} o {distance:.3g} bodov"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind top of {otherShape} by {distance:.3g} points"
+msgstr "Nasleduje zhora za {otherShape} by {distance:.3g} bodov"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers right of {otherShape} by {distance:.3g} points"
+msgstr "prekrýva zprava {otherShape} o {distance:.3g} bodov"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind right of {otherShape} by {distance:.3g} points"
+msgstr "Nasleduje zprava za {otherShape} by {distance:.3g} bodov"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers bottom of {otherShape} by {distance:.3g} points"
+msgstr "prekrýva zdola {otherShape} o {distance:.3g} bodov"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind bottom of {otherShape} by {distance:.3g} points"
+msgstr "nasleduje zdola za {otherShape} by {distance:.3g} bodov"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers  {otherShape}"
+msgstr "prekrýva {otherShape}"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind {otherShape}"
+msgstr "za {otherShape}"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+msgid "{distance:.3g} points from left slide edge"
+msgstr "{distance:.3g} bodov od ľavého okraja snímky"
+
+#. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+msgid "Off left slide edge by {distance:.3g} points"
+msgstr "za ľavým okrajom snímky o {distance:.3g} bodov"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+msgid "{distance:.3g} points from top slide edge"
+msgstr "{distance:.3g} bodov od horného okraja snímky"
+
+#. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+msgid "Off top slide edge by {distance:.3g} points"
+msgstr "za horným okrajom snímky o {distance:.3g} bodov"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+msgid "{distance:.3g} points from right slide edge"
+msgstr "{distance:.3g} bodov od pravého okraja snímky"
+
+#. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+msgid "Off right slide edge by {distance:.3g} points"
+msgstr "za pravým okrajom snímky o {distance:.3g} bodov"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+msgid "{distance:.3g} points from bottom slide edge"
+msgstr "{distance:.3g} bodov od dolného okraja snímky"
+
+#. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+msgid "Off bottom slide edge by {distance:.3g} points"
+msgstr "Za dolným okrajom snímky o {distance:.3g} bodov"
 
 #. Translators: The description for a script
 msgid ""
@@ -3599,6 +3880,10 @@ msgstr "Žiadne poznámky"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "Prázdna snímka"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "Čaká sa na spustenie programu Powerpoint..."
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -3723,8 +4008,8 @@ msgstr "Nastavenia uložené."
 #. Translators: Message shown when current configuration cannot be saved such as when running NVDA from a CD.
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
-"Nemôžem uložiť nastavenia. Pravdepodobne je NVDA spustený z systému len na "
-"čítanie."
+"Nie je možné uložiť nastavenia. Pravdepodobne je NVDA spustený z systému len "
+"na čítanie."
 
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
@@ -3814,7 +4099,8 @@ msgid ""
 "Configure how NVDA reports input composition and candidate selection for "
 "certain languages"
 msgstr ""
-"Nastavuje oznamovanie zadávania textu skladaním a zoznamu návrhov pre niektoré jazyky"
+"Nastavuje oznamovanie zadávania textu skladaním a zoznamu návrhov pre "
+"niektoré jazyky"
 
 #. Translators: The label for the menu item to open Object Presentation dialog.
 msgid "&Object presentation..."
@@ -3951,7 +4237,7 @@ msgstr "&Pomocník"
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
 msgid "&Configuration profiles..."
-msgstr "Používateľské profi&ly..."
+msgstr "Konfiguračné profi&ly..."
 
 #. Translators: The label for the menu item to revert to saved configuration.
 msgid "&Revert to saved configuration"
@@ -4077,6 +4363,10 @@ msgstr "Autor"
 msgid "&About add-on..."
 msgstr "O &doplnku..."
 
+#. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
+msgid "Add-on &help"
+msgstr "&Návod"
+
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
 msgstr "Na&inštalovať"
@@ -4196,7 +4486,7 @@ msgstr "Informácie o doplnku"
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
-msgstr "Používateľské profily"
+msgstr "Konfiguračné profily"
 
 #. Translators: The label of the profile list in the Configuration Profiles dialog.
 msgid "&Profile"
@@ -4301,7 +4591,7 @@ msgstr "Plynulé čítanie"
 msgid ""
 "Error saving configuration profile triggers - probably read only file system."
 msgstr ""
-"Nemôžem uložiť udalosť. Pravdepodobne je NVDA spustený z systému len na "
+"Nie je možné uložiť udalosť. Pravdepodobne je NVDA spustený z systému len na "
 "čítanie."
 
 #. Translators: The title of the configuration profile triggers dialog.
@@ -4356,8 +4646,8 @@ msgstr "Upozornenie"
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
 msgstr ""
-"Nemôžem vytvoriť profil. Pravdepodobne je NVDA spustený z systému len na "
-"čítanie."
+"Nie je možné vytvoriť profil. Pravdepodobne je NVDA spustený z systému len "
+"na čítanie."
 
 #. Translators: The prompt asking the user whether they wish to
 #. manually activate a configuration profile that has just been created.
@@ -4464,7 +4754,9 @@ msgstr "Spúšťať NVDA pri zobrazení prihlasovacej obrazovky Windows"
 msgid "&Keep existing desktop shortcut"
 msgstr "Po&nechať odkaz na pracovnej ploche"
 
-#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
+#. If the shortcut key has been changed for this locale,
+#. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "Vytvoriť odkaz na &pracovnej ploche so skratkou ctrl+alt+n"
 
@@ -4600,6 +4892,10 @@ msgstr "&Uložiť nastavenia pri ukončení"
 msgid "&Warn before exiting NVDA"
 msgstr "&Potvrdzovať ukončenie NVDA"
 
+#. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
+msgid "&Play sounds when starting or exiting NVDA"
+msgstr "Prehrať &zvuk pri spustení a ukončení NVDA"
+
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "Úr&oveň záznamu:"
@@ -4714,7 +5010,7 @@ msgstr "Výstupné zaria&denie:"
 #. synthesizer.
 #, python-format
 msgid "Could not load the %s synthesizer."
-msgstr "Nemôžem spustiť hlasový výstup \"%s\"."
+msgstr "Nie je možné spustiť hlasový výstup \"%s\"."
 
 msgid "Synthesizer Error"
 msgstr "Chyba hlasového výstupu"
@@ -4814,6 +5110,11 @@ msgstr "Pípať pri písaní malých písmen ak je zapnutý caps lock"
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "Čítať príkazové s&kratky"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Handle keys from other &applications"
+msgstr "Spracovať vstup z externých &programov"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
@@ -5058,7 +5359,7 @@ msgstr "Oznamovať &zarovnanie"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &colors"
-msgstr "Oznamovať &farby"
+msgstr "Oznamovať farby"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5090,6 +5391,11 @@ msgstr "Oznamovať čísla ria&dkov"
 #.
 msgid "Report l&ine indentation"
 msgstr "&Oznamovať odsadenie"
+
+#. Translators: This message is presented in the document formatting settings dialogue
+#. If this option is selected, NVDA will report paragraph indentation if available.
+msgid "Report &paragraph indentation"
+msgstr "Oznamovať odsadenie od&sekov"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5136,6 +5442,11 @@ msgstr "Oznamovať o&blasti stránky"
 msgid "Report fra&mes"
 msgstr "Oznamovať rá&mce"
 
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "Oznamovať udalosť &pri kliknutí"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "Upraviť Položku Slovníka"
@@ -5165,6 +5476,7 @@ msgid "&Dictionary entries"
 msgstr "Položky slovníka"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
+#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr "Komentár"
 
@@ -5243,7 +5555,7 @@ msgstr "Zabrániť deleniu &slov keď  je to možné"
 
 #, python-format
 msgid "Could not load the %s display."
-msgstr "Nemôžem načítať zobrazovač %s"
+msgstr "Nie je možné načítať zobrazovač %s"
 
 msgid "Braille Display Error"
 msgstr "Chyba braillovského riadku"
@@ -5289,8 +5601,8 @@ msgstr "Zadajte klávesovú skratku:"
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
-"Nemôžem uložiť zmeny klávesových skratiek. Pravdepodobne je NVDA spustený z "
-"systému len na čítanie."
+"Nie je možné uložiť zmeny klávesových skratiek. Pravdepodobne je NVDA "
+"spustený z systému len na čítanie."
 
 #. Translators: Information about NVDA's new laptop keyboard layout.
 msgid ""
@@ -5345,6 +5657,14 @@ msgstr "Bez reči"
 msgid "word"
 msgstr "slovo"
 
+#. Translators: current position in a document as a percentage of the document length
+msgid "{curPercent:.0f}%"
+msgstr "{curPercent:.0f}%"
+
+#. Translators: the current position's screen coordinates in pixels
+msgid "at {x}, {y}"
+msgstr "na {x}, {y}"
+
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
 msgid "%s landmark"
@@ -5395,7 +5715,7 @@ msgstr "Obnovené"
 
 #. Translators: Reported while loading a document.
 msgid "Loading document..."
-msgstr "Nahrávam dokument..."
+msgstr "Prebieha nahrávanie dokumentu..."
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 msgid "No long description"
@@ -5433,6 +5753,7 @@ msgstr "Zobrazí zoznam odkazov, nadpisov alebo oblastí stránky"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
 msgstr "nie v bunke tabuľky"
 
@@ -5911,48 +6232,78 @@ msgstr "Predvolená farba"
 msgid "{start} through {end}"
 msgstr "{start} do {end}"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
 msgstr ""
-"Nemôžem nastaviť hlavičky. Začiarknite oznamovanie hlavičiek stĺpcov/riadkov "
-"tabuľky v nastaveniach čítania textu."
+"Nie je možné nastaviť hlavičku. Začiarknite oznamovanie hlavičiek stĺpcov/"
+"riadkov tabuľky v nastaveniach čítania textu."
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Set column header row"
-msgstr "Nastaviť hlavičku stĺpca"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Set {address} as start of column headers"
+msgstr "{address} nastavené ako začiatok hlavičky pre stĺpce"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Cleared column header row"
-msgstr "hlavička stĺpca vymazaná"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Already set {address} as start of column headers"
+msgstr "{address} je už nastavené ako začiatok hlavičky pre stĺpce"
 
-msgid ""
-"Pressing once will set the current row as the row where column headers "
-"should be found. Pressing twice clears the setting."
-msgstr ""
-"Nastaví aktuálny riadok ako hlavičku. Stlačené rýchlo dvakrát vymaže "
-"nastavenie."
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "removed {address}    from column headers"
+msgstr "{address}    odstránené ako hlavička pre stĺpce"
 
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Set row header column"
-msgstr "Nastaviť hlavičku riadku"
-
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Cleared row header column"
-msgstr "Hlavička riadku vymazaná"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Cannot find {address}    in column headers"
+msgstr "Nie je možné nájsť {address}    v hlavičkách pre stĺpce"
 
 msgid ""
-"Pressing once will set the current column as the column where row headers "
-"should be found. Pressing twice clears the setting."
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this region. Pressing twice will forget "
+"the current column header for this cell."
 msgstr ""
-"Nastaví aktuálny riadok ako hlavičku. Stlačené rýchlo dvakrát vymaže "
-"nastavenie."
+"Stlačené raz nastaví túto bunku ako prvý stĺpec hlavičky pre ostatné bunky, "
+"ktoré sú napravo a nižšie v tejto oblasti. Stlačené dvakrát odstráni "
+"informáciu o hlavičkách pre stĺpce."
 
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "má vzorec"
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Set {address} as start of row headers"
+msgstr "{address} nastavené ako začiatok hlavičky pre riadky"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Already set {address} as start of row headers"
+msgstr "{address} je už nastavené ako začiatok hlavičky pre riadky"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "removed {address}    from row headers"
+msgstr "{address}    odstránené ako hlavička pre riadky"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Cannot find {address}    in row headers"
+msgstr "Nie je možné nájsť {address}    v hlavičkách pre riadky"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this region. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Stlačené raz nastaví túto bunku ako prvý riadok hlavičky pre ostatné bunky, "
+"ktoré sú napravo a nižšie v tejto oblasti. Stlačené dvakrát odstráni "
+"informáciu o hlavičkách pre riadky."
+
+#. Translators: A message in Excel when there is no comment
+msgid "Not on a comment"
+msgstr "Kurzor nie je na komentári"
+
+#. Translators: the description  for a script for Excel
+msgid "Reports the comment on the current cell"
+msgstr "Prečíta komentár pre aktuálnu bunku."
+
+#. Translators: Dialog text for
+msgid "Editing comment for cell {address}"
+msgstr "Úprava komentára pre bunku {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
@@ -6065,6 +6416,161 @@ msgstr "neznámy dátum"
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "{revisionType} od {revisionAuthor} dňa {revisionDate}"
 
+#, python-format
+msgid "%g characters"
+msgstr "%g znakov"
+
+#. Translators: the value in points for a paragraph indenting
+#, python-format
+msgid "%g pt"
+msgstr "%g bodov"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"riadok {rowNumber} stĺpec {columnNumber} nastavený ako začiatok pre hlavičky "
+"stĺpcov"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"riadok {rowNumber} stĺpec {columnNumber} je už nastavený ako začiatok "
+"hlavičky pre stĺpce"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr ""
+"Riadok {rowNumber} stĺpec {columnNumber}  odstránený z hlavičky pre stĺpce"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+"Nie je možné nájsť riadok {rowNumber} stĺpec {columnNumber}  v hlavičkách "
+"pre stĺpce"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"Stlačené raz nastaví túto bunku ako prvý stĺpec hlavičky pre ostatné bunky, "
+"ktoré sú napravo a nižšie v tabuľke. Stlačené dvakrát odstráni informáciu o "
+"hlavičkách pre stĺpce."
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Riadok {rowNumber} stĺpec {columnNumber} nastavený ako hlavička pre riadky"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Riadok {rowNumber} stĺpec {columnNumber} už nastavený ako začiatok hlavičky "
+"pre riadky"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr ""
+"riadok {rowNumber} stĺpec {columnNumber}  odstránený z hlavičky pre riadky"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+"Nie je možné nájsť riadok {rowNumber} stĺpec {columnNumber}  v hlavičke pre "
+"riadky"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Stlačené raz nastaví túto bunku ako prvý riadok hlavičky pre ostatné bunky, "
+"ktoré sú napravo a nižšie v tabuľke. Stlačené dvakrát odstráni informáciu o "
+"hlavičkách pre riadky."
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "Tučné aktívne"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "Tučné neaktívne"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "kurzíva aktívna"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "kurzíva neaktívna"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "podčiarknutie aktívne"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "podčiarknutie neaktívne"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Left aligned"
+msgstr "Zarovnané vľavo"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "centered"
+msgstr "zarovnané na stred"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Right aligned"
+msgstr "Zarovnané vpravo"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Justified"
+msgstr "Zarovnané  do bloku"
+
+#. Translators: the message when the outline level / style is changed in Microsoft word
+msgid "{styleName} style, outline level {outlineLevel}"
+msgstr "Štýl {styleName}, úroveň {outlineLevel}"
+
+#. Translators: a message when increasing or decreasing font size in Microsoft Word
+msgid "{size:g} point font"
+msgstr "{size:g} bodov písma"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} characters"
+msgstr "{offset:.3g} znakov"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} inches"
+msgstr "{offset:.3g} palcov"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} centimeters"
+msgstr "{offset:.3g} centimetrov"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} millimeters"
+msgstr "{offset:.3g} milimetrov"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} points"
+msgstr "{offset:.3g} bodov"
+
+#. Translators: a measurement in Microsoft Word
+#. See http://support.microsoft.com/kb/76388 for details.
+msgid "{offset:.3g} picas"
+msgstr "{offset:.3g} pica"
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "no comments"
+msgstr "Žiadne komentáre"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "prečíta text komentára pod systémovým kurzorom."
+
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 msgid "Not in table"
@@ -6080,6 +6586,42 @@ msgstr "HIMS Braille Sense/Séria Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "No location information for navigator object"
+#~ msgstr "Žiadna informácia o pozícii pre práve zameraný objekt."
+
+#~ msgid "No location information for screen"
+#~ msgstr "Žiadna informácia o umiestnení obrazovky"
+
+#~ msgid ""
+#~ "Reports the hight, width and position of the current navigator object"
+#~ msgstr "Oznamuje výšku, šírku a pozíciu navigačného objektu."
+
+#~ msgid "Set column header row"
+#~ msgstr "Nastaviť hlavičku stĺpca"
+
+#~ msgid "Cleared column header row"
+#~ msgstr "hlavička stĺpca vymazaná"
+
+#~ msgid ""
+#~ "Pressing once will set the current row as the row where column headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "Nastaví aktuálny riadok ako hlavičku. Stlačené rýchlo dvakrát vymaže "
+#~ "nastavenie."
+
+#~ msgid "Set row header column"
+#~ msgstr "Nastaviť hlavičku riadku"
+
+#~ msgid "Cleared row header column"
+#~ msgstr "Hlavička riadku vymazaná"
+
+#~ msgid ""
+#~ "Pressing once will set the current column as the column where row headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "Nastaví aktuálny riadok ako hlavičku. Stlačené rýchlo dvakrát vymaže "
+#~ "nastavenie."
 
 #, fuzzy
 #~ msgid "%s through %s"

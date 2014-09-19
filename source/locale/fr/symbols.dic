@@ -1,6 +1,6 @@
 ﻿#locale/fr/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2012 NVDA contributors.
+#Copyright (c) 2011-2014 NVDA contributors.
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -12,8 +12,8 @@ complexSymbols:
 ... sentence ending	(?<=[^\s.])(\s\.|\.)\.\.(?=[\"'”’)\s]|$)
 … sentence ending	(?<=[^\s…])\…(?=[\"'”’)\s]|$)
 # Phrase endings.
-; phrase ending	(?<=[^\s;])(\s\;|\;)(?=[\"'”’)\s]|$)
-: phrase ending	(?<=[^\s:])(\s\:|\:)(?=[\"'”’)\s]|$)
+; phrase ending	(?<=[^\s;])(\s;|;)(?=\s|$)
+: phrase ending	(?<=[^\s:])(\s:|:)(?=\s|$)
 # Others
 decimal point	(?<=\d)\,(?=\d)
 in-word -	(?<=[^\W_])[-]
@@ -21,9 +21,6 @@ dates .	((?<=\b\d\d)\.(?=\d\d.(\d{2}|\d{4})\b))|((?<=\b\d\d.\d\d)\.(?=(\d{2}|\d{
 dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
 after-number %	(?<=\d)((\%)|(\s\%))(?=\W|$)
-
-# Fix pronunciation for some words
-no francs	F(?=\d|\s\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -38,12 +35,12 @@ symbols:
 : phrase ending	deux points	# : fin de phrase
 
 decimal point		# virgule décimale
-dates .	 	all	always
-dates /	 	all	always
+dates .	 	all	always	# point de date
+dates /	 	all	always	# barre oblique de date
 negative number	moins	none	norep	# - devant un nombre
-after-number %	pour cent	none	norep
-in-word '	apostrophe
-in-word -	tiret	all	norep
+after-number %	pour cent	none	norep	# % après un nombre
+in-word '	apostrophe	# ' dans un mot
+in-word -	tiret	all	norep	# - dans un mot
 
 # Whitespace
 \0	nul
@@ -52,10 +49,10 @@ in-word -	tiret	all	norep
 \f	saut de page
 \r	retour chariot
  	espace
- 	espace insécable	# espace insécable
+ 	espace insécable	char	# espace insécable
 
 # Standard punctuation/symbols
-!	point dexclamation	some
+!	point dexclamation
 "	guillemet
 \#	dièse
 $	dollar
@@ -64,22 +61,22 @@ $	dollar
 ¢	Centimes
 ¥	Yen
 %	pour cent
-&	et
+&	et commercial	some	norep
 '	apostrophe
 (	parenthèse gauche
 )	parenthèse droite
-*	astérisque	some	norep
+*	astérisque
 +	pluce	some	norep
 ,	virgule
 -	tiret
 .	point
 /	barre oblique
-:	deux points	all	norep
+:	deux points
 ;	point virgule
 <	inférieur
 >	supérieur
 =	égal
-?	point dinterrogation	some
+?	point dinterrogation
 ¿	point dinterrogation renversé	some
 @	arobase	none
 [	crochet gauche
@@ -117,7 +114,7 @@ _	souligné
 „	guillemet vers le bas	none
 ∞	infini	none
 ➔	flèche droite
-°	degrés
+°	degré	some	norep
 «	guillemet ouvert
 »	guillemet fermé
 µ	micro
@@ -130,12 +127,14 @@ _	souligné
 ±	Plus ou Moins
 ×	fois
 ÷	divisé par
+←	flèche gauche
 →	flèche droite
+	flèche gauche	some
+	flèche droite	some
+↑	flèche haut	some
+↓	flèche bas	some
 ✓	coché
 ✔	coché
-
-# Fix pronunciation of some words
-no francs	f	none	norep
 
 # Fixes for some synthesizers
 ô	o circonflexe	char	norep

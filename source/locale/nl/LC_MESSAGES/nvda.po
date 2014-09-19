@@ -1,4 +1,3 @@
-# Dutch interface messages for NVDA.
 # Copyright (C) 2006-2012 NVDA Contributors
 #
 # Translators:
@@ -7,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-12 16:04+1000\n"
-"PO-Revision-Date: 2013-11-12 14:35+0100\n"
-"Last-Translator: Leonard de Ruijter <mail@leonardderuijter.nl>\n"
+"POT-Creation-Date: 2014-08-11 19:10+1000\n"
+"PO-Revision-Date: 2014-08-07 18:31+0100\n"
+"Last-Translator: Bart Simons <bart@bartsimons.be>\n"
 "Language-Team: Dutch <nvda-nl@googlegroups.com> (http://www.transifex.net/"
 "projects/p/nvda/language/nl/)\n"
 "Language: nl\n"
@@ -124,6 +123,10 @@ msgstr "zoeken"
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
 msgstr "formulier"
+
+#. Translators: Reported for a significant region, normally found on web pages.
+msgid "region"
+msgstr "gebied"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1261,11 +1264,13 @@ msgstr "achtergrondkleur"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "superscript"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "subscript"
 
@@ -1445,6 +1450,10 @@ msgstr "bevat formule"
 msgid "has comment"
 msgstr "bevat opmerking"
 
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "wordt overlapt"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "niet geselecteerd"
@@ -1562,6 +1571,7 @@ msgid "Tools"
 msgstr "Extra"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "Aanraakscherm"
 
@@ -1704,7 +1714,7 @@ msgstr "getypte karakters uitspreken"
 
 #. Translators: Input help mode message for toggle speaked typed characters command.
 msgid "Toggles on and off the speaking of typed characters"
-msgstr "In en uitschakelen van het uitspreken van getypte karakters"
+msgstr "Schakelt het uitspreken van getypte karakters in en uit"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
@@ -1716,7 +1726,7 @@ msgstr "getypte woorden uitspreken"
 
 #. Translators: Input help mode message for toggle speak typed words command.
 msgid "Toggles on and off the speaking of typed words"
-msgstr "In en uitschakelen van het uitspreken van getypte woorden"
+msgstr "Schakelt het uitspreken van getypte woorden in en uit"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
@@ -1730,7 +1740,7 @@ msgstr "commandotoetsen uitspreken"
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
-msgstr "In en uitschakelen van het uitspreken van commandotoetsen"
+msgstr "Schakelt het uitspreken van commandotoetsen in en uit"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -1752,18 +1762,18 @@ msgstr "object heeft geen locatie"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
-msgstr "Verplaatst de muisaanwijzer naar het huidige navigator object"
+msgstr "Verplaatst de muisaanwijzer naar het huidige navigatorobject"
 
 #. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
 msgid "Move navigator object to mouse"
-msgstr "Verplaats navigator object naar muisaanwijzer"
+msgstr "Verplaats navigatorobject naar muisaanwijzer"
 
 #. Translators: Input help mode message for move navigator object to mouse command.
 msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
 msgstr ""
-"Verplaatst het navigator object naar het object dat zich onder de "
+"Verplaatst het navigatorobject naar het object dat zich onder de "
 "muisaanwijzer bevindt, en spreekt het uit"
 
 #. Translators: reported when there are no other available review modes for this object
@@ -1776,7 +1786,7 @@ msgid ""
 "positions the review position at the point of the navigator object"
 msgstr ""
 "Schakelt naar de volgende leesoverzichtmodus (b.v. document, object of "
-"scherm) en positioneert de leescursor op de locatie van het navigator object"
+"scherm) en positioneert de leescursor op de locatie van het navigatorobject"
 
 #. Translators: reported when there are no  other available review modes for this object
 msgid "No previous review mode"
@@ -1788,12 +1798,12 @@ msgid ""
 "positions the review position at the point of the navigator object"
 msgstr ""
 "Schakelt naar de vorige leesoverzichtmodus (b.v. document, object of scherm) "
-"en positioneert de leescursor op de locatie van het huidige navigator object"
+"en positioneert de leescursor op de locatie van het huidige navigatorobject"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
 msgid "no navigator object"
-msgstr "geen navigator object"
+msgstr "geen navigatorobject"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
 #, python-format
@@ -1806,34 +1816,21 @@ msgid ""
 "and pressing three times Copies name and value of this  object to the "
 "clipboard"
 msgstr ""
-"Geeft het huidige navigator object weer. Bij tweemaal drukken, wordt deze "
+"Geeft het huidige navigatorobject weer. Bij tweemaal drukken, wordt deze "
 "informatie gespeld. Drie keer drukken kopieert de naam en de waarde van dit "
 "object naar het klembord."
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
-msgid "No location information for navigator object"
-msgstr "Geen informatie over de locatie van het navigator object"
+#. Translators: message when there is no location information for the review cursor
+msgid "No location information"
+msgstr "Locatie onbekend"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
-msgid "No location information for screen"
-msgstr "Geen informatie over de locatie van het scherm"
-
-#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#. Translators: Description for report review cursor location command.
 msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
-"screen, height is {height:.1f} per cent of screen"
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
 msgstr ""
-"Object is als volgt gepositioneerd: {left:.1f} percent van de linkerrand van "
-"het scherm, {top:.1f} percent van de bovenrand van het scherm, breedte is "
-"{width:.1f} percent van het scherm, hoogte is {height:.1f} percent van het "
-"scherm."
-
-#. Translators: Input help mode message for report object dimensions command.
-msgid "Reports the hight, width and position of the current navigator object"
-msgstr ""
-"Geeft de hoogte, de breette en de positie weer van het huidige navigator "
-"object"
+"Meld de locatie van de tekst of het object op de leescursor. Tweemaal "
+"drukken, kan meer detail geven."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -1844,7 +1841,7 @@ msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
-"Verplaatst het navigator object naar het object dat de focus heeft en "
+"Verplaatst het navigatorobject naar het object dat de focus heeft en "
 "verplaatst indien mogelijk de leescursor naar de positie van de cursor "
 "daarbinnen."
 
@@ -1867,7 +1864,7 @@ msgid ""
 "Pressed once Sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
-"Eenmaal drukken, verplaatst de toetsenbordfocus naar het navigator object, "
+"Eenmaal drukken, verplaatst de toetsenbordfocus naar het navigatorobject, "
 "tweemaal drukken, verplaatst de systeemcursor naar de positie van de "
 "leescursor."
 
@@ -1877,7 +1874,7 @@ msgstr "Bevat geen object"
 
 #. Translators: Input help mode message for move to parent object command.
 msgid "Moves the navigator object to the object containing it"
-msgstr "Verplaatst het navigator object naar het object dat het bevat"
+msgstr "Verplaatst het navigatorobject naar het object dat het bevat"
 
 #. Translators: Reported when there is no next object (current object is the last object).
 msgid "No next"
@@ -1885,7 +1882,7 @@ msgstr "Geen volgend"
 
 #. Translators: Input help mode message for move to next object command.
 msgid "Moves the navigator object to the next object"
-msgstr "Verplaats het navigator object naar het volgende object"
+msgstr "Verplaatst het navigatorobject naar het volgende object"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 msgid "No previous"
@@ -1893,7 +1890,7 @@ msgstr "Geen vorig"
 
 #. Translators: Input help mode message for move to previous object command.
 msgid "Moves the navigator object to the previous object"
-msgstr "Verplaatst het navigator object naar het vorige object"
+msgstr "Verplaatst het navigatorobject naar het vorige object"
 
 #. Translators: Reported when there is no contained (first child) object such as inside a document.
 msgid "No objects inside"
@@ -1928,7 +1925,7 @@ msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
 msgstr ""
-"Verplaatst de leescursor naar de eerste regel van het navigator object, en "
+"Verplaatst de leescursor naar de eerste regel van het navigatorobject, en "
 "spreekt deze uit"
 
 #. Translators: Input help mode message for move review cursor to previous line command.
@@ -1936,7 +1933,7 @@ msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
 msgstr ""
-"Verplaatst de leescursor naar de vorige regel van het navigator object, en "
+"Verplaatst de leescursor naar de vorige regel van het navigatorobject, en "
 "spreek deze uit"
 
 #. Translators: Input help mode message for read current line under review cursor command.
@@ -1945,7 +1942,7 @@ msgid ""
 "situated. If this key is pressed twice, the current line will be spelled. "
 "Pressing three times will spell the line using character descriptions."
 msgstr ""
-"Geeft de huidige regel van het navigator object weer waar de leescursor zich "
+"Geeft de huidige regel van het navigatorobject weer waar de leescursor zich "
 "bevind. Tweemaal drukken, spelt de regel. Driemaal drukken, spelt de regel "
 "met omschrijvingen van karakters."
 
@@ -1960,7 +1957,7 @@ msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
 msgstr ""
-"Verplaatst de leescursor naar de volgende regel van het navigator object, en "
+"Verplaatst de leescursor naar de volgende regel van het navigatorobject, en "
 "spreekt deze uit"
 
 #. Translators: Input help mode message for move review cursor to bottom line command.
@@ -1968,7 +1965,7 @@ msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
 "and speaks it"
 msgstr ""
-"Verplaatst de leescursor naar de laatste regel van het navigator object, en "
+"Verplaatst de leescursor naar de laatste regel van het navigatorobject, en "
 "spreekt deze uit"
 
 #. Translators: Input help mode message for move review cursor to previous word command.
@@ -1976,7 +1973,7 @@ msgid ""
 "Moves the review cursor to the previous word of the current navigator object "
 "and speaks it"
 msgstr ""
-"Verplaatst de leescursor naar het vorige woord van het navigator object, en "
+"Verplaatst de leescursor naar het vorige woord van het navigatorobject, en "
 "spreekt het uit"
 
 #. Translators: Input help mode message for report current word under review cursor command.
@@ -1985,7 +1982,7 @@ msgid ""
 "situated. Pressing twice spells the word. Pressing three times spells the "
 "word using character descriptions"
 msgstr ""
-"Meldt het huidige woord van het navigator object waar de leescursor zich "
+"Meldt het huidige woord van het navigatorobject waar de leescursor zich "
 "bevindt. Tweemaal drukken, spelt het woord. Driemaal drukken, spelt het "
 "woord met omschrijvingen van karakters."
 
@@ -1994,8 +1991,8 @@ msgid ""
 "Moves the review cursor to the next word of the current navigator object and "
 "speaks it"
 msgstr ""
-"Verplaatst de leescursor naar het volgende woord van het navigator object, "
-"en spreekt het uit."
+"Verplaatst de leescursor naar het volgende woord van het navigatorobject, en "
+"spreekt het uit."
 
 msgid "left"
 msgstr "links"
@@ -2006,7 +2003,7 @@ msgid ""
 "situated in the current navigator object and speaks it"
 msgstr ""
 "Verplaatst de leescursor naar het eerste karakter van de huidige regel van "
-"het navigator object, en spreekt het uit"
+"het navigatorobject, en spreekt het uit"
 
 #. Translators: Input help mode message for move review cursor to previous character command.
 msgid ""
@@ -2014,7 +2011,7 @@ msgid ""
 "object and speaks it"
 msgstr ""
 "Verplaatst de leescursor naar het vorige karakter van de huidige regel van "
-"het navigator object, en spreekt het uit"
+"het navigatorobject, en spreekt het uit"
 
 #. Translators: Input help mode message for report current character under review cursor command.
 msgid ""
@@ -2023,7 +2020,7 @@ msgid ""
 "character. Pressing three times reports the numeric value of the character "
 "in decimal and hexadecimal"
 msgstr ""
-"Geeft het karakter van het huidige navigator object, waarop de leescursor "
+"Geeft het karakter van het huidige navigatorobject, waarop de leescursor "
 "zich bevindt, weer. Bij dubbeldruk wordt een omschrijving van het karakter "
 "gegeven, bij drie maal drukken wordt de hexa-decimale- en ascii waarde van "
 "het karakter uitgesproken"
@@ -2036,8 +2033,8 @@ msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
 msgstr ""
-"Verplaatst de leescursor naar het volgende karakter van het navigator "
-"object, en spreekt het uit"
+"Verplaatst de leescursor naar het volgende karakter van het navigatorobject, "
+"en spreekt het uit"
 
 #. Translators: Input help mode message for move review cursor to end of current line command.
 msgid ""
@@ -2045,7 +2042,7 @@ msgid ""
 "situated in the current navigator object and speaks it"
 msgstr ""
 "Verplaatst de leescursor naar het laatste karakter van de huidige regel van "
-"het navigator object, en spreekt het uit"
+"het navigatorobject, en spreekt het uit"
 
 #. Translators: A speech mode which disables speech output.
 msgid "speech mode off"
@@ -2214,7 +2211,7 @@ msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
 msgstr ""
-"In en uitschakelen van de weergave van veranderingen van dynamische inhoud, "
+"In- en uitschakelen van de weergave van veranderingen van dynamische inhoud, "
 "zoals bij DOS-vensters bijvoorbeeld"
 
 #. Translators: presented when toggled.
@@ -2234,17 +2231,17 @@ msgstr ""
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
-msgstr "focus verplaatst navigator object niet"
+msgstr "focus verplaatst navigatorobject niet"
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object on"
-msgstr "focus verplaatst navigator object"
+msgstr "focus verplaatst navigatorobject"
 
 #. Translators: Input help mode message for toggle focus moves navigator object command.
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr ""
-"In- en uitschakelen van het verplaatsen van het navigator object bij focus "
+"In- en uitschakelen van het verplaatsen van het navigatorobject bij focus "
 "veranderingen"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
@@ -2506,7 +2503,7 @@ msgstr "Toont het NVDA dialoogvenster voor configuratieprofielen"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
-msgstr ""
+msgstr "Geëmuleerde systeemtoetsen"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
@@ -2515,6 +2512,14 @@ msgstr "Diversen"
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "bladermodus"
+
+#. Translators: The shortcut key used to start NVDA.
+#. This should normally be left as is, but might be changed for some locales
+#. if the default key causes problems for the normal locale keyboard layout.
+#. The key must be formatted as described in this article:
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+msgid "CTRL+ALT+N"
+msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
@@ -3065,6 +3070,7 @@ msgstr "onderstrepen uit"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "basislijn"
 
@@ -3085,9 +3091,78 @@ msgstr "rechts uitlijnen"
 msgid "align justify"
 msgstr "uitvullen"
 
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "verdeeld uitlijnen"
+
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
-msgstr "standaard uitlijning"
+msgstr "standaard uitlijnen"
+
+#. Translators: the label for paragraph format left indent
+msgid "left indent"
+msgstr "links inspringen"
+
+#. Translators: the message when there is no paragraph format left indent
+msgid "no left indent"
+msgstr "niet links inspringen"
+
+#. Translators: the label for paragraph format right indent
+msgid "right indent"
+msgstr "rechts inspringen"
+
+#. Translators: the message when there is no paragraph format right indent
+msgid "no right indent"
+msgstr "niet rechts inspringen"
+
+#. Translators: the label for paragraph format hanging indent
+msgid "hanging indent"
+msgstr "verkeerd om inspringen"
+
+#. Translators: the message when there is no paragraph format hanging indent
+msgid "no hanging indent"
+msgstr "niet verkeerd om inspringen"
+
+#. Translators: the label for paragraph format first line indent
+msgid "first line indent"
+msgstr "eerste regel inspringen"
+
+#. Translators: the message when there is no paragraph format first line indent
+msgid "no first line indent"
+msgstr "eerste regel niet inspringen"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "verticaal boven uitlijnen"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "verticaal midden uitlijnen"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "verticaal beneden uitlijnen"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "verticaal op de baseline uitlijnen"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "verticaal uitvullen"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "verticaal verdeeld uitlijnen"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "verticaal standaard uitlijnen"
+
+#. Translators: Reported when text no longer contains a comment.
+msgid "out of comment"
+msgstr "buiten opmerking"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -3135,6 +3210,82 @@ msgstr "&Toonhoogte"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Intonatie"
+
+msgid "text mode"
+msgstr "tekstmodus"
+
+msgid "object mode"
+msgstr "objectmodus"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "eenmaal {action}"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "tweemaal {action}"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "driemaal {action}"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "viermaal {action}"
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{numFingers} vinger {action}"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "tik"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "tik en houd vast"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "houd vast"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr "veeg omhoog"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr "veeg omlaag"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr "veeg naar links"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr "veeg naar rechts"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+msgctxt "touch action"
+msgid "hover down"
+msgstr "bewegen gestart"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr "bewegen"
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr "bewegen gestopt"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3300,6 +3451,25 @@ msgstr ""
 "dan aub aan om een gift over te maken aan NV Access. Dit kunt u doen door in "
 "het NVDA menu te kiezen voor Doneer."
 
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"Kan de NVDA add-on niet installeren vanaf {path}.\n"
+"NVDA moet actief zijn om add-ons te kunnen installeren."
+
+#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+msgid ""
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
+msgstr ""
+"Object is als volgt gepositioneerd: {left:.1f} percent van de linkerrand van "
+"het scherm, {top:.1f} percent van de bovenrand van het scherm, breedte is "
+"{width:.1f} percent van het scherm, hoogte is {height:.1f} percent van het "
+"scherm."
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "{symbol} zoals in {description}"
@@ -3315,19 +3485,19 @@ msgstr "Grens van tabel"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the next column"
-msgstr "Verplaatst het navigator object naar de volgende kolom"
+msgstr "Verplaatst het navigatorobject naar de volgende kolom"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object to the previous column"
-msgstr "Verplaatst het navigator object naar de vorige kolom"
+msgstr "Verplaatst het navigatorobject naar de vorige kolom"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the next row"
-msgstr "Verplaatst navigator object en focus naar de volgende rij"
+msgstr "Verplaatst navigatorobject en focus naar de volgende rij"
 
 #. Translators: The description of an NVDA command.
 msgid "Moves the navigator object and focus to the previous row"
-msgstr "Verplaatst navigator object en focus naar de vorige rij"
+msgstr "Verplaatst navigatorobject en focus naar de vorige rij"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 msgid "Composition"
@@ -3361,6 +3531,15 @@ msgstr "Nog geen bericht"
 #. Translators: The description of an NVDA command to view one of the recent messages.
 msgid "Displays one of the recent messages"
 msgstr "Toont een van de recente berichten"
+
+#. Translators: This Outlook Express message has an attachment
+#. Translators: when an email has attachments
+msgid "has attachment"
+msgstr "bijlage"
+
+#. Translators: this Outlook Express message is flagged
+msgid "flagged"
+msgstr "gemarkeerd"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
@@ -3415,8 +3594,17 @@ msgid "BCC:"
 msgstr "BCC:"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
+#. Translators: when an email is unread
 msgid "unread"
 msgstr "ongelezen"
+
+#. Translators: for a high importance email
+msgid "high importance"
+msgstr "Hoge prioriteit"
+
+#. Translators: For a low importance email
+msgid "low importance"
+msgstr "Lage prioriteit"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3436,6 +3624,26 @@ msgstr "bijlage"
 #, python-format
 msgid "sent: %s"
 msgstr "verzonden: %s"
+
+#. Translators: The title for the dialog shown while Microsoft Outlook initializes.
+msgid "Waiting for Outlook..."
+msgstr "Wachten op Outlook..."
+
+#. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+msgid "{startTime} to {endTime}"
+msgstr "{startTime} tot {endTime}"
+
+#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+msgid "Appointment {subject}, {time}"
+msgstr "Afspraak {subject}, {time}"
+
+#. Translators: a message when the current time slot on an Outlook Calendar has an appointment
+msgid "has appointment"
+msgstr "heeft afspraak"
+
+#. Translators: the email is a meeting request
+msgid "meeting request"
+msgstr "vergaderverzoek"
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -3586,13 +3794,81 @@ msgstr "Miniaturen"
 msgid "Master Thumbnails"
 msgstr "Modelminiaturen"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "Wachten op Powerpoint..."
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Dia {slideNumber}"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers left of {otherShape} by {distance:.3g} points"
+msgstr "overlapt met linkerkant van {otherShape} met {distance:.3g} punten"
+
+#. Translators: A message when a shape is behind  another shape on a powerpoint slide
+msgid "behind left of {otherShape} by {distance:.3g} points"
+msgstr "achter linkerkant van {otherShape} voor {distance:.3g} punten"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers top of {otherShape} by {distance:.3g} points"
+msgstr "overlapt met bovenkant van {otherShape} met {distance:.3g} punten"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind top of {otherShape} by {distance:.3g} points"
+msgstr "achter bovenkant van {otherShape} voor {distance:.3g} punten"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers right of {otherShape} by {distance:.3g} points"
+msgstr "overlapt met rechterkant van {otherShape} met {distance:.3g} punten"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind right of {otherShape} by {distance:.3g} points"
+msgstr "achter rechterkant van {otherShape} voor {distance:.3g} punten"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers bottom of {otherShape} by {distance:.3g} points"
+msgstr "overlapt met onderkant van {otherShape} met {distance:.3g} punten"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind bottom of {otherShape} by {distance:.3g} points"
+msgstr "achter onderkant van {otherShape} voor {distance:.3g} punten"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers  {otherShape}"
+msgstr "overlapt met {otherShape}"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind {otherShape}"
+msgstr "achter {otherShape}"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+msgid "{distance:.3g} points from left slide edge"
+msgstr "{distance:.3g} punten van linkerrand van dia"
+
+#. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+msgid "Off left slide edge by {distance:.3g} points"
+msgstr "{distance:.3g} punten buiten linkerrand van dia"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+msgid "{distance:.3g} points from top slide edge"
+msgstr "{distance:.3g} punten van bovenrand van dia"
+
+#. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+msgid "Off top slide edge by {distance:.3g} points"
+msgstr "{distance:.3g} punten buiten bovenrand van dia"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+msgid "{distance:.3g} points from right slide edge"
+msgstr "{distance:.3g} punten van rechterrand van dia"
+
+#. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+msgid "Off right slide edge by {distance:.3g} points"
+msgstr "{distance:.3g} punten buiten rechterrand van dia"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+msgid "{distance:.3g} points from bottom slide edge"
+msgstr "{distance:.3g} punten van onderrand van dia"
+
+#. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+msgid "Off bottom slide edge by {distance:.3g} points"
+msgstr "{distance:.3g} punten buiten onderrand van dia"
 
 #. Translators: The description for a script
 msgid ""
@@ -3623,6 +3899,10 @@ msgstr "Geen notities"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "Lege dia"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "Wachten op Powerpoint..."
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -3905,7 +4185,7 @@ msgstr "Uitspraak van &interpunctie en symbolen..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 msgid "I&nput gestures..."
-msgstr "I&nvoerhandelingen..."
+msgstr "I&nvoerhandelingen koppelen..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
@@ -4101,6 +4381,10 @@ msgstr "Auteur"
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
 msgstr "&Over de add-on..."
+
+#. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
+msgid "Add-on &help"
+msgstr "Add-on &help"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -4493,7 +4777,9 @@ msgstr "Gebruik NVDA op het &aanmeldscherm van Windows "
 msgid "&Keep existing desktop shortcut"
 msgstr "&Behoud de bestaande bureaublad sneltoets"
 
-#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
+#. If the shortcut key has been changed for this locale,
+#. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "Maak &bureaublad icoon en sneltoets (control+alt+n)"
 
@@ -4627,6 +4913,10 @@ msgstr "Configuratie &opslaan bij afsluiten"
 #. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
 msgid "&Warn before exiting NVDA"
 msgstr "&Waarschuwen bij afsluiten van NVDA"
+
+#. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
+msgid "&Play sounds when starting or exiting NVDA"
+msgstr "&Geluid bij starten of afsluiten NVDA"
 
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
@@ -4845,6 +5135,11 @@ msgstr ""
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "&Commando-toetsen uitspreken"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Handle keys from other &applications"
+msgstr "Behandel toetsen van andere toepassingen"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
@@ -5127,6 +5422,11 @@ msgstr "&Regelnummers melden"
 msgid "Report l&ine indentation"
 msgstr "Inspringing melden"
 
+#. Translators: This message is presented in the document formatting settings dialogue
+#. If this option is selected, NVDA will report paragraph indentation if available.
+msgid "Report &paragraph indentation"
+msgstr "Meld &alinea inspringen"
+
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &tables"
@@ -5172,6 +5472,11 @@ msgstr "Oriëntatiepunten melden"
 msgid "Report fra&mes"
 msgstr "&Frames melden"
 
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "Meld indien &klikbaar"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "Wijzig Woordenboekregel"
@@ -5201,6 +5506,7 @@ msgid "&Dictionary entries"
 msgstr "&Woordenboekregels"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
+#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr "Opmerking"
 
@@ -5320,7 +5626,7 @@ msgstr "{main} ({source})"
 
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 msgid "Enter input gesture:"
-msgstr "Voer invoergebaar uit:"
+msgstr "Voer invoerhandeling uit:"
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
@@ -5381,6 +5687,14 @@ msgstr "Geen spraak"
 
 msgid "word"
 msgstr "woord"
+
+#. Translators: current position in a document as a percentage of the document length
+msgid "{curPercent:.0f}%"
+msgstr "{curPercent:.0f}%"
+
+#. Translators: the current position's screen coordinates in pixels
+msgid "at {x}, {y}"
+msgstr "op {x}, {y}"
 
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
@@ -5463,7 +5777,7 @@ msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
 msgstr ""
-"In en uitschakelen van het behouden van de scherm lay-out tijdens het "
+"In- en uitschakelen van het behouden van de schermlay-out tijdens het "
 "vernieuwen van het document"
 
 #. Translators: the description for the elements list dialog script on virtualBuffers.
@@ -5472,6 +5786,7 @@ msgstr "Toont een lijst van links, koppen of oriëntatiepunten"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
 msgstr "Niet in een cel van een tabel"
 
@@ -5948,8 +6263,10 @@ msgstr "standaardkleur"
 msgid "{start} through {end}"
 msgstr "{start} tot en met {end}"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
@@ -5957,35 +6274,67 @@ msgstr ""
 "Kan geen hoofdingen instellen. Schakel het melden van tabelhoofdingen in bij "
 "de Documentopmaak instellingen"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Set column header row"
-msgstr "Huidige rij bevat kolomhoofdingen"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Set {address} as start of column headers"
+msgstr "Stel {address} in als begin van kolomhoofdingen"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Cleared column header row"
-msgstr "Dit is niet langer de rij die kolomhoofdingen bevat."
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Already set {address} as start of column headers"
+msgstr "{address} is al ingesteld als begin van kolomhoofdingen"
 
-msgid ""
-"Pressing once will set the current row as the row where column headers "
-"should be found. Pressing twice clears the setting."
-msgstr ""
-"Een keer drukken, stelt de huidige rij in als de rij die de kolomhoofdingen "
-"bevat. Tweemaal drukken, maakt de instelling ongedaan."
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "removed {address}    from column headers"
+msgstr "{address} verwijderd van kolomhoofdingen"
 
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Set row header column"
-msgstr "Huidige kolom bevat rijhoofdingen"
-
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Cleared row header column"
-msgstr "Dit is niet langer de kolom die rijhoofdingen bevat."
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Cannot find {address}    in column headers"
+msgstr "Kan {address} niet vinden in kolomhoofdingen"
 
 msgid ""
-"Pressing once will set the current column as the column where row headers "
-"should be found. Pressing twice clears the setting."
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this region. Pressing twice will forget "
+"the current column header for this cell."
 msgstr ""
-"Een keer drukken, stelt de huidige kolom in als de kolom die de "
-"rijhoofdingen bevat. Tweemaal drukken, maakt de instelling ongedaan."
+"Eenmaal drukken, stelt deze cel in als eerste kolomhoofding voor alle cellen "
+"eronder en rechts ervan, binnen dit gebied. Tweemaal drukken vergeet de "
+"huidige kolomhoofding voor deze cel."
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Set {address} as start of row headers"
+msgstr "Stel {address} in als begin van rijhoofdingen"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Already set {address} as start of row headers"
+msgstr "{address} is al ingesteld als begin van rijhoofdingen"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "removed {address}    from row headers"
+msgstr "{address} verwijderd van rijhoofdingen"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Cannot find {address}    in row headers"
+msgstr "Kan {address} niet vinden in rijhoofdingen"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this region. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Eenmaal drukken, stelt deze cel in als eerste rijhoofding voor alle cellen "
+"eronder en rechts ervan, binnen dit gebied. Tweemaal drukken vergeet de "
+"huidige rijhoofding voor deze cel."
+
+#. Translators: A message in Excel when there is no comment
+msgid "Not on a comment"
+msgstr "Niet in een opmerking"
+
+#. Translators: the description  for a script for Excel
+msgid "Reports the comment on the current cell"
+msgstr "Leest de opmerking bij de huidige cel"
+
+#. Translators: Dialog text for
+msgid "Editing comment for cell {address}"
+msgstr "Opmerking bewerken bij cel {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
@@ -6098,6 +6447,156 @@ msgstr "Datum onbekend"
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "{revisionType} door {revisionAuthor} op {revisionDate}"
 
+#, python-format
+msgid "%g characters"
+msgstr "%g karakters"
+
+#. Translators: the value in points for a paragraph indenting
+#, python-format
+msgid "%g pt"
+msgstr "%g pt"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Stel rij {rowNumber} en kolom {columnNumber} in als begin van kolomhoofdingen"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Rij {rowNumber} en kolom {columnNumber} zijn al ingesteld als begin van "
+"kolomhoofdingen"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr "Rij {rowNumber} en kolom {columnNumber} verwijderd van kolomhoofdingen"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+"Kan rij {rowNumber} en kolom {columnNumber} niet vinden in kolomhoofdingen"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"Eenmaal drukken, stelt deze cel in als eerste kolomhoofding voor alle cellen "
+"eronder en rechts ervan, binnen deze tabel. Tweemaal drukken vergeet de "
+"huidige kolomhoofding voor deze cel."
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Stel rij {rowNumber} en kolom {columnNumber} in als begin van rijhoofdingen"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Rij {rowNumber} en kolom {columnNumber} zijn al ingesteld als begin van "
+"rijhoofdingen"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr "Rij {rowNumber} en kolom {columnNumber} verwijderd van rijhoofdingen"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+"Kan rij {rowNumber} en kolom {columnNumber} niet vinden in rijhoofdingen"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Eenmaal drukken, stelt deze cel in als eerste rijhoofding voor alle cellen "
+"eronder en rechts ervan, binnen deze tabel. Tweemaal drukken vergeet de "
+"huidige rijhoofding voor deze cel."
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "Vet"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "Einde vet"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "cursief"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "einde cursief"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "onderstrepen"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "einde onderstrepen"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Left aligned"
+msgstr "Links uitgelijnd"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "centered"
+msgstr "gecentreerd"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Right aligned"
+msgstr "Rechts uitgelijnd"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Justified"
+msgstr "Uitgevuld"
+
+#. Translators: the message when the outline level / style is changed in Microsoft word
+msgid "{styleName} style, outline level {outlineLevel}"
+msgstr "{styleName} stijl, kopniveau {outlineLevel}"
+
+#. Translators: a message when increasing or decreasing font size in Microsoft Word
+msgid "{size:g} point font"
+msgstr "lettergrootte {size:g} punten"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} characters"
+msgstr "{offset:.3g} karakters"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} inches"
+msgstr "{offset:.3g} inches"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} centimeters"
+msgstr "{offset:.3g} centimeter"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} millimeters"
+msgstr "{offset:.3g} millimeter"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} points"
+msgstr "{offset:.3g} punten"
+
+#. Translators: a measurement in Microsoft Word
+#. See http://support.microsoft.com/kb/76388 for details.
+msgid "{offset:.3g} picas"
+msgstr "{offset:.3g} picas"
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "no comments"
+msgstr "geen opmerkingen"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "Meld de tekst van de opmerking waar de cursor zich bevindt."
+
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 msgid "Not in table"
@@ -6113,6 +6612,44 @@ msgstr "HIMS Braille Sense/Braille EDGE serie"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "No location information for navigator object"
+#~ msgstr "Geen informatie over de locatie van het navigatorobject"
+
+#~ msgid "No location information for screen"
+#~ msgstr "Geen informatie over de locatie van het scherm"
+
+#~ msgid ""
+#~ "Reports the hight, width and position of the current navigator object"
+#~ msgstr ""
+#~ "Geeft de hoogte, de breette en de positie weer van het huidige "
+#~ "navigatorobject"
+
+#~ msgid "Set column header row"
+#~ msgstr "Huidige rij bevat kolomhoofdingen"
+
+#~ msgid "Cleared column header row"
+#~ msgstr "Dit is niet langer de rij die kolomhoofdingen bevat."
+
+#~ msgid ""
+#~ "Pressing once will set the current row as the row where column headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "Een keer drukken, stelt de huidige rij in als de rij die de "
+#~ "kolomhoofdingen bevat. Tweemaal drukken, maakt de instelling ongedaan."
+
+#~ msgid "Set row header column"
+#~ msgstr "Huidige kolom bevat rijhoofdingen"
+
+#~ msgid "Cleared row header column"
+#~ msgstr "Dit is niet langer de kolom die rijhoofdingen bevat."
+
+#~ msgid ""
+#~ "Pressing once will set the current column as the column where row headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "Een keer drukken, stelt de huidige kolom in als de kolom die de "
+#~ "rijhoofdingen bevat. Tweemaal drukken, maakt de instelling ongedaan."
 
 #, fuzzy
 #~ msgid "%s through %s"
@@ -6162,8 +6699,8 @@ msgstr "HIMS SyncBraille"
 #~ "Moves navigator object to the object represented by the text at the "
 #~ "position of the review cursor within flat review"
 #~ msgstr ""
-#~ "In platte overzichtsmodus, verplaatst navigator object naar het object "
-#~ "dat wordt voorgesteld door de tekst op de positie van de leescursor"
+#~ "In platte overzichtsmodus, verplaatst navigatorobject naar het object dat "
+#~ "wordt voorgesteld door de tekst op de positie van de leescursor"
 
 #~ msgid "Please close the other NVDA settings dialog first"
 #~ msgstr "Sluit eerst het andere dialoogvenster met NVDA-instellingen aub"

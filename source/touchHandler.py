@@ -4,9 +4,11 @@
 #See the file COPYING for more details.
 #Copyright (C) 2012 NV Access Limited
 
+import wx
 import threading
 from ctypes import *
 from ctypes.wintypes import *
+import re
 import sys
 import globalPluginHandler
 import config
@@ -14,14 +16,19 @@ import winUser
 import speech
 import api
 import ui
-import queueHandler
 import inputCore
 import screenExplorer
 from logHandler import log
 import touchTracker
 import gui
+import core
 
 availableTouchModes=['text','object']
+
+touchModeLabels={
+	"text":_("text mode"),
+	"object":_("object mode"),
+}
 
 HWND_MESSAGE=-3
 
@@ -95,6 +102,20 @@ class TouchInputGesture(inputCore.InputGesture):
 
 	counterNames=["single","double","tripple","quodruple"]
 
+	pluralActionLabels={
+		# Translators: a touch screen action performed once 
+		"single":_("single {action}"),
+		# Translators: a touch screen action performed twice
+		"double":_("double {action}"),
+		# Translators: a touch screen action performed 3 times
+		"tripple":_("tripple {action}"),
+		# Translators: a touch screen action performed 4 times
+		"quodruple":_("quadruple {action}"),
+	}
+
+	# Translators: a touch screen action using multiple fingers
+	multiFingerActionLabel=_("{numFingers} finger {action}")
+
 	def _get_speechEffectWhenExecuted(self):
 		if self.tracker.action in (touchTracker.action_hover,touchTracker.action_hoverUp): return None
 		return super(TouchInputGesture,self).speechEffectWhenExecuted
@@ -124,12 +145,44 @@ class TouchInputGesture(inputCore.InputGesture):
 	def _get_identifiers(self):
 		return [x.lower() for x in self._rawIdentifiers] 
 
-	def _get_displayName(self):
-		return " ".join(self._rawIdentifiers[1][3:].split('_'))
+	RE_IDENTIFIER = re.compile(r"^ts(?:\((.+?)\))?:(.*)$")
+
+	@classmethod
+	def getDisplayTextForIdentifier(cls, identifier):
+		mode,IDs=cls.RE_IDENTIFIER.match(identifier).groups()
+		actions=[]
+		for ID in IDs.split('+'):
+			action=None
+			foundAction=foundPlural=False
+			for subID in reversed(ID.split('_')):
+				if not foundAction:
+					action=touchTracker.actionLabels[subID]
+					foundAction=True
+					continue
+				if not foundPlural:
+					pluralActionLabel=cls.pluralActionLabels.get(subID)
+					if pluralActionLabel:
+						action=pluralActionLabel.format(action=action)
+						foundPlural=True
+						continue
+				if subID.endswith('finger'):
+					numFingers=int(subID[:0-len('finger')])
+					if numFingers>1:
+						action=cls.multiFingerActionLabel.format(numFingers=numFingers,action=action)
+				break
+			actions.append(action)
+		# Translators: a touch screen gesture
+		source=_("Touch screen")
+		if mode:
+			source=u"{source}, {mode}".format(source=source,mode=touchModeLabels[mode])
+		return source,u" + ".join(actions)
+
+inputCore.registerGestureSource("ts", TouchInputGesture)
 
 class TouchHandler(threading.Thread):
 
 	def __init__(self):
+		self.pendingEmitsTimer=wx.PyTimer(core.requestPump)
 		super(TouchHandler,self).__init__()
 		self._curTouchMode='object'
 		self.initializedEvent=threading.Event()
@@ -142,6 +195,7 @@ class TouchHandler(threading.Thread):
 	def terminate(self):
 		windll.user32.PostThreadMessageW(self.ident,WM_QUIT,0,0)
 		self.join()
+		self.pendingEmitsTimer.Stop()
 
 	def run(self):
 		try:
@@ -155,8 +209,6 @@ class TouchHandler(threading.Thread):
 			self.trackerManager=touchTracker.TrackerManager()
 			self.screenExplorer=screenExplorer.ScreenExplorer()
 			self.screenExplorer.updateReview=True
-			self.gesturePump=self.gesturePumpFunc()
-			queueHandler.registerGeneratorObject(self.gesturePump)
 		except Exception as e:
 			self.threadExc=e
 		finally:
@@ -165,7 +217,6 @@ class TouchHandler(threading.Thread):
 		while windll.user32.GetMessageW(byref(msg),None,0,0):
 			windll.user32.TranslateMessage(byref(msg))
 			windll.user32.DispatchMessageW(byref(msg))
-		self.gesturePump.close()
 		oledll.oleacc.AccSetRunningUtilityState(self._touchWindow,ANRUS_TOUCH_MODIFICATION_ACTIVE,0)
 		windll.user32.UnregisterPointerInputTarget(self._touchWindow,PT_TOUCH)
 		windll.user32.DestroyWindow(self._touchWindow)
@@ -180,8 +231,10 @@ class TouchHandler(threading.Thread):
 			ID=winUser.LOWORD(wParam)
 			if touching:
 				self.trackerManager.update(ID,x,y,False)
+				core.requestPump()
 			elif not flags&POINTER_MESSAGE_FLAG_FIRSTBUTTON:
 				self.trackerManager.update(ID,x,y,True)
+				core.requestPump()
 			return 0
 		return windll.user32.DefWindowProcW(hwnd,msg,wParam,lParam)
 
@@ -190,15 +243,20 @@ class TouchHandler(threading.Thread):
 			raise ValueError("Unknown mode %s"%mode)
 		self._curTouchMode=mode
 
-	def gesturePumpFunc(self):
-		while True:
-			for tracker in self.trackerManager.emitTrackers():
-				gesture=TouchInputGesture(tracker,self._curTouchMode)
-				try:
-					inputCore.manager.executeGesture(gesture)
-				except inputCore.NoInputGestureAction:
-					pass
-			yield
+	def pump(self):
+		for tracker in self.trackerManager.emitTrackers():
+			gesture=TouchInputGesture(tracker,self._curTouchMode)
+			try:
+				inputCore.manager.executeGesture(gesture)
+			except inputCore.NoInputGestureAction:
+				pass
+		interval=self.trackerManager.pendingEmitInterval
+		if interval and interval>0:
+			# Ensure we are pumpped again by the time more pending multiTouch trackers are ready
+			self.pendingEmitsTimer.Start(interval*1000,True)
+		else:
+			# Stop the timer in case we were pumpped due to something unrelated but just happened to be at the appropriate time to clear any remaining trackers 
+			self.pendingEmitsTimer.Stop()
 
 	def notifyInteraction(self, obj):
 		"""Notify the system that UI interaction is occurring via touch.

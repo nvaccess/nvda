@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
 #URL: http://www.nvda-project.org/
-#Copyright 2010 James Teh <jamie@jantrid.net>.
+#Copyright 2010-2014 NV Access Limited.
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -14,6 +14,7 @@
 
 import sys
 import os
+import time
 import _winreg
 from glob import glob
 
@@ -37,20 +38,6 @@ gettext.install("nvda", unicode=True)
 sys.path.append("source")
 import versionInfo
 del sys.path[-1]
-
-# Get the path to 7z.
-try:
-	szKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\7-Zip", 0, _winreg.KEY_READ)
-except WindowsError:
-	try:
-		szKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\7-Zip", 0, _winreg.KEY_WOW64_64KEY | _winreg.KEY_READ)
-	except WindowsError:
-		szKey = None
-if szKey:
-	with szKey:
-		sz = os.path.join(_winreg.QueryValueEx(szKey, "Path")[0], "7z.exe")
-else:
-	sz = "7z"
 
 makensis = "miscDeps\\tools\\NSIS\\makensis"
 
@@ -82,7 +69,7 @@ vars.Add(PathVariable("certFile", "The certificate file with which to sign execu
 vars.Add("certPassword", "The password for the private key in the signing certificate", "")
 vars.Add("certTimestampServer", "The URL of the timestamping server to use to timestamp authenticode signatures", "")
 vars.Add(PathVariable("outputDir", "The directory where the final built archives and such will be placed", "output",PathVariable.PathIsDirCreate))
-vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'symbols', ["symbols","debugCRT","RTC","noOptimize"]))
+vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'none', ["debugCRT","RTC"]))
 vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in xrange(60)]))
 
 #Base environment for this and sub sconscripts
@@ -126,12 +113,35 @@ outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot
 outputDir=Dir(env['outputDir'])
 devDocsOutputDir=outputDir.Dir('devDocs')
 
+# An action to sign an executable with certFile.
+signExecCmd = ["signtool", "sign", "/f", certFile]
+if certPassword:
+	signExecCmd.extend(("/p", certPassword))
+if certTimestampServer:
+	signExecCmd.extend(("/t", certTimestampServer))
+def signExec(target,source,env):
+	print [str(x) for x in target]
+	#sys.exit(1)
+	# #3795: signtool can quite commonly fail with timestamping, so allow it to try up to 3 times with a 1 second delay between each try. 
+	res=0
+	for count in xrange(3):
+		res=env.Execute([signExecCmd+[target[0].abspath]])
+		if not res:
+			return 0 # success
+		time.sleep(1)
+	return res # failed
+#Export via scons environment so other libraries can be signed
+env['signExec']=signExec
+
 #architecture-specific environments
 archTools=['default','windowsSdk','midl','msrpc']
 env32=env.Clone(TARGET_ARCH='x86',tools=archTools)
 env64=env.Clone(TARGET_ARCH='x86_64',tools=archTools)
-env=env32
+# Hack around odd bug where some tool [after] msvc states that static and shared objects are different
+env32['STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME'] = 1
+env64['STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME'] = 1
 
+env=env32
 
 #Fill sourceDir with anything provided for it by miscDeps
 env.recursiveCopy(sourceDir,Dir('miscdeps/source'))
@@ -140,7 +150,7 @@ env.SConscript('source/comInterfaces_sconscript',exports=['env'])
 
 #Process nvdaHelper scons files
 env32.SConscript('nvdaHelper/archBuild_sconscript',exports={'env':env32,'clientInstallDir':clientDir.Dir('x86'),'libInstallDir':sourceLibDir},variant_dir='build/x86')
-env64.SConscript('nvdaHelper/archBuild_sconscript',exports={'env':env64,'clientInstallDir':clientDir.Dir('x86_64'),'libInstallDir':sourceLibDir64},variant_dir='build/x86_64')
+env64.SConscript('nvdaHelper/archBuild_sconscript',exports={'env':env64,'clientInstallDir':clientDir.Dir('x64'),'libInstallDir':sourceLibDir64},variant_dir='build/x86_64')
 
 #Allow all NVDA's gettext po files to be compiled in source/locale
 for po in env.Glob(sourceDir.path+'/locale/*/lc_messages/*.po'):
@@ -209,8 +219,8 @@ def NVDADistGenerator(target, source, env, for_signature):
 	if env.get("uiAccess"):
 		buildCmd.append("--enable-uiAccess")
 	if certFile:
-		for prog in "nvda_noUIAccess", "nvda_uiAccess", "nvda_slave", "nvda_service":
-			action.append(signExec[:-1] + [os.path.join(target[0].path, "%s.exe" % prog)])
+		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "nvda_service.exe":
+			action.append(lambda target,source,env, progByVal=prog: signExec([target[0].File(progByVal)],source,env))
 
 	for ext in "", "c", "o":
 		action.append(Delete(buildVersionFn + ext))
@@ -218,32 +228,48 @@ def NVDADistGenerator(target, source, env, for_signature):
 	return action
 env["BUILDERS"]["NVDADist"] = Builder(generator=NVDADistGenerator, target_factory=Dir)
 
-# A builder to generate an archive with 7-Zip.
-def SzArchiveGenerator(target, source, env, for_signature):
-	cmd = []
-	relativeToSourceDir = env.get("relativeToSourceDir", False)
-	if relativeToSourceDir:
-		cmd.extend(("cd", source[0], "&&"))
-	cmd.extend((sz, "a", "-mx=9"))
-	ext = os.path.splitext(str(target[0]))[1]
-	if ext == ".7z":
-		cmd.append("-t7z")
-	elif ext == ".zip":
-		cmd.append("-tzip")
-	elif ext == ".exe":
-		cmd.append("-sfx7z.sfx")
-	cmd.extend((target[0].abspath,
-		"." if relativeToSourceDir else "$SOURCES"))
-	return [cmd]
-env["BUILDERS"]["SzArchive"] = Builder(generator=SzArchiveGenerator)
+# A builder to generate a zip archive.
+# We roll our own instead of using env.Zip because we want to create some archives
+# relative to a specified directory.
+def ZipArchiveAction(target, source, env):
+	relativeTo = env.get("relativeTo", None)
+	if relativeTo:
+		relativeTo = relativeTo.path
+		def getArcName(origName):
+			arcName = os.path.relpath(origName, relativeTo)
+			if arcName.startswith(".."):
+				arcName = arcName.replace(".." + os.path.sep, "")
+			return "" if arcName == "." else arcName
+	else:
+		getArcName = lambda origName: "" if origName == "." else origName
 
-# An action to sign an executable with certFile.
-signExec = ["signtool", "sign", "/f", certFile]
-if certPassword:
-	signExec.extend(("/p", certPassword))
-if certTimestampServer:
-	signExec.extend(("/t", certTimestampServer))
-signExec.append("$TARGET")
+	# Nasty hack to make zipfile use best compression, since it isn't configurable.
+	# Tried setting memlevel to 9 as well, but it made compression slightly worse.
+	import zlib
+	origZDefComp = zlib.Z_DEFAULT_COMPRESSION
+	zlib.Z_DEFAULT_COMPRESSION = zlib.Z_BEST_COMPRESSION
+
+	import zipfile
+	zf = None
+	try:
+		zf = zipfile.ZipFile(target[0].path, "w", zipfile.ZIP_DEFLATED)
+		for s in source:
+			if os.path.isdir(s.path):
+				for path, dirs, files in os.walk(s.path):
+					arcPath = getArcName(path)
+					if arcPath:
+						zf.write(path, arcPath)
+					for f in files:
+						zf.write(os.path.join(path, f), os.path.join(arcPath, f))
+			else:
+				zf.write(s.path, getArcName(s.path))
+
+	finally:
+		if zf:
+			zf.close()
+		zlib.Z_DEFAULT_COMPRESSION = origZDefComp
+
+env["BUILDERS"]["ZipArchive"] = Builder(action=ZipArchiveAction)
 
 uninstFile=File("dist/uninstall.exe")
 uninstGen = env.Command(File("uninstaller/uninstGen.exe"), "uninstaller/uninst.nsi",
@@ -272,7 +298,7 @@ if certFile:
 	env.AddPostAction(launcher, [signExec])
 env.Alias("launcher", launcher)
 
-clientArchive = env.SzArchive(outputDir.File("%s_controllerClient.zip" % outFilePrefix), clientDir, relativeToSourceDir=True)
+clientArchive = env.ZipArchive(outputDir.File("%s_controllerClient.zip" % outFilePrefix), clientDir, relativeTo=clientDir)
 env.Alias("client", clientArchive)
 
 changesFile=env.Command(outputDir.File("%s_changes.html" % outFilePrefix),userDocsDir.File('en/changes.html'),Copy('$TARGET','$SOURCE'))
@@ -289,6 +315,8 @@ def makePot(target, source, env):
 			"--foreign-user",
 			"--add-comments=Translators:",
 			"--keyword=pgettext:1c,2",
+			# Needed because xgettext doesn't recognise the .pyw extension.
+			"--language=python",
 		] + [os.path.relpath(str(f), str(sourceDir)) for f in source]
 	]) != 0:
 		raise RuntimeError("xgettext failed")
@@ -331,7 +359,7 @@ env.Clean('devDocs', [devGuide, devDocs_nvda])
 pot = env.Command(outputDir.File("%s.pot" % outFilePrefix),
 	# Don't use sourceDir as the source, as this depends on comInterfaces and nvdaHelper.
 	# We only depend on the Python files.
-	[f for pattern in ("*.py", r"*\*.py", r"*\*\*.py") for f in env.Glob(os.path.join(sourceDir.path, pattern))],
+	[f for pattern in ("*.py", "*.pyw", r"*\*.py", r"*\*\*.py") for f in env.Glob(os.path.join(sourceDir.path, pattern))],
 	makePot)
 
 env.Alias("pot", pot)
@@ -339,7 +367,7 @@ env.Alias("pot", pot)
 symbolsList=[]
 symbolsList.extend(env.Glob(os.path.join(sourceLibDir.path,'*.pdb')))
 symbolsList.extend(env.Glob(os.path.join(sourceLibDir64.path,'*.pdb')))
-symbolsArchive = env.SzArchive(outputDir.File("%s_debugSymbols.zip" % outFilePrefix), symbolsList)
+symbolsArchive = env.ZipArchive(outputDir.File("%s_debugSymbols.zip" % outFilePrefix), symbolsList)
 env.Alias("symbolsArchive", symbolsArchive)
 
 env.Default(dist)

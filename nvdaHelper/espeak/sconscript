@@ -9,6 +9,9 @@ from glob import glob
 
 env=env.Clone()
 env.Append(CPPDEFINES='/DLIBRARY')
+#Whole-program optimization causes eSpeak to distort and worble with its Klatt4 voice
+#Therefore specifically force it off
+env.Append(CCFLAGS='/GL-')
 
 def _compilePhonemeAndDictData_buildEmitter(target,source,env):
 	dictSources=env.Flatten([env.Glob(source[0].abspath+'\\*_%s'%ext) for ext in ('rules','list','listx','extra')])

@@ -75,6 +75,8 @@ def generate(env):
 		if targetArch.endswith('64'):
 			env.Append(LINKFLAGS=[env['LINKFLAGS'],'/SUBSYSTEM:WINDOWS,5.02'])
 		else:
+			# #3730: VC2012 uses SSE2 by default, but NVDA is still run on some older processers (AMD Athlon etc) which don't support this.
+			env.Append(CCFLAGS='/arch:IA32')
 			env.Append(LINKFLAGS=[env['LINKFLAGS'],'/SUBSYSTEM:WINDOWS,5.01'])
 	if not d:
 		d=fetchSDKVars(targetArch,'v7.1')

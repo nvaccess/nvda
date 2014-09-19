@@ -2,8 +2,9 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2007-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
+#Copyright (C) 2007-2014 NV Access Limited
 
+import threading
 import queueHandler
 import api
 import speech
@@ -18,6 +19,8 @@ import globalPluginHandler
 _pendingEventCountsByName={}
 _pendingEventCountsByObj={}
 _pendingEventCountsByNameAndObj={}
+# Needed to ensure updates are atomic, as these might be updated from multiple threads simultaneously.
+_pendingEventCountsLock=threading.RLock()
 
 #: the last object queued for a gainFocus event. Useful for code running outside NVDA's core queue 
 lastQueuedFocusObject=None
@@ -28,29 +31,31 @@ def queueEvent(eventName,obj,**kwargs):
 	@type eventName: string
 	"""
 	global lastQueuedFocusObject
-	queueHandler.queueFunction(queueHandler.eventQueue,_queueEventCallback,eventName,obj,kwargs)
 	if eventName=="gainFocus":
 		lastQueuedFocusObject=obj
-	_pendingEventCountsByName[eventName]=_pendingEventCountsByName.get(eventName,0)+1
-	_pendingEventCountsByObj[obj]=_pendingEventCountsByObj.get(obj,0)+1
-	_pendingEventCountsByNameAndObj[(eventName,obj)]=_pendingEventCountsByNameAndObj.get((eventName,obj),0)+1
+	with _pendingEventCountsLock:
+		_pendingEventCountsByName[eventName]=_pendingEventCountsByName.get(eventName,0)+1
+		_pendingEventCountsByObj[obj]=_pendingEventCountsByObj.get(obj,0)+1
+		_pendingEventCountsByNameAndObj[(eventName,obj)]=_pendingEventCountsByNameAndObj.get((eventName,obj),0)+1
+	queueHandler.queueFunction(queueHandler.eventQueue,_queueEventCallback,eventName,obj,kwargs)
 
 def _queueEventCallback(eventName,obj,kwargs):
-	curCount=_pendingEventCountsByName.get(eventName,0)
-	if curCount>1:
-		_pendingEventCountsByName[eventName]=(curCount-1)
-	elif curCount==1:
-		del _pendingEventCountsByName[eventName]
-	curCount=_pendingEventCountsByObj.get(obj,0)
-	if curCount>1:
-		_pendingEventCountsByObj[obj]=(curCount-1)
-	elif curCount==1:
-		del _pendingEventCountsByObj[obj]
-	curCount=_pendingEventCountsByNameAndObj.get((eventName,obj),0)
-	if curCount>1:
-		_pendingEventCountsByNameAndObj[(eventName,obj)]=(curCount-1)
-	elif curCount==1:
-		del _pendingEventCountsByNameAndObj[(eventName,obj)]
+	with _pendingEventCountsLock:
+		curCount=_pendingEventCountsByName.get(eventName,0)
+		if curCount>1:
+			_pendingEventCountsByName[eventName]=(curCount-1)
+		elif curCount==1:
+			del _pendingEventCountsByName[eventName]
+		curCount=_pendingEventCountsByObj.get(obj,0)
+		if curCount>1:
+			_pendingEventCountsByObj[obj]=(curCount-1)
+		elif curCount==1:
+			del _pendingEventCountsByObj[obj]
+		curCount=_pendingEventCountsByNameAndObj.get((eventName,obj),0)
+		if curCount>1:
+			_pendingEventCountsByNameAndObj[(eventName,obj)]=(curCount-1)
+		elif curCount==1:
+			del _pendingEventCountsByNameAndObj[(eventName,obj)]
 	executeEvent(eventName,obj,**kwargs)
 
 def isPendingEvents(eventName=None,obj=None):

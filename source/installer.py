@@ -172,7 +172,12 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 	NVDAExe=os.path.join(installDir,u"nvda.exe")
 	slaveExe=os.path.join(installDir,u"nvda_slave.exe")
 	if shouldCreateDesktopShortcut:
-		createShortcut(u"NVDA.lnk",targetPath=slaveExe,arguments="launchNVDA -r",hotkey="CTRL+ALT+N",workingDirectory=installDir,prependSpecialFolder="AllUsersDesktop")
+		# Translators: The shortcut key used to start NVDA.
+		# This should normally be left as is, but might be changed for some locales
+		# if the default key causes problems for the normal locale keyboard layout.
+		# The key must be formatted as described in this article:
+		# http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+		createShortcut(u"NVDA.lnk",targetPath=slaveExe,arguments="launchNVDA -r",hotkey=_("CTRL+ALT+N"),workingDirectory=installDir,prependSpecialFolder="AllUsersDesktop")
 	createShortcut(os.path.join(startMenuFolder,"NVDA.lnk"),targetPath=NVDAExe,workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
 	# Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 	createShortcut(os.path.join(startMenuFolder,_("NVDA web site")+".lnk"),targetPath=versionInfo.url,prependSpecialFolder="AllUsersPrograms")

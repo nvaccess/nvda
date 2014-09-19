@@ -8,7 +8,7 @@ The NVDA source depends on several other packages to run correctly.
 
 === Installed Dependencies ===
 The following dependencies need to be installed on your system:
-* Python, version 2.7.5, 32 bit: http://www.python.org/
+* Python, version 2.7.8, 32 bit: http://www.python.org/
 * Microsoft Visual Studio 2012 Update 1 or later (Express for Windows Desktop, or Professional)
 	* Download for Visual Studio Express 2012 (Windows Desktop): http://www.microsoft.com/en-au/download/details.aspx?id=34673
 	* Download for Visual Studio 2012 latest update package: http://go.microsoft.com/fwlink/?LinkId=301713 
@@ -24,17 +24,17 @@ The following dependencies are included in Git submodules:
 * comtypes, version 0.6.2: http://sourceforge.net/projects/comtypes/
 * wxPython, version 2.8.12.1 unicode: http://www.wxpython.org/
 * Python Windows Extensions, build 218: http://sourceforge.net/projects/pywin32/ 
-* eSpeak, version 1.47.11: http://espeak.sourceforge.net/
+* eSpeak, version 1.48.03: http://espeak.sourceforge.net/
 * IAccessible2, version 1.3: http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2
 * ConfigObj, version 4.6.0: http://www.voidspace.org.uk/python/configobj.html
-* liblouis, version 2.5.3: http://www.liblouis.org/
+* liblouis, version 2.5.4: http://www.liblouis.org/
 * NVDA images and sounds
 * System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest
 * Adobe Acrobat accessibility interface, version XI: http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip
 * Adobe FlashAccessibility interface typelib
 * txt2tags, version 2.5: http://txt2tags.sourceforge.net/
-* MinHook, rev e21b54a: https://github.com/RaMMicHaeL/minhook
-* SCons, version 2.3.0: http://www.scons.org/
+* MinHook, tagged version 1.2.2: https://github.com/RaMMicHaeL/minhook
+* SCons, version 2.3.2: http://www.scons.org/
 * brlapi Python bindings, version 0.5.7 or later, distributed with BRLTTY for Windows, version 4.2-2: http://brl.thefreecat.org/brltty/
 * ALVA BC6 generic dll, version 3.0.4.1
 * lilli.dll, version 2.1.0.0
@@ -52,7 +52,6 @@ The following dependencies are included in Git submodules:
 === Other Dependencies ===
 These dependencies are not included in Git submodules, but aren't needed by most people.
 * If you want to be able to use the Handy Tech braille display driver when running from source code, you will need to install the Handy Tech universal driver: ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
-* To create the NVDA controller client and symbols archives: 7-Zip: http://www.7-zip.org/
 * To generate developer documentation for nvdaHelper: Doxygen Windows installer, version 1.7.3: http://www.stack.nl/~dimitri/doxygen/download.html
 
 == Preparing the Source Tree ==
@@ -67,14 +66,19 @@ Though while simply testing or committing changes, it may be faster usually just
 === Compiling NVDAHelper with Debugging Options ===
 Among other things, preparing the source tree builds the NVDAHelper libraries.  
 If trying to debug nvdaHelper, You can control various  debugging options  with the nvdaHelperDebugFlags command line variable. It takes one or more of the following flags:
-	* symbols: debugging symbols will be added to the DLLs and pdb files will be generated for use with a debugger. (symbols are produced by default, but if specifying nvdaHelperDebugFlags and you want symbols it is still necessary to  specify this keyword.)
 	* debugCRT: the libraries will be linked against the debug C runtime and assertions will be enabled. (By default, the normal CRT is used and assertions are disabled.)
-	* noOptimize: All compiler optimizations will be disabled. (Optimization 2 [/O2] is used by default.)
 	* RTC: runtime checks (stack corruption, uninitialized variables, etc.) will be enabled. (The default is no runtime checks.)
 The special keywords none and all can also be used in place of the individual flags.
 
-An example follows that enables symbols and disables optimizations:
-scons source nvdaHelperDebugFlags=symbols,noOptimize
+An example follows that enables debug CRT and runtype checks 
+scons source nvdaHelperDebugFlags=debugCRT,RTC
+
+Symbol pdb files are always produced when building, regardless of the debug flags.
+However, they are not included in the NVDA distribution.
+Instead, scons symbolArchive will package them as a separate archive.
+
+By default, builds also do not use any compiler optimizations.
+Please see the release keyword argument for what compiler optimizations it will enable.
 
 == Running the Source Code ==
 To start NVDA from source code, run nvda.pyw located in the source directory.
@@ -110,6 +114,8 @@ scons pot
 Optionally, the build can  be customised by providing variables on the command line:
 	* version: The version of this build.
 	* release: Whether this is a release version.
+		* This enables various C++ compiler optimizations such as /O2 and whole-program optimization.
+		* It also instructs Python to generate optimized byte code.
 	* publisher: The publisher of this build.
 	* certFile: The certificate file with which to sign executables. The certificate must be in pfx format and contain the private key.
 	* certPassword: The password for the private key in the signing certificate. If omitted, no password will be assumed.

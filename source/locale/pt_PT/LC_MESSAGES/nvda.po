@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-14 14:20+0000\n"
-"PO-Revision-Date: 2013-11-04 11:59-0000\n"
+"POT-Creation-Date: 2014-08-06 23:27+1000\n"
+"PO-Revision-Date: 2014-05-06 23:35-0000\n"
 "Last-Translator: Rui Fontes <rui.fontes@tiflotecnia.com>\n"
 "Language-Team: pt-PT <LL@li.org>\n"
 "Language: pt_PT\n"
@@ -119,6 +119,10 @@ msgstr "pesquisa"
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
 msgstr "formulário"
+
+#. Translators: Reported for a significant region, normally found on web pages.
+msgid "region"
+msgstr "região"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1256,11 +1260,13 @@ msgstr "cor de fundo"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "superescrito"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "subescrito"
 
@@ -1312,7 +1318,7 @@ msgstr "ocupado"
 
 #. Translators: This is presented when a button is pressed.
 msgid "pressed"
-msgstr "pressionado"
+msgstr "premido"
 
 #. Translators: This is presented when a check box is checked.
 msgid "checked"
@@ -1440,6 +1446,10 @@ msgstr "tem fórmula"
 msgid "has comment"
 msgstr "tem comentário"
 
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "obscurecido"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "não seleccionado"
@@ -1557,6 +1567,7 @@ msgid "Tools"
 msgstr "Ferramentas"
 
 #. Translators: The name of a category of NVDA commands.
+#. Translators: a touch screen gesture
 msgid "Touch screen"
 msgstr "Ecrã táctil"
 
@@ -1586,8 +1597,8 @@ msgid ""
 "keyboard will tell you what script is associated with that input, if any."
 msgstr ""
 "Alterna entre activar ou desactivar a ajuda de entrada. Quando estiver "
-"activa, qualquer entrada tal como pressionar uma tecla no teclado, informará "
-"o script associado com a mesma, se existir"
+"activa, qualquer entrada tal como premir uma tecla no teclado, informará o "
+"script associado com a mesma, se existir"
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
@@ -1608,7 +1619,7 @@ msgid ""
 "Reports the current line under the application cursor. Pressing this key "
 "twice will spell the current line"
 msgstr ""
-"Anuncia a linha actual sob o cursor da aplicação. Se pressionar este comando "
+"Anuncia a linha actual sob o cursor da aplicação. Se premir este comando "
 "duas vezes, ser-lhe-á soletrada a mesma"
 
 #. Translators: Reported when left mouse button is clicked.
@@ -1664,7 +1675,7 @@ msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
 msgstr ""
-"Pressionando uma vez anuncia a hora actual, duas vezes, anuncia a data actual"
+"Premindo uma vez anuncia a hora actual, duas vezes, anuncia a data actual"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
 msgid "No settings"
@@ -1727,8 +1738,8 @@ msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
 msgstr ""
-"Alterna entre activar e desactivar o anúncio das teclas pressionadas que não "
-"são especificamente caracteres"
+"Alterna entre activar e desactivar o anúncio das teclas premidas que não são "
+"especificamente caracteres"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -1804,32 +1815,19 @@ msgid ""
 "and pressing three times Copies name and value of this  object to the "
 "clipboard"
 msgstr ""
-"Anuncia o objecto de navegação actual. Ao pressionar duas vezes rapidamente, "
+"Anuncia o objecto de navegação actual. Ao premir duas vezes rapidamente, "
 "soletra a informação e se premir três vezes, copia o nome e o valor deste  "
 "objecto para a área de transferência"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
-msgid "No location information for navigator object"
-msgstr ""
-"Não foi encontrada informação de localização para o objecto de navegação"
+#. Translators: message when there is no location information for the review cursor
+msgid "No location information"
+msgstr "Sem informação de posição"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
-msgid "No location information for screen"
-msgstr "Sem informação de localização para o ecrã"
-
-#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#. Translators: Description for report review cursor location command.
 msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
-"screen, height is {height:.1f} per cent of screen"
-msgstr ""
-"As arestas do objecto estão posicionadas {left:.1f} porcento da borda "
-"esquerda do ecrã, {top:.1f} porcento da borda superior do ecrã, a largura é "
-"{width:.1f} porcento do ecrã, a altura é {height:.1f} porcento do ecrã"
-
-#. Translators: Input help mode message for report object dimensions command.
-msgid "Reports the hight, width and position of the current navigator object"
-msgstr "Anuncia a altura, largura e posição do objecto de navegação actual"
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
+msgstr "Anuncia informações àcerca da posição do texto ou objecto no cursor de revisão. Premindo duas vezes pode´rá fornecer maiores detalhes"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -1862,9 +1860,8 @@ msgid ""
 "Pressed once Sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
-"Pressionado uma vez define o foco do teclado para o objecto de navegação, "
-"pressionado duas define o cursor do sistema para a posição do cursor de "
-"revisão"
+"Premido uma vez define o foco do teclado para o objecto de navegação, "
+"premido duas define o cursor do sistema para a posição do cursor de revisão"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
@@ -1912,7 +1909,7 @@ msgid ""
 "presses it if it is a button)."
 msgstr ""
 "Executa a acção predefinida no objecto de navegação actual (por exemplo, se "
-"for um butão pressiona-o)"
+"for um butão prime-o)"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 msgid "top"
@@ -1941,9 +1938,9 @@ msgid ""
 "Pressing three times will spell the line using character descriptions."
 msgstr ""
 "Anuncia a linha do objecto de navegação actual onde está o cursor de "
-"revisão. Se este atalho for pressionado duas vezes rapidamente, a linha "
-"actual será soletrada. Ao pressionar três vezes, a mesma será soletrada "
-"através do alfabeto fonético internacional."
+"revisão. Se este atalho for premido duas vezes rapidamente, a linha actual "
+"será soletrada. Ao premir três vezes, a mesma será soletrada através do "
+"alfabeto fonético internacional."
 
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
@@ -1980,9 +1977,9 @@ msgid ""
 "word using character descriptions"
 msgstr ""
 "Fala a palavra do objecto de navegação actual onde está o cursor de revisão. "
-"Se este atalho for pressionado duas vezes rapidamente, a palavra actual será "
-"soletrada. Ao pressionar três vezes rapidamente, a mesma será soletrada "
-"através da descrição de caracteres"
+"Se este atalho for premido duas vezes rapidamente, a palavra actual será "
+"soletrada. Ao premir três vezes rapidamente, a mesma será soletrada através "
+"da descrição de caracteres"
 
 #. Translators: Input help mode message for move review cursor to next word command.
 msgid ""
@@ -2018,10 +2015,9 @@ msgid ""
 "in decimal and hexadecimal"
 msgstr ""
 "Anuncia o caracter do objecto de navegação actual onde o cursor de revisão "
-"está situado. Se esta combinação de teclas for pressionada duas vezes "
-"rapidamente, é anunciada a descrição ou exemplo desse carácter. Ao "
-"pressionar três vezes rapidamente, os valores ascii e hexadecimal do mesmo "
-"serão anunciados"
+"está situado. Premindo duas vezes rapidamente, é anunciada a descrição ou "
+"exemplo desse caracter. Ao premir três vezes rapidamente, os valores ascii e "
+"hexadecimal do mesmo serão anunciados"
 
 msgid "right"
 msgstr "direita"
@@ -2150,8 +2146,8 @@ msgid ""
 "the clipboard"
 msgstr ""
 "Anuncia o título da aplicação actual ou janela em primeiro plano. Se for "
-"pressionado duas vezes, soletra o título. Se for pressionado três vezes, "
-"copia o título para a área de transferência"
+"premido duas vezes, soletra o título. Se for premido três vezes, copia o "
+"título para a área de transferência"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 msgid "speaks the current foreground object"
@@ -2334,13 +2330,13 @@ msgid ""
 "Pressing once reverts the current configuration to the most recently saved "
 "state. Pressing three times reverts to factory defaults."
 msgstr ""
-"Se pressionar uma vez volta para a última configuração guardada. Se "
-"pressionar três vezes volta para a configuração padrão original."
+"Se premir uma vez volta para a última configuração guardada. Se premir três "
+"vezes volta para a configuração padrão original."
 
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr ""
-"Activa a consola de Python do NVDA , Principalmente útil para programação"
+"Activa a consola de Python do NVDA , útil principalmente para programação"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
@@ -2505,6 +2501,14 @@ msgstr "Diversos"
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
 msgstr "Modo de Navegação"
+
+#. Translators: The shortcut key used to start NVDA.
+#. This should normally be left as is, but might be changed for some locales
+#. if the default key causes problems for the normal locale keyboard layout.
+#. The key must be formatted as described in this article:
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+msgid "CTRL+ALT+N"
+msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
@@ -2890,7 +2894,7 @@ msgstr "Revisão de ecrã"
 
 #, python-format
 msgid "Emulates pressing %s on the system keyboard"
-msgstr "Cimular o pressionar de %s no teclado do sistema"
+msgstr "Cimular o premir de %s no teclado do sistema"
 
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
@@ -3055,6 +3059,7 @@ msgstr "não está sublinhado"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "linha base"
 
@@ -3075,9 +3080,78 @@ msgstr "alinhamento à direita"
 msgid "align justify"
 msgstr "alinhamento justificado"
 
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "alinhamento distribuído"
+
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "alinhamento predefinido"
+
+#. Translators: the label for paragraph format left indent
+msgid "left indent"
+msgstr "identação à esquerda"
+
+#. Translators: the message when there is no paragraph format left indent
+msgid "no left indent"
+msgstr "sem identação à esquerda"
+
+#. Translators: the label for paragraph format right indent
+msgid "right indent"
+msgstr "Identação à direita"
+
+#. Translators: the message when there is no paragraph format right indent
+msgid "no right indent"
+msgstr "sem identação à direita"
+
+#. Translators: the label for paragraph format hanging indent
+msgid "hanging indent"
+msgstr "Identação suspensa"
+
+#. Translators: the message when there is no paragraph format hanging indent
+msgid "no hanging indent"
+msgstr "Sem identação suspensa"
+
+#. Translators: the label for paragraph format first line indent
+msgid "first line indent"
+msgstr "Identação da primeira linha"
+
+#. Translators: the message when there is no paragraph format first line indent
+msgid "no first line indent"
+msgstr "Sem identação da primeira linha"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "Alinhamento vertical ao topo"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "Alinhamento vertical ao meio"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "Alinhamento vertical ao fundo"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "Alinhamento vertical à linha base"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "alinhamento vertical justificado"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "Alinhamento vertical distribuído"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "alinhamento vertical por omissão"
+
+#. Translators: Reported when text no longer contains a comment.
+msgid "out of comment"
+msgstr "Fora do comentário"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -3125,6 +3199,82 @@ msgstr "&Entoação"
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Inflexão"
+
+msgid "text mode"
+msgstr "modo texto"
+
+msgid "object mode"
+msgstr "modo de objecto"
+
+#. Translators: a touch screen action performed once
+msgid "single {action}"
+msgstr "{action} único"
+
+#. Translators: a touch screen action performed twice
+msgid "double {action}"
+msgstr "{action} duplo"
+
+#. Translators: a touch screen action performed 3 times
+msgid "tripple {action}"
+msgstr "{action} triplo"
+
+#. Translators: a touch screen action performed 4 times
+msgid "quadruple {action}"
+msgstr "{action} quádruplo "
+
+#. Translators: a touch screen action using multiple fingers
+msgid "{numFingers} finger {action}"
+msgstr "{action} com {numFingers} dedos"
+
+#. Translators: a very quick touch and release of a finger on a touch screen
+msgctxt "touch action"
+msgid "tap"
+msgstr "toque"
+
+#. Translators: a very quick touch and release, then another touch with no release, on a touch screen
+msgctxt "touch action"
+msgid "tap and hold"
+msgstr "toque e mantenha"
+
+#. Translators: a touch with no release, on a touch screen.
+msgctxt "touch action"
+msgid "hold"
+msgstr "manter"
+
+#. Translators: a quick swipe of a finger in an up direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick up"
+msgstr "varrimento para cima"
+
+#. Translators: a quick swipe of a finger in an down direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick down"
+msgstr "varrimento para baixo"
+
+#. Translators: a quick swipe of a finger in a left direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick left"
+msgstr "varrimento para a esquerda"
+
+#. Translators: a quick swipe of a finger in a right direction, on a touch screen.
+msgctxt "touch action"
+msgid "flick right"
+msgstr "varrimento  para a direita"
+
+#. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
+msgctxt "touch action"
+msgid "hover down"
+msgstr "Deslizar para baixo"
+
+#. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
+msgctxt "touch action"
+msgid "hover"
+msgstr "deslizar"
+
+#. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
+msgctxt "touch action"
+msgid "hover up"
+msgstr "deslizar para cima"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3292,6 +3442,24 @@ msgstr ""
 "favor concidere fazer um donativo à NV Access. Pode fazê-lo através do item "
 "\"Efectuar um donativo a partir do menu do NVDA."
 
+#. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+msgid ""
+"Cannot install NVDA add-on from {path}.\n"
+"You must be running NVDA to be able to install add-ons."
+msgstr ""
+"Não é possível instalar Extras do NVDA a partir de {path}.\n"
+"Tem de estar a executar o NVDA para poder instalar extras."
+
+#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+msgid ""
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
+msgstr ""
+"As arestas do objecto estão posicionadas {left:.1f} porcento da borda "
+"esquerda do ecrã, {top:.1f} porcento da borda superior do ecrã, a largura é "
+"{width:.1f} porcento do ecrã, a altura é {height:.1f} porcento do ecrã"
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "{symbol} como em {description}"
@@ -3353,6 +3521,15 @@ msgstr "Nenhuma mensagem ainda"
 msgid "Displays one of the recent messages"
 msgstr "Apresenta uma das mensagens recentes"
 
+#. Translators: This Outlook Express message has an attachment
+#. Translators: when an email has attachments
+msgid "has attachment"
+msgstr "Com anexo"
+
+#. Translators: this Outlook Express message is flagged
+msgid "flagged"
+msgstr "Sinalizada"
+
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
 msgstr "Anexos"
@@ -3406,8 +3583,17 @@ msgid "BCC:"
 msgstr "BCC:"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
+#. Translators: when an email is unread
 msgid "unread"
 msgstr "não lida"
+
+#. Translators: for a high importance email
+msgid "high importance"
+msgstr "Alta importância"
+
+#. Translators: For a low importance email
+msgid "low importance"
+msgstr "Baixa importância"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3427,6 +3613,26 @@ msgstr "Anexo"
 #, python-format
 msgid "sent: %s"
 msgstr "enviado %s"
+
+#. Translators: The title for the dialog shown while Microsoft Outlook initializes.
+msgid "Waiting for Outlook..."
+msgstr "A aguardar pelo Outlook..."
+
+#. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+msgid "{startTime} to {endTime}"
+msgstr "{startTime} até {endTime}"
+
+#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+msgid "Appointment {subject}, {time}"
+msgstr "Compromisso {subject}, {time}"
+
+#. Translators: a message when the current time slot on an Outlook Calendar has an appointment
+msgid "has appointment"
+msgstr "tem compromisso"
+
+#. Translators: the email is a meeting request
+msgid "meeting request"
+msgstr "Pedido de reunião"
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -3577,13 +3783,81 @@ msgstr "Miniaturas"
 msgid "Master Thumbnails"
 msgstr "Miniaturas gerais"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "A aguardar pelo PowerPoint..."
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Diapositivo {slideNumber}"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers left of {otherShape} by {distance:.3g} points"
+msgstr "cobre a esquerda de {otherShape} em {distance:.3g} pontos"
+
+#. Translators: A message when a shape is behind  another shape on a powerpoint slide
+msgid "behind left of {otherShape} by {distance:.3g} points"
+msgstr "por de trás da esquerda de {otherShape} em {distance:.3g} pontos"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers top of {otherShape} by {distance:.3g} points"
+msgstr "cobre o topo de {otherShape} em {distance:.3g} pontos"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind top of {otherShape} by {distance:.3g} points"
+msgstr "por de trás do topo de {otherShape} em {distance:.3g} pontos"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers right of {otherShape} by {distance:.3g} points"
+msgstr "cobre a direita de {otherShape} em {distance:.3g} pontos"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind right of {otherShape} by {distance:.3g} points"
+msgstr "por de trás da direita {otherShape} em {distance:.3g} pontos"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers bottom of {otherShape} by {distance:.3g} points"
+msgstr "cobre o fundo de {otherShape} em {distance:.3g} pontos"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind bottom of {otherShape} by {distance:.3g} points"
+msgstr "por de trás do fundo de {otherShape} em {distance:.3g} pontos"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers  {otherShape}"
+msgstr "cobre  {otherShape}"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind {otherShape}"
+msgstr "por de trás de {otherShape}"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+msgid "{distance:.3g} points from left slide edge"
+msgstr "{distance:.3g} pontos da margem esquerda do slide"
+
+#. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+msgid "Off left slide edge by {distance:.3g} points"
+msgstr "para lá da margem esquerda do slide em {distance:.3g} pontos"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+msgid "{distance:.3g} points from top slide edge"
+msgstr "{distance:.3g} pontos da margem superior do slide"
+
+#. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+msgid "Off top slide edge by {distance:.3g} points"
+msgstr "para lá da margem superior do slide em {distance:.3g} pontos"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+msgid "{distance:.3g} points from right slide edge"
+msgstr "{distance:.3g} pontos da margem direita do slide"
+
+#. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+msgid "Off right slide edge by {distance:.3g} points"
+msgstr "para lá da margem direita do slide em {distance:.3g} pontos"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+msgid "{distance:.3g} points from bottom slide edge"
+msgstr "{distance:.3g} pontos da margem inferior do slide"
+
+#. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+msgid "Off bottom slide edge by {distance:.3g} points"
+msgstr "para lá da margem inferior do slide em {distance:.3g} pontos"
 
 #. Translators: The description for a script
 msgid ""
@@ -3614,6 +3888,10 @@ msgstr "Sem notas"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "Diapositivo vazio"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "A aguardar pelo PowerPoint..."
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -4011,14 +4289,13 @@ msgid ""
 "functions.\n"
 msgstr ""
 "Bem vindo ao NVDA!\n"
-"Muitos dos comandos para controlar este leitor de ecrã requerem a utilização "
-"da tecla modificadora do NVDA enquanto pressiona outras teclas. Por "
-"predefinição, o insert do bloco numérico e o insert do bloco intermédio "
-"podem ser usados como teclas do NVDA. Pode também configurar este software "
-"para utilizar o CapsLock como a tecla deste leitor de ecrã.\n"
-"Pressione NVDA+N em qualquer altura para activar o menu deste programa. A "
-"partir deste menu pode configurar este leitor de ecrã, obter ajuda e aceder "
-"a outras funções do NVDA.\n"
+"Muitos dos comandos para controlar o NVDA requerem a utilização da tecla "
+"modificadora do NVDA enquanto prime outras teclas. Por predefinição, o "
+"insert do bloco numérico e o insert do bloco intermédio podem ser usados "
+"como teclas do NVDA. Pode também configurar o NVDA para utilizar o CapsLock "
+"como a tecla do NVDA.\n"
+"Prima NVDA+N em qualquer altura para activar o menu do NVDA. A partir deste "
+"menu pode configurar o NVDA, obter ajuda e aceder a outras funções do NVDA.\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
@@ -4092,6 +4369,10 @@ msgstr "Autor"
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
 msgstr "&Acerca do extra..."
+
+#. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
+msgid "Add-on &help"
+msgstr "A&juda do Extra"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -4447,7 +4728,7 @@ msgstr "A sua instalação do NVDA foi actualizada com sucesso."
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
 msgid "Please press OK to start the installed copy."
-msgstr "Por favor pressione OK para iniciar a cópia instaladda."
+msgstr "Por favor prima OK para iniciar a cópia instaladda."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
 msgid "Success"
@@ -4460,7 +4741,7 @@ msgstr "Instalar o NVDA"
 #. Translators: An informational message in the Install NVDA dialog.
 msgid "To install NVDA to your hard drive, please press the Continue button."
 msgstr ""
-"Para instalar o NVDA no disco rígido por favor pressione o botão  Continuar."
+"Para instalar o NVDA no disco rígido por favor prima o botão  Continuar."
 
 #. Translators: An informational message in the Install NVDA dialog.
 msgid ""
@@ -4486,7 +4767,9 @@ msgstr "Utilizar o NVDA no ecrã de início de &sessão do Windows"
 msgid "&Keep existing desktop shortcut"
 msgstr "&Manter atalho existente no ambiente de trabalho"
 
-#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
+#. If the shortcut key has been changed for this locale,
+#. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr ""
 "Criar um ícone no Ambiente &de Trabalho e tecla de atalho (control+alt+n)"
@@ -4509,7 +4792,7 @@ msgid ""
 "and then press Continue"
 msgstr ""
 "Para criar uma cópia portátil do NVDA, por favor seleccione o caminho e "
-"outras opções e por fim pressione Continuar"
+"outras opções e por fim prima Continuar"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
@@ -4622,6 +4905,10 @@ msgstr "&Guardar a configuração ao sair"
 msgid "&Warn before exiting NVDA"
 msgstr "&Alertar ao sair do NVDA"
 
+#. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
+msgid "&Play sounds when starting or exiting NVDA"
+msgstr "Tocar &sons ao iniciar e ao sair do NVDA"
+
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
 msgstr "Nível de regist&o:"
@@ -4709,8 +4996,8 @@ msgid ""
 "manually save and exit at a later time."
 msgstr ""
 "Para que o novo idioma faça efeito, a configuração terá que ser guardada e o "
-"NVDA precisa ser reiniciado. Pressione enter para guardar e reiniciar ou "
-"prima cancelar para guardar manualmente e sair mais tarde."
+"NVDA precisa ser reiniciado. Prima enter para guardar e reiniciar ou prima "
+"cancelar para guardar manualmente e sair mais tarde."
 
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 msgid "Language Configuration Change"
@@ -4817,7 +5104,7 @@ msgstr "Anunciar &palavras escritas"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speech interrupt for typed characters"
-msgstr "Pressionar de &caracteres interrompe a voz"
+msgstr "Premir &caracteres interrompe a voz"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -4840,6 +5127,11 @@ msgstr ""
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "Anunciar &teclas de comando"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Handle keys from other &applications"
+msgstr "Tratar teclas enviadas por outras &aplicações"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
@@ -5115,9 +5407,14 @@ msgstr "Anunciar &números de linha"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#. 
+#.
 msgid "Report l&ine indentation"
 msgstr "Anunciar &identação de linha"
+
+#. Translators: This message is presented in the document formatting settings dialogue
+#. If this option is selected, NVDA will report paragraph indentation if available.
+msgid "Report &paragraph indentation"
+msgstr "Anunciar identação de &parágrafo"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5164,6 +5461,11 @@ msgstr "Anunciar &marcas"
 msgid "Report fra&mes"
 msgstr "Anunciar &frames"
 
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report if &clickable"
+msgstr "Anunciar se &clicável"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "Editar Entrada do Dicionário"
@@ -5193,6 +5495,7 @@ msgid "&Dictionary entries"
 msgstr "Entradas do &dicionário"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
+#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr "Comentário"
 
@@ -5374,6 +5677,14 @@ msgstr "Sem voz"
 msgid "word"
 msgstr "palavra"
 
+#. Translators: current position in a document as a percentage of the document length
+msgid "{curPercent:.0f}%"
+msgstr "{curPercent:.0f}%"
+
+#. Translators: the current position's screen coordinates in pixels
+msgid "at {x}, {y}"
+msgstr "em {x}, {y}"
+
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
 msgid "%s landmark"
@@ -5464,6 +5775,7 @@ msgstr "Apresenta a lista de links, títulos ou marcas"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
 msgstr "não está numa célula de tabela"
 
@@ -5937,10 +6249,12 @@ msgstr "cor predefinida"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
-msgstr ""
+msgstr "{start} até {end}"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
@@ -5948,37 +6262,67 @@ msgstr ""
 "Impossível definir os cabeçalhos. Por favor active o anúncio dos cabeçalhos "
 "de tabelas nas definições de formatação"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Set column header row"
-msgstr "Definida a coluna de cabeçalhos de linha"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Set {address} as start of column headers"
+msgstr "Definido {address} como o´ início dos cabeçalhos de coluna"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Cleared column header row"
-msgstr "Apagou o a linha de cabeçalhos de coluna"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Already set {address} as start of column headers"
+msgstr "Já está definido {address} como o início dos cabeçalhos de coluna"
 
-msgid ""
-"Pressing once will set the current row as the row where column headers "
-"should be found. Pressing twice clears the setting."
-msgstr ""
-"Pressionando uma vez definirá a linha actual como a linha onde deverão ser "
-"encontrados os cabeçalhos de coluna. Pressionando duas vezes limpa esta "
-"configuração."
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "removed {address}    from column headers"
+msgstr "Removido {address} dos cabeçalhos de coluna"
 
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Set row header column"
-msgstr "Definida a linha de cabeçalhos de coluna"
-
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Cleared row header column"
-msgstr "Apagou a coluna de cabeçalhos de linha"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Cannot find {address}    in column headers"
+msgstr "Impossível encontrar {address} nos cabeçalhos de coluna"
 
 msgid ""
-"Pressing once will set the current column as the column where row headers "
-"should be found. Pressing twice clears the setting."
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this region. Pressing twice will forget "
+"the current column header for this cell."
 msgstr ""
-"Pressionando uma vez definirá a coluna actual como a coluna onde deverão ser "
-"encontrados os cabeçalhos de linha. Pressionando duas vezes limpa esta "
-"configuração."
+"Premindo uma vez definirá esta célula como o primeiro cabeçalho de coluna "
+"das células em baixo e à direita dela, nesta região. Premindo duas vezes irá "
+"esquecer o cabeçalho de coluna para a célula actual."
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Set {address} as start of row headers"
+msgstr "Define {address} como o início dos cabeçalhos de linha"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Already set {address} as start of row headers"
+msgstr "Já está definido {address} como o início dos cabeçalhos de linha"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "removed {address}    from row headers"
+msgstr "Removido {address} dos cabeçalhos de linha"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Cannot find {address}    in row headers"
+msgstr "Impossível encontrar {address} nos cabeçalhos de linha"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this region. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Premindo uma vez definirá esta célula como a primeira célula de cabeçalho de "
+"linha para as células em baixo e à direita dela, nesta região. Premindo duas "
+"vezes esquecerá o cabeçalho de linha para esta célula"
+
+#. Translators: A message in Excel when there is no comment
+msgid "Not on a comment"
+msgstr "não está num comentário"
+
+#. Translators: the description  for a script for Excel
+msgid "Reports the comment on the current cell"
+msgstr "Anuncia o comentário na célula actual"
+
+#. Translators: Dialog text for
+msgid "Editing comment for cell {address}"
+msgstr "A editar o comentário para a célula {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
@@ -6091,6 +6435,162 @@ msgstr "data desconhecida"
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "{revisionType} por {revisionAuthor} em {revisionDate}"
 
+#, python-format
+msgid "%g characters"
+msgstr "%g caracteres"
+
+#. Translators: the value in points for a paragraph indenting
+#, python-format
+msgid "%g pt"
+msgstr "%g pt"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Definido linha {rowNumber} coluna {columnNumber} como o início dos "
+"cabeçalhos de coluna"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"Já está definido linha {rowNumber} coluna {columnNumber} como o início dos "
+"cabeçalhos de coluna"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr ""
+"Removido linha {rowNumber} coluna {columnNumber} dos cabeçalhos de coluna"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+"Impossível encontrar linha {rowNumber} coluna {columnNumber} nos cabeçalhos "
+"de coluna"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"Premindo uma vez definirá esta célula como o primeiro cabeçalho de coluna "
+"para qualquer célula abaixo e à direita dela, nesta tabela. Premindo duas "
+"vezes esquecerá o cabeçalho de coluna actual para esta célula"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Definido linha {rowNumber} coluna {columnNumber} como o início dos "
+"cabeçalhos de linha"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"Já está definido linha {rowNumber} coluna {columnNumber} como o início dos "
+"cabeçalhos de linha"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr ""
+"Removido linha {rowNumber} coluna {columnNumber} dos cabeçalhos de linha"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+"Impossível encontrar {rowNumber} {columnNumber} nos cabeçalhos de linha"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"Premindo uma vez definirá esta célula como o primeiro cabeçalho de linha "
+"para qualquer célula a baixo ou à direita dela, nesta tabela. Premindo duas "
+"vezes esquecerá o cabeçalho de linha actual para esta célula"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "Negrito ligado"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "Negrito desligado"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "Itálico ligado"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "Itálico desligado"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "sublinhado ligado"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "sublinhado desligado"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Left aligned"
+msgstr "Alinhado à esquerda"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "centered"
+msgstr "Centrado"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Right aligned"
+msgstr "Allinhado à direita"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Justified"
+msgstr "Justificado"
+
+#. Translators: the message when the outline level / style is changed in Microsoft word
+msgid "{styleName} style, outline level {outlineLevel}"
+msgstr "Estilo {styleName},  nível de alinhamento {outlineLevel}"
+
+#. Translators: a message when increasing or decreasing font size in Microsoft Word
+msgid "{size:g} point font"
+msgstr "Tipo de letra com {size:g} pontos"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} characters"
+msgstr "{offset:.3g} caracteres"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} inches"
+msgstr "{offset:.3g} polegadas"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} centimeters"
+msgstr "{offset:.3g} centímetros"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} millimeters"
+msgstr "{offset:.3g} milímetros"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} points"
+msgstr "{offset:.3g} pontos"
+
+#. Translators: a measurement in Microsoft Word
+#. See http://support.microsoft.com/kb/76388 for details.
+msgid "{offset:.3g} picas"
+msgstr "{offset:.3g} picas"
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "no comments"
+msgstr "Sem comentários"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr ""
+"Anuncia o texto do comentário onde está localizado o cursor do sistema."
+
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 msgid "Not in table"
@@ -6107,53 +6607,13 @@ msgstr "Séries HIMS Braille Sense/Braille EDGE"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
-#~ msgid "Manual activate/edit"
-#~ msgstr "Activar manualmente/editar "
+#~ msgid "No location information for navigator object"
+#~ msgstr ""
+#~ "Não foi encontrada informação de localização para o objecto de navegação"
+
+#~ msgid "No location information for screen"
+#~ msgstr "Sem informação de localização para o ecrã"
 
 #~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "O seu ficheiro de configuração tem erros. \n"
-#~ "Pressione 'Ok' para corrigir estes erros, ou prima 'Cancelar' se "
-#~ "pretender editá-lo manualmente mais tarde para fazer correcções. Podem "
-#~ "ser encontrados mais detalhes sobre os erros no ficheiro de registo.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "Sem comentários automáticos,"
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "Não foi possível localizar a janela de comentários automáticos."
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "Anuncia quaisquer comentários na janela de comentários automáticos"
-
-#~ msgid "Automatic comments:"
-#~ msgstr "Comentários automáticos:"
-
-#~ msgid "Translation:"
-#~ msgstr "Tradução:"
-
-#~ msgid "Comments:"
-#~ msgstr "Comentários:"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "Sem revisão plana para este objecto"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "Nenhum objecto na posição  da revisão plana"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "Move o objecto de navegação para o objecto representado em texto na "
-#~ "posição do cursor de revisão que se encontra na revisão plana"
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "Por favor, feche primeiro o outro diálogo de definições do NVDA"
-
-#~ msgid "Translation &table:"
-#~ msgstr "&Tabela de conversão:"
+#~ "Reports the hight, width and position of the current navigator object"
+#~ msgstr "Anuncia a altura, largura e posição do objecto de navegação actual"

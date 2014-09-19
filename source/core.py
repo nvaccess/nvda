@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #core.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2014 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -17,13 +18,23 @@ comtypes.gen.__path__.append(comInterfaces.__path__[0])
 import comtypesMonkeyPatches
 
 import sys
+import thread
 import nvwave
 import os
 import time
+import ctypes
 import logHandler
 import globalVars
 from logHandler import log
 import addonHandler
+
+PUMP_MAX_DELAY = 10
+
+#: The thread identifier of the main thread.
+mainThreadId = thread.get_ident()
+
+_pump = None
+_isPumpPending = False
 
 def doStartupDialogs():
 	import config
@@ -116,9 +127,16 @@ def _setInitialFocus():
 
 def main():
 	"""NVDA's core main loop.
-This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and installs the core pump timer, which checks the queues and executes functions every 1 ms. Finally, it starts the wx main loop.
+This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and sets up the core pump, which checks the queues and executes functions when requested. Finally, it starts the wx main loop.
 """
 	log.debug("Core starting")
+
+	try:
+		# Windows >= Vista
+		ctypes.windll.user32.SetProcessDPIAware()
+	except AttributeError:
+		pass
+
 	import config
 	if not globalVars.appArgs.configPath:
 		globalVars.appArgs.configPath=config.getUserDefaultConfigPath(useInstalledPathIfExists=globalVars.appArgs.launcher)
@@ -128,7 +146,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("loading config")
 	import config
 	config.initialize()
-	if not globalVars.appArgs.minimal:
+	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
 			nvwave.playWaveFile("waves\\start.wav")
 		except:
@@ -180,7 +198,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		# NVDA will be terminated as soon as this function returns, so save configuration if appropriate.
 		config.saveOnExit()
 		speech.cancelSpeech()
-		if not globalVars.appArgs.minimal:
+		if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 			try:
 				nvwave.playWaveFile("waves\\exit.wav",async=False)
 			except:
@@ -281,13 +299,19 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	queueHandler.queueFunction(queueHandler.eventQueue, _setInitialFocus)
 	import watchdog
 	import baseObject
+
+	# Doing this here is a bit ugly, but we don't want these modules imported
+	# at module level, including wx.
+	log.debug("Initializing core pump")
 	class CorePump(wx.Timer):
 		"Checks the queues and executes functions."
-		def __init__(self,*args,**kwargs):
-			log.debug("Core pump starting")
-			super(CorePump,self).__init__(*args,**kwargs)
 		def Notify(self):
+			global _isPumpPending
+			_isPumpPending = False
+			watchdog.alive()
 			try:
+				if touchHandler.handler:
+					touchHandler.handler.pump()
 				JABHandler.pumpAll()
 				IAccessibleHandler.pumpAll()
 				queueHandler.pumpAll()
@@ -296,10 +320,16 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			except:
 				log.exception("errors in this core pump cycle")
 			baseObject.AutoPropertyObject.invalidateCaches()
-			watchdog.alive()
-	log.debug("starting core pump")
-	pump = CorePump()
-	pump.Start(1)
+			watchdog.asleep()
+			if _isPumpPending and not _pump.IsRunning():
+				# #3803: A pump was requested, but the timer was ignored by a modal loop
+				# because timers aren't re-entrant.
+				# Therefore, schedule another pump.
+				_pump.Start(PUMP_MAX_DELAY, True)
+	global _pump
+	_pump = CorePump()
+	requestPump()
+
 	log.debug("Initializing watchdog")
 	watchdog.initialize()
 	try:
@@ -352,7 +382,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	_terminate(speech)
 	_terminate(addonHandler)
 
-	if not globalVars.appArgs.minimal:
+	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
 			nvwave.playWaveFile("waves\\exit.wav",async=False)
 		except:
@@ -368,3 +398,37 @@ def _terminate(module, name=None):
 	except:
 		log.exception("Error terminating %s" % name)
 
+def requestPump():
+	"""Request a core pump.
+	This will perform any queued activity.
+	It is delayed slightly so that queues can implement rate limiting,
+	filter extraneous events, etc.
+	"""
+	global _isPumpPending
+	if not _pump or _isPumpPending:
+		return
+	_isPumpPending = True
+	if thread.get_ident() == mainThreadId:
+		_pump.Start(PUMP_MAX_DELAY, True)
+		return
+	# This isn't the main thread. wx timers cannot be run outside the main thread.
+	# Therefore, Have wx start it in the main thread with a CallAfter.
+	import wx
+	wx.CallAfter(_pump.Start,PUMP_MAX_DELAY, True)
+
+def callLater(delay, callable, *args, **kwargs):
+	"""Call a callable once after the specified number of milliseconds.
+	This is currently a thin wrapper around C{wx.CallLater},
+	but this should be used instead for calls which aren't just for UI,
+	as it notifies watchdog appropriately.
+	"""
+	import wx
+	return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
+
+def _callLaterExec(callable, args, kwargs):
+	import watchdog
+	watchdog.alive()
+	try:
+		return callable(*args, **kwargs)
+	finally:
+		watchdog.asleep()

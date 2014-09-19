@@ -485,6 +485,10 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	macro_addHTMLAttributeToMap(L"aria-multiline",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-label",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-hidden",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-live",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-relevant",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-busy",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-atomic",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	pHTMLAttributeCollection2->Release();
 }
 
@@ -738,7 +742,7 @@ wostringstream tempStringStream;
 	return tableInfo;
 }
 
-VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfo, int* LIIndexPtr, bool ignoreInteractiveUnlabelledGraphics, bool allowPreformattedText, bool shouldSkipText) {
+VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, VBufStorage_controlFieldNode_t* oldNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfo, int* LIIndexPtr, bool ignoreInteractiveUnlabelledGraphics, bool allowPreformattedText, bool shouldSkipText, bool inNewSubtree,set<VBufStorage_controlFieldNode_t*>& atomicNodes) {
 	BSTR tempBSTR=NULL;
 	wostringstream tempStringStream;
 
@@ -770,6 +774,8 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	bool isBlock=true;
 	wstring listStyle;
 	getCurrentStyleInfoFromHTMLDOMNode(pHTMLDOMNode, dontRender, isBlock,hidden,listStyle);
+	// #4031: nodes hidden due to style (not role="presentation") should have their direct text nodes skipped
+	if(hidden) shouldSkipText=true;
 	LOG_DEBUG(L"Trying to get IHTMLDOMNode::nodeName");
 	if(pHTMLDOMNode->get_nodeName(&tempBSTR)!=S_OK||!tempBSTR) {
 		LOG_DEBUG(L"Failed to get IHTMLDOMNode::nodeName");
@@ -856,8 +862,15 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		language=static_cast<MshtmlVBufStorage_controlFieldNode_t*>(parentNode)->language;
 	}
 
-	//Add the node to the buffer
 	VBufStorage_controlFieldNode_t* node=new MshtmlVBufStorage_controlFieldNode_t(docHandle,ID,isBlock,this,pHTMLDOMNode,language);
+	((MshtmlVBufStorage_controlFieldNode_t*)node)->preProcessLiveRegion((MshtmlVBufStorage_controlFieldNode_t*)(oldNode?oldNode->getParent():parentNode),attribsMap);
+	bool wasInNewSubtree=inNewSubtree;
+	if(!wasInNewSubtree&&!oldNode) {
+		oldNode=this->getControlFieldNodeWithIdentifier(docHandle,ID);
+		if(oldNode&&oldNode->isHidden) oldNode=NULL;
+		inNewSubtree=!oldNode;
+	}
+	//Add the node to the buffer
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,node);
 	nhAssert(parentNode);
 	previousNode=NULL;
@@ -868,9 +881,9 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		parentNode->updateAncestor=tableInfo->tableNode;
 	}
 
-	parentNode->isHidden=(hidden||dontRender);
 	//We do not want to render any content for dontRender nodes
 	if(dontRender) {
+		parentNode->isHidden=true;
 		return parentNode;
 	}
 
@@ -901,9 +914,10 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		IAStates-=STATE_SYSTEM_READONLY;
 	}
 
+	wstring ariaRole;
 	tempIter=attribsMap.find(L"HTMLAttrib::role");
 	if(tempIter!=attribsMap.end()) {
-		const wstring& ariaRole=tempIter->second;
+		ariaRole=tempIter->second;
 		if(ariaRole.compare(L"description")==0||ariaRole.compare(L"search")==0) {
 			//IE gives elements with an ARIA role of description and search a role of edit, probably should be staticText
 			IARole=ROLE_SYSTEM_STATICTEXT;
@@ -930,6 +944,8 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			IARole=ROLE_SYSTEM_PUSHBUTTON;
 		} else if(ariaRole.compare(L"dialog")==0) {
 			IARole=ROLE_SYSTEM_DIALOG;
+		} else if(!hidden&&ariaRole.compare(L"presentation")==0) {
+			hidden=true;
 		}
 	} 
 	//IE doesn't seem to support aria-label yet so we want to override IAName with it
@@ -944,8 +960,10 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		if(IAStates&STATE_SYSTEM_FOCUSABLE) IAStates-=STATE_SYSTEM_FOCUSABLE;
 	}
 
+	// Whether this is the root node.
+	bool isRoot=ID==this->rootID;
 	//Is this node interactive?
-	bool isInteractive=isEditable||(IAStates&STATE_SYSTEM_FOCUSABLE&&nodeName!=L"BODY"&&nodeName!=L"IFRAME")||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::longdesc")!=attribsMap.end());
+	bool isInteractive=isEditable||(!isRoot&&IAStates&STATE_SYSTEM_FOCUSABLE&&nodeName!=L"BODY"&&nodeName!=L"IFRAME")||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::longdesc")!=attribsMap.end());
 	//Set up numbering for lists
 	int LIIndex=0;
 	if(nodeName.compare(L"OL")==0||nodeName.compare(L"UL")==0) {
@@ -957,13 +975,27 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		LIIndexPtr=NULL;
 	}
 
-	//Collect and update table information
-	tableInfo=fillVBuf_helper_collectAndUpdateTableInfo(parentNode, nodeName, docHandle,ID, tableInfo, attribsMap); 
+	parentNode->isHidden=hidden;
+
+	if(!hidden) {
+		//Collect and update table information
+		tableInfo=fillVBuf_helper_collectAndUpdateTableInfo(parentNode, nodeName, docHandle,ID, tableInfo, attribsMap); 
+	}
+
+	// Whether the name is the content of this node.
+	bool nameIsContent = (IARole == ROLE_SYSTEM_LINK || IARole == ROLE_SYSTEM_PUSHBUTTON || IARole == ROLE_SYSTEM_MENUITEM || IARole == ROLE_SYSTEM_GRAPHIC || IARole == ROLE_SYSTEM_PAGETAB
+		|| ariaRole == L"heading" || (nodeName[0] == L'H' && iswdigit(nodeName[1]))
+		|| nodeName == L"OBJECT" || nodeName == L"APPLET" || IARole == ROLE_SYSTEM_APPLICATION || IARole == ROLE_SYSTEM_DIALOG);
+	// True if the name definitely came from the author.
+	bool nameFromAuthor=false;
 
 	//Generate content for nodes
 	wstring contentString=L"";
 	bool renderChildren=false;
-	if (nodeName.compare(L"HR")==0) {
+	if (nameIsContent && (attribsMap.find(L"HTMLAttrib::aria-label") != attribsMap.end() || attribsMap.find(L"HTMLAttrib::aria-labelledby") != attribsMap.end())) {
+		// Explicitly override any content with aria-label(ledby).
+		contentString = IAName;
+	} else if (nodeName.compare(L"HR")==0) {
 		contentString=L" ";
 		isBlock=true;
 		IARole=ROLE_SYSTEM_SEPARATOR;
@@ -1025,15 +1057,11 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			if(IAStates&STATE_SYSTEM_PROTECTED) {
 				fill(contentString.begin(),contentString.end(),L'*');
 			}
-			if(!IAName.empty()) {
-				attribsMap[L"name"]=IAName;
-			}
+			nameFromAuthor=true;
 		} else if(IARole==ROLE_SYSTEM_PUSHBUTTON) {
 			contentString=IAName;
 		} else if(IARole==ROLE_SYSTEM_RADIOBUTTON||IARole==ROLE_SYSTEM_CHECKBUTTON) {
-			if(!IAName.empty()) {
-				attribsMap[L"name"]=IAName;
-			}
+			nameFromAuthor=true;
 		}
 		if(contentString.empty()) {
 			contentString=L" ";
@@ -1050,9 +1078,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		} else {
 			contentString=L" ";
 		}
-		if(!IAName.empty()) {
-			attribsMap[L"name"]=IAName;
-		}
+		nameFromAuthor=true;
 	} else if(nodeName.compare(L"TEXTAREA")==0) {
 		isBlock=true;
 		if(!IAValue.empty()) {
@@ -1060,19 +1086,25 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		} else {
 			contentString=L" ";
 		}
-		if(!IAName.empty()) {
-			attribsMap[L"name"]=IAName;
-		}
+		nameFromAuthor=true;
 	} else if(nodeName.compare(L"BR")==0) {
 		LOG_DEBUG(L"node is a br tag, adding a line feed as its text.");
 		contentString=L"\n";
 	} else if (nodeName.compare(L"MATH")==0) {
 		contentString=IAName;
-	} else if(IARole==ROLE_SYSTEM_APPLICATION||IARole==ROLE_SYSTEM_DIALOG||IARole==ROLE_SYSTEM_OUTLINE) {
+	} else if((!isRoot&&(IARole==ROLE_SYSTEM_APPLICATION||IARole==ROLE_SYSTEM_DIALOG))||IARole==ROLE_SYSTEM_OUTLINE) {
 		contentString=L" ";
 	} else {
 		renderChildren=true;
 	}
+
+	//If the name isn't being rendered as the content, add the name as a field attribute
+	// if it came from the author (not content).
+	if (!nameIsContent && !IAName.empty() && (nameFromAuthor || (
+		attribsMap.find(L"HTMLAttrib::aria-label") != attribsMap.end() || attribsMap.find(L"HTMLAttrib::aria-labelledby") != attribsMap.end()
+		|| attribsMap.find(L"HTMLAttrib::title") != attribsMap.end() || attribsMap.find(L"HTMLAttrib::alt") != attribsMap.end()
+	)))
+		attribsMap[L"name"]=IAName;
 
 	//Add a textNode to the buffer containing any special content retreaved
 	if(!hidden&&!contentString.empty()) {
@@ -1111,7 +1143,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 				IHTMLDOMNode* childPHTMLDOMNode=NULL;
 				getHTMLSubdocumentBodyFromIAccessibleFrame(pacc,&childPHTMLDOMNode);
 				if(childPHTMLDOMNode) {
-					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfo,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText,hidden);
+					previousNode=this->fillVBuf(buffer,parentNode,previousNode,NULL,childPHTMLDOMNode,docHandle,tableInfo,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText,shouldSkipText,inNewSubtree,atomicNodes);
 					childPHTMLDOMNode->Release();
 				}
 			}
@@ -1135,7 +1167,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 						}
 						IHTMLDOMNode* childPHTMLDOMNode=NULL;
 						if(childPDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode)==S_OK) {
-							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfo,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText,hidden);
+							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,NULL,childPHTMLDOMNode,docHandle,tableInfo,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText,shouldSkipText,inNewSubtree,atomicNodes);
 							if(tempNode) {
 								previousNode=tempNode;
 							}
@@ -1182,9 +1214,9 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	}
 
 	//Update attributes with table info
-	if(nodeName.compare(L"TABLE")==0) {
+	if(!hidden&&nodeName.compare(L"TABLE")==0) {
 		nhAssert(tableInfo);
-		if(hidden||!tableInfo->definitData) {
+		if(!tableInfo->definitData) {
 			attribsMap[L"table-layout"]=L"1";
 		}
 		for (list<pair<VBufStorage_controlFieldNode_t*, wstring>>::iterator it = tableInfo->nodesWithExplicitHeaders.begin(); it != tableInfo->nodesWithExplicitHeaders.end(); ++it)
@@ -1220,6 +1252,16 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	//Add all the collected attributes to the node
 	for(tempIter=attribsMap.begin();tempIter!=attribsMap.end();++tempIter) {
 		parentNode->addAttribute(tempIter->first,tempIter->second);
+	}
+
+	// Report any live region update for this node
+	if(!wasInNewSubtree&&!hidden) {
+		((MshtmlVBufStorage_controlFieldNode_t*)parentNode)->postProcessLiveRegion(oldNode,atomicNodes);
+		auto i=atomicNodes.find(parentNode);
+		if(i!=atomicNodes.end()) {
+			((MshtmlVBufStorage_controlFieldNode_t*)(*i))->reportLiveAddition();
+			atomicNodes.erase(i);
+		}
 	}
 
 	return parentNode;
@@ -1262,7 +1304,11 @@ void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, in
 		pHTMLElement->Release();
 	}
 	nhAssert(pHTMLDOMNode);
-	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle,NULL,NULL,false,false,false);
+	set<VBufStorage_controlFieldNode_t*> atomicNodes;
+	this->fillVBuf(buffer,NULL,NULL,oldNode,pHTMLDOMNode,docHandle,NULL,NULL,false,false,false,false,atomicNodes);
+	for(auto& i: atomicNodes) {
+		((MshtmlVBufStorage_controlFieldNode_t*)i)->reportLiveAddition();
+	}
 	pHTMLDOMNode->Release();
 }
 

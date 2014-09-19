@@ -43,7 +43,7 @@ class ControlField(Field):
 		states = self.get("states", set())
 
 		# Honour verbosity configuration.
-		if not formatConfig["includeLayoutTables"] and role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER):
+		if role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER):
 			# The user doesn't want layout tables.
 			# Find the nearest table.
 			if role == controlTypes.ROLE_TABLE:
@@ -57,7 +57,7 @@ class ControlField(Field):
 						break
 				else:
 					table = None
-			if table and table.get("table-layout", None):
+			if table and ((not formatConfig["includeLayoutTables"] and table.get("table-layout", None)) or table.get('isHidden',False)):
 				return self.PRESCAT_LAYOUT
 		if reason in (controlTypes.REASON_CARET, controlTypes.REASON_SAYALL, controlTypes.REASON_FOCUS) and (
 			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"])
@@ -71,7 +71,7 @@ class ControlField(Field):
 			return self.PRESCAT_LAYOUT
 
 		if (
-			role in (controlTypes.ROLE_LINK, controlTypes.ROLE_HEADING, controlTypes.ROLE_BUTTON, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_GRAPHIC, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TAB, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_SLIDER, controlTypes.ROLE_SPINBUTTON, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_TOGGLEBUTTON, controlTypes.ROLE_MENUBUTTON, controlTypes.ROLE_TREEVIEW)
+			role in (controlTypes.ROLE_LINK, controlTypes.ROLE_HEADING, controlTypes.ROLE_BUTTON, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_GRAPHIC, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TAB, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_SLIDER, controlTypes.ROLE_SPINBUTTON, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_TOGGLEBUTTON, controlTypes.ROLE_MENUBUTTON, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_CHECKMENUITEM, controlTypes.ROLE_RADIOMENUITEM)
 			or (role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 		):
@@ -259,6 +259,10 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@rtype: list of unicode and L{FieldCommand}
 		""" 
 		return [self.text]
+
+	def _get_locationText(self):
+		"""A message that explains the location of the text position in friendly terms."""
+		return None
 
 	def unitIndex(self,unit):
 		"""
