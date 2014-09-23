@@ -706,7 +706,7 @@ inline int generateInlineShapeXML(IDispatch* pDispatchRange, wostringstream& XML
 		}
 		SysFreeString(altText);
 	}
-	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<(shapeType==3?L"graphic":L"object")<<L"\" value=\""<<altTextStr<<L"\">";
+	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<((shapeType==3||shapeType==4)?L"graphic":L"object")<<L"\" value=\""<<altTextStr<<L"\">";
 	return count;
 }
 
