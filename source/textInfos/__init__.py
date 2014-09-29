@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2012 NV Access Limited
+#Copyright (C) 2006-2014 NV Access Limited
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -450,6 +450,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
 		winUser.setCursorPos(oldX,oldY)
+
+	def getMathMl(self, field):
+		"""Get MathML for a math control field.
+		This will only be called for control fields with a role of L{controlTypes.ROLE_MATH}.
+		@raise LookupError: If MathML can't be retrieved for this field.
+		"""
+		raise NotImplementedError
 
 RE_EOL = re.compile("\r\n|[\n\r]")
 def convertToCrlf(text):
