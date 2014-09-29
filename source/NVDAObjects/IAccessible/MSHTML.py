@@ -1,6 +1,6 @@
 #NVDAObjects/MSHTML.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2014 NV Access Limited, Aleksey Sadovoy
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -81,6 +81,7 @@ nodeNamesToNVDARoles={
 	"FIELDSET":controlTypes.ROLE_GROUPING,
 	"OPTION":controlTypes.ROLE_LISTITEM,
 	"BLOCKQUOTE":controlTypes.ROLE_BLOCKQUOTE,
+	"MATH":controlTypes.ROLE_MATH,
 }
 
 def IAccessibleFromHTMLNode(HTMLNode):
@@ -396,6 +397,8 @@ class MSHTML(IAccessible):
 				clsList.append(Object)
 			elif nodeName=="FIELDSET":
 				clsList.append(Fieldset)
+			elif nodeName=="MATH":
+				clsList.append(Math)
 		clsList.append(MSHTML)
 		if not self.HTMLNodeHasAncestorIAccessible:
 			# The IAccessibleObject is for this node (not an ancestor), so IAccessible overlay classes are relevant.
@@ -945,6 +948,12 @@ class RootClient(IAccessible):
 
 class MSAATextLeaf(IAccessible):
 	role=controlTypes.ROLE_STATICTEXT
+
+class Math(MSHTML):
+	role = controlTypes.ROLE_MATH
+
+	def _get_mathMl(self):
+		return self.HTMLNode.outerHTML
 
 def findExtraIAccessibleOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class for MSHTML objects.
