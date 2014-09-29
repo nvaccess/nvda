@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2007-2012 NV Access Limited, Peter Vágner
+#Copyright (C) 2007-2014 NV Access Limited, Peter Vágner
 
 import time
 import threading
@@ -322,6 +322,12 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def activate(self):
 		self.obj._activatePosition(self)
+
+	def getMathMl(self, field):
+		docHandle = int(field["controlIdentifier_docHandle"])
+		nodeId = int(field["controlIdentifier_ID"])
+		obj = self.obj.getNVDAObjectFromIdentifier(docHandle, nodeId)
+		return obj.mathMl
 
 class ElementsListDialog(wx.Dialog):
 	ELEMENT_TYPES = (
