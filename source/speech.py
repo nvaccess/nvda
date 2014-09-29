@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2012 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 
 """High-level functions to speak information.
 """ 
@@ -618,6 +618,16 @@ class SpeakTextInfoState(object):
 	def copy(self):
 		return self.__class__(self)
 
+def _speakTextInfo_addMath(speechSequence, info, field):
+	import mathPres
+	mathPres.ensureInit()
+	if not mathPres.speechProvider:
+		return
+	try:
+		speechSequence.extend(mathPres.speechProvider.getSpeechForMathMl(info.getMathMl(field)))
+	except (NotImplementedError, LookupError):
+		return
+
 def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlTypes.REASON_QUERY,index=None,onlyInitialFields=False,suppressBlanks=False):
 	if isinstance(useCache,SpeakTextInfoState):
 		speakTextInfoState=useCache
@@ -713,17 +723,23 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	#Get speech text for any fields that are in both controlFieldStacks, if extra detail is not requested
 	if not extraDetail:
 		for count in xrange(commonFieldCount):
-			text=info.getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"start_inControlFieldStack",formatConfig,extraDetail,reason=reason)
+			field=newControlFieldStack[count]
+			text=info.getControlFieldSpeech(field,newControlFieldStack[0:count],"start_inControlFieldStack",formatConfig,extraDetail,reason=reason)
 			if text:
 				speechSequence.append(text)
 				isTextBlank=False
+				if field.get("role")==controlTypes.ROLE_MATH:
+					_speakTextInfo_addMath(speechSequence,info,field)
 
 	#Get speech text for any fields in the new controlFieldStack that are not in the old controlFieldStack
 	for count in xrange(commonFieldCount,len(newControlFieldStack)):
-		text=info.getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"start_addedToControlFieldStack",formatConfig,extraDetail,reason=reason)
+		field=newControlFieldStack[count]
+		text=info.getControlFieldSpeech(field,newControlFieldStack[0:count],"start_addedToControlFieldStack",formatConfig,extraDetail,reason=reason)
 		if text:
 			speechSequence.append(text)
 			isTextBlank=False
+			if field.get("role")==controlTypes.ROLE_MATH:
+				_speakTextInfo_addMath(speechSequence,info,field)
 		commonFieldCount+=1
 
 	#Fetch the text for format field attributes that have changed between what was previously cached, and this textInfo's initialFormatField.
@@ -800,6 +816,8 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 						relativeSpeechSequence.append(LangChangeCommand(None))
 						lastLanguage=None
 					relativeSpeechSequence.append(fieldText)
+					if command.command=="controlStart" and command.field.get("role")==controlTypes.ROLE_MATH:
+						_speakTextInfo_addMath(relativeSpeechSequence,info,command.field)
 				if autoLanguageSwitching and newLanguage!=lastLanguage:
 					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
 					lastLanguage=newLanguage
