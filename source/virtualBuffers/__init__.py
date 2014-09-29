@@ -374,6 +374,12 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def activate(self):
 		self.obj._activatePosition(self)
 
+	def getMathMl(self, field):
+		docHandle = int(field["controlIdentifier_docHandle"])
+		nodeId = int(field["controlIdentifier_ID"])
+		obj = self.obj.getNVDAObjectFromIdentifier(docHandle, nodeId)
+		return obj.mathMl
+
 class VirtualBuffer(cursorManager.CursorManager, browseMode.BrowseModeTreeInterceptor, treeInterceptorHandler.DocumentTreeInterceptor):
 
 	TextInfo=VirtualBufferTextInfo
