@@ -529,7 +529,8 @@ class NVDAObjectRegion(Region):
 	def update(self):
 		obj = self.obj
 		presConfig = config.conf["presentation"]
-		text = getBrailleTextForProperties(name=obj.name, role=obj.role,
+		role = obj.role
+		text = getBrailleTextForProperties(name=obj.name, role=role,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=obj.description if presConfig["reportObjectDescriptions"] else None,
@@ -537,6 +538,15 @@ class NVDAObjectRegion(Region):
 			positionInfo=obj.positionInfo if presConfig["reportObjectPositionInformation"] else None,
 			cellCoordsText=obj.cellCoordsText if config.conf["documentFormatting"]["reportTableCellCoords"] else None,
 		)
+		if role == controlTypes.ROLE_MATH:
+			import mathPres
+			mathPres.ensureInit()
+			if mathPres.brailleProvider:
+				try:
+					text += " " + mathPres.brailleProvider.getBrailleForMathMl(
+						obj.mathMl)
+				except (NotImplementedError, LookupError):
+					pass
 		self.rawText = text + self.appendText
 		super(NVDAObjectRegion, self).update()
 
