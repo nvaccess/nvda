@@ -155,7 +155,7 @@ def getAvailableAddons(refresh=False):
 	return _availableAddons.itervalues()
 
 def installAddonBundle(bundle):
-	"""Extracts an Addon bundle in to a unique subdirectory of the user addons directory, marking the addon as needing install completion on NVDA restart.""" 
+	"""Extracts an Addon bundle in to a unique subdirectory of the user addons directory, marking the addon as needing install completion on NVDA restart."""
 	addonPath = os.path.join(globalVars.appArgs.configPath, "addons",bundle.manifest['name']+ADDON_PENDINGINSTALL_SUFFIX)
 	bundle.extract(addonPath)
 	addon=Addon(addonPath)
@@ -391,7 +391,7 @@ def _translatedManifestPaths(lang=None, forBundle=False):
 
 
 class AddonBundle(object):
-	""" Represents the contents of an NVDA addon in a for suitable for distribution.
+	""" Represents the contents of an NVDA addon suitable for distribution.
 	The bundle is compressed using the zip file format. Manifest information
 	is available without the need for extraction."""
 	def __init__(self, bundlePath):
