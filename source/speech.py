@@ -311,7 +311,8 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 
 def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
-	isEditable=(reason!=controlTypes.REASON_FOCUSENTERED and obj.TextInfo!=NVDAObjectTextInfo and (obj.role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
+	role=obj.role
+	isEditable=(reason!=controlTypes.REASON_FOCUSENTERED and obj.TextInfo!=NVDAObjectTextInfo and (role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
 	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True}
 
 	if reason==controlTypes.REASON_FOCUSENTERED:
@@ -349,7 +350,9 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 		allowProperties['value']=False
 
 	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
-	if reason!=controlTypes.REASON_ONLYCACHE and isEditable:
+	if reason==controlTypes.REASON_ONLYCACHE:
+		return
+	if isEditable:
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			if not info.isCollapsed:
@@ -361,6 +364,14 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 		except:
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
 			speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=controlTypes.REASON_CARET)
+	elif role==controlTypes.ROLE_MATH:
+		import mathPres
+		mathPres.ensureInit()
+		if mathPres.speechProvider:
+			try:
+				speak(mathPres.speechProvider.getSpeechForMathMl(obj.mathMl))
+			except (NotImplementedError, LookupError):
+				pass
 
 def speakText(text,index=None,reason=controlTypes.REASON_MESSAGE,symbolLevel=None):
 	"""Speaks some text.
