@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2012 NV Access Limited
+#Copyright (C) 2008-2014 NV Access Limited
 
 import itertools
 import os
@@ -591,7 +591,17 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		level = field.get("level")
 		if level:
 			props["positionInfo"] = {"level": level}
-		return getBrailleTextForProperties(**props)
+		text = getBrailleTextForProperties(**props)
+		if role == controlTypes.ROLE_MATH:
+			import mathPres
+			mathPres.ensureInit()
+			if mathPres.brailleProvider:
+				try:
+					text += " " + mathPres.brailleProvider.getBrailleForMathMl(
+						info.getMathMl(field))
+				except (NotImplementedError, LookupError):
+					pass
+		return text
 	else:
 		# Translators: Displayed in braille at the end of a control field such as a list or table.
 		# %s is replaced with the control's role.
