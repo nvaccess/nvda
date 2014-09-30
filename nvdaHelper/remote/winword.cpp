@@ -103,6 +103,7 @@ using namespace std;
 #define wdDISPID_RANGE_INLINESHAPES 319
 #define wdDISPID_INLINESHAPES_COUNT 1
 #define wdDISPID_INLINESHAPES_ITEM 0 
+#define wdDISPID_INLINESHAPE_OLEFORMAT 5
 #define wdDISPID_INLINESHAPE_TYPE 6
 #define wdDISPID_INLINESHAPE_ALTERNATIVETEXT 131
 #define wdDISPID_INLINESHAPE_TITLE 158
@@ -128,6 +129,7 @@ using namespace std;
 #define wdDISPID_PARAGRAPHFORMAT_RIGHTINDENT 106
 #define wdDISPID_PARAGRAPHFORMAT_LEFTINDENT 107
 #define wdDISPID_PARAGRAPHFORMAT_FIRSTLINEINDENT 108
+#define wdDISPID_OLEFORMAT_PROGID 22
 
 #define wdCommentsStory 4
 
@@ -155,6 +157,9 @@ using namespace std;
 #define wdLanguageNone 0  //&H0
 #define wdNoProofing 1024  //&H400
 #define wdLanguageUnknown 9999999
+
+#define wdInlineShapeEmbeddedOLEObject 1
+#define wdInlineShapePicture 3
 
 #define formatConfig_reportFontName 1
 #define formatConfig_reportFontSize 2
@@ -664,7 +669,7 @@ inline int getInlineShapesCount(IDispatch* pDispatchRange) {
  * Generates an opening tag for the first inline shape  in this range if one exists.
   * If the function is successful, the total number of inline shapes for this range is returned allowing the caller to then perhaps move the range forward a character and try again.
    */
-inline int generateInlineShapeXML(IDispatch* pDispatchRange, wostringstream& XMLStream) {
+inline int generateInlineShapeXML(IDispatch* pDispatchRange, int offset, wostringstream& XMLStream) {
 	IDispatchPtr pDispatchShapes=NULL;
 	IDispatchPtr pDispatchShape=NULL;
 	int count=0;
@@ -696,7 +701,19 @@ inline int generateInlineShapeXML(IDispatch* pDispatchRange, wostringstream& XML
 		}
 		SysFreeString(altText);
 	}
-	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<(shapeType==3?L"graphic":L"object")<<L"\" value=\""<<altTextStr<<L"\">";
+	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<(shapeType==wdInlineShapePicture?L"graphic":L"object")<<L"\" value=\""<<altTextStr<<L"\"";
+	if(shapeType==wdInlineShapeEmbeddedOLEObject) {
+		XMLStream<<L" shapeoffset=\""<<offset<<L"\"";
+		IDispatchPtr pOLEFormat=NULL;
+		if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_OLEFORMAT,VT_DISPATCH,&pOLEFormat)==S_OK) {
+			BSTR progId=NULL;
+			if(_com_dispatch_raw_propget(pOLEFormat,wdDISPID_OLEFORMAT_PROGID,VT_BSTR,&progId)==S_OK&&progId) {
+				XMLStream<<L" progid=\""<<progId<<"\"";
+				SysFreeString(progId);
+			}
+		}
+	}
+	XMLStream<<L">";
 	return count;
 }
 
@@ -860,7 +877,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			}
 			//If there are inline shapes somewhere, try getting and generating info for the first one hear.
 			//We also get the over all count of shapes for this word so we know whether we need to check for more within this word
-			int inlineShapesCount=hasInlineShapes?generateInlineShapeXML(pDispatchRange,XMLStream):0;
+			int inlineShapesCount=hasInlineShapes?generateInlineShapeXML(pDispatchRange,chunkStartOffset,XMLStream):0;
 			if(inlineShapesCount>1) {
 				_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseStart);
 				if(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdCharacter,1)!=S_OK||unitsMoved<=0) {
