@@ -1,6 +1,6 @@
 #appModules/winword.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
+#Copyright (C) 2006-2014 NV Access Limited, Manish Agrawal
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -524,7 +524,12 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		elif role=="graphic":
 			role=controlTypes.ROLE_GRAPHIC
 		elif role=="object":
-			role=controlTypes.ROLE_EMBEDDEDOBJECT
+			progid=field.get("progid")
+			if progid and progid.startswith("Equation.DSMT"):
+				# MathType.
+				role=controlTypes.ROLE_MATH
+			else:
+				role=controlTypes.ROLE_EMBEDDEDOBJECT
 		else:
 			fieldType=int(field.pop('wdFieldType',-1))
 			if fieldType!=-1:
@@ -768,6 +773,19 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	def updateSelection(self):
 		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)
 		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.End)
+
+	def getMathMl(self, field):
+		try:
+			import mathType
+		except:
+			raise LookupError("MathType not installed")
+		range = self._rangeObj.Duplicate
+		range.Start = int(field["shapeoffset"])
+		obj = range.InlineShapes[0].OLEFormat
+		try:
+			return mathType.getMathMl(obj)
+		except:
+			raise LookupError("Couldn't get MathML from MathType")
 
 class WordDocumentTextInfoForTreeInterceptor(WordDocumentTextInfo):
 
