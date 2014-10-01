@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2012 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista
+#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista
 
 import time
 import itertools
@@ -1371,7 +1371,42 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onConfigProfilesCommand, None)
 	# Translators: Describes the command to open the Configuration Profiles dialog.
 	script_activateConfigProfilesDialog.__doc__ = _("Shows the NVDA Configuration Profiles dialog")
-	
+
+	def script_interactWithMath(self, gesture):
+		import mathPres
+		mathPres.ensureInit()
+		if not mathPres.interactionProvider:
+			# Translators: Reported when the user attempts math interaction
+			# but math interaction is not supported.
+			ui.message(_("Math interaction not supported."))
+			return
+
+		pos = api.getReviewPosition()
+		pos.expand(textInfos.UNIT_CHARACTER)
+		for item in reversed(pos.getTextWithFields()):
+			if not isinstance(item, textInfos.FieldCommand) or item.command != "controlStart":
+				continue
+			field = item.field
+			if field.get("role") != controlTypes.ROLE_MATH:
+				continue
+			try:
+				return mathPres.interactionProvider.interactWithMathMl(pos.getMathMl(field))
+			except (NotImplementedError, LookupError):
+				continue
+
+		obj = api.getNavigatorObject()
+		if obj.role == controlTypes.ROLE_MATH:
+			try:
+				return mathPres.interactionProvider.interactWithMathMl(obj.mathMl)
+			except (NotImplementedError, LookupError):
+				pass
+
+		# Translators: Reported when the user attempts math interaction
+		# with something that isn't math.
+		ui.message(_("Not math"))
+	# Translators: Describes a command.
+	script_interactWithMath.__doc__ = _("Begins interaction with math content")
+
 	__gestures = {
 		# Basic
 		"kb:NVDA+n": "showGui",
@@ -1549,6 +1584,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+control+z": "activatePythonConsole",
 		"kb:NVDA+control+f3": "reloadPlugins",
 		"kb(desktop):NVDA+control+f2": "test_navigatorDisplayModelText",
+		"kb:NVDA+alt+m": "interactWithMath",
 	}
 
 #: The single global commands instance.
