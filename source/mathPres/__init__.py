@@ -11,6 +11,12 @@ Plugins can register their own implementation for any or all of these
 using L{registerProvider}.
 """
 
+from NVDAObjects.window import Window
+import controlTypes
+import api
+import virtualBuffers
+import eventHandler
+
 class MathPresentationProvider(object):
 	"""Implements presentation of math content.
 	A single provider does not need to implement all presentation types.
@@ -65,3 +71,40 @@ def registerProvider(provider, speech=False, braille=False, interaction=False):
 
 def ensureInit():
 	pass
+
+class MathInteractionNVDAObject(Window):
+	"""Base class for a fake NVDAObject which can be focused while interacting with math.
+	Subclasses can bind commands to itneract with the content
+	and produce speech and braille output as they wish.
+	To begin interaction, call L{setFocus}.
+	Pressing escape exits interaction.
+	"""
+
+	role = controlTypes.ROLE_MATH
+	# Override the window name.
+	name = None
+	# Any tree interceptor should not apply here.
+	treeInterceptor = None
+
+	def __init__(self, provider=None, mathMl=None):
+		self.parent = parent = api.getFocusObject()
+		self.provider = provider
+		super(MathInteractionNVDAObject, self).__init__(windowHandle=parent.windowHandle)
+
+	def setFocus(self):
+		ti = self.parent.treeInterceptor
+		if isinstance(ti, virtualBuffers.VirtualBuffer):
+			# Normally, when entering browse mode from a descendant (e.g. dialog),
+			# we want the cursor to move to the focus (#3145).
+			# However, we don't want this for math, as math isn't focusable.
+			ti._enteringFromOutside = True
+		eventHandler.executeEvent("gainFocus", self)
+
+	def script_exit(self, gesture):
+		eventHandler.executeEvent("gainFocus", self.parent)
+	# Translators: Describes a command.
+	script_exit.__doc__ = _("Exit math interaction")
+
+	__gestures = {
+		"kb:escape": "exit",
+	}
