@@ -55,7 +55,7 @@ def registerProvider(provider, speech=False, braille=False, interaction=False):
 	@param interaction: Whether this provider supports interaction.
 	@type interaction: bool
 	"""
-	global speechProvider, brailleProvider, presentationProvider
+	global speechProvider, brailleProvider, interactionProvider
 	if speech:
 		speechProvider = provider
 	if braille:
