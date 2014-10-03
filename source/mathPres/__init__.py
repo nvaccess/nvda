@@ -70,7 +70,13 @@ def registerProvider(provider, speech=False, braille=False, interaction=False):
 		interactionProvider = provider
 
 def ensureInit():
-	pass
+	# Register builtin providers if a plugin hasn't registered others.
+	needSpeech = not speechProvider
+	needInteraction = not interactionProvider
+	if needSpeech or needInteraction:
+		from . import pymathspeak
+		registerProvider(pymathspeak.PyMathSpeak(),
+			speech=needSpeech, interaction=needInteraction)
 
 class MathInteractionNVDAObject(Window):
 	"""Base class for a fake NVDAObject which can be focused while interacting with math.
