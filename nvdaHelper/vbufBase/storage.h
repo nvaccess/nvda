@@ -286,9 +286,10 @@ class VBufStorage_fieldNode_t {
  * @param endOffset the offset to end at. Use -1 to mean node's end offset. 
  * @param text a string in whish to append the text.
  * @param useMarkup if true then markup indicating opening and closing of fields will be included.
+ * @param filter: a function that takes the current recursive node and returns true if text should be fetched and false if it should be skipped.
  * @return true if successfull, false otherwize.
  */ 
-	virtual void getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup=false);
+	virtual void getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup=false,bool(*filter)(VBufStorage_fieldNode_t*)=NULL);
 
 /**
  * @return a string providing information about this node's type, and its state.
@@ -359,7 +360,7 @@ class VBufStorage_textFieldNode_t : public VBufStorage_fieldNode_t {
 
 	virtual void generateMarkupTagName(std::wstring& text);
 
-	virtual void getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup=false);
+	virtual void getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup=false,bool(*filter)(VBufStorage_fieldNode_t*)=NULL);
 
 /**
  * constructor.
