@@ -444,6 +444,8 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	@param subdir: The subdirectory to be used, C{None} for the name of C{module}.
 	@type subdir: str
 	"""
+	if globalVars.appArgs.disableAddons:
+		return
 	if not subdir:
 		subdir = module.__name__
 	# Python 2.x doesn't properly handle unicode import paths, so convert them.

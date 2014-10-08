@@ -75,6 +75,7 @@ parser.add_option('-l','--log-level',type="int",dest='logLevel',default=0,help="
 parser.add_option('-c','--config-path',dest='configPath',default=None,help="The path where all settings for NVDA are stored")
 parser.add_option('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
 parser.add_option('-s','--secure',action="store_true",dest='secure',default=False,help="Secure mode (disable Python console)")
+parser.add_option('--disable-addons',action="store_true",dest='disableAddons',default=False,help="Disable all add-ons")
 parser.add_option('--no-sr-flag',action="store_false",dest='changeScreenReaderFlag',default=True,help="Don't change the global system screen reader flag")
 parser.add_option('--install',action="store_true",dest='install',default=False,help="Silently installs NVDA")
 parser.add_option('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")

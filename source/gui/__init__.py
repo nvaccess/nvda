@@ -194,16 +194,12 @@ class MainFrame(wx.Frame):
 		self._popupSettingsDialog(DictionaryDialog,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
 
 	def onExitCommand(self, evt):
-		canExit=False
 		if config.conf["general"]["askToExit"]:
-			if isInMessageBox:
-				return
-			# Translators: Message shown to ask if user really wishes to quit NVDA.
-			if messageBox(_("Are you sure you want to quit NVDA?"), _("Exit NVDA"), wx.YES_NO|wx.ICON_WARNING) == wx.YES:
-				canExit=True
+			self.prePopup()
+			self.exitDialog = ExitDialog(self)
+			self.exitDialog.Show()
+			self.postPopup()
 		else:
-			canExit=True
-		if canExit:
 			wx.GetApp().ExitMainLoop()
 
 	def onGeneralSettingsCommand(self,evt):
@@ -688,6 +684,55 @@ class LauncherDialog(wx.Dialog):
 		d = cls(mainFrame)
 		d.Show()
 		mainFrame.postPopup()
+
+class ExitDialog(wx.Dialog):
+
+	def __init__(self, parent):
+		# Translators: The title of the dialog to exit NVDA
+		super(ExitDialog, self).__init__(parent, title=_("Exit NVDA"))
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+
+		if globalVars.appArgs.disableAddons:
+			# Translators: A message in the exit Dialog shown when all add-ons are disabled.
+			addonsDisabledLabel=wx.StaticText(self,-1,label=_("All add-ons are now disabled. They will be re-enabled on the next restart unless you choose to disable them again."))
+			mainSizer.Add(addonsDisabledLabel)
+
+		actionSizer=wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for actions list in the Exit dialog.
+		actionsLabel=wx.StaticText(self,-1,label=_("What would you like to &do?"))
+		actionSizer.Add(actionsLabel)
+		actionsListID=wx.NewId()
+		self.actions = [
+		# Translators: An option in the combo box to choose exit action.
+		_("Exit"),
+		# Translators: An option in the combo box to choose exit action.
+		_("Restart"),
+		# Translators: An option in the combo box to choose exit action.
+		_("Restart with add-ons disabled")]
+		self.actionsList=wx.Choice(self,actionsListID,choices=self.actions)
+		self.actionsList.SetSelection(0)
+		actionSizer.Add(self.actionsList)
+		mainSizer.Add(actionSizer,border=10,flag=wx.CENTER)
+
+		mainSizer.Add(self.CreateButtonSizer(wx.OK | wx.CANCEL))
+		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
+		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
+		mainSizer.Fit(self)
+		self.Sizer = mainSizer
+		self.actionsList.SetFocus()
+
+	def onOk(self, evt):
+		action=self.actionsList.GetSelection()
+		if action == 0:
+			wx.GetApp().ExitMainLoop()
+		elif action == 1:
+			queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
+		elif action == 2:
+			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,True)
+		self.Destroy()
+
+	def onCancel(self, evt):
+		self.Destroy()
 
 class ExecAndPump(threading.Thread):
 	"""Executes the given function with given args and kwargs in a background thread while blocking and pumping in the current thread."""

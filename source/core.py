@@ -62,7 +62,7 @@ def doStartupDialogs():
 		from gui import upgradeAlerts
 		upgradeAlerts.NewLaptopKeyboardLayout.run()
 
-def restart():
+def restart(disableAddons=False):
 	"""Restarts NVDA by starting a new copy with -r."""
 	if globalVars.appArgs.launcher:
 		import wx
@@ -72,10 +72,21 @@ def restart():
 	import subprocess
 	import winUser
 	import shellapi
+	options=[]
+	try:
+		sys.argv.index('-r')
+	except:
+		options.append("-r")
+	try:
+		sys.argv.pop(sys.argv.index('--disable-addons'))
+	except:
+		pass
+	if disableAddons:
+		options.append('--disable-addons')
 	# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL  
 	shellapi.ShellExecute(None, None,
 		sys.executable.decode("mbcs"),
-		subprocess.list2cmdline(sys.argv + ["-r"]).decode("mbcs"),
+		subprocess.list2cmdline(sys.argv + options).decode("mbcs"),
 		None, winUser.SW_SHOWNORMAL)
 
 def resetConfiguration(factoryDefaults=False):
