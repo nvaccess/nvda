@@ -683,7 +683,7 @@ class ExitDialog(wx.Dialog):
 
 		if globalVars.appArgs.disableAddons:
 			# Translators: A message in the exit Dialog shown when all add-ons are disabled.
-			addonsDisabledLabel=wx.StaticText(self,-1,label=_("All add-ons are now disabled. They will be reenabled on the next restart, unless you choose to disable them again."))
+			addonsDisabledLabel=wx.StaticText(self,-1,label=_("All add-ons are now disabled. They will be re-enabled on the next restart unless you choose to disable them again."))
 			mainSizer.Add(addonsDisabledLabel)
 
 		actionSizer=wx.BoxSizer(wx.HORIZONTAL)

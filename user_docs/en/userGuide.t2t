@@ -131,7 +131,7 @@ Press OK to dismiss this dialog.
 ++ Launching NVDA ++
 If you have installed NVDA with the installer, then starting NVDA is as simple as either pressing control+alt+n, or choosing NVDA from the NVDA menu under Programs on the Start Menu.
 Additionally you can type NVDA into the Run dialog and press Enter.
-You can also pass some [command line options #CommandLineOptions] which allows you to restart NVDA (-r), quit (-q), disable add-ons (--disable-addons) and many more.
+You can also pass some [command line options #CommandLineOptions] which allows you to restart NVDA (-r), quit (-q), disable add-ons (--disable-addons), etc.
 
 To start the portable version, go to the directory you unpacked NVDA to, and press enter or double click on nvda.exe.
 
@@ -597,7 +597,7 @@ This option is a checkbox that, when checked, tells NVDA to automatically save t
 ==== Show exit options when exiting NVDA ====
 This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks what action you want to perform.
 When checked, a dialog will appear when you attempt to exit NVDA asking whether you want to exit, restart or restart with add-ons disabled.
-When unchecked, NVDA will exit directly.
+When unchecked, NVDA will exit immediately.
 
 ==== Play sounds when starting or exiting NVDA ====
 This option is a checkbox that, when checked, tells NVDA to play sounds when it starts or exits.
@@ -1923,31 +1923,33 @@ The following state indicators are also defined:
 
 + Advanced Topics +
 
-++ Command line options ++[CommandLineOptions]
-NVDA can accept one or more additional options when starts, which could change its behaviour.
+++ Command Line Options ++[CommandLineOptions]
+NVDA can accept one or more additional options when it starts which alter its behavior.
 You can pass as many options as you need.
-Those options could be passed when starting from a shortcut (in the shortcut properties), from the Run dialog (StartMenu->Run or WindowsKey+R), or from the command interpretor (command prompt or cmd.exe) and should be separated by themselvs and from the name of NVDA's executable file with spaces.
-For example, the desktop shortcut that NVDA creates after install has the -r option, which tells NVDA to close the currently running copy before starting the new one.
-Another useful option is --disable-addons, which tells NVDA to suspend all running add-ons, which allows you to recover from bad situations and also helps you to determin the cause of some problem when such appear.
+These options can be passed when starting from a shortcut (in the shortcut properties), from the Run dialog (Start Menu -> Run or Windows+r) or from a Windows command console.
+Options should be separated from the name of NVDA's executable file and from other options by spaces.
+For example, the Desktop shortcut that NVDA creates during installation has the -r option, which tells NVDA to close the currently running copy before starting the new one.
+Another useful option is --disable-addons, which tells NVDA to suspend all running add-ons.
+This allows you to determine whether a problem is caused by an add-on and to recover from serious problems caused by add-ons.
 
-For example, you can exit the currently running copy of NVDA by entering the following in the Run dialog:
+As an example, you can exit the currently running copy of NVDA by entering the following in the Run dialog:
 
 nvda -q
 
-Some of the command line options have a short and a long version, some of them have only one or the another.
+Some of the command line options have a short and a long version, while some of them have only a long version.
 For those which have a short version, you can combine them like this:
-| nvda -rm | This will exit the currently running copy of NVDA and will start this one with startup sounds off, etc |
-| nvda -rm --disable-addons | Same as above, but with addons disabled |
+| nvda -rm | This will exit the currently running copy of NVDA and will start a new copy with startup sounds disabled, etc. |
+| nvda -rm --disable-addons | Same as above, but with add-ons disabled |
 
-Some of the command line options accept additional parameters, for example how detailed the logging should be or the path to user config directory.
-Those parameters come right after the option, separated by a space (when using the short version) or an equal sign (=) - when using the long version of the option, for example:
+Some of the command line options accept additional parameters; e.g. how detailed the logging should be or the path to the user configuration directory.
+Those parameters should be placed after the option, separated from the option by a space when using the short version or an equals sign (=) when using the long version; e.g.:
 | nvda -l 10 | Tells NVDA to start with log level set to debug |
 | nvda --log-file=c:\nvda.log |  Tells NVDA to write its log to c:\nvda.log |
 | nvda --log-level=20 -f c:\nvda.log | Tels NVDA to start with log level set to info and to write its log to c:\nvda.log |
 
 Following are the command line options for NVDA:
 || Short | Long | Description |
-| -h | --help | show this help message and exit |
+| -h | --help | show command line help and exit |
 | -q | --quit | Quit already running copy of NVDA |
 | -r | --replace | Quit already running copy of NVDA and start this one |
 | -k | --check-running | Report whether NVDA is running via the exit code; 0 if running, 1 if not running |
