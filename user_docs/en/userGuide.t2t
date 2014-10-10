@@ -84,7 +84,7 @@ Running the portable version directly from read-only media is not supported at t
 Using the temporary copy of NVDA is also an option (e.g. for demonstration purposes), though  starting NVDA in this way each time can become very time consuming.
 
 ++ Portable and Temporary Copy Restrictions ++
-Apart from the  inability to automatically start during and or after log-on, the portable and temporary copies of NVDA also have the following restrictions:
+Apart from the  inability to automatically start during and/or after log-on, the portable and temporary copies of NVDA also have the following restrictions:
 - The inability to interact with applications running with administrative privileges, unless of course NVDA itself has been run also with these privileges (not recommended).
 - The inability to read User Account Control (UAC) screens when trying to start an application with administrative privileges.
 - Windows 8: the inability to support input from a touch screen.
@@ -107,7 +107,7 @@ This also includes UAC control and other secure screens.
 
 +++ Create Desktop Shortcut (ctrl+alt+n) +++
 This option allows you to choose whether or not NVDA should create a shortcut on the desktop to start NVDA. 
-This shortcut if created will also be assigned a  shortcut key of control+alt+n allowing you to start NVDA at any time with this key stroke.
+If created, this shortcut will also be assigned a  shortcut key of control+alt+n, allowing you to start NVDA at any time with this key stroke.
 
 +++ Copy Portable Configuration to Current User Account +++
 This option allows you to choose whether or not NVDA should copy the user configuration from the currently running NVDA into the configuration for the currently logged on  user, for the installed copy of NVDA. 
@@ -152,22 +152,20 @@ The third lets you control if this Welcome dialog should appear each time NVDA s
 
 +++ The NVDA Modifier Key +++
 Most NVDA-specific keyboard commands consist of pressing a particular key called the NVDA modifier key in conjunction with one or more other keys.
-Notable exceptions to this are the text review commands for desktop keyboards which just use the numpad keys by themselves, but there are some other exceptions as well.
+Notable exceptions to this are the text review commands for the desktop keyboard layout which just use the numpad keys by themselves, but there are some other exceptions as well.
 
-NVDA can be configured so that either the numpad Insert, Extended Insert, or capslock key can be used as the NVDA modifier key.
-
+NVDA can be configured so that the numpad Insert, Extended Insert and/or capslock key can be used as the NVDA modifier key.
 By default, both the numpad Insert and Extended Insert keys are set as NVDA modifier keys.
 
-If you wish to cause one of the NVDA modifier keys to act like its original key (for instance you wish to turn capslock on when you have set capslock to be an NVDA modifier key) you can press the key twice in quick succession.
+If you wish to cause one of the NVDA modifier keys to behave as it usually would if NVDA were not running (e.g. you wish to turn capslock on when you have set capslock to be an NVDA modifier key), you can press the key twice in quick succession.
 
 +++ Keyboard Layouts +++
-NVDA currently comes with two sets of key commands.
-There is a layout for Desktops and a layout for Laptops.
-NVDA by default is set to use the Desktop layout, though you can switch to the Laptop layout in the Keyboard Settings, found under Preferences in the NVDA menu.
+NVDA currently comes with two sets of key commands (known as keyboard layouts): the desktop layout and the laptop layout.
+By default, NVDA  is set to use the Desktop layout, though you can switch to the Laptop layout in the Keyboard Settings, found under Preferences in the NVDA menu.
 
-The Desktop layout makes heavy use of the numberpad (with numlock off).
-Although most laptops do not have a physical numberpad, some laptops can emulate one by holding down the FN key and pressing letters and numbers on the right-hand side of the keyboard (7 8 9 u i o j k l etc).
-If your laptop can not do this, or does not allow you to turn numlock off, you may want to switch to the Laptop layout instead.
+The Desktop layout makes heavy use of the numpad (with numlock off).
+Although most laptops do not have a physical numpad, some laptops can emulate one by holding down the FN key and pressing letters and numbers on the right-hand side of the keyboard (7, 8, 9, u, i, o, j, k, l, etc.).
+If your laptop cannot do this or does not allow you to turn numlock off, you may want to switch to the Laptop layout instead.
 
 ++ NVDA Touch Gestures ++
 If you are running NVDA on a device with a touch screen and running Windows 8 or higher, you can also control NVDA directly via the touch screen.
@@ -234,7 +232,7 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 || Name | Desktop key | Laptop key | Touch | Description |
 | Stop speech | Control | control | 2-finger tap | Instantly stops speaking |
 | Pause Speech | shift | shift | none | Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer) |
-| NVDA Menu | NVDA+n | NVDA+n | 2-finger double tap | Pops up the NVDA menu to allow you to access preferences, tools and help etc |
+| NVDA Menu | NVDA+n | NVDA+n | 2-finger double tap | Pops up the NVDA menu to allow you to access preferences, tools, help, etc. |
 | Toggle Speech Mode | NVDA+s | NVDA+s | none | Toggles speech mode between speech, beeps and off. |
 | Toggle Input Help Mode | NVDA+1 | NVDA+1 | none | Pressing any key in this mode will report the key, and the description of any NVDA command associated with it |
 | Quit NVDA | NVDA+q | NVDA+q | none | Exits NVDA |
@@ -669,12 +667,13 @@ This option is a slider which goes from 0 to 100, (0 being the lowest volume and
 This option is a slider that lets you choose how much inflection (rise and fall in pitch) the synthesizer should use to speak with. (The only synthesizer that provides this option at the present time is eSpeak).
 
 ==== Automatic Language switching ====
-This checkbox allows you to toggle whether or not NVDA should switch speech synthesizer languages on the fly, if language markup is available in the text being read.
+This checkbox allows you to toggle whether NVDA should switch speech synthesizer languages automatically if the text being read specifies its language.
 This option is enabled by default.
 Currently only the eSpeak synthesizer supports automatic language switching.
 
 ==== Automatic Dialect switching ====
-If automatic language switching is turned on, this checkbox allows you to toggle whether or not dialect changes should be made, rather than just actual language changes. E.g. If reading in an English U.S. voice but a document states some text is in English U.K. then if this feature is enabled the synthesizer will switch accents.
+This checkbox allows you to toggle whether or not dialect changes should be made, rather than just actual language changes.
+For example, if reading in an English U.S. voice but a document specifies that some text is in English U.K., then the synthesizer will switch accents if this option is enabled.
 This option is disabled by default.
 
 %kc:setting
@@ -880,7 +879,7 @@ Key: NVDA+6
 
 When enabled, the review cursor will automatically be moved to the position of the System caret each time it moves.
 
-==== Follow mouse ====
+==== Follow mouse cursor ====
 When enabled, the review cursor will follow the mouse as it moves.
 
 ==== Simple Review mode ====

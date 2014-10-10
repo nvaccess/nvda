@@ -209,7 +209,7 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType=="button":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_BUTTONMENU,IAccessibleHandler.IA2_ROLE_TOGGLE_BUTTON]}
 		elif nodeType=="edit":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]}
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT,oleacc.ROLE_SYSTEM_COMBOBOX],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None],"IAccessible2::state_%s"%IAccessibleHandler.IA2_STATE_EDITABLE:[1]}
 		elif nodeType=="frame":
 			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_INTERNAL_FRAME]}
 		elif nodeType=="separator":

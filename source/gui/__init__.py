@@ -458,6 +458,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		item = self.menu.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)
 
+		self.Bind(wx.EVT_TASKBAR_LEFT_DOWN, self.onActivate)
 		self.Bind(wx.EVT_TASKBAR_RIGHT_DOWN, self.onActivate)
 
 	def Destroy(self):
