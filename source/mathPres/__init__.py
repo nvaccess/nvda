@@ -77,6 +77,9 @@ def ensureInit():
 		from . import pymathspeak
 		registerProvider(pymathspeak.PyMathSpeak(),
 			speech=needSpeech, interaction=needInteraction)
+	if not brailleProvider:
+		from . import liblouisutdml
+		registerProvider(liblouisutdml.Liblouisutdml(), braille=True)
 
 class MathInteractionNVDAObject(Window):
 	"""Base class for a fake NVDAObject which can be focused while interacting with math.
