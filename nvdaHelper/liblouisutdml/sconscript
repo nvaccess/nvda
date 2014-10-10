@@ -1,0 +1,153 @@
+###
+#This file is a part of the NVDA project.
+#URL: http://www.nvda-project.org/
+#Copyright 2014 NV Access Limited.
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License version 2.0, as published by
+#the Free Software Foundation.
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#This license can be found at:
+#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+###
+
+import os
+import re
+
+Import([
+	"env",
+	"sourceDir",
+	"louisRootDir",
+	"louisSourceDir",
+	"louisLib",
+	"louisBuildDir",
+	"tablesOutDir",
+])
+
+utdmlRootDir = env.Dir("#include/liblouisutdml")
+utdmlSourceDir = utdmlRootDir.Dir("liblouisutdml")
+xmlSourceDir = utdmlRootDir.Dir("libxml2")
+outDir = sourceDir.Dir("louisutdml")
+
+# liblouisutdml replaces libxml/xmlversion.h, but there's no libxml directory.
+# Make a temporary include directory for this.
+tempIncludeDir = Dir("include")
+env.Command(tempIncludeDir.File("libxml/xmlversion.h"),
+	utdmlRootDir.File("windows/include/xmlversion.h"),
+	Copy("$TARGET", "$SOURCE"))
+
+env = env.Clone()
+env.Append(CCFLAGS="/W0")
+env.Prepend(CPPPATH=[
+	utdmlRootDir.Dir("windows/include"),
+	tempIncludeDir,
+	xmlSourceDir.Dir("include"),
+])
+env.Append(LINKFLAGS="/ignore:4049")
+
+RE_AC_INIT = re.compile(r"^AC_INIT\((?P<name>.*), (?P<version>.*), (?P<maintainer>.*)\)")
+def getLouisutdmlVersion():
+	# Get the version from configure.ac.
+	with file(utdmlRootDir.File("configure.ac").abspath) as f:
+		for line in f:
+			m = RE_AC_INIT.match(line)
+			if m:
+				return m.group("version")
+	return "unknown"
+
+utdmlSources = [
+	"change_table.c",
+	"makeContents.c",
+	"examine_document.c",
+	"liblouisutdml.c",
+	"paths.c",
+	"readconfig.c",
+	"semantics.c",
+	"transcribe_cdataSection.c",
+	"transcribe_chemistry.c",
+	"transcribe_computerCode.c",
+	"transcribe_document.c",
+	"transcribe_graphic.c",
+	"transcribe_math.c",
+	"transcribe_music.c",
+	"transcribe_paragraph.c",
+	"convert_utd.c",
+	"utd2transinxml.c",
+	"utd2dsbible.c",
+	"utd2brf.c",
+	"utd2pef.c",
+	"utd2volumes.c",
+	"transcriber.c",
+]
+utdmlDefines = [env["CPPDEFINES"],
+	("PACKAGE_VERSION", r'\"%s\"' % getLouisutdmlVersion()),
+	("WIDECHAR_TYPE", "unsigned short int"),
+]
+utdmlIncludes = [env["CPPPATH"],
+	louisSourceDir,
+	louisBuildDir,
+	louisRootDir.Dir("windows/include"),
+]
+utdmlObjs = [env.Object("%s.obj" % f, utdmlSourceDir.File(f),
+		CPPDEFINES=utdmlDefines, CPPPATH=utdmlIncludes) for f in utdmlSources]
+xmlSources = [
+	"SAX.c",
+	"entities.c",
+	"encoding.c",
+	"error.c",
+	"parserInternals.c",
+	"parser.c",
+	"tree.c",
+	"hash.c",
+	"list.c",
+	"xmlIO.c",
+	"xmlmemory.c",
+	"uri.c",
+	"valid.c",
+	"xlink.c",
+	"HTMLparser.c",
+	"HTMLtree.c",
+	"debugXML.c",
+	"xpath.c",
+	"xpointer.c",
+	"xinclude.c",
+	"nanohttp.c",
+	"nanoftp.c",
+	"DOCBparser.c",
+	"catalog.c",
+	"globals.c",
+	"threads.c",
+	"c14n.c",
+	"xmlstring.c",
+	"xmlregexp.c",
+	"xmlschemas.c",
+	"xmlschemastypes.c",
+	"xmlunicode.c",
+	"xmlreader.c",
+	"relaxng.c",
+	"dict.c",
+	"SAX2.c",
+	"xmlwriter.c",
+	"legacy.c",
+	"chvalid.c",
+	"pattern.c",
+	"xmlsave.c",
+	"xmlmodule.c",
+	"schematron.c",
+]
+xmlDefines = [env["CPPDEFINES"],
+	("VERSION", r'\"libxml2-2.7.2\"'),
+	("uint32_t", "unsigned int"),
+	]
+xmlIncludes = [env["CPPPATH"], xmlSourceDir]
+xmlObjs = [env.Object("%s.obj" % f, xmlSourceDir.File(f),
+	CPPDEFINES=xmlDefines, CPPPATH=xmlIncludes) for f in xmlSources]
+utdmlLib = env.SharedLibrary("liblouisutdml",
+	utdmlObjs + xmlObjs + [utdmlRootDir.File("windows/liblouisutdml.def")],
+	LIBS=[louisLib[2], "wsock32", "ws2_32", "kernel32"])
+env.Install(sourceDir, utdmlLib)
+
+dataDir = utdmlRootDir.Dir("lbu_files")
+env.Install(tablesOutDir,
+	[dataDir.File(f) for f in ("marburg.sem", "nemeth.sem", "ukmaths.sem")])
