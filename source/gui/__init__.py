@@ -11,6 +11,7 @@ import sys
 import threading
 import codecs
 import ctypes
+import weakref
 import wx
 import globalVars
 import tones
@@ -194,8 +195,9 @@ class MainFrame(wx.Frame):
 	def onExitCommand(self, evt):
 		if config.conf["general"]["askToExit"]:
 			self.prePopup()
-			self.exitDialog = ExitDialog(self)
-			self.exitDialog.Show()
+			d = ExitDialog(self)
+			d.Raise()
+			d.Show()
 			self.postPopup()
 		else:
 			wx.GetApp().ExitMainLoop()
@@ -675,8 +677,21 @@ class LauncherDialog(wx.Dialog):
 		mainFrame.postPopup()
 
 class ExitDialog(wx.Dialog):
+	_instance = None
+
+	def __new__(cls, parent):
+		# Make this a singleton.
+		inst = cls._instance() if cls._instance else None
+		if not inst:
+			return super(cls, cls).__new__(cls, parent)
+		return inst
 
 	def __init__(self, parent):
+		inst = ExitDialog._instance() if ExitDialog._instance else None
+		if inst:
+			return
+		# Use a weakref so the instance can die.
+		ExitDialog._instance = weakref.ref(self)
 		# Translators: The title of the dialog to exit NVDA
 		super(ExitDialog, self).__init__(parent, title=_("Exit NVDA"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
