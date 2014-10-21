@@ -1069,7 +1069,11 @@ You may also want to type a description of the rule in the Comment field (someth
 NVDA's speech dictionaries however are much more powerful than simple word replacement.
 The Add rule dialog also contains a checkbox to say whether or not you want the rule to be case sensitive (meaning that NVDA should care whether the characters are uppercase or lowercase.
 NVDA ignores case by default).
-Another checkbox allows you to state whether your pattern is a "Regular expression".
+
+Finally, a set of radio buttons allows you to tell NVDA whether your pattern should match anywhere, should only match if it is a complete word or should be treated as a "Regular expression".
+Setting the pattern to match as a whole word means that the replacement will only be made if the pattern does not occur as part of a larger word; i.e. a character other than an alphanumeric character or an underscore (or no character at all) comes both immediately before and after the pattern.
+Thus, using the earlier example of replacing the word "bird" with "frog", if you were to make this a whole word replacement, it would not match "birds" or "bluebird".
+
 A regular expression is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples.
 Regular expressions are not covered in this user guide, but there are many tutorials on the web which can provide you with more information.
 
