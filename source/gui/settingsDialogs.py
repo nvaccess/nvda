@@ -1153,6 +1153,15 @@ class DocumentFormattingDialog(SettingsDialog):
 		super(DocumentFormattingDialog, self).onOk(evt)
 
 class DictionaryEntryDialog(wx.Dialog):
+	TYPE_LABELS = {
+		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+		speechDictHandler.ENTRY_TYPE_ANYWHERE: _("&Anywhere"),
+		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+		speechDictHandler.ENTRY_TYPE_WORD: _("Whole &word"),
+		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+		speechDictHandler.ENTRY_TYPE_REGEXP: _("&Regular expression")
+	}
+	TYPE_LABELS_ORDERING = (speechDictHandler.ENTRY_TYPE_ANYWHERE, speechDictHandler.ENTRY_TYPE_WORD, speechDictHandler.ENTRY_TYPE_REGEXP)
 
 	# Translators: This is the label for the edit dictionary entry dialog.
 	def __init__(self, parent, title=_("Edit Dictionary Entry")):
@@ -1174,17 +1183,29 @@ class DictionaryEntryDialog(wx.Dialog):
 		# Translators: This is a label for a checkbox in add dictionary entry dialog.
 		self.caseSensitiveCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Case &sensitive"))
 		settingsSizer.Add(self.caseSensitiveCheckBox)
-		# Translators: This is a label for a checkbox in add dictionary entry dialog.
-		self.regexpCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Regular &expression"))
-		settingsSizer.Add(self.regexpCheckBox)
+
+		# Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+		self.typeRadioBox=wx.RadioBox(self,wx.NewId(),label=_("&Type"), choices=[DictionaryEntryDialog.TYPE_LABELS[i] for i in DictionaryEntryDialog.TYPE_LABELS_ORDERING])
+		settingsSizer.Add(self.typeRadioBox)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
+		self.setType(speechDictHandler.ENTRY_TYPE_ANYWHERE)
 		self.patternTextCtrl.SetFocus()
 
+	def getType(self):
+		typeRadioValue = self.typeRadioBox.GetSelection()
+		if typeRadioValue == wx.NOT_FOUND:
+			return speechDictHandler.ENTRY_TYPE_ANYWHERE
+		return DictionaryEntryDialog.TYPE_LABELS_ORDERING[typeRadioValue]
+
+	def setType(self, type):
+		self.typeRadioBox.SetSelection(DictionaryEntryDialog.TYPE_LABELS_ORDERING.index(type))
+
 class DictionaryDialog(SettingsDialog):
+	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.iteritems()}
 
 	def __init__(self,parent,title,speechDict):
 		self.title = title
@@ -1209,11 +1230,11 @@ class DictionaryDialog(SettingsDialog):
 		self.dictList.InsertColumn(2,_("Replacement"),width=150)
 		# Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
 		self.dictList.InsertColumn(3,_("case"),width=50)
-		# Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
-		self.dictList.InsertColumn(4,_("Regexp"),width=50)
+		# Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
+		self.dictList.InsertColumn(4,_("Type"),width=50)
 		self.offOn = (_("off"),_("on"))
 		for entry in self.tempSpeechDict:
-			self.dictList.Append((entry.comment,entry.pattern,entry.replacement,self.offOn[int(entry.caseSensitive)],self.offOn[int(entry.regexp)]))
+			self.dictList.Append((entry.comment,entry.pattern,entry.replacement,self.offOn[int(entry.caseSensitive)],DictionaryDialog.TYPE_LABELS[entry.type]))
 		self.editingIndex=-1
 		entriesSizer.Add(self.dictList,proportion=8)
 		settingsSizer.Add(entriesSizer)
@@ -1253,8 +1274,8 @@ class DictionaryDialog(SettingsDialog):
 		# Translators: This is the label for the add dictionary entry dialog.
 		entryDialog=DictionaryEntryDialog(self,title=_("Add Dictionary Entry"))
 		if entryDialog.ShowModal()==wx.ID_OK:
-			self.tempSpeechDict.append(speechDictHandler.SpeechDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),bool(entryDialog.regexpCheckBox.GetValue())))
-			self.dictList.Append((entryDialog.commentTextCtrl.GetValue(),entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())],self.offOn[int(entryDialog.regexpCheckBox.GetValue())]))
+			self.tempSpeechDict.append(speechDictHandler.SpeechDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),entryDialog.getType()))
+			self.dictList.Append((entryDialog.commentTextCtrl.GetValue(),entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())],DictionaryDialog.TYPE_LABELS[entryDialog.getType()]))
 			index=self.dictList.GetFirstSelected()
 			while index>=0:
 				self.dictList.Select(index,on=0)
@@ -1276,14 +1297,14 @@ class DictionaryDialog(SettingsDialog):
 		entryDialog.replacementTextCtrl.SetValue(self.tempSpeechDict[editIndex].replacement)
 		entryDialog.commentTextCtrl.SetValue(self.tempSpeechDict[editIndex].comment)
 		entryDialog.caseSensitiveCheckBox.SetValue(self.tempSpeechDict[editIndex].caseSensitive)
-		entryDialog.regexpCheckBox.SetValue(self.tempSpeechDict[editIndex].regexp)
+		entryDialog.setType(self.tempSpeechDict[editIndex].type)
 		if entryDialog.ShowModal()==wx.ID_OK:
-			self.tempSpeechDict[editIndex]=speechDictHandler.SpeechDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),bool(entryDialog.regexpCheckBox.GetValue()))
+			self.tempSpeechDict[editIndex]=speechDictHandler.SpeechDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),entryDialog.getType())
 			self.dictList.SetStringItem(editIndex,0,entryDialog.commentTextCtrl.GetValue())
 			self.dictList.SetStringItem(editIndex,1,entryDialog.patternTextCtrl.GetValue())
 			self.dictList.SetStringItem(editIndex,2,entryDialog.replacementTextCtrl.GetValue())
 			self.dictList.SetStringItem(editIndex,3,self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())])
-			self.dictList.SetStringItem(editIndex,4,self.offOn[int(entryDialog.regexpCheckBox.GetValue())])
+			self.dictList.SetStringItem(editIndex,4,DictionaryDialog.TYPE_LABELS[entryDialog.getType()])
 			self.dictList.SetFocus()
 		entryDialog.Destroy()
 
