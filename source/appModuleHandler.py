@@ -84,7 +84,8 @@ def getAppNameFromProcessID(processID,includeExt=False):
 	# This might be an executable which hosts multiple apps.
 	# Try querying the app module for the name of the app being hosted.
 	try:
-		mod = __import__("appModules.%s" % appName.decode("mbcs"),
+		# Python 2.x can't properly handle unicode module names, so convert them.
+		mod = __import__("appModules.%s" % appName.encode("mbcs"),
 			globals(), locals(), ("appModules",))
 		return mod.getAppNameFromHost(processID)
 	except (ImportError, AttributeError, LookupError):
