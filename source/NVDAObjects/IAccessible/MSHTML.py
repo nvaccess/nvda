@@ -606,7 +606,7 @@ class MSHTML(IAccessible):
 			except (COMError, AttributeError, NameError):
 				pass
 			try:
-				return self.HTMLNode.innerText or ""
+				return self.HTMLNode.innerText or super(MSHTML,self).basicText
 			except (COMError, AttributeError, NameError):
 				pass
 		return super(MSHTML,self).basicText
