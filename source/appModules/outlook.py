@@ -433,6 +433,8 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 		role=super(UIAGridRow,self).role
 		if role==controlTypes.ROLE_TREEVIEW:
 			role=controlTypes.ROLE_TREEVIEWITEM
+		elif role==controlTypes.ROLE_DATAITEM:
+			role=controlTypes.ROLE_LISTITEM
 		return role
 
 	def setFocus(self):
