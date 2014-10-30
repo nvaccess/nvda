@@ -1997,6 +1997,44 @@ Bitte lesen Sie die  [BRLTTY-Dokumentation für Tastaturtabellen http://mielke.c
 %kc:endInclude
 
 
++ Abkürzungen für Steuerelementtypen und Statusanzeigen in Braille +
+Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende Abkürzungen für Steuerelementtypen und Statusanzeigen definiert.
+
+|| Abkürzung | Steuerelementtyp |
+| sltr | Schalter |
+| akl | Konbinationsfeld |
+| kf | Kontrollkästchen |
+| dlg | Dialogfeld |
+| ef | Eingabefeld |
+| grf | Grafik |
+| sN | Tabellenspalte N, z.B. S1, S2. |
+| rN | Reihe N in einer Tabelle, z.B. R1, R2. |
+| üN | Überschrift der Ordnung N, z.B. ü1, ü2. |
+| lnk | link |
+| lst | Liste |
+| bl | besuchter link |
+| mnü | Menü |
+| Mnülst | Menüleiste |
+| as | Auswahlschalter |
+| tb | Tabelle |
+| ba | Baumansicht |
+| N | ein Eintrag in einer Baumansicht in der Ebene N|
+| ``-----`` | Trennlinie |
+
+Für die folgenden Statusanzeigen wurden ebenfalls Abkürzungen definiert
+|| Abkürzung | Status |
+| ... | wird angezeigt, wenn ein Objekt automatische Vervollständigung unterstützt |
+| [ ] | wird angezeigt, wenn ein Objekt (z.B. ein Kontrollkästchen) nicht aktiviert ist. |
+| [X] | wird angezeigt, wenn ein Objekt (z.B. ein Kontrollfeld) aktiviert ist |
+| [-] | wird angezeigt, wenn ein Objekt (z.B. ein Kontrollfeld) teilweise aktiviert ist. |
+| - | wird bei Objekten (z.B. Baumeinträgen) angezeigt, die reduziert werden können |
+| + | wird bei Objekten (z.B. Baumeinträgen) angezeigt, die erweitert werden können |
+| clk | wird bei anklickbaren Objekten angezeigt |
+| sef | wird bei Objekten (z.B. Eingabefeldern) angezeigt, die schreibgeschützt sind |
+| mrk | wird angezeigt, wenn ein Objekt ausgewählt ist |
+| #> | wird angezeigt, wenn ein Objekt ein Untermenü besitzt |
+
+
 + Erweiterte Themen +
 
 ++ Erweiterte Anpassung der Aussprache von Satz- und Sonderzeichen ++
