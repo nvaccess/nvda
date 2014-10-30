@@ -3,6 +3,30 @@ Qué hay de Nuevo en NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.4 =
+
+== Cambios ==
+- si un objeto al que te hayas movido con la navegación de objetos está dentro de un documento en modo exploración, pero el objeto en el que estabas anteriormente no lo estaba, el modo revisión se pone automáticamente en documentos. Con anterioridad esto sólo ocurría si el navegador de objetos se movía debido al cambio del foco. (#4369)
+- Las listas de pantallas Braille y de Sintetizadores en sus respectivos cuadros de diálogo ahora se ordenan alfabéticamente excepto para Sin braille/Sin voz,  las cuales ahora están al fondo. (#2724)
+- Actualizado el transcriptor braille liblouis a 2.6.0. (#4434, #3835)
+- En modo exploración, al pulsar e y shift+e para  navegar a campos de edición ahora se incluyen cuadros combinados editables. Esto incluye el cuadro buscar en la última  versiónn de Google Search. (#4436)
+- Al hacer Clic en el icono de NVDA en el Area de Notificación con el botón izquierdo del ratón ahora se abre el menú NVDA en lugar de no hacer nada. (#4459)
+
+
+== Corrección de Fallos ==
+- Al mover atrás el foco en un documento en modo exploración (ej.: yendo a una pestaña a una página web ya abierta) el cursor de revisión se coloca apropiadamente en el cursor virtual, en lugar de en el control enfocado (ej.: en un enlace más cercano). (#4369)
+- En presentaciones de diapositivas en Powerpoint, el cursor de revisión sigue correctamente al cursor virtual. (#4370)
+- En Mozilla Firefox y otros navegadores basados en Gecko, el contenido nuevo dentro de una región activa se anunciará incluso si el contenido nuevo tiene un tipo diferente de ARIA activa usable a la región activa padre. Ej.: Contenido marcado como assertive se añade a una región activa marcada como polite. (#4169).
+- En Internet Explorer y otros controles MSHTML, los framesets dentro de  framesets ya no causan que se cree un nuevo documento en modo exploración para los conjuntos de framesets, los cuales no permitían la navegación a otros marcos. (#4418)
+- NVDA ya no se cuelga cuando intenta utilizar una pantalla braille Handy Tech en algunos casos. (#3709)
+- En Windows Vista, ya no se muestra un expúreo diálogo "Entry Point Not Found" mostrado en varios casos como cuando se inicia NVDA desde el atajo del escritorio o a través de la tecla de acceso directo. (#4235)
+- Se han corregido problemas serios con controles de texto editable en diálogos en versiones recientes de Eclipse. (#3872)
+- En Outlook 2010, ahora mover el cursor funciona como se espera en el campo de ubicación de citas y solicitudes de reunión. (#4126)
+- Dentro de una región activa, el contenido que esté marcado como no activo (ej.: aria-live="off") ahora se ignora correctamente. (#4405)
+- Al anunciar el texto de una barra de estado que tiene un nombre, el nombre ahora se separa correctamente de la primera palabra del texto de la barra de estado. (#4430)
+- En campos de introdución de palabras clave con la verbalización de palabras al escribir activada, ya no se anuncian varios asteriscos inútilmente al comenzar palabras nuevas. (#4402)
+
+
 = 2014.3 =
 
 == Nuevas Características ==
