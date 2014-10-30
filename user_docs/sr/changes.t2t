@@ -1,0 +1,20 @@
+﻿Šta je Novo u NVDA
+
+
+%!includeconf: ../changes.t2tconf
+
+= 2014.4 =
+
+== Promene ==
+- Ako objekat na koji ste došli sa objekatskom navigacijom je u modu istraživanja dokument, ali objekat na koji ste došlije na prethodno bio ne, pregledni mod je automatski postavljen na dokument. Ranije ovo se jedino događalo ako navigator objekta je premešten zbog promene fokusa. (#4369)
+
+
+== Bug Fixes ==
+- When moving focus back to a browse mode document (e.g. alt tabbing to an already opened web page) the review cursor is properly positioned at the virtual caret, rather than the focused control (e.g. a near by link). (#4369)
+- In Powerpoint slide shows, the review cursor correctly follows the virtual caret. (#4370)
+- In Mozilla Firefox and other Gecko-based browsers, new content within a live region will be announced even if the new content has a usable ARIA live type different to the parent live region. E.g. Content marked as assertive is added to a live region marked as polite. (#4169).
+
+
+= Старије вести =
+
+за старије verzije, прочитајте engleski dokument
