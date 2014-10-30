@@ -152,21 +152,19 @@ Tretie začiarkavacie políčko umožňuje nastaviť, či sa uvítacie okno má 
 
 +++ Klávesový modifikátor NVDA +++
 Väčšina klávesových príkazov NVDA je kombináciou zvláštneho klávesu nazývaného kláves NVDA s inými klávesmi.
-Výnimkou sú príkazy na navigáciu v texte pomocou prezeracieho kurzora, čo sú klávesy numerického bloku pri vypnutom klávese numlock. Existuju však aj ďalšie vínimky.
+Výnimkou sú príkazy na navigáciu  v desktop rozložení pomocou prezeracieho kurzora, keďže tu sa používajú číslice na vypnutom  numerickom bloku bez klávesu NVDA. Existuju však aj ďalšie vínimky.
 
 Ako kláves NVDA je možné nastaviť klávesy insert, numerický insert a capslock.
-
 Predvolené nastavenia majú ako kláves NVDA nastavený insert aj numerický insert.
 
-Ak si želáte vykonať skutočnú funkcionalitu klávesu, ktorý Ste nastavili ako kláves NVDA (napr. prepnúť stav veľkých písmen pomocou klávesu capslock) stlačte kláves NVDA 2 krát rýchlo za sebou.
+Ak si želáte vykonať pôvodnú funkcionalitu klávesu, ktorý Ste nastavili ako kláves NVDA (napr. prepnúť stav veľkých písmen pomocou klávesu capslock) stlačte kláves NVDA 2 krát rýchlo za sebou.
 
 +++ Rozloženia klávesnice +++
-NVDA je dodávaný s dvoma sadami klávesových príkazov.
-Existuje rozloženie pre stolné (desktop) a rozloženie pre prenosné (laptop) počítače.
+NVDA je dodávaný s dvoma sadami klávesových príkazov, teda tzv. rozloženiami: rpupžemoe pre stolné počítače a pre prenosné (laptop) počítače.
 Predvolene je NVDA nastavený na rozloženie desktop. Je možné to zmeniť v dialógu nastavenia klávesnice v ponuke NVDA.
 
-Rozloženie pre stolné počítače spolieha na klávesy z numerického bloku, keď je tlačidlo numlock vypnuté.
-Aj keď väčšina prenosných počítačov nemá fyzický numerický blok, na mnohých notebookoch je možné emulovať klávesy numerického bloku pridržaním klávesu fn a stláčaním písmen a číslic v pravej časti klávesnice (7 8 9 u i o j k l atď).
+Rozloženie pre stolné počítače sa spolieha na klávesy z numerického bloku, keď je tlačidlo numlock vypnuté.
+Aj keď väčšina prenosných počítačov nemá fyzický numerický blok, na mnohých notebookoch je možné emulovať klávesy numerického bloku pridržaním klávesu fn a stláčaním písmen a číslic v pravej časti klávesnice (7, 8, 9, u, i, o, j, k, l, atď).
 Ak toto Váš notebook nepodporuje, alebo nie je možné vypnúť tlačidlo numlock, môžete použiť rozloženie nazvané laptop.
 
 ++ Dotikové gestá NVDA ++
@@ -669,12 +667,13 @@ Posuvník, ktorým v rozmedzí od nula po sto nastavíte hlasitosť hlasu od naj
 Posuvník, ktorého hodnota hovorí hlasovému výstupu do akej miery má byť intonácia uplatnená smerom na hor i smerom na dol. V súčasnosti intonáciu podporuje len hlasový výstup eSpeak.
 
 ==== Automaticky prepínať jazyk ====
-Ak je začiarknuté, NVDA bude automaticky prepínať jazyk. Jazyk určí podľa jazykových značiek v texte.
+Ak je začiarknuté, NVDA bude automaticky počas čítania meniť jazyk. Jazyk určí podľa jazykových značiek v texte.
 Predvolene je toto začiarknuté.
 Automatické prepínanie jazyka momentálne podporuje len hlasový výstup eSpeak.
 
 ==== Automaticky prepínať dialekt ====
-Ak je začiarknuté automaticky prepínať jazyk, toto umožňuje zmeny aj dialektu jazyka hlasového výstupu. Napríklad ak pri čítaní textu v jazyku en-us narazíte na text v jazyku en-uk, táto voľba umožní vybrať správny dialekt.
+Ak je začiarknuté automaticky prepínať jazyk, toto umožňuje zmeny aj dialektu jazyka hlasového výstupu.
+Napríklad ak budete anglickým hlasom čítať  v jazyku Angličtina - spojené štáty a NVDA narazí na značku pre zmenu dialektu  na  Angličtina - Veľká británia, hlasový výstup sa prepne na správny dialekt.
 Predvolene toto nie je začiarknuté.
 
 %kc:setting
@@ -1881,6 +1880,43 @@ Prosím prečítajte si [dokumentáciu klávesov brltty http://mielke.cc/brltty/
 | nasledujúci riadok | lndn (go down one line) |
 | Prejsť na znak v brailly | route (bring cursor to character) |
 %kc:endInclude
+
++ Skratky pre prvky a typy stavov v brailovskom zobrazení +
+Aby sa na brailovský riadok dostalo čo najviac informácií, pre prvky a stavy sa používajú tieto skratky.
+
+|| skratka | typ prvku |
+| btn | tlačidlo |
+| cbo | zoznamový rámik |
+| chk | začiarkávacie políčko |
+| dlg | dialóg |
+| edt | editačné textové pole |
+| gra | grafika |
+| cN | stĺpec v tabuľke, kde N je číslo stĺpca, napríklad c1, c2. |
+| rN | riadok v tabuľke, kde N je číslo riadka, napríklad r1, r2. |
+| hN | nadpis úrovne, pričom N udáva úroveň, napríklad h1, h2 |
+| lnk | odkaz |
+| lst | zoznam |
+| vlnk | navštívený odkaz |
+| mnu | menu |
+| mnubar | panel ponúk |
+| rbtn | prepínač |
+| tb | tabuľka |
+| tv | stromové zobrazenie |
+| lv N | položka v stromovom zobrazení, N udáva hierarchickú úroveň |
+| ``-----`` | oddeľovač |
+
+Skratkami sú tiež označené tieto stavy:
+|| skratka | stav prvku |
+| ... | zobrazuje sa, ak prvok podporuje automatické dopĺňanie |
+| ( ) | Zobrazuje sa, ak objekt (napríklad začiarkávacie pole) nie je začiarknutý |
+| (x) | zobrazuje sa, ak objekt (napríklad začiarkávacie pole) je začiarknutý |
+| (-) | zobrazuje sa, ak objekt (napríklad začiarkávacie pole) je čiastočne začiarknutý |
+| - | Zobrazuje sa, ak sa dá objekt (napríkladvetva v stromovom zobrazení) zbaliť |
+| + | zobrazuje sa, ak sa dá objekt (napríklad vetva v stromovom zobrazení) rozbaliť |
+| clk | zobrazuje sa, ak je objekt klikateľný |
+| ro | Zobrazuje sa, ak je objekt (napríklad editačné pole) len na čítanie |
+| sel | zobrazuje sa, ak je objekt vybratý |
+| submnu | zobrazuje sa, ak objekt obsahuje podmenu |
 
 + Pre pokročilých +
 
