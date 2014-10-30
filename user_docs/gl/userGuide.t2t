@@ -84,7 +84,7 @@ Executar a versión portable directamente dende medios de só lectura non está 
 Utilizar a copia temporal do NVDA é tamén unha opción ex.: con propósitos de demostración, posto que iniciar NVDA de este xeito cada vez pode chegar a ser moi incómodo.
 
 ++ Restriccións da Copia Portable e Temporal ++
-Ademáis da incapacidade de iniciarse automáticamente durante e ou despois da autentificación, as copias portable e temporal do NVDA tamén teñen as seguintes restriccións:
+Ademáis da incapacidade de iniciarse automáticamente durante e/ou despois da autentificación, as copias portable e temporal do NVDA tamén teñen as seguintes restriccións:
 - A incapacidade para interactuar con aplicacións que se executen con privilexios de administrador, ó menos que, por suposto, o mesmo NVDA tamén fora executado con estos privilexios (non é recomendable).
 - A incapacidade de ler as pantallas do Control de Contas do Usuario (UAC) cando tente iniciar unha aplicación con privilexios de administrador.
 - Windows 8: a incapacidade para soportar a entrada dende unha pantalla táctil.
@@ -107,7 +107,7 @@ Esto tamén inclúe ó control do UAC e outras pantallas seguras.
 
 +++ Criar Atallos do Escritorio (ctrl+alt+n) +++
 Esta opción permíteche escoller se NVDA debería criar ou non un atallo no escritorio para iniciar NVDA. 
-A este atallo se se cría tamén se lle asignará unha tecla de atallo control+alt+n permitíndoche iniciar ó NVDA en calquera ocasión con esta combinación de teclas.
+Se se creou, a este atallo tamén se lle asignará unha tecla de atallo control+alt+n permitíndoche iniciar ó NVDA en calquera ocasión con esta combinación de teclas.
 
 +++ Copiar Configuración Portable da Actual Conta do Usuario +++
 Esta opción permíteche escoller se NVDA debería copiar ou non a configuración do usuario do actual NVDA en execución na configuración para o usuario actualmente autentificado, para a copia instalada do NVDA. 
@@ -152,17 +152,15 @@ A terceira permíteche controlar se esta caixa de benvida debería aparecer cada
 
 +++ A Tecla Modificadora NVDA +++ 
 A maioría das ordes específicas de teclado do NVDA consisten normalmente na pulsación da tecla modificadora de NVDA, xunto cunha ou máis teclas. 
-Unha notable excepción desto son as ordes de revisión de texto para teclados de escritorio que só utilizan as teclas do teclado numérico por si mesmas, pero hai algunhas outras excepcións tamén.. 
+Unha notable excepción desto son as ordes de revisión de texto para a distribución de teclado de escritorio que só utiliza as teclas do teclado numérico por si mesmas, pero hai algunhas outras excepcións tamén.. 
 
-NVDA pode configurarse tal que ou a tecla Insert do teclado numérico, a Insert do extendido, ou a BloqMayus podan utilizarse como a tecla modificadora do NVDA.
-
+NVDA pode configurarse tal que ou a tecla Insert do teclado numérico, ou a Insert do extendido, e/ou a BloqMayus podan utilizarse como a tecla modificadora do NVDA.
 De xeito predeterminado tanto o insert do teclado numérico como o do teclado extendido poden utilizarse como teclas modificadoras.
 
-Se desexas facer que unha das teclas modificadoras de NVDA actúe como a tecla orixinal (por exemplo desexas activar BloqMayus cando tes configurada BloqMayus para que sexa unha tecla modificadora do NVDA) podes premer a tecla dúas veces en sucesión rápida.
+Se desexas facer que unha das teclas modificadoras de NVDA se comporte como normalmente o faría sen estar NVDA en funcionamento (por exemplo desexas activar BloqMayus cando tes configurada BloqMayus para que sexa unha tecla modificadora do NVDA) podes premer a tecla dúas veces en sucesión rápida.
 
 +++ Distribucións de Teclado +++
-Actualmente NVDA ven con dous conxuntos de  teclas de ordes. 
-Hai unha distribución para sobremesa e unha distribución para portátiles.
+Actualmente NVDA ven con dous conxuntos de  teclas de ordes coñecidos como distribucións. A distribución sobremesa e a distribución portátil.
 De xeito predeterminado NVDA configúrase para utilizar a distribución de sobremesa, aíndaque podes cambiar á distribución de portátiles nas Opcións de Teclado, que se atopan en Preferencias no menú NVDA.
 	
 A distribución sobremesa fai un uso amplo do teclado numérico (co bloqueo numérico desactivado).
@@ -234,7 +232,7 @@ Cando apareza o menú, podes utilizar as teclas de cursor para navegar polo men�
 || Nome | Tecla escritorio | Tecla portátil | Tactil | Descripción |
 | Deter voz | Control |  control | toque con 2 dedos | Detén a voz instantáneamente |
 | Pausar Voz | Shift | shift | non | Pausa a voz instantáneamente, preméndoa novamente continuará falando onde se detivo (se o pausado se soporta polo sintetizador actual) |
-| Menú NVDA | NVDA+n | NVDA+n | doble toque con 2 dedos | desprega o menú NVDA para permitirche acceder ás preferencias, ferramentas e axuda etc |
+| Menú NVDA | NVDA+n | NVDA+n | doble toque con 2 dedos | desprega o menú NVDA para permitirche acceder ás preferencias, ferramentas, axuda, etc |
 | Conmutar Modo Axuda de entrada | NVDA+1 | NVDA+1 | non | Premendo calquera tecla  neste modo anunciarase a tecla, e a descripción de calquer orde de NVDA asociada con ela | 
 | Conmutar Modo de Voz | NVDA+s | NVDA+s | non | Conmuta o modo voz entre falar, pitidos e desactivado. |
 | Saír do NVDA | NVDA+q | NVDA+q | non | Sae do NVDA |
@@ -669,12 +667,13 @@ Esta opción é unha barra de desprazamento que vai dende 0 ata 100, (sendo 0 o 
 Esta opción é unha barra de desprazamento que che permite elexir canta entoación (subida e caída no ton) o sintetizador debería utilizar para falar. (Soamente o sintetizador Espeak proporciona esta opción actualmente).
 
 ==== Cambio Automático de Lingua ====
-Esta caixa de verificación permíteche activar ou desactivar se NVDA debería cambiar as linguas do sintetizador de voz ó vo, se o marcado de linguas está dispoñible no texto a ler.
+Esta caixa de verificación permíteche activar ou desactivar se NVDA debería cambiar automáticamente as linguas do sintetizador de voz se o texto a se ler o especifica.
 Esta opción está activada de maneira predeterminada.
 Actualmente só o sintetizador eSpeak sopporta o cambio automático de lingua.
 
 ==== Cambio Automático de Dialecto ====
-Se o cambio automático de idioma está activado, esta caixa de verificación permíteche activar ou desactivar  se os cambios de dialecto deberíanse facer, en lugar de só cambiar a lingua actual. Ex.: Se se está lendo nunha voz Inglés U.S. pero partes dun documento teñen algún texto en Inglés U.K. entón se esta característica está activada o sintetizador cambiará o seu acento.
+Esta caixa de verificación permíteche activar ou desactivar  se os cambios de dialecto deberíanse facer, en lugar de só cambiar a lingua actual. 
+Por Exemplo Se se está lendo nunha voz Inglés U.S. pero partes dun documento teñen algún texto en Inglés U.K. entón se esta característica está activada o sintetizador cambiará o seu acento.
 Esta opción está desactivada de forma predeterminada.
 
 %kc:setting
@@ -880,7 +879,7 @@ Tecla: NVDA+6
 
 Cando se activa, o cursor de revisión moverase automáticamente á posición do cursor do Sistema cada vez que se mova.
 
-==== Seguir ó Rato ====
+==== Seguir ó Cursor do Rato ====
 Cando se activa, o cursor de revisión seguirá ó rato segundo se mova.
 
 ==== Modo de Revisión Sinxelo ====
@@ -1718,8 +1717,9 @@ Estas son (ordeadas de esquerda a dereita):
 Actualmente, a tecla pulgar dereito non se utiliza.
 As teclas interiores mapéanse a espazo.
 
-%kc:beginInclude
+
 || Nome | Tecla |
+%kc:beginInclude
 | tecla retroceso | ponto 7 |
 | tecla intro | ponto 8 |
 | tecla escape | espazo co ponto 7 |
@@ -1882,7 +1882,44 @@ Por favor mira [a documentación de táboas de teclas de BRLTTY http://mielke.cc
 | Guiar á celda braille | route (leva o cursor ó caracter) |
 %kc:endInclude
 
-+ Temas Avanzados +
++ Tipo de control Braille e abreviaturas de estado +
+Co fin de ter a meirande cantidade de información posible nunha pantalla braille, definíronse as seguintes abreviaturas para indicar o tipo de control e o estado.
+
+|| Abreviatura | Tipo de Control |
+| bt | botón |
+| cbo | caixa combinada |
+| cv | caixa de verificación |
+| dlg | diálogo |
+| ce | campo de texto editable |
+| gra | gráfico |
+| cN | número de columna de táboa n, ex.: c1, c2. |
+| rN | número de fila de táboa n, ex.: r1, r2. |
+| hN | cabeceira de nível n, ex.: h1, h2. |
+| enl | liga |
+| lst | lista |
+| enlv | liga visitada |
+| mn | menú |
+| mnbar | barra de menú |
+| btn | botón de opción |
+| tb | táboa |
+| tv | vista en árbore |
+| lv N | un elemento de vista en árbore que ten un nível xerárquico N|
+| ``-----`` | separador |
+
+Os seguintes indicadores de estado  tamén están definidos:
+|| Abreviatura | Estado de Control |
+| ... | amosado cando un obxecto soporta autocompletado |
+| ( ) | amosado cando un obxecto (ex.: unha caixa de verificación) non está marcado |
+| (x) | amosado cando un obxecto (ex.: unha caixa de verificación) está marcado |
+| (-) | amosado cando un obxecto (ex.: unha caixa de verificación) está  parcialmente marcado |
+| - | amosado cando un obxecto (ex.: un elemento de vista en árbore) é contraíble |
+| + | amosado cando un obxecto (ex.: un elemento de vista en árbore) é Expandible |
+| clk | amosado cando un obxecto é cliqueable |
+| ro | amosado cando un obxecto (ex.: un campo de texto editable) é de só lectura |
+| sel | amosado cando un obxecto está seleccionado |
+| submnu | amosado cando un obxecto ten un despregable (normalmente un submenú) |
+
++ + Temas Avanzados +
 
 ++ Persoalización Avanzada da Pronunciación de Símbolos ++
 É posible persoalizar a pronunciación da pontoación e outros símbolos máis aló do que pode facerse utilizando o [diálogo Pronunciación de Pontoación e símbolos #SymbolPronunciation].
