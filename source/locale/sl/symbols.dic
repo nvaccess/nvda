@@ -3,6 +3,11 @@
 #Copyright (c) 2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
+complexSymbols:
+# identifier	regexp
+# Others
+decimal point	(?<=\d)\,(?=\d)
+
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
@@ -29,11 +34,11 @@ negative number	minus
 !	klicaj
 "	narekovaj
 \#	lestvica
-$	dolar
-£	funt
-€	evro
-¢	Cents
-¥	Yen
+$	Dolar
+£	Funt
+€	Evro
+¢	Centi
+¥	Jen
 %	odstotek
 &	and
 '	tick
@@ -76,11 +81,11 @@ _	podčrtaj
 —	črtica
 ●	krožec
 ¨	diaeresis
-‎	left to right mark
-‏	right to left mark
+‎	z leve proti desni
+‏	z desne proti levi
 ■	black square
 ➔	right arrow
-§	section
+§	razdelek
 °	stopinje
 «	dvojni začetni narekovaj
 »	dvojni zaključni narekovaj
@@ -94,6 +99,7 @@ _	podčrtaj
 ±	Plus ali Minus
 ×	krat
 ÷	deljeno
+←	puščica levo
 →	puščica desno
 ✓	check
 ✔	check
