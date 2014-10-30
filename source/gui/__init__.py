@@ -580,6 +580,7 @@ class WelcomeDialog(wx.Dialog):
 		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)
 		self.capsAsNVDAModifierCheckBox.SetFocus()
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	def onOk(self, evt):
 		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"] = self.capsAsNVDAModifierCheckBox.IsChecked()
@@ -650,6 +651,7 @@ class LauncherDialog(wx.Dialog):
 
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	def onLicenseAgree(self, evt):
 		for ctrl in self.actionButtons:
@@ -724,6 +726,7 @@ class ExitDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.actionsList.SetFocus()
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	def onOk(self, evt):
 		action=self.actionsList.GetSelection()
@@ -774,6 +777,7 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 		self.timer = wx.PyTimer(self.Pulse)
 		self.timer.Start(1000)
 		self.Raise()
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	def Pulse(self):
 		super(IndeterminateProgressDialog, self).Pulse()

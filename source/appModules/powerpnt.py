@@ -1103,6 +1103,7 @@ class AppModule(appModuleHandler.AppModule):
 		import gui
 		# Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 		d=wx.Dialog(None,title=_("Waiting for Powerpoint..."))
+		d.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 		gui.mainFrame.prePopup()
 		d.Show()
 		self.hasTriedPpAppSwitch=True
