@@ -3,6 +3,30 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.4 =
+
+== Changements ==
+- Si vous vous déplacez vers un objet en mode navigation par objet et que cet objet est dans un document en mode revue de document, le mode de revue de document sera automatiquement activé. Précédemment, cela n'arrivait que si l'objet navigateur était déplacé à la suite d'un changement de focus. (#4369)
+- La liste des afficheurs braille et celle des synthétiseurs dans leurs dialogues de paramétrage respectifs sont maintenant triées dans l'ordre alphabétique à l'exception de "Pas de Braille" et "Pas de parole" qui se trouvent maintenant en fin de liste. (#2724)
+- Mise à jour du traducteur Braille Liblouis  à la version 2.6.0. (#4434, #3835)
+- En mode navigation, l'appui sur e et maj+e pour naviguer entre les zones dédition inclut maintenant les listes déroulantes éditables. Ceci inclut la boîte de recherche dans la dernière version de Google Search. (#4436)
+- Un clic gauche sur l'icône NVDA dans la zone de notification ouvre maintenant le menu NVDA au lieu de ne rien faire. (#4459)
+
+
+== Corrections de bogues ==
+- Quand on ramène le focus vers un document en mode navigation (ex. alt tab vers une page web déjà ouverte) le curseur de revue est correctement positionné au curseur virtuel plutôt qu'au contrôle en focus (ex. un lien proche). (#4369)
+- Dans les diaporamas Powerpoint, le curseur de revue suit correctement le curseur virtuel. (#4370)
+- Dans Mozilla Firefox et autres navigateurs basés sur Gecko, un nouveau contenu à l'intéieur d'une région live sera annoncé même si le nouveau contenu a un type ARIA live utilisable différent de la région live parent. Ex : Un contenu marqué comme assertif est ajouté à une région live marquée comme polie. (#4169).
+- Dans Internet Explorer et autres contrôles MSHTML, certains cas où un document est contenu dans un autre document n'empêchent plus l'utilisateur d'accéder à certains contenus, (en particuliers les cadres dans des cadres). (#4418)
+- NVDA ne se plante plus quand on essaie d'utiliser un terminal braille Handy Tech dans certains cas. (#3709)
+- Sous Windows Vista, un faux dialogue "Point d'entrée non trouvé" n'est plus affiché dans plusieurs cas tels que le démarrage de NVDA depuis le bureau ou depuis le raccourci clavier. (#4235)
+- De sérieux problèmes avec les contrôles de texte éditable dans les dialogues des versions récentes d'Eclipse ont été corrigés. (#3872)
+- Dans Outlook 2010, le déplacement du curseur fonctionne maintenant comme prévu dans le champ endroit des demandes de rendez-vous et de réunions. (#4126)
+- Dans une région active, le contenu marqué comme inactif (ex : aria-live="off") est maintenant correctement ignoré. (#4405)
+- Durant l'annonce d'une barre dd'état ayant un nom, le nom est maintenant correctement séparé du premier mot du texte de la barre d'état. (#4430)
+- Dans les champs de saisie de mot de passe quand l'écho par mot est activé, de multiples astérisques ne sont plus annoncées sans raison au commencement d'un nouveau mot. (#4402)
+
+
 = 2014.3 =
 
 == Nouvelles fonctionnalités ==
@@ -14,19 +38,19 @@ Quoi de Neuf dans NVDA
  - L'annonce du rendez-vous sélectionné à l'appui sur la touche tab
  - Le filtrage intelligent de la date pour ne l'annoncer que si la date ou le rendez-vous sélectionnés sont sur un jour différent du dernier
 - Support amélioré de la boîte de réception et des autres listes de messages sous Outlook 2010 et plus récent (#3834) incluant :
- - La possibilité de ne pas annoncer les entêtes de colonnes (de, sujet etc) en désactivant l'annonce des lignes et colonnes d'un tableau dans le dialogue "Mise en forme des documents",
+ - La possibilité de ne pas annoncer les titres de colonnes (de, sujet etc) en désactivant l'annonce des lignes et colonnes d'un tableau dans le dialogue "Mise en forme des documents",
  - La possibilité d'utiliser les commandes de navigation dans un tableau (contrôle+alt+flèches) pour se déplacer dans une colonne particulière. 
 - Microsoft word : si une image incluse n'a pas de texte alternatif défini, NVDA annoncera à la place le titre de l'image si l'auteur en a donné un. (#4193)
 - Microsoft Word : annonce de l'indentation du paragraphe avec la commande d'annonce du format (NVDA+f) et automatiquement quand le nouveau paramètre "Annoncer l'indentation des paragraphes" du dialogue "Mise en Forme des Documents" est activé. (#4165)
 - Annonce du texte inséré automatiquement tel qu'une nouvelle puce, indentation par numéro ou tabulation quand on presse "Entrée" dans les documents éditables et les champs de texte. (#4185)
 - Microsoft word : si le curseur est dans un commentaire, l'appui sur NVDA+alt+c annoncera le texte de celui-ci. (#3528)
-- Support amélioré de la lecture automatique des entêtes de lignes et de colonnes sous Microsoft Excel (#3568) incluant :
- - Support des jeux de noms définis par Excel pour identifier les cellules d'entête (compatible avec la revue d'écran Jaws) 
- - Les commandes de définition d'entête de colonne (NVDA+shift+c) et de définition d'entête de ligne (NVDA+shift+r) stockent maintenant les paramètres dans la feuille de travail. Ils sont de ce fait, disponibles à la prochaine ouverture de la feuille et utilisables par les autres revues d'écran supportant les jeux de noms définis.
- - Ces commandes peuvent maintenant aussi être utilisées plusieurs fois dans une feuille pour définir différents entêtes pour différentes régions.
-- Support de la lecture automatique des entêtes de lignes et de colonnes sous Microsoft Word (#3110) incluant :
- - Support des signets MS Word pour identifier les cellules d'entête (compatible avec la revue d'écran Jaws) 
- - Les commandes de définition d'entête de colonne (NVDA+shift+c) et de définition d'entête de ligne (NVDA+shift+r) quand on est sur la première cellule d'entête d'un tableau vous permettent d'indiquer à NVDA que ces entêtes devraient être annoncés automatiquement. les paramètres sont stockés dans le document pour être disponibles lors de la prochaine ouverture du document et pour être utilisable par les revues d'écran supportant le schéma de signets.
+- Support amélioré de la lecture automatique des titres de lignes et de colonnes sous Microsoft Excel (#3568) incluant :
+ - Support des jeux de noms définis par Excel pour identifier les cellules de titre (compatible avec la revue d'écran Jaws) 
+ - Les commandes de définition de titre de colonne (NVDA+shift+c) et de définition de titre de ligne (NVDA+shift+r) stockent maintenant les paramètres dans la feuille de travail. Ils sont de ce fait, disponibles à la prochaine ouverture de la feuille et utilisables par les autres revues d'écran supportant les jeux de noms définis.
+ - Ces commandes peuvent maintenant aussi être utilisées plusieurs fois dans une feuille pour définir différents titres pour différentes régions.
+- Support de la lecture automatique des titres de lignes et de colonnes sous Microsoft Word (#3110) incluant :
+ - Support des signets MS Word pour identifier les cellules de titre (compatible avec la revue d'écran Jaws) 
+ - Les commandes de définition de titre de colonne (NVDA+shift+c) et de définition de titre de ligne (NVDA+shift+r) quand on est sur la première cellule de titre d'un tableau vous permettent d'indiquer à NVDA que ces titres devraient être annoncés automatiquement. les paramètres sont stockés dans le document pour être disponibles lors de la prochaine ouverture du document et pour être utilisable par les revues d'écran supportant le schéma de signets.
 - Microsoft Word : annonce de la distance au bord gauche de la page à l'appui sur la touche tab. (#1353)
 - Microsoft Word : ajout d'un retour vocal et braille pour la plupart des raccourcis clavier de formatage disponibles (gras, italique, souligné, alignement et niveau hiérarchique). (#1353)
 - Microsoft Excel : si la cellule sélectionnée contient des commentaires, ceux-ci peuvent être annoncés, désormais, en tapant NVDA+alt+c. (#2920)
@@ -136,7 +160,7 @@ Quoi de Neuf dans NVDA
 - Lors de l'édition de texte dans Powerpoint, les liens sont maintenant rapportés. (#3416)
 - Dans les applications ARIA ou les dialogues Web, il est maintenant possible de forcer NVDA à passer en mode navigation avec NVDA+Espace, permettant le parcours de cette application ou de ce dialogue comme un document. (#2023)
 - Dans Outlook Express / Windows Mail / Windows Live Mail, NVDA annonce maintenant si un message a une pièce jointe ou s'il est marqué. (#1594)
-- Lors de la navigation dans des tableaux dans les applications Java accessibles, les coordonnées de lignes et de colonnes sont maintenant signalées, ainsi que les en-têtes de colonnes et de lignes, s'ils existent. (#3756)
+- Lors de la navigation dans des tableaux dans les applications Java accessibles, les coordonnées de lignes et de colonnes sont maintenant signalées, ainsi que les titres de colonnes et de lignes, s'ils existent. (#3756)
 
 
 == Changements ==
@@ -417,7 +441,7 @@ Veuillez lire le document [Résumé des commandes keyCommands.html] pour les nou
 
 
 = 2012.3 =
-Les apports majeurs de cette version incluent le support de la saisie des caractèrs asiatiques ; le support expérimental des écrans tactiles sous Windows 8 ; l'annonce des numéro de page et le support amélioré des tableaux dans Adobe Reader ; le support de la navigation entre les cellules des liste multi-colones ou en tableau ; le support de plusieurs nouveaux afficheurs Braille ; et l'annonce des entêtes de lignes et colonnes dans les tableaux Microsoft Excel.
+Les apports majeurs de cette version incluent le support de la saisie des caractèrs asiatiques ; le support expérimental des écrans tactiles sous Windows 8 ; l'annonce des numéro de page et le support amélioré des tableaux dans Adobe Reader ; le support de la navigation entre les cellules des liste multi-colones ou en tableau ; le support de plusieurs nouveaux afficheurs Braille ; et l'annonce des titres de lignes et colonnes dans les tableaux Microsoft Excel.
 
 
 == Nouvelles Fonctionnalités ==
@@ -435,7 +459,7 @@ Les apports majeurs de cette version incluent le support de la saisie des caract
  - Beaucoup de gestes pour naviguer entre les objets, le curseur de revue, et d'autres commandes de NVDA.
 - Support de VIP Mud. (#1728)
 - Dans Adobe Reader, si un tableau a un résumé, il est maintenant présenté. (#2465)
-- Dans Adobe Reader, les entêtes de lignes et de collones des tableaux peuvent maintenant être annoncés. (#2193, #2527, #2528)
+- Dans Adobe Reader, les titres de lignes et de collones des tableaux peuvent maintenant être annoncés. (#2193, #2527, #2528)
 - Nouvelles langues : Éthiopien, Coréen, Népalais, Slovénien.
 - NVDA peut maintenant lire les suggestions de l'autocomplétion lorsqu'on saisi des adresses e-mail dans Microsoft Outlook 2007. (#689)
 - Deux nouvelles variantes de voix Espeak : Gene, Gene2. (#2512)
@@ -445,7 +469,7 @@ Les apports majeurs de cette version incluent le support de la saisie des caract
 - Support des afficheurs braille Seika Version 3, 4 et 5 et Seika80 de Nippon Telesoft. (#2452)
 - les premiers et derniers curseurs routines des afficheurs braille Pacmate et Focus de Freedom Scientific peuvent maintenant être utilisés pour défiler vers l'avant ou vers l'arrière. (#2556)
 - Plus de possibilités sont supportées pour les afficheurs brailles Focus de Freedom Scientific comme les bares pour avancer, les bares de basculement et certaines combinaisons de points pour des actions communes. (#2516)
-- Dans les applications utilisant IAccessible2 comme les applications Mozilla, les entêtes de lignes et collones des tableaux peuvent être rapportés même en n'étant pas en mode navigation. (#926)
+- Dans les applications utilisant IAccessible2 comme les applications Mozilla, les titres de lignes et collones des tableaux peuvent être rapportés même en n'étant pas en mode navigation. (#926)
 - Support préliminaire des contrôles de documents de Microsoft Word 2013. (#2543)
 - L'alignement du texte peut maintenant être rapporté dans les applications utilisant IAccessible2 comme les applications Mozilla. (#2612)
 - Lorsqu'une ligne de tableau ou un élément d'une liste multi-colonnes standard Windows a le focus, il est possible d'utiliser les commande de navigation de tableau pour passer de cellule en cellule. (#828)
@@ -465,14 +489,14 @@ Les apports majeurs de cette version incluent le support de la saisie des caract
 - Les commandes de navigation par objets (excepté la commande rapporter l'objet courant) rapportent maintenant moins d'informations. Vous pouvez toujours obtenir les autres informations en utilisant la commande Rapporter l'objet courant. (#2560)
 - Mise à jour de liblouis vers la version 2.5.1. (#2319, #2480, #2662, #2672)
 - Le document Références Rapides des touches de Raccourcis a été renommé en résumé des touches de commandes puisqu'il inclut maintenant les commandes tactiles et les commandes clavier.
-- La liste d'éléments en mode Navigation se souviendra maintenant du type d'élément à afficher (Par exemple : les liens, les entêtes ou les repères) chaque fois que ce dialogue est appelé dans la même session de NVDA. (#365)
+- La liste d'éléments en mode Navigation se souviendra maintenant du type d'élément à afficher (Par exemple : les liens, les titres ou les repères) chaque fois que ce dialogue est appelé dans la même session de NVDA. (#365)
 - La plupart des applications en interface Windows 8 (Par exemple : Mail, Calendrier) n'activent plus le mode navigation pour toute l'application.
 - Le serveur-COM pour les afficheurs Braille Handy Tech est mis à jours vers la version 1.4.2.0.
 
 
 == Corrections de Bogues ==
 - Sous Windows Vista et supérieur, NVDA ne traite plus la touche Windows comme étant gardée appuyée lors du déverrouillage après l'avoir verrouillé en appuyant Windows+L. (#1856)
-- Dans Adobe Reader, les entêtes de colonnes sont maintenant bien reconnus comme des cellules ; P.Ex. les coordonnées sont annoncées et sont accessibles avec les touches de navigation pour les tableaux. (#2444)
+- Dans Adobe Reader, les titres de colonnes sont maintenant bien reconnus comme des cellules ; P.Ex. les coordonnées sont annoncées et sont accessibles avec les touches de navigation pour les tableaux. (#2444)
 - Dans Adobe Reader, les cellules sur plusieurs colonnes sont correctement traitées. (#2437, #2438, #2450)
 - Le package de NVDA distribué vérifie maintenant son intégrité avant de s'exécuter. (#2475)
 - Les fichiers temporaires de téléchargement sont maintenant supprimés si le téléchargement d'une mise à jour de NVDA échoue. (#2477)
@@ -567,7 +591,7 @@ Les apports majeurs de cette version incluent un installateur et créateur de ve
 - Les listes que l'on trouve dans les propriétés de fichiers de l'explorateur de Windows 8 (onglet permissions) et dans Windows Update sous Windows 8 sont maintenant lues correctement.
 - Correction de blocages possibles dans MS Word qui causaient un délai de plus de deux secondes pour récupérer le texte d'un document (lignes extrêmement longues ou table des matières). (#2191)
 - La détection de séparation de mots fonctionne maintenant correctement quand l'espace est suivi de certaines ponctuations. (#1656)
-- En mode Navigation dans Adobe Reader, il est maintenant possible de naviguer dans les différents niveaux d'en-têtes en utilisant les touches de navigation rapide et la liste. (#2181)
+- En mode Navigation dans Adobe Reader, il est maintenant possible de naviguer dans les différents niveaux de titres en utilisant les touches de navigation rapide et la liste. (#2181)
 - Dans Winamp, le braille est maintenant correctement mis à jour quand on change d'élément dans l'éditeur de playliste. (#1912)
 - L'arborescence dans la liste des éléments (disponibles pour les documents en mode navigation) est maintenant correctement dimentionné pour afficher le texte de tous les éléments. (#2276)
 - Dans les applications utilisant Java Access Bridge, les champs de texte éditables sont maintenant correctement présentés en braille. (#2284)
@@ -710,8 +734,8 @@ quand l'auteur a spécifié que celles-ci ne doivent pas être montrées (ex : s
 - Le redémarrage de NVDA après blocage (ex : en pressant contrôle+alt+n) n'arrête plus la copie en cours sans en démarrer une nouvelle.
 - Dans la console de commandes Windows, l'appui sur retour-arrière ou les flèches ne provoque plus de résultats bizarres dans certains cas. (#1612)
 - L'élément sélectionné dans les listes déroulantes WPF (et possiblement d'autres listes déroulantes présentées par UI Automation) qui n'autorisent pas l'édition de texte est maintenant annoncé correctement.
-- En mode navigation sous adobe Reader, il est maintenant toujours possible d'aller de la ligne d'en-tête à la ligne suivante et vice-versa en utilisant les commandes de déplacement à la ligne suivante et de déplacement à la ligne précédente.
-En outre, la ligne d'en-tête n'est plus annoncée comme ligne 0.
+- En mode navigation sous adobe Reader, il est maintenant toujours possible d'aller de la ligne de titre à la ligne suivante et vice-versa en utilisant les commandes de déplacement à la ligne suivante et de déplacement à la ligne précédente.
+En outre, la ligne de titre n'est plus annoncée comme ligne 0.
 - En mode navigation sous Adobe Reader, il est maintenant possible d'entrer et des ressortir des cellules vides d'un tableau.
 - Les informations de position sans signification (ex : 0 sur 0 niveau 0) ne sont plus affichées en Braille.
 - Quand le Braille suit le curseur de revue, il peut maintenant afficher le contenu en revue à plat. (#1711)
@@ -1002,7 +1026,7 @@ Précédemment, elles étaient toutes annoncées comme ereurs grammaticales. (#8
 - Les bulles d'aide sont maintenant affichées en braille quand elles apparaissent. (#652)
 - Ajout d'un pilote pour l'afficheur braille MDV Lilli. (#241)
 - Quand on sélectionne une ligne ou une colonne entière dans MS Excel par les raccourcis maj+espace ou ctrl+espace, la nouvelle sélection est maintenant annoncée. (#759)
-- Dans les tableaux, les en-têtes de lignes ou de colonnes peuvent maintenant être annoncés. Ceci est configurable depuis le dialogue Mise en forme des documents du menu Préférences.
+- Dans les tableaux, les titres de lignes ou de colonnes peuvent maintenant être annoncés. Ceci est configurable depuis le dialogue Mise en forme des documents du menu Préférences.
  - Actuellement, ceci est supporté dans les documents sous les applications Mozilla comme Firefox (à partir de la version 3.6.11) et Thunderbird (à partir de la version 3.1.5). (#361)
 - Introduction de commandes pour la revue à plat : (#58)
  - NVDA+pavnum7 active la revue à plat, place le curseur de revue à la position de l'objet en cours, vous permettant d'explorer l'écran (ou un document) avec les commandes de revue de texte.
@@ -1105,7 +1129,7 @@ Cette version met l'accent principalement sur des corrections de bugs et des am�
 - NVDA ne met plus aussi longtemps, quand il s'agit de développer les branches d'une arborescence qui contiennent une quantité très importante de sous-éléments.
 - Quand il dresse la liste des voix SAPI 5, NVDA tentera, désormais, de détecter les voix qui dysfonctionnent et les exclura de la boîte de dialogue Paramètres de la voix et de la boucle paramètres des synthétiseurs. Auparavant, même quand il n'y avait qu'une seule voix posant problème, il arrivait au pilote SAPI 5 intégré à NVDA de ne pas démarrer correctement.
 - En mode navigation, les touches de raccourci de l'objet sont correctement annoncées, conformément à ce qui est défini dans les paramètres du dialogue Présentation des objets. (#486)
-- En mode navigation, les coordonnées d'une ligne ou d'une colonne ne sont plus mal lues pour les en-têtes de ligne et de colonne quand l'annonce des tableaux est désactivée.
+- En mode navigation, les coordonnées d'une ligne ou d'une colonne ne sont plus mal lues pour les titres de ligne et de colonne quand l'annonce des tableaux est désactivée.
 - En mode navigation, les coordonnées de la ligne ou celles d'une colonne sont désormais détectées correctement lorsque vous quittez un tableau, puis réintégrez la même cellule sans visiter d'abord une autre cellule ; par exemple, en appuyant sur Flèche-Haut puis Flèche-Bas sur la première cellule d'un tableau. (#378)
 - Les lignes vides dans les documents Microsoft Word et dans les zones d'édition Microsoft HTML figurent maintenant correctement sur les afficheurs Braille. Précédemment, NVDA affichait la phrase actuelle en Braille, mais pas la ligne actuelle dans ce cas-là. (#420)
 - Introductions de plusieurs correctifs de sécurité lors de l'exécution de NVDA à l'ouverture de session Windows et en présence d'autres bureaux sécurisés. (#515)

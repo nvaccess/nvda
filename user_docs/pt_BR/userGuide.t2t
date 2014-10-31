@@ -542,8 +542,8 @@ O NVDA fornece seus próprios comandos adicionais para alguns aplicativos, com v
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
 || Nome | Tecla | Descrição |
-| Toggle speaker notes reading | control+shift+s | Estando num slide em execução, esse comando alternará entre as notas para o slide e o conteúdo do mesmo. Isso afeta somente o que o NVDA lê, não o que será mostrado na tela. |
-+%kc:endInclude
+| Alternar leitura de notas e slides | control+shift+s | Estando num slide em execução, esse comando alternará entre as notas para o slide e o conteúdo do mesmo. Isso afeta somente o que o NVDA lê, não o que será mostrado na tela. |
+%kc:endInclude
 
 ++ foobar2000 ++
 
@@ -1871,6 +1871,42 @@ Por favor consulte as [tabelas de documentação de teclas para o BRLTTY http://
 | Mover linha braille para a linha seguinte | lndn (dece uma linha) |
 | Guiar para a cela braille | route (lleva o cursor ao caractere) |
 %kc:endInclude
+
++ Abreviaturas para Tipos e Estados dos Controles em Braille +
+Com vistas a fornecer tanta informação quanto possível numa linha braille, as seguintes abreviaturas foram definidas para indicar os tipos e estados dos controles.
+|| Abreviatura | Tipo de controle |
+| btn | botão |
+| cbo | caixa de combinação |
+| chk | caixa de seleção |
+| dlg | diálogo |
+| edt | campo de edição de texto |
+| gra | gráfico |
+| cN |  coluna numa tabela n, isto é, c1, c2. |
+| rN | número da linha numa tabela n, isto é, r1, r2. |
+| hN | nível do cabeçalho n, isto é, h1, h2. |
+| lnk | link |
+| lst | lista |
+| vlnk | link visitado |
+| mnu | menu |
+| mnubar | barra de menu |
+| rbtn | botão de opção |
+| tb | tabela |
+| tv | vista em árvore |
+| lv N | um item de vista em árvore contendo um nível hierárquico N |
+| ``-----`` | separador |
+
+Os seguintes indicadores de estado também foram definidos:
+|| Abreviatura | Estado do controle |
+| ... | exibido quando um objeto suporta auto completar |
+| ( ) | exibido quando um objeto (por exemplo uma caixa de seleção) não está marcada |
+| (x) | exibido quando um objeto (por exemplo uma caixa de seleção) está marcada |
+| (-) | exibido quando um objeto (por exemplo uma caixa de seleção) está meio marcada |
+| - | exibido quando um objeto (por exemplo um item de vista em árvore) é recolhível |
+| + | exibido quando um objeto (por exemplo um item de vista em árvore) é expandível |
+| clk | exibido quando um objeto é clicável |
+| ro | exibido quando um objeto (por exemplo um campo de edição de texto) é somente leitura |
+| sel | exibido quando um objeto está selecionado |
+| submnu | exibido quando um objeto possui popup (usualmente um submenu) |
 
 + Tópicos Avançados +
 

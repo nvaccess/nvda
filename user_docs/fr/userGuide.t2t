@@ -155,14 +155,12 @@ La plupart des commandes spécifiques de NVDA se font en appuyant sur la touche 
 Les fonctions de revue de texte qui n'utilisent que le pavé numérique constituent une des quelques exceptions.
 
 NVDA peut être configuré pour que les touches "Insert" du pavé numérique, "Insert" du clavier étendu ou verrouillage majuscules puissent être utilisées comme touche NVDA.
-
 Par défaut, les touches "Insert" du pavé numérique et du clavier étendu sont définies comme touche NVDA.
 
 Si vous voulez utiliser l'une des touches NVDA dans sa fonction originale (par exemple si vous voulez utiliser verrouillage majuscules pour verrouiller les majuscules après l'avoir définie comme touche NVDA) vous devrez appuyer deux fois rapidement sur la touche.
 
 +++ Les configurations Clavier +++
-NVDA comporte actuellement deux configurations clavier : 
-une pour les ordinateurs de bureau (Desktop) et une pour les ordinateurs portables (Laptop).
+NVDA comporte actuellement deux configurations clavier : une pour les ordinateurs de bureau (Desktop) et une pour les ordinateurs portables (Laptop).
 Par défaut, NVDA est configuré pour un ordinateur de bureau. Pour passer en configuration ordinateur portable, allez dans le menu Préférences > Paramètres du clavier.
 
 La configuration pour ordinateur de bureau fait un usage intensif du pavé numérique (avec le verrouillage numérique désactivé).
@@ -529,15 +527,15 @@ NVDA fournit ses propres commandes additionnelles dans quelques applications pou
 %kc:beginInclude
 || Nom | Touche | Description |
 | Annonce du commentaire courant | NVDA+Alt+c | Annonce le texte du commentaire à la position du curseur système. | 
-| Définir les entêtes de colonnes | NVDA+maj+c | Appuyer une fois indique à NVDA que cette cellule est la première de la ligne contenant les entêtes de colonnes, qui devraient automatiquement être annoncés en navigant entre les colonnes sous cette ligne. Appuyer deux fois permet d'effacer le paramétrage. | 
-| Définir les entêtes de lignes | NVDA+maj+r | Appuyer une fois indique à NVDA que cette cellule est la première de la colonne contenant les entêtes de lignes, qui devraient automatiquement être annoncés en navigant entre les lignes après cette colonne. Appuyer deux fois permet d'effacer le paramétrage. | 
+| Définir les titres de colonnes | NVDA+maj+c | Appuyer une fois indique à NVDA que cette cellule est la première de la ligne contenant les titres de colonnes, qui devraient être annoncés automatiquement en navigant entre les colonnes sous cette ligne. Appuyer deux fois permet d'effacer le paramétrage. | 
+| Définir les titres de lignes | NVDA+maj+r | Appuyer une fois indique à NVDA que cette cellule est la première de la colonne contenant les titres de lignes, qui devraient être annoncés automatiquement en navigant entre les lignes après cette colonne. Appuyer deux fois permet d'effacer le paramétrage. | 
 %kc:endInclude
 
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Nom | Touche | Description |
-| Définir les entêtes de colonnes | NVDA+maj+c | Appuyer une fois indique à NVDA que cette cellule est la première de la ligne contenant les entêtes de colonnes, qui devraient automatiquement être annoncés en navigant entre les colonnes sous cette ligne. Appuyer deux fois permet d'effacer le paramétrage. | 
-| Définir les entêtes de lignes | NVDA+maj+r | Appuyer une fois indique à NVDA que cette cellule est la première de la colonne contenant les entêtes de lignes, qui devraient automatiquement être annoncés en navigant entre les lignes après cette colonne. Appuyer deux fois permet d'effacer le paramétrage. | 
+| Définir les titres de colonnes | NVDA+maj+c | Appuyer une fois indique à NVDA que cette cellule est la première de la ligne contenant les titres de colonnes, qui devraient être annoncés automatiquement en navigant entre les colonnes sous cette ligne. Appuyer deux fois permet d'effacer le paramétrage. | 
+| Définir les titres de lignes | NVDA+maj+r | Appuyer une fois indique à NVDA que cette cellule est la première de la colonne contenant les titres de lignes, qui devraient être annoncés automatiquement en navigant entre les lignes après cette colonne. Appuyer deux fois permet d'effacer le paramétrage. | 
 | Annonce du commentaire | NVDA+alt+c | Annonce le commentaire sur la cellule courante s'il y en a un. |
 %kc:endInclude
 
@@ -674,7 +672,8 @@ Par défaut, cette option est activée.
 À l'heure actuelle, seul le synthétiseur eSpeak prend en charge le changement automatique de langue.
 
 ==== Changement automatique de dialecte ====
-Si le changement automatique de langue est activé, cette case à cocher vous permet de choisir si les changements de dialecte doivent être pris en compte en plus des changements de langue réels. Par exemple, un texte peut être en Anglais Américain et comporter des passages marqués comme Anglais Britannique. Si cette option est activée, le synthétiseur respectera les changements d'accent.
+Cette case à cocher vous permet de choisir si les changements de dialecte doivent être pris en compte en plus des changements de langue réels.
+Par exemple, un texte peut être en Anglais Américain et comporter des passages marqués comme Anglais Britannique. Si cette option est activée, le synthétiseur respectera les changements d'accent.
 Par défaut, cette option est désactivée.
 
 %kc:setting
@@ -880,7 +879,7 @@ Raccourci clavier : NVDA+6
 
 Quand l'option est activée, le curseur de revue suit les mouvements du curseur système.
 
-==== Suivre la souris ====
+==== Suivre le curseur souris ====
 Quand l'option est activée, le curseur de revue suit les mouvements de la souris.
 
 ==== Mode de revue simple ====
@@ -1882,6 +1881,43 @@ Veuillez consulter la [documentation tableau des touches de BRLTTY http://mielke
 | Aller à la cellule braille | route (amener le curseur au caractère) |
 %kc:endInclude
 
++ Abbréviations des types et états des contrôles en Braille +
+Dans le but de loger autant d'informations que possible sur un afficheur braille, les abbréviations suivantes ont été définies pour indiquer le type et l'état des contrôles.
+
+|| Abbréviation | Type de contrôle |
+| btn | bouton |
+| lstd | liste déroulante |
+| càc | case à cocher |
+| dlg | dialogue |
+| éd | zone d'édition |
+| gra | graphique |
+| cN | colonne de tableau n° n, ex : c1, c2. |
+| lN | ligne de tableau n° n, ex : l1, l2. |
+| tN | titre de niveau n, ex : t1, t2. |
+| ln | lien |
+| lst | liste |
+| lnv | lien visité |
+| mnu | menu |
+| bmnu | barre de menu |
+| btnr | bouton radio |
+| tb | table |
+| arb | arborescence |
+| nv N | un élément d'arborescence a un niveau hiérarchique N|
+| ``-----`` | séparateur |
+
+Les indicateurs d'état suivants sont également définis :
+|| Abbréviation | État du contrôle |
+| ... | affiché quand un objet supporte l'autocomplétion |
+| ( ) | affiché quand un objet tel qu'une case à cocher n'est pas coché |
+| (x) | affiché quand un objet tel qu'une case à cocher est coché |
+| (-) | affiché quand un objet tel qu'une case à cocher est semi-coché |
+| - | affiché quand un objet tel qu'un élément d'arborescence peut être réduit |
+| + | affiché quand un objet tel qu'un élément d'arborescence peut être développé |
+| clq | affiché quand un objet est cliquable |
+| ls | affiché quand un objet tel qu'une zone d'édition est en lecture seule |
+| sél | affiché quand un objet est sélectionné |
+| smnu | affiché quand un objet a un sous-menu |
+ 
 + Fonctions avancées +
 
 ++ Personnalisation avancée de la prononciation des symboles ++
