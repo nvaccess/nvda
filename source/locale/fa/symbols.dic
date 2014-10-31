@@ -1,48 +1,51 @@
-﻿#locale/ar/symbols.dic
+﻿#locale/fa/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2012 NV Access Inc
+#Copyright (c) 2014 NVDA Farsi contributors
 #This file is covered by the GNU General Public License.
+
 complexSymbols:
-؟ sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+؟ sentence ending	(?<=[^\s؟])\؟(?=[\"'”’)\s]|$)
+
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
 . sentence ending	نقطه
-! sentence ending	شگفتنما
-? sentence ending	پرسشنما
-؟ sentence ending	پرسشنما
-; phrase ending	نقطه‌درنگنما
-: phrase ending	دونقطه
-decimal point		نقطه‌ی دهک
+! sentence ending	تعجب
+? sentence ending	Question
+؟ sentence ending	سؤال	all	always
+؛ phrase ending		نقطه ویرگول	all	always
+; phrase ending	semicolon
+: phrase ending	دو نقطه
+decimal point		ممیز
 in-word '	apostrophe
 negative number	منفی
 
 # Whitespace
-\0	تهی
-\t	تورفتگی
-\n	سر خط
-\f	بَرگه‌بُر
-\r	پایان خط
+\0	خالی
+\t	تب
+\n	سرِ خط
+\f	بَرگه بُر
+\r	پایانِ خط
  	فاصله
- 	فاصله
+ 	خطِ جدید
 
 # Standard punctuation/symbols
-!	شگفتنما
-"	گفتاوردنما
-\#	شماره‌نما
+!	تعجب
+"	نقلِ قول
+\#	شماره
 $	دلار
 £	پوند
 €	يورو
 %	درصد
-&	and
-'	apostrophe
-(	قلاب‌باز
-)	قلاب‌بسته
+&	And
+'	Apostrophe
+(	پرانتز باز
+)	پرانتز بسته
 *	ستاره
 +	به علاوه
-,	cama
--	خط کوتاه
+,	Comma
+-	خطِ تیره
 .	نقطه
 /	اِسلَش
 :	دونقطه
@@ -50,17 +53,17 @@ $	دلار
 <	کوچکتر
 >	بزرگتر
 =	مساوی
-?	پرسشنما
-@	at
-[	کروشه‌باز
-]	کروشه‌بسته
-\\	back slash
-^	پیکان
+?	question
+@	At
+[	کروشه باز
+]	کروشه بسته
+\\	بک اِسلش
+^	Circumflex
 _	زیرخط
 `	graav
-{	آکولاد‌باز
-}	آکولاد‌بسته
-|	خط عمودی
+{	آکولاد باز
+}	آکولاد بسته
+|	خطِ عمودی
 ~	tilda
 
 # Other characters
@@ -68,29 +71,42 @@ _	زیرخط
 …	سه‌نقطه
 ...	سه‌نقطه
 	bullet
-“	گفتاورد‌نمای چپ
-”	گفتاوردنمای راست
+“	آغازِ نقلِ قول
+”	پایانِ نقلِ قول
 –	en dash
 —	em dash
-●	circle
+●	دایره
 ¨	diaeresis
-■	چهارخانه‌ی سیاه
-➔	ناشناس
-→	ناشناس
-§	بخشنما
+■	مربعِ سیاه
+➔	فِلِشِ سر‌پهن
+→	‌فِلِشِ راست‌نما
+§	بخش
 °	درجه
 ¹	۱ بالانویس
 ²	۲ بالانویس
 ³	۳  بالانویس
 ±	مثبت منفی
 ×	ضرب در
-÷	بخش بر
-✓	ناشناس
-✔	معلم
-٬	درنگ‌نما
+÷	تقسیم بر
+✓	تیکِ ضخیم
+✔	تیک
+٬	هزار‌گان
 
-# arabic symbols
-،	فاصلة	all	always
-؟	استفهام	all
-ـ	كاشيداْ	char
+# Persian symbols
+،	کاما	all	always
+؟	سؤال	all	always
+ـ	کشیده	char	never
+«	گیومه باز		all	always
+»	گیومه بسته		all	always
+
+# Unicode Formating symbols
+‎	نشانه چپ به راست	char	never
+‏	نشانه راست به چپ	char	never
+‍	اتصال	char	never
+‌	نیم‌فاصله	char	never
+‪	چپ به راستِ توکار	char	never
+‫	راست به چپِ توکار	char	never
+‭	بازنویسیِ چپ به راست	char	never
+‮	 بازنویسیِ راست به چپ	char	never
+‬	پایانِ جهت	char	never
 

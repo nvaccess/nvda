@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5895\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-11 19:10+1000\n"
-"PO-Revision-Date: 2014-08-19 13:42+0100\n"
+"POT-Creation-Date: 2014-10-27 19:12+1000\n"
+"PO-Revision-Date: 2014-10-30 08:43+0100\n"
 "Last-Translator: jožef gregorc <jozko.gregorc@gmail.com>\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: sl\n"
@@ -3491,7 +3491,7 @@ msgid ""
 "screen, height is {height:.1f} per cent of screen"
 msgstr ""
 "Predmet se omejuje na položaj {left:.1f} odstotka od levega roba zaslona, "
-"{top:.1f} odstotka od zgornjega roba zaslona, širina je {width:.1f odstotka "
+"{top:.1f} odstotka od zgornjega roba zaslona, širina je {width:.1f} odstotka "
 "zaslona, višina je {height.1f} odstotka zaslona"
 
 #. Translators: a message announcing a candidate's character and description.
@@ -3673,16 +3673,16 @@ msgstr "prošnja za sestanek"
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
 msgid "No notes for translators."
-msgstr "Ni sporočil za prevajalce."
+msgstr "Ni opomb za prevajalce."
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'Notes for translators' window in poedit.
 msgid "Could not find Notes for translators window."
-msgstr "Ni mogoče najti okna Sporočila za prevajalce."
+msgstr "Ni mogoče najti okna Opomb za prevajalce."
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any notes for translators"
-msgstr "Poroča o bilokaterem sporočilu za prevajalce"
+msgstr "Sporoča vse opombe za prevajalce"
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
@@ -3836,7 +3836,7 @@ msgstr "Diapozitiv {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers left of {otherShape} by {distance:.3g} points"
-msgstr "prekriva levo {otherShape} za {distance:.3g} points"
+msgstr "prekriva levo {otherShape} za {distance:.3g} pik"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
 msgid "behind left of {otherShape} by {distance:.3g} points"
@@ -3844,7 +3844,7 @@ msgstr "za {otherShape} levo za {distance:.3g} points"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers top of {otherShape} by {distance:.3g} points"
-msgstr "prekriva zgoraj {otherShape} za {distance:.3g} pik"
+msgstr "prekriva zgornjo {otherShape} za {distance:.3g} pik"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 msgid "behind top of {otherShape} by {distance:.3g} points"
@@ -3860,7 +3860,7 @@ msgstr "za{otherShape} desno za {distance:.3g} pik"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
-msgstr "prekriva spodaj {otherShape} za {distance:.3g} pik"
+msgstr "prekriva spodnjo {otherShape} za {distance:.3g} pik"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
@@ -4228,15 +4228,15 @@ msgstr "&Nastavitve"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 msgid "View log"
-msgstr "Preglej &dnevnik"
+msgstr "Preglej dnevnik"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
-msgstr "Prikazovalnik &govora"
+msgstr "Prikazovalnik govora"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
-msgstr "Python &konzola"
+msgstr "Python konzola"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
 msgid "Manage &add-ons"
@@ -4800,7 +4800,7 @@ msgstr ""
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Use NVDA on the Windows &logon screen"
-msgstr "Uporabljaj NVDA tako v Oknih kot na prijavnem zaslonu"
+msgstr "Uporabljaj NVDA na &prijavnem zaslonu v Okna"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "&Keep existing desktop shortcut"
@@ -5152,7 +5152,7 @@ msgstr "Prekini govor ob pritisku tipke Enter"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Allow skim &reading in Say All"
-msgstr "Omogoči hitro branje v načinu Izgovori Vse"
+msgstr "Omogoči hitro &branje v načinu Izgovori Vse"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -5162,7 +5162,7 @@ msgstr "Oddaj pisk, ko se pišejo male črke in je Caps log vključen"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speak command &keys"
-msgstr "Izgovarjaj tipke ob prožitvi ukazov"
+msgstr "Izgovarjaj J&tipke ob prožitvi ukazov"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -5431,7 +5431,7 @@ msgstr "Sporočaj s&log"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report spelling errors"
-msgstr "Sporočaj napačno &črkovanje"
+msgstr "Sporočaj napačno črkovanje"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5527,8 +5527,9 @@ msgstr "&Občutljivost na male in velike črke"
 
 # boljšega prevoda trenutno ne najdem
 #. Translators: This is a label for a checkbox in add dictionary entry dialog.
+#, fuzzy
 msgid "Regular &expression"
-msgstr "Regularni &izraz"
+msgstr "&Regularni izraz"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -5844,7 +5845,7 @@ msgstr "Ni v vsebniku"
 
 #. Translators: Description for the Move to start of container command in browse mode.
 msgid "Moves to the start of the container element, such as a list or table"
-msgstr "premakne se na začetek esebnika kot je seznam ali tabela"
+msgstr "premakne se na začetek vsebnika kot je seznam ali tabela"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
@@ -6652,6 +6653,51 @@ msgstr "HIMS Braille Sense/Braille EDGE serija"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "All add-ons are now disabled. They will be re-enabled on the next restart "
+#~ "unless you choose to disable them again."
+#~ msgstr ""
+#~ "Vsi dodatki so sedaj onemogočeni. Dodatki bodo ponovno omogočeni ob "
+#~ "ponovnem zagonu programa, če se ne boste odločili, da se ob ponovnem "
+#~ "zagonu programa spet onemogočijo."
+
+#~ msgid "What would you like to &do?"
+#~ msgstr "Kaj želite &narediti?"
+
+#~ msgid "Exit"
+#~ msgstr "Izhod"
+
+#~ msgid "Restart"
+#~ msgstr "Ponovni zagon"
+
+#~ msgid "Restart with add-ons disabled"
+#~ msgstr "Ponovni zagon z onemogočenimi dodatki"
+
+#~ msgid ""
+#~ "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+#~ msgstr ""
+#~ "Vsi dodatki so sedaj onemogočeni. Če želite omogočiti dodatke, morate "
+#~ "NVDA ponovno zagnati."
+
+# začasen prevod
+#~ msgid "suspended"
+#~ msgstr "suspendiran"
+
+#~ msgid "Sho&w exit options when exiting NVDA"
+#~ msgstr "Pokaži &izhodne možnosti ob izhodu iz NVDA"
+
+#~ msgid "&Anywhere"
+#~ msgstr "&Povsod"
+
+#~ msgid "Whole &word"
+#~ msgstr "&Cela beseda"
+
+#~ msgid "&Type"
+#~ msgstr "&Tip"
+
+#~ msgid "Type"
+#~ msgstr "Tip"
 
 #~ msgid "No location information for navigator object"
 #~ msgstr "ni informacij o položaju za predmet krmarjenja"

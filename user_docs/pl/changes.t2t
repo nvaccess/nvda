@@ -3,6 +3,19 @@
 
 %!includeconf: ../changes.t2tconf
 
+
+= 2014.4 =
+
+== Zmiany ==
+- Jeśli obiekt, do którego przeszedłeś używając nawigacji po obiektach, jest wewnątrz dokumentu trybu czytania, a obiekt, na którym znajdowałeś się poprzednio nie był, tryb przeglądu jest automatycznie zmieniany na dokument. Poprzednio, takie zachowanie miało miejsce tylko na skutek zmiany obiektu nawigacyjnego po zmianie punktu uwagi. (#4369)
+- W Mozilla Firefox i innych przeglądarkach bazujących na Gecko, nowa treść w żywym obszarze zostanie odczytana nawet jeśli ma typ ARIA różny od typu nadrzędnego żywego obszaru. Np. treść z atrybutem assertive dodana do żywego obszaru oznaczonego jako polite. (#4169).
+
+
+== Poprawki błędów ==
+- Gddy następuje powrót punktu uwagi do dokumentu trybu czytania (np. przejście klawiszami alt+tab do okna otwartej wcześniej strony internetowej), punkt przeglądu jest prawidłowo umieszczany na pozycji wirtualnego kursora, zamiast na kontrolce w punkcie uwagi (np. najbliższym linku). (#4369)
+- W pokazach slajdów programu Powerpoint, punkt przeglądu prawidłowo podąża za wirtualnym kursorem. (#4370)
+
+
 = 2014.3 =
 
 == Nowe funkcje ==

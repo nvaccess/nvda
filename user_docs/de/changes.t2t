@@ -2,6 +2,29 @@
 
 
 %!includeconf: ../changes.t2tconf
+= 2014.4 =
+
+== Änderungen ==
+- Wenn Sie mit dem Navigator in ein virtuelles Dokument wechseln, wird der Darstellungsmodus auf "Dokument" eingstellt. früher geschah dies nur, wenn Sie den Fokus bewegt haben. (#4369)
+- Die Dialoge zum auswählen von Sprachausgaben Bzw. Braillezeilen werden alphabetisch sortiert; ausgenommen sind hierbei die Einträge "keine Sprachausgabe" Bzw. "keine Braillezeile". Diese befinden sich stets an letzter Stelle in der Liste. (#2724)
+- Libluis wurde auf Version  2.6.0 aktualisiert. (#4434, #3835)
+- Wenn Sie im Lesemodus die Schnellnavigationstasten E und umschalt+E drücken, werden nun auch bearbeitbare Kombinationsfelder berücksichtigt. Dies betrifft u.a. das Suchfeld in der neuesten Version der Google-suche. (#4436)
+- Wenn Sie mit der linken Maustaste auf das NVDA-Symbol im Infobereih klicken, wird nun das NVDA-Menü geöffnet. (#4459)
+
+
+== Fehlerbehebungen ==
+- Wenn Sie mit alt-tab in ein virtuelles Dokument wechseln, wird der Cursor korrekt positioniert. (#4369)
+- die Verfolgung des virtuellen Cursors in Powerpoint wurde verbessert. (#4370)
+- in Firefox wird neuer Inhalt in Live-Regionen korrekt angezeigt. (#4169).
+- im Internet Explorer verhindern verschachtelte Framesets nicht mehr das Navigieren in andere Frames. (#4418)
+- nvda stürzt nun nicht mehr ab, wenn es mit einer Handytech-Braillezeile verwendet wird. (#3709)
+- Problem behoben, wonach NVDA mit dem Dialog "Einsprungpunkt nicht gefunden" abgestürzt ist, wenn man es über die Desktop-Verknüpfung oder über die Tastenkombination gestartet hat. (#4235)
+- Probleme mit Eingabefeldern in einigen Eclipse-Versionen behoben. (#3872)
+- in Outlook 2010 wurden Probleme mit Eingabefeldern in Besprechungs- und Terminanfragen behoben. (#4126)
+- Live-Regionen, die mit "aria-live=off" gekennzeichnet sind, werden korrekterweise ignoriert. (#4405)
+- bei Statuszeilen, die einen Namen besitzen, wird der Name vom Text abgetrennt. (#4430)
+- Wenn beim Eingeben von Passwörtern das Sprechen eingegebener Wörter aktiviert ist, werden nicht mehr länger Sterne angesagt, wenn Sie ein neues Wort beginnen. (#4402)
+
 
 = 2014.3 =
 

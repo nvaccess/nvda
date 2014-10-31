@@ -1,0 +1,124 @@
+﻿#locale/es/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011-2012 NVDA contributors.
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+... sentence ending	(?<=[^\s.])(\s\.|\.)\.\.(?=[\"'”’)\s]|$)
+… sentence ending	(?<=[^\s.])\…(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word -	(?<=[^\W_])[-]
+negative number	(?<!\w)-(?=[$£€¥]?\d)
+dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	punto	all	always
+! sentence ending	cerrar exclamación	all	always
+? sentence ending	cerrar interrogación	all	always
+... sentence ending	elipsis	all	always	
+… sentence ending	elipsis	all	always	
+; phrase ending	punto y coma	most	always
+: phrase ending	dos puntos	most	always
+decimal point		none	always
+in-word '	apóstrofo	all	norep
+in-word -	guión	all	norep
+negative number	menos	none	norep
+dates /	 	all	always
+
+# Whitespace
+\0	en blanco	char
+\t	tab
+\n	línea nueva	char
+\f	Salto de página	none
+\r	retorno de carro	char
+ 	espacio	char
+ 	espacio	char	# no-break space
+
+# Standard punctuation/symbols
+!	cerrar exclamación	all
+"	comillas	most
+\#	signo de número	most
+$	dólar	all	norep
+£	libras	all	norep
+€	euros	all	norep
+¢	Centavos	all	norep
+¥	Yen	all	norep
+%	porciento	some
+&	anpersán	some
+'	apóstrofo	all
+(	abrir paréntesis	most
+)	cerrar paréntesis	most
+*	asterisco	some
++	más	some
+,	coma	all	always
+-	guión	most
+.	punto	some
+/	barra 	some
+:	dos puntos	most	norep
+;	punto y coma	most
+<	menor que	most
+>	mayor que	most
+=	igual	some
+?	cerrar interrogación	all
+@	arroba	some
+[	abrir corchete	most
+]	cerrar corchete	most
+\\	barra inversa	most
+^	circunflejo	most
+_	subrayado	most
+`	grave	most
+{	abrir llave	most
+}	cerrar llave	most
+|	barra vertical	most
+~	tilde	most
+¿	abrir interrogación	all
+¡	abrir exclamación	all
+
+# Other characters
+•	viñeta	some
+…	elipsis	all	always
+...	elipsis	all	always
+	viñeta	some
+“	abrir comillas	most
+”	cerrar comillas	most
+‘	apóstrofo	most
+’	apóstrofo	most
+–	guión	most
+—	guión	most
+●	círculo	most
+¨	diéresis	most
+‎	marca de izquierda a derecha	char
+‏	marca de derecha a izquierda	char
+■	Barra vertical cortada	some
+➔	flecha a la derecha	some
+§	Sección	most
+°	grados	some
+«	Abrir Comillas angulares
+»	Cerrar comillas angulares
+µ	micro	some
+¹	1 sobreescrito	some
+²	Al cuadrado	some
+³	al cubo	some
+®	registrado	some
+™	Marca registrada	some
+©	copyright	some	norep
+±	Más o menos	most
+×	multiplicado por	most
+÷	dividido por	most
+←	Flecha izquierda	some
+→	Flecha derecha	some
+✓	marcado	some
+✔	marcado	some

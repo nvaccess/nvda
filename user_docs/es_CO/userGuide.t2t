@@ -84,7 +84,7 @@ Ejecutar la versión portable directamente desde medios de sólo lectura no est�
 Utilizar la copia temporal de NVDA es también una opción, ej.: con propósitos de demostración, puesto que iniciar NVDA de este modo cada vez puede llegar a ser muy incómodo.
 
 ++ Restricciones de la Copia Portable y Temporal ++
-Además de la incapacidad de iniciarse automáticamente durante y/o después de la autentificación, las copias portable y temporal de NVDA también tienen las siguientes restricciones:
+Además de la incapacidad de iniciarse automáticamente durante y o después de la autentificación, las copias portable y temporal de NVDA también tienen las siguientes restricciones:
 - La incapacidad para interactuar con aplicaciones que se ejecuten con privilegios de administrador, al menos que, por supuesto, el mismo NVDA también haya sido ejecutado con estos privilegios (no es recomendable).
 - La incapacidad de leer las pantallas del Control de Cuentas de Usuario (UAC) cuando trate de iniciar una aplicación con privilegios de administrador.
 - Windows 8: la incapacidad para soportar la entrada desde una pantalla táctil.
@@ -107,7 +107,7 @@ Esto también incluye al control del UAC y otras pantallas seguras.
 
 +++ Crear Atajos del Escritorio (ctrl+alt+n) +++
 Esta opción te permite elegir si NVDA debería crear o no un atajo en el escritorio para iniciar NVDA. 
-Si se creó, a este atajo  también se le asignará una tecla de atajo control+alt+n permitiéndote iniciar a NVDA en cualquier ocasión con esta combinación de teclas.
+A este atajo si se crea también se le asignará una tecla de atajo control+alt+n permitiéndote iniciar a NVDA en cualquier ocasión con esta combinación de teclas.
 
 +++ Copiar Configuración Portable de la Actual Cuenta de Usuario +++
 Esta opción te permite elegir si NVDA debería copiar o no la configuración del usuario del actual NVDA en ejecución en la configuración para el usuario actualmente autentificado, para la copia instalada de NVDA. 
@@ -152,15 +152,17 @@ La tercera te permite controlar si este cuadro de bienvenida debería aparecer c
 
 +++ La Tecla Modificadora NVDA +++ 
 La mayoría de las órdenes específicas de teclado de NVDA consisten normalmente en la pulsación de la tecla modificadora de NVDA, junto con una o más teclas. 
-Una notable excepción a  esto son las órdenes de revisión de texto para la distribución de teclado de escritorio que sólo utiliza las teclas del teclado numérico en sí mismas, pero hay algunas otras excepciones también..
+Una notable excepción a  esto son las órdenes de revisión de texto para teclados de escritorio que sólo utilizan las teclas del teclado numérico en sí mismas, pero hay algunas otras excepciones también..
 
-NVDA puede configurarse tal que o la tecla Insert del teclado numérico, o la Insert del extendido, y/o la BloqMayus puedan utilizarse como la tecla modificadora de NVDA.
+NVDA puede configurarse tal que o la tecla Insert del teclado numérico, la Insert del extendido, o la BloqMayus puedan utilizarse como la tecla modificadora de NVDA.
+
 De forma predeterminada tanto el insert del teclado numérico como el del teclado extendido pueden utilizarse como teclas modificadoras.
 
-Si deseas hacer que una de las teclas modificadoras de NVDA se ccomporte como lo haría normalmente si NVDA no estuviese en marcha (por ejemplo deseas activar BloqMayus cuando tienes configurada BloqMayus para que sea una tecla modificadora de NVDA) puedes pulsar la tecla dos veces en sucesión rápida.
+Si deseas hacer que una de las teclas modificadoras de NVDA actúe como la tecla original (por ejemplo deseas activar BloqMayus cuando tienes configurada BloqMayus para que sea una tecla modificadora de NVDA) puedes pulsar la tecla dos veces en sucesión rápida.
 
 +++ Distribuciones de Teclado +++
-Actualmente NVDA viene con dos conjuntos de  teclas de órdenes conocidas como distribuciones de teclado. La distribución sobremesa y la distribución portátil.
+Actualmente NVDA viene con dos conjuntos de  teclas de órdenes. 
+Hay una distribución para sobremesa y una distribución para portátiles.
 De forma predeterminada NVDA se configura para utilizar la distribución de sobremesa, aunque puedes cambiar a la distribución de portátiles en las Opciones de Teclado, que se encuentran en Preferencias en el menú NVDA.
 	
 La distribución sobremesa hace un uso amplio del teclado numérico (con el bloqueo numérico desactivado).
@@ -232,7 +234,7 @@ Cuando aparezca el menú, puedes utilizar las teclas de cursor para navegar por 
 || Nombre | Tecla escritorio | Tecla portátil | Táctil | Descripción |
 | Detener voz | Control |  control | toque con 2 dedos | Detiene la voz instantáneamente |
 | Pausar Voz | Shift | shift | no | Pausa la voz instantáneamente, pulsándola nuevamente continuará hablando donde se detuvo (si el pausado se soporta por el sintetizador actual) |
-| Menú NVDA | NVDA+n | NVDA+n | doble toque con 2 dedos | despliega el menú NVDA para permitirte acceder a preferencias, herramientas, ayuda, etc. |
+| Menú NVDA | NVDA+n | NVDA+n | doble toque con 2 dedos | despliega el menú NVDA para permitirte acceder a preferencias, herramientas y ayuda etc. |
 | Conmutar Modo Ayuda de entrada | NVDA+1 | NVDA+1 | no | Pulsando cualquier tecla  en este modo se anunciará la tecla, y la descripción de cualquier orden de NVDA asociada con ella | 
 | Conmutar Modo de Voz | NVDA+s | NVDA+s | no | Conmuta el modo voz entre verbalizar, pitidos y desactivado. |
 | Salir de NVDA | NVDA+q | NVDA+q | no | Sale de NVDA |
@@ -667,13 +669,12 @@ Esta opción es una barra de desplazamiento que va desde 0 hasta 100, (siendo 0 
 Esta opción es una barra de desplazamiento que te permite elegir cuánta entonación (subida y caída en el tono) el sintetizador debería utilizar para hablar. (Solamente el sintetizador Espeak proporciona esta opción actualmente).
 
 ==== Cambio Automático de Idioma ====
-Esta casilla de verificación te permite activar o desactivar si NVDA debería cambiar automáticamente los idiomas del sintetizador de voz si el texto a leer lo especifica .
+Esta casilla de verificación te permite activar o desactivar si NVDA debería cambiar los idiomas del sintetizador de voz al vuelo, si el marcado de idiomas está disponible en el texto a leer.
 Esta opción está activada de manera predeterminada.
 Actualmente sólo el sintetizador eSpeak sopporta el cambio automático de idioma.
 
 ==== Cambio Automático de Dialecto ====
-Esta casilla de verificación te permite activar o desactivar  si los cambios de dialecto se deberían hacer, en lugar de sólo cambiar el idioma actual. 
-Por ejemplo: Si se está leyendo en una voz Inglés U.S. pero partes de un documento tienen algún texto en Inglés U.K. entonces si esta característica está activada el sintetizador cambiará su acento.
+Si el cambio automático de idioma está activado, esta casilla de verificación te permite activar o desactivar  si los cambios de dialecto se deberían hacer, en lugar de sólo cambiar el idioma actual. Ej.: Si se está leyendo en una voz Inglés U.S. pero partes de un documento tienen algún texto en Inglés U.K. entonces si esta característica está activada el sintetizador cambiará su acento.
 Esta opción está desactivada de forma predeterminada.
 
 %kc:setting
@@ -879,7 +880,7 @@ Tecla: NVDA+6
 
 Cuando se activa, el cursor de revisión se moverá automáticamente a la posición del cursor del Sistema cada vez que se mueva.
 
-==== Seguir al Cursor del Ratón ====
+==== Seguir al Ratón ====
 Cuando se activa, el cursor de revisión seguirá al ratón según se mueva.
 
 ==== Modo de Revisión Simple ====

@@ -1,18 +1,10 @@
 ﻿#locale/zh_HK/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2012 NVDA Contributors
+#Copyright (c) 2011-2014 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 
-complexSymbols:
-# identifier	regexp
-# Others
-decimal point	(?<=\d)\.(?=\d)
-
 symbols:
-# identifier	replacement[[	level][	preserve]][	# display name]
-# Complex symbols
-decimal point	點	all	none
 # Whitespace
 \0	空白	char
 \t	跳格
@@ -109,64 +101,6 @@ decimal point	點	all	none
 ﹟	井字號	most
 ﹠	和號	most
 ﹡	米字號	most
-
-# Standard punctuation/symbols
-!	bang	all	always
-"	quote	most	norep
-\#	number	some
-$	dollar	some
-£	pound	some
-€	euro	some
-¢	Cents	some
-¥	Yen	some
-%	percent	some
-&	and	some
-'	tick	all
-(	left paren	most	norep
-)	right paren	most	norep
-*	star	most	norep
-,	comma	all	always
--	dash	most	norep
-.	點	some	norep
-:	colon	some	norep
-;	semi	most	norep
-?	question	all	always
-@	at	some
-[	left bracket	most	norep
-]	right bracket	most	norep
-\\	backslash	some
-/	slash	some
-^	caret	most
-_	line	most
-`	graav	most
-{	left brace	most	norep
-}	right brace	most	norep
-|	bar	most
-~	tilda	most
-
-# Other characters
-•	項目符號	some
-	項目符號	some
-...	dot dot dot	all	norep
-“	left quote	most
-”	right quote	most
-‘	left tick	most
-’	right tick	most
-–	en dash	most
-—	em dash	most
-¨	diaeresis	most
-‎	left to right mark	char
-‏	right to left mark	char
-➔	right arrow	some
-§	章節符號	most
-°	度	some
-«	double left pointing angle bracket	some
-µ	micro	some
-®	registered	some
-™	Trademark	some
-©	Copyright	some
-✓	check	some
-✔	check	some
 
 # math symbols
 √	開根號	most

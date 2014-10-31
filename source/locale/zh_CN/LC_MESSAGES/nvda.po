@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-06 23:27+1000\n"
-"PO-Revision-Date: 2014-08-17 02:04+0800\n"
+"POT-Creation-Date: 2014-10-08 19:12+1000\n"
+"PO-Revision-Date: 2014-10-09 15:45+0800\n"
 "Last-Translator: 雪岭冰龙 <vgjh2005@gmail.com>\n"
 "Language-Team: Simplified Chinese translate team <vgjh2005@gmail.com>\n"
 "Language: zh_CN\n"
@@ -1464,8 +1464,8 @@ msgid ""
 "to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
-"您的配置文件包含错误。您的配置已经被重置为默认的出厂设置。如果需要了解此错误"
-"的详细信息，请查看日志文件。"
+"您的配置文件包含错误。您的配置已经被重置为默认的出厂设置。\n"
+"如果需要了解此错误的详细信息，请查看日志文件。"
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 msgid "Configuration File Error"
@@ -2775,7 +2775,7 @@ msgid ""
 msgstr "在欢迎屏幕、 UAC 屏幕等安全界面启用 NVDA （需要管理员权限）"
 
 msgid "Type help(object) to get help about object."
-msgstr "输入 “help”（对象名称），以获得该对象的帮助。"
+msgstr "输入“help（对象名称）”，以获得该对象的帮助。"
 
 msgid "Type exit() to exit the console"
 msgstr "输入“exit()”退出控制台。"
@@ -2903,17 +2903,17 @@ msgstr "默认样式"
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
 msgid "{color} on {backgroundColor}"
-msgstr "{color} 是 {backgroundColor}"
+msgstr "文字顏色：{color}，背景顏色：{backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
 msgid "{color}"
-msgstr "{color}"
+msgstr "文字顏色：{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
 msgid "{backgroundColor} background"
-msgstr "背景是{backgroundColor}色"
+msgstr "背景顏色：{backgroundColor}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -3042,7 +3042,7 @@ msgstr "垂直基准线对齐"
 
 #. Translators: Reported when text is vertically justified.
 msgid "vertical align justified"
-msgstr "垂直对齐校正"
+msgstr "垂直上下对齐"
 
 #. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
 msgid "vertical align distributed"
@@ -4530,8 +4530,8 @@ msgid ""
 "usage.\n"
 "Do you wish to manually activate it now?"
 msgstr ""
-"要想编辑此配置，您必须先将其激活。一旦您完成编辑，您必须手动停用它已使此配置"
-"恢复到正常的状态。\n"
+"要想编辑此配置，您必须先将其激活。一旦您完成编辑，您必须手动停用它已使配置恢"
+"复到原来的状态。\n"
 "您希望现在就手动激活它吗？"
 
 #. Translators: The title of the confirmation dialog for manual activation of a created profile.
@@ -6361,7 +6361,7 @@ msgstr "{styleName} 样式，大纲级别{outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
 msgid "{size:g} point font"
-msgstr "{size:g} 号字体"
+msgstr "{size:g} 磅字体"
 
 #. Translators: a measurement in Microsoft Word
 msgid "{offset:.3g} characters"
@@ -6386,7 +6386,7 @@ msgstr "{offset:.3g} 磅"
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
 msgid "{offset:.3g} picas"
-msgstr "{offset:.3g} 像素"
+msgstr "{offset:.3g} 十二点活字"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 msgid "no comments"
@@ -6411,6 +6411,34 @@ msgstr "HIMS Braille Sense/Braille EDGE 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "All add-ons are now disabled. They will be re-enabled on the next restart "
+#~ "unless you choose to disable them again."
+#~ msgstr ""
+#~ "所有插件已经被停用，他们将在下次重启时重新启用，除非您选择再次禁用。"
+
+#~ msgid "What would you like to &do?"
+#~ msgstr "您想怎么做(&d)？"
+
+#~ msgid "Exit"
+#~ msgstr "退出"
+
+#~ msgid "Restart"
+#~ msgstr "重新启动"
+
+#~ msgid "Restart with add-ons disabled"
+#~ msgstr "重启并停用插件"
+
+#~ msgid ""
+#~ "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+#~ msgstr "所有插件已被停用，要想启用插件，您必须重新启动 NVDA。"
+
+#~ msgid "suspended"
+#~ msgstr "已挂起"
+
+#~ msgid "Sho&w exit options when exiting NVDA"
+#~ msgstr "退出 NVDA 时显示退出选项(&w)"
 
 #~ msgid "No location information for navigator object"
 #~ msgstr "没有浏览对象的位置信息"
