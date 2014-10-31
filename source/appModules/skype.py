@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #appModules/skype.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2013 Peter Vágner, NV Access Limited
+#Copyright (C) 2007-2014 Peter Vágner, NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -140,7 +140,7 @@ class AppModule(appModuleHandler.AppModule):
 		try:
 			self.chatOutputList = NVDAObjects.IAccessible.getNVDAObjectFromEvent(
 				windowUtils.findDescendantWindow(window, className="TChatContentControl"),
-				winUser.OBJID_CLIENT, 1)
+				winUser.OBJID_CLIENT, 3)
 		except LookupError:
 			pass
 		else:
