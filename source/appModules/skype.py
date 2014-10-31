@@ -140,7 +140,7 @@ class AppModule(appModuleHandler.AppModule):
 		try:
 			self.chatOutputList = NVDAObjects.IAccessible.getNVDAObjectFromEvent(
 				windowUtils.findDescendantWindow(window, className="TChatContentControl"),
-				winUser.OBJID_CLIENT, 3)
+				winUser.OBJID_CLIENT, 0).lastChild
 		except LookupError:
 			pass
 		else:
