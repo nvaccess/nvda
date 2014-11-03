@@ -656,13 +656,13 @@ class WordDocumentTreeInterceptor(ReviewCursorManager,BrowseModeTreeInterceptorW
 	def __contains__(self,obj):
 		return obj==self.rootNVDAObject
 
-	def _iterLinks(self,nodeType,direction,rangeObj):
+	def _iterCollection(self,nodeType,direction,rangeObj,collectionName,filter=None):
 		if direction=="next":
 			rangeObj.moveEnd(wdStory,1)
 		elif direction=="previous":
 			rangeObj.collapse(wdCollapseStart)
 			rangeObj.moveStart(wdStory,-1)
-		items=rangeObj.hyperLinks
+		items=getattr(rangeObj,collectionName)
 		itemCount=items.count
 		isFirst=True
 		for index in xrange(1,itemCount+1):
@@ -672,6 +672,8 @@ class WordDocumentTreeInterceptor(ReviewCursorManager,BrowseModeTreeInterceptorW
 			itemRange=item.range
 			# Skip over the item we're already on.
 			if isFirst and ((direction=="next" and itemRange.start<=rangeObj.start) or (direction=="previous" and itemRange.end>rangeObj.end)):
+				continue
+			if filter and not filter(item):
 				continue
 			yield browseMode.TextInfoQuickNavItem(nodeType,self,BrowseModeWordDocumentTextInfo(self,None,_rangeObj=itemRange))
 			isFirst=False
@@ -697,7 +699,9 @@ class WordDocumentTreeInterceptor(ReviewCursorManager,BrowseModeTreeInterceptorW
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
 		rangeObj=pos._rangeObj if pos else self.rootNVDAObject.WinwordDocumentObject.range()
 		if nodeType=="link":
-			return self._iterLinks(nodeType,direction,rangeObj)
+			return self._iterCollection(nodeType,direction,rangeObj,"hyperlinks")
+		elif nodeType=="table":
+			return self._iterCollection(nodeType,direction,rangeObj,"tables",filter=lambda x: x.borders.enable) 
 		elif nodeType.startswith('heading'):
 			return self._iterHeadings(nodeType,direction,rangeObj)
 		else:
