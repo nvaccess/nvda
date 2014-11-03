@@ -30,7 +30,7 @@ import textInfos
 import textInfos.offsets
 import colors
 import controlTypes
-from browseMode import BrowseModeTreeInterceptor
+import browseMode
 from cursorManager import CursorManager, ReviewCursorManager
 from tableUtils import HeaderCellInfo, HeaderCellTracker
 from . import Window
@@ -253,6 +253,15 @@ formatConfigFlagsMap={
 	"reportParagraphIndentation":65536,
 }
 formatConfigFlag_includeLayoutTables=131072
+
+class WordDocumentHeadingQuickNavItem(browseMode.TextInfoQuickNavItem):
+
+	def __init__(self,nodeType,document,textInfo,level):
+		self.level=level
+		super(WordDocumentHeadingQuickNavItem,self).__init__(nodeType,document,textInfo)
+
+	def isChild(self,parent):
+		return self.level>parent.level
 
 class WordDocumentTextInfo(textInfos.TextInfo):
 
@@ -611,7 +620,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)
 		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.End)
 
-class BrowseModeTreeInterceptorWithMakeTextInfo(BrowseModeTreeInterceptor):
+class BrowseModeTreeInterceptorWithMakeTextInfo(browseMode.BrowseModeTreeInterceptor):
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
 
@@ -646,6 +655,53 @@ class WordDocumentTreeInterceptor(ReviewCursorManager,BrowseModeTreeInterceptorW
 
 	def __contains__(self,obj):
 		return obj==self.rootNVDAObject
+
+	def _iterLinks(self,nodeType,direction,rangeObj):
+		if direction=="next":
+			rangeObj.moveEnd(wdStory,1)
+		elif direction=="previous":
+			rangeObj.collapse(wdCollapseStart)
+			rangeObj.moveStart(wdStory,-1)
+		items=rangeObj.hyperLinks
+		itemCount=items.count
+		isFirst=True
+		for index in xrange(1,itemCount+1):
+			if direction=="previous":
+				index=itemCount-(index-1)
+			item=items[index]
+			itemRange=item.range
+			# Skip over the item we're already on.
+			if isFirst and ((direction=="next" and itemRange.start<=rangeObj.start) or (direction=="previous" and itemRange.end>rangeObj.end)):
+				continue
+			yield browseMode.TextInfoQuickNavItem(nodeType,self,BrowseModeWordDocumentTextInfo(self,None,_rangeObj=itemRange))
+			isFirst=False
+
+	def _iterHeadings(self,nodeType,direction,rangeObj):
+		neededLevel=int(nodeType[7:]) if len(nodeType)>7 else 0
+		while True:
+			if direction=="next":
+				newRangeObj=rangeObj.gotoNext(wdGoToHeading)
+				if not newRangeObj or newRangeObj.start<=rangeObj.start:
+					break
+				#print "old start %s, old end %s, new start %s, new end %s"%(rangeObj.start,rangeObj.end,newRangeObj.start,newRangeObj.end)
+			elif direction=="previous":
+				newRangeObj=rangeObj.gotoPrevious(wdGoToHeading)
+				if not newRangeObj or newRangeObj.start>=rangeObj.start:
+					break
+			level=newRangeObj.paragraphs[1].outlineLevel
+			if not neededLevel or  neededLevel==level:
+				newRangeObj.expand(wdParagraph)
+				yield WordDocumentHeadingQuickNavItem(nodeType,self,BrowseModeWordDocumentTextInfo(self,None,_rangeObj=newRangeObj),level)
+			rangeObj=newRangeObj
+
+	def _iterNodesByType(self,nodeType,direction="next",pos=None):
+		rangeObj=pos._rangeObj if pos else self.rootNVDAObject.WinwordDocumentObject.range()
+		if nodeType=="link":
+			return self._iterLinks(nodeType,direction,rangeObj)
+		elif nodeType.startswith('heading'):
+			return self._iterHeadings(nodeType,direction,rangeObj)
+		else:
+			return iter(()) 
 
 class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 
