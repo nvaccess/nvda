@@ -51,7 +51,7 @@ class QuickNavItem(object):
 	def isChild(self,parent):
 		raise NotImplementedError
 
-	def moveTo(self,gesture=None,readUnit=None,cancelSpeech=False):
+	def moveTo(self,gesture=None,readUnit=None):
 		raise NotImplementedError
 
 	canActivate=False
@@ -76,11 +76,9 @@ class TextInfoQuickNavItem(QuickNavItem):
 			return True
 		return False
 
-	def moveTo(self,gesture=None,readUnit=None,cancelSpeech=False):
+	def moveTo(self,gesture=None,readUnit=None):
 		info=self.textInfo
 		if not willSayAllResume(gesture):
-			if cancelSpeech:
-				speech.cancelSpeech()
 			if readUnit:
 				fieldInfo = info.copy()
 				info.collapse()
@@ -658,4 +656,7 @@ class ElementsListDialog(wx.Dialog):
 		if activate:
 			item.activate()
 		else:
-			wx.CallLater(100, item.moveTo,cancelSpeech=True)
+			def move():
+				speech.cancelSpeech()
+				item.moveTo()
+			wx.CallLater(100, move)
