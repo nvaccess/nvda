@@ -140,8 +140,19 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	# Translators: the description for the elements list dialog script on virtualBuffers.
 	script_elementsList.__doc__ = _("Presents a list of links, headings or landmarks")
 
+	def _activatePosition(self,info):
+		info.activate()
+
+	def script_activatePosition(self,gesture):
+		info=self.makeTextInfo(textInfos.POSITION_CARET)
+		self._activatePosition(info)
+	# Translators: the description for the activatePosition script on virtualBuffers.
+	script_activatePosition.__doc__ = _("activates the current object in the document")
+
 	__gestures={
 		"kb:NVDA+f7": "elementsList",
+		"kb:enter": "activatePosition",
+		"kb:space": "activatePosition",
 	}
 
 # Add quick navigation scripts.

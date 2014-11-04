@@ -660,12 +660,6 @@ class VirtualBuffer(cursorManager.CursorManager, browseMode.BrowseModeTreeInterc
 	# Translators: the description for the activateLongDescription script on virtualBuffers.
 	script_activateLongDesc.__doc__=_("Shows the long description at this position if one is found.")
 
-	def script_activatePosition(self,gesture):
-		info=self.makeTextInfo(textInfos.POSITION_CARET)
-		self._activatePosition(info)
-	# Translators: the description for the activatePosition script on virtualBuffers.
-	script_activatePosition.__doc__ = _("activates the current object in the document")
-
 	def script_refreshBuffer(self,gesture):
 		if scriptHandler.isScriptWaiting():
 			# This script may cause subsequently queued scripts to fail, so don't execute.
@@ -1267,8 +1261,6 @@ class VirtualBuffer(cursorManager.CursorManager, browseMode.BrowseModeTreeInterc
 
 	__gestures = {
 		"kb:NVDA+d": "activateLongDesc",
-		"kb:enter": "activatePosition",
-		"kb:space": "activatePosition",
 		"kb:NVDA+f5": "refreshBuffer",
 		"kb:NVDA+v": "toggleScreenLayout",
 		"kb:escape": "disablePassThrough",
