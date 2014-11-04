@@ -1008,7 +1008,7 @@ class VirtualBuffer(cursorManager.CursorManager, browseMode.BrowseModeTreeInterc
 			attrs["table-rownumber"] = [str(row)]
 		if column is not None:
 			attrs["table-columnnumber"] = [str(column)]
-			results = self._iterNodesByAttribs(attrs, pos=startPos, direction=direction)
+		results = self._iterNodesByAttribs(attrs, pos=startPos, direction=direction)
 		if not startPos and not row and not column and direction == "next":
 			# The first match will be the table itself, so skip it.
 			next(results)
