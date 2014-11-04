@@ -267,6 +267,17 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 
 	shouldIncludeLayoutTables=True #: layout tables should always be included (no matter the user's browse mode setting).
 
+	def activate(self):
+		# Handle activating links.
+		# It is necessary to expand to word to get a link as the link's first character is never actually in the link!
+		tempRange=self._rangeObj.duplicate
+		tempRange.expand(wdWord)
+		links=tempRange.hyperlinks
+		if links.count>0:
+			links[1].follow()
+			return
+		super(WordDocumentTextInfo,self).activate()
+
 	def _expandToLineAtCaret(self):
 		lineStart=ctypes.c_int()
 		lineEnd=ctypes.c_int()
