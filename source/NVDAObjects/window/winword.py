@@ -622,15 +622,7 @@ class BrowseModeWordDocumentTextInfo(WordDocumentTextInfo):
 	def _get_shouldIncludeLayoutTables(self):
 		return config.conf['documentFormatting']['includeLayoutTables']
 
-	def updateSelection(self):
-		self.obj.treeInterceptor.selection=self
-		super(BrowseModeWordDocumentTextInfo,self).updateSelection()
-
-	def updateCaret(self):
-		self.obj.treeInterceptor.selection=self
-		super(BrowseModeWordDocumentTextInfo,self).updateSelection()
-
-class WordDocumentTreeInterceptor(ReviewCursorManager,BrowseModeTreeInterceptorWithMakeTextInfo):
+class WordDocumentTreeInterceptor(CursorManager,BrowseModeTreeInterceptorWithMakeTextInfo):
 
 	TextInfo=BrowseModeWordDocumentTextInfo
 	needsReviewCursorTextInfoWrapper=False
