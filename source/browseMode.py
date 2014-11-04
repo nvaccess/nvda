@@ -39,28 +39,58 @@ def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 reportPassThrough.last = False
 
 class QuickNavItem(object):
+	""" Emitted by L{BrowseModeTreeInterceptor._iterNodesByType}, this represents one of many positions in a browse mode document, based on the type of item being searched for (e.g. link, heading, table etc)."""  
 
-	itemType=None
-	label=None
-	isAfterSelection=False
+	itemType=None #: The type of items searched for (e.g. link, heading, table etc) 
+	label=None #: The label that should represent this item in the Elements list.
+	isAfterSelection=False #: Is this item positioned after the caret in the document? Used by the elements list to plae its own selection.
 
 	def __init__(self,itemType,document):
+		"""
+		@param itemType: the type that was searched for (e.g. link, heading, table etc)
+		@ type itemType: string
+		@ param document: the browse mode document this item is a part of.
+		@type document: L{BrowseModeTreeInterceptor}
+		"""
 		self.itemType=itemType
 		self.document=document
 
 	def isChild(self,parent):
+		"""
+		Is this item a child of the given parent?
+		This is used when representing items in a hierarchical tree structure, such as the Elements List.
+		@param parent: the item of whom this item may be a child of.
+		@type parent: L{QuickNavItem}
+		@return: True if this item is a child, false otherwise.
+		@rtype: bool
+		"""
 		raise NotImplementedError
 
 	def moveTo(self,gesture=None,readUnit=None):
+		"""
+		Moves the browse mode caret or focus to this item.
+		@param gesture: the input gesture that caused the move.
+		@type gesture: L{inputCore.InputGesture}
+		@param readUnit: the optional unit (e.g. line, paragraph) that should be used to announce the item position when moved to. If not given, then the full sise of the item is used.
+		@type readingUnit: a L{textInfos}.UNIT_* constant.
+		"""
 		raise NotImplementedError
 
-	canActivate=False
 	def activate(self):
+		"""
+		Activates this item's position. E.g. follows a link, presses a button etc.
+		"""
 		raise NotImplementedError
 
 class TextInfoQuickNavItem(QuickNavItem):
+	""" Represents a quick nav item in a browse mode document who's positions are represented by a L{textInfos.TextInfo}. """
 
 	def __init__(self,itemType,document,textInfo):
+		"""
+		See L{QuickNavItem.__init__} for itemType and document argument definitions.
+		@param textInfo: the textInfo position this item represents.
+		@type textInfo: L{textInfos.TextInfo}
+		"""
 		self.textInfo=textInfo
 		super(TextInfoQuickNavItem,self).__init__(itemType,document)
 
@@ -98,6 +128,15 @@ class TextInfoQuickNavItem(QuickNavItem):
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 
 	def _iterNodesByType(self,itemType,direction="next",pos=None):
+		"""
+		Yields L{QuickNavItem} objects representing the ordered positions in this document according to the type being searched for (e.g. link, heading, table etc).
+		@param itemType: the type being searched for (e.g. link, heading, table etc)
+		@type itemType: string
+		@param direction: the direction in which to search (next, previous, up)
+		@ type direction: string
+		@param pos: the position in the document from where to seart the search.
+		@type pos: Usually an L{textInfos.TextInfo} 
+		"""
 		return iter(())
 
 	def _quickNavScript(self,gesture, itemType, direction, errorMessage, readUnit):
