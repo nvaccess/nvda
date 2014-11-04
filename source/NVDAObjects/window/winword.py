@@ -562,20 +562,12 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return res
 
 	def move(self,unit,direction,endPoint=None):
-		oldCell=None
-		if endPoint is None and unit==textInfos.UNIT_LINE and (direction==1 or direction==-1) and self._rangeObj.tables.count>0:
-			try:
-				cells=self._rangeObj.cells
-			except COMError:
-				cells=None
-			if cells and cells.count==0:
-				unit=textInfos.UNIT_CHARACTER
-			elif cells:
-				oldCell=cells[1]
 		if unit!=textInfos.UNIT_LINE:
 			return self._move(unit,direction,endPoint)
 		res=0
-		oldRange=self._rangeObj if oldCell else None
+		# Moving by line is impossible with a normal range.
+		# Therefore temporarily use the selection.
+		oldRange=self._rangeObj
 		sel=self.obj.WinwordSelectionObject
 		oldSel=sel.range
 		self.obj.WinwordDocumentObject.application.screenUpdating=False
@@ -592,21 +584,14 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			oldSel.select()
 		finally:
 			self.obj.WinwordDocumentObject.application.screenUpdating=True
-		if oldCell and (direction==1 or direction==-1):
-			try:
-				cell=self._rangeObj.cells[1]
-			except (COMError,IndexError):
-				cell=None
-			if cell and not oldCell.range.inRange(cell.range):
-				self._rangeObj=oldRange
-				if direction>0:
-					res=self._move(textInfos.UNIT_PARAGRAPH,direction)
-				elif direction<0:
-					self.expand(textInfos.UNIT_CELL)
-					self.collapse()
-					res=self._move(textInfos.UNIT_CHARACTER,direction)
-					self.expand(unit)
-					self.collapse()
+		# Sometimes when in a table with merged cells, moving by line can wrap back to a previous cell.
+		# If this happens, try moving by cell, aor jump over the table completely.
+		if direction>0 and endPoint!="end" and self._rangeObj.start<oldRange.start:
+			self._rangeObj=oldRange
+			res=self._move(textInfos.UNIT_CELL,direction,endPoint)
+			if res==0:
+				self.expand(textInfos.UNIT_TABLE)
+				self.collapse(end=True)
 		return res
 
 	def _get_bookmark(self):
