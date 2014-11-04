@@ -595,7 +595,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if oldCell and (direction==1 or direction==-1):
 			try:
 				cell=self._rangeObj.cells[1]
-			except IndexError:
+			except (COMError,IndexError):
 				cell=None
 			if cell and not oldCell.range.inRange(cell.range):
 				self._rangeObj=oldRange
