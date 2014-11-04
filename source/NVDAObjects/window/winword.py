@@ -702,6 +702,8 @@ class WordDocumentTreeInterceptor(ReviewCursorManager,BrowseModeTreeInterceptorW
 			return self._iterCollection(nodeType,direction,rangeObj,"hyperlinks")
 		elif nodeType=="table":
 			return self._iterCollection(nodeType,direction,rangeObj,"tables",filter=lambda x: x.borders.enable) 
+		elif nodeType=="graphic":
+			return self._iterCollection(nodeType,direction,rangeObj,"inlineShapes",filter=lambda x: 2<x.type<5) 
 		elif nodeType.startswith('heading'):
 			return self._iterHeadings(nodeType,direction,rangeObj)
 		else:
