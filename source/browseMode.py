@@ -68,6 +68,9 @@ class TextInfoQuickNavItem(QuickNavItem):
 	def label(self):
 		return self.textInfo.text.strip()
 
+	def activate(self):
+		self.textInfo.activate()
+
 	def isChild(self,parent):
 		if parent.textInfo.isOverlapping(self.textInfo):
 			return True
