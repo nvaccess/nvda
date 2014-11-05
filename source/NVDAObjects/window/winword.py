@@ -12,6 +12,7 @@ import comtypes.automation
 import uuid
 import operator
 import locale
+import collections
 import sayAllHandler
 import eventHandler
 import braille
@@ -261,7 +262,137 @@ class WordDocumentHeadingQuickNavItem(browseMode.TextInfoQuickNavItem):
 		super(WordDocumentHeadingQuickNavItem,self).__init__(nodeType,document,textInfo)
 
 	def isChild(self,parent):
+		if not isinstance(parent,WordDocumentHeadingQuickNavItem):
+			return False
 		return self.level>parent.level
+
+class WordDocumentCollectionQuickNavItem(browseMode.TextInfoQuickNavItem):
+	"""
+	A QuickNavItem representing an item that MS Word stores as a collection (e.g. link, table etc).
+	"""
+
+	def rangeFromCollectionItem(self,item):
+		"""
+		Fetches a Microsoft Word range object from a Microsoft Word item in a collection. E.g. a HyperLink object.
+		@param item: an item from a collection (E.g. a HyperLink object).
+		"""
+		return item.range
+
+	def __init__(self,itemType,document,collectionItem):
+		"""
+		See L{TextInfoQuickNavItem} for itemType and document argument definitions.
+		@param collectionItem: an item from an MS Word collection  e.g. HyperLink object.
+		"""
+		self.collectionItem=collectionItem
+		self.rangeObj=self.rangeFromCollectionItem(collectionItem)
+		textInfo=BrowseModeWordDocumentTextInfo(document,None,_rangeObj=self.rangeObj)
+		super(WordDocumentCollectionQuickNavItem,self).__init__(itemType,document,textInfo)
+
+class WordDocumentCommentQuickNavItem(WordDocumentCollectionQuickNavItem):
+	@property
+	def label(self):
+		author=self.collectionItem.author
+		date=self.collectionItem.date
+		text=self.collectionItem.range.text
+		return _(u"comment: {text} by {author} on {date}").format(author=author,text=text,date=date)
+
+	def rangeFromCollectionItem(self,item):
+		return item.scope
+
+class WordDocumentRevisionQuickNavItem(WordDocumentCollectionQuickNavItem):
+	@property
+	def label(self):
+		revisionType=wdRevisionTypeLabels.get(self.collectionItem.type)
+		author=self.collectionItem.author or ""
+		date=self.collectionItem.date
+		text=(self.collectionItem.range.text or "")[:100]
+		return _(u"{revisionType}: {text} by {author} on {date}").format(revisionType=revisionType,author=author,text=text,date=date)
+
+class WinWordCollectionQuicknavIterator(object):
+	"""
+	Allows iterating over an MS Word collection (e.g. HyperLinks) emitting L{QuickNavItem} objects.
+	"""
+
+	quickNavItemClass=WordDocumentCollectionQuickNavItem #: the QuickNavItem class that should be instanciated and emitted. 
+
+	def __init__(self,itemType,document,direction,rangeObj):
+		"""
+		See L{QuickNavItemIterator} for itemType, document and direction definitions.
+		@param rangeObj: a Microsoft Word range object where the collection should be fetched from.
+		"""
+		self.document=document
+		self.itemType=itemType
+		self.direction=direction if direction else "next"
+		self.rangeObj=rangeObj
+
+	def collectionFromRange(self,rangeObj):
+		"""
+		Fetches a Microsoft Word collection object from a Microsoft Word range object. E.g. HyperLinks from a range.
+		@param rangeObj: a Microsoft Word range object.
+		@return: a Microsoft Word collection object.
+		"""
+		raise NotImplementedError
+
+	def filter(self,item):
+		"""
+		Only allows certain items fom a collection to be emitted. E.g. a table who's borders are enabled.
+		@param item: an item from a Microsoft Word collection (e.g. HyperLink object).
+		@return True if this item should be allowd, false otherwise.
+		@rtype: bool
+		"""
+		return True
+
+	def iterate(self):
+		"""
+		returns a generator that emits L{QuickNavItem} objects for this collection.
+		"""
+		if self.direction=="next":
+			self.rangeObj.moveEnd(wdStory,1)
+		elif self.direction=="previous":
+			self.rangeObj.collapse(wdCollapseStart)
+			self.rangeObj.moveStart(wdStory,-1)
+		items=self.collectionFromRange(self.rangeObj)
+		itemCount=items.count
+		isFirst=True
+		for index in xrange(1,itemCount+1):
+			if self.direction=="previous":
+				index=itemCount-(index-1)
+			collectionItem=items[index]
+			item=self.quickNavItemClass(self.itemType,self.document,collectionItem)
+			itemRange=item.rangeObj
+			# Skip over the item we're already on.
+			if isFirst and ((self.direction=="next" and itemRange.start<=self.rangeObj.start) or (self.direction=="previous" and itemRange.end>self.rangeObj.end)):
+				continue
+			if not self.filter(collectionItem):
+				continue
+			yield item
+			isFirst=False
+
+class LinkWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	def collectionFromRange(self,rangeObj):
+		return rangeObj.hyperlinks
+
+class CommentWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	quickNavItemClass=WordDocumentCommentQuickNavItem
+	def collectionFromRange(self,rangeObj):
+		return rangeObj.comments
+
+class RevisionWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	quickNavItemClass=WordDocumentRevisionQuickNavItem
+	def collectionFromRange(self,rangeObj):
+		return rangeObj.revisions
+
+class GraphicWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	def collectionFromRange(self,rangeObj):
+		return rangeObj.inlineShapes
+	def filter(self,item):
+		return 2<item.type<5
+
+class TableWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	def collectionFromRange(self,rangeObj):
+		return rangeObj.tables
+	def filter(self,item):
+		return item.borders.enable
 
 class WordDocumentTextInfo(textInfos.TextInfo):
 
@@ -644,27 +775,8 @@ class WordDocumentTreeInterceptor(CursorManager,BrowseModeTreeInterceptorWithMak
 	def __contains__(self,obj):
 		return obj==self.rootNVDAObject
 
-	def _iterCollection(self,nodeType,direction,rangeObj,collectionName,filter=None):
-		if direction=="next":
-			rangeObj.moveEnd(wdStory,1)
-		elif direction=="previous":
-			rangeObj.collapse(wdCollapseStart)
-			rangeObj.moveStart(wdStory,-1)
-		items=getattr(rangeObj,collectionName)
-		itemCount=items.count
-		isFirst=True
-		for index in xrange(1,itemCount+1):
-			if direction=="previous":
-				index=itemCount-(index-1)
-			item=items[index]
-			itemRange=item.range
-			# Skip over the item we're already on.
-			if isFirst and ((direction=="next" and itemRange.start<=rangeObj.start) or (direction=="previous" and itemRange.end>rangeObj.end)):
-				continue
-			if filter and not filter(item):
-				continue
-			yield browseMode.TextInfoQuickNavItem(nodeType,self,BrowseModeWordDocumentTextInfo(self,None,_rangeObj=itemRange))
-			isFirst=False
+	def _get_ElementsListDialog(self):
+		return ElementsListDialog
 
 	def _iterHeadings(self,nodeType,direction,rangeObj):
 		neededLevel=int(nodeType[7:]) if len(nodeType)>7 else 0
@@ -687,11 +799,15 @@ class WordDocumentTreeInterceptor(CursorManager,BrowseModeTreeInterceptorWithMak
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
 		rangeObj=pos._rangeObj if pos else self.rootNVDAObject.WinwordDocumentObject.range()
 		if nodeType=="link":
-			return self._iterCollection(nodeType,direction,rangeObj,"hyperlinks")
+			return LinkWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj).iterate()
+		elif nodeType=="annotation":
+			comments=CommentWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj).iterate()
+			revisions=RevisionWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj).iterate()
+			return browseMode.mergeQuickNavItemIterators([comments,revisions],direction)
 		elif nodeType=="table":
-			return self._iterCollection(nodeType,direction,rangeObj,"tables",filter=lambda x: x.borders.enable) 
+			return TableWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj).iterate()
 		elif nodeType=="graphic":
-			return self._iterCollection(nodeType,direction,rangeObj,"inlineShapes",filter=lambda x: 2<x.type<5) 
+			return GraphicWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj).iterate()
 		elif nodeType.startswith('heading'):
 			return self._iterHeadings(nodeType,direction,rangeObj)
 		else:
@@ -1210,3 +1326,10 @@ class WordDocument_WwN(WordDocument):
 		"kb:shift+tab":None,
 	}
 
+class ElementsListDialog(browseMode.ElementsListDialog):
+
+	ELEMENT_TYPES=(browseMode.ElementsListDialog.ELEMENT_TYPES[0],browseMode.ElementsListDialog.ELEMENT_TYPES[1],
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("annotation", _("&Annotations")),
+	)
