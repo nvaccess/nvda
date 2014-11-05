@@ -470,6 +470,15 @@ qn("embeddedObject", key="o",
 	prevDoc=_("moves to the previous embedded object"),
 	# Translators: Message presented when the browse mode element is not found.
 	prevError=_("no previous embedded object"))
+qn("annotation", key="a",
+	# Translators: Input help message for a quick navigation command in browse mode.
+	nextDoc=_("moves to the next annotation"),
+	# Translators: Message presented when the browse mode element is not found.
+	nextError=_("no next annotation"),
+	# Translators: Input help message for a quick navigation command in browse mode.
+	prevDoc=_("moves to the previous annotation"),
+	# Translators: Message presented when the browse mode element is not found.
+	prevError=_("no previous annotation"))
 del qn
 
 class ElementsListDialog(wx.Dialog):
