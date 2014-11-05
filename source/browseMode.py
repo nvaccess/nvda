@@ -159,6 +159,9 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 
+	def _get_ElementsListDialog(self):
+		return ElementsListDialog
+
 	def _iterNodesByType(self,itemType,direction="next",pos=None):
 		"""
 		Yields L{QuickNavItem} objects representing the ordered positions in this document according to the type being searched for (e.g. link, heading, table etc).
@@ -204,7 +207,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		# We need this to be a modal dialog, but it mustn't block this script.
 		def run():
 			gui.mainFrame.prePopup()
-			d = ElementsListDialog(self)
+			d = self.ElementsListDialog(self)
 			d.ShowModal()
 			d.Destroy()
 			gui.mainFrame.postPopup()
