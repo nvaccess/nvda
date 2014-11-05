@@ -38,6 +38,35 @@ def reportPassThrough(treeInterceptor,onlyIfChanged=True):
 		reportPassThrough.last = treeInterceptor.passThrough
 reportPassThrough.last = False
 
+def mergeQuickNavItemIterators(iterators,direction="next"):
+	"""
+	Merges multiple iterators that emit L{QuickNavItem} objects, yielding them from first to last. 
+	They are sorted using min or max (__lt__ should be implemented on the L{QuickNavItem} objects).
+	@param iters: the iterators you want to merge. 
+	@type iters: sequence of iterators that emit L{QuicknavItem} objects.
+	@param direction: the direction these iterators are searching (e.g. next, previuos)
+	@type direction: string
+	"""
+	finder=min if direction=="next" else max
+	curValues=[]
+	index=0
+	for index,iter in enumerate(iterators):
+		try:
+			item=next(iter)
+		except StopIteration:
+			continue
+		curValues.append((index,item))
+	while len(curValues)>0:
+		first=finder(curValues,key=lambda x: x[1])
+		yield first[1]
+		firstIndex=curValues.index(first)
+		del curValues[firstIndex]
+		try:
+			newItem=next(iterators[first[0]])
+		except StopIteration:
+			continue
+		curValues.append((first[0],newItem))
+
 class QuickNavItem(object):
 	""" Emitted by L{BrowseModeTreeInterceptor._iterNodesByType}, this represents one of many positions in a browse mode document, based on the type of item being searched for (e.g. link, heading, table etc)."""  
 
@@ -93,6 +122,9 @@ class TextInfoQuickNavItem(QuickNavItem):
 		"""
 		self.textInfo=textInfo
 		super(TextInfoQuickNavItem,self).__init__(itemType,document)
+
+	def __lt__(self,other):
+		return self.textInfo.compareEndPoints(other.textInfo,"startToStart")<0
 
 	@property
 	def label(self):
