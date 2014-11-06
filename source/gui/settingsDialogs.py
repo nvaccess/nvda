@@ -80,6 +80,7 @@ class SettingsDialog(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
 		self.postInit()
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	def __del__(self):
 		SettingsDialog._hasInstance=False
