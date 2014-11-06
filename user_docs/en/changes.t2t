@@ -34,6 +34,13 @@
 - In password entry fields with speaking of typed words enabled, multiple asterisks are no longer pointlessly reported when beginning new words. (#4402)
 - In the Microsoft Outlook message list, items are no longer pointlessly announced as Data Items. (#4439)
 - When selecting text in the code editing control in the Eclipse IDE, the entire selection is no longer announced every time the selection changes. (#2314)
+- Various versions of Eclipse, such as the version included in the Android Developer Tools bundle, are now recognised as Eclipse and handled appropriately. (#4360)
+
+
+== Changes for Developers ==
+- For executables which host many different apps (e.g. javaw.exe), code can now be provided to load specific app modules for each app instead of loading the same app module for all hosted apps. (#4360)
+ - See the code documentation for appModuleHandler.AppModule for details.
+ - Support for javaw.exe is implemented.
 
 
 = 2014.3 =
