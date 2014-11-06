@@ -1,12 +1,14 @@
+# -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import glob
 import os
 import copy
+import re
 import wx
 import winUser
 import logHandler
@@ -1562,22 +1564,18 @@ class InputGesturesDialog(SettingsDialog):
 	title = _("Input Gestures")
 
 	def makeSettings(self, settingsSizer):
+		# Translators: The label of a text field for the filter in Input Gestures dialog.
+		settingsSizer.Add(wx.StaticText(self, label=_("&Filter by:")))
+		filter = wx.TextCtrl(self)
+		filter.Bind(wx.EVT_TEXT, self.onFilterChange, filter)
+		settingsSizer.Add(filter)
 		tree = self.tree = wx.TreeCtrl(self, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE)
 		self.treeRoot = tree.AddRoot("root")
 		tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onTreeSelect)
 		settingsSizer.Add(tree, proportion=7, flag=wx.EXPAND)
 
-		gestures = inputCore.manager.getAllGestureMappings(obj=gui.mainFrame.prevFocus, ancestors=gui.mainFrame.prevFocusAncestors)
-		for category in sorted(gestures):
-			treeCat = tree.AppendItem(self.treeRoot, category)
-			commands = gestures[category]
-			for command in sorted(commands):
-				treeCom = tree.AppendItem(treeCat, command)
-				commandInfo = commands[command]
-				tree.SetItemPyData(treeCom, commandInfo)
-				for gesture in commandInfo.gestures:
-					treeGes = tree.AppendItem(treeCom, self._formatGesture(gesture))
-					tree.SetItemPyData(treeGes, gesture)
+		self.gestures = inputCore.manager.getAllGestureMappings(obj=gui.mainFrame.prevFocus, ancestors=gui.mainFrame.prevFocusAncestors)
+		self.populateTree()
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a button to add a gesture in the Input Gestures dialog.
@@ -1596,6 +1594,32 @@ class InputGesturesDialog(SettingsDialog):
 
 	def postInit(self):
 		self.tree.SetFocus()
+
+	def populateTree(self, filter=''):
+		if filter:
+			#This regexp uses a positive lookahead (?=...) for every word in the filter, which just makes sure the word is present in the string to be tested without matching position or order.
+			filterReg = re.compile(r'(?=.*?' + r')(?=.*?'.join(filter.split(' ')) + r')', re.U|re.IGNORECASE)
+		for category in sorted(self.gestures):
+			treeCat = self.tree.AppendItem(self.treeRoot, category)
+			commands = self.gestures[category]
+			for command in sorted(commands):
+				if filter and not filterReg.match(command):
+					continue
+				treeCom = self.tree.AppendItem(treeCat, command)
+				commandInfo = commands[command]
+				self.tree.SetItemPyData(treeCom, commandInfo)
+				for gesture in commandInfo.gestures:
+					treeGes = self.tree.AppendItem(treeCom, self._formatGesture(gesture))
+					self.tree.SetItemPyData(treeGes, gesture)
+			if not self.tree.ItemHasChildren(treeCat):
+				self.tree.Delete(treeCat)
+			elif filter:
+				self.tree.Expand(treeCat)
+
+	def onFilterChange(self, evt):
+		filter=evt.GetClientObject().GetValue()
+		self.tree.DeleteChildren(self.treeRoot)
+		self.populateTree(filter)
 
 	def _formatGesture(self, identifier):
 		try:
@@ -1667,6 +1691,7 @@ class InputGesturesDialog(SettingsDialog):
 			self.pendingAdds.add(entry)
 		self.tree.SetItemText(treeGes, disp)
 		self.tree.SetItemPyData(treeGes, gid)
+		scriptInfo.gestures.append(gid)
 		self.onTreeSelect(None)
 
 	def onRemove(self, evt):
@@ -1681,6 +1706,7 @@ class InputGesturesDialog(SettingsDialog):
 		except KeyError:
 			self.pendingRemoves.add(entry)
 		self.tree.Delete(treeGes)
+		scriptInfo.gestures.remove(gesture)
 		self.tree.SetFocus()
 
 	def onOk(self, evt):
