@@ -1639,7 +1639,7 @@ class InputGesturesDialog(SettingsDialog):
 				self.tree.Expand(treeCat)
 
 	def onFilterChange(self, evt):
-		filter=evt.GetClientObject().GetValue()
+		filter=evt.GetEventObject().GetValue()
 		self.tree.DeleteChildren(self.treeRoot)
 		self.populateTree(filter)
 
