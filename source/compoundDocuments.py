@@ -505,6 +505,13 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 		while True:
 			if unit == textInfos.POSITION_SELECTION:
 				expandTi = obj.makeTextInfo(unit)
+				if expandTi.isCollapsed:
+					# There is no selection, only a caret.
+					if not findEnd:
+						return expandTi, obj
+					if not findEnd:
+						return expandTi, obj
+					return expandTi, obj, expandTi, obj
 			else:
 				expandTi = baseTi.copy()
 				expandTi.expand(unit)
