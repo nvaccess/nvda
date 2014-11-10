@@ -49,23 +49,26 @@ def mergeQuickNavItemIterators(iterators,direction="next"):
 	"""
 	finder=min if direction=="next" else max
 	curValues=[]
-	index=0
-	for index,iter in enumerate(iterators):
+	# Populate a list with all iterators and their corisponding first value
+	for it in iterators:
 		try:
-			item=next(iter)
+			val=next(it)
 		except StopIteration:
 			continue
-		curValues.append((index,item))
+		curValues.append((it,val))
+	# Until all iterators have been used up,
+	# Find the first (minimum or maximum) of all the values,
+	# emit that, and update the list with the next available value for the iterator who's value was emitted.
 	while len(curValues)>0:
 		first=finder(curValues,key=lambda x: x[1])
-		yield first[1]
-		firstIndex=curValues.index(first)
-		del curValues[firstIndex]
+		curValues.remove(first)
+		it,val=first
+		yield val
 		try:
-			newItem=next(iterators[first[0]])
+			newVal=next(it)
 		except StopIteration:
 			continue
-		curValues.append((first[0],newItem))
+		curValues.append((it,newVal))
 
 class QuickNavItem(object):
 	""" Emitted by L{BrowseModeTreeInterceptor._iterNodesByType}, this represents one of many positions in a browse mode document, based on the type of item being searched for (e.g. link, heading, table etc)."""  
