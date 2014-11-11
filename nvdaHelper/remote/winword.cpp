@@ -44,6 +44,7 @@ using namespace std;
 #define wdDISPID_REVISIONS_ITEM 0
 #define wdDISPID_REVISION_TYPE 4
 #define wdDISPID_RANGE_STORYTYPE 7
+#define wdDISPID_RANGE_MOVE 109
 #define wdDISPID_RANGE_MOVEEND 111
 #define wdDISPID_RANGE_COLLAPSE 101
 #define wdDISPID_RANGE_TEXT 0
@@ -921,12 +922,62 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	args->text=SysAllocString(XMLStream.str().c_str());
 }
 
+UINT wm_winword_moveByLine=0;
+typedef struct {
+	int offset;
+	int moveBack;
+	int newOffset;
+} winword_moveByLine_args;
+void winword_moveByLine_helper(HWND hwnd, winword_moveByLine_args* args) {
+	//Fetch all needed objects
+	IDispatchPtr pDispatchWindow=NULL;
+	if(AccessibleObjectFromWindow(hwnd,OBJID_NATIVEOM,IID_IDispatch,(void**)&pDispatchWindow)!=S_OK||!pDispatchWindow) {
+		LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
+		return;
+	}
+	IDispatchPtr pDispatchApplication=NULL;
+	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
+		LOG_DEBUGWARNING(L"window.application failed");
+		return;
+	}
+	IDispatchPtr pDispatchSelection=NULL;
+	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
+		LOG_DEBUGWARNING(L"application.selection failed");
+		return;
+	}
+	BOOL startWasActive=false;
+	if(_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_SELECTION_STARTISACTIVE,VT_BOOL,&startWasActive)!=S_OK) {
+		LOG_DEBUGWARNING(L"selection.StartIsActive failed");
+	}
+	IDispatch* pDispatchOldSelRange=NULL;
+	if(_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchOldSelRange)!=S_OK||!pDispatchOldSelRange) {
+		LOG_DEBUGWARNING(L"selection.range failed");
+		return;
+	}
+	//Disable screen updating as we will be moving the selection temporarily
+	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,false);
+	//Move the selection to the given range
+	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
+// Move the selection by 1 line
+	int unitsMoved=0;
+	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_RANGE_MOVE,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdLine,((args->moveBack)?-1:1));
+	_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_START,VT_I4,&(args->newOffset));
+	//Move the selection back to its original location
+	_com_dispatch_raw_method(pDispatchOldSelRange,wdDISPID_RANGE_SELECT,DISPATCH_METHOD,VT_EMPTY,NULL,NULL);
+	//Restore the old selection direction
+	_com_dispatch_raw_propput(pDispatchSelection,wdDISPID_SELECTION_STARTISACTIVE,VT_BOOL,startWasActive);
+	//Reenable screen updating
+	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
+}
+
 LRESULT CALLBACK winword_callWndProcHook(int code, WPARAM wParam, LPARAM lParam) {
 	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
 	if(pcwp->message==wm_winword_expandToLine) {
 		winword_expandToLine_helper(pcwp->hwnd,reinterpret_cast<winword_expandToLine_args*>(pcwp->wParam));
 	} else if(pcwp->message==wm_winword_getTextInRange) {
 		winword_getTextInRange_helper(pcwp->hwnd,reinterpret_cast<winword_getTextInRange_args*>(pcwp->wParam));
+	} else if(pcwp->message==wm_winword_moveByLine) {
+		winword_moveByLine_helper(pcwp->hwnd,reinterpret_cast<winword_moveByLine_args*>(pcwp->wParam));
 	}
 	return 0;
 }
@@ -947,9 +998,17 @@ error_status_t nvdaInProcUtils_winword_getTextInRange(handle_t bindingHandle, co
 	return RPC_S_OK;
 }
 
+error_status_t nvdaInProcUtils_winword_moveByLine(handle_t bindingHandle, const long windowHandle, const int offset, const int moveBack, int* newOffset) {
+	winword_moveByLine_args args={offset,moveBack,NULL};
+	SendMessage((HWND)windowHandle,wm_winword_moveByLine,(WPARAM)&args,0);
+	*newOffset=args.newOffset;
+	return RPC_S_OK;
+}
+
 void winword_inProcess_initialize() {
 	wm_winword_expandToLine=RegisterWindowMessage(L"wm_winword_expandToLine");
 	wm_winword_getTextInRange=RegisterWindowMessage(L"wm_winword_getTextInRange");
+	wm_winword_moveByLine=RegisterWindowMessage(L"wm_winword_moveByLine");
 	registerWindowsHook(WH_CALLWNDPROC,winword_callWndProcHook);
 }
 

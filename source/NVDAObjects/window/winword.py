@@ -706,34 +706,35 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	def move(self,unit,direction,endPoint=None):
 		if unit!=textInfos.UNIT_LINE:
 			return self._move(unit,direction,endPoint)
-		res=0
-		# Moving by line is impossible with a normal range.
-		# Therefore temporarily use the selection.
-		oldRange=self._rangeObj
-		sel=self.obj.WinwordSelectionObject
-		oldSel=sel.range
-		self.obj.WinwordDocumentObject.application.screenUpdating=False
-		try:
-			self._rangeObj.select()
-			if endPoint is None and direction<0:
-				oldStart,oldEnd=sel.start,sel.end
-			res=self._move(unit,direction,endPoint,sel)
-			if res!=0 and endPoint is None and direction==-1 and sel.start==oldStart and sel.end==oldEnd:
-				res=self._move(textInfos.UNIT_CHARACTER,direction,endPoint,sel)
-				self.expand(unit)
-				self.collapse()
-			self._rangeObj=sel.range
-			oldSel.select()
-		finally:
-			self.obj.WinwordDocumentObject.application.screenUpdating=True
-		# Sometimes when in a table with merged cells, moving by line can wrap back to a previous cell.
-		# If this happens, try moving by cell, aor jump over the table completely.
-		if direction>0 and endPoint!="end" and self._rangeObj.start<oldRange.start:
-			self._rangeObj=oldRange
-			res=self._move(textInfos.UNIT_CELL,direction,endPoint)
+		if direction==0 or direction>1 or direction<-1:
+			raise NotImplementedError("moving by line is only supported   collapsed and with a count of 1 or -1")
+		oldOffset=self._rangeObj.end if endPoint=="end" else self._rangeObj.start
+		newOffset=ctypes.c_long()
+		# Try moving by line making use of the selection temporarily
+		res=NVDAHelper.localLib.nvdaInProcUtils_winword_moveByLine(self.obj.appModule.helperLocalBindingHandle,self.obj.documentWindowHandle,oldOffset,1 if direction<0 else 0,ctypes.byref(newOffset))
+		newOffset=newOffset.value
+		if direction<0 and not endPoint and newOffset==oldOffset:
+			# Moving backwards by line seemed to not move.
+			# Therefore fallback to moving back a character, expanding to line and collapsing to start instead.
+			self.move(textInfos.UNIT_CHARACTER,-1)
+			self.expand(unit)
+			self.collapse()
+		elif direction>0 and not endPoint and newOffset<oldOffset:
+			# Moving forward by line seems to have wrapped back before the original position
+			# This can happen in some tables with merged rows.
+			# Try moving forward by cell, but if that fails, jump past the entire table.
+			res=self.move(textInfos.UNIT_CELL,direction,endPoint)
 			if res==0:
 				self.expand(textInfos.UNIT_TABLE)
 				self.collapse(end=True)
+		else:
+			# the move by line using the selection succeeded. Therefore update this TextInfo's position.
+			if not endPoint:
+				self._rangeObj.setRange(newOffset,newOffset)
+			elif endPoint=="start":
+				self._rangeObj.start=newOffset
+			elif endPoint=="end":
+				self._rangeObj.end=newOffset
 		return res
 
 	def _get_bookmark(self):
