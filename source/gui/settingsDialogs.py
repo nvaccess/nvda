@@ -1603,6 +1603,8 @@ class SpeechSymbolsDialog(SettingsDialog):
 			if entryDialog.ShowModal() != wx.ID_OK:
 				return
 			identifier = entryDialog.identifierTextCtrl.GetValue()
+			if not identifier:
+				return
 		for index, symbol in enumerate(self.symbols):
 			if identifier == symbol.identifier:
 				# Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
@@ -1631,11 +1633,15 @@ class SpeechSymbolsDialog(SettingsDialog):
 		index = self.symbolsList.GetFirstSelected()
 		symbol = self.symbols[index]
 		self.pendingRemovals[symbol.identifier] = symbol
-		del self.symbols[index]
+		# Deleting from self.symbolsList focuses the next item before deleting,
+		# so it must be done *before* we delete from self.symbols.
 		self.symbolsList.DeleteItem(index)
+		del self.symbols[index]
 		index = min(index, self.symbolsList.ItemCount - 1)
 		self.symbolsList.Select(index)
 		self.symbolsList.Focus(index)
+		# We don't get a new focus event with the new index, so set editingItem.
+		self.editingItem = index
 		self.symbolsList.SetFocus()
 
 	def onOk(self, evt):
