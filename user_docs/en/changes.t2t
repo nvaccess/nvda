@@ -11,6 +11,10 @@
 - NVDA now automatically reports new text in mintty. (#4588)
 
 
+== Changes ==
+- In NVDA's Document Formatting settings dialog, the option to report spelling errors now has a shortcut key (alt+r). (#793)
+
+
 == Bug Fixes ==
 - In Microsoft Excel, handle the case when row and column header cells are merged. E.g. if A1 and B1 are merged, then B2 will now have A1 and B1 reported as its column header, rather than nothing at all. (#4617)
 - When editing the content of a text box in Microsoft PowerPoint 2003, NVDA will correctly report the content of each line. Previously lines would increasingly be off by one character for each new paragraph. (#4619)
