@@ -1051,7 +1051,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.styleCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.spellingErrorsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report spelling errors"))
+		self.spellingErrorsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report spelling e&rrors"))
 		self.spellingErrorsCheckBox.SetValue(config.conf["documentFormatting"]["reportSpellingErrors"])
 		settingsSizer.Add(self.spellingErrorsCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
