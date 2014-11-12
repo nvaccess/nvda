@@ -7,11 +7,31 @@
 """Support for app specific modules for Java apps hosted by javaw.exe.
 """
 
-import re
+import os
+import shlex
 import appModuleHandler
 from appModuleHandler import AppModule
 
-RE_CMDLINE_CLASS = re.compile(r'(?:"[^"]+"|[^ ]+)(?: +-[^ "]+(?:"[^"]+")?)* +([^ ]+)')
+def _getEntryPoint(cmd):
+	cmd = iter(shlex.split(cmd))
+	# First argument is the executable.
+	next(cmd)
+	for arg in cmd:
+		if arg in ("-cp", "-classpath"):
+			# This option consuems the next argument.
+			next(cmd)
+			continue
+		if arg.startswith("-jar"):
+			# Next argument is the jar. Remove the extension.
+			return os.path.splitext(next(cmd))[0]
+		if arg.startswith("-"):
+			continue
+		if not arg:
+			continue
+		# Class.
+		return arg
+	raise LookupError
+
 def getAppNameFromHost(processId):
 	# Some apps have launcher executables which launch javaw.exe to run the app.
 	# In this case, the parent process will usually be the launcher.
@@ -23,11 +43,11 @@ def getAppNameFromHost(processId):
 			# The parent isn't a shell, so it's probably a launcher.
 			return name
 
-	# Try getting the class from the command line.
+	# Try getting the class/jar from the command line.
 	cmd = proc.CommandLine
 	if not cmd:
 		raise LookupError
-	m = RE_CMDLINE_CLASS.match(cmd)
-	if not m:
+	try:
+		return "javaw_" + _getEntryPoint(cmd).replace(".", "_")
+	except:
 		raise LookupError
-	return "javaw_" + m.group(1).replace(".", "_")
