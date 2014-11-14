@@ -143,7 +143,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 	def moveTo(self,gesture=None,readUnit=None):
 		info=self.textInfo
-		if not willSayAllResume(gesture):
+		if not gesture or not willSayAllResume(gesture):
 			if readUnit:
 				fieldInfo = info.copy()
 				info.collapse()
