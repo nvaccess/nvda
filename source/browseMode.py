@@ -9,6 +9,7 @@ import wx
 import nvwave
 import queueHandler
 import gui
+import ui
 from scriptHandler import isScriptWaiting, willSayAllResume
 import controlTypes
 import config
@@ -181,8 +182,12 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		info=self.selection
 		try:
 			item = next(self._iterNodesByType(itemType, direction, info))
+		except NotImplementedError:
+			# Translators: a message when a particular quick nav command is not supported in the current document.
+			ui.message(_("Not supported in this document"))
+			return
 		except StopIteration:
-			speech.speakMessage(errorMessage)
+			ui.message(errorMessage)
 			return
 		item.moveTo(gesture=gesture,readUnit=readUnit)
 
