@@ -315,15 +315,17 @@ class WinWordCollectionQuicknavIterator(object):
 
 	quickNavItemClass=WordDocumentCollectionQuickNavItem #: the QuickNavItem class that should be instanciated and emitted. 
 
-	def __init__(self,itemType,document,direction,rangeObj):
+	def __init__(self,itemType,document,direction,rangeObj,includeCurrent):
 		"""
 		See L{QuickNavItemIterator} for itemType, document and direction definitions.
 		@param rangeObj: a Microsoft Word range object where the collection should be fetched from.
+		@ param includeCurrent: if true then any item at the initial position will be also emitted rather than just further ones. 
 		"""
 		self.document=document
 		self.itemType=itemType
 		self.direction=direction if direction else "next"
 		self.rangeObj=rangeObj
+		self.includeCurrent=includeCurrent
 
 	def collectionFromRange(self,rangeObj):
 		"""
@@ -361,7 +363,7 @@ class WinWordCollectionQuicknavIterator(object):
 			item=self.quickNavItemClass(self.itemType,self.document,collectionItem)
 			itemRange=item.rangeObj
 			# Skip over the item we're already on.
-			if isFirst and ((self.direction=="next" and itemRange.start<=self.rangeObj.start) or (self.direction=="previous" and itemRange.end>self.rangeObj.end)):
+			if not self.includeCurrent and isFirst and ((self.direction=="next" and itemRange.start<=self.rangeObj.start) or (self.direction=="previous" and itemRange.end>self.rangeObj.end)):
 				continue
 			if not self.filter(collectionItem):
 				continue
@@ -779,38 +781,44 @@ class WordDocumentTreeInterceptor(CursorManager,BrowseModeTreeInterceptorWithMak
 	def _get_ElementsListDialog(self):
 		return ElementsListDialog
 
-	def _iterHeadings(self,nodeType,direction,rangeObj):
+	def _iterHeadings(self,nodeType,direction,rangeObj,includeCurrent):
 		neededLevel=int(nodeType[7:]) if len(nodeType)>7 else 0
+		isFirst=True
 		while True:
+			if not isFirst or includeCurrent:
+				level=rangeObj.paragraphs[1].outlineLevel
+				if level and 0<level<10 and (not neededLevel or neededLevel==level):
+					rangeObj.expand(wdParagraph)
+					yield WordDocumentHeadingQuickNavItem(nodeType,self,BrowseModeWordDocumentTextInfo(self,None,_rangeObj=rangeObj),level)
+			isFirst=False
 			if direction=="next":
 				newRangeObj=rangeObj.gotoNext(wdGoToHeading)
 				if not newRangeObj or newRangeObj.start<=rangeObj.start:
 					break
-				#print "old start %s, old end %s, new start %s, new end %s"%(rangeObj.start,rangeObj.end,newRangeObj.start,newRangeObj.end)
 			elif direction=="previous":
 				newRangeObj=rangeObj.gotoPrevious(wdGoToHeading)
 				if not newRangeObj or newRangeObj.start>=rangeObj.start:
 					break
-			level=newRangeObj.paragraphs[1].outlineLevel
-			if not neededLevel or  neededLevel==level:
-				newRangeObj.expand(wdParagraph)
-				yield WordDocumentHeadingQuickNavItem(nodeType,self,BrowseModeWordDocumentTextInfo(self,None,_rangeObj=newRangeObj),level)
 			rangeObj=newRangeObj
 
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
-		rangeObj=pos._rangeObj if pos else self.rootNVDAObject.WinwordDocumentObject.range()
+		if pos:
+			rangeObj=pos._rangeObj 
+		else:
+			rangeObj=self.rootNVDAObject.WinwordDocumentObject.range(0,0)
+		includeCurrent=False if pos else True
 		if nodeType=="link":
-			return LinkWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj).iterate()
+			return LinkWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 		elif nodeType=="annotation":
-			comments=CommentWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj).iterate()
-			revisions=RevisionWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj).iterate()
+			comments=CommentWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+			revisions=RevisionWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 			return browseMode.mergeQuickNavItemIterators([comments,revisions],direction)
 		elif nodeType=="table":
-			return TableWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj).iterate()
+			 return TableWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 		elif nodeType=="graphic":
-			return GraphicWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj).iterate()
+			 return GraphicWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
 		elif nodeType.startswith('heading'):
-			return self._iterHeadings(nodeType,direction,rangeObj)
+			return self._iterHeadings(nodeType,direction,rangeObj,includeCurrent)
 		else:
 			return iter(()) 
 
