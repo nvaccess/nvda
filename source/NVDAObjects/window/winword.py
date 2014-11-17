@@ -820,7 +820,7 @@ class WordDocumentTreeInterceptor(CursorManager,BrowseModeTreeInterceptorWithMak
 		elif nodeType.startswith('heading'):
 			return self._iterHeadings(nodeType,direction,rangeObj,includeCurrent)
 		else:
-			return iter(()) 
+			raise NotImplementedError
 
 class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 
