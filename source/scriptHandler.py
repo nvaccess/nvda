@@ -99,6 +99,8 @@ def findScript(gesture):
 		func = _getObjScript(treeInterceptor, gesture, globalMapScripts)
 		if func and (not treeInterceptor.passThrough or getattr(func,"ignoreTreeInterceptorPassThrough",False)):
 			return func
+		elif not gesture.shouldReportAsCommand and not treeInterceptor.passThrough and treeInterceptor.shouldTrapNonCommandGestures:
+			return treeInterceptor.script_trapNonCommandGesture
 
 	# NVDAObject level.
 	func = _getObjScript(focus, gesture, globalMapScripts)

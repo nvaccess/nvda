@@ -5,6 +5,7 @@
 
 import itertools
 import collections
+import winsound
 import wx
 import nvwave
 import queueHandler
@@ -162,6 +163,12 @@ class TextInfoQuickNavItem(QuickNavItem):
 		return self.textInfo.compareEndPoints(caret, "startToStart") <= 0
 
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
+
+	def _get_shouldTrapNonCommandGestures(self):
+		return config.conf['virtualBuffers']['trapNonCommandGestures']
+
+	def script_trapNonCommandGesture(self,gesture):
+		winsound.PlaySound("default",1)
 
 	def _get_ElementsListDialog(self):
 		return ElementsListDialog
