@@ -32,6 +32,7 @@ import textInfos.offsets
 import colors
 import controlTypes
 import browseMode
+import review
 from cursorManager import CursorManager, ReviewCursorManager
 from tableUtils import HeaderCellInfo, HeaderCellTracker
 from . import Window
@@ -714,6 +715,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		newOffset=ctypes.c_long()
 		# Try moving by line making use of the selection temporarily
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_moveByLine(self.obj.appModule.helperLocalBindingHandle,self.obj.documentWindowHandle,oldOffset,1 if direction<0 else 0,ctypes.byref(newOffset))
+		if res==0:
+			res=direction
 		newOffset=newOffset.value
 		if direction<0 and not endPoint and newOffset==oldOffset:
 			# Moving backwards by line seemed to not move.
@@ -777,6 +780,10 @@ class WordDocumentTreeInterceptor(CursorManager,BrowseModeTreeInterceptorWithMak
 
 	def __contains__(self,obj):
 		return obj==self.rootNVDAObject
+
+	def _set_selection(self,info):
+		super(WordDocumentTreeInterceptor,self)._set_selection(info)
+		review.handleCaretMove(info)
 
 	def _get_ElementsListDialog(self):
 		return ElementsListDialog
