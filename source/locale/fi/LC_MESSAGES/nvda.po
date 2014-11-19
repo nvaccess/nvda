@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-06 23:27+1000\n"
-"PO-Revision-Date: 2014-10-10 19:09+0200\n"
+"POT-Creation-Date: 2014-11-06 19:11+1000\n"
+"PO-Revision-Date: 2014-11-18 21:03+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.9\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -102,7 +102,7 @@ msgstr "täydentävä"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
 msgid "content info"
-msgstr "sisältötiedot"
+msgstr "sisällön tiedot"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
 msgid "main"
@@ -457,7 +457,7 @@ msgstr "lst"
 #. Translators: Displayed in braille for an object which is a
 #. menu bar.
 msgid "mnubar"
-msgstr "vkopal"
+msgstr "vkorvi"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu.
@@ -708,7 +708,7 @@ msgstr "sininen"
 
 #. Translators: The color purple.
 msgid "purple"
-msgstr "sinipunainen"
+msgstr "violetti"
 
 #. Translators: The color teal, which is a mix of green and blue, mostly green.
 #. For more info see http://en.wikipedia.org/wiki/Teal
@@ -744,7 +744,7 @@ msgstr "ikkuna"
 
 #. Translators: Used to identify title bar of a program.
 msgid "title bar"
-msgstr "otsikkopalkki"
+msgstr "otsikkorivi"
 
 #. Translators: The word used for pane such as desktop pane.
 msgid "pane"
@@ -870,7 +870,7 @@ msgstr "kehys"
 
 #. Translators: Identifies a tool bar.
 msgid "tool bar"
-msgstr "työkalupalkki"
+msgstr "työkalurivi"
 
 #. Translators: Identifies a column header in tables and spreadsheets.
 msgid "column header"
@@ -1054,7 +1054,7 @@ msgstr "juuripaneeli"
 #. Translators: May be reported for an editable text object in a toolbar.
 #. This is deprecated and is not often (if ever) used.
 msgid "edit bar"
-msgstr "muokkauspalkki"
+msgstr "muokkausrivi"
 
 #. Translators: Identifies a terminal window such as command prompt.
 msgid "terminal"
@@ -2150,7 +2150,7 @@ msgid ""
 "the clipboard"
 msgstr ""
 "Lukee nykyisen sovelluksen taietualalla olevan ikkunan nimen. Kahdesti "
-"painettaessa nimi tavataan, kolmesti painettaessa se kopioidaan "
+"painettaessa nimi tavataan ja kolmesti painettaessa se kopioidaan "
 "leikepöydälle."
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
@@ -2162,7 +2162,7 @@ msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
 msgstr ""
-"Kirjaa lokiin kehittäjille hyödyllistä tietoa nykyisestä "
+"Tallentaa lokiin kehittäjille hyödyllistä tietoa nykyisestä "
 "navigointiobjektista ja avaa Näytä loki -toiminnon, jossa näitä tietoja "
 "voidaan tutkia."
 
@@ -4037,13 +4037,6 @@ msgstr "Puheäänikohtainen sanasto (%s)"
 msgid "Temporary dictionary"
 msgstr "Tilapäissanasto"
 
-#. Translators: Message shown to ask if user really wishes to quit NVDA.
-msgid "Are you sure you want to quit NVDA?"
-msgstr "Haluatko varmasti sulkea NVDA:n?"
-
-msgid "Exit NVDA"
-msgstr "Sulje NVDA"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "Tietoja NVDA:sta"
@@ -4274,6 +4267,10 @@ msgstr "Lahjoita"
 msgid "E&xit"
 msgstr "&Sulje"
 
+#. Translators: The title of the dialog to exit NVDA
+msgid "Exit NVDA"
+msgstr "Sulje NVDA"
+
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -4288,9 +4285,9 @@ msgstr ""
 "Tervetuloa käyttämään NVDA:ta!\n"
 "Useimmat NVDA:n hallintaan tarkoitetuista komennoista edellyttävät NVDA-"
 "näppäimen painamista samaan aikaan muiden näppäinten kanssa.\n"
-"Oletusarvoisesti sekä normaalia että numeronäppäimistön Insert-näppäintä "
-"voidaan käyttää NVDA-näppäimenä.\n"
-"Voit määrittää NVDA:n käyttämään myös CapsLockia NVDA-näppäimenä.\n"
+"Oletusarvoisesti sekä normaalia että numeronäppäimistön Insertiä voidaan "
+"käyttää NVDA-näppäimenä.\n"
+"Voit määrittää NVDA:n käyttämään myös Capslockia NVDA-näppäimenä.\n"
 "Paina milloin tahansa NVDA+N avataksesi NVDA-valikon.\n"
 "Tästä valikosta voit määrittää NVDA:n asetuksia, lukea ohjeita ja käyttää "
 "muita toimintoja.\n"
@@ -4336,6 +4333,30 @@ msgstr "Luo &massamuistiversio"
 msgid "&Continue running"
 msgstr "&Jatka tilapäisversion käyttämistä"
 
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"Lisäosat on poistettu käytöstä. Ne otetaan käyttöön seuraavalla NVDA:n "
+"uudelleenkäynnistyksellä, ellet valitse käytöstäpoistamista."
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "Mitä haluat teh&dä?"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "Sulje"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "Käynnistä uudelleen"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "Käynnistä uudelleen ja poista lisäosat käytöstä"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "Odota"
@@ -4343,6 +4364,12 @@ msgstr "Odota"
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Lisäosien hallinta"
+
+#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgstr ""
+"Lisäosat on poistettu käytöstä. Ota ne käyttöön käynnistämällä NVDA "
+"uudelleen."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -4453,6 +4480,10 @@ msgstr "asenna"
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "remove"
 msgstr "poista"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+msgid "suspended"
+msgstr "ei käytössä"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
@@ -4885,9 +4916,9 @@ msgstr "Kieli"
 msgid "&Save configuration on exit"
 msgstr "&Tallenna asetukset suljettaessa"
 
-#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
-msgid "&Warn before exiting NVDA"
-msgstr "&Vahvista sulkeminen"
+#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
+msgid "Sho&w exit options when exiting NVDA"
+msgstr "Nä&ytä sulkemisvaihtoehdot"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -5042,7 +5073,7 @@ msgstr "Sano &iso ennen isoja kirjaimia"
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 msgid "&Beep for capitals"
-msgstr "Anna äänimerkki iso&jen kirjainten kohdalla"
+msgstr "Ilmaise isot kir&jaimet äänimerkillä"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
@@ -5065,12 +5096,12 @@ msgstr "Näppäimistöasettelu"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Käytä numeronäppäimistön Insert-näppäintä NVDA-näppäimenä"
+msgstr "Käytä numeronäppäimistön Insertiä NVDA-näppäimenä"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Käytä laajennettua Insert-näppäintä NVDA-näppäimenä"
+msgstr "Käytä laajennettua Insertiä NVDA-näppäimenä"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -5148,7 +5179,7 @@ msgstr "Lue hiiren alla olevan objektin &rooli"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "play audio coordinates when mouse moves"
-msgstr "Ilmaise hiiren &koordinaatit äänimerkeillä"
+msgstr "Ilmaise hiiren &koordinaatit äänimerkillä"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -5445,17 +5476,29 @@ msgstr "Lue ke&hykset"
 msgid "Report if &clickable"
 msgstr "Lue napsa&utettavat kohteet"
 
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "Täsmää ka&ikkialla"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "Koko &sana"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Regular expression"
+msgstr "Säännöllinen &lauseke"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "Muokkaa sanastomääritystä"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Pattern"
-msgstr "K&orvattava"
+msgstr "K&orvattava merkkijono"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
 msgid "&Replacement"
-msgstr "Ko&rvaava"
+msgstr "Ko&rvaava merkkijono"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Comment"
@@ -5463,11 +5506,11 @@ msgstr "&Kommentti"
 
 #. Translators: This is a label for a checkbox in add dictionary entry dialog.
 msgid "Case &sensitive"
-msgstr "Sama k&irjainkoko"
+msgstr "Sa&ma kirjainkoko"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "Säännöllinen l&auseke"
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "&Tyyppi"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -5490,9 +5533,9 @@ msgstr "Korvaava"
 msgid "case"
 msgstr "Kirjainkoko"
 
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
-msgid "Regexp"
-msgstr "Säänla"
+#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "Tyyppi"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
@@ -6579,6 +6622,15 @@ msgstr "HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to quit NVDA?"
+#~ msgstr "Haluatko varmasti sulkea NVDA:n?"
+
+#~ msgid "&Warn before exiting NVDA"
+#~ msgstr "&Vahvista sulkeminen"
+
+#~ msgid "Regexp"
+#~ msgstr "Säänla"
 
 #~ msgid "No location information for navigator object"
 #~ msgstr "Ei sijaintitietoja navigointiobjektille"
