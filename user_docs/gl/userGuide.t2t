@@ -23,7 +23,7 @@ O máis sinalable inclúe:
 - Soporte para moitas liñas de braille efímero incluíndo a entrada de braille computerizado para liñas braille que tenñan un teclado braille
 - Capacidade para executarse compretamente dende unha memoria USB ou outros medios portables sen a necesidade de instalación
 - Instalador parlante sinxelo de utilizar
-- Traducido a 45 linguas
+- Traducido a 47 linguas
 - Soporte para Sistemas Operativos Windows modernos incluíndo variantes de 32 e 64 bit
 - Capacidade para executarse en ventás de autentificación de Windows  e outras pantallas seguras 
 - Soporte para interfaces comuns de accesibilidade como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation
@@ -32,7 +32,7 @@ O máis sinalable inclúe:
 
 ++ Internacionalización ++
 É importante que calquera persoa no mundo, sen importar que lingua fale, teña igual acceso á tecnoloxía. 
-Actualmente NVDA foi traducido a 45 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Búlgaro, catalán, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Farsi, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Nepalí, Noruego, Polaco, Portugués, Portugués do Brasil, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
+Actualmente NVDA foi traducido a 47 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Búlgaro, catalán, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Nepalí, Noruego, Polaco, Portugués, Portugués do Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
 
 ++ Soporte da Síntesis de Voz ++
 Ademáis de proporcionar as súas mensaxes e interface en varias linguas, NVDA tamén pode capacitar ó usuario para ler contidos en calquera lingua, tanto en canto teñan un sintetizador de voz que poida falar esa lingua en particular. 
@@ -131,6 +131,7 @@ Preme Aceptar para pechar este diálogo.
 ++ Lanzando o NVDA ++
 Se instalaches o NVDA co instalador, entón iniciar NVDA é tan sinxelo coma ou premer control+alt+n, ou elexir NVDA dende o menú NVDA no Menú Inicio, submenú Programas. 
 Adicionalmente podes teclear NVDA no diálogo Executar e premer Intro. 
+Tamén podes pasar algunhas [opcións de liña de ordes #CommandLineOptions] as que che permiten reiniciar o NVDA (-r), saír (-q), deshabilitar complementos (--disable-addons), etc.
 
 Para iniciar a versión portátil, vai ó directorio onde descomprimiches ó NVDA, e preme intro ou fai doble clic sobre nvda.exe.
 
@@ -591,9 +592,10 @@ Preme Aceptar e NVDA reiniciarase.
 ==== Gardar Configuración ó Saír ====
 Esta opción é unha caixa de verificación que, cando se marca, di ó NVDA que garde automáticamente a actual configuración cando saias do NVDA. 
 
-==== Avisar antes de Saír do NVDA ====
-Esta opción é unha caixa de verificación que che permite elexir se si ou se non apareze un diálogo cando saias do NVDA que che pregunte se che gostaría saír ou non do NVDA. 
-Cando estea marcada, un diálogo aparecerá cando intentes saír do NVDA preguntándoche se queres ou non saír.
+==== Amosar opcións de saída ó saír do NVDA ====
+Esta opción é unha caixa de verificación que che permite escoller se aparece ou non un diálogo ó saír do NVDA que che pregunta sobre que acción queres lebar a cabo.
+Cando se marque, aparecerá un diálogo ó intentar saír do NVDA preguntándoche se queres saír, reiniciar ou reiniciar cos complementos deshabilitados.
+Cando se desmarque, NVDA salirá inmediatamente.
 
 ==== Reproducir sons ó iniciar ou saír do NVDA ====
 Esta Opción é unha caixa de verificación que, cando está marcada, di ó NVDA que reproduza sons cando se inicie ou saia.
@@ -1069,7 +1071,11 @@ poderías tamén querer teclear unha descripción da regra no campo Comentario (
 Os diccionarios da fala de NVDA asimesmo son moito máis poderosos que un sinxelo reemplazo de palabras. 
 O diálogo de Engadir regras tamén contén Unha caixa de verificación que di se queres ou non que a regra sexa sensible ás maiúsculas (significando que NVDA debería ter en conta se os caracteres están en maiúsculas ou en minúsculas. 
 NVDA ignora os casos de xeito predeterminado). 
-Outra caixa de verificación permíteche establecer se o teu patrón é unha "Expresión Regular". 
+
+Finalmente, un conxunto de botóns de opción permítenche dicir ó NVDA se o teu patrón debería compararse con calquera cousa, ou só debería compararse se é unha palabra completa ou se debería tratarse como unha "Expresión Regular".
+Axustar o patrón para comparar como unha palabra completa significa que o reemplazo só se fará se o patrón non ocurre como parte dunha palabra máis longa; é dicir, un carácter distinto a un carácter alfanumérico ou un subliñado (ou sen carácter) que veña inmediatamente antes e despois do patrón.
+Polo tanto, utilizando o exemplo anterior da sustitución da palabra "paxaro" con "ran", se foras  facer desto un reemplazo de palabra completa, non se compararía "paxaros" ou "paxaroAzul".
+
 Unha expresión regular é un patrón que contén símbolos especiais que che permiten emparellar máis de un caracter ó mesmo tempo, ou emparellar so números, ou so letras, segundo uns poucos exemplos. 
 As expresións regulares non están cubertas nesta Guía do Usuario, pero hai moitos titoriais na web que poden proporcionarche máis información.
 
@@ -1717,7 +1723,6 @@ Estas son (ordeadas de esquerda a dereita):
 Actualmente, a tecla pulgar dereito non se utiliza.
 As teclas interiores mapéanse a espazo.
 
-
 || Nome | Tecla |
 %kc:beginInclude
 | tecla retroceso | ponto 7 |
@@ -1921,7 +1926,46 @@ Os seguintes indicadores de estado  tamén están definidos:
 
 + + Temas Avanzados +
 
-++ Persoalización Avanzada da Pronunciación de Símbolos ++
+++ Opcións de Liña de Ordes ++[CommandLineOptions]
+NVDA pode aceptar unha ou máis opcións adicionais ó arrancar que alteren o seu comportamento.
+Podes pasar tantas opcións como necesites.
+Estas opcións poden pasarse ó arrancar dende un atallo de teclado (nas propiedades do atallo de teclado), dende o diálogo Executar(Menú Inicio -> Executar ou Windows+r) ou dende unha consola de ordes de Windows.
+As opcións deberían separarse do nome do ficheiro executable do NVDA e de outras opcións por espazos.
+Por exemplo, o atallo de teclado do escritorio que crea o NVDA durante a instalación ten a opción -r, que di ó NVDA que peche a copia actual en execucución antes de iniciar unha nova.
+Outra opción útil é --disable-addons, que di ó NVDA que suspenda todos os complementos en execución.
+Esto permíteche determinar se un problema é causado por un complemento e recuperarte de problemas serios causados por complementos.
+
+Como un exemplo, podes saír da copia actualmente en execución do NVDA introducindo o seguinte no diálogo Executar:
+
+nvda -q
+
+Algunhas das opcións de liña de ordes teñen unha versión curta e unha longa, mentras outras só teñen unha versión longa.
+Para aquelas que teñan unha versión curta, podes combinalas así:
+| nvda -rm | Esto salirá da copia actualmente en execución do NVDA e iniciará unha copia nova cos sons de inicio deshabilitados, etc. |
+| nvda -rm --disable-addons | Igual que o anterior, pero cos complementos deshabilitados |
+
+Algunhas das opcións de liña de ordes aceptan parámetros adicionais; ex.: cómo debería ser o grado de detalle do rexistro ou a vía para o directorio de configuración do usuario.
+Esos parámetros deberían colocarse despois da opción, separados da opción por un espazo cando se utiliza a versión ou un signo igual (=) cando se utiliza  a versión longa; ex.:
+| nvda -l 10 | di ó NVDA que se inicie co nível de rexistro posto en depuración |
+| nvda --log-file=c:\nvda.log |  Di ó NVDA que escriba o seu rexistro en c:\nvda.log |
+| nvda --log-level=20 -f c:\nvda.log | Di ó NVDA que inicie co nível de rexistro posto en info e que escreba o seu  rexistro en c:\nvda.log |
+
+Seguidamente van as opcións de liña de ordes para o NVDA:
+|| Curta | Longa | Descripción |
+| -h | --help | Amosa a axuda en liña de ordes e sae |
+| -q | --quit | Sae da copia que xa se estea a executar do NVDA |
+| -r | --replace | Sae da copia que xa se estea a executar do NVDA e arranca esta outra |
+| -k | --check-running | Informa se NVDA está en execución a través do código de saída; 0 se está en execución, 1 se non está en execución |
+| -f LOGFILENAME | --log-file=LOGFILENAME | O ficheiro onde se deberían escreber as mesaxes de rexistro |
+| -l LOGLEVEL | --log-level=LOGLEVEL | O nível máis baixo de mesaxe rexistrado (depuración 10, información 20, aviso 30, error 40, crítico 50), por defecto está en aviso |
+| -c CONFIGPATH | --config-path=CONFIGPATH | A vía  onde se almacenan todos os axustes para o NVDA |
+| -m | --minimal | Sen sons, sen interface, sen mesaxe de inicio etc |
+| -s | --secure | Modo seguro (deshabilita a consola Python) |
+| None | --disable-addons | Os complementos non terán efecto |
+| None | --no-sr-flag  | Non cambia a bandeira global do sistema do lector de pantalla |
+| None | --install | Instálase o NVDA silenciosamente |
+
+++ Persoalización Avanzada da Pronuncia de Símbolos ++
 É posible persoalizar a pronunciación da pontoación e outros símbolos máis aló do que pode facerse utilizando o [diálogo Pronunciación de Pontoación e símbolos #SymbolPronunciation].
 Por exemplo, podes especificar se o símbolo dibuxado debería enviarse ó sintetizador (ex. para causar unha pausa ou cambio na entoación) e podes engadir símbolos persoalizados. 
 
