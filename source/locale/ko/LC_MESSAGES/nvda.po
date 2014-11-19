@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-11 19:10+1000\n"
-"PO-Revision-Date: 2014-08-13 05:51-0800\n"
+"POT-Creation-Date: 2014-11-06 19:11+1000\n"
+"PO-Revision-Date: 2014-11-17 19:46-0800\n"
 "Last-Translator: Joseph Lee <joseph.lee22590@gmail,com>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com, nvda-korean@freelists.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.6.5\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -3994,13 +3994,6 @@ msgstr "(%s) 보이스 발음 사전"
 msgid "Temporary dictionary"
 msgstr "임시 음성 발음 사전"
 
-#. Translators: Message shown to ask if user really wishes to quit NVDA.
-msgid "Are you sure you want to quit NVDA?"
-msgstr "NVDA를 종료하시겠습니까? "
-
-msgid "Exit NVDA"
-msgstr "NVDA 종료"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "NVDA 정보"
@@ -4228,6 +4221,10 @@ msgstr "후원 (&D)"
 msgid "E&xit"
 msgstr "종료 (&X)"
 
+#. Translators: The title of the dialog to exit NVDA
+msgid "Exit NVDA"
+msgstr "NVDA 종료"
+
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -4288,6 +4285,30 @@ msgstr "휴대용 버전 만들기 (&P)"
 msgid "&Continue running"
 msgstr "계속 실행 (&C)"
 
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"현재 추가 기능들이 일시적으로 정지되어 있습니다. 추가 기능을 사용하려면 재시"
+"작하거나 추가 기능 미사용을 선택하여 추가 기능을 정지시킨채로 재시작하십시오."
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "원하는 옵션을 선택하십시오 (&D)"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "종료"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "재시작"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "재시작 및 추가 기능 미사용"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "잠시만 기다려 주십시요"
@@ -4295,6 +4316,12 @@ msgstr "잠시만 기다려 주십시요"
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "추가 기능 관리자"
+
+#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgstr ""
+"현재 추가 기능들이 일시적으로 정지되어 있습니다. 추가 기능들을 사용하려면 "
+"NvDA를 재시작하십시오."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -4408,6 +4435,10 @@ msgstr "설치"
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "remove"
 msgstr "추가 기능 삭제"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+msgid "suspended"
+msgstr "일시 정지됨"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
@@ -4839,9 +4870,9 @@ msgstr "언어"
 msgid "&Save configuration on exit"
 msgstr "NVDA 종료시 환경설정 저장 (&S)"
 
-#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
-msgid "&Warn before exiting NVDA"
-msgstr "NVDA 종료전 경고 알림 (&W)"
+#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
+msgid "Sho&w exit options when exiting NVDA"
+msgstr "NVDA 종료전 종료 옵션 호출 (&W)"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -5400,6 +5431,18 @@ msgstr "프레임 알림 (&M)"
 msgid "Report if &clickable"
 msgstr "클릭 가능 요소 알림 (&C)"
 
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "무제한 (&A)"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "단어 전체 (&W)"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Regular expression"
+msgstr "정규 표현 (&R)"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "발음 사전 항목 변경"
@@ -5420,9 +5463,9 @@ msgstr "설명 (&C)"
 msgid "Case &sensitive"
 msgstr "대소문자 구별 (&S)"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "정규 표현식 (&E)"
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "적용 방식 (&T)"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -5445,9 +5488,9 @@ msgstr "변경값"
 msgid "case"
 msgstr "case"
 
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
-msgid "Regexp"
-msgstr "Regexp"
+#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "방식"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
@@ -6521,6 +6564,15 @@ msgstr "HIMS 한소네/브레일 에지"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
+
+#~ msgid "Are you sure you want to quit NVDA?"
+#~ msgstr "NVDA를 종료하시겠습니까? "
+
+#~ msgid "&Warn before exiting NVDA"
+#~ msgstr "NVDA 종료전 경고 알림 (&W)"
+
+#~ msgid "Regexp"
+#~ msgstr "Regexp"
 
 #~ msgid "No location information for navigator object"
 #~ msgstr "화면 탐색 객체에 대한 위치 정보 없음"

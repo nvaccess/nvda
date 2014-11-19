@@ -5,6 +5,13 @@ Qué bi ha de Nuevo en o NVDA
 
 = 2014.4 =
 
+== Nuevas Caracteristicas ==
+- Nuevos idiomas: Espanyol de Colombia , Panyabí
+- Agora ye posible reenchegar o NVDA  u reenchegar-lo con os complementos desenchegaus dende o dialogo de salida d'o NVDA. (#4057)
+ - O NVDA tamién puet enchegar-se  con os complementos desenchegaus fendo servir a opción de linia de comandos --disable-addons.
+- En os diccionarios d'a fabla agora ye posible especificar que un patrón debe coincidir nomás si en ye una parola completa; p.eix. isto no pasa si en ye parti d'una parola  larga. (#1704)
+
+
 == Cambeos ==
 - Si un obchecto t'o que t'has moviu con a navegación d'obchectos ye adintro d'un documento en o modo de navegación pero l'obchecto an yeras antis no'n yera s'estableix automaticament o modo de revisión a lo documento	.Antis isto nomás pasaba  si o navegador d'obchectos se movía dimpués que cambiase o foco. (#4369) 
 - As listas de linias braille y sintetizadors en os respectives dialogos d'opcions son agora ordenaus alfabeticament fueras de Sin braille  y Sin voz que son agora a la fin. (#2724)
@@ -25,6 +32,17 @@ Qué bi ha de Nuevo en o NVDA
 - Adintro d'una rechión viva o conteniu que ye marcau como que no ye vivo (p. eix. aria-live="off") agora s'ignora correctament. (#4405)
 - En que s'anuncia o texto d'una barra d'estau que tien un nombre, o nombre agora se desepara correctament d'a primera parola d'o texto d'a barra d'estau. (#4430)
 - En campos de dentrada de clau con a fabla de parolas escritas activada ya no s'anuncian inutilment muitos asteriscos en que empecipian parolas nuevas. (#4402)
+- En a lista de mensaches d'o Microsoft Outlook os elementos ya no s'anuncian desustanciadament como elementos de datos. (#4439)
+- En que se selecciona texto en o control d'edición de codigo de l'IDE Eclipse ya no s'anuncia a selección completa cada vegada que a selección cambea. (#2314)
+- Qualques versions de l'Eclipse, como a suite de ferramientas de Spring y versión incluida en o conchunto de ferramientas de desembolique de l'Android, agora son reconoixidas como l'Eclipse y maniadas apropiadament. (#4360)
+- O seguimiento d'o churi y a exploración tactil en l'Internet Explorer y atros controls MSHTML (incluindo muitas aplicacions d'o Windows 8) agora ye muito mas preciso en pantallas d'alta DPI u quan se cambea l'ampliación d'o documento. (#3494) 
+- O seguimiento d'o churi y a exploración tactil en l'Internet Explorer y atros controls MSHTML agora anuncia la etiqueta de mas botons. (#4173)
+
+
+== Cambeos ta desembolicadors ==
+T'os executables que ahuespan muitas aplicacions diferents (por eixemplo, javaw.exe), o codigo agora se puet furnir ta cargar os modulos d'aplicacions especificas ta cada aplicación en cuenta de cargar o mesmo modulo d'aplicación ta todas as aplicacions ahuespadas. (# 4360)
+ - Gollar a documentación  d'o codigo d'appModuleHandler.AppModule ta detalles.
+ - O suporte t'o javaw.exe ye implementau.
 
 
 = 2014.3 =

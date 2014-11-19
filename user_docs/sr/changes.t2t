@@ -6,15 +6,15 @@
 = 2014.4 =
 
 == Promene ==
-- Ako objekat na koji ste došli sa objekatskom navigacijom je u modu istraživanja dokument, ali objekat na koji ste došlije na prethodno bio ne, pregledni mod je automatski postavljen na dokument. Ranije ovo se jedino događalo ako navigator objekta je premešten zbog promene fokusa. (#4369)
+- Ako objekat na koji ste došli sa objekatskom navigacijom je u modu istraživanja dokument, ali objekat na koji ste ranije doшли nije био , pregledni mod je automatski postavljen na dokument. Ranije ovo se jedino događalo ako navigator objekta je premešten zbog promene fokusa. (#4369)
 
 
-== Bug Fixes ==
-- When moving focus back to a browse mode document (e.g. alt tabbing to an already opened web page) the review cursor is properly positioned at the virtual caret, rather than the focused control (e.g. a near by link). (#4369)
-- In Powerpoint slide shows, the review cursor correctly follows the virtual caret. (#4370)
-- In Mozilla Firefox and other Gecko-based browsers, new content within a live region will be announced even if the new content has a usable ARIA live type different to the parent live region. E.g. Content marked as assertive is added to a live region marked as polite. (#4169).
+== Исправке Грешака ==
+- Када премештате фокус назад на мод истраживања докумената (нпр. алт tab на неку већ отворену веб страницу) прегледни курсор је тачно позициониран на виртуални карет, уместо на фокусирану контролу (нпр. близак линк). (#4369)
+- У Powerpoint слајд шоу, прегледни курсор тачно прати виртуални карет. (#4370)
+- У Mozilla Firefox и другим Gecko-based прегледачима, нови садржај у живом региону ће бити изговорен чак иако нови садржај има користиви ПРОСТОР живи тип другачији од  родитеља живи region. Нпр. Садржај означеног као потпуна је додат у жив region означен као polite. (#4169).
 
 
-= Старије вести =
+= Старије верзије =
 
 за старије verzije, прочитајте engleski dokument

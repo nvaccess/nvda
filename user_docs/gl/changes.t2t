@@ -6,6 +6,13 @@ Que hai de Novo no NVDA
 
 = 2014.4 =
 
+== Novas Características ==
+- Novos idiomas: Español de Colombia, Punjabi
+- Agora é posible reiniciar o NVDA ou reiniciar NVDA cos complementos deshabilitados dende o diálogo saír do NVDA. (#4057)
+ - NVDA tamén pode iniciarse cos complementos deshabilitados utilizando a opción de liña de ordes --disable-addons.
+- Nos diccionarios da Fala, agora é posible especificar que un patrón só deba compararse se é unha palabra completa; é dicir,non ocurre como parte dunha palabra máis longa. (#1704)
+
+
 == Cambios ==
 - se un obxecto ó que te moveras ca navegación de obxectos está dentro dun documento en modo exploración, pero o obxecto no que estabas anteriormente non o estaba, o modo revisión ponse automáticamente en documentos. Con anterioridade esto só ocorría se o navegador de obxectos se movía debido ó cambio do foco. (#4369)
 - As listas de pantallas Braille e de Sintetizadores nas súas respectivas caixas de diálogo agora ordéanse alfabéticamente excepto para Sen braille/Sen voz,  as que agora están ó fondo. (#2724)
@@ -26,6 +33,17 @@ Que hai de Novo no NVDA
 - Dentro dunha rexión activa, o contido que estea marcado como non activo (ex.: aria-live="off") agora ignórase correctamente. (#4405)
 - Ó se anunciar o texto dunha barra de estado que ten un nome, o nome agora sepárase correctamente da primeira palabra do texto da barra de estado. (#4430)
 - En campos de introdución de palabras chave ca fala de palabras ó se escreber activada, xa non se anuncian varios asteriscos inútilmente ó comezar palabras novas. (#4402)
+- Na lista de mesaxes do Microsoft Outlook, os elementos xa non se anuncian inútilmente como elementos de Data. (#4439)
+- Ó se seleccionar texto no control de edición de código no IDE Eclipse, xa non se anuncia toda a selección cada vez que a selección cambia. (#2314)
+- Varias versións de Eclipse, como Spring Tool Suite e a versión incluída no paquete Android Developer Tools, agora recoñécense como Eclipse e manéllanse apropriadamente. (#4360, #4454)
+- O seguemento do rato e a exploración tactil en Internet Explorer e outros controis MSHTML (incluíndo moitas aplicacións Windows 8) agora é moito máis preciso en pantallas de alta DPI ou cando se cambia o zoom do documento. (#3494) 
+- O seguemento do rato e a exploración tactil en Internet Explorer e outros controis MSHTML agora anuncia a etiqueta de máis botóns. (#4173)
+
+
+== Cambios para Desenvolvedores ==
+- Para executables que abranguen moitas aplicacións diferentes (ex.: javaw.exe), agora o código pode proporcionarse para que cargue app modules específicos para cada aplicación en lugar de cargar o mesmo app module para todas as aplicacións incluídas. (#4360)
+ - Olla  a documentación do código para appModuleHandler.AppModule para máis detalles.
+ - Implementouse o soporte para javaw.exe.
 
 
 = 2014.3 =

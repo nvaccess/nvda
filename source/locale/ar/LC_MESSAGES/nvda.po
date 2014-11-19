@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-06 23:27+1000\n"
-"PO-Revision-Date: 2014-10-22 16:27+0200\n"
+"POT-Creation-Date: 2014-11-06 19:11+1000\n"
+"PO-Revision-Date: 2014-11-08 22:43+0200\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -3959,13 +3959,6 @@ msgstr "معجم صوت (%s)"
 msgid "Temporary dictionary"
 msgstr "معجم مؤقت"
 
-#. Translators: Message shown to ask if user really wishes to quit NVDA.
-msgid "Are you sure you want to quit NVDA?"
-msgstr "هل أنت متأكد من رغبتك بالخروج من برنامج NVDA؟"
-
-msgid "Exit NVDA"
-msgstr "الخروج من البرنامج"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "نبذة عن البرنامج"
@@ -4190,6 +4183,10 @@ msgstr "تبرع"
 msgid "E&xit"
 msgstr "ال&خروج من البرنامج"
 
+#. Translators: The title of the dialog to exit NVDA
+msgid "Exit NVDA"
+msgstr "الخروج من البرنامج"
+
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -4252,6 +4249,30 @@ msgstr "إنشاء &نسخة محمولة"
 msgid "&Continue running"
 msgstr "استم&رار التشغيل"
 
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"كل الإضافات معطلة الآن. سيتم تفعيلها في المرة التالية من إعادة تشغيل NVDA "
+"إلا إذا اخترت تعطيلها مرة أخرى."
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "ماذا تر&يد أن تفعل؟"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "الخروج"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "إعادة التشغيل"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "إعادة التشغيل مع تعطيل الإضافات"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "يرجى الانتظار"
@@ -4259,6 +4280,10 @@ msgstr "يرجى الانتظار"
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "مدير الإضافات البرمجية"
+
+#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgstr "كل الإضافات معطلة الآن. لتفعيلها, يجب عليك إعادة تشغيل NVDA."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -4369,6 +4394,10 @@ msgstr "تم تثبيتها"
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "remove"
 msgstr "تم حزفها"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+msgid "suspended"
+msgstr "معطلة"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
@@ -4800,9 +4829,9 @@ msgstr "اللغة"
 msgid "&Save configuration on exit"
 msgstr "&حفظ الإعدادات عند الخروج من البرنامج"
 
-#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
-msgid "&Warn before exiting NVDA"
-msgstr "ال&تنبيه عند الخروج من البرنامج"
+#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
+msgid "Sho&w exit options when exiting NVDA"
+msgstr "إظ&هار خيارات الخروج عند الخروج من البرنامج"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -5358,6 +5387,18 @@ msgstr "الإعلان عن الإ&طارات"
 msgid "Report if &clickable"
 msgstr "الإعلان عن الكائنات التي تسمح ب&نقرها بالفأرة"
 
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "أ&ي مكان"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "ك&ل الكلمة"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Regular expression"
+msgstr "&تعبير قياسي"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "تعديل مدخلات المعجم"
@@ -5378,9 +5419,9 @@ msgstr "&ملحوظة"
 msgid "Case &sensitive"
 msgstr "&حساس لحالة الأحرف"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "تعبير &قياسي"
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "ال&نوع المطابقة:"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -5403,9 +5444,9 @@ msgstr "الكلمة البديلة"
 msgid "case"
 msgstr "حالة"
 
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
-msgid "Regexp"
-msgstr "تعبير قياسي"
+#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "نوع المطابقة"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
@@ -6479,3 +6520,12 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to quit NVDA?"
+#~ msgstr "هل أنت متأكد من رغبتك بالخروج من برنامج NVDA؟"
+
+#~ msgid "&Warn before exiting NVDA"
+#~ msgstr "ال&تنبيه عند الخروج من البرنامج"
+
+#~ msgid "Regexp"
+#~ msgstr "تعبير قياسي"

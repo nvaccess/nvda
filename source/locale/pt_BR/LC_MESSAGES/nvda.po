@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-11 19:10+1000\n"
-"PO-Revision-Date: 2014-08-06 15:31-0300\n"
+"POT-Creation-Date: 2014-11-06 19:11+1000\n"
+"PO-Revision-Date: 2014-11-16 23:56-0300\n"
 "Last-Translator: Cleverson Casarin Uliana <clever92000@yahoo.com.br>\n"
 "Language-Team: Equipe de tradução do NVDA para Português do Brasil "
 "<clever92000@yahoo.com.br>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.7\n"
+"X-Generator: Poedit 1.6.10\n"
 "X-Poedit-Basepath: e:\\NVDA\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-SearchPath-0: source\n"
@@ -4035,13 +4035,6 @@ msgstr "Dicionário da voz (%s)"
 msgid "Temporary dictionary"
 msgstr "Dicionário temporário"
 
-#. Translators: Message shown to ask if user really wishes to quit NVDA.
-msgid "Are you sure you want to quit NVDA?"
-msgstr "Tem certeza que quer sair do NVDA?"
-
-msgid "Exit NVDA"
-msgstr "encerrar o NVDA"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "Sobre o NVDA"
@@ -4272,6 +4265,10 @@ msgstr "Efetuar uma doação"
 msgid "E&xit"
 msgstr "s&air"
 
+#. Translators: The title of the dialog to exit NVDA
+msgid "Exit NVDA"
+msgstr "encerrar o NVDA"
+
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -4334,6 +4331,30 @@ msgstr "Criar cópia &portátil"
 msgid "&Continue running"
 msgstr "&Continuar usando"
 
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"Todos os complementos estão agora desativados. Eles serão reativados na "
+"próxima reinicialização a menos que você escolha desativá-los novamente."
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "O que deseja &fazer?"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "Sair"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "Reiniciar"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "Reiniciar com complementos desativados"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "Por favor aguarde"
@@ -4341,6 +4362,11 @@ msgstr "Por favor aguarde"
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Gestor de complementos"
+
+#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgstr ""
+"Todos os complementos estão desativados. Para ativá-los, reinicie o NVDA"
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -4453,6 +4479,10 @@ msgstr "instalar"
 msgid "remove"
 msgstr "remover"
 
+#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+msgid "suspended"
+msgstr "Desativado"
+
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
 msgstr "executando"
@@ -4462,8 +4492,8 @@ msgid ""
 "Add-ons have been added or removed. You must restart NVDA for these changes "
 "to take effect. Would you like to restart now?"
 msgstr ""
-"Foram adicionados ou removidos complementos. Você tem que reiniciar o NVDA "
-"para que as alterações tenham efeito. Quer reiniciar agora?"
+"Foram adicionados ou removidos complementos. Você deve reiniciar o NVDA para "
+"que as alterações tenham efeito. Quer reiniciar agora?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -4891,9 +4921,9 @@ msgstr "Idioma"
 msgid "&Save configuration on exit"
 msgstr "&Salvar configuração ao sair"
 
-#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
-msgid "&Warn before exiting NVDA"
-msgstr "aler&tar antes de encerrar o NVDA"
+#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
+msgid "Sho&w exit options when exiting NVDA"
+msgstr "M&ostrar opções ao sair do NVDA"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -5450,6 +5480,18 @@ msgstr "Anunciar frei&mes"
 msgid "Report if &clickable"
 msgstr "Anunciar quando &clicável"
 
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "&Em qualquer parte"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "&Palavra inteira"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Regular expression"
+msgstr "&Expressão regular"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "Editar entrada"
@@ -5470,9 +5512,9 @@ msgstr "&Comentário"
 msgid "Case &sensitive"
 msgstr "distinguir &maiúsculas de minúsculas"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "&Expressão regular"
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "Tipo:"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -5495,9 +5537,9 @@ msgstr "Substituto"
 msgid "case"
 msgstr "caixa"
 
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
-msgid "Regexp"
-msgstr "Expressão regular"
+#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "Tipo:"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
@@ -6243,12 +6285,12 @@ msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
 msgstr ""
-"Não foi possível estabelecer os cabeçalhos. Por favor habilite o anúncio de "
+"Não foi possível definir os cabeçalhos. Por favor habilite o anúncio de "
 "cabeçalhos de tabelas nas opções de formatação de documentos"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "Set {address} as start of column headers"
-msgstr "{address} colocado como início dos cabeçalhos de coluna"
+msgstr "{address} definido como início dos cabeçalhos de coluna"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "Already set {address} as start of column headers"
@@ -6267,13 +6309,13 @@ msgid ""
 "lower and to the right of it within this region. Pressing twice will forget "
 "the current column header for this cell."
 msgstr ""
-"Pressionar uma vez colocará esta célula como o primeiro cabeçalho de coluna "
-"de qualquer célula abaixo e à direita da mesma nesta região. Pressionar duas "
-"vezes causa o esquecimento do cabeçalho de coluna atual desta célula."
+"Pressionando uma vez, colocará esta célula como o primeiro cabeçalho de "
+"coluna de qualquer célula abaixo e à direita da mesma nesta região. "
+"Pressionando duas vezes, anula a configuração."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 msgid "Set {address} as start of row headers"
-msgstr "{address} colocado como início dos cabeçalhos de linha"
+msgstr "{address} definido como início dos cabeçalhos de linha"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 msgid "Already set {address} as start of row headers"
@@ -6292,9 +6334,9 @@ msgid ""
 "and to the right of it within this region. Pressing twice will forget the "
 "current row header for this cell."
 msgstr ""
-"Pressionar uma vez colocará esta célula como o primeiro cabeçalho de linha "
-"de qualquer célula abaixo e à direita da mesma nesta região. Pressionar duas "
-"vezes causa o esquecimento do cabeçalho de linha atual desta célula."
+"Pressionando uma vez, colocará esta célula como o primeiro cabeçalho de "
+"linha de qualquer célula abaixo e à direita da mesma nesta região. "
+"Pressionando duas vezes, anula a configuração."
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -6431,8 +6473,8 @@ msgstr "%g pt"
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
-"Configurada linha {rowNumber} coluna {columnNumber} como início dos "
-"cabeçalhos de coluna"
+"Definida linha {rowNumber} coluna {columnNumber} como início dos cabeçalhos "
+"de coluna"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid ""
@@ -6465,8 +6507,8 @@ msgstr ""
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
-"Configurada linha {rowNumber} coluna {columnNumber} como início dos "
-"cabeçalhos de coluna"
+"Definida linha {rowNumber} coluna {columnNumber} como início dos cabeçalhos "
+"de linha"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
@@ -6591,6 +6633,15 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to quit NVDA?"
+#~ msgstr "Tem certeza que quer sair do NVDA?"
+
+#~ msgid "&Warn before exiting NVDA"
+#~ msgstr "aler&tar antes de encerrar o NVDA"
+
+#~ msgid "Regexp"
+#~ msgstr "Expressão regular"
 
 #~ msgid "No location information for navigator object"
 #~ msgstr "sem informações de local para o objeto de navegação"

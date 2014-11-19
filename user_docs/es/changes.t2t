@@ -5,6 +5,13 @@ Qué hay de Nuevo en NVDA
 
 = 2014.4 =
 
+== Nuevas Características ==
+- Nuevos idiomas: Español de Colombia, Punjabi
+- Ahora es posible reiniciar NVDA o reiniciar NVDA con los complementos deshabilitados desde el diálogo salir de NVDA. (#4057)
+ - NVDA también puede iniciarse con los complementos deshabilitados utilizando la opción de línea de órdenes --disable-addons.
+- En diccionarios del habla, ahora es posible especificar que un patrón sólo deba compararse si es una palabra completa; es decir,no ocurre como parte de una palabra más larga. (#1704)
+
+
 == Cambios ==
 - si un objeto al que te hayas movido con la navegación de objetos está dentro de un documento en modo exploración, pero el objeto en el que estabas anteriormente no lo estaba, el modo revisión se pone automáticamente en documentos. Con anterioridad esto sólo ocurría si el navegador de objetos se movía debido al cambio del foco. (#4369)
 - Las listas de pantallas Braille y de Sintetizadores en sus respectivos cuadros de diálogo ahora se ordenan alfabéticamente excepto para Sin braille/Sin voz,  las cuales ahora están al fondo. (#2724)
@@ -25,6 +32,17 @@ Qué hay de Nuevo en NVDA
 - Dentro de una región activa, el contenido que esté marcado como no activo (ej.: aria-live="off") ahora se ignora correctamente. (#4405)
 - Al anunciar el texto de una barra de estado que tiene un nombre, el nombre ahora se separa correctamente de la primera palabra del texto de la barra de estado. (#4430)
 - En campos de introdución de palabras clave con la verbalización de palabras al escribir activada, ya no se anuncian varios asteriscos inútilmente al comenzar palabras nuevas. (#4402)
+- En la lista de mensajes de Microsoft Outlook, los elementos ya no se anuncian inútilmente como elementos de Fecha. (#4439)
+- Al seleccionar texto en el control de edición de código en el IDE Eclipse, ya no se anuncia toda la selección cada vez que la selección cambia. (#2314)
+- Varias versiones de Eclipse, tales como Spring Tool Suite y la versión incluída en el paquete Android Developer Tools, ahora se reconocen como Eclipse y se manejan apropiadamente. (#4360, #4454)
+- El seguimiento del ratón y la exploración táctil en Internet Explorer y otros controles MSHTML (incluyendo muchas aplicaciones Windows 8) ahora es mucho más preciso en pantallas de alta DPI o cuando se cambia el zoom de documento. (#3494) 
+- El seguimiento del ratón y la exploración táctil en Internet Explorer y otros controles MSHTML ahora anuncia la etiqueta de más botones. (#4173)
+
+
+== Cambios para Desarrolladores ==
+- Para ejecutables que albergan muchas aplicaciones diferentes (ej.: javaw.exe), ahora el código puede proporcionarse para que cargue app modules específicos para cada aplicación en lugar de cargar el mismo app module para todas las aplicaciones incluídas. (#4360)
+ - Mira  la documentación del código para appModuleHandler.AppModule para más detalles.
+ - Se ha implementado el soporte para javaw.exe.
 
 
 = 2014.3 =

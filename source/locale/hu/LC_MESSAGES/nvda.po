@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-11 19:10+1000\n"
-"PO-Revision-Date: 2014-08-18 16:33+0100\n"
-"Last-Translator: Aron Ocsvari <oaron@nvda.hu>\n"
+"POT-Creation-Date: 2014-11-06 19:11+1000\n"
+"PO-Revision-Date: 2014-11-16 19:41+0100\n"
+"Last-Translator: Erion <rob.mail@freemail.hu>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.7\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Poedit-Bookmarks: 672,168,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -4035,13 +4035,6 @@ msgstr "Hangkarakter kivételszótár (%s)"
 msgid "Temporary dictionary"
 msgstr "ideiglenes kivételszótár"
 
-#. Translators: Message shown to ask if user really wishes to quit NVDA.
-msgid "Are you sure you want to quit NVDA?"
-msgstr "Biztosan ki szeretne lépni az NVDA programból?"
-
-msgid "Exit NVDA"
-msgstr "kilépés az NVDA-ból"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "az NVDA névjegye"
@@ -4269,6 +4262,10 @@ msgstr "Adományozás"
 msgid "E&xit"
 msgstr "&kilépés"
 
+#. Translators: The title of the dialog to exit NVDA
+msgid "Exit NVDA"
+msgstr "kilépés az NVDA-ból"
+
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -4331,6 +4328,30 @@ msgstr "&Hordozható verzió készítése"
 msgid "&Continue running"
 msgstr "&Futtatás telepítés nélkül"
 
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"A kiegészítők mostantól le vannak tiltva. Az NVDA újraindításakor ezek "
+"engedélyezésre kerülnek mindaddig, amíg ujra ki nem kapcsolja őket."
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "Mit szeretne &tenni?"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "Kilépés"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "Újraindítás"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "Újraindítás letiltott bővítményekkel"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "Kérem várjon"
@@ -4338,6 +4359,11 @@ msgstr "Kérem várjon"
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Bővítménykezelő"
+
+#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgstr ""
+"Minden bővítmény le van tiltva, a futtatásukhoz újra kell indítani az NVDA-t"
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -4448,6 +4474,10 @@ msgstr "Telepítve"
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "remove"
 msgstr "eltávolítás"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+msgid "suspended"
+msgstr "felfüggesztve"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
@@ -4886,9 +4916,9 @@ msgstr "Nyelv"
 msgid "&Save configuration on exit"
 msgstr "A beállítások automatikus el&mentése kilépéskor"
 
-#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
-msgid "&Warn before exiting NVDA"
-msgstr "&Figyelmeztető üzenet megjelenítése kilépés előtt"
+#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
+msgid "Sho&w exit options when exiting NVDA"
+msgstr "Lehetőségek mutatása kilépéskor"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -5393,7 +5423,7 @@ msgstr "So&rszámok bemondása"
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
 #.
 msgid "Report l&ine indentation"
-msgstr "Soriga&zítás bemondása"
+msgstr "&Behúzás felolvasása"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -5452,6 +5482,18 @@ msgstr "K&eretek jelzése"
 msgid "Report if &clickable"
 msgstr "Jelzés ha k&attintható"
 
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "&Bárhol"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "Teljes &szó"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Regular expression"
+msgstr "Reg&ex kifejezés"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "A kivételszótár bejegyzésének szerkesztése"
@@ -5472,9 +5514,9 @@ msgstr "&Megjegyzés"
 msgid "Case &sensitive"
 msgstr "&Kis- és nagybetűk megkülönböztetése"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "Reg&ex kifejezés"
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "&Típus"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -5497,9 +5539,9 @@ msgstr "Behelyettesített kifejezés"
 msgid "case"
 msgstr "Kis- vagy nagybetű"
 
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
-msgid "Regexp"
-msgstr "Regex kifejezés"
+#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "Típus"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
@@ -6590,6 +6632,15 @@ msgstr "HIMS Braille Sense/Braille EDGE sorozat"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to quit NVDA?"
+#~ msgstr "Biztosan ki szeretne lépni az NVDA programból?"
+
+#~ msgid "&Warn before exiting NVDA"
+#~ msgstr "&Figyelmeztető üzenet megjelenítése kilépés előtt"
+
+#~ msgid "Regexp"
+#~ msgstr "Regex kifejezés"
 
 #~ msgid "No location information for navigator object"
 #~ msgstr "nem lehet a navigátor kurzornál lévő elem helyét meghatározni"

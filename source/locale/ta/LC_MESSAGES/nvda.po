@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-06 23:27+1000\n"
-"PO-Revision-Date: 2014-10-29 20:16+0530\n"
+"POT-Creation-Date: 2014-11-06 19:11+1000\n"
+"PO-Revision-Date: 2014-11-07 22:18+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: Tamil\n"
@@ -1418,7 +1418,7 @@ msgstr "இழுக்கப்படுகிறது"
 #. Translators: Reported where an object which is being dragged can be dropped.
 #. This is only reported for objects which support accessible drag and drop.
 msgid "drop target"
-msgstr "இலக்கில் விடு"
+msgstr "இலக்கில் விடுக"
 
 msgid "sorted"
 msgstr "வகைப்படுத்தப்பட்டது"
@@ -4036,13 +4036,6 @@ msgstr "குரல் அகரமுதலி (%s)"
 msgid "Temporary dictionary"
 msgstr "தற்காலிக அகரமுதலி"
 
-#. Translators: Message shown to ask if user really wishes to quit NVDA.
-msgid "Are you sure you want to quit NVDA?"
-msgstr "என்விடிஏவை விட்டு தாங்கள் கட்டாயம் வெளியேற வேண்டுமா?"
-
-msgid "Exit NVDA"
-msgstr "என்விடிஏவை விட்டு வெளியேறுக"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "என்விடிஏ குறித்து"
@@ -4272,6 +4265,10 @@ msgstr "நன்கொடையளியுங்கள் (&D)"
 msgid "E&xit"
 msgstr "வெளியேறுக (&X)"
 
+#. Translators: The title of the dialog to exit NVDA
+msgid "Exit NVDA"
+msgstr "என்விடிஏவை விட்டு வெளியேறுக"
+
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -4332,7 +4329,31 @@ msgstr "பெயர்த்தகு படியை உருவாக்க�
 
 #. Translators: The label of the button in NVDA installation program to continue using the installation program as a temporary copy of NVDA.
 msgid "&Continue running"
-msgstr "தற்காலிகமாக இயங்குக (&C)"
+msgstr "தொடர்ந்து தற்காலிகமாக இயங்குக (&C)"
+
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"எல்லா கூட்டுறுப்புகளும் இப்பொழுது செயலிழந்துள்ளன. கூட்டுறுப்புகளை மீண்டும் செயலிழக்கச்செய்ய "
+"தாங்கள் விரும்பவில்லையென்றால், அடுத்த மறுதுவக்கத்தில் அவைகள் செயற்படுத்தப்படும். "
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "தாங்கள் என்ன செய்ய விரும்புகிறீர்கள்? (&D)"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "வெளியேறுக"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "மறுதுவக்குக"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "கூட்டுறுப்புகள் செயலிழந்த நிலையில் மறுதுவக்குக. "
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -4341,6 +4362,12 @@ msgstr "கருணைக்கூர்ந்து காத்திரு�
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "கூட்டுறுப்பு மேலாளர்"
+
+#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgstr ""
+"எல்லா கூட்டுறுப்புகளும் இப்பொழுது செயலிழந்துள்ளன. அவைகளைச் செயற்படுத்த தாங்கள் என்விடிஏவை "
+"மறுதுவக்க வேண்டும். "
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -4452,6 +4479,10 @@ msgstr "நிறுவுக"
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "remove"
 msgstr "நீக்குக"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+msgid "suspended"
+msgstr "இடைநிறுத்தப்பட்டது"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
@@ -4889,9 +4920,10 @@ msgstr "மொழி"
 msgid "&Save configuration on exit"
 msgstr "வெளியேறும்பொழுது அமைவடிவத்தை சேமிக்கவும் (&S)"
 
-#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
-msgid "&Warn before exiting NVDA"
-msgstr "என்விடிஏவை விட்டு வெளியேறும்பொழுது எச்சரிக்கவும் (&W)"
+#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
+msgid "Sho&w exit options when exiting NVDA"
+msgstr ""
+"என்விடிஏவை விட்டு வெளியேறும்பொழுது வெளியேறுவதற்கான விருப்பத் தேர்வுகளைக் காட்டுக (&W)"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -5454,17 +5486,29 @@ msgstr "சட்டகங்களை அறிவிக்கவும் (&M)
 msgid "Report if &clickable"
 msgstr "சொடுக்கப்படக்கூடியதா என்பதை அறிவிக்கவும் (&C)"
 
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "எங்காயினும் (&A)"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "முழுச் சொல் (&W)"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Regular expression"
+msgstr "வழக்கமான வெளிப்பாடு (&R)"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "அகரமுதலி உள்ளீட்டினைத் தொகுக்கவும்"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Pattern"
-msgstr "அசலுரை (&P)"
+msgstr "மாதிரியுரு (&P)"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
 msgid "&Replacement"
-msgstr "மாற்றுரை (&R)"
+msgstr "மாற்றமர்வு (&R)"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Comment"
@@ -5474,9 +5518,9 @@ msgstr "கருத்துரை (&C)"
 msgid "Case &sensitive"
 msgstr "முகப்பெழுத்து/சிற்றெழுத்துகளுக்கிடையான மாற்றங்களை உணரக்கூடியது (&S)"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "வழக்கமான வெளிப்பாடு (&E)"
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "வகை (&T)"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -5489,19 +5533,19 @@ msgstr "கருத்துரை"
 
 #. Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
 msgid "Pattern"
-msgstr "அசல் உரை"
+msgstr "மாதிரியுரு"
 
 #. Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
 msgid "Replacement"
-msgstr "மாற்றுரை"
+msgstr "மாற்றமர்வு"
 
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
 msgid "case"
 msgstr "எழுத்தின் வகை"
 
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
-msgid "Regexp"
-msgstr "வழக்கமான வெளிப்பாடு"
+#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "வகை"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
@@ -6347,7 +6391,7 @@ msgstr "முரண்பாடு"
 
 #. Translators: a Microsoft Word revision type (replaced content)
 msgid "replace"
-msgstr "மாற்றுரை"
+msgstr "மாற்றமர்வு"
 
 #. Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
 msgid "paragraph property"
@@ -6600,6 +6644,15 @@ msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிர
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
+
+#~ msgid "Are you sure you want to quit NVDA?"
+#~ msgstr "என்விடிஏவை விட்டு தாங்கள் கட்டாயம் வெளியேற வேண்டுமா?"
+
+#~ msgid "&Warn before exiting NVDA"
+#~ msgstr "என்விடிஏவை விட்டு வெளியேறும்பொழுது எச்சரிக்கவும் (&W)"
+
+#~ msgid "Regexp"
+#~ msgstr "வழக்கமான வெளிப்பாடு"
 
 #~ msgid "No location information for navigator object"
 #~ msgstr "வழிகாட்டிப் பொருளுக்கு எந்த இருப்பிடத் தகவலுமில்லை"

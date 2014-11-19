@@ -8,15 +8,27 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 
 = 2014.4 =
 
+== Novas características ==
+- Novos idiomas: Espanhol Colombiano, Punjabi.
+
+
 == Alterações ==
 - Caso o objeto para o qual você tenha movido utilizando a navegação de objetos esteja dentro de um documento do modo de navegação, mas o objeto onde você se encontrava anteriormente não estava, o modo de exploração é automaticamente alternado para modo de documento. Anteriormente, isso ocorria apenas quando o objeto de navegação era movido devido à mudança no foco. (#4369)
+- as listas de linhas braille e Sintetizadores  em seus respectivos diálogos de opções agora são ordenadas alfabeticamente, exceto Sem braille/Sem fala, que agora se situam no fim das mesmas. (#2724)
+- Atualizado o transcritor braille liblouis para a versão 2.6.0. (#4434, #3835)
+- NO modo de navegação, ao pressionar e e shift+e para navegar para campos de edição, agora inclui caixas de combinação editáveis. Isso inclui também a caixa de pesquisa na mais recente versão do buscador do Google. (#4436)
+- Ao clicar sobre o ícone do NVDA na Área de Notificação com o botão esquerdo do mouse, agora abre seu menu ao invés de nada ocorrer. (#4459)
 
 
- == Bug Fixes ==
+ == Correção de Falhas ==
  - Ao mover o foco de volta para  um documento do modo de navegação (isto é, usando alt+tab para retornar a uma página web já aberta), o cursor de exploração agora é posicionado adequadamente sob o cursor virtual, em lugar de colocar-se sob o controle que tem o foco (isto é, próximo a um link). (#4369)
- - Em slide shows do Powerpoint, o cursor de exploração agora acompanha corretamente  o cursor virtual. (#4370)
+- Em slide shows do Powerpoint, o cursor de exploração agora acompanha corretamente  o cursor virtual. (#4370)
+- O NVDA já não trava quando  se tenta usar uma linha braille da Handy Tech   em alguns casos. (#3709)
+-   Resolvidos sérios problemas com os controles de edição de texto  nos diálogos em versões recentes do Eclipse. (#3872)
+- Ao anunciar o texto de uma barra de status que possui um nome, o nome agora é separado corretamente da primeira palavra do texto  da barra de status. (#4430)
+- Ao selecionar textos no controle de edição de códigos  do Eclipse IDE, a seleção já não é anunciada em sua totalidade a cada vez  que a seleção é alterada. (#2314)
 
-
+ 
 = 2014.3 =
 
 == Novas características ==

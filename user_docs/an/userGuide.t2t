@@ -23,7 +23,7 @@ Lo mas resinyable inclui:
 - Suporte ta muitas linias de braille efímero incluindo a dentrada de braille computerizau ta linias braille que tiengan un teclau braille
 - Capacidat ta executar-se completament dende una memoria USB u atros meyos portables sin a necesidat d'instalación
 - Instalador parlant facil d'emplegar
-- Traduciu en 45 idiomas
+- Traduciu en 47 idiomas
 - Suporte ta Sistemas Operativos Windows modernos incluindo as variants de 32 y 64 bits
 - Capacidat ta executar-se en as finestras d'autentificación de Windows  y atras pantallas seguras 
 - Suporte ta interficies comunas d'accesibilidat tals como o Microsoft Active Accessibility, o Java Access Bridge, o IAccessible2 y l'UI Automation
@@ -32,7 +32,7 @@ Lo mas resinyable inclui:
 
 ++ Internacionalización ++
 Ye important que qualsiquier persona en o mundo, sin importar qué idioma charre, tienga igual acceso a la tecnolochía. 
-Actualment o NVDA ye estau traduciu en 45 idiomas amás de l'idioma anglés incluindo: Afrikaans, albanés, amárico, arabe, aragonés, portugués brasilenyo, bulgaro, catalán, crovata, checo, danés, holandés, farsi, finlandés, francés, gallego, griego, Cheorchiano, alemán, hebreu, hindi, hungaro, islandés, irlandés, italián , chaponés, coreán, nepalí, noruego, polaco, portugués, rumano, ruso, serbio, eslovaco, esloveno, espanyol, sueco, tamil, tailandés, chino tradicional y simplificau, turco, ucrainés y vietnamita.
+Actualment o NVDA ye estau traduciu en 47 idiomas amás de l'idioma anglés incluindo: Afrikaans, albanés, amárico, arabe, aragonés, portugués brasilenyo, bulgaro, catalán, crovata, checo, danés, holandés, farsi, finlandés, francés, gallego, griego, Cheorchiano, alemán, hebreu, hindi, hungaro, islandés, irlandés, italián , chaponés, coreán, nepalí, noruego, polaco, portugués, panyabí, rumano, ruso, serbio, eslovaco, esloveno, espanyol, espanyol de colombia, sueco, tamil, tailandés, chino tradicional y simplificau, turco, ucrainés y vietnamita.
 
 ++ Suporte de Sintesi de Voz ++
 Amás de proporcionar os suyos mensaches y interficie en quantos idiomas, o NVDA tamién puet posibilitar a l'usuario ta leyer contenius en qualsiquier idioma, malas que tiengan un sintetizador de voz que pueda charrar ixe idioma en particular. 
@@ -131,6 +131,7 @@ Preta Acceptar ta zarrar iste dialogo.
 ++ Lanzando lo NVDA ++
 Si has instalau o NVDA con l'instalador, allora encetar NVDA ye tant facil como pretar control+Alt+n, u trigar NVDA dende o menú NVDA en Menú Inicio, submenú Programas. 
 Adicionalment puetz tecliar NVDA en o dialogo Executar y pretar l'Intro. 
+Tamién puetz pasar-le bellas [opcions de linia de comandos #CommandLineOptions] que te permiten reenchegar o NVDA (-r), salir (-q), desenchegar os complementos (--disable-addons), etc.
 
 Ta encetar a versión portable, ve t'o directorio an descomprimiés o NVDA y preta l'intro u fe dople clic sobre nvda.exe.
 
@@ -591,9 +592,10 @@ Preta l'Acceptar y o NVDA se reenchegará.
 ==== Alzar a Configuración en Salir ====
 Ista opción ye una caixeta de verificación que quan se marca diz a lo NVDA que alce automaticament l'actual configuración en que salgas d'o NVDA. 
 
-==== Alvertir antis de Salir d'o NVDA ====
-Ista opción ye una caixeta de verificación que te permite trigar si amaneix u si no pas un dialogo en que salgas d'o NVDA que te pregunte si te fería goyo salir u no pasw d'o NVDA. 
-Quan siga marcada, un dialogo amaneixerá en que intentes salir d'o NVDA preguntando-te si quiers salir u no pas.
+==== Amostrar as opcions de salida en salir d'o NVDA ====
+Ista opción ye una caixeta de verificación que te permite trigar si amaneix u si no pas un dialogo en que salgas d'o NVDA que te pregunte qué acción quiers fer.
+Quan siga marcada, un dialogo amaneixerá en que intentes salir d'o NVDA preguntando-te si quiers salir, reenchegar u reenchegar con os complementos desenchegaus.
+Quan no siga marcada, se saldrá d'o NVDA inmediatament.
 
 ==== Reproducir sons en enchegar u desenchegar o NVDA ====
 Ista Opción ye una caixeta de verificación que quan ye marcada diz a lo NVDA que reproduzca sons quan s'enchegue u desenchegue.
@@ -1062,15 +1064,19 @@ Allora berás o tuyo nuevo regle en a lista de regles.
 Asinasmesmo ta asegurar-te que a tuya regla ye actualment alzada, asegura-te de pretar Acceptar ta salir completament d'o dialogo de diccionario Una vegada haigas finalizau d'adhibir/editar regles.
 
 Os regles t'os diccionarios de voz d'o NVDA te permiten cambiar una cadena de caracters por unatra. 
-Un eixemplo simple sería que quereses tener o NVDA decindo a parola mixín cada vegada que hese de decir a parola paixaro. 
-En o dialogo d'adhibir regla, o modo mas facil de fer isto ye teclear a parola pájaro en o campo Patrón, y a parola rana en o campo de reemplazar. 
-podrías tamién querer tecliar una descripción d'o regle en o campo Comentario (bella cosa como: cambiar paixaro por mixín).
+Un eixemplo simple sería que quereses tener o NVDA decindo a parola mixín cada vegada que hese de decir a parola can. 
+En o dialogo d'adhibir un regle, o modo mas facil de fer isto ye tecliar a parola can en o campo Patrón, y a parola mixín en o campo de substitución. 
+podrías tamién querer tecliar una descripción d'o regle en o campo Comentario (bella cosa como: cambiar can por mixín).
 
 Os diccionarios d'a fabla d'o NVDA asinasmesmo son muito mas poderosos que un simple reemplazo de parolas. 
 O dialogo d'Adhibir regles tamién contién Una Caixeta de verificación que diz si quiers u no pas que o regle siga sensible a las mayusclas (significando que o NVDA habría de parar cuenta si os caracters son en mayusclas u en minusclas. 
 O NVDA ignora as mayusclas y minusclas de traza predeterminada). 
-Unatra caixeta de verificación te permite establir si o tuyo patrón ye una "Expresión Regular". 
-Una expresión regular ye un patrón que contién simbolos especials que te permiten emparellar mas d'un caracter a o mesmo tiempo, u emparellar solament numeros, u solament letras, seguntes uns pocos eixemplos. 
+
+Finalment, un conchunto de botons de radio te permite dicir-le a lo NVDA si o tuyo patrón ha de coincidir en cualsiquier puesto, ha de coincidir nomás si ye una parola completa u ha d'estar tractau como una "expresión regular".
+Establir o patrón ta coincidir con una parola completa significa que nomás se ferá a substitución si o patrón no coincide con parti d'una parola larga; p. eix. dengún caracter diferent d'un caracter alfanumerico, un guión baixo, u dengún atro caracter no va chusto antis u dimpués d'o patrón.
+Por tanto, fendo servir l'eixemplo anterior d'a substitución d'a parola "can" con "mixín", si fueses a fer d'iste conchunto un reemplazo de parola, sería no coincidir con "canya" u "cans".
+
+Una expresión regular ye un patrón que contién simbolos especials que te permiten emparellar mas d'un caracter a o mesmo tiempo, u emparellar nomás numeros, u nomás letras, seguntes uns pocos eixemplos. 
 As expresions regulars no son cubiertas en ista Guida de l'Usuario, pero bi ha muitos tutorials en a Web que pueden proporcionar-te mas información.
 
 +++ Pronuncia de Puntuación y simbolos +++[SymbolPronunciation]
@@ -1919,6 +1925,45 @@ Os siguients indicadors d'estau  tamién son definius:
 | submnu | amostrau quan un obchecto tien un desplegable (normalment un submenú) |
 
 + Temas Abanzaus +
+
+++ Opcions d'a linia de comandos ++[CommandLineOptions]
+O NVDA puet acceptar una u más opcions adicionals en rancar que alteran o suyo comportamiento.
+Puetz pasar-le tantas d'opcions como amenistes
+Ixas opcions se pueden pasar en rancar-ne dende un acceso dreito (en as propiedatz de l'acceso dreito), dende o dialogo d'executar (Menú inicio -> Executar u Windows+r) u dende una consola de comandos d'o Windows.
+As opcions han d'estar deseparadas d'o nombre d'o fichero executable d'o NVDA y d'atras opcions por spacios.
+Por eixemplo, l'acceso dreito d'o escritorio que o NVDA creya entre a instalación tien a opción -r, que ditz a lo NVDA que zarre a copia actualment en execución antis de no rancar a nueva.
+Unatra opción util ye --disable-addons, que ditz a lo NVDA que suspenda totz os complementos en execución.
+Ixo te permite determinar si un problema ye causau por un complemento y recuperar-lo de problemas serios causaus por complementos.
+
+A modo d'eixemplo, puetz salir d'a copia actualment en execución d'o NVDA metendo lo siguient en o dialogo d'executar:
+
+nvda -q
+
+Bellas d'as opcions d'a linia de comandos tienen una versión curta y unatra larga entre que atras tienen nomás versión larga.
+Ta ixas que tienen una versión curta, puetz combinar-las asinas
+| nvda -rm | Ixo saldrá d'a copia actualment en execución d'o NVDA y rancará una copia nueva con os sons de ranque desenchegaus, etc. |
+| nvda -rm --disable-addons | O mesmo que alto, pero con os complementos desenchegaus |
+
+Bellas d'as opcions acceptan parametros adicionals; p. eix. quanto s'ha de detallar o libel de rechistro u la rota t'o directorio de configuración de l'usuario.
+Ixos parametros han d'estar mesos dimpués d'a opción, separaus d'a opción por un espacio quan se fa servir a versión curta u un simbolo igual (=) quan se fa servir a versión larga; p.eix.:
+| nvda -l 10 | Ditz a lo NVDA que ranque con o libel de rechistro establiu a depuración |
+| nvda --log-file=c:\nvda.log |  Ditz a lo NVDA que escriba o suyo rechistro en c:\nvda.log |
+| nvda --log-level=20 -f c:\nvda.log | Ditz a lo  NVDA que ranque con o libel de rechistro establiu a información y que escriba o suyo rechistro en c:\nvda.log |
+
+As siguients son as opcions d'a linia de comandos d'o NVDA:
+|| Curta | Larga | Descripción |
+| -h | --help | Amostrar l'aduya d'a linia de comandos y salir |
+| -q | --quit | Salir d'a copia ya en execución d'o NVDA |
+| -r | --replace | Salir d'a copia ya en execución d'o NVDA y rancar ista |
+| -k | --check-running | Anunciar si o NVDA se ye executando a traviés d'o codigo de salida; 0 si se'n ye executando, 1 si not se'n ye executando |
+| -f nombre_fichero | --log-file=nombre_fichero | O fichero an s'han d'escribir os mensaches de rechistro |
+| -l libel_de_rechistro | --log-level=libel_de_rechistro | O libel más baixo de mensaches rechistraus (depuración 10, información 20, alvertencia 30, error 40, critico 50), por defecto en ye alvertencia |
+| -c rota_de_configuración | --config-path=rota_de_configuración | A rota an son almagazenadas todas as opcions d'o NVDA |
+| -m | --minimal | Sin sons, sin interficie, sin mensache de ranque, etc |
+| -s | --secure | Modo seguro (desenchegar a consola Python) |
+| Garra | --disable-addons | Oscomplementos no tendrán efecto |
+| Garra | --no-sr-flag  | No cambiart l'indicador global lector de pantalla d'o sistema |
+| Garra | --install | Instala o NVDA silenciosament |
 
 ++ Personalización Abanzada de Pronuncia de Simbolos ++
 Ye posible personalizar a pronuncia d'a puntuación y atros simbolos dillá d'o que puet fer-se emplegando o [dialogo Pronuncia de Puntuación y simbolos #SymbolPronunciation].
