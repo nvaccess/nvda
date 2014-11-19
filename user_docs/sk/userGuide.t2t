@@ -23,7 +23,7 @@ Najvýznamnejšie prednosti programu:
 - Podpora množstva braillovských zobrazovačov vrátane písania na riadkoch, ktoré podporujú vstup pomocou 8-bodového počítačového kódu
 - Možnosť spustenia programu z USB kľúča, alebo iného prenosného zariadenia, bez nutnosti inštalácie
 - Ozvučený inštalátor
-- Preložený do 45 jazykov
+- Preložený do 47 jazykov
 - Podpora pre moderné operačné systémy Windows, 32 aj 64 bitové verzie
 - Možnosť spúšťania na prihlasovacej obrazovke a iných zabezpečených obrazovkách Windows
 - Kompatibilita s rôznymi rozhraniami slúžiacimi na sprístupnenie aplikácií: Microsoft Active Accessibility, Java Access Bridge, IAccessible2 a UI Automation (UI Automation len vo Windows 7 a novších)
@@ -32,7 +32,7 @@ Najvýznamnejšie prednosti programu:
 
 ++ Medzinárodná podpora ++
 Je dôležité, aby ľudia na celom svete hovoriaci akýmkoľvek jazykom, mali kdekoľvek prístup k špeciálnym technológiám.
-NVDA bol dodnes okrem angličtiny lokalizovaný do týchto 45 jazykov: Afrikánčina, Albánčina, Arabčina, Aragónčina, Amharčina, Brazílčina, Bulharčina, Čeština, Dánčina, Fínčina, Francúzština, Galícijčina, Gréčtina, Gruzínčina, Hebrejčina,  Hindčina, Holandčina, Chorvátčina, Islandčina, Írčina, Japončina, Katalánčina, Kórejčina, Maďarčina, Nemčina, Nepálčina, Nórčina, Perzština, Poľština, Portugalčina, Rumunčina, Ruština, Slovenčina, Slovinčina, Srbčina, Španielčina, Švédčina, Taliančina, Tamilčina, Thajčina, Tradičná čínština, Turečtina, Ukrajinčina, Vietnamčina a Zjednodušená čínština.
+NVDA bol dodnes okrem angličtiny lokalizovaný do týchto 47 jazykov: Afrikánčina, Albánčina, Arabčina, Aragónčina, Amharčina, Brazílčina, Bulharčina, Čeština, Dánčina, Fínčina, Francúzština, Galícijčina, Gréčtina, Gruzínčina, Hebrejčina,  Hindčina, Holandčina, Chorvátčina, Islandčina, Írčina, Japončina, Katalánčina, Kolumbijská španielčina, Kórejčina, Maďarčina, Nemčina, Nepálčina, Nórčina, Perzština, Poľština, Portugalčina, Punjabi, Rumunčina, Ruština, Slovenčina, Slovinčina, Srbčina, Španielčina, Švédčina, Taliančina, Tamilčina, Thajčina, Tradičná čínština, Turečtina, Ukrajinčina, Vietnamčina a Zjednodušená čínština.
 
 ++ Podpora hlasového výstupu ++
 Bez ohľadu na poskytovanie hlásení, a rozhraní v niekoľkých jazykoch, NVDA ponúka možnosť čítania textov v akomkoľvek jazyku, pokiaľ je dostupný hlasový výstup pre daný jazyk.
@@ -131,6 +131,7 @@ Dialóg zatvorte aktivovaním tlačidla OK.
 ++ Spustenie NVDA ++
 Ak už máte nainštalovaný NVDA podľa pokynov inštalátora, spustiť NVDA je veľmi jednoduché. Stačí stlačiť klávesovú skratku Ctrl+Alt+N, alebo vybrať položku NVDA zo skupiny NVDA z menu štart/programy.
 Tiež môžete NVDA spustiť napísaním "nvda" do okna Spustiť v ponuke štart.
+Pomocou [parametrov príkazového riadka #CommandLineOptions] môžete reštartovať NVDA (-r), Ukončiť NVDA (-q), zakázať doplnky (--disable-addons) a podobne.
 
 Na spustenie prenosnej verzie vstúpte do priečinka, kam ste si NVDA rozbalili a stlačte enter, alebo kliknite na súbor NVDA.exe.
 
@@ -591,9 +592,10 @@ Na reštartovanie stlačte tlačidlo OK.
 ==== Uložiť nastavenia pri ukončení ====
 Začiarkavacie políčko, ktoré ak začiarknete, bude NVDA pri ukončení automaticky ukladať svoje nastavenia.
 
-==== Potvrdzovať ukončenie NVDA ====
-Začiarkávacie políčko, ktorého začiarknutím sa bude NVDA pred ukončením pýtať, či ste si istí, že program NVDA chcete ukončiť.
-Ak je začiarknuté a rozhodnete sa ukončiť NVDA, NVDA vás vyzve, aby ste ukončenie potvrdili.
+==== Pri ukončení NVDA zobraziť dialóg s možnosťami ====
+toto začiarkávacie pole určuje, či sa pri ukončení NVDA zobrazí dialóg, v ktorom môžete vybrať akciu.
+Ak je začiarknuté, pri ukončení NVDA sa zobrazí dialóg, v ktorom môžete vybrať, či chcete NVDA ukončiť, reštartovať, alebo reštartovať a zakázať doplnky.
+Ak toto pole nie je začiarknuté, NVDA sa ukončí okamžite.
 
 ==== prehrať zvuk pri spustení a ukončení NVDA ====
 začiarkávacie pole. Ak začiarknete, NVDA pri spustení  a pred ukončením prehrá zvuk.
@@ -1069,7 +1071,11 @@ Aby ste sa v zozname pravidiel nestratili, je vhodné zadať nejaký text vystih
 Rečové slovníky NVDA toho dokážu ešte viac než len zamieňať slová.
 Dialóg Upraviť položku slovníka obsahuje začiarkavacie políčko Rozlišovať malé a veľké písmená, čím môžete NVDA prinútiť rozlišovať či text je písaný veľkými písmenami alebo nie.
 Predvolene NVDA ignoruje veľkosť písmen.
-Ďalšie začiarkavacie políčko Regulárny výraz hovorí o tom, či v poli Vzor sa nachádza jednoduchý text alebo tzv. regulárny výraz.
+
+Nasleduje prepínač, ktorým určíte, či sa má výraz použiť ak sa nachádza kdekoľvek, ak je to celé slovo, alebo ide o "regulárny výraz".
+Ak nastavíte možnosť Iba celé slová, výraz sa použije len vtedy, ak nie je súčasťou väčšieho slova, teda pred a za výrazom nenasleduje žiadny alfanumerický znak, alebo podčiarkovník, alebo za a pred výrazom nie sú žiadne znaky a symboli.
+Vráťme sa ešte k predchádzajúcemu príkladu, v ktorom sme nahradili výraz "vták" výrazom "žaba". Ak nastavíte prepínač na Iba celé slová, výraz sa nezmení, ak bude v texte výraz "vtáky" alebo "bielyvták".
+
 Regulárny výraz je špeciálny druh vzoru, ktorý umožňuje filtrovať len znaky, len číslice alebo ľubovoľný počet ľubovoľných znakov v rôznych kombináciách.
 Regulárne výrazy nie sú podrobne vysvetlené v tejto príručke, ale na internete je na túto tému možné nájsť množstvo zaujímavých článkov.
 
@@ -1919,6 +1925,45 @@ Skratkami sú tiež označené tieto stavy:
 | submnu | zobrazuje sa, ak objekt obsahuje podmenu |
 
 + Pre pokročilých +
+
+++ parametre príkazového riadka ++[CommandLineOptions]
+NVDA dokáže pri spustení spracovať parametre, ktoré ovplyvnia jeho činnosť.
+Môžete použiť viacero parametrov súčasne.
+parametre sa dajú použiť priamo v odkaze (cez vlastnosti odkazu), v dialógu spustiť (menu štart > spustiť alebo skratka Windows+r) alebo priamo cez príkazový riadok Windows.
+parametre oddeľujte od seba a od názvu spustiteľného súboru NVDA medzerou.
+napríklad predvolene sa s NVDA inštaluje odkaz na pracovnej ploche, ktorý obsahuje parameter -r. Ten najprv ukončí NVDA, ak je spustené, a potom NVDA znovu spustí.
+Druhý užitočný parameter je --disable-addons, ktorý zakáže všetky doplnky.
+toto vám môže pomôcť zistiť, či problémy s NVDA spôsobuje doplnok a prípadne zabrániť vážnym problémom, ktoré doplnok spôsobuje.
+
+NVDA môžete napríklad ukončiť tak, že do okna spustiť napíšete:
+
+nvda -q
+
+Niektoré parametre majú dlhý a skrátený zápis, iné majú len dlhý zápis.
+Tie, ktoré podporujú skrátený zápis môžete kombinovať takto:
+| nvda -rm | Toto ukončí aktuálne spustenú kópiu NVDA a spustí novú kópiu, v ktorej budú zakázané zvuky a ďalšie možnosti. |
+| nvda -rm --disable-addons | To isté ako v predchádzajúcom príklade, ale so zakázanými doplnkami |
+
+K niektorým parametrom príkazového riadka musíte pridať aj argumenty. Tak určíte, ako podrobne má NVDA zaznamenávať informácie do logu, alebo môžete určiť priečinok s používateľskými dátami NVDA.
+Ak použijete krátky zápis parametra, argumenty oddeľte medzerou, ak použijete dlhý zápis, použite znak rovná sa (=). napríklad:
+| nvda -l 10 | Povie NVDA, že úroveň záznamu je debug |
+| nvda --log-file=c:\nvda.log |  Povie NVDA, aby log zapisoval do súboru c:\nvda.log |
+| nvda --log-level=20 -f c:\nvda.log | Povie NVDA, že úroveň záznamu je info a log sa má zapísať do c:\nvda.log |
+
+NVDA v súčasnosti podporuje tieto parametre:
+|| krátky zápis | dlhý zápis | popis |
+| -h | --help | zobrazí pomoc pre parametre príkazového riadka a skončí |
+| -q | --quit | Ukončí práve spustenú kópiu NVDA |
+| -r | --replace | Ukončí práve spustenú kópiu NVDA a spustí novú |
+| -k | --check-running | Oznámi, či NVDA beží alebo nie. 0 =beží, 1 =nie |
+| -f c:\esta\k\suboru | --log-file=c:\esta\k\suboru | Cesta k súboru, kde sa má zapisovať log |
+| -l n | --log-level=n | Určuje úroveň záznamu (debug 10, info 20, upozornenia 30, chyby 40, kritické chyby 50), predvolene je úroveň nastavená na upozornenia |
+| -c C:\esta\k\profilu | --config-path=C:\esta\k\profilu | určuje cestu, kam sa ukladajú nastavenia NVDA |
+| -m | --minimal | spustí NVDA bez zvukov, bez používateľského rozhrania, bez úvodného dialógu a podobne |
+| -s | --secure | Zabezpečený režim (je zakázaná Python konzola) |
+| nie je | --disable-addons | Všetky doplnky budú vypnuté |
+| nie je | --no-sr-flag  | Nezmení predvolené označenie čítača obrazovky v systéme |
+| nie je | --install | Nainštaluje NVDA s predvolenými parametrami bez používateľského rozhrania |
 
 ++ Zmena vyslovovania symbolov pre pokročilých ++
 Pomocou dialógu [Výslovnosť interpunkčných a špeciálnych symbolov #SymbolPronunciation] je možné prispôsobiť vyslovovanie interpunkčných alebo iných špeciálnych znakov. Okrem toho je možné tabuľku symbolov upravovať ručne, čo prináša širšie možnosti.
