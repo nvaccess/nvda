@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-11 19:10+1000\n"
-"PO-Revision-Date: 2014-08-16 09:47+0400\n"
-"Last-Translator: Ruslan Kolodyazhni <eye0@rambler.ru>\n"
+"POT-Creation-Date: 2014-11-06 19:11+1000\n"
+"PO-Revision-Date: 2014-11-15 12:47+0300\n"
+"Last-Translator: Ruslan <eye0@rambler.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
@@ -458,7 +458,7 @@ msgstr "|сп|"
 #. Translators: Displayed in braille for an object which is a
 #. menu bar.
 msgid "mnubar"
-msgstr "|мб|"
+msgstr "|см|"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu.
@@ -1149,7 +1149,7 @@ msgstr "Кнопка меню"
 
 #. Translators: Reported for a button which expands a grid when it is pressed.
 msgid "drop down button grid"
-msgstr "Нажатая кнопка ячейки"
+msgstr "кнопка ячейки с выпадающем меню"
 
 #. Translators: Identifies an equation.
 msgid "equation"
@@ -3089,9 +3089,8 @@ msgstr "выравнивание по ширине"
 
 #. Translators: Reported when text is justified with character spacing (Japanese etc)
 #. See http://kohei.us/2010/01/21/distributed-text-justification/
-#, fuzzy
 msgid "align distributed"
-msgstr "выравнивание по правому краю"
+msgstr "выравнивание распределено"
 
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
@@ -3114,14 +3113,12 @@ msgid "no right indent"
 msgstr "без отступа справа"
 
 #. Translators: the label for paragraph format hanging indent
-#, fuzzy
 msgid "hanging indent"
-msgstr "без отступа"
+msgstr "подвесной отступ"
 
 #. Translators: the message when there is no paragraph format hanging indent
-#, fuzzy
 msgid "no hanging indent"
-msgstr "без отступа"
+msgstr "нет подвесного отступа"
 
 #. Translators: the label for paragraph format first line indent
 msgid "first line indent"
@@ -3148,9 +3145,8 @@ msgid "vertical align baseline"
 msgstr "вертикальное выравнивание - по высоте"
 
 #. Translators: Reported when text is vertically justified.
-#, fuzzy
 msgid "vertical align justified"
-msgstr "выравнивание по ширине"
+msgstr "выравнивание повертикали уточнено"
 
 #. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
 msgid "vertical align distributed"
@@ -4052,13 +4048,6 @@ msgstr "Голосовой словарь (%s)"
 msgid "Temporary dictionary"
 msgstr "Временный словарь"
 
-#. Translators: Message shown to ask if user really wishes to quit NVDA.
-msgid "Are you sure you want to quit NVDA?"
-msgstr "Вы уверены, что хотите завершить работу NVDA?"
-
-msgid "Exit NVDA"
-msgstr "Завершение Работы NVDA"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "О NVDA"
@@ -4290,6 +4279,10 @@ msgstr "Пожертвования"
 msgid "E&xit"
 msgstr "В&ыход"
 
+#. Translators: The title of the dialog to exit NVDA
+msgid "Exit NVDA"
+msgstr "Завершение Работы NVDA"
+
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -4353,6 +4346,30 @@ msgstr "Создать &переносную копию"
 msgid "&Continue running"
 msgstr "&Продолжить работу"
 
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"Все дополнения будут отключены. Они будут вновь включены при следующей "
+"перезагрузке, если вы не решите отключить их снова."
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "Что вы хотите &сделать?"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "Завершение Работы"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "Перезагрузить"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "Перезагрузить с отключенными дополнениями"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "Пожалуйста подождите"
@@ -4360,6 +4377,12 @@ msgstr "Пожалуйста подождите"
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Менеджер дополнений"
+
+#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgstr ""
+"Все дополнения будут отключены. Чтобы их включить необходимо перезапустить "
+"NVDA."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -4469,6 +4492,10 @@ msgstr "Установить"
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "remove"
 msgstr "Удалить"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+msgid "suspended"
+msgstr "приостановлено"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
@@ -4920,9 +4947,9 @@ msgstr "Язык"
 msgid "&Save configuration on exit"
 msgstr "&Автосохранение конфигурации при выходе"
 
-#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
-msgid "&Warn before exiting NVDA"
-msgstr "Запро&с подтверждения при завершении NVDA"
+#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
+msgid "Sho&w exit options when exiting NVDA"
+msgstr "Показать &варианты выхода при завершении NVDA"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -5480,6 +5507,18 @@ msgstr "Читать &фреймы"
 msgid "Report if &clickable"
 msgstr "Читать &Интерактивные элементы"
 
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr ""
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr ""
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Regular expression"
+msgstr "Регулярное &выражение"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "Изменить словарную статью"
@@ -5500,9 +5539,9 @@ msgstr "&Коментарий"
 msgid "Case &sensitive"
 msgstr "Учитывать регистр"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "Регулярные &выражения"
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "&Тип"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -5525,9 +5564,9 @@ msgstr "Замена"
 msgid "case"
 msgstr "регистр"
 
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
-msgid "Regexp"
-msgstr "регулярное выражение"
+#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "Тип"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
@@ -6275,9 +6314,8 @@ msgstr ""
 "документа...\""
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, fuzzy
 msgid "Set {address} as start of column headers"
-msgstr "Читать заголовки строк и столбцов в &таблицах"
+msgstr "Выбрать {address} как начало заголовков столбца"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "Already set {address} as start of column headers"
@@ -6285,9 +6323,8 @@ msgstr ""
 "Координаты {address} уже установлены в качестве заголовков начала столбцов"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
-#, fuzzy
 msgid "removed {address}    from column headers"
-msgstr "Читать заголовки строк и столбцов в &таблицах"
+msgstr "удалён {address}    из заголовков столбца"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "Cannot find {address}    in column headers"
@@ -6556,7 +6593,7 @@ msgstr "Выравнивание по ширине"
 
 #. Translators: the message when the outline level / style is changed in Microsoft word
 msgid "{styleName} style, outline level {outlineLevel}"
-msgstr ""
+msgstr "стиль {styleName}, уровень наброски {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
 msgid "{size:g} point font"
@@ -6610,6 +6647,15 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to quit NVDA?"
+#~ msgstr "Вы уверены, что хотите завершить работу NVDA?"
+
+#~ msgid "&Warn before exiting NVDA"
+#~ msgstr "Запро&с подтверждения при завершении NVDA"
+
+#~ msgid "Regexp"
+#~ msgstr "регулярное выражение"
 
 #~ msgid "No location information for navigator object"
 #~ msgstr "Нет информации о расположении объекта навигатора"
