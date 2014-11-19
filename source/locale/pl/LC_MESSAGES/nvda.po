@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-11 19:10+1000\n"
-"PO-Revision-Date: 2014-08-06 22:17+0100\n"
+"POT-Creation-Date: 2014-11-06 19:11+1000\n"
+"PO-Revision-Date: 2014-11-07 19:00+0100\n"
 "Last-Translator: Grzegorz Zlotowicz <grzezlo@wp.pl>\n"
 "Language-Team:  <killer@tyflonet.com>\n"
 "Language: pl_PL\n"
@@ -1565,7 +1565,7 @@ msgstr "brajl"
 #. Translators: The name of a category of NVDA commands.
 #. Translators: The label for the Tools submenu in NVDA menu.
 msgid "Tools"
-msgstr "&Narzędzia"
+msgstr "Narzędzia"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: a touch screen gesture
@@ -3776,16 +3776,14 @@ msgid "covers top of {otherShape} by {distance:.3g} points"
 msgstr "pokrywa z góry {otherShape} o {distance:.3g} punktów"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, fuzzy
 msgid "behind top of {otherShape} by {distance:.3g} points"
-msgstr "od góry {otherShape} o {distance:.3g} punktów"
+msgstr "poza górną krawędzią {otherShape} o {distance:.3g} punktów"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers right of {otherShape} by {distance:.3g} points"
 msgstr "pokrywa z prawej {otherShape} o {distance:.3g} punktów"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, fuzzy
 msgid "behind right of {otherShape} by {distance:.3g} points"
 msgstr "poza prawą krawędzią {otherShape} o {distance:.3g} punktów"
 
@@ -3794,7 +3792,6 @@ msgid "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr "pokrywa z dołu {otherShape} o {distance:.3g} punktów"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, fuzzy
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr "poza dolną krawędzią {otherShape} o {distance:.3g} punktów"
 
@@ -3803,7 +3800,6 @@ msgid "covers  {otherShape}"
 msgstr "pokrywa {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
-#, fuzzy
 msgid "behind {otherShape}"
 msgstr "z tyłu {otherShape}"
 
@@ -4014,13 +4010,6 @@ msgstr "Słownik głosu (%s)"
 #. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
 msgid "Temporary dictionary"
 msgstr "Słownik tymczasowy"
-
-#. Translators: Message shown to ask if user really wishes to quit NVDA.
-msgid "Are you sure you want to quit NVDA?"
-msgstr "Czy na pewno chcesz zakończyć NVDA?"
-
-msgid "Exit NVDA"
-msgstr "Zakończ NVDA"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
@@ -4247,6 +4236,10 @@ msgstr "we&sprzyj"
 msgid "E&xit"
 msgstr "&Wyjście"
 
+#. Translators: The title of the dialog to exit NVDA
+msgid "Exit NVDA"
+msgstr "Zakończ NVDA"
+
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -4313,6 +4306,30 @@ msgstr "stwórz kopię &przenośną"
 msgid "&Continue running"
 msgstr "&Kontynuuj"
 
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"Wszystkie dodatki są teraz wyłączone. Zostaną ponownie włączone przy "
+"następnym uruchomieniu, chyba, że zdecydujesz ponownie je wyłączyć."
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "Co chcesz z&robić?"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "Wyjdź"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "Uruchom ponownie"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "Uruchom z wyłączonymi dodatkami"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "czekaj..."
@@ -4320,6 +4337,11 @@ msgstr "czekaj..."
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "manager wtyczek"
+
+#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgstr ""
+"Wszystkie dodatki są wyłączone. Aby je włączyć, musisz zrestartować NVDA."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -4429,6 +4451,10 @@ msgstr "zainstaluj"
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "remove"
 msgstr "Usuń"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+msgid "suspended"
+msgstr "wstrzymany"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
@@ -4868,9 +4894,9 @@ msgstr "Język"
 msgid "&Save configuration on exit"
 msgstr "&Zapisuj ustawienia przy wyjściu"
 
-#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
-msgid "&Warn before exiting NVDA"
-msgstr "&potwierdzaj zamknięcie NVDA"
+#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
+msgid "Sho&w exit options when exiting NVDA"
+msgstr "Pokaż &opcje przy wyjściu z NVDA"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -5426,6 +5452,18 @@ msgstr "zgłaszaj ra&mki"
 msgid "Report if &clickable"
 msgstr "&Zgłaszaj jeśli klikalne"
 
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "&Gdziekolwiek"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "&Całe słowo"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Regular expression"
+msgstr "Wyrażenie &regularne"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "Edytuj wpis w słowniku"
@@ -5446,9 +5484,9 @@ msgstr "&Komentarz:"
 msgid "Case &sensitive"
 msgstr "Uwzględniaj &wielkość liter"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "Wyrażenie &regularne"
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "Typ:"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -5471,9 +5509,9 @@ msgstr "Zamień na"
 msgid "case"
 msgstr "uwzględniaj wielkość liter"
 
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
-msgid "Regexp"
-msgstr "wyrażenie regularne"
+#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "Typ"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
@@ -5640,7 +5678,6 @@ msgid "{curPercent:.0f}%"
 msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
-#, fuzzy
 msgid "at {x}, {y}"
 msgstr "na  {x},{y}"
 
@@ -6564,6 +6601,15 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to quit NVDA?"
+#~ msgstr "Czy na pewno chcesz zakończyć NVDA?"
+
+#~ msgid "&Warn before exiting NVDA"
+#~ msgstr "&potwierdzaj zamknięcie NVDA"
+
+#~ msgid "Regexp"
+#~ msgstr "wyrażenie regularne"
 
 #~ msgid "No location information for navigator object"
 #~ msgstr "Brak danych o lokalizacji dla obiektu nawigatora"
