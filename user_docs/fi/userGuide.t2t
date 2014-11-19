@@ -23,7 +23,7 @@ Tärkeimpiä ominaisuuksia ovat:
 - Tuki useille pistenäytöille, mukaan lukien pistekirjoituksen syöttäminen tietokonemerkistöä käyttäen pistenäytöissä, joissa on pistenäppäimistö
 - Mahdollisuus käyttää USB-muistitikulta tai muulta siirrettävältä tietovälineeltä ilman asennusta
 - Helppokäyttöinen puhuva asennusohjelma
-- Käännökset 44 kielelle
+- Käännökset 47 kielelle
 - Tuki nykyaikaisille Windows-käyttöjärjestelmille, mukaan lukien sekä 32- että 64-bittiset versiot
 - Mahdollisuus käyttää Windowsin kirjautumisikkunassa ja muissa suojatuissa ruuduissa
 - Tuki yleisille esteettömyysrajapinnoille, kuten Microsoft Active Accessibility, Java Access Bridge, IAccessible2 sekä UI Automation (tuki UI Automationille vain Windows 7:ssä ja uudemmissa)
@@ -32,7 +32,7 @@ Tärkeimpiä ominaisuuksia ovat:
 
 ++ Kansainvälisyys ++
 On tärkeää, että ihmiset kaikkialla maailmassa voivat käyttää samoja teknologioita riippumatta siitä, mitä kieltä he puhuvat.
-NVDA on saatavilla englannin lisäksi seuraavilla 45 kielellä: afrikaans, albania, amhara, arabia, aragonia, brasilianportugali, bulgaria, espanja, farsi, galego, georgia, heprea, hindi, hollanti, iiri, islanti, italia, japani, katalaani, korea, kreikka, kroatia, mandariinikiina, nepali, norja, perinteinen kiina, portugali, puola, ranska, romania, ruotsi, saksa, serbia, slovakki, sloveeni, suomi, tamili, tanska, thai, tshekki, turkki, ukraina, unkari, venäjä ja vietnam.
+NVDA on saatavilla englannin lisäksi seuraavilla 47 kielellä: afrikaans, albania, amhara, arabia, aragonia, brasilianportugali, bulgaria, espanja, farsi, galego, georgia, heprea, hindi, hollanti, iiri, islanti, italia, japani, katalaani, kolumbianespanja, korea, kreikka, kroatia, mandariinikiina, nepali, norja, perinteinen kiina, portugali, punjabi, puola, ranska, romania, ruotsi, saksa, serbia, slovakki, sloveeni, suomi, tamili, tanska, thai, tshekki, turkki, ukraina, unkari, venäjä ja vietnam.
 
 ++ Puhesyntetisaattorituki ++
 Sen lisäksi, että NVDA:n ilmoitukset ja käyttöliittymä on käännetty useille kielille, käyttäjä voi myös lukea sisältöä millä tahansa kielellä, jos vain sitä tukeva puhesyntetisaattori on asennettu.
@@ -45,7 +45,7 @@ Tietoja muista NVDA:n tukemista puhesyntetisaattoreista löytyy [Tuetut puhesynt
 NVDA voi tulostaa tietonsa pistekirjoituksella niille käyttäjille, joilla on pistenäyttö.
 Katso [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaletta saadaksesi tietoja tuetuista pistenäytöistä.
 
-NVDA tukee useiden kielten pistekirjoitusjärjestelmiä, mukaan lukien lyhennepistekirjoitusta, tavallista sekä monissa kielissä tietokonemerkistöä.
+NVDA tukee useiden kielten pistekirjoitusjärjestelmiä, mukaan lukien lyhennepistekirjoitus ja tavallinen sekä monissa kielissä käytettävä tietokonemerkistö.
 
 ++ Lisenssi ja tekijänoikeustiedot ++
 NVDA on copyright NVDA_COPYRIGHT_YEARS NVDA:n tekijät.
@@ -126,11 +126,12 @@ Massamuistiversion luonti aloitetaan painamalla Jatka.
 Kun se on valmis, näkyviin tulee ilmoitus luonnin onnistumisesta.
 Valintaikkuna suljetaan Painamalla OK.
 
-+ Alkuun pääseminen +
++ Aloittaminen +
 
 ++ NVDA:n käynnistäminen ++
-Jos NVDA on asennettu sen omalla asennusohjelmalla, se voidaan käynnistää joko painamalla Control+Alt+n tai valitsemalla Käynnistä-valikosta Ohjelmat -> NVDA -> NVDA.
-Se voidaan käynnistää myös kirjoittamalla Suorita-valintaikkunaan NVDA ja painamalla Enteriä.
+Jos asensit NVDA:n omalla asennusohjelmallaan, voit käynnistää sen joko painamalla Control+Alt+N tai valitsemalla Käynnistä-valikosta Ohjelmat -> NVDA -> NVDA.
+Voit käynnistää sen myös kirjoittamalla Suorita-valintaikkunaan NVDA ja painamalla Enteriä.
+Lisäksi on mahdollista syöttää joitakin [komentorivivalitsimia #CommandLineOptions], joilla NVDA voidaan käynnistää uudelleen (-r), sulkea (-q), poistaa lisäosat käytöstä (--disable-addons) jne.
 
 Massamuistiversio voidaan käynnistää menemällä hakemistoon, johon se on purettu ja painamalla Enteriä nvda.exe-tiedoston kohdalla tai kaksoisnapsauttamalla sitä hiiren vasemmalla painikkeella.
 
@@ -138,8 +139,8 @@ NVDA:n käynnistyessä kuuluu joukko nousevia ääniä, jotka kertovat, että se
 Riippuen tietokoneen nopeudesta, tai jos NVDA:ta käytetään USB-muistitikulta tai muulta hitaammalta tallennusvälineeltä, käynnistyminen saattaa kestää jonkin aikaa.
 Jos käynnistyminen kestää erityisen kauan, NVDA:n pitäisi ilmoittaa "NVDA käynnistetään, odota..."
 
-Jos mitään tällaista ei kuulu, tai mikäli kuuluu Windowsin virheääni tai joukko laskevia ääniä, tämä tarkoittaa, että NVDA:ssa on mahdollisesti ohjelmavirhe ja että siitä on raportoitava kehittäjille.
-Tarkista NVDA:n verkkosivustolta, miten ohjelmavirheistä raportoidaan.
+Jos mitään tällaista ei kuulu, tai mikäli kuuluu Windowsin virheääni tai joukko laskevia ääniä, tämä tarkoittaa, että NVDA:ssa on mahdollisesti ohjelmavirhe ja että siitä on ilmoitettava kehittäjille.
+Tarkista NVDA:n verkkosivustolta, miten ohjelmavirheistä ilmoitetaan.
 
 Kun NVDA käynnistyy ensimmäistä kertaa, näkyviin tulee valintaikkuna, jossa on joitakin perustietoja NVDA-näppäimestä ja -valikosta.
 (Katso edempänä olevia kappaleita saadaksesi tietoja näistä aiheista).
@@ -154,8 +155,8 @@ Kolmannella voidaan säätää, halutaanko tämän Tervetuloa-valintaikkunan tul
 Useimmat NVDA:n näppäinkomennot koostuvat yleensä tietyn NVDA-näppäimeksi kutsutun näppäimen painamisesta yhdessä yhden tai useamman muun näppäimen kanssa.
 Huomionarvoisia poikkeuksia ovat pöytäkoneissa käytettävän näppäimistöasettelun tekstintarkastelukomennot, joissa käytetään pelkkiä numeronäppäimistön näppäimiä, ja lisäksi on muutamia muitakin.
 
-NVDA on mahdollista määrittää siten, että numeronäppäimistön Insert-, laajennettua Insert- ja/tai Capslock-näppäintä voidaan käyttää NVDA-näppäimenä.
-Oletusarvoisesti sekä laajennettu että numeronäppäimistön Insert toimivat NVDA-näppäimenä.
+NVDA on mahdollista määrittää käyttämään sekä numeronäppäimistön että laajennettua Insertiä ja/tai Capslockia NVDA-näppäimenä.
+Oletusarvoisesti käytetään laajennettua ja numeronäppäimistön Insertiä.
 
 Mikäli haluat jonkin NVDA-näppäimistä  toimivan samalla tavalla kuin silloin, kun NVDA ei ole käynnissä (haluat esim. ottaa Capslockin käyttöön, kun se on määritetty NVDA-näppäimeksi), paina sitä kaksi kertaa nopeasti peräkkäin.
 
@@ -311,7 +312,7 @@ Lista esimerkiksi sisältää listakohteita, joten niihin pääsemiseksi on siir
 Jos on siirrytty listan kohteeseen, seuraavaan ja edelliseen objektiin siirtyminen siirtää saman listan muihin kohteisiin.
 Listakohteen säilöobjektiin siirtyminen siirtää takaisin listan kohdalle.
 Tämän jälkeen siitä voidaan siirtyä pois, mikäli halutaan päästä muihin objekteihin.
-Myös työkalupalkki sisältää säätimiä, joten niihin pääsemiseksi on siirryttävä kyseisen työkalupalkin sisään.
+Myös työkalurivi sisältää säätimiä, joten niihin pääsemiseksi on siirryttävä kyseisen työkalurivin sisään.
 
 Nykyistä tarkasteltavaa objektia kutsutaan navigointiobjektiksi.
 Kun objektiin siirrytään, sitä voidaan tarkastella [tekstintarkastelukomennoilla #ReviewingText] [objektintarkastelutilassa #ObjectReview] oltaessa.
@@ -591,9 +592,10 @@ Hyväksy painamalla OK.
 ==== Tallenna asetukset suljettaessa ====
 Jos tämä valintaruutu on valittuna, nykyiset asetukset tallennetaan, kun NVDA suljetaan.
 
-==== Vahvista sulkeminen ====
-Tällä valintaruudulla voidaan määrittää, kysyykö NVDA vahvistuksen sitä suljettaessa.
-Kun tämä on valittuna, aina NVDA:ta suljettaessa tulee näkyviin valintaikkuna, jossa kysytään, halutaanko se varmasti sulkea.
+==== Näytä sulkemisvaihtoehdot ====
+Tällä valintaruudulla voit määrittää, tuleeko NVDA:ta suljettaessa näkyviin valintaikkuna, jossa kysytään suoritettavaa toimintoa.
+Kun tämä asetus on käytössä, NVDA:ta suljettaessa tulee näkyviin valintaikkuna, jossa kysytään, haluatko sulkea, käynnistää uudelleen vai käynnistää uudelleen poistaen lisäosat käytöstä.
+Kun asetus ei ole käytössä, NVDA sulkeutuu heti.
 
 ==== Toista ääni käynnistettäessä ja suljettaessa ====
 Kun tämä valintaruutu on valittuna, NVDA toistaa äänen käynnistyessään ja sulkeutuessaan.
@@ -693,7 +695,7 @@ Mikäli äänenkorkeuden ei haluta muuttuvan, on arvoksi asetettava 0.
 Kun tämä asetus on käytössä, NVDA sanoo "iso" ennen jokaista yksittäisenä merkkinä puhuttua isoa kirjainta (kuten esim. tavattaessa).
 Tavallisesti NVDA nostaa hieman äänenkorkeutta jokaisen ison kirjaimen kohdalla, mutta jotkin puhesyntetisaattorit eivät ehkä tue sitä kunnolla, joten tälle asetukselle voi olla käyttöä.
 
-==== Anna äänimerkki isojen kirjainten kohdalla ====
+==== Ilmaise isot kirjaimet äänimerkillä ====
 Jos tämä valintaruutu on valittuna, NVDA antaa pienen äänimerkin joka kerta, kun iso kirjain luetaan.
 Kuten Sano iso ennen isoja kirjaimia -asetus, tämäkin on käyttökelpoinen puhesyntetisaattoreilla, jotka eivät pysty nostamaan äänenkorkeuttaan isojen kirjainten kohdalla.
 
@@ -856,7 +858,7 @@ Vaihtoehtoina ovat merkki, sana, rivi ja kappale.
 ==== Lue hiiren alla olevan objektin rooli ====
 Jos tämä valintaruutu on valittuna, NVDA kertoo objektin roolin (tyypin) hiiren siirtyessä siihen.
 
-==== Ilmaise hiiren koordinaatit äänimerkeillä ====
+==== Ilmaise hiiren koordinaatit äänimerkillä ====
 Kun tämä valintaruutu on valittuna, NVDA antaa äänimerkkejä hiiren liikkuessa, jotta käyttäjä voi selvittää, missä hiiri on suhteessa ruudun kokoon.
 
 ==== Äänikoordinaatttien voimakkuutta säädetään ruudun kirkkauden mukaan ====
@@ -907,7 +909,7 @@ Tällä asetuksella voidaan määrittää, luetaanko objektin sijainti (esim. 1 
 ==== Arvaa objektien sijaintitiedot, kun niitä ei ole käytettävissä ====
 Jos objektien sijaintitietojen lukeminen on käytössä, tämän asetuksen avulla NVDA voi arvata objektien sijaintitiedot silloin, kun niitä ei ole saatavilla jostakin säätimestä muilla tavoin.
 
-Kun tämä asetus on käytössä, NVDA lukee sijaintitiedot entistä useammissa säätimissä, kuten valikoissa ja työkalupalkeissa. Tiedot voivat kuitenkin olla hieman epätarkkoja.
+Kun tämä asetus on käytössä, NVDA lukee sijaintitiedot entistä useammissa säätimissä, kuten valikoissa ja työkaluriveissä. Tiedot voivat kuitenkin olla hieman epätarkkoja.
  
 ==== Lue objektien kuvaukset ====
 Tätä valintaruutua ei kannata valita, jos ei haluta kuulla objektien kuvauksia.
@@ -1050,7 +1052,7 @@ Asetukset-valikosta löytyvä Puhesanastot-valikko sisältää valintaikkunoita,
 Puhesanastoja on kolmea eri tyyppiä.
 Ne ovat:
 - Oletus: tämän sanaston säännöt vaikuttavat kaikkeen NVDA:n puhumaan tekstiin.
-- Puheäänikohtainen: sanasto, jonka säännöt vaikuttavat käytettävän syntetisaattorin puheääneen.
+- Puheäänikohtainen: sanasto, jonka säännöt vaikuttavat käytössä olevan syntetisaattorin puheääneen.
 - Tilapäinen: tämän sanaston säännöt vaikuttavat kaikkeen NVDA:n puhumaan tekstiin, mutta vain nykyisessä istunnossa. Säännöt ovat tilapäisiä ja ne menetetään, jos NVDA käynnistetään uudelleen.
 -
 
@@ -1059,17 +1061,21 @@ Valintaikkunoissa on myös Lisää-, Muokkaa- ja Poista-painikkeet.
 
 Sanastoon lisätään uusi sääntö painamalla Lisää-painiketta, täyttämällä esiin tulevan valintaikkunan kentät ja painamalla OK.
 Lisätty sääntö näkyy tämän jälkeen sääntöjen luettelossa.
-Tehtyjen muutosten tallentaminen varmistetaan poistumalla sanastovalintaikkunasta painamalla OK.
+Varmista tehtyjen muutosten tallentaminen poistumalla sanastovalintaikkunasta painamalla OK.
 
-Puhesanastojen sääntöjen avulla voidaan muuttaa merkkijono joksikin muuksi.
+Puhesanastosääntöjen avulla voit muuttaa merkkijonon joksikin muuksi.
 Yksinkertaisena esimerkkinä tästä voisi olla, että NVDA saadaan sanomaan "sammakko" jokaisen lintu-sanan kohdalla.
-Helpointa tämä on tehdä  kirjoittamalla säännönlisäysvalintaikkunassa Korvattava-kenttään lintu ja Korvaava-kenttään sammakko.
-Kommentti-kenttään voidaan kirjoittaa säännön kuvaus (esim. muuttaa linnun sammakoksi).
+Helpointa tämä on tehdä  kirjoittamalla säännönlisäysvalintaikkunassa Korvattava merkkijono -kenttään lintu ja Korvaava merkkijono -kenttään sammakko.
+Kirjoita Kommentti-kenttään säännön kuvaus (esim. muuttaa linnun sammakoksi).
 
-Puhesanastoja voidaan käyttää paljon muuhunkin kuin yksinkertaiseen sanojen korvaamiseen.
-Säännönlisäämisvalintaikkunassa on myös valintaruutu, jolla voidaan määrittää, halutaanko säännön ottavan kirjainkoon huomioon, eli ovatko isot ja pienet kirjaimet merkitseviä.
-NVDA ei oletusarvoisesti huomioi kirjainkokoa.
-Toisella tämän valintaikkunan valintaruudulla voidaan määrittää, onko korvattava merkkijono "säännöllinen lauseke".
+Puhesanastoja on mahdollista käyttää paljon muuhunkin kuin yksinkertaiseen sanojen korvaamiseen.
+Säännönlisäämisvalintaikkunassa on myös valintaruutu, jolla voit määrittää, onko isoilla ja pienillä kirjaimilla merkitystä säännön toiminnan kannalta.
+Oletusarvoisesti kirjainkokoa ei huomioida.
+
+Lopuksi on joukko valintapainikkeita, joiden avulla voit määrittää, täsmääkö korvattava merkkijono kaikkialla, vain kokonaisena sanana vai käsitelläänkö sitä säännöllisenä lausekkeena.
+Korvattavan merkkijonon määrittäminen täsmäämään kokonaisena sanana tarkoittaa, että se korvataan vain, jos se ei esiinny pidemmän sanan osana, ts. heti sitä ennen ja sen jälkeen on muu kuin aakkosnumeerinen merkki, alaviiva (tai ei ole merkkiä ollenkaan).
+Joten, käyttääksemme aiempaa esimerkkiä lintu-sanan korvaamisesta sanalla sammakko, jos tekisit siitä koko sanan korvauksen, se ei täsmäisi "lintuja"- tai "sinilintu"-sanoihin.
+
 Säännöllinen lauseke on erikoismerkkejä sisältävä merkkiyhdistelmä, jonka avulla voidaan täsmätä useampaan kuin yhteen merkkiin kerrallaan, pelkkiin numeroihin tai pelkkiin kirjaimiin.
 Säännöllisiä lausekkeita ei käsitellä tässä käyttöoppaassa, mutta internetistä löytyy useita asiaa käsitteleviä oppaita.
 
@@ -1898,7 +1904,7 @@ Jotta pistenäytölle sopisi mahdollisimman paljon tietoa, seuraavat lyhenteet o
 | lst | lista |
 | alnk | avattu linkki |
 | vko | valikko |
-| vkopal | valikkopalkki |
+| vkorvi | valikkorivi |
 | vpnk | valintapainike |
 | tl | taulukko |
 | pn | puunäkymä |
@@ -1920,7 +1926,46 @@ Seuraavat tilan ilmaisimet on myös määritetty:
 
 + Edistyneet aiheet +
 
-++ Edistynyt symboleiden puhumisen mukauttaminen ++
+++ Komentorivivalitsimet ++[CommandLineOptions]
+NVDA hyväksyy käynnistyessään yhden tai useamman toimintaansa vaikuttavan komentorivivalitsimen.
+Voit antaa kerralla niin monta valitsinta kuin tarvitset.
+Valitsimet voidaan antaa pikakuvakkeesta käynnistettäessä (syötetään kuvakkeen Ominaisuudet-valintaikkunassa olevaan Kohde:-kenttään), Suorita-valintaikkunasta (Käynnistä-valikko -> Suorita tai Windows+R) tai Windowsin komentokehotteesta.
+Valitsimet erotetaan NVDA:n ohjelmatiedoston nimestä ja toisistaan välilyönneillä.
+Esimerkiksi asennuksen aikana Työpöydälle luodussa pikakuvakkeessa on -r-valitsin, joka sulkee NVDA:n käynnissä olevan version ennen uuden käynnistämistä.
+Toinen hyödyllinen valitsin on --disable-addons, joka poistaa kaikki lisäosat käytöstä.
+Sen avulla voit selvittää, aiheuttaako jokin lisäosa ongelmia.
+
+Voit esimerkiksi sulkea NVDA:n nykyisen version kirjoittamalla seuraavan komennon Suorita-valintaikkunaan:
+
+nvda -q
+
+Joistakin komentorivivalitsimista on sekä lyhyt että pitkä muoto, kun taas joistakin on vain pitkä muoto.
+Voit yhdistellä lyhyitä valitsimia näin:
+| nvda -rm | Tämä sulkee NVDA:n nykyisen version ja käynnistää uuden poistaen samalla käynnistysäänet käytöstä jne. |
+| nvda -rm --disable-addons | Muuten sama kuin edellä, mutta poistaa myös lisäosat käytöstä. |
+
+Jotkin valitsimet hyväksyvät lisäparametrejä, esim. miten yksityiskohtaisia tietoja lokiin tallennetaan tai käyttäjän asetushakemiston polkumäärityksen.
+Parametrit annetaan valitsimen jälkeen ja erotetaan sen lyhyestä muodosta välilyönnillä tai pitkää muotoa käytettäessä yhtä suuri -merkillä (=), esim.:
+| nvda -l 10 | Käynnistää NVDA:n virheenkorjaus-lokitasolla. |
+| nvda --log-file=c:\nvda.log | NVDA tallentaa lokinsa tiedostoon c:\nvda.log. |
+| nvda --log-level=20 -f c:\nvda.log | Käynnistää NVDA:n tiedot-lokitasolla ja tallentaa lokin tiedostoon c:\nvda.log. |
+
+Seuraavassa on lista NVDA:n komentorivivalitsimista:
+|| Lyhyt | Pitkä | Kuvaus |
+| -h | --help | Näyttää komentoriviohjeen. |
+| -q | --quit | Sulkee jo käynnissä olevan NVDA:n version. |
+| -r | --replace | Sulkee jo käynnissä olevan NVDA:n version ja käynnistää uuden. |
+| -k | --check-running | Ilmoittaa lopetuskoodilla, onko NVDA käynnissä, 0 = jos käynnissä tai 1 = jos ei käynnissä. |
+| -f LOKITIEDOSTO | --log-file=LOKITIEDOSTO | Tiedosto, johon lokiviestit tallennetaan. |
+| -l LOKITASO | --log-level=LOKITASO | Alin taso, jonka ilmoitukset tallennetaan lokiin (10 = virheenkorjaus, 20 = tiedot, 30 = varoitus, 40 = virhe, 50 = kriittinen). Oletustasona on varoitus. |
+| -c ASETUSPOLKU | --config-path=ASETUSPOLKU | Hakemistopolku, johon kaikki NVDA:n asetukset tallennetaan. |
+| -m | --minimal | Ei ääniä, ei käyttöliittymää, ei käynnistysilmoitusta jne. |
+| -s | --secure | Suojattu tila (poistaa käytöstä Python-konsolin). |
+| Ei mitään | --disable-addons | Poistaa lisäosat käytöstä. |
+| Ei mitään | --no-sr-flag | Ei muuta järjestelmänlaajuista ruudunlukuohjelmalippua. |
+| Ei mitään | --install | Asentaa NVDA:n ilman kehotteita. |
+
+++ Symboleiden puhumisen lisämukauttaminen ++
 Välimerkkien ja muiden symboleiden lukutapaa voidaan mukauttaa enemmänkin kuin mitä [Välimerkkien ja symboleiden puhuminen #SymbolPronunciation] -valintaikkunassa on mahdollista.
 Voidaan esimerkiksi määrittää, lähetetäänkö symboli syntetisaattorille sellaisenaan (esim. tauon tai äänensävyn muutoksen aikaansaamiseksi) ja lisätä omia symboleita.
 
