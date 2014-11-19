@@ -1,8 +1,9 @@
-Manual do Utilizador do NVDA NVDA_VERSION
+﻿Manual do Utilizador do NVDA NVDA_VERSION
 Traduzido por: Ângelo Abrantes, Diogo Costa, Elton Lopes, Rui Batista e Rui Fontes
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: Referência Rápida de Comandos do NVDA NVDA_VERSION
+
 = Índice =[toc]
 %%toc
 
@@ -22,7 +23,7 @@ As características principais são:
 - Suporte para diversas linhas Braille, incluindo a introdução de texto através do teclado Braille, nas linhas que o possuem, usando Braille informático
 - Possibilidade de ser executado a partir de dispositivos USB ou através de outros dispositivos portáteis, sem necessitar de instalação
 - Tem um instalador com voz e fácil de usar
-- Está traduzido em 45 idiomas
+- Está traduzido em 47 idiomas
 - Suporta os Sistemas Operativos Windows mais actuais, quer nas arquitecturas de 32 quer nas de 64 bits
 - Tem a possibilidade de funcionar nas janelas de início de sessão e noutros ecrãs de ambiente seguro
 - Suporta as interfaces de acessibilidade mais comuns, tais como o Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation (o UI Automation é somente suportado no Windows 7 ou posteriores)
@@ -31,7 +32,7 @@ As características principais são:
 
 ++ Internacionalização ++
 É importante que os indivíduos tenham o mesmo acesso às tecnologias, em qualquer parte do mundo, independentemente do idioma que falem.
-Para além do Inglês, o NVDA está traduzido em 45 idiomas, incluindo: Africânder, Albanês, Alemão, Amárico, Árabe, Aragonês, Búlgaro, Castelhano, Catalão, Checo, Chinês Tradicional e simplificado, Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Finlandês, Francês, Galego, Grego, Georgiano, Hebraico, Holandês, Húngaro, Indiano, Islandês, Irlandês, Italiano, Japonês, Nepalês, Norueguês, Perça, Polaco, Português de Portugal, Português do Brasil, Romeno, Russo, Sérvio, Sueco, Tailandês, Tamil, Turco, Ucraniano e Vietnamita.
+Para além do Inglês, o NVDA está traduzido em 47 idiomas, incluindo: Africânder, Albanês, Alemão, Amárico, Árabe, Aragonês, Búlgaro, Castelhano (Espanha e Colômbia), Catalão, Checo, Chinês Tradicional e simplificado, Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Farsi, Finlandês, Francês, Galego, Grego, Georgiano, Hebraico, Holandês, Húngaro, Indiano, Islandês, Irlandês, Italiano, Japonês, Nepalês, Norueguês, Polaco, Português (Portugal e Brasil), Punjabi, Romeno, Russo, Sérvio, Sueco, Tailandês, Tamil, Turco, Ucraniano e Vietnamita.
 
 ++ Suporte de Sintetizadores de Voz ++
 Para além de fornecer as mensagens e interface em diversos idiomas, o NVDA também pode permitir ao utilizador a leitura em qualquer idioma, desde  que tenha um sintetizador de voz, que o possa falar.
@@ -105,7 +106,7 @@ Tal também engloba os ecrãs de controlo de acesso (UAC) e outros ecrãs de amb
 
 +++ Criar Atalho no Ambiente de Trabalho (control+alt+n) +++
 Esta opção permite escolher se deverá ou não ser criado um atalho, no ambiente de trabalho,  para iniciar o NVDA.
-Este atalho, caso seja criado, permitirá igualmente iniciar o NVDA, a qualquer momento, através da combinação de teclas Control+Alt+n.
+Caso este atalho seja criado, permitirá igualmente iniciar o NVDA, a qualquer momento, através da combinação de teclas Control+Alt+n.
 
 +++ Copiar a Configuração Portátil para a Conta do Utilizador Actual +++
 Esta opção permite-lhe escolher se o NVDA deverá ou não copiar a configuração da cópia em execussão para a configuração do utilizador actual, para a cópia instalada do NVDA.
@@ -128,6 +129,7 @@ Pressione OK, para sair deste diálogo.
 ++ Executar O NVDA ++
 Se tem o NVDA instalado no computador, então executar este leitor de ecrã é tão simples como pressionar Ctrl+Alt+N, ou escolher o NVDA, a partir do submenu NVDA, que se encontra nos Programas do Menu Iniciar.
 Também pode escrever NVDA, no diálogo Executar, e pressionar Enter.
+Também pode passar algumas [opções de linha de comandos #CommandLineOptions] que permitem reiniciar o NVDA (-r), sair (-q), desactivar os extras (--disable-addons), etc.
 
 Para executar a versão portátil, vá para a pasta onde descompactou o NVDA e pressione Enter ou efectue um duplo clique esquerdo, em "nvda.exe".
 
@@ -158,8 +160,7 @@ Por padrão, tanto o Insert do bloco numérico como o insert do bloco intermédi
 Se pretender que uma das teclas modificadoras do NVDA actue com a sua função original (por exemplo, quando tiver definido o Caps Lock como uma tecla modificadora do NVDA e desejar activá-la com a sua função original), deverá pressionar a tecla duas vezes, em rápida sucessão.
 
 +++ Esquema do Teclado +++
-Actualmente, o NVDA vem configurado com dois esquemas de comandos de teclado.
-Existe o esquema Desktop, para computadores de secretária, e o esquema Laptop, para computadores portáteis.
+Actualmente, o NVDA vem com dois conjuntos de comandos, conhecidos como Esquemas do teclado. O esquema Desktop, para computadores de secretária, e o esquema Laptop, para computadores portáteis.
 Por padrão, o NVDA está definido para utilizar o esquema de Computadores de Secretária, embora possa alternar para o esquema de Computador Portátil, nas Definições do Teclado, que podem ser encontradas em Preferências, no Menu do NVDA.
 
 O esquema de Desktop faz uso intensivo do bloco numérico (com o NumLock desligado).
@@ -328,7 +329,7 @@ Para navegar pelos objectos, utilize os seguintes comandos:
 | Mover para o objecto em foco | NVDA+Menos do bloco numérico | NVDA+Backspace | Nenhum | Move para o objecto que tem o foco do sistema actual e também posiciona o cursor de revisão na posição do cursor do sistema, se o mesmo estiver visível |
 | Activar o objecto de navegação actual | NVDA+Enter do bloco numérico | NVDA+Enter | Toque duplo | Activa o objecto de navegação actual (semelhante ao clicar com o rato ou pressionar espaço quando o mesmo tem o foco do sistema) |
 | Mover o foco do sistema ou o cursor para o objecto actual da revisão| NVDA+Shift+Menos do bloco numérico | NVDA+Shift+Backspace | Nenhum | Ao pressionar uma vez, move o foco para o objecto de navegação actual, ao pressionar duas vezes, move o cursor do sistema para a posição do cursor de revisão |
-| Anunciar dimensões localização do cursor de revisão | NVDA+delete do bloco numérico | NVDA+delete | nenhum | Anuncia informação sobre a posição do texto ou objecto onde se encontra o cursor de revisão. Isto poderá incluir, por exemplo, a percentagem no documento, a distância desde a margem da página ou a posição exacta no ecrã. Premindo duas vezes irá fornecer mais detalhes. |
+| Anunciar localização do cursor de revisão | NVDA+delete do bloco numérico | NVDA+delete | nenhum | Anuncia informação sobre a posição do texto ou objecto onde se encontra o cursor de revisão. Isto poderá incluir, por exemplo, a percentagem no documento, a distância desde a margem da página ou a posição exacta no ecrã. Premindo duas vezes irá fornecer mais detalhes. |
 %kc:endInclude
 
 Nota: As teclas do bloco numérico requerem que o numlock esteja desligado, para que possam trabalhar adequadamente.
@@ -524,7 +525,7 @@ O NVDA fornece comandos de teclado adicionais para algumas aplicações, que rea
 %kc:beginInclude
 || Nome | Tecla | Descrição |
 | Anuncia o comentário actual | NVDA+Alt+c | Anuncia o texto do comentário na posição actual do cursor do sistema. |
-| Definir cabeçalhos de coluna | NVDA+shift+c | Premindo uma vez, indica ao NVDA que esta é a primeira célula de cabeçalho na linha que contem os cabeçalhos de coluna, que deverão ser automaticamente anunciados ao mover-se entre colunas abaixo desta linha. Premindo duas vezes irá apagar a definição. | 
+| Definir cabeçalhos de coluna | NVDA+shift+c | Premindo uma vez, indica ao NVDA que esta é a primeira célula de cabeçalho na linha que contém os cabeçalhos de coluna, que deverão ser automaticamente anunciados ao mover-se entre colunas abaixo desta linha. Premindo duas vezes irá apagar a definição. | 
 | Definir cabeçalhos de linha | NVDA+shift+r | Premindo uma vez, indica ao NVDA que esta é a primeira  célula de cabeçalho na coluna que contem os cabeçalhos de linha, que deverão ser automaticamente anunciados  ao mover-se entre linhas  após esta coluna. Premindo duas vezes apagará a definição. |  
 %kc:endInclude
 
@@ -589,9 +590,10 @@ Pressione OK, e o NVDA irá reiniciar.
 ==== Guardar A Configuração ao Sair ====
 Esta opção é uma caixa de verificação que, quando marcada, indica ao NVDA para guardar automaticamente a configuração actual, ao sair do NVDA.
 
-==== Alertar ao sair do NVDA ====
-Esta opção é uma caixa de verificação que lhe permite escolher se pretende ou não que apareça um diálogo, quando fechar o programa, questionando-o se deseja ou não sair.
-Quando marcada, um diálogo aparecerá ao tentar fechar o NVDA, a perguntar se deseja sair ou não.
+==== Mostrar opções de saída ao sair do NVDA ====
+Esta opção é uma caixa de verificação que lhe permite escolher se pretende ou não que apareça um diálogo, quando fechar o NVDA, questionando o que deseja fazer.
+Quando marcada, um diálogo aparecerá ao tentar fechar o NVDA, a perguntar se deseja sair, reiniciar ou reiniciar com os extras desactivados.
+Quando desmarcada, o NVDA sairá imediatamente
 
 ==== Tocar sons ao iniciar e sair do NVDA ====
 Esta opção é uma caixa de verificação que, quando marcada, indica ao NVDA para tocar sons ao iniciar e terminar.
@@ -665,12 +667,13 @@ Esta opção é uma barra deslizante, que vai de 0 a 100 (sendo o 0 o volume mai
 Uma barra deslizante que lhe permite escolher a inflexão (sobida e descida da entoação) que o sintetizador irá utilizar para falar. (Até ao momento, somente o eSpeak fornece esta funcionalidade).
 
 ==== Alterar o idioma, automaticamente (quando suportado) ====
-Esta caixa de verificação permite-lhe definir se o NVDA deverá ou não mudar o  idioma do sintetizador, enquanto fala, caso exista informação de marcação de idioma no texto que está a ser lido.
+Esta caixa de verificação permite-lhe definir se o NVDA deverá ou não mudar o  idioma do sintetizador, enquanto fala, caso o texto que está a ser lido especificar o seu idioma.
 Esta opção está activa, por padrão.
 Actualmente, apenas o eSpeak e o Vocalizer suportam a alteração automática de idioma.
 
 ==== Alterar o dialecto, automaticamente (quando suportado) ====
-Se a opção Alterar o idioma automaticamente estiver activa, esta caixa de verificação permite-lhe definir se o dialecto também deverá ser alterado, ou se serão efectuadas apenas alterações de idioma propriamente dito. Ex.: Se estiver a ler, com uma voz para o português de Portugal, mas um documento indicar que um pedaço de texto está em português do Brasil, se esta funcionalidade estiver activa, o sintetizador irá mudar de sotaque.
+Se a opção Alterar o idioma automaticamente estiver activa, esta caixa de verificação permite-lhe definir se o dialecto também deverá ser alterado, ou se serão efectuadas apenas alterações de idioma propriamente dito.
+Por exemplo, se estiver a ler, com uma voz para o português de Portugal, mas um documento indicar que um pedaço de texto está em português do Brasil, se esta funcionalidade estiver activa, o sintetizador irá mudar de sotaque.
 Esta opção está desactivada, por padrão.
 
 %kc:setting
@@ -1064,8 +1067,13 @@ Um exemplo simples passaria por ter o NVDA a anunciar a palavra "sapo", cada vez
 No diálogo para adicionar a regra, o modo mais fácil de fazer isto é escrever a palavra "pássaro", no campo texto original, e a palavra "sapo", no campo substituir por. Poderá igualmente escrever uma descrição da regra, no campo de comentário (algo como: muda pássaro para sapo).
 
 Os dicionários de voz do NVDA vão muito para além de simples substituição de palavras.
-O diálogo de adicionar regras também contém uma caixa de verificação que diz se pretende que a regra seja ou não sensível às maiúsculas (significando que o NVDA deverá ter em conta se os caracteres estão em maiúsculas ou não. O NVDA, por padrão), ignora a distinção entre maiúsculas e minúsculas.
-Outra caixa de verificação permite-lhe estabelecer se o texto original é uma "Expressão Regular".
+O diálogo de adicionar regras também contém uma caixa de verificação que diz se pretende que a regra seja ou não sensível às maiúsculas (significando que o NVDA deverá ter em conta se os caracteres estão em maiúsculas ou não.
+O NVDA, por padrão), ignora a distinção entre maiúsculas e minúsculas.
+
+Finalmente, um grupo de botões de rádio permite indicar ao NVDA se deve ser encontrado em qualquer local, se apenas em palavras completas ou deve ser considerado uma expressão regular.
+Configurando o padrão como palavra inteira define que a substituição só será feita se o padrão for encontrado como não fazendo parte de uma palavra maior; i.e. antes e depois do padrão não poderá estar un caracter diferente de um caracter alfanumérico ou um sublinhado (ou nenhum caracter ).
+Assim, usando o exemplo anterior de substituir a palavra "pássaro" por "sapo", se definir como uma substituição de palavra inteira, não substituirá "pássaros".
+
 Uma expressão regular é um padrão que contém símbolos especiais que permitem introduzir mais de um caracter ao mesmo tempo, ou introduzir apenas números, ou só letras, referindo alguns exemplos.
 As expressões regulares não são explicadas neste Manual do Utilizador, mas existem muitos tutoriais na Internet que podem proporcionar-lhe mais informações.
 
@@ -1760,6 +1768,7 @@ Geralmente, estão disponíveis as seguintes teclas, nestas linhas braille:
 | dn2 | Dois passos a baixo |
 
 Seguem-se as associações de comandos da Papenmeier para o NVDA:
+
 %kc:beginInclude
 Dispositivos com EAB
 || Nome | Tecla de atalho |
@@ -1877,7 +1886,84 @@ Por favor consulte a [documentação de tabelas de teclas do BRLTTY http://mielk
 | Encaminhar para a célula braille | route (bring cursor to character) |
 %kc:endInclude
 
++ abreviaçõess Braille para tipos de controlos e estados +
+Para que caiba o máximo de informaçãon possível na linha Braille, as seguintes abreviaturas são usadas para indicar os tipos de controlo e estado.
+
+|| Abreviatura | Tipo de controlo |
+| bto | botão |
+| cx | combo box |
+| cxver | caixa de verificação |
+| dlg | diálogo |
+| edç | texto editável |
+| gra | gráfico |
+| cN | Coluna número n da tabela, por exemplo, c1, c2. |
+| lN | Linha número n da tabela, por exemplo, l1, l2. |
+| tN | Título de nível n, e.g. h1, h2. |
+| lnk | link |
+| lst | lista |
+| lnkv | link visitado |
+| mnu | menu |
+| bmnu | Barra de menu |
+| btoo | botão de opção |
+| tb | tabela |
+| vá | vista em árvore |
+| vá N | Item de vista em árvore de nível N |
+| ``-----`` | separador |
+
+The following state indicators are also defined:
+|| Abreviatura | Estado do controlo |
+| ... | Mostrado quando um objecto suporta auto completação |
+| ( ) | Mostrado quando um objecto, por exemplo uma caixa de verificação, não está marcado |
+| (x) | Mostrado quando um objecto, por exemplo uma caixa de verificação, está marcado |
+| (-) | Mostrado quando um objecto, por exemplo uma caixa de verificação, está parcialmente marcado |
+| - | Mostrado quando um objecto, por exemplo um item de vista em árvore pode ser recolhido |
+| + | Mostrado quando um objecto, por exemplo um item de vista em árvore pode ser expandido |
+| clq | Mostrado quando um objecto pode ser clicado |
+| sl | Mostrado quando um objecto, por exemplo um campo de texto, é apenas de leitura |
+| sel | Mostrado quando um objecto está seleccionado |
+| submnu | displayed when an object has a popup (usually a sub-menu) |
+
+
 + tópicos Avançados +
+++ Opções de linha de comandos ++[CommandLineOptions]
+O NVDA pode aceitar uma ou mais opções adicionais quando inicia, que alteram o seu comportamento.
+Pode passar todas as opções que necessitar.
+Estas opções podem ser passadas ao iniciar a partir de um atalho (nas propriedades do atalho), a partir do diálogo Executar (Menu Iniciar -> Executar ou Windows+r) ou a partir da linha de comandos.
+As opções devem ser separadas do nome do ficheiro executável do NVDA e de outras opções por um espaço.
+Por exemplo, o atalho no Ambiente de trabalho criado pelo NVDA durante a instalação tem a opção -r, que indica ao NVDA para fechar a cópia em execução antes de iniciar outra cópia.
+Outra opção útil é --disable-addons, que indica ao NVDA para suspender todos os extras.
+Isto permite determinar se um problema é provocado por um extra e para recuperar de algum problema grave provocado por um extra.
+
+Como exemplo, pode sair da cópia em execução do NVDA escrevendo o seguinte na janela Executar::
+
+nvda -q
+
+Algumas das opções têm uma versão curta e uma longa, enquanto algumas só têm a longa.
+Para as que têm uma versão curta, pode combiná-las como se segue:
+| nvda -rm | This will exit the currently running copy of NVDA and will start a new copy with startup sounds disabled, etc. |
+| nvda -rm --disable-addons | Same as above, but with add-ons disabled |
+
+Some of the command line options accept additional parameters; e.g. how detailed the logging should be or the path to the user configuration directory.
+Those parameters should be placed after the option, separated from the option by a space when using the short version or an equals sign (=) when using the long version; e.g.:
+| nvda -l 10 | Tells NVDA to start with log level set to debug |
+| nvda --log-file=c:\nvda.log |  Tells NVDA to write its log to c:\nvda.log |
+| nvda --log-level=20 -f c:\nvda.log | Tels NVDA to start with log level set to info and to write its log to c:\nvda.log |
+
+Following are the command line options for NVDA:
+|| Short | Long | Description |
+| -h | --help | Mostra a ajuda da linha de comandos e sai |
+| -q | --quit | Sai da cópia em execução do NVDA |
+| -r | --replace | Sai da cópia em execução do NVDA e inicia esta |
+| -k | --check-running | Anuncia se o NVDA está em execução via código de saída; 0 se em execução, 1 se não em execução |
+| -f NomeDoFicheiroDeRegisto | --log-file=NomeDoFicheiroDeRegisto | Especifica em que ficheiro devem ser escritas as informações de registo |
+| -l NivelDeRegisto | --log-level=NivelDeRegisto | O nível mais baixo de mensagens registadas (depuração 10, info 20, aviso 30, erro 40, crítico 50), o padrão é aviso |
+| -c CAMINHO | --config-path=CAMINHO | O caminho para onde estão as configurações do NVDA |
+| -m | --minimal | Sem sons, sem interface, sem mensagem de início, etc |
+| -s | --secure | Modo seguro (desactiva a consola do Python) |
+| None | --disable-addons | Os extras serão desacttivados |
+| None | --no-sr-flag  | Não alterar a flag que sinaliza a presença de um leitor de ecrã no sistema |
+| None | --install | Silenciosamente installa o NVDA |
+
 ++ Personalização Avançada da Pronúncia de Símbolos ++
 
 É possível personalizar a pronúncia de pontuação e outros símbolos, além do que pode ser feito, usando o diálogo [pronúncia de pontuação/símbolo #SymbolPronunciation].
