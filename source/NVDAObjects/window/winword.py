@@ -757,18 +757,57 @@ class BrowseModeTreeInterceptorWithMakeTextInfo(browseMode.BrowseModeTreeInterce
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
 
-class BrowseModeWordDocumentTextInfo(WordDocumentTextInfo):
+class WordDocumentTextInfoForTreeInterceptor(WordDocumentTextInfo):
+
+	def _get_shouldIncludeLayoutTables(self):
+		return config.conf['documentFormatting']['includeLayoutTables']
+
+class BrowseModeWordDocumentTextInfo(textInfos.TextInfo):
 
 	def __init__(self,obj,position,_rangeObj=None):
 		if isinstance(position,WordDocument):
 			position=textInfos.POSITION_CARET
-		super(BrowseModeWordDocumentTextInfo,self).__init__(obj.rootNVDAObject,position,_rangeObj=_rangeObj)
+		super(BrowseModeWordDocumentTextInfo,self).__init__(obj,position)
+		self.innerTextInfo=WordDocumentTextInfoForTreeInterceptor(obj.rootNVDAObject,position,_rangeObj=_rangeObj)
 
 	def copy(self):
-		return BrowseModeWordDocumentTextInfo(self.obj.treeInterceptor,None,_rangeObj=self._rangeObj)
+		return BrowseModeWordDocumentTextInfo(self.obj,None,_rangeObj=self.innerTextInfo._rangeObj)
 
-	def _get_shouldIncludeLayoutTables(self):
-		return config.conf['documentFormatting']['includeLayoutTables']
+	def activate(self):
+		return self.innerTextInfo.activate()
+
+	def compareEndPoints(self,other,which):
+		return self.innerTextInfo.compareEndPoints(other.innerTextInfo,which)
+
+	def setEndPoint(self,other,which):
+		return self.innerTextInfo.setEndPoint(other.innerTextInfo,which)
+
+	def _get_isCollapsed(self):
+		return self.innerTextInfo.isCollapsed
+
+	def collapse(self,end=False):
+		return self.innerTextInfo.collapse(end=end)
+
+	def move(self,unit,direction,endPoint=None):
+		return self.innerTextInfo.move(unit,direction,endPoint=endPoint)
+
+	def _get_bookmark(self):
+		return self.innerTextInfo.bookmark
+
+	def updateCaret(self):
+		return self.innerTextInfo.updateCaret()
+
+	def updateSelection(self):
+		return self.innerTextInfo.updateSelection()
+
+	def _get_text(self):
+		return self.innerTextInfo.text
+
+	def getTextWithFields(self,formatConfig=None):
+		return self.innerTextInfo.getTextWithFields(formatConfig=formatConfig)
+
+	def expand(self,unit):
+		return self.innerTextInfo.expand(unit)
 
 class WordDocumentTreeInterceptor(CursorManager,BrowseModeTreeInterceptorWithMakeTextInfo):
 
@@ -810,7 +849,7 @@ class WordDocumentTreeInterceptor(CursorManager,BrowseModeTreeInterceptorWithMak
 
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
 		if pos:
-			rangeObj=pos._rangeObj 
+			rangeObj=pos.innerTextInfo._rangeObj 
 		else:
 			rangeObj=self.rootNVDAObject.WinwordDocumentObject.range(0,0)
 		includeCurrent=False if pos else True
