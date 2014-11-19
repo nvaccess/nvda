@@ -5,15 +5,45 @@
 
 = 2014.4 =
 
+== New Features ==
+- New languages: Colombian Spanish, Punjabi
+- It is now possible to restart NVDA or restart NVDA with add-ons disabled from NVDA's exit dialog. (#4057)
+ - NVDA can also be started with add-ons disabled by using the --disable-addons command line option.
+- In speech dictionaries, it is now possible to specify that a pattern should only match if it is a whole word; i.e. it does not occur as part of a larger word. (#1704)
+
+
 == Changes ==
 - If an object you have moved to with object navigation is inside a browse mode document, but the object you were on previously was not, the review mode is automatically set to document. Previously this only happened if the navigator object was moved due to the focus changing. (#4369)
+- The Braille display and Synthesizer lists in the respective settings dialogs are now alphabetically sorted except for No braille/No speech, which are now at the bottom. (#2724)
+- Updated liblouis braille translator to 2.6.0. (#4434, #3835)
+- In browse mode, pressing e and shift+e to navigate to edit fields now includes editable combo boxes. This includes the search box in the latest versionn of Google Search. (#4436)
+- Clicking the NVDA icon in the Notification Area with the left mouse button now opens the NVDA menu instead of doing nothing. (#4459)
 
 
 == Bug Fixes ==
 - When moving focus back to a browse mode document (e.g. alt tabbing to an already opened web page) the review cursor is properly positioned at the virtual caret, rather than the focused control (e.g. a near by link). (#4369)
 - In Powerpoint slide shows, the review cursor correctly follows the virtual caret. (#4370)
 - In Mozilla Firefox and other Gecko-based browsers, new content within a live region will be announced even if the new content has a usable ARIA live type different to the parent live region. E.g. Content marked as assertive is added to a live region marked as polite. (#4169).
-- In Internet Explorer and other MSHTML controls, framesets inside framesets no longer cause a new browse mode document to be created for the inner framesets, which was not allowing navigation to outer frames. (#4418)
+- In Internet Explorer and other MSHTML controls, some cases where a document is contained within another document no longer prevent the user from accessing some of the content (specifically, framesets inside framesets). (#4418)
+- NVDA no longer crashes when attempting to use a Handy Tech braille display in some cases. (#3709)
+- In Windows Vista, a spurious "Entry Point Not Found" dialog is no longer displayed in several cases such as when starting NVDA from the Desktop shortcut or via the shortcut key. (#4235)
+- Serious problems with editable text controls in dialogs in recent versions of Eclipse have been fixed. (#3872)
+- In Outlook 2010, moving the caret now works as expected in the location field of appointments and meeting requests. (#4126)
+- Inside a live region, content which is marked as not being live (e.g. aria-live="off") is now correctly ignored. (#4405)
+- When reporting the text of a status bar that has a name, the name is now correctly separated from the first word of the status bar text. (#4430)
+- In password entry fields with speaking of typed words enabled, multiple asterisks are no longer pointlessly reported when beginning new words. (#4402)
+- In the Microsoft Outlook message list, items are no longer pointlessly announced as Data Items. (#4439)
+- When selecting text in the code editing control in the Eclipse IDE, the entire selection is no longer announced every time the selection changes. (#2314)
+- Various versions of Eclipse, such as Spring Tool Suite and the version included in the Android Developer Tools bundle, are now recognised as Eclipse and handled appropriately. (#4360, #4454)
+- Mouse tracking and touch exploration in Internet Explorer and other MSHTML controls (including many Windows 8 applications) is now much more accurate  on 
+high DPI displays or when document zoom is changed. (#3494) 
+- Mouse tracking and touch exploration in Internet Explorer and other MSHTML controls will now announce the label of more buttons. (#4173)
+
+
+== Changes for Developers ==
+- For executables which host many different apps (e.g. javaw.exe), code can now be provided to load specific app modules for each app instead of loading the same app module for all hosted apps. (#4360)
+ - See the code documentation for appModuleHandler.AppModule for details.
+ - Support for javaw.exe is implemented.
 
 
 = 2014.3 =

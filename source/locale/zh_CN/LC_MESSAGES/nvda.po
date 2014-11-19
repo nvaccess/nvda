@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-08 19:12+1000\n"
-"PO-Revision-Date: 2014-10-09 15:45+0800\n"
+"POT-Creation-Date: 2014-11-06 19:11+1000\n"
+"PO-Revision-Date: 2014-11-08 20:31+0800\n"
 "Last-Translator: 雪岭冰龙 <vgjh2005@gmail.com>\n"
 "Language-Team: Simplified Chinese translate team <vgjh2005@gmail.com>\n"
 "Language: zh_CN\n"
@@ -3925,13 +3925,6 @@ msgstr "合成器字典(%s)"
 msgid "Temporary dictionary"
 msgstr "临时字典"
 
-#. Translators: Message shown to ask if user really wishes to quit NVDA.
-msgid "Are you sure you want to quit NVDA?"
-msgstr "您确定要退出 NVDA 吗？"
-
-msgid "Exit NVDA"
-msgstr "退出 NVDA"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "关于 NVDA"
@@ -4153,6 +4146,10 @@ msgstr "捐赠(&D)"
 msgid "E&xit"
 msgstr "退出(&X)"
 
+#. Translators: The title of the dialog to exit NVDA
+msgid "Exit NVDA"
+msgstr "退出 NVDA"
+
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -4212,6 +4209,28 @@ msgstr "创建便携版(&P)"
 msgid "&Continue running"
 msgstr "继续运行(&C)"
 
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr "所有插件已经被停用，他们将在下次重启时重新启用，除非您选择再次禁用。"
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "您想怎么做(&d)？"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "退出"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "重新启动"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "重启并停用插件"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "请等待"
@@ -4219,6 +4238,10 @@ msgstr "请等待"
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "插件管理器"
+
+#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgstr "所有插件已被停用，要想启用插件，您必须重新启动 NVDA。"
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -4325,6 +4348,10 @@ msgstr "安装"
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "remove"
 msgstr "移除"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+msgid "suspended"
+msgstr "已挂起"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
@@ -4749,9 +4776,9 @@ msgstr "语言"
 msgid "&Save configuration on exit"
 msgstr "退出时保存设置(&S)"
 
-#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
-msgid "&Warn before exiting NVDA"
-msgstr "退出 NVDA 前发出警告(&W)"
+#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
+msgid "Sho&w exit options when exiting NVDA"
+msgstr "退出 NVDA 时显示退出选项(&w)"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -5299,6 +5326,18 @@ msgstr "朗读框架(&M)"
 msgid "Report if &clickable"
 msgstr "朗读可点击(&C)"
 
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "不限"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "整词匹配(&W)"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Regular expression"
+msgstr "正则表达式(&R)"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "修改字典项目"
@@ -5319,9 +5358,9 @@ msgstr "注释(&C)"
 msgid "Case &sensitive"
 msgstr "匹配大小写(&S)"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "正则表达式(&E)"
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "类型(&T):"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -5344,9 +5383,9 @@ msgstr "替换文本"
 msgid "case"
 msgstr "大小写匹配"
 
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
-msgid "Regexp"
-msgstr "正则表达式"
+#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "类型类型:"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
@@ -6412,33 +6451,14 @@ msgstr "HIMS Braille Sense/Braille EDGE 系列"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
-#~ msgid ""
-#~ "All add-ons are now disabled. They will be re-enabled on the next restart "
-#~ "unless you choose to disable them again."
-#~ msgstr ""
-#~ "所有插件已经被停用，他们将在下次重启时重新启用，除非您选择再次禁用。"
+#~ msgid "Are you sure you want to quit NVDA?"
+#~ msgstr "您确定要退出 NVDA 吗？"
 
-#~ msgid "What would you like to &do?"
-#~ msgstr "您想怎么做(&d)？"
+#~ msgid "&Warn before exiting NVDA"
+#~ msgstr "退出 NVDA 前发出警告(&W)"
 
-#~ msgid "Exit"
-#~ msgstr "退出"
-
-#~ msgid "Restart"
-#~ msgstr "重新启动"
-
-#~ msgid "Restart with add-ons disabled"
-#~ msgstr "重启并停用插件"
-
-#~ msgid ""
-#~ "All add-ons are now disabled. To enable add-ons you must restart NVDA."
-#~ msgstr "所有插件已被停用，要想启用插件，您必须重新启动 NVDA。"
-
-#~ msgid "suspended"
-#~ msgstr "已挂起"
-
-#~ msgid "Sho&w exit options when exiting NVDA"
-#~ msgstr "退出 NVDA 时显示退出选项(&w)"
+#~ msgid "Regexp"
+#~ msgstr "正则表达式"
 
 #~ msgid "No location information for navigator object"
 #~ msgstr "没有浏览对象的位置信息"

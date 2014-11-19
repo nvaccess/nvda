@@ -3,20 +3,17 @@
 #Copyright (c) 2014 NVDA Farsi contributors
 #This file is covered by the GNU General Public License.
 
-complexSymbols:
-؟ sentence ending	(?<=[^\s؟])\؟(?=[\"'”’)\s]|$)
-
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	نقطه
-! sentence ending	تعجب
-? sentence ending	Question
+. sentence ending	نقطه	all	always
+! sentence ending	تعجب	all	always
+? sentence ending	Question	all	always
 ؟ sentence ending	سؤال	all	always
 ؛ phrase ending		نقطه ویرگول	all	always
-; phrase ending	semicolon
-: phrase ending	دو نقطه
+; phrase ending	semicolon	all	always
+: phrase ending	دو‌نقطه
 decimal point		ممیز
 in-word '	apostrophe
 negative number	منفی
@@ -28,7 +25,7 @@ negative number	منفی
 \f	بَرگه بُر
 \r	پایانِ خط
  	فاصله
- 	خطِ جدید
+ 	فاصله بدونِ شکست
 
 # Standard punctuation/symbols
 !	تعجب
@@ -77,32 +74,35 @@ _	زیرخط
 —	em dash
 ●	دایره
 ¨	diaeresis
-■	مربعِ سیاه
-➔	فِلِشِ سر‌پهن
-→	‌فِلِشِ راست‌نما
+■	مربعِ سیاه	char
+➔	فِلِشِ سر‌پهن	char
+→	‌فِلِشِ راست‌نما	char
 §	بخش
 °	درجه
 ¹	۱ بالانویس
 ²	۲ بالانویس
 ³	۳  بالانویس
-±	مثبت منفی
-×	ضرب در
-÷	تقسیم بر
+±	مثبت‌منفی
+×	ضرب‌در
+÷	تقسیم‌بر
 ✓	تیکِ ضخیم
 ✔	تیک
 ٬	هزار‌گان
+٫	ممیز	none
+٪	درصد	some
 
 # Persian symbols
-،	کاما	all	always
+،	ویرگول	all	always
 ؟	سؤال	all	always
-ـ	کشیده	char	never
-«	گیومه باز		all	always
-»	گیومه بسته		all	always
+ـ	کشیده	char	always
+«	گیومه باز	most	always
+»	گیومه بسته	most	always
+ٔ	همزه‌ی بالا	char	always
 
 # Unicode Formating symbols
 ‎	نشانه چپ به راست	char	never
 ‏	نشانه راست به چپ	char	never
-‍	اتصال	char	never
+‍	نیم‌اتصال	char	never
 ‌	نیم‌فاصله	char	never
 ‪	چپ به راستِ توکار	char	never
 ‫	راست به چپِ توکار	char	never

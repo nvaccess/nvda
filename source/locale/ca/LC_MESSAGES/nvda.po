@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-08 19:12+1000\n"
+"POT-Creation-Date: 2014-11-06 19:11+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Rubén Alcaraz <rubenalcarazmartinez@gmail.com>\n"
 "Language-Team: Dr. Mireia Ribera<mireia.ribera@gmail.com , Ruben "
@@ -2694,7 +2694,7 @@ msgstr "Fletxa esquerra"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right arrow"
-msgstr "Fletxa dreta"
+msgstr "fletxa dreta"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "up arrow"
@@ -3216,7 +3216,7 @@ msgstr "&To"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
-msgstr "&Entonació"
+msgstr "&Inflexió"
 
 msgid "text mode"
 msgstr "mode de text"
@@ -4054,13 +4054,6 @@ msgstr "Diccionari de veus (%s)"
 msgid "Temporary dictionary"
 msgstr "Diccionari temporal"
 
-#. Translators: Message shown to ask if user really wishes to quit NVDA.
-msgid "Are you sure you want to quit NVDA?"
-msgstr "Estàs segur que vols sortir de NVDA?"
-
-msgid "Exit NVDA"
-msgstr "Surt de NVDA"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "Quant a NVDA"
@@ -4198,7 +4191,7 @@ msgstr "&Preferències"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 msgid "View log"
-msgstr "Veure el registre"
+msgstr "Visor de registre"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
@@ -4292,6 +4285,10 @@ msgstr "Fes una donació"
 msgid "E&xit"
 msgstr "S&urt"
 
+#. Translators: The title of the dialog to exit NVDA
+msgid "Exit NVDA"
+msgstr "Surt de NVDA"
+
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -4355,6 +4352,33 @@ msgstr "Crea una versió &portable"
 msgid "&Continue running"
 msgstr "&Continua executant"
 
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"Tots els complements estan desactivats. Es tornaran a activar després de "
+"reiniciar, sempre que no triïs desactivar-los una altra vegada."
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "Què voleu &fer?"
+
+#. Translators: An option in the combo box to choose exit action.
+#, fuzzy
+msgid "Exit"
+msgstr "Surt de NVDA"
+
+#. Translators: An option in the combo box to choose exit action.
+#, fuzzy
+msgid "Restart"
+msgstr "Reinicia NVDA"
+
+#. Translators: An option in the combo box to choose exit action.
+#, fuzzy
+msgid "Restart with add-ons disabled"
+msgstr "Espera mentre el complement s'instal·la."
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "Espera"
@@ -4362,6 +4386,12 @@ msgstr "Espera"
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Gestor de complements"
+
+#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgstr ""
+"Tots els complements estan desactivats. Per activar els complements has de "
+"reiniciar NVDA."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -4400,7 +4430,7 @@ msgstr "&Instal·la..."
 #. Remove a speech dictionary entry.
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 msgid "&Remove"
-msgstr "&Suprimeix"
+msgstr "&Elimina"
 
 #. Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 msgid "&Get add-ons..."
@@ -4471,7 +4501,11 @@ msgstr "instal·la"
 
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "remove"
-msgstr "suprimeix"
+msgstr "elimina"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+msgid "suspended"
+msgstr "suspès"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
@@ -4527,7 +4561,7 @@ msgstr "&Reanomena"
 
 #. Translators: The label of a button to delete a configuration profile.
 msgid "&Delete"
-msgstr "&Suprimeix"
+msgstr "&Elimina"
 
 #. Translators: The label of a button to manage triggers
 #. in the Configuration Profiles dialog.
@@ -4607,7 +4641,7 @@ msgstr "S'ha produït un error en reanomenar el perfil."
 #. %s is replaced by the application executable name.
 #, python-format
 msgid "Current application (%s)"
-msgstr "Aplicació actual (%s)"
+msgstr "Aplicació en ús (%s)"
 
 #. Translators: Displayed for the configuration profile trigger for say all.
 msgid "Say all"
@@ -4910,9 +4944,9 @@ msgstr "Idiomes"
 msgid "&Save configuration on exit"
 msgstr "&Desa la configuració en sortir"
 
-#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
-msgid "&Warn before exiting NVDA"
-msgstr "&Avisa abans de sortir de NVDA"
+#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
+msgid "Sho&w exit options when exiting NVDA"
+msgstr "Mos&tra les opcions de sortida al sortir del NVDA"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -5180,7 +5214,7 @@ msgstr "Anuncia el &rol quan el ratolí entri dins l'objecte"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "play audio coordinates when mouse moves"
-msgstr "Emet les coordenades per àudio quan el ratolí es mou"
+msgstr "Emet les coordenades per àudio quan el ratolí es mogui"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -5243,7 +5277,7 @@ msgstr "Informa de canvis a la cadena de &composició"
 
 #. Translators: This is the label for the object presentation dialog.
 msgid "Object Presentation"
-msgstr "Presentació d'objecte"
+msgstr "Presentació d'objectes"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by speaking.
@@ -5376,7 +5410,7 @@ msgstr "Informa del &nom del tipus de lletra"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report font &size"
-msgstr "Informa del &cos de lletra"
+msgstr "Informa del &cos de la lletra"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5422,7 +5456,7 @@ msgstr "Informa dels números de &línia"
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
 #.
 msgid "Report l&ine indentation"
-msgstr "Informa del sagnat de línia"
+msgstr "Informa del sagnat de la línia"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -5437,12 +5471,12 @@ msgstr "Informa de les &taules"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report table row/column h&eaders"
-msgstr "Informa de les c&apçaleres de les files i columnes de la taula"
+msgstr "Informa de les c&apçaleres de les files i de les columnes de la taula"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report table cell c&oordinates"
-msgstr "Informa de les c&oordenades de les cel·les de la taula"
+msgstr "Informa de les c&oordenades de la cel·la de la taula"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5479,6 +5513,19 @@ msgstr "Informa dels &marcs"
 msgid "Report if &clickable"
 msgstr "Informa si és pot fer &clic"
 
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "&En qualsevol lloc"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "La &paraula sencera"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+#, fuzzy
+msgid "&Regular expression"
+msgstr "Expressió &regular"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "Edita l'entrada del diccionari"
@@ -5499,9 +5546,10 @@ msgstr "&Comentari"
 msgid "Case &sensitive"
 msgstr "Distingeix &majúscules i minúscules"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "Expressió &regular"
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+#, fuzzy
+msgid "&Type"
+msgstr "Tipus:"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -5522,11 +5570,12 @@ msgstr "Reemplaçament"
 
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
 msgid "case"
-msgstr "majúscules i minúscules"
+msgstr "Majúscules i minúscules"
 
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
-msgid "Regexp"
-msgstr "Regexp"
+#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
+#, fuzzy
+msgid "Type"
+msgstr "Tipus:"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
@@ -6625,3 +6674,12 @@ msgstr "sèries HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to quit NVDA?"
+#~ msgstr "Estàs segur que vols sortir de NVDA?"
+
+#~ msgid "&Warn before exiting NVDA"
+#~ msgstr "&Avisa abans de sortir de NVDA"
+
+#~ msgid "Regexp"
+#~ msgstr "Regexp"

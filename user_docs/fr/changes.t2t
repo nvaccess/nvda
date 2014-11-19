@@ -5,6 +5,13 @@ Quoi de Neuf dans NVDA
 
 = 2014.4 =
 
+== Nouvelles Fonctionnalités ==
+- Nouvelles langues : Espagnol Colombien, Punjabi
+- Il est maintenant possible de redémarrer NVDA normalement ou avec les modules complémentaires désactivés depuis le dialogue d'arrêt de NVDA. (#4057)
+ - NVDA peut aussi être démarré sans modules complémentaires en utilisant l'option de ligne de commande --disable-addons.
+- Dans les dictionnaires de prononciation, il est maintenant possible de spécifier qu'un modèle ne devrait correspondre que s'il s'agit d'un mot entier. (#1704)
+
+
 == Changements ==
 - Si vous vous déplacez vers un objet en mode navigation par objet et que cet objet est dans un document en mode revue de document, le mode de revue de document sera automatiquement activé. Précédemment, cela n'arrivait que si l'objet navigateur était déplacé à la suite d'un changement de focus. (#4369)
 - La liste des afficheurs braille et celle des synthétiseurs dans leurs dialogues de paramétrage respectifs sont maintenant triées dans l'ordre alphabétique à l'exception de "Pas de Braille" et "Pas de parole" qui se trouvent maintenant en fin de liste. (#2724)
@@ -25,6 +32,17 @@ Quoi de Neuf dans NVDA
 - Dans une région active, le contenu marqué comme inactif (ex : aria-live="off") est maintenant correctement ignoré. (#4405)
 - Durant l'annonce d'une barre dd'état ayant un nom, le nom est maintenant correctement séparé du premier mot du texte de la barre d'état. (#4430)
 - Dans les champs de saisie de mot de passe quand l'écho par mot est activé, de multiples astérisques ne sont plus annoncées sans raison au commencement d'un nouveau mot. (#4402)
+- Dans la liste de messages de Microsoft Outlook, des éléments ne sont plus annoncés sans raison comme éléments de données. (#4439)
+- Quand on sélectionne du texte dans le contrôle d'édition de code de l'IDE d'Eclipse, la sélection entière n'est plus annoncée chaque fois que la sélection change. (#2314)
+- Différentes versions d'Eclipse, telles que Spring Tool Suite ou la version incluse dans le pack d'outils de développement d'Android, sont maintenant reconnues comme Eclipse et prises en compte de manière appropriée. (#4360)
+- Le suivi de la souris et l'exploration tactile sous Internet Explorer et autres contrôles MSHTML (incluant beaucoup d'applications Windows 8) sont maintenant beaucoup plus précis sur les écrans à haute résolution ou quand on change le niveau de zoom du document. (#3494) 
+- Le suivi de la souris et l'exploration tactile sous Internet Explorer et autres contrôles MSHTML annonceront maintenant l'étiquette de davantage de boutons. (#4173)
+
+
+== Changements pour les Développeurs ==
+- Pour les exécutables qui hébergent beaucoup d'applications différentes (ex : javaw.exe), du code peut maintenant être fourni pour charger des modules spécifiques pour chaque application au lieu de charger le même module pour toutes les applications hébergées. (#4360)
+ - Consultez la documentation du code de appModuleHandler.AppModule pour des détails.
+ - Le support de javaw.exe est implémenté.
 
 
 = 2014.3 =
