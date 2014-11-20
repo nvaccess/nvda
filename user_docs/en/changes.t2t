@@ -6,14 +6,14 @@
 = 2014.4 =
 
 == New Features ==
-- New languages: Colombian Spanish, Punjabi
+- New languages: Colombian Spanish, Punjabi.
 - It is now possible to restart NVDA or restart NVDA with add-ons disabled from NVDA's exit dialog. (#4057)
  - NVDA can also be started with add-ons disabled by using the --disable-addons command line option.
 - In speech dictionaries, it is now possible to specify that a pattern should only match if it is a whole word; i.e. it does not occur as part of a larger word. (#1704)
 
 
 == Changes ==
-- If an object you have moved to with object navigation is inside a browse mode document, but the object you were on previously was not, the review mode is automatically set to document. Previously this only happened if the navigator object was moved due to the focus changing. (#4369)
+- If an object you have moved to with object navigation is inside a browse mode document, but the object you were on previously was not, the review mode is automatically set to document. Previously, this only happened if the navigator object was moved due to the focus changing. (#4369)
 - The Braille display and Synthesizer lists in the respective settings dialogs are now alphabetically sorted except for No braille/No speech, which are now at the bottom. (#2724)
 - Updated liblouis braille translator to 2.6.0. (#4434, #3835)
 - In browse mode, pressing e and shift+e to navigate to edit fields now includes editable combo boxes. This includes the search box in the latest versionn of Google Search. (#4436)
@@ -21,9 +21,9 @@
 
 
 == Bug Fixes ==
-- When moving focus back to a browse mode document (e.g. alt tabbing to an already opened web page) the review cursor is properly positioned at the virtual caret, rather than the focused control (e.g. a near by link). (#4369)
+- When moving focus back to a browse mode document (e.g. alt+tabbing to an already opened web page), the review cursor is properly positioned at the virtual caret, rather than the focused control (e.g. a nearby link). (#4369)
 - In Powerpoint slide shows, the review cursor correctly follows the virtual caret. (#4370)
-- In Mozilla Firefox and other Gecko-based browsers, new content within a live region will be announced even if the new content has a usable ARIA live type different to the parent live region. E.g. Content marked as assertive is added to a live region marked as polite. (#4169).
+- In Mozilla Firefox and other Gecko-based browsers, new content within a live region will be announced even if the new content has a usable ARIA live type different to the parent live region; e.g. when content marked as assertive is added to a live region marked as polite. (#4169)
 - In Internet Explorer and other MSHTML controls, some cases where a document is contained within another document no longer prevent the user from accessing some of the content (specifically, framesets inside framesets). (#4418)
 - NVDA no longer crashes when attempting to use a Handy Tech braille display in some cases. (#3709)
 - In Windows Vista, a spurious "Entry Point Not Found" dialog is no longer displayed in several cases such as when starting NVDA from the Desktop shortcut or via the shortcut key. (#4235)
