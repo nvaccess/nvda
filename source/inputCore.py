@@ -96,6 +96,10 @@ class InputGesture(baseObject.AutoPropertyObject):
 	#: @type: bool
 	shouldReportAsCommand = True
 
+	#: whether this gesture represents a character being typed (i.e. not a potential command)
+	#: @type bool
+	isCharacter=False
+
 	SPEECHEFFECT_CANCEL = "cancel"
 	SPEECHEFFECT_PAUSE = "pause"
 	SPEECHEFFECT_RESUME = "resume"
