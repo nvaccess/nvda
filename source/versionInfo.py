@@ -29,7 +29,7 @@ def _updateVersionFromVCS():
 
 name="NVDA"
 longName=_("NonVisual Desktop Access")
-version="2014.4dev"
+version="2015.1dev"
 publisher="unknown"
 updateVersionType=None
 try:
