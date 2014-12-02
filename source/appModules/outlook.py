@@ -22,6 +22,7 @@ import speech
 import ui
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
+from NVDAObjects.window.winword import WordDocument
 from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation
 from NVDAObjects.UIA import UIA
@@ -129,6 +130,8 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0,UIAGridRow)
 		if not isinstance(obj,IAccessible):
 			return
+		if WordDocument in clsList:
+			clsList.insert(0,OutlookWordDocument)
 		role=obj.role
 		windowClassName=obj.windowClassName
 		states=obj.states
@@ -441,3 +444,15 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 	def setFocus(self):
 		super(UIAGridRow,self).setFocus()
 		eventHandler.queueEvent("gainFocus",self)
+
+class OutlookWordDocument(WordDocument):
+
+	def _get_shouldCreateTreeInterceptor(self):
+		# #2975: If this WordDocument is displaying a sent message, then it should be read with browse mode.
+		try:
+			return self.appModule.nativeOm.activeInspector().currentItem.sent
+		except (COMError,NameError,AttributeError):
+			return False
+
+	def _get_role(self):
+		return controlTypes.ROLE_DOCUMENT if self.shouldCreateTreeInterceptor else super(OutlookWordDocument,self).role
