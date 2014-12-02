@@ -87,6 +87,7 @@ class AddonsDialog(wx.Dialog):
 		self.SetSizer(mainSizer)
 		self.refreshAddonsList()
 		self.addonsList.SetFocus()
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	def OnAddClick(self,evt):
 		# Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.

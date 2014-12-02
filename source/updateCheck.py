@@ -218,6 +218,7 @@ class UpdateResultDialog(wx.Dialog):
 
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 		self.Show()
 
 	def onDownloadButton(self, evt):
@@ -408,6 +409,7 @@ class DonateRequestDialog(wx.Dialog):
 
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 		self.Show()
 
 	def onDonate(self, evt):
