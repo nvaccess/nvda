@@ -5,6 +5,9 @@
 
 = 2015.1 =
 
+== Bug Fixes ==
+- In Microsoft Excel, handle the case when row and column header cells are merged. E.g. if A1 and B1 are merged, then B2 will now have A1 and B1 reported as its column header, rather than nothing at all. (#4617)
+
 
 = 2014.4 =
 
