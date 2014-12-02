@@ -3,6 +3,13 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.1 =
+
+== Bug Fixes ==
+- In Microsoft Excel, handle the case when row and column header cells are merged. E.g. if A1 and B1 are merged, then B2 will now have A1 and B1 reported as its column header, rather than nothing at all. (#4617)
+- When editing the content of a text box in Microsoft PowerPoint 2003, NVDA will correctly report the content of each line. Previously lines would increasingly be off by one character for each new paragraph. (#4619)
+
+
 = 2014.4 =
 
 == New Features ==
