@@ -88,13 +88,12 @@ RGBToNames={
 	#Standard 16 HTML 4 colors
 	# Translators: The color black.
 	RGB(0x00,0x00,0x00):_('black'),
-	# Translators: The color green.
-	RGB(0x00,0x80,0x00):_('green'),
+	# Translators: The color dark green.
+	RGB(0x00,0x80,0x00):_('dark green'),
 	# Translators: The light gray color.
 	RGB(0xc0,0xc0,0xc0):_('light grey'),
-	# Translators: The color lime.
-	# For more info see: http://en.wikipedia.org/wiki/Lime_%28color%29
-	RGB(0x00,0xff,0x00):_('lime'),
+	# Translators: The color green (full brightness) 
+	RGB(0x00,0xff,0x00):_('green'),
 	# Translators: The color gray (halfway between white and black).
 	RGB(0x80,0x80,0x80):_('grey'),
 	# Translators: the color olive.
