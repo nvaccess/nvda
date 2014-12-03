@@ -15,12 +15,26 @@ import wx
 import winKernel
 import wave
 import config
+from logHandler import log
 
 __all__ = (
 	"WavePlayer", "getOutputDeviceNames", "outputDeviceIDToName", "outputDeviceNameToID",
 )
 
 winmm = windll.winmm
+
+AUDIODUCKINGMODE_NONE=0
+AUDIODUCKINGMODE_OUTPUTTING=1
+AUDIODUCKINGMODE_ALWAYS=2
+
+audioDuckingModes=[
+	# Translators: an audio ducking mode for Windows 8 and up
+	_("No ducking"),
+	# Translators: an audio ducking mode for Windows 8 and up
+	_("Duck when outputting speech and sounds"),
+	# Translators: an audio ducking mode for Windows 8 and up
+	_("Always duck"),
+]
 
 ANRUS_PRIORITY_AUDIO_ACTIVE=4
 ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK=8
@@ -94,6 +108,9 @@ for func in (
 ):
 	func.errcheck = _winmm_errcheck
 
+def isAudioDuckingSupported():
+	return config.isInstalledCopy() and hasattr(oledll.oleacc,'AccSetRunningUtilityState')
+
 class WavePlayer(object):
 	"""Synchronously play a stream of audio.
 	To use, construct an instance and feed it waveform audio using L{feed}.
@@ -101,36 +118,60 @@ class WavePlayer(object):
 	#: A lock to prevent WaveOut* functions from being called simultaneously, as this can cause problems even if they are for different HWAVEOUTs.
 	_global_waveout_lock = threading.RLock()	
 
+	_audioDuckingMode=AUDIODUCKINGMODE_NONE
 	_global_priorityRefCount=0 #class variable, not instance
 	_global_priorityRefCountLock = threading.RLock()
 	_priorityRequested=False
 
-	def _checkPrioritySupported(self):
-		return config.isInstalledCopy() and hasattr(oledll.oleacc,'AccSetRunningUtilityState')
-
 	@classmethod
-	def _global_requestPriority(cls,switch):
+	def _global_setPriority(self,switch):
 		with WavePlayer._global_priorityRefCountLock:
 			import gui
 			ATWindow=gui.mainFrame.GetHandle()
 			if switch:
+				oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_PRIORITY_AUDIO_ACTIVE|ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK,ANRUS_PRIORITY_AUDIO_ACTIVE|ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK)
+			else:
+				oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_PRIORITY_AUDIO_ACTIVE|ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK,0)
+
+	@classmethod
+	def setAudioDuckingMode(cls,mode):
+		if mode<0 or mode>=len(audioDuckingModes):
+			raise ValueError("%s is not an audio ducking mode")
+		with WavePlayer._global_priorityRefCountLock:
+			oldMode=WavePlayer._audioDuckingMode
+			WavePlayer._audioDuckingMode=mode
+			if oldMode==AUDIODUCKINGMODE_NONE and mode!=AUDIODUCKINGMODE_NONE and WavePlayer._global_priorityRefCount>0:
+				WavePlayer._global_setPriority(True)
+			elif oldMode!=AUDIODUCKINGMODE_NONE and mode==AUDIODUCKINGMODE_NONE and WavePlayer._global_priorityRefCount>0:
+				WavePlayer._global_setPriority(False)
+			if oldMode!=AUDIODUCKINGMODE_ALWAYS and mode==AUDIODUCKINGMODE_ALWAYS:
+				WavePlayer._global_requestPriority(True)
+			elif oldMode==AUDIODUCKINGMODE_ALWAYS and mode!=AUDIODUCKINGMODE_ALWAYS: 
+				WavePlayer._global_requestPriority(False)
+
+	@classmethod
+	def _global_requestPriority(cls,switch):
+		with WavePlayer._global_priorityRefCountLock:
+			if switch:
 				WavePlayer._global_priorityRefCount+=1
-				if WavePlayer._global_priorityRefCount==1:
-					oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_PRIORITY_AUDIO_ACTIVE|ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK,ANRUS_PRIORITY_AUDIO_ACTIVE|ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK)
-					time.sleep(0.1)
+				if WavePlayer._global_priorityRefCount==1 and WavePlayer._audioDuckingMode!=AUDIODUCKINGMODE_NONE:
+					WavePlayer._global_setPriority(True)
+					time.sleep(0.15)
 			else:
 				WavePlayer._global_priorityRefCount-=1
-				if WavePlayer._global_priorityRefCount==0:
-					oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_PRIORITY_AUDIO_ACTIVE|ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK,0)
+				if WavePlayer._global_priorityRefCount==0 and WavePlayer._audioDuckingMode!=AUDIODUCKINGMODE_NONE:
+					WavePlayer._global_setPriority(False)
 
 	def _requestPriority(self,switch):
+		if self._audioDuckingMode==AUDIODUCKINGMODE_NONE:
+			return
 		with WavePlayer._global_priorityRefCountLock:
 			if switch==self._priorityRequested:
 				return
 			if switch:
 				WavePlayer._global_requestPriority(True)
 			else:
-				wx.CallLater(1500,WavePlayer._global_requestPriority,False)
+				wx.CallLater(1000,WavePlayer._global_requestPriority,False)
 			self._priorityRequested=switch
 
 	def __init__(self, channels, samplesPerSec, bitsPerSample, outputDevice=WAVE_MAPPER, closeWhenIdle=True,wantPriority=True):
@@ -156,7 +197,7 @@ class WavePlayer(object):
 		if isinstance(outputDevice, basestring):
 			outputDevice = outputDeviceNameToID(outputDevice, True)
 		self.outputDeviceID = outputDevice
-		if wantPriority and not self._checkPrioritySupported():
+		if wantPriority and not isAudioDuckingSupported():
 			wantPriority=False
 		self._wantPriority=wantPriority
 		self._priorityRequested=False

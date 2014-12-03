@@ -8,6 +8,7 @@
 import time
 import itertools
 import tones
+import nvwave
 import touchHandler
 import keyboardHandler
 import mouseHandler
@@ -78,6 +79,21 @@ SCRCAT_INPUT = _("Input")
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
 	"""
+
+	def script_toggleAudioDuckingMode(self,gesture):
+		if not nvwave.isAudioDuckingSupported():
+			# Translators: a message when audio ducking is not supported on this machine
+			ui.message(_("Audio ducking not supported"))
+			return
+		curMode=config.conf['audio']['audioDuckingMode']
+		numModes=len(nvwave.audioDuckingModes)
+		nextMode=(curMode+1)%numModes
+		nvwave.WavePlayer.setAudioDuckingMode(nextMode)
+		config.conf['audio']['audioDuckingMode']=nextMode
+		nextLabel=nvwave.audioDuckingModes[nextMode]
+		ui.message(nextLabel)
+	# Translators: input help message for toggleAudioDuckingMode script
+	script_toggleAudioDuckingMode.__doc__=_("Toggles whether NVDA's speech and sounds should duck other audio, or other audio should be ducked all the time, or audio should never be ducked")
 
 	def script_toggleInputHelp(self,gesture):
 		inputCore.manager.isInputHelpActive = not inputCore.manager.isInputHelpActive
@@ -1518,6 +1534,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+control+p": "activateConfigProfilesDialog",
 
 		# Settings
+		"kb:NVDA+shift+d":"toggleAudioDuckingMode",
 		"kb:NVDA+2": "toggleSpeakTypedCharacters",
 		"kb:NVDA+3": "toggleSpeakTypedWords",
 		"kb:NVDA+4": "toggleSpeakCommandKeys",

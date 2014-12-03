@@ -95,6 +95,9 @@ def resetConfiguration(factoryDefaults=False):
 	import speech
 	import languageHandler
 	import inputCore
+	canAudioDuck=nvwave.isAudioDuckingSupported()
+	if canAudioDuck:
+		nvwave.WavePlayer.setAudioDuckingMode(nvwave.AUDIODUCKINGMODE_NONE)
 	log.debug("Terminating braille")
 	braille.terminate()
 	log.debug("terminating speech")
@@ -120,6 +123,8 @@ def resetConfiguration(factoryDefaults=False):
 	inputCore.manager.loadUserGestureMap()
 	inputCore.manager.loadLocaleGestureMap()
 	log.info("Reverted to saved configuration")
+	if canAudioDuck:
+		nvwave.WavePlayer.setAudioDuckingMode(config.conf['audio']['audioDuckingMode'])
 
 def _setInitialFocus():
 	"""Sets the initial focus if no focus event was received at startup.
@@ -228,6 +233,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("Initializing GUI")
 	import gui
 	gui.initialize()
+	if nvwave.isAudioDuckingSupported():
+		# the GUI mainloop must be running for this to work so delay it
+		wx.CallAfter(nvwave.WavePlayer.setAudioDuckingMode,config.conf['audio']['audioDuckingMode'])
 	# initialize wxpython localization support
 	locale = wx.Locale()
 	lang=languageHandler.getLanguage()
