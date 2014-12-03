@@ -480,6 +480,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 
 def initialize():
 	global mainFrame
+	if mainFrame:
+		raise RuntimeError("GUI already initialized")
 	mainFrame = MainFrame()
 	wx.GetApp().SetTopWindow(mainFrame)
 
@@ -495,6 +497,7 @@ def terminate():
 	# Because the top window gets destroyed,
 	# MainLoop thankfully returns pretty quickly.
 	wx.GetApp().MainLoop()
+	mainFrame = None
 
 def showGui():
  	wx.CallAfter(mainFrame.showGui)
