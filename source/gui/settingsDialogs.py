@@ -1481,6 +1481,25 @@ class BrailleSettingsDialog(SettingsDialog):
 		enable = len(self.possiblePorts) > 0 and not (len(self.possiblePorts) == 1 and self.possiblePorts[0][0] == "auto")
 		self.portsList.Enable(enable)
 
+class AddSymbolDialog(wx.Dialog):
+
+	def __init__(self, parent):
+		# Translators: This is the label for the add symbol dialog.
+		super(AddSymbolDialog,self).__init__(parent, title=_("Add Symbol"))
+		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: This is the label for the edit field in the add symbol dialog.
+		sizer.Add(wx.StaticText(self, label=_("Symbol:")))
+		self.identifierTextCtrl = wx.TextCtrl(self)
+		sizer.Add(self.identifierTextCtrl)
+		mainSizer.Add(sizer, border=20, flag=wx.LEFT | wx.RIGHT | wx.TOP)
+		buttonSizer=self.CreateButtonSizer(wx.OK | wx.CANCEL)
+		mainSizer.Add(buttonSizer, border=20, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM)
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+		self.identifierTextCtrl.SetFocus()
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+
 class SpeechSymbolsDialog(SettingsDialog):
 	# Translators: This is the label for the symbol pronunciation dialog.
 	title = _("Symbol Pronunciation")
@@ -1492,6 +1511,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData("en")
 		self.symbolProcessor = symbolProcessor
 		symbols = self.symbols = [copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()]
+		self.pendingRemovals = {}
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for symbols list in symbol pronunciation dialog.
@@ -1528,6 +1548,17 @@ class SpeechSymbolsDialog(SettingsDialog):
 		sizer.Add(self.levelList)
 		changeSizer.Add(sizer)
 		settingsSizer.Add(changeSizer)
+		entryButtonsSizer=wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
+		addButton = wx.Button(self, label=_("&Add"))
+		entryButtonsSizer.Add(addButton)
+		# Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
+		self.removeButton = wx.Button(self, label=_("Re&move"))
+		self.removeButton.Disable()
+		entryButtonsSizer.Add(self.removeButton)
+		addButton.Bind(wx.EVT_BUTTON, self.OnAddClick)
+		self.removeButton.Bind(wx.EVT_BUTTON, self.OnRemoveClick)
+		settingsSizer.Add(entryButtonsSizer)
 
 		self.editingItem = None
 
@@ -1555,6 +1586,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.editingItem = item
 		self.replacementEdit.Value = symbol.replacement
 		self.levelList.Selection = characterProcessing.SPEECH_SYMBOL_LEVELS.index(symbol.level)
+		self.removeButton.Enabled = not self.symbolProcessor.isBuiltin(symbol.identifier)
 
 	def onListChar(self, evt):
 		if evt.KeyCode == wx.WXK_RETURN:
@@ -1567,10 +1599,60 @@ class SpeechSymbolsDialog(SettingsDialog):
 		else:
 			evt.Skip()
 
+	def OnAddClick(self, evt):
+		with AddSymbolDialog(self) as entryDialog:
+			if entryDialog.ShowModal() != wx.ID_OK:
+				return
+			identifier = entryDialog.identifierTextCtrl.GetValue()
+			if not identifier:
+				return
+		for index, symbol in enumerate(self.symbols):
+			if identifier == symbol.identifier:
+				# Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
+				gui.messageBox(_('Symbol "%s" is already present.') % identifier,
+					_("Error"), wx.OK | wx.ICON_ERROR)
+				self.symbolsList.Select(index)
+				self.symbolsList.Focus(index)
+				self.symbolsList.SetFocus()
+				return
+		addedSymbol = characterProcessing.SpeechSymbol(identifier)
+		try:
+			del self.pendingRemovals[identifier]
+		except KeyError:
+			pass
+		addedSymbol.displayName = identifier
+		addedSymbol.replacement = ""
+		addedSymbol.level = characterProcessing.SYMLVL_ALL
+		self.symbols.append(addedSymbol)
+		item = self.symbolsList.Append((addedSymbol.displayName,))
+		self.updateListItem(item, addedSymbol)
+		self.symbolsList.Select(item)
+		self.symbolsList.Focus(item)
+		self.symbolsList.SetFocus()
+
+	def OnRemoveClick(self, evt):
+		index = self.symbolsList.GetFirstSelected()
+		symbol = self.symbols[index]
+		self.pendingRemovals[symbol.identifier] = symbol
+		# Deleting from self.symbolsList focuses the next item before deleting,
+		# so it must be done *before* we delete from self.symbols.
+		self.symbolsList.DeleteItem(index)
+		del self.symbols[index]
+		index = min(index, self.symbolsList.ItemCount - 1)
+		self.symbolsList.Select(index)
+		self.symbolsList.Focus(index)
+		# We don't get a new focus event with the new index, so set editingItem.
+		self.editingItem = index
+		self.symbolsList.SetFocus()
+
 	def onOk(self, evt):
 		self.onSymbolEdited(None)
 		self.editingItem = None
+		for symbol in self.pendingRemovals.itervalues():
+			self.symbolProcessor.deleteSymbol(symbol)
 		for symbol in self.symbols:
+			if not symbol.replacement:
+				continue
 			self.symbolProcessor.updateSymbol(symbol)
 		try:
 			self.symbolProcessor.userSymbols.save()
