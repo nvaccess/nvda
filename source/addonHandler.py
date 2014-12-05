@@ -235,8 +235,8 @@ class Addon(object):
 			os.rename(self.path,tempPath)
 		except (WindowsError,IOError):
 			raise RuntimeError("Cannot rename add-on path for deletion")
-		shutil.rmtree(self.path,ignore_errors=True)
-		if os.path.exists(self.path):
+		shutil.rmtree(tempPath,ignore_errors=True)
+		if os.path.exists(tempPath):
 			log.error("Error removing addon directory %s, deferring until next NVDA restart"%self.path)
 
 	@property
