@@ -1668,8 +1668,8 @@ class InputGesturesDialog(SettingsDialog):
 	title = _("Input Gestures")
 
 	def makeSettings(self, settingsSizer):
-		# Translators: The label of a text field for the filter in Input Gestures dialog.
-		settingsSizer.Add(wx.StaticText(self, label=_("&Filter by:")))
+		# Translators: The label of a text field to search for gestures in the Input Gestures dialog.
+		settingsSizer.Add(wx.StaticText(self, label=pgettext("inputGestures", "&Filter by:")))
 		filter = wx.TextCtrl(self)
 		filter.Bind(wx.EVT_TEXT, self.onFilterChange, filter)
 		settingsSizer.Add(filter)
