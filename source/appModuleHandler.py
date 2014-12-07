@@ -392,6 +392,8 @@ class AppModule(baseObject.ScriptableObject):
 		@param clsList: The list of classes, which will be modified by this method if appropriate.
 		@type clsList: list of L{NVDAObjects.NVDAObject}
 		"""
+	# optimisation: Make it easy to detect that this hasn't been overridden.
+	chooseNVDAObjectOverlayClasses._isBase = True
 
 	def _get_is64BitProcess(self):
 		"""Whether the underlying process is a 64 bit process.
