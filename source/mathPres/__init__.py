@@ -16,6 +16,7 @@ import controlTypes
 import api
 import virtualBuffers
 import eventHandler
+from logHandler import log
 
 class MathPresentationProvider(object):
 	"""Implements presentation of math content.
@@ -70,7 +71,16 @@ def registerProvider(provider, speech=False, braille=False, interaction=False):
 		interactionProvider = provider
 
 def ensureInit():
-	pass
+	# Register builtin providers if a plugin hasn't registered others.
+	if not speechProvider or not brailleProvider or not interactionProvider:
+		from . import mathPlayer
+		try:
+			provider = mathPlayer.MathPlayer()
+		except:
+			log.warning("MathPlayer 2014 not available")
+		else:
+			registerProvider(provider, speech=not speechProvider,
+				braille=not brailleProvider, interaction=not interactionProvider)
 
 class MathInteractionNVDAObject(Window):
 	"""Base class for a fake NVDAObject which can be focused while interacting with math.
