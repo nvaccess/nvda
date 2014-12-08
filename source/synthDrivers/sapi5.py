@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #synthDrivers/sapi5.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2011 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -136,6 +137,8 @@ class SynthDriver(SynthDriver):
 				textList.append("<Bookmark Mark=\"%d\" />"%item.index)
 			elif isinstance(item,speech.CharacterModeCommand):
 				textList.append("<spell>" if item.state else "</spell>")
+			elif isinstance(item,speech.BreakCommand):
+				textList.append('<silence msec="%d" />' % item.time)
 			elif isinstance(item,speech.SpeechCommand):
 				log.debugWarning("Unsupported speech command: %s"%item)
 			else:

@@ -1474,3 +1474,17 @@ class SpeakWithoutPausesBreakCommand(SpeechCommand):
 	This should only be used with the L{speakWithoutPauses} function.
 	This will be removed during processing.
 	"""
+
+class BreakCommand(SpeechCommand):
+	"""Insert a break between words.
+	"""
+
+	def __init__(self, time=0):
+		"""
+		@param time: The duration of the pause to be inserted in milliseconds.
+		@param time: int
+		"""
+		self.time = time
+
+	def __repr__(self):
+		return "BreakCommand(time=%d)" % self.time

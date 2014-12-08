@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #synthDrivers/espeak.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2013 NV Access Limited, Peter Vágner
+#Copyright (C) 2007-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -70,6 +70,8 @@ class SynthDriver(SynthDriver):
 					textList.append("</voice>")
 				textList.append("<voice xml:lang=\"%s\">"%(item.lang if item.lang else defaultLanguage).replace('_','-'))
 				langChanged=True
+			elif isinstance(item,speech.BreakCommand):
+				textList.append('<break time="%dms" />' % item.time)
 			elif isinstance(item,speech.SpeechCommand):
 				log.debugWarning("Unsupported speech command: %s"%item)
 			else:
