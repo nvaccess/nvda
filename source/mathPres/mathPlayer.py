@@ -7,17 +7,35 @@
 """Support for math presentation using MathPlayer 2014.
 """
 
+import re
 import comtypes.client
 from comtypes import COMError
-from comtypes.gen.MathPlayer import MPInterface, IMathSpeech, IMathNavigation, IMathBraille
+from comtypes.gen.MathPlayer import MPInterface, IMathSpeech, IMathSpeechSettings, IMathNavigation, IMathBraille
 import speech
 from keyboardHandler import KeyboardInputGesture
 import braille
 import mathPres
 
+RE_MP_SPEECH = re.compile(
+	# Break.
+	r"<break time='(?P<break>\d+)ms'/> ?"
+	# Pronunciation for the character "a".
+	"|(?P<charA><phoneme alphabet='ipa' ph='\xe6'> eh</phoneme>)"
+	# Other tags, which we don't care about.
+	r"|<[^>]+> ?"
+	# Actual content.
+	r"|(?P<content>[^<]+)")
 def _processMpSpeech(text):
-	# todo
-	return [text]
+	out = []
+	for m in RE_MP_SPEECH.finditer(text):
+		if m.lastgroup == "break":
+			out.append(speech.BreakCommand(time=int(m.group("break"))))
+		elif m.lastgroup == "charA":
+			out.extend((speech.CharacterModeCommand(True),
+				"a", speech.CharacterModeCommand(False)))
+		elif m.lastgroup == "content":
+			out.append(m.group(0))
+	return out
 
 class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
 
@@ -63,6 +81,8 @@ class MathPlayer(mathPres.MathPresentationProvider):
 
 	def __init__(self):
 		mpSpeech = self._mpSpeech = comtypes.client.CreateObject(MPInterface, interface=IMathSpeech)
+		mpSpeechSettings = mpSpeech.QueryInterface(IMathSpeechSettings)
+		mpSpeechSettings.SetSpeechTags("SSML")
 		self._mpNavigation = mpSpeech.QueryInterface(IMathNavigation)
 		self._mpBraille = mpSpeech.QueryInterface(IMathBraille)
 
