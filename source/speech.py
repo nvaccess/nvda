@@ -692,7 +692,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		if not endingBlock and reason==controlTypes.REASON_SAYALL:
 			endingBlock=bool(int(controlFieldStackCache[count].get('isBlock',0)))
 	if endingBlock:
-		speechSequence.append(BreakCommand())
+		speechSequence.append(SpeakWithoutPausesBreakCommand())
 	# The TextInfo should be considered blank if we are only exiting fields (i.e. we aren't entering any new fields and there is no text).
 	isTextBlank=True
 
@@ -1365,7 +1365,7 @@ def speakWithoutPauses(speechSequence,detectBreaks=True):
 	if detectBreaks and speechSequence:
 		sequenceLen=len(speechSequence)
 		for index in xrange(sequenceLen):
-			if isinstance(speechSequence[index],BreakCommand):
+			if isinstance(speechSequence[index],SpeakWithoutPausesBreakCommand):
 				if index>0 and lastStartIndex<index:
 					speakWithoutPauses(speechSequence[lastStartIndex:index],detectBreaks=False)
 				speakWithoutPauses(None)
@@ -1469,5 +1469,8 @@ class LangChangeCommand(SpeechCommand):
 	def __repr__(self):
 		return "LangChangeCommand (%r)"%self.lang
 
-class BreakCommand(object):
-	"""Forces speakWithoutPauses to flush its buffer and therefore break the sentence at this point."""
+class SpeakWithoutPausesBreakCommand(SpeechCommand):
+	"""Forces speakWithoutPauses to flush its buffer and therefore break the sentence at this point.
+	This should only be used with the L{speakWithoutPauses} function.
+	This will be removed during processing.
+	"""
