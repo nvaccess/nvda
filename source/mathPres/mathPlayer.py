@@ -23,8 +23,10 @@ RE_MP_SPEECH = re.compile(
 	"|(?P<charA><phoneme alphabet='ipa' ph='\xe6'> eh</phoneme>)"
 	# Other tags, which we don't care about.
 	r"|<[^>]+> ?"
+	# Commas indicating pauses in navigation messages.
+	r"| ?(?P<comma>,) ?"
 	# Actual content.
-	r"|(?P<content>[^<]+)")
+	r"|(?P<content>[^<,]+)")
 def _processMpSpeech(text):
 	out = []
 	for m in RE_MP_SPEECH.finditer(text):
@@ -33,6 +35,8 @@ def _processMpSpeech(text):
 		elif m.lastgroup == "charA":
 			out.extend((speech.CharacterModeCommand(True),
 				"a", speech.CharacterModeCommand(False)))
+		elif m.lastgroup == "comma":
+			out.append(speech.BreakCommand(time=100))
 		elif m.lastgroup == "content":
 			out.append(m.group(0))
 	return out
