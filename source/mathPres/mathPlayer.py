@@ -4,7 +4,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2014 NV Access Limited
 
-"""Support for math presentation using MathPlayer 2014.
+"""Support for math presentation using MathPlayer 4.
 """
 
 import re

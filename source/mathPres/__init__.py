@@ -77,7 +77,7 @@ def ensureInit():
 		try:
 			provider = mathPlayer.MathPlayer()
 		except:
-			log.warning("MathPlayer 2014 not available")
+			log.warning("MathPlayer 4 not available")
 		else:
 			registerProvider(provider, speech=not speechProvider,
 				braille=not brailleProvider, interaction=not interactionProvider)
