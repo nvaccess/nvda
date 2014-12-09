@@ -260,6 +260,14 @@ void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, B
 		//Insert the chunk in to the temporary list
 		copiedChunks.insert(copiedChunks.end(),chunk);
 	}
+	//Save the old source focus rectangle
+	RECT* srcFocusRect=NULL;
+	if(focusRect) {
+		srcFocusRect=new RECT;
+		*srcFocusRect=*focusRect;
+	}
+	//Clear the source rectangle if requested to do so (move rather than copy)
+	if(removeFromSource) this->clearRectangle(srcRect);
 	//Clear the entire destination rectangle if requested to do so
 	if(opaqueCopy) destModel->clearRectangle(clippedDestRect);
 	//insert the copied chunks in to the destination model
@@ -268,23 +276,19 @@ void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, B
 		destModel->insertChunk(*i);
 	}
 	// If a focus rectangle was also contained in the source area, copy the focus rectangle as well
-	if(false) { //focusRect&&IntersectRect(&tempRect,&srcRect,focusRect)&&EqualRect(&tempRect,focusRect)) {
-		RECT newFocusRect=*focusRect;
-		transposAndScaleCoordinate(srcRect.left,destRect.left,scaleX,newFocusRect.left);
-		transposAndScaleCoordinate(srcRect.left,destRect.left,scaleX,newFocusRect.right);
-		transposAndScaleCoordinate(srcRect.top,destRect.top,scaleY,newFocusRect.top);
-		transposAndScaleCoordinate(srcRect.top,destRect.top,scaleY,newFocusRect.bottom);
-		if(IntersectRect(&tempRect,&clippedDestRect,&newFocusRect)&&EqualRect(&tempRect,&newFocusRect)) {
-			RECT oldDestFocusRect;
-			if(!opaqueCopy&&destModel->getFocusRect(&oldDestFocusRect)&&EqualRect(&oldDestFocusRect,&newFocusRect)) {
-				destModel->setFocusRect(NULL);
-			} else {
+	if(srcFocusRect) {
+		if(IntersectRect(&tempRect,&srcRect,srcFocusRect)&&EqualRect(&tempRect,srcFocusRect)) {
+			RECT newFocusRect=*srcFocusRect;
+			transposAndScaleCoordinate(srcRect.left,destRect.left,scaleX,newFocusRect.left);
+			transposAndScaleCoordinate(srcRect.left,destRect.left,scaleX,newFocusRect.right);
+			transposAndScaleCoordinate(srcRect.top,destRect.top,scaleY,newFocusRect.top);
+			transposAndScaleCoordinate(srcRect.top,destRect.top,scaleY,newFocusRect.bottom);
+			if(IntersectRect(&tempRect,&clippedDestRect,&newFocusRect)&&EqualRect(&tempRect,&newFocusRect)) {
 				destModel->setFocusRect(&newFocusRect);
 			}
 		}
+		free(srcFocusRect);
 	}
-	//Clear the source rectangle if requested to do so (move rather than copy)
-	if(removeFromSource) this->clearRectangle(srcRect);
 }
 
 void displayModel_t::generateWhitespaceXML(HWND hwnd, long baseline, wstring& text) {
