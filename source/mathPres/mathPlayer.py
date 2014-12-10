@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 #mathPlayer.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
@@ -20,7 +21,7 @@ RE_MP_SPEECH = re.compile(
 	# Break.
 	r"<break time='(?P<break>\d+)ms'/> ?"
 	# Pronunciation for the character "a".
-	"|(?P<charA><phoneme alphabet='ipa' ph='\xe6'> eh</phoneme>)"
+	ur"|(?P<charA><phoneme alphabet='ipa' ph='æ'> eh</phoneme>)"
 	# Other tags, which we don't care about.
 	r"|<[^>]+> ?"
 	# Commas indicating pauses in navigation messages.
