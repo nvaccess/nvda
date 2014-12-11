@@ -56,6 +56,22 @@ class SynthDriver(SynthDriver):
 		speech.RateCommand: "rate",
 	}
 
+	IPA_TO_ESPEAK = {
+		u"θ": u"T",
+		u"s": u"s",
+		u"ˈ": u"'",
+	}
+
+	def _processText(self, text):
+		text = unicode(text)
+		# We need to make several replacements.
+		return text.translate({
+			0x1: None, # used for embedded commands
+			0x3C: u"&lt;", # <: because of XML
+			0x3E: u"&gt;", # >: because of XML
+			0x5B: u" [", # [: [[ indicates phonemes
+		})
+
 	def speak(self,speechSequence):
 		defaultLanguage=self._language
 		textList=[]
@@ -66,11 +82,7 @@ class SynthDriver(SynthDriver):
 		# However, eSpeak doesn't seem to mind.
 		for item in speechSequence:
 			if isinstance(item,basestring):
-				s=unicode(item)
-				# Replace \01, as this is used for embedded commands.
-				#Also replace < and > as espeak handles xml
-				s=s.translate({ord(u'\01'):None,ord(u'<'):u'&lt;',ord(u'>'):u'&gt;'})
-				textList.append(s)
+				textList.append(self._processText(item))
 			elif isinstance(item,speech.IndexCommand):
 				textList.append("<mark name=\"%d\" />"%item.index)
 			elif isinstance(item,speech.CharacterModeCommand):
@@ -101,6 +113,15 @@ class SynthDriver(SynthDriver):
 				for attr,val in prosody.iteritems():
 					textList.append(' %s="%d%%"'%(attr,val))
 				textList.append(">")
+			elif isinstance(item,speech.PhonemeCommand):
+				# We can't use unicode.translate because we want to reject unknown characters.
+				try:
+					phonemes="".join([self.IPA_TO_ESPEAK[char] for char in item.ipa])
+					textList.append(u"[[%s]]"%phonemes)
+				except KeyError:
+					log.debugWarning("Unknown character in IPA string: %s"%item.ipa)
+					if item.text:
+						textList.append(self._processText(item.text))
 			elif isinstance(item,speech.SpeechCommand):
 				log.debugWarning("Unsupported speech command: %s"%item)
 			else:

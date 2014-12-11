@@ -1533,3 +1533,27 @@ class RateCommand(SpeechCommand):
 
 	def __repr__(self):
 		return "RateCommand(multiplier=%g)" % self.multiplier
+
+class PhonemeCommand(SpeechCommand):
+	"""Insert a specific pronunciation.
+	This command accepts Unicode International Phonetic Alphabet (IPA) characters.
+	Note that this is not well supported by synthesizers.
+	"""
+
+	def __init__(self, ipa, text=None):
+		"""
+		@param ipa: Unicode IPA characters.
+		@type ipa: unicode
+		@param text: Text to speak if the synthesizer does not support
+			some or all of the specified IPA characters,
+			C{None} to ignore this command instead.
+		@type text: unicode
+		"""
+		self.ipa = ipa
+		self.text = text
+
+	def __repr__(self):
+		out = "PhonemeCommand(%r" % self.ipa
+		if self.text:
+			out += ", text=%r" % self.text
+		return out + ")"

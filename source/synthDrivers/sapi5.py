@@ -134,6 +134,30 @@ class SynthDriver(SynthDriver):
 	def _percentToPitch(self, percent):
 		return percent / 2 - 25
 
+	IPA_TO_SAPI = {
+		u"θ": u"th",
+		u"s": u"s",
+	}
+	def _convertPhoneme(self, ipa):
+		# We only know about US English phonemes.
+		# Rather than just ignoring unknown phonemes, SAPI throws an exception.
+		# Therefore, don't bother with any other language.
+		if self.tts.voice.GetAttribute("language") != "409":
+			raise LookupError("No data for this language")
+		out = []
+		outAfter = None
+		for ipaChar in ipa:
+			if ipaChar == u"ˈ":
+				outAfter = u"1"
+				continue
+			out.append(self.IPA_TO_SAPI[ipaChar])
+			if outAfter:
+				out.append(outAfter)
+				outAfter = None
+		if outAfter:
+			out.append(outAfter)
+		return u" ".join(out)
+
 	def speak(self, speechSequence):
 		textList = []
 
@@ -202,6 +226,14 @@ class SynthDriver(SynthDriver):
 				else:
 					tags["rate"] = {"absspeed": self._percentToRate(int(rate * item.multiplier))}
 				tagsChanged[0] = True
+			elif isinstance(item, speech.PhonemeCommand):
+				try:
+					textList.append(u'<pron sym="%s">%s</pron>'
+						% (self._convertPhoneme(item.ipa), item.text or u""))
+				except LookupError:
+					log.debugWarning("Couldn't convert character in IPA string: %s" % item.ipa)
+					if item.text:
+						textList.append(item.text)
 			elif isinstance(item, speech.SpeechCommand):
 				log.debugWarning("Unsupported speech command: %s" % item)
 			else:
