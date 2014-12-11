@@ -22,14 +22,23 @@ RE_MP_SPEECH = re.compile(
 	r"<break time='(?P<break>\d+)ms'/> ?"
 	# Pronunciation for the character "a".
 	ur"|(?P<charA><phoneme alphabet='ipa' ph='æ'> eh</phoneme>)"
+	# Prosody.
+	r"|<prosidy(?: pitch='(?P<pitch>\d+)%')?(?: volume='(?P<volume>\d+)%')?(?: rate='(?P<rate>\d+)%')?> ?"
+	r"|(?P<prosodyReset></prosidy>) ?"
 	# Other tags, which we don't care about.
 	r"|<[^>]+> ?"
 	# Commas indicating pauses in navigation messages.
 	r"| ?(?P<comma>,) ?"
 	# Actual content.
 	r"|(?P<content>[^<,]+)")
+PROSODY_COMMANDS = {
+	"pitch": speech.PitchCommand,
+	"volume": speech.VolumeCommand,
+	"rate": speech.RateCommand,
+}
 def _processMpSpeech(text):
 	out = []
+	resetProsody = set()
 	for m in RE_MP_SPEECH.finditer(text):
 		if m.lastgroup == "break":
 			out.append(speech.BreakCommand(time=int(m.group("break"))))
@@ -38,6 +47,14 @@ def _processMpSpeech(text):
 				"a", speech.CharacterModeCommand(False)))
 		elif m.lastgroup == "comma":
 			out.append(speech.BreakCommand(time=100))
+		elif m.lastgroup in PROSODY_COMMANDS:
+			command = PROSODY_COMMANDS[m.lastgroup]
+			out.append(command(multiplier=int(m.group(m.lastgroup)) / 100.0))
+			resetProsody.add(command)
+		elif m.lastgroup == "prosodyReset":
+			for command in resetProsody:
+				out.append(command(multiplier=1))
+			resetProsody.clear()
 		elif m.lastgroup == "content":
 			out.append(m.group(0))
 	return out
