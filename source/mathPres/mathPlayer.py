@@ -21,7 +21,7 @@ RE_MP_SPEECH = re.compile(
 	# Break.
 	r"<break time='(?P<break>\d+)ms'/> ?"
 	# Pronunciation for the character "a".
-	ur"|(?P<charA><phoneme alphabet='ipa' ph='æ'> eh</phoneme>)"
+	ur"|(?P<charA><phoneme alphabet='ipa' ph='æ'> eh</phoneme>) ?"
 	# Prosody.
 	r"|<prosidy(?: pitch='(?P<pitch>\d+)%')?(?: volume='(?P<volume>\d+)%')?(?: rate='(?P<rate>\d+)%')?> ?"
 	r"|(?P<prosodyReset></prosidy>) ?"
