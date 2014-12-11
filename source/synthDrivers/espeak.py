@@ -50,10 +50,20 @@ class SynthDriver(SynthDriver):
 	def _get_language(self):
 		return self._language
 
+	PROSODY_ATTRS = {
+		speech.PitchCommand: "pitch",
+		speech.VolumeCommand: "volume",
+		speech.RateCommand: "rate",
+	}
+
 	def speak(self,speechSequence):
 		defaultLanguage=self._language
 		textList=[]
 		langChanged=False
+		prosody={}
+		# We output malformed XML, as we might close an outer tag after opening an inner one; e.g.
+		# <voice><prosody></voice></prosody>.
+		# However, eSpeak doesn't seem to mind.
 		for item in speechSequence:
 			if isinstance(item,basestring):
 				s=unicode(item)
@@ -72,12 +82,34 @@ class SynthDriver(SynthDriver):
 				langChanged=True
 			elif isinstance(item,speech.BreakCommand):
 				textList.append('<break time="%dms" />' % item.time)
+			elif type(item) in self.PROSODY_ATTRS:
+				if prosody:
+					# Close previous prosody tag.
+					textList.append("</prosody>")
+				attr=self.PROSODY_ATTRS[type(item)]
+				if item.multiplier==1:
+					# Returning to normal.
+					try:
+						del prosody[attr]
+					except KeyError:
+						pass
+				else:
+					prosody[attr]=int(item.multiplier* 100)
+				if not prosody:
+					continue
+				textList.append("<prosody")
+				for attr,val in prosody.iteritems():
+					textList.append(' %s="%d%%"'%(attr,val))
+				textList.append(">")
 			elif isinstance(item,speech.SpeechCommand):
 				log.debugWarning("Unsupported speech command: %s"%item)
 			else:
 				log.error("Unknown speech: %s"%item)
+		# Close any open tags.
 		if langChanged:
 			textList.append("</voice>")
+		if prosody:
+			textList.append("</prosody>")
 		text=u"".join(textList)
 		_espeak.speak(text)
 
