@@ -1519,3 +1519,48 @@ class BreakCommand(SpeechCommand):
 
 	def __repr__(self):
 		return "BreakCommand(time=%d)" % self.time
+
+class PitchCommand(SpeechCommand):
+	"""Change the pitch of the voice.
+	"""
+
+	def __init__(self, multiplier=1):
+		"""
+		@param multiplier: The number by which to multiply the current pitch setting;
+			e.g. 0.5 is half, 1 returns to the current pitch setting.
+		@param multiplier: int/float
+		"""
+		self.multiplier = multiplier
+
+	def __repr__(self):
+		return "PitchCommand(multiplier=%g)" % self.multiplier
+
+class VolumeCommand(SpeechCommand):
+	"""Change the volume of the voice.
+	"""
+
+	def __init__(self, multiplier=1):
+		"""
+		@param multiplier: The number by which to multiply the current volume setting;
+			e.g. 0.5 is half, 1 returns to the current volume setting.
+		@param multiplier: int/float
+		"""
+		self.multiplier = multiplier
+
+	def __repr__(self):
+		return "VolumeCommand(multiplier=%g)" % self.multiplier
+
+class RateCommand(SpeechCommand):
+	"""Change the rate of the voice.
+	"""
+
+	def __init__(self, multiplier=1):
+		"""
+		@param multiplier: The number by which to multiply the current rate setting;
+			e.g. 0.5 is half, 1 returns to the current rate setting.
+		@param multiplier: int/float
+		"""
+		self.multiplier = multiplier
+
+	def __repr__(self):
+		return "RateCommand(multiplier=%g)" % self.multiplier
