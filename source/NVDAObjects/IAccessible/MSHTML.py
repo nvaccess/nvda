@@ -151,19 +151,23 @@ def locateHTMLElementByID(document,ID):
 	if not frames: #frames can be None in IE 10
 		return None
 	for frame in frames:
-		try:
-			pacc=IAccessibleFromHTMLNode(frame)
-		except NotImplementedError:
-			# #1569: It's not possible to get an IAccessible from frames marked with an ARIA role of presentation.
-			# In this case, just skip this frame.
+		childElement=getChildHTMLNodeFromFrame(frame)
+		if not childElement:
 			continue
-		res=IAccessibleHandler.accChild(pacc,1)
-		if not res: continue
-		childElement=HTMLNodeFromIAccessible(res[0])
-		if not childElement: continue
 		childElement=locateHTMLElementByID(childElement.document,ID)
 		if not childElement: continue
 		return childElement
+
+def getChildHTMLNodeFromFrame(frame):
+	try:
+		pacc=IAccessibleFromHTMLNode(frame)
+	except NotImplementedError:
+		# #1569: It's not possible to get an IAccessible from frames marked with an ARIA role of presentation.
+		# In this case, just skip this frame.
+		return
+	res=IAccessibleHandler.accChild(pacc,1)
+	if not res: return
+	return HTMLNodeFromIAccessible(res[0])
 
 class MSHTMLTextInfo(textInfos.TextInfo):
 
@@ -372,12 +376,23 @@ class MSHTML(IAccessible):
 			return False
 
 		if relation=="focus":
-			try:
-				HTMLNode=HTMLNode.document.activeElement
-				# The IAccessibleObject may be incorrect now, so let the constructor recalculate it.
-				del kwargs['IAccessibleObject']
-			except:
-				log.exception("Error getting activeElement")
+			# #4045: we must recurse into frames ourselves when fetching the active element of a document. 
+			while True:
+				try:
+					HTMLNode=HTMLNode.document.activeElement
+				except:
+					log.exception("Error getting activeElement")
+					break
+				nodeName=HTMLNode.nodeName or ""
+				if nodeName.lower() not in ("frame","iframe"):
+					# The IAccessibleObject may be incorrect now, so let the constructor recalculate it.
+					del kwargs['IAccessibleObject']
+					break
+				childElement=getChildHTMLNodeFromFrame(HTMLNode)
+				if not childElement:
+					break
+				HTMLNode=childElement
+			
 		elif isinstance(relation,tuple):
 			windowHandle=kwargs.get('windowHandle')
 			p=ctypes.wintypes.POINT(x=relation[0],y=relation[1])
