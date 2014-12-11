@@ -22,6 +22,8 @@ RE_MP_SPEECH = re.compile(
 	r"<break time='(?P<break>\d+)ms'/> ?"
 	# Pronunciation for the character "a".
 	ur"|(?P<charA><phoneme alphabet='ipa' ph='æ'> eh</phoneme>) ?"
+	# Specific pronunciation.
+	ur"|<phoneme alphabet='ipa' ph='(?P<ipa>[^']+)'> (?P<phonemeText>[^ <]+)</phoneme> ?"
 	# Prosody.
 	r"|<prosidy(?: pitch='(?P<pitch>\d+)%')?(?: volume='(?P<volume>\d+)%')?(?: rate='(?P<rate>\d+)%')?> ?"
 	r"|(?P<prosodyReset></prosidy>) ?"
@@ -55,6 +57,9 @@ def _processMpSpeech(text):
 			for command in resetProsody:
 				out.append(command(multiplier=1))
 			resetProsody.clear()
+		elif m.lastgroup == "phonemeText":
+			out.append(speech.PhonemeCommand(m.group("ipa"),
+				text=m.group("phonemeText")))
 		elif m.lastgroup == "content":
 			out.append(m.group(0))
 	return out
