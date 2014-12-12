@@ -238,6 +238,10 @@ class SynthDriver(SynthDriver):
 				log.debugWarning("Unsupported speech command: %s" % item)
 			else:
 				log.error("Unknown speech: %s" % item)
+		# Close any tags that are still open.
+		tags.clear()
+		tagsChanged[0] = True
+		outputTags()
 
 		text = "".join(textList)
 		flags = constants.SVSFIsXML | constants.SVSFlagsAsync
