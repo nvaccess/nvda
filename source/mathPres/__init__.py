@@ -11,6 +11,7 @@ Plugins can register their own implementation for any or all of these
 using L{registerProvider}.
 """
 
+import re
 from NVDAObjects.window import Window
 import controlTypes
 import api
@@ -118,3 +119,11 @@ class MathInteractionNVDAObject(Window):
 	__gestures = {
 		"kb:escape": "exit",
 	}
+
+RE_STRIP_XML_PREFIX = re.compile(r"^.*?(?=<(?:\w+:)?math[ >])")
+def stripExtraneousXml(xml):
+	"""Strip extraneous XML from MathML.
+	This is needed where retrieving MathML produces more than just the math tag.
+	Currently, this strips anything before the opening of the math tag.
+	"""
+	return RE_STRIP_XML_PREFIX.sub("", xml)
