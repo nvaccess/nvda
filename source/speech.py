@@ -455,12 +455,17 @@ def speak(speechSequence,symbolLevel=None):
 	if symbolLevel is None:
 		symbolLevel=config.conf["speech"]["symbolLevel"]
 	curLanguage=defaultLanguage
+	inCharacterMode=False
 	for index in xrange(len(speechSequence)):
 		item=speechSequence[index]
+		if isinstance(item,CharacterModeCommand):
+			inCharacterMode=item.state
 		if autoLanguageSwitching and isinstance(item,LangChangeCommand):
 			curLanguage=item.lang
 		if isinstance(item,basestring):
-			speechSequence[index]=processText(curLanguage,item,symbolLevel)+CHUNK_SEPARATOR
+			speechSequence[index]=processText(curLanguage,item,symbolLevel)
+			if not inCharacterMode:
+				speechSequence[index]+=CHUNK_SEPARATOR
 	getSynth().speak(speechSequence)
 
 def speakSelectionMessage(message,text):
