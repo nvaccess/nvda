@@ -9,18 +9,13 @@
 
 import _winreg as winreg
 import ctypes
-import re
+import mathPres
 
 def _getDllPath():
 	with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Design Science\DSMT6\Directories", 0, winreg.KEY_WOW64_32KEY | winreg.KEY_QUERY_VALUE) as key:
 		return winreg.QueryValueEx(key, "AppSystemDir32")[0] + "\\MT6.dll"
 
 lib = ctypes.windll[_getDllPath()]
-
-RE_STRIP_XML_PREFIX = re.compile(r"^.*?(?=<(?:\w+:)?math[ >])")
-def stripExtraneousXml(xml):
-	# Strip anything before the opening of the math tag.
-	return RE_STRIP_XML_PREFIX.sub("", xml)
 
 def getMathMl(oleFormat, runForConversion=True):
 	"""Get MathML from a MathType OLEFormat object.
@@ -39,4 +34,4 @@ def getMathMl(oleFormat, runForConversion=True):
 	finally:
 		# 1 is OLECLOSE_NOSAVE
 		lib.MTCloseOleObject(1, mt)
-	return stripExtraneousXml(mathMl.value)
+	return mathPres.stripExtraneousXml(mathMl.value)
