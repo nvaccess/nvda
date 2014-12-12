@@ -953,7 +953,8 @@ class Math(MSHTML):
 	role = controlTypes.ROLE_MATH
 
 	def _get_mathMl(self):
-		return self.HTMLNode.outerHTML
+		import mathPres
+		return mathPres.stripExtraneousXml(self.HTMLNode.outerHTML)
 
 def findExtraIAccessibleOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class for MSHTML objects.
