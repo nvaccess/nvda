@@ -25,7 +25,7 @@ RE_MP_SPEECH = re.compile(
 	# Specific pronunciation.
 	ur"|<phoneme alphabet='ipa' ph='(?P<ipa>[^']+)'> (?P<phonemeText>[^ <]+)</phoneme> ?"
 	# Prosody.
-	r"|<prosidy(?: pitch='(?P<pitch>\d+)%')?(?: volume='(?P<volume>\d+)%')?(?: rate='(?P<rate>\d+)%')?> ?"
+	r"|<prosidy(?: pitch='(?P<pitch>\d+)%')?(?: volume='(?P<volume>\d+)'%)?(?: rate='(?P<rate>\d+)'%)?> ?"
 	r"|(?P<prosodyReset></prosidy>) ?"
 	# Other tags, which we don't care about.
 	r"|<[^>]+> ?"
