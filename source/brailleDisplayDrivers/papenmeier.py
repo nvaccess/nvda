@@ -511,7 +511,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			self.id=brl_join_keys(brl_decode_key_names_repeat(driver))
 			return
 
-		if keys[0] == 'L' and driver._baud!=1:
+		if driver._baud!=1 and keys[0] == 'L':
 			#get dots
 			z  = ord('0')
 			b = ord(keys[4])-z

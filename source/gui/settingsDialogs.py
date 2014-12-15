@@ -1,12 +1,14 @@
+# -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import glob
 import os
 import copy
+import re
 import wx
 import winUser
 import logHandler
@@ -78,6 +80,7 @@ class SettingsDialog(wx.Dialog):
 		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
 		self.postInit()
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	def __del__(self):
 		SettingsDialog._hasInstance=False
@@ -150,8 +153,8 @@ class GeneralSettingsDialog(SettingsDialog):
 		if globalVars.appArgs.secure:
 			self.saveOnExitCheckBox.Disable()
 		settingsSizer.Add(self.saveOnExitCheckBox,border=10,flag=wx.BOTTOM)
-		# Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
-		self.askToExitCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Warn before exiting NVDA"))
+		# Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
+		self.askToExitCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Sho&w exit options when exiting NVDA"))
 		self.askToExitCheckBox.SetValue(config.conf["general"]["askToExit"])
 		settingsSizer.Add(self.askToExitCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
@@ -1048,7 +1051,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.styleCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.spellingErrorsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report spelling errors"))
+		self.spellingErrorsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report spelling e&rrors"))
 		self.spellingErrorsCheckBox.SetValue(config.conf["documentFormatting"]["reportSpellingErrors"])
 		settingsSizer.Add(self.spellingErrorsCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
@@ -1153,6 +1156,15 @@ class DocumentFormattingDialog(SettingsDialog):
 		super(DocumentFormattingDialog, self).onOk(evt)
 
 class DictionaryEntryDialog(wx.Dialog):
+	TYPE_LABELS = {
+		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+		speechDictHandler.ENTRY_TYPE_ANYWHERE: _("&Anywhere"),
+		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+		speechDictHandler.ENTRY_TYPE_WORD: _("Whole &word"),
+		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+		speechDictHandler.ENTRY_TYPE_REGEXP: _("&Regular expression")
+	}
+	TYPE_LABELS_ORDERING = (speechDictHandler.ENTRY_TYPE_ANYWHERE, speechDictHandler.ENTRY_TYPE_WORD, speechDictHandler.ENTRY_TYPE_REGEXP)
 
 	# Translators: This is the label for the edit dictionary entry dialog.
 	def __init__(self, parent, title=_("Edit Dictionary Entry")):
@@ -1174,17 +1186,29 @@ class DictionaryEntryDialog(wx.Dialog):
 		# Translators: This is a label for a checkbox in add dictionary entry dialog.
 		self.caseSensitiveCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Case &sensitive"))
 		settingsSizer.Add(self.caseSensitiveCheckBox)
-		# Translators: This is a label for a checkbox in add dictionary entry dialog.
-		self.regexpCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Regular &expression"))
-		settingsSizer.Add(self.regexpCheckBox)
+
+		# Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+		self.typeRadioBox=wx.RadioBox(self,wx.NewId(),label=_("&Type"), choices=[DictionaryEntryDialog.TYPE_LABELS[i] for i in DictionaryEntryDialog.TYPE_LABELS_ORDERING])
+		settingsSizer.Add(self.typeRadioBox)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		buttonSizer=self.CreateButtonSizer(wx.OK|wx.CANCEL)
 		mainSizer.Add(buttonSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
+		self.setType(speechDictHandler.ENTRY_TYPE_ANYWHERE)
 		self.patternTextCtrl.SetFocus()
 
+	def getType(self):
+		typeRadioValue = self.typeRadioBox.GetSelection()
+		if typeRadioValue == wx.NOT_FOUND:
+			return speechDictHandler.ENTRY_TYPE_ANYWHERE
+		return DictionaryEntryDialog.TYPE_LABELS_ORDERING[typeRadioValue]
+
+	def setType(self, type):
+		self.typeRadioBox.SetSelection(DictionaryEntryDialog.TYPE_LABELS_ORDERING.index(type))
+
 class DictionaryDialog(SettingsDialog):
+	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.iteritems()}
 
 	def __init__(self,parent,title,speechDict):
 		self.title = title
@@ -1209,11 +1233,11 @@ class DictionaryDialog(SettingsDialog):
 		self.dictList.InsertColumn(2,_("Replacement"),width=150)
 		# Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
 		self.dictList.InsertColumn(3,_("case"),width=50)
-		# Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
-		self.dictList.InsertColumn(4,_("Regexp"),width=50)
+		# Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
+		self.dictList.InsertColumn(4,_("Type"),width=50)
 		self.offOn = (_("off"),_("on"))
 		for entry in self.tempSpeechDict:
-			self.dictList.Append((entry.comment,entry.pattern,entry.replacement,self.offOn[int(entry.caseSensitive)],self.offOn[int(entry.regexp)]))
+			self.dictList.Append((entry.comment,entry.pattern,entry.replacement,self.offOn[int(entry.caseSensitive)],DictionaryDialog.TYPE_LABELS[entry.type]))
 		self.editingIndex=-1
 		entriesSizer.Add(self.dictList,proportion=8)
 		settingsSizer.Add(entriesSizer)
@@ -1253,8 +1277,8 @@ class DictionaryDialog(SettingsDialog):
 		# Translators: This is the label for the add dictionary entry dialog.
 		entryDialog=DictionaryEntryDialog(self,title=_("Add Dictionary Entry"))
 		if entryDialog.ShowModal()==wx.ID_OK:
-			self.tempSpeechDict.append(speechDictHandler.SpeechDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),bool(entryDialog.regexpCheckBox.GetValue())))
-			self.dictList.Append((entryDialog.commentTextCtrl.GetValue(),entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())],self.offOn[int(entryDialog.regexpCheckBox.GetValue())]))
+			self.tempSpeechDict.append(speechDictHandler.SpeechDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),entryDialog.getType()))
+			self.dictList.Append((entryDialog.commentTextCtrl.GetValue(),entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())],DictionaryDialog.TYPE_LABELS[entryDialog.getType()]))
 			index=self.dictList.GetFirstSelected()
 			while index>=0:
 				self.dictList.Select(index,on=0)
@@ -1276,14 +1300,14 @@ class DictionaryDialog(SettingsDialog):
 		entryDialog.replacementTextCtrl.SetValue(self.tempSpeechDict[editIndex].replacement)
 		entryDialog.commentTextCtrl.SetValue(self.tempSpeechDict[editIndex].comment)
 		entryDialog.caseSensitiveCheckBox.SetValue(self.tempSpeechDict[editIndex].caseSensitive)
-		entryDialog.regexpCheckBox.SetValue(self.tempSpeechDict[editIndex].regexp)
+		entryDialog.setType(self.tempSpeechDict[editIndex].type)
 		if entryDialog.ShowModal()==wx.ID_OK:
-			self.tempSpeechDict[editIndex]=speechDictHandler.SpeechDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),bool(entryDialog.regexpCheckBox.GetValue()))
+			self.tempSpeechDict[editIndex]=speechDictHandler.SpeechDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),entryDialog.getType())
 			self.dictList.SetStringItem(editIndex,0,entryDialog.commentTextCtrl.GetValue())
 			self.dictList.SetStringItem(editIndex,1,entryDialog.patternTextCtrl.GetValue())
 			self.dictList.SetStringItem(editIndex,2,entryDialog.replacementTextCtrl.GetValue())
 			self.dictList.SetStringItem(editIndex,3,self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())])
-			self.dictList.SetStringItem(editIndex,4,self.offOn[int(entryDialog.regexpCheckBox.GetValue())])
+			self.dictList.SetStringItem(editIndex,4,DictionaryDialog.TYPE_LABELS[entryDialog.getType()])
 			self.dictList.SetFocus()
 		entryDialog.Destroy()
 
@@ -1459,6 +1483,25 @@ class BrailleSettingsDialog(SettingsDialog):
 		enable = len(self.possiblePorts) > 0 and not (len(self.possiblePorts) == 1 and self.possiblePorts[0][0] == "auto")
 		self.portsList.Enable(enable)
 
+class AddSymbolDialog(wx.Dialog):
+
+	def __init__(self, parent):
+		# Translators: This is the label for the add symbol dialog.
+		super(AddSymbolDialog,self).__init__(parent, title=_("Add Symbol"))
+		mainSizer=wx.BoxSizer(wx.VERTICAL)
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: This is the label for the edit field in the add symbol dialog.
+		sizer.Add(wx.StaticText(self, label=_("Symbol:")))
+		self.identifierTextCtrl = wx.TextCtrl(self)
+		sizer.Add(self.identifierTextCtrl)
+		mainSizer.Add(sizer, border=20, flag=wx.LEFT | wx.RIGHT | wx.TOP)
+		buttonSizer=self.CreateButtonSizer(wx.OK | wx.CANCEL)
+		mainSizer.Add(buttonSizer, border=20, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM)
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+		self.identifierTextCtrl.SetFocus()
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+
 class SpeechSymbolsDialog(SettingsDialog):
 	# Translators: This is the label for the symbol pronunciation dialog.
 	title = _("Symbol Pronunciation")
@@ -1470,6 +1513,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData("en")
 		self.symbolProcessor = symbolProcessor
 		symbols = self.symbols = [copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()]
+		self.pendingRemovals = {}
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for symbols list in symbol pronunciation dialog.
@@ -1506,6 +1550,17 @@ class SpeechSymbolsDialog(SettingsDialog):
 		sizer.Add(self.levelList)
 		changeSizer.Add(sizer)
 		settingsSizer.Add(changeSizer)
+		entryButtonsSizer=wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
+		addButton = wx.Button(self, label=_("&Add"))
+		entryButtonsSizer.Add(addButton)
+		# Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
+		self.removeButton = wx.Button(self, label=_("Re&move"))
+		self.removeButton.Disable()
+		entryButtonsSizer.Add(self.removeButton)
+		addButton.Bind(wx.EVT_BUTTON, self.OnAddClick)
+		self.removeButton.Bind(wx.EVT_BUTTON, self.OnRemoveClick)
+		settingsSizer.Add(entryButtonsSizer)
 
 		self.editingItem = None
 
@@ -1533,6 +1588,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.editingItem = item
 		self.replacementEdit.Value = symbol.replacement
 		self.levelList.Selection = characterProcessing.SPEECH_SYMBOL_LEVELS.index(symbol.level)
+		self.removeButton.Enabled = not self.symbolProcessor.isBuiltin(symbol.identifier)
 
 	def onListChar(self, evt):
 		if evt.KeyCode == wx.WXK_RETURN:
@@ -1545,10 +1601,60 @@ class SpeechSymbolsDialog(SettingsDialog):
 		else:
 			evt.Skip()
 
+	def OnAddClick(self, evt):
+		with AddSymbolDialog(self) as entryDialog:
+			if entryDialog.ShowModal() != wx.ID_OK:
+				return
+			identifier = entryDialog.identifierTextCtrl.GetValue()
+			if not identifier:
+				return
+		for index, symbol in enumerate(self.symbols):
+			if identifier == symbol.identifier:
+				# Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
+				gui.messageBox(_('Symbol "%s" is already present.') % identifier,
+					_("Error"), wx.OK | wx.ICON_ERROR)
+				self.symbolsList.Select(index)
+				self.symbolsList.Focus(index)
+				self.symbolsList.SetFocus()
+				return
+		addedSymbol = characterProcessing.SpeechSymbol(identifier)
+		try:
+			del self.pendingRemovals[identifier]
+		except KeyError:
+			pass
+		addedSymbol.displayName = identifier
+		addedSymbol.replacement = ""
+		addedSymbol.level = characterProcessing.SYMLVL_ALL
+		self.symbols.append(addedSymbol)
+		item = self.symbolsList.Append((addedSymbol.displayName,))
+		self.updateListItem(item, addedSymbol)
+		self.symbolsList.Select(item)
+		self.symbolsList.Focus(item)
+		self.symbolsList.SetFocus()
+
+	def OnRemoveClick(self, evt):
+		index = self.symbolsList.GetFirstSelected()
+		symbol = self.symbols[index]
+		self.pendingRemovals[symbol.identifier] = symbol
+		# Deleting from self.symbolsList focuses the next item before deleting,
+		# so it must be done *before* we delete from self.symbols.
+		self.symbolsList.DeleteItem(index)
+		del self.symbols[index]
+		index = min(index, self.symbolsList.ItemCount - 1)
+		self.symbolsList.Select(index)
+		self.symbolsList.Focus(index)
+		# We don't get a new focus event with the new index, so set editingItem.
+		self.editingItem = index
+		self.symbolsList.SetFocus()
+
 	def onOk(self, evt):
 		self.onSymbolEdited(None)
 		self.editingItem = None
+		for symbol in self.pendingRemovals.itervalues():
+			self.symbolProcessor.deleteSymbol(symbol)
 		for symbol in self.symbols:
+			if not symbol.replacement:
+				continue
 			self.symbolProcessor.updateSymbol(symbol)
 		try:
 			self.symbolProcessor.userSymbols.save()
@@ -1562,22 +1668,18 @@ class InputGesturesDialog(SettingsDialog):
 	title = _("Input Gestures")
 
 	def makeSettings(self, settingsSizer):
+		# Translators: The label of a text field to search for gestures in the Input Gestures dialog.
+		settingsSizer.Add(wx.StaticText(self, label=pgettext("inputGestures", "&Filter by:")))
+		filter = wx.TextCtrl(self)
+		filter.Bind(wx.EVT_TEXT, self.onFilterChange, filter)
+		settingsSizer.Add(filter)
 		tree = self.tree = wx.TreeCtrl(self, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE)
 		self.treeRoot = tree.AddRoot("root")
 		tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onTreeSelect)
 		settingsSizer.Add(tree, proportion=7, flag=wx.EXPAND)
 
-		gestures = inputCore.manager.getAllGestureMappings(obj=gui.mainFrame.prevFocus, ancestors=gui.mainFrame.prevFocusAncestors)
-		for category in sorted(gestures):
-			treeCat = tree.AppendItem(self.treeRoot, category)
-			commands = gestures[category]
-			for command in sorted(commands):
-				treeCom = tree.AppendItem(treeCat, command)
-				commandInfo = commands[command]
-				tree.SetItemPyData(treeCom, commandInfo)
-				for gesture in commandInfo.gestures:
-					treeGes = tree.AppendItem(treeCom, self._formatGesture(gesture))
-					tree.SetItemPyData(treeGes, gesture)
+		self.gestures = inputCore.manager.getAllGestureMappings(obj=gui.mainFrame.prevFocus, ancestors=gui.mainFrame.prevFocusAncestors)
+		self.populateTree()
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a button to add a gesture in the Input Gestures dialog.
@@ -1596,6 +1698,32 @@ class InputGesturesDialog(SettingsDialog):
 
 	def postInit(self):
 		self.tree.SetFocus()
+
+	def populateTree(self, filter=''):
+		if filter:
+			#This regexp uses a positive lookahead (?=...) for every word in the filter, which just makes sure the word is present in the string to be tested without matching position or order.
+			filterReg = re.compile(r'(?=.*?' + r')(?=.*?'.join(filter.split(' ')) + r')', re.U|re.IGNORECASE)
+		for category in sorted(self.gestures):
+			treeCat = self.tree.AppendItem(self.treeRoot, category)
+			commands = self.gestures[category]
+			for command in sorted(commands):
+				if filter and not filterReg.match(command):
+					continue
+				treeCom = self.tree.AppendItem(treeCat, command)
+				commandInfo = commands[command]
+				self.tree.SetItemPyData(treeCom, commandInfo)
+				for gesture in commandInfo.gestures:
+					treeGes = self.tree.AppendItem(treeCom, self._formatGesture(gesture))
+					self.tree.SetItemPyData(treeGes, gesture)
+			if not self.tree.ItemHasChildren(treeCat):
+				self.tree.Delete(treeCat)
+			elif filter:
+				self.tree.Expand(treeCat)
+
+	def onFilterChange(self, evt):
+		filter=evt.GetEventObject().GetValue()
+		self.tree.DeleteChildren(self.treeRoot)
+		self.populateTree(filter)
 
 	def _formatGesture(self, identifier):
 		try:
@@ -1667,6 +1795,7 @@ class InputGesturesDialog(SettingsDialog):
 			self.pendingAdds.add(entry)
 		self.tree.SetItemText(treeGes, disp)
 		self.tree.SetItemPyData(treeGes, gid)
+		scriptInfo.gestures.append(gid)
 		self.onTreeSelect(None)
 
 	def onRemove(self, evt):
@@ -1681,6 +1810,7 @@ class InputGesturesDialog(SettingsDialog):
 		except KeyError:
 			self.pendingRemoves.add(entry)
 		self.tree.Delete(treeGes)
+		scriptInfo.gestures.remove(gesture)
 		self.tree.SetFocus()
 
 	def onOk(self, evt):

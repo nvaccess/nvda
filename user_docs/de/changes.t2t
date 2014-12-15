@@ -3,6 +3,48 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.4 =
+
+== Neuerungen ==
+- neue Sprachen: kolumbianisches Spanisch, Punjabi
+- Sie können NVDA nun auch vom Dialog "beenden" aus (wahlweise mit deaktivierten Erweiterungen) neu starten. (#4057)
+  - Sie können NVDA auch mit deaktivierten Erweiterungen neu starten, indem Sie die Kommandozeilenoption --disable-addons verwenden.
+- Sie können in Aussprachewörterbüchern angeben, dass ein bestimmtes Muster nur auf ein ganzes Wort passen soll. (#1704)
+ 
+
+== Änderungen ==
+- Wenn Sie mit dem Navigator in ein virtuelles Dokument wechseln, wird der Darstellungsmodus auf "Dokument" eingestellt. früher geschah dies nur, wenn Sie den Fokus bewegt haben. (#4369)
+- Die Dialoge zum auswählen von Sprachausgaben Bzw. Braillezeilen werden alphabetisch sortiert; ausgenommen sind hierbei die Einträge "keine Sprachausgabe" Bzw. "keine Braillezeile". Diese befinden sich stets an letzter Stelle in der Liste. (#2724)
+- Libluis wurde auf Version  2.6.0 aktualisiert. (#4434, #3835)
+- Wenn Sie im Lesemodus die Schnellnavigationstasten E und umschalt+E drücken, werden nun auch bearbeitbare Kombinationsfelder berücksichtigt. Dies betrifft u.a. das Suchfeld in der neuesten Version der Google-suche. (#4436)
+- Wenn Sie mit der linken Maustaste auf das NVDA-Symbol im Infobereich klicken, wird nun das NVDA-Menü geöffnet. (#4459)
+
+
+== Fehlerbehebungen ==
+- Wenn Sie mit alt-tab in ein bereits geöffnetes virtuelles Dokument wechseln, wird der NVDA-Cursor korrekt auf dem virtuellen Cursor und nicht wie bisher auf dem fokusierten Objekt (z. B. einem nahe gelegenen Link) positioniert. (#4369)
+- Der NVDA-Cursor verfolgt nun den virtuellen Cursor in Powerpoint-Präsentationen richtig. (#4370)
+- in Mozilla Firefox und anderen Gecko-basierten Browsernwird neuer Inhalt in Live-Regionen korrekt angezeigt. (#4169).
+- im Internet Explorer und anderen MSHTML-Elementen verhindern verschachtelte Rahmen nicht mehr das Navigieren in außerhalb liegende Rahmen. (#4418)
+- nvda stürzt nun nicht mehr ab, wenn es mit einer Handytech-Braillezeile verwendet wird. (#3709)
+- Problem in Windows Vista behoben, wonach NVDA mit dem Dialog "Einsprungpunkt nicht gefunden" abgestürzt ist, wenn man es über die Desktop-Verknüpfung oder über die Tastenkombination gestartet hat. (#4235)
+- Probleme mit Eingabefeldern in einigen Eclipse-Versionen behoben. (#3872)
+- in Outlook 2010 wird der Systemcursor im Eingabefeld "Ort" in Besprechungs- und Terminanfragen ordnungsgemäß bewegt. (#4126)
+- Innerhalb einer  Live-Region wird der Inhalt, der mit "aria-live=off" gekennzeichnet ist, korrekterweise ignoriert. (#4405)
+- bei Statuszeilen, die einen Namen besitzen, wird der Name vom Text abgetrennt. (#4430)
+- Wenn die Option  Sprechen eingegebener Wörter" aktiviert ist, werden in Passwort-Eingabefeldern nicht mehr länger Sterne angesagt, wenn Sie ein neues Wort beginnen. (#4402)
+- In der Nachrichtenliste von Microsoft Outlook werden Einträge nicht mehr unnötigerweise als Dateneintrag bezeichnet.  (#4439)
+- im Code-Editor von Eclipse wird beim Markieren von Text nicht mehr der gesamte markierte Text ausgegeben, wenn sich die Markierung ändert. (#2314)
+- diverse Versionen von Eclipse (wie z. B. die Entwicklungsumgebung für Android-Anwendungen) werden korrekt als Eclipse erkannt. (#4360, #4454)
+- Die Mausverfolgung fürInternet Explorer sowie viele weitere Windows-8-Anwendungen wurde verbessert. Dies betrifft insbesondere die Verwendung höherer Bildschirmauflösungen (#3494) 
+- Bei Verwendung der Mausverfolgung im Internet Explorer und anderen mshtml-Dokumenten werden nun mehr Schalter erkannt. (#4173)
+
+
+== Änderungen für Entwickler ==
+- Für Programme, die mehrere unterschiedliche Anwendungen bereitstellen können (wie z. B. javaw.exe) können nun Anwendungsmodule für einzelne Anwendungen geschrieben werden. (#4360)
+ - siehe hierzu die Code-Dokumentation von appModuleHandler.AppModule für weitere Informationen.
+ - Unterstützung für javaw.exe ist bereits integriert.
+
+
 = 2014.3 =
 
 == neue Funktionen ==
@@ -13,11 +55,11 @@
  - es wird benachrichtigt, ob der gewählte Zeitpunkt mit einem Termin kollidiert
  - der gewählte Termin wird ausgegeben, wenn Sie Tab drücken
  - Das Datum wird nur noch ausgegeben, wenn sich der neu gewählte Termin/Zeitpunkt auf einen anderen Tag bezieht
- -  Im Posteingang und anderen Nachrichtenlisten in Outlook 2010 und neuer kann die Ansage der Spaltenüberschriften deaktiviert werden.(#3834)
+- Verbesserte Unterstützung für den Posteingang und andere Nachrichtenlisten in Outlook 2010 und neuer. (#3834)
  - Sie können die Anzeige der Spaltenüberschriften (Absender, Betreff usw.) unterdrücken, indem Sie die Option "Spalten- und Reihenüberschriften von Tabellen ansagen" in den Einstellungen für Dokumentformatierungen deaktivieren.
  - Sie können die Tabellennavigationsbefehle (Alt+strg+Pfeiltasten) verwenden, um zwischen den Spalten zu navigieren
 - Microsoft Word: Wenn eine eingebundene Grafik keinen Alternativtext besitzt, wird stattdessen der Titel angezeigt, sofern vorhanden. (#4193)
-- Microsoft Word: Sie können die Einrückung eines Absatzes automatisch ausgeben lassen,, indem Sie die Option "Absatzeinrückungen anzeigen" in den Einstellungen für Dokumentformatierungen aktivieren. Des weiteren werden Absatzeinrückungen auch mit dem Befehl Dokumentformatierung ansagen (NVDA+f) ausgegeben. (#4165).
+- Microsoft Word: Sie können die Einrückung eines Absatzes automatisch ausgeben lassen, indem Sie die Option "Absatzeinrückungen anzeigen" in den Einstellungen für Dokumentformatierungen aktivieren. Des weiteren werden Absatzeinrückungen auch mit dem Befehl Dokumentformatierung ansagen (NVDA+f) ausgegeben. (#4165).
 - Wenn Sie in Eingabefeldern oder in Dokumenten die Eingabetaste drücken, wird automatisch eingefügter Text (Tab-, Aufzählungszeichen, Numerierungen) automatisch ausgegeben. (#4185)
 - Microsoft Word: Sie können nvda+alt+c drücken, um sich den Kommentar in einem Word-Dokument ausgeben zu lassen. (#3528)
 - verbessertes automatisches Anzeigen von Reihen- und Spaltenüberschriften in Microsoft Excel (#3568):
@@ -78,15 +120,15 @@
 - Der Dialog zum Bearbeiten von Signaturen in Outlook ist nun voll zugänglich (Incl. Formaterkennung und Cursorverfolgung). (#3833) 
 - Wenn Sie in Microsoft Word die letzte Zeile einer Tabellenzelle lesen, wird nicht mehr die gesamte Zelle gelesen. (#3421)
 - In Microsoft Word wird nicht mehr das gesamte Inhaltsverzeichnis gelesen, wenn Sie die erste oder letzte Zeile in einem Inhaltsverzeichnis lesen. (#3421)
-- When speaking typed words and in some other cases, words are no longer incorrectly broken at marks such as vowel signs and virama in Indic languages. (#4254)
+- Beim sprechen geschriebener Wörter und in einigen anderen Fällen, werden Wörter, die Vokalzeichen und Virama (Indic Languages) enthalten, nicht mehr fälschlicherweise zerteilt. (#4254)
 - numerische Eingabefelder in Goldwave werden korrekt verarbeitet. (#670)
-- Wenn Sie sich in Microsoft Word absatzweise durch numerierte Listen oder Afufzählungslisten bewegen, müssen Sie die Tastenkonbinationen strg+Pfeil auf/ab nicht mehr zweimal drücken. (#3290)
+- Wenn Sie sich in Microsoft Word absatzweise durch numerierte Listen oder Aufzählungslisten bewegen, müssen Sie die Tastenkonbinationen strg+Pfeil auf/ab nicht mehr zweimal drücken. (#3290)
 
  
 == Änderungen für Entwickler ==
 - Die Unterstützung für das Beilegen einer Dokumentation zu NVDA-Erweiterungen wurde vereinheitlicht. Sehen Sie sich den Abschnitt zu Dokumentation für Erweiterungen für weitere Informationen an. (#2694)
 - Wenn sie das Wörterbuch __gestures verwenden, um Skripte an Eingabemethoden zuzuweisen, können Sie als Namen für das Skript das Schlüsselword None angeben, um in einer Basisklasse die Zuweisung für eine Tastenkombination zu löschen. (#4240)
-- Falls es in bestimmten Sprachräumen Probleme mit der Standardtastenkombination strg+alt+n zum Starten von NVDA geben sollte, können Sie diese ändern. (#2209)
+- Es ist nun möglich, die Tastenkombination zum Starten von NVDA zu ändern. In einigen Sprachräumen verursacht die Standard-Tastenkombination Probleme. (#2209)
  - Dies wird über Getext realisiert.
  - Bedenken Sie, dass Sie sowohl den Text für die Option zum Erstellen einer Desktop-Verknüpfung als auch die entsprechenden Passagen im Benutzerhandbuch aktualisieren müssen.
 

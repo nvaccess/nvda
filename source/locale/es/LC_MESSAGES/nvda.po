@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-11 19:10+1000\n"
-"PO-Revision-Date: 2014-08-06 21:20+0100\n"
+"POT-Creation-Date: 2014-11-06 19:11+1000\n"
+"PO-Revision-Date: 2014-11-06 20:43+0100\n"
 "Last-Translator: Juan C. Buño <quetzatl@eresmas.net>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.7\n"
+"X-Generator: Poedit 1.6.10\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -4060,13 +4060,6 @@ msgstr "Diccionario por Voces (%s)"
 msgid "Temporary dictionary"
 msgstr "Diccionario temporal"
 
-#. Translators: Message shown to ask if user really wishes to quit NVDA.
-msgid "Are you sure you want to quit NVDA?"
-msgstr "¿Estás seguro de que quieres salir de NVDA?"
-
-msgid "Exit NVDA"
-msgstr "salir de NVDA"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "Acerca de NVDA"
@@ -4297,6 +4290,10 @@ msgstr "Donar"
 msgid "E&xit"
 msgstr "&Salir"
 
+#. Translators: The title of the dialog to exit NVDA
+msgid "Exit NVDA"
+msgstr "salir de NVDA"
+
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -4360,6 +4357,30 @@ msgstr "Crear copia &portable"
 msgid "&Continue running"
 msgstr "&Continuar ejecución"
 
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"Ahora se deshabilitaron todos los complementos. Se volverán a habilitar en "
+"el próximo reinicio a menos que elijas deshabilitarlos de nuevo."
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "¿Qué te gustaría &hacer?"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "Salir"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "Reiniciar"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "Reiniciar con los complementos deshabilitados"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "Por favor espera"
@@ -4367,6 +4388,12 @@ msgstr "Por favor espera"
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Administrador de Complementos"
+
+#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgstr ""
+"Ahora se deshabilitaron todos los complementos. Para habilitarlos debes "
+"reiniciar NVDA."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -4394,7 +4421,7 @@ msgstr "&Acerca del complemento..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "&Ayuda de Complementos"
+msgstr "&Ayuda del Complemento"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -4478,6 +4505,10 @@ msgstr "instalar"
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "remove"
 msgstr "eliminar"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+msgid "suspended"
+msgstr "suspendido"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
@@ -4921,9 +4952,9 @@ msgstr "Idioma"
 msgid "&Save configuration on exit"
 msgstr "&Guardar configuración al salir"
 
-#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
-msgid "&Warn before exiting NVDA"
-msgstr "&Avisar antes de salir de NVDA"
+#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
+msgid "Sho&w exit options when exiting NVDA"
+msgstr "&Mostrar opciones cuando se salga de NVDA"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -5487,6 +5518,18 @@ msgstr "Anunciar &marcos"
 msgid "Report if &clickable"
 msgstr "Anunciar &se puede hacer clic"
 
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "&En cualquier sitio"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "&palabra completa"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Regular expression"
+msgstr "&Expresión regular"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "Edición de Entrada de Diccionario"
@@ -5507,9 +5550,9 @@ msgstr "&Comentario"
 msgid "Case &sensitive"
 msgstr "&Sensible a las mayúsculas"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "&Expresión regular"
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "Tipo:"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -5532,9 +5575,9 @@ msgstr "Reemplazar por"
 msgid "case"
 msgstr "caso"
 
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
-msgid "Regexp"
-msgstr "Regular"
+#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "Tipo:"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
@@ -6634,6 +6677,15 @@ msgstr "Serie de la HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to quit NVDA?"
+#~ msgstr "¿Estás seguro de que quieres salir de NVDA?"
+
+#~ msgid "&Warn before exiting NVDA"
+#~ msgstr "&Avisar antes de salir de NVDA"
+
+#~ msgid "Regexp"
+#~ msgstr "Regular"
 
 #~ msgid "No location information for navigator object"
 #~ msgstr "no hay información de posición para el navegador de objetos"

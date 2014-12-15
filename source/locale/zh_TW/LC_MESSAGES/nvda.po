@@ -4,16 +4,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-11 19:10+1000\n"
-"PO-Revision-Date: 2014-08-11 15:49+0800\n"
-"Last-Translator: Wang, Jan Li (Jerry) <wangjanli@gmail.com>\n"
+"POT-Creation-Date: 2014-08-06 23:27+1000\n"
+"PO-Revision-Date: 2014-10-06 17:21+0800\n"
+"Last-Translator: Cin-Wei <aha76540@hotmail.com.tw>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.6.6\n"
+"X-Generator: Poedit 1.6.9\n"
 "X-Poedit-Bookmarks: 127,-1,122,121,-1,606,650,117,123,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -87,7 +87,7 @@ msgstr "未知的輸入法"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
 msgid "{language} - {layout}"
-msgstr "{language}-{layout}"
+msgstr "{layout} - {language}"
 
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
@@ -190,7 +190,7 @@ msgstr "德語二級點字"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "English (U.K.) 8 dot computer braille"
-msgstr "英式英語八點電腦點字"
+msgstr "英語八點電腦點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -259,7 +259,7 @@ msgstr "加拿大法語二級點字"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "French (unified) 6 dot computer braille"
-msgstr "統一法語六點電腦點字"
+msgstr "通用法語六點電腦點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -429,7 +429,7 @@ msgstr "土耳其語一級點字"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Unified English Braille Code grade 1"
-msgstr "統一英語一級點字"
+msgstr "通用英語一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -734,7 +734,7 @@ msgstr "橘色"
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #, python-format
 msgid "selected %s"
-msgstr "選取了%s"
+msgstr "%s，已選擇"
 
 #. Translators: The word for an unknown control type.
 msgid "unknown"
@@ -1401,7 +1401,7 @@ msgstr "可選取"
 
 #. Translators: Presented when a control can be moved to using system focus.
 msgid "focusable"
-msgstr "焦點可到達的"
+msgstr "可聚焦"
 
 #. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
 msgid "clickable"
@@ -1452,7 +1452,7 @@ msgstr "有註解"
 
 #. Translators: a state that denotes that the object is covered partially or fully by another object
 msgid "obscured"
-msgstr "遮蓋"
+msgstr "已覆蓋"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -2184,7 +2184,7 @@ msgstr "忽略下一個NVDA的按鍵指令，改由相關的應用程式執行�
 #. If there is an appModule for the current program, NVDA speaks the name of the module after presenting this message.
 #, python-format
 msgid "Currently running application is %s"
-msgstr "目前執行的應用程式其檔名是%s"
+msgstr "目前執行的應用程式檔名是%s"
 
 #. Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
 #. For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
@@ -2205,7 +2205,7 @@ msgstr "開啟NVDA一般設定對話方塊"
 
 #. Translators: Input help mode message for go to synthesizer dialog command.
 msgid "Shows the NVDA synthesizer dialog"
-msgstr "開啟NVDA語音合成器對話方塊"
+msgstr "開啟 NVDA 語音合成對話方塊"
 
 #. Translators: Input help mode message for go to voice settings dialog command.
 msgid "Shows the NVDA voice settings dialog"
@@ -2279,7 +2279,7 @@ msgstr "讀出剪貼簿內的文字"
 
 #. Translators: Indicates start of review cursor text to be copied to clipboard.
 msgid "Start marked"
-msgstr "開始標記位置"
+msgstr "開始位置已標記"
 
 #. Translators: Input help mode message for mark review cursor position for copy command (that is, marks the current review cursor position as the starting point for text to be copied).
 msgid ""
@@ -2818,7 +2818,7 @@ msgstr "%s沒選取"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
-msgstr "已選取的都移除了"
+msgstr "移除所選"
 
 #. Translators: Reported when drag and drop is finished.
 #. This is only reported for objects which support accessible drag and drop.
@@ -2873,7 +2873,7 @@ msgstr "第%s頁"
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
 msgid "heading level %d"
-msgstr "標題等級 %d"
+msgstr "%d 級標題"
 
 #. Translators: Indicates the style of text.
 #. A style is a collection of formatting settings and depends on the application.
@@ -3155,17 +3155,17 @@ msgstr "向右滑動"
 #. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
 msgctxt "touch action"
 msgid "hover down"
-msgstr "向下懸浮控制"
+msgstr "停駐"
 
 #. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
 msgctxt "touch action"
 msgid "hover"
-msgstr "懸浮控制"
+msgstr "移動"
 
 #. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
 msgctxt "touch action"
 msgid "hover up"
-msgstr "向上懸浮控制"
+msgstr "抬起"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -3342,11 +3342,11 @@ msgstr ""
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
-msgstr "{description}的{symbol}"
+msgstr "{description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
 msgid "{number} {candidate}"
-msgstr "{number} {candidate}"
+msgstr "{candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
@@ -3709,11 +3709,11 @@ msgstr "在{otherShape}之下"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
 msgid "{distance:.3g} points from left slide edge"
-msgstr "從投影片左側邊緣{distance:.3g}點"
+msgstr "距離投影片左側邊緣{distance:.3g}點"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
 msgid "Off left slide edge by {distance:.3g} points"
-msgstr "距離投影片左側邊緣{distance:.3g}點"
+msgstr "投影片左側超出{distance:.3g}點"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
 msgid "{distance:.3g} points from top slide edge"
@@ -3933,10 +3933,10 @@ msgstr "一般設定"
 
 #. Translators: The label for the menu item to open Synthesizer settings dialog.
 msgid "&Synthesizer..."
-msgstr "語音合成器...(&S)"
+msgstr "語音合成...(&S)"
 
 msgid "Change the synthesizer to be used"
-msgstr "變更使用的語音合成器"
+msgstr "變更了語音合成器"
 
 #. Translators: The label for the menu item to open Voice Settings dialog.
 msgid "&Voice settings..."
@@ -4374,7 +4374,7 @@ msgstr "刪除(&D)"
 #. in the Configuration Profiles dialog.
 #. See the Configuration Profiles section of the User Guide for details.
 msgid "&Triggers..."
-msgstr "自動觸發...(&T)"
+msgstr "觸發器...(&T)"
 
 #. Translators: The label of a checkbox in the Configuration Profiles dialog.
 msgid "Temporarily d&isable all triggers"
@@ -4383,7 +4383,7 @@ msgstr "暫時停用自動觸發(&I)"
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
 msgid "(normal configuration)"
-msgstr "一般"
+msgstr "(通用配置)"
 
 #. Translators: Reported for a profile which is being edited
 #. in the Configuration Profiles dialog.
@@ -4451,7 +4451,7 @@ msgstr "目前的應用程式 (%s)"
 
 #. Translators: Displayed for the configuration profile trigger for say all.
 msgid "Say all"
-msgstr "讀出全部"
+msgstr "全文朗讀"
 
 #. Translators: An error displayed when saving configuration profile triggers fails.
 msgid ""

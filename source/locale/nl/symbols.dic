@@ -5,17 +5,10 @@
 
 complexSymbols:
 # identifier	regexp
-# Sentence endings.
-. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
-! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
-? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-# Phrase endings.
-; phrase ending	(?<=[^\s;]);(?=\s|$)
-: phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
 decimal point	(?<=\d)\,(?=\d)
-in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥]?\d)
+thousands separator	(?<=\d)\.(?=\d)
+begin-word '	((?<=\s)|(?<=^))'(?=\w(\s|$|-))
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -27,7 +20,9 @@ symbols:
 ; phrase ending	puntcomma	most	always
 : phrase ending	dubbele punt	most	always
 decimal point		none	always
+thousands separator	punt	all	norep
 in-word '	apostrofe	all	norep
+begin-word '	apostrofe	all	norep
 negative number	minus	none	norep
 
 # Whitespace
@@ -79,7 +74,7 @@ _	onderstreping	most
 
 # Other characters
 •	opsommingsteken	some
-…	punjt punt punt	all	always
+…	punt punt punt	all	always
 ...	punt punt punt	all	always
 	opsommingsteken	some
 “	aanhalingsteken openen	most

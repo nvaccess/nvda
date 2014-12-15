@@ -1,5 +1,5 @@
-﻿NVDA NVDA_VERSION 用戶指南
-（最後更新日期：2014年8月18日）
+﻿ NVDA_VERSION 用戶指南
+（最後更新日期：2014年9月12日）
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION 指令快速參考
@@ -231,7 +231,7 @@ NVDA 功能表提供偏好設定、開啟說明檔、儲存或還原修改的設
  
 ++ 基本按鍵指令 ++
 %kc:beginInclude
-|| 名稱 | 桌上型電腦快速鍵 | 筆記型電腦快速鍵 | 觸控 | 說明 |
+|| 名稱 | 桌電快速鍵 | 筆電快速鍵 | 觸控 | 說明 |
 | 停止報讀 | Ctrl | control | 二根手指點選 | 立即停止報讀。 |
 | 暫停/繼續報讀 | Shift | shift | 無 | 立即暫停報讀，再按一次會從原來暫停的地方繼續報讀(若使用的語音合成器有支援的話)。 |
 | NVDA 功能表 | NVDA+n | NVDA+n | 二根手指雙重點選 | 開啟 NVDA 功能表以存取偏好設定、工具及輔助說明等。 |
@@ -266,7 +266,7 @@ NVDA 可讓使用者以不同的方式在系統間導航並與之互動，包括
 
 以下是幾個用來移動系統焦點很有用的指令：
 %kc:beginInclude
-|| 名稱 | 桌上型電腦快速鍵 | 筆記型電腦快速鍵 | 說明 |
+|| 名稱 | 桌電快速鍵 | 筆電快速鍵 | 說明 |
 | 讀出目前焦點 | NVDA+tab | NVDA+tab | 讀出目前焦點所在的物件或控制項，連按兩次將拼讀其資訊。 |
 | 讀出視窗標題 | NVDA+t | NVDA+t | 讀出目前作用中的視窗標題，連按兩下拼讀標題，連按三下複製標題到剪貼簿。 |
 | 讀出作用中的視窗內容 | NVDA+b | NVDA+b | 讀出目前作用中視窗所有的控制項（尤其在對話方塊中很有用）。 |
@@ -282,7 +282,7 @@ NVDA 可讓使用者以不同的方式在系統間導航並與之互動，包括
 
 與編輯游標相關的NVDA按鍵指令列舉如下：
 %kc:beginInclude
-|| 名稱 | 桌上型電腦快速鍵 | 筆記型電腦快速鍵 | 說明 |
+|| 名稱 | 桌電快速鍵 | 筆電快速鍵 | 說明 |
 | 向下讀出全部 | NVDA+向下鍵 | NVDA+a | 從目前游標所在的位置往下讀出直到結尾，游標會跟隨移動。 |
 | 讀出游標所在行的內容 | NVDA+向上鍵 | NVDA+l |  讀出游標所在行的內容，連按兩次會拼讀出這一行內容。 |
 | 讀出選取的內容 | NVDA+Shift+向上鍵 | NVDA+Shift+s | 讀出目前已選取的文字。 |
@@ -321,7 +321,7 @@ NVDA 可讓使用者以不同的方式在系統間導航並與之互動，包括
 要進行物件瀏覽，可利用以下的指令：
 
 %kc:beginInclude
-|| 名稱 | 桌上型電腦快速鍵 | 筆記型電腦快速鍵 | 觸控 | 說明 |
+|| 名稱 | 桌電快速鍵 | 筆電快速鍵 | 觸控 | 說明 |
 | 讀出目前物件 | NVDA+數字鍵盤5 | NVDA+Shift+o | 無 | 讀出目前所在瀏覽物件的相關資訊，連按兩下拼讀物件名稱，連按三下複製物件的名稱到剪貼簿 |
 | 移至母物件 | NVDA+數字鍵盤8 | NVDA+Shift+向上鍵 | 向上撥動（物件模式） | 移至目前物件的母物件（也就是包含此物件的容器） |
 | 移至前一個物件 | NVDA+數字鍵盤4 | NVDA+Shift+向左鍵 | 向左撥動（物件模式） | 直接移至目前所在物件的前一個物件 |
@@ -352,7 +352,7 @@ NVDA 允許您以逐一字元、字詞及逐行方式讀出在視窗畫面、目
 
 下列的快速鍵可以用於瀏覽文字：
 %kc:beginInclude 
-|| 名稱 | 桌上型電腦快速鍵 | 筆記型電腦快速鍵 | 觸控 | 說明 |
+|| 名稱 | 桌電快速鍵 | 筆電快速鍵 | 觸控 | 說明 |
 | 移到第一行 | Shift+數字鍵盤7 | NVDA+control+home | 無 | 將瀏覽游標移動到文件中的第一行。 |
 | 移到上一行 | 數字鍵盤7 | NVDA+向上鍵 | 向上撥動（文字模式） | 移動瀏覽游標到所在行的上一行並讀出該行文字 |
 | 讀出瀏覽游標所在行 | 數字鍵盤8 | NVDA+shift+句點 | 無 | 讀出瀏覽游標所在的一行文字，連按兩下拼讀出整行，連按三下讀出該行的字詞解釋 |
@@ -386,7 +386,7 @@ NVDA 允許您以逐一字元、字詞及逐行方式讀出在視窗畫面、目
 
 以下的二個快速鍵是用來切換檢閱模式：
 %kc:beginInclude 
-|| 名稱 | 桌上型電腦快速鍵 | 筆記型電腦快速鍵 | 觸控 | 說明 |
+|| 名稱 | 桌電快速鍵 | 筆電快速鍵 | 觸控 | 說明 |
 || 切換到後一個檢閱模式 | NVDA+數字鍵盤7 | NVDA+pageUp | 二根手指向上撥動 | 切換到後一個可供使用的檢閱模式 | 
 | 切換到前一個檢閱模式 | NVDA+數字鍵盤1 | NVDA+pageDown | 二根手指向下撥動 | 切換到前一個可供使用的檢閱模式 |
 %kc:endInclude
@@ -430,7 +430,7 @@ NVDA 另外也提供一個利用聲音的高低來提示鼠標所指位置在螢
 
 雖然一般應以實體滑鼠或觸控板來移動鼠標，但NVDA 也提供幾個與鼠標相關的按鍵指令：
 %kc:beginInclude
-|| 名稱 | 桌上型電腦快速鍵 | 筆記型電腦快速鍵 | 說明 |
+|| 名稱 | 桌電快速鍵 | 筆電快速鍵 | 說明 |
 | 點擊滑鼠左鍵 | 數字鍵盤除號 | NVDA+左括弧 | 點擊滑鼠左鍵一次。連續快按二下為雙擊滑鼠左鍵。 |
 | 鎖定滑鼠左鍵 | Shift+數字鍵盤除號 | NVDA+control+左括弧 | 鎖定滑鼠左鍵，再按一次則解鎖。此功能可模擬按住滑鼠左鍵，執行拖曳的動作。 |
 | 點擊滑鼠右鍵 | 數字鍵盤乘號 | NVDA+右括弧 | 點擊滑鼠右鍵一次。 |
@@ -571,7 +571,7 @@ NVDA額外提供了一些應用程式專用的指令，可以更方便地執行�
 + NVDA 設定 +
 
 ++ 偏好設定 ++
-%kc:settingsSection: || Name | Desktop key | Laptop key | Description |
+%kc:settingsSection: || 名稱 | 桌電快速鍵 | 筆電快速鍵 | 說明 |
 大部分的 NVDA 設定可以經由 NVDA 功能表內的偏好設定子功能表中各項目的對話方塊來更改其設定值。
 在所有的設定對話方塊中，只要按 OK 按鈕即可接受您所做的任何改變。
 要取消更改，則按 Cancel 按鈕或者 Esc 鍵即可。
@@ -622,8 +622,8 @@ NVDA額外提供了一些應用程式專用的指令，可以更方便地執行�
 當勾選此核取方塊，NVDA會自動檢查更新版本並通知。
 您也可透過手動來做版本更新檢查，請在NVDA功能表中的「說明」選擇「檢查更新。」
 
-+++ 語音合成器選擇 (NVDA+Ctrl+s) +++
-語音合成器對話方塊用以選擇 NVDA 是使用那一個合成方式報讀。
++++ 語音合成 (NVDA+Ctrl+s) +++
+「語音合成」對話方塊用以選擇 NVDA 是使用那一個合成方式報讀。
 一旦您選擇了某一合成軟體，您可以按 「OK」，則 NVDA 會載入所選擇的合成軟體。
 假如在載入過程有任何錯誤發生，NVDA 將會顯示錯誤訊息，並且繼續使用先前的合成軟體。
 
@@ -669,7 +669,7 @@ NVDA 可以支援的語音合成器清單，請參見[支援的語音合成器 #
 這是一個以滑桿呈現的控制選項，它是在某一音調下，允許調整語調的上下起伏。它僅適用於有提供此功能的語音合成器，目前僅有 eSpeak 有提供。
 
 ==== 自動切換語言 ====
-可以利用此核取方塊決定，當所閱讀的文件有語言標記時，可即時自動切換調用對應的語言。
+當所閱讀的文件有使用語言標記，可利用此核取方塊決定是否即時自動切換調用對應的語言。
 此選項預設為開啟。
 目前只有 eSpeak 語音支援自動切換語言。
 
@@ -708,10 +708,10 @@ NVDA 可以支援的語音合成器清單，請參見[支援的語音合成器 #
 然而有些符合微軟 SAPI介面的語音合成器並沒做好，在此功能啟用時，會有不正確的報讀。
 在這種狀況下，則此功能應停用。 
 
-+++ 快速語音設定 +++[快速語音設定] 
++++ 快速語音設定 [快速語音設定]  +++
 假如不透過呼叫「語音設定」的對話方塊，想快速變更語音的設定，下表的快速鍵可供您在執行 NVDA 時，從任何地方直接修改：
 %kc:beginInclude
-|| 名稱 | 桌上型電腦快速鍵 | 筆記型電腦快速鍵 | 說明 |
+|| 名稱 | 桌電快速鍵 | 筆電快速鍵 | 說明 |
 | 切換到下一個語音控制項 | NVDA+Ctrl+向右鍵 | NVDA+Shift+Ctrl+向右鍵 | 切換到下一個語音控制項，包括語音、速度、音調及音量。若已到最後一個，再按則會回到第一個設定控制項。 |
 | 切換到上一個語音控制項 | NVDA+Ctrl+向左鍵 | NVDA+Shift+Ctrl+向左鍵 | 切換到上一個語音控制項，若已到第一個則會回到最後一個設定。 |
 | 增加目前語音控制項的設定值 | NVDA+Ctrl+向上鍵 | NVDA+Shift+Ctrl+向上鍵 | 增加目前使用的語音控制項的設定值，例如選擇前一個語音、加快速度、提高音調及調大音量。 |
@@ -1112,7 +1112,7 @@ NVDA提供的這個功能相當強，您也可以設定「大小寫需相符」�
 
 另一種好用的作法是使用下列的 NVDA 按鍵指令：
 %kc:beginInclude
-|| 名稱 | 桌上型電腦快速鍵 | 筆記型電腦快速鍵 | 說明 |
+|| 名稱 | 桌電快速鍵 | 筆電快速鍵 | 說明 |
 | 儲存設定 | NVDA+Ctrl+c | NVDA+Ctrl+c | 儲存目前的設定，當離開 NVDA 時，設定的資料不會遺失。 |
 | 還原設定 | NVDA+Ctrl+r | NVDA+Ctrl+r | 按一次回復到最後一次儲存的設定。連續按三次回復到出廠預設值。 |
 %kc:endInclude
@@ -1287,28 +1287,29 @@ SAPI 5 是微軟語音合成軟體的標準版本。
 
 ++ 微軟 Speech Platform ++
 微軟 Speech Platform 提供了許多種語言的語音，多用於伺服器語音應用程式的開發。
-NVDA也能使用這些語音。
+ NVDA也能使用這些語音。
+
 若要使用這些語音，您需要安裝兩個元件，包括：
-
 - Microsoft Speech Platform - Server Runtime (Version 11), x86: http://www.microsoft.com/download/en/details.aspx?id=27225
-
 - Microsoft Speech Platform - Server Runtime Languages (Version 11): http://www.microsoft.com/download/en/details.aspx?id=27224
-
-- 此頁面包含了許多用來產生語音辨識功能及文字轉語音(text-to-speech,TTS)的檔案。
+ - 此頁面包含了許多用來產生語音辨識功能及文字轉語音(text-to-speech,TTS)的檔案。
  請依照需要的語言或語音，選擇對應的TTS檔案。
  例如，MSSpeech_TTS_en-US_ZiraPro.msi，這個檔案是一個美式英文的語音引擎。
-
+ -
+-
+ 
 ++ Audiologic TTS3 ++
 這是一個專供義大利語的商務用語音合成器。
 您必須要先安裝它，才可以在 NVDA 上使用。
 若要了解更詳細的資訊，請瀏覽 Audiologic 網站 [www.audiologic.it http://www.audiologic.it] 。
 
-此合成器並不支援[拼字功能 #VoiceSpellingFunctionality].
+此合成器並不支援 [拼字功能 #VoiceSpellingFunctionality] 。
 
 ++ Newfon ++
 Newfon 是一個由 Sergey Shishmintzev 免費提供的商用語音合成軟體，目前可支援俄語與烏克蘭語兩種語言。
 若要下載這個語音合成軟體，請瀏覽俄羅斯 NVDA 社群的網站 http://ru.nvda-community.org/?page_id=10 中的下載頁面。
-此合成軟體並不支援拼字功能。 
+此合成軟體並不支援拼字功能。
+
 
 ++ NVDA 專用的 Nuance Vocalizer ++
 Nuance Vocalizer 是一個商業化的高品質語音合成軟體，它是由 Nuance Communications公司開發，並由 Tiflotecnia 公司專為 NVDA 製作成套件。
@@ -1322,7 +1323,7 @@ Nuance Vocalizer 是一個商業化的高品質語音合成軟體，它是由 Nu
 這一節的內容包含 NVDA 支援的點字顯示器的資訊。
 
 ++ Freedom Scientific Focus/PAC Mate 系列 ++
-[Freedom Scientific http://www.freedomscientific.com/] 所有的 Focus 與 PAC Mate 系列的點字顯示器均可被 NVDA 支援。
+ 所有 [Freedom Scientific http://www.freedomscientific.com/] 的 Focus 與 PAC Mate 系列的點字顯示器  均可被 NVDA 支援。
 您需要在您的系統中安裝 Freedom Scientific 點字顯示器的驅動程式。
 若您尚未安裝，您可以從下列的網頁取得：
 http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
@@ -1557,11 +1558,13 @@ NVDA可以支援由 [hedo Reha-Technik http://www.hedo.de/] 出品的點字顯�
 
 ++ HIMS Braille Sense/Braille EDGE Series ++
 NVDA 支援 Braille Sense 和 Braille EDGE displays 從 [Hims http://www.hims-inc.com/] 
-當透過USB做連結，
-您需要從HIMS下載USB驅動程式並安裝到您的系統。
-You can download these from the HIMS Resource Center: http://www.hims-inc.com/resource-center/
-On this page, select your device and download the driver in the Window-Eyes section.
-Although the section only mentions Window-Eyes, this is a general USB driver which will work with NVDA as well.
+當透過USB做連結，您需要從HIMS下載USB驅動程式並安裝到您的系統。
+您可以從 HIMS 資源中心 http://www.hims-inc.com/resource-center/ 下載。
+從此網頁內的 Window-Eyes 區塊，選取並下載您使用的設備的驅動程式。
+雖然此頁面僅提及 Window-Eyes，但這是一個通用的 USB 驅動程式，也是適用於 NVDA。
+
+以下是與 NVDA 相關按鍵的說明，
+請參考此設備的相關參考文件，以瞭解各按鍵的位置。
 %kc:beginInclude
 || 名稱 | 按鍵 |
 | Scroll braille display back | left side scroll down |
@@ -1616,7 +1619,6 @@ Although the section only mentions Window-Eyes, this is a general USB driver whi
 | windows+d key | dot1+dot4+dot5+advance1 |
 %kc:endInclude
 
-
 ++ HIMS SyncBraille ++
 NVDA 支援 SyncBraille 顯示器 從 [HIMS http://www.hims-inc.com/]。
 您需要從HIMS下載USB驅動程式並安裝到您的系統。
@@ -1635,9 +1637,7 @@ The Seika Version 3, 4 and 5 (40 cells) and Seika80 (80 cells) braille displays 
 
 您可以得到更多相關顯示器資訊從 http://www.seika-braille.com/
 您需要請供應商提供USB驅動程式並安裝到您的系統。
-
 下列為此顯示器在NVDA的按鍵配置。
-
 這些按鍵的實際位置，請參閱顯示器的說明文件。
 %kc:beginInclude
 || 名稱 | 按鍵 |

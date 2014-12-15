@@ -3,6 +3,44 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.4 =
+
+ == Nowości ==
+- Nowe języki: Hiszpański kolumbijski, pendżabski
+- Możliwe jest ponowne uruchomienie NVDA, albo ponowne uruchomienie z wyłączonymi dodatkami z okna dialogowego "Zakończ NVDA". (#4057)
+ - NVDA może zostać uruchomiony z wyłączonymi dodatkami również przy użyciu opcji linii komend --disable-addons.
+- W słownikach wymowy, można teraz określić, że wzorzec pasuje tylko jeśli jest całym słowem; tzn. nie pojawia się jako część dłuższego słowa. (#1704)
+
+
+== Zmiany ==
+- Jeśli obiekt, do którego przeszedłeś używając nawigacji po obiektach, jest wewnątrz dokumentu trybu czytania, a obiekt, na którym znajdowałeś się poprzednio nie był, tryb przeglądu jest automatycznie zmieniany na dokument. Poprzednio, takie zachowanie miało miejsce tylko na skutek zmiany obiektu nawigacyjnego po zmianie punktu uwagi. (#4369)
+- Listy monitorów brajlowskich i syntezatorów w odpowiednich oknach dialogowych ustawień, są od teraz sortowane alfabetycznie, za wyjątkiem bez brajla /bez mowy, które znajdują się na końcu. (#2724)
+- Zaktualizowany translator brajlowski liblouis do  wersji 2.6.0. (#4434, #3835)
+- W trybie czytania, naciśnięcie e i shift+e by nawigować po polach edycji, obecnie uwzględnia edytowalne listy rozwijane. Działa to np. w polu wyszukiwania najnowszej wersji wyszukiwarki Google. (#4436)
+- Kliknięcie lewym przyciskiem myszy ikony NVDA w obszarze powiadomień, obecnie otwiera menu NVDA. (#4459)
+
+
+== Poprawki błędów ==
+- Gdy następuje powrót punktu uwagi do dokumentu trybu czytania (np. przejście klawiszami alt+tab do okna otwartej wcześniej strony internetowej), punkt przeglądu jest prawidłowo umieszczany na pozycji wirtualnego kursora, zamiast na kontrolce w punkcie uwagi (np. najbliższym linku). (#4369)
+- W pokazach slajdów programu Powerpoint, punkt przeglądu prawidłowo podąża za wirtualnym kursorem. (#4370)
+- W Mozilla Firefox i innych przeglądarkach bazujących na Gecko, nowa treść w żywym obszarze zostanie odczytana nawet jeśli ma typ ARIA różny od typu nadrzędnego żywego obszaru. Np. treść z atrybutem assertive dodana do żywego obszaru oznaczonego jako polite. (#4169).
+- W Internet Explorer i innych kontrolkach MSHTML,  niektóre przypadki dokumentu zawartego w innym dokumencie, nie blokują teraz użytkownikowi możliwości dotarcia do niektórych treści (szczególnie ramki wewnątrz ramek). (#4418)
+- NVDA nie zawiesza się przy próbie użycia monitora brajlowskiego Handy Tech w niektórych sytuacjach. (#3709)
+- W Windows Vista, nieprawdziwe okno  "nie znaleziono punktu wejścia" nie jest wyświetlane w niektórych przypadkach, np. gdy uruchomiono NVDA ze skrótu na pulpicie, albo przez klawisz skrótu. (#4235)
+- Naprawiono poważne problemy z polami edycji w okienkach dialogowych najnowszych wersji Eclipse . (#3872)
+- Outlook 2010: przemieszczanie punktu uwagi działa zgodnie z oczekiwaniami w polu lokalizacji spotkań i próśb o spotkanie. (#4126)
+- Wewnątrz żywego obszaru, treść oznaczona jako nie będąca żywą, (np. aria-live="off") jest teraz prawidłowo ignorowana. (#4405)
+- Podczas zgłaszania treści paska stanu, posiadającego nazwę, nazwa jest teraz prawidłowo oddzielona od pierwszego słowa treści. (#4430)
+- W polach wprowadzania haseł, przy włączonym wypowiadaniu wpisywanych słów, wielokrotne gwiazdki nie są od teraz niepotrzebnie odczytywane po rozpoczęciu wpisywania nowych słów. (#4402)
+- Na liście wiadomości Microsoft Outlook , elementy nie są od teraz bezsensownie ogłaszane jako elementy danych. (#4439)
+- Podczas zaznaczania tekstu w polu edycji kodu w Eclipse IDE, całe zaznaczenie nie jest odczytywane za każdym razem gdy zaznaczenie się zmieni. (#2314)
+- Różne wersje Eclipse, np. wersja zawarta w  Spring Tool Suite,albo pakiecie Android Developer Tools, są teraz rozpoznawane jako Eclipse i odpowiednio obsługiwane. (#4360)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+
+
 = 2014.3 =
 
 == Nowe funkcje ==

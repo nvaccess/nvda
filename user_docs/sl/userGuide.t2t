@@ -23,7 +23,7 @@ Glavni poudarki so:
 - Podpora za precejšnje število brajevih vrstic vključno s podporo vnosa računalniške brajice za vrstice, ki vsebujejo brajevo tipkovnico
 - Možno uporabljati preko USB ključka ali drugega prenosljivega medija brez namestitve v računalnik
 - Govorna podpora ob namestitvi v sistem
-- Prevedeno v 45 jezikov
+- Prevedeno v 47 jezikov
 - Podpora za aktualne Windows operacijske sisteme tako 32-bitne kot 64-bitne
 - Možno poganjati na Windows prijavnem zaslonu in drugih "varnih" namizjih
 - Podpora za več vmesnikov za prilagoditev na primer Microsoft Active Accessibility, Java Access Bridge, IAccessible2 in UI Automation (le-ta je podprt v Windows 7 in novejših)
@@ -32,7 +32,7 @@ Glavni poudarki so:
 
 ++ Internacionalizacija ++
 Pomembno je, da imajo ljudje, ne glede na to, kateri jezik govorijo, enak dostop do tehnologije.
-Poleg Angleščine je NVDA prevedena v 45 jezikov vključno z: Afrikanščino, Albanščino, Amhariščino, Arabščino, Aragonščino, Bolgarščino, Brazilsko Portugalščino, Češčino, Danščino, Finščino, Francoščino, Galicijščino, Grščino, Gruzijščino, Hebrejščino, Hindujščino, Hrvaščino, Islandščino, Irščino, Italijanščino, Japonščino, Katalonščino, Korejščino, Madžarščino, Nepalščino, Nemščino, Nizozemščino, Norveščino, Perziščino, Poljščino, Portugalščino, Romunščino, Ruščino, Slovaščino, Slovenščino, Srbščino, Španščino, Švedščino, Tamilščino, Tajščino, Tradicionalno in Poenostavljeno Kitajščino, Turščino, Ukrajinščino in Vietnamščino.
+Poleg Angleščine je NVDA prevedena v 47 jezikov vključno z: Afrikanščino, Albanščino, Amhariščino, Arabščino, Aragonščino, Bolgarščino, Brazilsko Portugalščino, Češčino, Danščino, Finščino, Francoščino, Galicijščino, Grščino, Gruzijščino, Hebrejščino, Hindujščino, Hrvaščino, Islandščino, Irščino, Italijanščino, Japonščino, Katalonščino, Korejščino, Madžarščino, Nepalščino, Nemščino, Nizozemščino, Norveščino, Perziščino, Poljščino, Portugalščino, Punjabi, Romunščino, Ruščino, Slovaščino, Slovenščino, Srbščino, Španščino, Španščino (Kolumbija), Švedščino, Tamilščino, Tajščino, Tradicionalno in Poenostavljeno Kitajščino, Turščino, Ukrajinščino in Vietnamščino.
 
 ++ Podpora Govorni sintezi ++
 Ločeno od podajanja sporočil in vmesnika v naštetih jezikih NVDA omogoča uporabnici/ku, da bere vsebino v kateremkoli jeziku tako dolgo, dokler ima na računalniku nameščeno govorno sintezo za izbran jezik.
@@ -84,7 +84,7 @@ Poganjanje z medija, ki je samo za branje, trenutno ni podprto.
 Možno je uporabiti tudi začasno kopijo (na primer za demonstracijske prikaze), čeprav je pot zagona NVDA v tem načinu precej dolga.
 
 ++ Omejitve Začasne in Prenosljive Kopije ++
-Ločeno od tega, da se NVDA ne more samodejno zagnati med in ali po prijavi, imata prenosljiva in začasna kopija še naslednje omejitve:
+Ločeno od tega, da se NVDA ne more samodejno zagnati pred in/ali po prijavi, imata prenosljiva in začasna kopija še naslednje omejitve:
 - Nezmožnost biti v interakciji s programi, ki tečejo s skrbniškimi pravicami, dokler seveda tudi NVDA sama ne teče z istimi pravicami (ni priporočljivo).
 - Nezmožnost branja zaslonov Nadzora Uporabniškega računa (NURR), ko se poskuša zagnati program s skrbniškimi pravicami.
 - Windows 8: nezmožnost podpirati vnos preko zaslona na dotik.
@@ -131,6 +131,7 @@ Pritisnite V redu, da zaprete to pogovorno okno.
 ++ Zagon NVDA ++
 Če ste namestili NVDA z namestitvenega paketa, potem je zagon NVDA preprost. Zaženete ga lahko s pritiskom kombinacije tipk control+alt+a ali pa z izbiro NVDA menija v Start meniju, kjer razprete seznam vseh nameščenih programov.
 Kot dodatno možnost lahko uporabite pogovorno okno Zaženi, kjer vnesete NVDA in pritisnete Enter.
+Lahko uporabite tudi [možnosti v ukazni vrstici, #CommandLineOptions] ki vam omogočajo ponovni zagon NVDA (-r), izhod iz NVDA (-q), onemogočanje dodatkov (--disable-addons), in drugo.
 
 Za zagon prenosljive kopije pojdite v imenik, kjer ste ustvarili prenosljivo kopijo NVDA in pritisnite Enter nad NVDA.exe ali to ikono dvakrat kliknite.
 
@@ -155,19 +156,17 @@ Večina NVDA-posebnih tipkovničnih ukazov sestoji iz pritiska posebne tipke ime
 Posebna izjema pri tem so ukazi za pregledovanje besedila na običajni razporeditvi tipk, ki uporabljajo samo tipke na številskem delu tipkovnice, Obstajajo pa tudi druge izjeme.
 
 NVDA se lahko nastavi tako, da se uporablja Glavni Insert, številski Insert, lahko pa tudi Capslock kot prikrojevalna NVDA tipka.
-
 Privzeto velja, da sta tako številski kot Glavni Insert prikrojevalni NVDA tipki.
 
 Če želite, da se ena od prikrojevalnih NVDA tipk obnaša kot je prvotno predvideno (npr. želite vključiti tipko Capslock, ko je Capslock nastavljena kot prikrojevalna tipka NVDA), potem izbrano tipko pritisnite dvakrat v hitrem zaporedju.
 
 +++ Postavitve Tipkovnice +++
-Trenutno NVDA prihaja z dvema paketoma tipkovničnih ukazov.
-Obstaja postavitev za običajne tipkovnice (s številskim delom) in postavitev za prenosnike.
+Trenutno NVDA prihaja z dvema paketoma tipkovničnih ukazov, ki jih poznamo pod pojmom postavitev tipkovnice, kjer obstaja postavitev za običajne tipkovnice (s številskim delom) in postavitev za prenosnike.
 Privzeto je NVDA nastavljena tako, da uporablja običajno postavitev tipk. Vedno pa lahko zamenjate postavitev tipk v Nastavitvah Tipkovnice, ki jih najdete pod Nastavitvami v NVDA meniju.
 
 Običajna postavitev se močno zanaša na številski del tipkovnice, kjer je Numlock izključen.
-Čeprav večina prenosnikov nima fizičnega številskega dela, nekateri prenosniki lahko tega oponašajo tako, da držite tipko FN in pritiskate črke in številke na desnem delu tipkovnice (7 8 9 u i o j k l itn).
-Če vaš prenosnik ne more tega narediti ali vam ne omogoča izklopa številk na številskem delu, potem morda želite preklopiti na postavitev prenosnik namesto običajne postavitve.
+Čeprav večina prenosnikov nima fizičnega številskega dela, nekateri prenosniki lahko tega oponašajo tako, da držite tipko FN in pritiskate črke in številke na desnem delu tipkovnice (7, 8, 9, u, i, o, j, k, l, itn).
+Če vaš prenosnik ne more tega narediti ali vam ne omogoča izklopa številk na številskem delu, potem boste morda želeli preklopiti na postavitev prenosnik namesto običajne postavitve.
 
 ++ NVDA Kretnje Dotika ++
 Če poganjate NVDA na napravi z zaslonom na dotik na operacijskem sistemu Windows 8 ali novejšem, lahko NVDA nadzirate tudi neposredno preko zaslona na dotik.
@@ -497,8 +496,8 @@ Sledeče tipke samostojno preskakujejo na naslednji mogoč element, medtem, ko z
 -
 Za premik na začetek ali konec vsebinskih elementov, kot so seznami in tabele:
 || Ime | Tipka | Opis |
-| Pomik na začetek vsebine | shift+comma | Pomakne se na začetek vsebine (tabela, seznam in drugo) z ozirom na to, kje je trenutni položaj kazalke |
-| Pomik na konec vsebine | comma | Premakne se na konec vsebine (seznam, tabela, in drugo.) z ozirom na to, kje je trenutni položaj kazalke |
+| Pomik na začetek vsebnika | shift+comma | Pomakne se na začetek vsebine (v tabeli, seznamu in drugo) z ozirom na to, kje je trenutni položaj kazalke |
+| Pomik na konec vsebnika | comma | Premakne se na konec vsebine (v tabeli, seznamu in drugo) z ozirom na to, kje je trenutni položaj kazalke |
 %kc:endInclude
 
 ++ Seznam Elementov ++
@@ -593,9 +592,10 @@ Pritisnite V redu in NVDA se bo ponovno naložila.
 ==== Shrani Konfiguracijo ob Izhodu ====
 Ta možnost v obliki izbirnika, ko je izbrana, pove NVDA, da naj ob izhodu trenutno konfiguracijo samodejno shrani.
 
-==== Opozori pred izhodom iz NVDA ====
-Ta možnost kot izbirnik omogoča izbiro, ali naj se, ali pa naj se pogovorno okno opozorila ob izhodu ne prikaže; ta vas sprašuje, če res želite zapreti NVDA.
-Ko je možnost izbrana, se bo prikazalo pogovorno okno z vprašanjem o zaprtju NVDA, ko boste poskušali zapreti NVDA.
+==== Prikaži izhodne možnosti ob izhodu iz NVDA ====
+Ta možnost je izbirnik, ki vam omogoča izbiro prikaza pogovornega okna ob izhodu iz NVDA, ki vas sprašuje, katero dejanje naj se izvede.
+Če boste to možnost izbrali, se bo ob izhodu prikazalo pogovorno okno z vprašanjem, kaj želite storiti. Ali želite zapreti NVDA, jo želite ponovno zagnati ali jo želite ponovno zagnati z onemogočenimi dodatki.
+Ko ta možnost ni izbrana, se bo NVDA po ukazu nemudoma izključila.
 
 ==== Predvajaj zvok ob zagonu in izhodu iz NVDA ====
 Ta možnost je izbirnik, ki pove NVDA, naj, ali pa ne, predvaja zvok ob zagonu NVDA in izhodu iz nje.
@@ -666,15 +666,16 @@ Deluje preko drsnika od 0 do 100, kjer 0 pomeni najnižji ton in 100 najvišji.
 To je drsnik od 0 do 100, kjer je 0 najtišje govorjenje in 100 najglasnejše.
 
 ==== Glasovna modulacija ====
-Ta možnost je v obliki drsnika od 0 do 100 kjer 0 pomeni najmanjšo možno modulacijo (spreminjanje višine med govorom) in 100 najvišjo možno modulacijo. Trenutno to možnost podpira samo Espeak.
+Ta možnost je v obliki drsnika od 0 do 100 kjer 0 pomeni najmanjšo možno modulacijo (spreminjanje višine med govorom) in 100 najvišjo možno modulacijo. Trenutno to možnost podpira samo ESpeak.
 
 ==== Samodejna menjava Jezika ====
-Ta izbirnik vklaplja stikalo ali naj NVDA samodejno zamenja jezik govorne sinteze med branjem, če je v besedilu, ki ga prebirate, jezikovna zastavica.
+Ta izbirnik vklaplja stikalo samodejne zamenjave jezika govorne sinteze med branjem, če je v besedilu, ki ga prebirate, jezikovna zastavica, ki označuje jezik besedila.
 Ta možnost je privzeto vključena.
-Trenutno samodejno menjavo jezika podpira samo Espeak.
+Trenutno samodejno menjavo jezika podpira samo ESpeak.
 
 ==== Samodejna menjava Narečja ====
-Če je samodejna menjava jezika vključena, vam ta možnost omogoča vklop stikala za samodejni preklop med narečji istega jezika in ne samo menjavo med jeziki. Na primer, če berete z glasom ameriške Angleščine, v dokumentu pa je zastavica, da je del besedila v britanski Angleščini, potem bo sinteza preklopila med naglasi.
+Ta možnost omogoča, če je izbrana, da sinteza menja tudi narečje ne samo jezika.
+To pomeni sledeče, da bo govorna sinteza dokument prebrala z britanskim naglasom, čeprav je prednastavljen jezik Ameriška Angleščina. Vse to seveda zavisi od zastavic, s katerimi je opremljen dokument.
 Ta možnost je privzeto izključena.
 
 %kc:setting
@@ -880,7 +881,7 @@ Tipka: NVDA+6
 
 Ko je možnost vključena, se bo pregledna utripalka samodejno premaknila na položaj sistemske kazalke vsakič, ko se bo kazalka premaknila.
 
-==== Sledi miški ====
+==== Sledi miškini utripalki ====
 Ko možnost vključite, bo pregledna utripalka sledila vsem premikom miške.
 
 ==== Delovanje Enostavnega Pregleda ====
@@ -989,7 +990,7 @@ Ta možnost vklaplja samodejno branje, ko se stran naloži v brskalniško delova
 Privzeto je ta možnost vključena.
 
 ==== Vključi tabele namenjene oblikovanju ====
-Ta možnost določa, kako NVDA obravnava tabele, ki so namenjenje predvsem postavitvi oblikovanja.
+Ta možnost določa, kako NVDA obravnava tabele, ki so namenjene predvsem postavitvi oblikovanja.
 Ko jo vključite, bo NVDA obravnavala te tabele kot normalne tabele na način, kot je določeno v [Nastavitvah Oblikovanja Dokumenta #DocumentFormattingSettings] in se na nje umesti s pomočjo hitrih tipk za krmarjenje.
 Ko je izključena, NVDA o teh tabelah niti ne bo poročala, niti se na nje ne bo umeščala s hitrim krmarjenjem.
 Vseeno pa bo vsebina tabel še vedno na voljo kot normalno besedilo.
@@ -1064,17 +1065,21 @@ Toda zaradi zavarovanja, da se je pravilo resnično shranilo, se prepričajte, d
 
 Pravila NVDA govornega slovarja vam omogočajo spreminjanje enega niza znakov v drugega.
 Preprost primer tega je lahko vaša želja, da NVDA izgovori "žaba" namesto "ptič", vedno, ko naleti na ta niz.
-V pogovornem oknu dodajanja pravila je najlažja pot, da to storite ta, da vnesete ptič v polje vzorca in v polje zanenjave vnesete besedo žaba.
+V pogovornem oknu dodajanja pravila je najlažja pot, da to storite tako, da vnesete ptič v polje vzorca in v polje zanenjave vnesete besedo žaba.
 Kadar želite vnesti opis pravila, lahko storite tudi to tako, da vnesete opis v polje komentarja (nekaj takega kot: menja ptiča v žabo).
 
 Toda Slovarji govora v NVDA zmorejo še več kot preprosto zamenjavo besed.
 Pogovorno okno dodajanja pravila vsebuje tudi izbirnik, s katerim lahko izbirate ali naj bo vaše pravilo občutljivo na velike črke ali ne. To pomeni, da NVDA pravilo obravnava drugače takrat, ko je beseda zapisana z velikimi črkami kot takrat, ko je beseda zapisana z malimi.
 Privzeto NVDA ni občutljiva na velike črke.
-Z naslednjim izbirnikom lahko naznačite, če je beseda "regularni izraz".
+
+Na koncu vam set radijskih gumbov omogoča, da NVDA sporočite ali naj se vzorec uporablja kjerkoli, ali naj se vzorec uporablja samo takrat, ko je to cela beseda ali naj se vzorec obravnava kot "regularen izraz".
+Nastavitev cele besede pomeni, da bo vzorec kot zamenjava v uporabi samo takrat, ko vzorec ne bo del daljše besede. To pomeni, da se vzorec ne sme neposredno dotikati drugih znakov z izjemo alfanumeričnih znakov ali črtic. Drugače povedano, pred in za vzorcem mora biti presledek.
+Tako prejšnji primer zamenjave vzorca "ptič" v besedo "žaba" ne bo pokazal nobenih rezultatov ob določitvi, da se vzorec nanaša na celotno besedo, če bomo govorili o "ptičjem" ali "ptičih".
+
 Regularni izraz je vzorec, ki vsebuje posebne simbole, ki omogočajo zapis več kot enega znaka istočasno, ali zapis samo števil, črk in podobno. To je samo nekaj primerov.
 Regularnih izrazov ta uporabniški vodič ne pokriva, ker obstaja precej vodičev v spletu, kjer je na voljo več informacij.
 
-+++ Zgovornost/izgovorjava simbolov +++[SymbolPronunciation]
++++ Izgovorjava ločil/simbolov +++[SymbolPronunciation]
 To pogovorno okno vam omogoča menjavo zgovornosti, kar pomeni, kdaj se določen simbol izgovori. Lahko pa določite tudi, kaj naj se izgovori namesto imena simbola.
 
 Za menjavo simbola, ga najprej izberite s seznama simbolov.
@@ -1187,7 +1192,7 @@ Za urejanje profila, ki je povezan s prožilcem "Preberi vse", morate [ročno ak
 
 +++ Začasno Onemogočanje Prožilcev +++
 Včasih je uporabno, če lahko začasno onemogočimo vse prožilce.
-Tak primer se pojavi, ko želite urejati profil, ki se aktivira ročnoali Normalno konfiguracijo brez motenj profilov na prožilcu.
+Tak primer se pojavi, ko želite urejati profil, ki se aktivira ročno ali Normalno konfiguracijo brez motenj profilov na prožilcu.
 To storite s potrditvijo izbirnika Začasno onemogoči vse prožilce v pogovornem oknu Konfiguracije profilov.
 
 ++ Mesta datotek z Nastavitvami ++
@@ -1284,3 +1289,96 @@ Ko uporabljate to sintezo z NVDA, bodo na voljo vsi glasovi (dostopni prek [pogo
 SAPI 5 je trenuten Microsoftov standard za programske govorne sinteze.
 Veliko govornih sintez, ki je združljivih s tem standardom, je na voljo brezplačno za posedovanje ali prenos prek različnih družb ali spletnih mest, čeprav bo vaš sistem verjetno že imel prednameščeno vsaj eno tako sintezo.
 Ko uporabljate to sintezo z NVDA, bodo na voljo vsi glasovi (dostopni prek [pogovornega okna Nastavitev glasu #VoiceSettings] ali prek [Kroga Nastavitev Sinteze #SynthSettingsRing]) iz vseh pogonov, ki jih je NVDA našla na vašem sistemu.
+
++ Brajeve okrajšave stanja in tipov kontrolnika +
+Zaradi največjega možnega števila prikaza informacij na brajevi vrstici so v NVDA definirane okrajšave za indikacijo različnih tipov kontrolnikov in njihovih stanj.
+
+|| Okrajšava | Tip kontrolnika |
+| gmb | gumb |
+| sps | spustni seznam |
+| izb | izbirnik |
+| pok | pogovorno okno |
+| pub | polje za urejanje besedila |
+| gra | grafika |
+| sN | n številka stolpca v tabeli, npr. s1, s2. |
+| vN | n številka vrstice v tabeli, npr. v1, v2. |
+| nN | naslov na nivoju n, npr. n1, n2. |
+| pvz | povezava |
+| szm | seznam |
+| opvz | obiskana povezava |
+| mni | meni |
+| mnivrs | menijska vrstica |
+| rgmb | radijski gumb |
+| tb | tabela |
+| dp | drevesni pogled |
+| nv N | element v hierarhiji drevesnega pogleda na nivoju N|
+| ``-----`` | ločnica |
+
+Definirani so tudi sledeči indikatorji stanj kontrolnikov:
+|| Okrajšava | Stanje kontrolnika |
+| ... | se prikaže, ko predmet podpira samodokončanje |
+| ( ) | se prikaže ob predmetu (npr. izbirniku), ki ni izbran |
+| (x) | se prikaže ob predmetu (npr. izbirniku), ko je ta izbran |
+| (-) | se prikaže ob predmetu (npr. izbirniku), ki je delno izbran |
+| - | se prikaže, ko je predmet (npr. element v drevesnem pogledu) možno stisniti |
+| + | se prikaže, ko je predmet (npr. element v drevesnem pogledu) možno razpreti |
+| klk | se prikaže ob predmetu, na katerega je možno klikniti |
+| sb | se prikaže, ko je predmet (npr. polje za urejanje besedila) samo za branje |
+| ozn | se prikaže, ko je predmet označen |
+| podmni | se prikaže ob predmetu s pojavnim oknom (običajno pod-meni) |
+
++ Napredne Vsebine +
+
+++ Možnosti Ukazne Vrstice ++[CommandLineOptions]
+NVDA lahko sprejme več dodatnih možnosti ob zagonu, ki potem vplivajo na njeno delovanje.
+Uporabite lahko toliko možnosti, kot jih potrebujete.
+Te možnosti se lahko uporabijo ob zagonu NVDA prek bližnjice (v lastnostih bližnjice), v pogovornem oknu Zaženi (meni start -> Zaženi ali Windows+r) ali v ukazni konzoli Oken.
+Možnosti morajo biti ločene od imena izvršljive datoteke NVDA in drugih možnosti s presledki.
+Na primer, bližnjico, ki jo ustvari NVDA med namestitvijo, NVDA ustvari z izbrano možnostjo -r, ki pove NVDA, naj trenutno kopijo same sebe zapre, preden se znova zažene.
+Druga uporabna možnost je --disable-addons, ki naroča NVDA, naj zaustavi vse dodatke, ki so v uporabi.
+To vam omogoči, da ugotovite, če je težavo povzročil dodatek in da se program obnovi po resni težavi, ki jo je dodatek povzročil.
+
+Kot primer uporabe teh možnosti lahko v pogovornem oknu Zaženi zaprete trenutno kopijo NVDA z vnosom naslednje vsebine v polje pogovornega okna:
+
+nvda -q
+
+Nekatere možnosti ukazne vrstice (stikala) poznajo tako kratko kot dolgo obliko, druga pa imajo samo dolgo obliko poimenovanja.
+Tiste, ki imajo tudi kratko obliko, lahko med sebojno kombinirate na naslednji način
+| nvda -rm | To bo zaprlo trenutno kopijo NVDA, ki teče in NVDA zagnalo z onemogočenimi zvočnimi opozorili ipd. |
+| nvda -rm --disable-addons | Enako kot zgoraj, vendar bodo zraven onemogočeni tudi dodatki. |
+
+
+Nekatere možnosti ukazne vrstice sprejemajo tudi dodatne parametre; npr. kako podrobno naj se piše dnevnik, ali pot do uporabnikove konfiguracijske mape ali imenika.
+Ti parametri se morajo nahajati za možnostjo in morajo biti ločeni od možnosti s presledkom, ko se uporablja kratka različica možnosti ali s simbolom = (enačajem), ko se uporablja daljša različica; npr.:
+| nvda -l 10 | Pove naj se NVDA zažene z nastavitvijo zapisovanja v dnevnik na nivoju razhroščevanja. |
+| nvda --log-file=c:\nvda.log | Pove NVDA, naj dnevnik zapiše v  c:\nvda.log |
+| nvda --log-level=20 -f c:\nvda.log | Pove NVDA, naj se zažene tako, da bo nivo zapisovanja v dnevnik na nivoju informacij in naj dnevnik zapiše v c:\nvda.log |
+
+NVDA pozna naslednje možnosti ukazne vrstice:
+|| Kratka | Dolga | Opis |
+| -h | --help | Pokaže pomoč ukazne vrstice in Izhod |
+| -q | --quit | Zapre kopijo NVDA v pomnilniku (zaključi z izvajanjem trenutne kopije NVDA). |
+| -r | --replace | Zaključi z izvajanjem trenutne kopije NVDA in zažene novo. |
+| -k | --check-running | Sporoča, če je NVDA v pogonu. To sporoča z uporabo izhodne kode. Nič (0) pomeni, da teče in ena (1) pomeni, da NVDA ni v pogonu. |
+| -f LOGFILENAME | --log-file=LOGFILENAME | Datoteka, kjer se morajo beležiti dogodki, ki se zapisujejo v dnevnik. |
+| -l LOGLEVEL | --log-level=LOGLEVEL | Najnižji nivo beleženja sporočil v dnevnik (razhroščevanje 10, info 20, opozorilo, 30, napaka 40, kritično 50). Privzeta vrednost je nastavljena na opozorilo. |
+| -c CONFIGPATH | --config-path=CONFIGPATH | Prostor, kjer so shranjene vse nastavitve za NVDA. |
+| -m | --minimal | Brez zvokov, brez vmesnika, brez sporočila po zagunu ipd. |
+| -s | --secure | Varni način (Onemogočena konzola Pythona) |
+| None | --disable-addons | Dodatki nimajo vpliva na NVDA. Isto, kot če v NVDA dodatkov ne bi bilo. |
+| None | --no-sr-flag  | Ne zamenjaj stanja globalne sistemske zastavice za bralnik zaslona. |
+| None | --install | Tiha namestitev NVDA. |
+
+++ Napredno Nastavljanje Izgovorjave Simbolov ++
+V NVDA je možno nastaviti izgovorjavo ločil in drugih simbolov glede na to, kaj omogočajo možnosti v pogovornem oknu [Izgovorjave ločil/simbolov. #SymbolPronunciation]
+Na primer vi lahko določite, kako naj se symbol za vrstico pošlje k sintezi (npr. naj sinteza naredi premor ali naj uporabi modulacijo glasu.), lahko pa dodate tudi nove, druge simbole, ki niso vključeni v NVDA.
+
+Če želite to storiti, morate urediti datoteko, kjer so shranjene informacije o izgovorjavi simbolov v vašem imeniku z NVDA nastavitvami.
+Datoteka se imenuje symbols-xx.dic, kjer  xx predstavlja kodo jezika.
+Oblika te datoteke je dokumentirana v razdelku izgovorjave simbolov v navodilih za razvijalce, ki so dostopna v [razdelku namenjenemu razvijalcem NVDA spletišča.  http://community.nvda-project.org/wiki/Development]
+Vseeno pa je uporabnikom onemogočeno definiranje kompleksnih simbolov.
+
++ Druge Informacije +
+Če potrebujete več informacij ali pomoč pri uporabi NVDA, prosimo, obiščite spletno mesto NVDA na NVDA_URL.
+Tu boste našli drugo dokumentacijo, tako kot tehnično podporo in vire, ki jih je prispevala skupnost.
+Na spletnem mestu so tudi informacije in viri, ki se dotikajo razvoja za NVDA.

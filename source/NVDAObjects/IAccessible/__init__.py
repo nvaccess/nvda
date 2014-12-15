@@ -511,14 +511,15 @@ the NVDAObject for IAccessible
 
 		clsList.append(IAccessible)
 
-
-		if self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0:
+		if self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
 			# This is the main (client) area of the window, so we can use other classes at the window level.
+			# #3872: However, don't do this for IAccessible2 because
+			# IA2 supersedes window level APIs and might conflict with them.
 			super(IAccessible,self).findOverlayClasses(clsList)
 			#Generic client IAccessibles with no children should be classed as content and should use displayModel 
 			if clsList[0]==IAccessible and len(clsList)==3 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_CLIENT and self.childCount==0:
 				clsList.insert(0,ContentGenericClient)
- 
+
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
 @param pacc: a pointer to an IAccessible object

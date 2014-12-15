@@ -24,7 +24,7 @@ louisRootDir = env.Dir("#include/liblouis")
 louisSourceDir = louisRootDir.Dir("liblouis")
 outDir = sourceDir.Dir("louis")
 
-RE_AC_INIT = re.compile(r"^AC_INIT\((?P<name>.*), (?P<version>.*), (?P<maintainer>.*)\)")
+RE_AC_INIT = re.compile(r"^AC_INIT\(\[(?P<package>.*)\], \[(?P<version>.*)\], \[(?P<bugReport>.*)\], \[(?P<tarName>.*)\], \[(?P<url>.*)\]\)")
 def getLouisVersion():
 	# Get the version from configure.ac.
 	with file(louisRootDir.File("configure.ac").abspath) as f:
@@ -50,6 +50,7 @@ sourceFiles = [
 	"lou_translateString.c",
 	"lou_backTranslateString.c",
 	"wrappers.c",
+	"logging.c",
 ]
 objs = [env.Object("%s.obj" % f, louisSourceDir.File(f)) for f in sourceFiles]
 louisLib = env.SharedLibrary("liblouis", objs + ["liblouis.def"])

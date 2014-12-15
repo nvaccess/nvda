@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #appModuleHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -18,6 +19,7 @@ import sys
 import pkgutil
 import threading
 import tempfile
+import comtypes.client
 import baseObject
 import globalVars
 from logHandler import log
@@ -76,6 +78,18 @@ def getAppNameFromProcessID(processID,includeExt=False):
 	winKernel.kernel32.CloseHandle(FSnapshotHandle)
 	if not includeExt:
 		appName=os.path.splitext(appName)[0].lower()
+	if not appName:
+		return appName
+
+	# This might be an executable which hosts multiple apps.
+	# Try querying the app module for the name of the app being hosted.
+	try:
+		# Python 2.x can't properly handle unicode module names, so convert them.
+		mod = __import__("appModules.%s" % appName.encode("mbcs"),
+			globals(), locals(), ("appModules",))
+		return mod.getAppNameFromHost(processID)
+	except (ImportError, AttributeError, LookupError):
+		pass
 	return appName
 
 def getAppModuleForNVDAObject(obj):
@@ -260,6 +274,15 @@ class AppModule(baseObject.ScriptableObject):
 	where C{eventName} is the name of the event; e.g. C{event_gainFocus}.
 	These event methods take two arguments: the NVDAObject on which the event was fired
 	and a callable taking no arguments which calls the next event handler.
+
+	Some executables host many different applications; e.g. javaw.exe.
+	In this case, it is desirable that a specific app module be loaded for each
+	actual application, rather than the one for the hosting executable.
+	To support this, the module for the hosting executable
+	(not the C{AppModule} class within it) can implement the function
+	C{getAppNameFromHost(processId)}, where C{processId} is the id of the host process.
+	It should return a unicode string specifying the name that should be used.
+	Alternatively, it can raise C{LookupError} if a name couldn't be determined.
 	"""
 
 	#: Whether NVDA should sleep while in this application (e.g. the application is self-voicing).
@@ -369,6 +392,8 @@ class AppModule(baseObject.ScriptableObject):
 		@param clsList: The list of classes, which will be modified by this method if appropriate.
 		@type clsList: list of L{NVDAObjects.NVDAObject}
 		"""
+	# optimisation: Make it easy to detect that this hasn't been overridden.
+	chooseNVDAObjectOverlayClasses._isBase = True
 
 	def _get_is64BitProcess(self):
 		"""Whether the underlying process is a 64 bit process.
@@ -408,3 +433,22 @@ class AppProfileTrigger(config.ProfileTrigger):
 
 	def __init__(self, appName):
 		self.spec = "app:%s" % appName
+
+def getWmiProcessInfo(processId):
+	"""Retrieve the WMI Win32_Process class instance for a given process.
+	For details about the available properties, see
+	http://msdn.microsoft.com/en-us/library/aa394372%28v=vs.85%29.aspx
+	@param processId: The id of the process in question.
+	@type processId: int
+	@return: The WMI Win32_Process class instance.
+	@raise LookupError: If there was an error retrieving the instance.
+	"""
+	try:
+		wmi = comtypes.client.CoGetObject(r"winmgmts:root\cimv2", dynamic=True)
+		results = wmi.ExecQuery("select * from Win32_Process "
+			"where ProcessId = %d" % processId)
+		for result in results:
+			return result
+	except:
+		raise LookupError("Couldn't get process information using WMI")
+	raise LookupError("No such process")

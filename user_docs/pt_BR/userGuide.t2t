@@ -23,7 +23,7 @@ Suas características mais notáveis são:
 - Suporte para diversas linhas braille, incluindo a entrada de braille para computador, no caso das linhas braille que possuam um teclado braille;
 - Capacidade para  ser executado diretamente através de dispositivos USB e outros dispositivos portáteis sem necessitar de instalação;
 - Instalação com voz e fácil de usar;
-- Tradução para 45 idiomas;
+- Tradução para 47 idiomas;
 - Suporte para as modernas versões do sistema operacional Windows  incluindo variantes de 32 e 64 bit;
 - Possibilidade de uso na  tela de logon do Windows   e outras telas de segurança;
 - Suporte para interfaces comuns de acessibilidade tais como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation; (UI Automation é suportado apenas no Windows 7 e superiores) ;
@@ -32,7 +32,7 @@ Suas características mais notáveis são:
 
 ++ Internacionalização ++
 É importante que as pessoas tenham igual acesso às tecnologias em qualquer parte do mundo, independentemente do idioma que falem.
-Além do inglês, o NVDA está traduzido para 45 idiomas, estando inclusos: Africâner, Albanês, Alemão, Amárico, Árabe, Aragonês, Búlgaro, Catalão, Chinês Simplificado, Chinês Tradicional, Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Espanhol, Finlandês, Francês, Galego, Georgiano, Grego, Hebraico, Hindiano, Holandês, Húngaro, Irlandês, Islandês, Italiano, Japonês, Nepalês, Noroeguês, Persa, Polonês, Português do Brasil, Português de Portugal, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita. 
+Além do inglês, o NVDA está traduzido para 45 idiomas, estando inclusos: Africâner, Albanês, Alemão, Amárico, Árabe, Aragonês, Búlgaro, Catalão, Chinês Simplificado, Chinês Tradicional, Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Espanhol, Espanhol Colombiano, Finlandês, Francês, Galego, Georgiano, Grego, Hebraico, Hindiano, Holandês, Húngaro, Irlandês, Islandês, Italiano, Japonês, Nepalês, Noroeguês, Persa, Polonês, Português do Brasil, Português de Portugal, Punjabi, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita. 
 
 ++ Suporte de Sintetizador de Voz ++
 Além de fornecer as mensagens da interface em diversos idiomas, o NVDA também permite ao usuário ler o conteúdo em qualquer língua, desde que tenha um sintetizador de voz que fale esse idioma em particular. 
@@ -132,7 +132,8 @@ Essa opção só está disponível quando se cria cópias portáteis a partir de
 ++ Executando o NVDA ++
 Se tem este programa instalado, então iniciá-lo é tão simples quanto pressionar Ctrl+Alt+N, ou escolhê-lo a partir do submenu NVDA que se encontra nos Programas do Menu Iniciar.
 
-Adicionalmente pode escrever NVDA no diálogo Executar e pressionar Enter.
+Adicionalmente, pode escrever NVDA no diálogo Executar e pressionar Enter.
+Você pode também passar algumas [opções de linha de comando #CommandLineOptions] que lhe permitem reiniciar o NVDA (-r), encerrar (-q), desativar complementos (--disable-addons), etc.
 
 Para iniciar a versão portátil, vá para a pasta onde descompactou o NVDA e pressione Enter ou um duplo clique esquerdo em "nvda.exe".
 
@@ -542,8 +543,8 @@ O NVDA fornece seus próprios comandos adicionais para alguns aplicativos, com v
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
 || Nome | Tecla | Descrição |
-| Toggle speaker notes reading | control+shift+s | Estando num slide em execução, esse comando alternará entre as notas para o slide e o conteúdo do mesmo. Isso afeta somente o que o NVDA lê, não o que será mostrado na tela. |
-+%kc:endInclude
+| Alternar leitura de notas e slides | control+shift+s | Estando num slide em execução, esse comando alternará entre as notas para o slide e o conteúdo do mesmo. Isso afeta somente o que o NVDA lê, não o que será mostrado na tela. |
+%kc:endInclude
 
 ++ foobar2000 ++
 
@@ -591,10 +592,11 @@ Pressione OK e o NVDA irá reiniciar.
 ==== Salvar Configuração ao Sair ====
 Uma caixa de seleção que quando marcada informa ao leitor de tela para salvar automaticamente a configuração atual quando sair do NVDA. 
 
-==== Alertar Antes de Encerrar o NVDA ====
-Uma caixa de seleção que lhe permite escolher se pretende ou não que apareça um diálogo com a pergunta se deseja ou não sair quando fechar o programa.
-Se marcada, o diálogo aparecerá quando tentar encerrar o NVDA perguntando se pretende ou não sair.  
-
+==== Mostrar Opções ao Sair do NVDA ====
+Essa opção é uma caixa de seleção que lhe permite escolher se aparecerá  um diálogo perguntando que ação você pretende executar a quando do encerramento do NVDA.
+Se marcada, um diálogo aparecerá quando você tentar encerrar o NVDA, perguntando se deseja sair, reiniciar ou reiniciar com complementos desativados.
+Quando desmarcada, o NVDA encerrará imediatamente.
+ 
 ==== Tocar Sons ao Iniciar ou Encerrar o NVDA ====
 Esta opção é uma caixa de seleção que, quando marcada, informa ao NVDA para tocar seus sons ao iniciar ou encerrar.
 
@@ -940,7 +942,7 @@ Esse diálogo lhe permite controlar como o NVDA anunciará a entrada de caracter
 
 ==== Anunciar automaticamente  todas as sugestões disponíveis ====
 Esta opção, que por padrão encontra-se ativada, lhe permite escolher se todas as sugestões visíveis devem ou não ser anunciadas automaticamente quando uma  lista de sugestões aparece ou quando sua página muda.
-Ter esta opção ativada para métodos de entrada pitagráficos tais como o Novo ChangJie chinês ou Boshiami é útil, pois você pode ouvir automaticamente todos os símbolos e seus números e assim torna-se possível escolher um caminho correto.
+Ter esta opção ativada para métodos de entrada pitográficos tais como o Novo ChangJie chinês ou Boshiami é útil, pois você pode ouvir automaticamente todos os símbolos e seus números e assim torna-se possível escolher um caminho correto.
 Todavia, para métodos de entrada fonéticos como a Nova Fonética chinesa, poderá ser mais útil desativar esta opção, pois todos os símbolos soarão idênticos e você terá que usar as setas para navegar entre os itens de lista individualmente a fim de obter mais informações sobre cada sugestão via descrição de caracteres.
 
 ==== Anunciar a Sugestão Selecionada ====
@@ -959,7 +961,7 @@ Com esta opção, você pode escolher se o NVDA deve ou não anunciar novos cara
 A mesma encontra-se ativada por padrão.
 
 ==== Anunciar Alterações na Cadeia de Composição  ====
-Logo que os dados de leitura ou precomposição tenham sido combinados num símbolo pitagráfico válido, muitos métodos de entrada colocam este símbolo dentro de uma cadeia de composição para um armazenamento temporário junto com outros símbolos combinados antes que eles finalmente sejam inseridos no documento.
+Logo que os dados de leitura ou precomposição tenham sido combinados num símbolo pitográfico válido, muitos métodos de entrada colocam este símbolo dentro de uma cadeia de composição para um armazenamento temporário junto com outros símbolos combinados antes que eles finalmente sejam inseridos no documento.
  Esta opção lhe permite escolher se o NVDA deve ou não anunciar novos símbolos quando estes aparecem na cadeia de composição.
 Por padrão, a mesma encontra-se ativada.
 
@@ -1068,7 +1070,11 @@ Você pode também pretender digitar uma descrição dessa regra no campo de com
 Os dicionários de voz do NVDA vão muito além de uma simples substituição de palavras.
 O diálogo para a adição de regras também contém uma caixa de seleção onde é possível escolher se deseja que a regra seja ou não sensível às maiúsculas, (indicando que este programa irá levar em conta se os caracteres são ou não maiúsculos.
 O NVDA ignora estes casos por padrão).
-Outra caixa de seleção permite-lhe estabelecer se o texto original é uma "Expressão Regular".
+
+Finalmente, encontrará botões de opção que lhe permitem informar ao NVDA se o original deve corresponder em qualquer parte, se apenas caso seja uma palavra completa ou se será tratado como "expressão Regular".
+Configurar o original para corresponder em palavra inteira significa que a substituição será feita apenas se o original não aparecer como parte de uma palavra maior, ou seja, outro caractere que não seja alfanumérico ou um sublinhado venha imediatamente antes ou depois do original.
+Assim, usando o exemplo anterior de sutstituir a palavra "pássaro" por "rã, caso você tenha feito isso para palavra inteira, ele não corresponderá em "pássaros" ou outra palavra que contenha a combinação pássaro.
+
 Expressão regular é um texto original que contém símbolos especiais que permitem introduzir mais de um caractere ao mesmo tempo, ou introduzir apenas números, ou só letras, segundo alguns poucos exemplos.
 Expressões regulares não são explicadas neste guia do usuário, mas existem muitos tutoriais na Web que podem proporcionar-lhe mais informações.
 
@@ -1872,7 +1878,82 @@ Por favor consulte as [tabelas de documentação de teclas para o BRLTTY http://
 | Guiar para a cela braille | route (lleva o cursor ao caractere) |
 %kc:endInclude
 
++ Abreviaturas para Tipos e Estados dos Controles em Braille +
+Com vistas a fornecer tanta informação quanto possível numa linha braille, as seguintes abreviaturas foram definidas para indicar os tipos e estados dos controles.
+|| Abreviatura | Tipo de controle |
+| btn | botão |
+| cbo | caixa de combinação |
+| chk | caixa de seleção |
+| dlg | diálogo |
+| edt | campo de edição de texto |
+| gra | gráfico |
+| cN |  coluna numa tabela n, isto é, c1, c2. |
+| rN | número da linha numa tabela n, isto é, r1, r2. |
+| hN | nível do cabeçalho n, isto é, h1, h2. |
+| lnk | link |
+| lst | lista |
+| vlnk | link visitado |
+| mnu | menu |
+| mnubar | barra de menu |
+| rbtn | botão de opção |
+| tb | tabela |
+| tv | vista em árvore |
+| lv N | um item de vista em árvore contendo um nível hierárquico N |
+| ``-----`` | separador |
+
+Os seguintes indicadores de estado também foram definidos:
+|| Abreviatura | Estado do controle |
+| ... | exibido quando um objeto suporta auto completar |
+| ( ) | exibido quando um objeto (por exemplo uma caixa de seleção) não está marcada |
+| (x) | exibido quando um objeto (por exemplo uma caixa de seleção) está marcada |
+| (-) | exibido quando um objeto (por exemplo uma caixa de seleção) está meio marcada |
+| - | exibido quando um objeto (por exemplo um item de vista em árvore) é recolhível |
+| + | exibido quando um objeto (por exemplo um item de vista em árvore) é expandível |
+| clk | exibido quando um objeto é clicável |
+| ro | exibido quando um objeto (por exemplo um campo de edição de texto) é somente leitura |
+| sel | exibido quando um objeto está selecionado |
+| submnu | exibido quando um objeto possui popup (usualmente um submenu) |
+
 + Tópicos Avançados +
+
+++ Opções de Linha de Comando ++[CommandLineOptions]
+O NVDA pode aceitar uma ou mais opções adicionais quando iniciado que alteram seu comportamento.
+É possível passar tantas opções quanto você precisar.
+Essas opções  podem ser passadas ao iniciar a partir de um atalho (nas propriedades do atalho), a partir do diálogo executar (menu iniciar ->Executar ou Windows+r) ou a partir de um console de comando do Windows.
+As opções devem ser separadas do nome do arquivo executável do NVDA e de outras opções por espaços.
+Por exemplo, o atalho para a Área de Trabalho  que o NVDA cria durante a instalação tem a opção -r, que informa ao NVDA para encerrar a cópia em execução naquele momentto antes de iniciar a nova.
+Outra opção útil é --disable-addons, que  informa ao NVDA para suspender todos os complementos em execução.
+Isso lhe permite determinar se um problema está sendo causado por um complemento e também recuperar-se de problemas sérios causados por complementos.
+
+Como exemplo, você pode encerrar a cópia do NVDA atualmente em execução inserindo o seguinte no Diálogo Executar:
+
+nvda -q
+
+Algumas das opções de  linha de comando possuem uma versão curta e uma longa, enquanto outras delas contam apenas com uma versão longa.
+Para aquelas que possuem uma versão curta, você pode combiná-las do seguinte modo:
+| nvda -rm | Isso encerrará a cópia do NVDA atualmente em execução e iniciará uma nova cópia com os sons de início desabilitados, etc. |
+| nvda -rm --disable-addons | O descrito acima, mas com complementos desativados. |
+
+Algumas das opções aceitam parâmetros adicionais, por exemplo, qual o grau de detalhamento do log  ou o caminho para a pasta de configurações do usuário.
+Esses parâmetros devem ser inseridos depois da  opção, separados desta por um espaço quando for usada a versão curta ou um sinal de igual (=) caso seja usada a versão longa. Por exemplo:
+| nvda -l 10 | Informa ao NVDA para iniciar com o grau de informações no log configurado para depuração |
+| nvda --log-file=c:\nvda.log |  Informa ao NVDA para registrar seu log em c:\nvda.log |
+| nvda --log-level=20 -f c:\nvda.log | Informa ao NVDA para iniciar com o grau de informações no log configurado para  informações e também registrar seu log em c:\nvda.log |
+
+A seguir estão as opções de linha de comando para o NVDA:
+|| Curta | Longa | Descrição |
+| -h | --help | mostra a ajuda de linhas de comando e encerrar |
+| -q | --quit | Encerra a cópia do NVDA em execução |
+| -r | --replace | Encerra a cópia do NVDA em execução e inicia essa |
+| -k | --check-running | Report whether NVDA is running via the exit code; 0 if running, 1 if not running |
+| -f LOGFILENAME | --log-file=LOGFILENAME | The file where log messages should be written to |
+| -l LOGLEVEL | --log-level=LOGLEVEL | The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning |
+| -c CONFIGPATH | --config-path=CONFIGPATH | The path where all settings for NVDA are stored |
+| -m | --minimal | Sem sons, sem interface, sem mensagem de início etc |
+| -s | --secure | Modo seguro (desabilita o Console Python) |
+| None | --disable-addons | Complementos não funcionarão |
+| None | --no-sr-flag  | Don't change the global system screen reader flag |
+| None | --install | Instala o NVDA em silêncio |
 
 ++ Personalização avançada da Pronúncia de sinais ++
 É possível personalizar a pronúncia da pontuação e de outros sinais para além do que pode ser feito usando o [Diálogo de Pronúncia de Pontuação e Sinais #SymbolPronunciation].

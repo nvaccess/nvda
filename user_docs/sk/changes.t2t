@@ -3,6 +3,41 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.4 =
+
+== Nové vlastnosti ==
+- Nové jazyky: Kolumbijská Španielčina a Punjabi
+- pri ukončení NVDA je možné zobraziť dialóg, v ktorom môžete reštartovať NVDA alebo reštartovať a zakázať doplnky. (#4057)
+- NVDA je možné bez doplnkov spustiť aj z príkazového riadka s parametrom --disable-addons.
+- V rečových slovníkoch môžete odteraz nastaviť, aby sa reťazec nahradil len ak ide o celé slovo, teda len vtedy, ak nie je súčasťou väčšieho reťazca. (#1704)
+
+
+== Zmeny ==
+- Režim prezerania sa odteraz nastaví na prezeranie dokumentu aj vtedy, ak sa s objektu mimo režimu prehliadania dostanete objektovou navigáciou do objektu v dokumente v režime prehliadania. Doposiaľ sa toto dialo len vtedy, ak sa navigačný objekt zmenil spolu s fokusom. (#4369)
+- Zoznam hlasových výstupov a brailovských riadkov je odteraz usporiadaný v abecednom poradí, ale možnosť bez reči resp. žiadny zobrazovač, je vždy na konci zoznamu. (#2724)
+- prekladová tabuľka liblouis aktualizovaná na verziu 2.6.0. (#4434, #3835)
+- v režime prehliadania teraz skratka E a shift+E prechádza aj po editovateľných zoznamových rámikoch. Takýto prvok obsahuje pole hľadania vo vyhľadávači Google. (#4436)
+- Ak ľavým tlačidlom myši kliknete na ikonu NVDA na systémovom panely, otvorí sa ponuka NVDA (doposiaľ sa nestalo nič. (#4459)
+
+
+== opravy ==
+- Ak sa fokus vráti späť do dokumentu v režime prehliadania (napríklad ak alt+tabom prejdete späť na webovú stránku), prezerací kurzor sa presunie k virtuálnemu kurzoru, a nie k prvku, ktorý má fokus (napríklad k najbližšiemu odkazu). (#4369)
+- V powerpointových prezentáciách prezerací kurzor sleduje virtuálny kurzor. (#4370)
+- V prehliadači Mozilla firefox a iných prehliadačoch postavených na platforme Gecko, NVDA oznamuje nový obsah v live oblasti aj vtedy, ak sa typ podprvku líši od typu hlavného prvku v live oblasti, teda ak napríklad obsah označený ako "assertive" je vložený do obsahu označeného ako "polite". (#4169)
+- V prehliadači Internet Explorer a iných MSHTML prvkoch je odteraz možné dostať sa vždy k celému obsahu, ak je dokument obsiahnutý v dokumente (napríklad vnorený rámik obsahuje vnorený rámik). (#4418)
+- odstránená chyba, pri ktorej NVDA v niektorých situáciách spadlo, ak bol pripojený zobrazovač Handy Tech. (#3709)
+- opravená chyba, pri ktorej sa v systéme Windows Wista objavovalo falošné hlásenie "súbor nebol nájdený", ak ste NVDA spustili z pracovnej plochy, alebo klávesovou skratkou. (#4235)
+- odstránené vážne problémy s editačnými poliami v posledných verziáchEclipse. (#3872)
+- V programe Outlook 2010 opravený pohyb textového kurzora v pripomienkach a schôdzkach. (#4126)
+- Ak je v live oblasti nejaký prvok, ktorý nie je označený ako live (aria-live="off"), NVDA ho nebude oznamovať. (#4405)
+- Ak má stavový riadok pomenovanie, NVDA toto pomenovanie správne oddeluje od obsahu stavového riadka medzerou. (#4430)
+- NVDA zbytočne viacnásobne nečíta hviezdičky v heslových editačnýh poliach, ak je zapnuté čítanie po slovách a začnete písať nové slovo. (#4402)
+- Položky v zozname správ v programe Microsoft Outlook nie sú viac zbytočne oznamované ako dátové položky. (#4439)
+- pri výbere textu pri úprave kódu v Eclipse IDE NVda viac pri každej zmene výberu nečíta celý vybratý text. (#2314)
+- rôzne verzie Eclipse, ako napríklad Spring Tool Suite a verzia zahrnutá v balíku pre vývojárov Android aplikácií, sú správne rozpoznané ako Eclipse. (#4360, #4454)
+- sledovanie myši a prezeranie pomocou dotykov v prehliadači Internet Explorer, v MSHTML prvkoch a vo viacerých aplikáciách v systéme Windows 8 je odteraz presnejšie na obrazovkách s veľkým rozlíšením, alebo pri zmene zväčšenia dokumentu. (#3494)
+- Sledovanie kurzora myši a prezeranie na dotykovej obrazovke v prehliadači Internet Explorer a v MSHTML prvkoch oznamuje popisy k viacerým tlačidlám. (#4173)
+
 = 2014.3 =
 
 == Nové vlastnosti ==

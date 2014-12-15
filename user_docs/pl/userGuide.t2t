@@ -23,7 +23,7 @@ Najważniejsze właściwości NVDA to:
 - Wsparcie dla wielu monitorów Brajlowskich uwzględniające możliwość wprowadzania tekstu na monitorach z klawiaturą brajlowską
 - Możliwość uruchamiania z pamięci USB lub innych nośników przenośnych bez konieczności instalacji
 - Łatwy w użyciu udźwiękowiony instalator
-- Tłumaczenie na 44 języki
+- Tłumaczenie na 47 języków
 - Wsparcie dla współczesnych systemów operacyjnych Windows, zarówno 32 jak i 64 bitowych
 - Możliwość dostępu do ekranu logowania w systemie oraz innych zabezpieczonych ekranów.
 - Wsparcie dla wspólnych interfejsów dostępności, takich jak Microsoft Active Accessibility, Java Access Bridge, iAccessible2, UI Automation. UI Automation jest obsługiwany tylko pod kontrolą systemów Windows 7 i wyższych.
@@ -32,7 +32,7 @@ Najważniejsze właściwości NVDA to:
 
 ++ Wersje Językowe ++
 Ważne jest, by ludzie z całego świata, bez względu na ojczysty język, mogli mieć równy dostęp do technologii.
-Poza angielskim, NVDA został przetłumaczony na 44 języki, w tym: afrykanerski, albański, amharski, arabski, aragoński, portugalski brazylijski, bułgarski, chorwacki, czeski, duński, grecki,   holenderski,  fiński, francuski, gruziński, galicyjski, niemiecki, hebrajski, hindi,  węgierski, irlandzki, islandzki,  włoski, japoński, koreański, norweski, polski, portugalski, rosyjski, rumuński,  słowacki, serbski, słoweński, szwedzki, hiszpański, tajski, tamilski, chiński tradycyjny i uproszczony, tajski, mandaryński, turecki, ukraiński i wietnamski.
+Poza angielskim, NVDA został przetłumaczony na 47 języków, w tym: afrykanerski, albański, amharski, arabski, aragoński, bułgarski, chiński tradycyjny i uproszczony, chorwacki, czeski, duński, fiński, francuski, galicyjski, grecki,   gruziński, hebrajski, hindi,  hiszpański, hiszpański kolumbijski, holenderski,  irlandzki, islandzki,  japoński, kataloński, koreański, mandaryński, nepalski, niemiecki, norweski, pendżabski, perski, polski, portugalski, portugalski brazylijski, rosyjski, rumuński,  serbski, słowacki, słoweński, szwedzki, tajski, tamilski, turecki, ukraiński, węgierski, wietnamski i włoski.
 
 ++ Obsługa Syntezatora Mowy ++
 NVDA oferuje wiele wersji językowych interfejsu i daje możliwość odczytywania treści w każdym języku wspieranym przez zainstalowany w systemie syntezator mowy.
@@ -155,18 +155,16 @@ Większość poleceń programu NVDA wymaga naciśnięcia specjalnego klawisza zw
 Wyjątkiem są polecenia przeglądu tekstu, które przypisane są do pojedynczych klawiszy numerycznych, oraz niektóre inne polecenia.
 
 Można skonfigurować NVDA tak, by klawisz Insert znajdujący się na klawiaturze numerycznej, jak i klawisz Insert znajdujący się w pobliżu klawiszy strzałek, albo klawisz Capslock mogły zostać użyte jako specjalny klawisz poleceń NVDA.
-
 Domyślnie obydwa klawisze Insert są ustawione jako klawisz poleceń NVDA.
 
 Aby którykolwiek z klawiszy poleceń NVDA wykonał oryginalnie przypisaną mu funkcję (np. dla przełączenia Capslock, gdy jest on wybrany jako klawisz NVDA), należy nacisnąć ten klawisz dwukrotnie w krótkim odstępie czasu.
 
 +++ Układy Klawiatury +++
-NVDA obecnie obsługuje dwa układy klawiatur. 
-Jest to układ dla komputerów stacjonarnych i układ dla laptopów.
+NVDA obecnie obsługuje dwa zestawy poleceń (zwane układami klawiatury): układ dla komputerów stacjonarnych i układ dla laptopów.
 NVDA jest domyślnie skonfigurowany do korzystania z układu dla komputera stacjonarnego, ale można przełączyć się do układu klawiatury laptopa w Ustawienia klawiatury w menu NVDA.
 
 Układ dla komputera stacjonarnego sprawia, że intensywnie wykorzystujemy klawiaturę numeryczną (z wyłączonym klawiszem NumLock).
-Mimo, że większość laptopów nie ma fizycznej klawiatury numerycznej, niektóre laptopy mogą emulować ją poprzez przytrzymanie klawisza FN i naciskając na litery i cyfry z prawej strony klawiatury (7 8 9 u i o j k l itp.).
+Mimo, że większość laptopów nie ma fizycznej klawiatury numerycznej, niektóre laptopy mogą emulować ją poprzez przytrzymanie klawisza FN i naciskanie na litery i cyfry z prawej strony klawiatury (7, 8, 9, u, i, o, j, k, l itp.).
 Jeśli twój laptop nie może tego zrobić, albo nie pozwala wyłączyć klawisza NumLock, możesz przełączyć się na układ Laptopa.
 
 ++ Gesty dotykowe ++
@@ -234,7 +232,7 @@ Spowoduje to rozwinięcie menu. Nawigacja w menu odbywa się za pomocą strzałe
 || Działanie | Skrót desktopa | skrót laptopa | gest dotykowy | Opis |
 | Zatrzymuje mowę | Kontrol | control | stuknięcie dwoma palcami | Natychmiast przestaje czytać |
 | Pauza mowy | Shift | shift | brak | Natychmiast zatrzymuje mowę. Naciskając ponownie będzie mówić od momentu w którym zostało przerwane (jeśli wstrzymywanie jest obsługiwane przez syntezator) |
-| NVDA Menu | NVDA+n | NVDA+N | podwujne stuknięcie dwoma palcami | Pojawia się meni NVDA, aby umożliwić dostęp do ustawień, narzędzi, pomocy itp |
+| NVDA Menu | NVDA+n | NVDA+N | podwujne stuknięcie dwoma palcami | Pojawia się menu NVDA, aby umożliwić dostęp do ustawień, narzędzi, pomocy itp |
 | Przełącz tryb komunikacji | NVDA+s | NVDA+s | brak | Przełącza tryb mowy pomiędzy: mowa, dźwięki i bez mowy |
 | Przełączanie trybu pomocy | NVDA+1 | brak | Naciśnięcie dowolnego klawisza w tym trybie zostanie odczytany klawisz i opis wszelkich poleceń NVDA z nim związanych |
 | Zakończ NVDA | NVDA+q | NVDA+q | brak | Kończy działanie NVDA |
@@ -674,7 +672,8 @@ Domyślnie pole to jest zaznaczone.
 Aktualnie tylko syntezator Espeak obsługuję automatyczną zmianę języka .
 
 ==== Automatycznie zmieniaj dialekt ====
-Gdy zaznaczone jest pole automatycznej zmiany języka, to pole wyboru pozwala ustalić, czy również dialekt powinien być zmieniany w trakcie czytania. Dla przykładu, jeśli czytamy dokument angielski głosem angielski amerykański, a dokument zawiera oznaczenia części tekstu jako angielski brytyjski, jeśli ta funkcja jest włączona - syntezator zmieni również sposób akcentowania.
+To pole wyboru pozwala ustalić, czy dialekt powinien być zmieniany w trakcie czytania. 
+Dla przykładu, jeśli czytamy dokument angielski głosem angielski amerykański, a dokument zawiera oznaczenia części tekstu jako angielski brytyjski, jeśli ta funkcja jest włączona - syntezator zmieni również sposób akcentowania.
 Ta opcja jest domyślnie wyłączona.
 
 %kc:setting
@@ -1718,8 +1717,8 @@ Są to (w kolejności od lewej do prawej):
 Aktualnie klawisz prawego kciuka nie jest używany.
 Obydwa wewnętrzne klawisze to spacja.
 
-%kc:beginInclude
 || Działanie | Klawisz skrótu |
+%kc:beginInclude
 | Klawisz backspace | punkt 7 |
 | Klawisz enter | punkt 8 |
 | Klawisz escape | spacja+punkt 7 |
@@ -1881,6 +1880,43 @@ Zobacz [tabele klawiszy w dokumentacji brltty http://mielke.cc/brltty/doc/driver
 | Przenieś monitor do następnej linii | lndn (go down one line) |
 | Przywołaj do komórki brajla | route (przenieś kursor do znaku) |
 %kc:endInclude
+
++ Brajlowskie skróty typu i stanu kontrolki +
+Aby zmieścić jak najwięcej informacji na monitorze brajlowskim, zdefiniowano poniższe skróty określające typ i stan kontrolki.
+
+|| Skrót | Typ kontrolki |
+| btn | przycisk |
+| cbo | lista rozwijana |
+| chk | pole wyboru |
+| dlg | dialog |
+| edt | pole edycji tekstu |
+| gra | grafika |
+| cN | kolumna tabeli o numerze n, np. c1, c2. |
+| rN | Wiersz tabeli o numerze n, np. r1, r2. |
+| hN | nagłówek poziomu N, np. h1, h2. |
+| lnk | link |
+| lst | lista |
+| vlnk | odwiedzony link |
+| mnu | menu |
+| mnubar | pasek menu |
+| rbtn | przycisk opcji |
+| tb | tabela |
+| tv | widok drzewa |
+| lv N | widok drzewa ma chierarchiczny poziom N|
+| ``-----`` | separator |
+
+Zdefiniowano także poniższe oznaczenia stanu:
+|| Skrót | Stan kontrolki |
+| ... | wyświetlane, gdy obiekt obsługuje autouzupełnianie |
+| ( ) | wyświetlane, gdy obiekt (np. pole wyboru) jest niezaznaczony |
+| (x) | wyświetlane, gdy obiekt (np. pole wyboru) jest zaznaczony |
+| (-) | wyświetlane, gdy obiekt (np. pole wyboru) jest częściowo zaznaczony |
+| - | wyświetlane, gdy obiekt (np. drzewo) można zwinąć |
+| + | wyświetlane, gdy obiekt (np. drzewo) można rozwinąć |
+| clk | wyświetlane, gdy obiekt jest klikalny |
+| ro | wyświetlane, gdy obiekt (np. pole edycji) jest tylko do odczytu |
+| sel | wyświetlane, gdy obiekt jest wybrany |
+| submnu | wyświetlane, gdy obiekt posiada wyskakujące menu (zwykle podmenu) |
 
 + dla zaawansowanych +
 

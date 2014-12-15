@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-11 19:10+1000\n"
-"PO-Revision-Date: 2014-08-06 10:19+0900\n"
+"POT-Creation-Date: 2014-11-06 19:11+1000\n"
+"PO-Revision-Date: 2014-11-17 17:16+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -2450,7 +2450,7 @@ msgstr "ブラウズモード"
 #. The key must be formatted as described in this article:
 #. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
 msgid "CTRL+ALT+N"
-msgstr ""
+msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
@@ -2911,7 +2911,7 @@ msgstr "%s項目"
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
 msgid "out of %s"
-msgstr "%s終了"
+msgstr "%sの外"
 
 #. Translators: Indicates the page number in a document.
 #. %s will be replaced with the page number.
@@ -3091,7 +3091,7 @@ msgstr "縦方向 既定の揃え"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
-msgstr "コメントなし"
+msgstr "コメントの外"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -3099,7 +3099,7 @@ msgstr "スペルエラー"
 
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
-msgstr "スペルエラー終了"
+msgstr "スペルエラーの外"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -3366,7 +3366,7 @@ msgstr ""
 "{name}はGNU 一般公衆利用許諾契約書(Version 2)によって保護されています。この内"
 "容に同意いただき、必要としている方にソースコードを提供していただける場合、本"
 "ソフトウェアの配布や改良は自由に行うことができます。この規定は、オリジナルの"
-"ソフトウェアと改良販を含むソフトウェアのコピー、さらにこのソフトウェアのコー"
+"ソフトウェアと改良版を含むソフトウェアのコピー、さらにこのソフトウェアのコー"
 "ドを利用したソフトウェアにも適用されます。\n"
 "本ライセンスについての詳細は、ヘルプメニューのライセンスを参照してくださ"
 "い。\n"
@@ -3972,13 +3972,6 @@ msgstr "音声辞書(%s)"
 msgid "Temporary dictionary"
 msgstr "一時辞書"
 
-#. Translators: Message shown to ask if user really wishes to quit NVDA.
-msgid "Are you sure you want to quit NVDA?"
-msgstr "本当にNVDAを終了しますか？"
-
-msgid "Exit NVDA"
-msgstr "NVDAの終了"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "NVDAについて"
@@ -4201,6 +4194,10 @@ msgstr "寄付(&D)"
 msgid "E&xit"
 msgstr "終了(&X)"
 
+#. Translators: The title of the dialog to exit NVDA
+msgid "Exit NVDA"
+msgstr "NVDAの終了"
+
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -4260,6 +4257,30 @@ msgstr "ポータブル版を作成する(&P)"
 msgid "&Continue running"
 msgstr "動作を継続(&C)"
 
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"すべてのアドオンが無効です。アドオンを無効化しないでNVDAを再起動すれば、アド"
+"オンは有効化されます。"
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "終了オプション(&D)"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "終了"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "再起動"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "アドオンを無効化して再起動"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "お待ちください"
@@ -4267,6 +4288,12 @@ msgstr "お待ちください"
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "アドオン マネージャー"
+
+#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgstr ""
+"すべてのアドオンが無効です。アドオンを有効にするにはNVDAを再起動してくださ"
+"い。"
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -4376,6 +4403,10 @@ msgstr "インストール"
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "remove"
 msgstr "削除"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+msgid "suspended"
+msgstr "保留中"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
@@ -4811,9 +4842,9 @@ msgstr "言語"
 msgid "&Save configuration on exit"
 msgstr "終了時に設定情報を保存する(&S)"
 
-#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
-msgid "&Warn before exiting NVDA"
-msgstr "NVDA終了前に警告する(&W)"
+#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
+msgid "Sho&w exit options when exiting NVDA"
+msgstr "NVDA終了時に終了オプションを表示(&W)"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -5367,6 +5398,18 @@ msgstr "フレームの通知(&M)"
 msgid "Report if &clickable"
 msgstr "クリック可能の通知(&C)"
 
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "任意の部分(&A)"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "単語全体(&W)"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Regular expression"
+msgstr "正規表現(&R)"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "辞書項目の編集"
@@ -5377,7 +5420,7 @@ msgstr "パターン(&P)"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
 msgid "&Replacement"
-msgstr "読み(&R)"
+msgstr "読み方(&R)"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Comment"
@@ -5387,9 +5430,9 @@ msgstr "コメント(&C)"
 msgid "Case &sensitive"
 msgstr "大文字小文字を区別(&S)"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "正規表現(&E)"
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "種別(&T)"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -5406,15 +5449,15 @@ msgstr "パターン"
 
 #. Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
 msgid "Replacement"
-msgstr "読み"
+msgstr "読み方"
 
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
 msgid "case"
 msgstr "大文字小文字"
 
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
-msgid "Regexp"
-msgstr "正規表現"
+#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "種別"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
@@ -5494,7 +5537,7 @@ msgstr "記号"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
 msgid "Level"
-msgstr "読み上げレベル"
+msgstr "最低読み上げレベル"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
@@ -5502,7 +5545,7 @@ msgstr "読み方を変更"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
-msgstr "読み上げレベル(&L)"
+msgstr "最低読み上げレベル(&L)"
 
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 msgid "Input Gestures"
@@ -6486,39 +6529,3 @@ msgstr "HIMS社製 Braille Sense/Braille EDGE シリーズ"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS社製 SyncBraille"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "ナビゲーターオブジェクトに対する位置情報がありません"
-
-#~ msgid "No location information for screen"
-#~ msgstr "スクリーンに対する位置情報がありません"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr "現在のナビゲーターオブジェクトの幅、高さ、位置の読み上げ"
-
-#~ msgid "Set column header row"
-#~ msgstr "列見出しの行を設定"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "列見出しの行をクリアしました。"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "1回押すと現在の行を列見出しの行として設定します。2回押すと設定をクリアしま"
-#~ "す。"
-
-#~ msgid "Set row header column"
-#~ msgstr "行見出しの列を設定"
-
-#~ msgid "Cleared row header column"
-#~ msgstr "行見出しの列をクリアしました。"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "1回押すと現在の列を行見出しの列として設定します。2回押すと設定をクリアしま"
-#~ "す。"

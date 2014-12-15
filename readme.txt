@@ -27,7 +27,7 @@ The following dependencies are included in Git submodules:
 * eSpeak, version 1.48.03: http://espeak.sourceforge.net/
 * IAccessible2, version 1.3: http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2
 * ConfigObj, version 4.6.0: http://www.voidspace.org.uk/python/configobj.html
-* liblouis, version 2.5.4: http://www.liblouis.org/
+* liblouis, version 2.6.0: http://www.liblouis.org/
 * NVDA images and sounds
 * System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest
 * Adobe Acrobat accessibility interface, version XI: http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip
@@ -39,6 +39,7 @@ The following dependencies are included in Git submodules:
 * ALVA BC6 generic dll, version 3.0.4.1
 * lilli.dll, version 2.1.0.0
 * Handy Tech Braille SDK, version 1.4.2.0: ftp://ftp.handytech.de/public/Software/BrailleDriver/HTBrailleSDK_1420a.zip
+* Updated Handy Tech sbsupport.dll and dealers.dat received on 2014-09-09
 * pyserial, version 2.5: http://pypi.python.org/pypi/pyserial
 * HanSoneConnect.dll, version 2.0.0.1
 * SyncBraille.dll, version 1.0.0.1

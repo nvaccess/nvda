@@ -69,6 +69,7 @@ class AppModule(appModuleHandler.AppModule):
 		import gui
 		# Translators: The title for the dialog shown while Microsoft Outlook initializes.
 		d=wx.Dialog(None,title=_("Waiting for Outlook..."))
+		d.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 		gui.mainFrame.prePopup()
 		d.Show()
 		self._hasTriedoutlookAppSwitch=True
@@ -433,6 +434,8 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 		role=super(UIAGridRow,self).role
 		if role==controlTypes.ROLE_TREEVIEW:
 			role=controlTypes.ROLE_TREEVIEWITEM
+		elif role==controlTypes.ROLE_DATAITEM:
+			role=controlTypes.ROLE_LISTITEM
 		return role
 
 	def setFocus(self):

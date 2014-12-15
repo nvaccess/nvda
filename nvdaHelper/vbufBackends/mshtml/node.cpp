@@ -385,9 +385,17 @@ void MshtmlVBufStorage_controlFieldNode_t::reportLiveText(wstring& text) {
 	}
 }
 
+bool isNodeInLiveRegion(VBufStorage_fieldNode_t* node) {
+	if(!node) return false;
+	if(node->getFirstChild()) {
+		return ((MshtmlVBufStorage_controlFieldNode_t*)node)->ariaLiveNode!=NULL;
+	}
+	return true;
+}
+
 void MshtmlVBufStorage_controlFieldNode_t::reportLiveAddition() {
 	wstring text; //=(this->ariaLiveAtomicNode==this)?L"atomic: ":L"additions: ";
-	this->getTextInRange(0,this->getLength(),text,false);
+	this->getTextInRange(0,this->getLength(),text,false,isNodeInLiveRegion);
 	this->reportLiveText(text);
 }
 

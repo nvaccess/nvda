@@ -552,7 +552,8 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 
 def speakTypedCharacters(ch):
 	global curWordChars;
-	if api.isTypingProtected():
+	typingIsProtected=api.isTypingProtected()
+	if typingIsProtected:
 		realChar="*"
 	else:
 		realChar=ch
@@ -569,7 +570,7 @@ def speakTypedCharacters(ch):
 		curWordChars=[]
 		if log.isEnabledFor(log.IO):
 			log.io("typed word: %s"%typedWord)
-		if config.conf["keyboard"]["speakTypedWords"]: 
+		if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
 			speakText(typedWord)
 	if config.conf["keyboard"]["speakTypedCharacters"] and ord(ch)>=32:
 		speakSpelling(realChar)
