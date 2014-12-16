@@ -686,6 +686,10 @@ This allows you to choose the amount of punctuation and other symbols that shoul
 For example, when set to all, all symbols will be spoken as words.
 This option applies to all synthesizers, not just the currently active synthesizer.
 
+==== Trust voice's language for processing symbols and characters ====
+On by default, this option tells NVDA if the current voice's language can be trusted when processing symbols and characters.
+If you find that NVDA is reading punctuation in the wrong language for a particular synthesizer or voice, you may wish to turn this off to force NVDA to use its global language setting instead.
+
 ==== Capital pitch change percentage ====
 This edit field allows you to type the amount that the pitch of the voice will change when speaking a capital letter.
 This value is a percentage, where a negative value lowers the pitch and a positive value raises it.
