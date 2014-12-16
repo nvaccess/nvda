@@ -71,6 +71,7 @@ confspec = ConfigObj(StringIO(
 	# The synthesiser to use
 	synth = string(default=auto)
 	symbolLevel = integer(default=100)
+	trustVoiceLanguage = boolean(default=true)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 	outputDevice = string(default=default)
 	autoLanguageSwitching = boolean(default=true)

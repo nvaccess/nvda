@@ -123,7 +123,7 @@ def speakMessage(text,index=None):
 
 def getCurrentLanguage():
 	try:
-		language=getSynth().language if config.conf['speech']['autoLanguageSwitching'] else None
+		language=getSynth().language if config.conf['speech']['trustVoiceLanguage'] else None
 	except NotImplementedError:
 		language=None
 	if language:
