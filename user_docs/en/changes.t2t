@@ -14,6 +14,7 @@
 
 == Changes ==
 - In NVDA's Document Formatting settings dialog, the option to report spelling errors now has a shortcut key (alt+r). (#793)
+- When installing NVDA via the --install commandline argument, the newly installed NVDA will no longer be started at the end of the installation. If starting NVDA is necessary, also include the --start-after-install argument. (#4206)
 
 
 == Bug Fixes ==

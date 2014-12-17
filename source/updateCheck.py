@@ -371,7 +371,7 @@ class UpdateDownloader(object):
 		saveState()
 		shellapi.ShellExecute(None, None,
 			self.destPath.decode("mbcs"),
-			u"--install -m",
+			u"--install --start-after-install -m",
 			None, 0)
 
 class DonateRequestDialog(wx.Dialog):

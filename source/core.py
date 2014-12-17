@@ -292,7 +292,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	if globalVars.appArgs.install:
 		import wx
 		import gui.installerGui
-		wx.CallAfter(gui.installerGui.doSilentInstall)
+		wx.CallAfter(gui.installerGui.doSilentInstall,startAfterInstall=globalVars.appArgs.startAfterInstall)
 	elif not globalVars.appArgs.minimal:
 		try:
 			# Translators: This is shown on a braille display (if one is connected) when NVDA starts.

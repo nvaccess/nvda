@@ -78,6 +78,7 @@ parser.add_option('-s','--secure',action="store_true",dest='secure',default=Fals
 parser.add_option('--disable-addons',action="store_true",dest='disableAddons',default=False,help="Disable all add-ons")
 parser.add_option('--no-sr-flag',action="store_false",dest='changeScreenReaderFlag',default=True,help="Don't change the global system screen reader flag")
 parser.add_option('--install',action="store_true",dest='install',default=False,help="Silently installs NVDA")
+parser.add_option('--start-after-install',action="store_true",dest='startAfterInstall',default=False,help="If installing silently with --install, the newly installed copy will be started after installation.")
 parser.add_option('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
 (globalVars.appArgs,extraArgs)=parser.parse_args()
 
