@@ -1,0 +1,73 @@
+﻿Što je novo u NVDA
+
+
+%!includeconf: ../changes.t2tconf
+
+ 2015.1 =
+
+== Nove značajke ==
+- Sada možete dodavati nove simbole u dijaloškom okviru za dodavanje novih simbola. (#4354)
+- U dijaloškom okviru ulazne geste možete koristiti novu značajku "filtriraj po" kako biste prikazali geste koje sadrže samo određene riječi. (#4458)
+- NVDA sada automatski čita tekst u aplikaciji in mintty. (#4588)
+- U dijaloškom okviru moda surfanja, moguće je koristiti pretragu osjetljivu na velika slova. (#4584)
+
+
+== Izmjene ==
+- U dijaloškom okviru oblikovanje dokumenta, opcija izvjesti o pravopisnim pogreškama sada ima tipkovnički prečac (alt+r). (#793)
+
+
+== Ispravke grešaka ==
+- In Microsoft Excel, handle the case when row and column header cells are merged. E.g. if A1 and B1 are merged, then B2 will now have A1 and B1 reported as its column header, rather than nothing at all. (#4617)
+- When editing the content of a text box in Microsoft PowerPoint 2003, NVDA will correctly report the content of each line. Previously lines would increasingly be off by one character for each new paragraph. (#4619)
+- All of NVDA's dialogs are now centred on the screen, improving visual presentation and usability. (#3148)
+- In Skype for desktop, when entering an introductory message to add a contact, entering and moving through the text now works correctly. (#3661)
+- When focus moves to a new itemn in tree views in the Eclipse IDE, if the previously focused item is a check box, it is no longer incorrectly announced. (#4586)
+- In the Microsoft Word spell check dialog, the next error will be automatically reported when the last one has been changed or ignored via its shortcut key. (#1938)
+
+
+= 2014.4 =
+
+== Nove mogućnosti ==
+- Novi jezici: Kolumbijski španjolski, Pendžabski.
+- Sada je moguće ponovno pokrenuti NVDA, ili ponovno pokrenuti NVDA sa isključenim dodacima u NVDA dijaloškom okviru za izlaz. (#4057)
+ - NVDA je također moguće pokrenuti sa isključenim dodacima uporabom opcije --disable-addons u naredbenom retku.
+- U govornim rječnicima, sada je moguće odrediti hoće li se uzorak slagati samo ako se radi o cijeloj riječi; npr. ne pojavljuje se kao dio veće riječi. (#1704)
+
+
+== Promjene ==
+- Ako je objekt na koji ste se pomaknuli uporabom objektne navigacije unutar dokumenta koji radi u modu surfanja, ali objekt na kojem ste se prethodno nalazili nije bio, mod pregleda je automatski postavljen na dokument. Ranije se ovo događalo samo ako je objekt navigator pomaknut zbog promjene fokusa. (#4369)
+- Popisi brajičnih redaka i govornih jedinica u njihovim odgovarajućim dijaloškim okvirima postavki su sada sortirani abecednim redom, svi osim stavke Bez brajice/Bez govora koje se sada nalaze na kraju popisa. (#2724)
+- Brajični prevoditelj liblouis je ažuriran na inačicu 2.6.0. (#4434, #3835)
+- U modu surfanja, pritisak na e i shift+e za kretanje po poljima za uređivanje sada uključuje i uređivajučke odabirne okvire. Ovo se odnosi i na okvir za pretraživanje u zadnjoj inačici Google tražilice. (#4436)
+- Klik na NVDA ikonu u području obavijesti uporabom lijeve tipke miša sada otvara NVDA izbornik, umjesto da ne napravi ništa. (#4459)
+
+
+== Ispravke grešaka ==
+- Prilikom premiještanja fokusa natrag u dokument koji radi u modu surfanja (npr. ponavljanja alt+tab naredbe za dolazak do već otvorene web stranice), pregledni kursor je ispravno pozicioniran na virtualnu točku umetanja, a ne više na fokusiranu kontrolu (npr. na obližnji link). (#4369)
+- U Powerpoint dijaprojekcijama, pregledni kursor ispravno slijedi virtualnu točku umetanja. (#4370)
+- U Mozilla Firefox-u i ostalim preglednicima zasnovanim na Gecko-u, novi sadržaj unutar žive regije će se najaviti čak i ako novi sadržaj ima upotrebljiv ARIA živi tip koji je drugačiji od matične žive regije; npr. kada je sadržaj označen kao pouzdan dodan u živu regiju označenu kao uglađenu. (#4169)
+- U Internet Explorer-u i drugim MSHTML kontrolama, neki slućajevi gdje je dokument sadržan unutar drugog dokumenta više ne sprječavaju korisnika da pristupi nekom sadržaju (naročito okviri unutar okvira). (#4418)
+- NVDA se više ne ruši prilikom pokušaja korištenja Handy Tech brajičnog retka u nekim slućajevima. (#3709)
+- U Windows Vista sustavu, lažan dijaloški okvir "Ulazna točka nije pronađena" više se ne prikazuje u nekoliko slućajeva kao što su pokretanje NVDA preko prečaca na radnoj površini ili putem tipkovnog prečaca. (#4235)
+- Ozbiljni problemi sa kontrolama uređivanja teksta unutar dijaloških okvira u nedavnim inačicama Eclipse-a su ispravljeni. (#3872)
+- U Outlook-u 2010, premiještanje točke umetanja sada funkcionira kako treba u polju za lokaciju kod zahtjeva za sastanke. (#4126)
+- Unutar žive regije, sadržaj koji je označen kao neživ (npr. aria-live="off") će se sada ispravno ignorirati. (#4405)
+- Prilikom izgovaranja teksta statusne trake koja ima naziv, naziv je sada ispravno odvojen od prve riječi teksta statusne trake. (#4430)
+- U poljima za unos lozinke sa omogućenom opcijom za izgovaranje utipkanih riječi, višestruke zvjezdice se neće irelevantno najavljivati kod započinjanja novih riječi. (#4402)
+- U Microsoft Outlook popisu poruka, stavke se više neće irelevantno najavljivati kao podatkovne stavke. (#4439)
+- Prilikom odabira teksta unutar kontrole za uređivanje koda u Eclipse razvojnom okruženju, više se neće najaviti cjelokupan odabir svaki put kada se odabir promijeni. (#2314)
+- Različite inačice Eclipse-a, poput Spring Tool Suite-a i inačice uključene u Android Developer Tools paketu se sada prepoznaju kao Eclipse i njima se postupa na odgovarajući način. (#4360, #4454)
+- Praćenje miša i istraživanje dodirom u Internet Explorer-u i drugim MSHTML kontrolama (uključujući mnoge Windows 8 aplikacije) sada je puno preciznije na zaslonima visoke rezolucije ili kada se mijenja uvećanje dokumenta. (#3494) 
+- Praćenje miša i istraživanje dodirom u Internet Explorer-u i drugim MSHTML kontrolama će sada najaviti naziv za više gumbi. (#4173)
+- Pri korištenju Papenmeier BRAILLEX brajičnog retka sa BrxCom-om, tipke na retku sada rade kako treba. (#4614)
+
+
+== Promjene za razvojne programere ==
+- Za izvršne datoteke koje ugošćuju mnogo drugih aplikacija (npr. javaw.exe), kod sada može biti uvjet za učitavanje specifičnih aplikacijskih modula za svaku aplikaciju umjesto učitavanja istog aplikacijskog modula za sve ugošćene aplikacije. (#4360)
+ - Pogledajte dokumentaciju koda za appModuleHandler.AppModule za pojedinosti.
+ - Uvedena je podrška za javaw.exe.
+
+
+= Starije verzije =
+
+Za više informacija u promjenama u starijim inačicama, molimo pogledajte dokument što je novo na engleskom jeziku.
