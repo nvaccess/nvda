@@ -5,6 +5,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import re
 from comtypes import COMError
 import appModuleHandler
 import controlTypes
@@ -27,7 +28,13 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 	def stopMonitoring(self):
 		displayModel.requestTextChangeNotifications(self, False)
 
+	RE_MESSAGE = re.compile(r"^From (?P<from>.*), (?P<body>.*), sent on (?P<time>.*?)(?: Edited by .* at .*?)?(?: Not delivered|New)?$")
 	def reportMessage(self, text):
+		# Messages are ridiculously verbose.
+		# Strip the time and other metadata if possible.
+		m = self.RE_MESSAGE.match(text)
+		if m:
+			text = "%s, %s" % (m.group("from"), m.group("body"))
 		ui.message(text)
 
 	def _getMessageCount(self):
