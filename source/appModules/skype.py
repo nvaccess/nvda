@@ -45,7 +45,9 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 
 	def update(self, initial=False):
 		newCount = self._getMessageCount()
-		if not initial and config.conf["presentation"]["reportDynamicContentChanges"]:
+		if (not initial and config.conf["presentation"]["reportDynamicContentChanges"]
+				#4644: Don't report a flood of messages.
+				and newCount - self.oldMessageCount < 5):
 			ia = self.IAccessibleObject
 			for c in xrange(self.oldMessageCount + 1, newCount + 1):
 				text = ia.accName(c)
