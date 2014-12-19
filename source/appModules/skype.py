@@ -20,8 +20,7 @@ import config
 class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 
 	def startMonitoring(self):
-		self.oldLastMessageText = None
-		self.oldSecondLastMessageText = None
+		self.oldMessageCount = None
 		self.update(initial=True)
 		displayModel.requestTextChangeNotifications(self, True)
 
@@ -29,22 +28,10 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 		displayModel.requestTextChangeNotifications(self, False)
 
 	def reportMessage(self, text):
-		if text.startswith("["):
-			# Remove the timestamp.
-			text = text.split("] ", 1)[1]
 		ui.message(text)
 
-	def update(self, initial=False):
-		reportNew = not initial and config.conf["presentation"]["reportDynamicContentChanges"]
-
-		# Ideally, we'd determine new messages based just on the change in child count,
-		# but children can be inserted in the middle when messages are expanded.
-		# Therefore, we have to use message text.
+	def _getMessageCount(self):
 		ia = self.IAccessibleObject
-		newMessages = []
-		lastWasEdited = False
-		# The list is chronological and we're looking for new messages,
-		# so scan the list in reverse.
 		for c in xrange(self.childCount, -1, -1):
 			try:
 				if ia.accRole(c) != oleacc.ROLE_SYSTEM_LISTITEM or ia.accState(c) & oleacc.STATE_SYSTEM_UNAVAILABLE:
@@ -53,47 +40,19 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 			except COMError:
 				# The child probably disappeared after we fetched childCount.
 				continue
-			text = ia.accName(c)
-			if not text:
-				continue
-			if text.startswith("[] "):
-				# When timestamps are disabled,
-				# Skype initially prefixes outgoing messages with "[] ".
-				# However, the prefix silently disappears shortly afterwards.
-				# Remove it so we aren't affected by it.
-				text = text[3:]
-			if text == self.oldLastMessageText:
-				# No more new messages.
-				break
-			if text == self.oldSecondLastMessageText and len(newMessages) == 1:
-				# We didn't match the last message, but this is the second last message.
-				# This means the last message must have been edited, so stop here.
-				lastWasEdited = True
-				break
-			newMessages.append(text)
-			if not reportNew and (self.oldLastMessageText or len(newMessages) > 1):
-				# If we're not reporting new messages, we only need to go
-				# far enough so that we have the second last message.
-				break
+			return c
+		return 0
 
-		if not newMessages:
-			return
-
-		oldLast = self.oldLastMessageText
-		self.oldLastMessageText = newMessages[0]
-		if not lastWasEdited:
-			try:
-				self.oldSecondLastMessageText = newMessages[1]
-			except IndexError:
-				# There was only one new message,
-				# so the second last is the old last.
-				self.oldSecondLastMessageText = oldLast
-
-		if not reportNew:
-			return
-
-		for text in reversed(newMessages):
-			self.reportMessage(text)
+	def update(self, initial=False):
+		newCount = self._getMessageCount()
+		if not initial and config.conf["presentation"]["reportDynamicContentChanges"]:
+			ia = self.IAccessibleObject
+			for c in xrange(self.oldMessageCount + 1, newCount + 1):
+				text = ia.accName(c)
+				if not text:
+					continue
+				self.reportMessage(text)
+		self.oldMessageCount = newCount
 
 	def event_textChange(self):
 		# This event is called from another thread, but this needs to run in the main thread.
