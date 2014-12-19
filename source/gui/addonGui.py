@@ -151,7 +151,10 @@ class AddonsDialog(wx.Dialog):
 				del progressDialog
 		finally:
 			if closeAfter:
-				self.onClose(None)
+				# #4460: If we do this immediately, wx seems to drop the WM_QUIT sent if the user chooses to restart.
+				# This seems to have something to do with the wx.ProgressDialog.
+				# The CallLater seems to work around this.
+				wx.CallLater(1, self.Close)
 
 	def OnRemoveClick(self,evt):
 		index=self.addonsList.GetFirstSelected()
