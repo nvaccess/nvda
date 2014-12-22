@@ -50,6 +50,14 @@ class Conversation(NVDAObjects.IAccessible.IAccessible):
 			pass
 		else:
 			self.outputList.startMonitoring()
+		try:
+			self.typingIndicator = NVDAObjects.IAccessible.getNVDAObjectFromEvent(
+				windowUtils.findDescendantWindow(self.windowHandle, className="TWidgetControl"),
+				winUser.OBJID_CLIENT, 1)
+		except LookupError:
+			pass
+		else:
+			self.typingIndicator.startMonitoring()
 
 	def event_focusEntered(self):
 		self._gainedFocus()
@@ -65,6 +73,8 @@ class Conversation(NVDAObjects.IAccessible.IAccessible):
 		self.appModule.conversation = None
 		self.outputList.stopMonitoring()
 		self.outputList = None
+		self.typingIndicator.stopMonitoring()
+		self.typingIndicator = None
 
 	def script_reviewRecentMessage(self, gesture):
 		try:
@@ -147,6 +157,25 @@ class Notification(NVDAObjects.behaviors.Notification):
 		# There is a delay before the content of the notification is ready.
 		wx.CallLater(500, self.event_alert)
 
+class TypingIndicator(NVDAObjects.IAccessible.IAccessible):
+
+	def startMonitoring(self):
+		displayModel.requestTextChangeNotifications(self, True)
+
+	def stopMonitoring(self):
+		displayModel.requestTextChangeNotifications(self, False)
+
+	def _report(self):
+		if self.name:
+			ui.message(self.name)
+		else:
+			# Translators: Indicates that a contact stopped typing.
+			ui.message(_("Typing stopped"))
+
+	def event_textChange(self):
+		# This event is called from another thread, but this needs to run in the main thread.
+		queueHandler.queueFunction(queueHandler.eventQueue, self._report)
+
 class AppModule(appModuleHandler.AppModule):
 
 	def __init__(self, *args, **kwargs):
@@ -177,6 +206,8 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, ChatOutputList)
 		elif wClass == "TTrayAlert" and role == controlTypes.ROLE_WINDOW:
 			clsList.insert(0, Notification)
+		elif wClass == "TWidgetControl" and role == controlTypes.ROLE_LISTITEM:
+			clsList.insert(0, TypingIndicator)
 
 	def event_gainFocus(self, obj, nextHandler):
 		if self.conversation and not winUser.isDescendantWindow(self.conversation.windowHandle, obj.windowHandle):
