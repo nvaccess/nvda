@@ -7,6 +7,7 @@
 
 import re
 from comtypes import COMError
+import wx
 import appModuleHandler
 import controlTypes
 import winUser
@@ -17,6 +18,7 @@ import windowUtils
 import displayModel
 import queueHandler
 import config
+import NVDAObjects.behaviors
 
 class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 
@@ -67,6 +69,16 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 		# This event is called from another thread, but this needs to run in the main thread.
 		queueHandler.queueFunction(queueHandler.eventQueue, self.update)
 
+class Notification(NVDAObjects.behaviors.Notification):
+	role = controlTypes.ROLE_ALERT
+
+	def _get_name(self):
+		return " ".join(child.name for child in self.children)
+
+	def event_show(self):
+		# There is a delay before the content of the notification is ready.
+		wx.CallLater(500, self.event_alert)
+
 class AppModule(appModuleHandler.AppModule):
 
 	def __init__(self, *args, **kwargs):
@@ -90,8 +102,12 @@ class AppModule(appModuleHandler.AppModule):
 			obj.shouldAllowIAccessibleFocusEvent = False
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.windowClassName == "TChatContentControl" and obj.role == controlTypes.ROLE_LIST:
+		wClass = obj.windowClassName
+		role = obj.role
+		if wClass == "TChatContentControl" and role == controlTypes.ROLE_LIST:
 			clsList.insert(0, ChatOutputList)
+		elif wClass == "TTrayAlert" and role == controlTypes.ROLE_WINDOW:
+			clsList.insert(0, Notification)
 
 	def conversationMaybeFocused(self, obj):
 		if not isinstance(obj, NVDAObjects.IAccessible.IAccessible) or obj.windowClassName != "TConversationForm" or obj.IAccessibleRole != oleacc.ROLE_SYSTEM_CLIENT:
