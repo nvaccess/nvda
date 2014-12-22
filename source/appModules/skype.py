@@ -19,8 +19,17 @@ import displayModel
 import queueHandler
 import config
 import NVDAObjects.behaviors
+import api
+
+# Translators: The name of the NVDA command category for Skype specific commands.
+SCRCAT_SKYPE = _("Skype")
 
 class Conversation(NVDAObjects.IAccessible.IAccessible):
+	scriptCategory = SCRCAT_SKYPE
+
+	def initOverlayClass(self):
+		for n in xrange(0, 10):
+			self.bindGesture("kb:NVDA+control+%d" % n, "reviewRecentMessage")
 
 	def _gainedFocus(self):
 		# The user has entered this Skype conversation.
@@ -56,6 +65,18 @@ class Conversation(NVDAObjects.IAccessible.IAccessible):
 		self.appModule.conversation = None
 		self.outputList.stopMonitoring()
 		self.outputList = None
+
+	def script_reviewRecentMessage(self, gesture):
+		try:
+			index = int(gesture.mainKeyName[-1])
+		except (AttributeError, ValueError):
+			return
+		if index == 0:
+			index = 10
+		self.outputList.reviewRecentMessage(index)
+	# Describes the NVDA command to review messages in Skype.
+	script_reviewRecentMessage.__doc__ = _("Reports and moves the review cursor to a recent message")
+	script_reviewRecentMessage.canPropagate = True
 
 class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 
@@ -105,6 +126,16 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 	def event_textChange(self):
 		# This event is called from another thread, but this needs to run in the main thread.
 		queueHandler.queueFunction(queueHandler.eventQueue, self.update)
+
+	def reviewRecentMessage(self, index):
+		count = self._getMessageCount()
+		if index > count:
+			# Translators: This is presented to inform the user that no instant message has been received.
+			ui.message(_("No message yet"))
+			return
+		message = self.getChild(count - index)
+		api.setNavigatorObject(message)
+		self.reportMessage(message.name)
 
 class Notification(NVDAObjects.behaviors.Notification):
 	role = controlTypes.ROLE_ALERT
