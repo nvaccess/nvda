@@ -20,6 +20,43 @@ import queueHandler
 import config
 import NVDAObjects.behaviors
 
+class Conversation(NVDAObjects.IAccessible.IAccessible):
+
+	def _gainedFocus(self):
+		# The user has entered this Skype conversation.
+		if self.appModule.conversation:
+			# A conversation was already focused.
+			if self.appModule.conversation.windowHandle == self.windowHandle:
+				# This is the same conversation.
+				return
+			# This is another conversation that hasn't been cleaned up yet.
+			self.appModule.conversation.lostFocus()
+
+		self.appModule.conversation = self
+		try:
+			self.outputList = NVDAObjects.IAccessible.getNVDAObjectFromEvent(
+				windowUtils.findDescendantWindow(self.windowHandle, className="TChatContentControl"),
+				winUser.OBJID_CLIENT, 0).lastChild
+		except LookupError:
+			pass
+		else:
+			self.outputList.startMonitoring()
+
+	def event_focusEntered(self):
+		self._gainedFocus()
+		super(Conversation, self).event_focusEntered()
+
+	def event_gainFocus(self):
+		# A conversation might have its own top level window,
+		# but foreground changes often trigger gainFocus instead of focusEntered.
+		self._gainedFocus()
+		super(Conversation, self).event_gainFocus()
+
+	def lostFocus(self):
+		self.appModule.conversation = None
+		self.outputList.stopMonitoring()
+		self.outputList = None
+
 class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 
 	def startMonitoring(self):
@@ -83,8 +120,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def __init__(self, *args, **kwargs):
 		super(AppModule, self).__init__(*args, **kwargs)
-		self.chatWindow = None
-		self.chatOutputList = None
+		self.conversation = None
 
 	def event_NVDAObject_init(self,obj):
 		if isinstance(obj, NVDAObjects.IAccessible.IAccessible) and obj.event_objectID is None and controlTypes.STATE_FOCUSED in obj.states and obj.role not in (controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENUBAR):
@@ -104,49 +140,18 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		wClass = obj.windowClassName
 		role = obj.role
-		if wClass == "TChatContentControl" and role == controlTypes.ROLE_LIST:
+		if isinstance(obj, NVDAObjects.IAccessible.IAccessible) and obj.windowClassName == "TConversationForm" and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT:
+			clsList.insert(0, Conversation)
+		elif wClass == "TChatContentControl" and role == controlTypes.ROLE_LIST:
 			clsList.insert(0, ChatOutputList)
 		elif wClass == "TTrayAlert" and role == controlTypes.ROLE_WINDOW:
 			clsList.insert(0, Notification)
 
-	def conversationMaybeFocused(self, obj):
-		if not isinstance(obj, NVDAObjects.IAccessible.IAccessible) or obj.windowClassName != "TConversationForm" or obj.IAccessibleRole != oleacc.ROLE_SYSTEM_CLIENT:
-			# This isn't a Skype conversation.
-			return
-		# The user has entered a Skype conversation.
-
-		if self.chatWindow:
-			# Another conversation was already focused and hasn't been cleaned up yet.
-			self.conversationLostFocus()
-
-		window = obj.windowHandle
-		self.chatWindow = window
-		try:
-			self.chatOutputList = NVDAObjects.IAccessible.getNVDAObjectFromEvent(
-				windowUtils.findDescendantWindow(window, className="TChatContentControl"),
-				winUser.OBJID_CLIENT, 0).lastChild
-		except LookupError:
-			pass
-		else:
-			self.chatOutputList.startMonitoring()
-
-	def event_focusEntered(self, obj, nextHandler):
-		self.conversationMaybeFocused(obj)
-		nextHandler()
-
-	def conversationLostFocus(self):
-		self.chatWindow = None
-		self.chatOutputList.stopMonitoring()
-		self.chatOutputList = None
-
 	def event_gainFocus(self, obj, nextHandler):
-		if self.chatWindow and not winUser.isDescendantWindow(self.chatWindow, obj.windowHandle):
-			self.conversationLostFocus()
-		# A conversation might have its own top level window,
-		# but foreground changes often trigger gainFocus instead of focusEntered.
-		self.conversationMaybeFocused(obj)
+		if self.conversation and not winUser.isDescendantWindow(self.conversation.windowHandle, obj.windowHandle):
+			self.conversation.lostFocus()
 		nextHandler()
 
 	def event_appModule_loseFocus(self):
-		if self.chatWindow:
-			self.conversationLostFocus()
+		if self.conversation:
+			self.conversation.lostFocus()
