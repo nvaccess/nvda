@@ -587,9 +587,6 @@ class ElementsListDialog(wx.Dialog):
 		self._elements = []
 		self._initialElement = None
 
-		caret = self.document.makeTextInfo(textInfos.POSITION_CARET)
-		caret.expand("character")
-
 		parentElements = []
 		for item in self.document._iterNodesByType(elType):
 			# Find the parent element, if any.
