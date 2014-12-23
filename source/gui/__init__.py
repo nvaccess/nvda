@@ -807,6 +807,10 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 			# Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 			speech.speakMessage(_("Please wait"))
 
+	def IsActive(self):
+		#4714: In wxPython 3, ProgressDialog.IsActive always seems to return False.
+		return winUser.isDescendantWindow(winUser.getForegroundWindow(), self.Handle)
+
 	def done(self):
 		self.timer.Stop()
 		if self.IsActive():
