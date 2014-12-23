@@ -10,6 +10,8 @@
 - In the Input Gestures dialog, you can use the new "Filter by" field to show only gestures containing specific words. (#4458)
 - NVDA now automatically reports new text in mintty. (#4588)
 - In the browse mode Find dialog, there is now an option to perform a case sensitive search. (#4584)
+- Quick navigation (h for heading etc) plus Elements List (NVDA+f7) are now available in Microsoft Word documents by turning on browse mode with NVDA+space. (#2975)
+- Reading HTML messages in Microsoft Outlook 2007 and higher has been majorly improved as Browse mode is automatically enabled for these messages. If browse mode is not enabled in some rare situations, you can force it on with NVDA+space. (#2975) 
 
 
 == Changes ==
@@ -23,6 +25,7 @@
 - In Skype for desktop, when entering an introductory message to add a contact, entering and moving through the text now works correctly. (#3661)
 - When focus moves to a new itemn in tree views in the Eclipse IDE, if the previously focused item is a check box, it is no longer incorrectly announced. (#4586)
 - In the Microsoft Word spell check dialog, the next error will be automatically reported when the last one has been changed or ignored via its shortcut key. (#1938)
+- screen text no longer disappears from NVDA in windows such as Teraterm Pro's terminal window when it is scrolled. (#4229)
 
 
 = 2014.4 =
