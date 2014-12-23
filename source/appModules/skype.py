@@ -159,22 +159,30 @@ class Notification(NVDAObjects.behaviors.Notification):
 
 class TypingIndicator(NVDAObjects.IAccessible.IAccessible):
 
+	def initOverlayClass(self):
+		self._oldName = None
+
 	def startMonitoring(self):
 		displayModel.requestTextChangeNotifications(self, True)
 
 	def stopMonitoring(self):
 		displayModel.requestTextChangeNotifications(self, False)
 
-	def _report(self):
-		if self.name:
-			ui.message(self.name)
+	def _maybeReport(self):
+		name = self.name
+		if name == self._oldName:
+			# There was no real change; just a redraw.
+			return
+		self._oldName = name
+		if name:
+			ui.message(name)
 		else:
 			# Translators: Indicates that a contact stopped typing.
 			ui.message(_("Typing stopped"))
 
 	def event_textChange(self):
 		# This event is called from another thread, but this needs to run in the main thread.
-		queueHandler.queueFunction(queueHandler.eventQueue, self._report)
+		queueHandler.queueFunction(queueHandler.eventQueue, self._maybeReport)
 
 class AppModule(appModuleHandler.AppModule):
 
