@@ -44,6 +44,7 @@ using namespace std;
 #define wdDISPID_REVISIONS_ITEM 0
 #define wdDISPID_REVISION_TYPE 4
 #define wdDISPID_RANGE_STORYTYPE 7
+#define wdDISPID_RANGE_MOVE 109
 #define wdDISPID_RANGE_MOVEEND 111
 #define wdDISPID_RANGE_COLLAPSE 101
 #define wdDISPID_RANGE_TEXT 0
@@ -116,6 +117,8 @@ using namespace std;
 #define wdDISPID_TABLES_ITEM 0
 #define wdDISPID_TABLE_NESTINGLEVEL 108
 #define wdDISPID_TABLE_RANGE 0
+#define wdDISPID_TABLE_BORDERS 1100
+#define wdDISPID_BORDERS_ENABLE 2
 #define wdDISPID_RANGE_CELLS 57
 #define wdDISPID_CELLS_ITEM 0
 #define wdDISPID_CELL_RANGE 0
@@ -173,9 +176,10 @@ using namespace std;
 #define formatConfig_reportLanguage 16384
 #define formatConfig_reportRevisions 32768
 #define formatConfig_reportParagraphIndentation 65536
-
+#define formatConfig_includeLayoutTables 131072
+ 
 #define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor)
-#define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings)
+#define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings|formatConfig_includeLayoutTables)
 
 UINT wm_winword_expandToLine=0;
 typedef struct {
@@ -427,9 +431,16 @@ bool collectCommentOffsets(IDispatchPtr pDispatchRange, vector<pair<long,long>>&
 	return !commentVector.empty();
 }
 
-bool fetchTableInfo(IDispatch* pDispatchTable, int* rowCount, int* columnCount, int* nestingLevel) {
+bool fetchTableInfo(IDispatch* pDispatchTable, bool includeLayoutTables, int* rowCount, int* columnCount, int* nestingLevel) {
 	IDispatchPtr pDispatchRows=NULL;
 	IDispatchPtr pDispatchColumns=NULL;
+	IDispatchPtr pDispatchBorders=NULL;
+	if(!includeLayoutTables&&_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_BORDERS,VT_DISPATCH,&pDispatchBorders)==S_OK&&pDispatchBorders) {
+		BOOL isEnabled=true;
+		if(_com_dispatch_raw_propget(pDispatchBorders,wdDISPID_BORDERS_ENABLE,VT_BOOL,&isEnabled)==S_OK&&!isEnabled) {
+			return false;
+		}
+	}
 	if(_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_ROWS,VT_DISPATCH,&pDispatchRows)==S_OK&&pDispatchRows) {
 		_com_dispatch_raw_propget(pDispatchRows,wdDISPID_ROWS_COUNT,VT_I4,rowCount);
 	}
@@ -440,7 +451,7 @@ bool fetchTableInfo(IDispatch* pDispatchTable, int* rowCount, int* columnCount, 
 	return true;
 }
 
-int generateTableXML(IDispatch* pDispatchRange, int startOffset, int endOffset, wostringstream& XMLStream) {
+int generateTableXML(IDispatch* pDispatchRange, bool includeLayoutTables, int startOffset, int endOffset, wostringstream& XMLStream) {
 	int numTags=0;
 	int iVal=0;
 	IDispatchPtr pDispatchTables=NULL;
@@ -456,7 +467,7 @@ int generateTableXML(IDispatch* pDispatchRange, int startOffset, int endOffset, 
 	if(
 		_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_TABLES,VT_DISPATCH,&pDispatchTables)!=S_OK||!pDispatchTables\
 		||_com_dispatch_raw_method(pDispatchTables,wdDISPID_TABLES_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchTable,L"\x0003",1)!=S_OK||!pDispatchTable\
-		||!fetchTableInfo(pDispatchTable,&rowCount,&columnCount,&nestingLevel)\
+		||!fetchTableInfo(pDispatchTable,includeLayoutTables,&rowCount,&columnCount,&nestingLevel)\
 	) {
 		return 0;
 	}
@@ -696,7 +707,7 @@ inline int generateInlineShapeXML(IDispatch* pDispatchRange, wostringstream& XML
 		}
 		SysFreeString(altText);
 	}
-	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<(shapeType==3?L"graphic":L"object")<<L"\" value=\""<<altTextStr<<L"\">";
+	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<((shapeType==3||shapeType==4)?L"graphic":L"object")<<L"\" value=\""<<altTextStr<<L"\">";
 	return count;
 }
 
@@ -780,7 +791,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	int unitsMoved=0;
 	BSTR text=NULL;
 	if(initialFormatConfig&formatConfig_reportTables) {
-		neededClosingControlTagCount+=generateTableXML(pDispatchRange,args->startOffset,args->endOffset,XMLStream);
+		neededClosingControlTagCount+=generateTableXML(pDispatchRange,(initialFormatConfig&formatConfig_includeLayoutTables)!=0,args->startOffset,args->endOffset,XMLStream);
 	}
 		IDispatchPtr pDispatchParagraphs=NULL;
 	IDispatchPtr pDispatchParagraph=NULL;
@@ -911,12 +922,62 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	args->text=SysAllocString(XMLStream.str().c_str());
 }
 
+UINT wm_winword_moveByLine=0;
+typedef struct {
+	int offset;
+	int moveBack;
+	int newOffset;
+} winword_moveByLine_args;
+void winword_moveByLine_helper(HWND hwnd, winword_moveByLine_args* args) {
+	//Fetch all needed objects
+	IDispatchPtr pDispatchWindow=NULL;
+	if(AccessibleObjectFromWindow(hwnd,OBJID_NATIVEOM,IID_IDispatch,(void**)&pDispatchWindow)!=S_OK||!pDispatchWindow) {
+		LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
+		return;
+	}
+	IDispatchPtr pDispatchApplication=NULL;
+	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
+		LOG_DEBUGWARNING(L"window.application failed");
+		return;
+	}
+	IDispatchPtr pDispatchSelection=NULL;
+	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
+		LOG_DEBUGWARNING(L"application.selection failed");
+		return;
+	}
+	BOOL startWasActive=false;
+	if(_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_SELECTION_STARTISACTIVE,VT_BOOL,&startWasActive)!=S_OK) {
+		LOG_DEBUGWARNING(L"selection.StartIsActive failed");
+	}
+	IDispatch* pDispatchOldSelRange=NULL;
+	if(_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchOldSelRange)!=S_OK||!pDispatchOldSelRange) {
+		LOG_DEBUGWARNING(L"selection.range failed");
+		return;
+	}
+	//Disable screen updating as we will be moving the selection temporarily
+	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,false);
+	//Move the selection to the given range
+	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
+// Move the selection by 1 line
+	int unitsMoved=0;
+	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_RANGE_MOVE,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdLine,((args->moveBack)?-1:1));
+	_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_START,VT_I4,&(args->newOffset));
+	//Move the selection back to its original location
+	_com_dispatch_raw_method(pDispatchOldSelRange,wdDISPID_RANGE_SELECT,DISPATCH_METHOD,VT_EMPTY,NULL,NULL);
+	//Restore the old selection direction
+	_com_dispatch_raw_propput(pDispatchSelection,wdDISPID_SELECTION_STARTISACTIVE,VT_BOOL,startWasActive);
+	//Reenable screen updating
+	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
+}
+
 LRESULT CALLBACK winword_callWndProcHook(int code, WPARAM wParam, LPARAM lParam) {
 	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
 	if(pcwp->message==wm_winword_expandToLine) {
 		winword_expandToLine_helper(pcwp->hwnd,reinterpret_cast<winword_expandToLine_args*>(pcwp->wParam));
 	} else if(pcwp->message==wm_winword_getTextInRange) {
 		winword_getTextInRange_helper(pcwp->hwnd,reinterpret_cast<winword_getTextInRange_args*>(pcwp->wParam));
+	} else if(pcwp->message==wm_winword_moveByLine) {
+		winword_moveByLine_helper(pcwp->hwnd,reinterpret_cast<winword_moveByLine_args*>(pcwp->wParam));
 	}
 	return 0;
 }
@@ -937,9 +998,17 @@ error_status_t nvdaInProcUtils_winword_getTextInRange(handle_t bindingHandle, co
 	return RPC_S_OK;
 }
 
+error_status_t nvdaInProcUtils_winword_moveByLine(handle_t bindingHandle, const long windowHandle, const int offset, const int moveBack, int* newOffset) {
+	winword_moveByLine_args args={offset,moveBack,NULL};
+	SendMessage((HWND)windowHandle,wm_winword_moveByLine,(WPARAM)&args,0);
+	*newOffset=args.newOffset;
+	return RPC_S_OK;
+}
+
 void winword_inProcess_initialize() {
 	wm_winword_expandToLine=RegisterWindowMessage(L"wm_winword_expandToLine");
 	wm_winword_getTextInRange=RegisterWindowMessage(L"wm_winword_getTextInRange");
+	wm_winword_moveByLine=RegisterWindowMessage(L"wm_winword_moveByLine");
 	registerWindowsHook(WH_CALLWNDPROC,winword_callWndProcHook);
 }
 
