@@ -399,6 +399,13 @@ class TableWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 
 class WordDocumentTextInfo(textInfos.TextInfo):
 
+	def find(self,text,caseSensitive=False,reverse=False):
+		f=self._rangeObj.find
+		f.text=text
+		f.matchCase=caseSensitive
+		f.forward=not reverse
+		return f.execute()
+
 	shouldIncludeLayoutTables=True #: layout tables should always be included (no matter the user's browse mode setting).
 
 	def activate(self):
@@ -769,6 +776,9 @@ class BrowseModeWordDocumentTextInfo(textInfos.TextInfo):
 			position=textInfos.POSITION_CARET
 		super(BrowseModeWordDocumentTextInfo,self).__init__(obj,position)
 		self.innerTextInfo=WordDocumentTextInfoForTreeInterceptor(obj.rootNVDAObject,position,_rangeObj=_rangeObj)
+
+	def find(self,text,caseSensitive=False,reverse=False):
+		return self.innerTextInfo.find(text,caseSensitive,reverse)
 
 	def copy(self):
 		return BrowseModeWordDocumentTextInfo(self.obj,None,_rangeObj=self.innerTextInfo._rangeObj)
