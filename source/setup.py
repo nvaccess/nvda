@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #setup.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner
+#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -54,6 +54,8 @@ MAIN_MANIFEST_EXTRA = r"""
 		<supportedOS Id="{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}"/>
 		<!-- Windows 8.1 -->
 		<supportedOS Id="{1f676c76-80e1-4239-95bb-83d0f6d0da78}"/>
+		<!-- Windows 10 -->
+		<supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}"/>
 	</application> 
 </compatibility>
 """
