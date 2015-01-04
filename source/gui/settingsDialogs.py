@@ -492,6 +492,11 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.symbolLevelList.SetSelection(characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS.index(curLevel))
 		sizer.Add(self.symbolLevelList)
 		settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# voice settings dialog (if checked, text will be read using the voice for the language of the text).
+		self.trustVoiceLanguageCheckbox=wx.CheckBox(self,wx.NewId(),label=_("Trust voice's language when processing characters and symbols"))
+		self.trustVoiceLanguageCheckbox.SetValue(config.conf["speech"]["trustVoiceLanguage"])
+		settingsSizer.Add(self.trustVoiceLanguageCheckbox,border=10,flag=wx.BOTTOM)
 		# Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 		capPitchChangeLabel=wx.StaticText(self,-1,label=_("Capital pitch change percentage"))
 		settingsSizer.Add(capPitchChangeLabel)
@@ -579,6 +584,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		config.conf["speech"]["autoLanguageSwitching"]=self.autoLanguageSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["autoDialectSwitching"]=self.autoDialectSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["symbolLevel"]=characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[self.symbolLevelList.GetSelection()]
+		config.conf["speech"]["trustVoiceLanguage"]=self.trustVoiceLanguageCheckbox.IsChecked()
 		capPitchChange=self.capPitchChangeEdit.Value
 		try:
 			capPitchChange=int(capPitchChange)
