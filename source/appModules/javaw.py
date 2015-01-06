@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2014 NV Access Limited
+#Copyright (C) 2014-2015 NV Access Limited
 
 """Support for app specific modules for Java apps hosted by javaw.exe.
 """
@@ -23,7 +23,7 @@ def _getEntryPoint(cmd):
 			continue
 		if arg.startswith("-jar"):
 			# Next argument is the jar. Remove the extension.
-			return os.path.splitext(next(cmd))[0]
+			return os.path.basename(os.path.splitext(next(cmd))[0])
 		if arg.startswith("-"):
 			continue
 		if not arg:
