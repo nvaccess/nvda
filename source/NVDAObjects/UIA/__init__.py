@@ -130,6 +130,10 @@ class UIATextInfo(textInfos.TextInfo):
 			if pastEnd:
 				break
 			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
+		# Ensure that we always reach the end of the outer range, even if the units seem to stop somewhere inside
+		if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)<0:
+			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
+			yield tempRange.clone()
 
 	def _getFormatFieldsAndText(self,rangeObj,formatConfig):
 		for tempRange in self._iterUIARangeByUnit(rangeObj,UIAHandler.TextUnit_Format):
