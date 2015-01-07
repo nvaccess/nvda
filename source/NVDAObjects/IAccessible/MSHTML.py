@@ -14,6 +14,7 @@ import ctypes.wintypes
 import contextlib
 import winUser
 import oleacc
+import UIAHandler
 import IAccessibleHandler
 import aria
 from keyboardHandler import KeyboardInputGesture
@@ -25,6 +26,7 @@ from . import IAccessible
 from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
 from .. import InvalidNVDAObject
 from ..window import Window
+from NVDAObjects.UIA import UIA
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
@@ -334,6 +336,20 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 
 class MSHTML(IAccessible):
 
+	def _get__UIAControl(self):
+		if UIAHandler.handler and self.role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_FOCUSED in self.states:
+			e=UIAHandler.handler.clientObject.getFocusedElementBuildCache(UIAHandler.handler.baseCacheRequest)
+			obj=UIA(UIAElement=e)
+			if isinstance(obj,EditableTextWithoutAutoSelectDetection):
+				obj.parent=self.parent
+				self._UIAControl=obj
+				return obj
+
+	def makeTextInfo(self,position):
+		if self._UIAControl:
+			return self._UIAControl.makeTextInfo(position)
+		return super(MSHTML,self).makeTextInfo(position)
+
 	HTMLNodeNameNavSkipList=['#comment','SCRIPT','HEAD','HTML','PARAM','STYLE']
 	HTMLNodeNameEmbedList=['OBJECT','EMBED','APPLET','FRAME','IFRAME']
 
@@ -349,7 +365,7 @@ class MSHTML(IAccessible):
 
 	def event_caret(self):
 		if self._ignoreCaretEvents: return
-		if self.TextInfo is not MSHTMLTextInfo:
+		if self.TextInfo is not MSHTMLTextInfo and not self._UIAControl:
 			return
 		try:
 			newCaretBookmark=self.makeTextInfo(textInfos.POSITION_CARET).bookmark
@@ -412,7 +428,7 @@ class MSHTML(IAccessible):
 		return True
 
 	def findOverlayClasses(self,clsList):
-		if self.TextInfo == MSHTMLTextInfo:
+		if self.TextInfo == MSHTMLTextInfo or self._UIAControl:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
 		nodeName = self.HTMLNodeName
 		if nodeName:
