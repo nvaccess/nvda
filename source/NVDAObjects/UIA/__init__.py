@@ -230,7 +230,11 @@ class UIATextInfo(textInfos.TextInfo):
 
 	def expand(self,unit):
 		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]
+		oldRange=self._rangeObj.clone()
 		self._rangeObj.ExpandToEnclosingUnit(UIAUnit)
+		# When expanding to character or word at the end of a line in MSHTML, sometimes it can expand backwards onto the previous unit.
+		if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and self._rangeObj.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,oldRange,UIAHandler.TextPatternRangeEndpoint_End)<=0 and self._rangeObj.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,oldRange,UIAHandler.TextPatternRangeEndpoint_End)<0:
+			self._rangeObj=oldRange
 
 	def move(self,unit,direction,endPoint=None):
 		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]
