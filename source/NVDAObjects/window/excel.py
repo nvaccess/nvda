@@ -104,6 +104,14 @@ class ExcelBase(Window):
 			obj=ExcelSelection(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelRangeObject=selection)
 		else:
 			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
+		if not obj:
+			return
+		dropdown=self._getDropdown()
+		if dropdown:
+			dropdown.parent=obj
+			obj=dropdown
+			if obj and obj.selection:
+				obj=obj.selection
 		return obj
 
 class Excel7Window(ExcelBase):
@@ -112,16 +120,8 @@ class Excel7Window(ExcelBase):
 	def _get_excelWindowObject(self):
 		return self.excelWindowObjectFromWindow(self.windowHandle)
 
-	def event_gainFocus(self):
-		selection=self._getSelection()
-		dropdown=self._getDropdown()
-		if dropdown:
-			if selection:
-				dropdown.parent=selection
-			eventHandler.executeEvent('gainFocus',dropdown)
-			return
-		if selection:
-			eventHandler.executeEvent('gainFocus',selection)
+	def _get_focusRedirect(self):
+		return self._getSelection()
 
 class ExcelWorksheet(ExcelBase):
 
@@ -726,6 +726,7 @@ class ExcelDropdown(Window):
 
 	def _get_firstChild(self):
 		return self.children[0]
+
 	def _get_selection(self):
 		for child in self.children:
 			if controlTypes.STATE_SELECTED in child.states:
@@ -754,16 +755,6 @@ class ExcelDropdown(Window):
 		"kb:enter":"closeDropdown",
 		"kb:space":"closeDropdown",
 	}
-
-	def event_gainFocus(self):
-		child=self.selection
-		if not child and self.childCount>0:
-			child=self.children[0]
-		if child:
-			eventHandler.queueEvent("focusEntered",self)
-			eventHandler.queueEvent("gainFocus",child)
-		else:
-			super(ExcelDropdown,self).event_gainFocus()
 
 class ExcelMergedCell(ExcelCell):
 
