@@ -410,15 +410,6 @@ class DocumentWindow(PaneClassDC):
 		finally:
 			self._isHandlingSelectionChange=False
 
-	def event_gainFocus(self):
-		"""Bounces focus to the currently selected slide, shape or Text frame."""
-		obj=self.selection
-		if obj:
-			eventHandler.queueEvent("focusEntered",self)
-			eventHandler.queueEvent("gainFocus",obj)
-		else:
-			super(DocumentWindow,self).event_gainFocus()
-
 	def script_selectionChange(self,gesture):
 		gesture.send()
 		if scriptHandler.isScriptWaiting():
