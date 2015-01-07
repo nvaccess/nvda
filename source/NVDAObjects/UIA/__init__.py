@@ -119,6 +119,52 @@ class UIATextInfo(textInfos.TextInfo):
 			field["table-columnnumber"] = obj.columnNumber
 		return field
 
+	def _iterUIARangeByUnit(self,rangeObj,unit):
+		tempRange=rangeObj.clone()
+		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
+		while tempRange.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_End,unit,1)>0:
+			pastEnd=tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)>0
+			if pastEnd:
+				tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
+			yield tempRange.clone()
+			if pastEnd:
+				break
+			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
+
+	def _getFormatFieldsAndText(self,rangeObj,formatConfig):
+		for tempRange in self._iterUIARangeByUnit(rangeObj,UIAHandler.TextUnit_Format):
+			formatField=self._getFormatFieldAtRange(tempRange,formatConfig)
+			if formatConfig["reportSpellingErrors"]:
+				try:
+					annotationTypes=tempRange.GetAttributeValue(UIAHandler.UIA_AnnotationTypesAttributeId)
+				except COMError:
+					annotationTypes=UIAHandler.handler.reservedNotSupportedValue
+				if annotationTypes==UIAHandler.AnnotationType_SpellingError:
+					formatField.field["invalid-spelling"]=True
+					yield formatField
+					yield tempRange.GetText(-1)
+				elif annotationTypes==UIAHandler.handler.ReservedMixedAttributeValue:
+					for r in self._iterUIARangeByUnit(tempRange,UIAHandler.TextUnit_Word):
+						text=r.GetText(-1)
+						r.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,r,UIAHandler.TextPatternRangeEndpoint_Start)
+						r.ExpandToEnclosingUnit(UIAHandler.TextUnit_Character)
+						try:
+							annotationTypes=r.GetAttributeValue(UIAHandler.UIA_AnnotationTypesAttributeId)
+						except COMError:
+							annotationTypes=UIAHandler.handler.reservedNotSupportedValue
+						newField=textInfos.FormatField()
+						newField.update(formatField.field)
+						if annotationTypes==UIAHandler.AnnotationType_SpellingError:
+							newField["invalid-spelling"]=True
+						yield textInfos.FieldCommand("formatChange",newField)
+						yield text
+				else:
+					yield formatField
+					yield tempRange.GetText(-1)
+			else:
+				yield formatField
+				yield tempRange.GetText(-1)
+
 	def _getTextWithFieldsForRange(self,obj,rangeObj,formatConfig):
 		#Graphics usually have no actual text, so render the name instead
 		if obj.role==controlTypes.ROLE_GRAPHIC:
@@ -138,10 +184,8 @@ class UIATextInfo(textInfos.TextInfo):
 			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)>0:
 				childRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
 			tempRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,childRange,UIAHandler.TextPatternRangeEndpoint_Start)
-			text=tempRange.getText(-1)
-			if text:
-				yield self._getFormatFieldAtRange(tempRange,formatConfig)
-				yield text
+			for f in self._getFormatFieldsAndText(tempRange,formatConfig):
+				yield f
 			field=self._getControlFieldForObject(childObj) if childObj else None
 			if field:
 				yield textInfos.FieldCommand("controlStart",field)
@@ -151,10 +195,8 @@ class UIATextInfo(textInfos.TextInfo):
 				yield textInfos.FieldCommand("controlEnd",None)
 			tempRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_End)
 		tempRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
-		text=tempRange.getText(-1)
-		if text:
-			yield self._getFormatFieldAtRange(tempRange,formatConfig)
-			yield text
+		for f in self._getFormatFieldsAndText(tempRange,formatConfig):
+			yield f
 
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
