@@ -26,9 +26,18 @@ from . import IAccessible
 from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
 from .. import InvalidNVDAObject
 from ..window import Window
-from NVDAObjects.UIA import UIA
+from NVDAObjects.UIA import UIA, UIATextInfo
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
+
+class UIAMSHTMLTextInfo(UIATextInfo):
+
+	def expand(self,unit):
+		oldRange=self._rangeObj.clone()
+		super(UIAMSHTMLTextInfo,self).expand(unit)
+		# When expanding to character or word at the end of a line in MSHTML, sometimes it can expand backwards onto the previous unit.
+		if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and self._rangeObj.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,oldRange,UIAHandler.TextPatternRangeEndpoint_End)<=0 and self._rangeObj.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,oldRange,UIAHandler.TextPatternRangeEndpoint_End)<0:
+			self._rangeObj=oldRange
 
 class HTMLAttribCache(object):
 
@@ -342,6 +351,7 @@ class MSHTML(IAccessible):
 			obj=UIA(UIAElement=e)
 			if isinstance(obj,EditableTextWithoutAutoSelectDetection):
 				obj.parent=self.parent
+				obj.TextInfo=UIAMSHTMLTextInfo
 				self._UIAControl=obj
 				return obj
 

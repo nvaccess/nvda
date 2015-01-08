@@ -135,39 +135,38 @@ class UIATextInfo(textInfos.TextInfo):
 			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
 			yield tempRange.clone()
 
-	def _getFormatFieldsAndText(self,rangeObj,formatConfig):
-		for tempRange in self._iterUIARangeByUnit(rangeObj,UIAHandler.TextUnit_Format):
-			formatField=self._getFormatFieldAtRange(tempRange,formatConfig)
-			if formatConfig["reportSpellingErrors"]:
-				try:
-					annotationTypes=tempRange.GetAttributeValue(UIAHandler.UIA_AnnotationTypesAttributeId)
-				except COMError:
-					annotationTypes=UIAHandler.handler.reservedNotSupportedValue
-				if annotationTypes==UIAHandler.AnnotationType_SpellingError:
-					formatField.field["invalid-spelling"]=True
-					yield formatField
-					yield tempRange.GetText(-1)
-				elif annotationTypes==UIAHandler.handler.ReservedMixedAttributeValue:
-					for r in self._iterUIARangeByUnit(tempRange,UIAHandler.TextUnit_Word):
-						text=r.GetText(-1)
-						r.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,r,UIAHandler.TextPatternRangeEndpoint_Start)
-						r.ExpandToEnclosingUnit(UIAHandler.TextUnit_Character)
-						try:
-							annotationTypes=r.GetAttributeValue(UIAHandler.UIA_AnnotationTypesAttributeId)
-						except COMError:
-							annotationTypes=UIAHandler.handler.reservedNotSupportedValue
-						newField=textInfos.FormatField()
-						newField.update(formatField.field)
-						if annotationTypes==UIAHandler.AnnotationType_SpellingError:
-							newField["invalid-spelling"]=True
-						yield textInfos.FieldCommand("formatChange",newField)
-						yield text
-				else:
-					yield formatField
-					yield tempRange.GetText(-1)
+	def _getFormatFieldsAndText(self,tempRange,formatConfig):
+		formatField=self._getFormatFieldAtRange(tempRange,formatConfig)
+		if formatConfig["reportSpellingErrors"]:
+			try:
+				annotationTypes=tempRange.GetAttributeValue(UIAHandler.UIA_AnnotationTypesAttributeId)
+			except COMError:
+				annotationTypes=UIAHandler.handler.reservedNotSupportedValue
+			if annotationTypes==UIAHandler.AnnotationType_SpellingError:
+				formatField.field["invalid-spelling"]=True
+				yield formatField
+				yield tempRange.GetText(-1)
+			elif annotationTypes==UIAHandler.handler.ReservedMixedAttributeValue:
+				for r in self._iterUIARangeByUnit(tempRange,UIAHandler.TextUnit_Word):
+					text=r.GetText(-1)
+					r.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,r,UIAHandler.TextPatternRangeEndpoint_Start)
+					r.ExpandToEnclosingUnit(UIAHandler.TextUnit_Character)
+					try:
+						annotationTypes=r.GetAttributeValue(UIAHandler.UIA_AnnotationTypesAttributeId)
+					except COMError:
+						annotationTypes=UIAHandler.handler.reservedNotSupportedValue
+					newField=textInfos.FormatField()
+					newField.update(formatField.field)
+					if annotationTypes==UIAHandler.AnnotationType_SpellingError:
+						newField["invalid-spelling"]=True
+					yield textInfos.FieldCommand("formatChange",newField)
+					yield text
 			else:
 				yield formatField
 				yield tempRange.GetText(-1)
+		else:
+			yield formatField
+			yield tempRange.GetText(-1)
 
 	def _getTextWithFieldsForRange(self,obj,rangeObj,formatConfig):
 		#Graphics usually have no actual text, so render the name instead
@@ -230,11 +229,7 @@ class UIATextInfo(textInfos.TextInfo):
 
 	def expand(self,unit):
 		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]
-		oldRange=self._rangeObj.clone()
 		self._rangeObj.ExpandToEnclosingUnit(UIAUnit)
-		# When expanding to character or word at the end of a line in MSHTML, sometimes it can expand backwards onto the previous unit.
-		if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and self._rangeObj.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,oldRange,UIAHandler.TextPatternRangeEndpoint_End)<=0 and self._rangeObj.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,oldRange,UIAHandler.TextPatternRangeEndpoint_End)<0:
-			self._rangeObj=oldRange
 
 	def move(self,unit,direction,endPoint=None):
 		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]
