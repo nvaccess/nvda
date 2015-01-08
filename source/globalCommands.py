@@ -817,6 +817,7 @@ class GlobalCommands(ScriptableObject):
 				# Then ensure that browse mode is reported here. From the users point of view, browse mode was turned on.
 				if isinstance(ti,browseMode.BrowseModeTreeInterceptor) and not ti.passThrough:
 					browseMode.reportPassThrough(ti,False)
+					braille.handler.handleGainFocus(ti)
 			return
 
 		if not isinstance(vbuf, browseMode.BrowseModeTreeInterceptor):
