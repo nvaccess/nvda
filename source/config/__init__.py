@@ -69,6 +69,7 @@ confspec = ConfigObj(StringIO(
 	# The synthesiser to use
 	synth = string(default=auto)
 	symbolLevel = integer(default=100)
+	trustVoiceLanguage = boolean(default=true)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 	outputDevice = string(default=default)
 	autoLanguageSwitching = boolean(default=true)
@@ -149,6 +150,7 @@ confspec = ConfigObj(StringIO(
 	autoPassThroughOnCaretMove = boolean(default=false)
 	passThroughAudioIndication = boolean(default=true)
 	autoSayAllOnPageLoad = boolean(default=true)
+	trapNonCommandGestures = boolean(default=true)
 
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]

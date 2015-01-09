@@ -27,6 +27,8 @@ def _updateVersionFromVCS():
 	except:
 		pass
 
+# ticket:3763#comment:19: name must be str, not unicode.
+# Otherwise, py2exe will break.
 name="NVDA"
 longName=_("NonVisual Desktop Access")
 version="2015.1dev"

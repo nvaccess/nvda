@@ -66,10 +66,11 @@ def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,sil
 			# Translators: The title of a dialog presented to indicate a successful operation.
 			_("Success"))
 	if startAfterInstall:
+		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL  
 		shellapi.ShellExecute(None, None,
 			os.path.join(installer.defaultInstallPath,'nvda.exe'),
 			u"-r",
-			None, 0)
+			None, winUser.SW_SHOWNORMAL)
 	else:
 		wx.GetApp().ExitMainLoop()
 

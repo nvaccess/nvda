@@ -12,6 +12,7 @@ import comtypes.automation
 import uuid
 import operator
 import locale
+import collections
 import sayAllHandler
 import eventHandler
 import braille
@@ -30,6 +31,9 @@ import textInfos
 import textInfos.offsets
 import colors
 import controlTypes
+import browseMode
+import review
+from cursorManager import CursorManager, ReviewCursorManager
 from tableUtils import HeaderCellInfo, HeaderCellTracker
 from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
@@ -81,8 +85,23 @@ wdGoToRelative=2
 wdGoToNext=2
 wdGoToPrevious=3
 #GoTo - units
+wdGoToBookmark=-1
+wdGoToSection=0
 wdGoToPage=1
+wdGoToTable=2
 wdGoToLine=3
+wdGoToFootnote=4
+wdGoToEndnote=5
+wdGoToComment=6
+wdGoToField=7
+wdGoToGraphic=8
+wdGoToObject=9
+wdGoToEquation=10
+wdGoToHeading=11
+wdGoToPercent=12
+wdGoToSpellingError=13
+wdGoToGrammaticalError=14
+wdGoToProofreadingError=15
 
 wdCommentsStory=4
 wdEndnotesStory=3
@@ -235,8 +254,170 @@ formatConfigFlagsMap={
 	"reportRevisions":32768,
 	"reportParagraphIndentation":65536,
 }
+formatConfigFlag_includeLayoutTables=131072
+
+class WordDocumentHeadingQuickNavItem(browseMode.TextInfoQuickNavItem):
+
+	def __init__(self,nodeType,document,textInfo,level):
+		self.level=level
+		super(WordDocumentHeadingQuickNavItem,self).__init__(nodeType,document,textInfo)
+
+	def isChild(self,parent):
+		if not isinstance(parent,WordDocumentHeadingQuickNavItem):
+			return False
+		return self.level>parent.level
+
+class WordDocumentCollectionQuickNavItem(browseMode.TextInfoQuickNavItem):
+	"""
+	A QuickNavItem representing an item that MS Word stores as a collection (e.g. link, table etc).
+	"""
+
+	def rangeFromCollectionItem(self,item):
+		"""
+		Fetches a Microsoft Word range object from a Microsoft Word item in a collection. E.g. a HyperLink object.
+		@param item: an item from a collection (E.g. a HyperLink object).
+		"""
+		return item.range
+
+	def __init__(self,itemType,document,collectionItem):
+		"""
+		See L{TextInfoQuickNavItem} for itemType and document argument definitions.
+		@param collectionItem: an item from an MS Word collection  e.g. HyperLink object.
+		"""
+		self.collectionItem=collectionItem
+		self.rangeObj=self.rangeFromCollectionItem(collectionItem)
+		textInfo=BrowseModeWordDocumentTextInfo(document,None,_rangeObj=self.rangeObj)
+		super(WordDocumentCollectionQuickNavItem,self).__init__(itemType,document,textInfo)
+
+class WordDocumentCommentQuickNavItem(WordDocumentCollectionQuickNavItem):
+	@property
+	def label(self):
+		author=self.collectionItem.author
+		date=self.collectionItem.date
+		text=self.collectionItem.range.text
+		return _(u"comment: {text} by {author} on {date}").format(author=author,text=text,date=date)
+
+	def rangeFromCollectionItem(self,item):
+		return item.scope
+
+class WordDocumentRevisionQuickNavItem(WordDocumentCollectionQuickNavItem):
+	@property
+	def label(self):
+		revisionType=wdRevisionTypeLabels.get(self.collectionItem.type)
+		author=self.collectionItem.author or ""
+		date=self.collectionItem.date
+		text=(self.collectionItem.range.text or "")[:100]
+		return _(u"{revisionType}: {text} by {author} on {date}").format(revisionType=revisionType,author=author,text=text,date=date)
+
+class WinWordCollectionQuicknavIterator(object):
+	"""
+	Allows iterating over an MS Word collection (e.g. HyperLinks) emitting L{QuickNavItem} objects.
+	"""
+
+	quickNavItemClass=WordDocumentCollectionQuickNavItem #: the QuickNavItem class that should be instanciated and emitted. 
+
+	def __init__(self,itemType,document,direction,rangeObj,includeCurrent):
+		"""
+		See L{QuickNavItemIterator} for itemType, document and direction definitions.
+		@param rangeObj: a Microsoft Word range object where the collection should be fetched from.
+		@ param includeCurrent: if true then any item at the initial position will be also emitted rather than just further ones. 
+		"""
+		self.document=document
+		self.itemType=itemType
+		self.direction=direction if direction else "next"
+		self.rangeObj=rangeObj
+		self.includeCurrent=includeCurrent
+
+	def collectionFromRange(self,rangeObj):
+		"""
+		Fetches a Microsoft Word collection object from a Microsoft Word range object. E.g. HyperLinks from a range.
+		@param rangeObj: a Microsoft Word range object.
+		@return: a Microsoft Word collection object.
+		"""
+		raise NotImplementedError
+
+	def filter(self,item):
+		"""
+		Only allows certain items fom a collection to be emitted. E.g. a table who's borders are enabled.
+		@param item: an item from a Microsoft Word collection (e.g. HyperLink object).
+		@return True if this item should be allowd, false otherwise.
+		@rtype: bool
+		"""
+		return True
+
+	def iterate(self):
+		"""
+		returns a generator that emits L{QuickNavItem} objects for this collection.
+		"""
+		if self.direction=="next":
+			self.rangeObj.moveEnd(wdStory,1)
+		elif self.direction=="previous":
+			self.rangeObj.collapse(wdCollapseStart)
+			self.rangeObj.moveStart(wdStory,-1)
+		items=self.collectionFromRange(self.rangeObj)
+		itemCount=items.count
+		isFirst=True
+		for index in xrange(1,itemCount+1):
+			if self.direction=="previous":
+				index=itemCount-(index-1)
+			collectionItem=items[index]
+			item=self.quickNavItemClass(self.itemType,self.document,collectionItem)
+			itemRange=item.rangeObj
+			# Skip over the item we're already on.
+			if not self.includeCurrent and isFirst and ((self.direction=="next" and itemRange.start<=self.rangeObj.start) or (self.direction=="previous" and itemRange.end>self.rangeObj.end)):
+				continue
+			if not self.filter(collectionItem):
+				continue
+			yield item
+			isFirst=False
+
+class LinkWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	def collectionFromRange(self,rangeObj):
+		return rangeObj.hyperlinks
+
+class CommentWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	quickNavItemClass=WordDocumentCommentQuickNavItem
+	def collectionFromRange(self,rangeObj):
+		return rangeObj.comments
+
+class RevisionWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	quickNavItemClass=WordDocumentRevisionQuickNavItem
+	def collectionFromRange(self,rangeObj):
+		return rangeObj.revisions
+
+class GraphicWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	def collectionFromRange(self,rangeObj):
+		return rangeObj.inlineShapes
+	def filter(self,item):
+		return 2<item.type<5
+
+class TableWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
+	def collectionFromRange(self,rangeObj):
+		return rangeObj.tables
+	def filter(self,item):
+		return item.borders.enable
 
 class WordDocumentTextInfo(textInfos.TextInfo):
+
+	def find(self,text,caseSensitive=False,reverse=False):
+		f=self._rangeObj.find
+		f.text=text
+		f.matchCase=caseSensitive
+		f.forward=not reverse
+		return f.execute()
+
+	shouldIncludeLayoutTables=True #: layout tables should always be included (no matter the user's browse mode setting).
+
+	def activate(self):
+		# Handle activating links.
+		# It is necessary to expand to word to get a link as the link's first character is never actually in the link!
+		tempRange=self._rangeObj.duplicate
+		tempRange.expand(wdWord)
+		links=tempRange.hyperlinks
+		if links.count>0:
+			links[1].follow()
+			return
+		super(WordDocumentTextInfo,self).activate()
 
 	def _expandToLineAtCaret(self):
 		lineStart=ctypes.c_int()
@@ -271,7 +452,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			self._rangeObj.SetRange(0,0)
 		elif position==textInfos.POSITION_LAST:
 			self._rangeObj=self.obj.WinwordSelectionObject.range
-			self._rangeObj.moveEnd(wdStory,1)
+			self._rangeObj.endOf(wdStory)
 			self._rangeObj.move(wdCharacter,-1)
 		elif isinstance(position,textInfos.offsets.Offsets):
 			self._rangeObj=self.obj.WinwordSelectionObject.range
@@ -291,6 +472,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		endOffset=self._rangeObj.end
 		text=BSTR()
 		formatConfigFlags=sum(y for x,y in formatConfigFlagsMap.iteritems() if formatConfig.get(x,False))
+		if self.shouldIncludeLayoutTables:
+			formatConfigFlags+=formatConfigFlag_includeLayoutTables
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.documentWindowHandle,startOffset,endOffset,formatConfigFlags,ctypes.byref(text))
 		if res or not text:
 			log.debugWarning("winword_getTextInRange failed with %d"%res)
@@ -441,10 +624,14 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		lang = locale.windows_locale[lcid]
 		if lang:
 			return languageHandler.normalizeLanguage(lang)
-		
+
 	def expand(self,unit):
-		if unit==textInfos.UNIT_LINE and self.basePosition not in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
-			unit=textInfos.UNIT_SENTENCE
+		if unit==textInfos.UNIT_LINE: 
+			try:
+				if self._rangeObj.tables.count>0 and self._rangeObj.cells.count==0:
+					unit=textInfos.UNIT_CHARACTER
+			except COMError:
+				pass
 		if unit==textInfos.UNIT_LINE:
 			self._expandToLineAtCaret()
 		elif unit==textInfos.UNIT_CHARACTER:
@@ -505,25 +692,61 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			text=""
 		return text
 
-	def move(self,unit,direction,endPoint=None):
-		if unit==textInfos.UNIT_LINE:
-			unit=textInfos.UNIT_SENTENCE
+	def _move(self,unit,direction,endPoint=None,_rangeObj=None):
+		if not _rangeObj:
+			_rangeObj=self._rangeObj
 		if unit in NVDAUnitsToWordUnits:
 			unit=NVDAUnitsToWordUnits[unit]
 		else:
 			raise NotImplementedError("unit: %s"%unit)
 		if endPoint=="start":
-			moveFunc=self._rangeObj.MoveStart
+			moveFunc=_rangeObj.MoveStart
 		elif endPoint=="end":
-			moveFunc=self._rangeObj.MoveEnd
+			moveFunc=_rangeObj.MoveEnd
 		else:
-			moveFunc=self._rangeObj.Move
+			moveFunc=_rangeObj.Move
 		res=moveFunc(unit,direction)
 		#units higher than character and word expand to contain the last text plus the insertion point offset in the document
 		#However move from a character before will incorrectly move to this offset which makes move/expand contridictory to each other
 		#Make sure that move fails if it lands on the final offset but the unit is bigger than character/word
-		if direction>0 and endPoint!="end" and unit not in (wdCharacter,wdWord)  and (self._rangeObj.start+1)==self.obj.WinwordDocumentObject.characters.count:
+		if direction>0 and endPoint!="end" and unit not in (wdCharacter,wdWord)  and (_rangeObj.start+1)==self.obj.WinwordDocumentObject.characters.count:
 			return 0
+		return res
+
+	def move(self,unit,direction,endPoint=None):
+		if unit!=textInfos.UNIT_LINE:
+			return self._move(unit,direction,endPoint)
+		if direction==0 or direction>1 or direction<-1:
+			raise NotImplementedError("moving by line is only supported   collapsed and with a count of 1 or -1")
+		oldOffset=self._rangeObj.end if endPoint=="end" else self._rangeObj.start
+		newOffset=ctypes.c_long()
+		# Try moving by line making use of the selection temporarily
+		res=NVDAHelper.localLib.nvdaInProcUtils_winword_moveByLine(self.obj.appModule.helperLocalBindingHandle,self.obj.documentWindowHandle,oldOffset,1 if direction<0 else 0,ctypes.byref(newOffset))
+		if res==0:
+			res=direction
+		newOffset=newOffset.value
+		if direction<0 and not endPoint and newOffset==oldOffset:
+			# Moving backwards by line seemed to not move.
+			# Therefore fallback to moving back a character, expanding to line and collapsing to start instead.
+			self.move(textInfos.UNIT_CHARACTER,-1)
+			self.expand(unit)
+			self.collapse()
+		elif direction>0 and not endPoint and newOffset<oldOffset:
+			# Moving forward by line seems to have wrapped back before the original position
+			# This can happen in some tables with merged rows.
+			# Try moving forward by cell, but if that fails, jump past the entire table.
+			res=self.move(textInfos.UNIT_CELL,direction,endPoint)
+			if res==0:
+				self.expand(textInfos.UNIT_TABLE)
+				self.collapse(end=True)
+		else:
+			# the move by line using the selection succeeded. Therefore update this TextInfo's position.
+			if not endPoint:
+				self._rangeObj.setRange(newOffset,newOffset)
+			elif endPoint=="start":
+				self._rangeObj.start=newOffset
+			elif endPoint=="end":
+				self._rangeObj.end=newOffset
 		return res
 
 	def _get_bookmark(self):
@@ -537,8 +760,162 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)
 		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.End)
 
+class BrowseModeTreeInterceptorWithMakeTextInfo(browseMode.BrowseModeTreeInterceptor):
+	def makeTextInfo(self,position):
+		return self.TextInfo(self,position)
+
+class WordDocumentTextInfoForTreeInterceptor(WordDocumentTextInfo):
+
+	def _get_shouldIncludeLayoutTables(self):
+		return config.conf['documentFormatting']['includeLayoutTables']
+
+class BrowseModeWordDocumentTextInfo(textInfos.TextInfo):
+
+	def __init__(self,obj,position,_rangeObj=None):
+		if isinstance(position,WordDocument):
+			position=textInfos.POSITION_CARET
+		super(BrowseModeWordDocumentTextInfo,self).__init__(obj,position)
+		self.innerTextInfo=WordDocumentTextInfoForTreeInterceptor(obj.rootNVDAObject,position,_rangeObj=_rangeObj)
+
+	def find(self,text,caseSensitive=False,reverse=False):
+		return self.innerTextInfo.find(text,caseSensitive,reverse)
+
+	def copy(self):
+		return BrowseModeWordDocumentTextInfo(self.obj,None,_rangeObj=self.innerTextInfo._rangeObj)
+
+	def activate(self):
+		return self.innerTextInfo.activate()
+
+	def compareEndPoints(self,other,which):
+		return self.innerTextInfo.compareEndPoints(other.innerTextInfo,which)
+
+	def setEndPoint(self,other,which):
+		return self.innerTextInfo.setEndPoint(other.innerTextInfo,which)
+
+	def _get_isCollapsed(self):
+		return self.innerTextInfo.isCollapsed
+
+	def collapse(self,end=False):
+		return self.innerTextInfo.collapse(end=end)
+
+	def move(self,unit,direction,endPoint=None):
+		return self.innerTextInfo.move(unit,direction,endPoint=endPoint)
+
+	def _get_bookmark(self):
+		return self.innerTextInfo.bookmark
+
+	def updateCaret(self):
+		return self.innerTextInfo.updateCaret()
+
+	def updateSelection(self):
+		return self.innerTextInfo.updateSelection()
+
+	def _get_text(self):
+		return self.innerTextInfo.text
+
+	def getTextWithFields(self,formatConfig=None):
+		return self.innerTextInfo.getTextWithFields(formatConfig=formatConfig)
+
+	def expand(self,unit):
+		return self.innerTextInfo.expand(unit)
+
+class WordDocumentTreeInterceptor(CursorManager,BrowseModeTreeInterceptorWithMakeTextInfo):
+
+	TextInfo=BrowseModeWordDocumentTextInfo
+	needsReviewCursorTextInfoWrapper=False
+
+	def _get_isAlive(self):
+		return winUser.isWindow(self.rootNVDAObject.windowHandle)
+
+	def __contains__(self,obj):
+		return obj==self.rootNVDAObject
+
+	def _set_selection(self,info):
+		super(WordDocumentTreeInterceptor,self)._set_selection(info)
+		review.handleCaretMove(info)
+
+	def _get_ElementsListDialog(self):
+		return ElementsListDialog
+
+	def _iterHeadings(self,nodeType,direction,rangeObj,includeCurrent):
+		neededLevel=int(nodeType[7:]) if len(nodeType)>7 else 0
+		isFirst=True
+		while True:
+			if not isFirst or includeCurrent:
+				level=rangeObj.paragraphs[1].outlineLevel
+				if level and 0<level<10 and (not neededLevel or neededLevel==level):
+					rangeObj.expand(wdParagraph)
+					yield WordDocumentHeadingQuickNavItem(nodeType,self,BrowseModeWordDocumentTextInfo(self,None,_rangeObj=rangeObj),level)
+			isFirst=False
+			if direction=="next":
+				newRangeObj=rangeObj.gotoNext(wdGoToHeading)
+				if not newRangeObj or newRangeObj.start<=rangeObj.start:
+					break
+			elif direction=="previous":
+				newRangeObj=rangeObj.gotoPrevious(wdGoToHeading)
+				if not newRangeObj or newRangeObj.start>=rangeObj.start:
+					break
+			rangeObj=newRangeObj
+
+	def _iterNodesByType(self,nodeType,direction="next",pos=None):
+		if pos:
+			rangeObj=pos.innerTextInfo._rangeObj 
+		else:
+			rangeObj=self.rootNVDAObject.WinwordDocumentObject.range(0,0)
+		includeCurrent=False if pos else True
+		if nodeType=="link":
+			return LinkWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+		elif nodeType=="annotation":
+			comments=CommentWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+			revisions=RevisionWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+			return browseMode.mergeQuickNavItemIterators([comments,revisions],direction)
+		elif nodeType=="table":
+			 return TableWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+		elif nodeType=="graphic":
+			 return GraphicWinWordCollectionQuicknavIterator(nodeType,self,direction,rangeObj,includeCurrent).iterate()
+		elif nodeType.startswith('heading'):
+			return self._iterHeadings(nodeType,direction,rangeObj,includeCurrent)
+		else:
+			raise NotImplementedError
+
+	def script_tab(self,gesture):
+		self.rootNVDAObject.script_tab(gesture)
+		braille.handler.handleCaretMove(self)
+
+	def script_nextRow(self,gesture):
+		self.rootNVDAObject._moveInTable(row=True,forward=True)
+		braille.handler.handleCaretMove(self)
+
+	def script_previousRow(self,gesture):
+		self.rootNVDAObject._moveInTable(row=True,forward=False)
+		braille.handler.handleCaretMove(self)
+
+	def script_nextColumn(self,gesture):
+		self.rootNVDAObject._moveInTable(row=False,forward=True)
+		braille.handler.handleCaretMove(self)
+
+	def script_previousColumn(self,gesture):
+		self.rootNVDAObject._moveInTable(row=False,forward=False)
+		braille.handler.handleCaretMove(self)
+
+	__gestures={
+		"kb:tab":"tab",
+		"kb:shift+tab":"tab",
+		"kb:control+alt+upArrow": "previousRow",
+		"kb:control+alt+downArrow": "nextRow",
+		"kb:control+alt+leftArrow": "previousColumn",
+		"kb:control+alt+rightArrow": "nextColumn",
+		# We want to fall back to MS Word's real page up and page down, rather than browseMode's faked 25 lines
+		"kb:pageUp":None,
+		"kb:pageDown":None,
+		"kb:shift+pageUp":None,
+		"kb:shift+pageDown":None,
+	}
+
 class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 
+	treeInterceptorClass=WordDocumentTreeInterceptor
+	shouldCreateTreeInterceptor=False
 	TextInfo=WordDocumentTextInfo
 
 	#: True if formatting should be ignored (text only) such as for spellCheck error field
@@ -850,7 +1227,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			isCollapsed=False
 		if not isCollapsed:
 			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
-		braille.handler.handleCaretMove(info)
+		braille.handler.handleCaretMove(self)
 		if isCollapsed:
 			offset=info._rangeObj.information(wdHorizontalPositionRelativeToPage)
 			msg=self.getLocalizedMeasurementTextForPointSize(offset)
@@ -1048,3 +1425,10 @@ class WordDocument_WwN(WordDocument):
 		"kb:shift+tab":None,
 	}
 
+class ElementsListDialog(browseMode.ElementsListDialog):
+
+	ELEMENT_TYPES=(browseMode.ElementsListDialog.ELEMENT_TYPES[0],browseMode.ElementsListDialog.ELEMENT_TYPES[1],
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("annotation", _("&Annotations")),
+	)

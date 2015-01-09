@@ -70,6 +70,7 @@ def restart(disableAddons=False):
 		wx.GetApp().ExitMainLoop()
 		return
 	import subprocess
+	import winUser
 	import shellapi
 	options=[]
 	try:
@@ -85,7 +86,9 @@ def restart(disableAddons=False):
 	shellapi.ShellExecute(None, None,
 		sys.executable.decode("mbcs"),
 		subprocess.list2cmdline(sys.argv + options).decode("mbcs"),
-		None, 0)
+		None,
+		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
+		winUser.SW_SHOWNORMAL)
 
 def resetConfiguration(factoryDefaults=False):
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
@@ -228,19 +231,32 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("Initializing GUI")
 	import gui
 	gui.initialize()
+
+	# #3763: In wxPython 3, the class name of frame windows changed from wxWindowClassNR to wxWindowNR.
+	# NVDA uses the main frame to check for and quit another instance of NVDA.
+	# To remain compatible with older versions of NVDA, create our own wxWindowClassNR.
+	# We don't need to do anything else because wx handles WM_QUIT for all windows.
+	import windowUtils
+	class MessageWindow(windowUtils.CustomWindow):
+		className = u"wxWindowClassNR"
+	messageWindow = MessageWindow(unicode(versionInfo.name))
+
 	# initialize wxpython localization support
 	locale = wx.Locale()
 	lang=languageHandler.getLanguage()
-	if '_' in lang:
-		wxLang=lang.split('_')[0]
-	else:
-		wxLang=lang
+	wxLang=locale.FindLanguageInfo(lang)
+	if not wxLang and '_' in lang:
+		wxLang=locale.FindLanguageInfo(lang.split('_')[0])
 	if hasattr(sys,'frozen'):
 		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwdu(),"locale"))
-	try:
-		locale.Init(lang,wxLang)
-	except:
-		pass
+	if wxLang:
+		try:
+			locale.Init(wxLang.Language)
+		except:
+			log.error("Failed to initialize wx locale",exc_info=True)
+	else:
+		log.debugWarning("wx does not support language %s" % lang)
+
 	import api
 	import winUser
 	import NVDAObjects.window
@@ -357,6 +373,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	app.MainLoop()
 
 	log.info("Exiting")
+	messageWindow.destroy()
 	if updateCheck:
 		_terminate(updateCheck)
 
