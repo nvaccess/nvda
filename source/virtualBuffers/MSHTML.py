@@ -191,6 +191,11 @@ class MSHTML(VirtualBuffer):
 				return True
 			if newObj.role in (controlTypes.ROLE_APPLICATION,controlTypes.ROLE_DIALOG):
 				break
+			# #4772: As we sometimes create virtualBuffers for web apps purely to support live regions,
+			# We need to allow any embedded documents in these web apps to get virtualBuffers of their own, by not classing them as part of this buffer. 
+			if newObj.role==controlTypes.ROLE_DOCUMENT and self.rootNVDAObject.role!=controlTypes.ROLE_DOCUMENT and not newObj.isContentEditable:
+				return False
+				
 			newObj=newObj.parent 
 		return False
 
