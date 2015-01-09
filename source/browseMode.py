@@ -100,13 +100,17 @@ class QuickNavItem(object):
 		"""
 		raise NotImplementedError
 
-	def moveTo(self,gesture=None,readUnit=None):
+	def report(self,readUnit=None):
+		"""
+		Reports the contents of this item.
+		@param readUnit: the optional unit (e.g. line, paragraph) that should be used to announce the item position when moved to. If not given, then the full sise of the item is used.
+		@type readUnit: a L{textInfos}.UNIT_* constant.
+		"""
+		raise NotImplementedError
+
+	def moveTo(self):
 		"""
 		Moves the browse mode caret or focus to this item.
-		@param gesture: the input gesture that caused the move.
-		@type gesture: L{inputCore.InputGesture}
-		@param readUnit: the optional unit (e.g. line, paragraph) that should be used to announce the item position when moved to. If not given, then the full sise of the item is used.
-		@type readingUnit: a L{textInfos}.UNIT_* constant.
 		"""
 		raise NotImplementedError
 
@@ -143,19 +147,19 @@ class TextInfoQuickNavItem(QuickNavItem):
 			return True
 		return False
 
-	def moveTo(self,gesture=None,readUnit=None):
+	def report(self,readUnit=None):
 		info=self.textInfo
-		if not gesture or not willSayAllResume(gesture):
-			if readUnit:
-				fieldInfo = info.copy()
-				info.collapse()
-				info.move(readUnit, 1, endPoint="end")
-				if info.compareEndPoints(fieldInfo, "endToEnd") > 0:
-					# We've expanded past the end of the field, so limit to the end of the field.
-					info.setEndPoint(fieldInfo, "endToEnd")
-			speech.speakTextInfo(info, reason=controlTypes.REASON_FOCUS)
-		info.collapse()
-		self.document.selection=info
+		if readUnit:
+			fieldInfo = info.copy()
+			info.collapse()
+			info.move(readUnit, 1, endPoint="end")
+			if info.compareEndPoints(fieldInfo, "endToEnd") > 0:
+				# We've expanded past the end of the field, so limit to the end of the field.
+				info.setEndPoint(fieldInfo, "endToEnd")
+		speech.speakTextInfo(info, reason=controlTypes.REASON_FOCUS)
+
+	def moveTo(self):
+		self.textInfo.updateCaret()
 
 	@property
 	def isAfterSelection(self):
@@ -196,7 +200,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		except StopIteration:
 			ui.message(errorMessage)
 			return
-		item.moveTo(gesture=gesture,readUnit=readUnit)
+		item.moveTo()
+		if not gesture or not willSayAllResume(gesture):
+			item.report(readUnit=readUnit)
 
 	@classmethod
 	def addQuickNav(cls, itemType, key, nextDoc, nextError, prevDoc, prevError, readUnit=None):
@@ -754,4 +760,5 @@ class ElementsListDialog(wx.Dialog):
 			def move():
 				speech.cancelSpeech()
 				item.moveTo()
+				item.report()
 			wx.CallLater(100, move)
