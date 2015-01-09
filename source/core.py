@@ -83,11 +83,12 @@ def restart(disableAddons=False):
 		pass
 	if disableAddons:
 		options.append('--disable-addons')
-	# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL  
 	shellapi.ShellExecute(None, None,
 		sys.executable.decode("mbcs"),
 		subprocess.list2cmdline(sys.argv + options).decode("mbcs"),
-		None, winUser.SW_SHOWNORMAL)
+		None,
+		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
+		winUser.SW_SHOWNORMAL)
 
 def resetConfiguration(factoryDefaults=False):
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
