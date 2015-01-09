@@ -167,6 +167,7 @@ class ConsoleUI(wx.Frame):
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		self.outputCtrl = wx.TextCtrl(self, wx.ID_ANY, size=(500, 500), style=wx.TE_MULTILINE | wx.TE_READONLY|wx.TE_RICH)
+		self.outputCtrl.Bind(wx.EVT_KEY_DOWN, self.onOutputKeyDown)
 		self.outputCtrl.Bind(wx.EVT_CHAR, self.onOutputChar)
 		mainSizer.Add(self.outputCtrl, proportion=2, flag=wx.EXPAND)
 		inputSizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -333,13 +334,19 @@ class ConsoleUI(wx.Frame):
 			return
 		evt.Skip()
 
+	def onOutputKeyDown(self, evt):
+		key = evt.GetKeyCode()
+		# #3763: WX 3 no longer passes escape to evt_char for richEdit fields, therefore evt_key_down is used.
+		if key == wx.WXK_ESCAPE:
+			self.Close()
+			return
+		evt.Skip()
+
 	def onOutputChar(self, evt):
 		key = evt.GetKeyCode()
 		if key == wx.WXK_F6:
 			self.inputCtrl.SetFocus()
 			return
-		elif key == wx.WXK_ESCAPE:
-			self.Close()
 		evt.Skip()
 
 def initialize():
