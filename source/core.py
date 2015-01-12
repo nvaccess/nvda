@@ -305,10 +305,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import globalPluginHandler
 	log.debug("Initializing global plugin handler")
 	globalPluginHandler.initialize()
-	if globalVars.appArgs.install:
+	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import wx
 		import gui.installerGui
-		wx.CallAfter(gui.installerGui.doSilentInstall,startAfterInstall=globalVars.appArgs.startAfterInstall)
+		wx.CallAfter(gui.installerGui.doSilentInstall,startAfterInstall=not globalVars.appArgs.installSilent)
 	elif not globalVars.appArgs.minimal:
 		try:
 			# Translators: This is shown on a braille display (if one is connected) when NVDA starts.
