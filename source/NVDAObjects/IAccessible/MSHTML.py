@@ -32,12 +32,39 @@ IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
 
 class UIAMSHTMLTextInfo(UIATextInfo):
 
+	# #4174: MSHTML's UIAutomation implementation does not handle the insertion point at the end of the control correcly.
+	# Therefore get around it by detecting when the TextInfo is instanciated on it, and ensure that expand and move do the expected thing.
+	
+	_atEndOfStory=False
+
+	def __init__(self,obj,position):
+		super(UIAMSHTMLTextInfo,self).__init__(obj,position)
+		if position==textInfos.POSITION_CARET:
+			tempRange=self._rangeObj.clone()
+			tempRange.ExpandToEnclosingUnit(UIAHandler.TextUnit_Character)
+			if self._rangeObj.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)>0:
+				self._atEndOfStory=True
+
+	def copy(self):
+		info=super(UIAMSHTMLTextInfo,self).copy()
+		info._atEndOfStory=self._atEndOfStory
+		return info
+
 	def expand(self,unit):
-		oldRange=self._rangeObj.clone()
-		super(UIAMSHTMLTextInfo,self).expand(unit)
-		# When expanding to character or word at the end of a line in MSHTML, sometimes it can expand backwards onto the previous unit.
-		if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and self._rangeObj.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,oldRange,UIAHandler.TextPatternRangeEndpoint_End)<=0 and self._rangeObj.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,oldRange,UIAHandler.TextPatternRangeEndpoint_End)<0:
-			self._rangeObj=oldRange
+		if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and self._atEndOfStory:
+			return
+		self._atEndOfStory=False
+		return super(UIAMSHTMLTextInfo,self).expand(unit)
+
+	def move(self,unit,direction,endPoint=None):
+		if direction==0:
+			return 0
+		if self._atEndOfStory and direction<0:
+			direction+=1
+		self._atEndOfStory=False
+		if direction==0:
+			return -1
+		return super(UIAMSHTMLTextInfo,self).move(unit,direction,endPoint=endPoint)
 
 class HTMLAttribCache(object):
 
