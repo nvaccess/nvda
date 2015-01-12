@@ -373,7 +373,7 @@ class UpdateDownloader(object):
 		# #4475: ensure that the new process shows its first window, by providing SW_SHOWNORMAL
 		shellapi.ShellExecute(None, None,
 			self.destPath.decode("mbcs"),
-			u"--install --start-after-install -m",
+			u"--install -m",
 			None, winUser.SW_SHOWNORMAL)
 
 class DonateRequestDialog(wx.Dialog):
