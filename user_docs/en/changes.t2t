@@ -40,6 +40,7 @@
 - When you send a message in Skype for Desktop, it is no longer read twice. (#3616)
 - In Skype for Desktop, NVDA should no longer occasionally spuriously read a large flood of messages (perhaps even an entire conversation). (#4644)
 - fixed a problem where NVDA's Report date/time command did not honor the regional settings specified by the user in some cases. (#2987)
+- In browse mode, nonsensical text (sometimes spanning several lines) is no longer presented for certain graphics such as found on Google Groups. (Specifically, this occurred with base64 encoded images.) (#4793)
 
 
 == Changes for Developers ==
