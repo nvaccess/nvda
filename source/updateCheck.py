@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012 NV Access Limited
+#Copyright (C) 2012-2015 NV Access Limited
 
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
@@ -22,6 +22,7 @@ import time
 import cPickle
 import urllib
 import tempfile
+import hashlib
 import wx
 import languageHandler
 import gui
@@ -31,7 +32,7 @@ import shellapi
 import winUser
 
 #: The URL to use for update checks.
-CHECK_URL = "http://www.nvda-project.org/updateCheck"
+CHECK_URL = "https://www.nvaccess.org/nvdaUpdateCheck"
 #: The time to wait between checks.
 CHECK_INTERVAL = 86400 # 1 day
 #: The time to wait before retrying a failed check.
@@ -183,6 +184,7 @@ class UpdateResultDialog(wx.Dialog):
 		if updateInfo:
 			self.isInstalled = config.isInstalledCopy()
 			self.urls = updateInfo["launcherUrl"].split(" ")
+			self.fileHash = updateInfo.get("launcherHash")
 			# Translators: A message indicating that an updated version of NVDA is available.
 			# {version} will be replaced with the version; e.g. 2011.3.
 			message = _("NVDA version {version} is available.").format(**updateInfo)
@@ -228,7 +230,7 @@ class UpdateResultDialog(wx.Dialog):
 
 	def _download(self):
 		if self.isInstalled:
-			UpdateDownloader(self.urls).start()
+			UpdateDownloader(self.urls, fileHash=self.fileHash).start()
 		else:
 			os.startfile(self.urls[0])
 		self.Destroy()
@@ -243,13 +245,16 @@ class UpdateDownloader(object):
 	To use, call L{start} on an instance.
 	"""
 
-	def __init__(self, urls):
+	def __init__(self, urls, fileHash=None):
 		"""Constructor.
 		@param urls: URLs to try for the update file.
 		@type urls: list of str
+		@param fileHash: The SHA-1 hash of the file as a hex string.
+		@type fileHash: basestring
 		"""
 		self.urls = urls
 		self.destPath = tempfile.mktemp(prefix="nvda_update_", suffix=".exe")
+		self.fileHash = fileHash
 
 	def start(self):
 		"""Start the download.
@@ -313,6 +318,8 @@ class UpdateDownloader(object):
 		remote.fp._sock.settimeout(120)
 		size = int(remote.headers["content-length"])
 		local = file(self.destPath, "wb")
+		if self.fileHash:
+			hasher = hashlib.sha1()
 		self._guiExec(self._downloadReport, 0, size)
 		read = 0
 		chunk=DOWNLOAD_BLOCK_SIZE
@@ -328,9 +335,13 @@ class UpdateDownloader(object):
 			if self._shouldCancel:
 				return
 			local.write(block)
+			if self.fileHash:
+				hasher.update(block)
 			self._guiExec(self._downloadReport, read, size)
 		if read < size:
 			raise RuntimeError("Content too short")
+		if self.fileHash and hasher.hexdigest() != self.fileHash:
+			raise RuntimeError("Content has incorrect file hash")
 		self._guiExec(self._downloadReport, read, size)
 
 	def _downloadReport(self, read, size):
