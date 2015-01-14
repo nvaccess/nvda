@@ -355,8 +355,13 @@ void MshtmlVBufStorage_controlFieldNode_t::preProcessLiveRegion(const MshtmlVBuf
 	}
 	i=attribsMap.find(L"HTMLAttrib::aria-relevant");
 	if(i!=attribsMap.end()&&!i->second.empty()) {
-		this->ariaLiveIsTextRelevant=i->second.find(L"text")!=wstring::npos;
-		this->ariaLiveIsAdditionsRelevant=i->second.find(L"additions")!=wstring::npos;
+		if(i->second.compare(L"all")==0) {
+			this->ariaLiveIsTextRelevant=true;
+			this->ariaLiveIsAdditionsRelevant=true;
+		} else {
+			this->ariaLiveIsTextRelevant=i->second.find(L"text")!=wstring::npos;
+			this->ariaLiveIsAdditionsRelevant=i->second.find(L"additions")!=wstring::npos;
+		}
 	} else {
 		this->ariaLiveIsTextRelevant=parent?parent->ariaLiveIsTextRelevant:true;
 		this->ariaLiveIsAdditionsRelevant=parent?parent->ariaLiveIsAdditionsRelevant:true;
