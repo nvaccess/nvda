@@ -406,26 +406,52 @@ void MshtmlVBufStorage_controlFieldNode_t::postProcessLiveRegion(VBufStorage_con
 	bool reportNode=!oldNode&&this->ariaLiveIsAdditionsRelevant&&this->ariaLiveNode!=this;
 	wstring newChildrenText;
 	if(!reportNode&&oldNode&&ariaLiveIsTextRelevant) {
-		wstring oldChildrenText;
-		for(VBufStorage_fieldNode_t* tempNode=oldNode->getFirstChild();tempNode;tempNode=tempNode->getNext()) {
-			int length=tempNode->getLength();
-			if(!tempNode->getFirstChild()&&length>0) {
-				tempNode->getTextInRange(0,length,oldChildrenText,false);
-				oldChildrenText+=L' ';
+		// Find the first new text child
+		VBufStorage_fieldNode_t* newStart=this->getFirstChild();
+		VBufStorage_fieldNode_t* oldStart=oldNode->getFirstChild();
+		while(newStart&&oldStart) {
+			if(newStart->getLength()==0||newStart->getFirstChild()) {
+				newStart=newStart->getNext();
+				continue;
 			}
-		}
-		for(VBufStorage_fieldNode_t* tempNode=this->getFirstChild();tempNode;tempNode=tempNode->getNext()) {
-			int length=tempNode->getLength();
-			if(!tempNode->getFirstChild()&&length>0) {
-				tempNode->getTextInRange(0,length,newChildrenText,false);
-				newChildrenText+=L' ';
+			if(oldStart->getLength()==0||oldStart->getFirstChild()) {
+				oldStart=oldStart->getNext();
+				continue;
 			}
+			if(((VBufStorage_textFieldNode_t*)oldStart)->text.compare(((VBufStorage_textFieldNode_t*)newStart)->text)!=0) {
+				break;
+			}
+			oldStart=oldStart->getNext();
+			newStart=newStart->getNext();
 		}
-		if(newChildrenText.compare(oldChildrenText)==0) {
-			newChildrenText=L"";
+		// Find the last new text child
+		VBufStorage_fieldNode_t* newEnd=this->getLastChild();
+		VBufStorage_fieldNode_t* oldEnd=oldNode->getLastChild();
+		while(newEnd&&oldEnd) {
+			if(newEnd->getLength()==0||newEnd->getLastChild()) {
+				newEnd=newEnd->getPrevious();
+				continue;
+			}
+			if(oldEnd->getLength()==0||oldEnd->getLastChild()) {
+				oldEnd=oldEnd->getPrevious();
+				continue;
+			}
+			if(((VBufStorage_textFieldNode_t*)oldEnd)->text.compare(((VBufStorage_textFieldNode_t*)newEnd)->text)!=0) {
+				break;
+			}
+			oldEnd=oldEnd->getPrevious();
+			newEnd=newEnd->getPrevious();
+		}
+		// Collect all the text between the first and last new text children.
+		while(newStart) {
+			if(newStart->getLength()>0&&!newStart->getFirstChild()) {
+				newStart->getTextInRange(0,newStart->getLength(),newChildrenText,false);
+			}
+			if(newStart==newEnd) break;
+			newStart=newStart->getNext();
 		}
 	}
-		if(!reportNode&&newChildrenText.empty()) return;
+	if(!reportNode&&newChildrenText.empty()) return;
 	if(this->ariaLiveAtomicNode) {
 		atomicNodes.insert(this->ariaLiveAtomicNode);
 		newChildrenText=L"";
