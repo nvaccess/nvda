@@ -20,13 +20,13 @@ import mathPres
 RE_MP_SPEECH = re.compile(
 	# Break.
 	r"<break time='(?P<break>\d+)ms'/> ?"
-	# Pronunciation for the character "a".
-	ur"|(?P<charA><phoneme alphabet='ipa' ph='æ'> eh</phoneme>) ?"
+	# Pronunciation of characters.
+	ur"|<say-as interpret-as='characters'>(?P<char>[^<])</say-as> ?"
 	# Specific pronunciation.
 	ur"|<phoneme alphabet='ipa' ph='(?P<ipa>[^']+)'> (?P<phonemeText>[^ <]+)</phoneme> ?"
 	# Prosody.
-	r"|<prosidy(?: pitch='(?P<pitch>\d+)%')?(?: volume='(?P<volume>\d+)'%)?(?: rate='(?P<rate>\d+)'%)?> ?"
-	r"|(?P<prosodyReset></prosidy>) ?"
+	r"|<prosody(?: pitch='(?P<pitch>\d+)%')?(?: volume='(?P<volume>\d+)%')?(?: rate='(?P<rate>\d+)%')?> ?"
+	r"|(?P<prosodyReset></prosody>) ?"
 	# Other tags, which we don't care about.
 	r"|<[^>]+> ?"
 	# Commas indicating pauses in navigation messages.
@@ -44,9 +44,9 @@ def _processMpSpeech(text):
 	for m in RE_MP_SPEECH.finditer(text):
 		if m.lastgroup == "break":
 			out.append(speech.BreakCommand(time=int(m.group("break"))))
-		elif m.lastgroup == "charA":
+		elif m.lastgroup == "char":
 			out.extend((speech.CharacterModeCommand(True),
-				"a", speech.CharacterModeCommand(False)))
+				m.group("char"), speech.CharacterModeCommand(False)))
 		elif m.lastgroup == "comma":
 			out.append(speech.BreakCommand(time=100))
 		elif m.lastgroup in PROSODY_COMMANDS:
