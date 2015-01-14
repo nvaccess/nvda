@@ -272,10 +272,11 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 
 };
 
-MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, IHTMLDOMNode* pHTMLDOMNode,const wstring& lang): VBufStorage_controlFieldNode_t(docHandle,ID,isBlock), language(lang) {
+MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, bool isRootNode, IHTMLDOMNode* pHTMLDOMNode,const wstring& lang): VBufStorage_controlFieldNode_t(docHandle,ID,isBlock), language(lang) {
 	nhAssert(backend);
 	nhAssert(pHTMLDOMNode);
 	this->backend=backend;
+	this->isRootNode=isRootNode;
 	pHTMLDOMNode->AddRef();
 	this->pHTMLDOMNode=pHTMLDOMNode;
 	this->propChangeSink=NULL;
@@ -290,7 +291,7 @@ MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int d
 	} else {
 		propChangeSink->Release();
 	}
-	if(nodeName!=NULL&&(_wcsicmp(nodeName,L"body")==0||_wcsicmp(nodeName,L"frameset")==0)) {
+	if(this->isRootNode||(nodeName!=NULL&&(_wcsicmp(nodeName,L"body")==0||_wcsicmp(nodeName,L"frameset")==0))) {
 		IHTMLDOMNode2* pHTMLDOMNode2=NULL;
 		pHTMLDOMNode->QueryInterface(IID_IHTMLDOMNode2,(void**)&pHTMLDOMNode2);
 		if(pHTMLDOMNode2) {
