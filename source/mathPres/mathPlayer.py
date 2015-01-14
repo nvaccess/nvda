@@ -39,11 +39,16 @@ PROSODY_COMMANDS = {
 	"rate": speech.RateCommand,
 }
 def _processMpSpeech(text):
+	# MathPlayer's default rate is 180 wpm.
+	# Assume that 0% is 80 wpm and 100% is 450 wpm and scale accordingly.
+	synth = speech.getSynth()
+	wpm = synth._percentToParam(synth.rate, 80, 450)
+	breakMulti = 180.0 / wpm
 	out = []
 	resetProsody = set()
 	for m in RE_MP_SPEECH.finditer(text):
 		if m.lastgroup == "break":
-			out.append(speech.BreakCommand(time=int(m.group("break"))))
+			out.append(speech.BreakCommand(time=int(m.group("break")) * breakMulti))
 		elif m.lastgroup == "char":
 			out.extend((speech.CharacterModeCommand(True),
 				m.group("char"), speech.CharacterModeCommand(False)))
