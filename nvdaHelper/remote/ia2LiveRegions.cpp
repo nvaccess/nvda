@@ -261,6 +261,11 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 		allowText=(i->second.find(L"text",0)!=wstring::npos);
 		allowAdditions=(i->second.find(L"additions",0)!=wstring::npos);
 	} 
+	// We only support additions or text
+	if(!allowAdditions&&!allowText) {
+		pacc2->Release();
+		return;
+	}
 	//Only handle show events if additions are allowed
 	if(eventID==EVENT_OBJECT_SHOW&&!allowAdditions) {
 		pacc2->Release();
