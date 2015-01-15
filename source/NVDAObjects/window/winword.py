@@ -417,7 +417,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if links.count>0:
 			links[1].follow()
 			return
-		super(WordDocumentTextInfo,self).activate()
 
 	def _expandToLineAtCaret(self):
 		lineStart=ctypes.c_int()
