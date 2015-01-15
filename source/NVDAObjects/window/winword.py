@@ -895,7 +895,7 @@ class WordDocumentTreeInterceptor(CursorManager,BrowseModeTreeInterceptorWithMak
 
 	__gestures={
 		"kb:tab":"trapNonCommandGesture",
-		"kb:shift+tab":"tab",
+		"kb:shift+tab":"trapNonCommandGesture",
 		"kb:control+alt+upArrow": "previousRow",
 		"kb:control+alt+downArrow": "nextRow",
 		"kb:control+alt+leftArrow": "previousColumn",
