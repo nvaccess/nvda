@@ -877,6 +877,10 @@ class WordDocumentTreeInterceptor(CursorManager,BrowseModeTreeInterceptorWithMak
 		else:
 			raise NotImplementedError
 
+	def event_gainFocus(self,obj,nextHandler):
+		obj.reportFocus()
+		braille.handler.handleGainFocus(self)
+
 	def script_nextRow(self,gesture):
 		self.rootNVDAObject._moveInTable(row=True,forward=True)
 		braille.handler.handleCaretMove(self)
