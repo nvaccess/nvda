@@ -878,10 +878,6 @@ class WordDocumentTreeInterceptor(CursorManager,BrowseModeTreeInterceptorWithMak
 		else:
 			raise NotImplementedError
 
-	def script_tab(self,gesture):
-		self.rootNVDAObject.script_tab(gesture)
-		braille.handler.handleCaretMove(self)
-
 	def script_nextRow(self,gesture):
 		self.rootNVDAObject._moveInTable(row=True,forward=True)
 		braille.handler.handleCaretMove(self)
@@ -899,7 +895,7 @@ class WordDocumentTreeInterceptor(CursorManager,BrowseModeTreeInterceptorWithMak
 		braille.handler.handleCaretMove(self)
 
 	__gestures={
-		"kb:tab":"tab",
+		"kb:tab":"trapNonCommandGesture",
 		"kb:shift+tab":"tab",
 		"kb:control+alt+upArrow": "previousRow",
 		"kb:control+alt+downArrow": "nextRow",
