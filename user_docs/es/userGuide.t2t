@@ -23,7 +23,7 @@ Lo más reseñable incluye:
 - Soporte para muchas pantallas de braille efímero incluyendo la entrada de braille computerizado para pantallas braille que tengan un teclado braille
 - Capacidad para ejecutarse completamente desde una memoria USB u otros medios portables sin la necesidad de instalación
 - Instalador parlante fácil de utilizar
-- Traducido a 45 idiomas
+- Traducido a 47 idiomas
 - Soporte para Sistemas Operativos Windows modernos incluyendo variantes de 32 y 64 bit
 - Capacidad para ejecutarse en ventanas de autentificación de Windows  y otras pantallas seguras 
 - Soporte para interfaces comunes de accesibilidad tales como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 y UI Automation
@@ -32,7 +32,7 @@ Lo más reseñable incluye:
 
 ++ Internacionalización ++
 Es importante que cualquier persona en el mundo, sin importar qué idioma hable, tenga igual acceso a la tecnología. 
-Actualmente NVDA ha sido traducido a 45 idiomas además del idioma inglés incluyendo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Búlgaro, Catalán, Checo, Chino Mandarín y Chino cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Farsi, Finlandés, Francés, Gallego, Georgiano, Griego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Japonés, Nepalí, Noruego, Polaco, Portugués, Portugués del Brasil, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés, turco y Vietnamita,.
+Actualmente NVDA ha sido traducido a 47 idiomas además del idioma inglés incluyendo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Búlgaro, Catalán, Checo, Chino Mandarín y Chino cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Español de Colombia, Farsi, Finlandés, Francés, Gallego, Georgiano, Griego, Hebreo, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italiano, Japonés, Nepalí, Noruego, Polaco, Portugués, Portugués del Brasil, Punjabi, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés, turco y Vietnamita,.
 
 ++ Soporte de Síntesis de Voz ++
 Además de proporcionar sus mensajes e interface en varios idiomas, NVDA también puede posibilitar al usuario para leer contenidos en cualquier idioma, tanto en cuanto tengan un sintetizador de voz que pueda verbalizar ese idioma en particular. 
@@ -84,7 +84,7 @@ Ejecutar la versión portable directamente desde medios de sólo lectura no est�
 Utilizar la copia temporal de NVDA es también una opción, ej.: con propósitos de demostración, puesto que iniciar NVDA de este modo cada vez puede llegar a ser muy incómodo.
 
 ++ Restricciones de la Copia Portable y Temporal ++
-Además de la incapacidad de iniciarse automáticamente durante y o después de la autentificación, las copias portable y temporal de NVDA también tienen las siguientes restricciones:
+Además de la incapacidad de iniciarse automáticamente durante y/o después de la autentificación, las copias portable y temporal de NVDA también tienen las siguientes restricciones:
 - La incapacidad para interactuar con aplicaciones que se ejecuten con privilegios de administrador, al menos que, por supuesto, el mismo NVDA también haya sido ejecutado con estos privilegios (no es recomendable).
 - La incapacidad de leer las pantallas del Control de Cuentas de Usuario (UAC) cuando trate de iniciar una aplicación con privilegios de administrador.
 - Windows 8: la incapacidad para soportar la entrada desde una pantalla táctil.
@@ -107,7 +107,7 @@ Esto también incluye al control del UAC y otras pantallas seguras.
 
 +++ Crear Atajos del Escritorio (ctrl+alt+n) +++
 Esta opción te permite elegir si NVDA debería crear o no un atajo en el escritorio para iniciar NVDA. 
-A este atajo si se crea también se le asignará una tecla de atajo control+alt+n permitiéndote iniciar a NVDA en cualquier ocasión con esta combinación de teclas.
+Si se creó, a este atajo  también se le asignará una tecla de atajo control+alt+n permitiéndote iniciar a NVDA en cualquier ocasión con esta combinación de teclas.
 
 +++ Copiar Configuración Portable de la Actual Cuenta de Usuario +++
 Esta opción te permite elegir si NVDA debería copiar o no la configuración del usuario del actual NVDA en ejecución en la configuración para el usuario actualmente autentificado, para la copia instalada de NVDA. 
@@ -131,6 +131,7 @@ Pulsa Aceptar para cerrar este diálogo.
 ++ Lanzando NVDA ++
 Si has instalado NVDA con el instalador, entonces iniciar NVDA es tan fácil como o pulsar control+Alt+n, o elegir NVDA desde el menú NVDA en Menú Inicio, submenú Programas. 
 Adicionalmente puedes teclear NVDA en el diálogo Ejecutar y pulsar Intro. 
+También puedes pasar algunas [opciones de línea de órdenes #CommandLineOptions] las cuales te permiten reiniciar NVDA (-r), salir (-q), deshabilitar complementos (--disable-addons), etc.
 
 Para iniciar la versión portátil, ve al directorio donde descomprimiste NVDA, y pulsa intro o haz doble clic sobre nvda.exe.
 
@@ -152,17 +153,15 @@ La tercera te permite controlar si este cuadro de bienvenida debería aparecer c
 
 +++ La Tecla Modificadora NVDA +++ 
 La mayoría de las órdenes específicas de teclado de NVDA consisten normalmente en la pulsación de la tecla modificadora de NVDA, junto con una o más teclas. 
-Una notable excepción a  esto son las órdenes de revisión de texto para teclados de escritorio que sólo utilizan las teclas del teclado numérico en sí mismas, pero hay algunas otras excepciones también..
+Una notable excepción a  esto son las órdenes de revisión de texto para la distribución de teclado de escritorio que sólo utiliza las teclas del teclado numérico en sí mismas, pero hay algunas otras excepciones también..
 
-NVDA puede configurarse tal que o la tecla Insert del teclado numérico, la Insert del extendido, o la BloqMayus puedan utilizarse como la tecla modificadora de NVDA.
-
+NVDA puede configurarse tal que o la tecla Insert del teclado numérico, o la Insert del extendido, y/o la BloqMayus puedan utilizarse como la tecla modificadora de NVDA.
 De forma predeterminada tanto el insert del teclado numérico como el del teclado extendido pueden utilizarse como teclas modificadoras.
 
-Si deseas hacer que una de las teclas modificadoras de NVDA actúe como la tecla original (por ejemplo deseas activar BloqMayus cuando tienes configurada BloqMayus para que sea una tecla modificadora de NVDA) puedes pulsar la tecla dos veces en sucesión rápida.
-
+Si deseas hacer que una de las teclas modificadoras de NVDA se ccomporte como lo haría normalmente si NVDA no estuviese en marcha (por ejemplo deseas activar BloqMayus cuando tienes configurada BloqMayus para que sea una tecla modificadora de NVDA) puedes pulsar la tecla dos veces en sucesión rápida.
+	
 +++ Distribuciones de Teclado +++
-Actualmente NVDA viene con dos conjuntos de  teclas de órdenes. 
-Hay una distribución para sobremesa y una distribución para portátiles.
+Actualmente NVDA viene con dos conjuntos de  teclas de órdenes conocidas como distribuciones de teclado. La distribución sobremesa y la distribución portátil.
 De forma predeterminada NVDA se configura para utilizar la distribución de sobremesa, aunque puedes cambiar a la distribución de portátiles en las Opciones de Teclado, que se encuentran en Preferencias en el menú NVDA.
 	
 La distribución sobremesa hace un uso amplio del teclado numérico (con el bloqueo numérico desactivado).
@@ -234,7 +233,7 @@ Cuando aparezca el menú, puedes utilizar las teclas de cursor para navegar por 
 || Nombre | Tecla escritorio | Tecla portátil | Táctil | Descripción |
 | Detener voz | Control |  control | toque con 2 dedos | Detiene la voz instantáneamente |
 | Pausar Voz | Shift | shift | no | Pausa la voz instantáneamente, pulsándola nuevamente continuará hablando donde se detuvo (si el pausado se soporta por el sintetizador actual) |
-| Menú NVDA | NVDA+n | NVDA+n | doble toque con 2 dedos | despliega el menú NVDA para permitirte acceder a preferencias, herramientas y ayuda etc. |
+| Menú NVDA | NVDA+n | NVDA+n | doble toque con 2 dedos | despliega el menú NVDA para permitirte acceder a preferencias, herramientas, ayuda, etc. |
 | Conmutar Modo Ayuda de entrada | NVDA+1 | NVDA+1 | no | Pulsando cualquier tecla  en este modo se anunciará la tecla, y la descripción de cualquier orden de NVDA asociada con ella | 
 | Conmutar Modo de Voz | NVDA+s | NVDA+s | no | Conmuta el modo voz entre verbalizar, pitidos y desactivado. |
 | Salir de NVDA | NVDA+q | NVDA+q | no | Sale de NVDA |
@@ -588,14 +587,15 @@ Esta elección dirá a NVDA que utilice el idioma en el que Windows esté actual
 
 Por favor ten en cuenta que NVDA debe ser reiniciado cuando se cambie el idioma. 
 NVDA te preguntará si deseas reiniciar si haces cambios en la selección.
-Pulsa Aceptar y NVDA se reiniciará. 
+	Pulsa Aceptar y o NVDA se reiniciará. 
 
 ==== Guardar Configuración al Salir ====
 Esta opción es una casilla de verificación que, cuando se marca, dice a NVDA que guarde automáticamente la actual configuración cuando salgas de NVDA. 
 
-==== Avisar antes de Salir de NVDA ====
-Esta opción es una casilla de verificación que te permite elegir si sí o si no aparece un diálogo cuando salgas de NVDA que te pregunte si te gustaría salir o no de NVDA. 
-Cuando esté marcada, un diálogo aparecerá cuando intentes salir de NVDA preguntándote si quieres o no salir.
+==== Mostrar opciones de salida al salir de NVDA ====
+Esta opción es una casilla de verificación que te permite elegir si aparece o no un diálogo al salir de NVDA que te pregunta sobre qué acción quieres llebar a cabo.
+Cuando se marque, aparecerá un diálogo al intentar salir de NVDA preguntándote si quieres salir, reiniciar o reiniciar con los complementos deshabilitados.
+Cuando se desmarque, NVDA saldrá inmediatamente.
 
 ==== Reproducir sonidos al iniciar o salir de NVDA ====
 Esta Opción es una casilla de verificación que, cuando está marcada, dice a NVDA que reproduzca sonidos cuando se inicie o salga.
@@ -669,12 +669,13 @@ Esta opción es una barra de desplazamiento que va desde 0 hasta 100, (siendo 0 
 Esta opción es una barra de desplazamiento que te permite elegir cuánta entonación (subida y caída en el tono) el sintetizador debería utilizar para hablar. (Solamente el sintetizador Espeak proporciona esta opción actualmente).
 
 ==== Cambio Automático de Idioma ====
-Esta casilla de verificación te permite activar o desactivar si NVDA debería cambiar los idiomas del sintetizador de voz al vuelo, si el marcado de idiomas está disponible en el texto a leer.
+Esta casilla de verificación te permite activar o desactivar si NVDA debería cambiar automáticamente los idiomas del sintetizador de voz si el texto a leer lo especifica .
 Esta opción está activada de manera predeterminada.
 Actualmente sólo el sintetizador eSpeak sopporta el cambio automático de idioma.
 
 ==== Cambio Automático de Dialecto ====
-Si el cambio automático de idioma está activado, esta casilla de verificación te permite activar o desactivar  si los cambios de dialecto se deberían hacer, en lugar de sólo cambiar el idioma actual. Ej.: Si se está leyendo en una voz Inglés U.S. pero partes de un documento tienen algún texto en Inglés U.K. entonces si esta característica está activada el sintetizador cambiará su acento.
+Esta casilla de verificación te permite activar o desactivar  si los cambios de dialecto se deberían hacer, en lugar de sólo cambiar el idioma actual. 
+Por ejemplo: Si se está leyendo en una voz Inglés U.S. pero partes de un documento tienen algún texto en Inglés U.K. entonces si esta característica está activada el sintetizador cambiará su acento.
 Esta opción está desactivada de forma predeterminada.
 
 %kc:setting
@@ -880,7 +881,7 @@ Tecla: NVDA+6
 
 Cuando se activa, el cursor de revisión se moverá automáticamente a la posición del cursor del Sistema cada vez que se mueva.
 
-==== Seguir al Ratón ====
+==== Seguir al Cursor del Ratón ====
 Cuando se activa, el cursor de revisión seguirá al ratón según se mueva.
 
 ==== Modo de Revisión Simple ====
@@ -1070,7 +1071,11 @@ podrías también querer teclear una descripción de la regla en el campo Coment
 Los diccionarios del habla de NVDA asimismo son mucho más poderosos que un simple reemplazo de palabras. 
 El diálogo de Añadir reglas también contiene Una Casilla de verificación que dice si quieres o no que la regla sea sensible a las mayúsculas (significando que NVDA debería tener en cuenta si los carácteres están en mayúsculas o en minúsculas. 
 NVDA ignora los casos de forma predeterminada). 
-Otra casilla de verificación te permite establecer si tu patrón es una "Expresión Regular". 
+
+Finalmente, un conjunto de botones de opción te permiten decir a NVDA si tu patrón debería compararse con cualquier cosa, o sólo debería compararse si es una palabra completa o si debería tratarse como una "Expresión Regular".
+Ajustar el patrón para comparar como una palabra completa significa que el reemplazo sólo se hará si el patrón no ocurre como parte de una palabra más larga; es decir, un carácter distinto a un carácter alfanumérico o un subrayado (o sin carácter) que venga inmediatamente antes y después del patrón.
+Por lo tanto, utilizando el ejemplo anterior de la sustitución de la palabra "pájaro" con "rana", si fueras  a hacer de esto un reemplazo de palabra completa, no se compararía "pájaros" o "pájaroAzul".
+
 Una expresión regular es un patrón que contiene símbolos especiales que te permiten emparejar más de un carácter al mismo tiempo, o emparejar solo números, o solo letras, según unos pocos ejemplos. 
 Las expresiones regulares no están cubiertas en esta Guía del Usuario, pero hay muchos tutoriales en la Web que pueden proporcionarte más información.
 
@@ -1718,8 +1723,8 @@ Estas están (ordenadas de izquierda a derecha):
 Actualmente, la tecla pulgar derecho no se utiliza.
 Las teclas interiores se mapean a espacio.
 
-%kc:beginInclude
 || Nombre | Tecla |
+%kc:beginInclude
 | tecla retroceso | punto 7 |
 | tecla intro | punto 8 |
 | tecla escape | espacio con punto 7 |
@@ -1882,7 +1887,83 @@ Por favor mira [la documentación de tablas de teclas de BRLTTY http://mielke.cc
 | Guiar a la celda braille | route (lleva el cursor al carácter) |
 %kc:endInclude
 
++ Tipo de control Braille y abreviaturas de estado +
+Con el fin de tener la mayor cantidad de información posible en una pantalla braille, se han definido las siguientes abreviaturas para indicar el tipo de control y el estado.
+
+|| Abreviatura | Tipo de Control |
+| bt | botón |
+| cbo | cuadro combinado |
+| cv | casilla de verificación |
+| dlg | diálogo |
+| ce | campo de texto editable |
+| gra | gráfico |
+| cN | número de columna de tabla n, ej.: c1, c2. |
+| rN | número de fila de tabla n, ej.: r1, r2. |
+| hN | encabezado de nivel n, ej.: h1, h2. |
+| enl | enlace |
+| lst | lista |
+| enlv | enlace visitado |
+| mn | menú |
+| mnbar | barra de menú |
+| btn | botón de opción |
+| tb | tabla |
+| tv | vista en árbol |
+| lv N | un elemento de vista en árbol que tiene un nivel jerárquico N|
+| ``-----`` | separador |
+
+Los siguientes indicadores de estado  también están definidos:
+|| Abreviatura | Estado de Control |
+| ... | mostrado cuando un objeto soporta autocompletado |
+| ( ) | mostrado cuando un objeto (ej.: una casilla de verificación) no está marcado |
+| (x) | mostrado cuando un objeto (ej.: una casilla de verificación) está marcado |
+| (-) | mostrado cuando un objeto (ej.: una casilla de verificación) está  parcialmente marcado |
+| - | mostrado cuando un objeto (ej.: un elemento de vista en árbol) es contraíble |
+| + | mostrado cuando un objeto (ej.: un elemento de vista de árbol) es Expandible |
+| clk | mostrado cuando un objeto es cliqueable |
+| ro | mostrado cuando un objeto (ej.: un campo de texto editable) es de sólo lectura |
+| sel | mostrado cuando un objeto está seleccionado |
+| submnu | mostrado cuando un objeto tiene un desplegable (normalmente un submenú) |
+
 + Temas Avanzados +
+
+++ Opciones de Línea de Órdenes ++[CommandLineOptions]
+NVDA puede aceptar una o más opciones adicionales al arrancar que alteren su comportamiento.
+Puedes pasar tantas opciones como necesites.
+Estas opciones pueden pasarse al arrancar desde un atajo de teclado (en las propiedades del atajo de teclado), desde el diálogo Ejecutar(Menú Inicio -> Ejecutar o Windows+r) o desde una consola de órdenes de Windows.
+Las opciones deberían separarse del nombre del fichero ejecutable de NVDA y de otras opciones por espacios.
+Por ejemplo, el atajo de teclado del escritorio que crea NVDA durante la instalación tiene la opción -r, que dice a NVDA que cierre la copia actual en ejecucución antes de iniciar una nueva.
+Otra opción útil es --disable-addons, que dice a NVDA que suspenda todos los complementos en ejecución.
+Esto te permite determinar si un problema es causado por un complemento y recuperarte de problemas serios causados por complementos.
+
+Como un ejemplo, puedes salir de la copia actualmente en ejecución de NVDA introduciendo lo siguiente en el diálogo Ejecutar:
+
+nvda -q
+
+Algunas de las opciones de línea de órdenes tienen una versión corta y una larga, mientras otras sólo tienen una versión larga.
+Para aquellas que tengan una versión corta, puedes combinarlas así:
+| nvda -rm | Esto saldrá de la copia actualmente en ejecución de NVDA e iniciará una copia nueva con los sonidos de inicio deshabilitados, etc. |
+| nvda -rm --disable-addons | Igual que el anterior, pero con los complementos deshabilitados |
+
+Algunas de las opciones de línea de órdenes aceptan parámetros adicionales; ej.: cómo debería ser el grado de detalle del registro o la ruta para el directorio de configuración del usuario.
+Esos parámetros deberían colocarse después de la opción, separados de la opción por un espacio cuando se utiliza la versión o un signo igual (=) cuando se utiliza  la versión larga; ej.:
+| nvda -l 10 | dice a NVDA que se inicie con el nivel de registro puesto en depuración |
+| nvda --log-file=c:\nvda.log |  Dice a NVDA que escriba su registro en c:\nvda.log |
+| nvda --log-level=20 -f c:\nvda.log | Dice a NVDA que arranque con el nivel de registro puesto en info y que escriba su registro en c:\nvda.log |
+
+Seguidamente van las opciones de línea de órdenes para NVDA:
+|| Corta | Larga | Descripción |
+| -h | --help | muestra la ayuda en línea de órdenes y sale |
+| -q | --quit | Sale de la copia que ya se esté ejecutando de NVDA |
+| -r | --replace | Sale de la copia que ya se esté ejecutando de NVDA y arranca esta otra |
+| -k | --check-running | Informa si NVDA está en ejecución a través del código de salida; 0 si está en ejecución, 1 si no está en ejecución |
+| -f LOGFILENAME | --log-file=LOGFILENAME | El fichero donde deberían escribirse los mensajes de registro |
+| -l LOGLEVEL | --log-level=LOGLEVEL | El nivel más bajo de mensaje registrado (depuración 10, información 20, aviso 30, error 40, crítico 50), por defecto está en aviso |
+| -c CONFIGPATH | --config-path=CONFIGPATH | La ruta donde se almacenan todos los ajustes para NVDA |
+| -m | --minimal | Sin sonidos, sin interface, sin mensaje de inicio etc |
+| -s | --secure | Modo seguro (deshabilita la consola Python) |
+| None | --disable-addons | Los complementos no tendrán efecto |
+| None | --no-sr-flag  | No cambia la bandera global de sistema del lector de pantalla |
+| None | --install | Se instala NVDA silenciosamente |
 
 ++ Personalización Avanzada de Pronunciación de Símbolos ++
 Es posible personalizar la pronunciación de la puntuación y otros símbolos más allá de lo que puede hacerse utilizando el [diálogo Pronunciación de Puntuación y símbolos #SymbolPronunciation].

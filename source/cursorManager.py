@@ -1,6 +1,6 @@
 #cursorManager.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
+#Copyright (C) 2006-2014 NVDA Contributors
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -22,6 +22,47 @@ import config
 import braille
 import controlTypes
 from inputCore import SCRCAT_BROWSEMODE
+
+class FindDialog(wx.Dialog):
+	"""A dialog used to specify text to find in a cursor manager.
+	"""
+
+	def __init__(self, parent, cursorManager, text):
+		# Translators: Title of a dialog to find text.
+		super(FindDialog, self).__init__(parent, wx.ID_ANY, _("Find"))
+		# Have a copy of the active cursor manager, as this is needed later for finding text.
+		self.activeCursorManager = cursorManager
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+
+		findSizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: Dialog text for NvDA's find command.
+		textToFind = wx.StaticText(self, wx.ID_ANY, label=_("Type the text you wish to find"))
+		findSizer.Add(textToFind)
+		self.findTextField = wx.TextCtrl(self, wx.ID_ANY)
+		self.findTextField.SetValue(text)
+		findSizer.Add(self.findTextField)
+		mainSizer.Add(findSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
+		# Translators: An option in find dialog to perform case-sensitive search.
+		self.caseSensitiveCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Case &sensitive"))
+		self.caseSensitiveCheckBox.SetValue(False)
+		mainSizer.Add(self.caseSensitiveCheckBox,border=10,flag=wx.BOTTOM)
+
+		mainSizer.AddSizer(self.CreateButtonSizer(wx.OK|wx.CANCEL))
+		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
+		mainSizer.Fit(self)
+		self.SetSizer(mainSizer)
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		self.findTextField.SetFocus()
+
+	def onOk(self, evt):
+		text = self.findTextField.GetValue()
+		caseSensitive = self.caseSensitiveCheckBox.GetValue()
+		wx.CallLater(100, self.activeCursorManager.doFindText, text, caseSensitive=caseSensitive)
+		self.Destroy()
+
+	def onCancel(self, evt):
+		self.Destroy()
 
 class CursorManager(baseObject.ScriptableObject):
 	"""
@@ -84,24 +125,11 @@ class CursorManager(baseObject.ScriptableObject):
 		if not oldInfo.isCollapsed:
 			speech.speakSelectionChange(oldInfo,self.selection)
 
-	def doFindTextDialog(self):
-		d = wx.TextEntryDialog(gui.mainFrame, 
-			# Translators: Dialog text for NvDA's find command.
-			_("Type the text you wish to find"),
-			# Translators: Title of a dialog to find text.
-			_("Find"),
-			defaultValue=self._lastFindText)
-		def callback(result):
-			if result == wx.ID_OK:
-				# Make sure this happens after focus returns to the document.
-				wx.CallLater(100, self.doFindText, d.GetValue())
-		gui.runScriptModalDialog(d, callback)
-
-	def doFindText(self,text,reverse=False):
+	def doFindText(self,text,reverse=False,caseSensitive=False):
 		if not text:
 			return
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
-		res=info.find(text,reverse=reverse)
+		res=info.find(text,reverse=reverse,caseSensitive=caseSensitive)
 		if res:
 			self.selection=info
 			speech.cancelSpeech()
@@ -111,14 +139,17 @@ class CursorManager(baseObject.ScriptableObject):
 			wx.CallAfter(gui.messageBox,_('text "%s" not found')%text,_("Find Error"),wx.OK|wx.ICON_ERROR)
 		CursorManager._lastFindText=text
 
-	def script_find(self,gesture): 
-		self.doFindTextDialog()
+	def script_find(self,gesture):
+		d = FindDialog(gui.mainFrame, self, self._lastFindText)
+		gui.mainFrame.prePopup()
+		d.Show()
+		gui.mainFrame.postPopup()
 	# Translators: Input help message for NVDA's find command.
 	script_find.__doc__ = _("find a text string from the current cursor position")
 
 	def script_findNext(self,gesture):
 		if not self._lastFindText:
-			self.doFindTextDialog()
+			self.script_find(gesture)
 			return
 		self.doFindText(self._lastFindText)
 	# Translators: Input help message for find next command.
@@ -126,7 +157,7 @@ class CursorManager(baseObject.ScriptableObject):
 
 	def script_findPrevious(self,gesture):
 		if not self._lastFindText:
-			self.doFindTextDialog()
+			self.script_find(gesture)
 			return
 		self.doFindText(self._lastFindText,reverse=True)
 	# Translators: Input help message for find previous command.

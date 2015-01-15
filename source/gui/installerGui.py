@@ -65,10 +65,11 @@ def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,sil
 		gui.messageBox(msg+_("Please press OK to start the installed copy."),
 			# Translators: The title of a dialog presented to indicate a successful operation.
 			_("Success"))
+	# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL  
 	shellapi.ShellExecute(None, None,
 		os.path.join(installer.defaultInstallPath,'nvda.exe'),
 		u"-r",
-		None, 0)
+		None, winUser.SW_SHOWNORMAL)
 
 def doSilentInstall():
 	prevInstall=installer.isPreviousInstall()
@@ -128,6 +129,7 @@ class InstallerDialog(wx.Dialog):
 
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	def onInstall(self, evt):
 		self.Hide()
@@ -177,6 +179,7 @@ class PortableCreaterDialog(wx.Dialog):
 
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	def onBrowseForPortableDirectory(self, evt):
 		# Translators: The title of the dialog presented when browsing for the

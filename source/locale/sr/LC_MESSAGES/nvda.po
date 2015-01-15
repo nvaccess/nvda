@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-07 18:54+1000\n"
-"PO-Revision-Date: 2014-03-07 15:02+0100\n"
-"Last-Translator: Janko Valenćik <jankoval@gmail.com>\n"
+"POT-Creation-Date: 2014-11-06 19:11+1000\n"
+"PO-Revision-Date: 2014-11-25 19:54+0100\n"
+"Last-Translator: nikola jovic <wwenikola123@gmail.com>\n"
 "Language-Team:  <jankoval@gmail.com>\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-KeywordsList: _;gettext;gettext_noop\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.6.3\n"
+"X-Generator: Poedit 1.6.10\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SearchPath-0: C:\\NVDA\\main\n"
@@ -97,7 +97,7 @@ msgstr "{language} - {layout}"
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
 msgid "Error in appModule %s"
-msgstr "Грешка у модулу %s"
+msgstr "Грешка у апликациjском модулу %s"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
 msgid "banner"
@@ -127,6 +127,10 @@ msgstr "претраживање"
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 msgid "form"
 msgstr "форма"
+
+#. Translators: Reported for a significant region, normally found on web pages.
+msgid "region"
+msgstr "област"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -614,7 +618,7 @@ msgstr "Аутоматски"
 
 #. Translators: Reported before braille input in input help mode.
 msgid "braille"
-msgstr "брај"
+msgstr "брајев"
 
 #. Translators: Reported when braille space is pressed with dots in input help mode.
 msgid "space with dot"
@@ -771,7 +775,7 @@ msgstr "текст"
 
 #. Translators: The word used to identify edit fields such as subject edit field.
 msgid "edit"
-msgstr "уреди"
+msgstr "polje za unos teksta"
 
 #. Translators: The word used to identify a button such as OK button.
 msgid "button"
@@ -804,7 +808,7 @@ msgstr "ставка листе"
 
 #. Translators: The word used to identify graphics such as webpage graphics.
 msgid "graphic"
-msgstr "цртеж"
+msgstr "слика"
 
 #. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
 msgid "help balloon"
@@ -816,7 +820,7 @@ msgstr "опис алата"
 
 #. Translators: Identifies a link in webpage documents.
 msgid "link"
-msgstr "линк"
+msgstr "link"
 
 #. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
 msgid "tree view"
@@ -837,7 +841,7 @@ msgstr "контролна картица"
 
 #. Translators: Identifies a slider such as volume slider.
 msgid "slider"
-msgstr "клизач"
+msgstr "слајдер"
 
 #. Translators: Identifies a progress bar such as NvDA update progress.
 msgid "progress bar"
@@ -979,7 +983,7 @@ msgstr "наслов слике"
 
 #. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's name).
 msgid "check menu item"
-msgstr "штриклирана ставка менија"
+msgstr "штиклирана ставка менија"
 
 #. Translators: Identifies a data edit field.
 msgid "date edit"
@@ -1124,7 +1128,7 @@ msgstr "графикон"
 
 #. Translators: Identifies a cursor object.
 msgid "cursor"
-msgstr "курзор"
+msgstr "курсор"
 
 #. Translators: Identifies a diagram (seen on some websites and on Office documents).
 msgid "diagram"
@@ -1248,7 +1252,7 @@ msgstr "подебљано"
 
 #. Translators: Describes text formatting.
 msgid "ITALIC"
-msgstr "курзив"
+msgstr "искошено"
 
 #. Translators: Describes text formatting.
 msgid "underline"
@@ -1264,13 +1268,15 @@ msgstr "боја позадине"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
-msgstr "експонент"
+msgstr "суперскрипт"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
-msgstr "индекс"
+msgstr "подскрипт"
 
 #. Translators: Describes style of text.
 #. Translators: a Microsoft Word revision type (style change)
@@ -1283,7 +1289,7 @@ msgstr "увлачење"
 
 #. Translators: Describes text formatting.
 msgid "alignment"
-msgstr "поравнавање"
+msgstr "поравнање"
 
 #. Translators: Identifies a data grid control (a grid which displays data).
 msgid "data grid"
@@ -1324,11 +1330,11 @@ msgstr "притиснуто"
 
 #. Translators: This is presented when a check box is checked.
 msgid "checked"
-msgstr "штриклирано"
+msgstr "штиклирано"
 
 #. Translators: This is presented when a three state check box is half checked.
 msgid "half checked"
-msgstr "половично штриклирано"
+msgstr "половично штиклирано"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
@@ -1448,13 +1454,17 @@ msgstr "има формулу"
 msgid "has comment"
 msgstr "постоји коментар"
 
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "objekat pokriven od strane drugog objekta"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "није изабрано"
 
 #. Translators: This is presented when a checkbox is not checked.
 msgid "not checked"
-msgstr "није штриклирано"
+msgstr "није штиклирано"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -1464,7 +1474,7 @@ msgid ""
 msgstr ""
 "Ваша конфигурациона датотека садржи грешке. Ваша конфигурација је ресетована "
 "на фабричка подешавања\n"
-"Више детаља о грешкама можете наћи у датотеци промена."
+"Више детаља о грешкама можете наћи у датотеци прегледног дневника."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 msgid "Configuration File Error"
@@ -1475,14 +1485,14 @@ msgid ""
 "More details about the errors can be found in the log file."
 msgstr ""
 "Ваша датотека са мапом гестова садржи грешке.\n"
-"Више детаља о грешкама може се пронаћи у датотеци промена."
+"Више детаља о грешкама може се пронаћи у датотеци прегледног дневника."
 
 msgid "gesture map File Error"
 msgstr "грешка у датотеци са мапама гестова"
 
 #. Translators: This is spoken when NVDA is starting.
 msgid "Loading NVDA. Please wait..."
-msgstr "Учитавање NVDA апликације. Молимо сачекајте..."
+msgstr "Учитавање NVDА, Молимо сачекајте..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 msgid "NVDA started"
@@ -1505,7 +1515,7 @@ msgstr "Грешка при тражењу"
 
 #. Translators: Input help message for NVDA's find command.
 msgid "find a text string from the current cursor position"
-msgstr "пронађи одређени узорак текста од тренутног положаја курзора"
+msgstr "пронађи одређени узорак текста од тренутног положаја курсора"
 
 #. Translators: Input help message for find next command.
 msgid ""
@@ -1541,7 +1551,7 @@ msgstr "Навигација објеката"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "System caret"
-msgstr "Системски курзор"
+msgstr "Системски курсор"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Mouse"
@@ -1594,9 +1604,9 @@ msgid ""
 "Turns input help on or off. When on, any input such as pressing a key on the "
 "keyboard will tell you what script is associated with that input, if any."
 msgstr ""
-"Активира или деактивира помоћ. Када је активан, сваки унос, као на пример "
-"притискање тастера, откриће вам која је скрипта повезана са тим уносом, ако "
-"је иједна повезана."
+"Активира или деактивира помоћ. Када је активна, сваки унос, као на пример "
+"притискање тастера, изговориће вам која је скрипта повезана са тим уносом, "
+"ако је нека повезана."
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
@@ -1615,7 +1625,7 @@ msgid ""
 "Reports the current line under the application cursor. Pressing this key "
 "twice will spell the current line"
 msgstr ""
-"Пријављује тренутну линију испод курзора апликације. Притискање овог тастера "
+"Пријављује тренутну линију испод курсора апликације. Притискање овог тастера "
 "двапут срицаће тренутну линију "
 
 #. Translators: Reported when left mouse button is clicked.
@@ -1624,7 +1634,7 @@ msgstr "леви клик"
 
 #. Translators: Input help mode message for left mouse click command.
 msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "Извршава један клик на лево дугме миша на тренутној позицији миша"
+msgstr "Извршава леви клик на мишу на тренутној позицији миша"
 
 #. Translators: Reported when right mouse button is clicked.
 msgid "right click"
@@ -1671,8 +1681,8 @@ msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
 msgstr ""
-"Ако се притисне једном, приказаће се тренутно време. Ако се притисне двапут, "
-"приказаће се тренутни датум"
+"Ако се притисне једном, пријављујетренутно време. Ако се притисне двапут, "
+"пријављујетренутни датум"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
 msgid "No settings"
@@ -1815,27 +1825,17 @@ msgstr ""
 "ову информацију или, ако притиснете три пута, копира име и вредност "
 "навигационог објекта у привремену меморију"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
-msgid "No location information for navigator object"
-msgstr "Нема информација о локацији навигационог објекта"
+#. Translators: message when there is no location information for the review cursor
+msgid "No location information"
+msgstr "Нема информација о lokaciji"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
-msgid "No location information for screen"
-msgstr "Нема информације о локацији за екран"
-
-#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#. Translators: Description for report review cursor location command.
 msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
-"screen, height is {height:.1f} per cent of screen"
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
 msgstr ""
-"Ивице објекта позициониране {left:.1f} процената од леве ивице екрана, "
-"{top:.1f}  од врха екрана, ширина је  {width:.1f} процента екрана, висина је "
-"{height:.1f}  процента екрана"
-
-#. Translators: Input help mode message for report object dimensions command.
-msgid "Reports the hight, width and position of the current navigator object"
-msgstr "Пријављује висину, ширину и позицију тренутног навигационог објекта"
+"пријавлјује информације о објекту на прегледном курсору притисканје још "
+"једном можда да више информација."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -2179,15 +2179,15 @@ msgstr "нема ажурирања траке напретка"
 
 #. Translators: A mode where progress bar updates will be spoken.
 msgid "speak progress bar updates"
-msgstr "обавештење о ажурирању траке напретка помоћу изговора"
+msgstr "изговарај промене траке напредовања"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
 msgid "beep for progress bar updates"
-msgstr "обавештење о ажурирању траке напретка помоћу пиштања"
+msgstr "пишти за промене траке напредовања."
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
 msgid "beep and speak progress bar updates"
-msgstr "обавештење о ажурирању траке напретка помоћу пиштања и изговора"
+msgstr "изговарај и пишти за промене траке напредовања."
 
 #. Translators: Input help mode message for toggle progress bar output command.
 msgid ""
@@ -2508,6 +2508,14 @@ msgstr "Разно"
 msgid "Browse mode"
 msgstr "Режим претраживања"
 
+#. Translators: The shortcut key used to start NVDA.
+#. This should normally be left as is, but might be changed for some locales
+#. if the default key causes problems for the normal locale keyboard layout.
+#. The key must be formatted as described in this article:
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+msgid "CTRL+ALT+N"
+msgstr "CTRL+ALT+N"
+
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
 msgstr "NVDA Веб-сајт"
@@ -2518,7 +2526,7 @@ msgstr "Деинсталирај NVDA"
 
 #. Translators: A label for a shortcut item in start menu to open current user's NVDA configuration directory.
 msgid "Explore NVDA user configuration directory"
-msgstr "Истражи NVDA фасцилу са корисничким подешавањима"
+msgstr "Истражи NVDA фасциклу са корисничким подешавањима"
 
 #. Translators: The label of the NVDA Documentation menu in the Start Menu.
 msgid "Documentation"
@@ -2610,7 +2618,7 @@ msgstr "наменска апликација 2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "backspace"
-msgstr "тастер за брисање уназад"
+msgstr "бекспејс"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "caps lock"
@@ -2642,7 +2650,7 @@ msgstr "тастер за ентер на нумеричкој тастатур�
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "escape"
-msgstr "тастер ескејп"
+msgstr "ескејп"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "page up"
@@ -2654,11 +2662,11 @@ msgstr "страна доле"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "end"
-msgstr "крај"
+msgstr "енд"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "home"
-msgstr "почетак"
+msgstr "хоме"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "delete"
@@ -2686,7 +2694,7 @@ msgstr "стрелица доле"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "applications"
-msgstr "апликације"
+msgstr "апликације тастер"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "num lock"
@@ -2859,15 +2867,15 @@ msgstr "Кориснички основни"
 #. Translators: Reported when mouse cursor shape changes (example output: edit cursor).
 #, python-format
 msgid "%s cursor"
-msgstr "%s курзор"
+msgstr "%s курсор"
 
 #. Translators: The description of the NVDA service.
 msgid ""
 "Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
 "screens."
 msgstr ""
-"Дозвољава NVDA да ради на Windows пријавном екрану, екрану Контроле Приступа "
-"Корисника и другим безбедносним екранима."
+"Дозвољава NVDA да ради на Windows екрану за пријављивање, екрану Контроле "
+"Приступа Корисника и другим безбедносним екранима."
 
 msgid "Type help(object) to get help about object."
 msgstr "Укуцајте help(објекат) да добијете помоћ у вези с објектом"
@@ -2980,7 +2988,7 @@ msgstr "страна  %s"
 #. Translators: Speaks the heading level (example output: heading level 2).
 #, python-format
 msgid "heading level %d"
-msgstr "ниво наслова %d"
+msgstr "ниво заглавља %d"
 
 #. Translators: Indicates the style of text.
 #. A style is a collection of formatting settings and depends on the application.
@@ -3031,11 +3039,11 @@ msgstr "нису подебљана слова"
 
 #. Translators: Reported when text is italicized.
 msgid "italic"
-msgstr "курзив"
+msgstr "искошен"
 
 #. Translators: Reported when text is not italicized.
 msgid "no italic"
-msgstr "није курзив"
+msgstr "није искошен"
 
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
@@ -3057,6 +3065,7 @@ msgstr "није подвучено"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "основна линија"
 
@@ -3077,9 +3086,78 @@ msgstr "поравнај десно"
 msgid "align justify"
 msgstr "обострано поравнавање"
 
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "distribuiran"
+
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "почетно поравнавање"
+
+#. Translators: the label for paragraph format left indent
+msgid "left indent"
+msgstr "levi format"
+
+#. Translators: the message when there is no paragraph format left indent
+msgid "no left indent"
+msgstr "nema formata"
+
+#. Translators: the label for paragraph format right indent
+msgid "right indent"
+msgstr "десни desni format"
+
+#. Translators: the message when there is no paragraph format right indent
+msgid "no right indent"
+msgstr "нема desnog formata"
+
+#. Translators: the label for paragraph format hanging indent
+msgid "hanging indent"
+msgstr "format"
+
+#. Translators: the message when there is no paragraph format hanging indent
+msgid "no hanging indent"
+msgstr "nema formata"
+
+#. Translators: the label for paragraph format first line indent
+msgid "first line indent"
+msgstr "prijavi formate"
+
+#. Translators: the message when there is no paragraph format first line indent
+msgid "no first line indent"
+msgstr "nema redovnih formata"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "усправан алигмент."
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "усправан али у средини."
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "усправан али на врху"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "усправан на линији."
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "обострано uspravan"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "усправно дистрибуиран."
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "почетно uspravan"
+
+#. Translators: Reported when text no longer contains a comment.
+msgid "out of comment"
+msgstr "van коментара."
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -3376,6 +3454,16 @@ msgstr ""
 "Не може се инсталирати NVDA додатак са {path}.\n"
 "NVDA мора бити покренут да би се могао инсталирати додатак."
 
+#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+msgid ""
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
+msgstr ""
+"Ивице објекта позициониране {left:.1f} процената од леве ивице екрана, "
+"{top:.1f}  од врха екрана, ширина је  {width:.1f} процента екрана, висина је "
+"{height:.1f}  процента екрана"
+
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
 msgstr "{symbol} као {description}"
@@ -3439,6 +3527,7 @@ msgid "Displays one of the recent messages"
 msgstr "Приказује једну од недавних порука"
 
 #. Translators: This Outlook Express message has an attachment
+#. Translators: when an email has attachments
 msgid "has attachment"
 msgstr "прикачен је прилог"
 
@@ -3499,8 +3588,17 @@ msgid "BCC:"
 msgstr "BCC:"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
+#. Translators: when an email is unread
 msgid "unread"
 msgstr "непрочитано"
+
+#. Translators: for a high importance email
+msgid "high importance"
+msgstr "висока важност"
+
+#. Translators: For a low importance email
+msgid "low importance"
+msgstr "ниска вазност"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3520,6 +3618,26 @@ msgstr "прилог"
 #, python-format
 msgid "sent: %s"
 msgstr "послато: %s"
+
+#. Translators: The title for the dialog shown while Microsoft Outlook initializes.
+msgid "Waiting for Outlook..."
+msgstr "Чекam na outlok..."
+
+#. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+msgid "{startTime} to {endTime}"
+msgstr "{startTime} do {endTime}"
+
+#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+msgid "Appointment {subject}, {time}"
+msgstr "забелешка {subject}, {time}"
+
+#. Translators: a message when the current time slot on an Outlook Calendar has an appointment
+msgid "has appointment"
+msgstr "има забелешку"
+
+#. Translators: the email is a meeting request
+msgid "meeting request"
+msgstr "захтев за састанак"
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -3673,6 +3791,78 @@ msgstr "Мастер сличице"
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Слајд {slideNumber}"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers left of {otherShape} by {distance:.3g} points"
+msgstr "налази се лево од {otherShape} на {distance:.3g} тачака"
+
+#. Translators: A message when a shape is behind  another shape on a powerpoint slide
+msgid "behind left of {otherShape} by {distance:.3g} points"
+msgstr "лево иза {otherShape} од {distance:.3g} тачака"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers top of {otherShape} by {distance:.3g} points"
+msgstr "на врху од {otherShape} до {distance:.3g} тачака"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind top of {otherShape} by {distance:.3g} points"
+msgstr "иза врха од {otherShape} до {distance:.3g} тачака"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers right of {otherShape} by {distance:.3g} points"
+msgstr "десно од {otherShape} до {distance:.3g} тачака"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind right of {otherShape} by {distance:.3g} points"
+msgstr "десно иза {otherShape} до {distance:.3g} тачака"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers bottom of {otherShape} by {distance:.3g} points"
+msgstr "покрива дно од {otherShape} до by {distance:.3g} тачака"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind bottom of {otherShape} by {distance:.3g} points"
+msgstr "иза дна од {otherShape} до {distance:.3g} тачака"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers  {otherShape}"
+msgstr "покрива {otherShape}"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind {otherShape}"
+msgstr "иза {otherShape}"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+msgid "{distance:.3g} points from left slide edge"
+msgstr "{distance:.3g} тачака од леве ивице клизача"
+
+#. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+msgid "Off left slide edge by {distance:.3g} points"
+msgstr "ван леве ивице клизача до {distance:.3g} тачака"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+msgid "{distance:.3g} points from top slide edge"
+msgstr "{distance:.3g} тачака од врха ивице клизача"
+
+#. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+msgid "Off top slide edge by {distance:.3g} points"
+msgstr "ван ивице клизача до {distance:.3g} тачака"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+msgid "{distance:.3g} points from right slide edge"
+msgstr "{distance:.3g} тачака од десне ивице клизача"
+
+#. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+msgid "Off right slide edge by {distance:.3g} points"
+msgstr "ван десне ивице клизача до {distance:.3g} тачака"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+msgid "{distance:.3g} points from bottom slide edge"
+msgstr "{distance:.3g} тачака од дна ивице клизача"
+
+#. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+msgid "Off bottom slide edge by {distance:.3g} points"
+msgstr "ван дна ивице клизача до {distance:.3g} тачака"
 
 #. Translators: The description for a script
 msgid ""
@@ -3853,13 +4043,6 @@ msgstr "Речник гласова (%s)"
 msgid "Temporary dictionary"
 msgstr "Привремени речник"
 
-#. Translators: Message shown to ask if user really wishes to quit NVDA.
-msgid "Are you sure you want to quit NVDA?"
-msgstr "Да ли сте сигурни да желите изаћи из програма NVDA?"
-
-msgid "Exit NVDA"
-msgstr "Изађи из NVDA"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "О  NVDA"
@@ -3910,10 +4093,10 @@ msgstr "Пријављивање измене облика миша и обје�
 
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
-msgstr "&Ревизиони курзор..."
+msgstr "прегледни курсор..."
 
 msgid "Configure how and when the review cursor moves"
-msgstr "Подеси како и када се ревизиони курзор помера"
+msgstr "Подеси како и када се прегледни курсор помера"
 
 #. Translators: The label for the menu item to open Input Composition Settings dialog.
 msgid "&Input composition settings..."
@@ -3994,7 +4177,7 @@ msgstr "&Улазни гестови"
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
-msgstr "&Карактеристике"
+msgstr "&подешавања"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 msgid "View log"
@@ -4092,6 +4275,10 @@ msgstr "Донирај"
 msgid "E&xit"
 msgstr "&Излаз"
 
+#. Translators: The title of the dialog to exit NVDA
+msgid "Exit NVDA"
+msgstr "Изађи из NVDA"
+
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -4110,7 +4297,7 @@ msgstr ""
 "могу да се користе као NVDA тастер.\n"
 "Можете такође подесити NVDA да се тастер за велика слова (CapsLock) користи "
 "као NVDA тастер.\n"
-"Ако притисните  NVDA+n активираћете NVDA  мени.\n"
+"Ако притиснетеNVDA+n активираћете NVDA  мени.\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
@@ -4153,6 +4340,30 @@ msgstr "Креирај &портабл копију"
 msgid "&Continue running"
 msgstr "&Настави са радом"
 
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"сви додаци су сада онемогућени , они ће поново бити омогућени након поновног "
+"покретања осим ако их ви поново не онемогућите."
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "шта желите да урадите"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "излаз из  NVDA"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "поново покрени нвда"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "поново покрени са додацима онемогућеним"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "Молимо сачекајте"
@@ -4160,6 +4371,12 @@ msgstr "Молимо сачекајте"
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "Управљање додацима"
+
+#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgstr ""
+"сви додаци су сада онемогућени, да поново омогућите додатке поново покрените "
+"нвда"
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -4184,6 +4401,10 @@ msgstr "Аутор"
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
 msgstr "&О додацима..."
+
+#. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
+msgid "Add-on &help"
+msgstr "пом                    оћ за додатке"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -4214,7 +4435,7 @@ msgid ""
 "Failed to open add-on package file at %s - missing file or invalid file "
 "format"
 msgstr ""
-"Несупешно отварање датотеке са пакетом додатака на %s - недостаје датотека "
+"неуспех у отварању датотеке са пакетом додатака на %s - недостаје датотека "
 "или је неисправан њен формат"
 
 #. Translators: A message asking the user if they really wish to install an addon.
@@ -4266,6 +4487,10 @@ msgstr "инсталиран"
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "remove"
 msgstr "уклоњен"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+msgid "suspended"
+msgstr "суспендован"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
@@ -4572,7 +4797,9 @@ msgstr "Користи NVDA на Виндоузовом екрану за &пр�
 msgid "&Keep existing desktop shortcut"
 msgstr "&Задржи постојећу пречицу на радној површини"
 
-#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
+#. If the shortcut key has been changed for this locale,
+#. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr ""
 "Креирај иконицу на &радној површини и пречицу са тастатуре (control+alt+n)"
@@ -4701,11 +4928,15 @@ msgstr "Језик"
 
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
-msgstr "&Сачувај кофигурацију при излазу"
+msgstr "& чувај конфигурацију при излазу"
 
-#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
-msgid "&Warn before exiting NVDA"
-msgstr "&Упозори пре напуштања NVDA"
+#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
+msgid "Sho&w exit options when exiting NVDA"
+msgstr "при&казуј додатне опције при изласку из нвда."
+
+#. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
+msgid "&Play sounds when starting or exiting NVDA"
+msgstr "& пуштај звукове када се нвда зауставља и покреће"
 
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
@@ -4923,6 +5154,11 @@ msgstr ""
 #. keyboard settings dialog.
 msgid "Speak command &keys"
 msgstr "Изговори командне &тастере"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+msgid "Handle keys from other &applications"
+msgstr "Контролиши тастере из других &апликација"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
@@ -5200,6 +5436,11 @@ msgstr "Пријави бројеве &редова "
 msgid "Report l&ine indentation"
 msgstr "Пријави увлачење &редова"
 
+#. Translators: This message is presented in the document formatting settings dialogue
+#. If this option is selected, NVDA will report paragraph indentation if available.
+msgid "Report &paragraph indentation"
+msgstr "Пријави paragrafe po redovima"
+
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &tables"
@@ -5250,6 +5491,18 @@ msgstr "Пријави &оквире"
 msgid "Report if &clickable"
 msgstr "Пријави да ли је &кликабилно"
 
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "било где"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "целе речи"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Regular expression"
+msgstr "Правилна реч"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "Уреди унос у речник"
@@ -5270,15 +5523,16 @@ msgstr "&Коментар"
 msgid "Case &sensitive"
 msgstr "&Осетљив на величину слова"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "Регуларни &израз"
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "Тип"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
 msgstr "&Уноси у речнику"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
+#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr "Коментар"
 
@@ -5294,9 +5548,9 @@ msgstr "Замена"
 msgid "case"
 msgstr "мала/велика слова"
 
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
-msgid "Regexp"
-msgstr "Регуларни израз"
+#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "Тип"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
@@ -5460,6 +5714,14 @@ msgstr "Нема говора"
 msgid "word"
 msgstr "реч"
 
+#. Translators: current position in a document as a percentage of the document length
+msgid "{curPercent:.0f}%"
+msgstr "{curPercent:.0f}%"
+
+#. Translators: the current position's screen coordinates in pixels
+msgid "at {x}, {y}"
+msgstr "у {x}, {y}"
+
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
 msgid "%s landmark"
@@ -5550,6 +5812,7 @@ msgstr "Приказује листу линкова, наслова и ориј
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
 msgstr "Није у ћелији табеле"
 
@@ -6026,8 +6289,11 @@ msgstr "почетна боја"
 msgid "{start} through {end}"
 msgstr "{start} до {end}"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+#, fuzzy
 msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
@@ -6035,35 +6301,61 @@ msgstr ""
 "Заглавља не могу бити постављена. Молимо вас да укључите извештавање о "
 "заглављима табеле у подешавањима форматирања документа."
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Set column header row"
-msgstr "Постављен насловни ред за колоне"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Set {address} as start of column headers"
+msgstr "постављено {address} као почетак колоне"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Cleared column header row"
-msgstr "Испражњен насловни ред за колоне"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Already set {address} as start of column headers"
+msgstr "већ постављено {address} као почетак колоне"
 
-msgid ""
-"Pressing once will set the current row as the row where column headers "
-"should be found. Pressing twice clears the setting."
-msgstr ""
-"Једним притиском поставља се тренутни ред као ред где треба да буду смештена "
-"заглавља колоне. Двоструки притисак уклања подешавање."
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "removed {address}    from column headers"
+msgstr "уклоњено {address}    као почетак колоне"
 
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Set row header column"
-msgstr "Постављена насловна колона за редове"
-
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Cleared row header column"
-msgstr "Испражњена насловна колона за редове"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Cannot find {address}    in column headers"
+msgstr "немогу да пронађем {address}    као почетак колоне"
 
 msgid ""
-"Pressing once will set the current column as the column where row headers "
-"should be found. Pressing twice clears the setting."
-msgstr ""
-"Једним притиском поставља се тренутна колона као колона где треба да буду "
-"смештена заглавља реда. Двоструки притисак уклања подешавање."
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this region. Pressing twice will forget "
+"the current column header for this cell."
+msgstr "jednom da postaviš ćeliju kao prvu kolonu dvA puta da zaboravi ćeliju"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Set {address} as start of row headers"
+msgstr "постављено {address} као почетак заглавља редова"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Already set {address} as start of row headers"
+msgstr "већ постављено {address} као почетак заглавља редова"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "removed {address}    from row headers"
+msgstr "уклоњено {address}    као почетак заглавља редова"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Cannot find {address}    in row headers"
+msgstr "немогу да пронађем {address}    као почетак заглавља редова"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this region. Pressing twice will forget the "
+"current row header for this cell."
+msgstr "ćelija postavljena "
+
+#. Translators: A message in Excel when there is no comment
+msgid "Not on a comment"
+msgstr "nije na komentaru"
+
+#. Translators: the description  for a script for Excel
+msgid "Reports the comment on the current cell"
+msgstr "prijavljuje komentar u ćeliji"
+
+#. Translators: Dialog text for
+msgid "Editing comment for cell {address}"
+msgstr "уређује се коментар за ћелију {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
@@ -6176,6 +6468,148 @@ msgstr "непознат датум"
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "{revisionType} од {revisionAuthor} на дан {revisionDate}"
 
+#, python-format
+msgid "%g characters"
+msgstr "%g slova"
+
+#. Translators: the value in points for a paragraph indenting
+#, python-format
+msgid "%g pt"
+msgstr "%g pt"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"постављен ред {rowNumber} колона {columnNumber} као почетак заглавља колоне"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr ""
+"већ постављен ред {rowNumber} колона {columnNumber} као почетак заглавља "
+"колоне"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr "уклоњен ред {rowNumber} колона {columnNumber}  као заглавље колоне"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr ""
+"немогу да пронађем ред {rowNumber} колона {columnNumber}  као заглавље колоне"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr "postavlja ćeliju levo"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr "постављен ред {rowNumber} колона {columnNumber} као заглавље колоне"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr ""
+"већ постављен ред {rowNumber} колона {columnNumber} као заглавље колоне"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr "уклоњен ред {rowNumber} колона {columnNumber}  као заглавље редова"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr ""
+"немогу да пронађем ред {rowNumber} колона {columnNumber}  као заглавље редова"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr "postavlja ćeliju desno"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "подебљан"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "подебљан искључен"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "iskošen"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "iskošen isključen"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "podvučen"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "podvučen isključen"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Left aligned"
+msgstr "levo "
+
+#. Translators: a an alignment in Microsoft Word
+msgid "centered"
+msgstr "centriran"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Right aligned"
+msgstr "desno"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Justified"
+msgstr "јустифиед"
+
+#. Translators: the message when the outline level / style is changed in Microsoft word
+msgid "{styleName} style, outline level {outlineLevel}"
+msgstr "{styleName} стил , ниво редова {outlineLevel}"
+
+#. Translators: a message when increasing or decreasing font size in Microsoft Word
+msgid "{size:g} point font"
+msgstr "{size:g} величина фонта"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} characters"
+msgstr "{offset:.3g} слова"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} inches"
+msgstr "{offset:.3g} инча"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} centimeters"
+msgstr "{offset:.3g} центиметара"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} millimeters"
+msgstr "{offset:.3g} милиметара"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} points"
+msgstr "{offset:.3g} тачака"
+
+#. Translators: a measurement in Microsoft Word
+#. See http://support.microsoft.com/kb/76388 for details.
+msgid "{offset:.3g} picas"
+msgstr "{offset:.3g} пицас"
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "no comments"
+msgstr "Нема коментара"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "изговара текст коментара "
+
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 msgid "Not in table"
@@ -6191,6 +6625,54 @@ msgstr "HIMS Braille Sense/Braille EDGE серије"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Are you sure you want to quit NVDA?"
+#~ msgstr "Да ли сте сигурни да желите изаћи из програма NVDA?"
+
+#~ msgid "&Warn before exiting NVDA"
+#~ msgstr "&Упозори пре напуштања NVDA"
+
+#~ msgid "Regular &expression"
+#~ msgstr "Регуларни &израз"
+
+#~ msgid "Regexp"
+#~ msgstr "Регуларни израз"
+
+#~ msgid "No location information for navigator object"
+#~ msgstr "Нема информација о локацији навигационог објекта"
+
+#~ msgid "No location information for screen"
+#~ msgstr "Нема информације о локацији за екран"
+
+#~ msgid ""
+#~ "Reports the hight, width and position of the current navigator object"
+#~ msgstr "Пријављује висину, ширину и позицију тренутног навигационог објекта"
+
+#~ msgid "Set column header row"
+#~ msgstr "Постављен насловни ред за колоне"
+
+#~ msgid "Cleared column header row"
+#~ msgstr "Испражњен насловни ред за колоне"
+
+#~ msgid ""
+#~ "Pressing once will set the current row as the row where column headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "Једним притиском поставља се тренутни ред као ред где треба да буду "
+#~ "смештена заглавља колоне. Двоструки притисак уклања подешавање."
+
+#~ msgid "Set row header column"
+#~ msgstr "Постављена насловна колона за редове"
+
+#~ msgid "Cleared row header column"
+#~ msgstr "Испражњена насловна колона за редове"
+
+#~ msgid ""
+#~ "Pressing once will set the current column as the column where row headers "
+#~ "should be found. Pressing twice clears the setting."
+#~ msgstr ""
+#~ "Једним притиском поставља се тренутна колона као колона где треба да буду "
+#~ "смештена заглавља реда. Двоструки притисак уклања подешавање."
 
 #~ msgid "%s of %s"
 #~ msgstr "%s од %s"
@@ -6397,9 +6879,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid "case sensitive"
 #~ msgstr "осетљив на величину слова"
-
-#~ msgid "Regular expression"
-#~ msgstr "Правилан израз"
 
 #~ msgid "&edit"
 #~ msgstr "&измени"

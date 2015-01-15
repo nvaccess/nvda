@@ -6,14 +6,14 @@
 complexSymbols:
 # identifier	regexp
 # Sentence endings.
-. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
-! sentence ending	((?<=[^\s!])\!(?=[\"'”’)\s]|$)|(?<=[^\s]\s)\!(?=[\"'”’)\s]|$))
-? sentence ending	((?<=[^\s?])\?(?=[\"'”’.)\s]|$)|(?<=[^\s]\s)\?(?=[\"'”’.)\s]|$))
-... sentence ending	(?<=[^\s.])(\s\.|\.)\.\.(?=[\"'”’)\s]|$)
-… sentence ending	(?<=[^\s…])\…(?=[\"'”’)\s]|$)
+. sentence ending	((?<=[^\s.])\.(?=[\"'”’);\s]|$)|(?<=[^\s.]\s)\.(?=[\"'”’);\s]|$))
+! sentence ending	((?<=[^\s!])\!(?=[\"'”’);\s]|$)|(?<=[^\s!]\s)\!(?=[\"'”’);\s]|$))
+? sentence ending	((?<=[^\s?])\?(?=[\"'”’);\s]|$)|(?<=[^\s?]\s)\?(?=[\"'”’);\s]|$))
+... sentence ending	((?<=[^\s.])\.\.\.(?=[\"'”’);\s]|$)|(?<=[^\s.]\s)\.\.\.(?=[\"'”’);\s]|$))
+… sentence ending	((?<=[^\s…])\…(?=[\"'”’);\s]|$)|(?<=[^\s…]\s)\…(?=[\"'”’);\s]|$))
 # Phrase endings.
-; phrase ending	(?<=[^\s;])(\s;|;)(?=\s|$)
-: phrase ending	(?<=[^\s:])(\s:|:)(?=\s|$)
+; phrase ending	((?<=[^\s;]);(?=[\"'”’);\s]|$)|(?<=[^\s;]\s);(?=[\"'”’);\s]|$))
+: phrase ending	((?<=[^\s:]):(?=[\"'”’);\s]|$)|(?<=[^\s:]\s):(?=[\"'”’);\s]|$))
 # Others
 decimal point	(?<=\d)\,(?=\d)
 in-word -	(?<=[^\W_])[-]
@@ -93,7 +93,7 @@ _	souligné
 
 # Other characters
 •	puce
-…	points de suspension	some	norep
+…	points de suspension
 ...	point point point
 	puce
 “	guillemet ouvert
@@ -102,18 +102,13 @@ _	souligné
 ’	apostrophe droite
 –	tiret demicadratin
 —	tiret cadratin
-§	section
-¶	paragraphe	all
-●	astérisque
+●	cercle
 ¨	tréma
 ‎	gauche à droite
 ‏	droite à gauche
-©	copyright	some	norep
 ■	carré noir
-‰	pour-mille
-„	guillemet vers le bas	none
-∞	infini	none
 ➔	flèche droite
+§	section
 °	degré	some	norep
 «	guillemet ouvert
 »	guillemet fermé
@@ -129,12 +124,16 @@ _	souligné
 ÷	divisé par
 ←	flèche gauche
 →	flèche droite
+✓	coché
+✔	coché
+¶	paragraphe	all
+‰	pour-mille
+„	guillemet vers le bas	none
+∞	infini	none
 	flèche gauche	some
 	flèche droite	some
 ↑	flèche haut	some
 ↓	flèche bas	some
-✓	coché
-✔	coché
 
 # Fixes for some synthesizers
 ô	o circonflexe	char	norep

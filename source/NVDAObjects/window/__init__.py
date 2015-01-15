@@ -114,7 +114,7 @@ An NVDAObject for a window
 			from .edit import Edit as newCls
 		elif windowClassName=="RichEdit":
 			from .edit import RichEdit as newCls
-		elif windowClassName=="RichEdit20":
+		elif windowClassName in ("RichEdit20","REComboBox20W"):
 			from .edit import RichEdit20 as newCls
 		elif windowClassName=="RICHEDIT50W":
 			from .edit import RichEdit50 as newCls
@@ -445,4 +445,5 @@ windowClassMap={
 	"ScintillaWindowImpl":"Scintilla",
 	"RICHEDIT60W_WLXPRIVATE":"RICHEDIT50W",
 	"TNumEdit":"Edit",
+	"TAccessibleRichEdit":"RichEdit20",
 }

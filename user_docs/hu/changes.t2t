@@ -3,6 +3,42 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.4 =
+
+== Újdonságok ==
+- Új nyelvek: kolumbiai spanyol, pandzsábi
+- Most már lehetőség van az NVDA újraindítására szokásos módon, és letiltott bővítményekkel is az NVDA Kilépés párbeszédpanelen. (#4057)
+ - Az NVDA a --disable-addons parancssori opcióval is elindítható letiltott bővítményekkel.
+- A kivétel szótárakban már megadható, hogy csak a tényleges kifejezés pontos egyezésekor történjen behelyettesítés. Tehát ha a tényleges kifejezés egy hosszabb szó részeként fordul elő, akkor a korábbiakkal ellentétben már ne történjen semmi. (#1704)
+
+
+== Változások ==
+- Elem navigációval egy böngésző módú dokumentumon kívülről annak egy elemére navigáláskor az áttekintő mód automatikusan dokumentum áttekintésre vált. Korábban ez csak akkor történt meg, amikor a navigátor kurzornál lévő elem változott a fókusz változásával párhuzamosan. (#4369)
+- A braille kijelzők, és a beszédszintetizátorok listája a megfelelő párbeszédpanelen már ábécérendbe van rendezve, úgy, hogy a Nincs braille kijelző és a Csendes üzemmód opciók már mindenképpen a lista alján találhatók. (#2724)
+- A liblouis braille-fordító frissítve lett a 2.6.0. verzióra (#4434, #3835)
+- Böngészőmódban az e és shift+e szerkesztőmezők közti navigálásra szolgáló gyorsbillentyűk már a szerkeszthető kombinált listamezőket is kezelik, ezáltal a Googgle kereső legújabb változatának keresőmezőjét is. (#4436)
+- A bal egérgombbal történő kattintás a Windows értesítési területén található NVDA ikonra már megnyitja az NVDA menüjét, korábban ilyen esetben nem történt semmi. (#4459)
+
+
+== Hibajavítások ==
+- Amikor egy böngésző módú dokumentum visszakapja a fókuszt (pl. alt+tabbal egy már megnyitott weboldal) az áttekintő kurzor már a virtuális kurzorhoz kerül, nem pedig a legközelebbi aktív vezérlőhöz (pl. egy közeli linkhez) (#4369)
+- Powerpoint diavetítéseknél az áttekintő kurzor már a virtuális kurzort követi. (#4370)
+- Mozilla Firefox és más Gecko-alapú böngészők: Az új tartalmakat a dinamikus területeken az NVDA már akkor is felolvassa, ha az új tartalom ARIA dinamikus típusa eltér a szülő dinamikus terület típusától. Pl. ha assertive megjelölésű tartalmat adnak hozzá polite megjelölésű dinamikus területhez. (#4169).
+- Internet Explorer és más MSHTML vezérlők: Egyes esetekben amikor egy dokumentum egy másik dokumentumot tartalmaz, az már nem akadályozza meg a felhasználókat a tartalom bizonyos részeinek elérésében. (Kifejezetten keretkészleteken belüli keretkészletek esetében). (#4418)
+- Az NVDA bizonyos esetekben már nem omlik össze a Handy Tech braille kijelző használatakor. (#3709)
+- Windows Vista: Számos esetben már nem jelenik meg hibásan a "Belépési pont nem található" párbeszédpanel, pl. amikor az NVDA indítása asztali parancsikonról, vagy billentyűparanccsal történik. (#4235)
+- Eclipse legújabb verziói: A párbeszédpaneleken található szerkeszthető szöveges vezérlőkkel kapcsolatos súlyos hibákat javítottak ki. (#3872)
+- Outlook 2010: a kurzor mozgása az események, és találkozó felkérések területén már az elvárt módon működik. (#4126)
+- Egy dinamikus területen belül a nem dinamikusnak megjelölt tartalmakat (pl. aria-live="off") az NVDA már helyesen kezeli. (#4405)
+- Állapotsorról történő szövegfelolvasáskor, ha az adott szöveg névvel is el van látva, akkor már világosan elkülönül a név a szöveg első szavától. (#4430)
+- A védett szerkesztőmezőkben beírt szavak bemondása opció bekapcsolt állapotában sem mondja már be az NVDA a helyettesítő karaktereket szavakként új szó kezdésekor. (#4402)
+- Microsoft Outlook üzenetlista: az elemeket már nem adatelemekként jelenti be az NVDA. (#4439)
+- Eclipse IDE: A kódszerkesztő vezérlőben szöveg kijelölése esetén az NVDA már nem mondja be az egész kijelölést a kijelölés minden változásakor. (#2314)
+- Az Eclipse különböző verzióit - mint a Spring Tool Suite és az Android Developer Tools csomagban található verzió - az NVDA már Eclipse-ként azonosítja, és megfelelően kezeli. (#4360, #4454)
+- Internet Explorer és más MSHTML vezérlők (beleértve számos Windows 8 alkalmazást is): Az egérmutató követése, és az érintési parancsok is sokkal pontosabban működnek nagy felbontású (magas DPI számmal rendelkező) kijelzőkön, és olyankor is, amikor a dokumentumok nagyítási szintje változik. (#3494) 
+- Internet Explorer és más MSHTML vezérlők: Az egérmutató követése és az érintési parancsok használatával is már több gomb címkéje hangzik el. (#4173)
+
+
 = 2014.3 =
 
 == Újdonságok ==

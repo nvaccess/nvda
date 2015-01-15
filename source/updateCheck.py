@@ -28,6 +28,7 @@ import gui
 from logHandler import log
 import config
 import shellapi
+import winUser
 
 #: The URL to use for update checks.
 CHECK_URL = "http://www.nvda-project.org/updateCheck"
@@ -218,6 +219,7 @@ class UpdateResultDialog(wx.Dialog):
 
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 		self.Show()
 
 	def onDownloadButton(self, evt):
@@ -368,10 +370,11 @@ class UpdateDownloader(object):
 			_("Install Update"))
 		state["removeFile"] = self.destPath
 		saveState()
+		# #4475: ensure that the new process shows its first window, by providing SW_SHOWNORMAL
 		shellapi.ShellExecute(None, None,
 			self.destPath.decode("mbcs"),
 			u"--install -m",
-			None, 0)
+			None, winUser.SW_SHOWNORMAL)
 
 class DonateRequestDialog(wx.Dialog):
 	# Translators: The message requesting donations from users.
@@ -408,6 +411,7 @@ class DonateRequestDialog(wx.Dialog):
 
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 		self.Show()
 
 	def onDonate(self, evt):

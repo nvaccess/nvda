@@ -27,9 +27,11 @@ def _updateVersionFromVCS():
 	except:
 		pass
 
+# ticket:3763#comment:19: name must be str, not unicode.
+# Otherwise, py2exe will break.
 name="NVDA"
 longName=_("NonVisual Desktop Access")
-version="2014.4dev"
+version="2015.1dev"
 publisher="unknown"
 updateVersionType=None
 try:
@@ -38,7 +40,7 @@ except ImportError:
 	_updateVersionFromVCS()
 description=_("A free and open source screen reader for Microsoft Windows")
 url="http://www.nvaccess.org/"
-copyrightYears="2006-2014"
+copyrightYears="2006-2015"
 copyright=_("Copyright (C) {years} NVDA Contributors").format(
 	years=copyrightYears)
 aboutMessage=_(u"""{longName} ({name})

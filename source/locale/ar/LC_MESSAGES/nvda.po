@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-06 23:27+1000\n"
-"PO-Revision-Date: 2014-08-07 12:10+0200\n"
+"POT-Creation-Date: 2014-11-06 19:11+1000\n"
+"PO-Revision-Date: 2014-11-21 22:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.7\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -2949,7 +2949,7 @@ msgstr "تم تعديل %s"
 
 #. Translators: Reported when text is not revised.
 msgid "unrevised"
-msgstr "لم يتم تعديل %s"
+msgstr "لم يتم تعديله"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -3754,7 +3754,7 @@ msgstr "خلف {otherShape}"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
 msgid "{distance:.3g} points from left slide edge"
-msgstr "{distance:.3g }نقطة من الحافة اليسرى للشريحة"
+msgstr "{distance:.3g} نقطة من الحافة اليسرى للشريحة"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
 msgid "Off left slide edge by {distance:.3g} points"
@@ -3958,13 +3958,6 @@ msgstr "معجم صوت (%s)"
 #. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
 msgid "Temporary dictionary"
 msgstr "معجم مؤقت"
-
-#. Translators: Message shown to ask if user really wishes to quit NVDA.
-msgid "Are you sure you want to quit NVDA?"
-msgstr "هل أنت متأكد من رغبتك بالخروج من برنامج NVDA؟"
-
-msgid "Exit NVDA"
-msgstr "الخروج من البرنامج"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
@@ -4190,6 +4183,10 @@ msgstr "تبرع"
 msgid "E&xit"
 msgstr "ال&خروج من البرنامج"
 
+#. Translators: The title of the dialog to exit NVDA
+msgid "Exit NVDA"
+msgstr "الخروج من البرنامج"
+
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -4252,6 +4249,30 @@ msgstr "إنشاء &نسخة محمولة"
 msgid "&Continue running"
 msgstr "استم&رار التشغيل"
 
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"كل الإضافات معطلة الآن. سيتم تفعيلها في المرة التالية من إعادة تشغيل NVDA "
+"إلا إذا اخترت تعطيلها مرة أخرى."
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "ماذا تر&يد أن تفعل؟"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "الخروج"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "إعادة التشغيل"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "إعادة التشغيل مع تعطيل الإضافات"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "يرجى الانتظار"
@@ -4259,6 +4280,10 @@ msgstr "يرجى الانتظار"
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "مدير الإضافات البرمجية"
+
+#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgstr "كل الإضافات معطلة الآن. لتفعيلها, يجب عليك إعادة تشغيل NVDA."
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -4369,6 +4394,10 @@ msgstr "تم تثبيتها"
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "remove"
 msgstr "تم حزفها"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+msgid "suspended"
+msgstr "معطلة"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
@@ -4800,9 +4829,9 @@ msgstr "اللغة"
 msgid "&Save configuration on exit"
 msgstr "&حفظ الإعدادات عند الخروج من البرنامج"
 
-#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
-msgid "&Warn before exiting NVDA"
-msgstr "ال&تنبيه عند الخروج من البرنامج"
+#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
+msgid "Sho&w exit options when exiting NVDA"
+msgstr "إظ&هار خيارات الخروج عند الخروج من البرنامج"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -5358,6 +5387,18 @@ msgstr "الإعلان عن الإ&طارات"
 msgid "Report if &clickable"
 msgstr "الإعلان عن الكائنات التي تسمح ب&نقرها بالفأرة"
 
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "أ&ي مكان"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "ك&ل الكلمة"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Regular expression"
+msgstr "&تعبير قياسي"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "تعديل مدخلات المعجم"
@@ -5378,9 +5419,9 @@ msgstr "&ملحوظة"
 msgid "Case &sensitive"
 msgstr "&حساس لحالة الأحرف"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "تعبير &قياسي"
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "ال&نوع المطابقة:"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -5403,9 +5444,9 @@ msgstr "الكلمة البديلة"
 msgid "case"
 msgstr "حالة"
 
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
-msgid "Regexp"
-msgstr "تعبير قياسي"
+#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "نوع المطابقة"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
@@ -6161,11 +6202,11 @@ msgstr "{address} معين مسبقا كبداية لرؤوس الأعمدة"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "removed {address}    from column headers"
-msgstr "حذف {العنوان} من رأس الأعمدة"
+msgstr "حذف {address} من رأس الأعمدة"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "Cannot find {address}    in column headers"
-msgstr "تعذر وجود  {عنوان} في رؤوس الأعمدة"
+msgstr "تعذر وجود  {address} في رؤوس الأعمدة"
 
 msgid ""
 "Pressing once will set this cell as the first column header for any cells "
@@ -6177,19 +6218,19 @@ msgstr ""
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 msgid "Set {address} as start of row headers"
-msgstr "جعل {العنوان} كبداية لرأس العمود"
+msgstr "جعل {address} كبداية لرأس العمود"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 msgid "Already set {address} as start of row headers"
-msgstr "تعيين {العنوان} الحالي كي يكون بداية رأس الصفوف"
+msgstr "تعيين {address} الحالي كي يكون بداية رأس الصفوف"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 msgid "removed {address}    from row headers"
-msgstr "حذف {العنوان} من رؤوس الصفوف"
+msgstr "حذف {address} من رؤوس الصفوف"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 msgid "Cannot find {address}    in row headers"
-msgstr "تعذر وجود {العنوان} في رؤوس الأعمدة"
+msgstr "تعذر وجود {address} في رؤوس الأعمدة"
 
 msgid ""
 "Pressing once will set this cell as the first row header for any cells lower "
@@ -6209,7 +6250,7 @@ msgstr "الإعلان عن التعليقات الموجودة بالخانة �
 
 #. Translators: Dialog text for
 msgid "Editing comment for cell {address}"
-msgstr "تحرير تعليق خلية {العنوان}"
+msgstr "تحرير تعليق خلية {address}"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
@@ -6409,7 +6450,7 @@ msgstr "تحته خط لا يعمل"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Left aligned"
-msgstr "المحازاة لليسار"
+msgstr "المحاذاة لليسار"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "centered"
@@ -6417,7 +6458,7 @@ msgstr "الوسط"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Right aligned"
-msgstr "المحازاة لليمين"
+msgstr "المحاذاة لليمين"
 
 #. Translators: a an alignment in Microsoft Word
 msgid "Justified"
@@ -6480,134 +6521,11 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
-#~ msgid "No location information for navigator object"
-#~ msgstr "لا توجد بيانات متوفرة عن موضع مؤشر NVDA"
+#~ msgid "Are you sure you want to quit NVDA?"
+#~ msgstr "هل أنت متأكد من رغبتك بالخروج من برنامج NVDA؟"
 
-#~ msgid "No location information for screen"
-#~ msgstr "لا توجد بيانات عن أبعاد مؤشر NVDA "
+#~ msgid "&Warn before exiting NVDA"
+#~ msgstr "ال&تنبيه عند الخروج من البرنامج"
 
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr "قراءة عرض, وارتفاع, وموضع الكائن الحالي"
-
-#~ msgid "Set column header row"
-#~ msgstr "ضبط رأس العمود"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "إلغاء رأس العمود الذي تم ضبطه"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "بالضغط عليه مرة واحدة سيجعل الصف الحالي هو الصف الذي ينبغي البحث من خلاله "
-#~ "عن رءوس الأعمدة. وبالضغط عليه مرتين سيلغي الإعداد"
-
-#~ msgid "Set row header column"
-#~ msgstr "ضبط رأس الصف"
-
-#~ msgid "Cleared row header column"
-#~ msgstr "إلغاء رأس الصف الذي تم ضبطه"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "بالضغط عليه مرة واحدة سيجعل العمود الحالي هو العمود الذي ينبغي البحث من "
-#~ "خلاله عن رؤوس الصفوف. وبالضغط عليه مرتين سيلغي هذا الإعداد."
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "%s %s خلال %s %s"
-
-#~ msgid "Manual activate/edit"
-#~ msgstr "تنشيط يدوي"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "يحتوي ملف إعداداتك على أخطاء.\n"
-#~ "اضغط موافق لمعالجة تلك الأخطاء أو اضغط إلغاء إذا كنت ترغب في كتابة ملف "
-#~ "إعداداتك يدويا في وقت آخر لتصحيح الأخطاء. يمكنك الحصول على معلومات عن "
-#~ "الأخطاء بالاطلاع على ملف تقارير البرنامج.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "لا توجد تعليقات مستخلصة"
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "لم يتم العثور على نافذة التعليقات الآلية"
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "الإعلان عن أية ملاحظات بنافذة الملاحظات المولدة آليا"
-
-#~ msgid "Automatic comments:"
-#~ msgstr "التعليقات المستخلصة"
-
-#~ msgid "Translation:"
-#~ msgstr "الترجمة"
-
-#~ msgid "Comments:"
-#~ msgstr "نافذة التعليقات"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "لا يوجد استعراض مسطح لهذا الكائن"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "لا يوجد كائن في وضع الاستعراض المسطح"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr "تحريك الكائن المستعرض للكائن الذي يمثله النص في موضع مؤشر الاستعراض"
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "يرجى إغلاق محاورة الإعدادات الأخرى للبرنامج أولا"
-
-#~ msgid "Translation &table:"
-#~ msgstr "&جدول التحويل:"
-
-#~ msgid "beeps"
-#~ msgstr "صفير"
-
-#~ msgid "talk"
-#~ msgstr "كلام"
-
-#~ msgid "default action failed"
-#~ msgstr "فشل الفعل التلقائي"
-
-#~ msgid "layout %s"
-#~ msgstr "اللغة %s"
-
-#~ msgid "%s device found"
-#~ msgstr "الجهاز الذي تم العثور عليه هو %s"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, تلقائيا إلى %s"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "تكوين خاطئ لملف الإعدادات"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "خلل في تحليل ملف الإعدادات: %s"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "خلل في ملف الإعدادات '%s':\n"
-#~ " %s"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s مِن %s"
-
-#~ msgid ""
-#~ "This add-on seems to already be installed. Please remove the existing add-"
-#~ "on and try again."
-#~ msgstr ""
-#~ "يبدو أن الإضافة الجاري تنصيبها مثبتة بالفعل. يرجى حذف الإضافة الموجودة"
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr "تحميل إعدادات nvda المحفوظة واستبدال الإعدادات الحالية بها"
+#~ msgid "Regexp"
+#~ msgstr "تعبير قياسي"

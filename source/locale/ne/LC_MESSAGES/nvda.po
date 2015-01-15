@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr 2013.1:6039\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-11 19:10+1000\n"
-"PO-Revision-Date: 2014-08-07 11:02+0545\n"
+"POT-Creation-Date: 2014-11-06 19:11+1000\n"
+"PO-Revision-Date: 2014-11-07 16:10+0545\n"
 "Last-Translator: \n"
 "Language-Team: Him Prasad Gautam <drishtibachak@gmail.com>\n"
 "Language: ne\n"
@@ -2467,7 +2467,7 @@ msgstr "उपयोग निर्देशिका"
 
 #. Translators: A file extension label for NVDA add-on package.
 msgid "NVDA add-on package"
-msgstr "नेत्रवाणी थप-साधनको पोको"
+msgstr "नेत्रवाणी उपकर्मीको पोको"
 
 #. Translators: This is the name of the back key found on multimedia keyboards for controlling the web-browser.
 msgid "back"
@@ -3376,7 +3376,7 @@ msgid ""
 "You must be running NVDA to be able to install add-ons."
 msgstr ""
 "{path} बाट नेत्रवाणी थप शाधन भित्र्याउन सकिएन ।\n"
-"तपाइले नेत्रवाणी थप-साधन भित्र्याएको हुनु पर्छ ।"
+"तपाइले नेत्रवाणी उपकर्मी भित्र्याएको हुनु पर्छ ।"
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
 msgid ""
@@ -3962,13 +3962,6 @@ msgstr "आवाजको ढुकुटी %s"
 msgid "Temporary dictionary"
 msgstr "अस्ताई ढुकुटी"
 
-#. Translators: Message shown to ask if user really wishes to quit NVDA.
-msgid "Are you sure you want to quit NVDA?"
-msgstr "के तपाइले नेत्रवाणी बन्द गर्न चाहनु भएको हो?"
-
-msgid "Exit NVDA"
-msgstr "नेत्रवाणीको वहिर्गमन"
-
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
 msgstr "नेत्रवाणीको बारेमा"
@@ -4111,7 +4104,7 @@ msgstr "पाइथन कन्सोल"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
 msgid "Manage &add-ons"
-msgstr "&थप-साधनहरूको व्यवस्थापन "
+msgstr "&उपकर्मीहरूको व्यवस्थापन "
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create Portable copy..."
@@ -4193,6 +4186,10 @@ msgstr "दान गर्नु होस्"
 msgid "E&xit"
 msgstr "&बहिर्गमन"
 
+#. Translators: The title of the dialog to exit NVDA
+msgid "Exit NVDA"
+msgstr "नेत्रवाणीको वहिर्गमन"
+
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -4253,17 +4250,47 @@ msgstr "&फिरन्ते प्रति बनाउ ।"
 msgid "&Continue running"
 msgstr "&कार्यको निरन्तरता"
 
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"सबै उप-कर्मीहरू लाई असक्षम बनाइयो । यदी फेरी असक्षम गरिएन भने अर्को पल्ट नेत्रवाणी सुरु "
+"हुँदा यीनिहरू पुनः सक्रिय हुनेछन् ।"
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "तपाइ के गर्न&चाहानु हुन्छ?"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "वहिर्गमन"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "पुनः आरम्भ"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "उप-कर्मीहरू लाई असक्षम हुने गरि पुनः आरम्भ गर ।"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "कृपया पर्खनु होस्"
 
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
-msgstr "थप-साधनको व्यवस्थापक"
+msgstr "उपकर्मीको व्यवस्थापक"
+
+#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgstr ""
+"अब सबै उप-कर्मी असक्षम भए । . उप-कर्मीलाई सक्रिय गराउन नेत्रवाणीलाई तपाइले पुनः सुरुवात "
+"गर्नु पर्छ ।"
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
-msgstr "थप-साधन स्थापित भयो ।"
+msgstr "उपकर्मी स्थापित भयो ।"
 
 #. Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
 msgid "Package"
@@ -4283,11 +4310,11 @@ msgstr "लेखक"
 
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
-msgstr "&थप-साधनको बारेमा ..."
+msgstr "&उपकर्मीको बारेमा ..."
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "थप-साधन &सहयोग"
+msgstr "उपकर्मी &सहयोग"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -4302,22 +4329,22 @@ msgstr "&हटाउ"
 
 #. Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 msgid "&Get add-ons..."
-msgstr "&थप-साधनको प्राप्ति"
+msgstr "&उपकर्मीको प्राप्ति"
 
 #. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 msgid "Choose Add-on Package File"
-msgstr "थप-साधनको पोको बाट फाइल छान्नु होस् ।"
+msgstr "उपकर्मीको पोको बाट फाइल छान्नु होस् ।"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 msgid "NVDA Add-on Package (*.{ext})"
-msgstr "नेत्रवाणीको थप-साधन पोको(*.{ext})"
+msgstr "नेत्रवाणीको उपकर्मी पोको(*.{ext})"
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
 msgid ""
 "Failed to open add-on package file at %s - missing file or invalid file "
 "format"
-msgstr "%s मा थप-साधनको पोको खोल्न सकिएन । या त फाइल छैन वा फाइलको स्वरूप मिल्दैन ।"
+msgstr "%s मा उपकर्मीको पोको खोल्न सकिएन । या त फाइल छैन वा फाइलको स्वरूप मिल्दैन ।"
 
 #. Translators: A message asking the user if they really wish to install an addon.
 msgid ""
@@ -4326,7 +4353,7 @@ msgid ""
 "Addon: {summary} {version}\n"
 "Author: {author}"
 msgstr ""
-"के यो थप-साधनलाई तपाइ भित्र्याउन चाहनु हुन्छ ?केवल विश्वस्त स्रोतको थप-साधनलाई मात्र "
+"के यो उपकर्मीलाई तपाइ भित्र्याउन चाहनु हुन्छ ?केवल विश्वस्त स्रोतको उपकर्मीलाई मात्र "
 "भित्र्याउनु होला \n"
 " थप साधन: {summary} {version}\n"
 " लेखक: {author}"
@@ -4334,33 +4361,33 @@ msgstr ""
 #. Translators: Title for message asking if the user really wishes to install an Addon.
 #. Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
 msgid "Add-on Installation"
-msgstr "थप-साधनको स्थापना"
+msgstr "उपकर्मीको स्थापना"
 
 #. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
 msgid ""
 "A version of this add-on is already installed. Would you like to update it?"
 msgstr ""
-"यो थप-साधन को एउटा संस्करण पहिले नै भित्रिएको रहेछ । के तपाई पहिले नै भित्रि सकेको थप-"
+"यो उपकर्मी को एउटा संस्करण पहिले नै भित्रिएको रहेछ । के तपाई पहिले नै भित्रि सकेको थप-"
 "साधनलाई अद्यावधिक गर्न चाहनु हुन्छ ?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
-msgstr "थप-साधन स्थापना गर्दै छु ।"
+msgstr "उपकर्मी स्थापना गर्दै छु ।"
 
 #. Translators: The message displayed while an addon is being installed.
 msgid "Please wait while the add-on is being installed."
-msgstr "पर्खनु होस् है, नेत्रवाणीका थप-साधनहरू भित्रिँदै छ ।"
+msgstr "पर्खनु होस् है, नेत्रवाणीका उपकर्मीहरू भित्रिँदै छ ।"
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #, python-format
 msgid "Failed to install add-on  from %s"
-msgstr "%s वाट थप-साधन भित्र्याउन सकिएन ।"
+msgstr "%s वाट उपकर्मी भित्र्याउन सकिएन ।"
 
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
-msgstr "के तपाइ नेत्रवाणीबाट चयनित थप-साधन हटाउने कुरामा विश्वस्त हुनु हुन्छ ?"
+msgstr "के तपाइ नेत्रवाणीबाट चयनित उपकर्मी हटाउने कुरामा विश्वस्त हुनु हुन्छ ?"
 
 msgid "Remove Add-on"
-msgstr "&थप-साधनलाई हटाउ"
+msgstr "&उपकर्मीलाई हटाउ"
 
 #. Translators: The status shown for a newly installed addon before NVDA is restarted.
 msgid "install"
@@ -4369,6 +4396,10 @@ msgstr "भित्र्याउ"
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "remove"
 msgstr "हटाउ"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+msgid "suspended"
+msgstr "निलम्बित"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
@@ -4379,7 +4410,7 @@ msgid ""
 "Add-ons have been added or removed. You must restart NVDA for these changes "
 "to take effect. Would you like to restart now?"
 msgstr ""
-"थप-साधनहरूलाई हटाइयो अथवा थप गरियो । यसको प्रभावका लागि नेत्रवाणीलाई फेरी सुरुवात "
+"उपकर्मीहरूलाई हटाइयो अथवा थप गरियो । यसको प्रभावका लागि नेत्रवाणीलाई फेरी सुरुवात "
 "गर्नु पर्छ । के अहिले नै नेत्रवाणीलाई सुरुवात गरि हाल्ने हो ?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
@@ -4404,7 +4435,7 @@ msgstr "URL: {url}"
 
 #. Translators: title for the Addon Information dialog
 msgid "Add-on Information"
-msgstr "थप-साधन सम्बन्धी जानकारी "
+msgstr "उपकर्मी सम्बन्धी जानकारी "
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
@@ -4801,9 +4832,9 @@ msgstr "भाषा"
 msgid "&Save configuration on exit"
 msgstr "ब&हिर्गमन गर्दा अभियोजनलाई बचत गर"
 
-#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
-msgid "&Warn before exiting NVDA"
-msgstr "नेत्रवाणी बन्द हुँदा &सचेत गराऊ"
+#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
+msgid "Sho&w exit options when exiting NVDA"
+msgstr "नेत्रवाणी बन्द हुँदा विकल्प &देखाउ ।"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -5355,6 +5386,18 @@ msgstr "&कङ्काल बताउ"
 msgid "Report if &clickable"
 msgstr "&किटिक्क हुन्छ भने  बताउ"
 
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "&जहाँ पनि"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "पुरै &शब्द"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Regular expression"
+msgstr "नियमित &अभिव्यक्ति"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "ढुकुटी प्रविष्टि सम्पादन गर्नु होस् "
@@ -5375,9 +5418,9 @@ msgstr "&प्रतिक्रिया"
 msgid "Case &sensitive"
 msgstr "रुप &संवेदन सिल"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "नियमित &अभिव्यक्ति"
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "&किसिम:"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -5400,9 +5443,9 @@ msgstr "प्रतिस्थापन"
 msgid "case"
 msgstr "अवस्था"
 
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
-msgid "Regexp"
-msgstr "Regexp"
+#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "किसिम:"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
@@ -6476,39 +6519,3 @@ msgstr "HIMS ब्रेल चेतना/ब्रेल किनारा 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "विचरण वस्तु कहाँ छ पत्तो भएन ।"
-
-#~ msgid "No location information for screen"
-#~ msgstr "पर्दामा कहाँ निर भनेर पत्तो भएन ।"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr "चालू विचरण वस्तुको लम्बाइ, चौडाइ र स्थान बताउने छ ।"
-
-#~ msgid "Set column header row"
-#~ msgstr "महल शीर्षकको हरफ बनाउ"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "महल शिर्षक नभएको हरफ"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "एक पटक दबाउदा जहा महल शिर्षक फेला पार्नु छ त्यो हरफलाई चालु हरफ बनाउने छ । दुई "
-#~ "पटक दबाउदा अनुकुलतालाई हटाउने छ ।"
-
-#~ msgid "Set row header column"
-#~ msgstr "हरफ शीर्षकको महल बनाउ"
-
-#~ msgid "Cleared row header column"
-#~ msgstr "हरफ शीर्षक नभएको महल"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "एक पटक दबाउदा जहा हरफ शिर्षक फेला पार्नु छ त्यो महललाई चालु महल बनाउने छ । दुई "
-#~ "पटक दबाउदा अनुकुलतालाई हटाउने छ ।"

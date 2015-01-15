@@ -1,33 +1,72 @@
-Novidades do NVDA
+﻿Novidades do NVDA
 
 
 %!includeconf: ../changes.t2tconf
 
 Adaptado da tradução para Português do Brasil.
 
-Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana (adaptado por Rui Batista)
+Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana (adaptado por Rui Batista e Rui Fontes)
+
+= 2014.4 =
+
+== Novas Funcionalidades ==
+- Novos idiomas: Castelhano da Colômbia  e Punjabi
+- Agora é possível reiniciar o NVDA ou reiniciar o NVDA sem extras a partir da janela de saída do NVDA (#4057)
+ - O NVDA também pode ser iniciado com os extras desactivados usando a opção de linha de comando disable-addons.
+- Nos dicionários de voz, é agora possível especificar que uma regra só é aplicável se for uma palavra inteira, i.e. ou seja, não ocorre se fizer parte de uma palavra maior. (#1704)
+
+
+== Alterações ==
+- Caso o objeto para o qual se tenha movido, utilizando a navegação de objetos esteja dentro de um documento do modo de navegação, mas o objeto onde se encontrava anteriormente não estava, o modo de revisão é automaticamente alterado para modo de documento. Anteriormente, isso ocorria apenas quando o objeto de navegação era movido devido à mudança no foco. (#4369)
+- As listas de linhas Braille e de Sintetizadores, nas respectivas janelas de configuração, são agora ordenadas alfabeticamente, excepto Sem Braille/Sem voz, que se encontram sempre no fim. (#2724)
+- Actualizado o conversor Braille liblouis para a versão 2.6.0. (#4434, #3835)
+- No modo de navegação, pressionando "e" e "shift+e", para navegar para o próximo, ou anterior, campo de edição, agora inclui  as caixas combinadas editáveis. Isto inclui o campo de pesquisa da última versão da pesquisa do Google. (#4436)
+- Clicando com o botão esquerdo do rato no ícone do NVDA na barra do sistema agora abre o menu do NVDA em vez de não fazer nada. (#4459)
+
+
+ == Correcção de falhas ==
+ - Ao mover o foco de volta para  um documento do modo de navegação (isto é, usando alt+tab para retornar a uma página web já aberta), o cursor de exploração agora é posicionado adequadamente sob o cursor virtual, em lugar de colocar-se sob o controle que tem o foco (isto é, próximo a um link). (#4369)
+ - Na Apresentação de diapositivos do Powerpoint, o cursor de revisão agora acompanha corretamente  o cursor virtual. (#4370)
+ - No Mozilla Firefox e outros navegadores baseados em Gecko, o novo conteúdo numa região live será anunciado mesmo que o novo conteúdo tenha um tipo usável de ARIA live diferente do região live superior. E.g. Conteúdo marcado  como assertive é adicionado a uma região live marcada como polite. (#4169).
+ - No Internet Explorer e outros controlos MSHTML, no caso de um documento estar contido noutro documento já não causa a impedimento de leitura do documento, nomeadamente da frameset inserida noutra frameset (#4418)
+ - O NVDA já não cracha ao tentar usar uma linha Braille Handy Tech. (#3709)
+- No Windows Vista, um falso diálogo de "Ponto de Entrada Não Encontrado" já não é exibido em várias situações, tais como ao iniciar o NVDA pelo atalho do Ambiente de trabalho ou via pela tecla de atalho. (#4235)
+- Problemas sérios com controlos de texto editável em diálogos de versões recentes do Eclipse foram resolvidos. (#3872)
+- No Outlook 2010, a movimentação do cursor agora funciona como esperado nos campos de eventos e marcação de reuniões. (#4126)
+- Dentro de uma região Live, o conteúdo marcado como não sendo live, (e.g. aria-live="off") é agora correctamente  ignorado. (#4405)
+- Ao anunciar o texto de uma barra de estado, que tenha nome, o nome é agora correctamente separado da primeira palavra do texto da barra de estado. (#4430)
+- Em campos de edição de palavra-passe, mesmo com o anúncio de palavras escritas ligado, já não são anunciados m asteriscos ao pressionar Tab, Espaço ou Enter. (#4402)
+- Na lista de mensagens do  Microsoft Outlook, os itens já não são, sem necessidade, anunciados como Data Items. (#4439)
+- Quando se selecciona texto no campo de edição de código, no Eclipse IDE, a totalidade da selecção já não é anunciada de cada vez que a selecçãon muda. (#2314)
+- Várias versões do Eclipse, tais como Spring Tool Suite e a versão incluida no Android Developer Tools são agora reconhecidas como Eclipse, e tratadas correctamente. (#4360, #4454)
+- O seguimento do rato e a exploração por toque, no Internet Explorer e outros controlos MSHTML (incluindo muitas aplicações Windows 8), é agora muito mais precisa em monitores com alta definição ou quando o Zoom é alterado. (#3494) 
+- O seguimento do rato e a exploração por toque, no Internet Explorer e outros controlos MSHTML, agora anunciam a etiqueta de mais botões. (#4173)
+
+
+== Alterações para Desenvolvedores ==
+- Para executáveis que agrupam diferentes apps (e.g. javaw.exe), pode ser agora disponibilizado código numa app modules específica para cada app, em vez de usar o mesmo app module para todas as apps incluidas. (#4360)
+ - Ver a documentação do código para appModuleHandler.AppModule para detalhes.
+ - Implementado suporte para javaw.exe.
 
 
 = 2014.3 =
-
 == Novas características ==
 - Os sons tocados quando o NVDA inicia ou termina podem agora ser desactivados, por meio de uma nova opção no Diálogo de Definições Gerais. (#834)
 - A ajuda de extras agora pode ser acedida a partir do gestor de extras para extras que o suportem. (#2694)
 - Suporte para o Calendário no Microsoft Outlook 2007 e posteriores (#2943) incluindo:
- - anúncio da hora atual ao mover-se para ela com as setas;
- - indicação no caso de a hora seleccionada se encontrar dentro de algum compromisso;
+ - anúncio da hora atual ao mover-se para ela com as setas; - indicação no caso de a hora seleccionada se encontrar dentro de algum compromisso;
  - anúncio do compromisso selecionado ao premir tab;
  - Filtragem inteligente da data, de modo a anunciar a data apenas se a nova hora ou compromisso seleccionado  estiver num dia diferente do anterior.
 - Melhorado o suporte para a caixa de entrada e outras listas de mensagens no Outlook 2010 e pusteriores (#3834) incluindo:
  - Possibilidade de silenciar os cabeçalhos das colunas (como por exemplo assunto, de, etc), desativando a opção Anunciar os cabeçalhos de linhas e colunas das tabelas no Diálogo de Definições de Formatação de Documentos;
  - Possibilidade de usar os comandos de navegação de tabelas (control + alt + setas) para se mover pelas colunas separadamente.
 - Microsoft word: Quando não houver texto descritivo para uma imagem inserida no texto, o NVDA irá anunciar o título da imagem, caso o autor tenha definido um. (#4193)
-- Microsoft Word: Anúncio da indentação do parágrafo através do comando de anúncio de formatação (NVDA+f) automaticamente, caso a nova opção Anunciar indentação do parágrafo esteja activa, nas definições de formatação de documentos. (#4165).
+- Microsoft Word: Anúncio da indentação do parágrafo através do comando de anúncio de formatação (NVDA+f) automaticamente, caso a nova opção Anunciar indentação de parágrafos esteja activa, nas definições de formatação de documentos. (#4165).
 - Anúncio de textos  inseridos automaticamente, tais como um novo marcador, numeração ou indentação com tab ao premir enter em documentos editáveis  e campos de texto. (#4185)
 - Microsoft word: ao premir NVDA+alt+c, irá anunciar o texto do comentário caso o cursor esteja sobre um. (#3528)
 - Melhorado o suporte para a leitura automática dos cabeçalhos de colunas e linhas no Microsoft Excel (#3568) incluindo:
  - Support para o esquema de intervalo com nome definido no Excel para identificar cabeçalhos de células (compatível com o leitor de ecrã Jaws)
- - Os comandos para definir cabeçalhos de colunas    (NVDA+shift+c) e definir cabeçalhos de linhas (NVDA+shift+r) agora armazenam as configurações   na folha de cálculo, parao que  estejam disponíveis da próxima vez que esta for aberta, e estarão disponíveis para outros leitores de ecrã que  suportem o esquema de intervalo com nome definido.
+ - Os comandos para definir cabeçalhos de colunas    (NVDA+shift+c) e definir cabeçalhos de linhas (NVDA+shift+r) agora armazenam as configurações   na folha de cálculo, para que  estejam disponíveis da próxima vez que esta for aberta, e estarão disponíveis para outros leitores de ecrã que  suportem o esquema de intervalo com nome definido.
  - Estes comandos também poderão ser usados múltiplas vezes por folha de cálculo para definir diferentes cabeçalhos para diferentes regiões.
 - Suporte para leitura automática de cabeçalhos de linhas e colunas das tabelas no Microsoft Word (#3110) incluindo:
  - Suporte para marcadores do MS Word para identificar cabeçalhos das células (compatível com o leitor de ecrã Jaws)
@@ -55,10 +94,8 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana (adaptado por
  - Premindo esse comando duas vezes, produzir-se-á o comportamento anterior e anunciará a informação da localização para o controle completo.
 - Novo idioma: Catalão.
 
-
 == Alterações ==
 - Atualizado o transcritor braille liblouispara a versão 2.5.4. (#4103)
-
 
 == Correcção de falhas ==
 - No Google Chrome e navegadores baseados neste, certos blocos de texto (tais como os providos de ênfase) já não são repetidos quando é anunciado o texto de uma alerta ou diálogo. (#4066)

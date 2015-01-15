@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010 James Teh <jamie@jantrid.net>
+#Copyright (C) 2010-2014 NV Access Limited
 
 """App module for PuTTY
 """
@@ -14,9 +14,11 @@ import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible
 
 class AppModule(appModuleHandler.AppModule):
+	# Allow this to be overridden for derived applications.
+	TERMINAL_WINDOW_CLASS = "PuTTY"
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.windowClassName == "PuTTY" and isinstance(obj,IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT:
+		if obj.windowClassName ==  self.TERMINAL_WINDOW_CLASS and isinstance(obj,IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT:
 			try:
 				clsList.remove(DisplayModelEditableText)
 			except ValueError:

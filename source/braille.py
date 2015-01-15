@@ -309,6 +309,8 @@ def _getDisplayDriver(name):
 
 def getDisplayList():
 	displayList = []
+	# The display that should be placed at the end of the list.
+	lastDisplay = None
 	for loader, name, isPkg in pkgutil.iter_modules(brailleDisplayDrivers.__path__):
 		if name.startswith('_'):
 			continue
@@ -320,11 +322,17 @@ def getDisplayList():
 			continue
 		try:
 			if display.check():
-				displayList.append((display.name, display.description))
+				if display.name == "noBraille":
+					lastDisplay = (display.name, display.description)
+				else:
+					displayList.append((display.name, display.description))
 			else:
 				log.debugWarning("Braille display driver %s reports as unavailable, excluding" % name)
 		except:
 			log.error("", exc_info=True)
+	displayList.sort(key=lambda d : d[1].lower())
+	if lastDisplay:
+		displayList.append(lastDisplay)
 	return displayList
 
 class Region(object):

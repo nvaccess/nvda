@@ -787,7 +787,11 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return start,end
 
 	def _getTextRange(self,start,end):
-		text=self.obj.ppObject.textRange.text[start:end].replace('\x0b','\n')
+		# #4619: First let's "normalise" the text, i.e. get rid of the CR/LF mess
+		text=self.obj.ppObject.textRange.text
+		text=text.replace('\r\n','\n')
+		#Now string slicing will be okay
+		text=text[start:end].replace('\x0b','\n')
 		text=text.replace('\r','\n')
 		return text
 
@@ -1103,6 +1107,7 @@ class AppModule(appModuleHandler.AppModule):
 		import gui
 		# Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 		d=wx.Dialog(None,title=_("Waiting for Powerpoint..."))
+		d.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 		gui.mainFrame.prePopup()
 		d.Show()
 		self.hasTriedPpAppSwitch=True
