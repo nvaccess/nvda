@@ -24,7 +24,7 @@ Một số tính năng nổi bật như:
 - Hỗ trợ nhiều kiểu màn hình nổi khác nhau
 - có thể chạy trực tiếp từ ổ USB hay các thiết bị lưu trữ khác mà không cần phải cài đặt
 - Dễ dàng cài đặt với chương trình cài đặt có tích hợp tiếng nói
-- Hỗ trợ giao diện với 44 ngôn ngữ khác nhau
+- Hỗ trợ giao diện với 45 ngôn ngữ khác nhau
 - Hỗ trợ các hệ điều hành Windows 32bit và 64 bit
 - có khả năng chạy trong cửa sổ đăng nhập của Windows và trong các màn hình bảo vệ khác
 - Hỗ trợ tương tác với các giao diện phổ biến như Microsoft Active Accessibility, Java Access Bridge, IAccessible2 và UI Automation (UI Automation chỉ được hỗ trợ trong Windows 7 và cao hơn)
@@ -33,7 +33,7 @@ Một số tính năng nổi bật như:
 
 ++ Tính quốc tế ++
 Một điều quan trọng là tất cả mọi người trên thế giới không quan trọng ngôn ngữ đều có quyền ngang nhau trong việc tiếp cận với công nghệ.
-Bên cạnh tiếng anh thì NVDA được dịch sang 44 ngôn ngữ khác nhau như: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Brazilian Portuguese, Bulgarian, Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Greek, Georgian, German, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Korean, Nepali, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
+Bên cạnh tiếng anh thì NVDA được dịch sang 45 ngôn ngữ khác nhau như: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Brazilian Portuguese, Bulgarian, Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Greek, Georgian, German, Hebrew, Hindi, Hungarian, Icelandic, Irish, Catalan, Italian, Japanese, Korean, Nepali, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
 
 ++ Hỗ trợ các bộ tổng hợp tiếng nói ++
 Ngoài việc hỗ trợ giao diện với nhiều ngôn ngữ khác nhau, NVDA còn hỗ trợ bộ tổng hợp tiếng nói có khả năng đọc được nội dung với nhiều ngôn ngữ.
@@ -327,7 +327,7 @@ Sử dụng các phím tắt sau để duyệt qua các đối tượng:
 | Chuyển đến đối tượng đang được focus | NVDA+numpadMinus | NVDA+backspace | none | Chuyển đến đối tượng đang được chọn (focus) và đặt con trỏ duyệt text vào vị trí con trỏ nháy |
 | Kích hoạt đối tượng hiện tại | NVDA+numpadEnter | NVDA+enter | double tap | Kích hoạt đối tượng đang duyệt (giống như kích hoạt đối tượng đang được focus) |
 | Chuyển focus hoặc con trỏ nháy vào vị trí duyệt text trên đối tượng đang duyệt | NVDA+shift+numpadMinus | NVDA+shift+backspace | none | Ấn 1 lần để chuyển focus đến đối tượng đang duyệt, ấn 2 lần để chuyển con trỏ nháy vào vị trí duyệt text của đối tượng đó |
-| Thông báo chiều của đối tượng đang duyệt | NVDA+numpadDelete | NVDA+delete | none | Thông báo vị trí của đối tượng đang duyệt, bao gồm cả vị trí so với mép trái, mép trên của màn hình và chiều rộng, chiều cao của đối tượng đó |
+|Thông báo hướng của đối tượng đang được duyệt | NVDA+numpadDelete | NVDA+delete | none | Thông báo vị trí của text hoặc đối tượng tại nơi con trỏ duyệt text. Ví dụ theo tỷ lệ phần trăm của màn hình, khoảng cách đến các mép của trang hoặc tỉ lệ theo độ phân giải màn hình. Ấn nhanh 2 lần để có thêm thông tin. |
 %kc:endInclude
 
 Chú ý: Bạn cần tắt phím NumLock để sử dụng các phím số bên bàn phím số trong bàn phím Desktop
@@ -518,12 +518,20 @@ Dưới đây là phím tắt để giúp bạn quay trở lại chế độ duy
 
 + Phím tắt cho một số ứng dụng +
 NVDA cung cấp một số phím tắt mở rộng để hỗ trợ người dùng thao tác trên một số ứng dụng.
+++ Microsoft Word ++
+%kc:beginInclude
+|| Tên | Phím tắt | Mô tả |
+| Thông báo chú thích hiện tại | NVDA+Alt+c | Thông báo chú thích ở nơi vị trí con trỏ nháy hiện tại | 
+| Chọn tiêu đề cho cột | NVDA+shift+c | Ấn 1 lần để lựa chọn ô này là ô tiêu đề đầu tiên của các cột, tiêu đề này sẽ tự động được thông báo khi bạn di chuyển giữa các cột trong bảng. Ấn nhanh 2 lần để bỏ lựa chọn này | 
+| Chọn tiêu đề cho hàng | NVDA+shift+r | Ấn 1 lần để lựa chọn ô này là ô tiêu đề đầu tiên của các hàng, tiêu đề này sẽ tự động được thông báo khi bạn di chuyển giữa các hàng trong bảng. Ấn nhanh 2 lần để bỏ lựa chọn này | | 
+%kc:endInclude
 
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Chức năng | Phím tắt | Mô tả |
-| Set tiêu đề cho cột | NVDA+shift+c | Ấn 1 lần để Set tiêu đề cho cột, ấn 2 lần để hủy bỏ tiêu đề | 
-| Set tiêu đề cho hàng | NVDA+shift+r | Ấn 1 lần để Set tiêu đề cho hàng, ấn 2 lần để hủy bỏ tiêu đề | 
+| Set tiêu đề cho cột | NVDA+shift+c | Ấn 1 lần để lựa chọn ô này là ô tiêu đề đầu tiên của các cột, tiêu đề này sẽ tự động được thông báo khi bạn di chuyển giữa các cột trong bảng. Ấn nhanh 2 lần để bỏ lựa chọn này | 
+| Set tiêu đề cho hàng | NVDA+shift+r | Ấn 1 lần để lựa chọn ô này là ô tiêu đề đầu tiên của các hàng, tiêu đề này sẽ tự động được thông báo khi bạn di chuyển giữa các hàng trong bảng. Ấn nhanh 2 lần để bỏ lựa chọn này | 
+| Thông báo chú thích | NVDA+alt+c | Thông báo chú thích ở ô hiện tại nếu có |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -579,6 +587,9 @@ Nếu được chọn, NVDA sẽ lưu các thay đổi của bạn ngay sau khi 
 
 ==== Cảnh báo khi thoát NVDA NVDA ====
 tùy chọn này sẽ cho phép hiển thị một cửa sổ hỏi bạn có chắc chắn muốn thoát NVDA hay không
+
+==== Âm thanh khi khởi động và thoát NVDA ====
+Lựa chọn tùy chọn này nếu bạn muốn có thâm thanh thông báo khi khởi động và thoát NVDA.
 
 ==== Mức độ log ====
 cho phép bạn chọn cấp độ log trong NVDA.
@@ -916,6 +927,7 @@ Bạn có thể chọn các mục sau:
 - số trang
 - số dòng
 - Canh lề cho dòng
+- Căn lề cho đoạn (ví dụ căn lề cho dòng đầu tiên của đoạn, v.v)
 - Bảng
 - tiêu đề cho hàng và cột trong bảng
 - Vị trí của ô trong bảng

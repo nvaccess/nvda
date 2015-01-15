@@ -21,7 +21,7 @@ Főbb jellemzői:
 - A frissíthető braille kijelzők támogatása, a számítógépes braille bevitellel együtt
 - Telepítés nélküli futtatás egy USB hordozható eszköz használatával
 - Könnyen használható, beszédtámogatást nyújtó telepítő
-- A felület többnyelvű támogatása
+- A felület többnyelvű  támogatása
 - A Windows 32 és 64 bites verzióinak támogatása
 - A Windows bejelentkező és biztonsági képernyőinek támogatása
 - Általános kisegítő lehetőséget biztosító felületek támogatása, mint például Microsoft Active Accessibility, Java Access Bridge, IAccessible2 és UI Automation
@@ -30,7 +30,7 @@ Főbb jellemzői:
 
 ++ Honosítás ++
 
-Fontos, hogy az emberek a világ bármely részén, nyelvi korlátok nélkül, egyenlően hozzáférhessenek a különböző, a technológia nyújtotta lehetőségekhez. Az NVDA jelenleg 43 nyelvre lett lefordítva, többek között: Afrikai, Amhara, Aragóniai, Albán, Arab, Brazil Portugál, Bolgár, Farsi, Horvát, Cseh, Dán, Holland, Finn, Francia, Galíciai, Görög, Grúz, Német, Héber, Indiai, Magyar, Olasz, Japán, Norvég, Kóreai, Nepáli, Lengyel, Portugál, Román, Orosz, Szerb, Szlovák, Szlovén, Spanyol, Svéd, Tamil, Hagyományos Kínai, Tájföldi, Ukrán és Vietnámi nyelvre, sőt még eszperantóra is.
+Fontos, hogy az emberek a világ bármely részén, nyelvi korlátok nélkül, egyenlően hozzáférhessenek a különböző, a technológia nyújtotta lehetőségekhez. Az NVDA jelenleg 47 nyelvre lett lefordítva, többek között: Afrikai, Amhara, Aragóniai, Albán, Arab, Brazil Portugál, Bolgár, Farsi, Horvát, Katalán, Cseh, Dán, Holland, Finn, Francia, Galíciai, Görög, Grúz, Német, Héber, Indiai, Magyar, Olasz, Japán, Norvég, Kóreai, Nepáli, Lengyel, Portugál, Román, Orosz, Szerb, Szlovák, Szlovén, Spanyol, Svéd, Tamil, Hagyományos Kínai, Tájföldi, Ukrán és Vietnámi nyelvre, sőt még eszperantóra is.
 
 ++ Beszédszintetizátor Támogatás ++
 
@@ -117,6 +117,7 @@ A hordozható verzió elkészítéséhez nyomja meg a "folytatás" gombot. A tel
 ++ Az NVDA Elindítása ++
 
 Ha ön az NVDA telepítős változatát használja,  az NVDA a control+alt+n billentyűparanccsal (ha ezt engedélyezte a telepítéskor), vagy az enter billentyű megnyomásával a start menü NVDA almenüjéből elindítható. A futtatás menüből is elindíthatja a programot (start gomb +r), írja be a megjelenő mezőbe, hogy NVDA, majd nyomja meg az enter billentyűt.
+Megadhat  néhány [parancssori beállítást #CommandLineOptions] is, mely lehetővé teszi az NVDA különféle módú újraindítását (-r), quit (-q), bővítmények letiltása (--disable-addons), stb.
 
 Ha a hordozható exe fájl verziót szeretné elindítani, nyissa meg a kicsomagolt fájlok mappáját, jelölje ki az nvda.exe fájlt, nyomja meg az enter billentyűt, vagy kattintson kétszer az nvda.exe fájlra.
 
@@ -323,7 +324,7 @@ Az elemek közötti közlekedéshez használja a következő parancsokat:
 | A navigátor kurzor és az áttekintő kurzor áthelyezése | NVDA+minusz a numerikus billentyűzeten | NVDA+backspace | nincs | A navigátor kurzort az aktuális fókuszhoz, az áttekintő kurzort ha lehetséges, a kurzor aktuális pozíciójához helyezi. |
 | Az aktuális objektum aktiválása | NVDA+enter a numerikus billentyűzeten | NVDA+enter | dupla érintés | Aktiválja az aktuális elemet (pl. enter, szimpla vagy dupla kattintás). |
 | A kurzor áthelyezése a navigátor kurzorhoz | NVDA+shift+Minusz a numerikus billentyűzeten | NVDA+shift+backspace | nincs | A kurzort egyszeri lenyomásra a navigátor kurzorhoz, háromszori lenyomásra pedig az áttekintő kurzorhoz helyezi |
-| Elem pozíciójának bemondása | NVDA+delete a numerikus billentyűzeten | NVDA+delete | nincs | Felolvassa az adott elem pozícióját a képernyőn |
+| Elem pozíciójának bemondása | NVDA+delete a numerikus billentyűzeten | NVDA+delete | nincs | Bemondja az áttekintő kurzor alatt található szöveg vagy objektum elhelyeszkedését. Ez tartalmazhatja a szöveg százalékos elhelyezkedését az aktuális dokumentumban, a lapszéltől vett távolságot, vagy a pontos képernyő pozíciót. Kétszeri gyors megnyomásra további információ hangzik el. |
 %kc:endInclude
 
 Megjegyzés: A funkciók megfelelő működéséhez A numlock billentyűnek kikapcsolt állapotban kell lennie.
@@ -501,11 +502,26 @@ A következő billentyűparanccsal visszaléphet a beágyazott objektumot tartal
 + Alkalmazásfüggő NVDA billentyűparancsok +
 Az NVDA néhány alkalmazásban saját billentyűparanccsal rendelkezik, melyek megkönnyítik a szoftverek akadálymentes használatát.
 
+++ Microsoft Word ++
+%kc:beginInclude
+|| Név | Billentyűparancs | Leírás |
+| Aktuális megjegyzés bemondása | NVDA+Alt+c | Bemondja a rendszerkurzornál található megjegyzés szövegét. | 
+| Oszlopfejek beállítása | NVDA+shift+c | Egyszer megnyomva az NVDA-nak megadható, hogy a táblázatnak ez a sora tartalmazza az oszlopfejeket, így az NVDA ezeket automatikusan felolvassa, ha az alatta lévő sorokban oszlopról oszlopra lépünk. Kétszer gyorsan megnyomva törli ezt a beállítást. | 
+| Sorfejek beállítása | NVDA+shift+r | Egyszer megnyomva az NVDA-nak megadható, hogy a táblázatnak ez az oszlopa tartalmazza a sorfejeket, így az NVDA ezeket automatikusan felolvassa, ha az utána álló oszlopokban sorról sorra lépünk. Kétszer gyorsan megnyomva törli ezt a beállítást. | 
+%kc:endInclude
+
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Funkció | Billentyűparancs | Leírás |
 | Oszlopfejek beállítása | NVDA+shift+c | Egyszer megnyomva az NVDA-nak megadható, hogy a táblázatnak ez a sora tartalmazza az oszlopfejeket, így az NVDA ezeket automatikusan felolvassa, ha az alatta lévő sorokban oszlopról oszlopra lépünk. Kétszer gyorsan megnyomva törli ezt a beállítást. | 
-| Sorfejek beállítása | NVDA+shift+r | Egyszer megnyomva az NVDA-nak megadható, hogy a táblázatnak ez az oszlopa tartalmazza a sorfejeket, így az NVDA ezeket automatikusan felolvassa, ha a utána álló oszlopokban sorról sorra lépünk. Kétszer gyorsan megnyomva törli ezt a beállítást. | 
+| Sorfejek beállítása | NVDA+shift+r | Egyszer megnyomva az NVDA-nak megadható, hogy a táblázatnak ez az oszlopa tartalmazza a sorfejeket, így az NVDA ezeket automatikusan felolvassa, ha az utána álló oszlopokban sorról sorra lépünk. Kétszer gyorsan megnyomva törli ezt a beállítást. | 
+| Megjegyzés bemondása | NVDA+alt+c | Bemondja az aktuális cellához tartozó megjegyzést, amennyiben létezik. |
+%kc:endInclude
+
+++ Microsoft PowerPoint ++
+%kc:beginInclude
+|| Név | Billentyűparancs | Leírás |
+| Váltás a beszélő jegyzeteinek olvasására | control+shift+s |Vált a beszélő jegyzetei és az aktuális fólia tartalma között. A képernyő tartalma nem változik, de a felhasználó felolvastathatja az NVDA-val a megjelenő jegyzeteket.  | 
 %kc:endInclude
 
 ++ foobar2000 ++
@@ -550,9 +566,14 @@ Fontos: a nyelv megváltoztatása csak az NVDA újbóli elindításával követk
 
 Ez egy jelölőnégyzet, amivel vezérelheti az NVDA-t, hogy elmentse-e a beállításokat kilépéskor. Alapértelmezetten ez be van kapcsolva.
 
-===== Figyelmesztetés megjelenítése az NVDA bezárásakor =====
+===== A kilépési lehetőségek mutatása az NVDA-ból való kilépéskor =====
+Ez a beállítás egy jelölőnégyzet, mely lehetővé teszi, hogy az NVDA-ból való kilépéskor megjelenjen-e egy párbeszédpanel az NVDA-ból való kilépéskori lehetőségek felkínálásával.
+Ha be van jelölve, egy párbeszédpanel jelenik meg, ahol eldönthető, hogy kilépünk-e az NVDA-ból, bővítmények nélkül indítjuk újra, vagy a bővítmények betöltésével együtt.
+Ha nincs bejelölve, az NVDA azonnal kilép.
 
-Ennek a jelölőnégyzetnek a bejelölése esetén az NVDA kilépéskor egy figyelmeztető párbeszédpanelt jelenít meg. A nem gombbal tovább használhatja az NVDA-t, az igen gomb hatására a program kilép. Ha ez a jelölőnégyzet nincs bejelölve, az NVDA+Q vagy a menüparancsok hatására az NVDA ereszkedő hangjelzést ad és kérdés nélkül bezárul.
+===== Hangjelzés lejátszása az NVDA indításakor és kilépéskor =====
+
+A jelölőnégyzet bejelölésekor az NVDA egy hangjelzést játszik le a program elindításakor és bezárulásakor (ez az alapértelmezett).
 
 ===== Naplózási szint =====
 
@@ -972,7 +993,9 @@ Be lehet állítani a:
 - szerkesztői változások jelzése,
 - helyesírási hibák,
 - oldalszámok,
-- sorok száma,
+- Sorszámok,
+- Sorigazítás,
+- Bekezdés igazítás (pl. változó sorigazítás, első sorigazítás),
 - táblázatok,
 - táblázat sor/oszlop fejlécei,
 - táblázat sor/oszlop koordinátái,
@@ -1122,6 +1145,7 @@ A bővítmény kezelőben (amelyet az NVDA menü -eszközök almenüjében érhe
 Ezeket az NVDA közössége készíti, amivel a program funkcióit igyekeznek kibővíteni. Lehet ez egy egyszerűbb script (időjárás jelentés lekérdező program), vagy egy új beszédszintetizátor támogatása is.
 
 A bővítmény kezelő egy listában jeleníti meg a már feltelepített bővítményeket. A csomag nevét és annak verzióját már a listából is megtudhatja, a kiegészítő hosszabb leírását a "bővítmény névjegye" gomb aktiválásával érheti el.
+Ha tartozik a kiegészítőhöz súgó, azt a "bővítmény súgója" gomb aktiválásával érheti el.
 
 Egy új bővítmény telepítéséhez nyomja meg a "hozzáadás" gombot. Ekkor egy fájlválasztó ablak jelenik meg, ahol kiválaszthatja a telepítendő bővítmény fájlját. Amikor ez megtörtént, a "bezárás" gomb aktiválásával tudja véglegesíteni a műveletet. A bővítmény betöltéséhez az NVDA újraindítása szükséges, ezt a bezárás után fel is ajánlja a program.
 
@@ -1636,7 +1660,80 @@ Alább a BRLTTY billentyűparancsait olvashatja, a kijelzők helyes beállítás
 | A kurzor az aktuális braille cellához helyezése | route |
 %kc:endInclude
 
++ Braille vezérlőtípus- és állapotrövidítések +
+Ahhoz, hogy a braille kijelzőn minél több információ elférjen, a következő rövidítéseket alkalmazzuk a vezérlőelemek típusának és állapotának a feltüntetésére.
+
+|| Rövidítés | Vezérlő típus |
+| btn | gomb |
+| cbo | kombinált lista |
+| chk | jelölőnégyzet |
+| dlg | párbeszédablak |
+| edt | szerkesztőmező |
+| gra | kép |
+| cN | táblázat oszlopszáma , pl. c1, c2. |
+| rN | táblázat oszlopszáma , pl. r1, r2. |
+| hN | címsorszint, pl. h1, h2. |
+| lnk | hivatkozás |
+| lst | lista |
+| vlnk | meglátogatott hivatkozás |
+| mnu | menü |
+| mnubar | menüsor |
+| rbtn | választógomb |
+| tb | táblázat |
+| tv | fanézet |
+| lv N | a fanézet elemének hierarchikus szintjét mutatja N|
+| ``-----`` | elválasztó |
+
+Továbbá a következő állapotjelzőket alkalmazzuk:
+|| Rövidítés | Vezérlőelem állapota |
+| ... | Jelzi, ha egy elem támogatja az automatikus kiegészítést |
+| ( ) | jelzi, ha egy elem (pl. egy jelölőnégyzet) - nincs bejelölve |
+| (x) | jelzi, ha egy elem (pl. egy jelölőnégyzet) be van jelölve |
+| (-) | jelzi, ha egy elem (pl. egy jelölőnégyzet) félig van bejelölve |
+| - | jelzi, ha egy elem (pl. egy fanézetelem) összecsukható |
+| + | jelzi, ha egy elem (pl. egy fanézetelem) kiterjeszthető |
+| clk | jelzi, ha egy elem kattintható |
+| ro | jelzi, ha egy elem (pl. egy szerkesztőmező) csak olvasható |
+| sel | jelzi, ha egy elem ki van jelölve |
+| submnu | jelzi, ha egy elemnek van felugró további eleme (általában egy almenü) |
+
 + Haladó témák +
+
+++ Parancssori beállítások ++[CommandLineOptions]
+Az NVDA képes elfogadni egy vagy több olyan beállítást, mely az NVDA indulásakor módosítja a program működését.
+Annyi beállítást adhat meg, amennyire csak szüksége van.
+Ezeket a beállításokat az NVDA parancsikonjának tulajdonságlapján a parancsmezőben, a Windows futtatás (windows r) párbeszédpanelének parancsmezőjében, vagy a parancssorban lehet megadni. 
+A beállítási lehetőségeket az NVDA futtatható programfájljának nevétől és egymástól szóközzel kell elválasztani. 
+Például: az NVDA parancsikonjában, amely a telepítéskor keletkezik, benne van az -r kapcsoló, mely az NVDA-t arra utasítja, hogy zárja be a futó példányt, mielőtt az újat megnyitná. 
+Egy másik hasznos beállítás a --disable-addons, amely az NVDA-t arra utasítja, hogy minden futó bővítményt állítson le.
+Ez a beállítás lehetővé teszi, hogy megállapítsuk, hogy egy problémát egy bővítmény okoz-e, és ha igen, azt elháríthassuk.
+Például: a futtatás ablakban a következő parancs kiadásával kiléphet a futó NVDA-ból:
+
+nvda -q
+
+Egyes beállítások megadhatók rövid és hosszú változatban, mások csak hosszú változatban. Azoknál, amelyeknél van rövid és hosszú változat, ezek tetszőlegesen használhatók, például így:
+| nvda -rm | Ez kilép az NVDA jelenleg futó példányából, majd elindítja az NVDA egy új példányát bejelentkező hangok és egyebek nélkül, stb. |
+| nvda -rm --disable-addons | Ugyanaz, mint a fenti, csak a bővítményeket is tiltja. |
+
+Egyes parancssori beállítások elfogadnak megadható paramétereket, mint a naplózás részletessége, a konfigurációs mappa helye. Ezeket a paramétereket a rövid változat esetén szóközzel, hosszú változat esetén egyenlőségjellel (=)  kell a beállítás után írni, például: 
+| nvda -l 10 | Arra utasítja az NVDA-t, hogy a naplózás szintje a nyomkövetés legyen. |
+| nvda --log-file=c:\nvda.log | Arra utasítja az NVDA-t, hogy a naplóját a c:\nvda.log fájlba írja. |
+| nvda --log-level=20 -f c:\nvda.log | Arra utasítja az NVDA-t, hogy a naplózási szintje az információ legyen, a naplóját a c:\nvda.log fájlba írja. |
+
+Az NVDA parancssori beállításai a következők:
+|| Rövid | Hosszú | Leírás |
+| -h | --help | Ismerteti a parancssori beállításokat és kilép |
+| -q | --quit | Kilép az NVDA éppen futó példányából |
+| -r | --replace | Kilép az NVDA aktuálisan futó példányából, és újat indít |
+| -k | --check-running | Kilépési kóddal jelentést ad arról, hogy az NVDA fut-e. Ha fut, a kilépési kód 0, ha nem fut, 1. |
+| -f NAPLÓFÁJLNÉV | --log-file=NAPLÓFÁJLNÉV | Megadja a naplófájlt, amibe az NVDA a naplóját írja |
+| -l NAPLÓZÁSSZINT | --log-level=NAPLÓZÁSSZINT | A naplózott üzenetek legalacsonyabb szintje (nyomkövetés 10, információ 20, figyelmeztetés 30, hiba 40, kritikus hiba 50), az alapértelmezett a figyelmeztetés |
+| -c BEÁLLÍTÁSMAPPA | --config-path=BEÁLLÍTÁSMAPPA | Annak a mappának az útvonala, ahol az NVDA a beállításait tárolja |
+| -m | --minimal | Hang, interfész, üzenet stb. nélkül indul |
+| -s | --secure | Biztonsági mód (tiltja a Python konzolt) |
+| None | --disable-addons | Nem indulnak el a bővítmények |
+| None | --no-sr-flag  | Nem változtatja meg a globális képernyőbeállítás jelölőnégyzetének állapotát |
+| None | --install | Beavatkozás és képernyőkimenet nélkül telepíti az NVDA-t. |
 
 ++ Az írásjelek haladó testreszabása ++
 

@@ -47,6 +47,8 @@ interface NvdaInProcUtils {
 
 	error_status_t winword_getTextInRange([in] const long windowHandle, [in] const int startOffset, [in] const int endOffset, [in] const long formatConfig, [out] BSTR* text); 
 
+	error_status_t winword_moveByLine([in] const long windowHandle, [in] const int offset, [in] const int moveBack, [out] int* newOffset);
+
 	error_status_t sysListView32_getGroupInfo([in] long windowHandle, [in] int groupIndex,  [out,string] BSTR* header, [out,string] BSTR* footer, [out] int* state);
 
 	error_status_t getActiveObject([in] handle_t bindingHandle, [in,string] const wchar_t* progid, [out] IUnknown** ppUnknown);

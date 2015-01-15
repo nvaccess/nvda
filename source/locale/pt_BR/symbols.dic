@@ -13,7 +13,7 @@ complexSymbols:
 ; fim de período	(?<=[^\s;]);(?=\s|$)
 : fim de período	(?<=[^\s:]):(?=\s|$)
 # Others
-ponto decimal	(?<=\d)\.(?=\d)
+ponto decimal	(?<=\d),(?=\d)
 ' em palavra	(?<=[^\W_])['’]
 número negativo	(?<!\w)-(?=[$£€¥]?\d)
 
@@ -93,7 +93,7 @@ _	sublinhado	most
 ‎	esquerda para direita	char
 ‏	direita para esquerda	char
 ■	barra vertical cortada	some
-➔	seta direita	some
+➔	seta à direita	some
 §	parágrafo	all
 °	graus	some
 «	abre aspas duplas
@@ -108,7 +108,7 @@ _	sublinhado	most
 ±	mais ou menos	most
 ×	vezes	most
 ÷	dividido por	most
-←	seta esquerda	some
-→	seta direita	some
+←	seta à esquerda	some
+→	seta à direita	some
 ✓	marca	some
 ✔	marca	some

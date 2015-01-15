@@ -11,6 +11,7 @@ import sys
 import threading
 import codecs
 import ctypes
+import weakref
 import wx
 import globalVars
 import tones
@@ -192,16 +193,13 @@ class MainFrame(wx.Frame):
 		self._popupSettingsDialog(DictionaryDialog,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
 
 	def onExitCommand(self, evt):
-		canExit=False
 		if config.conf["general"]["askToExit"]:
-			if isInMessageBox:
-				return
-			# Translators: Message shown to ask if user really wishes to quit NVDA.
-			if messageBox(_("Are you sure you want to quit NVDA?"), _("Exit NVDA"), wx.YES_NO|wx.ICON_WARNING) == wx.YES:
-				canExit=True
+			self.prePopup()
+			d = ExitDialog(self)
+			d.Raise()
+			d.Show()
+			self.postPopup()
 		else:
-			canExit=True
-		if canExit:
 			wx.GetApp().ExitMainLoop()
 
 	def onGeneralSettingsCommand(self,evt):
@@ -458,6 +456,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		item = self.menu.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)
 
+		self.Bind(wx.EVT_TASKBAR_LEFT_DOWN, self.onActivate)
 		self.Bind(wx.EVT_TASKBAR_RIGHT_DOWN, self.onActivate)
 
 	def Destroy(self):
@@ -479,12 +478,24 @@ class SysTrayIcon(wx.TaskBarIcon):
 
 def initialize():
 	global mainFrame
+	if mainFrame:
+		raise RuntimeError("GUI already initialized")
 	mainFrame = MainFrame()
 	wx.GetApp().SetTopWindow(mainFrame)
 
 def terminate():
 	global mainFrame
-	mainFrame.Destroy()
+	# This is called after the main loop exits because WM_QUIT exits the main loop
+	# without destroying all objects correctly and we need to support WM_QUIT.
+	# Therefore, any request to exit should exit the main loop.
+	wx.CallAfter(mainFrame.Destroy)
+	# #4460: We need another iteration of the main loop
+	# so that everything (especially the TaskBarIcon) is cleaned up properly.
+	# ProcessPendingEvents doesn't seem to work, but MainLoop does.
+	# Because the top window gets destroyed,
+	# MainLoop thankfully returns pretty quickly.
+	wx.GetApp().MainLoop()
+	mainFrame = None
 
 def showGui():
  	wx.CallAfter(mainFrame.showGui)
@@ -581,6 +592,7 @@ class WelcomeDialog(wx.Dialog):
 		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)
 		self.capsAsNVDAModifierCheckBox.SetFocus()
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	def onOk(self, evt):
 		config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"] = self.capsAsNVDAModifierCheckBox.IsChecked()
@@ -590,8 +602,8 @@ class WelcomeDialog(wx.Dialog):
 		try:
 			config.conf.save()
 		except:
-			pass
-		self.Close()
+			log.debugWarning("could not save",exc_info=True)
+		self.EndModal(wx.ID_OK)
 
 	@classmethod
 	def run(cls):
@@ -651,6 +663,7 @@ class LauncherDialog(wx.Dialog):
 
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	def onLicenseAgree(self, evt):
 		for ctrl in self.actionButtons:
@@ -676,6 +689,69 @@ class LauncherDialog(wx.Dialog):
 		d = cls(mainFrame)
 		d.Show()
 		mainFrame.postPopup()
+
+class ExitDialog(wx.Dialog):
+	_instance = None
+
+	def __new__(cls, parent):
+		# Make this a singleton.
+		inst = cls._instance() if cls._instance else None
+		if not inst:
+			return super(cls, cls).__new__(cls, parent)
+		return inst
+
+	def __init__(self, parent):
+		inst = ExitDialog._instance() if ExitDialog._instance else None
+		if inst:
+			return
+		# Use a weakref so the instance can die.
+		ExitDialog._instance = weakref.ref(self)
+		# Translators: The title of the dialog to exit NVDA
+		super(ExitDialog, self).__init__(parent, title=_("Exit NVDA"))
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+
+		if globalVars.appArgs.disableAddons:
+			# Translators: A message in the exit Dialog shown when all add-ons are disabled.
+			addonsDisabledLabel=wx.StaticText(self,-1,label=_("All add-ons are now disabled. They will be re-enabled on the next restart unless you choose to disable them again."))
+			mainSizer.Add(addonsDisabledLabel)
+
+		actionSizer=wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for actions list in the Exit dialog.
+		actionsLabel=wx.StaticText(self,-1,label=_("What would you like to &do?"))
+		actionSizer.Add(actionsLabel)
+		actionsListID=wx.NewId()
+		self.actions = [
+		# Translators: An option in the combo box to choose exit action.
+		_("Exit"),
+		# Translators: An option in the combo box to choose exit action.
+		_("Restart"),
+		# Translators: An option in the combo box to choose exit action.
+		_("Restart with add-ons disabled")]
+		self.actionsList=wx.Choice(self,actionsListID,choices=self.actions)
+		self.actionsList.SetSelection(0)
+		actionSizer.Add(self.actionsList)
+		mainSizer.Add(actionSizer,border=10,flag=wx.CENTER)
+
+		mainSizer.Add(self.CreateButtonSizer(wx.OK | wx.CANCEL))
+		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
+		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
+		mainSizer.Fit(self)
+		self.Sizer = mainSizer
+		self.actionsList.SetFocus()
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+
+	def onOk(self, evt):
+		action=self.actionsList.GetSelection()
+		if action == 0:
+			wx.GetApp().ExitMainLoop()
+		elif action == 1:
+			queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
+		elif action == 2:
+			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,True)
+		self.Destroy()
+
+	def onCancel(self, evt):
+		self.Destroy()
 
 class ExecAndPump(threading.Thread):
 	"""Executes the given function with given args and kwargs in a background thread while blocking and pumping in the current thread."""
@@ -713,6 +789,7 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 		self.timer = wx.PyTimer(self.Pulse)
 		self.timer.Start(1000)
 		self.Raise()
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	def Pulse(self):
 		super(IndeterminateProgressDialog, self).Pulse()
@@ -729,6 +806,10 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 		if pbConf["progressBarOutputMode"] in ("speak", "both") and self._speechCounter == 0:
 			# Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 			speech.speakMessage(_("Please wait"))
+
+	def IsActive(self):
+		#4714: In wxPython 3, ProgressDialog.IsActive always seems to return False.
+		return winUser.isDescendantWindow(winUser.getForegroundWindow(), self.Handle)
 
 	def done(self):
 		self.timer.Stop()

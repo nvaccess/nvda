@@ -23,6 +23,17 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
+bool fetchIA2Attributes(IAccessible2* pacc2, map<wstring,wstring>& attribsMap) {
+	BSTR attribs=NULL;
+	pacc2->get_attributes(&attribs);
+	if(!attribs) {
+		return false;
+	}
+	IA2AttribsToMap(attribs,attribsMap);
+	SysFreeString(attribs);
+	return true;
+}
+
 IAccessible2* findAriaAtomic(IAccessible2* pacc2,map<wstring,wstring>& attribsMap) {
 	map<wstring,wstring>::iterator i=attribsMap.find(L"atomic");
 	bool atomic=(i!=attribsMap.end()&&i->second.compare(L"true")==0);
@@ -38,12 +49,8 @@ IAccessible2* findAriaAtomic(IAccessible2* pacc2,map<wstring,wstring>& attribsMa
 			if(pdispParent) {
 				IAccessible2* pacc2Parent=NULL;
 				if(pdispParent->QueryInterface(IID_IAccessible2,(void**)&pacc2Parent)==S_OK&&pacc2Parent) {
-					BSTR parentAttribs=NULL;
-					pacc2Parent->get_attributes(&parentAttribs);
-					if(parentAttribs) {
-						map<wstring,wstring> parentAttribsMap;
-						IA2AttribsToMap(parentAttribs,parentAttribsMap);
-						SysFreeString(parentAttribs);
+					map<wstring,wstring> parentAttribsMap;
+					if(fetchIA2Attributes(pacc2Parent,parentAttribsMap)) {
 						pacc2Atomic=findAriaAtomic(pacc2Parent,parentAttribsMap);
 					}
 					pacc2Parent->Release();
@@ -71,8 +78,13 @@ bool getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewTe
 				if(varChildren[i].vt==VT_DISPATCH) {
 					IAccessible2* pacc2Child=NULL;
 					if(varChildren[i].pdispVal&&varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)&pacc2Child)==S_OK) {
-						if(getTextFromIAccessible(textBuf,pacc2Child)) {
-							gotText=true;
+						map<wstring,wstring> childAttribsMap;
+						fetchIA2Attributes(pacc2Child,childAttribsMap);
+						auto i=childAttribsMap.find(L"live");
+						if(i==childAttribsMap.end()||i->second.compare(L"off")!=0) {
+							if(getTextFromIAccessible(textBuf,pacc2Child)) {
+								gotText=true;
+							}
 						}
 						pacc2Child->Release();
 					}
@@ -110,8 +122,13 @@ bool getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewTe
 						if(paccHypertext->get_hyperlink(hyperlinkIndex,&paccHyperlink)==S_OK) {
 							IAccessible2* pacc2Child=NULL;
 							if(paccHyperlink->QueryInterface(IID_IAccessible2,(void**)&pacc2Child)==S_OK) {
-								if(getTextFromIAccessible(textBuf,pacc2Child)) {
-									gotText=true;
+								map<wstring,wstring> childAttribsMap;
+								fetchIA2Attributes(pacc2Child,childAttribsMap);
+								auto i=childAttribsMap.find(L"live");
+								if(i==childAttribsMap.end()||i->second.compare(L"off")!=0) {
+									if(getTextFromIAccessible(textBuf,pacc2Child)) {
+										gotText=true;
+									}
 								}
 								charAdded=true;
 								pacc2Child->Release();
@@ -217,19 +234,12 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	pserv->Release();
 	if(!pacc2) return;
 	//Retreave the IAccessible2 attributes, and if the object is not a live region then ignore the event.
-	BSTR attribs=NULL;
-	pacc2->get_attributes(&attribs);
-	if(!attribs) {
+	map<wstring,wstring> attribsMap;
+	if(!fetchIA2Attributes(pacc2,attribsMap)) {
 		pacc2->Release();
 		return;
 	}
-	map<wstring,wstring> attribsMap;
-	IA2AttribsToMap(attribs,attribsMap);
-	SysFreeString(attribs);
-	map<wstring,wstring>::iterator i;
-	i=attribsMap.find(L"live");
-	bool isRegionRoot=(i!=attribsMap.end());
-	i=attribsMap.find(L"container-live");
+	auto i=attribsMap.find(L"container-live");
 	bool live=(i!=attribsMap.end()&&(i->second.compare(L"polite")==0||i->second.compare(L"assertive")==0||i->second.compare(L"rude")==0));
 	if(!live) {
 		pacc2->Release();
@@ -251,22 +261,40 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 		allowText=(i->second.find(L"text",0)!=wstring::npos);
 		allowAdditions=(i->second.find(L"additions",0)!=wstring::npos);
 	} 
-	//Only handle show events if additions are allowed and this is not the root of a region.
-	if(eventID==EVENT_OBJECT_SHOW&&(!allowAdditions||isRegionRoot)) {
+	attribsMap.clear();
+	//Only handle show events if additions are allowed
+	if(eventID==EVENT_OBJECT_SHOW&&!allowAdditions) {
 		pacc2->Release();
 		return;
 	}
 	// If this is a show event and this is not the root of the region and there is a text parent, 
 	// We can ignore this event as there will be text events which can handle this better
 	if(eventID==EVENT_OBJECT_SHOW) {
-	bool ignoreShowEvent=false;
+		bool ignoreShowEvent=false;
 		IDispatch* pdispParent=NULL;
 		pacc2->get_accParent(&pdispParent);
 		if(pdispParent) {
+			// check for text on parent
 			IAccessibleText* paccTextParent=NULL;
 			if(pdispParent->QueryInterface(IID_IAccessibleText,(void**)&paccTextParent)==S_OK&&paccTextParent) {
 				ignoreShowEvent=true;
 				paccTextParent->Release();
+			}
+			if(!ignoreShowEvent) {
+				// Check for useful container-live on parent, as if missing or off, then child must be the root 
+				// Firstly, we assume we are the root of the region and therefore should ignore the event
+				ignoreShowEvent=true;
+				IAccessible2* pacc2Parent=NULL;
+				if(pdispParent->QueryInterface(IID_IAccessible2,(void**)&pacc2Parent)==S_OK) {
+					if(fetchIA2Attributes(pacc2Parent,attribsMap)) {
+						i=attribsMap.find(L"container-live");
+						if(i!=attribsMap.end()&&(i->second.compare(L"polite")==0||i->second.compare(L"assertive")==0||i->second.compare(L"rude")==0)) {
+							// There is a valid container-live that is not off, so therefore the child is definitly not the root
+							ignoreShowEvent=false;
+						}
+					}
+					pacc2Parent->Release();
+				}
 			}
 			pdispParent->Release();
 		}

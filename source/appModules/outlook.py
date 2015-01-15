@@ -22,6 +22,7 @@ import speech
 import ui
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
+from NVDAObjects.window.winword import WordDocument
 from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation
 from NVDAObjects.UIA import UIA
@@ -69,6 +70,7 @@ class AppModule(appModuleHandler.AppModule):
 		import gui
 		# Translators: The title for the dialog shown while Microsoft Outlook initializes.
 		d=wx.Dialog(None,title=_("Waiting for Outlook..."))
+		d.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 		gui.mainFrame.prePopup()
 		d.Show()
 		self._hasTriedoutlookAppSwitch=True
@@ -128,6 +130,8 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0,UIAGridRow)
 		if not isinstance(obj,IAccessible):
 			return
+		if WordDocument in clsList:
+			clsList.insert(0,OutlookWordDocument)
 		role=obj.role
 		windowClassName=obj.windowClassName
 		states=obj.states
@@ -314,7 +318,8 @@ class CalendarView(IAccessible):
 		if endDate!=startDate:
 			endText="%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, endTime, None),endText)
 		CalendarView._lastStartDate=startDate
-		return "%s to %s"%(startText,endText)
+		# Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+		return _("{startTime} to {endTime}").format(startTime=startText,endTime=endText)
 
 	def isDuplicateIAccessibleEvent(self,obj):
 		return False
@@ -337,11 +342,15 @@ class CalendarView(IAccessible):
 				except COMError:
 					return super(CalendarView,self).reportFocus()
 				t=self._generateTimeRangeText(start,end)
-				speech.speakMessage("Appointment %s, %s"%(p.subject,t))
+				# Translators: A message reported when on a calendar appointment in Microsoft Outlook
+				speech.speakMessage(_("Appointment {subject}, {time}").format(subject=p.subject,time=t))
 			else:
 				v=e.currentView
-				selectedStartTime=v.selectedStartTime
-				selectedEndTime=v.selectedEndTime
+				try:
+					selectedStartTime=v.selectedStartTime
+					selectedEndTime=v.selectedEndTime
+				except COMError:
+					return super(CalendarView,self).reportFocus()
 				timeSlotText=self._generateTimeRangeText(selectedStartTime,selectedEndTime)
 				startLimit=u"%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedStartTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedStartTime, None))
 				endLimit=u"%s %s"%(winKernel.GetDateFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.DATE_LONGDATE, selectedEndTime, None),winKernel.GetTimeFormat(winKernel.LOCALE_USER_DEFAULT, winKernel.TIME_NOSECONDS, selectedEndTime, None))
@@ -350,7 +359,8 @@ class CalendarView(IAccessible):
 				i.sort('[Start]')
 				i.IncludeRecurrences =True
 				if i.find(query):
-					timeSlotText="has appointment "+timeSlotText
+					# Translators: a message when the current time slot on an Outlook Calendar has an appointment
+					timeSlotText=_("has appointment")+" "+timeSlotText
 				speech.speakMessage(timeSlotText)
 		else:
 			self.event_valueChange()
@@ -427,8 +437,22 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 		role=super(UIAGridRow,self).role
 		if role==controlTypes.ROLE_TREEVIEW:
 			role=controlTypes.ROLE_TREEVIEWITEM
+		elif role==controlTypes.ROLE_DATAITEM:
+			role=controlTypes.ROLE_LISTITEM
 		return role
 
 	def setFocus(self):
 		super(UIAGridRow,self).setFocus()
 		eventHandler.queueEvent("gainFocus",self)
+
+class OutlookWordDocument(WordDocument):
+
+	def _get_shouldCreateTreeInterceptor(self):
+		# #2975: If this WordDocument is displaying a sent message, then it should be read with browse mode.
+		try:
+			return self.appModule.nativeOm.activeInspector().currentItem.sent
+		except (COMError,NameError,AttributeError):
+			return False
+
+	def _get_role(self):
+		return controlTypes.ROLE_DOCUMENT if self.shouldCreateTreeInterceptor else super(OutlookWordDocument,self).role

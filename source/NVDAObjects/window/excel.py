@@ -234,7 +234,12 @@ class ExcelWorksheet(ExcelBase):
 		return True
 
 	def fetchAssociatedHeaderCellText(self,cell,columnHeader=False):
-		cellRegion=cell.excelCellObject.currentRegion
+		# #4409: cell.currentRegion fails if the worksheet is protected.
+		try:
+			cellRegion=cell.excelCellObject.currentRegion
+		except COMError:
+			log.debugWarning("Possibly protected sheet")
+			return None
 		if cellRegion.count==1:
 			minRow=maxRow=minColumn=maxColumn=None
 		else:
@@ -246,10 +251,22 @@ class ExcelWorksheet(ExcelBase):
 			if columnHeader:
 				for headerRowNumber in xrange(info.rowNumber,info.rowNumber+info.rowSpan): 
 					headerCell=self.excelWorksheetObject.cells(headerRowNumber,cell.columnNumber)
+					# The header could be  merged cells. 
+					# if so, fetch text from the first in the merge as that always contains the content
+					try:
+						headerCell=headerCell.mergeArea.item(1)
+					except (COMError,NameError,AttributeError):
+						pass
 					textList.append(headerCell.text)
 			else:
 				for headerColumnNumber in xrange(info.columnNumber,info.columnNumber+info.colSpan): 
 					headerCell=self.excelWorksheetObject.cells(cell.rowNumber,headerColumnNumber)
+					# The header could be  merged cells. 
+					# if so, fetch text from the first in the merge as that always contains the content
+					try:
+						headerCell=headerCell.mergeArea.item(1)
+					except (COMError,NameError,AttributeError):
+						pass
 					textList.append(headerCell.text)
 			text=" ".join(textList)
 			if text:

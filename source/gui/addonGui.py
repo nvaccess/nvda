@@ -11,6 +11,7 @@ import languageHandler
 import gui
 from logHandler import log
 import addonHandler
+import globalVars
 
 class AddonsDialog(wx.Dialog):
 	_instance = None
@@ -29,6 +30,10 @@ class AddonsDialog(wx.Dialog):
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		entriesSizer=wx.BoxSizer(wx.VERTICAL)
+		if globalVars.appArgs.disableAddons:
+			# Translators: A message in the add-ons manager shown when all add-ons are disabled.
+			addonsDisabledLabel=wx.StaticText(self,-1,label=_("All add-ons are now disabled. To enable add-ons you must restart NVDA."))
+			mainSizer.Add(addonsDisabledLabel)
 		# Translators: the label for the installed addons list in the addons manager.
 		entriesLabel=wx.StaticText(self,-1,label=_("Installed Add-ons"))
 		entriesSizer.Add(entriesLabel)
@@ -82,6 +87,7 @@ class AddonsDialog(wx.Dialog):
 		self.SetSizer(mainSizer)
 		self.refreshAddonsList()
 		self.addonsList.SetFocus()
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	def OnAddClick(self,evt):
 		# Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
@@ -151,7 +157,10 @@ class AddonsDialog(wx.Dialog):
 				del progressDialog
 		finally:
 			if closeAfter:
-				self.onClose(None)
+				# #4460: If we do this immediately, wx seems to drop the WM_QUIT sent if the user chooses to restart.
+				# This seems to have something to do with the wx.ProgressDialog.
+				# The CallLater seems to work around this.
+				wx.CallLater(1, self.Close)
 
 	def OnRemoveClick(self,evt):
 		index=self.addonsList.GetFirstSelected()
@@ -170,6 +179,9 @@ class AddonsDialog(wx.Dialog):
 		elif addon.isPendingRemove:
 			# Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 			return _("remove")
+		elif globalVars.appArgs.disableAddons:
+			# Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+			return _("suspended")
 		else:
 			# Translators: The status shown for an addon when its currently running in NVDA.
 			return _("running")

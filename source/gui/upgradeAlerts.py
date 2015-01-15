@@ -39,6 +39,7 @@ class NewLaptopKeyboardLayout(wx.Dialog):
 		whatsNewButton.SetFocus()
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	def onClose(self, evt):
 		config.conf["upgrade"]["newLaptopKeyboardLayout"] = True

@@ -29,6 +29,7 @@ import winUser
 import appModuleHandler
 import winKernel
 import treeInterceptorHandler
+import browseMode
 import scriptHandler
 import ui
 import braille
@@ -413,8 +414,8 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("No location information"))
 			return
 		ui.message(locationText)
-	# Translators: Input help mode message for report object dimensions command.
-	script_navigatorObject_currentDimensions.__doc__=_("Reports location and size information about the text position or object at the review cursor. Pressing twice may provide further detail.") 
+	# Translators: Description for report review cursor location command.
+	script_navigatorObject_currentDimensions.__doc__=_("Reports information about the location of the text or object at the review cursor. Pressing twice may provide further detail.") 
 	script_navigatorObject_currentDimensions.category=SCRCAT_OBJECTNAVIGATION
 
 	def script_navigatorObject_toFocus(self,gesture):
@@ -812,16 +813,22 @@ class GlobalCommands(ScriptableObject):
 			if focus in ti:
 				# Update the focus, as it will have cached that there is no tree interceptor.
 				focus.treeInterceptor = ti
+				# If we just happened to create a browse mode TreeInterceptor
+				# Then ensure that browse mode is reported here. From the users point of view, browse mode was turned on.
+				if isinstance(ti,browseMode.BrowseModeTreeInterceptor) and not ti.passThrough:
+					browseMode.reportPassThrough(ti,False)
+					braille.handler.handleGainFocus(ti)
 			return
 
-		if not isinstance(vbuf, virtualBuffers.VirtualBuffer):
+		if not isinstance(vbuf, browseMode.BrowseModeTreeInterceptor):
 			return
-		# Toggle virtual buffer pass-through.
+		# Toggle browse mode pass-through.
 		vbuf.passThrough = not vbuf.passThrough
-		# If we are enabling pass-through, the user has explicitly chosen to do so, so disable auto-pass-through.
-		# If we're disabling pass-through, re-enable auto-pass-through.
-		vbuf.disableAutoPassThrough = vbuf.passThrough
-		virtualBuffers.reportPassThrough(vbuf)
+		if isinstance(vbuf,virtualBuffers.VirtualBuffer):
+			# If we are enabling pass-through, the user has explicitly chosen to do so, so disable auto-pass-through.
+			# If we're disabling pass-through, re-enable auto-pass-through.
+			vbuf.disableAutoPassThrough = vbuf.passThrough
+		browseMode.reportPassThrough(vbuf)
 	# Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
 	script_toggleVirtualBufferPassThrough.__doc__=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.")
 	script_toggleVirtualBufferPassThrough.category=inputCore.SCRCAT_BROWSEMODE

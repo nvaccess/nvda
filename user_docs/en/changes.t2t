@@ -3,50 +3,127 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.1 =
+
+== New Features ==
+- You can now add new symbols in the Symbol Pronunciation dialog. (#4354)
+- In the Input Gestures dialog, you can use the new "Filter by" field to show only gestures containing specific words. (#4458)
+- NVDA now automatically reports new text in mintty. (#4588)
+- In the browse mode Find dialog, there is now an option to perform a case sensitive search. (#4584)
+- Quick navigation (h for heading etc) plus Elements List (NVDA+f7) are now available in Microsoft Word documents by turning on browse mode with NVDA+space. (#2975)
+- Reading HTML messages in Microsoft Outlook 2007 and higher has been majorly improved as Browse mode is automatically enabled for these messages. If browse mode is not enabled in some rare situations, you can force it on with NVDA+space. (#2975) 
+
+
+== Changes ==
+- In NVDA's Document Formatting settings dialog, the option to report spelling errors now has a shortcut key (alt+r). (#793)
+- NVDA will now use the synthesizer/voice's language for character and symbol processing (including punctuation symbol names), regardless of whether automatic language switching is turned on. To turn off this feature so that NVDA again uses its interface language, uncheck the new option in Voice settings called Trust Voice's language when processing characters and symbols. (#4210)
+
+
+== Bug Fixes ==
+- In Microsoft Excel, handle the case when row and column header cells are merged. E.g. if A1 and B1 are merged, then B2 will now have A1 and B1 reported as its column header, rather than nothing at all. (#4617)
+- When editing the content of a text box in Microsoft PowerPoint 2003, NVDA will correctly report the content of each line. Previously lines would increasingly be off by one character for each new paragraph. (#4619)
+- All of NVDA's dialogs are now centred on the screen, improving visual presentation and usability. (#3148)
+- In Skype for desktop, when entering an introductory message to add a contact, entering and moving through the text now works correctly. (#3661)
+- When focus moves to a new itemn in tree views in the Eclipse IDE, if the previously focused item is a check box, it is no longer incorrectly announced. (#4586)
+- In the Microsoft Word spell check dialog, the next error will be automatically reported when the last one has been changed or ignored using respective shortcut keys. (#1938)
+- Text can again be read correctly in places such as Tera Term Pro's terminal window and documents in Balabolka. (#4229)
+- Focus now correctly returns to the document being edited When finishing input composition of text in Korean and other east Asian languages while editing within a frame in Internet Explorer and other MSHTML documents. (#4045)
+- In the Input Gestures dialog, when selecting a keyboard layout for a keyboard gesture being added, pressing escape now closes the menu as expected instead of closing the dialog. (#3617)
+- When removing an add-on, the add-on directory is now correctly deleted after restarting NVDA. Previously, you had to restart twice. (#3461)
+
+
+== Changes for Developers ==
+- Updated wxPython to 3.0.2.0. (#3763)
+
+
+= 2014.4 =
+
+== New Features ==
+- New languages: Colombian Spanish, Punjabi.
+- It is now possible to restart NVDA or restart NVDA with add-ons disabled from NVDA's exit dialog. (#4057)
+ - NVDA can also be started with add-ons disabled by using the --disable-addons command line option.
+- In speech dictionaries, it is now possible to specify that a pattern should only match if it is a whole word; i.e. it does not occur as part of a larger word. (#1704)
+
+
+== Changes ==
+- If an object you have moved to with object navigation is inside a browse mode document, but the object you were on previously was not, the review mode is automatically set to document. Previously, this only happened if the navigator object was moved due to the focus changing. (#4369)
+- The Braille display and Synthesizer lists in the respective settings dialogs are now alphabetically sorted except for No braille/No speech, which are now at the bottom. (#2724)
+- Updated liblouis braille translator to 2.6.0. (#4434, #3835)
+- In browse mode, pressing e and shift+e to navigate to edit fields now includes editable combo boxes. This includes the search box in the latest versionn of Google Search. (#4436)
+- Clicking the NVDA icon in the Notification Area with the left mouse button now opens the NVDA menu instead of doing nothing. (#4459)
+
+
+== Bug Fixes ==
+- When moving focus back to a browse mode document (e.g. alt+tabbing to an already opened web page), the review cursor is properly positioned at the virtual caret, rather than the focused control (e.g. a nearby link). (#4369)
+- In Powerpoint slide shows, the review cursor correctly follows the virtual caret. (#4370)
+- In Mozilla Firefox and other Gecko-based browsers, new content within a live region will be announced even if the new content has a usable ARIA live type different to the parent live region; e.g. when content marked as assertive is added to a live region marked as polite. (#4169)
+- In Internet Explorer and other MSHTML controls, some cases where a document is contained within another document no longer prevent the user from accessing some of the content (specifically, framesets inside framesets). (#4418)
+- NVDA no longer crashes when attempting to use a Handy Tech braille display in some cases. (#3709)
+- In Windows Vista, a spurious "Entry Point Not Found" dialog is no longer displayed in several cases such as when starting NVDA from the Desktop shortcut or via the shortcut key. (#4235)
+- Serious problems with editable text controls in dialogs in recent versions of Eclipse have been fixed. (#3872)
+- In Outlook 2010, moving the caret now works as expected in the location field of appointments and meeting requests. (#4126)
+- Inside a live region, content which is marked as not being live (e.g. aria-live="off") is now correctly ignored. (#4405)
+- When reporting the text of a status bar that has a name, the name is now correctly separated from the first word of the status bar text. (#4430)
+- In password entry fields with speaking of typed words enabled, multiple asterisks are no longer pointlessly reported when beginning new words. (#4402)
+- In the Microsoft Outlook message list, items are no longer pointlessly announced as Data Items. (#4439)
+- When selecting text in the code editing control in the Eclipse IDE, the entire selection is no longer announced every time the selection changes. (#2314)
+- Various versions of Eclipse, such as Spring Tool Suite and the version included in the Android Developer Tools bundle, are now recognised as Eclipse and handled appropriately. (#4360, #4454)
+- Mouse tracking and touch exploration in Internet Explorer and other MSHTML controls (including many Windows 8 applications) is now much more accurate  on high DPI displays or when document zoom is changed. (#3494) 
+- Mouse tracking and touch exploration in Internet Explorer and other MSHTML controls will now announce the label of more buttons. (#4173)
+- When using a Papenmeier BRAILLEX braille display with BrxCom, keys on the display now work as expected. (#4614)
+
+
+== Changes for Developers ==
+- For executables which host many different apps (e.g. javaw.exe), code can now be provided to load specific app modules for each app instead of loading the same app module for all hosted apps. (#4360)
+ - See the code documentation for appModuleHandler.AppModule for details.
+ - Support for javaw.exe is implemented.
+
+
 = 2014.3 =
 
 == New Features ==
 - The sounds played when NVDA starts and exits can be disabled via a new option in the General Settings dialog. (#834)
 - Help for add-ons can be accessed from the Add-ons Manager for add-ons which support this. (#2694)
 - Support for the Calendar in Microsoft Outlook 2007 and above (#2943) including:
- - Announcement of the current time when moving around with the arrows,
- - Indication if the selected time is within any appointments,
- - announcement of the selected appointment when pressing tab
+ - Announcement of the current time when moving around with the arrow keys.
+ - Indication if the selected time is within any appointments.
+ - announcement of the selected appointment when pressing tab.
  - Smart filtering of the date so as to only announce the date if the new selected time or appointment is on a different day to the last.
-- Enhanced support for the Inbox and other message lists in Outlook 2010 and above (#3834) including:
- - The ability to silence column headers (from, subject etc) by turning off the Report Table row and column headers option in Document formatting settings,
- - The ability to use table navigation commands (control + arrows) to move along the individual columns. 
+- Enhanced support for the Inbox and other message lists in Microsoft Outlook 2010 and above (#3834) including:
+ - The ability to silence column headers (from, subject, etc.) by turning off the Report Table row and column headers option in Document Formatting settings.
+ - The ability to use table navigation commands (control + alt + arrows) to move through the individual columns. 
 - Microsoft word: If an inline image has no alternative text set, NVDA will instead report the title of the image if the author has provided one. (#4193)
-- Microsoft Word: Report paragraph indenting with  the report formatting command (NVDA+f) and automatically when the new Report Paragraph indenting Document formatting setting is enabled. (#4165).
+- Microsoft Word: NVDA can now report paragraph indenting with  the report formatting command (NVDA+f). It can also be reported automatically when the new Report Paragraph indenting option is enabled in Document Formatting settings. (#4165)
 - Report automatically inserted text such as a new bullet, number or tab indent when pressing enter in editable documents and text fields. (#4185)
 - Microsoft word: Pressing NVDA+alt+c will report  the text of a comment if the cursor is within one. (#3528)
 - Improved support for automatic column and row header reading in Microsoft Excel (#3568) including:
- - Support of Excel defined name ranges to identify header cells (compatible with Jaws screen reader) 
+ - Support of Excel defined name ranges to identify header cells (compatible with Jaws screen reader) .
  - The set column header (NVDA+shift+c) and set row header (NVDA+shift+r) commands now store the settings in the worksheet so that they are available the next time the sheet is opened, and will be available to other screen readers that support the defined name range scheme.
  - These commands can also now be used multiple times per sheet to set different headers for different regions.
 - Support for automatic column and row header reading in Microsoft Word (#3110) including:
- - Support of MS Word bookmarks to identify header cells (compatible with Jaws screen reader) 
+ - Support of Microsoft Word bookmarks to identify header cells (compatible with Jaws screen reader).
  -  set column header (NVDA+shift+c) and set row header (NVDA+shift+r) commands  while on the first header cell in a table allow you to tell NVDA that these headers should be reported automatically.  Settings are stored in the document so that they are available the next time the document is opened, and will be available to other screen readers that support the bookmark scheme.
 - Microsoft Word: Report the distance from the left edge of the page when the tab key is pressed. (#1353)
-- Microsoft Word: provide feedback in speech and braille for most available formatting shortcut keys (bold, italic, underline, alignment and outline level). (#1353)
-- Microsoft Excel: If the selected cell contains comments, they can be now reported by pressing NVDA+alt+c (#2920)
+- Microsoft Word: provide feedback in speech and braille for most available formatting shortcut keys (bold, italic, underline, alignment, outline level, superscript, subscript and font size). (#1353)
+- Microsoft Excel: If the selected cell contains comments, they can be now reported by pressing NVDA+alt+c. (#2920)
 - Microsoft Excel: Provide an NVDA-specific dialog to edit the comments on the currently selected cell when pressing Excel's shift+f2 command to enter comment editing mode. (#2920)
 - Microsoft Excel: speech and braille feedback for many more selection movement shortcuts (#4211) including:
- - Vertical page movement (pageUp and pageDown)
- - Horizontal page movement (alt+pageUp and alt+pageDown)
- - Extend selection (the above keys with Shift added).
- - Selecting the current region (control+shift+8)
-- Microsoft Excel: report vertical and horizontal  alignment for cells with the report formatting command (NVDA+f) and automatically if Report alignment option in Document Formatting settings is on. (#4212)
-- Microsoft Excel: report the style of a cell with the report formatting command (NVDA+f) and automatically if Report Style option in Document formatting settings is on. (#4213)
-- Microsoft Powerpoint: when moving shapes around a slide with the arrow keys, the shape's current location is now reported (#4214) including:
- - The distance between the shape and each of the  slide edges is reported
- - If the shape covers or is covered by another shape, then the distance overlapped, and the other shape are reported. 
- - To report this information at any time without moving a shape, press the report location command (NVDA+delete)
- - When selecting a shape, if it is covered by another shape, it will report the Obscured state.
-- The report location command (NVDA+delete) is more context specific in some situations. (#4219):
- - In standard edit fields and browse mode, the cursor position as a percentage through the content, and its screen coordinates are reported.
- - On shapes in Powerpoint Presentations, position of the shape relative to the slide and other shapes is reported.
- - Pressing this command twice will produce the older behaviour of reporting the location information for the entire control.
+ - Vertical page movement (pageUp and pageDown);
+ - Horizontal page movement (alt+pageUp and alt+pageDown);
+ - Extend selection (the above keys with Shift added); and
+ - Selecting the current region (control+shift+8).
+- Microsoft Excel: The vertical and horizontal  alignment for cells can now be reported with the report formatting command (NVDA+f). It can also be reported automatically if the Report alignment option in Document Formatting settings is enabled. (#4212)
+- Microsoft Excel: The style of a cell can now be reported with the report formatting command (NVDA+f). It can also be reported automatically if the Report Style option in Document formatting settings is enabled. (#4213)
+- Microsoft PowerPoint: when moving shapes around a slide with the arrow keys, the shape's current location is now reported (#4214) including:
+ - The distance between the shape and each of the  slide edges is reported.
+ - If the shape covers or is covered by another shape, then the distance overlapped and the overlapped shape are reported.
+ - To report this information at any time without moving a shape, press the report location command (NVDA+delete).
+ - When selecting a shape, if it is covered by another shape, NVDA will report that it is obscured.
+- The report location command (NVDA+delete) is more context specific in some situations. (#4219)
+ - In standard edit fields and browse mode, the cursor position as a percentage through the content and its screen coordinates are reported.
+ - On shapes in PowerPoint Presentations, position of the shape relative to the slide and other shapes is reported.
+ - Pressing this command twice will produce the previous behaviour of reporting the location information for the entire control.
+- New language: Catalan.
 
 
 == Changes ==
@@ -60,24 +137,34 @@
 - In certain lists in iTunes such as the Music list, moving to the next item using object navigation now works correctly. (#4129)
 - HTML elements considered headings because of WAI ARIA markup are now included in the Browse mode Elements list and quick navigation for Internet Explorer documents. (#4140)
 - Following same-page links in recent versions of Internet Explorer now correctly moves to and reports the destination position in browse mode  documents. (#4134)
-- Microsoft Outlook 2010 and above: improve over all access to secure dialogs such as the New profiles and mail setup dialogs. (#4090, #4091, #4095)
-- Microsoft Outlook: decrease useless verbosity of command toolbars when navigating through  certain dialogs. (#4096, #3407)
-- Microsoft word: tabbing to a blank cell in a table no longer incorrectly announces exiting the table. (#4151)
+- Microsoft Outlook 2010 and above: Overall access to secure dialogs such as the New profiles and mail setup dialogs has been improved. (#4090, #4091, #4095)
+- Microsoft Outlook: Useless verbosity has been decreased in command toolbars when navigating through  certain dialogs. (#4096, #3407)
+- Microsoft word: Tabbing to a blank cell in a table no longer incorrectly announces exiting the table. (#4151)
 - Microsoft Word: The first character past the end of a table (including a new blank line) is no longer incorrectly considered to be inside the table. (#4152)
-- Microsoft Word 2010 spell check dialog: Report the real mis-spelt word rather than  inappropriately just reporting the first bold word. (#3431) 
+- Microsoft Word 2010 spell check dialog: The actual misspelled word is reported rather than  inappropriately reporting just the first bold word. (#3431)
 - In browse mode in Internet Explorer and other MSHTML controls, tabbing or using single letter navigation to move to form fields again reports the label in many cases where it didn't (specifically, where HTML label elements are used). (#4170)
 - Microsoft Word: Reporting the existance and placement of comments is more accurate. (#3528)
-- Improve navigation of certain dialogs in MS Office products such as Word, Excel and Outlook by no longer reporting particular control container toolbars which are not useful to the user. (#4198) 
-- Task panes such as clipboard manager or File recovery no longer accidentilly seem to gain focus when opening an application such as Microsoft Word or Excel, which was sometimes causing the user to have to switch away and back to the application to use the document or spreadsheet.  (#4199)
-- NVDA no longer fails to run on recent Windows Operating Systems if the user's Windows language is set to Serbian (Latin). (#4203) 
+- Navigation of certain dialogs in MS Office products such as Word, Excel and Outlook has been improved by no longer reporting particular control container toolbars which are not useful to the user. (#4198) 
+- Task panes such as clipboard manager or File recovery no longer accidentilly seem to gain focus when opening an application such as Microsoft Word or Excel, which was sometimes causing the user to have to switch away from and back to the application to use the document or spreadsheet.  (#4199)
+- NVDA no longer fails to run on recent Windows Operating Systems if the user's Windows language is set to Serbian (Latin). (#4203)
 - Pressing numlock while in input help mode now correctly toggles numlock, rather than causing the keyboard and the Operating System to become out of sync in regards to the state of this key. (#4226)
 - In Google Chrome, the title of the document is again reported when switching tabs. In NVDA 2014.2, this did not occur in some cases. (#4222)
 - In Google Chrome and Chrome-based browsers, the URL of the document is no longer reported when reporting the document. (#4223)
 - When running say all with the No speech synthesizer selected (useful for automated testing), say all will now complete instead of stopping after the first few lines. (#4225)
+- Microsoft Outlook's Signature dialog: The Signature editing field is now accessible, allowing for full cursor tracking and format detection. (#3833)
+- Microsoft Word: When reading the last line of a table cell, the entire table cell is no longer read. (#3421)
+- Microsoft Word: When reading the first or last line of a table of contents, the entire table of contents is no longer read. (#3421)
+- When speaking typed words and in some other cases, words are no longer incorrectly broken at marks such as vowel signs and virama in Indic languages. (#4254)
+- Numeric editable text fields in GoldWave are now handled correctly. (#670)
+- Microsoft Word: when moving by paragraph with control+downArrow / control+upArrow, it is no longer necessary to press them twice if moving through bulleted or numbered lists. (#3290)
 
 
 == Changes for Developers ==
 - NVDA now has unified support for add-on documentation. See the Add-on Documentation section of the Developer Guide for details. (#2694)
+- When providing gesture bindings on a ScriptableObject via __gestures, it is now possible to provide the None keyword as the script. This unbinds the gesture in any base classes. (#4240)
+- It is now possible to change the shortcut key used to start NVDA for locales where the normal shortcut causes problems. (#2209)
+ - This is done via gettext.
+ - Note that the text for the Create desktop shortcut option in the Install NVDA dialog, as well as the shortcut key in the User Guide, must also be updated.
 
 
 = 2014.2 =

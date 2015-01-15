@@ -10,6 +10,7 @@
 
 import itertools
 import weakref
+import unicodedata
 import colors
 import globalVars
 from logHandler import log
@@ -122,7 +123,7 @@ def speakMessage(text,index=None):
 
 def getCurrentLanguage():
 	try:
-		language=getSynth().language if config.conf['speech']['autoLanguageSwitching'] else None
+		language=getSynth().language if config.conf['speech']['trustVoiceLanguage'] else None
 	except NotImplementedError:
 		language=None
 	if language:
@@ -535,11 +536,12 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 
 def speakTypedCharacters(ch):
 	global curWordChars;
-	if api.isTypingProtected():
+	typingIsProtected=api.isTypingProtected()
+	if typingIsProtected:
 		realChar="*"
 	else:
 		realChar=ch
-	if ch.isalnum():
+	if unicodedata.category(ch)[0] in "LMN":
 		curWordChars.append(realChar)
 	elif ch=="\b":
 		# Backspace, so remove the last character from our buffer.
@@ -552,7 +554,7 @@ def speakTypedCharacters(ch):
 		curWordChars=[]
 		if log.isEnabledFor(log.IO):
 			log.io("typed word: %s"%typedWord)
-		if config.conf["keyboard"]["speakTypedWords"]: 
+		if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
 			speakText(typedWord)
 	if config.conf["keyboard"]["speakTypedCharacters"] and ord(ch)>=32:
 		speakSpelling(realChar)

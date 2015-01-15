@@ -17,13 +17,14 @@ import textInfos
 import eventHandler
 
 from . import IAccessible
-from NVDAObjects.window.winword import WordDocument 
+from NVDAObjects.window.winword import WordDocument, WordDocument_WwN
 from displayModel import EditableTextDisplayModelTextInfo
 from NVDAObjects.window import DisplayModelEditableText
 
-class SpellCheckErrorField(IAccessible,WordDocument):
+class SpellCheckErrorField(IAccessible,WordDocument_WwN):
 
 	parentSDMCanOverrideName=False
+	ignoreFormatting=True
 
 	def _get_location(self):
 		return super(IAccessible,self).location
@@ -43,20 +44,6 @@ class SpellCheckErrorField(IAccessible,WordDocument):
 				break
 		return u"".join(textList)
 
-	def _get_WinwordWindowObject(self):
-		hwnd=NVDAHelper.localLib.findWindowWithClassInThread(self.windowThreadID,u"_WwG",True)
-		if hwnd:
-			try:
-				window=comtypes.client.dynamic.Dispatch(oleacc.AccessibleObjectFromWindow(hwnd,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch))
-			except (COMError, WindowsError):
-				log.debugWarning("Could not get MS Word object model",exc_info=True)
-				return None
-			try:
-				return window.application.activeWindow.activePane
-			except COMError:
-				log.debugWarning("can't use activeWindow, resorting to windows[1]",exc_info=True)
-				return window.application.windows[1].activePane
-
 	def _get_name(self):
 		if self.WinwordVersion<13:
 			return super(SpellCheckErrorField,self).description
@@ -66,12 +53,15 @@ class SpellCheckErrorField(IAccessible,WordDocument):
 
 	def reportFocus(self):
 		errorText=self.errorText
-		if self.WinwordVersion<13:		
-			speech.speakObjectProperties(self,name=True,role=True)
+		speech.speakObjectProperties(self,name=True,role=True)
 		if errorText:
 			speech.speakText(errorText)
 			speech.speakSpelling(errorText)
 
+	def isDuplicateIAccessibleEvent(self,obj):
+		""" We return false here because the spell	checker window raises the focus event every time the value changes instead of the value changed event 
+		regardless of the fact that this window already has the focus."""
+		return False
 
 class ProtectedDocumentPane(IAccessible):
 	"""The pane that gets focus in case a document opens in protected mode in word

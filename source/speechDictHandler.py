@@ -17,18 +17,29 @@ dictionaries = {}
 dictTypes = ("temp", "voice", "default", "builtin") # ordered by their priority E.G. voice specific speech dictionary is processed before the default
 speechDictsPath=os.path.join(globalVars.appArgs.configPath, "speechDicts")
 
+# Types of speech dictionary entries:
+ENTRY_TYPE_ANYWHERE = 0 # String can match anywhere
+ENTRY_TYPE_WORD = 2 # String must have word boundaries on both sides to match
+ENTRY_TYPE_REGEXP = 1 # Regular expression
+
 class SpeechDictEntry:
 
-	def __init__(self, pattern, replacement,comment,caseSensitive=True,regexp=False):
+	def __init__(self, pattern, replacement,comment,caseSensitive=True,type=ENTRY_TYPE_ANYWHERE):
 		self.pattern = pattern
 		flags = re.U
 		if not caseSensitive: flags|=re.IGNORECASE
-		tempPattern=pattern if regexp else re.escape(pattern)
+		if type == ENTRY_TYPE_REGEXP:
+			tempPattern = pattern
+		elif type == ENTRY_TYPE_WORD:
+			tempPattern = r"\b" + re.escape(pattern) + r"\b"
+		else:
+			tempPattern= re.escape(pattern)
+			type = ENTRY_TYPE_ANYWHERE # Insure sane values.
 		self.compiled = re.compile(tempPattern,flags)
 		self.replacement = replacement
 		self.comment=comment
 		self.caseSensitive=caseSensitive
-		self.regexp=regexp
+		self.type=type
 
 	def sub(self, text):
 		replacement=self.replacement
@@ -57,7 +68,7 @@ class SpeechDict(list):
 			else:
 				temp=line.split("\t")
 				if len(temp) ==4:
-					self.append(SpeechDictEntry(temp[0].replace(r'\#','#'),temp[1].replace(r'\#','#'),comment,bool(int(temp[2])),bool(int(temp[3]))))
+					self.append(SpeechDictEntry(temp[0].replace(r'\#','#'),temp[1].replace(r'\#','#'),comment,bool(int(temp[2])),int(temp[3])))
 					comment=""
 				else:
 					log.warning("can't parse line '%s'" % line)
@@ -77,7 +88,7 @@ class SpeechDict(list):
 		for entry in self:
 			if entry.comment:
 				file.write("#%s\r\n"%entry.comment)
-			file.write("%s\t%s\t%s\t%s\r\n"%(entry.pattern.replace('#',r'\#'),entry.replacement.replace('#',r'\#'),int(entry.caseSensitive),int(entry.regexp)))
+			file.write("%s\t%s\t%s\t%s\r\n"%(entry.pattern.replace('#',r'\#'),entry.replacement.replace('#',r'\#'),int(entry.caseSensitive),entry.type))
 		file.close()
 
 	def sub(self, text):

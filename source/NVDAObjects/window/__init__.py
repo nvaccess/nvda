@@ -114,7 +114,7 @@ An NVDAObject for a window
 			from .edit import Edit as newCls
 		elif windowClassName=="RichEdit":
 			from .edit import RichEdit as newCls
-		elif windowClassName=="RichEdit20":
+		elif windowClassName in ("RichEdit20","REComboBox20W"):
 			from .edit import RichEdit20 as newCls
 		elif windowClassName=="RICHEDIT50W":
 			from .edit import RichEdit50 as newCls
@@ -126,6 +126,8 @@ An NVDAObject for a window
 			from .winConsole import WinConsole as newCls
 		elif windowClassName=="_WwG":
 			from .winword import WordDocument as newCls
+		elif windowClassName in ("_WwN","_WwO"):
+			from .winword import WordDocument_WwN as newCls
 		elif windowClassName=="EXCEL7":
 			from .excel import Excel7Window as newCls
 		if newCls:
@@ -442,4 +444,6 @@ windowClassMap={
 	"TRxRichEdit":"RichEdit20",
 	"ScintillaWindowImpl":"Scintilla",
 	"RICHEDIT60W_WLXPRIVATE":"RICHEDIT50W",
+	"TNumEdit":"Edit",
+	"TAccessibleRichEdit":"RichEdit20",
 }

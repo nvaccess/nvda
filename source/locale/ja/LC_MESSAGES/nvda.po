@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-22 19:10+1000\n"
-"PO-Revision-Date: 2014-05-11 21:59+0900\n"
+"POT-Creation-Date: 2014-11-06 19:11+1000\n"
+"PO-Revision-Date: 2014-11-17 17:16+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -91,7 +91,7 @@ msgstr "{language} {layout}"
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
 msgid "Error in appModule %s"
-msgstr "appModuleの%sにエラーがあります"
+msgstr "appモジュールの%sにエラーがあります"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
 msgid "banner"
@@ -1079,7 +1079,7 @@ msgstr "セクション"
 
 #. Translators: Identifies a shape.
 msgid "shape"
-msgstr "形状"
+msgstr "シェイプ"
 
 #. Translators: Identifies a split pane.
 msgid "split pane"
@@ -1110,7 +1110,7 @@ msgstr "ボーダー"
 
 #. Translators: Identifies a caret object.
 msgid "caret"
-msgstr "べき乗"
+msgstr "キャレット"
 
 #. Translators: Identifies a character field (should not be confused with edit fields).
 msgid "character"
@@ -1262,11 +1262,13 @@ msgstr "背景色"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "superscript"
 msgstr "スーパースクリプト"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "subscript"
 msgstr "サブスクリプト"
 
@@ -1445,6 +1447,10 @@ msgstr "数式"
 #. Translators: Reported when text contains a comment.
 msgid "has comment"
 msgstr "コメント付き"
+
+#. Translators: a state that denotes that the object is covered partially or fully by another object
+msgid "obscured"
+msgstr "隠れています"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -1795,27 +1801,17 @@ msgstr ""
 "現在のナビゲーターオブジェクトの通知、2回押すとスペルの読み上げ、3回押すとオ"
 "ブジェクトの名前と内容をクリップボードにコピー"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
-msgid "No location information for navigator object"
-msgstr "ナビゲーターオブジェクトに対する位置情報がありません"
+#. Translators: message when there is no location information for the review cursor
+msgid "No location information"
+msgstr "位置情報なし"
 
-#. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
-msgid "No location information for screen"
-msgstr "スクリーンに対する位置情報がありません"
-
-#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+#. Translators: Description for report review cursor location command.
 msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
-"screen, height is {height:.1f} per cent of screen"
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
 msgstr ""
-"オブジェクトは、画面左端から{left:.1f}パーセント、上端から{top:.1f}パーセント"
-"にあり、画面の幅の{width:.1f}パーセント、高さの{height:.1f}パーセントを占めて"
-"います"
-
-#. Translators: Input help mode message for report object dimensions command.
-msgid "Reports the hight, width and position of the current navigator object"
-msgstr "現在のナビゲーターオブジェクトの幅、高さ、位置の読み上げ"
+"レビューカーソルのテキストやオブジェクトの位置の通知。2回押すと詳細な情報の通"
+"知。"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -1895,8 +1891,7 @@ msgstr "操作なし"
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
-msgstr ""
-"現在のナビゲーターオブジェクトのデフォルト動作の実行（例：ボタンを押す）"
+msgstr "現在のナビゲーターオブジェクトの既定の動作の実行（例：ボタンを押す）"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 msgid "top"
@@ -2078,7 +2073,7 @@ msgstr "書式情報なし"
 msgid ""
 "Reports formatting info for the current review cursor position within a "
 "document"
-msgstr "ドキュメント内の現在のレビューカーソル位置の書式情報を通知"
+msgstr "ドキュメント内の現在のレビューカーソル位置の書式情報の通知"
 
 #. Translators: Input help mode message for report current focus command.
 msgid "reports the object with focus"
@@ -2247,8 +2242,8 @@ msgid ""
 "Speaks the filename of the active application along with the name of the "
 "currently loaded appModule"
 msgstr ""
-"現在起動中のアプリケーションのファイル名を読み込まれているappModuleの名前とと"
-"もに読み上げ"
+"現在起動中のアプリケーションのファイル名を読み込まれているappモジュールの名前"
+"とともに読み上げ"
 
 #. Translators: Input help mode message for go to general settings dialog command.
 msgid "Shows the NVDA general settings dialog"
@@ -2449,6 +2444,14 @@ msgstr "全般"
 msgid "Browse mode"
 msgstr "ブラウズモード"
 
+#. Translators: The shortcut key used to start NVDA.
+#. This should normally be left as is, but might be changed for some locales
+#. if the default key causes problems for the normal locale keyboard layout.
+#. The key must be formatted as described in this article:
+#. http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+msgid "CTRL+ALT+N"
+msgstr "CTRL+ALT+N"
+
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
 msgstr "NVDA Webサイト"
@@ -2459,7 +2462,7 @@ msgstr "NVDAのアンインストール"
 
 #. Translators: A label for a shortcut item in start menu to open current user's NVDA configuration directory.
 msgid "Explore NVDA user configuration directory"
-msgstr "NVDAユーザー設定ディレクトリーを開く"
+msgstr "NVDAユーザー設定フォルダーを開く"
 
 #. Translators: The label of the NVDA Documentation menu in the Start Menu.
 msgid "Documentation"
@@ -2467,11 +2470,11 @@ msgstr "説明"
 
 #. Translators: The label of the Start Menu item to open the Commands Quick Reference document.
 msgid "Commands Quick Reference"
-msgstr "コマンド一覧表"
+msgstr "NVDA コマンド一覧表"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
 msgid "User Guide"
-msgstr "ユーザーガイド(&U)"
+msgstr "NVDA ユーザーガイド"
 
 #. Translators: A file extension label for NVDA add-on package.
 msgid "NVDA add-on package"
@@ -2908,7 +2911,7 @@ msgstr "%s項目"
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #, python-format
 msgid "out of %s"
-msgstr "%s終了"
+msgstr "%sの外"
 
 #. Translators: Indicates the page number in a document.
 #. %s will be replaced with the page number.
@@ -2996,6 +2999,7 @@ msgstr "下線なし"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
+#. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
 msgstr "ベースライン"
 
@@ -3016,9 +3020,78 @@ msgstr "右揃え"
 msgid "align justify"
 msgstr "両端揃え"
 
+#. Translators: Reported when text is justified with character spacing (Japanese etc)
+#. See http://kohei.us/2010/01/21/distributed-text-justification/
+msgid "align distributed"
+msgstr "両端揃え"
+
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
-msgstr "デフォルト揃え"
+msgstr "既定の揃え"
+
+#. Translators: the label for paragraph format left indent
+msgid "left indent"
+msgstr "左インデント"
+
+#. Translators: the message when there is no paragraph format left indent
+msgid "no left indent"
+msgstr "左インデントなし"
+
+#. Translators: the label for paragraph format right indent
+msgid "right indent"
+msgstr "右インデント"
+
+#. Translators: the message when there is no paragraph format right indent
+msgid "no right indent"
+msgstr "右インデントなし"
+
+#. Translators: the label for paragraph format hanging indent
+msgid "hanging indent"
+msgstr "ぶら下げ"
+
+#. Translators: the message when there is no paragraph format hanging indent
+msgid "no hanging indent"
+msgstr "ぶら下げなし"
+
+#. Translators: the label for paragraph format first line indent
+msgid "first line indent"
+msgstr "字下げ"
+
+#. Translators: the message when there is no paragraph format first line indent
+msgid "no first line indent"
+msgstr "字下げなし"
+
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "縦方向 上揃え"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "縦方向 中央揃え"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "縦方向 下揃え"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "縦方向 ベースライン揃え"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "縦方向 両端揃え"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "縦方向 両端揃え"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "縦方向 既定の揃え"
+
+#. Translators: Reported when text no longer contains a comment.
+msgid "out of comment"
+msgstr "コメントの外"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -3026,7 +3099,7 @@ msgstr "スペルエラー"
 
 #. Translators: Reported when moving out of text containing a spelling error.
 msgid "out of spelling error"
-msgstr "スペルエラー終了"
+msgstr "スペルエラーの外"
 
 #. Translators: Indicates end of a table.
 msgid "out of table"
@@ -3293,7 +3366,7 @@ msgstr ""
 "{name}はGNU 一般公衆利用許諾契約書(Version 2)によって保護されています。この内"
 "容に同意いただき、必要としている方にソースコードを提供していただける場合、本"
 "ソフトウェアの配布や改良は自由に行うことができます。この規定は、オリジナルの"
-"ソフトウェアと改良販を含むソフトウェアのコピー、さらにこのソフトウェアのコー"
+"ソフトウェアと改良版を含むソフトウェアのコピー、さらにこのソフトウェアのコー"
 "ドを利用したソフトウェアにも適用されます。\n"
 "本ライセンスについての詳細は、ヘルプメニューのライセンスを参照してくださ"
 "い。\n"
@@ -3313,6 +3386,16 @@ msgid ""
 msgstr ""
 "NVDA アドオンを {path} からインストールできません。\n"
 "アドオンのインストールはNVDAの実行中にのみ可能です。"
+
+#. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+msgid ""
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
+msgstr ""
+"オブジェクトは、画面左端から{left:.1f}パーセント、上端から{top:.1f}パーセント"
+"にあり、画面の幅の{width:.1f}パーセント、高さの{height:.1f}パーセントを占めて"
+"います"
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
@@ -3376,6 +3459,7 @@ msgid "Displays one of the recent messages"
 msgstr "最新のメッセージを表示"
 
 #. Translators: This Outlook Express message has an attachment
+#. Translators: when an email has attachments
 msgid "has attachment"
 msgstr "添付あり"
 
@@ -3436,8 +3520,17 @@ msgid "BCC:"
 msgstr "BCC:"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
+#. Translators: when an email is unread
 msgid "unread"
 msgstr "未読"
+
+#. Translators: for a high importance email
+msgid "high importance"
+msgstr "重要度 高い"
+
+#. Translators: For a low importance email
+msgid "low importance"
+msgstr "重要度 低い"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3457,6 +3550,26 @@ msgstr "添付"
 #, python-format
 msgid "sent: %s"
 msgstr "送信済み: %s"
+
+#. Translators: The title for the dialog shown while Microsoft Outlook initializes.
+msgid "Waiting for Outlook..."
+msgstr "アウトルックの処理を待っています"
+
+#. Translators: a message reporting the time range (i.e. start time to end time) of an Outlook calendar entry
+msgid "{startTime} to {endTime}"
+msgstr "{startTime} から {endTime}"
+
+#. Translators: A message reported when on a calendar appointment in Microsoft Outlook
+msgid "Appointment {subject}, {time}"
+msgstr "予定 {subject} {time}"
+
+#. Translators: a message when the current time slot on an Outlook Calendar has an appointment
+msgid "has appointment"
+msgstr "予定あり"
+
+#. Translators: the email is a meeting request
+msgid "meeting request"
+msgstr "会議の出席依頼"
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -3481,11 +3594,11 @@ msgstr "コメントウインドウが見つかりません。"
 #. comments to be presented to the user in the translator
 #. comments window in poedit.
 msgid "No comment."
-msgstr "コメントがありません。"
+msgstr "コメントなし"
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any comments in the comments window"
-msgstr "コメントウインドウのすべてのコメントを通知する"
+msgstr "コメントウインドウのすべてのコメントの通知"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Title placeholder"
@@ -3610,6 +3723,78 @@ msgstr "マスターサムネイル"
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "スライド {slideNumber}"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers left of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape}の左の手前にあり距離{distance:.3g}ポイント"
+
+#. Translators: A message when a shape is behind  another shape on a powerpoint slide
+msgid "behind left of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape}の左の奥にあり距離{distance:.3g}ポイント"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers top of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape}の上の手前にあり距離{distance:.3g}ポイント"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind top of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape}の上の奥にあり距離{distance:.3g}ポイント"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers right of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape}の右の手前にあり距離{distance:.3g}ポイント"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind right of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape}の右の奥にあり距離{distance:.3g}ポイント"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers bottom of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape}の下の手前にあり距離{distance:.3g}ポイント"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind bottom of {otherShape} by {distance:.3g} points"
+msgstr "{otherShape}の下の奥にあり距離{distance:.3g}ポイント"
+
+#. Translators: A message when a shape is infront of another shape on a Powerpoint slide
+msgid "covers  {otherShape}"
+msgstr "{otherShape}の手前"
+
+#. Translators: A message when a shape is behind another shape on a powerpoint slide
+msgid "behind {otherShape}"
+msgstr "{otherShape}の奥"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
+msgid "{distance:.3g} points from left slide edge"
+msgstr "スライド左端から距離{distance:.3g}ポイント"
+
+#. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+msgid "Off left slide edge by {distance:.3g} points"
+msgstr "スライド左端の外側 距離{distance:.3g}ポイント"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
+msgid "{distance:.3g} points from top slide edge"
+msgstr "スライド上端から距離{distance:.3g}ポイント"
+
+#. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+msgid "Off top slide edge by {distance:.3g} points"
+msgstr "スライド上端の外側 距離{distance:.3g}ポイント"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
+msgid "{distance:.3g} points from right slide edge"
+msgstr "スライド右端から距離{distance:.3g}ポイント"
+
+#. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+msgid "Off right slide edge by {distance:.3g} points"
+msgstr "スライド右端の外側 距離{distance:.3g}ポイント"
+
+#. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
+msgid "{distance:.3g} points from bottom slide edge"
+msgstr "スライド下端から距離{distance:.3g}ポイント"
+
+#. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+msgid "Off bottom slide edge by {distance:.3g} points"
+msgstr "スライド下端の外側 距離{distance:.3g}ポイント"
 
 #. Translators: The description for a script
 msgid ""
@@ -3738,7 +3923,7 @@ msgstr "Papenmeier ブレイレックスの新型機種"
 
 #. Translators: Describes action of routing buttons on a braille display.
 msgid "Route to and report formatting"
-msgstr "タッチカーソルで書式を通知"
+msgstr "タッチカーソルと書式の通知"
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
@@ -3776,7 +3961,7 @@ msgstr "NVDA設定ダイアログを表示中です。表示中のダイアロ�
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
-msgstr "デフォルト辞書"
+msgstr "既定の辞書"
 
 #. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
 #, python-format
@@ -3786,13 +3971,6 @@ msgstr "音声辞書(%s)"
 #. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
 msgid "Temporary dictionary"
 msgstr "一時辞書"
-
-#. Translators: Message shown to ask if user really wishes to quit NVDA.
-msgid "Are you sure you want to quit NVDA?"
-msgstr "本当にNVDAを終了しますか？"
-
-msgid "Exit NVDA"
-msgstr "NVDAの終了"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
@@ -3831,8 +4009,7 @@ msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
 msgstr ""
-"キーボードレイアウトおよび、入力文字、入力単語、またはコマンドキーの読み方の"
-"設定"
+"キーボード配列および、入力文字、入力単語、またはコマンドキーの読み方の設定"
 
 #. Translators: The label for the menu item to open Mouse Settings dialog.
 msgid "&Mouse settings..."
@@ -3880,12 +4057,12 @@ msgstr "ドキュメントの書式情報の変更に関する設定"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
-msgstr "デフォルト辞書(&D)..."
+msgstr "既定の辞書(&D)..."
 
 msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
 "to the list"
-msgstr "デフォルト辞書に項目を追加するためのダイアログ"
+msgstr "既定の辞書に項目を追加するためのダイアログ"
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 msgid "&Voice dictionary..."
@@ -4017,6 +4194,10 @@ msgstr "寄付(&D)"
 msgid "E&xit"
 msgstr "終了(&X)"
 
+#. Translators: The title of the dialog to exit NVDA
+msgid "Exit NVDA"
+msgstr "NVDAの終了"
+
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -4076,6 +4257,30 @@ msgstr "ポータブル版を作成する(&P)"
 msgid "&Continue running"
 msgstr "動作を継続(&C)"
 
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"すべてのアドオンが無効です。アドオンを無効化しないでNVDAを再起動すれば、アド"
+"オンは有効化されます。"
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "終了オプション(&D)"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "終了"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "再起動"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "アドオンを無効化して再起動"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "お待ちください"
@@ -4083,6 +4288,12 @@ msgstr "お待ちください"
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "アドオン マネージャー"
+
+#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgstr ""
+"すべてのアドオンが無効です。アドオンを有効にするにはNVDAを再起動してくださ"
+"い。"
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -4107,6 +4318,10 @@ msgstr "作者"
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
 msgstr "このアドオンについて(&A)..."
+
+#. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
+msgid "Add-on &help"
+msgstr "アドオンのヘルプ(&H)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -4188,6 +4403,10 @@ msgstr "インストール"
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 msgid "remove"
 msgstr "削除"
+
+#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+msgid "suspended"
+msgstr "保留中"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
@@ -4416,7 +4635,7 @@ msgstr "NVDAをインストール中"
 
 #. Translators: The message displayed while NVDA is being updated.
 msgid "Please wait while your previous installation of NVDA is being updated."
-msgstr "インストール済みの前のNVDAが更新されるまでお待ちください。"
+msgstr "インストール済みのNVDAが更新されるまでお待ちください。"
 
 #. Translators: The message displayed while NVDA is being installed.
 msgid "Please wait while NVDA is being installed"
@@ -4493,7 +4712,9 @@ msgstr "ログオン画面でNVDAを使用する(&L)"
 msgid "&Keep existing desktop shortcut"
 msgstr "デスクトップのショートカットを残す(&K)"
 
-#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#. Translators: The label of the option to create a desktop shortcut in the Install NVDA dialog.
+#. If the shortcut key has been changed for this locale,
+#. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "デスクトップにアイコンとショートカットキー（Ctrl+Alt+N）を作成する(&D)"
 
@@ -4531,7 +4752,7 @@ msgstr "現在のユーザー設定をコピー(&U)"
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 msgid "Select portable  directory"
-msgstr "ポータブル版のディレクトリーを選択"
+msgstr "ポータブル版を作成する場所"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
@@ -4621,9 +4842,13 @@ msgstr "言語"
 msgid "&Save configuration on exit"
 msgstr "終了時に設定情報を保存する(&S)"
 
-#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
-msgid "&Warn before exiting NVDA"
-msgstr "NVDA終了前に警告する(&W)"
+#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
+msgid "Sho&w exit options when exiting NVDA"
+msgstr "NVDA終了時に終了オプションを表示(&W)"
+
+#. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
+msgid "&Play sounds when starting or exiting NVDA"
+msgstr "NVDAの起動と終了のサウンド(&P)"
 
 #. Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 msgid "L&ogging level:"
@@ -4656,7 +4881,7 @@ msgid ""
 "to the system profile could be a security risk. Do you still wish to copy "
 "your settings?"
 msgstr ""
-"ユーザーディレクトリーにカスタムプラグインがみつかりました。これらをシステム"
+"ユーザー設定フォルダーにカスタムプラグインがみつかりました。これらをシステム"
 "プロファイルにコピーすることは、セキュリティ上のリスクとなる可能性がありま"
 "す。本当に設定をコピーしますか？"
 
@@ -4786,11 +5011,11 @@ msgstr "キーボード設定"
 #. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
 msgid "&Keyboard layout:"
-msgstr "キーボードレイアウト(&K)"
+msgstr "キーボード配列(&K)"
 
 #. Translators: This is the name of a combobox in the keyboard settings dialog.
 msgid "Keyboard layout"
-msgstr "キーボードレイアウト"
+msgstr "キーボード配列"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -4853,7 +5078,7 @@ msgstr "マウス設定"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "Report mouse &shape changes"
-msgstr "マウスカーソル形状の変化を通知(&S)"
+msgstr "マウスカーソル形状の変化の通知(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -4872,7 +5097,7 @@ msgstr "テキストの読み上げ範囲"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "Report &role when mouse enters object"
-msgstr "マウスカーソル位置の要素の種類を通知(&R)"
+msgstr "マウスカーソル位置の要素の種類の通知(&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -4920,7 +5145,7 @@ msgstr "候補リストの自動通知(&C)"
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Announce &selected candidate"
-msgstr "選択した候補を通知(&S)"
+msgstr "選択した候補の通知(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
@@ -4935,7 +5160,7 @@ msgstr "読み文字の通知(&R)"
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Report changes to the &composition string"
-msgstr "コンポジションの更新を通知(&C)"
+msgstr "コンポジションの更新の通知(&C)"
 
 #. Translators: This is the label for the object presentation dialog.
 msgid "Object Presentation"
@@ -5002,12 +5227,12 @@ msgstr "プログレスバー出力"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
-msgstr "バックグラウンドのプログレスバーの更新を通知"
+msgstr "バックグラウンドのプログレスバーの更新の通知"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report dynamic &content changes"
-msgstr "動的コンテンツの変化を通知(&C)"
+msgstr "動的コンテンツの変化の通知(&C)"
 
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
@@ -5060,7 +5285,7 @@ msgstr "書式情報"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "カーソル移動後に書式変化を通知（動作が遅くなります）(&A)"
+msgstr "カーソル移動後に書式変化の通知（動作が遅くなります）(&A)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5085,7 +5310,7 @@ msgstr "配置の通知(&A)"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &colors"
-msgstr "色を通知(&C)"
+msgstr "色の通知(&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5100,7 +5325,7 @@ msgstr "スタイルの通知(&Y)"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report spelling errors"
-msgstr "スペルエラーを通知(&R)"
+msgstr "スペルエラーの通知(&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5118,6 +5343,11 @@ msgstr "行番号の通知(&L)"
 msgid "Report l&ine indentation"
 msgstr "行インデントの通知(&I)"
 
+#. Translators: This message is presented in the document formatting settings dialogue
+#. If this option is selected, NVDA will report paragraph indentation if available.
+msgid "Report &paragraph indentation"
+msgstr "段落インデントの通知(&P)"
+
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &tables"
@@ -5126,12 +5356,12 @@ msgstr "テーブルの通知(&T)"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report table row/column h&eaders"
-msgstr "テーブルの行/列見出しを通知(&E)"
+msgstr "テーブルの行/列見出しの通知(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report table cell c&oordinates"
-msgstr "テーブルのセル番地を通知(&O)"
+msgstr "テーブルのセル番地の通知(&O)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5168,6 +5398,18 @@ msgstr "フレームの通知(&M)"
 msgid "Report if &clickable"
 msgstr "クリック可能の通知(&C)"
 
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "任意の部分(&A)"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "単語全体(&W)"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Regular expression"
+msgstr "正規表現(&R)"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "辞書項目の編集"
@@ -5178,7 +5420,7 @@ msgstr "パターン(&P)"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
 msgid "&Replacement"
-msgstr "読み(&R)"
+msgstr "読み方(&R)"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Comment"
@@ -5188,15 +5430,16 @@ msgstr "コメント(&C)"
 msgid "Case &sensitive"
 msgstr "大文字小文字を区別(&S)"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "正規表現(&E)"
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "種別(&T)"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
 msgstr "辞書項目(&D)"
 
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
+#. Translators: Title of a dialog edit an Excel comment
 msgid "Comment"
 msgstr "コメント"
 
@@ -5206,15 +5449,15 @@ msgstr "パターン"
 
 #. Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
 msgid "Replacement"
-msgstr "読み"
+msgstr "読み方"
 
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
 msgid "case"
 msgstr "大文字小文字"
 
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
-msgid "Regexp"
-msgstr "正規表現"
+#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "種別"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
@@ -5251,7 +5494,7 @@ msgstr "入力テーブル(&I)"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr "カーソル位置の単語をコンピューター点字に展開(&X)"
+msgstr "コンピューター点字(NABCC)を使用(&X)"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
@@ -5294,7 +5537,7 @@ msgstr "記号"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
 msgid "Level"
-msgstr "読み上げレベル"
+msgstr "最低読み上げレベル"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
@@ -5302,7 +5545,7 @@ msgstr "読み方を変更"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
-msgstr "読み上げレベル(&L)"
+msgstr "最低読み上げレベル(&L)"
 
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 msgid "Input Gestures"
@@ -5376,6 +5619,14 @@ msgstr "音声なし"
 
 msgid "word"
 msgstr "単語"
+
+#. Translators: current position in a document as a percentage of the document length
+msgid "{curPercent:.0f}%"
+msgstr "{curPercent:.0f}パーセント"
+
+#. Translators: the current position's screen coordinates in pixels
+msgid "at {x}, {y}"
+msgstr "位置 {x}, {y}"
 
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
@@ -5467,6 +5718,7 @@ msgstr "見出し、リンク、またはランドマークを一覧表示しま
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
+#. Translators: a message when trying to perform an action on a cell when not in one in Microsoft word
 msgid "Not in a table cell"
 msgstr "テーブルのセル内ではありません"
 
@@ -5941,43 +6193,75 @@ msgstr "標準色"
 msgid "{start} through {end}"
 msgstr "{start} から {end}"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+#. Translators: a message reported in the SetRowHeader script for Excel.
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
 msgstr ""
 "見出しを設定できません。書式設定でテーブルの見出し通知を有効にしてください。"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Set column header row"
-msgstr "列見出しの行を設定"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Set {address} as start of column headers"
+msgstr "列見出しの開始 {address} を設定"
 
-#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
-msgid "Cleared column header row"
-msgstr "列見出しの行をクリアしました。"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Already set {address} as start of column headers"
+msgstr "列見出しの開始 {address} は設定済みです"
 
-msgid ""
-"Pressing once will set the current row as the row where column headers "
-"should be found. Pressing twice clears the setting."
-msgstr ""
-"1回押すと現在の行を列見出しの行として設定します。2回押すと設定をクリアしま"
-"す。"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "removed {address}    from column headers"
+msgstr "列見出し {address} をクリア"
 
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Set row header column"
-msgstr "行見出しの列を設定"
-
-#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-msgid "Cleared row header column"
-msgstr "行見出しの列をクリアしました。"
+#. Translators: a message reported in the SetColumnHeader script for Excel.
+msgid "Cannot find {address}    in column headers"
+msgstr "列見出し {address} が見つかりません"
 
 msgid ""
-"Pressing once will set the current column as the column where row headers "
-"should be found. Pressing twice clears the setting."
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this region. Pressing twice will forget "
+"the current column header for this cell."
 msgstr ""
-"1回押すと現在の列を行見出しの列として設定します。2回押すと設定をクリアしま"
-"す。"
+"1回押すと現在のセルとその右側のセルを列見出しに設定。2回押すと列見出しの設定"
+"をクリア"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Set {address} as start of row headers"
+msgstr "行見出しの開始 {address} を設定"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Already set {address} as start of row headers"
+msgstr "行見出しの開始 {address} は設定済みです"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "removed {address}    from row headers"
+msgstr "行見出し {address} をクリア"
+
+#. Translators: a message reported in the SetRowHeader script for Excel.
+msgid "Cannot find {address}    in row headers"
+msgstr "行見出し {address} が見つかりません"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this region. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"1回押すと現在のセルとその下のセルを行見出しに設定。2回押すと行見出しの設定を"
+"クリア"
+
+#. Translators: A message in Excel when there is no comment
+msgid "Not on a comment"
+msgstr "コメントなし"
+
+#. Translators: the description  for a script for Excel
+msgid "Reports the comment on the current cell"
+msgstr "現在のセルのコメントの通知"
+
+#. Translators: Dialog text for
+msgid "Editing comment for cell {address}"
+msgstr "セル {address} のコメント編集"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
@@ -6089,6 +6373,146 @@ msgstr "日付不明"
 
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "{revisionType} 更新者 {revisionAuthor} 更新日 {revisionDate}"
+
+#, python-format
+msgid "%g characters"
+msgstr "%g文字"
+
+#. Translators: the value in points for a paragraph indenting
+#, python-format
+msgid "%g pt"
+msgstr "%gポイント"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr "行 {rowNumber} 列 {columnNumber} を列見出しの開始に設定"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgstr "行 {rowNumber} 列 {columnNumber} は列見出しの開始に設定済み"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
+msgstr "行 {rowNumber} 列 {columnNumber} の列見出しの設定をクリア"
+
+#. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
+msgstr "行 {rowNumber} 列 {columnNumber} が列見出しから見つかりません"
+
+msgid ""
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
+msgstr ""
+"1回押すとテーブル内の現在のセルとその右側のセルを列見出しに設定。2回押すと列"
+"見出しの設定をクリア"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr "行 {rowNumber} 列 {columnNumber} を行見出しに設定"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgstr "行 {rowNumber} 列 {columnNumber} は行見出しの開始に設定済み"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
+msgstr "行 {rowNumber} 列 {columnNumber} の行見出しの設定をクリア"
+
+#. Translators: a message reported in the SetRowHeader script for Microsoft Word.
+msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
+msgstr "行 {rowNumber} 列 {columnNumber} が行見出しから見つかりません"
+
+msgid ""
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
+msgstr ""
+"1回押すとテーブル内の現在のセルとその下側のセルを行見出しに設定。2回押すと行"
+"見出しの設定をクリア"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold on"
+msgstr "太字にする"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Bold off"
+msgstr "太字にしない"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic on"
+msgstr "斜体にする"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Italic off"
+msgstr "斜体にしない"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline on"
+msgstr "下線あり"
+
+#. Translators: a message when toggling formatting in Microsoft word
+msgid "Underline off"
+msgstr "下線なし"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Left aligned"
+msgstr "左揃え"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "centered"
+msgstr "中央揃え"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Right aligned"
+msgstr "右揃え"
+
+#. Translators: a an alignment in Microsoft Word
+msgid "Justified"
+msgstr "両端揃え"
+
+#. Translators: the message when the outline level / style is changed in Microsoft word
+msgid "{styleName} style, outline level {outlineLevel}"
+msgstr "{styleName} スタイル アウトライン レベル{outlineLevel}"
+
+#. Translators: a message when increasing or decreasing font size in Microsoft Word
+msgid "{size:g} point font"
+msgstr "{size:g}ポイント フォント"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} characters"
+msgstr "{offset:.3g}文字"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} inches"
+msgstr "{offset:.3g}インチ"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} centimeters"
+msgstr "{offset:.3g}センチメートル"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} millimeters"
+msgstr "{offset:.3g}ミリメートル"
+
+#. Translators: a measurement in Microsoft Word
+msgid "{offset:.3g} points"
+msgstr "{offset:.3g}ポイント"
+
+#. Translators: a measurement in Microsoft Word
+#. See http://support.microsoft.com/kb/76388 for details.
+msgid "{offset:.3g} picas"
+msgstr "{offset:.3g}パイカ"
+
+#. Translators: a message when there is no comment to report in Microsoft Word
+msgid "no comments"
+msgstr "コメントなし"
+
+#. Translators: a description for a script
+msgid "Reports the text of the comment where the System caret is located."
+msgstr "キャレット位置のコメントの通知"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
