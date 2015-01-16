@@ -79,6 +79,8 @@ def checkForUpdate(auto=False):
 			_updateWindowsRootCertificates()
 			# and then retry the update check.
 			res = urllib.urlopen(url)
+		else:
+			raise
 	if res.code != 200:
 		raise RuntimeError("Checking for update failed with code %d" % res.code)
 	info = {}
