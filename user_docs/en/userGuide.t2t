@@ -1688,19 +1688,23 @@ The following Braille displays are supported:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
 - BRAILLEX Trio (USB and bluetooth)
+- BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus (USB and bluetooth)
 -
 
 If BrxCom is installed, NVDA will use BrxCom.
 BrxCom is a tool that allows you to use the Braille input independently from a screen reader.
-A new version of BrxCom which works with NVDA will be released by Papenmeier soon.  
-However, braille input is possible with the Trio device without BrxCom.
+A new version of BrxCom which works with NVDA will be released by Papenmeier soon.
+Braille input is possible with the Trio, BRAILLEX Live 20 and Braillex Live devices without BrxCom.
+Braille input is also possible with the Live Plus model, but with BrxCom only.
 
 Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
 The EAB can be moved in four directions where generally each direction has two switches.
-The c-series is the only exception to this rule.
+The C and Live series are the only exceptions to this rule.
 
 The c-series and some other displays have two routing rows whereby the upper row is used to report formatting information.
 Holding one of the upper routing keys and pressing the EAB on c-series devices emulates the second switch state.
+The live series displays have one routing row only and the EAB has one step per direction.
+The second step may be emulated by pressing one of the routing keys and pressing the EAB in the corresponding direction.
 Pressing and holding the up, down, right and left keys (or EAB) causes the corresponding action to be repeated.
 
 Generally, the following keys are available on these braille displays:
