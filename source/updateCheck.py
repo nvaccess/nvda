@@ -23,6 +23,8 @@ import cPickle
 import urllib
 import tempfile
 import hashlib
+import ctypes.wintypes
+import ssl
 import wx
 import languageHandler
 import gui
@@ -67,7 +69,16 @@ def checkForUpdate(auto=False):
 		"language": languageHandler.getLanguage(),
 		"installed": config.isInstalledCopy(),
 	}
-	res = urllib.urlopen("%s?%s" % (CHECK_URL, urllib.urlencode(params)))
+	url = "%s?%s" % (CHECK_URL, urllib.urlencode(params))
+	try:
+		res = urllib.urlopen(url)
+	except IOError as e:
+		if isinstance(e.strerror, ssl.SSLError) and e.strerror.reason == "CERTIFICATE_VERIFY_FAILED":
+			# #4803: Windows fetches trusted root certificates on demand.
+			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
+			_updateWindowsRootCertificates()
+			# and then retry the update check.
+			res = urllib.urlopen(url)
 	if res.code != 200:
 		raise RuntimeError("Checking for update failed with code %d" % res.code)
 	info = {}
@@ -471,3 +482,47 @@ def terminate():
 	if autoChecker:
 		autoChecker.terminate()
 		autoChecker = None
+
+# These structs are only complete enough to achieve what we need.
+class CERT_USAGE_MATCH(ctypes.Structure):
+	_fields_ = (
+		("dwType", ctypes.wintypes.DWORD),
+		# CERT_ENHKEY_USAGE struct
+		("cUsageIdentifier", ctypes.wintypes.DWORD),
+		("rgpszUsageIdentifier", ctypes.c_void_p), # LPSTR *
+	)
+
+class CERT_CHAIN_PARA(ctypes.Structure):
+	_fields_ = (
+		("cbSize", ctypes.wintypes.DWORD),
+		("RequestedUsage", CERT_USAGE_MATCH),
+		("RequestedIssuancePolicy", CERT_USAGE_MATCH),
+		("dwUrlRetrievalTimeout", ctypes.wintypes.DWORD),
+		("fCheckRevocationFreshnessTime", ctypes.wintypes.BOOL),
+		("dwRevocationFreshnessTime", ctypes.wintypes.DWORD),
+		("pftCacheResync", ctypes.c_void_p), # LPFILETIME
+		("pStrongSignPara", ctypes.c_void_p), # PCCERT_STRONG_SIGN_PARA
+		("dwStrongSignFlags", ctypes.wintypes.DWORD),
+	)
+
+def _updateWindowsRootCertificates():
+	crypt = ctypes.windll.crypt32
+	# Get the server certificate.
+	sslCont = ssl._create_unverified_context()
+	u = urllib.urlopen("https://www.nvaccess.org/nvdaUpdateCheck", context=sslCont)
+	cert = u.fp._sock.getpeercert(True)
+	u.close()
+	# Convert to a form usable by Windows.
+	certCont = crypt.CertCreateCertificateContext(
+		0x00000001, # X509_ASN_ENCODING
+		cert,
+		len(cert))
+	# Ask Windows to build a certificate chain, thus triggering a root certificate update.
+	chainCont = ctypes.c_void_p()
+	crypt.CertGetCertificateChain(None, certCont, None, None,
+		ctypes.byref(CERT_CHAIN_PARA(cbSize=ctypes.sizeof(CERT_CHAIN_PARA),
+			RequestedUsage=CERT_USAGE_MATCH())),
+		0, None,
+		ctypes.byref(chainCont))
+	crypt.CertFreeCertificateChain(chainCont)
+	crypt.CertFreeCertificateContext(certCont)
