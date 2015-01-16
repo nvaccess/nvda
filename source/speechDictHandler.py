@@ -9,7 +9,6 @@ import globalVars
 from logHandler import log
 import os
 import codecs
-import synthDriverHandler
 import api
 import config
 
