@@ -1254,10 +1254,8 @@ the NVDAObject for IAccessible
 		return self._getIA2RelationFirstTarget(IAccessibleHandler.IA2_RELATION_FLOWS_FROM)
 
 	def _get_embeddingTextInfo(self):
-		if not hasattr(self, "IAccessibleTextObject"):
-			raise NotImplementedError
 		try:
-			hl = self.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHyperlink)
+			hl = self.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleHyperlink)
 			hlOffset = hl.startIndex
 			return self.parent.makeTextInfo(textInfos.offsets.Offsets(hlOffset, hlOffset + 1))
 		except COMError:
