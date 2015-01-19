@@ -1085,10 +1085,10 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	} else if(nodeName.compare(L"BR")==0) {
 		LOG_DEBUG(L"node is a br tag, adding a line feed as its text.");
 		contentString=L"\n";
-	} else if (nodeName.compare(L"MATH")==0) {
-		contentString=IAName;
-		isInteractive=true;
-	} else if((!isRoot&&(IARole==ROLE_SYSTEM_APPLICATION||IARole==ROLE_SYSTEM_DIALOG))||IARole==ROLE_SYSTEM_OUTLINE) {
+	} else if((!isRoot&&(IARole==ROLE_SYSTEM_APPLICATION||IARole==ROLE_SYSTEM_DIALOG))
+		||IARole==ROLE_SYSTEM_OUTLINE
+		||nodeName.compare(L"MATH")==0
+	) {
 		contentString=L" ";
 	} else {
 		renderChildren=true;
