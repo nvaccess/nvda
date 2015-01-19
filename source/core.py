@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #core.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner
+#Copyright (C) 2006-2015 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -58,9 +58,6 @@ def doStartupDialogs():
 		gui.messageBox(_("Your gesture map file contains errors.\n"
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
-	if not config.conf["upgrade"]["newLaptopKeyboardLayout"]:
-		from gui import upgradeAlerts
-		upgradeAlerts.NewLaptopKeyboardLayout.run()
 
 def restart(disableAddons=False):
 	"""Restarts NVDA by starting a new copy with -r."""
