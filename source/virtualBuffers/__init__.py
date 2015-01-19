@@ -866,6 +866,19 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		obj = info.NVDAObjectAtStart
 		if not obj:
 			return
+		if obj.role == controlTypes.ROLE_MATH:
+			import mathPres
+			mathPres.ensureInit()
+			if not mathPres.interactionProvider:
+				# Translators: Reported when the user attempts math interaction
+				# but math interaction is not supported.
+				ui.message(_("Math interaction not supported."))
+				return
+			try:
+				return mathPres.interactionProvider.interactWithMathMl(obj.mathMl)
+			except (NotImplementedError, LookupError):
+				pass
+			return
 		if self.shouldPassThrough(obj):
 			obj.setFocus()
 			self.passThrough = True
