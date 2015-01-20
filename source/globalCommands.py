@@ -1381,36 +1381,20 @@ class GlobalCommands(ScriptableObject):
 
 	def script_interactWithMath(self, gesture):
 		import mathPres
-		mathPres.ensureInit()
-		if not mathPres.interactionProvider:
+		mathMl = mathPres.getMathMlFromTextInfo(api.getReviewPosition())
+		if not mathMl:
+			obj = api.getNavigatorObject()
+			if obj.role == controlTypes.ROLE_MATH:
+				try:
+					mathMl = obj.mathMl
+				except (NotImplementedError, LookupError):
+					mathMl = None
+		if not mathMl:
 			# Translators: Reported when the user attempts math interaction
-			# but math interaction is not supported.
-			ui.message(_("Math interaction not supported."))
+			# with something that isn't math.
+			ui.message(_("Not math"))
 			return
-
-		pos = api.getReviewPosition()
-		pos.expand(textInfos.UNIT_CHARACTER)
-		for item in reversed(pos.getTextWithFields()):
-			if not isinstance(item, textInfos.FieldCommand) or item.command != "controlStart":
-				continue
-			field = item.field
-			if field.get("role") != controlTypes.ROLE_MATH:
-				continue
-			try:
-				return mathPres.interactionProvider.interactWithMathMl(pos.getMathMl(field))
-			except (NotImplementedError, LookupError):
-				continue
-
-		obj = api.getNavigatorObject()
-		if obj.role == controlTypes.ROLE_MATH:
-			try:
-				return mathPres.interactionProvider.interactWithMathMl(obj.mathMl)
-			except (NotImplementedError, LookupError):
-				pass
-
-		# Translators: Reported when the user attempts math interaction
-		# with something that isn't math.
-		ui.message(_("Not math"))
+		mathPres.interactWithMathMl(mathMl)
 	# Translators: Describes a command.
 	script_interactWithMath.__doc__ = _("Begins interaction with math content")
 

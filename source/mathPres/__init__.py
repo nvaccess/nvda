@@ -18,6 +18,8 @@ import api
 import virtualBuffers
 import eventHandler
 from logHandler import log
+import ui
+import textInfos
 
 class MathPresentationProvider(object):
 	"""Implements presentation of math content.
@@ -127,3 +129,41 @@ def stripExtraneousXml(xml):
 	Currently, this strips anything before the opening of the math tag.
 	"""
 	return RE_STRIP_XML_PREFIX.sub("", xml)
+
+def getMathMlFromTextInfo(pos):
+	"""Get MathML (if any) at the start of a TextInfo.
+	The caller need not call L{ensureInit} before calling this function.
+	@param pos: The TextInfo in question.
+	@type pos: L{textInfos.TextInfo}
+	@return: The MathML or C{None} if there is no math.
+	@rtype: basestring
+	"""
+	pos = pos.copy()
+	pos.expand(textInfos.UNIT_CHARACTER)
+	for item in reversed(pos.getTextWithFields()):
+		if not isinstance(item, textInfos.FieldCommand) or item.command != "controlStart":
+			continue
+		field = item.field
+		if field.get("role") != controlTypes.ROLE_MATH:
+			continue
+		try:
+			return pos.getMathMl(field)
+		except (NotImplementedError, LookupError):
+			continue
+	return None
+
+def interactWithMathMl(mathMl):
+	"""Begin interaction with specified MathML markup, reporting any errors to the user.
+	This is intended to be called from scripts.
+	If interaction isn't supported, this will be reported to the user.
+	The script should return after calling this function.
+	The caller need not call L{ensureInit} before calling this function.
+	@param mathMl: The MathML markup.
+	"""
+	ensureInit()
+	if not interactionProvider:
+		# Translators: Reported when the user attempts math interaction
+		# but math interaction is not supported.
+		ui.message(_("Math interaction not supported."))
+		return
+	return interactionProvider.interactWithMathMl(mathMl)
