@@ -1,6 +1,6 @@
 #appModules/winword.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NV Access Limited, Manish Agrawal
+#Copyright (C) 2006-2015 NV Access Limited, Manish Agrawal
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -419,6 +419,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	shouldIncludeLayoutTables=True #: layout tables should always be included (no matter the user's browse mode setting).
 
 	def activate(self):
+		import mathPres
+		mathMl=mathPres.getMathMlFromTextInfo(self)
+		if mathMl:
+			return mathPres.interactWithMathMl(mathMl)
 		# Handle activating links.
 		# It is necessary to expand to word to get a link as the link's first character is never actually in the link!
 		tempRange=self._rangeObj.duplicate
@@ -844,6 +848,9 @@ class BrowseModeWordDocumentTextInfo(textInfos.TextInfo):
 
 	def expand(self,unit):
 		return self.innerTextInfo.expand(unit)
+
+	def getMathMl(self, field):
+		return self.innerTextInfo.getMathMl(field)
 
 class WordDocumentTreeInterceptor(CursorManager,browseMode.BrowseModeTreeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor):
 
