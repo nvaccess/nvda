@@ -8,7 +8,7 @@ The NVDA source depends on several other packages to run correctly.
 
 === Installed Dependencies ===
 The following dependencies need to be installed on your system:
-* Python, version 2.7.8, 32 bit: http://www.python.org/
+* Python, version 2.7.9, 32 bit: http://www.python.org/
 * Microsoft Visual Studio 2012 Update 1 or later (Express for Windows Desktop, or Professional)
 	* Download for Visual Studio Express 2012 (Windows Desktop): http://www.microsoft.com/en-au/download/details.aspx?id=34673
 	* Download for Visual Studio 2012 latest update package: http://go.microsoft.com/fwlink/?LinkId=301713 
@@ -22,7 +22,7 @@ If you aren't sure, run git submodule update after every git pull, merge or chec
 
 The following dependencies are included in Git submodules:
 * comtypes, version 0.6.2: http://sourceforge.net/projects/comtypes/
-* wxPython, version 2.8.12.1 unicode: http://www.wxpython.org/
+* wxPython, version 3.0.2.0: http://www.wxpython.org/
 * Python Windows Extensions, build 218: http://sourceforge.net/projects/pywin32/ 
 * eSpeak, version 1.48.03: http://espeak.sourceforge.net/
 * IAccessible2, version 1.3: http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2

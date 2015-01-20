@@ -1145,6 +1145,7 @@ void gdiHooks_inProcess_initialize() {
 	real_CreateCompatibleDC=apiHook_hookFunction_safe("GDI32.dll",CreateCompatibleDC,fake_CreateCompatibleDC);
 	real_SelectObject=apiHook_hookFunction_safe("GDI32.dll",SelectObject,fake_SelectObject);
 	real_DeleteDC=apiHook_hookFunction_safe("GDI32.dll",DeleteDC,fake_DeleteDC);
+	real_FillRect=apiHook_hookFunction_safe("USER32.dll",FillRect,fake_FillRect);
 	real_DrawFocusRect=apiHook_hookFunction_safe("USER32.dll",DrawFocusRect,fake_DrawFocusRect);
 	real_BeginPaint=apiHook_hookFunction_safe("USER32.dll",BeginPaint,fake_BeginPaint);
 	real_BitBlt=apiHook_hookFunction_safe("GDI32.dll",BitBlt,fake_BitBlt);
