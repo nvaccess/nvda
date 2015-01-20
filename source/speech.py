@@ -1040,7 +1040,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		speakEntry=True
 		speakWithinForLine=True
 		speakExitForOther=True
-	elif presCat == attrs.PRESCAT_MARKER:
+	elif presCat in (attrs.PRESCAT_MARKER, attrs.PRESCAT_CELL):
 		speakEntry=True
 	elif presCat == attrs.PRESCAT_CONTAINER:
 		speakEntry=True
