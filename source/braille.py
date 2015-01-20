@@ -611,6 +611,8 @@ class NVDAObjectRegion(Region):
 
 def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
+	# Cache this for later use.
+	field._presCat = presCat
 	if reportStart:
 		# If this is a container, only report it if this is the start of the node.
 		if presCat == field.PRESCAT_CONTAINER and not field.get("_startOfNode"):
@@ -789,6 +791,18 @@ class TextInfoRegion(Region):
 					ctrlFields.append(field)
 					if not text:
 						continue
+					if getattr(field, "_presCat") == field.PRESCAT_MARKER:
+						# In this case, the field text is what the user cares about,
+						# not the actual content.
+						fieldStart = len(self.rawText)
+						if fieldStart > 0:
+							# There'll be a space before the field text.
+							fieldStart += 1
+						if shouldMoveCursorToFirstContent:
+							shouldMoveCursorToFirstContent = False
+							self.cursorPos = fieldStart
+						elif isSelection and self._selectionStart is None:
+							self._selectionStart = fieldStart
 					self._addFieldText(text)
 				elif cmd == "controlEnd":
 					field = ctrlFields.pop()
