@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #appModules/skype.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2014 Peter Vágner, NV Access Limited
+#Copyright (C) 2007-2015 Peter Vágner, NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -31,14 +31,17 @@ class Conversation(NVDAObjects.IAccessible.IAccessible):
 		for n in xrange(0, 10):
 			self.bindGesture("kb:NVDA+control+%d" % n, "reviewRecentMessage")
 
+	def _isEqual(self, other):
+		# Sometimes, we get this object as an unproxied IAccessible,
+		# which means the location is different, so IAccessible._isEqual return False.
+		# This can cause us to get a gainFocus and a focusEntered on two different instances.
+		# We don't care about the location here.
+		return self.windowHandle == other.windowHandle
+
 	def _gainedFocus(self):
 		# The user has entered this Skype conversation.
 		if self.appModule.conversation:
-			# A conversation was already focused.
-			if self.appModule.conversation.windowHandle == self.windowHandle:
-				# This is the same conversation.
-				return
-			# This is another conversation that hasn't been cleaned up yet.
+			# Another conversation was previously focused. Clean it up.
 			self.appModule.conversation.lostFocus()
 
 		self.appModule.conversation = self
