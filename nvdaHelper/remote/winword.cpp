@@ -51,6 +51,7 @@ constexpr int formatConfig_reportRevisions = 0x8000;
 constexpr int formatConfig_reportParagraphIndentation = 0x10000;
 constexpr int formatConfig_includeLayoutTables = 0x20000;
 constexpr int formatConfig_reportLineSpacing = 0x40000;
+constexpr int formatConfig_reportGraphics = 0x80000;
 
 constexpr int formatConfig_fontFlags =(formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor);
 constexpr int formatConfig_initialFormatFlags =(formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings|formatConfig_includeLayoutTables);
@@ -711,7 +712,9 @@ inline int generateInlineShapeXML(IDispatch* pDispatchRange, int offset, wostrin
 		SysFreeString(altText);
 	}
 	altText=NULL;
-	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<((shapeType==wdInlineShapePicture||shapeType==wdInlineShapeLinkedPicture)?L"graphic":(shapeType==wdInlineShapeChart?L"chart":L"object"))<<L"\" value=\""<<altTextStr<<L"\"";
+	XMLStream<<L"<control _startOfNode=\"1\" ";
+	XMLStream<<L"role=\""<<((shapeType==wdInlineShapePicture||shapeType==wdInlineShapeLinkedPicture)?L"graphic":(shapeType==wdInlineShapeChart?L"chart":L"object"))<<L"\" ";
+	XMLStream<<L"content=\""<<altTextStr<<L"\"";
 	if(shapeType==wdInlineShapeEmbeddedOLEObject) {
 		XMLStream<<L" shapeoffset=\""<<offset<<L"\"";
 		IDispatchPtr pOLEFormat=NULL;

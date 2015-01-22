@@ -572,6 +572,20 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportLinks.__doc__=_("Toggles on and off the reporting of links")
 	script_toggleReportLinks.category=SCRCAT_DOCUMENTFORMATTING
 
+	def script_toggleReportGraphics(self,gesture):
+		if config.conf["documentFormatting"]["reportGraphics"]:
+			# Translators: The message announced when toggling the report graphics document formatting setting.
+			state = _("report graphics off")
+			config.conf["documentFormatting"]["reportGraphics"]=False
+		else:
+			# Translators: The message announced when toggling the report graphics document formatting setting.
+			state = _("report graphics on")
+			config.conf["documentFormatting"]["reportGraphics"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report graphics command.
+	script_toggleReportGraphics.__doc__=_("Toggles on and off the reporting of graphics")
+	script_toggleReportGraphics.category=SCRCAT_DOCUMENTFORMATTING
+
 	def script_toggleReportComments(self,gesture):
 		if config.conf["documentFormatting"]["reportComments"]:
 			# Translators: The message announced when toggling the report comments document formatting setting.
@@ -1298,10 +1312,16 @@ class GlobalCommands(ScriptableObject):
 	def _reportFormattingHelper(self, info, browseable=False):
 		formatConfig={
 			"detectFormatAfterCursor":False,
-			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,"reportEmphasis":False,
-			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
-			"reportPage":False,"reportLineNumber":False,"reportLineIndentation":True,"reportLineIndentationWithTones":False,"reportParagraphIndentation":True,"reportLineSpacing":True,"reportTables":False,
-			"reportLinks":False,"reportHeadings":False,"reportLists":False,
+			"reportFontName":True,"reportFontSize":True,
+			"reportFontAttributes":True,"reportColor":True,
+			"reportRevisions":False,"reportEmphasis":False,
+			"reportStyle":True,"reportAlignment":True,
+			"reportSpellingErrors":True,"reportPage":False,
+			"reportLineNumber":False,"reportLineIndentation":True,
+			"reportLineIndentationWithTones":False,"reportParagraphIndentation":True,
+			"reportLineSpacing":True,"reportTables":False,
+			"reportLinks":False,"reportGraphics":False,
+			"reportHeadings":False,"reportLists":False,
 			"reportBlockQuotes":False,"reportComments":False,
 			"reportBorderStyle":True,"reportBorderColor":True,
 		}

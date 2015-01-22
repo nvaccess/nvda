@@ -1259,13 +1259,13 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 			+ (" %s" % stateText if stateText else "")
 			+ (" %s" % ariaCurrentText if ariaCurrent else ""))
 
+	content = attrs.get("content")
 	# General cases.
 	if (
 		(speakEntry and ((speakContentFirst and fieldType in ("end_relative","end_inControlFieldStack")) or (not speakContentFirst and fieldType in ("start_addedToControlFieldStack","start_relative"))))
 		or (speakWithinForLine and not speakContentFirst and not extraDetail and fieldType=="start_inControlFieldStack")
 	):
 		out = []
-		content = attrs.get("content")
 		if content and speakContentFirst:
 			out.append(content)
 		if placeholderValue:
@@ -1276,7 +1276,6 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		if content and not speakContentFirst:
 			out.append(content)
 		return CHUNK_SEPARATOR.join(out)
-		
 	elif fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText and ((not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)):
 		# Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 		return _("out of %s")%roleText
@@ -1286,6 +1285,8 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		out = []
 		if ariaCurrent:
 			out.append(ariaCurrentText)
+		if role == controlTypes.ROLE_GRAPHIC and content:
+			out.append(content)
 		return CHUNK_SEPARATOR.join(out)
 	else:
 		return ""

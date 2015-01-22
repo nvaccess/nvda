@@ -325,6 +325,7 @@ formatConfigFlagsMap={
 	"reportRevisions":0x8000,
 	"reportParagraphIndentation":0x10000,
 	"reportLineSpacing":0x40000,
+	"reportGraphics":0x80000,
 }
 formatConfigFlag_includeLayoutTables=0x20000
 
