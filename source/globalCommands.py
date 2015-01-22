@@ -113,7 +113,7 @@ class GlobalCommands(ScriptableObject):
 	def script_reportCurrentLine(self,gesture):
 		obj=api.getFocusObject()
 		treeInterceptor=obj.treeInterceptor
-		if hasattr(treeInterceptor,'TextInfo') and not treeInterceptor.passThrough:
+		if isinstance(treeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor) and not treeInterceptor.passThrough:
 			obj=treeInterceptor
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_CARET)
@@ -175,7 +175,7 @@ class GlobalCommands(ScriptableObject):
 	def script_reportCurrentSelection(self,gesture):
 		obj=api.getFocusObject()
 		treeInterceptor=obj.treeInterceptor
-		if hasattr(treeInterceptor,'TextInfo') and not treeInterceptor.passThrough:
+		if isinstance(treeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor) and not treeInterceptor.passThrough:
 			obj=treeInterceptor
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)

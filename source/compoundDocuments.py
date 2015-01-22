@@ -10,7 +10,7 @@ import controlTypes
 import eventHandler
 from NVDAObjects import NVDAObject
 from editableText import EditableText
-from treeInterceptorHandler import TreeInterceptor
+from treeInterceptorHandler import DocumentTreeInterceptor
 import speech
 import braille
 from NVDAObjects import behaviors
@@ -364,7 +364,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 
 		return direction - remainingMovement
 
-class CompoundDocument(EditableText, TreeInterceptor):
+class CompoundDocument(EditableText, DocumentTreeInterceptor):
 	TextInfo = TreeCompoundTextInfo
 
 	def __init__(self, rootNVDAObject):
@@ -383,9 +383,6 @@ class CompoundDocument(EditableText, TreeInterceptor):
 				return True
 			obj = obj.parent
 		return False
-
-	def makeTextInfo(self, position):
-		return self.TextInfo(self, position)
 
 	def _get_caretObject(self):
 		return eventHandler.lastQueuedFocusObject
