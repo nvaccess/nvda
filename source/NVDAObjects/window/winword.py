@@ -1,6 +1,6 @@
 #appModules/winword.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2016 NV Access Limited, Manish Agrawal, Derek Riemer
+#Copyright (C) 2006-2016 NV Access Limited, Manish Agrawal, Leonard de Ruijter, Derek Riemer
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -315,14 +315,15 @@ formatConfigFlagsMap={
 	"reportTables":0x200,
 	"reportLists":0x400,
 	"reportLinks":0x800,
-	"reportComments":0x1000,
-	"reportHeadings":0x2000,
-	"autoLanguageSwitching":0x4000,
-	"reportRevisions":0x8000,
-	"reportParagraphIndentation":0x10000,
+	"reportGraphics":0x1000,
+	"reportComments":0x2000,
+	"reportHeadings":0x4000,
+	"autoLanguageSwitching":0x8000,
+	"reportRevisions":0x10000,
+	"reportParagraphIndentation":0x20000,
 	"reportLineSpacing":0x40000,
 }
-formatConfigFlag_includeLayoutTables=0x20000
+formatConfigFlag_includeLayoutTables=0x80000
 
 class WordDocumentHeadingQuickNavItem(browseMode.TextInfoQuickNavItem):
 
