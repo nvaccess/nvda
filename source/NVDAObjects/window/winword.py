@@ -940,6 +940,15 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		states.add(controlTypes.STATE_MULTILINE)
 		return states
 
+	def populateHeaderCellTrackerFromHeaderRows(self,headerCellTracker,table):
+		for row in table.rows:
+			try:
+				headingFormat=row.headingFormat
+			except (COMError,AttributeError,NameError):
+				headingFormat=0
+			if headingFormat==-1: # is a header row
+				headerCellTracker.addHeaderCellInfo(rowNumber=row.index,columnNumber=1,isColumnHeader=True,isRowHeader=False)
+
 	def populateHeaderCellTrackerFromBookmarks(self,headerCellTracker,bookmarks):
 		for x in bookmarks: 
 			name=x.name
@@ -966,6 +975,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		if not self._curHeaderCellTrackerTable or not tableRange.isEqual(self._curHeaderCellTrackerTable.range):
 			self._curHeaderCellTracker=HeaderCellTracker()
 			self.populateHeaderCellTrackerFromBookmarks(self._curHeaderCellTracker,tableRange.bookmarks)
+			self.populateHeaderCellTrackerFromHeaderRows(self._curHeaderCellTracker,table)
 			self._curHeaderCellTrackerTable=table
 		return self._curHeaderCellTracker
 
@@ -1007,7 +1017,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			return False
 		headerCellTracker=self.getHeaderCellTrackerForTable(cell.range.tables[1])
 		info=headerCellTracker.getHeaderCellInfoAt(rowNumber,columnNumber)
-		if not info:
+		if not info or not hasattr(info,'name'):
 			return False
 		if isColumnHeader and info.isColumnHeader:
 			info.isColumnHeader=False
