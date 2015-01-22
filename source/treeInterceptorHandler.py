@@ -132,4 +132,12 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		"""Prepares this treeInterceptor so that it becomes ready to accept event/script input."""
 		raise NotImplementedError
 
+class DocumentTreeInterceptor(TreeInterceptor):
+	"""A TreeInterceptor that supports document review."""
+
+	def _get_TextInfo(self):
+		raise NotImplementedError
+
+	def makeTextInfo(self,position):
+		return self.TextInfo(self,position)
 

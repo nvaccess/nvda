@@ -374,7 +374,7 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def activate(self):
 		self.obj._activatePosition(self)
 
-class VirtualBuffer(cursorManager.CursorManager, browseMode.BrowseModeTreeInterceptor):
+class VirtualBuffer(cursorManager.CursorManager, browseMode.BrowseModeTreeInterceptor, treeInterceptorHandler.DocumentTreeInterceptor):
 
 	TextInfo=VirtualBufferTextInfo
 	programmaticScrollMayFireEvent = False
@@ -464,9 +464,6 @@ class VirtualBuffer(cursorManager.CursorManager, browseMode.BrowseModeTreeInterc
 			except WindowsError:
 				pass
 			self.VBufHandle=None
-
-	def makeTextInfo(self,position):
-		return self.TextInfo(self,position)
 
 	def isNVDAObjectPartOfLayoutTable(self,obj):
 		docHandle,ID=self.getIdentifierFromNVDAObject(obj)
