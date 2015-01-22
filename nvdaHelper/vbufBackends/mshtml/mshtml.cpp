@@ -1182,7 +1182,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		}
 
 		//A node who's rendered children produces no content, or only a small amount of whitespace should render its title or URL
-		if(!nodeHasUsefulContent(parentNode)) {
+		if(!hidden&&!nodeHasUsefulContent(parentNode)) {
 			contentString=L"";
 			if(!IAName.empty()) {
 				contentString=IAName;
