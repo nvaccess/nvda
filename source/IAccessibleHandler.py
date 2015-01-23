@@ -575,8 +575,6 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			# If we send a WM_NULL to this window at this point (which happens in accessibleObjectFromEvent), Messenger will silently exit (#677).
 			# Therefore, completely ignore these events, which is useless to us anyway.
 			return
-		if not eventHandler.shouldAcceptEvent(winEventIDsToNVDAEventNames[eventID], windowHandle=window):
-			return
 		if winEventLimiter.addEvent(eventID,window,objectID,childID,threadID):
 			core.requestPump()
 	except:
@@ -833,6 +831,8 @@ def pumpAll():
 	validFocus=False
 	fakeFocusEvent=None
 	for winEvent in winEvents[0-MAX_WINEVENTS:]:
+		if not eventHandler.shouldAcceptEvent(winEventIDsToNVDAEventNames[winEvent[0]], windowHandle=winEvent[1]):
+			continue
 		#We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one 
 		if winEvent[0] in (winUser.EVENT_OBJECT_FOCUS,winUser.EVENT_SYSTEM_FOREGROUND):
 			focusWinEvents.append(winEvent)
