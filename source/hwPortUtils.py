@@ -10,6 +10,7 @@ import itertools
 import ctypes
 from ctypes.wintypes import BOOL, WCHAR, HWND, DWORD, ULONG, WORD
 import _winreg as winreg
+from winKernel import SYSTEMTIME
 
 def ValidHandle(value):
 	if value == 0:
@@ -227,18 +228,6 @@ def listComPorts(onlyAvailable=True):
 
 BLUETOOTH_MAX_NAME_SIZE = 248
 BTH_ADDR = BLUETOOTH_ADDRESS = ULONGLONG
-
-class SYSTEMTIME(ctypes.Structure):
-	_fields_ = (
-		("wYear", WORD),
-		("wMonth", WORD),
-		("wDayOfWeek", WORD),
-		("wDay", WORD),
-		("wHour", WORD),
-		("wMinute", WORD),
-		("wSecond", WORD),
-		("wMilliseconds", WORD)
-	)
 
 class BLUETOOTH_DEVICE_INFO(ctypes.Structure):
 	_fields_ = (

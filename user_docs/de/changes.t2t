@@ -2,56 +2,231 @@
 
 
 %!includeconf: ../changes.t2tconf
-= 2014.1 =
 
-== neue Funktionen ==
-- Unterstützung für Microsoft PowerPoint 2013. die geschützte ansicht wird nicht unterstützt. (#3578)
-- Wenn Sie in Microsoft Word oder Excel den Dialog zum Einfügen von Sonderzeichen verwenden, kann NVDA nun das ausgewählte Symbol erkennen.  (#3538)
-- in den Einstellunbgen zur Dokumentformatierung können Sie nun festlegen, ob anklickbare Elemente als solche erkannt werden sollen. Diese Option ist standardmäßig aktiviert. Dies entspricht dem Verhalten älterer NVDA-Versionen. (#3556)
-- Wenn Sie die Widcomm-Bluetoot-Software verwenden, werden nun auch Braillezeilen korrekt erkannt, die per Bluetooth verbunden sind. (#2418)
-- Beim Bearbeiten von Text in Powerpoint werden Links als solche erkannt. (#3416)
-- Um Aria-Dialoge und -Anwendungen im Lesemodus anzuzeigen, können Sie mit nvda+Leertaste in den Lesemodus wechseln, während Sie eine Aria-Anwendung verwenden. (#2023)
-- In Outlook Express / Windows Mail / Windows Live Mail wird die Existenz von Anhängen oder Kennzeichnungen von Nachrichten angezeigt. (#1594)
+= 2014.4 =
+
+== Neuerungen ==
+- neue Sprachen: kolumbianisches Spanisch, Punjabi
+- Sie können NVDA nun auch vom Dialog "beenden" aus (wahlweise mit deaktivierten Erweiterungen) neu starten. (#4057)
+  - Sie können NVDA auch mit deaktivierten Erweiterungen neu starten, indem Sie die Kommandozeilenoption --disable-addons verwenden.
+- Sie können in Aussprachewörterbüchern angeben, dass ein bestimmtes Muster nur auf ein ganzes Wort passen soll. (#1704)
+ 
 
 == Änderungen ==
-- die Befehle zum Umschalten von/in den Flächenmodus wurden aus der Tastenbelegung für Papenmeier-Braillezeilen entfernt. Sie können im Dialog einstellungen/Eingaben jedoch eine eigene Tastenkombination zuweisen. (#3652)
-- NVDA benötigt nun mindestens VC Runtime Version 11. Dies bedeutet, dass nun mindestens Windows xp sp2 oder Windows server 2003 sp1 benötigt wird.
+- Wenn Sie mit dem Navigator in ein virtuelles Dokument wechseln, wird der Darstellungsmodus auf "Dokument" eingestellt. früher geschah dies nur, wenn Sie den Fokus bewegt haben. (#4369)
+- Die Dialoge zum auswählen von Sprachausgaben Bzw. Braillezeilen werden alphabetisch sortiert; ausgenommen sind hierbei die Einträge "keine Sprachausgabe" Bzw. "keine Braillezeile". Diese befinden sich stets an letzter Stelle in der Liste. (#2724)
+- Libluis wurde auf Version  2.6.0 aktualisiert. (#4434, #3835)
+- Wenn Sie im Lesemodus die Schnellnavigationstasten E und umschalt+E drücken, werden nun auch bearbeitbare Kombinationsfelder berücksichtigt. Dies betrifft u.a. das Suchfeld in der neuesten Version der Google-suche. (#4436)
+- Wenn Sie mit der linken Maustaste auf das NVDA-Symbol im Infobereich klicken, wird nun das NVDA-Menü geöffnet. (#4459)
+
+
+== Fehlerbehebungen ==
+- Wenn Sie mit alt-tab in ein bereits geöffnetes virtuelles Dokument wechseln, wird der NVDA-Cursor korrekt auf dem virtuellen Cursor und nicht wie bisher auf dem fokusierten Objekt (z. B. einem nahe gelegenen Link) positioniert. (#4369)
+- Der NVDA-Cursor verfolgt nun den virtuellen Cursor in Powerpoint-Präsentationen richtig. (#4370)
+- in Mozilla Firefox und anderen Gecko-basierten Browsernwird neuer Inhalt in Live-Regionen korrekt angezeigt. (#4169).
+- im Internet Explorer und anderen MSHTML-Elementen verhindern verschachtelte Rahmen nicht mehr das Navigieren in außerhalb liegende Rahmen. (#4418)
+- nvda stürzt nun nicht mehr ab, wenn es mit einer Handytech-Braillezeile verwendet wird. (#3709)
+- Problem in Windows Vista behoben, wonach NVDA mit dem Dialog "Einsprungpunkt nicht gefunden" abgestürzt ist, wenn man es über die Desktop-Verknüpfung oder über die Tastenkombination gestartet hat. (#4235)
+- Probleme mit Eingabefeldern in einigen Eclipse-Versionen behoben. (#3872)
+- in Outlook 2010 wird der Systemcursor im Eingabefeld "Ort" in Besprechungs- und Terminanfragen ordnungsgemäß bewegt. (#4126)
+- Innerhalb einer  Live-Region wird der Inhalt, der mit "aria-live=off" gekennzeichnet ist, korrekterweise ignoriert. (#4405)
+- bei Statuszeilen, die einen Namen besitzen, wird der Name vom Text abgetrennt. (#4430)
+- Wenn die Option  Sprechen eingegebener Wörter" aktiviert ist, werden in Passwort-Eingabefeldern nicht mehr länger Sterne angesagt, wenn Sie ein neues Wort beginnen. (#4402)
+- In der Nachrichtenliste von Microsoft Outlook werden Einträge nicht mehr unnötigerweise als Dateneintrag bezeichnet.  (#4439)
+- im Code-Editor von Eclipse wird beim Markieren von Text nicht mehr der gesamte markierte Text ausgegeben, wenn sich die Markierung ändert. (#2314)
+- diverse Versionen von Eclipse (wie z. B. die Entwicklungsumgebung für Android-Anwendungen) werden korrekt als Eclipse erkannt. (#4360, #4454)
+- Die Mausverfolgung fürInternet Explorer sowie viele weitere Windows-8-Anwendungen wurde verbessert. Dies betrifft insbesondere die Verwendung höherer Bildschirmauflösungen (#3494) 
+- Bei Verwendung der Mausverfolgung im Internet Explorer und anderen mshtml-Dokumenten werden nun mehr Schalter erkannt. (#4173)
+
+
+== Änderungen für Entwickler ==
+- Für Programme, die mehrere unterschiedliche Anwendungen bereitstellen können (wie z. B. javaw.exe) können nun Anwendungsmodule für einzelne Anwendungen geschrieben werden. (#4360)
+ - siehe hierzu die Code-Dokumentation von appModuleHandler.AppModule für weitere Informationen.
+ - Unterstützung für javaw.exe ist bereits integriert.
+
+
+= 2014.3 =
+
+== neue Funktionen ==
+- Die Klänge beim Starten/Beenden von NVDA können mit einer neuen Option in den allgemeinen Einstellungen ein- und ausgeschaltet werden. (#834)
+- Im Dialog Erweiterungen verwalten können Sie  eine Hilfeseite zu einer Erweiterung aufrufen, sofern es dies unterstützt. (#2694)
+- Unterstützung für den Kalender in Outlook 2007 und neuer (#2943):
+ - Wenn Sie sich mit den Pfeiltasten im Kalender bewegen, wird die aktuelle Uhrzeit ausgegeben
+ - es wird benachrichtigt, ob der gewählte Zeitpunkt mit einem Termin kollidiert
+ - der gewählte Termin wird ausgegeben, wenn Sie Tab drücken
+ - Das Datum wird nur noch ausgegeben, wenn sich der neu gewählte Termin/Zeitpunkt auf einen anderen Tag bezieht
+- Verbesserte Unterstützung für den Posteingang und andere Nachrichtenlisten in Outlook 2010 und neuer. (#3834)
+ - Sie können die Anzeige der Spaltenüberschriften (Absender, Betreff usw.) unterdrücken, indem Sie die Option "Spalten- und Reihenüberschriften von Tabellen ansagen" in den Einstellungen für Dokumentformatierungen deaktivieren.
+ - Sie können die Tabellennavigationsbefehle (Alt+strg+Pfeiltasten) verwenden, um zwischen den Spalten zu navigieren
+- Microsoft Word: Wenn eine eingebundene Grafik keinen Alternativtext besitzt, wird stattdessen der Titel angezeigt, sofern vorhanden. (#4193)
+- Microsoft Word: Sie können die Einrückung eines Absatzes automatisch ausgeben lassen, indem Sie die Option "Absatzeinrückungen anzeigen" in den Einstellungen für Dokumentformatierungen aktivieren. Des weiteren werden Absatzeinrückungen auch mit dem Befehl Dokumentformatierung ansagen (NVDA+f) ausgegeben. (#4165).
+- Wenn Sie in Eingabefeldern oder in Dokumenten die Eingabetaste drücken, wird automatisch eingefügter Text (Tab-, Aufzählungszeichen, Numerierungen) automatisch ausgegeben. (#4185)
+- Microsoft Word: Sie können nvda+alt+c drücken, um sich den Kommentar in einem Word-Dokument ausgeben zu lassen. (#3528)
+- verbessertes automatisches Anzeigen von Reihen- und Spaltenüberschriften in Microsoft Excel (#3568):
+ - Es werden (jaws-kompatible) definierte Namen verwendet, um Reihen- und Spaltenüberschriften zu identifizieren
+ - Die Befehle zum Setzen von Spalten- und Reihenbeschriftungen (nvda+Umschalt+c und nvda+Umschalt+r) speichern die Spalten- und Reihenbeschriftungen im Excel-Arbeitsblatt, sodass diese nach einem Neustart von NVDA oder Microsoft Excel wieder zur Verfügung stehen. Solche Reihen-/Spaltenüberschriften sollten von allen Bildschirmlesern ausgewertet werden können, die definierte Namen unterstützen
+ - Die Befehle können außerdem mehrmals in einem Arbeitsblatt verwendet werden, um verschiedene Überschriften für unterschiedliche Regionen eines Arbeitsblattes zu definieren.
+- Unterstützung für die Anzeige von Reihen- und Spaltenüberschriften in Microsoft Word (#3110):
+ - Es werden (jaws-kompatible) Word-Lesezeichen verwendet, um Reihen- und Spaltenüberschriften zu identifizieren
+ - Wenn Sie sich in der ersten Zeile/Spalte einer Tabelle befinden, können Sie diese mit nvda+Umschalt+c und nvda+Umschalt+R als Spalten-/Zeilenbeschriftung festlegen. Diese Beschriftungen werden im Word-Dokument gespeichert und stehen allen Bildschirmlesern zur Verfügung, die derartige Lesezeichen unterstützen.
+- Microsoft Word: Wenn Sie Tab drücken, wird der Abstand vom linken Seitenrand ausgegeben. (#1353)
+- Für die meisten Befehle, die die Formatierungen in einem Word-Dokument verändern (Fett, Kursiv, unterstrichen; Gliederungsebenen usw.) meldet NVDA die Änderung der Formatierung per Sprache und Braille. (#1353)
+- Wenn in einem Microsoft-Excel-Arbeitsblatt die aktuelle Zelle einen Kommentar besitzt, können Sie diesen über die Tastenkombination nvda+alt+c anzeigen lassen. (#2920)
+- Wenn Sie in Microsoft Excel den Modus zum Bearbeiten von Kommentaren mit der Tastenkombination umschalt+F2 einschalten, wird ein nvda-eigener Dialog zur Eingabe eines Kommentars angezeigt. (#2920)
+- Microsoft Excel: für etliche Tastenkombinationen, die sich auf das Verschieben von Markierungen beziehen, wurde die Ausgabe in Sprache und Braille verbessert (#4211):
+ - vertikales seitenweises Verschieben (Seite auf und Seite ab)
+ - horizontales seitenweises Verschieben (alt+Seite auf und alt+Seite ab)
+ - Erweitern von Markierungen (die obigen Tastenkombinationen mit der Umschalt-Taste).
+ - markieren der aktuellen Region (strg+Umschalt+8)
+- Microsoft Excel: Wenn die Ansage der Ausrichtung in den Einstellungen für Dokumentformatierungen aktiviert ist, wird die vertikale und horizontale Ausrichtung der aktuellen Zelle automatisch ausgegeben. Ausgabe derselben mittels Formatierung ausgeben (NVDA+f).  (#4212)
+- Microsoft Excel: Das Layout einer -Zelle wird ausgegeben, wenn Sie nvda+f drücken. Dies geschieht automatisch,  wenn die Option "Layout ansagen" in den Einstellungen für Dokumentformatierungen aktiviert ist. (#4213)
+- Microsoft Powerpoint: Wenn Sie ein Objekt über eine Folie mit Hilfe der Pfeiltasten bewegen, wird die neue Position ausgegeben (#4214):
+ - der Abstand zwischen dem Objekt und jedem Rand der Folie wird ausgegeben.
+ - Sofern das Objekt ein anderes Objekt überlagert oder überlagert wird, wird die Überlagerung ausgegeben.
+ - Verwenden Sie den Befehl "Position anzeigen" (nvda+Nummernblock entf), um diese Informationen abzurufen, ohne das objekt zu bewegen.
+ - Wenn Sie ein Objekt auf einer Folie auswählen, werden Überlagerungen mit anderen Objekten gemeldet.
+- Der Befehl zum Anzeigen der Dimensionen eines Objekts reagiert in einigen Situationen kontextsensitiver. (#4219):
+ - In Eingabefeldern und im Lesemodus wird die Cursorposition relativ zum Feldinhalt und in Form von Bildschirmkoordinaten gemeldet.
+ - Bei Powerpoint-Objekten wird die Position des Objekts auf der Folie sowie evtl. vorhandene Überlagerungen gemeldet.
+ - Wenn Sie die Tastenkombination zweimal drücken, wird die Position dem alten Verhalten entsprechend gemeldet.
+- neue Sprache: Catalan.
+
+
+== Änderungen ==
+- Braille-Übersetzer Liblouis auf 2.5.4 aktualisiert. (#4103)
+
+
+== Fehlerbehebungen ==
+- In Chrome und Chrome-basierten Browsern werden hervorgehobene Dialogtexte nicht mehr doppelt angesagt. (#4066)
+- im Lesemodus in Mozilla-Anwendungen werden Schalter, etc. zuverlässiger mit der Eingabetaste gedrückt. Zuvor wurde ein Schalter nicht bzw. ein anderer Schalter betätigt.dies betrifft z. B. die Schalter oben auf der Facebook-Seite. (#4106)
+- Beim Navigieren in Itunes wird nutzlose Information ausgefiltert. (#4128)
+- Das Navigieren auf den nächsten Eintrag in Listen wie der Musik-Liste in Itunes funktioniert korrekt, wenn Sie die Objektnavigation verwenden. (#4129)
+- im Internet Explorer werden HTML-Elemente, die Überschriften enthalten, in die Schnellnavigation und in die Elementliste einbezogen. (#4140)
+- Das Verfolgen von Links auf der selben Seite funktioniert nun im Internet Explorer korrekt. (#4134)
+- In Microsoft Outlook 2010 und neuer wurde die Zugänglichkeit für einige dialoge wie die Einrichtung eines Mail-Kontos verbessert. (#4090, #4091, #4095)
+- in Outlook 2010 werden in der Befehls-Symbolleiste in einigen Dialogen keine nutzlosen Informationen mehr angezeigt. (#4096, #3407)
+- Wenn Sie in Microsoft Word auf eine leere Zelle in einer Tabelle navigieren, wird nicht mehr fälschlicherweise das Verlassen der Tabelle gemeldet. (#4151)
+- Microsoft Word, das erste Zeichen jenseits einer Tabelle wird nun nicht mehr fälschlicherweise in die Tabelle verlegt. (#4152)
+- im Dialog der Rechtschreibprüfung in Microsoft Word wird nun das falsch geschriebene Wort korrekt angezeigt, anstatt das erste fett gedruckte Wort anzuzeigen. (#3431) 
+- Lesemodus: im Internet Explorer und anderen mshtml-Dokumenten werden die Beschriftungen von Formularfeldern korrekt angezeigt, wenn Sie die Tab-Taste oder die Schnellnavigationstasten zur Navigation im Dokument verwenden. Dies betrifft vor allem Formularfelder, bei denen das html-Element Label zur Beschriftung verwendet wurde. (#4170)
+- Die Existenz von Kommentaren wird in Microsoft Word zuverlässiger gemeldet. (#3528)
+- Der Umgang mit Dialogen in Microsoft Office-Produkten  wie Word, Excel und Outlook wurde verbessert, in dem manche Kontainer-Symbolleisten ignoriert werden, die für den Anwender nicht hilfreich sind. (#4198) 
+- Wenn Sie Word oder Excel öffnen, werden Aufgabenbereiche wie  das Fenster zur Dateiwiederherstellung oder der Zwischenablagen-Manager nicht mehr versehentlich in den Fokus genommen.  (#4199)
+- Wenn NVDA auf serbischen Windows-Systemen verwendet wird, funktioniert es ordnungsgemäß. (#4203) 
+- NVDA verhält sich nun korrekt, wenn Sie bei eingeschalteter Eingabehilfe Numlock drücken, um den Nummernblock ein- oder auszuschalten. (#4226)
+- in Google Chrome wird der Titel des Dokuments gelesen, wenn Sie die Registerkarte wechseln. (#4222)
+- in Google Chrome und Chrome-basierten Browsern wird die Adresse des Dokuments nicht mehr gelesen, wenn Sie das Dokument lesen. (#4223)
+- Der Sprachausgabentreiber "keine Sprache" simuliert nun ein vollständiges «alles lesen», Dies ist insbesondere für automatisierte Tests nützlich. (#4225)
+- Der Dialog zum Bearbeiten von Signaturen in Outlook ist nun voll zugänglich (Incl. Formaterkennung und Cursorverfolgung). (#3833) 
+- Wenn Sie in Microsoft Word die letzte Zeile einer Tabellenzelle lesen, wird nicht mehr die gesamte Zelle gelesen. (#3421)
+- In Microsoft Word wird nicht mehr das gesamte Inhaltsverzeichnis gelesen, wenn Sie die erste oder letzte Zeile in einem Inhaltsverzeichnis lesen. (#3421)
+- Beim sprechen geschriebener Wörter und in einigen anderen Fällen, werden Wörter, die Vokalzeichen und Virama (Indic Languages) enthalten, nicht mehr fälschlicherweise zerteilt. (#4254)
+- numerische Eingabefelder in Goldwave werden korrekt verarbeitet. (#670)
+- Wenn Sie sich in Microsoft Word absatzweise durch numerierte Listen oder Aufzählungslisten bewegen, müssen Sie die Tastenkonbinationen strg+Pfeil auf/ab nicht mehr zweimal drücken. (#3290)
+
+ 
+== Änderungen für Entwickler ==
+- Die Unterstützung für das Beilegen einer Dokumentation zu NVDA-Erweiterungen wurde vereinheitlicht. Sehen Sie sich den Abschnitt zu Dokumentation für Erweiterungen für weitere Informationen an. (#2694)
+- Wenn sie das Wörterbuch __gestures verwenden, um Skripte an Eingabemethoden zuzuweisen, können Sie als Namen für das Skript das Schlüsselword None angeben, um in einer Basisklasse die Zuweisung für eine Tastenkombination zu löschen. (#4240)
+- Es ist nun möglich, die Tastenkombination zum Starten von NVDA zu ändern. In einigen Sprachräumen verursacht die Standard-Tastenkombination Probleme. (#2209)
+ - Dies wird über Getext realisiert.
+ - Bedenken Sie, dass Sie sowohl den Text für die Option zum Erstellen einer Desktop-Verknüpfung als auch die entsprechenden Passagen im Benutzerhandbuch aktualisieren müssen.
+
+ 
+= 2014.2 =
+
+== Neue Funktionen ==
+- Der markierte Text in Eingabefeldern wird korrekt erkannt, wenn der angezeigte Text (über die API DisplayModel) benutzt werden muss. (#770)
+- In zugänglichen Java-Anwendungen werden Positionsinformationen (z. B. in Auswahlschaltern) korrekt angezeigt. (#3754)
+- In zugänglichen Java-Anwendungen werden Tastenkombinationen korrekt erkannt. (#3881)
+- Im Lesemodus werden Beschriftungen in Sprungmarken korrekt erkannt und in der Elementliste angezeigt. (#1195)
+- Im Lesemodus werden benannte Regionen als Sprungmarken erkannt. (#3741)
+- im Internet Explorer werden Live-Regionen unterstützt. Dies erlaubt es Webentwicklern, bestimmte Teile einer Webseite automatisch von NVDA vorlesen zu lassen, sobald sie sich ändern. (#1846)
+
+== Änderungen ==
+- Wenn Sie einen Dialog oder eine Anwendung beenden, der/die sich innerhalb eines Webdokuments befindet, wird der Name und der Typ des Dokumentes nicht mehr angesagt. (#4069)
+
+== Fehlerbehebungen ==
+- In zugänglichen Java-Anwendungen wird das Systemmenü nicht mehr unterdrückt (#3882)
+- Zeilenumbrüche werden nicht mehr unterdrückt, wenn Text aus der Bildschirmdarstellung kopiert wird. (#3900)
+- Wenn die vereinfachte Darstellung aktiviert ist, werden Objekte ohne Standortinformationen und Beschriftung nicht mehr angezeigt. (#3839)
+- Wenn NVDA-Meldungsfenster und -Dialoge erscheinen, wird die Sprache unterbrochen.
+- Wenn ein Webentwickler aus Gründen der Barrierefreiheit die Attribute aria-label oder aria-labelledby verwendet hat, um die Beschriftung eines Links oder Schalters zu überschreiben, werden diese Beschriftungen korrekt angezeigt. (#1354)
+- Wenn im Lesemodus im Internet Explorer ein Element als gestaltendes Element markiert wurde  (indem aria-presentation verwendet wird), wird der enthaltene Text nicht mehr ignoriert. (#4031)
+- Sie können nun wieder das Programm Unikey verwenden, um vietnamesische Sonderzeichen einzugeben. Deaktivieren Sie hierzu die neu hinzugekommene Option "Tastendrücke anderer Anwendungen verarbeiten" in den Tastatureinstellungen. (#4043) 
+- Im Lesemodus werden aktivierbare menüeinträge (mit und ohne Mehrfachauswahl) innerhalb von anklickbarem Text erkannt. (#4092)
+- Wenn ein aktivierbarer Menüeintrag (mit oder ohne mehrfachauswahl) den Fokus erhält, wird nicht mehr vom Fokus- in den lesemodus gewechselt. (#4092)
+- Wenn in Powerpoint die Wortweise Ansage aktiviert ist, werden gelöschte Zeichen nicht mehr als Teil eines eingegebenen Wortes angesagt. (#3231)
+- In den Einstellungen von Office 2010 werden Kombinationsfelder korrekt beschriftet. (#4056)
+- Die Schnellnavigationsbefehle für Formularfelder und Schalter berücksichtigen in Mozilla-Anwendungen auch Umschalter. (#4098)
+- Hinweisdialoge werden in Mozilla-Anwendungen nicht mehr doppelt angesagt. (#3481)
+- Wenn im Lesemodus eine Webseite automatisch aktualisiert wird, werden Sprungmarken und Containerinhalte nicht doppelt angesagt, sobald in ihnen navigiert wird (z. B. Twitter und Facebook). (#2199)
+- Wenn Sie den Fokus von einer Anwendung wegschalten, die nicht mehr reagiert, wird sich NVDA zuverlässiger neu starten. (#3825)
+- Wenn sich der Systemcursor in einem Eingabefeld befindet, das direkt auf den Bildschirm geschrieben wird, wird die Position des Systemcursors zuverlässiger aktualisiert, wenn Sie die Funktion "alles lesen" verwenden. (#4125)
+
+= 2014.1 =
+
+== Neue Funktionen ==
+- Unterstützung für Microsoft PowerPoint 2013. die geschützte ansicht wird nicht unterstützt. (#3578)
+- Wenn Sie in Microsoft Word oder Excel den Dialog zum Einfügen von Sonderzeichen verwenden, kann NVDA nun das ausgewählte Symbol erkennen.  (#3538)
+- In den Einstellunbgen zur Dokumentformatierung können Sie nun festlegen, ob anklickbare Elemente als solche erkannt werden sollen. Diese Option ist standardmäßig aktiviert. Dies entspricht dem Verhalten älterer NVDA-Versionen. (#3556)
+- Wenn Sie die Widcomm-Bluetoot-Software verwenden, werden nun auch Braillezeilen korrekt erkannt, die per Bluetooth verbunden sind. (#2418)
+- Beim Bearbeiten von Text in PowerPoint werden Links als solche erkannt. (#3416)
+- Um ARIA-Dialoge und -Anwendungen im Lesemodus anzuzeigen, können Sie mit NVDA+Leertaste in den Lesemodus wechseln, während Sie eine ARIA-Anwendung verwenden. (#2023)
+- In Outlook Express / Windows Mail / Windows Live Mail wird die Existenz von Anhängen oder Kennzeichnungen von Nachrichten angezeigt. (#1594)
+- Beim Navigieren innerhalb von Tabellen in zugänglichen Java-Anwendungen werden Reihen- und Spaltennummern sowie Reihen- und Spaltenüberschriften angezeigt. (#3756)
+
+== Änderungen ==
+- Die Befehle zum Umschalten von bzw. in den Flächenmodus wurden aus der Tastenbelegung für Papenmeier-Braillezeilen entfernt. Sie können im Dialog einstellungen / Eingaben jedoch eine eigene Tastenkombination zuweisen. (#3652)
+- NVDA benötigt nun mindestens VC Runtime Version 11. Das bedeutet, dass nun mindestens Windows XP SP2 oder Windows Server 2003 SP1 benötigt wird.
+- In der Satzzeichen- und in der Symbolebene "Einige" werden die Zeichen Stern (*) und Plus (+) angesagt. (#3614)
+- eSpeak auf Version 1.48.04 aktualisiert. Dadurch wurden etliche Fehler beseitigt. (#3842, #3739, #3860)
 
 == Fehlerbehebungen ==
 - Beim Navigieren durch und Markieren von Zellen in Microsoft Excel wird der markierte Zellenbereich korrekt erkannt, wenn Microsoft Excel langsam reagiert. (#3558)
 - NVDA verhält sich erwartungsgemäß, wenn Sie ein Kombinationsfeld für eine Zelle über das Kontextmenü öffnen. (#3586)
-- Im Itunes Store in Itunes 11 wird der Seiteninhalt aktualisiert, wenn Sie innerhalb des Stores einem Link folgen. (#3625)
-- im Itunes-Store in Itunes 11 werden die Beschriftungen für die Schalter für Musikvorschau korrekt angezeigt. (#3638)
-- im Lesemodus in Google Chrome werden die Beschriftungen von Kontrollkästchen und Auswahlschaltern korrekt angezeigt. (#1562)
-- in Instantbird wird beim Navigieren in der Kontaktliste keine nutzlose Information mehr angezeigt. (#2667)
-- im Lesemodus in Adobe Reader wird die Beschriftung von Schaltern richtig angezeigt, wenn sie durch Minihilfen überschrieben wird. (#3640)
-- im Adobe Reader werden nutzlose Grafiken, die als "mc-ref" beschriftet sind, nicht mehr angezeigt. (#3645)
-- in Microsoft Excel werden nicht mehr fälschlicherweise alle Zellen in den Formatierungsinformationen als unterstrichen angezeigt. (#3669)
+- Im iTunes Store in iTunes 11 wird der Seiteninhalt aktualisiert, wenn Sie innerhalb des Stores einem Link folgen. (#3625)
+- Im iTunes Store in iTunes 11 werden die Beschriftungen für die Schalter für Musikvorschau korrekt angezeigt. (#3638)
+- Im Lesemodus in Google Chrome werden die Beschriftungen von Kontrollkästchen und Auswahlschaltern korrekt angezeigt. (#1562)
+- In InstantBird wird beim Navigieren in der Kontaktliste keine nutzlose Information mehr angezeigt. (#2667)
+- Im Lesemodus in Adobe Reader wird die Beschriftung von Schaltern richtig angezeigt, wenn sie durch Minihilfen überschrieben wird. (#3640)
+- Im Adobe Reader werden nutzlose Grafiken, die als "mc-ref" beschriftet sind, nicht mehr angezeigt. (#3645)
+- In Microsoft Excel werden nicht mehr fälschlicherweise alle Zellen in den Formatierungsinformationen als unterstrichen angezeigt. (#3669)
 - Problem behoben, wonach bestimmte Unicode-Zeichen im Lesemodus die anzeige von Beschriftungen für Elemente verhindert haben. (#2963).
-- Pboblem behoben, wonach die Eingabe ostasiatischer Sonderzeichen in PUTTY fehlschlug (#3432)
-- Wenn Sie in einem Dokument im Lesemodus navigieren, nachdem Sie das Vorlesen des Dokuments abgebrochen haben, wird nun nicht mehr fälschlicherweise das Ende eines Containerobjektes (z.B. einer Tabelle) gemeldet (#3688).
+- Problem behoben, wonach die Eingabe Ostasiatischer Sonderzeichen in PUTTY fehlschlug (#3432)
+- Wenn Sie in einem Dokument im Lesemodus navigieren, nachdem Sie das Vorlesen des Dokuments abgebrochen haben, wird nun nicht mehr fälschlicherweise das Ende eines Containerobjektes (z. B. einer Tabelle) gemeldet (#3688).
 - Wenn Sie die Schnellnavigationstasten im Lesemodus verwenden, um das Vorlesen eines Dokumentes zu unterbrechen, während die Option "Navigation während alles Lesen erlauben" aktiviert ist, wird das aktuelle Element an der neuen Position korrekt angesagt. (#3689)
-- Die Navigationsbefehle zum Springen an den Anfang/das Ende eines Containerobjekts berücksichtigen jetzt die Option "Navigation während alles Lesen erlauben" (#3675).
+- Die Navigationsbefehle zum Springen an den Anfang bzw. an das Ende eines Containerobjekts berücksichtigen jetzt die Option "Navigation während alles Lesen erlauben" (#3675).
 - Die Namen von Berührungsgesten werden nun im Dialog einstellungen/eingaben in übersetzter Form angezeigt. (#3624)
-- NVDA wird keine Abstürze mehr verursachen, wenn Sie die Maus über die Dokumentfenster (TRichEdit) mancher Programme bewegen. Dies betrifft u.a.  Jarte 5.1 und BRfácil. (#3693, #3603, #3581)
-- Aria-Elemente, die als Präsentation gekennzeichnet sind, werden nicht mehr angezeigt. (#3713)
-- in Microsoft Word-Tabellen werden Spalten- und Reiheninformationen nun nicht mehr mehrfach in Braille angezeigt. (#3702)
-- In Sprachen, in denen das leerzeichen als Tausendertrennzeichen verwendet wird, werden Zahlen, die durch Lerzeichen getrennt sind, nicht mehr irrtümlich zusammengezogen (nützlich bei der Ansage von Tabellenzellen, die nur Zahlen enthalten). (#3698)
-- die Braille-Anzeige wird nun korrekt aktualisiert, wenn Sie in Microsoft Word 2013 den Systemcursor bewegen. (#3784)
-- Wenn Sie sich in Microsoft Word auf dem ersten Zeichen einer Überschrift befinden, wird die Kennzeichnung «Überschift» (einschließlich der Ebene) in Braille angezeigt. (#3701)
-- ein Konfigurationsprofil, das beim Starten einer Anwendung per Auslöser automatisch ausgewählt wird, wird nun deaktiviert, wenn die betreffende Anwendung beendet wird. (#3732)
-- Asiatische Sonderzeichen werden nun korrekt angesagt/angezeigt, wenn Sie sie innerhalb von nvda eingeben (z.B. im Suchdialog im Lesemodus). (#3726)
-- die Registerkarten im Optionendialog von Outlook 2013 werden korrekt angezeigt. (#3826)
-- Verbesserung der Unterstützung von Aria-Live-Regionen in Mozilla-Anwendungen:
-	- automatische Aktualisierung von Live-Regionen (#2640)
-	- alternative Texte (z.B. alt-Attribute) werden verwendet, sofern keine anderweitige Beschriftung vorhanden ist. (#3329)
+- NVDA wird keine Abstürze mehr verursachen, wenn Sie die Maus über die Dokumentfenster (TRichEdit) mancher Programme bewegen. Dies betrifft u. a. Jarte 5.1 und BRfácil. (#3693, #3603, #3581)
+- ARIA-Elemente, die als Präsentation gekennzeichnet sind, werden nicht mehr angezeigt. (#3713)
+- In Microsoft Word-Tabellen werden Spalten- und Reiheninformationen nun nicht mehr mehrfach in Braille angezeigt. (#3702)
+- In Sprachen, in denen das Leerzeichen als Tausendertrennzeichen verwendet wird, werden Zahlen, die durch Leerzeichen getrennt sind, nicht mehr irrtümlich zusammengezogen (nützlich bei der Ansage von Tabellenzellen, die nur Zahlen enthalten). (#3698)
+- Die Anzeige auf der Braillezeile wird nun korrekt aktualisiert, wenn Sie in Microsoft Word 2013 den System-Cursor bewegen. (#3784)
+- Wenn Sie sich in Microsoft Word auf dem ersten Zeichen einer Überschrift befinden, wird die Kennzeichnung "Überschrift" (einschließlich der Ebene) in Braille angezeigt. (#3701)
+- Ein Konfigurationsprofil, das beim Starten einer Anwendung per Auslöser automatisch ausgewählt wird, wird nun deaktiviert, wenn die betreffende Anwendung beendet wird. (#3732)
+- Asiatische Sonderzeichen werden nun korrekt angesagt und angezeigt, wenn Sie sie innerhalb von NVDA eingeben (z. B. im Suchdialog im Lesemodus). (#3726)
+- Die Registerkarten im Optionsdialog von Outlook 2013 werden korrekt angezeigt. (#3826)
+- Verbesserung der Unterstützung von ARIA-Live-Regionen in Mozilla-Anwendungen:
+	- Automatische Aktualisierung von Live-Regionen (#2640)
+	- Alternative Texte (z. B. Alt-Attribute) werden verwendet, sofern keine anderweitige Beschriftung vorhanden ist. (#3329)
 	- Aktualisierungen von Live-Regionen werden ausgegeben, wenn Sie gleichzeitig den Fokus bewegen. (#3777)
-- Certain presentation elements in Firefox and other Mozilla Gecko applications are no longer inappropriately shown in browse mode (specifically when the element is marked with aria-presentation but its also focusable). (#3781)
-- A performance improvement when navigating a document in Microsoft Word with spelling errors enabled. (#3785)
-
-
+- In Firefox und anderen Gecko-Anwendungen werden Elemente, die als ARIA-Presentation gekennzeichnet sind, korrekt im Lesemodus angezeigt. (#3781)
+- Leistungssteigerungen in Microsoft Word, wenn die Ansage von Rechtschreibfehlern aktiviert sind. (#3785)
+- Verbesserung der Unterstützung von zugänglichen Java-Anwendungen:
+ - Wenn ein Rahmen oder ein Dialog in den Vordergrund gebracht wird, wird das Steuerelement korrekt erkannt, das innerhalb des Rahmens/Dialogs den Fokus erhalten hat. (#3753)
+ - Nutzlose Positionsangaben (wie 1 von 1) für Auswahlschalter werden nicht mehr angezeigt. (#3754)
+ - Verbesserte Anzeige von Konbinationsfeldern (es wird kein HTML mehr angezeigt; der Status [erweitert/reduziert] wird korrekt erkannt). (#3755)
+ - Beim automatischen Vorlesen von Dialogfeldern wird mehr Text angezeigt. (#3857)
+ - Die Änderung von Namen, Wert oder Beschreibung des fokussierten Steuerelements wird besser verfolgt. (#3770)
+- Problem behoben, wonach NVDA unter Windows 8 manchmal abstürzte, wenn man ein Erweitertes Eingabefeld (wie den Protokollbetrachter oder WinDbg) in den Fokus nimmt. (#3867)
+- Auf Systemen mit modernen Monitoren wird nun die Maus nicht mehr an die falsche Stelle gesetzt. (#3758, #3703)
+- Problem behoben, wonach NVDA beim Lesen einer Webseite nicht richtig funktioniert. (#3804)
+- Eine Papenmeier-Braillezeile kann jetzt problemlos verwendet werden, auch wenn sie zuvor noch nie per USB verbunden war. (#3712)
+- NVDA hängt sich nicht mehr auf, wenn Sie versuchen, den Treiber für ältere Papenmeier-Braillezeilen auszuwählen, obwohl keine Braillezeile angeschlossen ist.
+ 
 == Änderungen für Entwickler ==
-- Alle Anwendungsmodule enthalten nun die Eigenschaften productName und productVersion. Diese Informationen werden auch in der Entwicklerinfo angezeigt, die mit der Tastenkombination NVDA+f1 abgerufen werden kann. (#1625)
+- Alle Anwendungsmodule enthalten nun die Eigenschaften productName und productVersion. Diese Informationen werden auch in der Entwicklerinfo angezeigt, die mit der Tastenkombination NVDA+F1 abgerufen werden kann. (#1625)
 - Sie können nun in der Python-Konsole Tab drücken, um den aktuellen Bezeichner zu vervollständigen. (#433)
  - Sollte es mehrere Möglichkeiten zur Autovervollständigung geben, können Sie ein zweites Mal Tab drücken und anschließend den gewünschten Eintrag aus einem Menü auswählen.
  
@@ -70,7 +245,7 @@
 
 == Fehlerbehebungen ==
 - Zend Studio funktioniert nun wie Eclipse. (#3420)
-- Die Statusänderungen von Kontrollkästchen in Microsoft Outlook 2010 werden  nun korrekt erkannt. (#3063)
+- Die Statusänderungen von Kontrollkästchen im Dialog für Nachrichtenregeln in Microsoft Outlook 2010 werden  nun korrekt erkannt. (#3063)
 - NVDA erkennt nun den Status "Angeheftet" für angeheftete Steuerelemente, wie zum Beispiel Registerkarten in Firefox. (#3372)
 - Es ist nun möglich, Skripts an Tastenkombinationen mit Alt- oder der Windows-Taste zuzuweisen. Bisher wurde in solchen Fällen das Startmenü Bzw. die Menüleiste der Anwendung angezeigt. (#3472)
 - Das Markieren von Text im Lesemodus mit Strg+Umschalt+End verursacht kein versehentliches Umschalten des Tastaturschemas mehr. (#3472)
@@ -86,7 +261,7 @@
 - In den Tastatureinstellungen muss mindestens eine Taste als NVDA-Taste eingestellt werden. Ist dies nicht der Fall, so wird eine Fehlermeldung angezeigt. (#2871)
 - In Microsoft Excel werden nun verbundene Zellen von mehreren markierten Zellen unterschieden. (#3567)
 - Wenn Sie im Lesemodus aus einem Dialog oder einer Anwendung ins Dokument zurückkehren, wird der Cursor nun richtig positioniert. (#3145)
-- Pblem behoben, wonach eine HumanWare Brailliant BI/B-Braillezeile nicht in den Braille-Einstellungen angezeigt wird, auch wenn sie per Usb angeschlossen war.
+- Problem behoben, wonach eine HumanWare Brailliant BI/B-Braillezeile nicht in den Braille-Einstellungen angezeigt wird, auch wenn sie per Usb angeschlossen war.
 - Wenn NVDA beim Wechsel in die Bildschirmdarstellung keine Objektposition erkennen kann, wird der NVDA-Cursor in die obere linke Ecke des Bildschirms gesetzt. (#3454)
 - Problem behoben, wonach der Treiber für Freedom-Scientific-Braillezeilen den Anschluss nicht richtig erkannt hat, wenn der Anschluss auf "usb" eingestellt war. (#3509, #3662)
 - Problem behoben, wonach manchmal bestimmte Tastendrücke an Freedom Scientific-Braillezeilen nicht richtig erkannt wurden. (#3401, #3662)
@@ -118,7 +293,7 @@
  
  
 == Änderungen ==
-- Wenn Sie im Objektmodus mit einem Finger nach rechts/links streichen, verwendet NVDA eine vereinfachte Darstellung beim Navigieren zum nächsten/vorigen Objekt. Streichen Sie mit 2 Fingern nach rechts/links, um unter Berücksichtigung der Objekthierarchie zum nächsten/vorigen Objekt zu navigieren.
+- Wenn Sie im Objektmodus mit einem Finger nach rechts/links streichen, navigiert NVDA unter Verwendung ALLER Objekte zum nächsten/vorigen Objekt und bezieht sich nicht auf den aktuellen Continer. Streichen Sie mit 2 Fingern nach rechts/links, um unter Berücksichtigung der Objekthierarchie zum nächsten/vorigen Objekt zu navigieren.
 - Die Option "Layouttabellen ansagen" wurde in "Layouttabellen einschließen" umbenannt. Hierdurch wird verdeutlicht,  dass Layouttabellen nicht angesprungen werden, wenn Sie die Schnellnavigationstasten verwenden, während diese Option deaktiviert ist. (#3140)
 - Der Flächenmodus wurde durch die Darstellungsmodi Objektdarstellung, Dokumentdarstellung und Bildschirmdarstellung ersetzt (#2996)
  - Im Objektmodus können Sie sich den Inhalt des aktuellen Navigatorobjekts anzeigen lassen; im Dokumentmodus wird der Inhalt des gesamten Dokuments angezeigt; im Bildschirm-Darstellungsmodus wird der gesamte Bildschirminhalt der aktuellen Anwendung angezeigt

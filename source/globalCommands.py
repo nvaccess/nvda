@@ -29,6 +29,7 @@ import winUser
 import appModuleHandler
 import winKernel
 import treeInterceptorHandler
+import browseMode
 import scriptHandler
 import ui
 import braille
@@ -404,27 +405,17 @@ class GlobalCommands(ScriptableObject):
 	script_navigatorObject_current.category=SCRCAT_OBJECTNAVIGATION
 
 	def script_navigatorObject_currentDimensions(self,gesture):
-		obj=api.getNavigatorObject()
-		if not obj:
-			ui.message(_("no navigator object"))
-		location=obj.location
-		if not location:
-			# Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
-			ui.message(_("No location information for navigator object"))
-		(left,top,width,height)=location
-		deskLocation=api.getDesktopObject().location
-		if not deskLocation:
-			# Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
-			ui.message(_("No location information for screen"))
-		(deskLeft,deskTop,deskWidth,deskHeight)=deskLocation
-		percentFromLeft=(float(left-deskLeft)/deskWidth)*100
-		percentFromTop=(float(top-deskTop)/deskHeight)*100
-		percentWidth=(float(width)/deskWidth)*100
-		percentHeight=(float(height)/deskHeight)*100
-		# Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
-		ui.message(_("Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of screen, height is {height:.1f} per cent of screen").format(left=percentFromLeft,top=percentFromTop,width=percentWidth,height=percentHeight))
-	# Translators: Input help mode message for report object dimensions command.
-	script_navigatorObject_currentDimensions.__doc__=_("Reports the hight, width and position of the current navigator object")
+		count=scriptHandler.getLastScriptRepeatCount()
+		locationText=api.getReviewPosition().locationText if count==0 else None
+		if not locationText:
+			locationText=api.getNavigatorObject().locationText
+		if not locationText:
+			# Translators: message when there is no location information for the review cursor
+			ui.message(_("No location information"))
+			return
+		ui.message(locationText)
+	# Translators: Description for report review cursor location command.
+	script_navigatorObject_currentDimensions.__doc__=_("Reports information about the location of the text or object at the review cursor. Pressing twice may provide further detail.") 
 	script_navigatorObject_currentDimensions.category=SCRCAT_OBJECTNAVIGATION
 
 	def script_navigatorObject_toFocus(self,gesture):
@@ -822,16 +813,22 @@ class GlobalCommands(ScriptableObject):
 			if focus in ti:
 				# Update the focus, as it will have cached that there is no tree interceptor.
 				focus.treeInterceptor = ti
+				# If we just happened to create a browse mode TreeInterceptor
+				# Then ensure that browse mode is reported here. From the users point of view, browse mode was turned on.
+				if isinstance(ti,browseMode.BrowseModeTreeInterceptor) and not ti.passThrough:
+					browseMode.reportPassThrough(ti,False)
+					braille.handler.handleGainFocus(ti)
 			return
 
-		if not isinstance(vbuf, virtualBuffers.VirtualBuffer):
+		if not isinstance(vbuf, browseMode.BrowseModeTreeInterceptor):
 			return
-		# Toggle virtual buffer pass-through.
+		# Toggle browse mode pass-through.
 		vbuf.passThrough = not vbuf.passThrough
-		# If we are enabling pass-through, the user has explicitly chosen to do so, so disable auto-pass-through.
-		# If we're disabling pass-through, re-enable auto-pass-through.
-		vbuf.disableAutoPassThrough = vbuf.passThrough
-		virtualBuffers.reportPassThrough(vbuf)
+		if isinstance(vbuf,virtualBuffers.VirtualBuffer):
+			# If we are enabling pass-through, the user has explicitly chosen to do so, so disable auto-pass-through.
+			# If we're disabling pass-through, re-enable auto-pass-through.
+			vbuf.disableAutoPassThrough = vbuf.passThrough
+		browseMode.reportPassThrough(vbuf)
 	# Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
 	script_toggleVirtualBufferPassThrough.__doc__=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.")
 	script_toggleVirtualBufferPassThrough.category=inputCore.SCRCAT_BROWSEMODE
@@ -863,7 +860,7 @@ class GlobalCommands(ScriptableObject):
 			"detectFormatAfterCursor":False,
 			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,
 			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
-			"reportPage":False,"reportLineNumber":False,"reportTables":False,
+			"reportPage":False,"reportLineNumber":False,"reportParagraphIndentation":True,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
 			"reportBlockQuotes":False,"reportComments":False,
 		}

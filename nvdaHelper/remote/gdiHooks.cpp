@@ -630,6 +630,48 @@ int WINAPI fake_FillRect(HDC hdc, const RECT* lprc, HBRUSH hBrush) {
 	return res;
 }
 
+//DrawFocusRect hook function
+typedef BOOL(WINAPI *DrawFocusRect_funcType)(HDC,const RECT*);
+DrawFocusRect_funcType real_DrawFocusRect=NULL;
+BOOL WINAPI fake_DrawFocusRect(HDC hdc, const RECT* lprc) {
+	//Call the real DrawFocusRect
+	BOOL res=real_DrawFocusRect(hdc,lprc);
+	//If the draw was successfull we can go on.
+	if(!res||!lprc) return res;
+	displayModel_t* model=acquireDisplayModel(hdc,TRUE);
+	if(!model) return res;
+	RECT oldFocusRect;
+	bool hadFocusRect=model->getFocusRect(&oldFocusRect);
+	RECT focusRect=*lprc;
+	dcPointsToScreenPoints(hdc,(LPPOINT)&focusRect,2,false);
+	POINT pt={(focusRect.left+focusRect.right)/2,(focusRect.top+focusRect.bottom)/2};
+	/*
+	if(!hwnd) {
+		// Not drawing directly to a window, so try and guess it by the coordinates
+		hwnd=WindowFromPoint(pt);
+		DWORD windowProcessID=0;
+		DWORD curProcessID=GetCurrentProcessId();
+		RECT windowRect;
+		while(hwnd) {
+			GetWindowRect(hwnd,&windowRect);
+			GetWindowThreadProcessId(hwnd,&windowProcessID);
+			if(windowProcessID==curProcessID&&windowRect.left<=focusRect.left&&windowRect.top<=focusRect.top&&windowRect.right>=focusRect.right&&windowRect.bottom>=focusRect.bottom) {
+				break;
+			}
+			hwnd=GetAncestor(hwnd,GA_PARENT);
+		}
+	}
+	*/
+	if(hadFocusRect&&EqualRect(&oldFocusRect,&focusRect)) {
+		model->setFocusRect(NULL);
+	} else {
+		model->setFocusRect(&focusRect);
+		if(model->hwnd) nvdaControllerInternal_drawFocusRectNotify((long)(model->hwnd),focusRect.left,focusRect.top,focusRect.right,focusRect.bottom);
+	}
+	model->release();
+	return res;
+}
+
 //PatBlt hook function
 typedef BOOL(WINAPI *PatBlt_funcType)(HDC,int,int,int,int,DWORD);
 PatBlt_funcType real_PatBlt=NULL;
@@ -1104,6 +1146,7 @@ void gdiHooks_inProcess_initialize() {
 	real_SelectObject=apiHook_hookFunction_safe("GDI32.dll",SelectObject,fake_SelectObject);
 	real_DeleteDC=apiHook_hookFunction_safe("GDI32.dll",DeleteDC,fake_DeleteDC);
 	real_FillRect=apiHook_hookFunction_safe("USER32.dll",FillRect,fake_FillRect);
+	real_DrawFocusRect=apiHook_hookFunction_safe("USER32.dll",DrawFocusRect,fake_DrawFocusRect);
 	real_BeginPaint=apiHook_hookFunction_safe("USER32.dll",BeginPaint,fake_BeginPaint);
 	real_BitBlt=apiHook_hookFunction_safe("GDI32.dll",BitBlt,fake_BitBlt);
 	real_StretchBlt=apiHook_hookFunction_safe("GDI32.dll",StretchBlt,fake_StretchBlt);

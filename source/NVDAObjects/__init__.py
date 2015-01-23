@@ -29,6 +29,8 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	The L{NVDAObject.basicText} attribute is used as the text to expose.
 	"""
 
+	locationText=None
+
 	def _get_unit_mouseChunk(self):
 		return textInfos.UNIT_STORY
 
@@ -75,7 +77,9 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			clsList.append(APIClass)
 		# Allow app modules to choose overlay classes.
 		appModule=obj.appModule
-		if appModule and "chooseNVDAObjectOverlayClasses" in appModule.__class__.__dict__:
+		# optimisation: The base implementation of chooseNVDAObjectOverlayClasses does nothing,
+		# so only call this method if it's been overridden.
+		if appModule and not hasattr(appModule.chooseNVDAObjectOverlayClasses, "_isBase"):
 			appModule.chooseNVDAObjectOverlayClasses(obj, clsList)
 		# Allow global plugins to choose overlay classes.
 		for plugin in globalPluginHandler.runningPlugins:
@@ -436,6 +440,21 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError
 
+	def _get_locationText(self):
+		"""A message that explains the location of the object in friendly terms."""
+		location=self.location
+		if not location:
+			return None
+		(left,top,width,height)=location
+		deskLocation=api.getDesktopObject().location
+		(deskLeft,deskTop,deskWidth,deskHeight)=deskLocation
+		percentFromLeft=(float(left-deskLeft)/deskWidth)*100
+		percentFromTop=(float(top-deskTop)/deskHeight)*100
+		percentWidth=(float(width)/deskWidth)*100
+		percentHeight=(float(height)/deskHeight)*100
+		# Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+		return _("Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of screen, height is {height:.1f} per cent of screen").format(left=percentFromLeft,top=percentFromTop,width=percentWidth,height=percentHeight)
+
 	def _get_parent(self):
 		"""Retreaves this object's parent (the object that contains this object).
 		@return: the parent object if it exists else None.
@@ -584,7 +603,7 @@ class NVDAObject(baseObject.ScriptableObject):
 			text=self.makeTextInfo(textInfos.POSITION_ALL).text
 			return self.presType_content if text and not text.isspace() else self.presType_layout
 
-		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_TITLEBAR,controlTypes.ROLE_LABEL):
+		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION, controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_TITLEBAR, controlTypes.ROLE_LABEL, controlTypes.ROLE_WHITESPACE):
 			return self.presType_layout
 		name = self.name
 		description = self.description

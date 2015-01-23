@@ -410,6 +410,9 @@ the NVDAObject for IAccessible
 		# Some special cases.
 		if windowClassName=="Frame Notification Bar" and role==oleacc.ROLE_SYSTEM_CLIENT:
 			clsList.append(IEFrameNotificationBar)
+		elif self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and windowClassName in ("_WwN","_WwO") and self.windowControlID==18:
+			from winword import SpellCheckErrorField
+			clsList.append(SpellCheckErrorField)
 		elif windowClassName=="DirectUIHWND" and role==oleacc.ROLE_SYSTEM_TOOLBAR:
 			parentWindow=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
 			if parentWindow and winUser.getClassName(parentWindow)=="Frame Notification Bar":
@@ -463,6 +466,9 @@ the NVDAObject for IAccessible
 			from .msOffice import BrokenMsoCommandBar
 			if BrokenMsoCommandBar.appliesTo(self):
 				clsList.append(BrokenMsoCommandBar)
+			if role==oleacc.ROLE_SYSTEM_TOOLBAR:
+				from .msOffice import MsoCommandBarToolBar
+				clsList.append(MsoCommandBarToolBar)
 		if windowClassName.startswith("Internet Explorer_"):
 			from . import MSHTML
 			MSHTML.findExtraIAccessibleOverlayClasses(self, clsList)
@@ -505,14 +511,15 @@ the NVDAObject for IAccessible
 
 		clsList.append(IAccessible)
 
-
-		if self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0:
+		if self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
 			# This is the main (client) area of the window, so we can use other classes at the window level.
+			# #3872: However, don't do this for IAccessible2 because
+			# IA2 supersedes window level APIs and might conflict with them.
 			super(IAccessible,self).findOverlayClasses(clsList)
 			#Generic client IAccessibles with no children should be classed as content and should use displayModel 
 			if clsList[0]==IAccessible and len(clsList)==3 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_CLIENT and self.childCount==0:
 				clsList.insert(0,ContentGenericClient)
- 
+
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
 @param pacc: a pointer to an IAccessible object
@@ -690,16 +697,6 @@ the NVDAObject for IAccessible
 			res=self.IAccessibleObject.accName(self.IAccessibleChildID)
 		except COMError:
 			res=None
-		if not res and hasattr(self,'IAccessibleTextObject'):
-			try:
-				res=self.makeTextInfo(textInfos.POSITION_CARET).text
-				if res:
-					return
-			except (NotImplementedError, RuntimeError):
-				try:
-					res=self.makeTextInfo(textInfos.POSITION_ALL).text
-				except (NotImplementedError, RuntimeError):
-					res=None
 		return res if isinstance(res,basestring) and not res.isspace() else None
 
 	def _get_value(self):
@@ -1289,35 +1286,42 @@ the NVDAObject for IAccessible
 		super(IAccessible, self).event_caret()
 		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_CARET:
 			return
+		# This is a nasty hack to make Mozilla rich text editing at least partially usable.
+		if not hasattr(self,'IAccessibleTextObject'):
+			return
+		if controlTypes.STATE_EDITABLE not in self.states:
+			return
 		focusObject=api.getFocusObject()
-		if self!=focusObject and not self.treeInterceptor and hasattr(self,'IAccessibleTextObject'):
-			inDocument=None
-			for ancestor in reversed(api.getFocusAncestors()+[focusObject]):
-				if ancestor.role==controlTypes.ROLE_DOCUMENT:
-					inDocument=ancestor
-					break
-			if not inDocument:
-				return
-			parent=self
-			caretInDocument=False
-			while parent:
-				if parent==inDocument:
-					caretInDocument=True
-					break
-				parent=parent.parent
-			if not caretInDocument:
-				return
-			try:
-				info=self.makeTextInfo(textInfos.POSITION_CARET)
-			except RuntimeError:
-				return
-			info.expand(textInfos.UNIT_CHARACTER)
-			try:
-				char=ord(info.text)
-			except TypeError:
-				char=0
-			if char!=0xfffc:
-				IAccessibleHandler.processFocusNVDAEvent(self)
+		if not isinstance(focusObject,IAccessible):
+			# This can happen during input composition.
+			# The composition object must remain focused.
+			return
+		if self==focusObject:
+			return
+		# Mozilla doesn't focus most objects inside an editable area.
+		# Therefore, we need to fake focus so our caret stuff works.
+		# First, determine whether this is inside a focused editable area.
+		shouldFocus=False
+		obj=self
+		while obj:
+			states=obj.states
+			if controlTypes.STATE_EDITABLE not in states:
+				break
+			if controlTypes.STATE_FOCUSED in states:
+				shouldFocus=True
+				break
+			obj=obj.parent
+		if not shouldFocus:
+			return
+		# If the caret is on an embedded object character, this isn't useful.
+		try:
+			info=self.makeTextInfo(textInfos.POSITION_CARET)
+		except RuntimeError:
+			return
+		info.expand(textInfos.UNIT_CHARACTER)
+		if info.text==u'\uFFFC':
+			return
+		eventHandler.executeEvent("gainFocus",self)
 
 	def _get_groupName(self):
 		return None
@@ -1799,7 +1803,5 @@ _staticMap={
 	("Shell DocObject View",oleacc.ROLE_SYSTEM_CLIENT):"ShellDocObjectView",
 	("listview",oleacc.ROLE_SYSTEM_CLIENT):"ListviewPane",
 	("NUIDialog",oleacc.ROLE_SYSTEM_CLIENT):"NUIDialogClient",
-	("_WwN",oleacc.ROLE_SYSTEM_TEXT):"winword.SpellCheckErrorField",
-	("_WwO",oleacc.ROLE_SYSTEM_TEXT):"winword.SpellCheckErrorField",
 	("_WwB",oleacc.ROLE_SYSTEM_CLIENT):"winword.ProtectedDocumentPane",
 }

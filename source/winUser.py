@@ -416,12 +416,20 @@ def mouse_event(*args):
 def getAncestor(hwnd,flags):
 	return user32.GetAncestor(hwnd,flags)
 
+try:
+	# Windows >= Vista
+	_getCursorPos = user32.GetPhysicalCursorPos
+	_setCursorPos = user32.SetPhysicalCursorPos
+except AttributeError:
+	_getCursorPos = user32.GetCursorPos
+	_setCursorPos = user32.SetCursorPos
+
 def setCursorPos(x,y):
-	user32.SetCursorPos(x,y)
+	_setCursorPos(x,y)
 
 def getCursorPos():
 	point=POINT()
-	user32.GetCursorPos(byref(point))
+	_getCursorPos(byref(point))
 	return [point.x,point.y]
 
 def getCaretPos():

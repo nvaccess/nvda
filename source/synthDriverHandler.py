@@ -39,6 +39,8 @@ def _getSynthDriver(name):
 
 def getSynthList():
 	synthList=[]
+	# The synth that should be placed at the end of the list.
+	lastSynth = None
 	for loader, name, isPkg in pkgutil.iter_modules(synthDrivers.__path__):
 		if name.startswith('_'):
 			continue
@@ -49,11 +51,17 @@ def getSynthList():
 			continue
 		try:
 			if synth.check():
-				synthList.append((synth.name,synth.description))
+				if synth.name == "silence":
+					lastSynth = (synth.name,synth.description)
+				else:
+					synthList.append((synth.name,synth.description))
 			else:
 				log.debugWarning("Synthesizer '%s' doesn't pass the check, excluding from list"%name)
 		except:
 			log.error("",exc_info=True)
+	synthList.sort(key=lambda s : s[1].lower())
+	if lastSynth:
+		synthList.append(lastSynth)
 	return synthList
 
 def getSynth():

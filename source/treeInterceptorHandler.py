@@ -66,6 +66,8 @@ class TreeInterceptor(baseObject.ScriptableObject):
 	Similarly, scripts on this interceptor take precedence over those of encompassed objects.
 	"""
 
+	shouldTrapNonCommandGestures=False #: If true then gestures that do not have a script and are not a command gesture should be trapped from going through to Windows.
+
 	def __init__(self, rootNVDAObject):
 		super(TreeInterceptor, self).__init__()
 		self._passThrough = False

@@ -1,0 +1,124 @@
+﻿# Catalan symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2014 NVDA contributors.
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+... sentence ending	(?<=[^\s.])(\s\.|\.)\.\.(?=[\"'”’)\s]|$)
+… sentence ending	(?<=[^\s.])\…(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word -	(?<=[^\W_])[-]
+negative number	(?<!\w)-(?=[$£€¥]?\d)
+dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	punt	all	always
+! sentence ending	signe d'admiració	all	always
+? sentence ending	signe d'interrogació	all	always
+... sentence ending	punts suspensius	all	always	
+… sentence ending	punts suspensius	all	always	
+; phrase ending	punt i coma	most	always
+: phrase ending	dos punts	most	always
+decimal point	signe decimal	none	always
+in-word '	apòstrof	all	norep
+in-word -	guió	all	norep
+negative number	menys	none	norep
+dates /	 barra inclinada	all	always
+
+# Whitespace
+\0	en blanc	char
+\t	tabulador
+\n	línia nova	char
+\f	salt de pàgina	none
+\r	retorn de carro	char
+ 	espai	char
+ 	espai inseparable	char	# no-break space
+
+# Standard punctuation/symbols
+!	signe d'admiració	all
+"	cometes	most
+\#	coixinet	most
+$	dòlar	all	norep
+£	lliura esterlina	all	norep
+€	euro	all	norep
+¢	cèntim d'euro	all	norep
+¥	ien	all	norep
+%	percentatge	some
+&	i comercial	some
+'	apòstrof	all
+(	parèntesi d'obertura	most
+)	parèntesi de tancament	most
+*	asterisc	some
++	més	some
+,	coma	all	always
+-	guionet	most
+.	punt	some
+/	barra inclinada 	some
+:	dos punts	most	norep
+;	punt i coma	most
+<	menor que	most
+>	major que	most
+=	igual	some
+?	signe d'interrogació	all
+@	arrova	some
+[	claudàtor d'obertura	most
+]	claudàtor de tancament	most
+\\	barra invertida	most
+^	circumflex	most
+_	guió baix	most
+`	greu	most
+{	obrir clau	most
+}	tancar clau	most
+|	barra pleca	most
+~	titlla	most
+¿	signe d'interrogació d'obertura	all
+¡	signe d'admiració d'obertura	all
+
+# Other characters
+•	pic	some
+…	punts suspensius	all	always
+...	punts suspensius	all	always
+	pic	some
+“	cometes altes d'obertura	most
+”	cometes altes de tancament	most
+‘	cometes simples d'obertura	most
+’	cometes simples de tancament	most
+–	guió	most
+—	guió llarg	most
+●	pic	most
+¨	dièresi	most
+‎	marca d'esquerra a dreta	char
+‏	marca de dreta a esquerra	char
+■	quadrat negre	some
+➔	fletxa dreta	some
+§	secció	most
+°	grau	some
+«	cometes baixes d'obertura
+»	cometes baixes de tancament
+µ	mi	some
+¹	superíndex 1	some
+²	superíndex 2	some
+³	superíndex 3	some
+®	registrada	some
+™	marca registrada	some
+©	copyright	some	norep
+±	Més o menys	most
+×	signe de multiplicar	most
+÷	signe de dividir	most
+←	fletxa esquerra	some
+→	fletxa dreta	some
+✓	vist	some
+✔	vist	some

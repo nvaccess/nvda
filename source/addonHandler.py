@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #addonHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012 Rui Batista, NV Access Limited
+#Copyright (C) 2012-2014 Rui Batista, NV Access Limited, Noelia Ruiz Martínez
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -154,7 +155,7 @@ def getAvailableAddons(refresh=False):
 	return _availableAddons.itervalues()
 
 def installAddonBundle(bundle):
-	"""Extracts an Addon bundle in to a unique subdirectory of the user addons directory, marking the addon as needing install completion on NVDA restart.""" 
+	"""Extracts an Addon bundle in to a unique subdirectory of the user addons directory, marking the addon as needing install completion on NVDA restart."""
 	addonPath = os.path.join(globalVars.appArgs.configPath, "addons",bundle.manifest['name']+ADDON_PENDINGINSTALL_SUFFIX)
 	bundle.extract(addonPath)
 	addon=Addon(addonPath)
@@ -234,8 +235,8 @@ class Addon(object):
 			os.rename(self.path,tempPath)
 		except (WindowsError,IOError):
 			raise RuntimeError("Cannot rename add-on path for deletion")
-		shutil.rmtree(self.path,ignore_errors=True)
-		if os.path.exists(self.path):
+		shutil.rmtree(tempPath,ignore_errors=True)
+		if os.path.exists(tempPath):
 			log.error("Error removing addon directory %s, deferring until next NVDA restart"%self.path)
 
 	@property
@@ -306,6 +307,37 @@ class Addon(object):
 			if func:
 				func(*args,**kwargs)
 
+	def getDocFilePath(self, fileName=None):
+		"""Get the path to a documentation file for this add-on.
+		The file should be located in C{doc\lang\file} inside the add-on,
+		where C{lang} is the language code and C{file} is the requested file name.
+		Failing that, the language without country is tried.
+		English is tried as a last resort.
+		An add-on can specify a default documentation file name
+		via the docFileName parameter in its manifest.
+		@param fileName: The requested file name or C{None} for the add-on's default.
+		@type fileName: basestring
+		@return: The path to the requested file or C{None} if it wasn't found.
+		@rtype: basestring
+		"""
+		if not fileName:
+			fileName = self.manifest["docFileName"]
+			if not fileName:
+				return None
+		docRoot = os.path.join(self.path, "doc")
+		lang = languageHandler.getLanguage()
+		langs = [lang]
+		if "_" in lang:
+			lang = lang.split("_", 1)[0]
+			langs.append(lang)
+		if lang != "en":
+			langs.append("en")
+		for lang in langs:
+			docFile = os.path.join(docRoot, lang, fileName)
+			if os.path.isfile(docFile):
+				return docFile
+		return None
+
 def getCodeAddon(obj=None, frameDist=1):
 	""" Returns the L{Addon} where C{obj} is defined. If obj is None the caller code frame is assumed to allow simple retrieval of "current calling addon".
 	@param obj: python object or None for default behaviour.
@@ -359,7 +391,7 @@ def _translatedManifestPaths(lang=None, forBundle=False):
 
 
 class AddonBundle(object):
-	""" Represents the contents of an NVDA addon in a for suitable for distribution.
+	""" Represents the contents of an NVDA addon suitable for distribution.
 	The bundle is compressed using the zip file format. Manifest information
 	is available without the need for extraction."""
 	def __init__(self, bundlePath):
@@ -439,7 +471,7 @@ class AddonManifest(ConfigObj):
 	""" Add-on manifest file. It contains metadata about an NVDA add-on package. """
 	configspec = ConfigObj(StringIO(
 	"""
-# NVDA Ad-on Manifest configuration specification
+# NVDA Add-on Manifest configuration specification
 # Add-on unique name
 name = string()
 # short  summary (label) of the add-on to show to users.
@@ -452,9 +484,10 @@ author = string()
 version = string()
 # URL for more information about the add-on. New versions and such.
 url= string(default=None)
+# Name of default documentation file for the add-on.
+docFileName = string(default=None)
 
 """))
-
 
 	def __init__(self, input, translatedInput=None):
 		""" Constructs an L{AddonManifest} instance from manifest string data

@@ -24,7 +24,7 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
 - Annuncio automatico del testo sul quale è posizionato il mouse, con possibilità opzionale di conoscere la posizione del mouse stesso sullo schermo
 - Annuncio automatico della formattazione dei caratteri, ad esempio stile, dimensione, nome e errori ortografici
 - Supporto per molti Display Braille, compresa la possibilità di immettere testo usando la tastiera della barra braille se presente
-- Tradotto in 44 lingue
+- Tradotto in 45 lingue
 - Supporto ai sistemi operativi più moderni, comprese le edizioni a 32 e 64 bit
 - Gestione delle videate di logon e quelle relative alla sicurezza
 - Supporto alle più comuni interfacce per l'accessibilità, come Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation (quest'ultima viene supportata a partire da Windows7 e successivi).
@@ -32,7 +32,7 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
   
 ++ Internazionalizzazione ++
 è importante che tutte le persone del mondo, indipendentemente dalla loro nazionalità e dalla lingua parlata, abbiano eguale accesso alle informazioni.
-Oltre all'inglese, NVDA è stato tradotto in 43 lingue ossia Afrikaans, Albanese, Amharic, Arabo, Aragonese, portoghese-brasiliano, Bulgaro, croato, Ceco, Coreano, Danese, Dutch, farsi, finlandese, Francese, Galiziano, Georgiano, Greco, Ebraico, Hindi, Irlandese, ungherese, tedesco, Islandese, italiano, giapponese, Nepalese, Norvegese, Polacco, portoghese, Rumeno, russo, Serbo, slovacco, sloveno, Spagnolo, Svedese, cinese tradizionale, Tamil, Thai,  Taiwanese Mandarin, Turco, ucraino e vietnamita.
+Oltre all'inglese, NVDA è stato tradotto in 45 lingue ossia Afrikaans, Albanese, Amharic, Arabo, Aragonese, portoghese-brasiliano, Bulgaro, croato, Ceco, Coreano, Danese, Dutch, farsi, finlandese, Francese, Farsi, Galiziano, Georgiano, Greco, Ebraico, Hindi, Irlandese, ungherese, tedesco, Islandese, italiano, giapponese, Nepalese, Norvegese, Polacco, portoghese, Rumeno, russo, Serbo, slovacco, sloveno, Spagnolo, Svedese, cinese tradizionale, Tamil, Thai,  Taiwanese Mandarin, Turco, ucraino e vietnamita.
   
 ++ Sintesi vocali supportate ++
 Oltre a presentare i messaggi e l'interfaccia in svariate lingue, NVDA fornisce all'utente la possibilità di accedere ai contenuti di qualsiasi linguaggio, a patto che l'utente sia in possesso della sintesi vocale che parla quella determinata lingua.
@@ -57,13 +57,15 @@ Per maggiori informazioni è possibile [Leggere l'intera licenza. http://www.gnu
 
 + Requisiti di sistema +
 - Sistemi operativi: tutte le versioni a 32 e 64 bit dei Sistemi Windows XP, Windows Vista e Windows 7 (Incluse le edizioni Server).
+ - Per Windows XP 32-bit, NVDA richiede Service Pack 2 o superiore.
+ - Per Windows Server 2003, NVDA richiede Service Pack 1 o superiore.
 - Memoria: 256 mb di Ram o superiore
 - Velocità processore: 1.0 ghz o superiore.
 - Circa 50 Megabytes di spazio disco.
 -
 
-+ Ottenere NVDA +
-Se non si possiede ancora una copia di NVDA, è possibile scaricarla dal sito originale all'indirizzo [http://www.nvda-project.org NVDA_URL].
++ Scaricare e configurare NVDA +
+Se non si possiede ancora una copia di NVDA, è possibile scaricarla dal sito originale all'indirizzo [www.nvaccess.org NVDA_URL].
 
 Accedere alla sezione download e si troverà l'apposito link per scaricarlo. In alternativa è anche possibile prelevare il software dal [sito della comunità italiana: http://www.nvda.it]
 
@@ -129,6 +131,7 @@ Premere a questo punto il pulsante OK per chiudere questa finestra.
 ++ Avviare NVDA ++
 Se si è installato NVDA tramite l'installer, per avviarlo basta premere semplicemente control+alt+n, o scegliere la voce NVDA dal menu NVDA sotto programmi del menu avvio. 
 In alternativa è possibile digitare NVDA dalla finestra di dialogo  esegui e premere invio.
+ Inoltre risulta possibile servirsi di alcuni [parametri a riga di comando #CommandLineOptions] che permettono di riavviare NVDA (-r), uscire (-q), disattivare i componenti aggiuntivi (--disable-addons) etc.
  
 Per avviare la versione portable, spostarsi nella cartella nella quale si è scompattato NVDA e premere invio o far doppio click su NVDA.exe.
  
@@ -151,7 +154,6 @@ La terza invece permette di decidere se questa finestra debba presentarsi ad ogn
 +++ Il tasto funzione NVDA +++
 La maggior parte dei comandi da tastiera di NVDA è costituita dalla combinazione del tasto funzione NVDA più qualsiasi altro tasto o serie di tasti. 
 Fanno eccezione i tasti di revisione del testo che utilizzano i soli tasti del tastierino numerico.
-
 NVDA può essere configurato in modo tale che sia il tasto Insert del tastierino numerico, sia l'Insert della tastiera estesa e il tasto Blocca Maiuscole agiscano contemporaneamente come tasto funzione NVDA.
 
 Da impostazioni predefinite entrambi i tasti Insert, della tastiera estesa e del tastierino, sono configurati come tasti funzione di NVDA.
@@ -159,8 +161,7 @@ Da impostazioni predefinite entrambi i tasti Insert, della tastiera estesa e del
 Se si desidera che uno dei tasti funzione NVDA agisca usando la sua funzione originale (ad esempio si potrebbe volere attivare il BloccaMaiuscole che però è stato impostato come tasto funzione NVDA) sarà sufficiente premere quel tasto due volte in rapida successione.
 
 +++ Layout Tastiera +++
-Al momento NVDA viene distribuito con due set di comandi per le tastiere.
-Esiste infatti un layout denominato "desktop", utile per i computer fissi, ed uno chiamato "laptop", più consono ai pc portatili.
+Al momento NVDA viene distribuito con due set di comandi per le tastiere. Esiste infatti un layout denominato "desktop", utile per i computer fissi, ed uno chiamato "laptop", più consono ai pc portatili.
 Da impostazioni predefinite, NVDA utilizza il layout Desktop,  tuttavia sarà sempre possibile modificare questo parametro accedendo alle impostazioni Tastiera, situate sotto la voce Preferenze del menu di NVDA.
 
 Il Layout Desktop fa un uso massiccio del tastierino numerico (con NumLock impostato su spento).
@@ -331,7 +332,7 @@ Per navigare ad oggetti, utilizzare i tasti seguenti:
 | Spostarsi all'oggetto focalizzato | NVDA+Meno del tastierino numerico | NVDA+Backspace | Nessuno | Sposta il navigatore ad oggetti sull'oggetto che attualmente ha il focus di sistema, e porta anche il cursore di controllo in quella posizione, se il cursore di sistema è visualizzato |
 | Attivare l'oggetto corrente | NVDA+Invio del tastierino numerico | NVDA+Invio | Doppio tap | Attiva l'oggetto corrente (l'equivalente di cliccare col mouse o premere la barra spazio in presenza del focus) |
 | Spostare il focus di sistema sull'oggetto corrente | NVDA+Shift+meno del tastierino numerico | NVDA+Shift+backspace | Nessuno | Sposta il focus di sistema alla posizione del navigatore ad oggetti se possibile, mentre se premuto due volte sposta il cursore di sistema alla posizione del cursore di controllo |
-| Annuncia dimensioni dell'oggetto corrente | NVDA+Canc del tastierino numerico | NVDA+Canc | Nessuno | Annuncia le dimensioni dell'oggetto attuale sullo schermo in percentuali (incluse distanza dal bordo sinistro e superiore dello schermo, e la sua altezza e larghezza) |
+| Annuncia posizione del cursore di controllo | NVDA+Canc del tastierino numerico | NVDA+Canc | Nessuno | Legge la posizione del testo o dell'oggetto sul cursore di controllo. Ad esempio, può significare la percentuale in un documento, la distanza dal bordo della pagina o l'esatta posizione sullo schermo. Una doppia pressione fornirà se possibile ulteriori dettagli. |
 %kc:endInclude
 
 Nota, Per utilizzare il tastierino numerico, il tasto NumLock deve essere impostato su spento.
@@ -523,11 +524,20 @@ Se risulterà accessibile, premere il tasto tab o comunque muoversi all'interno 
 + Comandi specifici di NVDA per le applicazioni +
 NVDA fornisce alcuni comandi per certe applicazioni in modo da facilitare gli utenti nello svolgimento di operazioni che, altrimenti, risulterebbero molto complesse e poco accessibili.
 
+++ Microsoft Word ++
+%kc:beginInclude
+|| Nome | Tasto | Descrizione |
+| Legge commento corrente | NVDA+Alt+c | Legge il testo del commento alla posizione del cursore di sistema. |
+| Imposta intestazioni colonna | NVDA+shift+c | Imposta il riconoscimento dell'intestazione colonna per la prima cella, consentendo la lettura automatica delle intestazioni successive. La doppia pressione cancellerà tale impostazione. |
+| Imposta intestazioni riga | NVDA+shift+r | Imposta il riconoscimento dell'intestazione riga per la prima cella, consentendo la lettura automatica delle intestazioni successive. La doppia pressione cancellerà tale impostazione. |
+%kc:endInclude
+
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Nome | Tasto | Descrizione |
-| Imposta intestazioni colonna | NVDA+shift+c | Premere una volta per dire a NVDA che questa è la riga che contiene le intestazioni della colonna, che dovranno essere annunciate automaticamente quando ci si sposta tra le colonne sotto quella riga. La doppia pressione cancellerà tale impostazione. | 
-| Imposta intestazioni riga | NVDA+shift+r | Premere una volta per dire a NVDA che questa è la colonna che contiene le intestazioni della riga, che dovranno essere annunciate automaticamente quando ci si sposta tra le righe sotto quella colonna. La doppia pressione cancellerà tale impostazione. | 
+| Imposta intestazioni colonna | NVDA+shift+c | Imposta il riconoscimento dell'intestazione colonna per la prima cella, consentendo la lettura automatica delle intestazioni successive. La doppia pressione cancellerà tale impostazione. |
+| Imposta intestazioni riga | NVDA+shift+r | Imposta il riconoscimento dell'intestazione riga per la prima cella, consentendo la lettura automatica delle intestazioni successive. La doppia pressione cancellerà tale impostazione. |
+| Legge commento | NVDA+alt+c | Legge il commento sulla cella corrente se esiste. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -582,9 +592,13 @@ Basterà premere il bottone OK e NVDA verrà riavviato
 ==== Salva la configurazione all'uscita ====
 Una casella di controllo che se attivata permette a NVDA di salvare automaticamente la configurazione all'uscita dal programma.
 
-==== Avvisa prima di uscire da NVDA ====
-Una casella di controllo che permette di decidere se, alla chiusura di NVDA, debba apparire una finestra di conferma, con la possibilità di annullare l'operazione.
-Se attivata, quando si cerca di chiudere NVDA apparirà una finestra di dialogo che chiederà conferma dell'operazione.
+==== Mostra opzioni all'uscita di NVDA ====
+Una casella di controllo che permette di decidere se, alla chiusura di NVDA, debbano comparire opzioni aggiuntive per decidere come chiudere il programma.
+Se attivata, quando si cerca di chiudere NVDA apparirà una finestra di dialogo che chiederà se riavviare lo screen reader, riavviarlo senza componenti aggiuntivi o semplicemente chiuderlo.
+Se non la si attiva, NVDA uscirà immediatamente.
+
+==== Riproduci un suono all'avvio o all'uscita di NVDA ====
+Questa opzione è costituita da una casella di controllo che, se attivata, permette a NVDA di riprodurre un suono quando si avvia e quando viene terminato.
 
 ==== Livello di logging ====
 Una casella combinata che permette di stabilire l'ammontare delle informazioni che NVDA scriverà sul suo file di log. 
@@ -797,17 +811,17 @@ Una casella di controllo che, se attivata, fa in modo che NVDA pronunci tutti i 
 Tasto: NVDA+3
 
 Una casella di controllo che, se attivata, fa in modo che NVDA pronunci tutte le parole che vengono digitate sulla tastiera.
- 
+
 ==== I caratteri digitati interrompono la voce ====
 Questa opzione, se attiva, interrompe la lettura della sintesi vocale non appena viene premuto un tasto. L'opzione è attivata di default.
 
 ==== Il tasto invio interrompe la voce ====
 Questa opzione, se attiva, interrompe la lettura della sintesi vocale non appena viene premuto il tasto invio. L'opzione è attivata di default.
- 
+
 ==== Consentire navigazione rapida in modalità dire tutto ====
  Se attivata, alcuni tasti di navigazione (ad esempio i comandi di navigazione rapida nei browser, oppure lo spostarsi per righe o paragrafi) non fermeranno più la lettura, che continuerà dalla nuova posizione raggiunta.
- 
- ==== Emetti un beep alla scrittura di lettere minuscole quando il tasto blocca maiuscole è attivo ====
+
+==== Emetti un beep alla scrittura di lettere minuscole quando il tasto blocca maiuscole è attivo ====
 Quando abilitato, si udirà un segnale acustico ogni qualvolta verrà digitata una lettera assieme al tasto Shift (maiuscolo) quando il blocca maiuscole è attivo.
 In genere, scrivere le lettere con il tasto Shift mentre la funzione di Blocca Maiuscole è attivata non è prassi comune e si presume sia non intenzionale, magari perché ci si è scordati di averla abilitata in precedenza.
 In ogni caso, può essere d'aiuto saperlo.
@@ -817,8 +831,12 @@ In ogni caso, può essere d'aiuto saperlo.
 Tasto: NVDA+4
 
 Una casella di controllo che, se attivata, fa in modo che NVDA pronunci tutte le combinazioni di tasti che non siano singoli caratteri che vengono digitati, ad esempio premendo il tasto control seguito da una lettera.
- 
-+++ Impostazioni Mouse (NVDA+control+m) +++
+
+==== Gestisci tasti da altre applicazioni ====
+	Quest'opzione permette all'utente di controllare se le pressioni di tasti, generate da programmi che si basano sul riconoscimento vocale o sulle tastiere a schermo, debbano essere processate da NVDA.
+L'opzione risulta attiva di default, sebbene alcuni utenti che utilizzano la lingua di immissione Vietnamita dovrebbero disattivare questa funzione.
+
++++[ Impostazioni Mouse (NVDA+control+m) +++
 Questa finestra di dialogo si trova all'interno del menu preferenze, alla voce impostazioni mouse... 
 Contiene le seguenti opzioni:
 
@@ -1009,6 +1027,7 @@ Ad esempio, se attiviamo la casella di controllo "Leggi il nome del font", NVDA 
 - Numeri di pagina
 - Numeri di riga
 - Rientro righe
+- Rientro paragrafi (ad esempio rientro prima riga)
 - tabelle
 - intestazioni riga/colonna delle tabelle
 - Coordinate delle celle delle tabelle
@@ -1049,9 +1068,13 @@ Dopo aver premuto il bottone Aggiungi, scrivere la parola nebbia sul primo campo
 è possibile anche compilare il campo commento, per fornire una descrizione alla nostra regola, ad esempio cambio nebbia in uccello.
 
 Si noti che in realtà le regole inerenti i dizionari possono essere molto più complesse di quella mostrata a titolo esemplificativo. 
-Vi sono infatti due caselle di controllo quando si compila una nuova regola, la prima, permette di distinguere tra maiuscole e minuscole.
+Vi sono infatti alcune opzioni quando si compila una nuova regola, la prima, permette di distinguere tra maiuscole e minuscole.
 Di default NVDA non effettua questa distinzione.
-La seconda, consente di stabilire se la regola debba essere trattata come un'espressione regolare.
+
+In fine, una serie di pulsanti radio consente di stabilire se l'occorrenza inserita debba essere valutata ovunque, oppure solo come parola intera, o se invece si tratta di un'espressione regolare.
+Impostare  questa opzione su parola intera significa che non verranno presi in esame porzioni di parola.
+Per tornare all'esempio precedente, se scrivessimo UccelloMarino, e abbiamo selezionato di prendere in esame soltanto le parole intere, questa stringa verrebbe scartata.
+
 Le espressioni regolari sono strumenti molto potenti per manipolare porzioni di testo, ma non verranno trattate in questo manuale a causa della loro complessità.
 Si consiglia di cercare in rete tutorials che ne spieghino l'uso.
 
@@ -1205,6 +1228,7 @@ Essi vengono prodotti  dalla comunità internazionale di NVDA  e contengono codi
 
 Il gestore di componenti aggiuntivi contiene un elenco che visualizza tutti i pacchetti installati nella propria cartella di configurazione di NVDA.
 Per ciascun componente, vengono mostrati il nome del pacchetto, la versione e l'autore, ed inoltre altre informazioni come la descrizione o l'URL possono essere visualizzate selezionando tale componente e cliccando sul pulsante "informazioni su".
+Se per il componente selezionato è disponibile aiuto specifico, è possibile accedervi tramite il pulsante Aiuto componente aggiuntivo.
 
 Per cercare e scaricare altri componenti aggiuntivi,  premere il pulsante Scarica Componenti aggiuntivi.
 Questo bottone aprirà la [Pagina componenti aggiuntivi di NVDA http://addons.nvda-project.org/].
@@ -1234,9 +1258,9 @@ Si consiglia di rimuovere questi file dalla propria configurazione e installare 
 
 ++ Console Python ++
 La Console Python di NVDA, situata nel menu strumenti, è uno strumento per sviluppatori che risulta utile in fase di debug, di diagnosi delle funzioni interne di NVDA o di analisi della gerarchia degli oggetti accessibili presenti in un'applicazione.
-Per ulteriori informazioni, si veda [l'articolo relativo alla Console di Python, in lingua inglese, nel sito web di NVDA NVDA_URLwiki/PythonConsole].
+Per ulteriori informazioni, si veda [l'articolo relativo alla Console di Python, in lingua inglese, nel sito web di NVDA http://community.nvda-project.org/wiki/Development].
 
-++ Ricarica plugins ++
+++ Ricarica componenti aggiuntivi ++
 Questa voce, una volta attivata, ricarica tutti i plugin e i moduli specifici per le applicazioni senza riavviare NVDA. Risulta utile per gli sviluppatori.
 
 + Sintesi vocali supportate +[SupportedSpeechSynths]
@@ -1305,8 +1329,8 @@ Questa sezione contiene informazioni sulle barre braille supportate da NVDA.
 ++ Freedom Scientific Serie Focus/PAC Mate ++
 Sono supportati Tutti i Display Braille Focus e Pac Mate prodotti da [Freedom Scientific http://www.freedomscientific.com/], sia USB che Bluetooth.
 per un corretto funzionamento è necessario avere installati nel proprio sistema i drivers per display Braille Freedom Scientific.
-Nel caso non si sia in possesso di tali drivers, è possibile scaricarli dall'indirizzo http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
-Sebbene nella pagina sia nominata solo la barra Focus 40, il driver funzionerà per tutti i modelli Freedom.
+Nel caso non si sia in possesso di tali drivers, è possibile scaricarli dall'indirizzo http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Sebbene nella pagina sia nominata solo la barra Focus Blue, il driver funzionerà per tutti i modelli Freedom.
 Da notare che se nel proprio sistema si sta utilizzando una versione di Windows a 64 bit e i driver sono già stati installati da un altro screen reader, è probabile che sia necessario installare comunque il pacchetto, in quanto difficilmente quello screen reader avrà installato tutti i file utilizzati da NVDA.
 
 Per impostazioni predefinite, NVDA è in grado di individuare e connettersi automaticamente a questi display via USB o Bluetooth.
@@ -1539,6 +1563,9 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 ++ HIMS serie Braille Sense/Braille EDGE ++
 NVDA supporta i modelli Braille Sense e Braille EDGE prodotti dalla [Hims http://www.hims-inc.com/] quando connessi tramite USB o bluetooth.
 In caso di connessione tramite USB, è necessario prima installare i driver sviluppati dal produttore.
+Si possono scaricare dal centro risorse Hims all'indirizzo: http://www.hims-inc.com/resource-center/
+In questa pagina, selezionare il proprio dispositivo e scaricare il driver dalla sezione Window-Eyes.
+Sebbene venga citato soltanto Window-Eyes, si tratta di un driver USB generico che funziona perfettamente anche con NVDA.
 
 Di seguito, ecco l'elenco dell'assegnazione dei tasti  per questa riga braille con NVDA.
 Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
@@ -1676,7 +1703,6 @@ Seguono i comandi per i Display Papenmeier associati con NVDA:
 | Route to braille cell | routing |
 | Annuncia il carattere attuale sul cursore di controllo | l1 |
 | Attiva l'oggetto corrente | l2 |
-| Attiva navigazione in linea/focus | r1 |
 | Annuncia Titolo | l1+up |
 | Annuncia barra di stato | l2+down |
 | Spostarsi all'oggetto contenitore | up2 |
@@ -1753,7 +1779,6 @@ Dispositivi con EAB
 | Route to braille cell | routing |
 | Annuncia il carattere attuale sul cursore di controllo | l1 |
 | Attiva l'oggetto corrente | l2 |
-| Attiva navigazione in linea | r1 |
 | Annuncia Titolo | l1+up |
 | Annuncia barra di stato | l2+down |
 | Spostarsi all'oggetto contenitore | up2 |
@@ -1771,7 +1796,6 @@ BRAILLEX Tiny:
 | Sposta display braille alla riga precedente | up |
 | Sposta display braille alla riga successiva | dn |
 | Commuta inseguimento braille | r2 |
-| Navigazione in linea / focus | r1 |
 | Spostarsi all'oggetto contenitore | r1+up |
 | Spostarsi al primo oggetto contenuto | r1+dn |
 | Spostarsi all'oggetto precedente | r1+left |
@@ -1786,7 +1810,6 @@ BRAILLEX 2D Screen:
 | Annuncia formattazione testo | reportf |
 | Sposta display braille alla riga precedente | up |
 | Sposta display braille indietro | left |
-| Commuta modalità in linea / focus | r1 |
 | Sposta display braille avanti | right |
 | Sposta display braille alla riga successiva | dn |
 | Spostarsi all'oggetto successivo | left2 |
@@ -1863,7 +1886,83 @@ Si legga la [tabella dei tasti di Brltty http://mielke.cc/brltty/doc/drivers/] p
 | Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
 
++ Tipi di controlli braille e abbreviazioni di stato +
+Per fare in modo di fornire il maggior numero di informazioni in un display braille, sono state definite le seguenti abbreviazioni per illustrare i tipi di controllo e lo stato degli elementi.
+
+|| Abbreviazione | Tipo controllo |
+| btn | bottone |
+| cbo | casella combinata |
+| chk | casella di controllo |
+| dlg | dialogo |
+| edt | campo di testo editabile |
+| gra | grafico |
+| cN | numero colonna tabella n, ad esempio c1, c2. |
+| rN | numero riga tabella n, ad esempio r1, r2. |
+| hN | intestazione di livello n, ad esempio h1, h2. |
+| lnk | link |
+| lst | elenco |
+| vlnk | link visitato |
+| mnu | menu |
+| mnubar | barra dei menu |
+| rbtn | pulsante radio |
+| tb | tabella |
+| tv | visualizzazione ad albero |
+| lv N | un elemento della visualizzazione ad albero possiede un livello gerarchico pari a N|
+| ``-----`` | separatore |
+
+Sono inoltre definiti i seguenti indicatori di stato:
+|| Abbreviazione | indicatore di stato |
+| ... | visualizzato quando un oggetto supporta l'autocompletamento |
+| ( ) | visualizzato quando un oggetto, come una casella di controllo, non è marcato |
+| (x) | visualizzato quando un oggetto, come una casella di controllo, è marcato |
+| (-) | visualizzato quando un oggetto, come una casella di controllo, è parzialmente attivato |
+| - | visualizzato quando un oggetto, come l'elemento di una visualizzazione ad albero, risulta non espandibile |
+| + | visualizzato quando un oggetto, come l'elemento di una visualizzazione ad albero, risulta espandibile |
+| clk | visualizzato quando un oggetto risulta cliccabile |
+| ro | visualizzato quando un oggetto, come un campo di testo editabile, risulta di sola lettura |
+| sel | visualizzato quando un oggetto risulta selezionato |
+| submnu | visualizzato quando un oggetto contiene un popup, in genere un sottomenu |
+
 + Argomenti avanzati +
+
+++ Opzioni a riga di comando ++[CommandLineOptions]
+NVDA è in grado di accettare alcune opzioni a riga di comando per modificarne il comportamento all'avvio.
+Si possono inserire tutti i parametri che si desiderano.
+Queste opzioni possono essere digitate sia dalla finestra esegui di Windows, sia nelle proprietà di un collegamento sul desktop o semplicemente nella console prompt dei comandi.
+Le opzioni devono essere separate da spazi, come del resto è consuetudine.
+Ad esempio, il collegamento sul desktop che NVDA crea in fase di installazione contiene l'opzione -r, per chiudere eventuali copie dello screen reader prima di essere eseguito nuovamente.
+Un altro parametro molto utile è --disable-addons, che permette di sospendere tutti i componenti aggiuntivi all'avvio di NVDA.
+Ciò permette di stabilire se un determinato problema è causato da un componente aggiuntivo e in quel caso poterlo risolvere senza che gli addon vengano eseguiti.
+
+Per fare un esempio, è possibile uscire da NVDA digitando la stringa seguente nella finestra esegui di Windows:
+
+NVDA -q
+
+Alcuni parametri possiedono una versione breve e lunga, altri invece soltanto una lunga.
+Per quelli che possiedono solo la versione breve, si possono unire nel modo seguente:
+| nvda -rm | Chiude la copia attuale di NVDA e ne esegue una nuova con i suoni disattivati, etc. |
+| nvda -rm --disable-addons | Identico a prima, ma con i componenti aggiuntivi disattivati |
+
+Alcune delle opzioni della riga di comando accetta parametri aggiuntivi; ad esempio quanto dettagliato debba essere il log oppure la cartella inerente il profilo di configurazione utente.
+Questi parametri devono essere collocati dopo l'opzione, separati da essa da uno spazio in cui si utilizza la versione corta o un segno di uguale (=) quando si utilizza la versione lunga; ad esempio .:
+| nvda -l 10 | Dice a NVDA di avviarsi con il log impostato su debug |
+| nvda --log-file=c:\nvda.log |  Dice a NVDA di scrivere il log in c:\nvda.log |
+| nvda --log-level=20 -f c:\nvda.log | Dice a NVDA  di avviarsi con livello di log impostato su info e di scrivere il log in c:\nvda.log |
+
+Ecco l'elenco dei parametri a riga di comando di NVDA:
+|| Breve | Lungo | Descrizione |
+| -h | --help | Visualizza l'aiuto sulla riga di comando ed esce |
+| -q | --quit | Chiude eventuali copie in esecuzione di NVDA |
+| -r | --replace | Chiude la copia in esecuzione di NVDA e si riavvia |
+| -k | --check-running | Notifica se NVDA è in esecuzione tramite exit code; 0 se in esecuzione, 1 se non lo è |
+| -f LOGFILENAME | --log-file=LOGFILENAME | Il file nel quale verrà scritto il log |
+| -l LOGLEVEL | --log-level=LOGLEVEL | Il livello più basso di un messaggio loggato (debug 10, info 20, warning 30, error 40, critical 50), default è warning |
+| -c CONFIGPATH | --config-path=CONFIGPATH | Il percorso ove sono salvate tutte le impostazioni di NVDA |
+| -m | --minimal | Niente suoni, niente interfaccia, niente messaggio all'avvio etc |
+| -s | --secure | Modalità protetta (disabilita Python console) |
+| None | --disable-addons | I componenti aggiuntivi non avranno alcun effetto |
+| None | --no-sr-flag  | Non modifica il flag Screen Reader per il sistema |
+| None | --install | Silently installa NVDA |
 
 ++ Personalizzazione avanzata dei simboli di punteggiatura ++
 in aggiunta a ciò che abbiamo visto nella [Finestra di dialogo Pronuncia Punteggiatura/Simboli #SymbolPronunciation], è possibile personalizzare la punteggiatura ed altri simboli in maniera diversa.
@@ -1871,7 +1970,7 @@ Per esempio, è possibile specificare se inviare o meno un simbolo non processat
 
 Per far ciò, è necessario modificare il file contenente le informazioni sulla pronuncia dei simboli che si trova nella propria cartella di configurazione utente di NVDA 
 Il file si chiama symbols-xx.dic, dove xx costituisce il codice della lingua.
-Il formato di tale file è documentato nella guida per gli sviluppatori, sezione pronuncia/simboli, che si può leggere sul [sito internazionale di NVDA NVDA_URLwiki/Development].
+Il formato di tale file è documentato nella guida per gli sviluppatori, sezione pronuncia/simboli, che si può leggere sul sito internazionale di NVDA http://community.nvda-project.org/wiki/Development].
 Comunque, non è possibile per gli utenti definire simboli troppo complessi.
  
 + Ulteriori Informazioni +

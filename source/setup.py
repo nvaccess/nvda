@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #setup.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2013 NV Access Limited, Peter Vágner
+#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -44,6 +44,18 @@ MAIN_MANIFEST_EXTRA = r"""
 	proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"
 	baseInterface="{00000000-0000-0000-C000-000000000046}"
 	tlbid="{33257EFB-336F-4680-B94E-F5013BA6B9B3}" />
+<compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+	<application>
+		<!-- Windows Vista -->
+		<supportedOS Id="{e2011457-1546-43c5-a5fe-008deee3d3f0}"/>
+		<!-- Windows 7 -->
+		<supportedOS Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}"/>
+		<!-- Windows 8 -->
+		<supportedOS Id="{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}"/>
+		<!-- Windows 8.1 -->
+		<supportedOS Id="{1f676c76-80e1-4239-95bb-83d0f6d0da78}"/>
+	</application> 
+</compatibility>
 """
 
 def getModuleExtention(thisModType):
@@ -59,7 +71,7 @@ def isSystemDLL(pathname):
 	if dll in ("msvcp71.dll", "msvcp90.dll", "gdiplus.dll","mfc71.dll", "mfc90.dll"):
 		# These dlls don't exist on many systems, so make sure they're included.
 		return 0
-	elif dll.startswith("api-ms-win-") or dll == "powrprof.dll":
+	elif dll.startswith("api-ms-win-") or dll in ("powrprof.dll", "mpr.dll"):
 		# These are definitely system dlls available on all systems and must be excluded.
 		# Including them can cause serious problems when a binary build is run on a different version of Windows.
 		return 1

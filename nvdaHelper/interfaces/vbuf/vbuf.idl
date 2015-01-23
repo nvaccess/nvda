@@ -124,13 +124,14 @@ interface VBuf {
  * @param buffer the virtual buffer to use
  * @param offset offset in the buffer to start searching from
  * @param direction which direction to search
- * @param attribsString the attributes the node should contain
+ * @param attribs the attributes to search
+ * @param regexp regular expression the requested attributes must match
  * @param startOffset memory where the start offset of the found node can be placed
  * @param endOffset memory where the end offset of the found node will be placed
  * @param foundNode the found field node
  * @return non-zero if the node is found.
  */
-	int findNodeByAttributes([in] VBufRemote_bufferHandle_t buffer, [in] int offset, [in] int direction, [in,string] const wchar_t* attribsString, [out] int *startOffset, [out] int *endOffset, [out] VBufRemote_nodeHandle_t* foundNode);
+	int findNodeByAttributes([in] VBufRemote_bufferHandle_t buffer, [in] int offset, [in] int direction, [in,string] const wchar_t* attribs, [in,string] const wchar_t* regexp, [out] int *startOffset, [out] int *endOffset, [out] VBufRemote_nodeHandle_t* foundNode);
 
 /**
  * Retreaves the current selection offsets for the buffer

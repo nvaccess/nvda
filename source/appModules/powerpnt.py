@@ -10,6 +10,7 @@ import comtypes.client
 import ctypes
 import oleacc
 import comHelper
+import ui
 import queueHandler
 import colors
 import api
@@ -235,6 +236,14 @@ def getBulletText(ppBulletFormat):
 		return "%d."%ppBulletFormat.number #(ppBulletFormat.startValue+(ppBulletFormat.number-1))
 	elif t:
 		return unichr(ppBulletFormat.character)
+
+def walkPpShapeRange(ppShapeRange):
+	for ppShape in ppShapeRange:
+		if ppShape.type==msoGroup:
+			for ppChildShape in walkPpShapeRange(ppShape.groupItems):
+				yield ppChildShape
+		else:
+			yield ppShape
 
 class PaneClassDC(Window):
 	"""Handles fetching of the Powerpoint object model."""
@@ -506,6 +515,191 @@ class Shape(PpObject):
 
 	presentationType=Window.presType_content
 
+	def _get__overlapInfo(self):
+		slideWidth=self.appModule._ppApplication.activePresentation.pageSetup.slideWidth
+		slideHeight=self.appModule._ppApplication.activePresentation.pageSetup.slideHeight
+		left=self.ppObject.left
+		top=self.ppObject.top
+		right=left+self.ppObject.width
+		bottom=top+self.ppObject.height
+		name=self.ppObject.name
+		slideShapeRange=self.documentWindow.currentSlide.ppObject.shapes.range()
+		otherIsBehind=True
+		infrontInfo=None
+		behindInfo=None
+		for ppShape in walkPpShapeRange(slideShapeRange):
+			otherName=ppShape.name
+			if otherName==name:
+				otherIsBehind=False
+				continue
+			otherLeft=ppShape.left
+			otherTop=ppShape.top
+			otherRight=otherLeft+ppShape.width
+			otherBottom=otherTop+ppShape.height
+			if otherLeft>=right or otherRight<=left:
+				continue
+			if otherTop>=bottom or otherBottom<=top:
+				continue
+			info={}
+			info['label']=Shape(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=ppShape).name
+			info['otherIsBehind']=otherIsBehind
+			info['overlapsOtherLeftBy']=right-otherLeft if right<otherRight else 0
+			info['overlapsOtherTopBy']=bottom-otherTop if bottom<otherBottom else 0
+			info['overlapsOtherRightBy']=otherRight-left if otherLeft<left else 0
+			info['overlapsOtherBottomBy']=otherBottom-top if otherTop<top else 0
+			if otherIsBehind:
+				behindInfo=info
+			else:
+				infrontInfo=info
+				break
+		self._overlapInfo=behindInfo,infrontInfo
+		return self._overlapInfo
+
+	def _getOverlapText(self):
+		textList=[]
+		for otherInfo in self._overlapInfo:
+			if otherInfo is None:
+				continue
+			otherIsBehind=otherInfo['otherIsBehind']
+			otherLabel=otherInfo['label']
+			total=True
+			overlapsOtherLeftBy=otherInfo['overlapsOtherLeftBy']
+			if overlapsOtherLeftBy>0:
+				total=False
+				if otherIsBehind:
+					# Translators: A message when a shape is infront of another shape on a Powerpoint slide 
+					textList.append(_("covers left of {otherShape} by {distance:.3g} points").format(otherShape=otherLabel,distance=overlapsOtherLeftBy))
+				else:
+					# Translators: A message when a shape is behind  another shape on a powerpoint slide
+					textList.append(_("behind left of {otherShape} by {distance:.3g} points").format(otherShape=otherLabel,distance=overlapsOtherLeftBy))
+			overlapsOtherTopBy=otherInfo['overlapsOtherTopBy']
+			if overlapsOtherTopBy>0:
+				total=False
+				if otherIsBehind:
+					# Translators: A message when a shape is infront of another shape on a Powerpoint slide 
+					textList.append(_("covers top of {otherShape} by {distance:.3g} points").format(otherShape=otherLabel,distance=overlapsOtherTopBy))
+				else:
+					# Translators: A message when a shape is behind another shape on a powerpoint slide
+					textList.append(_("behind top of {otherShape} by {distance:.3g} points").format(otherShape=otherLabel,distance=overlapsOtherTopBy))
+			overlapsOtherRightBy=otherInfo['overlapsOtherRightBy']
+			if overlapsOtherRightBy>0:
+				total=False
+				if otherIsBehind:
+					# Translators: A message when a shape is infront of another shape on a Powerpoint slide 
+					textList.append(_("covers right of {otherShape} by {distance:.3g} points").format(otherShape=otherLabel,distance=overlapsOtherRightBy))
+				else:
+					# Translators: A message when a shape is behind another shape on a powerpoint slide
+					textList.append(_("behind right of {otherShape} by {distance:.3g} points").format(otherShape=otherLabel,distance=overlapsOtherRightBy))
+			overlapsOtherBottomBy=otherInfo['overlapsOtherBottomBy']
+			if overlapsOtherBottomBy>0:
+				total=False
+				if otherIsBehind:
+					# Translators: A message when a shape is infront of another shape on a Powerpoint slide 
+					textList.append(_("covers bottom of {otherShape} by {distance:.3g} points").format(otherShape=otherLabel,distance=overlapsOtherBottomBy))
+				else:
+					# Translators: A message when a shape is behind another shape on a powerpoint slide
+					textList.append(_("behind bottom of {otherShape} by {distance:.3g} points").format(otherShape=otherLabel,distance=overlapsOtherBottomBy))
+			if total:
+				if otherIsBehind:
+					# Translators: A message when a shape is infront of another shape on a Powerpoint slide 
+					textList.append(_("covers  {otherShape}").format(otherShape=otherLabel))
+				else:
+					# Translators: A message when a shape is behind another shape on a powerpoint slide
+					textList.append(_("behind {otherShape}").format(otherShape=otherLabel))
+		return ", ".join(textList)
+
+	def _get__edgeDistances(self):
+		slideWidth=self.appModule._ppApplication.activePresentation.pageSetup.slideWidth
+		slideHeight=self.appModule._ppApplication.activePresentation.pageSetup.slideHeight
+		leftDistance=self.ppObject.left
+		topDistance=self.ppObject.top
+		rightDistance=slideWidth-(leftDistance+self.ppObject.width)
+		bottomDistance=slideHeight-(topDistance+self.ppObject.height)
+		self._edgeDistances=(leftDistance,topDistance,rightDistance,bottomDistance)
+		return self._edgeDistances
+
+	def _getShapeLocationText(self,left=False,top=False,right=False,bottom=False):
+		leftDistance,topDistance,rightDistance,bottomDistance=self._edgeDistances
+		offSlideList=[]
+		onSlideList=[]
+		if left:
+			if leftDistance>=0:
+				# Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge 
+				onSlideList.append(_("{distance:.3g} points from left slide edge").format(distance=leftDistance))
+			else:
+				# Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
+				offSlideList.append(_("Off left slide edge by {distance:.3g} points").format(distance=0-leftDistance))
+		if top:
+			if topDistance>=0:
+				# Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge 
+				onSlideList.append(_("{distance:.3g} points from top slide edge").format(distance=topDistance))
+			else:
+				# Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
+				offSlideList.append(_("Off top slide edge by {distance:.3g} points").format(distance=0-topDistance))
+		if right:
+			if rightDistance>=0:
+				# Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge 
+				onSlideList.append(_("{distance:.3g} points from right slide edge").format(distance=rightDistance))
+			else:
+				# Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
+				offSlideList.append(_("Off right slide edge by {distance:.3g} points").format(distance=0-rightDistance))
+		if bottom:
+			if bottomDistance>=0:
+				# Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge 
+				onSlideList.append(_("{distance:.3g} points from bottom slide edge").format(distance=bottomDistance))
+			else:
+				# Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
+				offSlideList.append(_("Off bottom slide edge by {distance:.3g} points").format(distance=0-bottomDistance))
+		return ", ".join(offSlideList+onSlideList)
+
+	def _get_locationText(self):
+		textList=[]
+		text=self._getOverlapText()
+		if text:
+			textList.append(text)
+		text=self._getShapeLocationText(True,True,True,True)
+		if text:
+			textList.append(text)
+		return ", ".join(textList)
+
+	def _clearLocationCache(self):
+		try:
+			del self._overlapInfo
+		except AttributeError:
+			pass
+		try:
+			del self._edgeDistances
+		except AttributeError:
+			pass
+
+	def script_moveHorizontal(self,gesture):
+		gesture.send()
+		if scriptHandler.isScriptWaiting():
+			return
+		self._clearLocationCache()
+		textList=[]
+		text=self._getOverlapText()
+		if text:
+			textList.append(text)
+		text=self._getShapeLocationText(left=True,right=True)
+		if text:
+			textList.append(text)
+		ui.message(", ".join(textList))
+
+	def script_moveVertical(self,gesture):
+		gesture.send()
+		if scriptHandler.isScriptWaiting():
+			return
+		self._clearLocationCache()
+		textList=[]
+		text=self._getOverlapText()
+		if text:
+			textList.append(text)
+		text=self._getShapeLocationText(top=True,bottom=True)
+		if text:
+			textList.append(text)
+		ui.message(", ".join(textList))
+
 	def _get_ppPlaceholderType(self):
 		try:
 			return self.ppObject.placeholderFormat.type
@@ -560,7 +754,23 @@ class Shape(PpObject):
 		if self.ppObject.hasTextFrame:
 			return self.ppObject.textFrame.textRange.text
 
+	def _get_states(self):
+		states=super(Shape,self).states
+		if self._overlapInfo[1] is not None:
+			states.add(controlTypes.STATE_OBSCURED)
+		if any(x for x in self._edgeDistances if x<0):
+			states.add(controlTypes.STATE_OFFSCREEN)
+		return states
+
 	__gestures={
+		"kb:leftArrow":"moveHorizontal",
+		"kb:rightArrow":"moveHorizontal",
+		"kb:upArrow":"moveVertical",
+		"kb:downArrow":"moveVertical",
+		"kb:shift+leftArrow":"moveHorizontal",
+		"kb:shift+rightArrow":"moveHorizontal",
+		"kb:shift+upArrow":"moveVertical",
+		"kb:shift+downArrow":"moveVertical",
 		"kb:enter":"selectionChange",
 		"kb:f2":"selectionChange",
 	}
@@ -577,7 +787,11 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return start,end
 
 	def _getTextRange(self,start,end):
-		text=self.obj.ppObject.textRange.text[start:end].replace('\x0b','\n')
+		# #4619: First let's "normalise" the text, i.e. get rid of the CR/LF mess
+		text=self.obj.ppObject.textRange.text
+		text=text.replace('\r\n','\n')
+		#Now string slicing will be okay
+		text=text[start:end].replace('\x0b','\n')
 		text=text.replace('\r','\n')
 		return text
 
@@ -685,6 +899,12 @@ class TextFrame(EditableTextWithoutAutoSelectDetection,PpObject):
 		parent=self.ppObject.parent
 		if parent:
 			return Shape(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=parent)
+
+	def script_caret_backspaceCharacter(self, gesture):
+		super(TextFrame, self).script_caret_backspaceCharacter(gesture)
+		# #3231: The typedCharacter event is never fired for the backspace key.
+		# Call it here so that speak typed words works as expected.
+		self.event_typedCharacter(u"\b")
 
 class TableCellTextFrame(TextFrame):
 	"""Represents a text frame inside a table cell in Powerpoint. Specifially supports the caret jumping into another cell with tab or arrows."""
@@ -887,6 +1107,7 @@ class AppModule(appModuleHandler.AppModule):
 		import gui
 		# Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 		d=wx.Dialog(None,title=_("Waiting for Powerpoint..."))
+		d.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 		gui.mainFrame.prePopup()
 		d.Show()
 		self.hasTriedPpAppSwitch=True

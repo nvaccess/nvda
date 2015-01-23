@@ -10,6 +10,7 @@
 
 import itertools
 import weakref
+import unicodedata
 import colors
 import globalVars
 from logHandler import log
@@ -122,7 +123,7 @@ def speakMessage(text,index=None):
 
 def getCurrentLanguage():
 	try:
-		language=getSynth().language if config.conf['speech']['autoLanguageSwitching'] else None
+		language=getSynth().language if config.conf['speech']['trustVoiceLanguage'] else None
 	except NotImplementedError:
 		language=None
 	if language:
@@ -535,11 +536,12 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 
 def speakTypedCharacters(ch):
 	global curWordChars;
-	if api.isTypingProtected():
+	typingIsProtected=api.isTypingProtected()
+	if typingIsProtected:
 		realChar="*"
 	else:
 		realChar=ch
-	if ch.isalnum():
+	if unicodedata.category(ch)[0] in "LMN":
 		curWordChars.append(realChar)
 	elif ch=="\b":
 		# Backspace, so remove the last character from our buffer.
@@ -552,7 +554,7 @@ def speakTypedCharacters(ch):
 		curWordChars=[]
 		if log.isEnabledFor(log.IO):
 			log.io("typed word: %s"%typedWord)
-		if config.conf["keyboard"]["speakTypedWords"]: 
+		if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
 			speakText(typedWord)
 	if config.conf["keyboard"]["speakTypedCharacters"] and ord(ch)>=32:
 		speakSpelling(realChar)
@@ -586,7 +588,7 @@ class SpeakTextInfoState(object):
 	def copy(self):
 		return self.__class__(self)
 
-def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlTypes.REASON_QUERY,index=None):
+def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlTypes.REASON_QUERY,index=None,onlyInitialFields=False,suppressBlanks=False):
 	if isinstance(useCache,SpeakTextInfoState):
 		speakTextInfoState=useCache
 	elif useCache:
@@ -653,7 +655,10 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	#Calculate how many fields in the old and new controlFieldStacks are the same
 	commonFieldCount=0
 	for count in xrange(min(len(newControlFieldStack),len(controlFieldStackCache))):
-		if newControlFieldStack[count]==controlFieldStackCache[count]:
+		# #2199: When comparing controlFields try using uniqueID if it exists before resorting to compairing the entire dictionary
+		oldUniqueID=controlFieldStackCache[count].get('uniqueID')
+		newUniqueID=newControlFieldStack[count].get('uniqueID')
+		if ((oldUniqueID is not None or newUniqueID is not None) and newUniqueID==oldUniqueID) or (newControlFieldStack[count]==controlFieldStackCache[count]):
 			commonFieldCount+=1
 		else:
 			break
@@ -700,10 +705,11 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		speechSequence.append(LangChangeCommand(language))
 		lastLanguage=language
 
-	if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and len(textWithFields)>0 and len(textWithFields[0])==1 and all((isinstance(x,textInfos.FieldCommand) and x.command=="controlEnd") for x in itertools.islice(textWithFields,1,None) ): 
-		if any(isinstance(x,basestring) for x in speechSequence):
+	if onlyInitialFields or (unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and len(textWithFields)>0 and len(textWithFields[0])==1 and all((isinstance(x,textInfos.FieldCommand) and x.command=="controlEnd") for x in itertools.islice(textWithFields,1,None) )): 
+		if onlyInitialFields or any(isinstance(x,basestring) for x in speechSequence):
 			speak(speechSequence)
-		speakSpelling(textWithFields[0],locale=language if autoLanguageSwitching else None)
+		if not onlyInitialFields: 
+			speakSpelling(textWithFields[0],locale=language if autoLanguageSwitching else None)
 		if useCache:
 			speakTextInfoState.controlFieldStackCache=newControlFieldStack
 			speakTextInfoState.formatFieldAttributesCache=formatFieldAttributesCache
@@ -799,7 +805,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 				isTextBlank=False
 
 	# If there is nothing  that should cause the TextInfo to be considered non-blank, blank should be reported, unless we are doing a say all.
-	if reason != controlTypes.REASON_SAYALL and isTextBlank:
+	if not suppressBlanks and reason != controlTypes.REASON_SAYALL and isTextBlank:
 		# Translators: This is spoken when the line is considered blank.
 		speechSequence.append(_("blank"))
 
@@ -1183,9 +1189,74 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 				# Translators: Reported when text is justified.
 				# See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
 				text=_("align justify")
+			elif textAlign=="distribute":
+				# Translators: Reported when text is justified with character spacing (Japanese etc) 
+				# See http://kohei.us/2010/01/21/distributed-text-justification/
+				text=_("align distributed")
 			else:
 				# Translators: Reported when text has reverted to default alignment.
 				text=_("align default")
+			textList.append(text)
+	if formatConfig["reportParagraphIndentation"]:
+		indentLabels={
+			'left-indent':(
+				# Translators: the label for paragraph format left indent
+				_("left indent"),
+				# Translators: the message when there is no paragraph format left indent
+				_("no left indent"),
+			),
+			'right-indent':(
+				# Translators: the label for paragraph format right indent
+				_("right indent"),
+				# Translators: the message when there is no paragraph format right indent
+				_("no right indent"),
+			),
+			'hanging-indent':(
+				# Translators: the label for paragraph format hanging indent
+				_("hanging indent"),
+				# Translators: the message when there is no paragraph format hanging indent
+				_("no hanging indent"),
+			),
+			'first-line-indent':(
+				# Translators: the label for paragraph format first line indent 
+				_("first line indent"),
+				# Translators: the message when there is no paragraph format first line indent
+				_("no first line indent"),
+			),
+		}
+		for attr,(label,noVal) in indentLabels.iteritems():
+			newVal=attrs.get(attr)
+			oldVal=attrsCache.get(attr) if attrsCache else None
+			if (newVal or oldVal is not None) and newVal!=oldVal:
+				if newVal:
+					textList.append(u"%s %s"%(label,newVal))
+				else:
+					textList.append(noVal)
+		verticalAlign=attrs.get("vertical-align")
+		oldverticalAlign=attrsCache.get("vertical-align") if attrsCache is not None else None
+		if (verticalAlign or oldverticalAlign is not None) and verticalAlign!=oldverticalAlign:
+			verticalAlign=verticalAlign.lower() if verticalAlign else verticalAlign
+			if verticalAlign=="top":
+				# Translators: Reported when text is vertically top-aligned.
+				text=_("vertical align top")
+			elif verticalAlign in("center","middle"):
+				# Translators: Reported when text is vertically middle aligned.
+				text=_("vertical align middle")
+			elif verticalAlign=="bottom":
+				# Translators: Reported when text is vertically bottom-aligned.
+				text=_("vertical align bottom")
+			elif verticalAlign=="baseline":
+				# Translators: Reported when text is vertically aligned on the baseline. 
+				text=_("vertical align baseline")
+			elif verticalAlign=="justify":
+				# Translators: Reported when text is vertically justified.
+				text=_("vertical align justified")
+			elif verticalAlign=="distributed":
+				# Translators: Reported when text is vertically justified but with character spacing (For some Asian content). 
+				text=_("vertical align distributed") 
+			else:
+				# Translators: Reported when text has reverted to default vertical alignment.
+				text=_("vertical align default")
 			textList.append(text)
 	if  formatConfig["reportLinks"]:
 		link=attrs.get("link")
@@ -1196,10 +1267,15 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 	if  formatConfig["reportComments"]:
 		comment=attrs.get("comment")
 		oldComment=attrsCache.get("comment") if attrsCache is not None else None
-		if comment and comment!=oldComment:
-			# Translators: Reported when text contains a comment.
-			text=_("has comment")
-			textList.append(text)
+		if (comment or oldComment is not None) and comment!=oldComment:
+			if comment:
+				# Translators: Reported when text contains a comment.
+				text=_("has comment")
+				textList.append(text)
+			elif extraDetail:
+				# Translators: Reported when text no longer contains a comment.
+				text=_("out of comment")
+				textList.append(text)
 	if formatConfig["reportSpellingErrors"]:
 		invalidSpelling=attrs.get("invalid-spelling")
 		oldInvalidSpelling=attrsCache.get("invalid-spelling") if attrsCache is not None else None

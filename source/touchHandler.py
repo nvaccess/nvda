@@ -4,6 +4,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2012 NV Access Limited
 
+import wx
 import threading
 from ctypes import *
 from ctypes.wintypes import *
@@ -15,12 +16,12 @@ import winUser
 import speech
 import api
 import ui
-import queueHandler
 import inputCore
 import screenExplorer
 from logHandler import log
 import touchTracker
 import gui
+import core
 
 availableTouchModes=['text','object']
 
@@ -181,6 +182,7 @@ inputCore.registerGestureSource("ts", TouchInputGesture)
 class TouchHandler(threading.Thread):
 
 	def __init__(self):
+		self.pendingEmitsTimer=wx.PyTimer(core.requestPump)
 		super(TouchHandler,self).__init__()
 		self._curTouchMode='object'
 		self.initializedEvent=threading.Event()
@@ -193,6 +195,7 @@ class TouchHandler(threading.Thread):
 	def terminate(self):
 		windll.user32.PostThreadMessageW(self.ident,WM_QUIT,0,0)
 		self.join()
+		self.pendingEmitsTimer.Stop()
 
 	def run(self):
 		try:
@@ -206,8 +209,6 @@ class TouchHandler(threading.Thread):
 			self.trackerManager=touchTracker.TrackerManager()
 			self.screenExplorer=screenExplorer.ScreenExplorer()
 			self.screenExplorer.updateReview=True
-			self.gesturePump=self.gesturePumpFunc()
-			queueHandler.registerGeneratorObject(self.gesturePump)
 		except Exception as e:
 			self.threadExc=e
 		finally:
@@ -216,7 +217,6 @@ class TouchHandler(threading.Thread):
 		while windll.user32.GetMessageW(byref(msg),None,0,0):
 			windll.user32.TranslateMessage(byref(msg))
 			windll.user32.DispatchMessageW(byref(msg))
-		self.gesturePump.close()
 		oledll.oleacc.AccSetRunningUtilityState(self._touchWindow,ANRUS_TOUCH_MODIFICATION_ACTIVE,0)
 		windll.user32.UnregisterPointerInputTarget(self._touchWindow,PT_TOUCH)
 		windll.user32.DestroyWindow(self._touchWindow)
@@ -231,8 +231,10 @@ class TouchHandler(threading.Thread):
 			ID=winUser.LOWORD(wParam)
 			if touching:
 				self.trackerManager.update(ID,x,y,False)
+				core.requestPump()
 			elif not flags&POINTER_MESSAGE_FLAG_FIRSTBUTTON:
 				self.trackerManager.update(ID,x,y,True)
+				core.requestPump()
 			return 0
 		return windll.user32.DefWindowProcW(hwnd,msg,wParam,lParam)
 
@@ -241,15 +243,20 @@ class TouchHandler(threading.Thread):
 			raise ValueError("Unknown mode %s"%mode)
 		self._curTouchMode=mode
 
-	def gesturePumpFunc(self):
-		while True:
-			for tracker in self.trackerManager.emitTrackers():
-				gesture=TouchInputGesture(tracker,self._curTouchMode)
-				try:
-					inputCore.manager.executeGesture(gesture)
-				except inputCore.NoInputGestureAction:
-					pass
-			yield
+	def pump(self):
+		for tracker in self.trackerManager.emitTrackers():
+			gesture=TouchInputGesture(tracker,self._curTouchMode)
+			try:
+				inputCore.manager.executeGesture(gesture)
+			except inputCore.NoInputGestureAction:
+				pass
+		interval=self.trackerManager.pendingEmitInterval
+		if interval and interval>0:
+			# Ensure we are pumpped again by the time more pending multiTouch trackers are ready
+			self.pendingEmitsTimer.Start(interval*1000,True)
+		else:
+			# Stop the timer in case we were pumpped due to something unrelated but just happened to be at the appropriate time to clear any remaining trackers 
+			self.pendingEmitsTimer.Stop()
 
 	def notifyInteraction(self, obj):
 		"""Notify the system that UI interaction is occurring via touch.

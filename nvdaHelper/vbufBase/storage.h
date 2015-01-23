@@ -19,6 +19,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <map>
 #include <set>
 #include <list>
+#include <vector>
+#include <regex>
 
 /**
  * values to indicate a direction for searching
@@ -224,7 +226,7 @@ class VBufStorage_fieldNode_t {
  * @param attribsString the string containing the attributes, each attribute can have multiple values to match on.
   * @return true if the attributes exist, false otherwize.
  */
-	bool matchAttributes(const std::wstring& attribsString);
+	bool matchAttributes(const std::vector<std::wstring>& attribs, const std::wregex& regexp);
 
 	/**
 	* True if this node his hidden - searches will not locate this node.
@@ -284,9 +286,10 @@ class VBufStorage_fieldNode_t {
  * @param endOffset the offset to end at. Use -1 to mean node's end offset. 
  * @param text a string in whish to append the text.
  * @param useMarkup if true then markup indicating opening and closing of fields will be included.
+ * @param filter: a function that takes the current recursive node and returns true if text should be fetched and false if it should be skipped.
  * @return true if successfull, false otherwize.
  */ 
-	virtual void getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup=false);
+	virtual void getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup=false,bool(*filter)(VBufStorage_fieldNode_t*)=NULL);
 
 /**
  * @return a string providing information about this node's type, and its state.
@@ -357,7 +360,7 @@ class VBufStorage_textFieldNode_t : public VBufStorage_fieldNode_t {
 
 	virtual void generateMarkupTagName(std::wstring& text);
 
-	virtual void getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup=false);
+	virtual void getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup=false,bool(*filter)(VBufStorage_fieldNode_t*)=NULL);
 
 /**
  * constructor.
@@ -554,12 +557,13 @@ class VBufStorage_buffer_t {
  * Finds a field node that contains particular attributes.
  * @param offset offset in the buffer to start searching from, if -1 then starts at the root of the buffer.
  * @param direction which direction to search
- * @param attribsString the attributes the node should contain
+ * @param attribs the attributes to search
+ * @param regexp regular expression the requested attributes must match
  * @param startOffset memory where the start offset of the found node can be placed
  * @param endOffset memory where the end offset of the found node will be placed
  * @return the found field node
  */
-	virtual VBufStorage_fieldNode_t* findNodeByAttributes(int offset, VBufStorage_findDirection_t  direction, const std::wstring &attribsString, int *startOffset, int *endOffset);
+	virtual VBufStorage_fieldNode_t* findNodeByAttributes(int offset, VBufStorage_findDirection_t  direction, const std::wstring &attribs, const std::wstring &regexp, int *startOffset, int *endOffset);
 
 /**
  * Retreaves the current selection offsets for the buffer

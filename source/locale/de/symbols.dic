@@ -1,48 +1,60 @@
 ﻿#locale/de/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2012 NVDA contributors.
+#Copyright (c) 2011-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
-# Sonderzeichen	Regulärer Ausdruck
-# Weitere
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\,(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥]?\d)
 date separator	(?<=\d\d)\.(?=\d\d)
 
 symbols:
-# Identifizierungszeichen	Ersetzungen[[	Ebene][	Bereich]][	# Angezeigter Name]
+# identifier	replacement[[	level][	preserve]][	# display name]
 
-# Komplexe Symbole
-. sentence ending	Punkt
-! sentence ending	Ausrufezeichen
-? sentence ending	Fragezeichen
-; phrase ending	Semikolon
-: phrase ending	Doppelpunkt
+# Complex symbols
+. sentence ending	Punkt	all	always
+! sentence ending	Ausrufezeichen	all	always
+? sentence ending	Fragezeichen	all	always
+; phrase ending	Semikolon	most	always
+: phrase ending	Doppelpunkt	most	always
+decimal point		none	always
+in-word '	Apostroph	all	norep
+negative number	Minus	none	norep
 date separator		none	always
-in-word '	Apostroph
 
-# Unsichtbare Zeichen
-\0	Leer	char	# Null
-\t	Tabulator
-\n	Zeilenumbruch
-\f	Seitenumbruch
-\r	Neue Zeile
- 	Leerzeichen
- 	Leerzeichen	# Geschütztes Leerzeichen
+# Whitespace
+\0	Leer	char	# null
+\t	Tab
+\n	Zeilenumbruch	char
+\f	Seitenumbruch	none
+\r	Neue Zeile	char
+ 	Leerzeichen	char
+ 	Geschütztes Leerzeichen	char	# no-break space
 
-# Standardsymbole und -satzzeichen
+# Standard punctuation/symbols
 !	Ausrufezeichen
 "	Anführungszeichen
-\#	Nummer
+\#	Nummernzeichen
 $	Dollar
-£	Pfund Sterling
+£	Pfund
 €	Euro
-¢	sent
-¥	Yenn
+¢	Cents
+¥	Yen
 %	Prozent
 &	Und
 '	Apostroph
 (	Runde Klammer auf
-)	Runde Klammer zu
+)	runde Klammer zu
 *	Stern
 +	Plus
 ,	Komma
@@ -51,56 +63,54 @@ $	Dollar
 /	Schrägstrich
 :	Doppelpunkt
 ;	Semikolon
-<	Kleiner als
->	Größer als
-=	Gleich
+<	Kleiner Als
+>	Größer Als
+=	Gleichheitszeichen
 ?	Fragezeichen
-@	Klammeraffe
+@	Ätt
 [	Eckige Klammer auf
 ]	Eckige Klammer zu
 \\	Backslash
 ^	Dach
 _	Unterstrich
-`	Apostroph
+`	Graav
 {	Geschweifte Klammer auf
 }	Geschweifte Klammer zu
 |	Senkrechter Strich
 ~	Tilde
 
-# Weitere Zeichen
+# Other characters
 •	Aufzählungszeichen
 …	Punkt Punkt Punkt
 ...	Punkt Punkt Punkt
 	Aufzählungszeichen
-“	Anführungszeichen oben
-”	Anführungszeichen unten	all
-‘	Anführungszeichen oben
-’	Anführungszeichen unten
-„	Anführungszeichen unten	all
+“	Typografisches Anführungszeichen oben
+„	Typografisches Anführungszeichen unten
+‘	Apostroph links
+’	Apostroph rechts
 –	Strich
 —	Gedankenstrich
 ●	Kreis
 ¨	Trema
-‏	Markierung von rechts nach links
-‎	Markierung von links nach rechts
+‎	Pfeil von links nach rechts
+‏	Pfeil von rechts nach links
 ■	Schwarzes Quadrat
-➔	Pfeil nach rechts
-→	Pfeil nach rechts
+➔	Großer rechtsweisender Pfeil
 §	Paragraf
 °	Grad
-Þ	Aufzählung	some
-«	Doppelte gewinkelte Klammer auf	most
-»	Doppelte gewinkelte Klammer zu	most
-µ	My
-¹	Hoch Eins
-²	Hoch Zwei
-³	Hoch Drei
+«	Doppelt gewinkelte Klammer auf
+»	Doppelt gewinkelte Klammer zu
+µ	Mü
+¹	Hochgestellte 1
+²	Hochgestellte 2
+³	Hochgestellte 3
 ®	Registriertes Warenzeichen
 ™	Eingetragenes Warenzeichen
 ©	Copyright
 ±	Plus Minus
 ×	Mal
-÷	Durch
-→	Rechtspfeil	some
-✓	Häkchen	some
-✔	Großes Häkchen	some
+÷	Geteilt durch
+←	Pfeil nach links
+→	Pfeil nach rechts
+✓	Häkchen
+✔	Fettes Häkchen
