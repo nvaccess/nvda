@@ -603,9 +603,6 @@ class MSHTML(IAccessible):
 		return super(MSHTML,self).shouldAllowIAccessibleFocusEvent
 
 	def _get_name(self):
-		ariaLabel=self.HTMLAttributes['aria-label']
-		if ariaLabel:
-			return ariaLabel
 		ariaLabelledBy=self.HTMLAttributes['aria-labelledBy']
 		if ariaLabelledBy:
 			try:
@@ -617,24 +614,27 @@ class MSHTML(IAccessible):
 					return labelNode.innerText
 				except (COMError,NameError):
 					pass
-		title=self.HTMLAttributes['title']
-		# #2121: MSHTML sometimes returns a node for the title attribute.
-		# This doesn't make any sense, so ignore it.
-		if title and isinstance(title,basestring):
-			return title
+		ariaLabel=self.HTMLAttributes['aria-label']
+		if ariaLabel:
+			return ariaLabel
 		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_TABLE:
 			summary=self.HTMLAttributes['summary']
 			if summary:
 				return summary
-		if self.HTMLNodeHasAncestorIAccessible:
-			return ""
-		#IE inappropriately generates the name from descendants on some controls
-		if self.IAccessibleRole in (oleacc.ROLE_SYSTEM_MENUBAR,oleacc.ROLE_SYSTEM_TOOLBAR,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TABLE,oleacc.ROLE_SYSTEM_DOCUMENT):
-			return ""
-		#Adding an ARIA landmark or unknown role to a DIV node makes an IAccessible with role_system_grouping and a name calculated from descendants.
-		# This name should also be ignored, but check NVDA's role, not accRole as its possible that NVDA chose a better role
-		# E.g. row (#2780)
-		if self.HTMLNodeName=="DIV" and self.role==controlTypes.ROLE_GROUPING:
+		if (
+			self.HTMLNodeHasAncestorIAccessible or
+			#IE inappropriately generates the name from descendants on some controls
+			self.IAccessibleRole in (oleacc.ROLE_SYSTEM_MENUBAR,oleacc.ROLE_SYSTEM_TOOLBAR,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TABLE,oleacc.ROLE_SYSTEM_DOCUMENT) or
+			#Adding an ARIA landmark or unknown role to a DIV or NAV node makes an IAccessible with role_system_grouping and a name calculated from descendants.
+			# This name should also be ignored, but check NVDA's role, not accRole as its possible that NVDA chose a better role
+			# E.g. row (#2780)
+			(self.HTMLNodeName in ("DIV","NAV") and self.role==controlTypes.ROLE_GROUPING)
+		):
+			title=self.HTMLAttributes['title']
+			# #2121: MSHTML sometimes returns a node for the title attribute.
+			# This doesn't make any sense, so ignore it.
+			if title and isinstance(title,basestring):
+				return title
 			return ""
 		return super(MSHTML,self).name
 
