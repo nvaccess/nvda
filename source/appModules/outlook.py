@@ -22,7 +22,7 @@ import speech
 import ui
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
-from NVDAObjects.window.winword import WordDocument
+from NVDAObjects.window.winword import WordDocument, WordDocumentTreeInterceptor
 from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation
 from NVDAObjects.UIA import UIA
@@ -445,14 +445,29 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 		super(UIAGridRow,self).setFocus()
 		eventHandler.queueEvent("gainFocus",self)
 
+class MailViewerTreeInterceptor(WordDocumentTreeInterceptor):
+	"""A BrowseMode treeInterceptor specifically for readonly emails, where tab and shift+tab are safe and we know will not edit the document."""
+	__gestures={
+		"kb:tab":None,
+		"kb:shift+tab":None,
+	}
+
 class OutlookWordDocument(WordDocument):
 
-	def _get_shouldCreateTreeInterceptor(self):
-		# #2975: If this WordDocument is displaying a sent message, then it should be read with browse mode.
+	def _get_isReadonlyViewer(self):
+		# #2975: The only way we know an email is read-only is if the underlying email has been sent.
 		try:
 			return self.appModule.nativeOm.activeInspector().currentItem.sent
 		except (COMError,NameError,AttributeError):
 			return False
 
+	def _get_treeInterceptorClass(self):
+		if self.isReadonlyViewer:
+			return MailViewerTreeInterceptor
+		return super(OutlookWordDocument,self).treeInterceptorClass
+
+	def _get_shouldCreateTreeInterceptor(self):
+		return self.isReadonlyViewer
+
 	def _get_role(self):
-		return controlTypes.ROLE_DOCUMENT if self.shouldCreateTreeInterceptor else super(OutlookWordDocument,self).role
+		return controlTypes.ROLE_DOCUMENT if self.isReadonlyViewer else super(OutlookWordDocument,self).role
