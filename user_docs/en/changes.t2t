@@ -13,12 +13,17 @@
 - Quick navigation (h for heading etc) plus Elements List (NVDA+f7) are now available in Microsoft Word documents by turning on browse mode with NVDA+space. (#2975)
 - Reading HTML messages in Microsoft Outlook 2007 and higher has been majorly improved as Browse mode is automatically enabled for these messages. If browse mode is not enabled in some rare situations, you can force it on with NVDA+space. (#2975) 
 - Table column headers in Microsoft word are automatically reported for tables where a header row has been explicitly specified by the author via Microsoft word's table properties. (#4510) 
+- In Skype for Desktop, notifications are now reported. (#4741)
+- In Skype for Desktop, you can now report and review recent messages using NVDA+control+1 through NVDA+control+0; e.g. NVDA+control+1 for the most recent message and NVDA+control+0 for the tenth most recent. (#3210)
+- In a conversation in Skype for Desktop, NVDA now reports when a contact is typing. (#3506)
+- NVDA can now be installed silently via the commandline with out it starting the installed copy after installation. To do this, use --install-silent. (#4206)
 
 
 == Changes ==
 - In NVDA's Document Formatting settings dialog, the option to report spelling errors now has a shortcut key (alt+r). (#793)
 - NVDA will now use the synthesizer/voice's language for character and symbol processing (including punctuation symbol names), regardless of whether automatic language switching is turned on. To turn off this feature so that NVDA again uses its interface language, uncheck the new option in Voice settings called Trust Voice's language when processing characters and symbols. (#4210)
 - Support for the Newfon synthesizer has been removed. Newfon is now available as an NVDA add-on. (#3184)
+- Skype for Desktop 7 or later is now required for use with NVDA; earlier versions are not supported. (#4218)
 
 
 == Bug Fixes ==
@@ -32,6 +37,15 @@
 - Focus now correctly returns to the document being edited When finishing input composition of text in Korean and other east Asian languages while editing within a frame in Internet Explorer and other MSHTML documents. (#4045)
 - In the Input Gestures dialog, when selecting a keyboard layout for a keyboard gesture being added, pressing escape now closes the menu as expected instead of closing the dialog. (#3617)
 - When removing an add-on, the add-on directory is now correctly deleted after restarting NVDA. Previously, you had to restart twice. (#3461)
+- Major problems have been fixed when using Skype for Desktop 7. (#4218)
+- When you send a message in Skype for Desktop, it is no longer read twice. (#3616)
+- In Skype for Desktop, NVDA should no longer occasionally spuriously read a large flood of messages (perhaps even an entire conversation). (#4644)
+- fixed a problem where NVDA's Report date/time command did not honor the regional settings specified by the user in some cases. (#2987)
+- In browse mode, nonsensical text (sometimes spanning several lines) is no longer presented for certain graphics such as found on Google Groups. (Specifically, this occurred with base64 encoded images.) (#4793)
+- NVDA should no longer freeze after a few seconds when moving focus away from a Windows 8 Metro-style app as it becomes suspended. (#4572)
+- The aria-atomic attribute on live regions in Mozilla Firefox is now honored even when the atomic element itself changes. Previously it only affected descendant elements. (#4794) 
+- Browse mode will reflect updates, and live regions will be announced, for   browse mode documents within ARIA applications embedded in a document in Internet Explorer or other MSHTML controls (#4798)
+- When text is changed or added in text-relevant live regions in Internet Explorer and other MSHTML controls, only the changed or added text is announced, rather than all of the text in the containing element. (#4800)
 
 
 == Changes for Developers ==

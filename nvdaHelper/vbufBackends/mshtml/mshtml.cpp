@@ -862,7 +862,8 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		language=static_cast<MshtmlVBufStorage_controlFieldNode_t*>(parentNode)->language;
 	}
 
-	VBufStorage_controlFieldNode_t* node=new MshtmlVBufStorage_controlFieldNode_t(docHandle,ID,isBlock,this,pHTMLDOMNode,language);
+	bool isDocRoot=!parentNode&&(!oldNode||!oldNode->getParent());
+	VBufStorage_controlFieldNode_t* node=new MshtmlVBufStorage_controlFieldNode_t(docHandle,ID,isBlock,this,isDocRoot,pHTMLDOMNode,language);
 	((MshtmlVBufStorage_controlFieldNode_t*)node)->preProcessLiveRegion((MshtmlVBufStorage_controlFieldNode_t*)(oldNode?oldNode->getParent():parentNode),attribsMap);
 	bool wasInNewSubtree=inNewSubtree;
 	if(!wasInNewSubtree&&!oldNode) {

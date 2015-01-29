@@ -200,6 +200,12 @@ class MSHTML(VirtualBuffer):
 		root=self.rootNVDAObject
 		if not root:
 			return False
+		if not winUser.isWindow(root.windowHandle):
+			return False
+		if root.appModule.appName.startswith('wwahost') and not winUser.isDescendantWindow(winUser.getForegroundWindow(),root.windowHandle):
+			# #4572: When a wwahost hosted app is in the background it gets suspended and all COM calls freeze.
+			# Therefore we don't have enough info to say whether its dead or not. We assume it is alive until we can get a better answer.
+			return True
 		try:
 			if not root.IAccessibleRole:
 				# The root object is dead.
@@ -209,7 +215,7 @@ class MSHTML(VirtualBuffer):
 			# Otherwise, we'll keep querying it on every focus change and freezing.
 			return False
 		states=root.states
-		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_EDITABLE in states:
+		if controlTypes.STATE_EDITABLE in states:
 			return False
 		return True
 

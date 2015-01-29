@@ -27,6 +27,10 @@ wstring getNameForURL(const wstring &url) {
 	wstring::size_type colonPos = url.find(L':');
 	if (colonPos != wstring::npos && url.compare(colonPos, 3, L"://") != 0) {
 		// This URL specifies a protocol, but it is not a path-based protocol; e.g. it is a javascript: or mailto: URL.
+		wstring imgCheck = url.substr(0, 11);
+		transform(imgCheck.begin(), imgCheck.end(), imgCheck.begin(), tolower);
+		if (imgCheck.compare(0, 11, L"data:image/") == 0)
+			return L""; // This URL is not useful.
 		// Return the URL as is with the protocol stripped.
 		return url.substr(colonPos + 1);
 	}
