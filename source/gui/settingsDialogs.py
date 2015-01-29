@@ -1028,7 +1028,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.detectFormatAfterCursorCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.fontNameCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report font &name"))
+		self.fontNameCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &font name"))
 		self.fontNameCheckBox.SetValue(config.conf["documentFormatting"]["reportFontName"])
 		settingsSizer.Add(self.fontNameCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
@@ -1073,7 +1073,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.pageCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.lineNumberCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &line numbers"))
+		self.lineNumberCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report line &numbers"))
 		self.lineNumberCheckBox.SetValue(config.conf["documentFormatting"]["reportLineNumber"])
 		settingsSizer.Add(self.lineNumberCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This message is presented in the document formatting settings dialogue
@@ -1104,7 +1104,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.tableCellCoordsCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.linksCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &links"))
+		self.linksCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report lin&ks"))
 		self.linksCheckBox.SetValue(config.conf["documentFormatting"]["reportLinks"])
 		settingsSizer.Add(self.linksCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
@@ -1114,7 +1114,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.headingsCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.listsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report l&ists"))
+		self.listsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &lists"))
 		self.listsCheckBox.SetValue(config.conf["documentFormatting"]["reportLists"])
 		settingsSizer.Add(self.listsCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
