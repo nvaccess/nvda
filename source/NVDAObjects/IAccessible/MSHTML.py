@@ -547,7 +547,16 @@ class MSHTML(IAccessible):
 		ariaRole=self.HTMLAttributes['aria-role']
 		if ariaRole=="gridcell":
 			return True
-		return super(MSHTML,self).shouldAllowIAccessibleFocusEvent
+		res=super(MSHTML,self).shouldAllowIAccessibleFocusEvent
+		if not res:
+			# #4667: Internet Explorer 11 correctly fires focus events for aria-activeDescendant, but fails to set the focused state.
+			# Therefore check aria-activeDescendant manually and let the focus events through  in this case.
+			activeElement=self.HTMLNode.document.activeElement
+			if activeElement:
+				activeID=activeElement.getAttribute('aria-activedescendant')
+				if activeID and activeID==self.HTMLNode.ID:
+					res=True
+		return res
 
 	def _get_name(self):
 		ariaLabel=self.HTMLAttributes['aria-label']
