@@ -140,6 +140,12 @@ winEventLimiter=OrderedWinEventLimiter()
 #A place to store live IAccessible NVDAObjects, that can be looked up by their window,objectID,childID event params.
 liveNVDAObjectTable=weakref.WeakValueDictionary()
 
+# #3831: Stuff related to deferring of events for foreground changes.
+# See pumpAll for details.
+MAX_FOREGROUND_DEFERS=2
+_deferUntilForegroundWindow = None
+_foregroundDefers = 0
+
 IAccessibleRolesToNVDARoles={
 	oleacc.ROLE_SYSTEM_WINDOW:controlTypes.ROLE_WINDOW,
 	oleacc.ROLE_SYSTEM_CLIENT:controlTypes.ROLE_PANE,
@@ -567,9 +573,15 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			#Move up the ancestry to find the real mozilla Window and use that
 			if winUser.getClassName(window)=='MozillaDropShadowWindowClass':
 				return
-		#We never want to see foreground events for the Program Manager or Shell (task bar) 
-		if eventID==winUser.EVENT_SYSTEM_FOREGROUND and windowClassName in ("Progman","Shell_TrayWnd"):
-			return
+		if eventID==winUser.EVENT_SYSTEM_FOREGROUND:
+			#We never want to see foreground events for the Program Manager or Shell (task bar) 
+			if windowClassName in ("Progman","Shell_TrayWnd"):
+				return
+			# #3831: Event handling can be deferred if Windows takes a while to change the foreground window.
+			# See pumpAll for details.
+			global _deferUntilForegroundWindow,_foregroundDefers
+			_deferUntilForegroundWindow=window
+			_foregroundDefers=0
 		if windowClassName=="MSNHiddenWindowClass":
 			# HACK: Events get fired by this window in Windows Live Messenger 2009 when it starts.
 			# If we send a WM_NULL to this window at this point (which happens in accessibleObjectFromEvent), Messenger will silently exit (#677).
@@ -825,6 +837,21 @@ def initialize():
 			log.error("initialize: could not register callback for event %s (%s)"%(eventType,winEventIDsToNVDAEventNames[eventType]))
 
 def pumpAll():
+	global _deferUntilForegroundWindow,_foregroundDefers
+	if _deferUntilForegroundWindow:
+		# #3831: Sometimes, a foreground event is fired,
+		# but GetForegroundWindow() takes a short while to return this new foreground.
+		if _foregroundDefers<MAX_FOREGROUND_DEFERS and winUser.getForegroundWindow()!=_deferUntilForegroundWindow:
+			# Wait a core cycle before handling events to give the foreground window time to update.
+			core.requestPump()
+			_foregroundDefers+=1
+			return
+		else:
+			# Either the foreground window is now correct
+			# or we've already had the maximum number of defers.
+			# (Sometimes, foreground events are fired even when the foreground hasn't actually changed.)
+			_deferUntilForegroundWindow=None
+
 	#Receive all the winEvents from the limiter for this cycle
 	winEvents=winEventLimiter.flushEvents()
 	focusWinEvents=[]
