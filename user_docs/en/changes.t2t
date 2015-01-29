@@ -43,6 +43,7 @@
 - In browse mode, nonsensical text (sometimes spanning several lines) is no longer presented for certain graphics such as found on Google Groups. (Specifically, this occurred with base64 encoded images.) (#4793)
 - NVDA should no longer freeze after a few seconds when moving focus away from a Windows 8 Metro-style app as it becomes suspended. (#4572)
 - The aria-atomic attribute on live regions in Mozilla Firefox is now honored even when the atomic element itself changes. Previously it only affected descendant elements. (#4794) 
+- Browse mode will reflect updates, and live regions will be announced, for   browse mode documents within ARIA applications embedded in a document in Internet Explorer or other MSHTML controls (#4798)
 
 
 == Changes for Developers ==
