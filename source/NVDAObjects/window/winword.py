@@ -399,6 +399,15 @@ class TableWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 
 class WordDocumentTextInfo(textInfos.TextInfo):
 
+	# #4852: temporary fix.
+	# force mouse reading chunk to sentense to make it what it used to be in 2014.4.
+	# We need to however fix line so it does not accidentially scroll.
+	def _get_unit_mouseChunk(self):
+		unit=super(WordDocumentTextInfo,self).unit_mouseChunk
+		if unit==textInfos.UNIT_LINE:
+			unit=textInfos.UNIT_SENTENCE
+		return unit
+
 	def find(self,text,caseSensitive=False,reverse=False):
 		f=self._rangeObj.find
 		f.text=text
