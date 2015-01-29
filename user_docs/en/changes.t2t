@@ -16,6 +16,7 @@
 - In Skype for Desktop, notifications are now reported. (#4741)
 - In Skype for Desktop, you can now report and review recent messages using NVDA+control+1 through NVDA+control+0; e.g. NVDA+control+1 for the most recent message and NVDA+control+0 for the tenth most recent. (#3210)
 - In a conversation in Skype for Desktop, NVDA now reports when a contact is typing. (#3506)
+- NVDA can now be installed silently via the commandline with out it starting the installed copy after installation. To do this, use --install-silent. (#4206)
 
 
 == Changes ==
@@ -41,6 +42,10 @@
 - In Skype for Desktop, NVDA should no longer occasionally spuriously read a large flood of messages (perhaps even an entire conversation). (#4644)
 - fixed a problem where NVDA's Report date/time command did not honor the regional settings specified by the user in some cases. (#2987)
 - In browse mode, nonsensical text (sometimes spanning several lines) is no longer presented for certain graphics such as found on Google Groups. (Specifically, this occurred with base64 encoded images.) (#4793)
+- NVDA should no longer freeze after a few seconds when moving focus away from a Windows 8 Metro-style app as it becomes suspended. (#4572)
+- The aria-atomic attribute on live regions in Mozilla Firefox is now honored even when the atomic element itself changes. Previously it only affected descendant elements. (#4794) 
+- Browse mode will reflect updates, and live regions will be announced, for   browse mode documents within ARIA applications embedded in a document in Internet Explorer or other MSHTML controls (#4798)
+- When text is changed or added in text-relevant live regions in Internet Explorer and other MSHTML controls, only the changed or added text is announced, rather than all of the text in the containing element. (#4800)
 
 
 == Changes for Developers ==
