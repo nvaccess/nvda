@@ -1981,7 +1981,8 @@ Following are the command line options for NVDA:
 | -s | --secure | Secure mode (disable Python console) |
 | None | --disable-addons | Addons will have no effect |
 | None | --no-sr-flag  | Don't change the global system screen reader flag |
-| None | --install | Silently installs NVDA |
+| None | --install | Installs NVDA (starting the newly installed copy) |
+| None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
 
 ++ Advanced Customization of Symbol Pronunciation ++
 It is possible to customize the pronunciation of punctuation and other symbols beyond what can be done using the [Punctuation/symbol pronunciation #SymbolPronunciation] dialog.

@@ -17,7 +17,7 @@ from logHandler import log
 import gui
 import tones
 
-def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,silent=False):
+def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,silent=False,startAfterInstall=True):
 	progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
 		# Translators: The title of the dialog presented while NVDA is being updated.
 		_("Updating NVDA") if isUpdate
@@ -45,7 +45,7 @@ def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,sil
 		# Translators: the title of a retry cancel dialog when NVDA installation fails
 		title=_("File in Use")
 		if winUser.MessageBox(None,message,title,winUser.MB_RETRYCANCEL)==winUser.IDRETRY:
-			return doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,silent)
+			return doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,silent,startAfterInstall)
 	if res!=0:
 		log.error("Installation failed: %s"%res)
 		# Translators: The message displayed when an error occurs during installation of NVDA.
@@ -65,15 +65,18 @@ def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,sil
 		gui.messageBox(msg+_("Please press OK to start the installed copy."),
 			# Translators: The title of a dialog presented to indicate a successful operation.
 			_("Success"))
-	# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL  
-	shellapi.ShellExecute(None, None,
-		os.path.join(installer.defaultInstallPath,'nvda.exe'),
-		u"-r",
-		None, winUser.SW_SHOWNORMAL)
+	if startAfterInstall:
+		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL  
+		shellapi.ShellExecute(None, None,
+			os.path.join(installer.defaultInstallPath,'nvda.exe'),
+			u"-r",
+			None, winUser.SW_SHOWNORMAL)
+	else:
+		wx.GetApp().ExitMainLoop()
 
-def doSilentInstall():
+def doSilentInstall(startAfterInstall=True):
 	prevInstall=installer.isPreviousInstall()
-	doInstall(installer.isDesktopShortcutInstalled() if prevInstall else True,config.getStartOnLogonScreen() if prevInstall else True,False,prevInstall,True)
+	doInstall(installer.isDesktopShortcutInstalled() if prevInstall else True,config.getStartOnLogonScreen() if prevInstall else True,False,prevInstall,silent=True,startAfterInstall=startAfterInstall)
 
 class InstallerDialog(wx.Dialog):
 
