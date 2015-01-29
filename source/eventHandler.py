@@ -219,11 +219,4 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		# This window or its root is a topmost window.
 		# This includes menus, combo box pop-ups and the task switching list.
 		return True
-	if (winUser.getClassName(fg) in ("Progman", "WorkerW")
-			and winUser.getWindowStyle(winUser.getAncestor(windowHandle, winUser.GA_ROOT)) & winUser.WS_POPUP
-			and winUser.getWindowThreadProcessID(windowHandle)[0] == winUser.getWindowThreadProcessID(fg)[0]):
-		# When the Shut Down Windows dialog is invoked by pressing alt+f4 on the Desktop,
-		# the foreground window is still reported as the Desktop for a while,
-		# even though events look fine and we don't get another foreground event after.
-		return True
 	return False
