@@ -117,15 +117,22 @@ class py2exe(build_exe.py2exe):
 
 def getLocaleDataFiles():
 	wxDir=wx.__path__[0]
-	localeMoFiles=[]
+	localeMoFiles=set()
 	for f in glob("locale/*/LC_MESSAGES"):
-		localeMoFiles.append((f, (os.path.join(f,"nvda.mo"),)))
+		localeMoFiles.add((f, (os.path.join(f,"nvda.mo"),)))
 		wxMoFile=os.path.join(wxDir,f,"wxstd.mo")
 		if os.path.isfile(wxMoFile):
-			localeMoFiles.append((f,(wxMoFile,))) 
+			localeMoFiles.add((f,(wxMoFile,))) 
+		lang=os.path.split(os.path.split(f)[0])[1]
+		if '_' in lang:
+				lang=lang.split('_')[0]
+				f=os.path.join('locale',lang,'lc_messages')
+				wxMoFile=os.path.join(wxDir,f,"wxstd.mo")
+				if os.path.isfile(wxMoFile):
+					localeMoFiles.add((f,(wxMoFile,))) 
 	localeDicFiles=[(os.path.dirname(f), (f,)) for f in glob("locale/*/*.dic")]
 	NVDALocaleGestureMaps=[(os.path.dirname(f), (f,)) for f in glob("locale/*/gestures.ini")]
-	return localeMoFiles+localeDicFiles+NVDALocaleGestureMaps
+	return list(localeMoFiles)+localeDicFiles+NVDALocaleGestureMaps
 
 def getRecursiveDataFiles(dest,source,excludes=()):
 	rulesList=[]
