@@ -55,20 +55,8 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_CLICKABLE)
 		if attrs.get('HTMLAttrib::aria-required','false')=='true':
 			states.add(controlTypes.STATE_REQUIRED)
-		name=None
-		ariaLabelledBy=attrs.get('HTMLAttrib::aria-labelledBy')
-		if ariaLabelledBy:
-			try:
-				labelNode=self.obj.rootNVDAObject.HTMLNode.document.getElementById(ariaLabelledBy)
-			except (COMError,NameError):
-				labelNode=None
-			if labelNode:
-				try:
-					name=self.obj.makeTextInfo(NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=labelNode)).text
-				except:
-					pass
 		description=None
-		ariaDescribedBy=attrs.get('HTMLAttrib::aria-describedBy')
+		ariaDescribedBy=attrs.get('HTMLAttrib::aria-describedby')
 		if ariaDescribedBy:
 			try:
 				descNode=self.obj.rootNVDAObject.HTMLNode.document.getElementById(ariaDescribedBy)
@@ -129,8 +117,6 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			attrs["level"] = level
 		if landmark:
 			attrs["landmark"]=landmark
-		if name:
-			attrs["name"]=name
 		if description:
 			attrs["description"]=description
 		return super(MSHTMLTextInfo,self)._normalizeControlField(attrs)
