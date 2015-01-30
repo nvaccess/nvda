@@ -950,7 +950,12 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		return states
 
 	def populateHeaderCellTrackerFromHeaderRows(self,headerCellTracker,table):
-		for row in table.rows:
+		rows=table.rows
+		for rowIndex in xrange(rows.count): 
+			try:
+				row=rows.item(rowIndex+1)
+			except COMError:
+				break
 			try:
 				headingFormat=row.headingFormat
 			except (COMError,AttributeError,NameError):
