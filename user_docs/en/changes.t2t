@@ -26,6 +26,7 @@
 - NVDA will now use the synthesizer/voice's language for character and symbol processing (including punctuation symbol names), regardless of whether automatic language switching is turned on. To turn off this feature so that NVDA again uses its interface language, uncheck the new option in Voice settings called Trust Voice's language when processing characters and symbols. (#4210)
 - Support for the Newfon synthesizer has been removed. Newfon is now available as an NVDA add-on. (#3184)
 - Skype for Desktop 7 or later is now required for use with NVDA; earlier versions are not supported. (#4218)
+- Downloading of NVDA updates is now more secure. (Specifically, the update information is retrieved via https and the hash of the file is verified after it is downloaded.) (#4716)
 
 
 == Bug Fixes ==
