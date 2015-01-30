@@ -13,6 +13,7 @@
 - Quick navigation (h for heading etc) plus Elements List (NVDA+f7) are now available in Microsoft Word documents by turning on browse mode with NVDA+space. (#2975)
 - Reading HTML messages in Microsoft Outlook 2007 and higher has been majorly improved as Browse mode is automatically enabled for these messages. If browse mode is not enabled in some rare situations, you can force it on with NVDA+space. (#2975) 
 - Table column headers in Microsoft word are automatically reported for tables where a header row has been explicitly specified by the author via Microsoft word's table properties. (#4510) 
+ - However, For tables where rows have been merged this will not work automatically. In this situation you can still set column headers manually in NVDA with NVDA+shift+c.
 - In Skype for Desktop, notifications are now reported. (#4741)
 - In Skype for Desktop, you can now report and review recent messages using NVDA+control+1 through NVDA+control+0; e.g. NVDA+control+1 for the most recent message and NVDA+control+0 for the tenth most recent. (#3210)
 - In a conversation in Skype for Desktop, NVDA now reports when a contact is typing. (#3506)
