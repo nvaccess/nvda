@@ -18,6 +18,7 @@
 - In Skype for Desktop, you can now report and review recent messages using NVDA+control+1 through NVDA+control+0; e.g. NVDA+control+1 for the most recent message and NVDA+control+0 for the tenth most recent. (#3210)
 - In a conversation in Skype for Desktop, NVDA now reports when a contact is typing. (#3506)
 - NVDA can now be installed silently via the commandline with out it starting the installed copy after installation. To do this, use --install-silent. (#4206)
+- Support for the Papenmeier BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus braille displays. (#4614)
 
 
 == Changes ==
@@ -25,6 +26,7 @@
 - NVDA will now use the synthesizer/voice's language for character and symbol processing (including punctuation symbol names), regardless of whether automatic language switching is turned on. To turn off this feature so that NVDA again uses its interface language, uncheck the new option in Voice settings called Trust Voice's language when processing characters and symbols. (#4210)
 - Support for the Newfon synthesizer has been removed. Newfon is now available as an NVDA add-on. (#3184)
 - Skype for Desktop 7 or later is now required for use with NVDA; earlier versions are not supported. (#4218)
+- Downloading of NVDA updates is now more secure. (Specifically, the update information is retrieved via https and the hash of the file is verified after it is downloaded.) (#4716)
 
 
 == Bug Fixes ==
@@ -52,6 +54,7 @@
 
 == Changes for Developers ==
 - Updated wxPython to 3.0.2.0. (#3763)
+- NVDA no longer crashes when restarting after removing or updating an add-on which imports speechDictHandler in its installTasks module. (#4496)
 
 
 = 2014.4 =
