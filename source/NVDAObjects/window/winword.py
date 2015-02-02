@@ -785,6 +785,9 @@ class BrowseModeWordDocumentTextInfo(textInfos.TextInfo):
 		super(BrowseModeWordDocumentTextInfo,self).__init__(obj,position)
 		self.innerTextInfo=WordDocumentTextInfoForTreeInterceptor(obj.rootNVDAObject,position,_rangeObj=_rangeObj)
 
+	def _get__rangeObj(self):
+		return self.innerTextInfo._rangeObj
+
 	def find(self,text,caseSensitive=False,reverse=False):
 		return self.innerTextInfo.find(text,caseSensitive,reverse)
 

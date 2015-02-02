@@ -12,6 +12,8 @@ import winKernel
 import comHelper
 import winUser
 from logHandler import log
+import textInfos
+import braille
 import appModuleHandler
 import eventHandler
 import UIAHandler
@@ -447,9 +449,26 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 
 class MailViewerTreeInterceptor(WordDocumentTreeInterceptor):
 	"""A BrowseMode treeInterceptor specifically for readonly emails, where tab and shift+tab are safe and we know will not edit the document."""
+
+	def script_tab(self,gesture):
+		bookmark=self.rootNVDAObject.makeTextInfo(textInfos.POSITION_SELECTION).bookmark
+		gesture.send()
+		info,caretMoved=self.rootNVDAObject._hasCaretMoved(bookmark)
+		if not caretMoved:
+			return
+		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		inTable=info._rangeObj.tables.count>0
+		isCollapsed=info.isCollapsed
+		if inTable and isCollapsed:
+			info.expand(textInfos.UNIT_CELL)
+			isCollapsed=False
+		if not isCollapsed:
+			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+		braille.handler.handleCaretMove(self)
+
 	__gestures={
-		"kb:tab":None,
-		"kb:shift+tab":None,
+		"kb:tab":"tab",
+		"kb:shift+tab":"tab",
 	}
 
 class OutlookWordDocument(WordDocument):
