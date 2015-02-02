@@ -441,7 +441,7 @@ Although a physical mouse or trackpad should be used to navigate with the mouse,
 + Browse Mode +
 Complex read-only documents such as web pages are browsed in NVDA using browse mode.
 This includes documents in Mozilla Firefox, Microsoft Internet Explorer, HTML messages in Microsoft Outlook, Google Chrome, Adobe Reader and Adobe Flash.
-Browse mode is also optionally available for Microsoft Word when navigating complex documents.
+Browse mode is also optionally available for Microsoft Word documents.
 
 In browse mode, the content of the document is made available in a flat representation that can be navigated with the cursor keys as if it were a normal text document.
 All of NVDA's [system caret #SystemCaret] key commands will work in this mode; e.g. say all, report formatting, table navigation commands, etc.
@@ -460,7 +460,7 @@ In addition, you can manually force focus mode, after which it will remain in ef
 || Name | Key | Description |
 | Toggle browse/focus modes | NVDA+space | Toggles between focus mode and browse mode |
 | Exit focus mode | escape | switches back to browse mode if focus mode was previously switched to automatically |
-| Refresh browse mode document | NVDA+f5 | Reloads the current document content (useful if certain content seems to be missing from the document) |
+| Refresh browse mode document | NVDA+f5 | Reloads the current document content (useful if certain content seems to be missing from the document. Not available in Microsoft Word and Outlook.) |
 | Find | NVDA+control+f | Pops up a dialog in which you can type some text to find in the current document |
 | Find next | NVDA+f3 | Finds the next occurrence of the text in the document that you previously searched for |
 | Find previous | NVDA+shift+f3 | Finds the previous occurrence of the text in the document you previously searched for |
@@ -470,6 +470,7 @@ In addition, you can manually force focus mode, after which it will remain in ef
 
 ++ Single Letter Navigation ++
 While in browse mode, For quicker navigation, NVDA also provides single character keys to jump to certain fields in the document.
+Note that not all of these commands are supported in every type of document.
 
 %kc:beginInclude
 The following keys by themselves jump to the next available element, while adding the shift key causes them to jump to the previous element:
