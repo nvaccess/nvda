@@ -17,7 +17,7 @@ NVDA allows blind and vision impaired people to access and interact with the Win
 
 Major highlights include:
 - Support for popular applications including web browsers, email clients, internet chat programs and office suites
-- Built-in speech synthesizer supporting over 43 languages
+- Built-in speech synthesizer supporting over 80 languages
 - reporting of textual formatting where available such as font name and size, style and spelling errors
 - Automatic announcement of text under the mouse and optional audible indication of the mouse position
 - Support for many refreshable braille displays, including input of computer braille for braille displays which have a braille keyboard
@@ -714,7 +714,7 @@ Like the "say cap for capitals" checkbox, this is useful for Synthesizers that c
 
 ==== Use spelling functionality if supported ====[VoiceSpellingFunctionality]
 Some words consist of only one character, but the pronunciation is different depending on whether the character is being spoken as an individual character (such as when spelling) or a word.
-For example, in English, "a" is both a letter and a word.
+For example, in English, "a" is both a letter and a word and is pronounced differently in each case.
 This option allows the synthesizer to differentiate between these two cases if the synthesizer supports this.
 Most synthesizers do support it.
 
@@ -873,6 +873,8 @@ If this checkbox is checked, NVDA will announce the role (type) of object as the
 
 ==== Play audio coordinates when mouse moves ====
 Checking this checkbox makes NVDA play beeps as the mouse moves, so that the user can work out where the mouse is in regards to the dimensions of the screen.
+The higher the mouse is on the screen, the higher the pitch of the beeps.
+The further left or right the mouse is located on the screen, the further left or right the sound will be played (assuming the user has stereo speakers or headphones).
 
 ==== Brightness controls audio coordinates volume ====
 If the "play audio coordinates when mouse moves" checkbox is checked, then checking this checkbox means that the volume of the audio coordinates beeps is controled by how bright the screen is under the mouse.
@@ -1257,7 +1259,7 @@ If there is help available for the selected add-on, you can access it by pressin
 
 To browse and download available add-ons online, press the Get add-ons button.
 This button opens the [NVDA Add-ons page http://addons.nvda-project.org/].
-If NVDA is installed on your system, you can open the add-on directly from the browser to begin the installation process as described below.
+If NVDA is installed and running on your system, you can open the add-on directly from the browser to begin the installation process as described below.
 Otherwise, save the add-on package and follow the instructions below.
 
 To install an Add-on you previously obtained, press the Install button.
@@ -1899,7 +1901,7 @@ For displays which have a braille keyboard, BRLTTY currently handles braille inp
 Therefore, NVDA's braille input table setting is not relevant.
 
 Following are the BRLTTY command assignments for NVDA.
-Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/drivers/] for information about how BRLTTY commands are mapped to controls on braille displays.
+Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/KeyTables/] for information about how BRLTTY commands are mapped to controls on braille displays.
 %kc:beginInclude
 || Name | BRLTTY command |
 | Scroll braille display back | fwinlt (go left one window) |
