@@ -18,6 +18,7 @@ import textInfos
 import speech
 import sayAllHandler
 import treeInterceptorHandler
+import inputCore
 
 REASON_QUICKNAV = "quickNav"
 
@@ -167,6 +168,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 		return self.textInfo.compareEndPoints(caret, "startToStart") <= 0
 
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
+	scriptCategory = inputCore.SCRCAT_BROWSEMODE
 
 	def _get_shouldTrapNonCommandGestures(self):
 		return config.conf['virtualBuffers']['trapNonCommandGestures']
