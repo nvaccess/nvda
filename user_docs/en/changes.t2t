@@ -4,34 +4,35 @@
 %!includeconf: ../changes.t2tconf
 
 = 2015.1 =
+Highlights of this release include browse mode for documents in Microsoft Word and Outlook; major enhancements to support for Skype for Desktop; and significant fixes for Microsoft Internet Explorer.
 
 == New Features ==
 - You can now add new symbols in the Symbol Pronunciation dialog. (#4354)
 - In the Input Gestures dialog, you can use the new "Filter by" field to show only gestures containing specific words. (#4458)
 - NVDA now automatically reports new text in mintty. (#4588)
 - In the browse mode Find dialog, there is now an option to perform a case sensitive search. (#4584)
-- Quick navigation (h for heading etc) plus Elements List (NVDA+f7) are now available in Microsoft Word documents by turning on browse mode with NVDA+space. (#2975)
-- Reading HTML messages in Microsoft Outlook 2007 and higher has been majorly improved as Browse mode is automatically enabled for these messages. If browse mode is not enabled in some rare situations, you can force it on with NVDA+space. (#2975) 
-- Table column headers in Microsoft word are automatically reported for tables where a header row has been explicitly specified by the author via Microsoft word's table properties. (#4510) 
- - However, For tables where rows have been merged this will not work automatically. In this situation you can still set column headers manually in NVDA with NVDA+shift+c.
+- Quick navigation (pressing h to move by heading, etc.) and Elements List (NVDA+f7) are now available in Microsoft Word documents by turning on browse mode with NVDA+space. (#2975)
+- Reading HTML messages in Microsoft Outlook 2007 and later has been majorly improved as Browse mode is automatically enabled for these messages. If browse mode is not enabled in some rare situations, you can force it on with NVDA+space. (#2975)
+- Table column headers in Microsoft word are automatically reported for tables where a header row has been explicitly specified by the author via Microsoft word's table properties. (#4510)
+ - However, For tables where rows have been merged, this will not work automatically. In this situation, you can still set column headers manually in NVDA with NVDA+shift+c.
 - In Skype for Desktop, notifications are now reported. (#4741)
 - In Skype for Desktop, you can now report and review recent messages using NVDA+control+1 through NVDA+control+0; e.g. NVDA+control+1 for the most recent message and NVDA+control+0 for the tenth most recent. (#3210)
 - In a conversation in Skype for Desktop, NVDA now reports when a contact is typing. (#3506)
-- NVDA can now be installed silently via the commandline with out it starting the installed copy after installation. To do this, use --install-silent. (#4206)
+- NVDA can now be installed silently via the command line without starting the installed copy after installation. To do this, use the --install-silent option. (#4206)
 - Support for the Papenmeier BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus braille displays. (#4614)
 
 
 == Changes ==
 - In NVDA's Document Formatting settings dialog, the option to report spelling errors now has a shortcut key (alt+r). (#793)
-- NVDA will now use the synthesizer/voice's language for character and symbol processing (including punctuation symbol names), regardless of whether automatic language switching is turned on. To turn off this feature so that NVDA again uses its interface language, uncheck the new option in Voice settings called Trust Voice's language when processing characters and symbols. (#4210)
+- NVDA will now use the synthesizer/voice's language for character and symbol processing (including punctuation/symbol names), regardless of whether automatic language switching is turned on. To turn off this feature so that NVDA again uses its interface language, uncheck the new option in Voice settings called Trust Voice's language when processing characters and symbols. (#4210)
 - Support for the Newfon synthesizer has been removed. Newfon is now available as an NVDA add-on. (#3184)
 - Skype for Desktop 7 or later is now required for use with NVDA; earlier versions are not supported. (#4218)
 - Downloading of NVDA updates is now more secure. (Specifically, the update information is retrieved via https and the hash of the file is verified after it is downloaded.) (#4716)
 
 
 == Bug Fixes ==
-- In Microsoft Excel, handle the case when row and column header cells are merged. E.g. if A1 and B1 are merged, then B2 will now have A1 and B1 reported as its column header, rather than nothing at all. (#4617)
-- When editing the content of a text box in Microsoft PowerPoint 2003, NVDA will correctly report the content of each line. Previously lines would increasingly be off by one character for each new paragraph. (#4619)
+- In Microsoft Excel, merged row and column header cells are now handled correctly. For example, if A1 and B1 are merged, then B2 will now have A1 and B1 reported as its column header rather than nothing at all. (#4617)
+- When editing the content of a text box in Microsoft PowerPoint 2003, NVDA will correctly report the content of each line. Previously, in each paragraph, lines would increasingly be off by one character. (#4619)
 - All of NVDA's dialogs are now centred on the screen, improving visual presentation and usability. (#3148)
 - In Skype for desktop, when entering an introductory message to add a contact, entering and moving through the text now works correctly. (#3661)
 - When focus moves to a new itemn in tree views in the Eclipse IDE, if the previously focused item is a check box, it is no longer incorrectly announced. (#4586)
@@ -45,15 +46,17 @@
 - In Skype for Desktop, NVDA should no longer occasionally spuriously read a large flood of messages (perhaps even an entire conversation). (#4644)
 - fixed a problem where NVDA's Report date/time command did not honor the regional settings specified by the user in some cases. (#2987)
 - In browse mode, nonsensical text (sometimes spanning several lines) is no longer presented for certain graphics such as found on Google Groups. (Specifically, this occurred with base64 encoded images.) (#4793)
-- NVDA should no longer freeze after a few seconds when moving focus away from a Windows 8 Metro-style app as it becomes suspended. (#4572)
-- The aria-atomic attribute on live regions in Mozilla Firefox is now honored even when the atomic element itself changes. Previously it only affected descendant elements. (#4794) 
-- Browse mode will reflect updates, and live regions will be announced, for   browse mode documents within ARIA applications embedded in a document in Internet Explorer or other MSHTML controls (#4798)
-- When text is changed or added in text-relevant live regions in Internet Explorer and other MSHTML controls, only the changed or added text is announced, rather than all of the text in the containing element. (#4800)
+- NVDA should no longer freeze after a few seconds when moving focus away from a Windows Store app as it becomes suspended. (#4572)
+- The aria-atomic attribute on live regions in Mozilla Firefox is now honored even when the atomic element itself changes. Previously, it only affected descendant elements. (#4794)
+- Browse mode will reflect updates, and live regions will be announced, for   browse mode documents within ARIA applications embedded in a document in Internet Explorer or other MSHTML controls. (#4798)
+- When text is changed or added in live regions in Internet Explorer and other MSHTML controls where the author has specified that text is relevant, only the changed or added text is announced, rather than all of the text in the containing element. (#4800)
 - Content indicated by the aria-labelledby attribute on elements in Internet Explorer and other MSHTML controls correctly replaces the original content  where it is appropriate to do so. (#4575)
+- When checking spelling in Microsoft Outlook 2013, the misspelled word is now announced. (#4848)
 
 
 == Changes for Developers ==
 - Updated wxPython to 3.0.2.0. (#3763)
+- Updated Python to 2.7.9. (#4715)
 - NVDA no longer crashes when restarting after removing or updating an add-on which imports speechDictHandler in its installTasks module. (#4496)
 
 

@@ -17,7 +17,7 @@ NVDA allows blind and vision impaired people to access and interact with the Win
 
 Major highlights include:
 - Support for popular applications including web browsers, email clients, internet chat programs and office suites
-- Built-in speech synthesizer supporting over 43 languages
+- Built-in speech synthesizer supporting over 80 languages
 - reporting of textual formatting where available such as font name and size, style and spelling errors
 - Automatic announcement of text under the mouse and optional audible indication of the mouse position
 - Support for many refreshable braille displays, including input of computer braille for braille displays which have a braille keyboard
@@ -441,7 +441,7 @@ Although a physical mouse or trackpad should be used to navigate with the mouse,
 + Browse Mode +
 Complex read-only documents such as web pages are browsed in NVDA using browse mode.
 This includes documents in Mozilla Firefox, Microsoft Internet Explorer, HTML messages in Microsoft Outlook, Google Chrome, Adobe Reader and Adobe Flash.
-Browse mode is also optionally available for Microsoft Word when navigating complex documents.
+Browse mode is also optionally available for Microsoft Word documents.
 
 In browse mode, the content of the document is made available in a flat representation that can be navigated with the cursor keys as if it were a normal text document.
 All of NVDA's [system caret #SystemCaret] key commands will work in this mode; e.g. say all, report formatting, table navigation commands, etc.
@@ -460,7 +460,7 @@ In addition, you can manually force focus mode, after which it will remain in ef
 || Name | Key | Description |
 | Toggle browse/focus modes | NVDA+space | Toggles between focus mode and browse mode |
 | Exit focus mode | escape | switches back to browse mode if focus mode was previously switched to automatically |
-| Refresh browse mode document | NVDA+f5 | Reloads the current document content (useful if certain content seems to be missing from the document) |
+| Refresh browse mode document | NVDA+f5 | Reloads the current document content (useful if certain content seems to be missing from the document. Not available in Microsoft Word and Outlook.) |
 | Find | NVDA+control+f | Pops up a dialog in which you can type some text to find in the current document |
 | Find next | NVDA+f3 | Finds the next occurrence of the text in the document that you previously searched for |
 | Find previous | NVDA+shift+f3 | Finds the previous occurrence of the text in the document you previously searched for |
@@ -470,6 +470,7 @@ In addition, you can manually force focus mode, after which it will remain in ef
 
 ++ Single Letter Navigation ++
 While in browse mode, For quicker navigation, NVDA also provides single character keys to jump to certain fields in the document.
+Note that not all of these commands are supported in every type of document.
 
 %kc:beginInclude
 The following keys by themselves jump to the next available element, while adding the shift key causes them to jump to the previous element:
@@ -713,7 +714,7 @@ Like the "say cap for capitals" checkbox, this is useful for Synthesizers that c
 
 ==== Use spelling functionality if supported ====[VoiceSpellingFunctionality]
 Some words consist of only one character, but the pronunciation is different depending on whether the character is being spoken as an individual character (such as when spelling) or a word.
-For example, in English, "a" is both a letter and a word.
+For example, in English, "a" is both a letter and a word and is pronounced differently in each case.
 This option allows the synthesizer to differentiate between these two cases if the synthesizer supports this.
 Most synthesizers do support it.
 
@@ -872,6 +873,8 @@ If this checkbox is checked, NVDA will announce the role (type) of object as the
 
 ==== Play audio coordinates when mouse moves ====
 Checking this checkbox makes NVDA play beeps as the mouse moves, so that the user can work out where the mouse is in regards to the dimensions of the screen.
+The higher the mouse is on the screen, the higher the pitch of the beeps.
+The further left or right the mouse is located on the screen, the further left or right the sound will be played (assuming the user has stereo speakers or headphones).
 
 ==== Brightness controls audio coordinates volume ====
 If the "play audio coordinates when mouse moves" checkbox is checked, then checking this checkbox means that the volume of the audio coordinates beeps is controled by how bright the screen is under the mouse.
@@ -1026,7 +1029,6 @@ If this option is enabled, NVDA will play special sounds when it switches betwee
 Enabled by default, this option allows you to choose if gestures (such as key presses) that  do not result in an NVDA command and are not considered to be a command key in general, should be trapped from going through to the document you are currently focused on. 
 As an example, if enabled, if the letter j was pressed, it would be trapped from reaching the document, even though it is not a quick navigation command nor is it likely to be a command in the application itself.
 
- 
 +++ Document Formatting Settings (NVDA+control+d) +++[DocumentFormattingSettings]
 This dialog box is found in the Preferences menu, under "Document Formatting...".
 
@@ -1257,7 +1259,7 @@ If there is help available for the selected add-on, you can access it by pressin
 
 To browse and download available add-ons online, press the Get add-ons button.
 This button opens the [NVDA Add-ons page http://addons.nvda-project.org/].
-If NVDA is installed on your system, you can open the add-on directly from the browser to begin the installation process as described below.
+If NVDA is installed and running on your system, you can open the add-on directly from the browser to begin the installation process as described below.
 Otherwise, save the add-on package and follow the instructions below.
 
 To install an Add-on you previously obtained, press the Install button.
@@ -1899,7 +1901,7 @@ For displays which have a braille keyboard, BRLTTY currently handles braille inp
 Therefore, NVDA's braille input table setting is not relevant.
 
 Following are the BRLTTY command assignments for NVDA.
-Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/drivers/] for information about how BRLTTY commands are mapped to controls on braille displays.
+Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/KeyTables/] for information about how BRLTTY commands are mapped to controls on braille displays.
 %kc:beginInclude
 || Name | BRLTTY command |
 | Scroll braille display back | fwinlt (go left one window) |
