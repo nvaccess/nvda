@@ -181,6 +181,24 @@ def doPreDocumentLoadComplete(obj):
 			focusObject.treeInterceptor=treeInterceptorHandler.getTreeInterceptor(focusObject)
 	return True
 
+#: set of (eventName, processId, windowClassName) of events to accept.
+_acceptEvents = set()
+
+def requestEvents(eventName=None, processId=None, windowClassName=None):
+	"""Request that particular events be accepted from a platform API.
+	Normally, L{shouldAcceptEvent} rejects certain events, including
+	most show events, events indicating changes in background processes, etc.
+	This function allows plugins to override this for specific cases;
+	e.g. to receive show events from a specific control or
+	to receive certain events even when in the background.
+	Note that NVDA may block some events at a lower level and doesn't listen for some event types at all.
+	In these cases, you will not be able to override this.
+	All arguments must be provided.
+	"""
+	if not eventName or not processId or not windowClassName:
+		raise ValueError("eventName, processId or windowClassName not specified")
+	_acceptEvents.add((eventName, processId, windowClassName))
+
 def shouldAcceptEvent(eventName, windowHandle=None):
 	"""Check whether an event should be accepted from a platform API.
 	Creating NVDAObjects and executing events can be expensive
@@ -191,6 +209,13 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 	if not windowHandle:
 		# We can't filter without a window handle.
 		return True
+	key = (eventName,
+		winUser.getWindowThreadProcessID(windowHandle)[0],
+		winUser.getClassName(windowHandle))
+	if key in _acceptEvents:
+		return True
+	if eventName == "stateChange":
+		return False
 	if eventName == "valueChange" and config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]:
 		return True
 	if eventName == "show":
