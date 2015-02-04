@@ -214,8 +214,6 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		winUser.getClassName(windowHandle))
 	if key in _acceptEvents:
 		return True
-	if eventName == "stateChange":
-		return False
 	if eventName == "valueChange" and config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]:
 		return True
 	if eventName == "show":
