@@ -3,6 +3,49 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2014.4 =
+
+== 新特性 ==
+- 新的语言支持：哥伦比亚西班牙语，旁遮普与。
+- 现在，可以使用 NVDA 退出对话框设置“重新启动”、“重新启动并停用插件”。 (#4057)
+ - NVDA 也可以使用命令行选项 --disable-addons 来禁用插件。
+- 在语音字典中，可以为来源字符定义只匹配整个单词，也就是说，不再匹配长单词的一部分。 (#1704)
+
+
+== 更改 ==
+- 如果您使用浏览光标浏览到一个包含在浏览模式文档的对象时，而您上次移动到的对象却并不包含在浏览模式文档中，此时，浏览模式将被设置为文档。以前，仅当浏览光标导致焦点移动后，模式才会被重置。 (#4369)
+- 点显器、合成器各自的设置对话框中，除了“无点显器”和“无合成器”选项之外的其他元素都按照字母顺序排列，而这两个选项将被放在列表底部。 (#2724)
+- 升级 liblouis 盲文翻译器为2.6.0。 (#4434, #3835)
+- 在浏览模式中，按“shift+e或e”键浏览编辑框时包含可编辑组合框，这会包含最新版本的 google 搜索框。 (#4436)
+- 现在，左键单机通知区域的 NVDA 图标将弹出 NVDA 菜单，而不是什么都不做。 (#4459)
+
+
+== Bug 修复 ==
+- 当焦点返回浏览模式文档（如使用alt+tab切换到一个已经打开的网页），焦点将被定位在上次浏览的字符上，而不是焦点临近的控件（如最近的链接）。 (#4369)
+- 在 Powerpoint 幻灯片展示时，浏览光标可正确的跟随虚拟输入焦点。 (#4370)
+- 在 Mozilla Firefox 和其他 基于 Gecko 的浏览器中， 活动区域的新内容将被读出，即使新的活动区域拥有可用的、与上级活动的区域不同的 ARIA 活动类型， 如为标记为 polite 的活动区域添加标记为 assertive  的内容。 (#4169)
+- 在 Internet Explorer 和其他 MSHTML 控件， 在一个文档包含于另外一个文档时的某些情况下，不会妨碍用户访问被嵌套文档的内容（特别是被嵌套在 frameset 的 frameset）。 (#4418)
+- NVDA 不会在当您视图使用 Handy Tech 点显器时崩溃。 (#3709)
+- 在 Windows Vista 中， 当使用 NVDA 桌面图标或使用其快捷键启动 NVDA 的时候，虚假的 “输入点未找到”的对话框将不再显示。 (#4235)
+- 最新版本的 Eclipse 中的某些对话框包含的编辑控件存在的一些问题被修复。 (#3872)
+- 在 Outlook 2010中，在“约会地点”和“会议要求”移动输入焦点时可以正常的工作。 (#4126)
+- 在一个活动区域中，被标记为 不活动（如aria-live="off"）的内容现在可被正确的忽略。 (#4405)
+- 当朗读包含名称的状态栏文本时，名称可以被状态栏文本的第一个单词正确拆分。 (#4430)
+- 在密码输入框启用“朗读输入单词”时，密码将不会被以单词的形式读出。 (#4402)
+- 在 Microsoft Outlook 消息列表中，消息项目将不会无意义的读出“数据项目”。 (#4439)
+- 当在 Eclipse IDE 的代码编辑控件中选择文本时， 将不会在每次选择发生变化时读出全部选择的内容。 (#2314)
+- 变种版本的 Eclipse（ 如Spring 工具套装和被包含在Android 开发工具的捆绑版本）现在可正确的识别为Eclipse 并可正确的控制。 (#4360, #4454)
+-  在 Internet Explorer 和其他 MSHTML 控件（还包括某些 windows 8 应用程序） 的高DPI 显示器下或文档大小被更改时，鼠标导航和触摸浏览将变得更加准确。 (#3494) 
+- 在 Internet Explorer 和其他 MSHTML 控件  使用鼠标导航或触摸浏览时，按钮的更多标签将被读出。 (#4173)
+- 当使用带有 BrxCom 的 Papenmeier BRAILLEX 点显器时，   点显器上的按键现在可正常的工作。 (#4614)
+
+
+== Changes for Developers ==
+- For executables which host many different apps (e.g. javaw.exe), code can now be provided to load specific app modules for each app instead of loading the same app module for all hosted apps. (#4360)
+ - See the code documentation for appModuleHandler.AppModule for details.
+ - Support for javaw.exe is implemented.
+
+
 = 2014.3 =
 
 == 新特性 ==
