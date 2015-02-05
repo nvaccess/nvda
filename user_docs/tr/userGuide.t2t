@@ -17,7 +17,7 @@ NVDA, Görmeyenlerin Windows işletim sistemi ve sistemde kurulu birçok farklı
 
 En dikkat çeken özelliklere şunlar dahildir:
 - internet web tarayıcıları, e-posta programları, sohbet programları ve ofis gibi popüler uygulamalara destek
-- 43'den fazla dili destekleyen ve programla birlikte kurulan konuşma sentezleyicisi
+- 80'den fazla dili destekleyen ve programla birlikte kurulan konuşma sentezleyicisi
 - Mevcut olduğunda, yazıtipi adı ve boyutu, sitili, ve imla hataları gibi metin biçimlendirmelerinin bildirimi
 - Fare altındaki metnin otomatik bildirimi ve fare hareketlerinin isteğe bağlı sesle gösterimi
 - Braille klavyesi bulunanlardan bilgisayar braille girişi yapılmasını da kapsayan Birçok Braille (kabartma) ekran için destek
@@ -440,7 +440,8 @@ NVDA, fareyi hareket ettirmek için, ek bir işleve sahip değildir. Fiziksel fa
 
 + Tarama Kipi +
 Web sayfaları gibi karmaşık salt okunur belgeler, NVDA'da tarama kipinde gösterilir.
- Bu, Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader ve Adobe Flash ile açılan belgeler için geçerlidir.
+ Bu, Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Microsoft outlook HTML mesajları, Adobe Reader ve Adobe Flash ile açılan belgeler için geçerlidir.
+Tarama kipi aynı zamanda  Microsoft Word için karmaşık belgelerde dolaşılırken kullanılmak üzere opsiyonel olarak mevcuttur..
 
 Tarama kipi, web sayfası gibi bir içeriğin değişmez biçimde gösterildiği bir inceleme alanıdır ve içerik içinde yön tuşlarıyla dolaşılabilir.
 NVDA'nın [sistem düzenleme imleci #SystemCaret] için geçerli olan hepsini okuma, tablo inceleme, yazı biçimini raporlama gibi komutları bu kip için de geçerlidir.
@@ -469,6 +470,7 @@ Odak kipine manuel olarak geçildikten sonra, NVDA bu kipte kalır ve siz tekrar
 
 ++ Tek Tuş Dolaşımı ++
 Tarama kipindeyken, NVDA, mevcut belgedeki belirli ögeler arasında daha seri bir dolaşım için, tek karakterlik tuşlar sağlamaktadır.
+Bu komutların her belge için geçerli olmayabileceğini unutmadan aşağıdaki listeyi inceleyebilirsiniz.
 
 %kc:beginInclude
 Aşağıdaki tuşlara kendi başlarına basıldığında bir sonraki ögeye gidilirken, bu tuşlara şift ile basıldığında bir önceki ögeye gidilmektedir:
@@ -565,6 +567,13 @@ Not: Kalan süreyi oku kısayol tuşu, yalnızca Foobar2000 durum çubuğu varsa
 || Ad | Kısayol Tuşu | Tarif |
 | Yorum penceresini oku | kontrol+shift+c | Yorum penceresindeki yorumları okur. |
 | Çeviri notlarını oku | kontrol+shift+a | Çeviri ile ilgili notları okur. |
+%kc:endInclude
+
+++ Skype ++
+%kc:beginInclude
+Bir konuşma içindeyken:
+|| Ad | Kısayol tuşu | Açıklama |
+| Mesajı dinle | NVDA+control+1-0 | Basılan numaraya göre, son mesajlardan birini okur ve inceleme imlecini mesajın üzerine taşır; örneğin NVDA+control+2 sondan ikinci mesajı okur. |
 %kc:endInclude
 
 + NVDA'yı ayarlama +
@@ -684,7 +693,11 @@ Kısayol tuşu: NVDA+p
 
 Bu, noktalama ya da başka işaretlerin ne kadarının sözcük olarak seslendirileceğiyle ilgili ayarı değiştirmenizi sağlar.
 Örneğin, Tümü olarak ayarladığınızda işaretlerin hepsi sözcük olarak seslendirilir.
-Bu ayarlamadan sadece halihazırda kullanılan sentezleyici değil; tüm sentezleyiciler etkilenir.
+Bu ayardan sadece halihazırda kullanılan sentezleyici değil; tüm sentezleyiciler etkilenir.
+
+==== İşaret ve karakterleri işlerken seçili sesin diline bak ====
+Bu seçenek varsayılan olarak etkindir ve  NVDA'ya işaret ve karakterler seslendirilirken seçili sesin dilinin dikkate alınıp alınmayacağını söyler.
+Eğer NVDA'nın noktalama işaretlerini  herhangi bir sentezleyici ya da ses için yanlış dilde seslendirdiğini fark ederseniz, bu seçeneği NVDA global ayarlarının kullanılmasını sağlamak için kapatabilirsiniz.
 
 ==== Büyük Harflerde Ses Perdesi Değişim Yüzdesi ====
 Bu yazı alanı , büyük harfler seslendirilirken ses perdesinin hangi oranda değiştirileceğini belirlemenizi sağlar.
@@ -859,7 +872,9 @@ Seçenekler, karakter, sözcük, satır ve paragraftır.
 Bu onay kutusu işaretlenirse, NVDA bir nesneye geldiğinde o nesnenin işlevini (türünü) belirtecektir.
 
 ==== Fare hareketlerinde Koordinatları Ses Çalarak Belirt ====
-Bu onay kutusunu işaretlemek, NVDA'nın fare hareket ettikçe bip çalmasını sağlar ve böylece kullanıcı ekranda farenin nerede olduğunu anlayabilir.
+Bu onay kutusunu işaretlemek, NVDA'nın fare hareket ettikçe bip sesi çıkarmasını sağlar ve böylece kullanıcı ekranda farenin nerede olduğunu anlayabilir.
+Fare yukarı çıktıkça bip sesi incelir.
+Fare imleci sola ve  sağa kaydırıldıkça bip sesi de aynı doğrultuda sola ve sağa kayar. Tabii bunun anlaşılması için hoparlör ya da kulaklık steryo olmalıdır.
 
 ==== Seçili bölgelerde dolaşırken fare koordinat sesini yükselt ====
 Eğer "fare hareket ettikçe ses çal" onay kutusu işaretliyse, bu onay kutusu işaretlendiğinde, sesli koordinatların miktarı ekranın parlaklığına göre kontrol edilir.
@@ -1010,6 +1025,10 @@ Bu seçenek işaretliyse, yön tuşlarıyla dolaşırken NVDA'nın odak kipine g
 ==== Odak Kipiyle Tarama Kipi Arasındaki Geçişi Ses Çalarak bildir ====
 Bu seçenek etkinse, odak kipi ve tarama kipi arasında geçiş yaparken NVDA bunu konuşarak değil, özel bir ses çalarak bildirecektir.
 
+==== Komut tuşu olmayan tuşların belgeye gönderilmesini engelle ====
+Bu seçenek varsayılan olarak etkindir ve NVDA komutu   olarak kullanılmayan tuşların ve hareketlerin belgeye gönderilip gönderilmeyeceğini belirlemenizi sağlar. 
+Etkinleştirildiğinde, örneğin J harfine basılırsa, bu tuş ne  NVDA komutu ne de  aktif uygulama komutu olarak kullanıldığı için , tuşun belgeye ulaşması engellenecektir.
+
 +++ Belge format Ayarları (NVDA+kontrol+d) +++[DocumentFormattingSettings]
 Bu iletişim kutusu tercihler menüsü içindeki "Belge Formatları..." altında bulunur.
 
@@ -1086,6 +1105,12 @@ Bu iletişim kutusu, noktalama ve imla işaretlerinin nasıl seslendirileceğini
 Olarak değiştir alanı, NVDA'nın sözkonusu işaretle karşılaştığında ne demesi gerektiğini belirlemenizi sağlar.
 Düzey alanı ise, işaretin seslendirilmesini istediğiniz en düşük imla seslendirme düzeyini belirlemenize imkan verir.
 
+Ekle düğmesine basarak yeni işaretler ekleyebilirsiniz.
+Açılacak iletişim kutusunda, işareti girin ve tamam düğmesine basın.
+Daha sonra, başka işaretler için yaptığınız gibi, yeni işaretin olarak değiştir alanını ve seslendirme seviyesini düzenleyin.
+
+Kaldır düğmesine basarak daha önce eklediğiniz işareti silebilirsiniz.
+
 Bu ayarlamaları yaptıktan sonra tamam düğmesine basarak değişiklikleri kaydedebilir; iptal düğmesiyle de değişiklik öncesi ayarlara geri dönebilirsiniz.
 
 +++ Girdi Hareketleri +++
@@ -1095,6 +1120,7 @@ Sadece, iletişim kutusu açılmadan önce kullanılabilen komutlar gösterilir.
 Örneğin, tarama kipiyle ilgili hareketleri özelleştirmek istiyorsanız, girdi hareketleri iletişim kutusunu tarama kipindeyken açmalısınız.
 
 BU diyalogdaki ağaç, kullanılabilen NVDA komutlarını kategoriler altında gruplanmış olarak listeler.
+Bunları, filtreleme kriteri alanına komutlarla ilgili olabilecek çeşitli kelimeler girerek filtreleyebilirsiniz.
 Bir komutla ilişkili hareketler o komutun altında listelenir.
 
 Bir komuta girdi hareketi eklemek için, komutun üzerindeyken ekle düğmesine basın.
@@ -1233,7 +1259,7 @@ Seçili eklenti için yardım mevcutsa, buna yardım düğmesine basarak ulaşab
 
 Mevcut eklentileri online olarak inceleyip indirmek için, Eklenti edin düğmesine basın.
 Bu düğme [NVDA Eklenti sayfasını http://addons.nvda-project.org/] açar.
-Eğer NVDA sisteminizde kuruluysa, eklenti kurulum sürecini aşağıdaki tarife uyarak doğrudan tarayıcınızda başlatabilirsiniz.
+Eğer NVDA sisteminizde kuruluysa, NVDA'nın o anda çalışıyor olması şartıyla eklenti kurulum sürecini aşağıdaki tarife uyarak doğrudan tarayıcınızda başlatabilirsiniz.
 Aksi halde, eklenti paketini bilgisayarınıza kaydedip aşağıdaki yönergeyi takip edin.
 
 Daha önce temin ettiğiniz bir eklentiyi kurmak için Eklenti Kur düğmesini kullanın.
@@ -1307,12 +1333,6 @@ Bu sesleri kullanabilmek için iki bileşeni indirip kurmanız gerekmektedir:
 Bu, italyanca diline özel ücretli bir konuşma sentezleyicisidir.
 NVDA ile kullanılabilmesi için, sentezleyicinin bilgisayarınızda yüklü olması gerekir.
 Daha fazla bilgi için, lütfen Audiologic web sayfasını www.audiologic.it adresinden ziyaret edin.
-
-Bu sentezleyici [kodlama işlevini #VoiceSpellingFunctionality] desteklemez.
-
-++ Newfon ++
-Newfon, Sergey Shishmintzev tarafından üretilen, rusça ve Ukraynacayı destekleyen ücretsiz bir sentezleyicidir.
-Bu sentezleyiciyi indirmek için lütfen Rusça NVDA sayfasını ziyaret edin. http://ru.nvda-community.org/?page_id=10
 
 Bu sentezleyici [kodlama işlevini #VoiceSpellingFunctionality] desteklemez.
 
@@ -1664,19 +1684,23 @@ Aşağıdaki Braille ekranlar desteklenmektedir:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
 - BRAILLEX Trio (USB and bluetooth)
+- BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus (USB and bluetooth)
 -
 
 If BrxCom is installed, NVDA will use BrxCom.
 BrxCom is a tool that allows you to use the Braille input independently from a screen reader.
 A new version of BrxCom which works with NVDA will be released by Papenmeier soon.
-However, braille input is possible with the Trio device without BrxCom.
+Braille input is possible with the Trio, BRAILLEX Live 20 and Braillex Live devices without BrxCom.
+Braille input is also possible with the Live Plus model, but with BrxCom only.
 
 Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
 The EAB can be moved in four directions where generally each direction has two switches.
-The c-series is the only exception to this rule.
+The C and Live series are the only exceptions to this rule.
 
 The c-series and some other displays have two routing rows whereby the upper row is used to report formatting information.
 Holding one of the upper routing keys and pressing the EAB on c-series devices emulates the second switch state.
+The live series displays have one routing row only and the EAB has one step per direction.
+The second step may be emulated by pressing one of the routing keys and pressing the EAB in the corresponding direction.
 Pressing and holding the up, down, right and left keys (or EAB) causes the corresponding action to be repeated.
 
 Generally, the following keys are available on these braille displays:
@@ -1877,7 +1901,7 @@ Kabartma klavyesi bulunan ekranlar için, BRLTTY şuanda braille girişini kendi
 Dolayısıyla, NVDA'nın braille girdi tablosu ayarı bu ekranları etkilemez.
 
 Aşağıda NVDA için BRLTTY tuş komutları bulunmaktadır.
-Lütfen [BRLTTY tuş tabloları yardımına http://mielke.cc/brltty/doc/drivers/] BRLTTY komutlarının braille ekran kontrollerinde nasıl konumlandığı hakkında daha fazla bilgi almak için bakın.
+Lütfen [BRLTTY tuş tabloları yardımına http://mielke.cc/brltty/doc/KeyTables/] BRLTTY komutlarının braille ekran kontrollerinde nasıl konumlandığı hakkında daha fazla bilgi almak için bakın.
 %kc:beginInclude
 || Ad | BRLTTY komutu |
 | Braille ekranı geri kaydırma | fwinlt (bir pencere sola git) |
@@ -1963,7 +1987,8 @@ Aşağıdakiler NVDA komut satırı seçenekleridir:
 | -s | --secure | Güvenli kip (Python konsolu devre dışı bırakır) |
 | None | --disable-addons | Eklentiler etkisizdir |
 | None | --no-sr-flag  | Global ekran okuyucu bayrağını devre dışı bırakmaz |
-| None | --install | NVDA'yı sessizce kurar |
+| None | --install | NVDA'yı kurar (yeni kurulmuş kopyayı çalıştırarak) |
+| None | --install-silent | NVDA'yı sessizce kurar (yeni kurulmuş kopyayı başlatmaz) |
 
 ++ Noktalama/imla Seslendirmesiyle İlgili İleri Düzey Ayarlamalar ++
 Noktalama ya da başka işaretlerin nasıl seslendirileceğiyle ilgili [Noktalama/imla sözlüğü #SymbolPronunciation] iletişim kutusunu kullanarak değiştirebileceğinizden daha fazla ayarlama da yapmanız mümkündür.
