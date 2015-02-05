@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-06 19:11+1000\n"
-"PO-Revision-Date: 2014-11-17 19:46-0800\n"
+"POT-Creation-Date: 2015-02-03 19:12+1000\n"
+"PO-Revision-Date: 2015-01-18 20:39-0800\n"
 "Last-Translator: Joseph Lee <joseph.lee22590@gmail,com>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com, nvda-korean@freelists.org>\n"
@@ -629,6 +629,496 @@ msgstr "dot"
 msgid "space"
 msgstr "스페이스"
 
+msgid "focus mode"
+msgstr "포커스 모드"
+
+msgid "browse mode"
+msgstr "브라우즈 모드"
+
+#. Translators: a message when a particular quick nav command is not supported in the current document.
+msgid "Not supported in this document"
+msgstr "본 요소를 지원하지 않는 문서임"
+
+#. Translators: the description for the elements list dialog script on virtualBuffers.
+msgid "Presents a list of links, headings or landmarks"
+msgstr "링크, 헤딩과 랜드마크 목록을 보여줍니다. "
+
+#. Translators: the description for the activatePosition script on virtualBuffers.
+msgid "activates the current object in the document"
+msgstr "현재 문서에서 포커스된 객체를 실행합니다."
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading"
+msgstr "다음 헤딩으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading"
+msgstr "다음 헤딩 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading"
+msgstr "이전 헤딩으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading"
+msgstr "이전 헤딩 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 1"
+msgstr "다음 레벨 1 헤딩으로 이동합니다."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 1"
+msgstr "다음 레벨 1 헤딩 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 1"
+msgstr "이전 레벨 1 헤딩으로 이동합니다."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 1"
+msgstr "이전 레벨 1 헤딩 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 2"
+msgstr "다음 레벨 2 헤딩으로 이동합니다."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 2"
+msgstr "다음 레벨 2 헤딩 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 2"
+msgstr "이전 레벨 2 헤딩으로 이동합니다."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 2"
+msgstr "이전 레벨 2 헤딩 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 3"
+msgstr "다음 레벨 3 헤딩으로 이동합니다."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 3"
+msgstr "다음 레벨 3 헤딩 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 3"
+msgstr "이전 레벨 3 헤딩으로 이동합니다."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 3"
+msgstr "이전 레벨 3 헤딩 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 4"
+msgstr "다음 레벨 4 헤딩으로 이동합니다."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 4"
+msgstr "다음 레벨 4 헤딩 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 4"
+msgstr "이전 레벨 4 헤딩으로 이동합니다."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 4"
+msgstr "이전 레벨 4 헤딩 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 5"
+msgstr "다음 레벨 5 헤딩으로 이동합니다."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 5"
+msgstr "다음 레벨 5 헤딩 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 5"
+msgstr "이전 레벨 5 헤딩으로 이동합니다."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 5"
+msgstr "이전 레벨 5 헤딩 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 6"
+msgstr "다음 레벨 6 헤딩으로 이동합니다."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 6"
+msgstr "다음 레벨 6 헤딩 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 6"
+msgstr "이전 레벨 6 헤딩으로 이동합니다."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 6"
+msgstr "이전 레벨 6 헤딩 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next table"
+msgstr "다음 테이블로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next table"
+msgstr "다음 테이블 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous table"
+msgstr "이전 테이블로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous table"
+msgstr "이전 테이블 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next link"
+msgstr "다음 링크로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next link"
+msgstr "다음 링크 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous link"
+msgstr "이전 링크로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous link"
+msgstr "이전 링크 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next visited link"
+msgstr "다음 방문한 링크로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next visited link"
+msgstr "다음 방문한 링크 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous visited link"
+msgstr "이전 방문한 링크로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous visited link"
+msgstr "이전 방문한 링크 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next unvisited link"
+msgstr "다음 방문하지 않은 링크로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next unvisited link"
+msgstr "다음 방문하지 않은 링크 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous unvisited link"
+msgstr "이전 방문하지 않은 링크로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous unvisited link"
+msgstr "이전 방문하지 않은 링크 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next form field"
+msgstr "다음 폼 필드로 이동합니다."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next form field"
+msgstr "다음 폼 필드 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous form field"
+msgstr "이전 폼 필드로 이동합니다."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous form field"
+msgstr "이전 폼 필드 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next list"
+msgstr "다음 목록으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next list"
+msgstr "다음 목록 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous list"
+msgstr "이전 목록으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous list"
+msgstr "이전 목록 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next list item"
+msgstr "다음 목록 항목으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next list item"
+msgstr "다음 목록 항목 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous list item"
+msgstr "이전 목록 항목으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous list item"
+msgstr "이전 목록 항목 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next button"
+msgstr "다음 버튼으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next button"
+msgstr "다음 버튼 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous button"
+msgstr "이전 버튼으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous button"
+msgstr "이전 버튼 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next edit field"
+msgstr "다음 입력창으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next edit field"
+msgstr "다음 입력창 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous edit field"
+msgstr "이전 입력창으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous edit field"
+msgstr "이전 입력창 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next frame"
+msgstr "다음 프레임으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next frame"
+msgstr "다음 프레임 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous frame"
+msgstr "이전 프레임으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous frame"
+msgstr "이전 프레임 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next separator"
+msgstr "다음 구분선으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next separator"
+msgstr "다음 구분선 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous separator"
+msgstr "이전 구분선으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous separator"
+msgstr "이전 구분선 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next radio button"
+msgstr "다음 라디오 버튼으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next radio button"
+msgstr "다음 라디오 버튼 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous radio button"
+msgstr "이전 라디오 버튼으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous radio button"
+msgstr "이전 라디오 버튼 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next combo box"
+msgstr "다음 콤보박스로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next combo box"
+msgstr "다음 콤보박스 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous combo box"
+msgstr "이전 콤보박스로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous combo box"
+msgstr "이전 콤보박스 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next check box"
+msgstr "다음 체크박스로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next check box"
+msgstr "다음 체크박스 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous check box"
+msgstr "이전 체크박스로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous check box"
+msgstr "이전 체크박스 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next graphic"
+msgstr "다음 그래픽으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next graphic"
+msgstr "다음 그래픽 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous graphic"
+msgstr "이전 그래픽으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous graphic"
+msgstr "이전 그래픽 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next block quote"
+msgstr "다음 블럭퀕으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next block quote"
+msgstr "다음 블럭퀕 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous block quote"
+msgstr "이전 블럭퀕으로 이동합니다."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous block quote"
+msgstr "이전 블럭퀕 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "skips forward past a block of links"
+msgstr "링크 블럭 이후 텍스트로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no more text after a block of links"
+msgstr "링크 블럭 이후 텍스트 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "skips backward past a block of links"
+msgstr "링크 블럭 이전 텍스트로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no more text before a block of links"
+msgstr "링크 블럭 이전 텍스트 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next landmark"
+msgstr "다음 랜드마크로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next landmark"
+msgstr "다음 랜드마크 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous landmark"
+msgstr "이전 랜드마크로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous landmark"
+msgstr "이전 랜드마크 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next embedded object"
+msgstr "다음 임베디드 객체로 이동합니다."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next embedded object"
+msgstr "다음 임베디드 갯체 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous embedded object"
+msgstr "이전 임베디드 객체로 이동합니다."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous embedded object"
+msgstr "이전 임베디드 객체 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next annotation"
+msgstr "다음 주석으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next annotation"
+msgstr "다음 주석 없음"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous annotation"
+msgstr "이전 주석으로 이동합니다"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous annotation"
+msgstr "이전 주석 없음"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Lin&ks"
+msgstr "링크 (&K)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Headings"
+msgstr "헤딩 (&H)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Lan&dmarks"
+msgstr "랜드마크 (&D)"
+
+#. Translators: The title of the browse mode Elements List dialog.
+msgid "Elements List"
+msgstr "구성요소 목록"
+
+#. Translators: The label of a group of radio buttons to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Type:"
+msgstr "구성요소"
+
+# Translation: "Find from elements list".
+#. Translators: The label of an editable text field to filter the elements
+#. in the browse mode Elements List dialog.
+msgid "&Filter by:"
+msgstr "특정 구성요소 이름 검색 (&F)"
+
+#. Translators: The label of a button to activate an element
+#. in the browse mode Elements List dialog.
+msgid "&Activate"
+msgstr "바로가기 (&A)"
+
+#. Translators: The label of a button to move to an element
+#. in the browse mode Elements List dialog.
+msgid "&Move to"
+msgstr "커서 이동 (&M)"
+
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
@@ -662,18 +1152,17 @@ msgstr "알 수 없는 색상"
 msgid "black"
 msgstr "검정"
 
-#. Translators: The color green.
-msgid "green"
-msgstr "녹색"
+#. Translators: The color dark green.
+msgid "dark green"
+msgstr "짙은 녹색"
 
 #. Translators: The light gray color.
 msgid "light grey"
 msgstr "밝은 회색"
 
-#. Translators: The color lime.
-#. For more info see: http://en.wikipedia.org/wiki/Lime_%28color%29
-msgid "lime"
-msgstr "라임"
+#. Translators: The color green (full brightness)
+msgid "green"
+msgstr "녹색"
 
 #. Translators: The color gray (halfway between white and black).
 msgid "grey"
@@ -1371,7 +1860,7 @@ msgstr "필수입력사항"
 #. Translators: Reported when an object no longer exists in the user interface;
 #. i.e. it is dead and is no longer usable.
 msgid "defunct"
-msgstr "defunct"
+msgstr "작동 안 함"
 
 #. Translators: This is presented when an invalid entry has been made.
 msgid "invalid entry"
@@ -1494,13 +1983,18 @@ msgstr "NVDA 실행 준비중, 잠시만 기다려 주십시요"
 msgid "NVDA started"
 msgstr "NVDA 시작"
 
+#. Translators: Title of a dialog to find text.
+msgid "Find"
+msgstr "찾기"
+
 #. Translators: Dialog text for NvDA's find command.
 msgid "Type the text you wish to find"
 msgstr "찾고자 하는 내용을 입력하세요. "
 
-#. Translators: Title of a dialog to find text.
-msgid "Find"
-msgstr "찾기"
+#. Translators: An option in find dialog to perform case-sensitive search.
+#. Translators: This is a label for a checkbox in add dictionary entry dialog.
+msgid "Case &sensitive"
+msgstr "대소문자 구별 (&S)"
 
 #, python-format
 msgid "text \"%s\" not found"
@@ -1796,7 +2290,7 @@ msgstr ""
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
 msgid "no navigator object"
-msgstr "화면 탐색 객체 없음"
+msgstr "탐색 객체 없음"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
 #, python-format
@@ -1870,7 +2364,7 @@ msgstr "화면 탐색 객체의 상위 갯체로 이동합니다. "
 # Translation reads, "cannot find next screen object".
 #. Translators: Reported when there is no next object (current object is the last object).
 msgid "No next"
-msgstr "다음 화면 객체 없음"
+msgstr "다음 객체 없음"
 
 #. Translators: Input help mode message for move to next object command.
 msgid "Moves the navigator object to the next object"
@@ -1879,7 +2373,7 @@ msgstr "화면 탐색 객체를 다음 객체로 이동합니다. "
 # Reads, "no previous screen object."
 #. Translators: Reported when there is no previous object (current object is the first object).
 msgid "No previous"
-msgstr "이전 화면 객체 없음"
+msgstr "이전 객체 없음"
 
 #. Translators: Input help mode message for move to previous object command.
 msgid "Moves the navigator object to the previous object"
@@ -2058,8 +2552,8 @@ msgid ""
 "with a control. When in browse mode, you can navigate the document with the "
 "cursor, quick navigation keys, etc."
 msgstr ""
-"브라우저 모드와 포커스 모드를 전환합니다. 포커스 모드에서는 키보드를 사용하"
-"여 폼 필드 값을 조작하며, 브라우저 모드에서는 커서와 엘리멘트 핫키를 토해 문"
+"브라우즈 모드와 포커스 모드를 전환합니다. 포커스 모드에서는 키보드를 사용하"
+"여 폼 필드 값을 조작하며, 브라우즈 모드에서는 커서와 엘리멘트 핫키를 토해 문"
 "서를 읽을 수 있습니다. "
 
 #. Translators: Input help mode message for quit NVDA command.
@@ -2286,7 +2780,7 @@ msgstr "NVDA 객체 표시 설정 대화상자를 보여줍니다."
 
 #. Translators: Input help mode message for go to browse mode dialog command.
 msgid "Shows the NVDA browse mode settings dialog"
-msgstr "NVDA 브라우저 모드 설정 대화상자를 보여줍니다. "
+msgstr "NVDA 브라우즈 모드 설정 대화상자를 보여줍니다. "
 
 #. Translators: Input help mode message for go to document formatting dialog command.
 msgid "Shows the NVDA document formatting settings dialog"
@@ -2413,7 +2907,7 @@ msgstr ""
 # Translation reads, "cannot find next screen object".
 #. Translators: a message when there is no next object when navigating
 msgid "no next"
-msgstr "다음 화면 객체 없음"
+msgstr "다음 객체 없음"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -3268,7 +3762,7 @@ msgstr "NVDA {version} 버전이 준비되어 있습니다. "
 # Literally means, "no new update is availible."
 #. Translators: A message indicating that no update to NVDA is available.
 msgid "No update available."
-msgstr "새로운 업데이트가 없습니다. "
+msgstr "새 업데이트가 없습니다. "
 
 #. Translators: The label of a button to download and install an NVDA update.
 msgid "Download and &install update"
@@ -3547,11 +4041,11 @@ msgstr "읽지 않음"
 
 #. Translators: for a high importance email
 msgid "high importance"
-msgstr "high importance"
+msgstr "중요도 높음"
 
 #. Translators: For a low importance email
 msgid "low importance"
-msgstr "low importance"
+msgstr "중요도 낮음"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3590,7 +4084,7 @@ msgstr "일정 있음"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
-msgstr "meeting request"
+msgstr "모임 요청"
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -3624,19 +4118,19 @@ msgstr "만약 주석이 있을 경우 이를 읽어줍니다. "
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Title placeholder"
-msgstr "Title placeholder"
+msgstr "제목 개체 틀"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Text placeholder"
-msgstr "Text placeholder"
+msgstr "텍스트 개체 틀"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Center Title placeholder"
-msgstr "Center Title placeholder"
+msgstr "중앙 제목 자리 표시자"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Subtitle placeholder"
-msgstr "Subtitle placeholder"
+msgstr "부제목 개체 틀"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Title placeholder"
@@ -3644,15 +4138,15 @@ msgstr "Vertical Title placeholder"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Text placeholder"
-msgstr "Vertical Text placeholder"
+msgstr "세로 텍스트 개체 틀"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Object placeholder"
-msgstr "Object placeholder"
+msgstr "개체 자리 표시자"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Chart placeholder"
-msgstr "Chart placeholder"
+msgstr "차트 개체 틀"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Bitmap placeholder"
@@ -3668,23 +4162,23 @@ msgstr "Org Chart placeholder"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Table placeholder"
-msgstr "Table placeholder"
+msgstr "표 개체 틀"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Slide Number placeholder"
-msgstr "Slide Number placeholder"
+msgstr "슬라이드 번호 개체 틀"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Header placeholder"
-msgstr "Header placeholder"
+msgstr "머리글 개체 틀"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Footer placeholder"
-msgstr "Footer placeholder"
+msgstr "바닥글 개체 틀"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Date placeholder"
-msgstr "Date placeholder"
+msgstr "날짜 개체 틀"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Object placeholder"
@@ -3692,55 +4186,55 @@ msgstr "Vertical Object placeholder"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Picture placeholder"
-msgstr "Picture placeholder"
+msgstr "그림 개체 틀"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide view"
-msgstr "Slide view"
+msgstr "슬라이드 보기"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide Master view"
-msgstr "Slide Master view"
+msgstr "슬라이드 마스터 보기"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Notes page"
-msgstr "Notes page"
+msgstr "슬라이드 노트"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Handout Master view"
-msgstr "Handout Master view"
+msgstr "유인물 마스터 보기"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Notes Master view"
-msgstr "Notes Master view"
+msgstr "노트 마스터 보기"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Outline view"
-msgstr "Outline view"
+msgstr "개요 보기"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide Sorter view"
-msgstr "Slide Sorter view"
+msgstr "여러 슬라이드 보기"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Title Master view"
-msgstr "Title Master view"
+msgstr "제목 마스터 보기"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Normal view"
-msgstr "Normal view"
+msgstr "기본 보기"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Print Preview"
-msgstr "Print Preview"
+msgstr "인쇄 미리 보기"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Thumbnails"
-msgstr "Thumbnails"
+msgstr "축소판 그림"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Master Thumbnails"
-msgstr "Master Thumbnails"
+msgstr "마스터 축소판 그림"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
@@ -3788,35 +4282,35 @@ msgstr ""
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
 msgid "{distance:.3g} points from left slide edge"
-msgstr ""
+msgstr "슬라이드 좌측으로부터 {distance:.3g} 포인트"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
 msgid "Off left slide edge by {distance:.3g} points"
-msgstr ""
+msgstr "슬라이드 좌측으로부터 {distance:.3g} 포인트 벗어남"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
 msgid "{distance:.3g} points from top slide edge"
-msgstr ""
+msgstr "슬라이드 위로부터 {distance:.3g} 포인트"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
 msgid "Off top slide edge by {distance:.3g} points"
-msgstr ""
+msgstr "슬라이드 위로부터 {distance:.3g} 포인트 벗어남"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
 msgid "{distance:.3g} points from right slide edge"
-msgstr ""
+msgstr "슬라이드 우측으로부터 {distance:.3g} 포인트"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
 msgid "Off right slide edge by {distance:.3g} points"
-msgstr ""
+msgstr "슬라이드 우측으로부터 {distance:.3g} 포인트 벗어남"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
 msgid "{distance:.3g} points from bottom slide edge"
-msgstr ""
+msgstr "슬라이드 아래로부터 {distance:.3g} 포인트"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
 msgid "Off bottom slide edge by {distance:.3g} points"
-msgstr ""
+msgstr "슬라이드 아래로부터 {distance:.3g} 포인트 벗어남"
 
 #. Translators: The description for a script
 msgid ""
@@ -3850,6 +4344,18 @@ msgstr "슬라이드 없음"
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 msgid "Waiting for Powerpoint..."
 msgstr "파워포인트 여는중..."
+
+#. Translators: The name of the NVDA command category for Skype specific commands.
+msgid "Skype"
+msgstr ""
+
+#, fuzzy
+msgid "Reports and moves the review cursor to a recent message"
+msgstr "캐럿의 이동으로 인한 리뷰 커서의 이동 여부를 토글합니다. "
+
+#. Translators: Indicates that a contact stopped typing.
+msgid "Typing stopped"
+msgstr ""
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -4070,7 +4576,7 @@ msgstr "화면 객체 표시 출력을 설정합니다. "
 
 #. Translators: The label for the menu item to open Browse Mode settings dialog.
 msgid "&Browse mode..."
-msgstr "브라우저 모드 (&B)..."
+msgstr "브라우즈 모드 (&B)..."
 
 msgid "Change virtual buffers specific settings"
 msgstr "가상 버퍼 출력에 대한 세부사항을 설정합니다. "
@@ -5014,6 +5520,11 @@ msgstr "음성 엔진 지원시 자동으로 종속어 전환"
 msgid "Punctuation/symbol &level:"
 msgstr "구두점/기호 출력 레벨 (&L)"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+msgid "Trust voice's language when processing characters and symbols"
+msgstr "기호 및 글자 출력시 선택된 음성 엔진 언어 사용"
+
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "대문자 음높이 변경율"
@@ -5269,7 +5780,7 @@ msgstr "자동 변경괸 컨텐츠 알림 (&C)"
 
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
-msgstr "브라우저 모드"
+msgstr "브라우즈 모드"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
@@ -5310,6 +5821,11 @@ msgstr "케럿 이동에 따른 자동 포커스 모드 전환"
 #. browse mode settings dialog.
 msgid "Audio indication of focus and browse modes"
 msgstr "포커스와 브라우즈 모드 전환시 경고음 재생"
+
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings dialog.
+msgid "&Trap all non-command gestures from reaching the document"
+msgstr "브라우즈 모드외 명령을 문서가 처리하지 않도록 함 (&T)"
 
 #. Translators: This is the label for the document formatting dialog.
 msgid "Document Formatting"
@@ -5357,8 +5873,8 @@ msgstr "글꼴 스타일 알림 (&Y)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling errors"
-msgstr "맞춤법 오류 알림"
+msgid "Report spelling e&rrors"
+msgstr "맞춤법 오류 알림 (&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5459,10 +5975,6 @@ msgstr "변환값 (&R)"
 msgid "&Comment"
 msgstr "설명 (&C)"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Case &sensitive"
-msgstr "대소문자 구별 (&S)"
-
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
 msgstr "적용 방식 (&T)"
@@ -5493,6 +6005,7 @@ msgid "Type"
 msgstr "방식"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
+#. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 msgid "&Add"
 msgstr "추가 (&A)"
@@ -5558,6 +6071,14 @@ msgstr "%s 디스플레이 활성화 실패."
 msgid "Braille Display Error"
 msgstr "점자 출력 오류"
 
+#. Translators: This is the label for the add symbol dialog.
+msgid "Add Symbol"
+msgstr "기호 추가"
+
+#. Translators: This is the label for the edit field in the add symbol dialog.
+msgid "Symbol:"
+msgstr "기호:"
+
 #. Translators: This is the label for the symbol pronunciation dialog.
 msgid "Symbol Pronunciation"
 msgstr "기호 발음 설정"
@@ -5582,9 +6103,24 @@ msgstr "기호 변경"
 msgid "&Level"
 msgstr "레벨 (&L)"
 
+#. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
+msgid "Re&move"
+msgstr "삭제 (&M)"
+
+#. Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
+#, python-format
+msgid "Symbol \"%s\" is already present."
+msgstr "\"%s\" 기호가 이미 존재합니다."
+
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 msgid "Input Gestures"
 msgstr "단축키 설정"
+
+# Translation: "Find from elements list".
+#. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
+msgctxt "inputGestures"
+msgid "&Filter by:"
+msgstr "명령 검색 (&F)"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -5600,27 +6136,6 @@ msgstr "단축키를 입력하십시오:"
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr "사용자 단축키 설정 저장 실패 - 일기 전용 파일시스템일 수 있음"
 
-#. Translators: Information about NVDA's new laptop keyboard layout.
-msgid ""
-"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in "
-"order to make it more intuitive and consistent.\n"
-"If you use the laptop layout, please see the What's New document for more "
-"information."
-msgstr ""
-"NvDA 2013.1에서는 사용자 편의를 위해 랩탑 키보드 레이아웃의 여러 명령이 변경"
-"되었습니다.\n"
-"만약 랩탑 키보드 레이아웃을 사용하신다면 변경된 사항 문서를 참조하시기 바랍니"
-"다."
-
-#. Translators: The title of a dialog providing information about NVDA's new laptop keyboard layout.
-msgid "New Laptop Keyboard layout"
-msgstr "새 laptop 키보드 레이아웃"
-
-#. Translators: The label of a button in the New Laptop Keyboard Layout dialog
-#. to open the What's New document.
-msgid "Read What's New"
-msgstr "변경된 사항 읽기"
-
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
 msgid "none"
@@ -5630,22 +6145,6 @@ msgstr "안 함"
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
 msgstr "음성 속도 부스트 (&T)"
-
-#. Translators: A setting for a speech synthesizer.
-msgid "&Acceleration"
-msgstr "&Acceleration"
-
-msgid "male 1"
-msgstr "male 1"
-
-msgid "female 1"
-msgstr "female 1"
-
-msgid "male 2"
-msgstr "male 2"
-
-msgid "female 2"
-msgstr "female 2"
 
 #. Translators: Description for a speech synthesizer.
 msgid "No speech"
@@ -5667,46 +6166,6 @@ msgstr " {x}, {y}"
 msgid "%s landmark"
 msgstr "%s 랜드마크"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Lin&ks"
-msgstr "링크 (&K)"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Headings"
-msgstr "헤딩 (&H)"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Lan&dmarks"
-msgstr "랜드마크 (&D)"
-
-#. Translators: The title of the browse mode Elements List dialog.
-msgid "Elements List"
-msgstr "구성요소 목록"
-
-#. Translators: The label of a group of radio buttons to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Type:"
-msgstr "구성요소"
-
-# Translation: "Find from elements list".
-#. Translators: The label of an editable text field to filter the elements
-#. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "특정 구성요소 이름 검색 (&F)"
-
-#. Translators: The label of a button to activate an element
-#. in the browse mode Elements List dialog.
-msgid "&Activate"
-msgstr "바로가기 (&A)"
-
-#. Translators: The label of a button to move to an element
-#. in the browse mode Elements List dialog.
-msgid "&Move to"
-msgstr "커서 이동 (&M)"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "새로 고침"
@@ -5722,10 +6181,6 @@ msgstr "상세 설명 없음"
 #. Translators: the description for the activateLongDescription script on virtualBuffers.
 msgid "Shows the long description at this position if one is found."
 msgstr "현 위치에 상세 설명이 있다면 그 내용을 보여줍니다."
-
-#. Translators: the description for the activatePosition script on virtualBuffers.
-msgid "activates the current object in the document"
-msgstr "현재 문서에서 포커스된 객체를 실행합니다."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -5744,10 +6199,6 @@ msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
 msgstr "문서를 표시할때 화면 레이아웃으로 보여줄 것인지를 토글합니다. "
-
-#. Translators: the description for the elements list dialog script on virtualBuffers.
-msgid "Presents a list of links, headings or landmarks"
-msgstr "링크, 헤딩과 랜드마크 목록을 보여줍니다. "
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -5783,428 +6234,6 @@ msgstr "케럿이 위치한 컨테이너 요소(목록, 표 등)의 맨 앞으�
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "케럿이 위치한 컨테이너 요소(목록, 표 등)의 맨 끝으로 이동합니다. "
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading"
-msgstr "다음 헤딩으로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading"
-msgstr "다음 헤딩 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading"
-msgstr "이전 헤딩으로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading"
-msgstr "이전 헤딩 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 1"
-msgstr "다음 레벨 1 헤딩으로 이동합니다."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 1"
-msgstr "다음 레벨 1 헤딩 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 1"
-msgstr "이전 레벨 1 헤딩으로 이동합니다."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 1"
-msgstr "이전 레벨 1 헤딩 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 2"
-msgstr "다음 레벨 2 헤딩으로 이동합니다."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 2"
-msgstr "다음 레벨 2 헤딩 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 2"
-msgstr "이전 레벨 2 헤딩으로 이동합니다."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 2"
-msgstr "이전 레벨 2 헤딩 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 3"
-msgstr "다음 레벨 3 헤딩으로 이동합니다."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 3"
-msgstr "다음 레벨 3 헤딩 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 3"
-msgstr "이전 레벨 3 헤딩으로 이동합니다."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 3"
-msgstr "이전 레벨 3 헤딩 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 4"
-msgstr "다음 레벨 4 헤딩으로 이동합니다."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 4"
-msgstr "다음 레벨 4 헤딩 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 4"
-msgstr "이전 레벨 4 헤딩으로 이동합니다."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 4"
-msgstr "이전 레벨 4 헤딩 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 5"
-msgstr "다음 레벨 5 헤딩으로 이동합니다."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 5"
-msgstr "다음 레벨 5 헤딩 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 5"
-msgstr "이전 레벨 5 헤딩으로 이동합니다."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 5"
-msgstr "이전 레벨 5 헤딩 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 6"
-msgstr "다음 레벨 6 헤딩으로 이동합니다."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 6"
-msgstr "다음 레벨 6 헤딩 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 6"
-msgstr "이전 레벨 6 헤딩으로 이동합니다."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 6"
-msgstr "이전 레벨 6 헤딩 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next table"
-msgstr "다음 테이블로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next table"
-msgstr "다음 테이블 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous table"
-msgstr "이전 테이블로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous table"
-msgstr "이전 테이블 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next link"
-msgstr "다음 링크로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next link"
-msgstr "다음 링크 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous link"
-msgstr "이전 링크로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous link"
-msgstr "이전 링크 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next visited link"
-msgstr "다음 방문한 링크로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next visited link"
-msgstr "다음 방문한 링크 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous visited link"
-msgstr "이전 방문한 링크로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous visited link"
-msgstr "이전 방문한 링크 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next unvisited link"
-msgstr "다음 방문하지 않은 링크로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next unvisited link"
-msgstr "다음 방문하지 않은 링크 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous unvisited link"
-msgstr "이전 방문하지 않은 링크로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous unvisited link"
-msgstr "이전 방문하지 않은 링크 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next form field"
-msgstr "다음 폼 필드로 이동합니다."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next form field"
-msgstr "다음 폼 필드 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous form field"
-msgstr "이전 폼 필드로 이동합니다."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous form field"
-msgstr "이전 폼 필드 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next list"
-msgstr "다음 목록으로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next list"
-msgstr "다음 목록 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous list"
-msgstr "이전 목록으로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous list"
-msgstr "이전 목록 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next list item"
-msgstr "다음 목록 항목으로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next list item"
-msgstr "다음 목록 항목 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous list item"
-msgstr "이전 목록 항목으로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous list item"
-msgstr "이전 목록 항목 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next button"
-msgstr "다음 버튼으로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next button"
-msgstr "다음 버튼 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous button"
-msgstr "이전 버튼으로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous button"
-msgstr "이전 버튼 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next edit field"
-msgstr "다음 입력창으로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next edit field"
-msgstr "다음 입력창 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous edit field"
-msgstr "이전 입력창으로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous edit field"
-msgstr "이전 입력창 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next frame"
-msgstr "다음 프레임으로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next frame"
-msgstr "다음 프레임 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous frame"
-msgstr "이전 프레임으로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous frame"
-msgstr "이전 프레임 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next separator"
-msgstr "다음 구분선으로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next separator"
-msgstr "다음 구분선 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous separator"
-msgstr "이전 구분선으로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous separator"
-msgstr "이전 구분선 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next radio button"
-msgstr "다음 라디오 버튼으로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next radio button"
-msgstr "다음 라디오 버튼 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous radio button"
-msgstr "이전 라디오 버튼으로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous radio button"
-msgstr "이전 라디오 버튼 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next combo box"
-msgstr "다음 콤보박스로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next combo box"
-msgstr "다음 콤보박스 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous combo box"
-msgstr "이전 콤보박스로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous combo box"
-msgstr "이전 콤보박스 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next check box"
-msgstr "다음 체크박스로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next check box"
-msgstr "다음 체크박스 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous check box"
-msgstr "이전 체크박스로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous check box"
-msgstr "이전 체크박스 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next graphic"
-msgstr "다음 그래픽으로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next graphic"
-msgstr "다음 그래픽 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous graphic"
-msgstr "이전 그래픽으로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous graphic"
-msgstr "이전 그래픽 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next block quote"
-msgstr "다음 블럭퀕으로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next block quote"
-msgstr "다음 블럭퀕 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous block quote"
-msgstr "이전 블럭퀕으로 이동합니다."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous block quote"
-msgstr "이전 블럭퀕 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "skips forward past a block of links"
-msgstr "링크 블럭 이후 텍스트로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no more text after a block of links"
-msgstr "링크 블럭 이후 텍스트 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "skips backward past a block of links"
-msgstr "링크 블럭 이전 텍스트로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no more text before a block of links"
-msgstr "링크 블럭 이전 텍스트 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next landmark"
-msgstr "다음 랜드마크로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next landmark"
-msgstr "다음 랜드마크 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous landmark"
-msgstr "이전 랜드마크로 이동합니다"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous landmark"
-msgstr "이전 랜드마크 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next embedded object"
-msgstr "다음 임베디드 객체로 이동합니다."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next embedded object"
-msgstr "다음 임베디드 갯체 없음"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous embedded object"
-msgstr "이전 임베디드 객체로 이동합니다."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous embedded object"
-msgstr "이전 임베디드 객체 없음"
-
-msgid "focus mode"
-msgstr "포커스 모드"
-
-msgid "browse mode"
-msgstr "브라우저 모드"
 
 msgid "Taskbar"
 msgstr "작업 표시줄"
@@ -6374,7 +6403,7 @@ msgid "Comments"
 msgstr "Comments"
 
 msgid "Endnotes"
-msgstr "Endnotes"
+msgstr "미주"
 
 msgid "Even pages footer"
 msgstr "Even pages footer"
@@ -6383,13 +6412,13 @@ msgid "Even pages header"
 msgstr "Even pages header"
 
 msgid "First page footer"
-msgstr "First page footer"
+msgstr "첫 페이지 바닥글"
 
 msgid "First page header"
-msgstr "First page header"
+msgstr "첫 페이지 머리글"
 
 msgid "Footnotes"
-msgstr "Footnotes"
+msgstr "각주"
 
 msgid "Primary footer"
 msgstr "Primary footer"
@@ -6399,6 +6428,12 @@ msgstr "Primary header"
 
 msgid "Text frame"
 msgstr "텍스트 프레임"
+
+msgid "comment: {text} by {author} on {date}"
+msgstr "주석: {text}; 저자: {author}; 날짜: {date}"
+
+msgid "{revisionType}: {text} by {author} on {date}"
+msgstr "{revisionType}: {text}; 저자: {author}; 날짜: {date}"
 
 msgid "unknown author"
 msgstr "글쓴이 알 수 없음"
@@ -6557,6 +6592,11 @@ msgstr "테이블 아님"
 msgid "Edge of table"
 msgstr "테이블 가장자리"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "주석 (&A)"
+
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE series"
 msgstr "HIMS 한소네/브레일 에지"
@@ -6564,6 +6604,41 @@ msgstr "HIMS 한소네/브레일 에지"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
+
+#~ msgid ""
+#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
+#~ "in order to make it more intuitive and consistent.\n"
+#~ "If you use the laptop layout, please see the What's New document for more "
+#~ "information."
+#~ msgstr ""
+#~ "NvDA 2013.1에서는 사용자 편의를 위해 랩탑 키보드 레이아웃의 여러 명령이 변"
+#~ "경되었습니다.\n"
+#~ "만약 랩탑 키보드 레이아웃을 사용하신다면 변경된 사항 문서를 참조하시기 바"
+#~ "랍니다."
+
+#~ msgid "New Laptop Keyboard layout"
+#~ msgstr "새 laptop 키보드 레이아웃"
+
+#~ msgid "Read What's New"
+#~ msgstr "변경된 사항 읽기"
+
+#~ msgid "&Acceleration"
+#~ msgstr "&Acceleration"
+
+#~ msgid "male 1"
+#~ msgstr "male 1"
+
+#~ msgid "female 1"
+#~ msgstr "female 1"
+
+#~ msgid "male 2"
+#~ msgstr "male 2"
+
+#~ msgid "female 2"
+#~ msgstr "female 2"
+
+#~ msgid "lime"
+#~ msgstr "라임"
 
 #~ msgid "Are you sure you want to quit NVDA?"
 #~ msgstr "NVDA를 종료하시겠습니까? "
