@@ -3,10 +3,59 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.1 =
+
+== Nowości ==
+- Można teraz dodawać nowe symbole w oknie wymowy symboli. (#4354)
+- W oknie Zdarzeń wejścia, można używać nowego pola filtrowania, aby wyświetlić zdarzenia zawierające określone słowa. (#4458)
+- NVDA automatycznie odczytuje nowy tekst w mintty. (#4588)
+- W oknie wyszukiwania trybu czytania, znajduje się od teraz opcja poszukiwania z uwzględnieniem wielkości liter. (#4584)
+- Szybka nawigacja (h do nagłówka etc.) oraz lista elementów (NVDA+f7) są teraz dostępne dla dokumentów Microsoft Word, po włączeniu trybu czytania NVDA+spacja. (#2975)
+- Odczyt wiadomości HTML w Microsoft Outlook 2007 i wyższych, został poprawiony ponieważ tryb czytania jest automatycznie włączony dla tych wiadomości. Jeśli tryb czytania nie jest włączony w niektórych rzadkich sytuacjach, możesz wymusić jego włączenie przez NVDA+spacja. (#2975) 
+- Nagłówki kolumn tabeli w Microsoft word są automatycznie zgłaszane dla tabel, w których wiersz nagłówkowy został określony przez autora we właściwościach tabeli. (#4510) 
+- W Skype dla pulpitu zgłaszane są powiadomienia. (#4741)
+- W Skype dla pulpitu można teraz czytać ostatnie wiadomości przy użyciu NVDA+control+1 do NVDA+control+0; np. NVDA+control+1 dla ostatniej wiadomości, NVDA+control+0 dla dziesiątej od końca. (#3210)
+- W konwersacji w Skype dla pulpitu, NVDA zgłasza, gdy kontakt pisze. (#3506)
+- NVDA może teraz zostać po cichu zainstalowany przy użyciu wiersza poleceń bez uruchamiania zainstalowanej kopii po instalacji. Aby to zrobić, użyj przełącznika --install-silent. (#4206)
+
+
+== Zmiany ==
+- W oknie ustawień formatowania dokumentu, opcja  informowania o błędach pisowni, posiada klawisz skrótu (alt+b). W polskiej wersji klawisz ten istniał już wcześniej. (#793)
+- NVDA  będzie używał języka syntezatora/głosu do przetwarzania znaków i symboli (włączając w to nazwy znaków przestankowych), niezależnie od tego, czy automatyczna zmiana języka jest włączona. Aby wyłączyć tę funkcję, czyli sprawić, żeby NVDA używał języka interfejsu, odznacz nową opcję w ustawieniach głosu: Ufaj językowi głosu przetwarzając znaki i symbole. (#4210)
+- Wsparcie dla syntezatora Newfon zostało usunięte. Newfon jest dostępny jako dodatek dla NVDA. (#3184)
+- Skype dla pulpitu 7 lub nowszy jest wymagany przez NVDA; wcześniejsze wersje nie są wspierane. (#4218)
+
+
+== Poprawki błędów ==
+- W Microsoft Excel obsługiwana jest  sytuacja, gdy kolumny i linie nagłówka są połączone. Przykład: Jeśli A1 i B1 są połączone, wówczas na B2 będzie teraz ogłaszany A1 i B1 jako nagłówek kolumny, zamiast braku informacji. (#4617)
+- Podczas edycji zawartości pól tekstowych w Microsoft PowerPoint 2003, NVDA będzie poprawnie odczytywał zawartość każdej linii. Dawniej linie były przyrostowo ucinane po jednym znaku na każdy nowy akapit. (#4619)
+- Wszystkie okna dialogowe NVDA  są od teraz wyśrodkowane na ekranie, co poprawia wizualną prezentację i użyteczność programu. (#3148)
+- W Skype dla pulpitu, podczas wprowadzania zaproszenia przy dodawaniu kontaktu, prawidłowo działa wpisywanie tekstu i przemieszczanie się po nim. (#3661)
+- Gdy punkt uwagi przejdzie do nowego elementu w drzewie w Eclipse IDE, jeśli element poprzednio posiadający punkt uwagi był polem wyboru, nie jest od teraz nieprawidłowo odczytywany. (#4586)
+- W oknie sprawdzania błędów Microsoft Word, następny błąd zostanie automatycznie zgłoszony po zmianie lub zignorowaniu poprzedniego przy użyciu klawisza skrótu. (#1938)
+- Tekst jest poprawnie odczytywany w miejscach takich jak terminal w Tera Term Pro, oraz dokumenty w programie Balabolka. (#4229)
+- Punkt uwagi prawidłowo powraca do edytowanego dokumentu, po zakończeniu kompozycji wprowadzania koreańskiego i innych wschodnioazjatyckich języków, podczas edycji w ramce w Internet Explorer i dokumentach MSHTML . (#4045)
+- W oknie zdarzeń wejścia, podczas dokonywania wyboru układu klawiatury dla dodawanego zdarzenia, naciśnięcie escape teraz zamyka menu, a nie jak dawniej okno dialogowe. (#3617)
+- Po usunięciu dodatku, jego folder jest teraz prawidłowo usuwany po restarcie NVDA. Poprzednio trzeba było restartować dwukrotnie. (#3461)
+- Naprawiono główne problemy podczas używania Skype 7 dla pulpitu. (#4218)
+- Gdy wysyłasz wiadomość w Skype dla pulpitu, nie jest odczytywana podwójnie. (#3616)
+- W Skype dla pulpitu, NVDA nie powinien teraz od czasu do czasu czytać dużej ilości wiadomości (nawet całej konwersacji). (#4644)
+- Naprawiono problem, że komenda zgłaszania daty i czasu w NVDA w niektórych przypadkach nie uwzględniała ustawień regionalnych określonych przez użytkownika. (#2987)
+- Tryb czytania: nonsensowny tekst (czasem kilkuliniowy) nie jest od teraz prezentowany dla niektórych obrazków np. w serwisie grupy  Google . (Miało to miejsce szczególnie dla obrazków kodowanych w base64.) (#4793)
+- NVDA nie powinien się zawieszać po kilku sekundach, gdy punkt uwagi opuścił aplikację Windows 8 Metro, kiedy została ona wstrzymana. (#4572)
+- Atrybut aria-atomic żywych obszarów w Mozilla Firefox jest uwzględniany nawet dla zmian tego elementu. Wcześniej miał wpływ tylko na elementy potomne. (#4794) 
+- Tryb czytania będzie odzwierciedlał zmiany, zgłaszane będą żywe obszary dla dokumentów trybu czytania w aplikacjach ARIA osadzonych w dokumentach otwartych przez Internet Explorer lub innych kontrolek MSHTML (#4798)
+- Gdy dodany lub zmieniony jest tekst w żywych obszarach w  Internet Explorer i innych kontrolkach MSHTML, ogłaszany jest dodany lub zmieniony tekst, zamiast całej zawartości elementu. (#4800)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+
+
 = 2014.4 =
 
  == Nowości ==
-- Nowe języki: Hiszpański kolumbijski, pendżabski
+- Nowe języki: Hiszpański kolumbijski, pendżabski.
 - Możliwe jest ponowne uruchomienie NVDA, albo ponowne uruchomienie z wyłączonymi dodatkami z okna dialogowego "Zakończ NVDA". (#4057)
  - NVDA może zostać uruchomiony z wyłączonymi dodatkami również przy użyciu opcji linii komend --disable-addons.
 - W słownikach wymowy, można teraz określić, że wzorzec pasuje tylko jeśli jest całym słowem; tzn. nie pojawia się jako część dłuższego słowa. (#1704)
@@ -35,6 +84,9 @@
 - Na liście wiadomości Microsoft Outlook , elementy nie są od teraz bezsensownie ogłaszane jako elementy danych. (#4439)
 - Podczas zaznaczania tekstu w polu edycji kodu w Eclipse IDE, całe zaznaczenie nie jest odczytywane za każdym razem gdy zaznaczenie się zmieni. (#2314)
 - Różne wersje Eclipse, np. wersja zawarta w  Spring Tool Suite,albo pakiecie Android Developer Tools, są teraz rozpoznawane jako Eclipse i odpowiednio obsługiwane. (#4360)
+- Śledzenie myszy i eksploracja dotykowa w Internet Explorer i innych kontrolkach MSHTML (włącznie z wieloma aplikacjami dla Windows 8) jest bardziej dokładna na wyświetlaczach z wysoką rozdzielczością DPI, albo po zmianie powiększenia dokumentu. (#3494) 
+ - Śledzenie myszy i eksploracja dotykowa w Internet Explorer i innych kontrolkach MSHTML  odczytuje teraz etykietę większej liczby przycisków. (#4173)
+- Podczas używania monitora brajlowskiego Papenmeier BRAILLEX z BrxCom, klawisze monitora działają zgodnie z oczekiwaniami. (#4614)
 
 
 == Zmiany dla programistów ==
