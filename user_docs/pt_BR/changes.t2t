@@ -6,10 +6,53 @@
 
 Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 
+= 2015.1 =
+
+== Novas características ==
+- Você agora pode adicionar novos símbolos através do Diálogo de Pronúncia de Pontuação e Sinais. (#4354)
+- No Diálogo de Gestos de Entrada, você agora pode usar o novo campo "Filtrar por" para mostrar apenas  gestos que contenham palavras específicas. (#4458)
+- O NVDA agora anuncia automaticamente textos novos no mintty. (#4588)
+- No diálogo de procura do modo de navegação, agora existe uma opção para distinguir maiúsculas de minúsculas na pesquisa. (#4584)
+- a navegação rápida (h para cabeçalho etc), e a Lista de Elementos  (NVDA+f7) agora estão disponíveis em documentos no Microsoft Word ativando-se o modo de navegação com NVDA+space. (#2975)
+- A leitura de mensagens HTML no Microsoft Outlook 2007 e posteriores foi significativamente melhorada, pois o modo de navegação agora é ativado automaticamente para estas mensagens. Caso o modo de navegação não seja ativado (em algumas situações raras), você pode forçar a ativação do mesmo com NVDA+space. (#2975)
+- Os cabeçalhos de colunas das tabelas no Microsoft word agora são anunciados automaticamente para tabelas onde  uma linha de cabeçalho tenha sido explicitamente especificada pelo autor por meio das propriedades das tabelas do Microsoft word. (#4510) 
+- No Skype para Desktop, as notificações agora são anunciadas. (#4741)
+- No Skype para Desktop, você agora pode ler as mensagens recentes usando os comandos desde NVDA+control+1 a NVDA+control+0; isto é,, NVDA+control+1 para a mensagem mais recente e NVDA+control+0 para a décima mais recente. (#3210)
+- Nas conversações do Skype para Desktop, o NVDA agora anuncia quando um contato está digitando. (#3506)
+- Suporte para as linhas braille Papenmeier BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus. (#4614)
+
+
+== alterações 
+- NO diálogo de Formatação de Documentos do NVDA, a opção Anunciar erros ortográficos agora possui uma tecla de atalho (alt+r). (#793)
+- O suporte para o sintetizador Newfon foi removido. O Newfon agora encontra-se disponível como complemento para o NVDA. (#3184)
+- O skype para Desktop versão 7 ou posterior  agora é exigido para uso com o NVDA; versões anteriores já não são suportadas. (#4218)
+
+
+== Correção de Falhas ==
+- Todos os diálogos do NVDA agora encontram-se centralizados na tela, melhorando a apresentação visual e usabilidade. (#3148)
+- Quando o foco é movido para um novo item em vistas em árvore no Eclipse IDE, caso o item anteriormente sob o foco seja uma caixa de seleção, ele já não é anunciado incorretamente. (#4586)
+- No diálogo de verificação ortográfica do Microsoft Word, o próximo erro agora será automaticamente anunciado logo que o último for alterado ou ignorado usando-se as respectivas teclas de atalho. (#1938)
+- O foco agora volta corretamente ao documento que está sendo editado ao finalizar a composição de uma entrada de texto em coreano e outros idiomas do leste asiático enquanto se edita dentro de uma frame no Internet Explorer e outros documentos MSHTML. (#4045)
+- No Diálogo de Gestos para Entrada do NVDA, ao selecionar um esquema de teclado para um gesto de teclado que está sendo adicionado, pressionando-se escape agora fecha o menu como o esperado, em lugar de fechar o diálogo. (#3617)
+- Ao remover um complemento, sua pasta agora é deletada corretamente depois de reiniciar o NVDA. Anteriormente, fazia-se necessário reiniciar duas vezes. (#3461)
+- Problemas significativos de quando se usa o Skype 7 para Desktop foram resolvidos. (#4218)
+- Ao enviar uma mensagem no Skype para Desktop, esta já não é lida duas vezes. (#3616)
+
+
+== Alterações específicas para desenvolvedores ==
+
+
+Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
+- Atualizado o wxPython para a versão 3.0.2.0. (#3763)
+
+
 = 2014.4 =
 
 == Novas características ==
 - Novos idiomas: Espanhol Colombiano, Punjabi.
+- Agora é possível reiniciar o NVDA ou reiniciá-lo com os complementos desativados a partir do diálogo NVDA's exit dialog. (#4057)
+ - O NVDA também pode ser iniciado com os complementos desativados usando a opção de linha de comando --disable-addons.
+- Nos dicionários de fala, agora é possível especificar que a combinação original só deve ser correspondida no caso de uma palavra inteira, ou seja, não ocorrendo como parte de uma palavra maior. (#1704)
 
 
 == Alterações ==

@@ -7,36 +7,36 @@ symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	نقطه	all	always
-! sentence ending	تعجب	all	always
-? sentence ending	Question	all	always
-؟ sentence ending	سؤال	all	always
-؛ phrase ending		نقطه ویرگول	all	always
-; phrase ending	semicolon	all	always
+. sentence ending	نقطه
+! sentence ending	علامتِ تعجب
+? sentence ending	Question
+؟ sentence ending	علامتِ سؤال
+؛ phrase ending	نقطه ویرگول
+; phrase ending	semicolon
 : phrase ending	دو‌نقطه
-decimal point		ممیز
-in-word '	apostrophe
+decimal point	نقطه	-	norep
+in-word '	tick
 negative number	منفی
 
 # Whitespace
 \0	خالی
 \t	تب
 \n	سرِ خط
-\f	بَرگه بُر
+\f	پایانِ صفحه
 \r	پایانِ خط
  	فاصله
  	فاصله بدونِ شکست
 
 # Standard punctuation/symbols
-!	تعجب
-"	نقلِ قول
+!	علامتِ تعجب
+"	quote
 \#	شماره
 $	دلار
 £	پوند
 €	يورو
 %	درصد
 &	And
-'	Apostrophe
+'	tick
 (	پرانتز باز
 )	پرانتز بسته
 *	ستاره
@@ -55,7 +55,7 @@ $	دلار
 [	کروشه باز
 ]	کروشه بسته
 \\	بک اِسلش
-^	Circumflex
+^	Caret
 _	زیرخط
 `	graav
 {	آکولاد باز
@@ -68,8 +68,8 @@ _	زیرخط
 …	سه‌نقطه
 ...	سه‌نقطه
 	bullet
-“	آغازِ نقلِ قول
-”	پایانِ نقلِ قول
+“	LeftQuote
+”	RightQuote
 –	en dash
 —	em dash
 ●	دایره
@@ -93,7 +93,8 @@ _	زیرخط
 
 # Persian symbols
 ،	ویرگول	all	always
-؟	سؤال	all	always
+؟	علامتِ سؤال	all	always
+؛	نقطه‌ویرگول	all	always
 ـ	کشیده	char	always
 «	گیومه باز	most	always
 »	گیومه بسته	most	always
@@ -109,4 +110,3 @@ _	زیرخط
 ‭	بازنویسیِ چپ به راست	char	never
 ‮	 بازنویسیِ راست به چپ	char	never
 ‬	پایانِ جهت	char	never
-

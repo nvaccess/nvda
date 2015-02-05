@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-06 19:11+1000\n"
-"PO-Revision-Date: 2014-11-17 17:16+0900\n"
+"POT-Creation-Date: 2015-02-03 19:12+1000\n"
+"PO-Revision-Date: 2015-02-04 19:59+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -95,7 +95,7 @@ msgstr "appモジュールの%sにエラーがあります"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
 msgid "banner"
-msgstr "大見出し"
+msgstr "バナー"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
 msgid "complementary"
@@ -627,6 +627,495 @@ msgstr "ドット"
 msgid "space"
 msgstr "スペース"
 
+msgid "focus mode"
+msgstr "フォーカスモード"
+
+msgid "browse mode"
+msgstr "ブラウズモード"
+
+#. Translators: a message when a particular quick nav command is not supported in the current document.
+msgid "Not supported in this document"
+msgstr "使用できません"
+
+#. Translators: the description for the elements list dialog script on virtualBuffers.
+msgid "Presents a list of links, headings or landmarks"
+msgstr "見出し、リンク、またはランドマークを一覧表示します"
+
+#. Translators: the description for the activatePosition script on virtualBuffers.
+msgid "activates the current object in the document"
+msgstr "ドキュメント内の現在のオブジェクトを開く"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading"
+msgstr "次の見出しへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading"
+msgstr "次の見出しがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading"
+msgstr "前の見出しへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading"
+msgstr "前の見出しがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 1"
+msgstr "次の見出し1へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 1"
+msgstr "次の見出し1がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 1"
+msgstr "前の見出し1へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 1"
+msgstr "前の見出し1がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 2"
+msgstr "次の見出し2へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 2"
+msgstr "次の見出し2がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 2"
+msgstr "前の見出し2へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 2"
+msgstr "前の見出し2がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 3"
+msgstr "次の見出し3へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 3"
+msgstr "次の見出し3がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 3"
+msgstr "前の見出し3へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 3"
+msgstr "前の見出し3がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 4"
+msgstr "次の見出し4へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 4"
+msgstr "次の見出し4がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 4"
+msgstr "前の見出し4へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 4"
+msgstr "前の見出し4がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 5"
+msgstr "次の見出し5へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 5"
+msgstr "次の見出し5がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 5"
+msgstr "前の見出し5へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 5"
+msgstr "前の見出し5がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 6"
+msgstr "次の見出し6へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 6"
+msgstr "次の見出し6がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 6"
+msgstr "前の見出し6へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 6"
+msgstr "前の見出し6がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next table"
+msgstr "次のテーブルへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next table"
+msgstr "次のテーブルがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous table"
+msgstr "前のテーブルへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous table"
+msgstr "前のテーブルがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next link"
+msgstr "次のリンクへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next link"
+msgstr "次のリンクがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous link"
+msgstr "前のリンクへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous link"
+msgstr "前のリンクがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next visited link"
+msgstr "次の既読リンクへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next visited link"
+msgstr "次の既読リンクがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous visited link"
+msgstr "前の既読リンクへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous visited link"
+msgstr "前の既読リンクがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next unvisited link"
+msgstr "次の未読リンクへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next unvisited link"
+msgstr "次の未読リンクがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous unvisited link"
+msgstr "前の未読リンクへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous unvisited link"
+msgstr "前の未読リンクがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next form field"
+msgstr "次のフォームフィールドへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next form field"
+msgstr "次のフォームフィールドがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous form field"
+msgstr "前のフォームフィールドへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous form field"
+msgstr "前のフォームフィールドがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next list"
+msgstr "次のリストへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next list"
+msgstr "次のリストがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous list"
+msgstr "前のリストへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous list"
+msgstr "前のリストがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next list item"
+msgstr "次のリスト項目へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next list item"
+msgstr "次のリスト項目がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous list item"
+msgstr "前のリスト項目へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous list item"
+msgstr "前のリスト項目がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next button"
+msgstr "次のボタンへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next button"
+msgstr "次のボタンがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous button"
+msgstr "前のボタンへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous button"
+msgstr "前のボタンがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next edit field"
+msgstr "次のエディットフィールドに移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next edit field"
+msgstr "次のエディットフィールドがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous edit field"
+msgstr "前のエディットフィールドに移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous edit field"
+msgstr "前のエディットフィールドがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next frame"
+msgstr "次のフレームへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next frame"
+msgstr "次のフレームがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous frame"
+msgstr "前のフレームへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous frame"
+msgstr "前のフレームがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next separator"
+msgstr "次の区切り線へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next separator"
+msgstr "次の区切り線がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous separator"
+msgstr "前の区切り線へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous separator"
+msgstr "前の区切り線がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next radio button"
+msgstr "次のラジオボタンへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next radio button"
+msgstr "次のラジオボタンがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous radio button"
+msgstr "前のラジオボタンへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous radio button"
+msgstr "前のラジオボタンがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next combo box"
+msgstr "次のコンボボックスへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next combo box"
+msgstr "次のコンボボックスがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous combo box"
+msgstr "前のコンボボックスへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous combo box"
+msgstr "前のコンボボックスがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next check box"
+msgstr "次のチェックボックスへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next check box"
+msgstr "次のチェックボックスがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous check box"
+msgstr "前のチェックボックスへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous check box"
+msgstr "前のチェックボックスがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next graphic"
+msgstr "次の画像へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next graphic"
+msgstr "次の画像がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous graphic"
+msgstr "前の画像へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous graphic"
+msgstr "前の画像がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next block quote"
+msgstr "次の引用文へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next block quote"
+msgstr "次の引用文がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous block quote"
+msgstr "前の引用文へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous block quote"
+msgstr "前の引用文がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "skips forward past a block of links"
+msgstr "リンクブロックを前方向にスキップ"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no more text after a block of links"
+msgstr "リンクブロックの後にテキストがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "skips backward past a block of links"
+msgstr "リンクブロックを後ろ方向にスキップ"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no more text before a block of links"
+msgstr "リンクブロックの前にテキストがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next landmark"
+msgstr "次のランドマークへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next landmark"
+msgstr "次のランドマークがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous landmark"
+msgstr "前のランドマークへ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous landmark"
+msgstr "前のランドマークがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next embedded object"
+msgstr "次の埋め込みオブジェクトに移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next embedded object"
+msgstr "次の埋め込みオブジェクトがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous embedded object"
+msgstr "前の埋め込みオブジェクトに移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous embedded object"
+msgstr "前の埋め込みオブジェクトがありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next annotation"
+msgstr "次の注釈へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next annotation"
+msgstr "次の注釈がありません"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous annotation"
+msgstr "前の注釈へ移動"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous annotation"
+msgstr "前の注釈がありません"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Lin&ks"
+msgstr "リンク(&K)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Headings"
+msgstr "見出し(&H)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Lan&dmarks"
+msgstr "ランドマーク(&D)"
+
+#. Translators: The title of the browse mode Elements List dialog.
+msgid "Elements List"
+msgstr "要素リスト"
+
+#. Translators: The label of a group of radio buttons to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Type:"
+msgstr "種別"
+
+#. Translators: The label of an editable text field to filter the elements
+#. in the browse mode Elements List dialog.
+msgid "&Filter by:"
+msgstr "フィルター(&F)"
+
+#. Translators: The label of a button to activate an element
+#. in the browse mode Elements List dialog.
+msgid "&Activate"
+msgstr "アクティブ化(&A)"
+
+#. Translators: The label of a button to move to an element
+#. in the browse mode Elements List dialog.
+msgid "&Move to"
+msgstr "移動(&M)"
+
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
@@ -660,18 +1149,17 @@ msgstr "不明な色"
 msgid "black"
 msgstr "黒"
 
-#. Translators: The color green.
-msgid "green"
-msgstr "緑"
+#. Translators: The color dark green.
+msgid "dark green"
+msgstr "暗い緑"
 
 #. Translators: The light gray color.
 msgid "light grey"
 msgstr "ライトグレー"
 
-#. Translators: The color lime.
-#. For more info see: http://en.wikipedia.org/wiki/Lime_%28color%29
-msgid "lime"
-msgstr "ライム"
+#. Translators: The color green (full brightness)
+msgid "green"
+msgstr "緑"
 
 #. Translators: The color gray (halfway between white and black).
 msgid "grey"
@@ -1491,13 +1979,18 @@ msgstr "NVDAを読み込み中です。お待ちください..."
 msgid "NVDA started"
 msgstr "NVDA起動"
 
+#. Translators: Title of a dialog to find text.
+msgid "Find"
+msgstr "検索"
+
 #. Translators: Dialog text for NvDA's find command.
 msgid "Type the text you wish to find"
 msgstr "探したい文字列を入力してください"
 
-#. Translators: Title of a dialog to find text.
-msgid "Find"
-msgstr "検索"
+#. Translators: An option in find dialog to perform case-sensitive search.
+#. Translators: This is a label for a checkbox in add dictionary entry dialog.
+msgid "Case &sensitive"
+msgstr "大文字小文字を区別(&S)"
 
 #, python-format
 msgid "text \"%s\" not found"
@@ -2207,7 +2700,7 @@ msgstr "AC電源オン"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
-msgstr "残り{hours:d} 時間 {minutes:d} 分"
+msgstr "残り{hours:d}時間{minutes:d}分"
 
 #. Translators: Input help mode message for report battery status command.
 msgid "reports battery status and time remaining if AC is not plugged in"
@@ -2267,7 +2760,7 @@ msgstr "NVDAのマウス設定ダイアログを表示"
 
 #. Translators: Input help mode message for go to object presentation dialog command.
 msgid "Shows the NVDA object presentation settings dialog"
-msgstr "NVDAのオブジェクト通知設定ダイアログを表示"
+msgstr "NVDAのオブジェクト表示設定ダイアログを表示"
 
 #. Translators: Input help mode message for go to browse mode dialog command.
 msgid "Shows the NVDA browse mode settings dialog"
@@ -2285,7 +2778,7 @@ msgstr "現在のNVDAの設定情報を保存"
 msgid ""
 "Pressing once reverts the current configuration to the most recently saved "
 "state. Pressing three times reverts to factory defaults."
-msgstr "1回押すと設定を前回保存した値に戻す。3回押すと設定を初期状態に戻す"
+msgstr "1回押すと前回保存された設定に戻す。3回押すと設定をリセット"
 
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
@@ -3249,7 +3742,7 @@ msgstr "更新はありません。"
 
 #. Translators: The label of a button to download and install an NVDA update.
 msgid "Download and &install update"
-msgstr "更新をダウンロードしてアップデートする(&I)"
+msgstr "更新をダウンロードしてインストール(&I)"
 
 #. Translators: The label of a button to download an NVDA update.
 msgid "&Download update"
@@ -3257,7 +3750,7 @@ msgstr "更新をダウンロード(&D)"
 
 #. Translators: The label of a button to remind the user later about performing some action.
 msgid "Remind me &later"
-msgstr "後で通知する(&L)"
+msgstr "後で通知(&L)"
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The label of a button to close the Addons dialog.
@@ -3279,7 +3772,7 @@ msgstr "ダウンロード中"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
-msgstr "更新をダウンロード中にエラーが発生しました。"
+msgstr "更新のダウンロード中にエラーが発生しました。"
 
 #. Translators: The message presented when the update has been successfully downloaded
 #. and is about to be installed.
@@ -3320,18 +3813,18 @@ msgstr "寄付(&D)"
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
 msgid "&Not now"
-msgstr "後で行う（&N）"
+msgstr "後で行う(&N)"
 
 #. Translators: The label of a button to indicate that the user is finished donating
 #. in the "Please Donate" dialog.
 msgid "&Done"
-msgstr "寄付を終了（&D）"
+msgstr "寄付を終了(&D)"
 
 msgid "NonVisual Desktop Access"
 msgstr "NonVisual Desktop Access"
 
 msgid "A free and open source screen reader for Microsoft Windows"
-msgstr "無料でオープンソースのMicrosoft Windows用スクリーン・リーダー"
+msgstr "無料でオープンソースのMicrosoft Windows用スクリーンリーダー"
 
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C) {years} NVDA Contributors"
@@ -3829,6 +4322,17 @@ msgstr "空白のスライド"
 msgid "Waiting for Powerpoint..."
 msgstr "パワーポイントの処理を待っています"
 
+#. Translators: The name of the NVDA command category for Skype specific commands.
+msgid "Skype"
+msgstr "Skype"
+
+msgid "Reports and moves the review cursor to a recent message"
+msgstr "チャット履歴の通知とレビューカーソルの移動"
+
+#. Translators: Indicates that a contact stopped typing.
+msgid "Typing stopped"
+msgstr "入力ストップ"
+
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
 msgstr "巻き戻し"
@@ -4124,7 +4628,7 @@ msgstr "NVDAのインストール(&I)..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
-msgstr "プラグインの再読み込み(&L)"
+msgstr "プラグインの再読み込み(&R)"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
@@ -4167,7 +4671,7 @@ msgstr "設定プロファイル(&C)..."
 
 #. Translators: The label for the menu item to revert to saved configuration.
 msgid "&Revert to saved configuration"
-msgstr "保存された設定の復元(&R)"
+msgstr "前回保存された設定に戻す(&R)"
 
 msgid "Reset all settings to saved state"
 msgstr "すべての設定情報を保存されている設定に戻す"
@@ -4175,7 +4679,7 @@ msgstr "すべての設定情報を保存されている設定に戻す"
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
 msgid "&Reset configuration to factory defaults"
-msgstr "設定のリセット(&R)"
+msgstr "設定のリセット"
 
 msgid "Reset all settings to default state"
 msgstr "設定をリセットして初期値に戻す"
@@ -4226,16 +4730,16 @@ msgstr "オプション"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use CapsLock as an NVDA modifier key"
-msgstr "英語キーボードのCapsLockキーをNVDAキーとして使用する"
+msgstr "英語キーボードのCapsLockキーをNVDAキーとして使用"
 
 #. Translators: The label of a check box in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
-msgstr "Windowsへのログオン後にNVDAを自動的に開始する(&A)"
+msgstr "Windowsへのログオン後にNVDAを自動的に開始(&A)"
 
 #. Translators: This is a label for a checkbox in welcome dialog to show welcome dialog at startup.
 msgid "Show this dialog when NVDA starts"
-msgstr "NVDA起動時にこのダイアログを表示する"
+msgstr "NVDA起動時にこのダイアログを表示"
 
 #. Translators: The label of the license text which will be shown when NVDA installation program starts.
 msgid "License Agreement"
@@ -4251,7 +4755,7 @@ msgstr "このコンピューターにNVDAをインストール(&I)"
 
 #. Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
 msgid "Create &portable copy"
-msgstr "ポータブル版を作成する(&P)"
+msgstr "ポータブル版を作成(&P)"
 
 #. Translators: The label of the button in NVDA installation program to continue using the installation program as a temporary copy of NVDA.
 msgid "&Continue running"
@@ -4352,7 +4856,7 @@ msgid ""
 "Failed to open add-on package file at %s - missing file or invalid file "
 "format"
 msgstr ""
-"アドオン パッケージ ファイル %s を 開けません。ファイルが不足しているか正しく"
+"アドオン パッケージ ファイル %s を開けません。ファイルが不足しているか正しく"
 "ありません。"
 
 #. Translators: A message asking the user if they really wish to install an addon.
@@ -4422,7 +4926,7 @@ msgstr ""
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
-msgstr "NVDAを再起動する"
+msgstr "NVDAの再起動"
 
 #. Translators: message shown in the Addon Information dialog.
 msgid ""
@@ -4522,7 +5026,7 @@ msgstr "手動アクティブ化"
 
 #. Translators: The label of a field to enter a new name for a configuration profile.
 msgid "New name:"
-msgstr "新しい名前:"
+msgstr "新しい名前"
 
 #. Translators: The title of the dialog to rename a configuration profile.
 msgid "Rename Profile"
@@ -4578,7 +5082,7 @@ msgstr "新しいプロファイル"
 
 #. Translators: The label of a field to enter the name of a new configuration profile.
 msgid "Profile name:"
-msgstr "プロファイルの名前:"
+msgstr "プロファイルの名前"
 
 #. Translators: The label of a radio button to specify that a profile will be used for manual activation
 #. in the new configuration profile dialog.
@@ -4586,7 +5090,7 @@ msgid "Manual activation"
 msgstr "手動アクティブ化"
 
 msgid "Use this profile for:"
-msgstr "このプロファイルの適用対象:"
+msgstr "このプロファイルの適用対象"
 
 #. Translators: The confirmation prompt presented when creating a new configuration profile
 #. and the selected trigger is already associated.
@@ -4706,7 +5210,7 @@ msgstr ""
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Use NVDA on the Windows &logon screen"
-msgstr "ログオン画面でNVDAを使用する(&L)"
+msgstr "ログオン画面でNVDAを使用(&L)"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "&Keep existing desktop shortcut"
@@ -4716,7 +5220,7 @@ msgstr "デスクトップのショートカットを残す(&K)"
 #. If the shortcut key has been changed for this locale,
 #. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
-msgstr "デスクトップにアイコンとショートカットキー（Ctrl+Alt+N）を作成する(&D)"
+msgstr "デスクトップにアイコンとショートカットキー（Ctrl+Alt+N）を作成(&D)"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Copy &portable configuration to current user account"
@@ -4840,7 +5344,7 @@ msgstr "言語"
 
 #. Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 msgid "&Save configuration on exit"
-msgstr "終了時に設定情報を保存する(&S)"
+msgstr "終了時に設定情報を保存(&S)"
 
 #. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
 msgid "Sho&w exit options when exiting NVDA"
@@ -4861,19 +5365,19 @@ msgstr "ログ記録レベル"
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 msgid ""
 "Use NVDA on the Windows logon screen (requires administrator privileges)"
-msgstr "ログオン画面でNVDAを使用する（管理者権限が必要です）"
+msgstr "ログオン画面でNVDAを使用（管理者権限が必要です）"
 
 #. Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
 msgid ""
 "Use currently saved settings on the logon and other secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"現在保存されている情報をログオンまたはその他のセキュアスクリーンで使用する"
-"（管理者権限が必要です）"
+"現在保存されている情報をログオンまたはその他のセキュアスクリーンで使用（管理"
+"者権限が必要です）"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
-msgstr "自動的に確認してNVDAを更新する(&U)"
+msgstr "自動的に確認してNVDAを更新(&U)"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -4881,9 +5385,9 @@ msgid ""
 "to the system profile could be a security risk. Do you still wish to copy "
 "your settings?"
 msgstr ""
-"ユーザー設定フォルダーにカスタムプラグインがみつかりました。これらをシステム"
-"プロファイルにコピーすることは、セキュリティ上のリスクとなる可能性がありま"
-"す。本当に設定をコピーしますか？"
+"ユーザー設定フォルダーにアドオンがみつかりました。これらをシステムプロファイ"
+"ルにコピーすることは、セキュリティ上のリスクとなる可能性があります。本当に設"
+"定をコピーしますか？"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
@@ -4983,7 +5487,12 @@ msgstr "サポートされている場合自動的に方言を切り換える"
 #. Translators: This is the label for a combobox in the
 #. voice settings dialog (possible choices are none, some, most and all).
 msgid "Punctuation/symbol &level:"
-msgstr "句読点/記号レベル(&L):"
+msgstr "句読点/記号レベル(&L)"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+msgid "Trust voice's language when processing characters and symbols"
+msgstr "記号と文字の説明に音声の言語を使用"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -5002,7 +5511,7 @@ msgstr "大文字にビープ音を付ける(&B)"
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 msgid "Use &spelling functionality if supported"
-msgstr "サポートされている場合スペル読み機能を使用する(&S)"
+msgstr "サポートされている場合スペル読み機能を使用(&S)"
 
 #. Translators: This is the label for the keyboard settings dialog.
 msgid "Keyboard Settings"
@@ -5020,12 +5529,12 @@ msgstr "キーボード配列"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "テンキーのInsertキーをNVDAキーとして使用する"
+msgstr "テンキーのInsertキーをNVDAキーとして使用"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use extended Insert as an NVDA modifier key"
-msgstr "InsertキーをNVDAキーとして使用する"
+msgstr "InsertキーをNVDAキーとして使用"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -5207,7 +5716,7 @@ msgstr "オブジェクト位置情報の通知(&P)"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Guess object &position information when unavailable"
-msgstr "オブジェクトの位置を推測する(&P)"
+msgstr "オブジェクトの位置を推測(&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -5251,7 +5760,7 @@ msgstr "1ページの行数(&N)"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Use &screen layout (when supported)"
-msgstr "サポートされている場合画面レイアウトを使用する(&S)"
+msgstr "サポートされている場合画面レイアウトを使用(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -5277,6 +5786,11 @@ msgstr "キャレットの移動を追跡する自動フォーカスモード"
 #. browse mode settings dialog.
 msgid "Audio indication of focus and browse modes"
 msgstr "フォーカスモードとブラウズモードの切替を音で通知"
+
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings dialog.
+msgid "&Trap all non-command gestures from reaching the document"
+msgstr "ドキュメントでコマンド以外の操作による入力を防止(&T)"
 
 #. Translators: This is the label for the document formatting dialog.
 msgid "Document Formatting"
@@ -5324,7 +5838,7 @@ msgstr "スタイルの通知(&Y)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling errors"
+msgid "Report spelling e&rrors"
 msgstr "スペルエラーの通知(&R)"
 
 #. Translators: This is the label for a checkbox in the
@@ -5426,10 +5940,6 @@ msgstr "読み方(&R)"
 msgid "&Comment"
 msgstr "コメント(&C)"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Case &sensitive"
-msgstr "大文字小文字を区別(&S)"
-
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
 msgstr "種別(&T)"
@@ -5460,6 +5970,7 @@ msgid "Type"
 msgstr "種別"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
+#. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 msgid "&Add"
 msgstr "追加(&A)"
@@ -5482,7 +5993,7 @@ msgstr "点字ディスプレイ(&D)"
 
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
-msgstr "ポート(&P):"
+msgstr "ポート(&P)"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
@@ -5506,7 +6017,7 @@ msgstr "メッセージの表示終了待ち時間(秒)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Braille tethered to:"
-msgstr "点字表示切替:"
+msgstr "点字表示切替"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -5522,6 +6033,14 @@ msgstr "点字ディスプレイ %s を読み込めません。"
 
 msgid "Braille Display Error"
 msgstr "点字ディスプレイエラー"
+
+#. Translators: This is the label for the add symbol dialog.
+msgid "Add Symbol"
+msgstr "記号の追加"
+
+#. Translators: This is the label for the edit field in the add symbol dialog.
+msgid "Symbol:"
+msgstr "記号"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 msgid "Symbol Pronunciation"
@@ -5547,9 +6066,23 @@ msgstr "読み方を変更"
 msgid "&Level"
 msgstr "最低読み上げレベル(&L)"
 
+#. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
+msgid "Re&move"
+msgstr "削除(&M)"
+
+#. Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
+#, python-format
+msgid "Symbol \"%s\" is already present."
+msgstr "記号 \"%s\" は登録済みです"
+
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 msgid "Input Gestures"
 msgstr "入力ジェスチャー"
+
+#. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
+msgctxt "inputGestures"
+msgid "&Filter by:"
+msgstr "フィルター(&F)"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -5559,33 +6092,13 @@ msgstr "{main} ({source})"
 
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 msgid "Enter input gesture:"
-msgstr "入力ジェスチャーの登録："
+msgstr "入力ジェスチャーの登録"
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
 "ユーザー定義ジェスチャーを保存できませんでした - 読み取り専用ファイルシステム"
 "が使用されている可能性があります"
-
-#. Translators: Information about NVDA's new laptop keyboard layout.
-msgid ""
-"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in "
-"order to make it more intuitive and consistent.\n"
-"If you use the laptop layout, please see the What's New document for more "
-"information."
-msgstr ""
-"NVDA 2013.1 ではラップトップ配列はより直観的で一貫性のある新しい配列に変更さ"
-"れました。ラップトップ配列でお使いのかたは「最新情報」で詳細をご確認くださ"
-"い。"
-
-#. Translators: The title of a dialog providing information about NVDA's new laptop keyboard layout.
-msgid "New Laptop Keyboard layout"
-msgstr "新しいラップトップ用キーボード配列"
-
-#. Translators: The label of a button in the New Laptop Keyboard Layout dialog
-#. to open the What's New document.
-msgid "Read What's New"
-msgstr "最新情報を読む"
 
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
@@ -5596,22 +6109,6 @@ msgstr "なし"
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
 msgstr "高速読み上げ(&T)"
-
-#. Translators: A setting for a speech synthesizer.
-msgid "&Acceleration"
-msgstr "加速度(&A)"
-
-msgid "male 1"
-msgstr "男性1"
-
-msgid "female 1"
-msgstr "女性1"
-
-msgid "male 2"
-msgstr "男性2"
-
-msgid "female 2"
-msgstr "女性2"
 
 #. Translators: Description for a speech synthesizer.
 msgid "No speech"
@@ -5633,45 +6130,6 @@ msgstr "位置 {x}, {y}"
 msgid "%s landmark"
 msgstr "%s ランドマーク"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Lin&ks"
-msgstr "リンク(&K)"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Headings"
-msgstr "見出し(&H)"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Lan&dmarks"
-msgstr "ランドマーク(&D)"
-
-#. Translators: The title of the browse mode Elements List dialog.
-msgid "Elements List"
-msgstr "要素リスト"
-
-#. Translators: The label of a group of radio buttons to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Type:"
-msgstr "種別:"
-
-#. Translators: The label of an editable text field to filter the elements
-#. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "フィルター:(&F)"
-
-#. Translators: The label of a button to activate an element
-#. in the browse mode Elements List dialog.
-msgid "&Activate"
-msgstr "アクティブ化(&A)"
-
-#. Translators: The label of a button to move to an element
-#. in the browse mode Elements List dialog.
-msgid "&Move to"
-msgstr "移動(&M)"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "更新完了"
@@ -5687,10 +6145,6 @@ msgstr "詳細説明なし"
 #. Translators: the description for the activateLongDescription script on virtualBuffers.
 msgid "Shows the long description at this position if one is found."
 msgstr "詳細説明がある場合に表示"
-
-#. Translators: the description for the activatePosition script on virtualBuffers.
-msgid "activates the current object in the document"
-msgstr "ドキュメント内の現在のオブジェクトを開く"
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -5711,10 +6165,6 @@ msgid ""
 msgstr ""
 "ドキュメントコンテンツのレンダリング中に、可能であれば画面レイアウトのOnまた"
 "はOffを切り替えます"
-
-#. Translators: the description for the elements list dialog script on virtualBuffers.
-msgid "Presents a list of links, headings or landmarks"
-msgstr "見出し、リンク、またはランドマークを一覧表示します"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -5750,428 +6200,6 @@ msgstr "リストやテーブルなどコンテナ要素の最初に移動"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "リストやテーブルなどコンテナ要素の最後に移動"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading"
-msgstr "次の見出しへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading"
-msgstr "次の見出しがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading"
-msgstr "前の見出しへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading"
-msgstr "前の見出しがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 1"
-msgstr "次の見出し1へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 1"
-msgstr "次の見出し1がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 1"
-msgstr "前の見出し1へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 1"
-msgstr "前の見出し1がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 2"
-msgstr "次の見出し2へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 2"
-msgstr "次の見出し2がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 2"
-msgstr "前の見出し2へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 2"
-msgstr "前の見出し2がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 3"
-msgstr "次の見出し3へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 3"
-msgstr "次の見出し3がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 3"
-msgstr "前の見出し3へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 3"
-msgstr "前の見出し3がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 4"
-msgstr "次の見出し4へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 4"
-msgstr "次の見出し4がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 4"
-msgstr "前の見出し4へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 4"
-msgstr "前の見出し4がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 5"
-msgstr "次の見出し5へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 5"
-msgstr "次の見出し5がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 5"
-msgstr "前の見出し5へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 5"
-msgstr "前の見出し5がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 6"
-msgstr "次の見出し6へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 6"
-msgstr "次の見出し6がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 6"
-msgstr "前の見出し6へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 6"
-msgstr "前の見出し6がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next table"
-msgstr "次のテーブルへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next table"
-msgstr "次のテーブルがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous table"
-msgstr "前のテーブルへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous table"
-msgstr "前のテーブルがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next link"
-msgstr "次のリンクへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next link"
-msgstr "次のリンクがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous link"
-msgstr "前のリンクへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous link"
-msgstr "前のリンクがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next visited link"
-msgstr "次の既読リンクへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next visited link"
-msgstr "次の既読リンクがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous visited link"
-msgstr "前の既読リンクへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous visited link"
-msgstr "前の既読リンクがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next unvisited link"
-msgstr "次の未読リンクへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next unvisited link"
-msgstr "次の未読リンクがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous unvisited link"
-msgstr "前の未読リンクへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous unvisited link"
-msgstr "前の未読リンクがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next form field"
-msgstr "次のフォームフィールドへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next form field"
-msgstr "次のフォームフィールドがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous form field"
-msgstr "前のフォームフィールドへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous form field"
-msgstr "前のフォームフィールドがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next list"
-msgstr "次のリストへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next list"
-msgstr "次のリストがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous list"
-msgstr "前のリストへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous list"
-msgstr "前のリストがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next list item"
-msgstr "次のリスト項目へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next list item"
-msgstr "次のリスト項目がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous list item"
-msgstr "前のリスト項目へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous list item"
-msgstr "前のリスト項目がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next button"
-msgstr "次のボタンへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next button"
-msgstr "次のボタンがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous button"
-msgstr "前のボタンへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous button"
-msgstr "前のボタンがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next edit field"
-msgstr "次のエディットフィールドに移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next edit field"
-msgstr "次のエディットフィールドがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous edit field"
-msgstr "前のエディットフィールドに移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous edit field"
-msgstr "前のエディットフィールドがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next frame"
-msgstr "次のフレームへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next frame"
-msgstr "次のフレームがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous frame"
-msgstr "前のフレームへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous frame"
-msgstr "前のフレームがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next separator"
-msgstr "次の区切り線へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next separator"
-msgstr "次の区切り線がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous separator"
-msgstr "前の区切り線へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous separator"
-msgstr "前の区切り線がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next radio button"
-msgstr "次のラジオボタンへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next radio button"
-msgstr "次のラジオボタンがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous radio button"
-msgstr "前のラジオボタンへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous radio button"
-msgstr "前のラジオボタンがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next combo box"
-msgstr "次のコンボボックスへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next combo box"
-msgstr "次のコンボボックスがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous combo box"
-msgstr "前のコンボボックスへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous combo box"
-msgstr "前のコンボボックスがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next check box"
-msgstr "次のチェックボックスへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next check box"
-msgstr "次のチェックボックスがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous check box"
-msgstr "前のチェックボックスへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous check box"
-msgstr "前のチェックボックスがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next graphic"
-msgstr "次の画像へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next graphic"
-msgstr "次の画像がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous graphic"
-msgstr "前の画像へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous graphic"
-msgstr "前の画像がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next block quote"
-msgstr "次の引用文へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next block quote"
-msgstr "次の引用文がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous block quote"
-msgstr "前の引用文へ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous block quote"
-msgstr "前の引用文がありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "skips forward past a block of links"
-msgstr "リンクブロックを前方向にスキップ"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no more text after a block of links"
-msgstr "リンクブロックの後にテキストがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "skips backward past a block of links"
-msgstr "リンクブロックを後ろ方向にスキップ"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no more text before a block of links"
-msgstr "リンクブロックの前にテキストがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next landmark"
-msgstr "次のランドマークへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next landmark"
-msgstr "次のランドマークがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous landmark"
-msgstr "前のランドマークへ移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous landmark"
-msgstr "前のランドマークがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next embedded object"
-msgstr "次の埋め込みオブジェクトに移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next embedded object"
-msgstr "次の埋め込みオブジェクトがありません"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous embedded object"
-msgstr "前の埋め込みオブジェクトに移動"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous embedded object"
-msgstr "前の埋め込みオブジェクトがありません"
-
-msgid "focus mode"
-msgstr "フォーカスモード"
-
-msgid "browse mode"
-msgstr "ブラウズモード"
 
 msgid "Taskbar"
 msgstr "タスクバー"
@@ -6365,6 +6393,12 @@ msgstr "プライマリーヘッダー"
 msgid "Text frame"
 msgstr "テキストフレーム"
 
+msgid "comment: {text} by {author} on {date}"
+msgstr "コメント {text} 更新者 {author} 更新日 {date}"
+
+msgid "{revisionType}: {text} by {author} on {date}"
+msgstr "{revisionType} {text} 更新者 {author} 更新日 {date}"
+
 msgid "unknown author"
 msgstr "著者不明"
 
@@ -6521,6 +6555,11 @@ msgstr "テーブル内ではありません"
 
 msgid "Edge of table"
 msgstr "テーブルの端"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "注釈(&A)"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE series"

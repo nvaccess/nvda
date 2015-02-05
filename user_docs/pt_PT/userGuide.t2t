@@ -437,7 +437,8 @@ Apesar de um rato físico ou de um touchpad terem de ser utilizados para navegar
 
 + Modo de Navegação +
 Os documentos complexos, só de leitura, tais como páginas de Internet, são apresentados pelo NVDA, através da utilização do modo de navegação.
-Isto inclui os documentos no Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader e Adobe Flash.
+Isto inclui os documentos no Mozilla Firefox, Microsoft Internet Explorer, mensagens em HTML do Microsoft Outlook, Google Chrome, Adobe Reader e Adobe Flash.
+O modo de navegação também está disponível como opção para o Microsoft Word para navegar documentos complexos.
 
 No modo de navegação, o conteúdo do documento está disponível numa representação plana e pode ser navegado com as teclas de cursor, como se se tratasse de um documento de texto normal.
 Todos os comandos de teclado do NVDA referentes ao [cursor do sistema #SystemCaret] trabalharão neste modo; ex: leitura contínua, anunciar formatação, comandos de navegação em tabelas, etc.
@@ -683,6 +684,10 @@ Tecla: NVDA+P
 Esta opção permite-lhe escolher que pontuações e outros símbolos deverão ser anunciados como palavras.
 Por exemplo: quando definido para todo, todos os símbolos, serão anunciados como palavras, ou seja, um ponto será mesmo anunciado como ponto.
 Esta opção aplica-se a todos os sintetizadores, e não apenas ao sintetizador actualmente activo.
+
+==== Usar o idioma da voz ao processar caracteres e símbolos ====
+Activada por padrão, esta opção indica ao NVDA se deve usar o idioma da voz actual para processar a leitura de símbolos e caracteres, incluindo sinais de pontuação.
+Se não quiser que o NVDA leia a pontuação no idioma da voz, para um determinado sintetizador ou voz, pode desactivar esta funcionalidade para forçar o NVDA para usar o idioma da interface.
 
 ==== Alterar a Percentagem da Entoação para Letras Maiúsculas ====
 Este campo de edição permite-lhe definir a alteração da entoação da voz, que irá ser usada para falar uma letra maiúscula.
@@ -1009,6 +1014,11 @@ Por exemplo, se for pressionando a Seta Abaixo, numa página da Internet e encon
 ==== Indicação em áudio dos modos de foco e de navegação ====
 Se esta opção estiver activa, o NVDA reproduzirá sons especiais, quando alternar entre o modo de navegação e modo de foco, em vez de anunciar essa alteração.
 
+==== Impedir comandos de atingir o documento ====
+Activada por padrão, esta opção permite que escolha se os comandos, (como o pressionar de teclas) que não são um comando do NVDA, nem são considerados como uma tecla de comando, em geral, devem ser impedidos de atingir o documento que está actualmente em foco.
+Por exemplo, se a opção estiver activada, se a letra j for pressionada, seria impedida de atingir o documento, pois não é um comando rápido de navegação nem é provável que seja um comando da própria aplicação.
+
+
 +++ Definições de Formatação de Documentos (NVDA+Ctrl+D) +++[DocumentFormattingSettings]
 Esta caixa de diálogo está no menu Preferências, em "Formatação de Documentos...".
 
@@ -1072,7 +1082,7 @@ O NVDA, por padrão), ignora a distinção entre maiúsculas e minúsculas.
 
 Finalmente, um grupo de botões de rádio permite indicar ao NVDA se deve ser encontrado em qualquer local, se apenas em palavras completas ou deve ser considerado uma expressão regular.
 Configurando o padrão como palavra inteira define que a substituição só será feita se o padrão for encontrado como não fazendo parte de uma palavra maior; i.e. antes e depois do padrão não poderá estar un caracter diferente de um caracter alfanumérico ou um sublinhado (ou nenhum caracter ).
-Assim, usando o exemplo anterior de substituir a palavra "pássaro" por "sapo", se definir como uma substituição de palavra inteira, não substituirá "pássaros".
+Assim, usando o exemplo anterior de substituir a palavra "pássaro" por "sapo", se definir como uma substituição de palavra inteira, não substituirá nada na palavra "pássaros".
 
 Uma expressão regular é um padrão que contém símbolos especiais que permitem introduzir mais de um caracter ao mesmo tempo, ou introduzir apenas números, ou só letras, referindo alguns exemplos.
 As expressões regulares não são explicadas neste Manual do Utilizador, mas existem muitos tutoriais na Internet que podem proporcionar-lhe mais informações.
@@ -1084,6 +1094,12 @@ Para mudar um símbolo, seleccione-o, primeiro, na lista de símbolos.
 O campo de substituição permite-lhe mudar o texto que deverá ser falado no lugar deste símbolo.
 Usando o campo nível, pode ajustar o nível mais baixo em que o símbolo deve ser anunciado.
 
+Pode adicionar novos símbolos pressionando o botão Adicionar.
+No diálogo que se abre, introduza o símbolo e pressione o botão OK.
+Em seguida, introduza o texto Substituir por e defina o nível para o novo símbolo, como faria para outros símbolos.
+
+Pode remover um símbolo que tenha adicionado anteriormente, pressionando o botão Remover.
+
 Quando tiver terminado, pressione o butão OK, para guardar as suas modificações, ou o butão Cancelar, para as descartar.
 
 +++ Comandos +++
@@ -1093,6 +1109,7 @@ Apenas os comandos aplicáveis imediatamente antes do diálogo ser aberto são m
 Por exemplo, se quiser personalizar comandos relacionados com o modo de navegação, deve abrir a caixa de diálogo dos comandos quando está no modo de navegação.
 
 A estrutura hierárquica deste diálogo lista todos os comandos do NVDA aplicáveis, agrupados por categoria.
+Pode filtrá-los, introduzindo uma ou mais palavras do nome do comando na caixa de edição Filtrar por em qualquer ordem.
 Qualquer tecla ou gesto associado a um comando é listado dentro do ramo desse comando.
 
 Para adicionar uma tecla ou um gesto a um comando, seleccione o comando e pressione o botão Adicionar.
@@ -1940,20 +1957,20 @@ nvda -q
 
 Algumas das opções têm uma versão curta e uma longa, enquanto algumas só têm a longa.
 Para as que têm uma versão curta, pode combiná-las como se segue:
-| nvda -rm | This will exit the currently running copy of NVDA and will start a new copy with startup sounds disabled, etc. |
-| nvda -rm --disable-addons | Same as above, but with add-ons disabled |
+| nvda -rm | Isto sairá da cópia do NVDA em execução e iniciará uma nova cópia com o som de início desactivado, etc. |
+| nvda -rm --disable-addons | Igual à anterior mas também com os extras desactivados |
 
-Some of the command line options accept additional parameters; e.g. how detailed the logging should be or the path to the user configuration directory.
-Those parameters should be placed after the option, separated from the option by a space when using the short version or an equals sign (=) when using the long version; e.g.:
-| nvda -l 10 | Tells NVDA to start with log level set to debug |
-| nvda --log-file=c:\nvda.log |  Tells NVDA to write its log to c:\nvda.log |
-| nvda --log-level=20 -f c:\nvda.log | Tels NVDA to start with log level set to info and to write its log to c:\nvda.log |
+Algumas das opções da linha de comando aceitam parâmetros adicionais, por exemplo quão detalhado o ficheiro de log deve ser ou o caminho para as configurações do utilizador.
+Esses parâmetros devem ser colocados depois da opção, separados da opção por um espaço se estivermos a usar a versão curta ou um sinal de igual (=) se usarmos a versão longa. Por exemplo:
+| nvda -l 10 | Informa o NVDA para iniciar com o nível de registo definido para depuração |
+| nvda --log-file=c:\nvda.log |  Informa o NVDA para escrever o ficheiro de log em c:\nvda.log |
+| nvda --log-level=20 -f c:\nvda.log | Informa o NVDA para iniciar com o nível de registo definido para info e para guardar o ficheiro em c:\nvda.log |
 
-Following are the command line options for NVDA:
-|| Short | Long | Description |
+Seguidamente apresentam-se as opções para a linha de comando para o NVDA
+|| Curta | Longa | Descrição |
 | -h | --help | Mostra a ajuda da linha de comandos e sai |
 | -q | --quit | Sai da cópia em execução do NVDA |
-| -r | --replace | Sai da cópia em execução do NVDA e inicia esta |
+| -r | --replace | Sai da cópia em execução do NVDA e inicia outra |
 | -k | --check-running | Anuncia se o NVDA está em execução via código de saída; 0 se em execução, 1 se não em execução |
 | -f NomeDoFicheiroDeRegisto | --log-file=NomeDoFicheiroDeRegisto | Especifica em que ficheiro devem ser escritas as informações de registo |
 | -l NivelDeRegisto | --log-level=NivelDeRegisto | O nível mais baixo de mensagens registadas (depuração 10, info 20, aviso 30, erro 40, crítico 50), o padrão é aviso |

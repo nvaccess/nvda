@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-06 19:11+1000\n"
-"PO-Revision-Date: 2014-11-20 18:07+0300\n"
-"Last-Translator: Ruslan <eye0@rambler.ru>\n"
+"POT-Creation-Date: 2015-02-03 19:12+1000\n"
+"PO-Revision-Date: 2015-02-04 12:19+0300\n"
+"Last-Translator: Ruslan Kolodyazhni <eye0@rambler.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
@@ -627,6 +627,495 @@ msgstr "точка"
 msgid "space"
 msgstr "Пробел"
 
+msgid "focus mode"
+msgstr "Режим редактирования"
+
+msgid "browse mode"
+msgstr "Режим обзора"
+
+#. Translators: a message when a particular quick nav command is not supported in the current document.
+msgid "Not supported in this document"
+msgstr "Не поддерживается в данном документе"
+
+#. Translators: the description for the elements list dialog script on virtualBuffers.
+msgid "Presents a list of links, headings or landmarks"
+msgstr "Вызывает диалог со списком ссылок, заголовков и ориентиров"
+
+#. Translators: the description for the activatePosition script on virtualBuffers.
+msgid "activates the current object in the document"
+msgstr "Активирует текущий объект документа"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading"
+msgstr "переходит на следующий заголовок"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading"
+msgstr "Нет следующего заголовка"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading"
+msgstr "переходит на предыдущий заголовок"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading"
+msgstr "Нет предыдущего заголовка"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 1"
+msgstr "переходит на следующий заголовок уровня 1"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 1"
+msgstr "Нет следующего заголовка уровня 1"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 1"
+msgstr "переходит на предыдущий заголовок уровня 1"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 1"
+msgstr "Нет предыдущего заголовка уровня 1"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 2"
+msgstr "переходит на следующий заголовок уровня 2"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 2"
+msgstr "Нет следующего заголовка уровня 2"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 2"
+msgstr "переходит на предыдущий заголовок уровня 2"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 2"
+msgstr "Нет предыдущего заголовка уровня 2"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 3"
+msgstr "переходит на следующий заголовок уровня 3"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 3"
+msgstr "Нет следующего заголовка уровня 3"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 3"
+msgstr "переходит на предыдущий заголовок уровня 3"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 3"
+msgstr "Нет предыдущего заголовка уровня 3"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 4"
+msgstr "переходит на следующий заголовок уровня 4"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 4"
+msgstr "Нет следующего заголовка уровня 4"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 4"
+msgstr "переходит на предыдущий заголовок уровня 4"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 4"
+msgstr "Нет предыдущего заголовка уровня 4"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 5"
+msgstr "переходит на следующий заголовок уровня 5"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 5"
+msgstr "Нет следующего заголовка уровня 5"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 5"
+msgstr "переходит на предыдущий заголовок уровня 5"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 5"
+msgstr "Нет предыдущего заголовка уровня 5"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 6"
+msgstr "переходит на следующий заголовок уровня 6"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 6"
+msgstr "Нет следующего заголовка уровня 6"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 6"
+msgstr "переходит на предыдущий заголовок уровня 6"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 6"
+msgstr "Нет предыдущего заголовка уровня 6"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next table"
+msgstr "переходит на следующую таблицу"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next table"
+msgstr "Нет следующей таблицы"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous table"
+msgstr "переходит на предыдущую таблицу"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous table"
+msgstr "Нет предыдущей таблицы"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next link"
+msgstr "переходит на следующую ссылку"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next link"
+msgstr "Нет следующей ссылки"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous link"
+msgstr "переходит на предыдущую ссылку"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous link"
+msgstr "Нет предыдущей ссылки"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next visited link"
+msgstr "переходит на следующую посещённую ссылку"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next visited link"
+msgstr "Нет следующей посещённой ссылки"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous visited link"
+msgstr "переходит на предыдущую посещённую ссылку"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous visited link"
+msgstr "Нет предыдущей посещённой ссылки"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next unvisited link"
+msgstr "переходит на следующую не посещённую ссылку"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next unvisited link"
+msgstr "Нет следующей не посещённой ссылки"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous unvisited link"
+msgstr "переходит на предыдущую не посещённую ссылку"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous unvisited link"
+msgstr "Нет предыдущей не посещённой ссылки"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next form field"
+msgstr "переходит на следующее поле формы"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next form field"
+msgstr "Нет следующего поля формы"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous form field"
+msgstr "переходит на предыдущее поле формы"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous form field"
+msgstr "Нет предыдущего поля формы"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next list"
+msgstr "переходит на следующий список"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next list"
+msgstr "Нет следующего списка"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous list"
+msgstr "переходит на предыдущий список"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous list"
+msgstr "Нет предыдущего списка"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next list item"
+msgstr "переходит на следующий элемент списка"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next list item"
+msgstr "Нет следующего элемента списка"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous list item"
+msgstr "переходит на предыдущий элемент списка"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous list item"
+msgstr "Нет предыдущего элемента списка"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next button"
+msgstr "переходит на следующую кнопку"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next button"
+msgstr "Нет следующей кнопки"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous button"
+msgstr "переходит на предыдущую кнопку"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous button"
+msgstr "Нет предыдущей кнопки"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next edit field"
+msgstr "переходит на следующее поле редактора"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next edit field"
+msgstr "Нет следующего поля редактора"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous edit field"
+msgstr "переходит на предыдущее поле редактора"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous edit field"
+msgstr "Нет предыдущего поля редактора"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next frame"
+msgstr "переходит на следующий фрейм"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next frame"
+msgstr "Нет следующего фрейма"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous frame"
+msgstr "переходит на предыдущий фрейм"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous frame"
+msgstr "Нет предыдущего фрейма"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next separator"
+msgstr "переходит на следующий разделитель"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next separator"
+msgstr "Нет следующего разделителя"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous separator"
+msgstr "переходит на предыдущий разделитель"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous separator"
+msgstr "Нет предыдущего разделителя"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next radio button"
+msgstr "переходит на следующую радио-кнопку"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next radio button"
+msgstr "Нет следующей радио-кнопки"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous radio button"
+msgstr "переходит на предыдущую радио-кнопку"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous radio button"
+msgstr "Нет предыдущей радио-кнопки"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next combo box"
+msgstr "переходит на следующий комбинированный список"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next combo box"
+msgstr "Нет следующего комбинированного списка"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous combo box"
+msgstr "переходит на предыдущий комбинированный список"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous combo box"
+msgstr "Нет предыдущего комбинированного списка"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next check box"
+msgstr "переходит на следующий флажок"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next check box"
+msgstr "Нет следующего флажка"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous check box"
+msgstr "переходит на предыдущий флажок"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous check box"
+msgstr "Нет предыдущего флажка"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next graphic"
+msgstr "переходит на следующий графический элемент"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next graphic"
+msgstr "Нет следующего графического элемента"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous graphic"
+msgstr "переходит на предыдущий графический элемент"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous graphic"
+msgstr "Нет предыдущего графического элемента"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next block quote"
+msgstr "переходит на следующую цитату"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next block quote"
+msgstr "нет следующей Цитаты"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous block quote"
+msgstr "переходит на предыдущую цитату"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous block quote"
+msgstr "Нет предыдущей цитаты"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "skips forward past a block of links"
+msgstr "Переходит на текст после группы ссылок"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no more text after a block of links"
+msgstr "Нет текста после группы ссылок"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "skips backward past a block of links"
+msgstr "Переходит на текст перед группой ссылок"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no more text before a block of links"
+msgstr "Нет текста перед группой ссылок"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next landmark"
+msgstr "переходит на следующий ориентир"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next landmark"
+msgstr "Нет следующего ориентира"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous landmark"
+msgstr "переходит на предыдущий ориентир"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous landmark"
+msgstr "Нет предыдущего ориентира"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next embedded object"
+msgstr "Переходит на следующий встроеный объект"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next embedded object"
+msgstr "Нет следующего встроеного объекта"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous embedded object"
+msgstr "Переходит на предыдущий встроеный объект"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous embedded object"
+msgstr "Нет предыдущего встроеного объекта"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next annotation"
+msgstr "переход к следующему примечанию"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next annotation"
+msgstr "нет следующего примечания"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous annotation"
+msgstr "переход к предыдущему примечанию"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous annotation"
+msgstr "нет предыдущего примечания"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Lin&ks"
+msgstr "С&сылки"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Headings"
+msgstr "&Заголовки"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Lan&dmarks"
+msgstr "&Ориентиры"
+
+#. Translators: The title of the browse mode Elements List dialog.
+msgid "Elements List"
+msgstr "Список Элементов"
+
+#. Translators: The label of a group of radio buttons to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Type:"
+msgstr "Тип:"
+
+#. Translators: The label of an editable text field to filter the elements
+#. in the browse mode Elements List dialog.
+msgid "&Filter by:"
+msgstr "&Фильтр по:"
+
+#. Translators: The label of a button to activate an element
+#. in the browse mode Elements List dialog.
+msgid "&Activate"
+msgstr "&Активировать"
+
+#. Translators: The label of a button to move to an element
+#. in the browse mode Elements List dialog.
+msgid "&Move to"
+msgstr "&Перейти к"
+
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
@@ -660,18 +1149,17 @@ msgstr "Неизвестный цвет"
 msgid "black"
 msgstr "черный"
 
-#. Translators: The color green.
-msgid "green"
-msgstr "зеленый"
+#. Translators: The color dark green.
+msgid "dark green"
+msgstr "тёмнозелёный"
 
 #. Translators: The light gray color.
 msgid "light grey"
 msgstr "светлосерый"
 
-#. Translators: The color lime.
-#. For more info see: http://en.wikipedia.org/wiki/Lime_%28color%29
-msgid "lime"
-msgstr "лимонный"
+#. Translators: The color green (full brightness)
+msgid "green"
+msgstr "зеленый"
 
 #. Translators: The color gray (halfway between white and black).
 msgid "grey"
@@ -1311,7 +1799,7 @@ msgstr "Недоступно"
 
 #. Translators: This is presented when a control has focus.
 msgid "focused"
-msgstr "Активно"
+msgstr "в фокусе"
 
 #. Translators: This is presented when the control is selected.
 msgid "selected"
@@ -1402,20 +1890,20 @@ msgstr "Доступно для выделения"
 
 #. Translators: Presented when a control can be moved to using system focus.
 msgid "focusable"
-msgstr "Активно"
+msgstr "сфокусированный"
 
 #. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
 msgid "clickable"
-msgstr "По щелчку"
+msgstr "по щелчку"
 
 msgid "editable"
-msgstr "Редактируемый"
+msgstr "редактируемый"
 
 msgid "checkable"
-msgstr "Отмечаемый"
+msgstr "отмечаемый"
 
 msgid "draggable"
-msgstr "Перетаскиваемый"
+msgstr "перетаскиваемый"
 
 msgid "dragging"
 msgstr "Перетаскивание"
@@ -1495,13 +1983,18 @@ msgstr "Загрузка NVDA. Пожалуйста, подождите..."
 msgid "NVDA started"
 msgstr "NVDA готов"
 
+#. Translators: Title of a dialog to find text.
+msgid "Find"
+msgstr "Поиск"
+
 #. Translators: Dialog text for NvDA's find command.
 msgid "Type the text you wish to find"
 msgstr "Введите текст для поиска"
 
-#. Translators: Title of a dialog to find text.
-msgid "Find"
-msgstr "Поиск"
+#. Translators: An option in find dialog to perform case-sensitive search.
+#. Translators: This is a label for a checkbox in add dictionary entry dialog.
+msgid "Case &sensitive"
+msgstr "Учитывать &регистр"
 
 #, python-format
 msgid "text \"%s\" not found"
@@ -1705,41 +2198,41 @@ msgstr "Переходит к предыдущему параметру в ко�
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
-msgstr "читать вводимые символы выключено"
+msgstr "чтение вводимых символов выключено"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters on"
-msgstr "читать вводимые символы включено"
+msgstr "чтение вводимых символов включено"
 
 #. Translators: Input help mode message for toggle speaked typed characters command.
 msgid "Toggles on and off the speaking of typed characters"
-msgstr "Переключает чтение символов при вводе"
+msgstr "Включает и выключает чтение символов при вводе"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
-msgstr "читать вводимые слова выключено"
+msgstr "чтение вводимых слов выключено"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words on"
-msgstr "читать вводимые слова включено"
+msgstr "чтение вводимых слов включено"
 
 #. Translators: Input help mode message for toggle speak typed words command.
 msgid "Toggles on and off the speaking of typed words"
-msgstr "Переключает чтение слов при вводе"
+msgstr "Включает и выключает чтение слов при вводе"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
-msgstr "читать командные клавиши выключено"
+msgstr "чтение командных клавиш выключено"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys on"
-msgstr "читать командные клавиши включено"
+msgstr "чтение командных клавиш включено"
 
 #. Translators: Input help mode message for toggle speak command keys command.
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
-msgstr "Переключает озвучивание клавиш, не являющихся символами"
+msgstr "Включает и выключает озвучивание клавиш, не являющихся символами"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -1898,7 +2391,7 @@ msgstr "Устанавливает навигатор на первый объе
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
 msgid "activate"
-msgstr "&Активировать"
+msgstr "активировать"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 msgid "No action"
@@ -1938,8 +2431,8 @@ msgid ""
 "situated. If this key is pressed twice, the current line will be spelled. "
 "Pressing three times will spell the line using character descriptions."
 msgstr ""
-"читает строку под просмотровым курсором объекта навигатора. Если нажать "
-"дважды, произносит её по буквам. Если нажать трижды, читается фонетическое "
+"читает строку под просмотровым курсором объекта навигатора. Если нажато "
+"дважды, произносит её по буквам. Если нажато трижды, читает фонетическое "
 "описание символов"
 
 #. Translators: a message reported when:
@@ -1979,7 +2472,7 @@ msgid ""
 "word using character descriptions"
 msgstr ""
 "читает слово под просмотровым курсором объекта навигатора. Если нажато "
-"дважды, читает его по буквам. Если нажато трижды, читает фонетическое "
+"дважды, произносит его по буквам. Если нажато трижды, читает фонетическое "
 "описание символов"
 
 #. Translators: Input help mode message for move review cursor to next word command.
@@ -2018,7 +2511,7 @@ msgid ""
 msgstr ""
 "Читает символ под просмотровым курсором объекта навигатора. Если нажато "
 "дважды, читает фонетическое описание символа.  Если нажато трижды, читает "
-"ASCII и шестнадцатиричное значение"
+"десятичное и шестнадцатеричное значение"
 
 msgid "right"
 msgstr "Правый"
@@ -2165,20 +2658,20 @@ msgstr ""
 
 #. Translators: A mode where no progress bar updates are given.
 msgid "no progress bar updates"
-msgstr "Не озвучивать обновления индикаторов выполнения"
+msgstr "не озвучивать обновление индикаторов выполнения"
 
 #. Translators: A mode where progress bar updates will be spoken.
 msgid "speak progress bar updates"
-msgstr "Проговаривать обновление индикаторов выполнения"
+msgstr "проговаривать обновление индикаторов выполнения"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
 msgid "beep for progress bar updates"
-msgstr "Звуковые сигналы обновления индикаторов выполнения"
+msgstr "звуковые сигналы при обновлении индикаторов выполнения"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
 msgid "beep and speak progress bar updates"
 msgstr ""
-"Проговаривать и воспроизводить звуковые сигналы обновления индикаторов "
+"проговаривать и воспроизводить звуковые сигналы при обновлении индикаторов "
 "выполнения"
 
 #. Translators: Input help mode message for toggle progress bar output command.
@@ -2191,19 +2684,19 @@ msgstr ""
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
-msgstr "Читать динамические изменения содержимого выключено"
+msgstr "чтение динамических изменений содержимого выключено"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes on"
-msgstr "Читать динамические изменения содержимого включено"
+msgstr "чтение динамических изменений содержимого включено"
 
 #. Translators: Input help mode message for toggle dynamic content changes command.
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
 msgstr ""
-"Переключает чтение динамических изменений содержимого, например, озвучивание "
-"нового текста в DOS консолях"
+"Включает и выключает чтение динамических изменений содержимого, например, "
+"озвучивание нового текста в DOS консолях"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
@@ -2280,7 +2773,7 @@ msgstr "Работающее приложение %s"
 #. This message will not be presented if there is no module for the current program.
 #, python-format
 msgid " and currently loaded module is %s"
-msgstr "и загруженный модуль %s"
+msgstr " и загруженный модуль %s"
 
 #. Translators: Input help mode message for report current program name and app module name command.
 msgid ""
@@ -2288,7 +2781,7 @@ msgid ""
 "currently loaded appModule"
 msgstr ""
 "Сообщает название  исполняемого файла активного приложения и загруженного "
-"для него модуля."
+"для него модуля"
 
 #. Translators: Input help mode message for go to general settings dialog command.
 msgid "Shows the NVDA general settings dialog"
@@ -2610,7 +3103,7 @@ msgstr "Клавиша приложения 2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "backspace"
-msgstr "Backspace"
+msgstr "backspace"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "caps lock"
@@ -2637,11 +3130,11 @@ msgstr "windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "enter"
-msgstr "ввод"
+msgstr "enter"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad enter"
-msgstr "серый ввод"
+msgstr "серый enter"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "escape"
@@ -2649,19 +3142,19 @@ msgstr "escape"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "page up"
-msgstr "страница вверх"
+msgstr "page up"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "page down"
-msgstr "страница вниз"
+msgstr "page down"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "end"
-msgstr "Конец"
+msgstr "end"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "home"
-msgstr "Начало"
+msgstr "home"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "delete"
@@ -2669,7 +3162,7 @@ msgstr "delete"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad delete"
-msgstr "серое удалить"
+msgstr "серый delete"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left arrow"
@@ -2692,7 +3185,7 @@ msgstr "стрелка вниз"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "applications"
-msgstr "приложения"
+msgstr "applications"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "num lock"
@@ -2700,11 +3193,11 @@ msgstr "num lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "print screen"
-msgstr "снимок экрана"
+msgstr "print screen"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "scroll lock"
-msgstr "scrol lock"
+msgstr "scroll lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 4"
@@ -2752,11 +3245,11 @@ msgstr "серое умножить"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad minus"
-msgstr "numpad minus"
+msgstr "серый минус"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad plus"
-msgstr "numpad plus"
+msgstr "серый плюс"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left control"
@@ -2795,12 +3288,12 @@ msgstr "правая windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "break"
-msgstr "пауза"
+msgstr "break"
 
 #. Translators: This is the name of a key on the keyboard.
 msgctxt "keyLabel"
 msgid "tab"
-msgstr "Таб"
+msgstr "tab"
 
 #. Translators: One of the keyboard layouts for NVDA.
 msgid "desktop"
@@ -2876,7 +3369,7 @@ msgid ""
 "screens."
 msgstr ""
 "Позволяет NVDA работать на экране входа в Windows, на экране контроля "
-"доступом пользователей и в других окнах защещенного рабочего стола."
+"учётных записей и других защищённых экранах."
 
 msgid "Type help(object) to get help about object."
 msgstr "Наберите help(object) для получения справки по объекту object."
@@ -3177,7 +3670,7 @@ msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "Таблица из {columnCount} столбцов и {rowCount} строк"
 
 msgid "NVDA Speech Viewer"
-msgstr "NVDA просмотрщик речи"
+msgstr "Просмотрщик Речи NVDA"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -3537,7 +4030,7 @@ msgstr "содержит вложение"
 
 #. Translators: this Outlook Express message is flagged
 msgid "flagged"
-msgstr ""
+msgstr "отмечено"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 msgid "Attachments"
@@ -3598,11 +4091,11 @@ msgstr "Непрочитано"
 
 #. Translators: for a high importance email
 msgid "high importance"
-msgstr ""
+msgstr "высокая важность"
 
 #. Translators: For a low importance email
 msgid "low importance"
-msgstr ""
+msgstr "низкая важность"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3641,7 +4134,7 @@ msgstr "есть назначение"
 
 #. Translators: the email is a meeting request
 msgid "meeting request"
-msgstr ""
+msgstr "запрос встречи"
 
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
@@ -3838,7 +4331,7 @@ msgstr ""
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
 msgid "{distance:.3g} points from left slide edge"
-msgstr ""
+msgstr "{distance:.3g} точек от левого края слайда"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
 msgid "Off left slide edge by {distance:.3g} points"
@@ -3846,7 +4339,7 @@ msgstr ""
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
 msgid "{distance:.3g} points from top slide edge"
-msgstr ""
+msgstr "{distance:.3g} точек от верхнего края слайда"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
 msgid "Off top slide edge by {distance:.3g} points"
@@ -3854,7 +4347,7 @@ msgstr ""
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
 msgid "{distance:.3g} points from right slide edge"
-msgstr ""
+msgstr "{distance:.3g} точек отправого края слайда"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
 msgid "Off right slide edge by {distance:.3g} points"
@@ -3862,7 +4355,7 @@ msgstr ""
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
 msgid "{distance:.3g} points from bottom slide edge"
-msgstr ""
+msgstr "{distance:.3g} точек от нижнего края слайда"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
 msgid "Off bottom slide edge by {distance:.3g} points"
@@ -3901,6 +4394,17 @@ msgstr "Пустой слайд"
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 msgid "Waiting for Powerpoint..."
 msgstr "Ожидаем Powerpoint..."
+
+#. Translators: The name of the NVDA command category for Skype specific commands.
+msgid "Skype"
+msgstr "Skype"
+
+msgid "Reports and moves the review cursor to a recent message"
+msgstr "Объявляет недавнее сообщение и перемещает к нему курсор обзора"
+
+#. Translators: Indicates that a contact stopped typing.
+msgid "Typing stopped"
+msgstr "Ввод остановлен"
 
 # An open-source (and free) Screen Reader for the Windows Operating System
 # Created by Michael Curran, with help from James Teh and others
@@ -4299,10 +4803,10 @@ msgstr ""
 "нажатии других клавиш.\n"
 "По умолчанию, используется insert на цифровом блоке и обычный insert как "
 "клавиша-модификатор NVDA.\n"
-"Также, можно настроить NVDA на использование CapsLock как клавишу-"
-"модификатор NVDA.\n"
-"Нажимайте NVDA+n в любое время для активации меню NVDA.\n"
-"Из этого меню вы можете настраивать NVDA, получать доступ к справке идругим "
+"Также, можно настроить NVDA на использование CapsLock как клавиши-"
+"модификатора NVDA.\n"
+"Нажимайте NVDA+n в любое время для вызова меню NVDA.\n"
+"Из этого меню вы можете настраивать NVDA, получать доступ к справке и другим "
 "функциям программы.\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
@@ -4315,7 +4819,7 @@ msgstr "Параметры"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Использовать CapsLock  как клавишу-модификатор NVDA"
+msgstr "Использовать CapsLock как клавишу-модификатор NVDA"
 
 #. Translators: The label of a check box in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
@@ -4364,11 +4868,11 @@ msgstr "Завершение Работы"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart"
-msgstr "Перезагрузить"
+msgstr "Перезагрузка"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Restart with add-ons disabled"
-msgstr "Перезагрузить с отключенными дополнениями"
+msgstr "Перезагрузка с отключёнными дополнениями"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
@@ -4843,7 +5347,7 @@ msgstr ""
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
 msgid "Portable &directory:"
-msgstr "Папка для переносной копии:"
+msgstr "Папка для &переносной копии:"
 
 #. Translators: The label of a button to browse for a directory.
 msgid "Browse..."
@@ -4851,7 +5355,7 @@ msgstr "Обзор..."
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 msgid "Copy current &user configuration"
-msgstr "Скопировать текущую конфигурацию пользователя"
+msgstr "Скопировать текущую конфигурацию &пользователя"
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
@@ -5090,6 +5594,11 @@ msgstr "Автоматическое переключение &диалекто�
 #. voice settings dialog (possible choices are none, some, most and all).
 msgid "Punctuation/symbol &level:"
 msgstr "&Уровень пунктуации"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+msgid "Trust voice's language when processing characters and symbols"
+msgstr "Использовать язык синтезатора для чтения знаков и символов пунктуации"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -5386,6 +5895,11 @@ msgstr "Автоматический переход в режим редакти
 msgid "Audio indication of focus and browse modes"
 msgstr "Звуковая индикация режимов обзора и редактирования"
 
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings dialog.
+msgid "&Trap all non-command gestures from reaching the document"
+msgstr "&Блокировать некомандные жесты"
+
 #. Translators: This is the label for the document formatting dialog.
 msgid "Document Formatting"
 msgstr "Форматирование документа"
@@ -5432,8 +5946,8 @@ msgstr "Читать &Стиль"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling errors"
-msgstr "Читать граматические ошибки"
+msgid "Report spelling e&rrors"
+msgstr "Читать &граматические ошибки"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5508,11 +6022,11 @@ msgstr "Читать &Интерактивные элементы"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
-msgstr ""
+msgstr "&Везде"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "Whole &word"
-msgstr ""
+msgstr "Целое &слово"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Regular expression"
@@ -5532,11 +6046,7 @@ msgstr "&Замена"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Comment"
-msgstr "&Коментарий"
-
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Case &sensitive"
-msgstr "Учитывать регистр"
+msgstr "&Комментарий"
 
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
@@ -5568,6 +6078,7 @@ msgid "Type"
 msgstr "Тип"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
+#. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 msgid "&Add"
 msgstr "&Добавить"
@@ -5622,7 +6133,7 @@ msgstr "Читать по &абзацам"
 
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
-msgstr "Не разбивать слова в середине, когда возможно"
+msgstr "Не разбивать &слова в середине, когда возможно"
 
 #, python-format
 msgid "Could not load the %s display."
@@ -5630,6 +6141,14 @@ msgstr "Не удалось загрузить дисплей %s."
 
 msgid "Braille Display Error"
 msgstr "Ошибка Брайлевского дисплея"
+
+#. Translators: This is the label for the add symbol dialog.
+msgid "Add Symbol"
+msgstr "Добавить Символ"
+
+#. Translators: This is the label for the edit field in the add symbol dialog.
+msgid "Symbol:"
+msgstr "Символ:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 msgid "Symbol Pronunciation"
@@ -5655,9 +6174,23 @@ msgstr "Изменить символ"
 msgid "&Level"
 msgstr "&Уровень"
 
+#. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
+msgid "Re&move"
+msgstr "Уд&алить"
+
+#. Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
+#, python-format
+msgid "Symbol \"%s\" is already present."
+msgstr "Символ \"%s\" уже предоставлен."
+
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 msgid "Input Gestures"
 msgstr "Жесты Ввода"
+
+#. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
+msgctxt "inputGestures"
+msgid "&Filter by:"
+msgstr "&Фильтр по:"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -5675,27 +6208,6 @@ msgstr ""
 "Не удалось сохранить определяемые пользователем жесты, вероятно, NVDA "
 "запущен из области, доступной только для чтения"
 
-#. Translators: Information about NVDA's new laptop keyboard layout.
-msgid ""
-"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in "
-"order to make it more intuitive and consistent.\n"
-"If you use the laptop layout, please see the What's New document for more "
-"information."
-msgstr ""
-"В NVDA 2013.1 полностью переделана раскладка клавиатуры для ноутбука для "
-"удобства и более легкого понимания.\n"
-"Если вы используете раскладку для ноутбука, то для дальнейшей информации, "
-"пожалуйста, ознакомьтесь с документом \"Что нового\"."
-
-#. Translators: The title of a dialog providing information about NVDA's new laptop keyboard layout.
-msgid "New Laptop Keyboard layout"
-msgstr "Новая Раскладка клавиатуры для ноутбука"
-
-#. Translators: The label of a button in the New Laptop Keyboard Layout dialog
-#. to open the What's New document.
-msgid "Read What's New"
-msgstr "Прочитайте  \"Что нового\""
-
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
 msgid "none"
@@ -5706,22 +6218,6 @@ msgstr "Ничего"
 msgid "Rate boos&t"
 msgstr "&Экстраускорение"
 
-#. Translators: A setting for a speech synthesizer.
-msgid "&Acceleration"
-msgstr "&Ускорение"
-
-msgid "male 1"
-msgstr "Мужской 1"
-
-msgid "female 1"
-msgstr "Женский 1"
-
-msgid "male 2"
-msgstr "Мужской 2"
-
-msgid "female 2"
-msgstr "Женский 2"
-
 #. Translators: Description for a speech synthesizer.
 msgid "No speech"
 msgstr "Нет речи"
@@ -5731,55 +6227,16 @@ msgstr "Слово"
 
 #. Translators: current position in a document as a percentage of the document length
 msgid "{curPercent:.0f}%"
-msgstr ""
+msgstr "{curPercent:.0f}%"
 
 #. Translators: the current position's screen coordinates in pixels
 msgid "at {x}, {y}"
-msgstr ""
+msgstr "координаты: {x}, {y}"
 
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 #, python-format
 msgid "%s landmark"
 msgstr "%s ориентир"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Lin&ks"
-msgstr "С&сылки"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Headings"
-msgstr "&Заголовки"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Lan&dmarks"
-msgstr "&Ориентиры"
-
-#. Translators: The title of the browse mode Elements List dialog.
-msgid "Elements List"
-msgstr "Список Элементов"
-
-#. Translators: The label of a group of radio buttons to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Type:"
-msgstr "Тип:"
-
-#. Translators: The label of an editable text field to filter the elements
-#. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "&Фильтр по:"
-
-#. Translators: The label of a button to activate an element
-#. in the browse mode Elements List dialog.
-msgid "&Activate"
-msgstr "&Активировать"
-
-#. Translators: The label of a button to move to an element
-#. in the browse mode Elements List dialog.
-msgid "&Move to"
-msgstr "&Перейти к"
 
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
@@ -5797,31 +6254,23 @@ msgstr "Нет полного описания"
 msgid "Shows the long description at this position if one is found."
 msgstr "Показывает полное описание на этой позиции, если таковой будет найден."
 
-#. Translators: the description for the activatePosition script on virtualBuffers.
-msgid "activates the current object in the document"
-msgstr "Активирует текущий объект документа"
-
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
 msgstr "Обновляет содержимое документа"
 
 #. Translators: Presented when use screen layout option is toggled.
 msgid "use screen layout on"
-msgstr "Использовать экранное представление включено"
+msgstr "экранное представление включено"
 
 #. Translators: Presented when use screen layout option is toggled.
 msgid "use screen layout off"
-msgstr "Использовать экранное представление выключено"
+msgstr "экранное представление выключено"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
 msgstr "Включает и выключает экранное представление документа"
-
-#. Translators: the description for the elements list dialog script on virtualBuffers.
-msgid "Presents a list of links, headings or landmarks"
-msgstr "Вызывает диалог со списком ссылок, заголовков и ориентиров"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -5857,428 +6306,6 @@ msgstr "Переходит к началу элемента-контейнера
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Переходит на конец элемента-контейнера, например списка или таблицы"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading"
-msgstr "переходит на следующий заголовок"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading"
-msgstr "Нет следующего заголовка"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading"
-msgstr "переходит на предыдущий заголовок"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading"
-msgstr "Нет предыдущего заголовка"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 1"
-msgstr "переходит на следующий заголовок уровня 1"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 1"
-msgstr "Нет следующего заголовка уровня 1"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 1"
-msgstr "переходит на предыдущий заголовок уровня 1"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 1"
-msgstr "Нет предыдущего заголовка уровня 1"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 2"
-msgstr "переходит на следующий заголовок уровня 2"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 2"
-msgstr "Нет следующего заголовка уровня 2"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 2"
-msgstr "переходит на предыдущий заголовок уровня 2"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 2"
-msgstr "Нет предыдущего заголовка уровня 2"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 3"
-msgstr "переходит на следующий заголовок уровня 3"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 3"
-msgstr "Нет следующего заголовка уровня 3"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 3"
-msgstr "переходит на предыдущий заголовок уровня 3"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 3"
-msgstr "Нет предыдущего заголовка уровня 3"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 4"
-msgstr "переходит на следующий заголовок уровня 4"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 4"
-msgstr "Нет следующего заголовка уровня 4"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 4"
-msgstr "переходит на предыдущий заголовок уровня 4"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 4"
-msgstr "Нет предыдущего заголовка уровня 4"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 5"
-msgstr "переходит на следующий заголовок уровня 5"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 5"
-msgstr "Нет следующего заголовка уровня 5"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 5"
-msgstr "переходит на предыдущий заголовок уровня 5"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 5"
-msgstr "Нет предыдущего заголовка уровня 5"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 6"
-msgstr "переходит на следующий заголовок уровня 6"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 6"
-msgstr "Нет следующего заголовка уровня 6"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 6"
-msgstr "переходит на предыдущий заголовок уровня 6"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 6"
-msgstr "Нет предыдущего заголовка уровня 6"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next table"
-msgstr "переходит на следующую таблицу"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next table"
-msgstr "Нет следующей таблицы"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous table"
-msgstr "переходит на предыдущую таблицу"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous table"
-msgstr "Нет предыдущей таблицы"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next link"
-msgstr "переходит на следующую ссылку"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next link"
-msgstr "Нет следующей ссылки"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous link"
-msgstr "переходит на предыдущую ссылку"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous link"
-msgstr "Нет предыдущей ссылки"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next visited link"
-msgstr "переходит на следующую посещённую ссылку"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next visited link"
-msgstr "Нет следующей посещённой ссылки"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous visited link"
-msgstr "переходит на предыдущую посещённую ссылку"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous visited link"
-msgstr "Нет предыдущей посещённой ссылки"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next unvisited link"
-msgstr "переходит на следующую не посещённую ссылку"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next unvisited link"
-msgstr "Нет следующей не посещённой ссылки"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous unvisited link"
-msgstr "переходит на предыдущую не посещённую ссылку"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous unvisited link"
-msgstr "Нет предыдущей не посещённой ссылки"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next form field"
-msgstr "переходит на следующее поле формы"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next form field"
-msgstr "Нет следующего поля формы"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous form field"
-msgstr "переходит на предыдущее поле формы"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous form field"
-msgstr "Нет предыдущего поля формы"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next list"
-msgstr "переходит на следующий список"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next list"
-msgstr "Нет следующего списка"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous list"
-msgstr "переходит на предыдущий список"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous list"
-msgstr "Нет предыдущего списка"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next list item"
-msgstr "переходит на следующий элемент списка"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next list item"
-msgstr "Нет следующего элемента списка"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous list item"
-msgstr "переходит на предыдущий элемент списка"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous list item"
-msgstr "Нет предыдущего элемента списка"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next button"
-msgstr "переходит на следующую кнопку"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next button"
-msgstr "Нет следующей кнопки"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous button"
-msgstr "переходит на предыдущую кнопку"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous button"
-msgstr "Нет предыдущей кнопки"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next edit field"
-msgstr "переходит на следующее поле редактора"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next edit field"
-msgstr "Нет следующего поля редактора"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous edit field"
-msgstr "переходит на предыдущее поле редактора"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous edit field"
-msgstr "Нет предыдущего поля редактора"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next frame"
-msgstr "переходит на следующий фрейм"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next frame"
-msgstr "Нет следующего фрейма"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous frame"
-msgstr "переходит на предыдущий фрейм"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous frame"
-msgstr "Нет предыдущего фрейма"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next separator"
-msgstr "переходит на следующий разделитель"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next separator"
-msgstr "Нет следующего разделителя"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous separator"
-msgstr "переходит на предыдущий разделитель"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous separator"
-msgstr "Нет предыдущего разделителя"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next radio button"
-msgstr "переходит на следующую радио-кнопку"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next radio button"
-msgstr "Нет следующей радио-кнопки"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous radio button"
-msgstr "переходит на предыдущую радио-кнопку"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous radio button"
-msgstr "Нет предыдущей радио-кнопки"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next combo box"
-msgstr "переходит на следующий комбинированный список"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next combo box"
-msgstr "Нет следующего комбинированного списка"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous combo box"
-msgstr "переходит на предыдущий комбинированный список"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous combo box"
-msgstr "Нет предыдущего комбинированного списка"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next check box"
-msgstr "переходит на следующий флажок"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next check box"
-msgstr "Нет следующего флажка"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous check box"
-msgstr "переходит на предыдущий флажок"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous check box"
-msgstr "Нет предыдущего флажка"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next graphic"
-msgstr "переходит на следующий графический элемент"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next graphic"
-msgstr "Нет следующего графического элемента"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous graphic"
-msgstr "переходит на предыдущий графический элемент"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous graphic"
-msgstr "Нет предыдущего графического элемента"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next block quote"
-msgstr "переходит на следующую цитату"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next block quote"
-msgstr "нет следующей Цитаты"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous block quote"
-msgstr "переходит на предыдущую цитату"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous block quote"
-msgstr "Нет предыдущей цитаты"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "skips forward past a block of links"
-msgstr "Переходит на текст после группы ссылок"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no more text after a block of links"
-msgstr "Нет текста после группы ссылок"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "skips backward past a block of links"
-msgstr "Переходит на текст перед группой ссылок"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no more text before a block of links"
-msgstr "Нет текста перед группой ссылок"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next landmark"
-msgstr "переходит на следующий ориентир"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next landmark"
-msgstr "Нет следующего ориентира"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous landmark"
-msgstr "переходит на предыдущий ориентир"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous landmark"
-msgstr "Нет предыдущего ориентира"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next embedded object"
-msgstr "Переходит на следующий встроеный объект"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next embedded object"
-msgstr "Нет следующего встроеного объекта"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous embedded object"
-msgstr "Переходит на предыдущий встроеный объект"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous embedded object"
-msgstr "Нет предыдущего встроеного объекта"
-
-msgid "focus mode"
-msgstr "Режим редактирования"
-
-msgid "browse mode"
-msgstr "Режим обзора"
 
 msgid "Taskbar"
 msgstr "Панель Задач"
@@ -6478,6 +6505,12 @@ msgstr "Первичный заголовок"
 msgid "Text frame"
 msgstr "Текстовый фрейм"
 
+msgid "comment: {text} by {author} on {date}"
+msgstr "комментарий: {text} {author} в {date}"
+
+msgid "{revisionType}: {text} by {author} on {date}"
+msgstr "{revisionType}: {text} {author} в {date}"
+
 msgid "unknown author"
 msgstr "Неизвестный автор"
 
@@ -6604,7 +6637,7 @@ msgstr "{offset:.3g} символов"
 
 #. Translators: a measurement in Microsoft Word
 msgid "{offset:.3g} inches"
-msgstr ""
+msgstr "{offset:.3g} дюймов"
 
 #. Translators: a measurement in Microsoft Word
 msgid "{offset:.3g} centimeters"
@@ -6621,7 +6654,7 @@ msgstr "{offset:.3g} точек"
 #. Translators: a measurement in Microsoft Word
 #. See http://support.microsoft.com/kb/76388 for details.
 msgid "{offset:.3g} picas"
-msgstr ""
+msgstr "{offset:.3g} пик"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 msgid "no comments"
@@ -6639,6 +6672,11 @@ msgstr "Вне таблицы"
 msgid "Edge of table"
 msgstr "Граница таблицы"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "&Примечания"
+
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE series"
 msgstr "HIMS Braille Sense/Braille EDGE series"
@@ -6646,6 +6684,41 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
+#~ "in order to make it more intuitive and consistent.\n"
+#~ "If you use the laptop layout, please see the What's New document for more "
+#~ "information."
+#~ msgstr ""
+#~ "В NVDA 2013.1 полностью переделана раскладка клавиатуры для ноутбука для "
+#~ "удобства и более легкого понимания.\n"
+#~ "Если вы используете раскладку для ноутбука, то для дальнейшей информации, "
+#~ "пожалуйста, ознакомьтесь с документом \"Что нового\"."
+
+#~ msgid "New Laptop Keyboard layout"
+#~ msgstr "Новая Раскладка клавиатуры для ноутбука"
+
+#~ msgid "Read What's New"
+#~ msgstr "Прочитайте  \"Что нового\""
+
+#~ msgid "&Acceleration"
+#~ msgstr "&Ускорение"
+
+#~ msgid "male 1"
+#~ msgstr "Мужской 1"
+
+#~ msgid "female 1"
+#~ msgstr "Женский 1"
+
+#~ msgid "male 2"
+#~ msgstr "Мужской 2"
+
+#~ msgid "female 2"
+#~ msgstr "Женский 2"
+
+#~ msgid "lime"
+#~ msgstr "лимонный"
 
 #~ msgid "Are you sure you want to quit NVDA?"
 #~ msgstr "Вы уверены, что хотите завершить работу NVDA?"

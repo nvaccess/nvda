@@ -1,5 +1,5 @@
 ﻿NVDA NVDA_VERSION Manuale Utente
-Ultimo Aggiornamento del manuale originale: 13 novembre 2013, traduzione a cura di Simone Dal Maso e Gianluca Casalino
+Ultimo Aggiornamento del manuale originale: 4 febbraio 2015, traduzione a cura di Simone Dal Maso e Gianluca Casalino
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Guida rapida ai comandi 
@@ -439,8 +439,9 @@ Sebbene un mouse o un trackpad risultino la maniera migliore per esplorare lo sc
 %kc:endInclude
 
 + Modalità navigazione +
-Documenti complessi di sola lettura, come ad esempio pagine web, sono rappresentati da NVDA avvalendosi della modalità navigazione.
-Questo comprende documenti in Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader e Adobe Flash.
+NVDA si serve della modalità navigazione per presentare all'utente documenti complessi di sola lettura, come ad esempio le pagine web.
+Essa viene utilizzata nei doccumenti di Mozilla Firefox, Microsoft Internet Explorer, messaggi html in Microsoft Outlook, Google Chrome, Adobe Reader e Adobe Flash.
+Inoltre, la modalità navigazione risulta disponibile anche per la gestione di documenti complessi in Microsoft Word.
 
 Nella modalità navigazione, il contenuto del documento è reso disponibile tramite una rappresentazione lineare, che può essere esplorata con i comuni tasti dedicati al cursore, come se si trattasse di un normale documento.
 Tutte le combinazioni di tasti di NVDA dedicate al [cursore di sistema #SystemCaret] funzioneranno regolarmente, ad esempio dire tutto, annuncia formattazione, comandi per esplorare le tabelle, etc.
@@ -567,6 +568,13 @@ Nota: Questo tasto caldo funziona soltanto se la barra di stato di Foobar ha il 
 | Annuncia note per traduttori | control+shift+a | Annuncia ogni nota presente per traduttori. |
 %kc:endInclude
 
+++ Skype ++
+%kc:beginInclude
+In una conversazione:
+|| Nome | Tasto | Descrizione |
+| Annuncia messaggio | NVDA+control+1-0 | Legge il messaggio e vi sposta il cursore di controllo, a seconda del numero premuto. Ad esempio NVDA+control+2 legge il secondo messaggio più recente. |
+%kc:endInclude
+
 + Configurare NVDA +
 
 ++ Preferenze ++
@@ -685,6 +693,10 @@ Questa opzione permette di stabilire la quantità di punteggiatura e di altri si
 Ad esempio, se impostata su tutto, tutti i simboli verranno annunciati in parole.
 Questa impostazione viene applicata a tutti i sintetizzatori, non soltanto a quello usato al momento.
   
+==== Considera attendibile la lingua della voce  corrente nel processare caratteri e simboli ====
+Da impostazioni predefinite, questa funzione risulta attiva e consente di stabilire se NVDA debba ritenere affidabile la lingua della voce corrente nel processare simboli e caratteri.
+Se per qualche motivo ci si accorge che NVDA sta leggendo  la punteggiatura con un sintetizzatore o voce particolare in una lingua sbagliata, si consiglia di disattivare questa opzione, per forzare NVDA ad utilizzare le impostazioni globali per quella lingua.
+
 ==== Percentuale di cambio tono  per lettere maiuscole ====
 Questo campo editazione permette di digitare un numero che sarà equivalente alla variazione di altezza (pitch) effettuato dalla sintesi vocale in presenza di lettere maiuscole.
 Questo valore lavora in percentuale, perciò un valore negativo abbasserà il pitch, mentre uno positivo lo alzerà.
@@ -1009,6 +1021,11 @@ Per esempio, se si naviga in una pagina web e, scorrendo con il cursore, si inco
 ==== indicazione audio delle modalità focus e buffer virtuale ====
 Attivando questa casella di controllo, NVDA emetterà dei segnali acustici al passaggio tra la modalità navigazione e la modalità focus, piuttosto che annunciarli a parole.
 
+==== Inibisci tutti i gesti che non rappresentano un comando ====
+Attivata da impostazioni predefinite, questa funzione permette di stabilire se, ai gesti (come le pressioni di un tasto) che non rappresentano comandi di NVDA e non sono considerati tasti caldi in generale, debba essere impedito di raggiungere il documento sul quale è posizionato il focus.
+Ad esempio, se abilitata, premendo la lettera "j", a questa verrebbe impedito di raggiungere il documento, nonostante non sia un comando veloce di navigazione o possa essere un comando dell'applicazione stessa.
+
+
 +++ Impostazioni formato documento (NVDA+Control+d) +++[documentFormattingSettings]
 Questa finestra di dialogo si trova nel menu preferenze, sotto la voce formato documento.
 
@@ -1085,6 +1102,12 @@ Per modificare un simbolo, dapprima selezionarlo nell'elenco simboli.
 Il campo "voce in sostituzione" permette di cambiare il testo che deve essere pronunciato in corrispondenza di quel simbolo.
 Utilizzando il campo "livello", è possibile stabilire il livello più basso dal quale il simbolo dovrà essere annunciato.
 
+è possibile aggiungere un nuovo simbolo servendosi del pulsante Aggiungi.
+Nella finestra di dialogo che appare, inserire il simbolo e premere il pulsante Ok.
+Poi, modificare i campi "voce in sostituzione" e "livello" secondo le proprie esigenze.
+
+Sarà sempre possibile eliminare un simbolo aggiunto in precedenza tramite il pulsante "Rimuovi".
+
 Una volta terminate le modifiche, premere il pulsante OK per salvare i cambiamenti oppure il bottone Annulla per annullare l'operazione.
 
 +++ Tasti e gesti di immissione +++
@@ -1094,6 +1117,7 @@ In questa finestra di dialogo, è possibile personalizzare i gesti di immissione
 Ad esempio, se si volessero personalizzare i comandi relativi alla modalità navigazione, sarà necessario aprire la finestra di dialogo "tasti e gesti di immissione" mentre ci si trova in modalità navigazione.
 
 La visualizzazione ad albero di questo elenco mostra tutti i comandi di NVDA applicabili, raggruppati per categorie.
+è possibile filtrarli inserendo una o più parole del nome del comando nella casella editazione "filtra per".
 Eventuali gesti associati a un comando sono elencati sotto il comando stesso.
 
 Per aggiungere un gesto d'immissione per un comando, selezionare il comando e premere il pulsante Aggiungi.
@@ -1306,12 +1330,6 @@ Per usare queste voci, è necessaria l'installazione di due componenti:
 Si tratta di una sintesi vocale commerciale espressamente rivolta al mercato italiano. 
 Per farla funzionare bisogna possedere una regolare licenza installata sul proprio pc.
 Per maggiori informazioni si veda il sito www.audiologic.it.
-
-Questo sintetizzatore non supporta [funzionalità spelling #VoiceSpellingFunctionality].
-
-++ Newfon ++
-Newfon è una sintesi vocale gratuita commerciale sviluppata da Sergey Shishmintzev in grado di supportare le lingue russo e ucraino.
-Per scaricare la sintesi si veda l'apposita pagina di download nel sito della comunità russa all'indirizzo http://ru.nvda-community.org/?page_id=10
 
 Questo sintetizzatore non supporta [funzionalità spelling #VoiceSpellingFunctionality].
 
@@ -1663,21 +1681,23 @@ Sono supportati i seguenti display braille:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
 - BRAILLEX Trio (USB e bluetooth)
+- BRAILLEX Live 20, BRAILLEX Live e BRAILLEX Live Plus (USB e bluetooth)
 -
 
 Se BrxCom è installato, NVDA lo utilizzerà.
 BrxCom è un utility che permette di gestire la scrittura tramite i tasti braille indipendentemente dallo screen reader in uso.
 Verrà realizzata presto da Papenmeier una nuova versione di BrXcom che funzioni con NVDA 
-In ogni caso, la scrittura tramite tastiera sarà sempre disponibile per i dispositivi Trio anche senza la presenza di BrxCom.
-
+In ogni caso, la scrittura tramite tastiera sarà sempre disponibile per i dispositivi Trio, BRAILLEX Live 20 e Braillex Live anche senza la presenza di BrxCom.
+La scrittura con tastiera è possibile anche con il modello Live Plus, ma soltanto con Brxcom.
 La maggior parte dei dispositivi è dotata di una barra di navigazione facilitata (EAB) che permette di svolgere le operazioni in una modalità molto più rapida ed intuitiva..
 Questa barra può essere spostata in quattro direzioni e ciascuna direzione ha due posizioni.
-la serie C è l'unica eccezione alla regola.
+la serie C e la serie Live sono le uniche eccezioni a questa regola.
 
-Tale serie ed alcuni altri display  presentano due file di cursor routing dove la riga superiore viene utilizzata per ottenere informazioni sulla formattazione.
+Tali serie ed alcuni altri display  presentano due file di cursor routing dove la riga superiore viene utilizzata per ottenere informazioni sulla formattazione.
 Tenendo premuto uno dei tasti della fila superiore e spostando la barra di accesso rapido nella serie C, si simula la seconda posizione della EAB.
 Mantenendo premuti i tasti su, giù, destra e sinistra (o EAB) permetterà di ripetere l'azione corrispondente..
-
+I display della serie Live hanno solo una riga di cursor routing e la EAB si sposta di un solo scatto per ciascuna direzione.
+Il secondo scatto può essere emulato premendo uno dei tasti di routing e premendo l'EAB nella direzione corrispondente.
 In genere, sono disponibili i seguenti tasti in questi display braille::
 || Nome | Tasto |
 | l1 | Tasto sinistro frontale |
@@ -1962,7 +1982,8 @@ Ecco l'elenco dei parametri a riga di comando di NVDA:
 | -s | --secure | Modalità protetta (disabilita Python console) |
 | None | --disable-addons | I componenti aggiuntivi non avranno alcun effetto |
 | None | --no-sr-flag  | Non modifica il flag Screen Reader per il sistema |
-| None | --install | Silently installa NVDA |
+| None | --install | Installa NVDA (avviando la copia appena installata) |
+| None | --install | Silent Installa NVDA (non avviando la copia appena installata) |
 
 ++ Personalizzazione avanzata dei simboli di punteggiatura ++
 in aggiunta a ciò che abbiamo visto nella [Finestra di dialogo Pronuncia Punteggiatura/Simboli #SymbolPronunciation], è possibile personalizzare la punteggiatura ed altri simboli in maniera diversa.
