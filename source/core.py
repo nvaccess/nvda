@@ -18,6 +18,7 @@ comtypes.gen.__path__.append(comInterfaces.__path__[0])
 import comtypesMonkeyPatches
 
 import sys
+import winVersion
 import thread
 import nvwave
 import os
@@ -172,7 +173,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		log.warning("Could not set language to %s"%lang)
 	import versionInfo
 	log.info("NVDA version %s" % versionInfo.version)
-	log.info("Using Windows version %s" % "{v.major}.{v.minor}.{v.build} {v.service_pack_major}.{v.service_pack_minor} {v.product_type}".format(v=sys.getwindowsversion()))
+	log.info("Using Windows version %s" % "{v.major}.{v.minor}.{v.build} {v.service_pack_major}.{v.service_pack_minor} {v.product_type}".format(v=winVersion.winVersion))
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
 	# Set a reasonable timeout for any socket connections NVDA makes.
