@@ -28,6 +28,7 @@ Highlights of this release include browse mode for documents in Microsoft Word a
 - Support for the Newfon synthesizer has been removed. Newfon is now available as an NVDA add-on. (#3184)
 - Skype for Desktop 7 or later is now required for use with NVDA; earlier versions are not supported. (#4218)
 - Downloading of NVDA updates is now more secure. (Specifically, the update information is retrieved via https and the hash of the file is verified after it is downloaded.) (#4716)
+- eSpeak has been upgraded to version 1.48.04 (#4325)
 
 
 == Bug Fixes ==
@@ -52,6 +53,7 @@ Highlights of this release include browse mode for documents in Microsoft Word a
 - When text is changed or added in live regions in Internet Explorer and other MSHTML controls where the author has specified that text is relevant, only the changed or added text is announced, rather than all of the text in the containing element. (#4800)
 - Content indicated by the aria-labelledby attribute on elements in Internet Explorer and other MSHTML controls correctly replaces the original content  where it is appropriate to do so. (#4575)
 - When checking spelling in Microsoft Outlook 2013, the misspelled word is now announced. (#4848)
+- In Internet Explorer and other MSHTML controls, content inside elements hidden with visibility:hidden is no longer inappropriately presented in browse mode. (#4839, #3776)
 
 
 == Changes for Developers ==
