@@ -63,7 +63,7 @@ def checkForUpdate(auto=False):
 		"autoCheck": auto,
 		"version": versionInfo.version,
 		"versionType": versionInfo.updateVersionType,
-		"osVersion": "{v.major}.{v.minor}.{v.build} {v.service_pack_major}.{v.service_pack_minor} {v.product_type}".format(v=winVersion.winVersion),
+		"osVersion": winVersion.longWinVersion,
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
 		"language": languageHandler.getLanguage(),
 		"installed": config.isInstalledCopy(),
