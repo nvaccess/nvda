@@ -440,7 +440,8 @@ Aj napriek tomu, že sa na tento druh navigácie bežne používa myš alebo tra
 
 + Režim prehliadania +
 Súhrnnejšie dokumenty, ako napríklad web stránky, nám NVDA dokáže zobraziť v TZV. režime prehliadania.
-Toto zahŕňa dokumenty v programoch Internet Explorer, Mozilla Firefox, Google Chrome, Adobe reader a Adobe Flash.
+Toto zahŕňa dokumenty v programoch Internet Explorer, Mozilla Firefox, Google Chrome, Adobe reader, HTML správy v programe Microsoft Outlook, Adobe Flash a HTML správy v programe Microsoft Outlook.
+Režim prehliadania môžete aktivovať aj v dokumentoch programu MS word a prehliadať takto komplexnejšie dokumenty.
 
 V režime prehliadania je obsah dokumentu usporiadaný plošne, takže na navigáciu je možné použiť bežné navigačné príkazy ako v prípade textových dokumentov.
 V tomto režime fungujú štandardné klávesové skratky na [čítanie textu systémovým kurzorom #SystemCaret] ako napríklad plynulé čítanie, info o formátovaní a navigačné príkazy po tabuľkách.
@@ -685,6 +686,10 @@ Klávesová skratka: NVDA+p
 Môžete nastaviť, či má NVDA slovne  oznamovať interpunkčné znamienka a symboly.
 Ak je toto napríklad nastavené na všetko, všetky symboly budú vyslovované ako slová.
 Nastavenie interpunkcie ovplyvňuje prejav NVDA pre všetky hlasové výstupy.
+
+==== pri spracovaní textu sa riadiť jazykom hlasového výstupu ====
+táto možnosť je predvolene začiarknutá a hovorí NVDA, že pri spracovaní textu sa má riadiť jazykom konkrétneho hlasu.
+Ak vám NVDA pri použití konkrétneho hlasu alebo hlasového výstupu nesprávne číta interpunkciu, odčiarknite túto možnosť, aby boli uprednostnené globálne nastavenia NVDA.
 
 ==== Zmeniť výšku hlasu pri čítaní veľkých písmen v percentách ====
 Do tohoto editačného poľa je možné napísať hodnotu v percentách, ako sa zmení výška hlasu pri čítaní veľkých písmen.
@@ -1010,6 +1015,11 @@ Toto platí pre klávesy rýchlej navigácie ako aj pre navigáciu po riadkoch, 
 ==== Režim prehliadania a režim fokusu oznamovať zvukom ====
 Ak je táto voľba začiarknutá, NVDA bude namiesto oznamovania prepínania režimu prehliadania a režimu fokusu prehrávať zvuky špeciálne priradené k týmto akciám.
 
+==== Ignorovať skratky mimo rýchlej navigácie ====
+Táto možnosť je predvolene začiarknutá a spôsobuje, že skratky, ktoré sa nepoužívajú v rýchlej navigácii, nebudú posielané do aktívnej aplikácie.
+Ak napríklad stlačíte písmeno j v dokumente programu MS Word, toto sa pri začiarknutom poli nenapíše do aktívneho dokumentu, ani nebude poslané do aplikácie MS Word ako klávesová skratka.
+
+
 +++ Nastavenia čítania textu (NVDA+control+d) +++[DocumentFormattingSettings]
 Toto dialógové okno nájdeme v možnostiach programu NVDA pod položkou Nastavenia čítania textu...
 
@@ -1086,6 +1096,12 @@ Ak si želáte upraviť symbol, musíte ho najprv vybrať v zozname symbolov.
 Do poľa nahradiť s môžete vpísať text, ktorý sa má vysloviť vždy, keď bude NVDA čítať tento symbol.
 Zmenou výberu v zozname úrovní môžete určiť najnižšiu úroveň, na ktorej bude symbol oznamovaný.
 
+Nový symbol môžete pridať tak, že stlačíte tlačidlo pridať.
+v dialógu, ktorý sa otvorí, vložte nový symbol a stlačte tlačidlo OK.
+Následne nastavte nahradenie a úroveň interpunkcie tak, ako pri ostatných symboloch.
+
+Symboly, ktoré ste pridali, môžete odstrániť aktivovaním tlačidla odstrániť.
+
 Ak ste skončili s úpravami, môžete stlačiť tlačidlo OK a uložiť zmeny, alebo tlačidlom Zrušiť zmeny zahodiť.
 
 +++ Klávesové skratky +++
@@ -1095,6 +1111,7 @@ V okne sa zobrazujú len skratky, ktoré sú funkčné tesne pred otvorením dia
 Ak napríklad chcete nastaviť skratky pre príkazy v režime prehliadania, pred otvorením dialógu musíte byť v režime prehliadania.
 
 V strome sú všetky príkazy NVDA usporiadané podľa kategórií.
+Zoznam dostupných funkcii môžete prehľadávať tak, že do poľa filtrovať napíšete slovo alebo viacero slov z názvu funkcie, pričom na poradí slov nezáleží.
 Pod každým príkazom nájdete aktívne klávesové skratky.
 
 Ak chcete vytvoriť novú skratku, vyberte požadovaný príkaz a stlačte tlačidlo pridať.
