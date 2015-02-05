@@ -16,6 +16,7 @@ import ctypes
 import ctypes.wintypes
 import os
 import sys
+import winVersion
 import pkgutil
 import threading
 import tempfile
@@ -300,7 +301,7 @@ class AppModule(baseObject.ScriptableObject):
 		#: The application name.
 		#: @type: str
 		self.appName=appName
-		if sys.getwindowsversion().major > 5:
+		if winVersion.winVersion.major > 5:
 			self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
 		else:
 			self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION|winKernel.PROCESS_VM_READ,False,processID)
@@ -314,7 +315,7 @@ class AppModule(baseObject.ScriptableObject):
 		if not self.processHandle:
 			raise RuntimeError("processHandle is 0")
 		# Choose the right function to use to get the executable file name
-		if sys.getwindowsversion().major > 5:
+		if winVersion.winVersion.major > 5:
 			# For Windows Vista and higher, use QueryFullProcessImageName function
 			GetModuleFileName = ctypes.windll.Kernel32.QueryFullProcessImageNameW
 		else:

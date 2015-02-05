@@ -5,6 +5,7 @@
 
 import locale
 import sys
+import winVersion
 import comtypes.client
 import struct
 import ctypes
@@ -378,7 +379,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				start=end
 				end=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,offset)
 			return (start,end)
-		elif sys.getwindowsversion().major<6: #Implementation of standard edit field wordbreak behaviour (only breaks on space)
+		elif sys.winVersion.winVersion.major<6: #Implementation of standard edit field wordbreak behaviour (only breaks on space)
 			lineStart,lineEnd=self._getLineOffsets(offset)
 			if offset>=lineEnd:
 				return offset,offset+1
