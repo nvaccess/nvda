@@ -9,7 +9,6 @@ import threading
 from ctypes import *
 from ctypes.wintypes import *
 import re
-import sys
 import winVersion
 import globalPluginHandler
 import config
