@@ -671,27 +671,6 @@ class ExcelCell(ExcelBase):
 		self._overlapInfo = info
 		return self._overlapInfo
 
-	def _getOverlapText(self):
-		textList=[]
-		obscuringRightBy=otherInfo['obscuringRightBy']
-		obscuredFromRightBy=otherInfo['obscuredFromRightBy']
-		total=True
-		if obscuringRightBy>0:
-			total=False
-			# Translators: A message when text is extending to adjacent cell(s) in MS Excel
-			textList.append(_("obscures right by {distance:.3g} points").format(distance=overlapsRightBy))
-		elif obscuredFromRightBy>0:
-			# Translators: A message when text is obscured from right in MS Excel
-			textList.append(_("obscured from right by {distance:.3g} points").format(distance=obscuredFromRightBy))
-		return ", ".join(textList)
-
-	def _get_locationText(self):
-		textList=[]
-		text=self._getOverlapText()
-		if text:
-			textList.append(text)
-		return ", ".join(textList)
-
 	def _get_parent(self):
 		worksheet=self.excelCellObject.Worksheet
 		self.parent=ExcelWorksheet(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelWorksheetObject=worksheet)
