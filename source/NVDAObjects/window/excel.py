@@ -573,6 +573,7 @@ class ExcelCell(ExcelBase):
 		#handle to Device Context
 		hDC = ctypes.windll.user32.GetDC(self.windowHandle)
 		tempDC = ctypes.windll.gdi32.CreateCompatibleDC(hDC)
+		ctypes.windll.user32.ReleaseDC(self.windowHandle, hDC)
 		#Compatible Bitmap for current Device Context
 		hBMP = ctypes.windll.gdi32.CreateCompatibleBitmap(tempDC, 1, 1)
 		#handle to the bitmap object
@@ -632,7 +633,6 @@ class ExcelCell(ExcelBase):
 		#Delete the temporary BitMap Object
 		ctypes.windll.gdi32.DeleteObject(hBMP)
 		#Release & Delete the device context
-		ctypes.windll.user32.ReleaseDC(self.windowHandle, tempDC)
 		ctypes.windll.gdi32.DeleteDC(tempDC)
 		#Retrieve the text width
 		textWidth = StructText.width+5
