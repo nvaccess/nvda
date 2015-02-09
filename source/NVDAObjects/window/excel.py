@@ -249,6 +249,7 @@ class FormulaExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 
 	needsReviewCursorTextInfoWrapper=False
+	passThrough=True
 
 	def _get_isAlive(self):
 		return winUser.isWindow(self.rootNVDAObject.windowHandle)
@@ -275,6 +276,11 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 		else:
 			raise NotImplementedError
 
+	def script_elementsList(self,gesture):
+		super(ExcelBrowseModeTreeInterceptor,self).script_elementsList(gesture)
+	# Translators: the description for the elements list dialog script on virtualBuffers.
+	script_elementsList.__doc__ = _("Presents a list of links, headings or landmarks")
+	script_elementsList.ignoreTreeInterceptorPassThrough=True
 
 class ElementsListDialog(browseMode.ElementsListDialog):
 
@@ -377,8 +383,6 @@ class ExcelWorksheet(ExcelBase):
 
 
 	treeInterceptorClass=ExcelBrowseModeTreeInterceptor
-	shouldCreateTreeInterceptor=False
-
 
 	role=controlTypes.ROLE_TABLE
 
