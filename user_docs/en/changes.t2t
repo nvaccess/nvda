@@ -54,6 +54,8 @@ Highlights of this release include browse mode for documents in Microsoft Word a
 - Content indicated by the aria-labelledby attribute on elements in Internet Explorer and other MSHTML controls correctly replaces the original content  where it is appropriate to do so. (#4575)
 - When checking spelling in Microsoft Outlook 2013, the misspelled word is now announced. (#4848)
 - In Internet Explorer and other MSHTML controls, content inside elements hidden with visibility:hidden is no longer inappropriately presented in browse mode. (#4839, #3776)
+- In Internet Explorer and other MSHTML controls, the title attribute on form controls no longer inappropriately takes preference over other label associations. (#4491)
+- In Internet Explorer and other MSHTML controls, NVDA no longer ignores focusing  of elements  due to the aria-activedescendant attribute. (#4667)
 
 
 == Changes for Developers ==

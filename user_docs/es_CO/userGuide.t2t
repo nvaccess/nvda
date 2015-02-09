@@ -1,15 +1,15 @@
-﻿Guía del Usuario de NVDA NVDA_VERSION
+Guía del Usuario de NVDA NVDA_VERSION
 
 
 %!includeconf: ../userGuide.t2tconf
-%kc:title: NVDA NVDA_VERSION Referencia Rápida de Órdenes 
+%kc:title: NVDA NVDA_VERSION Referencia Rápida de comandos 
 
 = Índice =[toc]
 %%toc
 
 + Introducción +
 NonVisual Desktop Access (NVDA) es un lector de pantalla libre y de código abierto  para el Sistema Operativo  Microsoft Windows.
-Proporcionando retroalimentación a través de voz sintética y Braille, posibilita a la gente ciega o deficiente visual acceder a ordenadores ejecutando Windows por un coste no mayor al de una persona vidente.
+Proporcionando feedback a través de voz sintética y Braille, le brinda la posibilidad a los invidentes y deficientes visuales  para acceder a los computadores que ejecutan  Windows por un costo no mayor al de una persona vidente.
 NVDA está desarrollado por [NV Access http://www.nvaccess.org/], con  colaboraciones de la comunidad.
 
 ++ Características generales ++
@@ -148,11 +148,11 @@ La primera te permite controlar si NVDA debería utilizar BloqMayus como una tec
 La segunda especifica si NVDA debería arrancar automáticamente después de autentificarte en Windows y sólo está disponible para copias instaladas de NVDA.
 La tercera te permite controlar si este cuadro de bienvenida debería aparecer cada vez que NVDA arranque.
 
-++ Acerca de Órdenes de teclado de NVDA ++
+++ Acerca de comandos de teclado de NVDA ++
 
 +++ La Tecla Modificadora NVDA +++ 
-La mayoría de las órdenes específicas de teclado de NVDA consisten normalmente en la pulsación de la tecla modificadora de NVDA, junto con una o más teclas. 
-Una notable excepción a  esto son las órdenes de revisión de texto para teclados de escritorio que sólo utilizan las teclas del teclado numérico en sí mismas, pero hay algunas otras excepciones también..
+La mayoría de los comandos específicas de teclado de NVDA consisten normalmente en la pulsación de la tecla modificadora de NVDA, junto con una o más teclas. 
+Una notable excepción a  esto son los comandos de revisión de texto para teclados de escritorio que sólo utilizan las teclas del teclado numérico en sí mismas, pero hay algunas otras excepciones también..
 
 NVDA puede configurarse tal que o la tecla Insert del teclado numérico, la Insert del extendido, o la BloqMayus puedan utilizarse como la tecla modificadora de NVDA.
 
@@ -161,7 +161,7 @@ De forma predeterminada tanto el insert del teclado numérico como el del teclad
 Si deseas hacer que una de las teclas modificadoras de NVDA actúe como la tecla original (por ejemplo deseas activar BloqMayus cuando tienes configurada BloqMayus para que sea una tecla modificadora de NVDA) puedes pulsar la tecla dos veces en sucesión rápida.
 
 +++ Distribuciones de Teclado +++
-Actualmente NVDA viene con dos conjuntos de  teclas de órdenes. 
+Actualmente NVDA viene con dos conjuntos de  teclas de comandos. 
 Hay una distribución para sobremesa y una distribución para portátiles.
 De forma predeterminada NVDA se configura para utilizar la distribución de sobremesa, aunque puedes cambiar a la distribución de portátiles en las Opciones de Teclado, que se encuentran en Preferencias en el menú NVDA.
 	
@@ -180,7 +180,7 @@ Para hacer esto, pon un dedo en cualquier lugar sobre la pantalla.
 También puedes mantener tu dedo sobre la pantalla y moverlo alrededor para leer otros controles y texto sobre el que vayas moviendo el dedo.
 
 +++ Gestos Táctiles +++
-Cuando se describan las órdenes de NVDA de ahora en adelante en esta guía del usuario, podrán listar un gesto táctil que se puede utilizar para activar esa orden con la pantalla táctil.
+Cuando se describan los comandos de NVDA de ahora en adelante en esta guía del usuario, podrán listar un gesto táctil que se puede utilizar para activar dicho comando con la pantalla táctil.
 Seguidamente van algunas instrucciones sobre cómo llevar a cabo varios gestos táctiles.
 
 ==== Toques ====
@@ -203,9 +203,9 @@ Al igual que con los toques, se puede utilizar más de un dedo para realizar el 
 Por lo tanto, gestos tales como deslizar dos dedos arriba o deslizar 4 dedos a la izquierda son todos posibles.
 
 +++ Modos Táctiles +++
-Tal como hay muchas órdenes de NVDA también hay otros tantos gestos táctiles. NVDA tiene varios modos táctiles entre los que puedes cambiar, que hacen disponibles ciertos subconjuntos de órdenes.
+Tal como hay muchos comandos de NVDA también hay otros tantos gestos táctiles. NVDA tiene varios modos táctiles entre los que puedes cambiar, que hacen disponibles ciertos subconjuntos de comandos.
 Los dos modos que existen por ahora son modo texto y modo objeto. 
-Ciertas órdenes de NVDA mostradas en este documento podrán tener un modo táctil mostrado entre paréntesis después del gesto táctil.
+Ciertos comandos de NVDA mostrados en este documento podrán tener un modo táctil mostrado entre paréntesis después del gesto táctil.
 Por ejemplo: deslizar arriba (modo texto) significa que la orden se realizará si deslizas arriba, pero sólo mientras estés en modo texto.
 Si la orden no tiene un modo asociado con ella, funcionará en cualquier modo.
 
@@ -214,22 +214,22 @@ Para conmutar entre los dos modos, realiza un toque con 3 dedos.
 %kc:endInclude
 
 ++ Modo de Ayuda de Entrada ++
-Muchas órdenes de teclado y gestos se mencionan a lo largo del resto de esta guía del usuario, pero una manera fácil de explorar todas las diferentes órdenes es activar la ayuda de entrada.
+Muchos comandos de teclado y gestos se mencionan a lo largo del resto de esta guía del usuario, pero una manera fácil de explorar todos los diferentes comandos es activando la ayuda de entrada.
 
 Para activar la ayuda de entrada, pulsa NVDA+1.
 Para desactivarla, pulsa NVDA+1 de nuevo.
 Mientras estés en la ayuda de entrada, pulsando cualquier tecla o realizando cualquier gesto táctil se anunciará la acción y se describirá qué hace (si es que hace algo).
-Las órdenes actuales no se ejecutarán mientras se esté en el modo de ayuda de entrada.
+Los comandos actuales no se ejecutarán mientras se esté en el modo de ayuda de entrada.
 
 ++ El Menú NVDA ++
-El menú NVDA te permite controlar las opciones de NVDA, acceder a la ayuda, guardar/volver a tu configuración, Modificar los diccionarios del habla, leer el fichero de registro, y salir de NVDA.
+El menú NVDA te permite controlar las opciones de NVDA, acceder a la ayuda, guardar/volver a tu configuración, Modificar los diccionarios de pronunciación, leer el fichero de registro, y salir de NVDA.
 
 Para desplegar el menú NVDA desde cualquier lugar de Windows mientras NVDA se esté ejecutando, pulsa NVDA+n en el teclado o realiza un doble toque con 2 dedos en la pantalla táctil. 
 También puedes desplegar el menú NVDA a través de la bandeja de sistema de Windows. 
 O haciendo clic con el botón derecho sobre el icono NVDA encontrado en la bandeja de sistema, o accediendo a la bandeja de sistema pulsando la tecla con el logo de Windows+B, flecha abajo hasta el icono de  NVDA y pulsando la tecla aplicaciones encontrada seguidamente a la tecla de control de la derecha en la mayoría de los teclados. 
 Cuando aparezca el menú, puedes utilizar las teclas de cursor para navegar por el menú, y la tecla intro para activar un elemento.
 
-++ Órdenes Básicas de NVDA ++
+++ comandos Básicos de NVDA ++
 %kc:beginInclude
 || Nombre | Tecla escritorio | Tecla portátil | Táctil | Descripción |
 | Detener voz | Control |  control | toque con 2 dedos | Detiene la voz instantáneamente |
@@ -238,8 +238,8 @@ Cuando aparezca el menú, puedes utilizar las teclas de cursor para navegar por 
 | Conmutar Modo Ayuda de entrada | NVDA+1 | NVDA+1 | no | Pulsando cualquier tecla  en este modo se anunciará la tecla, y la descripción de cualquier orden de NVDA asociada con ella | 
 | Conmutar Modo de Voz | NVDA+s | NVDA+s | no | Conmuta el modo voz entre verbalizar, pitidos y desactivado. |
 | Salir de NVDA | NVDA+q | NVDA+q | no | Sale de NVDA |
-| Dejar pasar siguiente tecla | NVDA+f2 | NVDA+f2 | no | Dice a NVDA que deje pasar la siguiente tecla pulsada directamente a la aplicación activa, si está normalmente tratada como una tecla de órdenes de NVDA |
-| activar y desactivar modo de aplicación silencioso | NVDA+shift+s | NVDA+shift+z | no | el modo silencioso desactiva todas las órdenes de NVDA y la salida de voz/braille para la aplicación actual. Esto es más útil en aplicaciones que proporcionan su propia voz o características de lectura de pantalla. Pulsa esta orden nuevamente para desactivar el modo silencioso. |
+| Dejar pasar siguiente tecla | NVDA+f2 | NVDA+f2 | no | Dice a NVDA que deje pasar la siguiente tecla pulsada directamente a la aplicación activa, si está normalmente tratada como una tecla de comandos de NVDA |
+| activar y desactivar modo de aplicación silencioso | NVDA+shift+s | NVDA+shift+z | no | el modo silencioso desactiva todos los comandos de NVDA y la salida de voz/braille para la aplicación actual. Esto es más útil en aplicaciones que proporcionan su propia voz o características de lectura de pantalla. Pulsa esta orden nuevamente para desactivar el modo silencioso. |
 %kc:endInclude
 
 ++ Anunciando Información del Sistema ++
@@ -261,10 +261,10 @@ Un objeto es un simple elemento tal como un trozo de texto, botón, casilla de v
 El foco del sistema, también conocido simplemente como el foco, es el [objeto #Objects] que recibe teclas escritas en el teclado.
 Por ejemplo, si estás escribiendo en un campo de texto editable, el campo de texto editable tiene el foco.
 
-El modo más común de navegar por Windows con NVDA, es sólo moverse con las órdenes de teclado normales, tales como tab. Y shift tab. Para moverse adelante y atrás entre controles, pulsando Alt. Para desplegar la barra de menú y luego utilizando las teclas de cursor para navegar por los menús, utilizando Alt-tab. Para moverse entre aplicaciones en ejecución. 
+El modo más común de navegar por Windows con NVDA, es sólo moverse con los comandos de teclado normales, tales como tab. Y shift tab. Para moverse adelante y atrás entre controles, pulsando Alt. Para desplegar la barra de menú y luego utilizando las teclas de cursor para navegar por los menús, utilizando Alt-tab. Para moverse entre aplicaciones en ejecución. 
 Cuando hagas esto, NVDA anunciará información sobre lo que tiene el foco, tal como su nombre, tipo, valor, estado, descripción, atajo de teclado e información posicional.
 
-Hay algunas órdenes de teclado útiles cuando nos movamos con el foco:
+Hay algunos comandos de teclado útiles cuando nos movamos con el foco:
 %kc:beginInclude
 || Nombre | tecla escritorio | tecla portátil | Descripción |
 | Anunciar foco actual | NVDA+tab | NVDA+tab | anuncia el objeto actual o control que tenga el foco del sistema. Pulsando dos veces deletreará la información  |
@@ -280,7 +280,7 @@ Cuando el foco esté sobre un objeto que tenga el cursor del sistema, puedes uti
 También puedes cambiar el texto si el control soporta edición.
 NVDA anunciará según te muevas por caráccteres, palabras, líneas, y también anunciará la selección y no selección de texto.
 
-NVDA proporciona las siguientes teclas de órdenes en relación al cursor del sistema:
+NVDA proporciona las siguientes teclas de comandos en relación al cursor del sistema:
 %kc:beginInclude
 || Nombre | Tecla escritorio | Tecla portátil | Descripción |
 | Leer todo | NVDA+Flecha Abajo | NVDA+a | Comienza la lectura desde la posición actual del cursor del sistema, moviéndolo según se desplaza |
@@ -288,7 +288,7 @@ NVDA proporciona las siguientes teclas de órdenes en relación al cursor del si
 | Leer la selección de texto actual | NVDA+Shift+Flecha Arriba | NVDA+shift+s | Lee cualquier texto seleccionado actualmente |
 
 
-Cuando estés en una tabla, las siguientes teclas de órdenes también están disponibles:
+Cuando estés en una tabla, las siguientes teclas de comandos también están disponibles:
 || Nombre | Tecla | Descripción |
 | Moverse a la columna anterior | control+Alt+Flecha Izquierda | Mueve el cursor del sistema a la columna anterior (permaneciendo en la misma fila) |
 | Moverse a la columna siguiente | control+Alt+Flecha Derecha | Mueve el cursor del sistema a la columna siguiente (permaneciendo en la misma fila) |
@@ -297,7 +297,7 @@ Cuando estés en una tabla, las siguientes teclas de órdenes también están di
 %kc:endInclude
 
 ++ Navegación de Objetos ++
-La mayor parte del tiempo, trabajarás con aplicaciones utilizando  órdenes que muevan [el foco #SystemFocus] y [el cursor #SystemCaret].
+La mayor parte del tiempo, trabajarás con aplicaciones utilizando  comandos que muevan [el foco #SystemFocus] y [el cursor #SystemCaret].
 Sin embargo, a veces, podrías querer explorar la aplicación actual o el Sistema Operativo sin mover el foco o el cursor.
 También podrías querer trabajar con [objetos #Objects] que no pueden accederse normalmente utilizando el teclado.
 En estos casos, puedes utilizar la navegación de objetos.
@@ -315,13 +315,13 @@ Entonces puedes pasar de la lista si deseas acceder a otros objetos.
 Del mismo modo, en una barra de herramientas conteniendo controles, debes moverte dentro de la barra de herramientas para acceder a los controles de la misma.
  
 El objeto actualmente en revisión se llama navegador de objetos.
-Una vez que navegues a un objeto, puedes revisar su contenido utilizando las [órdenes de revisión de texto #ReviewingText] mientras se esté en [modo revisión de objetos #ObjectReview].
+Una vez que navegues a un objeto, puedes revisar su contenido utilizando los [comandos de revisión de texto #ReviewingText] mientras se esté en [modo revisión de objetos #ObjectReview].
 De forma predeterminada, el navegador de objetos se mueve junto con el foco  del Sistema, aunque este comportamiento puede activarse y desactivarse.
 
 Ten en cuenta que el braille sigue al [foco #SystemFocus] y al [cursor del sistema #SystemCaret] de forma predeterminada, en lugar de al navegador de objetos y revisión de texto.
 Si en su lugar quieres seguir al navegador de objetos y a la revisión de texto, necesitas [configurar que el braille siga #BrailleTether] a la revisión.
 
-Para navegar por objetos, utiliza las siguientes órdenes:
+Para navegar por objetos, utiliza los siguientes comandos:
 
 %kc:beginInclude
 || Nombre | Tecla Sobremesa | Tecla Portátil | Táctil | Descripción |
@@ -350,7 +350,7 @@ Esto puede activarse y desactivarse.
 Ten en cuenta que el braille sigue al [foco #SystemFocus] y al [cursor del sistema #SystemCaret] de forma predeterminada, en lugar de al navegador de objetos y revisión de texto.
 Si en su lugar quieres seguir al navegador de objetos y a la revisión de texto, necesitas [configurar que el braille siga #BrailleTether] a la revisión.
 
-Las siguientes órdenes están disponibles para revisión de texto: 
+Los siguientes comandos están disponibles para revisión de texto: 
 %kc:beginInclude
 || Nombre | Tecla Sobremesa | Tecla Portátil | Táctil | Descripción |
 | mover a la línea superior en revisión | shift+7 teclado numérico | NVDA+control+inicio  | no | Mueve el cursor de revisión a la línea superior del texto |
@@ -374,17 +374,17 @@ Las siguientes órdenes están disponibles para revisión de texto:
 
 nota: las teclas del teclado numérico requieren que la tecla BloqNum sea desactivada para funcionar apropiadamente.
 
-Una buena manera Para recordar  las órdenes básicas de revisión de texsto cuando se utiliza la distribución de escritorio es imaginarlas en una rejilla de tres por tres, yendo de superior a inferior con línea, palabra y carácter y yendo de izquierda a derecha   con anterior, actual y siguiente.
+Una buena manera Para recordar  los comandos básicas de revisión de texsto cuando se utiliza la distribución de escritorio es imaginarlos en una rejilla de tres por tres, yendo de superior a inferior con línea, palabra y carácter y yendo de izquierda a derecha   con anterior, actual y siguiente.
 La disposición está ilustrada como sigue:
 | Línea anterior | Línea actual | Línea siguiente |
 | Palabra anterior | Palabra actual | Palabra siguiente |
 | carácter anterior | carácter actual | carácter siguiente |
 
 ++ Modos de Revisión ++[ReviewModes]
-Las órdenes de revisión de texto de NVDA pueden revisar el contenido dentro del navegador de objetos actual, documento actual, o pantalla, dependiendo del modo de revisión seleccionado.
+Los comandos de revisión de texto de NVDA pueden revisar el contenido dentro del navegador de objetos actual, documento actual, o pantalla, dependiendo del modo de revisión seleccionado.
 Los modos de revisión son un  reemplazo para el antiguo concepto de revisión plana de NVDA.
 
-Las órdenes que siguen cambian entre los modos de revisión:
+Los comandos que siguen cambian entre los modos de revisión:
 %kc:beginInclude
 || Nombre | Tecla Escritorio | Tecla Portátil | Táctil | Descripción |
 | Cambiar al  modo de revisión siguiente | NVDA+7 teclado numérico | NVDA+repág | deslizar 2 dedos arriba | cambia al siguiente modo de revisión disponible. | 
@@ -410,7 +410,7 @@ El modo revisión de pantalla te permite revisar el texto tal y como aparezca vi
 Esto es similar a la funcionalidad de revisión de pantalla o cursor del ratón en muchos otros lectores de pantalla para Windows.
  
  Cuando se cambia al modo revisión de pantalla, el cursor de revisión se coloca en la posición de pantalla del actual [navegador de objetos #ObjectNavigation].
- Cuando nos movamos por la pantalla con las órdenes de revisión, el navegador de objetos se actualiza automáticamente al objeto encontrado en la posición de la pantalla del cursor de revisión.
+ Cuando nos movamos por la pantalla con los comandos de revisión, el navegador de objetos se actualiza automáticamente al objeto encontrado en la posición de la pantalla del cursor de revisión.
 
  Ten en cuenta que en algunas aplicaciones modernas, NVDA podría no ver alguno o todo el texto disponible en la pantalla, debido al uso de las recientes tecnologías de dibujo en pantalla que son imposibles de soportar en estos momentos.
 
@@ -428,13 +428,13 @@ Cuanto más a la izquierda o a la derecha esté el ratón en la pantalla, más a
 Estas características extra del ratón no están activadas de forma predeterminada en NVDA. 
 Si deseas sacar partido de ellas, puedes configurarlas desde el diálogo [Opciones del Ratón #MouseSettings], que se encuentra en el menú Preferencias en el menú NVDA.
 
-Si bien un ratón físico o un trackpad se podrían utilizar para navegar con el ratón, NVDA tiene unas pocas teclas de órdenes relacionadas con el ratón:
+Si bien un ratón físico o un trackpad se podrían utilizar para navegar con el ratón, NVDA tiene unas pocas teclas de comandos relacionadas con el ratón:
 %kc:beginInclude
 || Nombre | Tecla Escritorio | Tecla Portátil | Descripción |
 | Clic botón izquierdo del ratón | Dividir teclado numérico | NVDA+` (acento grave) | Hace clic en el botón izquierdo del ratón una vez. El común doble clic puede llevarse a cabo pulsando esta tecla dos veces en rápida sucesión |
-| Bloquear botón izquierdo del ratón | shift+Dividir teclado numérico | NVDA+control+` (acento grave) | Mantiene pulsado el botón izquierdo del ratón. Púlsalo de nuevo para liberarlo. Para arrastrar el ratón,  pulsa esta tecla para bloquear el botón izquierdo y entonces mueve el ratón físicamente o utiliza una de las otras órdenes de enrutamiento del ratón |
+| Bloquear botón izquierdo del ratón | shift+Dividir teclado numérico | NVDA+control+` (acento grave) | Mantiene pulsado el botón izquierdo del ratón. Púlsalo de nuevo para liberarlo. Para arrastrar el ratón,  pulsa esta tecla para bloquear el botón izquierdo y entonces mueve el ratón físicamente o utiliza una de los otros comandos de enrutamiento del ratón |
 | Clic botón derecho del ratón | Multiplicar teclado numérico | NVDA++ (signo más) | Hace Clic en el botón derecho del ratón una vez. |
-| Bloquear botón derecho del ratón | shift+Multiplicar teclado numérico | NVDA+control++ (signo más) | Mantiene pulsado el botón derecho del ratón. Pulsa otra vez para liberarlo. Para arrastrar el ratón,  pulsa esta tecla  para bloquear el botón derecho y entonces mueve el ratón físicamente o utiliza una de las otras órdenes de enrutamiento del ratón |
+| Bloquear botón derecho del ratón | shift+Multiplicar teclado numérico | NVDA+control++ (signo más) | Mantiene pulsado el botón derecho del ratón. Pulsa otra vez para liberarlo. Para arrastrar el ratón,  pulsa esta tecla  para bloquear el botón derecho y entonces mueve el ratón físicamente o utiliza una de las otros comandos de enrutamiento del ratón |
 | Mover ratón a navegador de objetos actual | NVDA+Dividir teclado numérico | NVDA+shift+m | Mueve el ratón a la posición del navegador de objetos actual y cursor de revisión |
 | navegar al objeto bajo el ratón | NVDA+Multiplicar teclado numérico | NVDA+shift+n | Pone el navegador de objetos en el objeto localizado en la posición del ratón |
 %kc:endInclude
@@ -444,7 +444,7 @@ Los documentos complejos de sólo lectura, tales como páginas Web, son represen
 Esto incluye documentos en Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader y Adobe Flash.
 
 En el Modo Exploración, el contenido del documento se hace disponible mediante una representación plana de contenido tal como una página Web, por el que te puedes mover con las teclas de cursor. 
-Todas las teclas de órdenes de [cursor del sistema #SystemCaret] de NVDA funcionarán en este modo; ej.: leer todo, anunciar formato, órdenes de navegación de tabla, etc.
+Todas las teclas de comandos de [cursor del sistema #SystemCaret] de NVDA funcionarán en este modo; ej.: leer todo, anunciar formato, comandos de navegación de tabla, etc.
 La información tal como si el texto es un enlace,  encabezado, etc. se anuncia junto con el texto según te muevas.
 
 A veces, necesitarás interactuar directamente con controles en estos documentos.
@@ -522,8 +522,8 @@ Se proporciona una orden de teclado para regresar a la página original que cont
 | Mover al contenido del modo de Navegación | NVDA+control+espacio | Mueve el foco fuera del actual objeto integrado y lo pone dentro del documento que lo contiene |
 %kc:endInclude
  
-+ Órdenes de NVDA Específicas para Aplicación +
-NVDA proporciona sus propias órdenes extra para algunas aplicaciones para hacer más fáciles ciertas tareas o para proporcionar acceso a funcionalidad que de otro modo no está accesible para los usuarios de lector de pantalla.
++ comandos de NVDA Específicos para Aplicación +
+NVDA proporciona sus propios comandos extra para algunas aplicaciones para hacer más fáciles ciertas tareas o para proporcionar acceso a funcionalidad que de otro modo no está accesible para los usuarios de lector de pantalla.
 
 ++ Microsoft Word ++
 %kc:beginInclude
@@ -709,7 +709,7 @@ No obstante, algunos sintetizadores Microsoft Speech API no implementan esto cor
 Si estás teniendo problemas con la pronunciación de carácteres individuales,  prueba desactivando esta opción.
 
 +++ Grupo de Opciones de Sintetizador +++[SynthSettingsRing]
-Si deseas cambiar rápidamente opciones de voz  sin ir al diálogo de Opciones de Voz, hay algunas teclas de órdenes de NVDA que te permiten moverte a través de las opciones de voz más comunes, desde cualquier lugar mientras se ejecuta NVDA:
+Si deseas cambiar rápidamente opciones de voz  sin ir al diálogo de Opciones de Voz, hay algunas teclas de comandos de NVDA que te permiten moverte a través de las opciones de voz más comunes, desde cualquier lugar mientras se ejecuta NVDA:
 %kc:beginInclude
 || Nombre | Tecla Sobremesa | Tecla Portátil | Descripción |
 | Mover a la siguiente opción de sintetizador | NVDA+control+Flecha derecha | NVDA+shift+control+Flecha derecha | Se mueve a la siguiente opción de voz disponible después de la actual, pasando por la primera opción de nuevo después de la última |
@@ -775,7 +775,7 @@ Esta opción te permite elegir si la pantalla braille seguirá al foco del siste
 
 ==== Leer por Párrafo ====
 Si está activado, el braille se mostrará por párrafos en lugar de por líneas.
-También, las órdenes de línea siguiente y anterior moverán por párrafos en concordancia.
+También, los comandos de línea siguiente y anterior moverán por párrafos en concordancia.
 Esto significa que no tienes desplazamiento de la pantalla braille al final de cada línea incluso cuando haya más texto del que quepa en la pantalla braille.
 Esto podría permitir una lectura más fluida de grandes cantidades de texto.
 Esto está desactivado de forma predeterminada.
@@ -796,7 +796,7 @@ Si esta casilla de verificación está marcada, la tecla insert (normalmente enc
 ==== Utilizar insert del teclado numérico como tecla modificadora de NVDA ====
 Si esta casilla de verificación está marcada, la tecla insert del teclado numérico puede utilizarse como una tecla modificadora de NVDA.
 
-Si no se elige ninguna tecla como la tecla NVDA podría ser imposible acceder a ciertas órdenes de NVDA.
+Si no se elige ninguna tecla como la tecla NVDA podría ser imposible acceder a ciertos comandos de NVDA.
 Por lo tanto, el diálogo Opciones de Teclado mostrará un mensaje de error si todas las teclas están sin seleccionar  cuando se pulse Aceptar.
 Después de descartar el mensaje de error, debes seleccionar al menos una antes de poder pulsar Aceptar para cerrar el diálogo correctamente.
 
@@ -819,7 +819,7 @@ Si está activada, esta opción causará que la voz se interrumpa cada vez que s
 Si está activada, esta opción causará que la voz se interrumpa cada vez que se pulse la tecla Intro. Esto está activado de manera predeterminada.
 
 ==== Permitir lectura superficial en Verbalizar Todo ====
-Si está activada, ciertas órdenes de navegación (tales como la navegación rápida en modo exploración o el movimiento por líneas o por párrafos) no detienen  Verbalizar Todo, en su lugar Verbalizar Todo salta  a la nueva posición y continúa leyendo.
+Si está activada, ciertos comandos de navegación (tales como la navegación rápida en modo exploración o el movimiento por líneas o por párrafos) no detienen  Verbalizar Todo, en su lugar Verbalizar Todo salta  a la nueva posición y continúa leyendo.
 
 ==== Pitar si se Teclean Letras Minúsculas Cuando BloqMayus está Activado ====
 Cuando está activada, se escuchará un pitido de aviso si se escribe una letra con la tecla shift mientras BloqMayus está activada.
@@ -827,7 +827,7 @@ Generalmente, escribir letras en mayúsculas con BloqMayus es inintencionado y n
 Por lo tanto, puede ser bastante útil ser avisado acerca de esto.
 
 %kc:setting
-==== Verbalizar teclas de órdenes ====
+==== Verbalizar teclas de comandos ====
 Tecla: NVDA+4
 
 Cuando está marcada significa que NVDA anunciará todas las teclas que no sean carácteres al escribirlas en el teclado. Esto incluye combinaciones de teclas tales como control más cualquier otra letra. 
@@ -990,7 +990,7 @@ Esta opción está activada por defecto.
 
 ==== Incluir Tablas de Diseño ====
 Esta opción afecta a cómo NVDA maneja las tablas utilizadas exclusivamente con fines de diseño.
-Cuando está activada, NVDA las trata como tablas normales, anunciándolas basándose en las [Opciones de Formato de Documento #DocumentFormattingSettings] y localizándolas con las órdenes de navegación rápida.
+Cuando está activada, NVDA las trata como tablas normales, anunciándolas basándose en las [Opciones de Formato de Documento #DocumentFormattingSettings] y localizándolas con los comandos de navegación rápida.
 Cuando está desactivada, no se anuncian ni se encuentran con la navegación rápida.
 Sin embargo, el contenido de las tablas todavía se incluirá como texto normal.
 Esta opción está desactivada de forma predeterminada.
@@ -1084,15 +1084,15 @@ Utilizando el campo Nivel, puedes ajustar el nivel más bajo del símbolo al cua
 Cuando termines, pulsa el botón Aceptar para guardar tus cambios o el botón Cancelar para descartarlos.
 
 +++ Gestos de Entrada +++
-En este diálogo, puedes personalizar los gestos de entrada (teclas en el teclado, botones en la pantalla braille, etc.) para órdenes de NVDA.
+En este diálogo, puedes personalizar los gestos de entrada (teclas en el teclado, botones en la pantalla braille, etc.) para comandos de NVDA.
 
-Sólo se muestran las órdenes que se apliquen inmediatamente antes de que el diálogo se abra.
-Por ejemplo, si quieres personalizar órdenes relacionadas con el modo exploración, deberías abrir el diálogo Gestos de entrada mientras estés en modo exploración.
+Sólo se muestran los comandos que se apliquen inmediatamente antes de que el diálogo se abra.
+Por ejemplo, si quieres personalizar comandos relacionados con el modo exploración, deberías abrir el diálogo Gestos de entrada mientras estés en modo exploración.
 
-El árbol en este cuadro de diálogo muestra todas las órdenes de NVDA aplicables agrupadas por categoría.
+El árbol en este cuadro de diálogo muestra todos los comandos de NVDA aplicables agrupadas por categoría.
 Cualquier gesto asociado con una orden se lista bajo la orden.
 
-Para añadir un gesto de entrada a una orden, selecciona la orden y pulsa el botón Añadir.
+Para añadir un gesto de entrada a un comando, selecciona el comando  y pulsa el botón Añadir.
 A continuación, realiza el gesto de entrada que desees asociar, por ejemplo, pulsa una tecla del teclado o un botón en una pantalla Braille.
 A menudo, un gesto puede interpretarse de más de una manera.
 Por ejemplo, si has pulsado una tecla en el teclado, puede que desees que sea específica para la distribución de teclado actual (por ejemplo, de escritorio o portátil) o puede que desees que se aplique a todas las distribuciones.
@@ -1110,7 +1110,7 @@ Para guardar las opciones manualmente en cualquier ocasión, elige el elemento G
 Si te equivocas con las opciones y necesitas volver a las opciones guardadas, puedes elegir el elemento "volver a la configuración guardada" en el menú NVDA.
 También puedes reiniciar las opciones a sus valores predeterminados de fábrica originales eligiendo Reiniciar Configuración a los Valores Predeterminados de Fábrica, que también se encuentra en el menú NVDA.
 
-Las siguientes teclas de órdenes de NVDA también son útiles:
+Las siguientes teclas de comandos de NVDA también son útiles:
 %kc:beginInclude
 || Nombre | Tecla Sobremesa | Tecla Portátil | Descripción |
 | Guardar configuración | NVDA+control+c | NVDA+control+c | Guarda tu configuración actual tal que no se pierda cuando salgas de NVDA |
@@ -1689,7 +1689,7 @@ Generalmente, las siguientes teclas están disponibles en estas pantallas braill
 | dn | 1 paso abajo |
 | dn2 | 2 pasos abajo |
 
-Seguidamente van las asignaciones de órdenes de la Papenmeier para NVDA:
+Seguidamente van las asignaciones de comandos de la Papenmeier para NVDA:
 %kc:beginInclude
 || Nombre | Tecla |
 | Desplazar pantalla braille atrás | izquierda |
@@ -1764,7 +1764,7 @@ Generalmente, las siguientes teclas están disponibles en las pantallas braille:
 | dn | 1 paso abajo |
 | dn2 | 2 pasos abajo |
 
-Seguidamente van las asignaciones de órdenes de las Papenmeier para NVDA:
+Seguidamente van las asignaciones de comandos de las Papenmeier para NVDA:
 
 %kc:beginInclude
 Dispositivos con EAB:
@@ -1832,7 +1832,7 @@ Si te estás conectando utilizando un puerto serie (o un conversor de USB a seri
 
 Antes de conectar tu BrailleNote Apex utilizando su cliente de interface USB, debes instalar los controladores proporcionados por HumanWare.
 
-Seguidamente van las asignaciones de órdenes del BrailleNote para NVDA.
+Seguidamente van las asignaciones de comandos del BrailleNote para NVDA.
 Por favor mira la documentación del BrailleNote para encontrar dónde se localizan estas teclas.
 
 %kc:beginInclude
@@ -1872,8 +1872,8 @@ Cuando configures la línea y puerto a utilizar,  asegúrate de prestar gran ate
 Para pantallas que tengan un teclado braille, BRLTTY actualmente maneja la entrada braille por sí mismo.
 Por lo tanto, la opción tabla braille de entrada de NVDA es irrelevante.
 
-Seguidamente van las asignaciones a órdenes BRLTTY para NVDA.
-Por favor mira [la documentación de tablas de teclas de BRLTTY http://mielke.cc/brltty/doc/drivers/] para información acerca de cómo están mapeadas las órdenes de BRLTTY para controlar las líneas braille.
+Seguidamente van las asignaciones a comandos BRLTTY para NVDA.
+Por favor mira [la documentación de tablas de teclas de BRLTTY http://mielke.cc/brltty/doc/drivers/] para información acerca de cómo están mapeadas los comandos de BRLTTY para controlar las líneas braille.
 %kc:beginInclude
 || Nombre | orden de BRLTTY |
 | Desplazar pantalla braille hacia atrás | fwinlt (va a la izquierda una ventana) |
