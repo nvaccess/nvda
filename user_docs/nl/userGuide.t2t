@@ -456,7 +456,7 @@ Hoewel u voor het navigeren met de muis een fysieke muis of een muispad moet geb
 + Bladermodus +
 In NVDA worden complexe alleen-lezen documenten zoals een webpagina weergegeven in bladermodus.
 Het gaat om documenten in Mozilla Firefox, Microsoft Internet Explorer, HTML-berichten in Microsoft Outlook, Google Chrome, Adobe Reader en Adobe Flash.
-Bladermodus is ook optioneel beschikbaar voor Microsoft Word wanneer in complexe documenten moet worden genavigeerd.
+Bladermodus is ook optioneel beschikbaar voor Microsoft Word-documenten.
 
 In bladermodus wordt de inhoud van het document weergegeven als platte tekst waar u met de pijltoetsen doorheen kunt lopen alsof het een tekstdocument is.
 Alle NVDA commando's voor de [systeemcursor #SystemCaret] werken in bladermodus. Denk hierbij aan opmaakinformatie, alles lezen, tabelnavigatie etc.
@@ -475,7 +475,7 @@ Het is ook mogelijk om handmatig de focusmodus in te schakelen, deze zal dan act
 || Naam | Toets | Beschrijving |
 | Van modus wisselen | NVDA+spatiebalk | Wisselen tussen blader en focusmodus |
 | Focusmodus verlaten | escape | Naar de bladermodus teruggaan vanuit de automatisch ingeschakelde focusmodus |
-| Document vernieuwen | NVDA+f5 | Het document wordt opnieuw geladen (nuttig als er iets lijkt te ontbreken op de pagina) |
+| Document vernieuwen | NVDA+f5 | Het document wordt opnieuw geladen (nuttig als er iets lijkt te ontbreken op de pagina. Niet beschikbaar in Microsoft Word en Outlook.) |
 | Zoeken | NVDA+control+f | Er wordt een venster geopend waarin u tekst kunt typen die in het huidige document moet worden opgezocht |
 | Volgende zoeken | NVDA+f3 | Hiermee kunt u nagaan of tekst van een zoekopdracht verderop in het document nog vaker voorkomt. |
 | Vorige zoeken | NVDA+shift+f3 | Hiermee kunt u nagaan of de gezochte tekst eerder in het document voorkomt |
@@ -485,6 +485,7 @@ Het is ook mogelijk om handmatig de focusmodus in te schakelen, deze zal dan act
 
 ++ Lettertoetsnavigatie ++
 Om in de bladermodus snel te kunnen navigeren, kunt u een lettertoets gebruiken om naar bepaalde velden te springen in een document.
+Merk op  dat niet alle commando’s  worden ondersteund  in elk type document.
 
 %kc:beginInclude
 Om naar het eerstvolgende element te springen gebruikt u uitsluitend één van de hierna vermelde toetsen, terwijl u in combinatie met de shifttoets naar een vorig element springt:
@@ -1697,19 +1698,23 @@ De volgende brailleleesregels worden ondersteund:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2D80s, EL 70s, EL 66s (USB)
 - BRAILLEX Trio (USB en Bluetooth)
+- BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus (USB and bluetooth)
 -
 
 Als BrxCom is geïnstalleerd, zal NVDA BrxCom gebruiken.
 BrxCom is een hulpprogramma waarmee u de Braille-invoer onafhankelijk van een schermlezer kunt gebruiken.
 Door de firma Papenmeier zal spoedig een nieuwe versie van BrxCom die voor NVDA geschikt is, worden uitgebracht. 
-Met de Braillex Trio is brailleïnvoer echter wel mogelijk  zonder BrxCom.
+Met de Braillex Trio Live 20 en Braillex Live-toestellen is brailleïnvoer mogelijk  zonder BrxCom.
+Brailleinvoer is ook mogelijk met het Live Plus-model, maar alleen met BrxCom.
 
 De meeste leesregels hebben een gebruiksvriendelijke navigatiebalk (EAB = Easy Access Bar, waarmee intuïtief en snel gewerkt kan worden.
 De navigatiebalk kan in vier richtingen bewogen worden waarbij er als regel twee schakelpunten per richting zijn.
-De c-Serie vormt hierop een uitzondering.
+De c-Serie en de Live-serie vormen hierop een uitzondering.
 
 De modellen uit de c-serie en enkele andere leesregels hebben twee rijen routing toetsen waarvan de bovenste rij  door NVDA gebruikt wordt om informatie over opmaak te krijgen.
 Door bij de modellen uit de c-serie één van de routing toetsen ingedrukt te houden en daarbij op de EAB (navigatiebalk) te drukken, wordt de staat van het tweede schakelpunt gesimuleerd.
+De leesregels uit de live-serie hebben maar één rij routing-toetsen en de EAB heeft 1 schakelpunt per richting.
+Het tweede schakelpunt kan worden gesimuleerd door een van de routing-toetsen in te drukken en de EAP in de daarmee overeenkomende richting te drukken. 
 Door de linker-, rechter-, omhoog- en omlaagtoets (of de EAB) in te drukken en vast te houden wordt de bijbehorende actie herhaald.     
 
 In het algemeen beschikken deze leesregels over de volgende toetsen:

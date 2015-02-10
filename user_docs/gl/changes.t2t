@@ -28,6 +28,7 @@ O sinalable nesta versión  inclúe o modo exploración para documentos en Micro
 - Eliminouse o soporte para o sintetizador Newfon. Agora Newfon está dispoñible como un complemento do NVDA. (#3184)
 - Agora requírese Skype for Desktop 7 ou posterior para utilizar co NVDA; non se soportan as versións anteriores. (#4218)
 - A descarga das actualizacións do NVDA agora é máis segura. (en concreto, a información de actualización recupérase a través de https e o hash do ficheiro verifícase tras a súa descarga.) (#4716)
+- Actualizouse o eSpeak á versión 1.48.04 (#4325)
 
 
 == Corrección de Erros ==
@@ -52,6 +53,7 @@ O sinalable nesta versión  inclúe o modo exploración para documentos en Micro
 - Cando o texto cambie ou se engada a rexións activas de texto relevante en Internet Explorer e outros controis MSHTML, só se anuncia o texto cambiado ou engadido, en lugar de todo o texto no elemento contedor. (#4800)
 - O contido indicado polo atributo aria-labelledby en elementos en Internet Explorer e outros controis MSHTML reemplaza correctamente o contido orixinal  onde sexa apropriado facelo. (#4575)
 - Cando se revisa a ortografía no Microsoft Outlook 2013, agora anúnciase a palabra mal escribida. (#4848)
+- En Internet Explorer e outros controis MSHTML, o contido dentro de elementos ocultos con visibility:hidden xa non se presenta inapropriadamente no modo exploración. (#4839, #3776)
 
 
 == Cambios para desenvolvedores ==

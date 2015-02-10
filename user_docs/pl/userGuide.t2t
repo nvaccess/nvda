@@ -17,7 +17,7 @@ NVDA pozwala osobom niewidomym korzystać z systemu operacyjnego MS Windows, a t
 
 Najważniejsze właściwości NVDA to:
 - Wsparcie popularnych aplikacji takich jak przeglądarki internetowe, klienty poczty, komunikatory internetowe, pakiety biurowe
-- Wbudowany Syntezator mowy obsługujący ponad 43 języki
+- Wbudowany Syntezator mowy obsługujący ponad 80 języków
 - Ogłaszanie formatowania tekstu, jeśli jest dostępne, takiego jak nazwa i rozmiar czcionki, styl oraz błędy ortograficzne
 - Automatyczne ogłaszanie tekstu znajdującego się pod myszką oraz opcjonalna dźwiękowa sygnalizacja pozycji myszki.
 - Wsparcie dla wielu monitorów Brajlowskich uwzględniające możliwość wprowadzania tekstu na monitorach z klawiaturą brajlowską
@@ -441,7 +441,7 @@ Nawigacja myszą powinna odbywać się przy użyciu fizycznej myszy lub trackpad
 + Tryb czytania +
 Złożone dokumenty przeznaczone tylko do odczytywania, na przykład strony internetowe, przedstawiane są w NVDA w trybie czytania.
 Dotyczy to dokumentów wyświetlanych w programach Mozilla Firefox, Microsoft Internet Explorer, wiadomości HTML w Microsoft Outlook, Google Chrome, Adobe Reader and Adobe Flash.
-Tryb czytania jest również opcjonalnie dostępny dla nawigowania w złożonych dokumentach w programie Microsoft Word . 
+Tryb czytania jest również opcjonalnie dostępny dla dokumentów w programie Microsoft Word . 
 
 W trybie czytania treść dokumentu jest udostępniana w płaskiej reprezentacji, po której można się przemieszczać z użyciem klawiszy kursora tak jak w zwykłych dokumentach tekstowych.
 Wszystkie polecenia NVDA dotyczące [punktu uwagi #SystemCaret] będą działały w tym trybie; np. czytaj wszystko, odczytaj formatowanie, komendy nawigacji wewnątrz tabel, etc.
@@ -460,7 +460,7 @@ Dodatkowo możesz wymusić tryb formularza, który pozostanie wówczas aktywny d
 || Działanie | Skróty Klawiszowe | Opis |
 | Przełącz tryb czytania | NVDA+spacja | Przełącza pomiędzy trybem formularza i trybem czytania |
 | Wyjście z trybu formularza | escape | Przełącza się na tryb czytania, jeśli wcześniej tryb formularza włączył się automatycznie |
-| Odśwież zawartość dokumentu | NVDA+f5 | Odświeża aktualny dokument w trybie przeglądania. (przydatne w przypadku, gdy niektórych treści brakuje na stronie.) |
+| Odśwież zawartość dokumentu | NVDA+f5 | Odświeża aktualny dokument w trybie przeglądania. (przydatne w przypadku, gdy niektórych treści brakuje na stronie. Niedostępne w Microsoft Word i Outlook.) |
 | Znajdź | NVDA+kontrol+f | Pojawia się okno dialogowe, w którym można wpisać tekst, aby przeszukać aktualny dokument |
 | Znajdź następny | NVDA+f3 | Znajduje w dokumencie następne wystąpienie wyszukiwanego wcześniej tekstu |
 | Znajdź poprzedni | NVDA+shift+f3 | Znajduje w dokumencie poprzednie wystąpienie wyszukiwanego wcześniej tekstu |
@@ -470,6 +470,7 @@ Dodatkowo możesz wymusić tryb formularza, który pozostanie wówczas aktywny d
 
 ++ Nawigacja pojedynczymi literami ++
 Podczas pracy w trybie czytania można używać pojedynczych liter do przechodzenia pomiędzy kolejnymi elementami określonego typu. 
+Zauważ, że nie wszystkie te komendy są dostępne we wszystkich typach dokumentów.
 
 %kc:beginInclude
 Naciśnięcie litery przechodzi do następnego elementu odpowiedniego typu, natomiast naciśnięcie litery z klawiszem Shift przechodzi do elementu poprzedniego.
@@ -566,6 +567,13 @@ Opisana komenda działa tylko dla domyślnego ustawienia formatowania linii stat
 || Działanie | Skrót klawiszowy | Opis |
 | odczytaj okno komentarzy | Control+shift+c | czyta komentarze znajdujące się w oknie komentarzy. |
 | Odczytaj uwagi dla tłumaczy | control+shift+a | Zgłasza wszelkie uwagi dla tłumaczy. |
+%kc:endInclude
+
+++ Skype ++
+%kc:beginInclude
+Wewnątrz konwersacji:
+|| Działanie | Skrót | Opis |
+| Przejrzyj wiadomość | NVDA+control+1-0 | Odczytuje ostatnią wiadomość i przenosi do niej punkt przeglądu, zależnie od naciśniętej cyfry; np. NVDA+control+2 odczytuje wiadomość drugą od końca. |
 %kc:endInclude
 
 + Konfigurowanie NVDA +
@@ -706,7 +714,7 @@ Opcja ta jest przydatna dla syntezatorów, które nie potrafią zmieniać wysoko
 
 ==== wykrywanie wymowy ====[VoiceSpellingFunctionality]
 Niektóre słowa zawierają tylko jeden znak, lecz wymowa rużni się w zależności od tego, czy wymawiamy daną literę jak słowo, czy jako literę samą w sobie.
-Przykładowo w języku angielskim litera a może być wymawiana jako litera "ej", lub jako "e", w zależności od tego, kiedy zostanie użyta.
+Przykładowo w języku angielskim "a" jest literą lub słowem i jest przy tym różnie wymawiana.
 To ustawienie sprawia, że syntezatory mowy uwzględniają ten fakt. 
 Ta funkcjonalność jest wspierana w większości syntezatorów.
 
@@ -865,6 +873,8 @@ Jeśli zaznaczysz to pole, NVDA będzie informować o rodzaju obiektu wskazywane
 
 ==== Sygnalizuj dźwiękiem położenie myszy ====
 Jeśli zaznaczysz to pole, NVDA będzie generować dźwięki podczas poruszania myszą, ułatwiając określenie pozycji wskaźnika na ekranie.
+Im wyżej mysz jest na ekranie, tym wyższy będzie dźwięk.
+Im bardziej po lewej lub prawej stronie ekranu znajduje się wskaźnik myszy, tym bardziej po lewej lub prawej stronie będzie słychać dźwięk (jeśli użytkownik ma podłączone stereofoniczne słuchawki lub głośniki).
 
 ==== Głośność dźwięku myszy zależy od jasności obrazu ====
 Jeśli zaznaczysz to pole, dźwięki sygnalizujące położenie myszy będą tym głośniejsze, im jaśniejszy jest obraz znajdujący się w miejscu wskaźnika. Opcja ta ma znaczenie tylko, jeśli włączona jest funkcja "Sygnalizuj dźwiękiem położenie myszy". 
@@ -1019,8 +1029,7 @@ Jeśli ta opcja jest włączona, NVDA będzie sygnalizować dźwiękiem przełą
 Domyślnie włączone, to ustawienie pozwala zdecydować, że zdarzenia wejścia, (takie jak naciskane klawisze) które nie są poleceniami NVDA, ani nie wyglądają na polecenia aplikacji, powinny być nieprzekazywane do dokumentu, w którym znajduje się punkt uwagi. 
 Dla przykładu: jeśli to ustawienie jest włączone i naciśnięto literę j, zostanie ona zignorowana, ponieważ nie jest komendą szybkiej nawigacji i nie wydaje się być poleceniem aplikacji.
 
- 
-+++ Formatowanie Dokumentów (NVDA+kontrol+d) +++[DocumentFormattingSettings]
+ +++ Formatowanie Dokumentów (NVDA+kontrol+d) +++[DocumentFormattingSettings]
 Okno "Formatowanie Dokumentów ..." znajduje się w menu ustawień nvda.
 
 Większość pól wyboru w tym oknie dialogowym służy do konfiguracji, jaki rodzaj formatowania chcesz usłyszeć automatycznie podczas poruszania się kursorem po dokumentach.
@@ -1250,8 +1259,8 @@ Jeśli wybrany dodatek posiada pomoc, możesz ją przejrzeć po wciśnięciu prz
 
 Aby przejrzeć i pobrać dostępne dodatki, naciśnij przycisk "Pobierz dodatki".
 Ten przycisk otwiera [stronę dodatków NVDA http://addons.nvda-project.org/].
-Jeśli NVDA jest zainstalowany w systemie, możesz otworzyć dodatek bezpośrednio w przeglądarce internetowej, aby rozpocząć opisany poniżej proces instalacji.
-Jeśli NVDA nie jest zainstalowany, zapisz plik pakietu dodatku,  i postępuj według poniższych instrukcji.
+Jeśli NVDA jest zainstalowany i uruchomiony w systemie, możesz otworzyć dodatek bezpośrednio w przeglądarce internetowej, aby rozpocząć opisany poniżej proces instalacji.
+W przeciwnym wypadku, zapisz plik pakietu dodatku i postępuj według poniższych instrukcji.
 
 Aby zainstalować pozyskany plik dodatku, naciśnij przycisk "Zainstaluj".
 Pozwoli to wskazać pakiet dodatku (plik z rozszerzeniem .nvda-addon) znajdujący się na komputerze lub w sieci lokalnej.
@@ -1324,12 +1333,6 @@ Aby użyć tych głosów, musisz zainstalować dwa komponenty:
 Jest to komercyjny syntezator mowy dla języka włoskiego.
 Należy mieć zainstalowany ten syntezator w systemie, aby używać go z NVDA.
 Aby uzyskać więcej informacji, odwiedź stronę Audiologic: www.audiologic.it.
-
-Ten syntezator nie obsługuje [Wykrywania wymowy #VoiceSpellingFunctionality].
-
-++ Newfon ++
-NewFon jest bezpłatnym syntezatorem Sergeya Shishmintzeva, który wspiera język rosyjski i ukraiński.
-Aby pobrać ten syntezator, należy przejść do sekcji pliki do pobrania na stronie rosyjskiej społeczności NVDA: http://ru.nvda-community.org/?page_id=10
 
 Ten syntezator nie obsługuje [Wykrywania wymowy #VoiceSpellingFunctionality].
 
@@ -1681,19 +1684,23 @@ Obsługiwane są następujące monitory:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
 - BRAILLEX Trio (USB i bluetooth)
+- BRAILLEX Live 20, BRAILLEX Live i BRAILLEX Live Plus (USB i bluetooth)
 -
 
 Jeśli zainstalowany jest BrxCom, NVDA będzie używać BrxCom.
 BrxCom jest to narzędzie, które pozwala używać wprowadzania brajlem niezależnie od używanego programu odczytu ekranu.
 Nowa wersja BrxCom pracująca z NVDA, wkrótce  zostanie wydana przez Papenmeier.  
-Możliwe jest jednak wprowadzanie brajlem na urządzeniu Trio bez BrxCom.
+Możliwe jest jednak wprowadzanie brajlem na urządzeniach Trio, BRAILLEX Live 20 i Braillex Live bez BrxCom.
+Wprowadzanie brajla jest również możliwe na modelu Live Plus , ale tylko z BrxCom.
 
 Większość urządzeń posiada pasek łatwego dostępu(EAB) umożliwiający intuicyjną i szybką obsługę.
 EAB może być przesunięty w czterech kierunkach, a każdy kierunek generalnie posiada dwa przełączniki.
-Seria c to jedyny wyjątek od tej reguły.
+Serie c i Live to jedyny wyjątek od tej reguły.
 
 Seria c i niektóre inne monitory posiada dwie linie routingu, z których górna jest używana do ogłaszania formatowania.
 Naciśnięcie i przytrzymanie jednego z górnych klawiszy routingowych i naciśnięcie EAB na monitorach serii c emuluje drugi stan przełącznika.
+Monitory serii live  posiadają jeden rząd klawiszy routingowych, a EAB - jeden stopień w każdym kierunku.
+Drugi stopień może zostać uzyskany poprzez naciśnięcie jednego z klawiszy routingowych i przesunięcie EAB w wybranym kierunku.
 Naciśnięcie i przytrzymanie klawisza góra, dół, prawo i lewo (albo EAB) spowoduje powtórzenie powiązanej akcji.
 
 Na ogół, następujące klawisze są dostępne na tych monitorach:
@@ -1894,7 +1901,7 @@ Dla monitorów z klawiaturą brajlowską, BRLTTY aktualnie sam zarządza wprowad
 W związku z tym, ustawienie w NVDA tabeli wprowadzania nie ma zastosowania.
 
 Poniżej wykaz poleceń brltty dla nvda. 
-Zobacz [tabele klawiszy w dokumentacji brltty http://mielke.cc/brltty/doc/drivers/] by dowiedzieć się, jak poszczególne komendy programu wywołać za pomocą klawiszy poszczególnych monitorów.
+Zobacz [tabele klawiszy w dokumentacji brltty http://mielke.cc/brltty/doc/KeyTables/] by dowiedzieć się, jak poszczególne komendy programu wywołać za pomocą klawiszy poszczególnych monitorów.
 %kc:beginInclude
 || Działanie | komenda brltty |
 | Przewiń brajla do tyłu | fwinlt (go left one window) |
@@ -1980,7 +1987,8 @@ Poniżej wymieniono wszystkie opcje linii poleceń dla NVDA:
 | -s | --secure | Tryb bezpieczny (wyłącz konsolę Pythona) |
 | Brak | --disable-addons | dodatki będą ignorowane |
 | None | --no-sr-flag  | Nie zmieniaj globalnej flagi systemowej czytnika ekranu |
-| None | --install | Po cichu instaluje NVDA |
+| None | --install | Po cichu instaluje NVDA i uruchamia zainstalowaną kopię |
+| Brak | --install-silent | Po cichu instaluje NVDA (nie uruchamia zainstalowanej kopii) |
 
 ++ Zaawansowana edycja wymowy symboli ++
 Możliwa jest  edycja wymowy symboli wykraczająca poza to, co daje okno dialogowe [Wymowa znaków i symboli #SymbolPronunciation]. 
