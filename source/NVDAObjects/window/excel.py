@@ -251,7 +251,14 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 	passThrough=True
 
 	def _get_isAlive(self):
-		return winUser.isWindow(self.rootNVDAObject.windowHandle)
+		if not winUser.isWindow(self.rootNVDAObject.windowHandle):
+			return False
+		try:
+			return self.rootNVDAObject.excelWorksheetObject.name==self.rootNVDAObject.excelApplicationObject.activeSheet.name
+		except (COMError,AttributeError,NameError):
+			log.debugWarning("could not compair sheet names",exc_info=True)
+			return False
+
 
 	def __contains__(self,obj):
 		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle)
