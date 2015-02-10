@@ -117,7 +117,14 @@ class ExcelChartQuickNavItem(ExcelQuickNavItem):
 		except(COMError):
 
 			pass
-
+		focus=api.getDesktopObject().objectWithFocus()
+		if not focus or not isinstance(focus,ExcelBase):
+			return
+		# Charts are not yet automatically detected with objectFromFocus, so therefore use selection
+		sel=focus._getSelection()
+		if not sel:
+			return
+		eventHandler.queueEvent("gainFocus",sel)
 
 
 	@property
@@ -142,7 +149,7 @@ class ExcelRangeBasedQuickNavItem(ExcelQuickNavItem):
 
 	def moveTo(self):
 		self.excelItemObject.Activate()
-
+		eventHandler.queueEvent("gainFocus",api.getDesktopObject().objectWithFocus())
 
 	@property
 	def isAfterSelection(self):
