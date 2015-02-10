@@ -205,23 +205,15 @@ class ExcelQuicknavIterator(object):
 		returns a generator that emits L{QuickNavItem} objects for this collection.
 		"""
 		items=self.collectionFromWorksheet(self.document)
-		if items:
-			itemCount=items.count
-			log.debugWarning("item count {}".format( itemCount ) ) 
-			isFirst=True
-			for index in xrange(1,itemCount+1):
-				if self.direction=="previous":
-					index=itemCount-(index-1)
-				collectionItem=items[index]
-				item=self.quickNavItemClass(self.itemType,self.document,collectionItem , items )
-				#itemRange=item.rangeObj
-				# Skip over the item we're already on.
-				#if not self.includeCurrent and isFirst and ((self.direction=="next" and itemRange.start<=self.rangeObj.start) or (self.direction=="previous" and itemRange.end>self.rangeObj.end)):
-					#continue
-				if not self.filter(collectionItem):
-					continue
-				yield item
-				isFirst=False
+		if not items:
+			return
+		if self.direction=="previous":
+			items=reversed(items)
+		for collectionItem in items:
+			item=self.quickNavItemClass(self.itemType,self.document,collectionItem , items )
+			if not self.filter(collectionItem):
+				continue
+			yield item
 
 class ChartExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 	quickNavItemClass=ExcelChartQuickNavItem#: the QuickNavItem class that should be instanciated and emitted. 
