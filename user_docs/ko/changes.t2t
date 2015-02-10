@@ -4,7 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2015.1 =
-Highlights of this release include browse mode for documents in Microsoft Word and Outlook; major enhancements to support for Skype for Desktop; and significant fixes for Microsoft Internet Explorer.
+이번 버전의 주 기능들: 마이크로소프트 워드와 아우틀룩 문서 및 메시지에서의 브라우즈 모드 기능, Skype 지원 향상 및 인터넷 엑스플로러 사용시 발생하던 여러 중대 버그 수정 등입니다.
 
 == 새로 추가된 기능들 ==
 - 구두점/기호 발음 설정에 새 기호를 추가할 수 있음. (#4354)
@@ -15,7 +15,9 @@ Highlights of this release include browse mode for documents in Microsoft Word a
 - 마이크로소프트 아우틀룩 2007 이상에서 브라우즈 모드를 사용하여 HTML 이메일을 읽을 수 있음(만약 브라우즈 모드가 자동으로 적용되지 않았을 경우 NVDA+SPACE를 눌러 수동으로 브라우즈 모드를 선택바람). (#2975) 
 - 마이크로소프트 워드 문서 저자가 표 속성 중 열 머릿말 행을 표시한 경우 표의 열 머릿말이 자동으로 출력되도록 함. (#4510) 
  - 그러나 표 행이 중복되는 경우 적용되지 않을 수 있음(이때 NVDA+shift+c를 눌러 열 머릿말을 설정하기 바람).
-- Desktop용 스카이프에 뜨는 노티피케이션이 자동으로 출력되도록 함. (#4741)
+- Desktop용 스카이프에서 뜨는 알림을 자동으로 출력하도록 함. (#4741)
+- Desktop용 스카이프 사용시 NVDA+control+1부터 NVDA+control+0을 출러 최근 메시지 리뷰시 메시지를 출력하도록 함(예: NVDA+control+1을 출러 ㅗ치근 메시지를 NVDA+control+0을 출러 최근 열번째 메시지 확인). (#3210)
+- Desktop용 스카이프로 메시지를 주고받을때 친구가 타이핑을 하는지를 출력함. (#3506)
 - NVDA 실행 명령 목록에 --install-silent 옵션을 통해 NvDA 설치 후 자동으로 실행하는것을 차단할 수 있음. (#4206)
 - 페이펀마이어 BRAILLEX Live 20, BRAILLEX Live 및 BRAILLEX Live Plus 디스플레이 지원 추가. (#4614)
 
@@ -25,6 +27,8 @@ Highlights of this release include browse mode for documents in Microsoft Word a
 - 자동 언어 변경 설정에 관계없이 현재 사용되는 음성 엔진 언어로 기호 및 구두점을 출력하도록 함(보이스 설정에 추가된 보이스 언어 데이타 사용 설정을 해제하여 NVDA 인터페이스 언어를 사용하도록 할 수 있음). (#4210)
 - Newfon 음성 엔진을 추가 기능으로 전환함. (#3184)
 - 스카이프 사용시 스카이프 7 이상 사용 바람. (#4218)
+- NVDA 업데이트 다운로드 보안 강화(HTTPS 연결 및 다운로드후 파일 hash 검사 추가). (#4716)
+- 이스피크 음성 엔진 1.48.04 사용. (#4325)
 
 
 == 버그 수정 ==
@@ -39,7 +43,10 @@ Highlights of this release include browse mode for documents in Microsoft Word a
 - 단춧키 설정을 통해 단춧키 추가중 키보드 배열 선택 메뉴에서 ESC를 눌렀을때 메뉴 대신 단춧키 설정 대화상자가 닫히던 문제 수정. (#3617)
 - 추가 기능 제거후 추가 기능 폴더가 삭제되도록 함(이전에는 NVDA를 한번 더 재시작한 후 추가 기능 폴더가 삭제되었음). (#3461)
 - 스카이프 7 사용시 존재하던 중대 버그들 수정. (#4218)
+- 스카이프에서 메시지 전송시 메시지가 두번 출력되던 문제 수정. (#3616)
+- 스카이프 사용중 가끔 메시지 내용(일부분 또는 전체)이 갑자기 출력되던 문제 수정. (#4644)
 - 시간 및 날짜 출력시 사용자가 지정한 국가 설정을 반영하지 않던 문제 수정. (#2987) 
+- 일시 중단된 메트로 앱에서 빠져나갈때 NVDA가 몇초동안 다운되던 문제 수정. (#4572)
 
 
 == 개발자를 위한 내용 ==
