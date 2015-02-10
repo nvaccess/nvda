@@ -28,6 +28,7 @@ Unapređenja u ovoj inačici uključuju način pregleda za dokumente u Microsoft
 - Podrška sintetizatora govora Newfon je uklonjena. Newfon je sad dostupan kao dodatak za NVDA. (#3184)
 - Za korištenje uz pomoć NVDA zahtjeva se Skype za Radnu površinu 7 ili noviji; Ranije inačice nisu podržane. (#4218)
 - Preuzimanje NVDA nadogradnji je sada više sigurnije. (Točnije, informacije o nadogradnjama sada se dobivaju putem https protokola i kontrolni zbroj datoteke se provjerava poslije preuzimanja.) (#4716)
+- eSpeak je nadograđen tako da je njegova najnovija inačica 1.48.04 (#4325)
 
 
 == Ispravke grešaka ==
@@ -52,6 +53,7 @@ Unapređenja u ovoj inačici uključuju način pregleda za dokumente u Microsoft
 - Kada je tekst izmijenjen ili dodan u tekstualno relevantnim živim regijama u Internet Exploreru i drugim MSHTML kontrolama, Čita se samo dodan ili pročitan tekst, bolje nego sav tekst koji se nalazi u tom elementu. (#4800)
 - Sadržaj koji je označen atributom aria-labelledby na elementima u Internet Exploreru i drugim MSHTML kontrolama ispravno zamjenjuje izvorni sadržaj gdje je to tako dozvoljeno. (#4575)
 - Kad se provjerava pravopis u Microsoft Outlooku 2013, neispravno napisana riječ se sada ispravno čita. (#4848)
+- U Internet Exploreru i drugim MSHTML kontrolama, sadržaj unutar elemenata koji je skriven sa visibility:hidden više se nepoželjno ne prikazuje u načinu pregleda. (#4839, #3776)
 
 
 == Izmjene za razvojne programere ==
