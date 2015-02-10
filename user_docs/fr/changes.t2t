@@ -28,6 +28,7 @@ Quoi de Neuf dans NVDA
 - Le support du synthétiseur Newfon a été supprimé. Newfon est maintenant disponible sous la forme d'un module complémentaire. (#3184)
 - Skype for Desktop 7 ou plus récent est maintenant requis pour utilisation avec NVDA; les versions plus anciennes ne sont pas supportées. (#4218)
 - Le téléchargement des mises à jour de NVDA est maintenant plus sécurisé. (En particulier, l'information de mise à jour est récupérée via https et le hash du fichier est vérifié après téléchargement.) (#4716)
+- eSpeak a été mis à jour à la version 1.48.04 (#4325)
 
 
 == Corrections de Bogues ==
@@ -53,6 +54,7 @@ Quoi de Neuf dans NVDA
 - Quand du texte est modifié ou ajouté dans des régions live de texte sous Internet Explorer et autres contrôles MSHTML, seul le texte modifié ou ajouté est annoncé, plutôt que tout le texte de l'élément contenant. (#4800)
 - Le contenu indiqué par l'attribut aria-labelledby sur des éléments sous Internet Explorer et autres contrôles MSHTML remplace correctement le contenu original là où il est approprié de le faire. (#4575)
 - Lors de la vérification orthographique sous Microsoft Outlook 2013, le mot mal orthogaphié est maintenant annoncé. (#4848)
+- Sous Internet Explorer et autres contrôles MSHTML, le contenu des éléments cachés avec visibility:hidden n'est plus présenté de manière inappropriée en mode navigation. (#4839, #3776)
 
 
 == Changements pour les Développeurs ==
