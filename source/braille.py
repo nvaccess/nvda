@@ -33,6 +33,12 @@ TABLES = (
 	("ar-fa.utb", _("Farsi grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("as-in-g1.utb", _("Assamese grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("be-in-g1.utb", _("Bengali grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("bg.ctb", _("Bulgarian 8 dot computer braille"), True),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
@@ -114,6 +120,9 @@ TABLES = (
 	("fr-bfu-g2.ctb", _("French (unified) Grade 2"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("gu-in-g1.utb", _("Gujarati grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("gr-gr-g1.utb", _("Greek (Greece) grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
@@ -141,13 +150,28 @@ TABLES = (
 	("it-it-comp8.utb", _("Italian 8 dot computer braille"), True),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("ka-in-g1.utb", _("Kannada grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("ko-g1.ctb", _("Korean grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("ko-g2.ctb", _("Korean grade 2"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("ks-in-g1.utb", _("Kashmiri grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("Lv-Lv-g1.utb", _("Latvian grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("ml-in-g1.utb", _("Malayalam grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("mn-in-g1.utb", _("Manipuri grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("mr-in-g1.utb", _("Marathi grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("nl-be-g1.utb", _("Dutch (Belgium) grade 1"), False),
@@ -171,6 +195,12 @@ TABLES = (
 	("No-No-g3.ctb", _("Norwegian grade 3"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("np-in-g1.utb", _("Nepali grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("or-in-g1.utb", _("Oriya grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("Pl-Pl-g1.utb", _("Polish grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
@@ -183,10 +213,16 @@ TABLES = (
 	("Pt-Pt-g2.ctb", _("Portuguese grade 2"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("pu-in-g1.utb", _("Punjabi grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("ru-compbrl.ctb", _("Russian braille for computer code"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("ru-ru-g1.utb", _("Russian grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("sa-in-g1.utb", _("Sanskrit grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("Se-Se-g1.utb", _("Swedish grade 1"), False),
@@ -202,6 +238,9 @@ TABLES = (
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("ta-ta-g1.ctb", _("Tamil grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("te-in-g1.utb", _("Telegu grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("tr.ctb", _("Turkish grade 1"), False),
