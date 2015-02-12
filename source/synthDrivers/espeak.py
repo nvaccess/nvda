@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #synthDrivers/espeak.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2007-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -117,7 +117,9 @@ class SynthDriver(SynthDriver):
 				# We can't use unicode.translate because we want to reject unknown characters.
 				try:
 					phonemes="".join([self.IPA_TO_ESPEAK[char] for char in item.ipa])
-					textList.append(u"[[%s]]"%phonemes)
+					# There needs to be a space after the phoneme command.
+					# Otherwise, eSpeak will announce a subsequent SSML tag instead of processing it.
+					textList.append(u"[[%s]] "%phonemes)
 				except KeyError:
 					log.debugWarning("Unknown character in IPA string: %s"%item.ipa)
 					if item.text:
