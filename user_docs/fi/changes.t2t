@@ -28,11 +28,12 @@ Tämän version keskeisimpiä ominaisuuksia ovat mm. selaustila Microsoft Word -
 - Newfon-syntetisaattorin tuki on poistettu. Newfon on nyt saatavilla NVDA:n lisäosana. (#3184)
 - Skypen käyttämiseen NVDA:n kanssa tarvitaan nyt Skypen työpöytäversio 7.0 tai uudempi; aiempia versioita ei tueta. (#4218)
 - NVDA:n päivitysten lataaminen on nyt turvallisempaa. (päivityksen tiedot haetaan HTTPS-protokollalla ja tiedoston tarkistussumma tarkistetaan latauksen jälkeen.) (#4716)
+- eSpeak on päivitetty versioksi 1.48.04. (#4325)
 
 
 == Korjatut ohjelmavirheet ==
 - Yhdistetyt rivi- ja sarakeotsikkosolut käsitellään nyt oikein Microsoft Excelissä. Esim. jos A1 ja B1 yhdistetään, solut A1 ja B1 luetaan solun B2 sarakeotsikkona. Aiemmin tällaisissa tapauksissa ei luettu mitään. (#4617)
-- Kun Microsoft PowerPoint 2003:ssa muokataan tekstiruudun sisältöä, NVDA lukee nyt oikein joka rivin sisällön. Aiemmin riveiltä jäi pois yksi merkki lisää aina jokaista uutta kappaletta kohti. (#4619)
+- Kun Microsoft PowerPoint 2003:ssa muokataan tekstikentän sisältöä, NVDA lukee nyt oikein joka rivin sisällön. Aiemmin riveiltä jäi pois yksi merkki lisää aina jokaista uutta kappaletta kohti. (#4619)
 - Kaikki NVDA:n valintaikkunat ovat nyt näytöllä keskitettyinä, mikä parantaa visuaalista ulkoasua ja käytettävyyttä. (#3148)
 - Kun Skypen työpöytäversiossa kontaktia lisättäessä kirjoitetaan esittelyviestiä, kirjoittaminen ja tekstissä liikkuminen toimii nyt oikein. (#3661)
 - Jos Eclipse-kehitysympäristön puunäkymissä aiemmin aktiivisena ollut kohde on valintaruutu, sitä ei enää virheellisesti lueta kohdistuksen siirtyessä uuteen kohtaan. (#4586)
@@ -52,6 +53,7 @@ Tämän version keskeisimpiä ominaisuuksia ovat mm. selaustila Microsoft Word -
 - Kun teksti muuttuu tai sitä lisätään text-relevant -tyyppisiin aktiivisiin alueisiin Internet Explorerissa ja muissa MSHTML-säätimissä, vain muutettu tai lisätty teksti puhutaan säilöelementin kaiken tekstin sijasta. (#4800)
 - Internet Explorerissa ja muissa MSHTML-säätimissä aria-labeledby-määreellä ilmaistava elementtien sisältö korvaa oikein alkuperäisen sisällön, jos se on tarkoituksenmukaista. (#4575)
 - Väärin kirjoitettu sana luetaan nyt Microsoft Outlook 2013:ssa oikeinkirjoitusta tarkistettaessa. (#4848)
+- Visibility:hidden-määreellä piilotetuissa elementeissä olevaa sisältöä ei enää näytetä asiaankuulumattomasti selaustilassa Internet Explorerissa ja muissa MSHTML-säätimissä. #3776)
 
 
 == Muutokset kehittäjille (englanniksi) ==
@@ -195,7 +197,7 @@ Tämän version keskeisimpiä ominaisuuksia ovat mm. selaustila Microsoft Word -
 
 == Uudet ominaisuudet ==
 - Tekstin valitsemisen ilmoittaminen on nyt mahdollista joissakin sellaisissa muokkauskentissä, joissa käytetään näytöllä olevaa tietoa. (#770)
-- Sijaintitiedot luetaan nyt saavutettavissa Java -sovelluksissa valintapainikkeille ja muille säätimille, jotka välittävät ryhmätietoja. (#3754)
+- Sijaintitiedot luetaan nyt saavutettavissa Java -sovelluksissa vaihtoehtopainikkeille ja muille säätimille, jotka välittävät ryhmätietoja. (#3754)
 - Pikanäppäimet luetaan nyt saavutettavissa Java -sovelluksissa sellaisille säätimille, joilla niitä on. (#3881)
 - Kiintopisteiden nimet luetaan nyt selaustilassa. Ne näytetään myös Elementtilista-valintaikkunassa. (#1195)
 - Nimetyt alueet käsitellään nyt selaustilassa maamerkkeinä. (#3741)
@@ -214,8 +216,8 @@ Tämän version keskeisimpiä ominaisuuksia ovat mm. selaustila Microsoft Word -
 - Säädinten nimet, kuten  linkit ja painikkeet, hahmonnetaan nyt oikein selaustilassa, jos sivun tekijä on korvannut nimen saavutettavuustarkoituksessa (erityisesti aria-label- tai aria-labeledby-ominaisuuksia käyttäen). (#1354)
 - Elementin sisällä olevaa esitykselliseksi  (ARIA role="presentation") merkittyä tekstiä ei enää jätetä virheellisesti huomiotta selaustilassa Internet Explorerissa. (#4031)
 - Vietnaminkielisen tekstin kirjoittaminen on taas mahdollista Unikey-ohjelmistoa käytettäessä. Tee tämä poistamalla valinta Käsittele muiden sovellusten näppäinpainallukset -valintaruudusta, joka on lisätty NVDA:n Näppäimistöasetukset-valintaikkunaan. (#4043) 
-- Valikkokohteina olevat valintapainikkeet tai valintaruudut ilmoitetaan selaustilassa pelkän napsautettavan tekstin sijasta nyt säätimiksi. (#4092)
-- NVDA ei enää siirry automaattisesti kohdistustilasta selaustilaan valikkokohteena olevan valintapainikkeen tai valintaruudun ollessa aktiivisena. (#4092)
+- Valikkokohteina olevat vaihtoehtopainikkeet tai valintaruudut ilmoitetaan selaustilassa pelkän napsautettavan tekstin sijasta nyt säätimiksi. (#4092)
+- NVDA ei enää siirry automaattisesti kohdistustilasta selaustilaan valikkokohteena olevan vaihtoehtopainikkeen tai valintaruudun ollessa aktiivisena. (#4092)
 - Askelpalauttimella poistettuja merkkejä ei enää lueta kirjoitetun sanan osana Microsoft PowerPointissa kirjoitettujen sanojen lukemisen ollessa käytössä. (#3231)
 - Yhdistelmäruutujen nimet luetaan nyt oikein Microsoft Office 2010:n asetusvalintaikkunoissa. (#4056)
 - Edelliseen tai seuraavaan painikkeeseen tai lomakekenttään siirtävillä komennoilla voidaan liikkua nyt myös tilanvaihtopainikkeiden välillä selaustilassa Mozilla-sovelluksissa. (#4098)
@@ -250,7 +252,7 @@ Tämän version keskeisimpiä ominaisuuksia ovat mm. selaustila Microsoft Word -
 - NVDA käsittelee oikein Microsoft Excelissä solun pudotuslistan avaamisen pikavalikon kautta. (#3586)
 - Uusi sisältö näytetään nyt oikein iTunes 11 storen sivuilla selaustilassa seurattaessa storessa olevaa linkkiä tai avattaessa storea ensimmäistä kertaa. (#3625)
 - iTunes 11 storen kappaleiden  esikuuntelupainikkeiden nimet näkyvät nyt  selaustilassa. (#3638)
-- Valintaruutujen ja valintapainikkeiden nimet hahmonnetaan nyt oikein selaustilassa Google Chromessa. (#1562)
+- Valintaruutujen ja vaihtoehtopainikkeiden nimet esitetään nyt oikein selaustilassa Google Chromessa. (#1562)
 - NVDA ei enää lue tarpeetonta tietoa Instantbirdissä joka kerran siirtyessäsi kontaktin kohdalle kontaktien listassa. (#2667)
 - Sellaisten painikkeiden jne. teksti, joiden nimet on korvattu työkaluvihjeellä tai muilla keinoin, hahmonnetaan nyt oikein selaustilassa Adobe Readerissa. (#3640)
 - Ylimääräisiä "mc-ref"-tekstiä sisältäviä grafiikoita ei enää hahmonneta selaustilassa Adobe Readerissa. (#3645)
@@ -278,7 +280,7 @@ Tämän version keskeisimpiä ominaisuuksia ovat mm. selaustila Microsoft Word -
 - Suorituskykyä paranneltu liikuttaessa Microsoft Word -asiakirjassa kirjoitusvirheiden lukemisen ollessa käytössä. (#3785)
 - Useita korjauksia saavutettavien Java-sovellusten tukeen:
  - Kehyksen tai valintaikkunan ensimmäinen aktiivinen säädin luetaan nyt oikein kyseisen kehyksen tai valintaikkunan tullessa etualalle. (#3753)
- - Valintapainikkeille ei enää lueta tarpeetonta sijaintitietoa (esim. 1 / 1). (#3754)
+ - Vaihtoehtopainikkeille ei enää lueta tarpeetonta sijaintitietoa (esim. 1 / 1). (#3754)
  - JComboBox-säätimet luetaan paremmin (enää ei lueta HTML-koodia, avattu- ja suljettu-tilat ilmoitetaan paremmin). (#3755)
  - Teksti, joka aiemmin puuttui valintaikkunoista niitä luettaessa, sisällytetään nyt niihin. (#3757)
  - Aktiivisen säätimen nimen, arvon tai kuvauksen muutokset luetaan nyt tarkemmin. (#3770)
@@ -1400,7 +1402,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat tuki 64-bittisille Windows
 - Lue kaikki- sekä valinnan ja nykyisen rivin lukukomennot toimivat nyt oikein näennäispuskurin läpivientitilassa. (#52)
 - Puheen nopeutus- ja hidastuskomennot poistettu. Näiden asetusten muuttamiseen tulisi käyttää puhesyntetisaattorin asetusrengasta (Control+NVDA+ylä- ja alanuoli) tai ääniasetusten valintaikkunaa.
 - Paranneltu edistymispalkkeja ilmaisevien äänimerkkien äänialaa ja skaalausta.
-- Uuteen näennäispuskuriin lisätty pikanavigointinäppäimiä: l=lista, i=listan kohde, e=muokkauskenttä, b=painike, x=valintaruutu, r=valintapainike, g=grafiikka, q=sisennetty kappale, c=yhdistelmäruutu, numerot 1 - 6=niitä vastaavat otsikkotasot, s=erotin, m=kehys. (#67, #102, #108)
+- Uuteen näennäispuskuriin lisätty pikanavigointinäppäimiä: l=lista, i=listan kohde, e=muokkauskenttä, b=painike, x=valintaruutu, r=vaihtoehtopainike, g=grafiikka, q=sisennetty kappale, c=yhdistelmäruutu, numerot 1 - 6=niitä vastaavat otsikkotasot, s=erotin, m=kehys. (#67, #102, #108)
 - Uuden verkkosivun latauksen peruuttaminen Firefoxissa mahdollistaa aiemman sivun sisältävän näennäispuskurin käytön, mikäli sitä ei ole vielä tuhottu. (#63)
 - Näennäispuskureissa sana kerrallaan liikkuminen on nyt tarkempaa, koska sanat eivät enää satunnaisesti sisällä tekstiä useammasta kuin yhdestä kentästä. (#70)
 - Kohdistuksen seurannan ja päivityksen tarkkuutta paranneltu Mozilla Gecko -näennäispuskureissa.

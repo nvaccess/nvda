@@ -4,30 +4,36 @@ Qué bi ha de Nuevo en o NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2015.1 =
+O resinyable d'ista versión inclui o modo de navegación t'os documentos en o Microsoft Word y l'Outlook; milloras mayors t'o suporte t'o Skype t'o escritorio; y significants correccions t'o Microsoft Internet Explorer.
 
 == Nuevas Caracteristicas ==
 - Agora se pueden adhibir nuevos simbolos en o dialogo de Pronuncia de Simbolos. (#4354)
 - En o dialogo de cenyos de dentrada se puet fer servir o nuevo campo "Tresminar-ne por" t'amostrar nomás os cenyos que contengan parolas specificas. (#4458)
 - O NVDA agora anuncia automaticament o nuevo texto en o mintty. (#4588)
 - En o dialogo de busca d'o modo de navegación agora bi ha una opción ta fer buscas que diferencien as mayusclas y as minusclas. (#4584)
-- A  navegación rapida (h ta capiters etc.) y a Lista d'Elementos (NVDA+f7) agora son disponibles en os documentos d'o Microsoft Word activando lo modo de navegación con NVDA+espacio. (#2975)
+- A  navegación rapida (pretar la h ta mover-se-ne por os capiters etc.) y a Lista d'Elementos (NVDA+f7) agora son disponibles en os documentos d'o Microsoft Word activando lo modo de navegación con NVDA+espacio. (#2975)
 - O leyer mensaches HTML en o Microsoft Outlook 2007 y posteriors s'ha amillorau muito en que s'activa automaticament o modo de navegación ta ixos mensaches. Si o modo de navegación no s'habilita en qualques situacions raras puetz aforzar-lo con NVDA+espacio. (#2975) 
 - Os capiters de columna de Tabla en o Microsoft word s'anuncian automaticament t'as tablas que o suyo autor haiga specificau explicitament un capitero de ringlera   a traviés d'as propiedatz de tabla d'o Microsoft word. (#4510) 
+ - Sin d'embargo, t'as tablas que as ringleras sigan estadas fusionadas ixo no marchará automaticament. En ista situgación encara puetz fixar os capiters de columna manualment en o NVDA con NVDA+mayus+c.
 - En o Skype t'o escritorio agora s'anuncian as notificacions. (#4741)
 - En o Skype t'o escritorio agora puetz  anunciar y revisar os mensaches recients  fendo servir dende NVDA+control+1 dica NVDA+control+0; p.eix. NVDA+control+1 t'o mensache más recient  y NVDA+control+0 t'o deceno más recient. (#3210)
 - En una conversa en o Skype t'o escritorio lo NVDA agora anuncia quan un contacto ye escribindo. (#3506)
+- Agora se puet instalar o NVDA silenciosament a traviés d'a linia de comandos sin que ixo ranque a copia instalada dimpués d'a instalación. Ta fer ixo fe servir a opción --install-silent. (#4206)
+- Suporte t'as linias braille Papenmeier BRAILLEX Live 20, BRAILLEX Live y BRAILLEX Live Plus. (#4614)
 
 
 == Cambeos ==
 - En o dialogo d'opcions de formatiau de documentos d'o NVDA la opción t'anunciar as errors d'ortografía agora tien un alcorce de teclau (alt+r). (#793)
-- O NVDA agora ferá servir l'idioma d'a voz d'o sintetizador en procesar caracters y simbolos (incluindo os nombres d'os simbolos de puntuación) sin mirar que siga enchegau o cambeo automatico d'idioma. Ta desenchegar ista caracteristica ta que o NVDA torne a fer servir l'idioma d'interficie d'ell desmarca a nueva opción clamada Confidar en l'idioma d'a voz en procesar caracters y simbolos en as opcions d'a voz. (#4210)
+- O NVDA agora ferá servir l'idioma d'a voz d'o sintetizador en procesar caracters y simbolos (incluindo os nombres d'os simbolos y a puntuación) sin mirar que siga enchegau o cambeo automatico d'idioma. Ta desenchegar ista caracteristica ta que o NVDA torne a fer servir l'idioma d'interficie d'ell desmarca a nueva opción clamada Confidar en l'idioma d'a voz en procesar caracters y simbolos en as opcions d'a voz. (#4210)
 - S'ha eliminau o suporte t'o sintetizador Newfon . O Newfon agora ye disponible como un complemento d'o NVDA. (#3184)
 - Agora se requier o Skype t'o escritorio 7 u superior ta fer-se servir con o NVDA; as versions anteriors no son suportadas. (#4218)
+- Descargar actualizacions d'o NVDA agora ye más seguro. (Specificament a información de l'actualización se recupera a traviés d'o https y l'hash d'o fichero se verifica dimpués de descargau.) (#4716)
+- O eSpeak s'ha esviellau t'a versión 1.48.04 (#4325)
 
 
 == Corrección d'errors ==
-- En o Microsoft Excel se maneya o caso que as celdas de capitero de ringlera y columna sigan mezcladas. P.eix. si A1 y B1 son mezcladas allora B2 será anunciada con A1 y B1 como lo suyo capitero de columna en cuenta d'absolutament cosa. (#4617)
-- En editar o conteniu d'un quadro de texto en o Microsoft PowerPoint 2003 o NVDA anunciará correctament o conteniu de cada linia. Anteriorment as linias se'n iban incrementando un caracter por cada nuevo paragrafo. (#4619)
+- En o Microsoft Excel agora se maneya correctament que as celdas de capitero de ringlera y columna sigan mezcladas. P.eix. si A1 y B1 son mezcladas allora B2 será anunciada con A1 y B1 como lo suyo capitero de columna en cuenta d'absolutament cosa. (#4617)
+- En editar o conteniu d'un quadro de texto en o Microsoft PowerPoint 2003 o NVDA anunciará correctament o conteniu de cada linia. Anteriorment en cada paragrafo as linias se'n iban incrementando un. (#4619)
 - Totz os dialogos d'o NVDA son agora centraus en a pantalla amillorando a presentación visual y a usabilidat. (#3148)
 - En o Skype t'o escritorio, en ficar un mensache introductorio t'adhibir un contacto, agora marcha bien o escribir y mover-se-ne a traviés d'o texto. (#3661)
 - En que o foco se'n mueve ta un nuevo elemento en as anvistas d'arbol en l'IDE Eclipse , si l'anterior elemento enfocau ye una caixeta de verificación, ya no s'anuncia incorrectament. (#4586)
@@ -41,10 +47,19 @@ Qué bi ha de Nuevo en o NVDA
 - En o Skype t'o escritorio lo NVDA ya no habría de leyer ocasionalment 	 un gran fluxo de mensaches (talment mesmo una conversación entera). (#4644)
 - Apanyau un problema que o comando de l'anunciau de calendata y hora d'o NVDA no feba honra a las opcions rechionals especificadas por l'usuario en bells casos. (#2987)
 - En o modo de navegación ya no se presenta texto absurdo (bellas vegadas abastando quantas linias) ta ciertos graficos tals como los trobaus en o Google Groups. (Specificament isto ocurre con imachens codificadas en base64.) (#4793)
+- O NVDA ya no habría de conchelar-se dimpués d'uns pocos segundos en mover o foco difuera d'una aplicación d'a tienda de Windows que ha plegau a suspender-se. (#4572)
+- L'atributo aria-atomic en rechions vivas en o Mozilla Firefox agora se tien en cuenta mesmo anque o mesmo elemento atomic cambee. Anteriorment no afectaba que a elementos descendients. (#4794) 
+- O modo de navegación refleixará as actualizacions y as rechions vivas s'anunciarán t'os documentos en o modo de navegación adintro d'as aplicacions ARIA contenidas en un documento en l'Internet Explorer u atros controls MSHTML. (#4798)
+- En que o texto cambee u s'adhiba a rechions vivas en l'Internet Explorer y atros controls MSHTML que o suyo autor haiga marcau que o texto ye relevant no s'anunciará que o texto cambiau u adhibiu, en cuenta de tot o texto en l'elemento contenedor. (#4800)
+- O conteniu indicau por l'atributo aria-labelledby en elementos en l'Internet Explorer y atros controls MSHTML substitui correctament o conteniu orichinal  do siga apropiau de fer-se. (#4575)
+- En comprebar a ortografía en o Microsoft Outlook 2013 a parola con falta d'ortografía agora s'anuncia. (#4848)
+- En l'Internet Explorer y atros controls MSHTML  o conteniu adintro d'elementos amagaus con visibility:hidden ya no se presienta inapropiadament en o modo de navegación. (#4839, #3776)
 
 
 == Cambeos ta desembolicadors ==
 - Esviellau lo wxPython ta 3.0.2.0. (#3763)
+- Esviellau lo Python to 2.7.9. (#4715)
+- O NVDA ya no se creba en reenchegar-se dimpués de borrar u esviellar un complemento que importa speechDictHandler en o modulo installTasks  d'ell. (#4496)
 
 
 = 2014.4 =
