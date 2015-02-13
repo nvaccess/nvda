@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-06 19:11+1000\n"
-"PO-Revision-Date: 2014-11-18 21:03+0200\n"
+"POT-Creation-Date: 2015-02-03 19:12+1000\n"
+"PO-Revision-Date: 2015-02-06 09:05+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.6.11\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -21,7 +21,7 @@ msgstr "Suojattu työpöytä"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
-msgstr "Natiivi syöte"
+msgstr "Alkuperäinen syöte"
 
 #. Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
 msgid "Alpha numeric input"
@@ -611,7 +611,7 @@ msgstr "Automaattinen"
 
 #. Translators: Reported before braille input in input help mode.
 msgid "braille"
-msgstr "pistesyöttö"
+msgstr "pistesyöte"
 
 #. Translators: Reported when braille space is pressed with dots in input help mode.
 msgid "space with dot"
@@ -625,6 +625,495 @@ msgstr "piste"
 #. Translators: This is the name of a key on the keyboard.
 msgid "space"
 msgstr "väli"
+
+msgid "focus mode"
+msgstr "vuorovaikutustila"
+
+msgid "browse mode"
+msgstr "selaustila"
+
+#. Translators: a message when a particular quick nav command is not supported in the current document.
+msgid "Not supported in this document"
+msgstr "Ei tueta tässä asiakirjassa"
+
+#. Translators: the description for the elements list dialog script on virtualBuffers.
+msgid "Presents a list of links, headings or landmarks"
+msgstr "Näyttää listan linkeistä, otsikoista ja kiintopisteistä"
+
+#. Translators: the description for the activatePosition script on virtualBuffers.
+msgid "activates the current object in the document"
+msgstr "Aktivoi asiakirjassa kohdalla olevan objektin"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading"
+msgstr "siirtää seuraavaan otsikkoon"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading"
+msgstr "ei enempää otsikoita"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading"
+msgstr "siirtää edelliseen otsikkoon"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading"
+msgstr "ei edellisiä otsikoita"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 1"
+msgstr "siirtää seuraavaan otsikkoon tasolla 1"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 1"
+msgstr "ei enempää otsikoita tasolla 1"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 1"
+msgstr "siirtää edelliseen otsikkoon tasolla 1"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 1"
+msgstr "ei edellisiä otsikoita tasolla 1"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 2"
+msgstr "siirtää seuraavaan otsikkoon tasolla 2"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 2"
+msgstr "ei enempää otsikoita tasolla 2"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 2"
+msgstr "siirtää edelliseen otsikkoon tasolla 2"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 2"
+msgstr "ei edellisiä otsikoita tasolla 2"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 3"
+msgstr "siirtää seuraavaan otsikkoon tasolla 3"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 3"
+msgstr "ei enempää otsikoita tasolla 3"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 3"
+msgstr "siirtää edelliseen otsikkoon tasolla 3"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 3"
+msgstr "ei edellisiä otsikoita tasolla 3"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 4"
+msgstr "siirtää seuraavaan otsikkoon tasolla 4"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 4"
+msgstr "ei enempää otsikoita tasolla 4"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 4"
+msgstr "siirtää edelliseen otsikkoon tasolla 4"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 4"
+msgstr "ei edellisiä otsikoita tasolla 4"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 5"
+msgstr "siirtää seuraavaan otsikkoon tasolla 5"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 5"
+msgstr "ei enempää otsikoita tasolla 5"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 5"
+msgstr "siirtää edelliseen otsikkoon tasolla 5"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 5"
+msgstr "ei edellisiä otsikoita tasolla 5"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 6"
+msgstr "siirtää seuraavaan otsikkoon tasolla 6"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 6"
+msgstr "ei enempää otsikoita tasolla 6"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 6"
+msgstr "siirtää edelliseen otsikkoon tasolla 6"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 6"
+msgstr "ei edellisiä otsikoita tasolla 6"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next table"
+msgstr "siirtää seuraavaan taulukkoon"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next table"
+msgstr "ei enempää taulukoita"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous table"
+msgstr "siirtää edelliseen taulukkoon"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous table"
+msgstr "ei edellisiä taulukoita"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next link"
+msgstr "siirtää seuraavan linkin kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next link"
+msgstr "ei enempää linkkejä"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous link"
+msgstr "siirtää edellisen linkin kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous link"
+msgstr "ei edellisiä linkkejä"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next visited link"
+msgstr "siirtää seuraavan avatun linkin kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next visited link"
+msgstr "ei enempää avattuja linkkejä"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous visited link"
+msgstr "siirtää edellisen avatun linkin kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous visited link"
+msgstr "ei edellisiä avattuja linkkejä"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next unvisited link"
+msgstr "siirtää seuraavan avaamattoman linkin kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next unvisited link"
+msgstr "ei enempää avaamattomia linkkejä"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous unvisited link"
+msgstr "siirtää edellisen avaamattoman linkin kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous unvisited link"
+msgstr "ei edellisiä avaamattomia linkkejä"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next form field"
+msgstr "siirtää seuraavaan lomakekenttään"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next form field"
+msgstr "ei enempää lomakekenttiä"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous form field"
+msgstr "siirtää edelliseen lomakekenttään"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous form field"
+msgstr "ei edellisiä lomakekenttiä"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next list"
+msgstr "siirtää seuraavaan listaan"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next list"
+msgstr "ei enempää listoja"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous list"
+msgstr "siirtää edelliseen listaan"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous list"
+msgstr "ei edellisiä listoja"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next list item"
+msgstr "siirtää seuraavaan listan kohteeseen"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next list item"
+msgstr "ei enempää listan kohteita"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous list item"
+msgstr "siirtää edelliseen listan kohteeseen"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous list item"
+msgstr "ei edellisiä listan kohteita"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next button"
+msgstr "siirtää seuraavan painikkeen kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next button"
+msgstr "ei enempää painikkeita"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous button"
+msgstr "siirtää edellisen painikkeen kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous button"
+msgstr "ei edellisiä painikkeita"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next edit field"
+msgstr "siirtää seuraavaan muokkauskenttään"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next edit field"
+msgstr "ei enempää muokkauskenttiä"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous edit field"
+msgstr "siirtää edelliseen muokkauskenttään"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous edit field"
+msgstr "ei edellisiä muokkauskenttiä"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next frame"
+msgstr "siirtää seuraavaan kehykseen"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next frame"
+msgstr "ei enempää kehyksiä"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous frame"
+msgstr "siirtää edelliseen kehykseen"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous frame"
+msgstr "ei edellisiä kehyksiä"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next separator"
+msgstr "siirtää seuraavan erottimen kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next separator"
+msgstr "ei enempää erottimia"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous separator"
+msgstr "siirtää edellisen erottimen kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous separator"
+msgstr "ei edellisiä erottimia"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next radio button"
+msgstr "siirtää seuraavan vaihtoehtopainikkeen kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next radio button"
+msgstr "ei enempää vaihtoehtopainikkeita"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous radio button"
+msgstr "siirtää edellisen vaihtoehtopainikkeen kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous radio button"
+msgstr "ei edellisiä vaihtoehtopainikkeita"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next combo box"
+msgstr "siirtää seuraavaan yhdistelmäruutuun"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next combo box"
+msgstr "ei enempää yhdistelmäruutuja"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous combo box"
+msgstr "siirtää edelliseen yhdistelmäruutuun"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous combo box"
+msgstr "ei edellisiä yhdistelmäruutuja"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next check box"
+msgstr "siirtää seuraavan valintaruudun kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next check box"
+msgstr "ei enempää valintaruutuja"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous check box"
+msgstr "siirtää edellisen valintaruudun kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous check box"
+msgstr "ei edellisiä valintaruutuja"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next graphic"
+msgstr "siirtää seuraavan grafiikan kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next graphic"
+msgstr "ei enempää grafiikoita"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous graphic"
+msgstr "siirtää edellisen grafiikan kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous graphic"
+msgstr "ei edellisiä grafiikoita"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next block quote"
+msgstr "siirtää seuraavan sisennetyn kappaleen kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next block quote"
+msgstr "ei enempää sisennettyjä kappaleita"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous block quote"
+msgstr "siirtää edellisen sisennetyn kappaleen kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous block quote"
+msgstr "ei edellisiä sisennettyjä kappaleita"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "skips forward past a block of links"
+msgstr "Siirtää eteenpäin linkkilohkon  jälkeiseen tekstiin"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no more text after a block of links"
+msgstr "ei enempää linkkilohkon jälkeistä tekstiä"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "skips backward past a block of links"
+msgstr "Siirtää taaksepäin linkkilohkoa edeltävään tekstiin"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no more text before a block of links"
+msgstr "Ei enempää  linkkilohkoa edeltävää tekstiä"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next landmark"
+msgstr "siirtää seuraavan kiintopisteen kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next landmark"
+msgstr "ei enempää kiintopisteitä"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous landmark"
+msgstr "siirtää edellisen kiintopisteen kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous landmark"
+msgstr "ei edellisiä kiintopisteitä"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next embedded object"
+msgstr "siirtää seuraavan upotetun objektin kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next embedded object"
+msgstr "ei enempää upotettuja objekteja"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous embedded object"
+msgstr "siirtää edellisen upotetun objektin kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous embedded object"
+msgstr "ei edellisiä upotettuja objekteja"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next annotation"
+msgstr "Siirtää seuraavan selitteen kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next annotation"
+msgstr "Ei enempää selitteitä"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous annotation"
+msgstr "Siirtää edellisen selitteen kohdalle"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous annotation"
+msgstr "Ei edellisiä selitteitä"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Lin&ks"
+msgstr "Lin&kit"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Headings"
+msgstr "&Otsikot"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Lan&dmarks"
+msgstr "Kii&ntopisteet"
+
+#. Translators: The title of the browse mode Elements List dialog.
+msgid "Elements List"
+msgstr "Elementtilista"
+
+#. Translators: The label of a group of radio buttons to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Type:"
+msgstr "Tyyppi:"
+
+#. Translators: The label of an editable text field to filter the elements
+#. in the browse mode Elements List dialog.
+msgid "&Filter by:"
+msgstr "Suo&data:"
+
+#. Translators: The label of a button to activate an element
+#. in the browse mode Elements List dialog.
+msgid "&Activate"
+msgstr "&Avaa"
+
+#. Translators: The label of a button to move to an element
+#. in the browse mode Elements List dialog.
+msgid "&Move to"
+msgstr "&Siirry"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -659,18 +1148,17 @@ msgstr "tuntematon väri"
 msgid "black"
 msgstr "musta"
 
-#. Translators: The color green.
-msgid "green"
-msgstr "vihreä"
+#. Translators: The color dark green.
+msgid "dark green"
+msgstr "tummanvihreä"
 
 #. Translators: The light gray color.
 msgid "light grey"
 msgstr "vaaleanharmaa"
 
-#. Translators: The color lime.
-#. For more info see: http://en.wikipedia.org/wiki/Lime_%28color%29
-msgid "lime"
-msgstr "limetinvihreä"
+#. Translators: The color green (full brightness)
+msgid "green"
+msgstr "vihreä"
 
 #. Translators: The color gray (halfway between white and black).
 msgid "grey"
@@ -760,7 +1248,7 @@ msgstr "valintaruutu"
 
 #. Translators: The text used to identify radio buttons such as yes or no radio button.
 msgid "radio button"
-msgstr "valintapainike"
+msgstr "vaihtoehtopainike"
 
 #. Translators: The word used to identify a static text such as dialog text.
 msgid "text"
@@ -1037,7 +1525,7 @@ msgstr "sivu"
 
 #. Translators: Identifies a radio menu item.
 msgid "radio menu item"
-msgstr "valintapainike valikon kohteena"
+msgstr "vaihtoehtopainike valikon kohteena"
 
 #. Translators: Identifies a layered pane.
 msgid "layered pane"
@@ -1490,13 +1978,18 @@ msgstr "NVDA käynnistetään, odota..."
 msgid "NVDA started"
 msgstr "NVDA käynnissä"
 
+#. Translators: Title of a dialog to find text.
+msgid "Find"
+msgstr "Etsi"
+
 #. Translators: Dialog text for NvDA's find command.
 msgid "Type the text you wish to find"
 msgstr "Kirjoita etsittävä teksti"
 
-#. Translators: Title of a dialog to find text.
-msgid "Find"
-msgstr "Etsi"
+#. Translators: An option in find dialog to perform case-sensitive search.
+#. Translators: This is a label for a checkbox in add dictionary entry dialog.
+msgid "Case &sensitive"
+msgstr "Sa&ma kirjainkoko"
 
 #, python-format
 msgid "text \"%s\" not found"
@@ -1559,7 +2052,7 @@ msgstr "Asetukset"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Braille"
-msgstr "Pistenäyttö"
+msgstr "Pistekirjoitus"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: The label for the Tools submenu in NVDA menu.
@@ -1704,35 +2197,35 @@ msgstr ""
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
-msgstr "kirjoitettuja merkkejä ei lueta"
+msgstr "kirjoitettuja merkkejä ei puhuta"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters on"
-msgstr "lue kirjoitetut merkit"
+msgstr "kirjoitetut merkit puhutaan"
 
 #. Translators: Input help mode message for toggle speaked typed characters command.
 msgid "Toggles on and off the speaking of typed characters"
-msgstr "Ottaa käyttöön ja poistaa käytöstä kirjoitettujen merkkien lukemisen"
+msgstr "Ottaa käyttöön ja poistaa käytöstä kirjoitettujen merkkien puhumisen"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words off"
-msgstr "kirjoitettuja sanoja ei lueta"
+msgstr "kirjoitettuja sanoja ei puhuta"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 msgid "speak typed words on"
-msgstr "lue kirjoitetut sanat"
+msgstr "kirjoitetut sanat puhutaan"
 
 #. Translators: Input help mode message for toggle speak typed words command.
 msgid "Toggles on and off the speaking of typed words"
-msgstr "Ottaa käyttöön ja poistaa käytöstä kirjoitettujen sanojen lukemisen"
+msgstr "Ottaa käyttöön ja poistaa käytöstä kirjoitettujen sanojen puhumisen"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys off"
-msgstr "komentonäppäimiä ei lueta"
+msgstr "komentonäppäimiä ei puhuta"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 msgid "speak command keys on"
-msgstr "lue komentonäppäimet"
+msgstr "komentonäppäimet puhutaan"
 
 #. Translators: Input help mode message for toggle speak command keys command.
 msgid ""
@@ -1837,7 +2330,7 @@ msgid ""
 "position of the caret inside it, if possible."
 msgstr ""
 "Siirtää navigointiobjektin nykyiseen kohdistukseen ja "
-"tarkastelukohdistimensiinä olevan kohdistimen kohdalle, mikäli mahdollista."
+"tarkastelukohdistimensiinä olevan kohdistimen kohdalle, jos mahdollista."
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -2444,7 +2937,7 @@ msgid ""
 "Useful for developers"
 msgstr ""
 "Lataa uudelleen sovellusmoduulit ja yleisliitännäiset ilman NVDA:n "
-"uudelleenkäynnistystä, mikä voi olla hyödyllistä kehittäjille"
+"uudelleenkäynnistystä, josta voi olla hyötyä kehittäjille"
 
 #. Translators: a message when there is no next object when navigating
 msgid "no next"
@@ -2868,7 +3361,7 @@ msgid ""
 "screens."
 msgstr ""
 "Mahdollistaa NVDA:n käyttämisen Windowsin kirjautumisikkunassa sekä "
-"käyttäjätilien valvonnan ja muissa suojatuissa ruuduissa."
+"käyttäjätilien valvonnan kehotteissa ja muissa suojatuissa ruuduissa."
 
 msgid "Type help(object) to get help about object."
 msgstr "Kirjoita help(objekti) saadaksesi objektin ohjeet."
@@ -3518,7 +4011,7 @@ msgstr "Ei viestejä"
 
 #. Translators: The description of an NVDA command to view one of the recent messages.
 msgid "Displays one of the recent messages"
-msgstr "Näyttää yhden viimeisimmistä viesteistä"
+msgstr "Näyttää yhden uusimmista viesteistä"
 
 #. Translators: This Outlook Express message has an attachment
 #. Translators: when an email has attachments
@@ -3588,11 +4081,11 @@ msgstr "lukematon"
 
 #. Translators: for a high importance email
 msgid "high importance"
-msgstr "suuri tärkeys"
+msgstr "erittäin tärkeä"
 
 #. Translators: For a low importance email
 msgid "low importance"
-msgstr "pieni tärkeys"
+msgstr "vähämerkityksinen"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -3894,6 +4387,19 @@ msgstr "Tyhjä dia"
 msgid "Waiting for Powerpoint..."
 msgstr "Odotetaan PowerPointia..."
 
+#. Translators: The name of the NVDA command category for Skype specific commands.
+msgid "Skype"
+msgstr "Skype"
+
+msgid "Reports and moves the review cursor to a recent message"
+msgstr ""
+"Lukee numeroa vastaavan uusimman viestin ja siirtää tarkastelukohdistimen "
+"siihen"
+
+#. Translators: Indicates that a contact stopped typing.
+msgid "Typing stopped"
+msgstr "Kirjoittaminen lopetettu"
+
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
 msgstr "Kelaa taaksepäin"
@@ -3984,7 +4490,7 @@ msgstr "Ei pistenäyttöä"
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX newer models"
-msgstr "Papenmeier BRAILLEX (uudemmat mallit)"
+msgstr "Papenmeier BRAILLEX (uudet mallit)"
 
 #. Translators: Describes action of routing buttons on a braille display.
 msgid "Route to and report formatting"
@@ -3992,7 +4498,7 @@ msgstr "Siirrä pistesoluun ja lue muotoilutiedot"
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
-msgstr "Papenmeier BRAILLEX (vanhemmat mallit)"
+msgstr "Papenmeier BRAILLEX (vanhat mallit)"
 
 #. Translators: Names of braille displays.
 msgid "Seika braille displays"
@@ -4064,7 +4570,7 @@ msgstr "Valitse käytettävä puheääni, nopeus, korkeus ja voimakkuus"
 
 #. Translators: The label for the menu item to open Braille Settings dialog.
 msgid "B&raille settings..."
-msgstr "P&istenäyttö..."
+msgstr "P&istekirjoitus..."
 
 #. Translators: The label for the menu item to open Keyboard Settings dialog.
 msgid "&Keyboard settings..."
@@ -4161,7 +4667,7 @@ msgstr "P&uhesanastot"
 
 #. Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 msgid "&Punctuation/symbol pronunciation..."
-msgstr "Välimerkkien ja symboleiden puhuminen..."
+msgstr "&Välimerkkien ja symboleiden puhuminen..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 msgid "I&nput gestures..."
@@ -4307,7 +4813,7 @@ msgstr "Käytä Caps Lockia  NVDA-näppäimenä"
 #. Translators: The label of a check box in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
-msgstr "Käynnistä NVDA &automaattisesti kirjauduttuani Windowsiin"
+msgstr "Käynnistä NVDA &automaattisesti sisäänkirjautumisen jälkeen"
 
 #. Translators: This is a label for a checkbox in welcome dialog to show welcome dialog at startup.
 msgid "Show this dialog when NVDA starts"
@@ -4338,8 +4844,8 @@ msgid ""
 "All add-ons are now disabled. They will be re-enabled on the next restart "
 "unless you choose to disable them again."
 msgstr ""
-"Lisäosat on poistettu käytöstä. Ne otetaan käyttöön seuraavalla NVDA:n "
-"uudelleenkäynnistyksellä, ellet valitse käytöstäpoistamista."
+"Lisäosat on poistettu käytöstä. Ne otetaan taas käyttöön seuraavalla NVDA:n "
+"uudelleenkäynnistyksellä ellet valitse käytöstäpoistamista toistamiseen."
 
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
@@ -4456,7 +4962,7 @@ msgstr ""
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
-msgstr "Lisäosaa asennetaan"
+msgstr "Asennetaan lisäosaa"
 
 #. Translators: The message displayed while an addon is being installed.
 msgid "Please wait while the add-on is being installed."
@@ -4554,7 +5060,7 @@ msgstr "Po&ista kaikki käynnistimet käytöstä tilapäisesti"
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
 msgid "(normal configuration)"
-msgstr "(normaalit asetukset)"
+msgstr "(tavalliset asetukset)"
 
 #. Translators: Reported for a profile which is being edited
 #. in the Configuration Profiles dialog.
@@ -4577,7 +5083,7 @@ msgstr "Virhe otettaessa käyttöön profiilia."
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
 msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr "Haluatko varmasti poistaa tämän profiilin? Poistoa ei voi kumota."
+msgstr "Haluatko varmasti poistaa tämän profiilin? Poistoa ei voi perua."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 msgid "Confirm Deletion"
@@ -4708,7 +5214,7 @@ msgstr "NVDA:ta päivitetään"
 
 #. Translators: The title of the dialog presented while NVDA is being installed.
 msgid "Installing NVDA"
-msgstr "NVDA:ta asennetaan"
+msgstr "Asennetaan NVDA:ta"
 
 #. Translators: The message displayed while NVDA is being updated.
 msgid "Please wait while your previous installation of NVDA is being updated."
@@ -4745,7 +5251,7 @@ msgstr "NVDA on asennettu onnistuneesti."
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 msgid "Successfully updated your installation of NVDA. "
-msgstr "Aiempi NVDA:n asennus päivitetty onnistuneesti."
+msgstr "Aiempi NVDA:n asennus on päivitetty onnistuneesti. "
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
@@ -4807,8 +5313,8 @@ msgid ""
 "To create a portable copy of NVDA, please select the path and other options "
 "and then press Continue"
 msgstr ""
-"Luo NVDA:n massamuistiversio valitsemalla hakemistopolku ja paina sitten "
-"Jatka."
+"Luo NVDA:n massamuistiversio valitsemalla sille hakemisto sekä muut "
+"asetukset, ja paina sitten Jatka-painiketta."
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
@@ -5008,9 +5514,9 @@ msgid ""
 "NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
 "manually save and exit at a later time."
 msgstr ""
-"Uusi kieli otetaan käyttöön tallentamalla asetukset ja käynnistämällä NVDA "
-"uudelleen. Tallenna ja käynnistä uudelleen painamalla Enter, tai tallenna ja "
-"käynnistä uudelleen myöhemmin painamalla Peruuta."
+"Asetukset on tallennettava ja NVDA käynnistettävä uudelleen, jotta uusi "
+"kieli voidaan ottaa käyttöön. Tallenna ja käynnistä uudelleen painamalla "
+"Enter, tai tallenna ja käynnistä uudelleen myöhemmin painamalla Peruuta."
 
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 msgid "Language Configuration Change"
@@ -5049,17 +5555,22 @@ msgstr "Puheäänen asetukset"
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, text will be read using the voice for the language of the text).
 msgid "Automatic language switching (when supported)"
-msgstr "Vaihda kieltä automaattisesti (mikäli mahdollista)"
+msgstr "Vaihda kieltä automaattisesti (jos mahdollista)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, different voices for dialects will be used to read text in that dialect).
 msgid "Automatic dialect switching (when supported)"
-msgstr "Vaihda murretta automaattisesti (mikäli mahdollista)"
+msgstr "Vaihda murretta automaattisesti (jos mahdollista)"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings dialog (possible choices are none, some, most and all).
 msgid "Punctuation/symbol &level:"
 msgstr "Välimerkki- ja symboli&taso:"
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+msgid "Trust voice's language when processing characters and symbols"
+msgstr "Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -5068,7 +5579,7 @@ msgstr "Äänenkorkeuden muutos prosentteina isoille kirjaimille"
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 msgid "Say &cap before capitals"
-msgstr "Sano &iso ennen isoja kirjaimia"
+msgstr "Ilmaise isot kirjaimet sanalla \"&iso\""
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
@@ -5078,7 +5589,7 @@ msgstr "Ilmaise isot kir&jaimet äänimerkillä"
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 msgid "Use &spelling functionality if supported"
-msgstr "Käytä tava&ustoimintoa, mikäli mahdollista"
+msgstr "Käytä tava&ustoimintoa (jos mahdollista)"
 
 #. Translators: This is the label for the keyboard settings dialog.
 msgid "Keyboard Settings"
@@ -5106,12 +5617,12 @@ msgstr "Käytä laajennettua Insertiä NVDA-näppäimenä"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speak typed &characters"
-msgstr "Lue &kirjoitetut merkit"
+msgstr "Puhu &kirjoitetut merkit"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speak typed &words"
-msgstr "Lue kirjoitetut &sanat"
+msgstr "Puhu kirjoitetut &sanat"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -5137,7 +5648,7 @@ msgstr ""
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speak command &keys"
-msgstr "Lue k&omentonäppäimet"
+msgstr "Puhu k&omentonäppäimet"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -5155,7 +5666,7 @@ msgstr "Hiiriasetukset"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "Report mouse &shape changes"
-msgstr "Lue &hiirikohdistimen muutokset"
+msgstr "Ilmoita &hiirikohdistimen muodon muutokset"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
@@ -5355,6 +5866,11 @@ msgstr "Automaattinen vuorovaikutustila kohdistinta liikutettaessa"
 msgid "Audio indication of focus and browse modes"
 msgstr "Ilmaise vuorovaikutus- ja selaustilat äänimerkillä"
 
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings dialog.
+msgid "&Trap all non-command gestures from reaching the document"
+msgstr "Estä mui&den kuin komentoeleiden pääsy asiakirjaan"
+
 #. Translators: This is the label for the document formatting dialog.
 msgid "Document Formatting"
 msgstr "Asiakirjojen muotoiluasetukset"
@@ -5402,7 +5918,7 @@ msgstr "Lue t&yylimääreet"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling errors"
+msgid "Report spelling e&rrors"
 msgstr "Lue &kirjoitusvirheet"
 
 #. Translators: This is the label for a checkbox in the
@@ -5434,7 +5950,7 @@ msgstr "Lue t&aulukot"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report table row/column h&eaders"
-msgstr "Lue taulukon rivien &ja sarakkeiden otsikot"
+msgstr "Lue taulukon rivi- &ja sarakeotsikot"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5494,19 +6010,15 @@ msgstr "Muokkaa sanastomääritystä"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Pattern"
-msgstr "K&orvattava merkkijono"
+msgstr "K&orvattava teksti"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
 msgid "&Replacement"
-msgstr "Ko&rvaava merkkijono"
+msgstr "Ko&rvaava teksti"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Comment"
 msgstr "&Kommentti"
-
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Case &sensitive"
-msgstr "Sa&ma kirjainkoko"
 
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
@@ -5538,6 +6050,7 @@ msgid "Type"
 msgstr "Tyyppi"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
+#. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 msgid "&Add"
 msgstr "&Lisää"
@@ -5552,7 +6065,7 @@ msgstr "Lisää sanastomääritys"
 
 #. Translators: This is the label for the braille settings dialog.
 msgid "Braille Settings"
-msgstr "Pistenäytön asetukset"
+msgstr "Pistekirjoitusasetukset"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
@@ -5592,7 +6105,7 @@ msgstr "Lue &kappaleittain"
 
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
-msgstr "Vältä &sanojen katkaisua, jos mahdollista"
+msgstr "Vältä &sanojen katkaisua"
 
 #, python-format
 msgid "Could not load the %s display."
@@ -5600,6 +6113,14 @@ msgstr "Pistenäyttöä %s ei voitu ladata."
 
 msgid "Braille Display Error"
 msgstr "Pistenäyttövirhe"
+
+#. Translators: This is the label for the add symbol dialog.
+msgid "Add Symbol"
+msgstr "Lisää symboli"
+
+#. Translators: This is the label for the edit field in the add symbol dialog.
+msgid "Symbol:"
+msgstr "Symboli:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 msgid "Symbol Pronunciation"
@@ -5625,9 +6146,23 @@ msgstr "Muuta symbolia"
 msgid "&Level"
 msgstr "&Taso"
 
+#. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
+msgid "Re&move"
+msgstr "Po&ista"
+
+#. Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
+#, python-format
+msgid "Symbol \"%s\" is already present."
+msgstr "Symboli \"%s\" on jo olemassa."
+
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 msgid "Input Gestures"
 msgstr "Syöte-eleet"
+
+#. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
+msgctxt "inputGestures"
+msgid "&Filter by:"
+msgstr "&Suodata:"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -5645,28 +6180,6 @@ msgstr ""
 "Virhe tallennettaessa käyttäjän määrittämiä eleitä - tiedostojärjestelmä "
 "luultavasti vain luku -tyyppiä."
 
-#. Translators: Information about NVDA's new laptop keyboard layout.
-msgid ""
-"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in "
-"order to make it more intuitive and consistent.\n"
-"If you use the laptop layout, please see the What's New document for more "
-"information."
-msgstr ""
-"Kannettavien tietokoneiden näppäimistöasettelu on suunniteltu täysin "
-"uudelleen NVDA:n 2013.1-versiossa, jotta se olisi intuitiivisempi ja "
-"johdonmukaisempi.\n"
-"Mikäli käytät kannettavien näppäimistöasettelua, katso lisätietoja Mitä "
-"uutta -asiakirjasta."
-
-#. Translators: The title of a dialog providing information about NVDA's new laptop keyboard layout.
-msgid "New Laptop Keyboard layout"
-msgstr "Uusi kannettavien näppäimistöasettelu"
-
-#. Translators: The label of a button in the New Laptop Keyboard Layout dialog
-#. to open the What's New document.
-msgid "Read What's New"
-msgstr "Mitä uutta"
-
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
 msgid "none"
@@ -5676,22 +6189,6 @@ msgstr "ei mitään"
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
 msgstr "Nopeuden l&isäys"
-
-#. Translators: A setting for a speech synthesizer.
-msgid "&Acceleration"
-msgstr "Kiih&tyvyys:"
-
-msgid "male 1"
-msgstr "mies 1"
-
-msgid "female 1"
-msgstr "nainen 1"
-
-msgid "male 2"
-msgstr "mies 2"
-
-msgid "female 2"
-msgstr "nainen 2"
 
 #. Translators: Description for a speech synthesizer.
 msgid "No speech"
@@ -5713,45 +6210,6 @@ msgstr "kohdassa {x}, {y}"
 msgid "%s landmark"
 msgstr "%s kiintopiste"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Lin&ks"
-msgstr "Lin&kit"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Headings"
-msgstr "&Otsikot"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Lan&dmarks"
-msgstr "Kii&ntopisteet"
-
-#. Translators: The title of the browse mode Elements List dialog.
-msgid "Elements List"
-msgstr "Elementtilista"
-
-#. Translators: The label of a group of radio buttons to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Type:"
-msgstr "Tyyppi:"
-
-#. Translators: The label of an editable text field to filter the elements
-#. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "Suo&data:"
-
-#. Translators: The label of a button to activate an element
-#. in the browse mode Elements List dialog.
-msgid "&Activate"
-msgstr "&Avaa"
-
-#. Translators: The label of a button to move to an element
-#. in the browse mode Elements List dialog.
-msgid "&Move to"
-msgstr "&Siirry"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "Päivitetty"
@@ -5768,10 +6226,6 @@ msgstr "Ei pitkää kuvausta"
 msgid "Shows the long description at this position if one is found."
 msgstr ""
 "Näyttää nykyisestä kohdasta pitkän kuvauksen, mikäli sellainen on saatavilla."
-
-#. Translators: the description for the activatePosition script on virtualBuffers.
-msgid "activates the current object in the document"
-msgstr "Aktivoi asiakirjassa kohdalla olevan objektin"
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -5792,10 +6246,6 @@ msgid ""
 msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä asetuksen, joka määrittää, säilytetäänkö "
 "ruudun ulkoasu asiakirjan sisältöä hahmonnettaessa."
-
-#. Translators: the description for the elements list dialog script on virtualBuffers.
-msgid "Presents a list of links, headings or landmarks"
-msgstr "Näyttää listan linkeistä, otsikoista ja kiintopisteistä"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -5832,428 +6282,6 @@ msgstr "Siirtää säilöelementin, kuten listan tai taulukon, alkuun."
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Siirtää säilöelementin, kuten listan tai taulukon, loppuun."
 
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading"
-msgstr "siirtää seuraavaan otsikkoon"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading"
-msgstr "ei enempää otsikoita"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading"
-msgstr "siirtää edelliseen otsikkoon"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading"
-msgstr "ei edellisiä otsikoita"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 1"
-msgstr "siirtää seuraavaan otsikkoon tasolla 1"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 1"
-msgstr "ei enempää otsikoita tasolla 1"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 1"
-msgstr "siirtää edelliseen otsikkoon tasolla 1"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 1"
-msgstr "ei edellisiä otsikoita tasolla 1"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 2"
-msgstr "siirtää seuraavaan otsikkoon tasolla 2"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 2"
-msgstr "ei enempää otsikoita tasolla 2"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 2"
-msgstr "siirtää edelliseen otsikkoon tasolla 2"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 2"
-msgstr "ei edellisiä otsikoita tasolla 2"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 3"
-msgstr "siirtää seuraavaan otsikkoon tasolla 3"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 3"
-msgstr "ei enempää otsikoita tasolla 3"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 3"
-msgstr "siirtää edelliseen otsikkoon tasolla 3"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 3"
-msgstr "ei edellisiä otsikoita tasolla 3"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 4"
-msgstr "siirtää seuraavaan otsikkoon tasolla 4"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 4"
-msgstr "ei enempää otsikoita tasolla 4"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 4"
-msgstr "siirtää edelliseen otsikkoon tasolla 4"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 4"
-msgstr "ei edellisiä otsikoita tasolla 4"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 5"
-msgstr "siirtää seuraavaan otsikkoon tasolla 5"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 5"
-msgstr "ei enempää otsikoita tasolla 5"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 5"
-msgstr "siirtää edelliseen otsikkoon tasolla 5"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 5"
-msgstr "ei edellisiä otsikoita tasolla 5"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 6"
-msgstr "siirtää seuraavaan otsikkoon tasolla 6"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 6"
-msgstr "ei enempää otsikoita tasolla 6"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 6"
-msgstr "siirtää edelliseen otsikkoon tasolla 6"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 6"
-msgstr "ei edellisiä otsikoita tasolla 6"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next table"
-msgstr "siirtää seuraavaan taulukkoon"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next table"
-msgstr "ei enempää taulukoita"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous table"
-msgstr "siirtää edelliseen taulukkoon"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous table"
-msgstr "ei edellisiä taulukoita"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next link"
-msgstr "siirtää seuraavan linkin kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next link"
-msgstr "ei enempää linkkejä"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous link"
-msgstr "siirtää edellisen linkin kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous link"
-msgstr "ei edellisiä linkkejä"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next visited link"
-msgstr "siirtää seuraavan avatun linkin kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next visited link"
-msgstr "ei enempää avattuja linkkejä"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous visited link"
-msgstr "siirtää edellisen avatun linkin kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous visited link"
-msgstr "ei edellisiä avattuja linkkejä"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next unvisited link"
-msgstr "siirtää seuraavan avaamattoman linkin kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next unvisited link"
-msgstr "ei enempää avaamattomia linkkejä"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous unvisited link"
-msgstr "siirtää edellisen avaamattoman linkin kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous unvisited link"
-msgstr "ei edellisiä avaamattomia linkkejä"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next form field"
-msgstr "siirtää seuraavaan lomakekenttään"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next form field"
-msgstr "ei enempää lomakekenttiä"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous form field"
-msgstr "siirtää edelliseen lomakekenttään"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous form field"
-msgstr "ei edellisiä lomakekenttiä"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next list"
-msgstr "siirtää seuraavaan listaan"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next list"
-msgstr "ei enempää listoja"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous list"
-msgstr "siirtää edelliseen listaan"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous list"
-msgstr "ei edellisiä listoja"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next list item"
-msgstr "siirtää seuraavaan listan kohteeseen"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next list item"
-msgstr "ei enempää listan kohteita"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous list item"
-msgstr "siirtää edelliseen listan kohteeseen"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous list item"
-msgstr "ei edellisiä listan kohteita"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next button"
-msgstr "siirtää seuraavan painikkeen kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next button"
-msgstr "ei enempää painikkeita"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous button"
-msgstr "siirtää edellisen painikkeen kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous button"
-msgstr "ei edellisiä painikkeita"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next edit field"
-msgstr "siirtää seuraavaan muokkauskenttään"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next edit field"
-msgstr "ei enempää muokkauskenttiä"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous edit field"
-msgstr "siirtää edelliseen muokkauskenttään"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous edit field"
-msgstr "ei edellisiä muokkauskenttiä"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next frame"
-msgstr "siirtää seuraavaan kehykseen"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next frame"
-msgstr "ei enempää kehyksiä"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous frame"
-msgstr "siirtää edelliseen kehykseen"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous frame"
-msgstr "ei edellisiä kehyksiä"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next separator"
-msgstr "siirtää seuraavan erottimen kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next separator"
-msgstr "ei enempää erottimia"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous separator"
-msgstr "siirtää edellisen erottimen kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous separator"
-msgstr "ei edellisiä erottimia"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next radio button"
-msgstr "siirtää seuraavan valintapainikkeen kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next radio button"
-msgstr "ei enempää valintapainikkeita"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous radio button"
-msgstr "siirtää edellisen valintapainikkeen kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous radio button"
-msgstr "ei edellisiä valintapainikkeita"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next combo box"
-msgstr "siirtää seuraavaan yhdistelmäruutuun"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next combo box"
-msgstr "ei enempää yhdistelmäruutuja"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous combo box"
-msgstr "siirtää edelliseen yhdistelmäruutuun"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous combo box"
-msgstr "ei edellisiä yhdistelmäruutuja"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next check box"
-msgstr "siirtää seuraavan valintaruudun kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next check box"
-msgstr "ei enempää valintaruutuja"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous check box"
-msgstr "siirtää edellisen valintaruudun kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous check box"
-msgstr "ei edellisiä valintaruutuja"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next graphic"
-msgstr "siirtää seuraavan grafiikan kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next graphic"
-msgstr "ei enempää grafiikoita"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous graphic"
-msgstr "siirtää edellisen grafiikan kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous graphic"
-msgstr "ei edellisiä grafiikoita"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next block quote"
-msgstr "siirtää seuraavan sisennetyn kappaleen kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next block quote"
-msgstr "ei enempää sisennettyjä kappaleita"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous block quote"
-msgstr "siirtää edellisen sisennetyn kappaleen kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous block quote"
-msgstr "ei edellisiä sisennettyjä kappaleita"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "skips forward past a block of links"
-msgstr "Siirtää eteenpäin linkkilohkon  jälkeiseen tekstiin"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no more text after a block of links"
-msgstr "ei enempää linkkilohkon jälkeistä tekstiä"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "skips backward past a block of links"
-msgstr "Siirtää taaksepäin linkkilohkoa edeltävään tekstiin"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no more text before a block of links"
-msgstr "Ei enempää  linkkilohkoa edeltävää tekstiä"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next landmark"
-msgstr "siirtää seuraavan kiintopisteen kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next landmark"
-msgstr "ei enempää kiintopisteitä"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous landmark"
-msgstr "siirtää edellisen kiintopisteen kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous landmark"
-msgstr "ei edellisiä kiintopisteitä"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next embedded object"
-msgstr "siirtää seuraavan upotetun objektin kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next embedded object"
-msgstr "ei enempää upotettuja objekteja"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous embedded object"
-msgstr "siirtää edellisen upotetun objektin kohdalle"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous embedded object"
-msgstr "ei edellisiä upotettuja objekteja"
-
-msgid "focus mode"
-msgstr "vuorovaikutustila"
-
-msgid "browse mode"
-msgstr "selaustila"
-
 msgid "Taskbar"
 msgstr "Tehtäväpalkki"
 
@@ -6272,7 +6300,7 @@ msgstr "oletusväri"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
-msgstr "{start} / {end}"
+msgstr "väliltä {start} ja {end}"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #. Translators: a message reported in the SetRowHeader script for Excel.
@@ -6306,7 +6334,7 @@ msgid ""
 "lower and to the right of it within this region. Pressing twice will forget "
 "the current column header for this cell."
 msgstr ""
-"Tämä solu määritetään kerran painettaessa ensimmäiseksi sarakeotsikoksi sen "
+"Kerran painaminen määrittää tämän solun ensimmäiseksi sarakeotsikoksi sen "
 "ala- ja oikealla puolella oleville soluille nykyisellä alueella. Kahdesti "
 "painaminen nollaa solun nykyisen sarakeotsikon."
 
@@ -6331,8 +6359,8 @@ msgid ""
 "and to the right of it within this region. Pressing twice will forget the "
 "current row header for this cell."
 msgstr ""
-"Tämä solu määritetään kerran painettaessa ensimmäiseksi riviotsikoksi sen "
-"ala- ja oikealla puolella oleville soluille nykyisellä alueella. Kahdesti "
+"Kerran painaminen määrittää tämän solun ensimmäiseksi riviotsikoksi sen ala- "
+"ja oikealla puolella oleville soluille nykyisellä alueella. Kahdesti "
 "painaminen nollaa solun nykyisen riviotsikon."
 
 #. Translators: A message in Excel when there is no comment
@@ -6349,7 +6377,7 @@ msgstr "Muokataan solun {address} kommenttia"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
-msgstr "{firstAddress} {firstContent} / {lastAddress} {lastContent}"
+msgstr "väliltä {firstAddress} {firstContent} ja {lastAddress} {lastContent}"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
@@ -6448,6 +6476,12 @@ msgstr "Ensisijainen ylätunniste"
 
 msgid "Text frame"
 msgstr "Tekstikehys"
+
+msgid "comment: {text} by {author} on {date}"
+msgstr "kommentti: {text}, muokkaaja: {author}, päiväys: {date}"
+
+msgid "{revisionType}: {text} by {author} on {date}"
+msgstr "{revisionType}: {text}, muokkaaja: {author}, päiväys: {date}"
 
 msgid "unknown author"
 msgstr "tuntematon muokkaaja"
@@ -6615,6 +6649,11 @@ msgstr "Ei taulukossa"
 msgid "Edge of table"
 msgstr "Taulukon reuna"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "&Selitteet"
+
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE series"
 msgstr "HIMS Braille Sense/Braille EDGE"
@@ -6622,6 +6661,42 @@ msgstr "HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
+#~ "in order to make it more intuitive and consistent.\n"
+#~ "If you use the laptop layout, please see the What's New document for more "
+#~ "information."
+#~ msgstr ""
+#~ "Kannettavien tietokoneiden näppäimistöasettelu on suunniteltu täysin "
+#~ "uudelleen NVDA:n 2013.1-versiossa, jotta se olisi intuitiivisempi ja "
+#~ "johdonmukaisempi.\n"
+#~ "Mikäli käytät kannettavien näppäimistöasettelua, katso lisätietoja Mitä "
+#~ "uutta -asiakirjasta."
+
+#~ msgid "New Laptop Keyboard layout"
+#~ msgstr "Uusi kannettavien näppäimistöasettelu"
+
+#~ msgid "Read What's New"
+#~ msgstr "Mitä uutta"
+
+#~ msgid "&Acceleration"
+#~ msgstr "Kiih&tyvyys:"
+
+#~ msgid "male 1"
+#~ msgstr "mies 1"
+
+#~ msgid "female 1"
+#~ msgstr "nainen 1"
+
+#~ msgid "male 2"
+#~ msgstr "mies 2"
+
+#~ msgid "female 2"
+#~ msgstr "nainen 2"
+
+#~ msgid "lime"
+#~ msgstr "limetinvihreä"
 
 #~ msgid "Are you sure you want to quit NVDA?"
 #~ msgstr "Haluatko varmasti sulkea NVDA:n?"

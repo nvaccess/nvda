@@ -17,7 +17,7 @@ NVDA allows blind and vision impaired people to access and interact with the Win
 
 Major highlights include:
 - Support for popular applications including web browsers, email clients, internet chat programs and office suites
-- Built-in speech synthesizer supporting over 43 languages
+- Built-in speech synthesizer supporting over 80 languages
 - reporting of textual formatting where available such as font name and size, style and spelling errors
 - Automatic announcement of text under the mouse and optional audible indication of the mouse position
 - Support for many refreshable braille displays, including input of computer braille for braille displays which have a braille keyboard
@@ -441,7 +441,7 @@ Although a physical mouse or trackpad should be used to navigate with the mouse,
 + Browse Mode +
 Complex read-only documents such as web pages are browsed in NVDA using browse mode.
 This includes documents in Mozilla Firefox, Microsoft Internet Explorer, HTML messages in Microsoft Outlook, Google Chrome, Adobe Reader and Adobe Flash.
-Browse mode is also optionally available for Microsoft Word when navigating complex documents.
+Browse mode is also optionally available for Microsoft Word documents.
 
 In browse mode, the content of the document is made available in a flat representation that can be navigated with the cursor keys as if it were a normal text document.
 All of NVDA's [system caret #SystemCaret] key commands will work in this mode; e.g. say all, report formatting, table navigation commands, etc.
@@ -460,7 +460,7 @@ In addition, you can manually force focus mode, after which it will remain in ef
 || Name | Key | Description |
 | Toggle browse/focus modes | NVDA+space | Toggles between focus mode and browse mode |
 | Exit focus mode | escape | switches back to browse mode if focus mode was previously switched to automatically |
-| Refresh browse mode document | NVDA+f5 | Reloads the current document content (useful if certain content seems to be missing from the document) |
+| Refresh browse mode document | NVDA+f5 | Reloads the current document content (useful if certain content seems to be missing from the document. Not available in Microsoft Word and Outlook.) |
 | Find | NVDA+control+f | Pops up a dialog in which you can type some text to find in the current document |
 | Find next | NVDA+f3 | Finds the next occurrence of the text in the document that you previously searched for |
 | Find previous | NVDA+shift+f3 | Finds the previous occurrence of the text in the document you previously searched for |
@@ -470,6 +470,7 @@ In addition, you can manually force focus mode, after which it will remain in ef
 
 ++ Single Letter Navigation ++
 While in browse mode, For quicker navigation, NVDA also provides single character keys to jump to certain fields in the document.
+Note that not all of these commands are supported in every type of document.
 
 %kc:beginInclude
 The following keys by themselves jump to the next available element, while adding the shift key causes them to jump to the previous element:
@@ -566,6 +567,13 @@ Note: The report remaining time shortcut works only with the default formatting 
 || Name | Key | Description |
 | Report Comments Window | control+shift+c | Reports any comments in the comments window. |
 | Report notes for translators | control+shift+a | Reports any notes for translators. |
+%kc:endInclude
+
+++ Skype ++
+%kc:beginInclude
+When in a conversation:
+|| Name | Key | Description |
+| Review message | NVDA+control+1-0 | Reports and moves the review cursor to a recent message, depending on the number pressed; e.g. NVDA+control+2 reads the second most recent message. |
 %kc:endInclude
 
 + Configuring NVDA +
@@ -706,7 +714,7 @@ Like the "say cap for capitals" checkbox, this is useful for Synthesizers that c
 
 ==== Use spelling functionality if supported ====[VoiceSpellingFunctionality]
 Some words consist of only one character, but the pronunciation is different depending on whether the character is being spoken as an individual character (such as when spelling) or a word.
-For example, in English, "a" is both a letter and a word.
+For example, in English, "a" is both a letter and a word and is pronounced differently in each case.
 This option allows the synthesizer to differentiate between these two cases if the synthesizer supports this.
 Most synthesizers do support it.
 
@@ -865,6 +873,8 @@ If this checkbox is checked, NVDA will announce the role (type) of object as the
 
 ==== Play audio coordinates when mouse moves ====
 Checking this checkbox makes NVDA play beeps as the mouse moves, so that the user can work out where the mouse is in regards to the dimensions of the screen.
+The higher the mouse is on the screen, the higher the pitch of the beeps.
+The further left or right the mouse is located on the screen, the further left or right the sound will be played (assuming the user has stereo speakers or headphones).
 
 ==== Brightness controls audio coordinates volume ====
 If the "play audio coordinates when mouse moves" checkbox is checked, then checking this checkbox means that the volume of the audio coordinates beeps is controled by how bright the screen is under the mouse.
@@ -1019,7 +1029,6 @@ If this option is enabled, NVDA will play special sounds when it switches betwee
 Enabled by default, this option allows you to choose if gestures (such as key presses) that  do not result in an NVDA command and are not considered to be a command key in general, should be trapped from going through to the document you are currently focused on. 
 As an example, if enabled, if the letter j was pressed, it would be trapped from reaching the document, even though it is not a quick navigation command nor is it likely to be a command in the application itself.
 
- 
 +++ Document Formatting Settings (NVDA+control+d) +++[DocumentFormattingSettings]
 This dialog box is found in the Preferences menu, under "Document Formatting...".
 
@@ -1250,7 +1259,7 @@ If there is help available for the selected add-on, you can access it by pressin
 
 To browse and download available add-ons online, press the Get add-ons button.
 This button opens the [NVDA Add-ons page http://addons.nvda-project.org/].
-If NVDA is installed on your system, you can open the add-on directly from the browser to begin the installation process as described below.
+If NVDA is installed and running on your system, you can open the add-on directly from the browser to begin the installation process as described below.
 Otherwise, save the add-on package and follow the instructions below.
 
 To install an Add-on you previously obtained, press the Install button.
@@ -1324,12 +1333,6 @@ To use these voices, you will need to install two components:
 This is a commercial speech synthesizer specifically for the Italian language.
 You must have the synthesizer installed on your system in order for it to be used with NVDA.
 For more information, please visit the Audiologic website at www.audiologic.it.
-
-This synthesizer does not support [spelling functionality #VoiceSpellingFunctionality].
-
-++ Newfon ++
-Newfon is a free commercial synthesizer by Sergey Shishmintzev which supports the Russian and Ukrainian languages.
-To download this synthesizer, please visit the downloads section of the Russian NVDA community site: http://ru.nvda-community.org/?page_id=10
 
 This synthesizer does not support [spelling functionality #VoiceSpellingFunctionality].
 
@@ -1681,19 +1684,23 @@ The following Braille displays are supported:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
 - BRAILLEX Trio (USB and bluetooth)
+- BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus (USB and bluetooth)
 -
 
 If BrxCom is installed, NVDA will use BrxCom.
 BrxCom is a tool that allows you to use the Braille input independently from a screen reader.
-A new version of BrxCom which works with NVDA will be released by Papenmeier soon.  
-However, braille input is possible with the Trio device without BrxCom.
+A new version of BrxCom which works with NVDA will be released by Papenmeier soon.
+Braille input is possible with the Trio, BRAILLEX Live 20 and Braillex Live devices without BrxCom.
+Braille input is also possible with the Live Plus model, but with BrxCom only.
 
 Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
 The EAB can be moved in four directions where generally each direction has two switches.
-The c-series is the only exception to this rule.
+The C and Live series are the only exceptions to this rule.
 
 The c-series and some other displays have two routing rows whereby the upper row is used to report formatting information.
 Holding one of the upper routing keys and pressing the EAB on c-series devices emulates the second switch state.
+The live series displays have one routing row only and the EAB has one step per direction.
+The second step may be emulated by pressing one of the routing keys and pressing the EAB in the corresponding direction.
 Pressing and holding the up, down, right and left keys (or EAB) causes the corresponding action to be repeated.
 
 Generally, the following keys are available on these braille displays:
@@ -1894,7 +1901,7 @@ For displays which have a braille keyboard, BRLTTY currently handles braille inp
 Therefore, NVDA's braille input table setting is not relevant.
 
 Following are the BRLTTY command assignments for NVDA.
-Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/drivers/] for information about how BRLTTY commands are mapped to controls on braille displays.
+Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/KeyTables/] for information about how BRLTTY commands are mapped to controls on braille displays.
 %kc:beginInclude
 || Name | BRLTTY command |
 | Scroll braille display back | fwinlt (go left one window) |
@@ -1980,7 +1987,8 @@ Following are the command line options for NVDA:
 | -s | --secure | Secure mode (disable Python console) |
 | None | --disable-addons | Addons will have no effect |
 | None | --no-sr-flag  | Don't change the global system screen reader flag |
-| None | --install | Silently installs NVDA |
+| None | --install | Installs NVDA (starting the newly installed copy) |
+| None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
 
 ++ Advanced Customization of Symbol Pronunciation ++
 It is possible to customize the pronunciation of punctuation and other symbols beyond what can be done using the [Punctuation/symbol pronunciation #SymbolPronunciation] dialog.

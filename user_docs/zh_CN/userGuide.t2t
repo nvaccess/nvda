@@ -1885,13 +1885,13 @@ Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/driv
 + 高级主题 +
 
 ++ 标点符号读音的高级定制 ++
-It is possible to customize the pronunciation of punctuation and other symbols beyond what can be done using the [Punctuation/symbol pronunciation #SymbolPronunciation] dialog.
-For example, you can specify whether the raw symbol should be sent to the synthesizer (e.g. to cause a pause or change in inflection) and you can add custom symbols.
+直接定义标点符号的读音是允许的，此外，使用[标点符号读音 #SymbolPronunciation]对话框也能完成相同的事情。
+例如，您可以定义是否输出元标点至合成器( 如造成停顿或改变声调)并添加普通标点。
 
-To do this, you must edit the symbol pronunciation information file in your NVDA user configuration directory.
-The file is called symbols-xx.dic, where xx is the language code.
-The format of this file is documented in the Symbol Pronunciation section of the NVDA Developer Guide, which is available from [the Development section of the NVDA web site http://community.nvda-project.org/wiki/Development].
-However, it is not possible for users to define complex symbols.
+要想这么做，您必须编辑 NVDA 用户配置文件家的标点符号读音信息文件。
+标点文件放在xx(语言文件夹)的“symbols.dic”。
+文件的格式被写载 NVDA 开发文档的 Symbol Pronunciation 章节，开发文档被放至在[NVDA 官方网站的开发区域 http://community.nvda-project.org/wiki/Development]。
+然而，用户无法定义复合标点。
 
 + Further Information +
 If you require further information or assistance regarding NVDA, please visit the NVDA web site at NVDA_URL.

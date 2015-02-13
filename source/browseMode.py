@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NVDA Contributors
+#Copyright (C) 2015 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -18,6 +18,7 @@ import textInfos
 import speech
 import sayAllHandler
 import treeInterceptorHandler
+import inputCore
 
 REASON_QUICKNAV = "quickNav"
 
@@ -167,6 +168,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 		return self.textInfo.compareEndPoints(caret, "startToStart") <= 0
 
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
+	scriptCategory = inputCore.SCRCAT_BROWSEMODE
 
 	def _get_shouldTrapNonCommandGestures(self):
 		return config.conf['virtualBuffers']['trapNonCommandGestures']

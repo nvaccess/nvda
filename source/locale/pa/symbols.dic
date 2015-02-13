@@ -1,0 +1,113 @@
+﻿#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011-2012 NVDA Contributors
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥]?\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	dot	all	always
+! sentence ending	bang	all	always
+? sentence ending	question	all	always
+; phrase ending	semi	most	always
+: phrase ending	colon	most	always
+decimal point		none	always
+in-word '	tick	all	norep
+negative number	minus	none	norep
+
+# Whitespace
+\0	blank	char	# null
+\t	tab
+\n	line feed	char
+\f	page break	none
+\r	carriage return	char
+ 	space	char
+ 	space	char	# no-break space
+
+# Standard punctuation/symbols
+!	bang	all
+"	quote	most
+\#	number	most
+$	dollar	all	norep
+£	pound	all	norep
+€	euro	all	norep
+¢	Cents	all	norep
+¥	Yen	all	norep
+%	percent	some
+&	and	some
+'	tick	all
+(	left paren	most
+)	right paren	most
+*	star	some
++	plus	some
+,	comma	all	always
+-	dash	most
+.	dot	some
+/	slash	some
+:	colon	most	norep
+;	semi	most
+<	less	most
+>	greater	most
+=	equals	some
+?	question	all
+@	at	some
+[	left bracket	most
+]	right bracket	most
+\\	backslash	most
+^	caret	most
+_	line	most
+`	graav	most
+{	left brace	most
+}	right brace	most
+|	bar	most
+~	tilda	most
+
+# Other characters
+•	bullet	some
+…	dot dot dot	all	always
+...	dot dot dot	all	always
+	bullet	some
+“	left quote	most
+”	right quote	most
+‘	left tick	most
+’	right tick	most
+–	en dash	most
+—	em dash	most
+●	circle	most
+¨	diaeresis	most
+‎	left to right mark	char
+‏	right to left mark	char
+■	black square	some
+➔	right arrow	some
+§	section	all
+°	degrees	some
+«	double left pointing angle bracket
+»	double right pointing angle bracket
+µ	micro	some
+¹	superscript 1	some
+²	superscript 2	some
+³	superscript 3	some
+®	registered	some
+™	Trademark	some
+©	Copyright	some
+±	Plus or Minus	most
+×	times	most
+÷	divide by	most
+←	left arrow	some
+→	right arrow	some
+✓	check	some
+✔	check	some

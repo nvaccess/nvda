@@ -4,16 +4,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-06 23:27+1000\n"
-"PO-Revision-Date: 2014-10-06 17:21+0800\n"
-"Last-Translator: Cin-Wei <aha76540@hotmail.com.tw>\n"
+"POT-Creation-Date: 2015-02-03 19:12+1000\n"
+"PO-Revision-Date: 2015-01-30 16:40+0800\n"
+"Last-Translator: Wang, Jan Li (Jerry) <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.6.9\n"
+"X-Generator: Poedit 1.6.6\n"
 "X-Poedit-Bookmarks: 127,-1,122,121,-1,606,650,117,123,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -92,7 +92,7 @@ msgstr "{layout} - {language}"
 #. Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 #, python-format
 msgid "Error in appModule %s"
-msgstr "應用程式模組 %s錯誤"
+msgstr "應用程式模組 %s 錯誤"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
 msgid "banner"
@@ -572,7 +572,7 @@ msgstr "vlnk"
 #. %s will be replaced with the negated state.
 #, python-format
 msgid "not %s"
-msgstr "沒%s"
+msgstr "沒 %s"
 
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
@@ -581,13 +581,13 @@ msgstr "沒%s"
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
 msgid "{number} of {total}"
-msgstr "{total}之{number}"
+msgstr "{total} 之 {number}"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 #. %s is replaced with the level.
 #, python-format
 msgid "lv %s"
-msgstr "第%s級"
+msgstr "第 %s 級"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
@@ -605,7 +605,7 @@ msgstr "%s欄"
 #. %s is replaced with the control's role.
 #, python-format
 msgid "%s end"
-msgstr "%s結尾"
+msgstr "%s 結尾"
 
 #. Translators: String representing the automatic port selection for braille displays.
 msgid "Automatic"
@@ -617,16 +617,505 @@ msgstr "點顯器"
 
 #. Translators: Reported when braille space is pressed with dots in input help mode.
 msgid "space with dot"
-msgstr "空格"
+msgstr "點字 句點並空格"
 
 #. Translators: Reported when braille dots are pressed in input help mode.
 msgid "dot"
-msgstr "點字"
+msgstr "點字 句點"
 
 #. Translators: Reported when braille space is pressed in input help mode.
 #. Translators: This is the name of a key on the keyboard.
 msgid "space"
-msgstr "空格"
+msgstr "點字 空格"
+
+msgid "focus mode"
+msgstr "焦點模式"
+
+msgid "browse mode"
+msgstr "瀏覽模式"
+
+#. Translators: a message when a particular quick nav command is not supported in the current document.
+msgid "Not supported in this document"
+msgstr "本文件沒有支援"
+
+#. Translators: the description for the elements list dialog script on virtualBuffers.
+msgid "Presents a list of links, headings or landmarks"
+msgstr "顯示連結、標題、地標元件的清單"
+
+#. Translators: the description for the activatePosition script on virtualBuffers.
+msgid "activates the current object in the document"
+msgstr "啟動文件中目前的物件"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading"
+msgstr "移到後一個標題"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading"
+msgstr "沒有後一個標題了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading"
+msgstr "移到前一個標題"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading"
+msgstr "沒有前一個標題了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 1"
+msgstr "移到後一個第一級標題"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 1"
+msgstr "沒有後一個第一級標題了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 1"
+msgstr "移到前一個第一級標題"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 1"
+msgstr "沒有前一個第一級標題了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 2"
+msgstr "移到後一個第二級標題"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 2"
+msgstr "沒有後一個第二級標題了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 2"
+msgstr "移到前一個第二級標題"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 2"
+msgstr "沒有前一個第二級標題了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 3"
+msgstr "移到後一個第三級標題"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 3"
+msgstr "沒有後一個第三級標題了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 3"
+msgstr "移到前一個第三級標題"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 3"
+msgstr "沒有前一個第三級標題了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 4"
+msgstr "移到後一個第四級標題"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 4"
+msgstr "沒有後一個第四級標題了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 4"
+msgstr "移到前一個第四級標題"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 4"
+msgstr "沒有前一個第四級標題了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 5"
+msgstr "移到後一個第五級標題"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 5"
+msgstr "沒有後一個第五級標題了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 5"
+msgstr "移到前一個第五級標題"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 5"
+msgstr "沒有前一個第五級標題了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 6"
+msgstr "移到後一個第六級標題"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 6"
+msgstr "沒有後一個第六級標題了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 6"
+msgstr "移到前一個第六級標題"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 6"
+msgstr "沒有前一個第六級標題了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next table"
+msgstr "移到後一個表格"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next table"
+msgstr "沒有後一個表格了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous table"
+msgstr "移到前一個表格"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous table"
+msgstr "沒有前一個表格了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next link"
+msgstr "移到後一個連結"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next link"
+msgstr "沒有後一個連結了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous link"
+msgstr "移到前一個連結"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous link"
+msgstr "沒有前一個連結了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next visited link"
+msgstr "移到後一個到訪過的連結"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next visited link"
+msgstr "沒有後一個到訪過的連結了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous visited link"
+msgstr "移到前一個到訪過的連結"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous visited link"
+msgstr "沒有前一個到訪過的連結了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next unvisited link"
+msgstr "移到後一個未到訪過的連結"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next unvisited link"
+msgstr "沒有後一個未到訪過的連結了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous unvisited link"
+msgstr "移到前一個未到訪過的連結"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous unvisited link"
+msgstr "沒有前一個未到訪過的連結了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next form field"
+msgstr "移到後一個表單區"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next form field"
+msgstr "沒有後一個表單區了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous form field"
+msgstr "移到前一個表單區"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous form field"
+msgstr "沒有前一個表單區了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next list"
+msgstr "移到後一個清單"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next list"
+msgstr "沒有後一個清單了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous list"
+msgstr "移到前一個清單"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous list"
+msgstr "沒有前一個清單了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next list item"
+msgstr "移到後一個清單項目"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next list item"
+msgstr "沒有後一個清單項目了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous list item"
+msgstr "移到前一個清單項目"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous list item"
+msgstr "沒有前一個清單項目了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next button"
+msgstr "移到後一個按鈕"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next button"
+msgstr "沒有後一個按鈕了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous button"
+msgstr "移到前一個按鈕"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous button"
+msgstr "沒有前一個按鈕了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next edit field"
+msgstr "移到後一個編輯區"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next edit field"
+msgstr "沒有後一個編輯區了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous edit field"
+msgstr "移到前一個編輯區"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous edit field"
+msgstr "沒有前一個編輯區了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next frame"
+msgstr "移到後一個頁框"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next frame"
+msgstr "沒有後一個頁框了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous frame"
+msgstr "移到前一個頁框"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous frame"
+msgstr "沒有前一個頁框了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next separator"
+msgstr "移到後一個分隔線"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next separator"
+msgstr "沒有後一個分隔線了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous separator"
+msgstr "移到前一個分隔線"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous separator"
+msgstr "沒有前一個分隔線了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next radio button"
+msgstr "移到後一個單選鈕"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next radio button"
+msgstr "沒有後一個單選鈕了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous radio button"
+msgstr "移到前一個單選鈕"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous radio button"
+msgstr "沒有前一個單選鈕了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next combo box"
+msgstr "移到後一個下拉方塊"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next combo box"
+msgstr "沒有後一個下拉方塊了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous combo box"
+msgstr "移到前一個下拉方塊"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous combo box"
+msgstr "沒有前一個下拉方塊了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next check box"
+msgstr "移到後一個核取方塊"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next check box"
+msgstr "沒有後一個核取方塊了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous check box"
+msgstr "移到前一個核取方塊"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous check box"
+msgstr "沒有前一個核取方塊了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next graphic"
+msgstr "移到後一張圖片"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next graphic"
+msgstr "沒有後一張圖片了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous graphic"
+msgstr "移到前一張圖片"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous graphic"
+msgstr "沒有前一張圖片了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next block quote"
+msgstr "移到後一個引述"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next block quote"
+msgstr "沒有後一個引述了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous block quote"
+msgstr "移到前一個引述"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous block quote"
+msgstr "沒有前一個引述了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "skips forward past a block of links"
+msgstr "往後移到連結區之後的文字"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no more text after a block of links"
+msgstr "在連結區之後沒有文字了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "skips backward past a block of links"
+msgstr "往前移到連結區之前的文字"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no more text before a block of links"
+msgstr "在連結區之前沒有文字了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next landmark"
+msgstr "移到後一個地標"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next landmark"
+msgstr "沒有後一個地標了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous landmark"
+msgstr "移到前一個地標"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous landmark"
+msgstr "沒有前一個地標了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next embedded object"
+msgstr "移到後一個嵌入式物件"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next embedded object"
+msgstr "沒有後一個嵌入式物件了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous embedded object"
+msgstr "移到前一個嵌入式物件"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous embedded object"
+msgstr "沒有前一個嵌入式物件了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next annotation"
+msgstr "移到後一個註解"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next annotation"
+msgstr "已沒有後一個註解了"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous annotation"
+msgstr "移到前一個註解"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous annotation"
+msgstr "沒有前一個註解了"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Lin&ks"
+msgstr "連結(&K)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Headings"
+msgstr "標題(&H)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Lan&dmarks"
+msgstr "地標(&D)"
+
+#. Translators: The title of the browse mode Elements List dialog.
+msgid "Elements List"
+msgstr "元件清單"
+
+#. Translators: The label of a group of radio buttons to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Type:"
+msgstr "種類"
+
+#. Translators: The label of an editable text field to filter the elements
+#. in the browse mode Elements List dialog.
+msgid "&Filter by:"
+msgstr "輸入篩選字串(F):"
+
+#. Translators: The label of a button to activate an element
+#. in the browse mode Elements List dialog.
+msgid "&Activate"
+msgstr "啟動(&A)"
+
+#. Translators: The label of a button to move to an element
+#. in the browse mode Elements List dialog.
+msgid "&Move to"
+msgstr "移到(&M)"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -661,18 +1150,17 @@ msgstr "未知的色彩"
 msgid "black"
 msgstr "黑色"
 
-#. Translators: The color green.
-msgid "green"
-msgstr "綠色"
+#. Translators: The color dark green.
+msgid "dark green"
+msgstr "墨綠色"
 
 #. Translators: The light gray color.
 msgid "light grey"
 msgstr "淺灰色"
 
-#. Translators: The color lime.
-#. For more info see: http://en.wikipedia.org/wiki/Lime_%28color%29
-msgid "lime"
-msgstr "萊姆綠"
+#. Translators: The color green (full brightness)
+msgid "green"
+msgstr "綠色"
 
 #. Translators: The color gray (halfway between white and black).
 msgid "grey"
@@ -1493,13 +1981,18 @@ msgstr "載入NVDA中,請稍後..."
 msgid "NVDA started"
 msgstr "NVDA已啟動"
 
+#. Translators: Title of a dialog to find text.
+msgid "Find"
+msgstr "尋找"
+
 #. Translators: Dialog text for NvDA's find command.
 msgid "Type the text you wish to find"
 msgstr "請輸入搜尋字串"
 
-#. Translators: Title of a dialog to find text.
-msgid "Find"
-msgstr "尋找"
+#. Translators: An option in find dialog to perform case-sensitive search.
+#. Translators: This is a label for a checkbox in add dictionary entry dialog.
+msgid "Case &sensitive"
+msgstr "大小寫需相符(&S)"
 
 #, python-format
 msgid "text \"%s\" not found"
@@ -2120,7 +2613,7 @@ msgstr "讀出內容的動態改變開啟"
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
-msgstr "切換讀出已改變的動態內容開關, 動態內容包括在 DOS 指令模式下的文字"
+msgstr "切換讀出動態內容改變的開關，例如包括在 DOS 命令模式下新出現的文字"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
@@ -3196,7 +3689,7 @@ msgstr "NVDA版本{version}已可供使用"
 
 #. Translators: A message indicating that no update to NVDA is available.
 msgid "No update available."
-msgstr "沒有更新可使用。"
+msgstr "沒有更新版可供下載。"
 
 #. Translators: The label of a button to download and install an NVDA update.
 msgid "Download and &install update"
@@ -3318,10 +3811,10 @@ msgstr ""
 "關於許可證的細節可以參考以下網頁:\n"
 "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "\n"
-"{name} 是由NV Access所開發。NV Access是一個致力於推廣視障者用自由開放軟體的非"
-"營利組織。\n"
-"若您覺得NVDA很實用，並且希望它繼續進步，請贊助 NV Access。您可選擇 [NVDA功能"
-"表] 中的 [連結至贊助NVDA英文網頁] 選項，即可開啟捐款頁面。"
+"{name} 是由NV Access所開發。NV Access是一個致力於推廣供視障者使用的自由開放軟"
+"體之非營利組織。\n"
+"若您覺得NVDA非常實用，且希望它繼續進步，請贊助 NV Access。您可選擇 [NVDA功能"
+"表] 中的 [請贊助] 選項，即可開啟捐款頁面。"
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 msgid ""
@@ -3342,11 +3835,11 @@ msgstr ""
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
-msgstr "{description}"
+msgstr "{description}的{symbol}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
 msgid "{number} {candidate}"
-msgstr "{candidate}"
+msgstr "{number} {candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
@@ -3478,12 +3971,12 @@ msgstr "低"
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
 msgid "subject: %s"
-msgstr "主旨:%s"
+msgstr "主旨: %s"
 
 #. Translators: This is presented in outlook or live mail, email received time
 #, python-format
 msgid "received: %s"
-msgstr "收件:%s"
+msgstr "收件: %s"
 
 #. Translators: This is presented in outlook or live mail, indicating email attachments
 msgid "attachment"
@@ -3492,7 +3985,7 @@ msgstr "附件"
 #. Translators: This is presented in outlook or live mail, email sent date
 #, python-format
 msgid "sent: %s"
-msgstr "送出:%s"
+msgstr "送出: %s"
 
 #. Translators: The title for the dialog shown while Microsoft Outlook initializes.
 msgid "Waiting for Outlook..."
@@ -3517,16 +4010,16 @@ msgstr "開會通知"
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
 msgid "No notes for translators."
-msgstr "沒有給譯者的注意事項"
+msgstr "沒有給譯者的備註。"
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'Notes for translators' window in poedit.
 msgid "Could not find Notes for translators window."
-msgstr "無法找到譯者注意事項的註解"
+msgstr "無法找到給譯者的備註。"
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any notes for translators"
-msgstr "讀出譯者注意事項"
+msgstr "讀出給譯者的備註"
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
@@ -3541,7 +4034,7 @@ msgstr "沒有註解"
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any comments in the comments window"
-msgstr "讀出註解視窗"
+msgstr "讀出註解視窗內的任何註解"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Title placeholder"
@@ -3758,7 +4251,7 @@ msgstr "投影片放映- {slideName}"
 
 #. Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
 msgid "Slide Show - complete"
-msgstr "放映-結束"
+msgstr "結束放映"
 
 #. Translators: The message for no notes  for a slide in a slide show
 msgid "No notes"
@@ -3771,6 +4264,17 @@ msgstr "空白投影片"
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 msgid "Waiting for Powerpoint..."
 msgstr "正在等待PowerPoint..."
+
+#. Translators: The name of the NVDA command category for Skype specific commands.
+msgid "Skype"
+msgstr "Skype"
+
+msgid "Reports and moves the review cursor to a recent message"
+msgstr "讀出並將瀏覽游標移到最近的訊息"
+
+#. Translators: Indicates that a contact stopped typing.
+msgid "Typing stopped"
+msgstr "停止打字"
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -3912,13 +4416,6 @@ msgstr "語音字庫(%s)"
 #. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
 msgid "Temporary dictionary"
 msgstr "暫存字庫"
-
-#. Translators: Message shown to ask if user really wishes to quit NVDA.
-msgid "Are you sure you want to quit NVDA?"
-msgstr "確定要結束NVDA嗎?"
-
-msgid "Exit NVDA"
-msgstr "關閉NVDA"
 
 #. Translators: The title of the dialog to show about info for NVDA.
 msgid "About NVDA"
@@ -4141,6 +4638,10 @@ msgstr "請贊助"
 msgid "E&xit"
 msgstr "結束(&X)"
 
+#. Translators: The title of the dialog to exit NVDA
+msgid "Exit NVDA"
+msgstr "關閉NVDA"
+
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -4201,6 +4702,30 @@ msgstr "建立可攜式版(&P)"
 msgid "&Continue running"
 msgstr "繼續執行(&C)"
 
+#. Translators: A message in the exit Dialog shown when all add-ons are disabled.
+msgid ""
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
+msgstr ""
+"所有的附加元件目前已停用，它們將於下次重新啟動後方啟用，除非您再次選擇將其停"
+"用。"
+
+#. Translators: The label for actions list in the Exit dialog.
+msgid "What would you like to &do?"
+msgstr "您想要做什麼？(&d)"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Exit"
+msgstr "結束"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart"
+msgstr "重新啟動"
+
+#. Translators: An option in the combo box to choose exit action.
+msgid "Restart with add-ons disabled"
+msgstr "重新啟動附加元件已停用"
+
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 msgid "Please wait"
 msgstr "請稍後"
@@ -4208,6 +4733,10 @@ msgstr "請稍後"
 #. Translators: The title of the Addons Dialog
 msgid "Add-ons Manager"
 msgstr "附加元件管理員"
+
+#. Translators: A message in the add-ons manager shown when all add-ons are disabled.
+msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
+msgstr "所有的附加元件均已停用，若要再啟用這些附加元件，你必須重新啟動NVDA。"
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -4265,7 +4794,7 @@ msgstr "NVDA附加元件(*.{ext})"
 msgid ""
 "Failed to open add-on package file at %s - missing file or invalid file "
 "format"
-msgstr "在%s開啟附加元件失敗 - 檔案遺失或無效的檔案格式"
+msgstr "無法開啟%s附加元件檔案-檔案可能遺失或無效的格式"
 
 #. Translators: A message asking the user if they really wish to install an addon.
 msgid ""
@@ -4274,7 +4803,7 @@ msgid ""
 "Addon: {summary} {version}\n"
 "Author: {author}"
 msgstr ""
-"您確定要安裝此附加元件嗎？請確認此附加元件來自可信任的來源\n"
+"您確定要安裝此附加元件嗎？請僅安裝可以信認來源的附加元件 \n"
 "Addon: {summary} {version}\n"
 "Author: {author}"
 
@@ -4315,6 +4844,10 @@ msgstr "安裝"
 msgid "remove"
 msgstr "移除"
 
+#. Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+msgid "suspended"
+msgstr "停用"
+
 #. Translators: The status shown for an addon when its currently running in NVDA.
 msgid "running"
 msgstr "正在執行"
@@ -4339,7 +4872,6 @@ msgstr ""
 "{summary} ({name})\n"
 "版本: {version}\n"
 "作者: {author}\n"
-"網址: {url}\n"
 "描述: {description}\n"
 
 #. Translators: the url part of the About Add-on information
@@ -4738,9 +5270,9 @@ msgstr "語言"
 msgid "&Save configuration on exit"
 msgstr "關閉時儲存設定(&S)"
 
-#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
-msgid "&Warn before exiting NVDA"
-msgstr "關閉NVDA前提示(&W)"
+#. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
+msgid "Sho&w exit options when exiting NVDA"
+msgstr "關閉NVDA時，顯示關閉後的選項(&w)"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -4874,6 +5406,11 @@ msgstr "自動切換方言 (若有支援) "
 #. voice settings dialog (possible choices are none, some, most and all).
 msgid "Punctuation/symbol &level:"
 msgstr "標點符號、特殊符號等級(&L)："
+
+#. Translators: This is the label for a checkbox in the
+#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+msgid "Trust voice's language when processing characters and symbols"
+msgstr "當處理字詞及符號報讀時，信任使用的語音語言"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -5168,6 +5705,11 @@ msgstr "當游標移至編輯區，自動啟動焦點模式"
 msgid "Audio indication of focus and browse modes"
 msgstr "以音效提示模式切換"
 
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings dialog.
+msgid "&Trap all non-command gestures from reaching the document"
+msgstr "(&T)將所有的非手勢指令失效"
+
 #. Translators: This is the label for the document formatting dialog.
 msgid "Document Formatting"
 msgstr "文件格式"
@@ -5214,8 +5756,8 @@ msgstr "讀出文字樣式(&Y)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling errors"
-msgstr "讀出拼錯字"
+msgid "Report spelling e&rrors"
+msgstr "讀出拼錯字 (&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5288,6 +5830,18 @@ msgstr "讀出頁框(&M)"
 msgid "Report if &clickable"
 msgstr "讀出可點擊"
 
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Anywhere"
+msgstr "任意字(&A)"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "Whole &word"
+msgstr "完整的單字 (&w)"
+
+#. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
+msgid "&Regular expression"
+msgstr "正規表達式(&R)"
+
 #. Translators: This is the label for the edit dictionary entry dialog.
 msgid "Edit Dictionary Entry"
 msgstr "編輯字庫項目"
@@ -5304,13 +5858,9 @@ msgstr "代替文字(&R)"
 msgid "&Comment"
 msgstr "註解(&C)"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Case &sensitive"
-msgstr "大小寫需相符(&S)"
-
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Regular &expression"
-msgstr "正規表達式(&E)"
+#. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+msgid "&Type"
+msgstr "類別(&T)"
 
 #. Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 msgid "&Dictionary entries"
@@ -5333,11 +5883,12 @@ msgstr "代替文字"
 msgid "case"
 msgstr "大小寫須相符"
 
-#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
-msgid "Regexp"
-msgstr "正規表達式"
+#. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
+msgid "Type"
+msgstr "類別"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
+#. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 msgid "&Add"
 msgstr "新增(&A)"
@@ -5401,6 +5952,14 @@ msgstr "無法載入%s點顯器"
 msgid "Braille Display Error"
 msgstr "連接點顯器失敗"
 
+#. Translators: This is the label for the add symbol dialog.
+msgid "Add Symbol"
+msgstr "新增"
+
+#. Translators: This is the label for the edit field in the add symbol dialog.
+msgid "Symbol:"
+msgstr "符號:"
+
 #. Translators: This is the label for the symbol pronunciation dialog.
 msgid "Symbol Pronunciation"
 msgstr "符號讀音"
@@ -5425,9 +5984,23 @@ msgstr "變更符號讀法 "
 msgid "&Level"
 msgstr "等級(&L)"
 
+#. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
+msgid "Re&move"
+msgstr "移除 (&M)"
+
+#. Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
+#, python-format
+msgid "Symbol \"%s\" is already present."
+msgstr "符號 \"%s\" 已存在了"
+
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 msgid "Input Gestures"
 msgstr "輸入手勢"
+
+#. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
+msgctxt "inputGestures"
+msgid "&Filter by:"
+msgstr "輸入篩選字串(&F):"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -5443,25 +6016,6 @@ msgstr "鍵入輸入手勢："
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr "無法儲存使用者定義的手勢，可能是NVDA程式位於唯讀的檔案系統所造成。"
 
-#. Translators: Information about NVDA's new laptop keyboard layout.
-msgid ""
-"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in "
-"order to make it more intuitive and consistent.\n"
-"If you use the laptop layout, please see the What's New document for more "
-"information."
-msgstr ""
-"在 NVDA 2013.1，為了使筆記型電腦的鍵盤配置更加直覺和一致，已徹底重新設計。\n"
-"若您需要使用筆記型電腦的鍵盤配置，請參閱\"新版資訊\"文件以取得更多訊息"
-
-#. Translators: The title of a dialog providing information about NVDA's new laptop keyboard layout.
-msgid "New Laptop Keyboard layout"
-msgstr "新版筆記型電腦鍵盤配置"
-
-#. Translators: The label of a button in the New Laptop Keyboard Layout dialog
-#. to open the What's New document.
-msgid "Read What's New"
-msgstr "閱讀新版資訊"
-
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
 msgid "none"
@@ -5471,22 +6025,6 @@ msgstr "沒有"
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
 msgstr "語速增量(&T)"
-
-#. Translators: A setting for a speech synthesizer.
-msgid "&Acceleration"
-msgstr "加速(&A)"
-
-msgid "male 1"
-msgstr "男聲一"
-
-msgid "female 1"
-msgstr "女聲1"
-
-msgid "male 2"
-msgstr "男聲二"
-
-msgid "female 2"
-msgstr "女聲二"
 
 #. Translators: Description for a speech synthesizer.
 msgid "No speech"
@@ -5508,45 +6046,6 @@ msgstr "在螢幕座標 {x}, {y}"
 msgid "%s landmark"
 msgstr "%s地標"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Lin&ks"
-msgstr "連結(&K)"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Headings"
-msgstr "標題(&H)"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Lan&dmarks"
-msgstr "地標(&D)"
-
-#. Translators: The title of the browse mode Elements List dialog.
-msgid "Elements List"
-msgstr "元件清單"
-
-#. Translators: The label of a group of radio buttons to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Type:"
-msgstr "種類"
-
-#. Translators: The label of an editable text field to filter the elements
-#. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "輸入篩選字串(F):"
-
-#. Translators: The label of a button to activate an element
-#. in the browse mode Elements List dialog.
-msgid "&Activate"
-msgstr "啟動(&A)"
-
-#. Translators: The label of a button to move to an element
-#. in the browse mode Elements List dialog.
-msgid "&Move to"
-msgstr "移到(&M)"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "重新整理"
@@ -5562,10 +6061,6 @@ msgstr "沒有長說明"
 #. Translators: the description for the activateLongDescription script on virtualBuffers.
 msgid "Shows the long description at this position if one is found."
 msgstr "顯示所指位置的長說明"
-
-#. Translators: the description for the activatePosition script on virtualBuffers.
-msgid "activates the current object in the document"
-msgstr "啟動文件中目前的物件"
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -5584,10 +6079,6 @@ msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
 msgstr "切換文件內容的畫面顯視方式的開關"
-
-#. Translators: the description for the elements list dialog script on virtualBuffers.
-msgid "Presents a list of links, headings or landmarks"
-msgstr "顯示連結、標題及地標元件的清單"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -5623,428 +6114,6 @@ msgstr "跳到清單或表格的開頭"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "跳過清單或表格"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading"
-msgstr "移到後一個標題"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading"
-msgstr "沒有後一個標題了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading"
-msgstr "移到前一個標題"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading"
-msgstr "沒有前一個標題了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 1"
-msgstr "移到後一個第一級標題"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 1"
-msgstr "沒有後一個第一級標題了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 1"
-msgstr "移到前一個第一級標題"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 1"
-msgstr "沒有前一個第一級標題了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 2"
-msgstr "移到後一個第二級標題"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 2"
-msgstr "沒有後一個第二級標題了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 2"
-msgstr "移到前一個第二級標題"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 2"
-msgstr "沒有前一個第二級標題了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 3"
-msgstr "移到後一個第三級標題"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 3"
-msgstr "沒有後一個第三級標題了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 3"
-msgstr "移到前一個第三級標題"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 3"
-msgstr "沒有前一個第三級標題了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 4"
-msgstr "移到後一個第四級標題"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 4"
-msgstr "沒有後一個第四級標題了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 4"
-msgstr "移到前一個第四級標題"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 4"
-msgstr "沒有前一個第四級標題了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 5"
-msgstr "移到後一個第五級標題"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 5"
-msgstr "沒有後一個第五級標題了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 5"
-msgstr "移到前一個第五級標題"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 5"
-msgstr "沒有前一個第五級標題了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 6"
-msgstr "移到後一個第六級標題"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 6"
-msgstr "沒有後一個第六級標題了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 6"
-msgstr "移到前一個第六級標題"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 6"
-msgstr "沒有前一個第六級標題了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next table"
-msgstr "移到後一個表格"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next table"
-msgstr "沒有後一個表格了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous table"
-msgstr "移到前一個表格"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous table"
-msgstr "沒有前一個表格了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next link"
-msgstr "移到後一個連結"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next link"
-msgstr "沒有後一個連結了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous link"
-msgstr "移到前一個連結"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous link"
-msgstr "沒有前一個連結了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next visited link"
-msgstr "移到後一個到訪過的連結"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next visited link"
-msgstr "沒有後一個到訪過的連結了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous visited link"
-msgstr "移到前一個到訪過的連結"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous visited link"
-msgstr "沒有前一個到訪過的連結了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next unvisited link"
-msgstr "移到後一個未到訪過的連結"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next unvisited link"
-msgstr "沒有後一個未到訪過的連結了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous unvisited link"
-msgstr "移到前一個未到訪過的連結"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous unvisited link"
-msgstr "沒有前一個未到訪過的連結了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next form field"
-msgstr "移到後一個表單區"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next form field"
-msgstr "沒有後一個表單區了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous form field"
-msgstr "移到前一個表單區"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous form field"
-msgstr "沒有前一個表單區了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next list"
-msgstr "移到後一個清單"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next list"
-msgstr "沒有後一個清單了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous list"
-msgstr "移到前一個清單"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous list"
-msgstr "沒有前一個清單了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next list item"
-msgstr "移到後一個清單項目"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next list item"
-msgstr "沒有後一個清單項目了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous list item"
-msgstr "移到前一個清單項目"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous list item"
-msgstr "沒有前一個清單項目了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next button"
-msgstr "移到後一個按鈕"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next button"
-msgstr "沒有後一個按鈕了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous button"
-msgstr "移到前一個按鈕"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous button"
-msgstr "沒有前一個按鈕了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next edit field"
-msgstr "移到後一個編輯區"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next edit field"
-msgstr "沒有後一個編輯區了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous edit field"
-msgstr "移到前一個編輯區"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous edit field"
-msgstr "沒有前一個編輯區了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next frame"
-msgstr "移到後一個頁框"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next frame"
-msgstr "沒有後一個頁框了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous frame"
-msgstr "移到前一個頁框"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous frame"
-msgstr "沒有前一個頁框了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next separator"
-msgstr "移到後一個分隔線"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next separator"
-msgstr "沒有後一個分隔線了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous separator"
-msgstr "移到前一個分隔線"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous separator"
-msgstr "沒有前一個分隔線了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next radio button"
-msgstr "移到後一個單選鈕"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next radio button"
-msgstr "沒有後一個單選鈕了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous radio button"
-msgstr "移到前一個單選鈕"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous radio button"
-msgstr "沒有前一個單選鈕了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next combo box"
-msgstr "移到後一個下拉方塊"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next combo box"
-msgstr "沒有後一個下拉方塊了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous combo box"
-msgstr "移到前一個下拉方塊"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous combo box"
-msgstr "沒有前一個下拉方塊了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next check box"
-msgstr "移到後一個核取方塊"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next check box"
-msgstr "沒有後一個核取方塊了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous check box"
-msgstr "移到前一個核取方塊"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous check box"
-msgstr "沒有前一個核取方塊了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next graphic"
-msgstr "移到後一張圖片"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next graphic"
-msgstr "沒有後一張圖片了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous graphic"
-msgstr "移到前一張圖片"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous graphic"
-msgstr "沒有前一張圖片了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next block quote"
-msgstr "移到後一個引述"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next block quote"
-msgstr "沒有後一個引述了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous block quote"
-msgstr "移到前一個引述"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous block quote"
-msgstr "沒有前一個引述了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "skips forward past a block of links"
-msgstr "往後移到連結區之後的文字"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no more text after a block of links"
-msgstr "在連結區之後沒有文字了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "skips backward past a block of links"
-msgstr "往前移到連結區之前的文字"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no more text before a block of links"
-msgstr "在連結區之前沒有文字了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next landmark"
-msgstr "移到後一個地標"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next landmark"
-msgstr "沒有後一個地標了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous landmark"
-msgstr "移到前一個地標"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous landmark"
-msgstr "沒有前一個地標了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next embedded object"
-msgstr "移到後一個嵌入式物件"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next embedded object"
-msgstr "沒有後一個嵌入式物件了"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous embedded object"
-msgstr "移到前一個嵌入式物件"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous embedded object"
-msgstr "沒有前一個嵌入式物件了"
-
-msgid "focus mode"
-msgstr "焦點模式"
-
-msgid "browse mode"
-msgstr "瀏覽模式"
 
 msgid "Taskbar"
 msgstr "工作列"
@@ -6238,6 +6307,12 @@ msgstr "主要頁首"
 msgid "Text frame"
 msgstr "文字框"
 
+msgid "comment: {text} by {author} on {date}"
+msgstr "註解: 由 {author} 於 {date} 加註的 {text}"
+
+msgid "{revisionType}: {text} by {author} on {date}"
+msgstr "{revisionType}: {text} 由 {author} 於 {date} 修訂"
+
 msgid "unknown author"
 msgstr "未知的作者"
 
@@ -6249,7 +6324,7 @@ msgstr "{revisionType}由{revisionAuthor}修訂於{revisionDate}"
 
 #, python-format
 msgid "%g characters"
-msgstr "%G個字元"
+msgstr "%g 個字元"
 
 #. Translators: the value in points for a paragraph indenting
 #, python-format
@@ -6395,6 +6470,11 @@ msgstr "不在表格中"
 msgid "Edge of table"
 msgstr "表格的邊緣了"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "(&A) 註解"
+
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE series"
 msgstr "HIMS Braille Sense/Braille EDGE 系列"
@@ -6402,6 +6482,49 @@ msgstr "HIMS Braille Sense/Braille EDGE 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
+#~ "in order to make it more intuitive and consistent.\n"
+#~ "If you use the laptop layout, please see the What's New document for more "
+#~ "information."
+#~ msgstr ""
+#~ "在 NVDA 2013.1，為了使筆記型電腦的鍵盤配置更加直覺和一致，已徹底重新設"
+#~ "計。\n"
+#~ "若您需要使用筆記型電腦的鍵盤配置，請參閱\"新版資訊\"文件以取得更多訊息"
+
+#~ msgid "New Laptop Keyboard layout"
+#~ msgstr "新版筆記型電腦鍵盤配置"
+
+#~ msgid "Read What's New"
+#~ msgstr "閱讀新版資訊"
+
+#~ msgid "&Acceleration"
+#~ msgstr "加速(&A)"
+
+#~ msgid "male 1"
+#~ msgstr "男聲一"
+
+#~ msgid "female 1"
+#~ msgstr "女聲1"
+
+#~ msgid "male 2"
+#~ msgstr "男聲二"
+
+#~ msgid "female 2"
+#~ msgstr "女聲二"
+
+#~ msgid "lime"
+#~ msgstr "萊姆綠"
+
+#~ msgid "Are you sure you want to quit NVDA?"
+#~ msgstr "確定要結束NVDA嗎?"
+
+#~ msgid "&Warn before exiting NVDA"
+#~ msgstr "關閉NVDA前提示(&W)"
+
+#~ msgid "Regexp"
+#~ msgstr "正規表達式"
 
 #~ msgid "No location information for navigator object"
 #~ msgstr "沒有瀏覽物件的位置資訊"

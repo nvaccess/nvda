@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-06 19:11+1000\n"
-"PO-Revision-Date: 2014-11-20 19:35+0530\n"
+"POT-Creation-Date: 2015-02-03 19:12+1000\n"
+"PO-Revision-Date: 2015-02-02 19:17+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: Tamil\n"
@@ -625,6 +625,495 @@ msgstr "புள்ளி"
 msgid "space"
 msgstr "இடைவெளி"
 
+msgid "focus mode"
+msgstr "குவிமைய நிலை"
+
+msgid "browse mode"
+msgstr "உலாவும் நிலை"
+
+#. Translators: a message when a particular quick nav command is not supported in the current document.
+msgid "Not supported in this document"
+msgstr "இவ்வாவணத்தில் ஆதரவில்லை"
+
+#. Translators: the description for the elements list dialog script on virtualBuffers.
+msgid "Presents a list of links, headings or landmarks"
+msgstr "தொடுப்புகள், தலைப்புகள், அல்லது நிலக்குறிகளின் பட்டியலை வழங்குகிறது"
+
+#. Translators: the description for the activatePosition script on virtualBuffers.
+msgid "activates the current object in the document"
+msgstr "ஆவணத்திலுள்ள தற்போதைய பொருளை இயங்கச் செய்கிறது"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading"
+msgstr "அடுத்த தலைப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading"
+msgstr "அடுத்த தலைப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading"
+msgstr "முந்தைய தலைப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading"
+msgstr "முந்தைய தலைப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 1"
+msgstr "அடுத்த 1ம் மட்ட தலைப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 1"
+msgstr "அடுத்த 1ம் மட்ட தலைப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 1"
+msgstr "முந்தைய 1ம் மட்ட தலைப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 1"
+msgstr "முந்தைய 1ம் மட்ட தலைப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 2"
+msgstr "அடுத்த 2ம் மட்ட தலைப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 2"
+msgstr "அடுத்த 2ம் மட்ட தலைப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 2"
+msgstr "முந்தைய 2ம் மட்ட தலைப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 2"
+msgstr "முந்தைய 2ம் மட்ட தலைப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 3"
+msgstr "அடுத்த 3ம் மட்ட தலைப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 3"
+msgstr "அடுத்த 3ம் மட்ட தலைப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 3"
+msgstr "முந்தைய 3ம் மட்ட தலைப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 3"
+msgstr "முந்தைய 3ம் மட்ட தலைப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 4"
+msgstr "அடுத்த 4ம் மட்ட தலைப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 4"
+msgstr "அடுத்த 4ம் மட்ட தலைப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 4"
+msgstr "முந்தைய 4ம் மட்ட தலைப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 4"
+msgstr "முந்தைய 4ம் மட்ட தலைப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 5"
+msgstr "அடுத்த 5ம் மட்ட தலைப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 5"
+msgstr "அடுத்த 5ம் மட்ட தலைப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 5"
+msgstr "முந்தைய 5ம் மட்ட தலைப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 5"
+msgstr "முந்தைய 5ம் மட்ட தலைப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 6"
+msgstr "அடுத்த 6ம் மட்ட தலைப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 6"
+msgstr "அடுத்த 6ம் மட்ட தலைப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 6"
+msgstr "முந்தைய 6ம் மட்ட தலைப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 6"
+msgstr "முந்தைய 6ம் மட்ட தலைப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next table"
+msgstr "அடுத்த அட்டவணைக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next table"
+msgstr "அடுத்த அட்டவணை ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous table"
+msgstr "முந்தைய அட்டவணைக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous table"
+msgstr "முந்தைய அட்டவணை ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next link"
+msgstr "அடுத்த தொடுப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next link"
+msgstr "அடுத்த தொடுப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous link"
+msgstr "முந்தைய தொடுப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous link"
+msgstr "முந்தைய தொடுப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next visited link"
+msgstr "அடுத்த பார்த்த தொடுப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next visited link"
+msgstr "அடுத்த பார்த்த தொடுப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous visited link"
+msgstr "முந்தைய பார்த்த தொடுப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous visited link"
+msgstr "முந்தைய பார்த்த தொடுப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next unvisited link"
+msgstr "அடுத்த பார்க்காத தொடுப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next unvisited link"
+msgstr "அடுத்த பார்க்காத தொடுப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous unvisited link"
+msgstr "முந்தைய பார்க்காத தொடுப்பிற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous unvisited link"
+msgstr "முந்தைய பார்க்காத தொடுப்பு ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next form field"
+msgstr "அடுத்த படிவக் களத்திற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next form field"
+msgstr "அடுத்த படிவக் களம் ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous form field"
+msgstr "முந்தைய படிவக் களத்திற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous form field"
+msgstr "முந்தைய படிவக் களம் ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next list"
+msgstr "அடுத்த வரிசைப் பட்டியலுக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next list"
+msgstr "அடுத்த வரிசைப் பட்டியல் ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous list"
+msgstr "முந்தைய வரிசைப் பட்டியலுக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous list"
+msgstr "முந்தைய வரிசைப் பட்டியல் ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next list item"
+msgstr "அடுத்த வரிசைப் பட்டியல் உருப்படிக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next list item"
+msgstr "அடுத்த வரிசைப் பட்டியல் உருப்படி ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous list item"
+msgstr "முந்தைய வரிசைப் பட்டியல் உருப்படிக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous list item"
+msgstr "முந்தைய வரிசைப் பட்டியல் உருப்படி ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next button"
+msgstr "அடுத்த பொத்தானுக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next button"
+msgstr "அடுத்த பொத்தான் ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous button"
+msgstr "முந்தைய பொத்தானுக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous button"
+msgstr "முந்தைய பொத்தான் ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next edit field"
+msgstr "அடுத்த தொகு களத்திற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next edit field"
+msgstr "அடுத்த தொகு களம் ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous edit field"
+msgstr "முந்தைய தொகு களத்திற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous edit field"
+msgstr "முந்தைய தொகு களம் ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next frame"
+msgstr "அடுத்த சட்டகத்திற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next frame"
+msgstr "அடுத்த சட்டகம் ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous frame"
+msgstr "முந்தைய சட்டகத்திற்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous frame"
+msgstr "முந்தைய சட்டகம் ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next separator"
+msgstr "அடுத்த பிரிப்பானுக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next separator"
+msgstr "அடுத்த பிரிப்பான் ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous separator"
+msgstr "முந்தைய பிரிப்பானுக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous separator"
+msgstr "முந்தைய பிரிப்பான் ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next radio button"
+msgstr "அடுத்த வானொலிப் பொத்தானுக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next radio button"
+msgstr "அடுத்த வானொலிப் பொத்தான் ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous radio button"
+msgstr "முந்தைய வானொலிப் பொத்தானுக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous radio button"
+msgstr "முந்தைய வானொலிப் பொத்தான் ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next combo box"
+msgstr "அடுத்த சேர்க்கைப் பெட்டிக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next combo box"
+msgstr "அடுத்த சேர்க்கைப் பெட்டி ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous combo box"
+msgstr "முந்தைய சேர்க்கைப் பெட்டிக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous combo box"
+msgstr "முந்தைய சேர்க்கைப் பெட்டி ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next check box"
+msgstr "அடுத்த தேர்வுப் பெட்டிக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next check box"
+msgstr "அடுத்த தேர்வுப் பெட்டி ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous check box"
+msgstr "முந்தைய தேர்வுப் பெட்டிக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous check box"
+msgstr "முந்தைய தேர்வுப் பெட்டி ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next graphic"
+msgstr "அடுத்த வரைகலைக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next graphic"
+msgstr "அடுத்த வரைகலை ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous graphic"
+msgstr "முந்தைய வரைகலைக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous graphic"
+msgstr "முந்தைய வரைகலை ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next block quote"
+msgstr "அடுத்த உரைத் தொகுதிக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next block quote"
+msgstr "அடுத்த உரைத் தொகுதி ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous block quote"
+msgstr "முந்தைய உரைத் தொகுதிக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous block quote"
+msgstr "முந்தைய உரைத் தொகுதி ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "skips forward past a block of links"
+msgstr "தொடுப்புகளின் தொகுதியைத் தவிர்த்து முன்செல்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no more text after a block of links"
+msgstr "தொடுப்புகளின் தொகுதிக்குப் பிறகு உரை ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "skips backward past a block of links"
+msgstr "தொடுப்புகளின் தொகுதியைப் தவிர்த்து பின்செல்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no more text before a block of links"
+msgstr "தொடுப்புகளின் தொகுதிக்கு முன் உரை ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next landmark"
+msgstr "அடுத்த நிலக்குறிக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next landmark"
+msgstr "அடுத்த நிலக்குறி ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous landmark"
+msgstr "முந்தைய நிலக்குறிக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous landmark"
+msgstr "முந்தைய நிலக்குறி ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next embedded object"
+msgstr "அடுத்த பதிந்துள்ள பொருளுக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next embedded object"
+msgstr "அடுத்த பதிந்துள்ள பொருள் ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous embedded object"
+msgstr "முந்தைய பதிந்துள்ள பொருளுக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous embedded object"
+msgstr "முந்தைய பதிந்துள்ள பொருள் ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next annotation"
+msgstr "அடுத்த விளக்கவுரைக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next annotation"
+msgstr "அடுத்த விளக்கவுரை ஏதுமில்லை"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous annotation"
+msgstr "முந்தைய விளக்கவுரைக்கு நகர்கிறது"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous annotation"
+msgstr "முந்தைய விளக்கவுரை ஏதுமில்லை"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Lin&ks"
+msgstr "தொடுப்புகள் (&K)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Headings"
+msgstr "தலைப்புகள் (&H)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Lan&dmarks"
+msgstr "நிலக்குறிகள் (&D)"
+
+#. Translators: The title of the browse mode Elements List dialog.
+msgid "Elements List"
+msgstr "அவயவங்களின் பட்டியல்"
+
+#. Translators: The label of a group of radio buttons to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Type:"
+msgstr "வகை"
+
+#. Translators: The label of an editable text field to filter the elements
+#. in the browse mode Elements List dialog.
+msgid "&Filter by:"
+msgstr "இதைக் கொண்டு வடிகட்டுக (&F):"
+
+#. Translators: The label of a button to activate an element
+#. in the browse mode Elements List dialog.
+msgid "&Activate"
+msgstr "இயங்கச் செய்க (&A)"
+
+#. Translators: The label of a button to move to an element
+#. in the browse mode Elements List dialog.
+msgid "&Move to"
+msgstr "இங்கு நகர்க (&M)"
+
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
@@ -658,18 +1147,17 @@ msgstr "தெரியாத நிறம்"
 msgid "black"
 msgstr "கருப்பு"
 
-#. Translators: The color green.
-msgid "green"
-msgstr "பச்சை"
+#. Translators: The color dark green.
+msgid "dark green"
+msgstr "கரும்பச்சை"
 
 #. Translators: The light gray color.
 msgid "light grey"
 msgstr "மெல்லிய சாம்பல் நிறம்"
 
-#. Translators: The color lime.
-#. For more info see: http://en.wikipedia.org/wiki/Lime_%28color%29
-msgid "lime"
-msgstr "எழுமிச்ச நிறம்"
+#. Translators: The color green (full brightness)
+msgid "green"
+msgstr "பச்சை"
 
 #. Translators: The color gray (halfway between white and black).
 msgid "grey"
@@ -1490,13 +1978,18 @@ msgstr "என்விடிஏ ஏற்றப்படுகிறது. க
 msgid "NVDA started"
 msgstr "என்விடிஏ துவங்கிவிட்டது"
 
+#. Translators: Title of a dialog to find text.
+msgid "Find"
+msgstr "கண்டுபிடிக்கவும்"
+
 #. Translators: Dialog text for NvDA's find command.
 msgid "Type the text you wish to find"
 msgstr "தாங்கள் கண்டுபிடிக்க விரும்பும் உரையைத் தட்டச்சிடவும்"
 
-#. Translators: Title of a dialog to find text.
-msgid "Find"
-msgstr "கண்டுபிடிக்கவும்"
+#. Translators: An option in find dialog to perform case-sensitive search.
+#. Translators: This is a label for a checkbox in add dictionary entry dialog.
+msgid "Case &sensitive"
+msgstr "முகப்பெழுத்து/சிற்றெழுத்துகளுக்கிடையான மாற்றங்களை உணரக்கூடியது (&S)"
 
 #, python-format
 msgid "text \"%s\" not found"
@@ -1514,7 +2007,7 @@ msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
-"ஏற்கனவே உள்ளீடு செய்யப்பட்ட உரையின் அடுத்த தோற்றம், தற்போதைய சுட்டியின் நிலையிலிருந்து "
+"ஏற்கெனவே உள்ளீடு செய்யப்பட்ட உரையின் அடுத்த தோற்றம், தற்போதைய சுட்டியின் நிலையிலிருந்து "
 "எங்கேவென்று கண்டுபிடிக்கவும்"
 
 #. Translators: Input help message for find previous command.
@@ -1522,7 +2015,7 @@ msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
-"ஏற்கனவே உள்ளீடு செய்யப்பட்ட உரையின் முந்தைய தோற்றம், தற்போதைய சுட்டியின் நிலையிலிருந்து "
+"ஏற்கெனவே உள்ளீடு செய்யப்பட்ட உரையின் முந்தைய தோற்றம், தற்போதைய சுட்டியின் நிலையிலிருந்து "
 "எங்கேவென்று கண்டுபிடிக்கவும்"
 
 #. Translators: Reported when there is no text selected (for copying).
@@ -3512,7 +4005,7 @@ msgstr "அண்மைய தகவல்களில் ஒன்றினை 
 #. Translators: This Outlook Express message has an attachment
 #. Translators: when an email has attachments
 msgid "has attachment"
-msgstr "இணைப்புள்ளது"
+msgstr "இணைப்புக்கொண்டது"
 
 #. Translators: this Outlook Express message is flagged
 msgid "flagged"
@@ -3573,7 +4066,7 @@ msgstr "மறைப்படி பெறுநர்:"
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
 #. Translators: when an email is unread
 msgid "unread"
-msgstr "படிக்காதது"
+msgstr "படிக்கப்படாதது"
 
 #. Translators: for a high importance email
 msgid "high importance"
@@ -3893,6 +4386,17 @@ msgstr "வெற்றுப் படவில்லை"
 msgid "Waiting for Powerpoint..."
 msgstr "பவர் பாயிண்ட்டிற்காக காத்துக்கொண்டிருக்கிறது..."
 
+#. Translators: The name of the NVDA command category for Skype specific commands.
+msgid "Skype"
+msgstr "ஸ்கைப்"
+
+msgid "Reports and moves the review cursor to a recent message"
+msgstr "அண்மைய தகவலைப் படித்து, அவ்விடத்திற்கு மறுபரிசீலனைச் சுட்டியை நகர்த்துகிறது"
+
+#. Translators: Indicates that a contact stopped typing.
+msgid "Typing stopped"
+msgstr "தட்டச்சு நிறுத்தப்பட்டது"
+
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
 msgstr "பின்நகர்த்துக"
@@ -4020,7 +4524,7 @@ msgstr "அமைவடிவத்தை சேமிக்க இயலவி�
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
 msgstr ""
-"என்விடிஏ அமைப்புகள் உரையாடல் ஒன்று ஏற்கனவே திறக்கப்பட்டுள்ளது. கருணைக் கூர்ந்து முதலில் "
+"என்விடிஏ அமைப்புகள் உரையாடல் ஒன்று ஏற்கெனவே திறக்கப்பட்டுள்ளது. கருணைக் கூர்ந்து முதலில் "
 "அதை மூடவும்."
 
 #. Translators: Title for default speech dictionary dialog.
@@ -4341,7 +4845,7 @@ msgstr ""
 
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
-msgstr "தாங்கள் என்ன செய்ய விரும்புகிறீர்கள்? (&D)"
+msgstr "தாங்கள் என்ன செய்ய விரும்புகிறீர்கள்? "
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Exit"
@@ -4450,7 +4954,7 @@ msgstr "கூட்டுறுப்பு நிறுவுதல்"
 msgid ""
 "A version of this add-on is already installed. Would you like to update it?"
 msgstr ""
-"கூட்டுறுப்பின் ஒரு பதிப்பு ஏற்கனவே நிறுவப்பட்டுள்ளது. இதை இற்றைப்படுத்த விரும்புகிறீர்களா?"
+"கூட்டுறுப்பின் ஒரு பதிப்பு ஏற்கெனவே நிறுவப்பட்டுள்ளது. இதை இற்றைப்படுத்த விரும்புகிறீர்களா?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -4608,7 +5112,7 @@ msgstr "தனியமைப்பை மறுபெயரிடுக"
 #. and a profile with the new name already exists.
 #. Translators: An error displayed when the user attempts to create a configuration profile which already exists.
 msgid "That profile already exists. Please choose a different name."
-msgstr "இப்பெயரில்  ஏற்கனவே ஒரு தனியமைப்பு உள்ளது. மாற்றுப் பெயரை தேர்ந்தெடுக்கவும். "
+msgstr "இப்பெயரில்  ஏற்கெனவே ஒரு தனியமைப்பு உள்ளது. மாற்றுப் பெயரை தேர்ந்தெடுக்கவும். "
 
 msgid "Error renaming profile."
 msgstr "தனியமைப்பினை மறுபெயரிடுவதில் பிழை."
@@ -4746,7 +5250,7 @@ msgstr "என்விடிஏ வெற்றிகரமாக நிறு�
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 msgid "Successfully updated your installation of NVDA. "
-msgstr "ஏற்கனவே நிறுவப்பட்டிருந்த தங்களின் என்விடிஏ வெற்றிகரமாக இற்றைப்படுத்தப்பட்டது. "
+msgstr "ஏற்கெனவே நிறுவப்பட்டிருந்த தங்களின் என்விடிஏ வெற்றிகரமாக இற்றைப்படுத்தப்பட்டது. "
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
@@ -5069,6 +5573,11 @@ msgstr "ஆதரவு இருக்கும்பொழுது ஒரு 
 msgid "Punctuation/symbol &level:"
 msgstr "நிறுத்தற்குறிகள்/குறியெழுத்துகள் நிலை (&L)"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+msgid "Trust voice's language when processing characters and symbols"
+msgstr "வரியுருக்களையும், குறியெழுத்துகளையும் கையாளும்பொழுது குரலின் மொழியை நம்புக"
+
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
 msgstr "ஆங்கில முகப்பெழுத்து சுருதி மாற்று விழுக்காடு"
@@ -5365,6 +5874,11 @@ msgstr "கணினிச் சுட்டிக்கான தன்னி�
 msgid "Audio indication of focus and browse modes"
 msgstr "குவிமைய நிலை, உலாவும் நிலைக்கான ஒலிச் சைகை"
 
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings dialog.
+msgid "&Trap all non-command gestures from reaching the document"
+msgstr "கட்டளைகள் அல்லாத எல்லா சைகைகளையும் ஆவணத்திற்குச் செல்லாமல் தடுக்கவும் (&T)"
+
 #. Translators: This is the label for the document formatting dialog.
 msgid "Document Formatting"
 msgstr "ஆவண வடிவூட்டம்"
@@ -5412,8 +5926,8 @@ msgstr "பாங்கினை அறிவிக்கவும் (&Y)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling errors"
-msgstr "எழுத்துப் பிழைகளை அறிவிக்கவும்"
+msgid "Report spelling e&rrors"
+msgstr "எழுத்துப் பிழைகளை அறிவிக்கவும் (&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5504,7 +6018,7 @@ msgstr "அகரமுதலி உள்ளீட்டினைத் தொ�
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Pattern"
-msgstr "மாதிரியுரு (&P)"
+msgstr "தோற்றுரு (&P)"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
 msgid "&Replacement"
@@ -5513,10 +6027,6 @@ msgstr "மாற்றமர்வு (&R)"
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Comment"
 msgstr "கருத்துரை (&C)"
-
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Case &sensitive"
-msgstr "முகப்பெழுத்து/சிற்றெழுத்துகளுக்கிடையான மாற்றங்களை உணரக்கூடியது (&S)"
 
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
@@ -5533,7 +6043,7 @@ msgstr "கருத்துரை"
 
 #. Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
 msgid "Pattern"
-msgstr "மாதிரியுரு"
+msgstr "தோற்றுரு"
 
 #. Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
 msgid "Replacement"
@@ -5548,6 +6058,7 @@ msgid "Type"
 msgstr "வகை"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
+#. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 msgid "&Add"
 msgstr "ஏற்றுக (&A)"
@@ -5611,6 +6122,14 @@ msgstr "%s காட்சியமைவை ஏற்ற இயலவில்�
 msgid "Braille Display Error"
 msgstr "பிரெயில் காட்சியமைவில் பிழை"
 
+#. Translators: This is the label for the add symbol dialog.
+msgid "Add Symbol"
+msgstr "குறியெழுத்தினை ஏற்றவும்"
+
+#. Translators: This is the label for the edit field in the add symbol dialog.
+msgid "Symbol:"
+msgstr "குறியெழுத்து"
+
 #. Translators: This is the label for the symbol pronunciation dialog.
 msgid "Symbol Pronunciation"
 msgstr "குறியெழுத்து பலுக்கல்"
@@ -5635,9 +6154,23 @@ msgstr "குறியெழுத்தை மாற்றுக"
 msgid "&Level"
 msgstr "நிலை (&L)"
 
+#. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
+msgid "Re&move"
+msgstr "நீக்குக (&M)"
+
+#. Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
+#, python-format
+msgid "Symbol \"%s\" is already present."
+msgstr "%s குறியெழுத்து ஏற்கெனவே உள்ளது."
+
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 msgid "Input Gestures"
 msgstr "உள்ளீட்டுச் சைகைகள்"
+
+#. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
+msgctxt "inputGestures"
+msgid "&Filter by:"
+msgstr "இதைக் கொண்டு வடிகட்டுக (&F):"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -5655,27 +6188,6 @@ msgstr ""
 "பயனர் வரையறுத்த சைகைகளை சேமிக்க இயலவில்லை - ஒருவேளை படிக்க மட்டுமேயான கோப்பாக "
 "இருக்கலாம்"
 
-#. Translators: Information about NVDA's new laptop keyboard layout.
-msgid ""
-"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in "
-"order to make it more intuitive and consistent.\n"
-"If you use the laptop layout, please see the What's New document for more "
-"information."
-msgstr ""
-"என்விடிஏ 2013.1 பதிப்பில், மாற்றமில்லாமலும், தன்னிச்சையாக பயன்படுத்தவும், மடிக்கணினி "
-"விசைப் பலகை வரைவு முழுவதுமாக மறுவடிவமாக்கப்பட்டுள்ளது.\n"
-"மடிக்கணினி வரைவை தாங்கள் பயன்படுத்துவதாக இருந்தால், மேலும் தகவல்களுக்கு, 'புதிதாக "
-"என்ன?' என்கிற ஆவணத்தை காணவும். "
-
-#. Translators: The title of a dialog providing information about NVDA's new laptop keyboard layout.
-msgid "New Laptop Keyboard layout"
-msgstr "புதிய மடிக்கணினி விசைப் பலகை வரைவு"
-
-#. Translators: The label of a button in the New Laptop Keyboard Layout dialog
-#. to open the What's New document.
-msgid "Read What's New"
-msgstr "புதிதாக என்னவென்பதை படிக்கவும்"
-
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
 msgid "none"
@@ -5685,22 +6197,6 @@ msgstr "இயல்பிருப்பு"
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
 msgstr "விகிதத்தை மேலேற்றுக (&T)"
-
-#. Translators: A setting for a speech synthesizer.
-msgid "&Acceleration"
-msgstr "முடுக்கம் (&A)"
-
-msgid "male 1"
-msgstr "ஆண் 1"
-
-msgid "female 1"
-msgstr "பெண் 1"
-
-msgid "male 2"
-msgstr "ஆண் 2"
-
-msgid "female 2"
-msgstr "பெண் 2"
 
 #. Translators: Description for a speech synthesizer.
 msgid "No speech"
@@ -5722,45 +6218,6 @@ msgstr "தற்போதைய திரையின் நிலை {x},{y} �
 msgid "%s landmark"
 msgstr "%s நிலக்குறி"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Lin&ks"
-msgstr "தொடுப்புகள் (&K)"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Headings"
-msgstr "தலைப்புகள் (&H)"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Lan&dmarks"
-msgstr "நிலக்குறிகள் (&D)"
-
-#. Translators: The title of the browse mode Elements List dialog.
-msgid "Elements List"
-msgstr "அவயவங்களின் பட்டியல்"
-
-#. Translators: The label of a group of radio buttons to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Type:"
-msgstr "வகை"
-
-#. Translators: The label of an editable text field to filter the elements
-#. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "இதைக் கொண்டு வடிகட்டுக (&F):"
-
-#. Translators: The label of a button to activate an element
-#. in the browse mode Elements List dialog.
-msgid "&Activate"
-msgstr "இயங்கச் செய்க (&A)"
-
-#. Translators: The label of a button to move to an element
-#. in the browse mode Elements List dialog.
-msgid "&Move to"
-msgstr "இங்கு நகர்க (&M)"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "புத்தாக்கப்பட்டது"
@@ -5776,10 +6233,6 @@ msgstr "நெடுவிளக்கம் ஏதுமில்லை"
 #. Translators: the description for the activateLongDescription script on virtualBuffers.
 msgid "Shows the long description at this position if one is found."
 msgstr "இந்நிலையில் நெடுவிளக்கம் ஏதேனும் இருந்தால், அதை காண்பிக்கும்"
-
-#. Translators: the description for the activatePosition script on virtualBuffers.
-msgid "activates the current object in the document"
-msgstr "ஆவணத்திலுள்ள தற்போதைய பொருளை இயங்கச் செய்கிறது"
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -5800,10 +6253,6 @@ msgid ""
 msgstr ""
 "ஆவணத்தின் உள்ளடக்கங்களை வழங்கும்பொழுது, திரை வரைவு பாதுகாக்கப்பட்டிருந்தால், அதை இயக்கவோ, "
 "நிறுத்தவோ செய்கிறது"
-
-#. Translators: the description for the elements list dialog script on virtualBuffers.
-msgid "Presents a list of links, headings or landmarks"
-msgstr "தொடுப்புகள், தலைப்புகள், அல்லது நிலக்குறிகளின் பட்டியலை வழங்குகிறது"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -5839,428 +6288,6 @@ msgstr "வரிசைப் பட்டியல், அட்டவணை �
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "வரிசைப் பட்டியல், அட்டவணை போன்ற கொள்களத்தின் முடிவிற்கு அப்பால் செல்லும்"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading"
-msgstr "அடுத்த தலைப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading"
-msgstr "அடுத்த தலைப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading"
-msgstr "முந்தைய தலைப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading"
-msgstr "முந்தைய தலைப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 1"
-msgstr "அடுத்த 1ம் மட்ட தலைப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 1"
-msgstr "அடுத்த 1ம் மட்ட தலைப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 1"
-msgstr "முந்தைய 1ம் மட்ட தலைப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 1"
-msgstr "முந்தைய 1ம் மட்ட தலைப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 2"
-msgstr "அடுத்த 2ம் மட்ட தலைப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 2"
-msgstr "அடுத்த 2ம் மட்ட தலைப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 2"
-msgstr "முந்தைய 2ம் மட்ட தலைப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 2"
-msgstr "முந்தைய 2ம் மட்ட தலைப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 3"
-msgstr "அடுத்த 3ம் மட்ட தலைப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 3"
-msgstr "அடுத்த 3ம் மட்ட தலைப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 3"
-msgstr "முந்தைய 3ம் மட்ட தலைப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 3"
-msgstr "முந்தைய 3ம் மட்ட தலைப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 4"
-msgstr "அடுத்த 4ம் மட்ட தலைப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 4"
-msgstr "அடுத்த 4ம் மட்ட தலைப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 4"
-msgstr "முந்தைய 4ம் மட்ட தலைப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 4"
-msgstr "முந்தைய 4ம் மட்ட தலைப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 5"
-msgstr "அடுத்த 5ம் மட்ட தலைப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 5"
-msgstr "அடுத்த 5ம் மட்ட தலைப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 5"
-msgstr "முந்தைய 5ம் மட்ட தலைப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 5"
-msgstr "முந்தைய 5ம் மட்ட தலைப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 6"
-msgstr "அடுத்த 6ம் மட்ட தலைப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 6"
-msgstr "அடுத்த 6ம் மட்ட தலைப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 6"
-msgstr "முந்தைய 6ம் மட்ட தலைப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 6"
-msgstr "முந்தைய 6ம் மட்ட தலைப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next table"
-msgstr "அடுத்த அட்டவணைக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next table"
-msgstr "அடுத்த அட்டவணை ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous table"
-msgstr "முந்தைய அட்டவணைக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous table"
-msgstr "முந்தைய அட்டவணை ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next link"
-msgstr "அடுத்த தொடுப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next link"
-msgstr "அடுத்த தொடுப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous link"
-msgstr "முந்தைய தொடுப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous link"
-msgstr "முந்தைய தொடுப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next visited link"
-msgstr "அடுத்த பார்த்த தொடுப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next visited link"
-msgstr "அடுத்த பார்த்த தொடுப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous visited link"
-msgstr "முந்தைய பார்த்த தொடுப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous visited link"
-msgstr "முந்தைய பார்த்த தொடுப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next unvisited link"
-msgstr "அடுத்த பார்க்காத தொடுப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next unvisited link"
-msgstr "அடுத்த பார்க்காத தொடுப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous unvisited link"
-msgstr "முந்தைய பார்க்காத தொடுப்பிற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous unvisited link"
-msgstr "முந்தைய பார்க்காத தொடுப்பு ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next form field"
-msgstr "அடுத்த படிவக் களத்திற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next form field"
-msgstr "அடுத்த படிவக் களம் ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous form field"
-msgstr "முந்தைய படிவக் களத்திற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous form field"
-msgstr "முந்தைய படிவக் களம் ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next list"
-msgstr "அடுத்த வரிசைப் பட்டியலுக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next list"
-msgstr "அடுத்த வரிசைப் பட்டியல் ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous list"
-msgstr "முந்தைய வரிசைப் பட்டியலுக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous list"
-msgstr "முந்தைய வரிசைப் பட்டியல் ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next list item"
-msgstr "அடுத்த வரிசைப் பட்டியல் உருப்படிக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next list item"
-msgstr "அடுத்த வரிசைப் பட்டியல் உருப்படி ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous list item"
-msgstr "முந்தைய வரிசைப் பட்டியல் உருப்படிக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous list item"
-msgstr "முந்தைய வரிசைப் பட்டியல் உருப்படி ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next button"
-msgstr "அடுத்த பொத்தானுக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next button"
-msgstr "அடுத்த பொத்தான் ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous button"
-msgstr "முந்தைய பொத்தானுக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous button"
-msgstr "முந்தைய பொத்தான் ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next edit field"
-msgstr "அடுத்த தொகு களத்திற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next edit field"
-msgstr "அடுத்த தொகு களம் ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous edit field"
-msgstr "முந்தைய தொகு களத்திற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous edit field"
-msgstr "முந்தைய தொகு களம் ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next frame"
-msgstr "அடுத்த சட்டகத்திற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next frame"
-msgstr "அடுத்த சட்டகம் ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous frame"
-msgstr "முந்தைய சட்டகத்திற்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous frame"
-msgstr "முந்தைய சட்டகம் ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next separator"
-msgstr "அடுத்த பிரிப்பானுக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next separator"
-msgstr "அடுத்த பிரிப்பான் ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous separator"
-msgstr "முந்தைய பிரிப்பானுக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous separator"
-msgstr "முந்தைய பிரிப்பான் ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next radio button"
-msgstr "அடுத்த வானொலிப் பொத்தானுக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next radio button"
-msgstr "அடுத்த வானொலிப் பொத்தான் ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous radio button"
-msgstr "முந்தைய வானொலிப் பொத்தானுக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous radio button"
-msgstr "முந்தைய வானொலிப் பொத்தான் ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next combo box"
-msgstr "அடுத்த சேர்க்கைப் பெட்டிக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next combo box"
-msgstr "அடுத்த சேர்க்கைப் பெட்டி ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous combo box"
-msgstr "முந்தைய சேர்க்கைப் பெட்டிக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous combo box"
-msgstr "முந்தைய சேர்க்கைப் பெட்டி ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next check box"
-msgstr "அடுத்த தேர்வுப் பெட்டிக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next check box"
-msgstr "அடுத்த தேர்வுப் பெட்டி ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous check box"
-msgstr "முந்தைய தேர்வுப் பெட்டிக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous check box"
-msgstr "முந்தைய தேர்வுப் பெட்டி ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next graphic"
-msgstr "அடுத்த வரைகலைக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next graphic"
-msgstr "அடுத்த வரைகலை ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous graphic"
-msgstr "முந்தைய வரைகலைக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous graphic"
-msgstr "முந்தைய வரைகலை ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next block quote"
-msgstr "அடுத்த உரைத் தொகுதிக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next block quote"
-msgstr "அடுத்த உரைத் தொகுதி ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous block quote"
-msgstr "முந்தைய உரைத் தொகுதிக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous block quote"
-msgstr "முந்தைய உரைத் தொகுதி ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "skips forward past a block of links"
-msgstr "தொடுப்புகளின் தொகுதியைத் தவிர்த்து முன்செல்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no more text after a block of links"
-msgstr "தொடுப்புகளின் தொகுதிக்குப் பிறகு உரை ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "skips backward past a block of links"
-msgstr "தொடுப்புகளின் தொகுதியைப் தவிர்த்து பின்செல்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no more text before a block of links"
-msgstr "தொடுப்புகளின் தொகுதிக்கு முன் உரை ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next landmark"
-msgstr "அடுத்த நிலக்குறிக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next landmark"
-msgstr "அடுத்த நிலக்குறி ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous landmark"
-msgstr "முந்தைய நிலக்குறிக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous landmark"
-msgstr "முந்தைய நிலக்குறி ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next embedded object"
-msgstr "அடுத்தப் பதிந்துள்ள பொருளுக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next embedded object"
-msgstr "அடுத்தப் பதிந்துள்ள பொருள் ஏதுமில்லை"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous embedded object"
-msgstr "முந்தைய பதிந்துள்ள பொருளுக்கு நகர்கிறது"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous embedded object"
-msgstr "முந்தைய பதிந்துள்ள பொருள் ஏதுமில்லை"
-
-msgid "focus mode"
-msgstr "குவிமைய நிலை"
-
-msgid "browse mode"
-msgstr "உலாவும் நிலை"
 
 msgid "Taskbar"
 msgstr "பணிப்பட்டை"
@@ -6299,7 +6326,7 @@ msgstr "செங்குத்து வரிசை தலைப்புர�
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "Already set {address} as start of column headers"
-msgstr "{address} ஏற்கனவே செங்குத்து வரிசை தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
+msgstr "{address} ஏற்கெனவே செங்குத்து வரிசை தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "removed {address}    from column headers"
@@ -6325,7 +6352,7 @@ msgstr "கிடைவரிசை தலைப்புரையின் த�
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 msgid "Already set {address} as start of row headers"
-msgstr "{address} ஏற்கனவே கிடைவரிசை தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
+msgstr "{address} ஏற்கெனவே கிடைவரிசை தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 msgid "removed {address}    from row headers"
@@ -6459,11 +6486,17 @@ msgstr "முதன்மை தலைப்புரை"
 msgid "Text frame"
 msgstr "உரைச் சட்டகம்"
 
+msgid "comment: {text} by {author} on {date}"
+msgstr "கருத்துரை: {text}, படைப்பாளர்: {author}, தேதி: {date}"
+
+msgid "{revisionType}: {text} by {author} on {date}"
+msgstr "{revisionType}: உரை: {text}, படைப்பாளர்: {author}, தேதி: {date}"
+
 msgid "unknown author"
-msgstr "தெரியாதப் படைப்பாளர்"
+msgstr "தெரியாத படைப்பாளர்"
 
 msgid "unknown date"
-msgstr "தெரியாதத் தேதி"
+msgstr "தெரியாத தேதி"
 
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr ""
@@ -6488,7 +6521,7 @@ msgstr ""
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
-"{rowNumber} கிடைவரிசையும், {columnNumber} செங்குத்து வரிசையும் ஏற்கனவே செங்குத்து "
+"{rowNumber} கிடைவரிசையும், {columnNumber} செங்குத்து வரிசையும் ஏற்கெனவே செங்குத்து "
 "வரிசை தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
@@ -6523,7 +6556,7 @@ msgstr ""
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
-"{rowNumber} கிடைவரிசையும், {columnNumber} செங்குத்து வரிசையும் ஏற்கனவே கிடைவரிசை "
+"{rowNumber} கிடைவரிசையும், {columnNumber} செங்குத்து வரிசையும் ஏற்கெனவே கிடைவரிசை "
 "தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
@@ -6637,6 +6670,11 @@ msgstr "அட்டவணையில் இல்லை"
 msgid "Edge of table"
 msgstr "அட்டவணையின் விளிம்பு"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "விளக்கவுரைகள் (&A)"
+
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE series"
 msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிரெயில் எட்ஜ் தொடர்"
@@ -6644,6 +6682,41 @@ msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிர
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
+
+#~ msgid ""
+#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
+#~ "in order to make it more intuitive and consistent.\n"
+#~ "If you use the laptop layout, please see the What's New document for more "
+#~ "information."
+#~ msgstr ""
+#~ "என்விடிஏ 2013.1 பதிப்பில், மாற்றமில்லாமலும், தன்னிச்சையாக பயன்படுத்தவும், மடிக்கணினி "
+#~ "விசைப் பலகை வரைவு முழுவதுமாக மறுவடிவமாக்கப்பட்டுள்ளது.\n"
+#~ "மடிக்கணினி வரைவை தாங்கள் பயன்படுத்துவதாக இருந்தால், மேலும் தகவல்களுக்கு, 'புதிதாக "
+#~ "என்ன?' என்கிற ஆவணத்தை காணவும். "
+
+#~ msgid "New Laptop Keyboard layout"
+#~ msgstr "புதிய மடிக்கணினி விசைப் பலகை வரைவு"
+
+#~ msgid "Read What's New"
+#~ msgstr "புதிதாக என்னவென்பதை படிக்கவும்"
+
+#~ msgid "&Acceleration"
+#~ msgstr "முடுக்கம் (&A)"
+
+#~ msgid "male 1"
+#~ msgstr "ஆண் 1"
+
+#~ msgid "female 1"
+#~ msgstr "பெண் 1"
+
+#~ msgid "male 2"
+#~ msgstr "ஆண் 2"
+
+#~ msgid "female 2"
+#~ msgstr "பெண் 2"
+
+#~ msgid "lime"
+#~ msgstr "எழுமிச்ச நிறம்"
 
 #~ msgid "Are you sure you want to quit NVDA?"
 #~ msgstr "என்விடிஏவை விட்டு தாங்கள் கட்டாயம் வெளியேற வேண்டுமா?"
@@ -6741,7 +6814,7 @@ msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
 
 #~ msgid "Please close the other NVDA settings dialog first"
 #~ msgstr ""
-#~ "ஏற்கனவே இயக்கத்திலுள்ள மற்றொரு என்விடிஏ அமைப்புகள் உரையாடலை கருணைக்கூர்ந்து முதலில் "
+#~ "ஏற்கெனவே இயக்கத்திலுள்ள மற்றொரு என்விடிஏ அமைப்புகள் உரையாடலை கருணைக்கூர்ந்து முதலில் "
 #~ "மூடுங்கள்"
 
 #~ msgid "Translation &table:"
@@ -6785,7 +6858,7 @@ msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
 #~ "This add-on seems to already be installed. Please remove the existing add-"
 #~ "on and try again."
 #~ msgstr ""
-#~ "இக்கூட்டுறுப்பு ஏற்கனவே நிறுவப்பட்டிருப்பதாகத் தோன்றுகிறது. நிறுவப்பட்டிருக்கும் "
+#~ "இக்கூட்டுறுப்பு ஏற்கெனவே நிறுவப்பட்டிருப்பதாகத் தோன்றுகிறது. நிறுவப்பட்டிருக்கும் "
 #~ "கூட்டுறுப்பை நீக்கிவிட்டு மீண்டும் முயற்சியுங்கள்."
 
 #~ msgid "loads the saved NVDA configuration, overriding current changes"

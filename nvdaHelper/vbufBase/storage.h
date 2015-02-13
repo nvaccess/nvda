@@ -351,11 +351,6 @@ class VBufStorage_controlFieldNode_t : public VBufStorage_fieldNode_t {
 class VBufStorage_textFieldNode_t : public VBufStorage_fieldNode_t {
 	protected:
 
-/**
- * The text this field contains.
- */
-	std::wstring text;
-
 	virtual VBufStorage_textFieldNode_t*locateTextFieldNodeAtOffset(int offset, int *relativeOffset);
 
 	virtual void generateMarkupTagName(std::wstring& text);
@@ -371,6 +366,11 @@ class VBufStorage_textFieldNode_t : public VBufStorage_fieldNode_t {
 	friend class VBufStorage_buffer_t;
 
 	public:
+
+	/**
+ * The text this field contains.
+ */
+	const std::wstring text;
 
 	virtual std::wstring getDebugInfo() const;
 

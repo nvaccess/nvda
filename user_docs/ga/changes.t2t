@@ -1,0 +1,80 @@
+What's New in NVDA
+
+
+%!includeconf: ../changes.t2tconf
+
+= 2013.1 =
+Highlights of this release include a more intuitive and consistent laptop keyboard layout; basic support for Microsoft PowerPoint; support for long descriptions in web browsers; and support for input of computer braille for braille displays which have a braille keyboard.
+
+== Important ==
+
+=== New Laptop Keyboard Layout ===
+The laptop keyboard layout has been completely redesigned in order to make it more intuitive and consistent.
+The new layout uses the arrow keys in combination with the NVDA key and other modifiers for review commands.
+
+Please note the following changes to commonly used commands:
+|| Name | Key |
+| Say all | NVDA+a |
+| Read current line | NVDA+l |
+| Read current text selection | NVDA+shift+s |
+| Report status bar | NVDA+shift+end |
+In addition, among other changes, all of the object navigation, text review, mouse click and synth settings ring commands have changed.
+Please see the [Commands Quick Reference keyCommands.html] document for the new keys.
+
+
+== New Features ==
+- Basic support for editing and reading Microsoft PowerPoint presentations. (#501)
+- Basic support for reading and writing messages in Lotus Notes 8.5. (#543)
+- Support for automatic language switching when reading documents in Microsoft Word. (#2047) 
+- In Browse mode for MSHTML (e.g. Internet Explorer) and Gecko (e.g. Firefox), the existance of long descriptions are now announced. It's also possible to open the long description in a new window by pressing NVDA+d. (#809)
+- Notifications in Internet Explorer 9 and above are now spoken (such as content blocking or file downloads). (#2343)
+- Automatic reporting of table row and column headers is now supported for browse mode documents in Internet Explorer and other MSHTML controls. (#778)
+- New language: Aragonese
+- New braille translation tables: Danish grade 2, Korean grade 1. (#2737)
+- Support for braille displays connected via bluetooth on a computer running the Bluetooth Stack for Windows by Toshiba. (#2419)
+- Support for port selection when using Freedom Scientific displays (Automatic, USB or Bluetooth).
+- Support for the BrailleNote family of notetakers from HumanWare when acting as a braille terminal for a screen reader. (#2012)
+- Support for older models of Papenmeier BRAILLEX braille displays. (#2679)
+- Support for input of computer braille for braille displays which have a braille keyboard. (#808)
+- New keyboard settings that allow  the choice for whether NVDA should interrupt speech for typed characters and or the Enter key. (#698)
+- Support for several browsers based on Google Chrome: Rockmelt, BlackHawk, Comodo Dragon and SRWare Iron. (#2236, #2813, #2814, #2815)
+
+
+== Changes ==
+- Updated liblouis braille translator to 2.5.2. (#2737)
+- The laptop keyboard layout has been completely redesigned in order to make it more intuitive and consistent. (#804)
+
+
+== Bug Fixes ==
+- The quick navigation keys for jumping to the next or previous separator in Browse Mode now work in Internet Explorer and other MSHTML controls. (#2781)
+- If NVDA falls back to eSpeak or no speech due to the configured speech synthesizer failing when NVDA starts, the configured choice is no longer automatically set to the fallback synthesizer. This means that now, the original synthesizer will be tried again next time NVDA starts. (#2589)
+- If NVDA falls back to no braille due to the configured braille display failing when NVDA starts, the configured display is no longer automatically set to no braille. This means that now, the original display will be tried again next time NVDA starts. (#2264)
+- In browse mode in Mozilla applications, updates to tables are now rendered correctly. For example, in updated cells, row and column coordinates are reported and table navigation works as it should. (#2784)
+- In browse mode in web browsers, certain clickable unlabelled graphics which weren't previously rendered are now rendered correctly. (#2838)
+- Earlier and newer versions of SecureCRT are now supported. (#2800)
+- For input  methods such as Easy Dots IME under XP, the reading string is now correctly reported.
+- The candidate list in the Chinese Simplified Microsoft Pinyin input method under Windows 7 is now correctly read when changing pages with left and right arrow, and when first opening it with Home.
+- When custom symbol pronunciation information is saved, the advanced "preserve" field is no longer removed. (#2852)
+- When disabling automatic checking for updates, NVDA no longer has to be restarted in order for the change to fully take effect.
+- NVDA no longer fails to start if an add-on cannot be removed due to its directory currently being in use by another application. (#2860)
+- Tab labels in DropBox's preferences dialog can now be seen with Flat Review.
+- If the input language is changed to something other than the default, NVDA now detects keys correctly for commands and input help mode.
+- For languages such as German where the + (plus) sign is a single key on the keyboard, it is now possible to bind commands to it by using the word "plus". (#2898)
+- In Internet Explorer and other MSHTML controls, block quotes are now reported where appropriate. (#2888)
+- The HumanWare Brailliant BI/B series braille display driver can now be selected when the display is connected via Bluetooth but has never been connected via USB.
+- Filtering elements in the Browse Mode Elements list with uppercase filter text now returns case-insensitive results just like lowercase rather than nothing at all. (#2951)
+- In Mozilla browsers, browse mode can again be used when Flash content is focused. (#2546)
+- When using a contracted braille table and expand to computer braille for the word at the cursor is enabled, the braille cursor is now positioned correctly when located after a word wherein a character is represented by multiple braille cells (e.g. capital sign, letter sign, number sign, etc.). (#2947)
+- Text selection is now correctly shown on a braille display in applications such as Microsoft word 2003 and Internet Explorer edit controls.
+- It is again possible to select text in a backward direction in Microsoft Word while Braille is enabled.
+- When reviewing,  backspacing or deleting characters  In Scintilla edit controls, NVDA correctly announces multibyte characters. (#2855)
+- NVDA will no longer fail to install when the user's profile path contains certain multibyte characters. (#2729)
+- Reporting of groups for List View controls (SysListview32) in 64-bit applications no longer causes an error.
+- In browse mode in Mozilla applications, text content is no longer incorrectly treated as editable in some rare cases. (#2959)
+- In IBM Lotus Symphony and OpenOffice, moving the caret now moves the review cursor if appropriate.
+- Adobe Flash content is now accessible in Internet Explorer in Windows 8. (#2454)
+- Fixed Bluetooth support for Papenmeier Braillex Trio. (#2995)
+- Fixed inability to use certain Microsoft Speech API version 5 voices such as Koba Speech 2 voices. (#2629)
+
+
+

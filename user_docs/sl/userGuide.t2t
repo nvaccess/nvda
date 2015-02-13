@@ -17,7 +17,7 @@ NVDA omogoča slepim in osebam s preostankom vida dostop in interakcijo z operac
 
 Glavni poudarki so:
 - Podpora za pogosto uporabljene programe vključno z internetnimi brskalniki, programi za e-pošto, programi za neposredno klepetanje in pisarniškimi zbirkami
-- Vgrajena govorna sinteza, ki podpira več kot 43 jezikov
+- Vgrajena govorna sinteza, ki podpira več kot 80 jezikov
 - Poročanje o postavitvi besedila, kjer je to mogoče; na primer velikost in ime pisave, slogovne in črkovne nepravilnosti
 - Samodejno obvestilo o besedilu pod miško in zvočna indikacija o položaju miške, če to želite
 - Podpora za precejšnje število brajevih vrstic vključno s podporo vnosa računalniške brajice za vrstice, ki vsebujejo brajevo tipkovnico
@@ -440,7 +440,8 @@ Te dodatne značilnosti NVDA so privzeto izključene.
 
 + Brskalniško Delovanje +
 Kompleksne dokumente samo za branje, kot so spletne strani, v NVDA obravnavamo s pomočjo Brskalniškega delovanja.
-To vključuje dokumente v Mozilli Firefox, Microsoftovem Internet Explorerju, Google Chrome-u, Adobe Reader-ju in Adobe Flash-u.
+To vključuje dokumente v Mozilli Firefox, Microsoftovem Internet Explorerju, Google Chrome-u, HTML sporočila v Microsoftovem Outlooku, Adobe Reader-ju in Adobe Flash-u.
+Brskalniško delovanje je opcijsko na voljo tudi v Microsoftovem Wordu.
 
 V brskalniškem delovanju je vsebina dokumenta na voljo v ravninski predstavitvi, tako da lahko uporabljate tipke za krmarjenje z utripalko podobno, kot če bi bili v navadnem besedilnem dokumentu.
 Vsi NVDA ukazi za [sistemsko kazalko #SystemCaret] bodo delovali v tem delovanju; npr. izgovori vse, sporoči oblikovanje, ukazi za pomikanje po tabeli, in drugi.
@@ -459,7 +460,7 @@ Vedno lahko vsilite delovanje žarišča, tako bo na voljo in bo učinkoval, dok
 || Ime | Tipka | Opis |
 | Stikalo za preklop med brskalniškim delovanjem in delovanjem žarišča | NVDA+preslednica | Preklaplja med brskalniškim delovanjem in delovanjem žarišča |
 | Izhod iz delovanja žarišča | escape | Preklopi nazaj v brskalniško delovanje, če se je prej samodejno vklopilo delovanje žarišča |
-| Osveži dokument v brskalniškem delovanju | NVDA+f5 | Ponovno naloži vsebino trenutnega dokumenta (uporabno, ko izgleda, da se del vsebine dokumenta ne prikazuje) |
+| Osveži dokument v brskalniškem delovanju | NVDA+f5 | Ponovno naloži vsebino trenutnega dokumenta (uporabno, ko izgleda, da se del vsebine dokumenta ne prikazuje; v Microsoft Outlooku in Microsoft Wordu ni uporabno) |
 | Najdi | NVDA+control+f | Dvigne pogovorno okno v katerem lahko natipkate besedilo, ki ga želite najti v dokumentu |
 | Najdi naslednje | NVDA+f3 | Najde naslednji kos besedila v dokumentu, ki ste ga že iskali |
 | Najdi predhodno | NVDA+shift+f3 | Najde predhodni kos besedila v dokumentu, ki ste ga že iskali |
@@ -469,6 +470,7 @@ Vedno lahko vsilite delovanje žarišča, tako bo na voljo in bo učinkoval, dok
 
 ++ Enočrkovno Krmarjenje ++
 Ko ste v brskalniškem delovanju, vas lahko NVDA oskrbi za hitrejše krmarjenje z enoznakovnimi ukazi za preskoke na različna polja v dokumentu.
+Opozorilo: Ni nujno, da vsi našteti ukazi delujejo v vseh programih, saj niso podprti.
 
 %kc:beginInclude
 Sledeče tipke samostojno preskakujejo na naslednji mogoč element, medtem, ko z dodatkom tipke Shift pritisk teh tipk povzroči preskok na predhodni mogoč element:
@@ -565,6 +567,13 @@ Opozorilo: Bližnjica poročaj o preostanku časa dela samo s privzetim oblikova
 || Ime | Tipka | Opis |
 | Poročaj o vsebini okna z opombami | control+shift+c | Poroča o kateremkoli komentarju v oknu z opombami. |
 | Sporočaj opombe za prevajalce | control+shift+a | Sporoča katerokoli sporočilo namenjeno prevajalcem. |
+%kc:endInclude
+
+++ Skype ++
+%kc:beginInclude
+Ko smo v pogovoru:
+|| Ime | Tipka | Opis |
+| Preglej sporočilo | NVDA+control+1-0 | Sporoči zadnje sporočilo in nanj premakne pregledno utripalko, odvisno od številke, ki ste jo pritisnili; npr. NVDA+control+2 prebere predzadnje sporočilo. |
 %kc:endInclude
 
 + Nastavljanje NVDA +
@@ -686,6 +695,10 @@ To vam omogoča izbiro vrednost naglaševanja in izgovorjave drugih simbolov, ki
 Ko je vrednost v tem spustnem meniju nastavljena na vse, potem se bodo vsi simboli brali z besedami.
 Ta možnost vpliva na vse sinteze in ne samo na tisto, ki je trenutno v uporabi.
 
+==== Zaupaj jeziku osebe med obdelovanjem simbolov in znakov ====
+Ta možnost, ki je privzeto vključena, pove NVDA, naj se pri obdelovanju znakov in simbolov zanaša na jezik osebe (slovar govorne sinteze preglasi slovar vgrajen v NVDA).
+Če ugotovite, da NVDA napačno izgovarja posamezno ločilo v nekem jeziku ob nastavitvi glasu ali govorne sinteze v celoti, potem lahko to možnost izključite, da NVDA vsilite uporabo globalnih jezikovnih nastavitev.
+
 ==== Sprememba višine glasu ob velikih črkah v odstotkih ====
 To vnosno polje omogoča vnos vrednosti razlike v tonu glasu, za katero se bo glas zvišal, ko bo sinteza izgovarjala veliko črko.
 Ta vrednost je v odstotkih, kjer negativna vrednost zniža odstotke od osnove in pozitivna vrednost te zviša.
@@ -701,7 +714,7 @@ Podobno kot pri funkciji izgovori "velika" pred velikimi črkami, je ta funkcija
 
 ==== Uporabljaj funkcijo črkovanja, če je podprta ====[VoiceSpellingFunctionality]
 Nekatere besede sestavlja samo ena črka, toda njihova izgovorjava je različna glede na to ali se znak izgovarja kot samostojna enota (kot pri črkovanju) ali izgovorjavi besede.
-Na primer v Angleščini je "a" tako znak kot beseda.
+Na primer v Angleščini je "a" tako znak kot beseda. Ker je tako, se to tudi različno izgovarja.
 Ta možnost omogoča govorni sintezi ločevanje med tema dvema dogodkoma, če to govorna sinteza podpira.
 Večina sintez to podpira.
 
@@ -860,6 +873,8 @@ Možnosti so znak, beseda, vrstica in odstavek.
 
 ==== Zaigraj avdio koordinate, ko se miška premika ====
 Izbira te možnosti naroča NVDA naj oddaja piske, ko se miška premika, tako da uporabnik lahko ugotavlja kje je miška v odnosu na zaslonski položaj.
+Višji ton pomeni, da je miška višje na zaslonu.
+Bolj, kot je miška na levi ali desni strani zaslona, bolj izrazit bo zvok na levi ali desni strani ob predpostavki, da ima uporabnik stereo zvočnike ali slušalke.
 
 ==== Svetloba nadzira jakost zvočnih piskov ====
 Če je možnost "Zaigraj avdio koordinate, ko se miška premika" izbrana, potem to pomeni, da se jakost zvoka piskov nadzira. Jakost zvoka je odvisna od svetlosti zaslona pod miškinim kazalcem.
@@ -1010,6 +1025,10 @@ Na primer, ko se premikate s puščicami po spletni strani in vstopite na polje 
 ==== Zvočna indikacija delovanja Žarišča in Brskalniškega delovanja ====
 Če je ta možnost izbrana, bo NVDA oddajala posebne zvoke ob preklopu med brskalniškim delovanjem in delovanjem žarišča namesto govornega obvestila o spremembi.
 
+==== Onemogoči vpliv kretenj, ki niso ukazi, na dokument ====
+Ta možnost, ki je privzeto vključena, vam omogoča izbiro ali naj kretnje (pritiski tipk), ki niso ukazi NVDA, niti to niso splošni ukazi, ne vplivajo na dokument.
+Na primer, v primeru, ko je možnost vključena, pritisk črke j ne bo vplival na dokument, čeprav to niti ni ukaz NVDA, niti ni to splošen ukaz v programu.
+
 +++ Nastavitve Oblikovanja Dokumentov (NVDA+control+d) +++[DocumentFormattingSettings]
 To pogovorno okno se nahaja v meniju Nastavitev pod "Oblikovanje Dokumentov...".
 
@@ -1086,6 +1105,12 @@ Za menjavo simbola, ga najprej izberite s seznama simbolov.
 Polje zamenjave vam omogoča spremembo besedila, ki naj se izgovori ob simbolu.
 Z uporabo polja za nivoje določite najnižji nivo, kjer se mora simbol izgovoriti.
 
+Če želite dodati nov simbol, pritisnite gumb Dodaj.
+V pogovorno okno, ki se prikaže, vnesite željeni simbol in pritisnite gumb V redu.
+Nato, kot velja za druge simbole, vnesite zamenjavo in najnižji nivo izgovorjave.
+
+Simbol, ki ste ga prej dodali, lahko odstranite tako, da pritisnete gumb Odstrani.
+
 Ko zaključite z delom, pritisnite V redu, da spremembe shranite ali Prekliči, če želite spremembe zavreči.
 
 +++ Kretnje Vnosa +++
@@ -1095,6 +1120,7 @@ Pokažejo se samo tisti ukazi, ki so bili na voljo tik preden ste odprli to pogo
 Na primer, če želite spremeniti kretnje vnosa, ki se nanašajo na brskalniško delovanje, morate odpreti pogovorno okno kretenj vnosa med tem, ko ste v brskalniškem delovanju.
 
 To pogovorno okno vsebuje drevo, kjer so razvrščeni NVDA ukazi, ki so na voljo ločeni po kategorijah.
+Ukaze lahko presejete (filtrirate) tudi tako, da vnesete eno ali več besed imena ukaza v za to namenjeno vnosno polje. Vrstni red besed ni pomemben.
 Vsaka kretnja, ki se nanaša na ukaz je razvrščena pod ukazom.
 
 Če želite dodati kretnjo vnosa posameznemu ukazu, izberite ukaz in pritisnite gumb Dodaj.
@@ -1233,7 +1259,7 @@ Ime paketa, njegova različica in avtorji se pokažejo ob vsakem paketu, ostale 
 
 Za brskanje in prenos dodatkov, ki so na voljo na spletu, pritisnite gumb Pridobi dodatke.
 Ta gumb odpre [stran z dodatki za NVDA http://addons.nvda-project.org/].
-Če je NVDA nameščena v vaš računalnik, lahko dodatek odprete neposredno iz brskalnika in tako pričnete potek namestitve opisane spodaj.
+Če je NVDA nameščena v vaš računalnik in v njem tudi teče v času nameščanja dodatka, lahko dodatek odprete neposredno iz brskalnika za začetek poteka namestitve, kot je opisano spodaj.
 V nasprotnem primeru shranite paket z dodatkom in sledite spodnjim navodilom.
 
 Za dodatek, ki ste ga že prej posedovali, pritisnite gumb Namesti.
@@ -1289,6 +1315,57 @@ Ko uporabljate to sintezo z NVDA, bodo na voljo vsi glasovi (dostopni prek [pogo
 SAPI 5 je trenuten Microsoftov standard za programske govorne sinteze.
 Veliko govornih sintez, ki je združljivih s tem standardom, je na voljo brezplačno za posedovanje ali prenos prek različnih družb ali spletnih mest, čeprav bo vaš sistem verjetno že imel prednameščeno vsaj eno tako sintezo.
 Ko uporabljate to sintezo z NVDA, bodo na voljo vsi glasovi (dostopni prek [pogovornega okna Nastavitev glasu #VoiceSettings] ali prek [Kroga Nastavitev Sinteze #SynthSettingsRing]) iz vseh pogonov, ki jih je NVDA našla na vašem sistemu.
+
+++ Microsoft Speech Platform ++
+Microsoft Speech Platform (Microsoftova govorna platforma) oskrbuje glasove za precejšnje število jezikov, ki se običajno uporabljajo tekom razvoja govornih aplikacij, ki temeljijo na strežniški podpori.
+Ti glasovi pa se lahko uporabljajo tudi z NVDA.
+
+Za uporabo teh glasov boste morali v sistem namestiti ti dve komponenti:
+- Microsoft Speech Platform - Runtime (Različica 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Runtime Languages (Različica 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+ - Ta stran vsebuje veliko število datotek, ki se dotikajo tako govorne prepoznave (speech recognition), kot pretvorbe besedila v govor - BVG (Text to Speech).
+ Izberite datoteke, ki vsebujejo podatke za BVG, ki ustrezajo vašim izbranim jezikom/glasovom.
+ Na primer, datoteka MSSpeech_TTS_en-US_ZiraPro.msi je glas, ki govori ameriško Angleščino.
+ -
+-
+
+++ Audiologic Tts3 ++
+To je plačljiva govorna sinteza namenjena predvsem za italijanski jezik
+Govorna sinteza mora v sistemu že biti nameščena, če jo želite uporabljati z NVDA.
+Za več informacij, prosimo, obiščite spletno mesto Audiologic na www.audiologic.it.
+
+Ta govorna sinteza ne podpira  [funkcije črkovanja #VoiceSpellingFunctionality].
+
+++ Nuance Vocalizer za NVDA ++
+Nuance Vocalizer je plačljiva visokokakovostna glasovna sinteza, ki so jo razvili v podjetju Nuance Communications, Inc. Posebej za NVDA pa so jo prilagodili v podjetju Tiflotecnia, Lda.
+Vsebuje več kot 50 glasov, ki jih lahko namestite govoreč več kot 30 jezikov.
+Vse komponente sinteze in glasovi so pakirani kot NVDA dodatek, kar omogoča polno uporabo tudi v prenosljivi kopiji NVDA.
+
+Več informacij o Nuance Vocalizerju za NVDA in kako ga kupiti lahko dobite na njegovem spletnem mestu [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
+Del izkupička od prodaje tega izdelka se donira NV Access za financiranje nadaljnjega razvoja NVDA.
+
++ Podprte Brajeve Vrstice +[SupportedBrailleDisplays]
+Ta razdelek vsebuje informacije o brajevih vrsticah, ki jih podpira NVDA.
+
+++ BRLTTY ++
+[BRLTTY http://mielke.cc/brltty/] je program neodvisen od NVDA, ki pa ga vseeno lahko uporabimo zaradi podpore večjega števila brajevih vrstic.
+Če ga želite uporabljati, morate namestiti [BRLTTY za Windows http://brl.thefreecat.org/brltty/].
+K sebi morate prenesti in namestiti zadnji namestitveni paket, ki se imenuje nekako tako brltty-win-4.2-2.exe. Številke so lahko različne.
+Ko boste nastavljali vrstico in vrata, ki jih boste uporabljali, posebno pozornost namenite navodilom še posebej, če uporabljate vrstico na USB vratih hkrati pa so gonilniki proizvajalca te vrstice že nameščeni v sistem.
+
+Za vrstice, ki imajo brajevo tipkovnico, BRLTTY sam upravlja brajev vnos.
+Tako nastavitev vnosne brajeve tabele v NVDA ni relevantna.
+
+Sledeči ukazi so BRLTTY ukazi, ki jih razume NVDA.
+Prosimo, poglejte [BRLTTY dokumentacijo tabele tipk http://mielke.cc/brltty/doc/KeyTables/] for information about how BRLTTY commands are mapped to controls on braille displays.
+%kc:beginInclude
+|| Ime | BRLTTY command |
+| Pomakni brajevo vrstico nazaj | fwinlt (go left one window) |
+| Pomakni brajevo vrstico naprej | fwinrt (go right one window) |
+| Premakni brajevo vrstico eno vrstico nazaj (v prejšnjo vrstico) | lnup (go up one line) |
+| Premakni brajevo vrstico eno vrstico naprej (v naslednjo vrstico) | lndn (go down one line) |
+| usmeri na brajevo celico | route (bring cursor to character) |
+%kc:endInclude
 
 + Brajeve okrajšave stanja in tipov kontrolnika +
 Zaradi največjega možnega števila prikaza informacij na brajevi vrstici so v NVDA definirane okrajšave za indikacijo različnih tipov kontrolnikov in njihovih stanj.
@@ -1367,7 +1444,8 @@ NVDA pozna naslednje možnosti ukazne vrstice:
 | -s | --secure | Varni način (Onemogočena konzola Pythona) |
 | None | --disable-addons | Dodatki nimajo vpliva na NVDA. Isto, kot če v NVDA dodatkov ne bi bilo. |
 | None | --no-sr-flag  | Ne zamenjaj stanja globalne sistemske zastavice za bralnik zaslona. |
-| None | --install | Tiha namestitev NVDA. |
+| None | --install | Namesti NVDA (na novo nameščeno kopijo NVDA tudi zažene). |
+| None | --install-silent | Tiho namesti NVDA (na novo nameščene kopije NVDA ne zažene). |
 
 ++ Napredno Nastavljanje Izgovorjave Simbolov ++
 V NVDA je možno nastaviti izgovorjavo ločil in drugih simbolov glede na to, kaj omogočajo možnosti v pogovornem oknu [Izgovorjave ločil/simbolov. #SymbolPronunciation]
