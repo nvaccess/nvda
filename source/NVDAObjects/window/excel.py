@@ -1,6 +1,6 @@
 #NVDAObjects/excel.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2014 NVDA Contributors <http://www.nvaccess.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -28,6 +28,8 @@ from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
 
+import browseMode
+
 xlCenter=-4108
 xlJustify=-4130
 xlLeft=-4131
@@ -51,7 +53,242 @@ xlA1 = 1
 xlRC = 2
 xlUnderlineStyleNone=-4142
 
+#Excel cell types
+xlCellTypeAllFormatConditions =-4172      # from enum XlCellType
+xlCellTypeAllValidation       =-4174      # from enum XlCellType
+xlCellTypeBlanks              =4          # from enum XlCellType
+xlCellTypeComments            =-4144      # from enum XlCellType
+xlCellTypeConstants           =2          # from enum XlCellType
+xlCellTypeFormulas            =-4123      # from enum XlCellType
+xlCellTypeLastCell            =11         # from enum XlCellType
+xlCellTypeSameFormatConditions=-4173      # from enum XlCellType
+xlCellTypeSameValidation      =-4175      # from enum XlCellType
+xlCellTypeVisible             =12         # from enum XlCellType
+
+re_RC=re.compile(r'R(?:\[(\d+)\])?C(?:\[(\d+)\])?')
 re_absRC=re.compile(r'^R(\d+)C(\d+)(?::R(\d+)C(\d+))?$')
+
+class ExcelQuickNavItem(browseMode.QuickNavItem):
+
+	def __init__( self , nodeType , document , itemObject , itemCollection ):
+		self.excelItemObject = itemObject
+		self.excelItemCollection = itemCollection 
+		super( ExcelQuickNavItem ,self).__init__( nodeType , document )
+
+	def activate(self):
+		pass
+
+	def isChild(self,parent):
+		return False
+
+	def report(self,readUnit=None):
+		pass
+
+class ExcelChartQuickNavItem(ExcelQuickNavItem):
+
+	def __init__( self , nodeType , document , chartObject , chartCollection ):
+		self.chartIndex = chartObject.Index
+		if chartObject.Chart.HasTitle:
+
+			self.label = chartObject.Chart.ChartTitle.Text + " " + chartObject.TopLeftCell.address(False,False,1,False) + "-" + chartObject.BottomRightCell.address(False,False,1,False) 
+
+		else:
+
+			self.label = chartObject.Name + " " + chartObject.TopLeftCell.address(False,False,1,False) + "-" + chartObject.BottomRightCell.address(False,False,1,False) 
+
+		super( ExcelChartQuickNavItem ,self).__init__( nodeType , document , chartObject , chartCollection )
+
+	def __lt__(self,other):
+		return self.chartIndex < other.chartIndex
+
+	def moveTo(self):
+		try:
+			self.excelItemObject.Activate()
+
+			# After activate(), though the chart object is selected, 
+
+			# pressing arrow keys moves the object, rather than 
+
+			# let use go inside for sub-objects. Somehow 
+		# calling an COM function on a different object fixes that !
+
+			log.debugWarning( self.excelItemCollection.Count )
+
+		except(COMError):
+
+			pass
+
+
+
+	@property
+	def isAfterSelection(self):
+		activeCell = self.document.Application.ActiveCell
+		#log.debugWarning("active row: {} active column: {} current row: {} current column: {}".format ( activeCell.row , activeCell.column , self.excelCommentObject.row , self.excelCommentObject.column   ) )
+
+		if self.excelItemObject.TopLeftCell.row == activeCell.row:
+			if self.excelItemObject.TopLeftCell.column > activeCell.column:
+				return False
+		elif self.excelItemObject.TopLeftCell.row > activeCell.row:
+			return False
+		return True
+
+class ExcelRangeBasedQuickNavItem(ExcelQuickNavItem):
+
+	def __lt__(self,other):
+		if self.excelItemObject.row == other.excelItemObject.row:
+			return self.excelItemObject.column < other.excelItemObject.column
+		else:
+			return self.excelItemObject.row < other.excelItemObject.row
+
+	def moveTo(self):
+		self.excelItemObject.Activate()
+
+
+	@property
+	def isAfterSelection(self):
+		activeCell = self.document.Application.ActiveCell
+		log.debugWarning("active row: {} active column: {} current row: {} current column: {}".format ( activeCell.row , activeCell.column , self.excelItemObject.row , self.excelItemObject.column   ) )
+
+		if self.excelItemObject.row == activeCell.row:
+			if self.excelItemObject.column > activeCell.column:
+				return False
+		elif self.excelItemObject.row > activeCell.row:
+			return False
+		return True
+
+class ExcelCommentQuickNavItem(ExcelRangeBasedQuickNavItem):
+
+	def __init__( self , nodeType , document , commentObject , commentCollection ):
+		self.label = commentObject.address(False,False,1,False) + " " + commentObject.Comment.Text()
+		super( ExcelCommentQuickNavItem , self).__init__( nodeType , document , commentObject , commentCollection )
+
+class ExcelFormulaQuickNavItem(ExcelRangeBasedQuickNavItem):
+
+	def __init__( self , nodeType , document , formulaObject , formulaCollection ):
+		self.label = formulaObject.address(False,False,1,False) + " " + formulaObject.Formula
+		super( ExcelFormulaQuickNavItem , self).__init__( nodeType , document , formulaObject , formulaCollection )
+
+class ExcelQuicknavIterator(object):
+	"""
+	Allows iterating over an MS excel collection (e.g. Comments, Formulas or charts) emitting L{QuickNavItem} objects.
+	"""
+
+	def __init__(self, itemType , document , direction , includeCurrent):
+		"""
+		See L{QuickNavItemIterator} for itemType, document and direction definitions.
+		@ param includeCurrent: if true then any item at the initial position will be also emitted rather than just further ones. 
+		"""
+		self.document=document
+		self.itemType=itemType
+		self.direction=direction if direction else "next"
+		self.includeCurrent=includeCurrent
+
+	def collectionFromWorksheet(self,worksheetObject):
+		"""
+		Fetches a Microsoft Excel collection object from a Microsoft excel worksheet object. E.g. charts, comments, or formula.
+		@param worksheetObject: a Microsoft excel worksheet object.
+		@return: a Microsoft excel collection object.
+		"""
+		raise NotImplementedError
+
+	def filter(self,item):
+		"""
+		Only allows certain items fom a collection to be emitted. E.g. a chart .
+		@param item: an item from a Microsoft excel collection (e.g. chart object).
+		@return True if this item should be allowd, false otherwise.
+		@rtype: bool
+		"""
+		return True
+
+	def iterate(self):
+		"""
+		returns a generator that emits L{QuickNavItem} objects for this collection.
+		"""
+		items=self.collectionFromWorksheet(self.document)
+		if items:
+			itemCount=items.count
+			log.debugWarning("item count {}".format( itemCount ) ) 
+			isFirst=True
+			for index in xrange(1,itemCount+1):
+				if self.direction=="previous":
+					index=itemCount-(index-1)
+				collectionItem=items[index]
+				item=self.quickNavItemClass(self.itemType,self.document,collectionItem , items )
+				#itemRange=item.rangeObj
+				# Skip over the item we're already on.
+				#if not self.includeCurrent and isFirst and ((self.direction=="next" and itemRange.start<=self.rangeObj.start) or (self.direction=="previous" and itemRange.end>self.rangeObj.end)):
+					#continue
+				if not self.filter(collectionItem):
+					continue
+				yield item
+				isFirst=False
+
+class ChartExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
+	quickNavItemClass=ExcelChartQuickNavItem#: the QuickNavItem class that should be instanciated and emitted. 
+	def collectionFromWorksheet( self , worksheetObject ):
+		return worksheetObject.ChartObjects() 
+
+class CommentExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
+	quickNavItemClass=ExcelCommentQuickNavItem#: the QuickNavItem class that should be instanciated and emitted. 
+	def collectionFromWorksheet( self , worksheetObject ):
+		try:
+			return  worksheetObject.cells.SpecialCells( xlCellTypeComments )
+		except(COMError):
+
+			return None
+
+class FormulaExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
+	quickNavItemClass=ExcelFormulaQuickNavItem#: the QuickNavItem class that should be instanciated and emitted. 
+	def collectionFromWorksheet( self , worksheetObject ):
+		try:
+			return  worksheetObject.cells.SpecialCells( xlCellTypeFormulas )
+		except(COMError):
+
+			return None
+
+class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
+
+	needsReviewCursorTextInfoWrapper=False
+
+	def _get_isAlive(self):
+		return winUser.isWindow(self.rootNVDAObject.windowHandle)
+
+	def __contains__(self,obj):
+		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle)
+
+
+
+	def _set_selection(self,info):
+		super(ExcelBrowseModeTreeInterceptor,self)._set_selection(info)
+		#review.handleCaretMove(info)
+
+	def _get_ElementsListDialog(self):
+		return ElementsListDialog
+
+	def _iterNodesByType(self,nodeType,direction="next",pos=None):
+		if nodeType=="chart":
+			return ChartExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
+		elif nodeType=="comment":
+			return CommentExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
+		elif nodeType=="formula":
+			return FormulaExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
+		else:
+			raise NotImplementedError
+
+
+class ElementsListDialog(browseMode.ElementsListDialog):
+
+	ELEMENT_TYPES=(
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("chart", _("&Chart")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("comment", _("&Comment")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("formula", _("&Formula")),
+	)
 
 class ExcelBase(Window):
 	"""A base that all Excel NVDAObjects inherit from, which contains some useful methods."""
@@ -98,13 +335,26 @@ class ExcelBase(Window):
 			isMerged=selection.mergeCells
 		except (COMError,NameError):
 			isMerged=False
+
+		try:
+			numCells=selection.count
+		except (COMError,NameError):
+			numCells=0
+
+		isChartActive = True if self.excelWindowObject.ActiveChart else False
+		obj=None
 		if isMerged:
 			obj=ExcelMergedCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection.item(1))
-		elif selection.Count>1:
+		elif numCells>1:
 			obj=ExcelSelection(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelRangeObject=selection)
-		else:
+		elif numCells==1:
 			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
+		elif isChartActive:
+			selection = self.excelWindowObject.ActiveChart
+			import excelChart
+			obj=excelChart.ExcelChart(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelChartObject=selection)
 		return obj
+
 
 class Excel7Window(ExcelBase):
 	"""An overlay class for Window for the EXCEL7 window class, which simply bounces focus to the active excel cell."""
@@ -124,6 +374,11 @@ class Excel7Window(ExcelBase):
 			eventHandler.executeEvent('gainFocus',selection)
 
 class ExcelWorksheet(ExcelBase):
+
+
+	treeInterceptorClass=ExcelBrowseModeTreeInterceptor
+	shouldCreateTreeInterceptor=False
+
 
 	role=controlTypes.ROLE_TABLE
 
@@ -775,3 +1030,4 @@ class ExcelMergedCell(ExcelCell):
 
 	def _get_colSpan(self):
 		return self.excelCellObject.mergeArea.columns.count
+
