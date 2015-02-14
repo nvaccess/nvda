@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*- 
 #NVDAObjects/excel.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
@@ -423,7 +424,7 @@ class ExcelChart(excel.ExcelBase):
 			# Translators: chart type to be reported when the type is not available
 			chartTypeText=_("unknown")
 		# Translators: prompt for chart title and chart type to be reported 
-		return _("Chart title equals %s type equals %s" %(name, chartTypeText))
+		return _("Chart title equals {chartTitle} type equals {chartType}").format(chartTitle=name, chartType=chartTypeText)
 
 	def _get_title(self):
 		try:
@@ -455,7 +456,7 @@ class ExcelChart(excel.ExcelBase):
 			# Translators: chart type to be reported when the type is not available
 			chartTypeText=_("unknown")
 		# Translators: prompt for chart title and chart type to be reported 
-		ui.message( _("Chart title equals %s type equals %s" %(name, chartTypeText)) ) 
+		ui.message( _("Chart title equals {chartTitle} type equals {chartType}").format(chartTitle=name, chartType=chartTypeText)) 
 		self.reportSeriesSummary()
 
 	def script_reportTitle(self,gesture):
@@ -473,7 +474,7 @@ class ExcelChart(excel.ExcelBase):
 		# Translators: Chart Axis types  
 		axisName = _( "Category" ) if axisType==xlCategory else _( "Value" ) if axisType==xlValue else _( "Series" )
 		# Translators: Prompt for axis title and axis type to be reported 
-		text=_("%s Axis is %s" %(axisName, axisTitle))
+		text=_("{axisName} Axis is {axisTitle}").format(axisName=axisName, axisTitle=axisTitle)
 		ui.message(text)
 
 	def script_reportCategoryAxis(self, gesture):
