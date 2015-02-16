@@ -15,9 +15,9 @@ O NVDA é desenvolvido pela [NV Access http://www.nvaccess.org/], , com contribu
 ++ Características Gerais ++
 O NonVisual Desktop Access permite às pessoas cegas ou com deficiência visual acessar e interagir com o sistema operacional Windows e diversas aplicações de terceiros. 
 
-Suas características mais notáveis são: 
+Suas características mais notáveis incluem: 
 - Suporte para aplicações populares incluindo navegadores web, clientes de e-mail, programas de conversação pela internet e suítes de escritório;
-- Sintetizador de voz integrado que suporta 43 idiomas;
+- Sintetizador de voz integrado que suporta cerca de 80 idiomas;
 - Anúncio da formatação do texto onde esteja disponível tal como nome e tamanho da fonte, estilo e erros ortográficos;
 - Anúncio automático do texto sob o mouse e indicação opcional em áudio de sua posição;
 - Suporte para diversas linhas braille, incluindo a entrada de braille para computador, no caso das linhas braille que possuam um teclado braille;
@@ -439,7 +439,8 @@ Ainda que um mouse físico ou um touchpad precisem ser utilizados para navegar c
 + Modo de Navegação +
 
 Documentos complexos somente leitura, tais como páginas Web, são navegados pelo NVDA usando o modo de Navegação.
-Isso inclui documentos no Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader e Adobe Flash.
+Isso inclui documentos no Mozilla Firefox, Microsoft Internet Explorer, mensagens em HTML no Microsoft Outlook, Google Chrome, Adobe Reader e Adobe Flash.
+O modo de navegação também encontra-se disponível opcionalmente para documentos no Microsoft Word.
 
 No modo de navegação, o conteúdo do  documento é disposto  numa representação plana que pode ser navegada com as teclas do cursor como se ele  fosse um documento de texto qualquer.
 Todas as teclas de comando do NVDA para o [cursor do sistema #SystemCaret] funcionam neste modo (Ex: leitura contínua, informar formatação, comandos de navegação para tabelas, etc).
@@ -458,7 +459,7 @@ Adicionalmente, pode alternar manualmente forçando o modo de foco, sendo que as
 || Nome | Tecla | Descrição |
 | Alternar Modo de Foco e Navegação | NVDA+espaço | Alterna entre o modo de foco e o modo de navegação |
 | Sair do modo de foco | escape | Volta para o modo de navegação se o modo de foco foi anteriormente ativado automaticamente |
-| Atualizar Documento no Modo de Navegação | NVDA+f5 | Recarrega o conteúdo do documento atual (muito útil se lhe falta determinado conteúdo. ) |
+| Atualizar Documento no Modo de Navegação | NVDA+f5 | Recarrega o conteúdo do documento atual (muito útil se lhe falta determinado conteúdo.  Not available in Microsoft Word and Outlook. Não disponível no Microsoft Word e Outlook.) |) | ) |
 | Procurar | NVDA+control+f | Abre um diálogo onde você pode digitar algum texto para procurar no documento atual |
 | Procurar seguinte | NVDA+f3 | Procura pela próxima ocorrência de texto já procurada no documento |
 | Procurar anterior | NVDA+shift+f3 | Procura pela ocorrência de texto anterior  já procurada no documento |
@@ -467,6 +468,7 @@ Adicionalmente, pode alternar manualmente forçando o modo de foco, sendo que as
 
 ++ Navegação por Caractere ++
 Quando estiver no modo de navegação, o NVDA também fornece teclas de apenas um caractere para uma navegação rápida, as quais permitem saltar para determinados campos no documento.   
+Note que nem todos os comandos são suportados em todos os tipos de documento.
 
 %kc:beginInclude
 As teclas seguintes só por si saltam para o próximo elemento disponível, adicionando-se a tecla Shift faz com que saltem para o elemento anterior:
@@ -703,7 +705,7 @@ Tal como a caixa de seleção "dizer cap antes de maiúsculas", esta é útil pa
 
 ==== Usar Soletragem Melhorada Quando Suportado ====[VoiceSpellingFunctionality]
 Algumas palavras consistem de um único caractere, mas a pronúncia é diferente dependendo de se este está sendo falado como um caractere individual (tal como quando é soletrado) ou como palavra.
-"A", por exemplo, em inglês, tanto pode ser uma letra como uma palavra.
+"A", por exemplo, em inglês, tanto pode ser uma letra como uma palavra,  e é pronunciada diferentemente em cada caso.
 Essa opção permite ao sintetizador diferenciar entre esses dois casos se o mesmo suportar.
 Maior parte dos sintetizadores o suportam.
 
@@ -1233,7 +1235,7 @@ O nome do pacote, bem como a versão e author são exibidos para cada complement
 
 Para procurar e baixar complementos disponíveis online, pressione o botão baixar complementos.
 Esse botão abre a [página de complementos do NVDA http://addons.nvda-project.org/].
-Caso o NVDA esteja instalado em seu sistema, é possível abrir o complemento diretamente do navegador para começar o processo de instalação como será descrito a seguir. Caso contrário, salve o pacote de complemento e siga as instruções abaixo.
+Caso o NVDA esteja instalado e em execução em seu sistema, é possível abrir o complemento diretamente do navegador para começar o processo de instalação como será descrito a seguir. Caso contrário, salve o pacote de complemento e siga as instruções abaixo.
 
 Para instalar um complemento anteriormente obtido, pressione o botão Instalar.
 Isso lhe permitirá procurar por um pacote de complemento (arquivo .nvda-addon) em algum lugar de seu computador ou em uma rede.
@@ -1305,13 +1307,6 @@ Para usá-las, você necessitará instalar dois componentes:
 Este é um sintetizador de voz comercial especificamente para o idioma Italiano.
 O mesmo deve estar instalado em seu sistema para que possa utilizá-lo com o NVDA.
 Para mais informações, por favor visite o site Web da Audiologic em www.audiologic.it.
-
-Esse sintetizador não suporta a [funcionalidade de soletragem melhorada #VoiceSpellingFunctionality].
-
-++ Newfon ++
-Newfon é um sintetizador comercial disponibilizado por Sergey Shishmintzev, que suporta os idiomas russo e ucraniano.
-Para fazer o download deste sintetizador, por favor visite a seção de download da página da comunidade russa do NVDA:
-http://ru.nvda-community.org/?page_id=10
 
 Esse sintetizador não suporta a [funcionalidade de soletragem melhorada #VoiceSpellingFunctionality].
 
@@ -1675,16 +1670,18 @@ As seguintes linhas braille são suportadas:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
 - BRAILLEX Trio (USB e bluetooth)
+- BRAILLEX Live 20, BRAILLEX Live e BRAILLEX Live Plus (USB e bluetooth)
 -
 
 Caso o BrxCom esteja instalado, o NVDA irá usá-lo.
 BrxCom é uma ferramenta que lhe permite usar a entrada Braille  independentemente de um leitor de telas.
 Uma nova versão do BrxCom que funciona com o NVDA será lançada pela Papenmeier dentro de pouco tempo.
-Todavia, a entrada de braille é suportada pelo modelo Trio mesmo sem o BrxCom.
+A entrada de braille é suportada pelos modelos Trio, BRAILLEX Live 20 e Braillex Live mesmo sem o BrxCom.
+A entrada de braille também é possível com o modelo Live Plus, mas somente através do BrxCom.
 
 Muitos dispositivos possuem uma Easy Access Bar (EAB) (Barra de Acesso Fácil), que propicia uma operacionalidade intuitiva e rápida.
 A EAB pode ser movida em quatro direções, sendo que cada direção possui 2 estados.
-As série c- é a única excessão a esta regra.
+As séries c- e Live são as únicas excessões a esta regra.
 
 A series-c e algumas outras linhas braille possuem duas linhas de sensores na qual a linha de cima é usada para informar a formatação.
 Segurando-se um dos sensores de cima e pressionando a EAB em dispositivos da series-c emulará o segundo estado alternável.
@@ -1944,8 +1941,8 @@ A seguir estão as opções de linha de comando para o NVDA:
 || Curta | Longa | Descrição |
 | -h | --help | mostra a ajuda de linhas de comando e encerrar |
 | -q | --quit | Encerra a cópia do NVDA em execução |
-| -r | --replace | Encerra a cópia do NVDA em execução e inicia essa |
-| -k | --check-running | Report whether NVDA is running via the exit code; 0 if running, 1 if not running |
+| -r | --replace | Encerra a cópia do NVDA em execução e inicia esta |
+| -k | --check-running | Anuncia se o NVDA está em execução via exit code; 0 if running, 1 if not running |
 | -f LOGFILENAME | --log-file=LOGFILENAME | The file where log messages should be written to |
 | -l LOGLEVEL | --log-level=LOGLEVEL | The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning |
 | -c CONFIGPATH | --config-path=CONFIGPATH | The path where all settings for NVDA are stored |
