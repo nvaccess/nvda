@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-03 19:12+1000\n"
-"PO-Revision-Date: 2015-01-30 16:40+0800\n"
+"PO-Revision-Date: 2015-02-09 13:29+0800\n"
 "Last-Translator: Wang, Jan Li (Jerry) <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -71,11 +71,11 @@ msgstr "羅馬片假名"
 
 #. Translators: a message when the IME open status changes to opened
 msgid "IME opened"
-msgstr "輸入法開啟"
+msgstr "輸入法 IME 開啟"
 
 #. Translators: a message when the IME open status changes to closed
 msgid "IME closed"
-msgstr "輸入法關閉"
+msgstr "輸入法 IME 關閉"
 
 #. Translators: the label for an unknown language when switching input methods.
 msgid "unknown language"
@@ -349,7 +349,7 @@ msgstr "挪威語八點電腦點字"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Norwegian grade 0"
-msgstr "挪威語0級點字"
+msgstr "挪威語零級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2870,7 +2870,7 @@ msgstr "直接讀出手指所觸摸到的物件及內容"
 msgid ""
 "Reports the new object or content under your finger if different to where "
 "your finger was last"
-msgstr "讀出手指新觸摸的物件或內容，若所觸摸的物件是與前次不同。"
+msgstr "讀出手指新觸摸的物件或內容，若所觸摸的物件與前次不同。"
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
@@ -3745,9 +3745,9 @@ msgid ""
 "Thank you for your support."
 msgstr ""
 "我們需要您的贊助來持續改善NVDA，此專案主要依賴捐款及補助計畫。\n"
-"針對捐款，您可幫忙贊助一為全職的開發人員。即使每次下載就有美金十元的捐款，我"
-"門就可負擔所有接下來專案的費用。\n"
-"所有的捐款皆由 NV Access 收取，他是一個非營利組織主要負責開發NVDA。\n"
+"針對捐款，您可幫忙贊助一位全職的開發人員。即使每次下載只捐十美元，集合眾人捐"
+"款，就可負擔所有接下來專案的費用。\n"
+"所有的捐款皆由 NV Access 收取，它是一個非營利組織主要負責開發NVDA。\n"
 "非常感謝您的支持。"
 
 #. Translators: The title of the dialog requesting donations from users.
@@ -3830,7 +3830,7 @@ msgid ""
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
 "screen, height is {height:.1f} per cent of screen"
 msgstr ""
-"物件與螢幕左邊界距離為百分之{left:.1f}, 語螢幕上邊界距離為百分之{top:.1f}, 寬"
+"物件與螢幕左邊界距離為百分之{left:.1f}, 與螢幕上邊界距離為百分之{top:.1f}, 寬"
 "度為百分之{width:.1f}, 高度為百分之{height:.1f}"
 
 #. Translators: a message announcing a candidate's character and description.
@@ -4658,8 +4658,8 @@ msgstr ""
 "所謂的 NVDA 鍵是指主鍵盤上的 insert 鍵和數字鍵盤的0（也是 insert 鍵），其預設"
 "狀態均是啟用。\n"
 "您也可將 Caps Lock 設定為 NVDA 鍵。\n"
-"你可隨時按 NVDA+n 開啟 NVDA 的功能表，\n"
-"此功能表可讓你設定 NVDA 的各種選項、取得開發工具相關資訊及使用說明等資訊。\n"
+"您可隨時按 NVDA+n 開啟 NVDA 的功能表，\n"
+"此功能表可讓您設定 NVDA 的各種選項、取得開發工具相關資訊及使用說明等資訊。\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
@@ -4736,7 +4736,7 @@ msgstr "附加元件管理員"
 
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
 msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
-msgstr "所有的附加元件均已停用，若要再啟用這些附加元件，你必須重新啟動NVDA。"
+msgstr "所有的附加元件均已停用，若要再啟用這些附加元件，您必須重新啟動NVDA。"
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -5410,7 +5410,7 @@ msgstr "標點符號、特殊符號等級(&L)："
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
-msgstr "當處理字詞及符號報讀時，信任使用的語音語言"
+msgstr "處理字詞及符號報讀，信任使用的語音語言"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -5708,7 +5708,7 @@ msgstr "以音效提示模式切換"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "&Trap all non-command gestures from reaching the document"
-msgstr "(&T)將所有的非手勢指令失效"
+msgstr "將所有的非手勢指令失效(&T)"
 
 #. Translators: This is the label for the document formatting dialog.
 msgid "Document Formatting"
