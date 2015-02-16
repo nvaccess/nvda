@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-03 19:12+1000\n"
-"PO-Revision-Date: 2015-02-07 22:48+0300\n"
-"Last-Translator: Alexander Jaszyn <a.jaszyn@ya.ru>\n"
+"PO-Revision-Date: 2015-02-15 22:12+0300\n"
+"Last-Translator: Ruslan Kolodyazhni <eye0@rambler.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 "Initial-Author: Dmitry Kaslin <dak1968@gmail.com>\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-Bookmarks: 343,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -30,23 +30,23 @@ msgstr "Буквенно-цифровой ввод"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in full-shaped (full double-byte) characters, rather than the smaller half-shaped ones.
 msgid "Full shaped mode"
-msgstr "Full shaped mode"
+msgstr "Режим полной формы"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in half-shaped (single-byte) characters, rather than the larger full-shaped (double-byte) ones.
 msgid "Half shaped mode"
-msgstr "Half shaped mode"
+msgstr "Режим частичной формы"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
 msgid "half alphanumeric"
-msgstr "half alphanumeric"
+msgstr "Частично буквенно-цифровой"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
 msgid "half katakana"
-msgstr "half katakana"
+msgstr "Частично katakana"
 
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
 msgid "alphanumeric"
-msgstr "alphanumeric"
+msgstr "буквенно-цифровой"
 
 #. Translators: For Japanese character input: Hiragana input mode.
 msgid "hiragana"
@@ -1147,7 +1147,7 @@ msgstr "Неизвестный цвет"
 
 #. Translators: The color black.
 msgid "black"
-msgstr "черный"
+msgstr "чёрный"
 
 #. Translators: The color dark green.
 msgid "dark green"
@@ -3386,7 +3386,7 @@ msgstr "Просмотр объекта"
 
 #. Translators: One of the review modes.
 msgid "Document review"
-msgstr "Просмотр документов"
+msgstr "Просмотр документа"
 
 #. Translators: One of the review modes.
 msgid "Screen review"
@@ -3510,7 +3510,7 @@ msgstr "{color}"
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
 msgid "{backgroundColor} background"
-msgstr "{backgroundColor} фоновый"
+msgstr "фоновый {backgroundColor}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
@@ -3764,17 +3764,17 @@ msgstr "пролистать вправо"
 #. Translators:  a finger has been held on the touch screen long enough to be considered as hovering
 msgctxt "touch action"
 msgid "hover down"
-msgstr ""
+msgstr "скольжение вниз"
 
 #. Translators: A finger is still touching the touch screen and is moving around with out breaking contact.
 msgctxt "touch action"
 msgid "hover"
-msgstr ""
+msgstr "скольжение"
 
 #. Translators: a finger that was hovering (touching the touch screen for a long time) has been released
 msgctxt "touch action"
 msgid "hover up"
-msgstr ""
+msgstr "скольжение вверх"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
@@ -4291,43 +4291,43 @@ msgstr "Слайд {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers left of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "covers left of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
 msgid "behind left of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "behind left of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers top of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "covers top of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 msgid "behind top of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "behind top of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers right of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "covers right of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 msgid "behind right of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "behind right of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "covers bottom of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
-msgstr ""
+msgstr "behind bottom of {otherShape} by {distance:.3g} points"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers  {otherShape}"
-msgstr ""
+msgstr "covers  {otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 msgid "behind {otherShape}"
-msgstr ""
+msgstr "behind {otherShape}"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's left edge to the slide's left edge
 msgid "{distance:.3g} points from left slide edge"
@@ -4335,7 +4335,7 @@ msgstr "{distance:.3g} точек от левого края слайда"
 
 #. Translators: For a shape too far  off the left  edge of a Powerpoint Slide, this is the distance in points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
 msgid "Off left slide edge by {distance:.3g} points"
-msgstr ""
+msgstr "С левого края слайда на {distance:.3g} points"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's top edge to the slide's top edge
 msgid "{distance:.3g} points from top slide edge"
@@ -4343,7 +4343,7 @@ msgstr "{distance:.3g} точек от верхнего края слайда"
 
 #. Translators: For a shape too far  off the top   edge of a Powerpoint Slide, this is the distance in points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
 msgid "Off top slide edge by {distance:.3g} points"
-msgstr ""
+msgstr "С верхнего края  слайда на   {distance:.3g} points"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's right edge to the slide's right edge
 msgid "{distance:.3g} points from right slide edge"
@@ -4351,7 +4351,7 @@ msgstr "{distance:.3g} точек отправого края слайда"
 
 #. Translators: For a shape too far  off the right  edge of a Powerpoint Slide, this is the distance in points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
 msgid "Off right slide edge by {distance:.3g} points"
-msgstr ""
+msgstr "С правого края  слайда на  {distance:.3g} points"
 
 #. Translators: For a shape within a Powerpoint Slide, this is the distance in points from the shape's bottom edge to the slide's bottom edge
 msgid "{distance:.3g} points from bottom slide edge"
@@ -4359,7 +4359,7 @@ msgstr "{distance:.3g} точек от нижнего края слайда"
 
 #. Translators: For a shape too far  off the bottom edge of a Powerpoint Slide, this is the distance in points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
 msgid "Off bottom slide edge by {distance:.3g} points"
-msgstr ""
+msgstr "С нижнего края слайда на  {distance:.3g} points"
 
 #. Translators: The description for a script
 msgid ""
@@ -4499,15 +4499,15 @@ msgstr "Нет Брайля"
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX newer models"
-msgstr "Papenmeier BRAILLEX newer models"
+msgstr "Новые модели Papenmeier BRAILLEX"
 
 #. Translators: Describes action of routing buttons on a braille display.
 msgid "Route to and report formatting"
-msgstr ""
+msgstr "Перемещается к указанному месту и объявляет форматирование"
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
-msgstr "Papenmeier BRAILLEX устаревших моделей"
+msgstr "Устаревшие модели Papenmeier BRAILLEX"
 
 #. Translators: Names of braille displays.
 msgid "Seika braille displays"
@@ -5660,7 +5660,7 @@ msgstr "прерывание речи для набираемых символо
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speech interrupt for Enter key"
-msgstr "прерывание речи по клавише \"Ввод\""
+msgstr "прерывание речи для клавише \"Ввод\""
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -6252,7 +6252,8 @@ msgstr "Нет полного описания"
 
 #. Translators: the description for the activateLongDescription script on virtualBuffers.
 msgid "Shows the long description at this position if one is found."
-msgstr "Показывает полное описание на этой позиции, если таковой будет найден."
+msgstr ""
+"Показывает полное описание на этой позиции, если таковое будет найдено."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -6550,6 +6551,8 @@ msgstr ""
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
 msgstr ""
+"Не удалось найти строку {rowNumber} столбец {columnNumber}  в заголовках "
+"столбцов"
 
 msgid ""
 "Pressing once will set this cell as the first column header for any cells "
@@ -6581,6 +6584,8 @@ msgstr ""
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
 msgstr ""
+"Не удалось найти строку {rowNumber} столбец {columnNumber}  в заголовках "
+"строк"
 
 msgid ""
 "Pressing once will set this cell as the first row header for any cells lower "
@@ -6637,7 +6642,7 @@ msgstr "стиль {styleName}, уровень наброски {outlineLevel}"
 
 #. Translators: a message when increasing or decreasing font size in Microsoft Word
 msgid "{size:g} point font"
-msgstr ""
+msgstr "{size:g} пунктов шрифта"
 
 #. Translators: a measurement in Microsoft Word
 msgid "{offset:.3g} characters"

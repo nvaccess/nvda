@@ -445,7 +445,7 @@ A virtuális kijelzőben az NVDA kétféleképpen használható. Böngésző mó
 | Ugrás az előző találatra | NVDA+shift+f3 | Az ön által keresett kifejezés előző előfordulására ugrik. |
 %kc:endInclude
 
-Az NVDA jelenleg a Mozilla Firefoxban, a Microsoft Internet Explorerben, a Google chromeban, az Adobe Readerben, és az Adobe flashben használ virtuális kijelzőt a dokumentumok olvasásához. 
+Az NVDA jelenleg a Mozilla Firefoxban, a Microsoft Internet Explorerben, a Microsoft Outlook html üzeneteiben, a Google chromeban, az Adobe Readerben, és az Adobe flashben használ virtuális kijelzőt a dokumentumok olvasásához. A Microsoft Word összetett dokumentumaiban is elérhető a böngészőmód, mely megkönnyíti az abban történő navigációt.
 
 ++ Navigációs gyorsbillentyűk ++
 
@@ -1033,11 +1033,18 @@ Az NVDA kivételszótárai azonban ennél jóval többre képesek. A párbeszéd
 
 Ezen a párbeszédablakon beállítható, hogy a különböző írásjelek szintenként hogyan hangozzanak el a program használatakor. Az írásjelek listából kiválasztható az önnek megfelelő írásjel. Egy tab billentyű lenyomásával a behelyettesített kifejezésre léphet, ahol átírható az ottlévő kifejezés. A tab billentyű ismételt lenyomásával megadható az írásjel szintje, mely az írásjel a beállított szinttől kezdődő kiejtését határozza meg. Az Igen gomb lenyomásával elmenthetők a változtatások, a mégsem gomb lenyomásával pedig visszatérhet az előző állapothoz.
 
+Hozzáadhat új írásjelet is a Hozzáad gomb megnyomásával.
+A megjelenő ablakban írja be a hozzáadni kívánt írásjelet, majd nyomja meg az Ok gombot. A párbeszédpanel bezáródása után van lehetősége megadni a hozzá tartozó behelyettesítendő szöveget, és beállítani az írásjel szintjét is.
+
+A hozzáadott írásjelet eltávolíthatja az Eltávolítás gombot.
+
 +++ Beviteli parancsok +++
 
 Ezen a párbeszédpanelen testre szabhatók az NVDA beviteli parancsai (a billentyűparancsok a billentyűzeten, a gombokhoz kötött funkciók a braille kijelzőn, stb.) az NVDA parancsainak használatához. A program csak azokat a parancsokat mutatja, amelyek azonnal alkalmazhatók, mielőtt a párbeszédpanelt megnyitjuk. Például, ha a böngészőmódhoz kapcsolódó parancsokat szeretnénk megváltoztatni, a párbeszédpanelt úgy kell megnyitnunk, hogy már böngészőmódban vagyunk. 
 
 a párbeszédablakban lévő fanézet kategóriák szerint csoportosítva listázza az összes alkalmazható NVDA-parancsot. Minden beviteli parancs egy vezérlőparancshoz van társítva. Ahhoz, hogy egy vezérlőparancshoz egy beviteli parancsot hozzáadjunk, válasszuk ki a vezérlőparancsot, nyomjuk meg a hozzáadás gombot, majd adjuk meg azt a beviteli parancsot, amelyet a vezérlőparancshoz kívánunk társítani, például nyomjunk meg egy billentyűt a billentyűzeten, egy gombot a braille kijelzőn. Gyakran előfordul, hogy egy vezérlőparancshoz több beviteli parancsot kell társítanunk. Például: ha ilyenkor leütünk egy billentyűt a billentyűzeten, meghatározhatjuk, hogy az a használt billentyűzet-kiosztásban (asztali vagy laptop), netán az összes kiosztásban alkalmazandó legen. Ebben az esetben egy menü jelenik meg, melyen kiválaszthatjuk a kívánt működési módot.
+
+Lehetőségünk van a beviteli parancsok szűrésére is. Gépeljünk be egy vagy több kifejezést a szűrés szerkesztőmezőbe, ekkor a tab billentyű megnyomása esetén a feltételnek megfelelő elemek jelennek csak meg a fanézetben.
 
 Egy beviteli parancsot úgy választhatunk le a vezérlőparancsról, ha kiválasztjuk és az eltávolítás gombot megnyomjuk. 
 

@@ -53,7 +53,9 @@ Tämän version keskeisimpiä ominaisuuksia ovat mm. selaustila Microsoft Word -
 - Kun teksti muuttuu tai sitä lisätään text-relevant -tyyppisiin aktiivisiin alueisiin Internet Explorerissa ja muissa MSHTML-säätimissä, vain muutettu tai lisätty teksti puhutaan säilöelementin kaiken tekstin sijasta. (#4800)
 - Internet Explorerissa ja muissa MSHTML-säätimissä aria-labeledby-määreellä ilmaistava elementtien sisältö korvaa oikein alkuperäisen sisällön, jos se on tarkoituksenmukaista. (#4575)
 - Väärin kirjoitettu sana luetaan nyt Microsoft Outlook 2013:ssa oikeinkirjoitusta tarkistettaessa. (#4848)
-- Visibility:hidden-määreellä piilotetuissa elementeissä olevaa sisältöä ei enää näytetä asiaankuulumattomasti selaustilassa Internet Explorerissa ja muissa MSHTML-säätimissä. #3776)
+- Visibility:hidden-attribuutilla piilotetuissa elementeissä olevaa sisältöä ei enää näytetä asiaankuulumattomasti selaustilassa Internet Explorerissa ja muissa MSHTML-säätimissä. #3776)
+- Lomakesäätimien title-attribuutti ei enää ole asiaankuulumattomasti etusijalla muihin nimiliitoksiin nähden Internet Explorerissa ja muissa MSHTML-säätimissä. (#4491)
+- NVDA ei jätä enää huomiotta kohdistuksen siirtymistä elementteihin aria-activedescendant-attribuutin vuoksi Internet Explorerissa ja muissa MSHTML-säätimissä. (#4667)
 
 
 == Muutokset kehittäjille (englanniksi) ==

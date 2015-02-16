@@ -17,7 +17,7 @@ NVDA giver blinde og svagsynede mulighed for at få adgang til og interagere med
 
 Af væsentlige funktioner kan nævnes:
 - Understøttelse af populære applikationer som web-browsere, email-programmer, internet-chat- programmer og office suites
-- Indbygget talesyntese der understøtter over 43 sprog
+- Indbygget talesyntese der understøtter over 80 sprog
 - Rapportering af tekstformatering hvor det er muligt, såsom skrifttype og størrelse, typografi og stavefejl.
 - Læser automatisk teksten under musen op og kan angive musens position akustisk
 - Understøttelse af mange punktdisplays, herunder indtastning af computerbraille på punktdisplays med et punkttastatur
@@ -427,7 +427,7 @@ Jo mere til venstre eller højre musen er på skærmen, jo mere til venstre elle
 Disse ekstra musefunktioner er ikke slået til som standard i NVDA
 Hvis du ønsker at drage fordel af dem, kan de konfigureres fra [Museindstillinger-dialogen, #MouseSettings] som findes i menuen Indstillinger i NVDA-menuen.
 
-Selv om en fysisk mus eller pegefelt skal bruges til at navigere med musen, har NVDA et par vigtige kommandoer relateret til musen:
+Selv om du bør bruge en fysisk mus eller et pegefelt til at navigere med musen, har NVDA et par vigtige kommandoer relateret til brugen af mus:
 %kc:beginInclude
 || Navn | Desktop tast | Laptop tast | Beskrivelse |
 | Venstre museklik | Numpad-skråstreg | NVDA+[ | Klikker en enkelt gang med venstre museknap. Det almindelige dobbeltklik kan udføres ved at trykke på denne tastekombination to gange hurtigt efter hinanden. |
@@ -441,7 +441,7 @@ Selv om en fysisk mus eller pegefelt skal bruges til at navigere med musen, har 
 + Browsertilstand (gennemsynstilstand) +
 Komplekse dokumenter, der ikke kan redigeres, fx. web-sider, bliver præsenteret med NVDA i browsertilstand eller gennemsynstilstand.
 Dette omfatter dokumenter i Mozilla Firefox, Microsoft Internet Explorer, HTML-meddelelser i Microsoft Outlook, Google Chrome, Adobe Reader and Adobe Flash.
-Gennemsynstilstand kan også bruges i Microsoft Word, når du navigerer rundt i komplekse dokumenter.
+Gennemsynstilstand kan også bruges i Microsoft Word-dokumenter.
 
 Når du benytter gennemsynstilstand, bliver indholdet af dokumentet præsenteret i en flad visning, som du kan navigere rundt i ved hjælp af piletasterne, præcist som hvis det var det normalt dokument.
 Alle NVDAs kommandoer til [systemmarkør #SystemCaret] fungerer i denne tilstand; fx. læs alt, rapportér tekstformatering, kommandoer til navigering af tabeller, osv.
@@ -460,7 +460,7 @@ Derudover kan du også manuelt tvinge NVDA i fokustilstand, hvorefter tilstanden
 || Navn | Tast | Beskrivelse |
 | Skift mellem browse- og fokustilstand | NVDA+Mellemrum | Skifter mellem gennemsynstilstand og fokustilstand |
 | Forlad fokustilstand | Escape | Skifter tilbage til gennemsynstilstand, hvis NVDA havde skiftet automatisk til fokustilstand |
-| Opdater dokument i browse-tilstand | NVDA+f5 | Genindlæser det aktuelle dokument. Kan være nyttigt, hvis noget af indholdet synes at mangle |
+| Opdater dokument i browse-tilstand | NVDA+f5 | Genindlæser det aktuelle dokument. (Kan være nyttigt, hvis noget af indholdet synes at mangle. Ikke tilgængelig i Microsoft Word og Outlook.) |
 | Søg | NVDA+Ctrl+f | Viser en dialog, hvor du kan indtaste den tekst, du vil søge efter i det aktuelle dokument |
 | Find næste | NVDA+f3 | Finder næste forekomst i dokumentet af den tekst, du tidligere har søgt efter |
 | Find forrige | NVDA+Shift+F3 | Finder forrige forekomst i dokumentet af den tekst, du tidligere har søgt efter |
@@ -470,6 +470,7 @@ Derudover kan du også manuelt tvinge NVDA i fokustilstand, hvorefter tilstanden
 
 ++ Enkelttegns navigering ++
 For hurtigere at kunne navigere når du er i gennemsynstilstand, giver NVDA også mulighed for ved hjælp af et enkelt bogstav at springe til bestemte områder i dokumentet.
+Bemærk, at ikke alle disse kommandoer understøttes i alle dokumenttyper.
 
 %kc:beginInclude
 Hvis du trykker en af de følgende taster ned alene, hopper du til den næste forekomst af det pågældende element. Hvis du trykker tasten ned sammen med Shift, hopper du til det forrige element.
@@ -575,7 +576,7 @@ Under en samtale:
 | Læs meddelelse | NVDA+Ctrl+1-0 | Læser og flytter læsemarkøren til en af de nyeste meddelelser alt efter, hvilket tal du trykker. F.eks. NVDA+Ctrl+2 læser den næstnyeste meddelelse. |
 %kc:endInclude
 
-+ Konfigurering af NVDA+
++ opsætning af NVDA+
 
 ++ Indstillinger ++
 %kc:settingsSection: || Navn | Desktop tast | Laptop tast | Beskrivelse |
@@ -713,7 +714,7 @@ Ligesom checkboksen 'Sig stort ved stort bogstav' er denne indstilling nyttig i 
 
 ==== Brug stavefunktion hvis understøttet ====[VoiceSpellingFunctionality]
 Nogle ord består af kun et bogstav, men udtalen kan være anderledes, afhængigt af om ordet er udtalt som et individuelt bogstav (som når du staver) eller som et helt ord.
-For eksempel, på engelsk er "a" både et bogstav og et ord.
+For eksempel, på engelsk er "a" både et bogstav og et ord, og det skal udtales forskelligt alt efter sammenhængen.
 Denne indstilling giver talesyntesen mulighed for at skelne mellem disse to tilfæld.
 De fleste synteser understøtter denne funktion.
 
@@ -871,7 +872,9 @@ Indstillingsmulighederne er tegn, ord, linje og afsnit.
 Hvis denne checkboks er markeret, oplæser NVDA rollen (typen) på objektet, når musen bevæger sig ind i det pågældende objekt.
 
 ==== Afspil lydkoordinater under flytning af mus ====
-Hvis denne checkboks er markeret, bipper NVDA under flytning af musen. Derved kan du følge med i, hvor musen netop nu er placeret på skærmen.
+Hvis denne checkboks er slået til, bipper NVDA under flytning af musen. På den måde kan du følge med i, hvor musen netop nu befinder sig på skærmen.
+Jo højere oppe musen befinder sig på skærmen, desto højere bliver tonehøjden af lydsignalet.
+Jo længere mod venstre eller højre musen befinder sig på skærmen, desto længere mod venstre eller højre vil lyden blive afspillet (forudsat at du har stereohøjttalere eller hovedtelefoner).
 
 ==== Lysstyrke kontrollerer lydstyrke for lydkoordinater ====
 Hvis checkboksen "Afspil lydkoordinater under flytning af mus" er slået til, bevirker markering af denne checkboks, at lydstyrken på biptonen ved lydkoordinaterne bestemmes af, hvor lyst skærmbilledet under musen er.
@@ -1025,7 +1028,6 @@ Hvis denne indstilling er slået til, afspiller NVDA en særlig lyd i stedet for
 ==== Forhindre alle ikke-NVDA-kommandoer i at nå til dokumentet ====
 med denne indstilling, som er slået til som udgangspunkt, kan du vælge om kommandobevægelser, f.eks. tastetryk, som ikke udgør en NVDA-kommando, og som ikke anses for at være en generel kommando, skal forhindres i at komme videre til det dokument, du har fokus på.
 Hvis denne indstilling er slået til, og du f.eks. trykker på bogstavet j, vil tastetrykket blive forhindret i at komme videre til dokumentet, selv om det ikke er en kommando til hurtignavigation, og det heller ikke er sandsynligt, at det er en kommando i selve programmet.
-
 
 +++ Indstillinger for dokument formatering (NVDA+Ctrl+d) +++[DocumentFormattingSettings]
 Denne dialogboks findes i menuen Indstillinger under "Dokumentformatering...".
@@ -1257,7 +1259,7 @@ Hvis der er en tilgængelig hjælpetekst til et tilføjelsesprogram, kan du se d
 
 For at se efter og hente tilføjelsespakker, som er tilgængelige online skal du trykke på knappen Hent tilføjelsesprogrammer.
 Denne knap åbner [siden for NVDA tilføjelsesprogrammer http://addons.nvda-project.org/].
-Hvis NVDA er installeret på dit system, kan du åbne tilføjelsespakken direkte fra din browser og starte installationsprocessen som beskrevet nedenfor.
+Hvis NVDA er installeret og kører på dit system, kan du åbne tilføjelsespakken direkte fra din browser og starte installationsprocessen som beskrevet nedenfor.
 Ellers skal du gemme tilføjelsespakken og følg instruktionerne nedenfor.
 
 For at installere et tilføjelsesprogram, som du tidligere har hentet, skal du trykke på knappen Installer.
@@ -1688,7 +1690,7 @@ Følgende punktdisplay er understøttede
 Hvis BrxCom er installeret, vil NVDA benytte BrxCom.
 BrxCom er et værktøj der giver dig mulighed for, at bruge punktdisplayet uafhængigt af en skærmlæser.
 En ny version af BrxCom der virker med NVDA bliver snart udgivet af Papenmeier.  
-Indtastning af punkt er mulig med TRIO, BRAILLEX Live 20 og Braillex Live -enheder uden BrxCom.
+Indtastning i punkt er mulig med TRIO, BRAILLEX Live 20 og Braillex Live -enheder uden BrxCom.
 Punktindtastning er også mulig med Live Plus-modellen, men kun med BrxCom.
 
 De fleste enheder har en Easy Access bjælke (EAB) der giver mulighed for intuitive og hurtige handlinger.
@@ -1899,7 +1901,7 @@ BRLTTY håndtere selv indtastning i braille, hvis det tilkoblede punktdisplay ha
 NVDAs indstilling for Braille-input-tabel  er derfor ikke relevant.
 
 Dette er tastekombinationerne til BRLTTY til brug med NVDA.
-Se venligst [BRLTTY dokumentationen for tastekombinationer http://mielke.cc/brltty/doc/drivers/] for yderliger information om, hvordan BRLTTY kommandoer er indstillet til kontroller på diverse punktdisplays.
+Se venligst [BRLTTY dokumentationen for tastekombinationer http://mielke.cc/brltty/doc/KeyTables/] for yderliger information om, hvordan BRLTTY kommandoer er indstillet til kontroller på diverse punktdisplays.
 %kc:beginInclude
 || Navn | BRLTTY command |
 | Rul punktdisplay tilbage | fwinlt (gå et vindue til venstre) |
@@ -1985,10 +1987,10 @@ De mulige kommandolinjeparametre til NVDA er følgende:
 | -s | --secure | Sikker tilstand (uden Python console) |
 | Ingen | --disable-addons | ingen tilføjelsesprogrammer |
 | Ingen | --no-sr-flag  | Lad være med at ændre det globale skærmlæserflag |
-| Ingen | --install | Tavs installerer NVDA og starter den nyinstallerede kopi |
+| Ingen | --install | Installerer NVDA og starter den nyinstallerede kopi |
 | Ingen | --install-silent | Tavs installation af NVDA (Starter ikke den nyinstallerede kopi) |
 
-++ Avanceret tilpasning af udtalelse af symboler ++
+++ Avanceret tilpasning af udtale af symboler ++
 Det er muligt at tilpasse udtale af sætningstegn, samt andre symboler udover det som du kan opnå ved brug af dialogen [Udtale af sætningstegn/symboler #SymbolPronunciation].
 Du kan for eksempel bestemme, om det rå symbol skal sendes til talesyntesen (fx. for at skabe en pause i talen eller ændre tonefald) og du kan tilføje brugerdefinerede symboler.
 
