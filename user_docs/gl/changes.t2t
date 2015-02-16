@@ -54,6 +54,8 @@ O sinalable nesta versión  inclúe o modo exploración para documentos en Micro
 - O contido indicado polo atributo aria-labelledby en elementos en Internet Explorer e outros controis MSHTML reemplaza correctamente o contido orixinal  onde sexa apropriado facelo. (#4575)
 - Cando se revisa a ortografía no Microsoft Outlook 2013, agora anúnciase a palabra mal escribida. (#4848)
 - En Internet Explorer e outros controis MSHTML, o contido dentro de elementos ocultos con visibility:hidden xa non se presenta inapropriadamente no modo exploración. (#4839, #3776)
+- En Internet Explorer e outros controis MSHTML, o atributo title en controis form xa non toma inapropriadamente preferencia sobre outras asociacións de etiqueta. (#4491)
+- En Internet Explorer e outros controis MSHTML, NVDA xa non ignora o enfocado de elementos  debido ó atributo aria-activedescendant. (#4667)
 
 
 == Cambios para desenvolvedores ==
