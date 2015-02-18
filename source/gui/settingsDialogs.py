@@ -1515,15 +1515,18 @@ class AddSymbolDialog(wx.Dialog):
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 class SpeechSymbolsDialog(SettingsDialog):
-	# Translators: This is the label for the symbol pronunciation dialog.
-	title = _("Symbol Pronunciation")
 
-	def makeSettings(self, settingsSizer):
+	def __init__(self,parent):
 		try:
 			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData(speech.getCurrentLanguage())
 		except LookupError:
 			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData("en")
 		self.symbolProcessor = symbolProcessor
+		# Translators: This is the label for the symbol pronunciation dialog.
+		self.title = _("Symbol Pronunciation (%s)")%languageHandler.getLanguageDescription(self.symbolProcessor.locale)
+		super(SpeechSymbolsDialog, self).__init__(parent)
+
+	def makeSettings(self, settingsSizer):
 		symbols = self.symbols = [copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()]
 		self.pendingRemovals = {}
 
