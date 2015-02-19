@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2014 NV Access Limited
+#Copyright (C) 2014-2015 NV Access Limited
 
 """Support for math presentation using MathPlayer 4.
 """
@@ -73,6 +73,7 @@ class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
 
 	def __init__(self, provider=None, mathMl=None):
 		super(MathPlayerInteraction, self).__init__(provider=provider, mathMl=mathMl)
+		provider._setSpeechLanguage(mathMl)
 		provider._mpSpeech.SetMathML(mathMl)
 
 	def reportFocus(self):
@@ -113,12 +114,17 @@ class MathPlayer(mathPres.MathPresentationProvider):
 
 	def __init__(self):
 		mpSpeech = self._mpSpeech = comtypes.client.CreateObject(MPInterface, interface=IMathSpeech)
-		mpSpeechSettings = mpSpeech.QueryInterface(IMathSpeechSettings)
+		mpSpeechSettings = self._mpSpeechSettings = mpSpeech.QueryInterface(IMathSpeechSettings)
 		mpSpeechSettings.SetSpeechTags("SSML")
 		self._mpNavigation = mpSpeech.QueryInterface(IMathNavigation)
 		self._mpBraille = mpSpeech.QueryInterface(IMathBraille)
 
+	def _setSpeechLanguage(self, mathMl):
+		lang = speech.getCurrentLanguage()
+		self._mpSpeechSettings.SetLanguage(lang.replace("_", "-"))
+
 	def getSpeechForMathMl(self, mathMl):
+		self._setSpeechLanguage(mathMl)
 		self._mpSpeech.SetMathML(mathMl)
 		return _processMpSpeech(self._mpSpeech.GetSpokenText())
 
