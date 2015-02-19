@@ -17,7 +17,7 @@ NVDA ermöglicht den blinden und sehbehinderten Menschen das Arbeiten mit den Wi
 
 Zu den wichtigsten Funktionen gehören:
 - Unterstützung der am weitesten verbreiteten Anwendungen einschließlich Web-Browser, E-Mail-Clients, Programme für Internet-Chats und Office-Pakete.
-- Integrierte Sprachausgabe, welche über 43 Landessprachen unterstützt.
+- Integrierte Sprachausgabe, welche über 80 Landessprachen unterstützt.
 - Ansagen der Textformatierungen wie zum Beispiel Namen der Schriftarten, Schriftgröße, Textausrichtung und Rechtschreibfehler.
 - Automatische Ansage der Mausposition und optionaler Audiokoordinaten.
 - Unterstützung für zahlreiche Braillezeilen inklusive Unterstützung für die Eingabe von Computerbraille für Braillezeilen, die eine Braille-Tastatur besitzen.
@@ -441,7 +441,7 @@ Zum Navigieren mit der Maus sollte eine richtige Maus oder eine Mauskugel benutz
 + Lese-Modus +
 Umfangreiche schreibgeschützte Dokumente - wie beispielsweise Webseiten - werden in NVDA im so genannten Lese-Modus dargestellt. 
 Dies betrifft Dokumente in Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader und Adobe Flash sowie HTML-Nachrichten in Microsoft Outlook. 
-Wenn Sie in komplexen Dokumenten navigieren, ist der Lese-Modus in Microsoft Word optional verfügbar.
+Der Lese-Modus ist optional in Microsoft Word-Dokumenten verfügbar. 
 
 Im Lese-Modus wird der Inhalt von Dokumenten in einer strukturierten Dokument-ähnlichen Form dargestellt, so dass sie sich mit den Pfeiltasten durch das Dokument bewegen können.
 Alle [Befehle zum Navigieren mit dem System-Cursor #SystemCaret] sind im Lese-Modus verfügbar. So z. B. alles lesen, Formatierung ansagen, Befehle zur Tabellen-Navigation, etc.
@@ -470,6 +470,7 @@ Zusätzlich können Sie auch den Fokusmodus erzwingen. In diesem Fall bleibt der
 
 ++ Die Schnellnavigationstasten ++
 Um im Lesemodus eine schnellere Navigation zu ermöglichen, stellt NVDA die so genannten Schnellnavigationstasten für das Ansteuern bestimmter Seitenelemente zur Verfügung.
+Bitte beachten Sie, dass nicht alle Schnellnavigationstasten in jedem Dokumententyp verfügbar sind.
 
 %kc:beginInclude
 Folgende Befehle springen ohne Umschalttaste gedrückt zum nächsten Element; zusammen mit der Umschalttaste springen Sie zum vorherigen Objekt.
@@ -876,6 +877,9 @@ Wenn diese Option aktiviert ist, sagt NVDA den Typ an, sobald sich der Mauszeige
 
 ==== Audiokoordinaten bei Mausbewegungen wiedergeben ====
 Das Aktivieren dieser Option bewirkt, dass NVDA die Position des Mauszeigers durch Signaltöne an Ort und Stelle wiedergibt, so dass der Anwender die Mausposition auf dem Bildschirm akustisch mitverfolgen und selbst ermitteln kann.
+Je näher sich der Mauszeiger am oberen Bildschirmrand befindet, desto höher ist der Signalton.
+Richtig ausgerichtete Stereolautsprecher oder Kopfhörer vorausgesetzt, wird der Signalton um so mehr links oder rechts abgespielt, je weiter links bzw. rechts sich der Mauszeiger bewegt.
+
 
 ==== Lautstärke der Audiokoordinaten durch Helligkeit kontrollieren ====
 Wenn die Option "Audiokoordinaten bei Mausbewegungen wiedergeben" und diese Option aktiviert sind, passt NVDA die Lautstärke der Signaltöne an die Helligkeit unter dem Mauszeiger an.

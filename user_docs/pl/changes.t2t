@@ -54,6 +54,8 @@ Główne zmiany w tej wersji, to tryb czytania dla dokumentów Microsoft Word i 
 - Treść wskazywana przez atrybut aria-labelledby na elementach w Internet Explorer i innych kontrolkach MSHTML, prawidłowo zastępuje treść oryginalną, jeśli jest to potrzebne. (#4575)
 - Błędnie wpisane słowo jest teraz oznajmiane podczas sprawdzania pisowni w Microsoft Outlook 2013. (#4848)
 - W Internet Explorer i innych kontrolkach MSHTML, treść wewnątrz elementów ukrytych przez visibility:hidden nie jest nieprawidłowo pokazywana w trybie czytania. (#4839, #3776)
+- W Internet Explorer i innych kontrolkach MSHTML, atrybut title na kontrolkach formularza nie jest od teraz nieprawidłowo preferowany względem innych powiązań ze znacznikami label. (#4491)
+- W Internet Explorer i innych kontrolkach MSHTML, NVDA nie ignoruje od teraz ustawiania punktu uwagi na elementach w związku z atrybutem aria-activedescendant. (#4667)
 
 
 == Zmiany dla programistów ==

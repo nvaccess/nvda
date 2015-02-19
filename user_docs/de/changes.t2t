@@ -3,6 +3,7 @@
 
 %!includeconf: ../changes.t2tconf
 = 2015.1 =
+Schwerpunkte dieser Version sind: Lese-Modus für Dokumente Microsoft Word und Outlook, wesentliche Verbesserungen für die Unterstützung von Skype für Desktop, bedeutende Fehlerbehebungen für Internet Explorer
 
 == neue Funktionen ==
 - im Dialog aussprache von Symbolen und Satzzeichen können Sie nun neue Symbole hinzufügen. (#4354)
@@ -11,13 +12,13 @@
 - im Suchdialog des Lesemodus' gibt es ein Kontrollkästchen, mit dem Sie eine Suche unter Berücksichtigung der Groß-/Kleinschreibung durchführen können. (#4584)
 - In Microsoft Word kann nun mittels NVDA+Leertaste der Lesemodus verwendet werden, um mit Hilfe von Schnellnavigationstasten im Dokument zu navigieren. Die Elementliste ist ebenfalls verfügbar. (#2975)
 - das Lesen von Html-Nachrichten in Outlook 2007 und höher wurde verbessert, in dem der Lesemodus automatisch für diese Nachrichten aktiviert wird. Sollte dies in seltenen Fällen nicht geschehen, können Sie den Lesemodus mittels NVDA+Leertaste aktivieren. (#2975) 
-- In Microsoft Word werden Spaltenüberschriften automatisch gelesen, wenn sie in den Tabelleneigenschaften als solche gekennzeichnet wurden. (#4510)
- - Wenn die Tabelle jedoch verbundene Zeilen enthält, müssen Sie die Spaltenüberschrift manuell mit NVDA setzen. Verwenden Sie hierfür die Tastenkombinationen nvda+Umschalt+c.
+- In Microsoft Word werden Spaltenüberschriften automatisch gelesen, wenn sie in den Tabelleneigenschaften als solche gekennzeichnet wurden. (#)
+ - Wenn die Tabelle jedoch verbundene Zeilen enthält, funktioniert dies nicht automatisch. Sie können die Spaltenüberschrift manuell mit NVDA setzen. Verwenden Sie hierfür die Tastenkombination nvda+Umschalt+c.
 - In der Desktop-Version von Skype werden Benachrichtigungen angezeigt. (#4741)
 - in Skype können Sie die letzten Nachrichten mit nvda+strg+1 bis nvda+strg+0 anzeigen nvda+strg+1 zeigt beispielsweise die letzte eingegebene Nachricht an. (#3210)
-- In einer Skype-Konversation wird nun angezeigt, wenn jemand tippt. (#3506)
+- In einer Skype-Konversation wird nun angesagt, wenn jemand tippt. (#3506)
 - Bei der Installation von NVDA kann die Anzeige von Meldungen unterdrückt werden. Verwenden Sie hierfür die Kommandozeilenoption  --install-silent. (#4206)
-- Untestützung für Papenmeier BRAILLEX Live 20, BRAILLEX Live und BRAILLEX Live Plus. (#4614)
+- Unterstützung für Papenmeier BRAILLEX Live 20, BRAILLEX Live und BRAILLEX Live Plus. (#4614)
 
 
 == Änderungen ==
@@ -25,7 +26,8 @@
 - NVDA wird die Sprache der Sprachausgabe/der Stimme verwenden, um Namen von Symbolen und Satzzeichen zu sprechen; unabhängig davon, ob "automatisch Sprache wechseln"  aktiviert ist. Um dieses Verhalten abzuschalten sodass NVDA wieder seine Dialogsprache verwendet, deaktivieren Sie in den Stimmeneinstellungen die neue Option "beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen". (#4210)
 - Die Unterstützung für Newfon wurde entfernt; Newfon ist jetzt als NVDA-Erweiterung verfügbar. (#3184)
 - Skype 7 oder neuer wird nun benötigt; ältere Skype-Versionen werden nicht mehr unterstützt. (#4218)
-- Das Herunterladen von Aktualisierungen von NVDA erfolgt nun über https. Zudem wird die Datei nach dem Herunterladen mit Hilfe ihres Hash-Wertes auf Unversehrtheit geprüft. (#4716)
+- Das Herunterladen von Aktualisierungen von NVDA ist nun sicherer. Es erfolgt nun über https. Zudem wird die Datei nach dem Herunterladen mit Hilfe ihres Hash-Wertes auf Unversehrtheit geprüft. (#4716)
+- ESpeak auf Version 1.48.04 aktualisiert.
 
 
 == Fehlerbehebungen ==
@@ -49,12 +51,15 @@
 - Aktualisierungen von Dokumenten innerhalb von Aria-Anwendungen werden in Internet Explorer und anderen MSHTML-Dokumenten berücksichtigt (#4798)
 - Wenn sich Text innerhalb von Aria-Elementen in Internet Explorer und MSHTML-Steuerelementen ändert, wird nur der neu hinzugekommene/geänderte Text ausgegeben. (#4800)
 - Das Attribut Aria-labeledby wird korrekt verarbeitet. (#4575)
-- Wird in Microsoft Outlook 2013 die Rechtschreibung geprüft, so werden falsch geschriebene Wörter ausgegeben. (#4848) 
+- Wird in Microsoft Outlook 2013 die Rechtschreibung geprüft, so werden falsch geschriebene Wörter angesagt. (#4848)
+- Im Internet Explorer und anderen MSHTML-Elementen werden Elemente, welche durch visibility:hidden versteckt wurden, nicht mehr fälschlicherweise im Lese-Modus ausgegeben.
  
-
+ 
 == Änderungen für Entwickler ==
 - wxPython auf 3.0.2.0 aktualisiert. (#3763)
+- Python auf Version 2.7.9 aktualisiert. (#4715)
 - Wenn Sie eine Erweiterung entfernen oder aktualisieren, die während der Installation das Modul speechDictHandler importiert hat, wird NVDA nicht mehr abstürzen. (#4496)
+
 
 = 2014.4 =
 
@@ -178,7 +183,7 @@
 - Wenn Sie sich in Microsoft Word absatzweise durch numerierte Listen oder Aufzählungslisten bewegen, müssen Sie die Tastenkonbinationen strg+Pfeil auf/ab nicht mehr zweimal drücken. (#3290)
 
  
-== Änderungen für Entwickler ==
+= Änderungen für Entwickler ==
 - Die Unterstützung für das Beilegen einer Dokumentation zu NVDA-Erweiterungen wurde vereinheitlicht. Sehen Sie sich den Abschnitt zu Dokumentation für Erweiterungen für weitere Informationen an. (#2694)
 - Wenn Sie das Wörterbuch __gestures verwenden, um Skripte an Eingabemethoden zuzuweisen, können Sie als Namen für das Skript das Schlüsselword None angeben, um in einer Basisklasse die Zuweisung für eine Tastenkombination zu löschen. (#4240)
 - Es ist nun möglich, die Tastenkombination zum Starten von NVDA zu ändern. In einigen Sprachräumen verursacht die Standard-Tastenkombination Probleme. (#2209)
@@ -606,7 +611,7 @@ Schwerpunkte in dieser Version sind: Unterstützung für asiatische Eingabemetod
 - Im Lesemodus in GoogleChrome wird Text innerhalb von Registerkarten nun korrekt angezeigt.
 - Menü-Schalter werden im Lese-Modus nun korrekt ausgegeben.
 - In Calc (OpenOffice.org sowie in LibreOffice) funktioniert das Lesen von Tabellen nun ordnungsgemäß. (#2765)
-- NVDA funktioniert nun in der Listenansicht der Yahoo Mails ordnungsgemäß, wenn Sie mit dem Internetexplorer arbeiten. (#2780)
+- NVDA funktioniert nun in der Listenansicht der Yahoo Mails ordnungsgemäß, wenn Sie mit dem Internet Explorer arbeiten. (#2780)
 - Die Kurztasten aller Einträge des NVDA-Menüs sowie aller Dialogelemente sind nun kollisionsfrei d.h. Sie können den hervorgehobenen Buchstaben eines Menüeintrags Bzw. Dialogelements eingeben, um das entsprechende Element aufzurufen.
 -
 
@@ -740,7 +745,7 @@ Die wichtigsten Neuerungen für diese Version beinhalten Funktionen, um Braille 
 - Wenn die Routingtasten benutzt werden, um den Cursor an ein Leerzeichen zu ziehen, das sich am Ende einer Zeile befindet, funktioniert das Routing nun korrekt; der Cursor wird nun nicht mehr an den Anfang des Textes gezogen. (#2096)
 - NVDA arbeitet nun wieder korrekt mit der Sprachausgabe Audioologic Tts3. (#2109)
 - Microsoft-Word-dokumente werden korrekt als mehrzeilige Eingabefelder behandelt. Dies wirkt sich vor allem auf die anzeige in Braille aus, wenn ein Word-Dokument den Fokus erhält.
-- In Microsoft Internetexplorer treten keine Fehler mehr auf, wenn bestimmte seltene Elemente fokusiert werden.(#2121)
+- In Microsoft Internet Explorer treten keine Fehler mehr auf, wenn bestimmte seltene Elemente fokusiert werden.(#2121)
 - Wenn ein Anwender die Aussprache von Satzzeichen und/oder Symbolen ändert, werden die Änderungen ohne Neustart von NVDA bzw. das deaktivierendes automatischen Sprachenwechsels übernommen.
 - Wenn die Sprachausgabe eSpeak benutzt wird und Sie sich im Dialog speichern unter des Protokollbetrachters befinden, verstummt die Sprache in einigen Situationen nicht mehr. (#2145)
 -
@@ -832,7 +837,7 @@ Die wichtigsten neuerungen sind u.a. das automatische Wechseln der Synthesizersp
 
 
 = 2011.2 =
-Die wichtigsten Neuerungen in dieser Version beinhalten umfangreiche Verbesserungen im Bereich der Satzzeichen und Symbole, einschließlich einstellbarer Ebenen, selbstwählbare Bezeichnungen und phonetisches Buchstabieren; keine Pausen am Zeilenende während alles lesen; verbesserte Unterstützung für ARIA im Internetexplorer; verbesserte Unterstützung für XFA/LiveCycle PDF dokumente in Adobe REader; Zugriff auf Text, der auf den Bildschirm geschriben wurde in mehr Anwendungen; und Zugriff auf Farb- und Formatierungsinformationen für text, der auf den Bildschirm geschrieben wurde.
+Die wichtigsten Neuerungen in dieser Version beinhalten umfangreiche Verbesserungen im Bereich der Satzzeichen und Symbole, einschließlich einstellbarer Ebenen, selbstwählbare Bezeichnungen und phonetisches Buchstabieren; keine Pausen am Zeilenende während alles lesen; verbesserte Unterstützung für ARIA im Internet Explorer; verbesserte Unterstützung für XFA/LiveCycle PDF dokumente in Adobe REader; Zugriff auf Text, der auf den Bildschirm geschriben wurde in mehr Anwendungen; und Zugriff auf Farb- und Formatierungsinformationen für text, der auf den Bildschirm geschrieben wurde.
 
  
 == Neue Funktionen ==
@@ -844,8 +849,8 @@ Die wichtigsten Neuerungen in dieser Version beinhalten umfangreiche Verbesserun
 - Bei der Verwendung des Befehls "Alles lesen" macht die Sprachausgabe keine unnatürlichen Pausen mehr. (#149)
 - NVDA sagt nun an, wenn ettwas sortiert wurde (gemäß der "aria-sort-Richtlinie) in Internetbrowsern. (#1500)
 - Braillezeichen im Unicode-Format werden jetzt auf der Braillezeile richtig angezeigt. (#1505)
-- Wenn sich der Fokus Im Internetexplorer und anderen MSHTML-Dokumenten über eine Gruppe von Elementen bewegt, welche von einem "fieldset" umgeben ist, sagt NVDA den Namen der Gruppe, also die Legende an (#535).
-- Im Internetexplorer und anderen MSHTML-Dokumenten werden jetzt die Eigenschaften "aria-labelledBy" und "aria-describedBy" beachtet.
+- Wenn sich der Fokus Im Internet Explorer und anderen MSHTML-Dokumenten über eine Gruppe von Elementen bewegt, welche von einem "fieldset" umgeben ist, sagt NVDA den Namen der Gruppe, also die Legende an (#535).
+- Im Internet Explorer und anderen MSHTML-Dokumenten werden jetzt die Eigenschaften "aria-labelledBy" und "aria-describedBy" beachtet.
 - im Internet Explorer und anderen mshtml-Steuerelementen wurde die Unterstützung für ARIA-listen, Aria-Tabellenzellen, Schieberegler und Fortschrittsbalken verbessert.
 - Anwender können nun die Aussprache von Satzzeichen und anderen Symbolen ändern, so wie die Symbolebene, ab welcher sie angesagt werden. (#271, #1516)
 - In Microsoft Excel wird nun der Name des aktiven Blattes angesagt, wenn sie mit Steuerung+Bild auf bzw. Steuerung+Bild ab zwischen den Blättern wechseln. (#760)

@@ -55,6 +55,8 @@ Quoi de Neuf dans NVDA
 - Le contenu indiqué par l'attribut aria-labelledby sur des éléments sous Internet Explorer et autres contrôles MSHTML remplace correctement le contenu original là où il est approprié de le faire. (#4575)
 - Lors de la vérification orthographique sous Microsoft Outlook 2013, le mot mal orthogaphié est maintenant annoncé. (#4848)
 - Sous Internet Explorer et autres contrôles MSHTML, le contenu des éléments cachés avec visibility:hidden n'est plus présenté de manière inappropriée en mode navigation. (#4839, #3776)
+- Sous Internet Explorer et autres contrôles MSHTML, l'attribut titre sur les contrôles de formulaire ne prend plus la préférence de manière inappropriée sur les autres associations d'étiquette. (#4491)
+- Sous Internet Explorer et autres contrôles MSHTML, NVDA n'ignore plus la mise en focus des éléments à cause de l'attribut aria-activedescendant. (#4667)
 
 
 == Changements pour les Développeurs ==

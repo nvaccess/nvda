@@ -7,6 +7,7 @@
 Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 
 = 2015.1 =
+Os destaques desta versão incluem o modo de navegação para documentos no Microsoft Word e Outlook; maiores melhorias no suporte ao Skype para Desktop; e significativas correções para o Microsoft Internet Explorer.
 
 == Novas características ==
 - Você agora pode adicionar novos símbolos através do Diálogo de Pronúncia de Pontuação e Sinais. (#4354)
@@ -26,6 +27,7 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 - NO diálogo de Formatação de Documentos do NVDA, a opção Anunciar erros ortográficos agora possui uma tecla de atalho (alt+r). (#793)
 - O suporte para o sintetizador Newfon foi removido. O Newfon agora encontra-se disponível como complemento para o NVDA. (#3184)
 - O skype para Desktop versão 7 ou posterior  agora é exigido para uso com o NVDA; versões anteriores já não são suportadas. (#4218)
+- Atualizado o sintetizador eSpeak para a versão 1.48.04. (#4325)
 
 
 == Correção de Falhas ==
@@ -365,7 +367,7 @@ Alguns itens ou termos desta seção não serão traduzidos, uma vez que são de
 - O NVDA não anuncia mais conteúdo inútil na área de trabalho quando os métodos de entrada IME Google Japonês ou Atok estão em uso. (#3234)
 - No Windows 7 e posteriores, o NVDA não mais anuncia de modo inapropriado reconhecimento de voz ou entrada tátil quando se troca o idioma de teclado.
 - O NVDA não anuncia mais um caractere especial em particular (0x7f) ao pressionar control+backspace em alguns editores quando falar caracteres digitados estiver abilitado. (#3315)
-- O eSpeak não mais muda inapropriadamente de tom, volume, etc. quando o NVDA lê textos que contenham certos caracteres de controle ou XML. (#3334) (regressão do #437)
+- O eSpeak já não muda inapropriadamente de tom, volume, etc. quando o NVDA lê textos que contenham certos caracteres de controle ou XML. (#3334) (regressão do #437)
 - Em aplicativos Java, mudanças de rótulo ou valor no controle em foco agora são automaticamente anunciadas e se refletem ao chamar novamente o controle. (#3119)
 - Em controles Scintilla as linhas agora são anunciadas de modo correto quando quebrar linhas está abilitado. (#885)
 - Em aplicativos Mozilla, os nomes de itens de lista somente-leitura são anunciados corretamente; por exemplo ao navegar por twites em modo de foco no twitter.com. (#3327)

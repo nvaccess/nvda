@@ -3,6 +3,58 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.1 =
+A kiadás főbb elemei: böngészőmód a Microsoft Word és Outlook dokumentumokhoz; jelentős fejlesztések a Skype asztali változatának támogatása terén; és fontos javítások a Microsoft Internet Explorer jobb hozzáférhetősége érdekében.
+
+== Újdonságok ==
+- Az Írásjel-kiejtés párbeszédpanelen már van lehetőség új írásjelek hozzáadására. (#4354)
+- A Beviteli parancsok párbeszédpanelen az újonnan hozzáadott "Szűrés" mező segítségével mód nyílik csak a megadott szavakat tartalmazó parancsok megjelenítésére. (#4458)
+- Mintty: Az NVDA már automatikusan bejelenti az új szövegeket. (#4588)
+- Böngészőmódban a keresés párbeszédpanelen lehetővé vált a kis- és nagybetűk figyelembevételével keresni. (#4584)
+- Microsoft Word dokumentumok: A böngészőmód bekapcsolásával (NVDA+szóköz) már használhatók a navigációs gyorsbillentyűk (H a címsorokhoz, stb.), és elérhető az elemlista is (NVDA+f7). (#2975)
+- Microsoft Outlook 2007 és újabb verziói: A HTML üzenetek olvasása jelentősen javult a böngészőmód automatikus bekapcsolásának köszönhetően. Bizonyos ritka esetekben, ha a böngészőmód mégsem aktiválódna automatikusan ezekhez az üzenetekhez, az NVDA+Szóköz billentyűparanccsal bekapcsolható. (#2975)
+- Microsoft Word: Az NVDA automatikusan bejelenti a táblázatok oszlopfejléceit az olyan táblázatok esetében, ahol a készítő beállítja a fejléceket tartalmazó sort a táblázat tulajdonságai közt. (#4510)
+ - Az olyan táblázatoknál, ahol a sorok egyesítve vannak ez nem működik automatikusan. Ilyen esetben az NVDA+shift+c billentyűparanccsal manuálisan megadható az NVDA számára az oszlopfejléceket tartalmazó sor.
+- Skype asztali változat: Az NVDA már felolvassa az értesítéseket. (#4741)
+- Skype asztali változat: Bemondathatók és áttekinthetők a legutóbbi üzenetek az NVDA+control+(számok 0-tól 9-ig) billentyűparancsokkal; pl. NVDA+control+1 a legutóbbi üzenet bemondásához, és NVDA+control+0 a 10. legújabbhoz. (#3210)
+- Skype asztali változat: üzenetváltás közben az NVDA bemondja, ha a partner épp üzenetet ír. (#3506)
+- Az NVDA már beszéd nélkül is telepíthető a parancssorból, anélkül, hogy a telepítés után elindulna a feltelepített változat. Ehhez az --install-silent parancssori opció szükséges. (#4206)
+- Támogatás a Papenmeier BRAILLEX Live 20, BRAILLEX Live és BRAILLEX Live Plus braille kijelzőkhöz. (#4614)
+
+
+== Változások ==
+- Az NVDA Dokumentum formázás párbeszédpanelén a Helyesírási hibák jelzése opcióhoz gyorsbillentyűt rendeltek (alt+r). (#793)
+- Az NVDA már az épp használatban lévő beszédszintetizátor/hangkarakter nyelvét használja a karakterek és írásjelek feldolgozásához (ide értve az írásjelek megnevezését is), attól függetlenül, hogy az automatikus nyelvváltás be van-e kapcsolva. Az opció kikapcsolásához, ezáltal a korábbi viselkedéshez, az NVDA felhasználói felület nyelvének használatához meg kell szűntetni a bejelölést a Beszéd párbeszédpanelen hozzáadott új opciónál: Karakterek és írásjelek feldolgozása az aktív hangkarakter nyelvén. (#4210)
+- A Newfon beszédszintetizátor támogatása megszűnt, innentől a Newfon már csak NVDA-bővítményként érhető el. (#3184)
+- Az NVDA már csak a Skype asztali változatának 7-es, vagy újabb verzióit támogatja, a korábbiakat már nem. (#4218)
+- Az NVDA frissítéseinek letöltése már sokkal biztonságosabb. A frissítéshez már https protokollt használnak, illetve a fájl hash is ellenőrzésre kerül letöltés után. (#4716)
+- Az Espeak frissítve az 1.48.04 verzióra. (#4325)
+
+
+== Hibajavítások ==
+- Microsoft Excel: Az NVDA már helyesen kezeli az egyesített sor- és oszlopfejléceket. Pl., ha az A1 és B1 cellát egyesítjük a B2 cella oszlopfejléce az A1:B1 egyesített cella lesz, szemben a korábbi működéssel, amikor ilyen esetben nem jelentett be fejlécet az NVDA. (#4617)
+- Microsoft PowerPoint 2003: Egy szövegdoboz szerkesztése során az NVDA már helyesen olvassa fel az egyes sorok tartalmát. Korábban minden új bekezdés sorát fokozatosan egy-egy karakterrel rövidebbként kezelte az NVDA. (#4619)
+- Az NVDA minden párbeszédpanele immár a képernyő közepén jelenik meg a jobb láthatóságot, és használhatóságot szem előtt tartva. (#3148)
+- Skype asztali változat: Új partner hozzáadása során az üdvözlő üzenet írása és az üzeneten belüli mozgás már jól működik. (#3661)
+- Eclipse IDE: Ha a fókusz egy fa nézetben új elemre mozdul, abban az esetben ha a korábbi elem egy jelölőnégyzet, akkor már nem kerül ez helytelenül bejelentésre. (#4586)
+- Microsoft Word Helyesírás-ellenőrzés párbeszédpanel: A következő hiba automatikusan bejelentésre kerül, amennyiben a legutóbbi hibát javítjuk, vagy figyelmen kívül hagyjuk a megfelelő gyorsbillentyűk segítségével. (#1938)
+- A szöveg ismét bejelentésre kerül a Tera Term Pro's terminal ablakában és a Balabolka dokumentumaiban. (#4229)
+- Internet Explorer és más MSHTML dokumentumok: Egy kereten belül koreai és más kelet-ázsiai nyelveken történő szövegbevitel befejezése után a fókusz már visszatér a szerkesztett dokumentumhoz. (#4045)
+- Beviteli parancsok párbeszédpanel: Új billentyűparancs hozzáadása során a billentyűzetkiosztás beállításakor az ESC gomb lenyomása most már helyesen csak a menüt zárja be, és nem az egész párbeszédpanelt. (#3617)
+- Egy NVDA bővítmény eltávolítása esetén már törlődik a bővítmény könyvtára az NVDA újraindítása után, eddig ehhez kétszeri újraindításra volt szükség. (#3461)
+- Skype asztali változat 7: komoly problémákat orvosoltak. (#4218)
+- Skype asztali változat: Üzenetküldés esetén az NVDA már nem olvassa fel kétszer az üzenetet. (#3616)
+- Skype asztali változat: Az NVDA már nem olvas fel kéretlenül nagy mennyiségű üzenetet, akár egy egész beszélgetést. (#4644)
+- Kijavították azt a hibát, amely miatt bizonyos esetekben az NVDA dátum és idő lekérdezésére szolgáló parancsa nem vette figyelembe a felhasználó területi beállításait. (#2987)
+- Böngészőmódban bizonyos ábráknál ( pl. Google csoportoknál) az NVDA már nem olvas akár több sorosra is nyúló értelmetlen szöveget. (Kifejezetten base64 kódolású képek esetében.) (#4793)
+- Az NVDA már nem fagy le pár másodperccel azután, hogy a fókusz elmozdul egy Windows Store alkalmazásról. (#4572)
+- Mozilla Firefox: Dinamikus területeken a program már figyelembe veszi az aria-atomic attribútumot, még akkor is, ha maga az atomic elem változik. Korábban ez csak a leszármazott elemeket érintette. (#4794)
+- Internet Explorer és más MSHTML vezérlők: Böngészőmódú dokumentumba ágyazott ARIA alkalmazáson belül az NVDA már bejelenti a dinamikus területeket, és megjeleníti azok változásait. (#4798)
+- Internet Explorer és más MSHTML vezérlők: Dinamikus területeken szöveg hozzáadása, vagy módosítása során a készítő által relevant-ként megjelölt szövegek esetében már csak az újonnan hozzáadott, vagy módosított szövegek fognak elhangozni, és nem az érintett elem teljes szövege. (#4800)
+- Internet Explorer és más MSHTML vezérlők: Az egyes elemek aria-labelledby attribútummal megjelölt tartalmai már helyesen, a megfelelő helyen írják felül az eredeti tartalmat. (#4575)
+- Microsoft Outlook 2013: Bekapcsolt helyesírás-ellenőrzés esetén az elgépelt szó már felolvasásra kerül. (#4848)
+
+
 = 2014.4 =
 
 == Újdonságok ==
