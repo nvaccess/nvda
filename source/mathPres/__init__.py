@@ -167,3 +167,20 @@ def interactWithMathMl(mathMl):
 		ui.message(_("Math interaction not supported."))
 		return
 	return interactionProvider.interactWithMathMl(mathMl)
+
+RE_MATH_LANG = re.compile(r"""<math.*? xml:lang=["']([^"']+)["'].*?>""")
+def getLanguageFromMath(mathMl):
+	"""Get the language specified in a math tag.
+	@return: The language or C{None} if unspeicifed.
+	@rtype: basestring
+	"""
+	m = RE_MATH_LANG.search(mathMl)
+	if m:
+		return m.group(1)
+	return None
+
+RE_MATH_APPEND = re.compile(r"(<math[^>]*)>")
+def insertLanguageIntoMath(mathMl, language):
+	"""Insert the specified language into a math tag.
+	"""
+	return RE_MATH_APPEND.sub(r'\1 xml:lang="%s">' % language, mathMl, count=1)
