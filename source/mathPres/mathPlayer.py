@@ -38,13 +38,15 @@ PROSODY_COMMANDS = {
 	"volume": speech.VolumeCommand,
 	"rate": speech.RateCommand,
 }
-def _processMpSpeech(text):
+def _processMpSpeech(text, language):
 	# MathPlayer's default rate is 180 wpm.
 	# Assume that 0% is 80 wpm and 100% is 450 wpm and scale accordingly.
 	synth = speech.getSynth()
 	wpm = synth._percentToParam(synth.rate, 80, 450)
 	breakMulti = 180.0 / wpm
 	out = []
+	if language:
+		out.append(speech.LangChangeCommand(language))
 	resetProsody = set()
 	for m in RE_MP_SPEECH.finditer(text):
 		if m.lastgroup == "break":
@@ -67,6 +69,8 @@ def _processMpSpeech(text):
 				text=m.group("phonemeText")))
 		elif m.lastgroup == "content":
 			out.append(m.group(0))
+	if language:
+		out.append(speech.LangChangeCommand(None))
 	return out
 
 class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
@@ -78,7 +82,8 @@ class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
 
 	def reportFocus(self):
 		super(MathPlayerInteraction, self).reportFocus()
-		speech.speak(_processMpSpeech(self.provider._mpSpeech.GetSpokenText()))
+		speech.speak(_processMpSpeech(self.provider._mpSpeech.GetSpokenText(),
+			self.provider._language))
 
 	def getBrailleRegions(self, review=False):
 		yield braille.NVDAObjectRegion(self, appendText=" ")
@@ -108,7 +113,7 @@ class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
 				"shift" in modNames, "control" in modNames, "alt" in modNames, False)
 		except COMError:
 			return
-		speech.speak(_processMpSpeech(text))
+		speech.speak(_processMpSpeech(text, self.provider._language))
 
 class MathPlayer(mathPres.MathPresentationProvider):
 
@@ -120,13 +125,16 @@ class MathPlayer(mathPres.MathPresentationProvider):
 		self._mpBraille = mpSpeech.QueryInterface(IMathBraille)
 
 	def _setSpeechLanguage(self, mathMl):
-		lang = speech.getCurrentLanguage()
+		lang = mathPres.getLanguageFromMath(mathMl)
+		if not lang:
+			lang = speech.getCurrentLanguage()
 		self._mpSpeechSettings.SetLanguage(lang.replace("_", "-"))
+		self._language = lang
 
 	def getSpeechForMathMl(self, mathMl):
 		self._setSpeechLanguage(mathMl)
 		self._mpSpeech.SetMathML(mathMl)
-		return _processMpSpeech(self._mpSpeech.GetSpokenText())
+		return _processMpSpeech(self._mpSpeech.GetSpokenText(), self._language)
 
 	def getBrailleForMathMl(self, mathMl):
 		self._mpSpeech.SetMathML(mathMl)
