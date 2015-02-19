@@ -1007,7 +1007,10 @@ class Math(MSHTML):
 
 	def _get_mathMl(self):
 		import mathPres
-		return mathPres.stripExtraneousXml(self.HTMLNode.outerHTML)
+		mathMl = mathPres.stripExtraneousXml(self.HTMLNode.outerHTML)
+		if not mathPres.getLanguageFromMath(mathMl) and self.language:
+			mathMl = mathPres.insertLanguageIntoMath(mathMl, self.language)
+		return mathMl
 
 def findExtraIAccessibleOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class for MSHTML objects.

@@ -180,9 +180,16 @@ class Math(Mozilla):
 		# Try the data-mathml attribute.
 		attr = node.attributesForNames(1, (BSTR * 1)("data-mathml"), (c_short * 1)(0,))
 		if attr:
+			import mathPres
+			if not mathPres.getLanguageFromMath(attr) and self.language:
+				attr = mathPres.insertLanguageIntoMath(attr, self.language)
 			return attr
 		# Assume the content is MathML.
-		return "<math>%s</math>" % node.innerHTML
+		if self.language:
+			attrs = ' xml:lang="%s"' % self.language
+		else:
+			attrs = ""
+		return "<math%s>%s</math>" % (attrs, node.innerHTML)
 
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Mozilla object.
