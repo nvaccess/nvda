@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2015 NVDA contributers.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -40,6 +40,7 @@ class MshtmlVBufStorage_controlFieldNode_t : public VBufStorage_controlFieldNode
 	void reportLiveAddition();
 	void preProcessLiveRegion(const MshtmlVBufStorage_controlFieldNode_t* parent, const std::map<std::wstring,std::wstring>& attribsMap);
 	void postProcessLiveRegion(VBufStorage_controlFieldNode_t* oldNode, std::set<VBufStorage_controlFieldNode_t*>& atomicNodes);
+	virtual void generateAttributesForMarkupOpeningTag(std::wstring& text, int startOffset, int endOffset);
 	bool isRootNode;
 	MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, bool isRootNode, IHTMLDOMNode* pHTMLDOMNode, const std::wstring& lang);
 	~MshtmlVBufStorage_controlFieldNode_t();

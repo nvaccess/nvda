@@ -497,9 +497,6 @@ class VirtualBuffer(cursorManager.CursorManager, browseMode.BrowseModeTreeInterc
 				break
 		return tableLayout
 
- 
-
-
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		"""Retrieve an NVDAObject for a given node identifier.
 		Subclasses must override this method.
@@ -1273,6 +1270,20 @@ class VirtualBuffer(cursorManager.CursorManager, browseMode.BrowseModeTreeInterc
 		"""Handle an update to this buffer.
 		"""
 		braille.handler.handleUpdate(self)
+
+	def getControlFieldForNVDAObject(self, obj):
+		docHandle, objId = self.getIdentifierFromNVDAObject(obj)
+		objId = unicode(objId)
+		info = self.makeTextInfo(obj)
+		info.collapse()
+		info.expand(textInfos.UNIT_CHARACTER)
+		for item in info.getTextWithFields():
+			if not isinstance(item, textInfos.FieldCommand) or not item.field:
+				continue
+			fieldId = item.field.get("controlIdentifier_ID")
+			if fieldId == objId:
+				return item.field
+		raise LookupError
 
 	__gestures = {
 		"kb:NVDA+d": "activateLongDesc",

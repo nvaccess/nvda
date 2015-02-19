@@ -1,6 +1,6 @@
 #NVDAObjects/MSHTML.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NV Access Limited, Aleksey Sadovoy
+#Copyright (C) 2006-2015 NV Access Limited, Aleksey Sadovoy
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -899,6 +899,17 @@ class MSHTML(IAccessible):
 			ret = "exception: %s" % e
 		info.append("MSHTML nodeName: %s" % ret)
 		return info
+
+	def _get_language(self):
+		ti = self.treeInterceptor
+		if not ti:
+			# This is too slow to calculate without a buffer.
+			# This case should be pretty rare anyway.
+			return None
+		try:
+			return ti.getControlFieldForNVDAObject(self)["language"]
+		except LookupError:
+			return None
 
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.
