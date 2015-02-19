@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
+#Copyright (C) 2006-2015 NVDA Contributors
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -1432,6 +1432,17 @@ the NVDAObject for IAccessible
 				ret = "exception: %s" % e
 			info.append("IAccessible2 attributes: %s" % ret)
 		return info
+
+	def _get_language(self):
+		try:
+			ia2Locale = self.IAccessibleObject.locale
+		except (AttributeError, COMError):
+			return None
+		if ia2Locale.language and ia2Locale.country:
+			return "%s_%s" % (ia2Locale.language, ia2Locale.country)
+		elif ia2Locale.language:
+			return ia2Locale.language
+		return None
 
 class ContentGenericClient(IAccessible):
 

@@ -435,3 +435,10 @@ void MshtmlVBufStorage_controlFieldNode_t::postProcessLiveRegion(VBufStorage_con
 		this->reportLiveText(newChildrenText);
 	}
 }
+
+void MshtmlVBufStorage_controlFieldNode_t::generateAttributesForMarkupOpeningTag(wstring& text, int startOffset, int endOffset) {
+	VBufStorage_controlFieldNode_t::generateAttributesForMarkupOpeningTag(text, startOffset, endOffset);
+	wostringstream s;
+	s << L"language=\"" << language << L"\" ";
+	text += s.str();
+}

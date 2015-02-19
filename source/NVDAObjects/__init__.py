@@ -1051,3 +1051,7 @@ This code is executed if a gain focus event is received by this object.
 		@raise LookupError: If MathML can't be retrieved for this object.
 		"""
 		raise NotImplementedError
+
+	#: The language/locale of this object.
+	#: @type: basestring
+	language = None
