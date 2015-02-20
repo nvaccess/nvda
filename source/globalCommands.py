@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer
+#Copyright (C) 2006-2016 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter, Derek Riemer, Babbage B.V.
 
 import time
 import itertools
@@ -1977,6 +1977,20 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Describes the command to open the Configuration Profiles dialog.
 	script_activateConfigProfilesDialog.__doc__ = _("Shows the NVDA Configuration Profiles dialog")
 	script_activateConfigProfilesDialog.category=SCRCAT_CONFIG
+
+	def script_toggleConfigProfileTriggers(self,gesture):
+		if config.conf.profileTriggersEnabled:
+			# Translators: The message announced when temporarily disabling all configuration profile triggers.
+			state = _("Configuration profile triggers disabled")
+			config.conf.profileTriggersEnabled=False
+		else:
+			# Translators: The message announced when re-enabling all configuration profile triggers.
+			state = _("Configuration profile triggers enabled")
+			config.conf.profileTriggersEnabled=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle configuration profile triggers command.
+	script_toggleConfigProfileTriggers.__doc__=_("Disables or enables all configuration profile triggers. Disabling takes effect until NVDA is restarted")
+	script_toggleConfigProfileTriggers.category=SCRCAT_CONFIG
 
 	def script_interactWithMath(self, gesture):
 		import mathPres
