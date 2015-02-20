@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov
+#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -1523,6 +1523,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData("en")
 		self.symbolProcessor = symbolProcessor
 		# Translators: This is the label for the symbol pronunciation dialog.
+		# %s is replaced by the language for which symbol pronunciation is being edited.
 		self.title = _("Symbol Pronunciation (%s)")%languageHandler.getLanguageDescription(self.symbolProcessor.locale)
 		super(SpeechSymbolsDialog, self).__init__(parent)
 
