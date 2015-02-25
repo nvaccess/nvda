@@ -582,7 +582,7 @@ class ExcelCell(ExcelBase):
 		deviceCaps = ctypes.windll.gdi32.GetDeviceCaps(tempDC, 88)
 		#Fetching Font Size and Weight information
 		iFontSize = self.excelCellObject.Font.Size
-		iFontSize = int(iFontSize)
+		iFontSize = 11 if iFontSize is None else int(iFontSize)
 		iFontSize = ctypes.c_int(iFontSize)
 		iFontSize = ctypes.windll.kernel32.MulDiv(iFontSize, deviceCaps, 72)
 		#Font  Weight for Bold FOnt is 700 and for normal font it's 400
