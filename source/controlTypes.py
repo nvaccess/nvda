@@ -188,6 +188,8 @@ STATE_HASFORMULA=0x1000000000 #Mostly for spreadsheets
 STATE_HASCOMMENT=0X2000000000
 STATE_OBSCURED=0x4000000000
 STATE_OBSCURING=0x8000000000
+STATE_CROPPED=0x10000000000
+STATE_OVERFLOWING=0X20000000000
 
 roleLabels={
 	# Translators: The word for an unknown control type.
@@ -549,9 +551,13 @@ stateLabels={
 	# Translators: a state that denotes the existance of a comment.
 	STATE_HASCOMMENT:_("has comment"),
 	# Translators: a state that denotes that the object is covered partially or fully by another object
-	STATE_OBSCURED:_("cropped in"),
+	STATE_OBSCURED:_("obscured"),
 	# Translators: a state that denotes that the object is overlapping onto adjacent object(s)
-	STATE_OBSCURING:_("overflowing"),
+	STATE_OBSCURING:_("obscuring"),
+	# Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the allocated/available space
+	STATE_CROPPED:_("cropped"),
+	# Translators: a state that denotes that the object(text) is overflowing into the adjacent space
+	STATE_OVERFLOWING:_("overflowing"),
 }
 
 negativeStateLabels={

@@ -564,9 +564,9 @@ class ExcelCell(ExcelBase):
 			states.add(controlTypes.STATE_HASCOMMENT)
 		if self._overlapInfo is not None:
 			if self._overlapInfo['obscuredFromRightBy'] > 0:
-				states.add(controlTypes.STATE_OBSCURED)
+				states.add(controlTypes.STATE_CROPPED)
 			if self._overlapInfo['obscuringRightBy'] > 0:
-				states.add(controlTypes.STATE_OBSCURING)
+				states.add(controlTypes.STATE_OVERFLOWING)
 		return states
 
 	def getCellWidthAndTextWidth(self):
@@ -635,8 +635,10 @@ class ExcelCell(ExcelBase):
 		#Release & Delete the device context
 		ctypes.windll.gdi32.DeleteDC(tempDC)
 		#Retrieve the text width
-		textWidth = StructText.width+5
+		textWidth = StructText.width
 		cellWidth  = self.excelCellObject.ColumnWidth * xlCellWidthUnitToPixels	#Conversion factor to convert the cellwidth to pixels
+		log.io("\nTextWidth:\t"+str(textWidth)+"\n")
+		log.io("\nCellWidth:\t"+str(cellWidth)+"\n")
 		return (cellWidth,textWidth)
 
 	def _get__overlapInfo(self):
