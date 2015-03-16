@@ -635,10 +635,8 @@ class ExcelCell(ExcelBase):
 		#Release & Delete the device context
 		ctypes.windll.gdi32.DeleteDC(tempDC)
 		#Retrieve the text width
-		textWidth = StructText.width
+		textWidth = StructText.width+5
 		cellWidth  = self.excelCellObject.ColumnWidth * xlCellWidthUnitToPixels	#Conversion factor to convert the cellwidth to pixels
-		log.io("\nTextWidth:\t"+str(textWidth)+"\n")
-		log.io("\nCellWidth:\t"+str(cellWidth)+"\n")
 		return (cellWidth,textWidth)
 
 	def _get__overlapInfo(self):
