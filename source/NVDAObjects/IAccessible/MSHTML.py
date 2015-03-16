@@ -602,7 +602,8 @@ class MSHTML(IAccessible):
 				value=""
 			return value
 		IARole=self.IAccessibleRole
-		if IARole in (oleacc.ROLE_SYSTEM_PANE,oleacc.ROLE_SYSTEM_TEXT):
+		# value is not useful on certain nodes that just expose a URL, or they  have other ways of getting their content (#4976 - editble combos).
+		if IARole in (oleacc.ROLE_SYSTEM_PANE,oleacc.ROLE_SYSTEM_TEXT) or (IARole==oleacc.ROLE_SYSTEM_COMBOBOX and controlTypes.STATE_EDITABLE in self.states):
 			return ""
 		else:
 			return super(MSHTML,self).value
