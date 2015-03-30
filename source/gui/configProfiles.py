@@ -309,12 +309,12 @@ class TriggersDialog(wx.Dialog):
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of the profile list in the Configuration Profile Triggers dialog.
-		sizer.Add(wx.StaticText(self, label=_("Profile")))
+		sizer.Add(wx.StaticText(self, label=_("Profile")),border=10,flag=wx.RIGHT)
 		item = self.profileList = wx.Choice(self,
 			choices=[parent.getProfileDisplay(name) for name in parent.profileNames])
 		item.Bind(wx.EVT_CHOICE, self.onProfileListChoice)
 		sizer.Add(item)
-		mainSizer.Add(sizer)
+		mainSizer.Add(sizer,border=10,flag=wx.BOTTOM)
 
 		item = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
 		item.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
@@ -367,7 +367,7 @@ class NewProfileDialog(wx.Dialog):
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a field to enter the name of a new configuration profile.
-		sizer.Add(wx.StaticText(self, label=_("Profile name:")))
+		sizer.Add(wx.StaticText(self, label=_("Profile name:")),border=10,flag=wx.RIGHT)
 		item = self.profileName = wx.TextCtrl(self)
 		sizer.Add(item)
 		mainSizer.Add(sizer)

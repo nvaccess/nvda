@@ -156,7 +156,7 @@ class PortableCreaterDialog(wx.Dialog):
 		# in the Create Portable NVDA dialog.
 		sizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("Portable &directory:")), wx.HORIZONTAL)
 		ctrl = self.portableDirectoryEdit = wx.TextCtrl(self)
-		sizer.Add(ctrl)
+		sizer.Add(ctrl,border=10,flag=wx.RIGHT)
 		# Translators: The label of a button to browse for a directory.
 		ctrl = wx.Button(self, label=_("Browse..."))
 		ctrl.Bind(wx.EVT_BUTTON, self.onBrowseForPortableDirectory)
