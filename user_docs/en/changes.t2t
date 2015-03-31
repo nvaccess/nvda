@@ -17,10 +17,12 @@
 
 == Bug Fixes ==
 - Character descriptions are now handled correctly for conjunct characters in certain Indian languages. (#4582)
+-In Internet Explorer and other MSHTML controls, typed characters are no longer inappropriately announced in editable combo boxes such as the Google search field on the Google home page. (#4976)
 
 
 == Changes for Developers ==
 - brailleInput.handler.sendChars(mychar) will no longer filter out a character if it is equal to the previous character, by ensuring that the key sent is correctly released.
+- scripts for changing touch modes will now honor new labeles added to touchHandler.touchModeLabels. (#4699)
 
 
 = 2015.1 =
