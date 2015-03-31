@@ -3,56 +3,57 @@
 
 %!includeconf: ../changes.t2tconf
 = 2015.1 =
-Schwerpunkte dieser Version sind: Lese-Modus für Dokumente Microsoft Word und Outlook, wesentliche Verbesserungen für die Unterstützung von Skype für Desktop, bedeutende Fehlerbehebungen für Internet Explorer
+Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dokumente, wesentliche Verbesserungen für die Unterstützung von Skype für Desktop sowie bedeutende Fehlerbehebungen für Internet Explorer
 
-== neue Funktionen ==
-- im Dialog aussprache von Symbolen und Satzzeichen können Sie nun neue Symbole hinzufügen. (#4354)
+== Neue Funktionen ==
+- Im Dialog aussprache von Symbolen und Satzzeichen können Sie nun neue Symbole hinzufügen. (#4354)
 - Im Dialog Eingaben können Sie über das Eingabefeld Filtern nach.... nur diejenigen Eingaben anzeigen, die in ihrer Beschreibung bestimmte Wörter enthalten. (#4458)
-- in mintty gibt NVDA nun neuen Text aus. (#4588)
-- im Suchdialog des Lesemodus' gibt es ein Kontrollkästchen, mit dem Sie eine Suche unter Berücksichtigung der Groß-/Kleinschreibung durchführen können. (#4584)
+- In Mintty gibt NVDA nun neuen Text aus. (#4588)
+- Im Suchdialog des Lesemodus' gibt es ein Kontrollkästchen, mit dem Sie eine Suche unter Berücksichtigung der Groß-/Kleinschreibung durchführen können. (#4584)
 - In Microsoft Word kann nun mittels NVDA+Leertaste der Lesemodus verwendet werden, um mit Hilfe von Schnellnavigationstasten im Dokument zu navigieren. Die Elementliste ist ebenfalls verfügbar. (#2975)
-- das Lesen von Html-Nachrichten in Outlook 2007 und höher wurde verbessert, in dem der Lesemodus automatisch für diese Nachrichten aktiviert wird. Sollte dies in seltenen Fällen nicht geschehen, können Sie den Lesemodus mittels NVDA+Leertaste aktivieren. (#2975) 
+- Das Lesen von HTML-Nachrichten in Outlook 2007 und höher wurde verbessert, in dem der Lesemodus automatisch für diese Nachrichten aktiviert wird. Sollte dies in seltenen Fällen nicht geschehen, können Sie den Lesemodus mittels NVDA+Leertaste aktivieren. (#2975) 
 - In Microsoft Word werden Spaltenüberschriften automatisch gelesen, wenn sie in den Tabelleneigenschaften als solche gekennzeichnet wurden. (#)
- - Wenn die Tabelle jedoch verbundene Zeilen enthält, funktioniert dies nicht automatisch. Sie können die Spaltenüberschrift manuell mit NVDA setzen. Verwenden Sie hierfür die Tastenkombination nvda+Umschalt+c.
+ - Wenn die Tabelle jedoch verbundene Zeilen enthält, funktioniert dies nicht automatisch. Sie können die Spaltenüberschrift manuell mit NVDA setzen. Verwenden Sie hierfür die Tastenkombination NVDA+Umschalt+c.
 - In der Desktop-Version von Skype werden Benachrichtigungen angezeigt. (#4741)
-- in Skype können Sie die letzten Nachrichten mit nvda+strg+1 bis nvda+strg+0 anzeigen nvda+strg+1 zeigt beispielsweise die letzte eingegebene Nachricht an. (#3210)
+- In Skype können Sie die letzten Nachrichten mit NVDA+Strg+1 bis NVDA+Strg+0 anzeigen NVDA+Strg+1 zeigt beispielsweise die letzte eingegebene Nachricht an. (#3210)
 - In einer Skype-Konversation wird nun angesagt, wenn jemand tippt. (#3506)
 - Bei der Installation von NVDA kann die Anzeige von Meldungen unterdrückt werden. Verwenden Sie hierfür die Kommandozeilenoption  --install-silent. (#4206)
 - Unterstützung für Papenmeier BRAILLEX Live 20, BRAILLEX Live und BRAILLEX Live Plus. (#4614)
 
 
 == Änderungen ==
-- im Dialog Dokumentformatierungen besitzt die Option zur Ansage von Rechtschreibfehlern nun das Tastenkürzel alt+r. (#793)
-- NVDA wird die Sprache der Sprachausgabe/der Stimme verwenden, um Namen von Symbolen und Satzzeichen zu sprechen; unabhängig davon, ob "automatisch Sprache wechseln"  aktiviert ist. Um dieses Verhalten abzuschalten sodass NVDA wieder seine Dialogsprache verwendet, deaktivieren Sie in den Stimmeneinstellungen die neue Option "beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen". (#4210)
+- Im Dialog Dokumentformatierungen besitzt die Option zur Ansage von Rechtschreibfehlern nun das Tastenkürzel Alt+R. (#793)
+- NVDA wird die Sprache der Sprachausgabe/der Stimme verwenden, um Namen von Symbolen und Satzzeichen zu sprechen; unabhängig davon, ob "Sprache automatisch wechseln"  aktiviert ist. Um dieses Verhalten abzuschalten sodass NVDA wieder seine Dialogsprache verwendet, deaktivieren Sie in den Stimmeneinstellungen die neue Option "beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen". (#4210)
 - Die Unterstützung für Newfon wurde entfernt; Newfon ist jetzt als NVDA-Erweiterung verfügbar. (#3184)
 - Skype 7 oder neuer wird nun benötigt; ältere Skype-Versionen werden nicht mehr unterstützt. (#4218)
 - Das Herunterladen von Aktualisierungen von NVDA ist nun sicherer. Es erfolgt nun über https. Zudem wird die Datei nach dem Herunterladen mit Hilfe ihres Hash-Wertes auf Unversehrtheit geprüft. (#4716)
-- ESpeak auf Version 1.48.04 aktualisiert.
+- eSpeak auf Version 1.48.04 aktualisiert.  (#4325)
 
 
 == Fehlerbehebungen ==
 - Wenn in Microsoft Excel die Reihen- oder Spaltenüberschriften aus verbundenen Zellen bestehen, werden diese richtig erkannt. Wenn beispielsweise A1 und A2 verbunden sind, wird in b2 der Inhalt aus a1 und b1 ausgegeben, anstatt die Überschrift zu ignorieren.   (#4617)
-- beim Bearbeiten von Text in Eingabefeldern in Microsoft Powerpoint 2003 wird der Inhalt von jeder Zeile richtig ausgegeben. Zuvor wurden Zeilenumbrüche falsch verarbeitet. (#4619)
-- alle NVDA-Dialoge werden zentriert angezeigt, um die Lesbarkeit zu verbessern. (#3148)
+- Beim Bearbeiten von Text in Eingabefeldern in Microsoft PowerPoint 2003 wird der Inhalt von jeder Zeile richtig ausgegeben. Zuvor wurden Zeilenumbrüche falsch verarbeitet. (#4619)
+- Alle NVDA-Dialoge werden zentriert angezeigt, um die Lesbarkeit zu verbessern. (#3148)
 - Wenn Sie in Skype eine Nachricht eingeben, um einen Kontakt zu einem Chat einzuladen, funktioniert das Eingeben der Nachricht nun korrekt. (#3661)
 - Die Navigation in Baumstrukturen in der Eclipse IDE funktioniert nun korrekt. (#4586)
 - Wenn Sie Tastenkombinationen verwenden, um einen Rechtschreibfehler in Microsoft Word zu korrigieren oder zu ignorieren, wird automatisch der nächste Rechtschreibfehler ausgegeben. (#1938)
 - In Balabolka-Dokumenten oder dem Terminalfenster von Tera Term Pro funktioniert das Lesen von Text korrekt. (#4229)
-- Wenn Sie im Internet Explorer oder anderen Mshtml-Dokumenten innerhalb eines Rahmens Text bearbeitet haben, wird der Fokus korrekt in das Dokument gesetzt, wenn Sie die Bearbeitung abgeschlossen haben. Dies betrifft vor allem Text in ostasiatischen Sprachen wie korean. (#4045)
-- Wenn Sie Im Dialog "Eingaben" beim Auswählen eines Tastaturschemas beim Hinzufügen einer Eingabemethode im Tastaturschemen-Menü esc drücken, wird jetzt - wie erwartet - das Menü geschlossen; zuvor wurde der gesamte Dialog geschlossen.  (#3617)
-- Beim Entfernen einer Erweiterung wird das Verzeichnis der Erweiterung korrekt gelöscht. Zuvor musste NVDA hierfür zweimal neu gestartet werden. (#3461)
-- schwerwiegende Probleme mit Skype 7 für Desktop wurden behoben. (#4218)
+- Wenn Sie im Internet Explorer oder anderen MSHTML-Dokumenten innerhalb eines Rahmens Text bearbeitet haben, wird der Fokus korrekt in das Dokument gesetzt, wenn Sie die Bearbeitung abgeschlossen haben. Dies betrifft vor allem Text in ostasiatischen Sprachen wie Koreanisch. (#4045)
+- Wenn Sie Im Dialog "Eingaben" beim Auswählen eines Tastaturschemas beim Hinzufügen einer Eingabemethode im Tastaturschemen-Menü ESC drücken, wird jetzt - wie erwartet - das Menü geschlossen; zuvor wurde der gesamte Dialog geschlossen.  (#3617)
+- Beim Entfernen einer Erweiterung wird das Verzeichnis der Erweiterung korrekt gelöscht. Zuvor musste NVDA hierfür zwei Mal neu gestartet werden. (#3461)
+- Schwerwiegende Probleme mit Skype 7 für Desktop wurden behoben. (#4218)
 - Wenn Sie eine Nachricht in Skype schreiben, wird sie nicht mehr zweimal gelesen. (#3616)
-- in Skype sollte NVDA nicht mehr fälschlicherweise ganze Konversationen lesen. (#4644)
+- In Skype sollte NVDA nicht mehr fälschlicherweise ganze Konversationen lesen. (#4644)
 - Problem behoben, wonach NVDA beim Lesen des Datums und der Uhrzeit manchmal die Ländereinstellungen des Benutzers nicht berücksichtigt hat. (#2987)
-- Im Lesemodus werden keine irreführenden Alternativtexte für Grafiken mehr angezeigt. dies betrifft u.a. base64-codierte Grafiken in Google Groups.(#4793)
+- Im Lesemodus werden keine irreführenden Alternativtexte für Grafiken mehr angezeigt. dies betrifft u.a. base64-kodierte Grafiken in Google Groups. (#4793)
 - NVDA sollte nun nicht mehr hängen bleiben, sobald eine Metro-App durch Windows 8 stillgelegt wird. (#4572)
-- In Firefox wird das Aria-Attribut Atomic in Live-Regionen berücksichtigt, wenn sich das Atomic-Element ändert. Zuvor wirkte sich eine Änderung des Atomic-Attributes nur auf enthaltene Elemente aus. (#4794) 
-- Aktualisierungen von Dokumenten innerhalb von Aria-Anwendungen werden in Internet Explorer und anderen MSHTML-Dokumenten berücksichtigt (#4798)
-- Wenn sich Text innerhalb von Aria-Elementen in Internet Explorer und MSHTML-Steuerelementen ändert, wird nur der neu hinzugekommene/geänderte Text ausgegeben. (#4800)
-- Das Attribut Aria-labeledby wird korrekt verarbeitet. (#4575)
+- In Firefox wird das ARIA-Attribut Atomic in Live-Regionen berücksichtigt, wenn sich das Atomic-Element ändert. Zuvor wirkte sich eine Änderung des Atomic-Attributes nur auf enthaltene Elemente aus. (#4794) 
+- Aktualisierungen von Dokumenten innerhalb von ARIA-Anwendungen werden in Internet Explorer und anderen MSHTML-Dokumenten berücksichtigt. (#4798)
+- Wenn sich Text innerhalb von ARIA-Elementen in Internet Explorer und MSHTML-Steuerelementen ändert, wird nur der neu hinzugekommene/geänderte Text ausgegeben. (#4800)
+- Das Attribut ARIA-labeledby wird korrekt verarbeitet. (#4575)
 - Wird in Microsoft Outlook 2013 die Rechtschreibung geprüft, so werden falsch geschriebene Wörter angesagt. (#4848)
-- Im Internet Explorer und anderen MSHTML-Elementen werden Elemente, welche durch visibility:hidden versteckt wurden, nicht mehr fälschlicherweise im Lese-Modus ausgegeben.
+- Im Internet Explorer und anderen MSHTML-Elementen werden Elemente, welche durch visibility:hidden versteckt wurden, nicht mehr fälschlicherweise im Lese-Modus ausgegeben.  (#4839, #3776)
+- Im Internet Explorer und anderen MSHTML-Elementen werden Beschriftungen von Formularfeldern nicht mehr durch die Titelbezeichnung verdeckt.
  
  
 == Änderungen für Entwickler ==
@@ -63,9 +64,9 @@ Schwerpunkte dieser Version sind: Lese-Modus für Dokumente Microsoft Word und O
 
 = 2014.4 =
 
-== Neuerungen ==
+== Neue Funktionen ==
 - Neue Sprachen: Kolumbianisches Spanisch, Punjabi
-- Sie können NVDA nun auch vom Dialog "beenden" aus (wahlweise mit deaktivierten Erweiterungen) neu starten. (#4057)
+- Sie können NVDA nun auch vom Dialog "Beenden" aus (wahlweise mit deaktivierten Erweiterungen) neu starten. (#4057)
   - Sie können NVDA auch mit deaktivierten Erweiterungen neu starten, indem Sie die Kommandozeilenoption --disable-addons verwenden.
 - Sie können in Aussprachewörterbüchern angeben, dass ein bestimmtes Muster nur auf ein ganzes Wort passen soll. (#1704)
  
@@ -73,23 +74,23 @@ Schwerpunkte dieser Version sind: Lese-Modus für Dokumente Microsoft Word und O
 == Änderungen ==
 - Wenn Sie mit dem Navigator in ein virtuelles Dokument wechseln, wird der Darstellungsmodus auf "Dokument" eingestellt. früher geschah dies nur, wenn Sie den Fokus bewegt haben. (#4369)
 - Die Dialoge zum auswählen von Sprachausgaben Bzw. Braillezeilen werden alphabetisch sortiert; ausgenommen sind hierbei die Einträge "keine Sprachausgabe" Bzw. "keine Braillezeile". Diese befinden sich stets an letzter Stelle in der Liste. (#2724)
-- Libluis wurde auf Version  2.6.0 aktualisiert. (#4434, #3835)
+- Libluis wurde auf Version 2.6.0 aktualisiert. (#4434, #3835)
 - Wenn Sie im Lesemodus die Schnellnavigationstasten E und Umschalt+E drücken, werden nun auch bearbeitbare Kombinationsfelder berücksichtigt. Dies betrifft u. a. das Suchfeld in der neuesten Version der Google-suche. (#4436)
 - Wenn Sie mit der linken Maustaste auf das NVDA-Symbol im Infobereich klicken, wird nun das NVDA-Menü geöffnet. (#4459)
 
 
 == Fehlerbehebungen ==
-- Wenn Sie mit alt+Tab in ein bereits geöffnetes virtuelles Dokument wechseln, wird der NVDA-Cursor korrekt auf dem virtuellen Cursor und nicht wie bisher auf dem fokusierten Objekt (z. B. einem nahe gelegenen Link) positioniert. (#4369)
+- Wenn Sie mit Alt+Tab in ein bereits geöffnetes virtuelles Dokument wechseln, wird der NVDA-Cursor korrekt auf dem virtuellen Cursor und nicht wie bisher auf dem fokusierten Objekt (z. B. einem nahe gelegenen Link) positioniert. (#4369)
 - Der NVDA-Cursor verfolgt nun den virtuellen Cursor richtig in PowerPoint-Präsentationen. (#4370)
 - In Mozilla Firefox und anderen Gecko-basierten Browsernwird neuer Inhalt in Live-Regionen korrekt angezeigt. (#4169).
 - Im Internet Explorer und anderen MSHTML-Elementen verhindern verschachtelte Rahmen nicht mehr das Navigieren in außerhalb liegende Rahmen. (#4418)
 - NVDA stürzt nun nicht mehr ab, wenn es mit einer Handytech-Braillezeile verwendet wird. (#3709)
 - Problem in Windows Vista behoben, wonach NVDA mit dem Dialog "Einsprungpunkt nicht gefunden" abgestürzt ist, wenn man es über die Desktop-Verknüpfung oder über die Tastenkombination gestartet hat. (#4235)
 - Probleme mit Eingabefeldern in einigen Eclipse-Versionen behoben. (#3872)
-- In Outlook 2010 wird der Systemcursor im Eingabefeld "Ort" in Besprechungs- und Terminanfragen ordnungsgemäß bewegt. (#4126)
+- In Microsoft Outlook 2010 wird der System-Cursor im Eingabefeld "Ort" in Besprechungs- und Terminanfragen ordnungsgemäß bewegt. (#4126)
 - Innerhalb einer Live-Region wird der Inhalt, der mit "aria-live=off" gekennzeichnet ist, korrekterweise ignoriert. (#4405)
 - Bei Statuszeilen, die einen Namen besitzen, wird der Name vom Text abgetrennt. (#4430)
-- Wenn die Option Sprechen eingegebener Wörter" aktiviert ist, werden in Passwort-Eingabefeldern nicht mehr länger Sterne angesagt, wenn Sie ein neues Wort beginnen. (#4402)
+- Wenn die Option "Eingegebene Wörter ansagen" aktiviert ist, werden in Passwort-Eingabefeldern nicht mehr länger Sterne angesagt, wenn Sie ein neues Wort beginnen. (#4402)
 - In der Nachrichtenliste von Microsoft Outlook werden Einträge nicht mehr unnötigerweise als Dateneintrag bezeichnet.  (#4439)
 - Im Code-Editor von Eclipse wird beim Markieren von Text nicht mehr der gesamte markierte Text ausgegeben, wenn sich die Markierung ändert. (#2314)
 - Diverse Versionen von Eclipse (wie z. B. die Entwicklungsumgebung für Android-Anwendungen) werden korrekt als Eclipse erkannt. (#4360, #4454)
