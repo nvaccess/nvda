@@ -17,7 +17,7 @@ NVDA stelt blinden en slechtzienden in staat om te werken met het Windows bestur
 
 Belangrijke functies zijn:
 - Ondersteuning voor populaire toepassingen zoals webbrowsers, emailprogramma’s, chatprogramma’s en kantoorapplicaties   
-- Ingebouwde spraakmodule met ondersteuning voor meer dan 43 talen
+- Ingebouwde spraakmodule met ondersteuning voor meer dan 80 talen
 - Vermeldding van tekstopmaakeigenschappen , voor zover beschikbaar, zoals naam lettertype, grootte, stijl- en spelfouten
 - Tekst onder de muis wordt automatisch voorgelezen en er kan een akoestisch signaal worden ingesteld dat de muispositie aangeeft
 - Ondersteuning voor veel brailleleesregels, inclusief invoer van computerbraille voor leesregels met een brailletoetsenbord
@@ -300,7 +300,8 @@ U kunt de volgende NVDA-toetscommando’s gebruiken om met de textcursor te navi
 | Alles voorlezen | NVDA+pijl omlaag | NVDA+a | Voorlezen starten vanaf de huidige positie van de tekstcursor die tijdens het lezen wordt verplaatst. |
 | Deze regel lezen | NVDA+pijl omhoog | NVDA+l | Hiermee wordt de regel waarin de tekstcursor zich momenteel bevindt voorgelezen. Bij tweemaal drukken wordt regel gespeld. |
 | Geselecteerde tekst lezen | NVDA+Shift+pijl omhoog | NVDA+Shift+s | Hiermee wordt geselecteerde tekst voorgelezen. |
-
+| Volgende zin | alt+Pijl omlaag | alt+Pijl omlaag | Verplaatst cursor naar volgende zin en meldt deze (alleen ondersteund in Microsoft Word). |
+| Vorige zin | alt+Pijl omhoog | Alt+Pijl omhoog | Verplaatst cursor naar vorige zin en meldt deze (alleen ondersteund in Microsoft Word). |
 
 Binnen een tabel kunt u ook de volgende toetscommando’s gebruiken:
 || Naam | Toets | Beschrijving |
@@ -733,8 +734,6 @@ De meeste synthesizers ondersteunen deze functionaliteit.
 
 In het algemeen is het aan te bevelen dit selectievakje aan te vinken. Er zijn evenwel synthesizers die van de Microsoft API gebruik maken die met de uitspraak van individuele lettertekens niet goed omgaan. Als u problemen hiermee ondervindt, kunt u het selectievakje beter niet aanvinken.
 
-Merk op dat deze functionaliteit voor het Engels van groot belang is, maar dat dit bij het Nederlands nauwelijks of niet het geval is.
-
 +++ Synth settings ring +++[SynthSettingsRing]
 Om spraakinstellingen snel aan te passen zonder dat u gebruik maakt van het dialoogvenster “rij/kolomkoppen”, kunt u te allen tijde beschikken over een aantal toetscombinaties terwijl u met NVDA werkt:
 %kc:beginInclude
@@ -890,6 +889,8 @@ Als dit selectievakje is ingeschakeld, zal NVDA de rol (type) van het object wee
 
 ==== Geluidscoördinatie gebruiken bij verplaatsen muis====
 Als het selectievakje is ingeschakeld laat NVDA pieptonen horen bij het verplaatsen van de muis. Met behulp van deze signalen kan de gebruiker bepalen waar de muis zich op het scherm bevindt.
+Hoe verder de muis naar de bovenrand van het scherm wordt verplaatst, hoe hoger de pieptonen worden.
+Bij gebruik van stereoluidsprekers of een koptelefoon zal het geluidssignaal steeds verder van links of rechts komen al naar gelang de muis naar links of rechts op het scherm wordt verplaatst. 
 
 ==== Schermhelderheid bepaalt Volume audio-coördinatie ====
 Als het selectievakje “geluidscoördinatie gebruiken bij verplaatsen muis” is ingeschakeld, dan zal het inschakelen van dit selectievakje ervoor zorgen dat het volume van de pieptonen wordt bepaald door de schermhelderheid onder de muis.
@@ -1272,7 +1273,7 @@ Van elke Add-on wordt de pakketnaam, versie en auteur weergegeven. Door een Add-
 
 U kunt op Internet naar beschikbare Add-ons bladeren en deze desgewenst installeren door op de knop "Add-ons toevoegen" te klikken.
 U komt nu op de [NVDA Add-ons pagina http://addons.nvda-project.org/]. 
-Als NVDA op uw computer is geïnstalleerd,kunt u een Add-on rechtstreeks vanuit de browser openen en installeren volgens de hieronder beschreven procedure.
+Als NVDA op uw computer is geïnstalleerd,en gestart is, kunt u een Add-on rechtstreeks vanuit de browser openen en installeren volgens de hieronder beschreven procedure.
 Werkt u met een draagbare kopie van NVDA, dan slaat u de Add-on op en volgt u onderstaande instructies.
 
 Om een eerder verkregen Add-on te installeren drukt u op de knop "Installeren".
@@ -1912,7 +1913,7 @@ Het is dan ook niet relevant dat een invoertabel in NVDA wordt ingesteld.
 
 De volgende brltty-commando's worden in NVDA ondersteund.
 Voor informatie over toetsenbordtabellen kunt u de  [BRLTTY-Documentatie op 
-http://mielke.cc/brltty/doc/drivers/] raadplegen.
+http://mielke.cc/brltty/doc/KeyTables/] raadplegen.
 
 %kc:beginInclude
 || Naam | BRLTTY-commando |
