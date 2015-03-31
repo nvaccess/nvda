@@ -6,6 +6,18 @@
 
 Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 
+= 2015.2 =
+
+== Novas características ==
+- Agora é possível avançar e retroceder por sentenças no Microsoft Word com alt+seta abaixo e alt+seta acima respectivamente. (#3288)
+- Novas tabelas de tradução braille para vários idiomas Indianos. (#4778)
+
+
+== alterações ==
+- No Diálogo de Formatação de Documentos do NVDA, as teclas de atalho para Anunciar listas, Anunciar links, Anunciar número das linhas e Anunciar nome da font foram alterados. (#4650)
+- No Diálogo de Opções de Mouse do NVDA, foram adicionadas teclas de atalho para tocar coordenadas de áudio quando o mouse é movido e brilho controla o volume das coordenadas de áudio. (#4916)
+
+
 = 2015.1 =
 Os destaques desta versão incluem o modo de navegação para documentos no Microsoft Word e Outlook; maiores melhorias no suporte ao Skype para Desktop; e significativas correções para o Microsoft Internet Explorer.
 
@@ -14,16 +26,18 @@ Os destaques desta versão incluem o modo de navegação para documentos no Micr
 - No Diálogo de Gestos de Entrada, você agora pode usar o novo campo "Filtrar por" para mostrar apenas  gestos que contenham palavras específicas. (#4458)
 - O NVDA agora anuncia automaticamente textos novos no mintty. (#4588)
 - No diálogo de procura do modo de navegação, agora existe uma opção para distinguir maiúsculas de minúsculas na pesquisa. (#4584)
-- a navegação rápida (h para cabeçalho etc), e a Lista de Elementos  (NVDA+f7) agora estão disponíveis em documentos no Microsoft Word ativando-se o modo de navegação com NVDA+space. (#2975)
-- A leitura de mensagens HTML no Microsoft Outlook 2007 e posteriores foi significativamente melhorada, pois o modo de navegação agora é ativado automaticamente para estas mensagens. Caso o modo de navegação não seja ativado (em algumas situações raras), você pode forçar a ativação do mesmo com NVDA+space. (#2975)
+- a navegação rápida (h para cabeçalho etc), e a Lista de Elementos  (NVDA+f7) agora estão disponíveis em documentos no Microsoft Word ativando-se o modo de navegação com NVDA+espaço. (#2975)
+- A leitura de mensagens HTML no Microsoft Outlook 2007 e posteriores foi significativamente melhorada, pois o modo de navegação agora é ativado automaticamente para estas mensagens. Caso o modo de navegação não seja ativado (em algumas situações raras), você pode forçar a ativação do mesmo com NVDA+espaço. (#2975)
 - Os cabeçalhos de colunas das tabelas no Microsoft word agora são anunciados automaticamente para tabelas onde  uma linha de cabeçalho tenha sido explicitamente especificada pelo autor por meio das propriedades das tabelas do Microsoft word. (#4510) 
+ - Contudo, para tabelas onde linhas tenham sido mescladas, isto não funcionará automaticamente. Nessa situação, você ainda poderá definir os cabeçalhos das colunas manualmente no NVDA usando o comando NVDA+shift+c.
 - No Skype para Desktop, as notificações agora são anunciadas. (#4741)
 - No Skype para Desktop, você agora pode ler as mensagens recentes usando os comandos desde NVDA+control+1 a NVDA+control+0; isto é,, NVDA+control+1 para a mensagem mais recente e NVDA+control+0 para a décima mais recente. (#3210)
 - Nas conversações do Skype para Desktop, o NVDA agora anuncia quando um contato está digitando. (#3506)
+- O NVDA agora pode ser instalado sem fala por meio de uma linha de  comando sem iniciar a cópia instalada após a instalação. Para fazer isso, use a opção --install-silent. (#4206)
 - Suporte para as linhas braille Papenmeier BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus. (#4614)
 
 
-== alterações 
+== alterações ==
 - NO diálogo de Formatação de Documentos do NVDA, a opção Anunciar erros ortográficos agora possui uma tecla de atalho (alt+r). (#793)
 - O suporte para o sintetizador Newfon foi removido. O Newfon agora encontra-se disponível como complemento para o NVDA. (#3184)
 - O skype para Desktop versão 7 ou posterior  agora é exigido para uso com o NVDA; versões anteriores já não são suportadas. (#4218)
@@ -366,7 +380,7 @@ Alguns itens ou termos desta seção não serão traduzidos, uma vez que são de
 - O NVDA agora anuncia mudanças de modos de conversão de IME no Windows 8.
 - O NVDA não anuncia mais conteúdo inútil na área de trabalho quando os métodos de entrada IME Google Japonês ou Atok estão em uso. (#3234)
 - No Windows 7 e posteriores, o NVDA não mais anuncia de modo inapropriado reconhecimento de voz ou entrada tátil quando se troca o idioma de teclado.
-- O NVDA não anuncia mais um caractere especial em particular (0x7f) ao pressionar control+backspace em alguns editores quando falar caracteres digitados estiver abilitado. (#3315)
+- O NVDA não anuncia mais um caractere especial em particular (0x7f) ao pressionar control+backspace em alguns editores quando falar caracteres digitados está abilitado. (#3315)
 - O eSpeak já não muda inapropriadamente de tom, volume, etc. quando o NVDA lê textos que contenham certos caracteres de controle ou XML. (#3334) (regressão do #437)
 - Em aplicativos Java, mudanças de rótulo ou valor no controle em foco agora são automaticamente anunciadas e se refletem ao chamar novamente o controle. (#3119)
 - Em controles Scintilla as linhas agora são anunciadas de modo correto quando quebrar linhas está abilitado. (#885)
@@ -716,8 +730,8 @@ Alguns itens ou termos desta seção não serão traduzidos, uma vez que são de
 - Os comandos da navegação de objetos já não anunciam "sem filhos" e "sem pais", e em lugar disso, anunciam mensagens em concordância com a documentação. Nota: (Isto foi feito apenas no idioma original, visto que estamos habituados a tais expressões e optamos por mantê-las.)
 - Quando o NVDA está configurado para usar outro idioma diferente do inglês, o nome da tecla tab agora é anunciado no idioma correto.
 - No Mozilla Gecko, (isto é, Firefox), o NVDA já não alterna ocasionalmente para o modo de navegação quando se navega por menus em documentos. (#2025) 
-- Na Calculadora, a tecla backspace agora anuncia o resultado atualizado ao invés de slenciar. (#2030) 
-- Em modo de navegação, quando se tem a opção "Modo de foco automático quando o foco muda" ativada, quando uma  barra de ferramentas recebe foco, o modo de foco agora é ativado. (#1339) 
+- Na Calculadora, a tecla backspace agora anuncia o resultado atualizado ao invés de silenciar. (#2030) 
+- Em modo de navegação, quando se tem ativada a opção "Modo de foco automático quando o foco muda", caso uma  barra de ferramentas receba foco, o modo de foco agora será ativado. (#1339) 
 - No modo de navegação, o comando de mover o mouse para o objeto de navegação atual agora desloca-o para o centro do objeto sob o cursor de exploração, em lugar de ir para a parte esquerda do topo, tornando-o mais eficaz em alguns casos. (#2029)
 - O comando para anunciar título volta a funcionar apropriadamente no Adobe Reader.
 - Com a opção "Modo de foco automático quando o foco muda" ativada, o modo de foco agora é usado corretamente para células de tabelas que recebem foco; isto é, em ARIA grids. (#1763)

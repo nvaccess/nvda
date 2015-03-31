@@ -1,7 +1,14 @@
 ﻿#locale/fa/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2014 NVDA Farsi contributors
+#Copyright (c) 2015 NVDA Persian (Farsi) contributors
 #This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+؟ sentence ending	(?<=[^\s؟])\؟(?=[\"'”’)\s]|$)
+# Phrase endings.
+؛ phrase ending	(?<=[^\s؛])؛(?=\s|$)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -10,11 +17,11 @@ symbols:
 . sentence ending	نقطه
 ! sentence ending	علامتِ تعجب
 ? sentence ending	Question
-؟ sentence ending	علامتِ سؤال
-؛ phrase ending	نقطه ویرگول
+؟ sentence ending	علامتِ سؤال	all	always
+؛ phrase ending	نقطه ویرگول	all	always
 ; phrase ending	semicolon
 : phrase ending	دو‌نقطه
-decimal point	نقطه	-	norep
+decimal point	نقطه	none	never
 in-word '	tick
 negative number	منفی
 
@@ -33,7 +40,7 @@ negative number	منفی
 \#	شماره
 $	دلار
 £	پوند
-€	يورو
+€	یورو
 %	درصد
 &	And
 '	tick
@@ -74,9 +81,10 @@ _	زیرخط
 —	em dash
 ●	دایره
 ¨	diaeresis
-■	مربعِ سیاه	char
-➔	فِلِشِ راست‌نمای سر‌پهن	char
-→	‌فِلِشِ راست‌نما	char
+■	مربعِ سیاه
+➔	فِلِشِ راست‌نمای سر‌پهن
+→	‌فِلِشِ راست‌نما
+←	‌فِلِشِ چپ‌نما
 §	بخش
 °	درجه
 ¹	۱ بالانویس
@@ -87,20 +95,21 @@ _	زیرخط
 ÷	تقسیم‌بر
 ✓	تیک
 ✔	تیکِ ضخیم
-٬	هزار‌گان
-٫	ممیز	none
-٪	درصد	some
 
 # Persian symbols
 ،	ویرگول	all	always
 ؟	علامتِ سؤال	all	always
 ؛	نقطه‌ویرگول	all	always
-ـ	کشیده	char	always
 «	گیومه باز	most	always
 »	گیومه بسته	most	always
-ٔ	همزه‌ی بالا	char	always
+ـ	کشیده	char	norep
+ٔ	همزه‌ی بالا	char	norep
+٬	هزار‌گان	char	never
+٫	ممیز	none	never
+٪	درصد	none	never
+﷼	ریال	none	never
 
-# Unicode Formating symbols
+# Unicode formatting symbols
 ‎	نشانه چپ به راست	char	never
 ‏	نشانه راست به چپ	char	never
 ‍	نیم‌اتصال	char	never
