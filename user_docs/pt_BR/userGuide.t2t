@@ -284,6 +284,8 @@ Este leitor de telas fornece os seguintes comandos em relação ao cursor do sis
 | Leitura contínua | NVDA+seta abaixo | NVDA+a | Inicia a leitura a partir da posição atual do cursor do sistema, movendo-o pelo texto |
 | Ler linha atual | NVDA+seta acima | NVDA+l | Lê a linha onde o cursor do sistema está posicionado atualmente. Ao pressionar duas vezes soletra a linha |
 | Ler texto atualmente selecionado | NVDA+Shift+seta acima | NVDA+shift+s | Lê qualquer texto selecionado atualmente |
+| Próxima Sentença | alt+seta abaixo | alt+seta abaixo | Move o cursor do sistema para a próxima sentença e a anuncia. (suportado apenas no Microsoft Word) |
+| Sentença anterior | alt+seta acima | alt+seta acima | Move o cursor do sistema para a sentença anterior e a anuncia. (suportado apenas no Microsoft Word) |
 
 
 Quando estiver numa tabela, as seguintes teclas de atalho também estarão disponíveis:
@@ -1009,6 +1011,10 @@ Por exemplo, se for pressionando a Seta Abaixo numa página Web e encontrar uma 
 
 ==== Indicação sonora de mudança entre modo de foco e navegação ====
 Se esta opção estiver marcada, o NVDA reproduzirá sons especiais quando alternar entre os modos de navegação e foco, em vez de anunciar a alteração.
+
+==== Interceptar tudo que não seja comando para que não chegue ao documento ====
+habilitada por padrão, esta opção lhe permite escolher se os gestos (tais como pressionamentos de teclas) que não resultam num commando  do NVDA e não são considerados como comandos em geral, devem ser interceptados para que não passem ao documento que está  atualmente sob o foco. 
+Por exemplo, quando habilitado, se a letra j for pressionada, ela é interceptada para que não chegue ao documento, já que não se trata de um comando de navegação rápida, e provavelmente não é um comando do próprio aplicativo.
 
 +++ Opções de Formatação de Documentos (NVDA+control+d) +++[DocumentFormattingSettings]
 Esta caixa de diálogo está no menu Preferências, mais propriamente no item "Formatação de Documentos...".
