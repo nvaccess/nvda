@@ -130,7 +130,9 @@ class CommandBarListItem(IAccessible):
 		name, matchRGB = self.rgbNameAndMatch
 		if matchRGB:
 			import colors
-			return (', red '+ str(colors.RGB.fromString(name).red) + ', green ' + str(colors.RGB.fromString(name).green) + ', blue ' + str(colors.RGB.fromString(name).blue))
+			rgb=colors.RGB.fromString(name)
+			# Translators: a color, broken down into its RGB red, green, blue parts.
+			return _("RGB red {rgb.red}, green {rgb.green} and blue {rgb.blue}").format(rgb=colors.RGB.fromString(name))
 		else:
 			return super(CommandBarListItem,self).description
 
