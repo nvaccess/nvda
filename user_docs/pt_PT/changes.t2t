@@ -3,11 +3,30 @@
 
 %!includeconf: ../changes.t2tconf
 
-Adaptado da tradução para Português do Brasil.
+A partir da versão 2015.1 traduzido por Rui Fontes, e as versões anteriores foram adaptadas por Rui Batista e Rui Fontes da tradução brasileira...
 
-Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana (adaptado por Rui Batista e Rui Fontes)
+= 2015.2 =
+ 
+== Novas Funcionalidades ==
+- Agora é possível mover-se para a frente e para trás por frase, no Microsoft Word, com alt + SetaAbaixo e alt + SetaAcima respectivamente. (#3288)
+- Novas tabelas  braille para vários idiomas indianos (#4778)
+ 
+
+== Alterações ==
+- No diálogo de Formatação de documentos do NVDA, as teclas de atalho para Anunciar listas, Anunciar links, Anunciar números de linha e Anunciar nome do tipo de letra foram alterados em inglês, mas não em português (#4650)
+- No diálogo de Definições do rato do NVDA, foram adicionadas teclas de atalho para Tocar coordenadas de áudio quando o rato se mover e Brilho controla o volume das coordenadas de áudio (#4916)
+
+
+ == Correcção de falhas ==
+- As descrições de caracteres passam a ser correctamente tratadas para conjuntos de caracteres em certos idiomas indianos (#4582)
+
+
+== Alterações para Desenvolvedores ==
+- brailleInput.handler.sendChars(mychar) já não filtra o caractere, se for igual ao caractere anterior, por se certificar que a tecla é correctamente levantada.
+
 
 = 2015.1 =
+Os destaques desta versão incluem o modo de navegação para documentos no Microsoft Word e Microsoft Outlook, grandes melhorias no suporte ao Skype para Desktop e correções significativas no suporte ao Microsoft Internet Explorer.
 
 == Novas Funcionalidades ==
 - Passa a ser possível adicionar novos símbolos na caixa de diálogo Pronúncia de pontuação/símbolo. (# 4354)
@@ -16,11 +35,22 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana (adaptado por
 - Na caixa de diálogo Localizar do modo de navegação, existe agora uma opção para executar a pesquisa sensível a maiúsculas. (# 4584)
 - As teclas de navegação rápida (h para títulos, etc), e a lista de elementos (NVDA + F7) estão agora disponíveis em documentos do Microsoft Word se activarmos o modo de navegação com NVDA + espaço. (# 2975)
 - A leitura de mensagens no Microsoft Outlook 2007 e superiores foi bastante melhorada pois o modo de navegação é automaticamente activado para essas mensagens. Se o modo de navegação não for activado em algumas situações raras, pode forçá-lo com NVDA + espaço. (# 2975)
+- Os títulos  de coluna de tabelas no Microsoft word são automaticamente anunciados nas  tabelas em que a linha de títulos foi especificamente definida pelo  autor nas propriedades de tabela do Microsoft word. (#4510)
+ - Contudo em tabelas com colunas unidas , isto não funcionará automaticamente. Nestas situações, pode definir os títulos de coluna manuamente no NVDA com NVDA+shift+c.
+- No Skype for Desktop, as notificações são agora anunciadas. (#4741)
+- No  Skype for Desktop, Pode agora ter anunciadas  as várias mensagens antigas usando NVDA+control+1 até NVDA+control+0; por exemplo, NVDA+control+1 para a mensagem mais recente e NVDA+control+0 para a décima mensagem a ter sido recebida. (#3210)
+- Numa  conversa no Skype for Desktop, o NVDA agora anuncia quando o outro elemento está a escrever. (#3506)
+- O NVDA pode agora ser   instalado silenciosamente via linha de  comandos sem iniciar a cópia após instalação. Para tal, use a opção --install-silent. (#4206)
+- Suporte para  as linhas Braille Papenmeier BRAILLEX Live 20, BRAILLEX Live e BRAILLEX Live Plus. (#4614)
 
 
 == Alterações ==
 - Na caixa de diálogo das Preferências do NVDA, Formatação de documentos, a opção Anunciar erros ortográficos agora tem uma tecla de atalho (Alt + O). (# 793)
 - O NVDA passa a usar o idioma da voz/sintetizador para o processamento de caracteres, símbolos e momes dos sinais de pontuação, independentemente da configuração da opção "Alterar o idioma automaticamente". Para desactivar esta funcionalidade, para que o NVDA volte a usar o idioma da interface, desmarque a nova opção nas definições de voz, "Usar o idioma da voz ao processar caracteres e símbolos". (#4210)
+- O suporte ao  sintetizador Newfon foi removido. O Newfon está agora disponível como um  extra do NVDA. (#3184)
+- As versões 7 ou superiores do Skype for Desktop são agora necessárias para que o suporte do    NVDA funcione. As versões anteriores já não são suportadas. (#4218)
+- O download das actualizações do NVDA é agora mais seguro. (Mais especificamente, a informação da actualização é agora  feita via https e a verificação da integridade do ficheiro é feita após download.) (#4716)
+- O sintetizador eSpeak foi actualizado para a versão 1.48.04 (#4325)
 
 
  == Correcção de falhas ==
@@ -34,9 +64,26 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana (adaptado por
 - O foco agora retorna corretamente ao documento que está a ser editado Ao terminar a composição de entrada de texto em coreano e outros idiomas do leste asiático, durante a edição dentro de frames no Internet Explorer e outros documentos MSHTML. (# 4045)
 - No diálogo Comandos, ao seleccionar um esquema de teclado para um comando de teclado que está a ser adicionado, ao pressinar escape agora fecha o menu, como eé expectável, em vez de fechar o diálogo. (#3617)
 - Ao remover um Extra, a directoria do Extra é correctamente eliminada após o reinício do NVDA. Antes era necessário reiniciar o NVDA por duas vezes. (#3461)
- 
+- Os problemas ao usar o Skype for Desktop 7 foram resolvidos. (#4218)
+- Quando uma mensagem é enviada no Skype for Desktop, já não é anunciada duas vezes. (#3616)
+- No Skype for Desktop, o NVDA já não deve, ocasionalmente, anunciar   continuamente um grande bloco de mensagens (às vezes toda a conversa). (#4644)
+- Resolvido  o problema do comando de Anunciar a data/hora do NVDA por vezes não respeitar as definições regionais definidas. (#2987)
+- No modo de navegação, para certos gráficos, como algumas imagens  em Google Groups, já não é apresentado texto sem sentido (por vezes estendendo-se por várias linhas). (Mais especificamente, isto ocorria em imagens codificadas em base64.) (#4793)
+- O NVDA já não deve bloquear após alguns segundos, depois de mover o foco  de uma app da Windows Store, como se tivesse sido suspenso. (#4572)
+- O atributo  aria-atomic em  regiões live no Mozilla Firefox é agora respeitado mesmo que  o próprio elemento atomic  mude. Antes, só afectava elementos descendentes. (#4794)
+- O modo de navegação reflectirá actualizações, e as regiões serão anunciadas, em documentos que usem o modo de navegação dentro de aplicações ARIA inseridas em documentos no Internet Explorer, ou outros controlos MSHTML. (#4798)
+- Quando é alterado, ou acrescentado, texto em regiões live no Internet Explorer, ou outros controlos MSHTML, em que o autor especificou que o texto é relevante, apenas o texto alterado ou modificado é anunciado, em vez de todo o texto no elemento que o contém. (#4800)
+- Conteúdo indicado pelo atributo aria-labelledby em elementos no Internet Explorer, ou outros controlos MSHTML, substitui, quando apropriado, o conteúdo original. (#4575)
+- Na verificação ortográfica do Microsoft Outlook 2013, a palavra errada é agora anunciada. (#4848)
+- No Internet Explorer, ou outros controlos MSHTML, o conteúdo dentro de elementos ocultos com visibility:hidden já não é indevidamente mostrado no modo de navegação. (#4839, #3776)
+- No Internet Explorer, ou outros controlos MSHTML, o atributo title nos controlos de formulário já não, indevidamente, tem preferência sobre outras associações de etiquetas. (#4491)
+- No Internet Explorer, ou outros controlos MSHTML, o NVDA já não ignora a focagem de elementos devida ao atributo aria-activedescendant. (#4667)
+
+
 == Alterações para Desenvolvedores ==
 - Actualizado o wxPython para a versão 3.0.2.0. (#3763)
+- Actualizado o Python para a versão 2.7.9. (#4715)
+- O NVDA já não apresenta problemas quando é reiniciado após remover ou actualizar um extra que importe speechDictHandler no módulo installTasks. (#4496)
 
 
 = 2014.4 =

@@ -17,7 +17,7 @@ O NVDA permite às pessoas com deficiência visual acederem e interagirem com o 
 
 As características principais são:
 - Suporte a aplicações populares, incluindo navegadores de Internet, clientes de e-mail, programas de conversa na Internet e pacotes de escritório
-- Tem sintetizador de voz embutido, que suporta mais de quarenta idiomas
+- Tem sintetizador de voz embutido, que suporta mais de oitenta idiomas
 - Anuncia a formatação do texto, quando disponível, tal como nome e tamanho do tipo de letra, estilo, bem como os erros ortográficos
 - Anuncia automaticamente o texto sob o rato e dá indicação em áudio (opcional) da posição deste periférico
 - Suporte para diversas linhas Braille, incluindo a introdução de texto através do teclado Braille, nas linhas que o possuem, usando Braille informático
@@ -181,6 +181,7 @@ pelos vários objectos.
 +++ Gestos de Toque +++
 Quando os comandos do NVDA forem descritos, mais tarde neste manual, poderá ser listado um gesto de toque que pode  ser usado para activar esse mesmo comando, através do ecrã sensível ao toque.
 Seguem-se algumas instruções de como efectuar os vários gestos de toque, necessários para realizar os comandos do NVDA com um ecrã sensível ao toque.
+
 ==== Toques ====
 Toque rapidamente no ecrã com um ou mais dedos.
 
@@ -284,6 +285,9 @@ O NVDA fornece os seguintes comandos, relativamente ao cursor do sistema:
 | Leitura Contínua | NVDA+Seta Abaixo | NVDA+a | Inicia a leitura, a partir da posição actual do cursor do sistema, movendo-o ao longo do texto, enquanto Lê |
 | Ler a linha actual | NVDA+Seta Acima | NVDA+l | Lê a linha onde o cursor do sistema está posicionado actualmente. Ao pressionar duas vezes, soletra a linha |
 | Ler o texto actualmente seleccionado | NVDA+Shift+Seta Acima | NVDA+shift+s | Lê qualquer texto seleccionado actualmente |
+| Frase seguinte | alt+Seta Abaixo | alt+Seta Abaixo | Move o cursor para a frase seguinte e anuncia-a. (Suportado apenas no Microsoft Word) |
+| Frase anterior | alt+Seta Acima | alt+Seta Acima | Move o cursor para a frase anterior e anuncia-a. (Suportado apenas no Microsoft Word) |
+
 
 Quando estiver numa tabela, os seguintes comandos de teclado também estarão disponíveis:
 || Nome | Comando de Teclado | Descrição |
@@ -438,7 +442,7 @@ Apesar de um rato físico ou de um touchpad terem de ser utilizados para navegar
 + Modo de Navegação +
 Os documentos complexos, só de leitura, tais como páginas de Internet, são apresentados pelo NVDA, através da utilização do modo de navegação.
 Isto inclui os documentos no Mozilla Firefox, Microsoft Internet Explorer, mensagens em HTML do Microsoft Outlook, Google Chrome, Adobe Reader e Adobe Flash.
-O modo de navegação também está disponível como opção para o Microsoft Word para navegar documentos complexos.
+O modo de navegação também está disponível como opção para o Microsoft Word.
 
 No modo de navegação, o conteúdo do documento está disponível numa representação plana e pode ser navegado com as teclas de cursor, como se se tratasse de um documento de texto normal.
 Todos os comandos de teclado do NVDA referentes ao [cursor do sistema #SystemCaret] trabalharão neste modo; ex: leitura contínua, anunciar formatação, comandos de navegação em tabelas, etc.
@@ -457,7 +461,7 @@ Adicionalmente, poderá forçar, manualmente, o modo de foco e o mesmo continuar
 || Nome | Comando de Teclado | Descrição |
 | Alternar entre os modos de Foco e de Navegação | NVDA+Espaço | Alterna entre o modo de foco e o modo de navegação |
 | Sair do modo de foco | Escape | Volta para o modo de navegação, se o modo de foco foi activado manualmente ou automaticamente |
-| Actualizar o Documento no Modo de Navegação | NVDA+F5 | Recarrega o conteúdo do documento actual (muito útil se determinado conteúdo está em falta no documento) |
+| Actualizar o Documento no Modo de Navegação | NVDA+F5 | Recarrega o conteúdo do documento actual (muito útil se determinado conteúdo está em falta no documento. Não disponível no Microsoft Word e Outlook.) |
 | Localizar | NVDA+Ctrl+F | Abre uma janela, onde pode escrever algum texto a ser localizado no documento actual |
 | Localizar seguinte | NVDA+F3 | Localiza a próxima ocorrência de texto que já localizou no documento |
 | Localizar anterior | NVDA+Shift+F3 | Localiza a ocorrência de texto anterior que já localizou no documento |
@@ -466,6 +470,7 @@ Adicionalmente, poderá forçar, manualmente, o modo de foco e o mesmo continuar
 
 ++ Navegação por Caracter ++
 Quando em modo de navegação, para maior rapidez, o NVDA também fornece teclas de apenas um caracter que permitem saltar para determinados campos no documento. 
+Note que nem todos os comandos são suportados em todos os tipos de documentos.
 
 %kc:beginInclude
 As teclas seguintes, por si mesmas, saltam para o próximo elemento disponível. Adicionando-se a tecla Shift, faz com que saltem para o elemento anterior:
@@ -564,6 +569,13 @@ Nota: O comando para anunciar o tempo restante funciona somente com a cadeia de 
 || Nome | Comando de Teclado | Descrição |
 | Anunciar Janela de Comentários | control+shift+c | Anuncia quaisquer comentários na janela de comentários. |
 | Anunciar notas para os tradutores | control+shift+a | Anuncia quaisquer notas para os tradutores. |
+%kc:endInclude
+
+++ Skype ++
+%kc:beginInclude
+Numa conversa:
+|| Nome | Comando de Teclado | Descrição |
+| Rever mensagem | NVDA+control+1-0 | Anuncia e move o cursor de revisão para uma mensagem, dependendo do número utilizado, por exemplo, NVDA+control+2 lê a segunda mensagem mais recente. |
 %kc:endInclude
 
 + Configurar O NVDA +
@@ -704,7 +716,7 @@ Tal como a caixa de verificação 'anunciar maiúscula antes de letras maiúscul
 
 ==== Usar Funcionalidade de Soletrar, se Suportado ====
 Algumas palavras são constituídas apenas por um caracter, porém a pronúncia é diferente, dependendo se o caracter está a ser falado como um caracter individual (por exemplo, ao soletrar) ou como uma palavra.
-Por exemplo, em português, "a" é tanto uma letra como uma palavra.
+Por exemplo, em português, "a" é tanto uma letra como uma palavra, e é pronunciado de maneira diferente em cada caso.
 Esta opção permite que o sintetizador diferencie estes dois casos, se suportar tal funcionalidade.
 A maioria dos sintetizadores tem esse suporte.
 
@@ -865,6 +877,8 @@ Se esta caixa de verificação estiver marcada, o NVDA anunciará o tipo de cont
 
 ==== Tocar coordenadas de áudio, quando o rato se mover ====
 Marcar esta caixa de verificação, faz com que o NVDA reproduza beeps, quando o rato se mover. Desta forma, o utilizador pode saber onde é que o rato está, tendo em conta as dimensões do ecrã.
+Quanto mais acima no ecrã estiver o rato, mais agudo será o beep.
+Quanto mais à esquerda ou à direita estiver o rato no ecrã, tanto mais à esquerda ou à direita o som soará, assumindo a utilização de som stereo..
 
 ==== Brilho controla o volume das coordenadas de áudio ====
 Se a caixa de verificação "tocar as coordenadas de áudio quando o rato se mover" estiver marcada, ao marcar esta opção, faz com que o volume dos beeps das coordenadas de áudio seja controlado pelo quão brilhante está o ecrã sob o rato.
@@ -1017,7 +1031,6 @@ Se esta opção estiver activa, o NVDA reproduzirá sons especiais, quando alter
 ==== Impedir comandos de atingir o documento ====
 Activada por padrão, esta opção permite que escolha se os comandos, (como o pressionar de teclas) que não são um comando do NVDA, nem são considerados como uma tecla de comando, em geral, devem ser impedidos de atingir o documento que está actualmente em foco.
 Por exemplo, se a opção estiver activada, se a letra j for pressionada, seria impedida de atingir o documento, pois não é um comando rápido de navegação nem é provável que seja um comando da própria aplicação.
-
 
 +++ Definições de Formatação de Documentos (NVDA+Ctrl+D) +++[DocumentFormattingSettings]
 Esta caixa de diálogo está no menu Preferências, em "Formatação de Documentos...".
@@ -1248,7 +1261,7 @@ Caso exista ajuda disponível para o extra seleccionado, poderá consultá-la pr
 
 Para procurar extras disponíveis on-line, pressione o botão Obter Extras.
 Este botão abre a [Página de extras do NVDA http://addons.nvda-project.org/].
-Se o NVDA estiver instalado no seu sistema, poderá abrir o extra directamente pelo navegador, de modo a iniciar o processo de instalação, seguidamente descrito.
+Se o NVDA estiver instalado, e a ser executado, no seu sistema, poderá abrir o extra directamente pelo navegador, de modo a iniciar o processo de instalação, seguidamente descrito.
 Caso contrário, guarde o pacote do extra e siga as instruções abaixo.
 
 Para instalar um extra que obteve previamente, pressione o butão instalar.
@@ -1324,10 +1337,6 @@ Para as usar, precisa de instalar dois componentes:
 Este é um sintetizador de voz comercial especificamente para o idioma Italiano.
 O sintetizador deve estar instalado no seu sistema para que o possa utilizar com o NVDA.
 Para mais informações, por favor visite a página Internet da  Audiologic em www.audiologic.it.
-
-++ Newfon ++
-O Newfon é um sintetizador comercial disponibilizado por Sergey Shishmintzev, que suporta os idiomas russo e ucraniano.
-Para fazer o download deste sintetizador, por favor, visite a secção de download da página Internet da comunidade russa do NVDA: http://ru.nvda-community.org/?page_id=10
 
 ++ Nuance Vocalizer for NVDA ++
 Nuance Vocalizer é um sintetizador comercial, com vozes de alta qualidade, desenvolvido pela Nuance Communications, Inc., e adaptado, especificamente para o NVDA, pela Tiflotecnia, Lda.
@@ -1678,13 +1687,14 @@ São suportadas as seguintes linhas braille:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
 - BRAILLEX Trio (USB e bluetooth)
+- BRAILLEX Live 20, BRAILLEX Live e BRAILLEX Live Plus (USB e bluetooth)
 -
 
 Se estiver instalado o BrxCom, o NVDA usará o BrxCom.
 O BrxCom é uma ferramenta que lhe permite usar  a entrada de braille, independentemente do leitor de ecrã.
-Uma nova versão do BrxCom, que funcionará com o NVDA, será brevemente lançada pela Papenmeier.  
-
-Contudo, é possível utilizar o teclado Braille da linha Trio, sem o BrxCom.
+Uma nova versão do BrxCom, que funcionará com o NVDA, será brevemente lançada pela Papenmeier.
+É possível utilizar o teclado Braille das Braillex Trio, BRAILLEX Live 20 and Braillex Live, sem o BrxCom.
+É possível utilizar o teclado da Braillex Live Plus, mas apenas com o BrxCom.
 
 A maioria dos dispositivos têm uma barra de acesso fácil, EAB - Easy access bar, que permite  a operação intuitiva e rápida.
 A EAB pode ser movida em quatro direcções, em que cada direcção tem, geralmente, dois interruptores.
@@ -1692,6 +1702,8 @@ A série-c É a única excepção a esta regra.
 
 A série-C e e algumas outras linhas têm duas linhas de encaminhamento, em que a linha superior é usada para reportar informação de formatação.
 Mantendo pressionado um dos butões de encaminhamento superiores, e premindo a EAB nos dispositivos da série-C, simula o segundo estado do interruptor.
+A série Live tem apenas uma linha de encaminhamento e a EAB tem apenas um passo por direção.
+O segundo passo pode ser simulado pressionando um dos cursores de encaminhamento e pressionando a EAB na direção correspondente.
 Pressionando e mantendo as teclas cima, baixo, direita e esquerda (ou a EAB) provoca que a acção correspondente seja repetida.
 
 Geralmente, estão disponíveis as seguintes teclas, nestas linhas braille:
@@ -1893,7 +1905,7 @@ Para as linhas com teclado Braille, actualmente, o BRLTTY trata da escrita em Br
 Por isso, a tabela de conversão da escrita do NVDA é irrelevante
 
 Seguem-se as associações de teclas do BRLTTY com o NVDA.
-Por favor consulte a [documentação de tabelas de teclas do BRLTTY http://mielke.cc/brltty/doc/drivers/] para informação sobre como os comandos do BRLTTY são mapiados nas linhas braille.
+Por favor consulte na documentação do BRLTTY as [tabelas de teclas do BRLTTY http://mielke.cc/brltty/doc/KeyTables/] para informação sobre como os comandos do BRLTTY são mapiados nas linhas braille.
 %kc:beginInclude
 || Nome | Comando BRLTTY |
 | Mover a linha braille para trás | fwinlt (go left one window) |
@@ -1979,7 +1991,8 @@ Seguidamente apresentam-se as opções para a linha de comando para o NVDA
 | -s | --secure | Modo seguro (desactiva a consola do Python) |
 | None | --disable-addons | Os extras serão desacttivados |
 | None | --no-sr-flag  | Não alterar a flag que sinaliza a presença de um leitor de ecrã no sistema |
-| None | --install | Silenciosamente installa o NVDA |
+| None | --install | Silenciosamente installa o NVDA e inicia a cópia instalada |
+| None | --install-silent | Instala o NVDA silenciosamente e não inicia a cópia instalada |
 
 ++ Personalização Avançada da Pronúncia de Símbolos ++
 
