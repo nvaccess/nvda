@@ -431,7 +431,10 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 
 	def _iterRecursiveText(self, ti, withFields, formatConfig):
 		if ti.obj == self._endObj:
-			ti = self._end
+			end = True
+			ti.setEndPoint(self._end, "endToEnd")
+		else:
+			end = False
 		if withFields:
 			fields = ti.getTextWithFields(formatConfig=formatConfig)
 		else:
@@ -461,7 +464,7 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			else:
 				yield field
 
-		if ti is self._end:
+		if end:
 			# None means the end has been reached and text retrieval should stop.
 			yield None
 
