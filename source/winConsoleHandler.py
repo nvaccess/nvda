@@ -4,6 +4,7 @@
 #See the file COPYING for more details.
 #Copyright (C) 2009-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
 
+import sys
 import wx
 import winUser
 import winKernel
@@ -21,6 +22,7 @@ CHECK_DEAD_INTERVAL = 100
 
 consoleObject=None #:The console window that is currently in the foreground.
 consoleWinEventHookHandles=[] #:a list of currently registered console win events.
+consoleInputHandle=None
 consoleOutputHandle=None
 checkDeadTimer=None
 
@@ -54,7 +56,7 @@ def _consoleCtrlHandler(event):
 	return False
 
 def connectConsole(obj):
-	global consoleObject, consoleOutputHandle, checkDeadTimer
+	global consoleObject, consoleOutputHandle, consoleInputHandle, checkDeadTimer
 	#Get the process ID of the console this NVDAObject is fore
 	processID,threadID=winUser.getWindowThreadProcessID(obj.windowHandle)
 	#Attach NVDA to this console so we can access its text etc
@@ -65,6 +67,7 @@ def connectConsole(obj):
 		return False
 	wincon.SetConsoleCtrlHandler(_consoleCtrlHandler,True)
 	consoleOutputHandle=winKernel.CreateFile(u"CONOUT$",winKernel.GENERIC_READ|winKernel.GENERIC_WRITE,winKernel.FILE_SHARE_READ|winKernel.FILE_SHARE_WRITE,None,winKernel.OPEN_EXISTING,0,None)                                                     
+	consoleInputHandle=winKernel.CreateFile(u"CONIN$",winKernel.GENERIC_READ|winKernel.GENERIC_WRITE,winKernel.FILE_SHARE_READ|winKernel.FILE_SHARE_WRITE,None,winKernel.OPEN_EXISTING,0,None)                                                     
 	#Register this callback with all the win events we need, storing the given handles for removal later
 	for eventID in (winUser.EVENT_CONSOLE_CARET,winUser.EVENT_CONSOLE_UPDATE_REGION,winUser.EVENT_CONSOLE_UPDATE_SIMPLE,winUser.EVENT_CONSOLE_UPDATE_SCROLL,winUser.EVENT_CONSOLE_LAYOUT):
 		handle=winUser.setWinEventHook(eventID,eventID,0,consoleWinEventHook,0,0,0)
@@ -77,7 +80,7 @@ def connectConsole(obj):
 	return True
 
 def disconnectConsole():
-	global consoleObject, consoleOutputHandle, consoleWinEventHookHandles, checkDeadTimer
+	global consoleObject, consoleOutputHandle, consoleInputHandle, consoleWinEventHookHandles, checkDeadTimer
 	if not consoleObject:
 		log.debugWarning("console was not connected")
 		return False
@@ -90,6 +93,8 @@ def disconnectConsole():
 	consoleObject.stopMonitoring()
 	winKernel.closeHandle(consoleOutputHandle)
 	consoleOutputHandle=None
+	winKernel.closeHandle(consoleInputHandle)
+	consoleInputHandle=None
 	consoleObject=None
 	try:
 		wincon.SetConsoleCtrlHandler(_consoleCtrlHandler,False)
@@ -137,6 +142,9 @@ def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestam
 	# This avoids an extra core cycle.
 	consoleObject.event_textChange()
 	if eventID==winUser.EVENT_CONSOLE_UPDATE_SIMPLE:
+		ver=sys.getwindowsversion()
+		if ver.major>6 or (ver.major==6 and ver.minor>1):
+			return # #513: Win 7 and above receive wm_char for characters.
 		x=winUser.LOWORD(objectID)
 		y=winUser.HIWORD(objectID)
 		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
@@ -149,6 +157,9 @@ def initialize():
 def terminate():
 	if consoleObject:
 		disconnectConsole()
+
+def isInputEchoEnabled():
+	return wincon.getConsoleMode(consoleInputHandle)&wincon.ENABLE_ECHO_INPUT
 
 class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 
