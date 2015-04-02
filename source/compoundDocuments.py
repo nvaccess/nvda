@@ -483,6 +483,7 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			if withFields and not self._isObjectEditableText(obj):
 				# Add a controlEnd if this field had a controlStart.
 				fields.append(textInfos.FieldCommand("controlEnd", None))
+			from logHandler import log; log.info("%d" % obj.role)
 			ti = obj.embeddingTextInfo
 			obj = ti.obj
 			if ti.move(textInfos.UNIT_OFFSET, 1) == 0:
@@ -518,6 +519,9 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			else:
 				expandTi = baseTi.copy()
 				expandTi.expand(unit)
+				if expandTi.isCollapsed:
+					# This shouldn't happen, but can due to server implementation bugs; e.g. MozillaBug:1149415.
+					expandTi.expand(textInfos.UNIT_OFFSET)
 			allTi = obj.makeTextInfo(textInfos.POSITION_ALL)
 
 			if not start and findStart and expandTi.compareEndPoints(allTi, "startToStart") != 0:
