@@ -143,7 +143,7 @@ def consoleWinEventHook(handle,eventID,window,objectID,childID,threadID,timestam
 	consoleObject.event_textChange()
 	if eventID==winUser.EVENT_CONSOLE_UPDATE_SIMPLE:
 		ver=sys.getwindowsversion()
-		if ver.major>6 or (ver.major==6 and ver.minor>1):
+		if ver.major>6 or (ver.major==6 and ver.minor>=1):
 			return # #513: Win 7 and above receive wm_char for characters.
 		x=winUser.LOWORD(objectID)
 		y=winUser.HIWORD(objectID)
