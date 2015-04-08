@@ -114,10 +114,13 @@ class CompoundTextInfo(textInfos.TextInfo):
 		if ignoreEditableText and self._isObjectEditableText(obj):
 			# This is basically just a text node.
 			return None
-		field = textInfos.ControlField()
 		role = obj.role
-		field["role"] = role
 		states = obj.states
+		if role == controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:
+			# Named link destination, not a link that can be activated.
+			return None
+		field = textInfos.ControlField()
+		field["role"] = role
 		# The user doesn't care about certain states, as they are obvious.
 		states.discard(controlTypes.STATE_EDITABLE)
 		states.discard(controlTypes.STATE_MULTILINE)
