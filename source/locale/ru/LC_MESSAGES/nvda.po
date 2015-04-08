@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-26 19:04-0700\n"
-"PO-Revision-Date: 2015-03-27 10:28+0800\n"
+"PO-Revision-Date: 2015-04-06 13:32+0800\n"
 "Last-Translator: Ruslan Kolodyazhni <eye0@rambler.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -1241,7 +1241,7 @@ msgstr "белый"
 
 #. Translators: The color yellow.
 msgid "yellow"
-msgstr "желтый"
+msgstr "жёлтый"
 
 #. Translators: The dark red color.
 msgid "dark red"
@@ -2098,7 +2098,7 @@ msgstr "Скопировано в буфер обмена"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Text review"
-msgstr "просмотр Текста"
+msgstr "Просмотр текста"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Object navigation"
@@ -2136,11 +2136,11 @@ msgstr "Сенсорный экран"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "System focus"
-msgstr "Системный курсор"
+msgstr "Системный фокус"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "System status"
-msgstr "статус Системы"
+msgstr "Состояние системы"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Input"
@@ -2161,7 +2161,7 @@ msgid ""
 msgstr ""
 "Включает и выключает режим справки по вводу. При включённом режиме, для "
 "любого жеста ввода (например при нажатии клавиш на клавиатуре), читается "
-"описание соответствующей команды, закрепленной за жестом."
+"описание соответствующей команды, закреплённой за жестом."
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
@@ -2169,7 +2169,7 @@ msgstr "Режим сна выключен"
 
 #. Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 msgid "Sleep mode on"
-msgstr "Режим сна включен"
+msgstr "Режим сна включён"
 
 #. Translators: Input help mode message for toggle sleep mode command.
 msgid "Toggles  sleep mode on and off for  the active application."
@@ -2231,15 +2231,15 @@ msgid ""
 "no selection it says so."
 msgstr ""
 "Читает выделенный текст в документе или редактируемом элементе управления. "
-"При отсутствии выделения, также, сообщает об этом"
+"При отсутствии выделения, также, сообщает об этом."
 
 #. Translators: Input help mode message for report date and time command.
 msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
 msgstr ""
-"Если нажато 1 раз, читает текущее время. Если нажато дважды, читает текущую "
-"дату"
+"Если нажато один раз, читает текущее время. Если нажато дважды, читает "
+"текущую дату"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
 msgid "No settings"
@@ -2315,11 +2315,11 @@ msgstr ""
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
 msgid "object has no location"
-msgstr "У объекта нет расположения"
+msgstr "объект не имеет расположения"
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
-msgstr "Перемещает указатель мыши к текущему объекту навигатора."
+msgstr "Перемещает указатель мыши к текущему объекту навигатора"
 
 #. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
 msgid "Move navigator object to mouse"
@@ -2329,8 +2329,7 @@ msgstr "Привести навигатор к мыши"
 msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
-msgstr ""
-"устанавливает навигатор на текущий объект под указателем мыши и читает его"
+msgstr "Устанавливает навигатор на объект под указателем мыши и читает его"
 
 #. Translators: reported when there are no other available review modes for this object
 msgid "No next review mode"
@@ -2342,7 +2341,7 @@ msgid ""
 "positions the review position at the point of the navigator object"
 msgstr ""
 "Переключается на следующий режим просмотра (например, объект, документ или "
-"экран) и располагает позицию обзора в точке объекта навигатора"
+"экран) и располагает позицию просмотра в точке объекта навигатора"
 
 #. Translators: reported when there are no  other available review modes for this object
 msgid "No previous review mode"
@@ -2354,7 +2353,7 @@ msgid ""
 "positions the review position at the point of the navigator object"
 msgstr ""
 "Переключается на предыдущий режим просмотра (например, объект, документ или "
-"экран) и располагает позицию обзора в точке объекта навигатора"
+"экран) и располагает позицию просмотра в точке объекта навигатора"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -2372,9 +2371,8 @@ msgid ""
 "and pressing three times Copies name and value of this  object to the "
 "clipboard"
 msgstr ""
-"Сообщает объект навигатора. При двойном нажатии будет прочитано по буквам. "
-"Если нажато трижды, копирует название и значение объекта навигатора в буфер "
-"обмена"
+"Сообщает объект навигатора. При двойном нажатии читает эту информацию по "
+"символам. Если нажато трижды, копирует имя и значение объекта в буфер обмена"
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
@@ -2385,8 +2383,8 @@ msgid ""
 "Reports information about the location of the text or object at the review "
 "cursor. Pressing twice may provide further detail."
 msgstr ""
-"Объявляет информацию о местоположении текста или объекта под курсором "
-"обзора. Двойное нажатие может предоставить дополнительные подробности."
+"Объявляет информацию о местоположении текста или объекта под просмотровым "
+"курсором. Двойное нажатие может предоставить дополнительные подробности."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -2398,7 +2396,7 @@ msgid ""
 "position of the caret inside it, if possible."
 msgstr ""
 "Устанавливает навигатор на объект в фокусе и просмотровый курсор в позицию "
-"системного курсора в этом объекте, если это возможно."
+"каретки в этом объекте, если это возможно."
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -2412,15 +2410,15 @@ msgstr "Привести фокус"
 
 #. Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
 msgid "no caret"
-msgstr "Нет курсора"
+msgstr "Нет каретки"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
 msgid ""
 "Pressed once Sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
-"Перемещает на объект, содержащий текст в позиции плоского просмотра. Если "
-"нажато дважды, перемещает системную каретку в позицию просмотрового курсора"
+"Перемещает системный фокус на объект навигатора. При двойном нажатии, "
+"перемещает системную каретку в позицию просмотрового курсора"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
@@ -2428,7 +2426,7 @@ msgstr "Нет содержащего объекта"
 
 #. Translators: Input help mode message for move to parent object command.
 msgid "Moves the navigator object to the object containing it"
-msgstr "Устанавливает навигатор на объект, который содержит в себе текущий"
+msgstr "Перемещает навигатор на объект, который содержит в себе текущий"
 
 #. Translators: Reported when there is no next object (current object is the last object).
 msgid "No next"
@@ -2436,7 +2434,7 @@ msgstr "Нет следующего"
 
 #. Translators: Input help mode message for move to next object command.
 msgid "Moves the navigator object to the next object"
-msgstr "Устанавливает объект навигатора на следующий объект"
+msgstr "Перемещает навигатор на следующий объект"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 msgid "No previous"
@@ -2444,15 +2442,15 @@ msgstr "Нет предыдущего"
 
 #. Translators: Input help mode message for move to previous object command.
 msgid "Moves the navigator object to the previous object"
-msgstr "Устанавливает объект навигатора на предыдущий объект"
+msgstr "Перемещает навигатор на предыдущий объект"
 
 #. Translators: Reported when there is no contained (first child) object such as inside a document.
 msgid "No objects inside"
-msgstr "Не содержит объектов внутри"
+msgstr "Нет объектов внутри"
 
 #. Translators: Input help mode message for move to first child object command.
 msgid "Moves the navigator object to the first object inside it"
-msgstr "Устанавливает навигатор на первый объект, который содержится в текущем"
+msgstr "Перемещает навигатор на первый объект, который содержится в текущем"
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
 msgid "activate"
@@ -2467,8 +2465,8 @@ msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
 msgstr ""
-"Выполняет установленное действие текущего объекта навигатора, например,"
-"нажимает его, если это кнопка"
+"Выполняет действие по умолчанию над объектом навигатора (например, нажимает "
+"его, если это кнопка)"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 msgid "top"
@@ -2496,8 +2494,8 @@ msgid ""
 "situated. If this key is pressed twice, the current line will be spelled. "
 "Pressing three times will spell the line using character descriptions."
 msgstr ""
-"читает строку под просмотровым курсором объекта навигатора. Если нажато "
-"дважды, произносит её по буквам. Если нажато трижды, читает фонетическое "
+"Читает строку под просмотровым курсором объекта навигатора. Если нажато "
+"дважды, произносит её по символам. Если нажато трижды, читает фонетическое "
 "описание символов"
 
 #. Translators: a message reported when:
@@ -2536,8 +2534,8 @@ msgid ""
 "situated. Pressing twice spells the word. Pressing three times spells the "
 "word using character descriptions"
 msgstr ""
-"читает слово под просмотровым курсором объекта навигатора. Если нажато "
-"дважды, произносит его по буквам. Если нажато трижды, читает фонетическое "
+"Читает слово под просмотровым курсором объекта навигатора. Если нажато "
+"дважды, произносит его по символам. Если нажато трижды, читает фонетическое "
 "описание символов"
 
 #. Translators: Input help mode message for move review cursor to next word command.
@@ -2556,8 +2554,8 @@ msgid ""
 "Moves the review cursor to the first character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr ""
-"Перемещает просмотровый курсор к началу текущей строки объекта навигатора и "
-"читает символ под курсором"
+"Перемещает просмотровый курсор на первый символ текущей строки объекта "
+"навигатора и читает его"
 
 #. Translators: Input help mode message for move review cursor to previous character command.
 msgid ""
@@ -2594,8 +2592,8 @@ msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr ""
-"Перемещает просмотровый курсор к концу текущей строки объекта навигатора и "
-"читает символ под курсором"
+"Перемещает просмотровый курсор на последний символ текущей строки объекта "
+"навигатора и читает его"
 
 #. Translators: A speech mode which disables speech output.
 msgid "speech mode off"
@@ -2618,7 +2616,7 @@ msgstr ""
 "Переключает режим озвучивания NVDA между выключено, Сигналы, Речь. При "
 "Выключено, NVDA ничего не читает. При режиме Сигналы, NVDA издаёт "
 "высокочастотные звуки, когда на экране появляется новая информация. При "
-"режиме Речь NVDA озвучивает события активным синтезатором"
+"режиме Речь NVDA озвучивает события активным синтезатором."
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
@@ -2765,11 +2763,11 @@ msgstr ""
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
-msgstr "Привязка просмотрового курсора к системному выключено"
+msgstr "Привязка просмотрового курсора к системному выключена"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor on"
-msgstr "Привязка просмотрового курсора к системному включено"
+msgstr "Привязка просмотрового курсора к системному включена"
 
 #. Translators: Input help mode message for toggle caret moves review cursor command.
 msgid ""
@@ -2780,11 +2778,11 @@ msgstr ""
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
-msgstr "Привязка навигатора к фокусу выключено"
+msgstr "Привязка навигатора к фокусу выключена"
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object on"
-msgstr "Привязка навигатора к фокусу включено"
+msgstr "Привязка навигатора к фокусу включена"
 
 #. Translators: Input help mode message for toggle focus moves navigator object command.
 msgid ""
@@ -4602,7 +4600,7 @@ msgstr ""
 
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
-msgstr "Диалог настроек NVDA уже открыт. сначала закройте его."
+msgstr "Диалог настроек NVDA уже открыт. Пожалуйста, сначала закройте его."
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -4754,7 +4752,7 @@ msgstr "&Параметры"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 msgid "View log"
-msgstr "Просмотреть журнал..."
+msgstr "Просмотр журнала"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
@@ -6207,7 +6205,7 @@ msgstr "Ошибка Брайлевского дисплея"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
-msgstr "Добавить символ"
+msgstr "Добавление символа"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
 msgid "Symbol:"
