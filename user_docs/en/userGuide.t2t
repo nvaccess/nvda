@@ -1103,6 +1103,9 @@ Regular expressions are not covered in this user guide, but there are many tutor
 +++ Punctuation/symbol pronunciation +++[SymbolPronunciation]
 This dialog allows you to change the way punctuation and other symbols are pronounced, as well as the symbol level at which they are spoken.
 
+The language for which symbol pronunciation is being edited will be shown in the dialog's title.
+Note that this dialog respects the "Trust voice's language for processing symbols and characters" option found in the [Voice Settings dialog #VoiceSettings]; i.e. it uses the voice language rather than the NVDA global language setting when this option is enabled.
+
 To change a symbol, first select it in the Symbols list.
 The Replacement field allows you to change the text that should be spoken in place of this symbol.
 Using the Level field, you can adjust the lowest symbol level at which this symbol should be spoken.
