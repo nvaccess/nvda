@@ -9,7 +9,7 @@ import winUser
 import textInfos
 import controlTypes
 import eventHandler
-from NVDAObjects import NVDAObject
+from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 from editableText import EditableText
 from treeInterceptorHandler import TreeInterceptor
 import speech
@@ -421,10 +421,15 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 					# We always want to report the character immediately after the insertion point.
 					ti = obj.makeTextInfo(textInfos.POSITION_FIRST)
 			ti.expand(textInfos.UNIT_OFFSET)
-			if ti.text == u"\uFFFC":
-				obj = ti.getEmbeddedObject()
-			else:
+			if ti.text != u"\uFFFC":
+				# We've descended as far as we can go.
 				break
+			embObj = ti.getEmbeddedObject()
+			if embObj.TextInfo is NVDAObjectTextInfo:
+				# This is an embedded object, but it has no text,
+				# so we don't descend into it.
+				break
+			obj = embObj
 
 		ti.collapse()
 		return ti, obj
@@ -454,10 +459,11 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 							controlField = self._getControlFieldForObject(chunk)
 							if controlField:
 								yield textInfos.FieldCommand("controlStart", controlField)
-						for subChunk in self._iterRecursiveText(chunk.makeTextInfo("all"), withFields, formatConfig):
-							yield subChunk
-							if subChunk is None:
-								return
+						if not isinstance(chunk.TextInfo, NVDAObjectTextInfo): # Has text
+							for subChunk in self._iterRecursiveText(chunk.makeTextInfo("all"), withFields, formatConfig):
+								yield subChunk
+								if subChunk is None:
+									return
 						if withFields and controlField:
 							yield textInfos.FieldCommand("controlEnd", None)
 				fieldStart += textLength
