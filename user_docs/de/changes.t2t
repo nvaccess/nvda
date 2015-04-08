@@ -2,6 +2,27 @@
 
 
 %!includeconf: ../changes.t2tconf
+
+= 2015.2 =
+
+== Neue Funktionen ==
+- In Microsoft Word kann man nun mittels Alt+Pfeiltaste nach oben bzw. nach unten Satzweise rück- bzw. vorwärts springen. (#3288)
+- Neue Braillezeichensätze für mehrere indische Sprachen. (#4778)
+
+
+== Änderungen ==
+In den Einstellungen zu Dokumentformatierungen wurden die Tastenkürzel für die ausgaben von Listen, Links, Zeilennummern und Schriftartennamen geändert. (#4650)
+- In den Mauseinstellungen von NVDA wurden Tastenkürzel für Audiokoordinaten bei Mausbewegungen wiedergeben sowie Lautstärke der Audiokoordinaten durch Helligkeit kontrollieren hinzugefügt. (#4916)
+
+
+== Fehlerbehebungen ==
+- Zeichenbeschreibungen für zusammengesetzte Zeichen werden nun für bestimmte indische Sprachen korrekt behandelt. (#4582)
+
+
+== Änderungen für Entwickler ==
+- - brailleInput.handler.sendChars(mychar) filtert keine Zeichen mehr aus, wenn das vorherige Zeichen gleich war. Dies wird erreicht in dem überprüft wird, ob die vorangegangene Taste richtig losgelassen wurde. 
+
+
 = 2015.1 =
 Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dokumente, wesentliche Verbesserungen für die Unterstützung von Skype für Desktop sowie bedeutende Fehlerbehebungen für Internet Explorer
 
@@ -53,7 +74,8 @@ Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dok
 - Das Attribut ARIA-labeledby wird korrekt verarbeitet. (#4575)
 - Wird in Microsoft Outlook 2013 die Rechtschreibung geprüft, so werden falsch geschriebene Wörter angesagt. (#4848)
 - Im Internet Explorer und anderen MSHTML-Elementen werden Elemente, welche durch visibility:hidden versteckt wurden, nicht mehr fälschlicherweise im Lese-Modus ausgegeben.  (#4839, #3776)
-- Im Internet Explorer und anderen MSHTML-Elementen werden Beschriftungen von Formularfeldern nicht mehr durch die Titelbezeichnung verdeckt.
+- Im Internet Explorer und anderen MSHTML-Elementen werden Beschriftungen von Formularfeldern nicht mehr durch die Titelbezeichnung verdeckt. (#4491)
+- Im Internet Explorer und anderen MSHTML-Elementen ignoriert NVDA  das fokusieren von Elementen nicht mehr, wenn dies durch das Atribut aria-activedescendant erfolgte. (#4667)
  
  
 == Änderungen für Entwickler ==
@@ -179,7 +201,7 @@ Schwerpunkte dieser Version sind: LeseModus für Microsoft Word- und Outlook-Dok
 - Der Dialog zum Bearbeiten von Signaturen in Outlook ist nun voll zugänglich (Incl. Formaterkennung und Cursorverfolgung). (#3833) 
 - Wenn Sie in Microsoft Word die letzte Zeile einer Tabellenzelle lesen, wird nicht mehr die gesamte Zelle gelesen. (#3421)
 - In Microsoft Word wird nicht mehr das gesamte Inhaltsverzeichnis gelesen, wenn Sie die erste oder letzte Zeile in einem Inhaltsverzeichnis lesen. (#3421)
-- Beim sprechen geschriebener Wörter und in einigen anderen Fällen, werden Wörter, die Vokalzeichen und Virama (Indic Languages) enthalten, nicht mehr fälschlicherweise zerteilt. (#4254)
+- Beim sprechen geschriebener Wörter und in einigen anderen Fällen, werden indische Wörter, die Vokalzeichen und Virama  enthalten, nicht mehr fälschlicherweise zerteilt. (#4254)
 - Numerische Eingabefelder in Goldwave werden korrekt verarbeitet. (#670)
 - Wenn Sie sich in Microsoft Word absatzweise durch numerierte Listen oder Aufzählungslisten bewegen, müssen Sie die Tastenkonbinationen strg+Pfeil auf/ab nicht mehr zweimal drücken. (#3290)
 
