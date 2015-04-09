@@ -5,6 +5,7 @@
 #Copyright (C) 2007-2014 NV Access Limited
 
 import threading
+import weakref
 import queueHandler
 import api
 import speech
@@ -181,8 +182,10 @@ def doPreDocumentLoadComplete(obj):
 			focusObject.treeInterceptor=treeInterceptorHandler.getTreeInterceptor(focusObject)
 	return True
 
-#: set of (eventName, processId, windowClassName) of events to accept.
-_acceptEvents = set()
+#: Collection of (eventName, processId, windowClassName) of events to accept.
+#: We use a WeakValueDictionary mapping events to AppModules so that
+#: entries get cleaned up automatically soon after their process dies.
+_acceptEvents = weakref.WeakValueDictionary()
 
 def requestEvents(eventName=None, processId=None, windowClassName=None):
 	"""Request that particular events be accepted from a platform API.
@@ -197,7 +200,8 @@ def requestEvents(eventName=None, processId=None, windowClassName=None):
 	"""
 	if not eventName or not processId or not windowClassName:
 		raise ValueError("eventName, processId or windowClassName not specified")
-	_acceptEvents.add((eventName, processId, windowClassName))
+	app = appModuleHandler.getAppModuleFromProcessID(processId)
+	_acceptEvents[(eventName, processId, windowClassName)] = app
 
 def shouldAcceptEvent(eventName, windowHandle=None):
 	"""Check whether an event should be accepted from a platform API.
