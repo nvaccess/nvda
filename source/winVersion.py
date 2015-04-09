@@ -9,8 +9,11 @@ import winUser
 
 winVersion=sys.getwindowsversion()
 winVersionText="{v.major}.{v.minor}.{v.build}".format(v=winVersion)
-winVersionText+="" if winVersion.service_pack_major == 0 else (" service pack %d"%winVersion.service_pack_major)+(".%d"%winVersion.service_pack_minor if winVersion.service_pack_minor!=0 else "")
-winVersionText+=" %s" % ["workstation","domain controller","server"][winVersion.product_type-1]
+if winVersion.service_pack_major!=0:
+	winVersionText+=" service pack %d"%winVersion.service_pack_major
+	if winVersion.service_pack_minor!=0:
+		winVersionText+=".%d"%winVersion.service_pack_minor
+winVersionText+=" %s" % ("workstation","domain controller","server")[winVersion.product_type-1]
 
 def canRunVc2010Builds():
 	if (winVersion.major, winVersion.minor) < (5, 1):
