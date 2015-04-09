@@ -196,6 +196,7 @@ def requestEvents(eventName=None, processId=None, windowClassName=None):
 	to receive certain events even when in the background.
 	Note that NVDA may block some events at a lower level and doesn't listen for some event types at all.
 	In these cases, you will not be able to override this.
+	This should generally be called when a plugin is instantiated.
 	All arguments must be provided.
 	"""
 	if not eventName or not processId or not windowClassName:
