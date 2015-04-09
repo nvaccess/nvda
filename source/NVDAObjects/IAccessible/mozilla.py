@@ -49,9 +49,9 @@ class Mozilla(IAccessible):
 
 	def _get_embeddingTextInfo(self):
 		info=super(Mozilla,self).embeddingTextInfo
-		if not info and isinstance(self.parent,Mozilla) and isinstance(self.parent.TextInfo,IndexTextInfo):
+		if not info and isinstance(self.parent,Mozilla) and issubclass(self.parent.TextInfo,IndexTextInfo):
 			index=self.indexInParent
-			info=self.parent.makeTextInfo(textInfos.offsets.Offsets(index,index))
+			info=self.parent.makeTextInfo(textInfos.offsets.Offsets(index,index+1))
 		return info
 
 	def _get_TextInfo(self):
