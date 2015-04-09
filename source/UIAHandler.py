@@ -1,4 +1,4 @@
-import sys
+import winVersion
 import comtypes
 import config
 from logHandler import log
@@ -7,8 +7,7 @@ handler=None
 isUIAAvailable=False
 
 if config.conf and config.conf["UIA"]["enabled"]:
-	winver=sys.getwindowsversion()
-	winver=winver.major+(winver.minor/10.0)
+	winver=winVersion.winVersion.major+(winVersion.winVersion.minor/10.0)
 	if winver>=config.conf["UIA"]["minWindowsVersion"]:
 		try:
 			from _UIAHandler import *
