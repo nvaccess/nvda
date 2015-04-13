@@ -235,8 +235,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			d.Destroy()
 			gui.mainFrame.postPopup()
 		wx.CallAfter(run)
-	# Translators: the description for the elements list dialog script on virtualBuffers.
-	script_elementsList.__doc__ = _("Presents a list of links, headings or landmarks")
+	# Translators: the description for the Elements List command in browse mode.
+	script_elementsList.__doc__ = _("Lists various types of elements in this document")
 
 	def _activatePosition(self,info):
 		info.activate()
