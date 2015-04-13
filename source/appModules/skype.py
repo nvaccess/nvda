@@ -20,9 +20,15 @@ import queueHandler
 import config
 import NVDAObjects.behaviors
 import api
+from logHandler import log
 
 # Translators: The name of the NVDA command category for Skype specific commands.
 SCRCAT_SKYPE = _("Skype")
+
+TYPING_INDICATOR_MATCH = {
+	("TTypingIndicatorPanel", controlTypes.ROLE_STATICTEXT),
+	("TWidgetControl", controlTypes.ROLE_LISTITEM), # Skype <= 7.2
+}
 
 class Conversation(NVDAObjects.IAccessible.IAccessible):
 	scriptCategory = SCRCAT_SKYPE
@@ -50,17 +56,22 @@ class Conversation(NVDAObjects.IAccessible.IAccessible):
 				windowUtils.findDescendantWindow(self.windowHandle, className="TChatContentControl"),
 				winUser.OBJID_CLIENT, 0).lastChild
 		except LookupError:
-			pass
+			log.debugWarning("Couldn't find output list")
+			self.outputList = None
 		else:
 			self.outputList.startMonitoring()
-		try:
-			self.typingIndicator = NVDAObjects.IAccessible.getNVDAObjectFromEvent(
-				windowUtils.findDescendantWindow(self.windowHandle, className="TWidgetControl"),
-				winUser.OBJID_CLIENT, 1)
-		except LookupError:
-			pass
-		else:
+		for wClass, role in TYPING_INDICATOR_MATCH:
+			try:
+				self.typingIndicator = NVDAObjects.IAccessible.getNVDAObjectFromEvent(
+					windowUtils.findDescendantWindow(self.windowHandle, className=wClass),
+					winUser.OBJID_CLIENT, 1)
+			except LookupError:
+				continue
 			self.typingIndicator.startMonitoring()
+			break
+		else:
+			log.debugWarning("Couldn't find typing indicator")
+			self.typingIndicator = None
 
 	def event_focusEntered(self):
 		self._gainedFocus()
@@ -74,10 +85,12 @@ class Conversation(NVDAObjects.IAccessible.IAccessible):
 
 	def lostFocus(self):
 		self.appModule.conversation = None
-		self.outputList.stopMonitoring()
-		self.outputList = None
-		self.typingIndicator.stopMonitoring()
-		self.typingIndicator = None
+		if self.outputList:
+			self.outputList.stopMonitoring()
+			self.outputList = None
+		if self.typingIndicator:
+			self.typingIndicator.stopMonitoring()
+			self.typingIndicator = None
 
 	def script_reviewRecentMessage(self, gesture):
 		try:
@@ -217,7 +230,7 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, ChatOutputList)
 		elif wClass == "TTrayAlert" and role == controlTypes.ROLE_WINDOW:
 			clsList.insert(0, Notification)
-		elif wClass == "TWidgetControl" and role == controlTypes.ROLE_LISTITEM:
+		elif (wClass, role) in TYPING_INDICATOR_MATCH:
 			clsList.insert(0, TypingIndicator)
 
 	def event_gainFocus(self, obj, nextHandler):
