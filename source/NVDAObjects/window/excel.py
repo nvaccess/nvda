@@ -296,7 +296,7 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		("chart", _("&Chart")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("comment", _("&Comment")),
+		("comment", _("C&omment")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("formula", _("&Formula")),
