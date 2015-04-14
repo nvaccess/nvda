@@ -27,6 +27,7 @@ import controlTypes
 from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
+import ctypes
 
 xlCenter=-4108
 xlJustify=-4130
@@ -35,7 +36,7 @@ xlRight=-4152
 xlDistributed=-4117
 xlBottom=-4107
 xlTop=-4160
-
+xlCellWidthUnitToPixels = 7.5919335705812574139976275207592
 alignmentLabels={
 	xlCenter:"center",
 	xlJustify:"justify",
@@ -561,7 +562,114 @@ class ExcelCell(ExcelBase):
 			comment=None
 		if comment:
 			states.add(controlTypes.STATE_HASCOMMENT)
+		if self._overlapInfo is not None:
+			if self._overlapInfo['obscuredFromRightBy'] > 0:
+				states.add(controlTypes.STATE_CROPPED)
+			if self._overlapInfo['obscuringRightBy'] > 0:
+				states.add(controlTypes.STATE_OVERFLOWING)
 		return states
+
+	def getCellWidthAndTextWidth(self):
+		#handle to Device Context
+		hDC = ctypes.windll.user32.GetDC(self.windowHandle)
+		tempDC = ctypes.windll.gdi32.CreateCompatibleDC(hDC)
+		ctypes.windll.user32.ReleaseDC(self.windowHandle, hDC)
+		#Compatible Bitmap for current Device Context
+		hBMP = ctypes.windll.gdi32.CreateCompatibleBitmap(tempDC, 1, 1)
+		#handle to the bitmap object
+		hOldBMP = ctypes.windll.gdi32.SelectObject(tempDC, hBMP)
+		#Pass Device Context and LOGPIXELSX, the horizontal resolution in pixels per unit inch
+		deviceCaps = ctypes.windll.gdi32.GetDeviceCaps(tempDC, 88)
+		#Fetching Font Size and Weight information
+		iFontSize = self.excelCellObject.Font.Size
+		iFontSize = 11 if iFontSize is None else int(iFontSize)
+		iFontSize = ctypes.c_int(iFontSize)
+		iFontSize = ctypes.windll.kernel32.MulDiv(iFontSize, deviceCaps, 72)
+		#Font  Weight for Bold FOnt is 700 and for normal font it's 400
+		iFontWeight = 700 if self.excelCellObject.Font.Bold else 400
+		#Fetching Font Name and style information
+		sFontName = self.excelCellObject.Font.Name
+		sFontItalic = self.excelCellObject.Font.Italic
+		sFontUnderline = True if self.excelCellObject.Font.Underline else False
+		sFontStrikeThrough = self.excelCellObject.Font.Strikethrough
+		#If FontSize is <0: The font mapper transforms this value into device units
+		#and matches its absolute value against the character height of the available fonts.
+		iFontHeight = iFontSize * -1
+		#If Font Width is 0, the font mapper chooses a closest match value.
+		iFontWidth = 0
+		iEscapement = 0
+		iOrientation = 0
+		#Default CharSet based on System Locale is chosen
+		iCharSet = 0
+		#Default font mapper behavior
+		iOutputPrecision = 0
+		#Default clipping behavior
+		iClipPrecision = 0
+		#Default Quality
+		iOutputQuality = 0
+		#Default Pitch and default font family
+		iPitchAndFamily = 0
+		#Create a font object with the correct size, weight and style
+		hFont = ctypes.windll.gdi32.CreateFontW(iFontHeight, iFontWidth, iEscapement, iOrientation, iFontWeight, sFontItalic, sFontUnderline, sFontStrikeThrough, iCharSet, iOutputPrecision, iClipPrecision, iOutputQuality, iPitchAndFamily, sFontName)
+		#Load the font into the device context, storing the original font object
+		hOldFont = ctypes.windll.gdi32.SelectObject(tempDC, hFont)
+		sText = self.excelCellObject.Text
+		textLength = len(sText)
+		class structText(ctypes.Structure):
+			_fields_ = [("width", ctypes.c_int), ("height",ctypes.c_int)]
+		StructText = structText()
+		getTextExtentPoint = ctypes.windll.gdi32.GetTextExtentPoint32W
+		getTextExtentPoint.argtypes = [ctypes.c_void_p, ctypes.c_wchar_p, ctypes.c_int, ctypes.POINTER(structText)]
+		getTextExtentPoint.restype = ctypes.c_int
+		sText = unicode(sText)
+		#Get the text dimensions
+		ctypes.windll.gdi32.GetTextExtentPoint32W(tempDC, sText, textLength,ctypes.byref(StructText))
+		#Restore the old Font Object
+		ctypes.windll.gdi32.SelectObject(tempDC, hOldFont)
+		#Delete the font object we created
+		ctypes.windll.gdi32.DeleteObject(hFont)
+		#Restore the old Bitmap Object
+		ctypes.windll.gdi32.SelectObject(tempDC, hOldBMP)
+		#Delete the temporary BitMap Object
+		ctypes.windll.gdi32.DeleteObject(hBMP)
+		#Release & Delete the device context
+		ctypes.windll.gdi32.DeleteDC(tempDC)
+		#Retrieve the text width
+		textWidth = StructText.width+5
+		cellWidth  = self.excelCellObject.ColumnWidth * xlCellWidthUnitToPixels	#Conversion factor to convert the cellwidth to pixels
+		return (cellWidth,textWidth)
+
+	def _get__overlapInfo(self):
+		(cellWidth, textWidth) = self.getCellWidthAndTextWidth()
+		isWrapText = self.excelCellObject.WrapText
+		isShrinkToFit = self.excelCellObject.ShrinkToFit
+		isMerged = self.excelWindowObject.Selection.MergeCells
+		adjacentCell = self.excelCellObject.Offset(0,1)
+		if adjacentCell.Text:
+			isAdjacentCellEmpty = False
+		else:
+			isAdjacentCellEmpty = True
+		info = {}
+		if isMerged:
+			columnCountInMergeArea = self.excelCellObject.MergeArea.Columns.Count
+			curCol = self.excelCellObject.Column
+			curRow = self.excelCellObject.Row
+			cellWidth = 0
+			for x in xrange(columnCountInMergeArea):
+				cellWidth += self.excelCellObject.Cells(curRow, curCol).ColumnWidth
+				curCol += 1
+			cellWidth = cellWidth * xlCellWidthUnitToPixels #Conversion factor to convert the cellwidth to pixels
+		if isWrapText or isShrinkToFit or textWidth <= cellWidth:
+			info = None
+		else:
+			if isAdjacentCellEmpty:
+				info['obscuringRightBy']= textWidth - cellWidth
+				info['obscuredFromRightBy'] = 0
+			else:
+				info['obscuredFromRightBy']= textWidth - cellWidth
+				info['obscuringRightBy'] = 0
+		self._overlapInfo = info
+		return self._overlapInfo
 
 	def _get_parent(self):
 		worksheet=self.excelCellObject.Worksheet
