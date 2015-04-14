@@ -132,7 +132,7 @@ class CommandBarListItem(IAccessible):
 			import colors
 			rgb=colors.RGB.fromString(name)
 			# Translators: a color, broken down into its RGB red, green, blue parts.
-			return _("RGB red {rgb.red}, green {rgb.green} and blue {rgb.blue}").format(rgb=colors.RGB.fromString(name))
+			return _("RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}").format(rgb=colors.RGB.fromString(name))
 		else:
 			return super(CommandBarListItem,self).description
 
