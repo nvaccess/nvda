@@ -30,7 +30,6 @@ import scriptHandler
 import ctypes
 import browseMode
 
-
 xlCenter=-4108
 xlJustify=-4130
 xlLeft=-4131
