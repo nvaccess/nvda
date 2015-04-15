@@ -184,7 +184,9 @@ class Math(Mozilla):
 			if not mathPres.getLanguageFromMath(attr) and self.language:
 				attr = mathPres.insertLanguageIntoMath(attr, self.language)
 			return attr
-		# Assume the content is MathML.
+		if self.IA2Attributes.get("tag") != "math":
+			# This isn't MathML.
+			raise LookupError
 		if self.language:
 			attrs = ' xml:lang="%s"' % self.language
 		else:
