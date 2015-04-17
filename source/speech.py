@@ -714,8 +714,9 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 			if text:
 				speechSequence.append(text)
 				isTextBlank=False
-				if field.get("role")==controlTypes.ROLE_MATH:
-					_speakTextInfo_addMath(speechSequence,info,field)
+			if field.get("role")==controlTypes.ROLE_MATH:
+				isTextBlank=False
+				_speakTextInfo_addMath(speechSequence,info,field)
 
 	#Get speech text for any fields in the new controlFieldStack that are not in the old controlFieldStack
 	for count in xrange(commonFieldCount,len(newControlFieldStack)):
@@ -724,8 +725,9 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		if text:
 			speechSequence.append(text)
 			isTextBlank=False
-			if field.get("role")==controlTypes.ROLE_MATH:
-				_speakTextInfo_addMath(speechSequence,info,field)
+		if field.get("role")==controlTypes.ROLE_MATH:
+			isTextBlank=False
+			_speakTextInfo_addMath(speechSequence,info,field)
 		commonFieldCount+=1
 
 	#Fetch the text for format field attributes that have changed between what was previously cached, and this textInfo's initialFormatField.
@@ -802,8 +804,8 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 						relativeSpeechSequence.append(LangChangeCommand(None))
 						lastLanguage=None
 					relativeSpeechSequence.append(fieldText)
-					if command.command=="controlStart" and command.field.get("role")==controlTypes.ROLE_MATH:
-						_speakTextInfo_addMath(relativeSpeechSequence,info,command.field)
+				if command.command=="controlStart" and command.field.get("role")==controlTypes.ROLE_MATH:
+					_speakTextInfo_addMath(relativeSpeechSequence,info,command.field)
 				if autoLanguageSwitching and newLanguage!=lastLanguage:
 					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
 					lastLanguage=newLanguage
@@ -876,7 +878,7 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	rowNumber=propertyValues.get('rowNumber')
 	columnNumber=propertyValues.get('columnNumber')
 	includeTableCellCoords=propertyValues.get('includeTableCellCoords',True)
-	if speakRole and (reason not in (controlTypes.REASON_SAYALL,controlTypes.REASON_CARET,controlTypes.REASON_FOCUS) or not (name or value or cellCoordsText or rowNumber or columnNumber) or role not in controlTypes.silentRolesOnFocus):
+	if speakRole and (reason not in (controlTypes.REASON_SAYALL,controlTypes.REASON_CARET,controlTypes.REASON_FOCUS) or not (name or value or cellCoordsText or rowNumber or columnNumber) or role not in controlTypes.silentRolesOnFocus) and (role!=controlTypes.ROLE_MATH or reason not in (controlTypes.REASON_CARET,controlTypes.REASON_SAYALL)):
 		textList.append(controlTypes.roleLabels[role])
 	if value:
 		textList.append(value)

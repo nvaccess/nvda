@@ -603,7 +603,11 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 		return getBrailleTextForProperties(**props)
 
 	elif reportStart:
-		props = {"role": role, "states": states,"value":value}
+		props = {
+			# Don't report the role for math here.
+			# However, we still need to pass it (hence "_role").
+			"_role" if role == controlTypes.ROLE_MATH else "role": role,
+			"states": states,"value":value}
 		if config.conf["presentation"]["reportKeyboardShortcuts"]:
 			kbShortcut = field.get("keyboardShortcut")
 			if kbShortcut:
@@ -617,7 +621,9 @@ def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 			mathPres.ensureInit()
 			if mathPres.brailleProvider:
 				try:
-					text += " " + mathPres.brailleProvider.getBrailleForMathMl(
+					if text:
+						text += " "
+					text += mathPres.brailleProvider.getBrailleForMathMl(
 						info.getMathMl(field))
 				except (NotImplementedError, LookupError):
 					pass
