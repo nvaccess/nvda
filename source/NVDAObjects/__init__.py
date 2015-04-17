@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #NVDAObjects/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-20012 NVDA Contributors
+#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -1042,3 +1043,15 @@ This code is executed if a gain focus event is received by this object.
 	# Don't cache sleepMode, as it is derived from a property which might change
 	# and we want the changed value immediately.
 	_cache_sleepMode = False
+
+	def _get_mathMl(self):
+		"""Obtain the MathML markup for an object containing math content.
+		This will only be called (and thus only needs to be implemented) for
+		objects with a role of L{controlTypes.ROLE_MATH}.
+		@raise LookupError: If MathML can't be retrieved for this object.
+		"""
+		raise NotImplementedError
+
+	#: The language/locale of this object.
+	#: @type: basestring
+	language = None

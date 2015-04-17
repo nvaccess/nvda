@@ -285,8 +285,8 @@ NVDA provides the following key commands in relation to the system caret:
 | Say all | NVDA+downArrow | NVDA+a | Starts reading from the current position of the system caret, moving it along as it goes |
 | Read current line | NVDA+upArrow | NVDA+l | Reads the line where the system caret is currently situated. Pressing twice spells the line. |
 | Read current text selection | NVDA+Shift+upArrow | NVDA+shift+s | Reads any currently selected text |
-| nextSentence | alt+downArrow | alt+downArrow | Moves the caret to the next sentence and announces it. (only supported in Microsoft Word) |
-| previousSentence | alt+upArrow | alt+upArrow | Moves the caret to the previous sentence and announces it. (only supported in Microsoft Word) |
+| Next sentence | alt+downArrow | alt+downArrow | Moves the caret to the next sentence and announces it. (only supported in Microsoft Word) |
+| Previous sentence | alt+upArrow | alt+upArrow | Moves the caret to the previous sentence and announces it. (only supported in Microsoft Word) |
 
 
 When within a table, the following key commands are also available:
@@ -526,6 +526,42 @@ A key command is provided to return to the original page containing the embedded
 || Name | Key | Description |
 | Move to containing browse mode document | NVDA+control+space | Moves the focus out of the current embedded object and into the document that contains it |
 %kc:endInclude
+
++ Reading Mathematical Content +
+Using MathPlayer 4 from Design Science, NVDA can read and interactively navigate supported mathematical content.
+This requires that MathPlayer 4 is installed on the computer.
+MathPlayer is available as a free download from: http://www.dessci.com/en/products/mathplayer/
+
+NVDA supports the following types of mathematical content:
+- MathML in Mozilla Firefox and Microsoft Internet Explorer.
+- Design Science MathType in Microsoft Word and PowerPoint.
+- MathML in Adobe Reader. Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
+-
+
+When reading a document, NVDA will speak any supported mathematical content where it occurs.
+If you are using a braille display, it will also be displayed in braille.
+
+++ Interactive Navigation ++
+If you are working primarily with speech, in most cases, you will probably wish to examine the expression in smaller segments, rather than hearing the entire expression at once.
+
+If you are in browse mode, you can do this by moving the cursor to the mathematical content and pressing enter.
+
+If you are not in browse mode:
++ move the review cursor to the mathematical content.
+By default, the review cursor follows the system caret, so you can usually use the system caret to move to the desired content.
++ Then, activate the following command:
++
+
+%kc:beginInclude
+|| Name | Key | Description |
+| Interact with math content | NVDA+alt+m | Begins interaction with math content. |
+%kc:endInclude
+
+At this point, you can use MathPlayer commands such as the arrow keys to explore the expression.
+For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
+Please see the MathPlayer documentation for further information.
+
+When you wish to return to the document, simply press the escape key.
 
 + Application Specific NVDA Commands +
 NVDA provides its own extra commands for some applications to make certain tasks easier or to provide access to functionality which is not otherwise accessible to screen reader users.
@@ -1358,7 +1394,7 @@ This section contains information about the Braille displays supported by NVDA.
 ++ Freedom Scientific Focus/PAC Mate Series ++
 All Focus and PAC Mate displays from [Freedom Scientific http://www.freedomscientific.com/] are supported when connected via USB or bluetooth.
 You will need the Freedom Scientific braille display drivers installed on your system.
-If you do not have them already, you can obtain them from http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+If you do not have them already, you can obtain them from http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Although this page only mentions the Focus Blue display, the drivers support all Freedom Scientific Focus and Pacmate displays.
 If your system is running 64 bit Windows and the drivers were already installed by another screen reader, you will probably still need to install the drivers from this link, as the files required by NVDA were probably not installed by the other screen reader.
 

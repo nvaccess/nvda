@@ -40,6 +40,7 @@ class MshtmlVBufStorage_controlFieldNode_t : public VBufStorage_controlFieldNode
 	void reportLiveAddition();
 	void preProcessLiveRegion(const MshtmlVBufStorage_controlFieldNode_t* parent, const std::map<std::wstring,std::wstring>& attribsMap);
 	void postProcessLiveRegion(VBufStorage_controlFieldNode_t* oldNode, std::set<VBufStorage_controlFieldNode_t*>& atomicNodes);
+	virtual void generateAttributesForMarkupOpeningTag(std::wstring& text, int startOffset, int endOffset);
 	bool isRootNode;
 	MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, bool isRootNode, IHTMLDOMNode* pHTMLDOMNode, const std::wstring& lang);
 	~MshtmlVBufStorage_controlFieldNode_t();

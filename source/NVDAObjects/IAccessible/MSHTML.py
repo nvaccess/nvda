@@ -1,6 +1,6 @@
 #NVDAObjects/MSHTML.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2015 NV Access Limited, Aleksey Sadovoy
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -119,6 +119,7 @@ nodeNamesToNVDARoles={
 	"FIELDSET":controlTypes.ROLE_GROUPING,
 	"OPTION":controlTypes.ROLE_LISTITEM,
 	"BLOCKQUOTE":controlTypes.ROLE_BLOCKQUOTE,
+	"MATH":controlTypes.ROLE_MATH,
 }
 
 def getZoomFactorsFromHTMLDocument(HTMLDocument):
@@ -482,6 +483,8 @@ class MSHTML(IAccessible):
 				clsList.append(Object)
 			elif nodeName=="FIELDSET":
 				clsList.append(Fieldset)
+			elif nodeName=="MATH":
+				clsList.append(Math)
 		clsList.append(MSHTML)
 		if not self.HTMLNodeHasAncestorIAccessible:
 			# The IAccessibleObject is for this node (not an ancestor), so IAccessible overlay classes are relevant.
@@ -950,6 +953,17 @@ class MSHTML(IAccessible):
 		info.append("MSHTML nodeName: %s" % ret)
 		return info
 
+	def _get_language(self):
+		ti = self.treeInterceptor
+		if not ti:
+			# This is too slow to calculate without a buffer.
+			# This case should be pretty rare anyway.
+			return None
+		try:
+			return ti.getControlFieldForNVDAObject(self)["language"]
+		except LookupError:
+			return None
+
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.
 	"""
@@ -1050,6 +1064,16 @@ class RootClient(IAccessible):
 
 class MSAATextLeaf(IAccessible):
 	role=controlTypes.ROLE_STATICTEXT
+
+class Math(MSHTML):
+	role = controlTypes.ROLE_MATH
+
+	def _get_mathMl(self):
+		import mathPres
+		mathMl = mathPres.stripExtraneousXml(self.HTMLNode.outerHTML)
+		if not mathPres.getLanguageFromMath(mathMl) and self.language:
+			mathMl = mathPres.insertLanguageIntoMath(mathMl, self.language)
+		return mathMl
 
 def findExtraIAccessibleOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class for MSHTML objects.

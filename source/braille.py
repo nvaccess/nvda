@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2012 NV Access Limited
+#Copyright (C) 2008-2014 NV Access Limited
 
 import itertools
 import os
@@ -593,7 +593,8 @@ class NVDAObjectRegion(Region):
 			columnNumber=obj.columnNumber
 		except NotImplementedError:
 			columnNumber=None
-		text = getBrailleTextForProperties(name=obj.name, role=obj.role,
+		role = obj.role
+		text = getBrailleTextForProperties(name=obj.name, role=role,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=obj.description if presConfig["reportObjectDescriptions"] else None,
@@ -605,6 +606,15 @@ class NVDAObjectRegion(Region):
 			rowHeaderText=obj.rowHeaderText if hasattr(obj, "rowHeaderText") and config.conf["documentFormatting"]["reportTableHeaders"] else None,
 			cellCoordsText=obj.cellCoordsText if config.conf["documentFormatting"]["reportTableCellCoords"] else None,
 		)
+		if role == controlTypes.ROLE_MATH:
+			import mathPres
+			mathPres.ensureInit()
+			if mathPres.brailleProvider:
+				try:
+					text += " " + mathPres.brailleProvider.getBrailleForMathMl(
+						obj.mathMl)
+				except (NotImplementedError, LookupError):
+					pass
 		self.rawText = text + self.appendText
 		super(NVDAObjectRegion, self).update()
 
@@ -614,8 +624,10 @@ class NVDAObjectRegion(Region):
 		except NotImplementedError:
 			pass
 
-def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
+def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
+	# Cache this for later use.
+	field._presCat = presCat
 	if reportStart:
 		# If this is a container, only report it if this is the start of the node.
 		if presCat == field.PRESCAT_CONTAINER and not field.get("_startOfNode"):
@@ -652,7 +664,11 @@ def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
 		return getBrailleTextForProperties(**props)
 
 	elif reportStart:
-		props = {"role": role, "states": states,"value":value}
+		props = {
+			# Don't report the role for math here.
+			# However, we still need to pass it (hence "_role").
+			"_role" if role == controlTypes.ROLE_MATH else "role": role,
+			"states": states,"value":value}
 		if config.conf["presentation"]["reportKeyboardShortcuts"]:
 			kbShortcut = field.get("keyboardShortcut")
 			if kbShortcut:
@@ -660,7 +676,19 @@ def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
 		level = field.get("level")
 		if level:
 			props["positionInfo"] = {"level": level}
-		return getBrailleTextForProperties(**props)
+		text = getBrailleTextForProperties(**props)
+		if role == controlTypes.ROLE_MATH:
+			import mathPres
+			mathPres.ensureInit()
+			if mathPres.brailleProvider:
+				try:
+					if text:
+						text += " "
+					text += mathPres.brailleProvider.getBrailleForMathMl(
+						info.getMathMl(field))
+				except (NotImplementedError, LookupError):
+					pass
+		return text
 	else:
 		# Translators: Displayed in braille at the end of a control field such as a list or table.
 		# %s is replaced with the control's role.
@@ -785,10 +813,22 @@ class TextInfoRegion(Region):
 					ctrlFields.append(field)
 					if not text:
 						continue
+					if getattr(field, "_presCat") == field.PRESCAT_MARKER:
+						# In this case, the field text is what the user cares about,
+						# not the actual content.
+						fieldStart = len(self.rawText)
+						if fieldStart > 0:
+							# There'll be a space before the field text.
+							fieldStart += 1
+						if shouldMoveCursorToFirstContent:
+							shouldMoveCursorToFirstContent = False
+							self.cursorPos = fieldStart
+						elif isSelection and self._selectionStart is None:
+							self._selectionStart = fieldStart
 					self._addFieldText(text)
 				elif cmd == "controlEnd":
 					field = ctrlFields.pop()
-					text = getControlFieldBraille(field, ctrlFields, False, formatConfig)
+					text = info.getControlFieldBraille(field, ctrlFields, False, formatConfig)
 					if not text:
 						continue
 					# Separate this field text from the rest of the text.
@@ -1238,6 +1278,17 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 	_cachedFocusAncestorsEnd = ancestorsEnd
 
 def getFocusRegions(obj, review=False):
+	# Allow objects to override normal behaviour.
+	try:
+		regions = obj.getBrailleRegions(review=review)
+	except (AttributeError, NotImplementedError):
+		pass
+	else:
+		for region in regions:
+			region.update()
+			yield region
+		return
+
 	# Late import to avoid circular import.
 	from treeInterceptorHandler import TreeInterceptor
 	from cursorManager import CursorManager

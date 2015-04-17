@@ -73,6 +73,14 @@ env.Install(libInstallDir,ia2RPCStubs[0]) #proxy dll
 if TARGET_ARCH=='x86':
 	env.Install(sourceTypelibDir,ia2RPCStubs[1]) #typelib
 
+iSimpleDomRPCStubs=env.SConscript('ISimpleDOM_sconscript')
+if TARGET_ARCH=='x86':
+	env.Install(sourceTypelibDir,iSimpleDomRPCStubs[0]) #typelib
+
+mathPlayerRPCStubs=env.SConscript('mathPlayer_sconscript')
+if TARGET_ARCH=='x86':
+	env.Install(sourceTypelibDir,mathPlayerRPCStubs[0]) #typelib
+
 if TARGET_ARCH=='x86':
 	localLib=env.SConscript('local/sconscript')
 	Export('localLib')
