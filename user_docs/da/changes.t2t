@@ -1,0 +1,66 @@
+﻿Nyheder i NVDA
+
+
+%!includeconf: ../changes.t2tconf
+
+= 2015.1 =
+De vigtigste nyheder omfatter gennemsynstilstand for dokumenter i Microsoft Word og Outlook, store forbedringer i understøttelsen af Skype for Desktop samt betydelige fejlrettelser i Internet Explorer.
+
+== Nye funktioner ==
+- Du kan nu tilføje nye symboler i dialogen "Udtale af symboler". (#4354)
+- I dialogen Input-bevægelser kan du bruge det nye filtreringsfelt til kun at få vist kommandoer, der indeholder bestemte ord. (#4458)
+- NVDA annoncerer nu automatisk ny tekst i programmet mintty. (#4588)
+- I søgedialogen i gennemsynstilstand kan man nu søge specifikt efter store eller små bogstaver. (#4584)
+-Hurtignavigation (h for overskrift osv.) plus elementliste (NVDA+F7) kan nu også bruges i Microsoft Word. Tryk på NVDA+Mellemrum for at slå læsetilstand til. (#2975)
+- Læsning af HTML-meddelelser i Microsoft Outlook 2007 og højere er blevet kraftigt forbedret, da læsetilstand automatisk bliver slået til ved disse meddelelser. Hvis læsetilstand i sjældne situationer ikke bliver slået til automatisk, kan du slå den til med NVDA+Mellemrum. (#2975) 
+- I tabeller Microsoft Word bliver kolonneoverskrifter automatisk læst op i tabeller, hvor en række til overskrifter er blevet angivet ved hjælp af tabelegenskaberne i Microsoft Word. (#4510)
+- I tabeller, hvor rækker er blevet flettet/lagt sammen, virker dette imidlertid ikke automatisk. I denne situation kan du stadig indstille kolonneoverskrifterne manuelt i NVDA med NVDA+Shift+c.
+- I Skype for Desktop bliver notifikationer nu automatisk læst op. (#4741)
+- i Skype for Desktop kan du nu læse og gennemse de seneste meddelelser med NVDA+Ctrl-1-0, f.eks. NVDA+Ctrl+1 for den seneste meddelelse eller NVDA+Ctrl-0 for den tiendesidste meddelelse. (#3210)
+- under en samtale i Skype for Desktop gør NVDA nu opmærksom på, når en kontaktperson skriver noget. (#3506)
+- NVDA kan nu installeres "tavst" (uden dialoger) fra kommandolinjen uden at starte den installerede version bagefter. For at gøre dette skal du bruge kommandolinje-indstillingen --install-silent. (#4206)
+- Understøttelse af Papenmeier BRAILLEX Live 20, BRAILLEX Live og BRAILLEX Live Plus braille displays. (#4614)
+
+
+== Ændringer ==
+- i NVDAs dialogen til dokumentformateringsindstillinger er der nu kommet en genvejstast til annoncering af stavefejl (alt-r). (#793)
+- NVDA bruger nu talesyntesens eller stemmens sprog til behandling af tegn og symboler (herunder navne på specialtegn og symboler), uanset om automatisk sprogskift er slået til. Hvis du vil slå denne funktion fra, så NVDA igen bruger sit brugergrænsefladesprog, skal du slå den nye indstilling fra, som hedder Brug stemmens sprog til behandling af tegn og symboler. (#4210)
+Understøttelse af talesyntesen Newfon er blevet fjernet. Newfon er nu tilgængelig som et NVDA-tilføjelsesprogram. (#3184)
+Skype for Desktop version 7 eller senere er nu nødvendig til brug med NVDA. Tidligere versionunderstøttes ikke. (#4218)
+- Hentning af opdateringer til NVDA er nu mere sikker. Specifikt bliver oplysningerne om opdateringer nu hentet via https, og filens integritet bliver kontrolleret, når den er blevet hentet. (#4716)
+- eSpeak er blevet opgraderet til version 1.48.04 (#4325)
+
+
+== Fejlrettelser ==
+- Microsoft Excel, håndtering af tilfælde, hvor celler med række- eller kolonneoverskrifter bliver flettet. F.eks. hvis A1 og B1 bliver flettet, vil a2 nu få annonceret A1 og B1 som kolonneoverskrift i stedet for ingenting. (#4617)
+- Når man redigerer indholdet i en tekstboks i Microsoft PowerPoint 2003, bliver indholdet af hver linje nu annonceret korrekt. Tidligere ville hver linje have et tegn mere galt for hvert nyt afsnit. (#4619)
+- Alle dialoger i NVDA er nu centreret på skærmen af hensyn til den visuelle præsentation og brugervenlighed. (#3148)
+- Skype for desktop: Når man indtaster en præsentationsmeddelelse ved tilføjelse af en kontakt, virker indtastning og navigering i teksten nu korrekt. (#3661)
+- Eclipse IDE: Når fokus bliver flyttet til et nyt emne i en træoversigt, og det tidligere emne var en checkboks, bliver det nu annonceret korrekt. (#4586)
+- I stavekontrollen i Microsoft Word bliver den næste fejl nu annonceret, hvis den sidste fejl bliver ændret eller ignoreret ved hjælp af genvejstasten. (#1938)
+- Tekst kan igen læses korrekt i f.eks. Tera Term Pro's terminalvindue og dokumenter i Balabolka. (#4229)
+- Fokus kommer nu korrekt tilbage til det dokument, der bliver redigeret, når man fuldfører inputkomposition på koreansk og andre østasiatiske sprog, når man redigerer i en ramme i Internet Explorer eller andre SHTML-dokumenter. (#4045)
+- I dialogen Inputbevægelser, når man vælger et tastaturlayout for en tastaturkommando, som skal tilføjes, vil et tryk på Escape nu lukke menuen som forventet i stedet for at lukke dialogen. (#3617)
+- Når man fjerner et tilføjelsesprogram, bliver mappen til tilføjelsesprogrammet nu slettet korrekt, når man genstarter NVDA. Førhen skulle man genstarte NVDA to gange. (#3461)
+- Store problemer er blevet løst omkring brugen af Skype for Desktop 7. (#4218)
+- Når du sender en meddelelse i Skype for Desktop, bliver den ikke længere læst op to gange. (#3616)
+- I Skype for Desktop bør NVDA ikke længere en gang i mellem fejlagtigt læse en syndflod af meddelelser (måske oven i købet en hel samtale). (#4644)
+- Løste et problem, hvor NVDAs kommando for dato og tid en gang imellem ikke respektererede brugerens regionale indstillinger. (#2987)
+- I gennemsynstilstand bliver meningsløse tekster, som kan fylde flere linjer ikke længere læst op for nogle grafikelementer, f.eks. i Google Groups. (Dette forekom specifikt i forbindelse med grafik som var kodet i base64.) (#4793)
+- NVDA bør ikke længere fryse efter et par sekunder, Når man flytter fokus væk fra en Windows Store app, når den bliver sat på standby. (#4572)
+- I live regions i Mozilla Firefox bliver aria-atomic attributten nu respekteret, Selv når  atomic-elementet selv ændrer sig. Tidligere påvirkede dette kun underordnede elementer. (#4794)
+- Gennemsynstilstand vil afspejle opdateringer, og live regions vil blive annonceret for dokumenter i gennemsynstilstand inden i ARIA applikationer, som er indlejret i dokumenter i Internet Explorer eller andre MSHTML-kontroller. (#4798)
+- Når tekst bliver tilføjet eller ændret i Live regions i Internet Explorer eller andre MSHTML-kontroller, hvor forfatteren har specificeret, at teksten er relevant, bliver kun den nye eller ændrede tekst læst op, ikke hele teksten i det overordnede element. (#4800)
+- Indhold, som er indikeret af aria-labelledby-attributten i elementer i Internet Explorer og andre MSHTML-kontroller, erstatter nu korrekt det originale indhold, hvor dette er korrekt at gøre. (#4575)
+- Under stavekontrol i Microsoft Outlook 2013 bliver det forkert stavede ord nu læst op. (#4848)
+- I Internet Explorer og andre MSHTML controller bliver indholdet i usynlige elementer ikke længere fejlagtigt læst op i gennemsynstilstand. (#4839, #3776)
+- I Internet Explorer og andre MSHTML controller tager titel-attributten på formularfelter ikke længere fejlagtigt forrang over andre label-assosiationer. (#4491)
+- I Internet Explorer og andre MSHTML controller ignorerer NVDA ikke længere fokus på  elementer på grund af aria-activedescendant-attributten. (#4667)
+
+
+== Nyheder for udviklere ==
+For nyheder relateret til udvikling se venligst det engelske "What's New"-dokument
+
+
+= Tidligere versioner =
+For nyheder i ældre versioner se venligst det engelske "What's New"-dokument.

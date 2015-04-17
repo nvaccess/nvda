@@ -1304,4 +1304,3 @@ class VirtualBuffer(cursorManager.CursorManager, browseMode.BrowseModeTreeInterc
 		"kb:shift+,": "moveToStartOfContainer",
 		"kb:,": "movePastEndOfContainer",
 	}
-

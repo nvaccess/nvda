@@ -473,8 +473,8 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	macro_addHTMLAttributeToMap(L"role",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-valuenow",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-sort",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
-	macro_addHTMLAttributeToMap(L"aria-labelledBy",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
-	macro_addHTMLAttributeToMap(L"aria-describedBy",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-labelledby",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-describedby",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-expanded",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-selected",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-level",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
@@ -862,7 +862,8 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		language=static_cast<MshtmlVBufStorage_controlFieldNode_t*>(parentNode)->language;
 	}
 
-	VBufStorage_controlFieldNode_t* node=new MshtmlVBufStorage_controlFieldNode_t(docHandle,ID,isBlock,this,pHTMLDOMNode,language);
+	bool isDocRoot=!parentNode&&(!oldNode||!oldNode->getParent());
+	VBufStorage_controlFieldNode_t* node=new MshtmlVBufStorage_controlFieldNode_t(docHandle,ID,isBlock,this,isDocRoot,pHTMLDOMNode,language);
 	((MshtmlVBufStorage_controlFieldNode_t*)node)->preProcessLiveRegion((MshtmlVBufStorage_controlFieldNode_t*)(oldNode?oldNode->getParent():parentNode),attribsMap);
 	bool wasInNewSubtree=inNewSubtree;
 	if(!wasInNewSubtree&&!oldNode) {
@@ -1066,12 +1067,6 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		if(contentString.empty()) {
 			contentString=L" ";
 		}
-	} else if(nodeName.compare(L"BUTTON")==0) {
-		if(!IAName.empty()) {
-			contentString=IAName;
-		} else {
-			contentString=L" ";
-		}
 	} else if(nodeName.compare(L"SELECT")==0) {
 		if(!IAValue.empty()) {
 			contentString=IAValue;
@@ -1183,7 +1178,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		}
 
 		//A node who's rendered children produces no content, or only a small amount of whitespace should render its title or URL
-		if(!nodeHasUsefulContent(parentNode)) {
+		if(!hidden&&!nodeHasUsefulContent(parentNode)) {
 			contentString=L"";
 			if(!IAName.empty()) {
 				contentString=IAName;
