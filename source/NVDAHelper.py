@@ -438,8 +438,8 @@ def initialize():
 			raise e
 	localLib.nvdaHelperLocal_initialize()
 	generateBeep=localLib.generateBeep
-	generateBeep.argtypes=[c_char_p,c_float,c_uint,c_ubyte,c_ubyte]
-	generateBeep.restype=c_uint
+	generateBeep.argtypes=[c_char_p,c_float,c_int,c_int,c_int]
+	generateBeep.restype=c_int
 	# Handle VBuf_getTextInRange's BSTR out parameter so that the BSTR will be freed automatically.
 	VBuf_getTextInRange = CFUNCTYPE(c_int, c_int, c_int, c_int, POINTER(BSTR), c_int)(
 		("VBuf_getTextInRange", localLib),
