@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2015 NVDA contributers.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -17,6 +17,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include "nvdaHelperLocal.h"
 
-unsigned generateBeep(short* buf, const float hz, const unsigned length, const unsigned char left=50, const unsigned char right = 50);
+int generateBeep(short* buf, const float hz, const int length, const int left=50, const int right=50);
 
 #endif
