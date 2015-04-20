@@ -1,6 +1,6 @@
 #NVDAObjects/excel.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2015 NV Access Limited, Siddhartha Gupta
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -644,11 +644,14 @@ class ExcelCell(ExcelBase):
 		isWrapText = self.excelCellObject.WrapText
 		isShrinkToFit = self.excelCellObject.ShrinkToFit
 		isMerged = self.excelWindowObject.Selection.MergeCells
-		adjacentCell = self.excelCellObject.Offset(0,1)
-		if adjacentCell.Text:
-			isAdjacentCellEmpty = False
-		else:
+		try:
+			adjacentCell = self.excelCellObject.Offset(0,1)
+		except COMError:
+			# #5041: This cell is at the right edge.
+			# For our purposes, treat this as if there is an empty cell to the right.
 			isAdjacentCellEmpty = True
+		else:
+			isAdjacentCellEmpty = not adjacentCell.Text
 		info = {}
 		if isMerged:
 			columnCountInMergeArea = self.excelCellObject.MergeArea.Columns.Count
