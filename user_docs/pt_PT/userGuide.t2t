@@ -469,6 +469,7 @@ Adicionalmente, poderá forçar, manualmente, o modo de foco e o mesmo continuar
 | Abrir descrição longa | NVDA+d | Abre uma nova janela, contendo uma descrição longa para o objecto, se esta existir. |
 %kc:endInclude
 
+
 ++ Navegação por Caracter ++
 Quando em modo de navegação, para maior rapidez, o NVDA também fornece teclas de apenas um caracter que permitem saltar para determinados campos no documento. 
 Note que nem todos os comandos são suportados em todos os tipos de documentos.
@@ -856,7 +857,8 @@ Esta opção permite controlar se o pressionar de teclas gerado por outras aplic
 Esta opção está activada por padrão, embora alguns utilizadores possam preferir desactivá-la, como os utilizadores do "Unikey typing software" pois causará incorreções.
 
 +++ Definições do rato (NVDA+Ctrl+M) +++
-O diálogo das definições do rato encontra-se no menu Preferências, no item "Definições do rato...", e contém as seguintes opções:
+O diálogo das definições do rato encontra-se no menu Preferências, no item "Definições do rato...".
+Contém as seguintes opções:
 
 ==== Anunciar Alterações Na Forma do Rato ====
 É uma caixa de verificação que, quando marcada, significa que o NVDA anunciará a alteração da forma do ponteiro do rato, de cada vez que esta muda.
@@ -1143,6 +1145,7 @@ Note, no entanto, que pode alterar esta definição através do item "Definiçõ
 Para guardar as suas definições manualmente, em qualquer altura, escolha o item "Guardar configuração", no Menu do NVDA.
 
 Se alguma vez se enganar, ao alterar as suas definições, e necessitar voltar atrás para a configuração guardada, pode sempre escolher o item "Restaurar para a configuração guardada”, no menu do NVDA.
+Também pode voltar às configurações originais do programa escolhendo no menu do NVDA a opção "Restaurar a configuração para o padrão original".
 
 Os comandos de teclado do NVDA, que se seguem, também podem ser usados:
 %kc:beginInclude
@@ -1294,11 +1297,9 @@ Para mais informação, consulte por favor a secção de desenvolvimento na pág
 ++ Recarregar Plugins ++
 Este item, uma vez activado, recarrega todos os plugins globais e módulos de aplicação, sem reiniciar o NVDA, o que pode ser útil para programadores.
 
-
 + Sintetizadores de Voz Suportados +[SupportedSpeechSynths]
 Esta secção contém informação sobre os sintetizadores de voz suportados pelo NVDA.
-Para uma lista ainda mais extença de sintetizadores de voz, gratuitos e comerciais, que pode comprar e descarregar para usar com o NVDA, por favor, consulte a página
-[http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+Para uma lista ainda mais extença de sintetizadores de voz, gratuitos e comerciais, que pode comprar e descarregar para usar com o NVDA, por favor, consulte a página [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
 ++ eSpeak ++
 O sintetizador [eSpeak http://espeak.sourceforge.net/] é incluído directamente no NVDA e não necessita instalar nenhum outro driver ou componente especial.
