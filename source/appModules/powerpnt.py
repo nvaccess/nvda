@@ -18,7 +18,7 @@ import speech
 import sayAllHandler
 import NVDAHelper
 import winUser
-from treeInterceptorHandler import TreeInterceptor
+from treeInterceptorHandler import DocumentTreeInterceptor
 from NVDAObjects import NVDAObjectTextInfo
 from displayModel import DisplayModelTextInfo, EditableTextDisplayModelTextInfo
 import textInfos.offsets
@@ -992,7 +992,7 @@ class SlideShowTreeInterceptorTextInfo(NVDAObjectTextInfo):
 		except:
 			raise LookupError("Couldn't get MathML from MathType")
 
-class SlideShowTreeInterceptor(TreeInterceptor):
+class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 	"""A TreeInterceptor for showing Slide show content. Has no caret navigation, a CursorManager must be used on top. """
 
 	def _get_isAlive(self):
