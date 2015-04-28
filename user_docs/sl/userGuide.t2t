@@ -285,6 +285,8 @@ NVDA vas oskrbuje z naslednjimi ukazi glede na sistemsko kazalko:
 | Izgovori vse | NVDA+Puščica dol | NVDA+a | Začne brati od trenutnega položaja sistemske kazalke, se premikajoč tako kot sistemska kazalka |
 | Preberi trenutno vrstico | NVDA+Puščica gor | NVDA+l | Prebere vrstico, kjer je trenutno postavljena sistemska kazalka. Dvojni pritisk vrstico črkuje. |
 | Preberi trenutno besedilno označbo | NVDA+Shift+Puščica gor | NVDA+shift+s | Prebere vsako besedilo, ki je trenutno označeno |
+| naslednjiStavek | alt+puščica dol | alt+puščica dol | Premakne kazalko na naslednji stavek in ga izgovori. (trenutno na voljo samo v Microsoft Wordu) |
+| predhodniStavek | alt+puščica gor | alt+puščica gor | Premakne kazalko na predhodni stavek in ga izgovori. (trenutno na voljo samo v Microsoft Wordu) |
 
 
 Ko se nahajate v tabeli, so na voljo tudi sledeči ukazi:
@@ -1346,6 +1348,240 @@ Del izkupička od prodaje tega izdelka se donira NV Access za financiranje nadal
 
 + Podprte Brajeve Vrstice +[SupportedBrailleDisplays]
 Ta razdelek vsebuje informacije o brajevih vrsticah, ki jih podpira NVDA.
+
+++ Freedom Scientific Focus/PAC Mate Series ++
+Vse Focus in PAC Mate vrstice iz [podjetja Freedom Scientific, http://www.freedomscientific.com/] ko so na računalnik priljučene prek USB ali bluetooth povezave.
+V sistemu boste morali imeti nameščene gonilnike za Freedom Scientific rajeve vrstice.
+Če jih še nimate, jih lahko pridobite s http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Čeprav ta stran omenja samo Focus Blue vrstico, gonilniki podpirajo vse Freedom Scientific Focus in Pacmate vrstice.
+Če na vašem sistemu tečejo 64-bitna Okna in so gonilniki že bili nameščeni ob namestitvi drugega bralnika zaslona, boste verjetno gonilnike morali še vedno namestiti s te povezave, saj se datoteke, ki jih potrebuje NVDA, morda niso namestile ob drugem bralniku zaslona.
+
+Privzeto NVDA zna samodejno zaznati in s s temi vrsticami tudi povezati prek USB ali bluetooth povezave.
+Vseeno pa lahko ob konfiguraciji vrstice eksplicitno določite "USB" ali "bluetooth" vrata, da omejite tip povezave v uporabi.
+To je lahko uporabno ob tem, ko želite Focus vrstico priključiti na računalnik in jo povezati z NVDA prek bluetooth povezave, vseeno pa jo želite polniti prek USB vhoda, ko je tako priključena v sistem.
+
+Sledeče prirejene tipke predstavljajo naslednje NVDA ukaze za to vrstico.
+Prosimo, poglejte si dokumentacijo vrstice za točen opis posamezne tipke in njenega položaja.
+%kc:beginInclude
+|| Ime | Tipka |
+| Pomakni brajevo vrstico nazaj | topRouting1 (prva celica na vrstici) |
+| Pomakni brajevo vrstico naprej | topRouting20/40/80 (zadnja celica na vrstici) |
+| pomakni brajevo vrstico nazaj | leftAdvanceBar |
+| Pomakni brajevo vrstico naprej | rightAdvanceBar |
+| stikalo brajeve navezave na | leftGDFButton+rightGDFButton |
+| Stikalo leve wiz wheel action | leftWizWheelPress |
+|  Pomik nazaj z uporabo leve wiz wheel action | leftWizWheelUp |
+| Pomik naprej z uporabo leve wiz wheel action | leftWizWheelDown |
+| Stikalo desne wiz wheel action | rightWizWheelPress |
+| Pomik nazaj z uporabo desne wiz wheel action | rightWizWheelUp |
+| Pomik naprej z uporabo desne wiz wheel action | rightWizWheelDown |
+| Usmeri na brajevo celico | routing |
+| tipka vračalka | dot7 |
+| tipka enter | dot8 |
+| tipka shift+tab | brailleSpaceBar+dot1+dot2 |
+| tipka tab | brailleSpaceBar+dot4+dot5 |
+| tipka puščicaGor | brailleSpaceBar+dot1 |
+| tipka puščicaDol | brailleSpaceBar+dot4 |
+| tipka control+puščicaLevo | brailleSpaceBar+dot2 |
+| tipka control+puščicaDesno | brailleSpaceBar+dot5 |
+| tipka puščicaLevo | brailleSpaceBar+dot3 |
+| tipka puščicaDesno | brailleSpaceBar+dot6 |
+| tipka home | brailleSpaceBar+dot1+dot3 |
+| tipka end | brailleSpaceBar+dot4+dot6 |
+| tipka control+home | brailleSpaceBar+dot1+dot2+dot3 |
+| tipka control+end | brailleSpaceBar+dot4+dot5+dot6 |
+| tipka alt | brailleSpaceBar+dot1+dot3+dot4 |
+| tipka alt+tab | brailleSpaceBar+dot2+dot3+dot4+dot5 |
+| tipka escape | brailleSpaceBar+dot1+dot5 |
+| tipka windows | brailleSpaceBar+dot2+dot4+dot5+dot6 |
+| tipka space | brailleSpaceBar |
+| tipka windows+d (minimiranje vseh programov) | brailleSpaceBar+dot1+dot2+dot3+dot4+dot5+dot6 |
+| Sporoči Trenutno Vrstico | brailleSpaceBar+dot1+dot4 |
+| meni NVDA | brailleSpaceBar+dot1+dot3+dot4+dot5 |
+
+Za novejše modele Focus, ki posedujejo rocker bar tipke (focus 40, focus 80 and focus blue):
+|| Ime | Tipka |
+| Premakni brajevo vrstico v prejšnjo vrstico | leftRockerBarUp, rightRockerBarUp |
+| Premakni brajevo vrstico v naslednjo vrstico | leftRockerBarDown, rightRockerBarDown |
+
+Samo za Focus 80:
+|| Ime | Tipka |
+| Pomakni brajevo vrstico nazaj | leftBumperBarUp, rightBumperBarUp |
+| Pomakni brajevo vrstico naprej | leftBumperBarDown, rightBumperBarDown |
+%kc:endInclude
+
+++ Optelec ALVA BC640/680 ++
+Tako ALVA BC640 kot BC680 brajeva vrstica iz [podjetja Optelec http://www.optelec.com/] sta podprti, ko se na računalnik priključita prek USB ali bluetooth povezave.
+Za uporabo teh vrstic ne potrebujete nobenih posebnih gonilnikov, ki bi morali biti nameščeni v sistem.
+Potrebno je samo, da se vrstica prključi in nastavi NVDA.
+
+Modeli teh vrstic z brajevo tipkovnico pretvarjajo brajeve vnose v besedilo sami.
+Tako nastavitev vnosne tabele v NVDA ne prihaja v poštev in tako ni relevantna.
+
+Sledeče tipke so pripete k naslednjim ukazom v NVDA.
+Prosimo, preglejte dokumentacijo vrstice, da boste vedeli, kje se posamezna tipka nahaja.
+%kc:beginInclude
+|| Ime | Tipka |
+| Pomakni brajevo vrstico nazaj | t1 |
+| Premakni brajevo vrstico v prejšnjo vrstico | t2 |
+| Premakni brajevo vrstico v naslednjo vrstico | t4 |
+| Pomakni brajevo vrstico naprej | t5 |
+| Usmeri na brajevo celico | routing |
+| tipka shift+tab | sp1 |
+| tipka alt | sp2 |
+| tipka escape | sp3 |
+| tipka tab | sp4 |
+| tipka puščicaGor | spUp |
+| tipka puščicaDol | spDown |
+| tipka puščicaLevo | spLeft |
+| tipka puščicaDesno | spRight |
+| tipka enter | spEnter |
+| Meni NVDA | sp1+sp3 |
+| tipka windows+d (minimiranje vseh programov) | sp1+sp4 |
+| tipka windows | sp2+sp3 |
+| tipka alt+tab | sp2+sp4 |
+%kc:endInclude
+
+++ Vrstice Handy Tech ++
+NVDA podpira vse vrstice [podjetja Handy Tech, http://www.handytech.de/] ko so priključene na računalnik prek USB ali bluetooth povezave.
+V primeru uporabe starejših vrstic, boste morali gonilnike zanje prenesti in namestiti v sistem s spletnega mesta Handy Tech.
+
+Brajev vnos za vrstice Handy Tech še ni podprt.
+
+Sledeče tipke so ukazi za vrstice Handy Tech ob uporabi z NVDA.
+Prosimo, glejte dokumentacijo vrstice, da boste vedeli, kje senahaja katera tipka.
+%kc:beginInclude
+|| Ime | Tipka |
+| Pomakni brajevo vrstico nazaj | left, up |
+| Pomakni brajevo vrstico naprej | right, down |
+| Premakni brajevo vrstico v prejšnjo vrstico | b4 |
+| Premakni brajevo vrstico v naslednjo vrstico | b5 |
+| Usmeri na brajevo celico | routing |
+| tipka shift+tab | esc |
+| tipka alt | b2+b4+b5 |
+| tipka escape | b4+b6 |
+| tipka tab | enter |
+| tipka enter | esc+enter |
+| tipka puščicaGor | leftSpace |
+| tipka puščicaDol | rightSpace |
+| Meni NVDA | b2+b4+b5+b6 |
+| Handy Tech konfiguracija | b4+b8 |
+%kc:endInclude
+
+++ MDV Lilli ++
+Lilli brajeva vrstica na voljo s [MDV http://www.mdvbologna.it/] je podprta.
+Za uporabo te vrstice vam ni potrebno namestiti posebnih gonilnikov.
+Potrebno je samo vrstico priključiti in konfigurirati NVDA.
+
+Sledeče tipke so prirejene za uporabo te vrstice z NVDA.
+Prosimo, poglejte si dokumentacijo za opis položaja tipk.
+%kc:beginInclude
+|| Ime | Tipka |
+| Pomakni brajevo vrstico nazaj | LF |
+| Pomakni brajevo vrstico naprej | RG |
+| Premakni brajevo vrstico v prejšnjo vrstico | UP |
+| Premakni brajevo vrstico v naslednjo vrstico | DN |
+| Usmeri na brajevo celico | route |
+| tipka shift+tab | SLF |
+| tipka tab | SRG |
+| tipka alt+tab | SDN |
+| tipka alt+shift+tab | SUP |
+%kc:endInclude
+
+++ Brajeve Vrstice Baum/Humanware/APH ++
+Precej [Baumovih http://www.baum.de/cms/en/], [HumanWarovih http://www.humanware.com/] in [APH http://www.aph.org/] vrstic je podprtih, ko jih priključimo prek USB ali bluetooth povezave.
+To vključuje:
+- Baum: SuperVario, PocketVario
+- HumanWare: Brailliant, BrailleConnect
+- APH: Refreshabraille
+-
+Verjetno dela še nekaj drugih vrstic izdelovalca Baum, vendar niso bile testirane.
+
+Če boste vrstice priljučili prek USB povezave, boste morali najprej namestiti gonilnik, ki ga je oskrbel izdelovalec.
+Za pravilno delovanje APH Refreshabraille mora biti delovanje USB nastavljeno na serijski način.
+
+Sledeče tipke so prirejene za delovanje skupaj z NVDA.
+Prosimo, poglejte si dokumentacijo vrstice za točen opis položaja posamezne tipke.
+%kc:beginInclude
+|| Ime | Tipka |
+| Pomakni brajevo vrstico nazaj | d2 |
+| Pomakni brajevo vrstico naprej | d5 |
+| Premakni brajevo vrstico v prejšnjo vrstico | d1 |
+| Premakni brajevo vrstico v naslednjo vrstico | d3 |
+| Usmeri na brajevo celico | routing |
+
+Velja za vrstice, ki imajo krmilno palčko:
+|| Ime | Tipka |
+| Tipka puščicaGor | up |
+| tipka puščicaDol | down |
+| tipka puščicaLevo | left |
+| tipka puščicaDesno | right |
+| tipka enter | select |
+%kc:endInclude
+
+++ hedo ProfiLine USB ++
+Hedo ProfiLine USB iz [podjetja hedo Reha-Technik http://www.hedo.de/] je podprta.
+Najprej morate namestiti USB gonilnik, ki ga je oskrbel izdelovalec.
+
+Sledeče tipke so prirejene za delovanje z NVDA.
+Prosimo, poglejte si dokumentacijo vrstice, za opis položaja posamezne tipke.
+%kc:beginInclude
+|| Ime | Tipka |
+| Pomakni brajevo vrstico nazaj | K1 |
+| Pomakni brajevo vrstico naprej | K3 |
+| Premakni brajevo vrstico v prejšnjo vrstico | B2 |
+| Premakni brajevo vrstico v naslednjo vrstico | B5 |
+| Usmeri na brajevo celico | routing |
+| Stikalo zamenjave brajevega načina | K2 |
+| Preberi vse | B6 |
+%kc:endInclude
+
+++ hedo MobilLine USB ++
+Hedo MobilLine USB iz [podjetja hedo Reha-Technik http://www.hedo.de/] je podprta.
+Najprej morate za uprabo te vrstice namestiti gonilnik, ki ga je oskrbel izdelovalec.
+
+Sledeče tipke so prirejene za delovanje z NVDA.
+Prosimo, oglejte si dokumentacijo za točen opis položaja posamezne tipke.
+%kc:beginInclude
+|| Ime | Tipka |
+| Pomakni brajevo vrstico nazaj | K1 |
+| Pomakni brajevo vrstico naprej | K3 |
+| Premakni brajevo vrstico v prejšnjo vrstico | B2 |
+| Premakni brajevo vrstico v naslednjo vrstico | B5 |
+| Usmeri na brajevo celico | routing |
+| Stikalo zamenjave brajevega načina | K2 |
+| Preberi vse | B6 |
+%kc:endInclude
+
+++ HumanWare Brailliant BI/B Series ++
+Brailliant BI in B seriji vrstic iz podjetja [HumanWare http://www.humanware.com/], vključno z BI 32, BI 40 in B 80, sta podprti, ko jih rpiključimo prek USB ali bluetooth povezave.
+Če jih v sistem želite priključiti prek USB povezave, morate najprej namestiti gonilnik, ki ga je oskrbel izdelovalec.
+
+Sledeče tipke so prirejene za delovanje z NVDA.
+Prosimo, poglejte si dokumentacijo vrstice za opis točnega položaja posamezne tipke.
+%kc:beginInclude
+|| Ime | Tipka |
+| Pomakni brajevo vrstico nazaj | left |
+| Pomakni brajevo vrstico naprej | right |
+| Premakni brajevo vrstico v prejšnjo vrstico | up |
+| Premakni brajevo vrstico v naslednjo vrstico | down |
+| Usmeri na brajevo celico | routing |
+| stikalo brajeve navezave z | up+down |
+| tipka puščicaGor | space+dot1 |
+| tipka puščicaDol | space+dot4 |
+| tipka puščicaLevo | space+dot3 |
+| tipka puščicaDesno | space+dot6 |
+| Neni NVDA | c1+c3+c4+c5 (command n) |
+| tipka shift+tab | space+dot1+dot3 |
+| tipka tab | space+dot4+dot6 |
+| tipka alt | space+dot1+dot3+dot4 (space+m) |
+| tipka escape | space+dot1+dot5 (space+e) |
+| tipka enter | dot8 |
+| tipka windows+d (minimiranje vseh programov) | c1+c4+c5 (command d) |
+| tipka windows | space+dot3+dot4 |
+| tipka alt+tab | space+dot2+dot3+dot4+dot5 (space+t) |
+| Preberi vse | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
 
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] je program neodvisen od NVDA, ki pa ga vseeno lahko uporabimo zaradi podpore večjega števila brajevih vrstic.

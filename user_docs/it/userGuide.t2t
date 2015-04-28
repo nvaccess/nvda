@@ -17,7 +17,7 @@ NVDA permette alle persone non vedenti di accedere ed interagire con il sistema 
 
 Le caratteristiche principali possono essere riassunte nei seguenti punti:
 - Supporto alle applicazioni più comuni come browser web, posta elettronica, wordprocessor e software per chattare.
-- sintesi vocale incorporata capace di parlare più di 43 lingue
+- sintesi vocale incorporata capace di parlare più di 80 lingue
 - Capacità di funzionare interamente da una chiavetta USB o altri dispositivi portatili senza bisogno di installazione
 - Installazione guidata semplice ed intuitiva tramite sintesi vocale
 - Supporto al prompt dei comandi di Windows e alle applicazioni lanciate da console
@@ -441,7 +441,7 @@ Sebbene un mouse o un trackpad risultino la maniera migliore per esplorare lo sc
 + Modalità navigazione +
 NVDA si serve della modalità navigazione per presentare all'utente documenti complessi di sola lettura, come ad esempio le pagine web.
 Essa viene utilizzata nei doccumenti di Mozilla Firefox, Microsoft Internet Explorer, messaggi html in Microsoft Outlook, Google Chrome, Adobe Reader e Adobe Flash.
-Inoltre, la modalità navigazione risulta disponibile anche per la gestione di documenti complessi in Microsoft Word.
+Inoltre, la modalità navigazione risulta disponibile anche per la gestione dei documenti in Microsoft Word.
 
 Nella modalità navigazione, il contenuto del documento è reso disponibile tramite una rappresentazione lineare, che può essere esplorata con i comuni tasti dedicati al cursore, come se si trattasse di un normale documento.
 Tutte le combinazioni di tasti di NVDA dedicate al [cursore di sistema #SystemCaret] funzioneranno regolarmente, ad esempio dire tutto, annuncia formattazione, comandi per esplorare le tabelle, etc.
@@ -460,7 +460,7 @@ Anche la pressione del tasto Esc farà in modo che NVDA attivi la modalità navi
 || Nome | Tasto | Descrizione |
 | Commuta modalità focus/navigazione | NVDA+Spazio | Commuta tra le modalità focus e navigazione |
 | Abbandona modalità focus | escape | Ritorna alla modalità navigazione se la modalità focus era stata impostata precedentemente in maniera automatica |
-| Aggiorna documento in  modalità navigazione | NVDA+f5 | Ricarica il contenuto del documento attuale (utile nel caso certi contenuti della pagina non sembrano essere presenti) |
+| Aggiorna documento in  modalità navigazione | NVDA+f5 | Ricarica il contenuto del documento attuale (utile nel caso certi contenuti della pagina non sembrano essere presenti. Funzione non disponibile in Microsoft Word e Outlook) |
 | Trova | NVDA+Control+f | Permette di inserire in una casella di dialogo del testo da cercare all'interno del documento |
 | Trova successivo | NVDA+f3 | Trova la stringa successiva di testo precedentemente cercata nel documento |
 | Trova precedente | NVDA+Shift+f3 | Trova la stringa precedente di testo nel documento cercata con control+NVDA+f  |
@@ -469,7 +469,8 @@ Anche la pressione del tasto Esc farà in modo che NVDA attivi la modalità navi
 
 
 ++ Navigare con le lettere ++
-Per avere una maggiore velocità nella navigazione, NVDA fornisce alcuni tasti per muoversi fra i vari campi quando si utilizza la modalità navigazione.
+Per avere una maggiore velocità nell'esplorazione, NVDA fornisce alcuni tasti per muoversi fra i vari campi quando si utilizza la modalità navigazione.
+Si noti che non tutti questi comandi sono supportati in ogni tipo di documento.
 
 %kc:beginInclude
 I seguenti tasti premuti da soli portano al campo successivo, tenendo premuto Shift invece portano al campo precedente.
@@ -712,13 +713,14 @@ Questa opzione, assieme alla precedente, è utile in quelle sintesi vocali che n
 
 ==== Utilizza la modalità spelling se supportata ====[VoiceSpellingFunctionality	]
 Alcune parole sono costituite soltanto da un singolo carattere, ma talvolta, la pronuncia può risultare diversa se il carattere viene annunciato da solo  (come quando viene fatto lo spelling), oppure come una parola.
-Ad esempio, in inglese, "a" è sia una lettera che una parola.
+Ad esempio, in inglese, "a" è sia una lettera che una parola e viene pronunciata in maniera diversa in entrambe i casi.
 Questa opzione permette ai sintetizzatori di operare una differenziazione tra i due casi, se il sintetizzatore è in grado di supportarlo.
 La maggior parte dei sintetizzatori supportano questa funzione.
 
 Generalmente, si consiglia di abilitare questa impostazione.
 Talvolta, può succedere che alcune sintesi Microsoft Speech Api si comportino in modo strano nell'eseguire lo spelling.
 In caso ciò avvenga, consigliamo di disattivare questa caratteristica.
+
 
 +++ Modificare al volo le impostazioni del sintetizzatore +++[SynthSettingsRing]
 Se si vogliono modificare i parametri della voce senza dover aprire la finestra inerente tali impostazioni, esistono alcuni tasti rapidi che consentono di spostarsi tra i parametri più comuni da qualunque punto ci si trovi:
@@ -871,6 +873,8 @@ Se questa casella di controllo è attivata, NVDA leggerà il tipo di oggetto sul
 
 ==== Coordinate audio quando il mouse si sposta ====
 Attivando questa casella di controllo si farà in modo che NVDA emetta dei segnali acustici man mano che il mouse si sposta, in modo che l'utente possa farsi un'idea della sua posizione in relazione allo schermo.
+Più in alto è la posizione del mouse sullo schermo, più acuti saranno i toni dei beep emessi.
+Spostando il mouse a sinistra o a destra si otterrà lo spostamento del suono nelle direzioni corrispondenti sugli altoparlanti, a patto che si abbiano a disposizione degli altoparlanti stereo.
 
 ==== La luminosità controlla il volume delle coordinate audio ====
 Se la casella di controllo "coordinate audio quando il mouse si sposta" è attiva, allora, attivando quest'opzione, il volume dei beeps delle coordinate audio è controllato dal livello di luminosità dello schermo, riferito alla posizione attuale del mouse. 
@@ -1024,7 +1028,6 @@ Attivando questa casella di controllo, NVDA emetterà dei segnali acustici al pa
 ==== Inibisci tutti i gesti che non rappresentano un comando ====
 Attivata da impostazioni predefinite, questa funzione permette di stabilire se, ai gesti (come le pressioni di un tasto) che non rappresentano comandi di NVDA e non sono considerati tasti caldi in generale, debba essere impedito di raggiungere il documento sul quale è posizionato il focus.
 Ad esempio, se abilitata, premendo la lettera "j", a questa verrebbe impedito di raggiungere il documento, nonostante non sia un comando veloce di navigazione o possa essere un comando dell'applicazione stessa.
-
 
 +++ Impostazioni formato documento (NVDA+Control+d) +++[documentFormattingSettings]
 Questa finestra di dialogo si trova nel menu preferenze, sotto la voce formato documento.
@@ -1689,6 +1692,7 @@ BrxCom è un utility che permette di gestire la scrittura tramite i tasti braill
 Verrà realizzata presto da Papenmeier una nuova versione di BrXcom che funzioni con NVDA 
 In ogni caso, la scrittura tramite tastiera sarà sempre disponibile per i dispositivi Trio, BRAILLEX Live 20 e Braillex Live anche senza la presenza di BrxCom.
 La scrittura con tastiera è possibile anche con il modello Live Plus, ma soltanto con Brxcom.
+
 La maggior parte dei dispositivi è dotata di una barra di navigazione facilitata (EAB) che permette di svolgere le operazioni in una modalità molto più rapida ed intuitiva..
 Questa barra può essere spostata in quattro direzioni e ciascuna direzione ha due posizioni.
 la serie C e la serie Live sono le uniche eccezioni a questa regola.
@@ -1698,6 +1702,7 @@ Tenendo premuto uno dei tasti della fila superiore e spostando la barra di acces
 Mantenendo premuti i tasti su, giù, destra e sinistra (o EAB) permetterà di ripetere l'azione corrispondente..
 I display della serie Live hanno solo una riga di cursor routing e la EAB si sposta di un solo scatto per ciascuna direzione.
 Il secondo scatto può essere emulato premendo uno dei tasti di routing e premendo l'EAB nella direzione corrispondente.
+
 In genere, sono disponibili i seguenti tasti in questi display braille::
 || Nome | Tasto |
 | l1 | Tasto sinistro frontale |
@@ -1896,7 +1901,7 @@ Per i display che possiedono già una tastiera braille, Brltty gestisce autonoma
 Pertanto, le impostazioni tabella braille di immissione non sono rilevanti.
 
 Seguono i tasti che sono stati assegnati con NVDA a Brltty.
-Si legga la [tabella dei tasti di Brltty http://mielke.cc/brltty/doc/drivers/] per comprendere come i comandi di Brltty sono mappati sul Display Braille.
+Si legga la [tabella dei tasti di Brltty http://mielke.cc/brltty/doc/KeyTables] per comprendere come i comandi di Brltty sono mappati sul Display Braille.
 %kc:beginInclude
 || Nome | comando BRLTTY  |
 | Scorre Display Braille indietro | fwinlt (go left one window) |

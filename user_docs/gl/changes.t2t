@@ -3,8 +3,29 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+== Novas Características ==
+- Agora é posible moverse cara adiante ou atrás por frases no Microsoft Word con alt+flecha abaixo e alt+flecha arriba respectivamente. (#3288)
+- Novas táboas de transcripción braille para varias linguas da India. (#4778)
+
+
+== Cambios ==
+- No diálogo de formateado de documentos do NVDA, os atallos de teclado para Anunciar listas, Anunciar ligas, Anunciar números de Líña e Anunciar Nome da fonte cambiáronse. (#4650)
+- No diálogo Opcións do Rato do NVDA, engadíronse atallos de teclado para Reproducir son cando se move o rato e O brilo controla o volume do audio das coordenadas. (#4916)
+
+
+== Corrección de Fallas ==
+- As descripcións de carácter agora manéxanse correctamente para conxuntos de carácteres en certas linguas da India. (#4582)
+
+
+== Cambios para Desenvolvedores ==
+- brailleInput.handler.sendChars(mychar) xa non filtrará un carácter se é igual ó carácter anterior, asegurándose que a tecla enviada  se liberou correctamente.
+
+
+= 2015.2 =
+
+
 = 2015.1 =
-O sinalable nesta versión  inclúe o modo exploración para documentos en Microsoft Word e Outlook; melloras maiores o soporte para Skype for Desktop; e coreccións significativas para Microsoft Internet Explorer.
+O sinalable nesta versión  inclúe o modo exploración para documentos en Microsoft Word e Outlook; melloras maiores o soporte para Skype para Escritorio; e coreccións significativas para Microsoft Internet Explorer.
 
 == Novas Características ==
 - Agora podes engadir símbolos novos no diálogo Pronunciación de Símbolos. (#4354)
@@ -15,9 +36,9 @@ O sinalable nesta versión  inclúe o modo exploración para documentos en Micro
 - Lendo mensaxes HTML en Microsoft Outlook 2007 e posterior mellorouse moito cando se activa automáticamente o modo Exploración para esas mensaxes. Se o modo exploración non se habilita nalgunhas situacións raras, podes forzalo con NVDA+espazo. (#2975) 
 - As cabeceiras de columna de táboa no Microsoft word anúncianse automáticamente para táboas onde se especificara unha cabeceira de fila polo autor a través das propiedades de táboa do Microsoft word. (#4510) 
  - Sin embargo, para táboas onde as filas foran fusionadas esto non funcionará automáticamente. Nesta situación aínda podes fixar as cabeceiras de columna manualmente no NVDA con NVDA+shift+c.
-- No Skype for Desktop, agora anúncianse as notificacións. (#4741)
-- No Skype for Desktop, agora podes anunciar e revisar as mensaxes recentes utilizando NVDA+control+1 ata NVDA+control+0; por ex.: NVDA+control+1 para a mensaxe máis recente e NVDA+control+0 para a décima máis recente. (#3210)
-- Nunha conversa No Skype for Desktop, NVDA agora anuncia cando un contacto estea a teclear. (#3506)
+- No Skype para Escritorio, agora anúncianse as notificacións. (#4741)
+- No Skype para Escritorio, agora podes anunciar e revisar as mensaxes recentes utilizando NVDA+control+1 ata NVDA+control+0; por ex.: NVDA+control+1 para a mensaxe máis recente e NVDA+control+0 para a décima máis recente. (#3210)
+- Nunha conversa No Skype para Escritorio, NVDA agora anuncia cando un contacto estea a teclear. (#3506)
 - NVDA agora pode instalarse en silenzo a través da liña de ordes  sen iniciar a copia instalada despois da instalación. Para facer esto, utiliza --install-silent. (#4206)
 - Soporte para as pantallas braille Papenmeier BRAILLEX Live 20, BRAILLEX Live e BRAILLEX Live Plus. (#4614)
 
@@ -26,7 +47,7 @@ O sinalable nesta versión  inclúe o modo exploración para documentos en Micro
 - No diálogo de opcións de Formateado de documentos do NVDA, a opción para anunciar erros de ortografía agora ten un atallo de teclado (alt+r). (#793)
 - NVDA agora utilizará a lingua do sintetizador ou voz para o procesamento do carácter e símbolo (incluindo nomes de símbolos de puntuación), xa o cambio automático de lingua estea activado ou non. Para desactivar esta característica para que NVDA utilice de novo a súa lingua de interface, desmarca a nova opción en Opcións de Voz chamada Confiar na lingua da Voz ó procesar caracteres e símbolos. (#4210)
 - Eliminouse o soporte para o sintetizador Newfon. Agora Newfon está dispoñible como un complemento do NVDA. (#3184)
-- Agora requírese Skype for Desktop 7 ou posterior para utilizar co NVDA; non se soportan as versións anteriores. (#4218)
+- Agora requírese Skype para Escritorio 7 ou posterior para utilizar co NVDA; non se soportan as versións anteriores. (#4218)
 - A descarga das actualizacións do NVDA agora é máis segura. (en concreto, a información de actualización recupérase a través de https e o hash do ficheiro verifícase tras a súa descarga.) (#4716)
 - Actualizouse o eSpeak á versión 1.48.04 (#4325)
 
@@ -42,9 +63,9 @@ O sinalable nesta versión  inclúe o modo exploración para documentos en Micro
 - O foco agora volta correctamente ó documento que se estea a editar cando se remate a composición de entrada de texto en coreano e outras linguas do este asiático mentras se edita dentro dun marco en Internet Explorer e outros documentos MSHTML. (#4045)
 - No diálogo Xestos de entrada, ó seleccionar unha distribución de teclado para un xesto de teclado que se engade, agora premendo escape péchase o menú como se debera en lugar de pechar o diálogo. (#3617)
 - Ó eliminar un complemento, o directorio do complemento agora bórrase correctamente despois de reiniciar o NVDA. Anteriormente, tiñas que reinicialo dúas veces. (#3461)
-- Corexíronse os principais problemas ó utilizar Skype for Desktop 7. (#4218)
-- Cando envíes unha mensaxe en Skype for Desktop, xa non o le dúas veces. (#3616)
-- No Skype for Desktop, NVDA xa non debería ler ocasionalmente unha grande cantidade de mensaxes en falso (quizáis incluso unha conversa enteira. (#4644)
+- Corexíronse os principais problemas ó utilizar Skype para Escritorio 7. (#4218)
+- Cando envíes unha mensaxe en Skype para Escritorio, xa non o le dúas veces. (#3616)
+- No Skype para Escritorio, NVDA xa non debería ler ocasionalmente unha grande cantidade de mensaxes en falso (quizáis incluso unha conversa enteira. (#4644)
 - Correxido un problema onde a orde de NVDA Anunciar data e hora non tiña en conta nalgúns casos as opcións rexionais especificadas polo usuario. (#2987)
 - No Modo exploración, xa non se presenta texto sen sentido (abranguendo ás veces varias liñas) para certos gráficos como os atopados en Google Groups. (en concreto, esto ocurría cas imaxes codificadas en base 64.) (#4793)
 - NVDA xa non debería  conxelarse despois duns poucos segundos cando se saca o foco dunha aplicación de estilo Windows 8 Metro cando permanece suspendido. (#4572)
@@ -54,6 +75,8 @@ O sinalable nesta versión  inclúe o modo exploración para documentos en Micro
 - O contido indicado polo atributo aria-labelledby en elementos en Internet Explorer e outros controis MSHTML reemplaza correctamente o contido orixinal  onde sexa apropriado facelo. (#4575)
 - Cando se revisa a ortografía no Microsoft Outlook 2013, agora anúnciase a palabra mal escribida. (#4848)
 - En Internet Explorer e outros controis MSHTML, o contido dentro de elementos ocultos con visibility:hidden xa non se presenta inapropriadamente no modo exploración. (#4839, #3776)
+- En Internet Explorer e outros controis MSHTML, o atributo title en controis form xa non toma inapropriadamente preferencia sobre outras asociacións de etiqueta. (#4491)
+- En Internet Explorer e outros controis MSHTML, NVDA xa non ignora o enfocado de elementos  debido ó atributo aria-activedescendant. (#4667)
 
 
 == Cambios para desenvolvedores ==

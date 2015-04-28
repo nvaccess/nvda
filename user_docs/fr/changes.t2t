@@ -3,6 +3,26 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.2 =
+
+== Nouvelles Fonctionnalités ==
+- avancer et reculer par phrase sous Microsoft Word est maintenant possible avec alt+flècheBas et alt+flècheHaut respectivement. (#3288)
+- De nouvelles tables de conversion braille pour plusieurs langues Indiennes. (#4778)
+ 
+ 
+== Changements ==
+- Dans le dialogue de mise en forme des documents, les raccourcis clavier pour l'annonce des listes, l'annonce des liens, l'annonce du numéro de ligne et l'annonce du nom de la police ont été changés (en anglais). (#4650)
+- Dans le dialogue des paramètres de la souris de NVDA, des raccourcis clavier ont été ajoutés pour "Sonoriser les coordonnées quand la souris se déplace" et "La brillance modifie le volume des coordonnées audio". (#4916)
+
+
+== Corrections de Bogues ==
+- Les descriptions de caractère sont maintenant traitées correctement pour les caractères conjoints dans certaines langues Indiennes. (#4582)
+
+
+== Changements pour les Développeurs ==
+- brailleInput.handler.sendChars(mychar) N'ignorera plus un caractère s'il est égal au caractère précédent en s'assurant que la touche pressée a été correctement relâchée.
+
+ 
 = 2015.1 =
  
 == Nouvelles Fonctionnalités ==
@@ -24,7 +44,7 @@ Quoi de Neuf dans NVDA
 == Changements ==
 - dans le dialogue Mise en Forme des Documents de NVDA, l'option d'annonce des fautes d'orthographe a maintenant un raccourci (alt+f). (#793)
 - NVDA utilisera maintenant la langue de la voix du synthétiseur pour le traitement des caractères et symboles
-(incluant le nom des symboles de ponctuation), que le changement automatique de langue soit activé ou non. Pour désactiver cette fonction de manière à ce que NVDA utilise à nouveau la langue de son interface, décochez la nouvelle option dans les paramètres vocaux appelée Se baser sur la langue de la voix pour le traitement des caractyres et symboles. (#4210)
+(incluant le nom des symboles de ponctuation), que le changement automatique de langue soit activé ou non. Pour désactiver cette fonction de manière à ce que NVDA utilise à nouveau la langue de son interface, décochez la nouvelle option dans les paramètres vocaux appelée Se baser sur la langue de la voix pour le traitement des caractères et symboles. (#4210)
 - Le support du synthétiseur Newfon a été supprimé. Newfon est maintenant disponible sous la forme d'un module complémentaire. (#3184)
 - Skype for Desktop 7 ou plus récent est maintenant requis pour utilisation avec NVDA; les versions plus anciennes ne sont pas supportées. (#4218)
 - Le téléchargement des mises à jour de NVDA est maintenant plus sécurisé. (En particulier, l'information de mise à jour est récupérée via https et le hash du fichier est vérifié après téléchargement.) (#4716)
@@ -55,6 +75,8 @@ Quoi de Neuf dans NVDA
 - Le contenu indiqué par l'attribut aria-labelledby sur des éléments sous Internet Explorer et autres contrôles MSHTML remplace correctement le contenu original là où il est approprié de le faire. (#4575)
 - Lors de la vérification orthographique sous Microsoft Outlook 2013, le mot mal orthogaphié est maintenant annoncé. (#4848)
 - Sous Internet Explorer et autres contrôles MSHTML, le contenu des éléments cachés avec visibility:hidden n'est plus présenté de manière inappropriée en mode navigation. (#4839, #3776)
+- Sous Internet Explorer et autres contrôles MSHTML, l'attribut titre sur les contrôles de formulaire ne prend plus la préférence de manière inappropriée sur les autres associations d'étiquette. (#4491)
+- Sous Internet Explorer et autres contrôles MSHTML, NVDA n'ignore plus la mise en focus des éléments à cause de l'attribut aria-activedescendant. (#4667)
 
 
 == Changements pour les Développeurs ==
