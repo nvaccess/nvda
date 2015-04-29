@@ -980,6 +980,9 @@ class SlideShowTreeInterceptor(TreeInterceptor):
 		gesture.send()
 		self.rootNVDAObject.handleSlideChange()
 
+class ReviewableSlideshowTreeInterceptor(ReviewCursorManager,SlideShowTreeInterceptor):
+	"""A TreeInterceptor for Slide show content but with caret navigation via ReviewCursorManager."""
+
 	__gestures={
 		"kb:space":"slideChange",
 		"kb:enter":"slideChange",
@@ -988,10 +991,6 @@ class SlideShowTreeInterceptor(TreeInterceptor):
 		"kb:pageDown":"slideChange",
 		"kb:control+shift+s":"toggleNotesMode",
 	}
-
-class ReviewableSlideshowTreeInterceptor(ReviewCursorManager,SlideShowTreeInterceptor):
-	"""A TreeInterceptor for Slide show content but with caret navigation via ReivewCursorManager."""
-	pass
 
 class SlideShowWindow(PaneClassDC):
 
