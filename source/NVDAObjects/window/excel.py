@@ -1,6 +1,6 @@
 #NVDAObjects/excel.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Siddhartha Gupta
+#Copyright (C) 2006-2015 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -27,8 +27,8 @@ import controlTypes
 from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
-import ctypes
 import browseMode
+import ctypes
 
 xlCenter=-4108
 xlJustify=-4130
