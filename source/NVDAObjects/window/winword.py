@@ -31,6 +31,7 @@ import textInfos
 import textInfos.offsets
 import colors
 import controlTypes
+import treeInterceptorHandler
 import browseMode
 import review
 from cursorManager import CursorManager, ReviewCursorManager
@@ -768,10 +769,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)
 		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.End)
 
-class BrowseModeTreeInterceptorWithMakeTextInfo(browseMode.BrowseModeTreeInterceptor):
-	def makeTextInfo(self,position):
-		return self.TextInfo(self,position)
-
 class WordDocumentTextInfoForTreeInterceptor(WordDocumentTextInfo):
 
 	def _get_shouldIncludeLayoutTables(self):
@@ -830,7 +827,7 @@ class BrowseModeWordDocumentTextInfo(textInfos.TextInfo):
 	def expand(self,unit):
 		return self.innerTextInfo.expand(unit)
 
-class WordDocumentTreeInterceptor(CursorManager,BrowseModeTreeInterceptorWithMakeTextInfo):
+class WordDocumentTreeInterceptor(CursorManager,browseMode.BrowseModeTreeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor):
 
 	TextInfo=BrowseModeWordDocumentTextInfo
 	needsReviewCursorTextInfoWrapper=False

@@ -216,9 +216,9 @@ def setNavigatorObject(obj,isFocus=False):
 	globalVars.reviewPositionObj=None
 	reviewMode=review.getCurrentMode()
 	# #3320: If in document review yet there is no document to review the mode should be forced to object. 
-	if reviewMode=='document' and (not obj.treeInterceptor or not obj.treeInterceptor.isReady or obj.treeInterceptor.passThrough):
+	if reviewMode=='document' and (not isinstance(obj.treeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor)  or not obj.treeInterceptor.isReady or obj.treeInterceptor.passThrough):
 		review.setCurrentMode('object',False)
-	elif obj.treeInterceptor and obj.treeInterceptor.isReady and not obj.treeInterceptor.passThrough:
+	elif isinstance(obj.treeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor) and obj.treeInterceptor.isReady and not obj.treeInterceptor.passThrough:
 		if reviewMode=='object':
 			review.setCurrentMode('document',False)
 		if isFocus:
@@ -361,6 +361,6 @@ def getCaretObject():
 	"""
 	obj = getFocusObject()
 	ti = obj.treeInterceptor
-	if ti and ti.isReady and not ti.passThrough:
+	if isinstance(ti,treeInterceptorHandler.DocumentTreeInterceptor) and ti.isReady and not ti.passThrough:
 		return ti
 	return obj

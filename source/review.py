@@ -8,7 +8,7 @@ import api
 import winUser
 from NVDAObjects import NVDAObject
 from NVDAObjects.window import Window
-from treeInterceptorHandler import TreeInterceptor
+from treeInterceptorHandler import DocumentTreeInterceptor
 from displayModel import DisplayModelTextInfo
 import textInfos
 import config
@@ -35,7 +35,8 @@ def getDocumentPosition(obj):
 	@return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error. 
 	@rtype: (L{TextInfo},L{ScriptableObject})
 	"""
-	if not obj.treeInterceptor: return None
+	if not isinstance(obj.treeInterceptor,DocumentTreeInterceptor):
+		return None
 	try:
 		pos=obj.treeInterceptor.makeTextInfo(obj)
 	except LookupError:
@@ -153,7 +154,7 @@ def handleCaretMove(pos):
 	if isinstance(obj,NVDAObject):
 		if not mode=='object' or obj!=api.getNavigatorObject():
 			return
-	elif isinstance(obj,TreeInterceptor):
+	elif isinstance(obj,DocumentTreeInterceptor):
 		if mode not in ('object','document'):
 			return
 		if mode!='document':
