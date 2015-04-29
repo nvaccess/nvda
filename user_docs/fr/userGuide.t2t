@@ -17,7 +17,7 @@ En restituant l'information par synthèse vocale ou en braille, NVDA permet aux 
 
 Ses points forts sont :
 - la prise en charge d'applications grand-public telles que des navigateurs Web, clients e-mail, programmes de tchat sur Internet et suites bureautiques ;
-- un synthétiseur intégré prenant en charge plus de 43 langues ;
+- un synthétiseur intégré prenant en charge plus de 80 langues ;
 - l'annonce, quand c'est possible, d'informations de formatage du texte telles que, le nom et la taille de la police, le style et les fautes d'orthographe ;
 - l'annonce automatique du texte sous la souris et, en option, l'indication sonore de la position de la souris ;
 - la prise en charge de nombreux afficheurs braille, incluant la saisie du braille informatique pour les afficheurs disposant d'un clavier braille ;
@@ -285,6 +285,8 @@ NVDA fournit les commandes clavier suivantes par rapport au curseur système :
 | Dire tout | NVDA+flèche bas | NVDA+a | Démarre la lecture depuis la position du curseur système en lui faisant suivre la lecture |
 | Lire ligne courante | NVDA+flèche haut | NVDA+l | Lit la ligne où se trouve le curseur système. Un double appui épelle la ligne. |
 | Lire texte sélectionné | NVDA+Maj+flèche haut | NVDA+Maj+s | Lit tout le texte actuellement sélectionné |
+| Phrase suivante | alt+flècheBas | alt+flècheBas | Amène le curseur à la phrase suivante et la lit. (Supporté seulement sous Microsoft Word) |
+| Phrase précédente | alt+flècheHaut | alt+flècheHaut | Amène le curseur à la phrase précédente et la lit. (Supporté seulement sous Microsoft Word) |
 
 
 Dans un tableau, vous disposez également des touches de commandes suivantes :
@@ -440,7 +442,8 @@ Bien qu'une souris physique devrait être utilisée pour naviguer à la souris, 
 
 + Le mode navigation +
 Les documents complexes, tels que les pages web, sont représentés sous NVDA en utilisant le Mode Navigation.
-Cela concerne les documents sous Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader et Adobe Flash.
+Cela concerne les documents sous Mozilla Firefox, Microsoft Internet Explorer, les messages HTML sous Microsoft Outlook, Google Chrome, Adobe Reader et Adobe Flash.
+Le mode navigation est aussi disponible en option sous Microsoft Word.
 
 Le mode navigation offre une représentation platement textuelle du document dans laquelle on peut se déplacer avec les flèches de navigation. 
 Dans ce mode, toutes les touches de commandes du [mode curseur #SystemCaret] fonctionneront (ex : dire tout, annonce du formatage, touches de navigation dans les tableaux etc).
@@ -459,7 +462,7 @@ De plus, vous pouvez aussi passer manuellement NVDA en mode formulaire, après q
 || Nom | Touche | Description |
 | Bascule entre mode formulaire et mode navigation | NVDA+espace | Bascule entre le mode formulaire et le mode navigation |
 | Quitter le mode formulaire | échap | Retourne en mode navigation si lemode formulaire a préalablement été activé automatiquement |
-| Réactualiser le document | NVDA+f5 | Recharge le document en cours, (utile si le contenu de la page semble incomplet) |
+| Réactualiser le document | NVDA+f5 | Recharge le document en cours, (utile si le contenu de la page semble incomplet. Non disponible sous Microsoft Word et Outlook.) |
 | Rechercher | NVDA+contrôle+f | Affiche un dialogue qui vous permet de rechercher du texte dans le document courant |
 | Rechercher suivant | NVDA+f3 | Recherche l'occurrence suivante du texte que vous avez préalablement recherché dans le document |
 | Rechercher précédent | NVDA+maj+f3 | Recherche l'occurrence précédente du texte que vous avez préalablement recherché dans le document |
@@ -469,6 +472,7 @@ De plus, vous pouvez aussi passer manuellement NVDA en mode formulaire, après q
 
 ++ Les touches de navigation rapide ++
 En mode navigation, pour une navigation plus rapide, NVDA dispose de raccourcis clavier où l'appui d'une seule touche amène à certains champs dans le document.
+Notez que toutes ces commandes ne sont pas disponibles dans tous les types de documents.
 
 %kc:beginInclude
 Les touches suivantes permettent d'aller à l'élément suivant. En les combinant avec maj, on retourne à l'élément précédent.
@@ -567,12 +571,19 @@ Note : Le raccourci "Annonce du temps restant" fonctionne seulement avec le form
 | Annonce des notes pour les traducteurs | contrôle+maj+a | Annonce les notes pour les traducteurs. |
 %kc:endInclude
 
+++ Skype ++
+%kc:beginInclude
+Durant une conversation :
+|| Nom | Touche | Description |
+| Revoir un message | NVDA+control+1-0 | Annonce et amène le curseur de revue à un message récent, en fonction du nombre pressé; ex : NVDA+control+2 lit le second message plus récent. |
+%kc:endInclude
+
 + Configurer NVDA +
 
 ++ Préférences ++
 %kc:settingsSection: || Nom | Touche Desktop | Touche Laptop | Description |
 La plupart des paramètres de NVDA peuvent être modifiés en utilisant les dialogues accessibles par le sous-menu "Préférences" du menu NVDA.
-Dans tous les dialogues de NVDA, appuyez sur le bouton "Accepter" pour valider vos modifications.
+Dans tous les dialogues de NVDA, appuyez sur le bouton "OK" pour valider vos modifications.
 Pour annuler les modifications, appuyez sur le bouton "Annuler" ou sur la touche "échap".
 Certains paramètres peuvent aussi être modifiés en utilisant des raccourcis clavier que vous trouverez dans les sections ci-dessous.
 
@@ -587,7 +598,7 @@ Ce choix indique à NVDA d'utiliser la langue de Windows.
 
 Noter qu'il faut relancer NVDA quand on change la langue. 
 NVDA vous demandera si vous désirez le redémarrer quand vous changez la sélection. 
-Appuyez sur "Accepter" et NVDA redémarrera.
+Appuyez sur "OK" et NVDA redémarrera.
 
 ==== Sauvegarder la configuration en quittant ====
 C'est une case à cocher qui, une fois cochée, indique à NVDA de sauvegarder automatiquement la configuration courante lorsqu'on arrête NVDA.
@@ -624,7 +635,7 @@ Vous pouvez également vérifier manuellement les mises à jour en sélectionnan
 
 +++ Choix du synthétiseur (NVDA+contrôle+s) +++
 Le dialogue "Synthétiseur", situé sous "Synthétiseur" dans le menu "Préférences", permet de choisir le synthétiseur de parole qui sera utilisé par NVDA.
-Une fois que vous aurez choisi votre synthétiseur, appuyez sur "Accepter" et NVDA chargera le synthétiseur choisi.
+Une fois que vous aurez choisi votre synthétiseur, appuyez sur "OK" et NVDA chargera le synthétiseur choisi.
 S'il y a une erreur au chargement du synthétiseur, NVDA vous en informera par un message, puis continuera à fonctionner avec le synthétiseur précédent.
 
 ==== Synthétiseur ====
@@ -686,6 +697,10 @@ Ceci vous permet de choisir la quantité de ponctuations et autres symboles qui 
 Par exemple, si vous choisissez "Tous", tous les symboles seront annoncés.
 Cette option s'applique à tous les synthétiseurs, pas uniquement au synthétiseur courant.
 
+==== Se baser sur la langue de la voix pour le traitement des symboles et caractères ====
+Activée par défaut, cette option indique à NVDA si la langue de la voix en cours peut être utilisée pour le traitement des symboles et caractères.
+Si vous trouvez que NVDA lit les ponctuations dans la mauvaise langue pour une voix ou un synthétiseur particulier, vous pouvez désactiver ce comportement pour forcer NVDA à utiliser ses paramètres généraux de langue à la place.
+
 ==== Pourcentage de changement de la hauteur pour indiquer les majuscules ====
 Ce champ d'édition vous permet d'entrer la valeur du changement de hauteur de la voix à l'annonce d'une lettre majuscule.
 Cette valeur est un pourcentage, une valeur négative réduit la hauteur, une valeur positive l'augmente.
@@ -701,7 +716,7 @@ Comme l'option "Dire maj avant les majuscules", cette option est utile pour les 
 
 ==== Utiliser la fonction d'épellation si elle est supportée ====[VoiceSpellingFunctionality]
 Certains mots ne comportent qu'un seul caractère, mais la prononciation est différente selon que le caractère est prononcé comme un caractère unique (épellation) ou comme un mot.
-Par exemple, en Français, "y" est à la fois une lettre et un mot.
+Par exemple, en Français, "y" est à la fois une lettre et un mot et se prononce différemment selon le cas.
 Cette option permet au synthétiseur de différencier les deux cas si le synthétiseur le supporte.
 La plupart des synthétiseurs le supportent.
 
@@ -798,7 +813,7 @@ Quand cette case est cochée, "Insert" du clavier étendu, généralement situé
 Si cette case est cochée, la touche "Insert" du pavé numérique peut être utilisée comme touche NVDA.
 
 Si aucune touche n'est choisie pour être la touche NVDA, il peut être impossible d'accéder à certaines commandes NVDA.
-Par conséquent, le dialogue "Paramètres du clavier" affichera un message d'erreur si aucune touche n'est sélectionnée en appuyant sur "Accepter".
+Par conséquent, le dialogue "Paramètres du clavier" affichera un message d'erreur si aucune touche n'est sélectionnée en appuyant sur "OK".
 Après avoir fermé le message d'erreur, vous devrez sélectionner au moins une touche avant de pouvoir appuyer sur "OK" pour fermer le dialogue correctement.
 
 %kc:setting
@@ -860,6 +875,8 @@ Quand cette case est cochée, NVDA annonce le type de l'objet quand la souris y 
 
 ==== Sonoriser les coordonnées quand la souris se déplace ====
 Quand cette case est cochée, NVDA émet des bips quand la souris se déplace, pour que l'utilisateur puisse se figurer la position de la souris sur l'écran.
+Plus la souris est haut sur l'écran, plus la fréquence des bips est élevée.
+Plus la souris est à gauche ou à droite sur l'écran, plus le son sera émis à gauche ou à droite, dans la mesure où l'utilisateur possède des haut-parleurs ou un casque stéréophoniques.
 
 ==== La brillance modifie le volume des coordonnées audio ====
 Si la case "Sonoriser les coordonnées quand la souris se déplace" est cochée, le volume des bips variera en fonction de la brillance de la zone sous le pointeur de la souris. 
@@ -1010,6 +1027,10 @@ Par exemple, si vous naviguez dans une page web avec les flèches et que vous ar
 ==== Indication audio du mode formulaire ou navigation ====
 Si cette option est activée, NVDA émettra des sons particuliers au passage du mode formulaire au mode navigation plutôt que d'anoncer le changement verbalement.
 
+==== Empêcher les gestes ne correspondant pas à des commandes d'atteindre le document ====
+Activée par défaut, cette option vous permet de choisir si des gestes (tels que l'appui sur des touches) qui ne déclenchent pas une commande NVDA et ne sont pas considérés comme une commande en général, devraient être interceptés pour ne pas interagir avec le document actuellement en focus. 
+Par exemple, si l'option est activée, si la lettre j est pressée, elle sera interceptée pour ne pas atteindre le document, même si ce n'est ni une touche de navigation rapide ni une commande dans l'application elle-même.
+
 +++ Mise en forme des documents (NVDA+contrôle+d) +++[DocumentFormattingSettings]
 Ce dialogue se trouve dans le menu des "Préférences", sous "Mise en forme des documents...".
 
@@ -1059,9 +1080,9 @@ Ce sont :
 Tous les dialogues des dictionnaires contiennent une liste de règles qui seront utilisées pour produire la parole. 
 Chaque dialogue contient aussi des boutons "Ajouter", "Éditer" et "Supprimer"
 
-Pour ajouter une règle au dictionnaire, cliquez sur le bouton "Ajout", remplissez les champs dans le dialogue puis cliquez sur "Accepter".
+Pour ajouter une règle au dictionnaire, cliquez sur le bouton "Ajout", remplissez les champs dans le dialogue puis cliquez sur "OK".
 Vous verrez ainsi votre nouvelle règle dans la liste des règles.
-Cependant, pour être sûr que votre règle est vraiment sauvegardée, n'oubliez pas de cliquer sur le bouton "Accepter" pour quitter le dialogue de dictionnaire une fois que vous aurez fait toutes vos modifications.
+Cependant, pour être sûr que votre règle est vraiment sauvegardée, n'oubliez pas de cliquer sur le bouton "OK" pour quitter le dialogue de dictionnaire une fois que vous aurez fait toutes vos modifications.
 
 Les règles des dictionnaires de NVDA vous permettent de remplacer une chaîne de caractères par une autre.
 Par exemple, vous pourrez vouloir que NVDA prononce le mot "grenouille" chaque fois qu'il rencontre le mot "oiseau".
@@ -1072,7 +1093,7 @@ Cependant, les dictionnaires de NVDA font bien mieux que le simple remplacement 
 Le dialogue "Ajout de règles" contient une case à cocher permettant de choisir si vous voulez que la règle respecte la casse pour que NVDA tienne compte des majuscules et minuscules. 
 Par défaut, NVDA ne tient pas compte de la casse.
 
-Pour finir, un ensemble de boutons radio vous permet de dire à NVDA si votre modèle devrait s'appliquer partout, seulement dans le cas d'un mot entier ou s'il devrait être taité comme une "expression régulière".
+Pour finir, un ensemble de boutons radio vous permet de dire à NVDA si votre modèle devrait s'appliquer partout, seulement dans le cas d'un mot entier ou s'il devrait être traité comme une "expression régulière".
 Définir le modèle comme un mot entier signifie que le remplacement ne sera fait que si le modèle n'est pas rencontré dans un mot plus grand; un caractère non alphanumérique ou un souligné ou pas de caractère doit être présent immédiatement avant et après le modèle.
 Ainsi, en utilisant l'exemple précédent de remplacement du mot "oiseau" par le mot "grenouille", si vous le définissez comme un remplacement de mot entier, cela ne marcherait pas pour "oiseaux" ou "damoiseau".
 
@@ -1086,7 +1107,13 @@ Pour modifier un symbole, sélectionnez-le d'abord dans la liste de symboles.
 Le champ "Remplacement" vous permet de modifier le texte qui doit être prononcé à la place de ce symbole.
 En utilisant le champ "Niveau", vous pouvez ajuster le niveau minimum auquel ce symbole doit être annoncé.
 
-Quand vous avez fini, cliquez sur le bouton "Accepter" pour sauvegarder vos modifications, ou le bouton "Annuler" pour les supprimer.
+Vous pouvez ajouter de nouveaux symboles en pressant le bouton Ajouter.
+Dans le dialogue qui apparaît, saisissez le symbole et pressez le bouton OK.
+Puis, changez le remplacement et le niveau pour le nouveau symbole comme vous le feriez pour les autres symboles.
+
+Vous pouvez supprimer un symbole précédemment ajouté en pressant le bouton Supprimer.
+
+Quand vous avez fini, cliquez sur le bouton "OK" pour sauvegarder vos modifications, ou le bouton "Annuler" pour les supprimer.
 
 +++ Gestes de commandes +++
 Dans ce dialogue, vous pouvez configurer les gestes de commandes (raccourcis clavier, boutons d'un afficheur braille etc) pour les commandes NVDA.
@@ -1095,6 +1122,7 @@ Seules les commandes qui sont applicables immédiatement avant l'ouverture du di
 Par exemple, si vous souhaitez personnaliser des commandes liées au mode navigation, vous devez ouvrir le dialogue des gestes de commandes lorsque vous êtes en mode navigation.
 
 L'arborescence de ce dialogue répertorie toutes les commandes NVDA applicables regroupées par catégories.
+Vous pouvez les filtrer en entrant un ou plusieurs mots du nom de la commande dans la zone d'édition Filtrer par dans n'importe quel ordre.
 Tous les gestes associés à une commande sont énumérés au niveau suivant la commande.
 
 Pour ajouter un geste à une commande, sélectionnez la commande et appuyez sur le bouton "Ajouter".
@@ -1105,7 +1133,7 @@ Dans ce cas, un menu apparaît, vous permettant de sélectionner l'option désir
 
 Pour supprimer un geste d'une commande, sélectionnez le geste et appuyez sur le bouton "Supprimer".
 
-Lorsque vous avez terminé vos modifications, appuyez sur le bouton "Accepter" pour les sauvegarder ou sur le bouton "Annuler" pour les ignorer.
+Lorsque vous avez terminé vos modifications, appuyez sur le bouton "OK" pour les sauvegarder ou sur le bouton "Annuler" pour les ignorer.
 
 ++ Sauvegarder et recharger la configuration ++
 Par défaut NVDA sauvegarde automatiquement vos paramètres.
@@ -1159,7 +1187,7 @@ Sinon, sélectionnez un déclencheur qui doit activer automatiquement ce profil.
 Pour plus de commodité, si vous n'avez pas saisi un nom pour le profil, sélectionner un déclencheur le fera pour vous.
 Reportez-vous [ci-dessous #ConfigProfileTriggers] pour plus d'informations.
 
-Appuyer sur "Accepter" crée le profil et ferme le dialogue de configuration de sorte que vous pouvez le modifier.
+Appuyer sur "OK" crée le profil et ferme le dialogue de configuration de sorte que vous pouvez le modifier.
 
 +++ Activation manuelle +++[ConfigProfileManual]
 Vous pouvez activer manuellement un profil en sélectionnant un profil et en cliquant sur le bouton "Activation manuelle".
@@ -1233,7 +1261,7 @@ Si une aide est disponible pour le module sélectionné, vous pouvez y accéder 
 
 Pour télécharger des modules complémentaires mis à disposition par la communauté, cliquez sur le bouton "Obtenir des modules complémentaires".
 Ce bouton ouvre la [page des modules complémentaires NVDA http://addons.nvda-project.org/].
-Si NVDA est installé sur votre système, vous pourrez ouvrir le module complémentaire directement depuis votre navigateur afin de démarrer le processus d'installation décrit plus loin.
+Si NVDA est installé sur votre système et en cours d'exécution, vous pourrez ouvrir le module complémentaire directement depuis votre navigateur afin de démarrer le processus d'installation décrit plus loin.
 Autrement, enregistrez le fichier du module complémentaire et suivez les instructions ci-dessous.
 
 Pour ajouter un module complémentaire, cliquez sur le bouton "Ajouter".
@@ -1307,12 +1335,6 @@ Pour utiliser ces voix, vous devrez installer deux composants :
 C'est un synthétiseur de parole du commerce, spécifique à la langue italienne.
 Le synthétiseur doit être installé sur le système pour être utilisable par NVDA.
 Pour plus d'informations, veuillez visiter le site Audiologic à www.audiologic.it.
-
-Ce synthétiseur ne supporte pas la [fonction d'épellation #VoiceSpellingFunctionality].
-
-++ Newfon ++
-Newfon est un synthétiseur libre du commerce développé par Sergey Shishmintzev qui supporte le Russe et l'Ukrainien.
-Pour télécharger ce synthétiseur, veuillez visiter le site de la communauté russe NVDA sur http://ru.nvda-community.org/?page_id=10
 
 Ce synthétiseur ne supporte pas la [fonction d'épellation #VoiceSpellingFunctionality].
 
@@ -1664,19 +1686,23 @@ Les afficheurs braille suivant sont supportés :
 - brailleX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - brailleX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
 - brailleX Trio (USB et bluetooth)
+- BRAILLEX Live 20, BRAILLEX Live et BRAILLEX Live Plus (USB et bluetooth)
 -
 
 Si BrxCom est installé, NVDA utilisera BrxCom.
 BrxCom est un outil qui permet d'utiliser le clavier braille indépendamment d'un lecteur d'écran.
 Une nouvelle version de BrxCom compatible avec NVDA sera bientôt mise à disposition par Papenmeier.
-De plus, la saisie en braille est possible avec le Trio sans BrxCom.
+La saisie braille est possible avec les terminaux Trio, BRAILLEX Live 20 et Braillex Live  sans BrxCom.
+La saisie braille est aussi possible avec le modèle Live Plus, mais seulement avec BrxCom.
 
 La plupart des afficheurs ont une barre d'accès facile (EAB) qui permet des opérations intuitives et rapides.
 L'EAB peut être bougé dans quatre directions et chaque direction a deux crans.
-La série-C est la seule exception à cette règle.
+Les séries C et Live sont les seules exceptions à cette règle.
 
 La série-C et quelques autres afficheurs ont deux rangées de routines où celle du haut sert à rapporter les informations de mise en forme.
 Garder enfoncée une des routines du haut puis appuyer sur l'EAB sur une Série-C annule le second cran.
+Les terminaux des séries Live n'ont qu'une ligne de routines et l'EAB n'a qu'un cran par direction.
+Le second cran peut être reproduit en pressant une des touches de routage et en pressant l'EAB dans la direction correspondante.
 Appuyer et garder les touches haute, basse, gauche et droite (ou EAB) répète la dernière commande.
 
 Généralement, les touches suivantes sont disponibles sur ces afficheurs braille :
@@ -1877,7 +1903,7 @@ Pour les afficheurs disposant d'un clavier braille, BRLTTY gèrent la saisie du 
 L'option table d'entrée n'est donc pas applicable.
 
 Voici les assignations de commandes BRLTTY pour NVDA.
-Veuillez consulter la [documentation tableau des touches de BRLTTY http://mielke.cc/brltty/doc/drivers/] pour des informations sur la manière dont BRLTTY lie ses commandes aux touches sur les terminaux braille.
+Veuillez consulter la [documentation tableau des touches de BRLTTY http://mielke.cc/brltty/doc/KeyTables/] pour des informations sur la manière dont BRLTTY lie ses commandes aux touches sur les terminaux braille.
 %kc:beginInclude
 || Nom | commande BRLTTY |
 | Défilement arrière de l'affichage braille | fwinlt (se déplacer à gauche d'une fenêtre) |
@@ -1963,7 +1989,8 @@ Voici les options de ligne de commande de NVDA :
 | -s | --secure | Mode sécurisé (désactive la console Python) |
 | Aucune | --disable-addons | Les modules complémentaires n'auront pas d'effet |
 | Aucune | --no-sr-flag  | Ne change pas l'indicateur système global de revue d'écran |
-| Aucune | --install | Installe NVDA en silence |
+| Aucune | --install | Installe NVDA (en démarrant la copie nouvellement installée) |
+| Aucune | --install-silent | Installe NVDA silencieusement (sans démarrer la copie nouvellement installée) |
 
 ++ Personnalisation avancée de la prononciation des symboles ++
 Il est possible de personnaliser la prononciation des ponctuations et autres symboles au-delà de ce que permet le dialogue ["Prononciation des symboles et ponctuations" #SymbolPronunciation].

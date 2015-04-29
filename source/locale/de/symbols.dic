@@ -37,80 +37,83 @@ date separator		none	always
 \t	Tab
 \n	Zeilenumbruch	char
 \f	Seitenumbruch	none
-\r	Neue Zeile	char
+\r	Wagenrücklauf	char
  	Leerzeichen	char
- 	Geschütztes Leerzeichen	char	# no-break space
+ 	Geschütztes Leerzeichen	char	# geschütztes Leerzeichen
 
 # Standard punctuation/symbols
-!	Ausrufezeichen
-"	Anführungszeichen
-\#	Nummernzeichen
-$	Dollar
-£	Pfund
-€	Euro
-¢	Cents
-¥	Yen
-%	Prozent
-&	Und
-'	Apostroph
-(	Runde Klammer auf
-)	runde Klammer zu
-*	Stern
-+	Plus
-,	Komma
--	Bindestrich
-.	Punkt
-/	Schrägstrich
-:	Doppelpunkt
-;	Semikolon
-<	Kleiner Als
->	Größer Als
-=	Gleichheitszeichen
-?	Fragezeichen
-@	Ätt
-[	Eckige Klammer auf
-]	Eckige Klammer zu
-\\	Backslash
-^	Dach
-_	Unterstrich
-`	Graav
-{	Geschweifte Klammer auf
-}	Geschweifte Klammer zu
-|	Senkrechter Strich
-~	Tilde
+!	Ausrufezeichen	all
+"	Anführungszeichen	most
+\#	Nummernzeichen	most
+$	Dollar	all	norep
+£	Pfund	all	norep
+€	Euro	all	norep
+¢	Cents	all	norep
+¥	Yen	all	norep
+%	Prozent	some
+&	Und	some
+'	Apostroph	all
+(	Runde Klammer auf	most
+)	runde Klammer zu	most
+*	Stern	some
++	Plus	some
+,	Komma	all	always
+-	Bindestrich	most
+.	Punkt	some
+/	Schrägstrich	some
+:	Doppelpunkt	most	norep
+;	Semikolon	most
+<	Kleiner Als	most
+>	Größer Als	most
+=	Gleichheitszeichen	some
+?	Fragezeichen	all
+@	Ätt	some
+[	Eckige Klammer auf	most
+]	Eckige Klammer zu	most
+\\	Backslash	most
+^	Dach	most
+_	Unterstrich	most
+`	Graav	most
+{	Geschweifte Klammer auf	most
+}	Geschweifte Klammer zu	most
+|	Senkrechter Strich	most
+~	Tilde	most
 
 # Other characters
-•	Aufzählungszeichen
-…	Punkt Punkt Punkt
-...	Punkt Punkt Punkt
-	Aufzählungszeichen
-“	Typografisches Anführungszeichen oben
-„	Typografisches Anführungszeichen unten
-‘	Apostroph links
-’	Apostroph rechts
-–	Strich
-—	Gedankenstrich
-●	Kreis
-¨	Trema
-‎	Pfeil von links nach rechts
-‏	Pfeil von rechts nach links
-■	Schwarzes Quadrat
-➔	Großer rechtsweisender Pfeil
-§	Paragraf
-°	Grad
-«	Doppelt gewinkelte Klammer auf
-»	Doppelt gewinkelte Klammer zu
-µ	Mü
-¹	Hochgestellte 1
-²	Hochgestellte 2
-³	Hochgestellte 3
-®	Registriertes Warenzeichen
-™	Eingetragenes Warenzeichen
-©	Copyright
-±	Plus Minus
-×	Mal
-÷	Geteilt durch
-←	Pfeil nach links
-→	Pfeil nach rechts
-✓	Häkchen
-✔	Fettes Häkchen
+•	Aufzählungszeichen	some
+…	Punkt Punkt Punkt	all	always
+...	Punkt Punkt Punkt	all	always
+	Aufzählungszeichen	some
+“	Typografisches Anführungszeichen oben	most
+„	Typografisches Anführungszeichen unten	most
+‘	Apostroph links	most
+’	Apostroph rechts	most
+–	Strich	most
+—	Gedankenstrich	most
+●	Kreis	most
+¨	Trema	most
+‎	Pfeil von links nach rechts	char
+‏	Pfeil von rechts nach links	char
+■	Schwarzes Quadrat	some
+▪	schwarzes Quadrat	some
+◾	schwarzes Quadrat	some
+◦	weißes Aufzählungszeichen	some
+➔	Großer rechtsweisender Pfeil	some
+§	Paragraf	all
+°	Grad	some
+«	Doppelte gewinkelte Klammer auf
+»	Doppelte gewinkelte Klammer zu
+µ	Mü	some
+¹	Hochgestellte 1	some
+²	Hochgestellte 2	some
+³	Hochgestellte 3	some
+®	Registriertes Warenzeichen	some
+™	Eingetragenes Warenzeichen	some
+©	Copyright	some
+±	Plus Minus	most
+×	Mal	most
+÷	Geteilt durch	most
+←	Pfeil nach links	some
+→	Pfeil nach rechts	some
+✓	Häkchen	some
+✔	Fettes Häkchen	some

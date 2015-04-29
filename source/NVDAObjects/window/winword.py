@@ -399,6 +399,15 @@ class TableWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 
 class WordDocumentTextInfo(textInfos.TextInfo):
 
+	# #4852: temporary fix.
+	# force mouse reading chunk to sentense to make it what it used to be in 2014.4.
+	# We need to however fix line so it does not accidentially scroll.
+	def _get_unit_mouseChunk(self):
+		unit=super(WordDocumentTextInfo,self).unit_mouseChunk
+		if unit==textInfos.UNIT_LINE:
+			unit=textInfos.UNIT_SENTENCE
+		return unit
+
 	def find(self,text,caseSensitive=False,reverse=False):
 		f=self._rangeObj.find
 		f.text=text
@@ -417,7 +426,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if links.count>0:
 			links[1].follow()
 			return
-		super(WordDocumentTextInfo,self).activate()
 
 	def _expandToLineAtCaret(self):
 		lineStart=ctypes.c_int()
@@ -777,6 +785,9 @@ class BrowseModeWordDocumentTextInfo(textInfos.TextInfo):
 		super(BrowseModeWordDocumentTextInfo,self).__init__(obj,position)
 		self.innerTextInfo=WordDocumentTextInfoForTreeInterceptor(obj.rootNVDAObject,position,_rangeObj=_rangeObj)
 
+	def _get__rangeObj(self):
+		return self.innerTextInfo._rangeObj
+
 	def find(self,text,caseSensitive=False,reverse=False):
 		return self.innerTextInfo.find(text,caseSensitive,reverse)
 
@@ -878,9 +889,9 @@ class WordDocumentTreeInterceptor(CursorManager,BrowseModeTreeInterceptorWithMak
 		else:
 			raise NotImplementedError
 
-	def script_tab(self,gesture):
-		self.rootNVDAObject.script_tab(gesture)
-		braille.handler.handleCaretMove(self)
+	def event_gainFocus(self,obj,nextHandler):
+		obj.reportFocus()
+		braille.handler.handleGainFocus(self)
 
 	def script_nextRow(self,gesture):
 		self.rootNVDAObject._moveInTable(row=True,forward=True)
@@ -899,8 +910,8 @@ class WordDocumentTreeInterceptor(CursorManager,BrowseModeTreeInterceptorWithMak
 		braille.handler.handleCaretMove(self)
 
 	__gestures={
-		"kb:tab":"tab",
-		"kb:shift+tab":"tab",
+		"kb:tab":"trapNonCommandGesture",
+		"kb:shift+tab":"trapNonCommandGesture",
 		"kb:control+alt+upArrow": "previousRow",
 		"kb:control+alt+downArrow": "nextRow",
 		"kb:control+alt+leftArrow": "previousColumn",
@@ -941,6 +952,20 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		states.add(controlTypes.STATE_MULTILINE)
 		return states
 
+	def populateHeaderCellTrackerFromHeaderRows(self,headerCellTracker,table):
+		rows=table.rows
+		for rowIndex in xrange(rows.count): 
+			try:
+				row=rows.item(rowIndex+1)
+			except COMError:
+				break
+			try:
+				headingFormat=row.headingFormat
+			except (COMError,AttributeError,NameError):
+				headingFormat=0
+			if headingFormat==-1: # is a header row
+				headerCellTracker.addHeaderCellInfo(rowNumber=row.index,columnNumber=1,isColumnHeader=True,isRowHeader=False)
+
 	def populateHeaderCellTrackerFromBookmarks(self,headerCellTracker,bookmarks):
 		for x in bookmarks: 
 			name=x.name
@@ -967,6 +992,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		if not self._curHeaderCellTrackerTable or not tableRange.isEqual(self._curHeaderCellTrackerTable.range):
 			self._curHeaderCellTracker=HeaderCellTracker()
 			self.populateHeaderCellTrackerFromBookmarks(self._curHeaderCellTracker,tableRange.bookmarks)
+			self.populateHeaderCellTrackerFromHeaderRows(self._curHeaderCellTracker,table)
 			self._curHeaderCellTrackerTable=table
 		return self._curHeaderCellTracker
 
@@ -1008,7 +1034,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			return False
 		headerCellTracker=self.getHeaderCellTrackerForTable(cell.range.tables[1])
 		info=headerCellTracker.getHeaderCellInfoAt(rowNumber,columnNumber)
-		if not info:
+		if not info or not hasattr(info,'name'):
 			return False
 		if isColumnHeader and info.isColumnHeader:
 			info.isColumnHeader=False

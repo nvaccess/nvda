@@ -12,6 +12,8 @@ import winKernel
 import comHelper
 import winUser
 from logHandler import log
+import textInfos
+import braille
 import appModuleHandler
 import eventHandler
 import UIAHandler
@@ -22,7 +24,7 @@ import speech
 import ui
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
-from NVDAObjects.window.winword import WordDocument
+from NVDAObjects.window.winword import WordDocument, WordDocumentTreeInterceptor
 from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation
 from NVDAObjects.UIA import UIA
@@ -445,14 +447,46 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 		super(UIAGridRow,self).setFocus()
 		eventHandler.queueEvent("gainFocus",self)
 
+class MailViewerTreeInterceptor(WordDocumentTreeInterceptor):
+	"""A BrowseMode treeInterceptor specifically for readonly emails, where tab and shift+tab are safe and we know will not edit the document."""
+
+	def script_tab(self,gesture):
+		bookmark=self.rootNVDAObject.makeTextInfo(textInfos.POSITION_SELECTION).bookmark
+		gesture.send()
+		info,caretMoved=self.rootNVDAObject._hasCaretMoved(bookmark)
+		if not caretMoved:
+			return
+		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		inTable=info._rangeObj.tables.count>0
+		isCollapsed=info.isCollapsed
+		if inTable and isCollapsed:
+			info.expand(textInfos.UNIT_CELL)
+			isCollapsed=False
+		if not isCollapsed:
+			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+		braille.handler.handleCaretMove(self)
+
+	__gestures={
+		"kb:tab":"tab",
+		"kb:shift+tab":"tab",
+	}
+
 class OutlookWordDocument(WordDocument):
 
-	def _get_shouldCreateTreeInterceptor(self):
-		# #2975: If this WordDocument is displaying a sent message, then it should be read with browse mode.
+	def _get_isReadonlyViewer(self):
+		# #2975: The only way we know an email is read-only is if the underlying email has been sent.
 		try:
 			return self.appModule.nativeOm.activeInspector().currentItem.sent
 		except (COMError,NameError,AttributeError):
 			return False
 
+	def _get_treeInterceptorClass(self):
+		if self.isReadonlyViewer:
+			return MailViewerTreeInterceptor
+		return super(OutlookWordDocument,self).treeInterceptorClass
+
+	def _get_shouldCreateTreeInterceptor(self):
+		return self.isReadonlyViewer
+
 	def _get_role(self):
-		return controlTypes.ROLE_DOCUMENT if self.shouldCreateTreeInterceptor else super(OutlookWordDocument,self).role
+		return controlTypes.ROLE_DOCUMENT if self.isReadonlyViewer else super(OutlookWordDocument,self).role

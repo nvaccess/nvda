@@ -261,7 +261,11 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 		allowText=(i->second.find(L"text",0)!=wstring::npos);
 		allowAdditions=(i->second.find(L"additions",0)!=wstring::npos);
 	} 
-	attribsMap.clear();
+	// We only support additions or text
+	if(!allowAdditions&&!allowText) {
+		pacc2->Release();
+		return;
+	}
 	//Only handle show events if additions are allowed
 	if(eventID==EVENT_OBJECT_SHOW&&!allowAdditions) {
 		pacc2->Release();
@@ -286,9 +290,10 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 				ignoreShowEvent=true;
 				IAccessible2* pacc2Parent=NULL;
 				if(pdispParent->QueryInterface(IID_IAccessible2,(void**)&pacc2Parent)==S_OK) {
-					if(fetchIA2Attributes(pacc2Parent,attribsMap)) {
-						i=attribsMap.find(L"container-live");
-						if(i!=attribsMap.end()&&(i->second.compare(L"polite")==0||i->second.compare(L"assertive")==0||i->second.compare(L"rude")==0)) {
+					map<wstring,wstring> parentAttribsMap;
+					if(fetchIA2Attributes(pacc2Parent,parentAttribsMap)) {
+						i=parentAttribsMap.find(L"container-live");
+						if(i!=parentAttribsMap.end()&&(i->second.compare(L"polite")==0||i->second.compare(L"assertive")==0||i->second.compare(L"rude")==0)) {
 							// There is a valid container-live that is not off, so therefore the child is definitly not the root
 							ignoreShowEvent=false;
 						}

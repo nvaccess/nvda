@@ -37,6 +37,8 @@ beenCanceled=True
 isPaused=False
 curWordChars=[]
 
+#Set containing locale codes for languages supporting conjunct characters
+LANGS_WITH_CONJUNCT_CHARS = {'hi', 'as', 'bn', 'gu', 'kn', 'kok', 'ml', 'mni', 'mr', 'pa', 'te', 'ur'}
 # The REASON_* constants in this module are deprecated and will be removed in a future release.
 # Use controlTypes.REASON_* instead.
 from controlTypes import REASON_FOCUS, REASON_FOCUSENTERED, REASON_MOUSE, REASON_QUERY, REASON_CHANGE, REASON_MESSAGE, REASON_SAYALL, REASON_CARET, REASON_ONLYCACHE
@@ -179,18 +181,45 @@ def speakSpelling(text,locale=None,useCharacterDescriptions=False):
 			return
 		queueHandler.registerGeneratorObject(_speakSpellingGenerator)
 
+def getCharDescListFromText(text,locale):
+	"""This method prepares a list, which contains character and its description for all characters the text is made up of, by checking the presence of character descriptions in characterDescriptions.dic of that locale for all possible combination of consecutive characters in the text.
+	This is done to take care of conjunct characters present in several languages such as Hindi, Urdu, etc.
+	"""
+	charDescList = []
+	charDesc=None
+	i = len(text)
+	while i:
+		subText = text[:i]
+		charDesc = characterProcessing.getCharacterDescription(locale,subText)
+		if charDesc or i==1:
+			charDescList.append((subText,charDesc))
+			text = text[i:]
+			i = len(text)
+		else:
+			i = i - 1
+	return charDescList
+
 def _speakSpellingGen(text,locale,useCharacterDescriptions):
 	synth=getSynth()
 	synthConfig=config.conf["speech"][synth.name]
 	buf=[(text,locale,useCharacterDescriptions)]
 	for text,locale,useCharacterDescriptions in buf:
 		textLength=len(text)
-		for count,char in enumerate(text): 
+		count = 0
+		localeHasConjuncts = True if locale.split('_',1)[0] in LANGS_WITH_CONJUNCT_CHARS else False
+		charDescList = getCharDescListFromText(text,locale) if localeHasConjuncts else text
+		for item in charDescList:
+			if localeHasConjuncts:
+				# item is a tuple containing character and its description
+				char = item[0]
+				charDesc = item[1]
+			else:
+				# item is just a character.
+				char = item
+				if useCharacterDescriptions:
+					charDesc=characterProcessing.getCharacterDescription(locale,char.lower())
 			uppercase=char.isupper()
-			charDesc=None
-			if useCharacterDescriptions:
-				charDesc=characterProcessing.getCharacterDescription(locale,char.lower())
-			if charDesc:
+			if useCharacterDescriptions and charDesc:
 				#Consider changing to multiple synth speech calls
 				char=charDesc[0] if textLength>1 else u"\u3001".join(charDesc)
 			else:
@@ -201,6 +230,7 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 			if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
 				oldPitch=synthConfig["pitch"]
 				synth.pitch=max(0,min(oldPitch+synthConfig["capPitchChange"],100))
+			count = len(char)
 			index=count+1
 			log.io("Speaking character %r"%char)
 			speechSequence=[LangChangeCommand(locale)] if config.conf['speech']['autoLanguageSwitching'] else []

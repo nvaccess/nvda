@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov
+#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -740,12 +740,12 @@ class MouseSettingsDialog(SettingsDialog):
 		settingsSizer.Add(self.reportObjectRoleCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# mouse settings dialog.
-		self.audioCheckBox=wx.CheckBox(self,wx.NewId(),label=_("play audio coordinates when mouse moves"))
+		self.audioCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Play audio coordinates when mouse moves"))
 		self.audioCheckBox.SetValue(config.conf["mouse"]["audioCoordinatesOnMouseMove"])
 		settingsSizer.Add(self.audioCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# mouse settings dialog.
-		self.audioDetectBrightnessCheckBox=wx.CheckBox(self,wx.NewId(),label=_("brightness controls audio coordinates volume"))
+		self.audioDetectBrightnessCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Brightness controls audio coordinates volume"))
 		self.audioDetectBrightnessCheckBox.SetValue(config.conf["mouse"]["audioCoordinates_detectBrightness"])
 		settingsSizer.Add(self.audioDetectBrightnessCheckBox,border=10,flag=wx.BOTTOM)
 
@@ -1028,7 +1028,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.detectFormatAfterCursorCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.fontNameCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report font &name"))
+		self.fontNameCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &font name"))
 		self.fontNameCheckBox.SetValue(config.conf["documentFormatting"]["reportFontName"])
 		settingsSizer.Add(self.fontNameCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
@@ -1073,7 +1073,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.pageCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.lineNumberCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &line numbers"))
+		self.lineNumberCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report line &numbers"))
 		self.lineNumberCheckBox.SetValue(config.conf["documentFormatting"]["reportLineNumber"])
 		settingsSizer.Add(self.lineNumberCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This message is presented in the document formatting settings dialogue
@@ -1104,7 +1104,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.tableCellCoordsCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.linksCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &links"))
+		self.linksCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report lin&ks"))
 		self.linksCheckBox.SetValue(config.conf["documentFormatting"]["reportLinks"])
 		settingsSizer.Add(self.linksCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
@@ -1114,7 +1114,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.headingsCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.listsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report l&ists"))
+		self.listsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &lists"))
 		self.listsCheckBox.SetValue(config.conf["documentFormatting"]["reportLists"])
 		settingsSizer.Add(self.listsCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
@@ -1515,15 +1515,19 @@ class AddSymbolDialog(wx.Dialog):
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 class SpeechSymbolsDialog(SettingsDialog):
-	# Translators: This is the label for the symbol pronunciation dialog.
-	title = _("Symbol Pronunciation")
 
-	def makeSettings(self, settingsSizer):
+	def __init__(self,parent):
 		try:
-			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData(languageHandler.getLanguage())
+			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData(speech.getCurrentLanguage())
 		except LookupError:
 			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData("en")
 		self.symbolProcessor = symbolProcessor
+		# Translators: This is the label for the symbol pronunciation dialog.
+		# %s is replaced by the language for which symbol pronunciation is being edited.
+		self.title = _("Symbol Pronunciation (%s)")%languageHandler.getLanguageDescription(self.symbolProcessor.locale)
+		super(SpeechSymbolsDialog, self).__init__(parent)
+
+	def makeSettings(self, settingsSizer):
 		symbols = self.symbols = [copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()]
 		self.pendingRemovals = {}
 
