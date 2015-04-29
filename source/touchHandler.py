@@ -9,7 +9,7 @@ import threading
 from ctypes import *
 from ctypes.wintypes import *
 import re
-import sys
+import winVersion
 import globalPluginHandler
 import config
 import winUser
@@ -275,8 +275,7 @@ def initialize():
 	if not config.isInstalledCopy():
 		log.debugWarning("Touch only supported on installed copies")
 		raise NotImplementedError
-	version=sys.getwindowsversion()
-	if (version.major*10+version.minor)<62:
+	if (winVersion.winVersion.major*10+winVersion.winVersion.minor)<62:
 		log.debugWarning("Touch only supported on Windows 8 and higher")
 		raise NotImplementedError
 	maxTouches=windll.user32.GetSystemMetrics(95) #maximum touches

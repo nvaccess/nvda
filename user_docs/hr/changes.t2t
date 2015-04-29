@@ -3,6 +3,26 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.2 =
+
+== Nove značajke ==
+- Sada je moguće pomicanje po rečenicama koristeći tipkovničke prečace alt+strelicaGore i alt+strelicaDolje u Microsoft wordu. (#3288)
+- Nove brajične tablice za nekoliko indijskih jezika. (#4778)
+
+
+== izmjene ==
+- U NVDA dijaloškom okviru oblikovanje dokumenta, promjenjeni su tipkovnički prečaci za opcije  izvijesti o popisima, izvijesti o linkovima, izvijesti o brojevima redaka i izvijesti o imenu fonta. (#4650)
+- U NVDA dijaloškom okviru postavke miša, dodani su tipkovnički prečaci za slijedeće opcije: reproduciraj zvučne koordinate prilikom pomicanja miša i svjetlina kontrolira glasnoću zvuka. (#4916)
+
+
+== Ispravke grešaka ==
+- Opisima znakova se sada ispravno rukuje u slučajevima kada postoje spojni znakovi u nekim jezicima indijskog podkontinenta. (#4582)
+
+
+== Izmjene za razvojne programere ==
+Da biste pogledali izmjene za razvojne programere, molimo vas pogledajte dokument "Što je novo" na engleskom jeziku.
+
+
 = 2015.1 =
 Unapređenja u ovoj inačici uključuju način pregleda za dokumente u Microsoft Wordu i Outlooku; velika poboljšanja u podršci za Skype za Radnu površinu; i nezamjetne popravke grešaka u Microsoft Internet Exploreru.
 
@@ -54,6 +74,8 @@ Unapređenja u ovoj inačici uključuju način pregleda za dokumente u Microsoft
 - Sadržaj koji je označen atributom aria-labelledby na elementima u Internet Exploreru i drugim MSHTML kontrolama ispravno zamjenjuje izvorni sadržaj gdje je to tako dozvoljeno. (#4575)
 - Kad se provjerava pravopis u Microsoft Outlooku 2013, neispravno napisana riječ se sada ispravno čita. (#4848)
 - U Internet Exploreru i drugim MSHTML kontrolama, sadržaj unutar elemenata koji je skriven sa visibility:hidden više se nepoželjno ne prikazuje u načinu pregleda. (#4839, #3776)
+- U Internet Exploreru i drugim MSHTML kontrolama, atribut naslova na kontrolama obrasca više ne uzima prevlast nad drugim pridruženim natpisima]. (#4491)
+- U Internet Exploreru i drugim MSHTML kontrolama, NVDA više ne izbjegava fokusiranje na elemente zbog aria-activedescendant attributa. (#4667)
 
 
 == Izmjene za razvojne programere ==
@@ -73,7 +95,7 @@ Da biste pogledali izmjene za razvojne programere, molimo vas pogledajte dokumen
 - Ako je objekt na koji ste se pomaknuli uporabom objektne navigacije unutar dokumenta koji radi u načinu pregleda, ali objekt na kojem ste se prethodno nalazili nije bio, način pregleda je automatski postavljen na dokument. Ranije se ovo događalo samo ako je objekt navigatora pomaknut zbog promjene fokusa. (#4369)
 - Popisi brajičnih redaka i govornih jedinica u njihovim odgovarajućim dijaloškim okvirima postavki su sad sortirani abecednim redom, svi osim stavke Bez brajice/Bez govora koje se sada nalaze na kraju popisa. (#2724)
 - Brajični prevoditelj liblouis je ažuriran na inačicu 2.6.0. (#4434, #3835)
-- U načinu pregleda, pritisak na e i shift+e za kretanje po poljima za uređivanje sada uključuje i uređivajučke odabirne okvire. Ovo se odnosi i na okvir za pretraživanje u zadnjoj inačici Google tražilice. (#4436)
+- U načinu pregleda, pritisak na e i shift+e za kretanje po poljima za uređivanje sada uključuje i uređivajuče odabirne okvire. Ovo se odnosi i na okvir za pretraživanje u zadnjoj inačici Google tražilice. (#4436)
 - Klik na NVDA ikonu u području obavijesti uporabom lijeve tipke miša sada otvara NVDA izbornik, umjesto da ne napravi ništa. (#4459)
 
 

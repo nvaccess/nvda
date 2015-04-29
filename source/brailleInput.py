@@ -51,12 +51,13 @@ class BrailleInputHandler(object):
 	def sendChars(self, chars):
 		inputs = []
 		for ch in chars:
-			input = winUser.Input()
-			input.type = winUser.INPUT_KEYBOARD
-			input.ii.ki = winUser.KeyBdInput()
-			input.ii.ki.wScan = ord(ch)
-			input.ii.ki.dwFlags = winUser.KEYEVENTF_UNICODE
-			inputs.append(input)
+			for direction in (0,winUser.KEYEVENTF_KEYUP): 
+				input = winUser.Input()
+				input.type = winUser.INPUT_KEYBOARD
+				input.ii.ki = winUser.KeyBdInput()
+				input.ii.ki.wScan = ord(ch)
+				input.ii.ki.dwFlags = winUser.KEYEVENTF_UNICODE|direction
+				inputs.append(input)
 		winUser.SendInput(inputs)
 
 class BrailleInputGesture(inputCore.InputGesture):

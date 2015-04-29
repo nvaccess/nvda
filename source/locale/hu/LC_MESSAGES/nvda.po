@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-06 19:11+1000\n"
-"PO-Revision-Date: 2014-11-16 19:41+0100\n"
+"POT-Creation-Date: 2015-02-03 19:12+1000\n"
+"PO-Revision-Date: 2015-02-12 23:41+0100\n"
 "Last-Translator: Erion <rob.mail@freemail.hu>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "Language: hu_HU\n"
@@ -625,6 +625,495 @@ msgstr "pont"
 msgid "space"
 msgstr "szóköz"
 
+msgid "focus mode"
+msgstr "Interaktív mód"
+
+msgid "browse mode"
+msgstr "böngésző mód"
+
+#. Translators: a message when a particular quick nav command is not supported in the current document.
+msgid "Not supported in this document"
+msgstr "Ebben a dokumentumban nem támogatott."
+
+#. Translators: the description for the elements list dialog script on virtualBuffers.
+msgid "Presents a list of links, headings or landmarks"
+msgstr "Megjeleníti a címsorok, jelzőpontok vagy hivatkozások listáját"
+
+#. Translators: the description for the activatePosition script on virtualBuffers.
+msgid "activates the current object in the document"
+msgstr "Aktiválja az aktuális elemet a dokumentumban."
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading"
+msgstr "A következő címsorhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading"
+msgstr "nincs következő címsor"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading"
+msgstr "Az előző címsorhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading"
+msgstr "nincs előző címsor"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 1"
+msgstr "A következő, első szintű címsorhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 1"
+msgstr "Nincs következő, első szintű címsor"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 1"
+msgstr "Az előző, első szintű címsorhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 1"
+msgstr "nincs előző, első szintű címsor"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 2"
+msgstr "A következő második szintű címsorhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 2"
+msgstr "nincs következő, második szintű címsor"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 2"
+msgstr "Az előző, második szintű címsorhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 2"
+msgstr "Nincs előző, második szintű címsor"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 3"
+msgstr "A következő, harmadik szintű címsorhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 3"
+msgstr "Nincs következő, harmadik szintű címsor."
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 3"
+msgstr "Az előző, harmadik szintű címsorhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 3"
+msgstr "Nincs előző, harmadik szintű címsor"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 4"
+msgstr "A következő, negyedik szintű címsorhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 4"
+msgstr "nincs következő, negyedik szintű címsor"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 4"
+msgstr "Az előző, negyedik szintű címsorhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 4"
+msgstr "Nincs előző, negyedik szintű címsor"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 5"
+msgstr "A következő, ötödik szintű címsorhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 5"
+msgstr "Nincs következő, ötödik szintű címsor"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 5"
+msgstr "Az előző, ötödik szintű címsorhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 5"
+msgstr "Nincs előző, ötödik szintű címsor"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next heading at level 6"
+msgstr "A következő, hatodik szintű címsorhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next heading at level 6"
+msgstr "Nincs következő, hatodik szintű címsor"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous heading at level 6"
+msgstr "Az előző, hatodik szintű címsorhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous heading at level 6"
+msgstr "Nincs előző, hatodik szintű címsor"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next table"
+msgstr "A következő táblázathoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next table"
+msgstr "Nincs következő táblázat"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous table"
+msgstr "Az előző táblázathoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous table"
+msgstr "nincs előző táblázat"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next link"
+msgstr "A következő hivatkozáshoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next link"
+msgstr "nincs következő hivatkozás"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous link"
+msgstr "Az előző hivatkozáshoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous link"
+msgstr "nincs előző hivatkozás"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next visited link"
+msgstr "A következő, meglátogatott hivatkozáshoz lép"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next visited link"
+msgstr "nincs következő, meglátogatott hivatkozás"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous visited link"
+msgstr "Az előző, meglátogatott hivatkozáshoz lép"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous visited link"
+msgstr "nincs előző, meglátogatott hivatkozás"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next unvisited link"
+msgstr "A következő, nem meglátogatott hivatkozáshoz lép"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next unvisited link"
+msgstr "nincs következő, nem meglátogatott hivatkozás"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous unvisited link"
+msgstr "Az előző, nem meglátogatott hivatkozáshoz lép"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous unvisited link"
+msgstr "nincs előző, nem meglátogatott hivatkozás"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next form field"
+msgstr "A következő űrlapmezőhöz lép"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next form field"
+msgstr "nincs következő űrlapmező"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous form field"
+msgstr "az előző űrlapmezőhöz lép"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous form field"
+msgstr "nincs előző űrlapmező"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next list"
+msgstr "a következő listához lép"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next list"
+msgstr "nincs következő lista"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous list"
+msgstr "az előző listához lép"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous list"
+msgstr "nincs előző lista"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next list item"
+msgstr "a következő listaelemhez lép"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next list item"
+msgstr "nincs következő listaelem"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous list item"
+msgstr "az előző listaelemhez lép"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous list item"
+msgstr "nincs előző listaelem"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next button"
+msgstr "A következő gombhoz lép"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next button"
+msgstr "nincs következő gomb"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous button"
+msgstr "Az előző gombhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous button"
+msgstr "nincs előző gomb"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next edit field"
+msgstr "A következő szerkesztőmezőhöz lép"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next edit field"
+msgstr "nincs következő szerkesztőmező"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous edit field"
+msgstr "az előző szerkesztőmezőhöz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous edit field"
+msgstr "nincs előző szerkesztőmező"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next frame"
+msgstr "A következő kerethez lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next frame"
+msgstr "Nincs következő keret"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous frame"
+msgstr "Az előző kerethez lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous frame"
+msgstr "Nincs előző keret"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next separator"
+msgstr "A következő elválasztóhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next separator"
+msgstr "nincs következő elválasztó"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous separator"
+msgstr "Az előző elválasztóhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous separator"
+msgstr "nincs előző elválasztó"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next radio button"
+msgstr "A következő választógombhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next radio button"
+msgstr "nincs következő választógomb"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous radio button"
+msgstr "Az előző választógombhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous radio button"
+msgstr "nincs előző választógomb"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next combo box"
+msgstr "A következő kombinált listamezőhöz lép"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next combo box"
+msgstr "Nincs következő kombinált listamező"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous combo box"
+msgstr "Az előző kombinált listamezőhöz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous combo box"
+msgstr "nincs előző kombinált listamező"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next check box"
+msgstr "A következő jelölőnégyzethez lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next check box"
+msgstr "Nincs következő jelölőnégyzet"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous check box"
+msgstr "Az előző jelölőnégyzethez lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous check box"
+msgstr "nincs előző jelölőnégyzet"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next graphic"
+msgstr "A következő ábrához lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next graphic"
+msgstr "Nincs következő ábra"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous graphic"
+msgstr "Az előző ábrához lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous graphic"
+msgstr "nincs előző ábra"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next block quote"
+msgstr "A következő idézetblokkhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next block quote"
+msgstr "Nincs következő idézetblokk"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous block quote"
+msgstr "Az előző idézetblokkhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous block quote"
+msgstr "Nincs előző idézetblokk"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "skips forward past a block of links"
+msgstr "Átugrik egy hivatkozásblokkot"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no more text after a block of links"
+msgstr "Nincs több szöveg a hivatkozásblokk után"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "skips backward past a block of links"
+msgstr "a hivatkozásblokk elé ugrik."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no more text before a block of links"
+msgstr "Nincs több szöveg a hivatkozásblokk előtt"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next landmark"
+msgstr "A következő jelzőponthoz lép"
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next landmark"
+msgstr "nincs következő jelzőpont"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous landmark"
+msgstr "Az előző jelzőponthoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous landmark"
+msgstr "nincs előző jelzőpont"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next embedded object"
+msgstr "A következő beágyazott objektumhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next embedded object"
+msgstr "Nincs következő beágyazott objektum"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous embedded object"
+msgstr "Az előző beágyazott objektumhoz lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous embedded object"
+msgstr "Nincs előző beágyazott objektum"
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the next annotation"
+msgstr "A következő mellékszöveghez lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no next annotation"
+msgstr "Nincs következő mellékszöveg."
+
+#. Translators: Input help message for a quick navigation command in browse mode.
+msgid "moves to the previous annotation"
+msgstr "Az előző mellékszöveghez lép."
+
+#. Translators: Message presented when the browse mode element is not found.
+msgid "no previous annotation"
+msgstr "Nincs előző mellékszöveg."
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Lin&ks"
+msgstr "&Hivatkozások"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Headings"
+msgstr "&Címsorok"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Lan&dmarks"
+msgstr "&Jelzőpontok"
+
+#. Translators: The title of the browse mode Elements List dialog.
+msgid "Elements List"
+msgstr "Elemlista"
+
+#. Translators: The label of a group of radio buttons to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "Type:"
+msgstr "Típus:"
+
+#. Translators: The label of an editable text field to filter the elements
+#. in the browse mode Elements List dialog.
+msgid "&Filter by:"
+msgstr "&Szűrés:"
+
+#. Translators: The label of a button to activate an element
+#. in the browse mode Elements List dialog.
+msgid "&Activate"
+msgstr "&Aktiválás"
+
+#. Translators: The label of a button to move to an element
+#. in the browse mode Elements List dialog.
+msgid "&Move to"
+msgstr "&Ugrás"
+
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
@@ -658,18 +1147,17 @@ msgstr "ismeretlen szín"
 msgid "black"
 msgstr "Fekete"
 
-#. Translators: The color green.
-msgid "green"
-msgstr "Zöld"
+#. Translators: The color dark green.
+msgid "dark green"
+msgstr "Sötétzöld"
 
 #. Translators: The light gray color.
 msgid "light grey"
 msgstr "Világosszürke"
 
-#. Translators: The color lime.
-#. For more info see: http://en.wikipedia.org/wiki/Lime_%28color%29
-msgid "lime"
-msgstr "élénkzöld"
+#. Translators: The color green (full brightness)
+msgid "green"
+msgstr "Zöld"
 
 #. Translators: The color gray (halfway between white and black).
 msgid "grey"
@@ -1489,13 +1977,18 @@ msgstr "Az NVDA betöltése folyamatban, kérem várjon..."
 msgid "NVDA started"
 msgstr "Az NVDA elindult."
 
+#. Translators: Title of a dialog to find text.
+msgid "Find"
+msgstr "keresés"
+
 #. Translators: Dialog text for NvDA's find command.
 msgid "Type the text you wish to find"
 msgstr "Írja be a keresendő szöveget."
 
-#. Translators: Title of a dialog to find text.
-msgid "Find"
-msgstr "keresés"
+#. Translators: An option in find dialog to perform case-sensitive search.
+#. Translators: This is a label for a checkbox in add dictionary entry dialog.
+msgid "Case &sensitive"
+msgstr "&Kis- és nagybetűk megkülönböztetése"
 
 #, python-format
 msgid "text \"%s\" not found"
@@ -3891,6 +4384,17 @@ msgstr "Üres fólia"
 msgid "Waiting for Powerpoint..."
 msgstr "Várakozás a Powerpoint-ra..."
 
+#. Translators: The name of the NVDA command category for Skype specific commands.
+msgid "Skype"
+msgstr "Skype"
+
+msgid "Reports and moves the review cursor to a recent message"
+msgstr "Bemondja és elmozdítja az áttekintő kurzort egy új üzenetre."
+
+#. Translators: Indicates that a contact stopped typing.
+msgid "Typing stopped"
+msgstr "nem ír"
+
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
 msgstr "Hátra"
@@ -5062,6 +5566,11 @@ msgstr "A&utomatikus dialektusváltás (ha támogatott)"
 msgid "Punctuation/symbol &level:"
 msgstr "Írás&jelszint:"
 
+#. Translators: This is the label for a checkbox in the
+#. voice settings dialog (if checked, text will be read using the voice for the language of the text).
+msgid "Trust voice's language when processing characters and symbols"
+msgstr "Karakterek és írásjelek feldolgozása az aktív hangkarakter nyelvén"
+
 # sokkal pontosabb és csak kicsit hosszabb
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -5356,6 +5865,11 @@ msgstr "Automatikus i&nteraktív mód a kurzor mozgásakor"
 msgid "Audio indication of focus and browse modes"
 msgstr "Az interaktív és a böngészőmód jelzése hangjelzéssel"
 
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings dialog.
+msgid "&Trap all non-command gestures from reaching the document"
+msgstr "A nem NVDA-parancsnak minősülő &egyéb parancsok blokkolása"
+
 #. Translators: This is the label for the document formatting dialog.
 msgid "Document Formatting"
 msgstr "Dokumentumformázás"
@@ -5406,7 +5920,7 @@ msgstr "st&ílus bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-msgid "Report spelling errors"
+msgid "Report spelling e&rrors"
 msgstr "Helyesírási hi&bák jelzése"
 
 #. Translators: This is the label for a checkbox in the
@@ -5510,10 +6024,6 @@ msgstr "&Behelyettesített kifejezés"
 msgid "&Comment"
 msgstr "&Megjegyzés"
 
-#. Translators: This is a label for a checkbox in add dictionary entry dialog.
-msgid "Case &sensitive"
-msgstr "&Kis- és nagybetűk megkülönböztetése"
-
 #. Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 msgid "&Type"
 msgstr "&Típus"
@@ -5544,6 +6054,7 @@ msgid "Type"
 msgstr "Típus"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
+#. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 msgid "&Add"
 msgstr "&Hozzáadás"
@@ -5607,6 +6118,14 @@ msgstr "Nem lehet betölteni a(z) %s braille kijelzőt."
 msgid "Braille Display Error"
 msgstr "Braille kijelző hiba"
 
+#. Translators: This is the label for the add symbol dialog.
+msgid "Add Symbol"
+msgstr "Írásjel Hozzáadás"
+
+#. Translators: This is the label for the edit field in the add symbol dialog.
+msgid "Symbol:"
+msgstr "Írásjel:"
+
 #. Translators: This is the label for the symbol pronunciation dialog.
 msgid "Symbol Pronunciation"
 msgstr "Írásjel kiejtés"
@@ -5631,9 +6150,23 @@ msgstr "Írásjel megváltoztatása"
 msgid "&Level"
 msgstr "Szint"
 
+#. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
+msgid "Re&move"
+msgstr "&eltávolítás"
+
+#. Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
+#, python-format
+msgid "Symbol \"%s\" is already present."
+msgstr "A(z) \"%s\" írásjel már létezik."
+
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 msgid "Input Gestures"
 msgstr "Beviteli parancsok"
+
+#. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
+msgctxt "inputGestures"
+msgid "&Filter by:"
+msgstr "&Szűrés:"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
@@ -5651,27 +6184,6 @@ msgstr ""
 "Nem lehetett elmenteni a felhasználó által módosított parancsokat. "
 "Lehetséges, hogy a fájlrendszer írásvédett."
 
-#. Translators: Information about NVDA's new laptop keyboard layout.
-msgid ""
-"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in "
-"order to make it more intuitive and consistent.\n"
-"If you use the laptop layout, please see the What's New document for more "
-"information."
-msgstr ""
-"A könnyebb és logikusabb használhatóság érdekében az NVDA 2013.1 verziójában "
-"a laptop billentyűzet kiosztás teljesen újra lett tervezve.\n"
-"Ha ön a laptop billentyűzet kiosztást használja, bővebb információért kérjük "
-"tekintse meg az Újdonságok dokumentumot a súgó menüben."
-
-#. Translators: The title of a dialog providing information about NVDA's new laptop keyboard layout.
-msgid "New Laptop Keyboard layout"
-msgstr "Új laptop billentyűzet kiosztás"
-
-#. Translators: The label of a button in the New Laptop Keyboard Layout dialog
-#. to open the What's New document.
-msgid "Read What's New"
-msgstr "Ú&jdonságok"
-
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
 msgid "none"
@@ -5681,22 +6193,6 @@ msgstr "nincs"
 #. which further increases the speaking rate when enabled.
 msgid "Rate boos&t"
 msgstr "Sebesség &fokozás"
-
-#. Translators: A setting for a speech synthesizer.
-msgid "&Acceleration"
-msgstr "&Gyorsítás"
-
-msgid "male 1"
-msgstr "Férfi hang 1"
-
-msgid "female 1"
-msgstr "Női hang  1"
-
-msgid "male 2"
-msgstr "Férfi hang 2"
-
-msgid "female 2"
-msgstr "Női hang  2"
 
 #. Translators: Description for a speech synthesizer.
 msgid "No speech"
@@ -5718,45 +6214,6 @@ msgstr "pozíció: {x}; {y}"
 msgid "%s landmark"
 msgstr "%s jelzőpont"
 
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Lin&ks"
-msgstr "&Hivatkozások"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "&Headings"
-msgstr "&Címsorok"
-
-#. Translators: The label of a radio button to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Lan&dmarks"
-msgstr "&Jelzőpontok"
-
-#. Translators: The title of the browse mode Elements List dialog.
-msgid "Elements List"
-msgstr "Elemlista"
-
-#. Translators: The label of a group of radio buttons to select the type of element
-#. in the browse mode Elements List dialog.
-msgid "Type:"
-msgstr "Típus:"
-
-#. Translators: The label of an editable text field to filter the elements
-#. in the browse mode Elements List dialog.
-msgid "&Filter by:"
-msgstr "&Szűrés:"
-
-#. Translators: The label of a button to activate an element
-#. in the browse mode Elements List dialog.
-msgid "&Activate"
-msgstr "&Aktiválás"
-
-#. Translators: The label of a button to move to an element
-#. in the browse mode Elements List dialog.
-msgid "&Move to"
-msgstr "&Ugrás"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "Frissítve"
@@ -5772,10 +6229,6 @@ msgstr "Nincs bővebb leírás"
 #. Translators: the description for the activateLongDescription script on virtualBuffers.
 msgid "Shows the long description at this position if one is found."
 msgstr "Megmutatja a bővebb leírást, ha létezik a jelenlegi pozíciónál."
-
-#. Translators: the description for the activatePosition script on virtualBuffers.
-msgid "activates the current object in the document"
-msgstr "Aktiválja az aktuális elemet a dokumentumban."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -5796,10 +6249,6 @@ msgid ""
 msgstr ""
 "Be- és kikapcsolja, hogy az NVDA megtartsa-e a képernyőelrendezést, amikor a "
 "dokumentumot böngészőmódban tekinti meg"
-
-#. Translators: the description for the elements list dialog script on virtualBuffers.
-msgid "Presents a list of links, headings or landmarks"
-msgstr "Megjeleníti a címsorok, jelzőpontok vagy hivatkozások listáját"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -5837,428 +6286,6 @@ msgstr "Egy elemblokk (pl. lista vagy táblázat) elejéhez lép"
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Egy elemblokk (pl. lista vagy táblázat) végére ugrik"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading"
-msgstr "A következő címsorhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading"
-msgstr "nincs következő címsor"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading"
-msgstr "Az előző címsorhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading"
-msgstr "nincs előző címsor"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 1"
-msgstr "A következő, első szintű címsorhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 1"
-msgstr "Nincs következő, első szintű címsor"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 1"
-msgstr "Az előző, első szintű címsorhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 1"
-msgstr "nincs előző, első szintű címsor"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 2"
-msgstr "A következő második szintű címsorhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 2"
-msgstr "nincs következő, második szintű címsor"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 2"
-msgstr "Az előző, második szintű címsorhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 2"
-msgstr "Nincs előző, második szintű címsor"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 3"
-msgstr "A következő, harmadik szintű címsorhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 3"
-msgstr "Nincs következő, harmadik szintű címsor."
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 3"
-msgstr "Az előző, harmadik szintű címsorhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 3"
-msgstr "Nincs előző, harmadik szintű címsor"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 4"
-msgstr "A következő, negyedik szintű címsorhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 4"
-msgstr "nincs következő, negyedik szintű címsor"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 4"
-msgstr "Az előző, negyedik szintű címsorhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 4"
-msgstr "Nincs előző, negyedik szintű címsor"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 5"
-msgstr "A következő, ötödik szintű címsorhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 5"
-msgstr "Nincs következő, ötödik szintű címsor"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 5"
-msgstr "Az előző, ötödik szintű címsorhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 5"
-msgstr "Nincs előző, ötödik szintű címsor"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next heading at level 6"
-msgstr "A következő, hatodik szintű címsorhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next heading at level 6"
-msgstr "Nincs következő, hatodik szintű címsor"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous heading at level 6"
-msgstr "Az előző, hatodik szintű címsorhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous heading at level 6"
-msgstr "Nincs előző, hatodik szintű címsor"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next table"
-msgstr "A következő táblázathoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next table"
-msgstr "Nincs következő táblázat"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous table"
-msgstr "Az előző táblázathoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous table"
-msgstr "nincs előző táblázat"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next link"
-msgstr "A következő hivatkozáshoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next link"
-msgstr "nincs következő hivatkozás"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous link"
-msgstr "Az előző hivatkozáshoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous link"
-msgstr "nincs előző hivatkozás"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next visited link"
-msgstr "A következő, meglátogatott hivatkozáshoz lép"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next visited link"
-msgstr "nincs következő, meglátogatott hivatkozás"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous visited link"
-msgstr "Az előző, meglátogatott hivatkozáshoz lép"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous visited link"
-msgstr "nincs előző, meglátogatott hivatkozás"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next unvisited link"
-msgstr "A következő, nem meglátogatott hivatkozáshoz lép"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next unvisited link"
-msgstr "nincs következő, nem meglátogatott hivatkozás"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous unvisited link"
-msgstr "Az előző, nem meglátogatott hivatkozáshoz lép"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous unvisited link"
-msgstr "nincs előző, nem meglátogatott hivatkozás"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next form field"
-msgstr "A következő űrlapmezőhöz lép"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next form field"
-msgstr "nincs következő űrlapmező"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous form field"
-msgstr "az előző űrlapmezőhöz lép"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous form field"
-msgstr "nincs előző űrlapmező"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next list"
-msgstr "a következő listához lép"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next list"
-msgstr "nincs következő lista"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous list"
-msgstr "az előző listához lép"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous list"
-msgstr "nincs előző lista"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next list item"
-msgstr "a következő listaelemhez lép"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next list item"
-msgstr "nincs következő listaelem"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous list item"
-msgstr "az előző listaelemhez lép"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous list item"
-msgstr "nincs előző listaelem"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next button"
-msgstr "A következő gombhoz lép"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next button"
-msgstr "nincs következő gomb"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous button"
-msgstr "Az előző gombhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous button"
-msgstr "nincs előző gomb"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next edit field"
-msgstr "A következő szerkesztőmezőhöz lép"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next edit field"
-msgstr "nincs következő szerkesztőmező"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous edit field"
-msgstr "az előző szerkesztőmezőhöz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous edit field"
-msgstr "nincs előző szerkesztőmező"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next frame"
-msgstr "A következő kerethez lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next frame"
-msgstr "Nincs következő keret"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous frame"
-msgstr "Az előző kerethez lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous frame"
-msgstr "Nincs előző keret"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next separator"
-msgstr "A következő elválasztóhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next separator"
-msgstr "nincs következő elválasztó"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous separator"
-msgstr "Az előző elválasztóhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous separator"
-msgstr "nincs előző elválasztó"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next radio button"
-msgstr "A következő választógombhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next radio button"
-msgstr "nincs következő választógomb"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous radio button"
-msgstr "Az előző választógombhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous radio button"
-msgstr "nincs előző választógomb"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next combo box"
-msgstr "A következő kombinált listamezőhöz lép"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next combo box"
-msgstr "Nincs következő kombinált listamező"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous combo box"
-msgstr "Az előző kombinált listamezőhöz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous combo box"
-msgstr "nincs előző kombinált listamező"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next check box"
-msgstr "A következő jelölőnégyzethez lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next check box"
-msgstr "Nincs következő jelölőnégyzet"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous check box"
-msgstr "Az előző jelölőnégyzethez lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous check box"
-msgstr "nincs előző jelölőnégyzet"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next graphic"
-msgstr "A következő ábrához lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next graphic"
-msgstr "Nincs következő ábra"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous graphic"
-msgstr "Az előző ábrához lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous graphic"
-msgstr "nincs előző ábra"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next block quote"
-msgstr "A következő idézetblokkhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next block quote"
-msgstr "Nincs következő idézetblokk"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous block quote"
-msgstr "Az előző idézetblokkhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous block quote"
-msgstr "Nincs előző idézetblokk"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "skips forward past a block of links"
-msgstr "Átugrik egy hivatkozásblokkot"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no more text after a block of links"
-msgstr "Nincs több szöveg a hivatkozásblokk után"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "skips backward past a block of links"
-msgstr "a hivatkozásblokk elé ugrik."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no more text before a block of links"
-msgstr "Nincs több szöveg a hivatkozásblokk előtt"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next landmark"
-msgstr "A következő jelzőponthoz lép"
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next landmark"
-msgstr "nincs következő jelzőpont"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous landmark"
-msgstr "Az előző jelzőponthoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous landmark"
-msgstr "nincs előző jelzőpont"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the next embedded object"
-msgstr "A következő beágyazott objektumhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no next embedded object"
-msgstr "Nincs következő beágyazott objektum"
-
-#. Translators: Input help message for a quick navigation command in browse mode.
-msgid "moves to the previous embedded object"
-msgstr "Az előző beágyazott objektumhoz lép."
-
-#. Translators: Message presented when the browse mode element is not found.
-msgid "no previous embedded object"
-msgstr "Nincs előző beágyazott objektum"
-
-msgid "focus mode"
-msgstr "Interaktív mód"
-
-msgid "browse mode"
-msgstr "böngésző mód"
 
 msgid "Taskbar"
 msgstr "tálca"
@@ -6455,6 +6482,12 @@ msgstr "elsődleges fejléc"
 msgid "Text frame"
 msgstr "szövegkeret"
 
+msgid "comment: {text} by {author} on {date}"
+msgstr "megjegyzés: {text}, {author} által, {date}"
+
+msgid "{revisionType}: {text} by {author} on {date}"
+msgstr "{revisionType}: {text} {author} által, {date}"
+
 msgid "unknown author"
 msgstr "ismeretlen szerző"
 
@@ -6625,6 +6658,11 @@ msgstr "csak táblázatban használható"
 msgid "Edge of table"
 msgstr "a táblázat széle"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Annotations"
+msgstr "&Mellékszövegek"
+
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE series"
 msgstr "HIMS Braille Sense/Braille EDGE sorozat"
@@ -6632,6 +6670,41 @@ msgstr "HIMS Braille Sense/Braille EDGE sorozat"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
+#~ "in order to make it more intuitive and consistent.\n"
+#~ "If you use the laptop layout, please see the What's New document for more "
+#~ "information."
+#~ msgstr ""
+#~ "A könnyebb és logikusabb használhatóság érdekében az NVDA 2013.1 "
+#~ "verziójában a laptop billentyűzet kiosztás teljesen újra lett tervezve.\n"
+#~ "Ha ön a laptop billentyűzet kiosztást használja, bővebb információért "
+#~ "kérjük tekintse meg az Újdonságok dokumentumot a súgó menüben."
+
+#~ msgid "New Laptop Keyboard layout"
+#~ msgstr "Új laptop billentyűzet kiosztás"
+
+#~ msgid "Read What's New"
+#~ msgstr "Ú&jdonságok"
+
+#~ msgid "&Acceleration"
+#~ msgstr "&Gyorsítás"
+
+#~ msgid "male 1"
+#~ msgstr "Férfi hang 1"
+
+#~ msgid "female 1"
+#~ msgstr "Női hang  1"
+
+#~ msgid "male 2"
+#~ msgstr "Férfi hang 2"
+
+#~ msgid "female 2"
+#~ msgstr "Női hang  2"
+
+#~ msgid "lime"
+#~ msgstr "élénkzöld"
 
 #~ msgid "Are you sure you want to quit NVDA?"
 #~ msgstr "Biztosan ki szeretne lépni az NVDA programból?"
