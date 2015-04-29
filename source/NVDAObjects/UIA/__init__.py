@@ -122,13 +122,15 @@ class UIATextInfo(textInfos.TextInfo):
 	def _iterUIARangeByUnit(self,rangeObj,unit):
 		tempRange=rangeObj.clone()
 		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
-		while tempRange.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_End,unit,1)>0:
+		endRange=tempRange.Clone()
+		while endRange.Move(unit,1)>0:
+			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,endRange,UIAHandler.TextPatternRangeEndpoint_Start)
 			pastEnd=tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)>0
 			if pastEnd:
 				tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
 			yield tempRange.clone()
 			if pastEnd:
-				break
+				return
 			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
 		# Ensure that we always reach the end of the outer range, even if the units seem to stop somewhere inside
 		if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)<0:
@@ -149,6 +151,8 @@ class UIATextInfo(textInfos.TextInfo):
 			elif annotationTypes==UIAHandler.handler.ReservedMixedAttributeValue:
 				for r in self._iterUIARangeByUnit(tempRange,UIAHandler.TextUnit_Word):
 					text=r.GetText(-1)
+					if not text:
+						continue
 					r.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,r,UIAHandler.TextPatternRangeEndpoint_Start)
 					r.ExpandToEnclosingUnit(UIAHandler.TextUnit_Character)
 					try:
