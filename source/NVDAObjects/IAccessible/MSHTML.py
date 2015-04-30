@@ -56,6 +56,7 @@ nodeNamesToNVDARoles={
 	"A":controlTypes.ROLE_LINK,
 	"LABEL":controlTypes.ROLE_LABEL,
 	"#text":controlTypes.ROLE_STATICTEXT,
+	"#TEXT":controlTypes.ROLE_STATICTEXT,
 	"H1":controlTypes.ROLE_HEADING,
 	"H2":controlTypes.ROLE_HEADING,
 	"H3":controlTypes.ROLE_HEADING,
@@ -81,6 +82,9 @@ nodeNamesToNVDARoles={
 	"FIELDSET":controlTypes.ROLE_GROUPING,
 	"OPTION":controlTypes.ROLE_LISTITEM,
 	"BLOCKQUOTE":controlTypes.ROLE_BLOCKQUOTE,
+	"NAV":controlTypes.ROLE_SECTION,
+	"SECTION":controlTypes.ROLE_SECTION,
+	"ARTICLE":controlTypes.ROLE_DOCUMENT,
 }
 
 def getZoomFactorsFromHTMLDocument(HTMLDocument):
@@ -647,8 +651,8 @@ class MSHTML(IAccessible):
 			if nodeName:
 				if nodeName in ("OBJECT","EMBED","APPLET"):
 					return controlTypes.ROLE_EMBEDDEDOBJECT
-				if self.HTMLNodeHasAncestorIAccessible or nodeName in ("BODY","FRAMESET","FRAME","IFRAME","LABEL"):
-					return nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_TEXTFRAME)
+				if self.HTMLNodeHasAncestorIAccessible or nodeName in ("BODY","FRAMESET","FRAME","IFRAME","LABEL","NAV","SECTION","ARTICLE"):
+					return nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_SECTION)
 		if self.IAccessibleChildID>0:
 			states=super(MSHTML,self).states
 			if controlTypes.STATE_LINKED in states:
@@ -873,7 +877,10 @@ class MSHTML(IAccessible):
 
 	def _get_HTMLNodeUniqueNumber(self):
 		if not hasattr(self,'_HTMLNodeUniqueNumber'):
-			self._HTMLNodeUniqueNumber=self.HTMLNode.uniqueNumber
+			try:
+				self._HTMLNodeUniqueNumber=self.HTMLNode.uniqueNumber
+			except COMError:
+				return None
 		return self._HTMLNodeUniqueNumber
 
 	def _get_HTMLNodeName(self):
