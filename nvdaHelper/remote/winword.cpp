@@ -42,6 +42,7 @@ using namespace std;
 #define wdDISPID_RANGE_DUPLICATE 6
 #define wdDISPID_RANGE_REVISIONS 150
 #define wdDISPID_REVISIONS_ITEM 0
+#define wdDISPID_REVISIONS_COUNT 5
 #define wdDISPID_REVISION_TYPE 4
 #define wdDISPID_RANGE_STORYTYPE 7
 #define wdDISPID_RANGE_MOVE 109
@@ -381,8 +382,12 @@ int getRevisionType(IDispatch* pDispatchOrigRange) {
 	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_REVISIONS,VT_DISPATCH,&pDispatchRevisions)!=S_OK||!pDispatchRevisions) {
 		return 0;
 	}
+	int count=0;
+	if(_com_dispatch_raw_propget(pDispatchRevisions,wdDISPID_REVISIONS_COUNT,VT_I4,&count)!=S_OK||count==0) {
+		return 0;
+	}
 	IDispatchPtr pDispatchRevision=NULL;
-	if(_com_dispatch_raw_method(pDispatchRevisions,wdDISPID_REVISIONS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchRevision,L"\x0003",1)!=S_OK||!pDispatchRevision) {
+	if(_com_dispatch_raw_method(pDispatchRevisions,wdDISPID_REVISIONS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchRevision,L"\x0003",count)!=S_OK||!pDispatchRevision) {
 		return 0;
 	}
 	long revisionType=0;
