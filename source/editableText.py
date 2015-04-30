@@ -127,6 +127,18 @@ class EditableText(ScriptableObject):
 			onlyInitial=False
 		speech.speakTextInfo(lineInfo,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET,onlyInitialFields=onlyInitial,suppressBlanks=True)
 
+	def _caretMoveBySentenceHelper(self, gesture, direction):
+		if isScriptWaiting():
+			return
+		try:
+			info=self.makeTextInfo(textInfos.POSITION_CARET)
+			info.move(textInfos.UNIT_SENTENCE, direction)
+			info.updateCaret()
+			self._caretScriptPostMovedHelper(textInfos.UNIT_SENTENCE,gesture,info)
+		except:
+			gesture.send()
+			return
+
 	def script_caret_moveByLine(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_LINE)
 	script_caret_moveByLine.resumeSayAllMode=sayAllHandler.CURSOR_CARET
@@ -141,6 +153,13 @@ class EditableText(ScriptableObject):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH)
 	script_caret_moveByParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
+	def script_caret_previousSentence(self,gesture):
+		self._caretMoveBySentenceHelper(gesture, -1)
+	script_caret_previousSentence.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+
+	def script_caret_nextSentence(self,gesture):
+		self._caretMoveBySentenceHelper(gesture, 1)
+	script_caret_nextSentence.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
 	def _backspaceScriptHelper(self,unit,gesture):
 		try:
@@ -196,6 +215,8 @@ class EditableText(ScriptableObject):
 		"kb:control+rightArrow": "caret_moveByWord",
 		"kb:control+upArrow": "caret_moveByParagraph",
 		"kb:control+downArrow": "caret_moveByParagraph",
+		"kb:alt+upArrow": "caret_previousSentence",
+		"kb:alt+downArrow": "caret_nextSentence",
 		"kb:home": "caret_moveByCharacter",
 		"kb:end": "caret_moveByCharacter",
 		"kb:control+home": "caret_moveByLine",

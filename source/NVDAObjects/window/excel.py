@@ -1,6 +1,6 @@
 #NVDAObjects/excel.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2015 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -27,6 +27,8 @@ import controlTypes
 from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
+import browseMode
+import ctypes
 
 xlCenter=-4108
 xlJustify=-4130
@@ -35,7 +37,7 @@ xlRight=-4152
 xlDistributed=-4117
 xlBottom=-4107
 xlTop=-4160
-
+xlCellWidthUnitToPixels = 7.5919335705812574139976275207592
 alignmentLabels={
 	xlCenter:"center",
 	xlJustify:"justify",
@@ -51,7 +53,254 @@ xlA1 = 1
 xlRC = 2
 xlUnderlineStyleNone=-4142
 
+#Excel cell types
+xlCellTypeAllFormatConditions =-4172      # from enum XlCellType
+xlCellTypeAllValidation       =-4174      # from enum XlCellType
+xlCellTypeBlanks              =4          # from enum XlCellType
+xlCellTypeComments            =-4144      # from enum XlCellType
+xlCellTypeConstants           =2          # from enum XlCellType
+xlCellTypeFormulas            =-4123      # from enum XlCellType
+xlCellTypeLastCell            =11         # from enum XlCellType
+xlCellTypeSameFormatConditions=-4173      # from enum XlCellType
+xlCellTypeSameValidation      =-4175      # from enum XlCellType
+xlCellTypeVisible             =12         # from enum XlCellType
+
+re_RC=re.compile(r'R(?:\[(\d+)\])?C(?:\[(\d+)\])?')
 re_absRC=re.compile(r'^R(\d+)C(\d+)(?::R(\d+)C(\d+))?$')
+
+class ExcelQuickNavItem(browseMode.QuickNavItem):
+
+	def __init__( self , nodeType , document , itemObject , itemCollection ):
+		self.excelItemObject = itemObject
+		self.excelItemCollection = itemCollection 
+		super( ExcelQuickNavItem ,self).__init__( nodeType , document )
+
+	def activate(self):
+		pass
+
+	def isChild(self,parent):
+		return False
+
+	def report(self,readUnit=None):
+		pass
+
+class ExcelChartQuickNavItem(ExcelQuickNavItem):
+
+	def __init__( self , nodeType , document , chartObject , chartCollection ):
+		self.chartIndex = chartObject.Index
+		if chartObject.Chart.HasTitle:
+
+			self.label = chartObject.Chart.ChartTitle.Text + " " + chartObject.TopLeftCell.address(False,False,1,False) + "-" + chartObject.BottomRightCell.address(False,False,1,False) 
+
+		else:
+
+			self.label = chartObject.Name + " " + chartObject.TopLeftCell.address(False,False,1,False) + "-" + chartObject.BottomRightCell.address(False,False,1,False) 
+
+		super( ExcelChartQuickNavItem ,self).__init__( nodeType , document , chartObject , chartCollection )
+
+	def __lt__(self,other):
+		return self.chartIndex < other.chartIndex
+
+	def moveTo(self):
+		try:
+			self.excelItemObject.Activate()
+
+			# After activate(), though the chart object is selected, 
+
+			# pressing arrow keys moves the object, rather than 
+
+			# let use go inside for sub-objects. Somehow 
+		# calling an COM function on a different object fixes that !
+
+			log.debugWarning( self.excelItemCollection.Count )
+
+		except(COMError):
+
+			pass
+		focus=api.getDesktopObject().objectWithFocus()
+		if not focus or not isinstance(focus,ExcelBase):
+			return
+		# Charts are not yet automatically detected with objectFromFocus, so therefore use selection
+		sel=focus._getSelection()
+		if not sel:
+			return
+		eventHandler.queueEvent("gainFocus",sel)
+
+
+	@property
+	def isAfterSelection(self):
+		activeCell = self.document.Application.ActiveCell
+		#log.debugWarning("active row: {} active column: {} current row: {} current column: {}".format ( activeCell.row , activeCell.column , self.excelCommentObject.row , self.excelCommentObject.column   ) )
+
+		if self.excelItemObject.TopLeftCell.row == activeCell.row:
+			if self.excelItemObject.TopLeftCell.column > activeCell.column:
+				return False
+		elif self.excelItemObject.TopLeftCell.row > activeCell.row:
+			return False
+		return True
+
+class ExcelRangeBasedQuickNavItem(ExcelQuickNavItem):
+
+	def __lt__(self,other):
+		if self.excelItemObject.row == other.excelItemObject.row:
+			return self.excelItemObject.column < other.excelItemObject.column
+		else:
+			return self.excelItemObject.row < other.excelItemObject.row
+
+	def moveTo(self):
+		self.excelItemObject.Activate()
+		eventHandler.queueEvent("gainFocus",api.getDesktopObject().objectWithFocus())
+
+	@property
+	def isAfterSelection(self):
+		activeCell = self.document.Application.ActiveCell
+		log.debugWarning("active row: {} active column: {} current row: {} current column: {}".format ( activeCell.row , activeCell.column , self.excelItemObject.row , self.excelItemObject.column   ) )
+
+		if self.excelItemObject.row == activeCell.row:
+			if self.excelItemObject.column > activeCell.column:
+				return False
+		elif self.excelItemObject.row > activeCell.row:
+			return False
+		return True
+
+class ExcelCommentQuickNavItem(ExcelRangeBasedQuickNavItem):
+
+	def __init__( self , nodeType , document , commentObject , commentCollection ):
+		self.label = commentObject.address(False,False,1,False) + " " + commentObject.Comment.Text()
+		super( ExcelCommentQuickNavItem , self).__init__( nodeType , document , commentObject , commentCollection )
+
+class ExcelFormulaQuickNavItem(ExcelRangeBasedQuickNavItem):
+
+	def __init__( self , nodeType , document , formulaObject , formulaCollection ):
+		self.label = formulaObject.address(False,False,1,False) + " " + formulaObject.Formula
+		super( ExcelFormulaQuickNavItem , self).__init__( nodeType , document , formulaObject , formulaCollection )
+
+class ExcelQuicknavIterator(object):
+	"""
+	Allows iterating over an MS excel collection (e.g. Comments, Formulas or charts) emitting L{QuickNavItem} objects.
+	"""
+
+	def __init__(self, itemType , document , direction , includeCurrent):
+		"""
+		See L{QuickNavItemIterator} for itemType, document and direction definitions.
+		@ param includeCurrent: if true then any item at the initial position will be also emitted rather than just further ones. 
+		"""
+		self.document=document
+		self.itemType=itemType
+		self.direction=direction if direction else "next"
+		self.includeCurrent=includeCurrent
+
+	def collectionFromWorksheet(self,worksheetObject):
+		"""
+		Fetches a Microsoft Excel collection object from a Microsoft excel worksheet object. E.g. charts, comments, or formula.
+		@param worksheetObject: a Microsoft excel worksheet object.
+		@return: a Microsoft excel collection object.
+		"""
+		raise NotImplementedError
+
+	def filter(self,item):
+		"""
+		Only allows certain items fom a collection to be emitted. E.g. a chart .
+		@param item: an item from a Microsoft excel collection (e.g. chart object).
+		@return True if this item should be allowd, false otherwise.
+		@rtype: bool
+		"""
+		return True
+
+	def iterate(self):
+		"""
+		returns a generator that emits L{QuickNavItem} objects for this collection.
+		"""
+		items=self.collectionFromWorksheet(self.document)
+		if not items:
+			return
+		if self.direction=="previous":
+			items=reversed(items)
+		for collectionItem in items:
+			item=self.quickNavItemClass(self.itemType,self.document,collectionItem , items )
+			if not self.filter(collectionItem):
+				continue
+			yield item
+
+class ChartExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
+	quickNavItemClass=ExcelChartQuickNavItem#: the QuickNavItem class that should be instanciated and emitted. 
+	def collectionFromWorksheet( self , worksheetObject ):
+		return worksheetObject.ChartObjects() 
+
+class CommentExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
+	quickNavItemClass=ExcelCommentQuickNavItem#: the QuickNavItem class that should be instanciated and emitted. 
+	def collectionFromWorksheet( self , worksheetObject ):
+		try:
+			return  worksheetObject.cells.SpecialCells( xlCellTypeComments )
+		except(COMError):
+
+			return None
+
+class FormulaExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
+	quickNavItemClass=ExcelFormulaQuickNavItem#: the QuickNavItem class that should be instanciated and emitted. 
+	def collectionFromWorksheet( self , worksheetObject ):
+		try:
+			return  worksheetObject.cells.SpecialCells( xlCellTypeFormulas )
+		except(COMError):
+
+			return None
+
+class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
+
+	needsReviewCursorTextInfoWrapper=False
+	passThrough=True
+
+	def _get_isAlive(self):
+		if not winUser.isWindow(self.rootNVDAObject.windowHandle):
+			return False
+		try:
+			return self.rootNVDAObject.excelWorksheetObject.name==self.rootNVDAObject.excelApplicationObject.activeSheet.name
+		except (COMError,AttributeError,NameError):
+			log.debugWarning("could not compair sheet names",exc_info=True)
+			return False
+
+
+	def __contains__(self,obj):
+		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle)
+
+
+
+	def _set_selection(self,info):
+		super(ExcelBrowseModeTreeInterceptor,self)._set_selection(info)
+		#review.handleCaretMove(info)
+
+	def _get_ElementsListDialog(self):
+		return ElementsListDialog
+
+	def _iterNodesByType(self,nodeType,direction="next",pos=None):
+		if nodeType=="chart":
+			return ChartExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
+		elif nodeType=="comment":
+			return CommentExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
+		elif nodeType=="formula":
+			return FormulaExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
+		else:
+			raise NotImplementedError
+
+	def script_elementsList(self,gesture):
+		super(ExcelBrowseModeTreeInterceptor,self).script_elementsList(gesture)
+	# Translators: the description for the elements list dialog script on virtualBuffers.
+	script_elementsList.__doc__ = _("Presents a list of links, headings or landmarks")
+	script_elementsList.ignoreTreeInterceptorPassThrough=True
+
+class ElementsListDialog(browseMode.ElementsListDialog):
+
+	ELEMENT_TYPES=(
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("chart", _("&Chart")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("comment", _("C&omment")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("formula", _("&Formula")),
+	)
 
 class ExcelBase(Window):
 	"""A base that all Excel NVDAObjects inherit from, which contains some useful methods."""
@@ -98,13 +347,26 @@ class ExcelBase(Window):
 			isMerged=selection.mergeCells
 		except (COMError,NameError):
 			isMerged=False
+
+		try:
+			numCells=selection.count
+		except (COMError,NameError):
+			numCells=0
+
+		isChartActive = True if self.excelWindowObject.ActiveChart else False
+		obj=None
 		if isMerged:
 			obj=ExcelMergedCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection.item(1))
-		elif selection.Count>1:
+		elif numCells>1:
 			obj=ExcelSelection(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelRangeObject=selection)
-		else:
+		elif numCells==1:
 			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
+		elif isChartActive:
+			selection = self.excelWindowObject.ActiveChart
+			import excelChart
+			obj=excelChart.ExcelChart(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelChartObject=selection)
 		return obj
+
 
 class Excel7Window(ExcelBase):
 	"""An overlay class for Window for the EXCEL7 window class, which simply bounces focus to the active excel cell."""
@@ -124,6 +386,9 @@ class Excel7Window(ExcelBase):
 			eventHandler.executeEvent('gainFocus',selection)
 
 class ExcelWorksheet(ExcelBase):
+
+
+	treeInterceptorClass=ExcelBrowseModeTreeInterceptor
 
 	role=controlTypes.ROLE_TABLE
 
@@ -561,7 +826,117 @@ class ExcelCell(ExcelBase):
 			comment=None
 		if comment:
 			states.add(controlTypes.STATE_HASCOMMENT)
+		if self._overlapInfo is not None:
+			if self._overlapInfo['obscuredFromRightBy'] > 0:
+				states.add(controlTypes.STATE_CROPPED)
+			if self._overlapInfo['obscuringRightBy'] > 0:
+				states.add(controlTypes.STATE_OVERFLOWING)
 		return states
+
+	def getCellWidthAndTextWidth(self):
+		#handle to Device Context
+		hDC = ctypes.windll.user32.GetDC(self.windowHandle)
+		tempDC = ctypes.windll.gdi32.CreateCompatibleDC(hDC)
+		ctypes.windll.user32.ReleaseDC(self.windowHandle, hDC)
+		#Compatible Bitmap for current Device Context
+		hBMP = ctypes.windll.gdi32.CreateCompatibleBitmap(tempDC, 1, 1)
+		#handle to the bitmap object
+		hOldBMP = ctypes.windll.gdi32.SelectObject(tempDC, hBMP)
+		#Pass Device Context and LOGPIXELSX, the horizontal resolution in pixels per unit inch
+		deviceCaps = ctypes.windll.gdi32.GetDeviceCaps(tempDC, 88)
+		#Fetching Font Size and Weight information
+		iFontSize = self.excelCellObject.Font.Size
+		iFontSize = 11 if iFontSize is None else int(iFontSize)
+		iFontSize = ctypes.c_int(iFontSize)
+		iFontSize = ctypes.windll.kernel32.MulDiv(iFontSize, deviceCaps, 72)
+		#Font  Weight for Bold FOnt is 700 and for normal font it's 400
+		iFontWeight = 700 if self.excelCellObject.Font.Bold else 400
+		#Fetching Font Name and style information
+		sFontName = self.excelCellObject.Font.Name
+		sFontItalic = self.excelCellObject.Font.Italic
+		sFontUnderline = True if self.excelCellObject.Font.Underline else False
+		sFontStrikeThrough = self.excelCellObject.Font.Strikethrough
+		#If FontSize is <0: The font mapper transforms this value into device units
+		#and matches its absolute value against the character height of the available fonts.
+		iFontHeight = iFontSize * -1
+		#If Font Width is 0, the font mapper chooses a closest match value.
+		iFontWidth = 0
+		iEscapement = 0
+		iOrientation = 0
+		#Default CharSet based on System Locale is chosen
+		iCharSet = 0
+		#Default font mapper behavior
+		iOutputPrecision = 0
+		#Default clipping behavior
+		iClipPrecision = 0
+		#Default Quality
+		iOutputQuality = 0
+		#Default Pitch and default font family
+		iPitchAndFamily = 0
+		#Create a font object with the correct size, weight and style
+		hFont = ctypes.windll.gdi32.CreateFontW(iFontHeight, iFontWidth, iEscapement, iOrientation, iFontWeight, sFontItalic, sFontUnderline, sFontStrikeThrough, iCharSet, iOutputPrecision, iClipPrecision, iOutputQuality, iPitchAndFamily, sFontName)
+		#Load the font into the device context, storing the original font object
+		hOldFont = ctypes.windll.gdi32.SelectObject(tempDC, hFont)
+		sText = self.excelCellObject.Text
+		textLength = len(sText)
+		class structText(ctypes.Structure):
+			_fields_ = [("width", ctypes.c_int), ("height",ctypes.c_int)]
+		StructText = structText()
+		getTextExtentPoint = ctypes.windll.gdi32.GetTextExtentPoint32W
+		getTextExtentPoint.argtypes = [ctypes.c_void_p, ctypes.c_wchar_p, ctypes.c_int, ctypes.POINTER(structText)]
+		getTextExtentPoint.restype = ctypes.c_int
+		sText = unicode(sText)
+		#Get the text dimensions
+		ctypes.windll.gdi32.GetTextExtentPoint32W(tempDC, sText, textLength,ctypes.byref(StructText))
+		#Restore the old Font Object
+		ctypes.windll.gdi32.SelectObject(tempDC, hOldFont)
+		#Delete the font object we created
+		ctypes.windll.gdi32.DeleteObject(hFont)
+		#Restore the old Bitmap Object
+		ctypes.windll.gdi32.SelectObject(tempDC, hOldBMP)
+		#Delete the temporary BitMap Object
+		ctypes.windll.gdi32.DeleteObject(hBMP)
+		#Release & Delete the device context
+		ctypes.windll.gdi32.DeleteDC(tempDC)
+		#Retrieve the text width
+		textWidth = StructText.width+5
+		cellWidth  = self.excelCellObject.ColumnWidth * xlCellWidthUnitToPixels	#Conversion factor to convert the cellwidth to pixels
+		return (cellWidth,textWidth)
+
+	def _get__overlapInfo(self):
+		(cellWidth, textWidth) = self.getCellWidthAndTextWidth()
+		isWrapText = self.excelCellObject.WrapText
+		isShrinkToFit = self.excelCellObject.ShrinkToFit
+		isMerged = self.excelWindowObject.Selection.MergeCells
+		try:
+			adjacentCell = self.excelCellObject.Offset(0,1)
+		except COMError:
+			# #5041: This cell is at the right edge.
+			# For our purposes, treat this as if there is an empty cell to the right.
+			isAdjacentCellEmpty = True
+		else:
+			isAdjacentCellEmpty = not adjacentCell.Text
+		info = {}
+		if isMerged:
+			columnCountInMergeArea = self.excelCellObject.MergeArea.Columns.Count
+			curCol = self.excelCellObject.Column
+			curRow = self.excelCellObject.Row
+			cellWidth = 0
+			for x in xrange(columnCountInMergeArea):
+				cellWidth += self.excelCellObject.Cells(curRow, curCol).ColumnWidth
+				curCol += 1
+			cellWidth = cellWidth * xlCellWidthUnitToPixels #Conversion factor to convert the cellwidth to pixels
+		if isWrapText or isShrinkToFit or textWidth <= cellWidth:
+			info = None
+		else:
+			if isAdjacentCellEmpty:
+				info['obscuringRightBy']= textWidth - cellWidth
+				info['obscuredFromRightBy'] = 0
+			else:
+				info['obscuredFromRightBy']= textWidth - cellWidth
+				info['obscuringRightBy'] = 0
+		self._overlapInfo = info
+		return self._overlapInfo
 
 	def _get_parent(self):
 		worksheet=self.excelCellObject.Worksheet
@@ -775,3 +1150,4 @@ class ExcelMergedCell(ExcelCell):
 
 	def _get_colSpan(self):
 		return self.excelCellObject.mergeArea.columns.count
+

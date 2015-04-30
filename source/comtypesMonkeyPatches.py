@@ -5,8 +5,11 @@
 
 from logHandler import log
 
+from comtypes import COMError
+from comtypes.hresult import *
+
 #Monkey patch comtypes to support byref in variants
-from comtypes.automation import VARIANT, VT_BYREF
+from comtypes.automation import VARIANT, VT_BYREF, IDispatch
 from ctypes import cast, c_void_p
 from _ctypes import _Pointer
 oldVARIANT_value_fset=VARIANT.value.fset
@@ -60,3 +63,12 @@ oldVARIANT_value_fget=VARIANT.value.fget
 def newVARIANT_value_fget(self):
 	return self._get_value(dynamic=True)
 VARIANT.value=property(newVARIANT_value_fget,VARIANT.value.fset,VARIANT.value.fdel)
+
+# #4258: monkeypatch to better handle error where IDispatch's GetTypeInfo can return a NULL pointer. Affects QT5
+oldGetTypeInfo=IDispatch._GetTypeInfo
+def newGetTypeInfo(self,index,lcid=0):
+	res=oldGetTypeInfo(self,index,lcid)
+	if not res:
+		raise COMError(E_NOTIMPL,None,None)
+	return res
+IDispatch._GetTypeInfo=newGetTypeInfo

@@ -18,7 +18,7 @@ import speech
 import sayAllHandler
 import NVDAHelper
 import winUser
-from treeInterceptorHandler import TreeInterceptor
+from treeInterceptorHandler import DocumentTreeInterceptor
 from NVDAObjects import NVDAObjectTextInfo
 from displayModel import DisplayModelTextInfo, EditableTextDisplayModelTextInfo
 import textInfos.offsets
@@ -933,7 +933,7 @@ class SlideShowTreeInterceptorTextInfo(NVDAObjectTextInfo):
 			return (0,self._getStoryLength())
 		raise LookupError
 
-class SlideShowTreeInterceptor(TreeInterceptor):
+class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 	"""A TreeInterceptor for showing Slide show content. Has no caret navigation, a CursorManager must be used on top. """
 
 	def _get_isAlive(self):
@@ -980,6 +980,9 @@ class SlideShowTreeInterceptor(TreeInterceptor):
 		gesture.send()
 		self.rootNVDAObject.handleSlideChange()
 
+class ReviewableSlideshowTreeInterceptor(ReviewCursorManager,SlideShowTreeInterceptor):
+	"""A TreeInterceptor for Slide show content but with caret navigation via ReviewCursorManager."""
+
 	__gestures={
 		"kb:space":"slideChange",
 		"kb:enter":"slideChange",
@@ -988,10 +991,6 @@ class SlideShowTreeInterceptor(TreeInterceptor):
 		"kb:pageDown":"slideChange",
 		"kb:control+shift+s":"toggleNotesMode",
 	}
-
-class ReviewableSlideshowTreeInterceptor(ReviewCursorManager,SlideShowTreeInterceptor):
-	"""A TreeInterceptor for Slide show content but with caret navigation via ReivewCursorManager."""
-	pass
 
 class SlideShowWindow(PaneClassDC):
 

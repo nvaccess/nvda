@@ -1,4 +1,4 @@
-NVDA NVDA_VERSION brugervejledning
+﻿NVDA NVDA_VERSION brugervejledning
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -17,7 +17,7 @@ NVDA giver blinde og svagsynede mulighed for at få adgang til og interagere med
 
 Af væsentlige funktioner kan nævnes:
 - Understøttelse af populære applikationer som web-browsere, email-programmer, internet-chat- programmer og office suites
-- Indbygget talesyntese der understøtter over 43 sprog
+- Indbygget talesyntese der understøtter over 80 sprog
 - Rapportering af tekstformatering hvor det er muligt, såsom skrifttype og størrelse, typografi og stavefejl.
 - Læser automatisk teksten under musen op og kan angive musens position akustisk
 - Understøttelse af mange punktdisplays, herunder indtastning af computerbraille på punktdisplays med et punkttastatur
@@ -32,7 +32,7 @@ Af væsentlige funktioner kan nævnes:
 
 ++ Internationalisering ++
 Det er vigtigt, at folk overalt i verden, uanset hvilket sprog de taler, får lige adgang til teknologi.
-Udover Engelsk er NVDA blevet oversat til 43 sprog herunder: Afrikaans, albansk, amharisk, arabisk, aragonisk, brasiliansk portugisisk, bulgarsk, kroatisk, tjekkisk, dansk, hollandsk, finsk, fransk, galicisk, græsk, georgisk, tysk, hebraisk, hindi, ungarsk, islandsk, irsk, italiensk, japansk, koreansk, Nepali, norsk , polsk, portugisisk, rumænsk, russisk, serbisk, slovakisk, slovensk, spansk, svensk, tamil, thai, traditionelt og forenklet kinesisk, tyrkisk, ukrainsk og vietnamesisk.
+Udover Engelsk er NVDA blevet oversat til 47 sprog herunder: Afrikaans, albansk, amharisk, arabisk, aragonisk, brasiliansk portugisisk, bulgarsk, catalansk, colombiansk spansk, kroatisk, tjekkisk, dansk, hollandsk, farsi, finsk, fransk, galicisk, græsk, georgisk, tysk, hebraisk, hindi, ungarsk, islandsk, irsk, italiensk, japansk, koreansk, Nepali, norsk, polsk, portugisisk, punjabi, rumænsk, russisk, serbisk, slovakisk, slovensk, spansk, svensk, tamilsk, thai, traditionelt og forenklet kinesisk, tyrkisk, ukrainsk og vietnamesisk.
 
 ++ Understøttelse af 	talesynteser ++
 Udover at programmets meddelelser og brugerflade findes på flere sprog, kan NVDA også sætte brugeren i stand til at læse tekster på alle sprog, så længe de har en talesyntese, der kan tale det pågældende sprog.
@@ -93,7 +93,7 @@ Udover den manglende evne til at starte på og efter logon-skærmen, har en flyt
 
 ++ Installation af NVDA ++
 Hvis du installerer NVDA direkte fra den hentede fil, skaldu trykke på knappen Installer NVDA.
-Hvis du allerede har lukket denne dialog, eller hvis du ønsker at installere fra en flytbar kopi, skal du vælge menupunktet Installer NVDA under Værktøjer i NVDA menuen.
+Hvis du allerede har lukket denne dialog, eller hvis du ønsker at installere fra en flytbar kopi, skal du vælge menupunktet Installer NVDA under Værktøjer i NVDA-menuen.
 
 Installationsdialogen der vises vil bede dig bekræfte, at du ønsker at installere NVDA, og dialogen vil også fortælle dig om en tidligere installation vil blive opdateret.
 Når du trykker på knappen Fortsæt, installeres NVDA.
@@ -116,7 +116,7 @@ Denne indstilling er kun tilgængelig når du installerer fra den flytbare kopi,
 
 ++ Opret en flytbar kopi ++
 Hvis du ønsker, at oprette en flytbar kopi af NVDA direkte fra den hentede fil, skal du bare trykke på knappen Opret Flytbar Kopi.
-Hvis du allerede har lukket denne dialog, eller hvis du kører en installeret kopi af NVDA, skal du vælge menupunktet Opret Flytbar Kopi under Værktøjer i NVDA menuen.
+Hvis du allerede har lukket denne dialog, eller hvis du kører en installeret kopi af NVDA, skal du vælge menupunktet Opret Flytbar Kopi under Værktøjer i NVDA-menuen.
 
 Dialogen der vises lader dig vælge hvor du vil oprette den flytbare kopi.
 det kan være en mappe på din harddisk, et USB-drev eller andet bærbart medie.
@@ -129,7 +129,7 @@ Tryk Ok for at lukke denne dialog.
 + Kom i gang med at bruge NVDA +
 
 ++ Start NVDA ++
-Hvis du har installeret NVDA med installationsprogrammet, kan du blot starte NVDA ved enten at trykke Ctrl+Alt+n eller vælge NVDA fra NVDA menuen under Programmer i menuen Start.
+Hvis du har installeret NVDA med installationsprogrammet, kan du blot starte NVDA ved enten at trykke Ctrl+Alt+n eller vælge NVDA fra NVDA-menuen under Programmer i menuen Start.
 Derudover kan du skrive NVDA i dialogboksen Kør og trykke på Enter.
 Du kan også skrive nogle [kommandolinjeparametre #CommandLineOptions], som du kan bruge til følgende: Genstarte NVDA (-r), afslut (-q) slå tilføjelsesprogrammer fra (--disable-addons) osv.
 
@@ -142,7 +142,7 @@ Hvis det tager ekstra lang tid, bør NVDA sige "Indlæser NVDA. Vent venligst ..
 Hvis du ikke hører noget af dette, eller du hører Windows lyden der indikere en fejl eller en faldende række af toner, så betyder det, at NVDA har en fejl, og du bliver nødt til eventuelt at rapportere en fejl til udviklerne.
 Venligst tjek på NVDA hjemmesiden for hvordan du gør dette.
 
-Når NVDA starter for første gang, vil du blive mødt af en dialogboks som giver dig nogle grundlæggende oplysninger om NVDA tasten og NVDA menuen.
+Når NVDA starter for første gang, vil du blive mødt af en dialogboks som giver dig nogle grundlæggende oplysninger om NVDA tasten og NVDA-menuen.
 (Se de følgende afsnit om disse emner).
 Dialogboksen indeholder også tre check-bokse.
 Med den første kan du bestemme, om NVDA skal bruge capslock som en NVDA tast.
@@ -427,7 +427,7 @@ Jo mere til venstre eller højre musen er på skærmen, jo mere til venstre elle
 Disse ekstra musefunktioner er ikke slået til som standard i NVDA
 Hvis du ønsker at drage fordel af dem, kan de konfigureres fra [Museindstillinger-dialogen, #MouseSettings] som findes i menuen Indstillinger i NVDA-menuen.
 
-Selv om en fysisk mus eller pegefelt skal bruges til at navigere med musen, har NVDA et par vigtige kommandoer relateret til musen:
+Selv om du bør bruge en fysisk mus eller et pegefelt til at navigere med musen, har NVDA et par vigtige kommandoer relateret til brugen af mus:
 %kc:beginInclude
 || Navn | Desktop tast | Laptop tast | Beskrivelse |
 | Venstre museklik | Numpad-skråstreg | NVDA+[ | Klikker en enkelt gang med venstre museknap. Det almindelige dobbeltklik kan udføres ved at trykke på denne tastekombination to gange hurtigt efter hinanden. |
@@ -440,7 +440,8 @@ Selv om en fysisk mus eller pegefelt skal bruges til at navigere med musen, har 
 
 + Browsertilstand (gennemsynstilstand) +
 Komplekse dokumenter, der ikke kan redigeres, fx. web-sider, bliver præsenteret med NVDA i browsertilstand eller gennemsynstilstand.
-Dette omfatter dokumenter i Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader and Adobe Flash.
+Dette omfatter dokumenter i Mozilla Firefox, Microsoft Internet Explorer, HTML-meddelelser i Microsoft Outlook, Google Chrome, Adobe Reader and Adobe Flash.
+Gennemsynstilstand kan også bruges i Microsoft Word-dokumenter.
 
 Når du benytter gennemsynstilstand, bliver indholdet af dokumentet præsenteret i en flad visning, som du kan navigere rundt i ved hjælp af piletasterne, præcist som hvis det var det normalt dokument.
 Alle NVDAs kommandoer til [systemmarkør #SystemCaret] fungerer i denne tilstand; fx. læs alt, rapportér tekstformatering, kommandoer til navigering af tabeller, osv.
@@ -459,7 +460,7 @@ Derudover kan du også manuelt tvinge NVDA i fokustilstand, hvorefter tilstanden
 || Navn | Tast | Beskrivelse |
 | Skift mellem browse- og fokustilstand | NVDA+Mellemrum | Skifter mellem gennemsynstilstand og fokustilstand |
 | Forlad fokustilstand | Escape | Skifter tilbage til gennemsynstilstand, hvis NVDA havde skiftet automatisk til fokustilstand |
-| Opdater dokument i browse-tilstand | NVDA+f5 | Genindlæser det aktuelle dokument. Kan være nyttigt, hvis noget af indholdet synes at mangle |
+| Opdater dokument i browse-tilstand | NVDA+f5 | Genindlæser det aktuelle dokument. (Kan være nyttigt, hvis noget af indholdet synes at mangle. Ikke tilgængelig i Microsoft Word og Outlook.) |
 | Søg | NVDA+Ctrl+f | Viser en dialog, hvor du kan indtaste den tekst, du vil søge efter i det aktuelle dokument |
 | Find næste | NVDA+f3 | Finder næste forekomst i dokumentet af den tekst, du tidligere har søgt efter |
 | Find forrige | NVDA+Shift+F3 | Finder forrige forekomst i dokumentet af den tekst, du tidligere har søgt efter |
@@ -469,6 +470,7 @@ Derudover kan du også manuelt tvinge NVDA i fokustilstand, hvorefter tilstanden
 
 ++ Enkelttegns navigering ++
 For hurtigere at kunne navigere når du er i gennemsynstilstand, giver NVDA også mulighed for ved hjælp af et enkelt bogstav at springe til bestemte områder i dokumentet.
+Bemærk, at ikke alle disse kommandoer understøttes i alle dokumenttyper.
 
 %kc:beginInclude
 Hvis du trykker en af de følgende taster ned alene, hopper du til den næste forekomst af det pågældende element. Hvis du trykker tasten ned sammen med Shift, hopper du til det forrige element.
@@ -567,7 +569,14 @@ Bemærk: Genvejen til at oplyse den resterende tid virker kun, når statuslinjen
 | Læs oversætternoter | Ctrl+Shift+a | Læser oversætternoter. |
 %kc:endInclude
 
-+ Konfigurering af NVDA+
+++ Skype ++
+%kc:beginInclude
+Under en samtale:
+|| Navn | Tast | Beskrivelse |
+| Læs meddelelse | NVDA+Ctrl+1-0 | Læser og flytter læsemarkøren til en af de nyeste meddelelser alt efter, hvilket tal du trykker. F.eks. NVDA+Ctrl+2 læser den næstnyeste meddelelse. |
+%kc:endInclude
+
++ opsætning af NVDA+
 
 ++ Indstillinger ++
 %kc:settingsSection: || Navn | Desktop tast | Laptop tast | Beskrivelse |
@@ -597,7 +606,7 @@ Denne indstillingsmulighed er en tjekboks, der giver mulighed for at vælge, hvo
 Når den er slået til, fremkommer en dialog, når du forsøger at afslutte NVDA, hvor du skal tage stilling til, hvorvidt du ønsker at afslutte eller ej.
 Når den er slået fra, bliver NVDA afsluttet med det samme.
 
-=== Afspil lyd ved start og afslutning af NVDA ===
+==== Afspil lyd ved start og afslutning af NVDA ====
 Dette er en checkboks, der, når den er slået til, får NVDA til at afspille en lyd ved opstart og afslutning af programmet.
 
 ==== Logningsniveau ====
@@ -686,6 +695,10 @@ Her kan du vælge, hvor mange sætningstegn og andre symboler, der skal udtales 
 Hvis du fx. sætter niveauet til "alt", vil alle symboler blive udtalt.
 Denne indstilling gælder for alle talesynteser, ikke kun den, som er aktiv i øjeblikket.
 
+==== Brug stemmens sprog til udtale af symboler og tegn ====
+Med den indstilling, som er slået til som standard, kan du vælge om du vil stole på sproget for den aktuelle stemme til udtale af tegn og symboler.
+Hvis du opdager, at NVDA læser tegn og symboler på et forkert sprog med en bestemt talesyntese eller stemme, kan du slå denne indstilling fra for at tvinge NVDA til at benytte sin globale sprogindstilling.
+
 ==== Ændring af tonehøjde ved store bogstaver ====
 I dette editfelt kan du indtaste et tal for, hvor meget tonehøjden skal ændre sig, når NVDA udtaler et stort bogstav.
 Denne værdi er en procentsats. En negativ værdi vil gøre tonehøjden lavere, og en positiv værdi vil gøre den højere.
@@ -701,7 +714,7 @@ Ligesom checkboksen 'Sig stort ved stort bogstav' er denne indstilling nyttig i 
 
 ==== Brug stavefunktion hvis understøttet ====[VoiceSpellingFunctionality]
 Nogle ord består af kun et bogstav, men udtalen kan være anderledes, afhængigt af om ordet er udtalt som et individuelt bogstav (som når du staver) eller som et helt ord.
-For eksempel, på engelsk er "a" både et bogstav og et ord.
+For eksempel, på engelsk er "a" både et bogstav og et ord, og det skal udtales forskelligt alt efter sammenhængen.
 Denne indstilling giver talesyntesen mulighed for at skelne mellem disse to tilfæld.
 De fleste synteser understøtter denne funktion.
 
@@ -733,7 +746,7 @@ Læs venligst afsnittet [Understøttede punktdisplays #SupportedBrailleDisplays]
 
 ==== Port ====
 Hvis denne indstilling er tilgængelig, giver den dig mulighed for at vælge, hvilken port eller forbindelsestype du vil benytte for at kommunikere med det punktdisplay, du har valgt.
-Det er en kombobox der indeholder de mulige valgmuligheder for dit display.
+Det er en kombobox der indeholder de mulige indstillinger for dit display.
 
 Som standard søger NVDA automatisk efter den påkrævede port til dit punktdisplay ved brug af automatisk detektering af port, hvilket betyder, at NVDA automatisk vil etablere forbindelse med din enhed ved at scanne computeren for alle tilgængelige USB og Bluetooth enheder koblet til dit system.
 For nogle punktdisplays er det dog muligt at vælge direkte, hvilken port du vil bruge.
@@ -859,7 +872,9 @@ Indstillingsmulighederne er tegn, ord, linje og afsnit.
 Hvis denne checkboks er markeret, oplæser NVDA rollen (typen) på objektet, når musen bevæger sig ind i det pågældende objekt.
 
 ==== Afspil lydkoordinater under flytning af mus ====
-Hvis denne checkboks er markeret, bipper NVDA under flytning af musen. Derved kan du følge med i, hvor musen netop nu er placeret på skærmen.
+Hvis denne checkboks er slået til, bipper NVDA under flytning af musen. På den måde kan du følge med i, hvor musen netop nu befinder sig på skærmen.
+Jo højere oppe musen befinder sig på skærmen, desto højere bliver tonehøjden af lydsignalet.
+Jo længere mod venstre eller højre musen befinder sig på skærmen, desto længere mod venstre eller højre vil lyden blive afspillet (forudsat at du har stereohøjttalere eller hovedtelefoner).
 
 ==== Lysstyrke kontrollerer lydstyrke for lydkoordinater ====
 Hvis checkboksen "Afspil lydkoordinater under flytning af mus" er slået til, bevirker markering af denne checkboks, at lydstyrken på biptonen ved lydkoordinaterne bestemmes af, hvor lyst skærmbilledet under musen er.
@@ -1010,6 +1025,10 @@ Hvis du fx flytter ned over en webside med pil-ned og NVDA støder på et editfe
 ==== Lydindikering af fokustilstand og gennemsynstilstand ====
 Hvis denne indstilling er slået til, afspiller NVDA en særlig lyd i stedet for at oplæse ændringen.
 
+==== Forhindre alle ikke-NVDA-kommandoer i at nå til dokumentet ====
+med denne indstilling, som er slået til som udgangspunkt, kan du vælge om kommandobevægelser, f.eks. tastetryk, som ikke udgør en NVDA-kommando, og som ikke anses for at være en generel kommando, skal forhindres i at komme videre til det dokument, du har fokus på.
+Hvis denne indstilling er slået til, og du f.eks. trykker på bogstavet j, vil tastetrykket blive forhindret i at komme videre til dokumentet, selv om det ikke er en kommando til hurtignavigation, og det heller ikke er sandsynligt, at det er en kommando i selve programmet.
+
 +++ Indstillinger for dokument formatering (NVDA+Ctrl+d) +++[DocumentFormattingSettings]
 Denne dialogboks findes i menuen Indstillinger under "Dokumentformatering...".
 
@@ -1084,7 +1103,13 @@ Denne dialog giver dig mulighed for at bestemme, hvordan sætningstegn og andre 
 
 For at ændre et symbol, skal du først vælge det i listen med symboler.
 I feltet erstatning, kan du skrive den tekst du vil have læst i stedet for det oprindelige symbol.
-I boksen niveau, kan du justere det laveste symbolniveau dette symbol skal udtales ved.
+I feltet niveau, kan du justere det laveste symbolniveau dette symbol skal udtales ved.
+
+Du kan tilføje nye symboler ved at trykke på Tilføj-knappen.
+I den dialog, som fremkommer, skal du indtaste symbolet og trykke på Enter.
+Indtast så erstatningstekst og niveau for symbolet, præcist som med andre symboler.
+
+Du kan fjerne et symbol, som du tidligere har tilføjet, ved at trykke på Fjern-knappen.
 
 Når du er færdig, skal du trykke på OK-knappen for at gemme dine ændringer, eller Annuller-knappen for at kassere dem.
 
@@ -1095,6 +1120,7 @@ Du får kun vist de kommandoer, som er tilgængelige på det tidspunkt, hvor du 
 Hvis du fx. vil tilpasse kommandoer til browsetilstand, skal du åbne dialogen, mens NVDA er i browsetilstand.
 
 Trævisningen i denne dialog viser alle de tilgængelige NVDA-kommandoer grupperet efter kategori.
+Du kan filtrere dem ved at indtaste et eller flere ord fra kommandoens navn i editfeltet "Filtrer efter" i en hvilken som helst rækkefølge.
 Hvis en bevægelse er tilknyttet en kommando, bliver den vist neden under kommandoen.
 
 For at tilføje en inputbevægelse til en kommando skal du vælge kommandoen og så trykke på Tilføj-knappen.
@@ -1233,7 +1259,7 @@ Hvis der er en tilgængelig hjælpetekst til et tilføjelsesprogram, kan du se d
 
 For at se efter og hente tilføjelsespakker, som er tilgængelige online skal du trykke på knappen Hent tilføjelsesprogrammer.
 Denne knap åbner [siden for NVDA tilføjelsesprogrammer http://addons.nvda-project.org/].
-Hvis NVDA er installeret på dit system, kan du åbne tilføjelsespakken direkte fra din browser og starte installationsprocessen som beskrevet nedenfor.
+Hvis NVDA er installeret og kører på dit system, kan du åbne tilføjelsespakken direkte fra din browser og starte installationsprocessen som beskrevet nedenfor.
 Ellers skal du gemme tilføjelsespakken og følg instruktionerne nedenfor.
 
 For at installere et tilføjelsesprogram, som du tidligere har hentet, skal du trykke på knappen Installer.
@@ -1271,35 +1297,35 @@ For en endnu mere omfattende list over gratis og kommercielt tilgængelige synte
 ++ eSpeak ++
 Talesyntesen [eSpeak http://espeak.sourceforge.net/] er bygget direkte ind i NVDA og kræver ingen installation af særskilte drivere eller komponenter for at fungere.
 NVDA bruger som standard eSpeak ved opstart.
-Eftersom denne talesyntese er bygget ind i NVDA, er den et godt valg til de situationer, hvor NVDA afvikles fra en USB-pen eller fra en cd på flere forskellige systemer.
+Eftersom denne talesyntese er bygget ind i NVDA, er den et godt valg til de situationer, hvor NVDA skal afvikles fra en USB-pen eller fra en cd på flere forskellige systemer.
 
-Der er et sprog tilknyttet enhver af de stmmer, som følger med eSpeak. 
+Hver af de stemmer, som følger med eSpeak, taler forskellige sprog. 
 Der findes mere end 43 forskellige sprog i eSpeak.
 
 Der findes også mange forskellige varianter, der kan vælges for at ændre, hvordan den enkelte stemme lyder. 
 
 ++ Microsoft Speech API version 4 (SAPI 4) ++
-SAPI 4 er en ældre standard fra Microsoft for software talesynteser.
+SAPI 4 er en ældre standard fra Microsoft for software-talesynteser.
 Der findes en lang række talesynteser, der opfylder denne standard. De kan enten hentes gratis eller købes fra forskellige firmaer og hjemmesider.
 Når denne talesyntese vælges i NVDA, indeholder listen (som nås med [dialogboksen Stemmeindstillinger #VoiceSettings] eller via den cirkulære menu Talesyntese-indstillinger #SynthSettingsRing]) en oversigt over de tilgængelige stemmer fra samtlige SAPI 4 talesynteser, der er installeret på dit system.
 
 Hvis dine installerede SAPI 4 talesynteser ikke fremkommer i NVDAs liste med talesynteser, skal du installere SAPI 4.0 pakkerne (SAPI 4.0 runtime binaries). De kan hentes på http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
 
 ++ Microsoft Speech API version 5 (SAPI 5) ++
-SAPI 5 er en standard fra Microsoft for software talesynteser.
+SAPI 5 er en standard fra Microsoft for software-talesynteser.
 En lang række af de talesynteser, der overholder denne standard, kan enten købes eller hentes gratis fra forskellige firmaer og netsteder. Din computer har sandsynligvis allerede én SAPI 5 talesyntese præinstalleret.
 Når denne talesyntese vælges i NVDA, indeholder listen (som nås med [dialogboksen Stemmeindstillinger #VoiceSettings] eller via den cirkulære menu Talesyntese-indstillinger #SynthSettingsRing]) en oversigt over de tilgængelige stemmer fra samtlige SAPI 5 talesynteser, der er installeret på dit system.
 
 ++ Microsoft Speech Platform ++
-Microsoft Speech Platform giver stemmer til mange sprog, men disse stemmer er normalt brugt i udvikling af serverbaserede applikationer.
-Disse stemmer kan blive brugt af NVDA.
+Microsoft Speech Platform giver stemmer til mange sprog. Disse stemmer bliver normalt brugt i udvikling af serverbaserede applikationer.
+Stemmerne kan dog også bruges af NVDA.
 
 For a tbruge disse stemmer, er det nødvendigt at installere to komponenter:
 - Microsoft Speech Platform - Runtime (Version 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
 - Microsoft Speech Platform - Runtime Languages (Version 11): http://www.microsoft.com/download/en/details.aspx?id=27224
  - Denne side indeholder mange filer for både talegenkendelse og tekst til tale.
  Vælg filerne der indeholder det ønskede sprog/stemmer.
-  For eksempel er filen MSSpeech_TTS_en-US_ZiraPro.msI en U.S. English stemme.
+  For eksempel er filen MSSpeech_TTS_en-US_ZiraPro.msI en stemme til amerikansk enhelsk.
  -
 -
 
@@ -1310,35 +1336,29 @@ For yderligere oplysninger om talesyntesen henvises til Audiologics netsted på 
 
 Denne talesyntese understøtter ikke [stavefunktionalitet #VoiceSpellingFunctionality].
 
-++ Newfon ++
-Newfon er en fri og kommerciel talesyntese, som er skrevet af Sergey Shishmintzev. Den understøtter russisk og ukrainsk. 
-Hvis du ønsker at hente denne talesyntese, henvises til NVDAs russiske fællesskab under sektionen for downloads: http://ru.nvda-community.org/?page_id=10
-
-Denne talesyntese understøtter ikke [stavefunktionalitet #VoiceSpellingFunctionality].
-
 ++ Nuance Vocalizer for NVDA ++
 Nuance Vocalizer er et kommercielt produkt, som giver dig stemmer af høj kvalitet. Dette produkt er udviklet af Nuance Communications, Inc., og er omdannet til brug med NVDA af Tiflotecnia, Lda.
-Produktet omfatter over 50 forskellige stemmer du kan installere, hvoraf stemmerne dækker over 30 sprog.
+Produktet omfatter over 50 forskellige stemmer du kan installere og dækker over 30 sprog.
 Alle komponenterne til syntesen er indpakket som et tilføjelsesprogram, så de kan bruges med en flytbar kopi af NVDA.
 
 Du kan finde mere information om Nuance Vocalizer for NVDA, samt hvordan du kan købe en licens på siden [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
-En procentdel af salget af dette produkt doneres til videre udvikling af NVDA skærmlæseren.
+En procentdel af salget af dette produkt doneres til NV Access til videreudvikling af NVDA skærmlæseren.
 
 + Understøttede punktdisplays +[SupportedBrailleDisplays]
-Dette kapitel indeholder oplysninger om de punktdisplays, som NVDA understøtter.
+Dette afsnit indeholder oplysninger om de punktdisplays, som NVDA understøtter.
 
 ++ Freedom Scientific Focus/PAC Mate Series ++
-Der er understøttelse af alle Focus og PAC Mate displays fra [Freedom Scientific http://www.freedomscientific.com/] når de kobles til med USB og Bluetooth.
+Der er understøttelse af alle Focus og PAC Mate displays fra [Freedom Scientific http://www.freedomscientific.com/] når de kobles til med USB eller Bluetooth.
 Punktdisplay-driverne fra Freedom Scientific skal vær installeret på dit system.
 Hvis du ikke allerede har dem, kan du hente dem fra http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Selvom siden kun henviser til displayet Focus 40 Blue,understøtter driveren alle displays fra Freedom Scientific.
-Hvis dit system kører Windows 64 bit og de aktuelle drivere var installeret af en anden skærmlæser, skal du tilsyneladende installere driveren fra dette link alligevel, da filerne krævet af NVDA sikkert ikke var installeret af en anden skærmlæser.
+Hvis dit system kører Windows 64 bit og driverne allerede er blevet  installeret af en anden skærmlæser, skal du sandsynligvis installere driveren fra dette link alligevel, da de filer, som NVDA har brug for, sikkert ikke er blevet installeret af den anden skærmlæser.
 
-Som standard kan NVDA automatisk forbinde til disse displays via USB og Bluetooth.
-Når du konfigurer dette display kan du desuden vælge hvilken forbindelsestype, som du ønsker at benytte.
-Dette kan være nyttigt hvis du ønsker at bruge dit Focus display via Bluetooth, men fortsætte med at oplade dit punktdisplay ved brug af USB.
+Som standard kan NVDA automatisk detektere og forbinde til disse displays via USB og Bluetooth.
+Når du konfigurer dette display kan du dog selv vælge, hvilken forbindelsestype du ønsker at benytte.
+Dette kan være nyttigt hvis du ønsker at bruge dit Focus display via Bluetooth, men fortsætte med at oplade dit punktdisplay ved brug af USB fra computeren.
 
-Dette er tastekombinationerne til dette punktdisplay til brug med NVDA.
+Tastekombinationerne til dette punktdisplay med NVDA er følgende.
 Se venligst dokumentationen til dit punktdisplay for at finde ud af, hvor du kan finde knapperne.
 %kc:beginInclude
 || Navn | Tast |
@@ -1346,24 +1366,24 @@ Se venligst dokumentationen til dit punktdisplay for at finde ud af, hvor du kan
 | Rul display fremad | top markørsammenføringstast20/40/80 (sidste celle på display) |
  | Rul punktdisplay tilbage | venstre panoreringsknap |
 | Rul punktdisplay fremad | højre panoreringsknap |
-| Skift indstilling punkt tøjret til | venstre vælgeknap+højre vælgeknap |
+| Slå punkt følger til/fra | venstre vælgeknap+højre vælgeknap |
 | Skift handling for venstre lynhjul | Tryk venstre lynhjul |
 | Flyt tilbage ved brug af venstre lynhjul | Venstre lynhjul op |
 | Flyt fremad ved brug af venstre lynhjul | Venstre lynhjul |
-| Skift handling for højre lynhjul | tryk på hjre lynhjul |
+| Skift handling for højre lynhjul | tryk på højre lynhjul |
 | Flyt tilbage ved brug af højre lynhjul | højre lynhjul op |
 | Flyt fremad ved brug af højre lynhjul | højre lynhjul ned |
-| Flyt til punktcelle | markøranføringsknap |
+| Flyt til punktcelle | markørsammenføringsknap |
 | backspace tast | punkt7 |
 | enter tast | punkt8 |
 | skift+tab tast | punktMellemrum+punkt1+punkt2 |
 | tab tast | punktMellemrum+punkt4+punkt5 |
-| Pil op tast | punktMellemrum+punkt1 |
-| pil ned tast | punktMellemrum+punkt4 |
-| Ctrl+venstre piletast | punktMellemrum+punkt2 |
-| Ctrl+højre piletast | punktMellemrum+punkt5 |
-| venstre piletast | punktMellemrum+punkt3 |
-| Højre piltast | punktMellemrum+punkt6 |
+| Pil-op | punktMellemrum+punkt1 |
+| Pil-ned | punktMellemrum+punkt4 |
+| Ctrl+Venstre-pil | punktMellemrum+punkt2 |
+| Ctrl+Højre-pil | punktMellemrum+punkt5 |
+| Venstre-pil | punktMellemrum+punkt3 |
+| Højre-pil | punktMellemrum+punkt6 |
 | Hjem tast | punktMellemrum+punkt1+punkt3 |
 | end tast | punktMellemrum+punkt4+punkt6 |
 | Ctrl+hjem tast | punktMellemrum+punkt1+punkt2+punkt3 |
@@ -1375,9 +1395,9 @@ Se venligst dokumentationen til dit punktdisplay for at finde ud af, hvor du kan
 | space tast | punktMellemrum |
 | windows+d tast (minimer alle programmer) | punktMellemrum+punkt1+punkt2+punkt3+punkt4+punkt5+punkt6 |
 | Annoncér aktuelle linje | punktMellemrum+punkt1+punkt4 |
-| NVDA menu | punktMellemrum+punkt1+punkt3+punkt4+punkt5 |
+| NVDA-menu | punktMellemrum+punkt1+punkt3+punkt4+punkt5 |
 
-For nyere Focus modeller der har vippe bjælker (focus 40, focus 80 og focus blue):
+For nyere Focus modeller der har vippebjælker (focus 40, focus 80 og focus blue):
 || Navn | Tast |
 | Flyt punktdisplay til forrige linje | venstre Vippe Bjælke Op, højre vippe bjælke op |
 | Flyt punktdisplay til næste linje | venstre vippe bjælke ned, højre vippe bjælke ned |
@@ -1396,7 +1416,7 @@ Sæt blot displayet til computeren og indstil NVDA til at bruge det.
 Selv om disse punktdisplays har et tastatur, håndtere de selv oversættelsen fra punkt til tekst.
 Derfor er NVDAs punkt input indstilling ikke relevant.
 
-Dette er tastekombinationerne til dette display til brug af NVDA.
+Dette er tastekombinationerne til dette display til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
 %kc:beginInclude
 || Navn | Tast |
@@ -1404,17 +1424,17 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Flyt punktdisplay to forrige linje | t2 |
 | Flyt punktdisplay til næste linje | t4 |
 | Rul punktdisplay fremad | t5 |
-| Flyt til punktcelle | Markøranføringsknapper |
+| Flyt til punktcelle | markørsammenføringsknapper |
 | shift+tab tast | sp1 |
 | alt tast | sp2 |
 | escape tast | sp3 |
 | tab tast | sp4 |
-| Højre piletast | spop |
-| Pil ned | spNed |
-| Venstre piletast | spVenstre |
-| Højre piletast | spHøjre |
+| Pil-op | spop |
+| Pil-ned | spNed |
+| Venstre-pil | spVenstre |
+| Højre-pil | spHøjre |
 | enter tast | spEnter |
-| NVDA Menu | sp1+sp3 |
+| NVDA-menu | sp1+sp3 |
 | windows+d tast (Minimer alle programmer) | sp1+sp4 |
 | windows tast | sp2+sp3 |
 | alt+tab tast | sp2+sp4 |
@@ -1426,7 +1446,7 @@ NVDA understøtter alle displays fra [Handy Tech http://www.handytech.de/] når 
 
 Punkt input er endnu ikke understøttet.
 
-Dette er tastekombinationerne til dette display til brug af NVDA.
+Dette er tastekombinationerne til dette display til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
 %kc:beginInclude
 || Navn | Tast |
@@ -1434,15 +1454,15 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Rul punktdisplay fremad | højre, ned |
 | Flyt punktdisplay to forrige linje | b4 |
 | Flyt punktdisplay til næste linje | b5 |
-| Flyt til punktcelle | markøranføringsknapper |
+| Flyt til punktcelle | markørsammenføringsknapper |
 | shift+tab Tast | esc |
 | alt Tast | b2+b4+b5 |
 | escape Tast | b4+b6 |
 | tab Tast | enter |
 | enter Tast | esc+enter |
-| Venstre piletast | venstreMellemrum |
-| Pile ned | højreMellemrum |
-| NVDA Menu | b2+b4+b5+b6 |
+| Pil-op | venstreMellemrum |
+| Pil-ned | højreMellemrum |
+| NVDA-menu | b2+b4+b5+b6 |
 | Handy Tech konfiguration | b4+b8 |
 %kc:endInclude
 
@@ -1451,7 +1471,7 @@ Punkttdisplayet Lilli fra [MDV http://www.mdvbologna.it/] er understøttet.
 Installation af særskilte drivere er ikke nødvendig for at kunne bruge dette display.
 Tilslut blot displayet og indstil NVDA til at bruge det.
 
-Dette er tastekombinationerne til dette display til brug af NVDA.
+Dette er tastekombinationerne til dette display til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
 %kc:beginInclude
 || Navn | Tast |
@@ -1468,17 +1488,17 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 
 ++ Baum/Humanware/APH Braille Displays ++
 Adskillige [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] samt [APH http://www.aph.org/] displays er understøttet hvis de kobles til via USB eller Bluetooth.
-Disse inkluderer:
+Det omfatter:
 - Baum: SuperVario, PocketVario
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
-Nogle andre displays fremstillet by Baum kan også virke, men dette er ikke testet.
+Nogle andre displays, som er  fremstillet af Baum, virker måske også, men dette er ikke testet.
 
 Hvis du ønsker at koble displayet til ved brug af USB, skal du først installere driveren fra leverandøren.
-Bruger du APH Refreshabraille, skal USB-tilstanden ændres til seriel.
+Bruger du APH Refreshabraille, skal USB-tilstanden sættes til seriel.
 
-Dette er tastekombinationerne til dette display til brug af NVDA.
+Dette er tastekombinationerne til dette display til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
 %kc:beginInclude
 || Navn | Tast |
@@ -1486,14 +1506,14 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Rul punktdisplay fremad | d5 |
 | Flyt punktdisplay to forrige linje | d1 |
 | Flyt punktdisplay til næste linje | d3 |
-| Flyt til punktcelle | markøranføringsknapper |
+| Flyt til punktcelle | markørsammenføringsknapper |
 
 For displays der har et joystick:
 || Navn | Tast |
-| Pil op | op |
-| Pil ned | ned |
-| Venstre piletast | venstre |
-| Højre piletast | højre |
+| Pil-op | op |
+| Pil-ned | ned |
+| Venstre-pil | venstre |
+| Højre-pil | højre |
 | enter Tast | select |
 %kc:endInclude
 
@@ -1501,7 +1521,7 @@ For displays der har et joystick:
 Hedo ProfiLine USB fra [hedo Reha-Technik http://www.hedo.de/] er understøttet.
 Du skal først installere driveren fra leverandøren, før du kan benytte dette punktdisplay.
 
-Dette er tastekombinationerne til dette display til brug af NVDA.
+Dette er tastekombinationerne til dette display til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
 %kc:beginInclude
 || Navn | Tast |
@@ -1509,8 +1529,8 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Rul punktdisplay fremad | K3 |
 | Flyt punktdisplay to forrige linje | B2 |
 | Flyt punktdisplay til næste linje | B5 |
-| Flyt til punktcelle | Markøranføringsknapper |
-| Skift indstillingen "punkt tøjret til" | K2 |
+| Flyt til punktcelle | markørsammenføringsknapper |
+| Slå "Punkt følger" til/fra | K2 |
 | Sig alt | B6 |
 %kc:endInclude
 
@@ -1518,7 +1538,7 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 Hedo MobilLine USB fra [hedo Reha-Technik http://www.hedo.de/] er understøttet.
 Du skal først installere driveren fra leverandøren, før du kan benytte dette punktdisplay.
 
-Dette er tastekombinationerne til dette display til brug af NVDA.
+Dette er tastekombinationerne til dette display til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
 %kc:beginInclude
 || Navn | Tast |
@@ -1526,8 +1546,8 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Rul punktdisplay fremad | K3 |
 | Flyt punktdisplay to forrige linje | B2 |
 | Flyt punktdisplay til næste linje | B5 |
-| Flyt til punktcelle | Markøranføringsknapper |
-| Skift indstillingen "Punkt tøjret til" | K2 |
+| Flyt til punktcelle | markørsammenføringsknapper |
+| Slå "Punkt følger" til/fra | K2 |
 | Sig alt | B6 |
 %kc:endInclude
 
@@ -1535,7 +1555,7 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 Brailliant BI og B serierne af punktdisplays fra [HumanWare http://www.humanware.com/], herunder BI 32, BI 40 og B 80, er understøttede når du kobler til via USB eller Bluetooth.
 Hvis du ønsker at koble displayet til ved brug af USB, skal du først installere driveren fra leverandøren.
 
-Dette er tastekombinationerne til dette display til brug af NVDA.
+Dette er tastekombinationerne til dette display til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
 %kc:beginInclude
 || Navn | Tast |
@@ -1543,13 +1563,13 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Rul punktdisplay fremad | højre |
 | Flyt punktdisplay to forrige linje | op |
 | Flyt punktdisplay til næste linje | ned |
-| Flyt til punktcelle | Markøranføringsknapper |
-| Skift indstillingen "Punkt tøjret til" | op+ned |
-| Pil op Tast | mellemrum+punkt1 |
-| pil ned Tast | mellemrum+punkt4 |
-| venstre piletast | mellemrum+punkt3 |
-| højre pile tast | mellemrum+punkt6 |
-| NVDA Menu | c1+c3+c4+c5 (kommando n) |
+| Flyt til punktcelle | markørsammenføringsknapper |
+| Slå "Punkt følger" til/fra | op+ned |
+| Pil-op | mellemrum+punkt1 |
+| Pil-ned | mellemrum+punkt4 |
+| Venstre-pil | mellemrum+punkt3 |
+| højre-pil | mellemrum+punkt6 |
+| NVDA-menu | c1+c3+c4+c5 (kommando n) |
 | shift+tab Tast | mellemrum+punkt1+punkt3 |
 | tab Tast | mellemrum+punkt4+punkt6 |
 | alt Tast | mellemrum+punkt1+punkt3+punkt4 (mellemrum+m) |
@@ -1564,8 +1584,11 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 ++ HIMS Braille Sense/Braille EDGE Series ++
 NVDA understøtter Braille Sense og Braille EDGE displays fra [Hims http://www.hims-inc.com/] hvis disse displays kobles til med USB eller Bluetooth. 
 Hvis du ønsker at koble displayet til ved brug af USB, skal du først installere driveren fra HIMS på dit system.
+Du kan hente disse drivere fra HIMS Resource Center: http://www.hims-inc.com/resource-center/
+På denne side skal du vælge din Braille-enhed og hente driveren i Sindo-Eyes-afsnittet.
+Selv om det kun er Window-Eyes, som bliver nævnt i dette afsnit, er der tale om en generel driver, som også virker med NVDA.
 
-Dette er tastekombinationerne til dette display til brug af NVDA.
+Tastekombinationerne til disse displays med NVDA er følgende.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
 %kc:beginInclude
 || Navn | Tast |
@@ -1573,46 +1596,46 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Rul punktdisplay fremad | højre side rul ned |
 | Flyt punktdisplay to forrige linje | venstre side rul op |
 | Flyt punktdisplay til næste linje | højre side rul op |
-| Flyt til punktcelle | Markøranføringsknapper |
+| Flyt til punktcelle | markørsammenføringsknapper |
 | shift+tab Tast | punkt1+punkt2+mellemrum |
 | alt Tast | punkt1+punkt3+punkt4+mellemrum |
 | escape Tast | punkt1+punkt5+mellemrum |
 | tab Tast | punkt4+punkt5+mellemrum |
 | enter Tast | punkt8 |
 | backspace Tast | punkt7 |
-| pil op Tast | punkt1+mellemrum |
-| pil ned Tast | punkt4+mellemrum |
-| capsLock | punkt1+punkt3+punkt6+mellemrum |
+| Pil-op | punkt1+mellemrum |
+| Pil-ned | punkt4+mellemrum |
+| capslock | punkt1+punkt3+punkt6+mellemrum |
 | shift+alt+tab Tast | advance2+advance3+advance1 |
 | alt+tab Tast | advance2+advance3 |
 | end Tast | punkt4+punkt6+mellemrum |
 | Ctrl+end Tast | punkt4+punkt5+punkt6+mellemrum |
 | hjem Tast | punkt1+punkt3+mellemrum |
 | Ctrl+hjem Tast | punkt1+punkt2+punkt3+mellemrum |
-| venstre piletast | punkt3+mellemrum |
-| Ctrl+skift+venstre piletast | punkt2+punkt8+mellemrum+advance1 |
-| Ctrl+venstre piletast | punkt2+mellemrum |
-| shift+alt+venstre piletast | punkt2+punkt7+advance1 |
-| alt+venstre piletast | punkt2+punkt7 |
-| højre piletast | punkt6+mellemrum |
-| Ctrl+skift+højre piletast | punkt5+punkt8+mellemrum+advance1 |
-| Ctrl+højre piletast | punkt5+mellemrum |
-| skift+alt+højre pileast | punkt5+punkt7+advance1 |
-| alt+højre piletast | punkt5+punkt7 |
+| Venstre-pil | punkt3+mellemrum |
+| Ctrl+skift+Venstre-pil | punkt2+punkt8+mellemrum+advance1 |
+| Ctrl+Venstre-pil | punkt2+mellemrum |
+| shift+alt+Venstre-pil | punkt2+punkt7+advance1 |
+| alt+Venstre-pil | punkt2+punkt7 |
+| Højre-pil | punkt6+mellemrum |
+| Ctrl+skift+Højre-pil | punkt5+punkt8+mellemrum+advance1 |
+| Ctrl+Højre-pil | punkt5+mellemrum |
+| skift+alt+højre-pil | punkt5+punkt7+advance1 |
+| alt+Højre-pil | punkt5+punkt7 |
 | side op Tast | punkt1+punkt2+punkt6+mellemrum |
 | Ctrl+side op Tast | punkt1+punkt2+punkt6+punkt8+mellemrum |
-| Ctrl+skift+pil op Tast | punkt2+punkt3+punkt8+mellemrum+advance1 |
-| Ctrl+pil op Tast | punkt2+punkt3+mellemrum |
-| skift+alt+pil op Tast | punkt2+punkt3+punkt7+advance1 |
-| alt+pil op Tast | punkt2+punkt3+punkt7 |
-| skift+pil op Tast | venstre side rul ned + mellemrum |
+| Ctrl+skift+Pil-op | punkt2+punkt3+punkt8+mellemrum+advance1 |
+| Ctrl+Pil-op | punkt2+punkt3+mellemrum |
+| skift+alt+Pil-op | punkt2+punkt3+punkt7+advance1 |
+| alt+Pil-op | punkt2+punkt3+punkt7 |
+| skift+Pil-op | venstre side rul ned + mellemrum |
 | side ned Tast | punkt3+punkt4+punkt5+mellemrum |
 | Ctrl+side ned Tast | punkt3+punkt4+punkt5+punkt8+mellemrum |
-| Ctrl+skift+pil ned Tast | punkt5+punkt6+punkt8+mellemrum+advance1 |
-| Ctrl+pil ned Tast | punkt5+punkt6+mellemrum |
-| skift+alt+pil ned Tast | punkt5+punkt6+punkt7+advance1 |
-| alt+pil ned Tast | punkt5+punkt6+punkt7 |
-| skift+pil ned Tast | højre side rul ned + mellemrum |
+| Ctrl+skift+Pil-ned | punkt5+punkt6+punkt8+mellemrum+advance1 |
+| Ctrl+Pil-ned | punkt5+punkt6+mellemrum |
+| skift+alt+Pil-ned | punkt5+punkt6+punkt7+advance1 |
+| alt+Pil-ned | punkt5+punkt6+punkt7 |
+| skift+Pil-ned | højre side rul ned + mellemrum |
 | delete Tast | punkt1+punkt3+punkt5+mellemrum |
 | f1 Tast | punkt1+punkt2+punkt5+mellemrum |
 | f3 Tast | punkt1+punkt2+punkt4+punkt8 |
@@ -1625,13 +1648,13 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 NVDA understøtter SyncBraille Display fra [HIMS http://www.hims-inc.com/].
 Hvis du ønsker at koble displayet til ved brug af USB, skal du først installere driveren fra HIMS på dit system.
 
-Dette er tastekombinationerne til dette display til brug af NVDA.
+Dette er tastekombinationerne til dette display til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
 %kc:beginInclude
 || Navn | Tast |
 | Rul punktdisplay tilbage | venstre side rul ned |
 | Rul punktdisplay fremad | højre side rul ned |
-| Flyt til punktcelle | Markøranføringsknapper |
+| Flyt til punktcelle | markørsammenføringsknapper |
 %kc:endInclude
 
 ++ Seika Braille Displays ++
@@ -1639,7 +1662,7 @@ Seika Version 3, 4 og 5 (40 celler) og Seika80 (80 celler) punktdisplaysfra [Nip
 Du kan finde yderligere information om disse displays her http://www.seika-braille.com/.
 Du skal først installere USB-driveren fra leverandøren, før du kan bruge dette punktdisplay.
 
-Dette er tastekombinationerne til dette display til brug af NVDA.
+Dette er tastekombinationerne til dette display til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
 %kc:beginInclude
 || Navn | Tast |
@@ -1647,13 +1670,13 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Rul punktdisplay fremad | højre |
 | Flyt punktdisplay to forrige linje | b3 |
 | Flyt punktdisplay til næste linje | b4 |
-| Skift indstillingen "punkt tøjret til" | b5 |
+| Slå "Punkt følger" til/fra | b5 |
 | Sig alt | b6 |
 | tab | b1 |
 | skift+tab | b2 |
 | alt+tab | b1+b2 |
-| NVDA Menu | venstre+højre |
-| Flyt til punktcelle | Markøranføringsknapper |
+| NVDA-menu | venstre+højre |
+| Flyt til punktcelle | markørsammenføringsknapper |
 %kc:endInclude
 
 ++ Papenmeier BRAILLEX Nyere modeller ++
@@ -1661,33 +1684,37 @@ Følgende punktdisplay er understøttede
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
 - BRAILLEX Trio (USB og bluetooth)
--
+- BRAILLEX Live 20, BRAILLEX Live og BRAILLEX Live Plus (USB and bluetooth)
+- 
 
 Hvis BrxCom er installeret, vil NVDA benytte BrxCom.
 BrxCom er et værktøj der giver dig mulighed for, at bruge punktdisplayet uafhængigt af en skærmlæser.
 En ny version af BrxCom der virker med NVDA bliver snart udgivet af Papenmeier.  
-Punktinput er dog muligt med en TRIO enhed uden BrxCom.
+Indtastning i punkt er mulig med TRIO, BRAILLEX Live 20 og Braillex Live -enheder uden BrxCom.
+Punktindtastning er også mulig med Live Plus-modellen, men kun med BrxCom.
 
 De fleste enheder har en Easy Access bjælke (EAB) der giver mulighed for intuitive og hurtige handlinger.
 EAB kan bevæge sig i fire retninger, hvor der generelt er to tilhørende stillinger.
-C-serien er den eneste undtagelse.
+C-serien og Live-serien er eneste undtagelser til denne regel.
 
-C-serien samt nogle andre displays har to rækker med markøranføringsknapper, hvor den øvester række bruges til at rapportere formateringsinformation.
-Hvis du holder en af de øverste  Markøranføringsknapper og trykker på EAB på C-serien, vil enheden emulere handlingen for den anden stilling.
+C-serien samt nogle andre displays har to rækker med markørsammenføringsknapper, hvor den øveste række bruges til at rapportere formateringsinformation.
+Hvis du holder en af de øverste  markørsammenføringsknapper og trykker på EAB på C-serien, vil enheden emulere handlingen for den anden stilling.
+Displays i Live-serien har kun en enkelt række sammenføringsknapper, og bjælken kan kun bevæges et enkelt trin i hver retning.
+Du kan emulere det andet trin ved at trykke på en af sammenføringstasterne og skubbe bjælken i den tilsvarende retning.
 Hvis du trykker og holder på piletasterne op, ned, højre og venstre (eller EAB) vil den tilsvarende handling gentages.
 
 De følgende taster er generelt tilgængelige på disse punktdisplays:
 || Navn | Tast |
-| l1 | Venstre front Tast |
-| l2 | Venstre tast bag |
-| r1 | Højre front Tast |
-| r2 | Højre Tast bag |
+| l1 | Venstre frontTast |
+| l2 | Venstre bagtast |
+| r1 | Højre frontTast |
+| r2 | Højre batTast |
 | op | 1 trin op|
 | op2 | To trin op |
-| Venstre | 1 trin til højre |
+| Venstre | 1 trin til venstre |
 | venstre2 | 2 trin til venstre |
 | Højre | 1 Trin til højre |
-| Venstre2 | 2 trin til højre |
+| Højre2 | 2 trin til højre |
 | ned | 1 trin ned |
 | Ned2 | 2 trin ned |
 
@@ -1698,38 +1725,37 @@ Papenmeier kommandoer til NVDA er som følgende:
 | Rul punktdisplay fremad | højre |
 | Flyt punktdisplay to forrige linje | op |
 | Flyt punktdisplay til næste linje | ned |
-| Flyt til punktcelle | Markøranføringsknapper |
-| Sig aktuelt tegn ved ubegrænset markør | l1 |
+| Flyt til punktcelle | markørsammenføringsknapper |
+| Sig aktuelt tegn i læsetilstand | l1 |
 | Aktiver det aktuelle navigatorobjekt | l2 |
-| Flyt til flad visning/fokus | r1 |
 | Sig titel | l1+up |
 | Rapportër statuslinje | l2+ned |
 | Flyt til overordnet objekt | op2 |
 | Flyt til første underordnet objekt | ned2 |
 | Flyt til forrige objekt | venstre2 |
 | Flyt til næste objekt | højre2 |
-| Sig tekstformatering | øverste markøranføringsknapper |
+| Sig tekstformatering | øverste markørsammenføringsknapper |
 %kc:endInclude
 
 Trio modellen har yderligere fire knapper. Disse er placeret foran punkttastaturet.
-Knapperne går fra venstre mod højre.
+Knapperne er fra venstre mod højre.
 - Venstre thumb key (LT)
 - mellemrum
 - mellemrum
 - højre thumb key (RT)
 -
 På nuværende tidspunkt er højre thumb key ikke taget i brug.
-De indre taster er begge brugt som mellemrumstaster.
+De midterste taster bliver begge brugt som mellemrumstaster.
 
 %kc:beginInclude
 || Navn | Tast |
 | backspace tast | punkt 7 |
 | enter tast | punkt 8 |
 | escape tast | mellemrum med punkt 7 |
-| pilOp tast | mellemrum med punkt 2 |
-| pilOp tast | mellemrum med punkt 1 |
-| højrePil tast | mellemrum med punkt 4 |
-| pilNed | mellemrum med punkt 5 |
+| Pil-op | mellemrum med punkt 2 |
+| Venstre-pil | mellemrum med punkt 1 |
+| Højre-pil | mellemrum med punkt 4 |
+| Pil-ned | mellemrum med punkt 5 |
 | kontrol tast | lt+punkt2 |
 | alt tast | lt+punkt3 |
 | Ctrl+escape tast | mellemrum med punkt 1 2 3 4 5 6 |
@@ -1754,9 +1780,9 @@ Følgende taster er generelt tilgængelige på disse punktdisplays:
 
 || Navn | Tast |
 | l1 | Venstre front tast |
-| l2 | Venstre tast bag |
+| l2 | Venstre tast bagved |
 | r1 | Højre front tast |
-| r2 | Højre tast bag |
+| r2 | Højre tast bagved |
 | op | 1 trin op |
 | op2 | 2 trin op |
 | venstre | 1 trin venstre |
@@ -1775,28 +1801,26 @@ Enheder med EAB:
 | Rul punktdisplay fremad | højre |
 | Flyt punktdisplay to forrige linje | op |
 | Flyt punktdisplay til næste linje | ned |
-| Flyt til punktcelle | Markøranføringsknapper |
-| Sig aktuelt tegn ved ubegrænset markør | l1 |
+| Flyt til punktcelle | markørsammenføringsknapper |
+| Sig aktuelt tegn i læsetilstand | l1 |
 | Aktiver det aktuelle navigatorobjekt | l2 |
-| Flyt til flad visning/fokus | r1 |
 | Sig titel | l1+up |
 | Rapportër statuslinje | l2+ned |
 | Flyt til overordnet objekt | op2 |
 | Flyt til første underordnet objekt | ned2 |
 | Flyt til næste objekt | højre2 |
 | Flyt til forrige objekt | venstre2 |
-| Sig tekstformatering | øverste markøranføringsknapper |
+| Sig tekstformatering | øverste markørsammenføringsknapper |
 
 BRAILLEX Tiny:
 || Navn | Tast |
-| Sig aktuelt tegn ved ubegrænset markør | l1 |
+| Sig aktuelt tegn i læsetilstand | l1 |
 | Aktiver det aktuelle navigatorobjekt | l2 |
 | Rul punktdisplay tilbage | venstre |
 | Rul punktdisplay fremad | højre |
 | Flyt punktdisplay to forrige linje | op |
 | Flyt punktdisplay til næste linje | ned |
-| Skift punkt tøjret til indstilling | r2 |
-| Skift til flad visning / fokus | r1 |
+| Slå "Punkt følger" til/fra | r2 |
 | Flyt til overordnet objekt | R1+op |
 | Flyt til første underordnet objekt | R1+ned |
 | Flyt til forrige objekt | R1+venstre |
@@ -1805,13 +1829,12 @@ BRAILLEX Tiny:
 
 BRAILLEX 2D Screen:
 || Navn | Tast |
-| Sig aktuelt tegn ved ubegrænset markør | l1 |
+| Sig aktuelt tegn i læsetilstand | l1 |
 | Aktiver det aktuelle navigatorobjekt | l2 |
-| Skift punkt tøjret til indstilling | r2 |
+| Slå "Punkt følger" til/fra | r2 |
 | Sig tekstformatering | reportf |
 | Flyt punktdisplay to forrige linje | op |
 | Rul punktdisplay tilbage | venstre |
-| Skift til flad visning / fokus | r1 |
 | Rul punktdisplay fremad | højre |
 | Flyt punktdisplay til næste linje | ned |
 | Flyt til næste objekt | Venstre2 |
@@ -1829,7 +1852,7 @@ Følgende modeller er understøttede:
 - BrailleNote Apex (USB og Bluetooth forbindelser)
 -
 
-Hvis din enhed understøtter mere end en forbindelsestype, skal du indstille punkt terminal porten i Punkt Terminal indstillinger.
+Hvis din enhed understøtter mere end en forbindelsestype, skal du indstille porten til punktterminal under indstillinger for PunktTerminal.
 Læs venligst Braillenote manualen for detaljer.
 Det kan også være nødvendigt at indstille porten i Braille-indstillinger.
 hvis du kobler til via USB eller Bluetooth, kan du sætte indstillingen til "Automatisk", "USB" eller "Bleutooth", afhængigt af de tilgængelig valgmuligheder.
@@ -1837,7 +1860,7 @@ Hvis du forbinder enheden gennem en ældre seriel port eller en USB til seriel a
 
 Før du forbinder din BrailleNote Apex ved brug af dens USB-client grænseflade, skal du installere de nødvendige drivere fra HumanWare.
 
-Dette er tastekombinationerne til BrailleNote til brug af NVDA.
+Dette er tastekombinationerne til BrailleNote til brug med NVDA.
 Se venligst dokumentationen til din BrailleNote for at finde ud af, hvor du kan finde knapperne.
 
 %kc:beginInclude
@@ -1846,12 +1869,12 @@ Se venligst dokumentationen til din BrailleNote for at finde ud af, hvor du kan 
 | Rul punktdisplay fremad | advance |
 | Flyt punktdisplay til forrige linje | previous |
 | Flyt punktdisplay til næste linje | next |
-| Flyt til punktcelle | routing |
-| Skift punkt tøjret til | previous+next |
-| Pil op key | space+dot1 |
-| Pil ned key | space+dot4 |
-| Venstre piletast | space+dot3 |
-| Højre piletast | space+dot6 |
+| Flyt til punktcelle | markørsammenføringsknapper |
+| Slå "Punkt følger" til/fra | previous+next |
+| Pil-op | space+dot1 |
+| Pil-ned key | space+dot4 |
+| Venstre-pil | space+dot3 |
+| Højre-pil | space+dot6 |
 | Side op | space+dot1+dot3 |
 | side ned | space+dot4+dot6 |
 | Hjem tast | space+dot1+dot2 |
@@ -1865,112 +1888,116 @@ Se venligst dokumentationen til din BrailleNote for at finde ud af, hvor du kan 
 | Shift+tab taster | space+dot1+dot2+dot5+dot6 |
 | Windows tast | space+dot2+dot4+dot5+dot6 (space+w) |
 | Alt tast | space+dot1+dot3+dot4 (space+m) |
-| Skift tastaturhjælp | mellemrum+dot2+dot3+dot6 (mellemrum+lavt+h) |
+| Tastaturhjælp til/fra | mellemrum+dot2+dot3+dot6 (mellemrum+lavt+h) |
 %kc:endInclude
 
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] er et særskilt program, der understøtter yderligere en lang række punktdisplays.
-For at kunne bruge det, skal programmet [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
+For at kunne bruge det, skal du installere programmet [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
 Det anbefales, at du henter og installerer den seneste installationspakke, som fx. kan have navnet brltty-win-4.2-2.exe.
 Under konfigurationen af displayet og den port, der skal bruges, skal du følge instruktionerne nøje, især hvis du benytter et USB-display og allerede har installeret producentens drivere.
 
-BRLTTY håndtere selv braille input, hvis det tilkoblede punktdisplay har et punkttastatur.
-Braille input indstillingen er ikke relevant.
+BRLTTY håndtere selv indtastning i braille, hvis det tilkoblede punktdisplay har et punkttastatur.
+NVDAs indstilling for Braille-input-tabel  er derfor ikke relevant.
 
-Dette er tastekombinationerne til BRLTTY til brug af NVDA.
-Se venligst [BRLTTY dokumentationen for tastekombinationer http://mielke.cc/brltty/doc/drivers/] for yderliger information om, hvordan BRLTTY kommandoer er indstillet til kontroller på diverse punktdisplays.
+Dette er tastekombinationerne til BRLTTY til brug med NVDA.
+Se venligst [BRLTTY dokumentationen for tastekombinationer http://mielke.cc/brltty/doc/KeyTables/] for yderliger information om, hvordan BRLTTY kommandoer er indstillet til kontroller på diverse punktdisplays.
 %kc:beginInclude
 || Navn | BRLTTY command |
-| Rul punktdisplay tilbage | fwinlt (gå venstre et vindue) |
-| Rul punktdisplay fremad | fwinrt (gå højre et vindue) |
-| Flyt punktdisplay til forrige linje | lnup (gå op en linje) |
-| Flyt punktdisplay til næste linje | lndn (gå ned en linje) |
+| Rul punktdisplay tilbage | fwinlt (gå et vindue til venstre) |
+| Rul punktdisplay fremad | fwinrt (gå et vindue til højre) |
+| Flyt punktdisplay til forrige linje | lnup (gå en linje op) |
+| Flyt punktdisplay til næste linje | lndn (gå en linje ned) |
 | Flyt til punktcelle | fly (bring markør til tegn) |
 %kc:endInclude
 
++ Punktforkortelser for felttyper og felttilstande +
+For at få plads til så meget som muligt på et punktdisplay bruger NVDA følgende forkortelser til at indikere type og tilstand for felter.
+
+|| Forkortelse | felttype |
+| knp | knap |
+| cbo | comboboks |
+| chk | checkboks |
+| dlg | dialog |
+| edt | redigerbart tekstfelt (editfelt) |
+| gra | grafik |
+| kN | Nummer på tabelkolonne fs. k1, k2 |
+| rN | Nummer på tabelrække, fx. r1, r2 |
+| hN | Overskrift niveau N, fx. h1, h2 |
+| lnk | link |
+| lst | list |
+| blnk | besøgt link |
+| mnu | menu |
+| mnuln | menulinje |
+| rknp | radioknap |
+| tb | tabel |
+| tv | trævisning |
+| nv N | Et emne i en trævisning har niveau N |
+| ``-----`` | skilletegn |
+
+Desuden er følgende indikatorer for tilstande defineret:
+|| Forkortelse | tilstand for felt |
+| ... | vises, når et objekt understøtter autofuldførelse |
+| ( ) | bliver vist, når et objekt, fx. en checkboks, ikke er markeret |
+| (x) | bliver vist, når et objekt, fx. en checkboks, er markeret |
+| (-) | bliver vist, når et objekt, fx. en checkboks, er delvist markeret |
+| - | Bliver vist, når et objekt, fx. en trævisning, kan foldes sammen |
+| + | Bliver vist, når et objekt, fx. en trævisning, kan foldes ud |
+| klk | Bliver vist, når et objekt kan klikkes på |
+| sb | Bliver vist, når et objekt, fx. et editfelt, er skrivebeskyttet |
+| vlg | Bliver vist, når et objekt er valgt |
+| umnu | Bliver vist, når et objekt har en pop-up-funktion, som regel en undermenu |
+
 + Avancerede emner +
 
-++ Remapping af tastaturkommandoer og andre input-bevægelser ++
-Brugere er i stand til at oprette eller overskrive mappings af input-bevægelser (såsom tastetryk) til scripts i en særlig fil i brugerens NVDA konfigurationsmappe.
-Denne fil hedder gestures.ini.
+++ indstillinger på kommandolinjen ++
+Du kan angive en eller flere indstillinger på kommandolinjen, når du starter NVDA.
+Du kan angive så mange indstillinger, som du har brug for.
+Disse indstillinger kan angives, når du starter NVDA fra en genvej (under egenskaber for genvej), fra Kør-dialogen (Startmenu -> Kør eller Windows+r) eller eller fra Windows kommandoprompt.
+kommandolinjeparametre skal adskilles fra navnet på NVDAs eksekverbare fil og fra andre kommandolinjeparametre af mellemrum.
+For eksempel: Den genvej på skrivebordet, som NVDA opretter under installationen, rummer indstillingen -r, som får NVDA til at lukke den aktuelle kopi, inden en ny startes.
+En anden nyttig kommandolinjeparameter er --disable-addons, som får NVDA til at afbryde alle tilføjelsesprogrammer
+Med den kan du finde ud af, om et givet problem skyldes et tilføjelsesprogram eller klare et alvorligt problem, som er forårsaget af et tilføjelsesprogram.
 
-Denne fil bruger standard ini syntax.
-Filen kan indeholde adskillige sektioner, og hver sektion kan ligeledes have en eller flere optegnelser.
+Som et eksempel kan du afslutte den aktuelle kopi af NVDA ved at skrive følgende i Kør-dialogen:
 
-Hver sektion består af mapninger for scripts i et særligt Python modul og klasse til NVDA.
-- Navnet på sektionen skal være Python-modulet og klassen adskilt af et punktum (.).
-- Tasten for hvert optegnelse er navnet på det script, som  input-bevægelserne skal tilknyttes til.
-Alternativt kan du bruge None til at fjerne  input-bevægelser fra et script, som du tidligere har tilknyttet kommandoer.
-Hver optegnelses nøgle kan kun benyttes en gang per sektion. Dette inkluderer også None.
-- optegnelsens værdi er et komma (,) adskilt liste af bevægelses-identifikatorer for de input-bevægelser, du ønsker at tilknytte.
-Bevægelses-identifikatorer, som slutter med et komma, skal omgives af anførselstegn (" eller ').
--
+nvda -q
 
-Bevægelses-identifikatorer består af en device kode på to bogstaver; et sub-device, layout eller tilstand i parenteser; et kolon; og derefter en type-specifik streng, der identificerer det aktuelle input, såsom navnet på Tast eller touch-bevægelse.
-- For tastaturkommandoer er device koden kb.
-Det som er omgivet af parenteser er tastaturlayout og er valgfrit.
-Hvis dette ikke er inkluderet i parametrene, vil bevægelsen gælde alle tastaturlayouter.
-Strengen efter kolon er en eller flere Tastnavne adskilt af et plus (+) tegn.
-- For bevægelser der anvendes på et punktdisplay,  er device koden br.
-Den del af parametrene, der er omgivet af parenteser, er obligatorisk og angiver hvilket display der skal benyttes.
-Strengen efter kolon er en eller flere Tastnavne adskilt af et plus (+) tegn.
-- For touch-bevægelser er device koden ts.
-Den del der omgives af parenteser bestemmer hvilket touch-tilstand skal bruges til denne bevægelse, og er obligatorisk.
-Strengen efter kolon er en touch-bevægelse; f.eks double_tap, 2fingerflickUp eller 3finger_tap.
--
+Nogle af kommandolinjeparametrene har både en kort og en lang version, mens andre kun har en lang version.
+De, som har en kort version, kan kombineres på denne måde:
+|NVDA -rm | Afslutter den nuværende kopi af NVDA, og starter en ny kopi med startoplyde slået fra osv. |
+| NVDA -rm --disable-addons | Samme som ovenfor, men med tilføjelsesprogrammer slået fra. |
 
-For at kunne find ud af hvilke bevægelses-identifikatorer, script navne samt klassen og modulet de befinder sig i, kan du:
-+ Slå tastaturhjælp til.
-+ Aktiver bevægelsen (tryk tastekombinationen, rør skærmen, osv.).
-+ Slå tastaturhjælp fra.
-+ Aktiver "Vis log" i NVDA-menuen under Værktøjer.
-+ Undersøg de seneste optegnelser i loggen.
-En af disse linjer burde indeholde den nødvendige information for den input-bevægelse du sendte, herunder module.class og scriptnavn, hvis bevægelsen er tilknyttet.
-+
+Med nogle af kommandolinjeparametrene kan du angive yderlige parametre, fx. hvor detaljeret loggen skal være, eller stien til mappen med brugerprofiler.
+Disse yderligere parametre skal skrives efter indstillingen og adskilles fra indstillingen af et mellemrum i den korte version og af et lighedstegn (=) i den lange version, fx.
+| nvda -l 10 | Starter NVDA med logningsniveau sat til "debug" |
+| nvda --log-file=c:\nvda.log |  Får NVDA til at skrive sin log til c:\nvda.log |
+| nvda --log-level=20 -f c:\nvda.log | Får NVDA til at starte med logniveau sat til "info" og gemme sin log i filen c:\nvda.log |
 
-Nedenstående er et eksempel på, hvordan du kan tilknytte NVDA+skift+t til scriptet de rer ansvarligt for annoncering af tid og dato.
+De mulige kommandolinjeparametre til NVDA er følgende:
+|| Kort | Lang | Beskrivelse |
+| -h | --help | Vis hjælp til kommandolinje og afslut |
+| -q | --quit | Afslut den nuværende kopi af NVDA |
+| -r | --replace | Afslut en allerede kørende kopi af NVDA og start denne kopi |
+| -k | --check-running | Fortæl via exitkoden, om NVDA kører (0 hvis NVDA kører, 1 hvis den ikke gør) |
+| -f LOGFILENAME | --log-file=LOGFILENAME | Filen hvor NVDAs log skal gemmes |
+| -l LOGLEVEL | --log-level=LOGLEVEL | Det laveste niveau af meddelelser, som skal logges (debug 10, info 20, advarsler 30, fejl 40 og kritiske fejl 50). Standard er advarsler. |
+| -c CONFIGPATH | --config-path=CONFIGPATH | Stien hvor alle indstillinger i NVDA bliver gemt |
+| -m | --minimal | Ingen lyde, ingen brugergrænseflade, ingen opstartsmeddelelser osv. |
+| -s | --secure | Sikker tilstand (uden Python console) |
+| Ingen | --disable-addons | ingen tilføjelsesprogrammer |
+| Ingen | --no-sr-flag  | Lad være med at ændre det globale skærmlæserflag |
+| Ingen | --install | Installerer NVDA og starter den nyinstallerede kopi |
+| Ingen | --install-silent | Tavs installation af NVDA (Starter ikke den nyinstallerede kopi) |
 
-For at finde det korrekte scriptnavn og module.class for dato tid, skal du slå tastaturhjælp til og derefter trykke NVDA+f12 (eftersom dette er den aktuelle kommando til at aktivere scriptet).
-Derefter skal du slå tastaturhjælp fra igen og undersøge loggen.
+++ Avanceret tilpasning af udtale af symboler ++
+Det er muligt at tilpasse udtale af sætningstegn, samt andre symboler udover det som du kan opnå ved brug af dialogen [Udtale af sætningstegn/symboler #SymbolPronunciation].
+Du kan for eksempel bestemme, om det rå symbol skal sendes til talesyntesen (fx. for at skabe en pause i talen eller ændre tonefald) og du kan tilføje brugerdefinerede symboler.
 
-Når du nærmer dig slutningen på filen burde du se:
-
-```
-INFO - inputCore.InputManager._handleInputHelp (13:17:22):
-Input help: gesture kb(desktop):NVDA+f12, bound to script dateTime on globalCommands.GlobalCommands
-```
-
-Fra dette output kan du se, at script navnet er dateTime og module.class er globalCommands.GlobalCommands.
-
-Hvis filen dog ikke eksisterer, skal du oprette en tekstfil ved navn gestures.ini i user configuration mappen, og tilføjfe følgende indhold:
-
-```
-[globalCommands.GlobalCommands]
-	dateTime = kb:NVDA+skift+t
-```
-
-Dette vil tilknytte kommandoen tryk NVDA+skift+t (i ethvert tastaturlayout) til scriptet dateTime.
-
-Bemærk at den oprindelige kommando, som er NVDA+F12, fortsat vil udføre dens oprindelige handling.
-Hvis du ønsker at fjerne denne komando kan du tilføje følgende linje:
-
-```
-	None = kb:NVDA+f12
-```
-
-Selv om, at du kan tilknytte scripts til alle tilgængelige tastetryk og bevægelser, kan det blive problematisk at bruge ALT-tasten på tastaturet.
-NVDA fortsætter med at sende funktionstaster (såsom skift, kontrol og alt) til operativsystemet, uanset om de ender i et script.
-Således kan denne kommando aktivere menulinjen, men på samme tid eksekvere en kommando, hvis du altså har tilknyttet et script til denne tast.
-Af denne grund er det muligvis det bedste, hvis du fortsætter med at bruge skift, kontrol og NVDAs funktionstaste som funktionstaster.
-
-++ Avanceret tilpasning af udtalelse af symboler ++
-Det er muligt at tilpasse udtalelse af tegnsætning, samt andre symboler udover det som du kan opnå ved brug af dialogen [Udtalelse sætningstegn/symboler #SymbolPronunciation].
-Du kan for eksempel bestemme, om det rå symbol skal sendes til talesyntesen (fx. pause talen eller ændre tonefald) og du kan også tilføje brugerdefinerede.
-
-For at gøre dette, er det nødvendigt at ændre filen med udtalelser for symboler og tegnsætning. Den findes i den mappe, der indeholder brugerkonfigurationen af NVDA.
+For at gøre dette, skal du ændre filen med udtaler for symboler og sætningstegn. Den findes i den mappe, der indeholder brugerkonfigurationen til NVDA.
 Filen hedder symbols-xx.dic, hvor xx repræsentere sprogkoden.
-Formateringen af denne fil er dokumenteret  i kapitlet Symbol Pronunciation, fundet i NVDAs udviklingsvejledning [the Development section of the NVDA web site NVDA_URLwiki/Development].
-Bemærk at det ikke er muligt for brugere at definere komplekse symboler.
+Formatet på denne fil er dokumenteret  i kapitlet Symbol Pronunciation, fundet i NVDAs udviklingsvejledning [the Development section of the NVDA web site NVDA_URLwiki/Development].
+Det er dog ikke muligt for brugere at definere komplekse symboler.
 
 + Yderligere information +
 Hvis du har brug for yderligere information eller hjælp til brugen af NVDA, besøg venligst NVDAs netsted NVDA_URL.

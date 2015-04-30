@@ -3,6 +3,110 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.1 =
+此次发布的重要更新包括 Microsoft Word 和 outlook 的浏览模式支持，Skype 桌面版支持的少量提升及 Microsoft Explorer 支持的显著提升。
+
+== 新特性 ==
+- 您可以使用“标点符号读音”对话框新增标点。 (#4354)
+- 在“输入手势”对话框，您可以使用“过滤关键字”筛选您需要查看的触摸手势。 (#4458)
+- NVDA 现在可以自动的朗读 mintty 的新文本。 (#4588)
+- 浏览模式的查找对话框中增加了区分大小写的选项。 (#4584)
+- 在word 中，现在可以使用“NVDA+空格”切换到浏览模式后使用h等进行元素跳转，也可以使用“NVDA+F7”进行元素筛选。 (#2975)
+- 提升对 Outlook 2007 及其后版本中的 HTML 消息浏览模式自动切换的支持，如果没有自动切换则可以使用“NVDA+空格”强行切换。 (#2975)
+- 由作者使用 Microsoft Word 的表格属性指定的列标题行现在可以正常的识别为标题。 (#4510)
+ - 如果列表被合并，列标题不能正常识别，您还可以手动使用“NVDA+Shift+C”设置列标题行。
+- 支持 Skype 桌面版的通知自动朗读。 (#4741)
+- 在 Skype 桌面版中，您可以使用“NVDA+control+1到0”朗读最近的第x条消息。 (#3210)
+- 在 Skype 桌面版的绘画框中，输入状态可以自动读出。 (#3506)
+- 现在您可以使用命令行对 NVDA 进行静默安装，这种方式安装之后不会启动新安装的 NVDA 副本，参数是 --install-silent。 (#4206)
+- 支持 Papenmeier BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus 点显器 (#4614)
+
+
+== 更改 ==
+- 在文档格式设置的“读出拼写错误”选项增加了快速键“r”。 (#793)
+- NVDA 现在使用语音语言来对文字和标点的朗读进行处理，此选项与自动语言切换的开关没有关联，如果您想取消这个特性可以通过取消选中“处理文字和标点时信任语音的语言”复选框。 (#4210)
+- 对 Newfon 合成器的支持被移除，因为它已经变成了一个插件。 (#3184)
+- NVDA 仅支持 Skype 7桌面版以上的版本，低版本不再支持。 (#4218)
+- NVDA 升级的下载变得更加安全，文件信息由 HTTPS 协议传输，且在文件下载完成后会进行 hash 校验。 (#4716)
+- ESpeak已经被升级到了 1.48.04 (#4325)
+
+
+== Bug 修复（此部分请查看测试版升级日志） ==
+- In Microsoft Excel, merged row and column header cells are now handled correctly. For example, if A1 and B1 are merged, then B2 will now have A1 and B1 reported as its column header rather than nothing at all. (#4617)
+- When editing the content of a text box in Microsoft PowerPoint 2003, NVDA will correctly report the content of each line. Previously, in each paragraph, lines would increasingly be off by one character. (#4619)
+- All of NVDA's dialogs are now centred on the screen, improving visual presentation and usability. (#3148)
+- In Skype for desktop, when entering an introductory message to add a contact, entering and moving through the text now works correctly. (#3661)
+- When focus moves to a new itemn in tree views in the Eclipse IDE, if the previously focused item is a check box, it is no longer incorrectly announced. (#4586)
+- In the Microsoft Word spell check dialog, the next error will be automatically reported when the last one has been changed or ignored using respective shortcut keys. (#1938)
+- Text can again be read correctly in places such as Tera Term Pro's terminal window and documents in Balabolka. (#4229)
+- Focus now correctly returns to the document being edited When finishing input composition of text in Korean and other east Asian languages while editing within a frame in Internet Explorer and other MSHTML documents. (#4045)
+- In the Input Gestures dialog, when selecting a keyboard layout for a keyboard gesture being added, pressing escape now closes the menu as expected instead of closing the dialog. (#3617)
+- When removing an add-on, the add-on directory is now correctly deleted after restarting NVDA. Previously, you had to restart twice. (#3461)
+- Major problems have been fixed when using Skype for Desktop 7. (#4218)
+- When you send a message in Skype for Desktop, it is no longer read twice. (#3616)
+- In Skype for Desktop, NVDA should no longer occasionally spuriously read a large flood of messages (perhaps even an entire conversation). (#4644)
+- fixed a problem where NVDA's Report date/time command did not honor the regional settings specified by the user in some cases. (#2987)
+- In browse mode, nonsensical text (sometimes spanning several lines) is no longer presented for certain graphics such as found on Google Groups. (Specifically, this occurred with base64 encoded images.) (#4793)
+- NVDA should no longer freeze after a few seconds when moving focus away from a Windows Store app as it becomes suspended. (#4572)
+- The aria-atomic attribute on live regions in Mozilla Firefox is now honored even when the atomic element itself changes. Previously, it only affected descendant elements. (#4794)
+- Browse mode will reflect updates, and live regions will be announced, for   browse mode documents within ARIA applications embedded in a document in Internet Explorer or other MSHTML controls. (#4798)
+- When text is changed or added in live regions in Internet Explorer and other MSHTML controls where the author has specified that text is relevant, only the changed or added text is announced, rather than all of the text in the containing element. (#4800)
+- Content indicated by the aria-labelledby attribute on elements in Internet Explorer and other MSHTML controls correctly replaces the original content  where it is appropriate to do so. (#4575)
+- When checking spelling in Microsoft Outlook 2013, the misspelled word is now announced. (#4848)
+- In Internet Explorer and other MSHTML controls, content inside elements hidden with visibility:hidden is no longer inappropriately presented in browse mode. (#4839, #3776)
+- In Internet Explorer and other MSHTML controls, the title attribute on form controls no longer inappropriately takes preference over other label associations. (#4491)
+- In Internet Explorer and other MSHTML controls, NVDA no longer ignores focusing  of elements  due to the aria-activedescendant attribute. (#4667)
+
+
+== Changes for Developers ==
+- Updated wxPython to 3.0.2.0. (#3763)
+- Updated Python to 2.7.9. (#4715)
+- NVDA no longer crashes when restarting after removing or updating an add-on which imports speechDictHandler in its installTasks module. (#4496)
+
+
+= 2014.4 =
+
+== 新特性 ==
+- 新的语言支持：哥伦比亚西班牙语，旁遮普与。
+- 现在，可以使用 NVDA 退出对话框设置“重新启动”、“重新启动并停用插件”。 (#4057)
+ - NVDA 也可以使用命令行选项 --disable-addons 来禁用插件。
+- 在语音字典中，可以为来源字符定义只匹配整个单词，也就是说，不再匹配长单词的一部分。 (#1704)
+
+
+== 更改 ==
+- 如果您使用浏览光标浏览到一个包含在浏览模式文档的对象时，而您上次移动到的对象却并不包含在浏览模式文档中，此时，浏览模式将被设置为文档。以前，仅当浏览光标导致焦点移动后，模式才会被重置。 (#4369)
+- 点显器、合成器各自的设置对话框中，除了“无点显器”和“无合成器”选项之外的其他元素都按照字母顺序排列，而这两个选项将被放在列表底部。 (#2724)
+- 升级 liblouis 盲文翻译器为2.6.0。 (#4434, #3835)
+- 在浏览模式中，按“shift+e或e”键浏览编辑框时包含可编辑组合框，这会包含最新版本的 google 搜索框。 (#4436)
+- 现在，左键单机通知区域的 NVDA 图标将弹出 NVDA 菜单，而不是什么都不做。 (#4459)
+
+
+== Bug 修复 ==
+- 当焦点返回浏览模式文档（如使用alt+tab切换到一个已经打开的网页），焦点将被定位在上次浏览的字符上，而不是焦点临近的控件（如最近的链接）。 (#4369)
+- 在 Powerpoint 幻灯片展示时，浏览光标可正确的跟随虚拟输入焦点。 (#4370)
+- 在 Mozilla Firefox 和其他 基于 Gecko 的浏览器中， 活动区域的新内容将被读出，即使新的活动区域拥有可用的、与上级活动的区域不同的 ARIA 活动类型， 如为标记为 polite 的活动区域添加标记为 assertive  的内容。 (#4169)
+- 在 Internet Explorer 和其他 MSHTML 控件， 在一个文档包含于另外一个文档时的某些情况下，不会妨碍用户访问被嵌套文档的内容（特别是被嵌套在 frameset 的 frameset）。 (#4418)
+- NVDA 不会在当您视图使用 Handy Tech 点显器时崩溃。 (#3709)
+- 在 Windows Vista 中， 当使用 NVDA 桌面图标或使用其快捷键启动 NVDA 的时候，虚假的 “输入点未找到”的对话框将不再显示。 (#4235)
+- 最新版本的 Eclipse 中的某些对话框包含的编辑控件存在的一些问题被修复。 (#3872)
+- 在 Outlook 2010中，在“约会地点”和“会议要求”移动输入焦点时可以正常的工作。 (#4126)
+- 在一个活动区域中，被标记为 不活动（如aria-live="off"）的内容现在可被正确的忽略。 (#4405)
+- 当朗读包含名称的状态栏文本时，名称可以被状态栏文本的第一个单词正确拆分。 (#4430)
+- 在密码输入框启用“朗读输入单词”时，密码将不会被以单词的形式读出。 (#4402)
+- 在 Microsoft Outlook 消息列表中，消息项目将不会无意义的读出“数据项目”。 (#4439)
+- 当在 Eclipse IDE 的代码编辑控件中选择文本时， 将不会在每次选择发生变化时读出全部选择的内容。 (#2314)
+- 变种版本的 Eclipse（ 如Spring 工具套装和被包含在Android 开发工具的捆绑版本）现在可正确的识别为Eclipse 并可正确的控制。 (#4360, #4454)
+-  在 Internet Explorer 和其他 MSHTML 控件（还包括某些 windows 8 应用程序） 的高DPI 显示器下或文档大小被更改时，鼠标导航和触摸浏览将变得更加准确。 (#3494) 
+- 在 Internet Explorer 和其他 MSHTML 控件  使用鼠标导航或触摸浏览时，按钮的更多标签将被读出。 (#4173)
+- 当使用带有 BrxCom 的 Papenmeier BRAILLEX 点显器时，   点显器上的按键现在可正常的工作。 (#4614)
+
+
+== Changes for Developers ==
+- For executables which host many different apps (e.g. javaw.exe), code can now be provided to load specific app modules for each app instead of loading the same app module for all hosted apps. (#4360)
+ - See the code documentation for appModuleHandler.AppModule for details.
+ - Support for javaw.exe is implemented.
+
+
 = 2014.3 =
 
 == 新特性 ==

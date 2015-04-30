@@ -30,7 +30,7 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
-from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer
+from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
@@ -1573,15 +1573,6 @@ class OutlineItem(IAccessible):
 		except (ValueError, TypeError):
 			return val
 
-class Tooltip(IAccessible):
-
-	def event_show(self):
-		# TODO: Abstract this somehow.
-		if (config.conf["presentation"]["reportTooltips"] and (self.IAccessibleRole==oleacc.ROLE_SYSTEM_TOOLTIP)) or (config.conf["presentation"]["reportHelpBalloons"] and (self.IAccessibleRole==oleacc.ROLE_SYSTEM_HELPBALLOON)):
-			speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
-			# TODO: Don't use getBrailleTextForProperties directly.
-			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
-
 class List(IAccessible):
 
 	def _get_role(self):
@@ -1743,8 +1734,8 @@ _staticMap={
 	("Static",oleacc.ROLE_SYSTEM_STATICTEXT):"StaticText",
 	("msctls_statusbar32",oleacc.ROLE_SYSTEM_STATICTEXT):"StaticText",
 	(None,oleacc.ROLE_SYSTEM_PUSHBUTTON):"Button",
-	("tooltips_class32",oleacc.ROLE_SYSTEM_TOOLTIP):"Tooltip",
-	("tooltips_class32",oleacc.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
+	("tooltips_class32",oleacc.ROLE_SYSTEM_TOOLTIP):"ToolTip",
+	("tooltips_class32",oleacc.ROLE_SYSTEM_HELPBALLOON):"Notification",
 	(None,oleacc.ROLE_SYSTEM_DIALOG):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_ALERT):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_PROPERTYPAGE):"Dialog",
@@ -1806,4 +1797,5 @@ _staticMap={
 	("listview",oleacc.ROLE_SYSTEM_CLIENT):"ListviewPane",
 	("NUIDialog",oleacc.ROLE_SYSTEM_CLIENT):"NUIDialogClient",
 	("_WwB",oleacc.ROLE_SYSTEM_CLIENT):"winword.ProtectedDocumentPane",
+    ("MsoCommandBar",oleacc.ROLE_SYSTEM_LISTITEM):"msOffice.CommandBarListItem",
 }

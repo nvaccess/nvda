@@ -191,6 +191,14 @@ class CursorManager(baseObject.ScriptableObject):
 		self._caretMovementScriptHelper(gesture,textInfos.UNIT_LINE,1)
 	script_moveByLine_forward.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
+	def script_moveBySentence_back(self,gesture):
+		self._caretMovementScriptHelper(gesture,textInfos.UNIT_SENTENCE,-1)
+	script_moveBySentence_back.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+
+	def script_moveBySentence_forward(self,gesture):
+		self._caretMovementScriptHelper(gesture,textInfos.UNIT_SENTENCE,1)
+	script_moveBySentence_forward.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+
 	def script_moveByParagraph_back(self,gesture):
 		self._caretMovementScriptHelper(gesture,textInfos.UNIT_PARAGRAPH,-1)
 	script_moveByParagraph_back.resumeSayAllMode=sayAllHandler.CURSOR_CARET
@@ -335,6 +343,8 @@ class CursorManager(baseObject.ScriptableObject):
 		"kb:NVDA+Control+f": "find",
 		"kb:NVDA+f3": "findNext",
 		"kb:NVDA+shift+f3": "findPrevious",
+		"kb:alt+upArrow":"moveBySentence_back",
+		"kb:alt+downArrow":"moveBySentence_forward",
 	}
 
 class _ReviewCursorManagerTextInfo(textInfos.TextInfo):
