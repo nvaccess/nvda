@@ -580,7 +580,7 @@ class MSHTML(IAccessible):
 		if (
 			self.HTMLNodeHasAncestorIAccessible or
 			#IE inappropriately generates the name from descendants on some controls
-			self.IAccessibleRole in (oleacc.ROLE_SYSTEM_MENUBAR,oleacc.ROLE_SYSTEM_TOOLBAR,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TABLE,oleacc.ROLE_SYSTEM_DOCUMENT) or
+			self.IAccessibleRole in (oleacc.ROLE_SYSTEM_MENUBAR,oleacc.ROLE_SYSTEM_TOOLBAR,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TABLE,oleacc.ROLE_SYSTEM_DOCUMENT,oleacc.ROLE_SYSTEM_DIALOG) or
 			#Adding an ARIA landmark or unknown role to a DIV or NAV node makes an IAccessible with role_system_grouping and a name calculated from descendants.
 			# This name should also be ignored, but check NVDA's role, not accRole as its possible that NVDA chose a better role
 			# E.g. row (#2780)
