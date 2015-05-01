@@ -1718,6 +1718,8 @@ class InputGesturesDialog(SettingsDialog):
 	def populateTree(self, filter=''):
 		if filter:
 			#This regexp uses a positive lookahead (?=...) for every word in the filter, which just makes sure the word is present in the string to be tested without matching position or order.
+			# #5060: Escape the filter text to prevent unexpected matches and regexp errors.
+			filter = re.escape(filter)
 			filterReg = re.compile(r'(?=.*?' + r')(?=.*?'.join(filter.split(' ')) + r')', re.U|re.IGNORECASE)
 		for category in sorted(self.gestures):
 			treeCat = self.tree.AppendItem(self.treeRoot, category)
