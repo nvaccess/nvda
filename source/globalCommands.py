@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2012 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista
+#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista
 
 import time
 import itertools
@@ -1382,7 +1382,26 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onConfigProfilesCommand, None)
 	# Translators: Describes the command to open the Configuration Profiles dialog.
 	script_activateConfigProfilesDialog.__doc__ = _("Shows the NVDA Configuration Profiles dialog")
-	
+
+	def script_interactWithMath(self, gesture):
+		import mathPres
+		mathMl = mathPres.getMathMlFromTextInfo(api.getReviewPosition())
+		if not mathMl:
+			obj = api.getNavigatorObject()
+			if obj.role == controlTypes.ROLE_MATH:
+				try:
+					mathMl = obj.mathMl
+				except (NotImplementedError, LookupError):
+					mathMl = None
+		if not mathMl:
+			# Translators: Reported when the user attempts math interaction
+			# with something that isn't math.
+			ui.message(_("Not math"))
+			return
+		mathPres.interactWithMathMl(mathMl)
+	# Translators: Describes a command.
+	script_interactWithMath.__doc__ = _("Begins interaction with math content")
+
 	__gestures = {
 		# Basic
 		"kb:NVDA+n": "showGui",
@@ -1560,6 +1579,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+control+z": "activatePythonConsole",
 		"kb:NVDA+control+f3": "reloadPlugins",
 		"kb(desktop):NVDA+control+f2": "test_navigatorDisplayModelText",
+		"kb:NVDA+alt+m": "interactWithMath",
 	}
 
 #: The single global commands instance.

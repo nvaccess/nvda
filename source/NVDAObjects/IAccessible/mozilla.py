@@ -1,14 +1,16 @@
+# -*- coding: UTF-8 -*-
 #NVDAObjects/IAccessible/mozilla.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
+#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner
 
 from collections import namedtuple
+from ctypes import c_short
 import IAccessibleHandler
 import oleacc
 import winUser
-from comtypes import IServiceProvider, COMError
+from comtypes import IServiceProvider, COMError, BSTR
 import eventHandler
 import controlTypes
 from . import IAccessible, Dialog, WindowRoot
@@ -170,6 +172,27 @@ class TextLeaf(Mozilla):
 class Application(Document):
 	shouldCreateTreeInterceptor = False
 
+class Math(Mozilla):
+
+	def _get_mathMl(self):
+		from comtypes.gen.ISimpleDOM import ISimpleDOMNode
+		node = self.IAccessibleObject.QueryInterface(ISimpleDOMNode)
+		# Try the data-mathml attribute.
+		attr = node.attributesForNames(1, (BSTR * 1)("data-mathml"), (c_short * 1)(0,))
+		if attr:
+			import mathPres
+			if not mathPres.getLanguageFromMath(attr) and self.language:
+				attr = mathPres.insertLanguageIntoMath(attr, self.language)
+			return attr
+		if self.IA2Attributes.get("tag") != "math":
+			# This isn't MathML.
+			raise LookupError
+		if self.language:
+			attrs = ' xml:lang="%s"' % self.language
+		else:
+			attrs = ""
+		return "<math%s>%s</math>" % (attrs, node.innerHTML)
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Mozilla object.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
@@ -246,6 +269,7 @@ _IAccessibleRolesToOverlayClasses = {
 	"object": EmbeddedObject,
 	oleacc.ROLE_SYSTEM_APPLICATION: Application,
 	oleacc.ROLE_SYSTEM_DIALOG: Application,
+	oleacc.ROLE_SYSTEM_EQUATION: Math,
 }
 
 #: Roles that mightn't set the focused state when they are focused.
