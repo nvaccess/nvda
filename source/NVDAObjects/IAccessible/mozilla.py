@@ -55,7 +55,7 @@ class Mozilla(IAccessible):
 		return info
 
 	def _get_TextInfo(self):
-		TextInfo=super(Mozilla,self).TextInfo
+		return super(Mozilla,self).TextInfo
 		if not isinstance(TextInfo,IA2TextTextInfo) and self.role in (controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEROW):
 			TextInfo=IndexTextInfo
 		return TextInfo

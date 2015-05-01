@@ -22,6 +22,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <common/log.h>
 #include "nvdaHelperRemote.h"
 #include "dllmain.h"
+#include "inProcess.h"
+#include "nvdaInProcUtils.h"
 #include "IA2Support.h"
 
 typedef ULONG(*LPFNDLLCANUNLOADNOW)();
@@ -170,4 +172,82 @@ void IA2Support_inProcess_terminate() {
 	unregisterWindowsHook(WH_GETMESSAGE,IA2Support_uninstallerHook);
 	CloseHandle(IA2UIThreadUninstalledEvent);
 	CloseHandle(IA2UIThreadHandle);
+}
+
+bool findDescendantSelection(IAccessible2* pacc2, long* startID, long* startOffset, long* endID, long* endOffset) {
+	bool foundCaret=false;
+	IAccessibleText* paccText=NULL;
+	pacc2->QueryInterface(IID_IAccessibleText,(void**)&paccText);
+	if(paccText) {
+		long caretOffset=-1;
+		paccText->get_caretOffset(&caretOffset);
+		paccText->Release();
+		if(caretOffset==-1) return false; 
+		IAccessibleHypertext* paccHypertext=NULL;
+		pacc2->QueryInterface(IID_IAccessibleHypertext,(void**)&paccHypertext);
+		if(paccHypertext) {
+			long hi=-1;
+			paccHypertext->get_hyperlinkIndex(caretOffset,&hi);
+			IAccessibleHyperlink* paccHyperlink=NULL;
+			if(hi>=0) {
+				paccHypertext->get_hyperlink(hi,&paccHyperlink);
+			}
+			paccHypertext->Release();
+			if(paccHyperlink) {
+				IAccessible2* pacc2Child=NULL;
+				paccHyperlink->QueryInterface(IID_IAccessible2,(void**)&pacc2Child);
+				paccHyperlink->Release();
+				if(pacc2Child) {
+					foundCaret=findDescendantSelection(pacc2Child,startID,startOffset,endID,endOffset);
+					pacc2Child->Release();
+				}
+			}
+		}
+		if(!foundCaret) {
+			pacc2->get_uniqueID(startID);
+			*endID=*startID;
+			*startOffset=caretOffset;
+			*endOffset=caretOffset;
+			foundCaret=true;
+		}
+	} else {
+		long childCount=0;
+		pacc2->get_accChildCount(&childCount);
+		VARIANT varChild;
+		varChild.vt=VT_I4;
+		for(varChild.lVal=1;varChild.lVal<=childCount;++(varChild.lVal)) {
+			IDispatch* pdispatchChild=NULL;
+			pacc2->get_accChild(varChild,&pdispatchChild);
+			if(!pdispatchChild) continue;
+			IAccessible2* pacc2Child=NULL;
+			pdispatchChild->QueryInterface(IID_IAccessible2,(void**)&pacc2Child);
+			pdispatchChild->Release();
+			if(!pacc2Child) continue;
+			foundCaret=findDescendantSelection(pacc2Child,startID,startOffset,endID,endOffset);
+			pacc2Child->Release();
+			if(foundCaret) break;
+		}
+	}
+	return foundCaret;
+}
+
+error_status_t nvdaInProcUtils_IA2_findDescendantSelection(handle_t bindingHandle, long hwnd, long parentID, long* startID, long* startOffset, long* endID, long* endOffset) {
+	auto func=[&](void* data){
+		IAccessible* pacc=NULL;
+		VARIANT varChild;
+		AccessibleObjectFromEvent((HWND)hwnd,OBJID_CLIENT,parentID,&pacc,&varChild);
+		if(!pacc) return;
+		IAccessible2* pacc2=NULL;
+		IServiceProvider* pserv=NULL;
+		pacc->QueryInterface(IID_IServiceProvider,(void**)&pserv);
+		pacc->Release();
+		if(!pserv) return; 
+		pserv->QueryService(IID_IAccessible,IID_IAccessible2,(void**)&pacc2);
+		pserv->Release();
+		if(!pacc2) return;
+		findDescendantSelection(pacc2,startID,startOffset,endID,endOffset);
+		pacc2->Release();
+	};
+	execInWindow((HWND)hwnd,func,NULL);
+	return 0;
 }

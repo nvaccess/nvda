@@ -415,6 +415,18 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			raise NotImplementedError
 
 	def _findContentDescendant(self, obj, position):
+		import ctypes
+		import NVDAHelper
+		import NVDAObjects.IAccessible
+		if position==textInfos.POSITION_CARET:
+			startID=ctypes.c_int()
+			startOffset=ctypes.c_int()
+			endID=ctypes.c_int()
+			endOffset=ctypes.c_int()
+			NVDAHelper.localLib.nvdaInProcUtils_IA2_findDescendantSelection(obj.appModule.helperLocalBindingHandle,obj.windowHandle,obj.IAccessibleObject.uniqueID,ctypes.byref(startID),ctypes.byref(startOffset),ctypes.byref(endID),ctypes.byref(endOffset))
+			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(obj.windowHandle,winUser.OBJID_CLIENT,startID.value)
+			ti=obj.makeTextInfo(textInfos.offsets.Offsets(startOffset.value,endOffset.value))
+			return ti,obj
 		while True:
 			try:
 				ti = obj.makeTextInfo(position)
