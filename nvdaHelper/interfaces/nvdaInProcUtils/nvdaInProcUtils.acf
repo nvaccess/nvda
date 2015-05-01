@@ -22,4 +22,5 @@ interface NvdaInProcUtils {
 	[fault_status,comm_status] sysListView32_getGroupInfo();
 	[fault_status,comm_status] getActiveObject();
 	[fault_status,comm_status] dumpOnCrash();
+	[fault_status,comm_status] IA2_findDescendantSelection();
 }
