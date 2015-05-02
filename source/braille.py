@@ -743,7 +743,7 @@ class TextInfoRegion(Region):
 			typeform |= louis.underline
 		return typeform
 
-	def _addFieldText(self, text):
+	def _addFieldText(self, text, contentPos):
 		# Separate this field text from the rest of the text.
 		if self.rawText:
 			text = " %s " % text
@@ -752,8 +752,7 @@ class TextInfoRegion(Region):
 		self.rawText += text
 		textLen = len(text)
 		self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
-		# Map this field text to the start of the field's content.
-		self._rawToContentPos.extend((self._currentContentPos,) * textLen)
+		self._rawToContentPos.extend((contentPos,) * textLen)
 
 	def _addTextWithFields(self, info, formatConfig, isSelection=False):
 		shouldMoveCursorToFirstContent = not isSelection and self.cursorPos is not None
@@ -772,8 +771,9 @@ class TextInfoRegion(Region):
 					self.cursorPos = len(self.rawText)
 					shouldMoveCursorToFirstContent = False
 				self.rawText += command
-				self.rawTextTypeforms.extend((typeform,) * len(command))
-				endPos = self._currentContentPos + len(command)
+				commandLen = len(command)
+				self.rawTextTypeforms.extend((typeform,) * commandLen)
+				endPos = self._currentContentPos + commandLen
 				self._rawToContentPos.extend(xrange(self._currentContentPos, endPos))
 				self._currentContentPos = endPos
 				if isSelection:
@@ -787,13 +787,14 @@ class TextInfoRegion(Region):
 					text = getFormatFieldBraille(field)
 					if not text:
 						continue
-					self._addFieldText(text)
+					# Map this field text to the start of the field's content.
+					self._addFieldText(text, self._currentContentPos)
 				elif cmd == "controlStart":
-					# Place this field on a stack so we can access it for controlEnd.
 					if self._skipFieldsNotAtStartOfNode and not field.get("_startOfNode"):
 						text = None
 					else:
 						text = info.getControlFieldBraille(field, ctrlFields, True, formatConfig)
+					# Place this field on a stack so we can access it for controlEnd.
 					ctrlFields.append(field)
 					if not text:
 						continue
@@ -804,23 +805,20 @@ class TextInfoRegion(Region):
 						if fieldStart > 0:
 							# There'll be a space before the field text.
 							fieldStart += 1
-						if shouldMoveCursorToFirstContent:
-							shouldMoveCursorToFirstContent = False
-							self.cursorPos = fieldStart
-						elif isSelection and self._selectionStart is None:
+						if isSelection and self._selectionStart is None:
 							self._selectionStart = fieldStart
-					self._addFieldText(text)
+						elif shouldMoveCursorToFirstContent:
+							self.cursorPos = fieldStart
+							shouldMoveCursorToFirstContent = False
+					# Map this field text to the start of the field's content.
+					self._addFieldText(text, self._currentContentPos)
 				elif cmd == "controlEnd":
 					field = ctrlFields.pop()
 					text = info.getControlFieldBraille(field, ctrlFields, False, formatConfig)
 					if not text:
 						continue
-					# Separate this field text from the rest of the text.
-					self.rawText += " %s " % text
-					textLen = len(text)
-					self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
 					# Map this field text to the end of the field's content.
-					self._rawToContentPos.extend((self._currentContentPos - 1,) * textLen)
+					self._addFieldText(text, self._currentContentPos - 1)
 		if isSelection and self._selectionStart is None:
 			# There is no selection. This is a cursor.
 			self.cursorPos = len(self.rawText)
