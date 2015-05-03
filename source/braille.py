@@ -744,11 +744,9 @@ class TextInfoRegion(Region):
 		return typeform
 
 	def _addFieldText(self, text, contentPos):
-		# Separate this field text from the rest of the text.
 		if self.rawText:
-			text = " %s " % text
-		else:
-			text += " "
+			# Separate this field text from the rest of the text.
+			text = " " + text
 		self.rawText += text
 		textLen = len(text)
 		self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
@@ -762,6 +760,12 @@ class TextInfoRegion(Region):
 			if isinstance(command, basestring):
 				if not command:
 					continue
+				if self._endsWithField:
+					# The last item added was a field,
+					# so add a space before the content.
+					self.rawText += " "
+					self.rawTextTypeforms.append(louis.plain_text)
+					self._rawToContentPos.append(self._currentContentPos)
 				if isSelection and self._selectionStart is None:
 					# This is where the content begins.
 					self._selectionStart = len(self.rawText)
@@ -779,6 +783,7 @@ class TextInfoRegion(Region):
 				if isSelection:
 					# The last time this is set will be the end of the content.
 					self._selectionEnd = len(self.rawText)
+				self._endsWithField = False
 			elif isinstance(command, textInfos.FieldCommand):
 				cmd = command.command
 				field = command.field
@@ -819,6 +824,7 @@ class TextInfoRegion(Region):
 						continue
 					# Map this field text to the end of the field's content.
 					self._addFieldText(text, self._currentContentPos - 1)
+				self._endsWithField = True
 		if isSelection and self._selectionStart is None:
 			# There is no selection. This is a cursor.
 			self.cursorPos = len(self.rawText)
@@ -855,6 +861,7 @@ class TextInfoRegion(Region):
 		self._currentContentPos = 0
 		self._selectionStart = self._selectionEnd = None
 		self._skipFieldsNotAtStartOfNode = False
+		self._endsWithField = False
 
 		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the reading unit.
 		# Therefore, grab the reading unit in three parts.
@@ -869,12 +876,24 @@ class TextInfoRegion(Region):
 		chunk.setEndPoint(readingInfo, "endToEnd")
 		chunk.setEndPoint(sel, "startToEnd")
 		self._addTextWithFields(chunk, formatConfig)
-		# Strip line ending characters, but add a space in case the cursor is at the end of the reading unit.
-		self.rawText = self.rawText.rstrip("\r\n\0\v\f") + " "
-		self._rawToContentPos.append(self._currentContentPos)
+		# Strip line ending characters.
+		self.rawText = self.rawText.rstrip("\r\n\0\v\f")
 		rawTextLen = len(self.rawText)
-		del self.rawTextTypeforms[rawTextLen - 1:]
-		self.rawTextTypeforms.append(louis.plain_text)
+		if rawTextLen < len(self._rawToContentPos):
+			# The stripped text is shorter than the original.
+			self._currentContentPos = self._rawToContentPos[rawTextLen]
+			del self.rawTextTypeforms[rawTextLen:]
+			# Trimming _rawToContentPos doesn't matter,
+			# because we'll only ever ask for indexes valid in rawText.
+			#del self._rawToContentPos[rawTextLen:]
+		if rawTextLen == 0 or not self._endsWithField:
+			# There is no text left after stripping line ending characters,
+			# or the last item added can be navigated with a cursor.
+			# Add a space in case the cursor is at the end of the reading unit.
+			self.rawText += " "
+			rawTextLen += 1
+			self.rawTextTypeforms.append(louis.plain_text)
+			self._rawToContentPos.append(self._currentContentPos)
 		if self.cursorPos is not None and self.cursorPos >= rawTextLen:
 			self.cursorPos = rawTextLen - 1
 
