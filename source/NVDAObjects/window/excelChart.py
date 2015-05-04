@@ -620,7 +620,7 @@ class ExcelChartElementBase(Window):
 	def script_reportCurrentChartElementColor(self,gesture):
 		if self.elementID == xlSeries:
 			if self.arg2 == -1:
-				ui.message ( _( "Series color: {} ").format(colors.RGB.fromCOLORREF(int( self.excelChartObject.SeriesCollection( self.arg1 ).Interior.Color ) ).name  ) )
+				ui.message ( _( "Series color: {colorName} ").format(colorName=colors.RGB.fromCOLORREF(int( self.excelChartObject.SeriesCollection( self.arg1 ).Interior.Color ) ).name  ) )
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if ElementID == xlDisplayUnitLabel:  
@@ -728,7 +728,7 @@ class ExcelChartElementSeries(ExcelChartElementBase):
 		if ElementID == xlSeries:
 			if arg2 == -1:
 				# Translators: Prompt for series details in the format: Name series index of count 
-				return _( "{} Series {} of {}").format( self.excelChartObject.SeriesCollection(arg1).Name , arg1 , self.excelChartObject.SeriesCollection().Count )
+				return _( "{seriesName} Series {seriesIndex} of {seriesCount}").format( seriesName = self.excelChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.excelChartObject.SeriesCollection().Count )
 			else:
 # if XValue is a float, change it to int, else dates are shown with points. hope this does not introduce another bug
 				if isinstance( self.excelChartObject.SeriesCollection(arg1).XValues[arg2 - 1] , float): 
@@ -742,35 +742,35 @@ class ExcelChartElementSeries(ExcelChartElementBase):
 
 						if self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] == self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2]: 
 							# Translators: for line charts, no change from the previous element
-							output += _( "no change from point {}, ").format( arg2 - 1 )
+							output += _( "no change from point {previousIndex}, ").format( previousIndex = arg2 - 1 )
 						elif self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] > self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2]: 
 							# Translators: for line charts, increase from the previous element
-							output += _( "Increased by {} from point {}, ").format( self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] - self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2] , arg2 - 1 ) 
+							output += _( "Increased by {incrementValue} from point {previousIndex}, ").format( incrementValue = self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] - self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2] , previousIndex = arg2 - 1 ) 
 						else:
 							# Translators: for line charts, decrease from the previous element
-							output += _( "decreased by {} from point {}, ").format( self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2] - self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] , arg2 - 1 ) 
+							output += _( "decreased by {decrementValue} from point {previousIndex}, ").format( decrementValue = self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2] - self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] , previousIndex = arg2 - 1 ) 
 
 				if self.excelChartObject.HasAxis(xlCategory) and self.excelChartObject.Axes(xlCategory).HasTitle:
 					# Translators: report category axis title if available in the format title value
-					output += _( "{} {}: ").format( self.excelChartObject.Axes(xlCategory).AxisTitle.Text , excelSeriesXValue ) 
+					output += _( "{categoryAxisTitle} {categoryAxisData}: ").format( categoryAxisTitle = self.excelChartObject.Axes(xlCategory).AxisTitle.Text , categoryAxisData = excelSeriesXValue ) 
 				else:
 					# Translators: report category axis title as Category if axis title is not available in the format "category" value
-					output += _( "Category {}: ").format( excelSeriesXValue ) 
+					output += _( "Category {categoryAxisData}: ").format( categoryAxisData = excelSeriesXValue ) 
 
 				if self.excelChartObject.HasAxis(xlValue) and self.excelChartObject.Axes(xlValue).HasTitle:
 					# Translators: report value axis title if available in the format title value
-					output +=  _( "{} {}").format( self.excelChartObject.Axes(xlValue).AxisTitle.Text , self.excelChartObject.SeriesCollection(arg1).Values[arg2-1]) 
+					output +=  _( "{valueAxisTitle} {valueAxisData}").format( valueAxisTitle = self.excelChartObject.Axes(xlValue).AxisTitle.Text , valueAxisData = self.excelChartObject.SeriesCollection(arg1).Values[arg2-1]) 
 				else:
 					# Translators: report value axis title as value if axis title is not available in the format "Value" value
-					output +=  _( "value {}").format( self.excelChartObject.SeriesCollection(arg1).Values[arg2-1]) 
+					output +=  _( "value {valueAxisData}").format( valueAxisData = self.excelChartObject.SeriesCollection(arg1).Values[arg2-1]) 
 
 				if self.excelChartObject.ChartType == xlPie or self.excelChartObject.ChartType == xlPieExploded or self.excelChartObject.ChartType == xlPieOfPie: 
 					total = math.fsum( self.excelChartObject.SeriesCollection(arg1).Values ) 
 					# Translators: Prompt for pie chart in the format: fraction nn percent slice  index of count 
-					output += _( " fraction {:.2f} Percent {} {} of {}").format( self.excelChartObject.SeriesCollection(arg1).Values[arg2-1] / total *100.00 , self.GetChartSegment() ,  arg2 , len( self.excelChartObject.SeriesCollection(arg1).Values ) )
+					output += _( " fraction {fractionValue:.2f} Percent {segmentType} {pointIndex} of {pointCount}").format( fractionValue = self.excelChartObject.SeriesCollection(arg1).Values[arg2-1] / total *100.00 , segmentType = self.GetChartSegment() ,  pointIndex = arg2 , pointCount = len( self.excelChartObject.SeriesCollection(arg1).Values ) )
 				else:
 					# Translators: Prompt for other charts in the format: segment type index of count 
-					output += _( " {} {} of {}").format( self.GetChartSegment() ,  arg2 , len( self.excelChartObject.SeriesCollection(arg1).Values ) )
+					output += _( " {segmentType} {pointIndex} of {pointCount}").format( segmentType = self.GetChartSegment() ,  pointIndex = arg2 , pointCount = len( self.excelChartObject.SeriesCollection(arg1).Values ) )
 
 				return  output 
 
@@ -801,10 +801,10 @@ class ExcelChartElementAxis(ExcelChartElementBase):
 			axisDescription =""
 			if self.excelChartObject.HasAxis( arg2 ) and self.excelChartObject.Axes( arg2 ).HasTitle:
 				# Translators: Prompt for axis details such as: type, group, and title 
-				axisDescription += _("Chart Axis, type equals {}, group equals {}, Title equals {}").format( axisType , axisGroup , self.excelChartObject.Axes( arg2 , arg1 ).AxisTitle.Text ) 
+				axisDescription += _("Chart Axis, type equals {axisType}, group equals {axisGroup}, Title equals {axisTitle}").format( axisType = axisType , axisGroup = axisGroup , axisTitle = self.excelChartObject.Axes( arg2 , arg1 ).AxisTitle.Text ) 
 			elif self.excelChartObject.HasAxis( arg2 ) and not self.excelChartObject.Axes( arg2 ).HasTitle:
 				# Translators: Prompt for axis details such as: type, group, and title when there is no title
-				axisDescription += _("Chart Axis, type equals {}, group equals {}, Title equals {}").format( axisType , axisGroup , _("none")  ) 
+				axisDescription += _("Chart Axis, type equals {axisType}, group equals {axisGroup}, Title equals {axisTitle}").format( axisType = axisType , axisGroup = axisGroup , axisTitle = _("none")  ) 
 
 			return  axisDescription 
 
@@ -818,10 +818,10 @@ class ExcelChartElementAxisTitle(ExcelChartElementBase):
 			axisTitle=""
 			if self.excelChartObject.HasAxis( arg2 ) and self.excelChartObject.Axes( arg2 ).HasTitle:
 				# Translators: Prompt for axis title if axis has title
-				axisTitle += _("Chart Axis Title equals {} ").format( self.excelChartObject.Axes( arg2 , arg1 ).AxisTitle.Text  ) 
+				axisTitle += _("Chart Axis Title equals {axisTitle} ").format( axisTitle = self.excelChartObject.Axes( arg2 , arg1 ).AxisTitle.Text  ) 
 			elif self.excelChartObject.HasAxis( arg2 ) and not self.excelChartObject.Axes( arg2 ).HasTitle:
 				# Translators: Prompt for axis title without title
-				axisTitle += _("Chart Axis Title equals {} ").format( _("none") ) 
+				axisTitle += _("Chart Axis Title equals {axisTitle} ").format( axisTitle = _("none") ) 
 
 			return  axisTitle 
 
@@ -833,9 +833,10 @@ class ExcelChartElementTrendline(ExcelChartElementBase):
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if ElementID == xlTrendline:
 			if self.excelChartObject.SeriesCollection(arg1).Trendlines(arg2).DisplayEquation    or self.excelChartObject.SeriesCollection(arg1).Trendlines(arg2).DisplayRSquared:
+				# Translators: description for the word square
 				trendlineText = unicode( self.excelChartObject.SeriesCollection(arg1).Trendlines(arg2).DataLabel.Text ).encode("utf-8").replace("\xc2\xb2" , _( " square " ) )
 				# Translators: Prompt for trendline with equation or r square
-				return  _( " trendline {} ").format( trendlineText ) 
+				return  _( " trendline {dataLabel} ").format( dataLabel = trendlineText ) 
 			else:
 				# Translators: Prompt for trendline without equation or r square
 				return _( "Trendline" ) 
@@ -849,7 +850,7 @@ class ExcelChartElementChartTitle(ExcelChartElementBase):
 		if ElementID == xlChartTitle:
 			if self.excelChartObject.HasTitle:
 				# Translators: Prompt for chart title
-				return _( "Chart Title equals {}").format ( self.excelChartObject.ChartTitle.Text )
+				return _( "Chart Title equals {chartTitle}").format ( chartTitle = self.excelChartObject.ChartTitle.Text )
 			else:
 				# Translators: Prompt for chart title when the title is not available
 				return _( "Untitled chart" )
@@ -863,7 +864,7 @@ class ExcelChartElementChartArea(ExcelChartElementBase):
 		if ElementID == xlChartArea:
 			if reportExtraInfo:
 				# Translators: Prompt for chart area with dimentions
-				return _( "Chart area height equals {}, width equals {}, top equals {}, left equals {}").format ( self.excelChartObject.ChartArea.Height , self.excelChartObject.ChartArea.Width , self.excelChartObject.ChartArea.Top , self.excelChartObject.ChartArea.Left)
+				return _( "Chart area height equals {chartAreaHeight}, width equals {chartAreaWidth}, top equals {chartAreaTop}, left equals {chartAreaLeft}").format ( chartAreaHeight = self.excelChartObject.ChartArea.Height , chartAreaWidth = self.excelChartObject.ChartArea.Width , chartAreaTop = self.excelChartObject.ChartArea.Top , chartAreaLeft = self.excelChartObject.ChartArea.Left)
 			else:
 				# Translators: Prompt for chart area 
 				return _( "Chart area ")
@@ -878,7 +879,7 @@ class ExcelChartElementPlotArea(ExcelChartElementBase):
 			if reportExtraInfo:
 			# useing {:.0f} to remove fractions
 				# Translators: Prompt for plot area with inner dimentions
-				return _( "Plot Area inside height equals {:.0f}, inside width equals {:.0f}, inside top equals {:.0f}, inside left equals {:.0f}").format ( self.excelChartObject.PlotArea.InsideHeight , self.excelChartObject.PlotArea.InsideWidth , self.excelChartObject.PlotArea.InsideTop , self.excelChartObject.PlotArea.InsideLeft )
+				return _( "Plot Area inside height equals {plotAreaInsideHeight:.0f}, inside width equals {plotAreaInsideWidth:.0f}, inside top equals {plotAreaInsideTop:.0f}, inside left equals {plotAreaInsideLeft:.0f}").format ( plotAreaInsideHeight = self.excelChartObject.PlotArea.InsideHeight , plotAreaInsideWidth = self.excelChartObject.PlotArea.InsideWidth , plotAreaInsideTop = self.excelChartObject.PlotArea.InsideTop , plotAreaInsideLeft = self.excelChartObject.PlotArea.InsideLeft )
 			else:
 				# Translators: Prompt for plot area 
 				return _( "Plot Area " )
@@ -905,7 +906,7 @@ class ExcelChartElementLegendEntry(ExcelChartElementBase):
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if ElementID == xlLegendEntry:
 			# Translators: Prompt for Legend entry for series name index of count
-			return _( "Legend entry for Series {}, {} of {}").format( self.excelChartObject.SeriesCollection(arg1).Name , arg1 , self.excelChartObject.SeriesCollection().Count ) 
+			return _( "Legend entry for Series {seriesName}, {seriesIndex} of {seriesCount}").format( seriesName = self.excelChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.excelChartObject.SeriesCollection().Count ) 
 
 class ExcelChartElementLegendKey(ExcelChartElementBase):
 
@@ -915,6 +916,6 @@ class ExcelChartElementLegendKey(ExcelChartElementBase):
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if ElementID == xlLegendKey:
 			# Translators: Prompt for Legend key for series name index of count
-			return _( "Legend key for Series {} {} of {}").format( self.excelChartObject.SeriesCollection(arg1).Name , arg1 , self.excelChartObject.SeriesCollection().Count )
+			return _( "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}").format( seriesName = self.excelChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.excelChartObject.SeriesCollection().Count )
 
 
