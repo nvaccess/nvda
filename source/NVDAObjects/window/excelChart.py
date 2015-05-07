@@ -623,92 +623,52 @@ class ExcelChartElementBase(Window):
 			if self.arg2 == -1:
 				ui.message ( _( "Series color: {colorName} ").format(colorName=colors.RGB.fromCOLORREF(int( self.excelChartObject.SeriesCollection( self.arg1 ).Interior.Color ) ).name  ) )
 
+	ELEMENT_IDS = {
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlDisplayUnitLabel:  _("Display Unit Label"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlMajorGridlines:  _("Major Gridlines"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlMinorGridlines: _("Minor Gridlines"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlPivotChartDropZone: _("Pivot Chart Drop Zone"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlPivotChartFieldButton: _("Pivot Chart Field Button"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlDownBars: _("Down Bars"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlDropLines: _("Drop Lines"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlHiLoLines:  _("Hi Lo Lines"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlRadarAxisLabels: _("Radar Axis Labels"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlSeriesLines: _("Series Lines"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlUpBars: _("Up Bars"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlCorners: _("Corners"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlDataTable: _("Data Table"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlFloor:  _("Floor"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlNothing: _("Nothing"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlWalls: _("Walls"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlDataLabel: _("Data Label"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlErrorBars: _("Error Bars"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlXErrorBars: _("X Error Bars"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlYErrorBars: _("Y Error Bars"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlShape: _("Shape"),
+	}
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
-		if ElementID == xlDisplayUnitLabel:  
-			# Translators: prompt for xlDisplayUnitLabel
-			return  _( "Display Unit Label") 
-
-		elif ElementID == xlMajorGridlines:  
-			# Translators: prompt for xlMajorGridlines
-			return  _( "Major Gridlines" ) 
-
-		elif ElementID == xlMinorGridlines:  
-			# Translators: prompt for xlMinorGridlines
-			return _( "Minor Gridlines" ) 
-
-		elif ElementID == xlPivotChartDropZone:  
-			# Translators: prompt for xlPivotChartDropZone
-			return _( "Pivot Chart Drop Zone" ) 
-
-		elif ElementID == xlPivotChartFieldButton:
-			# Translators: prompt for xlPivotChartFieldButton
-			return _( "Pivot Chart Field Button" ) 
-
-		elif ElementID == xlDownBars:
-			# Translators: prompt for xlDownBars
-			return _( "Down Bars" ) 
-
-		elif ElementID == xlDropLines:
-			# Translators: prompt for xlDropLines
-			return _( "Drop Lines" )
-
-		elif ElementID == xlHiLoLines:
-			# Translators: prompt for xlHiLoLines
-			return  _( "Hi Lo Lines" )
-
-		elif ElementID == xlRadarAxisLabels:
-			# Translators: prompt for xlRadarAxisLabels
-			return _( "Radar Axis Labels" )
-
-		elif ElementID == xlSeriesLines:
-			# Translators: prompt for xlSeriesLines
-			return _( "Series Lines" )
-
-		elif ElementID == xlUpBars:
-			# Translators: prompt for xlUpBars
-			return _( "Up Bars" )
-
-		elif ElementID == xlCorners:
-			# Translators: prompt for xlCorners
-			return _( "Corners" )
-
-		elif ElementID == xlDataTable:
-			# Translators: prompt for xlDataTable
-			return _( "Data Table" )
-
-		elif ElementID == xlFloor:
-			# Translators: prompt for xlFloor
-			return  _( "Floor" )
-
-		elif ElementID == xlNothing:
-			# Translators: prompt for xlNothing
-			return _( "xlNothing" )
-
-		elif ElementID == xlWalls:
-			# Translators: prompt for xlWalls
-			return _( "Walls" )
-
-		elif ElementID == xlDataLabel:
-			# Translators: prompt for xlDataLabel
-			return _( "Data Label" )
-
-		elif ElementID == xlErrorBars:
-			# Translators: prompt for xlErrorBars
-			return _( "Error Bars" )
-
-		elif ElementID == xlXErrorBars:
-			# Translators: prompt for xlXErrorBars
-			return _( "X Error Bars" )
-
-		elif ElementID == xlYErrorBars:
-			# Translators: prompt for xlYErrorBars
-			return _( "Y Error Bars" )
-
-		elif ElementID == xlShape:
-			# Translators: prompt for xlShape
-			return _( "Shape" )
-
-	#end def _Select
+		return self.ELEMENT_IDS[ElementID]
 
 	__gestures = {
 		"kb:NVDA+d" : "reportCurrentChartElementWithExtraInfo",
