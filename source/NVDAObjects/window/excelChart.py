@@ -655,7 +655,8 @@ class ExcelChartElementSeries(ExcelChartElementBase):
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if ElementID == xlSeries:
 			if arg2 == -1:
-				# Translators: Prompt for series details in the format: Name series index of count 
+				# Translators: Details about a series in a chart.
+				# For example, this might report "foo series 1 of 2"
 				return _( "{seriesName} Series {seriesIndex} of {seriesCount}").format( seriesName = self.excelChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.excelChartObject.SeriesCollection().Count )
 			else:
 # if XValue is a float, change it to int, else dates are shown with points. hope this does not introduce another bug
@@ -665,39 +666,47 @@ class ExcelChartElementSeries(ExcelChartElementBase):
 					excelSeriesXValue = self.excelChartObject.SeriesCollection(arg1).XValues[arg2 - 1] 
 
 				output=""
-				if self.excelChartObject.ChartType == xlLine or self.excelChartObject.ChartType == xlLineMarkers  or self.excelChartObject.ChartType == xlLineMarkersStacked or self.excelChartObject.ChartType == xlLineMarkersStacked100 or self.excelChartObject.ChartType == xlLineStacked or self.excelChartObject.ChartType == xlLineStacked100: 
+				if self.excelChartObject.ChartType in (xlLine, xlLineMarkers , xlLineMarkersStacked, xlLineMarkersStacked100, xlLineStacked, xlLineStacked100):
 					if arg2 > 1:
 
 						if self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] == self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2]: 
-							# Translators: for line charts, no change from the previous element
+							# Translators: For line charts, indicates no change from the previous data point on the left
 							output += _( "no change from point {previousIndex}, ").format( previousIndex = arg2 - 1 )
 						elif self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] > self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2]: 
-							# Translators: for line charts, increase from the previous element
+							# Translators: For line charts, indicates an increase from the previous data point on the left
 							output += _( "Increased by {incrementValue} from point {previousIndex}, ").format( incrementValue = self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] - self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2] , previousIndex = arg2 - 1 ) 
 						else:
-							# Translators: for line charts, decrease from the previous element
+							# Translators: For line charts, indicates a decrease from the previous data point on the left
 							output += _( "decreased by {decrementValue} from point {previousIndex}, ").format( decrementValue = self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2] - self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] , previousIndex = arg2 - 1 ) 
 
 				if self.excelChartObject.HasAxis(xlCategory) and self.excelChartObject.Axes(xlCategory).HasTitle:
-					# Translators: report category axis title if available in the format title value
+					# Translators: Specifies the category of a data point.
+					# {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
+					# {categoryAxisData} will be replaced with the category itself; e.g. "January".
 					output += _( "{categoryAxisTitle} {categoryAxisData}: ").format( categoryAxisTitle = self.excelChartObject.Axes(xlCategory).AxisTitle.Text , categoryAxisData = excelSeriesXValue ) 
 				else:
-					# Translators: report category axis title as Category if axis title is not available in the format "category" value
+					# Translators: Specifies the category of a data point.
+					# {categoryAxisData} will be replaced with the category itself; e.g. "January".
 					output += _( "Category {categoryAxisData}: ").format( categoryAxisData = excelSeriesXValue ) 
 
 				if self.excelChartObject.HasAxis(xlValue) and self.excelChartObject.Axes(xlValue).HasTitle:
-					# Translators: report value axis title if available in the format title value
+					# Translators: Specifies the value of a data point.
+					# {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
+					# {valueAxisData} will be replaced with the value itself; e.g. "1000".
 					output +=  _( "{valueAxisTitle} {valueAxisData}").format( valueAxisTitle = self.excelChartObject.Axes(xlValue).AxisTitle.Text , valueAxisData = self.excelChartObject.SeriesCollection(arg1).Values[arg2-1]) 
 				else:
-					# Translators: report value axis title as value if axis title is not available in the format "Value" value
+					# Translators: Specifies the value of a data point.
+					# {valueAxisData} will be replaced with the value itself; e.g. "1000".
 					output +=  _( "value {valueAxisData}").format( valueAxisData = self.excelChartObject.SeriesCollection(arg1).Values[arg2-1]) 
 
-				if self.excelChartObject.ChartType == xlPie or self.excelChartObject.ChartType == xlPieExploded or self.excelChartObject.ChartType == xlPieOfPie: 
+				if self.excelChartObject.ChartType in (xlPie, xlPieExploded, xlPieOfPie):
 					total = math.fsum( self.excelChartObject.SeriesCollection(arg1).Values ) 
-					# Translators: Prompt for pie chart in the format: fraction nn percent slice  index of count 
-					output += _( " fraction {fractionValue:.2f} Percent {segmentType} {pointIndex} of {pointCount}").format( fractionValue = self.excelChartObject.SeriesCollection(arg1).Values[arg2-1] / total *100.00 , segmentType = self.GetChartSegment() ,  pointIndex = arg2 , pointCount = len( self.excelChartObject.SeriesCollection(arg1).Values ) )
+					# Translators: Details about a slice of a pie chart.
+					# For example, this might report "fraction 25.25 percent slice 1 of 5"
+					output += _( " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}").format( fractionValue = self.excelChartObject.SeriesCollection(arg1).Values[arg2-1] / total *100.00 , pointIndex = arg2 , pointCount = len( self.excelChartObject.SeriesCollection(arg1).Values ) )
 				else:
-					# Translators: Prompt for other charts in the format: segment type index of count 
+					# Translators: Details about a segment of a chart.
+					# For example, this might report "column 1 of 5"
 					output += _( " {segmentType} {pointIndex} of {pointCount}").format( segmentType = self.GetChartSegment() ,  pointIndex = arg2 , pointCount = len( self.excelChartObject.SeriesCollection(arg1).Values ) )
 
 				return  output 
