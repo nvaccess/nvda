@@ -267,85 +267,6 @@ chartTypeDict = {
 	xlXYScatterSmoothNoMarkers : _( "Scatter with Smoothed Lines and No Data Markers")
 }
 
-# Dictionary for the segments of different chart types.
-chartSegmentDict = {
-	xl3DArea : "3D Area",
-	xl3DAreaStacked : "3D Stacked Area",
-	xl3DAreaStacked100 : "100 percent Stacked Area",
-	xl3DBarClustered : "3D Clustered Bar",
-	xl3DBarStacked : "3D Stacked Bar",
-	xl3DBarStacked100 : "3D 100 percent Stacked Bar",
-	xl3DColumn : "Column",
-	xl3DColumnClustered : "Column",
-	xl3DColumnStacked : "Column",
-	xl3DColumnStacked100 : "Column",
-	xl3DLine : "Line",
-	xl3DPie : "Slice",
-	xl3DPieExploded : "Slice",
-	xlArea : "Area",
-	xlAreaStacked : "Stacked Area",
-	xlAreaStacked100 : "100 percent Stacked Area",
-	xlBarClustered : "Clustered Bar",
-	xlBarOfPie : "Bar of Pie",
-	xlBarStacked : "Stacked Bar",
-	xlBarStacked100 : "100 percent Stacked Bar",
-	xlBubble : "Bubble",
-	xlBubble3DEffect : "Bubble with 3D effects",
-	xlColumnClustered : "Column",
-	xlColumnStacked : "Column",
-	xlColumnStacked100 : "Column",
-	xlConeBarClustered : "Clustered Cone Bar",
-	xlConeBarStacked : "Stacked Cone Bar",
-	xlConeBarStacked100 : "100 percent Stacked Cone Bar",
-	xlConeCol : "3D Cone Column",
-	xlConeColClustered : "Clustered Cone Column",
-	xlConeColStacked : "Stacked Cone Column",
-	xlConeColStacked100 : "100 percent Stacked Cone Column",
-	xlCylinderBarClustered : "Clustered Cylinder Bar",
-	xlCylinderBarStacked : "Stacked Cylinder Bar",
-	xlCylinderBarStacked100 : "100 percent Stacked Cylinder Bar",
-	xlCylinderCol : "3D Cylinder Column",
-	xlCylinderColClustered : "Clustered Cone Column",
-	xlCylinderColStacked : "Stacked Cone Column",
-	xlCylinderColStacked100 : "100 percent Stacked Cylinder Column",
-	xlDoughnut : "Doughnut",
-	xlDoughnutExploded : "Exploded Doughnut",
-	xlLine : "Line",
-	xlLineMarkers : "Line",
-	xlLineMarkersStacked : "Line",
-	xlLineMarkersStacked100 : "Line",
-	xlLineStacked : "Line",
-	xlLineStacked100 : "Line",
-	xlPie : "slice",
-	xlPieExploded : "Exploded Pie",
-	xlPieOfPie : "Pie of Pie",
-	xlPyramidBarClustered : "Clustered Pyramid Bar",
-	xlPyramidBarStacked : "Stacked Pyramid Bar",
-	xlPyramidBarStacked100 : "100 percent Stacked Pyramid Bar",
-	xlPyramidCol : "3D Pyramid Column",
-	xlPyramidColClustered : "Clustered Pyramid Column",
-	xlPyramidColStacked : "Stacked Pyramid Column",
-	xlPyramidColStacked100 : "100 percent Stacked Pyramid Column",
-	xlRadar : "Radar",
-	xlRadarFilled : "Filled Radar",
-	xlRadarMarkers : "Radar with Data Markers",
-	xlStockHLC : "High-Low-Close",
-	xlStockOHLC : "Open-High-Low-Close",
-	xlStockVHLC : "Volume-High-Low-Close",
-	xlStockVOHLC : "Volume-Open-High-Low-Close",
-	xlSurface : "3D Surface",
-	xlSurfaceTopView : "Surface (Top View)",
-	xlSurfaceTopViewWireframe : "Surface (Top View wireframe)",
-	xlSurfaceWireframe : "3D Surface (wireframe)",
-	xlXYScatter : "Scatter",
-	xlXYScatterLines : "Scatter with Lines",
-	xlXYScatterLinesNoMarkers : "Scatter with Lines and No Data Markers",
-	xlXYScatterSmooth : "Scatter with Smoothed Lines",
-	xlXYScatterSmoothNoMarkers : "Scatter with Smoothed Lines and No Data Markers"
-}
-
-
-
 # Axis types in chart
 xlCategory = 1
 xlValue = 2
@@ -601,10 +522,17 @@ class ExcelChartElementBase(Window):
 
 	def GetChartSegment(self):
 		chartType = self.excelChartObject.ChartType
-		if chartType in chartSegmentDict.keys():
-			text= chartSegmentDict[chartType]
+		if chartType in (xl3DPie, xl3DPieExploded, xlPie, xlPieExploded, xlPieOfPie):
+			# Translators: A slice in a pie chart.
+			text=_("slice")
+		elif chartType in (xl3DColumn, xl3DColumnClustered, xl3DColumnStacked, xl3DColumnStacked100, xlColumnClustered, xlColumnStacked100, xlColumnStacked):
+			# Translators: A column in a column chart.
+			text=_("column")
+		elif chartType in (xl3DLine, xlLine, xlLineMarkers, xlLineMarkersStacked, xlLineMarkersStacked100, xlLineStacked, xlLineStacked100):
+			# Translators: A data point in a line chart.
+			text=_("data point")
 		else:
-			# Translators: Chart segment such as slice for  pie chart etc this is reported when there is no segment available.
+			# Translators: A segment of a chart for charts which don't have a specific name for segments.
 			text=_("item")
 		return text
 
