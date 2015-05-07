@@ -42,7 +42,7 @@ negative number	minus	none	norep
 # Standard punctuation/symbols
 !	bang	all
 "	quote	most
-\#	number	most
+\#	number	some
 $	dollar	all	norep
 £	pound	all	norep
 €	euro	all	norep
@@ -51,8 +51,8 @@ $	dollar	all	norep
 %	percent	some
 &	and	some
 '	tick	all
-(	left paren	most
-)	right paren	most
+(	left paren	most	always
+)	right paren	most	always
 *	star	some
 +	plus	some
 ,	comma	all	always
@@ -61,8 +61,8 @@ $	dollar	all	norep
 /	slash	some
 :	colon	most	norep
 ;	semi	most
-<	less	most
->	greater	most
+<	less	some
+>	greater	some
 =	equals	some
 ?	question	all
 @	at	some
@@ -86,7 +86,7 @@ _	line	most
 ”	right quote	most
 ‘	left tick	most
 ’	right tick	most
-–	en dash	most
+–	en dash	most	always
 —	em dash	most
 ●	circle	most
 ¨	diaeresis	most
@@ -108,9 +108,9 @@ _	line	most
 ®	registered	some
 ™	Trademark	some
 ©	Copyright	some
-±	Plus or Minus	most
-×	times	most
-÷	divide by	most
+±	Plus or Minus	some
+×	times	some
+÷	divide by	some
 ←	left arrow	some
 →	right arrow	some
 ✓	check	some
