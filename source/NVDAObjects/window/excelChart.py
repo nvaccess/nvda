@@ -119,151 +119,224 @@ xlXYScatterSmoothNoMarkers = 73
 
 # Dictionary for the Description of chart types.
 chartTypeDict = {
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel. 
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DArea : _( "3D Area" ),
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DAreaStacked : _( "3D Stacked Area" ),
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DAreaStacked100 : _( "100 percent Stacked Area" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DBarClustered : _( "3D Clustered Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DBarStacked : _( "3D Stacked Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DBarStacked100 : _( "3D 100 percent Stacked Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DColumn : _( "3D Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DColumnClustered : _( "3D Clustered Column" ),
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DColumnStacked : _( "3D Stacked Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DColumnStacked100 : _( "3D 100 percent Stacked Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DLine : _( "3D Line" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DPie : _( "3D Pie" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DPieExploded : _( "Exploded 3D Pie" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlArea : _( "Area" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlAreaStacked : _( "Stacked Area" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlAreaStacked100 : _( "100 percent Stacked Area" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlBarClustered : _( "Clustered Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlBarOfPie : _( "Bar of Pie" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlBarStacked : _( "Stacked Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlBarStacked100 : _( "100 percent Stacked Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlBubble : _( "Bubble" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlBubble3DEffect : _( "Bubble with 3D effects" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlColumnClustered : _( "Clustered Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlColumnStacked : _( "Stacked Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlColumnStacked100 : _( "100 percent Stacked Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlConeBarClustered : _( "Clustered Cone Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlConeBarStacked : _( "Stacked Cone Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlConeBarStacked100 : _( "100 percent Stacked Cone Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlConeCol : _( "3D Cone Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlConeColClustered : _( "Clustered Cone Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlConeColStacked : _( "Stacked Cone Column" ),
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlConeColStacked100 : _( "100 percent Stacked Cone Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlCylinderBarClustered : _( "Clustered Cylinder Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlCylinderBarStacked : _( "Stacked Cylinder Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlCylinderBarStacked100 : _( "100 percent Stacked Cylinder Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlCylinderCol : _( "3D Cylinder Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlCylinderColClustered : _( "Clustered Cone Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlCylinderColStacked : _( "Stacked Cone Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlCylinderColStacked100 : _( "100 percent Stacked Cylinder Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlDoughnut : _( "Doughnut" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlDoughnutExploded : _( "Exploded Doughnut" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlLine : _( "Line" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlLineMarkers : _( "Line with Markers" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlLineMarkersStacked : _( "Stacked Line with Markers" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlLineMarkersStacked100 : _( "100 percent Stacked Line with Markers" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlLineStacked : _( "Stacked Line" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlLineStacked100 : _( "100 percent Stacked Line" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlPie : _( "Pie" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlPieExploded : _( "Exploded Pie" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlPieOfPie : _( "Pie of Pie" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlPyramidBarClustered : _( "Clustered Pyramid Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlPyramidBarStacked : _( "Stacked Pyramid Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlPyramidBarStacked100 : _( "100 percent Stacked Pyramid Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlPyramidCol : _( "3D Pyramid Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlPyramidColClustered : _( "Clustered Pyramid Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlPyramidColStacked : _( "Stacked Pyramid Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlPyramidColStacked100 : _( "100 percent Stacked Pyramid Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlRadar : _( "Radar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlRadarFilled : _( "Filled Radar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlRadarMarkers : _( "Radar with Data Markers" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlStockHLC : _( "High-Low-Close" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlStockOHLC : _( "Open-High-Low-Close" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlStockVHLC : _( "Volume-High-Low-Close" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlStockVOHLC : _( "Volume-Open-High-Low-Close" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlSurface : _( "3D Surface" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlSurfaceTopView : _( "Surface (Top View)" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlSurfaceTopViewWireframe : _( "Surface (Top View wireframe)" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlSurfaceWireframe : _( "3D Surface (wireframe)" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlXYScatter : _( "Scatter" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlXYScatterLines : _( "Scatter with Lines" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlXYScatterLinesNoMarkers : _( "Scatter with Lines and No Data Markers" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlXYScatterSmooth : _( "Scatter with Smoothed Lines" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlXYScatterSmoothNoMarkers : _( "Scatter with Smoothed Lines and No Data Markers")
 }
 
