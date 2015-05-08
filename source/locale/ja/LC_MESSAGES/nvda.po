@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-15 11:28-0700\n"
-"PO-Revision-Date: 2015-04-19 17:27+0900\n"
+"POT-Creation-Date: 2015-05-02 19:04+1000\n"
+"PO-Revision-Date: 2015-05-04 22:01+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -168,13 +168,23 @@ msgstr "チェコ語1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Danish grade 1"
-msgstr "デンマーク語1級点字"
+msgid "Danish 6 dot grade 1"
+msgstr "デンマーク語6点1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Danish grade 2"
-msgstr "デンマーク語2級点字"
+msgid "Danish 8 dot grade 1"
+msgstr "デンマーク語8点1級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 6 dot grade 2"
+msgstr "デンマーク語6点2級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot grade 2"
+msgstr "デンマーク語8点2級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -257,16 +267,6 @@ msgstr "フィンランド語8点コンピューター点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "カナダフランス語1級点字"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "カナダフランス語2級点字"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
 msgid "French (unified) 6 dot computer braille"
 msgstr "フランス語 (unified) 6点コンピューター点字"
 
@@ -279,6 +279,16 @@ msgstr "フランス語 (unified) 8点コンピューター点字"
 #. braille settings dialog.
 msgid "French (unified) Grade 2"
 msgstr "フランス語 (unified) 2級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "French (Canada) grade 1"
+msgstr "カナダフランス語1級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "French (Canada) grade 2"
+msgstr "カナダフランス語2級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -373,12 +383,12 @@ msgstr "マラーティー語1級点字"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Dutch (Belgium) grade 1"
-msgstr "ベルギーオランダ語1級点字"
+msgstr "オランダ語(ベルギー)1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (netherlands) grade 1"
-msgstr "オランダ語1級点字"
+msgid "Dutch (Netherlands) grade 1"
+msgstr "オランダ語(オランダ)1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -462,8 +472,8 @@ msgstr "スウェーデン語1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Slovak"
-msgstr "スロバキア語"
+msgid "Slovak grade 1"
+msgstr "スロバキア語1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1916,6 +1926,7 @@ msgid "selected %s"
 msgstr "%s 選択"
 
 #. Translators: The word for an unknown control type.
+#. Translators: chart type to be reported when the type is not available
 msgid "unknown"
 msgstr "未定義"
 
@@ -2328,9 +2339,9 @@ msgstr "メニューボタン"
 msgid "drop down button grid"
 msgstr "ドロップダウンボタングリッド"
 
-#. Translators: Identifies an equation.
-msgid "equation"
-msgstr "数式"
+#. Translators: Identifies mathematical content.
+msgid "math"
+msgstr ""
 
 #. Translators: Identifies a grip control.
 msgid "grip"
@@ -2634,11 +2645,11 @@ msgstr "隠れています"
 
 #. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the allocated/available space
 msgid "cropped"
-msgstr "端が切れています"
+msgstr "クロップ"
 
 #. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
 msgid "overflowing"
-msgstr "オーバーフローあり"
+msgstr "オーバーフロー"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -2772,6 +2783,11 @@ msgstr "システム状態"
 #. Translators: The name of a category of NVDA commands.
 msgid "Input"
 msgstr "入力"
+
+#. Translators: The name of a category of NVDA commands.
+#, fuzzy
+msgid "Document formatting"
+msgstr "書式情報"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -2919,6 +2935,351 @@ msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
 msgstr "コマンドキーの読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report font name document formatting setting.
+#, fuzzy
+msgid "report font name off"
+msgstr "フォント名の通知(&F)"
+
+#. Translators: The message announced when toggling the report font name document formatting setting.
+#, fuzzy
+msgid "report font name on"
+msgstr "フォント名の通知(&F)"
+
+#. Translators: Input help mode message for toggle report font name command.
+#, fuzzy
+msgid "Toggles on and off the reporting of font changes"
+msgstr "入力文字の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report font size document formatting setting.
+#, fuzzy
+msgid "report font size off"
+msgstr "フォントサイズの通知(&S)"
+
+#. Translators: The message announced when toggling the report font size document formatting setting.
+#, fuzzy
+msgid "report font size on"
+msgstr "フォントサイズの通知(&S)"
+
+#. Translators: Input help mode message for toggle report font size command.
+#, fuzzy
+msgid "Toggles on and off the reporting of font size changes"
+msgstr "入力文字の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report font attributes document formatting setting.
+#, fuzzy
+msgid "report font attributes off"
+msgstr "フォント属性の通知(&B)"
+
+#. Translators: The message announced when toggling the report font attributes document formatting setting.
+#, fuzzy
+msgid "report font attributes on"
+msgstr "フォント属性の通知(&B)"
+
+#. Translators: Input help mode message for toggle report font attributes command.
+#, fuzzy
+msgid "Toggles on and off the reporting of font attributes"
+msgstr "入力文字の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report revisions document formatting setting.
+#, fuzzy
+msgid "report revisions off"
+msgstr "校閲者による更新の通知(&E)"
+
+#. Translators: The message announced when toggling the report revisions document formatting setting.
+#, fuzzy
+msgid "report revisions on"
+msgstr "校閲者による更新の通知(&E)"
+
+#. Translators: Input help mode message for toggle report revisions command.
+#, fuzzy
+msgid "Toggles on and off the reporting of revisions"
+msgstr "入力単語の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report colors document formatting setting.
+#, fuzzy
+msgid "report colors off"
+msgstr "色の通知(&C)"
+
+#. Translators: The message announced when toggling the report colors document formatting setting.
+#, fuzzy
+msgid "report colors on"
+msgstr "色の通知(&C)"
+
+#. Translators: Input help mode message for toggle report colors command.
+#, fuzzy
+msgid "Toggles on and off the reporting of colors"
+msgstr "入力単語の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report alignment document formatting setting.
+#, fuzzy
+msgid "report alignment off"
+msgstr "配置の通知(&A)"
+
+#. Translators: The message announced when toggling the report alignment document formatting setting.
+#, fuzzy
+msgid "report alignment on"
+msgstr "配置の通知(&A)"
+
+#. Translators: Input help mode message for toggle report alignment command.
+#, fuzzy
+msgid "Toggles on and off the reporting of text alignment"
+msgstr "入力文字の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report style document formatting setting.
+#, fuzzy
+msgid "report style off"
+msgstr "スタイルの通知(&Y)"
+
+#. Translators: The message announced when toggling the report style document formatting setting.
+#, fuzzy
+msgid "report style on"
+msgstr "スタイルの通知(&Y)"
+
+#. Translators: Input help mode message for toggle report style command.
+#, fuzzy
+msgid "Toggles on and off the reporting of style changes"
+msgstr "入力文字の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report spelling errors document formatting setting.
+#, fuzzy
+msgid "report spelling errors off"
+msgstr "スペルエラーの通知(&R)"
+
+#. Translators: The message announced when toggling the report spelling errors document formatting setting.
+#, fuzzy
+msgid "report spelling errors on"
+msgstr "スペルエラーの通知(&R)"
+
+#. Translators: Input help mode message for toggle report spelling errors command.
+#, fuzzy
+msgid "Toggles on and off the reporting of spelling errors"
+msgstr "入力単語の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report pages document formatting setting.
+#, fuzzy
+msgid "report pages off"
+msgstr "ページ番号の通知(&P)"
+
+#. Translators: The message announced when toggling the report pages document formatting setting.
+#, fuzzy
+msgid "report pages on"
+msgstr "ページ番号の通知(&P)"
+
+#. Translators: Input help mode message for toggle report pages command.
+#, fuzzy
+msgid "Toggles on and off the reporting of pages"
+msgstr "入力単語の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report line numbers document formatting setting.
+#, fuzzy
+msgid "report line numbers off"
+msgstr "行番号の通知(&N)"
+
+#. Translators: The message announced when toggling the report line numbers document formatting setting.
+#, fuzzy
+msgid "report line numbers on"
+msgstr "行番号の通知(&N)"
+
+#. Translators: Input help mode message for toggle report line numbers command.
+#, fuzzy
+msgid "Toggles on and off the reporting of line numbers"
+msgstr "入力単語の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report line indentation document formatting setting.
+#, fuzzy
+msgid "report line indentation off"
+msgstr "行インデントの通知(&I)"
+
+#. Translators: The message announced when toggling the report line indentation document formatting setting.
+#, fuzzy
+msgid "report line indentation on"
+msgstr "行インデントの通知(&I)"
+
+#. Translators: Input help mode message for toggle report line indentation command.
+#, fuzzy
+msgid "Toggles on and off the reporting of line indentation"
+msgstr "入力単語の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
+#, fuzzy
+msgid "report paragraph indentation off"
+msgstr "段落インデントの通知(&P)"
+
+#. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
+#, fuzzy
+msgid "report paragraph indentation on"
+msgstr "段落インデントの通知(&P)"
+
+#. Translators: Input help mode message for toggle report paragraph indentation command.
+#, fuzzy
+msgid "Toggles on and off the reporting of paragraph indentation"
+msgstr "入力文字の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report tables document formatting setting.
+#, fuzzy
+msgid "report tables off"
+msgstr "テーブルの通知(&T)"
+
+#. Translators: The message announced when toggling the report tables document formatting setting.
+#, fuzzy
+msgid "report tables on"
+msgstr "テーブルの通知(&T)"
+
+#. Translators: Input help mode message for toggle report tables command.
+#, fuzzy
+msgid "Toggles on and off the reporting of tables"
+msgstr "入力単語の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
+#, fuzzy
+msgid "report table row and column headers off"
+msgstr "テーブルの行/列見出しの通知(&E)"
+
+#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
+#, fuzzy
+msgid "report table row and column headers on"
+msgstr "テーブルの行/列見出しの通知(&E)"
+
+#. Translators: Input help mode message for toggle report table row/column headers command.
+#, fuzzy
+msgid "Toggles on and off the reporting of table row and column headers"
+msgstr "入力文字の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
+#, fuzzy
+msgid "report table cell coordinates off"
+msgstr "テーブルのセル番地の通知(&O)"
+
+#. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
+#, fuzzy
+msgid "report table cell coordinates on"
+msgstr "テーブルのセル番地の通知(&O)"
+
+#. Translators: Input help mode message for toggle report table cell coordinates command.
+#, fuzzy
+msgid "Toggles on and off the reporting of table cell coordinates"
+msgstr "入力文字の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report links document formatting setting.
+#, fuzzy
+msgid "report links off"
+msgstr "リンクの通知(&K)"
+
+#. Translators: The message announced when toggling the report links document formatting setting.
+#, fuzzy
+msgid "report links on"
+msgstr "リンクの通知(&K)"
+
+#. Translators: Input help mode message for toggle report links command.
+#, fuzzy
+msgid "Toggles on and off the reporting of links"
+msgstr "入力単語の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report comments document formatting setting.
+#, fuzzy
+msgid "report comments off"
+msgstr "コメントなし"
+
+#. Translators: The message announced when toggling the report comments document formatting setting.
+#, fuzzy
+msgid "report comments on"
+msgstr "コメントなし"
+
+#. Translators: Input help mode message for toggle report comments command.
+#, fuzzy
+msgid "Toggles on and off the reporting of comments"
+msgstr "入力単語の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report lists document formatting setting.
+#, fuzzy
+msgid "report lists off"
+msgstr "リストの通知(&L)"
+
+#. Translators: The message announced when toggling the report lists document formatting setting.
+#, fuzzy
+msgid "report lists on"
+msgstr "リストの通知(&L)"
+
+#. Translators: Input help mode message for toggle report lists command.
+#, fuzzy
+msgid "Toggles on and off the reporting of lists"
+msgstr "入力単語の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report headings document formatting setting.
+#, fuzzy
+msgid "report headings off"
+msgstr "見出しの通知(&H)"
+
+#. Translators: The message announced when toggling the report headings document formatting setting.
+#, fuzzy
+msgid "report headings on"
+msgstr "見出しの通知(&H)"
+
+#. Translators: Input help mode message for toggle report headings command.
+#, fuzzy
+msgid "Toggles on and off the reporting of headings"
+msgstr "入力単語の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+#, fuzzy
+msgid "report block quotes off"
+msgstr "引用の通知(&Q)"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+#, fuzzy
+msgid "report block quotes on"
+msgstr "引用の通知(&Q)"
+
+#. Translators: Input help mode message for toggle report block quotes command.
+#, fuzzy
+msgid "Toggles on and off the reporting of block quotes"
+msgstr "入力単語の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report landmarks document formatting setting.
+#, fuzzy
+msgid "report landmarks off"
+msgstr "ランドマークの通知(&D)"
+
+#. Translators: The message announced when toggling the report landmarks document formatting setting.
+#, fuzzy
+msgid "report landmarks on"
+msgstr "ランドマークの通知(&D)"
+
+#. Translators: Input help mode message for toggle report landmarks command.
+#, fuzzy
+msgid "Toggles on and off the reporting of landmarks"
+msgstr "入力単語の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report frames document formatting setting.
+#, fuzzy
+msgid "report frames off"
+msgstr "フレームの通知(&M)"
+
+#. Translators: The message announced when toggling the report frames document formatting setting.
+#, fuzzy
+msgid "report frames on"
+msgstr "フレームの通知(&M)"
+
+#. Translators: Input help mode message for toggle report frames command.
+#, fuzzy
+msgid "Toggles on and off the reporting of frames"
+msgstr "入力文字の読み上げの切り替え"
+
+#. Translators: The message announced when toggling the report if clickable document formatting setting.
+#, fuzzy
+msgid "report if clickable off"
+msgstr "クリック可能の通知(&C)"
+
+#. Translators: The message announced when toggling the report if clickable document formatting setting.
+#, fuzzy
+msgid "report if clickable on"
+msgstr "クリック可能の通知(&C)"
+
+#. Translators: Input help mode message for toggle report if clickable command.
+#, fuzzy
+msgid "Toggles on and off reporting if clickable"
+msgstr "入力文字の読み上げの切り替え"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -3450,12 +3811,27 @@ msgstr "NVDAの音声エンジン設定ダイアログの表示"
 msgid "Shows the NVDA voice settings dialog"
 msgstr "NVDAの音声設定ダイアログを表示"
 
+#. Translators: Input help mode message for go to braille settings dialog command.
+#, fuzzy
+msgid "Shows the NVDA braille settings dialog"
+msgstr "NVDAの一般設定ダイアログの表示"
+
 #. Translators: Input help mode message for go to keyboard settings dialog command.
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "NVDAのキーボード設定ダイアログを表示"
 
 #. Translators: Input help mode message for go to mouse settings dialog command.
 msgid "Shows the NVDA mouse settings dialog"
+msgstr "NVDAのマウス設定ダイアログを表示"
+
+#. Translators: Input help mode message for go to review cursor settings dialog command.
+#, fuzzy
+msgid "Shows the NVDA review cursor settings dialog"
+msgstr "NVDAの音声設定ダイアログを表示"
+
+#. Translators: Input help mode message for go to input composition dialog.
+#, fuzzy
+msgid "Shows the NVDA input composition settings dialog"
 msgstr "NVDAのマウス設定ダイアログを表示"
 
 #. Translators: Input help mode message for go to object presentation dialog command.
@@ -3470,6 +3846,31 @@ msgstr "NVDAのブラウズ設定ダイアログを表示"
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "NVDAの書式設定ダイアログを表示"
 
+#. Translators: Input help mode message for opening default dictionary dialog.
+#, fuzzy
+msgid "Shows the NVDA default dictionary dialog"
+msgstr "NVDAの一般設定ダイアログの表示"
+
+#. Translators: Input help mode message for opening voice-specific dictionary dialog.
+#, fuzzy
+msgid "Shows the NVDA voice-specific dictionary dialog"
+msgstr "NVDAの音声設定ダイアログを表示"
+
+#. Translators: Input help mode message for opening temporary dictionary.
+#, fuzzy
+msgid "Shows the NVDA temporary dictionary dialog"
+msgstr "NVDAのキーボード設定ダイアログを表示"
+
+#. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
+#, fuzzy
+msgid "Shows the NVDA symbol pronunciation dialog"
+msgstr "NVDAの音声エンジン設定ダイアログの表示"
+
+#. Translators: Input help mode message for go to input gestures dialog command.
+#, fuzzy
+msgid "Shows the NVDA input gestures dialog"
+msgstr "NVDAの音声エンジン設定ダイアログの表示"
+
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
 msgstr "現在のNVDAの設定情報を保存"
@@ -3483,6 +3884,28 @@ msgstr "1回押すと前回保存された設定に戻す。3回押すと設定�
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "開発用のNVDA Pythonコンソールを開く"
+
+#. Translators: Input help mode message for activate manage add-ons command.
+msgid ""
+"Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
+"for NVDA"
+msgstr ""
+
+#. Translators: The message announced when disabling speech viewer.
+#, fuzzy
+msgid "speech viewer disabled"
+msgstr "スピーチビューワー(&S)"
+
+#. Translators: The message announced when enabling speech viewer.
+#, fuzzy
+msgid "speech viewer enabled"
+msgstr "スピーチビューワー(&S)"
+
+#. Translators: Input help mode message for toggle speech viewer command.
+msgid ""
+"Toggles the NVDA Speech viewer, a floating window that allows you to view "
+"all the text that NVDA is currently speaking"
+msgstr ""
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
@@ -3624,6 +4047,15 @@ msgstr "指で触っているオブジェクトやコンテンツが変化した
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "NVDAの設定プロファイルダイアログの表示"
+
+#. Translators: Reported when the user attempts math interaction
+#. with something that isn't math.
+msgid "Not math"
+msgstr ""
+
+#. Translators: Describes a command.
+msgid "Begins interaction with math content"
+msgstr ""
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -6036,7 +6468,7 @@ msgstr "デバッグ"
 
 #. Translators: The label for a setting in general settings to select NVDA's interface language (once selected, NVDA must be restarted; the option user default means the user's Windows language will be used).
 msgid "&Language (requires restart to fully take effect):"
-msgstr "言語(&L) (設定を有効にするには再起動が必要)"
+msgstr "言語(設定を有効にするには再起動が必要)(&L)"
 
 #. Translators: The list of languages for NVDA.
 msgid "Language"
@@ -6802,6 +7234,15 @@ msgstr ""
 "ユーザー定義ジェスチャーを保存できませんでした - 読み取り専用ファイルシステム"
 "が使用されている可能性があります"
 
+#. Translators: Describes a command.
+msgid "Exit math interaction"
+msgstr ""
+
+#. Translators: Reported when the user attempts math interaction
+#. but math interaction is not supported.
+msgid "Math interaction not supported."
+msgstr ""
+
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
 msgid "none"
@@ -6923,6 +7364,25 @@ msgstr "デスクトップ"
 msgid "default color"
 msgstr "標準色"
 
+#. Translators: the description for the elements list command in Microsoft Excel.
+msgid "Presents a list of charts, cells with comments and cells with formulas"
+msgstr ""
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Chart"
+msgstr "グラフ(&C)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "C&omment"
+msgstr "コメント(&O)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Formula"
+msgstr "数式(&F)"
+
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
 msgstr "{start} から {end}"
@@ -7000,6 +7460,535 @@ msgstr "セル {address} のコメント編集"
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} から {lastAddress} {lastContent}"
+
+#. Translators: Chart type
+msgid "3D Area"
+msgstr "3D面"
+
+#. Translators: Chart type
+msgid "3D Stacked Area"
+msgstr "3D積み上げ面"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Area"
+msgstr "100%積み上げ面"
+
+#. Translators: Chart type
+msgid "3D Clustered Bar"
+msgstr "3D集合横棒"
+
+#. Translators: Chart type
+msgid "3D Stacked Bar"
+msgstr "3D積み上げ横棒"
+
+#. Translators: Chart type
+msgid "3D 100 percent Stacked Bar"
+msgstr "3D 100%積み上げ横棒"
+
+#. Translators: Chart type
+msgid "3D Column"
+msgstr "3D縦棒"
+
+#. Translators: Chart type
+msgid "3D Clustered Column"
+msgstr "3D集合縦棒"
+
+#. Translators: Chart type
+msgid "3D Stacked Column"
+msgstr "3D積み上げ縦棒"
+
+#. Translators: Chart type
+msgid "3D 100 percent Stacked Column"
+msgstr "3D 100%積み上げ縦棒"
+
+#. Translators: Chart type
+msgid "3D Line"
+msgstr "3D折れ線"
+
+#. Translators: Chart type
+msgid "3D Pie"
+msgstr "3D円"
+
+#. Translators: Chart type
+msgid "Exploded 3D Pie"
+msgstr "分割円"
+
+#. Translators: Chart type
+msgid "Area"
+msgstr "面"
+
+#. Translators: Chart type
+msgid "Stacked Area"
+msgstr "積み上げ面"
+
+#. Translators: Chart type
+msgid "Clustered Bar"
+msgstr "集合横棒"
+
+#. Translators: Chart type
+msgid "Bar of Pie"
+msgstr "補助縦棒グラフ付き円"
+
+#. Translators: Chart type
+msgid "Stacked Bar"
+msgstr "積み上げ横棒"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Bar"
+msgstr "100%積み上げ横棒"
+
+#. Translators: Chart type
+msgid "Bubble"
+msgstr "バブルチャート"
+
+#. Translators: Chart type
+msgid "Bubble with 3D effects"
+msgstr "3D効果付バブルチャート"
+
+#. Translators: Chart type
+msgid "Clustered Column"
+msgstr "集合縦棒"
+
+#. Translators: Chart type
+msgid "Stacked Column"
+msgstr "積み上げ縦棒"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Column"
+msgstr "100%積み上げ縦棒"
+
+#. Translators: Chart type
+msgid "Clustered Cone Bar"
+msgstr "集合円錐横棒"
+
+#. Translators: Chart type
+msgid "Stacked Cone Bar"
+msgstr "積み上げ円錐横棒"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Cone Bar"
+msgstr "100%積み上げ円錐横棒"
+
+#. Translators: Chart type
+msgid "3D Cone Column"
+msgstr "3D円錐縦棒"
+
+#. Translators: Chart type
+msgid "Clustered Cone Column"
+msgstr "集合円錐縦棒"
+
+#. Translators: Chart type
+msgid "Stacked Cone Column"
+msgstr "積み上げ円錐縦棒"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Cone Column"
+msgstr "100%積み上げ円錐縦棒"
+
+#. Translators: Chart type
+msgid "Clustered Cylinder Bar"
+msgstr "集合円柱横棒"
+
+#. Translators: Chart type
+msgid "Stacked Cylinder Bar"
+msgstr "積み上げ円柱横棒"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Cylinder Bar"
+msgstr "100%積み上げ円柱横棒"
+
+#. Translators: Chart type
+msgid "3D Cylinder Column"
+msgstr "3D円柱縦棒"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Cylinder Column"
+msgstr "100%積み上げ円柱縦棒"
+
+#. Translators: Chart type
+msgid "Doughnut"
+msgstr "ドーナツ"
+
+#. Translators: Chart type
+msgid "Exploded Doughnut"
+msgstr "分割ドーナツ"
+
+#. Translators: Chart type
+msgid "Line"
+msgstr "折れ線"
+
+#. Translators: Chart type
+msgid "Line with Markers"
+msgstr "マーカー付き折れ線"
+
+#. Translators: Chart type
+msgid "Stacked Line with Markers"
+msgstr "マーカー付き積み上げ折れ線"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Line with Markers"
+msgstr "マーカー付き100%積み上げ折れ線"
+
+#. Translators: Chart type
+msgid "Stacked Line"
+msgstr "積み上げ折れ線"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Line"
+msgstr "100%積み上げ折れ線"
+
+#. Translators: Chart type
+msgid "Pie"
+msgstr "円"
+
+#. Translators: Chart type
+msgid "Exploded Pie"
+msgstr "分割円"
+
+#. Translators: Chart type
+msgid "Pie of Pie"
+msgstr "補助円グラフ付き円"
+
+#. Translators: Chart type
+msgid "Clustered Pyramid Bar"
+msgstr "集合ピラミッド横棒"
+
+#. Translators: Chart type
+msgid "Stacked Pyramid Bar"
+msgstr "積み上げピラミッド横棒"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Pyramid Bar"
+msgstr "100%積み上げピラミッド横棒"
+
+#. Translators: Chart type
+msgid "3D Pyramid Column"
+msgstr "3Dピラミッド縦棒"
+
+#. Translators: Chart type
+msgid "Clustered Pyramid Column"
+msgstr "集合ピラミッド縦棒"
+
+#. Translators: Chart type
+msgid "Stacked Pyramid Column"
+msgstr "積み上げピラミッド縦棒"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Pyramid Column"
+msgstr "100%積み上げピラミッド縦棒"
+
+#. Translators: Chart type
+msgid "Radar"
+msgstr "レーダー"
+
+#. Translators: Chart type
+msgid "Filled Radar"
+msgstr "塗りつぶされたレーダー"
+
+#. Translators: Chart type
+msgid "Radar with Data Markers"
+msgstr "データマーカー付レーダー"
+
+#. Translators: Chart type
+msgid "High-Low-Close"
+msgstr "株価チャート(高値-安値-終値)"
+
+#. Translators: Chart type
+msgid "Open-High-Low-Close"
+msgstr "株価チャート(始値-高値-安値-終値)"
+
+#. Translators: Chart type
+msgid "Volume-High-Low-Close"
+msgstr "株価チャート(出来高-高値-安値-終値)"
+
+#. Translators: Chart type
+msgid "Volume-Open-High-Low-Close"
+msgstr "株価チャート(出来高-始値-高値-安値-終値)"
+
+#. Translators: Chart type
+msgid "3D Surface"
+msgstr "3D面"
+
+#. Translators: Chart type
+msgid "Surface (Top View)"
+msgstr "上から見た面"
+
+#. Translators: Chart type
+msgid "Surface (Top View wireframe)"
+msgstr "面 上から見たワイヤーフレーム"
+
+#. Translators: Chart type
+msgid "3D Surface (wireframe)"
+msgstr "3D面 ワイヤーフレーム"
+
+#. Translators: Chart type
+msgid "Scatter"
+msgstr "散布図"
+
+#. Translators: Chart type
+msgid "Scatter with Lines"
+msgstr "折れ線付き散布図"
+
+#. Translators: Chart type
+msgid "Scatter with Lines and No Data Markers"
+msgstr "折れ線付き散布図 データマーカーなし"
+
+#. Translators: Chart type
+msgid "Scatter with Smoothed Lines"
+msgstr "平滑線付き散布図"
+
+#. Translators: Chart type
+msgid "Scatter with Smoothed Lines and No Data Markers"
+msgstr "平滑線付散布図 データマーカーなし"
+
+#. Translators: prompt for chart title and chart type to be reported
+msgid "Chart title equals {chartTitle} type equals {chartType}"
+msgstr "グラフタイトルは {chartTitle} 種類は {chartType}"
+
+#, python-format
+msgid "%s"
+msgstr "%s"
+
+#. Translators: Axis title to be reported when the title is not available
+msgid "Not defined"
+msgstr "定義されていません"
+
+#. Translators: Chart Axis types
+#. Translators: axis type
+msgid "Category"
+msgstr "項目"
+
+#. Translators: axis type
+msgid "Value"
+msgstr "値"
+
+#. Translators: axis type
+msgid "Series"
+msgstr "系列"
+
+#. Translators: Prompt for axis title and axis type to be reported
+msgid "{axisName} Axis is {axisTitle}"
+msgstr "{axisName} 軸は {axisTitle}"
+
+#. Translators: Number of series when there is only one series
+#, python-format
+msgid "There is %d series in this chart"
+msgstr "グラフには%d個の系列があります"
+
+#. Translators: Number of series when there are multiple series
+#, python-format
+msgid "There are total %d series in this chart"
+msgstr "グラフには%d個の系列があります"
+
+#. Translators: prompt to be reported when there is no series
+msgid "No Series defined."
+msgstr "系列が定義されていません"
+
+#. Translators: Chart segment such as slice for  pie chart etc this is reported when there is no segment available.
+msgid "item"
+msgstr "項目"
+
+msgid "Series color: {} "
+msgstr "系列の色 {}"
+
+#. Translators: prompt for xlDisplayUnitLabel
+msgid "Display Unit Label"
+msgstr "単位ラベルを表示"
+
+#. Translators: prompt for xlMajorGridlines
+msgid "Major Gridlines"
+msgstr "目盛"
+
+#. Translators: prompt for xlMinorGridlines
+msgid "Minor Gridlines"
+msgstr "補助目盛"
+
+#. Translators: prompt for xlPivotChartDropZone
+msgid "Pivot Chart Drop Zone"
+msgstr "ピボットグラフ ドロップゾーン"
+
+#. Translators: prompt for xlPivotChartFieldButton
+msgid "Pivot Chart Field Button"
+msgstr "ピボットグラフ フィールドボタン"
+
+#. Translators: prompt for xlDownBars
+msgid "Down Bars"
+msgstr "ダウンバー"
+
+#. Translators: prompt for xlDropLines
+msgid "Drop Lines"
+msgstr "ドロップライン"
+
+#. Translators: prompt for xlHiLoLines
+msgid "Hi Lo Lines"
+msgstr "ハイローライン"
+
+#. Translators: prompt for xlRadarAxisLabels
+msgid "Radar Axis Labels"
+msgstr "レーダー軸ラベル"
+
+#. Translators: prompt for xlSeriesLines
+msgid "Series Lines"
+msgstr "系列線"
+
+#. Translators: prompt for xlUpBars
+msgid "Up Bars"
+msgstr "アップバー"
+
+#. Translators: prompt for xlCorners
+msgid "Corners"
+msgstr "コーナー"
+
+#. Translators: prompt for xlDataTable
+msgid "Data Table"
+msgstr "データテーブル"
+
+#. Translators: prompt for xlFloor
+msgid "Floor"
+msgstr "床面"
+
+#. Translators: prompt for xlNothing
+msgid "xlNothing"
+msgstr "ナッシング"
+
+#. Translators: prompt for xlWalls
+msgid "Walls"
+msgstr "壁面"
+
+#. Translators: prompt for xlDataLabel
+msgid "Data Label"
+msgstr "データラベル"
+
+#. Translators: prompt for xlErrorBars
+msgid "Error Bars"
+msgstr "誤差範囲"
+
+#. Translators: prompt for xlXErrorBars
+msgid "X Error Bars"
+msgstr "X誤差範囲"
+
+#. Translators: prompt for xlYErrorBars
+msgid "Y Error Bars"
+msgstr "Y誤差範囲"
+
+#. Translators: prompt for xlShape
+msgid "Shape"
+msgstr "シェイプ"
+
+#. Translators: Prompt for series details in the format: Name series index of count
+msgid "{} Series {} of {}"
+msgstr "{}系列 {}の{}"
+
+#. Translators: for line charts, no change from the previous element
+msgid "no change from point {}, "
+msgstr "点 {} から変化なし"
+
+#. Translators: for line charts, increase from the previous element
+msgid "Increased by {} from point {}, "
+msgstr "{}増加 ポイント{}から"
+
+#. Translators: for line charts, decrease from the previous element
+msgid "decreased by {} from point {}, "
+msgstr "{}減少 ポイント{}から"
+
+#. Translators: report category axis title if available in the format title value
+msgid "{} {}: "
+msgstr "{} {}: "
+
+#. Translators: report category axis title as Category if axis title is not available in the format "category" value
+msgid "Category {}: "
+msgstr "項目{}:"
+
+#. Translators: report value axis title if available in the format title value
+msgid "{} {}"
+msgstr "{} {}"
+
+#. Translators: report value axis title as value if axis title is not available in the format "Value" value
+msgid "value {}"
+msgstr "値 {}"
+
+#. Translators: Prompt for pie chart in the format: fraction nn percent slice  index of count
+msgid " fraction {:.2f} Percent {} {} of {}"
+msgstr "{:.2f}パーセント {} {}の{}"
+
+#. Translators: Prompt for other charts in the format: segment type index of count
+msgid " {} {} of {}"
+msgstr "{} {}の{}"
+
+#. Translators: axis group
+msgid "Primary"
+msgstr "主"
+
+#. Translators: axis group
+msgid "Secondary"
+msgstr "第2"
+
+#. Translators: Prompt for axis details such as: type, group, and title
+#. Translators: Prompt for axis details such as: type, group, and title when there is no title
+msgid "Chart Axis, type equals {}, group equals {}, Title equals {}"
+msgstr "グラフの軸、種類は{}、グループは{}、タイトルは{}"
+
+msgid "none"
+msgstr "なし"
+
+#. Translators: Prompt for axis title if axis has title
+#. Translators: Prompt for axis title without title
+msgid "Chart Axis Title equals {} "
+msgstr "グラフ軸タイトルは{}"
+
+msgid " square "
+msgstr "平方"
+
+#. Translators: Prompt for trendline with equation or r square
+msgid " trendline {} "
+msgstr "近似曲線{}"
+
+#. Translators: Prompt for trendline without equation or r square
+msgid "Trendline"
+msgstr "近似曲線"
+
+#. Translators: Prompt for chart title
+msgid "Chart Title equals {}"
+msgstr "グラフタイトルは{}"
+
+#. Translators: Prompt for chart title when the title is not available
+msgid "Untitled chart"
+msgstr "グラフ タイトルなし"
+
+#. Translators: Prompt for chart area with dimentions
+msgid ""
+"Chart area height equals {}, width equals {}, top equals {}, left equals {}"
+msgstr "グラフエリア 高さは{} 幅は{} 上端は{} 左端は{}"
+
+#. Translators: Prompt for chart area
+msgid "Chart area "
+msgstr "グラフエリア"
+
+#. Translators: Prompt for plot area with inner dimentions
+msgid ""
+"Plot Area inside height equals {:.0f}, inside width equals {:.0f}, inside "
+"top equals {:.0f}, inside left equals {:.0f}"
+msgstr "プロットエリア内側の高さは{:.0f} 幅は{:.0f} 上端は{:.0f} 左端は{:.0f}"
+
+#. Translators: Prompt for plot area
+msgid "Plot Area "
+msgstr "プロットエリア"
+
+#. Translators: Prompt for Legend
+msgid "Legend"
+msgstr "凡例"
+
+#. Translators: Prompt for Legend when no legend is present
+msgid "No legend"
+msgstr "凡例なし"
+
+#. Translators: Prompt for Legend entry for series name index of count
+msgid "Legend entry for Series {}, {} of {}"
+msgstr "系列{}の凡例項目 {}の{}"
+
+#. Translators: Prompt for Legend key for series name index of count
+msgid "Legend key for Series {} {} of {}"
+msgstr "系列{}の凡例キー {}の{}"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
@@ -7274,3 +8263,9 @@ msgstr "HIMS社製 Braille Sense/Braille EDGE シリーズ"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS社製 SyncBraille"
+
+#~ msgid "equation"
+#~ msgstr "数式"
+
+#~ msgid "Presents a list of links, headings or landmarks"
+#~ msgstr "リンク、見出し、ランドマークのリストを表示"
