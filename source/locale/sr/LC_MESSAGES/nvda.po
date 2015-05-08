@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-15 11:28-0700\n"
+"POT-Creation-Date: 2015-05-02 19:04+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Janko Valenćik <jankoval@gmail.com>\n"
 "Language-Team: \n"
@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Generator: Poedit 1.7.6\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -171,13 +171,23 @@ msgstr "češki stepen 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Danish grade 1"
-msgstr "danski stepen 1"
+msgid "Danish 6 dot grade 1"
+msgstr "danski šestotačkasti stepen 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Danish grade 2"
-msgstr "danski stepen 2"
+msgid "Danish 8 dot grade 1"
+msgstr "danski osmotačkasti stepen 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 6 dot grade 2"
+msgstr "danski šestotačkasti stepen 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot grade 2"
+msgstr "danski osmotačkasti stepen 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -260,16 +270,6 @@ msgstr "finski osmotačkasti brajev kod"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "francuski kanadski stepen 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "francuski kanadski stepen 2"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
 msgid "French (unified) 6 dot computer braille"
 msgstr "francuski (unificiran) osmotačkasti brajev kod"
 
@@ -282,6 +282,16 @@ msgstr "francuski (unificiran) osmotačkasti brajev kod"
 #. braille settings dialog.
 msgid "French (unified) Grade 2"
 msgstr "francuski (unificiran) stepen 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "French (Canada) grade 1"
+msgstr "francuski kanadski stepen 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "French (Canada) grade 2"
+msgstr "francuski kanadski stepen 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -380,7 +390,7 @@ msgstr "holandski (Belgija) stepen 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (netherlands) grade 1"
+msgid "Dutch (Netherlands) grade 1"
 msgstr "holandski (Holandija) stepen 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -465,8 +475,8 @@ msgstr "švedski stepen 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Slovak"
-msgstr "slovački"
+msgid "Slovak grade 1"
+msgstr "slovački stepen 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1919,6 +1929,7 @@ msgid "selected %s"
 msgstr "%s izabrano"
 
 #. Translators: The word for an unknown control type.
+#. Translators: chart type to be reported when the type is not available
 msgid "unknown"
 msgstr "nepoznat"
 
@@ -2331,9 +2342,9 @@ msgstr "dugme menija"
 msgid "drop down button grid"
 msgstr "dugme za proširenje prikaza mreže"
 
-#. Translators: Identifies an equation.
-msgid "equation"
-msgstr "jednačina"
+#. Translators: Identifies mathematical content.
+msgid "math"
+msgstr ""
 
 #. Translators: Identifies a grip control.
 msgid "grip"
@@ -2781,6 +2792,11 @@ msgstr "Status sistema"
 msgid "Input"
 msgstr "Unos"
 
+#. Translators: The name of a category of NVDA commands.
+#, fuzzy
+msgid "Document formatting"
+msgstr "Formatiranje dokumenta"
+
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
 msgstr "pomoć za unos uključena"
@@ -2938,6 +2954,351 @@ msgid ""
 "characters"
 msgstr ""
 "Uključuje i isključuje izgovor komandnih tastera, koji nisu određeni znakovi"
+
+#. Translators: The message announced when toggling the report font name document formatting setting.
+#, fuzzy
+msgid "report font name off"
+msgstr "Prijavi ime fon&ta"
+
+#. Translators: The message announced when toggling the report font name document formatting setting.
+#, fuzzy
+msgid "report font name on"
+msgstr "Prijavi ime fon&ta"
+
+#. Translators: Input help mode message for toggle report font name command.
+#, fuzzy
+msgid "Toggles on and off the reporting of font changes"
+msgstr "Uključuje i isključuje izgovor ukucanih znakova"
+
+#. Translators: The message announced when toggling the report font size document formatting setting.
+#, fuzzy
+msgid "report font size off"
+msgstr "&Prijavi veličinu fonta"
+
+#. Translators: The message announced when toggling the report font size document formatting setting.
+#, fuzzy
+msgid "report font size on"
+msgstr "&Prijavi veličinu fonta"
+
+#. Translators: Input help mode message for toggle report font size command.
+#, fuzzy
+msgid "Toggles on and off the reporting of font size changes"
+msgstr "Uključuje i isključuje izgovor ukucanih znakova"
+
+#. Translators: The message announced when toggling the report font attributes document formatting setting.
+#, fuzzy
+msgid "report font attributes off"
+msgstr "Prijavi atri&bute fonta"
+
+#. Translators: The message announced when toggling the report font attributes document formatting setting.
+#, fuzzy
+msgid "report font attributes on"
+msgstr "Prijavi atri&bute fonta"
+
+#. Translators: Input help mode message for toggle report font attributes command.
+#, fuzzy
+msgid "Toggles on and off the reporting of font attributes"
+msgstr "Uključuje i isključuje izgovor ukucanih znakova"
+
+#. Translators: The message announced when toggling the report revisions document formatting setting.
+#, fuzzy
+msgid "report revisions off"
+msgstr "Prijavi ure&đivačke revizije"
+
+#. Translators: The message announced when toggling the report revisions document formatting setting.
+#, fuzzy
+msgid "report revisions on"
+msgstr "Prijavi ure&đivačke revizije"
+
+#. Translators: Input help mode message for toggle report revisions command.
+#, fuzzy
+msgid "Toggles on and off the reporting of revisions"
+msgstr "Uključuje i isključuje izgovor ukucanih reči"
+
+#. Translators: The message announced when toggling the report colors document formatting setting.
+#, fuzzy
+msgid "report colors off"
+msgstr "Prijavi &boje"
+
+#. Translators: The message announced when toggling the report colors document formatting setting.
+#, fuzzy
+msgid "report colors on"
+msgstr "Prijavi &boje"
+
+#. Translators: Input help mode message for toggle report colors command.
+#, fuzzy
+msgid "Toggles on and off the reporting of colors"
+msgstr "Uključuje i isključuje izgovor ukucanih reči"
+
+#. Translators: The message announced when toggling the report alignment document formatting setting.
+#, fuzzy
+msgid "report alignment off"
+msgstr "Prijavi poravn&anje"
+
+#. Translators: The message announced when toggling the report alignment document formatting setting.
+#, fuzzy
+msgid "report alignment on"
+msgstr "Prijavi poravn&anje"
+
+#. Translators: Input help mode message for toggle report alignment command.
+#, fuzzy
+msgid "Toggles on and off the reporting of text alignment"
+msgstr "Uključuje i isključuje izgovor ukucanih znakova"
+
+#. Translators: The message announced when toggling the report style document formatting setting.
+#, fuzzy
+msgid "report style off"
+msgstr "Prijavi st&il"
+
+#. Translators: The message announced when toggling the report style document formatting setting.
+#, fuzzy
+msgid "report style on"
+msgstr "Prijavi st&il"
+
+#. Translators: Input help mode message for toggle report style command.
+#, fuzzy
+msgid "Toggles on and off the reporting of style changes"
+msgstr "Uključuje i isključuje izgovor ukucanih znakova"
+
+#. Translators: The message announced when toggling the report spelling errors document formatting setting.
+#, fuzzy
+msgid "report spelling errors off"
+msgstr "Prijavi g&reške u pravopisu"
+
+#. Translators: The message announced when toggling the report spelling errors document formatting setting.
+#, fuzzy
+msgid "report spelling errors on"
+msgstr "Prijavi g&reške u pravopisu"
+
+#. Translators: Input help mode message for toggle report spelling errors command.
+#, fuzzy
+msgid "Toggles on and off the reporting of spelling errors"
+msgstr "Uključuje i isključuje izgovor ukucanih reči"
+
+#. Translators: The message announced when toggling the report pages document formatting setting.
+#, fuzzy
+msgid "report pages off"
+msgstr "Prijavi &stranice"
+
+#. Translators: The message announced when toggling the report pages document formatting setting.
+#, fuzzy
+msgid "report pages on"
+msgstr "Prijavi &stranice"
+
+#. Translators: Input help mode message for toggle report pages command.
+#, fuzzy
+msgid "Toggles on and off the reporting of pages"
+msgstr "Uključuje i isključuje izgovor ukucanih reči"
+
+#. Translators: The message announced when toggling the report line numbers document formatting setting.
+#, fuzzy
+msgid "report line numbers off"
+msgstr "Prijavi broj red&ova"
+
+#. Translators: The message announced when toggling the report line numbers document formatting setting.
+#, fuzzy
+msgid "report line numbers on"
+msgstr "Prijavi broj red&ova"
+
+#. Translators: Input help mode message for toggle report line numbers command.
+#, fuzzy
+msgid "Toggles on and off the reporting of line numbers"
+msgstr "Uključuje i isključuje izgovor ukucanih reči"
+
+#. Translators: The message announced when toggling the report line indentation document formatting setting.
+#, fuzzy
+msgid "report line indentation off"
+msgstr "Prijavi uv&lačenje reda"
+
+#. Translators: The message announced when toggling the report line indentation document formatting setting.
+#, fuzzy
+msgid "report line indentation on"
+msgstr "Prijavi uv&lačenje reda"
+
+#. Translators: Input help mode message for toggle report line indentation command.
+#, fuzzy
+msgid "Toggles on and off the reporting of line indentation"
+msgstr "Uključuje i isključuje izgovor ukucanih reči"
+
+#. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
+#, fuzzy
+msgid "report paragraph indentation off"
+msgstr "Prijavi uvlačenje pa&susa"
+
+#. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
+#, fuzzy
+msgid "report paragraph indentation on"
+msgstr "Prijavi uvlačenje pa&susa"
+
+#. Translators: Input help mode message for toggle report paragraph indentation command.
+#, fuzzy
+msgid "Toggles on and off the reporting of paragraph indentation"
+msgstr "Uključuje i isključuje izgovor ukucanih znakova"
+
+#. Translators: The message announced when toggling the report tables document formatting setting.
+#, fuzzy
+msgid "report tables off"
+msgstr "Prijavi &tabele"
+
+#. Translators: The message announced when toggling the report tables document formatting setting.
+#, fuzzy
+msgid "report tables on"
+msgstr "Prijavi &tabele"
+
+#. Translators: Input help mode message for toggle report tables command.
+#, fuzzy
+msgid "Toggles on and off the reporting of tables"
+msgstr "Uključuje i isključuje izgovor ukucanih reči"
+
+#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
+#, fuzzy
+msgid "report table row and column headers off"
+msgstr "Prijavi zaglavlja redova/kolona tab&ele"
+
+#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
+#, fuzzy
+msgid "report table row and column headers on"
+msgstr "Prijavi zaglavlja redova/kolona tab&ele"
+
+#. Translators: Input help mode message for toggle report table row/column headers command.
+#, fuzzy
+msgid "Toggles on and off the reporting of table row and column headers"
+msgstr "Uključuje i isključuje izgovor ukucanih znakova"
+
+#. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
+#, fuzzy
+msgid "report table cell coordinates off"
+msgstr "Prijavi ko&ordinate ćelija u tabeli"
+
+#. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
+#, fuzzy
+msgid "report table cell coordinates on"
+msgstr "Prijavi ko&ordinate ćelija u tabeli"
+
+#. Translators: Input help mode message for toggle report table cell coordinates command.
+#, fuzzy
+msgid "Toggles on and off the reporting of table cell coordinates"
+msgstr "Uključuje i isključuje izgovor ukucanih znakova"
+
+#. Translators: The message announced when toggling the report links document formatting setting.
+#, fuzzy
+msgid "report links off"
+msgstr "Prijavi lin&kove"
+
+#. Translators: The message announced when toggling the report links document formatting setting.
+#, fuzzy
+msgid "report links on"
+msgstr "Prijavi lin&kove"
+
+#. Translators: Input help mode message for toggle report links command.
+#, fuzzy
+msgid "Toggles on and off the reporting of links"
+msgstr "Uključuje i isključuje izgovor ukucanih reči"
+
+#. Translators: The message announced when toggling the report comments document formatting setting.
+#, fuzzy
+msgid "report comments off"
+msgstr "nema komentara"
+
+#. Translators: The message announced when toggling the report comments document formatting setting.
+#, fuzzy
+msgid "report comments on"
+msgstr "nema komentara"
+
+#. Translators: Input help mode message for toggle report comments command.
+#, fuzzy
+msgid "Toggles on and off the reporting of comments"
+msgstr "Uključuje i isključuje izgovor ukucanih reči"
+
+#. Translators: The message announced when toggling the report lists document formatting setting.
+#, fuzzy
+msgid "report lists off"
+msgstr "Prijavi l&iste"
+
+#. Translators: The message announced when toggling the report lists document formatting setting.
+#, fuzzy
+msgid "report lists on"
+msgstr "Prijavi l&iste"
+
+#. Translators: Input help mode message for toggle report lists command.
+#, fuzzy
+msgid "Toggles on and off the reporting of lists"
+msgstr "Uključuje i isključuje izgovor ukucanih reči"
+
+#. Translators: The message announced when toggling the report headings document formatting setting.
+#, fuzzy
+msgid "report headings off"
+msgstr "Prijavi &naslove"
+
+#. Translators: The message announced when toggling the report headings document formatting setting.
+#, fuzzy
+msgid "report headings on"
+msgstr "Prijavi &naslove"
+
+#. Translators: Input help mode message for toggle report headings command.
+#, fuzzy
+msgid "Toggles on and off the reporting of headings"
+msgstr "Uključuje i isključuje izgovor ukucanih reči"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+#, fuzzy
+msgid "report block quotes off"
+msgstr "Prijavi ci&tate"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+#, fuzzy
+msgid "report block quotes on"
+msgstr "Prijavi ci&tate"
+
+#. Translators: Input help mode message for toggle report block quotes command.
+#, fuzzy
+msgid "Toggles on and off the reporting of block quotes"
+msgstr "Uključuje i isključuje izgovor ukucanih reči"
+
+#. Translators: The message announced when toggling the report landmarks document formatting setting.
+#, fuzzy
+msgid "report landmarks off"
+msgstr "Prijavi reg&ione"
+
+#. Translators: The message announced when toggling the report landmarks document formatting setting.
+#, fuzzy
+msgid "report landmarks on"
+msgstr "Prijavi reg&ione"
+
+#. Translators: Input help mode message for toggle report landmarks command.
+#, fuzzy
+msgid "Toggles on and off the reporting of landmarks"
+msgstr "Uključuje i isključuje izgovor ukucanih reči"
+
+#. Translators: The message announced when toggling the report frames document formatting setting.
+#, fuzzy
+msgid "report frames off"
+msgstr "Prijavi okvir&e"
+
+#. Translators: The message announced when toggling the report frames document formatting setting.
+#, fuzzy
+msgid "report frames on"
+msgstr "Prijavi okvir&e"
+
+#. Translators: Input help mode message for toggle report frames command.
+#, fuzzy
+msgid "Toggles on and off the reporting of frames"
+msgstr "Uključuje i isključuje izgovor ukucanih znakova"
+
+#. Translators: The message announced when toggling the report if clickable document formatting setting.
+#, fuzzy
+msgid "report if clickable off"
+msgstr "Prijavi da li se može kli&knuti"
+
+#. Translators: The message announced when toggling the report if clickable document formatting setting.
+#, fuzzy
+msgid "report if clickable on"
+msgstr "Prijavi da li se može kli&knuti"
+
+#. Translators: Input help mode message for toggle report if clickable command.
+#, fuzzy
+msgid "Toggles on and off reporting if clickable"
+msgstr "Uključuje i isključuje izgovor ukucanih znakova"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -3500,12 +3861,27 @@ msgstr "Prikazuje NVDA dijalog za podešavanje sintetizatora"
 msgid "Shows the NVDA voice settings dialog"
 msgstr "Prikazuje NVDA dijalog za glasovna podešavanja"
 
+#. Translators: Input help mode message for go to braille settings dialog command.
+#, fuzzy
+msgid "Shows the NVDA braille settings dialog"
+msgstr "Prikazuje NVDA dijalog za opšte postavke"
+
 #. Translators: Input help mode message for go to keyboard settings dialog command.
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "Prikazuje NVDA dijalog za podešavanje tastature"
 
 #. Translators: Input help mode message for go to mouse settings dialog command.
 msgid "Shows the NVDA mouse settings dialog"
+msgstr "Prikazuje NVDA dijalog za podešavanje miša"
+
+#. Translators: Input help mode message for go to review cursor settings dialog command.
+#, fuzzy
+msgid "Shows the NVDA review cursor settings dialog"
+msgstr "Prikazuje NVDA dijalog za glasovna podešavanja"
+
+#. Translators: Input help mode message for go to input composition dialog.
+#, fuzzy
+msgid "Shows the NVDA input composition settings dialog"
 msgstr "Prikazuje NVDA dijalog za podešavanje miša"
 
 #. Translators: Input help mode message for go to object presentation dialog command.
@@ -3519,6 +3895,31 @@ msgstr "Prikazuje NVDA dijalog za podešavanje režima pretraživanja"
 #. Translators: Input help mode message for go to document formatting dialog command.
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "Prikazuje NVDA dijalog za podešavanje formatiranja dokumenta"
+
+#. Translators: Input help mode message for opening default dictionary dialog.
+#, fuzzy
+msgid "Shows the NVDA default dictionary dialog"
+msgstr "Prikazuje NVDA dijalog za opšte postavke"
+
+#. Translators: Input help mode message for opening voice-specific dictionary dialog.
+#, fuzzy
+msgid "Shows the NVDA voice-specific dictionary dialog"
+msgstr "Prikazuje NVDA dijalog za glasovna podešavanja"
+
+#. Translators: Input help mode message for opening temporary dictionary.
+#, fuzzy
+msgid "Shows the NVDA temporary dictionary dialog"
+msgstr "Prikazuje NVDA dijalog za podešavanje tastature"
+
+#. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
+#, fuzzy
+msgid "Shows the NVDA symbol pronunciation dialog"
+msgstr "Prikazuje NVDA dijalog za podešavanje sintetizatora"
+
+#. Translators: Input help mode message for go to input gestures dialog command.
+#, fuzzy
+msgid "Shows the NVDA input gestures dialog"
+msgstr "Prikazuje NVDA dijalog za podešavanje sintetizatora"
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
@@ -3535,6 +3936,28 @@ msgstr ""
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Aktivira NVDA Python konzolu, prvenstveno korisnu za razvoj"
+
+#. Translators: Input help mode message for activate manage add-ons command.
+msgid ""
+"Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
+"for NVDA"
+msgstr ""
+
+#. Translators: The message announced when disabling speech viewer.
+#, fuzzy
+msgid "speech viewer disabled"
+msgstr "Preglednik govora"
+
+#. Translators: The message announced when enabling speech viewer.
+#, fuzzy
+msgid "speech viewer enabled"
+msgstr "Preglednik govora"
+
+#. Translators: Input help mode message for toggle speech viewer command.
+msgid ""
+"Toggles the NVDA Speech viewer, a floating window that allows you to view "
+"all the text that NVDA is currently speaking"
+msgstr ""
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
@@ -3685,6 +4108,15 @@ msgstr ""
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Prikazuje NVDA dijalog za konfiguracione profile"
+
+#. Translators: Reported when the user attempts math interaction
+#. with something that isn't math.
+msgid "Not math"
+msgstr ""
+
+#. Translators: Describes a command.
+msgid "Begins interaction with math content"
+msgstr ""
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -6887,6 +7319,15 @@ msgstr ""
 "Greška pri čuvanju korisnički definisanih gestova - verovatno je sistem "
 "datoteka samo za čitanje."
 
+#. Translators: Describes a command.
+msgid "Exit math interaction"
+msgstr ""
+
+#. Translators: Reported when the user attempts math interaction
+#. but math interaction is not supported.
+msgid "Math interaction not supported."
+msgstr ""
+
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
 msgid "none"
@@ -7010,6 +7451,25 @@ msgstr "Radna površina"
 msgid "default color"
 msgstr "zadana boja"
 
+#. Translators: the description for the elements list command in Microsoft Excel.
+msgid "Presents a list of charts, cells with comments and cells with formulas"
+msgstr ""
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Chart"
+msgstr "&Grafikon"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "C&omment"
+msgstr "K&omentar"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Formula"
+msgstr "&Formula"
+
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
 msgstr "{start} do {end}"
@@ -7090,6 +7550,535 @@ msgstr "Uređivanje komentara za ćeliju {address}"
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} do {lastAddress} {lastContent}"
+
+#. Translators: Chart type
+msgid "3D Area"
+msgstr ""
+
+#. Translators: Chart type
+msgid "3D Stacked Area"
+msgstr ""
+
+#. Translators: Chart type
+msgid "100 percent Stacked Area"
+msgstr ""
+
+#. Translators: Chart type
+msgid "3D Clustered Bar"
+msgstr ""
+
+#. Translators: Chart type
+msgid "3D Stacked Bar"
+msgstr ""
+
+#. Translators: Chart type
+msgid "3D 100 percent Stacked Bar"
+msgstr ""
+
+#. Translators: Chart type
+msgid "3D Column"
+msgstr "3D kolona"
+
+#. Translators: Chart type
+msgid "3D Clustered Column"
+msgstr ""
+
+#. Translators: Chart type
+msgid "3D Stacked Column"
+msgstr ""
+
+#. Translators: Chart type
+msgid "3D 100 percent Stacked Column"
+msgstr ""
+
+#. Translators: Chart type
+msgid "3D Line"
+msgstr "3D linija"
+
+#. Translators: Chart type
+msgid "3D Pie"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Exploded 3D Pie"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Area"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Stacked Area"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Clustered Bar"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Bar of Pie"
+msgstr "Izvedeni stubičasti grafikon od pite"
+
+#. Translators: Chart type
+msgid "Stacked Bar"
+msgstr ""
+
+#. Translators: Chart type
+msgid "100 percent Stacked Bar"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Bubble"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Bubble with 3D effects"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Clustered Column"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Stacked Column"
+msgstr "Složeni stubičasti grafikon po kolonama"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Column"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Clustered Cone Bar"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Stacked Cone Bar"
+msgstr ""
+
+#. Translators: Chart type
+msgid "100 percent Stacked Cone Bar"
+msgstr ""
+
+#. Translators: Chart type
+msgid "3D Cone Column"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Clustered Cone Column"
+msgstr "Složeni kupasti grafikon po kolonama"
+
+#. Translators: Chart type
+msgid "Stacked Cone Column"
+msgstr ""
+
+#. Translators: Chart type
+msgid "100 percent Stacked Cone Column"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Clustered Cylinder Bar"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Stacked Cylinder Bar"
+msgstr ""
+
+#. Translators: Chart type
+msgid "100 percent Stacked Cylinder Bar"
+msgstr ""
+
+#. Translators: Chart type
+msgid "3D Cylinder Column"
+msgstr ""
+
+#. Translators: Chart type
+msgid "100 percent Stacked Cylinder Column"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Doughnut"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Exploded Doughnut"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Line"
+msgstr "Linijski grafikon"
+
+#. Translators: Chart type
+msgid "Line with Markers"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Stacked Line with Markers"
+msgstr ""
+
+#. Translators: Chart type
+msgid "100 percent Stacked Line with Markers"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Stacked Line"
+msgstr ""
+
+#. Translators: Chart type
+msgid "100 percent Stacked Line"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Pie"
+msgstr "Pita grafikon"
+
+#. Translators: Chart type
+msgid "Exploded Pie"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Pie of Pie"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Clustered Pyramid Bar"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Stacked Pyramid Bar"
+msgstr ""
+
+#. Translators: Chart type
+msgid "100 percent Stacked Pyramid Bar"
+msgstr ""
+
+#. Translators: Chart type
+msgid "3D Pyramid Column"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Clustered Pyramid Column"
+msgstr "Složeni piradimalni grafikon po kolonama"
+
+#. Translators: Chart type
+msgid "Stacked Pyramid Column"
+msgstr ""
+
+#. Translators: Chart type
+msgid "100 percent Stacked Pyramid Column"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Radar"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Filled Radar"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Radar with Data Markers"
+msgstr ""
+
+#. Translators: Chart type
+msgid "High-Low-Close"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Open-High-Low-Close"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Volume-High-Low-Close"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Volume-Open-High-Low-Close"
+msgstr ""
+
+#. Translators: Chart type
+msgid "3D Surface"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Surface (Top View)"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Surface (Top View wireframe)"
+msgstr ""
+
+#. Translators: Chart type
+msgid "3D Surface (wireframe)"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Scatter"
+msgstr "Raspršeni grafikon"
+
+#. Translators: Chart type
+msgid "Scatter with Lines"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Scatter with Lines and No Data Markers"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Scatter with Smoothed Lines"
+msgstr ""
+
+#. Translators: Chart type
+msgid "Scatter with Smoothed Lines and No Data Markers"
+msgstr ""
+
+#. Translators: prompt for chart title and chart type to be reported
+msgid "Chart title equals {chartTitle} type equals {chartType}"
+msgstr ""
+
+#, python-format
+msgid "%s"
+msgstr "%s"
+
+#. Translators: Axis title to be reported when the title is not available
+msgid "Not defined"
+msgstr "Nije definisano"
+
+#. Translators: Chart Axis types
+#. Translators: axis type
+msgid "Category"
+msgstr ""
+
+#. Translators: axis type
+msgid "Value"
+msgstr ""
+
+#. Translators: axis type
+msgid "Series"
+msgstr ""
+
+#. Translators: Prompt for axis title and axis type to be reported
+msgid "{axisName} Axis is {axisTitle}"
+msgstr ""
+
+#. Translators: Number of series when there is only one series
+#, python-format
+msgid "There is %d series in this chart"
+msgstr "Ima %d serija na ovom grafikonu"
+
+#. Translators: Number of series when there are multiple series
+#, python-format
+msgid "There are total %d series in this chart"
+msgstr ""
+
+#. Translators: prompt to be reported when there is no series
+msgid "No Series defined."
+msgstr ""
+
+#. Translators: Chart segment such as slice for  pie chart etc this is reported when there is no segment available.
+msgid "item"
+msgstr "stavka"
+
+msgid "Series color: {} "
+msgstr ""
+
+#. Translators: prompt for xlDisplayUnitLabel
+msgid "Display Unit Label"
+msgstr "Prikaži naziv jedinice"
+
+#. Translators: prompt for xlMajorGridlines
+msgid "Major Gridlines"
+msgstr ""
+
+#. Translators: prompt for xlMinorGridlines
+msgid "Minor Gridlines"
+msgstr ""
+
+#. Translators: prompt for xlPivotChartDropZone
+msgid "Pivot Chart Drop Zone"
+msgstr ""
+
+#. Translators: prompt for xlPivotChartFieldButton
+msgid "Pivot Chart Field Button"
+msgstr ""
+
+#. Translators: prompt for xlDownBars
+msgid "Down Bars"
+msgstr "Stubići nadole"
+
+#. Translators: prompt for xlDropLines
+msgid "Drop Lines"
+msgstr "Pomoćne linije"
+
+#. Translators: prompt for xlHiLoLines
+msgid "Hi Lo Lines"
+msgstr ""
+
+#. Translators: prompt for xlRadarAxisLabels
+msgid "Radar Axis Labels"
+msgstr ""
+
+#. Translators: prompt for xlSeriesLines
+msgid "Series Lines"
+msgstr ""
+
+#. Translators: prompt for xlUpBars
+msgid "Up Bars"
+msgstr ""
+
+#. Translators: prompt for xlCorners
+msgid "Corners"
+msgstr "Uglovi"
+
+#. Translators: prompt for xlDataTable
+msgid "Data Table"
+msgstr "Tabela sa podacima"
+
+#. Translators: prompt for xlFloor
+msgid "Floor"
+msgstr ""
+
+#. Translators: prompt for xlNothing
+msgid "xlNothing"
+msgstr ""
+
+#. Translators: prompt for xlWalls
+msgid "Walls"
+msgstr ""
+
+#. Translators: prompt for xlDataLabel
+msgid "Data Label"
+msgstr ""
+
+#. Translators: prompt for xlErrorBars
+msgid "Error Bars"
+msgstr "Stubići sa greškama"
+
+#. Translators: prompt for xlXErrorBars
+msgid "X Error Bars"
+msgstr ""
+
+#. Translators: prompt for xlYErrorBars
+msgid "Y Error Bars"
+msgstr ""
+
+#. Translators: prompt for xlShape
+msgid "Shape"
+msgstr "Oblik"
+
+#. Translators: Prompt for series details in the format: Name series index of count
+msgid "{} Series {} of {}"
+msgstr ""
+
+#. Translators: for line charts, no change from the previous element
+msgid "no change from point {}, "
+msgstr ""
+
+#. Translators: for line charts, increase from the previous element
+msgid "Increased by {} from point {}, "
+msgstr ""
+
+#. Translators: for line charts, decrease from the previous element
+msgid "decreased by {} from point {}, "
+msgstr ""
+
+#. Translators: report category axis title if available in the format title value
+msgid "{} {}: "
+msgstr ""
+
+#. Translators: report category axis title as Category if axis title is not available in the format "category" value
+msgid "Category {}: "
+msgstr ""
+
+#. Translators: report value axis title if available in the format title value
+msgid "{} {}"
+msgstr ""
+
+#. Translators: report value axis title as value if axis title is not available in the format "Value" value
+msgid "value {}"
+msgstr ""
+
+#. Translators: Prompt for pie chart in the format: fraction nn percent slice  index of count
+msgid " fraction {:.2f} Percent {} {} of {}"
+msgstr ""
+
+#. Translators: Prompt for other charts in the format: segment type index of count
+msgid " {} {} of {}"
+msgstr ""
+
+#. Translators: axis group
+msgid "Primary"
+msgstr "Primarna"
+
+#. Translators: axis group
+msgid "Secondary"
+msgstr ""
+
+#. Translators: Prompt for axis details such as: type, group, and title
+#. Translators: Prompt for axis details such as: type, group, and title when there is no title
+msgid "Chart Axis, type equals {}, group equals {}, Title equals {}"
+msgstr ""
+
+msgid "none"
+msgstr "nijedan"
+
+#. Translators: Prompt for axis title if axis has title
+#. Translators: Prompt for axis title without title
+msgid "Chart Axis Title equals {} "
+msgstr ""
+
+msgid " square "
+msgstr ""
+
+#. Translators: Prompt for trendline with equation or r square
+msgid " trendline {} "
+msgstr ""
+
+#. Translators: Prompt for trendline without equation or r square
+msgid "Trendline"
+msgstr "Linija trenda"
+
+#. Translators: Prompt for chart title
+msgid "Chart Title equals {}"
+msgstr ""
+
+#. Translators: Prompt for chart title when the title is not available
+msgid "Untitled chart"
+msgstr "Neimenovani grafikon"
+
+#. Translators: Prompt for chart area with dimentions
+msgid ""
+"Chart area height equals {}, width equals {}, top equals {}, left equals {}"
+msgstr ""
+
+#. Translators: Prompt for chart area
+msgid "Chart area "
+msgstr "Oblast grafikona"
+
+#. Translators: Prompt for plot area with inner dimentions
+msgid ""
+"Plot Area inside height equals {:.0f}, inside width equals {:.0f}, inside "
+"top equals {:.0f}, inside left equals {:.0f}"
+msgstr ""
+
+#. Translators: Prompt for plot area
+msgid "Plot Area "
+msgstr ""
+
+#. Translators: Prompt for Legend
+msgid "Legend"
+msgstr ""
+
+#. Translators: Prompt for Legend when no legend is present
+msgid "No legend"
+msgstr ""
+
+#. Translators: Prompt for Legend entry for series name index of count
+msgid "Legend entry for Series {}, {} of {}"
+msgstr ""
+
+#. Translators: Prompt for Legend key for series name index of count
+msgid "Legend key for Series {} {} of {}"
+msgstr ""
 
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
@@ -7377,8 +8366,14 @@ msgstr "HIMS Braille Sense/Braille EDGE serije"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
+#~ msgid "equation"
+#~ msgstr "jednačina"
+
 #~ msgid "Presents a list of links, headings or landmarks"
 #~ msgstr "prikazuje listu linkova, zaglavlja i orjentira"
+
+#~ msgid "Slovak"
+#~ msgstr "slovački"
 
 #~ msgid "grey"
 #~ msgstr "siva"
@@ -7470,9 +8465,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid "Set row header column"
 #~ msgstr "Postavljena naslovna kolona za redove"
-
-#~ msgid "Cleared row header column"
-#~ msgstr "Ispražnjena naslovna kolona za redove"
 
 #~ msgid ""
 #~ "Pressing once will set the current column as the column where row headers "

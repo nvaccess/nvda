@@ -3,25 +3,42 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.2 =
+O subliñable desta  versión inclúe a capacidade de ler gráficos en  Microsoft Excel e o apoio para a lectura e a navegación interactiva de contido matemático.
+
 == Novas Características ==
 - Agora é posible moverse cara adiante ou atrás por frases no Microsoft Word con alt+flecha abaixo e alt+flecha arriba respectivamente. (#3288)
 - Novas táboas de transcripción braille para varias linguas da India. (#4778)
+- No Microsoft Excel, NVDA agora anuncia cando unha celda ten contido desbordante ou cortado. (#3040)
+- No Microsoft Excel, agora podes utilizar a Lista de Elementos (NVDA+f7) para permitir o listado de gráficos, comentarios e fórmulas. (#1987)
+- Apoio para a lectura de gráficos en Microsoft Excel. Para utilizar esto, selecciona o gráfico utilizando a Lista de Elementos (NVDA+f7) e logo utiliza as teclas de cursor para moverte entre os pontos de datos. (#1987)
+- Utilizando MathPlayer 4 from Design Science, NVDA agora pode ler e navegar interactivamente polo contido matemático nos navegadores web e en Microsoft Word e PowerPoint. Mira a sección "Lendo Contido Matemático" na Guía do Usuario para detalles. (#4673)
+- Agora é posible asignar xestos de entrada (ordes de teclado, xestos táctiles, etc.) Para todos os diálogos de preferencias do NVDA e opcións de formato de documento utilizando o diálogo Xestos de Entrada. (#4898)
 
 
 == Cambios ==
 - No diálogo de formateado de documentos do NVDA, os atallos de teclado para Anunciar listas, Anunciar ligas, Anunciar números de Líña e Anunciar Nome da fonte cambiáronse. (#4650)
 - No diálogo Opcións do Rato do NVDA, engadíronse atallos de teclado para Reproducir son cando se move o rato e O brilo controla o volume do audio das coordenadas. (#4916)
+- Melloras significativas no anunciado de nomes de cor. (#4984)
+- Actualizado o transcriptor braille liblouis a 2.6.2. (#4777)
 
 
 == Corrección de Fallas ==
 - As descripcións de carácter agora manéxanse correctamente para conxuntos de carácteres en certas linguas da India. (#4582)
+- Se a opción "Confiar na Lingua da Voz ó Procesar Caracteres e Símbolos" está activada, o diálogo Pronunciación de Pontoación/Símbolos  agora utiliza correctamente a lingua da voz. Tamén, a lingua para a que a pronunciación estea sendo editada amósase no título do diálogo. (#4930)
+- En Internet Explorer e outros controis MSHTML, os caracteres tecleados xa non se anuncian inapropriadamente en caixas combinadas editables como o campo de búsqueda de Google na páxina de inicio de Google. (#4976)
+- Ó seleccionar cores en aplicacións de Microsoft Office, os nomes de cor agora anúncianse. (#3045)
+- A saída braille en Danés agora funciona de novo. (#4986)
+- AvPáx/rePáx poden utilizarse de novo para cambiar diapositivas dentro dunha presentación de diapositivas de PowerPoint. (#4850)
+- En Skype para Escritorio 7.2 e posteriores, as notificacións de tecleo agora anúncianse e correxíronse os problemas imediatamente despois de mover o foco fora dunha conversa. (#4972)
+- Correxidos problemas ó teclear certos símbolos de pontoación como parénteses dentro do campo de filtrado no diálogo Xestos de Entrada. (#5060)
 
 
 == Cambios para Desenvolvedores ==
 - brailleInput.handler.sendChars(mychar) xa non filtrará un carácter se é igual ó carácter anterior, asegurándose que a tecla enviada  se liberou correctamente.
-
-
-= 2015.2 =
+- Os scripts para cambiar os modos táctiles agora cumplen cas novas etiquetas engadidas a touchHandler.touchModeLabels. (#4699)
+- Implementáronse ordes de voz para insertar unha ruptura entre palabras e para cambiar o ton, volume e velocidade. Mira BreakCommand, PitchCommand, VolumeCommand e RateCommand no módulo speech. (#4674)
+ - Tamén hai speech.PhonemeCommand para insertar pronunciacións específicas, pero as implementacións actuais só soportan un número moi limitado de fonemas.
 
 
 = 2015.1 =

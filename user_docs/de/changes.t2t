@@ -4,23 +4,42 @@
 %!includeconf: ../changes.t2tconf
 
 = 2015.2 =
+Schwerpunkte dieser Version sind: Diagramme können in Microsoft Excel gelesen werden, Unterstützung für das Lesen und interaktive navigieren in mathematischem Text.
 
 == Neue Funktionen ==
 - In Microsoft Word kann man nun mittels Alt+Pfeiltaste nach oben bzw. nach unten Satzweise rück- bzw. vorwärts springen. (#3288)
 - Neue Braillezeichensätze für mehrere indische Sprachen. (#4778)
+- NVDA meldet in Excel überstehende oder abgeschnittene Zelleninhalte. (#3040)
+- In Excel können Sie sich mit Hilfe der Elementliste (NVDA+F7) eine Liste aller Formeln, Diagramme oder Kommentare anzeigen lassen. (#1987)
+- Diagramme können nun in Excel ausgelesen werden. Wählen Sie das Diagramm mit Hilfe der Elementliste (nvda+f7) aus und bewegen Sie sich anschließend mit den Pfeiltasten  zwischen den Datenpunkten. (#1987)
+- mit Hilfe von Mathplayer von Design Science kann NVDA in Webbrowsern, in Microsoft Word und in Powerpoint innerhalb mathematischer Inhalte navigieren. Siehe das kapitel "auslesen mathematischer Inhalte" für weitere informationen. (#4673)
+- Im Dialog "Eingaben" können Sie nun Tastenkombinationen , Gesten, Etc. an alle NVDA-Einstellungsdialoge sowie Einstellungen zur Dokumentformatierung zuweisen. (#4898)
 
 
 == Änderungen ==
-In den Einstellungen zu Dokumentformatierungen wurden die Tastenkürzel für die ausgaben von Listen, Links, Zeilennummern und Schriftartennamen geändert. (#4650)
+- In den Einstellungen zu Dokumentformatierungen wurden die Tastenkürzel für die ausgaben von Listen, Links, Zeilennummern und Schriftartennamen geändert. (#4650)
 - In den Mauseinstellungen von NVDA wurden Tastenkürzel für Audiokoordinaten bei Mausbewegungen wiedergeben sowie Lautstärke der Audiokoordinaten durch Helligkeit kontrollieren hinzugefügt. (#4916)
+- Die Ausgabe von Farbnamen wurde verbessert. (#4984)
+- Die Brailleübersetzung Liblouis wurde auf Version  2.6.2 aktualisiert. (#4777)
 
 
 == Fehlerbehebungen ==
 - Zeichenbeschreibungen für zusammengesetzte Zeichen werden nun für bestimmte indische Sprachen korrekt behandelt. (#4582)
+- Wenn die Option "beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen" in den Stimmeneinstellungen aktiviert ist, wird beim bearbeiten der Aussprache von Symbolen und Sonderzeichen die korrekte Sprache verwendet. Außerdem wird die verwendete Sprache im Dialogtitel angezeigt. (#4930)
+- Im Internet Explorer und anderen mshtml-Dokumenten werden eingegebene Zeichen nun korrekt ausgegeben. Dies betrifft deaktivierte Kombinationsfelder wie z.B. das Suchfeld auf der Google-Startseite. (#4976)
+- Bei der Auswahl von Farben in Microsoft office werden Farbnamen ausgegeben. (#3045)
+- Die Brailleausgabe in Dänisch funktioniert wieder. (#4986)
+- In Powerpoint-Präsentationen können Sie mit Seite auf/ab wieder zwischen den Folien wechseln. (#4850)
+- in Skype für Desktops 7.2 oder neuer wird korrekt angegeben, wenn jemand in einer Konversation tippt. Außerdem wurde ein Fehler beim Verlassen einer Konversation behoben. (#4972)
+- Problem beim Eingeben bestimmter Sonderzeichen (z. B. Klammern) in das Filter-Suchfeld des Eingaben-Dialogs behoben. (#5060)
 
 
 == Änderungen für Entwickler ==
-- - brailleInput.handler.sendChars(mychar) filtert keine Zeichen mehr aus, wenn das vorherige Zeichen gleich war. Dies wird erreicht in dem überprüft wird, ob die vorangegangene Taste richtig losgelassen wurde. 
+- brailleInput.handler.sendChars(mychar) filtert keine Zeichen mehr aus, wenn das vorherige Zeichen gleich war. Dies wird erreicht in dem überprüft wird, ob die vorangegangene Taste richtig losgelassen wurde. (#4139)
+- Wenn Sie in einem Skript einen neuen Arbeitsmodus für Touchscreens einführen, werden nun die namen der Arbeitsmodi in  touchHandler.touchModeLabels berücksichtigt. (#4699)
+- NvDA-erweiterungen können nun ihre eigene Darstellung für mathematische Formeln implementieren. Siehe hierzu das paket MathPres für weitere Informationen. (#4509)
+- Neue Befehle zum Steuern von Tonhöhe, Sprachgeschwindigkeit und lautstärke. Siehe hierzu BreakCommand, PitchCommand, VolumeCommand und RateCommand im Modul speech. (#4674)
+ - Mit der Methode speech.PhonemeCommand können Sie außerdem die Aussprache beeinflussen; momentan werden noch sehr wenige Phoneme unterstützt.
 
 
 = 2015.1 =

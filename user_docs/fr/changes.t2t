@@ -4,25 +4,44 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2015.2 =
+Les points forts de cette version incluent la possibilité de lire les graphiques dans Microsoft Excel et le support de la lecture et de la navigation interactive dans les contenus mathématiques.
 
 == Nouvelles Fonctionnalités ==
-- avancer et reculer par phrase sous Microsoft Word est maintenant possible avec alt+flècheBas et alt+flècheHaut respectivement. (#3288)
+- Avancer et reculer par phrase sous Microsoft Word est maintenant possible avec alt+flècheBas et alt+flècheHaut respectivement. (#3288)
 - De nouvelles tables de conversion braille pour plusieurs langues Indiennes. (#4778)
- 
- 
+- Dans Microsoft Excel, NVDA annonce maintenant quand une cellule a un contenu en débordement ou réajusté. (#3040)
+- Une liste d'éléments dans Microsoft Excel (NVDA+f7), permet de lister les graphiques, commentaires et formules. (#1987)
+- Support de la lecture des graphiques dans Microsoft Excel : Sélectionnez le graphique en utilisant la liste d'éléments (NVDA+f7) puis utilisez les flèches pour aller à tous les points de données. (#1987)
+- En utilisant MathPlayer 4 de Design Science, NVDA peut maintenant lire et naviguer de façon interactive dans les contenus mathématiques dans les navigateurs Internet et dans Microsoft Word et PowerPoint. Veuillez consulter la section "Lecture des Contenus Mathématiques" dans le Guide de l'utilisateur pour plus de détails. (#4673)
+- Il est maintenant possible d'assigner des gestes de commande (commandes clavier, gestes tactiles, etc.) pour tous les dialogues des préférences NVDA et les options de mise en forme de document en utilisant le dialogue Gestes de Commandes. (#4898)
+
+
 == Changements ==
 - Dans le dialogue de mise en forme des documents, les raccourcis clavier pour l'annonce des listes, l'annonce des liens, l'annonce du numéro de ligne et l'annonce du nom de la police ont été changés (en anglais). (#4650)
 - Dans le dialogue des paramètres de la souris de NVDA, des raccourcis clavier ont été ajoutés pour "Sonoriser les coordonnées quand la souris se déplace" et "La brillance modifie le volume des coordonnées audio". (#4916)
+- Amélioration significative de l'annonce des couleurs. (#4984)
+- Mise à jour du traducteur braille liblouis à la version 2.6.2. (#4777)
 
 
 == Corrections de Bogues ==
 - Les descriptions de caractère sont maintenant traitées correctement pour les caractères conjoints dans certaines langues Indiennes. (#4582)
+- Si l'option "Se baser sur la langue de la voix pour le traitement des caractères et symboles" est cochée, le dialogue Prononciation des symboles et ponctuations utilise maintenant correctement la langue de la voix. La langue dont la prononciation est éditée est aussi indiquée dans le titre du dialogue. (#4930)
+- Dans Internet Explorer et autres contrôles MSHTML, les caractères frappés ne sont plus annoncés de manière inappropriée dans les listes déroulantes éditables telles que le champ de recherche Google sur la page d'accueil de Google. (#4976)
+- Quand on sélectionne des couleurs dans les applications Microsoft Office, le nom des couleurs est maintenant annoncé. (#3045)
+- L'affichage du Braille Danois fonctionne à nouveau. (#4986)
+- pagePrec / pageSuiv peuvent de nouveau être utilisées pour changer de diapositive dans un diaporama PowerPoint. (#4850)
+- Dans Skype for Desktop 7.2 et au-delà, les notifications de frappe sont maintenant annoncées et les problèmes intervenant immédiatement après que le focus ait quitté une conversation ont été corrigés. (#4972)
+- Correction de problèmes de frappe de certains symboles telles que les crochets dans le champ de filtrage dans le dialogue de saisie des gestes de commande. (#5060)
 
 
 == Changements pour les Développeurs ==
-- brailleInput.handler.sendChars(mychar) N'ignorera plus un caractère s'il est égal au caractère précédent en s'assurant que la touche pressée a été correctement relâchée.
+- brailleInput.handler.sendChars(mychar) N'ignorera plus un caractère s'il est égal au caractère précédent en s'assurant que la touche enfoncée a été correctement relâchée.
+- Les scripts pour changer le mode de toucher honnoreront maintenant les nouvelles étiquettes ajoutée à touchHandler.touchModeLabels. (#4699)
+- Les modules complémentaires peuvent fournir leur propre implémentation de présentation mathématique. Voir le package mathPres  pour plus de détails. (#4509)
+- Des commandes de parole ont été implémentées pour insérer une pause entre les mots et pour changer la hauteur, le volume et le débit. Voir les commandes BreakCommand, PitchCommand, VolumeCommand et RateCommand dans le module speech. (#4674)
+- Il y a aussi speech.PhonemeCommand pour insérer une prononciation spécifique, mais l'implémentation courante supporte un nombre très limité de phonèmes.
 
- 
+
 = 2015.1 =
  
 == Nouvelles Fonctionnalités ==

@@ -3,26 +3,45 @@
 
 %!includeconf: ../changes.t2tconf
 
-A partir da versão 2015.1 traduzido por Rui Fontes, e as versões anteriores foram adaptadas por Rui Batista e Rui Fontes da tradução brasileira...
+Tradução por Rui Fontes, a partir da versão 2015.1, adaptação por Rui Batista e Rui Fontes da tradução brasileira nas versões anteriores.
 
 = 2015.2 =
- 
+Os destaques desta versão incluem a possibilidade de ler gráficos no Microsoft Excel e suporte para leitura e navegação interactiva de conteúdo matemático no MathPlayer 4.
+
 == Novas Funcionalidades ==
 - Agora é possível mover-se para a frente e para trás por frase, no Microsoft Word, com alt + SetaAbaixo e alt + SetaAcima respectivamente. (#3288)
 - Novas tabelas  braille para vários idiomas indianos (#4778)
- 
+- No Microsoft Excel, o NVDA agora anuncia quando uma célula tem conteúdo em sobreposição ou obscurecido. (#3040)
+- No Microsoft Excel, agora pode usar a Lista de Elementos, NVDA+f7, para listar gráficos, comentários e fórmulas. (#1987)
+- Suporte para a leitura de gráficos no Microsoft Excel. Para isso seleccione o gráfico usando a Lista de Elementos, NVDA+f7, e depois use as setas para se mover entre os vários pontos. (#1987)
+- Usando o MathPlayer 4 da Design Science, o NVDA pode agora ler e navegar interactivamente conteúdo matemático nos navegadores de Internet, Microsoft Word E PowerPoint. Veja a secção "Leitura de conteúdo matemático" no Manual do utilizador para mais detalhes. (#4673)
+- Passa a ser possível associar comandos, (comandos de teclado, comandos de toque, etc.) para todos os diálogos de preferências do NVDA e de formatação de documentos, usando o diálogo Comandos. (#4898)
+     
 
 == Alterações ==
 - No diálogo de Formatação de documentos do NVDA, as teclas de atalho para Anunciar listas, Anunciar links, Anunciar números de linha e Anunciar nome do tipo de letra foram alterados em inglês, mas não em português (#4650)
 - No diálogo de Definições do rato do NVDA, foram adicionadas teclas de atalho para Tocar coordenadas de áudio quando o rato se mover e Brilho controla o volume das coordenadas de áudio (#4916)
-
+- Melhorado significativamente o anúncio dos nomes das cores. (#4984)
+- Actualizado o liblouis braille translator para a versão 2.6.2. (#4777)
+  
 
  == Correcção de falhas ==
 - As descrições de caracteres passam a ser correctamente tratadas para conjuntos de caracteres em certos idiomas indianos (#4582)
-
+- Se a opção "Usar o idioma da voz ao processar caracteres e símbolos" estiver marcada, o diálogo "Pronúncia de pontuação/símbolo..." usará correctamente o idioma da voz. E também o nome do idioma para o qual estão a ser configurados os símbolos e pontuação estará presente no título do diálogo. (#4930)
+- No Internet Explorer e noutros controlos MSHTML, os caracteres digitados já não são anunciados inapropriadamente em caixas combinadas editáveis, tais como o campo de pesquisa Google na página inicial do Google. (#4976)
+- Ao seleccionar cores nas aplicações do  Microsoft Office, os nomes das cores passam a ser anunciados. (#3045)
+- A tabela Braille de saída em dinamarquês volta a funcionar correctamente. (#4986)
+- PageUp/pageDown podem ser usados novamente para mudar de slide numa apresentação PowerPoint. (#4850)
+- No Skype para Desktop 7.2 e superiores, a notificação de contacto a escrever é agora anunciada e os problemas imediatamente após o foco sair de uma conversação foram resolvidos. (#4972)
+- Resolvido o problema ao digitar alguns símbolos/pontuação, tais como parêntese rectos, no campo "Filtrar por" no diálogo Comandos. (#5060)
+   
 
 == Alterações para Desenvolvedores ==
 - brailleInput.handler.sendChars(mychar) já não filtra o caractere, se for igual ao caractere anterior, por se certificar que a tecla é correctamente levantada.
+- Scripts para alterar os modos de toque passam a respeitar os novos nomes adicionados a touchHandler.touchModeLabels. (#4699)
+- Os Add-ons podem fornecer as suas próprias implementações de representação matemática. Ver o pacote mathPres para detalhes. (#4509)
+- Foram implementados comandos de vvoz para inserir uma pausa entre palavras e para alterar a entoação, volume e velocidade. Ver BreakCommand, PitchCommand, VolumeCommand e RateCommand no módulo speech. (#4674)
+ - Criado também o speech.PhonemeCommand para inserir pronúncia específica, mas a implementação actual apenas suporta um número limitado de fonemas.
 
 
 = 2015.1 =

@@ -3,6 +3,41 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.2 =
+Hoogtepunten in deze versie zijn de mogelijkheid om grafieken te lezen in Microsoft Excel en ondersteuning voor lezen van, interageren met, en navigeren in wiskundige inhoud.
+
+== Nieuwe Functies ==
+- Per zin vooruit en achteruit bewegen is nu mogelijk in Microsoft Word met respectievelijk alt+pijlOmlaag en alt+upOmhoog. (#3288)
+- Nieuwe brailletabellen voor verschillende Indische talen. (#4778)
+- In Microsoft Excel meldt NVDA nu als een cel overflowing of cropped inhoud heeft. (#3040)
+- In Microsoft Excel kunt u nu de Elementenlijst (NVDA+f7) gebruiken voor een lijst van grafieken, opmerkingen en formules. (#1987)
+- Ondersteuning voor het lezen van grafieken in Microsoft Excel. Selecteer de grafiek via de Elementenlijst (NVDA+f7) en gebruik dan de pijltoetsen om tussen de data points te bewegen. (#1987)
+- Using MathPlayer 4 from Design Science, NVDA can now read and interactively navigate mathematical content in web browsers and in Microsoft Word and PowerPoint. See the "Reading Mathematical Content" section in the User Guide for details. (#4673)
+- It is now possible to assign input gestures (keyboard commands, touch gestures, etc.) for all NVDA preferences dialogs and document formatting options using the Input Gestures dialog. (#4898)
+
+
+== Veranderingen ==
+- In NVDA's Document Formatting dialog, the keyboard shortcuts for Report lists, Report links, Report line numbers and Report font name have been changed. (#4650)
+- In NVDA's Mouse Settings dialog, keyboard shortcuts have been added for play audio coordinates when mouse moves and brightness controls audio coordinates volume. (#4916)
+- Significantly improved reporting of color names. (#4984)
+- Updated liblouis braille translator to 2.6.2. (#4777)
+
+
+== Opgeloste Problemen ==
+- Character descriptions are now handled correctly for conjunct characters in certain Indian languages. (#4582)
+- If the "Trust voice's language when processing characters and symbols" option is enabled, the Punctuation/Symbol pronunciation dialog now correctly uses the voice language. Also, the language for which pronunciation is being edited is shown in the dialog's title. (#4930)
+- In Internet Explorer and other MSHTML controls, typed characters are no longer inappropriately announced in editable combo boxes such as the Google search field on the Google home page. (#4976)
+- When selecting colors in Microsoft Office applications, color names are now reported. (#3045)
+- Danish braille output now works again. (#4986)
+- PageUp/pageDown can again be used to change slides within a PowerPoint slide show. (#4850)
+- In Skype for Desktop 7.2 and later, typing notifications are now reported and problems immediately after moving focus out of a conversation have been fixed. (#4972)
+- Fixed problems when typing certain punctuation/symbols such as brackets into the filter field in the Input Gestures dialog. (#5060)
+
+
+== Veranderingen voor Ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
+
+
 = 2015.1 =
 Hoogtepunten in deze versie zijn  bladermodus voor Microsoft Word en Outlook documenten; drastisch verbeterde ondersteuning voor de Desktop client van Skype; en aanzienlijke verbeteringen aan Microsoft Internet Explorer.
 

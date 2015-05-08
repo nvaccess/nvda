@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-15 11:28-0700\n"
+"POT-Creation-Date: 2015-05-02 19:04+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jorge Pérez Pérez <jorgtum@gmail.com>\n"
 "Language-Team: Softaragonés\n"
@@ -11,7 +11,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.3\n"
+"X-Generator: Poedit 1.8beta1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -165,13 +165,23 @@ msgstr "Checo grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Danish grade 1"
-msgstr "Danés grau 1"
+msgid "Danish 6 dot grade 1"
+msgstr "Danés de 6 puntos grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Danish grade 2"
-msgstr "Danés grau 2"
+msgid "Danish 8 dot grade 1"
+msgstr "Danés de 8 puntos grau 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 6 dot grade 2"
+msgstr "Danés de 6 puntos grau 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot grade 2"
+msgstr "Danés de 8 puntos grau 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -254,16 +264,6 @@ msgstr "Braille computerizau Finlandés de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "Francés (Canadá) grau 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "Francés (Canadá) grau 2"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
 msgid "French (unified) 6 dot computer braille"
 msgstr "Braille d'ordinador de 6 puntos francés (unificau)"
 
@@ -276,6 +276,16 @@ msgstr "Braille d'ordinador de 8 puntos francés (unificau)"
 #. braille settings dialog.
 msgid "French (unified) Grade 2"
 msgstr "Francés (unificau) Grau 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "French (Canada) grade 1"
+msgstr "Francés (Canadá) grau 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "French (Canada) grade 2"
+msgstr "Francés (Canadá) grau 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -374,8 +384,8 @@ msgstr "Neerlandés (Belchica) grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (netherlands) grade 1"
-msgstr "Neerlandés (Países Baixos) grau 1"
+msgid "Dutch (Netherlands) grade 1"
+msgstr "Holandés (Países Baixos) grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -459,8 +469,8 @@ msgstr "Sueco grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Slovak"
-msgstr "Eslovaco"
+msgid "Slovak grade 1"
+msgstr "Eslovaco grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1913,6 +1923,7 @@ msgid "selected %s"
 msgstr "seleccionau %s"
 
 #. Translators: The word for an unknown control type.
+#. Translators: chart type to be reported when the type is not available
 msgid "unknown"
 msgstr "desconoixiu"
 
@@ -2325,9 +2336,9 @@ msgstr "botón de menú"
 msgid "drop down button grid"
 msgstr "botón desplegable de quadricula"
 
-#. Translators: Identifies an equation.
-msgid "equation"
-msgstr "equación"
+#. Translators: Identifies mathematical content.
+msgid "math"
+msgstr ""
 
 #. Translators: Identifies a grip control.
 msgid "grip"
@@ -2776,6 +2787,11 @@ msgstr "Estau d'o sistema"
 msgid "Input"
 msgstr "Dentrada"
 
+#. Translators: The name of a category of NVDA commands.
+#, fuzzy
+msgid "Document formatting"
+msgstr "Formatiau de Documentos"
+
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
 msgstr "aduya de dentrada activada"
@@ -2932,6 +2948,351 @@ msgid ""
 msgstr ""
 "Enchega y desenchega o charrar  as teclas en escribir, as qualas no son "
 "caracters especificament"
+
+#. Translators: The message announced when toggling the report font name document formatting setting.
+#, fuzzy
+msgid "report font name off"
+msgstr "Anunciar o nombre d'a &fuent"
+
+#. Translators: The message announced when toggling the report font name document formatting setting.
+#, fuzzy
+msgid "report font name on"
+msgstr "Anunciar o nombre d'a &fuent"
+
+#. Translators: Input help mode message for toggle report font name command.
+#, fuzzy
+msgid "Toggles on and off the reporting of font changes"
+msgstr "Enchega y desenchega o charrar os caracters en escribir"
+
+#. Translators: The message announced when toggling the report font size document formatting setting.
+#, fuzzy
+msgid "report font size off"
+msgstr "Anunciar o taman&yo d'a fuent"
+
+#. Translators: The message announced when toggling the report font size document formatting setting.
+#, fuzzy
+msgid "report font size on"
+msgstr "Anunciar o taman&yo d'a fuent"
+
+#. Translators: Input help mode message for toggle report font size command.
+#, fuzzy
+msgid "Toggles on and off the reporting of font size changes"
+msgstr "Enchega y desenchega o charrar os caracters en escribir"
+
+#. Translators: The message announced when toggling the report font attributes document formatting setting.
+#, fuzzy
+msgid "report font attributes off"
+msgstr "Anunciar os &atributos d'a fuent"
+
+#. Translators: The message announced when toggling the report font attributes document formatting setting.
+#, fuzzy
+msgid "report font attributes on"
+msgstr "Anunciar os &atributos d'a fuent"
+
+#. Translators: Input help mode message for toggle report font attributes command.
+#, fuzzy
+msgid "Toggles on and off the reporting of font attributes"
+msgstr "Enchega y desenchega o charrar os caracters en escribir"
+
+#. Translators: The message announced when toggling the report revisions document formatting setting.
+#, fuzzy
+msgid "report revisions off"
+msgstr "Anunciar as revisions de l'&editor"
+
+#. Translators: The message announced when toggling the report revisions document formatting setting.
+#, fuzzy
+msgid "report revisions on"
+msgstr "Anunciar as revisions de l'&editor"
+
+#. Translators: Input help mode message for toggle report revisions command.
+#, fuzzy
+msgid "Toggles on and off the reporting of revisions"
+msgstr "Enchega y desenchega o charrar as parolas en escribir"
+
+#. Translators: The message announced when toggling the report colors document formatting setting.
+#, fuzzy
+msgid "report colors off"
+msgstr "Anunciar as &colors"
+
+#. Translators: The message announced when toggling the report colors document formatting setting.
+#, fuzzy
+msgid "report colors on"
+msgstr "Anunciar as &colors"
+
+#. Translators: Input help mode message for toggle report colors command.
+#, fuzzy
+msgid "Toggles on and off the reporting of colors"
+msgstr "Enchega y desenchega o charrar as parolas en escribir"
+
+#. Translators: The message announced when toggling the report alignment document formatting setting.
+#, fuzzy
+msgid "report alignment off"
+msgstr "Anunciar l'&aliniación"
+
+#. Translators: The message announced when toggling the report alignment document formatting setting.
+#, fuzzy
+msgid "report alignment on"
+msgstr "Anunciar l'&aliniación"
+
+#. Translators: Input help mode message for toggle report alignment command.
+#, fuzzy
+msgid "Toggles on and off the reporting of text alignment"
+msgstr "Enchega y desenchega o charrar os caracters en escribir"
+
+#. Translators: The message announced when toggling the report style document formatting setting.
+#, fuzzy
+msgid "report style off"
+msgstr "Anunciar o &estilo"
+
+#. Translators: The message announced when toggling the report style document formatting setting.
+#, fuzzy
+msgid "report style on"
+msgstr "Anunciar o &estilo"
+
+#. Translators: Input help mode message for toggle report style command.
+#, fuzzy
+msgid "Toggles on and off the reporting of style changes"
+msgstr "Enchega y desenchega o charrar os caracters en escribir"
+
+#. Translators: The message announced when toggling the report spelling errors document formatting setting.
+#, fuzzy
+msgid "report spelling errors off"
+msgstr "Anunciar as e&rrors d'ortografía"
+
+#. Translators: The message announced when toggling the report spelling errors document formatting setting.
+#, fuzzy
+msgid "report spelling errors on"
+msgstr "Anunciar as e&rrors d'ortografía"
+
+#. Translators: Input help mode message for toggle report spelling errors command.
+#, fuzzy
+msgid "Toggles on and off the reporting of spelling errors"
+msgstr "Enchega y desenchega o charrar as parolas en escribir"
+
+#. Translators: The message announced when toggling the report pages document formatting setting.
+#, fuzzy
+msgid "report pages off"
+msgstr "Anunciar as pa&chinas"
+
+#. Translators: The message announced when toggling the report pages document formatting setting.
+#, fuzzy
+msgid "report pages on"
+msgstr "Anunciar as pa&chinas"
+
+#. Translators: Input help mode message for toggle report pages command.
+#, fuzzy
+msgid "Toggles on and off the reporting of pages"
+msgstr "Enchega y desenchega o charrar as parolas en escribir"
+
+#. Translators: The message announced when toggling the report line numbers document formatting setting.
+#, fuzzy
+msgid "report line numbers off"
+msgstr "Anunciar os &numeros de linia"
+
+#. Translators: The message announced when toggling the report line numbers document formatting setting.
+#, fuzzy
+msgid "report line numbers on"
+msgstr "Anunciar os &numeros de linia"
+
+#. Translators: Input help mode message for toggle report line numbers command.
+#, fuzzy
+msgid "Toggles on and off the reporting of line numbers"
+msgstr "Enchega y desenchega o charrar as parolas en escribir"
+
+#. Translators: The message announced when toggling the report line indentation document formatting setting.
+#, fuzzy
+msgid "report line indentation off"
+msgstr "Anunciar a sangría d'a l&ínea"
+
+#. Translators: The message announced when toggling the report line indentation document formatting setting.
+#, fuzzy
+msgid "report line indentation on"
+msgstr "Anunciar a sangría d'a l&ínea"
+
+#. Translators: Input help mode message for toggle report line indentation command.
+#, fuzzy
+msgid "Toggles on and off the reporting of line indentation"
+msgstr "Enchega y desenchega o charrar as parolas en escribir"
+
+#. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
+#, fuzzy
+msgid "report paragraph indentation off"
+msgstr "Anunciar a sangría d'o &paragrafo"
+
+#. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
+#, fuzzy
+msgid "report paragraph indentation on"
+msgstr "Anunciar a sangría d'o &paragrafo"
+
+#. Translators: Input help mode message for toggle report paragraph indentation command.
+#, fuzzy
+msgid "Toggles on and off the reporting of paragraph indentation"
+msgstr "Enchega y desenchega o charrar os caracters en escribir"
+
+#. Translators: The message announced when toggling the report tables document formatting setting.
+#, fuzzy
+msgid "report tables off"
+msgstr "Anunciar as &tablas"
+
+#. Translators: The message announced when toggling the report tables document formatting setting.
+#, fuzzy
+msgid "report tables on"
+msgstr "Anunciar as &tablas"
+
+#. Translators: Input help mode message for toggle report tables command.
+#, fuzzy
+msgid "Toggles on and off the reporting of tables"
+msgstr "Enchega y desenchega o charrar as parolas en escribir"
+
+#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
+#, fuzzy
+msgid "report table row and column headers off"
+msgstr "Anunciar os &capiters de ringlera y columna de tabla"
+
+#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
+#, fuzzy
+msgid "report table row and column headers on"
+msgstr "Anunciar os &capiters de ringlera y columna de tabla"
+
+#. Translators: Input help mode message for toggle report table row/column headers command.
+#, fuzzy
+msgid "Toggles on and off the reporting of table row and column headers"
+msgstr "Enchega y desenchega o charrar os caracters en escribir"
+
+#. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
+#, fuzzy
+msgid "report table cell coordinates off"
+msgstr "Anunciar as c&oordenadas de celdas de tabla"
+
+#. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
+#, fuzzy
+msgid "report table cell coordinates on"
+msgstr "Anunciar as c&oordenadas de celdas de tabla"
+
+#. Translators: Input help mode message for toggle report table cell coordinates command.
+#, fuzzy
+msgid "Toggles on and off the reporting of table cell coordinates"
+msgstr "Enchega y desenchega o charrar os caracters en escribir"
+
+#. Translators: The message announced when toggling the report links document formatting setting.
+#, fuzzy
+msgid "report links off"
+msgstr "Anunciar os &vinclos"
+
+#. Translators: The message announced when toggling the report links document formatting setting.
+#, fuzzy
+msgid "report links on"
+msgstr "Anunciar os &vinclos"
+
+#. Translators: Input help mode message for toggle report links command.
+#, fuzzy
+msgid "Toggles on and off the reporting of links"
+msgstr "Enchega y desenchega o charrar as parolas en escribir"
+
+#. Translators: The message announced when toggling the report comments document formatting setting.
+#, fuzzy
+msgid "report comments off"
+msgstr "sin comentarios"
+
+#. Translators: The message announced when toggling the report comments document formatting setting.
+#, fuzzy
+msgid "report comments on"
+msgstr "sin comentarios"
+
+#. Translators: Input help mode message for toggle report comments command.
+#, fuzzy
+msgid "Toggles on and off the reporting of comments"
+msgstr "Enchega y desenchega o charrar as parolas en escribir"
+
+#. Translators: The message announced when toggling the report lists document formatting setting.
+#, fuzzy
+msgid "report lists off"
+msgstr "Anunciar as &listas"
+
+#. Translators: The message announced when toggling the report lists document formatting setting.
+#, fuzzy
+msgid "report lists on"
+msgstr "Anunciar as &listas"
+
+#. Translators: Input help mode message for toggle report lists command.
+#, fuzzy
+msgid "Toggles on and off the reporting of lists"
+msgstr "Enchega y desenchega o charrar as parolas en escribir"
+
+#. Translators: The message announced when toggling the report headings document formatting setting.
+#, fuzzy
+msgid "report headings off"
+msgstr "Anunciar os &capiters"
+
+#. Translators: The message announced when toggling the report headings document formatting setting.
+#, fuzzy
+msgid "report headings on"
+msgstr "Anunciar os &capiters"
+
+#. Translators: Input help mode message for toggle report headings command.
+#, fuzzy
+msgid "Toggles on and off the reporting of headings"
+msgstr "Enchega y desenchega o charrar as parolas en escribir"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+#, fuzzy
+msgid "report block quotes off"
+msgstr "Anunciar as c&itas"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+#, fuzzy
+msgid "report block quotes on"
+msgstr "Anunciar as c&itas"
+
+#. Translators: Input help mode message for toggle report block quotes command.
+#, fuzzy
+msgid "Toggles on and off the reporting of block quotes"
+msgstr "Enchega y desenchega o charrar as parolas en escribir"
+
+#. Translators: The message announced when toggling the report landmarks document formatting setting.
+#, fuzzy
+msgid "report landmarks off"
+msgstr "Anunciar as &zonas"
+
+#. Translators: The message announced when toggling the report landmarks document formatting setting.
+#, fuzzy
+msgid "report landmarks on"
+msgstr "Anunciar as &zonas"
+
+#. Translators: Input help mode message for toggle report landmarks command.
+#, fuzzy
+msgid "Toggles on and off the reporting of landmarks"
+msgstr "Enchega y desenchega o charrar as parolas en escribir"
+
+#. Translators: The message announced when toggling the report frames document formatting setting.
+#, fuzzy
+msgid "report frames off"
+msgstr "Anunciar os &marcos"
+
+#. Translators: The message announced when toggling the report frames document formatting setting.
+#, fuzzy
+msgid "report frames on"
+msgstr "Anunciar os &marcos"
+
+#. Translators: Input help mode message for toggle report frames command.
+#, fuzzy
+msgid "Toggles on and off the reporting of frames"
+msgstr "Enchega y desenchega o charrar os caracters en escribir"
+
+#. Translators: The message announced when toggling the report if clickable document formatting setting.
+#, fuzzy
+msgid "report if clickable off"
+msgstr "Anunciar si ye &clicable"
+
+#. Translators: The message announced when toggling the report if clickable document formatting setting.
+#, fuzzy
+msgid "report if clickable on"
+msgstr "Anunciar si ye &clicable"
+
+#. Translators: Input help mode message for toggle report if clickable command.
+#, fuzzy
+msgid "Toggles on and off reporting if clickable"
+msgstr "Enchega y desenchega o charrar os caracters en escribir"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -3503,12 +3864,27 @@ msgstr "Amuestra o dialogo Sintetizadors d'o NVDA"
 msgid "Shows the NVDA voice settings dialog"
 msgstr "Amuestra o dialogo d'Opcions de Voz d'o NVDA"
 
+#. Translators: Input help mode message for go to braille settings dialog command.
+#, fuzzy
+msgid "Shows the NVDA braille settings dialog"
+msgstr "Amuestra o dialogo Opcions Chenerals d'o NVDA"
+
 #. Translators: Input help mode message for go to keyboard settings dialog command.
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "Amuestra o dialogo Opcions de Teclau d'o NVDA"
 
 #. Translators: Input help mode message for go to mouse settings dialog command.
 msgid "Shows the NVDA mouse settings dialog"
+msgstr "Amuestra o dialogo Opcions d'o Churi d'o NVDA"
+
+#. Translators: Input help mode message for go to review cursor settings dialog command.
+#, fuzzy
+msgid "Shows the NVDA review cursor settings dialog"
+msgstr "Amuestra o dialogo d'Opcions de Voz d'o NVDA"
+
+#. Translators: Input help mode message for go to input composition dialog.
+#, fuzzy
+msgid "Shows the NVDA input composition settings dialog"
 msgstr "Amuestra o dialogo Opcions d'o Churi d'o NVDA"
 
 #. Translators: Input help mode message for go to object presentation dialog command.
@@ -3522,6 +3898,31 @@ msgstr "Amuestra o dialogo d'opcions d'o modo de Navegación d'o NVDA"
 #. Translators: Input help mode message for go to document formatting dialog command.
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "Amuestra o dialogo Formatiau de documentos d'o NVDA"
+
+#. Translators: Input help mode message for opening default dictionary dialog.
+#, fuzzy
+msgid "Shows the NVDA default dictionary dialog"
+msgstr "Amuestra o dialogo Opcions Chenerals d'o NVDA"
+
+#. Translators: Input help mode message for opening voice-specific dictionary dialog.
+#, fuzzy
+msgid "Shows the NVDA voice-specific dictionary dialog"
+msgstr "Amuestra o dialogo d'Opcions de Voz d'o NVDA"
+
+#. Translators: Input help mode message for opening temporary dictionary.
+#, fuzzy
+msgid "Shows the NVDA temporary dictionary dialog"
+msgstr "Amuestra o dialogo Opcions de Teclau d'o NVDA"
+
+#. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
+#, fuzzy
+msgid "Shows the NVDA symbol pronunciation dialog"
+msgstr "Amuestra o dialogo Sintetizadors d'o NVDA"
+
+#. Translators: Input help mode message for go to input gestures dialog command.
+#, fuzzy
+msgid "Shows the NVDA input gestures dialog"
+msgstr "Amuestra o dialogo Sintetizadors d'o NVDA"
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
@@ -3539,6 +3940,28 @@ msgstr ""
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Activa a Consola Python d'o NVDA, util mas que mas ta desembolicadors"
+
+#. Translators: Input help mode message for activate manage add-ons command.
+msgid ""
+"Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
+"for NVDA"
+msgstr ""
+
+#. Translators: The message announced when disabling speech viewer.
+#, fuzzy
+msgid "speech viewer disabled"
+msgstr "Visualizador d'a Voz"
+
+#. Translators: The message announced when enabling speech viewer.
+#, fuzzy
+msgid "speech viewer enabled"
+msgstr "Visualizador d'a Voz"
+
+#. Translators: Input help mode message for toggle speech viewer command.
+msgid ""
+"Toggles the NVDA Speech viewer, a floating window that allows you to view "
+"all the text that NVDA is currently speaking"
+msgstr ""
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
@@ -3692,6 +4115,15 @@ msgstr ""
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Amuestra o dialogo de perfils de configuración d'o NVDA"
+
+#. Translators: Reported when the user attempts math interaction
+#. with something that isn't math.
+msgid "Not math"
+msgstr ""
+
+#. Translators: Describes a command.
+msgid "Begins interaction with math content"
+msgstr ""
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -6909,6 +7341,15 @@ msgstr ""
 "S'ha produciu una error alzando los cenyos definius por l'usuario - "
 "prebablement yes en un sistema de fichers de nomás lectura."
 
+#. Translators: Describes a command.
+msgid "Exit math interaction"
+msgstr ""
+
+#. Translators: Reported when the user attempts math interaction
+#. but math interaction is not supported.
+msgid "Math interaction not supported."
+msgstr ""
+
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
 msgid "none"
@@ -7033,6 +7474,25 @@ msgstr "Escritorio"
 msgid "default color"
 msgstr "color predeterminada"
 
+#. Translators: the description for the elements list command in Microsoft Excel.
+msgid "Presents a list of charts, cells with comments and cells with formulas"
+msgstr ""
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Chart"
+msgstr "Grafi&co"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "C&omment"
+msgstr "C&omentario"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Formula"
+msgstr "&Formula"
+
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
 msgstr "{start} dica {end}"
@@ -7113,6 +7573,539 @@ msgstr "Se son editando os comentarios d'a celda {address}"
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} a traviés de {lastAddress} {lastContent}"
+
+#. Translators: Chart type
+msgid "3D Area"
+msgstr "Aria 3D"
+
+#. Translators: Chart type
+msgid "3D Stacked Area"
+msgstr "Arias 3D apuyaladas"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Area"
+msgstr "Arias 100 por cient apuyaladas"
+
+#. Translators: Chart type
+msgid "3D Clustered Bar"
+msgstr "Barras 3D agrupadas"
+
+#. Translators: Chart type
+msgid "3D Stacked Bar"
+msgstr "Barras 3D apuyaladas"
+
+#. Translators: Chart type
+msgid "3D 100 percent Stacked Bar"
+msgstr "Barras 3D 100 por cient apuyaladas"
+
+#. Translators: Chart type
+msgid "3D Column"
+msgstr "Columnas 3D"
+
+#. Translators: Chart type
+msgid "3D Clustered Column"
+msgstr "Columnas 3D agrupadas"
+
+#. Translators: Chart type
+msgid "3D Stacked Column"
+msgstr "Columnas 3D apuyaladas"
+
+#. Translators: Chart type
+msgid "3D 100 percent Stacked Column"
+msgstr "Columnas 3D 100 por cient apuyaladas"
+
+#. Translators: Chart type
+msgid "3D Line"
+msgstr "Linias 3D"
+
+#. Translators: Chart type
+msgid "3D Pie"
+msgstr "Cercular 3D"
+
+#. Translators: Chart type
+msgid "Exploded 3D Pie"
+msgstr "Cercular 3D seccionau"
+
+#. Translators: Chart type
+msgid "Area"
+msgstr "Arias"
+
+#. Translators: Chart type
+msgid "Stacked Area"
+msgstr "Arias apuyaladas"
+
+#. Translators: Chart type
+msgid "Clustered Bar"
+msgstr "Barras agrupadas"
+
+#. Translators: Chart type
+msgid "Bar of Pie"
+msgstr "Barra d'o cercular"
+
+#. Translators: Chart type
+msgid "Stacked Bar"
+msgstr "Barras apuyaladas"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Bar"
+msgstr "Barras 100 por cient apuyaladas"
+
+#. Translators: Chart type
+msgid "Bubble"
+msgstr "Bambolla"
+
+#. Translators: Chart type
+msgid "Bubble with 3D effects"
+msgstr "Bambolla con efectos 3D"
+
+#. Translators: Chart type
+msgid "Clustered Column"
+msgstr "Columnas agrupadas"
+
+#. Translators: Chart type
+msgid "Stacked Column"
+msgstr "Columnas apuyaladas"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Column"
+msgstr "Columnas 100 por cient apuyaladas"
+
+#. Translators: Chart type
+msgid "Clustered Cone Bar"
+msgstr "Barras conicas agrupadas"
+
+#. Translators: Chart type
+msgid "Stacked Cone Bar"
+msgstr "Barras conicas apuyaladas"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Cone Bar"
+msgstr "Barras conicas 100 por cient apuyaladas"
+
+#. Translators: Chart type
+msgid "3D Cone Column"
+msgstr "Columnas 3D conicas"
+
+#. Translators: Chart type
+msgid "Clustered Cone Column"
+msgstr "Columnas conicas agrupadas"
+
+#. Translators: Chart type
+msgid "Stacked Cone Column"
+msgstr "Columnas conicas apuyaladas"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Cone Column"
+msgstr "Columnas conicas 100 por cient apuyaladas"
+
+#. Translators: Chart type
+msgid "Clustered Cylinder Bar"
+msgstr "Barras cilindricas agrupadas"
+
+#. Translators: Chart type
+msgid "Stacked Cylinder Bar"
+msgstr "Barras cilindricas apuyaladas"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Cylinder Bar"
+msgstr "Barras cilindricas 100 por cient apuyaladas"
+
+#. Translators: Chart type
+msgid "3D Cylinder Column"
+msgstr "Columnas 3D cilindricas"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Cylinder Column"
+msgstr "Columnas 3D 100 por cient apuyaladas"
+
+#. Translators: Chart type
+msgid "Doughnut"
+msgstr "Aniellos"
+
+#. Translators: Chart type
+msgid "Exploded Doughnut"
+msgstr "Aniellos seccionaus"
+
+#. Translators: Chart type
+msgid "Line"
+msgstr "Linias"
+
+#. Translators: Chart type
+msgid "Line with Markers"
+msgstr "Linias con marcadors"
+
+#. Translators: Chart type
+msgid "Stacked Line with Markers"
+msgstr "Linias con marcadors apuyaladas"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Line with Markers"
+msgstr "Linias con marcadors 100 por cient apuyaladas"
+
+#. Translators: Chart type
+msgid "Stacked Line"
+msgstr "Linias apuyaladas"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Line"
+msgstr "Linias 100 por cient apuyaladas"
+
+#. Translators: Chart type
+msgid "Pie"
+msgstr "Cercular"
+
+#. Translators: Chart type
+msgid "Exploded Pie"
+msgstr "Cercular seccionau"
+
+#. Translators: Chart type
+msgid "Pie of Pie"
+msgstr "Cercular de cerculars"
+
+#. Translators: Chart type
+msgid "Clustered Pyramid Bar"
+msgstr "Barras piramidals agrupadas"
+
+#. Translators: Chart type
+msgid "Stacked Pyramid Bar"
+msgstr "Barras piramidals apuyaladas"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Pyramid Bar"
+msgstr "Barras piramidals 100 por cient apuyaladas"
+
+#. Translators: Chart type
+msgid "3D Pyramid Column"
+msgstr "Columnas 3D piramidals"
+
+#. Translators: Chart type
+msgid "Clustered Pyramid Column"
+msgstr "Columnas piramidals apuyaladas"
+
+#. Translators: Chart type
+msgid "Stacked Pyramid Column"
+msgstr "Columnas piramidals apuyaladas"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Pyramid Column"
+msgstr "Columnas piramidals 100 por cient apuyaladas"
+
+#. Translators: Chart type
+msgid "Radar"
+msgstr "Radial"
+
+#. Translators: Chart type
+msgid "Filled Radar"
+msgstr "Radial replén"
+
+#. Translators: Chart type
+msgid "Radar with Data Markers"
+msgstr "Radial con marcadors de datos"
+
+#. Translators: Chart type
+msgid "High-Low-Close"
+msgstr "Alto-baixo-zarradura"
+
+#. Translators: Chart type
+msgid "Open-High-Low-Close"
+msgstr "Ubridura-alto-baixo-zarradura"
+
+#. Translators: Chart type
+msgid "Volume-High-Low-Close"
+msgstr "Volumen-alto-baixo-zarradura"
+
+#. Translators: Chart type
+msgid "Volume-Open-High-Low-Close"
+msgstr "Volumen-ubridura-alto-baixo-zarradura"
+
+#. Translators: Chart type
+msgid "3D Surface"
+msgstr "Superficie 3D"
+
+#. Translators: Chart type
+msgid "Surface (Top View)"
+msgstr "Superficie (anvista superior)"
+
+#. Translators: Chart type
+msgid "Surface (Top View wireframe)"
+msgstr "Superficie (anvista superior d'estructura)"
+
+#. Translators: Chart type
+msgid "3D Surface (wireframe)"
+msgstr "Superficie 3D (estructura)"
+
+#. Translators: Chart type
+msgid "Scatter"
+msgstr "Dispersión"
+
+#. Translators: Chart type
+msgid "Scatter with Lines"
+msgstr "Dispersión con linias"
+
+#. Translators: Chart type
+msgid "Scatter with Lines and No Data Markers"
+msgstr "Dispersión con Linias y sin marcadors de datos"
+
+#. Translators: Chart type
+msgid "Scatter with Smoothed Lines"
+msgstr "Dispersión con linias suavezadas"
+
+#. Translators: Chart type
+msgid "Scatter with Smoothed Lines and No Data Markers"
+msgstr "Dispersión con linias suavezadas y sin marcadors de datos"
+
+#. Translators: prompt for chart title and chart type to be reported
+msgid "Chart title equals {chartTitle} type equals {chartType}"
+msgstr "Titol d'o grafico igual {chartTitle} mena igual {chartType}"
+
+#, python-format
+msgid "%s"
+msgstr "%s"
+
+#. Translators: Axis title to be reported when the title is not available
+msgid "Not defined"
+msgstr "No definiu"
+
+#. Translators: Chart Axis types
+#. Translators: axis type
+msgid "Category"
+msgstr "Categoría"
+
+#. Translators: axis type
+msgid "Value"
+msgstr "Valor"
+
+#. Translators: axis type
+msgid "Series"
+msgstr "Series"
+
+#. Translators: Prompt for axis title and axis type to be reported
+msgid "{axisName} Axis is {axisTitle}"
+msgstr "L'eixe {axisName} ye {axisTitle}"
+
+#. Translators: Number of series when there is only one series
+#, python-format
+msgid "There is %d series in this chart"
+msgstr "Bi ha %d series en iste grafico"
+
+#. Translators: Number of series when there are multiple series
+#, python-format
+msgid "There are total %d series in this chart"
+msgstr "Bi ha un total de %d series en iste grafico"
+
+#. Translators: prompt to be reported when there is no series
+msgid "No Series defined."
+msgstr "No bi ha Series definidas."
+
+#. Translators: Chart segment such as slice for  pie chart etc this is reported when there is no segment available.
+msgid "item"
+msgstr "elemento"
+
+msgid "Series color: {} "
+msgstr "Color d'as series: {} "
+
+#. Translators: prompt for xlDisplayUnitLabel
+msgid "Display Unit Label"
+msgstr "Amostrar a etiqueta d'a unidat"
+
+#. Translators: prompt for xlMajorGridlines
+msgid "Major Gridlines"
+msgstr "Linias de quadricula mayors"
+
+#. Translators: prompt for xlMinorGridlines
+msgid "Minor Gridlines"
+msgstr "Linias de quadricula menors"
+
+#. Translators: prompt for xlPivotChartDropZone
+msgid "Pivot Chart Drop Zone"
+msgstr "Zona de baixada d'o grafico dinamico"
+
+#. Translators: prompt for xlPivotChartFieldButton
+msgid "Pivot Chart Field Button"
+msgstr "Botón de campo d'o grafico dinamico"
+
+#. Translators: prompt for xlDownBars
+msgid "Down Bars"
+msgstr "Barras inferiors"
+
+#. Translators: prompt for xlDropLines
+msgid "Drop Lines"
+msgstr "Linias de chunión"
+
+#. Translators: prompt for xlHiLoLines
+msgid "Hi Lo Lines"
+msgstr "Linias altas y baixas"
+
+#. Translators: prompt for xlRadarAxisLabels
+msgid "Radar Axis Labels"
+msgstr "Etiquetas d'os eixes radials"
+
+#. Translators: prompt for xlSeriesLines
+msgid "Series Lines"
+msgstr "Linias d'as series"
+
+#. Translators: prompt for xlUpBars
+msgid "Up Bars"
+msgstr "Barras superiors"
+
+#. Translators: prompt for xlCorners
+msgid "Corners"
+msgstr "Cantonadas"
+
+#. Translators: prompt for xlDataTable
+msgid "Data Table"
+msgstr "Tabla de datos"
+
+#. Translators: prompt for xlFloor
+msgid "Floor"
+msgstr "Plan inferior"
+
+#. Translators: prompt for xlNothing
+msgid "xlNothing"
+msgstr "Cosa d'o xl"
+
+#. Translators: prompt for xlWalls
+msgid "Walls"
+msgstr "Plans laterals"
+
+#. Translators: prompt for xlDataLabel
+msgid "Data Label"
+msgstr "Etiqueta de datos"
+
+#. Translators: prompt for xlErrorBars
+msgid "Error Bars"
+msgstr "Barras d'error"
+
+#. Translators: prompt for xlXErrorBars
+msgid "X Error Bars"
+msgstr "Barras d'errors X"
+
+#. Translators: prompt for xlYErrorBars
+msgid "Y Error Bars"
+msgstr "Barras d'errors Y"
+
+#. Translators: prompt for xlShape
+msgid "Shape"
+msgstr "Forma"
+
+#. Translators: Prompt for series details in the format: Name series index of count
+msgid "{} Series {} of {}"
+msgstr "{} series {} de {}"
+
+#. Translators: for line charts, no change from the previous element
+msgid "no change from point {}, "
+msgstr "no bi ha cambeo dende o punto {}, "
+
+#. Translators: for line charts, increase from the previous element
+msgid "Increased by {} from point {}, "
+msgstr "Incrementau por {} dende o punto {}, "
+
+#. Translators: for line charts, decrease from the previous element
+msgid "decreased by {} from point {}, "
+msgstr "decrementau por {} dende o punto {}, "
+
+#. Translators: report category axis title if available in the format title value
+msgid "{} {}: "
+msgstr "{} {}: "
+
+#. Translators: report category axis title as Category if axis title is not available in the format "category" value
+msgid "Category {}: "
+msgstr "Categoría {}: "
+
+#. Translators: report value axis title if available in the format title value
+msgid "{} {}"
+msgstr "{} {}"
+
+#. Translators: report value axis title as value if axis title is not available in the format "Value" value
+msgid "value {}"
+msgstr "valor {}"
+
+#. Translators: Prompt for pie chart in the format: fraction nn percent slice  index of count
+msgid " fraction {:.2f} Percent {} {} of {}"
+msgstr " fracción {:.2f} por cient {} {} de {}"
+
+#. Translators: Prompt for other charts in the format: segment type index of count
+msgid " {} {} of {}"
+msgstr " {} {} de {}"
+
+#. Translators: axis group
+msgid "Primary"
+msgstr "Primario"
+
+#. Translators: axis group
+msgid "Secondary"
+msgstr "Secundario"
+
+#. Translators: Prompt for axis details such as: type, group, and title
+#. Translators: Prompt for axis details such as: type, group, and title when there is no title
+msgid "Chart Axis, type equals {}, group equals {}, Title equals {}"
+msgstr "Eixe d'o grafico, mena igual {}, grupo igual {}, Titol igual {}"
+
+msgid "none"
+msgstr "garra"
+
+#. Translators: Prompt for axis title if axis has title
+#. Translators: Prompt for axis title without title
+msgid "Chart Axis Title equals {} "
+msgstr "Titol de l'eixe d'o grafico igual {} "
+
+msgid " square "
+msgstr " quadrau "
+
+#. Translators: Prompt for trendline with equation or r square
+msgid " trendline {} "
+msgstr " linia de tendencia {} "
+
+#. Translators: Prompt for trendline without equation or r square
+msgid "Trendline"
+msgstr "Linia de tendencia"
+
+#. Translators: Prompt for chart title
+msgid "Chart Title equals {}"
+msgstr "Titol d'o grafico igual {}"
+
+#. Translators: Prompt for chart title when the title is not available
+msgid "Untitled chart"
+msgstr "Grafico sin titol"
+
+#. Translators: Prompt for chart area with dimentions
+msgid ""
+"Chart area height equals {}, width equals {}, top equals {}, left equals {}"
+msgstr ""
+"Altaria de l'aria d'o grafico igual {}, amplaria igual {}, alto igual {}, "
+"cucha igual {}"
+
+#. Translators: Prompt for chart area
+msgid "Chart area "
+msgstr "Aria d'o grafico"
+
+#. Translators: Prompt for plot area with inner dimentions
+msgid ""
+"Plot Area inside height equals {:.0f}, inside width equals {:.0f}, inside "
+"top equals {:.0f}, inside left equals {:.0f}"
+msgstr ""
+"Altaria interior de l'aria d'o trazau  igual {:.0f}, amplaria interior igual "
+"{:.0f}, alto interior igual {:.0f}, cucha interior igual {:.0f}"
+
+#. Translators: Prompt for plot area
+msgid "Plot Area "
+msgstr "Aria d'o trazau"
+
+#. Translators: Prompt for Legend
+msgid "Legend"
+msgstr "Lechenda"
+
+#. Translators: Prompt for Legend when no legend is present
+msgid "No legend"
+msgstr "Sin lechenda"
+
+#. Translators: Prompt for Legend entry for series name index of count
+msgid "Legend entry for Series {}, {} of {}"
+msgstr "Dentrada en a lechenda ta series {}, {} de {}"
+
+#. Translators: Prompt for Legend key for series name index of count
+msgid "Legend key for Series {} {} of {}"
+msgstr "Clau en a lechenda ta series {} {} de {}"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
@@ -7406,8 +8399,14 @@ msgstr "Serie d'a HIMS Braille Sense/Braille EDGE"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
+#~ msgid "equation"
+#~ msgstr "equación"
+
 #~ msgid "Presents a list of links, headings or landmarks"
 #~ msgstr "Presienta una lista de vinclos, capiters u zonas"
+
+#~ msgid "Slovak"
+#~ msgstr "Eslovaco"
 
 #~ msgid "grey"
 #~ msgstr "grisa"
@@ -7497,9 +8496,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid "Set row header column"
 #~ msgstr "Configurar a columna de capiters de ringlera"
-
-#~ msgid "Cleared row header column"
-#~ msgstr "S'ha limpiau a columna de capiters de ringlera"
 
 #~ msgid ""
 #~ "Pressing once will set the current column as the column where row headers "

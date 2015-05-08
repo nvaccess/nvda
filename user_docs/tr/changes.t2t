@@ -4,23 +4,42 @@
 %!includeconf: ../changes.t2tconf
 
 = 2015.2 =
+Highlights of this release include the ability to read charts in Microsoft Excel and support for reading and interactive navigation of mathematical content.
 
 == New Features ==
-- moving forward and backward by sentence in Microsoft Word is now possible with alt+downArrow and alt+upArrow respectively. (#3288)
+- Moving forward and backward by sentence in Microsoft Word is now possible with alt+downArrow and alt+upArrow respectively. (#3288)
 - New braille translation tables for several Indian languages. (#4778)
+- In Microsoft Excel, NVDA now reports when a cell has overflowing or cropped content. (#3040)
+- In Microsoft Excel, you can now use the Elements List (NVDA+f7) to allow listing of charts, comments and formulas. (#1987)
+- Support for reading charts in Microsoft Excel. To use this, select the chart using the Elements List (NVDA+f7) and then use the arrow keys to move between the data points. (#1987)
+- Using MathPlayer 4 from Design Science, NVDA can now read and interactively navigate mathematical content in web browsers and in Microsoft Word and PowerPoint. See the "Reading Mathematical Content" section in the User Guide for details. (#4673)
+- It is now possible to assign input gestures (keyboard commands, touch gestures, etc.) for all NVDA preferences dialogs and document formatting options using the Input Gestures dialog. (#4898)
 
 
 == Changes ==
 - In NVDA's Document Formatting dialog, the keyboard shortcuts for Report lists, Report links, Report line numbers and Report font name have been changed. (#4650)
 - In NVDA's Mouse Settings dialog, keyboard shortcuts have been added for play audio coordinates when mouse moves and brightness controls audio coordinates volume. (#4916)
+- Significantly improved reporting of color names. (#4984)
+- Updated liblouis braille translator to 2.6.2. (#4777)
 
 
 == Bug Fixes ==
 - Character descriptions are now handled correctly for conjunct characters in certain Indian languages. (#4582)
+- If the "Trust voice's language when processing characters and symbols" option is enabled, the Punctuation/Symbol pronunciation dialog now correctly uses the voice language. Also, the language for which pronunciation is being edited is shown in the dialog's title. (#4930)
+- In Internet Explorer and other MSHTML controls, typed characters are no longer inappropriately announced in editable combo boxes such as the Google search field on the Google home page. (#4976)
+- When selecting colors in Microsoft Office applications, color names are now reported. (#3045)
+- Danish braille output now works again. (#4986)
+- PageUp/pageDown can again be used to change slides within a PowerPoint slide show. (#4850)
+- In Skype for Desktop 7.2 and later, typing notifications are now reported and problems immediately after moving focus out of a conversation have been fixed. (#4972)
+- Fixed problems when typing certain punctuation/symbols such as brackets into the filter field in the Input Gestures dialog. (#5060)
 
 
 == Changes for Developers ==
-- brailleInput.handler.sendChars(mychar) will no longer filter out a character if it is equal to the previous character, by ensuring that the key sent is correctly released.
+- brailleInput.handler.sendChars(mychar) will no longer filter out a character if it is equal to the previous character by ensuring that the key sent is correctly released. (#4139)
+- Scripts for changing touch modes will now honor new labeles added to touchHandler.touchModeLabels. (#4699)
+- Add-ons can provide their own math presentation implementations. See the mathPres package for details. (#4509)
+- Speech commands have been implemented to insert a break between words and to change the pitch, volume and rate. See BreakCommand, PitchCommand, VolumeCommand and RateCommand in the speech module. (#4674)
+ - There is also speech.PhonemeCommand to insert specific pronunciation, but the current implementations only support a very limited number of phonemes.
 
 
 = 2015.1 =
