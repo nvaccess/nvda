@@ -16,18 +16,18 @@ NVDA est développé par [NV Access http://www.nvaccess.org/], avec des contribu
 En restituant l'information par synthèse vocale ou en braille, NVDA permet aux personnes aveugles et malvoyantes d'utiliser le système d'exploitation Windows ainsi que beaucoup d'applications disponibles dans cet environnement.
 
 Ses points forts sont :
-- la prise en charge d'applications grand-public telles que des navigateurs Web, clients e-mail, programmes de tchat sur Internet et suites bureautiques ;
-- un synthétiseur intégré prenant en charge plus de 80 langues ;
-- l'annonce, quand c'est possible, d'informations de formatage du texte telles que, le nom et la taille de la police, le style et les fautes d'orthographe ;
-- l'annonce automatique du texte sous la souris et, en option, l'indication sonore de la position de la souris ;
-- la prise en charge de nombreux afficheurs braille, incluant la saisie du braille informatique pour les afficheurs disposant d'un clavier braille ;
-- la possibilité de s'exécuter entièrement depuis une clé USB ou tout autre média portable sans avoir à installer ;
-- un installateur parlant facile à utiliser ;
-- une traduction dans 47 langues ;
-- la prise en charge des environnements Windows modernes, incluant les versions 32 et 64 bits ;
+- La prise en charge d'applications grand-public telles que des navigateurs Web, clients e-mail, programmes de tchat sur Internet et suites bureautiques ;
+- Un synthétiseur intégré prenant en charge plus de 80 langues ;
+- L'annonce, quand c'est possible, d'informations de formatage du texte telles que le nom et la taille de la police, le style et les fautes d'orthographe ;
+- L'annonce automatique du texte sous la souris et, en option, l'indication sonore de la position de la souris ;
+- La prise en charge de nombreux afficheurs braille, incluant la saisie du braille informatique pour les afficheurs disposant d'un clavier braille ;
+- La possibilité de s'exécuter entièrement depuis une clé USB ou tout autre média portable sans avoir à installer ;
+- Un installateur parlant facile à utiliser ;
+- Une traduction dans 47 langues ;
+- La prise en charge des environnements Windows modernes, incluant les versions 32 et 64 bits ;
 - L'accès à l'écran de connexion à Windows et aux autres écrans sécurisés ;
-- la prise en charge des interfaces d'accessibilité communes telles que, Microsoft Active Accessibility, Java Access Bridge, IAccessible2 et UI Automation (UI Automation n'est supporté qu'à partir de Windows 7) ;
-- support de l'invite de commandes Windows et des applications en mode console.
+- La prise en charge des interfaces d'accessibilité communes telles que, Microsoft Active Accessibility, Java Access Bridge, IAccessible2 et UI Automation (UI Automation n'est supporté qu'à partir de Windows 7) ;
+- Support de l'invite de commandes Windows et des applications en mode console.
 -
 
 ++ Internationalisation ++
@@ -69,7 +69,7 @@ Si vous n'avez pas encore une copie de NVDA, vous pouvez la télécharger sur [w
 
 Rendez-vous à la section "Download" où vous trouverez un lien pour télécharger la dernière version de NVDA.
 
-Démarrer le fichier téléchargé, exécutera une version temporaire de NVDA.
+Démarrer le fichier téléchargé exécutera une version temporaire de NVDA.
 Vous aurez ensuite le choix entre installer NVDA, créer une copie portable, ou juste continuer à utiliser la version temporaire.
 
 Si vous avez prévu de toujours utiliser NVDA sur cet ordinateur, choisissez "Installer NVDA".
@@ -85,14 +85,14 @@ Utiliser la version temporaire de NVDA est aussi une option, par exemple pour un
 
 ++ Restrictions des versions portables et temporaires ++
 Outre l'impossibilité de démarrer automatiquement pendant ou après l'ouverture de session, les versions portables et temporaires de NVDA ont également les restrictions suivantes :
-- impossible d'interagir avec les applications démarrées avec les privilèges administrateur, sauf bien sûr si NVDA a été démarré avec ces privilèges (non recommandé) ;
-- impossible de lire les écrans de contrôle de compte utilisateur (UAC) lorsque l'on tente de démarrer une application avec les privilèges administrateur ;
+- Impossible d'interagir avec les applications démarrées avec les privilèges administrateur, sauf bien sûr si NVDA a été démarré avec ces privilèges (non recommandé) ;
+- Impossible de lire les écrans de contrôle de compte utilisateur (UAC) lorsque l'on tente de démarrer une application avec les privilèges administrateur ;
 - Windows 8 : impossible d'utiliser un écran tactile comme support d'entrée ;
 - Windows 8 : fonctionnalités impossibles comme le mode navigation ou l'annonce des caractères saisis dans les applications du Windows Store.
 -
 
 ++ Installer NVDA ++
-Si vous installez directement par le paquet téléchargé, cliquez sur le bouton "Installer NVDA sur cet ordinateur".
+Si vous installez NVDA directement par le paquet téléchargé, cliquez sur le bouton "Installer NVDA sur cet ordinateur".
 Si vous avez déjà fermé ce dialogue, ou si vous voulez l'installer à partir d'une copie portable, allez dans le menu NVDA, cliquez sur "Outils", et choisissez "Installer NVDA".
 
 Le dialogue d'installation qui s'affichera vous demandera de confirmer l'installation, et vous signalera s'il s'agit de la mise à jour d'une installation existante.
@@ -119,8 +119,8 @@ Si vous voulez créer votre copie depuis le paquet téléchargé, cliquez simple
 Si vous avez déjà fermé ce dialogue ou si vous êtes dans une version installée, allez dans le menu NVDA, cliquez sur "Outils", et choisissez "Créer une copie portable".
 
 Le dialogue qui s'affiche vous permet de choisir où créer la copie portable.
-Ce peut être un répertoire de votre disque dur, un chemin sur une clé USB ou un autre média portable.
-Vous pouvez choisir si oui ou non NVDA doit copier la configuration NVDA de l'utilisateur connecté pour l'utiliser avec la copie portable nouvellement créée.
+Celui-ci peut être un répertoire de votre disque dur, un chemin sur une clé USB ou un autre média portable.
+Vous pouvez choisir si oui ou non NVDA doit copier la configuration NVDA de l'utilisateur courant pour l'utiliser avec la copie portable nouvellement créée.
 Cette option n'est disponible que lorsque vous créez une copie portable de NVDA depuis une copie installée, pas quand vous créez une copie portable depuis le paquet téléchargé du lanceur.
 Cliquer sur "Continuer" créera la copie portable.
 Dès que la création est terminée, un message s'affiche.
@@ -442,7 +442,7 @@ Bien qu'une souris physique devrait être utilisée pour naviguer à la souris, 
 
 + Le mode navigation +
 Les documents complexes, tels que les pages web, sont représentés sous NVDA en utilisant le Mode Navigation.
-Cela concerne les documents sous Mozilla Firefox, Microsoft Internet Explorer, les messages HTML sous Microsoft Outlook, Google Chrome, Adobe Reader et Adobe Flash.
+Cela concerne les documents sous Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, les messages HTML sous Microsoft Outlook, Google Chrome, Adobe Reader et Adobe Flash.
 Le mode navigation est aussi disponible en option sous Microsoft Word.
 
 Le mode navigation offre une représentation platement textuelle du document dans laquelle on peut se déplacer avec les flèches de navigation. 
@@ -497,6 +497,7 @@ Les touches suivantes permettent d'aller à l'élément suivant. En les combinan
 - d : région
 - o : objet embarqué
 - 1 ... 6 : Titres 1 ... 6.
+- a: annotation (commentaire, révisionde l'éditeur, etc.)
 -
 Pour se déplacer au début ou à la fin des éléments contenants comme les listes et tableaux :
 || Nom | Touche | Description |
@@ -505,17 +506,18 @@ Pour se déplacer au début ou à la fin des éléments contenants comme les lis
 %kc:endInclude
 
 ++ La liste d'éléments ++
-La liste d'éléments vous donne accès à une liste de liens, titres, ou régions dans la page. 
-Des boutons radio vous permettent de choisir entre ces trois types d'informations. 
+La liste d'éléments donne accès à une liste de différents types d'éléments dans le document, de manière appropriée à l'application.  
+Par exemple, dans les navigateurs web, la liste d'éléments peut afficher des liens, des titres ou des régions.
+Des boutons radio vous permettent de choisir entre les différents types d'éléments. 
 Une zone d'édition est également présente dans le dialogue, elle vous permet de filtrer la liste pour faciliter la recherche d'un élément particulier dans la page. 
 Quand vous avez choisi un élément, des boutons vous permettent de vous y rendre ou de l'activer.
 %kc:beginInclude
 || Nom | Touche | Description |
-| Liste d'éléments du document | NVDA+f7 | Affiche une liste d'éléments contenant les liens, titres et régions du document courant |
+| Liste d'éléments du document | NVDA+f7 | Liste les différents types d'éléments du document courant |
 %kc:endInclude
 
 ++ Les objets embarqués ++
-Certaines pages peuvent inclure du contenu riche utilisant des technologies comme Adobe Flash ou Sun Java, tout comme des applications ou des boîtes de dialogue.
+Certaines pages peuvent inclure du contenu riche utilisant des technologies comme Adobe Flash ou Sun Java, tout comme des applications ou des dialogues.
 Quand il en rencontre dans un document, NVDA annonce "objet embarqué", "application", ou "dialogue" respectivement.
 Vous pouvez appuyer sur "entrer" sur ces objets pour interagir avec eux. 
 Si l'objet est accessible, vous pourrez interagir avec lui comme n'importe quelle autre application. 
@@ -524,6 +526,42 @@ Une touche de commande permet de retourner à la page contenant l'objet embarqu�
 || Nom | Touche | Description |
 | Aller au document contenant l'objet | NVDA+contrôle+espace | Retire le focus à l'objet embarqué en cours et le rend au document contenant l'objet |
 %kc:endInclude
+
++ Lecture de Contenu Mathématique +
+En utilisant MathPlayer 4 de Design Science, NVDA peut lire et naviguer interactivement dans le contenu mathématique supporté.
+Cela nécessite que MathPlayer 4 soit installé sur l'ordinateur.
+MathPlayer est disponible en téléchargement gratuit sur : http://www.dessci.com/en/products/mathplayer/
+
+NVDA supporte les types de contenu mathématiques suivants :
+- MathML sous Mozilla Firefox et Microsoft Internet Explorer.
+- Design Science MathType sous Microsoft Word et PowerPoint.
+- MathML sous Adobe Reader. Notez que ceci n'est pas un standard officiel, ce qui fait qu'actuellement, il n'existe pas de logiciels grand public pouvant produire ce contenu.
+-
+
+Durant la lecture d'un document, NVDA annoncera tout contenu mathématique supporté quand il se présente.
+Si vous utilisez un afficheur braille, ce contenu sera aussi affiché en braille.
+
+++ Navigation Interactive ++
+Si vous travaillez principalement à la synthèse vocale, dans la plupart des cas, vous souhaiterez probablement examiner l'expression en plus petits segments plutôt qu'entendre toute l'expression en une seule fois.
+
+Si vous êtes en mode navigation, vous pouvez le faire en amenant le curseur sur le contenu mathématique et en pressant Entrée.
+
+Si vous n'êtes pas en mode navigation :
++ Amenez le curseur de revue sur le contenu mathématique.
+Par défaut, le curseur de revue suit le curseur système, vous pouvez donc généralement utiliser le curseur système pour aller au contenu désiré.
++ Ensuite, activez la commande suivante :
++
+
+%kc:beginInclude
+|| Nom | Touche | Description |
+| Interagir avec le contenu mathématique | NVDA+alt+m | Commence l'interaction avec le contenu mathématique. |
+%kc:endInclude
+
+Arrivé là, vous pouvez utiliser les commandes MathPlayer telles que les flèches pour explorer l'expression.
+Par exemple, vous pouvez vous déplacer dans l'expression avec les flèches gauche et droite puis zoomer sur une partie de l'expression telle qu'une fraction en utilisant la flèche basse.
+Veuillez consulter la documentation de MathPlayer pour plus d'information.
+
+Quand vous voulez retourner au document, pressez simplement la touche échap.
 
 + Commandes NVDA spécifiques à certaines applications +
 NVDA fournit ses propres commandes additionnelles dans quelques applications pour rendre certaines tâches plus faciles ou pour donner accès à certaines fonctions qui ne seraient pas accessibles autrement.
@@ -542,6 +580,7 @@ NVDA fournit ses propres commandes additionnelles dans quelques applications pou
 | Définir les titres de colonnes | NVDA+maj+c | Appuyer une fois indique à NVDA que cette cellule est la première de la ligne contenant les titres de colonnes, qui devraient être annoncés automatiquement en navigant entre les colonnes sous cette ligne. Appuyer deux fois permet d'effacer le paramétrage. | 
 | Définir les titres de lignes | NVDA+maj+r | Appuyer une fois indique à NVDA que cette cellule est la première de la colonne contenant les titres de lignes, qui devraient être annoncés automatiquement en navigant entre les lignes après cette colonne. Appuyer deux fois permet d'effacer le paramétrage. | 
 | Annonce du commentaire | NVDA+alt+c | Annonce le commentaire sur la cellule courante s'il y en a un. |
+| Liste d'éléments dialog | NVDA+f7 | ouvre le dialogue de la liste d'éléments présentant les graphiques, les cellules avec commentaires, ou les cellules avec formules. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -586,6 +625,9 @@ La plupart des paramètres de NVDA peuvent être modifiés en utilisant les dial
 Dans tous les dialogues de NVDA, appuyez sur le bouton "OK" pour valider vos modifications.
 Pour annuler les modifications, appuyez sur le bouton "Annuler" ou sur la touche "échap".
 Certains paramètres peuvent aussi être modifiés en utilisant des raccourcis clavier que vous trouverez dans les sections ci-dessous.
+
+Notez que par défaut, tous les dialogues des préférences ne peuvent pas être atteints par des gestes de commandes (raccourcis clavier, gestes tactiles, etc.).
+Si vous voulez atteindre des dialogues qui n'ont pas de raccourci clavier, utilisez le [dialogue Gestes de Commandes #InputGestures] pour ajouter un geste personnalisé pour ce dialogue.
 
 +++ Paramètres généraux (NVDA+contrôle+g) +++
 Le dialogue "Paramètres généraux" se trouve dans le menu "Préférences".
@@ -795,6 +837,18 @@ De la même manière, les commandes de ligne précédente et ligne suivante navi
 Cela signifie que vous n'aurez pas besoin de faire défiler l'afficheur à la fin de chaque ligne même si plus de texte peut entrer sur l'afficheur.
 Cela permet une lecture plus fluide des textes volumineux.
 Par défaut, cette option est désactivée.
+
+==== Ne pas couper les mots quand c'est possible ====
+Si cette option est activée, un mot trop long pour entrer à la fin de l'afficheur braille ne sera pas coupé.
+À la place, il y aura des espaces à la fin de l'affichage.
+En faisant défiler l'affichage, vous pourrez lire le mot entier.
+Ceci est parfois appelé retour automatique à la ligne.
+Notez que si le mot est trop long pour entrer sur l'afficheur, il devra quand-même être coupé.
+
+Si cette option est désactivée, le plus possible du mot sera affiché sur la ligne, mais le reste sera coupé.
+En faisant défiler l'affichage, vous pourrez lire le reste du mot.
+
+Activer cette option peut rendre la lecture plus fluide mais vous obligera à faire défiler plus souvent.
 
 +++ Paramètres du clavier (NVDA+contrôle+k) +++
 Ce dialogue se trouve dans le menu "Préférences", sous "Paramètres du clavier...". 
@@ -1059,7 +1113,10 @@ On peut configurer les annonces suivantes :
 - citations,
 - régions,
 - cadres.
+- Quand quelque chose est cliquable
 -
+
+Pour modifier ces paramètres de n'importe où, veuillez assigner un geste personnalisé en utilisant le [dialogue Gestes de Commandes #InputGestures].
 
 ==== Annonce des changements de mise en forme après le curseur ====
 Si on l'active, ce paramètre dit à NVDA de détecter tous les changements de mise en forme sur une ligne et de les annoncer pendant la lecture. Attention, cela peut dégrader les performances de NVDA.
@@ -1076,6 +1133,8 @@ Ce sont :
 - Voix : les règles de ce dictionnaire n'affectent que la voix en cours d'utilisation.
 - Temporaire : les règles de ce dictionnaire affectent tout NVDA mais seulement pour la session en cours.
 -
+
+Vous devez assigner des gestes personnalisés en utilisant le [dialogue Gestes de Commandes #InputGestures] si vous voulez ouvrir l'un de ces dialogues de dictionnaire depuis n'importe où.
 
 Tous les dialogues des dictionnaires contiennent une liste de règles qui seront utilisées pour produire la parole. 
 Chaque dialogue contient aussi des boutons "Ajouter", "Éditer" et "Supprimer"
@@ -1103,6 +1162,9 @@ Les expressions régulières ne sont pas expliquées dans ce manuel, mais on tro
 +++ Prononciation des symboles et ponctuations +++[SymbolPronunciation]
 Ce dialogue vous permet de modifier la façon dont les ponctuations et autres symboles sont prononcés ainsi que le niveau de symbole auquel ils sont annoncés.
 
+La langue pour laquelle la prononciation des symboles est en cours d'édition sera indiquée dans le titre du dialogue.
+Notez que ce dialogue tient compte de l'option "Se baser sur la langue de la voix pour le traitement des caractères et symboles" qui se trouve dans le dialogue [Paramètres vocaux #VoiceSettings];. Il utilise la langue de la voix plutôt que les paramètres vocaux globaux de NVDA quand cette option est activée.
+
 Pour modifier un symbole, sélectionnez-le d'abord dans la liste de symboles.
 Le champ "Remplacement" vous permet de modifier le texte qui doit être prononcé à la place de ce symbole.
 En utilisant le champ "Niveau", vous pouvez ajuster le niveau minimum auquel ce symbole doit être annoncé.
@@ -1115,7 +1177,7 @@ Vous pouvez supprimer un symbole précédemment ajouté en pressant le bouton Su
 
 Quand vous avez fini, cliquez sur le bouton "OK" pour sauvegarder vos modifications, ou le bouton "Annuler" pour les supprimer.
 
-+++ Gestes de commandes +++
++++ Gestes de commandes +++[InputGestures]
 Dans ce dialogue, vous pouvez configurer les gestes de commandes (raccourcis clavier, boutons d'un afficheur braille etc) pour les commandes NVDA.
 
 Seules les commandes qui sont applicables immédiatement avant l'ouverture du dialogue sont affichées.
@@ -1251,6 +1313,8 @@ Décochez l'élément de menu pour la désactiver.
 Pendant que la visionneuse de parole est active, elle se met constamment à jour, vous permettant de voir les dernières paroles prononcées par NVDA. 
 Cependant, si vous cliquez ou mettez le focus sur la visionneuse, NVDA arrêtera momentanément de mettre à jour le texte, vous pourrez ainsi sélectionner ou copier le contenu.
 
+Pour activer la visionneuse de parole de n'importe où, Veuillez assigner un geste personnalisé en utilisant le [dialogue Gestes de Commandes #InputGestures].
+
 ++ Gestionnaire de modules complémentaires ++
 Le Gestionnaire de modules complémentaires, accessible en sélectionnant "Gestion des Modules Complémentaires" dans le menu "Outils" du menu NVDA, permet d'installer ou de désinstaller des paquets de modules complémentaires pour NVDA.
 Ces paquets sont fournis par la communauté et contiennent du code qui peut ajouter ou modifier des fonctionnalités dans NVDA ou proposer le support de plages braille ou synthèses vocales suplémentaires.
@@ -1284,6 +1348,8 @@ Si vous avez installé ou supprimé des modules complémentaires, NVDA vous dema
 Jusqu'à maintenant, il était possible d'étendre les fonctionnalités de NVDA en copiant des plugins ou pilotes dans votre répertoire de configuration utilisateur.
 Même si cette version peut toujours les charger, ceux-ci ne seront pas affichés dans le gestionnaire de modules complémentaires.
 Il est recommandé de supprimer ces fichiers de votre répertoire de configuration et d'installer le module complémentaire approprié s'il y en a un.
+
+Pour activer le gestionnaire de modules complémentaires de n'importe où, Veuillez assigner un geste personnalisé en utilisant le [dialogue Gestes de Commandes #InputGestures].
 
 ++ Console Python ++
 La console Python NVDA, située dans "Outils" du menu NVDA, est un outil de développement utile pour dépanner, inspecter le code ou inspecter la hiérarchie d'accessibilité d'une application.
@@ -1352,7 +1418,7 @@ Cette section contient des informations sur les terminaux braille pris en charge
 ++ Les terminaux Focus et PAC Mate de chez Freedom Scientific ++
 Tous les terminaux Focus et PAC Mate de chez [Freedom Scientific http://www.freedomscientific.com/] sont pris en charge quand ils sont connectés en USB ou Bluetooth.
 Vous devrez installer les pilotes de terminaux braille de Freedom Scientific sur votre système.
-Si vous ne les avez pas déjà, vous pourrez les obtenir sur http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Si vous ne les avez pas déjà, vous pourrez les obtenir sur http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Bien que cette page ne mentionne que le terminal Focus 40 Blue, le pilote supporte tous les terminaux de Freedom Scientific.
 Si votre système est sous Windows 64 bits et que les pilotes ont déjà été installés par une autre revue d'écran, vous devrez probablement installer quand-même les pilotes car les fichiers nécessaires pour NVDA n'auront probablement pas été installés par l'autre revue d'écran.
 
