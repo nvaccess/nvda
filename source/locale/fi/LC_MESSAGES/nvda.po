@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-15 11:28-0700\n"
-"PO-Revision-Date: 2015-04-18 22:19+0200\n"
+"POT-Creation-Date: 2015-05-02 19:04+1000\n"
+"PO-Revision-Date: 2015-05-07 21:05+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.6.11\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -69,11 +69,11 @@ msgstr "latinalainen katakana"
 
 #. Translators: a message when the IME open status changes to opened
 msgid "IME opened"
-msgstr "IME avattu"
+msgstr "Kirjoitustuki avattu"
 
 #. Translators: a message when the IME open status changes to closed
 msgid "IME closed"
-msgstr "IME suljettu"
+msgstr "Kirjoitustuki suljettu"
 
 #. Translators: the label for an unknown language when switching input methods.
 msgid "unknown language"
@@ -94,7 +94,7 @@ msgstr "Virhe sovellusmoduulissa %s"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
 msgid "banner"
-msgstr "banneri"
+msgstr "mainospalkki"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
 msgid "complementary"
@@ -167,13 +167,23 @@ msgstr "tshekki, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Danish grade 1"
-msgstr "tanska, taso 1"
+msgid "Danish 6 dot grade 1"
+msgstr "tanska, 6 pisteen taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Danish grade 2"
-msgstr "tanska, taso 2"
+msgid "Danish 8 dot grade 1"
+msgstr "tanska, 8 pisteen taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 6 dot grade 2"
+msgstr "tanska, 6 pisteen taso 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot grade 2"
+msgstr "tanska, 8 pisteen taso 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -256,16 +266,6 @@ msgstr "suomi, 8 pisteen tietokonemerkistö"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "ranska (Kanada), taso 1"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "ranska (Kanada), taso 2"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
 msgid "French (unified) 6 dot computer braille"
 msgstr "ranska (yhdenmukaistettu), 6 pisteen tietokonemerkistö"
 
@@ -278,6 +278,16 @@ msgstr "ranska (yhdenmukaistettu), 8 pisteen tietokonemerkistö"
 #. braille settings dialog.
 msgid "French (unified) Grade 2"
 msgstr "ranska (yhdenmukaistettu), taso 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "French (Canada) grade 1"
+msgstr "ranska (Kanada), taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "French (Canada) grade 2"
+msgstr "ranska (Kanada), taso 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -376,7 +386,7 @@ msgstr "hollanti (Belgia), taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (netherlands) grade 1"
+msgid "Dutch (Netherlands) grade 1"
 msgstr "hollanti (Alankomaat), taso 1"
 
 #. Translators: The name of a braille table displayed in the
@@ -461,8 +471,8 @@ msgstr "ruotsi, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Slovak"
-msgstr "slovakki"
+msgid "Slovak grade 1"
+msgstr "slovakki, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1915,6 +1925,7 @@ msgid "selected %s"
 msgstr "valittu %s"
 
 #. Translators: The word for an unknown control type.
+#. Translators: chart type to be reported when the type is not available
 msgid "unknown"
 msgstr "tuntematon"
 
@@ -2327,9 +2338,9 @@ msgstr "valikkopainike"
 msgid "drop down button grid"
 msgstr "pudotuspainikeruudukko"
 
-#. Translators: Identifies an equation.
-msgid "equation"
-msgstr "yhtälö"
+#. Translators: Identifies mathematical content.
+msgid "math"
+msgstr "matemaattinen sisältö"
 
 #. Translators: Identifies a grip control.
 msgid "grip"
@@ -2523,7 +2534,7 @@ msgstr "suljettu"
 
 #. Translators: This is presented when a control or a document becomes invisible.
 msgid "invisible"
-msgstr "näkymätön"
+msgstr "ei näkyvissä"
 
 #. Translators: This is presented when a visited link is encountered.
 msgid "visited"
@@ -2570,7 +2581,7 @@ msgstr "pienennetty"
 
 #. Translators: Presented when the current control is located off screen.
 msgid "off screen"
-msgstr "ruudun ulkopuolinen"
+msgstr "ei ruudulla"
 
 #. Translators: Presented when the control allows selection such as text fields.
 msgid "selectable"
@@ -2629,15 +2640,15 @@ msgstr "sisältää kommentin"
 
 #. Translators: a state that denotes that the object is covered partially or fully by another object
 msgid "obscured"
-msgstr "peitossa"
+msgstr "ei näy kokonaan"
 
 #. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the allocated/available space
 msgid "cropped"
-msgstr "katkaistu"
+msgstr "rajattu"
 
 #. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
 msgid "overflowing"
-msgstr "tilanylitys"
+msgstr "ylivuoto"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -2775,6 +2786,10 @@ msgstr "Järjestelmän tila"
 #. Translators: The name of a category of NVDA commands.
 msgid "Input"
 msgstr "Syöttö"
+
+#. Translators: The name of a category of NVDA commands.
+msgid "Document formatting"
+msgstr "Asiakirjojen muotoilu"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -2934,6 +2949,292 @@ msgid ""
 msgstr ""
 "Ottaa käyttöön ja poistaa käytöstä sellaisten näppäinten puhumisen, jotka "
 "eivät ole kirjaimia, numeroita eivätkä muita merkkejä"
+
+#. Translators: The message announced when toggling the report font name document formatting setting.
+msgid "report font name off"
+msgstr "fontin lukeminen pois"
+
+#. Translators: The message announced when toggling the report font name document formatting setting.
+msgid "report font name on"
+msgstr "fontin lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report font name command.
+msgid "Toggles on and off the reporting of font changes"
+msgstr "Ottaa käyttöön fonttimuutosten ilmoittamisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report font size document formatting setting.
+msgid "report font size off"
+msgstr "fonttikoon lukeminen pois"
+
+#. Translators: The message announced when toggling the report font size document formatting setting.
+msgid "report font size on"
+msgstr "fonttikoon lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report font size command.
+msgid "Toggles on and off the reporting of font size changes"
+msgstr ""
+"Ottaa käyttöön fonttikoon muutosten ilmoittamisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report font attributes document formatting setting.
+msgid "report font attributes off"
+msgstr "fonttimääreiden lukeminen pois"
+
+#. Translators: The message announced when toggling the report font attributes document formatting setting.
+msgid "report font attributes on"
+msgstr "fonttimääreiden lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report font attributes command.
+msgid "Toggles on and off the reporting of font attributes"
+msgstr "Ottaa käyttöön fonttimääreiden ilmoittamisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report revisions document formatting setting.
+msgid "report revisions off"
+msgstr "muokkausten lukeminen pois"
+
+#. Translators: The message announced when toggling the report revisions document formatting setting.
+msgid "report revisions on"
+msgstr "muokkausten lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report revisions command.
+msgid "Toggles on and off the reporting of revisions"
+msgstr "Ottaa käyttöön muokkausten lukemisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report colors document formatting setting.
+msgid "report colors off"
+msgstr "värien lukeminen pois"
+
+#. Translators: The message announced when toggling the report colors document formatting setting.
+msgid "report colors on"
+msgstr "värien lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report colors command.
+msgid "Toggles on and off the reporting of colors"
+msgstr "Ottaa käyttöön värien lukemisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report alignment document formatting setting.
+msgid "report alignment off"
+msgstr "tasauksen lukeminen pois"
+
+#. Translators: The message announced when toggling the report alignment document formatting setting.
+msgid "report alignment on"
+msgstr "tasauksen lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report alignment command.
+msgid "Toggles on and off the reporting of text alignment"
+msgstr ""
+"Ottaa käyttöön tekstin tasauksen ilmoittamisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report style document formatting setting.
+msgid "report style off"
+msgstr "tyylin lukeminen pois"
+
+#. Translators: The message announced when toggling the report style document formatting setting.
+msgid "report style on"
+msgstr "tyylin lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report style command.
+msgid "Toggles on and off the reporting of style changes"
+msgstr "Ottaa käyttöön tyylimuutosten ilmoittamisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report spelling errors document formatting setting.
+msgid "report spelling errors off"
+msgstr "kirjoitusvirheiden lukeminen pois"
+
+#. Translators: The message announced when toggling the report spelling errors document formatting setting.
+msgid "report spelling errors on"
+msgstr "kirjoitusvirheiden lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report spelling errors command.
+msgid "Toggles on and off the reporting of spelling errors"
+msgstr "Ottaa käyttöön kirjoitusvirheiden lukemisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report pages document formatting setting.
+msgid "report pages off"
+msgstr "sivunumeroiden lukeminen pois"
+
+#. Translators: The message announced when toggling the report pages document formatting setting.
+msgid "report pages on"
+msgstr "sivunumeroiden lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report pages command.
+msgid "Toggles on and off the reporting of pages"
+msgstr "Ottaa käyttöön sivunumeroiden lukemisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report line numbers document formatting setting.
+msgid "report line numbers off"
+msgstr "rivinumeroiden lukeminen pois"
+
+#. Translators: The message announced when toggling the report line numbers document formatting setting.
+msgid "report line numbers on"
+msgstr "rivinumeroiden lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report line numbers command.
+msgid "Toggles on and off the reporting of line numbers"
+msgstr "Ottaa käyttöön rivinumeroiden lukemisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report line indentation document formatting setting.
+msgid "report line indentation off"
+msgstr "rivin sisennyksen lukeminen pois"
+
+#. Translators: The message announced when toggling the report line indentation document formatting setting.
+msgid "report line indentation on"
+msgstr "rivin sisennyksen lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report line indentation command.
+msgid "Toggles on and off the reporting of line indentation"
+msgstr "Ottaa käyttöön rivin sisennyksen lukemisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
+msgid "report paragraph indentation off"
+msgstr "kappaleen sisennyksen lukeminen pois"
+
+#. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
+msgid "report paragraph indentation on"
+msgstr "kappaleen sisennyksen lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report paragraph indentation command.
+msgid "Toggles on and off the reporting of paragraph indentation"
+msgstr ""
+"Ottaa käyttöön kappaleen sisennyksen ilmoittamisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report tables document formatting setting.
+msgid "report tables off"
+msgstr "taulukoiden lukeminen pois"
+
+#. Translators: The message announced when toggling the report tables document formatting setting.
+msgid "report tables on"
+msgstr "taulukoiden lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report tables command.
+msgid "Toggles on and off the reporting of tables"
+msgstr "Ottaa käyttöön taulukoiden lukemisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
+msgid "report table row and column headers off"
+msgstr "taulukon rivi- ja sarakeotsikoiden lukeminen pois"
+
+#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
+msgid "report table row and column headers on"
+msgstr "taulukon rivi- ja sarakeotsikoiden lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report table row/column headers command.
+msgid "Toggles on and off the reporting of table row and column headers"
+msgstr ""
+"Ottaa käyttöön taulukon rivi- ja sarakeotsikoiden lukemisen tai poistaa sen "
+"käytöstä"
+
+#. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
+msgid "report table cell coordinates off"
+msgstr "taulukon solujen koordinaattien lukeminen pois"
+
+#. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
+msgid "report table cell coordinates on"
+msgstr "taulukon solujen koordinaattien lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report table cell coordinates command.
+msgid "Toggles on and off the reporting of table cell coordinates"
+msgstr ""
+"Ottaa käyttöön taulukon solujen koordinaattien lukemisen tai poistaa sen "
+"käytöstä"
+
+#. Translators: The message announced when toggling the report links document formatting setting.
+msgid "report links off"
+msgstr "linkkien lukeminen pois"
+
+#. Translators: The message announced when toggling the report links document formatting setting.
+msgid "report links on"
+msgstr "linkkien lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report links command.
+msgid "Toggles on and off the reporting of links"
+msgstr "Ottaa käyttöön linkkien lukemisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report comments document formatting setting.
+msgid "report comments off"
+msgstr "kommenttien lukeminen pois"
+
+#. Translators: The message announced when toggling the report comments document formatting setting.
+msgid "report comments on"
+msgstr "kommenttien lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report comments command.
+msgid "Toggles on and off the reporting of comments"
+msgstr "Ottaa käyttöön kommenttien lukemisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report lists document formatting setting.
+msgid "report lists off"
+msgstr "listojen lukeminen pois"
+
+#. Translators: The message announced when toggling the report lists document formatting setting.
+msgid "report lists on"
+msgstr "listojen lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report lists command.
+msgid "Toggles on and off the reporting of lists"
+msgstr "Ottaa käyttöön listojen lukemisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report headings document formatting setting.
+msgid "report headings off"
+msgstr "otsikoiden lukeminen pois"
+
+#. Translators: The message announced when toggling the report headings document formatting setting.
+msgid "report headings on"
+msgstr "otsikoiden lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report headings command.
+msgid "Toggles on and off the reporting of headings"
+msgstr "Ottaa käyttöön otsikoiden lukemisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report block quotes off"
+msgstr "sisennettyjen kappaleiden lukeminen pois"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report block quotes on"
+msgstr "sisennettyjen kappaleiden lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report block quotes command.
+msgid "Toggles on and off the reporting of block quotes"
+msgstr ""
+"Ottaa käyttöön sisennettyjen kappaleiden lukemisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report landmarks document formatting setting.
+msgid "report landmarks off"
+msgstr "kiintopisteiden lukeminen pois"
+
+#. Translators: The message announced when toggling the report landmarks document formatting setting.
+msgid "report landmarks on"
+msgstr "kiintopisteiden lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report landmarks command.
+msgid "Toggles on and off the reporting of landmarks"
+msgstr "Ottaa käyttöön kiintopisteiden lukemisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report frames document formatting setting.
+msgid "report frames off"
+msgstr "kehysten lukeminen pois"
+
+#. Translators: The message announced when toggling the report frames document formatting setting.
+msgid "report frames on"
+msgstr "kehysten lukeminen käytössä"
+
+#. Translators: Input help mode message for toggle report frames command.
+msgid "Toggles on and off the reporting of frames"
+msgstr "Ottaa käyttöön kehysten lukemisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report if clickable document formatting setting.
+msgid "report if clickable off"
+msgstr "napsautettavien kohteiden ilmoittaminen pois"
+
+#. Translators: The message announced when toggling the report if clickable document formatting setting.
+msgid "report if clickable on"
+msgstr "napsautettavien kohteiden ilmoittaminen käytössä"
+
+#. Translators: Input help mode message for toggle report if clickable command.
+msgid "Toggles on and off reporting if clickable"
+msgstr ""
+"Ottaa käyttöön napsautettavien kohteiden ilmoittamisen tai poistaa sen "
+"käytöstä"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -3356,8 +3657,8 @@ msgid ""
 "developers and activates the log viewer so the information can be examined."
 msgstr ""
 "Tallentaa lokiin kehittäjille hyödyllistä tietoa nykyisestä "
-"navigointiobjektista ja avaa Näytä loki -toiminnon, jossa näitä tietoja "
-"voidaan tutkia."
+"navigointiobjektista ja avaa Lokin tarkastelun, jossa näitä tietoja voidaan "
+"tutkia."
 
 #. Translators: A mode where no progress bar updates are given.
 msgid "no progress bar updates"
@@ -3495,6 +3796,10 @@ msgstr "Avaa NVDA:n puhesyntetisaattorin asetusten valintaikkunan."
 msgid "Shows the NVDA voice settings dialog"
 msgstr "Avaa NVDA:n Puheäänen asetukset -valintaikkunan."
 
+#. Translators: Input help mode message for go to braille settings dialog command.
+msgid "Shows the NVDA braille settings dialog"
+msgstr "Avaa pistenäytön asetusten valintaikkunan"
+
 #. Translators: Input help mode message for go to keyboard settings dialog command.
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "Avaa NVDA:n Näppäimistöasetukset -valintaikkunan."
@@ -3502,6 +3807,14 @@ msgstr "Avaa NVDA:n Näppäimistöasetukset -valintaikkunan."
 #. Translators: Input help mode message for go to mouse settings dialog command.
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "Avaa NVDA:n Hiiriasetukset-valintaikkunan."
+
+#. Translators: Input help mode message for go to review cursor settings dialog command.
+msgid "Shows the NVDA review cursor settings dialog"
+msgstr "Avaa tarkastelukohdistimen asetusten valintaikkunan"
+
+#. Translators: Input help mode message for go to input composition dialog.
+msgid "Shows the NVDA input composition settings dialog"
+msgstr "Avaa syöttömenetelmän asetusten valintaikkunan"
 
 #. Translators: Input help mode message for go to object presentation dialog command.
 msgid "Shows the NVDA object presentation settings dialog"
@@ -3514,6 +3827,26 @@ msgstr "Avaa NVDA:n Selaustilan asetukset -valintaikkunan."
 #. Translators: Input help mode message for go to document formatting dialog command.
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "Avaa NVDA:n Asiakirjojen muotoiluasetukset -valintaikkunan."
+
+#. Translators: Input help mode message for opening default dictionary dialog.
+msgid "Shows the NVDA default dictionary dialog"
+msgstr "Avaa oletuspuhesanaston valintaikkunan"
+
+#. Translators: Input help mode message for opening voice-specific dictionary dialog.
+msgid "Shows the NVDA voice-specific dictionary dialog"
+msgstr "Avaa puheäänikohtaisen sanaston valintaikkunan"
+
+#. Translators: Input help mode message for opening temporary dictionary.
+msgid "Shows the NVDA temporary dictionary dialog"
+msgstr "Avaa tilapäissanaston valintaikkunan"
+
+#. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
+msgid "Shows the NVDA symbol pronunciation dialog"
+msgstr "Avaa symbolien puhumisen asetusten valintaikkunan"
+
+#. Translators: Input help mode message for go to input gestures dialog command.
+msgid "Shows the NVDA input gestures dialog"
+msgstr "Avaa syöte-eleiden valintaikkunan"
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
@@ -3530,6 +3863,30 @@ msgstr ""
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Avaa NVDA:n Python-konsolin, hyödyllinen pääasiassa kehittäjille"
+
+#. Translators: Input help mode message for activate manage add-ons command.
+msgid ""
+"Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
+"for NVDA"
+msgstr ""
+"Avaa Lisäosien hallinnan, jolla voi asentaa ja poistaa NVDA:n "
+"lisäosapaketteja"
+
+#. Translators: The message announced when disabling speech viewer.
+msgid "speech viewer disabled"
+msgstr "puheen tarkastelu pois"
+
+#. Translators: The message announced when enabling speech viewer.
+msgid "speech viewer enabled"
+msgstr "puheen tarkastelu käytössä"
+
+#. Translators: Input help mode message for toggle speech viewer command.
+msgid ""
+"Toggles the NVDA Speech viewer, a floating window that allows you to view "
+"all the text that NVDA is currently speaking"
+msgstr ""
+"Ottaa käyttöön tai poistaa käytöstä Puheen tarkastelun, kelluvan ikkunan, "
+"jonka avulla voit tarkastella NVDA:n tällä hetkellä puhumaa tekstiä"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
@@ -3681,6 +4038,15 @@ msgstr ""
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Näyttää NVDA:n Asetusprofiilit-valintaikkunan."
+
+#. Translators: Reported when the user attempts math interaction
+#. with something that isn't math.
+msgid "Not math"
+msgstr "Ei matemaattista sisältöä"
+
+#. Translators: Describes a command.
+msgid "Begins interaction with math content"
+msgstr "Aloittaa vuorovaikutuksen matemaattisen sisällön kanssa"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -4362,7 +4728,7 @@ msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "taulukko jossa {columnCount} saraketta ja {rowCount} riviä"
 
 msgid "NVDA Speech Viewer"
-msgstr "Näytä NVDA:n puhe"
+msgstr "Puheen tarkastelu"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -5383,7 +5749,7 @@ msgstr "Näytä l&oki"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
-msgstr "Näytä pu&he"
+msgstr "Pu&heen tarkastelu"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -6071,7 +6437,7 @@ msgstr "NVDA:n massamuistiversio luotu onnistuneesti hakemistoon %s."
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
-msgstr "Näytä NVDA:n loki"
+msgstr "Lokin tarkastelu"
 
 #. Translators: The label for a menu item in NVDA log viewer to refresh log messages.
 msgid "Refresh\tF5"
@@ -6609,7 +6975,7 @@ msgstr "Lue &värit"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &editor revisions"
-msgstr "Lue &muokkaajan muutokset"
+msgstr "Lue &muokkaajan muokkaukset"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -6882,6 +7248,15 @@ msgstr ""
 "Virhe tallennettaessa käyttäjän määrittämiä eleitä - tiedostojärjestelmä "
 "luultavasti vain luku -tyyppiä."
 
+#. Translators: Describes a command.
+msgid "Exit math interaction"
+msgstr "Poistu matemaattisen sisällön vuorovaikutuksesta"
+
+#. Translators: Reported when the user attempts math interaction
+#. but math interaction is not supported.
+msgid "Math interaction not supported."
+msgstr "Matemaattisen sisällön vuorovaikutusta ei tueta."
+
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
 msgid "none"
@@ -7004,6 +7379,26 @@ msgstr "Työpöytä"
 msgid "default color"
 msgstr "oletusväri"
 
+#. Translators: the description for the elements list command in Microsoft Excel.
+msgid "Presents a list of charts, cells with comments and cells with formulas"
+msgstr ""
+"Näyttää listan kaavioista sekä kommentteja ja kaavoja sisältävistä soluista"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Chart"
+msgstr "&Kaavio"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "C&omment"
+msgstr "K&ommentti"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Formula"
+msgstr "K&aava"
+
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
 msgstr "väliltä {start} ja {end}"
@@ -7085,6 +7480,538 @@ msgstr "Muokataan solun {address} kommenttia"
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "väliltä {firstAddress} {firstContent} ja {lastAddress} {lastContent}"
 
+#. Translators: Chart type
+msgid "3D Area"
+msgstr "kolmiulotteinen alue"
+
+#. Translators: Chart type
+msgid "3D Stacked Area"
+msgstr "kolmiulotteinen pinottu alue"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Area"
+msgstr "pinottu alue, 100 %"
+
+#. Translators: Chart type
+msgid "3D Clustered Bar"
+msgstr "kolmiulotteinen yhdistelmäpalkki"
+
+#. Translators: Chart type
+msgid "3D Stacked Bar"
+msgstr "kolmiulotteinen pinottu palkki"
+
+#. Translators: Chart type
+msgid "3D 100 percent Stacked Bar"
+msgstr "kolmiulotteinen pinottu palkki, 100 %"
+
+#. Translators: Chart type
+msgid "3D Column"
+msgstr "kolmiulotteinen pylväs"
+
+#. Translators: Chart type
+msgid "3D Clustered Column"
+msgstr "kolmiulotteinen yhdistelmäpylväs"
+
+#. Translators: Chart type
+msgid "3D Stacked Column"
+msgstr "kolmiulotteinen pinottu pylväs"
+
+#. Translators: Chart type
+msgid "3D 100 percent Stacked Column"
+msgstr "kolmiulotteinen pinottu pylväs, 100 %"
+
+#. Translators: Chart type
+msgid "3D Line"
+msgstr "kolmiulotteinen viiva"
+
+#. Translators: Chart type
+msgid "3D Pie"
+msgstr "kolmiulotteinen ympyrä"
+
+#. Translators: Chart type
+msgid "Exploded 3D Pie"
+msgstr "kolmiulotteinen leikattu ympyrä"
+
+#. Translators: Chart type
+msgid "Area"
+msgstr "alue"
+
+#. Translators: Chart type
+msgid "Stacked Area"
+msgstr "pinottu alue"
+
+#. Translators: Chart type
+msgid "Clustered Bar"
+msgstr "Yhdistelmäpalkki"
+
+#. Translators: Chart type
+msgid "Bar of Pie"
+msgstr "ympyrän palkki"
+
+#. Translators: Chart type
+msgid "Stacked Bar"
+msgstr "pinottu palkki"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Bar"
+msgstr "pinottu palkki, 100 %"
+
+#. Translators: Chart type
+msgid "Bubble"
+msgstr "kupla"
+
+#. Translators: Chart type
+msgid "Bubble with 3D effects"
+msgstr "kolmiulotteinen kupla"
+
+#. Translators: Chart type
+msgid "Clustered Column"
+msgstr "yhdistelmäpylväs"
+
+#. Translators: Chart type
+msgid "Stacked Column"
+msgstr "pinottu pylväs"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Column"
+msgstr "pinottu pylväs, 100 %"
+
+#. Translators: Chart type
+msgid "Clustered Cone Bar"
+msgstr "yhdistelmäkartiopalkki"
+
+#. Translators: Chart type
+msgid "Stacked Cone Bar"
+msgstr "pinottu kartiopalkki"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Cone Bar"
+msgstr "pinottu kartiopalkki, 100 %"
+
+#. Translators: Chart type
+msgid "3D Cone Column"
+msgstr "kolmiulotteinen kartiopylväs"
+
+#. Translators: Chart type
+msgid "Clustered Cone Column"
+msgstr "yhdistelmäkartiopylväs"
+
+#. Translators: Chart type
+msgid "Stacked Cone Column"
+msgstr "pinottu kartiopylväs"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Cone Column"
+msgstr "pinottu kartiopylväs, 100 %"
+
+#. Translators: Chart type
+msgid "Clustered Cylinder Bar"
+msgstr "yhdistelmälieriöpalkki"
+
+#. Translators: Chart type
+msgid "Stacked Cylinder Bar"
+msgstr "pinottu lieriöpalkki"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Cylinder Bar"
+msgstr "pinottu lieriöpalkki, 100 %"
+
+#. Translators: Chart type
+msgid "3D Cylinder Column"
+msgstr "kolmiulotteinen lieriöpylväs"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Cylinder Column"
+msgstr "pinottu lieriöpylväs, 100 %"
+
+#. Translators: Chart type
+msgid "Doughnut"
+msgstr "rengas"
+
+#. Translators: Chart type
+msgid "Exploded Doughnut"
+msgstr "leikattu rengas"
+
+#. Translators: Chart type
+msgid "Line"
+msgstr "viiva"
+
+#. Translators: Chart type
+msgid "Line with Markers"
+msgstr "viiva ja merkit"
+
+#. Translators: Chart type
+msgid "Stacked Line with Markers"
+msgstr "pinottu viiva ja merkit"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Line with Markers"
+msgstr "pinottu viiva ja merkit, 100 %"
+
+#. Translators: Chart type
+msgid "Stacked Line"
+msgstr "pinottu viiva"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Line"
+msgstr "pinottu viiva, 100 %"
+
+#. Translators: Chart type
+msgid "Pie"
+msgstr "ympyrä"
+
+#. Translators: Chart type
+msgid "Exploded Pie"
+msgstr "leikattu ympyrä"
+
+#. Translators: Chart type
+msgid "Pie of Pie"
+msgstr "ympyrän ympyrä"
+
+#. Translators: Chart type
+msgid "Clustered Pyramid Bar"
+msgstr "yhdistelmäpyramidipalkki"
+
+#. Translators: Chart type
+msgid "Stacked Pyramid Bar"
+msgstr "pinottu pyramidipalkki"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Pyramid Bar"
+msgstr "pinottu pyramidipalkki, 100 %"
+
+#. Translators: Chart type
+msgid "3D Pyramid Column"
+msgstr "kolmiulotteinen pyramidipylväs"
+
+#. Translators: Chart type
+msgid "Clustered Pyramid Column"
+msgstr "yhdistelmäpyramidipylväs"
+
+#. Translators: Chart type
+msgid "Stacked Pyramid Column"
+msgstr "pinottu pyramidipylväs"
+
+#. Translators: Chart type
+msgid "100 percent Stacked Pyramid Column"
+msgstr "pinottu pyramidipylväs, 100 %"
+
+#. Translators: Chart type
+msgid "Radar"
+msgstr "säteittäinen"
+
+#. Translators: Chart type
+msgid "Filled Radar"
+msgstr "täytetty säteittäinen"
+
+#. Translators: Chart type
+msgid "Radar with Data Markers"
+msgstr "säteittäinen ja merkit"
+
+#. Translators: Chart type
+msgid "High-Low-Close"
+msgstr "pörssi"
+
+#. Translators: Chart type
+msgid "Open-High-Low-Close"
+msgstr "avauksen sisältävä pörssi"
+
+#. Translators: Chart type
+msgid "Volume-High-Low-Close"
+msgstr "vaihdon sisältävä pörssi"
+
+#. Translators: Chart type
+msgid "Volume-Open-High-Low-Close"
+msgstr "avauksen ja vaihdon sisältävä pörssi"
+
+#. Translators: Chart type
+msgid "3D Surface"
+msgstr "kolmiulotteinen pinta"
+
+#. Translators: Chart type
+msgid "Surface (Top View)"
+msgstr "pinta (näkymä ylhäältä)"
+
+#. Translators: Chart type
+msgid "Surface (Top View wireframe)"
+msgstr "pinta (lankamalli, näkymä ylhäältä)"
+
+#. Translators: Chart type
+msgid "3D Surface (wireframe)"
+msgstr "kolmiulotteinen pinta (lankamalli)"
+
+#. Translators: Chart type
+msgid "Scatter"
+msgstr "piste"
+
+#. Translators: Chart type
+msgid "Scatter with Lines"
+msgstr "piste ja viivat"
+
+#. Translators: Chart type
+msgid "Scatter with Lines and No Data Markers"
+msgstr "piste ja viivat, ei merkkejä"
+
+#. Translators: Chart type
+msgid "Scatter with Smoothed Lines"
+msgstr "piste ja tasoitetut viivat"
+
+#. Translators: Chart type
+msgid "Scatter with Smoothed Lines and No Data Markers"
+msgstr "piste ja tasoitetut viivat, ei merkkejä"
+
+#. Translators: prompt for chart title and chart type to be reported
+msgid "Chart title equals {chartTitle} type equals {chartType}"
+msgstr "Kaavion otsikko on  {chartTitle}, tyyppi on {chartType}"
+
+#, python-format
+msgid "%s"
+msgstr "%s"
+
+#. Translators: Axis title to be reported when the title is not available
+msgid "Not defined"
+msgstr "ei määritetty"
+
+#. Translators: Chart Axis types
+#. Translators: axis type
+msgid "Category"
+msgstr "luokka"
+
+#. Translators: axis type
+msgid "Value"
+msgstr "arvo"
+
+#. Translators: axis type
+msgid "Series"
+msgstr "sarja"
+
+#. Translators: Prompt for axis title and axis type to be reported
+msgid "{axisName} Axis is {axisTitle}"
+msgstr "Akselin {axisName} otsikko on {axisTitle}"
+
+#. Translators: Number of series when there is only one series
+#, python-format
+msgid "There is %d series in this chart"
+msgstr "Tässä kaaviossa on %d sarjaa"
+
+#. Translators: Number of series when there are multiple series
+#, python-format
+msgid "There are total %d series in this chart"
+msgstr "Tässä kaaviossa on yhteensä %d sarjaa"
+
+#. Translators: prompt to be reported when there is no series
+msgid "No Series defined."
+msgstr "Sarjoja ei määritetty."
+
+#. Translators: Chart segment such as slice for  pie chart etc this is reported when there is no segment available.
+msgid "item"
+msgstr "elementti"
+
+msgid "Series color: {} "
+msgstr "Sarjan väri: {} "
+
+#. Translators: prompt for xlDisplayUnitLabel
+msgid "Display Unit Label"
+msgstr "Näyttöyksikön otsikko"
+
+#. Translators: prompt for xlMajorGridlines
+msgid "Major Gridlines"
+msgstr "Pääyksikön ruudukko"
+
+#. Translators: prompt for xlMinorGridlines
+msgid "Minor Gridlines"
+msgstr "Apuyksikön ruudukko"
+
+#. Translators: prompt for xlPivotChartDropZone
+msgid "Pivot Chart Drop Zone"
+msgstr "Pivot-kaavion pudotusalue"
+
+#. Translators: prompt for xlPivotChartFieldButton
+msgid "Pivot Chart Field Button"
+msgstr "Pivot-kaavion kenttäpainike"
+
+#. Translators: prompt for xlDownBars
+msgid "Down Bars"
+msgstr "Alas-palkit"
+
+#. Translators: prompt for xlDropLines
+msgid "Drop Lines"
+msgstr "Arvoviivat"
+
+#. Translators: prompt for xlHiLoLines
+msgid "Hi Lo Lines"
+msgstr "Vaihteluväliviivat"
+
+#. Translators: prompt for xlRadarAxisLabels
+msgid "Radar Axis Labels"
+msgstr "Säteittäisakselin otsikko"
+
+#. Translators: prompt for xlSeriesLines
+msgid "Series Lines"
+msgstr "Sarjaviivat"
+
+#. Translators: prompt for xlUpBars
+msgid "Up Bars"
+msgstr "Ylös-palkit"
+
+#. Translators: prompt for xlCorners
+msgid "Corners"
+msgstr "Kulmat"
+
+#. Translators: prompt for xlDataTable
+msgid "Data Table"
+msgstr "Arvotaulukko"
+
+#. Translators: prompt for xlFloor
+msgid "Floor"
+msgstr "Pohjataso"
+
+#. Translators: prompt for xlNothing
+msgid "xlNothing"
+msgstr "ei mitään"
+
+#. Translators: prompt for xlWalls
+msgid "Walls"
+msgstr "Sivutasot"
+
+#. Translators: prompt for xlDataLabel
+msgid "Data Label"
+msgstr "Arvopisteen otsikko"
+
+#. Translators: prompt for xlErrorBars
+msgid "Error Bars"
+msgstr "virhepalkit"
+
+#. Translators: prompt for xlXErrorBars
+msgid "X Error Bars"
+msgstr "x-virhepalkit"
+
+#. Translators: prompt for xlYErrorBars
+msgid "Y Error Bars"
+msgstr "y-virhepalkit"
+
+#. Translators: prompt for xlShape
+msgid "Shape"
+msgstr "muoto"
+
+#. Translators: Prompt for series details in the format: Name series index of count
+msgid "{} Series {} of {}"
+msgstr "{}-sarja {} / {}"
+
+#. Translators: for line charts, no change from the previous element
+msgid "no change from point {}, "
+msgstr "ei muutosta pisteestä {}, "
+
+#. Translators: for line charts, increase from the previous element
+msgid "Increased by {} from point {}, "
+msgstr "Noussut {} pisteestä {}, "
+
+#. Translators: for line charts, decrease from the previous element
+msgid "decreased by {} from point {}, "
+msgstr "laskenut {} pisteestä {}, "
+
+#. Translators: report category axis title if available in the format title value
+msgid "{} {}: "
+msgstr "{} {}: "
+
+#. Translators: report category axis title as Category if axis title is not available in the format "category" value
+msgid "Category {}: "
+msgstr "Luokka {}: "
+
+#. Translators: report value axis title if available in the format title value
+msgid "{} {}"
+msgstr "{} {}"
+
+#. Translators: report value axis title as value if axis title is not available in the format "Value" value
+msgid "value {}"
+msgstr "arvo {}"
+
+#. Translators: Prompt for pie chart in the format: fraction nn percent slice  index of count
+msgid " fraction {:.2f} Percent {} {} of {}"
+msgstr " osa {:.2f} prosenttia {} {} / {}"
+
+#. Translators: Prompt for other charts in the format: segment type index of count
+msgid " {} {} of {}"
+msgstr " {} {} / {}"
+
+#. Translators: axis group
+msgid "Primary"
+msgstr "1"
+
+#. Translators: axis group
+msgid "Secondary"
+msgstr "2"
+
+#. Translators: Prompt for axis details such as: type, group, and title
+#. Translators: Prompt for axis details such as: type, group, and title when there is no title
+msgid "Chart Axis, type equals {}, group equals {}, Title equals {}"
+msgstr "Kaavion akselin tyyppi on {}, ryhmä on {}, otsikko on {}"
+
+msgid "none"
+msgstr "ei mitään"
+
+#. Translators: Prompt for axis title if axis has title
+#. Translators: Prompt for axis title without title
+msgid "Chart Axis Title equals {} "
+msgstr "Kaavion akselin otsikko on {} "
+
+msgid " square "
+msgstr " neliö "
+
+#. Translators: Prompt for trendline with equation or r square
+msgid " trendline {} "
+msgstr " suuntaviiva {} "
+
+#. Translators: Prompt for trendline without equation or r square
+msgid "Trendline"
+msgstr "suuntaviiva"
+
+#. Translators: Prompt for chart title
+msgid "Chart Title equals {}"
+msgstr "Kaavion otsikko on {}"
+
+#. Translators: Prompt for chart title when the title is not available
+msgid "Untitled chart"
+msgstr "nimetön kaavio"
+
+#. Translators: Prompt for chart area with dimentions
+msgid ""
+"Chart area height equals {}, width equals {}, top equals {}, left equals {}"
+msgstr ""
+"Kaavioalueen korkeus on {}, leveys on {}, yläreuna on {}, vasen reuna on {}"
+
+#. Translators: Prompt for chart area
+msgid "Chart area "
+msgstr "Kaavion alue "
+
+#. Translators: Prompt for plot area with inner dimentions
+msgid ""
+"Plot Area inside height equals {:.0f}, inside width equals {:.0f}, inside "
+"top equals {:.0f}, inside left equals {:.0f}"
+msgstr ""
+"Piirtoalueen sisäkorkeus on {:.0f}, sisäleveys on {:.0f}, sisäyläreuna on "
+"{:.0f}, sisävasen on {:.0f}"
+
+#. Translators: Prompt for plot area
+msgid "Plot Area "
+msgstr "Piirtoalue "
+
+#. Translators: Prompt for Legend
+msgid "Legend"
+msgstr "Selite"
+
+#. Translators: Prompt for Legend when no legend is present
+msgid "No legend"
+msgstr "Ei selitettä"
+
+#. Translators: Prompt for Legend entry for series name index of count
+msgid "Legend entry for Series {}, {} of {}"
+msgstr "Seliteosa sarjalle {}, {} / {}"
+
+#. Translators: Prompt for Legend key for series name index of count
+msgid "Legend key for Series {} {} of {}"
+msgstr "Selitteen avain sarjalle {} {} / {}"
+
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
 msgstr "lisäys"
@@ -7107,7 +8034,7 @@ msgstr "näyttökenttä"
 
 #. Translators: a Microsoft Word revision type (reconcile)
 msgid "reconcile"
-msgstr "yhteensovitus"
+msgstr "täsmäytys"
 
 #. Translators: a Microsoft Word revision type (conflicting revision)
 msgid "conflict"
@@ -7197,7 +8124,8 @@ msgstr "tuntematon päiväys"
 
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr ""
-"Muutos: {revisionType}, muokkaaja: {revisionAuthor}, päiväys: {revisionDate}"
+"Muokkaus: {revisionType}, muokkaaja: {revisionAuthor}, päiväys: "
+"{revisionDate}"
 
 #, python-format
 msgid "%g characters"
@@ -7368,8 +8296,14 @@ msgstr "HIMS Braille Sense/Braille EDGE"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
+#~ msgid "equation"
+#~ msgstr "yhtälö"
+
 #~ msgid "Presents a list of links, headings or landmarks"
 #~ msgstr "Näyttää listan linkeistä, otsikoista ja kiintopisteistä"
+
+#~ msgid "Slovak"
+#~ msgstr "slovakki"
 
 #~ msgid "grey"
 #~ msgstr "harmaa"
@@ -7460,9 +8394,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid "Set row header column"
 #~ msgstr "Määritä rivin otsikkosarake"
-
-#~ msgid "Cleared row header column"
-#~ msgstr "Rivin otsikkosarake nollattu"
 
 #~ msgid ""
 #~ "Pressing once will set the current column as the column where row headers "
