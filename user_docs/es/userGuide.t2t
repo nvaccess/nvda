@@ -442,7 +442,7 @@ Si bien un ratón físico o un trackpad se podrían utilizar para navegar con el
 
 + Modo Exploración +
 Los documentos complejos de sólo lectura, tales como páginas Web, son representados en NVDA con un Modo Exploración. 
-Esto incluye documentos en Mozilla Firefox, Microsoft Internet Explorer, mensajes HTML en Microsoft Outlook, Google Chrome, Adobe Reader y Adobe Flash.
+Esto incluye documentos en Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, mensajes HTML en Microsoft Outlook, Google Chrome, Adobe Reader y Adobe Flash.
 El modo Exploración también está opcionalmente disponible para documentos de Microsoft Word.
 
 En el Modo Exploración, el contenido del documento se hace disponible mediante una representación plana de contenido tal como una página Web, por el que te puedes mover con las teclas de cursor. 
@@ -497,6 +497,7 @@ Las siguientes teclas por sí mismas saltan al siguiente campo, con la tecla shi
 - d: punto de referencia
 - o: objeto integrado
 - 1 a 6: encabezados de 1 a 6 respectivamente
+- a: anotación (comentario, revisión del editor, etc.)
 -
 Para moverte al comienzo o final de elementos contenedores tales como listas y tablas:
 || Nombre | Tecla | Descripción |
@@ -505,13 +506,14 @@ Para moverte al comienzo o final de elementos contenedores tales como listas y t
 %kc:endInclude
 
 ++ La Lista de Elementos ++
-La lista de elementos proporciona acceso a una lista de enlaces, encabezados o puntos de referencia en la página. 
-Los botones de opción te permiten cambiar entre estos tres tipos de información. 
+La lista de elementos proporciona acceso a una lista de varios tipos de elementos en el documento según sea apropiado para la aplicación.
+Por ejemplo, en navegadores web, la lista de elementos puede listar enlaces, encabezados o puntos de referencia.
+Los botones de opción te permiten cambiar entre los diferentes tipos de elementos.
 Se Proporciona también un campo de edición en el diálogo el cual te permite filtrar la lista para ayudarte a buscar un elemento en particular en la página. 
 Una vez hayas elegido un elemento, puedes utilizar los botones proporcionados en el diálogo para moverte a, o activar, ese elemento.
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| Lista de elementos del Modo Exploración | NVDA+f7 | Despliega la lista de elementos que contiene enlaces, encabezados y puntos de referencia ARIA del documento actual |
+| Lista de elementos del Modo Exploración | NVDA+f7 | Lista  varios tipos de elementos en el documento actual |
 %kc:endInclude
 
 ++ Objetos Integrados ++
@@ -525,6 +527,42 @@ Se proporciona una orden de teclado para regresar a la página original que cont
 | Mover al contenido del modo de Navegación | NVDA+control+espacio | Mueve el foco fuera del actual objeto integrado y lo pone dentro del documento que lo contiene |
 %kc:endInclude
  
++ Leyendo Contenido Matemático +
+Utilizando MathPlayer 4 from Design Science, NVDA puede leer y navegar interactivamente por el contenido matemático soportado.
+Esto requiere que MathPlayer 4 esté instalado en el ordenador.
+MathPlayer está disponible como una descarga gratuita desde: http://www.dessci.com/en/products/mathplayer/
+
+NVDA soporta los siguientes tipos de contenidos matemáticos:
+- MathML en Mozilla Firefox y Microsoft Internet Explorer.
+- Design Science MathType en Microsoft Word y PowerPoint.
+- MathML en Adobe Reader. Ten en cuenta que esto no es un estándar official aún, así que no hay actualmente software disponible al público que pueda producir este contenido.
+-
+
+Al leer un documento, NVDA verbalizará cualquier contenido matemático soportado donde aparezca.
+Si estás utilizando una pantalla braille, también se mostrará en braille.
+
+++ Navegación Interactiva ++
+Si estás trabajando principalmente con voz, en la mayoría de los casos, probablemente desearás examinar la expresión en segmentos más pequeños, en lugar de escuchar la expresión entera de una vez.
+
+Si estás en modo exploración, puedes hacer esto moviendo el cursor al contenido matemático y pulsando intro.
+
+Si no estás en modo exploración:
++ mueve el cursor de revisión al contenido matemático.
+Por omisión, el cursor de revisión sigue al cursor del sistema, así puedes utilizar normalmente el cursor del sistema para moverte al contenido decidido.
++ Luego, activa la siguiente orden:
++
+
+%kc:beginInclude
+|| Nombre | Tecla | Descripción |
+| Interactuar con contenido matemático | NVDA+alt+m | Comienza la interactuación con el contenido matemático. |
+%kc:endInclude
+
+En este punto, puedes utilizar órdenes de MathPlayer tales como las teclas de cursor para explorar la  expresión.
+Por ejemplo, puedes moverte a través de la expresión con las teclas de flecha  izquierda o derecha y acercarte a una porción de la expresión tal como una fracción utilizando la tecla de flecha abajo.
+Por favor consulta la documentación de MathPlayer para información adicional.
+
+Cuando desees volver al documento, simplemente pulsa la tecla escape.
+
 + Órdenes de NVDA Específicas para Aplicación +
 NVDA proporciona sus propias órdenes extra para algunas aplicaciones para hacer más fáciles ciertas tareas o para proporcionar acceso a funcionalidad que de otro modo no está accesible para los usuarios de lector de pantalla.
 
@@ -542,6 +580,7 @@ NVDA proporciona sus propias órdenes extra para algunas aplicaciones para hacer
 | Fijar encabezado de columnas | NVDA+shift+c | Al pulsar esto una vez le dice a NVDA que es la primera celda de encabezado de la fila que contiene los encabezados de columna, que debería ser anunciado automáticamente cuando te desplaces entre las columnas por debajo de esta fila. Pulsando dos veces se eliminará la opción. | 
 | Fijar encabezado de filas | NVDA+shift+r | Al pulsar esto una vez le dice a NVDA que es la primera celda del encabezado de la columna que contiene los encabezados de fila, que debería ser anunciado automáticamente cuando te desplaces entre las filas después de esta columna. Pulsando dos veces eliminarás la opción. | 
 | Anunciar comentario | NVDA+alt+c | Anuncia el comentario en la celda actual si lo hay. |
+| Diálogo Lista de Elementos | NVDA+f7 | abre el diálogo Lista de Elementos mostrando gráficos, celdas con comentarios, o celdas con fórmulas. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -586,6 +625,9 @@ La mayoría de las opciones de NVDA pueden cambiarse utilizando cuadros de diál
 En todos los cuadros de diálogo de opciones de NVDA, pulsa el botón Aceptar para aceptar cualquier cambio que hayas hecho.
 Para cancelar cualquier cambio, pulsa el botón Cancelar o la tecla escape.
 Algunas opciones también pueden cambiarse utilizando teclas de atajo,  que se listan donde sean relevantes en las secciones subsiguientes.
+
+Ten en cuenta que de manera predeterminada, no puede accederse a todos los diálogos de preferencias con gestos de entrada (órdenes de teclado, gestos táctiles, etc.).
+Si deseas acceder a diálogos que no tengan atajos de teclado dedicados, utiliza el [Diálogo Gestos de Entrada #InputGestures] para añadir un gesto personalizado para ese diálogo.
 
 +++ Opciones Generales (NVDA+control+g) +++
 El cuadro de diálogo Opciones Generales se encuentra en el menú Preferencias. 
@@ -795,6 +837,18 @@ También, las órdenes de línea siguiente y anterior moverán por párrafos en 
 Esto significa que no tienes desplazamiento de la pantalla braille al final de cada línea incluso cuando haya más texto del que quepa en la pantalla braille.
 Esto podría permitir una lectura más fluida de grandes cantidades de texto.
 Esto está desactivado de forma predeterminada.
+
+==== Evitar separación de palabras cuando sea posible ====
+Si esto está habilitado, una palabra que sea demasiado larga para caber en el final de la pantalla braille no se separará.
+En su lugar, habrá algunos espacios en blanco al final de la pantalla.
+Cuando desplaces la pantalla, podrás leer toda la palabra.
+Esto se llama en ocasiones "ajuste de línea".
+Ten en cuenta que si la palabra es demasiado larga para caber en la pantalla incluso por sí misma, la palabra todavía debe ser partida.
+
+Si esto está deshabilitado, se mostrará tanto como sea posible de la palabra, pero el resto se cortará.
+Cuando desplaces la pantalla, entonces podrás leer el resto de la palabra.
+
+Habilitar esto podría permitir una mayor fluidez en la lectura, pero normalmente requiere desplazar la pantalla más.
 
 +++ Opciones de Teclado (NVDA+control+k)+++
 Este cuadro de diálogo se encuentra en el menú Preferencias, bajo "Opciones de teclado...". 
@@ -1059,7 +1113,10 @@ Puedes configurar el anunciado de:
 - Citas
 - Puntos de referencia
 - Marcos
+- Cuando se puede hacer clic en algo
 -
+
+Para conmutar estas  opciones desde cualquier lugar, por favor asigna gestos personalizados utilizando el [diálogo Gestos de Entrada #InputGestures].
 
 ==== Anunciar cambios de formato después del cursor ====
 Si está activada, esta opción dice a NVDA que pruebe y detecte todos los cambios de formato en una línea según la verbaliza, si se hace esto podría enlentecerse la respuesta de NVDA.
@@ -1076,6 +1133,8 @@ son:
 - Voz: un diccionario cuyas reglas afectan a la voz para el sintetizador que actualmente está siendo utilizado.
 - Temporal: las reglas en este diccionario afectan a todas las voces en NVDA, pero sólo para la sesión actual. Estas reglas son temporales y se perderán si NVDA es reiniciado
 -
+
+Necesitas asignar gestos personalizados utilizando el [diálogo Gestos de Entrada #InputGestures] si deseas abrir cualquiera de estos diálogos de diccionario desde cualquier lugar.
 
 Todos los diálogos de diccionario contienen una lista de reglas que serán utilizadas para procesar la voz. 
 El diálogo también contiene los botones Añadir, Editar y Eliminar.
@@ -1103,6 +1162,9 @@ Las expresiones regulares no están cubiertas en esta Guía del Usuario, pero ha
 +++ Pronunciación de Puntuación/símbolos +++[SymbolPronunciation]
 Este diálogo te permite cambiar el modo en que son pronunciados la puntuación y otros símbolos, así como el nivel de los símbolos en el cual se verbalizan. 
 
+El idioma cuya pronunciación de símbolo vaya a ser editada se mostrará en el título del diálogo.
+Ten en cuenta que este diálogo respeta la opción "Confiar en el Idioma de la voz al procesar símbolos y caracteres" que se encuentra en el [diálogo Opciones de Voz #VoiceSettings]; es decir, utiliza el idioma de la voz en lugar de la opción del idioma global de NVDA cuando esta opción esté habilitada.
+
 Para cambiar un símbolo, primero selecciónalo en la lísta de Símbolos.
 El campo Reemplazar te permite cambiar el texto que debería verbalizarse en lugar de este símbolo.
 Utilizando el campo Nivel, puedes ajustar el nivel más bajo del símbolo al cual este símbolo debería verbalizarse.
@@ -1115,7 +1177,7 @@ Puedes eliminar un símbolo que añadiste anteriormente pulsando el botón Elimi
 
 Cuando termines, pulsa el botón Aceptar para guardar tus cambios o el botón Cancelar para descartarlos.
 
-+++ Gestos de Entrada +++
++++ Gestos de Entrada +++[InputGestures]
 En este diálogo, puedes personalizar los gestos de entrada (teclas en el teclado, botones en la pantalla braille, etc.) para órdenes de NVDA.
 
 Sólo se muestran las órdenes que se apliquen inmediatamente antes de que el diálogo se abra.
@@ -1251,6 +1313,8 @@ Desmarca el elemento de menú para desactivarlo.
 Mientras el visualizador de voz está activado, se actualiza constantemente para mostrarte el texto más reciente que está siendo hablado.
 No obstante, si haces clic o colocas el foco dentro del visualizador,  NVDA detendrá temporalmente la actualización del texto, tal que podrás seleccionar o copiar fácilmente el contenido existente.
 
+Para conmutar el visualizador de voz desde cualquier lugar, por favor asigna un gesto personalizado utilizando el [diálogo Gestos de Entrada #InputGestures].
+
 ++ Administrador de Complementos ++
 El Administrador de Complementos, al que se accede seleccionando Administrador de complementos bajo Herramientas en el menú NVDA, te permite instalar y desinstalar paquetes de complementos para NVDA.
 Estos paquetes son proporcionados por la comunidad y contienen código personalizado que podrá añadir o cambiar características en NVDA o también proporcionan soporte para pantallas Braille o sintetizadores de voz extra.
@@ -1284,6 +1348,8 @@ Si has instalado o eliminado complementos, NVDA primero te preguntará si deseas
 En el pasado ha sido posible extender la funcionalidad de NVDA copiando plugins y controladores individuales en tu directorio de configuración del usuario de NVDA.
 Aunque esta versión de NVDA todavía podrá cargarlos, No se mostrarán en el Administrador de Complementos.
 Es mejor eliminar estos ficheros de tu configuración e instalar el complemento apropiado si hay uno disponible.
+
+Para acceder al Administrador de Complementos desde cualquier lugar, por favor asigna un gesto personalizado utilizando el [diálogho Gestos de Entrada #InputGestures].
 
 ++ Consola de Python ++
 La consola de Python de NVDA, encontrada bajo Herramientas en el menú NVDA, es una herramienta de desarrollo que es útil para depuración, inspección general del interior  de NVDA o inspeción de la jerarquía de accesibilidad  de una aplicación.
@@ -1352,7 +1418,7 @@ Esta sección contiene información acerca de las pantallas braille soportadas p
 ++ Series de la Freedom Scientific Focus/PAC Mate ++
 Todas las pantallas Focus y PAC Mate de [Freedom Scientific http://www.freedomscientific.com/] están soportadas.
 Necesitarás los controladores de pantallas braille de Freedom Scientific instalados en tu sistema.
-Si no los tienes todavía, puedes obtenerlos desde http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Si no los tienes todavía, puedes obtenerlos desde http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Aunque esta página sólo mencione la pantalla Focus 40 Blue, el controlador soporta todas las pantallas Focus y Pacmate de Freedom Scientific.
 Si tu sistema ejecuta un Windows de 64 bit y los controladores ya se instalaron por otro lector de pantalla, posiblemente todavía necesitarás instalar los controladores desde este enlace, puesto que los ficheros que requiere NVDA posiblemente no fueran instalados por el otro lector de pantalla.
 
