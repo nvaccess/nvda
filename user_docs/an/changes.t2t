@@ -2,25 +2,44 @@ Qué bi ha de Nuevo en o NVDA
 
 
 %!includeconf: ../changes.t2tconf
+O resinyable d'ista  versión inclui a capacidat de leyer graficos en  o Microsoft Excel y l'emparo t'a lectura y t'a navegación interactiva de conteniu matematico.
 
 = 2015.2 =
 
 == Nuevas Caracteristicas ==
 - Agora ye posible mover-se-ne enta devant u enta dezaga por as frases en o Microsoft Word con alt+flecha abaixo y alt+flecha alto respectivament. (#3288)
 - Nuevas tablas de transcripción braille ta quantos idiomas Indicos. (#4778)
+- En o Microsoft Excel o NVDA agora anuncia quan una celda tien conteniu desbordant u tallau. (#3040)
+- En o Microsoft Excel agora puetz fer servir a lista d'elementos (NVDA+f7) ta permitir un listau de graficos, comentarios y formulas. (#1987)
+- Suporte ta leyer graficos en o Microsoft Excel. Ta fer servir ixo Selecciona o grafico fendo servir a lista d'elementos (NVDA+f7) y allora fe servir as teclas de flecha ta mover-te-ne entre os puntos de datos. (#1987)
+- Fendo servir o MathPlayer 4 de Design Science, o NVDA agora puet leyer y navegar interactivament por conteniu matematico en os navegadors web y en o Microsoft Word y PowerPoint. Mira-te a sección "Leyer conteniu mathematico" en a Guida de l'usuario  ta detalles. (#4673)
+- Agora ye posible asignar cenyos de dentrada (comandos de teclau, cenyos tactils, etc.) Ta totz os dialogos de preferencias d'o NVDA y as opcions de formatiau de documentos fendo servir o dialogo de Cenyos de Dentrada. (#4898)
 
 
 == Cambeos ==
-- En o dialogo de formatiau de documentos d'o NVDA os alcorces de teclau t'anunciar as listas, anunciar os vinclos, anunciar os numeros de Línea y anunciar o Nombre d'a fuent se ha cambiau. (#4650)
-- En o dialogo Opcions d'o churi d'o NVDA se ha adhibiu alcorces de teclau ta reproducir as coordenadas d'audio en que se mueve o churi y o brilo controla o volumen d'as coordenadas d'audio. (#4916)
+- En o dialogo de formatiau de documentos d'o NVDA os alcorces de teclau t'anunciar as listas, anunciar os vinclos, anunciar os numeros de Línea y anunciar o Nombre d'a fuent s'ha cambiau. (#4650)
+- En o dialogo Opcions d'o churi d'o NVDA s'ha adhibiu alcorces de teclau ta reproducir as coordenadas d'audio en que se mueve o churi y o brilo controla o volumen d'as coordenadas d'audio. (#4916)
+- S'ha amillorau significativament l'anunciau d'os nombres d'as colors. (#4984)
+- Esviellau o transcriptor braille liblouis ta 2.6.2. (#4777)
 
 
 == Corrección d'errors ==
 - As descripcions d'os caracters agora se maneyan correctament t'os conchuntos de caracters en qualques idiomas Indicos. (#4582)
+- Si a opción "Confidar en l'idioma d'a voz en procesar caracters y simbolos" ye activada, o dialogo de pronuncia de puntuación y simbolos  agora fa servir correctament l'idioma d'a voz. Tamién l'idioma  que a suya pronuncia se ye editando s'amuestra en o titol d'o dialogo. (#4930)
+-En l'Internet Explorer y atros controls MSHTML os caracters tipaus ya no s'anuncian inapropiadament en os quadros combinaus editables tals como o campo de busca de Google en a pachina prencipal d'o Google. (#4976)
+- En que se seleccionan colors en as aplicacions d'o Microsoft Office agora s'anuncian os nombres d'as colors. (#3045)
+- A salida braille en danés agora marcha de nuevas. (#4986)
+- l'avPach y o RePach se puet fer servir unatra vegada ta cambiar as diapositivas adintro d'una presentación d'o PowerPoint. (#4850)
+- En o Skype ta escritorio 7.2 y superior, as notificacions d'escritura agora s'anuncian y s'han apanyau os problemas inmediatament dimpués de mover o foco ta difuera d'una conversa. (#4972)
+- S'han apanyau problemas en escribir qualques puntuacións y simbolos tals como gafetz en o campo de tresmín en o dialogo de cenyos de dentrada. (#5060)
 
 
 == Cambeos ta desembolicadors ==
-- brailleInput.handler.sendChars(mychar) ya no tresminará un caracter si ye igual que o caracter anterior, guarenciando-se que a tecla ninviada  s'ha liberau correctament.
+- brailleInput.handler.sendChars(mychar) ya no tresminará un caracter si ye igual que o caracter anterior guarenciando-se que a tecla ninviada  s'ha liberau correctament. (#4139)
+- Os scripts ta cambiar os modos tactils agora cumplen con as nuevas etiquetas adhibidas ta touchHandler.touchModeLabels. (#4699)
+- Os complementos pueden furnir as suyas propias implementacions de presentación matematica. Mira-te o paquet mathPres ta detalles. (#4509)
+- S'han implementau comandos de fabla  ta ficar una crebadura entre parolas y ta cambiar o ton, volumen y velocidat. Mira-te BreakCommand, PitchCommand, VolumeCommand y RateCommand en o modulo d'a fabla. (#4674)
+ - Bi ha tamién speech.PhonemeCommand ta ficar pronuncias especificas, pero  as implementacions actuals no suportan que un numero muito limitau de fonemas.
 
 
 = 2015.1 =
