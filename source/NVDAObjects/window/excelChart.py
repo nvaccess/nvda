@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*- 
 #NVDAObjects/excel.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2014-2015 Dinesh Kaushal, NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -119,232 +119,226 @@ xlXYScatterSmoothNoMarkers = 73
 
 # Dictionary for the Description of chart types.
 chartTypeDict = {
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel. 
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DArea : _( "3D Area" ),
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DAreaStacked : _( "3D Stacked Area" ),
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DAreaStacked100 : _( "100 percent Stacked Area" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DBarClustered : _( "3D Clustered Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DBarStacked : _( "3D Stacked Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DBarStacked100 : _( "3D 100 percent Stacked Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DColumn : _( "3D Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DColumnClustered : _( "3D Clustered Column" ),
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DColumnStacked : _( "3D Stacked Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DColumnStacked100 : _( "3D 100 percent Stacked Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DLine : _( "3D Line" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DPie : _( "3D Pie" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xl3DPieExploded : _( "Exploded 3D Pie" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlArea : _( "Area" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlAreaStacked : _( "Stacked Area" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlAreaStacked100 : _( "100 percent Stacked Area" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlBarClustered : _( "Clustered Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlBarOfPie : _( "Bar of Pie" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlBarStacked : _( "Stacked Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlBarStacked100 : _( "100 percent Stacked Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlBubble : _( "Bubble" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlBubble3DEffect : _( "Bubble with 3D effects" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlColumnClustered : _( "Clustered Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlColumnStacked : _( "Stacked Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlColumnStacked100 : _( "100 percent Stacked Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlConeBarClustered : _( "Clustered Cone Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlConeBarStacked : _( "Stacked Cone Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlConeBarStacked100 : _( "100 percent Stacked Cone Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlConeCol : _( "3D Cone Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlConeColClustered : _( "Clustered Cone Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlConeColStacked : _( "Stacked Cone Column" ),
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlConeColStacked100 : _( "100 percent Stacked Cone Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlCylinderBarClustered : _( "Clustered Cylinder Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlCylinderBarStacked : _( "Stacked Cylinder Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlCylinderBarStacked100 : _( "100 percent Stacked Cylinder Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlCylinderCol : _( "3D Cylinder Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlCylinderColClustered : _( "Clustered Cone Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlCylinderColStacked : _( "Stacked Cone Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlCylinderColStacked100 : _( "100 percent Stacked Cylinder Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlDoughnut : _( "Doughnut" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlDoughnutExploded : _( "Exploded Doughnut" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlLine : _( "Line" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlLineMarkers : _( "Line with Markers" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlLineMarkersStacked : _( "Stacked Line with Markers" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlLineMarkersStacked100 : _( "100 percent Stacked Line with Markers" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlLineStacked : _( "Stacked Line" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlLineStacked100 : _( "100 percent Stacked Line" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlPie : _( "Pie" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlPieExploded : _( "Exploded Pie" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlPieOfPie : _( "Pie of Pie" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlPyramidBarClustered : _( "Clustered Pyramid Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlPyramidBarStacked : _( "Stacked Pyramid Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlPyramidBarStacked100 : _( "100 percent Stacked Pyramid Bar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlPyramidCol : _( "3D Pyramid Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlPyramidColClustered : _( "Clustered Pyramid Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlPyramidColStacked : _( "Stacked Pyramid Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 	xlPyramidColStacked100 : _( "100 percent Stacked Pyramid Column" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlRadar : _( "Radar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlRadarFilled : _( "Filled Radar" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlRadarMarkers : _( "Radar with Data Markers" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlStockHLC : _( "High-Low-Close" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlStockOHLC : _( "Open-High-Low-Close" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlStockVHLC : _( "Volume-High-Low-Close" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlStockVOHLC : _( "Volume-Open-High-Low-Close" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlSurface : _( "3D Surface" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlSurfaceTopView : _( "Surface (Top View)" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlSurfaceTopViewWireframe : _( "Surface (Top View wireframe)" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlSurfaceWireframe : _( "3D Surface (wireframe)" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlXYScatter : _( "Scatter" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlXYScatterLines : _( "Scatter with Lines" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlXYScatterLinesNoMarkers : _( "Scatter with Lines and No Data Markers" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlXYScatterSmooth : _( "Scatter with Smoothed Lines" ) ,
-	# Translators: Chart type
+	# Translators: A type of chart in Microsoft Excel.
+	# See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 	xlXYScatterSmoothNoMarkers : _( "Scatter with Smoothed Lines and No Data Markers")
 }
-
-# Dictionary for the segments of different chart types.
-chartSegmentDict = {
-	xl3DArea : "3D Area",
-	xl3DAreaStacked : "3D Stacked Area",
-	xl3DAreaStacked100 : "100 percent Stacked Area",
-	xl3DBarClustered : "3D Clustered Bar",
-	xl3DBarStacked : "3D Stacked Bar",
-	xl3DBarStacked100 : "3D 100 percent Stacked Bar",
-	xl3DColumn : "Column",
-	xl3DColumnClustered : "Column",
-	xl3DColumnStacked : "Column",
-	xl3DColumnStacked100 : "Column",
-	xl3DLine : "Line",
-	xl3DPie : "Slice",
-	xl3DPieExploded : "Slice",
-	xlArea : "Area",
-	xlAreaStacked : "Stacked Area",
-	xlAreaStacked100 : "100 percent Stacked Area",
-	xlBarClustered : "Clustered Bar",
-	xlBarOfPie : "Bar of Pie",
-	xlBarStacked : "Stacked Bar",
-	xlBarStacked100 : "100 percent Stacked Bar",
-	xlBubble : "Bubble",
-	xlBubble3DEffect : "Bubble with 3D effects",
-	xlColumnClustered : "Column",
-	xlColumnStacked : "Column",
-	xlColumnStacked100 : "Column",
-	xlConeBarClustered : "Clustered Cone Bar",
-	xlConeBarStacked : "Stacked Cone Bar",
-	xlConeBarStacked100 : "100 percent Stacked Cone Bar",
-	xlConeCol : "3D Cone Column",
-	xlConeColClustered : "Clustered Cone Column",
-	xlConeColStacked : "Stacked Cone Column",
-	xlConeColStacked100 : "100 percent Stacked Cone Column",
-	xlCylinderBarClustered : "Clustered Cylinder Bar",
-	xlCylinderBarStacked : "Stacked Cylinder Bar",
-	xlCylinderBarStacked100 : "100 percent Stacked Cylinder Bar",
-	xlCylinderCol : "3D Cylinder Column",
-	xlCylinderColClustered : "Clustered Cone Column",
-	xlCylinderColStacked : "Stacked Cone Column",
-	xlCylinderColStacked100 : "100 percent Stacked Cylinder Column",
-	xlDoughnut : "Doughnut",
-	xlDoughnutExploded : "Exploded Doughnut",
-	xlLine : "Line",
-	xlLineMarkers : "Line",
-	xlLineMarkersStacked : "Line",
-	xlLineMarkersStacked100 : "Line",
-	xlLineStacked : "Line",
-	xlLineStacked100 : "Line",
-	xlPie : "slice",
-	xlPieExploded : "Exploded Pie",
-	xlPieOfPie : "Pie of Pie",
-	xlPyramidBarClustered : "Clustered Pyramid Bar",
-	xlPyramidBarStacked : "Stacked Pyramid Bar",
-	xlPyramidBarStacked100 : "100 percent Stacked Pyramid Bar",
-	xlPyramidCol : "3D Pyramid Column",
-	xlPyramidColClustered : "Clustered Pyramid Column",
-	xlPyramidColStacked : "Stacked Pyramid Column",
-	xlPyramidColStacked100 : "100 percent Stacked Pyramid Column",
-	xlRadar : "Radar",
-	xlRadarFilled : "Filled Radar",
-	xlRadarMarkers : "Radar with Data Markers",
-	xlStockHLC : "High-Low-Close",
-	xlStockOHLC : "Open-High-Low-Close",
-	xlStockVHLC : "Volume-High-Low-Close",
-	xlStockVOHLC : "Volume-Open-High-Low-Close",
-	xlSurface : "3D Surface",
-	xlSurfaceTopView : "Surface (Top View)",
-	xlSurfaceTopViewWireframe : "Surface (Top View wireframe)",
-	xlSurfaceWireframe : "3D Surface (wireframe)",
-	xlXYScatter : "Scatter",
-	xlXYScatterLines : "Scatter with Lines",
-	xlXYScatterLinesNoMarkers : "Scatter with Lines and No Data Markers",
-	xlXYScatterSmooth : "Scatter with Smoothed Lines",
-	xlXYScatterSmoothNoMarkers : "Scatter with Smoothed Lines and No Data Markers"
-}
-
-
 
 # Axis types in chart
 xlCategory = 1
@@ -416,15 +410,13 @@ class ExcelChart(excel.ExcelBase):
 			name=self.excelChartObject.ChartTitle.Text
 		else:
 			name=self.excelChartObject.Name
-#find the type of the chart
+		#find the type of the chart
 		chartType = self.excelChartObject.ChartType
-		if chartType in chartTypeDict.keys():
-			chartTypeText = "%s" %(chartTypeDict[chartType])
-		else:
-			# Translators: chart type to be reported when the type is not available
-			chartTypeText=_("unknown")
-		# Translators: prompt for chart title and chart type to be reported 
-		return _("Chart title equals {chartTitle} type equals {chartType}").format(chartTitle=name, chartType=chartTypeText)
+		chartTypeText = chartTypeDict.get(chartType,
+			# Translators: Reported when the type of a chart is not known.
+			_("unknown"))
+		# Translators: Message reporting the title and type of a chart.
+		return _("Chart title: {chartTitle}, type: {chartType}").format(chartTitle=name, chartType=chartTypeText)
 
 	def _get_title(self):
 		try:
@@ -432,10 +424,10 @@ class ExcelChart(excel.ExcelBase):
 		except COMError:
 			title=None
 		return title
-	
+
 	def _get_role(self):
 		return controlTypes.ROLE_CHART 
-	
+
 	def script_switchToCell(self,gesture):
 		cell=self.excelWindowObject.ActiveCell
 		cell.Activate()
@@ -444,19 +436,7 @@ class ExcelChart(excel.ExcelBase):
 	script_switchToCell.canPropagate=True
 
 	def event_gainFocus(self):
-		if self.excelChartObject.HasTitle:
-			name=self.excelChartObject.ChartTitle.Text
-		else:
-			name=self.excelChartObject.Name
-#find the type of the chart
-		chartType = self.excelChartObject.ChartType
-		if chartType in chartTypeDict.keys():
-			chartTypeText=_("%s" %(chartTypeDict[chartType]))
-		else:
-			# Translators: chart type to be reported when the type is not available
-			chartTypeText=_("unknown")
-		# Translators: prompt for chart title and chart type to be reported 
-		ui.message( _("Chart title equals {chartTitle} type equals {chartType}").format(chartTitle=name, chartType=chartTypeText)) 
+		ui.message(self.name)
 		self.reportSeriesSummary()
 
 	def script_reportTitle(self,gesture):
@@ -467,13 +447,17 @@ class ExcelChart(excel.ExcelBase):
 		axis=None
 		if self.excelChartObject.HasAxis(axisType, xlPrimary):
 			axis = self.excelChartObject.Axes(axisType, xlPrimary)
-		else:
-			pass
-		# Translators: Axis title to be reported when the title is not available
+		# Translators: Reported when there is no title for an axis in a chart.
 		axisTitle = axis.AxisTitle.Text if axis and axis.HasTitle else _("Not defined")
-		# Translators: Chart Axis types  
-		axisName = _( "Category" ) if axisType==xlCategory else _( "Value" ) if axisType==xlValue else _( "Series" )
-		# Translators: Prompt for axis title and axis type to be reported 
+		axisName = (
+			# Translators: A type of axis in a chart.
+			_( "Category" ) if axisType==xlCategory
+			# Translators: A type of axis in a chart.
+			else _( "Value" ) if axisType==xlValue
+			# Translators: A type of axis in a chart.
+			else _( "Series" ))
+		# Translators: Message reporting the type and title of an axis in a chart.
+		# For example, this might report "Category axis is month"
 		text=_("{axisName} Axis is {axisTitle}").format(axisName=axisName, axisTitle=axisTitle)
 		ui.message(text)
 
@@ -493,18 +477,18 @@ class ExcelChart(excel.ExcelBase):
 		count = self.excelChartObject.SeriesCollection().count
 		if count>0:
 			if count == 1:
-				# Translators: Number of series when there is only one series  
-				seriesValueString = _( "There is %d series in this chart" ) %(count)
+				# Translators: Indicates that there is 1 series in a chart.
+				seriesValueString = _( "There is 1 series in this chart" )
 			else:
-				# Translators: Number of series when there are multiple series 
+				# Translators: Indicates the number of series in a chart where there are multiple series.
 				seriesValueString = _( "There are total %d series in this chart" ) %(count)
 
 			for i in xrange(1, count+1):
-				# Translators: prompt for series number and name to be reported 
-				seriesValueString += ", Series %d %s" %(i, self.excelChartObject.SeriesCollection(i).Name)
+				# Translators: Specifies the number and name of a series when listing series in a chart.
+				seriesValueString += ", " + _("series {number} {name}").format(number=i, name=self.excelChartObject.SeriesCollection(i).Name)
 			text = seriesValueString	
 		else:
-			# Translators: prompt to be reported when there is no series
+			# Translators: Indicates that there are no series in a chart.
 			text=_("No Series defined.")
 		ui.message(text)
 
@@ -601,15 +585,22 @@ class ExcelChartElementBase(Window):
 
 	def GetChartSegment(self):
 		chartType = self.excelChartObject.ChartType
-		if chartType in chartSegmentDict.keys():
-			text= chartSegmentDict[chartType]
+		if chartType in (xl3DPie, xl3DPieExploded, xlPie, xlPieExploded, xlPieOfPie):
+			# Translators: A slice in a pie chart.
+			text=_("slice")
+		elif chartType in (xl3DColumn, xl3DColumnClustered, xl3DColumnStacked, xl3DColumnStacked100, xlColumnClustered, xlColumnStacked100, xlColumnStacked):
+			# Translators: A column in a column chart.
+			text=_("column")
+		elif chartType in (xl3DLine, xlLine, xlLineMarkers, xlLineMarkersStacked, xlLineMarkersStacked100, xlLineStacked, xlLineStacked100):
+			# Translators: A data point in a line chart.
+			text=_("data point")
 		else:
-			# Translators: Chart segment such as slice for  pie chart etc this is reported when there is no segment available.
+			# Translators: A segment of a chart for charts which don't have a specific name for segments.
 			text=_("item")
 		return text
 
 	def _get_role(self):
-			return controlTypes.ROLE_UNKNOWN
+		return controlTypes.ROLE_UNKNOWN
 
 	def _get_name(self):
 		return self._getChartElementText(self.elementID , self.arg1 , self.arg2)
@@ -620,94 +611,54 @@ class ExcelChartElementBase(Window):
 	def script_reportCurrentChartElementColor(self,gesture):
 		if self.elementID == xlSeries:
 			if self.arg2 == -1:
-				ui.message ( _( "Series color: {} ").format(colors.RGB.fromCOLORREF(int( self.excelChartObject.SeriesCollection( self.arg1 ).Interior.Color ) ).name  ) )
+				ui.message ( _( "Series color: {colorName} ").format(colorName=colors.RGB.fromCOLORREF(int( self.excelChartObject.SeriesCollection( self.arg1 ).Interior.Color ) ).name  ) )
 
+	ELEMENT_IDS = {
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlDisplayUnitLabel:  _("Display Unit Label"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlMajorGridlines:  _("Major Gridlines"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlMinorGridlines: _("Minor Gridlines"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlPivotChartDropZone: _("Pivot Chart Drop Zone"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlPivotChartFieldButton: _("Pivot Chart Field Button"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlDownBars: _("Down Bars"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlDropLines: _("Drop Lines"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlHiLoLines:  _("Hi Lo Lines"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlRadarAxisLabels: _("Radar Axis Labels"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlSeriesLines: _("Series Lines"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlUpBars: _("Up Bars"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlCorners: _("Corners"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlDataTable: _("Data Table"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlFloor:  _("Floor"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlNothing: _("Nothing"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlWalls: _("Walls"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlDataLabel: _("Data Label"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlErrorBars: _("Error Bars"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlXErrorBars: _("X Error Bars"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlYErrorBars: _("Y Error Bars"),
+		# Translators: A type of element in a Microsoft Excel chart.
+		xlShape: _("Shape"),
+	}
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
-		if ElementID == xlDisplayUnitLabel:  
-			# Translators: prompt for xlDisplayUnitLabel
-			return  _( "Display Unit Label") 
-
-		elif ElementID == xlMajorGridlines:  
-			# Translators: prompt for xlMajorGridlines
-			return  _( "Major Gridlines" ) 
-
-		elif ElementID == xlMinorGridlines:  
-			# Translators: prompt for xlMinorGridlines
-			return _( "Minor Gridlines" ) 
-
-		elif ElementID == xlPivotChartDropZone:  
-			# Translators: prompt for xlPivotChartDropZone
-			return _( "Pivot Chart Drop Zone" ) 
-
-		elif ElementID == xlPivotChartFieldButton:
-			# Translators: prompt for xlPivotChartFieldButton
-			return _( "Pivot Chart Field Button" ) 
-
-		elif ElementID == xlDownBars:
-			# Translators: prompt for xlDownBars
-			return _( "Down Bars" ) 
-
-		elif ElementID == xlDropLines:
-			# Translators: prompt for xlDropLines
-			return _( "Drop Lines" )
-
-		elif ElementID == xlHiLoLines:
-			# Translators: prompt for xlHiLoLines
-			return  _( "Hi Lo Lines" )
-
-		elif ElementID == xlRadarAxisLabels:
-			# Translators: prompt for xlRadarAxisLabels
-			return _( "Radar Axis Labels" )
-
-		elif ElementID == xlSeriesLines:
-			# Translators: prompt for xlSeriesLines
-			return _( "Series Lines" )
-
-		elif ElementID == xlUpBars:
-			# Translators: prompt for xlUpBars
-			return _( "Up Bars" )
-
-		elif ElementID == xlCorners:
-			# Translators: prompt for xlCorners
-			return _( "Corners" )
-
-		elif ElementID == xlDataTable:
-			# Translators: prompt for xlDataTable
-			return _( "Data Table" )
-
-		elif ElementID == xlFloor:
-			# Translators: prompt for xlFloor
-			return  _( "Floor" )
-
-		elif ElementID == xlNothing:
-			# Translators: prompt for xlNothing
-			return _( "xlNothing" )
-
-		elif ElementID == xlWalls:
-			# Translators: prompt for xlWalls
-			return _( "Walls" )
-
-		elif ElementID == xlDataLabel:
-			# Translators: prompt for xlDataLabel
-			return _( "Data Label" )
-
-		elif ElementID == xlErrorBars:
-			# Translators: prompt for xlErrorBars
-			return _( "Error Bars" )
-
-		elif ElementID == xlXErrorBars:
-			# Translators: prompt for xlXErrorBars
-			return _( "X Error Bars" )
-
-		elif ElementID == xlYErrorBars:
-			# Translators: prompt for xlYErrorBars
-			return _( "Y Error Bars" )
-
-		elif ElementID == xlShape:
-			# Translators: prompt for xlShape
-			return _( "Shape" )
-
-	#end def _Select
+		return self.ELEMENT_IDS[ElementID]
 
 	__gestures = {
 		"kb:NVDA+d" : "reportCurrentChartElementWithExtraInfo",
@@ -727,50 +678,59 @@ class ExcelChartElementSeries(ExcelChartElementBase):
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if ElementID == xlSeries:
 			if arg2 == -1:
-				# Translators: Prompt for series details in the format: Name series index of count 
-				return _( "{} Series {} of {}").format( self.excelChartObject.SeriesCollection(arg1).Name , arg1 , self.excelChartObject.SeriesCollection().Count )
+				# Translators: Details about a series in a chart.
+				# For example, this might report "foo series 1 of 2"
+				return _( "{seriesName} series {seriesIndex} of {seriesCount}").format( seriesName = self.excelChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.excelChartObject.SeriesCollection().Count )
 			else:
-# if XValue is a float, change it to int, else dates are shown with points. hope this does not introduce another bug
+				# if XValue is a float, change it to int, else dates are shown with points. hope this does not introduce another bug
 				if isinstance( self.excelChartObject.SeriesCollection(arg1).XValues[arg2 - 1] , float): 
 					excelSeriesXValue = int(self.excelChartObject.SeriesCollection(arg1).XValues[arg2 - 1] )
 				else:
 					excelSeriesXValue = self.excelChartObject.SeriesCollection(arg1).XValues[arg2 - 1] 
 
 				output=""
-				if self.excelChartObject.ChartType == xlLine or self.excelChartObject.ChartType == xlLineMarkers  or self.excelChartObject.ChartType == xlLineMarkersStacked or self.excelChartObject.ChartType == xlLineMarkersStacked100 or self.excelChartObject.ChartType == xlLineStacked or self.excelChartObject.ChartType == xlLineStacked100: 
+				if self.excelChartObject.ChartType in (xlLine, xlLineMarkers , xlLineMarkersStacked, xlLineMarkersStacked100, xlLineStacked, xlLineStacked100):
 					if arg2 > 1:
 
 						if self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] == self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2]: 
-							# Translators: for line charts, no change from the previous element
-							output += _( "no change from point {}, ").format( arg2 - 1 )
+							# Translators: For line charts, indicates no change from the previous data point on the left
+							output += _( "no change from point {previousIndex}, ").format( previousIndex = arg2 - 1 )
 						elif self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] > self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2]: 
-							# Translators: for line charts, increase from the previous element
-							output += _( "Increased by {} from point {}, ").format( self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] - self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2] , arg2 - 1 ) 
+							# Translators: For line charts, indicates an increase from the previous data point on the left
+							output += _( "Increased by {incrementValue} from point {previousIndex}, ").format( incrementValue = self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] - self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2] , previousIndex = arg2 - 1 ) 
 						else:
-							# Translators: for line charts, decrease from the previous element
-							output += _( "decreased by {} from point {}, ").format( self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2] - self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] , arg2 - 1 ) 
+							# Translators: For line charts, indicates a decrease from the previous data point on the left
+							output += _( "decreased by {decrementValue} from point {previousIndex}, ").format( decrementValue = self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 2] - self.excelChartObject.SeriesCollection(arg1).Values[arg2 - 1] , previousIndex = arg2 - 1 ) 
 
 				if self.excelChartObject.HasAxis(xlCategory) and self.excelChartObject.Axes(xlCategory).HasTitle:
-					# Translators: report category axis title if available in the format title value
-					output += _( "{} {}: ").format( self.excelChartObject.Axes(xlCategory).AxisTitle.Text , excelSeriesXValue ) 
+					# Translators: Specifies the category of a data point.
+					# {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
+					# {categoryAxisData} will be replaced with the category itself; e.g. "January".
+					output += _( "{categoryAxisTitle} {categoryAxisData}: ").format( categoryAxisTitle = self.excelChartObject.Axes(xlCategory).AxisTitle.Text , categoryAxisData = excelSeriesXValue ) 
 				else:
-					# Translators: report category axis title as Category if axis title is not available in the format "category" value
-					output += _( "Category {}: ").format( excelSeriesXValue ) 
+					# Translators: Specifies the category of a data point.
+					# {categoryAxisData} will be replaced with the category itself; e.g. "January".
+					output += _( "Category {categoryAxisData}: ").format( categoryAxisData = excelSeriesXValue ) 
 
 				if self.excelChartObject.HasAxis(xlValue) and self.excelChartObject.Axes(xlValue).HasTitle:
-					# Translators: report value axis title if available in the format title value
-					output +=  _( "{} {}").format( self.excelChartObject.Axes(xlValue).AxisTitle.Text , self.excelChartObject.SeriesCollection(arg1).Values[arg2-1]) 
+					# Translators: Specifies the value of a data point.
+					# {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
+					# {valueAxisData} will be replaced with the value itself; e.g. "1000".
+					output +=  _( "{valueAxisTitle} {valueAxisData}").format( valueAxisTitle = self.excelChartObject.Axes(xlValue).AxisTitle.Text , valueAxisData = self.excelChartObject.SeriesCollection(arg1).Values[arg2-1]) 
 				else:
-					# Translators: report value axis title as value if axis title is not available in the format "Value" value
-					output +=  _( "value {}").format( self.excelChartObject.SeriesCollection(arg1).Values[arg2-1]) 
+					# Translators: Specifies the value of a data point.
+					# {valueAxisData} will be replaced with the value itself; e.g. "1000".
+					output +=  _( "value {valueAxisData}").format( valueAxisData = self.excelChartObject.SeriesCollection(arg1).Values[arg2-1]) 
 
-				if self.excelChartObject.ChartType == xlPie or self.excelChartObject.ChartType == xlPieExploded or self.excelChartObject.ChartType == xlPieOfPie: 
+				if self.excelChartObject.ChartType in (xlPie, xlPieExploded, xlPieOfPie):
 					total = math.fsum( self.excelChartObject.SeriesCollection(arg1).Values ) 
-					# Translators: Prompt for pie chart in the format: fraction nn percent slice  index of count 
-					output += _( " fraction {:.2f} Percent {} {} of {}").format( self.excelChartObject.SeriesCollection(arg1).Values[arg2-1] / total *100.00 , self.GetChartSegment() ,  arg2 , len( self.excelChartObject.SeriesCollection(arg1).Values ) )
+					# Translators: Details about a slice of a pie chart.
+					# For example, this might report "fraction 25.25 percent slice 1 of 5"
+					output += _( " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}").format( fractionValue = self.excelChartObject.SeriesCollection(arg1).Values[arg2-1] / total *100.00 , pointIndex = arg2 , pointCount = len( self.excelChartObject.SeriesCollection(arg1).Values ) )
 				else:
-					# Translators: Prompt for other charts in the format: segment type index of count 
-					output += _( " {} {} of {}").format( self.GetChartSegment() ,  arg2 , len( self.excelChartObject.SeriesCollection(arg1).Values ) )
+					# Translators: Details about a segment of a chart.
+					# For example, this might report "column 1 of 5"
+					output += _( " {segmentType} {pointIndex} of {pointCount}").format( segmentType = self.GetChartSegment() ,  pointIndex = arg2 , pointCount = len( self.excelChartObject.SeriesCollection(arg1).Values ) )
 
 				return  output 
 
@@ -782,29 +742,32 @@ class ExcelChartElementAxis(ExcelChartElementBase):
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if ElementID == xlAxis:
 			if arg1 == xlPrimary: 
-				# Translators: axis group
+				# Translators: The primary axis group in a Microsoft Excel chart.
 				axisGroup = _("Primary")
 			elif arg1 == xlSecondary :
-				# Translators: axis group
+				# Translators: The secondary axis group in a Microsoft Excel chart.
 				axisGroup = _("Secondary")
 
 			if arg2 == xlCategory: 
-				# Translators: axis type 
+				# Translators: The category axis in a Microsoft Excel chart.
+				# See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 				axisType= _("Category")
 			elif arg2 == xlValue:
-				# Translators: axis type 
+				# Translators: The value axis in a Microsoft Excel chart.
+				# See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 				axisType= _("Value")
 			elif arg2 == xlSeriesAxis: 
-				# Translators: axis type 
+				# Translators: The series axis in a Microsoft Excel chart.
+				# See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 				axisType= _("Series")
 
 			axisDescription =""
 			if self.excelChartObject.HasAxis( arg2 ) and self.excelChartObject.Axes( arg2 ).HasTitle:
-				# Translators: Prompt for axis details such as: type, group, and title 
-				axisDescription += _("Chart Axis, type equals {}, group equals {}, Title equals {}").format( axisType , axisGroup , self.excelChartObject.Axes( arg2 , arg1 ).AxisTitle.Text ) 
-			elif self.excelChartObject.HasAxis( arg2 ) and not self.excelChartObject.Axes( arg2 ).HasTitle:
-				# Translators: Prompt for axis details such as: type, group, and title when there is no title
-				axisDescription += _("Chart Axis, type equals {}, group equals {}, Title equals {}").format( axisType , axisGroup , _("none")  ) 
+				# Translators: Details about an axis in a chart.
+				axisDescription += _("Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}").format( axisType = axisType , axisGroup = axisGroup , axisTitle = self.excelChartObject.Axes( arg2 , arg1 ).AxisTitle.Text )
+			else:
+				# Translators: Details about an untitled axis in a chart.
+				axisDescription += _("Chart axis, type: {axisType}, group: {axisGroup}").format( axisType = axisType , axisGroup = axisGroup)
 
 			return  axisDescription 
 
@@ -815,13 +778,10 @@ class ExcelChartElementAxisTitle(ExcelChartElementBase):
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if ElementID == xlAxisTitle:  
-			axisTitle=""
+			# Translators: Indicates a chart axis title in Microsoft Excel.
+			axisTitle=_("Chart axis title")
 			if self.excelChartObject.HasAxis( arg2 ) and self.excelChartObject.Axes( arg2 ).HasTitle:
-				# Translators: Prompt for axis title if axis has title
-				axisTitle += _("Chart Axis Title equals {} ").format( self.excelChartObject.Axes( arg2 , arg1 ).AxisTitle.Text  ) 
-			elif self.excelChartObject.HasAxis( arg2 ) and not self.excelChartObject.Axes( arg2 ).HasTitle:
-				# Translators: Prompt for axis title without title
-				axisTitle += _("Chart Axis Title equals {} ").format( _("none") ) 
+				axisTitle += ": " + self.excelChartObject.Axes( arg2 , arg1 ).AxisTitle.Text 
 
 			return  axisTitle 
 
@@ -832,13 +792,13 @@ class ExcelChartElementTrendline(ExcelChartElementBase):
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if ElementID == xlTrendline:
+			# Translators: Indicates a trendline in a Microsoft Excel chart.
+			# See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+			text = _("trendline")
 			if self.excelChartObject.SeriesCollection(arg1).Trendlines(arg2).DisplayEquation    or self.excelChartObject.SeriesCollection(arg1).Trendlines(arg2).DisplayRSquared:
-				trendlineText = unicode( self.excelChartObject.SeriesCollection(arg1).Trendlines(arg2).DataLabel.Text ).encode("utf-8").replace("\xc2\xb2" , _( " square " ) )
-				# Translators: Prompt for trendline with equation or r square
-				return  _( " trendline {} ").format( trendlineText ) 
-			else:
-				# Translators: Prompt for trendline without equation or r square
-				return _( "Trendline" ) 
+				# Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
+				text += " " + self.excelChartObject.SeriesCollection(arg1).Trendlines(arg2).DataLabel.Text.replace(u"²", _( " squared " ) )
+			return text
 
 class ExcelChartElementChartTitle(ExcelChartElementBase):
 
@@ -848,10 +808,10 @@ class ExcelChartElementChartTitle(ExcelChartElementBase):
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if ElementID == xlChartTitle:
 			if self.excelChartObject.HasTitle:
-				# Translators: Prompt for chart title
-				return _( "Chart Title equals {}").format ( self.excelChartObject.ChartTitle.Text )
+				# Translators: Details about a chart title in Microsoft Excel.
+				return _( "Chart title: {chartTitle}").format ( chartTitle = self.excelChartObject.ChartTitle.Text )
 			else:
-				# Translators: Prompt for chart title when the title is not available
+				# Translators: Indicates an untitled chart in Microsoft Excel.
 				return _( "Untitled chart" )
 
 class ExcelChartElementChartArea(ExcelChartElementBase):
@@ -862,10 +822,10 @@ class ExcelChartElementChartArea(ExcelChartElementBase):
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if ElementID == xlChartArea:
 			if reportExtraInfo:
-				# Translators: Prompt for chart area with dimentions
-				return _( "Chart area height equals {}, width equals {}, top equals {}, left equals {}").format ( self.excelChartObject.ChartArea.Height , self.excelChartObject.ChartArea.Width , self.excelChartObject.ChartArea.Top , self.excelChartObject.ChartArea.Left)
+				# Translators: Details about the chart area in a Microsoft Excel chart.
+				return _( "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: {chartAreaTop}, left: {chartAreaLeft}").format ( chartAreaHeight = self.excelChartObject.ChartArea.Height , chartAreaWidth = self.excelChartObject.ChartArea.Width , chartAreaTop = self.excelChartObject.ChartArea.Top , chartAreaLeft = self.excelChartObject.ChartArea.Left)
 			else:
-				# Translators: Prompt for chart area 
+				# Translators: Indicates the chart area of a Microsoft Excel chart.
 				return _( "Chart area ")
 
 class ExcelChartElementPlotArea(ExcelChartElementBase):
@@ -876,12 +836,12 @@ class ExcelChartElementPlotArea(ExcelChartElementBase):
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if ElementID == xlPlotArea:
 			if reportExtraInfo:
-			# useing {:.0f} to remove fractions
-				# Translators: Prompt for plot area with inner dimentions
-				return _( "Plot Area inside height equals {:.0f}, inside width equals {:.0f}, inside top equals {:.0f}, inside left equals {:.0f}").format ( self.excelChartObject.PlotArea.InsideHeight , self.excelChartObject.PlotArea.InsideWidth , self.excelChartObject.PlotArea.InsideTop , self.excelChartObject.PlotArea.InsideLeft )
+				# useing {:.0f} to remove fractions
+				# Translators: Details about the plot area of a Microsoft Excel chart.
+				return _( "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: {plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: {plotAreaInsideLeft:.0f}").format ( plotAreaInsideHeight = self.excelChartObject.PlotArea.InsideHeight , plotAreaInsideWidth = self.excelChartObject.PlotArea.InsideWidth , plotAreaInsideTop = self.excelChartObject.PlotArea.InsideTop , plotAreaInsideLeft = self.excelChartObject.PlotArea.InsideLeft )
 			else:
-				# Translators: Prompt for plot area 
-				return _( "Plot Area " )
+				# Translators: Indicates the plot area of a Microsoft Excel chart.
+				return _( "Plot area " )
 
 class ExcelChartElementLegend(ExcelChartElementBase):
 
@@ -891,10 +851,11 @@ class ExcelChartElementLegend(ExcelChartElementBase):
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if ElementID == xlLegend:
 			if self.excelChartObject.HasLegend:
-			# Translators: Prompt for Legend
+				# Translators: Indicates the legend in a Microsoft Excel chart.
+				# See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 				return _( "Legend" ) 
 			else:
-			# Translators: Prompt for Legend when no legend is present
+				# Translators: Indicates that there is no legend in a Microsoft Excel chart.
 				return _( "No legend" )
 
 class ExcelChartElementLegendEntry(ExcelChartElementBase):
@@ -904,8 +865,9 @@ class ExcelChartElementLegendEntry(ExcelChartElementBase):
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if ElementID == xlLegendEntry:
-			# Translators: Prompt for Legend entry for series name index of count
-			return _( "Legend entry for Series {}, {} of {}").format( self.excelChartObject.SeriesCollection(arg1).Name , arg1 , self.excelChartObject.SeriesCollection().Count ) 
+			# Translators: Details about a legend entry for a series in a Microsoft Excel chart.
+			# For example, this might report "Legend entry for series Temperature 1 of 2"
+			return _( "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}").format( seriesName = self.excelChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.excelChartObject.SeriesCollection().Count ) 
 
 class ExcelChartElementLegendKey(ExcelChartElementBase):
 
@@ -914,7 +876,7 @@ class ExcelChartElementLegendKey(ExcelChartElementBase):
 
 	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
 		if ElementID == xlLegendKey:
-			# Translators: Prompt for Legend key for series name index of count
-			return _( "Legend key for Series {} {} of {}").format( self.excelChartObject.SeriesCollection(arg1).Name , arg1 , self.excelChartObject.SeriesCollection().Count )
-
-
+			# Translators: Details about a legend key for a series in a Microsoft Excel chart.
+			# For example, this might report "Legend key for series Temperature 1 of 2"
+			# See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+			return _( "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}").format( seriesName = self.excelChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.excelChartObject.SeriesCollection().Count )
