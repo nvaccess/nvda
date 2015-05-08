@@ -285,8 +285,8 @@ NVDA omogućuje korištenje sljedećih prečaca u svezi sa kursorom sustava:
 | Čitaj sve | NVDA+strelicaDolje | NVDA+a | čita od trenutne pozicije kursora sustava, pomičući ga kako on doista ide |
 | Pročitaj trenutni redak | NVDA+strelicaGore | NVDA+l | čita trenutni redak gdje je kursor sustava pozicioniran. Kad se pritisne dvaput, NVDA slovka taj redak. |
 | Čitaj trenutno označeni tekst | NVDA+Shift+strelicaGore | NVDA+shift+s | čita bilo koji trenutno označen tekst |
-| slijedećaRečenica | alt+strelicaDolje | alt+strelicaDolje | Premješta kursor na slijedeću rečenicu, a potom ju izgovara. (podržano samo u Microsoft Wordu) |
-| prethodnaRečenica | alt+strelicaGore | alt+strelicaGore | Premješta kursor na prethodnu rečenicu, a potom ju izgovara. (podržano samo u Microsoft Wordu) |
+| slijedeća rečenica | alt+Strelicadolje | alt+StrelicaDolje | Premješta kursor na slijedeću rečenicu a potom je izgovara. (podržano samo u microsoft wordu) |
+| prethodna rečenica | alt+StrelicaGore | alt+StrelicaGore | premješta kursor na prethodnu rečenicu a potom je izgovara. (Podržano samo u microsoft wordu) |
 
 
 Kad ste unutar tablice, sljedeći prečaci su također dostupni:
@@ -442,7 +442,7 @@ Iako bi se za navigaciju mišem trebao koristiti miš ili trackpad, NVDA ima nek
 
 + Način pregleda +
 Kompleksni dokumenti koji su samo za čitanje kao na primjer web stranice uz pomoć NVDA pregledavaju se koristeći način pregleda.
-Ovo uključuje dokumente u Mozilla Firefoxu, Microsoft Internet Exploreru, poruke prikazane kao HTML u Microsoft Outlooku, Google Chromeu, Adobe Readeru i Adobe Flashu.
+Ovo uključuje dokumente u Mozilla Firefoxu, Microsoft Internet Exploreru, Mozilla Thunderbirdu, html poruke u Microsoft Outlooku, Google Chromeu, Adobe Readeru i Adobe Flashu.
 Također, način pregleda je neobavezno dostupan u microsoft word dokumentima.
 
 U načinu pregleda, html dokument je dostupan u virtualnom pregledu koji omogućuje navigaciju pomoću kursorskih tipaka kao da je to običan tekstualni dokument.
@@ -497,6 +497,7 @@ Sljedeće tipke služe da bi se prešlo na idući dostupni element, dodavanjem s
 - d: orjentir
 - o: ugrađeni objekt
 - 1 do 6: naslovi od 1 do 6
+- a: zabilješka (komentar, revizija urednika, itd.)
 -
 Da biste se prebacivali na početak ili kraj sadržaja popisa kao što su popisi ili tablice:
 || Naziv | Prečac | opis |
@@ -505,13 +506,14 @@ Da biste se prebacivali na početak ili kraj sadržaja popisa kao što su popisi
 %kc:endInclude
 
 ++ Lista elemenata ++
-Lista elemenata omogućuje pristup listi linkova, naslova ili orjentira u dokumentu.
-Izborni gumbi vam omogućuju prebacivanje između te  tri vrste prikaza elemenata.
-U dijaloškom okviru također postoji polje za uređivanje koje omogućuje filtriranje liste da bi vam pomoglo u traženju kontkretne stavke na stranici.
+Lista elemenata prikazuje razne vrste elemenata, što ovisi od aplikacije do aplikacije.
+Na primjer, u web preglednicima, lista elemenata može popisivati linkove, naslove ili orijentire.
+Izborni vam gumbi omogućuju prebacivanje između više vrsta elemenata.
+U dijaloškom okviru također postoji polje za uređivanje koje omogućuje filtriranje liste kako bi vam pomoglo u traženju konkretne stavke na stranici.
 Jednom kad ste odabrali stavku, možete koristiti ponuđene gumbe u dijaloškom okviru da se pomaknete na, ili aktivirate element.
 %kc:beginInclude
 || Naziv | Prečac | Opis |
-| popis elemenata u načinu pregleda | NVDA+f7 | Prikazuje listu elemenata koja sadrži linkove, naslove i orjentire u trenutnom dokumentu |
+| lista elemenata u načinu pregleda | NVDA+f7 | popisuje raznovrsne tipove elemenata u trenutnom dokumentu |
 %kc:endInclude
 
 ++ ugrađeni objekti ++
@@ -524,6 +526,42 @@ Dostupan je prečac koji služi za vraćanje na izvornu stranicu koja sadrži ta
 || Naziv | Prečac | Opis |
 | Prebaci se na dokument sadržaja u načinu pregleda | NVDA+kontrol+razmak | pomiće kursor iz ugrađenog objekta u dokument koji ga sadrži |
 %kc:endInclude
+
++ Čitanje matematičkog sadržaja +
+Koristeći MathPlayer4 tvrtke Design Science, NVDA može čitati i istovremeno biti u interakciji sa podržanim matematičkim sadržajem.
+Ovo zahtjeva instaliranu kopiju MathPlayera na vašem računalu.
+MathPlayer je dostupan za besplatno preuzimanje sa adrese: http://www.dessci.com/en/products/mathplayer/
+
+NVDA podržava slijedeće vrste matematičkog sadržaja:
+- MathML u Mozilla Firefoxu i Microsoft Internet Exploreru.
+- Design Science MathType u Microsoft Wordu i PowerPointu.
+- MathML u Adobe Readeru. Imajte na umu da ovo još uvijek nije službeni standard, dakle, ne postoji javno dostupan softver kojim se može izrađivati ovakav sadržaj.
+-
+
+Dok čitate dokument, NVDA će izgovarati bilo koji podržani matematički sadržaj gdje se pojavi.
+Ako koristite brajični redak, taj će sadržaj biti prikazan na brajičnom retku.
+
+++ Interactive Navigation ++
+If you are working primarily with speech, in most cases, you will probably wish to examine the expression in smaller segments, rather than hearing the entire expression at once.
+
+If you are in browse mode, you can do this by moving the cursor to the mathematical content and pressing enter.
+
+If you are not in browse mode:
++ move the review cursor to the mathematical content.
+By default, the review cursor follows the system caret, so you can usually use the system caret to move to the desired content.
++ Then, activate the following command:
++
+
+%kc:beginInclude
+|| Name | Key | Description |
+| Interact with math content | NVDA+alt+m | Begins interaction with math content. |
+%kc:endInclude
+
+At this point, you can use MathPlayer commands such as the arrow keys to explore the expression.
+For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
+Please see the MathPlayer documentation for further information.
+
+When you wish to return to the document, simply press the escape key.
 
 + Tipkovnički prečaci namjenjeni za specifične aplikacije +
 NVDA u sebi ima svoje dodatne prečace za neke aplikacije da bi neke zadatke učinili lakšim ili da omoguće pristup nekim funkcionalnostima koje inače nisu pristupačne korisnicima čitača zaslona.
@@ -542,6 +580,7 @@ NVDA u sebi ima svoje dodatne prečace za neke aplikacije da bi neke zadatke uč
 | Postavi zaglavlja stupaca | NVDA+shift+c | kad jednom pritisnete ovu tipku NVDA zna da je to prvo zaglavlje čelije u retku koje sadrži zaglavlja stupaca koja automatski trebaju biti pročitana kad se krećete po stupcima ispod toga retka. Kad se pritisne dvaput, postavka će biti obrisana. | 
 | Postavi zaglavlja redaka | NVDA+shift+r | Kad se jednom pritisne NVDA zna da je to prva ćelija zaglavlja u stupcu koja sadrži zaglavlja redaka koja se trebaju automatski pročitati kad se mićete po retcima poslije tog stupca. Kad se pritisne dvaput, postavke se brišu. | 
 | Izgovori komentare | NVDA+alt+c | Izgovara komentar na trenutnoj ćeliji ako postoji. |
+| lista elemenata | NVDA+f7 | Otvara dijalloški okvir popisa elemenata u kojem su prikazani grafovi, ćelije sa komentarima ili ćelije sa formulama. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -795,6 +834,18 @@ Također, brajični će se redak točnije pomicati po odlomcima.
 To znači da ne morate svaki put pomicati brajični redak na kraj svakog retka, čak i kad više teksta ne stane na brajični redak.
 Ova opcija vam može omogućiti tečnije čitanje veće količine teksta.
 Ova je opcija zadano isključena.
+
+==== Izbjegni rastavljanje riječi kada je to moguće ====
+Ako je ova opcija omogućena, riječ koja je prevelika da bi stala na brajični redak neće biti rastavljena.
+Umjesto toga, do kraja brajičnog retka ostat će prazno mjesto na kojem se znakovi neće prikazivati.
+kada pomaknete brajični redak za jedan redak prema gore, moći ćete pročitati cijelu riječ.
+Ponekada se ova opcija naziva i rastavljanje /prelamanje riječi.
+Imajte na umu da ako cijela riječ sama po sebi ne može stati na brajičnom retku, ta ista riječ mora biti rastavljena.
+
+Ako je ova opcija onemogućena, bit će prikazan onaj dio riječi koji stane na brajični redak, ali će ostatak biti odrezan.
+Kad pomaknete brajični redak za jedan redak, tada ćete moći pročitati ostatak riječi.
+
+Ako omogućite ovu opciju moći ćete tečnije čitati tekst, ali to povlaći za sobom i više pomicanja brajičnog retka za jednu po jednu liniju teksta.
 
 +++ Postavke tipkovnice (NVDA+kontrol+k) +++
 Ovu opciju možete pronaći u izborniku Postavke, kao stavku "Postavke tipkovnice...".
@@ -1059,6 +1110,7 @@ Možete podesiti izgovor slijedećeg:
 - Citati
 - Orjentiri
 - Okviri
+- klikabilnne elemente
 -
 
 ==== Obavijesti o promjenama oblikovanja poslije kursora ====
@@ -1102,6 +1154,9 @@ Regularni izrazi nisu pokriveni ovim korisničkim vodičem, ali postoji puno tut
 
 +++ Izgovor simbola interpunkcije +++[SymbolPronunciation]
 Ovaj vam dijaloški okvir omogućuje promjenu načina na koji su interpunkcija i drugi simboli izgovoreni, kao i razinu simbola na koji je izgovoren znak.
+
+Jezik za koji se uređuje izgovor simbola će se prikazati u naslovnoj traci dijaloškog okvira.
+Imajte na umu da ovaj dijaloški okvir poštuje opciju "Vjeruj glasu trenutnog jezika prilikom procesiranja interpunkcije i znakova" koja se može pronaći u [Dijaloškom okviru glasovne postavke #VoiceSettings]; tj. kada je ova opcija uključena, koristi se glas tog određenog jezika bolje nego korištenje globalnog jezika.
 
 Da biste promijenili simbol, označite ga u listi simbola.
 Polje zamjena vam omogućuje promjenu onog što će biti izgovoreno umjesto zadane vrijednosti za taj znak.
@@ -1352,7 +1407,7 @@ Ovo poglavlje sadrži informacije o brajičnim retcima koje podržava NVDA.
 ++ Brajični retci Freedom Scientific Focus/PAC Mate ++
 Svi su Focus i PAC Mate brajični retci firme [Freedom Scientific http://www.freedomscientific.com/] podržani kad se spajaju putem USB ili Bluetooth veze.
 Trebat ćete instalirati upravljačke programe za freedom scientific brajične retke.
-Ako ih još uvijek nemate, možete ih preuzeti sa http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Ako ih još uvijek nemate, možete ih preuzeti sa adrese http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Premda se na ovoj stranici govori o focus blue brajičnim recima, Upravljački programi podržavaju sve focus i Pac mate brajične retke.
 Ako koristite 64 bitni sustav windows i neki drugi čitač ekrana je instalirao svoj upravljački program, možda ćete još uvijek trebati instalirati upravljačke programe s ovog linka, jer neke datoteke, koje NVDA zahtjeva, možda nisu instalirane u sustavu kad su ti određeni upravljački programi instalirani.
 
