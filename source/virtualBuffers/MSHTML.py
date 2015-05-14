@@ -22,9 +22,35 @@ import aria
 import config
 import watchdog
 
+FORMATSTATE_INSERTED=1
+FORMATSTATE_DELETED=2
+FORMATSTATE_MARKED=4
+FORMATSTATE_STRONG=8
+FORMATSTATE_EMPH=16
+
 class MSHTMLTextInfo(VirtualBufferTextInfo):
 
 	def _normalizeFormatField(self, attrs):
+		formatState=attrs.get('formatState',"0")
+		formatState=int(formatState)
+		textList=[]
+		if formatState&FORMATSTATE_INSERTED:
+			# Translators: text marked as inserted in HTML.
+			textList.append(_("inserted"))
+		if formatState&FORMATSTATE_DELETED:
+			# Translators: text marked as deleted in HTML.
+			textList.append(_("deleted"))
+		if formatState&FORMATSTATE_MARKED:
+			# Translators: text marked as marked in HTML.
+			textList.append(_("marked"))
+		if formatState&FORMATSTATE_STRONG:
+			# Translators: text marked as strong in HTML.
+			textList.append(_("strong"))
+		if formatState&FORMATSTATE_EMPH:
+			# Translators: text marked as emphasized in HTML.
+			textList.append(_("emphasized"))
+		if textList:
+			attrs['revision']=" ".join(textList)
 		language=attrs.get('language')
 		if language:
 			attrs['language']=languageHandler.normalizeLanguage(language)

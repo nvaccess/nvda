@@ -275,6 +275,7 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, bool isRootNode, IHTMLDOMNode* pHTMLDOMNode,const wstring& lang): VBufStorage_controlFieldNode_t(docHandle,ID,isBlock), language(lang) {
 	nhAssert(backend);
 	nhAssert(pHTMLDOMNode);
+	this->formatState=0;
 	this->backend=backend;
 	this->isRootNode=isRootNode;
 	pHTMLDOMNode->AddRef();
