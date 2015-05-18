@@ -1813,7 +1813,6 @@ Dies sind von links nach rechts:
 - Leertaste
 - Nach rechts springen (RT)
 -
-
 Die Taste RT wird momentan noch nicht verwendet.
 Die inneren Tasten sind als Leertasten belegt.
 
@@ -1838,9 +1837,7 @@ Die folgenden Braillezeilen werden unterstützt:
 - BRAILLEX Tiny, 2D Screen
 -
 
-
-=== Allgemeines ===
-Bedenken Sie, dass diese Braillezeilen nur seriell angeschlossen werden können.
+Beachten Sie, dass diese Braillezeilen nur seriell angeschlossen werden können.
 Hierfür müssen Sie in den Braile-Einstellungen von NVDA den Anschluss angeben, mit dem die Braillezeile verbunden ist.
 
 Einige dieser Braillezeilenmodelle besitzen eine Navigationsleiste, die eine schnelle und intuitive Bedienung ermöglicht.
@@ -1867,43 +1864,26 @@ Im Allgemeinen gibt es auf allen Braillezeilen die folgenden Tasten:
 Die folgenden Befehle sind in NVDA verfügbar:
 
 %kc:beginInclude
-
-
-=== Geräte mit Navigationsleiste ===
+Geräte mit Navigationsleiste
 || Name | Taste |
 | Braillezeile zurückscrollen | Links |
 | Braillezeile vorwärtsscrollen | Rechts |
 | Braillezeile zur vorherigen Zeile bewegen | Auf |
 | Braillezeile zur nächsten Zeile bewegen | Ab |
 | Cursor zum ausgewählten Braille-Modul bewegen | Routingtaste |
-| Aktuelles Zeichen am NVDA-Cursor angeben | L1 |
+| Aktuelles Zeichen am NVDA-Cursor ausgeben | L1 |
 | Aktuelles Navigator-Objekt aktivieren | L2 |
-| Zwischen Flächenmodus und Objektnavigation umschalten | R1 |
 | Titelzeile ausgeben | L1+Auf |
 | Statuszeile ausgeben | L2+Ab |
 | Zum übergeordneten Objekt springen | Auf2 |
 | Zum ersten untergeordneten Objekt springen | Ab2 |
 | Zum vorherigen objekt bewegen | Links2 |
 | Zum nächsten Objekt bewegen | Rechts2 |
-| Textformatierungen angeben | Obere Routingreihe |
+| Textformatierungen ausgeben | Obere Routingreihe |
 
-
-=== BRAILLEX Tiny ===
-Bei der Braillex Tiny sind die von NVDA zurückgegebenen Tastennamen wie folgt den Daumentasten zugeordnet:
-|| Name | Daumentaste |
-| L1 | FN - Funktion |
-| L2 | C - Cursor |
-| Links | LR - Lesen rückwärts |
-| Auf | O - Oben |
-| R2 | H - Home |
-| Ab | U - Unten |
-| Rechts | LV - Lesen vorwärts |
-| R1 | B - Braille |
-| Attribut | A - Attribute |
-
-Folgende NVDA-Befehle sind für diese Braillezeile verfügbar:
+BRAILLEX Tiny
 || Name | Taste |
-| Aktuelles Zeichen am NVDA-Cursor angeben | L1 |
+| Aktuelles Zeichen am NVDA-Cursor ausgeben | L1 |
 | Aktuelles Navigator-Objekt aktivieren | L2 |
 | Braillezeile zurückscrollen | Links |
 | Braillezeile vorwärtsscrollen | Rechts |
@@ -1918,16 +1898,14 @@ Folgende NVDA-Befehle sind für diese Braillezeile verfügbar:
 | Titelzeile der aktuellen Anwendung anzeigen | L1+Auf |
 | Statuszeile anzeigen | L2+Ab |
 
-
-=== BRAILLEX 2D Screen ===
+BRAILLEX 2D Screen
 || Name | Taste |
-| Aktuelles Zeichen am NVDA-Cursor angeben | L1 |
+| Aktuelles Zeichen am NVDA-Cursor ausgeben | L1 |
 | Aktuelles Navigator-Objekt aktivieren | L2 |
 | Kopplung der Braillezeile konfigurieren | R2 |
 | Textformatierungen angeben | ReportF |
 | Braillezeile zur vorherigen Zeile bewegen | Auf |
 | Braillezeile zurückscrollen | Links |
-| Zwischen Flächenmodus und Objektnavigation umschalten | R1 |
 | Braillezeile vorwärtsscrollen | Rechts |
 | Braillezeile zur nächsten Zeile bewegen | Ab |
 | Zum nächsten Objekt bewegen | Links2 |
@@ -1935,8 +1913,6 @@ Folgende NVDA-Befehle sind für diese Braillezeile verfügbar:
 | Zum ersten untergeordneten Objekt bewegen | Ab2 |
 | Zum vorherigen Objekt bewegen | Rechts2 |
 %kc:endInclude
-
-
 
 ++ HumanWare BrailleNote ++
 NVDA unterstützt die BrailleNote-Modelle von [HumanWare http://www.humanware.com] sofern diese als Braillezeilen betrieben werden.
@@ -2006,9 +1982,9 @@ Bitte lesen Sie hierzu die [BRLTTY-Dokumentation für Tastaturtabellen http://mi
 | Cursor zum Braille-Modul ziehen | Routingtaste (Cursor zum Zeichen bewegen) |
 %kc:endInclude
 
-
 + Abkürzungen für Steuerelementtypen und Statusanzeigen in Braille +
 Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende Abkürzungen für Steuerelementtypen und Statusanzeigen festgelegt.
+
 || Abkürzung | Steuerelementtyp |
 | sltr | Schalter |
 | akl | Konbinationsfeld |
@@ -2043,17 +2019,7 @@ Für die folgenden Statusanzeigen wurden ebenfalls Abkürzungen festgelegt:
 | mrk | Wird angezeigt, wenn ein Objekt ausgewählt ist. |
 | #> | Wird angezeigt, wenn ein Objekt ein Untermenü besitzt. |
 
-
 + Erweiterte Themen +
-
-++ Erweiterte Anpassung der Aussprache von Satz- und Sonderzeichen ++
-Es gibt über den [Dialog zur Aussprache von Satz- und Sonderzeichen #SymbolPronunciation] hinaus noch weitere Möglichkeiten, die Aussprache von Satzzeichen zu beeinflussen. Sie können beispielsweise veranlassen, das bestimmte Zeichen unverarbeitet an die Sprachausgabe weitergegeben werden, um die Betonung zu beeinflussen oder Sie können weitere benutzerdefinierte Symbole hinzufügen.
-
-Hierfür müssen Sie die Symboldefinitionsdatei bearbeiten, die sich im Konfigurationsverzeichnis von NVDA des in Windows angemeldeten Benutzers befindet. 
-Der Name der Datei hat das Format "symbols-xx.dic", wobei xx der zweistellige Sprachencode ist.
-Das Format der Datei ist im Entwicklerhandbuch dokumentiert, welches Sie in englischer Sprache im [Abschnitt für Entwickler auf der NVDA-Webseite http://community.nvda-project.org/wiki/Development] finden können.
-Hinweis: Es ist Anwendern jedoch nicht möglich, komplexe Symbole zu definieren.
-
 
 ++ Befehlszeilenoptionen ++[CommandLineOptions]
 Mit Hilfe von Befehlszeilenoptionen können Sie das Verhalten von NVDA beeinflussen.
@@ -2066,19 +2032,15 @@ So können Sie beispielsweise feststellen, ob ein Problem durch eine bestimmte E
 
 Mit dem folgenden Befehl können Sie über den Dialog "ausführen" eine laufende Instanz von NVDA beenden:
 
-```
 nvda -q
-```
 
-Einige Befehlszeilenoptionen besitzen eine kurze und eine Lange Form.
+Einige Befehlszeilenoptionen besitzen eine kurze und eine Lange Form und widerum einige nur eine lange Form..
 Die Kurzformen mehrerer Optionen können beispielsweise wie folgt kombiniert werden:
 | nvda -rm | Dieser Aufruf wird die laufende Instanz von NVDA beenden und eine neue instanz mit deaktivierten Klängen starten. |
 | nvda -rm --disable-addons | Siehe oben; zusätzlich werden alle Erweiterungen deaktiviert |
 
 Einige Optionen akzeptieren zusätzliche Parameter, mit denen Sie z. B. den Umfang der Protokollierung oder den Namen einer Konfigurationsdatei angeben können.
-Die Parameter müssen durch ein Leerzeichen von der Option getrennt angegeben werden, wenn Sie die Kurzform verwenden. Wenn Sie die Langform benutzen, müssen Sie den Parameter mit einem Gleichheitszeichen von der Option trennen.
-
-Beispiele:
+Die Parameter müssen durch ein Leerzeichen von der Option getrennt angegeben werden, wenn Sie die Kurzform verwenden. Wenn Sie die Langform benutzen, müssen Sie den Parameter mit einem Gleichheitszeichen von der Option trennen. Beispiele:
 | nvda -l 10 | Startet NVDA mit der Protokollierungsstufe "Fehlerkorrektur" |
 | nvda --log-file=c:\nvda.log |  Speichert das Protokoll in der Datei c:\nvda.log |
 | nvda --log-level=20 -f c:\nvda.log | Legt die Protokollierungsstufe "Informationen" fest und speichert das Protokoll in der datei c:\nvda.log |
@@ -2099,15 +2061,21 @@ Folgende Kommandozeilenoptionen werden akzeptiert:
 | Keine | --install | Installiert NVDA ohne Ausgabe von Rückmeldungen und startet die neu installierte Version. |
 | keine | --install-silent | Installiert NVDA ohne Ausgabe von Rückmeldungen, startet die Version aber nicht. |
 
+++ Erweiterte Anpassung der Aussprache von Satz- und Sonderzeichen ++
+Es gibt über den [Dialog zur Aussprache von Satz- und Sonderzeichen #SymbolPronunciation] hinaus noch weitere Möglichkeiten, die Aussprache von Satzzeichen zu beeinflussen.
+Sie können beispielsweise veranlassen, das bestimmte Zeichen unverarbeitet an die Sprachausgabe weitergegeben werden, um die Betonung zu beeinflussen oder Sie können weitere benutzerdefinierte Symbole hinzufügen.
+
+Hierfür müssen Sie die Symboldefinitionsdatei bearbeiten, die sich im Konfigurationsverzeichnis von NVDA des in Windows angemeldeten Benutzers befindet. 
+Der Name der Datei hat das Format "symbols-xx.dic", wobei xx der zweistellige Sprachencode ist.
+Das Format der Datei ist im Entwicklerhandbuch dokumentiert, welches Sie in englischer Sprache im [Abschnitt für Entwickler auf der NVDA-Webseite http://community.nvda-project.org/wiki/Development] finden können.
+Hinweis: Es ist Anwendern jedoch nicht möglich, komplexe Symbole zu definieren.
 
 + Weitere Informationen +
-Wenn Sie mehr Informationen oder Hilfe bezüglich NVDA benötigen, besuchen Sie bitte die Homepage unter NVDA_URL.
+Wenn Sie mehr Informationen oder Hilfe bezüglich NVDA benötigen, besuchen Sie bitte die englische Internetseite unter NVDA_URL.
 Dort finden Sie u. a. neben der Community und dem Technischen Support auch die zusätzlichen Dokumentationen.
-
 Diese Seite stellt auch die Informationen zur Weiterentwicklung von NVDA bereit.
 
 + Anhang +
-
 
 ++ Hinweise zu Java ++
 Da es sich bei NVDA um eine 32-Bit-Anwendung handelt, müssen auch 32-Bit-Versionen der Java-Laufzeitumgebung (Java Runtime Enviroment) installiert werden. Seit Java 7 Update 6 ist die Zugänglichkeitsschnittstelle (Access Bridge) fester Bestandteil von Java und muss lediglich aktiviert werden, nachdem die Installation von Java abgeschlossen ist.

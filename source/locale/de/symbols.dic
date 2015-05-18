@@ -13,107 +13,109 @@ complexSymbols:
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
-decimal point	(?<=\d)\,(?=\d)
+decimal point	(?<![^\d -])\,(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥]?\d)
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 date separator	(?<=\d\d)\.(?=\d\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	Punkt	all	always
-! sentence ending	Ausrufezeichen	all	always
-? sentence ending	Fragezeichen	all	always
-; phrase ending	Semikolon	most	always
-: phrase ending	Doppelpunkt	most	always
-decimal point		none	always
-in-word '	Apostroph	all	norep
-negative number	Minus	none	norep
+. sentence ending	Punkt
+! sentence ending	Ausrufezeichen
+? sentence ending	Fragezeichen
+; phrase ending	Semikolon
+: phrase ending	Doppelpunkt
+decimal point	
+in-word '	Apostroph
+negative number	Minus
 date separator		none	always
 
 # Whitespace
-\0	Leer	char	# null
+\0	Leer	# null
 \t	Tab
-\n	Zeilenumbruch	char
-\f	Seitenumbruch	none
-\r	Wagenrücklauf	char
- 	Leerzeichen	char
- 	Geschütztes Leerzeichen	char	# geschütztes Leerzeichen
+\n	Zeilenumbruch
+\f	Seitenumbruch
+\r	Neue Zeile
+ 	Leerzeichen
+ 	Geschütztes Leerzeichen	# geschütztes Leerzeichen
 
 # Standard punctuation/symbols
-!	Ausrufezeichen	all
-"	Anführungszeichen	most
-\#	Nummernzeichen	most
-$	Dollar	all	norep
-£	Pfund	all	norep
-€	Euro	all	norep
-¢	Cents	all	norep
-¥	Yen	all	norep
-%	Prozent	some
-&	Und	some
-'	Apostroph	all
-(	Runde Klammer auf	most
-)	runde Klammer zu	most
-*	Stern	some
-+	Plus	some
-,	Komma	all	always
--	Bindestrich	most
-.	Punkt	some
-/	Schrägstrich	some
-:	Doppelpunkt	most	norep
-;	Semikolon	most
-<	Kleiner Als	most
->	Größer Als	most
-=	Gleichheitszeichen	some
-?	Fragezeichen	all
-@	Ätt	some
-[	Eckige Klammer auf	most
-]	Eckige Klammer zu	most
-\\	Backslash	most
-^	Dach	most
-_	Unterstrich	most
-`	Graav	most
-{	Geschweifte Klammer auf	most
-}	Geschweifte Klammer zu	most
-|	Senkrechter Strich	most
-~	Tilde	most
+!	Ausrufezeichen
+"	Anführungszeichen
+\#	Nummernzeichen
+$	Dollar
+£	Pfund
+€	Euro
+¢	Cents
+¥	Yen
+%	Prozent
+&	Und
+'	Apostroph
+(	Runde Klammer auf
+)	runde Klammer zu
+*	Stern
++	Plus
+,	Komma
+-	Bindestrich
+.	Punkt
+/	Schrägstrich
+:	Doppelpunkt
+;	Semikolon
+<	Kleiner Als
+>	Größer Als
+=	Gleichheitszeichen
+?	Fragezeichen
+@	Ätt
+[	Eckige Klammer auf
+]	Eckige Klammer zu
+\\	Backslash
+^	Dach
+_	Unterstrich
+`	Graav
+{	Geschweifte Klammer auf
+}	Geschweifte Klammer zu
+|	Senkrechter Strich
+~	Tilde
 
 # Other characters
-•	Aufzählungszeichen	some
-…	Punkt Punkt Punkt	all	always
-...	Punkt Punkt Punkt	all	always
-	Aufzählungszeichen	some
-“	Typografisches Anführungszeichen oben	most
-„	Typografisches Anführungszeichen unten	most
-‘	Apostroph links	most
-’	Apostroph rechts	most
-–	Strich	most
-—	Gedankenstrich	most
-●	Kreis	most
-¨	Trema	most
-‎	Pfeil von links nach rechts	char
-‏	Pfeil von rechts nach links	char
-■	Schwarzes Quadrat	some
-▪	schwarzes Quadrat	some
-◾	schwarzes Quadrat	some
-◦	weißes Aufzählungszeichen	some
-➔	Großer rechtsweisender Pfeil	some
-§	Paragraf	all
-°	Grad	some
+•	Aufzählungszeichen
+…	Punkt Punkt Punkt
+...	Punkt Punkt Punkt
+	Aufzählungszeichen
+“	Typografisches Anführungszeichen oben links
+”	Typografisches Anführungszeichen oben rechts
+„	Typografisches Anführungszeichen unten rechts
+‘	Apostroph links
+’	Apostroph rechts
+–	Strich
+—	Gedankenstrich
+●	Kreis
+¨	Trema
+‎	Pfeil von links nach rechts
+‏	Pfeil von rechts nach links
+■	großes Schwarzes ausgefülltes Quadrat
+▪	schwarzes Quadrat
+◾	schwarzes Quadrat
+◦	weißes Aufzählungszeichen
+➔	Großer rechtsweisender Pfeil
+§	Paragraf
+°	Grad
 «	Doppelte gewinkelte Klammer auf
 »	Doppelte gewinkelte Klammer zu
-µ	Mü	some
-¹	Hochgestellte 1	some
-²	Hochgestellte 2	some
-³	Hochgestellte 3	some
-®	Registriertes Warenzeichen	some
-™	Eingetragenes Warenzeichen	some
-©	Copyright	some
-±	Plus Minus	most
-×	Mal	most
-÷	Geteilt durch	most
-←	Pfeil nach links	some
-→	Pfeil nach rechts	some
-✓	Häkchen	some
-✔	Fettes Häkchen	some
+µ	Mü
+¹	Hochgestellte 1
+²	Hochgestellte 2
+³	Hochgestellte 3
+®	Registriertes Warenzeichen
+™	Eingetragenes Warenzeichen
+©	Copyright
+±	Plus Minus
+×	Mal
+÷	Geteilt durch
+←	Pfeil nach links
+→	Pfeil nach rechts
+✓	Häkchen
+✔	Fettes Häkchen
+℃	Grad Celsius	some
