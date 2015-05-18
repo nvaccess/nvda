@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-02 19:04+1000\n"
-"PO-Revision-Date: 2015-05-07 14:46+0200\n"
+"POT-Creation-Date: 2015-05-08 19:04+1000\n"
+"PO-Revision-Date: 2015-05-14 23:05+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -1930,7 +1930,7 @@ msgid "selected %s"
 msgstr "επιλέχθηκε %s"
 
 #. Translators: The word for an unknown control type.
-#. Translators: chart type to be reported when the type is not available
+#. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
 msgstr "άγνωστο"
 
@@ -2053,6 +2053,7 @@ msgid "cell"
 msgstr "κελί"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
+#. Translators: A column in a column chart.
 msgid "column"
 msgstr "στήλη"
 
@@ -2346,7 +2347,7 @@ msgstr "κουμπί αναδυόμενου πλέγματος"
 
 #. Translators: Identifies mathematical content.
 msgid "math"
-msgstr ""
+msgstr "μαθηματικά"
 
 #. Translators: Identifies a grip control.
 msgid "grip"
@@ -2797,9 +2798,8 @@ msgid "Input"
 msgstr "Είσοδος"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "Document formatting"
-msgstr "Μορφοποίηση Εγγράφου"
+msgstr "Μορφοποίηση εγγράφου"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -2966,382 +2966,289 @@ msgstr ""
 "αντιστοιχούν σε συγκεκριμένους χαρακτήρες"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
-#, fuzzy
 msgid "report font name off"
-msgstr "Αναφορά &ονόματος γραμματοσειράς"
+msgstr "απενεργοποίηση αναφοράς ονόματος γραμματοσειράς"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
-#, fuzzy
 msgid "report font name on"
-msgstr "Αναφορά &ονόματος γραμματοσειράς"
+msgstr "ενεργοποίηση αναφοράς ονόματος γραμματοσειράς"
 
 #. Translators: Input help mode message for toggle report font name command.
-#, fuzzy
 msgid "Toggles on and off the reporting of font changes"
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των χαρακτήρων κατά την "
-"πληκτρολόγηση"
+"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των αλλαγών στη γραμματοσειρά"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
-#, fuzzy
 msgid "report font size off"
-msgstr "Αναφορά &μεγέθους γραμματοσειράς"
+msgstr "απενεργοποίηση Αναφοράς μεγέθους γραμματοσειράς"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
-#, fuzzy
 msgid "report font size on"
-msgstr "Αναφορά &μεγέθους γραμματοσειράς"
+msgstr "ενεργοποίηση Αναφοράς μεγέθους γραμματοσειράς"
 
 #. Translators: Input help mode message for toggle report font size command.
-#, fuzzy
 msgid "Toggles on and off the reporting of font size changes"
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των χαρακτήρων κατά την "
-"πληκτρολόγηση"
+"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των αλλαγών στη γραμματοσειρά"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
-#, fuzzy
 msgid "report font attributes off"
-msgstr "Αναφορά &χαρακτηριστικών γραμματοσειράς"
+msgstr "απενεργοποίση αναφοράς χαρακτηριστικών γραμματοσειράς"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
-#, fuzzy
 msgid "report font attributes on"
-msgstr "Αναφορά &χαρακτηριστικών γραμματοσειράς"
+msgstr "ενεργοποίση αναφοράς χαρακτηριστικών γραμματοσειράς"
 
 #. Translators: Input help mode message for toggle report font attributes command.
-#, fuzzy
 msgid "Toggles on and off the reporting of font attributes"
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των χαρακτήρων κατά την "
-"πληκτρολόγηση"
+"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των χαρακτηριστικών της "
+"γραμματοσειράς"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
-#, fuzzy
 msgid "report revisions off"
-msgstr "Αναφορά αναθεωρήσεων &συντάκτη"
+msgstr "απενεργοποίηση αναφοράς αναθεωρήσεων συντάκτη"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
-#, fuzzy
 msgid "report revisions on"
-msgstr "Αναφορά αναθεωρήσεων &συντάκτη"
+msgstr "ενεργοποίηση Αναφοράς αναθεωρήσεων συντάκτη"
 
 #. Translators: Input help mode message for toggle report revisions command.
-#, fuzzy
 msgid "Toggles on and off the reporting of revisions"
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των λέξεων κατά την πληκτρολόγηση"
+"Ενεργοποιεί και απενεργοποιεί την αναφορά των αναθεωρήσεων του συντάκτη"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
-#, fuzzy
 msgid "report colors off"
-msgstr "Αναφορά &χρωμάτων"
+msgstr "απενεργοποίηση αναφοράς χρωμάτων"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
-#, fuzzy
 msgid "report colors on"
-msgstr "Αναφορά &χρωμάτων"
+msgstr "ενεργοποίηση Αναφοράς χρωμάτων"
 
 #. Translators: Input help mode message for toggle report colors command.
-#, fuzzy
 msgid "Toggles on and off the reporting of colors"
-msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των λέξεων κατά την πληκτρολόγηση"
+msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά χρωμάτων"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
-#, fuzzy
 msgid "report alignment off"
-msgstr "Αναφορά &στοίχισης"
+msgstr "απενεργοποίηση αναφοράς στοίχισης"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
-#, fuzzy
 msgid "report alignment on"
-msgstr "Αναφορά &στοίχισης"
+msgstr "ενεργοποίηση αναφοράς στοίχισης"
 
 #. Translators: Input help mode message for toggle report alignment command.
-#, fuzzy
 msgid "Toggles on and off the reporting of text alignment"
-msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των χαρακτήρων κατά την "
-"πληκτρολόγηση"
+msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά στοίχισης"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
-#, fuzzy
 msgid "report style off"
-msgstr "Αναφορά &στυλ"
+msgstr "απενεργοποίση αναφοράς στυλ"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
-#, fuzzy
 msgid "report style on"
-msgstr "Αναφορά &στυλ"
+msgstr "ενεργοποίηση αναφοράς στυλ"
 
 #. Translators: Input help mode message for toggle report style command.
-#, fuzzy
 msgid "Toggles on and off the reporting of style changes"
-msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των χαρακτήρων κατά την "
-"πληκτρολόγηση"
+msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά των αλλαγών στιλ"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
-#, fuzzy
 msgid "report spelling errors off"
-msgstr "Αναφορά ορθογραφικών &λαθών"
+msgstr "απενεργοποίηση αναφοράς ορθογραφικών λαθών"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
-#, fuzzy
 msgid "report spelling errors on"
-msgstr "Αναφορά ορθογραφικών &λαθών"
+msgstr "ενεργοποίηση αναφοράς ορθογραφικών λαθών"
 
 #. Translators: Input help mode message for toggle report spelling errors command.
-#, fuzzy
 msgid "Toggles on and off the reporting of spelling errors"
-msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των λέξεων κατά την πληκτρολόγηση"
+msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά ορθογραφικών λαθών"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
-#, fuzzy
 msgid "report pages off"
-msgstr "Αναφορά &σελίδων"
+msgstr "απενεργοποίηση αναφοράς σελίδων"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
-#, fuzzy
 msgid "report pages on"
-msgstr "Αναφορά &σελίδων"
+msgstr "ενεργοποίηση αναφοράς σελίδων"
 
 #. Translators: Input help mode message for toggle report pages command.
-#, fuzzy
 msgid "Toggles on and off the reporting of pages"
-msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των λέξεων κατά την πληκτρολόγηση"
+msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά σελίδων"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
-#, fuzzy
 msgid "report line numbers off"
-msgstr "Αναφορά &αρίθμησης γραμμών"
+msgstr "απενεργοποίηση αναφοράς αρίθμησης γραμμών"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
-#, fuzzy
 msgid "report line numbers on"
-msgstr "Αναφορά &αρίθμησης γραμμών"
+msgstr "ενεργοποίηση αναφοράς αρίθμησης γραμμών"
 
 #. Translators: Input help mode message for toggle report line numbers command.
-#, fuzzy
 msgid "Toggles on and off the reporting of line numbers"
-msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των λέξεων κατά την πληκτρολόγηση"
+msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά της αρίθμησης γραμμών"
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
-#, fuzzy
 msgid "report line indentation off"
-msgstr "Αναφορά εσοχής &γραμμής"
+msgstr "απενεργοποίηση αναφοράς εσοχής γραμμής"
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
-#, fuzzy
 msgid "report line indentation on"
-msgstr "Αναφορά εσοχής &γραμμής"
+msgstr "ενεργοποίηση αναφοράς εσοχής γραμμής"
 
 #. Translators: Input help mode message for toggle report line indentation command.
-#, fuzzy
 msgid "Toggles on and off the reporting of line indentation"
-msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των λέξεων κατά την πληκτρολόγηση"
+msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά της εσοχής της γραμμής"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
-#, fuzzy
 msgid "report paragraph indentation off"
-msgstr "Αναφορά εσοχής &παραγράφου"
+msgstr "απενεργοποίηση αναφοράς εσοχής παραγράφου"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
-#, fuzzy
 msgid "report paragraph indentation on"
-msgstr "Αναφορά εσοχής &παραγράφου"
+msgstr "ενεργοποίηση αναφοράς εσοχής παραγράφου"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
-#, fuzzy
 msgid "Toggles on and off the reporting of paragraph indentation"
-msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των χαρακτήρων κατά την "
-"πληκτρολόγηση"
+msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά της εσοχής της παραγράφου"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
-#, fuzzy
 msgid "report tables off"
-msgstr "Αναφορά &πινάκων"
+msgstr "απενεργοποίηση αναφοράς πινάκων"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
-#, fuzzy
 msgid "report tables on"
-msgstr "Αναφορά &πινάκων"
+msgstr "ενεργοποίηση αναφοράς πινάκων"
 
 #. Translators: Input help mode message for toggle report tables command.
-#, fuzzy
 msgid "Toggles on and off the reporting of tables"
-msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των λέξεων κατά την πληκτρολόγηση"
+msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά πινάκων"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
-#, fuzzy
 msgid "report table row and column headers off"
-msgstr "Αναφορά &κεφαλίδων της γραμμής/στήλης πίνακα"
+msgstr "απενεργοποίηση αναφοράς κεφαλίδων γραμμών και στηλών πίνακα"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
-#, fuzzy
 msgid "report table row and column headers on"
-msgstr "Αναφορά &κεφαλίδων της γραμμής/στήλης πίνακα"
+msgstr "ενεργοποίηση αναφοράς κεφαλίδων γραμμών και στηλών πίνακα"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
-#, fuzzy
 msgid "Toggles on and off the reporting of table row and column headers"
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των χαρακτήρων κατά την "
-"πληκτρολόγηση"
+"Ενεργοποιεί και απενεργοποιεί την αναφορά των κεφαλίδων των γραμμών και των "
+"στηλών των πινάκων"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
-#, fuzzy
 msgid "report table cell coordinates off"
-msgstr "Αναφορά &συντεταγμένων κελιού πίνακα"
+msgstr "απενεργοποίηση αναφοράς συντεταγμένων κελιού πίνακα"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
-#, fuzzy
 msgid "report table cell coordinates on"
-msgstr "Αναφορά &συντεταγμένων κελιού πίνακα"
+msgstr "ενεργοποίηση αναφοράς συντεταγμένων κελιού πίνακα"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
-#, fuzzy
 msgid "Toggles on and off the reporting of table cell coordinates"
 msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των χαρακτήρων κατά την "
-"πληκτρολόγηση"
+"Ενεργοποιεί και απενεργοποιεί την αναφορά των συντεταγμένων του κελιού του "
+"πίνακα"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
-#, fuzzy
 msgid "report links off"
-msgstr "Αναφορά συν&δέσμων"
+msgstr "απενεργοποίηση αναφοράς συνδέσμων"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
-#, fuzzy
 msgid "report links on"
-msgstr "Αναφορά συν&δέσμων"
+msgstr "ενεργοποίηση αναφοράς συνδέσμων"
 
 #. Translators: Input help mode message for toggle report links command.
-#, fuzzy
 msgid "Toggles on and off the reporting of links"
-msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των λέξεων κατά την πληκτρολόγηση"
+msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά συνδέσμων"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
-#, fuzzy
 msgid "report comments off"
-msgstr "Δεν υπάρχουν σχόλια"
+msgstr "απενεργοποίηση αναφορά σχολίων"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
-#, fuzzy
 msgid "report comments on"
-msgstr "Δεν υπάρχουν σχόλια"
+msgstr "ενεργοποίηση αναφοράς σχολίων"
 
 #. Translators: Input help mode message for toggle report comments command.
-#, fuzzy
 msgid "Toggles on and off the reporting of comments"
-msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των λέξεων κατά την πληκτρολόγηση"
+msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά σχολίων"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
-#, fuzzy
 msgid "report lists off"
-msgstr "Αναφορά &λιστών"
+msgstr "απενεργοποίηση αναφοράς λιστών"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
-#, fuzzy
 msgid "report lists on"
-msgstr "Αναφορά &λιστών"
+msgstr "ενεργοποίηση αναφοράς λιστών"
 
 #. Translators: Input help mode message for toggle report lists command.
-#, fuzzy
 msgid "Toggles on and off the reporting of lists"
-msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των λέξεων κατά την πληκτρολόγηση"
+msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά λιστών"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
-#, fuzzy
 msgid "report headings off"
-msgstr "Αναφορά &επικεφαλίδων"
+msgstr "απενεργοποίηση αναφοράς επικεφαλίδων"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
-#, fuzzy
 msgid "report headings on"
-msgstr "Αναφορά &επικεφαλίδων"
+msgstr "ενεργοποίηση αναφοράς επικεφαλίδων"
 
 #. Translators: Input help mode message for toggle report headings command.
-#, fuzzy
 msgid "Toggles on and off the reporting of headings"
-msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των λέξεων κατά την πληκτρολόγηση"
+msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά επικεφαλίδων"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-#, fuzzy
 msgid "report block quotes off"
-msgstr "Αναφορά μπλοκ &παράθεσης"
+msgstr "απενεργοποίηση αναφοράς μπλοκ παράθεσης"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-#, fuzzy
 msgid "report block quotes on"
-msgstr "Αναφορά μπλοκ &παράθεσης"
+msgstr "ενεργοποίηση αναφοράς μπλοκ παράθεσης"
 
 #. Translators: Input help mode message for toggle report block quotes command.
-#, fuzzy
 msgid "Toggles on and off the reporting of block quotes"
-msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των λέξεων κατά την πληκτρολόγηση"
+msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά μπλοκ παράθεσης"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-#, fuzzy
 msgid "report landmarks off"
-msgstr "Αναφορά &οροσήμων"
+msgstr "απενεργοποίηση αναφοράς οροσήμων"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
-#, fuzzy
 msgid "report landmarks on"
-msgstr "Αναφορά &οροσήμων"
+msgstr "ενεργοποίηση αναφοράς οροσήμων"
 
 #. Translators: Input help mode message for toggle report landmarks command.
-#, fuzzy
 msgid "Toggles on and off the reporting of landmarks"
-msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των λέξεων κατά την πληκτρολόγηση"
+msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά οροσήμων"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
-#, fuzzy
 msgid "report frames off"
-msgstr "Αναφορά &πλαισίων"
+msgstr "απενεργοποίηση αναφοράς πλαισίων"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
-#, fuzzy
 msgid "report frames on"
-msgstr "Αναφορά &πλαισίων"
+msgstr "ενεργοποίηση αναφοράς πλαισίων"
 
 #. Translators: Input help mode message for toggle report frames command.
-#, fuzzy
 msgid "Toggles on and off the reporting of frames"
-msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των χαρακτήρων κατά την "
-"πληκτρολόγηση"
+msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά πλαισίων"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
-#, fuzzy
 msgid "report if clickable off"
-msgstr "Αναφορά αν δύναται να γίνει κλικ"
+msgstr "απενεργοποίηση αναφοράς αν δύναται να γίνει κλικ"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
-#, fuzzy
 msgid "report if clickable on"
-msgstr "Αναφορά αν δύναται να γίνει κλικ"
+msgstr "ενεργοποίηση αναφοράς αν δύναται να γίνει κλικ"
 
 #. Translators: Input help mode message for toggle report if clickable command.
-#, fuzzy
 msgid "Toggles on and off reporting if clickable"
-msgstr ""
-"Ενεργοποιεί και απενεργοποιεί την εκφώνηση των χαρακτήρων κατά την "
-"πληκτρολόγηση"
+msgstr "Ενεργοποιεί και απενεργοποιεί την αναφορά αν δύναται να γίνει κλικ"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -3921,9 +3828,8 @@ msgid "Shows the NVDA voice settings dialog"
 msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων φωνής του NVDA"
 
 #. Translators: Input help mode message for go to braille settings dialog command.
-#, fuzzy
 msgid "Shows the NVDA braille settings dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου των γενικών ρυθμίσεων του NVDA"
+msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων braille του NVDA"
 
 #. Translators: Input help mode message for go to keyboard settings dialog command.
 msgid "Shows the NVDA keyboard settings dialog"
@@ -3934,14 +3840,14 @@ msgid "Shows the NVDA mouse settings dialog"
 msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων ποντικιού του NVDA"
 
 #. Translators: Input help mode message for go to review cursor settings dialog command.
-#, fuzzy
 msgid "Shows the NVDA review cursor settings dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων φωνής του NVDA"
+msgstr ""
+"Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων του δρομέα επανεξέτασης του NVDA"
 
 #. Translators: Input help mode message for go to input composition dialog.
-#, fuzzy
 msgid "Shows the NVDA input composition settings dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων ποντικιού του NVDA"
+msgstr ""
+"Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων της εισόδου κειμένου του NVDA"
 
 #. Translators: Input help mode message for go to object presentation dialog command.
 msgid "Shows the NVDA object presentation settings dialog"
@@ -3960,29 +3866,25 @@ msgid "Shows the NVDA document formatting settings dialog"
 msgstr "Εμφανίζει το παράθυρο διαλόγου της μορφοποίησης εγγράφου του NVDA"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
-#, fuzzy
 msgid "Shows the NVDA default dictionary dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου των γενικών ρυθμίσεων του NVDA"
+msgstr "Εμφανίζει το παράθυρο διαλόγου του προεπιλεγμένου λεξικού του NVDA"
 
 #. Translators: Input help mode message for opening voice-specific dictionary dialog.
-#, fuzzy
 msgid "Shows the NVDA voice-specific dictionary dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων φωνής του NVDA"
+msgstr ""
+"Εμφανίζει το παράθυρο διαλόγου του εξειδικευμένου λεξικού φωνής του NVDA"
 
 #. Translators: Input help mode message for opening temporary dictionary.
-#, fuzzy
 msgid "Shows the NVDA temporary dictionary dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου των ρυθμίσεων πληκτρολογίου του NVDA"
+msgstr "Εμφανίζει το παράθυρο διαλόγου του προσωρινού λεξικού του NVDA"
 
 #. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
-#, fuzzy
 msgid "Shows the NVDA symbol pronunciation dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου του συνθέτη φωνής του NVDA"
+msgstr "Εμφανίζει το παράθυρο διαλόγου της προφοράς συμβόλων του NVDA"
 
 #. Translators: Input help mode message for go to input gestures dialog command.
-#, fuzzy
 msgid "Shows the NVDA input gestures dialog"
-msgstr "Εμφανίζει το παράθυρο διαλόγου του συνθέτη φωνής του NVDA"
+msgstr "Εμφανίζει το παράθυρο διαλόγου των χειρονομιών εισόδου του NVDA"
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
@@ -4007,22 +3909,24 @@ msgid ""
 "Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
 "for NVDA"
 msgstr ""
+"Ενεργοποιεί το διαχειριστή πρόσθετων του NVDA για να εγκαθιστά και να "
+"απεγκαθιστά πακέτα πρόσθετων για το NVDA"
 
 #. Translators: The message announced when disabling speech viewer.
-#, fuzzy
 msgid "speech viewer disabled"
-msgstr "Προβολέας εκφώνησης"
+msgstr "απενεργοποίηση προβολέα εκφώνησης"
 
 #. Translators: The message announced when enabling speech viewer.
-#, fuzzy
 msgid "speech viewer enabled"
-msgstr "Προβολέας εκφώνησης"
+msgstr "ενεργοποίηση προβολέα εκφώνησης"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
 "Toggles the NVDA Speech viewer, a floating window that allows you to view "
 "all the text that NVDA is currently speaking"
 msgstr ""
+"Πραγματοποιεί εναλλαγή του προβολέα φωνής του NVDA, ένα κινούμενο παράθυορ "
+"που σας επιτρέπει να βλέπετε το κείμενο που εκφωνεί το NVDA"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
@@ -4182,11 +4086,11 @@ msgstr "Εμφανίζει το παράθυρο διαλόγου των Προ�
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
 msgid "Not math"
-msgstr ""
+msgstr "όχι μαθηματικά"
 
 #. Translators: Describes a command.
 msgid "Begins interaction with math content"
-msgstr ""
+msgstr "Αρχίζει αλληλεπίδραση με μαθηματικό περιεχόμενο"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -7444,12 +7348,12 @@ msgstr ""
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
-msgstr ""
+msgstr "Έξοδος από αλληλεπίδραση με μαθηματικά"
 
 #. Translators: Reported when the user attempts math interaction
 #. but math interaction is not supported.
 msgid "Math interaction not supported."
-msgstr ""
+msgstr "Δεν υποστηρίζεται αλληλεπίδραση με μαθηματικά."
 
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
@@ -7579,7 +7483,7 @@ msgstr "προεπιλεγμένο χρώμα"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr ""
+msgstr "Παρουσιάζει μια λίστα γραφημάτων, κελιά με σχόλια και κελιά με τύπους"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -7679,542 +7583,641 @@ msgstr "Επεξεργασία σχολίου για {address}"
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} έως {lastAddress} {lastContent}"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Area"
 msgstr "Περιοχή 3D"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Area"
 msgstr "Σωρευμένη Περιοχή 3D"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Area"
 msgstr "Σωρευμένη Περιοχή 100 τοις εκατό"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Bar"
 msgstr "Ράβδος Τμημάτων 3D"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Bar"
 msgstr "Σωρευμένη Ράβδος 3D"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Bar"
 msgstr "Σωρευμένη Ράβδος 3D 100 τοις εκατό"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Column"
 msgstr "Στήλη 3D"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Column"
 msgstr "Στήλη Τμημάτων 3D"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Column"
 msgstr "Σωρευμένη Στήλη 3D"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Column"
 msgstr "Σωρευμένη Στήλη 3D 100 τοις εκατό"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Line"
 msgstr "Γραμμή 3D"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Pie"
 msgstr "Πίτα 3D"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded 3D Pie"
 msgstr "Πίτα Με Απομακρυσμένα Τμήματα 3D"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Area"
 msgstr "Περιοχή"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Area"
 msgstr "Σωρευμένη Περιοχή"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Clustered Bar"
 msgstr "Ράβδος Τμημάτων"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bar of Pie"
 msgstr "Ράβδος Από Πίτα"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Bar"
 msgstr "Σωρευμένη Ράβδος"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Bar"
 msgstr "Σωρευμένη Ράβδος 100 τοις εκατό"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bubble"
 msgstr "Φυσαλίδα"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bubble with 3D effects"
 msgstr "Φυσαλίδα Με Εφέ 3D"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Clustered Column"
 msgstr "Στήλη Τμημάτων"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Column"
 msgstr "Σωρευμένη Στήλη"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Column"
 msgstr "Σωρευμένη Στήλη 100 τοις εκατό"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cone Bar"
 msgstr "Σύμπλεγμα Κωνικών Ράβδων"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cone Bar"
 msgstr "Σωρευμένη Κωνική Ράβδος"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cone Bar"
 msgstr "Σωρευμένη Κωνική Ράβδος 100 τοις εκατό"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cone Column"
 msgstr "Κωνική Στήλη 3D"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cone Column"
 msgstr "Σύμπλεγμα Κωνικής Στήλης"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cone Column"
 msgstr "Σωρευμένη Κωνική Στήλη"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cone Column"
 msgstr "Σωρευμένη Κωνική Στήλη 100 τοις εκατό"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cylinder Bar"
 msgstr "Σύμπλεγμα Κυλινδρικών Ράβδων"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cylinder Bar"
 msgstr "Σωρευμένη Κυλινδρική Ράβδος"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cylinder Bar"
 msgstr "Σωρευμένη Κυλινδρική Ράβδος 100 τοις εκατό"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cylinder Column"
 msgstr "Κυλινδρική Στήλη 3D"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cylinder Column"
 msgstr "Σωρευμένη Κυλινδρική Στήλη 100 τοις εκατό"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Doughnut"
 msgstr "Δακτύλιος"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded Doughnut"
 msgstr "Δακτύλιος Με Απομακρυσμένα Τμήματα"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line"
 msgstr "Γραμμή"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line with Markers"
 msgstr "Γραμμή Με Δείκτες"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line with Markers"
 msgstr "Σωρευμένη Γραμμή Με Δείκτες"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line with Markers"
 msgstr "Σωρευμένη Γραμμή Με Δείκτες 100 τοις εκατό"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line"
 msgstr "Σωρευμένη Γραμμή"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line"
 msgstr "Σωρευμένη Γραμμή 100 τοις εκατό"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Pie"
 msgstr "Πίτα"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded Pie"
 msgstr "Πίτα Με Απομακρυσμένα Τμήματα"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Pie of Pie"
 msgstr "Πίτα Από Πίτα"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Pyramid Bar"
 msgstr "Σύμπλεγμα Πυραμιδικής Ράβδου"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Pyramid Bar"
 msgstr "Σωρευμένη Πυραμιδική Ράβδος"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Bar"
 msgstr "Σωρευμένη Πυραμιδική Ράβδος 100 τοις εκατό"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Pyramid Column"
 msgstr "Πυραμιδική Στήλη 3D"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Pyramid Column"
 msgstr "Σύμπλεγμα Πυραμιδικής Στήλης"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Pyramid Column"
 msgstr "Σωρευμένη Πυραμιδική Στήλη"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Column"
 msgstr "Σωρευμένη Πυραμιδική Στήλη 100 τοις εκατό"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Radar"
 msgstr "Αραχνοειδές"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Filled Radar"
 msgstr "Αραχνοειδές Με Γέμισμα"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Radar with Data Markers"
 msgstr "Αραχνοειδές Με Δείκτες Δεδομένων"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "High-Low-Close"
 msgstr "Ανώτερη-Κατώτερη-Κλεισίματος"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Open-High-Low-Close"
 msgstr "Ανοίγματος-Ανώτερη-Κατώτερη-Κλεισίματος"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-High-Low-Close"
 msgstr "Όγκος-Ανώτερη-Κατώτερη-Κλεισίματος"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-Open-High-Low-Close"
 msgstr "Όγκος-Ανοίγματος-Ανώτερη-Κατώτερη-Κλεισίματος"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface"
 msgstr "Επιφάνεια 3D"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Surface (Top View)"
 msgstr "Επιφάνεια (Προβολή Κορυφής)"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Surface (Top View wireframe)"
 msgstr "Επιφάνεια (Γραμμικό Περίγραμμα Προβολής Κορυφής)"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface (wireframe)"
 msgstr "Επιφάνεια 3D (Περίγραμμα)"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter"
 msgstr "Διασπορά"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Lines"
 msgstr "Διασπορά Με Γραμμές"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Lines and No Data Markers"
 msgstr "Διασπορά Με Γραμμές Χωρίς Δείκτες Δεδομένων"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Smoothed Lines"
 msgstr "Διασπορά Με Ομαλές Γραμμές"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "Διασπορά Με Ομαλές Γραμμές Χωρίς Δείκτες Δεδομένων"
 
-#. Translators: prompt for chart title and chart type to be reported
-msgid "Chart title equals {chartTitle} type equals {chartType}"
-msgstr "Τίτλος γραφήματος ισούται με {chartTitle} τύπος ισούται με {chartType}"
+#. Translators: Message reporting the title and type of a chart.
+msgid "Chart title: {chartTitle}, type: {chartType}"
+msgstr "Τίτλος γραφήματος: {chartTitle}, τύπος: {chartType}"
 
-#, python-format
-msgid "%s"
-msgstr "%s"
-
-#. Translators: Axis title to be reported when the title is not available
+#. Translators: Reported when there is no title for an axis in a chart.
 msgid "Not defined"
 msgstr "Δεν έχει οριστεί"
 
-#. Translators: Chart Axis types
-#. Translators: axis type
+#. Translators: A type of axis in a chart.
+#. Translators: The category axis in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Category"
 msgstr "Κατηγορία"
 
-#. Translators: axis type
+#. Translators: A type of axis in a chart.
+#. Translators: The value axis in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Value"
 msgstr "Τιμή"
 
-#. Translators: axis type
+#. Translators: A type of axis in a chart.
+#. Translators: The series axis in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Series"
 msgstr "Σειρά"
 
-#. Translators: Prompt for axis title and axis type to be reported
+#. Translators: Message reporting the type and title of an axis in a chart.
+#. For example, this might report "Category axis is month"
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "{axisName} Άξονας είναι {axisTitle}"
 
-#. Translators: Number of series when there is only one series
-#, python-format
-msgid "There is %d series in this chart"
-msgstr "Υπάρχει %d σειρά στο διάγραμμα"
+#. Translators: Indicates that there is 1 series in a chart.
+msgid "There is 1 series in this chart"
+msgstr "Υπάρχει 1 σειρά στο διάγραμμα"
 
-#. Translators: Number of series when there are multiple series
+#. Translators: Indicates the number of series in a chart where there are multiple series.
 #, python-format
 msgid "There are total %d series in this chart"
 msgstr "Υπάρχουν %d σειρές σε αυτό το γράφημα"
 
-#. Translators: prompt to be reported when there is no series
+#. Translators: Specifies the number and name of a series when listing series in a chart.
+msgid "series {number} {name}"
+msgstr "σειρά {number} {name}"
+
+#. Translators: Indicates that there are no series in a chart.
 msgid "No Series defined."
 msgstr "Δεν έχει οριστεί σειρά"
 
-#. Translators: Chart segment such as slice for  pie chart etc this is reported when there is no segment available.
+#. Translators: A slice in a pie chart.
+msgid "slice"
+msgstr "κομμάτι"
+
+#. Translators: A data point in a line chart.
+msgid "data point"
+msgstr "σημείο δεδομένων"
+
+#. Translators: A segment of a chart for charts which don't have a specific name for segments.
 msgid "item"
 msgstr "στοιχείο"
 
-msgid "Series color: {} "
-msgstr "Χρώμα Σειράς: {} "
+msgid "Series color: {colorName} "
+msgstr "Χρώμα σειράς: {colorName} "
 
 # to be checked
-#. Translators: prompt for xlDisplayUnitLabel
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Display Unit Label"
 msgstr "Εμφάνιση Ετικέτας Μονάδας"
 
-#. Translators: prompt for xlMajorGridlines
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Major Gridlines"
 msgstr "Κύριες Γραμμές Πλέγματος"
 
-#. Translators: prompt for xlMinorGridlines
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Minor Gridlines"
 msgstr "Δευτερεύουσες Γραμμές Πλέγματος"
 
-#. Translators: prompt for xlPivotChartDropZone
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Pivot Chart Drop Zone"
 msgstr "Συγκεντρωτικό Γράφημα Ζώνης Απόθεσης"
 
-#. Translators: prompt for xlPivotChartFieldButton
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Pivot Chart Field Button"
 msgstr "Συγκεντρωτικό Γράφημα Κουμπιού Πεδίου"
 
-#. Translators: prompt for xlDownBars
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Down Bars"
 msgstr "Κάτω Ράβδοι"
 
-#. Translators: prompt for xlDropLines
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Drop Lines"
 msgstr "Γραμμές Ύψους"
 
-#. Translators: prompt for xlHiLoLines
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Hi Lo Lines"
 msgstr "Ανώτερες Κατώτερες Γραμμές"
 
-#. Translators: prompt for xlRadarAxisLabels
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Radar Axis Labels"
 msgstr "Ετικέτες Άξονα Αραχνοειδούς"
 
-#. Translators: prompt for xlSeriesLines
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Series Lines"
 msgstr "Γραμμές Σειρών"
 
-#. Translators: prompt for xlUpBars
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Up Bars"
 msgstr "Άνω Ράβδοι"
 
-#. Translators: prompt for xlCorners
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Corners"
 msgstr "Γωνίες"
 
-#. Translators: prompt for xlDataTable
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Data Table"
 msgstr "Πίνακας Δεδομένων"
 
-#. Translators: prompt for xlFloor
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Floor"
 msgstr "Δάπεδο"
 
-#. Translators: prompt for xlNothing
-msgid "xlNothing"
-msgstr "xlNothing"
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Nothing"
+msgstr "Τίποτα"
 
-#. Translators: prompt for xlWalls
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Walls"
 msgstr "Τοίχοι"
 
-#. Translators: prompt for xlDataLabel
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Data Label"
 msgstr "Ετικέτα Δεδομένων"
 
-#. Translators: prompt for xlErrorBars
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Error Bars"
 msgstr "Γραμμές Σφάλματος"
 
-#. Translators: prompt for xlXErrorBars
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "X Error Bars"
 msgstr "X Γραμμές Σφάλματος"
 
-#. Translators: prompt for xlYErrorBars
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Y Error Bars"
 msgstr "Y Γραμμές Σφάλματος"
 
-#. Translators: prompt for xlShape
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Shape"
 msgstr "Σχήμα"
 
-#. Translators: Prompt for series details in the format: Name series index of count
-msgid "{} Series {} of {}"
-msgstr "{} Σειρά {} από {}"
+#. Translators: Details about a series in a chart.
+#. For example, this might report "foo series 1 of 2"
+msgid "{seriesName} series {seriesIndex} of {seriesCount}"
+msgstr "{seriesName} σειρά {seriesIndex} από {seriesCount}"
 
-#. Translators: for line charts, no change from the previous element
-msgid "no change from point {}, "
-msgstr "καμία αλλαγή σημείου σχεδίασης {}, "
+#. Translators: For line charts, indicates no change from the previous data point on the left
+msgid "no change from point {previousIndex}, "
+msgstr "καμία αλλαγή από σημείο {previousIndex}, "
 
-#. Translators: for line charts, increase from the previous element
-msgid "Increased by {} from point {}, "
-msgstr "αυξημένο κατά {} από σημείο {}, "
+#. Translators: For line charts, indicates an increase from the previous data point on the left
+msgid "Increased by {incrementValue} from point {previousIndex}, "
+msgstr "Αυξημένο κατά {incrementValue} από σημείο {previousIndex}, "
 
-#. Translators: for line charts, decrease from the previous element
-msgid "decreased by {} from point {}, "
-msgstr "μειωμένο κατά {} από σημείο {}, "
+#. Translators: For line charts, indicates a decrease from the previous data point on the left
+msgid "decreased by {decrementValue} from point {previousIndex}, "
+msgstr "μειωμένο κατά {decrementValue} από σημείο {previousIndex}, "
 
-#. Translators: report category axis title if available in the format title value
-msgid "{} {}: "
-msgstr "{} {}: "
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+msgid "{categoryAxisTitle} {categoryAxisData}: "
+msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
-#. Translators: report category axis title as Category if axis title is not available in the format "category" value
-msgid "Category {}: "
-msgstr "Κατηγορία {}: "
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+msgid "Category {categoryAxisData}: "
+msgstr "Κατηγορία {categoryAxisData}: "
 
-#. Translators: report value axis title if available in the format title value
-msgid "{} {}"
-msgstr "{} {}"
+#. Translators: Specifies the value of a data point.
+#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+msgid "{valueAxisTitle} {valueAxisData}"
+msgstr "{valueAxisTitle} {valueAxisData}"
 
-#. Translators: report value axis title as value if axis title is not available in the format "Value" value
-msgid "value {}"
-msgstr "τιμή {}"
+#. Translators: Specifies the value of a data point.
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+msgid "value {valueAxisData}"
+msgstr "τιμή {valueAxisData}"
 
-#. Translators: Prompt for pie chart in the format: fraction nn percent slice  index of count
-msgid " fraction {:.2f} Percent {} {} of {}"
-msgstr " κλάσμα {:.2f} Τοις Εκατό {} {} από {}"
+#. Translators: Details about a slice of a pie chart.
+#. For example, this might report "fraction 25.25 percent slice 1 of 5"
+msgid ""
+" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
+msgstr ""
+" κλάσμα {fractionValue:.2f} Κομμάτι επί τοις εκατό {pointIndex} από "
+"{pointCount}"
 
-#. Translators: Prompt for other charts in the format: segment type index of count
-msgid " {} {} of {}"
-msgstr " {} {} από {}"
+#. Translators: Details about a segment of a chart.
+#. For example, this might report "column 1 of 5"
+msgid " {segmentType} {pointIndex} of {pointCount}"
+msgstr " {segmentType} {pointIndex} από {pointCount}"
 
-#. Translators: axis group
+#. Translators: The primary axis group in a Microsoft Excel chart.
 msgid "Primary"
 msgstr "Πρωτεύον"
 
-#. Translators: axis group
+#. Translators: The secondary axis group in a Microsoft Excel chart.
 msgid "Secondary"
 msgstr "Δευτερεύον"
 
-#. Translators: Prompt for axis details such as: type, group, and title
-#. Translators: Prompt for axis details such as: type, group, and title when there is no title
-msgid "Chart Axis, type equals {}, group equals {}, Title equals {}"
+#. Translators: Details about an axis in a chart.
+msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
 msgstr ""
-"Άξονας Γραφήματος, τύπος ισούται με {}, ομάδα ισούται με {}, Τίτλος ισούται "
-"με {}"
+"Άξονας γραφήματος, τύπος: {axisType}, ομάδα: {axisGroup}, τίτλος: {axisTitle}"
 
-msgid "none"
-msgstr "χωρίς τύπο"
+#. Translators: Details about an untitled axis in a chart.
+msgid "Chart axis, type: {axisType}, group: {axisGroup}"
+msgstr "Άξονας γραφήματος, τύπος: {axisType}, ομάδα: {axisGroup}"
 
-#. Translators: Prompt for axis title if axis has title
-#. Translators: Prompt for axis title without title
-msgid "Chart Axis Title equals {} "
-msgstr "Τίτλος Άξονα Γραφήματος ισούται με {} "
+#. Translators: Indicates a chart axis title in Microsoft Excel.
+msgid "Chart axis title"
+msgstr "Τίτλος άξονα γραφήματος"
 
-msgid " square "
-msgstr " τετράγωνο "
+#. Translators: Indicates a trendline in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+msgid "trendline"
+msgstr "γραμμή τάσης"
 
-#. Translators: Prompt for trendline with equation or r square
-msgid " trendline {} "
-msgstr " γραμμή τάσης {} "
+#. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
+msgid " squared "
+msgstr " τετραγωνισμένο"
 
-#. Translators: Prompt for trendline without equation or r square
-msgid "Trendline"
-msgstr "Γραμμή Τάσης"
+#. Translators: Details about a chart title in Microsoft Excel.
+msgid "Chart title: {chartTitle}"
+msgstr "Τίτλος γραφήματος: {chartTitle}"
 
-#. Translators: Prompt for chart title
-msgid "Chart Title equals {}"
-msgstr "Τίτλος Γραφήματος ισούται με {}"
-
-#. Translators: Prompt for chart title when the title is not available
+#. Translators: Indicates an untitled chart in Microsoft Excel.
 msgid "Untitled chart"
 msgstr "Διάγραμμα χωρίς τίτλο"
 
-#. Translators: Prompt for chart area with dimentions
+#. Translators: Details about the chart area in a Microsoft Excel chart.
 msgid ""
-"Chart area height equals {}, width equals {}, top equals {}, left equals {}"
+"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
+"{chartAreaTop}, left: {chartAreaLeft}"
 msgstr ""
-"ύψος περιοχής γραφήματος ισούται με {}, πλάτος ισούται με {}, αρχή ισούται "
-"με {}, αριστερά ισούται με {}"
+"Περιοχή γραφήματος, ύψος: {chartAreaHeight}, πλάτος: {chartAreaWidth}, "
+"κορυφή: {chartAreaTop}, αριστερά: {chartAreaLeft}"
 
-#. Translators: Prompt for chart area
+#. Translators: Indicates the chart area of a Microsoft Excel chart.
 msgid "Chart area "
 msgstr "Περιοχή διαγράμματος"
 
-#. Translators: Prompt for plot area with inner dimentions
+#. Translators: Details about the plot area of a Microsoft Excel chart.
 msgid ""
-"Plot Area inside height equals {:.0f}, inside width equals {:.0f}, inside "
-"top equals {:.0f}, inside left equals {:.0f}"
+"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
+"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
+"{plotAreaInsideLeft:.0f}"
 msgstr ""
-"Εσωτερικό ύψος περιοχής σχεδίασης ισούται με {:.0f}, εσωτερικό πλάτος "
-"ισούται με {:.0f}, εσωτερική αρχή ισούται με {:.0f}, εσωτερικό αριστερό "
-"ισούται με {:.0f}"
+"Περιοχή σχεδίασης, εσωτερικό ύψος: {plotAreaInsideHeight:.0f}, εσωτερικό "
+"πλάτος: {plotAreaInsideWidth:.0f}, εσωτερική κορυφή: "
+"{plotAreaInsideTop:.0f}, εσωτερικό αριστερό: {plotAreaInsideLeft:.0f}"
 
-#. Translators: Prompt for plot area
-msgid "Plot Area "
-msgstr "Περιοχή Σχεδίασης"
+#. Translators: Indicates the plot area of a Microsoft Excel chart.
+msgid "Plot area "
+msgstr "Περιοχή σχεδίασης "
 
-#. Translators: Prompt for Legend
+#. Translators: Indicates the legend in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Legend"
 msgstr "Υπόμνημα"
 
-#. Translators: Prompt for Legend when no legend is present
+#. Translators: Indicates that there is no legend in a Microsoft Excel chart.
 msgid "No legend"
 msgstr "Χωρίς υπόμνημα"
 
-#. Translators: Prompt for Legend entry for series name index of count
-msgid "Legend entry for Series {}, {} of {}"
-msgstr "Καταχώρση υπομνήματος για σειρά {}, {} από {}"
+#. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
+#. For example, this might report "Legend entry for series Temperature 1 of 2"
+msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr ""
+"Καταχώρηση υπομνήματος για σειρά {seriesName} {seriesIndex} από {seriesCount}"
 
-#. Translators: Prompt for Legend key for series name index of count
-msgid "Legend key for Series {} {} of {}"
-msgstr "Κλειδί υπομνήματος για σειρά {} {} από {}"
+#. Translators: Details about a legend key for a series in a Microsoft Excel chart.
+#. For example, this might report "Legend key for series Temperature 1 of 2"
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr ""
+"Κλειδί υπομνήματος για σειρά {seriesName} {seriesIndex} από {seriesCount}"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
@@ -8514,6 +8517,37 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "%s"
+#~ msgstr "%s"
+
+#~ msgid "{} Series {} of {}"
+#~ msgstr "{} Σειρά {} από {}"
+
+#~ msgid "{} {}: "
+#~ msgstr "{} {}: "
+
+#~ msgid "{} {}"
+#~ msgstr "{} {}"
+
+#~ msgid "value {}"
+#~ msgstr "τιμή {}"
+
+#~ msgid " {} {} of {}"
+#~ msgstr " {} {} από {}"
+
+#~ msgid "none"
+#~ msgstr "χωρίς τύπο"
+
+#~ msgid " trendline {} "
+#~ msgstr " γραμμή τάσης {} "
+
+#~ msgid ""
+#~ "Chart area height equals {}, width equals {}, top equals {}, left equals "
+#~ "{}"
+#~ msgstr ""
+#~ "ύψος περιοχής γραφήματος ισούται με {}, πλάτος ισούται με {}, αρχή "
+#~ "ισούται με {}, αριστερά ισούται με {}"
 
 #~ msgid "equation"
 #~ msgstr "εξίσωση"
