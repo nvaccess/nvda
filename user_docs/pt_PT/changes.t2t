@@ -34,14 +34,15 @@ Os destaques desta versão incluem a possibilidade de ler gráficos no Microsoft
 - PageUp/pageDown podem ser usados novamente para mudar de slide numa apresentação PowerPoint. (#4850)
 - No Skype para Desktop 7.2 e superiores, a notificação de contacto a escrever é agora anunciada e os problemas imediatamente após o foco sair de uma conversação foram resolvidos. (#4972)
 - Resolvido o problema ao digitar alguns símbolos/pontuação, tais como parêntese rectos, no campo "Filtrar por" no diálogo Comandos. (#5060)
-   
+   - No Internet Explorer e noutros  controlos MSHTML, pressionando g, ou  shift+g, para  navegar pelos  gráficos, agora são  incluídos os elementos marcados como  imagens para efeitos de acessibilidade (i.e. ARIA role img). (#5062)
+
 
 == Alterações para Desenvolvedores ==
 - brailleInput.handler.sendChars(mychar) já não filtra o caractere, se for igual ao caractere anterior, por se certificar que a tecla é correctamente levantada.
 - Scripts para alterar os modos de toque passam a respeitar os novos nomes adicionados a touchHandler.touchModeLabels. (#4699)
 - Os Add-ons podem fornecer as suas próprias implementações de representação matemática. Ver o pacote mathPres para detalhes. (#4509)
 - Foram implementados comandos de vvoz para inserir uma pausa entre palavras e para alterar a entoação, volume e velocidade. Ver BreakCommand, PitchCommand, VolumeCommand e RateCommand no módulo speech. (#4674)
- - Criado também o speech.PhonemeCommand para inserir pronúncia específica, mas a implementação actual apenas suporta um número limitado de fonemas.
+- Criado também o speech.PhonemeCommand para inserir pronúncia específica, mas a implementação actual apenas suporta um número limitado de fonemas.
 
 
 = 2015.1 =

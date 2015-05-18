@@ -527,42 +527,41 @@ Se forem acessíveis, pode pressionar Tab para navegar por eles e interagir, com
 | Mover para o documento em Modo de Navegação que contém o objecto embutido | NVDA+Ctrl+Espaço | Move o foco para fora do objecto embotido actual e entra no documento que o contém |
 %kc:endInclude
 
-+ Reading Mathematical Content +
-+Using MathPlayer 4 from Design Science, NVDA can read and interactively navigate supported mathematical content.
-+This requires that MathPlayer 4 is installed on the computer.
-+MathPlayer is available as a free download from: http://www.dessci.com/en/products/mathplayer/
-+
-+NVDA supports the following types of mathematical content:
-+- MathML in Mozilla Firefox and Microsoft Internet Explorer.
-+- Design Science MathType in Microsoft Word and PowerPoint.
-+- MathML in Adobe Reader. Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
-+-
-+
-+When reading a document, NVDA will speak any supported mathematical content where it occurs.
-+If you are using a braille display, it will also be displayed in braille.
-+
-+++ Interactive Navigation ++
-+If you are working primarily with speech, in most cases, you will probably wish to examine the expression in smaller segments, rather than hearing the entire expression at once.
-+
-+If you are in browse mode, you can do this by moving the cursor to the mathematical content and pressing enter.
-+
-+If you are not in browse mode:
-++ move the review cursor to the mathematical content.
-+By default, the review cursor follows the system caret, so you can usually use the system caret to move to the desired content.
-++ Then, activate the following command:
-++
-+
-+%kc:beginInclude
-+|| Name | Key | Description |
-+| Interact with math content | NVDA+alt+m | Begins interaction with math content. |
-+%kc:endInclude
-+
-+At this point, you can use MathPlayer commands such as the arrow keys to explore the expression.
-+For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
-+Please see the MathPlayer documentation for further information.
-+
-+When you wish to return to the document, simply press the escape key.
-+
++ Leitura de conteúdo Matemático +
+Usando MathPlayer 4 de Design Science, o NVDA pode ler e navegar interactivamente conteúdo matemático suportado.
+Para isso, é necessário que esteja instalado o MathPlayer 4.
+O MathPlayer está disponível como download gratuito em http://www.dessci.com/en/products/mathplayer/
+
+O NVDA suporta os seguintes tipos de conteúdo matemático:
+- MathML no Mozilla Firefox e Microsoft Internet Explorer.
+- Design Science MathType no Microsoft Word e PowerPoint.
+- MathML no Adobe Reader. Note que este ainda não é um padrão oficial, portanto ainda não está disponível nenhum software que produza este conteúdo.
+-
+
+Ao ler um documento, o NVDA irá falar o conteúdo matemático suportado onde ele aparecer.
+Se estiver a usar uma linha Braille, o conteúdo matemáttico irá também ser mostrado em Braille.
+
+++ Navegação Interactiva ++
+Se trabalha essencialmente com voz, ma maioria dos casos, provavelmente irá querer examinar a expressão em pequenos segmentos, em vez de ouvir a expressão completa de uma só vez.
+
+Se estiver no modo de navegação, pode fazer isso movendo o cursor para o conteúdo matemático e pressionando enter.
+
+Se não estiver em nodo de navegação:
+mova o cursor de revisão para o conteúdo matemático.
+Por padrão, o cursor de revisão segue o cursor de inserção, portanto, normalmente, pode usar o cursor de inserção para se mover para o conteúdo desejado.
+Depois, active o seguinte comando:
+
+%kc:beginInclude
+|| Nome | Tecla | Descrição |
+| Interagir com conteúdo matemático | NVDA+alt+m | Inicia a interação com o conteúdo matemático. |
+%kc:endInclude
+
+A partir daqui, pode usar os comandos do MathPlayer, tais como as setas, para explorar a expressão.
+Por exemplo, pode mover-se pela expressão com as setas para a esquerda ou direita, e examinar uma porção da expressão, como uma fração, com a seta para baixo.
+Por favor, consulte a documentação do MathPlayer para mais informações.
+
+Quando quiser voltar à leitura do documento, simplesmente pressione Escape.
+
  + Comandos Específicos do NVDA para Aplicações +
 O NVDA fornece comandos de teclado adicionais para algumas aplicações, que realizam determinadas tarefas ou que dão acesso a funcionalidades que não são acessíveis, de outra forma, aos utilizadores de leitores de ecrã.
 
@@ -1790,6 +1789,7 @@ Seguem-se as associações de comandos da Papenmeier para o NVDA:
 | Anuncia o caracter actual em revisão | l1 |
 | Activa o objecto de navegação actual | l2 |
 | Anuncia o título | l1+up |
+| Alternar Braille fixado para | r2 |
 | Anuncia a barra de estado | l2+down |
 | Move para o objecto que contem | up2 |
 | Move para o primeiro objecto contido | dn2 |
@@ -1829,7 +1829,7 @@ Os seguintes modelos são suportados:
 - BRAILLEX Tiny, 2D Screen
 -
 
-Note que estas linhas só podem ser ligadas por porta sériie.
+Note que estas linhas só podem ser ligadas por porta série.
 Por isso, após seleccionar este tipo de linhas, nas Definições do Braille, deve seleccionar a porta onde está ligada a linha Braille.
 
 Alguns dispositivos têm uma barra de acesso fácil, EAB - Easy access bar, que permite  a operação intuitiva e rápida.
