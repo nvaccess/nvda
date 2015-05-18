@@ -441,7 +441,7 @@ Ainda que um mouse físico ou um touchpad precisem ser utilizados para navegar c
 + Modo de Navegação +
 
 Documentos complexos somente leitura, tais como páginas Web, são navegados pelo NVDA usando o modo de Navegação.
-Isso inclui documentos no Mozilla Firefox, Microsoft Internet Explorer, mensagens em HTML no Microsoft Outlook, Google Chrome, Adobe Reader e Adobe Flash.
+Isso inclui documentos no Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, mensagens em HTML no Microsoft Outlook, Google Chrome, Adobe Reader e Adobe Flash.
 O modo de navegação também encontra-se disponível opcionalmente para documentos no Microsoft Word.
 
 No modo de navegação, o conteúdo do  documento é disposto  numa representação plana que pode ser navegada com as teclas do cursor como se ele  fosse um documento de texto qualquer.
@@ -495,6 +495,7 @@ As teclas seguintes só por si saltam para o próximo elemento disponível, adic
 - d: marca
 - o: objeto embutido
 - 1 a 6: cabeçalhos de nível 1 a 6 respectivamente
+- a: anotação (comentário, revisão do editor, etc.)
 -
 Para mover-se ao início ou final de elementos que contém outros, tais como listas e tabelas:
 | Nome | Tecla | Descrição |
@@ -503,13 +504,13 @@ Para mover-se ao início ou final de elementos que contém outros, tais como lis
 %kc:endInclude
 
 ++ A Lista de Elementos ++
-A lista de elementos fornece acesso a uma lista de links, cabeçalhos ou marcas no documento.
-Os botões de opção permitem-lhe alterar entre estes três tipos de informação.
+A lista de elementos fornece acesso a uma lista de  vários tipos de elementos no documento, quando apropriado ao aplicativo.
+Os botões de opção permitem-lhe alternar entre os vários tipos de elementos.
 Um campo de edição também se encontra disponível na caixa de diálogo que permite filtrar a lista para o ajudar a procurar um item específico na página.
 Depois de ter escolhido um item, pode utilizar os botões fornecidos no diálogo para mover para ou ativar esse item.
 %kc:beginInclude
 || Nome | Tecla | Descrição |
-| Lista de elementos do Modo de Navegação | NVDA+f7 | Chama a lista de elementos que contém links, cabeçalhos e marcas do documento atual |
+| Lista de elementos do Modo de Navegação | NVDA+f7 | Lista vários tipos de elementos no documento atual |
 %kc:endInclude
 
 ++ Objetos Embutidos ++
@@ -542,6 +543,7 @@ O NVDA fornece seus próprios comandos adicionais para alguns aplicativos, com v
 | Selecionar os cabeçalhos das colunas | NVDA+shift+c | Pressionado uma vez, informa ao NVDA que esta é a linha que contém os cabeçalhos das colunas, os quais deverão ser anunciados automaticamente ao mover-se entre colunas abaixo dessa linha. Ao pressionar duas vezes, limpará a configuração. |
 | Selecionar os cabeçalhos das linhas | NVDA+shift+r | Pressionando-se uma vez, informa ao NVDA que esta é a coluna que contém os cabeçalhos das linhas, os quais deverão ser anunciados  automaticamente ao mover-se entre linhas dentro desta coluna. Pressione duas vezes e limpará a configuração. |
 | Anunciar comentário | NVDA+alt+c | Anuncia o comentário na célula atual, caso haja algum. |
+| Lista de Elementos | NVDA+f7 | abre o Diálogo da Lista de Elementos, contendo gráficos, células com comentários, ou células com fórmulas. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -575,10 +577,13 @@ O NVDA fornece seus próprios comandos adicionais para alguns aplicativos, com v
 
 ++ Preferências ++
 %kc:settingsSection: || Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
-A maioria das opções do NVDA podem ser alteradas através da utilização de caixas de diálogo que localizam-se no sub-menu Preferências do Menu do NVDA.
+A maior parte das opções do NVDA pode ser alterada através da utilização de caixas de diálogo que localizam-se no sub-menu Preferências do Menu do NVDA.
 Em todas as caixas de diálogo de opções do NVDA, pressione o botão OK para efetuar as alterações.
-Para cancelar as alterações, pressione o botão Cancelar ou a tecla Escape.
+Para cancelá-las, pressione o botão Cancelar ou a tecla Escape.
 Algumas opções também podem ser alteradas através da utilização de teclas de atalho, que estão listadas quando relevante nas seções abaixo. 
+
+Note que por padrão, nem todos os diálogos de preferências podem ser acessados por meio de gestos de entrada (comandos de teclado, gestos de toque, etc.).
+Se pretende acessar os diálogos que não possuem teclas de atalho atribuídas, use o [Diálogo de Gestos de Entrada #InputGestures] para adicionar-lhes gestos personalizados.
 
 +++ Opções gerais (NVDA+control+g) +++
 A caixa de diálogo das opções gerais encontra-se no menu Preferências.
@@ -1013,7 +1018,7 @@ Por exemplo, se for pressionando a Seta Abaixo numa página Web e encontrar uma 
 Se esta opção estiver marcada, o NVDA reproduzirá sons especiais quando alternar entre os modos de navegação e foco, em vez de anunciar a alteração.
 
 ==== Interceptar tudo que não seja comando para que não chegue ao documento ====
-habilitada por padrão, esta opção lhe permite escolher se os gestos (tais como pressionamentos de teclas) que não resultam num commando  do NVDA e não são considerados como comandos em geral, devem ser interceptados para que não passem ao documento que está  atualmente sob o foco. 
+habilitada por padrão, esta opção lhe permite escolher se os gestos (tais como o pressionamento de teclas) que não resultam num commando  do NVDA e não são considerados como comandos em geral, devem ser interceptados para que não passem ao documento que está  atualmente sob o foco. 
 Por exemplo, quando habilitado, se a letra j for pressionada, ela é interceptada para que não chegue ao documento, já que não se trata de um comando de navegação rápida, e provavelmente não é um comando do próprio aplicativo.
 
 +++ Opções de Formatação de Documentos (NVDA+control+d) +++[DocumentFormattingSettings]
@@ -1022,7 +1027,7 @@ Esta caixa de diálogo está no menu Preferências, mais propriamente no item "F
 Maior parte das caixas de seleção neste diálogo lhe permitem configurar que tipo de formatação pretende ouvir automaticamente enquanto se move com o cursor pelos documentos.
 Por exemplo, se marcar a caixa de seleção para informar o nome da fonte a medida que avançar pelo texto com tipos de fonte diferentes, este será anunciado.
 
-Pode configurar o anúncio de: 
+É possível configurar o anúncio de: 
 - Nome da Fonte
 - Tamanho da Fonte
 - Atributos da Fonte
@@ -1044,7 +1049,10 @@ Pode configurar o anúncio de:
 - Blocos de citação
 - Marcas de Seção
 - Frames
+- Quando algo é clicável
 -
+
+Para alterar essas configurações de qualquer lugar, por favor atribua-lhes gestos personalizados usando o [Diálogo de Gestos de Entrada #InputGestures].
 
 ==== Anunciar Mudanças de Formato Após o Cursor ====
 Se ativada, esta opção faz com que o NVDA tente detectar todas as alterações de formatação na linha conforme a anuncia, mesmo que isto possa diminuir seu desempenho.
@@ -1062,6 +1070,8 @@ São eles:
 - Voz: é um dicionário cujas regras afetam a voz para o sintetizador utilizado atualmente.
 - Temporário: as regras neste dicionário afetam todas as vozes deste programa, mas apenas para a sessão atual. Estas regras são temporárias e perder-se-ão se o NVDA for reiniciado. 
 -
+
+É necessário atribuir gestos personalizados usando o [Diálogo de Gestos de Entrada #InputGestures] caso pretenda abrir qualquer um desses diálogos de dicionário de onde você estiver.
 
 Todos os diálogos do dicionário contêm uma lista de regras que serão utilizadas para processar a voz.
 O diálogo contém também os botões Adicionar, Editar e Remover.
@@ -1103,6 +1113,7 @@ Somente comandos que são aplicábeis imediatamente antes do diálogo ser aberto
 Por exemplo, se você deseja personalizar comandos relacionados com o modo de navegação, é necessário abrir o Diálogo de Gestos de Entrada enquanto está no modo de navegação.
 
 A árvore nesse diálogo lista todos os comandos aplicáveis do NVDA agrupados por categoria.
+Você pode filtrá-los inserindo uma ou mais palavras do nome do comando na caixa de edição Filtrar por em qualquer ordem.
  Quaisquer gestos associados a um comando são listados abaixo do comando.
 
 Para adicionar um gesto de entrada para um comando, selecione o comando e pressione o botão Adicionar.
@@ -1232,6 +1243,8 @@ Ao desmarcar este item você o desativará.
 Enquanto o exibidor de fala estiver ativado, o mesmo atualizar-se-á constantemente para apresentar-lhe o texto mais recente que está sendo falado.
 Contudo, se clicar ou se o cursor ficar no visualizador, o NVDA parará temporariamente a atualização do texto, de modo que possa selecionar facilmente ou copiar o conteúdo existente. 
 
+Para alternar o Exibidor de fala de qualquer lugar, por favor atribua-lhe um gesto personalizado usando o [Diálogo de Gestos de Entrada #InputGestures].
+
 ++ O Gerenciador de Complementos ++
 O gerenciador de complementos, que pode ser acessado selecionando Gerir Complementos no submenu ferramentas no menu do NVDA, permite-lhe instalar e desinstalar pacotes contendo complementos para o NVDA.
 Esses pacotes são fornecidos pela comunidade e contém códigos com personalizações que podem acrescentar  ou modificar recursos do NVDA ou mesmo fornecer suporte para linhas Braille ou sintetizadores de voz extras.
@@ -1244,7 +1257,7 @@ Esse botão abre a [página de complementos do NVDA http://addons.nvda-project.o
 Caso o NVDA esteja instalado e em execução em seu sistema, é possível abrir o complemento diretamente do navegador para começar o processo de instalação como será descrito a seguir. Caso contrário, salve o pacote de complemento e siga as instruções abaixo.
 
 Para instalar um complemento anteriormente obtido, pressione o botão Instalar.
-Isso lhe permitirá procurar por um pacote de complemento (arquivo .nvda-addon) em algum lugar de seu computador ou em uma rede.
+Isto lhe permitirá procurar por um pacote de complemento (arquivo .nvda-addon) em algum lugar de seu computador ou em uma rede.
 Uma vez pressionado Abrir, o NVDA perguntar-lhe-á se você realmente deseja instalar esse complemento.
 Como a funcionalidade dos complementos é irrestrita dentro do NVDA, o que em teoria pode incluir  o acesso a seus dados pessoais ou mesmo a todo o sistema caso o NVDA seja uma cópia instalada, é muito importante que você só instale complementos oriúndos de códigos de sua confiança.
 
@@ -1262,6 +1275,8 @@ Caso tenha instalado ou removido algum complemento, o NVDA primeiro indagará se
 No passado foi possível extender as funcionalidades do NVDA copiando plugins e drivers individuais para sua pasta de Configurações do usuário do NVDA.
 Embora nessa versão do NVDA continue sendo possível carregá-los, eles não serão mostrados no gerenciador de complementos. 
 Recomenda-se remover esses arquivos de suas configurações do usuário e instalar o complemento apropriado caso algum esteja disponível.
+
+Para acessar o Gerenciador de Complementos de qualquer lugar, por favor atribua-lhe um gesto personalizado usando o [Diálogo de Gestos de Entrada #InputGestures].
 
 ++ O Console Python ++
 o Console Python do NVDA encontra-se dentro das Ferramentas, no menu do NVDA.
@@ -1330,7 +1345,7 @@ Esta seção contém informação sobre as linhas Braille que o NVDA suporta.
 ++ Freedom Scientific Focus/PAC Mate Series ++
 Todas as linhas Focus e PAC Mate da [Freedom Scientific http://www.freedomscientific.com/] são suportadas quando conectadas via USB ou bluetooth.
 Será necessário instalar os drivers para as linhas Braille da Freedom Scientific em seu sistema.
-Se ainda não tem os mesmos, pode obtê-los em http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Se ainda não tem os mesmos, pode obtê-los em http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
  Embora esta página mencione somente a linha Focus Blue 40, este driver suporta todas as linhas focus e Pacmate da Freedom Scientific. 
 
 Se seu sistema é de 64 bit  e os drivers já foram instalados por outro leitor de telas, provavelmente você continuará necessitando instalar os drivers do link acima, pois os arquivos necessários para o NVDA provavelmente não foram instalados pelo outro leitor de telas.
@@ -1770,6 +1785,7 @@ Dispositivos que possuem EAB:
 | Guiar para a cela braille | sensor |
 | Anunciar o caractere atual em revisão | l1 |
 | Ativar o atual objeto de navegação | l2 |
+| Alternar vínculo do braille | r2 |
 | Mover para a revisão plana/foco | r1 |
 | Anunciar título | l1up |
 | Ler Barra de Status | l2down |

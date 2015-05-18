@@ -1,10 +1,8 @@
 ﻿#locale/ko/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2012 NVDA Contributors
+#Copyright (c) 2012-2015 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
-complexSymbols:
-# identifier	regexp
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
@@ -13,9 +11,9 @@ complexSymbols:
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
-decimal point	(?<=\d)\.(?=\d)
+decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥]?\d)
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]

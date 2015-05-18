@@ -3,6 +3,38 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.2 =
+Ebben a kiadásban: Microsoft Excel diagramok felolvasása, és matematikai tartalmak kezelésének támogatása.
+
+== Újdonságok ==
+- Microsoft Word: Most már lehetséges mondatonként navigálni egy szövegben az alt+lenyíl és az alt+felnyíl billentyűparancsokkal. (#3288)
+- Új braille fordító táblák számos indiai nyelvhez. (#4778)
+- Microsoft Excel: Az NVDA már bejelenti egy cella tartalmának letakarva, vagy átlóg állapotát. (#3040)
+- Microsoft Excel: Már használható az elemlista (NVDA+f7) a diagramok, megjegyzések és  a képletek kilistázására. (#1987)
+- Microsoft Excel: A diagramok felolvasása már támogatott. Ehhez ki kell választani az Elemlistából (NVDA+f7) a megfelelő diagramot, majd az egyes adatpontok között a nyílbillentyűkkel lehet navigálni. (#1987)
+- A Design Science MathPlayer 4 használatával az NVDA már fel tudja olvasni és képes interaktívan kezelni a webböngészők, a Microsoft Word és a PowerPoint matematikai tartalmait. (#4673)
+- Az NVDA Beviteli parancsok párbeszédpanelén lehetővé vált az NVDA minden beállítási párbeszédpaneléhez, és a dokumentum formázási opciókhoz billentyűparancsot, vagy érintési parancsot hozzárendelni. (#4898)
+
+
+== Változások ==
+- NVDADokumentum formázás párbeszédpanel: Változtak a Listák jelzése, Hivatkozások jelzése, Sorszámok bemondása, és A betűtípus nevének bemondása opciókhoz tartozó gyorsgombok. (#4650)
+- NVDA Egér párbeszédpanel: Gyorsgombot rendeltek Az egérmutató mozgásának jelzése hanggal, és A fényerő változtatja az egérmutató hangjának hangerejét opciókhoz. (#4916)
+- Jelentősen javult a színek nevének bemondása. (#4984)
+- A liblouis braille fordítót frissítették a 2.6.2 verzióra. (#4777)
+
+
+== Hibajavítások ==
+- Character descriptions are now handled correctly for conjunct characters in certain Indian languages. (#4582)
+- If the "Trust voice's language when processing characters and symbols" option is enabled, the Punctuation/Symbol pronunciation dialog now correctly uses the voice language. Also, the language for which pronunciation is being edited is shown in the dialog's title. (#4930)
+- Internet Explorer és más MSHTML vezérlők: A szerkeszthető kombinált listamezőkben, mint pl.: A Google keresési mezőjében a Google weboldalán, a beírt karaktereket már nem hibásan jelenti be az NVDA. (#4976)
+- Microsoft Office: A kiválasztott szín nevét már bemondja az NVDA. (#3045)
+- A dán braille kimenet ismét működik. (#4986)
+- Microsoft PowerPoint: Diavetítés során a PageUp és pageDown billentyűk ismét használhatók az egyes diák közti váltásra. (#4850)
+- A Skype for Desktop 7-es és újabb verzióiban a gépelést jelző üzenet bemondásra kerül, ezen felül ha a  fókusz elmozdul nem történik hibaüzenet küldés. (#4972)
+- Javítva az a hiba, mely akkor jött elő ha a beviteli parancsok szűrésre szolgáló mezőjébe egyes írásjelet/szimbólumot (pl. zárójel) gépelt be a felhasználó. (#5060)
+- Internet explorer és a többi MSHTML kezelő használatakor a g és shift+g lenyomása esetén elérhetőek az Aria img szabály által definiált ábrák is. (#5062)
+
+
 = 2015.1 =
 A kiadás főbb elemei: böngészőmód a Microsoft Word és Outlook dokumentumokhoz; jelentős fejlesztések a Skype asztali változatának támogatása terén; és fontos javítások a Microsoft Internet Explorer jobb hozzáférhetősége érdekében.
 

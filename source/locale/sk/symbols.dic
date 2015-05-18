@@ -6,8 +6,8 @@
 complexSymbols:
 # identifier	regexp
 # Others
-decimal point	(?<=\d)\,(?=\d)
-negative number	(?<!\w)-(?=[$£€¥]?\d)
+decimal point	(?<![^\d -])\.(?=\d)
+negative number	(?<!\w)-(?=[$┬úÔéČ┬ą.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -88,6 +88,9 @@ _	podčiarkovník	most
 ‎	znak z ľava do prava 	char
 ‏	znak z prava do ľava	char
 ■	čierny štvorec	some
+â–Ş	čierny štvorec	some
+â—ľ	čierny štvorec	some
+â—¦	biela odrážka	some
 ➔	šípka vpravo	some
 §	paragraf	all
 °	stupňov	some

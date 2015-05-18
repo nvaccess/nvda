@@ -15,7 +15,7 @@ Az NVDA programot az [NV Access http://www.nvacces.org] fejleszti. A program hon
 
 Főbb jellemzői:
 - Népszerű alkalmazások támogatása (ide tartoznak a webböngészők, az e-mail kliensek, különböző internetes chat programok, és az irodai szoftverek)
-- Beépített beszédszintetizátor, ami több mint 40 nyelvet támogat
+- Beépített beszédszintetizátor, ami több mint 80 nyelvet támogat
 - A szöveg formázásának - például szöveg mérete és betűtípusa, stílus és helyesírási hibák - bemondása ahol elérhető, 
 - Az egérmutatónál lévő szöveg automatikus bemondása és választható hangjelzés az egér pozíciójának megállapításához
 - A frissíthető braille kijelzők támogatása, a számítógépes braille bevitellel együtt
@@ -439,17 +439,19 @@ A virtuális kijelzőben az NVDA kétféleképpen használható. Böngésző mó
 || Funkció | billentyűparancs | leírás |
 | Váltás a virtuális kijelző módjai között | NVDA+szóköz | Vált az interaktív és a  böngészőmód között |
 | Kilépés az interaktív módból | escape | Visszavált az interaktív módból böngésző módra. |
-| A virtuális kijelző frissítése | NVDA+f5 | Frissíti a virtuális kijelző tartalmát. Ez akkor lehet hasznos, ha egy oldal hiányosan töltődött be. |
+| A virtuális kijelző frissítése | NVDA+f5 | Frissíti a virtuális kijelző tartalmát. Ez akkor lehet hasznos, ha egy oldal hiányosan töltődött be. (a funkció nem érhető el Microsoft Word és Outlook programok használata esetén). |
 | Keresés | NVDA+control+f | A felbukkanó ablak segítségével egy szövegrészletre kereshet rá az adott oldalon. |
 | Ugrás a következő találatra | NVDA+f3 | Az ön által keresett kifejezés következő előfordulására ugrik. |
 | Ugrás az előző találatra | NVDA+shift+f3 | Az ön által keresett kifejezés előző előfordulására ugrik. |
 %kc:endInclude
 
-Az NVDA jelenleg a Mozilla Firefoxban, a Microsoft Internet Explorerben, a Microsoft Outlook html üzeneteiben, a Google chromeban, az Adobe Readerben, és az Adobe flashben használ virtuális kijelzőt a dokumentumok olvasásához. A Microsoft Word összetett dokumentumaiban is elérhető a böngészőmód, mely megkönnyíti az abban történő navigációt.
+Az NVDA jelenleg a Mozilla Firefoxban, a Microsoft Internet Explorerben, a Mozilla Thunderbirdben, a Microsoft Outlook html üzeneteiben, a Google chromeban, az Adobe Readerben, és az Adobe flashben használ virtuális kijelzőt a dokumentumok olvasásához. A Microsoft Word összetett dokumentumaiban is elérhető a böngészőmód, mely megkönnyíti az abban történő navigációt.
 
 ++ Navigációs gyorsbillentyűk ++
 
 Böngésző módban az NVDA a gyorsabb navigáció érdekében egykarakteres navigációs gyorsbillentyűket tartalmaz a virtuális kijelző meghatározott területére történő ugráshoz.
+Megjegyzés: Nem minden gyorsbillentyűhasználható a böngészőmódot támogató dokumentumokban.
+
 %kc:beginInclude
 Egymagukban a következő, a shifttel együtt használva az előző területre ugranak:
 - H: címsor 
@@ -499,6 +501,42 @@ A következő billentyűparanccsal visszaléphet a beágyazott objektumot tartal
 | Visszalépés a virtuális kijelzőbe | NVDA+control+szóköz | A fókuszt a beágyazott objektumról az azt tartalmazó dokumentumra helyezi. |
 %kc:endInclude
 
++ Matematikai tartalom olvasása +
+A Design Science által fejlesztett MathPlayer szoftverrel az NVDA képes a matematikai tartalmak kezelésére, az azokban történő navigációra.
+Ehhez az szükséges, hogy a MathPlayer legalább 4-es verziója a számítógépre fel legyen telepítve, ami ingyenesen letölthető a következő címről: http://www.dessci.com/en/products/mathplayer/
+
+Az NVDA a következő matematikai tartalmakat támogatja:
+- MathML a Mozilla Firefox és Microsoft Internet Explorer böngészőkben.
+- A Design Science által forgalmazott MathType a Microsoft Word és PowerPoint programokban.
+- MathML az Adobe Reader programban. Megjegyzendő, hogy ez nem egy hivatalos szabvány jelenleg, így nincs nyilvánosan elérhető szoftver, amely képes a tartalom teljeskörű kezelésére.
+-
+
+Dokumentum olvasásakor az NVDA bejelenti ha egy matematikai tartalomhoz ér, braille kijelző használata esetén a matematikai tartalom a braille szabványnak megfelelően megjelenik a kijelzőn.
+
+
+++ Interaktív navigáció ++
+Ha ön elsősorban a beszédkimenettel dolgozik, akkor szüksége lehet a kifejezés kissebb részekben történő meghallgatására.
+
+Böngészőmód használata esetén ezt megteheti, csak keresse meg a matematikai tartalmat és nyomja meg az enter billentyűt.
+
+Ha nem böngészőmódban van:
++ Keresse meg az áttekintő kurzorral a matematikai tartalmat.
+Alapértelmezetten az áttekintő kurzor követi a rendszer fókuszt, így ezt megteheti a nyíl billentyűk használatával is.
++ Nyomja le a következő billentyűparancsot:
++
+
+%kc:beginInclude
+|| Megnevezés | Billentyűparancs | Leírás |
+| Matematikai tartalom aktiválása | NVDA+alt+m | Belép a matematikai áttekintőbe. |
+%kc:endInclude
+
+Ettől a ponttól kezdve használhatja a MathPlayer billentyűparancsait (pl. a nyíl billentyűket) a tartalom áttekintésére.
+Így például bejárhatja a teljes kifejezést a jobbra és balra nyíl használatával, de megtekintheti annak csak egy részletét is (pl. egy zárójel tartalmát) a lefele nyíl megnyomásával.
+
+Bővebb információkért olvassal el a MathPlayer súgóját.
+
+Amennyiben szeretne visszatérni a fődokumentumba, nyomja meg az escape billentyűt.
+
 + Alkalmazásfüggő NVDA billentyűparancsok +
 Az NVDA néhány alkalmazásban saját billentyűparanccsal rendelkezik, melyek megkönnyítik a szoftverek akadálymentes használatát.
 
@@ -522,6 +560,13 @@ Az NVDA néhány alkalmazásban saját billentyűparanccsal rendelkezik, melyek 
 %kc:beginInclude
 || Név | Billentyűparancs | Leírás |
 | Váltás a beszélő jegyzeteinek olvasására | control+shift+s | Vált a beszélő jegyzetei és az aktuális fólia tartalma között. A képernyő tartalma nem változik, de a felhasználó felolvastathatja az NVDA-val a megjelenő jegyzeteket.  | 
+%kc:endInclude
+
+++ Skype ++
+%kc:beginInclude
+Egy beszélgetés ablakában:
+|| Funkció | Billentyűparancs | Leírás |
+| Üzenetek áttekintése | NVDA+kontrol+1-0 | Bemondja az utolsó 10 üzenetet annak megfelelően hogy mely szám került lenyomásra. Így pl. ha az NVDA+kontrol+2 billentyűparancsot nyomta le, az NVDA felolvassa az utolsó előtti üzenetet és az áttekintő kurzort oda helyezi. |
 %kc:endInclude
 
 ++ Foobar2000 ++
@@ -653,6 +698,14 @@ Ez a beállítás lehetővé teszi a beszédhang hangmagasságának állításá
 
 A csúszkával a hangerő állítható 0 és 100 között. 0 a leghalkabb, 100 a leghangosabb hangerőt jelenti.
 
+===== Automatikus nyelvváltás =====
+
+Ezzel a jelölőnégyzettel szabályozzuk, hogy az NVDA a beszédszintetizátor nyelvét automatikusan átállítsa-e az olvasandó szöveg nyelvére. Ez a jelölőnégyzet alapértelmezetten be van jelölve. Jelenleg csak az Espeak beszédszintetizátor képes az automatikus nyelvváltásra.
+
+===== Automatikus dialektusváltás =====
+
+Ezzel a jelölőnégyzettel szabályozzuk, hogy az NVDA automatikusan állítsa-e be a nyelvváltozatot, akárcsak a nyelvet. Például, ha az NVDA amerikai egyesültállamokbeli angol nyelvváltozatban olvas, ám a dokumentum a szöveg nyelvét egyesült királyságbeli angolként határozza meg, a beszédszintetizátor átállítja a nyelvváltozatot. Ez a jelölőnégyzet alapértelmezésben nincs bejelölve.
+
 ===== Intonáció =====
 
 Ezzel a csúszkával beállítható a beszédszintetizátor hangsúlyozása (a hangmagasság növelése és csökkentése). (Az egyetlen beszédszintetizátor amely használja ezt a beállítást jelenleg az eSpeak). 0 esetén teljesen monoton, 100 esetén a legnagyobb mértékben hangsúlyoz.
@@ -662,6 +715,13 @@ Ezzel a csúszkával beállítható a beszédszintetizátor hangsúlyozása (a h
 Billentyűparancs: NVDA+p
 
 Az NVDA minden írásjel szintnek megfelelően képes az írásjeleket különálló szavanként kezelni. A szintek között a billentyűparancs többszöri lenyomásával tud váltani.
+
+===== Karakterek és írásjelek feldolgozása az aktív hangkarakter nyelvén =====
+
+Alapértelmezésben ez a jelölőnégyzet az NVDA-t arra utasítja, hogy a megadott hangkarakter szabályai szerint dolgozza fel az írásjeleket és a karaktereket. Ha azt észleljük, hogy az NVDA egy beszédszintetizátor vagy hangkarakter kiválasztásakor rosszul olvassa a központozást, a jelölőnégyzet kikapcsolásával az NVDA-t arra kényszeríthetjük, hogy használja az általános nyelvi beállításait.
+
+===== Betűzés használata, ha támogatott =====[hangzó betűzés]
+Az egykarakteres szavakat másképpen kell ejteni hangzó szóként és másképpen karakterként. (Pl. betűzéskor) vagy külön szóként. Például az angolban az "a"-t másképpen kell mondani, ha szó és másképpen, ha betű. Ezzel a jelölőnégyzettel szabályozható, hogy a beszédszintetizátor tegyen-e különbséget e két eset között, ha a beszédszintetizátor támogatja ezt a funkciót. A legtöbb szintetizátor támogatja ezt az opciót. Ez a jelölőnégyzet általában be van jelölve, azonban egyes Microsoft Speech API beszédszintetizátorok nem tartalmazzák megfelelően ezt a funkciót, és ha be van kapcsolva, furcsán viselkednek. Ha problémákat tapasztalunk egyes különálló karakterek kiejtésével, kapcsoljuk ki ezt a jelölőnégyzetet!
 
 ===== A hangmagasság megemelése nagybetűknél =====
 
@@ -1004,6 +1064,7 @@ Be lehet állítani a:
 - listák,
 - idézetblokkok,
 - jelző pontok
+- kattintható elemek
 -
 bemondását.
 
@@ -1189,10 +1250,8 @@ A SAPI5 egy Windows szabvány a beszédszintetizátor programokhoz. Sok szinteti
 Ha ön egy SAPI 5-ös szintetizátort használ, akkor a hozzátartozó hangkaraktereket a [beszéd... #VoiceSettings] beállításainál, vagy a [szintetizátor körön #SynthSettingsRing] tudja módosítani, miután aktiválta a SAPI 5 szabványt a Beszédszintetizátor párbeszédablakon. 
 
 ++ Audiologic Tts3 ++
-Ez egy fizetős szintetizátor, ami kizárólag olasz nyelven érhető el. Az NVDA-val való használat előtt ezt telepítenie kell a számítógépére. Bővebb információért keresse fel az AudioLogic weboldalát: www.audiologic.it
 
-++ Newfon ++
-A Newfon Sergey Shishmintzev által készített ingyenes, de kereskedelmi beszédszintetizátor, ami az orosz és ukrán nyelveket támogatja. A szintetizátor letöltéséhez kérjük látogassa meg az NVDA orosz oldalát: http://ru.nvda-community.org/?page_id=10
+Ez egy fizetős szintetizátor, ami kizárólag olasz nyelven érhető el. Az NVDA-val való használat előtt ezt telepítenie kell a számítógépére. Bővebb információért keresse fel az AudioLogic weboldalát: www.audiologic.it
 
 ++ Vocalizer beszédhangok az NVDA-hoz ++
 
@@ -1481,6 +1540,7 @@ Az NVDA ezek közül az alábbi kijelzőket támogatja:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
 - BRAILLEX Trio (USB és bluetooth)
+- BRAILLEX Live 20, BRAILLEX Live és BRAILLEX Live Plus (USB és bluetooth)
 -
 
 Ha a BrxCom program telepítve van, az NVDA használni fogja azt.
@@ -1738,9 +1798,9 @@ Az NVDA parancssori beállításai a következők:
 | -c BEÁLLÍTÁSMAPPA | --config-path=BEÁLLÍTÁSMAPPA | Annak a mappának az útvonala, ahol az NVDA a beállításait tárolja |
 | -m | --minimal | Hang, interfész, üzenet stb. nélkül indul |
 | -s | --secure | Biztonsági mód (tiltja a Python konzolt) |
-| None | --disable-addons | Nem indulnak el a bővítmények |
-| None | --no-sr-flag  | Nem változtatja meg a globális képernyőbeállítás jelölőnégyzetének állapotát |
-| None | --install | Beavatkozás és képernyőkimenet nélkül telepíti az NVDA-t. |
+| Nincs | --disable-addons | Nem indulnak el a bővítmények |
+| Nincs | --no-sr-flag  | Nem változtatja meg a globális képernyőbeállítás jelölőnégyzetének állapotát |
+| Nincs | --install |  Telepíti az NVDA-t, majd a telepített verzió elindul. |
 
 ++ Az írásjelek haladó testreszabása ++
 

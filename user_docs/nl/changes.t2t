@@ -7,13 +7,13 @@
 Hoogtepunten in deze versie zijn de mogelijkheid om grafieken te lezen in Microsoft Excel en ondersteuning voor lezen van, interageren met, en navigeren in wiskundige inhoud.
 
 == Nieuwe Functies ==
-- Per zin vooruit en achteruit bewegen is nu mogelijk in Microsoft Word met respectievelijk alt+pijlOmlaag en alt+upOmhoog. (#3288)
+- Per zin vooruit en achteruit bewegen is nu mogelijk in Microsoft Word met respectievelijk alt+pijlOmlaag en alt+pijlOmhoog. (#3288)
 - Nieuwe brailletabellen voor verschillende Indische talen. (#4778)
 - In Microsoft Excel meldt NVDA nu als een cel overflowing of cropped inhoud heeft. (#3040)
 - In Microsoft Excel kunt u nu de Elementenlijst (NVDA+f7) gebruiken voor een lijst van grafieken, opmerkingen en formules. (#1987)
 - Ondersteuning voor het lezen van grafieken in Microsoft Excel. Selecteer de grafiek via de Elementenlijst (NVDA+f7) en gebruik dan de pijltoetsen om tussen de data points te bewegen. (#1987)
 - Using MathPlayer 4 from Design Science, NVDA can now read and interactively navigate mathematical content in web browsers and in Microsoft Word and PowerPoint. See the "Reading Mathematical Content" section in the User Guide for details. (#4673)
-- It is now possible to assign input gestures (keyboard commands, touch gestures, etc.) for all NVDA preferences dialogs and document formatting options using the Input Gestures dialog. (#4898)
+- Via het dialoogvenster Invoerhandelingen is het nu mogelijk om invoerhandelingen (toetsenbordsneltoetsen, aanraakgebaren, enz.) te koppelen aan alle dialoogvensters met instellingen van NVDA en opties voor documentopmaak. (#4898)
 
 
 == Veranderingen ==
@@ -32,6 +32,7 @@ Hoogtepunten in deze versie zijn de mogelijkheid om grafieken te lezen in Micros
 - PageUp/pageDown can again be used to change slides within a PowerPoint slide show. (#4850)
 - In Skype for Desktop 7.2 and later, typing notifications are now reported and problems immediately after moving focus out of a conversation have been fixed. (#4972)
 - Fixed problems when typing certain punctuation/symbols such as brackets into the filter field in the Input Gestures dialog. (#5060)
+- In Internet Explorer and other MSHTML controls, pressing g or shift+g to navigate to graphics now includes elements marked as images for accessibility purposes (i.e. ARIA role img). (#5062)
 
 
 == Veranderingen voor Ontwikkelaars ==

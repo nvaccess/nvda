@@ -267,7 +267,7 @@ Joitakin hyödyllisiä näppäinkomentoja kohdistuksella navigoitaessa:
 %kc:beginInclude
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
 | Lue nykyinen kohdistus | NVDA+sarkain | NVDA+sarkain | Kertoo nykyisen objektin tai säätimen, jossa järjestelmän kohdistus on. Kahdesti painettaessa tiedot tavataan. |
-| Lue ikkunan nimi | NVDA+T | NVDA+T | Lukee aktiivisen ikkunan nimen. Kahdesti painettaessa nimi tavataan, kolmesti painettaessa se kopioidaan leikepöydälle. |
+| Lue ikkunan otsikko | NVDA+T | NVDA+T | Lukee aktiivisen ikkunan otsikon. Kahdesti painettaessa otsikko tavataan ja kolmesti painettaessa se kopioidaan leikepöydälle. |
 | Lue aktiivinen ikkuna | NVDA+B | NVDA+B | Lukee kaikki aktiivisen ikkunan säätimet (hyödyllinen valintaikkunoissa). |
 | Lue tilarivi | NVDA+End | NVDA+Shift+End | Lukee tilarivin, mikäli NVDA löytää sen, ja siirtää lisäksi navigointiobjektin sen kohdalle. |
 %kc:endInclude
@@ -553,7 +553,7 @@ Tarkastelukohdistin seuraa oletusarvoisesti järjestelmäkohdistinta, joten voit
 +
 
 %kc:beginInclude
-|| Nimi | Näppäin | Kuvaus |
+|| Nimi | Näppäinkomento | Kuvaus |
 | Vuorovaikutus matemaattisen sisällön kanssa | NVDA+Alt+M | Aloittaa vuorovaikutuksen matemaattisen sisällön kanssa. |
 %kc:endInclude
 
@@ -927,13 +927,13 @@ Vaihtoehtoina ovat merkki, sana, rivi ja kappale.
 ==== Lue hiiren alla olevan objektin rooli ====
 Jos tämä valintaruutu on valittuna, NVDA kertoo objektin roolin (tyypin) hiiren siirtyessä siihen.
 
-==== Ilmaise hiiren koordinaatit äänimerkillä ====
+==== Ilmaise hiiren koordinaatit äänimerkeillä ====
 Kun tämä valintaruutu on valittuna, NVDA antaa äänimerkkejä hiiren liikkuessa, jotta käyttäjä saa selville, missä hiiri on suhteessa ruudun kokoon.
-Äänimerkit ovat sitä korkeampia, mitä ylempänä hiiri on ruudulla.
-Mitä enemmän vasemmalla tai oikealla hiiri on ruudulla, sitä enemmän vasemmalta tai oikealta ääni kuuluu (olettaen, että käytössä on stereokaiuttimet tai kuulokkeet).
+Äänimerkit ovat sitä korkeampia, mitä ylempänä ruudulla hiiri on.
+Mitä enemmän vasemmalla tai oikealla hiiri on, sitä enemmän vasemmalta tai oikealta ääni kuuluu (olettaen, että käytössä on stereokaiuttimet tai kuulokkeet).
 
 ==== Äänikoordinaatttien voimakkuutta säädetään ruudun kirkkauden mukaan ====
-Jos Ilmaise hiiren koordinaatit äänimerkeillä -asetus on käytössä, tämän valintaruudun valitseminen merkitsee, että äänikoordinaattien voimakkuutta säädetään sen mukaan, miten kirkas ruutu on hiiren alla.
+Jos Ilmaise hiiren koordinaatit äänimerkeillä -asetus on käytössä, tämän valintaruudun valitseminen merkitsee, että äänikoordinaattien voimakkuutta säädetään sen mukaan, miten kirkas ruutu on hiirikohdistimen alla.
 Tämä asetus ei ole oletusarvoisesti käytössä.
 
 +++ Tarkastelukohdistimen asetukset +++
@@ -1088,8 +1088,8 @@ Esimerkiksi, jos asetuksen ollessa käytössä painetaan j-kirjainta, sen tulost
 +++ Asiakirjojen muotoiluasetukset (NVDA+Control+D) +++[DocumentFormattingSettings]
 Tämä valintaikkuna löytyy Asetukset-valikon "Asiakirjojen muotoilu..." -kohdasta.
 
-Useimmilla tämän valintaikkunan valintaruuduilla voidaan määrittää, minkä tyyppisiä muotoilutietoja halutaan kuulla automaattisesti liikutettaessa kohdistinta asiakirjoissa.
-Jos esimerkiksi valitaan Lue fontti -valintaruutu, joka kerta, kun liikutaan nuolinäppäimillä tekstin kohdalle, jonka fontti eroaa aikaisemmasta, NVDA kertoo fontin nimen.
+Useimmilla tämän valintaikkunan valintaruuduilla voit määrittää, minkä tyyppisiä muotoilutietoja haluat automaattisesti kuulla liikuttaessasi kohdistinta asiakirjoissa.
+Jos esimerkiksi valitset Lue fontti -valintaruudun, joka kerta, kun siirryt nuolinäppäimillä sellaisen tekstin kohdalle, jonka fontti eroaa aikaisemmasta, NVDA kertoo fontin nimen.
 
 Seuraavien tietojen lukeminen voidaan määrittää:
 - Fontti
@@ -1249,14 +1249,14 @@ Valitse muussa tapauksessa käynnistin, joka ottaa profiilin automaattisesti kä
 Mikäli et ole kirjoittanut profiilille nimeä, käynnistimen valitseminen täyttää sen puolestasi.
 Katso [alta #ConfigProfileTriggers] lisätietoja käynnistimistä.
 
-Luo profiili ja sulje valintaikkuna painamalla OK, jonka jälkeen voit muokata profiilia.
+Luo profiili ja sulje valintaikkuna painamalla OK, jonka jälkeen voit muokata sitä.
 
 +++ Manuaalinen käyttöönotto +++[ConfigProfileManual]
 Voit ottaa profiilin käyttöön manuaalisesti valitsemalla sen ja painamalla Käytä manuaalisesti -painiketta.
 Muita profiileja voidaan edelleen ottaa käyttöön käynnistimien avulla, mutta manuaalisesti käyttöönotetun profiilin asetukset ovat etusijalla.
 Jos esimerkiksi linkkien lukeminen on käytössä nykyiselle sovellukselle käynnistimellä käyttöönotettavassa profiilissa mutta poissa käytöstä manuaalisesti käyttöönotettavassa, linkkejä ei tällöin lueta.
 Jos kuitenkin olet vaihtanut puheääntä käynnistimellä käyttöönotettavassa profiilissa mutta et manuaalisesti käyttöönotetussa, tällöin käytetään käynnistimellä käyttöönotettavan profiilin puheääntä.
-Muokkaamasi asetukset tallennetaan manuaalisesti käyttöönottamaasi profiiliin.
+Muokkaamasi asetukset tallennetaan manuaalisesti käyttöön ottamaasi profiiliin.
 Voit poistaa manuaalisesti käyttöönotetun profiilin käytöstä valitsemalla sen Asetusprofiilit-valintaikkunasta ja painamalla Poista käytöstä manuaalisesti -painiketta.
 
 +++ ´Käynnistimet +++[ConfigProfileTriggers]
@@ -1796,7 +1796,8 @@ Seuraavassa on Papenmeierin näppäinmääritykset NVDA:lle:
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
 | Lue nykyinen merkki | l1 |
 | Aktivoi nykyinen navigointiobjekti | l2 |
-| Lue ikkunan nimi | l1+up |
+| Vaihda Pistenäyttö seuraa -asetusta | r2 |
+| Lue ikkunan otsikko | l1+up |
 | Lue tilarivi | l2+down |
 | Siirrä säilöobjektiin | up2 |
 | Siirrä ensimmäiseen sisältöobjektiin | dn2 |
@@ -1872,7 +1873,7 @@ Laitteet, joissa on EAB:
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
 | Lue nykyinen merkki | l1 |
 | Aktivoi nykyinen navigointiobjekti | l2 |
-| Lue ikkunan nimi | l1up |
+| Lue ikkunan otsikko | l1up |
 | Lue tilarivi | l2down |
 | Siirrä säilöobjektiin | up2 |
 | Siirrä ensimmäiseen sisältöobjektiin | dn2 |
@@ -2039,7 +2040,7 @@ Voit yhdistellä lyhyitä valitsimia näin:
 Jotkin valitsimet hyväksyvät lisäparametrejä, esim. miten yksityiskohtaisia tietoja lokiin tallennetaan tai käyttäjän asetushakemiston polkumäärityksen.
 Parametrit annetaan valitsimen jälkeen ja erotetaan sen lyhyestä muodosta välilyönnillä tai pitkää muotoa käytettäessä yhtä suuri -merkillä (=), esim.:
 | nvda -l 10 | Käynnistää NVDA:n virheenkorjaus-lokitasolla. |
-| nvda --log-file=c:\nvda.log | NVDA tallentaa lokinsa tiedostoon c:\nvda.log. |
+| nvda --log-file=c:\nvda.log | NVDA tallentaa lokin tiedostoon c:\nvda.log. |
 | nvda --log-level=20 -f c:\nvda.log | Käynnistää NVDA:n tiedot-lokitasolla ja tallentaa lokin tiedostoon c:\nvda.log. |
 
 Seuraavassa on lista NVDA:n komentorivivalitsimista:

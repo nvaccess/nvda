@@ -530,6 +530,42 @@ Er is een toetscombinatie beschikbaar om weer terug te gaan naar de oorspronkeli
 | Terug naar inhoud van document | NVDA+control+spatiebalk | Verplaatst de focus van het huidige ingevoegde object naar “het document waarin het zich bevindt |
 %kc:endInclude
 
++ Inhoud van wiskundige aard lezen +
+Met MathPlayer 4 van Design Science, kan NVDA ondersteunde wiskundige inhoud lezen en u er interactief in laten navigeren.
+Hiervoor moet MathPlayer 4 op uw computer zijn geïnstalleerd.
+MathPlayer is gratis te downloaden van: http://www.dessci.com/en/products/mathplayer/
+
+NVDA ondersteunt de volgende types wiskundige inhoud:
+- MathML in Mozilla Firefox en Microsoft Internet Explorer.
+- Design Science MathType in Microsoft Word en PowerPoint.
+- MathML in Adobe Reader. NB. Dit is nog geen officiële standaard. Er is dan ook geen software publiek verkrijgbaar waarmee deze inhoud geproduceerd kan worden.
+-
+
+Bij het lezen van een document zal NVDA alle ondersteunde wiskundige inhoud voorlezen wanneer deze voorkomt.
+Als u een brailleleesregel gebruikt, wordt deze ook in braille weergegeven.
+
+++ Interactieve Navigatie ++
+Als u voornamelijk met spraak  werkt, zult u de probleemstelling waarschijnlijk meestal liever eerst in kleinere stukjes horen dan in zijn geheel.
+
+Als u in de bladermodus bent, kunt u dit doen door de cursor naar de wiskundige inhoud te verplaatsen en dan op enter te drukken.
+
+Als u zich niet in de bladermodus bevindt:
++ verplaatst u de leescursor naar de wiskundige inhoud.
+Standaard volgt de leescursor de systeemcursor, dus kunt u deze gewoonlijk gebruiken om bij de gewenste inhoud te geraken.
++ Hierna activeert u het volgende commando:
++
+
+%kc:beginInclude
+|| Naam | Toets | Beschrijving |
+| Interactie met wiskundige inhoud | NVDA+alt+m | interactie met wiskundige inhoud starten. |
+%kc:endInclude
+
+Nu kunt u MathPlayer-commando’s zoals de pijltjestoetsen gebruiken om de stelling te verkennen.
+U kunt bij voorbeeld  horizontaal door de stelling gaan met de linker en rechter pijltoets en inzoemen op een onderdeel van de stelling zoals een breuk  met behulp van  pijl omlaag.
+Raadpleeg de documentatie bij MathPlayer  voor nadere informatie.
+
+Als u naar het document wilt teruggaan drukt u op Escape.
+
 + Applicatie-specifieke NVDA commando's +
 NVDA beschikt over een aantal applicatie-specifieke commando's om het gebruik van deze applicaties te vergemakkelijken, of om toegang te geven tot functionaliteit die anders niet bruikbaar zou zijn voor screenreader gebruikers.
 
@@ -547,6 +583,7 @@ NVDA beschikt over een aantal applicatie-specifieke commando's om het gebruik va
 | Kolomhoofdingen instellen | NVDA+shift+c | Door eenmaal indrukken weet NVDA dat dit de eerste hoofdingcel is in de rij waar de kolomhoofdingen in staan die automatisch moeten worden gemeld bij het gaan van kolom naar kolom in de rijen eronder. Door tweemaal drukken wordt de instelling opgeheven. | 
 | Rijhoofdingen instellen | NVDA+shift+r | Door eenmaal indrukken weet NVDA dat dit de eerste hoofdingcel is in de kolom waar de rijhoofdingen in staan die automatisch moeten worden gemeld bij het gaan van rij naar rij na deze kolom. Door tweemaal drukken wordt de instelling opgeheven. |
 | Opmerking(en) melden | NVDA+alt+c | Meldt eventuele opmerkingen bij de actuele cel. |
+| Dialoogvenster Lijst met elementen | NVDA+f7 | opent het bijbehorende dialoogvenster  dat overzichten, cellen met opmerkingen, of cellen met berekeningen toont. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -591,6 +628,9 @@ De meeste instellingen van NVDA kunnen via dialoogvensters worden aangepast. Om 
 Voor alle instellingen die u wijzigt, geldt dat u met de OK-knop de wijzigingen accepteert.
 Door op de knop “Annuleren” of de Escape-toets te drukken worden wijzigingen niet doorgevoerd.
 Sommige instellingen kunnen ook gewijzigd worden met sneltoetsen. Deze worden, voor zover van toepassing, hieronder vermeld.
+
+NB. Standaard zijn niet alle dialoogvensters onder Opties toegankelijk  met invoerhandelingen (toetsenbordcommando’s, aanraakgebaren, etc.).
+Als u dialoogvensters wilt oproepen die geen specifieke sneltoetscombinatie kennen,kunt uvia het dialoogvenster Invoerhandelingen koppelen [#InputGestures] voor een dergelijk dialoogvenster een aangepaste  invoerhandeling aanmaken.
 
 +++ Algemeen (NVDA+control+g) +++
 Het dialoogvenster met “Algemene instellingen” vindt u in het NVDA-menu onder “Opties”.
@@ -800,8 +840,8 @@ Deze optie is standaard uitgeschakeld.
 Wanneer deze optie is ingeschakeld, zal een woord dat te lang is om nog op de brailleregel te passen niet worden afgebroken.
 In plaats daarvan blijft er wat lege ruimte aan het einde van de brailleleesregel.
 Door te scrollen kunt u het gehele woord lezen.
-Dit wordt wel “word wrap” of woordomloop genoemd.
-Merk op dat een woord dat van zichzelf zodanig lang is dat het niet op de regel past, afgebroken moet worden.
+Dit wordt wel “word wrap” of woordterugloop genoemd.
+Merk op dat een woord dat van zichzelf zodanig lang is dat het niet op de regel past, toch afgebroken moet worden.
 
 Wanneer deze optie is uitgeschakeld, wordt zoveel mogelijk tekst op de regel geplaatst terwijl wat overblijft wordt afgekapt. 
 Door te scrollen kunt u dan de rest van het woord lezen.
@@ -1080,6 +1120,8 @@ U kunt de vermelding laten horen van:
 - Wat klikbaar is
 -
 
+Als u vermelding van bovenstaande kenmerken altijd en overal wilt kunnen in- of uischakelen, kunt u daarvoor aangepaste invoerhandelingen aanmaken met behulp van [Invoerhandelingen koppelen onder Opties #InputGestures].
+
 ==== Wijzigingen in documentopmaak achter de cursor weergeven (kan vertraging veroorzaken)====
 Als het selectievakje aangevinkt is, zal NVDA proberen alle wijzigingen in de opmaak van een regel te melden bij het lezen van de regel ook als dit de prestatie vertraagt.
 
@@ -1095,6 +1137,8 @@ te weten,
 - Stemafhankelijk woordenboek: de regels hierin hebben betrekking op de in gebruik zijnde synthesizer stem.
 - Tijdelijk woordenboek: de regels hierin hebben betrekking op alles wat er door NVDA wordt uitgesproken, maar dan alleen voor de huidige sessie. De gemaakte regels gaan verloren wanneer NVDA opnieuw wordt gestart.
 -
+
+Als u deze woordenboeken altijd en overal wilt kunnen openen, kunt u daarvoor aangepaste invoerhandelingen aanmaken met behulp van [Invoerhandelingen koppelen #InputGestures]  onder Opties.
 
 In de dialoogvensters van de verschillende woordenboeken vindt u een lijst met regels die gebruikt worden om de uitspraak te sturen.
 Tevens zijn er de knoppen Toevoegen, Bewerken en Verwijderen.
@@ -1135,7 +1179,7 @@ U kunt een eerder ingevoerd symbool verwijderen door op de knop Verwijderen te d
 
 Als u klaar bent, drukt u op Ok om de wijzigingen op te slaan of op Annuleren om deze niet door te voeren.
 
-+++ Invoerhandelingen +++
++++ Invoerhandelingen +++[InputGestures]
 In dit dialoogvenster  kunt u toetsen voor invoerhandelingen op het toetsenbord,  knoppen op de brailleleesregel, etc. instellen voor het uitvoeren van NVDA  commando's.
 
 Alleen commando's die toepasbaar zijn vlak voordat u  het dialoogvenster  opent, worden getoond.
@@ -1262,14 +1306,16 @@ Door Logboek weergeven te kiezen in het NVDA-menu onder Extra kunt u alles bekij
 U kunt niet alleen de inhoud van het logbestand lezen, maar er ook een kopie van opslaan of de inhoud van het scherm vernieuwen zodat ook de gegevens worden getoond die werden vastgelegd na openen van het logbestand.
 Dit kunt u doen via het Logboek-menu (alt+l).
 
-++ Speech Viewer (schermweergave gesproken tekst)++
+++ Spraakweergavevenster (schermweergave gesproken tekst)++
 Goed-ziende software-ontwikkelaars of mensen die NVDA demonstreren voor een goed-ziend publiek is er een zwevend kader waarin alles op het scherm wordt getoond wat NVDA bezig is voor te lezen.
 
-Om de speech viewer in te schakelen zet u een vinkje voor speech viewer onder Extra in het NVDA-menu.
+Om het spraakweergavevenster in te schakelen zet u een vinkje voor spraakweergavevenster onder Extra in het NVDA-menu.
 Haal dit vinkje weg om de speech viewer uit te schakelen.
 
-Als de speech viewer ingeschakeld is, wordt de getoonde tekst voortdurend vernieuwd om het voorlezen bij te houden.
+Als het spraakweergavevenster ingeschakeld is, wordt de getoonde tekst voortdurend vernieuwd om het voorlezen bij te houden.
 Maar klikt u in of verplaatst u de focus naar het viewer venster, dan wordt het verversen van de tekst tijdelijk gestopt. U kunt zo gemakkelijk de getoonde tekst selecteren en kopiëren.
+
+Als u het Spraakweergavevenster altijd en overal wilt kunnen in- of uischakelen, kunt u daarvoor aangepaste invoerhandelingen aanmaken met behulp van [Invoerhandelingen koppelen onder Opties #InputGestures].
 
 ++ Add-Ons Beheren ++
 Met "Add-ons Beheren" onder Extra in het NVDA menu kunt u uitbreidingspakketten voor NVDA installeren en verwijderen.
@@ -1303,6 +1349,8 @@ Als u Add-ons hebt geïnstalleerd of verwijderd zal NVDA vragen of u eerst NVDA 
 In het verleden kon de functionaliteit van NVDA worden uitgebreid door plug-ins en drivers naar de gebruikersconfiguratiemap te kopiëren.
 Hoewel de huidige versie van NVDA deze mogelijk nog steeds zal laden, worden ze niet getoond in de lijst met geïnstalleerde Add-ons in Add-on Beheer. 
 Het is het beste deze bestanden te verwijderen uit uw configuratie en via Add-on Beheer de geschikte add-on te installeren als deze beschikbaar is.
+
+Als u Add-Ons Beheren altijd en overal wilt kunnen oproepen, kunt u daarvoor aangepaste invoerhandelingen aanmaken met behulp van [Invoerhandelingen koppelen onder Opties #InputGestures].
 
 ++ Python Console ++
 Met de Python console die u vindt onder Extra in het NVDA-menu kunnen fouten in de programmacode worden opgespoord en hersteld, algemene inspecties van de programmatuur worden uitgevoerd of de mate van toegankelijkheid van een toepassing worden gecontroleerd.
@@ -1750,6 +1798,7 @@ De volgende toetscommando's zijn voor Papenmeier-Brailleleesregels beschikbaar:
 | Cursor naar Braillecel verplaatsen | Routing |
 | Teken onder cursor voorlezen | l1 |
 | Huidige navigatorobject activeren | l2 |
+| Wissel Braille gekoppeld aann  | r2 |
 | Titel van actieve venster weergeven | l1+omhoog |
 | Statusbalk actieve venster weergeven | l2+omlaag |
 | Navigatorobject naar hoger niveau verplaatsen | omhoog2 |
