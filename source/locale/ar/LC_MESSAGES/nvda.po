@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-02 19:04+1000\n"
-"PO-Revision-Date: 2015-05-07 18:00+0200\n"
+"POT-Creation-Date: 2015-05-08 19:04+1000\n"
+"PO-Revision-Date: 2015-05-17 15:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -1925,7 +1925,7 @@ msgid "selected %s"
 msgstr "%s محدد"
 
 #. Translators: The word for an unknown control type.
-#. Translators: chart type to be reported when the type is not available
+#. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
 msgstr "مجهول"
 
@@ -2048,6 +2048,7 @@ msgid "cell"
 msgstr "خلية"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
+#. Translators: A column in a column chart.
 msgid "column"
 msgstr "عمود"
 
@@ -2538,7 +2539,7 @@ msgstr "خفيِّ"
 
 #. Translators: This is presented when a visited link is encountered.
 msgid "visited"
-msgstr "تمت زيارته"
+msgstr "مُزار"
 
 #. Translators: This is presented when a link is encountered.
 msgid "linked"
@@ -2570,7 +2571,7 @@ msgstr "نمط"
 
 #. Translators: This is presented when a field supports auto completion of entered text such as email address field in Microsoft Outlook.
 msgid "has auto complete"
-msgstr "يحتوي على خاصية الإكمال التلقائي"
+msgstr "بإكمال تلقائي"
 
 #. Translators: This is presented when an edit field allows typing multiple lines of text such as comment fields on websites.
 msgid "multi line"
@@ -7332,550 +7333,634 @@ msgstr "تحرير تعليق خلية {address}"
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} إلى {lastAddress} {lastContent}"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Area"
 msgstr "مساحة مع تأثير مرئي ثلاثي الأبعاد"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Area"
 msgstr "أعمدة مرصوفة مع تأثير مرئي ثلاثي الأبعاد"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Area"
 msgstr "أعمدة مرصوفة %100 مع تأثير مرئي ثلاثي الأبعاد"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Bar"
 msgstr "أشرطة متفاوتة المسافات مع  تأثير مرئي ثلاثي الأبعاد"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Bar"
 msgstr "شريطي مرصوف مائة بالمائة مع تأثير مرئي ثلاثي الأبعاد"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Bar"
 msgstr "شريطي مرصوف مائة بالمائة مع تأثير مرئي ثلاثي الأبعاد"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Column"
 msgstr "أعمدة ثلاثية الأبعاد"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Column"
 msgstr "أعمدة متفاوتة المسافات مع تأثير ثلاثي الأبعاد"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Column"
 msgstr "أعمدة مرصوفة مع تأثير ثلاثي الأبعاد"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Column"
 msgstr "أعمدة مرصوفة مائة بالمائة مع تأثير ثلاثي الأبعاد"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Line"
 msgstr "خطي ثلاثي الأبعاد"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Pie"
 msgstr "دائري مع تأثير مرئي ثلاثي الأبعاد"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded 3D Pie"
 msgstr "دائري مجزأ مع تأثير مرئي ثلاثي الأبعاد"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Area"
 msgstr "مساحي"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Area"
 msgstr "مساحي مرصوف"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Clustered Bar"
 msgstr "شريط متفاوت المسافات"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bar of Pie"
 msgstr "شريط التخطيط الدائري"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Bar"
 msgstr "شريط مرصوف"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Bar"
 msgstr "شريط مرصوف مائة بالمائة"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bubble"
 msgstr "فقاعي"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bubble with 3D effects"
 msgstr "فقاعي مع تأثير مرئي ثلاثي الأبعاد"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Clustered Column"
 msgstr "أعمدة متفاوتة المسافات"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Column"
 msgstr "أعمدة مرصوفة"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Column"
 msgstr "أعمدة مرصوفة %100"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cone Bar"
 msgstr "شريطي بشكل بوقي"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cone Bar"
 msgstr "شريطي مرصوف بشكل بوقي"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cone Bar"
 msgstr "شريطي مرصوف 100% بشكل بوقي"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cone Column"
 msgstr "عمودي ثلاثي الأبعاد بشكل بوقي"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cone Column"
 msgstr "عمودي بشكل بوقي"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cone Column"
 msgstr "عمودي مرصوف بشكل بوقي"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cone Column"
 msgstr "عمودي مرصوف 100% بشكل بوقي"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cylinder Bar"
 msgstr "شريطي بشكل اسطواني"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cylinder Bar"
 msgstr "شريطي مرصوف بشكل اسطواني"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cylinder Bar"
 msgstr "شريطي مرصوف 100% بشكل اسطواني"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cylinder Column"
 msgstr "عمودي ثلاثي الأبعاد بشكل اسطواني"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cylinder Column"
 msgstr "عمودي مرصوف 100% بشكل اسطواني"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Doughnut"
 msgstr "دائري مجوف"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded Doughnut"
 msgstr "دائري مجوف مجزء"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line"
 msgstr "خطي"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line with Markers"
 msgstr "خطي مع معلامات تظهر عند كل قيمة بيانات"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line with Markers"
 msgstr "خطي مرصوف مع علامات تظهر عند كل قيمة بيانات"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line with Markers"
 msgstr "خطي مرصوف 100% مع علامات تظهر عند كل قيمة بيانات"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line"
 msgstr "خطي مرصوف"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line"
 msgstr "خطي مرصوف 100%"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Pie"
 msgstr "دائري"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded Pie"
 msgstr "دائري مجزء"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Pie of Pie"
 msgstr "دائرة التخطيط الدائري"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Pyramid Bar"
 msgstr "شريطي بشكل هرمي"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Pyramid Bar"
 msgstr "شريطي مرصوف بشكل هرمي"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Bar"
 msgstr "شريطي مرصوف 100% بشكل هرمي"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Pyramid Column"
 msgstr "عمودي ثلاثي الأبعاد بشكل هرمي"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Pyramid Column"
 msgstr "عمودي بشكل هرمي"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Pyramid Column"
 msgstr "عمودي مرصوف بشكل هرمي"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Column"
 msgstr "عمودي مرصوف 100% بشكل هرمي"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Radar"
 msgstr "نسيجي"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Filled Radar"
 msgstr "نسيجي معبأ"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Radar with Data Markers"
 msgstr "نسيجي مع علامات عند كل نقطة بيانات"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "High-Low-Close"
 msgstr "علو-انخفاض-إغلاق"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Open-High-Low-Close"
 msgstr "فتح-علو-انخفاض-إغلاق"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-High-Low-Close"
 msgstr "كمية-علو-انخفاض-إغلاق"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-Open-High-Low-Close"
 msgstr "كمية-فتح-علو-انخفاض-إغلاق"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface"
 msgstr "سطحي ثلاثي الأبعاد"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Surface (Top View)"
 msgstr "إحاطة (تخطيط سطحي معروض من أعلى)"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Surface (Top View wireframe)"
 msgstr "سطحي (إحاطة بأسلاك محيطة معروض لأعلى)"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface (wireframe)"
 msgstr "سطحي ثلاثي الأبعاد (بأسلاك محيطة)"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter"
 msgstr "مبعثر"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Lines"
 msgstr "مبعثر"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Lines and No Data Markers"
 msgstr "مبعثر مع نقاط بيانات متصلة بخطوط"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Smoothed Lines"
 msgstr "مبعثر مع نقاط بيانات متصلة بخطوط متجانسة"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "مبعثر مع نقاط بيانات متصلة بخطوط متجانسة وبدون علامات"
 
-#. Translators: prompt for chart title and chart type to be reported
-msgid "Chart title equals {chartTitle} type equals {chartType}"
-msgstr "عنوان المخطط يساوي {chartTitle} النوع يساوي {chartType}"
+#. Translators: Message reporting the title and type of a chart.
+msgid "Chart title: {chartTitle}, type: {chartType}"
+msgstr "عنوان المخطط:{chartTitle}, نوع المخطط: {chartType}"
 
-#, python-format
-msgid "%s"
-msgstr "%s"
-
-#. Translators: Axis title to be reported when the title is not available
+#. Translators: Reported when there is no title for an axis in a chart.
 msgid "Not defined"
 msgstr "غير معرفة"
 
-#. Translators: Chart Axis types
-#. Translators: axis type
+#. Translators: A type of axis in a chart.
+#. Translators: The category axis in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Category"
 msgstr "الفئة"
 
-#. Translators: axis type
+#. Translators: A type of axis in a chart.
+#. Translators: The value axis in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Value"
 msgstr "القيمة"
 
-#. Translators: axis type
+#. Translators: A type of axis in a chart.
+#. Translators: The series axis in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Series"
 msgstr "متسلسلة"
 
-#. Translators: Prompt for axis title and axis type to be reported
+#. Translators: Message reporting the type and title of an axis in a chart.
+#. For example, this might report "Category axis is month"
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "{axisName} المحور {axisTitle}"
 
-#. Translators: Number of series when there is only one series
-#, python-format
-msgid "There is %d series in this chart"
-msgstr "يوجد %d سلسلة بهذا المخطط"
+#. Translators: Indicates that there is 1 series in a chart.
+msgid "There is 1 series in this chart"
+msgstr "توجد سلسلة واحدة فقط بالمخطط"
 
-#. Translators: Number of series when there are multiple series
+#. Translators: Indicates the number of series in a chart where there are multiple series.
 #, python-format
 msgid "There are total %d series in this chart"
 msgstr "يوجد إجمالي %dفي هذه المتسلسلة"
 
-#. Translators: prompt to be reported when there is no series
+#. Translators: Specifies the number and name of a series when listing series in a chart.
+msgid "series {number} {name}"
+msgstr "سلسلة {number} {name}"
+
+#. Translators: Indicates that there are no series in a chart.
 msgid "No Series defined."
 msgstr "لا توجد سلسلة معرفة"
 
-#. Translators: Chart segment such as slice for  pie chart etc this is reported when there is no segment available.
+#. Translators: A slice in a pie chart.
+msgid "slice"
+msgstr "شريحة"
+
+#. Translators: A data point in a line chart.
+msgid "data point"
+msgstr "نقطة البيانات"
+
+#. Translators: A segment of a chart for charts which don't have a specific name for segments.
 msgid "item"
 msgstr "عنصر"
 
-msgid "Series color: {} "
-msgstr "لون السلسلة: {} "
+msgid "Series color: {colorName} "
+msgstr "لون السلسلة: {colorName} "
 
-#. Translators: prompt for xlDisplayUnitLabel
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Display Unit Label"
 msgstr "عرض معرف الوحدةحقل عرض"
 
-#. Translators: prompt for xlMajorGridlines
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Major Gridlines"
 msgstr "خطوط الشبكة الرئيسية"
 
-#. Translators: prompt for xlMinorGridlines
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Minor Gridlines"
 msgstr "خطوط الشبكة الفرعية"
 
-#. Translators: prompt for xlPivotChartDropZone
-#, fuzzy
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Pivot Chart Drop Zone"
-msgstr "موقع إسقاط محور المخطط"
+msgstr "منطقة إسقات محور المخطط"
 
-#. Translators: prompt for xlPivotChartFieldButton
-#, fuzzy
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Pivot Chart Field Button"
 msgstr "زر حقل محور المخطط"
 
-#. Translators: prompt for xlDownBars
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Down Bars"
 msgstr "أشرطة سفلية"
 
-#. Translators: prompt for xlDropLines
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Drop Lines"
 msgstr "خطوط إسقاط"
 
-#. Translators: prompt for xlHiLoLines
-#, fuzzy
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Hi Lo Lines"
 msgstr "خطوط مرتفعة منخفضة"
 
-#. Translators: prompt for xlRadarAxisLabels
-#, fuzzy
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Radar Axis Labels"
-msgstr "تعريفات المحور النسيجي"
+msgstr "تعريفات المحور الرداري"
 
-#. Translators: prompt for xlSeriesLines
-#, fuzzy
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Series Lines"
 msgstr "خطوط السلسلة"
 
-#. Translators: prompt for xlUpBars
-#, fuzzy
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Up Bars"
 msgstr "أشرطة علوية"
 
-#. Translators: prompt for xlCorners
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Corners"
 msgstr "زوايا"
 
-#. Translators: prompt for xlDataTable
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Data Table"
 msgstr "جدول بيانات"
 
-#. Translators: prompt for xlFloor
-#, fuzzy
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Floor"
 msgstr "أرضية"
 
-#. Translators: prompt for xlNothing
-#, fuzzy
-msgid "xlNothing"
-msgstr "xlNothing"
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Nothing"
+msgstr "لا شيء"
 
-#. Translators: prompt for xlWalls
-#, fuzzy
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Walls"
 msgstr "حوائط"
 
-#. Translators: prompt for xlDataLabel
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Data Label"
 msgstr "معرف البيانات"
 
-#. Translators: prompt for xlErrorBars
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Error Bars"
 msgstr "أشرطة الأخطاء"
 
-#. Translators: prompt for xlXErrorBars
-#, fuzzy
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "X Error Bars"
 msgstr "أشرطة أخطاء المحور س"
 
-#. Translators: prompt for xlYErrorBars
-#, fuzzy
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Y Error Bars"
 msgstr "أشرطة أخطاء المحور ص"
 
-#. Translators: prompt for xlShape
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Shape"
 msgstr "شكل"
 
-#. Translators: Prompt for series details in the format: Name series index of count
-msgid "{} Series {} of {}"
-msgstr "{} سلسلة {} من {}"
+#. Translators: Details about a series in a chart.
+#. For example, this might report "foo series 1 of 2"
+msgid "{seriesName} series {seriesIndex} of {seriesCount}"
+msgstr "{seriesName} سلسلة {seriesIndex} من {seriesCount}"
 
-#. Translators: for line charts, no change from the previous element
-msgid "no change from point {}, "
-msgstr "لا يوجد تغيير من نقطة {}, "
+#. Translators: For line charts, indicates no change from the previous data point on the left
+msgid "no change from point {previousIndex}, "
+msgstr "لا يوجد تغيير من نقطة {previousIndex}, "
 
-#. Translators: for line charts, increase from the previous element
-msgid "Increased by {} from point {}, "
-msgstr "زادت ب {} من نقطة {}, "
+#. Translators: For line charts, indicates an increase from the previous data point on the left
+msgid "Increased by {incrementValue} from point {previousIndex}, "
+msgstr "زادت ب {incrementValue} من نقطة {previousIndex}, "
 
-#. Translators: for line charts, decrease from the previous element
-msgid "decreased by {} from point {}, "
-msgstr "تقل ب {} من نقطة {}, "
+#. Translators: For line charts, indicates a decrease from the previous data point on the left
+msgid "decreased by {decrementValue} from point {previousIndex}, "
+msgstr "تقل ب {decrementValue} من نقطة {previousIndex}, "
 
-#. Translators: report category axis title if available in the format title value
-msgid "{} {}: "
-msgstr "{} {}: "
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+msgid "{categoryAxisTitle} {categoryAxisData}: "
+msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
-#. Translators: report category axis title as Category if axis title is not available in the format "category" value
-msgid "Category {}: "
-msgstr "الفئة {}: "
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+msgid "Category {categoryAxisData}: "
+msgstr "الفئة {categoryAxisData}: "
 
-#. Translators: report value axis title if available in the format title value
-msgid "{} {}"
-msgstr "{} {}"
+#. Translators: Specifies the value of a data point.
+#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+msgid "{valueAxisTitle} {valueAxisData}"
+msgstr "{valueAxisTitle} {valueAxisData}"
 
-#. Translators: report value axis title as value if axis title is not available in the format "Value" value
-msgid "value {}"
-msgstr "القيمة {}"
+#. Translators: Specifies the value of a data point.
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+msgid "value {valueAxisData}"
+msgstr "قيمة {valueAxisData}"
 
-#. Translators: Prompt for pie chart in the format: fraction nn percent slice  index of count
-msgid " fraction {:.2f} Percent {} {} of {}"
-msgstr "الكسر {:.2f} بالمائة {} {} من {}"
+#. Translators: Details about a slice of a pie chart.
+#. For example, this might report "fraction 25.25 percent slice 1 of 5"
+msgid " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
+msgstr "الكسر {fractionValue:.2f} شريحة بالمائة {pointIndex} من {pointCount}"
 
-#. Translators: Prompt for other charts in the format: segment type index of count
-msgid " {} {} of {}"
-msgstr " {} {} من {}"
+#. Translators: Details about a segment of a chart.
+#. For example, this might report "column 1 of 5"
+msgid " {segmentType} {pointIndex} of {pointCount}"
+msgstr " {segmentType} {pointIndex} من {pointCount}"
 
-#. Translators: axis group
+#. Translators: The primary axis group in a Microsoft Excel chart.
 msgid "Primary"
 msgstr "أساسي"
 
-#. Translators: axis group
+#. Translators: The secondary axis group in a Microsoft Excel chart.
 msgid "Secondary"
 msgstr "ثانوي"
 
-#. Translators: Prompt for axis details such as: type, group, and title
-#. Translators: Prompt for axis details such as: type, group, and title when there is no title
-msgid "Chart Axis, type equals {}, group equals {}, Title equals {}"
-msgstr "محور المخطط, النوع يساوي {}, المجموعة تساوي {}, العنوان يساوي {}"
+#. Translators: Details about an axis in a chart.
+msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
+msgstr "محور المخطط, النوع: {axisType}, المجموعة: {axisGroup}, العنوان: {axisTitle}"
 
-msgid "none"
-msgstr "لا شيء"
+#. Translators: Details about an untitled axis in a chart.
+msgid "Chart axis, type: {axisType}, group: {axisGroup}"
+msgstr "محور المخطط, النوع: {axisType}, المجموعة: {axisGroup}"
 
-#. Translators: Prompt for axis title if axis has title
-#. Translators: Prompt for axis title without title
-msgid "Chart Axis Title equals {} "
-msgstr "عنوان محور المخطط يساوي {} "
+#. Translators: Indicates a chart axis title in Microsoft Excel.
+msgid "Chart axis title"
+msgstr "عنوان محور المخطط"
 
-msgid " square "
-msgstr "مربع"
+#. Translators: Indicates a trendline in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+msgid "trendline"
+msgstr "مسار الاتجاه"
 
-#. Translators: Prompt for trendline with equation or r square
-msgid " trendline {} "
-msgstr ""
+#. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
+msgid " squared "
+msgstr "تربيعي"
 
-#. Translators: Prompt for trendline without equation or r square
-#, fuzzy
-msgid "Trendline"
-msgstr "شَرطة تحت السطر"
+#. Translators: Details about a chart title in Microsoft Excel.
+msgid "Chart title: {chartTitle}"
+msgstr "عنوان المخطط: {chartTitle}"
 
-#. Translators: Prompt for chart title
-msgid "Chart Title equals {}"
-msgstr "عنوان المخطط يساوي {}"
-
-#. Translators: Prompt for chart title when the title is not available
+#. Translators: Indicates an untitled chart in Microsoft Excel.
 msgid "Untitled chart"
 msgstr "مخطط بلا عنوان"
 
-#. Translators: Prompt for chart area with dimentions
-msgid "Chart area height equals {}, width equals {}, top equals {}, left equals {}"
+#. Translators: Details about the chart area in a Microsoft Excel chart.
+msgid ""
+"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
+"{chartAreaTop}, left: {chartAreaLeft}"
 msgstr ""
-"ارتفاع مساحة المخطط يساوي {}, العرض يساوي {}, العلو يساوي {}, اليسار يساوي {}"
+"مساحة المخطط, الارتفاع: {chartAreaHeight}, العرض: {chartAreaWidth}, العلو: "
+"{chartAreaTop}, اليسار: {chartAreaLeft}"
 
-#. Translators: Prompt for chart area
+#. Translators: Indicates the chart area of a Microsoft Excel chart.
 msgid "Chart area "
 msgstr "مخطط مساحي"
 
-#. Translators: Prompt for plot area with inner dimentions
+#. Translators: Details about the plot area of a Microsoft Excel chart.
 msgid ""
-"Plot Area inside height equals {:.0f}, inside width equals {:.0f}, inside top "
-"equals {:.0f}, inside left equals {:.0f}"
+"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
+"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
+"{plotAreaInsideLeft:.0f}"
 msgstr ""
+"مساحة المخطط, داخل الارتفاع: {plotAreaInsideHeight:.0f}, داخل العرض: "
+"{plotAreaInsideWidth:.0f}, داخل العلو: {plotAreaInsideTop:.0f}, داخل اليسار: "
+"{plotAreaInsideLeft:.0f}"
 
-#. Translators: Prompt for plot area
-msgid "Plot Area "
-msgstr ""
+#. Translators: Indicates the plot area of a Microsoft Excel chart.
+msgid "Plot area "
+msgstr "مساحة المخطط"
 
-#. Translators: Prompt for Legend
-#, fuzzy
+#. Translators: Indicates the legend in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Legend"
-msgstr "أسطورة"
+msgstr "وسيلة إيضاح"
 
-#. Translators: Prompt for Legend when no legend is present
-#, fuzzy
+#. Translators: Indicates that there is no legend in a Microsoft Excel chart.
 msgid "No legend"
-msgstr "لا توجد أساطير"
+msgstr "لا توجد وسيلة إيضاح"
 
-#. Translators: Prompt for Legend entry for series name index of count
-#, fuzzy
-msgid "Legend entry for Series {}, {} of {}"
-msgstr "مدخل الأسطورة للسلسلة"
+#. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
+#. For example, this might report "Legend entry for series Temperature 1 of 2"
+msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr "إدخال وسيلة الإيضاح للسلسلة {seriesName} {seriesIndex} من {seriesCount}"
 
-#. Translators: Prompt for Legend key for series name index of count
-#, fuzzy
-msgid "Legend key for Series {} {} of {}"
-msgstr "مفتاح الأسطورة للسلسلة"
+#. Translators: Details about a legend key for a series in a Microsoft Excel chart.
+#. For example, this might report "Legend key for series Temperature 1 of 2"
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr "مفتاح وسيلة الإيضاح للسلسلة {seriesName} {seriesIndex} من {seriesCount}"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
@@ -8148,6 +8233,32 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "%s"
+#~ msgstr "%s"
+
+#~ msgid "{} Series {} of {}"
+#~ msgstr "{} سلسلة {} من {}"
+
+#~ msgid "{} {}: "
+#~ msgstr "{} {}: "
+
+#~ msgid "{} {}"
+#~ msgstr "{} {}"
+
+#~ msgid "value {}"
+#~ msgstr "القيمة {}"
+
+#~ msgid " {} {} of {}"
+#~ msgstr " {} {} من {}"
+
+#~ msgid "none"
+#~ msgstr "لا شيء"
+
+#~ msgid ""
+#~ "Chart area height equals {}, width equals {}, top equals {}, left equals {}"
+#~ msgstr ""
+#~ "ارتفاع مساحة المخطط يساوي {}, العرض يساوي {}, العلو يساوي {}, اليسار يساوي {}"
 
 #~ msgid "equation"
 #~ msgstr "معادلة"
