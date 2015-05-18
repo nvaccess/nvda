@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-02 19:04+1000\n"
-"PO-Revision-Date: 2015-05-07 22:52+0400\n"
+"POT-Creation-Date: 2015-05-08 19:04+1000\n"
+"PO-Revision-Date: 2015-05-17 11:58+0800\n"
 "Last-Translator: Ruslan Kolodyazhni <eye0@rambler.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 "Initial-Author: Dmitry Kaslin <dak1968@gmail.com>\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.6.11\n"
 "X-Poedit-Bookmarks: 343,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -1926,7 +1926,7 @@ msgid "selected %s"
 msgstr "Выделено %s"
 
 #. Translators: The word for an unknown control type.
-#. Translators: chart type to be reported when the type is not available
+#. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
 msgstr "неизвестно"
 
@@ -2052,6 +2052,7 @@ msgid "cell"
 msgstr "Ячейка"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
+#. Translators: A column in a column chart.
 msgid "column"
 msgstr "Столбец"
 
@@ -2344,7 +2345,7 @@ msgstr "кнопка ячейки с выпадающем меню"
 
 #. Translators: Identifies mathematical content.
 msgid "math"
-msgstr ""
+msgstr "Математическое выражение"
 
 #. Translators: Identifies a grip control.
 msgid "grip"
@@ -2648,11 +2649,11 @@ msgstr "перекрыто"
 
 #. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the allocated/available space
 msgid "cropped"
-msgstr "обрезан"
+msgstr "Обрезано"
 
 #. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
 msgid "overflowing"
-msgstr "переполнен"
+msgstr "Переполнено"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -2681,7 +2682,7 @@ msgid ""
 "More details about the errors can be found in the log file."
 msgstr ""
 "Ваш файл с привязками жестов содержит ошибки.\n"
-"Лог содержит более подробную информацию о них"
+"Более подробную информацию об ошибках можно найти в журнале."
 
 msgid "gesture map File Error"
 msgstr "Ошибка файла привязки жестов"
@@ -2951,11 +2952,11 @@ msgstr "Включает и выключает озвучивание клави
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
-msgstr "читать название шрифта отключено"
+msgstr "чтение названия шрифта выключено"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name on"
-msgstr "читать название шрифта включено"
+msgstr "чтение названия шрифта включено"
 
 #. Translators: Input help mode message for toggle report font name command.
 msgid "Toggles on and off the reporting of font changes"
@@ -2963,11 +2964,11 @@ msgstr "Включает и выключает объявление измене
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size off"
-msgstr "Читать размер шрифта отключено"
+msgstr "чтение размера шрифта выключено"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size on"
-msgstr "Читать размер шрифта включено"
+msgstr "чтение размера шрифта включено"
 
 #. Translators: Input help mode message for toggle report font size command.
 msgid "Toggles on and off the reporting of font size changes"
@@ -2975,11 +2976,11 @@ msgstr "Включает и выключает объявление измене
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes off"
-msgstr "читать атрибуты шрифта отключено"
+msgstr "чтение атрибутов шрифта выключено"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes on"
-msgstr "читать атрибуты шрифта включено"
+msgstr "чтение атрибутов шрифта включено"
 
 #. Translators: Input help mode message for toggle report font attributes command.
 msgid "Toggles on and off the reporting of font attributes"
@@ -2987,11 +2988,11 @@ msgstr "Включает и выключает объявление атрибу
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
-msgstr "читать ревизии редактора отключено"
+msgstr "чтение ревизий редактора выключено"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions on"
-msgstr "читать ревизии редактора включено"
+msgstr "чтение ревизий редактора включено"
 
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
@@ -2999,11 +3000,11 @@ msgstr "Включает и выключает объявление ревизи
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
-msgstr "читать цвета отключено"
+msgstr "чтение цветов выключено"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors on"
-msgstr "читать цвета включено"
+msgstr "чтение цветов включено"
 
 #. Translators: Input help mode message for toggle report colors command.
 msgid "Toggles on and off the reporting of colors"
@@ -3011,11 +3012,11 @@ msgstr "Включает и выключает объявление цветов
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment off"
-msgstr "читать выравнивание отключено"
+msgstr "чтение выравнивания выключено"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment on"
-msgstr "читать выравнивание включено"
+msgstr "чтение выравнивания включено"
 
 #. Translators: Input help mode message for toggle report alignment command.
 msgid "Toggles on and off the reporting of text alignment"
@@ -3023,11 +3024,11 @@ msgstr "Включает и выключает объявление выравн
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style off"
-msgstr "читать стиль отключено"
+msgstr "чтение стиля выключено"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style on"
-msgstr "читать стиль включено"
+msgstr "чтение стиля включено"
 
 #. Translators: Input help mode message for toggle report style command.
 msgid "Toggles on and off the reporting of style changes"
@@ -3035,11 +3036,11 @@ msgstr "Включает и выключает объявление измене
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
-msgstr "читать граматические ошибки отключено"
+msgstr "чтение граматических ошибок выключено"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors on"
-msgstr "читать граматические ошибки включено"
+msgstr "чтение граматических ошибок включено"
 
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
@@ -3047,11 +3048,11 @@ msgstr "Включает и выключает объявление грамат
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
-msgstr "читать страницы отключено"
+msgstr "чтение страниц выключено"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages on"
-msgstr "читать страницы включено"
+msgstr "чтение страниц включено"
 
 #. Translators: Input help mode message for toggle report pages command.
 msgid "Toggles on and off the reporting of pages"
@@ -3059,11 +3060,11 @@ msgstr "Включает и выключает объявление страни
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
-msgstr "читать номера строк отключено"
+msgstr "чтение номеров строк выключено"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers on"
-msgstr "читать номера строк включено"
+msgstr "чтение номеров строк включено"
 
 #. Translators: Input help mode message for toggle report line numbers command.
 msgid "Toggles on and off the reporting of line numbers"
@@ -3071,11 +3072,11 @@ msgstr "Включает и выключает объявление номеро
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
 msgid "report line indentation off"
-msgstr "читать отступы отключено"
+msgstr "чтение отступов выключено"
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
 msgid "report line indentation on"
-msgstr "читать отступы включено"
+msgstr "чтение отступов включено"
 
 #. Translators: Input help mode message for toggle report line indentation command.
 msgid "Toggles on and off the reporting of line indentation"
@@ -3083,11 +3084,11 @@ msgstr "Включает и выключает объявление отступ
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
-msgstr "читать отступы абзацев отключено"
+msgstr "чтение отступов абзацев выключено"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation on"
-msgstr "читать отступы абзацев включено"
+msgstr "чтение отступов абзацев включено"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -3095,11 +3096,11 @@ msgstr "Включает и выключает объявление отступ
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
-msgstr "читать таблицы отключено"
+msgstr "чтение таблиц выключено"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables on"
-msgstr "читать таблицы включено"
+msgstr "чтение таблиц включено"
 
 #. Translators: Input help mode message for toggle report tables command.
 msgid "Toggles on and off the reporting of tables"
@@ -3107,24 +3108,23 @@ msgstr "Включает и выключает объявление таблиц
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers off"
-msgstr "читать заголовки строк и столбцов отключено"
+msgstr "чтение заголовков строк и столбцов выключено"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers on"
-msgstr "читать заголовки строк и столбцов включено"
+msgstr "чтение заголовков строк и столбцов включено"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
 msgid "Toggles on and off the reporting of table row and column headers"
-msgstr ""
-"Включает и выключает объявление заголовков строк и столбцов  в таблицах"
+msgstr "Включает и выключает объявление заголовков строк и столбцов в таблицах"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
-msgstr "читать координаты ячейки отключено"
+msgstr "чтение координат ячейки выключено"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates on"
-msgstr "читать координаты ячейки включено"
+msgstr "чтение координат ячейки включено"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
@@ -3132,11 +3132,11 @@ msgstr "Включает и выключает объявление коорди
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
-msgstr "читать ссылки отключено"
+msgstr "чтение ссылок выключено"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links on"
-msgstr "читать ссылки включено"
+msgstr "чтение ссылок включено"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3144,11 +3144,11 @@ msgstr "Включает и выключает объявление ссылок
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
-msgstr "читать примечания отключено"
+msgstr "чтение примечаний выключено"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments on"
-msgstr "читать примечания включено"
+msgstr "чтение примечаний включено"
 
 #. Translators: Input help mode message for toggle report comments command.
 msgid "Toggles on and off the reporting of comments"
@@ -3156,11 +3156,11 @@ msgstr "Включает и выключает объявление примеч
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists off"
-msgstr "читать списки отключено"
+msgstr "чтение списков выключено"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists on"
-msgstr "читать списки включено"
+msgstr "чтение списков включено"
 
 #. Translators: Input help mode message for toggle report lists command.
 msgid "Toggles on and off the reporting of lists"
@@ -3168,11 +3168,11 @@ msgstr "Включает и выключает объявление списко
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings off"
-msgstr "читать заголовки отключено"
+msgstr "чтение заголовков выключено"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings on"
-msgstr "читать заголовки включено"
+msgstr "чтение заголовков включено"
 
 #. Translators: Input help mode message for toggle report headings command.
 msgid "Toggles on and off the reporting of headings"
@@ -3180,11 +3180,11 @@ msgstr "Включает и выключает объявление заголо
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
-msgstr "читать цитаты отключено"
+msgstr "чтение цитат выключено"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes on"
-msgstr "читать цитаты включено"
+msgstr "чтение цитат включено"
 
 #. Translators: Input help mode message for toggle report block quotes command.
 msgid "Toggles on and off the reporting of block quotes"
@@ -3192,11 +3192,11 @@ msgstr "Включает и выключает объявление цитат"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks off"
-msgstr "читать ориентиры отключено"
+msgstr "чтение ориентиров выключено"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks on"
-msgstr "читать ориентиры включено"
+msgstr "чтение ориентиров включено"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
@@ -3204,11 +3204,11 @@ msgstr "Включает и выключает объявление ориент
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
-msgstr "читать фреймы отключено"
+msgstr "чтение фреймов выключено"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames on"
-msgstr "читать фреймы включено"
+msgstr "чтение фреймов включено"
 
 #. Translators: Input help mode message for toggle report frames command.
 msgid "Toggles on and off the reporting of frames"
@@ -3216,11 +3216,11 @@ msgstr "Включает и выключает объявление фреймо
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
-msgstr "читать интерактивные элементы отключено"
+msgstr "чтение интерактивных элементов выключено"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable on"
-msgstr "читать интерактивные элементы включено"
+msgstr "чтение интерактивных элементов включено"
 
 #. Translators: Input help mode message for toggle report if clickable command.
 msgid "Toggles on and off reporting if clickable"
@@ -3724,11 +3724,11 @@ msgstr "Нет системной батареи"
 #. Translators: This is presented to inform the user of the current battery percentage.
 #, python-format
 msgid "%d percent"
-msgstr "%d процент."
+msgstr "%d процент,"
 
 #. Translators: This is presented when AC power is connected such as when recharging a laptop battery.
 msgid "AC power on"
-msgstr "Подключено питание от электросети"
+msgstr "подключено питание от электросети"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
@@ -3749,22 +3749,22 @@ msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
 msgstr ""
-"Следующее нажатие клавиши или сочетания клавиш не будет обрабатываться NVDA, "
-"а будет передано, непосредственно, Windows."
+"Следующее нажатие клавиши или комбинации клавиш не будет обрабатываться "
+"NVDA, а будет передано, непосредственно, Windows."
 
 #. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
 #. If there is an appModule for the current program, NVDA speaks the name of the module after presenting this message.
 #, python-format
 msgid "Currently running application is %s"
-msgstr "Работающее приложение %s"
+msgstr "Работает приложение %s"
 
 #. Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
 #. For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
 #. This message will not be presented if there is no module for the current program.
 #, python-format
 msgid " and currently loaded module is %s"
-msgstr " и загруженный модуль %s"
+msgstr " для которого загружен модуль %s"
 
 #. Translators: Input help mode message for report current program name and app module name command.
 msgid ""
@@ -3788,7 +3788,7 @@ msgstr "Вызывает диалог выбора используемого г
 
 #. Translators: Input help mode message for go to braille settings dialog command.
 msgid "Shows the NVDA braille settings dialog"
-msgstr ""
+msgstr "Вызывает диалог настроек брайля NVDA"
 
 #. Translators: Input help mode message for go to keyboard settings dialog command.
 msgid "Shows the NVDA keyboard settings dialog"
@@ -3800,11 +3800,11 @@ msgstr "Вызывает диалог настроек мыши NVDA"
 
 #. Translators: Input help mode message for go to review cursor settings dialog command.
 msgid "Shows the NVDA review cursor settings dialog"
-msgstr ""
+msgstr "Вызывает диалог настроек просмотрового курсора NVDA"
 
 #. Translators: Input help mode message for go to input composition dialog.
 msgid "Shows the NVDA input composition settings dialog"
-msgstr ""
+msgstr "Вызывает диалог настроек формирования ввода азиатских символов NVDA"
 
 #. Translators: Input help mode message for go to object presentation dialog command.
 msgid "Shows the NVDA object presentation settings dialog"
@@ -3820,27 +3820,27 @@ msgstr "Вызывает диалог настроек озвучивания ф
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 msgid "Shows the NVDA default dictionary dialog"
-msgstr ""
+msgstr "Вызывает общий словарь NVDA"
 
 #. Translators: Input help mode message for opening voice-specific dictionary dialog.
 msgid "Shows the NVDA voice-specific dictionary dialog"
-msgstr ""
+msgstr "Вызывает голосовой словарь NVDA"
 
 #. Translators: Input help mode message for opening temporary dictionary.
 msgid "Shows the NVDA temporary dictionary dialog"
-msgstr ""
+msgstr "Вызывает временный словарь NVDA"
 
 #. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
 msgid "Shows the NVDA symbol pronunciation dialog"
-msgstr ""
+msgstr "Вызывает диалог произношения символов/пунктуации NVDA"
 
 #. Translators: Input help mode message for go to input gestures dialog command.
 msgid "Shows the NVDA input gestures dialog"
-msgstr "Показывает диалог жестов ввода NVDA"
+msgstr "Вызывает диалог жестов ввода NVDA"
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
-msgstr "Сохраняет текущую конфигурацию настроек NVDA в файл"
+msgstr "Сохраняет текущую конфигурацию NVDA"
 
 #. Translators: Input help mode message for apply last saved or default settings command.
 msgid ""
@@ -3859,21 +3859,21 @@ msgstr ""
 msgid ""
 "Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
 "for NVDA"
-msgstr ""
+msgstr "Активирует менеджер дополнений NVDA"
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
-msgstr "просмотрщик речи запрещён"
+msgstr "просмотрщик речи отключён"
 
 #. Translators: The message announced when enabling speech viewer.
 msgid "speech viewer enabled"
-msgstr "просмотрщик речи разрешён"
+msgstr "просмотрщик речи включён"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
 "Toggles the NVDA Speech viewer, a floating window that allows you to view "
 "all the text that NVDA is currently speaking"
-msgstr ""
+msgstr "Включает и выключает просмотрщик речи NVDA"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
@@ -4027,11 +4027,11 @@ msgstr "Вызывает диалог профилей конфигурации 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
 msgid "Not math"
-msgstr ""
+msgstr "Нет математического выражения"
 
 #. Translators: Describes a command.
 msgid "Begins interaction with math content"
-msgstr ""
+msgstr "Начинает взаимодействие с математическим выражением"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -6923,7 +6923,7 @@ msgstr "Использовать &экранное представление (�
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Automatic &Say All on page load"
-msgstr "Автоматическое &чтение страницы при ее загрузке"
+msgstr "Автоматическое &чтение страницы при её загрузке"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -7262,12 +7262,12 @@ msgstr ""
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
-msgstr ""
+msgstr "Завершить математическое взаимодействие"
 
 #. Translators: Reported when the user attempts math interaction
 #. but math interaction is not supported.
 msgid "Math interaction not supported."
-msgstr ""
+msgstr "Математическое взаимодействие не поддерживается."
 
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
@@ -7391,7 +7391,7 @@ msgstr "цвет поумолчанию"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr ""
+msgstr "Вызывает список диаграмм, ячеек с комментариями и ячеек с формулами"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -7492,547 +7492,649 @@ msgstr "Редактирование примечания для ячейки с
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} по {lastAddress} {lastContent}"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Area"
 msgstr "Объёмная диаграмма с областями"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Area"
 msgstr "Объёмная диаграмма с областями с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Area"
 msgstr "Нормированная с областями и накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Bar"
 msgstr "Объёмная линейчатая диаграмма с группировкой"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Bar"
 msgstr "Объёмная линейчатая диаграмма с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Bar"
 msgstr "Нормированная объёмная линейчатая диаграмма с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Column"
 msgstr "Трёхмерная гистограмма"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Column"
 msgstr "Объёмная гистограмма с группировкой"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Column"
 msgstr "Объёмная гистограмма с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Column"
 msgstr "Нормированная объёмная гистограмма с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Line"
 msgstr "Объёмный график"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Pie"
 msgstr "Объёмная круговая диаграмма"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded 3D Pie"
 msgstr "Объёмная разрезанная круговая диаграмма"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Area"
 msgstr "Диаграмма с областями"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Area"
 msgstr "Диаграмма с областями с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Clustered Bar"
 msgstr "Линейчатая диаграмма с группировкой"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bar of Pie"
 msgstr "Линия круговой диаграммы"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Bar"
 msgstr "Линейчатая диаграмма с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Bar"
 msgstr "Нормированная линейчатая диаграмма"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bubble"
 msgstr "Пузырьковая диаграмма"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bubble with 3D effects"
 msgstr "Объёмный вариант пузырьковой диаграммы"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Clustered Column"
 msgstr "Гистограмма с группировкой"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Column"
 msgstr "Гистограмма с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Column"
 msgstr "Нормированная гистограмма"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cone Bar"
 msgstr "Коническая с группировкой"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cone Bar"
 msgstr "Коническая с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cone Bar"
 msgstr "Нормированная коническая с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cone Column"
 msgstr "Объёмная коническая гистограмма"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cone Column"
 msgstr "Коническая гистограмма с группировкой"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cone Column"
 msgstr "Коническая гистограмма с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cone Column"
 msgstr "Нормированная коническая гистограмма с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cylinder Bar"
 msgstr "Цилиндрическая с группировкой"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cylinder Bar"
 msgstr "Цилиндрическая с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cylinder Bar"
 msgstr "Нормированная цилиндрическая с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cylinder Column"
 msgstr "Объёмная цилиндрическая гистограмма"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cylinder Column"
 msgstr "Нормированная цилиндрическая гистограмма с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Doughnut"
 msgstr "Кольцевая диаграмма"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded Doughnut"
 msgstr "Разрезанная кольцевая диаграмма"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line"
 msgstr "Строка"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line with Markers"
 msgstr "График с маркерами"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line with Markers"
 msgstr "График с накоплением, на котором отдельные значения помечены маркерами"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line with Markers"
 msgstr "Нормированный график, на котором отдельные значения помечены маркерами"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line"
 msgstr "График с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line"
 msgstr "Нормированный график с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Pie"
 msgstr "Круговая диаграмма"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded Pie"
 msgstr "Разрезанная круговая диаграмма"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Pie of Pie"
 msgstr "Вторичная круговая диаграмма"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Pyramid Bar"
 msgstr "Пирамидальная с группировкой"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Pyramid Bar"
 msgstr "Пирамидальная с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Bar"
 msgstr "Нормированная пирамидальная с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Pyramid Column"
 msgstr "Объёмная пирамидальная гистограмма"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Pyramid Column"
 msgstr "Пирамидальная гистограмма с группировкой"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Pyramid Column"
 msgstr "Пирамидальная гистограмма с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Column"
 msgstr "Нормированная пирамидальная гистограмма с накоплением"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Radar"
 msgstr "Лепестковая диаграмма"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Filled Radar"
 msgstr "Заполненная лепестковая диаграмма"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Radar with Data Markers"
 msgstr "Лепестковая диаграмма с маркерами данных"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "High-Low-Close"
 msgstr ""
 "Биржевая диаграмма отображает наборы данных из трёх значений (самый высокий "
 "курс, самый низкий курс, курс закрытия)"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Open-High-Low-Close"
 msgstr ""
 "Биржевая диаграмма для наборов из четырёх значений (курс открытия, самый "
 "высокий курс, самый низкий курс, курс закрытия)"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-High-Low-Close"
 msgstr ""
 "Биржевая диаграмма для наборов из четырёх значений (объём, самый высокий "
 "курс, самый низкий курс, курс закрытия)"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-Open-High-Low-Close"
 msgstr ""
 "Биржевая диаграмма для наборов из пяти значений (объём, курс открытия, самый "
 "высокий курс, самый низкий курс, курс закрытия)"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface"
 msgstr "Объёмная поверхностная диаграмма"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Surface (Top View)"
 msgstr "Поверхностная диаграмма (вид сверху)"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Surface (Top View wireframe)"
 msgstr "Проволочная поверхность"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface (wireframe)"
 msgstr "Объёмная проволочная поверхность"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter"
 msgstr "Точечная диаграмма"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Lines"
 msgstr "Точечная диаграмма с линиями"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Lines and No Data Markers"
 msgstr "Точечная диаграмма с линиями и без маркеров данных"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Smoothed Lines"
 msgstr "Точечная диаграмма с гладкими линиями"
 
-#. Translators: Chart type
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Smoothed Lines and No Data Markers"
 msgstr "Точечная диаграмма с гладкими линиями и без маркеров данных"
 
-#. Translators: prompt for chart title and chart type to be reported
-msgid "Chart title equals {chartTitle} type equals {chartType}"
+#. Translators: Message reporting the title and type of a chart.
+msgid "Chart title: {chartTitle}, type: {chartType}"
 msgstr "{chartType} с заголовком {chartTitle}"
 
-#, python-format
-msgid "%s"
-msgstr "%s"
-
-#. Translators: Axis title to be reported when the title is not available
+#. Translators: Reported when there is no title for an axis in a chart.
 msgid "Not defined"
 msgstr "Не определено"
 
-#. Translators: Chart Axis types
-#. Translators: axis type
+#. Translators: A type of axis in a chart.
+#. Translators: The category axis in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Category"
 msgstr "Категория"
 
-#. Translators: axis type
+#. Translators: A type of axis in a chart.
+#. Translators: The value axis in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Value"
 msgstr "Значение"
 
-#. Translators: axis type
+#. Translators: A type of axis in a chart.
+#. Translators: The series axis in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Series"
 msgstr "Ряд"
 
-#. Translators: Prompt for axis title and axis type to be reported
+#. Translators: Message reporting the type and title of an axis in a chart.
+#. For example, this might report "Category axis is month"
 msgid "{axisName} Axis is {axisTitle}"
 msgstr "Ось типа {axisName} с заголовком {axisTitle}"
 
-#. Translators: Number of series when there is only one series
-#, python-format
-msgid "There is %d series in this chart"
-msgstr "В этой диаграмме только %d ряд"
+#. Translators: Indicates that there is 1 series in a chart.
+msgid "There is 1 series in this chart"
+msgstr "В этой диаграмме только 1 ряд"
 
-#. Translators: Number of series when there are multiple series
+#. Translators: Indicates the number of series in a chart where there are multiple series.
 #, python-format
 msgid "There are total %d series in this chart"
 msgstr "В этой диаграмме всего %d рядов"
 
-#. Translators: prompt to be reported when there is no series
+#. Translators: Specifies the number and name of a series when listing series in a chart.
+msgid "series {number} {name}"
+msgstr "ряд {number} {name}"
+
+#. Translators: Indicates that there are no series in a chart.
 msgid "No Series defined."
 msgstr "Ряды не определены."
 
-#. Translators: Chart segment such as slice for  pie chart etc this is reported when there is no segment available.
+#. Translators: A slice in a pie chart.
+msgid "slice"
+msgstr "сектор"
+
+#. Translators: A data point in a line chart.
+msgid "data point"
+msgstr "точка данных"
+
+#. Translators: A segment of a chart for charts which don't have a specific name for segments.
 msgid "item"
 msgstr "элемент"
 
-msgid "Series color: {} "
-msgstr "Цвет ряда: {} "
+msgid "Series color: {colorName} "
+msgstr "Цвет ряда: {colorName} "
 
-#. Translators: prompt for xlDisplayUnitLabel
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Display Unit Label"
 msgstr "Показать метку цены деления"
 
-#. Translators: prompt for xlMajorGridlines
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Major Gridlines"
 msgstr "Основные линии сетки"
 
-#. Translators: prompt for xlMinorGridlines
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Minor Gridlines"
 msgstr "Вспомогательные линии сетки"
 
-#. Translators: prompt for xlPivotChartDropZone
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Pivot Chart Drop Zone"
 msgstr "Pivot Chart Drop Zone"
 
-#. Translators: prompt for xlPivotChartFieldButton
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Pivot Chart Field Button"
 msgstr "Pivot Chart Field Button"
 
 # An open-source (and free) Screen Reader for the Windows Operating System
 # Created by Michael Curran, with help from James Teh and others
 # Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
-#. Translators: prompt for xlDownBars
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Down Bars"
 msgstr "Полосы понижения"
 
-#. Translators: prompt for xlDropLines
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Drop Lines"
 msgstr "Линии проекции"
 
-#. Translators: prompt for xlHiLoLines
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Hi Lo Lines"
 msgstr "Hi Lo Lines"
 
-#. Translators: prompt for xlRadarAxisLabels
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Radar Axis Labels"
 msgstr "Метки оси лепестковой"
 
-#. Translators: prompt for xlSeriesLines
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Series Lines"
 msgstr "Линии серий"
 
-#. Translators: prompt for xlUpBars
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Up Bars"
 msgstr "Полосы повышения"
 
-#. Translators: prompt for xlCorners
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Corners"
 msgstr "Углы"
 
-#. Translators: prompt for xlDataTable
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Data Table"
 msgstr "Таблица данных"
 
-#. Translators: prompt for xlFloor
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Floor"
 msgstr "Основание"
 
-#. Translators: prompt for xlNothing
-msgid "xlNothing"
-msgstr "xlNothing"
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Nothing"
+msgstr "Ничего"
 
-#. Translators: prompt for xlWalls
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Walls"
 msgstr "Стенки"
 
-#. Translators: prompt for xlDataLabel
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Data Label"
 msgstr "Подпись данных"
 
-#. Translators: prompt for xlErrorBars
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Error Bars"
 msgstr "Предел погрешностей"
 
-#. Translators: prompt for xlXErrorBars
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "X Error Bars"
 msgstr "Предел погрешностей по X"
 
-#. Translators: prompt for xlYErrorBars
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Y Error Bars"
 msgstr "Предел погрешностей по Y"
 
-#. Translators: prompt for xlShape
+#. Translators: A type of element in a Microsoft Excel chart.
 msgid "Shape"
 msgstr "Фигура"
 
-#. Translators: Prompt for series details in the format: Name series index of count
-msgid "{} Series {} of {}"
-msgstr "{} Ряд {} из {}"
+#. Translators: Details about a series in a chart.
+#. For example, this might report "foo series 1 of 2"
+msgid "{seriesName} series {seriesIndex} of {seriesCount}"
+msgstr "{seriesName} ряд {seriesIndex} из {seriesCount}"
 
-#. Translators: for line charts, no change from the previous element
-msgid "no change from point {}, "
-msgstr "нет изменений в точке {}, "
+#. Translators: For line charts, indicates no change from the previous data point on the left
+msgid "no change from point {previousIndex}, "
+msgstr "нет изменений в точке {previousIndex}, "
 
-#. Translators: for line charts, increase from the previous element
-msgid "Increased by {} from point {}, "
-msgstr "увеличилась на {} в точке {}, "
+#. Translators: For line charts, indicates an increase from the previous data point on the left
+msgid "Increased by {incrementValue} from point {previousIndex}, "
+msgstr "Увеличилось на {incrementValue} в точке {previousIndex}, "
 
-#. Translators: for line charts, decrease from the previous element
-msgid "decreased by {} from point {}, "
-msgstr "снизилась на {} в точке {}, "
+#. Translators: For line charts, indicates a decrease from the previous data point on the left
+msgid "decreased by {decrementValue} from point {previousIndex}, "
+msgstr "Уменьшилось на {decrementValue} в точке {previousIndex}, "
 
-#. Translators: report category axis title if available in the format title value
-msgid "{} {}: "
-msgstr "{} {}: "
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+msgid "{categoryAxisTitle} {categoryAxisData}: "
+msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
-#. Translators: report category axis title as Category if axis title is not available in the format "category" value
-msgid "Category {}: "
-msgstr "Категория {}: "
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+msgid "Category {categoryAxisData}: "
+msgstr "Категория {categoryAxisData}: "
 
-#. Translators: report value axis title if available in the format title value
-msgid "{} {}"
-msgstr "{} {}"
+#. Translators: Specifies the value of a data point.
+#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+msgid "{valueAxisTitle} {valueAxisData}"
+msgstr "{valueAxisTitle} {valueAxisData}"
 
-#. Translators: report value axis title as value if axis title is not available in the format "Value" value
-msgid "value {}"
-msgstr "значение {}"
+#. Translators: Specifies the value of a data point.
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+msgid "value {valueAxisData}"
+msgstr "значение {valueAxisData}"
 
-#. Translators: Prompt for pie chart in the format: fraction nn percent slice  index of count
-msgid " fraction {:.2f} Percent {} {} of {}"
-msgstr " что составляет {:.2f}% {} {} из {}"
+#. Translators: Details about a slice of a pie chart.
+#. For example, this might report "fraction 25.25 percent slice 1 of 5"
+msgid ""
+" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
+msgstr ""
+" что составляет сектор в {fractionValue:.2f} процент {pointIndex} из "
+"{pointCount}"
 
-#. Translators: Prompt for other charts in the format: segment type index of count
-msgid " {} {} of {}"
-msgstr " {} {} из {}"
+#. Translators: Details about a segment of a chart.
+#. For example, this might report "column 1 of 5"
+msgid " {segmentType} {pointIndex} of {pointCount}"
+msgstr " {segmentType} {pointIndex} из {pointCount}"
 
-#. Translators: axis group
+#. Translators: The primary axis group in a Microsoft Excel chart.
 msgid "Primary"
 msgstr "По основной оси"
 
-#. Translators: axis group
+#. Translators: The secondary axis group in a Microsoft Excel chart.
 msgid "Secondary"
 msgstr "По вспомогательной оси"
 
-#. Translators: Prompt for axis details such as: type, group, and title
-#. Translators: Prompt for axis details such as: type, group, and title when there is no title
-msgid "Chart Axis, type equals {}, group equals {}, Title equals {}"
-msgstr "Ось диаграммы, тип - {}, группа - {}, заголовок - {}"
+#. Translators: Details about an axis in a chart.
+msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
+msgstr ""
+"Ось диаграммы, тип: {axisType}, группа: {axisGroup}, заголовок: {axisTitle}"
 
-msgid "none"
-msgstr "отсутствует"
+#. Translators: Details about an untitled axis in a chart.
+msgid "Chart axis, type: {axisType}, group: {axisGroup}"
+msgstr "Ось диаграммы, тип: {axisType}, группа: {axisGroup}"
 
-#. Translators: Prompt for axis title if axis has title
-#. Translators: Prompt for axis title without title
-msgid "Chart Axis Title equals {} "
-msgstr "Заголовок оси диаграммы - {} "
+#. Translators: Indicates a chart axis title in Microsoft Excel.
+msgid "Chart axis title"
+msgstr "Заголовок оси диаграммы"
 
-msgid " square "
+#. Translators: Indicates a trendline in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+msgid "trendline"
+msgstr "линия тренда"
+
+#. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
+msgid " squared "
 msgstr " квадрат "
 
-#. Translators: Prompt for trendline with equation or r square
-msgid " trendline {} "
-msgstr " линия тренда {} "
+#. Translators: Details about a chart title in Microsoft Excel.
+msgid "Chart title: {chartTitle}"
+msgstr "Заголовок диаграммы: {chartTitle}"
 
-#. Translators: Prompt for trendline without equation or r square
-msgid "Trendline"
-msgstr "Линия тренда"
-
-#. Translators: Prompt for chart title
-msgid "Chart Title equals {}"
-msgstr "Заголовок диаграммы: {}"
-
-#. Translators: Prompt for chart title when the title is not available
+#. Translators: Indicates an untitled chart in Microsoft Excel.
 msgid "Untitled chart"
 msgstr "Диаграмма без названия"
 
-#. Translators: Prompt for chart area with dimentions
+#. Translators: Details about the chart area in a Microsoft Excel chart.
 msgid ""
-"Chart area height equals {}, width equals {}, top equals {}, left equals {}"
-msgstr "Высота области диаграммы {}, ширина {}, сверху {}, слева {}"
+"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
+"{chartAreaTop}, left: {chartAreaLeft}"
+msgstr ""
+"Область диаграммы, высота: {chartAreaHeight}, ширина: {chartAreaWidth}, "
+"сверху: {chartAreaTop}, слева: {chartAreaLeft}"
 
-#. Translators: Prompt for chart area
+#. Translators: Indicates the chart area of a Microsoft Excel chart.
 msgid "Chart area "
 msgstr "Область диаграммы "
 
-#. Translators: Prompt for plot area with inner dimentions
+#. Translators: Details about the plot area of a Microsoft Excel chart.
 msgid ""
-"Plot Area inside height equals {:.0f}, inside width equals {:.0f}, inside "
-"top equals {:.0f}, inside left equals {:.0f}"
+"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
+"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
+"{plotAreaInsideLeft:.0f}"
 msgstr ""
-"Высота области построения внутри {:.0f}, ширина внутри {:.0f}, сверху внутри "
-"{:.0f}, слева внутри {:.0f}"
+"Высота области построения внутри: {plotAreaInsideHeight:.0f}, ширина внутри: "
+"{plotAreaInsideWidth:.0f}, сверху внутри: {plotAreaInsideTop:.0f}, слева "
+"внутри: {plotAreaInsideLeft:.0f}"
 
-#. Translators: Prompt for plot area
-msgid "Plot Area "
-msgstr "Область построения"
+#. Translators: Indicates the plot area of a Microsoft Excel chart.
+msgid "Plot area "
+msgstr "Область построения "
 
-#. Translators: Prompt for Legend
+#. Translators: Indicates the legend in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Legend"
 msgstr "Легенда"
 
-#. Translators: Prompt for Legend when no legend is present
+#. Translators: Indicates that there is no legend in a Microsoft Excel chart.
 msgid "No legend"
 msgstr "Нет легенды"
 
-#. Translators: Prompt for Legend entry for series name index of count
-msgid "Legend entry for Series {}, {} of {}"
-msgstr "Элемент легенды для ряда {}, {} из {}"
+#. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
+#. For example, this might report "Legend entry for series Temperature 1 of 2"
+msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr "Элемент легенды для ряда {seriesName} {seriesIndex} из {seriesCount}"
 
-#. Translators: Prompt for Legend key for series name index of count
-msgid "Legend key for Series {} {} of {}"
-msgstr "Ключ легенды для ряда {} {} из {}"
+#. Translators: Details about a legend key for a series in a Microsoft Excel chart.
+#. For example, this might report "Legend key for series Temperature 1 of 2"
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr "Ключ легенды для ряда {seriesName} {seriesIndex} из {seriesCount}"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
@@ -8322,6 +8424,35 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "%s"
+#~ msgstr "%s"
+
+#~ msgid "{} Series {} of {}"
+#~ msgstr "{} Ряд {} из {}"
+
+#~ msgid "{} {}: "
+#~ msgstr "{} {}: "
+
+#~ msgid "{} {}"
+#~ msgstr "{} {}"
+
+#~ msgid "value {}"
+#~ msgstr "значение {}"
+
+#~ msgid " {} {} of {}"
+#~ msgstr " {} {} из {}"
+
+#~ msgid "none"
+#~ msgstr "отсутствует"
+
+#~ msgid " trendline {} "
+#~ msgstr " линия тренда {} "
+
+#~ msgid ""
+#~ "Chart area height equals {}, width equals {}, top equals {}, left equals "
+#~ "{}"
+#~ msgstr "Высота области диаграммы {}, ширина {}, сверху {}, слева {}"
 
 #~ msgid "equation"
 #~ msgstr "Уравнение"
