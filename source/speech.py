@@ -1179,13 +1179,58 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 			text=_("line %s")%lineNumber
 			textList.append(text)
 	if  formatConfig["reportRevisions"]:
+		# Insertion
+		revision=attrs.get("revision-insertion")
+		oldRevision=attrsCache.get("revision-insertion") if attrsCache is not None else None
+		if (revision or oldRevision is not None) and revision!=oldRevision:
+			# Translators: Reported when text is marked as having been inserted
+			text=(_("inserted") if revision
+				# Translators: Reported when text is no longer marked as having been inserted.
+				else _("not inserted"))
+			textList.append(text)
+		revision=attrs.get("revision-deletion")
+		oldRevision=attrsCache.get("revision-deletion") if attrsCache is not None else None
+		if (revision or oldRevision is not None) and revision!=oldRevision:
+			# Translators: Reported when text is marked as having been deleted
+			text=(_("deleted") if revision
+				# Translators: Reported when text is no longer marked as having been  deleted.
+				else _("not deleted"))
+			textList.append(text)
 		revision=attrs.get("revision")
 		oldRevision=attrsCache.get("revision") if attrsCache is not None else None
 		if (revision or oldRevision is not None) and revision!=oldRevision:
 			# Translators: Reported when text is revised.
 			text=(_("revised %s"%revision) if revision
 				# Translators: Reported when text is not revised.
-				else _("unrevised"))
+				else _("no revised %s")%oldRevision)
+			textList.append(text)
+	if  formatConfig["reportEmphasis"]:
+		# marked text 
+		marked=attrs.get("marked")
+		oldMarked=attrsCache.get("marked") if attrsCache is not None else None
+		if (marked or oldMarked is not None) and marked!=oldMarked:
+			# Translators: Reported when text is marked
+			text=(_("marked") if marked
+				# Translators: Reported when text is no longer marked
+				else _("not marked"))
+			textList.append(text)
+		# strong text
+		strong=attrs.get("strong")
+		oldStrong=attrsCache.get("strong") if attrsCache is not None else None
+		if (strong or oldStrong is not None) and strong!=oldStrong:
+			# Translators: Reported when text is marked as strong (e.g. bold)
+			text=(_("strong") if strong
+				# Translators: Reported when text is no longer marked as strong (e.g. bold) 
+				else _("not strong"))
+			textList.append(text)
+		# emphasised text 
+		emphasised=attrs.get("emphasised")
+		oldEmphasised=attrsCache.get("emphasised") if attrsCache is not None else None
+		if (emphasised or oldEmphasised is not None) and emphasised!=oldEmphasised:
+			# Translators: Reported when text is marked as emphasised
+			text=(_("emphasised") if emphasised
+				# Translators: Reported when text is no longer marked as emphasised 
+				else _("not emphasised"))
 			textList.append(text)
 	if  formatConfig["reportFontAttributes"]:
 		bold=attrs.get("bold")
