@@ -1023,6 +1023,13 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	// True if the name definitely came from the author.
 	bool nameFromAuthor=false;
 
+	//Add opening quote for <Q> elements
+	if(nodeName.compare(L"Q")==0) {
+		VBufStorage_textFieldNode_t* textNode=buffer->addTextFieldNode(parentNode,previousNode,L"\x201c");
+		fillTextFormattingForNode(pHTMLDOMNode,textNode);
+		previousNode=textNode;
+	}
+
 	//Generate content for nodes
 	wstring contentString=L"";
 	bool renderChildren=false;
@@ -1281,6 +1288,12 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 	//Add all the collected attributes to the node
 	for(tempIter=attribsMap.begin();tempIter!=attribsMap.end();++tempIter) {
 		parentNode->addAttribute(tempIter->first,tempIter->second);
+	}
+
+	// Closing quote for <Q> elements
+	if(nodeName.compare(L"Q")==0) {
+		VBufStorage_textFieldNode_t* textNode=buffer->addTextFieldNode(parentNode,previousNode,L"\x201d");
+		fillTextFormattingForNode(pHTMLDOMNode,textNode);
 	}
 
 	// Report any live region update for this node
