@@ -3,6 +3,38 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.2 =
+Prednosti tejto verzie zahŕňajú podporu pre čítanie grafov v dokumentoch MS Excel a tiež podporu pre čítanie a prácu s matematickými výrazmi.
+
+== Nové vlastnosti ==
+- V dokumentoch programu MS Word môžete čítať po vetách skratkami alt+šípka hore a dole. (#3288)
+- Nové prekladové brailovské tabuky pre viacero Indických jazykov. (#4778)
+- NVDA v tabuľkách MS Excel hlási, ak je obsah bunky orezaný alebo preteká do vedľajšej bunky. (#3040)
+- V Programe MS Excel môžete odteraz vyvolať dialóg zoznam prvkov (NVDA+f7) a zobraziť si tak zoznam grafov, buniek s komentárom a buniek so vzorcami. (#1987)
+- Podpora pre čítanie grafov v Dokumentoch MS Excel od verzie 2007. Najprv nájdite požadovaný graf cez zoznam prvkov (NVDA+F7) a potom čítajte dátové položky grafu šípkami. (#1987)
+- S použitím programu  MathPlayer 4 od  Design Science je možné čítať  matematický obsah  vo webových prehliadačoch a v  programoch Microsoft Word a PowerPoint. Pozrite časť "Čítanie matematického obsahu" v používateľskej príručke. (#4673)
+- V dialógu Klávesové skratky odteraz môžete nastaviť skratky a dotykové gestá pre všetky dialógy s nastaveniami a pre možnosti v dialógu nastavenia čítania textu. (#4898)
+
+
+== Zmeny ==
+- Zreorganizované klávesové skratky v dialógu nastavenia čítania textu (v Slovenskej lokalizácii opravené situácie, keď dve nastavenia mali rovnakú skratku a niektoré nemali žiadnu). (#4650)
+- V dialógu nastavenia myši pribudli skratky pre nastavenia "signalizovať polohu myši počas posúvania" a "úroveň jasu ovplyvňuje hlasitosť  signalizácie". (#4916)
+- Významne prepracované oznamovanie farieb. (#4984)
+- Prekladová tabuľka  liblouis aktualizovaná na verziu 2.6.2. (#4777)
+
+
+== Opravy ==
+- Popisy spojitých symbolov v niektorých indických jazykoch sú odteraz správne spracované. (#4582)
+- Ak je začiarknuté "pri spracovaní textu sa riadiť hlasovým výstupom", v dialógu sa správne použije jazyk hlasového výstupu. V názve okna je tiež zobrazená informácia o aktuálnom jazyku. (#4930)
+- V prehliadači  Internet Explorer a  ďalších  MSHTML prvkoch nie sú viac zbytočne  oznamované napísané znaky, ak píšete do editovateľného zoznamového rámika, napríklad na domovskej stránke Google. (#4976)
+- NVDA odteraz oznamuje farby pri nastavovaní farby v programe MS Word. (#3045)
+- Zobrazovanie brailovského textu v Dánčine  opäť funguje. (#4986)
+- V MS powerpointe opäť fungujú klávesy strana hore a strana dole na prepínanie snímok. (#4850)
+- V programe   Skype (Desktop) od verzie 7.2 , fungujú oznámenia ak osoba píše a boli odstránené problémy, ktoré nastali ak fokus opustil okno konverzácie. (#4972)
+- Opravená chyba, ktorá sa vyskytla, ak ste v dialógu klávesové skratky do editačného poľa filter napísali nejaký symbol, napríklad zátvorky. (#5060)
+- V prehliadači  Internet Explorer a ďalších  MSHTML prvkoch skratka G a shift+g naviguje aj po obrázkoch určených pre lepšiu prístupnosť (ARIA role img). (#5062)
+
+
 = 2015.1 =
 Prednosti tejto verzie zahŕňajú podporu pre režim prehliadania v dokumentoch programu Microsoft Word a Outlook, veľké vylepšenia podpori pre Desktopovú verziu programu Skype a významné opravy pre Microsoft Internet Explorer.
 

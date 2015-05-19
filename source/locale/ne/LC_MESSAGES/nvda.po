@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: NVDA bzr 2013.1:6039\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-08 19:04+1000\n"
-"PO-Revision-Date: 2015-05-15 09:09+0545\n"
+"PO-Revision-Date: 2015-05-18 19:24+0545\n"
 "Last-Translator: drishtibachak@gmail.com\n"
 "Language-Team: Him Prasad Gautam <drishtibachak@gmail.com>\n"
 "Language: ne\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Generator: Poedit 1.7.6\n"
 "प्रथम अनुवाद मिति: २०६९ साल असार १५ गते\n"
 "पुनरावलोकन मिति: २०७१ साल श्रावण १५ गते\n"
 "अनुवादक: हिम प्रसाद गौतम(नेपाल) <drishtibachak@gmail.com>\n"
@@ -4524,19 +4524,19 @@ msgstr "वस्तु मुद्रा"
 
 #. Translators: a touch screen action performed once
 msgid "single {action}"
-msgstr "एकल क्रिया"
+msgstr "एकल {action}"
 
 #. Translators: a touch screen action performed twice
 msgid "double {action}"
-msgstr "दोब्बर क्रिया"
+msgstr "दोब्बर {action}"
 
 #. Translators: a touch screen action performed 3 times
 msgid "tripple {action}"
-msgstr "तेब्बर क्रिया"
+msgstr "तेब्बर {action}"
 
 #. Translators: a touch screen action performed 4 times
 msgid "quadruple {action}"
-msgstr "चौब्बर क्रिया"
+msgstr "चौब्बर {action}"
 
 #. Translators: a touch screen action using multiple fingers
 msgid "{numFingers} finger {action}"
@@ -7582,52 +7582,52 @@ msgstr "प्रकार"
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
-msgstr "{} श्रेणी {} {} को"
+msgstr "{seriesCount} को {seriesName} स्रेणी {seriesIndex}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
 msgid "no change from point {previousIndex}, "
-msgstr "{} विन्दु देखिपरिवर्तन हुदैन, "
+msgstr "{previousIndex} विन्दु देखिपरिवर्तन हुदैन, "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr "{} बाट विन्दु {} बढि भयो, "
+msgstr " {previousIndex} बाट विन्दु {incrementValue} बढि भयो, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "{} बाट विन्दु {} कम भयो, "
+msgstr "{previousIndex} बाट विन्दु {decrementValue} कम भयो, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
 msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr "{} {}: "
+msgstr "{categoryAxisTitle} {categoryAxisData}:"
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
 msgid "Category {categoryAxisData}: "
-msgstr "बर्गीकरण {}: "
+msgstr "बर्गीकरण {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
 msgid "{valueAxisTitle} {valueAxisData}"
-msgstr "{} {}"
+msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
 msgid "value {valueAxisData}"
-msgstr "मान {}"
+msgstr "मान {valueAxisData}"
 
 #. Translators: Prompt for pie chart in the format: fraction nn percent slice index of count
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
 msgid " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr "भिन्न {:.2f} प्रतिशत {} {} {} को"
+msgstr "भिन्न {fractionValue:.2f} प्रतिसत टुक्रा {pointCount} को {pointIndex} "
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
 msgid " {segmentType} {pointIndex} of {pointCount}"
-msgstr " {} {} को {}"
+msgstr " {segmentType} {pointCount} को {pointIndex} "
 
 #. Translators: The primary axis group in a Microsoft Excel chart.
 msgid "Primary"
@@ -7639,7 +7639,7 @@ msgstr "दोस्रो"
 
 #. Translators: Details about an axis in a chart.
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
-msgstr "चार्ट कक्ष, किसिम बराबर {}, समुह बराबर {}, शिर्षक बराबर {}"
+msgstr "चार्ट कक्ष, किसिम: {axisType}, समुह: {axisGroup}, शिर्षक: {axisTitle}"
 
 msgid "none"
 msgstr "कुनै पनि होइन"
@@ -7648,11 +7648,11 @@ msgstr "कुनै पनि होइन"
 #. Translators: Prompt for axis title without title
 #. Translators: Details about an untitled axis in a chart.
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-msgstr "चार्ट कक्ष शिर्षक बराबर {} "
+msgstr "चार्ट कक्ष, किसिम: {axisType}, समूह: {axisGroup} "
 
 #. Translators: Indicates a chart axis title in Microsoft Excel.
 msgid "Chart axis title"
-msgstr "वर्ग"
+msgstr "चार्ट कक्ष, शिर्षक "
 
 #. Translators: Prompt for trendline with equation or r square
 msgid " trendline {} "
@@ -7714,13 +7714,13 @@ msgstr "सङ्केत छैन"
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "श्रेणि {} को सङ्केत प्रविष्टि, {} {} को"
+msgstr "श्रेणी  {seriesCount} को  {seriesName} {seriesIndex} सङ्केतको प्रविष्टि"
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "श्रेणि {} को सङ्केत चाबी, {} {} को"
+msgstr "श्रेणी  {seriesCount} को  {seriesName} {seriesIndex} सङ्केतको चाबी"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
