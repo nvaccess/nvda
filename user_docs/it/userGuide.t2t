@@ -528,6 +528,42 @@ Se risulterà accessibile, premere il tasto tab o comunque muoversi all'interno 
 | Ritornare alla modalità navigazione | NVDA+control+spazio | Sposta il focus dall'oggetto incorporato alla modalità navigazione |
 %kc:endInclude
 
++ Lettura della matematica +
+NVDA è in grado di leggere ed interagire con la matematica nei contenuti che fanno uso del software MathPlayer4, prodotto da Design Science.
+Ciò richiede che MathPlayer4 sia installato sul computer.
+MathPlayer può essere scaricato gratuitamente dal seguente sito web: http://www.dessci.com/en/products/mathplayer/
+
+NVDA supporta la matematica nei seguenti formati:
+- MathML in Mozilla Firefox e Microsoft Internet Explorer.
+- Il tipo Design Science  in Microsoft Word e PowerPoint.
+- MathML in Adobe Reader. (Si noti che questo non è ancora uno standard ufficiale, per cui attualmente non esiste per il pubblico un software disponibile che possa produrre questo contenuto).
+-
+
+Durante la lettura di un documento, NVDA sarà in grado di leggere qualsiasi contenuto di tipo matematico supportato.
+Se si utilizza un display braille, verrà visualizzato regolarmente anche in Braille.
+
+++ Esplorazione interattiva ++
+Nel caso in cui si stia lavorando con la sintesi vocale, potrebbe essere molto più comodo ascoltare un'espressione riducendola in piccoli segmenti, piuttosto che doversi ascoltare tutto il contenuto in una sola volta.
+
+Se ci si trova in modalità navigazione, sarà sufficiente spostare il cursore di controllo dove inizia la parte matematica e premere semplicemente invio.
+
+Se non ci si trova in modalità navigazione:
++ Spostare il cursore di controllo in un contenuto di tipo matematico.
++ Da impostazioni predefinite, il cursore di controllo segue il cursore di sistema, sicché sarà sufficiente muoversi col cursore standard alla posizione desiderata.
++Poi, utilizzare il comando seguente:
++
+
+%kc:beginInclude
+|| Nome | Tasto | Descrizione |
+| Interagire con matematica | NVDA+alt+m | Inizia l'interazione con contenuto di tipo matematico. |
+%kc:endInclude
+
+A questo punto, è possibile utilizzare i comandi MathPlayer come i tasti freccia per esplorare l'espressione.
+Ad esempio, ci si potrà spostare attraverso l'espressione con i tasti freccia sinistra e destra, per poi evidenziare una parte dell'espressione, come una frazione utilizzando il tasto freccia verso il basso.
+Si prega di consultare la documentazione di MathPlayer per ulteriori informazioni.
+
+Quando si desidera tornare al documento, è sufficiente premere il tasto Esc.
+
 + Comandi specifici di NVDA per le applicazioni +
 NVDA fornisce alcuni comandi per certe applicazioni in modo da facilitare gli utenti nello svolgimento di operazioni che, altrimenti, risulterebbero molto complesse e poco accessibili.
 
@@ -589,6 +625,9 @@ La maggior parte delle impostazioni possono essere modificate accedendo alle rel
 In tutte le finestre di dialogo di NVDA, premere il tasto OK per accettare i cambiamenti effettuati.
 Per annullare invece premere il bottone Annulla o il tasto Esc.
 Alcune impostazioni possono anche essere cambiate utilizzando dei tasti rapidi, che verranno elencati nella sezione successiva.
+
+Si noti che da impostazioni predefinite, non è possibile accedere a tutte le finestre delle preferenze utilizzando Gesti e tasti di immissione (ad esempio tasti rapidi, gesti col touchScreen, etc).
+Se si desidera accedere alle finestre di dialogo che non dispongono di tasti di scelta rapida dedicati, servirsi della finestra [tasti e gesti di immissione #InputGestures] per aggiungere gesti personalizzati a quella finestra. 
 
 +++ Impostazioni generali (NVDA+control+g) +++
 La finestra di dialogo inerente le impostazioni generali si trova nel menu preferenze. 
@@ -1077,7 +1116,9 @@ Ad esempio, se attiviamo la casella di controllo "Leggi il nome del font", NVDA 
 - Quando qualcosa è cliccabile
 -
    
-==== Leggi i cambiamenti di formattazione dopo il cursore ====
+Per modificare queste impostazioni da qualsiasi luogo ci si trovi, servirsi della finestra [tasti e gesti di immissione #InputGestures] ed assegnare un gesto o tasto rapido personalizzato per quella funzione.
+   
+      ==== Leggi i cambiamenti di formattazione dopo il cursore ====
 Se abilitata, questa impostazione istruisce NVDA a intercettare tutti i cambiamenti di formattazione in una riga e a leggerli, anche se questo porerà ad un rallentamento nelle prestazioni di NVDA.
 
 Da impostazioni predefinite, NVDA ricava le informazioni di formattazione dalla posizione del cursore di sistema / cursore di controllo, ed in alcune circostanze può riuscire ad intercettare i cambiamenti di formattazione nell'intera riga, a patto che questo non vada a  causare un rallentamento dello Screen Reader.
@@ -1092,6 +1133,8 @@ Essi sono:
 - voce: Le regole di questo tipo di dizionario hanno effetto esclusivamente sulla voce in uso.
 - Temporaneo: Le regole in questo dizionario hanno effetto in qualsiasi circostanza, ma soltanto per la sessione corrente di NVDA. Tali regole andranno perse non appena NVDA verrà chiuso o riavviato.
 -
+
+Per aprire questi dizionari da qualsiasi luogo ci si trovi, servirsi della finestra [tasti e gesti di immissione #InputGestures] ed assegnare un gesto o tasto rapido personalizzato per quella funzione.
 
 Tutte le finestre di dialogo contengono un elenco di regole che verrà utilizzato per processare il parlato. 
 L'interfaccia comprende anche i bottoni aggiungi, modifica e rimuovi.
@@ -1134,7 +1177,7 @@ Sarà sempre possibile eliminare un simbolo aggiunto in precedenza tramite il pu
 
 Una volta terminate le modifiche, premere il pulsante OK per salvare i cambiamenti oppure il bottone Annulla per annullare l'operazione.
 
-+++ Tasti e gesti di immissione +++
++++ Tasti e gesti di immissione +++[InputGestures]
 In questa finestra di dialogo, è possibile personalizzare i gesti di immissione quali tasti della tastiera, pulsanti di un display braille, etc, per i comandi di NVDA.
 
 è importante notare che saranno mostrati e quindi applicabili soltanto i comandi appartenenti all'applicazione che si stava usando prima di aprire questa finestra di dialogo.
@@ -1265,10 +1308,12 @@ Queste azioni sono disponibili dal menu Log del visualizzatore.
 Per sviluppatori vedenti di programmi o persone che stanno dimostrando le funzionalità di NVDA ad un'utenza vedente, è disponibile una finestra che mostra tutto il testo che NVDA manda alla sintesi vocale.
 
 Per abilitare il visualizzatore sintesi vocale, attivare la voce apposita che si trova nel menu strumenti di NVDA.
-Disabilitare tale voce di menu per disattivare tale caratteristica.
+Disabilitare la voce di menu per disattivare tale caratteristica.
 
 Mentre il visualizzatore sintesi vocale è attivo, il contenuto della finestra si aggiornerà in tempo reale per mostrare di continuo le informazioni che NVDA invia al sintetizzatore.
 Comunque, se si clicca o si focalizza la finestra, NVDA fermerà temporaneamente l'aggiornamento di modo da permettere la selezione del testo e l'eventuale copia dello stesso.
+
+Per abilitare/disabilitare il visualizzatore sintesi vocale da qualsiasi punto ci si trovi, servirsi della finestra [tasti e gesti di immissione #InputGestures] ed assegnare un gesto o tasto rapido personalizzato per quella funzione.
 
 ++ Gestore componenti aggiuntivi ++
 Il gestore di componenti aggiuntivi, accessibile selezionando "gestisci componenti aggiuntivi" dal menu strumenti di NVDA, permette di installare e disinstallare questo tipo di pacchetti. 
@@ -1303,6 +1348,8 @@ Se sono stati installati o rimossi dei componenti, NVDA chiederà di potersi ria
 In passato è stato possibile aumentare le funzionalità di NVDA copiando driver e plugin individuali nella propria cartella contenente le configurazioni utente. 
 Sebbene questa versione di NVDA sia ancora in grado di caricarli, essi non saranno visualizzati nel gestore componenti aggiuntivi. 
 Si consiglia di rimuovere questi file dalla propria configurazione e installare il componente aggiuntivo corrispondente se disponibile. 
+
+Per accedere al gestore componenti aggiuntivi da qualsiasi punto ci si trovi, servirsi della finestra [tasti e gesti di immissione #InputGestures] ed assegnare un gesto o tasto rapido personalizzato per quella funzione.
 
 ++ Console Python ++
 La Console Python di NVDA, situata nel menu strumenti, è uno strumento per sviluppatori che risulta utile in fase di debug, di diagnosi delle funzioni interne di NVDA o di analisi della gerarchia degli oggetti accessibili presenti in un'applicazione.
@@ -1749,6 +1796,7 @@ Seguono i comandi per i Display Papenmeier associati con NVDA:
 | Route to braille cell | routing |
 | Annuncia il carattere attuale sul cursore di controllo | l1 |
 | Attiva l'oggetto corrente | l2 |
+| Commuta inseguimento Braille | r2 |
 | Annuncia Titolo | l1+up |
 | Annuncia barra di stato | l2+down |
 | Spostarsi all'oggetto contenitore | up2 |
