@@ -21,9 +21,10 @@ import inputCore
 
 #: The directory in which liblouis braille tables are located.
 TABLES_DIR = r"louis\tables"
+PATTERNS_TABLE = os.path.join(TABLES_DIR, "braille-patterns.cti")
 
-#: The table file names and information.
-TABLES = (
+#: The braille table file names and information.
+tables = [
 	# (fileName, displayName, supportsInput),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
@@ -277,10 +278,7 @@ TABLES = (
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("zh-tw.ctb", _("Chinese (Taiwan, Mandarin)"), False),
-)
-
-#: Braille tables that support input (only computer braille tables yet).
-INPUT_TABLES = tuple(t for t in TABLES if t[2])
+]
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is an
@@ -447,7 +445,7 @@ class Region(object):
 		text=unicode(self.rawText).replace('\0','')
 		braille, self.brailleToRawPos, self.rawToBraillePos, brailleCursorPos = louis.translate(
 			[os.path.join(TABLES_DIR, config.conf["braille"]["translationTable"]),
-				"braille-patterns.cti"],
+				PATTERNS_TABLE],
 			text,
 			# liblouis mutates typeform if it is a list.
 			typeform=tuple(self.rawTextTypeforms) if isinstance(self.rawTextTypeforms, list) else self.rawTextTypeforms,

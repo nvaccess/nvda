@@ -42,7 +42,7 @@ class BrailleInputHandler(object):
 		char = unichr(dots | 0x8000)
 		text = louis.backTranslate(
 			[os.path.join(braille.TABLES_DIR, config.conf["braille"]["inputTable"]),
-			"braille-patterns.cti"],
+				braille.PATTERNS_TABLE],
 			char, mode=louis.dotsIO)
 		chars = text[0]
 		if len(chars) > 0:
