@@ -41,9 +41,7 @@ class BrailleInputHandler(object):
 		# liblouis requires us to set the highest bit for proper use of dotsIO.
 		char = unichr(dots | 0x8000)
 		text = louis.backTranslate(
-			[os.path.join(braille.TABLES_DIR, config.conf["braille"]["inputTable"]),
-				braille.PATTERNS_TABLE],
-			char, mode=louis.dotsIO)
+			braille.handler.inputTableList, char, mode=louis.dotsIO)
 		chars = text[0]
 		if len(chars) > 0:
 			self.sendChars(chars)

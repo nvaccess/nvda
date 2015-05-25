@@ -444,9 +444,7 @@ class Region(object):
 			mode |= louis.compbrlAtCursor
 		text=unicode(self.rawText).replace('\0','')
 		braille, self.brailleToRawPos, self.rawToBraillePos, brailleCursorPos = louis.translate(
-			[os.path.join(TABLES_DIR, config.conf["braille"]["translationTable"]),
-				PATTERNS_TABLE],
-			text,
+			handler.translationTableList, text,
 			# liblouis mutates typeform if it is a list.
 			typeform=tuple(self.rawTextTypeforms) if isinstance(self.rawTextTypeforms, list) else self.rawTextTypeforms,
 			mode=mode, cursorPos=self.cursorPos or 0)
@@ -1347,6 +1345,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def __init__(self):
 		self.display = None
 		self.displaySize = 0
+		self.translationTableList = []
+		self.inputTableList = []
 		self.mainBuffer = BrailleBuffer(self)
 		self.messageBuffer = BrailleBuffer(self)
 		self._messageCallLater = None
@@ -1424,6 +1424,29 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			log.error("Error initializing display driver", exc_info=True)
 			self.setDisplayByName("noBraille", isFallback=True)
 			return False
+
+	def _getTablePath(self, table):
+		if not os.path.isabs(table):
+			# This is a stock table.
+			return os.path.join(TABLES_DIR, table)
+		return table
+
+	def _getTableList(self, table):
+		return [self._getTablePath(table), PATTERNS_TABLE]
+
+	def setTranslationTable(self, table):
+		tableList = self._getTableList(table)
+		# TODO: Use louis.checkTable() to verify if tableList can actually be compiled.
+		config.conf["braille"]["translationTable"] = table
+		self.translationTableList = tableList
+		return True
+
+	def setInputTable(self, table):
+		tableList = self._getTableList(table)
+		# TODO: Use louis.checkTable() to verify if tableList can actually be compiled.
+		config.conf["braille"]["inputTable"] = table
+		self.inputTableList = tableList
+		return True
 
 	def _updateDisplay(self):
 		if self._cursorBlinkTimer:
@@ -1607,6 +1630,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		display = config.conf["braille"]["display"]
 		if display != self.display.name:
 			self.setDisplayByName(display)
+		setTranslationTable(config.conf["braille"]["translationTable"])
+		setInputTable(config.conf["braille"]["inputTable"])
 
 def initialize():
 	global handler
@@ -1614,6 +1639,8 @@ def initialize():
 	log.info("Using liblouis version %s" % louis.version())
 	handler = BrailleHandler()
 	handler.setDisplayByName(config.conf["braille"]["display"])
+	handler.setTranslationTable(config.conf["braille"]["translationTable"])
+	handler.setInputTable(config.conf["braille"]["inputTable"])
 
 	# Update the display to the current focus/review position.
 	if not handler.enabled or not api.getDesktopObject():

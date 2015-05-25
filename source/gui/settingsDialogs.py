@@ -1457,8 +1457,14 @@ class BrailleSettingsDialog(SettingsDialog):
 		if not braille.handler.setDisplayByName(display):
 			gui.messageBox(_("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING, self)
 			return 
-		config.conf["braille"]["translationTable"] = self.tableNames[self.tableList.GetSelection()]
-		config.conf["braille"]["inputTable"] = self.inputTableNames[self.inputTableList.GetSelection()]
+		table = self.tableNames[self.tableList.GetSelection()]
+		if not braille.handler.setTranslationTable(table):
+			gui.messageBox(_("Could not load the %s translation table.")%table, _("Braille Table Error"), wx.OK|wx.ICON_WARNING, self)
+			return
+		table = self.inputTableNames[self.inputTableList.GetSelection()]
+		if not braille.handler.setInputTable(table):
+			gui.messageBox(_("Could not load the %s input table.")%table, _("Braille Table Error"), wx.OK|wx.ICON_WARNING, self)
+			return
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
 		try:
 			val = int(self.cursorBlinkRateEdit.GetValue())
