@@ -24,14 +24,14 @@ Ebben a kiadásban: Microsoft Excel diagramok felolvasása, és matematikai tart
 
 
 == Hibajavítások ==
-- Character descriptions are now handled correctly for conjunct characters in certain Indian languages. (#4582)
-- If the "Trust voice's language when processing characters and symbols" option is enabled, the Punctuation/Symbol pronunciation dialog now correctly uses the voice language. Also, the language for which pronunciation is being edited is shown in the dialog's title. (#4930)
+- Bizonyos indiai nyelveknél már jól működik a betűzés az összetett karakterek esetén is. (#4582)
+- Ha a "Karakterek és írásjelek feldolgozása az aktív hangkarakter nyelvén" be van jelölve, az írásjel kiejtés ablakában az NVDA a kiejtés nyelvéhez tartozó beszédhangot használja. Ezen kívül az aktuális ablak címében megjelenik az épp szerkesztés alatt lévő nyelv megnevezése is. (#4930)
 - Internet Explorer és más MSHTML vezérlők: A szerkeszthető kombinált listamezőkben, mint pl.: A Google keresési mezőjében a Google weboldalán, a beírt karaktereket már nem hibásan jelenti be az NVDA. (#4976)
 - Microsoft Office: A kiválasztott szín nevét már bemondja az NVDA. (#3045)
 - A dán braille kimenet ismét működik. (#4986)
 - Microsoft PowerPoint: Diavetítés során a PageUp és pageDown billentyűk ismét használhatók az egyes diák közti váltásra. (#4850)
 - A Skype for Desktop 7-es és újabb verzióiban a gépelést jelző üzenet bemondásra kerül, ezen felül ha a  fókusz elmozdul nem történik hibaüzenet küldés. (#4972)
-- Javítva az a hiba, mely akkor jött elő ha a beviteli parancsok szűrésre szolgáló mezőjébe egyes írásjelet/szimbólumot (pl. zárójel) gépelt be a felhasználó. (#5060)
+- Javítva az a hiba, mely akkor jött elő ha a beviteli parancsok szűrésre szolgáló mezőjébe szimbólumot (pl. zárójel) gépelt be a felhasználó. (#5060)
 - Internet explorer és a többi MSHTML kezelő használatakor a g és shift+g lenyomása esetén elérhetőek az Aria img szabály által definiált ábrák is. (#5062)
 
 
