@@ -1370,8 +1370,9 @@ class BrailleSettingsDialog(SettingsDialog):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 		label = wx.StaticText(self, wx.ID_ANY, label=_("&Output table:"))
-		self.tableNames = [table[0] for table in braille.tables]
-		self.tableList = wx.Choice(self, wx.ID_ANY, choices=[table[1] for table in braille.tables])
+		tables = sorted(braille.tables, key=lambda table: table[1])
+		self.tableNames = [table[0] for table in tables]
+		self.tableList = wx.Choice(self, wx.ID_ANY, choices=[table[1] for table in tables])
 		try:
 			selection = self.tableNames.index(config.conf["braille"]["translationTable"])
 			self.tableList.SetSelection(selection)
@@ -1384,9 +1385,9 @@ class BrailleSettingsDialog(SettingsDialog):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 		label = wx.StaticText(self, wx.ID_ANY, label=_("&Input table:"))
-		inputTables = [table for table in braille.tables if table[2]]
-		self.inputTableNames = [table[0] for table in inputTables]
-		self.inputTableList = wx.Choice(self, wx.ID_ANY, choices=[table[1] for table in inputTables])
+		tables = [table for table in tables if table[2]]
+		self.inputTableNames = [table[0] for table in tables]
+		self.inputTableList = wx.Choice(self, wx.ID_ANY, choices=[table[1] for table in tables])
 		try:
 			selection = self.inputTableNames.index(config.conf["braille"]["inputTable"])
 			self.inputTableList.SetSelection(selection)
