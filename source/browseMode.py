@@ -176,6 +176,30 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def script_trapNonCommandGesture(self,gesture):
 		winsound.PlaySound("default",1)
 
+	singleLetterNavEnabled=True #: Whether single letter navigation scripts should be active (true) or if these letters should fall to the application.
+
+	def getScript(self,gesture):
+		script=super(BrowseModeTreeInterceptor,self).getScript(gesture)
+		if self.passThrough or not gesture.isCharacter:
+			return script
+		if not self.singleLetterNavEnabled:
+			return None
+		if not script and self.shouldTrapNonCommandGestures: 
+			script=self.script_trapNonCommandGesture
+		return script
+
+	def script_toggleSingleLetterNav(self,gesture):
+		if self.singleLetterNavEnabled:
+			self.singleLetterNavEnabled=False
+			# Translators: single letter navigation in browse mode is turned off.
+			ui.message(_("Single letter navigation off"))
+		else:
+			self.singleLetterNavEnabled=True
+			# Translators: single letter navigation in browse mode is turned on.
+			ui.message(_("Single letter navigation on"))
+	# Translators: the description for the toggleSingleLetterNavigation command in browse mode.
+	script_toggleSingleLetterNav.__doc__=_("Switches single letter navigation mode on and off. When on single letter keys in browse mode jump to various kinds of elements on the page, and when off, these keys are passed to the application.")
+
 	def _get_ElementsListDialog(self):
 		return ElementsListDialog
 
@@ -251,6 +275,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		"kb:NVDA+f7": "elementsList",
 		"kb:enter": "activatePosition",
 		"kb:space": "activatePosition",
+		"kb:NVDA+shift+space":"toggleSingleLetterNav",
 	}
 
 # Add quick navigation scripts.
