@@ -286,6 +286,8 @@ Az NVDA a következő billentyűparancsokat biztosítja a rendszerkurzor mozgat�
 || Funkció | Asztali billentyűparancs | Laptop billentyűparancs | Leírás |
 | folyamatos felolvasás | NVDA+lenyíl | NVDA+a | A rendszerkurzor aktuális pozíciójától a szöveg végéig olvas. |
 | Aktuális sor felolvasása | NVDA+felnyíl | NVDA+l | Felolvassa a kurzornál lévő sort, kétszer megnyomva betűzi azt. |
+| Következő mondat | alt+lenyíl | alt+lenyíl | A kurzort a következő mondatra helyezi, és felolvassa azt (jelenleg ez csak a Microsoft Word programban érhető el). |
+| Előző mondat | alt+felnyíl | alt+felnyíl | A kurzort az előző mondatra helyezi, és felolvassa azt (jelenleg ez csak a Microsoft Word programban érhető el). |
 | A kijelölt szöveg felolvasása | NVDA+Shift+felnyíl | NVDA+shift+s | Felolvassa a kijelölt szöveget. |
 | A karakter formázásának bemondása | NVDA+f | | Bemondja a formázási beállítását annak a karakternek, melyen a rendszerkurzor éppen áll. |
 
@@ -474,6 +476,7 @@ Egymagukban a következő, a shifttel együtt használva az előző területre u
 - D: Jelzőpont
 - N: hivatkozás nélküli szöveg
 - O: beágyazott objektum
+- a: Mellékszöveg (megjegyzés, korrektúra szöveg, stb)
 - 1-től 6-ig: elsőtől hatodikig terjedő szintű címsorokra történő ugrás 
 -
 Első vagy utolsó elemre ugrás (listák vagy táblázatok esetében):
@@ -1263,7 +1266,7 @@ Ebben a fejezetben az NVDA által támogatott braille kijelzőkről olvashat.
 
 ++ Freedom Scientific Focus/Pacmate kijelzők ++
 
-A Freedom Scientific Focus/Pacmate kijelzőket tudja használni az NVDA programmal. Csak akkor jelenik meg a kijelzők listájában, ha fel van telepítve a Freedom Scientific braille driver. Ezeket a [Freedom Scientific hivatalos braille driverek angol nyelvű oldalán http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp] érheti el, a driverek telepítési információival együtt.
+A Freedom Scientific Focus/Pacmate kijelzőket tudja használni az NVDA programmal. Csak akkor jelenik meg a kijelzők listájában, ha fel van telepítve a Freedom Scientific braille driver. Ezeket a [Freedom Scientific hivatalos braille driverek angol nyelvű oldalán http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp] érheti el, a driverek telepítési információival együtt.
 Ez ugyan a Focus  Blue kijelzőkhöz készült, de támogatja az összes többi Freedom Scientific terméket is.
 Megjegyzés: Ha ön 64 bites operációs rendszert használ, amire már fel van telepítve a kijelző drivere egy másik képernyőolvasóval együtt, az NVDA programhoz külön telepíteniekell az eszköz illesztőprogramját.
 

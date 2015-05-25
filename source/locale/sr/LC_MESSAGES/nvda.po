@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.6.3\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -1926,7 +1926,7 @@ msgstr "žuto zelena"
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #, python-format
 msgid "selected %s"
-msgstr "%s izabrano"
+msgstr "izabrano %s"
 
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
@@ -2345,7 +2345,7 @@ msgstr "dugme za proširenje prikaza mreže"
 
 #. Translators: Identifies mathematical content.
 msgid "math"
-msgstr "matematički znak"
+msgstr "matematički izraz"
 
 #. Translators: Identifies a grip control.
 msgid "grip"
@@ -4472,7 +4472,7 @@ msgstr "%s izabrano"
 #. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
 #, python-format
 msgid "unselecting %s"
-msgstr "%s nije izabrano"
+msgstr "nije izabrano %s"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4850,7 +4850,7 @@ msgstr "NVDA ažuriranje"
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
 msgid "NVDA version {version} is available."
-msgstr "NVDA verzija {version} je dostupna"
+msgstr "NVDA verzija {version} je dostupna."
 
 #. Translators: A message indicating that no update to NVDA is available.
 msgid "No update available."
@@ -4893,7 +4893,7 @@ msgstr "Greška pri preuzimanju ažuriranja"
 #. Translators: The message presented when the update has been successfully downloaded
 #. and is about to be installed.
 msgid "Update downloaded. It will now be installed."
-msgstr "Ažuriranje preuzeto, sada će biti instalirano"
+msgstr "Ažuriranje je preuzeto; sada će biti instalirano."
 
 #. Translators: The title of the dialog displayed when the update is about to be installed.
 msgid "Install Update"
@@ -5611,14 +5611,14 @@ msgid "&Synthesizer..."
 msgstr "&Sintetizator..."
 
 msgid "Change the synthesizer to be used"
-msgstr "Izmeni sintetizator koji će se  koristiti"
+msgstr "Izmenite sintetizator koji će se koristiti"
 
 #. Translators: The label for the menu item to open Voice Settings dialog.
 msgid "&Voice settings..."
 msgstr "&Glasovna podešavanja..."
 
 msgid "Choose the voice, rate, pitch and volume to use"
-msgstr "Izaberite glas, brzinu, visinu, i jačinu zvuka koje ćete koristiti"
+msgstr "Izaberite glas, brzinu, visinu i jačinu zvuka koje ćete koristiti"
 
 #. Translators: The label for the menu item to open Braille Settings dialog.
 msgid "B&raille settings..."
@@ -7217,7 +7217,7 @@ msgstr "Simbol \"%s\" već postoji."
 
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 msgid "Input Gestures"
-msgstr "Ulazni gastovi"
+msgstr "Ulazni gestovi"
 
 #. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 msgctxt "inputGestures"
@@ -8031,7 +8031,8 @@ msgstr "Sekundarna"
 
 #. Translators: Details about an axis in a chart.
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
-msgstr "Osa grafikona, vrsta: {axisType}, grupa: {axisGroup}, naziv: {axisTitle}"
+msgstr ""
+"Osa grafikona, vrsta: {axisType}, grupa: {axisGroup}, naziv: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
@@ -8063,8 +8064,8 @@ msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
 msgstr ""
-"Prostor grafikona, visina: {chartAreaHeight}, širina: {chartAreaWidth}, "
-"vrh: {chartAreaTop}, levo: {chartAreaLeft}"
+"Prostor grafikona, visina: {chartAreaHeight}, širina: {chartAreaWidth}, vrh: "
+"{chartAreaTop}, levo: {chartAreaLeft}"
 
 #. Translators: Indicates the chart area of a Microsoft Excel chart.
 msgid "Chart area "
@@ -8076,9 +8077,9 @@ msgid ""
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
 "{plotAreaInsideLeft:.0f}"
 msgstr ""
-"Prostor crteža, unutrašnja visina: {plotAreaInsideHeight:.0f}, unutrašnja širina: "
-"{plotAreaInsideWidth:.0f}, unutrašnji vrh: {plotAreaInsideTop:.0f}, unutrašnje levo: "
-"{plotAreaInsideLeft:.0f}"
+"Prostor crteža, unutrašnja visina: {plotAreaInsideHeight:.0f}, unutrašnja "
+"širina: {plotAreaInsideWidth:.0f}, unutrašnji vrh: {plotAreaInsideTop:.0f}, "
+"unutrašnje levo: {plotAreaInsideLeft:.0f}"
 
 #. Translators: Indicates the plot area of a Microsoft Excel chart.
 msgid "Plot area "
@@ -8367,7 +8368,7 @@ msgstr "nema komentara"
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
 msgstr ""
-"Izveštava o tekstu komentara na mestu gde je postvaljen znak za umetanje."
+"Izveštava o tekstu komentara na mestu gde je postavljen znak za umetanje."
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.

@@ -31,7 +31,7 @@ in-word '	apostrof	all	norep
 negative number	minus	none	norep
 
 # Whitespace
-\0	tegn	# null
+\0	blank	# null
 \t	tab
 \n	linjeskift	char
 \f	sideskift	none
@@ -46,8 +46,10 @@ negative number	minus	none	norep
 $	dollar	all	norep
 £	pund	all	norep
 €	euro	all	norep
+¢	Cents	all	norep
+¥	Yen	all	norep
 %	procent	some
-&	og tegn	some
+&	og	some
 '	apostrof	all
 (	venstre parentes	most
 )	højre parentes	most
@@ -64,8 +66,8 @@ $	dollar	all	norep
 =	lig med	most
 ?	spørgsmålstegn	all
 @	snabel a	some
-[	venstre kantet parentes	most
-]	højre kantet parentes	most
+[	venstre klamme	most
+]	højre klamme	most
 \\	omvendt skråstreg	most
 ^	accent circonflex	most
 _	understregning	most
@@ -78,21 +80,24 @@ _	understregning	most
 # Other characters
 •	punkttegn	some
 …	prik prik prik	all	always
-...	punkt punkt punkt	all	always
+...	prik prik prik	all	always
 	punkttegn	some
 “ anførselstegn begynd	most
 ”	anførselstegn slut	most
 ‘	venstre apostrof	most
 ’	højre apostrof	most
-–	en dash	most
-—	em dash	most
-●	circle	most
-¨	diaeresis	most
+–	tankestreg	most
+—	tankestreg	most
+●	cirkel	most
+¨	tremmer	most
 ‎	venstre mod højre tegn
 ‏	højre mod venstre tegn
 ■	sort firkant	some
+▪	sort firkant	some
+◾	sort firkant	some
+◦	hvidt punkttegn	some
 ➔	højre pil	some
-§	sektion	all
+§	paragraf	all
 °	grader	some
 «	double left pointing angle bracket
 »	double right pointing angle bracket
@@ -101,11 +106,12 @@ _	understregning	most
 ²	i anden	some
 ³	i tredje	some
 ®	registreret	some
-™	handelsmærke	some
+™	varemærke	some
 ©	Copyright	some
 ±	Plus eller Minus	most
 ×	gange	most
 ÷	divideret med	most
-→	højre pil arrow	some
+←	venstre pil	some
+→	højre pil	some
 ✓	check	some
 ✔	check	some
