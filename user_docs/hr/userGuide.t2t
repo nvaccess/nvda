@@ -624,7 +624,10 @@ Kada se nalazite u razgovoru:
 Većina postavki NVDA mogu se promijeniti koristeći dijaloške okvire kojima se može pristupiti preko podizbornika postavke u NVDA izborniku.
 U svim dijaloškim okvirima NVDA postavki, pritisnite gumb u redu da biste primjenili promjene koje ste napravili.
 Da biste poništili promjene, pritisnite gumb odustani ili tipku escape na tipkovnici.
-Većina se postavki također može mjenjati koristeći tipkovničke prečace, koji su navedeni gdje je to relevantno u poglavljima ispod.
+Neke se postavke također mogu mijenjati koristeći tipkovničke prečace, koji su dostupni u onim poglavljima gdje postoje.
+
+Imajte na umu da po zadanim postavkama, nemaju sve opcije (tipkovničke prečace, dodirne geste, itd.).
+Ako želite brže pristupati dijaloškim okvirima koji nemaju definirane svoje tipkovničke prečace, koristite [dijaloški okvir ulazne geste #InputGestures] da biste dodali tipkovnički prećac za taj određeni dijaloški okvir..
 
 +++ opće postavke (NVDA+control+g) +++
 Dijaloški okvir opće postavke možete pronaći u podizborniku postavke.
@@ -1113,6 +1116,8 @@ Možete podesiti izgovor slijedećeg:
 - klikabilnne elemente
 -
 
+Da biste mogli ukljućivati/iskljućivati ove postavke sa bilo kojeg mjesta, molimo pridjelite prilagođene tipkovničke prećace koristeći [dijaloški okvir ulazne geste #InputGestures].
+
 ==== Obavijesti o promjenama oblikovanja poslije kursora ====
 Ako je ova opcija uključena, ova će opcija uzrokovati da NVDA pokuša prepoznati sve postavke oblikovanja u retku i potom ih izgovara, čak iako uključite ovu opciju to može uzrokovati usporavanje NVDA.
 
@@ -1128,6 +1133,8 @@ To su:
 - Glasovni: Pravila u ovom rječniku primjenjuju se na govornu jedinicu i na glas koji se trenutno koristi.
 - Privremeni: pravila u ovom rječniku Primjenjuju se na sav govor u NVDA, ali samo za trenutnu sesiju. Ova su pravila privremena i bit će izgubljena kad NVDA bude ponovno pokrenut.
 -
+
+Morate definirati prilagođene ulazne geste koristeći [dijaloški okvir ulazne geste #InputGestures] ako želite otvarati jedan od ovih dijaloških okvira za riječnike od bilo gdje.
 
 Svi dijaloški okviri za rječnike sadrže listu pravila koja se koriste za procesiranje govora.
 Dijaloški okvir također sadrži gumbe dodaj, uredi i ukloni.
@@ -1306,6 +1313,8 @@ Maknite kvačicu sa stavke izbornika pomoću tipke enter da biste je onemogučil
 Kad je preglednik govora omogućen, on se stalno osvježava da bi vam prikazao tekst koji se trenutno izgovara.
 Međutim, ako kliknete ili se fokusirate na preglednik, NVDA će privremeno zaustaviti osvježavanje teksta, tako da možete označiti ili kopirati postojeći sadržaj.
 
+Kako biste mogli uključiti ili isključiti preglednik govora sa bilo kojeg mjesta, molimo pridjelite prilagođenu gestu koristeći [dijaloški okvir ulazne geste #InputGestures].
+
 ++ Upravitelj dodacima ++
 Upravitelj dodacima, kojemu se može pristupiti u NVDA izborniku u podizborniku alati pod stavkom upravljaj dodacima, vam omogućuje instalaciju i deinstalaciju NVDA dodataka.
 Ove pakete pruža zajednica koja koristi NVDA, i ovi dodaci mogu sadržavati prilagođeni kod pomoću kojeg su dodane ili izmjenjene neke funkcije u NVDA ili čak pružaju podršku za neke brajične retke ili govorne jedinice.
@@ -1339,6 +1348,8 @@ Ako ste dodali ili uklonili dodatke, NVDA će vas najprije pitati želite li ga 
 U prošlosti je bilo moguće proširiti funkcionalnost NVDA kopirajući dodatne dodatke i upravljačke programe u vašu korisničku mapu.
 Iako ih ova NVDA inačica može pokretati, oni neće biti prikazani u upravitelju dodataka.
 Najbolje je ukloniti ove datoteke iz vaše konfiguracije i instalirati  odgovarajući dodatak ako je dostupan.
+
+Kako biste pristupili upravitelju dodataka sa bilo kojeg mjesta, molimo pridjelite odgovarajuću prilagođenu gestu koristeći [dijaloški okvir ulazne geste #InputGestures].
 
 ++ Python Konzola ++
 NVDA PYTHON konzola, koja se može pronaći u podizborniku alati u NVDA izborniku, je alat za razvojne programere koji je koristan za otkrivanje grešaka, opću provjeru NVDA unutarnjih funkcija ili provjeru hijerarhije pristupačnosti neke aplikacije.
@@ -1785,6 +1796,7 @@ Ovo su Papenmeier prečaci dodijeljeni za korištenje sa NVDA:
 | Prebaci se na brajičnu ćeliju | routing |
 | Pročitaj trenutni znak u načinu pregleda | l1 |
 | Aktiviraj trenutni objekt navigacije | l2 |
+| prebacuj između brajice povezane na fokus i pregled | r2 |
 | Izvijesti o naslovu | l1+up |
 | Pročitaj statusnu traku | l2+down |
 | Premjesti se na sadržavajući objekt | up2 |
