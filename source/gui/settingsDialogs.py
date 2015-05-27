@@ -198,11 +198,11 @@ class GeneralSettingsDialog(SettingsDialog):
 		settingsSizer.Add(self.copySettingsButton)
 		if updateCheck:
 			# Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
-			item=self.autoCheckForUpdatesCheckBox=wx.CheckBox(self,label=_("Automatically check for &updates to NVDA"))
-			item.Value=config.conf["update"]["autoCheck"]
+			self.autoCheckForUpdatesCheckBox=wx.CheckBox(self,label=_("Automatically check for &updates to NVDA"))
+			self.autoCheckForUpdatesCheckBox.SetValue(config.conf["update"]["autoCheck"])
 			if globalVars.appArgs.secure:
-				item.Disable()
-			settingsSizer.Add(item)
+				self.autoCheckForUpdatesCheckBox.Disable()
+			settingsSizer.Add(self.autoCheckForUpdatesCheckBox)
 
 	def postInit(self):
 		self.languageList.SetFocus()
@@ -1159,14 +1159,14 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.landmarksCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		item=self.framesCheckBox=wx.CheckBox(self,label=_("Report fra&mes"))
-		item.Value=config.conf["documentFormatting"]["reportFrames"]
-		settingsSizer.Add(item,border=10,flag=wx.BOTTOM)
+		self.framesCheckBox=wx.CheckBox(self,label=_("Report fra&mes"))
+		self.framesCheckBox.SetValue(config.conf["documentFormatting"]["reportFrames"])
+		settingsSizer.Add(self.framesCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		item=self.clickableCheckBox=wx.CheckBox(self,label=_("Report if &clickable"))
-		item.Value=config.conf["documentFormatting"]["reportClickable"]
-		settingsSizer.Add(item,border=10,flag=wx.BOTTOM)
+		self.clickableCheckBox=wx.CheckBox(self,label=_("Report if &clickable"))
+		self.clickableCheckBox.SetValue(config.conf["documentFormatting"]["reportClickable"])
+		settingsSizer.Add(self.clickableCheckBox,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
 		self.detectFormatAfterCursorCheckBox.SetFocus()
