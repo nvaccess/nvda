@@ -419,13 +419,11 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 		import NVDAHelper
 		import NVDAObjects.IAccessible
 		if position==textInfos.POSITION_CARET:
-			startID=ctypes.c_int()
-			startOffset=ctypes.c_int()
-			endID=ctypes.c_int()
-			endOffset=ctypes.c_int()
-			NVDAHelper.localLib.nvdaInProcUtils_IA2_findDescendantSelection(obj.appModule.helperLocalBindingHandle,obj.windowHandle,obj.IAccessibleObject.uniqueID,ctypes.byref(startID),ctypes.byref(startOffset),ctypes.byref(endID),ctypes.byref(endOffset))
-			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(obj.windowHandle,winUser.OBJID_CLIENT,startID.value)
-			ti=obj.makeTextInfo(textInfos.offsets.Offsets(startOffset.value,endOffset.value))
+			descendantID=ctypes.c_int()
+			descendantOffset=ctypes.c_int()
+			NVDAHelper.localLib.nvdaInProcUtils_IA2Text_findContentDescendant(obj.appModule.helperLocalBindingHandle,obj.windowHandle,obj.IAccessibleObject.uniqueID,1,ctypes.byref(descendantID),ctypes.byref(descendantOffset))
+			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(obj.windowHandle,winUser.OBJID_CLIENT,descendantID.value)
+			ti=obj.makeTextInfo(textInfos.offsets.Offsets(descendantOffset.value,descendantOffset.value))
 			return ti,obj
 		while True:
 			try:

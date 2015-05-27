@@ -174,7 +174,11 @@ void IA2Support_inProcess_terminate() {
 	CloseHandle(IA2UIThreadHandle);
 }
 
-bool findDescendantSelection(IAccessible2* pacc2, long* startID, long* startOffset, long* endID, long* endOffset) {
+const long FINDCONTENTDESCENDANT_FIRST=0;
+const long FINDCONTENTDESCENDANT_CARET=1;
+const long FINDCONTENTDESCENDANT_LAST=2;
+
+bool findContentDescendant(IAccessible2* pacc2, long what, long* descendantID, long* descendantOffset) {
 	bool foundCaret=false;
 	IAccessibleText* paccText=NULL;
 	pacc2->QueryInterface(IID_IAccessibleText,(void**)&paccText);
@@ -198,16 +202,14 @@ bool findDescendantSelection(IAccessible2* pacc2, long* startID, long* startOffs
 				paccHyperlink->QueryInterface(IID_IAccessible2,(void**)&pacc2Child);
 				paccHyperlink->Release();
 				if(pacc2Child) {
-					foundCaret=findDescendantSelection(pacc2Child,startID,startOffset,endID,endOffset);
+					foundCaret=findContentDescendant(pacc2Child,what,descendantID,descendantOffset);
 					pacc2Child->Release();
 				}
 			}
 		}
 		if(!foundCaret) {
-			pacc2->get_uniqueID(startID);
-			*endID=*startID;
-			*startOffset=caretOffset;
-			*endOffset=caretOffset;
+			pacc2->get_uniqueID(descendantID);
+			*descendantOffset=caretOffset;
 			foundCaret=true;
 		}
 	} else {
@@ -223,7 +225,7 @@ bool findDescendantSelection(IAccessible2* pacc2, long* startID, long* startOffs
 			pdispatchChild->QueryInterface(IID_IAccessible2,(void**)&pacc2Child);
 			pdispatchChild->Release();
 			if(!pacc2Child) continue;
-			foundCaret=findDescendantSelection(pacc2Child,startID,startOffset,endID,endOffset);
+			foundCaret=findContentDescendant(pacc2Child,what,descendantID,descendantOffset);
 			pacc2Child->Release();
 			if(foundCaret) break;
 		}
@@ -231,7 +233,7 @@ bool findDescendantSelection(IAccessible2* pacc2, long* startID, long* startOffs
 	return foundCaret;
 }
 
-error_status_t nvdaInProcUtils_IA2_findDescendantSelection(handle_t bindingHandle, long hwnd, long parentID, long* startID, long* startOffset, long* endID, long* endOffset) {
+error_status_t nvdaInProcUtils_IA2Text_findContentDescendant(handle_t bindingHandle, long hwnd, long parentID, long what, long* descendantID, long* descendantOffset) {
 	auto func=[&](void* data){
 		IAccessible* pacc=NULL;
 		VARIANT varChild;
@@ -245,7 +247,7 @@ error_status_t nvdaInProcUtils_IA2_findDescendantSelection(handle_t bindingHandl
 		pserv->QueryService(IID_IAccessible,IID_IAccessible2,(void**)&pacc2);
 		pserv->Release();
 		if(!pacc2) return;
-		findDescendantSelection(pacc2,startID,startOffset,endID,endOffset);
+		findContentDescendant(pacc2,what,descendantID,descendantOffset);
 		pacc2->Release();
 	};
 	execInWindow((HWND)hwnd,func,NULL);
