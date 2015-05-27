@@ -16,9 +16,9 @@ complexSymbols:
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 
 # Others
-decimal point	(?<=\d)\.(?=\d)
+decimal point	(?<![^\d -])\.(?=\d)
 in-word -	(?<=[^\W_])[-]
-negative number	(?<!\w)-(?=[$£€¥]?\d)
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
 symbols:

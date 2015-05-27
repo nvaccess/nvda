@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-15 11:28-0700\n"
-"PO-Revision-Date: 2015-04-19 16:37+0100\n"
+"POT-Creation-Date: 2015-05-08 19:04+1000\n"
+"PO-Revision-Date: 2015-05-19 11:46+0100\n"
 "Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -170,13 +170,23 @@ msgstr "Češki puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Danish grade 1"
-msgstr "Danski puno pismo"
+msgid "Danish 6 dot grade 1"
+msgstr "danski šestotočkasti puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Danish grade 2"
-msgstr "Danski kratkopis"
+msgid "Danish 8 dot grade 1"
+msgstr "danski osmotočkasti puno pismo"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 6 dot grade 2"
+msgstr "danski šestotočkasti kratkopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot grade 2"
+msgstr "danski osmotočkasti kratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -259,16 +269,6 @@ msgstr "Finski 8-točkasta kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "Francuski (Kanada) puno pismo"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "Francuski (Kanada) kratkopis"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
 msgid "French (unified) 6 dot computer braille"
 msgstr "Francuski (jedinstveni) 6-točkasta kompjutorska brajica"
 
@@ -281,6 +281,16 @@ msgstr "Francuski (jedinstveni) 8-točkasta kompjutorska brajica"
 #. braille settings dialog.
 msgid "French (unified) Grade 2"
 msgstr "Francuski (jedinstven) kratkopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "French (Canada) grade 1"
+msgstr "Francuski (Kanada) puno pismo"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "French (Canada) grade 2"
+msgstr "Francuski (Kanada) kratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -379,8 +389,8 @@ msgstr "Nizozemski (Belgija) puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (netherlands) grade 1"
-msgstr "Nizozemski (Nizozemska) puno pismo"
+msgid "Dutch (Netherlands) grade 1"
+msgstr "Nizozemski (nizozemska) puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -464,7 +474,7 @@ msgstr "Švedski puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Slovak"
+msgid "Slovak grade 1"
 msgstr "Slovački puno pismo"
 
 #. Translators: The name of a braille table displayed in the
@@ -1918,6 +1928,7 @@ msgid "selected %s"
 msgstr "odabrano %s"
 
 #. Translators: The word for an unknown control type.
+#. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
 msgstr "nepoznato"
 
@@ -2040,6 +2051,7 @@ msgid "cell"
 msgstr "ćelija"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
+#. Translators: A column in a column chart.
 msgid "column"
 msgstr "stupac"
 
@@ -2330,9 +2342,9 @@ msgstr "gumb izbornika"
 msgid "drop down button grid"
 msgstr "padajući mrežni gumb"
 
-#. Translators: Identifies an equation.
-msgid "equation"
-msgstr "jednadžba"
+#. Translators: Identifies mathematical content.
+msgid "math"
+msgstr "matematika"
 
 #. Translators: Identifies a grip control.
 msgid "grip"
@@ -2780,6 +2792,10 @@ msgstr "Status sustava"
 msgid "Input"
 msgstr "Unos"
 
+#. Translators: The name of a category of NVDA commands.
+msgid "Document formatting"
+msgstr "Oblikovanje dokumenta"
+
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
 msgstr "pomoć pri unosu uključeno"
@@ -2938,6 +2954,282 @@ msgid ""
 "characters"
 msgstr ""
 "uključuje i isključuje izgovor utipkanih tipaka koje nisu određeni znakovi"
+
+#. Translators: The message announced when toggling the report font name document formatting setting.
+msgid "report font name off"
+msgstr "Izvijesti o nazivu fonta isključeno"
+
+#. Translators: The message announced when toggling the report font name document formatting setting.
+msgid "report font name on"
+msgstr "Izvijesti o nazivu fonta uključeno"
+
+#. Translators: Input help mode message for toggle report font name command.
+msgid "Toggles on and off the reporting of font changes"
+msgstr "Uključuje i isključuje izgovor imena fonta"
+
+#. Translators: The message announced when toggling the report font size document formatting setting.
+msgid "report font size off"
+msgstr "Izvijesti o veličini fonta isključeno"
+
+#. Translators: The message announced when toggling the report font size document formatting setting.
+msgid "report font size on"
+msgstr "Izvijesti o veličini fonta uključeno"
+
+#. Translators: Input help mode message for toggle report font size command.
+msgid "Toggles on and off the reporting of font size changes"
+msgstr "Uključuje i isključuje izgovor promjena velićine fonta"
+
+#. Translators: The message announced when toggling the report font attributes document formatting setting.
+msgid "report font attributes off"
+msgstr "Izvijesti o karakteristikama fonta isključeno"
+
+#. Translators: The message announced when toggling the report font attributes document formatting setting.
+msgid "report font attributes on"
+msgstr "Izvijesti o karakteristikama fonta ukljućeno"
+
+#. Translators: Input help mode message for toggle report font attributes command.
+msgid "Toggles on and off the reporting of font attributes"
+msgstr "Uključuje i isključuje izgovor karakteristika fonta"
+
+#. Translators: The message announced when toggling the report revisions document formatting setting.
+msgid "report revisions off"
+msgstr "Izvijesti o revizijama urednika isklućeno"
+
+#. Translators: The message announced when toggling the report revisions document formatting setting.
+msgid "report revisions on"
+msgstr "Izvijesti o revizijama urednika ukljućeno"
+
+#. Translators: Input help mode message for toggle report revisions command.
+msgid "Toggles on and off the reporting of revisions"
+msgstr "Uključuje i isključuje izgovor revizija urednika"
+
+#. Translators: The message announced when toggling the report colors document formatting setting.
+msgid "report colors off"
+msgstr "Izvijesti o bojama isključeno"
+
+#. Translators: The message announced when toggling the report colors document formatting setting.
+msgid "report colors on"
+msgstr "Izvijesti o bojama uključeno"
+
+#. Translators: Input help mode message for toggle report colors command.
+msgid "Toggles on and off the reporting of colors"
+msgstr "Uključuje i isključuje izgovor boja"
+
+#. Translators: The message announced when toggling the report alignment document formatting setting.
+msgid "report alignment off"
+msgstr "Izvijesti o poravnanju isključeno"
+
+#. Translators: The message announced when toggling the report alignment document formatting setting.
+msgid "report alignment on"
+msgstr "Izvijesti o poravnanju uključeno"
+
+#. Translators: Input help mode message for toggle report alignment command.
+msgid "Toggles on and off the reporting of text alignment"
+msgstr "Uključuje i isključuje izgovor poravnanja"
+
+#. Translators: The message announced when toggling the report style document formatting setting.
+msgid "report style off"
+msgstr "Izvijesti o stilu isključeno"
+
+#. Translators: The message announced when toggling the report style document formatting setting.
+msgid "report style on"
+msgstr "Izvijesti o stilu uključeno"
+
+#. Translators: Input help mode message for toggle report style command.
+msgid "Toggles on and off the reporting of style changes"
+msgstr "Uključuje i isključuje izgovor promjena stila"
+
+#. Translators: The message announced when toggling the report spelling errors document formatting setting.
+msgid "report spelling errors off"
+msgstr "Izvijesti o pravopisnim pogreškama isključeno"
+
+#. Translators: The message announced when toggling the report spelling errors document formatting setting.
+msgid "report spelling errors on"
+msgstr "Izvijesti o pravopisnim pogreškama uključeno"
+
+#. Translators: Input help mode message for toggle report spelling errors command.
+msgid "Toggles on and off the reporting of spelling errors"
+msgstr "Uključuje i isključuje izgovor pravopisnih pogrešaka"
+
+#. Translators: The message announced when toggling the report pages document formatting setting.
+msgid "report pages off"
+msgstr "Izvijesti o stranicama isključeno"
+
+#. Translators: The message announced when toggling the report pages document formatting setting.
+msgid "report pages on"
+msgstr "Izvijesti o stranicama uključeno"
+
+#. Translators: Input help mode message for toggle report pages command.
+msgid "Toggles on and off the reporting of pages"
+msgstr "Uključuje i isključuje izgovor stranica"
+
+#. Translators: The message announced when toggling the report line numbers document formatting setting.
+msgid "report line numbers off"
+msgstr "Izvijesti o broju retka isključeno"
+
+#. Translators: The message announced when toggling the report line numbers document formatting setting.
+msgid "report line numbers on"
+msgstr "Izvijesti o broju retka uključeno"
+
+#. Translators: Input help mode message for toggle report line numbers command.
+msgid "Toggles on and off the reporting of line numbers"
+msgstr "Uključuje i isključuje izgovor brojeva redaka"
+
+#. Translators: The message announced when toggling the report line indentation document formatting setting.
+msgid "report line indentation off"
+msgstr "Izvijesti o uvlačenju redaka isključeno"
+
+#. Translators: The message announced when toggling the report line indentation document formatting setting.
+msgid "report line indentation on"
+msgstr "Izvijesti o uvlačenju redaka uključeno"
+
+#. Translators: Input help mode message for toggle report line indentation command.
+msgid "Toggles on and off the reporting of line indentation"
+msgstr "Uključuje i isključuje izgovor uvlačenja redaka"
+
+#. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
+msgid "report paragraph indentation off"
+msgstr "Izvijesti o poravnanju odlomaka isključeno"
+
+#. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
+msgid "report paragraph indentation on"
+msgstr "Izvijesti o poravnanju odlomaka uključeno"
+
+#. Translators: Input help mode message for toggle report paragraph indentation command.
+msgid "Toggles on and off the reporting of paragraph indentation"
+msgstr "Uključuje i isključuje izgovor poravnanja odlomaka"
+
+#. Translators: The message announced when toggling the report tables document formatting setting.
+msgid "report tables off"
+msgstr "Izvijesti o tablicama isključeno"
+
+#. Translators: The message announced when toggling the report tables document formatting setting.
+msgid "report tables on"
+msgstr "Izvijesti o tablicama uključeno"
+
+#. Translators: Input help mode message for toggle report tables command.
+msgid "Toggles on and off the reporting of tables"
+msgstr "Uključuje i isključuje izgovor tablica"
+
+#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
+msgid "report table row and column headers off"
+msgstr "Izvijesti o zaglavljima redova/stupaca tabele isključeno"
+
+#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
+msgid "report table row and column headers on"
+msgstr "Izvijesti o zaglavljima redova/stupaca tabele uključeno"
+
+#. Translators: Input help mode message for toggle report table row/column headers command.
+msgid "Toggles on and off the reporting of table row and column headers"
+msgstr "Uključuje i isključuje izgovor redova i stupaca tabele"
+
+#. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
+msgid "report table cell coordinates off"
+msgstr "Izvijesti o koordinatama ćelije u tabeli isključeno"
+
+#. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
+msgid "report table cell coordinates on"
+msgstr "Izvijesti o koordinatama ćelije u tabeli uključeno"
+
+#. Translators: Input help mode message for toggle report table cell coordinates command.
+msgid "Toggles on and off the reporting of table cell coordinates"
+msgstr "Uključuje i isključuje izgovor kordinate ćelija u tablici"
+
+#. Translators: The message announced when toggling the report links document formatting setting.
+msgid "report links off"
+msgstr "Izvijesti o linkovima isključeno"
+
+#. Translators: The message announced when toggling the report links document formatting setting.
+msgid "report links on"
+msgstr "Izvijesti o linkovima uključeno"
+
+#. Translators: Input help mode message for toggle report links command.
+msgid "Toggles on and off the reporting of links"
+msgstr "Uključuje i isključuje izgovor linkova"
+
+#. Translators: The message announced when toggling the report comments document formatting setting.
+msgid "report comments off"
+msgstr "izgovaraj komentare isključeno"
+
+#. Translators: The message announced when toggling the report comments document formatting setting.
+msgid "report comments on"
+msgstr "izgovaraj komentare uključeno"
+
+#. Translators: Input help mode message for toggle report comments command.
+msgid "Toggles on and off the reporting of comments"
+msgstr "Uključuje i isključuje izgovor komentara"
+
+#. Translators: The message announced when toggling the report lists document formatting setting.
+msgid "report lists off"
+msgstr "Izvijesti o popisima isključeno"
+
+#. Translators: The message announced when toggling the report lists document formatting setting.
+msgid "report lists on"
+msgstr "Izvijesti o po&pisima uključeno"
+
+#. Translators: Input help mode message for toggle report lists command.
+msgid "Toggles on and off the reporting of lists"
+msgstr "Uključuje i isključuje izgovor popisa"
+
+#. Translators: The message announced when toggling the report headings document formatting setting.
+msgid "report headings off"
+msgstr "Izvijesti o naslovima isključeno"
+
+#. Translators: The message announced when toggling the report headings document formatting setting.
+msgid "report headings on"
+msgstr "Izvijesti o naslovima uključeno"
+
+#. Translators: Input help mode message for toggle report headings command.
+msgid "Toggles on and off the reporting of headings"
+msgstr "Uključuje i isključuje izgovor naslova"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report block quotes off"
+msgstr "Izvijesti o citatima isključeno"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report block quotes on"
+msgstr "Izvijesti o citatima uključeno"
+
+#. Translators: Input help mode message for toggle report block quotes command.
+msgid "Toggles on and off the reporting of block quotes"
+msgstr "Uključuje i isključuje izgovorcitata "
+
+#. Translators: The message announced when toggling the report landmarks document formatting setting.
+msgid "report landmarks off"
+msgstr "Izvijesti o orijentirima isključeno"
+
+#. Translators: The message announced when toggling the report landmarks document formatting setting.
+msgid "report landmarks on"
+msgstr "Izvijesti o orijentirima uključeno"
+
+#. Translators: Input help mode message for toggle report landmarks command.
+msgid "Toggles on and off the reporting of landmarks"
+msgstr "Uključuje i isključuje izgovor orijentira"
+
+#. Translators: The message announced when toggling the report frames document formatting setting.
+msgid "report frames off"
+msgstr "Izvijesti o okvirima isključeno"
+
+#. Translators: The message announced when toggling the report frames document formatting setting.
+msgid "report frames on"
+msgstr "Izvijesti o okvirima uključeno"
+
+#. Translators: Input help mode message for toggle report frames command.
+msgid "Toggles on and off the reporting of frames"
+msgstr "Uključuje i isključuje izgovor okvira"
+
+#. Translators: The message announced when toggling the report if clickable document formatting setting.
+msgid "report if clickable off"
+msgstr "Izvijesti ukoliko se radi o klikajućem objektu isključeno"
+
+#. Translators: The message announced when toggling the report if clickable document formatting setting.
+msgid "report if clickable on"
+msgstr "Izvijesti ukoliko se radi o klikajućem objektu uključeno"
+
+#. Translators: Input help mode message for toggle report if clickable command.
+msgid "Toggles on and off reporting if clickable"
+msgstr "Uključuje i isključuje izgovor klikajućih objekata"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -3505,6 +3797,10 @@ msgstr "Prikazuje NVDA dijaloški okvir za govornu jedinicu"
 msgid "Shows the NVDA voice settings dialog"
 msgstr "Prikazuje NVDA dijaloški okvir za glasovne postavke"
 
+#. Translators: Input help mode message for go to braille settings dialog command.
+msgid "Shows the NVDA braille settings dialog"
+msgstr "Prikazuje NVDA dijaloški okvir brajičnih postavki"
+
 #. Translators: Input help mode message for go to keyboard settings dialog command.
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "Prikazuje NVDA dijaloški okvir za postavke tipkovnice"
@@ -3512,6 +3808,14 @@ msgstr "Prikazuje NVDA dijaloški okvir za postavke tipkovnice"
 #. Translators: Input help mode message for go to mouse settings dialog command.
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "Prikazuje NVDA dijaloški okvir za postavke miša"
+
+#. Translators: Input help mode message for go to review cursor settings dialog command.
+msgid "Shows the NVDA review cursor settings dialog"
+msgstr "prikazuje dijaloški okvir postavki preglednog kursora"
+
+#. Translators: Input help mode message for go to input composition dialog.
+msgid "Shows the NVDA input composition settings dialog"
+msgstr "prikazuje dijaloški okvir postavke sastava unosa"
 
 #. Translators: Input help mode message for go to object presentation dialog command.
 msgid "Shows the NVDA object presentation settings dialog"
@@ -3524,6 +3828,28 @@ msgstr "Prikazuje NVDA dijaloški okvir postavki za mod pregleda"
 #. Translators: Input help mode message for go to document formatting dialog command.
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "Prikazuje NVDA dijaloški okvir za postavke oblikovanja dokumenta"
+
+#. Translators: Input help mode message for opening default dictionary dialog.
+msgid "Shows the NVDA default dictionary dialog"
+msgstr "prikazuje glavni dijaloški okvir govornih riječnika"
+
+#. Translators: Input help mode message for opening voice-specific dictionary dialog.
+msgid "Shows the NVDA voice-specific dictionary dialog"
+msgstr ""
+"prikazuje dijaloški okvir govornih riječnika koji su specifični za određeni "
+"glas govorne jedinice koja se koristi"
+
+#. Translators: Input help mode message for opening temporary dictionary.
+msgid "Shows the NVDA temporary dictionary dialog"
+msgstr "prikazuje dijaloški okvir za privremeni govorni riječnik"
+
+#. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
+msgid "Shows the NVDA symbol pronunciation dialog"
+msgstr "Prikazuje NVDA dijaloški okvir za izgovor simbola"
+
+#. Translators: Input help mode message for go to input gestures dialog command.
+msgid "Shows the NVDA input gestures dialog"
+msgstr "Prikazuje NVDA dijaloški okvir za ulazne geste"
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
@@ -3540,6 +3866,30 @@ msgstr ""
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Aktivira NVDA Python konzolu, prvenstveno korisnu za programiranje"
+
+#. Translators: Input help mode message for activate manage add-ons command.
+msgid ""
+"Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
+"for NVDA"
+msgstr ""
+"Otvara NVDA upravitelj dodataka koji služi za instaliranje /uklanjanje NVDA "
+"dodataka"
+
+#. Translators: The message announced when disabling speech viewer.
+msgid "speech viewer disabled"
+msgstr "Preglednik govora je onemogućen"
+
+#. Translators: The message announced when enabling speech viewer.
+msgid "speech viewer enabled"
+msgstr "Preglednik govora je omogućen"
+
+#. Translators: Input help mode message for toggle speech viewer command.
+msgid ""
+"Toggles the NVDA Speech viewer, a floating window that allows you to view "
+"all the text that NVDA is currently speaking"
+msgstr ""
+"Uključuje / isključuje nvda preglednik govora, plutajući prozor koji vam "
+"omogućuje pregled cijeloga tekst kojeg NVDA trenutno izgovara"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
@@ -3691,6 +4041,15 @@ msgstr ""
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Prikazuje dijalog za NVDA konfiguracijske profile"
+
+#. Translators: Reported when the user attempts math interaction
+#. with something that isn't math.
+msgid "Not math"
+msgstr "Nije matematika"
+
+#. Translators: Describes a command.
+msgid "Begins interaction with math content"
+msgstr "Počinje interakciju sa matematičkim sadržajem"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -6904,6 +7263,15 @@ msgstr ""
 "Greška kod spremanja korisnički definiranih gesta - datotečni sustav je "
 "vjerojatno samo za čitanje."
 
+#. Translators: Describes a command.
+msgid "Exit math interaction"
+msgstr "Izlazi iz interakcije sa matematičkim sadržajem"
+
+#. Translators: Reported when the user attempts math interaction
+#. but math interaction is not supported.
+msgid "Math interaction not supported."
+msgstr "Interakcija sa matematičkim sadržajem nije podržana"
+
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
 msgid "none"
@@ -7025,6 +7393,25 @@ msgstr "Radna površina"
 msgid "default color"
 msgstr "početna boja"
 
+#. Translators: the description for the elements list command in Microsoft Excel.
+msgid "Presents a list of charts, cells with comments and cells with formulas"
+msgstr "Prikazuje popis grafova, ćelija sa komentarima i ćelija sa formulama"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Chart"
+msgstr "&graf"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "C&omment"
+msgstr "&komentar"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Formula"
+msgstr "&Formula"
+
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
 msgstr "od {start} do {end}"
@@ -7105,6 +7492,636 @@ msgstr "Uređivanje komentara za ćeliju {address}"
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "od {firstAddress} {firstContent} do {lastAddress} {lastContent}"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Area"
+msgstr "3D Prostor"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Area"
+msgstr "3D stakirani prostor"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Area"
+msgstr "100 postotno stakirani prostor"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Bar"
+msgstr "3D klastrirana traka"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Bar"
+msgstr "3D stakirana traka"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Bar"
+msgstr "3D 100 posto stakirana traka"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Column"
+msgstr "3D stupac"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Column"
+msgstr "3D klastrirani stupac"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Column"
+msgstr "3D stakirani stupac"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Column"
+msgstr "3D 100 posto stakirani stupac"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Line"
+msgstr "3D linija"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Pie"
+msgstr "3D torta"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded 3D Pie"
+msgstr "eksplodirana 3D torta"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Area"
+msgstr "područni grafikon"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Area"
+msgstr "Stakirano područje"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Bar"
+msgstr "klastrirana traka"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bar of Pie"
+msgstr "traka torte"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Bar"
+msgstr "stakirana traka"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Bar"
+msgstr "100 posto stakirana traka"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble"
+msgstr "balon"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble with 3D effects"
+msgstr "balon sa 3D efektima"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Column"
+msgstr "klastrirani stupac"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Column"
+msgstr "stakirani stupac"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Column"
+msgstr "100 posto stakirani stupac"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Bar"
+msgstr "klastrirana stožasta traka"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Bar"
+msgstr "stakirana stožasta traka"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Bar"
+msgstr "100 posto stakirana stožasta traka"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cone Column"
+msgstr "3d stožasti stupac"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Column"
+msgstr "klastrirani stožasti stupac"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Column"
+msgstr "stakirani stožasti stupac"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Column"
+msgstr "100 posto stakirani stožasti stupac"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cylinder Bar"
+msgstr "klastrirana cilindrična traka"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cylinder Bar"
+msgstr "stakirana cilindrična traka"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Bar"
+msgstr "100 posto stakirana cilindrična traka"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cylinder Column"
+msgstr "3D cilindrični stupac"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Column"
+msgstr "100 posto stakirani cilindrični stupac"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Doughnut"
+msgstr "krafnasti grafikon"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Doughnut"
+msgstr "eksplodirana krafna"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line"
+msgstr "linija"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line with Markers"
+msgstr "linija sa oznakama"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line with Markers"
+msgstr "stakirana linija sa markerima"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line with Markers"
+msgstr "100 posto stakirana linija sa oznakama"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line"
+msgstr "stakirana linija"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line"
+msgstr "100 posto stakirana linija"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Pie"
+msgstr "tortni grafikon"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Pie"
+msgstr "eksplodirana pita"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Pie of Pie"
+msgstr "tortina torta"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Bar"
+msgstr "klastrirana piramidasta traka"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Bar"
+msgstr "stakirana piramidasta traka"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Bar"
+msgstr "100 posto stakirana piramidasta traka"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Pyramid Column"
+msgstr "3D piramidasti stupac"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Column"
+msgstr "klastrirani piramidni stupac"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Column"
+msgstr "stakirani piramidasti stupac"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Column"
+msgstr "100 posto stakirani piramidasti stupac"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar"
+msgstr "Radar"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Filled Radar"
+msgstr "popunjeni Radar"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar with Data Markers"
+msgstr "Radar sa oznakama podataka"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "High-Low-Close"
+msgstr "visoko-zatvoreni-nisko"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Open-High-Low-Close"
+msgstr "otvoreni-visoko-nisko-zatvoreni"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-High-Low-Close"
+msgstr "svesčano-visoko-nisko-zatvoreni"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-Open-High-Low-Close"
+msgstr "svesčano-otvoreni-visoko-dolje-zatvoreni"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface"
+msgstr "3D površina"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View)"
+msgstr "površinski gornji pregled"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View wireframe)"
+msgstr "površinski pogled prema dolje u žičanom okviru"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface (wireframe)"
+msgstr "3 D površinski žičani okvir"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter"
+msgstr "meteor"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines"
+msgstr "meteor sa linijama"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines and No Data Markers"
+msgstr "scatter bez podatkovnih oznaka ali sa linijama"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines"
+msgstr "meteor sa produženim linijama"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines and No Data Markers"
+msgstr "meteor sa produženim linijama ali bez oznaka podataka"
+
+#. Translators: Message reporting the title and type of a chart.
+msgid "Chart title: {chartTitle}, type: {chartType}"
+msgstr "naslov grafa: {chartTitle}, tip: {chartType}"
+
+#. Translators: Reported when there is no title for an axis in a chart.
+msgid "Not defined"
+msgstr "nije definirano"
+
+#. Translators: A type of axis in a chart.
+#. Translators: The category axis in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+msgid "Category"
+msgstr "kategorija"
+
+#. Translators: A type of axis in a chart.
+#. Translators: The value axis in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+msgid "Value"
+msgstr "vrijednost"
+
+#. Translators: A type of axis in a chart.
+#. Translators: The series axis in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+msgid "Series"
+msgstr "serije"
+
+#. Translators: Message reporting the type and title of an axis in a chart.
+#. For example, this might report "Category axis is month"
+msgid "{axisName} Axis is {axisTitle}"
+msgstr "{axisName} os je {axisTitle}"
+
+#. Translators: Indicates that there is 1 series in a chart.
+msgid "There is 1 series in this chart"
+msgstr "Postoji jedna serija u ovom grafu"
+
+#. Translators: Indicates the number of series in a chart where there are multiple series.
+#, python-format
+msgid "There are total %d series in this chart"
+msgstr "trenutno postoji %d serije u ovom grafu"
+
+#. Translators: Specifies the number and name of a series when listing series in a chart.
+msgid "series {number} {name}"
+msgstr "serija {number} {name}"
+
+#. Translators: Indicates that there are no series in a chart.
+msgid "No Series defined."
+msgstr "nema definiranih serija"
+
+#. Translators: A slice in a pie chart.
+msgid "slice"
+msgstr "komadić"
+
+#. Translators: A data point in a line chart.
+msgid "data point"
+msgstr "podatkovna točka"
+
+#. Translators: A segment of a chart for charts which don't have a specific name for segments.
+msgid "item"
+msgstr "stavka"
+
+msgid "Series color: {colorName} "
+msgstr "boja serije: {colorName} "
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Display Unit Label"
+msgstr "prikaz oznake jedinice"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Major Gridlines"
+msgstr "veliki granični rubovi"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Minor Gridlines"
+msgstr "mali granični rubovi"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Pivot Chart Drop Zone"
+msgstr "Pivot ispusna zona grafa"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Pivot Chart Field Button"
+msgstr "Pivot polje gumb grafa"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Down Bars"
+msgstr "dolnje trake"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Drop Lines"
+msgstr "padajuće linije"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Hi Lo Lines"
+msgstr "debele-tanke linije"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Radar Axis Labels"
+msgstr "nazivi osi u radar grafikonu"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Series Lines"
+msgstr "linije serija"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Up Bars"
+msgstr "gornje trake"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Corners"
+msgstr "kutevi"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Data Table"
+msgstr "tablica podataka"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Floor"
+msgstr "kat"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Nothing"
+msgstr "ništa"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Walls"
+msgstr "zidovi"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Data Label"
+msgstr "oznaka podatka"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Error Bars"
+msgstr "trake pogrešaka"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "X Error Bars"
+msgstr "X trake pogrešaka"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Y Error Bars"
+msgstr "Y trake pogrešaka"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Shape"
+msgstr "oblik"
+
+#. Translators: Details about a series in a chart.
+#. For example, this might report "foo series 1 of 2"
+msgid "{seriesName} series {seriesIndex} of {seriesCount}"
+msgstr "{seriesName} serije {seriesIndex} od {seriesCount}"
+
+#. Translators: For line charts, indicates no change from the previous data point on the left
+msgid "no change from point {previousIndex}, "
+msgstr "nema promjene od {previousIndex}, "
+
+#. Translators: For line charts, indicates an increase from the previous data point on the left
+msgid "Increased by {incrementValue} from point {previousIndex}, "
+msgstr "povećano za{incrementValue} od točke {previousIndex}, "
+
+#. Translators: For line charts, indicates a decrease from the previous data point on the left
+msgid "decreased by {decrementValue} from point {previousIndex}, "
+msgstr "smanjeno za {decrementValue} od točke {previousIndex}, "
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+msgid "{categoryAxisTitle} {categoryAxisData}: "
+msgstr "{categoryAxisTitle} {categoryAxisData}: "
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+msgid "Category {categoryAxisData}: "
+msgstr "kategorija {categoryAxisData}: "
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+msgid "{valueAxisTitle} {valueAxisData}"
+msgstr "{valueAxisTitle} {valueAxisData}"
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+msgid "value {valueAxisData}"
+msgstr "vrijednost {valueAxisData}"
+
+#. Translators: Details about a slice of a pie chart.
+#. For example, this might report "fraction 25.25 percent slice 1 of 5"
+msgid ""
+" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
+msgstr " djelić {fractionValue:.2f} posto djelića {pointIndex} od {pointCount}"
+
+#. Translators: Details about a segment of a chart.
+#. For example, this might report "column 1 of 5"
+msgid " {segmentType} {pointIndex} of {pointCount}"
+msgstr " {segmentType} {pointIndex} od {pointCount}"
+
+#. Translators: The primary axis group in a Microsoft Excel chart.
+msgid "Primary"
+msgstr "jprimaran"
+
+#. Translators: The secondary axis group in a Microsoft Excel chart.
+msgid "Secondary"
+msgstr "sekundarna"
+
+#. Translators: Details about an axis in a chart.
+msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
+msgstr "os grafa, vrsta: {axisType}, grupa: {axisGroup}, naslov: {axisTitle}"
+
+#. Translators: Details about an untitled axis in a chart.
+msgid "Chart axis, type: {axisType}, group: {axisGroup}"
+msgstr "os grafa, vrsta: {axisType}, grupa: {axisGroup}"
+
+#. Translators: Indicates a chart axis title in Microsoft Excel.
+msgid "Chart axis title"
+msgstr "naslov osi grafa"
+
+#. Translators: Indicates a trendline in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+msgid "trendline"
+msgstr "trend linija"
+
+#. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
+msgid " squared "
+msgstr "kvadratno"
+
+#. Translators: Details about a chart title in Microsoft Excel.
+msgid "Chart title: {chartTitle}"
+msgstr "naslov grafa: {chartTitle}"
+
+#. Translators: Indicates an untitled chart in Microsoft Excel.
+msgid "Untitled chart"
+msgstr "neimenovani graf"
+
+#. Translators: Details about the chart area in a Microsoft Excel chart.
+msgid ""
+"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
+"{chartAreaTop}, left: {chartAreaLeft}"
+msgstr ""
+"prostor grafa, visina: {chartAreaHeight}, širina: {chartAreaWidth}, početak: "
+"{chartAreaTop}, lijevo: {chartAreaLeft}"
+
+#. Translators: Indicates the chart area of a Microsoft Excel chart.
+msgid "Chart area "
+msgstr "mjesto grafa"
+
+#. Translators: Details about the plot area of a Microsoft Excel chart.
+msgid ""
+"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
+"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
+"{plotAreaInsideLeft:.0f}"
+msgstr ""
+"Plot područje, ununutarnja visina: {plotAreaInsideHeight:.0f}, unutrasnja "
+"širina: {plotAreaInsideWidth:.0f}, unutrašnji vrh: {plotAreaInsideTop:.0f}, "
+"unutrasnja lijeva strana: {plotAreaInsideLeft:.0f}"
+
+#. Translators: Indicates the plot area of a Microsoft Excel chart.
+msgid "Plot area "
+msgstr "plot mjesto"
+
+#. Translators: Indicates the legend in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+msgid "Legend"
+msgstr "legenda"
+
+#. Translators: Indicates that there is no legend in a Microsoft Excel chart.
+msgid "No legend"
+msgstr "Nema legende"
+
+#. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
+#. For example, this might report "Legend entry for series Temperature 1 of 2"
+msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr "zapis legende za seriju {seriesName} {seriesIndex} od {seriesCount}"
+
+#. Translators: Details about a legend key for a series in a Microsoft Excel chart.
+#. For example, this might report "Legend key for series Temperature 1 of 2"
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr "ključ legende za seriju {seriesName} {seriesIndex} od {seriesCount}"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
@@ -7390,8 +8407,22 @@ msgstr "HIMS Braille Sense/Braille EDGE serija"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
+#, fuzzy
+#~ msgid "%s"
+#~ msgstr "nasl.%s"
+
+#, fuzzy
+#~ msgid "none"
+#~ msgstr "ništa"
+
+#~ msgid "equation"
+#~ msgstr "jednadžba"
+
 #~ msgid "Presents a list of links, headings or landmarks"
 #~ msgstr "Prikazuje popis linkova, naslova ili orijentira"
+
+#~ msgid "Slovak"
+#~ msgstr "Slovački puno pismo"
 
 #~ msgid "grey"
 #~ msgstr "siva"
@@ -7481,9 +8512,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid "Set row header column"
 #~ msgstr "Postavi stupac zaglavlja reda"
-
-#~ msgid "Cleared row header column"
-#~ msgstr "Obrisan stupac zaglavlja retka"
 
 #~ msgid ""
 #~ "Pressing once will set the current column as the column where row headers "

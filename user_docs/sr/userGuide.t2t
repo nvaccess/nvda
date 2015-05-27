@@ -8,123 +8,123 @@
 %%toc
 
 + Uvod +
-NonVisual Desktop Access (NVDA) is a free and open source screen reader for the Microsoft Windows operating system.
-Providing feedback via synthetic speech and Braille, it enables blind or vision impaired people to access computers running Windows for no more cost than a sighted person.
-NVDA is developed by [NV Access http://www.nvaccess.org/], with contributions from the community.
+NVDA je skraćenica za NonVisual Desktop Access, što se može prevesti kao nevizuelni pristup računaru tj. radnoj površini. Ovo je besplatan softver, otvorenog koda, za operativni sistem Microsoft Windows.
+Pružajući podršku putem sinteze govora i za brajev red, omogućava slepim i slabovidim korisnicima da koriste računar, a da za to ne moraju da plate više od korisnika koji normalno vide.
+NVDA razvija [NV Access http://www.nvaccess.org/] uz saradnju zajednice.
 
-++ General Features ++
-NVDA allows blind and vision impaired people to access and interact with the Windows operating system and many third party applications.
+++ Osnovne karakteristike ++
+NVDA omogućava slepim i korisnicima sa oštećenim vidom da koriste računar sa Windows operativnim sistemom i mnoge aplikacije.
 
-Major highlights include:
-- Support for popular applications including web browsers, email clients, internet chat programs and office suites
-- Built-in speech synthesizer supporting over 80 languages
-- reporting of textual formatting where available such as font name and size, style and spelling errors
-- Automatic announcement of text under the mouse and optional audible indication of the mouse position
-- Support for many refreshable braille displays, including input of computer braille for braille displays which have a braille keyboard
-- Ability to run entirely from a USB stick or other portable media without the need for installation
-- Easy to use talking installer
-- Translated into 47 languages
-- Support for modern Windows Operating Systems including both 32 and 64 bit variants
-- Ability to run on Windows logon and other secure screens
-- Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation only supported in Windows 7 and later)
-- support for Windows Command Prompt and console applications
+Neke od glavnih prednosti su:
+- Podrška za popularne aplikacije kao što su web pretraživači, e-mail klijenti, programi za razmenu poruka i kancelarijski alati
+- Ugrađeni sintetizator govora sa više od 80 podržanih jezika
+- Prijavljivanje formata teksta gde je to moguće (npr. naziv, veličina i stil fonta, pravopisne greške i sl.)
+- Čitanje teksta preko kojeg se prelazi mišem i mogućnost zvučnog pozicioniranja strelice (kursora) miša
+- Podrška za brajev red, uključujući i mogućnost unosa sličnog onom na brajevoj mašini
+- Mogućnost korišćenja sa USB memorije ili drugog prenosnog uređaja, bez potrebe za instalacijom
+- Jednostavna instalacija uz govornu podršku
+- Prevedeno na 47 jezika
+- Podrška za 32-bitne i 64-bitne varijante operativnog sistema Windows
+- Mogućnost za korišćenje na Windows-ovom ekranu za prijavljivanje i drugim tzv. bezbednim radnim površinama
+- Podrška za interfejse pristupačnosti kao što su Microsoft Active Accessibility, Java Access Bridge, IAccessible2, UI Automation (UI Automation je podržan samo na Windows 7 i kasnijim verzijama)
+- Podrška za Windows Komandnu liniju i konzolne aplikacije
 -
 
-++ Internationalization ++
-It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
-Besides English, NVDA has been translated into 47 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Brazilian Portuguese, Bulgarian, Catalan, Colombian Spanish, Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Greek, Georgian, German, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Korean, Nepali, Norwegian, Polish, Portuguese, Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
+++ Internacionalizacija ++
+Važno je da svi ljudi na svetu, bez obzira koji jezik govore, imaju pristup tehnologiji.
+Pored engleskog, NVDA je preveden na brojne jezike: afrikaans, albanski, amharski, arapski, aragonski, brazilski portugalski, bugarski, češki, danski, farsi (persijski), finski, francuski, galicijski, grčki, gruzijski, hebrejski, hindi, holandski, hrvatski, irski, islandski, italijanski, japanski, katalonski, kolumbijski španski, korejski, mađarski, nemački, nepalski, norveški, pandžabi, poljski, portugalski, rumunski, ruski, slovački, slovenački, srpski, španski, švedski, tajlandski, tamilski, tradicionalni i pojednostavljeni kineski, turski, ukrajinski i vijetnamski.
 
-++ Speech Synthesizer Support ++
-Apart from providing its messages and interface in several languages, NVDA can also enable the user to read content in any language, as long as they have a speech synthesizer that can speak that language.
+++ Podrška za  sinteze govora ++
+Osim što svoje poruke i interfejs nudi na više jezika, NVDA omogućava korisniku da koristi i druge jezike, u zavisnosti od toga koje sintetizatore govora instalira.
 
-NVDA is bundled with [eSpeak http://espeak.sourceforge.net/], a free, open-source, multi-lingual speech synthesizer.
+NVDA je zasnovan na [eSpeak http://espeak.sourceforge.net/]-u, besplatnom sintetizatoru govora, koji podržava mnoštvo jezika i otvorenog je koda.
 
-Information about other speech synthesizers that NVDA supports can be found in the [Supported Speech Synthesizers #SupportedSpeechSynths] section.
+Podaci o drugim sintetizatorima koje NVDA podržava mogu se pročitati u sekciji [Podržani sintetizatori #SupportedSpeechSynths].
 
-++ Braille support ++
-For users that own a refreshable braille display, NVDA can output its information in Braille.
-Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for information about the supported braille displays.
+++ Podrška za brajev red ++
+NVDA korisnicima koji poseduju brajev red pruža mogućnost da izlazni tekst čitaju na brajevom pismu.
+Pogledajte [Podržani brajevi redovi #SupportedBrailleDisplays] da biste videli koje sve brajeve redove možete koristiti sa NVDA.
 
-NVDA supports braille codes for many languages, including contracted, uncontracted and computer braille codes for many languages.
+NVDA podržava brajev izlaz na mnogim jezicima, različitih vrsta koda.
 
-++ Licence and Copyright ++
-NVDA is copyright NVDA_COPYRIGHT_YEARS NVDA contributors.
+++ Licenca i autorska prava ++
+NVDA autorska prava: NVDA_COPYRIGHT_YEARS NVDA tim.
 
-NVDA is covered by the GNU General Public License (Version 2).
-You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it.
-This applies to both original and modified copies of this software, plus any derivative works.
-For further details, you can [view the full licence. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+Licenca za NVDA je GNU General Public License (Verzija 2).
+Možete da delite i menjate NVDA kako god želite sve dok je to u skladu sa licencom, a vaš kod dostupan svima.
+Ovo važi za originalni i izmenjene kopije softvera, kao i za sve dodatke.
+Za više detalja, [pogledajte licencu http://www.gnu.org/licenses/old-licenses/gpl-2.0.html].
 
-+ System Requirements +
-- Operating Systems: all 32-bit and 64-bit versions of Windows XP, Windows Vista, Windows 7 and Windows 8 (including Server operating Systems)
- - For Windows XP 32-bit, NVDA requires Service Pack 2 or higher.
- - For Windows Server 2003, NVDA requires Service Pack 1 or higher.
-- Memory: 256 mb or more of RAM
-- Processor speed: 1.0 ghz or above
-- About 50 MB of storage space.
++ Neophodna konfiguracija sistema +
+- Operativni Sistemi: sve 32-bitne i 64-bitne verzije Windows XP, Windows Vista, Windows 7 i Windows 8 (uključujući Server operativne sisteme)
+ - Kod Windows XP 32-bit, NVDA zahteva SP2 ili više.
+ - Za Windows Server 2003, NVDA zahteva Servisni paket 1 ili više.
+- Memorija: 256MB RAM (ili više)
+- Procesor: 1.0 GHz ili brži
+- Oko 50MB prostora za skladištenje na disku.
 -
 
-+ Getting and Setting Up NVDA +
-If you have not yet got a copy of NVDA, you can download it from [www.nvaccess.org NVDA_URL].
++ Kako nabaviti i instalirati NVDA +
+Ako još nemate svoju kopiju NVDA, možete je preuzeti sa [www.nvaccess.org NVDA_URL].
 
-Go to the download section and you will find a link to download the latest version of NVDA.
+Link za preuzimanje možete pronaći u Download sekciji/odeljku.
 
-Running the file you have just downloaded will start a temporary copy of NVDA.
-You will then be asked if you want to install NVDA, create a portable copy or just continue using the temporary copy.
+Kada pokrenete preuzeti fajl, pokrenuće se privremena kopija NVDA.
+Tada ćete biti upitani da li želite da instalirate NVDA, kreirate prenosivu kopiju ili jednostavno da nastavite sa korišćenjem privremene kopije.
 
-If you plan to  always use NVDA on this computer, you will want to choose to install NVDA.
-Installing NVDA will allow for additional functionality such as automatic starting after logon, the ability to read the Windows Logon and Windows security screens (which cannot be done with portable and temporary copies) and creation of Start Menu and desktop shortcuts.
-The installed copy is also able to create a portable copy itself at any time.
+Ako planirate da stalno koristite NVDA na ovom računaru, vaš izbor treba da bude instalacija NVDA.
+Instaliranjem NVDA dobićete neke mogućnosti koje prenosiva i privremena kopija nemaju, kao što je automatsko uključivanje NVDA pri uključivanju računara ili korišćenje NVDA na tzv. bezbednim radnim površinama i Windows ekranu za prijavljivanje.
+Iz instalirane kopije u bilo kom trenutku možete stvoriti prenosivu kopiju.
 
-If you want to take NVDA with you on a USB thum drive or other writable  media, then you  should choose to create a portable copy.
-The portable copy also has the ability to install itself on any computer at a later time.
-However, if you wish to copy NVDA onto read-only media such as a CD, you should just copy the download package.
-Running the portable version directly from read-only media is not supported at this time.
+Ako želite da imate NVDA na prenosivom mediju, vaš izbor naravno treba da bude kreiranje prenosive kopije.
+Iz prenosive kopije može se u bilo kom trenutku pokrenuti instalacija.
+Međutim, ako želite da prebacite NVDA na medij koji se ne može menjati, treba samo da kopirate preuzeti paket.
+Pokretanje prenosive verzije sa read-only (nepromenljivog) medija za sada nije podržano.
 
-Using the temporary copy of NVDA is also an option (e.g. for demonstration purposes), though  starting NVDA in this way each time can become very time consuming.
+Korišćenje privremene kopije može da bude dobro npr. za isprobavanje softvera, ali biste gubili dosta vremena kada biste svaki put pokretali NVDA na ovaj način.
 
-++ Portable and Temporary Copy Restrictions ++
-Apart from the  inability to automatically start during and/or after log-on, the portable and temporary copies of NVDA also have the following restrictions:
-- The inability to interact with applications running with administrative privileges, unless of course NVDA itself has been run also with these privileges (not recommended).
-- The inability to read User Account Control (UAC) screens when trying to start an application with administrative privileges.
-- Windows 8: the inability to support input from a touch screen.
-- Windows 8: the inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
+++ Ograničenja prenosive i privremene kopije ++
+Osim što ne mogu biti pokrenuti pri, odnosno nakon prijavljivanja na Windows, prenosiva i privremena kopija NVDA imaju sledeća ograničenja:
+- Nemogućnost da pristupaju aplikacijama sa administratorskim privilegijama, osim ako i sam NVDA nije pokrenut na ovaj način (ne preporučuje se)).
+- Nemogućnost čitanja ekrana za dozvolu aplikacija koje zahtevaju administratorske privilegije.
+- Windows 8: čitanje unosa sa ekrana na dodir nije podržan.
+- Windows 8: nemogućnost pristupa funkcijama kao što su režim pretraživanja ili izgovora unetih karaktera u Windows Store-u.
 -
 
-++ Installing NVDA ++
-If installing NVDA directly from the NVDA download package, press the Install NVDA button.
-If you have already closed this dialog or are wanting to install from a portable copy, please choose the Install NVDA menu item found under Tools in the NVDA menu.
+++ Instalacija NVDA ++
+Ako instalirate NVDA putem preuzetog fajla, jednostavno odaberite dugme Instaliraj NVDA.
+Ako ste zatvorili pokrenuti prozor ili želite da instalirate iz prenosive kopije, pronađite Instaliraj NVDA opciju u meniju Alati.
 
-The installation dialog that appears will confirm whether you wish to install NVDA and will also tell you whether  this installation will be updating a previous install.
-Pressing the Continue button will start installing NVDA.
-There are also a few options in this dialog which are explained below.
-Once the installation has completed, a message will appear telling you that it was successful.
-Pressing OK at this point will restart the newly installed copy of NVDA.
+Pojaviće se prozor sa obaveštenjem da će nova instalacija, ukoliko je potvrdite, ažurirati prethodno instaliranu verziju NVDA.
+Odabirom dugmeta za nastavak (zavisno od jezika operativnog sistema) pokrećete instalaciju.
+Tada ćete dobiti par opcija o kojima ćete više pročitati u nastavku.
+Kada se instalacija završi, dobićete poruku o uspešno izvršenoj instalaciji.
+Kada odaberete OK pokrenuće se novoinstalirana kopija NVDA.
 
-+++ Start at Windows Logon +++
-This option allows you to choose whether or not NVDA should automatically start while on the Windows Logon screen, before you have entered a password.
-This also includes UAC control and other secure screens.
++++ Pokretanje na Windows ekranu za prijavljivanje +++
+Ovo je opcija koja određuje da li će se NVDA pokretati pri Windows ekranu za prijavljivanje pre nego što odaberete korisnika ili unesete lozinku.
+Ovo takođe uključuje i druge bezbedne radne površine tj. ekrane.
 
-+++ Create Desktop Shortcut (ctrl+alt+n) +++
-This option allows you to choose whether or not NVDA should create a shortcut on the desktop to start NVDA. 
-If created, this shortcut will also be assigned a  shortcut key of control+alt+n, allowing you to start NVDA at any time with this key stroke.
++++ Kreiranje prečice na radnoj površini (ctrl+alt+n) +++
+Odaberite da li želite da na radnoj površini bude kreirana prečica za pokretanje NVDA. 
+Ako je kreirana, ovoj ikonici biće dodeljena tasterska prečica Ctrl+Alt+N kojom možete pokrenuti NVDA u bilo kom trenutku.
 
-+++ Copy Portable Configuration to Current User Account +++
-This option allows you to choose whether or not NVDA should copy the user configuration from the currently running NVDA into the configuration for the currently logged on  user, for the installed copy of NVDA. 
-This will not  copy the configuration for   any other users  of this system nor to the system configuration for use at Windows Logon and other secure screens.
-This option is only available when installing from a portable copy, not when installing directly from the downloaded Launcher package.
++++ Kopirati konfiguraciju na trenutni korisnički nalog +++
+Odaberite da li želite da se trenutno sačuvana konfiguracija prenosive verzije NVDA kopira i koristi na instaliranoj kopiji. 
+Ovo neće obuhvatiti druge korisnike na operativnom sistemu, niti ekran za prijavljivanje i druge bezbedne radne površine.
+Ova opcija je dostupna samo ako instalaciju vršite iz prenosive kopije, ne i kada pokrećete preuzeti instalacioni fajl.
 
-++ Creating a Portable Copy ++
-If creating a portable copy directly from the NVDA download  package, simply press the Create Portable Copy button.
-If you have already closed this dialog or you are running an installed copy of NVDA, choose the Create Portable copy menu item found under Tools in the NVDA menu.
+++ Kreiranje prenosive kopije ++
+Ako kreirate prenosivu (ili prenosnu) kopiju putem preuzetog instalacionog fajla, jednostavno odaberite dugme Kreiraj prenosivu (portabl) kopiju.
+Ako ste zatvorili pokrenuti prozor ili kreirate prenosivu kopiju iz instalirane, otvorite NVDA meni, pa u podmeniju Alati pronađite Kreiraj portabl kopiju.
 
-The Dialog that appears allows you to choose where the portable copy should be created.
-This can be a directory on your hard drive or a location on a USB thum drive or other portable media.
-There is also an option to choose whether NVDA should copy the logged on user's current NVDA configuration for use  with the newly created portable copy.
- This option is only available when creating a portable copy from an installed copy, not when creating from the download package.
-Pressing Continue will create the portable copy.
-Once creation is complete, a message will appear telling you it was successfull.
-Press OK to dismiss this dialog.
+Otvoriće se prozor u kojem možete odabrati gde će biti napravljena prenosiva kopija NVDA.
+Ovo može biti folder na hard-disku ili prenosivom mediju.
+Tu je i opcija kojom se određuje da li će trenutno sačuvana konfiguracija biti prebačena i na prenosivu kopiju.
+ Ova opcija postoji samo ako se prenosiva kopija kreira iz instalirane, ne i kada se kreira putem preuzetog instalacionog fajla.
+Odabirom dugmeta za potvrdu (različito u zavisnosti od jezika operativnog sistema) kreiraće se prenosiva kopija.
+Kada se proces završi, dobićete poruku da je prenosiva kopija uspešno kreirana.
+Odaberite OK (U redu) da zatvorite ovaj prozorčić.
 
 + Getting started with NVDA +
 

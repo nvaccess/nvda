@@ -1,6 +1,6 @@
 #appModules/winword.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
+#Copyright (C) 2006-2015 NV Access Limited, Manish Agrawal
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -419,6 +419,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	shouldIncludeLayoutTables=True #: layout tables should always be included (no matter the user's browse mode setting).
 
 	def activate(self):
+		import mathPres
+		mathMl=mathPres.getMathMlFromTextInfo(self)
+		if mathMl:
+			return mathPres.interactWithMathMl(mathMl)
 		# Handle activating links.
 		# It is necessary to expand to word to get a link as the link's first character is never actually in the link!
 		tempRange=self._rangeObj.duplicate
@@ -524,7 +528,12 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		elif role=="graphic":
 			role=controlTypes.ROLE_GRAPHIC
 		elif role=="object":
-			role=controlTypes.ROLE_EMBEDDEDOBJECT
+			progid=field.get("progid")
+			if progid and progid.startswith("Equation.DSMT"):
+				# MathType.
+				role=controlTypes.ROLE_MATH
+			else:
+				role=controlTypes.ROLE_EMBEDDEDOBJECT
 		else:
 			fieldType=int(field.pop('wdFieldType',-1))
 			if fieldType!=-1:
@@ -769,6 +778,19 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		self.obj.WinwordWindowObject.ScrollIntoView(self._rangeObj)
 		self.obj.WinwordSelectionObject.SetRange(self._rangeObj.Start,self._rangeObj.End)
 
+	def getMathMl(self, field):
+		try:
+			import mathType
+		except:
+			raise LookupError("MathType not installed")
+		range = self._rangeObj.Duplicate
+		range.Start = int(field["shapeoffset"])
+		obj = range.InlineShapes[0].OLEFormat
+		try:
+			return mathType.getMathMl(obj)
+		except:
+			raise LookupError("Couldn't get MathML from MathType")
+
 class WordDocumentTextInfoForTreeInterceptor(WordDocumentTextInfo):
 
 	def _get_shouldIncludeLayoutTables(self):
@@ -826,6 +848,9 @@ class BrowseModeWordDocumentTextInfo(textInfos.TextInfo):
 
 	def expand(self,unit):
 		return self.innerTextInfo.expand(unit)
+
+	def getMathMl(self, field):
+		return self.innerTextInfo.getMathMl(field)
 
 class WordDocumentTreeInterceptor(CursorManager,browseMode.BrowseModeTreeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor):
 

@@ -252,7 +252,7 @@ class MSHTML(VirtualBuffer):
 		elif nodeType == "blockQuote":
 			attrs = {"IHTMLDOMNode::nodeName": ["BLOCKQUOTE"]}
 		elif nodeType == "graphic":
-			attrs = {"IHTMLDOMNode::nodeName": ["IMG"]}
+			attrs = [{"IHTMLDOMNode::nodeName": ["IMG"]},{"HTMLAttrib::role":["img"]}]
 		elif nodeType == "frame":
 			attrs = {"IHTMLDOMNode::nodeName": ["FRAME","IFRAME"]}
 		elif nodeType=="focusable":

@@ -3,6 +3,42 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.2 =
+Hoogtepunten in deze versie zijn de mogelijkheid om grafieken te lezen in Microsoft Excel en ondersteuning voor lezen van, interageren met, en navigeren in wiskundige inhoud.
+
+== Nieuwe Functies ==
+- Per zin vooruit en achteruit bewegen is nu mogelijk in Microsoft Word met respectievelijk alt+pijlOmlaag en alt+pijlOmhoog. (#3288)
+- Nieuwe brailletabellen voor verschillende Indische talen. (#4778)
+- In Microsoft Excel meldt NVDA nu als de inhoud van een cel is overschreden of afgesneden. (#3040)
+- In Microsoft Excel kunt u nu de Elementenlijst (NVDA+f7) gebruiken voor een lijst van grafieken, opmerkingen en formules. (#1987)
+- Ondersteuning voor het lezen van grafieken in Microsoft Excel. Selecteer de grafiek via de Elementenlijst (NVDA+f7) en gebruik dan de pijltoetsen om tussen de gegevenspunten te bewegen. (#1987)
+- Als u MathPlayer 4 van Design Science gebruikt, kan NVDA nu wiskundige inhoud lezen en ermee interageren in internetbrowsers en in Microsoft Word en PowerPoint. Voor meer details verwijzen we naar het hoofdstuk "Inhoud van wiskundige aard lezen" van de gebruikershandleiding. (#4673)
+- Via het dialoogvenster Invoerhandelingen koppelen, is het nu mogelijk om invoerhandelingen (toetsenbordsneltoetsen, aanraakgebaren, enz.) te koppelen aan alle dialoogvensters met instellingen van NVDA en opties voor documentopmaak. (#4898)
+
+
+== Veranderingen ==
+- In het dialoogvenster Documentopmaak zijn de sneltoetsen gewijzigd voor het melden van lijsten, links, regelnummers en lettertypes. (#4650)
+- In het dialoogvenster Muisinstellingen zijn sneltoetsen toegevoegd voor "Geluidscoördinatie gebruiken bij verplaatsen van muis" en "Schermhelderheid bepaalt Volume audio-coördinatie". (#4916)
+- Melden van kleurnamen is aanzienlijk verbeterd. (#4984)
+- Liblouis braillevertaler bijgewerkt naar 2.6.2. (#4777)
+
+
+== Opgeloste Problemen ==
+- In bepaalde Indische talen worden omschrijvingen van karakters nu correct behandeld voor samengevoegde karakters. (#4582)
+- Als de optie "Vertrouw taal van stem bij het verwerken van karakters en symbolen" ingeschakeld is, zal het dialoogvenster Uitspraak van interpunctie en symbolen nu correct de stemtaal gebruiken. Ook wordt de taal waarvoor de uitspraak gewijzigd wordt getoond als titel van het dialoogvenster. (#4930)
+- In Internet Explorer en andere MSHTML controls worden getypte karakters niet langer foutief aangekondigd in bewerkbare keuzelijsten zoals het zoekveld op de Google homepage. (#4976)
+- Als u in Microsoft Officetoepassingen kleuren selecteert, worden de kleurnamen nu gemeld. (#3045)
+- Deense brailleweergave hersteld. (#4986)
+- U kunt opnieuw PageUp/pageDown gebruiken om slides te wissselen in een PowerPoint presentatie. (#4850)
+- In Skype voor Desktop 7.2 en hoger worden typing notifications nu gemeld en er zijn problemen opgelost onmiddellijk nadat de focus uit een conversatie beweeegt. (#4972)
+- Problemen opgelost bij het typen van bepaalde leestekens/symbolen zoals haken in het filterveld in het dialoogvenster Invoerhandelingen koppelen. (#5060)
+- Als u in Internet Explorer en andere MSHTML controls g of shift+g drukt om te navigeren naar afbeeldingen komt u nu ook bij elementen die gemarkeerd zijn als afbeelding via ARIA role img. (#5062)
+
+
+== Veranderingen voor Ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit document ../en/changes.html].
+
+
 = 2015.1 =
 Hoogtepunten in deze versie zijn  bladermodus voor Microsoft Word en Outlook documenten; drastisch verbeterde ondersteuning voor de Desktop client van Skype; en aanzienlijke verbeteringen aan Microsoft Internet Explorer.
 
@@ -139,7 +175,7 @@ Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit docum
 
 
 == Veranderingen ==
-- liblouis braille translator bijgewerkt naar 2.5.4. (#4103)
+- Liblouis braillevertaler bijgewerkt naar 2.5.4. (#4103)
 
 
 == Opgeloste Problemen ==
@@ -344,7 +380,7 @@ Deze zijn niet vertaald. We verwijzen naar [de Engelstalige versie van dit docum
  - Het navigatorobject volgt automatisch de leescursor zodat het het laagste object blijft op de positie van de leescursor als u in document- of schermoverzichtmodus bent.
  - Na het schakelen naar schermoverzichtmodus, zal NVDA in deze modus blijven totdat u expliciet terugschakelt naar document- of objectoverzichtmodus.
  - Als u in document- of objectoverzichtmodus bent, kan NVDA automatisch schakelen tussen deze twee modi afhankelijk of u al dan niet in een bladermodusdocument navigeert.
-- liblouis braille translator bijgewerkt naar 2.5.3. (#3371)
+- Liblouis braillevertaler bijgewerkt naar 2.5.3. (#3371)
 
 
 == Opgeloste Problemen ==
@@ -433,7 +469,7 @@ Bekijk het [Overzicht van Commando's keyCommands.html] voor de nieuwe toetsen.
 
 
 == Veranderingen ==
-- Liblouis braille translator bijgewerkt naar 2.5.2. (#2737)
+- Liblouis braillevertaler bijgewerkt naar 2.5.2. (#2737)
 - De laptop toetsenbordindeling is helemaal herzien om ze intuïtiever en consistenter te maken. (#804)
 - eSpeak speech synthesizer bijgewerkt naar 1.47.11. (#2680, #3124, #3132, #3141, #3143, #3172)
 
@@ -526,7 +562,7 @@ Hoogtepunten in deze versie zijn ondersteuning voor Aziatische karakterinvoer; e
 - De add-ons lijst in de Add-ons Manager toont nu de package naam voorafgaand aan zijn status. (#2548)
 - Als u dezelfde of een andere versie van een momenteel geïnstalleerde add-on installeert, zal NVDA vragen of u de add-on wilt bijwerken in plaats van enkel een fout te tonen en de installatie af te breken. (#2501)
 - Objectnavigatiecommando's (behalve het meld huidig object commando) melden nu met minder breedsprakigheid. U kan de extra informatie nog steeds krijgen door het meld huidig object commando te gebruiken. (#2560)
-- liblouis braille translator bijgewerkt naar 2.5.1. (#2319, #2480, #2662, #2672)
+- Liblouis braillevertaler bijgewerkt naar 2.5.1. (#2319, #2480, #2662, #2672)
 - Het NVDA Key Commands Quick Reference document is hernoemd naar Commands Quick Reference omdat het nu zowel aanraakgebaren bevat als toetsenbordcommando's.
 - De Elementenlijst in bladermodus onthoudt nu het laatst getoonde elementtype (b.v. links, koppen of oriëntatiepunten) elke keer het dialoogvenster wordt getoond tijdens dezelfde sessie van NVDA. (#365)
 - De meeste Metro apps in Windows 8 (b.v. Mail, Calendar) activeren niet langer de bladermodus voor de volledige app.

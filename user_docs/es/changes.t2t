@@ -4,23 +4,43 @@ Qué hay de Nuevo en NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2015.2 =
+Lo reseñable de esta  versión incluye la capacidad de leer gráficos en  Microsoft Excel y el apoyo para la lectura y la navegación interactiva de contenido matemático.
 
 == Nuevas Características ==
 - Ahora es posible moverse hacia adelante o atrás por frases en Microsoft Word con alt+flecha abajo y alt+flecha arriba respectivamente. (#3288)
 - Nuevas tablas de transcripción braille para varios idiomas de la India. (#4778)
+- En Microsoft Excel, NVDA ahora anuncia cuando una celda tiene contenido desbordante o cortado. (#3040)
+- En Microsoft Excel, ahora puedes utilizar la Lista de Elementos (NVDA+f7) para permitir el listado de gráficos, comentarios y fórmulas. (#1987)
+- Apoyo para la lectura de gráficos en Microsoft Excel. Para utilizar esto, selecciona el gráfico utilizando la Lista de Elementos (NVDA+f7) y luego utiliza las teclas de cursor para moverte entre los puntos de datos. (#1987)
+- Utilizando MathPlayer 4 from Design Science, NVDA ahora puede leer y navegar interactivamente por el contenido matemático en los navegadores web y en Microsoft Word y PowerPoint. Mira la sección "Leyendo Contenido Matemático" en la Guía del Usuario para detalles. (#4673)
+- Ahora es posible asignar gestos de entrada (órdenes de teclado, gestos táctiles, etc.) Para todos los diálogos de preferencias de NVDA y opciones de formato de documento utilizando el diálogo Gestos de Entrada. (#4898)
 
 
 == Cambios ==
-- En el diálogo de formateado de documentos de NVDA, los atajos de teclado para Anunciar listas, Anunciar enlaces, Anunciar números de Línea y Anunciar Nombre de fuente se han cambiado. (#4650)
-- En el diálogo Opciones del Ratón de NVDA, se han añadido atajos de teclado para Reproducir sonido cuando se mueve el ratón y El brillo controla el volumen del audio de las coordenadas. (#4916)
+- En el diálogo de formateado de documentos de NVDA, los atajos de teclado para Anunciar listas, Anunciar enlaces, Anunciar números de Línea y Anunciar Nombre de fuente se ha cambiado. (#4650)
+- En el diálogo Opciones del ratón de NVDA se han añadido atajos de teclado para Reproducir sonido cuando se mueve el ratón y El brillo controla el volumen del audio de las coordenadas. (#4916)
+- Mejoras significativas en el anunciado de nombres de color. (#4984)
+- Actualizado el transcriptor braille liblouis a 2.6.2. (#4777)
 
 
 == Corrección de Fallos ==
 - Las descripciones de carácter ahora se manejan correctamente para conjuntos de carácteres en ciertos idiomas de la India. (#4582)
+- Si la opción "Confiar en el Idioma de la Voz al Procesar Caracteres y Símbolos" está activada, el diálogo Pronunciación de Puntuación/Símbolos  ahora utiliza correctamente el idioma de la voz. También, el idioma para el que la pronunciación esté siendo editada se muestra en el título del diálogo. (#4930)
+- En Internet Explorer y otros controles MSHTML, los caracteres tecleados ya no se anuncian inapropiadamente en cuadros combinados editables tales como el campo de búsqueda de Google en la página de inicio de Google. (#4976)
+- Al seleccionar colores en aplicaciones de Microsoft Office, los nombres de color ahora se anuncian. (#3045)
+- La salida braille en Danés ahora funciona de nuevo. (#4986)
+- AvPág/rePág pueden utilizarse de nuevo para cambiar diapositivas dentro de una presentación de diapositivas de PowerPoint. (#4850)
+- En Skype para Escritorio 7.2 y posteriores, las notificaciones de tecleo ahora se anuncian y se han corregido los problemas imediatamente después de mover el foco fuera de una conversación. (#4972)
+- Corregidos problemas al teclear ciertos símbolos de puntuación tales como paréntesis dentro del campo de filtrado en el diálogo Gestos de Entrada. (#5060)
+- En Internet Explorer y otros controles MSHTML, al pulsar g o shift+g para navegar por gráficos ahora se incluyen elementos marcados como imágenes para propósitos de accesibilidad (por ejemplo ARIA role img). (#5062)
 
 
  == Cambios para Desarrolladores ==
 - brailleInput.handler.sendChars(mychar) ya no filtrará un carácter si es igual al carácter anterior, asegurándose que la tecla enviada  se liberó correctamente.
+- Los scripts para cambiar los modos táctiles ahora cumplen con las nuevas etiquetas añadidas a touchHandler.touchModeLabels. (#4699)
+- Los complementos pueden proveer sus propias implementaciones de presentación matemática. Mira el paquete mathPres para detalles. (#4509)
+- Se han implementado órdenes de voz para insertar una ruptura entre palabras y para cambiar el tono, volumen y velocidad. Mira BreakCommand, PitchCommand, VolumeCommand y RateCommand en el módulo speech. (#4674)
+ - También hay speech.PhonemeCommand para insertar pronunciaciones específicas, pero las implementaciones actuales sólo soportan un número muy limitado de fonemas.
 
 
 = 2015.1 =

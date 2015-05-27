@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2012 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 
 """High-level functions to speak information.
 """ 
@@ -311,7 +311,8 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 
 def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
-	isEditable=(reason!=controlTypes.REASON_FOCUSENTERED and obj.TextInfo!=NVDAObjectTextInfo and (obj.role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
+	role=obj.role
+	isEditable=(reason!=controlTypes.REASON_FOCUSENTERED and obj.TextInfo!=NVDAObjectTextInfo and (role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
 	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True}
 
 	if reason==controlTypes.REASON_FOCUSENTERED:
@@ -349,7 +350,9 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 		allowProperties['value']=False
 
 	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
-	if reason!=controlTypes.REASON_ONLYCACHE and isEditable:
+	if reason==controlTypes.REASON_ONLYCACHE:
+		return
+	if isEditable:
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			if not info.isCollapsed:
@@ -361,6 +364,14 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 		except:
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
 			speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=controlTypes.REASON_CARET)
+	elif role==controlTypes.ROLE_MATH:
+		import mathPres
+		mathPres.ensureInit()
+		if mathPres.speechProvider:
+			try:
+				speak(mathPres.speechProvider.getSpeechForMathMl(obj.mathMl))
+			except (NotImplementedError, LookupError):
+				pass
 
 def speakText(text,index=None,reason=controlTypes.REASON_MESSAGE,symbolLevel=None):
 	"""Speaks some text.
@@ -474,12 +485,17 @@ def speak(speechSequence,symbolLevel=None):
 	if symbolLevel is None:
 		symbolLevel=config.conf["speech"]["symbolLevel"]
 	curLanguage=defaultLanguage
+	inCharacterMode=False
 	for index in xrange(len(speechSequence)):
 		item=speechSequence[index]
+		if isinstance(item,CharacterModeCommand):
+			inCharacterMode=item.state
 		if autoLanguageSwitching and isinstance(item,LangChangeCommand):
 			curLanguage=item.lang
 		if isinstance(item,basestring):
-			speechSequence[index]=processText(curLanguage,item,symbolLevel)+CHUNK_SEPARATOR
+			speechSequence[index]=processText(curLanguage,item,symbolLevel)
+			if not inCharacterMode:
+				speechSequence[index]+=CHUNK_SEPARATOR
 	getSynth().speak(speechSequence)
 
 def speakSelectionMessage(message,text):
@@ -618,6 +634,16 @@ class SpeakTextInfoState(object):
 	def copy(self):
 		return self.__class__(self)
 
+def _speakTextInfo_addMath(speechSequence, info, field):
+	import mathPres
+	mathPres.ensureInit()
+	if not mathPres.speechProvider:
+		return
+	try:
+		speechSequence.extend(mathPres.speechProvider.getSpeechForMathMl(info.getMathMl(field)))
+	except (NotImplementedError, LookupError):
+		return
+
 def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlTypes.REASON_QUERY,index=None,onlyInitialFields=False,suppressBlanks=False):
 	if isinstance(useCache,SpeakTextInfoState):
 		speakTextInfoState=useCache
@@ -702,7 +728,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		if not endingBlock and reason==controlTypes.REASON_SAYALL:
 			endingBlock=bool(int(controlFieldStackCache[count].get('isBlock',0)))
 	if endingBlock:
-		speechSequence.append(BreakCommand())
+		speechSequence.append(SpeakWithoutPausesBreakCommand())
 	# The TextInfo should be considered blank if we are only exiting fields (i.e. we aren't entering any new fields and there is no text).
 	isTextBlank=True
 
@@ -713,17 +739,25 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	#Get speech text for any fields that are in both controlFieldStacks, if extra detail is not requested
 	if not extraDetail:
 		for count in xrange(commonFieldCount):
-			text=info.getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"start_inControlFieldStack",formatConfig,extraDetail,reason=reason)
+			field=newControlFieldStack[count]
+			text=info.getControlFieldSpeech(field,newControlFieldStack[0:count],"start_inControlFieldStack",formatConfig,extraDetail,reason=reason)
 			if text:
 				speechSequence.append(text)
 				isTextBlank=False
+			if field.get("role")==controlTypes.ROLE_MATH:
+				isTextBlank=False
+				_speakTextInfo_addMath(speechSequence,info,field)
 
 	#Get speech text for any fields in the new controlFieldStack that are not in the old controlFieldStack
 	for count in xrange(commonFieldCount,len(newControlFieldStack)):
-		text=info.getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"start_addedToControlFieldStack",formatConfig,extraDetail,reason=reason)
+		field=newControlFieldStack[count]
+		text=info.getControlFieldSpeech(field,newControlFieldStack[0:count],"start_addedToControlFieldStack",formatConfig,extraDetail,reason=reason)
 		if text:
 			speechSequence.append(text)
 			isTextBlank=False
+		if field.get("role")==controlTypes.ROLE_MATH:
+			isTextBlank=False
+			_speakTextInfo_addMath(speechSequence,info,field)
 		commonFieldCount+=1
 
 	#Fetch the text for format field attributes that have changed between what was previously cached, and this textInfo's initialFormatField.
@@ -800,6 +834,8 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 						relativeSpeechSequence.append(LangChangeCommand(None))
 						lastLanguage=None
 					relativeSpeechSequence.append(fieldText)
+				if command.command=="controlStart" and command.field.get("role")==controlTypes.ROLE_MATH:
+					_speakTextInfo_addMath(relativeSpeechSequence,info,command.field)
 				if autoLanguageSwitching and newLanguage!=lastLanguage:
 					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
 					lastLanguage=newLanguage
@@ -872,7 +908,7 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	rowNumber=propertyValues.get('rowNumber')
 	columnNumber=propertyValues.get('columnNumber')
 	includeTableCellCoords=propertyValues.get('includeTableCellCoords',True)
-	if speakRole and (reason not in (controlTypes.REASON_SAYALL,controlTypes.REASON_CARET,controlTypes.REASON_FOCUS) or not (name or value or cellCoordsText or rowNumber or columnNumber) or role not in controlTypes.silentRolesOnFocus):
+	if speakRole and (reason not in (controlTypes.REASON_SAYALL,controlTypes.REASON_CARET,controlTypes.REASON_FOCUS) or not (name or value or cellCoordsText or rowNumber or columnNumber) or role not in controlTypes.silentRolesOnFocus) and (role!=controlTypes.ROLE_MATH or reason not in (controlTypes.REASON_CARET,controlTypes.REASON_SAYALL)):
 		textList.append(controlTypes.roleLabels[role])
 	if value:
 		textList.append(value)
@@ -1006,7 +1042,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		speakEntry=True
 		speakWithinForLine=True
 		speakExitForOther=True
-	elif presCat == attrs.PRESCAT_MARKER:
+	elif presCat in (attrs.PRESCAT_MARKER, attrs.PRESCAT_CELL):
 		speakEntry=True
 	elif presCat == attrs.PRESCAT_CONTAINER:
 		speakEntry=True
@@ -1367,7 +1403,7 @@ def speakWithoutPauses(speechSequence,detectBreaks=True):
 	if detectBreaks and speechSequence:
 		sequenceLen=len(speechSequence)
 		for index in xrange(sequenceLen):
-			if isinstance(speechSequence[index],BreakCommand):
+			if isinstance(speechSequence[index],SpeakWithoutPausesBreakCommand):
 				if index>0 and lastStartIndex<index:
 					speakWithoutPauses(speechSequence[lastStartIndex:index],detectBreaks=False)
 				speakWithoutPauses(None)
@@ -1471,5 +1507,91 @@ class LangChangeCommand(SpeechCommand):
 	def __repr__(self):
 		return "LangChangeCommand (%r)"%self.lang
 
-class BreakCommand(object):
-	"""Forces speakWithoutPauses to flush its buffer and therefore break the sentence at this point."""
+class SpeakWithoutPausesBreakCommand(SpeechCommand):
+	"""Forces speakWithoutPauses to flush its buffer and therefore break the sentence at this point.
+	This should only be used with the L{speakWithoutPauses} function.
+	This will be removed during processing.
+	"""
+
+class BreakCommand(SpeechCommand):
+	"""Insert a break between words.
+	"""
+
+	def __init__(self, time=0):
+		"""
+		@param time: The duration of the pause to be inserted in milliseconds.
+		@param time: int
+		"""
+		self.time = time
+
+	def __repr__(self):
+		return "BreakCommand(time=%d)" % self.time
+
+class PitchCommand(SpeechCommand):
+	"""Change the pitch of the voice.
+	"""
+
+	def __init__(self, multiplier=1):
+		"""
+		@param multiplier: The number by which to multiply the current pitch setting;
+			e.g. 0.5 is half, 1 returns to the current pitch setting.
+		@param multiplier: int/float
+		"""
+		self.multiplier = multiplier
+
+	def __repr__(self):
+		return "PitchCommand(multiplier=%g)" % self.multiplier
+
+class VolumeCommand(SpeechCommand):
+	"""Change the volume of the voice.
+	"""
+
+	def __init__(self, multiplier=1):
+		"""
+		@param multiplier: The number by which to multiply the current volume setting;
+			e.g. 0.5 is half, 1 returns to the current volume setting.
+		@param multiplier: int/float
+		"""
+		self.multiplier = multiplier
+
+	def __repr__(self):
+		return "VolumeCommand(multiplier=%g)" % self.multiplier
+
+class RateCommand(SpeechCommand):
+	"""Change the rate of the voice.
+	"""
+
+	def __init__(self, multiplier=1):
+		"""
+		@param multiplier: The number by which to multiply the current rate setting;
+			e.g. 0.5 is half, 1 returns to the current rate setting.
+		@param multiplier: int/float
+		"""
+		self.multiplier = multiplier
+
+	def __repr__(self):
+		return "RateCommand(multiplier=%g)" % self.multiplier
+
+class PhonemeCommand(SpeechCommand):
+	"""Insert a specific pronunciation.
+	This command accepts Unicode International Phonetic Alphabet (IPA) characters.
+	Note that this is not well supported by synthesizers.
+	"""
+
+	def __init__(self, ipa, text=None):
+		"""
+		@param ipa: Unicode IPA characters.
+		@type ipa: unicode
+		@param text: Text to speak if the synthesizer does not support
+			some or all of the specified IPA characters,
+			C{None} to ignore this command instead.
+		@type text: unicode
+		"""
+		self.ipa = ipa
+		self.text = text
+
+	def __repr__(self):
+		out = "PhonemeCommand(%r" % self.ipa
+		if self.text:
+			out += ", text=%r" % self.text
+		return out + ")"

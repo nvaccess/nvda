@@ -527,6 +527,42 @@ A key command is provided to return to the original page containing the embedded
 | Move to containing browse mode document | NVDA+control+space | Moves the focus out of the current embedded object and into the document that contains it |
 %kc:endInclude
 
++ Reading Mathematical Content +
+Using MathPlayer 4 from Design Science, NVDA can read and interactively navigate supported mathematical content.
+This requires that MathPlayer 4 is installed on the computer.
+MathPlayer is available as a free download from: http://www.dessci.com/en/products/mathplayer/
+
+NVDA supports the following types of mathematical content:
+- MathML in Mozilla Firefox and Microsoft Internet Explorer.
+- Design Science MathType in Microsoft Word and PowerPoint.
+- MathML in Adobe Reader. Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
+-
+
+When reading a document, NVDA will speak any supported mathematical content where it occurs.
+If you are using a braille display, it will also be displayed in braille.
+
+++ Interactive Navigation ++
+If you are working primarily with speech, in most cases, you will probably wish to examine the expression in smaller segments, rather than hearing the entire expression at once.
+
+If you are in browse mode, you can do this by moving the cursor to the mathematical content and pressing enter.
+
+If you are not in browse mode:
++ move the review cursor to the mathematical content.
+By default, the review cursor follows the system caret, so you can usually use the system caret to move to the desired content.
++ Then, activate the following command:
++
+
+%kc:beginInclude
+|| Name | Key | Description |
+| Interact with math content | NVDA+alt+m | Begins interaction with math content. |
+%kc:endInclude
+
+At this point, you can use MathPlayer commands such as the arrow keys to explore the expression.
+For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
+Please see the MathPlayer documentation for further information.
+
+When you wish to return to the document, simply press the escape key.
+
 + Application Specific NVDA Commands +
 NVDA provides its own extra commands for some applications to make certain tasks easier or to provide access to functionality which is not otherwise accessible to screen reader users.
 
@@ -589,6 +625,9 @@ Most NVDA settings can be changed using dialog boxes accessed through the Prefer
 In all NVDA settings dialog boxes, press the OK button to accept any changes you have made.
 To cancel any changes, press the Cancel button or the escape key.
 Some settings can also be changed using shortcut keys, which are listed where relevant in the sections below.
+
+Note that by default, not all preferences dialogs can be accessed with input gestures (keyboard commands, touch gestures, etc.).
+If you wish to access dialogs which don't have dedicated shortcut keys, use the [Input Gestures dialog #InputGestures] to add custom gesture for that dialog.
 
 +++ General Settings (NVDA+control+g) +++
 The General settings dialog box is found in the Preferences menu.
@@ -1077,6 +1116,8 @@ You can configure reporting of:
 - When something is clickable
 -
 
+To toggle these settings from anywhere, please assign custom gestures using the [Input Gestures dialog #InputGestures].
+
 ==== Announce formatting changes after the cursor ====
 If enabled, this setting tells NVDA to try and detect all the formatting changes on a line as it speaks it, even if doing this may slow down NVDA's performance.
 
@@ -1092,6 +1133,8 @@ They are:
 - Voice: rules in this dictionary affect speech for the synthesizer voice currently being used.
 - Temporary: rules in this dictionary affect all speech in NVDA, but only for the current session. These rules are temporary and will be lost if NVDA is restarted.
 -
+
+You need to assign custom gestures using the [Input Gestures dialog #InputGestures] if you wish to open any of these dictionary dialogs from anywhere.
 
 All dictionary dialogs contain a list of rules which will be used for processing the speech.
 The dialog also contains Add, Edit and Remove buttons.
@@ -1134,7 +1177,7 @@ You can remove a symbol you previously added by pressing the Remove button.
 
 When you are finished, press the OK button to save your changes or the Cancel button to discard them.
 
-+++ Input Gestures +++
++++ Input Gestures +++[InputGestures]
 In this dialog, you can customize the input gestures (keys on the keyboard, buttons on a braille display, etc.) for NVDA commands.
 
 Only commands that are applicable immediately before the dialog is opened are shown.
@@ -1270,6 +1313,8 @@ Uncheck the menu item to disable it.
 While the speech viewer is enabled, it constantly updates to show you the most current text being spoken.
 However, if you click or focus inside the viewer, NVDA will temporarily stop updating the text, so that you are able to easily select or copy the existing content.
 
+To toggle the speech viewer from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
 ++ Add-ons Manager ++
 The Add-ons Manager, accessed by selecting Manage add-ons under Tools in the NVDA menu, allows you to install and uninstall add-on packages for NVDA.
 These packages are provided by the community and contain custom code that may add or change features in NVDA or even provide support for extra Braille displays or speech synthesizers.
@@ -1303,6 +1348,8 @@ If you have installed or removed add-ons, NVDA will first ask you if you wish to
 In the past it has been possible to extend NVDA's functionality by copying individual plugins and drivers in to your NVDA user Configuration directory.
 Although this version of NVDA  may still   load them, they will not be shown in the Add-on Manager.
 It is best to remove these files from your configuration and install  the appropriate add-on if one is available.
+
+To access the Add-ons Manager from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
 ++ Python Console ++
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
@@ -1749,6 +1796,7 @@ Following are the Papenmeier command assignments for NVDA:
 | Route to braille cell | routing |
 | Report current character in review | l1 |
 | Activate current navigator object | l2 |
+| Toggle braille tethered to | r2 |
 | Report title | l1+up |
 | Report Status Bar | l2+down |
 | Move to containing object | up2 |

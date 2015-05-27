@@ -4,19 +4,35 @@
 %!includeconf: ../changes.t2tconf
 
 = 2015.2 =
+Nove značajke u ovoj inačici uključuju mogućnost čitanja grafova u microsoft excelu i podršku koja omogućuje čitanje matematičkog sadržaja.
 
 == Nove značajke ==
 - Sada je moguće pomicanje po rečenicama koristeći tipkovničke prečace alt+strelicaGore i alt+strelicaDolje u Microsoft wordu. (#3288)
 - Nove brajične tablice za nekoliko indijskih jezika. (#4778)
+- U microsoft excelu, NVDA sada izgovara kada je u čeliji sadržaj koji prelazi preko ćelije ili koji je izrezan. (#3040)
+- Sada u excelu možete pritisnuti insert f7 kako bi ste se kretali između formula i grafova. (#1987)
+- Podrška za čitanje grafova u Microsoft excelu. da biste ovo koristili, pritisnite (NVDA+f7) potom koristite strelice kako biste se kretali između podatkovnih točaka. (#1987)
+- koristeći MathPlayer 4 firme Design Science, nvda sada može čitati i biti u interakciji sa matematičkim sadržajem u web preglednicima, microsoft wordu i powerpointu. Molimo pogledajte poglavlje "čitanje matematičkog sadržaja" u korisničkom priručniku". (#4673)
+- Sada je moguće pridjeljivanje dodirne geste, tipkovničkog prečaca, ili tipke na brajičnom retku bilo kojem nvda dijaloškom okviru pomoću dijaloškog okvira "ulazne geste". (#4898)
 
 
 == izmjene ==
 - U NVDA dijaloškom okviru oblikovanje dokumenta, promjenjeni su tipkovnički prečaci za opcije  izvijesti o popisima, izvijesti o linkovima, izvijesti o brojevima redaka i izvijesti o imenu fonta. (#4650)
 - U NVDA dijaloškom okviru postavke miša, dodani su tipkovnički prečaci za slijedeće opcije: reproduciraj zvučne koordinate prilikom pomicanja miša i svjetlina kontrolira glasnoću zvuka. (#4916)
+- Značajno poboljšano izgovaranje boja. (#4984)
+- nadograđen liblouis brajični prevoditelj na inačicu 2.6.2. (#4777)
 
 
 == Ispravke grešaka ==
 - Opisima znakova se sada ispravno rukuje u slučajevima kada postoje spojni znakovi u nekim jezicima indijskog podkontinenta. (#4582)
+- ako je opcija "vjeruj jeziku trenutnog glasa prilikom procesiranja simbola" uključena, dijaloški okvir izgovor simbola interpunkcije sada poštuje taj jezik. također, izgovor za jezik koji se uređuje, sada se prikazuje u naslovnoj traci. (#4930)
+-U internet exploreru i drugim mshtml kontrolama, upisani znakovi se više ne izgovaraju nepotrebno u odabirnim okvirima za uređivanje poput google pretrage na Googleovoj web stranici. (#4976)
+- kada se označuju boje u aplikacijama Microsoft office uredskog paketa, Imena boja se sada ispravno čitaju. (#3045)
+- Danska brajična tablica sada ponovno radi. (#4986)
+- Tipke pageUp / pageDown sada se ponovno mogu koristiti kako bi se mijenjali slajdovi u powerpointowom prikazu slajdova. (#4850)
+- U Skypeu za radnu površinu 7.2 i novijem, ispravno se izgovaraju obavjesti prilikom pisanja poruke, a također, riješeni su problemi prilikom pomicanja fokusa sa skypeovog prozora čavrljanja. (#4972)
+- Ispravljene greške prilikom upisivanja nekih simbola poput zagrada u polje filtriranja u dijaloškom okviru ulazne geste. (#5060)
+- u Internet Exploreru i drugim MSHTML kontrolama, pritisak tipkovničkih kombinacija G i shift+G koja služi za kretanje po grafikama sada prikazuje i slike u svrhu pristupačnosti (tj. ARIA role img). (#5062)
 
 
 == Izmjene za razvojne programere ==

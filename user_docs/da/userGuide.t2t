@@ -1,4 +1,4 @@
-﻿NVDA NVDA_VERSION brugervejledning
+﻿ NVDA NVDA_VERSION brugervejledning
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -285,6 +285,8 @@ Følgende NVDA-kommandoer kan bruges i forbindelse med systemmarkøren:
 | Sig alt | NVDA+Pil-ned | NVDA+a | Starter læsningen fra markørens nuværende position og flytter markøren med ned i teksten |
 | Læs aktuelle linje | NVDA+Pil-op | NVDA+l | Læser den linje, hvor markøren for øjeblikket befinder sig. Tryk to gange for at få linjen stavet. |
 | Læs den valgte tekst | NVDA+Shift+Pil-op | NVDA+Shift+s | Læser den tekst, som er blevet markeret |
+| Næste sætning | Alt+Pil-ned | Alt+Pil-ned | Flytter markøren til den næste sætning og læser den (kun understøttet i Microsoft Word). |
+| Forrige sætning | Alt+Pil-op | Alt+Pil-op | Flytter markøren til den forrige sætning og læser den (kun understøttet i Microsoft Word). |
 
 
 Når du er i en tabel, kan følgende kommandoer også bruges:
@@ -440,7 +442,7 @@ Selv om du bør bruge en fysisk mus eller et pegefelt til at navigere med musen,
 
 + Browsertilstand (gennemsynstilstand) +
 Komplekse dokumenter, der ikke kan redigeres, fx. web-sider, bliver præsenteret med NVDA i browsertilstand eller gennemsynstilstand.
-Dette omfatter dokumenter i Mozilla Firefox, Microsoft Internet Explorer, HTML-meddelelser i Microsoft Outlook, Google Chrome, Adobe Reader and Adobe Flash.
+Dette omfatter dokumenter i Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, HTML-meddelelser i Microsoft Outlook, Google Chrome, Adobe Reader and Adobe Flash.
 Gennemsynstilstand kan også bruges i Microsoft Word-dokumenter.
 
 Når du benytter gennemsynstilstand, bliver indholdet af dokumentet præsenteret i en flad visning, som du kan navigere rundt i ved hjælp af piletasterne, præcist som hvis det var det normalt dokument.
@@ -495,6 +497,7 @@ Hvis du trykker en af de følgende taster ned alene, hopper du til den næste fo
 - d: Landemærke
 - o: indlejret objekt
 - 1-6: overskrifter på niveauer fra 1 til 6.
+- a: Annotation (kommentar, revision o.s.v.)
 -
 Flyt til begyndelsen eller slutningen af overordnede elementer, fx. lister eller tabeller:
 || Navn | Tast | Beskrivelse |
@@ -503,13 +506,14 @@ Flyt til begyndelsen eller slutningen af overordnede elementer, fx. lister eller
 %kc:endInclude
 
 ++ Elementlisten ++
-Elementlisten giver adgang til en liste med enten links, overskrifter eller landmærker på siden.
-Med radioknapper kan du skifte mellem disse tre typer af information.
+Elementlisten giver adgang til en liste med  forskellige typer elementer i dokumentet, alt efter hvilket program du bruger.
+F.eks., i web-browsere kan kan elementlisten vise links, overskrifter og landemærker.
+Med radioknapper kan du skifte mellem de forskellige typer elementer.
 Ved hjælp af Et editfelt kan du filtrere listen, så du kan søge efter et bestemt element på siden.
 Når du har valgt et element, kan du bruge knapperne i dialogen til at flytte til, eller aktivere det pågældende element.
 %kc:beginInclude
 || Navn | Tast | Beskrivelse |
-| Elementliste i gennemsynstilstand | NVDA+f7 | Giver Element listen som indeholder links, overskrifter og landmærker fra det nuværende dokument |
+| Elementliste i gennemsynstilstand | NVDA+f7 | Giver Element listen som indeholder forskellige elementer i det nuværende dokument |
 %kc:endInclude
 
 ++ Indlejrede objekter ++
@@ -520,8 +524,44 @@ Hvis objektet er tilgængeligt, kan du derefter tabbe rundt indenfor det og inte
 du kan med et tastetryk vende tilbage til den oprindelige side, der indeholder det indlejrede objekt:
 %kc:beginInclude
 || Navn | Tast | Beskrivelse |
-| Gå til det overordnede dokument | NVDA+Ctrl+Mellemrum | Flytter fokus ud af det aktuelle indlejrede objekt og ind i dokumentet, som indeholder objektet |
+| Gå til det overordnede dokument i gennemsynstilstand | NVDA+Ctrl+Mellemrum | Flytter fokus ud af det aktuelle indlejrede objekt og ind i dokumentet, som indeholder objektet |
 %kc:endInclude
+
++ Læsning af matematisk materiale +
+Ved hjælp af MathPlayer 4 fra Design Science kan du med NVDA læse og navigere interaktivt i matematisk materiale.
+Dette kræver, at MathPlayer 4 er installeret på computeren.
+MathPlayer kan hentes gratis fra: http://www.dessci.com/en/products/mathplayer/
+
+NVDA understøtter følgende typer matematisk indhold:
+- MathML i Mozilla Firefox og Microsoft Internet Explorer.
+- Design Science MathType i Microsoft Word og PowerPoint.
+- MathML i Adobe Reader. Bemærk, at dette endnu ikke er en officiel standard, så der er i øjeblikket ingen offentligt tilgængelige programmer, som kan producere dette indhold.
+-
+
+Når du læser et dokument, vil NVDA udtale understøttet matematisk indhold der, hvor det forekommer.
+Hvis du bruger et punktdisplay, vil det også blive vist i Braille.
+
+++ Interaktiv navigering ++
+Hvis du primært bruger tale, vil du sandsynligvis i de fleste tilfælde ønske at undersøge det matematiske udtryk i mindre bidder i stedet for at høre hele udtrykket på en gang.
+
+Hvis du befinder dig i gennemsynstilstand, kan du gøre dette ved at flytte markøren til det matematiske indhold og trykke Enter.
+
+Hvis du ikke er i gennemsynstilstand:
++ Flyt læsemarkøren til det matematiske indhold.
+Som udgangspunkt følger læsemarkøren systemmarkøren, så som regel kan du bare bruge systemmarkøren til at gå til det ønskede indhold.
++ Aktiver så følgende kommando:
++
+
+%kc:beginInclude
+|| Navn | Tast | Beskrivelse |
+| Interager med matematikindhold | NVDA+Alt+m | Starter interaktion med matematikindhold |
+%kc:endInclude
+
+På dette tidspunkt kan du bruge MathPlayer-kommandoer, såsom piletasterne, til at udforske udtrykket.
+For eksempel kan du flytte gennem udtrykket med Venstre- og Højre-pil og zoome ind på en del af udtrykket, f.eks. en brøk, med Pil-ned.
+Se venligst dokumentationen til MathPlayer for flere oplysninger.
+
+Når du vil tilbage til dokumentet, skal du simpelthen trykke på Escape-tasten.
 
 + Programspecifikke NVDA-kommandoer +
 NVDA har sine egne ekstra kommandoer for nogle programmer. Dette er for at gøre nogle opgaver lettere, eller for at give adgang til funktionalitet som ellers ikke er tilgængelig for brugere af skærmlæsere.
@@ -540,6 +580,7 @@ NVDA har sine egne ekstra kommandoer for nogle programmer. Dette er for at gøre
 | Indstil kolonneoverskrifter | NVDA+Shift+c | Tryk en gang for at fortælle NVDA, at dette er den første overskriftscelle i rækken med kolonneoverskrifter, som skal læses automatisk, når du bevæger dig mellem kolonner i rækkerne nedenunder. Tryk to gange for at nulstille denne indstilling. | 
 | Indstil rækkeoverskrifter | NVDA+Shift+r | Tryk en gang for at fortælle NVDA, at dette er den første overskriftscelle i kolonnen med rækkeoverskrifter, som skal læses automatisk, når du bevæger dig mellem rækker til højre for denne kolonne. Tryk to gange for at nulstille denne indstilling. | 
 | Læs kommentar | NVDA+Alt+c | Læser kommentaren til den aktuelle celle, hvis der er nogen. |
+| Elementliste | NVDA+F7 | Åbner elementlisten, som viser diagrammer, celler med kommentarer og celler med formler. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -584,6 +625,9 @@ De fleste indstillinger i NVDA kan nås fra dialogbokse, som åbnes via undermen
 I alle NVDAs indstillingsdialoger skal du trykke på knappen OK for at godkende de ændringer, du har foretaget.
 Tryk på Annuller-knappen eller Escape-tasten for at annullere dine ændringer.
 Nogle indstillinger kan ligeledes ændres ved hjælp af genvejstaster, der anføres i de enkelte afsnit nedenfor, hvor det er relevant.
+
+Bemærk, at det ikke er alle indstillingsdialoger, der kan nås ved hjælp af inputbevægelser (tastaturkommandoer, berøringer af skærmen o.s.v.).
+Hvis du gerne vil have let adgang til dialoger, som ikke har tilknyttet en genvejstast, kan du bruge [dialogen til inputbevægelser #InputGestures] til at tilføje en speciel inputbevægelse til dialogen.
 
 +++ Generelle Indstillinger (NVDA+Ctrl+g) +++
 Dialogboksen med generelle indstillinger findes i menuen Indstillinger.
@@ -793,6 +837,18 @@ Desuden vil kommandoer til forrige og næste linje flytte et afsnit ad gangen.
 Det betyder, at du ikke behøver at rulle med displayet for enden af hver linje, selv ikke hvis der er plads til mere tekst på displayet.
 Det kan give mulighed for en mere flydende læseoplevelse, når der er tale om store mængder tekst.
 Som standard er dette slået fra.
+
+==== Undgå at dele ord, når det er muligt ====
+Hvis denne indstilling er slået til, vil et ord, som er for langt til at være for enden af en punktlinje, ikke blive opdelt.
+I stedet vil der optræde nogle blanke tegn for enden af displayet.
+Når du ruller displayet videre, kan du læse hele ordet.
+Dette kaldes nogle gange for "ombrydning af ord"..
+Bemærk, at hvis ordet er for langt til at være på displayet overhovedet, bliver det stadig opdelt.
+
+Hvis indstillingen er slået fra, vil så meget af ordet som muligt blive vist, men resten vil blive skåret væk.
+Når du så ruller displayet videre, kan du læse resten af ordet.
+
+Hvis du slår denne indstilling til, kan det give en mere flydende læsning, men generelt medfører det, at du skal skifte linje på displayet hyppigere.
 
 +++ Tastatur-indstillinger (NVDA+Ctrl+k) +++
 Denne dialogboks findes i menuen Indstillinger under punktet Tastatur-indstillinger...".
@@ -1057,7 +1113,10 @@ Du kan tilpasse annoncering af:
 - Lange citater
 - Landmærker
 - Rammer
+- Når noget kan klikkes på (er klikbart)
 -
+
+Hvis du gerne vil kunne slå disse indstillinger til eller fra, uanset hvor du befinder dig, kan du knytte en inputbevægelse til indstillingen med [dialogen inputbevægelser #InputGestures].
 
 ==== Annoncer ændringer i formatering efter markøren ====
 Hvis denne indstilling er slået til, betyder det at NVDA forsøger at spore alle ændringer i formateringen på en linje, når den læses op, selvom dette måtte sænke NVDAs hastighed.   
@@ -1074,6 +1133,8 @@ Disse er:
 - Stemme: Regler i denne ordbog gælder for den talesyntesestemme, der i øjeblikket er i brug.
 - Midlertidig: Regler i denne ordbog gælder for al tale i NVDA, dog kun for den aktuelle session. Disse regler er midlertidige og forsvinder, næste gang NVDA genstartes.
 -
+
+Du kan tilknytte inputbevægelser med [dialogen inputbevægelser #InputGestures], hvis du gerne vil have let adgang til kunne åbne disse ordbøger fra hvor som helst.
 
 Alle ordbogsdialogerne indeholder en liste med regler, som bruges under behandling af talen.
 Dialogboksen indeholder også knapperne Tilføj, Redigér og Fjern.
@@ -1096,10 +1157,13 @@ Hvis du sætter mønsteret til kun at gælde for hele ord, betyder det, at møns
 Hvis du med eksemplet fra før vil erstatte ordet "fugl" med "frø", og det kun skulle gælde som et helt ord, ville det ikke komme til at gælde ord som "fugle" eller "sommerfugl".
 
 Et regulært udtryk er en række af specielle symboler, som sætter dig i stand til at søge på mere end et tegn ad gangen, at søge udelukkende på tal eller udelukkende på bogstaver for blot at nævne nogle få eksempler. .
-Regulære udtryk beskrives ikke nærmere i denne brugervejledning. Men der findes en mængde materiale om emnet på internettet, hvor du kan finde yderligere oplysninger.
+Regulære udtryk bliver ikke beskrevet nærmere i denne brugervejledning. Men der findes en mængde materiale om emnet på internettet, hvor du kan finde yderligere oplysninger.
 
 +++ Udtale af sætningstegn/symboler +++[SymbolPronunciation]
 Denne dialog giver dig mulighed for at bestemme, hvordan sætningstegn og andre symboler skal udtales, samt på hvilket niveau de skal udtales.
+
+Det sprog, som du redigerer udtale af symboler for, bliver vist i dialogens titellinje.
+Bemærk, at denne dialog følger indstillingen "Brug stemmens sprog til behandling af symboler og tegn", som kan findes i dialogen [Stemmeindstillinger #VoiceSettings]; D.v.s., den bruger den aktuelle stemmes sprog og ikke NVDA's globale sprog, når denne indstilling er slået til.
 
 For at ændre et symbol, skal du først vælge det i listen med symboler.
 I feltet erstatning, kan du skrive den tekst du vil have læst i stedet for det oprindelige symbol.
@@ -1113,7 +1177,7 @@ Du kan fjerne et symbol, som du tidligere har tilføjet, ved at trykke på Fjern
 
 Når du er færdig, skal du trykke på OK-knappen for at gemme dine ændringer, eller Annuller-knappen for at kassere dem.
 
-+++ Inputbevægelser +++
++++ Inputbevægelser +++[InputGestures]
 I denne dialog kan du tilpasse inputbevægelser for de forskellige NVDA-kommandoer (taster på tastaturet, knapper på et punktdisplay osv.)
 
 Du får kun vist de kommandoer, som er tilgængelige på det tidspunkt, hvor du åbner dialogen.
@@ -1249,6 +1313,8 @@ Fjern markeringen fra punktet for at slå det fra.
 Så længe talevisning er slået til, opdateres den konstant med den tekst, der netop nu læses op.
 Hvis du klikker i viseren, eller hvis den får fokus, stoppes opdateringen dog midlertidigt, så det er muligt at markere eller kopiere det aktuelle indhold.
 
+Hvis du gerne vil kunne slå talevisning til og fra, uanset hvor du befinder dig på computeren, kan du tilknytte en speciel inputbevægelse med [dialogen inputbevægelser [InputGestures].
+
 ++ Styring af tilføjelsesprogrammer++
 Du kan administrere dine tilføjelsesprogrammer til NVDA ved at gå til "Administrer tilføjelsesprogrammer" under Værktøjer i NVDA-menuen. Dette værktøj giver dig mulighed for at installer tilføjelser til skærmlæseren, samt afinstallere tilføjelserne.
 Disse pakker kan indeholde tilpasset kode der kan ændre eller tilføje funktionalitet i NVDA, såsom understøttelse af bestemte talesynteser eller punktdisplays. Pakkerne er udgivet og bliver stillet til rådighed af fællesskabet.
@@ -1282,6 +1348,8 @@ Hvis du har tilføjet eller fjernet tilføjelsesprogrammer, vil NVDA spørge om 
 Det har før i tiden været muligt at udvide funktionaliteten af NVDA ved at kopiere plugins og drivere ind i mappen med brugerkonfigurationen til NVDA.
 Selv om denne version af NVDA kan indlæse dem, vil de ikke figurere i listen over tilføjelsesprogrammer.
 Det er bedst at slette disse filer, og derefter installere det rigtige tilføjelsesprogram hvis det er tilgængeligt.
+
+Hvis du gerne vil kunne nå dialogen til styring af tilføjelsesprogrammer fra hvor som helst på computeren, kan du tilknytte en inputbevægelse med [dialogen inputbevægelser [InputGestures].
 
 ++ Python konsollen ++
 NVDAs Python-konsol, der ligger under Værktøjer i NVDA-menuen, er et udviklerværktøj. Det er især velegnet til brug ved debugging, generel inspektion af interne processer i NVDA eller inspektion af tilgængelighedshierarkiet i en applikation.
@@ -1350,7 +1418,7 @@ Dette afsnit indeholder oplysninger om de punktdisplays, som NVDA understøtter.
 ++ Freedom Scientific Focus/PAC Mate Series ++
 Der er understøttelse af alle Focus og PAC Mate displays fra [Freedom Scientific http://www.freedomscientific.com/] når de kobles til med USB eller Bluetooth.
 Punktdisplay-driverne fra Freedom Scientific skal vær installeret på dit system.
-Hvis du ikke allerede har dem, kan du hente dem fra http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
+Hvis du ikke allerede har dem, kan du hente dem fra http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Selvom siden kun henviser til displayet Focus 40 Blue,understøtter driveren alle displays fra Freedom Scientific.
 Hvis dit system kører Windows 64 bit og driverne allerede er blevet  installeret af en anden skærmlæser, skal du sandsynligvis installere driveren fra dette link alligevel, da de filer, som NVDA har brug for, sikkert ikke er blevet installeret af den anden skærmlæser.
 
@@ -1429,7 +1497,7 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | alt tast | sp2 |
 | escape tast | sp3 |
 | tab tast | sp4 |
-| Pil-op | spop |
+| Pil-op | spOp |
 | Pil-ned | spNed |
 | Venstre-pil | spVenstre |
 | Højre-pil | spHøjre |
@@ -1718,7 +1786,7 @@ De følgende taster er generelt tilgængelige på disse punktdisplays:
 | ned | 1 trin ned |
 | Ned2 | 2 trin ned |
 
-Papenmeier kommandoer til NVDA er som følgende:
+Papenmeier kommandoer til NVDA er som følger:
 %kc:beginInclude
 || Navn | Tast |
 | Rul punktdisplay tilbage | venstre |
@@ -1728,6 +1796,7 @@ Papenmeier kommandoer til NVDA er som følgende:
 | Flyt til punktcelle | markørsammenføringsknapper |
 | Sig aktuelt tegn i læsetilstand | l1 |
 | Aktiver det aktuelle navigatorobjekt | l2 |
+| slå Braille-tøjring til/fra | r2 |
 | Sig titel | l1+up |
 | Rapportër statuslinje | l2+ned |
 | Flyt til overordnet objekt | op2 |

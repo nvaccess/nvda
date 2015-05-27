@@ -3,8 +3,44 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.2 =
+De vigtigste nyheder i denne udgave omfatter mulighed for læsning af diagrammer i Microsoft Excel og understøttelse af læsning og interaktiv navigering i matematisk indhold.
+
+== Nye funktioner ==
+- Du kan nu flytte frem og tilbage en sætning af gangen med tasterne Alt+Pil-ned og Alt+pil-op. (#3288)
+- Nye punktoversættelsestabeller for adskillige indiske sprog. (#4778)
+- I Microsoft Excel rapporterer NVDA nu, når en celle har for meget indhold, eller hvis det er blevet beskåret. (#3040)
+- I Microsoft Excel kan du nu bruge elementlisten (NVDA+F7) til at oprette en liste over diagrammer, kommentarer og formler. (#1987)
+- Understøttelse af læsning af diagrammer i Microsoft Excel. Hvis du vil bruge denne funktion, så vælg et diagram i elementlisten (NVDA+F7), og brug så piletasterne til at flytte mellem datapunkterne.
+- Ved hjælp af MathPlayer 4 fra Design Science kan NVDA nu læse og navigere interaktivt i matematisk indhold i web-browsere samt i Microsoft Word og PowerPoint. For detaljer se afsnittet om læsning af matematisk material i brugermanualen. (#4673)
+- Det er nu muligt at knytte inputbevægelser (tastaturkommandoer, bevægelser på skærmen o.s.v.) til alle indstillingsdialoger og indstillinger og indstillinger for dokumentformatering ved hjælp af dialogen Inputbevægelser. (#4898).
+
+
+== Ændringer ==
+- I NVDAs dialog til dokumentformatering er genvejstasterne til Annoncer lister, Annoncer links, Annoncer linjenumre og Annoncer navn på skrifttype blevet ændret. (#4650)
+- I NVDAs dialog til indstilling af mus er der nu tilføjet genvejstaster til punkterne "afspil lydkoordinater ved flytning af musen" og "Lysstyrke kontrollerer lydstyrke på lydkoordinater". (#4916)
+- Betydelig forbedring af annoncering navne på farver. (#4984)
+- Opdateret Braille-forkortelsesprogrammet Liblouis til version 2.6.2. (#4777)
+
+
+== Fejlrettelser ==
+- Tegnbeskrivelser for visse karakterer på indiske sprog bliver nu håndteret korrekt. (#4582)
+- Hvis punktet "Brug stemmens sprog til behandling af tegn og symboler" er slået til, vil dialogen til udtale af sætningstegn og symboler nu korrekt bruge stemmens sprog. Desuden bliver det sprog, man foretager ændringer for, nu vist i dialogens titel. (#4930)
+- I Internet Explorer og andre MSHTML kontroller bliver indtastede tegn  ikke længere forkert annonceret i edit-combo-bokse, såsom søgefeltet på Googles hjemmeside. (#4976)
+Når man vælger farver i Microsofts office-programmer, bliver navnene på farverne nu annonceret. (#3045)
+- Dansk Braille-output virker nu igen. (#4986)
+- Side-op/Side-ned kan igen bruges til at skifte dias i et dias-show i PowerPoint. (#4850)
+- In Skype for Desktop 7.2 og senere bliver indtastninger nu annonceret, og de problemer, der kunne opstå umiddelbart efter, man havfjernet fokus fra en samtale, er nu blevet løøst. (#4972)
+- Løst problemer ved indtastning af visse sætningstegn og symboler såsom kantede parenteser i filterfeltet i dialogen Inputbevægelser. (#5060)
+- i Internet Explorer og andre MSHTML kontroller vil tryk på g og Shift-g for at navigere til grafikelementer nu også omfatte elementer, som er afmærket som grafik af tilgængelighedsgrunde (d.v.s. ARIA role img). (#5062)
+
+
+== Nyheder for udviklere ==
+For nyheder relateret til udvikling se venligst det engelske "What's New"-dokument
+
+
 = 2015.1 =
-De vigtigste nyheder omfatter gennemsynstilstand for dokumenter i Microsoft Word og Outlook, store forbedringer i understøttelsen af Skype for Desktop samt betydelige fejlrettelser i Internet Explorer.
+De vigtigste nyheder omfatter gennemsynstilstand for dokumenter i Microsoft Word og Outlook, store forbedringer i understøttelsen af Skype for Desktop samt bsssssssssssssetydelige fejlrettelser i Internet Explorer.
 
 == Nye funktioner ==
 - Du kan nu tilføje nye symboler i dialogen "Udtale af symboler". (#4354)

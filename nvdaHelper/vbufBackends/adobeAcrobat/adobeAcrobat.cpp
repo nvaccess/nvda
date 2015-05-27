@@ -427,6 +427,8 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 
 	BSTR stdName = NULL;
 	int textFlags = 0;
+	// Whether to render just a space in place of the content.
+	bool renderSpace = false;
 	BSTR tempBstr = NULL;
 	if (domElement) {
 		// Get stdName.
@@ -439,6 +441,11 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 			if (wcscmp(stdName, L"Span") == 0 || wcscmp(stdName, L"Link") == 0 || wcscmp(stdName, L"Quote") == 0) {
 				// This is an inline element.
 				parentNode->isBlock=false;
+			}
+			if (wcscmp(stdName, L"Formula") == 0) {
+				// We don't want the content of formulas,
+				// but we still want a space so the user can get at them.
+				renderSpace = true;
 			}
 		}
 
@@ -472,7 +479,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 	int childCount=0;
 	// We don't want to descend into lists and combo boxes.
 	// Besides, Acrobat reports the child count, but the children can't be accessed.
-	if (role != ROLE_SYSTEM_LIST && role != ROLE_SYSTEM_COMBOBOX) {
+	if (!renderSpace && role != ROLE_SYSTEM_LIST && role != ROLE_SYSTEM_COMBOBOX) {
 		LOG_DEBUG(L"get childCount with IAccessible::get_accChildCount");
 		if((res=pacc->get_accChildCount((long*)(&childCount)))!=S_OK) {
 			LOG_DEBUG(L"pacc->get_accChildCount returned "<<res);
@@ -599,8 +606,15 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		}
 	}
 
-	// Iterate through the children.
-	if (childCount > 0) {
+	if (renderSpace) {
+		// Just render a space.
+		if (tempNode = buffer->addTextFieldNode(parentNode, previousNode, L" ")) {
+			addAttrsToTextNode(tempNode);
+			previousNode=tempNode;
+		}
+
+	} else if (childCount > 0) {
+		// Iterate through the children.
 		LOG_DEBUG(L"Allocate memory to hold children");
 		VARIANT* varChildren;
 		if((varChildren=(VARIANT*)malloc(sizeof(VARIANT)*childCount))==NULL) {
@@ -644,8 +658,8 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		}
 		LOG_DEBUG(L"Freeing memory holding children");
 		free(varChildren);
-	} else {
 
+	} else {
 		// No children, so this is a leaf node.
 		if (!this->isXFA && !stdName) {
 			// Non-XFA leaf nodes with no stdName are inline.
