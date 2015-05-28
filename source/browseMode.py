@@ -178,8 +178,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 
 	singleLetterNavEnabled=True #: Whether single letter navigation scripts should be active (true) or if these letters should fall to the application.
 
-	def getScript(self,gesture):
-		script=super(BrowseModeTreeInterceptor,self).getScript(gesture)
+	def getAlternativeScript(self,gesture,script):
 		if self.passThrough or not gesture.isCharacter:
 			return script
 		if not self.singleLetterNavEnabled:
