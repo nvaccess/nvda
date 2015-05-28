@@ -414,51 +414,26 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 		else:
 			raise NotImplementedError
 
-	POSITION_SELECTION_START = "selectionStart"
-	POSITION_SELECTION_END = "selectionEnd"
+	POSITION_SELECTION_START = 3
+	POSITION_SELECTION_END = 4
+	FINDCONTENTDESCENDANT_POSITIONS = {
+		textInfos.POSITION_FIRST: 0,
+		textInfos.POSITION_CARET: 1,
+		textInfos.POSITION_LAST: 2,
+	}
 	def _findContentDescendant(self, obj, position):
 		import ctypes
 		import NVDAHelper
 		import NVDAObjects.IAccessible
-		if position==textInfos.POSITION_CARET:
-			descendantID=ctypes.c_int()
-			descendantOffset=ctypes.c_int()
-			NVDAHelper.localLib.nvdaInProcUtils_IA2Text_findContentDescendant(obj.appModule.helperLocalBindingHandle,obj.windowHandle,obj.IAccessibleObject.uniqueID,1,ctypes.byref(descendantID),ctypes.byref(descendantOffset))
-			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(obj.windowHandle,winUser.OBJID_CLIENT,descendantID.value)
-			ti=obj.makeTextInfo(textInfos.offsets.Offsets(descendantOffset.value,descendantOffset.value))
-			return ti,obj
-
-		useLast = False
-		if position in (self.POSITION_SELECTION_START, self.POSITION_SELECTION_END):
-			if position == self.POSITION_SELECTION_END:
-				useLast = True
-			position = textInfos.POSITION_SELECTION
-
-		while True:
-			try:
-				ti = obj.makeTextInfo(position)
-			except RuntimeError:
-				if position == textInfos.POSITION_CARET:
-					# The insertion point is before this object, so this object has no caret.
-					# We always want to report the character immediately after the insertion point.
-					ti = obj.makeTextInfo(textInfos.POSITION_FIRST)
-			if useLast:
-				ti.collapse(end=True)
-				ti.move(textInfos.UNIT_CHARACTER, -1, "start")
-			else:
-				ti.expand(textInfos.UNIT_OFFSET)
-			if ti.text != u"\uFFFC":
-				# We've descended as far as we can go.
-				break
-			embObj = ti.getEmbeddedObject()
-			if embObj.TextInfo is NVDAObjectTextInfo:
-				# This is an embedded object, but it has no text,
-				# so we don't descend into it.
-				break
-			obj = embObj
-
-		ti.collapse()
-		return ti, obj
+		descendantID=ctypes.c_int()
+		descendantOffset=ctypes.c_int()
+		what = self.FINDCONTENTDESCENDANT_POSITIONS.get(position, position)
+		NVDAHelper.localLib.nvdaInProcUtils_IA2Text_findContentDescendant(obj.appModule.helperLocalBindingHandle,obj.windowHandle,obj.IAccessibleObject.uniqueID,what,ctypes.byref(descendantID),ctypes.byref(descendantOffset))
+		if position == self.POSITION_SELECTION_END:
+			descendantOffset.value += 1
+		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(obj.windowHandle,winUser.OBJID_CLIENT,descendantID.value)
+		ti=obj.makeTextInfo(textInfos.offsets.Offsets(descendantOffset.value,descendantOffset.value))
+		return ti,obj
 
 	def _iterRecursiveText(self, ti, withFields, formatConfig):
 		if ti.obj == self._endObj:
