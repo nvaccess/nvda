@@ -231,7 +231,8 @@ bool findContentDescendant(IAccessible2* pacc2, long what, long* descendantID, l
 		pacc2->get_accChildCount(&childCount);
 		VARIANT varChild;
 		varChild.vt=VT_I4;
-		for(varChild.lVal=1;varChild.lVal<=childCount;++(varChild.lVal)) {
+		for(int i=1;i<=childCount;++i) {
+			varChild.lVal=(what==FINDCONTENTDESCENDANT_LAST)?(childCount-(i-1)):i;
 			IDispatch* pdispatchChild=NULL;
 			pacc2->get_accChild(varChild,&pdispatchChild);
 			if(!pdispatchChild) continue;
