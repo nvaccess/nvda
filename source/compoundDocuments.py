@@ -410,7 +410,13 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			self._end = self._start
 			self._endObj = self._startObj
 		elif position == textInfos.POSITION_SELECTION:
-			self._start, self._startObj, self._end, self._endObj = self._findUnitEndpoints(obj.caretObject.makeTextInfo(position), position)
+			tempTi, tempObj = self._findContentDescendant(obj.caretObject, textInfos.POSITION_CARET)
+			tempTi = tempObj.makeTextInfo(position)
+			if tempTi.isCollapsed:
+				self._start = self._end = tempTi
+				self._startObj = self._endObj = tempObj
+			else:
+				self._start, self._startObj, self._end, self._endObj = self._findUnitEndpoints(tempTi, position)
 		else:
 			raise NotImplementedError
 
