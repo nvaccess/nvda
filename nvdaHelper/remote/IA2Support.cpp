@@ -179,19 +179,30 @@ const long FINDCONTENTDESCENDANT_CARET=1;
 const long FINDCONTENTDESCENDANT_LAST=2;
 
 bool findContentDescendant(IAccessible2* pacc2, long what, long* descendantID, long* descendantOffset) {
-	bool foundCaret=false;
+	bool foundDescendant=false;
 	IAccessibleText* paccText=NULL;
 	pacc2->QueryInterface(IID_IAccessibleText,(void**)&paccText);
 	if(paccText) {
-		long caretOffset=-1;
-		paccText->get_caretOffset(&caretOffset);
+		long offset=-1;
+		switch(what) {
+			case FINDCONTENTDESCENDANT_FIRST:
+			offset=0;
+			break;
+		case FINDCONTENTDESCENDANT_CARET:
+			paccText->get_caretOffset(&offset);
+			break;
+		case FINDCONTENTDESCENDANT_LAST:
+			paccText->get_nCharacters(&offset);
+			--offset;
+			break;
+		}
 		paccText->Release();
-		if(caretOffset==-1) return false; 
+		if(offset==-1) return false; 
 		IAccessibleHypertext* paccHypertext=NULL;
 		pacc2->QueryInterface(IID_IAccessibleHypertext,(void**)&paccHypertext);
 		if(paccHypertext) {
 			long hi=-1;
-			paccHypertext->get_hyperlinkIndex(caretOffset,&hi);
+			paccHypertext->get_hyperlinkIndex(offset,&hi);
 			IAccessibleHyperlink* paccHyperlink=NULL;
 			if(hi>=0) {
 				paccHypertext->get_hyperlink(hi,&paccHyperlink);
@@ -202,15 +213,18 @@ bool findContentDescendant(IAccessible2* pacc2, long what, long* descendantID, l
 				paccHyperlink->QueryInterface(IID_IAccessible2,(void**)&pacc2Child);
 				paccHyperlink->Release();
 				if(pacc2Child) {
-					foundCaret=findContentDescendant(pacc2Child,what,descendantID,descendantOffset);
+					foundDescendant=findContentDescendant(pacc2Child,what,descendantID,descendantOffset);
+					if(!foundDescendant&&what==FINDCONTENTDESCENDANT_CARET) {
+						foundDescendant=findContentDescendant(pacc2Child,FINDCONTENTDESCENDANT_FIRST,descendantID,descendantOffset);
+					}
 					pacc2Child->Release();
 				}
 			}
 		}
-		if(!foundCaret) {
+		if(!foundDescendant) {
 			pacc2->get_uniqueID(descendantID);
-			*descendantOffset=caretOffset;
-			foundCaret=true;
+			*descendantOffset=offset;
+			foundDescendant=true;
 		}
 	} else {
 		long childCount=0;
@@ -225,12 +239,12 @@ bool findContentDescendant(IAccessible2* pacc2, long what, long* descendantID, l
 			pdispatchChild->QueryInterface(IID_IAccessible2,(void**)&pacc2Child);
 			pdispatchChild->Release();
 			if(!pacc2Child) continue;
-			foundCaret=findContentDescendant(pacc2Child,what,descendantID,descendantOffset);
+			foundDescendant=findContentDescendant(pacc2Child,what,descendantID,descendantOffset);
 			pacc2Child->Release();
-			if(foundCaret) break;
+			if(foundDescendant) break;
 		}
 	}
-	return foundCaret;
+	return foundDescendant;
 }
 
 error_status_t nvdaInProcUtils_IA2Text_findContentDescendant(handle_t bindingHandle, long hwnd, long parentID, long what, long* descendantID, long* descendantOffset) {
