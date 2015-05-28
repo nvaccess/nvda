@@ -514,6 +514,8 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 		return self._getText(True, formatConfig)
 
 	def _findUnitEndpoints(self, baseTi, unit, findStart=True, findEnd=True):
+		from NVDAObjects.IAccessible.mozilla import IndexTextInfo
+
 		start = startObj = end = endObj = None
 		baseTi.collapse()
 		obj = baseTi.obj
@@ -570,6 +572,9 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			# start and/or end hasn't yet been found,
 			# so it must be higher in the hierarchy.
 			embedTi = obj.embeddingTextInfo
+			if isinstance(embedTi, IndexTextInfo):
+				# hack: Selection in Mozilla table/table rows is broken, so just ignore it.
+				embedTi = None
 			if not embedTi:
 				# There is no embedding object.
 				# The unit starts and/or ends at the start and/or end of this last object.
