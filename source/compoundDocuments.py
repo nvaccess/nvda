@@ -414,6 +414,8 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 		else:
 			raise NotImplementedError
 
+	POSITION_SELECTION_START = "selectionStart"
+	POSITION_SELECTION_END = "selectionEnd"
 	def _findContentDescendant(self, obj, position):
 		import ctypes
 		import NVDAHelper
@@ -425,6 +427,13 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(obj.windowHandle,winUser.OBJID_CLIENT,descendantID.value)
 			ti=obj.makeTextInfo(textInfos.offsets.Offsets(descendantOffset.value,descendantOffset.value))
 			return ti,obj
+
+		useLast = False
+		if position in (self.POSITION_SELECTION_START, self.POSITION_SELECTION_END):
+			if position == self.POSITION_SELECTION_END:
+				useLast = True
+			position = textInfos.POSITION_SELECTION
+
 		while True:
 			try:
 				ti = obj.makeTextInfo(position)
@@ -433,7 +442,11 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 					# The insertion point is before this object, so this object has no caret.
 					# We always want to report the character immediately after the insertion point.
 					ti = obj.makeTextInfo(textInfos.POSITION_FIRST)
-			ti.expand(textInfos.UNIT_OFFSET)
+			if useLast:
+				ti.collapse(end=True)
+				ti.move(textInfos.UNIT_CHARACTER, -1, "start")
+			else:
+				ti.expand(textInfos.UNIT_OFFSET)
 			if ti.text != u"\uFFFC":
 				# We've descended as far as we can go.
 				break
@@ -547,7 +560,9 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 				# The unit definitely starts within this object.
 				start = expandTi
 				startObj = start.obj
-				if baseTi.compareEndPoints(expandTi, "startToStart") == 0:
+				if unit == textInfos.POSITION_SELECTION:
+					startDescPos = self.POSITION_SELECTION_START
+				elif baseTi.compareEndPoints(expandTi, "startToStart") == 0:
 					startDescPos = textInfos.POSITION_FIRST
 				else:
 					# The unit expands beyond the base point,
@@ -558,7 +573,9 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 				# The unit definitely ends within this object.
 				end = expandTi
 				endObj = end.obj
-				if baseTi.compareEndPoints(expandTi, "endToEnd") == 0:
+				if unit == textInfos.POSITION_SELECTION:
+					endDescPos = self.POSITION_SELECTION_END
+				elif baseTi.compareEndPoints(expandTi, "endToEnd") == 0:
 					endDescPos = textInfos.POSITION_LAST
 				else:
 					# The unit expands beyond the base point,
@@ -578,7 +595,9 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 				if findStart and not start:
 					start = expandTi
 					startObj = start.obj
-					if baseTi.compareEndPoints(expandTi, "startToStart") == 0:
+					if unit == textInfos.POSITION_SELECTION:
+						startDescPos = self.POSITION_SELECTION_START
+					elif baseTi.compareEndPoints(expandTi, "startToStart") == 0:
 						startDescPos = textInfos.POSITION_FIRST
 					else:
 						# The unit expands beyond the base point,
@@ -587,7 +606,9 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 				if findEnd and not end:
 					end = expandTi
 					endObj = end.obj
-					if baseTi.compareEndPoints(expandTi, "endToEnd") == 0:
+					if unit == textInfos.POSITION_SELECTION:
+						endDescPos = self.POSITION_SELECTION_END
+					elif baseTi.compareEndPoints(expandTi, "endToEnd") == 0:
 						endDescPos = textInfos.POSITION_LAST
 					else:
 						# The unit expands beyond the base point,
