@@ -207,7 +207,7 @@ bool findContentDescendant(IAccessible2* pacc2, long what, long* descendantID, l
 				long startOffset=0;
 				long endOffset=0;
 				paccText->get_selection(0,&startOffset,&endOffset);
-				offset=(what==FINDCONTENTDESCENDANT_SELECTIONSTART)?startOffset:endOffset;
+				offset=(what==FINDCONTENTDESCENDANT_SELECTIONSTART)?startOffset:endOffset-1;
 			}
 			break;
 		}
