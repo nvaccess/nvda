@@ -177,6 +177,8 @@ void IA2Support_inProcess_terminate() {
 const long FINDCONTENTDESCENDANT_FIRST=0;
 const long FINDCONTENTDESCENDANT_CARET=1;
 const long FINDCONTENTDESCENDANT_LAST=2;
+const long FINDCONTENTDESCENDANT_SELECTIONSTART=3;
+const long FINDCONTENTDESCENDANT_SELECTIONEND=4;
 
 bool findContentDescendant(IAccessible2* pacc2, long what, long* descendantID, long* descendantOffset) {
 	bool foundDescendant=false;
@@ -194,6 +196,19 @@ bool findContentDescendant(IAccessible2* pacc2, long what, long* descendantID, l
 		case FINDCONTENTDESCENDANT_LAST:
 			paccText->get_nCharacters(&offset);
 			--offset;
+			break;
+			case FINDCONTENTDESCENDANT_SELECTIONSTART:
+			case FINDCONTENTDESCENDANT_SELECTIONEND:
+			long nSelections=0;
+			paccText->get_nSelections(&nSelections);
+			if(nSelections==0) {
+				offset=-1;
+			} else {
+				long startOffset=0;
+				long endOffset=0;
+				paccText->get_selection(0,&startOffset,&endOffset);
+				offset=(what==FINDCONTENTDESCENDANT_SELECTIONSTART)?startOffset:endOffset;
+			}
 			break;
 		}
 		paccText->Release();
@@ -232,7 +247,7 @@ bool findContentDescendant(IAccessible2* pacc2, long what, long* descendantID, l
 		VARIANT varChild;
 		varChild.vt=VT_I4;
 		for(int i=1;i<=childCount;++i) {
-			varChild.lVal=(what==FINDCONTENTDESCENDANT_LAST)?(childCount-(i-1)):i;
+			varChild.lVal=(what==FINDCONTENTDESCENDANT_LAST||what==FINDCONTENTDESCENDANT_SELECTIONEND)?(childCount-(i-1)):i;
 			IDispatch* pdispatchChild=NULL;
 			pacc2->get_accChild(varChild,&pdispatchChild);
 			if(!pdispatchChild) continue;
