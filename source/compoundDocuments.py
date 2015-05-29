@@ -435,6 +435,9 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 		descendantOffset=ctypes.c_int()
 		what = self.FINDCONTENTDESCENDANT_POSITIONS.get(position, position)
 		NVDAHelper.localLib.nvdaInProcUtils_IA2Text_findContentDescendant(obj.appModule.helperLocalBindingHandle,obj.windowHandle,obj.IAccessibleObject.uniqueID,what,ctypes.byref(descendantID),ctypes.byref(descendantOffset))
+		if descendantID.value == 0:
+			# No descendant.
+			raise LookupError("Object has no text descendants")
 		if position == self.POSITION_SELECTION_END:
 			descendantOffset.value += 1
 		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(obj.windowHandle,winUser.OBJID_CLIENT,descendantID.value)
@@ -609,11 +612,16 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			ti = start.copy()
 			ti.expand(textInfos.UNIT_OFFSET)
 			if ti.text == u"\uFFFC":
-				start, startObj = self._findContentDescendant(ti.getEmbeddedObject(), startDescPos)
-				if unit == textInfos.POSITION_SELECTION:
-					start = startObj.makeTextInfo(unit)
+				try:
+					start, startObj = self._findContentDescendant(ti.getEmbeddedObject(), startDescPos)
+				except LookupError:
+					# No text descendants, so we don't descend.
+					pass
 				else:
-					start.expand(unit)
+					if unit == textInfos.POSITION_SELECTION:
+						start = startObj.makeTextInfo(unit)
+					else:
+						start.expand(unit)
 			if not findEnd:
 				return start, startObj
 		if findEnd:
@@ -621,11 +629,16 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			ti.collapse(end=True)
 			ti.move(textInfos.UNIT_OFFSET, -1, "start")
 			if ti.text == u"\uFFFC":
-				end, endObj = self._findContentDescendant(ti.getEmbeddedObject(), endDescPos)
-				if unit == textInfos.POSITION_SELECTION:
-					end = endObj.makeTextInfo(unit)
+				try:
+					end, endObj = self._findContentDescendant(ti.getEmbeddedObject(), endDescPos)
+				except LookupError:
+					# No text descendants, so we don't descend.
+					pass
 				else:
-					end.expand(unit)
+					if unit == textInfos.POSITION_SELECTION:
+						end = endObj.makeTextInfo(unit)
+					else:
+						end.expand(unit)
 			if not findStart:
 				return end, endObj
 
@@ -668,7 +681,11 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 
 		ti.expand(textInfos.UNIT_OFFSET)
 		if ti.text == u"\uFFFC":
-			return self._findContentDescendant(ti.getEmbeddedObject(), textInfos.POSITION_LAST if moveBack else textInfos.POSITION_FIRST)
+			try:
+				return self._findContentDescendant(ti.getEmbeddedObject(), textInfos.POSITION_LAST if moveBack else textInfos.POSITION_FIRST)
+			except LookupError:
+				# No text descendants, so we don't descend.
+				pass
 		return ti, obj
 
 	def move(self, unit, direction, endPoint=None):
@@ -716,7 +733,11 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 					ti = moveTi.copy()
 					ti.expand(textInfos.UNIT_OFFSET)
 					if ti.text == u"\uFFFC":
-						moveTi, moveObj = self._findContentDescendant(ti.getEmbeddedObject(), textInfos.POSITION_FIRST)
+						try:
+							moveTi, moveObj = self._findContentDescendant(ti.getEmbeddedObject(), textInfos.POSITION_FIRST)
+						except LookupError:
+							# No text descendants, so we don't descend.
+							pass
 
 			remainingMovement -= -1 if moveBack else 1
 
