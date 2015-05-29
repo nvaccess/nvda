@@ -576,7 +576,7 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			# so it must be higher in the hierarchy.
 			embedTi = obj.embeddingTextInfo
 			if isinstance(embedTi, IndexTextInfo):
-				# hack: Selection in Mozilla table/table rows is broken, so just ignore it.
+				# hack: Selection in Mozilla table/table rows is broken (MozillaBug:1169238), so just ignore it.
 				embedTi = None
 			if not embedTi:
 				# There is no embedding object.
