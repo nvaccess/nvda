@@ -4,19 +4,35 @@
 %!includeconf: ../changes.t2tconf
 
 = 2015.2 =
+Najważniejsze zmiany w tej wersji to możliwość odczytywania wykresów w Microsoft Excel oraz wsparcie dla nawigacji i odczytu treści matematycznej.
 
 == Nowości ==
 - W Microsoft Word możliwe jest przechodzenie w przód i wstecz po zdaniach przy użyciu odpowiednio alt+strzałka w dół i alt+strzałka w górę. (#3288)
+- Nowe tablice brajlowskie dla kilku języków indyjskich. (#4778)
+- W Microsoft Excel, NVDA zgłasza, gdy komórka jest przepełniona lub zawiera przyciętą treść. (#3040)
+- Microsoft Excel: Lista elementów (NVDA+f7), pozwalająca wyświetlić wykresy, komentarze i formuły. (#1987)
+- Obsługa odczytu wykresów w Microsoft Excel: wybierz wykres używając listy elementów (NVDA+f7), a następnie przy użyciu klawiszy strzałek można przejść do wszystkich punktów danych. (#1987)
+- Używając MathPlayer 4 od Design Science, NVDA może odczytywać i interaktywnie nawigować w treści matematycznej w przeglądarkach internetowych oraz  Microsoft Word i PowerPoint. Więcej szczegółów zawiera rozdział "Czytanie treści matematycznej" w podręczniku użytkownika. (#4673)
+- Możliwe jest obecnie przypisywanie zdarzeń wejścia (skrótów klawiszowych, gestów dotykowych, etc.) dla wszystkich okien ustawień NVDA i opcji formatowania dokumentów, używając polecenia "Zdarzenia wejścia". (#4898)
 
 
 == Zmiany ==
 - W oknie formatowania dokumentów NVDA, zmienione zostały skróty klawiszowe do zgłaszania list, linków, numerów linii i nazw czcionek (nie dotyczy polskiej wersji językowej). (#4650)
 - W oknie ustawień myszy NVDA, dodano skróty klawiszowe sygnalizowania dźwiękiem położenia myszy oraz "głośność dźwięku myszy zależy od jasności obrazu" (w polskiej wersji językowej, skróty te istniały już wcześniej). (#4916)
+- Znacząco poprawione oznajmianie nazw kolorów. (#4984)
+- Zaktualizowany translator brajlowski liblouis do  wersji 2.6.2. (#4777)
 
 
 == Poprawki błędów ==
 - Opisy znaków są teraz poprawnie obsługiwane dla złożonych znaków w kilku indyjskich językach. (#4582)
-- Nowe tablice brajlowskie dla kilku języków indyjskich. (#4778)
+- Jeśli opcja "Ufaj językowi głosu przetwarzając znaki i symbole" jest włączona, okno interpunkcji/wymowy prawidłowo używa języka głosu. Ponadto język, którego wymowa jest edytowana,jest wyświetlany w tytule okna. (#4930)
+- W Internet Explorer i innych kontrolkach MSHTML, wpisywane znaki nie są od teraz nieprawidłowo oznajmiane w rozwijanych polach edycyjnych takich jak pole wyszukiwania na stronie domowej Google. (#4976)
+- Podczas wybierania koloru w aplikacjach Microsoft Office, odczytywane są nazwy kolorów. (#3045)
+- Brajl dla języka duńskiego teraz działa ponownie. (#4986)
+- pageUp / pageDown mogą być znów używane do przełączania slajdów w pokazie slajdów PowerPoint . (#4850)
+- W Skype dla pulpitu 7.2 i nowszych, powiadomienia o wpisywaniu są odczytywane i zostały rozwiązane problemy występujące po wyjściu punktu uwagi z konwersacji. (#4972)
+- Poprawione problemy z wpisywaniem niektórych znaków interpunkcji i symboli, takich jak nawiasy, do pola filtru w oknie dialogowym zdarzeń wejścia. (#5060)
+- W Internet Explorer i innych kontrolkach MSHTML, naciśnięcie g lub shift+g by nawigować po grafikach, uwzględnia teraz elementy oznaczone jako obrazki dla potrzeb dostępności (tj. rola ARIA img). (#5062)
 
 
 == Zmiany dla programistów ==

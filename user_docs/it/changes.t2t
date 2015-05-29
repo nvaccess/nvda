@@ -4,6 +4,46 @@
 %!includeconf: ../changes.t2tconf
 
 
+= 2015.2 =
+Caratteristiche salienti di questa versione includono la capacità di leggere i grafici in Microsoft Excel, nonché il supporto per la lettura e la navigazione interattiva dei contenuti di tipo matematico.
+
+== Novità ==
+è ora possibile spostarsi avanti e indietro per frasi in Microsoft Word con la combinazione di tasti alt+freccia giù o freccia su. (#3288)
+- Nuove tabelle braille relative a molte lingue presenti in India. (#4778)
+- In Microsoft Excel, NVDA notifica quando una cella possiede del contenuto che ne supera i bordi. (#3040)
+- In Microsoft Excel, si può utilizzare la combinazione di tasti NVDA+f7 per ottenere un elenco dei grafici, dei commenti e delle formule. (#1987)
+- Aggiunto il supporto per la lettura dei grafici in Excel. Per utilizzare tale funzione, premere NVDA+f7, selezionare il grafico desiderato, dopodiché usare le frecce per spostarsi tra i punti del grafico stesso. (#1987)
+- Aggiunto il supporto a Mathplayer4. Tramite questa applicazione è possibile leggere e esplorare in maniera interattiva la matematica presente sulle pagine web, sui documenti Word o su Powerpoint. Consultare il manuale utente di NVDA per ottenere informazioni su come utilizzare questa funzione. (#4673)
+- è ora possibile assegnare dei gesti o dei tasti rapidi per tutte le finestre di dialogo Preferenze di NVDA e anche per tutte le opzioni di formattazione documento, servendosi della finestra gesti e tasti di immissione. (#4898)
+
+
+== Cambiamenti ==
+- Nella finestra di dialogo Formattazione Documento, sono stati modificati i tasti rapidi per le funzioni leggi elenchi, leggi i link, leggi i numeri di riga e leggi il nome del carattere. (#4650)
+- Nella finestra impostazioni Mouse di NVDA, sono stati aggiunti dei tasti rapidi per le funzioni Coordinate audio quando il mouse si sposta, e La luminosità controlla il volume delle coordinate audio. (#4916)
+- NVDA ora riconosce un numero molto più cospicuo di colori. (#4984)
+- Aggiornato liblouis braille translator alla versione 2.6.2. (#4777)
+
+
+== Bug corretti ==
+- La descrizione dei caratteri è ora gestita correttamente per i caratteri congiunti in alcune lingue indiane. (#4582)
+- Se l'opzione "Considera attendibile la lingua della voce  corrente nel processare caratteri e simboli" risulta attiva, la finestra di dialogo "pronuncia punteggiatura/simboli" ora utilizza correttamente la lingua della voce, e la mostrerà anche sul titolo della finestra. (#4930)
+- In Internet Explorer e altri controlli MSHTML, non vengono più annunciati erroneamenti i caratteri digitati nelle caselle combinate modificabili, come  il campo di ricerca di Google sulla home page di Google. (#4976)
+- Durante la selezione dei colori nelle applicazioni Microsoft Office, ora viene letto il nome del colore. (#3045)
+- La tabella Braille Danese ora funziona di nuovo regolarmente. (#4986)
+- I tasti paginaSu e pagina giù funzionano di nuovo per cambiare diapositiva in una presentazione di Powerpoint. (#4850)
+- In Skype Desktop 7.2 e versioni successive, sono stati risolti alcuni problemi che si evidenziavano spostandosi da una conversazione, ed inoltre viene di nuovo annunciato quando un contatto sta scrivendo. (#4972)
+Risolti i problemi durante la digitazione di alcuni simboli come le parentesi nel campo filtro della finestra di dialogo gesti e tasti di immissione. (#5060)
+- In Internet Explorer e altri controlli MSHTML, la pressione dei tasti g o shift + g per spostarsi tra i grafici ora consente di spostarsi anche tra elementi contrassegnati come immagini a fini di accessibilità (ossia ARIA role img). (#5062)
+ 
+
+== Cambiamenti per sviluppatori (in inglese) ==
+- brailleInput.handler.sendChars(mychar) will no longer filter out a character if it is equal to the previous character by ensuring that the key sent is correctly released. (#4139)
+- Scripts for changing touch modes will now honor new labeles added to touchHandler.touchModeLabels. (#4699)
+- Add-ons can provide their own math presentation implementations. See the mathPres package for details. (#4509)
+- Speech commands have been implemented to insert a break between words and to change the pitch, volume and rate. See BreakCommand, PitchCommand, VolumeCommand and RateCommand in the speech module. (#4674)
+ - There is also speech.PhonemeCommand to insert specific pronunciation, but the current implementations only support a very limited number of phonemes.
+
+
 = 2015.1 =
 Caratteristiche salienti di questa versione includono la modalità di navigazione per i documenti in Microsoft Word e Outlook; importanti miglioramenti al supporto per Skype per Desktop; e correzioni significative per Microsoft Internet Explorer.
 

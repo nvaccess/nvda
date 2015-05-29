@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:10703\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-15 11:28-0700\n"
-"PO-Revision-Date: 2015-04-17 14:14+0100\n"
-"Last-Translator: Michel Such <michel.such@free.fr>\n"
+"POT-Creation-Date: 2015-05-08 19:04+1000\n"
+"PO-Revision-Date: 2015-05-25 13:15+0100\n"
+"Last-Translator: Bachir Benanou <ben_bach@yahoo.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.5\n"
+"X-Generator: Poedit 1.6.6\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -168,13 +168,23 @@ msgstr "Tchèque intégral"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Danish grade 1"
-msgstr "Danois intégral"
+msgid "Danish 6 dot grade 1"
+msgstr "Danois intégral 6 points"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Danish grade 2"
-msgstr "Danois abrégé"
+msgid "Danish 8 dot grade 1"
+msgstr "Danois intégral 8 points"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 6 dot grade 2"
+msgstr "Danois abrégé 6 points"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Danish 8 dot grade 2"
+msgstr "Danois abrégé 8 points"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -257,16 +267,6 @@ msgstr "Finnois Braille informatique 8 points"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "French (Canada) grade 1"
-msgstr "Français (Canada) intégral"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-msgid "French (Canada) grade 2"
-msgstr "Français (Canada) abrégé"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
 msgid "French (unified) 6 dot computer braille"
 msgstr "Français unifié Braille littéraire 6 points"
 
@@ -279,6 +279,16 @@ msgstr "Français (unifié) Braille informatique 8 points"
 #. braille settings dialog.
 msgid "French (unified) Grade 2"
 msgstr "Français (France) abrégé"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "French (Canada) grade 1"
+msgstr "Français (Canada) intégral"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "French (Canada) grade 2"
+msgstr "Français (Canada) abrégé"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -377,7 +387,7 @@ msgstr "Néerlandais (Belgique) intégral"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Dutch (netherlands) grade 1"
+msgid "Dutch (Netherlands) grade 1"
 msgstr "Néerlandais (Pays-Bas) intégral"
 
 #. Translators: The name of a braille table displayed in the
@@ -462,8 +472,8 @@ msgstr "Suédois intégral"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-msgid "Slovak"
-msgstr "Slovaque"
+msgid "Slovak grade 1"
+msgstr "Slovaque intégral"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1916,6 +1926,7 @@ msgid "selected %s"
 msgstr "sélectionné %s"
 
 #. Translators: The word for an unknown control type.
+#. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
 msgstr "inconnu"
 
@@ -2038,6 +2049,7 @@ msgid "cell"
 msgstr "cellule"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
+#. Translators: A column in a column chart.
 msgid "column"
 msgstr "colonne"
 
@@ -2063,7 +2075,7 @@ msgstr "en-tête de ligne"
 
 #. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 msgid "drop down button"
-msgstr "bouton poussoir"
+msgstr "bouton déroulant"
 
 #. Translators: Identifies an element.
 msgid "clock"
@@ -2247,7 +2259,7 @@ msgstr "édition riche"
 
 #. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
 msgid "ruler"
-msgstr "règle de format"
+msgstr "règle"
 
 #. Translators: Identifies a scroll pane.
 msgid "scroll pane"
@@ -2263,13 +2275,13 @@ msgstr "forme"
 
 #. Translators: Identifies a split pane.
 msgid "split pane"
-msgstr "panneau de séparation"
+msgstr "volet de fractionnement"
 
 #. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
 #. which represents the portion of the entire data that the user can see.
 #. As the user manipulates the scroll bars, the contents of the view port can change.
 msgid "view port"
-msgstr "fenêtre"
+msgstr "fenêtre d'affichage"
 
 #. Translators: Reported for an object that forms part of a menu system
 #. but which can be undocked from or torn off the menu system
@@ -2283,7 +2295,7 @@ msgstr "cadre de texte"
 
 #. Translators: Identifies a toggle button (a button used to toggle something).
 msgid "toggle button"
-msgstr "bascule"
+msgstr "bouton bascule"
 
 msgid "border"
 msgstr "bordure"
@@ -2318,7 +2330,7 @@ msgstr "liste déroulante"
 
 #. Translators: Identifies a split button (a control which performs different actions when different parts are clicked).
 msgid "split button"
-msgstr "bouton"
+msgstr "bouton partagé"
 
 #. Translators: Identifies a menu button (a button which opens a menu of items).
 msgid "menu button"
@@ -2328,9 +2340,9 @@ msgstr "bouton de menu"
 msgid "drop down button grid"
 msgstr "grille de boutons poussoirs"
 
-#. Translators: Identifies an equation.
-msgid "equation"
-msgstr "équation"
+#. Translators: Identifies mathematical content.
+msgid "math"
+msgstr "mathématique"
 
 #. Translators: Identifies a grip control.
 msgid "grip"
@@ -2338,7 +2350,7 @@ msgstr "poignée"
 
 #. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as assigning shortcut for icons on the desktop).
 msgid "hot key field"
-msgstr "champ de saisie rapide"
+msgstr "champ de raccourci clavier"
 
 #. Translators: Identifies an indicator control.
 msgid "indicator"
@@ -2459,7 +2471,7 @@ msgstr "style"
 
 #. Translators: Describes text formatting.
 msgid "indent"
-msgstr "indentation"
+msgstr "retrait"
 
 #. Translators: Describes text formatting.
 msgid "alignment"
@@ -2532,7 +2544,7 @@ msgstr "visité"
 
 #. Translators: This is presented when a link is encountered.
 msgid "linked"
-msgstr "attaché"
+msgstr "lié"
 
 #. Translators: This is presented when the control menu item has a submenu.
 msgid "subMenu"
@@ -2553,7 +2565,7 @@ msgstr "expiré"
 
 #. Translators: This is presented when an invalid entry has been made.
 msgid "invalid entry"
-msgstr "saisie incorrecte"
+msgstr "entrée incorrecte"
 
 msgid "modal"
 msgstr "modal"
@@ -2778,6 +2790,10 @@ msgstr "État du système"
 msgid "Input"
 msgstr "Entrée"
 
+#. Translators: The name of a category of NVDA commands.
+msgid "Document formatting"
+msgstr "Mise en Forme des Documents"
+
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
 msgstr "aide à la saisie activée"
@@ -2796,11 +2812,11 @@ msgstr ""
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
-msgstr "Mode veille désactivée"
+msgstr "Mode veille désactivé"
 
 #. Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 msgid "Sleep mode on"
-msgstr "Mode veille activée"
+msgstr "Mode veille activé"
 
 #. Translators: Input help mode message for toggle sleep mode command.
 msgid "Toggles  sleep mode on and off for  the active application."
@@ -2925,6 +2941,282 @@ msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
 msgstr "Bascule de l'écho clavier des touches qui ne sont pas des caractères"
+
+#. Translators: The message announced when toggling the report font name document formatting setting.
+msgid "report font name off"
+msgstr "Annonce du nom de la police désactivée"
+
+#. Translators: The message announced when toggling the report font name document formatting setting.
+msgid "report font name on"
+msgstr "Annonce du nom de la police activée"
+
+#. Translators: Input help mode message for toggle report font name command.
+msgid "Toggles on and off the reporting of font changes"
+msgstr "Active ou désactive l'annonce des changements de police"
+
+#. Translators: The message announced when toggling the report font size document formatting setting.
+msgid "report font size off"
+msgstr "annonce de la taille de la police désactivée"
+
+#. Translators: The message announced when toggling the report font size document formatting setting.
+msgid "report font size on"
+msgstr "annonce de la taille de la police activée"
+
+#. Translators: Input help mode message for toggle report font size command.
+msgid "Toggles on and off the reporting of font size changes"
+msgstr "Active ou désactive l'annonce des changements de taille de la police"
+
+#. Translators: The message announced when toggling the report font attributes document formatting setting.
+msgid "report font attributes off"
+msgstr "Annonce des attributs de la police désactivée"
+
+#. Translators: The message announced when toggling the report font attributes document formatting setting.
+msgid "report font attributes on"
+msgstr "Annonce des attributs de la police activée"
+
+#. Translators: Input help mode message for toggle report font attributes command.
+msgid "Toggles on and off the reporting of font attributes"
+msgstr "Active ou désactive l'annonce des attributs de la police"
+
+#. Translators: The message announced when toggling the report revisions document formatting setting.
+msgid "report revisions off"
+msgstr "annonce des révisions désactivée"
+
+#. Translators: The message announced when toggling the report revisions document formatting setting.
+msgid "report revisions on"
+msgstr "annonce des révisions activée"
+
+#. Translators: Input help mode message for toggle report revisions command.
+msgid "Toggles on and off the reporting of revisions"
+msgstr "Active ou désactive l'annonce des révisions"
+
+#. Translators: The message announced when toggling the report colors document formatting setting.
+msgid "report colors off"
+msgstr "Annonce des couleurs désactivée"
+
+#. Translators: The message announced when toggling the report colors document formatting setting.
+msgid "report colors on"
+msgstr "Annonce des couleurs activée"
+
+#. Translators: Input help mode message for toggle report colors command.
+msgid "Toggles on and off the reporting of colors"
+msgstr "Active ou désactive l'annonce des couleurs"
+
+#. Translators: The message announced when toggling the report alignment document formatting setting.
+msgid "report alignment off"
+msgstr "Annonce de l'alignement désactivée"
+
+#. Translators: The message announced when toggling the report alignment document formatting setting.
+msgid "report alignment on"
+msgstr "Annonce de l'alignement activée"
+
+#. Translators: Input help mode message for toggle report alignment command.
+msgid "Toggles on and off the reporting of text alignment"
+msgstr "Active ou désactive l'annonce de l'alignement"
+
+#. Translators: The message announced when toggling the report style document formatting setting.
+msgid "report style off"
+msgstr "Annonce du style désactivée"
+
+#. Translators: The message announced when toggling the report style document formatting setting.
+msgid "report style on"
+msgstr "Annonce du style activée"
+
+#. Translators: Input help mode message for toggle report style command.
+msgid "Toggles on and off the reporting of style changes"
+msgstr "Active ou désactive l'annonce du style"
+
+#. Translators: The message announced when toggling the report spelling errors document formatting setting.
+msgid "report spelling errors off"
+msgstr "Annonce des fautes d'orthographe désactivée"
+
+#. Translators: The message announced when toggling the report spelling errors document formatting setting.
+msgid "report spelling errors on"
+msgstr "Annonce des fautes d'orthographe activée"
+
+#. Translators: Input help mode message for toggle report spelling errors command.
+msgid "Toggles on and off the reporting of spelling errors"
+msgstr "Active ou désactive l'annonce des fautes d'orthographe"
+
+#. Translators: The message announced when toggling the report pages document formatting setting.
+msgid "report pages off"
+msgstr "Annonce des pages désactivée"
+
+#. Translators: The message announced when toggling the report pages document formatting setting.
+msgid "report pages on"
+msgstr "Annonce des pages activée"
+
+#. Translators: Input help mode message for toggle report pages command.
+msgid "Toggles on and off the reporting of pages"
+msgstr "Active ou désactive l'annonce des pages"
+
+#. Translators: The message announced when toggling the report line numbers document formatting setting.
+msgid "report line numbers off"
+msgstr "Annonce du numéro de ligne désactivée"
+
+#. Translators: The message announced when toggling the report line numbers document formatting setting.
+msgid "report line numbers on"
+msgstr "Annonce du numéro de ligne activée"
+
+#. Translators: Input help mode message for toggle report line numbers command.
+msgid "Toggles on and off the reporting of line numbers"
+msgstr "Active ou désactive l'annonce du numéro de ligne"
+
+#. Translators: The message announced when toggling the report line indentation document formatting setting.
+msgid "report line indentation off"
+msgstr "Annonce de l'indentation des lignes désactivée"
+
+#. Translators: The message announced when toggling the report line indentation document formatting setting.
+msgid "report line indentation on"
+msgstr "Annonce de l'indentation des lignes activée"
+
+#. Translators: Input help mode message for toggle report line indentation command.
+msgid "Toggles on and off the reporting of line indentation"
+msgstr "Active ou désactive l'annonce de l'indentation des lignes"
+
+#. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
+msgid "report paragraph indentation off"
+msgstr "Annonce de l'indentation des paragraphes désactivée"
+
+#. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
+msgid "report paragraph indentation on"
+msgstr "Annonce de l'indentation des paragraphes activée"
+
+#. Translators: Input help mode message for toggle report paragraph indentation command.
+msgid "Toggles on and off the reporting of paragraph indentation"
+msgstr "Active ou désactive l'annonce de l'indentation des paragraphes"
+
+#. Translators: The message announced when toggling the report tables document formatting setting.
+msgid "report tables off"
+msgstr "Annonce des tableaux désactivée"
+
+#. Translators: The message announced when toggling the report tables document formatting setting.
+msgid "report tables on"
+msgstr "Annonce des tableaux activée"
+
+#. Translators: Input help mode message for toggle report tables command.
+msgid "Toggles on and off the reporting of tables"
+msgstr "Active ou désactive l'annonce des tableaux"
+
+#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
+msgid "report table row and column headers off"
+msgstr "Annonce des titres des lignes et des colonnes désactivée"
+
+#. Translators: The message announced when toggling the report table row/column headers document formatting setting.
+msgid "report table row and column headers on"
+msgstr "Annonce des titres des lignes et des colonnes activée"
+
+#. Translators: Input help mode message for toggle report table row/column headers command.
+msgid "Toggles on and off the reporting of table row and column headers"
+msgstr "Active ou désactive l'annonce des titres des lignes et des colonnes"
+
+#. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
+msgid "report table cell coordinates off"
+msgstr "Annonce des coordonnées des cellules désactivée"
+
+#. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
+msgid "report table cell coordinates on"
+msgstr "Annonce des coordonnées des cellules activée"
+
+#. Translators: Input help mode message for toggle report table cell coordinates command.
+msgid "Toggles on and off the reporting of table cell coordinates"
+msgstr "Active ou désactive l'annonce des coordonnées des cellules"
+
+#. Translators: The message announced when toggling the report links document formatting setting.
+msgid "report links off"
+msgstr "Annonce des liens désactivée"
+
+#. Translators: The message announced when toggling the report links document formatting setting.
+msgid "report links on"
+msgstr "Annonce des liens activée"
+
+#. Translators: Input help mode message for toggle report links command.
+msgid "Toggles on and off the reporting of links"
+msgstr "Active ou désactive l'annonce des liens"
+
+#. Translators: The message announced when toggling the report comments document formatting setting.
+msgid "report comments off"
+msgstr "Annonce des commentaires désactivée"
+
+#. Translators: The message announced when toggling the report comments document formatting setting.
+msgid "report comments on"
+msgstr "Annonce des commentaires activée"
+
+#. Translators: Input help mode message for toggle report comments command.
+msgid "Toggles on and off the reporting of comments"
+msgstr "Active ou désactive l'annonce des commentaires"
+
+#. Translators: The message announced when toggling the report lists document formatting setting.
+msgid "report lists off"
+msgstr "Annonce des listes désactivée"
+
+#. Translators: The message announced when toggling the report lists document formatting setting.
+msgid "report lists on"
+msgstr "Annonce des listes activée"
+
+#. Translators: Input help mode message for toggle report lists command.
+msgid "Toggles on and off the reporting of lists"
+msgstr "Active ou désactive l'annonce des listes"
+
+#. Translators: The message announced when toggling the report headings document formatting setting.
+msgid "report headings off"
+msgstr "Annonce des titres désactivée"
+
+#. Translators: The message announced when toggling the report headings document formatting setting.
+msgid "report headings on"
+msgstr "Annonce des titres activée"
+
+#. Translators: Input help mode message for toggle report headings command.
+msgid "Toggles on and off the reporting of headings"
+msgstr "Active ou désactive l'annonce des titres"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report block quotes off"
+msgstr "Annonce des citations désactivée"
+
+#. Translators: The message announced when toggling the report block quotes document formatting setting.
+msgid "report block quotes on"
+msgstr "Annonce des citations activée"
+
+#. Translators: Input help mode message for toggle report block quotes command.
+msgid "Toggles on and off the reporting of block quotes"
+msgstr "Active ou désactive l'annonce des citations"
+
+#. Translators: The message announced when toggling the report landmarks document formatting setting.
+msgid "report landmarks off"
+msgstr "Annonce des régions désactivée"
+
+#. Translators: The message announced when toggling the report landmarks document formatting setting.
+msgid "report landmarks on"
+msgstr "Annonce des régions activée"
+
+#. Translators: Input help mode message for toggle report landmarks command.
+msgid "Toggles on and off the reporting of landmarks"
+msgstr "Active ou désactive l'annonce des régions"
+
+#. Translators: The message announced when toggling the report frames document formatting setting.
+msgid "report frames off"
+msgstr "Annonce des cadres désactivée"
+
+#. Translators: The message announced when toggling the report frames document formatting setting.
+msgid "report frames on"
+msgstr "Annonce des cadres activée"
+
+#. Translators: Input help mode message for toggle report frames command.
+msgid "Toggles on and off the reporting of frames"
+msgstr "Active ou désactive l'annonce des cadres"
+
+#. Translators: The message announced when toggling the report if clickable document formatting setting.
+msgid "report if clickable off"
+msgstr "Annonce si cliquable désactivée"
+
+#. Translators: The message announced when toggling the report if clickable document formatting setting.
+msgid "report if clickable on"
+msgstr "Annonce si cliquable activée"
+
+#. Translators: Input help mode message for toggle report if clickable command.
+msgid "Toggles on and off reporting if clickable"
+msgstr "Active ou désactive l'annonce d'élément cliquable"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -3487,6 +3779,10 @@ msgstr "Afficher le dialogue synthétiseurs de NVDA"
 msgid "Shows the NVDA voice settings dialog"
 msgstr "Afficher le dialogue paramètres vocaux de NVDA"
 
+#. Translators: Input help mode message for go to braille settings dialog command.
+msgid "Shows the NVDA braille settings dialog"
+msgstr "Afficher le dialogue  Paramètres braille de NVDA"
+
 #. Translators: Input help mode message for go to keyboard settings dialog command.
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "Afficher le dialogue Paramètres du clavier de NVDA"
@@ -3494,6 +3790,14 @@ msgstr "Afficher le dialogue Paramètres du clavier de NVDA"
 #. Translators: Input help mode message for go to mouse settings dialog command.
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "Afficher le dialogue paramètres de la souris de NVDA"
+
+#. Translators: Input help mode message for go to review cursor settings dialog command.
+msgid "Shows the NVDA review cursor settings dialog"
+msgstr "Afficher le dialogue paramètres du curseur de NVDA"
+
+#. Translators: Input help mode message for go to input composition dialog.
+msgid "Shows the NVDA input composition settings dialog"
+msgstr "Afficher le dialogue paramètres de saisie de NVDA"
 
 #. Translators: Input help mode message for go to object presentation dialog command.
 msgid "Shows the NVDA object presentation settings dialog"
@@ -3506,6 +3810,26 @@ msgstr "Afficher le dialogue mode navigation de NVDA"
 #. Translators: Input help mode message for go to document formatting dialog command.
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "Afficher le dialogue mise en forme des documents de NVDA"
+
+#. Translators: Input help mode message for opening default dictionary dialog.
+msgid "Shows the NVDA default dictionary dialog"
+msgstr "Afficher le dialogue  Dictionnaire par défaut de NVDA"
+
+#. Translators: Input help mode message for opening voice-specific dictionary dialog.
+msgid "Shows the NVDA voice-specific dictionary dialog"
+msgstr "Afficher le dialogue Dictionnaire de la voix de NVDA"
+
+#. Translators: Input help mode message for opening temporary dictionary.
+msgid "Shows the NVDA temporary dictionary dialog"
+msgstr "Afficher le dialogue Dictionnaire temporaire de NVDA"
+
+#. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
+msgid "Shows the NVDA symbol pronunciation dialog"
+msgstr "Afficher le dialogue Prononciation des symboles de NVDA"
+
+#. Translators: Input help mode message for go to input gestures dialog command.
+msgid "Shows the NVDA input gestures dialog"
+msgstr "Afficher le dialogue Gestes de commandes de NVDA"
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
@@ -3524,6 +3848,30 @@ msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr ""
 "Activer la console Python de NVDA, essentiellement utile pour les "
 "développeurs"
+
+#. Translators: Input help mode message for activate manage add-ons command.
+msgid ""
+"Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
+"for NVDA"
+msgstr ""
+"Active le gestionnaire de modules complémentaires pour installer et "
+"désinstaller des modules complémentaires pour NVDA"
+
+#. Translators: The message announced when disabling speech viewer.
+msgid "speech viewer disabled"
+msgstr "Visionneuse de parole désactivée"
+
+#. Translators: The message announced when enabling speech viewer.
+msgid "speech viewer enabled"
+msgstr "Visionneuse de parole activée"
+
+#. Translators: Input help mode message for toggle speech viewer command.
+msgid ""
+"Toggles the NVDA Speech viewer, a floating window that allows you to view "
+"all the text that NVDA is currently speaking"
+msgstr ""
+"Active ou désactive la visionneuse de parole, une fenêtre flottante qui vous "
+"permet de voir le texte que NVDA est en train de prononcer"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
@@ -3676,6 +4024,15 @@ msgstr ""
 msgid "Shows the NVDA Configuration Profiles dialog"
 msgstr "Afficher le dialogue de configuration des profils de NVDA"
 
+#. Translators: Reported when the user attempts math interaction
+#. with something that isn't math.
+msgid "Not math"
+msgstr "Non mathématique"
+
+#. Translators: Describes a command.
+msgid "Begins interaction with math content"
+msgstr "Commence l'interaction avec le contenu mathématique"
+
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
 msgstr "Touche du clavier du système émulé"
@@ -3822,7 +4179,7 @@ msgstr "windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "enter"
-msgstr "entrer"
+msgstr "entrée"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad enter"
@@ -4094,7 +4451,7 @@ msgstr "%s majuscule"
 
 #. Translators: This is spoken when the given line has no indentation.
 msgid "no indent"
-msgstr "pas d'indentation"
+msgstr "pas de retrait"
 
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #, python-format
@@ -4215,7 +4572,7 @@ msgstr "non révisé"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
-msgstr "pas de caractère gras"
+msgstr "pas de gras"
 
 #. Translators: Reported when text is italicized.
 msgid "italic"
@@ -4277,35 +4634,35 @@ msgstr "alignement par défaut"
 
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
-msgstr "indentation gauche"
+msgstr "retrait gauche"
 
 #. Translators: the message when there is no paragraph format left indent
 msgid "no left indent"
-msgstr "pas d'indentation gauche"
+msgstr "pas de retrait gauche"
 
 #. Translators: the label for paragraph format right indent
 msgid "right indent"
-msgstr "indentation droite"
+msgstr "retrait droit"
 
 #. Translators: the message when there is no paragraph format right indent
 msgid "no right indent"
-msgstr "pas d'indentation droite"
+msgstr "pas de retrait droit"
 
 #. Translators: the label for paragraph format hanging indent
 msgid "hanging indent"
-msgstr "indentation en cours"
+msgstr "retrait négatif de première ligne"
 
 #. Translators: the message when there is no paragraph format hanging indent
 msgid "no hanging indent"
-msgstr "pas d'indentation suspendue"
+msgstr "pas de retrait négatif de première ligne"
 
 #. Translators: the label for paragraph format first line indent
 msgid "first line indent"
-msgstr "indentation de première ligne"
+msgstr "retrait de première ligne"
 
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
-msgstr "pas d'indentation de première ligne"
+msgstr "pas de retrait de première ligne"
 
 #. Translators: Reported when text is vertically top-aligned.
 msgid "vertical align top"
@@ -4850,115 +5207,115 @@ msgstr "Annoncer tous les commentaires dans la fenêtre de commentaires"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Title placeholder"
-msgstr "Emplacement de titre"
+msgstr "Espace réservé du titre"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Text placeholder"
-msgstr "Emplacement de texte"
+msgstr "Espace réservé du texte"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Center Title placeholder"
-msgstr "Emplacement de titre centré"
+msgstr "Espace réservé de titre central"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Subtitle placeholder"
-msgstr "Emplacement de sous-titre"
+msgstr "Espace réservé du sous-titre"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Title placeholder"
-msgstr "Emplacement de titre vertical"
+msgstr "Espace réservé du titre vertical"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Text placeholder"
-msgstr "Emplacement de texte vertical"
+msgstr "Espace réservé du texte vertical"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Object placeholder"
-msgstr "Emplacement d'objet"
+msgstr "Espace réservé d'objet"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Chart placeholder"
-msgstr "Emplacement de diagramme"
+msgstr "Espace réservé du diagramme"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Bitmap placeholder"
-msgstr "Emplacement de graphique"
+msgstr "Espace réservé du graphique"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Media Clip placeholder"
-msgstr "Emplacement de clip média"
+msgstr "Espace réservé de Clip Média"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Org Chart placeholder"
-msgstr "Emplacement d'organigramme"
+msgstr "Espace réservé de l'organigramme"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Table placeholder"
-msgstr "Emplacement de tableau"
+msgstr "Espace réservé du tableau"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Slide Number placeholder"
-msgstr "Emplacement de numéro de diaporama"
+msgstr "Espace réservé du numéro de diapositive"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Header placeholder"
-msgstr "Emplacement d'en-tête"
+msgstr "Espace réservé de l'en-tête"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Footer placeholder"
-msgstr "Emplacement de pied de page"
+msgstr "Espace réservé du pied de page"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Date placeholder"
-msgstr "Emplacement de date"
+msgstr "Espace réservé de la date"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Vertical Object placeholder"
-msgstr "Emplacement d'objet vertical"
+msgstr "Espace réservé de l'objet vertical"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Picture placeholder"
-msgstr "Emplacement de dessin"
+msgstr "Espace réservé pour l'image"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide view"
-msgstr "Vue de diaporama"
+msgstr "Mode Diapositive"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide Master view"
-msgstr "Vue principale de diaporama"
+msgstr "Mode Masque des diapositives"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Notes page"
-msgstr "page de notes"
+msgstr "Page de commentaires"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Handout Master view"
-msgstr "Mue maître de polycopie"
+msgstr "Afficher le document maître"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Notes Master view"
-msgstr "Vue maître de notes"
+msgstr "Masque de commentaires"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Outline view"
-msgstr "Vue d'aperçu"
+msgstr "Mode plan"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Slide Sorter view"
-msgstr "Vue de tri de diaporama"
+msgstr "Mode Trieuse de diapositives"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Title Master view"
-msgstr "Vue maître de titre"
+msgstr "Afficher le masque de titre"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Normal view"
-msgstr "Vue normale"
+msgstr "Affichage normal"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Print Preview"
-msgstr "Prévisualisation d'impression"
+msgstr "Aperçu avant impression"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Thumbnails"
@@ -4966,11 +5323,11 @@ msgstr "Miniatures"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 msgid "Master Thumbnails"
-msgstr "Miniatures principales"
+msgstr "Miniatures de masques"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
-msgstr "Diaporama {slideNumber}"
+msgstr "Diapositive {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers left of {otherShape} by {distance:.3g} points"
@@ -5072,7 +5429,7 @@ msgstr "Pas de notes"
 
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
-msgstr "Diaporama vide"
+msgstr "Diapositive vide"
 
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 msgid "Waiting for Powerpoint..."
@@ -5745,7 +6102,7 @@ msgstr "&effacer"
 #. in the Configuration Profiles dialog.
 #. See the Configuration Profiles section of the User Guide for details.
 msgid "&Triggers..."
-msgstr "&Déclencheurs ..."
+msgstr "&Déclencheurs..."
 
 #. Translators: The label of a checkbox in the Configuration Profiles dialog.
 msgid "Temporarily d&isable all triggers"
@@ -6019,7 +6376,7 @@ msgid ""
 "and then press Continue"
 msgstr ""
 "Pour créer une copie portable de NVDA, veuillez choisir le chemin et les "
-"autres options, puis pressez Continuer"
+"autres options, puis appuyez sur Continuer"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
@@ -6245,7 +6602,7 @@ msgstr "&Synthétiseur :"
 #. of an output device are default soundcard, usb
 #. headphones, etc.
 msgid "Output &device:"
-msgstr "Périphérique de sortie &audio:"
+msgstr "Périphérique &de sortie :"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -6440,19 +6797,19 @@ msgstr "Paramètres de Saisie"
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Automatically report all available &candidates"
-msgstr "Annonce &automatique de tous les candidats"
+msgstr "Annonce &automatique de toutes les suggestions"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Announce &selected candidate"
-msgstr "Annoncer le candidat &sélectionné"
+msgstr "Annoncer la suggestion &sélectionnée"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Always include short character &description when announcing candidates"
 msgstr ""
-"Toujours inclure la &description courte du caractère durant l'annonce du "
-"candidat"
+"Toujours inclure la &description courte du caractère durant l'annonce de la "
+"suggestion"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
@@ -6900,6 +7257,15 @@ msgstr ""
 "Impossible de sauvegarder les gestes définis par l'utilisateur : le système "
 "de fichiers est probablement protégé en écriture"
 
+#. Translators: Describes a command.
+msgid "Exit math interaction"
+msgstr "Quitter l'interaction mathématique"
+
+#. Translators: Reported when the user attempts math interaction
+#. but math interaction is not supported.
+msgid "Math interaction not supported."
+msgstr "Interaction mathématique non supportée."
+
 #. Translators: name of the default espeak varient.
 msgctxt "espeakVarient"
 msgid "none"
@@ -7023,6 +7389,27 @@ msgstr "Bureau"
 msgid "default color"
 msgstr "couleur par défaut"
 
+#. Translators: the description for the elements list command in Microsoft Excel.
+msgid "Presents a list of charts, cells with comments and cells with formulas"
+msgstr ""
+"Présente une liste de graphiques, cellules avec commentaires et cellules "
+"avec formules"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Chart"
+msgstr "&Graphique"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "C&omment"
+msgstr "C&ommentaire"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Formula"
+msgstr "&Formule"
+
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
 msgstr "{start} à {end}"
@@ -7104,6 +7491,642 @@ msgstr "Édition du commentaire pour la cellule {address}"
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "de {firstAddress} {firstContent} à {lastAddress} {lastContent}"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Area"
+msgstr "Aire 3d"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Area"
+msgstr "Aire empilée 3D"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Area"
+msgstr "Aire empilée 100 pour cent"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Bar"
+msgstr "Barres groupées 3D"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Bar"
+msgstr "Barres empilées 3D"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Bar"
+msgstr "Barres empilées 100 pour cent 3D"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Column"
+msgstr "Colonne 3D"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Clustered Column"
+msgstr "Histogramme groupé 3D"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Stacked Column"
+msgstr "Histogramme empilé 3D"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D 100 percent Stacked Column"
+msgstr "Histogramme empilé 100 pour cent 3D"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Line"
+msgstr "Ligne 3D"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Pie"
+msgstr "Camembert 3D"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded 3D Pie"
+msgstr "Secteur éclaté 3D"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Area"
+msgstr "Aire"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Area"
+msgstr "Aire empilée"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Bar"
+msgstr "Barre groupée"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bar of Pie"
+msgstr "Barre de camembert"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Bar"
+msgstr "Barre empilée"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Bar"
+msgstr "Barre empilée 100 pour cent"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble"
+msgstr "Bulle"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Bubble with 3D effects"
+msgstr "Bulle avec effets 3D"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Clustered Column"
+msgstr "Histogramme"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Column"
+msgstr "Colonne empilée"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Column"
+msgstr "Histogramme empilé 100 pour cent"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Bar"
+msgstr "barre cônique groupée"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Bar"
+msgstr "Barre cônique empilée"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Bar"
+msgstr "Barre cônique empilée 100 pour cent"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cone Column"
+msgstr "Colonne cônique 3D"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cone Column"
+msgstr "Colonne cônique groupée"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cone Column"
+msgstr "Colonne cônique empilée"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cone Column"
+msgstr "Colonne cônique empilée 100 pour cent"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Cylinder Bar"
+msgstr "Barre cylindrique groupée"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Cylinder Bar"
+msgstr "Barre cylindrique empilée"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Bar"
+msgstr "Barre cylindrique empilée 100 pour cent"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Cylinder Column"
+msgstr "Colonne cylindrique 3D"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Cylinder Column"
+msgstr "Colonne cylindrique empilée 100 pour cent"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Doughnut"
+msgstr "Anneau"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Doughnut"
+msgstr "Anneau éclaté"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line"
+msgstr "Ligne"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Line with Markers"
+msgstr "Ligne avec marqueurs"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line with Markers"
+msgstr "Ligne empilée avec marqueur"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line with Markers"
+msgstr "Ligne empilée avec marqueur 100 pour cent"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Stacked Line"
+msgstr "Ligne empilée"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "100 percent Stacked Line"
+msgstr "Ligne empilée 100 pour cent"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Pie"
+msgstr "Camembert"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Exploded Pie"
+msgstr "Camembert éclaté"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Pie of Pie"
+msgstr "Camembert de camemberts"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Bar"
+msgstr "Barre pyramidale groupée"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Bar"
+msgstr "Barre pyramidale empilée"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Bar"
+msgstr "Barre pyramidale empilée 100 pour cent"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "3D Pyramid Column"
+msgstr "Colonne pyramidale 3D"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Clustered Pyramid Column"
+msgstr "Colonne pyramidale groupée"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "Stacked Pyramid Column"
+msgstr "Colonne pyramidale empilée"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
+msgid "100 percent Stacked Pyramid Column"
+msgstr "Colonne pyramidale empilée 100 pour cent"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar"
+msgstr "Radar"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Filled Radar"
+msgstr "Radar rempli"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Radar with Data Markers"
+msgstr "Radar avec marqueurs de données"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "High-Low-Close"
+msgstr "Max-min-clôture"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Open-High-Low-Close"
+msgstr "Ouvert-max-min-clôture"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-High-Low-Close"
+msgstr "Volume-max-min-Clôture"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Volume-Open-High-Low-Close"
+msgstr "Volume-ouvert-max-min-Clôture"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface"
+msgstr "Surface 3D"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View)"
+msgstr "Surface (vue du haut)"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Surface (Top View wireframe)"
+msgstr "Surface (contour vu du haut)"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "3D Surface (wireframe)"
+msgstr "Surface 3D (contour)"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter"
+msgstr "Nuage de points"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines"
+msgstr "Nuage de points avec lignes"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Lines and No Data Markers"
+msgstr "Nuage de points avec lignes et sans marqueur de données"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines"
+msgstr "Nuage de points avec ligne lissée"
+
+#. Translators: A type of chart in Microsoft Excel.
+#. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
+msgid "Scatter with Smoothed Lines and No Data Markers"
+msgstr "Nuage de points avec ligne lissée et sans marqueur de données"
+
+#. Translators: Message reporting the title and type of a chart.
+msgid "Chart title: {chartTitle}, type: {chartType}"
+msgstr "Titre du graphique : {chartTitle}, type : {chartType}"
+
+#. Translators: Reported when there is no title for an axis in a chart.
+msgid "Not defined"
+msgstr "Non défini"
+
+#. Translators: A type of axis in a chart.
+#. Translators: The category axis in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+msgid "Category"
+msgstr "Catégorie"
+
+#. Translators: A type of axis in a chart.
+#. Translators: The value axis in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+msgid "Value"
+msgstr "Valeur"
+
+#. Translators: A type of axis in a chart.
+#. Translators: The series axis in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+msgid "Series"
+msgstr "Séries"
+
+#. Translators: Message reporting the type and title of an axis in a chart.
+#. For example, this might report "Category axis is month"
+msgid "{axisName} Axis is {axisTitle}"
+msgstr "L'axe de {axisName} est {axisTitle}"
+
+#. Translators: Indicates that there is 1 series in a chart.
+msgid "There is 1 series in this chart"
+msgstr "Il y a 1 séries dans ce graphique"
+
+#. Translators: Indicates the number of series in a chart where there are multiple series.
+#, python-format
+msgid "There are total %d series in this chart"
+msgstr "Il y a autotal %d séries dans ce graphique"
+
+#. Translators: Specifies the number and name of a series when listing series in a chart.
+msgid "series {number} {name}"
+msgstr "séries {number} {name}"
+
+#. Translators: Indicates that there are no series in a chart.
+msgid "No Series defined."
+msgstr "Aucune série définie."
+
+#. Translators: A slice in a pie chart.
+msgid "slice"
+msgstr "secteur"
+
+#. Translators: A data point in a line chart.
+msgid "data point"
+msgstr "point de données"
+
+#. Translators: A segment of a chart for charts which don't have a specific name for segments.
+msgid "item"
+msgstr "élément"
+
+msgid "Series color: {colorName} "
+msgstr "Couleur des Séries : {colorName} "
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Display Unit Label"
+msgstr "étiquette d'unité d'affichage"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Major Gridlines"
+msgstr "Quadrillage majeur"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Minor Gridlines"
+msgstr "Quadrillage mineur"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Pivot Chart Drop Zone"
+msgstr "Zone de dépôt de graphique à pivot"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Pivot Chart Field Button"
+msgstr "Bouton de champ de graphique à pivot"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Down Bars"
+msgstr "Barres du bas"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Drop Lines"
+msgstr "Lignes verticales"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Hi Lo Lines"
+msgstr "Lignes min.-max."
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Radar Axis Labels"
+msgstr "étiquettes d'axe du radar"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Series Lines"
+msgstr "Lignes de séries"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Up Bars"
+msgstr "Barres du haut"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Corners"
+msgstr "Coins"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Data Table"
+msgstr "Tableau de données"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Floor"
+msgstr "Plancher"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Nothing"
+msgstr "Rien"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Walls"
+msgstr "Murs"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Data Label"
+msgstr "étiquette de donnée"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Error Bars"
+msgstr "Barres d'erreur"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "X Error Bars"
+msgstr "Barres d'erreur X"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Y Error Bars"
+msgstr "Barres d'erreur Y"
+
+#. Translators: A type of element in a Microsoft Excel chart.
+msgid "Shape"
+msgstr "Forme"
+
+#. Translators: Details about a series in a chart.
+#. For example, this might report "foo series 1 of 2"
+msgid "{seriesName} series {seriesIndex} of {seriesCount}"
+msgstr "séries {seriesName} {seriesIndex} de {seriesCount}"
+
+#. Translators: For line charts, indicates no change from the previous data point on the left
+msgid "no change from point {previousIndex}, "
+msgstr "pas de changement à partir du point {previousIndex}, "
+
+#. Translators: For line charts, indicates an increase from the previous data point on the left
+msgid "Increased by {incrementValue} from point {previousIndex}, "
+msgstr "Augmenté de {incrementValue} à partir du point {previousIndex}, "
+
+#. Translators: For line charts, indicates a decrease from the previous data point on the left
+msgid "decreased by {decrementValue} from point {previousIndex}, "
+msgstr "Diminué de {decrementValue} à partir du point {previousIndex}, "
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+msgid "{categoryAxisTitle} {categoryAxisData}: "
+msgstr "{categoryAxisTitle} {categoryAxisData} : "
+
+#. Translators: Specifies the category of a data point.
+#. {categoryAxisData} will be replaced with the category itself; e.g. "January".
+msgid "Category {categoryAxisData}: "
+msgstr "Catégorie {categoryAxisData} : "
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+msgid "{valueAxisTitle} {valueAxisData}"
+msgstr "{valueAxisTitle} {valueAxisData}"
+
+#. Translators: Specifies the value of a data point.
+#. {valueAxisData} will be replaced with the value itself; e.g. "1000".
+msgid "value {valueAxisData}"
+msgstr "valeur {valueAxisData}"
+
+#. Translators: Details about a slice of a pie chart.
+#. For example, this might report "fraction 25.25 percent slice 1 of 5"
+msgid ""
+" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
+msgstr ""
+" fraction {fractionValue:.2f} Pour cent secteur {pointIndex} de {pointCount}"
+
+#. Translators: Details about a segment of a chart.
+#. For example, this might report "column 1 of 5"
+msgid " {segmentType} {pointIndex} of {pointCount}"
+msgstr " {segmentType} {pointIndex} de {pointCount}"
+
+#. Translators: The primary axis group in a Microsoft Excel chart.
+msgid "Primary"
+msgstr "Primaire"
+
+#. Translators: The secondary axis group in a Microsoft Excel chart.
+msgid "Secondary"
+msgstr "Secondaire"
+
+#. Translators: Details about an axis in a chart.
+msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
+msgstr ""
+"Axe du graphique, type : {axisType}, groupe : {axisGroup}, titre : "
+"{axisTitle}"
+
+#. Translators: Details about an untitled axis in a chart.
+msgid "Chart axis, type: {axisType}, group: {axisGroup}"
+msgstr "Axe du graphique, type : {axisType}, groupe : {axisGroup}"
+
+#. Translators: Indicates a chart axis title in Microsoft Excel.
+msgid "Chart axis title"
+msgstr "Titre de l'axe du graphique"
+
+#. Translators: Indicates a trendline in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+msgid "trendline"
+msgstr "courbe de tendance"
+
+#. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
+msgid " squared "
+msgstr "encadré"
+
+#. Translators: Details about a chart title in Microsoft Excel.
+msgid "Chart title: {chartTitle}"
+msgstr "Titre du graphique : {chartTitle}"
+
+#. Translators: Indicates an untitled chart in Microsoft Excel.
+msgid "Untitled chart"
+msgstr "Graphique sans titre"
+
+#. Translators: Details about the chart area in a Microsoft Excel chart.
+msgid ""
+"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
+"{chartAreaTop}, left: {chartAreaLeft}"
+msgstr ""
+"Hauteur de la zone graphique : {chartAreaHeight}, largeur : "
+"{chartAreaWidth}, haut : {chartAreaTop}, gauche : {chartAreaLeft}"
+
+#. Translators: Indicates the chart area of a Microsoft Excel chart.
+msgid "Chart area "
+msgstr "Aire du graphique"
+
+#. Translators: Details about the plot area of a Microsoft Excel chart.
+msgid ""
+"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
+"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
+"{plotAreaInsideLeft:.0f}"
+msgstr ""
+"Hauteur interne de la zone de traçage : {plotAreaInsideHeight:.0f}, largeur "
+"interne : {plotAreaInsideWidth:.0f}, haut interne : {plotAreaInsideTop:.0f}, "
+"gauche interne : {plotAreaInsideLeft:.0f}"
+
+#. Translators: Indicates the plot area of a Microsoft Excel chart.
+msgid "Plot area "
+msgstr "Zone de traçage"
+
+#. Translators: Indicates the legend in a Microsoft Excel chart.
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+msgid "Legend"
+msgstr "Légende"
+
+#. Translators: Indicates that there is no legend in a Microsoft Excel chart.
+msgid "No legend"
+msgstr "Pas de légende"
+
+#. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
+#. For example, this might report "Legend entry for series Temperature 1 of 2"
+msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr ""
+"Entrée de légendes pour les séries {seriesName}, {seriesIndex} de "
+"{seriesCount}"
+
+#. Translators: Details about a legend key for a series in a Microsoft Excel chart.
+#. For example, this might report "Legend key for series Temperature 1 of 2"
+#. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
+msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
+msgstr ""
+"Clé de légendes pour les séries {seriesName}, {seriesIndex} de {seriesCount}"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
@@ -7368,7 +8391,7 @@ msgstr "{offset:.3g} picas"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 msgid "no comments"
-msgstr "pas de commentaire"
+msgstr "pas de commentaires"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
@@ -7395,159 +8418,33 @@ msgstr "HIMS Braille séries Sense/Braille EDGE"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "Présente une liste de liens, titres ou régions"
+#~ msgid "%s"
+#~ msgstr "%s"
 
-#~ msgid "grey"
-#~ msgstr "gris"
+#~ msgid "{} Series {} of {}"
+#~ msgstr "{} Séries {} de {}"
 
-#~ msgid "navy blue"
-#~ msgstr "bleu marine"
+#~ msgid "{} {}: "
+#~ msgstr "{} {} : "
 
-#~ msgid "red"
-#~ msgstr "rouge"
+#~ msgid "{} {}"
+#~ msgstr "{} {}"
 
-#~ msgid "blue"
-#~ msgstr "bleu"
+#~ msgid "value {}"
+#~ msgstr "valeur {}"
 
-#~ msgid "teal"
-#~ msgstr "sarcelle"
+#~ msgid " {} {} of {}"
+#~ msgstr " {} {} de {}"
 
-#~ msgid "aqua"
-#~ msgstr "bleu-vert"
+#~ msgid "none"
+#~ msgstr "aucun"
 
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "Dans NVDA 2013.1, la disposition de clavier pour ordinateur portable a "
-#~ "été entièrement redéfinie dans le but de la rendre plus intuitive et plus "
-#~ "cohérente.\n"
-#~ "Si vous utilisez la disposition clavier pour ordinateur portable, "
-#~ "veuillez lire le document Quoi de Neuf pour plus d'informations."
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "Nouvelle disposition pour clavier d'ordinateur portable"
-
-#~ msgid "Read What's New"
-#~ msgstr "Lire quoi de neuf"
-
-#~ msgid "&Acceleration"
-#~ msgstr "&Accélération"
-
-#~ msgid "male 1"
-#~ msgstr "homme 1"
-
-#~ msgid "female 1"
-#~ msgstr "femme 1"
-
-#~ msgid "male 2"
-#~ msgstr "homme 2"
-
-#~ msgid "female 2"
-#~ msgstr "femme 2"
-
-#~ msgid "lime"
-#~ msgstr "citron"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "Êtes-vous sûr de vouloir quitter NVDA ?"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "&Avertir avant de quitter NVDA"
-
-#~ msgid "Regexp"
-#~ msgstr "Regexp"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "pas d'information de position pour l'objet navigateur"
-
-#~ msgid "No location information for screen"
-#~ msgstr "pas d'information de position pour cet écran"
+#~ msgid " trendline {} "
+#~ msgstr " courbe de tendance {} "
 
 #~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
+#~ "Chart area height equals {}, width equals {}, top equals {}, left equals "
+#~ "{}"
 #~ msgstr ""
-#~ "Annonce la hauteur, largeur et position de l'objet navigateur courant"
-
-#~ msgid "Set column header row"
-#~ msgstr "initialiser la ligne d'en-tête de colonne"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "Ligne d'en-tête de colonne vide"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Un appui définit la ligne courante comme étant celle où les en-têtes de "
-#~ "colonnes doivent se trouver. Deux appuis suppriment le réglage."
-
-#~ msgid "Set row header column"
-#~ msgstr "Initialiser la colonne d'en-tête de ligne"
-
-#~ msgid "Cleared row header column"
-#~ msgstr "Colonne d'en-tête de ligne vide"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Un appui définit la colonne courante comme étant celle où les en-têtes de "
-#~ "lignes doivent se trouver. Deux appuis suppriment le réglage."
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "biffure"
-
-#~ msgid "Manual activate/edit"
-#~ msgstr "Activation/édition manuelle"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "Votre fichier de configuration contient des erreurs. \n"
-#~ "Pressez 'Accepter' pour corriger ces erreurs, ou 'Annuler' si vous "
-#~ "préférez éditer mannuellement votre fichier de configuration plus tard "
-#~ "pour corriger. Vous trouverez plus de détails sur les erreurs dans le "
-#~ "fichier log.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "Pas de commentaires automatiques."
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "Impossible de trouver la fenêtre de commentaires automatiques."
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr ""
-#~ "Annonce tous les commentaires dans la fenêtre de commentaires automatiques"
-
-#~ msgid "Automatic comments:"
-#~ msgstr "Commentaires automatiques :"
-
-#~ msgid "Translation:"
-#~ msgstr "Traduction :"
-
-#~ msgid "Comments:"
-#~ msgstr "Commentaires :"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "pas de revue à plat pour cet objet"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "Aucun objet à la position de revue à plat"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "Amène l'objet navigateur à l'objet représenté par le texte à la position "
-#~ "du curseur de revue en mode revue à plat"
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "Veuillez d'abord fermer les autres dialogues de paramètres NVDA"
+#~ "Hauteur de zone graphique égale {}, largeur égale {}, haut égale {}, "
+#~ "gauche égale {}"
