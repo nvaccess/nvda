@@ -502,7 +502,6 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			if withFields and not self._isObjectEditableText(obj):
 				# Add a controlEnd if this field had a controlStart.
 				fields.append(textInfos.FieldCommand("controlEnd", None))
-			from logHandler import log; log.info("%d" % obj.role)
 			ti = obj.embeddingTextInfo
 			obj = ti.obj
 			if ti.move(textInfos.UNIT_OFFSET, 1) == 0:
