@@ -17,6 +17,10 @@ from NVDAObjects.window import Window
 from NVDAObjects.IAccessible import sysListView32, IAccessible
 from NVDAObjects.UIA import UIA
 
+# Suppress incorrect Win 10 Task switching window focus
+class MultitaskingViewFrameWindow(UIA):
+	shouldAllowUIAFocusEvent=False
+
 # support for Win8 start screen search suggestions.
 class SuggestionListItem(UIA):
 
@@ -175,6 +179,8 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, ImmersiveLauncher)
 			elif uiaClassName=="ListViewItem" and obj.UIAElement.cachedAutomationId.startswith('Suggestion_'):
 				clsList.insert(0,SuggestionListItem)
+			elif uiaClassName=="MultitaskingViewFrame" and role==controlTypes.ROLE_WINDOW:
+				clsList.insert(0,MultitaskingViewFrameWindow)
 
 	def event_NVDAObject_init(self, obj):
 		windowClass = obj.windowClassName
