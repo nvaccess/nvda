@@ -410,9 +410,12 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			self._end = self._start
 			self._endObj = self._startObj
 		elif position == textInfos.POSITION_SELECTION:
+			# The caret is always within the selection,
+			# so start from the caret for better performance/tolerance of server brokenness.
 			tempTi, tempObj = self._findContentDescendant(obj.caretObject, textInfos.POSITION_CARET)
 			tempTi = tempObj.makeTextInfo(position)
 			if tempTi.isCollapsed:
+				# No selection, so use the caret.
 				self._start = self._end = tempTi
 				self._startObj = self._endObj = tempObj
 			else:
@@ -527,13 +530,6 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 		while True:
 			if unit == textInfos.POSITION_SELECTION:
 				expandTi = obj.makeTextInfo(unit)
-				if expandTi.isCollapsed:
-					# There is no selection, only a caret.
-					if not findEnd:
-						return expandTi, obj
-					if not findEnd:
-						return expandTi, obj
-					return expandTi, obj, expandTi, obj
 			else:
 				expandTi = baseTi.copy()
 				expandTi.expand(unit)
