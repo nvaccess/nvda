@@ -102,6 +102,7 @@ class CursorManager(baseObject.ScriptableObject):
 
 	def _set_selection(self, info):
 		info.updateSelection()
+		review.handleCaretMove(info)
 		braille.handler.handleCaretMove(self)
 
 	def _caretMovementScriptHelper(self,gesture,unit,direction=None,posConstant=textInfos.POSITION_SELECTION,posUnit=None,posUnitEnd=False,extraDetail=False,handleSymbols=False):

@@ -796,76 +796,24 @@ class WordDocumentTextInfoForTreeInterceptor(WordDocumentTextInfo):
 	def _get_shouldIncludeLayoutTables(self):
 		return config.conf['documentFormatting']['includeLayoutTables']
 
-class BrowseModeWordDocumentTextInfo(textInfos.TextInfo):
+class BrowseModeWordDocumentTextInfo(treeInterceptorHandler.RootProxyTextInfo):
 
 	def __init__(self,obj,position,_rangeObj=None):
 		if isinstance(position,WordDocument):
 			position=textInfos.POSITION_CARET
-		super(BrowseModeWordDocumentTextInfo,self).__init__(obj,position)
-		self.innerTextInfo=WordDocumentTextInfoForTreeInterceptor(obj.rootNVDAObject,position,_rangeObj=_rangeObj)
+		super(BrowseModeWordDocumentTextInfo,self).__init__(obj,position,_rangeObj=_rangeObj)
 
-	def _get__rangeObj(self):
-		return self.innerTextInfo._rangeObj
-
-	def find(self,text,caseSensitive=False,reverse=False):
-		return self.innerTextInfo.find(text,caseSensitive,reverse)
-
-	def copy(self):
-		return BrowseModeWordDocumentTextInfo(self.obj,None,_rangeObj=self.innerTextInfo._rangeObj)
-
-	def activate(self):
-		return self.innerTextInfo.activate()
-
-	def compareEndPoints(self,other,which):
-		return self.innerTextInfo.compareEndPoints(other.innerTextInfo,which)
-
-	def setEndPoint(self,other,which):
-		return self.innerTextInfo.setEndPoint(other.innerTextInfo,which)
-
-	def _get_isCollapsed(self):
-		return self.innerTextInfo.isCollapsed
-
-	def collapse(self,end=False):
-		return self.innerTextInfo.collapse(end=end)
-
-	def move(self,unit,direction,endPoint=None):
-		return self.innerTextInfo.move(unit,direction,endPoint=endPoint)
-
-	def _get_bookmark(self):
-		return self.innerTextInfo.bookmark
-
-	def updateCaret(self):
-		return self.innerTextInfo.updateCaret()
-
-	def updateSelection(self):
-		return self.innerTextInfo.updateSelection()
-
-	def _get_text(self):
-		return self.innerTextInfo.text
-
-	def getTextWithFields(self,formatConfig=None):
-		return self.innerTextInfo.getTextWithFields(formatConfig=formatConfig)
-
-	def expand(self,unit):
-		return self.innerTextInfo.expand(unit)
-
-	def getMathMl(self, field):
-		return self.innerTextInfo.getMathMl(field)
+	InnerTextInfoClass=WordDocumentTextInfoForTreeInterceptor
 
 class WordDocumentTreeInterceptor(CursorManager,browseMode.BrowseModeTreeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor):
 
 	TextInfo=BrowseModeWordDocumentTextInfo
-	needsReviewCursorTextInfoWrapper=False
 
 	def _get_isAlive(self):
 		return winUser.isWindow(self.rootNVDAObject.windowHandle)
 
 	def __contains__(self,obj):
 		return obj==self.rootNVDAObject
-
-	def _set_selection(self,info):
-		super(WordDocumentTreeInterceptor,self)._set_selection(info)
-		review.handleCaretMove(info)
 
 	def _get_ElementsListDialog(self):
 		return ElementsListDialog
@@ -910,10 +858,6 @@ class WordDocumentTreeInterceptor(CursorManager,browseMode.BrowseModeTreeInterce
 			return self._iterHeadings(nodeType,direction,rangeObj,includeCurrent)
 		else:
 			raise NotImplementedError
-
-	def event_gainFocus(self,obj,nextHandler):
-		obj.reportFocus()
-		braille.handler.handleGainFocus(self)
 
 	def script_nextRow(self,gesture):
 		self.rootNVDAObject._moveInTable(row=True,forward=True)
