@@ -203,12 +203,6 @@ class UIAHandler(COMObject):
 			return
 		if not self.isNativeUIAElement(sender):
 			return
-		try:
-			hasFocus=sender.currentHasKeyboardFocus
-		except COMError:
-			return
-		if not hasFocus: 
-			return
 		import NVDAObjects.UIA
 		if isinstance(eventHandler.lastQueuedFocusObject,NVDAObjects.UIA.UIA):
 			lastFocus=eventHandler.lastQueuedFocusObject.UIAElement
