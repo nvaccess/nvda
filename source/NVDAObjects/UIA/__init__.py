@@ -294,8 +294,13 @@ class UIA(Window):
 
 		UIAControlType=self.UIAElement.cachedControlType
 		UIAClassName=self.UIAElement.cachedClassName
+		import edge
 		if UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
+		elif UIAClassName=="Internet Explorer_Server" and self.role==controlTypes.ROLE_PANE:
+			clsList.append(edge.EdgeHTMLRootContainer)
+		elif isinstance(self.parent,edge.EdgeHTMLRootContainer) and self.role==controlTypes.ROLE_PANE:
+			clsList.append(edge.EdgeHTMLRoot)
 		elif UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId:
 			clsList.append(Toast)
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
@@ -824,3 +829,4 @@ class WpfTextView(UIA):
 
 	def event_stateChange(self):
 		return
+
