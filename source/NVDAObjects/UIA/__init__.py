@@ -49,10 +49,10 @@ class UIATextInfo(textInfos.TextInfo):
 				formatField["heading-level"]=(styleIDValue-UIAHandler.StyleId_Heading1)+1
 		return textInfos.FieldCommand("formatChange",formatField)
 
-	def __init__(self,obj,position):
+	def __init__(self,obj,position,_rangeObj=None):
 		super(UIATextInfo,self).__init__(obj,position)
-		if isinstance(position,UIAHandler.IUIAutomationTextRange):
-			self._rangeObj=position
+		if _rangeObj:
+			self._rangeObj=_rangeObj.clone()
 		elif position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			sel=self.obj.UIATextPattern.GetSelection()
 			if sel.length>0:
@@ -72,7 +72,10 @@ class UIATextInfo(textInfos.TextInfo):
 		elif position==textInfos.POSITION_ALL:
 			self._rangeObj=self.obj.UIATextPattern.documentRange
 		elif isinstance(position,UIA):
-			self._rangeObj=self.obj.UIATextPattern.rangeFromChild(position.UIAElement)
+			try:
+				self._rangeObj=self.obj.UIATextPattern.rangeFromChild(position.UIAElement)
+			except COMError:
+				raise LookupError
 		elif isinstance(position,textInfos.Point):
 			#rangeFromPoint causes a freeze in UIA client library!
 			#p=POINT(position.x,position.y)
@@ -88,10 +91,9 @@ class UIATextInfo(textInfos.TextInfo):
 
 	def _get_NVDAObjectAtStart(self):
 		tempRange=self._rangeObj.clone()
-		tempRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)
-		e=tempRange.getEnclosingElement()
-		obj=UIA(UIAElement=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
-		return obj if obj else self.obj
+		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)
+		child=tempRange.getEnclosingElement()
+		return UIA(UIAElement=child.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)) or self.obj
 
 	def _get_bookmark(self):
 		return self.copy()
@@ -249,7 +251,7 @@ class UIATextInfo(textInfos.TextInfo):
 		return res
 
 	def copy(self):
-		return self.__class__(self.obj,self._rangeObj.clone())
+		return self.__class__(self.obj,None,_rangeObj=self._rangeObj)
 
 	def collapse(self,end=False):
 		if end:
