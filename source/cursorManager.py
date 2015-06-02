@@ -354,7 +354,9 @@ class _ReviewCursorManagerTextInfo(textInfos.TextInfo):
 	"""
 
 	def updateCaret(self):
-		self.obj.selection = self
+		info=self.copy()
+		info.collapse()
+		self.obj.selection = info
 
 	def updateSelection(self):
 		self.obj.selection = self
