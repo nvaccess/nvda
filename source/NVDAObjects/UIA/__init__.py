@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2012 NV Access Limited
+#Copyright (C) 2009-2015 NV Access Limited
 
 from ctypes import byref
 from ctypes.wintypes import POINT, RECT
@@ -294,7 +294,9 @@ class UIA(Window):
 		UIAClassName=self.UIAElement.cachedClassName
 		if UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
-		elif UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId:
+		# #5136: Windows 8.x and Windows 10 uses different window class and other attributes for toast notifications.
+		elif ((UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId) #Windows 8.x
+		or (self.windowClassName=="Windows.UI.Core.CoreWindow" and UIAControlType==UIAHandler.UIA_WindowControlTypeId and self.UIAElement.cachedAutomationId=="NormalToastView")): # Windows 10
 			clsList.append(Toast)
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.append(ProgressBar)
