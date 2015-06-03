@@ -4,6 +4,8 @@
 #Copyright (C) 2015 NV Access Limited
 
 from comtypes import COMError
+from comtypes.automation import VARIANT
+from ctypes import byref
 import eventHandler
 import controlTypes
 import winUser
@@ -76,8 +78,12 @@ def getDeepestLastChildUIAElementInWalker(element,walker):
 		return element if descended else None
 
 def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction="next"):
+	# A part from the condition given, we must always match on the root of the document so we know when to stop walking
+	runtimeID=VARIANT()
+	document.rootNVDAObject.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(UIAHandler.UIA_RuntimeIdPropertyId,byref(runtimeID))
+	UIACondition=UIAHandler.handler.clientObject.createOrCondition(UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,runtimeID),UIACondition)
 	if not position:
-		# All items are request (such as for elements list)
+		# All items are requested (such as for elements list)
 		elements=document.rootNVDAObject.UIAElement.findAll(UIAHandler.TreeScope_Descendants,UIACondition)
 		for index in xrange(elements.length):
 			element=elements.getElement(index)
@@ -91,40 +97,39 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 		return
 	if direction=="previous":
 		# Fetching items previous to the given position.
-		toPosition=position.copy()
 		# When getting children of a UIA text range, Edge will incorrectly include a child that starts at the end of the range. 
 		# Therefore move back by one character to stop this.
-		toPosition.move(textInfos.UNIT_CHARACTER,-1)
-		# Extend the start of the range back to the start of the document so that we will be able to fetch children all the way up to this point.
-		toPosition.setEndPoint(document.TextInfo(document,textInfos.POSITION_ALL),"startToStart")
+		toPosition=position._rangeObj.clone()
+		toPosition.move(UIAHandler.TextUnit_Character,-1)
+		child=toPosition.getEnclosingElement()
+		childRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(child)
+		toPosition.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_Start)
 		# Fetch the last child of this text range.
 		# But if its own range extends beyond the end of our position:
 		# We know that the child is not the deepest descendant,
 		# And therefore we Limit our children fetching range to the start of this child,
 		# And fetch the last child again.
-		child=None
 		zoomedOnce=False
 		while True:
-			children=toPosition._rangeObj.getChildren()
+			children=toPosition.getChildren()
 			length=children.length
 			if length==0:
+				if zoomedOnce:
+					child=toPosition.getEnclosingElement()
 				break
 			child=children.getElement(length-1)
 			try:
 				childRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(child)
 			except COMError:
 				return
-			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,position._rangeObj,UIAHandler.TextPatternRangeEndpoint_End)>0 and childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,toPosition._rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)>0:
-				toPosition._rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_Start)
+			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,position._rangeObj,UIAHandler.TextPatternRangeEndpoint_End)>0 and childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,toPosition,UIAHandler.TextPatternRangeEndpoint_Start)>0:
+				toPosition.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_Start)
 				zoomedOnce=True
 				continue
 			break
-		if not child:
-			if not zoomedOnce:
-				return
-			# If we have zoomed in at all, yet this level has no children,
-			# Then we can use the element enclosing this range as that will be the deepest.
-			child=toPosition._rangeObj.getEnclosingElement()
+		if not child or UIAHandler.handler.clientObject.compareElements(child,document.rootNVDAObject.UIAElement):
+			# We're on the document itself -- probably nothing in it.
+			return
 		# Work out if this child is previous to our position or not.
 		# If it isn't, then we know we still need to move parent or previous before it is safe to emit an item.
 		try:
@@ -163,84 +168,70 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 					yield browseMode.TextInfoQuickNavItem(itemType,document,document.TextInfo(document,None,_rangeObj=document.rootNVDAObject.UIATextPattern.rangeFromChild(curElement)))
 				continue
 			curElement=None
-	elif True:
-				# Fetching items after the given position.
-		toPosition=position.copy()
+	else: # direction is next
+		# Fetching items after the given position.
 		# Extend the end of the range forward to the end of the document so that we will be able to fetch children from this point onwards. 
-		toPosition.setEndPoint(document.TextInfo(document,textInfos.POSITION_ALL),"endToEnd")
 		# Fetch the first child of this text range.
 		# But if its own range extends before the start of our position:
 		# We know that the child is not the deepest descendant,
 		# And therefore we Limit our children fetching range to the end of this child,
 		# And fetch the first child again.
-		child=None
+		child=position._rangeObj.getEnclosingElement()
+		childRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(child)
+		toPosition=position._rangeObj.clone()
+		toPosition.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,childRange,UIAHandler.TextPatternRangeEndpoint_End)
 		zoomedOnce=False
 		while True:
-			children=toPosition._rangeObj.getChildren()
+			children=toPosition.getChildren()
 			length=children.length
 			if length==0:
+				if zoomedOnce:
+					child=toPosition.getEnclosingElement()
 				break
 			child=children.getElement(0)
 			try:
 				childRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(child)
 			except COMError:
 				return
-			print "childRange text: %s"%childRange.getText(-1)
-			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,position._rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)<0 and childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,toPosition._rangeObj,UIAHandler.TextPatternRangeEndpoint_End)<0:
-				toPosition._rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,childRange,UIAHandler.TextPatternRangeEndpoint_End)
+			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,position._rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)<0 and childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,toPosition,UIAHandler.TextPatternRangeEndpoint_End)<0:
+				toPosition.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,childRange,UIAHandler.TextPatternRangeEndpoint_End)
 				zoomedOnce=True
 				continue
 			break
-		if not child:
-			if not zoomedOnce:
-				return
-			# If we have zoomed in at all, yet this level has no children,
-			# Then we can use the element enclosing this range as that will be the deepest.
-			child=toPosition._rangeObj.getEnclosingElement()
-			if UIAHandler.handler.clientObject.comareElements(child,document.rootNVDAObject.UIAElement):
-				import tones; tones.beep(550,50)
-				return
 		# Work out if this child is after our position or not.
+		if not child or UIAHandler.handler.clientObject.compareElements(child,document.rootNVDAObject.UIAElement):
+			# We're on the document itself -- probably nothing in it.
+			return
 		try:
 			childRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(child)
 		except COMError:
 			return
-		print "childRange text: %s"%childRange.getText(-1)
 		goneNextOnce=childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,position._rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)>0
-		print "goneNextOnce: %s"%goneNextOnce
 		walker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
 		curElement=child
 		# If we are already past our position, and this is a valid child
-		# Then we can emmit an item already
+		# Then we can emit an item already
 		if goneNextOnce and isUIAElementInWalker(curElement,walker):
 			yield browseMode.TextInfoQuickNavItem(itemType,document,document.TextInfo(document,None,_rangeObj=document.rootNVDAObject.UIATextPattern.rangeFromChild(curElement)))
 		# Start traversing from this child forwards through the document, emitting items for valid elements.
 		while curElement:
-			# Ensure this element is really represented in the document's text.
-			if not UIATextRangeFromElement(document.rootNVDAObject.UIATextPattern,curElement):
-				return
-			firstChild=walker.getFirstChildElement(curElement)
+			firstChild=walker.getFirstChildElement(curElement) if goneNextOnce else None
 			if firstChild:
 				curElement=firstChild
 				yield browseMode.TextInfoQuickNavItem(itemType,document,document.TextInfo(document,None,_rangeObj=document.rootNVDAObject.UIATextPattern.rangeFromChild(curElement)))
-				continue
-			nextSibling=None
-			while curElement:
-				nextSibling=walker.getNextSiblingElement(curElement)
-				if not nextSibling:
-					parent=walker.getParentElement(curElement)
-					if not parent or not UIATextRangeFromElement(document.rootNVDAObject.UIATextPattern,parent):
-						return
-					curElement=parent
-				else:
-					break
-			if nextSibling:
+			else:
+				nextSibling=None
+				while not nextSibling:
+					nextSibling=walker.getNextSiblingElement(curElement)
+					if not nextSibling:
+						parent=walker.getParentElement(curElement)
+						if parent and not UIAHandler.handler.clientObject.compareElements(document.rootNVDAObject.UIAElement,parent):
+							curElement=parent
+						else:
+							return
 				curElement=nextSibling
-				childRange=UIATextRangeFromElement(document.rootNVDAObject.UIATextPattern,curElement)
-				if not childRange:
-					return
-				yield browseMode.TextInfoQuickNavItem(itemType,document,document.TextInfo(document,None,_rangeObj=childRange))
-		curElement=None
+				goneNextOnce=True
+				yield browseMode.TextInfoQuickNavItem(itemType,document,document.TextInfo(document,None,_rangeObj=document.rootNVDAObject.UIATextPattern.rangeFromChild(curElement)))
 
 class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,browseMode.BrowseModeTreeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor):
 
