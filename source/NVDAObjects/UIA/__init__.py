@@ -113,8 +113,11 @@ class UIATextInfo(textInfos.TextInfo):
 		field["level"] = obj.positionInfo.get("level")
 		if role == controlTypes.ROLE_TABLE:
 			field["table-id"] = 1 # FIXME
-			field["table-rowcount"] = obj.rowCount
-			field["table-columncount"] = obj.columnCount
+			try:
+				field["table-rowcount"] = obj.rowCount
+				field["table-columncount"] = obj.columnCount
+			except NotImplementedError:
+				pass
 		if role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
 			field["table-id"] = 1 # FIXME
 			field["table-rownumber"] = obj.rowNumber
