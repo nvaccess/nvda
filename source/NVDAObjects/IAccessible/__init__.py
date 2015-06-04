@@ -280,32 +280,6 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _lineNumFromOffset(self,offset):
 		return -1
 
-	def getEmbeddedObject(self, offset=0):
-		offset += self._startOffset
-
-		# Mozilla uses IAccessibleHypertext to facilitate quick retrieval of embedded objects.
-		try:
-			ht = self.obj.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext)
-			hi = ht.hyperlinkIndex(offset)
-			if hi != -1:
-				hl = ht.hyperlink(hi)
-				return IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0)
-		except COMError:
-			pass
-
-		# Otherwise, we need to count the embedded objects to determine which child to use.
-		# This could possibly be optimised by caching.
-		text = self._getTextRange(0, offset + 1)
-		childIndex = text.count(u"\uFFFC")
-		if childIndex == 0:
-			raise LookupError
-		try:
-			return IAccessible(IAccessibleObject=IAccessibleHandler.accChild(self.obj.IAccessibleObject, childIndex)[0], IAccessibleChildID=0)
-		except COMError:
-			pass
-
-		raise LookupError
-
 class IAccessible(Window):
 	"""
 the NVDAObject for IAccessible
@@ -1252,15 +1226,6 @@ the NVDAObject for IAccessible
 
 	def _get_flowsFrom(self):
 		return self._getIA2RelationFirstTarget(IAccessibleHandler.IA2_RELATION_FLOWS_FROM)
-
-	def _get_embeddingTextInfo(self):
-		try:
-			hl = self.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleHyperlink)
-			hlOffset = hl.startIndex
-			return self.parent.makeTextInfo(textInfos.offsets.Offsets(hlOffset, hlOffset + 1))
-		except COMError:
-			pass
-		return None
 
 	def event_valueChange(self):
 		if isinstance(self, EditableTextWithAutoSelectDetection):
