@@ -180,7 +180,7 @@ class UIATextInfo(textInfos.TextInfo):
 
 	def _getTextWithFieldsForRange(self,obj,rangeObj,formatConfig):
 		#Graphics usually have no actual text, so render the name instead
-		if rangeObj.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)==0:
+		if rangeObj.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)==0 and obj!=self.obj:
 			for x in obj.makeTextInfo("all").getTextWithFields(formatConfig):
 				yield x
 			return
