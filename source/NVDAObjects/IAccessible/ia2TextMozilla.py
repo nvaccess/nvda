@@ -146,7 +146,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			end = False
 
 		for item in ti._iterTextWithEmbeddedObjects(withFields, formatConfig=formatConfig):
-			if not item:
+			if item is None:
 				yield u""
 			elif isinstance(item, basestring):
 				yield item
@@ -156,7 +156,9 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 					controlField = self._getControlFieldForObject(embedded)
 					if controlField:
 						yield textInfos.FieldCommand("controlStart", controlField)
-				if not embedded.TextInfo is NVDAObjectTextInfo: # Has text
+				if embedded.TextInfo is NVDAObjectTextInfo: # No text
+					yield embedded.basicText
+				else:
 					for subItem in self._iterRecursiveText(_makeRawTextInfo(embedded, textInfos.POSITION_ALL), withFields, formatConfig):
 						yield subItem
 						if subItem is None:

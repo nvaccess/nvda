@@ -292,7 +292,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			items = self.getTextWithFields(formatConfig=formatConfig)
 		else:
 			items = [self.text]
-		offset = 0
+		offset = self._startOffset
 		for item in items:
 			if not isinstance(item, basestring):
 				# This is a field.
