@@ -12,15 +12,35 @@ import itertools
 from comtypes import COMError
 import winUser
 import textInfos
+import controlTypes
 import IAccessibleHandler
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 from . import IA2TextTextInfo, IAccessible
 from compoundDocuments import CompoundTextInfo
 
+class FakeEmbeddingTextInfo(textInfos.offsets.OffsetsTextInfo):
+
+	def _getStoryLength(self):
+		return self.obj.childCount
+
+	def _iterTextWithEmbeddedObjects(self, withFields, formatConfig=None):
+		return xrange(self.obj.childCount)
+
+	def _getUnitOffsets(self,unit,offset):
+		if unit in (textInfos.UNIT_WORD,textInfos.UNIT_LINE):
+			unit=textInfos.UNIT_CHARACTER
+		return super(FakeEmbeddingTextInfo,self)._getUnitOffsets(unit,offset)
+
 def _makeRawTextInfo(obj, position):
+	if not hasattr(obj, "IAccessibleTextObject") and obj.role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLEROW):
+		return FakeEmbeddingTextInfo(obj, position)
+	elif obj.TextInfo is NVDAObjectTextInfo:
+		return obj.makeTextInfo(position)
 	return IA2TextTextInfo(obj, position)
 
 def _getEmbedded(obj, offset):
+	if not hasattr(obj, "IAccessibleTextObject"):
+		return obj.getChild(offset)
 	# Mozilla uses IAccessibleHypertext to facilitate quick retrieval of embedded objects.
 	try:
 		ht = obj.iaHypertext
@@ -33,11 +53,15 @@ def _getEmbedded(obj, offset):
 	return None
 
 def _getEmbedding(obj):
+	# optimisation: Passing an Offsets position checks nCharacters, which is an extra call we don't need.
+	info = _makeRawTextInfo(obj.parent, textInfos.POSITION_FIRST)
+	if isinstance(info, FakeEmbeddingTextInfo):
+		info._startOffset = obj.indexInParent
+		info._endOffset = info._startOffset + 1
+		return info
 	try:
 		hl = obj.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleHyperlink)
 		hlOffset = hl.startIndex
-		# optimisation: Passing an Offsets position checks nCharacters, which is an extra call we don't need.
-		info = _makeRawTextInfo(obj.parent, textInfos.POSITION_FIRST)
 		info._startOffset = hlOffset
 		info._endOffset = hlOffset + 1
 		return info
@@ -132,7 +156,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 					controlField = self._getControlFieldForObject(embedded)
 					if controlField:
 						yield textInfos.FieldCommand("controlStart", controlField)
-				if not isinstance(embedded.TextInfo, NVDAObjectTextInfo): # Has text
+				if not embedded.TextInfo is NVDAObjectTextInfo: # Has text
 					for subItem in self._iterRecursiveText(_makeRawTextInfo(embedded, textInfos.POSITION_ALL), withFields, formatConfig):
 						yield subItem
 						if subItem is None:
@@ -178,8 +202,6 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		return self._getText(True, formatConfig)
 
 	def _findUnitEndpoints(self, baseTi, unit, findStart=True, findEnd=True):
-		from NVDAObjects.IAccessible.mozilla import IndexTextInfo
-
 		start = startObj = end = endObj = None
 		baseTi.collapse()
 		obj = baseTi.obj
@@ -229,7 +251,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			# start and/or end hasn't yet been found,
 			# so it must be higher in the hierarchy.
 			embedTi = _getEmbedding(obj)
-			if isinstance(embedTi, IndexTextInfo):
+			if isinstance(embedTi, FakeEmbeddingTextInfo):
 				# hack: Selection in Mozilla table/table rows is broken (MozillaBug:1169238), so just ignore it.
 				embedTi = None
 			if not embedTi:

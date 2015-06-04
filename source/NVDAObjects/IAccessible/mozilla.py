@@ -20,48 +20,9 @@ from NVDAObjects.behaviors import RowWithFakeNavigation
 from . import IA2TextTextInfo
 from .ia2TextMozilla import MozillaCompoundTextInfo
 
-class IndexTextInfo(textInfos.offsets.OffsetsTextInfo):
-
-	def _getStoryLength(self):
-		return self.obj.childCount
-
-	def _getStoryText(self):
-		return u'\ufffc'*self.obj.childCount
-
-	def getEmbeddedObject(self,offset=0):
-		return self.obj.getChild(self._startOffset+offset)
-
-	def _getUnitOffsets(self,unit,offset):
-		if unit in (textInfos.UNIT_WORD,textInfos.UNIT_LINE):
-			unit=textInfos.UNIT_CHARACTER
-		return super(IndexTextInfo,self)._getUnitOffsets(unit,offset)
-
-	def _getCaretOffset(self):
-		for index in xrange(self.obj.childCount):
-			obj=self.obj.getChild(index)
-			try:
-				obj.makeTextInfo(textInfos.POSITION_CARET)
-			except RuntimeError:
-				continue
-			return index
-		raise RuntimeError("no active caret in this object")
-
 class Mozilla(IAccessible):
 
 	IAccessibleTableUsesTableCellIndexAttrib=True
-
-	def _get_embeddingTextInfo(self):
-		info=super(Mozilla,self).embeddingTextInfo
-		if not info and isinstance(self.parent,Mozilla) and issubclass(self.parent.TextInfo,IndexTextInfo):
-			index=self.indexInParent
-			info=self.parent.makeTextInfo(textInfos.offsets.Offsets(index,index+1))
-		return info
-
-	def _get_TextInfo(self):
-		TextInfo=super(Mozilla,self).TextInfo
-		if not isinstance(TextInfo,IA2TextTextInfo) and self.role in (controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEROW):
-			TextInfo=IndexTextInfo
-		return TextInfo
 
 	def _get_parent(self):
 		#Special code to support Mozilla node_child_of relation (for comboboxes)
