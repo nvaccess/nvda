@@ -825,10 +825,11 @@ class ListItem(UIA):
 	def event_stateChange(self):
 		if not self.hasFocus:
 			parent = self.parent
-			if parent and isinstance(parent, ComboBoxWithoutValuePattern):
+			focus=api.getFocusObject()
+			if parent and isinstance(parent, ComboBoxWithoutValuePattern) and parent==focus: 
 				# This is an item in a combo box without the Value pattern.
 				# This item has been selected, so notify the combo box that its value has changed.
-				parent.event_valueChange()
+				focus.event_valueChange()
 		super(ListItem, self).event_stateChange()
 
 class Dialog(Dialog):
