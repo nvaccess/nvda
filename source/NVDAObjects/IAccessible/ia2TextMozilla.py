@@ -252,10 +252,14 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 
 			# start and/or end hasn't yet been found,
 			# so it must be higher in the hierarchy.
-			embedTi = _getEmbedding(obj)
-			if isinstance(embedTi, FakeEmbeddingTextInfo):
-				# hack: Selection in Mozilla table/table rows is broken (MozillaBug:1169238), so just ignore it.
+			if obj.IA2UniqueID == self.obj.IA2UniqueID:
+				# We're at the root. Don't go any further.
 				embedTi = None
+			else:
+				embedTi = _getEmbedding(obj)
+				if isinstance(embedTi, FakeEmbeddingTextInfo):
+					# hack: Selection in Mozilla table/table rows is broken (MozillaBug:1169238), so just ignore it.
+					embedTi = None
 			if not embedTi:
 				# There is no embedding object.
 				# The unit starts and/or ends at the start and/or end of this last object.
@@ -349,6 +353,9 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		while True:
 			if ti and ti.move(textInfos.UNIT_OFFSET, direction) != 0:
 				break
+			if obj.IA2UniqueID == self.obj.IA2UniqueID:
+				# We're at the root. Don't go any further.
+				raise LookupError
 			ti = _getEmbedding(obj)
 			if not ti:
 				raise LookupError
@@ -428,6 +435,9 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		data = []
 		while True:
 			data.insert(0, (ti, obj))
+			if obj.IA2UniqueID == self.obj.IA2UniqueID:
+				# We're at the root. Don't go any further.
+				break
 			ti = _getEmbedding(obj)
 			if not ti:
 				break
