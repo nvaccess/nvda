@@ -9,6 +9,7 @@ from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
 import weakref
 import UIAHandler
+import aria
 import globalVars
 import eventHandler
 import controlTypes
@@ -303,7 +304,7 @@ class UIA(Window):
 			clsList.append(WpfTextView)
 		elif UIAClassName=="Internet Explorer_Server" and self.role==controlTypes.ROLE_PANE:
 			clsList.append(edge.EdgeHTMLRootContainer)
-		elif isinstance(self.parent,edge.EdgeHTMLRootContainer) and self.role==controlTypes.ROLE_PANE:
+		elif isinstance(self.parent,edge.EdgeHTMLRootContainer):
 			clsList.append(edge.EdgeHTMLRoot)
 		elif self.role==controlTypes.ROLE_LIST and self.UIAElement.cachedFrameworkId=="InternetExplorer":
 			clsList.append(edge.EdgeList)
@@ -462,7 +463,13 @@ class UIA(Window):
 		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_PANE,controlTypes.ROLE_WINDOW) and self.windowHandle:
 			superRole=super(UIA,self).role
 			if superRole!=controlTypes.ROLE_WINDOW:
-				return superRole
+				role=superRole
+		ariaRole=self.UIAElement.currentAriaRole
+		for ariaRole in ariaRole.split():
+			newRole=aria.ariaRolesToNVDARoles.get(ariaRole)
+			if newRole:
+				role=newRole
+				break
 		return role
 
 	def _get_description(self):

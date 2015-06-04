@@ -35,7 +35,7 @@ class EdgeHTMLRootContainer(UIA):
 		if isinstance(firstChild,UIA):
 			eventHandler.executeEvent("gainFocus",firstChild)
 			return
-		return super(EdgeHTML,self).event_gainFocus()
+		return super(EdgeHTMLRootContainer,self).event_gainFocus()
 
 def UIATextAttributeQuickNavIterator(itemType,document,position,attributeID,attributeValue,direction="next"):
 	includeCurrent=False
@@ -281,4 +281,13 @@ class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,browseMode.Brows
 class EdgeHTMLRoot(UIA):
 
 	treeInterceptorClass=EdgeHTMLTreeInterceptor
-	role=controlTypes.ROLE_DOCUMENT
+
+	def _get_shouldCreateTreeInterceptor(self):
+		return self.role==controlTypes.ROLE_DOCUMENT
+
+	def _get_role(self):
+		role=super(EdgeHTMLRoot,self).role
+		if role==controlTypes.ROLE_PANE:
+			role=controlTypes.ROLE_DOCUMENT
+		return role
+
