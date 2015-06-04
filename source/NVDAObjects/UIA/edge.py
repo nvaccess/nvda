@@ -16,6 +16,16 @@ import treeInterceptorHandler
 import cursorManager
 from . import UIA
 
+class EdgeList(UIA):
+
+	# non-focusable lists are readonly lists (ensures correct NVDA presentation category)
+	def _get_states(self):
+		states=super(EdgeList,self).states
+		if controlTypes.STATE_FOCUSABLE not in states:
+			states.add(controlTypes.STATE_READONLY)
+		return states
+
+
 class EdgeHTMLRootContainer(UIA):
 
 	shouldAllowUIAFocusEvent=True

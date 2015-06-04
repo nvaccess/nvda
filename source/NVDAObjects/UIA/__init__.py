@@ -304,6 +304,8 @@ class UIA(Window):
 			clsList.append(edge.EdgeHTMLRootContainer)
 		elif isinstance(self.parent,edge.EdgeHTMLRootContainer) and self.role==controlTypes.ROLE_PANE:
 			clsList.append(edge.EdgeHTMLRoot)
+		elif self.role==controlTypes.ROLE_LIST and self.UIAElement.cachedFrameworkId=="InternetExplorer":
+			clsList.append(edge.EdgeList)
 		elif UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId:
 			clsList.append(Toast)
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
