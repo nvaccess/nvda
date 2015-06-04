@@ -21,9 +21,12 @@ import review
 
 class CompoundTextInfo(textInfos.TextInfo):
 
+	def _makeRawTextInfo(self, obj, position):
+		return obj.makeTextInfo(position)
+
 	def _normalizeStartAndEnd(self):
 		if (self._start.isCollapsed and self._startObj != self._endObj
-				and self._start.compareEndPoints(self._startObj.makeTextInfo(textInfos.POSITION_ALL), "endToEnd") == 0):
+				and self._start.compareEndPoints(self._makeRawTextInfo(self._startObj, textInfos.POSITION_ALL), "endToEnd") == 0):
 			# Start it is at the end of its object.
 			# This is equivalent to the start of the next content.
 			# Aside from being pointless, we don't want a collapsed start object, as this will cause bogus control fields to be emitted.
@@ -39,9 +42,9 @@ class CompoundTextInfo(textInfos.TextInfo):
 			self._endObj = self._startObj
 		else:
 			# start needs to cover the rest of the text to the end of its object.
-			self._start.setEndPoint(self._startObj.makeTextInfo(textInfos.POSITION_ALL), "endToEnd")
+			self._start.setEndPoint(self._makeRawTextInfo(self._startObj, textInfos.POSITION_ALL), "endToEnd")
 			# end needs to cover the rest of the text to the start of its object.
-			self._end.setEndPoint(self._endObj.makeTextInfo(textInfos.POSITION_ALL), "startToStart")
+			self._end.setEndPoint(self._makeRawTextInfo(self._endObj, textInfos.POSITION_ALL), "startToStart")
 
 	def setEndPoint(self, other, which):
 		if which == "startToStart":
@@ -64,7 +67,7 @@ class CompoundTextInfo(textInfos.TextInfo):
 
 	def collapse(self, end=False):
 		if end:
-			if self._end.compareEndPoints(self._endObj.makeTextInfo(textInfos.POSITION_ALL), "endToEnd") == 0:
+			if self._end.compareEndPoints(self._makeRawTextInfo(self._endObj, textInfos.POSITION_ALL), "endToEnd") == 0:
 				# The end TextInfo is at the end of its object.
 				# The end of this object is equivalent to the start of the next content.
 				# As well as being silly, collapsing to the end of  this object causes say all to move the caret to the end of paragraphs.
@@ -162,7 +165,7 @@ class CompoundTextInfo(textInfos.TextInfo):
 
 	def _getInitialControlFields(self):
 		fields = []
-		rootObj = self.obj.rootNVDAObject
+		rootObj = self.obj
 		obj = self._startObj
 		while obj and obj != rootObj:
 			field = self._getControlFieldForObject(obj)
@@ -380,412 +383,6 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 
 		return direction - remainingMovement
 
-class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
-
-	def __init__(self, obj, position):
-		super(EmbeddedObjectCompoundTextInfo, self).__init__(obj, position)
-		rootObj = obj.rootNVDAObject
-		if isinstance(position, NVDAObject):
-			# FIXME
-			position = textInfos.POSITION_CARET
-		if isinstance(position, self.__class__):
-			self._start = position._start.copy()
-			self._startObj = position._startObj
-			if position._end is position._start:
-				self._end = self._start
-			else:
-				self._end = position._end.copy()
-			self._endObj = position._endObj
-		elif position in (textInfos.POSITION_FIRST, textInfos.POSITION_LAST):
-			self._start, self._startObj = self._findContentDescendant(rootObj, position)
-			self._end = self._start
-			self._endObj = self._startObj
-		elif position == textInfos.POSITION_ALL:
-			self._start, self._startObj = self._findContentDescendant(rootObj, textInfos.POSITION_FIRST)
-			self._start.expand(textInfos.UNIT_STORY)
-			self._end, self._endObj = self._findContentDescendant(rootObj, textInfos.POSITION_LAST)
-			self._end.expand(textInfos.UNIT_STORY)
-		elif position == textInfos.POSITION_CARET:
-			self._start, self._startObj = self._findContentDescendant(obj.caretObject, textInfos.POSITION_CARET)
-			self._end = self._start
-			self._endObj = self._startObj
-		elif position == textInfos.POSITION_SELECTION:
-			# The caret is always within the selection,
-			# so start from the caret for better performance/tolerance of server brokenness.
-			tempTi, tempObj = self._findContentDescendant(obj.caretObject, textInfos.POSITION_CARET)
-			tempTi = tempObj.makeTextInfo(position)
-			if tempTi.isCollapsed:
-				# No selection, so use the caret.
-				self._start = self._end = tempTi
-				self._startObj = self._endObj = tempObj
-			else:
-				self._start, self._startObj, self._end, self._endObj = self._findUnitEndpoints(tempTi, position)
-		else:
-			raise NotImplementedError
-
-	POSITION_SELECTION_START = 3
-	POSITION_SELECTION_END = 4
-	FINDCONTENTDESCENDANT_POSITIONS = {
-		textInfos.POSITION_FIRST: 0,
-		textInfos.POSITION_CARET: 1,
-		textInfos.POSITION_LAST: 2,
-	}
-	def _findContentDescendant(self, obj, position):
-		import ctypes
-		import NVDAHelper
-		import NVDAObjects.IAccessible
-		descendantID=ctypes.c_int()
-		descendantOffset=ctypes.c_int()
-		what = self.FINDCONTENTDESCENDANT_POSITIONS.get(position, position)
-		NVDAHelper.localLib.nvdaInProcUtils_IA2Text_findContentDescendant(obj.appModule.helperLocalBindingHandle,obj.windowHandle,obj.IAccessibleObject.uniqueID,what,ctypes.byref(descendantID),ctypes.byref(descendantOffset))
-		if descendantID.value == 0:
-			# No descendant.
-			raise LookupError("Object has no text descendants")
-		if position == self.POSITION_SELECTION_END:
-			descendantOffset.value += 1
-		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(obj.windowHandle,winUser.OBJID_CLIENT,descendantID.value)
-		ti=obj.makeTextInfo(textInfos.offsets.Offsets(descendantOffset.value,descendantOffset.value))
-		return ti,obj
-
-	def _iterRecursiveText(self, ti, withFields, formatConfig):
-		if ti.obj == self._endObj:
-			end = True
-			ti.setEndPoint(self._end, "endToEnd")
-		else:
-			end = False
-		if withFields:
-			fields = ti.getTextWithFields(formatConfig=formatConfig)
-		else:
-			fields = [ti.text]
-
-		fieldStart = 0
-		for field in fields:
-			if not field:
-				yield u""
-			elif isinstance(field, basestring):
-				textLength = len(field)
-				for chunk in self._iterTextWithEmbeddedObjects(field, ti, fieldStart, textLength=textLength):
-					if isinstance(chunk, basestring):
-						yield chunk
-					else:
-						if withFields:
-							controlField = self._getControlFieldForObject(chunk)
-							if controlField:
-								yield textInfos.FieldCommand("controlStart", controlField)
-						if not isinstance(chunk.TextInfo, NVDAObjectTextInfo): # Has text
-							for subChunk in self._iterRecursiveText(chunk.makeTextInfo("all"), withFields, formatConfig):
-								yield subChunk
-								if subChunk is None:
-									return
-						if withFields and controlField:
-							yield textInfos.FieldCommand("controlEnd", None)
-				fieldStart += textLength
-			else:
-				yield field
-
-		if end:
-			# None means the end has been reached and text retrieval should stop.
-			yield None
-
-	def _getText(self, withFields, formatConfig=None):
-		ti = self._start
-		obj = self._startObj
-		if withFields:
-			fields = self._getInitialControlFields()
-		else:
-			fields = []
-		fields += list(self._iterRecursiveText(ti, withFields, formatConfig))
-
-		while fields[-1] is not None:
-			# The end hasn't yet been reached, which means it isn't a descendant of obj.
-			# Therefore, continue from where obj was embedded.
-			if withFields and not self._isObjectEditableText(obj):
-				# Add a controlEnd if this field had a controlStart.
-				fields.append(textInfos.FieldCommand("controlEnd", None))
-			ti = obj.embeddingTextInfo
-			obj = ti.obj
-			if ti.move(textInfos.UNIT_OFFSET, 1) == 0:
-				# There's no more text in this object.
-				continue
-			ti.setEndPoint(obj.makeTextInfo(textInfos.POSITION_ALL), "endToEnd")
-			fields.extend(self._iterRecursiveText(ti, withFields, formatConfig))
-		del fields[-1]
-		return fields
-
-	def _get_text(self):
-		return "".join(self._getText(False))
-
-	def getTextWithFields(self, formatConfig=None):
-		return self._getText(True, formatConfig)
-
-	def _findUnitEndpoints(self, baseTi, unit, findStart=True, findEnd=True):
-		from NVDAObjects.IAccessible.mozilla import IndexTextInfo
-
-		start = startObj = end = endObj = None
-		baseTi.collapse()
-		obj = baseTi.obj
-
-		# Walk up the hierarchy until we find the start and end points.
-		while True:
-			if unit == textInfos.POSITION_SELECTION:
-				expandTi = obj.makeTextInfo(unit)
-			else:
-				expandTi = baseTi.copy()
-				expandTi.expand(unit)
-				if expandTi.isCollapsed:
-					# This shouldn't happen, but can due to server implementation bugs; e.g. MozillaBug:1149415.
-					expandTi.expand(textInfos.UNIT_OFFSET)
-			allTi = obj.makeTextInfo(textInfos.POSITION_ALL)
-
-			if not start and findStart and expandTi.compareEndPoints(allTi, "startToStart") != 0:
-				# The unit definitely starts within this object.
-				start = expandTi
-				startObj = start.obj
-				if unit == textInfos.POSITION_SELECTION:
-					startDescPos = self.POSITION_SELECTION_START
-				elif baseTi.compareEndPoints(expandTi, "startToStart") == 0:
-					startDescPos = textInfos.POSITION_FIRST
-				else:
-					# The unit expands beyond the base point,
-					# so only include the nearest descendant unit.
-					startDescPos = textInfos.POSITION_LAST
-
-			if not end and findEnd and expandTi.compareEndPoints(allTi, "endToEnd") != 0:
-				# The unit definitely ends within this object.
-				end = expandTi
-				endObj = end.obj
-				if unit == textInfos.POSITION_SELECTION:
-					endDescPos = self.POSITION_SELECTION_END
-				elif baseTi.compareEndPoints(expandTi, "endToEnd") == 0:
-					endDescPos = textInfos.POSITION_LAST
-				else:
-					# The unit expands beyond the base point,
-					# so only include the nearest descendant unit.
-					endDescPos = textInfos.POSITION_FIRST
-
-			if (start or not findStart) and (end or not findEnd):
-				# Required endpoint(s) have been found, so stop walking.
-				break
-
-			# start and/or end hasn't yet been found,
-			# so it must be higher in the hierarchy.
-			embedTi = obj.embeddingTextInfo
-			if isinstance(embedTi, IndexTextInfo):
-				# hack: Selection in Mozilla table/table rows is broken (MozillaBug:1169238), so just ignore it.
-				embedTi = None
-			if not embedTi:
-				# There is no embedding object.
-				# The unit starts and/or ends at the start and/or end of this last object.
-				if findStart and not start:
-					start = expandTi
-					startObj = start.obj
-					if unit == textInfos.POSITION_SELECTION:
-						startDescPos = self.POSITION_SELECTION_START
-					elif baseTi.compareEndPoints(expandTi, "startToStart") == 0:
-						startDescPos = textInfos.POSITION_FIRST
-					else:
-						# The unit expands beyond the base point,
-						# so only include the nearest descendant unit.
-						startDescPos = textInfos.POSITION_LAST
-				if findEnd and not end:
-					end = expandTi
-					endObj = end.obj
-					if unit == textInfos.POSITION_SELECTION:
-						endDescPos = self.POSITION_SELECTION_END
-					elif baseTi.compareEndPoints(expandTi, "endToEnd") == 0:
-						endDescPos = textInfos.POSITION_LAST
-					else:
-						# The unit expands beyond the base point,
-						# so only include the nearest descendant unit.
-						endDescPos = textInfos.POSITION_FIRST
-				break
-
-			obj = embedTi.obj
-			baseTi = embedTi
-
-		if findStart:
-			ti = start.copy()
-			ti.expand(textInfos.UNIT_OFFSET)
-			if ti.text == u"\uFFFC":
-				try:
-					start, startObj = self._findContentDescendant(ti.getEmbeddedObject(), startDescPos)
-				except LookupError:
-					# No text descendants, so we don't descend.
-					pass
-				else:
-					if unit == textInfos.POSITION_SELECTION:
-						start = startObj.makeTextInfo(unit)
-					else:
-						start.expand(unit)
-			if not findEnd:
-				return start, startObj
-		if findEnd:
-			ti = end.copy()
-			ti.collapse(end=True)
-			ti.move(textInfos.UNIT_OFFSET, -1, "start")
-			if ti.text == u"\uFFFC":
-				try:
-					end, endObj = self._findContentDescendant(ti.getEmbeddedObject(), endDescPos)
-				except LookupError:
-					# No text descendants, so we don't descend.
-					pass
-				else:
-					if unit == textInfos.POSITION_SELECTION:
-						end = endObj.makeTextInfo(unit)
-					else:
-						end.expand(unit)
-			if not findStart:
-				return end, endObj
-
-		return start, startObj, end, endObj
-
-	def expand(self, unit):
-		if unit in ( textInfos.UNIT_CHARACTER, textInfos.UNIT_OFFSET):
-			self._end = self._start
-			self._endObj = self._startObj
-			self._start.expand(unit)
-			return
-
-		start, startObj, end, endObj = self._findUnitEndpoints(self._start, unit)
-		if startObj == endObj:
-			end = start
-			endObj = startObj
-
-		self._start = start
-		self._startObj = startObj
-		self._end = end
-		self._endObj = endObj
-
-	def _findNextContent(self, origin, moveBack=False):
-		if isinstance(origin, textInfos.TextInfo):
-			ti = origin
-			obj = ti.obj
-		else:
-			ti = None
-			obj = origin
-
-		# Ascend until we can move to the next offset.
-		direction = -1 if moveBack else 1
-		while True:
-			if ti and ti.move(textInfos.UNIT_OFFSET, direction) != 0:
-				break
-			ti = obj.embeddingTextInfo
-			if not ti:
-				raise LookupError
-			obj = ti.obj
-
-		ti.expand(textInfos.UNIT_OFFSET)
-		if ti.text == u"\uFFFC":
-			try:
-				return self._findContentDescendant(ti.getEmbeddedObject(), textInfos.POSITION_LAST if moveBack else textInfos.POSITION_FIRST)
-			except LookupError:
-				# No text descendants, so we don't descend.
-				pass
-		return ti, obj
-
-	def move(self, unit, direction, endPoint=None):
-		if direction == 0:
-			return 0
-
-		if not endPoint or endPoint == "start":
-			moveTi = self._start
-			moveObj = self._startObj
-			moveTi.collapse()
-		elif endPoint == "end":
-			moveTi = self._end
-			moveObj = self._endObj
-			moveTi.collapse(end=True)
-
-		remainingMovement = direction
-		moveBack = direction < 0
-		while remainingMovement != 0:
-			if moveBack:
-				# Move back 1 offset to move into the previous unit.
-				try:
-					moveTi, moveObj = self._findNextContent(moveTi, moveBack=True)
-				except LookupError:
-					# Can't move back any further.
-					break
-
-			# Find the edge of the current unit in the requested direction.
-			moveTi, moveObj = self._findUnitEndpoints(moveTi, unit, findStart=moveBack, findEnd=not moveBack)
-
-			if not moveBack:
-				# Collapse to the start of the next unit.
-				moveTi.collapse(end=True)
-				if moveTi.compareEndPoints(moveObj.makeTextInfo(textInfos.POSITION_ALL), "endToEnd") == 0:
-					# If at the end of the object, move to the start of the next object.
-					try:
-						moveTi, moveObj = self._findNextContent(moveObj)
-					except LookupError:
-						# Can't move forward any further.
-						if endPoint == "end" and moveTi.compareEndPoints(self._end, "endToEnd") != 0:
-							# Moving the end to the end of the document counts as a move.
-							remainingMovement -= 1
-						break
-				else:
-					# We may have landed on an embedded object.
-					ti = moveTi.copy()
-					ti.expand(textInfos.UNIT_OFFSET)
-					if ti.text == u"\uFFFC":
-						try:
-							moveTi, moveObj = self._findContentDescendant(ti.getEmbeddedObject(), textInfos.POSITION_FIRST)
-						except LookupError:
-							# No text descendants, so we don't descend.
-							pass
-
-			remainingMovement -= -1 if moveBack else 1
-
-		if not endPoint or endPoint == "start":
-			self._start = moveTi
-			self._startObj = moveObj
-		if not endPoint or endPoint == "end":
-			self._end = moveTi
-			self._endObj = moveObj
-		self._normalizeStartAndEnd()
-		return direction - remainingMovement
-
-	def _getAncestors(self, ti, obj):
-		data = []
-		while True:
-			data.insert(0, (ti, obj))
-			ti = obj.embeddingTextInfo
-			if not ti:
-				break
-			obj = ti.obj
-		return data
-
-	def compareEndPoints(self, other, which):
-		if which in ("startToStart", "startToEnd"):
-			selfTi = self._start
-			selfObj = self._startObj
-		else:
-			selfTi = self._end
-			selfObj = self._endObj
-		if which in ("startToStart", "endToStart"):
-			otherTi = other._start
-			otherObj = other._startObj
-		else:
-			otherTi = other._end
-			otherObj = other._endObj
-
-		if selfObj == otherObj:
-			# Same object, so just compare the two TextInfos normally.
-			return selfTi.compareEndPoints(otherTi, which)
-
-		# Different objects, so we have to compare ancestors.
-		selfAncs = self._getAncestors(selfTi, selfObj)
-		otherAncs = self._getAncestors(otherTi, otherObj)
-		# Find the first common ancestor.
-		maxAncIndex = min(len(selfAncs), len(otherAncs)) - 1
-		for (selfAncTi, selfAncObj), (otherAncTi, otherAncObj) in itertools.izip(selfAncs[maxAncIndex::-1], otherAncs[maxAncIndex::-1]):
-			if selfAncObj == otherAncObj:
-				break
-		else:
-			# No common ancestor.
-			return 1
-		return selfAncTi.compareEndPoints(otherAncTi, which)
-
 class CompoundDocument(EditableText, DocumentTreeInterceptor):
 	TextInfo = TreeCompoundTextInfo
 
@@ -854,6 +451,3 @@ class CompoundDocument(EditableText, DocumentTreeInterceptor):
 
 	def event_selectionRemove(self, obj, nextHandler):
 		pass
-
-class EmbeddedObjectCompoundDocument(CompoundDocument):
-	TextInfo = EmbeddedObjectCompoundTextInfo

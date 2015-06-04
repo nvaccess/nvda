@@ -1288,42 +1288,6 @@ the NVDAObject for IAccessible
 		super(IAccessible, self).event_caret()
 		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_CARET:
 			return
-		# This is a nasty hack to make Mozilla rich text editing at least partially usable.
-		if not hasattr(self,'IAccessibleTextObject'):
-			return
-		if controlTypes.STATE_EDITABLE not in self.states:
-			return
-		focusObject=api.getFocusObject()
-		if not isinstance(focusObject,IAccessible):
-			# This can happen during input composition.
-			# The composition object must remain focused.
-			return
-		if self==focusObject:
-			return
-		# Mozilla doesn't focus most objects inside an editable area.
-		# Therefore, we need to fake focus so our caret stuff works.
-		# First, determine whether this is inside a focused editable area.
-		shouldFocus=False
-		obj=self
-		while obj:
-			states=obj.states
-			if controlTypes.STATE_EDITABLE not in states:
-				break
-			if controlTypes.STATE_FOCUSED in states:
-				shouldFocus=True
-				break
-			obj=obj.parent
-		if not shouldFocus:
-			return
-		# If the caret is on an embedded object character, this isn't useful.
-		try:
-			info=self.makeTextInfo(textInfos.POSITION_CARET)
-		except RuntimeError:
-			return
-		info.expand(textInfos.UNIT_CHARACTER)
-		if info.text==u'\uFFFC':
-			return
-		eventHandler.executeEvent("gainFocus",self)
 
 	def _get_groupName(self):
 		return None
@@ -1445,6 +1409,11 @@ the NVDAObject for IAccessible
 		elif ia2Locale.language:
 			return ia2Locale.language
 		return None
+
+	def _get_iaHypertext(self):
+		ht = self.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext)
+		self.iaHypertext = ht # Cache forever.
+		return ht
 
 class ContentGenericClient(IAccessible):
 

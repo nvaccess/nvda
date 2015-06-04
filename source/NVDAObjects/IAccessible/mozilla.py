@@ -18,6 +18,7 @@ from logHandler import log
 import textInfos.offsets
 from NVDAObjects.behaviors import RowWithFakeNavigation
 from . import IA2TextTextInfo
+from .ia2TextMozilla import MozillaCompoundTextInfo
 
 class IndexTextInfo(textInfos.offsets.OffsetsTextInfo):
 
@@ -149,9 +150,6 @@ class Document(Mozilla):
 				return virtualBuffers.gecko_ia2.Gecko_ia2Pre14
 			else:
 				return virtualBuffers.gecko_ia2.Gecko_ia2
-		if controlTypes.STATE_EDITABLE in states:
-			from compoundDocuments import EmbeddedObjectCompoundDocument
-			return EmbeddedObjectCompoundDocument
 		return super(Document,self).treeInterceptorClass
 
 	def _get_shouldCreateTreeInterceptor(self):
@@ -242,6 +240,9 @@ class Math(Mozilla):
 			attrs = ""
 		return "<math%s>%s</math>" % (attrs, node.innerHTML)
 
+class Editor(Mozilla):
+	TextInfo = MozillaCompoundTextInfo
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Mozilla object.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
@@ -251,6 +252,11 @@ def findExtraOverlayClasses(obj, clsList):
 		return
 
 	iaRole = obj.IAccessibleRole
+	try:
+		ia2States = obj.IAccessibleObject.states
+	except COMError:
+		ia2States = 0
+
 	cls = None
 	if iaRole == oleacc.ROLE_SYSTEM_APPLICATION:
 		try:
@@ -264,10 +270,6 @@ def findExtraOverlayClasses(obj, clsList):
 		# Text leaves are never focusable.
 		# Not unavailable excludes disabled editable text fields (which also aren't focusable).
 		if not (iaStates & oleacc.STATE_SYSTEM_FOCUSABLE or iaStates & oleacc.STATE_SYSTEM_UNAVAILABLE):
-			try:
-				ia2States = obj.IAccessibleObject.states
-			except COMError:
-				ia2States = 0
 			# This excludes a non-focusable @role="textbox".
 			if not (ia2States & IAccessibleHandler.IA2_STATE_EDITABLE):
 				cls = TextLeaf
@@ -278,7 +280,9 @@ def findExtraOverlayClasses(obj, clsList):
 	if cls:
 		clsList.append(cls)
 
-	if iaRole == oleacc.ROLE_SYSTEM_ROW:
+	if cls is not TextLeaf and ia2States & IAccessibleHandler.IA2_STATE_EDITABLE and obj.IAccessibleStates & oleacc.STATE_SYSTEM_FOCUSABLE:
+		clsList.append(Editor)
+	elif iaRole == oleacc.ROLE_SYSTEM_ROW:
 		clsList.append(RowWithFakeNavigation)
 	elif iaRole == oleacc.ROLE_SYSTEM_LISTITEM and hasattr(obj.parent, "IAccessibleTableObject"):
 		clsList.append(RowWithFakeNavigation)
