@@ -689,24 +689,43 @@ class UIA(Window):
 
 	def _get_positionInfo(self):
 		info=super(UIA,self).positionInfo or {}
+		itemIndex=0
 		try:
-			itemIndex=self.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemIndex_PropertyId)
+			itemIndex=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_PositionInSetPropertyId)
 		except COMError:
-			itemIndex=0
+			pass
+		if itemIndex==0:
+			try:
+				itemIndex=self.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemIndex_PropertyId)
+			except COMError:
+				pass
 		if itemIndex>0:
 			info['indexInGroup']=itemIndex
-		parent=self.parent
-		parentCount=1
-		while parentCount<3 and isinstance(parent,UIA):
-			try:
-				itemCount=parent.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemCount_PropertyId)
-			except COMError:
-				itemCount=0
-			if itemCount>0:
-				info['similarItemsInGroup']=itemCount
-				break
-			parent=parent.parent
-			parentCount+=1
+		itemCount=0
+		try:
+			itemCount=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
+		except COMError:
+			pass
+		if itemCount==0:
+			parent=self.parent
+			parentCount=1
+			while parentCount<3 and isinstance(parent,UIA):
+				try:
+					itemCount=parent.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemCount_PropertyId)
+				except COMError:
+					pass
+				if itemCount>0:
+					break
+				parent=parent.parent
+				parentCount+=1
+		if itemCount>0:
+			info['similarItemsInGroup']=itemCount
+		try:
+			level=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LevelPropertyId)
+		except COMError:
+			level=None
+		if level is not None and level>0:
+			info["level"]=level
 		return info
 
 	def event_UIA_elementSelected(self):

@@ -28,7 +28,9 @@ StyleId_Heading1=70001
 StyleId_Heading9=70009
 ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
 ItemCount_Property_GUID=GUID("{ABBF5C45-5CCC-47b7-BB4E-87CB87BBD162}")
-
+UIA_LevelPropertyId=30154
+UIA_PositionInSetPropertyId=30152
+UIA_SizeOfSetPropertyId=30153
 
 badUIAWindowClassNames=[
 	"SysTreeView32",
