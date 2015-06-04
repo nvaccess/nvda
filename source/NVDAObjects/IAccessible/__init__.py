@@ -280,6 +280,42 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _lineNumFromOffset(self,offset):
 		return -1
 
+	def _iterTextWithEmbeddedObjects(self, withFields, formatConfig=None):
+		"""Iterate through the text, splitting at embedded object characters.
+		Where an embedded object character occurs, its offset is provided.
+		@param withFields: Whether to output control/format fields.
+		@type withFields: bool
+		@param formatConfig: Document formatting configuration.
+		@return: A generator of fields, text strings and numeric offsets of embedded object characters.
+		"""
+		if withFields:
+			items = self.getTextWithFields(formatConfig=formatConfig)
+		else:
+			items = [self.text]
+		offset = 0
+		for item in items:
+			if not isinstance(item, basestring):
+				# This is a field.
+				yield item
+				continue
+			itemLen = len(item)
+			# The text consists of smaller chunks of text interspersed with embedded object characters.
+			chunkStart = 0
+			while chunkStart < itemLen:
+				# Find the next embedded object character.
+				try:
+					chunkEnd = item.index(u"\uFFFC", chunkStart)
+				except ValueError:
+					# This is the last chunk of text.
+					yield item[chunkStart:]
+					break
+				if chunkStart != chunkEnd:
+					yield item[chunkStart:chunkEnd]
+				# We've hit an embedded object character, so yield its offset.
+				yield offset + chunkEnd
+				chunkStart = chunkEnd + 1
+			offset += itemLen
+
 class IAccessible(Window):
 	"""
 the NVDAObject for IAccessible

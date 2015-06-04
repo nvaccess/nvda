@@ -120,35 +120,27 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			ti.setEndPoint(self._end, "endToEnd")
 		else:
 			end = False
-		if withFields:
-			fields = ti.getTextWithFields(formatConfig=formatConfig)
-		else:
-			fields = [ti.text]
 
-		fieldStart = 0
-		for field in fields:
-			if not field:
+		for item in ti._iterTextWithEmbeddedObjects(withFields, formatConfig=formatConfig):
+			if not item:
 				yield u""
-			elif isinstance(field, basestring):
-				textLength = len(field)
-				for chunk in self._iterTextWithEmbeddedObjects(field, ti, fieldStart, textLength=textLength):
-					if isinstance(chunk, basestring):
-						yield chunk
-					else:
-						if withFields:
-							controlField = self._getControlFieldForObject(chunk)
-							if controlField:
-								yield textInfos.FieldCommand("controlStart", controlField)
-						if not isinstance(chunk.TextInfo, NVDAObjectTextInfo): # Has text
-							for subChunk in self._iterRecursiveText(_makeRawTextInfo(chunk, textInfos.POSITION_ALL), withFields, formatConfig):
-								yield subChunk
-								if subChunk is None:
-									return
-						if withFields and controlField:
-							yield textInfos.FieldCommand("controlEnd", None)
-				fieldStart += textLength
+			elif isinstance(item, basestring):
+				yield item
+			elif isinstance(item, int): # Embedded object.
+				embedded = _getEmbedded(ti.obj, item)
+				if withFields:
+					controlField = self._getControlFieldForObject(embedded)
+					if controlField:
+						yield textInfos.FieldCommand("controlStart", controlField)
+				if not isinstance(embedded.TextInfo, NVDAObjectTextInfo): # Has text
+					for subItem in self._iterRecursiveText(_makeRawTextInfo(embedded, textInfos.POSITION_ALL), withFields, formatConfig):
+						yield subItem
+						if subItem is None:
+							return
+				if withFields and controlField:
+					yield textInfos.FieldCommand("controlEnd", None)
 			else:
-				yield field
+				yield item
 
 		if end:
 			# None means the end has been reached and text retrieval should stop.

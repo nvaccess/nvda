@@ -142,21 +142,6 @@ class CompoundTextInfo(textInfos.TextInfo):
 			field["table-columnnumber"] = obj.columnNumber
 		return field
 
-	def _iterTextWithEmbeddedObjects(self, text, ti, fieldStart=0, textLength=None):
-		if textLength is None:
-			textLength = len(text)
-		chunkStart = 0
-		while chunkStart < textLength:
-			try:
-				chunkEnd = text.index(u"\uFFFC", chunkStart)
-			except ValueError:
-				yield text[chunkStart:]
-				break
-			if chunkStart != chunkEnd:
-				yield text[chunkStart:chunkEnd]
-			yield ti.getEmbeddedObject(fieldStart + chunkEnd)
-			chunkStart = chunkEnd + 1
-
 	def __eq__(self, other):
 		return self._start == other._start and self._startObj == other._startObj and self._end == other._end and self._endObj == other._endObj
 
