@@ -283,7 +283,8 @@ class EdgeHTMLRoot(UIA):
 	treeInterceptorClass=EdgeHTMLTreeInterceptor
 
 	def _get_shouldCreateTreeInterceptor(self):
-		return self.role==controlTypes.ROLE_DOCUMENT
+		return self.role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY in self.states 
+
 
 	def _get_role(self):
 		role=super(EdgeHTMLRoot,self).role
