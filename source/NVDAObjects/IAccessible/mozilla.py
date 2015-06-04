@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner
+#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner
 
 from collections import namedtuple
 from ctypes import c_short
@@ -66,6 +66,15 @@ class Mozilla(IAccessible):
 			if level:
 				info['level']=level
 		return info
+
+	def __contains__(self, obj):
+		if not isinstance(obj, Mozilla):
+			return False
+		try:
+			self.IAccessibleObject.accChild(obj.IA2UniqueID)
+			return True
+		except COMError:
+			return False
 
 class Gecko1_9(Mozilla):
 

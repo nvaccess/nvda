@@ -1286,9 +1286,14 @@ the NVDAObject for IAccessible
 				speech.speakObject(child, reason=controlTypes.REASON_FOCUS)
 
 	def event_caret(self):
+		focus = api.getFocusObject()
+		if self is not focus and hasattr(self, "IAccessibleTextObject"):
+			import compoundDocuments
+			if issubclass(focus.TextInfo, compoundDocuments.CompoundTextInfo) and self in focus:
+				# This object is part of the focused compound text editor, so notify it.
+				focus.event_caret()
+				return
 		super(IAccessible, self).event_caret()
-		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_CARET:
-			return
 
 	def _get_groupName(self):
 		return None
