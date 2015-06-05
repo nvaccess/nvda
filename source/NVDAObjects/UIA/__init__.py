@@ -119,10 +119,16 @@ class UIATextInfo(textInfos.TextInfo):
 				field["table-columncount"] = obj.columnCount
 			except NotImplementedError:
 				pass
-		if role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
-			field["table-id"] = 1 # FIXME
-			field["table-rownumber"] = obj.rowNumber
-			field["table-columnnumber"] = obj.columnNumber
+		if role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_DATAITEM,controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER,controlTypes.ROLE_HEADERITEM):
+			try:
+				field["table-rownumber"] = obj.rowNumber
+				field["table-columnnumber"] = obj.columnNumber
+				field["table-id"] = 1 # FIXME
+				field['role']=controlTypes.ROLE_TABLECELL
+				field['table-columnheadertext']=obj.columnHeaderText
+				field['table-rowheadertext']=obj.rowHeaderText
+			except NotImplementedError:
+				pass
 		return field
 
 	def _iterUIARangeByUnit(self,rangeObj,unit):
