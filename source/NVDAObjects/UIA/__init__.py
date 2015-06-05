@@ -509,6 +509,12 @@ class UIA(Window):
 			states.add(controlTypes.STATE_CHECKABLE if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTABLE)
 			if self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId):
 				states.add(controlTypes.STATE_CHECKED if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTED)
+		try:
+			isDataValid=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_IsDataValidForFormPropertyId,True)
+		except COMError:
+			isDataValid=UIAHandler.handler.reservedNotSupportedValue
+		if not isDataValid:
+			states.add(controlTypes.STATE_INVALID_ENTRY)
 		if self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsRequiredForFormPropertyId):
 			states.add(controlTypes.STATE_REQUIRED)
 		if self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_ValueIsReadOnlyPropertyId):
