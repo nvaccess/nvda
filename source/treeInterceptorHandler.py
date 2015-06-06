@@ -205,3 +205,6 @@ class RootProxyTextInfo(textInfos.TextInfo):
 
 	def _get_NVDAObjectAtStart(self):
 		return self.innerTextInfo.NVDAObjectAtStart
+
+	def _get_focusableNVDAObjectAtStart(self):
+		return self.innerTextInfo.focusableNVDAObjectAtStart

@@ -109,7 +109,7 @@ class UIATextInfo(textInfos.TextInfo):
 		states.discard(controlTypes.STATE_MULTILINE)
 		states.discard(controlTypes.STATE_FOCUSED)
 		field["states"] = states
-		field["name"] = obj.name
+		#field["name"] = obj.name
 		#field["_childcount"] = obj.childCount
 		field["level"] = obj.positionInfo.get("level")
 		if role == controlTypes.ROLE_TABLE:
@@ -751,6 +751,9 @@ class UIA(Window):
 		if level is not None and level>0:
 			info["level"]=level
 		return info
+
+	def scrollIntoView(self):
+		pass
 
 	def event_UIA_elementSelected(self):
 		self.event_stateChange()

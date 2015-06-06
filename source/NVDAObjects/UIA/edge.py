@@ -37,6 +37,26 @@ class EdgeHTMLRootContainer(UIA):
 			return
 		return super(EdgeHTMLRootContainer,self).event_gainFocus()
 
+class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
+
+	def __init__(self,itemType,document,UIAElementOrRange):
+		if isinstance(UIAElementOrRange,UIAHandler.IUIAutomationElement):
+			UIATextRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(UIAElementOrRange)
+			self._UIAElement=UIAElementOrRange
+		elif isinstance(UIAElementOrRange,UIAHandler.IUIAutomationTextRange):
+			UIATextRange=UIAElementOrRange
+			self._UIAElement=None
+		else:
+			raise ValueError("Invalid UIAElementOrRange")
+		textInfo=document.TextInfo(document,None,_rangeObj=UIATextRange)
+		super(UIATextRangeQuickNavItem,self).__init__(itemType,document,textInfo)
+
+	@property
+	def obj(self):
+		UIAElement=self._UIAElement if self._UIAElement else self.textInfo._rangeObj.getEnclosingElement()
+		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		return UIA(UIAElement=UIAElement)
+
 def UIATextAttributeQuickNavIterator(itemType,document,position,attributeID,attributeValue,direction="next"):
 	includeCurrent=False
 	if not position:
@@ -56,11 +76,13 @@ def UIATextAttributeQuickNavIterator(itemType,document,position,attributeID,attr
 			newRange=None
 		if not newRange:
 			return
-		curPosition=document.TextInfo(document,None,_rangeObj=newRange)
-		if includeCurrent or curPosition.compareEndPoints(position,"startToStart")>0:
-			yield browseMode.TextInfoQuickNavItem(itemType,document,curPosition)
+		if includeCurrent or newRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,position._rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)>0:
+			yield UIATextRangeQuickNavItem(itemType,document,newRange)
 			includeCurrent=True
-		position.setEndPoint(curPosition,"endToStart" if direction=="previous" else "startToEnd")
+		if direction=="previous":
+			position._rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,newRange,UIAHandler.TextPatternRangeEndpoint_Start)
+		else:
+			position._rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,newRange,UIAHandler.TextPatternRangeEndpoint_End)
 
 def UIATextRangeFromElement(documentTextPattern,element):
 	try:
@@ -95,17 +117,24 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 	if not position:
 		# All items are requested (such as for elements list)
 		elements=document.rootNVDAObject.UIAElement.findAll(UIAHandler.TreeScope_Descendants,UIACondition)
-		for index in xrange(elements.length):
-			element=elements.getElement(index)
-			try:
-				elementRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(element)
-			except COMError:
-				elementRange=None
-			if elementRange:
-				info=document.TextInfo(document,None,_rangeObj=elementRange)
-				yield browseMode.TextInfoQuickNavItem(itemType,document,info)
+		if elements:
+			for index in xrange(elements.length):
+				element=elements.getElement(index)
+				try:
+					elementRange=document.rootNVDAObject.UIATextPattern.rangeFromChild(element)
+				except COMError:
+					elementRange=None
+				if elementRange:
+					yield UIATextRangeQuickNavItem(itemType,document,elementRange)
 		return
-	if direction=="previous":
+	if direction=="up":
+		walker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
+		element=position._rangeObj.getEnclosingElement()
+		element=walker.normalizeElement(element)
+		if element and not UIAHandler.handler.clientObject.compareElements(element,document.rootNVDAObject.UIAElement) and not UIAHandler.handler.clientObject.compareElements(element,UIAHandler.handler.rootElement):
+			yield UIATextRangeQuickNavItem(itemType,document,element)
+		return
+	elif direction=="previous":
 		# Fetching items previous to the given position.
 		# When getting children of a UIA text range, Edge will incorrectly include a child that starts at the end of the range. 
 		# Therefore move back by one character to stop this.
@@ -161,7 +190,7 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 				elif not curElementMatchedCondition and isUIAElementInWalker(curElement,walker):
 					curElementMatchedCondition=True
 				if curElementMatchedCondition:
-					yield browseMode.TextInfoQuickNavItem(itemType,document,document.TextInfo(document,None,_rangeObj=document.rootNVDAObject.UIATextPattern.rangeFromChild(curElement)))
+					yield UIATextRangeQuickNavItem(itemType,document,curElement)
 			previousSibling=walker.getPreviousSiblingElement(curElement)
 			if previousSibling:
 				gonePreviousOnce=True
@@ -175,7 +204,7 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 				goneParent=True
 				curElementMatchedCondition=True
 				if gonePreviousOnce:
-					yield browseMode.TextInfoQuickNavItem(itemType,document,document.TextInfo(document,None,_rangeObj=document.rootNVDAObject.UIATextPattern.rangeFromChild(curElement)))
+					yield UIATextRangeQuickNavItem(itemType,document,curElement)
 				continue
 			curElement=None
 	else: # direction is next
@@ -222,13 +251,13 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 		# If we are already past our position, and this is a valid child
 		# Then we can emit an item already
 		if goneNextOnce and isUIAElementInWalker(curElement,walker):
-			yield browseMode.TextInfoQuickNavItem(itemType,document,document.TextInfo(document,None,_rangeObj=document.rootNVDAObject.UIATextPattern.rangeFromChild(curElement)))
+			yield UIATextRangeQuickNavItem(itemType,document,curElement)
 		# Start traversing from this child forwards through the document, emitting items for valid elements.
 		while curElement:
 			firstChild=walker.getFirstChildElement(curElement) if goneNextOnce else None
 			if firstChild:
 				curElement=firstChild
-				yield browseMode.TextInfoQuickNavItem(itemType,document,document.TextInfo(document,None,_rangeObj=document.rootNVDAObject.UIATextPattern.rangeFromChild(curElement)))
+				yield UIATextRangeQuickNavItem(itemType,document,curElement)
 			else:
 				nextSibling=None
 				while not nextSibling:
@@ -241,11 +270,17 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 							return
 				curElement=nextSibling
 				goneNextOnce=True
-				yield browseMode.TextInfoQuickNavItem(itemType,document,document.TextInfo(document,None,_rangeObj=document.rootNVDAObject.UIATextPattern.rangeFromChild(curElement)))
+				yield UIATextRangeQuickNavItem(itemType,document,curElement)
 
-class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,browseMode.BrowseModeTreeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor):
+class EdgeHTMLTreeInterceptorTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
+	pass
 
-	TextInfo=treeInterceptorHandler.RootProxyTextInfo
+class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,browseMode.BrowseModeDocumentTreeInterceptor):
+
+	TextInfo=EdgeHTMLTreeInterceptorTextInfo
+
+	def _get_documentConstantIdentifier(self):
+		return self.rootNVDAObject.parent.name
 
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
 		if nodeType=="heading":
@@ -253,7 +288,16 @@ class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,browseMode.Brows
 		elif nodeType=="link":
 			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_HyperlinkControlTypeId)
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
+		elif nodeType=="focusable":
+			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_IsKeyboardFocusablePropertyId,True)
+			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		raise NotImplementedError
+
+	def _activateNVDAObject(self,obj):
+		try:
+			obj.doAction()
+		except NotImplementedError:
+			pass
 
 	def _get_isAlive(self):
 		if not winUser.isWindow(self.rootNVDAObject.windowHandle):
@@ -272,11 +316,6 @@ class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,browseMode.Brows
 		except LookupError:
 			return False
 		return True
-
-	def event_gainFocus(self,obj,nextHandler):
-		info=self.makeTextInfo(obj)
-		info.updateCaret()
-		nextHandler()
 
 class EdgeHTMLRoot(UIA):
 
