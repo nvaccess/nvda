@@ -57,7 +57,18 @@ class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		return UIA(UIAElement=UIAElement)
 
-def UIATextAttributeQuickNavIterator(itemType,document,position,attributeID,attributeValue,direction="next"):
+class HeadingUIATextRangeQuickNavItem(UIATextRangeQuickNavItem):
+
+	@property
+	def level(self):
+		return int(self.itemType[7:]) if len(self.itemType)>7 else 0
+
+	def isChild(self,parent):
+		if not isinstance(parent,HeadingUIATextRangeQuickNavItem):
+			return False
+		return self.level>parent.level
+
+def UIATextAttributeQuickNavIterator(itemType,document,position,attributeID,attributeValue,direction="next",ItemClass=UIATextRangeQuickNavItem):
 	includeCurrent=False
 	if not position:
 		position=document.makeTextInfo(textInfos.POSITION_ALL)
@@ -77,7 +88,7 @@ def UIATextAttributeQuickNavIterator(itemType,document,position,attributeID,attr
 		if not newRange:
 			return
 		if includeCurrent or newRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,position._rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)>0:
-			yield UIATextRangeQuickNavItem(itemType,document,newRange)
+			yield ItemClass(itemType,document,newRange)
 			includeCurrent=True
 		if direction=="previous":
 			position._rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,newRange,UIAHandler.TextPatternRangeEndpoint_Start)
@@ -284,7 +295,10 @@ class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,browseMode.Brows
 
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
 		if nodeType=="heading":
-			return browseMode.mergeQuickNavItemIterators([UIATextAttributeQuickNavIterator("heading",self,pos,UIAHandler.UIA_StyleIdAttributeId,value,direction) for value in xrange(UIAHandler.StyleId_Heading1,UIAHandler.StyleId_Heading7)],direction)
+			return browseMode.mergeQuickNavItemIterators([UIATextAttributeQuickNavIterator("heading%d"%level,self,pos,UIAHandler.UIA_StyleIdAttributeId,UIAHandler.StyleId_Heading1+(level-1),direction,HeadingUIATextRangeQuickNavItem) for level in xrange(1,7)],direction)
+		elif nodeType.startswith("heading"):
+			level=int(nodeType[7:])
+			return UIATextAttributeQuickNavIterator(nodeType,self,pos,UIAHandler.UIA_StyleIdAttributeId,UIAHandler.StyleId_Heading1+(level-1),direction,HeadingUIATextRangeQuickNavItem)
 		elif nodeType=="link":
 			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_HyperlinkControlTypeId)
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
