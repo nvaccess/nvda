@@ -97,7 +97,9 @@ def findScript(gesture):
 	treeInterceptor = focus.treeInterceptor
 	if treeInterceptor and treeInterceptor.isReady:
 		func = _getObjScript(treeInterceptor, gesture, globalMapScripts)
-		func=treeInterceptor.getAlternativeScript(gesture,func)
+		from browseMode import BrowseModeTreeInterceptor
+		if isinstance(treeInterceptor,BrowseModeTreeInterceptor):
+			func=treeInterceptor.getAlternativeScript(gesture,func)
 		if func and (not treeInterceptor.passThrough or getattr(func,"ignoreTreeInterceptorPassThrough",False)):
 			return func
 
