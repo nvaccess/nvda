@@ -93,7 +93,12 @@ class UIATextInfo(textInfos.TextInfo):
 	def _get_NVDAObjectAtStart(self):
 		tempRange=self._rangeObj.clone()
 		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)
-		child=tempRange.getEnclosingElement()
+		tempRange.expandToEnclosingUnit(UIAHandler.TextUnit_Character)
+		children=tempRange.getChildren()
+		if children.length==1:
+			child=children.getElement(0)
+		else:
+			child=tempRange.getEnclosingElement()
 		return UIA(UIAElement=child.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)) or self.obj
 
 	def _get_bookmark(self):
