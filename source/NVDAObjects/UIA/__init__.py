@@ -150,6 +150,8 @@ class UIATextInfo(textInfos.TextInfo):
 			yield tempRange.clone()
 
 	def _getFormatFieldsAndText(self,tempRange,formatConfig):
+		if tempRange.compareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)==0:
+			return
 		formatField=self._getFormatFieldAtRange(tempRange,formatConfig)
 		if formatConfig["reportSpellingErrors"]:
 			try:
