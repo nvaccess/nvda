@@ -418,6 +418,14 @@ class UIA(Window):
 		self.UIAInvokePattern=self._getUIAPattern(UIAHandler.UIA_InvokePatternId,UIAHandler.IUIAutomationInvokePattern)
 		return self.UIAInvokePattern
 
+	def _get_UIATogglePattern(self):
+		self.UIATogglePattern=self._getUIAPattern(UIAHandler.UIA_TogglePatternId,UIAHandler.IUIAutomationTogglePattern)
+		return self.UIATogglePattern
+
+	def _get_UIASelectionItemPattern(self):
+		self.UIASelectionItemPattern=self._getUIAPattern(UIAHandler.UIA_SelectionItemPatternId,UIAHandler.IUIAutomationSelectionItemPattern)
+		return self.UIASelectionItemPattern
+
 	def _get_UIATextPattern(self):
 		self.UIATextPattern=self._getUIAPattern(UIAHandler.UIA_TextPatternId,UIAHandler.IUIAutomationTextPattern)
 		return self.UIATextPattern
@@ -709,8 +717,13 @@ class UIA(Window):
 	def doAction(self,index=None):
 		if not index:
 			index=self.defaultActionIndex
-		if index==0 and self.UIAInvokePattern:
-			self.UIAInvokePattern.Invoke()
+		if index==0:
+			if self.UIAInvokePattern:
+				self.UIAInvokePattern.Invoke()
+			elif self.UIATogglePattern:
+				self.UIATogglePattern.toggle()
+			elif self.UIASelectionItemPattern:
+				self.UIASelectionItemPattern.select()
 			return
 		raise NotImplementedError
 
