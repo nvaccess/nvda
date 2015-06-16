@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2013 NV Access Limited
+#Copyright (C) 2010-2015 NV Access Limited
 
 import time
 from collections import OrderedDict
@@ -246,7 +246,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				# Press.
 				# This begins a new key combination.
 				self._ignoreKeyReleases = False
-			self._keysDown[command] = arg
+			if arg > 0:
+				self._keysDown[command] = arg
+			elif command in self._keysDown:
+				# All keys in this group have been released.
+				# #3541: Remove this group so it doesn't count as a group with keys down.
+				del self._keysDown[command]
 
 		elif command == BAUM_POWERDOWN:
 			log.debug("Power down")
