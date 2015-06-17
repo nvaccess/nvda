@@ -227,8 +227,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if command == BAUM_CELL_COUNT:
 			self.numCells = ord(arg)
 		elif command == BAUM_DEVICE_ID:
-			self._deviceID = arg
-
+			if arg == "Refreshabraille ":
+				# For most Baum devices, the argument is 16 bytes,
+				# but it is 18 bytes for the Refreshabraille.
+				arg += self._ser.read(2)
+			# Short ids can be padded with either nulls or spaces.
+			self._deviceID = arg.rstrip("\0 ")
 		elif command in KEY_NAMES:
 			arg = sum(ord(byte) << offset * 8 for offset, byte in enumerate(arg))
 			if arg < self._keysDown.get(command, 0):
