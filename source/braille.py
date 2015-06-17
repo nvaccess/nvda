@@ -1434,17 +1434,29 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def _getTableList(self, table):
 		return [self._getTablePath(table), PATTERNS_TABLE]
 
-	def setTranslationTable(self, table):
+	def setTranslationTable(self, table, isFallback=False):
 		tableList = self._getTableList(table)
-		# TODO: Use louis.checkTable() to verify if tableList can actually be compiled.
-		config.conf["braille"]["translationTable"] = table
+		if not isFallback:
+			try:
+				louis.checkTable(tables)
+			except:
+				log.error("Error compiling translation tables", exc_info=True)
+				self.setTranslationTable("en-us-comp8.ctb", isFallback=True)
+				return False
+			config.conf["braille"]["translationTable"] = table
 		self.translationTableList = tableList
 		return True
 
-	def setInputTable(self, table):
+	def setInputTable(self, table, isFallback=False):
 		tableList = self._getTableList(table)
-		# TODO: Use louis.checkTable() to verify if tableList can actually be compiled.
-		config.conf["braille"]["inputTable"] = table
+		if not isFallback:
+			try:
+				louis.checkTable(tables)
+			except:
+				log.error("Error compiling input tables", exc_info=True)
+				self.setInputTable("en-us-comp8.ctb", isFallback=True)
+				return False
+			config.conf["braille"]["inputTable"] = table
 		self.inputTableList = tableList
 		return True
 
