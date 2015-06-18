@@ -21,6 +21,15 @@ from NVDAObjects.UIA import UIA
 class MultitaskingViewFrameWindow(UIA):
 	shouldAllowUIAFocusEvent=False
 
+# suppress focus ancestry for task switching list items if alt is held down (alt+tab)
+class MultitaskingViewFrameListItem(UIA):
+
+	def _get_container(self):
+		if winUser.getAsyncKeyState(winUser.VK_MENU)&32768:
+			return api.getDesktopObject()
+		else:
+			return super(MultitaskingViewFrameListItem,self).container
+
 # support for Win8 start screen search suggestions.
 class SuggestionListItem(UIA):
 
@@ -181,6 +190,8 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0,SuggestionListItem)
 			elif uiaClassName=="MultitaskingViewFrame" and role==controlTypes.ROLE_WINDOW:
 				clsList.insert(0,MultitaskingViewFrameWindow)
+			elif obj.windowClassName=="MultitaskingViewFrame" and role==controlTypes.ROLE_LISTITEM:
+				clsList.insert(0,MultitaskingViewFrameListItem)
 
 	def event_NVDAObject_init(self, obj):
 		windowClass = obj.windowClassName
