@@ -140,7 +140,13 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 		return
 	if direction=="up":
 		walker=UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
-		element=position._rangeObj.getEnclosingElement()
+		tempRange=position._rangeObj.clone()
+		tempRange.expandToEnclosingUnit(UIAHandler.TextUnit_Character)
+		children=tempRange.getChildren()
+		if children.length==1:
+			element=children.getElement(0)
+		else:
+			element=position._rangeObj.getEnclosingElement()
 		element=walker.normalizeElement(element)
 		if element and not UIAHandler.handler.clientObject.compareElements(element,document.rootNVDAObject.UIAElement) and not UIAHandler.handler.clientObject.compareElements(element,UIAHandler.handler.rootElement):
 			yield UIATextRangeQuickNavItem(itemType,document,element)
