@@ -116,7 +116,11 @@ class UIATextInfo(textInfos.TextInfo):
 		states.discard(controlTypes.STATE_MULTILINE)
 		states.discard(controlTypes.STATE_FOCUSED)
 		field["states"] = states
-		#field["name"] = obj.name
+		# Only include name if the object's inner text is empty.
+		# could be unperformant.
+		text=self.obj.makeTextInfo(obj).text
+		if not text or text.isspace():
+			field["name"] = obj.name
 		#field["_childcount"] = obj.childCount
 		field["level"] = obj.positionInfo.get("level")
 		if role == controlTypes.ROLE_TABLE:
