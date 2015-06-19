@@ -475,8 +475,6 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		pass
 
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
-		if nodeType == "notLinkBlock":
-			return self._iterNotLinkBlock(direction=direction, pos=pos)
 		attribs=self._searchableAttribsForNodeType(nodeType)
 		if not attribs:
 			return iter(())
@@ -643,20 +641,8 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 	# Translators: the description for the previous table column script on virtualBuffers.
 	script_previousColumn.__doc__ = _("moves to the previous table column")
 
-	NOT_LINK_BLOCK_MIN_LEN = 30
-	def _iterNotLinkBlock(self, direction="next", pos=None):
-		links = self._iterNodesByType("link", direction=direction, pos=pos)
-		# We want to compare each link against the next link.
-		item1 = next(links)
-		while True:
-			item2 = next(links)
-			# If the distance between the links is small, this is probably just a piece of non-link text within a block of links; e.g. an inactive link of a nav bar.
-			if direction == "next" and item2.textInfo._startOffset - item1.textInfo._endOffset > self.NOT_LINK_BLOCK_MIN_LEN:
-				yield VirtualBufferQuickNavItem("notLinkBlock",self,0,item1.textInfo._endOffset, item2.textInfo._startOffset)
-			# If we're moving backwards, the order of the links in the document will be reversed.
-			elif direction == "previous" and item1.textInfo._startOffset - item2.textInfo._endOffset > self.NOT_LINK_BLOCK_MIN_LEN:
-				yield VirtualBufferQuickNavItem("notLinkBlock",self,0,item2.textInfo._endOffset, item1.textInfo._startOffset)
-			item1=item2
+	def _isSuitableNotLinkBlock(self,range):
+		return (range._endOffset-range._startOffset)>=self.NOT_LINK_BLOCK_MIN_LEN
 
 	def getEnclosingContainerRange(self,range):
 		formatConfig=config.conf['documentFormatting'].copy()

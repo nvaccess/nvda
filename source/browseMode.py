@@ -208,9 +208,13 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		return iter(())
 
 	def _quickNavScript(self,gesture, itemType, direction, errorMessage, readUnit):
+		if itemType=="notLinkBlock":
+			iterFactory=self._iterNotLinkBlock
+		else:
+			iterFactory=lambda direction,info: self._iterNodesByType(itemType,direction,info)
 		info=self.selection
 		try:
-			item = next(self._iterNodesByType(itemType, direction, info))
+			item = next(iterFactory(direction, info))
 		except NotImplementedError:
 			# Translators: a message when a particular quick nav command is not supported in the current document.
 			ui.message(_("Not supported in this document"))
@@ -1370,6 +1374,29 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 	script_movePastEndOfContainer.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 	# Translators: Description for the Move past end of container command in browse mode. 
 	script_movePastEndOfContainer.__doc__=_("Moves past the end  of the container element, such as a list or table")
+
+	NOT_LINK_BLOCK_MIN_LEN = 30
+	def _isSuitableNotLinkBlock(self,range):
+		return len(range.text)>=self.NOT_LINK_BLOCK_MIN_LEN
+
+	def _iterNotLinkBlock(self, direction="next", pos=None):
+		links = self._iterNodesByType("link", direction=direction, pos=pos)
+		# We want to compare each link against the next link.
+		item1 = next(links)
+		while True:
+			item2 = next(links)
+			# If the distance between the links is small, this is probably just a piece of non-link text within a block of links; e.g. an inactive link of a nav bar.
+			if direction=="previous":
+				range=item1.textInfo.copy()
+				range.collapse()
+				range.setEndPoint(item2.textInfo,"startToEnd")
+			else:
+				range=item2.textInfo.copy()
+				range.collapse()
+				range.setEndPoint(item1.textInfo,"startToEnd")
+			if self._isSuitableNotLinkBlock(range):
+				yield TextInfoQuickNavItem("notLinkBlock",self,range)
+			item1=item2
 
 	__gestures={
 		"kb:NVDA+d": "activateLongDesc",
