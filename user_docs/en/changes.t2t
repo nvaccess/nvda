@@ -13,7 +13,7 @@
 == Bug Fixes ==
 - In browse mode for Internet Explorer and other MSHTML controls, quick navigation by form field no longer incorrectly includes presentational list items. (#4204)
 - In Firefox, NVDA no longer tries to create a description for ARIA tab panels based  on all text inside. (#4638)
-- In Internet Explorer and other MSHTML controls, tabbing into sections or articles no longer reports all contents of the section or article. (#5021)
+- In Internet Explorer and other MSHTML controls, tabbing into sections, articles or dialogs  no longer reports all contents of the container as its name. (#5021, #5025) 
 
 
 = 2015.2 =
