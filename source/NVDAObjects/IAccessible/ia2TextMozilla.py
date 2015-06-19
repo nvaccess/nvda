@@ -382,6 +382,13 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			moveTi = self._end
 			moveObj = self._endObj
 			moveTi.collapse(end=True)
+			if moveTi.compareEndPoints(_makeRawTextInfo(moveObj, textInfos.POSITION_ALL), "endToEnd") == 0:
+				# We're at the end of the object, so move to the start of the next.
+				try:
+					moveTi, moveObj = self._findNextContent(moveObj)
+				except LookupError:
+					# Can't move forward any further.
+					return 0
 
 		remainingMovement = direction
 		moveBack = direction < 0
@@ -401,7 +408,14 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				# Collapse to the start of the next unit.
 				moveTi.collapse(end=True)
 				if moveTi.compareEndPoints(_makeRawTextInfo(moveObj, textInfos.POSITION_ALL), "endToEnd") == 0:
-					# If at the end of the object, move to the start of the next object.
+					# We're at the end of the object.
+					if remainingMovement == 1 and endPoint == "end":
+						# We've moved the required number of units.
+						# Stop here, as we don't want end to be the start of the next object,
+						# which would cause bogus control fields to be emitted.
+						remainingMovement -= 1
+						break
+					# We haven't finished moving, so move to the start of the next object.
 					try:
 						moveTi, moveObj = self._findNextContent(moveObj)
 					except LookupError:
