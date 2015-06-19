@@ -127,6 +127,9 @@ class CDispatchChangeSink : public IDispatch {
 				this->storageNode->backend->forceUpdate();
 			}
 			return S_OK;
+		} else if(dispIdMember==DISPID_EVMETH_ONFOCUS) {
+			this->storageNode->backend->forceUpdate();
+			return S_OK;
 		}
 		return E_FAIL;
 	}
