@@ -796,7 +796,7 @@ class WordDocumentTextInfoForTreeInterceptor(WordDocumentTextInfo):
 	def _get_shouldIncludeLayoutTables(self):
 		return config.conf['documentFormatting']['includeLayoutTables']
 
-class BrowseModeWordDocumentTextInfo(treeInterceptorHandler.RootProxyTextInfo):
+class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
 
 	def __init__(self,obj,position,_rangeObj=None):
 		if isinstance(position,WordDocument):
@@ -805,7 +805,10 @@ class BrowseModeWordDocumentTextInfo(treeInterceptorHandler.RootProxyTextInfo):
 
 	InnerTextInfoClass=WordDocumentTextInfoForTreeInterceptor
 
-class WordDocumentTreeInterceptor(CursorManager,browseMode.BrowseModeTreeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor):
+	def _get_focusableNVDAObjectAtStart(self):
+		return self.obj.rootNVDAObject
+
+class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	TextInfo=BrowseModeWordDocumentTextInfo
 
