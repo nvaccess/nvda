@@ -678,46 +678,6 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		offsets=range._getOffsetsFromFieldIdentifier(docHandle,ID)
 		return self.makeTextInfo(textInfos.offsets.Offsets(*offsets))
 
-	def script_moveToStartOfContainer(self,gesture):
-		info=self.makeTextInfo(textInfos.POSITION_CARET)
-		info.expand(textInfos.UNIT_CHARACTER)
-		container=self.getEnclosingContainerRange(info)
-		if not container:
-			# Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.) 
-			# But there is no container. 
-			ui.message(_("Not in a container"))
-			return
-		container.collapse()
-		self._set_selection(container, reason=browseMode.REASON_QUICKNAV)
-		if not willSayAllResume(gesture):
-			container.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(container, reason=controlTypes.REASON_FOCUS)
-	script_moveToStartOfContainer.resumeSayAllMode=sayAllHandler.CURSOR_CARET
-	# Translators: Description for the Move to start of container command in browse mode. 
-	script_moveToStartOfContainer.__doc__=_("Moves to the start of the container element, such as a list or table")
-
-	def script_movePastEndOfContainer(self,gesture):
-		info=self.makeTextInfo(textInfos.POSITION_CARET)
-		info.expand(textInfos.UNIT_CHARACTER)
-		container=self.getEnclosingContainerRange(info)
-		if not container:
-			ui.message(_("Not in a container"))
-			return
-		container.collapse(end=True)
-		if container._startOffset>=container._getStoryLength():
-			container.move(textInfos.UNIT_CHARACTER,-1)
-			# Translators: a message reported when:
-			# Review cursor is at the bottom line of the current navigator object.
-			# Landing at the end of a browse mode document when trying to jump to the end of the current container. 
-			ui.message(_("bottom"))
-		self._set_selection(container, reason=browseMode.REASON_QUICKNAV)
-		if not willSayAllResume(gesture):
-			container.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(container, reason=controlTypes.REASON_FOCUS)
-	script_movePastEndOfContainer.resumeSayAllMode=sayAllHandler.CURSOR_CARET
-	# Translators: Description for the Move past end of container command in browse mode. 
-	script_movePastEndOfContainer.__doc__=_("Moves past the end  of the container element, such as a list or table")
-
 	@classmethod
 	def changeNotify(cls, rootDocHandle, rootID):
 		try:
@@ -751,6 +711,4 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		"kb:control+alt+upArrow": "previousRow",
 		"kb:control+alt+rightArrow": "nextColumn",
 		"kb:control+alt+leftArrow": "previousColumn",
-		"kb:shift+,": "moveToStartOfContainer",
-		"kb:,": "movePastEndOfContainer",
 	}

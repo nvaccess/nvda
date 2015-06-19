@@ -1321,6 +1321,56 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 				pass
 		return None
 
+	def getEnclosingContainerRange(self,range):
+		range=range.copy()
+		range.collapse()
+		try:
+			item = next(self._iterNodesByType("container", "up", range))
+		except (NotImplementedError,StopIteration):
+			return
+		return item.textInfo
+
+	def script_moveToStartOfContainer(self,gesture):
+		info=self.makeTextInfo(textInfos.POSITION_CARET)
+		info.expand(textInfos.UNIT_CHARACTER)
+		container=self.getEnclosingContainerRange(info)
+		if not container:
+			# Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.) 
+			# But there is no container. 
+			ui.message(_("Not in a container"))
+			return
+		container.collapse()
+		self._set_selection(container, reason=REASON_QUICKNAV)
+		if not willSayAllResume(gesture):
+			container.expand(textInfos.UNIT_LINE)
+			speech.speakTextInfo(container, reason=controlTypes.REASON_FOCUS)
+	script_moveToStartOfContainer.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	# Translators: Description for the Move to start of container command in browse mode. 
+	script_moveToStartOfContainer.__doc__=_("Moves to the start of the container element, such as a list or table")
+
+	def script_movePastEndOfContainer(self,gesture):
+		info=self.makeTextInfo(textInfos.POSITION_CARET)
+		info.expand(textInfos.UNIT_CHARACTER)
+		container=self.getEnclosingContainerRange(info)
+		if not container:
+			ui.message(_("Not in a container"))
+			return
+		container.collapse(end=True)
+		docEnd=container.obj.makeTextInfo(textInfos.POSITION_LAST)
+		if container.compareEndPoints(docEnd,"endToEnd")>=0:
+			container=docEnd
+			# Translators: a message reported when:
+			# Review cursor is at the bottom line of the current navigator object.
+			# Landing at the end of a browse mode document when trying to jump to the end of the current container. 
+			ui.message(_("bottom"))
+		self._set_selection(container, reason=REASON_QUICKNAV)
+		if not willSayAllResume(gesture):
+			container.expand(textInfos.UNIT_LINE)
+			speech.speakTextInfo(container, reason=controlTypes.REASON_FOCUS)
+	script_movePastEndOfContainer.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+	# Translators: Description for the Move past end of container command in browse mode. 
+	script_movePastEndOfContainer.__doc__=_("Moves past the end  of the container element, such as a list or table")
+
 	__gestures={
 		"kb:NVDA+d": "activateLongDesc",
 		"kb:escape": "disablePassThrough",
@@ -1328,4 +1378,6 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		"kb:alt+downArrow": "collapseOrExpandControl",
 		"kb:tab": "tab",
 		"kb:shift+tab": "shiftTab",
+		"kb:shift+,": "moveToStartOfContainer",
+		"kb:,": "movePastEndOfContainer",
 	}
