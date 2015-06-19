@@ -131,15 +131,6 @@ class VirtualBufferQuickNavItem(browseMode.TextInfoQuickNavItem):
 				return False
 		return super(VirtualBufferQuickNavItem,self).isChild(parent)
 
-	canActivate=True
-	def activate(self):
-		self.textInfo.obj._activatePosition(self.textInfo)
-
-	def moveTo(self):
-		info=self.textInfo.copy()
-		info.collapse()
-		self.document._set_selection(info,reason=browseMode.REASON_QUICKNAV)
-
 class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offsets.OffsetsTextInfo):
 
 	allowMoveToOffsetPastEnd=False #: no need for end insertion point as vbuf is not editable. 

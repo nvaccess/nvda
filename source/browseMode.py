@@ -154,9 +154,6 @@ class TextInfoQuickNavItem(QuickNavItem):
 	def label(self):
 		return self.textInfo.text.strip()
 
-	def activate(self):
-		self.textInfo.activate()
-
 	def isChild(self,parent):
 		if parent.textInfo.isOverlapping(self.textInfo):
 			return True
@@ -173,8 +170,13 @@ class TextInfoQuickNavItem(QuickNavItem):
 				info.setEndPoint(fieldInfo, "endToEnd")
 		speech.speakTextInfo(info, reason=controlTypes.REASON_FOCUS)
 
+	def activate(self):
+		self.textInfo.obj._activatePosition(self.textInfo)
+
 	def moveTo(self):
-		self.textInfo.updateCaret()
+		info=self.textInfo.copy()
+		info.collapse()
+		self.document._set_selection(info,reason=REASON_QUICKNAV)
 
 	@property
 	def isAfterSelection(self):
