@@ -68,6 +68,39 @@ class HeadingUIATextRangeQuickNavItem(UIATextRangeQuickNavItem):
 			return False
 		return self.level>parent.level
 
+def createUIAMultiPropertyCondition(*dicts):
+	outerOrList=[]
+	for dict in dicts:
+		andList=[]
+		for key,values in dict.iteritems():
+			innerOrList=[]
+			if not isinstance(values,list):
+				values=[values]
+			for value in values:
+				condition=UIAHandler.handler.clientObject.createPropertyCondition(key,value)
+				innerOrList.append(condition)
+			if len(innerOrList)==0:
+				continue
+			elif len(innerOrList)==1:
+				condition=innerOrList[0]
+			else:
+				condition=UIAHandler.handler.clientObject.createOrConditionFromArray(innerOrList)
+			andList.append(condition)
+		if len(andList)==0:
+			continue
+		elif len(andList)==1:
+			condition=andList[0]
+		else:
+			condition=UIAHandler.handler.clientObject.createAndConditionFromArray(andList)
+		outerOrList.append(condition)
+	if len(outerOrList)==0:
+		raise ValueError("no properties")
+	elif len(outerOrList)==1:
+		condition=outerOrList[0]
+	else:
+		condition=UIAHandler.handler.clientObject.createOrConditionFromArray(outerOrList)
+	return condition
+
 def UIATextAttributeQuickNavIterator(itemType,document,position,attributeID,attributeValue,direction="next",ItemClass=UIATextRangeQuickNavItem):
 	includeCurrent=False
 	if not position:
@@ -310,8 +343,35 @@ class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,browseMode.Brows
 		elif nodeType=="link":
 			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_HyperlinkControlTypeId)
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
+		elif nodeType=="checkBox":
+			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_CheckBoxControlTypeId)
+			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
+		elif nodeType=="radioButton":
+			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_RadioButtonControlTypeId)
+			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
+		elif nodeType=="comboBox":
+			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_ComboBoxControlTypeId)
+			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
+		elif nodeType=="graphic":
+			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_ImageControlTypeId)
+			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
+		elif nodeType=="table":
+			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_TableControlTypeId)
+			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
+		elif nodeType=="separator":
+			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_SeparatorControlTypeId)
+			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		elif nodeType=="focusable":
 			condition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_IsKeyboardFocusablePropertyId,True)
+			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
+		elif nodeType=="list":
+			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:False})
+			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
+		elif nodeType=="edit":
+			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_EditControlTypeId,UIAHandler.UIA_ValueIsReadOnlyPropertyId:False})
+			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
+		elif nodeType=="formField":
+			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_EditControlTypeId,UIAHandler.UIA_ValueIsReadOnlyPropertyId:False},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:[UIAHandler.UIA_CheckBoxControlTypeId,UIAHandler.UIA_RadioButtonControlTypeId,UIAHandler.UIA_ComboBoxControlTypeId,UIAHandler.UIA_ButtonControlTypeId]})
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		raise NotImplementedError
 
