@@ -19,6 +19,7 @@ import globalPluginHandler
 import braille
 
 _numScriptsQueued=0 #Number of scripts that are queued to be executed
+_numUncompleteInterceptedCommandScripts=0 #Number of scripts (that send gestures on) that are queued to be executed, or are currently being executed
 _lastScriptTime=0 #Time in MS of when the last script was executed
 _lastScriptRef=None #Holds a weakref to the last script that was executed
 _lastScriptCount=0 #The amount of times the last script was repeated
@@ -132,14 +133,21 @@ def getScriptLocation(script):
 		if name in cls.__dict__:
 			return "%s.%s"%(cls.__module__,cls.__name__)
 
+def _isInterceptedCommandScript(script):
+	return not getattr(script,'__doc__',None)
+
 def _queueScriptCallback(script,gesture):
-	global _numScriptsQueued
+	global _numScriptsQueued, _numUncompleteInterceptedCommandScripts
 	_numScriptsQueued-=1
 	executeScript(script,gesture)
+	if _isInterceptedCommandScript(script):
+		_numUncompleteInterceptedCommandScripts-=1
 
 def queueScript(script,gesture):
-	global _numScriptsQueued
+	global _numScriptsQueued, _numUncompleteInterceptedCommandScripts
 	_numScriptsQueued+=1
+	if _isInterceptedCommandScript(script):
+		_numUncompleteInterceptedCommandScripts+=1
 	queueHandler.queueFunction(queueHandler.eventQueue,_queueScriptCallback,script,gesture)
 
 def willSayAllResume(gesture):
