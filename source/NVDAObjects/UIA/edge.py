@@ -325,11 +325,47 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 				yield UIATextRangeQuickNavItem(itemType,document,curElement)
 
 class EdgeHTMLTreeInterceptorTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
-	pass
+
+	# override move to get around bugs in Edge where moving by line jumps over checkboxes, radio buttons etc.
+	# Only fixes it for forward atht e moment.
+	def move(self,unit,direction,endPoint=None):
+		origInfo=None
+		if (direction==1 or direction==-1) and not endPoint and unit==textInfos.UNIT_LINE:
+			origInfo=self.copy()
+			origInfo.expand(unit)
+		res=super(EdgeHTMLTreeInterceptorTextInfo,self).move(unit,direction,endPoint)
+		if res and origInfo:
+			if direction==1 and self.compareEndPoints(origInfo,"startToEnd")>0:
+				newInfo=origInfo.copy()
+				newInfo.collapse(end=True)
+				newInfo.move(textInfos.UNIT_CHARACTER,-1)
+				newInfo.move(textInfos.UNIT_CHARACTER,1)
+				newInfo.expand(unit)
+				if newInfo.compareEndPoints(origInfo,"startToEnd")>=0 and self.compareEndPoints(newInfo,"startToStart")>0:
+					newInfo.collapse()
+					self._rangeObj=newInfo._rangeObj.clone()
+		return res
+
+	# Override expand to get around bugs in Edge where expanding to line on a checkbox, radio button etc expands the previous line (not containing the control in question).
+	def expand(self,unit):
+		origInfo=None
+		if unit in (textInfos.UNIT_WORD,textInfos.UNIT_LINE):
+			origInfo=self.copy()
+		super(EdgeHTMLTreeInterceptorTextInfo,self).expand(unit)
+		if origInfo:
+			if self.compareEndPoints(origInfo,"endToEnd")<=0:
+				self._rangeObj=origInfo._rangeObj.clone()
+				super(EdgeHTMLTreeInterceptorTextInfo,self).expand(textInfos.UNIT_CHARACTER)
 
 class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,browseMode.BrowseModeDocumentTreeInterceptor):
 
 	TextInfo=EdgeHTMLTreeInterceptorTextInfo
+
+	# Ovveride setting selection to get around bugs in Edge where programmatically setting focus corrupts existing IUIAutomationTextRanges
+	# cloning them seems to fix them
+	def _set_selection(self,info,reason=controlTypes.REASON_CARET):
+		super(EdgeHTMLTreeInterceptor,self)._set_selection(info,reason=reason)
+		info._rangeObj=info._rangeObj.clone()
 
 	def _get_documentConstantIdentifier(self):
 		return self.rootNVDAObject.parent.name
@@ -415,4 +451,3 @@ class EdgeHTMLRoot(UIA):
 		if role==controlTypes.ROLE_PANE:
 			role=controlTypes.ROLE_DOCUMENT
 		return role
-

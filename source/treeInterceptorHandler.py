@@ -161,6 +161,9 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def _get__rangeObj(self):
 		return self.innerTextInfo._rangeObj
 
+	def _set__rangeObj(self,r):
+		self.innerTextInfo._rangeObj=r
+
 	def find(self,text,caseSensitive=False,reverse=False):
 		return self.innerTextInfo.find(text,caseSensitive,reverse)
 
