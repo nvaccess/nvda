@@ -99,10 +99,18 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			self._end = self._start
 			self._endObj = self._startObj
 		elif position == textInfos.POSITION_SELECTION:
-			# The caret is always within the selection,
+			# The caret is usually within the selection,
 			# so start from the caret for better performance/tolerance of server brokenness.
 			tempTi, tempObj = self._findContentDescendant(obj, textInfos.POSITION_CARET)
 			tempTi = _makeRawTextInfo(tempObj, position)
+			if tempTi.isCollapsed:
+				# No selection, but perhaps the caret is at the start of the next/previous object.
+				# This happens when you, for example, press shift+rightArrow at the end of a block.
+				# Try from the root.
+				rootTi = _makeRawTextInfo(obj, position)
+				if not rootTi.isCollapsed:
+					# There is definitely a selection.
+					tempTi, tempObj = rootTi, obj
 			if tempTi.isCollapsed:
 				# No selection, so use the caret.
 				self._start = self._end = tempTi
