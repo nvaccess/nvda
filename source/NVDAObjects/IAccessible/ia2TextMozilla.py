@@ -24,19 +24,22 @@ class FakeEmbeddingTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return self.obj.childCount
 
 	def _iterTextWithEmbeddedObjects(self, withFields, formatConfig=None):
-		return xrange(self.obj.childCount)
+		return xrange(self._startOffset, self._endOffset)
 
 	def _getUnitOffsets(self,unit,offset):
 		if unit in (textInfos.UNIT_WORD,textInfos.UNIT_LINE):
 			unit=textInfos.UNIT_CHARACTER
 		return super(FakeEmbeddingTextInfo,self)._getUnitOffsets(unit,offset)
 
-def _makeRawTextInfo(obj, position):
+def _getRawTextInfo(obj):
 	if not hasattr(obj, "IAccessibleTextObject") and obj.role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLEROW):
-		return FakeEmbeddingTextInfo(obj, position)
+		return FakeEmbeddingTextInfo
 	elif obj.TextInfo is NVDAObjectTextInfo:
-		return obj.makeTextInfo(position)
-	return IA2TextTextInfo(obj, position)
+		return NVDAObjectTextInfo
+	return IA2TextTextInfo
+
+def _makeRawTextInfo(obj, position):
+	return _getRawTextInfo(obj)(obj, position)
 
 def _getEmbedded(obj, offset):
 	if not hasattr(obj, "IAccessibleTextObject"):
@@ -164,7 +167,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 					controlField = self._getControlFieldForObject(embedded)
 					if controlField:
 						yield textInfos.FieldCommand("controlStart", controlField)
-				if embedded.TextInfo is NVDAObjectTextInfo: # No text
+				if _getRawTextInfo(embedded) is NVDAObjectTextInfo: # No text
 					yield embedded.basicText
 				else:
 					for subItem in self._iterRecursiveText(_makeRawTextInfo(embedded, textInfos.POSITION_ALL), withFields, formatConfig):
