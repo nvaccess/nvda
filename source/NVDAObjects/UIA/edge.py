@@ -327,10 +327,9 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 class EdgeHTMLTreeInterceptorTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
 
 	# override move to get around bugs in Edge where moving by line jumps over checkboxes, radio buttons etc.
-	# Only fixes it for forward atht e moment.
 	def move(self,unit,direction,endPoint=None):
 		origInfo=None
-		if (direction==1 or direction==-1) and not endPoint and unit==textInfos.UNIT_LINE:
+		if (direction==1 or direction==-1) and not endPoint and unit in (textInfos.UNIT_WORD,textInfos.UNIT_LINE):
 			origInfo=self.copy()
 			origInfo.expand(unit)
 		res=super(EdgeHTMLTreeInterceptorTextInfo,self).move(unit,direction,endPoint)
@@ -343,7 +342,23 @@ class EdgeHTMLTreeInterceptorTextInfo(browseMode.BrowseModeDocumentTextInfo,tree
 				newInfo.expand(unit)
 				if newInfo.compareEndPoints(origInfo,"startToEnd")>=0 and self.compareEndPoints(newInfo,"startToStart")>0:
 					newInfo.collapse()
-					self._rangeObj=newInfo._rangeObj.clone()
+					charInfo=newInfo.copy()
+					charInfo.expand(textInfos.UNIT_CHARACTER)
+					children=charInfo._rangeObj.getChildren()
+					if children.length==1:
+						childInfo=self.obj.TextInfo(self.obj,None,_rangeObj=self.obj.rootNVDAObject.UIATextPattern.rangeFromChild(children.getElement(0)))
+						if childInfo.compareEndPoints(charInfo,"startToStart")==0 and childInfo.compareEndPoints(charInfo,"endToEnd")==0:
+							self._rangeObj=newInfo._rangeObj.clone()
+			elif direction==-1:
+				newInfo=self.copy()
+				count=4
+				while count>0:
+					newInfo.move(unit,1)
+					if newInfo.compareEndPoints(origInfo,"startToStart")<0:
+						self._rangeObj=newInfo._rangeObj.clone()
+					else:
+						break
+					count-=1
 		return res
 
 	# Override expand to get around bugs in Edge where expanding to line on a checkbox, radio button etc expands the previous line (not containing the control in question).
