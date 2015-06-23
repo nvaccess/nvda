@@ -98,9 +98,16 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			self._end, self._endObj = self._findContentDescendant(obj, textInfos.POSITION_LAST)
 			self._end.expand(textInfos.UNIT_STORY)
 		elif position == textInfos.POSITION_CARET:
-			self._start, self._startObj = self._findContentDescendant(obj, textInfos.POSITION_CARET)
-			self._end = self._start
-			self._endObj = self._startObj
+			caretTi, caretObj = self._findContentDescendant(obj, textInfos.POSITION_CARET)
+			if caretObj.IA2Attributes.get("display") == "inline" and caretTi.compareEndPoints(_makeRawTextInfo(caretObj, textInfos.POSITION_ALL), "startToEnd") == 0:
+				# The caret is at the end of an inline object.
+				# This will report "blank", but we want to report the character just after the caret.
+				try:
+					caretTi, caretObj = self._findNextContent(caretTi)
+				except LookupError:
+					pass
+			self._start = self._end = caretTi
+			self._startObj = self._endObj = caretObj
 		elif position == textInfos.POSITION_SELECTION:
 			# The caret is usually within the selection,
 			# so start from the caret for better performance/tolerance of server brokenness.
