@@ -156,32 +156,36 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		ti._startOffset=ti._endOffset=descendantOffset.value
 		return ti,obj
 
-	def _iterRecursiveText(self, ti, withFields, formatConfig):
+	def _iterRecursiveText(self, ti, controlStack, formatConfig):
 		if ti.obj == self._endObj:
 			end = True
 			ti.setEndPoint(self._end, "endToEnd")
 		else:
 			end = False
 
-		for item in ti._iterTextWithEmbeddedObjects(withFields, formatConfig=formatConfig):
+		for item in ti._iterTextWithEmbeddedObjects(controlStack, formatConfig=formatConfig):
 			if item is None:
 				yield u""
 			elif isinstance(item, basestring):
 				yield item
 			elif isinstance(item, int): # Embedded object.
 				embedded = _getEmbedded(ti.obj, item)
-				if withFields:
+				if controlStack is not None:
 					controlField = self._getControlFieldForObject(embedded)
+					controlStack.append(controlField)
 					if controlField:
+						controlField["_startOfNode"] = True
 						yield textInfos.FieldCommand("controlStart", controlField)
 				if _getRawTextInfo(embedded) is NVDAObjectTextInfo: # No text
 					yield embedded.basicText
 				else:
-					for subItem in self._iterRecursiveText(_makeRawTextInfo(embedded, textInfos.POSITION_ALL), withFields, formatConfig):
+					for subItem in self._iterRecursiveText(_makeRawTextInfo(embedded, textInfos.POSITION_ALL), controlStack, formatConfig):
 						yield subItem
 						if subItem is None:
 							return
-				if withFields and controlField:
+				if controlStack is not None and controlField:
+					controlField["_endOfNode"] = True
+					del controlStack[-1]
 					yield textInfos.FieldCommand("controlEnd", None)
 			else:
 				yield item
@@ -191,28 +195,70 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			yield None
 
 	def _getText(self, withFields, formatConfig=None):
-		ti = self._start
-		obj = self._startObj
-		if withFields:
-			fields = self._getInitialControlFields()
-		else:
-			fields = []
-		fields += list(self._iterRecursiveText(ti, withFields, formatConfig))
+		fields = []
+		if self.isCollapsed:
+			return fields
 
+		if withFields:
+			# Get the initial control fields.
+			controlStack = []
+			rootObj = self.obj
+			obj = self._startObj
+			ti = self._start
+			cannotBeStart = False
+			while obj and obj != rootObj:
+				field = self._getControlFieldForObject(obj)
+				if field:
+					if ti._startOffset == 0:
+						if not cannotBeStart:
+							field["_startOfNode"] = True
+					else:
+						# We're not at the start of this object, which also means we're not at the start of any ancestors.
+						cannotBeStart = True
+					fields.insert(0, textInfos.FieldCommand("controlStart", field))
+				controlStack.insert(0, field)
+				ti = _getEmbedding(obj)
+				obj = ti.obj
+		else:
+			controlStack = None
+
+		# Get the fields for start.
+		fields += list(self._iterRecursiveText(self._start, controlStack, formatConfig))
+		obj = self._startObj
 		while fields[-1] is not None:
 			# The end hasn't yet been reached, which means it isn't a descendant of obj.
 			# Therefore, continue from where obj was embedded.
-			if withFields and not self._isObjectEditableText(obj):
-				# Add a controlEnd if this field had a controlStart.
-				fields.append(textInfos.FieldCommand("controlEnd", None))
+			if withFields:
+				field = controlStack.pop()
+				if field:
+					# This object had a control field.
+					field["_endOfNode"] = True
+					fields.append(textInfos.FieldCommand("controlEnd", None))
 			ti = _getEmbedding(obj)
 			obj = ti.obj
 			if ti.move(textInfos.UNIT_OFFSET, 1) == 0:
 				# There's no more text in this object.
 				continue
 			ti.setEndPoint(_makeRawTextInfo(obj, textInfos.POSITION_ALL), "endToEnd")
-			fields.extend(self._iterRecursiveText(ti, withFields, formatConfig))
+			fields.extend(self._iterRecursiveText(ti, controlStack, formatConfig))
 		del fields[-1]
+
+		if withFields:
+			# Determine whether the range covers the end of any ancestors of endObj.
+			obj = self._endObj
+			ti = self._end
+			while obj and obj != rootObj:
+				field = controlStack.pop()
+				if field:
+					fields.append(textInfos.FieldCommand("controlEnd", None))
+					if ti.compareEndPoints(_makeRawTextInfo(obj, textInfos.POSITION_ALL), "endToEnd") == 0:
+						field["_endOfNode"] = True
+					else:
+						# We're not at the end of this object, which also means we're not at the end of any ancestors.
+						break
+				ti = _getEmbedding(obj)
+				obj = ti.obj
+
 		return fields
 
 	def _get_text(self):
