@@ -545,12 +545,12 @@ the NVDAObject for IAccessible
 @param objectID: the objectID for the IAccessible Object, if known
 @type objectID: int
 """
+		self.IAccessibleObject=IAccessibleObject
+		self.IAccessibleChildID=IAccessibleChildID
+
 		# Try every trick in the book to get the window handle if we don't have it.
 		if not windowHandle and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
-			try:
-				windowHandle=IAccessibleObject.windowHandle
-			except COMError, e:
-				log.debugWarning("IAccessible2::windowHandle failed: %s" % e)
+			windowHandle=self.IA2WindowHandle
 			#Mozilla Gecko: we can never use a MozillaWindowClass window for Gecko 1.9
 			tempWindow=windowHandle
 			while tempWindow and winUser.getClassName(tempWindow)=="MozillaWindowClass":
@@ -598,8 +598,6 @@ the NVDAObject for IAccessible
 			else:
 				event_childID=IAccessibleChildID
 
-		self.IAccessibleObject=IAccessibleObject
-		self.IAccessibleChildID=IAccessibleChildID
 		self.event_windowHandle=event_windowHandle
 		self.event_objectID=event_objectID
 		self.event_childID=event_childID
@@ -657,24 +655,21 @@ the NVDAObject for IAccessible
 			return False
 		if self.IAccessibleObject==other.IAccessibleObject: 
 			return True
-		try:
-			if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2) and isinstance(other.IAccessibleObject,IAccessibleHandler.IAccessible2):
-				# These are both IAccessible2 objects, so we can test unique ID.
-				# Unique ID is only guaranteed to be unique within a given window, so we must check window handle as well.
-				selfIA2Window=self.IAccessibleObject.windowHandle
-				selfIA2ID=self.IA2UniqueID
-				otherIA2Window=other.IAccessibleObject.windowHandle
-				otherIA2ID=other.IA2UniqueID
-				if selfIA2Window!=otherIA2Window:
-					# The window handles are different, so these are definitely different windows.
-					return False
-				# At this point, we know that the window handles are equal.
-				if selfIA2Window and (selfIA2ID or otherIA2ID):
-					# The window handles are valid and one of the objects has a valid unique ID.
-					# Therefore, we can safely determine equality or inequality based on unique ID.
-					return selfIA2ID==otherIA2ID
-		except COMError:
-			pass
+		if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2) and isinstance(other.IAccessibleObject,IAccessibleHandler.IAccessible2):
+			# These are both IAccessible2 objects, so we can test unique ID.
+			# Unique ID is only guaranteed to be unique within a given window, so we must check window handle as well.
+			selfIA2Window=self.IA2WindowHandle
+			selfIA2ID=self.IA2UniqueID
+			otherIA2Window=other.IA2WindowHandle
+			otherIA2ID=other.IA2UniqueID
+			if selfIA2Window!=otherIA2Window:
+				# The window handles are different, so these are definitely different windows.
+				return False
+			# At this point, we know that the window handles are equal.
+			if selfIA2Window and (selfIA2ID or otherIA2ID):
+				# The window handles are valid and one of the objects has a valid unique ID.
+				# Therefore, we can safely determine equality or inequality based on unique ID.
+				return selfIA2ID==otherIA2ID
 		if self.event_windowHandle is not None and other.event_windowHandle is not None and self.event_windowHandle!=other.event_windowHandle:
 			return False
 		if self.event_objectID is not None and other.event_objectID is not None and self.event_objectID!=other.event_objectID:
@@ -1420,6 +1415,19 @@ the NVDAObject for IAccessible
 		ht = self.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext)
 		self.iaHypertext = ht # Cache forever.
 		return ht
+
+	def _get_IA2WindowHandle(self):
+		window = None
+		if isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2):
+			try:
+				window = self.IAccessibleObject.windowHandle
+			except COMError as e:
+				log.debugWarning("IAccessible2::windowHandle failed: %s" % e)
+		self.IA2WindowHandle = window # Cache forever.
+		return window
+	# We forceably cache this forever, so we don't need temporary caching.
+	# Temporary caching breaks because the cache isn't initialised when this is first called.
+	_cache_IA2WindowHandle = False
 
 class ContentGenericClient(IAccessible):
 
