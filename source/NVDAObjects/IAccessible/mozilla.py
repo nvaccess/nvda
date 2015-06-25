@@ -249,10 +249,11 @@ def findExtraOverlayClasses(obj, clsList):
 	if ver and ver.full.startswith("1.9"):
 		clsList.append(Gecko1_9)
 
-	if iaRole == oleacc.ROLE_SYSTEM_DIALOG:
+	if iaRole in (oleacc.ROLE_SYSTEM_DIALOG,oleacc.ROLE_SYSTEM_PROPERTYPAGE):
 		xmlRoles = obj.IA2Attributes.get("xml-roles", "").split(" ")
-		if "dialog" in xmlRoles:
+		if "dialog" in xmlRoles or "tabpanel" in xmlRoles:
 			# #2390: Don't try to calculate text for ARIA dialogs.
+			# #4638: Don't try to calculate text for ARIA tab panels.
 			try:
 				clsList.remove(Dialog)
 			except ValueError:

@@ -94,6 +94,7 @@ nodeNamesToNVDARoles={
 	"A":controlTypes.ROLE_LINK,
 	"LABEL":controlTypes.ROLE_LABEL,
 	"#text":controlTypes.ROLE_STATICTEXT,
+	"#TEXT":controlTypes.ROLE_STATICTEXT,
 	"H1":controlTypes.ROLE_HEADING,
 	"H2":controlTypes.ROLE_HEADING,
 	"H3":controlTypes.ROLE_HEADING,
@@ -120,6 +121,9 @@ nodeNamesToNVDARoles={
 	"OPTION":controlTypes.ROLE_LISTITEM,
 	"BLOCKQUOTE":controlTypes.ROLE_BLOCKQUOTE,
 	"MATH":controlTypes.ROLE_MATH,
+	"NAV":controlTypes.ROLE_SECTION,
+	"SECTION":controlTypes.ROLE_SECTION,
+	"ARTICLE":controlTypes.ROLE_DOCUMENT,
 }
 
 def getZoomFactorsFromHTMLDocument(HTMLDocument):
@@ -636,7 +640,7 @@ class MSHTML(IAccessible):
 		if (
 			self.HTMLNodeHasAncestorIAccessible or
 			#IE inappropriately generates the name from descendants on some controls
-			self.IAccessibleRole in (oleacc.ROLE_SYSTEM_MENUBAR,oleacc.ROLE_SYSTEM_TOOLBAR,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TABLE,oleacc.ROLE_SYSTEM_DOCUMENT) or
+			self.IAccessibleRole in (oleacc.ROLE_SYSTEM_MENUBAR,oleacc.ROLE_SYSTEM_TOOLBAR,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TABLE,oleacc.ROLE_SYSTEM_DOCUMENT,oleacc.ROLE_SYSTEM_DIALOG) or
 			#Adding an ARIA landmark or unknown role to a DIV or NAV node makes an IAccessible with role_system_grouping and a name calculated from descendants.
 			# This name should also be ignored, but check NVDA's role, not accRole as its possible that NVDA chose a better role
 			# E.g. row (#2780)
@@ -703,8 +707,8 @@ class MSHTML(IAccessible):
 			if nodeName:
 				if nodeName in ("OBJECT","EMBED","APPLET"):
 					return controlTypes.ROLE_EMBEDDEDOBJECT
-				if self.HTMLNodeHasAncestorIAccessible or nodeName in ("BODY","FRAMESET","FRAME","IFRAME","LABEL"):
-					return nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_TEXTFRAME)
+				if self.HTMLNodeHasAncestorIAccessible or nodeName in ("BODY","FRAMESET","FRAME","IFRAME","LABEL","NAV","SECTION","ARTICLE"):
+					return nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_SECTION)
 		if self.IAccessibleChildID>0:
 			states=super(MSHTML,self).states
 			if controlTypes.STATE_LINKED in states:
@@ -929,7 +933,10 @@ class MSHTML(IAccessible):
 
 	def _get_HTMLNodeUniqueNumber(self):
 		if not hasattr(self,'_HTMLNodeUniqueNumber'):
-			self._HTMLNodeUniqueNumber=self.HTMLNode.uniqueNumber
+			try:
+				self._HTMLNodeUniqueNumber=self.HTMLNode.uniqueNumber
+			except COMError:
+				return None
 		return self._HTMLNodeUniqueNumber
 
 	def _get_HTMLNodeName(self):

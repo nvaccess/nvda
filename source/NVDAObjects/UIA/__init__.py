@@ -784,6 +784,20 @@ class UIA(Window):
 	def scrollIntoView(self):
 		pass
 
+	def _get_controllerFor(self):
+		e=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_ControllerForPropertyId)
+		if UIAHandler.handler.clientObject.checkNotSupported(e):
+			return None
+		a=e.QueryInterface(UIAHandler.IUIAutomationElementArray)
+		objList=[]
+		for index in xrange(a.length):
+			e=a.getElement(index)
+			e=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+			obj=UIA(UIAElement=e)
+			if obj:
+				objList.append(obj)
+		return objList
+
 	def event_UIA_elementSelected(self):
 		self.event_stateChange()
 

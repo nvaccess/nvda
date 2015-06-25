@@ -7,6 +7,14 @@
 
 == New Features ==
 - The existance of spelling errors is announced in editable fields for Internet Explorer and other MSHTML controls. (#4174)
+- Many more unicode math symbols are now spoken when they appear in text. (#3805)
+- Search suggestions in the Windows 10 start screen are automatically reported (#5049)
+
+
+== Bug Fixes ==
+- In browse mode for Internet Explorer and other MSHTML controls, quick navigation by form field no longer incorrectly includes presentational list items. (#4204)
+- In Firefox, NVDA no longer tries to create a description for ARIA tab panels based  on all text inside. (#4638)
+- In Internet Explorer and other MSHTML controls, tabbing into sections, articles or dialogs  no longer reports all contents of the container as its name. (#5021, #5025) 
 
 
 = 2015.2 =
