@@ -316,7 +316,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 
 			# start and/or end hasn't yet been found,
 			# so it must be higher in the hierarchy.
-			if obj.IA2UniqueID == self.obj.IA2UniqueID:
+			if obj == self.obj:
 				# We're at the root. Don't go any further.
 				embedTi = None
 			else:
@@ -417,7 +417,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		while True:
 			if ti and ti.move(textInfos.UNIT_OFFSET, direction) != 0:
 				break
-			if obj.IA2UniqueID == self.obj.IA2UniqueID:
+			if obj == self.obj:
 				# We're at the root. Don't go any further.
 				raise LookupError
 			ti = _getEmbedding(obj)
@@ -513,7 +513,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		data = []
 		while True:
 			data.insert(0, (ti, obj))
-			if obj.IA2UniqueID == self.obj.IA2UniqueID:
+			if obj == self.obj:
 				# We're at the root. Don't go any further.
 				break
 			ti = _getEmbedding(obj)
