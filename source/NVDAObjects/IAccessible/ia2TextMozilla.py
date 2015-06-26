@@ -112,15 +112,21 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			# The caret is usually within the selection,
 			# so start from the caret for better performance/tolerance of server brokenness.
 			tempTi, tempObj = self._findContentDescendant(obj, textInfos.POSITION_CARET)
-			tempTi = _makeRawTextInfo(tempObj, position)
-			if tempTi.isCollapsed:
-				# No selection, but perhaps the caret is at the start of the next/previous object.
-				# This happens when you, for example, press shift+rightArrow at the end of a block.
-				# Try from the root.
-				rootTi = _makeRawTextInfo(obj, position)
-				if not rootTi.isCollapsed:
-					# There is definitely a selection.
-					tempTi, tempObj = rootTi, obj
+			try:
+				tempTi = _makeRawTextInfo(tempObj, position)
+			except RuntimeError:
+				# The caret is just before this object.
+				# There is never a selection in this case.
+				pass
+			else:
+				if tempTi.isCollapsed:
+					# No selection, but perhaps the caret is at the start of the next/previous object.
+					# This happens when you, for example, press shift+rightArrow at the end of a block.
+					# Try from the root.
+					rootTi = _makeRawTextInfo(obj, position)
+					if not rootTi.isCollapsed:
+						# There is definitely a selection.
+						tempTi, tempObj = rootTi, obj
 			if tempTi.isCollapsed:
 				# No selection, so use the caret.
 				self._start = self._end = tempTi
