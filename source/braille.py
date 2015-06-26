@@ -126,6 +126,12 @@ TABLES = (
 	("Fr-Ca-g2.ctb", _("French (Canada) grade 2"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("ga-g1.utb", _("Irish grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("ga-g2.ctb", _("Irish grade 2"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("gu-in-g1.utb", _("Gujarati grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
@@ -157,6 +163,12 @@ TABLES = (
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("ka-in-g1.utb", _("Kannada grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("ko-2006-g1.ctb", _("Korean grade 1 (2006)"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("ko-2006-g2.ctb", _("Korean grade 2 (2006)"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("ko-g1.ctb", _("Korean grade 1"), False),
