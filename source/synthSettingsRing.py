@@ -89,7 +89,12 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 	def _get_currentSettingName(self):
 		""" returns the current setting's name """
 		if self._current is not None and hasattr(self,'settings'):
-			return self.settings[self._current].setting.i18nName.replace('&','')
+			currentSetting = self.settings[self._current].setting
+			# #5185: Look up display name before resorting to normalizing i18n name.
+			if currentSetting.displayName is not None:
+				return currentSetting.displayName
+			else:
+				return currentSetting.i18nName.replace('&','')
 		return None
 
 	def _get_currentSettingValue(self):
