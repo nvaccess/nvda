@@ -19,6 +19,8 @@ import speech
 import sayAllHandler
 import treeInterceptorHandler
 import inputCore
+import review
+import braille
 
 REASON_QUICKNAV = "quickNav"
 
@@ -161,6 +163,10 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 	def moveTo(self):
 		self.textInfo.updateCaret()
+		caret = self.textInfo.copy()
+		caret.collapse()
+		review.handleCaretMove(caret)
+		braille.handler.handleCaretMove(self.document)
 
 	@property
 	def isAfterSelection(self):
