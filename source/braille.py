@@ -106,8 +106,11 @@ TABLES = (
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("ethio-g1.ctb", _("Ethiopic grade 1"), False),
-	# braille settings dialog.
 	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("fi.utb", _("Finnish 6 dot"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("fi-fi-8dot.ctb", _("Finnish 8 dot computer braille"), True),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
