@@ -371,7 +371,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	app.MainLoop()
 
 	log.info("Exiting")
-	messageWindow.destroy()
 	if updateCheck:
 		_terminate(updateCheck)
 
@@ -413,6 +412,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			nvwave.playWaveFile("waves\\exit.wav",async=False)
 		except:
 			pass
+	# #5189: Destroy the message window as late as possible
+	# so new instances of NVDA can find this one even if it freezes during exit.
+	messageWindow.destroy()
 	log.debug("core done")
 
 def _terminate(module, name=None):
