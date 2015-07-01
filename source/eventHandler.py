@@ -5,7 +5,6 @@
 #Copyright (C) 2007-2014 NV Access Limited
 
 import threading
-import weakref
 import queueHandler
 import api
 import speech
@@ -182,10 +181,10 @@ def doPreDocumentLoadComplete(obj):
 			focusObject.treeInterceptor=treeInterceptorHandler.getTreeInterceptor(focusObject)
 	return True
 
-#: Collection of (eventName, processId, windowClassName) of events to accept.
-#: We use a WeakValueDictionary mapping events to AppModules so that
-#: entries get cleaned up automatically soon after their process dies.
-_acceptEvents = weakref.WeakValueDictionary()
+#: set of (eventName, processId, windowClassName) of events to accept.
+_acceptEvents = set()
+#: Maps process IDs to sets of events so they can be cleaned up when the process exits.
+_acceptEventsByProcess = {}
 
 def requestEvents(eventName=None, processId=None, windowClassName=None):
 	"""Request that particular events be accepted from a platform API.
@@ -201,8 +200,19 @@ def requestEvents(eventName=None, processId=None, windowClassName=None):
 	"""
 	if not eventName or not processId or not windowClassName:
 		raise ValueError("eventName, processId or windowClassName not specified")
-	app = appModuleHandler.getAppModuleFromProcessID(processId)
-	_acceptEvents[(eventName, processId, windowClassName)] = app
+	entry = (eventName, processId, windowClassName)
+	procEvents = _acceptEventsByProcess.get(processId)
+	if not procEvents:
+		procEvents = _acceptEventsByProcess[processId] = set()
+	procEvents.add(entry)
+	_acceptEvents.add(entry)
+
+def handleAppTerminate(appModule):
+	global _acceptEvents
+	events = _acceptEventsByProcess.pop(appModule.processID)
+	if not events:
+		return
+	_acceptEvents -= events
 
 def shouldAcceptEvent(eventName, windowHandle=None):
 	"""Check whether an event should be accepted from a platform API.
