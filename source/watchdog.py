@@ -64,10 +64,16 @@ def alive():
 def asleep():
 	"""Inform the watchdog that the core is going to sleep.
 	"""
+	# #5189: Reset in case the core was treated as dead.
+	alive()
+	# CancelWaitableTimer does not reset the signaled state; if it was signaled, it remains signaled.
+	# However, alive() calls SetWaitableTimer, which resets the timer to unsignaled.
 	windll.kernel32.CancelWaitableTimer(_coreDeadTimer)
 
 def _isAlive():
-	return winKernel.waitForSingleObject(_coreDeadTimer, 0) != 0
+	# #5189: If the watchdog has been terminated, treat the core as being alive.
+	# This will stop recovery if it has started and allow the watcher to terminate.
+	return not isRunning or winKernel.waitForSingleObject(_coreDeadTimer, 0) != 0
 
 def _watcher():
 	global isAttemptingRecovery
