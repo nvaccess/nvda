@@ -1227,7 +1227,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			speech.speakMessage(_("no focus"))
 	# Translators: Input help mode message for report current focus command.
-	script_reportCurrentFocus.__doc__ = _("reports the object with focus")
+	script_reportCurrentFocus.__doc__ = _("reports the object with focus. If pressed twice, spells the information")
 	script_reportCurrentFocus.category=SCRCAT_FOCUS
 
 	def script_reportStatusLine(self,gesture):
@@ -1256,7 +1256,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			speech.speakSpelling(text)
 	# Translators: Input help mode message for report status line text command.
-	script_reportStatusLine.__doc__ = _("reads the current application status bar and moves the navigator to it")
+	script_reportStatusLine.__doc__ = _("reads the current application status bar and moves the navigator to it. If pressed twice, spells the information")
 	script_reportStatusLine.category=SCRCAT_FOCUS
 
 	def script_toggleMouseTracking(self,gesture):
