@@ -209,7 +209,7 @@ def requestEvents(eventName=None, processId=None, windowClassName=None):
 
 def handleAppTerminate(appModule):
 	global _acceptEvents
-	events = _acceptEventsByProcess.pop(appModule.processID)
+	events = _acceptEventsByProcess.pop(appModule.processID, None)
 	if not events:
 		return
 	_acceptEvents -= events
