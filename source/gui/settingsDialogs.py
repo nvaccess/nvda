@@ -419,7 +419,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		@rtype: L{wx.BoxSizer}
 		"""
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.i18nName)
+		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.displayNameWithAccelerator)
 		slider=VoiceSettingsSlider(self,wx.ID_ANY,minValue=0,maxValue=100,name="%s:"%setting.i18nName)
 		setattr(self,"%sSlider"%setting.name,slider)
 		slider.Bind(wx.EVT_SLIDER,SynthSettingChanger(setting))
@@ -435,7 +435,7 @@ class VoiceSettingsDialog(SettingsDialog):
 	def makeStringSettingControl(self,setting):
 		"""Same as L{makeSettingControl} but for string settings. Returns sizer with label and combobox."""
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.i18nName)
+		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.displayNameWithAccelerator)
 		synth=getSynth()
 		setattr(self,"_%ss"%setting.name,getattr(synth,"available%ss"%setting.name.capitalize()).values())
 		l=getattr(self,"_%ss"%setting.name)###
@@ -457,7 +457,7 @@ class VoiceSettingsDialog(SettingsDialog):
 
 	def makeBooleanSettingControl(self,setting):
 		"""Same as L{makeSettingControl} but for boolean settings. Returns checkbox."""
-		checkbox=wx.CheckBox(self,wx.ID_ANY,label=setting.i18nName)
+		checkbox=wx.CheckBox(self,wx.ID_ANY,label=setting.displayNameWithAccelerator)
 		setattr(self,"%sCheckbox"%setting.name,checkbox)
 		checkbox.Bind(wx.EVT_CHECKBOX,
 			lambda evt: setattr(getSynth(),setting.name,evt.IsChecked()))

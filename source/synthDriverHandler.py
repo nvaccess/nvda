@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>, Peter Vágner <peter.v@datagate.sk>, Aleksey Sadovoy <lex@onm.su>
+#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Joseph Lee
 
 from copy import deepcopy
 import os
@@ -126,24 +126,32 @@ class SynthSetting(object):
 	#: @type: str
 	configSpec="string(default=None)"
 
-	def __init__(self,name,i18nName,availableInSynthSettingsRing=True):
+	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=True,displayName=None):
 		"""
 		@param name: internal name of the setting
 		@type name: str
-		@param i18nName: the localized string
-		@type i18nName: str
+		@param displayNameWithAccelerator: the localized string shown in voice settings dialog
+		@type displayNameWithAccelerator: str
+		@param displayName: the localized string used in synth settings ring or None to use displayNameWithAccelerator
+		@type displayName: str
 		@param availableInSynthSettingsRing: Will this option be available in synthesizer settings ring?
 		@type availableInSynthSettingsRing: bool
 		"""
 		self.name=name
-		self.i18nName=i18nName
+		self.displayNameWithAccelerator=displayNameWithAccelerator
+		#: @deprecated: Use L{displaynameWithAccelerator} and L{displayName} instead.
+		self.i18nName=displayNameWithAccelerator
+		if not displayName:
+			# Strip accelerator from displayNameWithAccelerator.
+			displayName=displayNameWithAccelerator.replace("&","")
+		self.displayName=displayName
 		self.availableInSynthSettingsRing=availableInSynthSettingsRing
 
 class NumericSynthSetting(SynthSetting):
 	"""Represents a numeric synthesizer setting such as rate, volume or pitch."""
 	configSpec="integer(default=50,min=0,max=100)"
 
-	def __init__(self,name,i18nName,availableInSynthSettingsRing=True,minStep=1,normalStep=5,largeStep=10):
+	def __init__(self,name,displayNameWithAccelerator,availableInSynthSettingsRing=True,minStep=1,normalStep=5,largeStep=10,displayName=None):
 		"""
 		@param minStep: Specifies the minimum step between valid values for each numeric setting. For example, if L{minStep} is set to 10, setting values can only be multiples of 10; 10, 20, 30, etc.
 		@type minStep: int
@@ -153,7 +161,7 @@ class NumericSynthSetting(SynthSetting):
 		@type largeStep: int
 		@note: If necessary, the step values will be normalised so that L{minStep} <= L{normalStep} <= L{largeStep}.
 		"""
-		super(NumericSynthSetting,self).__init__(name,i18nName,availableInSynthSettingsRing)
+		super(NumericSynthSetting,self).__init__(name,displayNameWithAccelerator,availableInSynthSettingsRing=availableInSynthSettingsRing,displayName=displayName)
 		self.minStep=minStep
 		self.normalStep=max(normalStep,minStep)
 		self.largeStep=max(largeStep,self.normalStep)
@@ -163,8 +171,8 @@ class BooleanSynthSetting(SynthSetting):
 	"""
 	configSpec = "boolean(default=False)"
 
-	def __init__(self, name, i18nName, availableInSynthSettingsRing=False):
-		super(BooleanSynthSetting, self).__init__(name, i18nName, availableInSynthSettingsRing)
+	def __init__(self, name,displayNameWithAccelerator,availableInSynthSettingsRing=False,displayName=None):
+		super(BooleanSynthSetting, self).__init__(name,displayNameWithAccelerator,availableInSynthSettingsRing=availableInSynthSettingsRing,displayName=displayName)
 
 class SynthDriver(baseObject.AutoPropertyObject):
 	"""Abstract base synthesizer driver.
@@ -211,40 +219,54 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	def LanguageSetting(cls):
 		"""Factory function for creating a language setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return SynthSetting("language",_("&Language"))
+		return SynthSetting("language",_("&Language"),
+		# Translators: Label for a setting in synth settings ring.
+		displayName=pgettext('synth setting','Language'))
 
 	@classmethod
 	def VoiceSetting(cls):
 		"""Factory function for creating voice setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return SynthSetting("voice",_("&Voice"))
+		return SynthSetting("voice",_("&Voice"),
+		# Translators: Label for a setting in synth settings ring.
+		displayName=pgettext('synth setting','Voice'))
 	@classmethod
 	def VariantSetting(cls):
 		"""Factory function for creating variant setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return SynthSetting("variant",_("V&ariant"))
+		return SynthSetting("variant",_("V&ariant"),
+		# Translators: Label for a setting in synth settings ring.
+		displayName=pgettext('synth setting','Variant'))
 
 	@classmethod
 	def RateSetting(cls,minStep=1):
 		"""Factory function for creating rate setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return NumericSynthSetting("rate",_("&Rate"),minStep=minStep)
+		return NumericSynthSetting("rate",_("&Rate"),minStep=minStep,
+		# Translators: Label for a setting in synth settings ring.
+		displayName=pgettext('synth setting','Rate'))
 	@classmethod
 	def VolumeSetting(cls,minStep=1):
 		"""Factory function for creating volume setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return NumericSynthSetting("volume",_("V&olume"),minStep=minStep,normalStep=10)
+		return NumericSynthSetting("volume",_("V&olume"),minStep=minStep,normalStep=10,
+		# Translators: Label for a setting in synth settings ring.
+		displayName=pgettext('synth setting','Volume'))
 	@classmethod
 	def PitchSetting(cls,minStep=1):
 		"""Factory function for creating pitch setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return NumericSynthSetting("pitch",_("&Pitch"),minStep=minStep)
+		return NumericSynthSetting("pitch",_("&Pitch"),minStep=minStep,
+		# Translators: Label for a setting in synth settings ring.
+		displayName=pgettext('synth setting','Pitch'))
 
 	@classmethod
 	def InflectionSetting(cls,minStep=1):
 		"""Factory function for creating inflection setting."""
 		# Translators: Label for a setting in voice settings dialog.
-		return NumericSynthSetting("inflection",_("&Inflection"),minStep=minStep)
+		return NumericSynthSetting("inflection",_("&Inflection"),minStep=minStep,
+# Translators: Label for a setting in synth settings ring.
+		displayName=pgettext('synth setting','Inflection'))
 
 	@classmethod
 	def check(cls):
