@@ -14,6 +14,7 @@ import config
 import inputCore
 
 ALVA_RELEASE_MASK = 0x8000
+ALVA_2ND_CR_MASK = 0x80
 
 ALVA_KEYS = {
 	# Thumb keys (FRONT_GROUP)
@@ -158,8 +159,12 @@ class InputGesture(braille.BrailleDisplayGesture):
 		self.keyNames = names = set()
 		for group, number in self.keyCodes:
 			if group == ALVA_CR_GROUP:
-				names.add("routing")
-				self.routingIndex = number
+				if number & ALVA_2ND_CR_MASK:
+					names.add("routing2")
+					self.routingIndex = number & ~ALVA_2ND_CR_MASK
+				else:
+					names.add("routing")
+					self.routingIndex = number
 			else:
 				try:
 					names.add(ALVA_KEYS[group][number])
