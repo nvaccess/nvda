@@ -138,10 +138,13 @@ class SynthSetting(object):
 		@type availableInSynthSettingsRing: bool
 		"""
 		self.name=name
-		self.displayName = displayName
 		self.displayNameWithAccelerator=displayNameWithAccelerator
 		#: @deprecated: Use L{displaynameWithAccelerator} and L{displayName} instead.
 		self.i18nName=displayNameWithAccelerator
+		if not displayName:
+			# Strip accelerator from displayNameWithAccelerator.
+			displayName=displayNameWithAccelerator.replace("&","")
+		self.displayName=displayName
 		self.availableInSynthSettingsRing=availableInSynthSettingsRing
 
 class NumericSynthSetting(SynthSetting):
