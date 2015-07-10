@@ -62,7 +62,7 @@ SCRCAT_CONFIG = _("Configuration")
 SCRCAT_BRAILLE = _("Braille")
 #: Script category for tools commands.
 # Translators: The name of a category of NVDA commands.
-SCRCAT_TOOLS = _("Tools")
+SCRCAT_TOOLS = pgettext('script category', 'Tools'),
 #: Script category for touch commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_TOUCH = _("Touch screen")
