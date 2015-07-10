@@ -190,14 +190,14 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	def script_toggleSingleLetterNav(self,gesture):
 		if self.singleLetterNavEnabled:
 			self.singleLetterNavEnabled=False
-			# Translators: single letter navigation in browse mode is turned off.
+			# Translators: Reported when single letter navigation in browse mode is turned off.
 			ui.message(_("Single letter navigation off"))
 		else:
 			self.singleLetterNavEnabled=True
-			# Translators: single letter navigation in browse mode is turned on.
+			# Translators: Reported when single letter navigation in browse mode is turned on.
 			ui.message(_("Single letter navigation on"))
 	# Translators: the description for the toggleSingleLetterNavigation command in browse mode.
-	script_toggleSingleLetterNav.__doc__=_("Switches single letter navigation mode on and off. When on single letter keys in browse mode jump to various kinds of elements on the page, and when off, these keys are passed to the application.")
+	script_toggleSingleLetterNav.__doc__=_("Toggles single letter navigation on and off. When on, single letter keys in browse mode jump to various kinds of elements on the page. When off, these keys are passed to the application")
 
 	def _get_ElementsListDialog(self):
 		return ElementsListDialog
