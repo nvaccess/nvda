@@ -1605,6 +1605,20 @@ class GlobalCommands(ScriptableObject):
 	script_braille_toggleTether.__doc__ = _("Toggle tethering of braille between the focus and the review position")
 	script_braille_toggleTether.category=SCRCAT_BRAILLE
 
+	def script_braille_toggleShowCursor(self, gesture):
+		if config.conf["braille"]["showCursor"]:
+			# Translators: The message announced when toggling the braille cursor.
+			state = _("Braille cursor off")
+			config.conf["braille"]["showCursor"]=False
+		else:
+			# Translators: The message announced when toggling the braille cursor.
+			state = _("Braille cursor on")
+			config.conf["braille"]["showCursor"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle braille cursor command.
+	script_braille_toggleShowCursor.__doc__ = _("Toggle the braille cursor on and off")
+	script_braille_toggleShowCursor.category=SCRCAT_BRAILLE
+
 	def script_braille_cycleCursorShape(self, gesture):
 		shapes = [s[0] for s in braille.CURSOR_SHAPES]
 		try:
