@@ -9,6 +9,7 @@
 - The existance of spelling errors is announced in editable fields for Internet Explorer and other MSHTML controls. (#4174)
 - Many more unicode math symbols are now spoken when they appear in text. (#3805)
 - Search suggestions in the Windows 10 start screen are automatically reported (#5049)
+- Support for the EcoBraille 20, EcoBraille 40, EcoBraille 80 and EcoBraille Plus braille displays. (#4078)
 
 
 == Bug Fixes ==
@@ -16,6 +17,9 @@
 - In Firefox, NVDA no longer tries to create a description for ARIA tab panels based  on all text inside. (#4638)
 - In Internet Explorer and other MSHTML controls, tabbing into sections, articles or dialogs  no longer reports all contents of the container as its name. (#5021, #5025) 
 - When using Baum/HumanWare/APH braille displays with a braille keyboard, braille input no longer stops functioning after pressing another type of key on the display. (#3541)
+- In Windows 10, extraneous information is no longer reported when pressing alt+tab or alt+shift+tab to switch between applications. (#5116)
+- Typed text is no longer garbled when using certain applications such as Microsoft Outlook with a braille display. (#2953)
+- When using text expansion functionality in software such as AutoHotkey, expanded text is no longer garbled when NVDA is configured to handle keys from other applications. (#4499)
 
 
 = 2015.2 =
