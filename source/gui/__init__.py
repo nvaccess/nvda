@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #gui/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2013 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed
+#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -403,7 +403,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 
 		menu_help = self.helpMenu = wx.Menu()
 		if not globalVars.appArgs.secure:
-			item = menu_help.Append(wx.ID_ANY, _("User Guide"))
+			# Translators: The label of a menu item to open NVDA user guide.
+			item = menu_help.Append(wx.ID_ANY, _("&User Guide"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("userGuide.html")), item)
 			# Translators: The label of a menu item to open the Commands Quick Reference document.
 			item = menu_help.Append(wx.ID_ANY, _("Commands &Quick Reference"))

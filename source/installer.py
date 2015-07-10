@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2011-2012 NV Access Limited
+#Copyright (C) 2011-2015 NV Access Limited, Joseph Lee
 
 from ctypes import *
 from ctypes.wintypes import *
@@ -195,7 +195,7 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 	docFolder=os.path.join(startMenuFolder,_("Documentation"))
 	# Translators: The label of the Start Menu item to open the Commands Quick Reference document.
 	createShortcut(os.path.join(docFolder,_("Commands Quick Reference")+".lnk"),targetPath=getDocFilePath("keyCommands.html",installDir),prependSpecialFolder="AllUsersPrograms")
-	# Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
+	# Translators: A label for a shortcut in start menu to open NVDA user guide.
 	createShortcut(os.path.join(docFolder,_("User Guide")+".lnk"),targetPath=getDocFilePath("userGuide.html",installDir),prependSpecialFolder="AllUsersPrograms")
 	registerAddonFileAssociation(slaveExe)
 
