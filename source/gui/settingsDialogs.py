@@ -1410,6 +1410,20 @@ class BrailleSettingsDialog(SettingsDialog):
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for a setting in braille settings to select the cursor shape.
+		label = wx.StaticText(self, wx.ID_ANY, label=_("Cursor shape:"))
+		self.cursorShapes = [s[0] for s in braille.CURSOR_SHAPES]
+		self.shapeList = wx.Choice(self, wx.ID_ANY, choices=[s[1] for s in braille.CURSOR_SHAPES])
+		try:
+			selection = self.cursorShapes.index(config.conf["braille"]["cursorShape"])
+			self.shapeList.SetSelection(selection)
+		except:
+			pass
+		sizer.Add(label)
+		sizer.Add(self.shapeList)
+		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 		label = wx.StaticText(self, wx.ID_ANY, label=_("Message timeout (sec)"))
 		sizer.Add(label)
@@ -1465,6 +1479,7 @@ class BrailleSettingsDialog(SettingsDialog):
 			val = None
 		if 0 <= val <= 2000:
 			config.conf["braille"]["cursorBlinkRate"] = val
+		config.conf["braille"]["cursorShape"] = self.cursorShapes[self.shapeList.GetSelection()]
 		try:
 			val = int(self.messageTimeoutEdit.GetValue())
 		except (ValueError, TypeError):

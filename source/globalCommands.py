@@ -1605,6 +1605,22 @@ class GlobalCommands(ScriptableObject):
 	script_braille_toggleTether.__doc__ = _("Toggle tethering of braille between the focus and the review position")
 	script_braille_toggleTether.category=SCRCAT_BRAILLE
 
+	def script_braille_cycleCursorShape(self, gesture):
+		shapes = [s[0] for s in braille.CURSOR_SHAPES]
+		try:
+			index = shapes.index(config.conf["braille"]["cursorShape"]) + 1
+		except:
+			index = 1
+		if index >= len(braille.CURSOR_SHAPES):
+			index = 0
+		config.conf["braille"]["cursorShape"] = braille.CURSOR_SHAPES[index][0]
+		shapeMsg = braille.CURSOR_SHAPES[index][1]
+		# Translators: Reports which braille cursor shape is activated.
+		ui.message(_("Braille cursor %s") % shapeMsg)
+	# Translators: Input help mode message for cycle braille cursor shape command.
+	script_braille_cycleCursorShape.__doc__ = _("Cycle through the braille cursor shapes")
+	script_braille_cycleCursorShape.category=SCRCAT_BRAILLE
+
 	def script_reportClipboardText(self,gesture):
 		try:
 			text = api.getClipData()
