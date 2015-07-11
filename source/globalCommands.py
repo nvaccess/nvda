@@ -1620,6 +1620,10 @@ class GlobalCommands(ScriptableObject):
 	script_braille_toggleShowCursor.category=SCRCAT_BRAILLE
 
 	def script_braille_cycleCursorShape(self, gesture):
+		if not config.conf["braille"]["showCursor"]:
+			# Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+			ui.message(_("Braille cursor is turned off"))
+			return
 		shapes = [s[0] for s in braille.CURSOR_SHAPES]
 		try:
 			index = shapes.index(config.conf["braille"]["cursorShape"]) + 1
