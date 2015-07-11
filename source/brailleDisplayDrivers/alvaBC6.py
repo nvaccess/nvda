@@ -124,6 +124,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"review_top": ("br(alvaBC6):t1+t2",),
 			"review_bottom": ("br(alvaBC6):t4+t5",),
 			"braille_toggleTether": ("br(alvaBC6):t1+t3",),
+			"braille_cycleCursorShape": ("br(alvaBC6):t1+t4",),
+			"braille_toggleShowCursor": ("br(alvaBC6):t2+t5",),
 			"title": ("br(alvaBC6):etouch2",),
 			"reportStatusLine": ("br(alvaBC6):etouch4",),
 			"kb:shift+tab": ("br(alvaBC6):sp1",),
