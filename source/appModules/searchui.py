@@ -16,7 +16,7 @@ class SuggestionListItem(UIA):
 
 	def event_UIA_elementSelected(self):
 		focusControllerFor=api.getFocusObject().controllerFor
-		if len(focusControllerFor)>0 and focusControllerFor[0].appModule is self.appModule:
+		if len(focusControllerFor)>0 and focusControllerFor[0].appModule is self.appModule and self.name:
 			speech.cancelSpeech()
 			api.setNavigatorObject(self)
 			self.reportFocus()
