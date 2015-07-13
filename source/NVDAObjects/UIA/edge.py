@@ -326,8 +326,38 @@ def UIAControlQuicknavIterator(itemType,document,position,UIACondition,direction
 
 class EdgeHTMLTreeInterceptorTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
 
+	def getTextWithFields(self,formatConfig=None):
+		try:
+			container=next(self.obj._iterNodesByType("nonTextContainer","up",self))
+		except StopIteration:
+			container=None
+		if container:
+			fields=super(EdgeHTMLTreeInterceptorTextInfo,container.textInfo).getTextWithFields(formatConfig)
+			startLen=0
+			for index,field in enumerate(fields):
+				if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
+					startLen=index+1
+				else:
+					break
+			fields[startLen:0-startLen]=[container.obj.value or u""]
+			return fields
+		else:
+			return super(EdgeHTMLTreeInterceptorTextInfo,self).getTextWithFields(formatConfig)
+
 	# override move to get around bugs in Edge where moving by line jumps over checkboxes, radio buttons etc.
 	def move(self,unit,direction,endPoint=None):
+		try:
+			containerInfo=next(self.obj._iterNodesByType("nonTextContainer","up",self)).textInfo
+		except StopIteration:
+			containerInfo=None
+		if containerInfo:
+			if direction>0:
+				containerInfo.collapse(end=True)
+				super(EdgeHTMLTreeInterceptorTextInfo,containerInfo).move(textInfos.UNIT_CHARACTER,-1)
+			else:
+				containerInfo.collapse()
+			self._rangeObj=containerInfo._rangeObj
+			del containerInfo
 		origInfo=None
 		if (direction==1 or direction==-1) and not endPoint and unit in (textInfos.UNIT_WORD,textInfos.UNIT_LINE):
 			origInfo=self.copy()
@@ -363,6 +393,13 @@ class EdgeHTMLTreeInterceptorTextInfo(browseMode.BrowseModeDocumentTextInfo,tree
 
 	# Override expand to get around bugs in Edge where expanding to line on a checkbox, radio button etc expands the previous line (not containing the control in question).
 	def expand(self,unit):
+		try:
+			containerInfo=None #next(self.obj._iterNodesByType("nonTextContainer","up",self)).textInfo
+		except StopIteration:
+			containerInfo=None
+		if containerInfo:
+			self._rangeObj=containerInfo._rangeObj
+			del containerInfo
 		origInfo=None
 		if unit in (textInfos.UNIT_WORD,textInfos.UNIT_LINE):
 			origInfo=self.copy()
@@ -426,6 +463,9 @@ class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,browseMode.Brows
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		elif nodeType=="formField":
 			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_EditControlTypeId,UIAHandler.UIA_ValueIsReadOnlyPropertyId:False},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:[UIAHandler.UIA_CheckBoxControlTypeId,UIAHandler.UIA_RadioButtonControlTypeId,UIAHandler.UIA_ComboBoxControlTypeId,UIAHandler.UIA_ButtonControlTypeId]})
+			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
+		elif nodeType=="nonTextContainer":
+			condition=createUIAMultiPropertyCondition({UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ListControlTypeId,UIAHandler.UIA_IsKeyboardFocusablePropertyId:True},{UIAHandler.UIA_ControlTypePropertyId:UIAHandler.UIA_ComboBoxControlTypeId})
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		raise NotImplementedError
 
