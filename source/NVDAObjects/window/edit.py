@@ -767,7 +767,8 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 
 	editAPIVersion=0
 	editAPIUnicode=True
-	useITextDocumentSupport=False
+	# #4291: Use ITextDocument in Windows 7 and later, as it's very slow in earlier versions.
+	useITextDocumentSupport=(winVersion.winVersion.major,winVersion.winVersion.minor)>=(6,1)
 	editValueUnit=textInfos.UNIT_LINE
 
 	def _get_TextInfo(self):
