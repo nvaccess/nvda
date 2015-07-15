@@ -295,11 +295,8 @@ class MainFrame(wx.Frame):
 	def onInstallCommand(self, evt):
 		if isInMessageBox:
 			return
-		self.prePopup()
-		from gui.installerGui import InstallerDialog
-		import installer
-		InstallerDialog(self).Show()
-		self.postPopup()
+		from gui import installerGui
+		installerGui.showInstallGui()
 
 	def onConfigProfilesCommand(self, evt):
 		if isInMessageBox:
