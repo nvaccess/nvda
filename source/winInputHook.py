@@ -1,6 +1,6 @@
 #winInputHook.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2007-2015 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -39,10 +39,10 @@ def keyboardHook(code,wParam,lParam):
 		return windll.user32.CallNextHookEx(0,code,wParam,lParam)
 	kbd=KBDLLHOOKSTRUCT.from_address(lParam)
 	if keyUpCallback and kbd.flags&LLKHF_UP:
-		if not keyUpCallback(kbd.vkCode,kbd.scanCode,bool(kbd.flags&LLKHF_EXTENDED),bool(kbd.flags&LLKHF_INJECTED)):
+		if not keyUpCallback(kbd.vkCode,kbd.scanCode,bool(kbd.flags&LLKHF_EXTENDED),bool(kbd.flags&LLKHF_INJECTED),kbd.dwExtraInfo):
 			return 1
 	elif keyDownCallback:
-		if not keyDownCallback(kbd.vkCode,kbd.scanCode,bool(kbd.flags&LLKHF_EXTENDED),bool(kbd.flags&LLKHF_INJECTED)):
+		if not keyDownCallback(kbd.vkCode,kbd.scanCode,bool(kbd.flags&LLKHF_EXTENDED),bool(kbd.flags&LLKHF_INJECTED),kbd.dwExtraInfo):
 			return 1
 	return windll.user32.CallNextHookEx(0,code,wParam,lParam)
 
