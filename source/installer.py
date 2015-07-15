@@ -68,11 +68,20 @@ def getInstallPath(noDefault=False):
 	except WindowsError:
 		return defaultInstallPath if not noDefault else None
 
-def isPreviousInstall():
-	path=getInstallPath(True)
-	if path and os.path.isdir(path):
-		return True
-	return False
+def comparePreviousInstall():
+	"""Returns 1 if the existing installation is newer than this running version,
+	0 if it is the same, -1 if it is older,
+	None if there is no existing installation.
+	"""
+	path = getInstallPath(True)
+	if not path or not os.path.isdir(path):
+		return None
+	try:
+		return cmp(
+			os.path.getmtime(os.path.join(path, "nvda_slave.exe")),
+			os.path.getmtime("nvda_slave.exe"))
+	except OSError:
+		return None
 
 def getDocFilePath(fileName,installDir):
 	rootPath=os.path.join(installDir,'documentation')
