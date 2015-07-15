@@ -534,13 +534,12 @@ def getSystemStickyKeys():
 
 
 # START SENDINPUT TYPE DECLARATIONS
-PUL = POINTER(c_ulong)
 class KeyBdInput(Structure):
     _fields_ = [("wVk", c_ushort),
              ("wScan", c_ushort),
              ("dwFlags", c_ulong),
              ("time", c_ulong),
-             ("dwExtraInfo", PUL)]
+             ("dwExtraInfo", c_ulong)]
 
 class HardwareInput(Structure):
     _fields_ = [("uMsg", c_ulong),
@@ -553,7 +552,7 @@ class MouseInput(Structure):
              ("mouseData", c_ulong),
              ("dwFlags", c_ulong),
              ("time",c_ulong),
-             ("dwExtraInfo", PUL)]
+             ("dwExtraInfo", c_ulong)]
 
 class Input_I(Union):
     _fields_ = [("ki", KeyBdInput),
