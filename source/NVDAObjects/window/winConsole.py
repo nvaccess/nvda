@@ -47,11 +47,6 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 	def _getTextLines(self):
 		return winConsoleHandler.getConsoleVisibleLines()
 
-	def event_typedCharacter(self,ch):
-		if winConsoleHandler.isInputEchoEnabled():
-			super(WinConsole,self).event_typedCharacter(ch)
-
-
 	def script_caret_backspaceCharacter(self, gesture):
 		super(WinConsole, self).script_caret_backspaceCharacter(gesture)
 		# #2586: We use console update events for typed characters,

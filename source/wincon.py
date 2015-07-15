@@ -43,8 +43,6 @@ CONSOLE_SELECTION_NOT_EMPTY=0x2
 CONSOLE_MOUSE_SELECTION=0X4
 CONSOLE_MOUSE_DOWN=0x8
 
-ENABLE_ECHO_INPUT=0x4
-
 def GetConsoleSelectionInfo():
 	info=CONSOLE_SELECTION_INFO()
 	if windll.kernel32.GetConsoleSelectionInfo(byref(info))==0:
@@ -91,10 +89,3 @@ def GetConsoleProcessList(maxProcessCount):
 def SetConsoleCtrlHandler(handler,add):
 	if windll.kernel32.SetConsoleCtrlHandler(handler,add)==0:
 		raise WinError()
-
-def getConsoleMode(handle):
-	val=DWORD()
-	windll.kernel32.GetConsoleMode(handle,byref(val))
-	return val.value
-
-	
