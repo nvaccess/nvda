@@ -7,13 +7,22 @@
 
 == Uudet ominaisuudet ==
 - Kirjoitusvirheet ilmoitetaan muokkauskentissä Internet Explorerissa ja muissa MSHTML-säätimissä. (#4174)
+- Entistä useampia matemaattisia unicode-symboleita puhutaan nyt niiden esiintyessä tekstissä. (#3805)
+- Windows 10:n aloitusnäytön Hakuehdotukset luetaan automaattisesti. (#5049)
+
+
+== Korjatut ohjelmavirheet ==
+- Lomakekenttiin pikanavigoiminen selaustilassa Internet Explorerissa ja muissa MSHTML-säätimissä ei enää siirrä virheellisesti esitystarkoituksiin käytettäviin listakohteisiin. (#4204)
+- NVDA ei enää yritä luoda Firefoxissa ARIA-välilehtiruuduille kuvausta kaiken niiden sisältämän tekstin perusteella. (#4638)
+- Sarkaimella siirtyminen osiin, artikkeleihin tai valintaikkunoihin Internet Explorerissa ja muissa MSHTML-säätimissä ei enää aiheuta kaiken säilön sisällön ilmoittamista sen nimenä. (#5021, #5025) 
+- Pistekirjoituksen syöttö ei lakkaa enää toimimasta sellaisia Baum/HumanWare/APH-pistenäyttöjä käytettäessä, joissa on pistekirjoitusnäppäimistö, kun jotain muuta näytön näppäintä on painettu. (#3541)
 
 
 = 2015.2 =
 Tämän version keskeisimpiä ominaisuuksia ovat mm. kaavioiden lukeminen Microsoft Excelissä sekä tuki matemaattisen sisällön lukemiselle ja vuorovaikutteiselle liikkumiselle.
 
 == Uudet ominaisuudet ==
-- Eteen- ja taaksepäin siirtyminen virkkeittäin on nyt mahdollista Microsoft Wordissa näppäinkomennoilla Alt+alanuoli ja Alt+ylänuoli. (#3288)
+- Eteen- ja taaksepäin siirtyminen virkkeittäin on nyt mahdollista Microsoft Wordissa ja Outlookissa näppäinkomennoilla Alt+alanuoli ja Alt+ylänuoli. (#3288)
 - Uusia pistetaulukoita useille intialaisille kielille. (#4778)
 - NVDA ilmoittaa Microsoft Excelissä, kun solussa on ylivuotavaa tai rajattua sisältöä. (#3040)
 - Elementtilistaa (NVDA+F7) voidaan nyt käyttää Microsoft Excelissä kaavioiden, kommenttien ja kaavojen näyttämiseen. (#1987)
