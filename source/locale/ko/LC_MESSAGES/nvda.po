@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-08 19:04+1000\n"
-"PO-Revision-Date: 2015-05-18 06:28-0800\n"
-"Last-Translator: Joseph Lee <joseph.lee22590@gmail,com>\n"
+"POT-Creation-Date: 2015-07-01 19:09+1000\n"
+"PO-Revision-Date: 2015-07-12 11:48+0900\n"
+"Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
 "Language: ko_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.5\n"
+"X-Generator: Poedit 1.7.1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -3582,17 +3582,20 @@ msgid ""
 msgstr "현재 리뷰 커서 위치의 서식 정보를 알려줍니다. "
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus"
-msgstr "포커스된 객체를 알려줍니다."
+msgid "reports the object with focus. If pressed twice, spells the information"
+msgstr "포커스된 객체를 알려줍니다. 두번 누르면 포커스 정보를 발음합니다."
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "표시줄을 찾을 수 없음"
 
 #. Translators: Input help mode message for report status line text command.
-msgid "reads the current application status bar and moves the navigator to it"
+msgid ""
+"reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information"
 msgstr ""
-"현재 응용프로그램의 상태 표시줄을 읽고 네비게이터를 그곳으로 이동합니다."
+"현재 응용프로그램의 상태 표시줄을 읽고 탐색 객체를 그곳으로 이동합니다. 두번 "
+"누르면 정보를 발음합니다."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -6463,13 +6466,13 @@ msgstr "NVDA 업데이트 자동 확인 (&U)"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
-"Custom plugins were detected in your user settings directory. Copying these "
-"to the system profile could be a security risk. Do you still wish to copy "
-"your settings?"
+"Add-ons were detected in your user settings directory. Copying these to the "
+"system profile could be a security risk. Do you still wish to copy your "
+"settings?"
 msgstr ""
-"사용자 환경 폴더내에 외부 플러그인들이 설치되어 있습니다. 이 플러그인들을 시"
-"스템 환경에 복사시 시스템 보안에 문제를 일으킬 수 있습니다. 정말로 시스템 환"
-"경으로 외부 플러그인들을 복사하시겠습니까? "
+"사용자 환경 폴더내에 추가 기능들이 설치되어 있습니다. 추가 기능들을 시스템 환"
+"경에 복사시 시스템 보안에 문제를 일으킬 수 있습니다. 정말로 시스템 환경으로 "
+"추가 기능들을 복사하시겠습니까? "
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
@@ -7744,7 +7747,7 @@ msgstr ""
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter"
-msgstr ""
+msgstr "분산형"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7768,7 +7771,7 @@ msgstr ""
 
 #. Translators: Message reporting the title and type of a chart.
 msgid "Chart title: {chartTitle}, type: {chartType}"
-msgstr ""
+msgstr "차트 제목: {chartTitle}, 형식: {chartType}"
 
 #. Translators: Reported when there is no title for an axis in a chart.
 msgid "Not defined"
@@ -7778,19 +7781,19 @@ msgstr ""
 #. Translators: The category axis in a Microsoft Excel chart.
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Category"
-msgstr ""
+msgstr "항목"
 
 #. Translators: A type of axis in a chart.
 #. Translators: The value axis in a Microsoft Excel chart.
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Value"
-msgstr ""
+msgstr "값"
 
 #. Translators: A type of axis in a chart.
 #. Translators: The series axis in a Microsoft Excel chart.
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Series"
-msgstr ""
+msgstr "계열"
 
 #. Translators: Message reporting the type and title of an axis in a chart.
 #. For example, this might report "Category axis is month"
@@ -7808,7 +7811,7 @@ msgstr ""
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
 msgid "series {number} {name}"
-msgstr ""
+msgstr "계열 {number} {name}"
 
 #. Translators: Indicates that there are no series in a chart.
 msgid "No Series defined."
@@ -7816,18 +7819,18 @@ msgstr ""
 
 #. Translators: A slice in a pie chart.
 msgid "slice"
-msgstr ""
+msgstr "조각"
 
 #. Translators: A data point in a line chart.
 msgid "data point"
-msgstr ""
+msgstr "데이터 요소"
 
 #. Translators: A segment of a chart for charts which don't have a specific name for segments.
 msgid "item"
-msgstr ""
+msgstr "항목"
 
 msgid "Series color: {colorName} "
-msgstr ""
+msgstr "계열 색상: {colorName} "
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Display Unit Label"
@@ -7835,27 +7838,27 @@ msgstr ""
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Major Gridlines"
-msgstr ""
+msgstr "주 눈금선"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Minor Gridlines"
-msgstr ""
+msgstr "보조 눈금선"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Pivot Chart Drop Zone"
-msgstr ""
+msgstr "Pivot Chart Drop Zone"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Pivot Chart Field Button"
-msgstr ""
+msgstr "Pivot Chart Field Button"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Down Bars"
-msgstr ""
+msgstr "음선"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Drop Lines"
-msgstr ""
+msgstr "하강선"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Hi Lo Lines"
@@ -7863,27 +7866,27 @@ msgstr ""
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Radar Axis Labels"
-msgstr ""
+msgstr "방사형 축 레이블"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Series Lines"
-msgstr ""
+msgstr "계열선"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Up Bars"
-msgstr ""
+msgstr "양선"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Corners"
-msgstr ""
+msgstr "꼭지점"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Data Table"
-msgstr ""
+msgstr "데이터 표"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Floor"
-msgstr ""
+msgstr "밑면"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Nothing"
@@ -7891,32 +7894,32 @@ msgstr ""
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Walls"
-msgstr ""
+msgstr "옆면"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Data Label"
-msgstr ""
+msgstr "데이터 레이블"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Error Bars"
-msgstr ""
+msgstr "오차 막대"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "X Error Bars"
-msgstr ""
+msgstr "X 오차 막대"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Y Error Bars"
-msgstr ""
+msgstr "Y 오차 막대"
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Shape"
-msgstr ""
+msgstr "모양"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
 msgid "{seriesName} series {seriesIndex} of {seriesCount}"
-msgstr ""
+msgstr "{seriesName} 계열 {seriesIndex} 총 {seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
 msgid "no change from point {previousIndex}, "
@@ -7924,39 +7927,39 @@ msgstr ""
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 msgid "Increased by {incrementValue} from point {previousIndex}, "
-msgstr ""
+msgstr "증가 {incrementValue} from point {previousIndex}, "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr ""
+msgstr "감소 {decrementValue} from point {previousIndex}, "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
 msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr ""
+msgstr "{categoryAxisTitle} {categoryAxisData}: "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
 msgid "Category {categoryAxisData}: "
-msgstr ""
+msgstr "항목 {categoryAxisData}: "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
 msgid "{valueAxisTitle} {valueAxisData}"
-msgstr ""
+msgstr "{valueAxisTitle} {valueAxisData}"
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisData} will be replaced with the value itself; e.g. "1000".
 msgid "value {valueAxisData}"
-msgstr ""
+msgstr "값 {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr ""
+msgstr " 분수 {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
@@ -7965,36 +7968,36 @@ msgstr ""
 
 #. Translators: The primary axis group in a Microsoft Excel chart.
 msgid "Primary"
-msgstr ""
+msgstr "기본"
 
 #. Translators: The secondary axis group in a Microsoft Excel chart.
 msgid "Secondary"
-msgstr ""
+msgstr "보조"
 
 #. Translators: Details about an axis in a chart.
 msgid "Chart axis, type: {axisType}, group: {axisGroup}, title: {axisTitle}"
-msgstr ""
+msgstr "차트 축, 유형: {axisType}, group: {axisGroup}, 제목: {axisTitle}"
 
 #. Translators: Details about an untitled axis in a chart.
 msgid "Chart axis, type: {axisType}, group: {axisGroup}"
-msgstr ""
+msgstr "차트 축, 유형: {axisType}, group: {axisGroup}"
 
 #. Translators: Indicates a chart axis title in Microsoft Excel.
 msgid "Chart axis title"
-msgstr ""
+msgstr "차트 축 제목"
 
 #. Translators: Indicates a trendline in a Microsoft Excel chart.
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "trendline"
-msgstr ""
+msgstr "추세선"
 
 #. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
 msgid " squared "
-msgstr ""
+msgstr " 제곱 "
 
 #. Translators: Details about a chart title in Microsoft Excel.
 msgid "Chart title: {chartTitle}"
-msgstr ""
+msgstr "차트 제목: {chartTitle}"
 
 #. Translators: Indicates an untitled chart in Microsoft Excel.
 msgid "Untitled chart"
@@ -8005,6 +8008,8 @@ msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
 msgstr ""
+"차트 영역, 높이: {chartAreaHeight}, 넓이: {chartAreaWidth}, 위쪽: "
+"{chartAreaTop}, 왼쪽: {chartAreaLeft}"
 
 #. Translators: Indicates the chart area of a Microsoft Excel chart.
 msgid "Chart area "
@@ -8019,16 +8024,16 @@ msgstr ""
 
 #. Translators: Indicates the plot area of a Microsoft Excel chart.
 msgid "Plot area "
-msgstr ""
+msgstr "그림 영역"
 
 #. Translators: Indicates the legend in a Microsoft Excel chart.
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Legend"
-msgstr ""
+msgstr "범례"
 
 #. Translators: Indicates that there is no legend in a Microsoft Excel chart.
 msgid "No legend"
-msgstr ""
+msgstr "범례 없음"
 
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
@@ -8315,6 +8320,9 @@ msgstr "HIMS 한소네/브레일 에지"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
+
+#~ msgid "reports the object with focus"
+#~ msgstr "포커스된 객체를 알려줍니다."
 
 #~ msgid "%s"
 #~ msgstr "%s"
