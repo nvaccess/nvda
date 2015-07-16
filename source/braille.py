@@ -1642,8 +1642,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		display = config.conf["braille"]["display"]
 		if display != self.display.name:
 			self.setDisplayByName(display)
-		setTranslationTable(config.conf["braille"]["translationTable"])
-		setInputTable(config.conf["braille"]["inputTable"])
+		self.setTranslationTable(config.conf["braille"]["translationTable"])
+		self.setInputTable(config.conf["braille"]["inputTable"])
 
 def initialize():
 	global handler
