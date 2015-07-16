@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-08 19:04+1000\n"
-"PO-Revision-Date: 2015-05-22 13:33+0100\n"
+"POT-Creation-Date: 2015-07-01 19:09+1000\n"
+"PO-Revision-Date: 2015-07-07 14:51+0100\n"
 "Last-Translator: Leonard de Ruijter <alderuijter@gmail.com>\n"
 "Language-Team: Dutch <nvda-nl@googlegroups.com> (http://www.transifex.net/"
 "projects/p/nvda/language/nl/)\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.7.4\n"
+"X-Generator: Poedit 1.8.1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -3607,17 +3607,21 @@ msgstr ""
 "het document"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus"
-msgstr "Geeft het object weer dat de focus heeft"
+msgid "reports the object with focus. If pressed twice, spells the information"
+msgstr ""
+"Meldt het object dat de focus heeft. Tweemaal drukken spelt de informatie"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "Geen statusregel gevonden"
 
 #. Translators: Input help mode message for report status line text command.
-msgid "reads the current application status bar and moves the navigator to it"
+msgid ""
+"reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information"
 msgstr ""
-"Leest de statusbalk van de huidige applicatie en plaatst de navigator daar"
+"Leest de statusbalk van de huidige applicatie en plaatst de navigator daar. "
+"Tweemaal drukken spelt de informatie"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -6539,13 +6543,13 @@ msgstr "Automatisch controleren op NVDA &updates"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
-"Custom plugins were detected in your user settings directory. Copying these "
-"to the system profile could be a security risk. Do you still wish to copy "
-"your settings?"
+"Add-ons were detected in your user settings directory. Copying these to the "
+"system profile could be a security risk. Do you still wish to copy your "
+"settings?"
 msgstr ""
-"Er zijn plugins aanwezig in de gebruikersconfiguratiemap. Het kopiëren van "
-"deze plugins naar de systeemdirectory kan een beveiligingsrisico vormen. "
-"Wilt u nog steeds uw instellingen kopieeren?"
+"Er zijn add-ons aanwezig in de gebruikersconfiguratiemap. Deze kopiëren naar "
+"de systeemmap kan een beveiligingsrisico vormen. Wilt u nog steeds uw "
+"instellingen kopiëren?"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
@@ -8421,6 +8425,9 @@ msgstr "HIMS Braille Sense/Braille EDGE serie"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "reports the object with focus"
+#~ msgstr "Geeft het object weer dat de focus heeft"
 
 #~ msgid "%s"
 #~ msgstr "%s"
