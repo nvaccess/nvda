@@ -838,6 +838,8 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		if not hasattr(self.rootNVDAObject.appModule, "_browseModeRememberedCaretPositions"):
 			self.rootNVDAObject.appModule._browseModeRememberedCaretPositions = {}
 		self._lastCaretPosition = None
+		#: True if the last caret move was due to a focus change.
+		self._lastCaretMoveWasFocus = False
 
 	def terminate(self):
 		if self.shouldRememberCaretPositionAcrossLoads and self._lastCaretPosition:
@@ -962,10 +964,12 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		self._lastCaretPosition = caret.bookmark
 		review.handleCaretMove(caret)
 		if reason == controlTypes.REASON_FOCUS:
+			self._lastCaretMoveWasFocus = True
 			focusObj = api.getFocusObject()
 			if focusObj==self.rootNVDAObject:
 				return
 		else:
+			self._lastCaretMoveWasFocus = False
 			focusObj=info.focusableNVDAObjectAtStart
 			obj=info.NVDAObjectAtStart
 			if not obj:
@@ -1095,6 +1099,10 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		@return: C{True} if the tab order was overridden, C{False} if not.
 		@rtype: bool
 		"""
+		if self._lastCaretMoveWasFocus:
+			# #5227: If the caret was last moved due to a focus change, don't override tab.
+			# This ensures that tabbing behaves as expected after tabbing hits an iframe document.
+			return False
 		focus = api.getFocusObject()
 		try:
 			focusInfo = self.makeTextInfo(focus)
