@@ -265,11 +265,11 @@ Quan faigas isto lo NVDA anunciará información sobre o que tien o foco, tal co
 
 Bi ha qualques ordens de teclau utils quan nos movamos con o foco:
 %kc:beginInclude
-|| Nombre | tecla | Descripción |
-| Anunciar o foco actual | NVDA+tabulador | anuncia l'obchecto actual u lo control que tienga o foco d'o sistema. Pretando-ne dos vegadas letriará a información  |
-| Anunciar o titol | NVDA+t | Anuncia o titol d'a finestra activa actualment. Pretando-ne dos vegadas letriará a información. Pretando-ne tres vegadas a copiará t'o portafuellas |
-| Leyer a finestra activa | NVDA+b | leye totz os controls en a finestra actualment activa (util ta dialogos) |
-| Anunciar a Barra d'Estau | NVDA+fin | Anuncia a barra d'estau si o NVDA en troba una. Tamién mueve o navegador d'obchectos ta ista localización |
+|| Nombre | tecla sobremesa | tecla portatil | Descripción |
+| Anunciar o foco actual | NVDA+tabulador | NVDA+tabulador | anuncia l'obchecto actual u lo control que tienga o foco d'o sistema. Pretando-ne dos vegadas letriará a información  |
+| Anunciar o titol | NVDA+t | NVDA+t | Anuncia o titol d'a finestra activa actualment. Pretando-ne dos vegadas letriará a información. Pretando-ne tres vegadas a copiará t'o portafuellas |
+| Leyer a finestra activa | NVDA+b | NVDA+b | leye totz os controls en a finestra actualment activa (util ta dialogos) |
+| Anunciar a Barra d'Estau | NVDA+fin | NVDA+mayus+fin | Anuncia a barra d'estau si o NVDA en troba una. Tamién mueve o navegador d'obchectos ta ixa localización. En pretar dos vegadas letreya a información |
 %kc:endInclude
 
 ++ Navegando con o Cursor d'o Sistema ++[SystemCaret]
@@ -281,12 +281,12 @@ O NVDA anunciará seguntes te muevas por caracteres, parolas, linias, y tamién 
 
 O NVDA proporciona as siguients teclas d'ordens en relación a o cursor d'o sistema:
 %kc:beginInclude
-|| Nombre | Tecla | Descripción |
-| Leyer-lo tot | NVDA+Flecha Abaixo | Prencipia a lectura dende a posición actual d'o cursor d'o sistema, movendo-lo seguntes se desplaza |
-| Leyer a linia actual | NVDA+Flecha Alto | Leye a linia an siga situau actualment o cursor d'o sistema. Pretando dos vegadas letreya a linia. |
-| Leyer a selección de texto actual | NVDA+Mayus+Flecha Alto | Leye qualsiquier texto seleccionau actualment |
-| Frase siguient | alt+flecha abaixo | alt+flecha abaixo | Mueve o cursor t'a  siguient frase y l'anuncia. (No suportau que en o Microsoft Word) |
-| Frase anterior | alt+flecha alto | alt+flecha alto | Mueve o cursor ta l'anterior frase y l'anuncia. (No suportau que en o Microsoft Word) |
+|| nombre | tecla sobremesa | tecla portatil | descripción |
+| Leyer-lo tot | NVDA+flecha abaixo | NVDA+A | Prencipia a lectura dende a posición actual d'o cursor d'o sistema movendo-lo seguntes se'n desplaza |
+| Leyer a linia actual | NVDA+flecha alto | NVDA+L | Leye a linia an siga situau actualment o cursor d'o sistema. Pretando dos vegadas letreya a linia. |
+| Leyer a selección de texto actual | NVDA+mayus+flecha alto | NVDA+mayus+S | Leye qualsiquier texto seleccionau actualment |
+| Frase siguient | alt+flecha abaixo | alt+flecha abaixo | Mueve o cursor t'a  siguient frase y l'anuncia. (No suportau que en o Microsoft Word y l'Outlook) |
+| Frase anterior | alt+flecha alto | alt+flecha alto | Mueve o cursor ta l'anterior frase y l'anuncia. (No suportau que en o Microsoft Word y l'Outlook) |
 
 
 Quan sigas en una tabla, as siguients teclas d'ordens tamién son disponibles:
@@ -513,7 +513,7 @@ Se Proporciona tamién un campo d'edición en o dialogo o qual te permite filtra
 Una vegada haigas trigau un elemento, puetz emplegar os botons proporcionaus en o dialogo ta mover-te-ne ta, u activar, ixe elemento.
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| Lista d'elementos d'o Modo Navegación | NVDA+f7 | Desplega a lista d'elementos que contién vinclos, capiters y zonas ARIA d'o documento actual |
+| Lista d'elementos d'o modo de navegación | NVDA+f7 | Desplega a lista d'elementos que contién vinclos, capiters y zonas ARIA d'o documento actual |
 %kc:endInclude
 
 ++ Obchectos Integraus ++
@@ -524,7 +524,7 @@ Si ye accesible, allora puetz tabular por ells y interactuar como con qualsiquie
 Se proporciona una orden de teclau ta tornar t'a pachina orichinal que contién a l'obchecto integrau.
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| Mover-se-ne t'o conteniu d'o modo de Navegación | NVDA+control+espacio | Mueve o foco difuera de l'actual obchecto integrau y lo mete adintro d'o documento que lo contién |
+| Mover-se-ne t'o conteniu d'o modo de navegación | NVDA+control+espacio | Mueve o foco difuera de l'actual obchecto integrau y lo mete adintro d'o documento que lo contién |
 %kc:endInclude
  
 + Leyer conteniu Matematico +
@@ -1895,6 +1895,8 @@ BRAILLEX Tiny:
 | Mover-se-ne ta l'obchecto anterior | r1+left |
 | Mover-se-ne t'o siguient obchecto | r1+right |
 | Anunciar o formato de texto | reportf |
+| Anunciar o titol | l1+alto |
+| Anunciar a barra d'estau | l2+abaixo |
 
 BRAILLEX 2D Screen:
 || Nombre | Tecla |
