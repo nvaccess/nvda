@@ -7,7 +7,6 @@
 
 """Keyboard support"""
 
-import os
 import time
 import re
 import wx
@@ -23,6 +22,8 @@ import api
 import winInputHook
 import inputCore
 import tones
+
+ignoreInjected=False
 
 # Fake vk codes.
 # These constants should be assigned to the name that NVDA will use for the key.
@@ -68,13 +69,13 @@ def isNVDAModifierKey(vkCode,extended):
 	else:
 		return False
 
-def internal_keyDownEvent(vkCode,scanCode,extended,injected,extraInfo):
+def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by winInputHook when it receives a keyDown.
 	"""
 	try:
 		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers, keyCounter, stickyNVDAModifier, stickyNVDAModifierLocked
 		# Injected keys should be ignored in some cases.
-		if injected and (not config.conf['keyboard']['handleInjectedKeys'] or extraInfo == os.getpid()):
+		if injected and (ignoreInjected or not config.conf['keyboard']['handleInjectedKeys']):
 			return True
 
 		keyCode = (vkCode, extended)
@@ -162,13 +163,13 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected,extraInfo):
 		log.error("internal_keyDownEvent", exc_info=True)
 	return True
 
-def internal_keyUpEvent(vkCode,scanCode,extended,injected,extraInfo):
+def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""Event called by winInputHook when it receives a keyUp.
 	"""
 	try:
 		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers
 		# Injected keys should be ignored in some cases.
-		if injected and (not config.conf['keyboard']['handleInjectedKeys'] or extraInfo == os.getpid()):
+		if injected and (ignoreInjected or not config.conf['keyboard']['handleInjectedKeys']):
 			return True
 
 		keyCode = (vkCode, extended)
@@ -428,6 +429,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			state=_("on") if toggleState else _("off")))
 
 	def send(self):
+		global ignoreInjected
 		keys = []
 		for vk, ext in self.generalizedModifiers:
 			if vk == VK_WIN:
@@ -441,21 +443,24 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			keys.append((vk, 0, ext))
 		keys.append((self.vkCode, self.scanCode, self.isExtended))
 
-		pid = os.getpid()
-		if winUser.getKeyState(self.vkCode) & 32768:
-			# This key is already down, so send a key up for it first.
-			winUser.keybd_event(self.vkCode, self.scanCode, self.isExtended + 2, pid)
+		try:
+			ignoreInjected=True
+			if winUser.getKeyState(self.vkCode) & 32768:
+				# This key is already down, so send a key up for it first.
+				winUser.keybd_event(self.vkCode, self.scanCode, self.isExtended + 2, 0)
 
-		# Send key down events for these keys.
-		for vk, scan, ext in keys:
-			winUser.keybd_event(vk, scan, ext, pid)
-		# Send key up events for the keys in reverse order.
-		for vk, scan, ext in reversed(keys):
-			winUser.keybd_event(vk, scan, ext + 2, pid)
+			# Send key down events for these keys.
+			for vk, scan, ext in keys:
+				winUser.keybd_event(vk, scan, ext, 0)
+			# Send key up events for the keys in reverse order.
+			for vk, scan, ext in reversed(keys):
+				winUser.keybd_event(vk, scan, ext + 2, 0)
 
-		if not queueHandler.isPendingItems(queueHandler.eventQueue):
-			time.sleep(0.01)
-			wx.Yield()
+			if not queueHandler.isPendingItems(queueHandler.eventQueue):
+				time.sleep(0.01)
+				wx.Yield()
+		finally:
+			ignoreInjected=False
 
 	@classmethod
 	def fromName(cls, name):

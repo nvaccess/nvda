@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2015 NV Access Limited, Rui Batista
+#Copyright (C) 2012-2013 NV Access Limited, Rui Batista
 
 import os.path
 import louis
@@ -50,7 +50,6 @@ class BrailleInputHandler(object):
 
 	def sendChars(self, chars):
 		inputs = []
-		pid = os.getpid()
 		for ch in chars:
 			for direction in (0,winUser.KEYEVENTF_KEYUP): 
 				input = winUser.Input()
@@ -58,7 +57,6 @@ class BrailleInputHandler(object):
 				input.ii.ki = winUser.KeyBdInput()
 				input.ii.ki.wScan = ord(ch)
 				input.ii.ki.dwFlags = winUser.KEYEVENTF_UNICODE|direction
-				input.ii.ki.dwExtraInfo = pid
 				inputs.append(input)
 		winUser.SendInput(inputs)
 
