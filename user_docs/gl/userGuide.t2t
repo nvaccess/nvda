@@ -269,7 +269,7 @@ Hai algunhas ordes de teclado útis cando nos movamos co foco:
 | Anunciar foco actual | NVDA+tab | NVDA+tab | anuncia o obxecto actual ou control que teña o foco do sistema. Premendo dúas veces deletreará a información  |
 | Anunciar título | NVDA+t | NVDA+t | Anuncia o título da ventá activa actualmente. Premendo dúas veces deletreará a información. Premendo tres veces copiaráa ó portapapeis |
 | Ler a ventá activa | NVDA+b | NVDA+b | le todos os controis na ventá actualmente activa (útil para diálogos) |
-| Anunciar Barra de Estado | NVDA+fin | NVDA+shift+fin | Anuncia a barra de estado se NVDA atopa unha. Tamén move o navegador de obxectos a esta localización |
+| Anunciar Barra de Estado | NVDA+fin | NVDA+shift+fin | Anuncia a barra de estado se NVDA atopa unha. Tamén move o navegador de obxectos a esta localización. preméndo dúas veces deletreará a información |
 %kc:endInclude
 
 ++ Navegando co Cursor do Sistema ++[SystemCaret]
@@ -285,8 +285,8 @@ NVDA proporciona as seguintes teclas de ordes en relación ó cursor do sistema:
 | Ler todo | NVDA+Flecha Abaixo | NVDA+a | Comeza a lectura dende a posición actual do cursor do sistema, movéndoo segundo se despraza |
 | Ler liña actual | NVDA+Flecha Arriba | NVDA+l | Le a liña onde estea situado actualmente o cursor do sistema. Premendo dúas veces deletrea a liña. |
 | Ler a selección do texto actual | NVDA+Shift+Flecha Arriba | NVDA+shift+s | Le calquera texto seleccionado actualmente |
-| frase seguinte | alt+flecha abaixo | alt+flecha abaixo | Move o cursor á frase seguinte e anúnciaa. (só se soporta no Microsoft Word) |
-| frase anterior | alt+flecha arriba | alt+flecha arriba | Move o cursor á frase anterior e anúnciaa. (só se soporta no Microsoft Word) |
+| frase seguinte | alt+flecha abaixo | alt+flecha abaixo | Move o cursor á frase seguinte e anúnciaa. (só se soporta no Microsoft Word e Outlook) |
+| frase anterior | alt+flecha arriba | alt+flecha arriba | Move o cursor á frase anterior e anúnciaa. (só se soporta no Microsoft Word e Outlook) |
 
 
 Cando esteas nunha táboa, as seguintes teclas de ordes tamén están dispoñibles:
@@ -1895,6 +1895,8 @@ BRAILLEX Tiny:
 | Moverse ó obxecto anterior | r1+left |
 | Moverse ó seguinte obxecto | r1+right |
 | Anunciar formato de texto | reportf |
+| Anunciar título | l1+arriba |
+| Anunciar barra de estado | l2+abaixo |
 
 BRAILLEX 2D Screen:
 || Nome | Tecla |

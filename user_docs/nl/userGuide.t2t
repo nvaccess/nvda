@@ -273,7 +273,7 @@ Enkele toetscommando’s die van pas komen bij het verplaatsen van de systeemfoc
 | Huidige focus melden | NVDA+tab | NVDA+tab | laat horen welk object of besturingselement momenteel is gefocusseerd. Bij tweemaal indrukken wordt informatie gespeld |
 | Titel/naam melden | NVDA+t | NVDA+t | Laat horen hoe het momenteel actieve venster heet. Bij tweemaal indrukken wordt de informatie gespeld. Bij driemaal indrukken wordt deze naar het klembord gekopieerd. |
 | Actieve venster voorlezen | NVDA+b | NVDA+b | Leest de inhoud (knoppen, uitklapnenu’s,selectievakjes, etc.) voor. Handig voor dialoogvensters |
-| Statusbalk voorlezen | NVDA+End | NVDA+Shift+End | Leest de statusbalk als NVDA deze kan vinden. Het navigator object wordt ook naar de statusbalk verplaatst. |
+| Statusbalk voorlezen | NVDA+End | NVDA+Shift+End | Leest de statusbalk als NVDA deze kan vinden. Het navigator object wordt ook naar de statusbalk verplaatst. Bij tweemaal indrukken wordt de informatie gespeld. |
 %kc:endInclude
 
 ++ Navigeren met de systeemcursor ++[SystemCaret]
@@ -289,8 +289,8 @@ U kunt de volgende NVDA-toetscommando’s gebruiken om met de textcursor te navi
 | Alles voorlezen | NVDA+pijl omlaag | NVDA+a | Voorlezen starten vanaf de huidige positie van de tekstcursor die tijdens het lezen wordt verplaatst. |
 | Deze regel lezen | NVDA+pijl omhoog | NVDA+l | Hiermee wordt de regel waarin de tekstcursor zich momenteel bevindt voorgelezen. Bij tweemaal drukken wordt regel gespeld. |
 | Geselecteerde tekst lezen | NVDA+Shift+pijl omhoog | NVDA+Shift+s | Hiermee wordt geselecteerde tekst voorgelezen. |
-| Volgende zin | alt+Pijl omlaag | alt+Pijl omlaag | Verplaatst cursor naar volgende zin en meldt deze (alleen ondersteund in Microsoft Word). |
-| Vorige zin | alt+Pijl omhoog | Alt+Pijl omhoog | Verplaatst cursor naar vorige zin en meldt deze (alleen ondersteund in Microsoft Word). |
+| Volgende zin | alt+Pijl omlaag | alt+Pijl omlaag | Verplaatst cursor naar volgende zin en meldt deze (alleen ondersteund in Microsoft Word en Outlook). |
+| Vorige zin | alt+Pijl omhoog | Alt+Pijl omhoog | Verplaatst cursor naar vorige zin en meldt deze (alleen ondersteund in Microsoft Word en Outlook ). |
 
 Binnen een tabel kunt u ook de volgende toetscommando’s gebruiken:
 || Naam | Toets | Beschrijving |
@@ -1895,8 +1895,10 @@ BRAILLEX Tiny:
 | Navigatorobject naar voorafgaand Object verplaatsen | r1+left |
 | Navigatorobject naar volgende Object verplaatsen | r1+right |
 | Documentopmaak weergeven | reportf |
+| Titelweergeven | l1+omhoog |
+| Statusbalk weergeven | l2+omlaag |
 
-BRAILLEX 2D Screen:
+BRAILLEX 2D Scherm:
 || Naam | Toets |
 | Teken onder cursor voorlezen | l1 |
 | Huidige navigatorobject activeren | l2 |

@@ -6,6 +6,16 @@
 = 2015.3 =
 == Nove Značajke ==
 - Sada se izgovara postojanje pravopisnih pogrešaka u poljima za uređivanje u internet exploreru i drugim MSHTML kontrolama. (#4174)
+- Many more unicode math symbols are now spoken when they appear in text. (#3805)
+- Search suggestions in the Windows 10 start screen are automatically reported (#5049)
+
+
+== Bug Fixes ==
+- In browse mode for Internet Explorer and other MSHTML controls, quick navigation by form field no longer incorrectly includes presentational list items. (#4204)
+- In Firefox, NVDA no longer tries to create a description for ARIA tab panels based  on all text inside. (#4638)
+- In Internet Explorer and other MSHTML controls, tabbing into sections, articles or dialogs  no longer reports all contents of the container as its name. (#5021, #5025) 
+- When using Baum/HumanWare/APH braille displays with a braille keyboard, braille input no longer stops functioning after pressing another type of key on the display. (#3541)
+
 
 = 2015.2 =
 Nove značajke u ovoj inačici uključuju mogućnost čitanja grafova u microsoft excelu i podršku koja omogućuje čitanje matematičkog sadržaja.

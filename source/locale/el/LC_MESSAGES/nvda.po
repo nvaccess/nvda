@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-08 19:04+1000\n"
-"PO-Revision-Date: 2015-05-14 23:05+0200\n"
+"POT-Creation-Date: 2015-07-01 19:09+1000\n"
+"PO-Revision-Date: 2015-06-26 11:49+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -3635,15 +3635,18 @@ msgstr ""
 "επανεξέτασης μέσα σε ένα έγγραφο"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus"
-msgstr "αναφέρει το αντικείμενο με εστίαση"
+msgid "reports the object with focus. If pressed twice, spells the information"
+msgstr ""
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "Δε βρέθηκε γραμμή κατάστασης"
 
 #. Translators: Input help mode message for report status line text command.
-msgid "reads the current application status bar and moves the navigator to it"
+#, fuzzy
+msgid ""
+"reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information"
 msgstr ""
 "διαβάζει τη γραμμή κατάστασης για την τρέχουσα εφαρμογή και μετακινεί τον "
 "πλοηγό σε αυτή."
@@ -6607,13 +6610,13 @@ msgstr "Αυτόματος έλεγχος ενημερωμένων εκδόσε�
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
-"Custom plugins were detected in your user settings directory. Copying these "
-"to the system profile could be a security risk. Do you still wish to copy "
-"your settings?"
+"Add-ons were detected in your user settings directory. Copying these to the "
+"system profile could be a security risk. Do you still wish to copy your "
+"settings?"
 msgstr ""
-"Εντοπίστηκαν προσαρμοσμένα plugins στο δικό σας φάκελο ρυθμίσεων χρήστη. Η "
-"αντιγραφή τους στο προφίλ συστήματος μπορεί να είναι επικίνδυνη. "
-"Εξακολουθείτε να θέλετε να αντιγράψετε τις ρυθμίσεις σας;"
+"Εντοπίστηκαν πρόσθετα στο δικό σας φάκελο ρυθμίσεων χρήστη. Η αντιγραφή τους "
+"στο προφίλ συστήματος μπορεί να είναι επικίνδυνη. Εξακολουθείτε να θέλετε να "
+"αντιγράψετε τις ρυθμίσεις σας;"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
@@ -8517,6 +8520,9 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "reports the object with focus"
+#~ msgstr "αναφέρει το αντικείμενο με εστίαση"
 
 #~ msgid "%s"
 #~ msgstr "%s"

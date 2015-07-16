@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr 2013.1:6039\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-19 19:05+1000\n"
-"PO-Revision-Date: 2015-05-22 06:47+0545\n"
+"POT-Creation-Date: 2015-07-01 19:09+1000\n"
+"PO-Revision-Date: 2015-07-09 22:15+0545\n"
 "Last-Translator: drishtibachak@gmail.com\n"
 "Language-Team: Him Prasad Gautam <drishtibachak@gmail.com>\n"
 "Language: ne\n"
@@ -3267,8 +3267,8 @@ msgid ""
 "Reports the current navigator object. Pressing twice spells this information,and pressing three "
 "times Copies name and value of this  object to the clipboard"
 msgstr ""
-"वर्तमान विचरण वश्तुको जानकारी दिनेछ । दुई पटक दबाएमा यसको हिज्जे भन्ने छ र तीन पटक दबाएमा यो वश्तुको नाम एबम् "
-"मान क्लिपपाटीमा उतार्नेछ ।"
+"चालू विचरण वस्तु बताउँछ । दुई पटक दबाएमा, यसको हिज्जे भन्ने छ  र  तीन पटक दबाएमा, वस्तुको नाम एवम् मान क्लिप "
+"पाटीमा उतार्ने छ ।"
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
@@ -3503,16 +3503,18 @@ msgid "Reports formatting info for the current review cursor position within a d
 msgstr "चालू समीक्षा कर्सर रहेको स्थानको कागजातको स्वरूप जनाउने छ । "
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus"
-msgstr "केन्द्रित वस्तु चिनाउने छ"
+msgid "reports the object with focus. If pressed twice, spells the information"
+msgstr "केन्द्रित् वस्तुको जानकारि दिन्छ ।  दुई पटक दबाएमा, यसको हिज्जे बताउने छ ।"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "स्थिति पङ्ति भेटिएन"
 
 #. Translators: Input help mode message for report status line text command.
-msgid "reads the current application status bar and moves the navigator to it"
-msgstr "चालू अनुप्रयोग स्थिति पट्टी पढ्छ र विचरण लाई यसमा सार्छ ।"
+msgid ""
+"reads the current application status bar and moves the navigator to it. If pressed twice, spells "
+"the information"
+msgstr "चालू अनुप्रयोगको स्थिति पट्टि पढ्छ र विचरकलाई यसमा लै जान्छ । दुई पटक दबाएमा, यसको हिज्जे बताउने छ ।"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -6290,11 +6292,11 @@ msgstr "अद्यावधिक &नेत्रवाणीको स्व
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
-"Custom plugins were detected in your user settings directory. Copying these to the system profile "
-"could be a security risk. Do you still wish to copy your settings?"
+"Add-ons were detected in your user settings directory. Copying these to the system profile could be "
+"a security risk. Do you still wish to copy your settings?"
 msgstr ""
-"तपाइको उपभोक्ता घर्रामा चालू चुकुलहरु पाइयो । यी दुबैलाई यो प्रणालीमा उतार्दा खतरनाक हुन सक्छ । के तपाइ आफ्नो "
-"अनुकूलताको नक्कल उतार्न नै चाहनु हुन्छ ?"
+"तपाइको उपभोक्ता अनुकूलता घर्रामा उपकर्मीहरू पाइए ।यिनिहरुलाई प्रणाली पार्श्वचित्रमा सार्दा सुरक्षाको चुनौति हुन "
+"सक्छ । के तपाइ यो अनुकूलतालाई सार्न चाहनु हुन्छ?"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
@@ -6671,7 +6673,7 @@ msgstr "पर्दा &रूपरेखाको उपयोग गर (स
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Automatic &Say All on page load"
-msgstr "स्वचालित रुपमा पृष्ठ बहन गरिदा  &सबै कुरा बताउ "
+msgstr "स्वचालित रुपमा पृष्ठ बहन गरिदा &सबै कुरा बताउ "
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -7110,7 +7112,7 @@ msgstr "तालिका वा सूचि जस्ता तत्व ह�
 
 #. Translators: Description for the Move past end of container command in browse mode.
 msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "सुचि अथवा तालिका जस्ता विगतका एकाईका सामाग्रीको  अन्तमा जान्छ ।, "
+msgstr "सुचि अथवा तालिका जस्ता विगतका एकाईका सामाग्रीको अन्तमा जान्छ ।, "
 
 msgid "Taskbar"
 msgstr "कार्य पट्टी"
@@ -7196,11 +7198,11 @@ msgstr "{address} लाई हरफको शिर्षक पहिले �
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 msgid "removed {address}    from row headers"
-msgstr "{address} लाई  हरफ शिर्षकबाट हटाइयो ।"
+msgstr "{address} लाई हरफ शिर्षकबाट हटाइयो ।"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 msgid "Cannot find {address}    in row headers"
-msgstr "{address}लाई  हरफ शिर्षकमा भेट्टिएन ।"
+msgstr "{address}लाई हरफ शिर्षकमा भेट्टिएन ।"
 
 msgid ""
 "Pressing once will set this cell as the first row header for any cells lower and to the right of it "
@@ -7844,13 +7846,13 @@ msgstr "सङ्केत छैन"
 #. Translators: Details about a legend entry for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend entry for series Temperature 1 of 2"
 msgid "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "श्रेणी  {seriesCount} को  {seriesName} {seriesIndex} सङ्केतको प्रविष्टि"
+msgstr "श्रेणी {seriesCount} को {seriesName} {seriesIndex} सङ्केतको प्रविष्टि"
 
 #. Translators: Details about a legend key for a series in a Microsoft Excel chart.
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "श्रेणी  {seriesCount} को  {seriesName} {seriesIndex} सङ्केतको चाबी"
+msgstr "श्रेणी {seriesCount} को {seriesName} {seriesIndex} सङ्केतको चाबी"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
@@ -8121,6 +8123,9 @@ msgstr "HIMS ब्रेल चेतना/ब्रेल किनारा 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "reports the object with focus"
+#~ msgstr "केन्द्रित वस्तु चिनाउने छ"
 
 #~ msgid "%s"
 #~ msgstr "%s"

@@ -3,6 +3,18 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.3 =
+
+== Novità ==
+- Se richiesto, vengono segnalati ora anche gli errori di ortografia presenti nei campi editazione di Internet Explorer e altri controlli MSHTML. (#4174)
+- Supporto per un numero molto più ampio di  simboli matematici unicode presenti in un testo. (#3805)
+- I suggerimenti di ricerca che appaiono nella schermata di start in Windows10 ora vengono annunciati automaticamente. (#5049)
+
+== Bug corretti ==
+- Nella modalità navigazione in Internet Explorer e altri controlli MSHTML, lo spostamento con la navigazione veloce con il tasto "f" per andare al campo successivo non presenta più elementi ornamentali. (#4204)
+In Firefox, NVDA non cerca più di creare una descrizione per le schede  ARIA basata su tutto il testo all'interno. (#4638)
+- Migliorata la lettura dei contenuti quando si preme tab per spostarsi tra sezioni, articoli o finestre di dialogo in Internet Explorer e altri controlli MSHTML. (#5021, #5025) 
+
 
 = 2015.2 =
 Caratteristiche salienti di questa versione includono la capacità di leggere i grafici in Microsoft Excel, nonché il supporto per la lettura e la navigazione interattiva dei contenuti di tipo matematico.

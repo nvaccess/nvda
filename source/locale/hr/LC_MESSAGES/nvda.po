@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-08 19:04+1000\n"
-"PO-Revision-Date: 2015-05-19 11:46+0100\n"
-"Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
+"POT-Creation-Date: 2015-07-01 19:09+1000\n"
+"PO-Revision-Date: 2015-06-25 16:48+0100\n"
+"Last-Translator: zvonimir stanečić <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
 "Language: hr_HR\n"
@@ -3607,15 +3607,18 @@ msgstr ""
 "unutar dokumenta"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus"
-msgstr "izvještava o objektu s fokusom"
+msgid "reports the object with focus. If pressed twice, spells the information"
+msgstr ""
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "Statusna linija nije pronađena"
 
 #. Translators: Input help mode message for report status line text command.
-msgid "reads the current application status bar and moves the navigator to it"
+#, fuzzy
+msgid ""
+"reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information"
 msgstr ""
 "čita trenutnu traku stanja aplikacije i premiješta kursor za navigaciju na "
 "istu"
@@ -6539,13 +6542,13 @@ msgstr "Automatski provjeri dostupnost &ažuriranja za NVDA"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
-"Custom plugins were detected in your user settings directory. Copying these "
-"to the system profile could be a security risk. Do you still wish to copy "
-"your settings?"
+"Add-ons were detected in your user settings directory. Copying these to the "
+"system profile could be a security risk. Do you still wish to copy your "
+"settings?"
 msgstr ""
-"U Vašem direktoriju za korisničke postavke pronađeni su proizvoljni dodaci. "
-"Kopiranje istih u profil sustava može prouzročiti sigurnosni rizik. Želite "
-"li svejedno nastaviti s kopiranjem Vaših postavki?"
+"U Vašem direktoriju za korisničke postavke pronađeni su dodaci. Kopiranje "
+"istih u profil sustava može prouzročiti sigurnosni rizik. Želite li svejedno "
+"nastaviti s kopiranjem Vaših postavki?"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
@@ -8406,6 +8409,9 @@ msgstr "HIMS Braille Sense/Braille EDGE serija"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "reports the object with focus"
+#~ msgstr "izvještava o objektu s fokusom"
 
 #, fuzzy
 #~ msgid "%s"
