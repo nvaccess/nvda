@@ -11,6 +11,7 @@ import wx
 import queueHandler
 from logHandler import log
 import review
+import scriptHandler
 import eventHandler
 import nvwave
 import queueHandler
