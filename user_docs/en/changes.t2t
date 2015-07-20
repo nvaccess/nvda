@@ -29,10 +29,12 @@
 - In browse mode in Internet Explorer and other MSHTML controls, the correct content is now reported when an element appears or changes and is immediately focused. (#5040)
 - In browse mode in Microsoft Word, single letter navigation now updates the braille display and the review cursor as expected. (#4968)
 - In braille, extraneous spaces are no longer displayed between or after indicators for controls and formatting. (#5043)
+- When an application is responding slowly and you switch away from that application, NVDA is now much more responsive in other applications in most cases. (#3831)
 
 
 == Changes for Developers ==
 - You can now injet raw input from a system keyboard that is not handled natively by Windows (e.g. a QWERTY keyboard on a braille display) using the new keyboardHandler.injectRawKeyboardInput function. (#4576)
+- eventHandler.requestEvents has been added to request particular events that are blocked by default; e.g. show events from a specific control or certain events even when in the background. (#3831)
 
 
 = 2015.2 =

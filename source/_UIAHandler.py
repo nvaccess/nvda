@@ -188,6 +188,12 @@ class UIAHandler(COMObject):
 			return
 		if not self.isNativeUIAElement(sender):
 			return
+		try:
+			window=sender.cachedNativeWindowHandle
+		except COMError:
+			window=None
+		if window and not eventHandler.shouldAcceptEvent(NVDAEventName,windowHandle=window):
+			return
 		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if not obj or (NVDAEventName=="gainFocus" and not obj.shouldAllowUIAFocusEvent):
@@ -217,6 +223,12 @@ class UIAHandler(COMObject):
 			# Therefore, don't ignore the event if the last focus object has lost its hasKeyboardFocus state.
 			if self.clientObject.compareElements(sender,lastFocus) and lastFocus.currentHasKeyboardFocus:
 				return
+		try:
+			window=sender.cachedNativeWindowHandle
+		except COMError:
+			window=None
+		if window and not eventHandler.shouldAcceptEvent("gainFocus",windowHandle=window):
+			return
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
 		if not obj or not obj.shouldAllowUIAFocusEvent:
 			return
@@ -233,6 +245,12 @@ class UIAHandler(COMObject):
 		if not NVDAEventName:
 			return
 		if not self.isNativeUIAElement(sender):
+			return
+		try:
+			window=sender.cachedNativeWindowHandle
+		except COMError:
+			window=None
+		if window and not eventHandler.shouldAcceptEvent(NVDAEventName,windowHandle=window):
 			return
 		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
