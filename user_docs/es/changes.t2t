@@ -7,13 +7,22 @@ Qué hay de Nuevo en NVDA
 
 == Nuevas Características ==
 - La existencia de errores de ortografía se  anuncia en campos editables para Internet Explorer y otros controles MSHTML. (#4174)
+- Ahora se verbalizan muchos más  símbolos matemáticos unicode  cuando aparezcan  en el texto. (#3805)
+- Ahora se anuncia automáticamente Buscar sugerencias en la pantalla de inicio de Windows 10 (#5049)
+
+
+== Corrección de Errores ==
+- En modo exploración para  Internet Explorer y otros controles MSHTML, la navegación rápida por campos ya no incluye incorrectamente elementos de listas presentacionales. (#4204)
+- En Firefox, NVDA ya no trata de crear una descripción para pestañas de paneles ARIA basados  en todo el texsto. (#4638)
+- En Internet Explorer y otros controles MSHTML, al tabular por secciones, artículos o diálogos  ya no anuncia todo el contenido del contenedor como su nombre. (#5021, #5025) 
+- Al utilizar las pantallas braille Baum/HumanWare/APH con un teclado braille, la entrada braille ya no detiene su funcionamiento después de pulsar otro tipo de tecla en la pantalla. (#3541)
 
 
 = 2015.2 =
 Lo reseñable de esta  versión incluye la capacidad de leer gráficos en  Microsoft Excel y el apoyo para la lectura y la navegación interactiva de contenido matemático.
 
 == Nuevas Características ==
-- Ahora es posible moverse hacia adelante o atrás por frases en Microsoft Word con alt+flecha abajo y alt+flecha arriba respectivamente. (#3288)
+- Ahora es posible moverse hacia adelante o atrás por frases en Microsoft Word y Outlook con alt+flecha abajo y alt+flecha arriba respectivamente. (#3288)
 - Nuevas tablas de transcripción braille para varios idiomas de la India. (#4778)
 - En Microsoft Excel, NVDA ahora anuncia cuando una celda tiene contenido desbordante o cortado. (#3040)
 - En Microsoft Excel, ahora puedes utilizar la Lista de Elementos (NVDA+f7) para permitir el listado de gráficos, comentarios y fórmulas. (#1987)

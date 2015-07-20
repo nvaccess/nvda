@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-08 19:04+1000\n"
-"PO-Revision-Date: 2015-05-26 09:00+0800\n"
+"POT-Creation-Date: 2015-07-01 19:09+1000\n"
+"PO-Revision-Date: 2015-07-10 16:04+0800\n"
 "Last-Translator: Cin-Wei <aha76540@hotmail.com.tw>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8\n"
+"X-Generator: Poedit 1.8.2\n"
 "X-Poedit-Bookmarks: 127,-1,122,121,-1,606,650,117,123,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -3526,16 +3526,19 @@ msgid ""
 msgstr "讀出文件中目前瀏覽游標所在字元的格式資訊。"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus"
-msgstr "讀出焦點物件"
+msgid "reports the object with focus. If pressed twice, spells the information"
+msgstr "讀出目前焦點所在的物件，連按兩次，則拼讀其資訊。"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "找不到狀態列"
 
 #. Translators: Input help mode message for report status line text command.
-msgid "reads the current application status bar and moves the navigator to it"
-msgstr "讀出目前應用程式的狀態列，並將瀏覽游標移至該處。"
+msgid ""
+"reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information"
+msgstr ""
+"讀出目前應用程式的狀態列，並將瀏覽游標移至該處。連按兩次，則拼讀其資訊。"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -6357,12 +6360,13 @@ msgstr "自動檢查NVDA的更新(&U)"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
-"Custom plugins were detected in your user settings directory. Copying these "
-"to the system profile could be a security risk. Do you still wish to copy "
-"your settings?"
+"Add-ons were detected in your user settings directory. Copying these to the "
+"system profile could be a security risk. Do you still wish to copy your "
+"settings?"
 msgstr ""
-"在使用者設定目錄中偵測到自訂外掛程式，複製這些到系統設定資料夾內，可能導致安"
-"全上的風險，是否仍要複製此設定？"
+"在使用者設定目錄中偵測到附加元件，複製這些到系統設定資料夾內，可能導致安全上"
+"的風險，是否仍要複製\n"
+"？"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
@@ -8201,6 +8205,9 @@ msgstr "HIMS Braille Sense/Braille EDGE 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "reports the object with focus"
+#~ msgstr "讀出焦點物件"
 
 #~ msgid "%s"
 #~ msgstr "%s"

@@ -249,6 +249,7 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 
 	fg = winUser.getForegroundWindow()
 	if (winUser.isDescendantWindow(fg, windowHandle)
+			# #3899, #3905: Covers cases such as the Firefox Page Bookmarked window and OpenOffice/LibreOffice context menus.
 			or winUser.isDescendantWindow(fg, winUser.getAncestor(windowHandle, winUser.GA_ROOTOWNER))):
 		# This is for the foreground application.
 		return True

@@ -4,15 +4,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5822\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-19 19:05+1000\n"
-"PO-Revision-Date: 2015-05-22 00:02+0200\n"
-"Last-Translator: Zahari Yurukov <zahari.yurukov@gmail.com>\n"
+"POT-Creation-Date: 2015-07-01 19:09+1000\n"
+"PO-Revision-Date: 2015-07-04 12:55+0200\n"
+"Last-Translator: Kostadin Kolev <k_kolev1985@mail.bg>\n"
 "Language-Team: Български <>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.6.10\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -3599,16 +3599,21 @@ msgstr ""
 "преглед в документа."
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus"
-msgstr "Докладва обекта на фокус."
+msgid "reports the object with focus. If pressed twice, spells the information"
+msgstr ""
+"Докладва обекта на фокус. При двукратно натискане, спелува информацията."
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "Лентата на състоянието не е намерена!"
 
 #. Translators: Input help mode message for report status line text command.
-msgid "reads the current application status bar and moves the navigator to it"
-msgstr "Прочита лентата на състоянието и премества навигатора до нея."
+msgid ""
+"reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information"
+msgstr ""
+"Прочита лентата на състоянието в текущото приложение и премества навигатора "
+"до нея. При двукратно натискане, спелува информацията."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -6525,13 +6530,13 @@ msgstr "Автоматична проверка за &обновления на 
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
-"Custom plugins were detected in your user settings directory. Copying these "
-"to the system profile could be a security risk. Do you still wish to copy "
-"your settings?"
+"Add-ons were detected in your user settings directory. Copying these to the "
+"system profile could be a security risk. Do you still wish to copy your "
+"settings?"
 msgstr ""
-"Външни добавки са засечени във вашата папка с потребителските настройки. "
-"Копирането им в системния профил може да бъде заплаха за сигурността. Все "
-"още ли искате да копирате вашите настройки?"
+"Във вашата папка с потребителските настройки са засечени добавки. Копирането "
+"им в системния профил може да бъде заплаха за сигурността. Все още ли искате "
+"да копирате вашите настройки?"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
@@ -8024,8 +8029,7 @@ msgstr "стойност {valueAxisData}"
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr ""
-" дроб {fractionValue:.2f} Процентна част {pointIndex} от {pointCount}"
+msgstr " дроб {fractionValue:.2f} Процентна част {pointIndex} от {pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
@@ -8075,8 +8079,8 @@ msgid ""
 "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
 "{chartAreaTop}, left: {chartAreaLeft}"
 msgstr ""
-"Област от диаграма, височина: {chartAreaHeight}, ширина: "
-"{chartAreaWidth}, отгоре: {chartAreaTop}, отляво: {chartAreaLeft}"
+"Област от диаграма, височина: {chartAreaHeight}, ширина: {chartAreaWidth}, "
+"отгоре: {chartAreaTop}, отляво: {chartAreaLeft}"
 
 #. Translators: Indicates the chart area of a Microsoft Excel chart.
 msgid "Chart area "
@@ -8115,8 +8119,7 @@ msgstr ""
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr ""
-"Ключ на легенда за Серия {seriesName} {seriesIndex} от {seriesCount}"
+msgstr "Ключ на легенда за Серия {seriesName} {seriesIndex} от {seriesCount}"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
@@ -8409,6 +8412,9 @@ msgstr "HIMS Braille серии Sense и Braille EDGE "
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "reports the object with focus"
+#~ msgstr "Докладва обекта на фокус."
 
 #~ msgid "%s"
 #~ msgstr "%s"

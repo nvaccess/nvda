@@ -269,7 +269,7 @@ Hay algunas órdenes de teclado útiles cuando nos movamos con el foco:
 | Anunciar foco actual | NVDA+tab | NVDA+tab | anuncia el objeto actual o control que tenga el foco del sistema. Pulsando dos veces deletreará la información  |
 | Anunciar título | NVDA+t | NVDA+t | Anuncia el título de la ventana activa actualmente. Pulsando dos veces deletreará la información. Pulsándolo tres veces la copiará al portapapeles |
 | Leer la ventana activa | NVDA+b | NVDA+b | lee todos los controles en la ventana actualmente activa (útil para diálogos) |
-| Anunciar Barra de Estado | NVDA+fin | NVDA+shift+fin | Anuncia la barra de estado si NVDA encuentra una. También mueve el navegador de objetos a esta localización |
+| Anunciar Barra de Estado | NVDA+fin | NVDA+shift+fin | Anuncia la barra de estado si NVDA encuentra una. También mueve el navegador de objetos a esta localización. Pulsándola dos veces deletreará la información |
 %kc:endInclude
 
 ++ Navegando con el Cursor del Sistema ++[SystemCaret]
@@ -285,8 +285,8 @@ NVDA proporciona las siguientes teclas de órdenes en relación al cursor del si
 | Leer todo | NVDA+Flecha Abajo | NVDA+a | Comienza la lectura desde la posición actual del cursor del sistema, moviéndolo según se desplaza |
 | Leer línea actual | NVDA+Flecha Arriba | NVDA+l | Lee la línea donde esté situado actualmente el cursor del sistema. Pulsando dos veces deletrea la línea. |
 | Leer la selección de texto actual | NVDA+Shift+Flecha Arriba | NVDA+shift+s | Lee cualquier texto seleccionado actualmente |
-| frase siguiente | alt+flecha abajo | alt+flecha abajo | Mueve el cursor a la frase siguiente y la anuncia. (sólo se soporta en Microsoft Word) |
-| frase anterior | alt+flecha arriba | alt+flecha arriba | Mueve el cursor a la frase anterior y la anuncia. (sólo se soporta en Microsoft Word) |
+| frase siguiente | alt+flecha abajo | alt+flecha abajo | Mueve el cursor a la frase siguiente y la anuncia. (sólo se soporta en Microsoft Word y Outlook) |
+| frase anterior | alt+flecha arriba | alt+flecha arriba | Mueve el cursor a la frase anterior y la anuncia. (sólo se soporta en Microsoft Word y Outlook) |
 
 
 Cuando estés en una tabla, las siguientes teclas de órdenes también están disponibles:
@@ -1895,6 +1895,8 @@ BRAILLEX Tiny:
 | Moverse al objeto anterior | r1+left |
 | Moverse al siguiente objeto | r1+right |
 | Anunciar formato de texto | reportf |
+| Anunciar título | l1+arriba |
+| Anunciar barra de estado | l2+abajo |
 
 BRAILLEX 2D Screen:
 || Nombre | Tecla |

@@ -858,6 +858,8 @@ def pumpAll():
 	validFocus=False
 	fakeFocusEvent=None
 	for winEvent in winEvents[0-MAX_WINEVENTS:]:
+		# #4001: Ideally, we'd call shouldAcceptEvent in winEventCallback,
+		# but this causes focus issues when starting applications.
 		if not eventHandler.shouldAcceptEvent(winEventIDsToNVDAEventNames[winEvent[0]], windowHandle=winEvent[1]):
 			continue
 		#We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one 

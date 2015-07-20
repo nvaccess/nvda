@@ -269,7 +269,7 @@ Joitakin hyödyllisiä näppäinkomentoja kohdistuksella navigoitaessa:
 | Lue nykyinen kohdistus | NVDA+sarkain | NVDA+sarkain | Kertoo nykyisen objektin tai säätimen, jossa järjestelmän kohdistus on. Kahdesti painettaessa tiedot tavataan. |
 | Lue ikkunan otsikko | NVDA+T | NVDA+T | Lukee aktiivisen ikkunan otsikon. Kahdesti painettaessa otsikko tavataan ja kolmesti painettaessa se kopioidaan leikepöydälle. |
 | Lue aktiivinen ikkuna | NVDA+B | NVDA+B | Lukee kaikki aktiivisen ikkunan säätimet (hyödyllinen valintaikkunoissa). |
-| Lue tilarivi | NVDA+End | NVDA+Shift+End | Lukee tilarivin, mikäli NVDA löytää sen, ja siirtää lisäksi navigointiobjektin sen kohdalle. |
+| Lue tilarivi | NVDA+End | NVDA+Shift+End | Lukee tilarivin, mikäli NVDA löytää sen, ja siirtää lisäksi navigointiobjektin sen kohdalle. Kahdesti painettaessa tiedot tavataan. |
 %kc:endInclude
 
 ++ Järjestelmäkohdistimella liikkuminen ++[SystemCaret]
@@ -285,8 +285,8 @@ NVDA:ssa on seuraavat järjestelmäkohdistimeen liittyvät näppäinkomennot:
 | Lue kaikki | NVDA+alanuoli | NVDA+A | Alkaa lukemaan järjestelmäkohdistimen nykyisestä sijainnista lähtien siirtäen samalla sitä. |
 | Lue nykyinen rivi | NVDA+ylänuoli | NVDA+L | Lukee järjestelmäkohdistimen kohdalla olevan rivin. Kahdesti painettaessa se tavataan. |
 | Lue valittu teksti | NVDA+Shift+ylänuoli | NVDA+Shift+S | Lukee kaiken valittuna olevan tekstin. |
-| Seuraava virke | Alt+alanuoli | Alt+alanuoli | Siirtää kohdistimen seuraavaan virkkeeseen ja lukee sen. (tuetaan vain Microsoft Wordissa) |
-| Edellinen virke | Alt+ylänuoli | Alt+ylänuoli | Siirtää kohdistimen edelliseen virkkeeseen ja lukee sen. (tuetaan vain Microsoft Wordissa) |
+| Seuraava virke | Alt+alanuoli | Alt+alanuoli | Siirtää kohdistimen seuraavaan virkkeeseen ja lukee sen. (tuetaan vain Microsoft Wordissa ja Outlookissa) |
+| Edellinen virke | Alt+ylänuoli | Alt+ylänuoli | Siirtää kohdistimen edelliseen virkkeeseen ja lukee sen. (tuetaan vain Microsoft Wordissa ja Outlookissa) |
 
 
 Taulukoissa ovat käytettävissä lisäksi seuraavat näppäinkomennot:
@@ -1895,6 +1895,8 @@ BRAILLEX Tiny:
 | Siirrä edelliseen objektiin | r1+left |
 | Siirrä seuraavaan objektiin | r1+right |
 | Lue tekstin muotoilutiedot | reportf |
+| Lue ikkunan otsikko | l1+up |
+| Lue tilarivi | l2+down |
 
 BRAILLEX 2D Screen:
 || Nimi | Näppäinkomento |

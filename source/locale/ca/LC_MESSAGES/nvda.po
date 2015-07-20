@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-08 19:04+1000\n"
+"POT-Creation-Date: 2015-07-01 19:09+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Rubén Alcaraz <rubenalcarazmartinez@gmail.com>\n"
 "Language-Team: Dr. Mireia Ribera<mireia.ribera@gmail.com , Ruben "
@@ -3625,15 +3625,20 @@ msgstr ""
 "document"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus"
-msgstr "Informa de l'objecte que té el focus"
+msgid "reports the object with focus. If pressed twice, spells the information"
+msgstr ""
+"informa de l'objecte amb el focus. Si es prem dues vegades, lletreja la "
+"informació"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "No s'ha trobat la línia d'estat"
 
 #. Translators: Input help mode message for report status line text command.
-msgid "reads the current application status bar and moves the navigator to it"
+#, fuzzy
+msgid ""
+"reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information"
 msgstr ""
 "llegeix la barra d'estat de l'aplicació actual i mou el cursor de navegació "
 "cap a ella"
@@ -6550,10 +6555,11 @@ msgid "Automatically check for &updates to NVDA"
 msgstr "Comprova automàticament si hi ha &actualitzacions per a NVDA"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
+#, fuzzy
 msgid ""
-"Custom plugins were detected in your user settings directory. Copying these "
-"to the system profile could be a security risk. Do you still wish to copy "
-"your settings?"
+"Add-ons were detected in your user settings directory. Copying these to the "
+"system profile could be a security risk. Do you still wish to copy your "
+"settings?"
 msgstr ""
 "S'han detectat connectors personalitzats al directori de configuració de "
 "l'usuari. Copiar-los al perfil del sistema pot comportar un risc de "
@@ -8453,6 +8459,9 @@ msgstr "sèries HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "reports the object with focus"
+#~ msgstr "Informa de l'objecte que té el focus"
 
 #~ msgid "%s"
 #~ msgstr "%s"
