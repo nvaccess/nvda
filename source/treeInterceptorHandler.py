@@ -133,10 +133,6 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		"""Prepares this treeInterceptor so that it becomes ready to accept event/script input."""
 		raise NotImplementedError
 
-	def event_gainFocus(self,obj,nextHandler):
-		obj.reportFocus()
-		braille.handler.handleGainFocus(self)
-
 class DocumentTreeInterceptor(TreeInterceptor):
 	"""A TreeInterceptor that supports document review."""
 

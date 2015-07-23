@@ -259,6 +259,14 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	# Translators: the description for the Elements List command in browse mode.
 	script_elementsList.__doc__ = _("Lists various types of elements in this document")
 
+	def _activatePosition(self):
+		raise NotImplementedError
+
+	def script_activatePosition(self,gesture):
+		self._activatePosition()
+	# Translators: the description for the activatePosition script on browseMode documents.
+	script_activatePosition.__doc__ = _("activates the current object in the document")
+
 	__gestures={
 		"kb:NVDA+f7": "elementsList",
 		"kb:enter": "activatePosition",
@@ -903,15 +911,6 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		reportPassThrough(self)
 		braille.handler.handleGainFocus(self)
 
-	def _activatePosition(self,info):
-		info.activate()
-
-	def script_activatePosition(self,gesture):
-		info=self.makeTextInfo(textInfos.POSITION_CARET)
-		self._activatePosition(info)
-	# Translators: the description for the activatePosition script on browseMode documents.
-	script_activatePosition.__doc__ = _("activates the current object in the document")
-
 	def event_caret(self, obj, nextHandler):
 		if self.passThrough:
 			nextHandler()
@@ -932,7 +931,9 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		"""
 		raise NotImplementedError
 
-	def _activatePosition(self, info):
+	def _activatePosition(self, info=None):
+		if not info:
+			info=self.makeTextInfo(textInfos.POSITION_CARET)
 		obj = info.NVDAObjectAtStart
 		if not obj:
 			return
