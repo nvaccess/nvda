@@ -8,6 +8,7 @@ import controlTypes
 import api
 import speech
 from NVDAObjects.UIA import UIA
+from NVDAObjects.UIA.edge import EdgeList
 
 # Windows 10 Search UI suggestion list item
 class SuggestionListItem(UIA):
@@ -24,5 +25,5 @@ class SuggestionListItem(UIA):
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
-		if isinstance(obj,UIA) and obj.role==controlTypes.ROLE_LISTITEM and isinstance(obj.parent,UIA) and obj.parent.role==controlTypes.ROLE_LIST:
+		if isinstance(obj,UIA) and obj.role==controlTypes.ROLE_LISTITEM and isinstance(obj.parent,EdgeList):
 			clsList.insert(0,SuggestionListItem)
