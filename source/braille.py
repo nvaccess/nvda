@@ -1438,7 +1438,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		tableList = self._getTableList(table)
 		if not isFallback:
 			try:
-				louis.checkTable(tables)
+				louis.checkTable(tableList)
 			except:
 				log.error("Error compiling translation tables", exc_info=True)
 				self.setTranslationTable("en-us-comp8.ctb", isFallback=True)
@@ -1451,7 +1451,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		tableList = self._getTableList(table)
 		if not isFallback:
 			try:
-				louis.checkTable(tables)
+				louis.checkTable(tableList)
 			except:
 				log.error("Error compiling input tables", exc_info=True)
 				self.setInputTable("en-us-comp8.ctb", isFallback=True)
