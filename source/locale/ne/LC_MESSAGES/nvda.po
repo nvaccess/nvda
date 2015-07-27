@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr 2013.1:6039\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-01 19:09+1000\n"
-"PO-Revision-Date: 2015-07-09 22:15+0545\n"
+"POT-Creation-Date: 2015-07-15 19:09+1000\n"
+"PO-Revision-Date: 2015-07-16 21:13+0545\n"
 "Last-Translator: drishtibachak@gmail.com\n"
 "Language-Team: Him Prasad Gautam <drishtibachak@gmail.com>\n"
 "Language: ne\n"
@@ -261,6 +261,12 @@ msgid "Ethiopic grade 1"
 msgstr "इथियोपियाजी श्रेणी १"
 
 #. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Finnish 6 dot"
+msgstr "फिनिस ६ थोप्ले श्रेणी १"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Finnish 8 dot computer braille"
 msgstr "फिनिस ८ .कल्पयन्त्र ब्रेल"
 
@@ -288,6 +294,16 @@ msgstr "फ्रान्सेली (क्यानेडा) श्रे�
 #. braille settings dialog.
 msgid "French (Canada) grade 2"
 msgstr "फ्रान्सेली (क्यानेडा) श्रेणी २"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 1"
+msgstr "आइरिस श्रेणी १"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 2"
+msgstr "आइरिस श्रेणी १"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -343,6 +359,16 @@ msgstr "इटालियन ८ थोप्लो कल्पयन्त्
 #. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "कन्नड श्रेणी १"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 1 (2006)"
+msgstr "कोरियाली श्रेणी १ (२००६)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 2 (2006)"
+msgstr "कोरियाली तह २ (२००६)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -706,6 +732,23 @@ msgstr "केन्द्रीयता मुद्रा"
 
 msgid "browse mode"
 msgstr "उघार्ने मुद्रा"
+
+#. Translators: Reported when single letter navigation in browse mode is turned off.
+msgid "Single letter navigation off"
+msgstr "एकल वर्ण विचरण निस्क्रिय बनाइयो ।"
+
+#. Translators: Reported when single letter navigation in browse mode is turned on.
+msgid "Single letter navigation on"
+msgstr "एकल वर्ण विचरण सक्रिय बनाइयो ।"
+
+#. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
+msgid ""
+"Toggles single letter navigation on and off. When on, single letter keys in browse mode jump to "
+"various kinds of elements on the page. When off, these keys are passed to the application"
+msgstr ""
+"एकल वर्ण विचरण गर्न सकिने अवस्था लाई क्रियासिल वा निस्क्रिय अवस्थामा लैजान्छ । सक्रिय बनाइएको खण्डमा उघार्ने "
+"मुद्रामा हुँदा पृष्ठमा रहेका विभिन्न तत्त्वमा विचरण गर्न सकिन्छ । निस्क्रिय भएमा यि कुञ्जीहरु सक्रिय अनुप्रयोगमा "
+"सारिन्छ ।"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
@@ -5338,6 +5381,8 @@ msgstr "Baum/HumanWare/APH ब्रेल पटल"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
 msgid "Serial: {portName}"
 msgstr "क्रमसङ्ख्या: {portName}"
 
@@ -5348,6 +5393,10 @@ msgstr "HumanWare ब्रेलनोट"
 #. Translators: The name of a series of braille displays.
 msgid "HumanWare Brailliant BI/B series"
 msgstr "HumanWare Brailliant BI/B series"
+
+#. Translators: The name of a braille display.
+msgid "EcoBraille displays"
+msgstr "इको ब्रेल पटल"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -8123,31 +8172,3 @@ msgstr "HIMS ब्रेल चेतना/ब्रेल किनारा 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "केन्द्रित वस्तु चिनाउने छ"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "Series color: {} "
-#~ msgstr "श्रेणीको रङ्ग: {} "
-
-#~ msgid "none"
-#~ msgstr "कुनै पनि होइन"
-
-#~ msgid " trendline {} "
-#~ msgstr "प्रबृत्ति रेखा {} "
-
-#~ msgid "Chart area height equals {}, width equals {}, top equals {}, left equals {}"
-#~ msgstr "चार्ट क्षेत्रफलको उचाई बराबर {}, चौडाई बराबर {}, माथि बराबर {}, बाया बराबर {}"
-
-#~ msgid ""
-#~ "Plot Area inside height equals {:.0f}, inside width equals {:.0f}, inside top equals {:.0f}, "
-#~ "inside left equals {:.0f}"
-#~ msgstr ""
-#~ "चित्र क्षेत्र भित्री उचाई बराबर {:.0f}, भित्रि मोटाई बराबर {:.0f}, भित्रि माथि बराबर {:.0f}, भित्रि वाया "
-#~ "बराबर {:.0f}"
-
-#~ msgid "Plot Area "
-#~ msgstr "चित्र क्षेत्र"

@@ -1,11 +1,11 @@
-#
+# Russian translation NVDA
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA bzr main:5884\n"
+"Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-01 19:09+1000\n"
-"PO-Revision-Date: 2015-07-04 10:55+0800\n"
-"Last-Translator: Ruslan Kolodyazhni <eye0@rambler.ru>\n"
+"POT-Creation-Date: 2015-07-15 19:09+1000\n"
+"PO-Revision-Date: 2015-07-26 14:31+0800\n"
+"Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
@@ -14,7 +14,6 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 "Initial-Author: Dmitry Kaslin <dak1968@gmail.com>\n"
 "X-Generator: Poedit 1.6.11\n"
-"X-Poedit-Bookmarks: 343,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -262,6 +261,12 @@ msgid "Ethiopic grade 1"
 msgstr "Эфиопский (первая ступень)"
 
 #. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Finnish 6 dot"
+msgstr "Финский шеститочечный"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Finnish 8 dot computer braille"
 msgstr "Финский восьмиточечный"
 
@@ -289,6 +294,16 @@ msgstr "Французский (Канада) (первая ступень)"
 #. braille settings dialog.
 msgid "French (Canada) grade 2"
 msgstr "Французский (Канада) (вторая ступень)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 1"
+msgstr "Ирландский (первая ступень)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 2"
+msgstr "Ирландский (вторая ступень)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -344,6 +359,16 @@ msgstr "Итальянский восьмиточечный"
 #. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "Каннада (первая ступень)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 1 (2006)"
+msgstr "Корейский (первая ступень) (2006)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 2 (2006)"
+msgstr "Корейский (вторая ступень) (2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -707,6 +732,25 @@ msgstr "Режим редактирования"
 
 msgid "browse mode"
 msgstr "Режим обзора"
+
+#. Translators: Reported when single letter navigation in browse mode is turned off.
+msgid "Single letter navigation off"
+msgstr "Однобуквенная навигация выключена"
+
+#. Translators: Reported when single letter navigation in browse mode is turned on.
+msgid "Single letter navigation on"
+msgstr "Однобуквенная навигация включена"
+
+#. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
+msgid ""
+"Toggles single letter navigation on and off. When on, single letter keys in "
+"browse mode jump to various kinds of elements on the page. When off, these "
+"keys are passed to the application"
+msgstr ""
+"Включает или выключает однобуквенную навигацию. Если включено, то в режиме "
+"обзора клавиши однобуквенной навигации осуществляют переход к различным "
+"типам элементов на странице. Если выключено, то эти клавиши передаются "
+"приложению."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
@@ -1194,7 +1238,7 @@ msgstr "&Перейти к"
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
-msgstr "ничего"
+msgstr "Ничего"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1928,7 +1972,7 @@ msgstr "Выделено %s"
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
-msgstr "неизвестно"
+msgstr "Неизвестно"
 
 # An open-source (and free) Screen Reader for the Windows Operating System
 # Created by Michael Curran, with help from James Teh and others
@@ -2000,7 +2044,7 @@ msgstr "Графика"
 
 #. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
 msgid "help balloon"
-msgstr "Всплывающее уведомление"
+msgstr "Всплывающая подсказка"
 
 #. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
 msgid "tool tip"
@@ -2078,7 +2122,7 @@ msgstr "Заголовок строки"
 
 #. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 msgid "drop down button"
-msgstr "кнопка с выпадающим меню"
+msgstr "Кнопка с выпадающим меню"
 
 #. Translators: Identifies an element.
 msgid "clock"
@@ -2118,7 +2162,7 @@ msgstr "Заголовок 6"
 
 #. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
 msgid "paragraph"
-msgstr "абзац"
+msgstr "Абзац"
 
 #. Translators: Presented for a section in a document which is a block quotation;
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
@@ -2164,7 +2208,7 @@ msgstr "Страница свойств"
 
 #. Translators: Identifies a canvas element on webpages (a box with some background color with some text drawn on the box, like a canvas).
 msgid "canvas"
-msgstr "Подложка"
+msgstr "Холст"
 
 #. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
 msgid "caption"
@@ -2192,7 +2236,7 @@ msgstr "Встроенный объект"
 
 #. Translators: Identifies an end note.
 msgid "end note"
-msgstr "Пояснение"
+msgstr "Концевая сноска"
 
 #. Translators: Identifies a footer (usually text).
 msgid "footer"
@@ -2213,7 +2257,7 @@ msgstr "Заголовок"
 
 #. Translators: Identifies an image map (a type of graphical link).
 msgid "image map"
-msgstr "Рисунок"
+msgstr "Карта изображений"
 
 #. Translators: Identifies an input window.
 msgid "input window"
@@ -3524,15 +3568,15 @@ msgstr ""
 
 #. Translators: A speech mode which disables speech output.
 msgid "speech mode off"
-msgstr "Режим озвучивания выключено"
+msgstr "Выключено"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
 msgid "speech mode beeps"
-msgstr "Режим озвучивания сигналы"
+msgstr "Сигналы"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
 msgid "speech mode talk"
-msgstr "Режим озвучивания речь"
+msgstr "Речь"
 
 #. Translators: Input help mode message for toggle speech mode command.
 msgid ""
@@ -5509,12 +5553,14 @@ msgstr "Выключено"
 
 #. Translators: The name of a braille display.
 msgid "ALVA BC640/680 series"
-msgstr "ALVA BC640/680 series"
+msgstr "ALVA BC640/680"
 
 #. Translators: Names of braille displays.
 msgid "Baum/HumanWare/APH braille displays"
-msgstr "Baum/HumanWare/APH брайлевские дисплеи"
+msgstr "Baum/HumanWare/APH"
 
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
 msgid "Serial: {portName}"
@@ -5526,11 +5572,15 @@ msgstr "HumanWare BrailleNote"
 
 #. Translators: The name of a series of braille displays.
 msgid "HumanWare Brailliant BI/B series"
-msgstr "HumanWare Brailliant BI/B модели"
+msgstr "HumanWare Brailliant BI/B"
+
+#. Translators: The name of a braille display.
+msgid "EcoBraille displays"
+msgstr "EcoBraille"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
-msgstr "Freedom Scientific линейка Focus/PAC Mate"
+msgstr "Freedom Scientific Focus/PAC Mate"
 
 #. Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
 msgid "display scroll"
@@ -5542,7 +5592,7 @@ msgstr "прокрутка строк"
 
 #. Translators: Names of braille displays.
 msgid "Handy Tech braille displays"
-msgstr "HandyTech braille displays"
+msgstr "Handy Tech"
 
 msgid "Show the Handy Tech driver configuration window."
 msgstr "Показать окно настроек Handy Tech."
@@ -5553,7 +5603,7 @@ msgstr "MDV Lilli"
 
 #. Translators: Is used to indicate that braille support will be disabled.
 msgid "No braille"
-msgstr "Нет Брайля"
+msgstr "Нет брайля"
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX newer models"
@@ -5569,7 +5619,7 @@ msgstr "Устаревшие модели Papenmeier BRAILLEX"
 
 #. Translators: Names of braille displays.
 msgid "Seika braille displays"
-msgstr "Seika braille displays"
+msgstr "Seika"
 
 #. Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 msgid "Configuration applied"
@@ -8426,250 +8476,8 @@ msgstr "&Примечания"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS Braille Sense/Braille EDGE series"
+msgstr "HIMS Braille Sense/Braille EDGE"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#~ msgid "reports the object with focus"
-#~ msgstr "Читает объект в фокусе"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "{} Series {} of {}"
-#~ msgstr "{} Ряд {} из {}"
-
-#~ msgid "{} {}: "
-#~ msgstr "{} {}: "
-
-#~ msgid "{} {}"
-#~ msgstr "{} {}"
-
-#~ msgid "value {}"
-#~ msgstr "значение {}"
-
-#~ msgid " {} {} of {}"
-#~ msgstr " {} {} из {}"
-
-#~ msgid "none"
-#~ msgstr "отсутствует"
-
-#~ msgid " trendline {} "
-#~ msgstr " линия тренда {} "
-
-#~ msgid ""
-#~ "Chart area height equals {}, width equals {}, top equals {}, left equals "
-#~ "{}"
-#~ msgstr "Высота области диаграммы {}, ширина {}, сверху {}, слева {}"
-
-#~ msgid "equation"
-#~ msgstr "Уравнение"
-
-#~ msgid "Presents a list of links, headings or landmarks"
-#~ msgstr "Вызывает диалог со списком ссылок, заголовков и ориентиров"
-
-#~ msgid "Slovak"
-#~ msgstr "Словацкий"
-
-#~ msgid "grey"
-#~ msgstr "серый"
-
-#~ msgid "navy blue"
-#~ msgstr "темносиний"
-
-#~ msgid "red"
-#~ msgstr "красный"
-
-#~ msgid "blue"
-#~ msgstr "синий"
-
-#~ msgid "teal"
-#~ msgstr "зеленовато голубой"
-
-#~ msgid "aqua"
-#~ msgstr "цвет морской волны"
-
-#~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
-#~ "in order to make it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more "
-#~ "information."
-#~ msgstr ""
-#~ "В NVDA 2013.1 полностью переделана раскладка клавиатуры для ноутбука для "
-#~ "удобства и более легкого понимания.\n"
-#~ "Если вы используете раскладку для ноутбука, то для дальнейшей информации, "
-#~ "пожалуйста, ознакомьтесь с документом \"Что нового\"."
-
-#~ msgid "New Laptop Keyboard layout"
-#~ msgstr "Новая Раскладка клавиатуры для ноутбука"
-
-#~ msgid "Read What's New"
-#~ msgstr "Прочитайте  \"Что нового\""
-
-#~ msgid "&Acceleration"
-#~ msgstr "&Ускорение"
-
-#~ msgid "male 1"
-#~ msgstr "Мужской 1"
-
-#~ msgid "female 1"
-#~ msgstr "Женский 1"
-
-#~ msgid "male 2"
-#~ msgstr "Мужской 2"
-
-#~ msgid "female 2"
-#~ msgstr "Женский 2"
-
-#~ msgid "lime"
-#~ msgstr "лимонный"
-
-#~ msgid "Are you sure you want to quit NVDA?"
-#~ msgstr "Вы уверены, что хотите завершить работу NVDA?"
-
-#~ msgid "&Warn before exiting NVDA"
-#~ msgstr "Запро&с подтверждения при завершении NVDA"
-
-#~ msgid "Regexp"
-#~ msgstr "регулярное выражение"
-
-#~ msgid "No location information for navigator object"
-#~ msgstr "Нет информации о расположении объекта навигатора"
-
-#~ msgid "No location information for screen"
-#~ msgstr "Информация о размещении объекта на экране недоступна"
-
-#~ msgid ""
-#~ "Reports the hight, width and position of the current navigator object"
-#~ msgstr "Сообщает высоту, ширину и расположение объекта навигатора"
-
-#~ msgid "Set column header row"
-#~ msgstr "Установить строку в качестве заголовка для столбцов"
-
-#~ msgid "Cleared column header row"
-#~ msgstr "Строка с пустым заголовком в столбце"
-
-#~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Однократное нажатие установит текущую строку как строку, в которой должны "
-#~ "находиться заголовки столбцов. Двойное нажатие сбрасывает эту установку."
-
-#~ msgid "Set row header column"
-#~ msgstr "Установить столбец в качестве заголовка для строк"
-
-#~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers "
-#~ "should be found. Pressing twice clears the setting."
-#~ msgstr ""
-#~ "Однократное нажатие установит текущий столбец как столбец, в котором "
-#~ "должны находиться заголовки строк. Двойное нажатие сбрасывает эту "
-#~ "установку."
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "%s %s до %s %s"
-
-#~ msgid "Manual activate/edit"
-#~ msgstr "Активировать/редактировать вручную"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "Ваш файл конфигурации содержит ошибки. \n"
-#~ "Нажмите 'ОК' для исправления ошибок или нажмите 'Отмена' ,если вы хотите "
-#~ "отредактировать файл конфигурации позже вручную.\n"
-#~ "Подробная информация об ошибках содержится в log файле.\n"
-
-#~ msgid "No automatic comments."
-#~ msgstr "Нет автоматических комментариев."
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "Невозможно найти окно с автоматическими комментариями."
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "Читает комментарий из окна автоматических комментариев"
-
-#~ msgid "Automatic comments:"
-#~ msgstr "Автоматические комментарии:"
-
-#~ msgid "Translation:"
-#~ msgstr "Перевод:"
-
-#~ msgid "Comments:"
-#~ msgstr "Комментарии:"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "Не доступен плоский просмотр для этого объекта"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "Нет объекта в этом месте плоского просмотра"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "Перемещает навигатор на объект, содержащий текст в позиции плоского "
-#~ "просмотра"
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "Пожалуйста, закройте сначала другой диалог настроек NVDA"
-
-#~ msgid "Translation &table:"
-#~ msgstr "Брайлевская &Таблица:"
-
-#~ msgid "beeps"
-#~ msgstr "Сигналы"
-
-#~ msgid "talk"
-#~ msgstr "Речь"
-
-#~ msgid "layout %s"
-#~ msgstr "%s раскладка"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s из %s"
-
-#~ msgid "default action failed"
-#~ msgstr "Не удалось выполнить действие по умолчанию"
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr "Загружает конфигурацию настроек NVDA из файла, применяя их "
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "Неверно сформирован файл конфигурации"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, предустановки по %s"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "Ошибка в синтаксе файла конфигурации: %s"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Ошибки в файле конфигурации '%s':\n"
-#~ "%s"
-
-#~ msgid "&Add..."
-#~ msgstr "&Добавить..."
-
-#~ msgid ""
-#~ "This add-on seems to already be installed. Please remove the existing add-"
-#~ "on and try again."
-#~ msgstr ""
-#~ "Это дополнение уже установлено. Пожалуйста, удалите его и попробуйте "
-#~ "снова."
-
-#~ msgid "Create an &Autorun file"
-#~ msgstr "Создать файл автозапуска"
-
-#~ msgid "Follow &keyboard focus"
-#~ msgstr "Следовать за &фокусом"

@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-08 19:04+1000\n"
-"PO-Revision-Date: 2015-05-18 16:52+0100\n"
+"POT-Creation-Date: 2015-07-15 19:09+1000\n"
+"PO-Revision-Date: 2015-07-26 14:28+0100\n"
 "Last-Translator: Ondrej Rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -259,6 +259,12 @@ msgid "Ethiopic grade 1"
 msgstr "Etiópčina plnopis"
 
 #. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Finnish 6 dot"
+msgstr "Fínčina 6 bodový plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Finnish 8 dot computer braille"
 msgstr "Fínsky počítačový 8 bodový brail"
 
@@ -286,6 +292,16 @@ msgstr "Kanadská francúzština plnopis"
 #. braille settings dialog.
 msgid "French (Canada) grade 2"
 msgstr "Kanadská francúzština skratkopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 1"
+msgstr "Írčina plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 2"
+msgstr "Írčina skratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -341,6 +357,16 @@ msgstr "Taliansky počítačový 8 bodový brail"
 #. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "Kannadčina plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 1 (2006)"
+msgstr "Kórejčina plnopis (2006)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 2 (2006)"
+msgstr "Kórejčina skratkopis (2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -704,6 +730,24 @@ msgstr "režim fokusu"
 
 msgid "browse mode"
 msgstr "režim prehliadania"
+
+#. Translators: Reported when single letter navigation in browse mode is turned off.
+msgid "Single letter navigation off"
+msgstr "Rýchla navigácia vypnutá"
+
+#. Translators: Reported when single letter navigation in browse mode is turned on.
+msgid "Single letter navigation on"
+msgstr "Rýchla navigácia zapnutá"
+
+#. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
+msgid ""
+"Toggles single letter navigation on and off. When on, single letter keys in "
+"browse mode jump to various kinds of elements on the page. When off, these "
+"keys are passed to the application"
+msgstr ""
+"Zapína a vypína rýchlu navigáciu. Ak je zapnutá, môžete po jednotlivých "
+"prvkoch v režime prehliadania prechádzať konkrétnymi písmenami. Ak je "
+"vypnutá, písmená NVDA prepúšťa do aktívneho programu"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
@@ -3596,17 +3640,20 @@ msgstr ""
 "kurzora v dokumente"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus"
-msgstr "Oznámi objekt, ktorý má fokus."
+msgid "reports the object with focus. If pressed twice, spells the information"
+msgstr "Prečíta objekt, ktorý má fokus. Stlačené dvakrát objekt vyhláskuje"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "Stavový riadok nebol nájdený."
 
 #. Translators: Input help mode message for report status line text command.
-msgid "reads the current application status bar and moves the navigator to it"
+msgid ""
+"reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information"
 msgstr ""
-"Prečíta stavový riadok aktuálnej aplikácie a premiestni naň navigačný objekt."
+"Prečíta stavový riadok aktuálnej aplikácie a premiestni naň navigačný "
+"objekt. Stlačené dvakrát stavový riadok vyhláskuje"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -5495,6 +5542,8 @@ msgstr "Zobrazovače Baum/HumanWare/APH "
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
 msgid "Serial: {portName}"
 msgstr "Sériový: {portName}"
 
@@ -5505,6 +5554,10 @@ msgstr "HumanWare BrailleNote"
 #. Translators: The name of a series of braille displays.
 msgid "HumanWare Brailliant BI/B series"
 msgstr "HumanWare Brailliant BI/B "
+
+#. Translators: The name of a braille display.
+msgid "EcoBraille displays"
+msgstr "Zobrazovače EcoBraille"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -6516,13 +6569,13 @@ msgstr "Kontrolovať dostupnosť novej &verzie NVDA"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
-"Custom plugins were detected in your user settings directory. Copying these "
-"to the system profile could be a security risk. Do you still wish to copy "
-"your settings?"
+"Add-ons were detected in your user settings directory. Copying these to the "
+"system profile could be a security risk. Do you still wish to copy your "
+"settings?"
 msgstr ""
-"Vo vašom priečinku s nastaveniamy sú uložené vlastné pluginy. Kopírovanie "
-"týchto pluginov do priečinka so systémovými nastaveniami predstavuje "
-"bezpečnostné riziko. Želáte si napriek tomu skopírovať nastavenia?"
+"Vo vašom priečinku s nastaveniamy sú uložené doplnky. Kopírovanie doplnkov "
+"do priečinka so systémovými nastaveniami predstavuje bezpečnostné riziko. "
+"Želáte si napriek tomu skopírovať nastavenia?"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
@@ -8389,6 +8442,9 @@ msgstr "HIMS Braille Sense/Séria Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "reports the object with focus"
+#~ msgstr "Oznámi objekt, ktorý má fokus."
 
 #~ msgid "%s"
 #~ msgstr "%s"

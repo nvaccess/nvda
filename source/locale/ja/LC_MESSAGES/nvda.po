@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-01 19:09+1000\n"
-"PO-Revision-Date: 2015-07-02 23:23+0900\n"
+"POT-Creation-Date: 2015-07-15 19:09+1000\n"
+"PO-Revision-Date: 2015-07-20 12:29+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -262,6 +262,12 @@ msgid "Ethiopic grade 1"
 msgstr "エチオピア語1級点字"
 
 #. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Finnish 6 dot"
+msgstr "フィンランド語6点点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Finnish 8 dot computer braille"
 msgstr "フィンランド語8点コンピューター点字"
 
@@ -289,6 +295,16 @@ msgstr "カナダフランス語1級点字"
 #. braille settings dialog.
 msgid "French (Canada) grade 2"
 msgstr "カナダフランス語2級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 1"
+msgstr "アイルランド語1級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 2"
+msgstr "アイルランド語1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -344,6 +360,16 @@ msgstr "イタリア語8点コンピューター点字"
 #. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "カンナダ語1級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 1 (2006)"
+msgstr "韓国語1級点字(2006)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 2 (2006)"
+msgstr "韓国語2級点字(2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -707,6 +733,24 @@ msgstr "フォーカスモード"
 
 msgid "browse mode"
 msgstr "ブラウズモード"
+
+#. Translators: Reported when single letter navigation in browse mode is turned off.
+msgid "Single letter navigation off"
+msgstr "1文字ナビゲーションを使わない"
+
+#. Translators: Reported when single letter navigation in browse mode is turned on.
+msgid "Single letter navigation on"
+msgstr "1文字ナビゲーションを使用"
+
+#. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
+msgid ""
+"Toggles single letter navigation on and off. When on, single letter keys in "
+"browse mode jump to various kinds of elements on the page. When off, these "
+"keys are passed to the application"
+msgstr ""
+"1文字ナビゲーションの切り替え。使用するとブラウズモードで1文字のキーによって"
+"ページ内の各要素にジャンプ。1文字ナビゲーションを使わないとキー入力をアプリで"
+"解釈"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
@@ -5438,6 +5482,8 @@ msgstr "Baum/HumanWare/APHの点字ディスプレイ"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
 msgid "Serial: {portName}"
 msgstr "シリアルポート: {portName}"
 
@@ -5448,6 +5494,10 @@ msgstr "HumanWareブレイルノート"
 #. Translators: The name of a series of braille displays.
 msgid "HumanWare Brailliant BI/B series"
 msgstr "HumanWare社のBrailliant BI/Bシリーズ"
+
+#. Translators: The name of a braille display.
+msgid "EcoBraille displays"
+msgstr "EcoBraille ディスプレイ"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -7230,7 +7280,7 @@ msgid ""
 "document content"
 msgstr ""
 "ドキュメントコンテンツのレンダリング中に、可能であれば画面レイアウトを使用す"
-"るか使わないかを切り替えます"
+"るか使わないかを切り替え"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.

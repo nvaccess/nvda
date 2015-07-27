@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-08 19:04+1000\n"
+"POT-Creation-Date: 2015-07-15 19:09+1000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Danijela Popovic <vlajna95@gmail.com>\n"
+"Last-Translator: Janko Valenćik <jankoval@gmail.com>\n"
 "Language-Team: NVDA Serbian translation\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.3\n"
+"X-Generator: Poedit 1.8.2\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -265,6 +265,12 @@ msgid "Ethiopic grade 1"
 msgstr "etiopijski stepen 1"
 
 #. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Finnish 6 dot"
+msgstr "finski šestotačkasti"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Finnish 8 dot computer braille"
 msgstr "finski osmotačkasti brajev kod"
 
@@ -292,6 +298,16 @@ msgstr "francuski kanadski stepen 1"
 #. braille settings dialog.
 msgid "French (Canada) grade 2"
 msgstr "francuski kanadski stepen 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 1"
+msgstr "irski stepen 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 2"
+msgstr "irski stepen 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -347,6 +363,16 @@ msgstr "italijanski osmotačkasti brajev kod"
 #. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "Kanada jezik stepen1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 1 (2006)"
+msgstr "korejski stepen 1 (2006)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 2 (2006)"
+msgstr "korejski stepen 2 (2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -710,6 +736,24 @@ msgstr "režim fokusiranja"
 
 msgid "browse mode"
 msgstr "režim pretraživanja"
+
+#. Translators: Reported when single letter navigation in browse mode is turned off.
+msgid "Single letter navigation off"
+msgstr "Isključena navigacija pomoću jednog dlova"
+
+#. Translators: Reported when single letter navigation in browse mode is turned on.
+msgid "Single letter navigation on"
+msgstr "Uključena navigacija pomoću jednog slova"
+
+#. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
+msgid ""
+"Toggles single letter navigation on and off. When on, single letter keys in "
+"browse mode jump to various kinds of elements on the page. When off, these "
+"keys are passed to the application"
+msgstr ""
+"Uključuje i isključuje navigaciju pomoću jednog slova. Kada je uključena, "
+"pritisak na pojedina slova vodi na razne vrste elemenata na stranici. Kada "
+"je isključena, ovi tasteri se prosleđuju aplikaciji"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
@@ -3607,16 +3651,21 @@ msgstr ""
 "unutar dokumenta"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus"
-msgstr "prikazuje objekat u fokusu"
+msgid "reports the object with focus. If pressed twice, spells the information"
+msgstr ""
+"obaveštava o objektu sa fokusom. Ako se pritisne dvaput, sriče informaciju"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "Nije pronađena statusna linija"
 
 #. Translators: Input help mode message for report status line text command.
-msgid "reads the current application status bar and moves the navigator to it"
-msgstr "čita statusnu traku trenutne aplikacije i pomera navigator ka njoj"
+msgid ""
+"reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information"
+msgstr ""
+"čita statusnu traku trenutne aplikacije i pomera navigator ka njoj. Ako se "
+"pritisne dvaput, sriče informaciju"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -5500,6 +5549,8 @@ msgstr "Baum/HumanWare/APH brajevi redovi"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
 msgid "Serial: {portName}"
 msgstr "Serijski: {portName}"
 
@@ -5510,6 +5561,10 @@ msgstr "HumanWare BrailleNote"
 #. Translators: The name of a series of braille displays.
 msgid "HumanWare Brailliant BI/B series"
 msgstr "HumanWare Brailliant BI/B serija"
+
+#. Translators: The name of a braille display.
+msgid "EcoBraille displays"
+msgstr "EcoBraille redovi"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -5787,7 +5842,7 @@ msgstr "&Proveri dostupna ažuriranja..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
 msgid "About..."
-msgstr "&O programu..."
+msgstr "O programu..."
 
 #. Translators: The label for the Help submenu in NVDA menu.
 msgid "&Help"
@@ -5861,7 +5916,7 @@ msgstr "Opcije"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Koristite &CapsLock kao NVDA taster"
+msgstr "Koristite CapsLock kao NVDA taster"
 
 #. Translators: The label of a check box in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
@@ -5946,7 +6001,7 @@ msgstr "Verzija"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's author (example: author is NV Access).
 msgid "Author"
-msgstr "Autor/i"
+msgstr "Autor"
 
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
 msgid "&About add-on..."
@@ -5998,7 +6053,7 @@ msgstr ""
 "Da li ste sigurni da želite da instalirate ovaj dodatak? Instalirajte samo "
 "dodatke iz pouzdanih izvora.\n"
 "Dodatak: {summary} {version}\n"
-"Autor/i: {author}"
+"Autor: {author}"
 
 #. Translators: Title for message asking if the user really wishes to install an Addon.
 #. Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
@@ -6067,7 +6122,7 @@ msgid ""
 msgstr ""
 "{summary} ({name})\n"
 "Verzija: {version}\n"
-"Autor/i: {author}\n"
+"Autor: {author}\n"
 "Opis: {description}\n"
 
 #. Translators: the url part of the About Add-on information
@@ -6517,13 +6572,13 @@ msgstr "Automatski proveri dostupna &ažuriranja za NVDA"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
-"Custom plugins were detected in your user settings directory. Copying these "
-"to the system profile could be a security risk. Do you still wish to copy "
-"your settings?"
+"Add-ons were detected in your user settings directory. Copying these to the "
+"system profile could be a security risk. Do you still wish to copy your "
+"settings?"
 msgstr ""
 "Prilagođeni dodaci su detektovani u vašoj fascikli sa korisničkim "
-"podešavanjima. Kopiranje ovih dodataka u sistem može predstavljati "
-"bezbednosni rizik. Da li još uvek želite da nastavite?"
+"podešavanjima. Kopiranje ovih dodataka u sistemski profil može predstavljati "
+"bezbednosni rizik. Da li još uvek želite da kopirate vaša podešavanja?"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
@@ -8390,6 +8445,9 @@ msgstr "HIMS Braille Sense/Braille EDGE serije"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "reports the object with focus"
+#~ msgstr "prikazuje objekat u fokusu"
 
 #~ msgid "%s"
 #~ msgstr "%s"

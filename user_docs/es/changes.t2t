@@ -9,6 +9,14 @@ Qué hay de Nuevo en NVDA
 - La existencia de errores de ortografía se  anuncia en campos editables para Internet Explorer y otros controles MSHTML. (#4174)
 - Ahora se verbalizan muchos más  símbolos matemáticos unicode  cuando aparezcan  en el texto. (#3805)
 - Ahora se anuncia automáticamente Buscar sugerencias en la pantalla de inicio de Windows 10 (#5049)
+- Soporte para las pantallas braille EcoBraille 20, EcoBraille 40, EcoBraille 80 y EcoBraille Plus. (#4078)
+- En modo exploración, ahora puedes  activar y desactivar la navegación con una sola letra pulsando NVDA+shift+espacio. Cuando se desactive, las teclas de una sola letra se pasan a la aplicación, lo cuál es útil para algunas aplicaciones web tales como Gmail, Twitter y Facebook. (#3203)
+- Nuevas tablas de transcripción braille: Finlandés de 6 puntos, Irlandés grado 1, Irlandés grado 2, Coreano grado 1 (2006), Coreano grado 2 (2006). (#5137, #5074, #5097)
+- Ahora se soporta el teclado QWERTY en la pantalla braille Papenmeier BRAILLEX Live Plus. (#5181)
+
+
+== Canbios ==
+- Actualizado el transcriptor braille liblouis a 2.6.3. (#5137)
 
 
 == Corrección de Errores ==
@@ -16,6 +24,17 @@ Qué hay de Nuevo en NVDA
 - En Firefox, NVDA ya no trata de crear una descripción para pestañas de paneles ARIA basados  en todo el texsto. (#4638)
 - En Internet Explorer y otros controles MSHTML, al tabular por secciones, artículos o diálogos  ya no anuncia todo el contenido del contenedor como su nombre. (#5021, #5025) 
 - Al utilizar las pantallas braille Baum/HumanWare/APH con un teclado braille, la entrada braille ya no detiene su funcionamiento después de pulsar otro tipo de tecla en la pantalla. (#3541)
+- En Windows 10, ahora ya no se anuncia información extraña al pulsar alt+tab o alt+shift+tab para cambiar entre aplicaciones. (#5116)
+- El texto excrito ya no es ilegible al utilizar ciertas aplicaciones tales como Microsoft Outlook con una pantalla braille. (#2953)
+- En modo exploración en Internet Explorer y otros controles MSHTML, ahora se anuncia el contenido correcto cuando un elemento aparece o cambia y se enfoca inmediatamente. (#5040)
+- En modo exploración en Microsoft Word, la navegación con una sola tecla ahora se actualiza en la pantalla braille y el cursor de revisión según se esperaba. (#4968)
+- En braille, ya no se muestran extraños espacios en braille entre o después de los indicadores para controles y formato. (#5043)
+- Cuando una aplicación está respondiendo lentamente y cambias desde esa aplicación, NVDA ahora es mucho más  sensible en otras aplicaciones en más casos. (#3831)
+- Las notificaciones de Windows 10 Toast ahora se anuncian como se esperaba. (#5136)
+
+
+== Cambios para Desarrolladores ==
+- Ahora puedes inyectar la entrada bruta desde un teclado de sistema que no se maneja nativamente por Windows (ej.: un teclado QWERTY en una pantalla braille) utilizando la nueva función keyboardHandler.injectRawKeyboardInput. (#4576)
 
 
 = 2015.2 =

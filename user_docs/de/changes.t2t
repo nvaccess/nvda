@@ -9,13 +9,34 @@
 - In Eingabefeldern in Internet Explorer und anderen MSHTML-Dokumenten werden Rechtschreibfehler korrekt erkannt (#4174)
 - Verbesserte Erkennung von mathematischen Unicode-Sonderzeichen (#3805)
 - Suchvorschläge im Windows 10-Startbildschirm werden automatisch ausgegeben. (#5049)
+- Unterstützung der  Braillezeillen EcoBraille 20, EcoBraille 40, EcoBraille 80 und EcoBraille Plus. (#4078)
+- Im Lese-Modus können Sie nun die Schnellnavigation mittels NVDA+Umschalt+Leertaste ein- und ausschalten. Bei ausgeschalteter Schnellnavigation werden Buchstaben an die aktive Anwendung weitergereicht. Dies ist in einigen Internet-Anwendungen wie GMail, Twitter und Facebook hilfreich. (#3203)
+- neue Brailleübersetzungstabellen: Finnisch 6 Punkt, Irische Vollschrift, Irische Kurzschrift, Koreanische Vollschrift (2006), Koreanische Kurzschrift (2006). (#5137, #5074, #5097)
+- Die Qwertz-Tastatur der Braillezeile BRAILLEX Live Plus von Papenmeier wird nun unterstützt. (#5181)
+
+
+== Änderungen ==
+- Liblouis auf Version 2.6.3 aktualisiert. (#5137)
 
 
 == Fehlerbehebungen ==
-- Wenn Sie die Schnellnvigationstasten verwenden, werden Listeneinträge ignoriert, die zu Gestaltungszwecken eingefügt wurden. (#4204)
+- Wenn Sie die Schnellnavigationstasten verwenden, werden Listeneinträge ignoriert, die zu Gestaltungszwecken eingefügt wurden. (#4204)
 - in Firefox erstellt NVDA keine Beschreibungen mehr für Aria-Registerkarten, die den gesamten Inhalt der Registerkarte enthalten. (#4638)
-- Wenn Sie im Internet Explorer in einen Abschnitt, einen Artikel oder einen Dialog navigieren, wird nicht mehr der gesamte Inhalt als Name angezeigt. (#5021, #5025) 
+- Wenn Sie im Internet Explorer oder anderen MSHTML-Elementen in einen Abschnitt, einen Artikel oder einen Dialog navigieren, wird nicht mehr der gesamte Inhalt als Name angezeigt. (#5021, #5025) 
 - Wenn Sie eine Braillezeile von Baum, Humanware oder Aph verwenden, funktioniert die Brailletastatur wieder, nachdem Sie andere Tasten an der Braillezeile verwendet haben. (#3541)
+- Wenn Sie in windows 10 mittels alt+tab bzw. Alt+Umschalt+Tab zwischen Anwendungen wechseln, werden keine überflüssigenInformationen angesagt. (#5116)
+- Wenn Sie bestimmte Anwendungen wie Microsoft Outlook mit einer Braillezeile verwenden, wird dieser nun nicht mehr verstümmelt.  (#2953)
+- im Internet explorer und anderen mshtml-Dokumenten werden Elemente, die sich ändern, korrekterweise fokussiert. (#5040)
+- in Microsoft word wird nun die Anzeige auf der Braillezeile korrekt aktualisiert, wenn Sie die Schnellnavigation verwenden. (#4968)
+- Beim ausgeben der Textformatierung in Braille werden keine überflüssigen Leerzeichen mehr angezeigt. (#5043)
+- Wenn Sie den Fokus von einer Anwendung nehmen, die langsam reagiert, sollte NVDA nun in den meisten Fällen schneller reagieren. (#3831)
+- Windows 10-Benachrichtigungen werden nun wie erwartet angezeigt. (#5136)
+
+
+== Änderungen für Entwickler ==
+- Nun können auch Tastenanschläge von Tastaturen verarbeitet werden, die nicht vom Betriebssystem erkannt werden (wie z.B. Tastaturen von Braillezeilen). Verwenden Sie hierzu die neue Funktion  keyboardHandler.injectRawKeyboardInput. (#4576)
+- Mit der neuen Funktion eventHandler.requestEvents können nun Ereignisse abgearbeitet werden, die standardmäßig blockiert werden  Hierzu zählen Ereignisse von bestimmten Steuerelementen oder Ereignisse, die im Hintergrund ausgelöst werden. (#3831)
+
 
 = 2015.2 =
 Schwerpunkte dieser Version sind: Diagramme können in Microsoft Excel gelesen werden, Unterstützung für das Lesen und interaktive navigieren in mathematischem Text.
