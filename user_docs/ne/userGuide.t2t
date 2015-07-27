@@ -2,7 +2,7 @@
 
 
 %!includeconf: ../userGuide.t2tconf
-%kc:title: नेत्रवाणी नेत्रवाणी_संस्करण कुञ्जीपाटी आदेशको छरितो सन्दर्भ
+%kc:title: नेत्रवाणी NVDA_VERSION कुञ्जीपाटी आदेशको छरितो सन्दर्भ
 
 = विषय सूची =[toc]
 %%toc
@@ -410,7 +410,7 @@ numpad Insert र Extended Insert दुबै कुञ्जीलाई न�
 पर्दा समीक्षा मुद्राले तपाइलाई पर्दामा सक्रिय अनुप्रयोगका देखिएका पाठहरूलाई समिक्षा गर्ने अनुमति दिन्छ ।
 यो अरू पर्दा वाचकहरूमा भएको पर्दा समीक्षा वा सुलसुलेको कार्यशैली जस्तै हो 
 
-पर्दा समीक्षा मुद्रामा जाँदा समीक्षा क्रसर चालू [विचरण वस्तु #ObjectNavigation] रहेको स्थानमा राखीने छ ।.
+पर्दा समीक्षा मुद्रामा जाँदा समीक्षा क्रसर चालू [विचरण वस्तु #ObjectNavigation] रहेको स्थानमा राखीने छ ।
 समीक्षा आदेसले पर्दामा घुमेको बेला, विचरण वस्तु वर्तमान पर्दा समीक्षा क्रसर भएको स्थानमा पाइएको वस्तुमा स्वतः निर्धारित हुन्छ ।
 
 ख्याल राखौं कि नया पर्दा प्रविधीको कारणले केही नया अनुप्रयोगहरूमा नेत्रवाणीले पर्दामा देखिएका केही वा सम्पूर्ण पाठहरूलाई  न पढ्न सक्छ । यसलाई तुरुन्तै पढ्न सक्ने बनाउन सम्भव छैन ।
@@ -503,6 +503,12 @@ escape कुञ्जीलाई दबाएमा फेरी उघार�
 || नाम | कुञ्जी | विवरण |
 | सुरुको एकाइमा जानका लागि | shift+अल्पविराम | तालिका सुची जस्ता लिङ्कहरूका सुरुका एकाइहरू स्थानमा कर्सर जाने छ ।
 | विगतको सामाग्रीको अन्तमा जान | comma | विगतमा गएका (सुची, तालिका, इत्यादि) वस्तुमा रहेको caret बसेको स्थानको अन्तिम सामाग्रीमा जान्छ । |
+
+%kc:endInclude
+Gmail, Twitter र फेसबुक जस्ता केहि वेभ अनुप्रयोगहरूले एकल वर्णलाई द्रुत कुञ्जी बनाएका छन् ।
+यदि तपाइ उघार्ने मुद्रामा रहेर पड्दा पनि यी एकल वर्नलाई प्रयोग गर्न चाहनु हुन्छ भने नेत्रवाणीको एकल वर्ण विचरण सुविधालाई निस्क्रिय गर्न सक्नु हुन्छ ।
+%kc:beginInclude
+सक्रिय कागजातमा हुँदा एकल वर्णको विचरणको अवस्थालाई साटोफेरो गर्न नेत्रवाणी+shift+Space दबाउनु होला ।
 %kc:endInclude
 
 ++ तत्त्वहरूको सुची ++
@@ -513,7 +519,7 @@ escape कुञ्जीलाई दबाएमा फेरी उघार�
 तपाइले कुनै पातोमा भएका एउटा सामाग्रीलाई चयन गरे पछि सोही सामाग्रीलाई सक्रिय गराउन उपलब्ध गराएको टाँकलाई प्रयोग गर्न सक्नु हुन्छ
 %kc:beginInclude
 || नाम | कुञ्जी | विवरण |
-| उघारने मुद्राका तत्त्वहरू list | नेत्रवाणी+f7 | चालू कागजातमा भएका फरक तत्त्वहरू को सुची देखाउने छ । |
+| उघारने मुद्राका तत्त्वहरू | नेत्रवाणी+f7 | चालू कागजातमा भएका फरक तत्त्वहरू को सुची देखाउने छ । |
 %kc:endInclude
 
 ++ गाँसिएको वस्तु ++
@@ -1418,7 +1424,7 @@ This option allows you to choose whether or not NVDA should report new symbols a
 ++ Freedom Scientific Focus/PAC Mate Series ++
 All Focus and PAC Mate displays from [Freedom Scientific http://www.freedomscientific.com/] are supported when connected via USB or bluetooth.
 You will need the Freedom Scientific braille display drivers installed on your system.
-यदि तपाइ सित उपलब्ध छैनन् भने तपाइले यिनिहरुलाई http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp बाट प्राप्त गर्न सक्नु हुन्छ ।.
+यदि तपाइ सित उपलब्ध छैनन् भने तपाइले यिनिहरुलाई http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp बाट प्राप्त गर्न सक्नु हुन्छ ।
 Although this page only mentions the Focus Blue display, the drivers support all Freedom Scientific Focus and Pacmate displays.
 If your system is running 64 bit Windows and the drivers were already installed by another screen reader, you will probably still need to install the drivers from this link, as the files required by NVDA were probably not installed by the other screen reader.
 
@@ -1756,10 +1762,9 @@ The following Braille displays are supported:
 -
 
 If BrxCom is installed, NVDA will use BrxCom.
-BrxCom is a tool that allows you to use the Braille input independently from a screen reader.
+BrxCom is a tool that allows keyboard input from the braille display to function independently from a screen reader.
 A new version of BrxCom which works with NVDA will be released by Papenmeier soon.
-Braille input is possible with the Trio, BRAILLEX Live 20 and Braillex Live devices without BrxCom.
-Braille input is also possible with the Live Plus model, but with BrxCom only.
+Keyboard input is possible with the Trio and BRAILLEX Live models.
 
 Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
 The EAB can be moved in four directions where generally each direction has two switches.
@@ -1960,6 +1965,41 @@ Please check your BrailleNote's documentation to find where these keys are locat
 | Windows key | space+dot2+dot4+dot5+dot6 (space+w) |
 | Alt key | space+dot1+dot3+dot4 (space+m) |
 | Toggle input help | space+dot1+dot2+dot5 (space+h) |
+%kc:endInclude
+
+++ EcoBraille ++
+NVDA supports EcoBraille displays from [ONCE http://www.once.es/].
+The following models are supported:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+In NVDA, you can set the serial port to which the display is connected in the Braille Settings dialog.
+
+Following are the key assignments for EcoBraille displays.
+Please see the [EcoBraille documentation ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] for descriptions of where these keys can be found.
+
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | T2 |
+| Scroll braille display forward | T4 |
+| Move braille display to previous line | T1 |
+| Move braille display to next line | T5 |
+| Route to braille cell | Routing |
+| Activate current navigator object | T3 |
+| Switch to next review mode | F1 |
+| Move to containing object | F2 |
+| Switch to previous review mode | F3 |
+| Move to previous object | F4 |
+| Report current object | F5 |
+| Move to next object | F6 |
+| Move to focus object | F7 |
+| Move to first contained object | F8 |
+| Move System focus or caret to current review position | F9 |
+| Report review cursor location | F0 |
+| Toggle braille tethered to | A |
 %kc:endInclude
 
 ++ BRLTTY ++
