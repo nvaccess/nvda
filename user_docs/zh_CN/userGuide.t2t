@@ -285,6 +285,8 @@ NVDA 提供下列与系统输入焦点相关的快捷命令：
 | 全文朗读 | NVDA+下光标 | NVDA+a | 从系统输入焦点的当前位置开始朗读，焦点会随着朗读的内容移动。 |
 | 朗读当前航 | NVDA+上光标 | NVDA+l | 朗读系统输入焦点所在的行，连按两次拼读该行。 |
 | 朗读当前选择的文本 | NVDA+Shift+上光标 | NVDA+shift+s | 朗读当前选择的所有文本 |
+| 下一个句子 | alt+下光标 | alt+下光标 | 移动系统焦点到下一个句子（仅在 word 中受到支持）。 |
+| 上一个句子 | alt+上光标 | alt+上光标 | 移动系统焦点到上一个句子（仅在 word 中受到支持）。 |
 
 
 当处于一个列表之内时，下面的键盘命令也是可用的：
@@ -440,7 +442,7 @@ NVDA 的这个额外的鼠标特性默认情况下是关闭的。
 
 + 浏览模式 +
 NVDA 使用浏览模式来浏览复杂的只读文档，如 web 页面。
-这包括Mozilla Firefox, Microsoft Internet Explorer, Microsoft Outlook  的 HTML 消息， Google Chrome, Adobe Reader 和 Adobe Flash 的文档。
+这包括Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, Microsoft Outlook  的 HTML 消息， Google Chrome, Adobe Reader 和 Adobe Flash 的文档。
 浏览模式在阅读 Microsoft Word 文档时也可用(可选)。
 
 在浏览模式中，文档的内容将可以以平面的形式用浏览光标快捷键进行浏览，前提是它是传统的文本文档。
@@ -494,6 +496,7 @@ NVDA 使用浏览模式来浏览复杂的只读文档，如 web 页面。
 - d: 路标
 - o: 嵌入式对象
 - 1 到 6: 分别表示1到6级的标题
+- a: 注释 (评论、编辑者修订等)。
 -
 要想在如列表、表格等容器控件的开始或者结尾之间切换：
 || 名称 | 按键 | 描述 |
@@ -503,12 +506,14 @@ NVDA 使用浏览模式来浏览复杂的只读文档，如 web 页面。
 
 ++ 元素列表 ++
 元素列表提供一个允许您访问当前文档的链接、标题或者路标的列表。
-单选按钮允许您在这三种类型的信息之间切换。
-也在此对话框提供了一个编辑区域，允许您过滤当前文档的列表，帮助您尽快找到此页面上的特定项目。
+元素列表依照不同的程序文档来显示多种类型元素的列表。
+如在 web 浏览器中，元素列表可列举“链接”、“标题”和“路标”。
+当中提供的单选按钮允许您在不同类型的元素之间切换。
+还在此对话框提供了一个编辑区域，允许您过滤当前文档的列表，帮助您尽快找到此页面上的特定项目。
 一旦您选择了一个项目，就可以使用对话框提供的按钮移动到或者激活项目。
 %kc:beginInclude
 || 名称 | 按键 | 描述 |
-| 浏览模式元素列表 | NVDA+f7 | 调出一个包含当前文档的链接、标题或路标的元素列表。 |
+| 浏览模式元素列表 | NVDA+f7 | 列举当前文档的各种元素。 |
 %kc:endInclude
 
 ++ 嵌入式对象 ++
@@ -521,6 +526,42 @@ NVDA 使用浏览模式来浏览复杂的只读文档，如 web 页面。
 || 名称 | 按键 | 描述 |
 | 移动到浏览模式文档容器 | NVDA+control+空格 | 移动焦点到此嵌入对象之外，返回到包含此对象的文档。 |
 %kc:endInclude
+
++ 阅读数学内容 +
+ 使用来自 Design Science的 MathPlayer 4， NVDA 可以阅读并有交互性的浏览数学内容。
+这要求 MathPlayer 4 已经安装在了电脑上。
+MathPlayer可免费从 http://www.dessci.com/en/products/mathplayer/ 处下载。
+
+NVDA 支持下列类型的数学内容：
+- Mozilla Firefox 和 Microsoft Internet Explorer 的 MathML。
+- Microsoft Word 和 PowerPoint 中的 Design Science MathType  
+- Adobe Reader 的 MathML。请注意，这仍不是一个官方标准，所以目前还没有通用的软件版本可以制作这些内容。
+-
+
+当阅读一个文档时， NVDA 将会把所有支持的数学内容读出来。
+如果您正在使用点显器，这也将会被用点字显示。
+
+++ 交互式浏览 ++
+如果您主要使用语音进行工作，在大多数情况下，您或许希望可以采用更小的浏览单位检查表达式，而不是马上读出整个表达式。
+
+如果您正处于浏览模式中，您可以移动光标到数学内容上然后按下“回车”键。
+
+如果您没有在浏览模式时：
++ 移动浏览光标到数学内容。
+默认情况下，浏览光标会跟随系统输入焦点，所以，实际上您可以直接使用系统输入焦点移动到期望的内容。
++ 随后激活下面的命令。
++
+
+%kc:beginInclude
+|| 名称 | 按键 | 描述 |
+| 与数学内容交互 | NVDA+alt+m | 开始与数学内容进行交互。 |
+%kc:endInclude
+
+在此时，您可以使用 MathPlayer 的命令(如)光标键)来浏览表达式。
+举例来说，您可以使用左右光标键经过表达式并缩放到表达式的其中一个部分，如分数等。
+请查看 MathPlayer 的文档获取更多信息。
+
+当您希望返回到文档时，简单的按下“esc”键即可。"
 
 + 特定应用程序的 NVDA命令 +
 NVDA 为某些特定的程序提供了自家额外的命令，提供了通常无法使用屏幕阅读器进行访问的功能的访问并使得某些特定任务的执行变得更加轻松。
@@ -539,6 +580,7 @@ NVDA 为某些特定的程序提供了自家额外的命令，提供了通常无
 | 设置列标题 | NVDA+shift+c | 按一次，告诉 NVDA，这是包含列标题的行的第一个标题单元，当在其下方的列之间切换时，自动读出那一行的列标题，连按两次清除设置。 |
 | 设置行标题 | NVDA+shift+r | 按一次，告诉 NVDA，这是包含行标题的列的第一个标题单元，当在其右方的行之间切换时，自动读出那一列的行标题，连按两次清除设置。 |
 | 朗读注释 | NVDA+Alt+c | 朗读输入焦点所在单元的注释文本(如果有的话)。 | 
+| 元素列表对话框 | NVDA+f7 | 打开元素列表对话框，显示图表、带评论的单元格或带公式的单元格。 |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -583,6 +625,9 @@ NVDA 为某些特定的程序提供了自家额外的命令，提供了通常无
 在所有的 NVDA 设置对话框中，点击“确认”按钮接受所有您作过的更改。
 要取消任何修改，只需要点击“取消”按钮或者按下“ESC”。
 一些设置也可以通过下面章节所列举的快捷键来修改。
+
+请注意：默认情况下不是所有的选项对话框都可以使用输入首饰进行访问(键盘命令、触摸手势等)
+如果您想访问的对话框没有专用的快捷键，使用[输入手势对话框 #InputGestures] 可谓该对话框添加自定义手势。
 
 +++ 常规设置 (NVDA+control+g) +++
 在“选项”菜单可以找到“常规设置”对话框。
@@ -792,6 +837,18 @@ NVDA现在只支持电脑盲文点字的输入，因此，只有八点点字表�
 这样的意思就是您不必在每一行的末尾进行点显器滚动，实际上，更多的文本将会显示在点显器上面。
 这样做将提高在阅读更大数量的文本时的效率。
 默认情况下，它是禁用的。
+
+==== 避免拆分单词()如果可能) ====
+如果它被启用，对于点显器末端而言太大的单词将不会被拆分。
+取而代之的是一些空白格子。
+当您滚动点显器，您可以查看整个单词。
+有时候这被称为“自动换行”。
+请注意：如果单词对于整个点显器本身而言过大，单词仍然会被拆分。
+
+如果此选项被停用，尽可能多的字符会被显示在点显器上，但单词后面的部分将被切分开。
+当您滚动点显器时，您将查看到单词的剩余部分。
+
+启用此选项可能令阅读变的更加流畅，但通常也会要求您进行更多次数的点显器滚动。
 
 +++ 键盘设置 (NVDA+control+k) +++
 此对话框可以在“选项”菜单下的“键盘设置”找到。
@@ -1056,6 +1113,7 @@ NVDA现在只支持电脑盲文点字的输入，因此，只有八点点字表�
 - 引用区
 - 路标
 - 框架
+-如果某些东西可点击
 -
 
 ==== 朗读光标经过时的文本格式变化 ====
@@ -1099,6 +1157,9 @@ NVDA 的语音字典比之单词替换更为强大。
 
 +++ 标点符号发音 +++[SymbolPronunciation]
 此对话框允许您修改标点符号的发音，并指定语音输出标点符号的级别。
+
+{正在编辑的标点发音所属的语言会被显示在对话框的标题上。
+请注意，此对话框依照可在[语音设置对话框 #VoiceSettings]中找到的选项“处理字符和标点时信任语音语言”而定，极如果此选项被选中，将使用语音语言代替 NVDA 本地语言设置。
 
 要想修改某个标点，请在标点列表选择它。
 “替换文本”编辑区域允许您定义用来替换此标点的文本。
@@ -1349,7 +1410,7 @@ This section contains information about the Braille displays supported by NVDA.
 ++ Freedom Scientific Focus/PAC Mate Series ++
 All Focus and PAC Mate displays from [Freedom Scientific http://www.freedomscientific.com/] are supported when connected via USB or bluetooth.
 You will need the Freedom Scientific braille display drivers installed on your system.
-If you do not have them already, you can obtain them from http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+If you do not have them already, you can obtain them from http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Although this page only mentions the Focus Blue display, the drivers support all Freedom Scientific Focus and Pacmate displays.
 If your system is running 64 bit Windows and the drivers were already installed by another screen reader, you will probably still need to install the drivers from this link, as the files required by NVDA were probably not installed by the other screen reader.
 
