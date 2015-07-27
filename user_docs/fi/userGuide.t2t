@@ -331,9 +331,9 @@ Käytä seuraavia komentoja objekteittain liikkumiseen:
 | Siirrä edelliseen objektiin | NVDA+numeronäppäimistön 4 | NVDA+Shift+vasen nuoli | Pyyhkäisy vasemmalle (objektitila) | Siirtää nykyistä navigointiobjektia edeltävään objektiin. |
 | Siirrä seuraavaan objektiin | NVDA+numeronäppäimistön 6 | NVDA+Shift+oikea nuoli | Pyyhkäisy oikealle (objektitila) | Siirtää nykyisen navigointiobjektin jälkeiseen objektiin. |
 | Siirrä ensimmäiseen sisältöobjektiin | NVDA+numeronäppäimistön 2 | NVDA+Shift+alanuoli | Pyyhkäisy alas (objektitila) | Siirtää ensimmäiseen navigointiobjektin sisällä olevaan objektiin. |
-| Siirrä kohdistusobjektiin | NVDA+numeronäppäimistön miinus | NVDA+askelpalautin | Ei mitään | Siirtää objektiin, jossa järjestelmän kohdistus on tällä hetkellä ja sijoittaa tarkastelukohdistimen järjestelmäkohdistimen kohdalle, mikäli se on näkyvissä. |
+| Siirrä aktiiviseen objektiin | NVDA+numeronäppäimistön miinus | NVDA+askelpalautin | Ei mitään | Siirtää objektiin, jossa järjestelmän kohdistus on tällä hetkellä ja sijoittaa tarkastelukohdistimen järjestelmäkohdistimen kohdalle, mikäli se on näkyvissä. |
 | Aktivoi nykyinen navigointiobjekti | NVDA+numeronäppäimistön Enter | NVDA+Enter | Kaksoisnapautus | Aktivoi nykyisen navigointiobjektin (vastaa hiiren napsauttamista tai välilyönnin painamista, kun järjestelmän kohdistus on siinä). |
-| Siirrä järjestelmäkohdistus tai -kohdistin tarkastelukohtaan | NVDA+Shift+numeronäppäimistön miinus | NVDA+Shift+askelpalautin | Ei mitään | Siirtää kerran painettaessa järjestelmän kohdistuksen nykyiseen navigointiobjektiin, kahdesti painettaessa siirtää järjestelmäkohdistimen  tarkastelukohdistimen kohdalle. |
+| Siirrä järjestelmän kohdistus tai -kohdistin tarkastelukohtaan | NVDA+Shift+numeronäppäimistön miinus | NVDA+Shift+askelpalautin | Ei mitään | Siirtää kerran painettaessa järjestelmän kohdistuksen nykyiseen navigointiobjektiin, kahdesti painettaessa siirtää järjestelmäkohdistimen  tarkastelukohdistimen kohdalle. |
 | Lue tarkastelukohdistimen sijainti | NVDA+numeronäppäimistön delete | NVDA+delete | Ei mitään | Kertoo tietoja tarkastelukohdistimen kohdalla olevan tekstin tai objektin sijainnista. Näitä tietoja voivat olla esim. prosenttimäärä asiakirjasta, etäisyys sivun reunasta tai tarkka sijainti ruudulla. Kahdesti painettaessa kerrotaan lisätietoja. |
 %kc:endInclude
 
@@ -503,6 +503,12 @@ Säilöelementtien, kuten listojen ja taulukoiden alkuun tai loppuun siirtymisee
 || Nimi | Näppäinkomento | Kuvaus |
 | Siirrä säilöelementin alkuun | Shift+pilkku | Siirtää sen säilöelementin alkuun, jonka kohdalla kohdistin on (lista, taulukko jne). |
 | Siirrä säilöelementin loppuun | pilkku | Siirtää sen säilöelementin loppuun, jonka kohdalla kohdistin on (lista, taulukko jne). |
+
+%kc:endInclude
+Joissakin uusissa verkkopohjaisissa sovelluksissa, kuten Gmail, Twitter ja Facebook, käytetään yksikirjaimisia pikanäppäimiä.
+Mikäli haluat samaan aikaan käyttää sekä niitä että nuolinäppäimiä selaustilassa lukemiseen, voit poistaa tilapäisesti käytöstä NVDA:n navigointinäppäimet.
+%kc:beginInclude
+Ota yksikirjaimiset navigointinäppäimet käyttöön tai poista ne käytöstä nykyisessä asiakirjassa painamalla NVDA+Shift+välilyönti.
 %kc:endInclude
 
 ++ Elementtilista ++
@@ -941,7 +947,7 @@ Löytyy Asetukset-valikon kohdasta "Tarkastelukohdistin...".
 Tämä valintaikkuna sisältää seuraavat asetukset:
 
 %kc:setting
-==== Seuraa järjestelmäkohdistusta ====
+==== Seuraa järjestelmän kohdistusta ====
 Näppäinkomento: NVDA+7
 
 Kun tämä asetus on käytössä, tarkastelukohdistin sijoitetaan aina samaan objektiin kuin nykyinen järjestelmän kohdistus sen muuttuessa.
@@ -950,7 +956,7 @@ Kun tämä asetus on käytössä, tarkastelukohdistin sijoitetaan aina samaan ob
 ==== Seuraa järjestelmäkohdistinta ====
 Pikanäppäin: NVDA+6
 
-Kun tämä asetus on käytössä, tarkastelukohdistin siirretään automaattisesti järjestelmäkohdistimen kohdalle joka kerta sen liikkuessa.
+Kun tämä asetus on käytössä, tarkastelukohdistin siirretään automaattisesti järjestelmäkohdistimen kohdalle aina sen liikkuessa.
 
 ==== Seuraa hiirikohdistinta ====
 Kun tämä asetus on käytössä, tarkastelukohdistin seuraa hiirtä sen liikkuessa.
@@ -1756,10 +1762,9 @@ Seuraavia pistenäyttöjä tuetaan:
 -
 
 NVDA käyttää BrxComia, mikäli se on asennettu.
-BrxCom on työkalu, joka mahdollistaa pistesyötön käyttämisen itsenäisesti ruudunlukuohjelmasta riippumatta.
+BrxCom on työkalu, joka mahdollistaa pistenäytön näppäimistösyötteen toimimisen itsenäisesti ruudunlukuohjelmasta riippumatta.
 Papenmeier julkaisee piakkoin tästä työkalusta NVDA:n kanssa toimivan version.
-Trio-, BRAILLEX Live 20- ja Braillex Live -laitteissa pistesyöttö on tosin mahdollista myös ilman BrxComia.
-Pistesyöttö on mahdollista myös Live Plus -mallissa, mutta vain BrxComin avulla.
+Pistekirjoituksen syöttäminen on mahdollista Trio- ja BRAILLEX Live -malleissa.
 
 Useimmissa laitteissa on intuitiivisen ja nopean käytön mahdollistava helppokäyttönäppäin (EAB).
 Sitä voidaan siirtää neljään suuntaan, joissa kussakin on yleensä kaksi kytkintä.
@@ -1960,6 +1965,40 @@ Katso laitteen käyttöohjeesta tarkat kuvaukset näppäinten paikoista.
 | Windows-näppäin | välilyönti+piste2+piste4+piste5+piste6 (välilyönti+w) |
 | Alt-näppäin | välilyönti+piste1+piste3+piste4 (välilyönti+m) |
 | Ota syöteohje käyttöön tai poista se käytöstä | välilyönti+piste2+piste3+piste6 (välilyönti+alempi h) |
+%kc:endInclude
+
+++ EcoBraille ++
+NVDA tukee [ONCEn http://www.once.es/] EcoBraille-pistenäyttöjä.
+Seuraavia malleja tuetaan:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+Voit määrittää näytön käyttämän sarjaportin NVDA:n Pistekirjoitusasetukset-valintaikkunasta.
+Seuraavassa on näiden pistenäyttöjen näppäinmääritykset.
+Katso [EcoBraillen ohjeesta ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] kuvaukset näppäinten paikoista.
+
+%kc:beginInclude
+|| Nimi | Näppäin |
+| Vieritä pistenäyttöä taaksepäin | T2 |
+| Vieritä pistenäyttöä eteenpäin | T4 |
+| Siirrä pistenäyttö edelliselle riville | T1 |
+| Siirrä pistenäyttö seuraavalle riville | T5 |
+| Siirrä pistesoluun | Kosketuskohdistinnäppäimet |
+| Aktivoi nykyinen navigointiobjekti | T3 |
+| Vaihda seuraavaan tarkastelutilaan | F1 |
+| Siirrä säilöobjektiin | F2 |
+| Vaihda edelliseen tarkastelutilaan | F3 |
+| Siirrä edelliseen objektiin | F4 |
+| Lue nykyinen objekti | F5 |
+| Siirrä seuraavaan objektiin | F6 |
+| Siirrä aktiiviseen objektiin | F7 |
+| Siirrä ensimmäiseen sisältöobjektiin | F8 |
+| Siirrä järjestelmän kohdistus tai -kohdistin nykyiseen tarkastelukohtaan | F9 |
+| Lue tarkastelukohdistimen sijainti | F0 |
+| Vaihda Pistenäyttö seuraa -asetusta | A |
 %kc:endInclude
 
 ++ BRLTTY ++
