@@ -503,6 +503,12 @@ Verwenden Sie folgende Tastenkombinationen, um zum Beginn Bzw. zum Ende eines Co
 || Name | Tastenkombination | Beschreibung |
 | zum Beginn des Containerobjekts springen | Umschalt+Komma | Bewegt den Systemcursor zum Beginn des Containerobjekts (Liste, Tabelle, etc.) auf welchem sich der Cursor befindet. |
 | Hinter das Containerobjekt springen | Komma | bewegt den Systemcursor hinter das Containerobjekt (Liste, Tabelle, etc.) auf welchem sich der Cursor befindet. |
+
+%kc:endInclude
+Einige Web-Anwendungen verwenden einzelne Buchstaben als Tastenkürzel. Hierzu zählen Twitter, Gmail und Facebook.
+Um in solchen Web-Anwendungen deren eigene Kurztasten zu verwenden und dennoch mit den Pfeiltasten durch die Web-Anwendung navigieren zu können, können Sie die Schnellnavigation von NVDA ein- oder ausschalten.
+%kc:beginInclude
+Drücken Sie NVDA+Umschalt+Leertaste, um die Schnellnavigation im aktuellen Dokument ein- oder auszuschalten.
 %kc:endInclude
 
 ++ Die Liste der Elemente ++
@@ -1758,8 +1764,7 @@ Folgende Braillezeilen werden unterstützt:
 Falls BrxCom installiert ist, wird es benutzt.
 BrxCom ist ein Programm, welches unabhängig von Screenreadern Brailleeingabe ermöglicht. 
 Eine neue Version von BrxCom, welche mit NVDA läuft wird in Kürze von der Firma Papenmeier veröffentlicht.
-Bei den Braillezeilen Braillex Trio, Braillex Live 20 und Braillex Live ist Braille-Eingabe jedoch auch ohne BrxCom möglich.
-Die Braille-Eingabe funktioniert auch mit dem Modell Live plus, jedoch nur mit BRXCom.
+Die Braille-Eingabe ist bei den Modellen Trio und Braillex Live verfügbar.
 
 Die meisten Braillezeilen besitzen eine Navigationsleiste (EAB), welche eine intuitive und schnelle Bedienung ermöglicht.
 Die Navigationsleiste kann in vier Richtungen bewegt werden, wobei sie in der Regel zwei Schalterstellungen je Richtung hat.
@@ -1960,6 +1965,41 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo sich die entspr
 | Windows-Taste | Leertaste+Punkt2+Punkt4+Punkt5+Punkt6 (Leertaste+w) |
 | Alt | Leertaste+Punkt1+Punkt3+Punkt4 (Leertaste+m) |
 | Eingabehilfe ein-/ausschalten | Leertaste+Punkt2+Punkt3+Punkt6 (Leertaste+tief gestelltes h) |
+%kc:endInclude
+
+++ EcoBraille ++
+NVDa unterstützt die Ecobraille von  [ONCE http://www.once.es/].
+die folgenden Modelle werden unterstützt:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+In den Braille-Einstellungen von NvDA können Sie den Anschluss festlegen, mit dem die Braillezeile verbunden ist.
+
+Folgende Tasten(Kombinationen) sind bei Verwendung der Ecobraille-Modelle verfügbar:
+Bitte sehen Sie in der [Dokumentation zur Ecobraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] nach, um zu erfahren, wo die entsprechenden Tasten zu finden sind.
+
+%kc:beginInclude
+|| Name | Taste |
+| Braillezeile zurückscrollen | T2 |
+| Braillezeile vorwärtsscrollen | T4 |
+| Braillezeile zur vorigen Zeile bewegen | T1 |
+| Braillezeile zur nächsten Zeile scrollen | T5 |
+| Cursor zum ausgewählten Braillemodul bewegen | Routing |
+| aktuelles Navigatorobjekt aktivieren | T3 |
+| zum nächsten Darstellungsmodus wechseln | F1 |
+| zum übergeordneten Objekt bewegen | F2 |
+| zum vorigen Darstellungsmodus wechseln | F3 |
+| zum vorigen Objekt bewegen | F4 |
+| aktuelles Objekt ausgeben | F5 |
+| zum nächsten Objekt bewegen | F6 |
+| zum Fokus bewegen | F7 |
+| zum ersten untergeordneten Objekt bewegen | F8 |
+| Systemfokus Bzw. Cursor zum aktuellen Navigatorobjekt bewegen | F9 |
+| Position des NVDA-Cursors angeben | F0 |
+| Kopplung der Braillezeile umschalten | A |
 %kc:endInclude
 
 ++ BRLTTY ++
