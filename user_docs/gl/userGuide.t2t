@@ -225,7 +225,7 @@ O menú NVDA permíteche controlar as opcións do NVDA, acceder á axuda, gardar
 
 Para despregar o menú NVDA dende calquer lugar de Windows mentres NVDA se está a executar, preme NVDA+n no teclado ou realiza un doble toque con 2 dedos na pantalla tactil.
 Tamén podes despregar o menú NVDA a través da bandexa de sistema de windows. 
-Ou facendo clic co o botón dereito sobre o icono NVDA atopado na bandexa de sistema, ou accedendo á bandexa de sistema premendo a tecla co logo de windows+B, flecha abaixo ata o icono de  NVDA e premendo a tecla aplicacións atopada seguidamente á tecla de control da dereita na maioría dos teclados. 
+Ou facendo clic co o botón dereito sobre o icono NVDA atopado na bandexa de sistema, ou accedendo á bandexa de sistema premendo a tecla co logo de windows+B, frecha abaixo ata o icono de  NVDA e premendo a tecla aplicacións atopada seguidamente á tecla de control da dereita na maioría dos teclados. 
 Cando apareza o menú, podes utilizar as teclas de cursor para navegar polo menú, e a tecla intro para activar un elemento. 
 
 ++ Ordes Básicas do NVDA ++
@@ -275,26 +275,26 @@ Hai algunhas ordes de teclado útis cando nos movamos co foco:
 ++ Navegando co Cursor do Sistema ++[SystemCaret]
 Cando un [obxecto #Objects] que permite navegación e/ou edición de texto se [enfoca #SystemFocus], podes moverte a traverso do texto utilizando o cursor do sistema, tamén coñecido como o cursor de edición.
 
-Cando o foco estea sobre un obxecto que teña un cursor de edición, podes moverte cas flechas, retroceso de páxina, avance de páxina, comezo, fin, etc., para moverte ó longo do texto. 
+Cando o foco estea sobre un obxecto que teña un cursor de edición, podes moverte cas frechas, retroceso de páxina, avance de páxina, comezo, fin, etc., para moverte ó longo do texto. 
 Tamén podes cambiar o texto se o control soporta edición.
 NVDA anunciará segundo te movas por carácteres, palabras, liñas, e tamén anunciará a selección e non selección do texto.
 
 NVDA proporciona as seguintes teclas de ordes en relación ó cursor do sistema:
 %kc:beginInclude
 || Nome | Tecla | Descripción |
-| Ler todo | NVDA+Flecha Abaixo | NVDA+a | Comeza a lectura dende a posición actual do cursor do sistema, movéndoo segundo se despraza |
-| Ler liña actual | NVDA+Flecha Arriba | NVDA+l | Le a liña onde estea situado actualmente o cursor do sistema. Premendo dúas veces deletrea a liña. |
-| Ler a selección do texto actual | NVDA+Shift+Flecha Arriba | NVDA+shift+s | Le calquera texto seleccionado actualmente |
-| frase seguinte | alt+flecha abaixo | alt+flecha abaixo | Move o cursor á frase seguinte e anúnciaa. (só se soporta no Microsoft Word e Outlook) |
-| frase anterior | alt+flecha arriba | alt+flecha arriba | Move o cursor á frase anterior e anúnciaa. (só se soporta no Microsoft Word e Outlook) |
+| Ler todo | NVDA+Frecha Abaixo | NVDA+a | Comeza a lectura dende a posición actual do cursor do sistema, movéndoo segundo se despraza |
+| Ler liña actual | NVDA+Frecha Arriba | NVDA+l | Le a liña onde estea situado actualmente o cursor do sistema. Premendo dúas veces deletrea a liña. |
+| Ler a selección do texto actual | NVDA+Shift+Frecha Arriba | NVDA+shift+s | Le calquera texto seleccionado actualmente |
+| frase seguinte | alt+frecha abaixo | alt+frecha abaixo | Move o cursor á frase seguinte e anúnciaa. (só se soporta no Microsoft Word e Outlook) |
+| frase anterior | alt+frecha arriba | alt+frecha arriba | Move o cursor á frase anterior e anúnciaa. (só se soporta no Microsoft Word e Outlook) |
 
 
 Cando esteas nunha táboa, as seguintes teclas de ordes tamén están dispoñibles:
 || Nome | Tecla | Descripción |
-| Moverse cara a columna anterior | control+alt+Flecha Esquerda | Move o cursor do sistema á columna anterior (permanecendo na mesma fila) |
-| Moverse cara a columna seguinte | control+alt+Flecha Dereita | Move o cursor do sistema á columna seguinte (permanecendo na mesma fila) |
-| Moverse cara a fila anterior | control+alt+Flecha Arriba| Move o cursor do sistema á fila anterior (permanecendo na mesma columna) |
-| Moverse cara a fila seguinte | control+alt+Flecha Abaixo | Move o cursor do sistema á seguinte fila (permanecendo na mesma columna) |
+| Moverse cara a columna anterior | control+alt+Frecha Esquerda | Move o cursor do sistema á columna anterior (permanecendo na mesma fila) |
+| Moverse cara a columna seguinte | control+alt+Frecha Dereita | Move o cursor do sistema á columna seguinte (permanecendo na mesma fila) |
+| Moverse cara a fila anterior | control+alt+Frecha Arriba| Move o cursor do sistema á fila anterior (permanecendo na mesma columna) |
+| Moverse cara a fila seguinte | control+alt+Frecha Abaixo | Move o cursor do sistema á seguinte fila (permanecendo na mesma columna) |
 %kc:endInclude
 
 ++ Navegación de Obxectos ++
@@ -327,10 +327,10 @@ Para navegar por obxectos, utiliza as seguintes ordes:
 %kc:beginInclude
 || Nome | Tecla Escritorio | Tecla Portátil | Tactil | Descripción |
 | Anunciar obxecto actual | NVDA+5 Teclado numérico | NVDA+shift+o  | non | Anuncia o navegador de obxectos actual. Premendo dúas veces deletrea a información e premendo tres veces copia este nome e valor do obxecto ó portapapeis. |
-| Navegar ó obxecto contedor | NVDA+8 teclado numérico | NVDA+shift+flecha arriba | deslizar arriba (Modo obxecto) | Navega ó contedor do navegador de obxectos actual |
-| Navegar ó obxecto anterior | NVDA+4 teclado numérico | NVDA+shift+flecha esquerda  | deslizar á esquerda (modo obxecto) | Navega ó obxecto directamente antes do actual navegador de obxectos |
-| Navegar ó seguinte obxecto | NVDA+6 teclado numérico | NVDA+shift+flecha dereita  | deslizar á dereita (modo obxecto) | Navega ó obxecto directamente despois do actual navegador de obxectos |
-| Navegar ó primeiro obxecto contido | NVDA+2 teclado numérico | NVDA+shift+flecha abaixo | deslizar abaixo (modo obxecto) | Navega ó primeiro obxecto contido polo actual navegador de obxectos |
+| Navegar ó obxecto contedor | NVDA+8 teclado numérico | NVDA+shift+frecha arriba | deslizar arriba (Modo obxecto) | Navega ó contedor do navegador de obxectos actual |
+| Navegar ó obxecto anterior | NVDA+4 teclado numérico | NVDA+shift+frecha esquerda  | deslizar á esquerda (modo obxecto) | Navega ó obxecto directamente antes do actual navegador de obxectos |
+| Navegar ó seguinte obxecto | NVDA+6 teclado numérico | NVDA+shift+frecha dereita  | deslizar á dereita (modo obxecto) | Navega ó obxecto directamente despois do actual navegador de obxectos |
+| Navegar ó primeiro obxecto contido | NVDA+2 teclado numérico | NVDA+shift+frecha abaixo | deslizar abaixo (modo obxecto) | Navega ó primeiro obxecto contido polo actual navegador de obxectos |
 | Navegar ó obxecto do foco | NVDA+Menos teclado numérico | NVDA+Retroceso | non | Navega ó obxecto que ten actualmente o foco do sistema, e tamén coloca o cursor de revisión na posición do cursor do Sistema, se é amosado |
 | Activar actual navegador de obxectos | NVDA+Intro teclado numérico | NVDA+Intro | doble toque | Activa o actual navegador de obxectos (similar a facer clic co rato ou premer espazo cando ten o foco do sistema) |
 | Mover foco do Sistema a actual navegador de obxectos | NVDA+shift+Menos teclado numérico | NVDA+shift+retroceso | non | premedo unha vez Move o foco do Sistema ó navegador de obxectos actual, premedo dúas veces move o cursor do sistema á posición do cursor de revisión |
@@ -355,17 +355,17 @@ As seguintes ordes están dispoñibles para revisión de texto:
 %kc:beginInclude
 || Nome | Tecla Sobremesa | Tecla Portátil | Tactil | Descripción |
 | mover á liña superior en revisión | shift+7 teclado numérico | NVDA+control+inicio  | non | Move o cursor de revisión á liña superior do texto |
-| Mover á liña anterior en revisión | 7 teclado numérico | NVDA+flecha arriba  | deslizar arriba (modo texto) | Move o cursor de revisión á liña anterior de texto |
+| Mover á liña anterior en revisión | 7 teclado numérico | NVDA+frecha arriba  | deslizar arriba (modo texto) | Move o cursor de revisión á liña anterior de texto |
 | Anunciar liña actual en revisión | 8 teclado numérico | NVDA+shift+. | non | Anuncia a liña actual de texto onde estea colocado o cursor de revisión. Premendo dúas veces deletrea a liña, Preméndoa tres veces deletrea a liña utilizando descripcións de carácteres. |
-| Mover á liña seguinte en revisión | 9 teclado numérico | NVDA+flecha abaixo  | deslizar abaixo (modo texto) | Move o cursor de revisión á liña seguinte de texto |
+| Mover á liña seguinte en revisión | 9 teclado numérico | NVDA+frecha abaixo  | deslizar abaixo (modo texto) | Move o cursor de revisión á liña seguinte de texto |
 | Mover á liña inferior en revisión | shift+9 teclado numérico | NVDA+control+fin | non | Move o cursor de revisión á liña inferior de texto |
-| Mover á palabra anterior en revisión | 4 teclado numérico | NVDA+control+flecha esquerda  | deslizar con 2 dedos á esquerda | Move o cursor de revisión á palabra anterior no texto |
+| Mover á palabra anterior en revisión | 4 teclado numérico | NVDA+control+frecha esquerda  | deslizar con 2 dedos á esquerda | Move o cursor de revisión á palabra anterior no texto |
 | Anunciar palabra actual en revisión | 5 teclado numérico | NVDA+control+. | non | Anuncia a palabra actual no texto onde estea posicionado o cursor de revisión. Premendo dúas veces deletrea a palabra, preméndoa tres veces deletrea a palabra utilizando descripcións de carácteres. |
-| Mover á seguinte palabra en revisión | 6 teclado numérico | NVDA+control+flecha dereita  | deslizar con 2 dedos á dereitta (modo texto) | Move o cursor de revisión á seguinte palabra no texto |
+| Mover á seguinte palabra en revisión | 6 teclado numérico | NVDA+control+frecha dereita  | deslizar con 2 dedos á dereitta (modo texto) | Move o cursor de revisión á seguinte palabra no texto |
 | mover ó comezo da liña en revisión | shift+1 teclado numérico | NVDA+inicio | non | Move o cursor de revisión ó comezo da liña actual no texto |
-| Mover ó carácter anterior en revisión | 1 teclado numérico | NVDA+flecha esquerda | deslizar á esquerda (modo texto) | Move o cursor de revisión ó carácter anterior na liña actual no texto |
+| Mover ó carácter anterior en revisión | 1 teclado numérico | NVDA+frecha esquerda | deslizar á esquerda (modo texto) | Move o cursor de revisión ó carácter anterior na liña actual no texto |
 | Anunciar caracter actual en revisión | 2 teclado numérico | NVDA+. | non | Anuncia o carácter actual na liña de texto onde estea posicionado o cursor de revisión. Premendo dúas veces anuncia unha descripción ou exemplo dese carácter.Preméndoa tres veces anuncia o valor numérico do caracter en decimal e hexadecimal. |
-| Mover ó seguinte carácter en revisión | 3 teclado numérico | NVDA+flecha dereita | deslizar á dereita (modo texto) | Move o cursor de revisión ó seguinte carácter na liña actual de texto |
+| Mover ó seguinte carácter en revisión | 3 teclado numérico | NVDA+frecha dereita | deslizar á dereita (modo texto) | Move o cursor de revisión ó seguinte carácter na liña actual de texto |
 | Mover ó final da liña en revisión | shift+3 teclado numérico | NVDA+fin  | non | Move o cursor de revisión ó final da liña actual de texto |
 | Ler todo con revisión | Máis teclado numérico | NVDA+shift+a | deslizar con 3 dedos abaixo (modo texto) | Le dende a posición actual do cursor de revisión, movéndoo segundo baixa |
 | copiar dende cursor de revisión | NVDA+f9 | NVDA+f9 | non | Comeza o copiado de texto dende a posición actual do cursor de revisión. A copia actual non se leva a cabo ata que digas ó NVDA onde copiar |
@@ -503,6 +503,12 @@ Para moverte ó comezo ou final de elementos contedores como listas e tablas:
 || Nome | Tecla | Descripción |
 | Mover ó comezo dun contedor | shift+coma | Móvese ó comezo do contedor (lista, táboa etc) onde estea situado o cursor |
 | Mover ó final do contedor | coma | Móvese ó final do contedor (lista, táboa etc) onde estea situado o cursor |
+
+%kc:endInclude
+Algunhas aplicacións web como Gmail, Twitter e Facebook usan letras soas como atallos de teclado.
+Se queres utilizar éstas aínda serás capaz de utilizar as teclas de cursor para ler en modo exploración, podes desactivar temporalmente  as teclas de navegación cunha soa letra do NVDA.
+%kc:beginInclude
+Para activar ou desactivar a navegación cunha soa letra para o documento actual, preme NVDA+shift+espazo.
 %kc:endInclude
 
 ++ A Lista de Elementos ++
@@ -558,7 +564,7 @@ Por omisión, o cursor de revisión segue ó cursor do sistema, así podes utili
 %kc:endInclude
 
 Neste ponto, podes utilizar ordes de MathPlayer como as teclas de cursor para explorar a  expresión.
-Por exemplo, podes moverte a través da expresión cas teclas de flecha  esquerda ou dereita e achegarte a unha porción da expresión como unha fracción utilizando a tecla de flecha abaixo.
+Por exemplo, podes moverte a través da expresión cas teclas de frecha  esquerda ou dereita e achegarte a unha porción da expresión como unha fracción utilizando a tecla de frecha abaixo.
 Por favor consulta a documentación do MathPlayer para información adicional.
 
 Cando desexes voltar ó documento, simplemente preme a tecla escape.
@@ -700,7 +706,7 @@ A caixa de diálogo de opcións de voz contén as seguintes opcións:
 ==== Voz ====
 A primeira opción que obtés neste diálogo é unha caixa combinada, que lista todas as voces do sintetizador actual que tes instalado. 
 Podes utilizar as teclas de cursor para escoitar todas as varias eleccións. 
-As flechas esquerda e arriba suben pola lista, mentres que as flechas dereita e abaixo baixan pola lista.
+As frechas esquerda e arriba suben pola lista, mentres que as frechas dereita e abaixo baixan pola lista.
 
 ==== Variante ====
 Se estás utilizando o sintetizador Espeak empaquetado xunto co NVDA, este é unha caixa combinada que che permite seleccionar a variante ca que o sintetizador debería falar. 
@@ -770,10 +776,10 @@ Se estás tendo problemas ca pronunciación de carácteres individuais,  proba d
 Se desexas cambiar rápidamente opcións de voz  sen ir ó diálogo de Opcións de Voz, hai algunhas teclas de ordes do NVDA que che permiten moverte a través das opcións de voz máis comúns, dende calquer lugar mentres se executa NVDA:
 %kc:beginInclude
 || Nome | Tecla Sobremesa | Tecla Portátil | Descripción |
-| Mover á seguinte opción de sintetizador | NVDA+control+Flecha dereita | NVDA+shift+control+Flecha dereita | Móvese á seguinte opción de voz dispoñible despois da actual, pasando pola primeira opción de novo despois da derradeira |
-| Mover á opción de sintetizador anterior | NVDA+control+Flecha esquerda | NVDA+shift+control+Flecha esquerda | Móvese á opción de voz anterior dispoñible despois da actual, pasando pola primeira opción de novo despois da derradeira |
-| Incrementar actual opción de sintetizador | NVDA+control+Flecha arriba | NVDA+shift+control+Flecha arriba | incrementa a opción de voz actual sobre a que esteas. Ex.: incrementa a velocidade, elixe a seguinte voz, incrementa o volume |
-| Decrementar actual opción de sintetizador | NVDA+control+Flecha abaixo | NVDA+shift+control+Flecha abaixo | decrementa a opción de voz actual sobre a que esteas. Ex.: decrementa a velocidade, elixe  a voz anterior, decrementa o volume |
+| Mover á seguinte opción de sintetizador | NVDA+control+Frecha dereita | NVDA+shift+control+Frecha dereita | Móvese á seguinte opción de voz dispoñible despois da actual, pasando pola primeira opción de novo despois da derradeira |
+| Mover á opción de sintetizador anterior | NVDA+control+Frecha esquerda | NVDA+shift+control+Frecha esquerda | Móvese á opción de voz anterior dispoñible despois da actual, pasando pola primeira opción de novo despois da derradeira |
+| Incrementar actual opción de sintetizador | NVDA+control+Frecha arriba | NVDA+shift+control+Frecha arriba | incrementa a opción de voz actual sobre a que esteas. Ex.: incrementa a velocidade, elixe a seguinte voz, incrementa o volume |
+| Decrementar actual opción de sintetizador | NVDA+control+Frecha abaixo | NVDA+shift+control+Frecha abaixo | decrementa a opción de voz actual sobre a que esteas. Ex.: decrementa a velocidade, elixe  a voz anterior, decrementa o volume |
 %kc:endInclude
 
 +++ Opcións de Braille +++
@@ -782,7 +788,7 @@ A caixa de diálogo de Opcións de braille pode chamarse indo ó menú preferenc
 ==== Liña Braille ====
 A primeira opción ca que te atoparás no diálogo de opcións de braille é unha caixa combinada que di "Liña braille". 
 Presentaráseche con varias opcións dependendo de cantas liñas braille estean dispoñibles no teu sistema.
-Móvete entre estas opcións cas flechas.
+Móvete entre estas opcións cas frechas.
 
 Sen braille significa que non estás utilizando braille.
 
@@ -861,7 +867,7 @@ Esta caixa combinada permíteche escoller que tipo de distribución de teclado d
 Se esta caixa de verificación está marcada, o BloqMaius pode utilizarse como unha tecla modificadora do NVDA.
 
 ==== Utilizar o insert extendido como unha tecla modificadora de NVDA ====
-Se esta caixa de verificación está marcada, a tecla insert (normalmente atopada enriba das teclas de flecha, preto de inicio e fin) pode utilizarse como unha tecla modificadora do NVDA.
+Se esta caixa de verificación está marcada, a tecla insert (normalmente atopada enriba das teclas de frecha, preto de inicio e fin) pode utilizarse como unha tecla modificadora do NVDA.
 
 ==== Utilizar insert do teclado numérico como tecla modificadora de NVDA ====
 Se esta caixa de verificación está marcada, a tecla insert do teclado numérico pode utilizarse como unha tecla modificadora do NVDA.
@@ -1020,7 +1026,7 @@ Sen embargo, para os métodos de entrada fonéticos como chinese Novo Fonético,
 
 ==== Anunciar Candidato Seleccionado ====
 Esta Opción, que está activada por omisión, permíteche escoller se NVDA debería anunciar o candidato seleccionado cando aparece unha lista de candidatos ou cando a selección se cambiou.
-Para os métodos de entrada onde a selección se pode cambiar cas teclas de flechas (como Chinese Nova Fonética) esto é necesario, pero para algúns métodos de entrada podería ser máis eficiente teclear con esta opción desactivada.
+Para os métodos de entrada onde a selección se pode cambiar cas teclas de frechas (como Chinese Nova Fonética) esto é necesario, pero para algúns métodos de entrada podería ser máis eficiente teclear con esta opción desactivada.
 Ten en conta que aínda con esta opción desactivada, o cursor de revisión aínda se colocará sobor do candidato seleccionado permitíndoche utilizar a navegación de obxectos para revisar manualmente para ler este ou outros candidatos.
 
 ==== Anunciar Cambios para a Cadea de Lectura ====
@@ -1074,9 +1080,9 @@ Por favor atopa as novas opcións no [diálogo Opcións de Formato de documento 
 Esta opción permite ó modo foco chamarse se o foco cambia. 
 Por exemplo, cando estás nunha páxina web, se premes tab e caes sobre un formulario, se esta opción está verificada, o modo foco chamaráse automáticamente.
 
-==== Modo foco automático para movemento de flechas ====
-Esta opción, cando está marcada, permite ó NVDA entrar en e abandoar o modo foco cando se utilizan as flechas. 
-Por exemplo, se se vai pulsando flecha abaixo por unha páxina web e caes sobre unha caixa de edición, NVDA activará automáticamente o modo foco. Se pulsas as flechas para saír da caixa de edición, NVDA voltaráche a poñer no modo Navegación.
+==== Modo foco automático para movemento de frechas ====
+Esta opción, cando está marcada, permite ó NVDA entrar en e abandoar o modo foco cando se utilizan as frechas. 
+Por exemplo, se se vai pulsando frecha abaixo por unha páxina web e caes sobre unha caixa de edición, NVDA activará automáticamente o modo foco. Se pulsas as frechas para saír da caixa de edición, NVDA voltaráche a poñer no modo Navegación.
 
 ==== Indicación de Audio dos modos Foco e Navegación ====
 Se esta opción está activada, NVDA reproducirá sons especiales cando cambie entre modo Navegación e modo foco, en lugar de falar o cambio.
@@ -1446,12 +1452,12 @@ Por favor mira a documentación da liña para descripcións de onde poden atopar
 | tecla intro | ponto8 |
 | tecla shift+tab | barra espaciadora braille+ponto1+ponto2 |
 | tecla tab | barra espaciadora braille+ponto4+ponto5 |
-| tecla flecha abaixo | barra espaciadora braille+ponto1 |
-| tecla flecha arriba | barra espaciadora braille+ponto4 |
-| tecla control+flecha esquerda | barra espaciadora braille+ponto2 |
-| tecla control+flecha dereita | barra espaciadora braille+ponto5 |
-| tecla flecha esquerda | barra espaciadora braille+ponto3 |
-| tecla flecha dereita | barra espaciadora braille+ponto6 |
+| tecla frecha abaixo | barra espaciadora braille+ponto1 |
+| tecla frecha arriba | barra espaciadora braille+ponto4 |
+| tecla control+frecha esquerda | barra espaciadora braille+ponto2 |
+| tecla control+frecha dereita | barra espaciadora braille+ponto5 |
+| tecla frecha esquerda | barra espaciadora braille+ponto3 |
+| tecla frecha dereita | barra espaciadora braille+ponto6 |
 | tecla inicio | barra espaciadora braille+ponto1+ponto3 |
 | tecla fin | barra espaciadora braille+ponto4+ponto6 |
 | tecla control+inicio | barra espaciadora braille+ponto1+ponto2+ponto3 |
@@ -1497,10 +1503,10 @@ Por favor mira a documentación da liña para descripcións de onde poden atopar
 | tecla alt | sp2 |
 | tecla escape | sp3 |
 | tecla tab | sp4 |
-| tecla flecha arriba | spUp |
-| tecla flecha abaixo | spDown |
-| tecla flecha esquerda | spLeft |
-| tecla flecha dereita | spRight |
+| tecla frecha arriba | spUp |
+| tecla frecha abaixo | spDown |
+| tecla frecha esquerda | spLeft |
+| tecla frecha dereita | spRight |
 | tecla intro | spEnter |
 | menú NVDA | sp1+sp3 |
 | tecla windows+d (minimizar todas as aplicacións) | sp1+sp4 |
@@ -1528,8 +1534,8 @@ Por favor mira a documentación da liña para descripcións de onde poden atopar
 | tecla escape | b4+b6 |
 | tecla tab | enter |
 | tecla intro | esc+enter |
-| tecla flecha arriba | leftSpace |
-| tecla flecha abaixo | rightSpace |
+| tecla frecha arriba | leftSpace |
+| tecla frecha abaixo | rightSpace |
 | menú NVDA | b2+b4+b5+b6 |
 | configuración de Handy Tech | b4+b8 |
 %kc:endInclude
@@ -1578,10 +1584,10 @@ Por favor mira a documentación da liña braille para descripcións de onde se p
 
 Para liñas que teñan un joystick:
 || Nome | Tecla |
-| Tecla flecha arriba | arriba |
-| Tecla flecha abaixo | abaixo |
-| Tecla flecha esquerda | esquerda |
-| Tecla flecha dereita | dereita |
+| Tecla frecha arriba | arriba |
+| Tecla frecha abaixo | abaixo |
+| Tecla frecha esquerda | esquerda |
+| Tecla frecha dereita | dereita |
 | Tecla intro | seleccionar |
 %kc:endInclude
 
@@ -1633,10 +1639,10 @@ Por favor mira a documentación da liña para descripcións de onde poden atopar
 | Mover liña braille á liña seguinte | abaixo |
 | Guiar ata a celda braille | sensores |
 | Activar/desactivar seguemento de braille | arriba+abaixo |
-| tecla flecha arriba | espazo+ponto1 |
-| tecla flecha abaixo | espazo+ponto4 |
-| tecla flecha esquerda | espazo+ponto3 |
-| tecla flecha dereita | espazo+ponto6 |
+| tecla frecha arriba | espazo+ponto1 |
+| tecla frecha abaixo | espazo+ponto4 |
+| tecla frecha esquerda | espazo+ponto3 |
+| tecla frecha dereita | espazo+ponto6 |
 | Menú NVDA | c1+c3+c4+c5 (comando n) |
 | tecla shift+tab | espazo+ponto1+ponto3 |
 | tecla tab | espazo+ponto4+ponto6 |
@@ -1671,8 +1677,8 @@ Por favor mira a documentación das liñas para descripcións de onde poden atop
 | tecla tab | ponto4+ponto5+Espazo |
 | tecla intro | ponto8 |
 | tecla retroceso | ponto7 |
-| tecla flecha arriba | ponto1+Espazo |
-| Tecla flecha abaixo | ponto4+Espazo |
+| tecla frecha arriba | ponto1+Espazo |
+| Tecla frecha abaixo | ponto4+Espazo |
 | bloq maiúsculas | ponto1+ponto3+ponto6+Espazo |
 | tecla shift+alt+tab | avance2+avance3+avance1 |
 | tecla alt+tab | avance2+avance3 |
@@ -1680,30 +1686,30 @@ Por favor mira a documentación das liñas para descripcións de onde poden atop
 | tecla Control+fin | ponto4+ponto5+ponto6+Espazo |
 | tecla inicio | ponto1+ponto3+Espazo |
 | tecla control+inicio | ponto1+ponto2+ponto+Espazo |
-| tecla flecha esquerda | ponto3+Espazo |
-| tecla control+shift+flecha esquerda | ponto2+ponto8+espazo+avance1 |
-| tecla control+flecha esquerda | ponto2+Espazo |
-| tecla shift+alt+flecha esquerda | ponto2+ponto7+avance1 |
-| tecla alt+flecha esquerda | ponto2+ponto7 |
-| tecla flecha dereita | ponto6+Espazo |
-| tecla control+shift+flecha dereita | ponto5+ponto6+Espazo+avance1 |
-| tecla control+flecha dereita | ponto5+espazo |
-| tecla shift+alt+flecha dereita | ponto5+ponto7+avance1 |
-| tecla alt+flecha dereita | ponto5+ponto7 |
+| tecla frecha esquerda | ponto3+Espazo |
+| tecla control+shift+frecha esquerda | ponto2+ponto8+espazo+avance1 |
+| tecla control+frecha esquerda | ponto2+Espazo |
+| tecla shift+alt+frecha esquerda | ponto2+ponto7+avance1 |
+| tecla alt+frecha esquerda | ponto2+ponto7 |
+| tecla frecha dereita | ponto6+Espazo |
+| tecla control+shift+frecha dereita | ponto5+ponto6+Espazo+avance1 |
+| tecla control+frecha dereita | ponto5+espazo |
+| tecla shift+alt+frecha dereita | ponto5+ponto7+avance1 |
+| tecla alt+frecha dereita | ponto5+ponto7 |
 | tecla RePáx | ponto1+ponto2+ponto6+espazo |
 | tecla control+rePáx | ponto1+ponto2+ponto6+ponto8+espazo |
-| tecla control+shift+flecha arriba | ponto2+ponto3+ponto8+espazo+avance1 |
-| tecla control+flecha arriba | ponto2+ponto3+espazo |
-| tecla shift+alt+flecha arriba | ponto2+ponto3+ponto7+avance1 |
-| tecla alt+flecha arriba | ponto2+ponto3+ponto7 |
-| tecla shift+flecha arriba | desprazador esquerdo abaixo + espazo |
+| tecla control+shift+frecha arriba | ponto2+ponto3+ponto8+espazo+avance1 |
+| tecla control+frecha arriba | ponto2+ponto3+espazo |
+| tecla shift+alt+frecha arriba | ponto2+ponto3+ponto7+avance1 |
+| tecla alt+frecha arriba | ponto2+ponto3+ponto7 |
+| tecla shift+frecha arriba | desprazador esquerdo abaixo + espazo |
 | tecla avPáx | ponto3+ponto4+ponto5+espazo |
 | tecla control+avPáx | ponto3+ponto4+ponto5+ponto8+espazo |
-| tecla control+shift+flecha abaixo | ponto5+ponto6+ponto8+espazo+avance1 |
-| tecla control+flecha abaixo | ponto5+ponto6+espazo |
-| tecla shift+alt+flecha abaixo | ponto5+ponto6+ponto7+avance1 |
-| tecla alt+flecha abaixo | ponto5+ponto6+ponto7 |
-| tecla shift+flecha abaixo | desprazador dereito abaixo + espazo |
+| tecla control+shift+frecha abaixo | ponto5+ponto6+ponto8+espazo+avance1 |
+| tecla control+frecha abaixo | ponto5+ponto6+espazo |
+| tecla shift+alt+frecha abaixo | ponto5+ponto6+ponto7+avance1 |
+| tecla alt+frecha abaixo | ponto5+ponto6+ponto7 |
+| tecla shift+frecha abaixo | desprazador dereito abaixo + espazo |
 | tecla suprimir | ponto1+ponto3+ponto5+espazo |
 | tecla f1 | ponto1+ponto2+ponto5+espazo |
 | tecla f3 | ponto1+ponto2+ponto4+ponto8 |
@@ -1756,10 +1762,9 @@ Sopórtanse as seguintes liñas Braille:
 -
 
 Se está instalado BrxCom, NVDA utilizará BrxCom.
-BrxCom é unha ferramenta que che permite utilizar a entrada Braille independentemente dun lector de pantalla.
+BrxCom é unha ferramenta que che permite utilizar a entrada de teclado da pantalla braille para funcionar independientemente dun lector de pantalla.
 Papenmeier liberará xa que logo unha versión nova do BrxCom que funcione co NVDA.  
-A entrada braille é posible cos dispositivos Trio, BRAILLEX Live 20 e Braillex Live sen BrxCom.
-A entrada braille tamén é posible co modelo Live Plus, pero co BrxCom só.
+A entrada e posible cos modelos Trio e BRAILLEX Live.
 
 A maioría dos dispositivos teñen unha Barra de Acceso sinxelo (EAB) que permite operar rápida e intuitivamente.
 A EAB pode moverse en catro direccións onde en xeral cada dirección ten dúas posicións.
@@ -1821,10 +1826,10 @@ As teclas interiores mapéanse a espazo.
 | tecla retroceso | ponto 7 |
 | tecla intro | ponto 8 |
 | tecla escape | espazo co ponto 7 |
-| tecla flecha arriba | espazo co ponto  2 |
-| tecla flecha esquerda | espazo co ponto 1 |
-| tecla flecha dereita | espazo co ponto 4 |
-| tecla flecha abaixo | espazo co ponto 5 |
+| tecla frecha arriba | espazo co ponto  2 |
+| tecla frecha esquerda | espazo co ponto 1 |
+| tecla frecha dereita | espazo co ponto 4 |
+| tecla frecha abaixo | espazo co ponto 5 |
 | tecla control | lt+ponto2 |
 | tecla alt | lt+ponto3 |
 | tecla control+escape | espazo cos pontos 1 2 3 4 5 6 |
@@ -1942,10 +1947,10 @@ Por favor mira a documentación do BrailleNote para atopar onde se localizan est
 | Mover liña braille á liña seguinte | seguinte |
 | Levar á celda braille | sensores |
 | Activar e desactivar seguemento do braille | anterior+seguinte |
-| Tecla flecha arriba | espazo+ponto1 |
-| Tecla flecha abaixo | espazo+ponto4 |
-| Tecla flecha esquerda | espazo+ponmto3 |
-| Tecla flecha dereita | espazo+ponto6 |
+| Tecla frecha arriba | espazo+ponto1 |
+| Tecla frecha abaixo | espazo+ponto4 |
+| Tecla frecha esquerda | espazo+ponmto3 |
+| Tecla frecha dereita | espazo+ponto6 |
 | Tecla retroceso de páxina | espazo+ponto1+ponto3 |
 | Tecla avance de páxina | espazo+ponto4+ponto6 |
 | Tecla inicio | espazo+ponto1+ponto2 |
@@ -1960,6 +1965,41 @@ Por favor mira a documentación do BrailleNote para atopar onde se localizan est
 | Tecla Windows | espazo+ponto2+ponto4+ponto5+ponto6 (espazo+w) |
 | Tecla Alt | espazo+ponto1+ponto3+ponto4 (espazo+m) |
 | Activar e desactivar axuda de entrada | espazo+ponto2+ponto3+ponto6 (espazo+h abaixo) |
+%kc:endInclude
+
+++ EcoBraille ++
+NVDA soporta pantallas EcoBraille de [ONCE http://www.once.es/].
+Sopórtanse os seguintes modelos:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+No NVDA, podes configurar o porto serie ó que se conecta a pantalla no diálogo Opcións de Braille.
+
+Seguidamente van as asignacións de teclas para as pantallas EcoBraille.
+Por favor consulta a [documentación para EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] para descripcións de onde se poden atopar estas teclas.
+
+%kc:beginInclude
+|| Nombre | Tecla |
+| Desprazar atrás pantalla braille | T2 |
+| Desprazar adiante pantalla braille | T4 |
+| Mover pantalla braille a liña anterior | T1 |
+| Mover pantalla braille a seguinte liña | T5 |
+| Levar á celda braille | Sensores |
+| Activar actual navegador de obxectos | T3 |
+| Cambiar  a seguinte modo de revisión | F1 |
+| Mover a obxecto contedor | F2 |
+| Cambiar  a anterior modo de revisión | F3 |
+| Mover a obxecto anterior | F4 |
+| Anunciar obxecto actual | F5 |
+| Mover a obxecto seguinte | F6 |
+| Mover a obxecto enfocado | F7 |
+| Mover a primeiro obxecto contido | F8 |
+| Mover foco do sistema ou cursor a posición de revisión actual | F9 |
+| Anunciar posición do cursor de revisión | F0 |
+| conmutar o braille sigue a | A |
 %kc:endInclude
 
 ++ BRLTTY ++
