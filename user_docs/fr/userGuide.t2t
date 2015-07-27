@@ -269,7 +269,7 @@ Quelques touches de commandes utiles pour naviguer avec le focus :
 | Annonce du focus courant | NVDA+tab | NVDA+tab | Annonce l'objet en cours ou le contrôle qui a le focus système. Un double appui épelle l'information |
 | Annonce du titre | NVDA+t | NVDA+t | Annonce le titre de la fenêtre active. Un double appui épelle l'information, un triple appui la copie dans le presse-papiers |
 | Lecture de la fenêtre active | NVDA+b | NVDA+b | lit tous les contrôles de la fenêtre active (utile pour les dialogues) |
-| Annonce de la barre d'état | NVDA+fin | NVDA+maj+fin | Lit la barre d'état si NVDA en trouve une. Déplace aussi l'objet navigateur à la barre d'état |
+| Annonce de la barre d'état | NVDA+fin | NVDA+maj+fin | Lit la barre d'état si NVDA en trouve une. Déplace aussi l'objet navigateur à la barre d'état. Un double appui épelle l'information |
 %kc:endInclude
 
 ++ Naviguer avec le curseur système ++[SystemCaret]
@@ -285,8 +285,8 @@ NVDA fournit les commandes clavier suivantes par rapport au curseur système :
 | Dire tout | NVDA+flèche bas | NVDA+a | Démarre la lecture depuis la position du curseur système en lui faisant suivre la lecture |
 | Lire ligne courante | NVDA+flèche haut | NVDA+l | Lit la ligne où se trouve le curseur système. Un double appui épelle la ligne. |
 | Lire texte sélectionné | NVDA+Maj+flèche haut | NVDA+Maj+s | Lit tout le texte actuellement sélectionné |
-| Phrase suivante | alt+flècheBas | alt+flècheBas | Amène le curseur à la phrase suivante et la lit. (Supporté seulement sous Microsoft Word) |
-| Phrase précédente | alt+flècheHaut | alt+flècheHaut | Amène le curseur à la phrase précédente et la lit. (Supporté seulement sous Microsoft Word) |
+| Phrase suivante | alt+flècheBas | alt+flècheBas | Amène le curseur à la phrase suivante et la lit. (Supporté seulement sous Microsoft Wordet Outlook) |
+| Phrase précédente | alt+flècheHaut | alt+flècheHaut | Amène le curseur à la phrase précédente et la lit. (Supporté seulement sous Microsoft Wordet Outlook) |
 
 
 Dans un tableau, vous disposez également des touches de commandes suivantes :
@@ -503,6 +503,12 @@ Pour se déplacer au début ou à la fin des éléments contenants comme les lis
 || Nom | Touche | Description |
 | Aller au début du conteneur | maj+virgule | Se déplace au début du conteneur (liste, tableau etc.) où le curseur est positionné |
 | Aller après la fin du conteneur | virgule | Se déplace après la fin du conteneur (liste, tableau etc.) où le curseur se trouve |
+
+%kc:endInclude
+Quelques applications web comme Gmail, Twitter et Facebook utilisent de simple lettres comme touches de raccourci.
+Si vous voulez les utiliser tout en restant capable d'utiliser vos touches curseur en mode navigation, vous pouvez désactiver temporairement les touches de navigation rapide de NVDA.
+%kc:beginInclude
+Pour activer ou désactiver la navigation rapide pour le document courant, pressez NVDA+maj+espace.
 %kc:endInclude
 
 ++ La liste d'éléments ++
@@ -1758,8 +1764,7 @@ Les afficheurs braille suivant sont supportés :
 Si BrxCom est installé, NVDA utilisera BrxCom.
 BrxCom est un outil qui permet d'utiliser le clavier braille indépendamment d'un lecteur d'écran.
 Une nouvelle version de BrxCom compatible avec NVDA sera bientôt mise à disposition par Papenmeier.
-La saisie braille est possible avec les terminaux Trio, BRAILLEX Live 20 et Braillex Live  sans BrxCom.
-La saisie braille est aussi possible avec le modèle Live Plus, mais seulement avec BrxCom.
+La saisie au clavier est possible avec les modèles Trio et BRAILLEX Live.
 
 La plupart des afficheurs ont une barre d'accès facile (EAB) qui permet des opérations intuitives et rapides.
 L'EAB peut être bougé dans quatre directions et chaque direction a deux crans.
@@ -1895,6 +1900,8 @@ brailleX Tiny :
 | Aller à l'objet précédent | r1+left |
 | Aller à l'objet suivant | r1+right |
 | Annoncer la mise en forme | reportf |
+| Annoncer le titre | l1+up |
+| Annoncer la barre d'état | l2+down |
 
 brailleX 2D Screen:
 || Nom | Touche |
@@ -1958,6 +1965,41 @@ Consultez la documentation de votre brailleNote pour savoir où se situent ces t
 | Touche Windows | Espace+Point2+Point4+Point5+Point6 |
 | touche alt | Espace+Point1+Point3+Point4 (Espace+m) |
 | Basculer aide à la saisie | Espace+Point2+Point3+Point6 (Espace+h en bas) |
+%kc:endInclude
+
+++ EcoBraille ++
+NVDA supporte Les afficheurs EcoBraille de [ONCE http://www.once.es/].
+Les modèles suivants sont supportés :
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+Sous NVDA, vous pouvez définir le port série auquel l'afficheur est connecté dans le dialogue "Paramètres braille".
+
+Voici les assignations de touche pour les afficheurs EcoBraille.
+Veuillez consulter [la documentation EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] pour connaître la position de ces touches.
+
+%kc:beginInclude
+|| Nom | Touche |
+| Défilement braille arrière | T2 |
+| Défilement braille avant | T4 |
+| Amener l'afficheur braille à la ligne précédente | T1 |
+| Amener l'afficheur braille à la ligne suivante | T5 |
+| Aller à la cellule braille | Routing |
+| Activer l'objet navigateur courant | T3 |
+| Passer au mode de revue suivant | F1 |
+| Aller à l'objet contenant | F2 |
+| Passer au mode de revue précédent | F3 |
+| Aller à l'objet précédent | F4 |
+| Annoncer l'objet courant | F5 |
+| Aller à l'objet suivant | F6 |
+| Aller à l'objet en focus | F7 |
+| Aller au premier objet inclus | F8 |
+| Amener le focus système ou le curseur à la position courante de revue | F9 |
+| Annoncer la position du curseur de revue | F0 |
+| Bascule du mode de suivi braille | A |
 %kc:endInclude
 
 ++ BRLTTY ++
