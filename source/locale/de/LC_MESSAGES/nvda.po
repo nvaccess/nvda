@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-01 19:09+1000\n"
+"POT-Creation-Date: 2015-07-25 11:01+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Bernd Dorer <bdorer@mailbox.org>\n"
 "Language-Team: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.2\n"
+"X-Generator: Poedit 1.8.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../nvda_quellen/nvda\n"
@@ -263,6 +263,12 @@ msgid "Ethiopic grade 1"
 msgstr "Äthiopische Vollschrift"
 
 #. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Finnish 6 dot"
+msgstr "finnisch (6 Punkte)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Finnish 8 dot computer braille"
 msgstr "Finnisches 8-Punkt-Computerbraille"
 
@@ -290,6 +296,16 @@ msgstr "Französische Vollschrift (Kanada)"
 #. braille settings dialog.
 msgid "French (Canada) grade 2"
 msgstr "Französische Kurzschrift (Kanada)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 1"
+msgstr "Irische Vollschrift"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 2"
+msgstr "Irische Kurzschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -345,6 +361,16 @@ msgstr "Italienisches 8-Punkt-Computerbraille"
 #. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "Kannadische Vollschrift"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 1 (2006)"
+msgstr "Koreanische Vollschrift (2006)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 2 (2006)"
+msgstr "Koreanische Kurzschrift (2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -708,6 +734,26 @@ msgstr "Fokusmodus"
 
 msgid "browse mode"
 msgstr "Lesemodus"
+
+#. Translators: Reported when single letter navigation in browse mode is turned off.
+msgid "Single letter navigation off"
+msgstr "Schnellnavigation aus"
+
+#. Translators: Reported when single letter navigation in browse mode is turned on.
+msgid "Single letter navigation on"
+msgstr "Schnellnavigation ein"
+
+#. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
+msgid ""
+"Toggles single letter navigation on and off. When on, single letter keys in "
+"browse mode jump to various kinds of elements on the page. When off, these "
+"keys are passed to the application"
+msgstr ""
+"schaltet die Schnellnavigation ein oder aus. bei eingeschalteter "
+"Schnellnavigation werden eingegebene Zeichen verwendet, um zu bestimmten "
+"Elementen auf einer Webseite zu springen. Bei ausgeschalteter "
+"Schnellnavigation werden die eingegebenen Zeichen direkt an die Web-"
+"anwendung weitergereicht."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
@@ -4756,29 +4802,64 @@ msgstr "NVDA-Sprachbetrachter"
 msgid "&Language"
 msgstr "&Sprache"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Language"
+msgstr "Sprache"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Voice"
 msgstr "&Stimme"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Voice"
+msgstr "Stimme"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&ariant"
 msgstr "V&ariante"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Variant"
+msgstr "Variante"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
 msgstr "&Geschwindigkeit"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate"
+msgstr "Geschwindigkeit"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "&Lautstärke"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Volume"
+msgstr "Lautstärke"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
 msgstr "Stimm&höhe"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Pitch"
+msgstr "Stimmhöhe"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Betonung"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Inflection"
+msgstr "Betonung"
 
 msgid "text mode"
 msgstr "Textmodus"
@@ -5553,6 +5634,8 @@ msgstr "Baum / HumanWare / APH Braillezeilen"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
 msgid "Serial: {portName}"
 msgstr "seriell: {portName}"
 
@@ -5563,6 +5646,10 @@ msgstr "HumanWare BrailleNote"
 #. Translators: The name of a series of braille displays.
 msgid "HumanWare Brailliant BI/B series"
 msgstr "HumanWare Brailliant Serie BI/B"
+
+#. Translators: The name of a braille display.
+msgid "EcoBraille displays"
+msgstr "Eco-Braillezeilen"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"

@@ -1962,6 +1962,41 @@ NvDA는 다음 브레일노트 모델을 지원합니다:
 | 입력 도움말 시작/종료 | space+2점+5점+6점 |
 %kc:endInclude
 
+++ EcoBraille ++
+[ONCE http://www.once.es/]에서 출시한 EcoBraille 디스플레이를 점자디스플레이로 사용할 수 있습니다.
+NvDA는 다음 EcoBraille 모델을 지원합니다:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+NVDA 점자 설정 대화상자에서 본 디스플레이가 연결된 시리얼 포트를 지정하시기 바랍니다.
+
+다음은 EcoBraille 디스플레이에 할당된 NVDA 기능키 목록입니다.
+각 키의 위치에 대해서는 [EcoBraille 사용설명서 ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/]를 참고하십시요.
+
+%kc:beginInclude
+|| 이름 | 키 |
+| 점자 디스플레이 뒤로 스크롤 | T2 |
+| 점자 디스플레이 앞으로 스크롤 | T4 |
+| 점자 디스플레이를 이전 줄로 이동 | T1 |
+| 점자 디스플레이를 다음 줄로 이동 | T5 |
+| 점자 셀로 이동 | Routing |
+| 현재 탐색 객체 활성화 | T3 |
+| 다음 탐색 모드로 전환 | F1 |
+| 상위 객체로 이동 | F2 |
+| 이전 탐색 모드로 전환 | F3 |
+| 이전 객체로 이동 | F4 |
+| 현재 객체 읽기 | F5 |
+| 다음 객체로 이동 | F6 |
+| 포커스된 객체로 이동 | F7 |
+| 첫 번째 하위 객체로 이동 | F8 |
+| 시스템 포커스나 케럿을 현재 리뷰 위치로 이동 | F9 |
+| 리뷰 커서 위치 알림 | F0 |
+| 점자 연계 커서 | A |
+%kc:endInclude
+
 ++ BRLTTY ++
 외부 프로그램인 [BRLTTY http://mielke.cc/brltty/]을 사용하여 다른 점자 디스플레이를 사용할 수 있습니다.
 이를 사용하기 위해서는 [BRLTTY for Windows http://brl.thefreecat.org/brltty/]를 설치해야 합니다.

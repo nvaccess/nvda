@@ -269,7 +269,7 @@ Pri zameraní fokusu možno použiť niekoľko užitočných skratiek:
 | Fokus | NVDA+tab | NVDA+tab | Oznámi alebo vyhláskuje meno objektu, ktorý má systémový fokus |
 | názov okna | NVDA+t | NVDA+t | Oznámi titulok aktuálneho aplikačného okna alebo okna v popredí. Stlačené 2 krát rýchlo za sebou vyhláskuje názov okna a stlačené 3 krát rýchlo za sebou skopíruje názov aktuálneho okna do schránky. |
 | obsah okna v popredí | NVDA+b | NVDA+b | Oznámi všetky prvky aktuálneho okna v popredí (užitočné pre dialógy) |
-| Stavový riadok | NVDA+end  | NVDA+shift+end | Oznámi obsah stavového riadku ak ho NVDA dokáže nájsť. Tiež je možné týmto príkazom premiestniť navigačný objekt na stavový riadok. |
+| Stavový riadok | NVDA+end  | NVDA+shift+end | Oznámi obsah stavového riadku ak ho NVDA dokáže nájsť. Tiež   premiestni navigačný objekt na stavový riadok. Stlačené dvakrát stavový riadok vyhláskuje|
 %kc:endInclude
 
 ++ Pohyb pomocou textového kurzora ++[SystemCaret]
@@ -285,8 +285,8 @@ NVDA obsahuje nasledujúce klávesové skratky súvisiace so systémovým kurzor
 | Plynulé čítanie | NVDA+šípka dolu | NVDA+A | Prečíta text od pozície systémového kurzora do konca textu pri čom sa systémový kurzor posúva |
 | Aktuálny riadok | NVDA+šípka hore | NVDA+l | Oznámi alebo vyhláskuje aktuálny riadok zameraný systémovým kurzorom |
 | Aktuálny výber | NVDA+Shift+šípka hore | NVDA+shift+s | Oznámi práve vybratý text |
-| Nasledujúca veta | alt+šípka dole | alt+šípka dole | presunie systémový kurzor na nasledujúcu vetu a prečíta ju (platí len pre Microsoft Word) |
-| Predchádzajúca veta | alt+šípka hore | alt+šípka hore | Presunie systémový kurzor na predchádzajúcu vetu a prečíta ju (platí len pre MIcrosoft Word) |
+| Nasledujúca veta | alt+šípka dole | alt+šípka dole | presunie systémový kurzor na nasledujúcu vetu a prečíta ju (platí len pre Microsoft Word a Outlook) |
+| Predchádzajúca veta | alt+šípka hore | alt+šípka hore | Presunie systémový kurzor na predchádzajúcu vetu a prečíta ju (platí len pre Microsoft Word a Outlook) |
 
 
 Pri navigácii v tabuľkách sú tiež dostupné tieto klávesové príkazy:
@@ -503,7 +503,13 @@ Rýchly prechod na začiatok alebo koniec skupín prvkov, ako napríklad zoznamo
 || Názov | Klávesová skratka | popis |
 | Prejdi na začiatok skupiny prvkov | shift+čiarka | Presunie fokus na začiatok skupiny prvkov (zoznam, tabuľka a podobne) podľa aktuálneho prvku |
 | prejdi za skupinu prvkov | čiarka | Presunie fokus za skupinu prvkov (zoznam, tabuľka a podobne) podľa aktuálneho prvku |
+
 %kc:endInclude
+Niektoré aplikácie, ako Gmail, Twitter a Facebook používajú písmená ako klávesové skratky.
+ak ich chcete používať a súčasne chcete čítať text pomocou kurzora, môžete dočasne vypnúť rýchlu navigáciu v režime prehliadania.
+%kc:beginInclude
+Na zapnutie a vypnutie rýchlej navigácie v režime prehlliadania, použite skratku NVDA+shift+medzera.
+ %kc:endInclude
 
 ++ Zoznam prvkov ++
 Dialóg zoznam prvkov zobrazuje zoznam rôznych  typov prvkov v závislosti od toho, v akej aplikácii tento dialóg otvoríte.
@@ -1758,8 +1764,7 @@ Podporované sú tieto brailovské riadky:
 Ak máte nainštalovaný BrxCom, NVDA ho bude používať.
 Pomocou BrxCom môžete písať priamo cez brailovský riadok nezávisle od použitého čítača obrazovky.
 Nová verzia BrxComu od spoločnosti Papenmeier s podporou pre NVDA by mala byť vydaná čoskoro.
-Na riadkoch Trio, BRAILLEX Live 20 a Braillex Live však môžete písať cez brailovskú klávesnicu aj bez inštalácie BrxCom.
-Písanie podporuje aj model Live Plus, ale len cez  BrxCom.
+Písanie je podporované na riadkoch Trio a BRAILLEX Live.
 
 Väčšina zariadení má tzv. panel rýchleho prístupu, ktorý umožňuje rýchle a intuitívne ovládanie.
 Tento panel môžete posúvať do štyroch strán, pričom na každej strane sú dva prepínače.
@@ -1895,6 +1900,8 @@ BRAILLEX Tiny:
 | Predchádzajúci objekt | r1+left |
 | Nasledujúci objekt | r1+right |
 | Formátovanie textu | reportf |
+| Názov okna | l1+up |
+| Stavový riadok | l2+down |
 
 BRAILLEX 2D Screen:
 || Názov | Klávesová skratka |
@@ -1948,8 +1955,8 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | Strana dole | medzera+body 4,6 |
 | Home | medzera+body 1,2 |
 | End | medzera+body 4,5 |
-| Control+home | medzera+body 1,2,3 |
-| Control+end | medzera+body 4,5,6 |
+| ctrl+home | medzera+body 1,2,3 |
+| ctrl+end | medzera+body 4,5,6 |
 | Medzera | medzera |
 | Enter | medzera+bod8 |
 | Backspace | medzera+bod7 |
@@ -1958,6 +1965,41 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | Windows | medzera+body 2,4,5,6 (medzera+w) |
 | Alt | medzera+body 1,3,4 (medzera+m) |
 | Nápoveda vstupu | medzera+body 2,3, 6 (medzera+znížené h) |
+%kc:endInclude
+
+++ Zobrazovače EcoBraille ++
+NVDA podporuje zobrazovače EcoBraille od spoločnosti [ONCE http://www.once.es/].
+Podporované sú tieto riadky:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+Sériový port, do ktorého je riadok pripojený, môžete vybrať v nastaveniach brailu.
+
+Nasleduje zoznam klávesových príkazov.
+Pre popis a umiestnenie tlačidiel si prosím pozrite [Návod k zobrazovačom EcoBraille (anglicky) ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] for descriptions of where these keys can be found.
+
+%kc:beginInclude
+|| Názov | Klávesová skratka |
+| Posunúť riadok späť | T2 |
+| Posunúť riadok vpred | T4 |
+| Predchádzajúci riadok | T1 |
+| Nasledujúci riadok | T5 |
+| prejsť na znak v brailly | smerové tlačidlá |
+| Aktivovať navigačný objekt | T3 |
+| Nasledujúci režim prezerania | F1 |
+| Nadradený objekt | F2 |
+| Predchádzajúci režim prezerania | F3 |
+| predchádzajúci objekt | F4 |
+| Aktuálny objekt | F5 |
+| nasledujúci objekt | F6 |
+| navigačný objekt na fokus | F7 |
+| Prvý podradený objekt | F8 |
+| Fokus alebo systémový kurzor na pozíciu prezeracieho kurzora | F9 |
+| Súradnice kurzora v režime prezerania | F0 |
+| Prepnúť nastavenie braillovský kurzor zviazaný s | A |
 %kc:endInclude
 
 ++ BRLTTY ++

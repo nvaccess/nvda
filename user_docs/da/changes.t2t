@@ -3,6 +3,38 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.3 =
+
+== Nye funktioner ==
+- Eventuelle stavefejl bliver nu annonceret i redigerbare felter i Internet Explorer og andre MSHTML-kontroller. (#4174)
+- Mange flere Unicode matematik-symboler bliver udtalt, når de forekommer i tekst. (#3805)
+- Søgeforslag på startskærmen i Windows 10 bliver automatisk annonceret. (#5049)
+- Understøttelse af punktdisplays EcoBraille 20, EcoBraille 40, EcoBraille 80 and EcoBraille Plus. (#4078)
+- I Browse-tilstand kan du nu slå enkelttegnsnavigering til og fra ved at trykke på NVDA+Shift+Mellemrum. Når funktionen er slået fra, bliver disse tastetryk sendt videre til applikationen, hvilket kan være nyttigt i applikationer såsom Gmail, Twitter og Facebook.
+- Nye oversættelsestabeller til punkt: Finsk 6-punkt, Irsk niveau 1, Irsk niveau 2, koreansk niveau 1 (2006) og koreansk niveau 2 (2006). (#5137, #5074, #5097)
+- QWERTY-tastaturet på punktdisplayet Papenmeier BRAILLEX Live Plus er nu understøttet. (#5181)
+
+
+== Ændringer ==
+- Liblouis punktskriftforkorter opdateret til version 2.6.3.
+
+
+== Fejlrettelser ==
+- i browse-tilstand i Internet Explorer og andre MSHTML-kontroller vil hurtignavigering mellem formularfelter ikke længere fejlagtigt medtage listeemner, som bruges til præsentation. (#4204)
+- I Firefox prøver NVDA ikke længere på at oprette en beskrivelse for ARIA fanebladspaneler baseret på al teksten i panelet. (#4638)
+- I Internet Explorer og andre MSHTML-kontroller vil hele inholdet af en sektion, en artikel eller en dialog ikke længere blive annonceret som navn på objektet, når man tab'er ind i det. (#5021, #5025) 
+- Når du bruger punktdisplays fra Baum/HumanWare/APH med punkttastatur, vil indtastning i Braille ikke længere holde op med at fungere efter tryk på andre typer taster. (#3541)
+- i Windows 10 bliver overflødig information ikke længere annonceret, når man trykker på Alt+Tab eller Alt+Shift+Tab for at skifte mellem programmer. (#5116)
+- Indtastet tekst bliver ikke længere rodet sammen under brug af visse programmer, såsom Microsoft Outlook, med et punktdisplay. (#2953)
+- I browse-tilstand i Internet Explorer og andre MSHTML-kontroller bliver det korrekte indhold nu annonceret, når et element dukker op eller ændrer sig og øjeblikkelig kommer i fokus. (#5040)
+- I browse-tilstand i Microsoft Word vil enkelttegnsnavigering nu opdatere punktdisplay og gennemsynsmarkør som forventet. (#4968)
+- i punkt bliver der ikke længere vist overflødige mellemrum mellem og efter indikatorer for felter og formatering. (#5043)
+
+
+== Ændringer for udviklere ==
+For nyheder relateret til udvikling se venligst det engelske "What's New"-dokument
+
+
 = 2015.2 =
 De vigtigste nyheder i denne udgave omfatter mulighed for læsning af diagrammer i Microsoft Excel og understøttelse af læsning og interaktiv navigering i matematisk indhold.
 

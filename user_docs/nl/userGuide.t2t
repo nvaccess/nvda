@@ -505,7 +505,13 @@ Om naar het eerstvolgende element te springen gebruikt u uitsluitend één van d
 Gebruik de volgende toetscombinaties om naar het begin resp. het einde van containerobjecten (lijsten tabellen e.d.) te springen:
 || Naam | Toetscombinatie | Beschrijving |
 | naar begin van containerobject springen | Shift+komma | Verplaatst de systeemcursor naar begin van het containerobject (lijst, tabel etc.) |
-| achter het containerobject springen | komma | Verplaatst de systeemcursor achter het containerobject (lijst, tabel etc.) |
+| achter het containerobject springen | komma | Verplaatst de systeemcursor achter het containerobject (lijst, tabel etc.) waar de cursor zich bevindt. |
+
+%kc:endInclude
+Webapplicaties zoals Gmail, Twitter en Facebook kunnen met lettertoetsnavigatie worden geactiveerd.
+Als u hiermee wilt werken terwijl u ook   uw cursortoetsen wilt kunnen gebruiken voor het lezen in bladermodus,  kunt u de lettertoetsnavigatie in NVDA tijdelijk uitschakelen.
+%kc:beginInclude
+Om de lettertoetsnavigatie voor het huidige document in of uit te schakelen drukt u op de NVDA-toets + de spatiebalk.
 %kc:endInclude
 
 ++ De lijst met elementen ++
@@ -1958,6 +1964,41 @@ Raadpleeg de documentatie bij de  BrailleNote voor informatie over de positie va
 | Windows-toets | spatie+punt2+punt4+punt5+punt6 (spatie+w) |
 | Alt | spatie+punt1+punt3+punt4 (spatie+m) |
 | Invoerhulp in-/uitschakelen | spatie+punt2+punt3+punt6 (spatie+kleine h) |
+%kc:endInclude
+
+++ EcoBraille ++
+NVDA biedt ondersteuning voor EcoBraille-leesregels  van [ONCE http://www.once.es/].
+De volgende modellen worden ondersteund:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+In NVDA, kunt u  in het dialoogvenster Braille (, menu Opties, ) de seriële poort instellen waarmee de leesregel wordt verbonden
+
+Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van toepassing: 
+(Raadpleeg de [EcoBraille documentatie ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] waar beschreven wordt waar de toetsen zich bevinden.)
+
+%kc:beginInclude
+|| Naam | Toets |
+| brailleleesregel terugscrollen | T2 |
+| brailleleesregel vooruitscrollen | T4 |
+| brailleleesregel naar vorige regel verplaatsen | T1 |
+| brailleleesregel naar volgende regel verplaatsen | T5 |
+| Naar braillecel gaan | Routing |
+| Huidige navigatorobject activeren | T3 |
+| Naar volgende leesmodus overschakelen | F1 |
+| Naar containerobject gaan | F2 |
+| Naar vorige leesmodus overschakelen | F3 |
+| Naar vorig object gaan | F4 |
+| Huidig object melden | F5 |
+| Naar volgend object gaan | F6 |
+| Naar gefocuseerd object gaan | F7 |
+| Naar eerste “contained” object gaan | F8 |
+| Systeemfocus of invoegcursor naar huidige leespositie verplaatsen | F9 |
+| Leescursorpositie melden | F0 |
+| Wisselknop “braille tethered to” | A |
 %kc:endInclude
 
 ++ BRLTTY ++

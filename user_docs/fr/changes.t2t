@@ -9,6 +9,10 @@ Quoi de Neuf dans NVDA
 - L'existence de fautes d'orthographe est annoncée dans les zones d'édition pour Internet Explorer et autres contrôles MSHTML. (#4174)
 - Beaucoup plus de symboles mathématiques unicodes sont maintenant annoncés quand ils apparaissent dans le texte. (#3805)
 - Les suggestions de recherche dans l'écran de démarrage de Windows 10 sont automatiquement annoncées (#5049)
+- Support des terminaux EcoBraille 20, EcoBraille 40, EcoBraille 80 et EcoBraille Plus. (#4078)
+- En mode navigation, vous pouvez maintenant activer ou désactiver la navigation par lettre unique en pressant NVDA+maj+espace. Quand elle est désactivée, les touches de lettres uniques sont passées à l'application, ce qui est utile pour quelques applications web comme Gmail, Twitter et Facebook. (#3203)
+- Nouvelles tables braille : Finnois 6 points, Irlandais intégral, Irlandais abrégé, Coréen intégral (2006), Coréen abrégé (2006). (#5137, #5074, #5097)
+- Le clavier QWERTY de l'afficheur braille Papenmeier BRAILLEX Live Plus est maintenant supporté. (#5181)
  
  
 == Corrections de Bogues ==
@@ -16,6 +20,18 @@ Quoi de Neuf dans NVDA
 - Sous Firefox, NVDA n'essaie plus de créer une description pour les panneaux d'onglets ARIA basés  sur tout le texte contenu. (#4638)
 - Sous Internet Explorer et autres contrôles MSHTML, tabuler dans des sections, articles ou dialogues n'annonce plus tout le contenu du conteneur comme étant son nom. (#5021, #5025)
 - Quand on utilise les terminaux braille Baum/HumanWare/APH avec un clavier braille, la saisie braille ne s'arrête plus de fonctionner après qu'on ait pressé un autre type de touche sur le terminal. (#3541)
+- Sous Windows 10, des information irrelevantes ne sont plus annoncées quand on presse alt+tab ou alt+maj+tab pour naviguer entre les applications. (#5116)
+- Le texte entré n'est plus mélangé quand on utilise certaines applications comme Microsoft Outlook avec un terminal braille. (#2953)
+- En mode navigation sous Internet Explorer et autres contrôles MSHTML, le contenu correct est maintenant reporté quand un élément apparaît ou change et est immédiatement mis en focus. (#5040)
+- En mode navigation sous Microsoft Word, la navigation par lettre unique met maintenant à jour l'afficheur braille et le curseur de revue comme attendu. (#4968)
+- En braille, des espaces irrelevants ne sont plus affichés entre ou après des indicateurs de contrôles et de présentation. (#5043)
+- Quand une application répond lentement et que vous passez sur une autre fenêtre, NVDA est maintenant beaucoup plus réactif sur les autres applications dans la plupart des cas. (#3831)
+- Les notifications de Toast de Windows 10 sont maintenant annoncées comme prévu. (#5136)
+
+
+== Changements pour les Développeurs ==
+- Vous pouvez maintenant injecter de la saisie brute depuis un clavier système non supporté nativement par Windows (ex : un clavier QWERTY sur un afficheur braille) en utilisant la nouvelle fonction keyboardHandler.injectRawKeyboardInput. (#4576)
+- eventHandler.requestEvents a été ajouté pour requérir des événements particuliers qui sont bloqués par défaut; ex : montrer les événements concernant un contrôle spécifique ou certains événements quand ils sont en arrière-plan. (#3831)
 
 
 = 2015.2 =
