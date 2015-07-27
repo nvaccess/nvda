@@ -269,7 +269,7 @@ Der er nogle nyttige kommandoer, når du flytter fokus rundt i systemet:
 | Sig det aktuelle fokus | NVDA+Tab | NVDA+Tab | annoncerer det aktuelle objekt eller kontrol, der er i fokus. Tryk to gange for at få oplysningerne stavet |
 | Sig titel | NVDA+t | NVDA+t | annoncerer titlen på det aktive vindue. Tryk to gange for at få oplysningerne stavet. Tryk tre gange for at kopiere til udklipsholderen. |
 | Læs det aktive vindue | NVDA+b | NVDA+b | Læser alle kontrolelementerne i det aktive vindue (nyttigt i dialogbokse) |
-| Læs statuslinje | NVDA+End | NVDA+Shift+End | Annoncerer statuslinjen hvis NVDA kan finde den. Det flytter også navigatorobjektet til denne position |
+| Læs statuslinje | NVDA+End | NVDA+Shift+End | Annoncerer statuslinjen hvis NVDA kan finde den. Det flytter også navigatorobjektet til denne position. Tryk to gange for at få stavet informationen. |
 %kc:endInclude
 
 ++ Navigering med systemmarkøren ++[SystemCaret]
@@ -285,8 +285,8 @@ Følgende NVDA-kommandoer kan bruges i forbindelse med systemmarkøren:
 | Sig alt | NVDA+Pil-ned | NVDA+a | Starter læsningen fra markørens nuværende position og flytter markøren med ned i teksten |
 | Læs aktuelle linje | NVDA+Pil-op | NVDA+l | Læser den linje, hvor markøren for øjeblikket befinder sig. Tryk to gange for at få linjen stavet. |
 | Læs den valgte tekst | NVDA+Shift+Pil-op | NVDA+Shift+s | Læser den tekst, som er blevet markeret |
-| Næste sætning | Alt+Pil-ned | Alt+Pil-ned | Flytter markøren til den næste sætning og læser den (kun understøttet i Microsoft Word). |
-| Forrige sætning | Alt+Pil-op | Alt+Pil-op | Flytter markøren til den forrige sætning og læser den (kun understøttet i Microsoft Word). |
+| Næste sætning | Alt+Pil-ned | Alt+Pil-ned | Flytter markøren til den næste sætning og læser den (kun understøttet i Microsoft Word og Outlook). |
+| Forrige sætning | Alt+Pil-op | Alt+Pil-op | Flytter markøren til den forrige sætning og læser den (kun understøttet i Microsoft Word og Outlook). |
 
 
 Når du er i en tabel, kan følgende kommandoer også bruges:
@@ -503,8 +503,14 @@ Flyt til begyndelsen eller slutningen af overordnede elementer, fx. lister eller
 || Navn | Tast | Beskrivelse |
 | Flyt til starten af overordnede element | Shift+Komma | Flytter til starten af det overordnede element, liste tabel osv., hvor systemmarkøren er placeret. |
 | Flyt forbi slutningen af det overordnede element | Komma | Flytter forbi slutningen af det overordnede element, liste tabel osv., hvor systemmarkøren er placeret. |
-%kc:endInclude
 
+%kc:endInclude
+Nogle web-applikationer, som f.eks. Gmail, Twitter og Facebook, bruger bogstaver som genvejstaster.
+Hvis du gerne vil kunne bruge disse genvejstaster og stadig være i stand til at bruge markørtasterne til at læse i browse-tilstand, kan du midlertidigt slå NVDAs bogstavnavigering fra.
+%kc:beginInclude
+Du kan slå bogstavnavigering til og fra i det aktuelle dokument ved at trykke på NVDA+Shift+Mellemrum.
+%kc:endInclude
+ 
 ++ Elementlisten ++
 Elementlisten giver adgang til en liste med  forskellige typer elementer i dokumentet, alt efter hvilket program du bruger.
 F.eks., i web-browsere kan kan elementlisten vise links, overskrifter og landemærker.
@@ -1756,10 +1762,9 @@ Følgende punktdisplay er understøttede
 - 
 
 Hvis BrxCom er installeret, vil NVDA benytte BrxCom.
-BrxCom er et værktøj der giver dig mulighed for, at bruge punktdisplayet uafhængigt af en skærmlæser.
+BrxCom er et værktøj der giver dig mulighed for, at bruge  punktdisplayet som et tastatur uafhængigt af en skærmlæser.
 En ny version af BrxCom der virker med NVDA bliver snart udgivet af Papenmeier.  
-Indtastning i punkt er mulig med TRIO, BRAILLEX Live 20 og Braillex Live -enheder uden BrxCom.
-Punktindtastning er også mulig med Live Plus-modellen, men kun med BrxCom.
+Indtastning i punkt er mulig med  TRIO og  BRAILLEX Live-modellerne.
 
 De fleste enheder har en Easy Access bjælke (EAB) der giver mulighed for intuitive og hurtige handlinger.
 EAB kan bevæge sig i fire retninger, hvor der generelt er to tilhørende stillinger.
@@ -1895,6 +1900,8 @@ BRAILLEX Tiny:
 | Flyt til forrige objekt | R1+venstre |
 | Flyt til næste objekt | R1+højre |
 | Sig tekstformatering | reportf |
+| Sig titel | l1+op |
+| Læs statuslinje | l2+ned |
 
 BRAILLEX 2D Screen:
 || Navn | Tast |
@@ -1958,6 +1965,41 @@ Se venligst dokumentationen til din BrailleNote for at finde ud af, hvor du kan 
 | Windows tast | space+dot2+dot4+dot5+dot6 (space+w) |
 | Alt tast | space+dot1+dot3+dot4 (space+m) |
 | Tastaturhjælp til/fra | mellemrum+dot2+dot3+dot6 (mellemrum+lavt+h) |
+%kc:endInclude
+
+++ EcoBraille ++
+NVDA understøtter EcoBraille displays fra [ONCE http://www.once.es/].
+Følgende modeller er understøttet:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+I NVDA kan du indstille, hvilken seriel port punktdisplayet er forbundet til, i dialogen Braille-indstillinger.
+
+Tastaturkommandoerne til Eco punktdisplays er som følger:
+Se venligst [dokumentationen til EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] for en beskrivelse af, hvor disse taster er placeret.
+
+%kc:beginInclude
+|| Navn | Tastetryk |
+| Rul punktdisplay tilbage | T2 |
+| Rul punktdisplay frem | T4 |
+| Flyt punktdisplay til forrige linje | T1 |
+| Flyt punktdisplay til næste linje | T5 |
+| Flyt markør til punktcelle | Markørflyttetast |
+| Aktiver det aktuelle navigator-objekt | T3 |
+| Skift til næste gennemsynstilstand | F1 |
+| Flyt til overordnede objekt | F2 |
+| Skift til forrige gennemsynstilstand | F3 |
+| Flyt til forrige objekt | F4 |
+| Læs det aktuelle objekt | F5 |
+| flyt til næste objekt | F6 |
+| Flyt til objektet i fokus | F7 |
+| Flyt til første underordnede objekt | F8 |
+| Flyt systemfokus eller markør til den aktuelle position for gennemsyn | F9 |
+| Sig position for gennemsynsmarkør | F0 |
+| slå tøjring af Braille til/fra | a |
 %kc:endInclude
 
 ++ BRLTTY ++
