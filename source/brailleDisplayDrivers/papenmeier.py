@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012 Tobias Platen, Halim Sahin, Ali-Riza Ciftcioglu, NV Access Limited
+#Copyright (C) 2012-2015 Tobias Platen, Halim Sahin, Ali-Riza Ciftcioglu, NV Access Limited
 #Author: Tobias Platen (nvda@lists.thm.de)
 #minor changes by Halim Sahin (nvda@lists.thm.de), Ali-Riza Ciftcioglu <aliminator83@googlemail.com> and James Teh
 
@@ -15,6 +15,7 @@ from logHandler import log
 import inputCore
 import brailleInput
 import struct
+import keyboardHandler
 
 try:
 	import ftdi2
@@ -104,7 +105,7 @@ def brl_poll(dev):
 
 def brl_decode_trio(keys):
 	"""decode routing keys on Trio"""
-	if(keys[0:3]=='KP_' ): #KEYSTATE CHANGED EVENT on Trio, not Braille keys
+	if(keys[0]=='K' ): #KEYSTATE CHANGED EVENT on Trio, not Braille keys
 		keys = keys[3:]
 		i = 0
 		j = []
@@ -227,12 +228,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				port = portInfo["port"]
 				hwID = portInfo["hardwareID"]
 				if "bluetoothName" in portInfo:
-					if(portInfo["bluetoothName"] == "braillex trio "):
+					if portInfo["bluetoothName"][0:14] == "braillex trio " or  portInfo["bluetoothName"][0:13] == "braillex live":
 						try:
 							self._dev = serial.Serial(port, baudrate = 57600,timeout = BLUETOOTH_TIMEOUT, writeTimeout = BLUETOOTH_TIMEOUT)
-							self.numCells = 40
-							self._proto = 'B'
-							self._voffset = 0
 							log.info("connectBluetooth success")
 						except:
 							log.debugWarning("connectBluetooth failed")
@@ -271,8 +269,7 @@ connection could not be established"""
 		elif ftdi2:
 			self._baud = 57600
 			self.connectUSB(devlist)
-			if(self._dev is None):
-				return None
+		if(self._dev is not None):
 			try:
 				#request type of braille display
 				self._dev.write(brl_auto_id())
@@ -284,13 +281,14 @@ connection could not be established"""
 					self._dev.set_baud_rate(self._baud)
 					self._dev.purge()
 					self._dev.read(self._dev.inWaiting())
-					self.numCells = 40
-					self._proto = 'B'
-					self._voffset = 0
-					#we don't use autoid here, because the trio might be switched off and other braille displays using the same baud rate do not exist
+					#request type of braille display twice because of baudrate change
+					self._dev.write(brl_auto_id())
+					self._dev.write(brl_auto_id())
+					time.sleep(0.05)# wait 50 ms in order to get response for further actions
+					autoid=brl_poll(self._dev)
+				if(len(autoid) != 8):
+					return None
 				else:
-					if(len(autoid) != 8):
-						return None
 					autoid = struct.unpack('BBBBBBBB',autoid)
 					if(autoid[3] == 0x35 and autoid[4] == 0x38):#EL80s
 						self.numCells = 80
@@ -355,6 +353,26 @@ connection could not be established"""
 						self._proto = 'A'
 						self._voffset = 20
 						log.info("Found EL2D80s")
+					elif(autoid[3] == 0x35 and autoid[4] == 0x39):#trio
+						self.numCells = 40
+						self._proto = 'B'
+						self._voffset = 0
+						log.info("Found trio")
+					elif(autoid[3] == 0x36 and autoid[4] == 0x34):#live20
+						self.numCells = 20
+						self._proto = 'B'
+						self._voffset = 0
+						log.info("Found live 20")
+					elif(autoid[3] == 0x36 and autoid[4] == 0x33):#live+
+						self.numCells = 40
+						self._proto = 'B'
+						self._voffset = 0
+						log.info("Found live+")
+					elif(autoid[3] == 0x36 and autoid[4] == 0x32):#live
+						self.numCells = 40
+						self._proto = 'B'
+						self._voffset = 0
+						log.info("Found live")
 					else:
 						log.debugWarning('UNKNOWN BRAILLE')
 
@@ -511,7 +529,13 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			self.id=brl_join_keys(brl_decode_key_names_repeat(driver))
 			return
 
-		if driver._baud!=1 and keys[0] == 'L':
+		if driver._baud != 1 and keys[0] == 'L':
+			if ((ord(keys[3]) -48) >>3):
+				scancode=ord(keys[5])-48 << 4| ord(keys[6])-48
+				press = not ord(keys[4]) & 1
+				ext = bool(ord(keys[4]) & 2)
+				keyboardHandler.injectRawKeyboardInput(press,scancode,ext)
+				return
 			#get dots
 			z  = ord('0')
 			b = ord(keys[4])-z

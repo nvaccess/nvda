@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov
+#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -211,7 +211,7 @@ class GeneralSettingsDialog(SettingsDialog):
 			if len(os.listdir(os.path.join(globalVars.appArgs.configPath,packageType)))>0:
 				if gui.messageBox(
 					# Translators: A message to warn the user when attempting to copy current settings to system settings.
-					_("Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"),
+					_("Add-ons were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"),
 					# Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 					_("Warning"),wx.YES|wx.NO|wx.ICON_WARNING,self
 				)==wx.NO:
@@ -419,7 +419,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		@rtype: L{wx.BoxSizer}
 		"""
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.i18nName)
+		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.displayNameWithAccelerator)
 		slider=VoiceSettingsSlider(self,wx.ID_ANY,minValue=0,maxValue=100,name="%s:"%setting.i18nName)
 		setattr(self,"%sSlider"%setting.name,slider)
 		slider.Bind(wx.EVT_SLIDER,SynthSettingChanger(setting))
@@ -435,7 +435,7 @@ class VoiceSettingsDialog(SettingsDialog):
 	def makeStringSettingControl(self,setting):
 		"""Same as L{makeSettingControl} but for string settings. Returns sizer with label and combobox."""
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.i18nName)
+		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.displayNameWithAccelerator)
 		synth=getSynth()
 		setattr(self,"_%ss"%setting.name,getattr(synth,"available%ss"%setting.name.capitalize()).values())
 		l=getattr(self,"_%ss"%setting.name)###
@@ -457,7 +457,7 @@ class VoiceSettingsDialog(SettingsDialog):
 
 	def makeBooleanSettingControl(self,setting):
 		"""Same as L{makeSettingControl} but for boolean settings. Returns checkbox."""
-		checkbox=wx.CheckBox(self,wx.ID_ANY,label=setting.i18nName)
+		checkbox=wx.CheckBox(self,wx.ID_ANY,label=setting.displayNameWithAccelerator)
 		setattr(self,"%sCheckbox"%setting.name,checkbox)
 		checkbox.Bind(wx.EVT_CHECKBOX,
 			lambda evt: setattr(getSynth(),setting.name,evt.IsChecked()))
@@ -740,12 +740,12 @@ class MouseSettingsDialog(SettingsDialog):
 		settingsSizer.Add(self.reportObjectRoleCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# mouse settings dialog.
-		self.audioCheckBox=wx.CheckBox(self,wx.NewId(),label=_("play audio coordinates when mouse moves"))
+		self.audioCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Play audio coordinates when mouse moves"))
 		self.audioCheckBox.SetValue(config.conf["mouse"]["audioCoordinatesOnMouseMove"])
 		settingsSizer.Add(self.audioCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# mouse settings dialog.
-		self.audioDetectBrightnessCheckBox=wx.CheckBox(self,wx.NewId(),label=_("brightness controls audio coordinates volume"))
+		self.audioDetectBrightnessCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Brightness controls audio coordinates volume"))
 		self.audioDetectBrightnessCheckBox.SetValue(config.conf["mouse"]["audioCoordinates_detectBrightness"])
 		settingsSizer.Add(self.audioDetectBrightnessCheckBox,border=10,flag=wx.BOTTOM)
 
@@ -1028,7 +1028,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.detectFormatAfterCursorCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.fontNameCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report font &name"))
+		self.fontNameCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &font name"))
 		self.fontNameCheckBox.SetValue(config.conf["documentFormatting"]["reportFontName"])
 		settingsSizer.Add(self.fontNameCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
@@ -1073,7 +1073,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.pageCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.lineNumberCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &line numbers"))
+		self.lineNumberCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report line &numbers"))
 		self.lineNumberCheckBox.SetValue(config.conf["documentFormatting"]["reportLineNumber"])
 		settingsSizer.Add(self.lineNumberCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This message is presented in the document formatting settings dialogue
@@ -1104,7 +1104,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.tableCellCoordsCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.linksCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &links"))
+		self.linksCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report lin&ks"))
 		self.linksCheckBox.SetValue(config.conf["documentFormatting"]["reportLinks"])
 		settingsSizer.Add(self.linksCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
@@ -1114,7 +1114,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.headingsCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
-		self.listsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report l&ists"))
+		self.listsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &lists"))
 		self.listsCheckBox.SetValue(config.conf["documentFormatting"]["reportLists"])
 		settingsSizer.Add(self.listsCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
@@ -1515,15 +1515,19 @@ class AddSymbolDialog(wx.Dialog):
 		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 class SpeechSymbolsDialog(SettingsDialog):
-	# Translators: This is the label for the symbol pronunciation dialog.
-	title = _("Symbol Pronunciation")
 
-	def makeSettings(self, settingsSizer):
+	def __init__(self,parent):
 		try:
-			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData(languageHandler.getLanguage())
+			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData(speech.getCurrentLanguage())
 		except LookupError:
 			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData("en")
 		self.symbolProcessor = symbolProcessor
+		# Translators: This is the label for the symbol pronunciation dialog.
+		# %s is replaced by the language for which symbol pronunciation is being edited.
+		self.title = _("Symbol Pronunciation (%s)")%languageHandler.getLanguageDescription(self.symbolProcessor.locale)
+		super(SpeechSymbolsDialog, self).__init__(parent)
+
+	def makeSettings(self, settingsSizer):
 		symbols = self.symbols = [copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()]
 		self.pendingRemovals = {}
 
@@ -1714,6 +1718,8 @@ class InputGesturesDialog(SettingsDialog):
 	def populateTree(self, filter=''):
 		if filter:
 			#This regexp uses a positive lookahead (?=...) for every word in the filter, which just makes sure the word is present in the string to be tested without matching position or order.
+			# #5060: Escape the filter text to prevent unexpected matches and regexp errors.
+			filter = re.escape(filter)
 			filterReg = re.compile(r'(?=.*?' + r')(?=.*?'.join(filter.split(' ')) + r')', re.U|re.IGNORECASE)
 		for category in sorted(self.gestures):
 			treeCat = self.tree.AppendItem(self.treeRoot, category)

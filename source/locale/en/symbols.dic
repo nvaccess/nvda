@@ -13,9 +13,9 @@ complexSymbols:
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
-decimal point	(?<=\d)\.(?=\d)
+decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥]?\d)
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -115,3 +115,49 @@ _	line	most
 →	right arrow	some
 ✓	check	some
 ✔	check	some
+#Mathematical Operators U+2200 to U+220F
+
+∀	For All 	none
+∁	Complement	none
+∂	Partial Derivative	none
+∃	There exists	none
+∄	There Does Not Exist	none
+∅	EMPTY SET	none
+∆	INCREMENT	none
+∇	NABLA	none
+∈	ELEMENT OF	none
+∉	NOT AN ELEMENT OF	none
+∊	SMALL ELEMENT OF	none
+∋	CONTAINS AS MEMBER	none
+∌	DOES NOT CONTAIN AS MEMBER	none
+∍	SMALL CONTAINS AS MEMBER	none
+∎	END OF PROOF	none
+∏	N-ARY PRODUCT	none
+
+# Miscellaneous Mathematical Operators
+
+∑	N-ARY SUMMATION	none
+√	SQUARE ROOT	none
+∛	CUBE ROOT	none
+∜	FOURTH ROOT	none
+∝	PROPORTIONAL TO	none
+∞	INFINITY	none
+∟	RIGHT ANGLE	none
+∠	ANGLE	none
+∥	PARALLEL TO	none
+∦	NOT PARALLEL TO	none
+∧	LOGICAL AND	none
+∨	LOGICAL OR	none
+∩	INTERSECTION	none
+∪	UNION	none
+∫	INTEGRAL	none
+∴	THEREFORE	none
+∵	BECAUSE	none
+∶	RATIO	none
+∷	PROPORTION	none
+≤	LESS-THAN OR EQUAL TO	none
+≥	GREATER-THAN OR EQUAL TO	none
+⊂	SUBSET OF	none
+⊃	SUPERSET OF	none
+⊆	SUBSET OF OR EQUAL TO	none
+⊇	SUPERSET OF OR EQUAL TO	none

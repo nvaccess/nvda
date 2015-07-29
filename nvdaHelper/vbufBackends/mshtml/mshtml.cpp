@@ -473,8 +473,8 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	macro_addHTMLAttributeToMap(L"role",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-valuenow",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-sort",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
-	macro_addHTMLAttributeToMap(L"aria-labelledBy",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
-	macro_addHTMLAttributeToMap(L"aria-describedBy",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-labelledby",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-describedby",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-expanded",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-selected",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-level",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
@@ -1067,12 +1067,6 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		if(contentString.empty()) {
 			contentString=L" ";
 		}
-	} else if(nodeName.compare(L"BUTTON")==0) {
-		if(!IAName.empty()) {
-			contentString=IAName;
-		} else {
-			contentString=L" ";
-		}
 	} else if(nodeName.compare(L"SELECT")==0) {
 		if(!IAValue.empty()) {
 			contentString=IAValue;
@@ -1091,9 +1085,10 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	} else if(nodeName.compare(L"BR")==0) {
 		LOG_DEBUG(L"node is a br tag, adding a line feed as its text.");
 		contentString=L"\n";
-	} else if (nodeName.compare(L"MATH")==0) {
-		contentString=IAName;
-	} else if((!isRoot&&(IARole==ROLE_SYSTEM_APPLICATION||IARole==ROLE_SYSTEM_DIALOG))||IARole==ROLE_SYSTEM_OUTLINE) {
+	} else if((!isRoot&&(IARole==ROLE_SYSTEM_APPLICATION||IARole==ROLE_SYSTEM_DIALOG))
+		||IARole==ROLE_SYSTEM_OUTLINE
+		||nodeName.compare(L"MATH")==0
+	) {
 		contentString=L" ";
 	} else {
 		renderChildren=true;
@@ -1183,7 +1178,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		}
 
 		//A node who's rendered children produces no content, or only a small amount of whitespace should render its title or URL
-		if(!nodeHasUsefulContent(parentNode)) {
+		if(!hidden&&!nodeHasUsefulContent(parentNode)) {
 			contentString=L"";
 			if(!IAName.empty()) {
 				contentString=IAName;

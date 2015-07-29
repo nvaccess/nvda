@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2015 NVDA contributers.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -126,6 +126,9 @@ class CDispatchChangeSink : public IDispatch {
 			if(this->storageNode->ariaLiveNode&&this->storageNode->ariaLiveNode!=this->storageNode&&!this->storageNode->ariaLiveIsBusy&&(this->storageNode->ariaLiveIsTextRelevant||this->storageNode->ariaLiveIsAdditionsRelevant)) {
 				this->storageNode->backend->forceUpdate();
 			}
+			return S_OK;
+		} else if(dispIdMember==DISPID_EVMETH_ONFOCUS) {
+			this->storageNode->backend->forceUpdate();
 			return S_OK;
 		}
 		return E_FAIL;
@@ -466,4 +469,11 @@ void MshtmlVBufStorage_controlFieldNode_t::postProcessLiveRegion(VBufStorage_con
 	} else if(!newChildrenText.empty()) {
 		this->reportLiveText(newChildrenText);
 	}
+}
+
+void MshtmlVBufStorage_controlFieldNode_t::generateAttributesForMarkupOpeningTag(wstring& text, int startOffset, int endOffset) {
+	VBufStorage_controlFieldNode_t::generateAttributesForMarkupOpeningTag(text, startOffset, endOffset);
+	wostringstream s;
+	s << L"language=\"" << language << L"\" ";
+	text += s.str();
 }

@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NVDA Contributors
+#Copyright (C) 2015 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -18,6 +18,9 @@ import textInfos
 import speech
 import sayAllHandler
 import treeInterceptorHandler
+import inputCore
+import review
+import braille
 
 REASON_QUICKNAV = "quickNav"
 
@@ -160,6 +163,10 @@ class TextInfoQuickNavItem(QuickNavItem):
 
 	def moveTo(self):
 		self.textInfo.updateCaret()
+		caret = self.textInfo.copy()
+		caret.collapse()
+		review.handleCaretMove(caret)
+		braille.handler.handleCaretMove(self.document)
 
 	@property
 	def isAfterSelection(self):
@@ -167,12 +174,36 @@ class TextInfoQuickNavItem(QuickNavItem):
 		return self.textInfo.compareEndPoints(caret, "startToStart") <= 0
 
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
+	scriptCategory = inputCore.SCRCAT_BROWSEMODE
 
 	def _get_shouldTrapNonCommandGestures(self):
 		return config.conf['virtualBuffers']['trapNonCommandGestures']
 
 	def script_trapNonCommandGesture(self,gesture):
 		winsound.PlaySound("default",1)
+
+	singleLetterNavEnabled=True #: Whether single letter navigation scripts should be active (true) or if these letters should fall to the application.
+
+	def getAlternativeScript(self,gesture,script):
+		if self.passThrough or not gesture.isCharacter:
+			return script
+		if not self.singleLetterNavEnabled:
+			return None
+		if not script and self.shouldTrapNonCommandGestures: 
+			script=self.script_trapNonCommandGesture
+		return script
+
+	def script_toggleSingleLetterNav(self,gesture):
+		if self.singleLetterNavEnabled:
+			self.singleLetterNavEnabled=False
+			# Translators: Reported when single letter navigation in browse mode is turned off.
+			ui.message(_("Single letter navigation off"))
+		else:
+			self.singleLetterNavEnabled=True
+			# Translators: Reported when single letter navigation in browse mode is turned on.
+			ui.message(_("Single letter navigation on"))
+	# Translators: the description for the toggleSingleLetterNavigation command in browse mode.
+	script_toggleSingleLetterNav.__doc__=_("Toggles single letter navigation on and off. When on, single letter keys in browse mode jump to various kinds of elements on the page. When off, these keys are passed to the application")
 
 	def _get_ElementsListDialog(self):
 		return ElementsListDialog
@@ -233,8 +264,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			d.Destroy()
 			gui.mainFrame.postPopup()
 		wx.CallAfter(run)
-	# Translators: the description for the elements list dialog script on virtualBuffers.
-	script_elementsList.__doc__ = _("Presents a list of links, headings or landmarks")
+	# Translators: the description for the Elements List command in browse mode.
+	script_elementsList.__doc__ = _("Lists various types of elements in this document")
 
 	def _activatePosition(self,info):
 		info.activate()
@@ -249,6 +280,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		"kb:NVDA+f7": "elementsList",
 		"kb:enter": "activatePosition",
 		"kb:space": "activatePosition",
+		"kb:NVDA+shift+space":"toggleSingleLetterNav",
 	}
 
 # Add quick navigation scripts.

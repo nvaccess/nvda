@@ -13,9 +13,9 @@ complexSymbols:
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
-decimal point	(?<=\d)\.(?=\d)
+decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥]?\d)
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -93,6 +93,9 @@ _	podkreślacz	most
 ‎	znak lewa do prawej	char
 ‏	znak prawa do lewej	char
 ■	czarny kwadrat	some
+▪	czarny kwadrat	some
+◾	czarny kwadrat	some
+◦	biały punktor	some
 ➔	strzałka w prawo	some
 §	sekcja	all
 °	stopień	some

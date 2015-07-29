@@ -11,6 +11,7 @@ import winUser
 import api
 from . import IAccessible, getNVDAObjectFromEvent
 import eventHandler
+import re
 
 """Miscellaneous support for Microsoft Office applications.
 """
@@ -104,6 +105,36 @@ class BrokenMsoCommandBar(IAccessible):
 		if name == "MSO Generic Control Container":
 			return None
 		return name
+
+class CommandBarListItem(IAccessible):
+	"""A list item in an MSO commandbar, that may be part of a color palet."""
+
+	COMPILED_RE = re.compile(r'RGB\(\d+, \d+, \d+\)',re.I)
+	def _get_rgbNameAndMatch(self):
+		name = super(CommandBarListItem,self).name
+		if self.COMPILED_RE.match(name):
+			matchRGB = True
+		else:
+			matchRGB = False
+		return name, matchRGB
+
+	def _get_name(self):
+		name, matchRGB = self.rgbNameAndMatch
+		if matchRGB:
+			import colors
+			return colors.RGB.fromString(name).name
+		else:
+			return name
+
+	def _get_description(self):
+		name, matchRGB = self.rgbNameAndMatch
+		if matchRGB:
+			import colors
+			rgb=colors.RGB.fromString(name)
+			# Translators: a color, broken down into its RGB red, green, blue parts.
+			return _("RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}").format(rgb=colors.RGB.fromString(name))
+		else:
+			return super(CommandBarListItem,self).description
 
 class SDMSymbols(SDM):
 

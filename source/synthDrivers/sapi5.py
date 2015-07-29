@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #synthDrivers/sapi5.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2011 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -92,8 +93,11 @@ class SynthDriver(SynthDriver):
 		else:
 			return None
 
+	def _percentToRate(self, percent):
+		return (percent - 50) / 5
+
 	def _set_rate(self,rate):
-		self.tts.Rate = (rate-50)/5
+		self.tts.Rate = self._percentToRate(rate)
 
 	def _set_pitch(self,value):
 		#pitch is really controled with xml around speak commands
@@ -127,25 +131,121 @@ class SynthDriver(SynthDriver):
 			return
 		self._initTts(voice=voice)
 
-	def speak(self,speechSequence):
-		textList=[]
+	def _percentToPitch(self, percent):
+		return percent / 2 - 25
+
+	IPA_TO_SAPI = {
+		u"θ": u"th",
+		u"s": u"s",
+	}
+	def _convertPhoneme(self, ipa):
+		# We only know about US English phonemes.
+		# Rather than just ignoring unknown phonemes, SAPI throws an exception.
+		# Therefore, don't bother with any other language.
+		if self.tts.voice.GetAttribute("language") != "409":
+			raise LookupError("No data for this language")
+		out = []
+		outAfter = None
+		for ipaChar in ipa:
+			if ipaChar == u"ˈ":
+				outAfter = u"1"
+				continue
+			out.append(self.IPA_TO_SAPI[ipaChar])
+			if outAfter:
+				out.append(outAfter)
+				outAfter = None
+		if outAfter:
+			out.append(outAfter)
+		return u" ".join(out)
+
+	def speak(self, speechSequence):
+		textList = []
+
+		# NVDA SpeechCommands are linear, but XML is hierarchical.
+		# Therefore, we track values for non-empty tags.
+		# When a tag changes, we close all previously opened tags and open new ones.
+		tags = {}
+		# We have to use something mutable here because it needs to be changed by the inner function.
+		tagsChanged = [True]
+		openedTags = []
+		def outputTags():
+			if not tagsChanged[0]:
+				return
+			for tag in reversed(openedTags):
+				textList.append("</%s>" % tag)
+			del openedTags[:]
+			for tag, attrs in tags.iteritems():
+				textList.append("<%s" % tag)
+				for attr, val in attrs.iteritems():
+					textList.append(' %s="%s"' % (attr, val))
+				textList.append(">")
+				openedTags.append(tag)
+			tagsChanged[0] = False
+
+		pitch = self._pitch
+		# Pitch must always be specified in the markup.
+		tags["pitch"] = {"absmiddle": self._percentToPitch(pitch)}
+		rate = self.rate
+		volume = self.volume
+
 		for item in speechSequence:
-			if isinstance(item,basestring):
-				textList.append(item.replace("<","&lt;"))
-			elif isinstance(item,speech.IndexCommand):
-				textList.append("<Bookmark Mark=\"%d\" />"%item.index)
-			elif isinstance(item,speech.CharacterModeCommand):
-				textList.append("<spell>" if item.state else "</spell>")
-			elif isinstance(item,speech.SpeechCommand):
-				log.debugWarning("Unsupported speech command: %s"%item)
+			if isinstance(item, basestring):
+				outputTags()
+				textList.append(item.replace("<", "&lt;"))
+			elif isinstance(item, speech.IndexCommand):
+				textList.append('<Bookmark Mark="%d" />' % item.index)
+			elif isinstance(item, speech.CharacterModeCommand):
+				if item.state:
+					tags["spell"] = {}
+				else:
+					try:
+						del tags["spell"]
+					except KeyError:
+						pass
+				tagsChanged[0] = True
+			elif isinstance(item, speech.BreakCommand):
+				textList.append('<silence msec="%d" />' % item.time)
+			elif isinstance(item, speech.PitchCommand):
+				tags["pitch"] = {"absmiddle": self._percentToPitch(int(pitch * item.multiplier))}
+				tagsChanged[0] = True
+			elif isinstance(item, speech.VolumeCommand):
+				if item.multiplier == 1:
+					try:
+						del tags["volume"]
+					except KeyError:
+						pass
+				else:
+					tags["volume"] = {"level": int(volume * item.multiplier)}
+				tagsChanged[0] = True
+			elif isinstance(item, speech.RateCommand):
+				if item.multiplier == 1:
+					try:
+						del tags["rate"]
+					except KeyError:
+						pass
+				else:
+					tags["rate"] = {"absspeed": self._percentToRate(int(rate * item.multiplier))}
+				tagsChanged[0] = True
+			elif isinstance(item, speech.PhonemeCommand):
+				try:
+					textList.append(u'<pron sym="%s">%s</pron>'
+						% (self._convertPhoneme(item.ipa), item.text or u""))
+				except LookupError:
+					log.debugWarning("Couldn't convert character in IPA string: %s" % item.ipa)
+					if item.text:
+						textList.append(item.text)
+			elif isinstance(item, speech.SpeechCommand):
+				log.debugWarning("Unsupported speech command: %s" % item)
 			else:
-				log.error("Unknown speech: %s"%item)
-		text="".join(textList)
-		#Pitch must always be hardcoded
-		pitch=(self._pitch/2)-25
-		text="<pitch absmiddle=\"%s\">%s</pitch>"%(pitch,text)
-		flags=constants.SVSFIsXML|constants.SVSFlagsAsync
-		self.tts.Speak(text,flags)
+				log.error("Unknown speech: %s" % item)
+		# Close any tags that are still open.
+		tags.clear()
+		tagsChanged[0] = True
+		outputTags()
+
+		text = "".join(textList)
+		flags = constants.SVSFIsXML | constants.SVSFlagsAsync
+		self.tts.Speak(text, flags)
 
 	def cancel(self):
 		#if self.tts.Status.RunningState == 2:

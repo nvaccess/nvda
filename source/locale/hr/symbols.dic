@@ -8,8 +8,9 @@
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
-decimal point	(?<=\d)\.(?=\d)
+decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])'
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -18,7 +19,7 @@ symbols:
 . sentence ending	točka	all	always
 ! sentence ending	uskličnik	all	always
 ? sentence ending	upitnik	all	always
-; phrase ending	točkazarez	most	always
+; phrase ending	točka zarez	most	always
 : phrase ending	dvotočka	most	always
 decimal point		none	always
 in-word '	izostavnik	all	norep
@@ -35,15 +36,15 @@ in-word '	izostavnik	all	norep
 # Standard punctuation/symbols
 !	uskličnik	all
 "	navodnik	most
-\#	ljestve	most
+\#	broj	most
 $	dolar	some
 £	funta	some
 €	euro	some
 %	posto	some
 &	trgovačko i	some
 '	izostavnik	all
-(	lijeva zagrada	most
-)	desna zagrada	most
+(	otvorena zagrada	most
+)	zatvorena zagrada	most
 *	zvjezdica	most
 +	plus	most
 ,	zarez	all	always
@@ -51,12 +52,12 @@ $	dolar	some
 .	točka	all
 /	kosa crta	some
 :	dvotočka	most
-;	točkazarez	most
+;	točka zarez	most
 <	manje od	most
 >	veće od	most
 =	jednako	most
 ?	upitnik	all
-@	manki	some
+@	et	some
 [	lijeva uglata	most
 ]	desna uglata	most
 "	navodnik	most
@@ -79,3 +80,75 @@ _	podcrtano	most
 —	em crtica	most
 ●	kružić	most
 ¨	diaeresis	most
+‎	s lijeva na desno
+‏	s desna na lijevo
+■	crni kvadrat	some
+▪	crni kvadrat	some
+◾	crni kvadrat	some
+◦	bijela točka	some
+➔	desna strelica	some
+§	sekcija	all
+°	stupanj	some
+«	španjolski navodnik otvoreni
+»	španjolski navodnik zatvoreni
+µ	mikro	some
+¹	na prvu	some
+²	na drugu	some
+³	na treću	some
+®	registrirano	some
+™	Trgovački znak	some
+©	Autorska prava	some
+±	Plus ili minus	most
+×	puta	most
+÷	podijeljeno	most
+←	lijeva strelica	some
+→	desna strelica	some
+✓	provjera	some
+✔	provjera	some
+∀	For All 	none
+
+#Mathematical Operators U+2200 to U+220F
+
+∁	Complement	none
+∂	Partial Derivative	none
+∃	There exists	none
+∄	There Does Not Exist	none
+∅	EMPTY SET	none
+∆	INCREMENT	none
+∇	NABLA	none
+∈	ELEMENT OF	none
+∉	NOT AN ELEMENT OF	none
+∊	SMALL ELEMENT OF	none
+∋	CONTAINS AS MEMBER	none
+∌	DOES NOT CONTAIN AS MEMBER	none
+∍	SMALL CONTAINS AS MEMBER	none
+∎	END OF PROOF	none
+∏	N-ARY PRODUCT	none
+
+# Miscellaneous Mathematical Operators
+
+∑	N-ARY SUMMATION	none
+√	SQUARE ROOT	none
+∛	CUBE ROOT	none
+∜	FOURTH ROOT	none
+∝	PROPORTIONAL TO	none
+∞	INFINITY	none
+∟	RIGHT ANGLE	none
+∠	ANGLE	none
+∥	PARALLEL TO	none
+∦	NOT PARALLEL TO	none
+∧	LOGICAL AND	none
+∨	LOGICAL OR	none
+∩	INTERSECTION	none
+∪	UNION	none
+∫	INTEGRAL	none
+∴	THEREFORE	none
+∵	BECAUSE	none
+∶	RATIO	none
+∷	PROPORTION	none
+≤	LESS-THAN OR EQUAL TO	none
+≥	GREATER-THAN OR EQUAL TO	none
+⊂	SUBSET OF	none
+⊃	SUPERSET OF	none
+⊆	SUBSET OF OR EQUAL TO	none
+⊇	SUPERSET OF OR EQUAL TO	none

@@ -15,8 +15,10 @@ complexSymbols:
 ; phrase ending	((?<=[^\s;]);(?=[\"'”’);\s]|$)|(?<=[^\s;]\s);(?=[\"'”’);\s]|$))
 : phrase ending	((?<=[^\s:]):(?=[\"'”’);\s]|$)|(?<=[^\s:]\s):(?=[\"'”’);\s]|$))
 # Others
-decimal point	(?<=\d)\,(?=\d)
+decimal point	(?<![^\d -])\,(?=\d)
+in-word '	(?<=[^\W_])['’]
 in-word -	(?<=[^\W_])[-]
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 dates .	((?<=\b\d\d)\.(?=\d\d.(\d{2}|\d{4})\b))|((?<=\b\d\d.\d\d)\.(?=(\d{2}|\d{4})\b))
 dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
@@ -107,6 +109,9 @@ _	souligné
 ‎	gauche à droite
 ‏	droite à gauche
 ■	carré noir
+▪	carré noir
+◾	carré noir
+◦	puce blanche
 ➔	flèche droite
 §	section
 °	degré	some	norep

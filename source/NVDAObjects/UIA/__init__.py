@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2012 NV Access Limited
+#Copyright (C) 2009-2015 NV Access Limited
 
 from ctypes import byref
 from ctypes.wintypes import POINT, RECT
@@ -119,6 +119,59 @@ class UIATextInfo(textInfos.TextInfo):
 			field["table-columnnumber"] = obj.columnNumber
 		return field
 
+	def _iterUIARangeByUnit(self,rangeObj,unit):
+		tempRange=rangeObj.clone()
+		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
+		endRange=tempRange.Clone()
+		while endRange.Move(unit,1)>0:
+			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,endRange,UIAHandler.TextPatternRangeEndpoint_Start)
+			pastEnd=tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)>0
+			if pastEnd:
+				tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
+			yield tempRange.clone()
+			if pastEnd:
+				return
+			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
+		# Ensure that we always reach the end of the outer range, even if the units seem to stop somewhere inside
+		if tempRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)<0:
+			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
+			yield tempRange.clone()
+
+	def _getFormatFieldsAndText(self,tempRange,formatConfig):
+		formatField=self._getFormatFieldAtRange(tempRange,formatConfig)
+		if formatConfig["reportSpellingErrors"]:
+			try:
+				annotationTypes=tempRange.GetAttributeValue(UIAHandler.UIA_AnnotationTypesAttributeId)
+			except COMError:
+				annotationTypes=UIAHandler.handler.reservedNotSupportedValue
+			if annotationTypes==UIAHandler.AnnotationType_SpellingError:
+				formatField.field["invalid-spelling"]=True
+				yield formatField
+				yield tempRange.GetText(-1)
+			elif annotationTypes==UIAHandler.handler.ReservedMixedAttributeValue:
+				for r in self._iterUIARangeByUnit(tempRange,UIAHandler.TextUnit_Word):
+					text=r.GetText(-1)
+					if not text:
+						continue
+					r.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,r,UIAHandler.TextPatternRangeEndpoint_Start)
+					r.ExpandToEnclosingUnit(UIAHandler.TextUnit_Character)
+					try:
+						annotationTypes=r.GetAttributeValue(UIAHandler.UIA_AnnotationTypesAttributeId)
+					except COMError:
+						annotationTypes=UIAHandler.handler.reservedNotSupportedValue
+					newField=textInfos.FormatField()
+					newField.update(formatField.field)
+					if annotationTypes==UIAHandler.AnnotationType_SpellingError:
+						newField["invalid-spelling"]=True
+					yield textInfos.FieldCommand("formatChange",newField)
+					yield text
+			else:
+				yield formatField
+				yield tempRange.GetText(-1)
+		else:
+			yield formatField
+			yield tempRange.GetText(-1)
+
 	def _getTextWithFieldsForRange(self,obj,rangeObj,formatConfig):
 		#Graphics usually have no actual text, so render the name instead
 		if obj.role==controlTypes.ROLE_GRAPHIC:
@@ -138,10 +191,8 @@ class UIATextInfo(textInfos.TextInfo):
 			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)>0:
 				childRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
 			tempRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,childRange,UIAHandler.TextPatternRangeEndpoint_Start)
-			text=tempRange.getText(-1)
-			if text:
-				yield self._getFormatFieldAtRange(tempRange,formatConfig)
-				yield text
+			for f in self._getFormatFieldsAndText(tempRange,formatConfig):
+				yield f
 			field=self._getControlFieldForObject(childObj) if childObj else None
 			if field:
 				yield textInfos.FieldCommand("controlStart",field)
@@ -151,10 +202,8 @@ class UIATextInfo(textInfos.TextInfo):
 				yield textInfos.FieldCommand("controlEnd",None)
 			tempRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_End)
 		tempRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
-		text=tempRange.getText(-1)
-		if text:
-			yield self._getFormatFieldAtRange(tempRange,formatConfig)
-			yield text
+		for f in self._getFormatFieldsAndText(tempRange,formatConfig):
+			yield f
 
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
@@ -245,7 +294,9 @@ class UIA(Window):
 		UIAClassName=self.UIAElement.cachedClassName
 		if UIAClassName=="WpfTextView":
 			clsList.append(WpfTextView)
-		elif UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId:
+		# #5136: Windows 8.x and Windows 10 uses different window class and other attributes for toast notifications.
+		elif ((UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId) #Windows 8.x
+		or (self.windowClassName=="Windows.UI.Core.CoreWindow" and UIAControlType==UIAHandler.UIA_WindowControlTypeId and self.UIAElement.cachedAutomationId=="NormalToastView")): # Windows 10
 			clsList.append(Toast)
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.append(ProgressBar)
@@ -643,6 +694,20 @@ class UIA(Window):
 			parent=parent.parent
 			parentCount+=1
 		return info
+
+	def _get_controllerFor(self):
+		e=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_ControllerForPropertyId)
+		if UIAHandler.handler.clientObject.checkNotSupported(e):
+			return None
+		a=e.QueryInterface(UIAHandler.IUIAutomationElementArray)
+		objList=[]
+		for index in xrange(a.length):
+			e=a.getElement(index)
+			e=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+			obj=UIA(UIAElement=e)
+			if obj:
+				objList.append(obj)
+		return objList
 
 	def event_UIA_elementSelected(self):
 		self.event_stateChange()
