@@ -15,7 +15,7 @@ speechPlayer_handle_t speechPlayerHandle=NULL;
 #define minFadeLength 110
 
 inline bool needsMixWaveFile() {
-	return wdata.mix_wavefile_ix<wdata.n_mix_wavefile;
+	return wdata.n_mix_wavefile>0;
 }
 
 unsigned int mixWaveFile(unsigned int maxNumSamples, sample* sampleBuf) {
