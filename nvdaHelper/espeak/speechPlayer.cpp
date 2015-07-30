@@ -115,7 +115,7 @@ int Wavegen_Klatt2(int length, int modulation, int resume, frame_t *fr1, frame_t
 		mainLength-=minFadeLength;
 		bool fadeOut=!isKlattFrameFollowing();
 		if(fadeOut) {
-			mainLength-=fadeOut;
+			mainLength-=minFadeLength;
 		}
 		if(mainLength>=1) {
 			speechPlayer_queueFrame(speechPlayerHandle,&spFrame2,mainLength,mainLength,-1,false);
