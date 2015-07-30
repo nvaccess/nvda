@@ -24,16 +24,19 @@ unsigned int mixWaveFile(unsigned int maxNumSamples, sample* sampleBuf) {
 		if(i>=maxNumSamples) break;
 		int val;
 		if(wdata.mix_wave_scale==0) {
-			val=wdata.mix_wavefile[wdata.mix_wavefile_ix];
+			val=wdata.mix_wavefile[wdata.mix_wavefile_ix+wdata.mix_wavefile_offset];
 			++(wdata.mix_wavefile_ix);
-			signed char c=wdata.mix_wavefile[wdata.mix_wavefile_ix];
+			signed char c=wdata.mix_wavefile[wdata.mix_wavefile_ix+wdata.mix_wavefile_offset];
 			val+=(c*256);
 		} else {
-			val=(signed char)wdata.mix_wavefile[wdata.mix_wavefile_ix]*wdata.mix_wave_scale;
+			val=(signed char)wdata.mix_wavefile[wdata.mix_wavefile_ix+wdata.mix_wavefile_offset]*wdata.mix_wave_scale;
 		}
 		val*=(wdata.amplitude_v/1024.0);
 		val=(val*wdata.mix_wave_amp)/40;
 		sampleBuf[i].value+=val;
+		if((wdata.mix_wavefile_ix+wdata.mix_wavefile_offset)>=wdata.mix_wavefile_max) {
+			wdata.mix_wavefile_offset-=(wdata.mix_wavefile_max*3)/4;
+		}
 		++i;
 	}
 	return i;
