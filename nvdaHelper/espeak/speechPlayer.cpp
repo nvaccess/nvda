@@ -57,7 +57,7 @@ bool isKlattFrameFollowing() {
 
 void fillSpeechPlayerFrame(frame_t * eFrame, speechPlayer_frame_t* spFrame) {
 	spFrame->voicePitch=(wdata.pitch)/4096;
-	spFrame->voiceAmplitude=1;
+	spFrame->voiceAmplitude=(wvoice->voicing)/64.0;
 	spFrame->cf1=(eFrame->ffreq[1]*wvoice->freq[1]/256.0)+wvoice->freqadd[1];
 	spFrame->cf2=(eFrame->ffreq[2]*wvoice->freq[2]/256.0)+wvoice->freqadd[2];
 	spFrame->cf3=(eFrame->ffreq[3]*wvoice->freq[3]/256.0)+wvoice->freqadd[3];
