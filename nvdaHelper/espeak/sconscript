@@ -27,9 +27,11 @@ def _compilePhonemeAndDictData_buildEmitter(target,source,env):
 	env.SideEffect(phSideEffects,targets)
 	return targets,sources
 
+espeakRepo=Dir("#include/espeak")
+
 env['BUILDERS']['compileEspeakPhonemeAndDictData']=Builder(
 	action=[
-		[File("#miscDeps/tools/espeakedit.exe"),"--compile"]
+		[espeakRepo.File("espeakedit.exe"),"--compile"]
 	],
 	emitter=_compilePhonemeAndDictData_buildEmitter,
 )
@@ -47,7 +49,7 @@ class espeak_VOICE(ctypes.Structure):
 		('spare',ctypes.c_void_p),
 	]
 
-espeakRepo=Dir("#include/espeak")
+
 
 env=env.Clone()
 env.Append(CCFLAGS='/W0')
