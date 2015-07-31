@@ -28,8 +28,6 @@ import speech
 import sayAllHandler
 import treeInterceptorHandler
 import inputCore
-import review
-import braille
 import api
 from NVDAObjects import NVDAObject
 
@@ -180,7 +178,11 @@ class TextInfoQuickNavItem(QuickNavItem):
 		info=self.textInfo.copy()
 		info.collapse()
 		self.document._set_selection(info,reason=REASON_QUICKNAV)
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> master
 	@property
 	def isAfterSelection(self):
 		caret=self.document.makeTextInfo(textInfos.POSITION_CARET)

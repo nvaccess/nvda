@@ -13,6 +13,7 @@
 - In browse mode, you can now toggle single letter navigation on and off by pressing NVDA+shift+space. When off, single letter keys are passed to the application, which is useful for some web applications such as Gmail, Twitter and Facebook. (#3203)
 - New braille translation tables: Finnish 6 dot, Irish grade 1, Irish grade 2, Korean grade 1 (2006), Korean grade 2 (2006). (#5137, #5074, #5097)
 - The QWERTY keyboard on the Papenmeier BRAILLEX Live Plus braille display is now supported. (#5181)
+- Experimental support for the Microsoft Edge web browser and browsing engine in Windows 10. (#5212)
 
 
 == Changes ==
@@ -31,6 +32,8 @@
 - In braille, extraneous spaces are no longer displayed between or after indicators for controls and formatting. (#5043)
 - When an application is responding slowly and you switch away from that application, NVDA is now much more responsive in other applications in most cases. (#3831)
 - Windows 10 Toast notifications are now reported as expected. (#5136)
+- The value is now reported as it changes in certain (UI Automation) combo boxes where this was not working previously.
+- In browse mode in web browsers, tabbing now behaves as expected after tabbing to a frame document. (#5227)
 
 
 == Changes for Developers ==
