@@ -9,6 +9,7 @@ from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
 import weakref
 import UIAHandler
+import aria
 import globalVars
 import eventHandler
 import controlTypes
@@ -49,10 +50,10 @@ class UIATextInfo(textInfos.TextInfo):
 				formatField["heading-level"]=(styleIDValue-UIAHandler.StyleId_Heading1)+1
 		return textInfos.FieldCommand("formatChange",formatField)
 
-	def __init__(self,obj,position):
+	def __init__(self,obj,position,_rangeObj=None):
 		super(UIATextInfo,self).__init__(obj,position)
-		if isinstance(position,UIAHandler.IUIAutomationTextRange):
-			self._rangeObj=position
+		if _rangeObj:
+			self._rangeObj=_rangeObj.clone()
 		elif position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			sel=self.obj.UIATextPattern.GetSelection()
 			if sel.length>0:
@@ -72,7 +73,10 @@ class UIATextInfo(textInfos.TextInfo):
 		elif position==textInfos.POSITION_ALL:
 			self._rangeObj=self.obj.UIATextPattern.documentRange
 		elif isinstance(position,UIA):
-			self._rangeObj=self.obj.UIATextPattern.rangeFromChild(position.UIAElement)
+			try:
+				self._rangeObj=self.obj.UIATextPattern.rangeFromChild(position.UIAElement)
+			except COMError:
+				raise LookupError
 		elif isinstance(position,textInfos.Point):
 			#rangeFromPoint causes a freeze in UIA client library!
 			#p=POINT(position.x,position.y)
@@ -88,10 +92,16 @@ class UIATextInfo(textInfos.TextInfo):
 
 	def _get_NVDAObjectAtStart(self):
 		tempRange=self._rangeObj.clone()
-		tempRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)
-		e=tempRange.getEnclosingElement()
-		obj=UIA(UIAElement=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
-		return obj if obj else self.obj
+		tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)
+		# some implementations (Edge, Word) do not correctly  class embedded objects (graphics, checkboxes) as being the enclosing element, even when the range is completely within them. Rather, they still list the object in getChildren.
+		# Thus we must check getChildren before getEnclosingElement.
+		tempRange.expandToEnclosingUnit(UIAHandler.TextUnit_Character)
+		children=tempRange.getChildren()
+		if children.length==1:
+			child=children.getElement(0)
+		else:
+			child=tempRange.getEnclosingElement()
+		return UIA(UIAElement=child.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)) or self.obj
 
 	def _get_bookmark(self):
 		return self.copy()
@@ -106,17 +116,30 @@ class UIATextInfo(textInfos.TextInfo):
 		states.discard(controlTypes.STATE_MULTILINE)
 		states.discard(controlTypes.STATE_FOCUSED)
 		field["states"] = states
-		field["name"] = obj.name
+		# Only include name if the object's inner text is empty.
+		# could be unperformant.
+		text=self.obj.makeTextInfo(obj).text
+		if not text or text.isspace():
+			field["name"] = obj.name
 		#field["_childcount"] = obj.childCount
 		field["level"] = obj.positionInfo.get("level")
 		if role == controlTypes.ROLE_TABLE:
 			field["table-id"] = 1 # FIXME
-			field["table-rowcount"] = obj.rowCount
-			field["table-columncount"] = obj.columnCount
-		if role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
-			field["table-id"] = 1 # FIXME
-			field["table-rownumber"] = obj.rowNumber
-			field["table-columnnumber"] = obj.columnNumber
+			try:
+				field["table-rowcount"] = obj.rowCount
+				field["table-columncount"] = obj.columnCount
+			except NotImplementedError:
+				pass
+		if role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_DATAITEM,controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER,controlTypes.ROLE_HEADERITEM):
+			try:
+				field["table-rownumber"] = obj.rowNumber
+				field["table-columnnumber"] = obj.columnNumber
+				field["table-id"] = 1 # FIXME
+				field['role']=controlTypes.ROLE_TABLECELL
+				field['table-columnheadertext']=obj.columnHeaderText
+				field['table-rowheadertext']=obj.rowHeaderText
+			except NotImplementedError:
+				pass
 		return field
 
 	def _iterUIARangeByUnit(self,rangeObj,unit):
@@ -138,6 +161,8 @@ class UIATextInfo(textInfos.TextInfo):
 			yield tempRange.clone()
 
 	def _getFormatFieldsAndText(self,tempRange,formatConfig):
+		if tempRange.compareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)==0:
+			return
 		formatField=self._getFormatFieldAtRange(tempRange,formatConfig)
 		if formatConfig["reportSpellingErrors"]:
 			try:
@@ -174,8 +199,9 @@ class UIATextInfo(textInfos.TextInfo):
 
 	def _getTextWithFieldsForRange(self,obj,rangeObj,formatConfig):
 		#Graphics usually have no actual text, so render the name instead
-		if obj.role==controlTypes.ROLE_GRAPHIC:
-			yield obj.name
+		if rangeObj.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)==0 and obj!=self.obj:
+			for x in obj.makeTextInfo("all").getTextWithFields(formatConfig):
+				yield x
 			return
 		tempRange=rangeObj.clone()
 		children=rangeObj.getChildren()
@@ -183,9 +209,12 @@ class UIATextInfo(textInfos.TextInfo):
 			child=children.getElement(index)
 			childObj=UIA(UIAElement=child.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
 			#Sometimes a child range can contain the same children as its parent (causing an infinite loop)
+			# Example: checkboxes, graphics, in Edge.
 			if childObj==obj:
 				continue
 			childRange=self.obj.UIATextPattern.rangeFromChild(child)
+			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)<=0 or childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)>=0:
+				continue
 			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)<0:
 				childRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
 			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)>0:
@@ -249,7 +278,7 @@ class UIATextInfo(textInfos.TextInfo):
 		return res
 
 	def copy(self):
-		return self.__class__(self.obj,self._rangeObj.clone())
+		return self.__class__(self.obj,None,_rangeObj=self._rangeObj)
 
 	def collapse(self,end=False):
 		if end:
@@ -298,6 +327,14 @@ class UIA(Window):
 		elif ((UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId) #Windows 8.x
 		or (self.windowClassName=="Windows.UI.Core.CoreWindow" and UIAControlType==UIAHandler.UIA_WindowControlTypeId and self.UIAElement.cachedAutomationId=="NormalToastView")): # Windows 10
 			clsList.append(Toast)
+		elif self.UIAElement.cachedFrameworkID=="InternetExplorer":
+			import edge
+			if UIAClassName=="Internet Explorer_Server" and self.role==controlTypes.ROLE_PANE:
+				clsList.append(edge.EdgeHTMLRootContainer)
+			elif isinstance(self.parent,edge.EdgeHTMLRootContainer):
+				clsList.append(edge.EdgeHTMLRoot)
+			elif self.role==controlTypes.ROLE_LIST:
+				clsList.append(edge.EdgeList)
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.append(ProgressBar)
 		if UIAClassName=="ControlPanelLink":
@@ -376,7 +413,11 @@ class UIA(Window):
 		except:
 			return False
 
-	shouldAllowUIAFocusEvent=True #: UIA focus events can be completely ignored on this object if set to false.
+	def _get_shouldAllowUIAFocusEvent(self):
+		try:
+			return bool(self.UIAElement.currentHasKeyboardFocus)
+		except COMError:
+			return True
 
 	def _getUIAPattern(self,ID,interface):
 		punk=self.UIAElement.GetCurrentPattern(ID)
@@ -386,6 +427,14 @@ class UIA(Window):
 	def _get_UIAInvokePattern(self):
 		self.UIAInvokePattern=self._getUIAPattern(UIAHandler.UIA_InvokePatternId,UIAHandler.IUIAutomationInvokePattern)
 		return self.UIAInvokePattern
+
+	def _get_UIATogglePattern(self):
+		self.UIATogglePattern=self._getUIAPattern(UIAHandler.UIA_TogglePatternId,UIAHandler.IUIAutomationTogglePattern)
+		return self.UIATogglePattern
+
+	def _get_UIASelectionItemPattern(self):
+		self.UIASelectionItemPattern=self._getUIAPattern(UIAHandler.UIA_SelectionItemPatternId,UIAHandler.IUIAutomationSelectionItemPattern)
+		return self.UIASelectionItemPattern
 
 	def _get_UIATextPattern(self):
 		self.UIATextPattern=self._getUIAPattern(UIAHandler.UIA_TextPatternId,UIAHandler.IUIAutomationTextPattern)
@@ -415,7 +464,7 @@ class UIA(Window):
 			ret="Exception: %s"%e
 		info.append("UIA automationID: %s"%ret)
 		try:
-			ret=self.UIAElement.currentFrameworkID
+			ret=self.UIAElement.cachedFrameworkID
 		except Exception as e:
 			ret="Exception: %s"%e
 		info.append("UIA frameworkID: %s"%ret)
@@ -447,7 +496,13 @@ class UIA(Window):
 		if role in (controlTypes.ROLE_UNKNOWN,controlTypes.ROLE_PANE,controlTypes.ROLE_WINDOW) and self.windowHandle:
 			superRole=super(UIA,self).role
 			if superRole!=controlTypes.ROLE_WINDOW:
-				return superRole
+				role=superRole
+		ariaRole=self.UIAElement.currentAriaRole
+		for ariaRole in ariaRole.split():
+			newRole=aria.ariaRolesToNVDARoles.get(ariaRole)
+			if newRole:
+				role=newRole
+				break
 		return role
 
 	def _get_description(self):
@@ -481,6 +536,16 @@ class UIA(Window):
 			states.add(controlTypes.STATE_CHECKABLE if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTABLE)
 			if self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId):
 				states.add(controlTypes.STATE_CHECKED if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTED)
+		try:
+			isDataValid=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_IsDataValidForFormPropertyId,True)
+		except COMError:
+			isDataValid=UIAHandler.handler.reservedNotSupportedValue
+		if not isDataValid:
+			states.add(controlTypes.STATE_INVALID_ENTRY)
+		if self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsRequiredForFormPropertyId):
+			states.add(controlTypes.STATE_REQUIRED)
+		if self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_ValueIsReadOnlyPropertyId):
+			states.add(controlTypes.STATE_READONLY)
 		try:
 			s=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,True)
 		except COMError:
@@ -662,8 +727,13 @@ class UIA(Window):
 	def doAction(self,index=None):
 		if not index:
 			index=self.defaultActionIndex
-		if index==0 and self.UIAInvokePattern:
-			self.UIAInvokePattern.Invoke()
+		if index==0:
+			if self.UIAInvokePattern:
+				self.UIAInvokePattern.Invoke()
+			elif self.UIATogglePattern:
+				self.UIATogglePattern.toggle()
+			elif self.UIASelectionItemPattern:
+				self.UIASelectionItemPattern.select()
 			return
 		raise NotImplementedError
 
@@ -675,25 +745,47 @@ class UIA(Window):
 
 	def _get_positionInfo(self):
 		info=super(UIA,self).positionInfo or {}
+		itemIndex=0
 		try:
-			itemIndex=self.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemIndex_PropertyId)
+			itemIndex=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_PositionInSetPropertyId)
 		except COMError:
-			itemIndex=0
+			pass
+		if itemIndex==0:
+			try:
+				itemIndex=self.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemIndex_PropertyId)
+			except COMError:
+				pass
 		if itemIndex>0:
 			info['indexInGroup']=itemIndex
-		parent=self.parent
-		parentCount=1
-		while parentCount<3 and isinstance(parent,UIA):
-			try:
-				itemCount=parent.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemCount_PropertyId)
-			except COMError:
-				itemCount=0
-			if itemCount>0:
-				info['similarItemsInGroup']=itemCount
-				break
-			parent=parent.parent
-			parentCount+=1
+		itemCount=0
+		try:
+			itemCount=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
+		except COMError:
+			pass
+		if itemCount==0:
+			parent=self.parent
+			parentCount=1
+			while parentCount<3 and isinstance(parent,UIA):
+				try:
+					itemCount=parent.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemCount_PropertyId)
+				except COMError:
+					pass
+				if itemCount>0:
+					break
+				parent=parent.parent
+				parentCount+=1
+		if itemCount>0:
+			info['similarItemsInGroup']=itemCount
+		try:
+			level=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LevelPropertyId)
+		except COMError:
+			level=None
+		if level is not None and level>0:
+			info["level"]=level
 		return info
+
+	def scrollIntoView(self):
+		pass
 
 	def _get_controllerFor(self):
 		e=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_ControllerForPropertyId)
@@ -806,10 +898,11 @@ class ListItem(UIA):
 	def event_stateChange(self):
 		if not self.hasFocus:
 			parent = self.parent
-			if parent and isinstance(parent, ComboBoxWithoutValuePattern):
+			focus=api.getFocusObject()
+			if parent and isinstance(parent, ComboBoxWithoutValuePattern) and parent==focus: 
 				# This is an item in a combo box without the Value pattern.
 				# This item has been selected, so notify the combo box that its value has changed.
-				parent.event_valueChange()
+				focus.event_valueChange()
 		super(ListItem, self).event_stateChange()
 
 class Dialog(Dialog):
@@ -834,3 +927,4 @@ class WpfTextView(UIA):
 
 	def event_stateChange(self):
 		return
+

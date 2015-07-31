@@ -1148,7 +1148,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		# Toggle browse mode pass-through.
 		vbuf.passThrough = not vbuf.passThrough
-		if isinstance(vbuf,virtualBuffers.VirtualBuffer):
+		if isinstance(vbuf,browseMode.BrowseModeDocumentTreeInterceptor):
 			# If we are enabling pass-through, the user has explicitly chosen to do so, so disable auto-pass-through.
 			# If we're disabling pass-through, re-enable auto-pass-through.
 			vbuf.disableAutoPassThrough = vbuf.passThrough
