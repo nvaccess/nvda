@@ -329,7 +329,7 @@ class UIA(Window):
 			clsList.append(Toast)
 		elif self.UIAElement.cachedFrameworkID=="InternetExplorer":
 			import edge
-			if UIAClassName=="Internet Explorer_Server" and self.role==controlTypes.ROLE_PANE:
+			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
 				clsList.append(edge.EdgeHTMLRootContainer)
 			elif isinstance(self.parent,edge.EdgeHTMLRootContainer):
 				clsList.append(edge.EdgeHTMLRoot)
