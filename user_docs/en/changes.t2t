@@ -18,6 +18,7 @@
 
 == Changes ==
 - Updated liblouis braille translator to 2.6.3. (#5137)
+- When attempting to install an earlier version of NVDA than is currently installed, you will now be warned that this is not recommended and that NVDA should be completely uninstalled before proceeding. (#5037)
 
 
 == Bug Fixes ==
@@ -34,6 +35,8 @@
 - Windows 10 Toast notifications are now reported as expected. (#5136)
 - The value is now reported as it changes in certain (UI Automation) combo boxes where this was not working previously.
 - In browse mode in web browsers, tabbing now behaves as expected after tabbing to a frame document. (#5227)
+- The Windows 10 lock screen can now be dismissed using a touch screen. (#5220)
+- In Windows 7 and later, text is no longer garbled when typing in certain applications such as Wordpad and Skype with a braille display. (#4291)
 
 
 == Changes for Developers ==
