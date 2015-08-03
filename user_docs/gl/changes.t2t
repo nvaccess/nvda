@@ -35,6 +35,9 @@ Que hai de Novo no NVDA
 
 == Cambios para Desenvolvedores ==
 - Agora podes inxectar a entrada bruta dende un teclado de sistema que non se manexa nativamente polo Windows (ex.: un teclado QWERTY nunha pantalla braille) utilizando a nova función keyboardHandler.injectRawKeyboardInput. (#4576)
+- En lugar dun só atributo i18nName, synthDriverHandler.SynthSetting agora ten os atributos  displayNameWithAccelerator e displayName separados para evitar o anunciado do acelerador no grupo de opcións do sintetizador nalgunhas linguas.
+ - Por compatibilidade con versións anteriores, no constructor, displayName é opcional e deribarase de displayNameWithAccelerator se non se proporciona. Con todo, se tentas ter un acelerador para unha opción, deberían proporcionarse ámbolos dous.
+ - O atributo i18nName está obsoleto e poderá eliminarse en unha versión futura.
 
 
 = 2015.2 =
