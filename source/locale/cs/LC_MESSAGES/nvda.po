@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-08 19:04+1000\n"
-"PO-Revision-Date: 2015-05-18 11:32+0100\n"
+"POT-Creation-Date: 2015-07-27 19:09+1000\n"
+"PO-Revision-Date: 2015-07-31 13:09+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS <http://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
@@ -262,6 +262,12 @@ msgid "Ethiopic grade 1"
 msgstr "Etiopský plnopis"
 
 #. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Finnish 6 dot"
+msgstr "Finské 6-bodové písmo"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Finnish 8 dot computer braille"
 msgstr "Finské 8-bodové počítačové písmo"
 
@@ -289,6 +295,16 @@ msgstr "Kanadská francouzština - plnopis"
 #. braille settings dialog.
 msgid "French (Canada) grade 2"
 msgstr "Kanadská francouzština - zkratkopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 1"
+msgstr "Irský plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 2"
+msgstr "Irský zkratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -344,6 +360,16 @@ msgstr "Italské 8-bodové počítačové písmo"
 #. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "Kannadský plnopis"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 1 (2006)"
+msgstr "Korejský plnopis (2006)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 2 (2006)"
+msgstr "Korejský zkratkopis (2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -707,6 +733,24 @@ msgstr "formulářový režim"
 
 msgid "browse mode"
 msgstr "režim prohlížení"
+
+#. Translators: Reported when single letter navigation in browse mode is turned off.
+msgid "Single letter navigation off"
+msgstr "Rychlá navigace vypnutá"
+
+#. Translators: Reported when single letter navigation in browse mode is turned on.
+msgid "Single letter navigation on"
+msgstr "Rychlá navigace zapnutá"
+
+#. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
+msgid ""
+"Toggles single letter navigation on and off. When on, single letter keys in "
+"browse mode jump to various kinds of elements on the page. When off, these "
+"keys are passed to the application"
+msgstr ""
+"Zapíná a vypíná rychlou navigaci. Je-li zapnutá, je možné pohybovat se v "
+"režimu prohlížení mezi různými prvky pomocí konkrétních kláves. Je-li "
+"vypnutá, tyto klávesy přejdou do aktuálního programu"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
@@ -3586,17 +3630,21 @@ msgstr ""
 "kurzoru"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus"
-msgstr "ohlásí zaměřený objekt"
+msgid "reports the object with focus. If pressed twice, spells the information"
+msgstr ""
+"ohlásí zaměřený objekt. Stiskne-li se dvakrát za sebou, bude vyhláskován"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "Stavový řádek nenalezen"
 
 #. Translators: Input help mode message for report status line text command.
-msgid "reads the current application status bar and moves the navigator to it"
+msgid ""
+"reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information"
 msgstr ""
-"přečte stavový řádek aktuální aplikace, jenž se stane prohlíženým objektem"
+"přečte stavový řádek aktuální aplikace, jenž se stane prohlíženým objektem. "
+"Stiskne-li se dvakrát za sebou, bude vyhláskován"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -4705,29 +4753,64 @@ msgstr "Zobrazení řeči NVDA"
 msgid "&Language"
 msgstr "&Jazyk"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Language"
+msgstr "Jazyk"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Voice"
 msgstr "&Hlas"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Voice"
+msgstr "Hlas"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&ariant"
 msgstr "&Osoba"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Variant"
+msgstr "Osoba"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
 msgstr "&Tempo"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate"
+msgstr "Tempo"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "Hla&sitost"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Volume"
+msgstr "Hlasitost"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
 msgstr "&Výška"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Pitch"
+msgstr "Výška"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Intonace"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Inflection"
+msgstr "Intonace"
 
 msgid "text mode"
 msgstr "textový režim"
@@ -5482,6 +5565,8 @@ msgstr "Braillské řádky Baum/HumanWare/APH"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
 msgid "Serial: {portName}"
 msgstr "Sériový: {portName}"
 
@@ -5492,6 +5577,10 @@ msgstr "HumanWare BrailleNote"
 #. Translators: The name of a series of braille displays.
 msgid "HumanWare Brailliant BI/B series"
 msgstr "HumanWare Brailliant řada B"
+
+#. Translators: The name of a braille display.
+msgid "EcoBraille displays"
+msgstr "Braillské řádky EcoBraille"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -6491,13 +6580,13 @@ msgstr "Automaticky upozorňovat na &aktualizace NVDA"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
-"Custom plugins were detected in your user settings directory. Copying these "
-"to the system profile could be a security risk. Do you still wish to copy "
-"your settings?"
+"Add-ons were detected in your user settings directory. Copying these to the "
+"system profile could be a security risk. Do you still wish to copy your "
+"settings?"
 msgstr ""
-"Ve Vaší složce s nastavením NVDA byly nalezeny uživatelské zásuvné moduly. "
-"Jejich překopírováním do systémového profilu se můžete vystavit "
-"bezpečnostnímu riziku. Opravdu chcete Vaše nastavení zkopírovat?"
+"Ve Vaší složce s nastavením NVDA byly nalezeny doplňky. Jejich "
+"překopírováním do systémového profilu se můžete vystavit bezpečnostnímu "
+"riziku. Opravdu chcete Vaše nastavení zkopírovat?"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
@@ -8352,6 +8441,9 @@ msgstr "Braillské řádky HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "reports the object with focus"
+#~ msgstr "ohlásí zaměřený objekt"
 
 #~ msgid "%s"
 #~ msgstr "%s"

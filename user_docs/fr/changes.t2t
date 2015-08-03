@@ -32,6 +32,9 @@ Quoi de Neuf dans NVDA
 == Changements pour les Développeurs ==
 - Vous pouvez maintenant injecter de la saisie brute depuis un clavier système non supporté nativement par Windows (ex : un clavier QWERTY sur un afficheur braille) en utilisant la nouvelle fonction keyboardHandler.injectRawKeyboardInput. (#4576)
 - eventHandler.requestEvents a été ajouté pour requérir des événements particuliers qui sont bloqués par défaut; ex : montrer les événements concernant un contrôle spécifique ou certains événements quand ils sont en arrière-plan. (#3831)
+- Plutôt qu'un simple attribut i18nName, synthDriverHandler.SynthSetting possède maintenant un displayNameWithAccelerator séparé et des attributs displayName pour éviter l'annonce du raccourci dans la boucle des paramètres synthétiseur dans certaines langues.
+ - Pour assurer la compatibilité descendante, dans le constructeur, displayName est optionnel et sera dérivé de displayNameWithAccelerator s'il n'est pas fourni. Cependant, si vous voulez avoir un raccourci pour un paramètre, les deux doivent être fournis.
+- L'attribut i18nName est déprécié et sera peut-être retiré dans une version future.
 
 
 = 2015.2 =

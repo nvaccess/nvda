@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-01 19:09+1000\n"
-"PO-Revision-Date: 2015-06-26 11:49+0200\n"
+"POT-Creation-Date: 2015-07-27 19:09+1000\n"
+"PO-Revision-Date: 2015-08-01 20:00+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -266,6 +266,12 @@ msgid "Ethiopic grade 1"
 msgstr "Αιθιοπικά βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Finnish 6 dot"
+msgstr "Φινλανδικό εξάστιγμο"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Finnish 8 dot computer braille"
 msgstr "Φινλανδικό οκτάστιγμο braille"
 
@@ -293,6 +299,16 @@ msgstr "Γαλλικά (Καναδά) βαθμού 1"
 #. braille settings dialog.
 msgid "French (Canada) grade 2"
 msgstr "Γαλλικά (Καναδά) βαθμού 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 1"
+msgstr "Ιρλανδικό βαθμού 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 2"
+msgstr "Ιρλανδικό βαθμού 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -348,6 +364,16 @@ msgstr "Ιταλικό οκτάστιγμο braille"
 #. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "Κάναντα βαθμού 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 1 (2006)"
+msgstr "Κορεάτικα βαθμού 1 (2006)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 2 (2006)"
+msgstr "Κορεάτικα βαθμού 2 (2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -711,6 +737,26 @@ msgstr "λειτουργία εστίασης"
 
 msgid "browse mode"
 msgstr "λειτουργία περιήγησης"
+
+#. Translators: Reported when single letter navigation in browse mode is turned off.
+msgid "Single letter navigation off"
+msgstr "Πλοήγηση με βάση ένα χαρακτήρα απενεργοποιημένη"
+
+#. Translators: Reported when single letter navigation in browse mode is turned on.
+msgid "Single letter navigation on"
+msgstr "Πλοήγηση με βάση ένα χαρακτήρα ενεργοποιημένη"
+
+#. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
+msgid ""
+"Toggles single letter navigation on and off. When on, single letter keys in "
+"browse mode jump to various kinds of elements on the page. When off, these "
+"keys are passed to the application"
+msgstr ""
+"Πραγματοποιεί εναλλαγή μεταξύ ενεργοποίησης και απενεργοποίησης της "
+"πλοήγησης με βάση ένα χαρακτήρα. Όταν είναι ενεργοποιημένη, τα πλήκτρα - "
+"χαρακτήρες, στη λειτουργία περιήγησης, πραγματοποιούν μεταπήδηση σε διάφορα "
+"είδη στοιχείων στη σελίδα. Όταν είναι απενεργοποιημένο, αυτά τα πλήκτρα "
+"περνούν στην εφαρμογή."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
@@ -3637,19 +3683,20 @@ msgstr ""
 #. Translators: Input help mode message for report current focus command.
 msgid "reports the object with focus. If pressed twice, spells the information"
 msgstr ""
+"Αναφέρει το αντικείμενο στο οποίο έχουμε εστιάσει. Αν πατηθεί δύο φορές, "
+"εκφωνεί τις πληροφορίες."
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "Δε βρέθηκε γραμμή κατάστασης"
 
 #. Translators: Input help mode message for report status line text command.
-#, fuzzy
 msgid ""
 "reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information"
 msgstr ""
 "διαβάζει τη γραμμή κατάστασης για την τρέχουσα εφαρμογή και μετακινεί τον "
-"πλοηγό σε αυτή."
+"πλοηγό σε αυτή. Αν πατηθεί δύο φορές, εκφωνεί τις πληροφορίες."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -4784,29 +4831,64 @@ msgstr "Προβολέας Εκφώνησης NVDA"
 msgid "&Language"
 msgstr "&Γλώσσα"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Language"
+msgstr "Γλώσσα"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Voice"
 msgstr "&Φωνή"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Voice"
+msgstr "Φωνή"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&ariant"
 msgstr "&Παραλλαγή"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Variant"
+msgstr "Μεταβλητή"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
 msgstr "&Ταχύτητα εκφώνησης"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate"
+msgstr "Ταχύτητα εκφώνησης"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "&Ένταση"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Volume"
+msgstr "Ένταση"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
 msgstr "&Τόνος φωνής"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Pitch"
+msgstr "Τόνος φωνής"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Επιτονισμός"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Inflection"
+msgstr "Επιτονισμός"
 
 msgid "text mode"
 msgstr "λειτουργία κειμένου"
@@ -5570,6 +5652,8 @@ msgstr "οθόνες braille Baum/HumanWare/APH"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
 msgid "Serial: {portName}"
 msgstr "Σειριακή θύρα: {portName}"
 
@@ -5580,6 +5664,10 @@ msgstr "HumanWare BrailleNote"
 #. Translators: The name of a series of braille displays.
 msgid "HumanWare Brailliant BI/B series"
 msgstr "HumanWare Brailliant BI/B series"
+
+#. Translators: The name of a braille display.
+msgid "EcoBraille displays"
+msgstr "Eco Οθόνες Braille"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"

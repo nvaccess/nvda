@@ -269,7 +269,7 @@ Existem alguns comandos de teclado úteis quando se move com o foco:
 | Informar o foco atual | NVDA+tab | | NVDA+tab | Anuncia o objeto atual ou controle que tem o foco do sistema. Ao pressionar duas vezes soletrará a informação |
 | Anunciar o título | NVDA+t | NVDA+t | Anuncia o título da janela atualmente em execução. Ao pressionar duas vezes soletrará a informação. Três vezes copiará o conteúdo para a área de transferência |
 | Ler janela ativa | NVDA+b | NVDA+b | Lê todos os controles na janela atual em execução (muito útil para diálogos) |
-| Ler a Barra de Status | NVDA+end | NVDA+shift+end | Lê a barra de status caso o NVDA a encontre. Este comando também move a navegação de objetos para sua localização |
+| Ler a Barra de Status | NVDA+end | NVDA+shift+end | Lê a barra de status caso o NVDA a encontre. Este comando também move a navegação de objetos para sua localização. Pressionando-se duas vezes, soletrará a informação |
 %kc:endInclude
 
 ++ Navegando com o Cursor do Sistema ++[SystemCaret]
@@ -502,6 +502,12 @@ Para mover-se ao início ou final de elementos que contém outros, tais como lis
 | Mover para o início do elemento | shift+vírgula | Move para o início do elemento que contém outros (lista, tabela etc) onde o cursor esteja posicionado |
 | Mover para o final do elemento | vírgula | Move para o final do elemento que contém outros (lista, tabela etc) onde esteja situado o cursor |
 %kc:endInclude
+
+Alguns aplicativos web, tais como o Gmail, Twitter e Facebook, usam caracteres individuuais como teclas de atalho.
+Caso queira usá-los e ainda continuar tendo a possibilidade  de usar suas teclas de cursor para ler no modo de navegação, você pode desabilitar temporariamente as teclas de navegação por caractere do NVDA.
+%kc:beginInclude
+Para alternar a ativação das teclas de navegação por caractere no o documento atual, pressione NVDA+shift+espaço.
+ %kc:endInclude
 
 ++ A Lista de Elementos ++
 A lista de elementos fornece acesso a uma lista de  vários tipos de elementos no documento, quando apropriado ao aplicativo.

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-15 19:09+1000\n"
-"PO-Revision-Date: 2015-07-19 08:44+0200\n"
+"POT-Creation-Date: 2015-07-27 19:09+1000\n"
+"PO-Revision-Date: 2015-07-30 20:58+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -735,11 +735,11 @@ msgstr "selaustila"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
-msgstr "Navigointinäppäimet pois"
+msgstr "Pikanavigointi pois"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
 msgid "Single letter navigation on"
-msgstr "Navigointinäppäimet käytössä"
+msgstr "Pikanavigointi käytössä"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 msgid ""
@@ -747,9 +747,9 @@ msgid ""
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
 msgstr ""
-"Ottaa käyttöön navigointinäppäimet tai poistaa ne käytöstä. Kun ne ovat "
-"käytössä, määrättyjen kirjainten painaminen selaustilassa siirtää sivulla "
-"oleviin eri tyyppisiin elementteihin. Kun navigointinäppäimet eivät ole "
+"Ottaa käyttöön pikanavigointinäppäimet tai poistaa ne käytöstä. Kun "
+"näppäimet ovat käytössä, määrättyjen kirjainten painaminen selaustilassa "
+"siirtää sivulla oleviin eri tyyppisiin elementteihin. Kun ne eivät ole "
 "käytössä, niiden painallukset välitetään suoraan sovellukselle."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
@@ -4782,29 +4782,64 @@ msgstr "Puheen tarkastelu"
 msgid "&Language"
 msgstr "Kie&li:"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Language"
+msgstr "Kieli"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Voice"
 msgstr "&Puheääni:"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Voice"
+msgstr "Puheääni"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&ariant"
 msgstr "&Muunnelma:"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Variant"
+msgstr "Muunnelma"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
 msgstr "&Nopeus:"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate"
+msgstr "Nopeus"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "&Voimakkuus:"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Volume"
+msgstr "Voimakkuus"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
 msgstr "&Korkeus:"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Pitch"
+msgstr "Korkeus"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Sävy:"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Inflection"
+msgstr "Sävy"
 
 msgid "text mode"
 msgstr "tekstitila"
