@@ -328,6 +328,9 @@ class UIA(Window):
 		elif ((UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId) #Windows 8.x
 		or (self.windowClassName=="Windows.UI.Core.CoreWindow" and UIAControlType==UIAHandler.UIA_WindowControlTypeId and self.UIAElement.cachedAutomationId=="NormalToastView")): # Windows 10
 			clsList.append(Toast)
+		# #5231: Announce values in time pickers.
+		elif self.role==controlTypes.ROLE_LISTITEM and self.UIAElement.cachedClassName == "LoopingSelectorItem":
+			clsList.append(LoopingSelectorItem)
 		elif self.UIAElement.cachedFrameworkID=="InternetExplorer":
 			import edge
 			if UIAClassName in ("Internet Explorer_Server","WebView") and self.role==controlTypes.ROLE_PANE:
@@ -928,4 +931,12 @@ class WpfTextView(UIA):
 
 	def event_stateChange(self):
 		return
+
+# Looping selectors are used in apps such as Alarms and Clock and Windows Update to select time values.
+class LoopingSelectorItem(UIA):
+
+	def event_UIA_elementSelected(self):
+		speech.cancelSpeech()
+		api.setNavigatorObject(self)
+		self.reportFocus()
 
