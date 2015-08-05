@@ -1700,6 +1700,8 @@ class GlobalCommands(ScriptableObject):
 		if braille.handler.tether == braille.handler.TETHER_REVIEW:
 			self.script_navigatorObject_toFocus(gesture)
 		else:
+			if not braille.handler.mainBuffer.regions:
+				return
 			region = braille.handler.mainBuffer.regions[-1]
 			braille.handler.mainBuffer.focus(region)
 			if region.brailleCursorPos is not None:
