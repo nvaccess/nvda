@@ -1696,6 +1696,19 @@ class GlobalCommands(ScriptableObject):
 	script_braille_dots.__doc__= _("Inputs braille dots via the braille keyboard")
 	script_braille_dots.category=SCRCAT_BRAILLE
 
+	def script_braille_toFocus(self, gesture):
+		if braille.handler.tether == braille.handler.TETHER_REVIEW:
+			self.script_navigatorObject_toFocus(gesture)
+		else:
+			region = braille.handler.mainBuffer.regions[-1]
+			braille.handler.mainBuffer.focus(region)
+			if region.brailleCursorPos is not None:
+				braille.handler.mainBuffer.scrollTo(region, region.brailleCursorPos)
+			braille.handler.mainBuffer.updateDisplay()
+	# Translators: Input help mode message for a braille command.
+	script_braille_toFocus.__doc__= _("Move braille to the focus object and the cursor or caret within it, if possible")
+	script_braille_toFocus.category=SCRCAT_BRAILLE
+
 	def script_reloadPlugins(self, gesture):
 		import globalPluginHandler
 		appModuleHandler.reloadAppModules()
