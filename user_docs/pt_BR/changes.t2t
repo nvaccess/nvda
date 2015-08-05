@@ -6,16 +6,42 @@
 
 Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 
+= 2015.3 =
+
+== Novas características ==
+- A existência de erros ortográficos é anunciada em campos de edição para o Internet Explorer e outros controls MSHTML. (#4174)
+- Muito mais sinais matemáticos unicode agora são falados quando aparecem no texto. (#3805)
+- As sugestões de pesquisa na tela inicial do Windows 10 são anunciadas automaticamente. (#5049)
+- Suporte para as linhas braille EcoBraille 20, EcoBraille 40, EcoBraille 80 e EcoBraille Plus. (#4078)
+- No modo de navegação, você agora pode alternar a ativação da navegação por caracteres pressionando NVDA+shift+espaço. Quando desativada, as teclas de navegação são passadas para o aplicativo, o que é útil para alguns aplicativos web como Gmail, Twitter e Facebook. (#3203)
+- Novas tabelas de tradução braille: Finlandês 6 pontos, Irlandês grau 1, Irlandês grau 2, Coreano grau 1 (2006), Coreano grau 2 (2006). (#5137, #5074, #5097)
+- O teclado QWERTY da linha braille Papenmeier BRAILLEX Live Plus agora é suportado. (#5181)
+
+
+== Alterações ==
+- Atualizado o transcritor braille liblouis para a versão 2.6.3. (#5137)
+
+
+
+
 = 2015.2 =
+Os destaques desta versão incluem a possibilidade de ler gráficos no Microsoft Excel e suporte à leitura e navegação interativa em conteúdos matemáticos no MathPlayer 4.
 
 == Novas características ==
 - Agora é possível avançar e retroceder por sentenças no Microsoft Word com alt+seta abaixo e alt+seta acima respectivamente. (#3288)
 - Novas tabelas de tradução braille para vários idiomas Indianos. (#4778)
+- No Microsoft Excel, o NVDA agora anuncia quando uma célula tem conteúdos sobrepostos ou obscurecidos. (#3040)
+- No Microsoft Excel, agora é possível usar a Lista de Elementos, NVDA+f7, para apresentar gráficos, comentários e fórmulas. (#1987)
+- Suporte para a leitura de gráficos no Microsoft Excel. Para isso selecione o gráfico usando a Lista de Elementos, NVDA+f7, e em seguida, use as setas para mover-se entre os vários pontos. (#1987)
+- Usando o MathPlayer 4 da Design Science, o NVDA agora pode ler e navegar interativamente por conteúdos matemáticos em navegadores de internett, no Microsoft Word e no PowerPoint. consulte a seção "Leitura de conteúdo matemático" no Guia do Usuário para mais detalhes. (#4673)
+- Agora é possível atribuir comandos, (comandos de teclado, gestos de toque, etc.) para todos os diálogos de preferências do NVDA e de formatação de documentos, usando o diálogo de gestos para entrada. (#4898)
 
 
 == alterações ==
 - No Diálogo de Formatação de Documentos do NVDA, as teclas de atalho para Anunciar listas, Anunciar links, Anunciar número das linhas e Anunciar nome da font foram alterados. (#4650)
 - No Diálogo de Opções de Mouse do NVDA, foram adicionadas teclas de atalho para tocar coordenadas de áudio quando o mouse é movido e brilho controla o volume das coordenadas de áudio. (#4916)
+- Melhoras significativas no anúncio dos nomes das cores. (#4984)
+- Atualizado o transcritor braille liblouis para a versão 2.6.2. (#4777)
 
 
 = 2015.1 =

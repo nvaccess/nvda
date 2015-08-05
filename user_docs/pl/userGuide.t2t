@@ -269,7 +269,7 @@ Przydatne skróty klawiszowe do nawigacji za pomocą punktu uwagi:
 | Odczytuje aktualny punkt uwagi | NVDA+tab | NVDA+tab | Odczytuje obiekt posiadający aktualnie punkt uwagi. Dwukrotne naciśnięcie literuje informacje  |
 | Odczytuje tytuł okna | NVDA+t | NVDA+t | Odczytuje tytuł aktualnej aplikacji lub okna. Dwukrotne naciśnięcie literuje tytuł. Trzykrotne naciśnięcie kopiuje tytuł do schowka. |
 | Odczytuje aktywne okno | NVDA+b | NVDA+b | Odczytuje zawartość obiektu na pierwszym planie (aktualnie aktywnego okna). Funkcja przydatna zwłaszcza w przypadku okna dialogowego lub komunikatu, którego pojawienie się nie zostało zauważone. |
-| Odczytaj pasek statusu | NVDA+end | NVDA+shift+end | odczytuje pasek statusu jeśli napodka na takowy, przenosi tam także obiekt nawigatora. |
+| Odczytaj pasek stanu | NVDA+end | NVDA+shift+end | odczytuje pasek statusu jeśli napodka na takowy, przenosi tam także obiekt nawigatora. Dwukrotne naciśnięcie przeliteruje informację. |
 %kc:endInclude
 
 ++ Nawigacja Kursorem systemowym ++
@@ -285,8 +285,8 @@ NVDA wykorzystuje następujące klawisze poleceń do nawigacji kursorem klawiatu
 | Czyta wszystko | NVDA+strzałka w dół | NVDA+a | Odczytuje od bieżącej pozycji kursora do końca tekstu, przesuwając kursor podczas czytania. |
 | Odczytuje aktualną linię | NVDA+strzałka w górę | NVDA+l | Odczytuje aktualną linię w miejscu kursora. Dwukrotne naciśnięcie literuje aktualną linię. |
 | Odczytuje aktualne zaznaczenie | NVDA+Shift+strzałka w górę | NVDA+shift+s | Odczytuje cały aktualnie zaznaczony tekst |
-| Następne zdanie | alt+strzałka w dół | alt+strzałka w dół | Przenosi kursor do następnego zdania i odczytuje je. (obsługiwane tylko w Microsoft Word) |
-| Poprzednie zdanie | alt+strzałka w górę | alt+strzałka w górę | Przenosi kursor do poprzedniego zdania i odczytuje je. (obsługiwane tylko w Microsoft Word) |
+| Następne zdanie | alt+strzałka w dół | alt+strzałka w dół | Przenosi kursor do następnego zdania i odczytuje je. (obsługiwane tylko w Microsoft Word i Outlook) |
+| Poprzednie zdanie | alt+strzałka w górę | alt+strzałka w górę | Przenosi kursor do poprzedniego zdania i odczytuje je. (obsługiwane tylko w Microsoft Word i Outlook) |
 
 
 Do poruszania się w struktórze tabel słurzą następujące klawisze poleceń:
@@ -503,6 +503,12 @@ Aby przejść na początek lub koniec elementów takich jak listy i tabele:
 || Działanie | Skrót | Opis |
 | Przejdź na początek kontenera | shift+przecinek | przechodzi na początek kontenera (listy, tabeli etc.) na którym ustawiony jest kursor |
 | Przejdź poza koniec kontenera | przecinek | przenosi poza koniec kontenera (listy, tabeli, etc.)na którym znajdował się kursor |
+
+%kc:endInclude
+Niektóre aplikacje webowe takie jak Gmail, Twitter czy Facebook używają pojedynczych liter jako klawiszy skrótu.
+Jeśli chcesz używać tych skrótów i móc jednocześnie posługiwać się klawiszami strzałek do odczytu treści w trybie czytania, możesz tymczasowo wyłączyć nawigację pojedynczymi literami NVDA.
+%kc:beginInclude
+Aby włączyć i wyłączyć nawigację literami dla aktualnego dokumentu, naciśnij NVDA+shift+space.
 %kc:endInclude
 
 ++ Lista elementów ++
@@ -1756,10 +1762,9 @@ Obsługiwane są następujące monitory:
 -
 
 Jeśli zainstalowany jest BrxCom, NVDA będzie używać BrxCom.
-BrxCom jest to narzędzie, które pozwala używać wprowadzania brajlem niezależnie od używanego programu odczytu ekranu.
+BrxCom jest to narzędzie, które pozwala używać wprowadzania z klawiatury brajlowskiej niezależnie od używanego programu odczytu ekranu.
 Nowa wersja BrxCom pracująca z NVDA, wkrótce  zostanie wydana przez Papenmeier.  
-Możliwe jest jednak wprowadzanie brajlem na urządzeniach Trio, BRAILLEX Live 20 i Braillex Live bez BrxCom.
-Wprowadzanie brajla jest również możliwe na modelu Live Plus , ale tylko z BrxCom.
+Wprowadzanie z klawiatury jest możliwe na modelach Trio i BRAILLEX Live.
 
 Większość urządzeń posiada pasek łatwego dostępu(EAB) umożliwiający intuicyjną i szybką obsługę.
 EAB może być przesunięty w czterech kierunkach, a każdy kierunek generalnie posiada dwa przełączniki.
@@ -1895,6 +1900,8 @@ BRAILLEX Tiny:
 | Przejdź do poprzedniego obiektu | r1+left |
 | Przejdź do następnego obiektu | r1+right |
 | Raportuj formatowanie tekstu | reportf |
+| Zgłoś tytuł | l1+up |
+| zgłoś pasek stanu | l2+down |
 
 BRAILLEX 2D Screen:
 || Działanie | Klawisz skrótu |
@@ -1958,6 +1965,41 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 | Klawisz windows | spacja+punkt 2+punkt 4+punkt 5+punkt 6 (space+w) |
 | Klawisz Alt | spacja+punkt 1+punkt 3+punkt 4 (space+m) |
 | Przełącz tryb pomocy | spacja+punkt 2+punkt 3+punkt 6 (spacja+obniżone h) |
+%kc:endInclude
+
+++ EcoBraille ++
+NVDA obsługuje monitory EcoBraille od [ONCE http://www.once.es/].
+Obsługiwane są następujące modele:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+W oknie ustawień brajla NVDA, możesz ustawić port szeregowy, do którego jest podłączony monitor.
+
+Poniżej znajdują się skróty klawiszowe dla monitorów EcoBraille.
+Proszę przeczytać [Dokumentację EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] dla uzyskania informacji, gdzie znajdują się te klawisze.
+
+%kc:beginInclude
+|| Działanie | Klawisz skrótu |
+| Przewiń wyświetlacz brajla wstecz | T2 |
+| Przewiń wyświetlacz brajla w przód | T4 |
+| Przenieś wyświetlacz brajla do poprzedniej linii | T1 |
+| Przenieś wyświetlacz brajla do następnej linii | T5 |
+| Przywołaj do komórki brajla | Routing |
+| Uaktywnij bieżący obiekt nawigatora | T3 |
+| Przełącz do następnego trybu przeglądania | F1 |
+| Przejdź do obiektu nadrzędnego | F2 |
+| Przełącz do poprzedniego trybu przeglądania | F3 |
+| Przejdź do poprzedniego obiektu | F4 |
+| Zgłoś bieżący obiekt | F5 |
+| Przejdź do następnego obiektu | F6 |
+| Przejdź do obiektu w punkcie uwagi | F7 |
+| Przejdź do pierwszego obiektu podrzędnego | F8 |
+| Przenieś kursor lub punkt uwagi do aktualnej pozycji kursora przeglądu | F9 |
+| Zgłoś położenie kursora przeglądu | F0 |
+| Przełącz "Brajl związany z..." | A |
 %kc:endInclude
 
 ++ BRLTTY ++

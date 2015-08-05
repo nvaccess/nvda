@@ -500,9 +500,15 @@ As siguients teclas por ellas mesmas blincan t'o siguient campo, con a tecla may
 - a: Anotación (comentario, revisión d'editor, etc.)
 -
 Ta mover-te-ne t'o comienzo u final d'elementos contenedors tals como listas y tablas:
-|| Nombre | Tecla | Descripción |
+|| nombre | tecla | descripción |
 | Mover-se-ne t'o comienzo d'un contenedor | mayus+coma | Se mueve t'o comienzo d'o contenedor (lista, tabla etc.) an siga situau o cursor |
 | Mover-se-ne t'a fin d'o contenedor | coma | Se mueve t'a fin d'o contenedor (lista, tabla etc.) an siga situau o cursor |
+
+%kc:endInclude
+Bellas aplicacions tals como lo Gmail, o Twitter y o Facebook fan servir letras sueltas como teclas d'alcorce.
+Si quiers fer servir-ne sin deixar d'estar capable de fer servir as teclas de cursor ta leyer en o modo de navegación puetz desenchegar temporalment as teclas de navegación d'una sola letra d'o NVDA.
+%kc:beginInclude
+Ta enchegar u desenchegar a navegación d'una sola letra t'o documento actual preta NVDA+mayus+espacio.
 %kc:endInclude
 
 ++ A Lista d'Elementos ++
@@ -1756,10 +1762,9 @@ Se suportan as siguients linias Braille:
 -
 
 Si ye instalau o BrxCom, NVDA emplegará o BrxCom.
-BrxCom ye una ferramienta que te permite emplegar a dentrada Braille independientment d'un lector de pantalla.
+O BrxCom ye una ferramienta que permit a la dentrada de teclau dende a linia braille  marchar independientment d'un lector de pantalla.
 Papenmeier liberará luego una versión nueva d'o BrxCom que funcione con o NVDA.
-A dentrada braille ye posible con o Trio, BRAILLEX Live 20 y os dispositivos Braillex Live sin o BrxCom.
-A dentrada braille tamién ye posible con o modelo Live Plus, pero nomás con o BrxCom.
+A dentrada de teclau ye posible con os modelos Trio y BRAILLEX Live 20.
 
 A mayoría d'os dispositivos tienen una Barra d'Acceso Facil (EAB) que permite operar rapida y intuitivament.
 A EAB puet mover-se-ne en quatro adrezas do en cheneral cada adreza tien dos posicions.
@@ -1960,6 +1965,41 @@ Por favor mira a documentación d'o BrailleNote ta trobar do se localizan istas 
 | Tecla Windows | espacio+punto2+punto4+punto5+punto6 (espacio+w) |
 | Tecla Alt | espacio+punto1+punto3+punto4 (espacio+m) |
 | Activar y desactivar l'aduya de dentrada | espacio+punto2+punto3+punto6 (espacio+h) |
+%kc:endInclude
+
+++ EcoBraille ++
+O NVDA suporta as linias EcoBraille d'[ONCE http://www.once.es/].
+Son suportaus os siguients modelos:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+En o NVDA puetz establir o puerto serie que a linia bi ye connectada en o dialogo d'opcions de braille.
+
+Contino son as asignacions de teclas t'as linias EcoBraille.
+Por favor mira-te a [documentación d'EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] ta descripcions de do se puet trobar ixas teclas.
+
+%kc:beginInclude
+|| nombre | tecla |
+| Desplazar enta zaga la linia braille | T2 |
+| Desplazar enta devant a linia braille | T4 |
+| Mover a linia braille t'a linia anterior | T1 |
+| Mover a linia braille t'a linia siguient | T5 |
+| Enrutar t'a celda braille | Routing |
+| Activar l'actual obchecto d'o navegador | T3 |
+| Cambiar t'o siguient modo de revisión | F1 |
+| Mover-se-ne ta l'obchecto contenedor | F2 |
+| Cambiar ta l'anterior modo de revisión | F3 |
+| Mover-se-ne ta l'obchecto anterior | F4 |
+| Anunciarl'obchecto actual | F5 |
+| Mover-se-ne t'o siguient obchecto | F6 |
+| Mover-se-ne ta l'obchecto d'o foco | F7 |
+| Mover-se-ne t'o primer obchecto conteniu | F8 |
+| Mover o foco d'o sistema u lo cursor t'a posición actual de revisión | F9 |
+| Anunciar a ubicación d'o cursor de revisión | F0 |
+| Conmutar o braille ancorau a | A |
 %kc:endInclude
 
 ++ BRLTTY ++

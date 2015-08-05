@@ -9,6 +9,14 @@ Qué bi ha de Nuevo en o NVDA
 - A existencia d'errors d'ortografía s'anuncia en os campos editables ta l'Internet Explorer y atros controls MSHTML. (#4174)
 - Agora se leye muitos más simbolos matematicos unicode en que amaneixen en os textos. (#3805)
 - As sucherencias de busca en a pantalla d'inicio d'o Windows 10 s'anuncia automaticament (#5049)
+- Refirme t'as linias braille EcoBraille 20, EcoBraille 40, EcoBraille 80 y EcoBraille Plus. (#4078)
+- En o modo de navegación agora puetz enchegar y desenchegar a navegación d'una sola letra  pretando NVDA+mayus+espacio. Quan siga desenchegada as teclas d'una letra se pasan ta l'aplicación que ye util ta bellas aplicacions web tals como lo Gmail, o Twitter y o Facebook. (#3203)
+- Nuevas tablas de transcripción braille; finlandés de 6 puntos, irlandés grau 1, irlandés grau 2, coreán grau 1 (2006), coreán grau 2 (2006). (#5137, #5074, #5097)
+- Agora se suporta o teclau QWERTY en a linia braille Papenmeier BRAILLEX Live Plus. (#5181)
+
+
+== Cambeos ==
+- Esviellau o transcriptor braille liblouis ta 2.6.3. (#5137)
 
 
 == Corrección d'errors ==
@@ -16,6 +24,21 @@ Qué bi ha de Nuevo en o NVDA
 - En o Firefox o NVDA ya no mira de creyar una descripción t'os panels de pestanyas ARIA basada en tot o texto d'adintro. (#4638)
 - En l'Internet Explorer y atros controls MSHTML en tabular enta seccions, articlos u dialogos  ya no s'anuncia totz os contenius d'o contenedor como lo suyo nombre. (#5021, #5025) 
 - En fer servir linias braille Baum, HumanWare u APH con un teclau braille a dentrada braille ya no deixa de funcionar dimpués de pretar unatra mena de tecla en a linia. (#3541)
+- En o Windows 10 ya no s'anuncia información rariza en pretar alt+tabulador u alt+mayus+tabulador ta cambiar entre aplicacions. (#5116)
+- O texto escrito ya no ye ilechible en fer servir qualques aplicacions tals como lo Microsoft Outlook con una linia braille. (#2953)
+- En o modo de navegación en l'Internet Explorer y atros controls MSHTML agora s'anuncia o conteniu correcto malas que un elemento amaneix u cambia y s'enfoca inmediatament. (#5040)
+- En o modo de navegación en o Microsoft Word a navegación d'una sola letra agora esviella la linia braille y o cursor de revisión  como s'aspera. (#4968)
+- En o braille ya no s'amuestran espacios rarizos entre u dimpués d'os indicadors ta controls y formato. (#5043)
+- Quan una aplicación ye respondendo lentament y cambias difuera d'ixa aplicación o NVDA responde muito millor en atras aplicacions en a mayoría d'os casos. (#3831)
+- Agora s'anuncia as notificacions rustidas d'o Windows 10 como s'aspera. (#5136)
+
+
+== Cambeos ta desembolicadors ==
+- Agora puetz xaringar a dentrada pura dende un teclau de sistema que no se maneye nativament en o Windows (p.eix. Un teclau QWERTY en una linia braille) fendo servir a nueva función keyboardHandler.injectRawKeyboardInput. (#4576)
+- S'ha adhibiu eventHandler.requestEvents ta solicitar eventos particulars que son blocaus por defecto; p.eix. amostrar os eventos dende un control especifico u qualques eventos siempre que se siga en o fundo. (#3831)
+- En cuenta d'un solo atributo i18nName, synthDriverHandler.SynthSetting agora tien os atributos  displayNameWithAccelerator y displayName deseparaus ta privar l'anuncio de l'accelerador en l'aniello  d'opcions d'o sintetizador en qualques idiomas.
+ - Por compatibilidat con versions anteriors, en o constructor displayName ye opcional y se deribará de displayNameWithAccelerator si no se proporciona. Sin d'embargo si miras de tener un accelerador ta una opción en habría de proporcionar-sen totz dos.
+ - L'atributo i18nName ye obsoleto y se podría eliminar en bella versión futura.
 
 
 = 2015.2 =

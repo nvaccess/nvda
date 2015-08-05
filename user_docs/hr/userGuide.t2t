@@ -269,7 +269,7 @@ Postoji nekoliko tipkovničkih prečaca koji su korisni za kretanje po objektima
 | Izvijesti o trenutnom fokusu | NVDA+tab | NVDA+tab | Obavještava o objektuk oji je trenutno u fokusu. Kad pritisnete dvaput, slovkat će izgovoreno |
 | Izvijesti o naslovu | NVDA+t | NVDA+t | Izvještava o naslovu trenutnog prozora. Kad pritisnete dvaput, NVDA će slovkati izgovoreno. Kad pritisnete triput kopirat ćete naslov u međuspremnik. |
 | Pročitaj trenutni prozor | NVDA+b | NVDA+b | čita sve kontrole u trenutno aktivnom prozoru (korisno za dijaloške okvire) |
-| Pročitaj traku stanja | NVDA+end | NVDA+shift+end | Čita traku stanja ako je NVDA pronađe. Također pomiće objekt navigatora na tu lokaciju |
+| čitaj statusnu traku | NVDA+end | NVDA+shift+end | ČIta traku stanja ako ju NVDA pronađe. također premješta objekt navigacije na tu lokaciju. Kada se pritisne dvaput, informacija na statusnoj traci bit će slovkana |
 %kc:endInclude
 
 ++ Kretanje pomoću kursora sustava ++[SystemCaret]
@@ -1960,6 +1960,41 @@ Molimo pogledajte vaše BrailleNote upute za upotrebu da biste znali gdje su smj
 | Windows tipka | razmak+točkica2+točkica4+točkica5+točkica6 (razmak+w) |
 | Alt | razmak+točkica1+točkica3+točkica4 (razmak+m) |
 | Uključi/isključi pomoč pri unosu | razmak+točkica2+točkica3+točkica6 (razmak+spušteno h) |
+%kc:endInclude
+
+++ EcoBraille ++
+NVDA podržava EcoBraille brajične retke koje proizvodi [ONCE http://www.once.es/].
+Slijedeći modeli su podržani:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+U NVDA možete podesiti priključak na koji će brajični redak biti prikljućen, u brajičnim postavkama.
+
+Slijede Dodjele tipaka za EcoBraille brajične retke.
+Molimo pogledajte [EcoBraille korisničko uputstvo ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] Za opis i smještaj tipaka na vašem brajičnom retku.
+
+%kc:beginInclude
+|| Naziv | Tipka |
+| Pomakni brajični redak nazad za red | T2 |
+| Pomakni brajični redak napred za jedan red | T4 |
+| Pomakni brajični redak na prethodnu liniju teksta | T1 |
+| Pomakni brajični redak na slijedeću liniju teksta | T5 |
+| Usmjeri se na brajičnu ćeliju | Routing |
+| Aktiviraj trenutni objekt navigacije | T3 |
+| Prebaci se na slijedeći način pregleda | F1 |
+| Pomakni se na prijašnji objekt sadržaja | F2 |
+| Pomakni se na prethodni način pregleda | F3 |
+| Pomakni se na prethodni objekt | F4 |
+| Čitaj trenutni objekt | F5 |
+| Prebaci se na slijedeći objekt | F6 |
+| Premjesti na objekt koji ima fokus | F7 |
+| Premjesti se na prvi nadređeni objekt | F8 |
+| Premjesti fokus sustava i kursor na trenutnu poziciju | F9 |
+| Izvjesti o poziciji preglednog kursora | F0 |
+| Ukljući /iskljući brajicu povezanu na | A |
 %kc:endInclude
 
 ++ BRLTTY ++

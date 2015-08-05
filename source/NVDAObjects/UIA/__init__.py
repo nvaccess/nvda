@@ -160,8 +160,9 @@ class UIATextInfo(textInfos.TextInfo):
 			tempRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
 			yield tempRange.clone()
 
+	allowGetFormatFieldsAndTextOnDegenerateUIARanges=False #: _getFormatFieldsAndText should not return anything for degenerate ranges.
 	def _getFormatFieldsAndText(self,tempRange,formatConfig):
-		if tempRange.compareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)==0:
+		if not self.allowGetFormatFieldsAndTextOnDegenerateUIARanges and tempRange.compareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)==0:
 			return
 		formatField=self._getFormatFieldAtRange(tempRange,formatConfig)
 		if formatConfig["reportSpellingErrors"]:
