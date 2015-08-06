@@ -258,6 +258,14 @@ class ExcelSheetQuickNavItem(ExcelQuickNavItem):
 
 	def moveTo(self):
 		self.sheetObject.Activate()
+		
+	def rename(self,newName):
+		self.sheetObject.Name=newName
+		self.label=newName
+		
+	@property
+	def isRenameAllowed(self):
+		return True
 
 class SheetsExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 	"""
