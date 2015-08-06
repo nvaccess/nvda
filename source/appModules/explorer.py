@@ -227,9 +227,17 @@ class AppModule(appModuleHandler.AppModule):
 			obj.presentationType=obj.presType_layout
 
 	def event_gainFocus(self, obj, nextHandler):
-		if obj.windowClassName == "ToolbarWindow32" and obj.role == controlTypes.ROLE_MENUITEM and obj.parent.role == controlTypes.ROLE_MENUBAR and eventHandler.isPendingEvents("gainFocus"):
+		wClass = obj.windowClassName
+		if wClass == "ToolbarWindow32" and obj.role == controlTypes.ROLE_MENUITEM and obj.parent.role == controlTypes.ROLE_MENUBAR and eventHandler.isPendingEvents("gainFocus"):
 			# When exiting a menu, Explorer fires focus on the top level menu item before it returns to the previous focus.
 			# Unfortunately, this focus event always occurs in a subsequent cycle, so the event limiter doesn't eliminate it.
 			# Therefore, if there is a pending focus event, don't bother handling this event.
 			return
+
+		if wClass == "ForegroundStaging":
+			# #5116: The Windows 10 Task View fires foreground/focus on this weird invisible window before and after it appears.
+			# This causes NVDA to report "unknown", so ignore it.
+			# We can't do this using shouldAllowIAccessibleFocusEvent because this isn't checked for foreground.
+			return
+
 		nextHandler()
