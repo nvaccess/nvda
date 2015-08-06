@@ -61,7 +61,6 @@ class AppModule(appModuleHandler.AppModule):
 		GlobalCommands.script_review_nextCharacter.__func__,
 		GlobalCommands.script_review_endOfLine.__func__,
 		GlobalCommands.script_review_sayAll.__func__,
-		GlobalCommands.script_braille_toggleTether.__func__,
 		GlobalCommands.script_braille_scrollBack.__func__,
 		GlobalCommands.script_braille_scrollForward.__func__,
 		GlobalCommands.script_braille_routeTo.__func__,
