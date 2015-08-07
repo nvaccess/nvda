@@ -117,7 +117,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"globalCommands.GlobalCommands": {
 			"braille_scrollBack": ("br(alvaBC6):t1","br(alvaBC6):etouch1"),
 			"braille_previousLine": ("br(alvaBC6):t2",),
-			"navigatorObject_toFocus": ("br(alvaBC6):t3",),
+			"braille_toFocus": ("br(alvaBC6):t3",),
 			"braille_nextLine": ("br(alvaBC6):t4",),
 			"braille_scrollForward": ("br(alvaBC6):t5","br(alvaBC6):etouch3"),
 			"braille_routeTo": ("br(alvaBC6):routing",),
