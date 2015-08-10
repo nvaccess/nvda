@@ -13,11 +13,11 @@
 - Im Lese-Modus können Sie nun die Schnellnavigation mittels NVDA+Umschalt+Leertaste ein- und ausschalten. Bei ausgeschalteter Schnellnavigation werden Buchstaben an die aktive Anwendung weitergereicht. Dies ist in einigen Internet-Anwendungen wie GMail, Twitter und Facebook hilfreich. (#3203)
 - neue Brailleübersetzungstabellen: Finnisch 6 Punkt, Irische Vollschrift, Irische Kurzschrift, Koreanische Vollschrift (2006), Koreanische Kurzschrift (2006). (#5137, #5074, #5097)
 - Die Qwertz-Tastatur der Braillezeile BRAILLEX Live Plus von Papenmeier wird nun unterstützt. (#5181)
-
+- experimentelle Unterstützung für den  Web-browser Edge sowie dessen Unterbau in Windows 10. (#5212)
 
 == Änderungen ==
 - Liblouis auf Version 2.6.3 aktualisiert. (#5137)
-
+- Wenn Sie versuchen, eine frühere Version von NVDA über eine aktuelle Version zu installieren wird eine Warnung angezeigt. Dies wird nicht empfohlen. NVDA sollte vollständig deinstalliert werden, bevor Sie eine ältere Version installieren. (#5037)
 
 == Fehlerbehebungen ==
 - Wenn Sie die Schnellnavigationstasten verwenden, werden Listeneinträge ignoriert, die zu Gestaltungszwecken eingefügt wurden. (#4204)
@@ -30,12 +30,19 @@
 - in Microsoft word wird nun die Anzeige auf der Braillezeile korrekt aktualisiert, wenn Sie die Schnellnavigation verwenden. (#4968)
 - Beim ausgeben der Textformatierung in Braille werden keine überflüssigen Leerzeichen mehr angezeigt. (#5043)
 - Wenn Sie den Fokus von einer Anwendung nehmen, die langsam reagiert, sollte NVDA nun in den meisten Fällen schneller reagieren. (#3831)
-- Windows 10-Benachrichtigungen werden nun wie erwartet angezeigt. (#5136)
-
+- Windows 10-Benachrichtigungen werden nun wie erwartet ausgegeben. (#5136)
+- Bestimmte Ui-Automation-Kombinationsfelder werden nun korrekt ausgegeben. Dies funktionierte zuvor nicht.
+- Im Lesemodus verhält sich NVDA beim Navigieren wie erwartet, wenn Sie mit (Umschalt+)Tab in einem Rahmen navigieren. (#5227)
+- Der Sperrbildschirm von Windows 10 kann nun mittels Touchscreen erkundet und geschlossen werden. (#5220)
+- Wenn Sie in Windows 7 oder neuer Text in Eingabefelder von z. B. Wordpad oder Skype eingeben, während Sie eine Braillezeile verwenden, wird die Eingabe nicht mehr verfälscht. (#4291)
+- Im Sperrbildschirm von Windows 10 ist es nicht mehr möglich, auf laufende Anwendungen zuzugreifen oder die Konfiguration von NVDA zu ändern. (#5269)
 
 == Änderungen für Entwickler ==
 - Nun können auch Tastenanschläge von Tastaturen verarbeitet werden, die nicht vom Betriebssystem erkannt werden (wie z.B. Tastaturen von Braillezeilen). Verwenden Sie hierzu die neue Funktion  keyboardHandler.injectRawKeyboardInput. (#4576)
 - Mit der neuen Funktion eventHandler.requestEvents können nun Ereignisse abgearbeitet werden, die standardmäßig blockiert werden  Hierzu zählen Ereignisse von bestimmten Steuerelementen oder Ereignisse, die im Hintergrund ausgelöst werden. (#3831)
+- Anstelle eines einfachen i18name-Attributs enthält synthDriverHandler.SynthSetting nun sowohl displayNameWithAccelerator als auch displayName-Attribute. Hiermit wird verhindert, dass die Namen von Einstellungen im Synthesizer-Einstellungsring in einigen Sprachen mitsamt ihren hervorgehobenen Buchstaben angesagt werden (z.B. &Stimme, Ton&höhe, &Lautstärke usw).
+ - Aus Gründen der Abwärtskompatibilität ist Displayname optional und wird von displaynamewithaccelerator abgeleitet. Wenn Sie jedoch planen, eine Einstellung sowohl in den Stimmeneinstellungen als auch im Synthesizer-Einstellungsring anzubieten, sollten Sie beide Attribute verwenden.
+ - Das Attribut i18name ist veraltet und wird in einer der nächsten Versionen entfernt.
 
 
 = 2015.2 =
