@@ -4,25 +4,28 @@ Qué bi ha de Nuevo en o NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2015.3 =
+O resinyable d'ista versión inclui refirme inicial t'o Windows 10, a capacidat ta desenchegar a navegación d'una sola letra en o modo de navegación (util ta bellas aplicacions web), milloras en l'Internet Explorer y apanyos ta texto ilechible en escribir en qualques aplicacions con o braille enchegau.
 
 == Nuevas Caracteristicas ==
 - A existencia d'errors d'ortografía s'anuncia en os campos editables ta l'Internet Explorer y atros controls MSHTML. (#4174)
 - Agora se leye muitos más simbolos matematicos unicode en que amaneixen en os textos. (#3805)
-- As sucherencias de busca en a pantalla d'inicio d'o Windows 10 s'anuncia automaticament (#5049)
+- As sucherencias de busca en a pantalla d'inicio d'o Windows 10 s'anuncia automaticament. (#5049)
 - Refirme t'as linias braille EcoBraille 20, EcoBraille 40, EcoBraille 80 y EcoBraille Plus. (#4078)
 - En o modo de navegación agora puetz enchegar y desenchegar a navegación d'una sola letra  pretando NVDA+mayus+espacio. Quan siga desenchegada as teclas d'una letra se pasan ta l'aplicación que ye util ta bellas aplicacions web tals como lo Gmail, o Twitter y o Facebook. (#3203)
 - Nuevas tablas de transcripción braille; finlandés de 6 puntos, irlandés grau 1, irlandés grau 2, coreán grau 1 (2006), coreán grau 2 (2006). (#5137, #5074, #5097)
 - Agora se suporta o teclau QWERTY en a linia braille Papenmeier BRAILLEX Live Plus. (#5181)
+- Refirme experimental t'o navegador web Microsoft Edge y o motor de buscas en o Windows 10. (#5212)
 
 
 == Cambeos ==
 - Esviellau o transcriptor braille liblouis ta 2.6.3. (#5137)
+- Quan mires d'instalar una versión más viella d'o NVDA que l'actualment  instalada, agora te s'alvertirá que ixo no ye recommendau y que o NVDA habrá de desinstalar-se de raso antis de no i proceder. (#5037)
 
 
 == Corrección d'errors ==
 - En o modo de navegación ta l'Internet Explorer y atros controls MSHTML, a navegación rapeda por campos de formularios ya no inclui incorrectament elementos de listas presentacionals. (#4204)
-- En o Firefox o NVDA ya no mira de creyar una descripción t'os panels de pestanyas ARIA basada en tot o texto d'adintro. (#4638)
-- En l'Internet Explorer y atros controls MSHTML en tabular enta seccions, articlos u dialogos  ya no s'anuncia totz os contenius d'o contenedor como lo suyo nombre. (#5021, #5025) 
+- En o Firefox o NVDA ya no anuncia inapropiadament o conteniu d'o panel de pestanyas ARIA en que o foco se'n mueve t'adintro d'ell. (#4638)
+- En l'Internet Explorer y atros controls MSHTML en tabular enta seccions, articlos u dialogos  ya no s'anuncia inapropiadament tot o conteniu d'o contenedor. (#5021, #5025) 
 - En fer servir linias braille Baum, HumanWare u APH con un teclau braille a dentrada braille ya no deixa de funcionar dimpués de pretar unatra mena de tecla en a linia. (#3541)
 - En o Windows 10 ya no s'anuncia información rariza en pretar alt+tabulador u alt+mayus+tabulador ta cambiar entre aplicacions. (#5116)
 - O texto escrito ya no ye ilechible en fer servir qualques aplicacions tals como lo Microsoft Outlook con una linia braille. (#2953)
@@ -31,6 +34,10 @@ Qué bi ha de Nuevo en o NVDA
 - En o braille ya no s'amuestran espacios rarizos entre u dimpués d'os indicadors ta controls y formato. (#5043)
 - Quan una aplicación ye respondendo lentament y cambias difuera d'ixa aplicación o NVDA responde muito millor en atras aplicacions en a mayoría d'os casos. (#3831)
 - Agora s'anuncia as notificacions rustidas d'o Windows 10 como s'aspera. (#5136)
+- Agora s'anuncia la valor malas que cambia en bells quadros combinaus (UI Automation) án ixo anteriorment no i marchaba.
+- En o modo de navegación en os navegadors web agora o tabular se comporta como s'aspera dimpués de tabular ta un documento de bastida. (#5227)
+- A pantalla de bloqueyo d'o Windows 10 agora se puet despachar fendo servir una pantalla tactil. (#5220)
+En o Windows 7 y posteriors o texto ya no ye ilechible en escribir en qualques aplicacions tals como lo Wordpad y o Skype con una linia braille.
 
 
 == Cambeos ta desembolicadors ==
