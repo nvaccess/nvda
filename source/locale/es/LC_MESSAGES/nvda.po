@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-27 19:09+1000\n"
-"PO-Revision-Date: 2015-07-30 18:44+0100\n"
+"POT-Creation-Date: 2015-08-06 19:09+1000\n"
+"PO-Revision-Date: 2015-08-06 19:14+0100\n"
 "Last-Translator: Jorge Pérez Pérez <jorgtum@gmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -760,7 +760,7 @@ msgstr "No se soporta en este documento"
 msgid "Lists various types of elements in this document"
 msgstr "Lista varios tipos de elementos en este documento"
 
-#. Translators: the description for the activatePosition script on virtualBuffers.
+#. Translators: the description for the activatePosition script on browseMode documents.
 msgid "activates the current object in the document"
 msgstr "activa el objeto actual en el documento"
 
@@ -1234,6 +1234,44 @@ msgstr "&Activar"
 #. in the browse mode Elements List dialog.
 msgid "&Move to"
 msgstr "&Moverse a"
+
+#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
+#, python-format
+msgid "%s landmark"
+msgstr "%s punto de referencia"
+
+#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "seleccionado %s"
+
+#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
+msgid "No long description"
+msgstr "No hay descripción larga"
+
+#. Translators: the description for the activateLongDescription script on browseMode documents.
+msgid "Shows the long description at this position if one is found."
+msgstr "Muestra la descripción larga en esta posición si se encuentra una."
+
+#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
+#. But there is no container.
+msgid "Not in a container"
+msgstr "No estás en un contenedor"
+
+#. Translators: Description for the Move to start of container command in browse mode.
+msgid "Moves to the start of the container element, such as a list or table"
+msgstr ""
+"Se mueve al comienzo de un elemento contenedor, tal como una lista o tabla"
+
+#. Translators: a message reported when:
+#. Review cursor is at the bottom line of the current navigator object.
+#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
+msgid "bottom"
+msgstr "fin"
+
+#. Translators: Description for the Move past end of container command in browse mode.
+msgid "Moves past the end  of the container element, such as a list or table"
+msgstr "Se mueve al final del elemento contenedor, tal como una lista o tabla"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1964,11 +2002,6 @@ msgctxt "color name"
 msgid "Yellow Green"
 msgstr "Verde amarillento"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "seleccionado %s"
-
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
@@ -2093,7 +2126,6 @@ msgid "cell"
 msgstr "celda"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
-#. Translators: A column in a column chart.
 msgid "column"
 msgstr "columna"
 
@@ -2815,7 +2847,7 @@ msgid "Braille"
 msgstr "Braille"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: The label for the Tools submenu in NVDA menu.
+msgctxt "script category"
 msgid "Tools"
 msgstr "Herramientas"
 
@@ -3485,12 +3517,6 @@ msgstr ""
 "deletreará. Pulsándola tres veces se deletreará la línea utilizando "
 "descripciones fonéticas."
 
-#. Translators: a message reported when:
-#. Review cursor is at the bottom line of the current navigator object.
-#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "fin"
-
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
@@ -4151,7 +4177,7 @@ msgstr "Documentación"
 msgid "Commands Quick Reference"
 msgstr "Referencia Rápida de Órdenes"
 
-#. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
+#. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
 msgstr "Guía del Usuario"
 
@@ -5874,6 +5900,14 @@ msgstr "&Instalar NVDA..."
 msgid "Reload plugins"
 msgstr "Recargar plugins"
 
+#. Translators: The label for the Tools submenu in NVDA menu.
+msgid "Tools"
+msgstr "Herramientas"
+
+#. Translators: The label of a menu item to open NVDA user guide.
+msgid "&User Guide"
+msgstr "&Guía del Usuario"
+
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
 msgstr "&Referencia Rápida de Órdenes"
@@ -6354,6 +6388,7 @@ msgstr ""
 "de ese perfil y se asociará con este.\n"
 "¿Estás seguro de querer continuar?"
 
+#. Translators: The title of a warning dialog.
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 msgid "Warning"
 msgstr "Aviso"
@@ -6485,6 +6520,24 @@ msgstr "Copiar la configuración del &portable a la cuenta de usuario actual"
 #. Translators: The label of a button to continue with the operation.
 msgid "&Continue"
 msgstr "&Continuar"
+
+#. Translators: A warning presented when the user attempts to downgrade NVDA
+#. to an older version.
+msgid ""
+"You are attempting to install an earlier version of NVDA than the version "
+"currently installed. If you really wish to revert to an earlier version, you "
+"should first cancel this installation and completely uninstall NVDA before "
+"installing the earlier version."
+msgstr ""
+"Estás intentando instalar una versión más antigua de NVDA que la versión "
+"instalada actualmente. Si realmente deseas volver a una versión más antigua, "
+"primero deberías cancelar esta instalación y desinstalar NVDA completamente "
+"antes de instalar la versión anterior."
+
+#. Translators: The label of a button to proceed with installation,
+#. even though this is not recommended.
+msgid "&Proceed with installation (not recommended)"
+msgstr "&Proceder con la instalación (no recomendado)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -7406,11 +7459,6 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "en {x}, {y}"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-#, python-format
-msgid "%s landmark"
-msgstr "%s punto de referencia"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "Refrescado"
@@ -7418,14 +7466,6 @@ msgstr "Refrescado"
 #. Translators: Reported while loading a document.
 msgid "Loading document..."
 msgstr "Cargando documento..."
-
-#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-msgid "No long description"
-msgstr "No hay descripción larga"
-
-#. Translators: the description for the activateLongDescription script on virtualBuffers.
-msgid "Shows the long description at this position if one is found."
-msgstr "Muestra la descripción larga en esta posición si se encuentra una."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -7468,20 +7508,6 @@ msgstr "se mueve a la siguiente columna de la tabla"
 #. Translators: the description for the previous table column script on virtualBuffers.
 msgid "moves to the previous table column"
 msgstr "se mueve a la anterior columna de la tabla"
-
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
-msgid "Not in a container"
-msgstr "No estás en un contenedor"
-
-#. Translators: Description for the Move to start of container command in browse mode.
-msgid "Moves to the start of the container element, such as a list or table"
-msgstr ""
-"Se mueve al comienzo de un elemento contenedor, tal como una lista o tabla"
-
-#. Translators: Description for the Move past end of container command in browse mode.
-msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "Se mueve al final del elemento contenedor, tal como una lista o tabla"
 
 msgid "Taskbar"
 msgstr "Barra de tareas"
@@ -8008,6 +8034,11 @@ msgstr "No hay Series definidas."
 #. Translators: A slice in a pie chart.
 msgid "slice"
 msgstr "tajada"
+
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "columna"
 
 #. Translators: A data point in a line chart.
 msgid "data point"
