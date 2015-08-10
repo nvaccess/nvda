@@ -56,7 +56,7 @@ Ovo se primjenjuje na originalni i izmjenjeni softver, kao i na rad koji je iz t
 Za više pojedinosti, možete [pogledati cijelu licencu. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Zahtjevi Sustava +
-- Operacijski sustavi: sve 32-bitne i 64-bitne inačice Windows XP, Windows Vista, Windows 7 i Windows 8 (uključujući Poslužiteljske operacijske sustave)
+- Operacijski sustavi: sve 32-bitne i 64-bitne inačice Windows XP, Windows Vista, Windows 7, Windows10, i Windows 8 (uključujući Poslužiteljske operacijske sustave)
  - Za Windows XP 32-bitni operacijski sustav, NVDA zahtjeva Servisni paket 2 ili viši.
  - Za Windows Server 2003, NVDA zahtjeva Servisni paket 1 ili viši.
 - Memorija: 256 mb ili više RAM-a
@@ -503,6 +503,12 @@ Da biste se prebacivali na početak ili kraj sadržaja popisa kao što su popisi
 || Naziv | Prečac | opis |
 | premjesti se na početak sadržaja | shift+zarez | pomiče se na početak sadržaja (popisa, tablice, itd.) gdje je kursor pozicioniran |
 | Pomakni se na kraj sadržaja | zarez | Pomiče na kraj sadržaja (popisa, tablice, itd.) gdje je kursor pozicioniran |
+
+%kc:endInclude
+Neke web aplikacije poput  Gmaila, Twittera i Facebooka koriste jednoslovne tipkovničke prećace.
+Ako ih želite koristiti istovremeno sa kursorskim tipkama kako biste mogli nesmetano čitati sadržaj web stranice, možete onemogućiti nvda brzo kretanje po dokumentu.
+%kc:beginInclude
+Da biste isključili ili uključili brzo kretanje za trenutni dokument, pritisnite NVDA+shift+razmaknica.
 %kc:endInclude
 
 ++ Lista elemenata ++
@@ -1756,10 +1762,9 @@ Sljedeći brajični retci su podržani:
 -
 
 Ako je BrxCom instaliran, NVDA će koristiti BrxCom.
-BrxCom je alat koji vam omogućuje korištenje unosa brajičnih znakova s brajičnog retka neovisno od čitača ekrana.
+BrxCom je alat koji omogućuje unos sa tipkovnice odvojen od čitača ekrana.
 Papenmeier će uskoro objaviti novu inačicu programa BrxCom koja će raditi sa NVDA čitačem zaslona.  
-Unos brajičnih znakova je moguć kada koristite Trio, BRAILLEX Live 20 i Braillex Live uređaje bez BrxCom programa.
-Unos brajičnih znakova također je moguć uz pomoć Live Plus model, ali samo uz pomoć BrxCom programa.
+Unos znakova sa tipkovnice brajičnog retka moguć je koristeći Trio i BRAILLEX Live modele brajičnih redaka..
 
 Većina uređaja ima tipku Easy Access Bar (EAB) koja omogućuje brzo i intuitivno rukovanje.
 EAB može biti premještan u četiri smjera gdje u glavnom svaki smjer ima dva preklopnika.
