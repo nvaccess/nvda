@@ -4,6 +4,8 @@
 %!includeconf: ../changes.t2tconf
 
 = 2015.3 =
+Prednosti tejto verzie zahŕňajú základnú podporu prostredia systému Windows 10, možnosť vypnúť jednoznakové príkazy rýchlej navigácie v režime prehliadania (užitočné pre niektoré web aplikácie), vylepšenia pri práci v programe Internet explorer, a oprava problému, keď počas písania so zapnutou podporov braillu bol do vstupného prvku zapisovaný skomolený text.
+
 
 == Nové vlastnosti ==
 - NVDA odteraz oznamuje pravopisné chyby v editačných prvkoch v prehliadači Internet Explorer a ostatných MSHTML prvkoch. (#4174)
@@ -13,24 +15,30 @@
 - V režime prehliadania môžete skratkou nvda+shift+medzera vypnúť rýchlu navigáciu. Pri vypnutej rýchlej navigácii sú písmená posielané do aktívneho okna. Toto je užitočné pri niektorých aplikáciách, ako Facebook, Gmail a Twitter. (#3203)
 - Nové brailovské prekladové tabuľky: Fínsky 6-bodový plnopis, Írsky plnopis a skradkopis, Kórejský plnopis a skradkopis (2006). (#5137, #5074, #5097)
 - pridaná podpora pre QWERTY klávesnicu na riadku Papenmeier BRAILLEX Live Plus. (#5181)
+- Experimentálna podpora pre webový prehliadač Microsoft Edge a technológiu prehliadania v systéme Windows 10. (#5212)
 
 
 == Zmeny ==
 - Brailovský Prekladač liblouis aktualizovaný na verziu 2.6.3. (#5137)
+- Ak sa pokúsite nainštalovať staršiu verziu NVDA ako verziu, ktorú máte práve nainštalovanú, NVDA upozorní na fakt, že tento postup nie je odporúčaný a ak chcete nainštalovať staršiu verziu NVDA, mali by ste najprv NVDA úplne odinštalovať. (#5037)
 
 
 == Opravy ==
 - Pri prechode po formulárových prvkoch v prehliadači Internet Explorer a ostatných MSHTML prvkoch viac nie sú oznamované položky v zoznamoch. (#4204)
-- Ak stránka obsahuje ARIA tab panel s textom, pri použití prehliadača mozilla Firefox NVDA viac nevytvára popis k tomuto prvku. (#4638)
+- Ak stránka obsahuje ARIA tab panel, pri použití prehliadača mozilla Firefox NVDA viac nevytvára popis k tomuto prvku obsahujúci text všetkých vnorených prvkov v panely. (#4638)
 - V prehliadači Internet explorer a ostatných MSHTML prvkoch sa po prechode tabulátorom do sekcie, článku alebo dialógu, neprečíta celý obsah prvku ako jeho názov. (#5021, #5025) 
-- ak používate brailovskú klávesnicu na riadkoch Baum/HumanWare/APH, písanie funguje aj po stlačení funkčných a iných kláves. (#3541)
+- ak používate brailovskú klávesnicu na riadkoch Baum/HumanWare/APH, písanie funguje aj po stlačení funkčných a iných klávesov. (#3541)
 - V systéme Windows 10 nie sú viac oznamované zbytočné informácie po stlačení skratiek alt+tab alebo alt+shift+tab. (#5116)
 - Ak používate brailovský riadok, NVDA viac nespôsobuje skomolenie textu pri písaní v aplikáciách ako Microsoft Outlook. (#2953)
 - V prehliadači Internet Explorer a ostatných MSHTML prvkoch sú správne oznamované prvky, ktoré sa zmenili alebo objavili a súčasne nadobudli fokus. (#5040)
 - pri použití rýchlej navigácie v programe MS Word sa brailovský kurzor a prezerací kurzor presúvajú na správne miesto. (#4968)
 - Na brailovských riadkoch sa viac nezobrazujú nadbytočné medzeri medzi znakmi pre prvky a znakmi pre formátovanie. (#5043)
-- Ak nejaká aplikácia pracuje pomaly a opustíte ju, NVDA by malo pracovať rýchlejšie. (#3831)
+- Ak nejaká aplikácia pracuje pomaly a opustíte ju, NVDA by mal pracovať rýchlejšie. (#3831)
 - odteraz sú správne čítané Dlaždicové notifikácie v systéme Windows 10. (#5136)
+- V niektorých zoznamových rámikoch (UI automation) doteraz nefungovalo oznamovanie novej hodnoty po zmene.
+- V režime prehliadania v prehliadačoch webových stránok sa navigácia tabulátorom správa korektne aj po prechode do dokumente v samostatnom ráme. (#5227)
+- Zamikacou obrazovkou v systéme Windows 10 je možné prejsť pomocou dotykovej obrazovky. (#5220)
+- V systéme Windows 7 alebo novšom, NVDA pri písaní do niektorých editačných polí napr. v aplikáciách Wordpad, Skype a zapnutom brailly nespôsobuje skomolenie textu. (#4291)
 
 
 = 2015.2 =
