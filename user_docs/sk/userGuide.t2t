@@ -161,26 +161,26 @@ Predvolené nastavenia majú ako kláves NVDA nastavený insert aj numerický in
 Ak si želáte vykonať pôvodnú funkcionalitu klávesu, ktorý Ste nastavili ako kláves NVDA (napr. prepnúť stav veľkých písmen pomocou klávesu capslock) stlačte kláves NVDA 2 krát rýchlo za sebou.
 
 +++ Rozloženia klávesnice +++
-NVDA je dodávaný s dvoma sadami klávesových príkazov, teda tzv. rozloženiami: rpupžemoe pre stolné počítače a pre prenosné (laptop) počítače.
+NVDA je dodávaný s dvoma sadami klávesových príkazov, teda tzv. rozloženiami: rozloženie pre stolné počítače a pre prenosné (laptop) počítače.
 Predvolene je NVDA nastavený na rozloženie desktop. Je možné to zmeniť v dialógu nastavenia klávesnice v ponuke NVDA.
 
 Rozloženie pre stolné počítače sa spolieha na klávesy z numerického bloku, keď je tlačidlo numlock vypnuté.
 Aj keď väčšina prenosných počítačov nemá fyzický numerický blok, na mnohých notebookoch je možné emulovať klávesy numerického bloku pridržaním klávesu fn a stláčaním písmen a číslic v pravej časti klávesnice (7, 8, 9, u, i, o, j, k, l, atď).
 Ak toto Váš notebook nepodporuje, alebo nie je možné vypnúť tlačidlo numlock, môžete použiť rozloženie nazvané laptop.
 
-++ Dotikové gestá NVDA ++
-Ak používate NVDA na zariadení vybavenom dotikovou obrazovkov a máte nainštalovaný operačný systém Windows 8 alebo novší, môžete NVDA ovládať tiež priamo použitím dotikovej obrazovky.
-Počas behu NVDA bude každý vstup z dotikovej obrazovky presmerovaný programu NVDA.
-Z tohoto dôvodu nie je v takejto situácii možné štandardným spôsobom vykonávať pomocou dotikovej obrazovky akcie, ktoré je možné vykonávať bez spusteného programu NVDA.
+++ Dotykové gestá NVDA ++
+Ak používate NVDA na zariadení vybavenom dotykovou obrazovkov a máte nainštalovaný operačný systém Windows 8 alebo novší, môžete NVDA ovládať tiež priamo použitím dotykovej obrazovky.
+Počas behu NVDA bude každý vstup z dotykovej obrazovky presmerovaný programu NVDA.
+Z tohoto dôvodu nie je v takejto situácii možné štandardným spôsobom vykonávať pomocou dotykovej obrazovky akcie, ktoré je možné vykonávať bez spusteného programu NVDA.
 
 +++ Skúmanie obrazovky +++
-Základná akcia, ktorú môžete spustiť dotikom na obrazovku je oznámenie objektu zobrazeného v akomkoľvek bode obrazovky.
+Základná akcia, ktorú môžete spustiť dotykom na obrazovku je oznámenie objektu zobrazeného v akomkoľvek bode obrazovky.
 Položením jedného prsta kdekoľvek na obrazovku spustíte túto akciu.
 Môžete tiež nechať prst pritlačený k obrazovke a postupným posúvaním po ploche obrazovky si nechať vyčítať prvky, cez ktoré Váš prst prechádza spolu s ich textom 
 
-+++ Dotikové gestá +++
-V ďalšom texte tejto príručky sa vyskytnú zoznamy príkazov NVDA, ktoré okrem štandardných klávesových skratiek budú obsahovať tzv. dotikové gestá, vykonávané pomocou dotikovej obrazovky.
-Nasledujú jednoduché inštrukcie, ktoré majú za cieľ vysvetliť ako vykonávať dotikové gestá pomocou dotikovej obrazovky tak, aby Ste na základe ich použitia dokázali vyvolať príkazy NVDA k týmto gestám priradené.
++++ Dotykové gestá +++
+V ďalšom texte tejto príručky sa vyskytnú zoznamy príkazov NVDA, ktoré okrem štandardných klávesových skratiek budú obsahovať tzv. dotykové gestá, vykonávané pomocou dotykovej obrazovky.
+Nasledujú jednoduché inštrukcie, ktoré majú za cieľ vysvetliť ako vykonávať dotykové gestá pomocou dotykovej obrazovky tak, aby Ste na základe ich použitia dokázali vyvolať príkazy NVDA k týmto gestám priradené.
 
 ==== Klepnutia ====
 Rýchlo poklepte po obrazovke jedným alebo viacerými prstami.
@@ -201,12 +201,12 @@ Sú štyri možnosti švihnutia na základe smeru pohybu: švihnutie vľavo, vpr
 Rovnako ako pri vykonávaní klepnutí je možné švihať viacerími prstami.
 Znamená to, že sú k dispozícii rôzne gestá ako napríklad švihnutie hore dvoma prstami, švihnutie vľavo štyrmi prstami a podobne.
 
-+++ Režim dotiku +++
-K dispozícii je nepochybne väčšie množstvo príkazov NVDA než dostupných gest, ktoré je možné vykonať pomocou dotikovej obrazovky. Znamená to, že NVDA používa niekoľko tzv. režimov dotiku, medzi ktorými je možné prepínať a podľa aktívneho režimu dotiku sú aj dostupné konkrétne podmnožiny príkazov NVDA.
++++ Režim dotyku +++
+K dispozícii je nepochybne väčšie množstvo príkazov NVDA než dostupných gest, ktoré je možné vykonať pomocou dotykovej obrazovky. Znamená to, že NVDA používa niekoľko tzv. režimov dotyku, medzi ktorými je možné prepínať a podľa aktívneho režimu dotyku sú aj dostupné konkrétne podmnožiny príkazov NVDA.
 Zatiaľ sú k dispozícii textový režim a objektový režim.
 Niektoré príkazy ďalej v tomto dokumente môžu mať preto za názvom gesta uvedený v zátvorke jeden z týchto režimov.
-Napríklad švihnutie hore (textový režim) znamená, že príkaz sa vykoná po švihnutí smerom na hor ale len ak je aktívny textový režim dotiku.
-Ak príkaz za názvom gesta nemá uvedený názov režimu dotiku, bude tento príkaz fungovať vo všetkých dostupných režimoch.
+Napríklad švihnutie hore (textový režim) znamená, že príkaz sa vykoná po švihnutí smerom na hor ale len ak je aktívny textový režim dotyku.
+Ak príkaz za názvom gesta nemá uvedený názov režimu dotyku, bude tento príkaz fungovať vo všetkých dostupných režimoch.
 
 %kc:beginInclude
 Prepínať režimi dotyku je možné klepnutím troma prstami.
@@ -217,20 +217,20 @@ Táto príručka obsahuje mnoho príkazov NVDA, no veľmi jednoduchý spôsob, a
 
 Nápovedu vstupu spustíte stlačením kombinácie NVDA+1.
 Pre zrušenie nápovedy opäť stlačte NVDA+1.
-Počas spustenej tejto nápovedy môžete ľubovoľne stláčať klávesové skratky a vykonávať gestá na dotikovej obrazovke a NVDA vám povie viac o ich funkcii ak je k práve vykonanému príkazu nejaká funkcia vôbec priradená.
+Počas spustenej tejto nápovedy môžete ľubovoľne stláčať klávesové skratky a vykonávať gestá na dotykovej obrazovke a NVDA vám povie viac o ich funkcii ak je k práve vykonanému príkazu nejaká funkcia vôbec priradená.
 Príkazy nebudú aktívne vykonávané, budete počuť len patričné informácie k popisu funkcie.
 
 ++ Ponuka NVDA ++
 Ponuka NVDA umožňuje meniť nastavenia, čítať pomocníka, načítať a uložiť konfiguráciu, editovať rečové slovníky, pristupovať k ďalším nástrojom a ukončiť NVDA.
 
-Pre vstup do ponuky NVDA odkiaľkoľvek zo systému Windows počas behu NVDA stlačte na klávesnici NVDA+N alebo dva krát klepnite dvoma prstami na dotikovú obrazovku.
+Pre vstup do ponuky NVDA odkiaľkoľvek zo systému Windows počas behu NVDA stlačte na klávesnici NVDA+N alebo dva krát klepnite dvoma prstami na dotykovú obrazovku.
 Túto istú ponuku môžete tiež vyvolať aktivovaním kontextovej ponuky pre ikonu NVDA v oznamovacej oblasti.
 Na prechod do oznamovacej oblasti môžete použiť klávesovú kombináciu Windows+b, potom nalistovať požadovanú ikonu a menu zobraziť klávesom aplikácie (v pravo od medzerníka na väčšine klávesníc).
 Po zobrazení ponuky programu môžete použiť šípky na pohyb po položkách, klávesom enter aktivujete aktuálnu položku.
 
 ++ Všeobecné príkazy NVDA ++
 %kc:beginInclude
-|| Názov | Klávesová skratka pre desktop | klávesová skratka pre Laptop | Dotikové gesto | Popis |
+|| Názov | Klávesová skratka pre desktop | klávesová skratka pre Laptop | Dotykové gesto | Popis |
 | Zastaviť reč | control | control | Klepnutie dvoma prstami | Okamžite zastaví reč |
 | Pozastaviť reč | Shift | shift | Nie je | Okamžite pozastaví reč. Po nasledujúcom stlačení bude reč pokračovať na prerušenom mieste ak to práve používaný hlasový výstup podporuje |
 | Ponuka NVDA | NVDA+n | NVDA+n | Dvojnásobné klepnutie dvoma prstami | Zobrazí ponuku NVDA, odkiaľ je možné pristupovať k nastaveniam, nástrojom a pomocníkovi |
@@ -325,7 +325,7 @@ Ak by Ste radšej chceli, aby sa text zobrazovaný na braillovskom riadku prisp�
 Pre pohyb po objektoch použite nasledujúce príkazy:
 
 %kc:beginInclude
-|| Názov | Klávesová skratka pre desktop | Klávesová skratka pre laptop | Dotikové gesto | Popis |
+|| Názov | Klávesová skratka pre desktop | Klávesová skratka pre laptop | Dotykové gesto | Popis |
 | Aktuálny objekt | NVDA+numpad5 | NVDA+shift+o | Nie je | Oznámenie aktuálneho objektu - pri stlačení 2 krát je informácia vyhláskovaná a tri krát rýchlo za sebou je obsah skopírovaný do schránky. |
 | Nadradený objekt | NVDA+numpad8 | NVDA+shift+šípka hore | Švihnutie hore | Prejde na objekt, ktorý obsahuje aktuálny navigačný objekt |
 | Predchádzajúci objekt | NVDA+numpad4 | NVDA+shift+ľavá šípka | Švihnutie vľavo | Prejde na predchádzajúci objekt od navigačného objektu |
@@ -353,7 +353,7 @@ Ak by Ste radšej chceli aby sa text zobrazovaný na braillovskom riadku prispô
 
 Na navigáciu v texte je možné použiť nasledovné príkazy:
 %kc:beginInclude
-|| Názov | Klávesová skratka pre desktop | Klávesová skratka pre Laptop | Dotikové gesto | Popis |
+|| Názov | Klávesová skratka pre desktop | Klávesová skratka pre Laptop | Dotykové gesto | Popis |
 | Prezerací kurzor do prvého riadku | shift+numpad7 | NVDA+ctrl+home | Nie je | Presunie prezerací kurzor do prvého riadku textu |
 | Prezerací kurzor do predchádzajúceho riadku | numpad7 | NVDA+šípka hore | Švihnutie hore (textový režim) | Presunie prezerací kurzor do predchádzajúceho riadku textu |
 | Aktuálny riadok prezeracieho kurzora | numpad8 | NVDA+shift+bodka | Nie je | Oznámi riadok, na ktorý ukazuje prezerací kurzor. Dvojnásobné stlačenie vyhláskuje riadok. Stlačené tri krát rýchlo za sebou foneticky vyhláskuje riadok. |

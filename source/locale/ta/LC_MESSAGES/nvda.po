@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-27 19:09+1000\n"
-"PO-Revision-Date: 2015-07-30 20:28+0530\n"
+"POT-Creation-Date: 2015-08-06 19:09+1000\n"
+"PO-Revision-Date: 2015-08-09 12:35+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Original Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
-"X-Generator: Poedit 1.8.2\n"
+"X-Generator: Poedit 1.5.7\n"
 
 # Thanks: http://www.ta.wiktionary.org/
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -742,12 +742,14 @@ msgstr "ஒற்றை எழுத்துடன் வழிநடக்க�
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 msgid ""
-"Toggles single letter navigation on and off. When on, single letter keys in browse mode jump "
-"to various kinds of elements on the page. When off, these keys are passed to the application"
+"Toggles single letter navigation on and off. When on, single letter keys in "
+"browse mode jump to various kinds of elements on the page. When off, these "
+"keys are passed to the application"
 msgstr ""
-"ஒற்றை எழுத்து வழிநடத்தலை இயக்கவோ, நிறுத்தவோ செய்கிறது. இயக்கத்தில் இருக்கும் பொழுது, உலாவும் நிலையில் "
-"பயன்படுத்தும் ஒற்றை எழுத்துகள், பக்கத்தில் இருக்கும் பலதரப்பட்ட கூறுகளுக்கிடையே தாவிச் செல்ல உதவும். இவ்வியக்கம் "
-"நிறுத்தப்பட்டால், அழுத்தப்படும் ஒற்றை எழுத்து, என்விடிஏ கையாளாமல், பயன்பாட்டிற்கு நேரடியாக அனுப்பி வைக்கும். "
+"ஒற்றை எழுத்து வழிநடத்தலை இயக்கவோ, நிறுத்தவோ செய்கிறது. இயக்கத்தில் இருக்கும் பொழுது, "
+"உலாவும் நிலையில் பயன்படுத்தும் ஒற்றை எழுத்துகள், பக்கத்தில் இருக்கும் பலதரப்பட்ட "
+"கூறுகளுக்கிடையே தாவிச் செல்ல உதவும். இவ்வியக்கம் நிறுத்தப்பட்டால், அழுத்தப்படும் ஒற்றை "
+"எழுத்து, என்விடிஏ கையாளாமல், பயன்பாட்டிற்கு நேரடியாக அனுப்பி வைக்கும். "
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
@@ -757,7 +759,7 @@ msgstr "இவ்வாவணத்தில் ஆதரவில்லை"
 msgid "Lists various types of elements in this document"
 msgstr "இவ்வாவணத்தில் இருக்கும் பல்வகை கூறுகளைப் பட்டியலிடுகிறது"
 
-#. Translators: the description for the activatePosition script on virtualBuffers.
+#. Translators: the description for the activatePosition script on browseMode documents.
 msgid "activates the current object in the document"
 msgstr "ஆவணத்திலுள்ள தற்போதைய பொருளை இயங்கச் செய்கிறது"
 
@@ -1231,6 +1233,43 @@ msgstr "இயங்கச் செய்க (&A)"
 #. in the browse mode Elements List dialog.
 msgid "&Move to"
 msgstr "இங்கு நகர்க (&M)"
+
+#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
+#, python-format
+msgid "%s landmark"
+msgstr "%s நிலக்குறி"
+
+#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "%s தெரிவாகியது"
+
+#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
+msgid "No long description"
+msgstr "நெடுவிளக்கம் ஏதுமில்லை"
+
+#. Translators: the description for the activateLongDescription script on browseMode documents.
+msgid "Shows the long description at this position if one is found."
+msgstr "இந்நிலையில் நெடுவிளக்கம் ஏதேனும் இருந்தால், அதை காண்பிக்கும்"
+
+#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
+#. But there is no container.
+msgid "Not in a container"
+msgstr "கொள்களத்தில் இல்லை"
+
+#. Translators: Description for the Move to start of container command in browse mode.
+msgid "Moves to the start of the container element, such as a list or table"
+msgstr "வரிசைப் பட்டியல், அட்டவணை போன்ற கொள்களத்தின் துவக்கத்திற்குச் செல்லும்"
+
+#. Translators: a message reported when:
+#. Review cursor is at the bottom line of the current navigator object.
+#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
+msgid "bottom"
+msgstr "கீழ்"
+
+#. Translators: Description for the Move past end of container command in browse mode.
+msgid "Moves past the end  of the container element, such as a list or table"
+msgstr "வரிசைப் பட்டியல், அட்டவணை போன்ற கொள்களத்தின் முடிவிற்கு அப்பால் செல்லும்"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1961,11 +2000,6 @@ msgctxt "color name"
 msgid "Yellow Green"
 msgstr "மஞ்சளான பச்சை"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "%s தெரிவாகியது"
-
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
@@ -2090,7 +2124,6 @@ msgid "cell"
 msgstr "சிறுகட்டம்"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
-#. Translators: A column in a column chart.
 msgid "column"
 msgstr "நெடுவரிசை"
 
@@ -2703,11 +2736,12 @@ msgstr "தேர்வாகாதது"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
-"Your configuration file contains errors. Your configuration has been reset to factory "
-"defaults.\n"
+"Your configuration file contains errors. Your configuration has been reset "
+"to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
-"தங்களின் அமைவடிவக் கோப்பில் பிழைகள் உள்ளன. தங்களின் அமைவடிவம் தொழிற்சாலை இயல்பிற்கு மாற்றியமைக்கப்பட்டுள்ளது.\n"
+"தங்களின் அமைவடிவக் கோப்பில் பிழைகள் உள்ளன. தங்களின் அமைவடிவம் தொழிற்சாலை இயல்பிற்கு "
+"மாற்றியமைக்கப்பட்டுள்ளது.\n"
 "கூடுதல் தகவல்களுக்கு செயற்குறிப்பேட்டுக் கோப்பினைக் காணவும்."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
@@ -2758,19 +2792,19 @@ msgstr "தற்போதைய சுட்டியின் இடத்த�
 
 #. Translators: Input help message for find next command.
 msgid ""
-"find the next occurrence of the previously entered text string from the current cursor's "
-"position"
+"find the next occurrence of the previously entered text string from the "
+"current cursor's position"
 msgstr ""
-"ஏற்கெனவே உள்ளீடு செய்யப்பட்ட உரையின் அடுத்த தோற்றம், தற்போதைய சுட்டியின் நிலையிலிருந்து எங்கேவென்று "
-"கண்டுபிடிக்கவும்"
+"ஏற்கெனவே உள்ளீடு செய்யப்பட்ட உரையின் அடுத்த தோற்றம், தற்போதைய சுட்டியின் நிலையிலிருந்து "
+"எங்கேவென்று கண்டுபிடிக்கவும்"
 
 #. Translators: Input help message for find previous command.
 msgid ""
-"find the previous occurrence of the previously entered text string from the current cursor's "
-"position"
+"find the previous occurrence of the previously entered text string from the "
+"current cursor's position"
 msgstr ""
-"ஏற்கெனவே உள்ளீடு செய்யப்பட்ட உரையின் முந்தைய தோற்றம், தற்போதைய சுட்டியின் நிலையிலிருந்து எங்கேவென்று "
-"கண்டுபிடிக்கவும்"
+"ஏற்கெனவே உள்ளீடு செய்யப்பட்ட உரையின் முந்தைய தோற்றம், தற்போதைய சுட்டியின் நிலையிலிருந்து "
+"எங்கேவென்று கண்டுபிடிக்கவும்"
 
 #. Translators: Reported when there is no text selected (for copying).
 msgid "no selection"
@@ -2809,7 +2843,7 @@ msgid "Braille"
 msgstr "பிரெயில் "
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: The label for the Tools submenu in NVDA menu.
+msgctxt "script category"
 msgid "Tools"
 msgstr "கருவிகள்"
 
@@ -2844,11 +2878,12 @@ msgstr "உள்ளீடு உதவி நீக்கப்பட்டத�
 
 #. Translators: Input help mode message for toggle input help command.
 msgid ""
-"Turns input help on or off. When on, any input such as pressing a key on the keyboard will "
-"tell you what script is associated with that input, if any."
+"Turns input help on or off. When on, any input such as pressing a key on the "
+"keyboard will tell you what script is associated with that input, if any."
 msgstr ""
-"உள்ளீடு உதவி நிலைக்கு கொண்டு செல்லும், அல்லது உதவியைவிட்டு வெளியே கொண்டு வரும். உள்ளீடு உதவி "
-"நிலையிலிருக்கும்பொழுது, ஒரு விசையை அழுத்தினால், அதற்கான உதவி ஏதுமிருந்தால், அது அறிவிக்கப்படும்"
+"உள்ளீடு உதவி நிலைக்கு கொண்டு செல்லும், அல்லது உதவியைவிட்டு வெளியே கொண்டு வரும். உள்ளீடு "
+"உதவி நிலையிலிருக்கும்பொழுது, ஒரு விசையை அழுத்தினால், அதற்கான உதவி ஏதுமிருந்தால், "
+"அது அறிவிக்கப்படும்"
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
@@ -2864,9 +2899,11 @@ msgstr "இயக்கத்திலுள்ள பயன்பாட்ட�
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
-"Reports the current line under the application cursor. Pressing this key twice will spell the "
-"current line"
-msgstr "சுட்டியின் கீழுள்ள வரியை படிக்கும். இவ்விசையை இருமுறை அழுத்தினால், வரியை எழுத்துகளாக படிக்கும்"
+"Reports the current line under the application cursor. Pressing this key "
+"twice will spell the current line"
+msgstr ""
+"சுட்டியின் கீழுள்ள வரியை படிக்கும். இவ்விசையை இருமுறை அழுத்தினால், வரியை எழுத்துகளாக "
+"படிக்கும்"
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "left click"
@@ -2910,14 +2947,19 @@ msgstr "சொடுக்கியின் வலது பொத்தான�
 
 #. Translators: Input help mode message for report current selection command.
 msgid ""
-"Announces the current selection in edit controls and documents. If there is no selection it "
-"says so."
+"Announces the current selection in edit controls and documents. If there is "
+"no selection it says so."
 msgstr ""
-"தொகு களங்களிலும், ஆவணங்களிலும் உள்ள தெரிவுகளை அறிவிக்கும். தெரிவு ஏதுமில்லையெனில், அதையும் அறிவிக்கும்"
+"தொகு களங்களிலும், ஆவணங்களிலும் உள்ள தெரிவுகளை அறிவிக்கும். தெரிவு ஏதுமில்லையெனில், "
+"அதையும் அறிவிக்கும்"
 
 #. Translators: Input help mode message for report date and time command.
-msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
-msgstr "ஒருமுறை அழுத்தினால் தற்போதைய நேரத்தையும், இருமுறை அழுத்தினால் இன்றையத் தேதியையும் அறிவிக்கும்"
+msgid ""
+"If pressed once, reports the current time. If pressed twice, reports the "
+"current date"
+msgstr ""
+"ஒருமுறை அழுத்தினால் தற்போதைய நேரத்தையும், இருமுறை அழுத்தினால் இன்றையத் தேதியையும் "
+"அறிவிக்கும்"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
 msgid "No settings"
@@ -2972,10 +3014,13 @@ msgid "speak command keys on"
 msgstr "கட்டளை விசைகளை அறிவிக்கும்"
 
 #. Translators: Input help mode message for toggle speak command keys command.
-msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
+msgid ""
+"Toggles on and off the speaking of typed keys, that are not specifically "
+"characters"
 msgstr ""
-"குறிப்பான வரியுருக்களாக இல்லாத விசைகளை அழுத்தும்பொழுது, அதை படிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ "
-"செய்கிறது. எடுத்துக்காட்டாக, கட்டுப்பாடு, மாற்றழுத்தி விசைகளைக் கூறலாம்"
+"குறிப்பான வரியுருக்களாக இல்லாத விசைகளை அழுத்தும்பொழுது, அதை படிக்கும் வசதியை "
+"இயக்கவோ, நிறுத்தவோ செய்கிறது. எடுத்துக்காட்டாக, கட்டுப்பாடு, மாற்றழுத்தி விசைகளைக் "
+"கூறலாம்"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
@@ -3143,7 +3188,9 @@ msgstr "அட்டவணையின் கிடைவரிசை/நெட�
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
 msgid "Toggles on and off the reporting of table row and column headers"
-msgstr "அட்டவணையின் கிடைவரிசை/நெடுவரிசைகளின் தலைப்பை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
+msgstr ""
+"அட்டவணையின் கிடைவரிசை/நெடுவரிசைகளின் தலைப்பை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ "
+"செய்கிறது"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
@@ -3261,8 +3308,11 @@ msgid "symbol level %s"
 msgstr "குறியெழுத்துகளின் நிலை %s"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
-msgid "Cycles through speech symbol levels which determine what symbols are spoken"
-msgstr "எந்தக் குறியெழுத்துகளைப் படிக்க வேண்டுமென்று தீர்மானிக்கும் குறியெழுத்துகளின் நிலைகளின் ஊடாகச் சுழலும்"
+msgid ""
+"Cycles through speech symbol levels which determine what symbols are spoken"
+msgstr ""
+"எந்தக் குறியெழுத்துகளைப் படிக்க வேண்டுமென்று தீர்மானிக்கும் குறியெழுத்துகளின் நிலைகளின் "
+"ஊடாகச் சுழலும்"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
 msgid "object has no location"
@@ -3277,9 +3327,12 @@ msgid "Move navigator object to mouse"
 msgstr "வழிகாட்டிப் பொருளை சொடுக்கிற்கு நகர்த்துக"
 
 #. Translators: Input help mode message for move navigator object to mouse command.
-msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
+msgid ""
+"Sets the navigator object to the current object under the mouse pointer and "
+"speaks it"
 msgstr ""
-"வழிகாட்டிப் பொருளை தற்போதைய சொடுக்கியின் குறிமுள்ளின் கீழிருக்கும் பொருளுடன் உட்பொருத்தி, பிறகு அதை படிக்கும்"
+"வழிகாட்டிப் பொருளை தற்போதைய சொடுக்கியின் குறிமுள்ளின் கீழிருக்கும் பொருளுடன் உட்பொருத்தி, "
+"பிறகு அதை படிக்கும்"
 
 #. Translators: reported when there are no other available review modes for this object
 msgid "No next review mode"
@@ -3287,11 +3340,11 @@ msgstr "அடுத்த மறுபரிசீலனை நிலை ஏத
 
 #. Translators: Script help message for next review mode command.
 msgid ""
-"Switches to the next review mode (e.g. object, document or screen) and positions the review "
-"position at the point of the navigator object"
+"Switches to the next review mode (e.g. object, document or screen) and "
+"positions the review position at the point of the navigator object"
 msgstr ""
-"பொருள் மறுபரிசீலனை, ஆவண மறுபரிசீலனை, அல்லது திரை மறுபரிசீலனை போன்று அடுத்து இருக்கும் மறுபரிசீலனை "
-"நிலைக்கு மாறி, வழிகாட்டிப் பொருளினிடத்தில் மறுபரிசீலனைச் சுட்டியை வைக்கும்"
+"பொருள் மறுபரிசீலனை, ஆவண மறுபரிசீலனை, அல்லது திரை மறுபரிசீலனை போன்று அடுத்து இருக்கும் "
+"மறுபரிசீலனை நிலைக்கு மாறி, வழிகாட்டிப் பொருளினிடத்தில் மறுபரிசீலனைச் சுட்டியை வைக்கும்"
 
 #. Translators: reported when there are no  other available review modes for this object
 msgid "No previous review mode"
@@ -3299,11 +3352,12 @@ msgstr "முந்தைய மறுபரிசீலனை நிலை ஏ
 
 #. Translators: Script help message for previous review mode command.
 msgid ""
-"Switches to the previous review mode (e.g. object, document or screen) and positions the "
-"review position at the point of the navigator object"
+"Switches to the previous review mode (e.g. object, document or screen) and "
+"positions the review position at the point of the navigator object"
 msgstr ""
-"பொருள் மறுபரிசீலனை, ஆவண மறுபரிசீலனை, அல்லது திரை மறுபரிசீலனை போன்று முந்தையதாக இருக்கும் மறுபரிசீலனை "
-"நிலைக்கு மாறி, வழிகாட்டிப் பொருளினிடத்தில் மறுபரிசீலனைச் சுட்டியை வைக்கும்"
+"பொருள் மறுபரிசீலனை, ஆவண மறுபரிசீலனை, அல்லது திரை மறுபரிசீலனை போன்று முந்தையதாக "
+"இருக்கும் மறுபரிசீலனை நிலைக்கு மாறி, வழிகாட்டிப் பொருளினிடத்தில் மறுபரிசீலனைச் சுட்டியை "
+"வைக்கும்"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -3317,11 +3371,13 @@ msgstr "%s பிடிப்புப்பலகைக்கு படிய�
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information,and pressing "
-"three times Copies name and value of this  object to the clipboard"
+"Reports the current navigator object. Pressing twice spells this information,"
+"and pressing three times Copies name and value of this  object to the "
+"clipboard"
 msgstr ""
-"தற்போதைய வழிகாட்டிப் பொருளை அறிவிக்கும். இருமுறை அழுத்தினால், தகவலை எழுத்துகளாக படிக்கும், மும்முறை "
-"அழுத்தினால், அப்பொருளின் பெயரையும், மதிப்பையும் பிடிப்புப் பலகைக்கு படியெடுக்கும்"
+"தற்போதைய வழிகாட்டிப் பொருளை அறிவிக்கும். இருமுறை அழுத்தினால், தகவலை எழுத்துகளாக "
+"படிக்கும், மும்முறை அழுத்தினால், அப்பொருளின் பெயரையும், மதிப்பையும் பிடிப்புப் பலகைக்கு "
+"படியெடுக்கும்"
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
@@ -3329,11 +3385,11 @@ msgstr "மறுபரிசீலனைச் சுட்டியின் �
 
 #. Translators: Description for report review cursor location command.
 msgid ""
-"Reports information about the location of the text or object at the review cursor. Pressing "
-"twice may provide further detail."
+"Reports information about the location of the text or object at the review "
+"cursor. Pressing twice may provide further detail."
 msgstr ""
-"மறுபரிசீலனைச் சுட்டியின் கீழிருக்கும் உரை, அல்லது பொறுளின் இருப்பிடம் குறித்த தகவலை அறிவிக்கும். இரு முறை "
-"அழுத்தினால், கூடுதல் தகவல்களை அறிவிக்கும்."
+"மறுபரிசீலனைச் சுட்டியின் கீழிருக்கும் உரை, அல்லது பொறுளின் இருப்பிடம் குறித்த தகவலை "
+"அறிவிக்கும். இரு முறை அழுத்தினால், கூடுதல் தகவல்களை அறிவிக்கும்."
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -3341,11 +3397,11 @@ msgstr "குவிமையத்திற்கு நகர்த்து"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 msgid ""
-"Sets the navigator object to the current focus, and the review cursor to the position of the "
-"caret inside it, if possible."
+"Sets the navigator object to the current focus, and the review cursor to the "
+"position of the caret inside it, if possible."
 msgstr ""
-"வழிகாட்டிப் பொருளை தற்போதைய குவிமையத்திற்குள் நகர்த்தி, இயன்றால், மறுபரிசீலனைச் சுட்டியை கணினியின் "
-"சுட்டியிருக்கும் இடத்திற்கு நகர்த்தும்"
+"வழிகாட்டிப் பொருளை தற்போதைய குவிமையத்திற்குள் நகர்த்தி, இயன்றால், மறுபரிசீலனைச் சுட்டியை "
+"கணினியின் சுட்டியிருக்கும் இடத்திற்கு நகர்த்தும்"
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3363,11 +3419,11 @@ msgstr "சுட்டி இல்லை"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
 msgid ""
-"Pressed once Sets the keyboard focus to the navigator object, pressed twice sets the system "
-"caret to the position of the review cursor"
+"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
+"sets the system caret to the position of the review cursor"
 msgstr ""
-"ஒருமுறை அழுத்தினால் விசைப்பலகையின் குவிமையத்தை வழிகாட்டிப் பொருளுடன் பொருத்தும், இருமுறை அழுத்தினால் "
-"கணினியின் சுட்டியை மறுபரிசீலனைச் சுட்டியுடன் பொருத்தும்"
+"ஒருமுறை அழுத்தினால் விசைப்பலகையின் குவிமையத்தை வழிகாட்டிப் பொருளுடன் பொருத்தும், "
+"இருமுறை அழுத்தினால் கணினியின் சுட்டியை மறுபரிசீலனைச் சுட்டியுடன் பொருத்தும்"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
@@ -3411,103 +3467,130 @@ msgstr "செயல் ஏதுமில்லை"
 
 #. Translators: Input help mode message for activate current object command.
 msgid ""
-"Performs the default action on the current navigator object (example: presses it if it is a "
-"button)."
+"Performs the default action on the current navigator object (example: "
+"presses it if it is a button)."
 msgstr ""
-"வழிகாட்டிப் பொருளின் மீது இயல்புச் செயலை நடத்தும். எடுத்துக்காட்டாக, அது ஒரு பொத்தானாக இருந்தால், அதை அழுத்தும்"
+"வழிகாட்டிப் பொருளின் மீது இயல்புச் செயலை நடத்தும். எடுத்துக்காட்டாக, அது ஒரு பொத்தானாக "
+"இருந்தால், அதை அழுத்தும்"
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 msgid "top"
 msgstr "மேல்"
 
 #. Translators: Input help mode message for move review cursor to top line command.
-msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
-msgstr "மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டிப் பொருளின் மேல் வரிக்கு நகர்த்தி, அதை படிக்கும்"
+msgid ""
+"Moves the review cursor to the top line of the current navigator object and "
+"speaks it"
+msgstr ""
+"மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டிப் பொருளின் மேல் வரிக்கு நகர்த்தி, அதை படிக்கும்"
 
 #. Translators: Input help mode message for move review cursor to previous line command.
 msgid ""
-"Moves the review cursor to the previous line of the current navigator object and speaks it"
-msgstr "மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டிப் பொருளின் முந்தைய வரிக்கு நகர்த்தி, அதை படிக்கும்"
+"Moves the review cursor to the previous line of the current navigator object "
+"and speaks it"
+msgstr ""
+"மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டிப் பொருளின் முந்தைய வரிக்கு நகர்த்தி, அதை "
+"படிக்கும்"
 
 #. Translators: Input help mode message for read current line under review cursor command.
 msgid ""
-"Reports the line of the current navigator object where the review cursor is situated. If this "
-"key is pressed twice, the current line will be spelled. Pressing three times will spell the "
-"line using character descriptions."
+"Reports the line of the current navigator object where the review cursor is "
+"situated. If this key is pressed twice, the current line will be spelled. "
+"Pressing three times will spell the line using character descriptions."
 msgstr ""
-"மறுபரிசீலனைச் சுட்டியின் இடத்திலிருக்கும் வழிகாட்டிப் பொருளைப் படிக்கும். இருமுறை அழுத்தினால், அவ்வரியை "
-"எழுத்துகளாக படிக்கும். மும்முறை அழுத்தினால், அவ்வரியை எழுத்து விளக்கங்களைக் கொண்டுப் படிக்கும்"
-
-#. Translators: a message reported when:
-#. Review cursor is at the bottom line of the current navigator object.
-#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "கீழ்"
+"மறுபரிசீலனைச் சுட்டியின் இடத்திலிருக்கும் வழிகாட்டிப் பொருளைப் படிக்கும். இருமுறை "
+"அழுத்தினால், அவ்வரியை எழுத்துகளாக படிக்கும். மும்முறை அழுத்தினால், அவ்வரியை எழுத்து "
+"விளக்கங்களைக் கொண்டுப் படிக்கும்"
 
 #. Translators: Input help mode message for move review cursor to next line command.
-msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
-msgstr "மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டிப் பொருளின் அடுத்த வரிக்கு நகர்த்தி, அதை படிக்கும்"
+msgid ""
+"Moves the review cursor to the next line of the current navigator object and "
+"speaks it"
+msgstr ""
+"மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டிப் பொருளின் அடுத்த வரிக்கு நகர்த்தி, அதை "
+"படிக்கும்"
 
 #. Translators: Input help mode message for move review cursor to bottom line command.
-msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
-msgstr "மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டிப் பொருளின் கீழ் வரிக்கு நகர்த்தி, அதை படிக்கும்"
+msgid ""
+"Moves the review cursor to the bottom line of the current navigator object "
+"and speaks it"
+msgstr ""
+"மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டிப் பொருளின் கீழ் வரிக்கு நகர்த்தி, அதை படிக்கும்"
 
 #. Translators: Input help mode message for move review cursor to previous word command.
 msgid ""
-"Moves the review cursor to the previous word of the current navigator object and speaks it"
-msgstr "மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டிப் பொருளின் முந்தைய சொல்லிற்கு நகர்த்தி, அதை படிக்கும்"
+"Moves the review cursor to the previous word of the current navigator object "
+"and speaks it"
+msgstr ""
+"மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டிப் பொருளின் முந்தைய சொல்லிற்கு நகர்த்தி, அதை "
+"படிக்கும்"
 
 #. Translators: Input help mode message for report current word under review cursor command.
 msgid ""
-"Speaks the word of the current navigator object where the review cursor is situated. Pressing "
-"twice spells the word. Pressing three times spells the word using character descriptions"
+"Speaks the word of the current navigator object where the review cursor is "
+"situated. Pressing twice spells the word. Pressing three times spells the "
+"word using character descriptions"
 msgstr ""
-"மறுபரிசீலனைச் சுட்டியின் இடத்திலிருக்கும் வழிகாட்டிப் பொருளின் சொல்லைப் படிக்கும். இருமுறை அழுத்தினால், "
-"அச்சொல்லை எழுத்துகளாகப் படிக்கும். மும்முறை அழுத்தினால், அச்சொல்லை எழுத்து விளக்கங்களாகப் படிக்கும்"
+"மறுபரிசீலனைச் சுட்டியின் இடத்திலிருக்கும் வழிகாட்டிப் பொருளின் சொல்லைப் படிக்கும். இருமுறை "
+"அழுத்தினால், அச்சொல்லை எழுத்துகளாகப் படிக்கும். மும்முறை அழுத்தினால், அச்சொல்லை எழுத்து "
+"விளக்கங்களாகப் படிக்கும்"
 
 #. Translators: Input help mode message for move review cursor to next word command.
-msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
-msgstr "மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டிப் பொருளின் அடுத்த சொல்லிற்கு நகர்த்தி, அதை படிக்கும்"
+msgid ""
+"Moves the review cursor to the next word of the current navigator object and "
+"speaks it"
+msgstr ""
+"மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டிப் பொருளின் அடுத்த சொல்லிற்கு நகர்த்தி, அதை "
+"படிக்கும்"
 
 msgid "left"
 msgstr "இடது"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
 msgid ""
-"Moves the review cursor to the first character of the line where it is situated in the current "
-"navigator object and speaks it"
+"Moves the review cursor to the first character of the line where it is "
+"situated in the current navigator object and speaks it"
 msgstr ""
-"மறுபரிசீலனைச் சுட்டியை, அது இருக்கும்  வழிகாட்டிப் பொருள் வரியின் முதல் வரியுருவிற்கு நகர்த்தி, அதை படிக்கும்"
+"மறுபரிசீலனைச் சுட்டியை, அது இருக்கும்  வழிகாட்டிப் பொருள் வரியின் முதல் வரியுருவிற்கு "
+"நகர்த்தி, அதை படிக்கும்"
 
 #. Translators: Input help mode message for move review cursor to previous character command.
 msgid ""
-"Moves the review cursor to the previous character of the current navigator object and speaks it"
-msgstr "மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டிப் பொருளின் முந்தைய வரியுருவிற்கு நகர்த்தி, அதை படிக்கும்"
+"Moves the review cursor to the previous character of the current navigator "
+"object and speaks it"
+msgstr ""
+"மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டிப் பொருளின் முந்தைய வரியுருவிற்கு நகர்த்தி, "
+"அதை படிக்கும்"
 
 #. Translators: Input help mode message for report current character under review cursor command.
 msgid ""
-"Reports the character of the current navigator object where the review cursor is situated. "
-"Pressing twice reports a description or example of that character. Pressing three times "
-"reports the numeric value of the character in decimal and hexadecimal"
+"Reports the character of the current navigator object where the review "
+"cursor is situated. Pressing twice reports a description or example of that "
+"character. Pressing three times reports the numeric value of the character "
+"in decimal and hexadecimal"
 msgstr ""
-"மறுபரிசீலனைச் சுட்டியின் இடத்திலிருக்கும் வழிகாட்டிப் பொருளின் வரியுருவை அறிவிக்கும். இருமுறை அழுத்தினால், "
-"அவ்வரியுருவிற்கான எழுத்து விளக்கத்தை அறிவிக்கும். மும்முறை அழுத்தினால், அவ்வரிவுருவிற்கான எண் மதிப்பை "
-"அறிவிக்கும்"
+"மறுபரிசீலனைச் சுட்டியின் இடத்திலிருக்கும் வழிகாட்டிப் பொருளின் வரியுருவை அறிவிக்கும். "
+"இருமுறை அழுத்தினால், அவ்வரியுருவிற்கான எழுத்து விளக்கத்தை அறிவிக்கும். மும்முறை "
+"அழுத்தினால், அவ்வரிவுருவிற்கான எண் மதிப்பை அறிவிக்கும்"
 
 msgid "right"
 msgstr "வலது"
 
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
-"Moves the review cursor to the next character of the current navigator object and speaks it"
-msgstr "மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டிப் பொருளின் அடுத்த வரியுருவிற்கு நகர்த்தி, அதை படிக்கும்"
+"Moves the review cursor to the next character of the current navigator "
+"object and speaks it"
+msgstr ""
+"மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டிப் பொருளின் அடுத்த வரியுருவிற்கு நகர்த்தி, அதை "
+"படிக்கும்"
 
 #. Translators: Input help mode message for move review cursor to end of current line command.
 msgid ""
-"Moves the review cursor to the last character of the line where it is situated in the current "
-"navigator object and speaks it"
+"Moves the review cursor to the last character of the line where it is "
+"situated in the current navigator object and speaks it"
 msgstr ""
-"மறுபரிசீலனைச் சுட்டியை, அது இருக்கும்  வழிகாட்டிப் பொருள் வரியின் கடைசி வரியுருவிற்கு நகர்த்தி, அதை படிக்கும்"
+"மறுபரிசீலனைச் சுட்டியை, அது இருக்கும்  வழிகாட்டிப் பொருள் வரியின் கடைசி வரியுருவிற்கு "
+"நகர்த்தி, அதை படிக்கும்"
 
 #. Translators: A speech mode which disables speech output.
 msgid "speech mode off"
@@ -3523,13 +3606,13 @@ msgstr "பேச்சு நிலை: பேசுக"
 
 #. Translators: Input help mode message for toggle speech mode command.
 msgid ""
-"Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak "
-"anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If "
-"talk then NVDA wil just speak normally."
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
-"பேசுக, சிற்றொலி, அமைதி, ஆகிய மூன்று பேச்சு நிலைகளுக்கிடையே சுழலும். பேசு என்றால், இயல்பாகப் பேசும். "
-"சிற்றொலி என்றால், பேசுவதற்குப் மாற்றாக சிற்றொலியை எழுப்பும். அமைதி என்றால், பேசவோ, சிற்றொலியை எழுப்பவோ "
-"செய்யாது"
+"பேசுக, சிற்றொலி, அமைதி, ஆகிய மூன்று பேச்சு நிலைகளுக்கிடையே சுழலும். பேசு என்றால், "
+"இயல்பாகப் பேசும். சிற்றொலி என்றால், பேசுவதற்குப் மாற்றாக சிற்றொலியை எழுப்பும். அமைதி "
+"என்றால், பேசவோ, சிற்றொலியை எழுப்பவோ செய்யாது"
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
@@ -3537,13 +3620,14 @@ msgstr "குவிமையத்தைக் கொண்டிருக்�
 
 #. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
 msgid ""
-"Toggles between browse mode and focus mode. When in focus mode, keys will pass straight "
-"through to the application, allowing you to interact directly with a control. When in browse "
-"mode, you can navigate the document with the cursor, quick navigation keys, etc."
+"Toggles between browse mode and focus mode. When in focus mode, keys will "
+"pass straight through to the application, allowing you to interact directly "
+"with a control. When in browse mode, you can navigate the document with the "
+"cursor, quick navigation keys, etc."
 msgstr ""
-"குவிமைய நிலை, உலாவும் நிலை ஆகிய இரு நிலைகளுக்கு இடையே சுழலும். குவிமைய நிலையில், அழுத்தப்படும் விசைகள் "
-"நேரடியாக பயன்பாட்டிற்கு அனுப்பப்படும். உலாவும் நிலையில், ஒரு HTML அல்லது PDF ஆவணத்தை சுட்டியை நகர்த்திப் "
-"படிக்கலாம், விரைவு விசைகளையும் பயன்படுத்தலாம்"
+"குவிமைய நிலை, உலாவும் நிலை ஆகிய இரு நிலைகளுக்கு இடையே சுழலும். குவிமைய நிலையில், "
+"அழுத்தப்படும் விசைகள் நேரடியாக பயன்பாட்டிற்கு அனுப்பப்படும். உலாவும் நிலையில், ஒரு HTML "
+"அல்லது PDF ஆவணத்தை சுட்டியை நகர்த்திப் படிக்கலாம், விரைவு விசைகளையும் பயன்படுத்தலாம்"
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
@@ -3555,28 +3639,35 @@ msgstr "என்விடிஏ பட்டியலைக் காட்ட�
 
 #. Translators: Input help mode message for say all in review cursor command.
 msgid ""
-"reads from the review cursor  up to end of current text, moving the review cursor as it goes"
+"reads from the review cursor  up to end of current text, moving the review "
+"cursor as it goes"
 msgstr ""
-"தற்பொழுது மறுபரிசீலனைச் சுட்டி இருக்குமிடத்திலிருந்து ஆவணத்தின் இறுதி வரைப் படிக்கும். அப்படி "
-"படிக்கும்பொழுது, மறுபரிசீலனைச் சுட்டியும் உடன் நகரும்"
+"தற்பொழுது மறுபரிசீலனைச் சுட்டி இருக்குமிடத்திலிருந்து ஆவணத்தின் இறுதி வரைப் படிக்கும். "
+"அப்படி படிக்கும்பொழுது, மறுபரிசீலனைச் சுட்டியும் உடன் நகரும்"
 
 #. Translators: Input help mode message for say all with system caret command.
-msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
+msgid ""
+"reads from the system caret up to the end of the text, moving the caret as "
+"it goes"
 msgstr ""
-"தற்பொழுது கணினிச் சுட்டி இருக்குமிடத்திலிருந்து உரையின் இறுதி வரைப் படிக்கும். அப்படிப் படிக்கும்பொழுது, "
-"கணினிச் சுட்டியும் நகரும்"
+"தற்பொழுது கணினிச் சுட்டி இருக்குமிடத்திலிருந்து உரையின் இறுதி வரைப் படிக்கும். அப்படிப் "
+"படிக்கும்பொழுது, கணினிச் சுட்டியும் நகரும்"
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 msgid "No formatting information"
 msgstr "வடிவூட்டத் தகவல் ஏதுமில்லை"
 
 #. Translators: Input help mode message for report formatting command.
-msgid "Reports formatting info for the current review cursor position within a document"
+msgid ""
+"Reports formatting info for the current review cursor position within a "
+"document"
 msgstr "ஒரு ஆவணத்தில் மறுபரிசீலனைச் சுட்டியின் நிலையிலுள்ள வடிவூட்டத் தகவலை அறிவிக்கும்"
 
 #. Translators: Input help mode message for report current focus command.
 msgid "reports the object with focus. If pressed twice, spells the information"
-msgstr "குவிமையத்திலுள்ள பொருளை அறிவிக்கும். இரு முறை அழுத்தினால், தகவலை எழுத்துகளாகப் படிக்கும். "
+msgstr ""
+"குவிமையத்திலுள்ள பொருளை அறிவிக்கும். இரு முறை அழுத்தினால், தகவலை எழுத்துகளாகப் "
+"படிக்கும். "
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
@@ -3584,11 +3675,11 @@ msgstr "நிலைமைப்பட்டை காணப்படவில�
 
 #. Translators: Input help mode message for report status line text command.
 msgid ""
-"reads the current application status bar and moves the navigator to it. If pressed twice, "
-"spells the information"
+"reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information"
 msgstr ""
-"தற்போதைய பயன்பாட்டின் நிலைமைப்பட்டையைப் படித்து, வழிகாட்டியை அவிடத்திற்கு நகர்த்தும். இரு முறை அழுத்தினால், "
-"தகவலை எழுத்துகளாகப் படிக்கும். "
+"தற்போதைய பயன்பாட்டின் நிலைமைப்பட்டையைப் படித்து, வழிகாட்டியை அவிடத்திற்கு நகர்த்தும். இரு "
+"முறை அழுத்தினால், தகவலை எழுத்துகளாகப் படிக்கும். "
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -3608,11 +3699,13 @@ msgstr "தலைப்பு ஏதுமில்லை"
 
 #. Translators: Input help mode message for report title bar command.
 msgid ""
-"Reports the title of the current application or foreground window. If pressed twice, spells "
-"the title. If pressed three times, copies the title to the clipboard"
+"Reports the title of the current application or foreground window. If "
+"pressed twice, spells the title. If pressed three times, copies the title to "
+"the clipboard"
 msgstr ""
-"தற்போதைய பயன்பாட்டின் தலைப்பையோ, முன்னணியிலிருக்கும் சாளரத்தின் தலைப்பையோ படிக்கும். இருமுறை அழுத்தினால், "
-"தலைப்பை எழுத்துகளாகப் படிக்கும். மும்முறை அழுத்தினால், தலைப்பை பிடிப்புப்பலகைக்கு படியெடுக்கும்"
+"தற்போதைய பயன்பாட்டின் தலைப்பையோ, முன்னணியிலிருக்கும் சாளரத்தின் தலைப்பையோ படிக்கும். "
+"இருமுறை அழுத்தினால், தலைப்பை எழுத்துகளாகப் படிக்கும். மும்முறை அழுத்தினால், தலைப்பை "
+"பிடிப்புப்பலகைக்கு படியெடுக்கும்"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 msgid "speaks the current foreground object"
@@ -3620,11 +3713,12 @@ msgstr "தற்போதைய முன்னணிப் பொருளை�
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
-"Logs information about the current navigator object which is useful to developers and "
-"activates the log viewer so the information can be examined."
+"Logs information about the current navigator object which is useful to "
+"developers and activates the log viewer so the information can be examined."
 msgstr ""
-"தற்போதைய வழிகாட்டிப் பொருளின் தகவலை செயற்குறிப்பேட்டில் பதிவு செய்யும். இது என்விடிஏ மேம்படுத்துநர்களுக்குப் "
-"பயன்படும். மேலும், பதிவாகியுள்ள தகவலை ஆராய செயற்குறிப்பேட்டுத் தோற்றத்தை முடிக்கிவிடும்"
+"தற்போதைய வழிகாட்டிப் பொருளின் தகவலை செயற்குறிப்பேட்டில் பதிவு செய்யும். இது என்விடிஏ "
+"மேம்படுத்துநர்களுக்குப் பயன்படும். மேலும், பதிவாகியுள்ள தகவலை ஆராய செயற்குறிப்பேட்டுத் "
+"தோற்றத்தை முடிக்கிவிடும்"
 
 #. Translators: A mode where no progress bar updates are given.
 msgid "no progress bar updates"
@@ -3644,10 +3738,11 @@ msgstr "முன்னேற்றப்பட்டை இற்றாக்�
 
 #. Translators: Input help mode message for toggle progress bar output command.
 msgid ""
-"Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
+"Toggles between beeps, speech, beeps and speech, and off, for reporting "
+"progress bar updates"
 msgstr ""
-"முன்னேற்றப்பட்டை இற்றாக்கங்களை அறிவிக்கும் பேசுக, சிற்றொலிகளை எழுப்புக, பேசவும் சிற்றொலிகளை எழுப்பவும் செய்க, "
-"நீக்கப்பட்டது ஆகிய நான்கு நிலைகளுக்கு ஊடாகச் சுழலும்"
+"முன்னேற்றப்பட்டை இற்றாக்கங்களை அறிவிக்கும் பேசுக, சிற்றொலிகளை எழுப்புக, பேசவும் "
+"சிற்றொலிகளை எழுப்பவும் செய்க, நீக்கப்பட்டது ஆகிய நான்கு நிலைகளுக்கு ஊடாகச் சுழலும்"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
@@ -3659,11 +3754,11 @@ msgstr "இயங்குநிலை உள்ளடக்க மாற்ற�
 
 #. Translators: Input help mode message for toggle dynamic content changes command.
 msgid ""
-"Toggles on and off the reporting of dynamic content changes, such as new text in dos console "
-"windows"
+"Toggles on and off the reporting of dynamic content changes, such as new "
+"text in dos console windows"
 msgstr ""
-"இயங்குநிலை உள்ளடக்க மாற்றங்களை இயக்கவோ, நிறுத்தவோ செய்யும். டாஸ் சாளரத்தில் தோன்றும் புது உரைகளை "
-"எடுத்துக்காட்டாகச் சொல்லலாம்"
+"இயங்குநிலை உள்ளடக்க மாற்றங்களை இயக்கவோ, நிறுத்தவோ செய்யும். டாஸ் சாளரத்தில் தோன்றும் புது "
+"உரைகளை எடுத்துக்காட்டாகச் சொல்லலாம்"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
@@ -3674,8 +3769,10 @@ msgid "caret moves review cursor on"
 msgstr "மறுபரிசீலனைச் சுட்டியைக் கணினிச் சுட்டி நகர்த்தும்"
 
 #. Translators: Input help mode message for toggle caret moves review cursor command.
-msgid "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "கணினிச் சுட்டி நகர்வதால் மறுபரிசீலனைச் சுட்டியும் நகர்வதை இயக்கவோ, நிறுத்தவோ செய்கிறது"
+msgid ""
+"Toggles on and off the movement of the review cursor due to the caret moving."
+msgstr ""
+"கணினிச் சுட்டி நகர்வதால் மறுபரிசீலனைச் சுட்டியும் நகர்வதை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
@@ -3686,8 +3783,11 @@ msgid "focus moves navigator object on"
 msgstr "குவிமையம் வழிகாட்டிப் பொருளை நகர்த்தும்"
 
 #. Translators: Input help mode message for toggle focus moves navigator object command.
-msgid "Toggles on and off the movement of the navigator object due to focus changes"
-msgstr "குவிமையத்தில் ஏற்படும் மாற்றங்களினால் வழிகாட்டிப் பொருளின் நகர்வை இயக்கவோ, நிறுத்தவோ செய்கிறது"
+msgid ""
+"Toggles on and off the movement of the navigator object due to focus changes"
+msgstr ""
+"குவிமையத்தில் ஏற்படும் மாற்றங்களினால் வழிகாட்டிப் பொருளின் நகர்வை இயக்கவோ, நிறுத்தவோ "
+"செய்கிறது"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 msgid "no system battery"
@@ -3709,7 +3809,8 @@ msgstr "{hours:d} மணி நேரம், {minutes:d} நிமிடங்�
 #. Translators: Input help mode message for report battery status command.
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr ""
-"மாறுதிசை மின்னோட்டம் பொருத்தப்படாதபொழுது, மின்கலத்தின் நிலைமையையும், எஞ்சியிருக்கும் நேரத்தையும் அறிவிக்கும்"
+"மாறுதிசை மின்னோட்டம் பொருத்தப்படாதபொழுது, மின்கலத்தின் நிலைமையையும், எஞ்சியிருக்கும் "
+"நேரத்தையும் அறிவிக்கும்"
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
 msgid "Pass next key through"
@@ -3717,9 +3818,11 @@ msgstr "அடுத்த விசையை கையாளாமல் நே
 
 #. Translators: Input help mode message for pass next key through command.
 msgid ""
-"The next key that is pressed will not be handled at all by NVDA, it will be passed directly "
-"through to Windows."
-msgstr "அடுத்ததாக அழுத்தப்படும் விசையை என்விடிஏ கையாளாமல், நேரடியாக பயன்பாட்டிற்கு அனுப்பி வைத்துவிடும்"
+"The next key that is pressed will not be handled at all by NVDA, it will be "
+"passed directly through to Windows."
+msgstr ""
+"அடுத்ததாக அழுத்தப்படும் விசையை என்விடிஏ கையாளாமல், நேரடியாக பயன்பாட்டிற்கு அனுப்பி "
+"வைத்துவிடும்"
 
 #. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
@@ -3737,11 +3840,11 @@ msgstr " தற்பொழுது ஏற்றப்பட்டிருக�
 
 #. Translators: Input help mode message for report current program name and app module name command.
 msgid ""
-"Speaks the filename of the active application along with the name of the currently loaded "
-"appModule"
+"Speaks the filename of the active application along with the name of the "
+"currently loaded appModule"
 msgstr ""
-"தற்பொழுது இயக்கத்திலுள்ள பயன்பாட்டின் கோப்பின் பெயரையும், அதற்கிணையாக ஏற்றப்பட்டுள்ள என்விடிஏ நிரற்கூறின் "
-"பெயரையும் பேசும்"
+"தற்பொழுது இயக்கத்திலுள்ள பயன்பாட்டின் கோப்பின் பெயரையும், அதற்கிணையாக ஏற்றப்பட்டுள்ள "
+"என்விடிஏ நிரற்கூறின் பெயரையும் பேசும்"
 
 #. Translators: Input help mode message for go to general settings dialog command.
 msgid "Shows the NVDA general settings dialog"
@@ -3813,21 +3916,23 @@ msgstr "தற்போதைய என்விடிஏ அமைவடிவ�
 
 #. Translators: Input help mode message for apply last saved or default settings command.
 msgid ""
-"Pressing once reverts the current configuration to the most recently saved state. Pressing "
-"three times reverts to factory defaults."
+"Pressing once reverts the current configuration to the most recently saved "
+"state. Pressing three times reverts to factory defaults."
 msgstr ""
-"ஒரு முறை அழுத்தினால், தற்போதைய அமைவடிவத்தை அண்மையில் சேமிக்கப்பட்ட நிலைக்கு திருப்பியமைக்கும். மும்முறை "
-"அழுத்தினால், தொழிற்சாலை இயல்பிற்கு திருப்பியமைக்கும்."
+"ஒரு முறை அழுத்தினால், தற்போதைய அமைவடிவத்தை அண்மையில் சேமிக்கப்பட்ட நிலைக்கு "
+"திருப்பியமைக்கும். மும்முறை அழுத்தினால், தொழிற்சாலை இயல்பிற்கு திருப்பியமைக்கும்."
 
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "என்விடிஏ உருவாக்குவதில் பயன்படும் பைத்தன் கட்டுப்பாட்டு மையத்தை இயக்குகிறது"
 
 #. Translators: Input help mode message for activate manage add-ons command.
-msgid "Activates the NVDA Add-ons Manager to install and uninstall add-on packages for NVDA"
+msgid ""
+"Activates the NVDA Add-ons Manager to install and uninstall add-on packages "
+"for NVDA"
 msgstr ""
-"என்விடிஏவிற்கான கூட்டுறுப்புத் தொகுதிகளை நிறுவவும், நிறுவு நீக்கவும் என்விடிஏ கூட்டுறுப்பு மேலாளர் உரையாடலை "
-"இயக்குகிறது"
+"என்விடிஏவிற்கான கூட்டுறுப்புத் தொகுதிகளை நிறுவவும், நிறுவு நீக்கவும் என்விடிஏ "
+"கூட்டுறுப்பு மேலாளர் உரையாடலை இயக்குகிறது"
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
@@ -3839,11 +3944,11 @@ msgstr "பேச்சுத் தோற்றம் இயக்கப்ப�
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
-"Toggles the NVDA Speech viewer, a floating window that allows you to view all the text that "
-"NVDA is currently speaking"
+"Toggles the NVDA Speech viewer, a floating window that allows you to view "
+"all the text that NVDA is currently speaking"
 msgstr ""
-"என்விடிஏ தற்போது பேசிக் கொண்டிருக்கும் உரைகளைக் கொண்ட மிதக்கும் திரையான பேச்சுத் தோற்றத்தை இயக்கவோ, நிறுத்தவோ "
-"செய்கிறது"
+"என்விடிஏ தற்போது பேசிக் கொண்டிருக்கும் உரைகளைக் கொண்ட மிதக்கும் திரையான பேச்சுத் தோற்றத்தை "
+"இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
@@ -3860,7 +3965,9 @@ msgstr "பிரெயில் இதனுடன் கட்டப்பட�
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
-msgstr "பிரெயில் கட்டப்படுவதை குவிமையம், மறுபரிசீலனை, ஆகிய இரு நிலைகளுக்கிடையே மாற்றியமைக்கிறது"
+msgstr ""
+"பிரெயில் கட்டப்படுவதை குவிமையம், மறுபரிசீலனை, ஆகிய இரு நிலைகளுக்கிடையே "
+"மாற்றியமைக்கிறது"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -3869,7 +3976,8 @@ msgstr "பிடிப்புப்பலகையில் எவ்வு�
 #. Translators: If the number of characters on the clipboard is greater than about 1000, it reports this message and gives number of characters on the clipboard.
 #. Example output: The clipboard contains a large portion of text. It is 2300 characters long.
 #, python-format
-msgid "The clipboard contains a large portion of text. It is %s characters long"
+msgid ""
+"The clipboard contains a large portion of text. It is %s characters long"
 msgstr "பிடிப்புப்பலகையில் பெருமளவு உரையுள்ளது. அது %s வரியுருக்கள் நீளமுடையது"
 
 #. Translators: Input help mode message for report clipboard text command.
@@ -3881,8 +3989,12 @@ msgid "Start marked"
 msgstr "துவக்கம் குறிக்கப்பட்டது"
 
 #. Translators: Input help mode message for mark review cursor position for copy command (that is, marks the current review cursor position as the starting point for text to be copied).
-msgid "Marks the current position of the review cursor as the start of text to be copied"
-msgstr "பிடிப்புப்பலகையில் படியெடுக்க, மறுபரிசீலனைச் சுட்டியின் தற்போதைய நிலையை துவக்கமாக குறித்துக்கொள்கிறது"
+msgid ""
+"Marks the current position of the review cursor as the start of text to be "
+"copied"
+msgstr ""
+"பிடிப்புப்பலகையில் படியெடுக்க, மறுபரிசீலனைச் சுட்டியின் தற்போதைய நிலையை துவக்கமாக "
+"குறித்துக்கொள்கிறது"
 
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 msgid "No start marker set"
@@ -3902,10 +4014,11 @@ msgstr "படியெடுக்க உரை ஏதுமில்லை"
 
 #. Translators: Input help mode message for copy selected review cursor text to clipboard command.
 msgid ""
-"Retrieves the text from the previously set start marker up to and including the current "
-"position of the review cursor and copies it to the clipboard"
+"Retrieves the text from the previously set start marker up to and including "
+"the current position of the review cursor and copies it to the clipboard"
 msgstr ""
-"முந்தைய துவக்கக் குறியிலிருந்து தற்போதைய மறுபரிசீலனைச் சுட்டியின் நிலைவரை பிடிப்புப்பலகைக்கு படியெடுக்கும்"
+"முந்தைய துவக்கக் குறியிலிருந்து தற்போதைய மறுபரிசீலனைச் சுட்டியின் நிலைவரை "
+"பிடிப்புப்பலகைக்கு படியெடுக்கும்"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Scrolls the braille display back"
@@ -3917,7 +4030,8 @@ msgstr "பிரெயில் காட்சியமைவை முன்�
 
 #. Translators: Input help mode message for a braille command.
 msgid "Routes the cursor to or activates the object under this braille cell"
-msgstr "பிரெயில் சிறுகட்டத்திற்குளிருக்கும் பொருளிடம் சுட்டியை நகர்த்தும், அல்லது அப்பொருளை இயக்கும்"
+msgstr ""
+"பிரெயில் சிறுகட்டத்திற்குளிருக்கும் பொருளிடம் சுட்டியை நகர்த்தும், அல்லது அப்பொருளை இயக்கும்"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Moves the braille display to the previous line"
@@ -3937,23 +4051,28 @@ msgstr "உட்பொருத்திகள் மறுஏற்றம் �
 
 #. Translators: Input help mode message for reload plugins command.
 msgid ""
-"Reloads app modules and global plugins without restarting NVDA, which can be Useful for "
-"developers"
+"Reloads app modules and global plugins without restarting NVDA, which can be "
+"Useful for developers"
 msgstr ""
-"என்விடிஏவை மறுதுவக்காமல், பயன்பாட்டு நிரற்கூறுகளையும், முழு உட்பொருத்திகளையும் மறுஏற்றம் செய்கிறது. இது "
-"என்விடிஏ மேம்படுத்துநர்களுக்கு பயனுள்ளதாக இருக்கும்"
+"என்விடிஏவை மறுதுவக்காமல், பயன்பாட்டு நிரற்கூறுகளையும், முழு உட்பொருத்திகளையும் மறுஏற்றம் "
+"செய்கிறது. இது என்விடிஏ மேம்படுத்துநர்களுக்கு பயனுள்ளதாக இருக்கும்"
 
 #. Translators: a message when there is no next object when navigating
 msgid "no next"
 msgstr "அடுத்தது ஏதுமில்லை"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-msgid "Moves to the next object in a flattened view of the object navigation hierarchy"
+msgid ""
+"Moves to the next object in a flattened view of the object navigation "
+"hierarchy"
 msgstr "பொருள் வழிநடத்தல் அடுக்கின் தட்டைத் தோற்றத்தில் இருக்கும் அடுத்த பொருளுக்கு நகர்கிறது"
 
 #. Translators: Input help mode message for a touchscreen gesture.
-msgid "Moves to the previous object in a flattened view of the object navigation hierarchy"
-msgstr "பொருள் வழிநடத்தல் அடுக்கின் தட்டைத் தோற்றத்தில் இருக்கும் முந்தைய பொருளுக்கு நகர்கிறது"
+msgid ""
+"Moves to the previous object in a flattened view of the object navigation "
+"hierarchy"
+msgstr ""
+"பொருள் வழிநடத்தல் அடுக்கின் தட்டைத் தோற்றத்தில் இருக்கும் முந்தைய பொருளுக்கு நகர்கிறது"
 
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 #, python-format
@@ -3970,10 +4089,11 @@ msgstr "தங்கள் விரலின்  நேர் கீழிர�
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
-"Reports the new object or content under your finger if different to where your finger was last"
+"Reports the new object or content under your finger if different to where "
+"your finger was last"
 msgstr ""
-"தங்களின் விரல் முன்னதாக வேறிடத்தில் இருந்திருந்தால், தற்போதைய நிலையில் இருக்கும் புதிய பொருளையும், "
-"உள்ளடக்கத்தையும் அறிவிக்கும்"
+"தங்களின் விரல் முன்னதாக வேறிடத்தில் இருந்திருந்தால், தற்போதைய நிலையில் இருக்கும் புதிய "
+"பொருளையும், உள்ளடக்கத்தையும் அறிவிக்கும்"
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
@@ -4028,9 +4148,9 @@ msgstr "ஆவணமாக்கல்"
 msgid "Commands Quick Reference"
 msgstr "கட்டளைகளுக்கான விரைவுக் குறிப்பு"
 
-#. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
+#. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
-msgstr "பயனர் வழிகாட்டி (&U)"
+msgstr "பயனர் வழிகாட்டி"
 
 #. Translators: A file extension label for NVDA add-on package.
 msgid "NVDA add-on package"
@@ -4362,9 +4482,12 @@ msgid "%s cursor"
 msgstr "%s சுட்டி"
 
 #. Translators: The description of the NVDA service.
-msgid "Allows NVDA to run on the Windows Logon screen, UAC screen and other secure screens."
+msgid ""
+"Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
+"screens."
 msgstr ""
-"புகுபதிவு, பயனர் கட்டுப்பாட்டுச் சாளரம், மற்றும் பிற பாதுகாப்பான திரைகளில் என்விடிஏவை இயங்க அனுமதிக்கிறது."
+"புகுபதிவு, பயனர் கட்டுப்பாட்டுச் சாளரம், மற்றும் பிற பாதுகாப்பான திரைகளில் என்விடிஏவை "
+"இயங்க அனுமதிக்கிறது."
 
 msgid "Type help(object) to get help about object."
 msgstr "பொருளுக்கான உதவியைப்பெற help(object) என்று தட்டச்சிடவும்"
@@ -4723,12 +4846,12 @@ msgstr "சுருதி"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
-msgstr "குரல் ஏற்ற இறக்கம் (&I)"
+msgstr "குரலேற்ற இறக்கம் (&I)"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
 msgid "Inflection"
-msgstr "குரல் ஏற்ற இறக்கம்"
+msgstr "குரலேற்ற இறக்கம்"
 
 msgid "text mode"
 msgstr "உரை நிலை"
@@ -4882,19 +5005,21 @@ msgstr "இற்றாக்கத்தை நிறுவுக"
 
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
-"This project relies primarily on donations and grants. By donating, you are helping to fund "
-"full time development.\n"
-"If even $10 is donated for every download, we will be able to cover all of the ongoing costs "
-"of the project.\n"
-"All donations are received by NV Access, the non-profit organisation which develops NVDA.\n"
+"This project relies primarily on donations and grants. By donating, you are "
+"helping to fund full time development.\n"
+"If even $10 is donated for every download, we will be able to cover all of "
+"the ongoing costs of the project.\n"
+"All donations are received by NV Access, the non-profit organisation which "
+"develops NVDA.\n"
 "Thank you for your support."
 msgstr ""
 "என்விடிஏவை தொடர்ந்து மேம்படுத்த எங்களுக்குத் தங்களின் ஆதரவு தேவைப்படுகிறது.\n"
-"இத்திட்டம் நன்கொடைகளையும், மானியங்களையுமே முதன்மையாக சார்ந்துள்ளது. நன்கொடை அளிப்பதன் மூலம் என்விடிஏவின் "
-"முழுநேர மேம்பாட்டிற்கு உதவுகிறீர்கள்.\n"
-"ஒவ்வொரு தரவிறக்கத்திற்கும் 10 டாலர் மட்டுமே நன்கொடையளித்தாலும், திட்டத்தின் தற்போதைய எல்லா செலவினங்களையும் "
-"எங்களால் ஈடு செய்ய இயலும்.\n"
-"எல்லா நன்கொடைகளையும், லாப நோக்கில்லாமல் என்விடிஏவை மேம்படுத்தி வரும் என்வி அக்ஸஸ் நிறுவனம் பெற்றுக் கொள்கிறது.\n"
+"இத்திட்டம் நன்கொடைகளையும், மானியங்களையுமே முதன்மையாக சார்ந்துள்ளது. நன்கொடை அளிப்பதன் "
+"மூலம் என்விடிஏவின் முழுநேர மேம்பாட்டிற்கு உதவுகிறீர்கள்.\n"
+"ஒவ்வொரு தரவிறக்கத்திற்கும் 10 டாலர் மட்டுமே நன்கொடையளித்தாலும், திட்டத்தின் தற்போதைய எல்லா "
+"செலவினங்களையும் எங்களால் ஈடு செய்ய இயலும்.\n"
+"எல்லா நன்கொடைகளையும், லாப நோக்கில்லாமல் என்விடிஏவை மேம்படுத்தி வரும் என்வி அக்ஸஸ் நிறுவனம் "
+"பெற்றுக் கொள்கிறது.\n"
 "தங்களின் ஆதரவிற்கு நன்றி."
 
 #. Translators: The title of the dialog requesting donations from users.
@@ -4931,36 +5056,42 @@ msgid ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are free to share or "
-"change this software in any way you like as long as it is accompanied by the license and you "
-"make all source code available to anyone who wants it. This applies to both original and "
-"modified copies of this software, plus any derivative works.\n"
+"{name} is covered by the GNU General Public License (Version 2). You are "
+"free to share or change this software in any way you like as long as it is "
+"accompanied by the license and you make all source code available to anyone "
+"who wants it. This applies to both original and modified copies of this "
+"software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"gpl-2.0.html\n"
 "\n"
-"{name} is developed by NV Access, a non-profit organisation committed to helping and promoting "
-"free and open source solutions for blind and vision impaired people.\n"
-"If you find NVDA useful and want it to continue to improve, please consider donating to NV "
-"Access. You can do this by selecting Donate from the NVDA menu."
+"{name} is developed by NV Access, a non-profit organisation committed to "
+"helping and promoting free and open source solutions for blind and vision "
+"impaired people.\n"
+"If you find NVDA useful and want it to continue to improve, please consider "
+"donating to NV Access. You can do this by selecting Donate from the NVDA "
+"menu."
 msgstr ""
 "{longName} ({name})\n"
 "பதிப்பு: {version}\n"
 "இணைய முகவரி: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} இது எல்லோருக்குமான இரண்டாம் பதிப்பு பொது உரிமத்தின் கீழ் வருகிறது. இம்மென்பொருளைத் தங்கள் விருப்பப்படி "
-"மாற்றிக் கொள்ளவோ, பிறருடன் பகிர்ந்து கொள்ளவோ தடையில்லை. அப்படிச் செய்யும்பொழுது, இம்மென்பொருளின் உரிமத்தையும், "
-"திறமூலத்தையும் கேட்பவர்களுக்குக் கொடுக்க வேண்டும். இவ்விதி, இம்மென்பொருளின் மூலத்திற்கும், மாற்றப்பட்ட "
-"வடிவத்திற்கும், இம்மென்பொருளிலிருந்து பெறப்பட்ட பிற பணிகளுக்கும் பொருந்தும். \n"
+"{name} இது எல்லோருக்குமான இரண்டாம் பதிப்பு பொது உரிமத்தின் கீழ் வருகிறது. "
+"இம்மென்பொருளைத் தங்கள் விருப்பப்படி மாற்றிக் கொள்ளவோ, பிறருடன் பகிர்ந்து கொள்ளவோ தடையில்லை. "
+"அப்படிச் செய்யும்பொழுது, இம்மென்பொருளின் உரிமத்தையும், திறமூலத்தையும் கேட்பவர்களுக்குக் "
+"கொடுக்க வேண்டும். இவ்விதி, இம்மென்பொருளின் மூலத்திற்கும், மாற்றப்பட்ட வடிவத்திற்கும், "
+"இம்மென்பொருளிலிருந்து பெறப்பட்ட பிற பணிகளுக்கும் பொருந்தும். \n"
 "கூடுதல் தகவல்களுக்கு, உதவி பட்டியலிலுள்ள உரிம விவரங்களைக் காணவும்.\n"
-"உரிமத்தைப் படிப்பதற்கான இணைய முகவரி: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+"உரிமத்தைப் படிப்பதற்கான இணைய முகவரி: http://www.gnu.org/licenses/old-licenses/"
+"gpl-2.0.html\n"
 "\n"
 "{name} இம்மென்பொருளை உருவாக்கியது NV Access நிறுவனம். இந்நிறுவனம், இலாப நோக்கில்லாமல் "
-"பார்வையற்றவர்களுக்காகவும், பார்வைக் குறைபாடுள்ளவர்களுக்காகவும் இலவச திறமூல தீர்வுகளை உருவாக்க உதவவும், அவைகளை "
-"மேம்படுத்தவும் தன்னை ஈடுபடுத்திக் கொண்டுள்ளது.\n"
-"என்விடிஏ பயனுள்ளதாக இருந்து, அது மேலும் மேம்பட வேண்டுமென்று தாங்கள் விரும்பினால், என்விடிஏவிற்கு நன்கொடை "
-"அளிப்பதைப் பற்றிச் சிந்தியுங்கள். இதற்கு, என்விடிஏ பட்டியலிலுள்ள 'நன்கொடையளியுங்கள்' உருப்படியைத் "
-"தேர்ந்தெடுக்கவும்."
+"பார்வையற்றவர்களுக்காகவும், பார்வைக் குறைபாடுள்ளவர்களுக்காகவும் இலவச திறமூல தீர்வுகளை "
+"உருவாக்க உதவவும், அவைகளை மேம்படுத்தவும் தன்னை ஈடுபடுத்திக் கொண்டுள்ளது.\n"
+"என்விடிஏ பயனுள்ளதாக இருந்து, அது மேலும் மேம்பட வேண்டுமென்று தாங்கள் விரும்பினால், "
+"என்விடிஏவிற்கு நன்கொடை அளிப்பதைப் பற்றிச் சிந்தியுங்கள். இதற்கு, என்விடிஏ பட்டியலிலுள்ள "
+"'நன்கொடையளியுங்கள்' உருப்படியைத் தேர்ந்தெடுக்கவும்."
 
 #. Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
 msgid ""
@@ -4972,13 +5103,13 @@ msgstr ""
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
 msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} per cent from "
-"top edge of screen, width is {width:.1f} per cent of screen, height is {height:.1f} per cent "
-"of screen"
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
 msgstr ""
-"பொருளின் விளிம்பு நிலை: திரையின் இடது விளிம்பிலிருந்து {left:.1f} விழுக்காடு, திரையின் மேல் "
-"விளிம்பிலிருந்து {top:.1f} விழுக்காடு, அகலம்: திரையின் அகலத்தில் {width:.1f} விழுக்காடு, உயரம்: திரையின் "
-"உயரத்தில் {height:.1f} விழுக்காடு"
+"பொருளின் விளிம்பு நிலை: திரையின் இடது விளிம்பிலிருந்து {left:.1f} விழுக்காடு, "
+"திரையின் மேல் விளிம்பிலிருந்து {top:.1f} விழுக்காடு, அகலம்: திரையின் அகலத்தில் "
+"{width:.1f} விழுக்காடு, உயரம்: திரையின் உயரத்தில் {height:.1f} விழுக்காடு"
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
@@ -5309,35 +5440,47 @@ msgstr "படவில்லை {slideNumber}"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers left of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} வடிவத்தின் இடப்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
+msgstr ""
+"{otherShape} வடிவத்தின் இடப்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
 
 #. Translators: A message when a shape is behind  another shape on a powerpoint slide
 msgid "behind left of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} வடிவத்தின் இடப்புறத்திற்குப் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு அமைந்துள்ளது"
+msgstr ""
+"{otherShape} வடிவத்தின் இடப்புறத்திற்குப் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு "
+"அமைந்துள்ளது"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers top of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} வடிவத்தின் மேற்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
+msgstr ""
+"{otherShape} வடிவத்தின் மேற்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 msgid "behind top of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} வடிவத்தின் மேற்புறத்திற்குப் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு அமைந்துள்ளது"
+msgstr ""
+"{otherShape} வடிவத்தின் மேற்புறத்திற்குப் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு "
+"அமைந்துள்ளது"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers right of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} வடிவத்தின் வலப்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
+msgstr ""
+"{otherShape} வடிவத்தின் வலப்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 msgid "behind right of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} வடிவத்தின் வலப்புறத்திற்குப் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு அமைந்துள்ளது"
+msgstr ""
+"{otherShape} வடிவத்தின் வலப்புறத்திற்குப் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு "
+"அமைந்துள்ளது"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers bottom of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} வடிவத்தின் கீழ்ப்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
+msgstr ""
+"{otherShape} வடிவத்தின் கீழ்ப்புறத்தை {distance:.3g} புள்ளிகள் அளவிற்கு மறைத்துள்ளது"
 
 #. Translators: A message when a shape is behind another shape on a powerpoint slide
 msgid "behind bottom of {otherShape} by {distance:.3g} points"
-msgstr "{otherShape} வடிவத்தின் கீழ்ப்புறத்திற்குப் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு அமைந்துள்ளது"
+msgstr ""
+"{otherShape} வடிவத்தின் கீழ்ப்புறத்திற்குப் பின்னால் {distance:.3g} புள்ளிகள் அளவிற்கு "
+"அமைந்துள்ளது"
 
 #. Translators: A message when a shape is infront of another shape on a Powerpoint slide
 msgid "covers  {otherShape}"
@@ -5381,12 +5524,13 @@ msgstr "படவில்லையின் கீழ் விளிம்ப�
 
 #. Translators: The description for a script
 msgid ""
-"Toggles between reporting the speaker notes or the actual slide content. This does not change "
-"what is visible on-screen, but only what the user can read with NVDA"
+"Toggles between reporting the speaker notes or the actual slide content. "
+"This does not change what is visible on-screen, but only what the user can "
+"read with NVDA"
 msgstr ""
-"அறிவிப்பாளரின் குறிப்புகள், படவில்லையின் மெய் உள்ளடக்கம் ஆகியவைகளுக்கிடையே அறிவிப்பை மாற்றியமைக்கிறது. "
-"திரையில் காணப்படுவதை இது மாற்றுவதில்லை. ஆனால், என்விடிஏவைக் கொண்டு ஒரு பயனர் எவைகளை படிக்கலாம் என்று "
-"வரையறுக்கிறது."
+"அறிவிப்பாளரின் குறிப்புகள், படவில்லையின் மெய் உள்ளடக்கம் ஆகியவைகளுக்கிடையே அறிவிப்பை "
+"மாற்றியமைக்கிறது. திரையில் காணப்படுவதை இது மாற்றுவதில்லை. ஆனால், என்விடிஏவைக் கொண்டு "
+"ஒரு பயனர் எவைகளை படிக்கலாம் என்று வரையறுக்கிறது."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
 msgid "Slide show notes - {slideName}"
@@ -5555,7 +5699,9 @@ msgstr "அமைவடிவத்தை சேமிக்க இயலவி�
 
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
-msgstr "என்விடிஏ அமைப்புகள் உரையாடல் ஒன்று ஏற்கெனவே திறக்கப்பட்டுள்ளது. கருணைக் கூர்ந்து முதலில் அதை மூடவும்."
+msgstr ""
+"என்விடிஏ அமைப்புகள் உரையாடல் ஒன்று ஏற்கெனவே திறக்கப்பட்டுள்ளது. கருணைக் கூர்ந்து முதலில் "
+"அதை மூடவும்."
 
 #. Translators: Title for default speech dictionary dialog.
 msgid "Default dictionary"
@@ -5593,7 +5739,8 @@ msgid "&Voice settings..."
 msgstr "குரல் அமைப்புகள்... (&V)"
 
 msgid "Choose the voice, rate, pitch and volume to use"
-msgstr "பயன்படுத்தப்பட வேண்டிய குரல், விகிதம், சுருதி, ஒலியளவு ஆகியவைகளைத் தேர்ந்தெடுக்கவும்"
+msgstr ""
+"பயன்படுத்தப்பட வேண்டிய குரல், விகிதம், சுருதி, ஒலியளவு ஆகியவைகளைத் தேர்ந்தெடுக்கவும்"
 
 #. Translators: The label for the menu item to open Braille Settings dialog.
 msgid "B&raille settings..."
@@ -5603,16 +5750,20 @@ msgstr "பிரெயில் அமைப்புகள்... (&R)"
 msgid "&Keyboard settings..."
 msgstr "விசைப்பலகை அமைப்புகள்... (&K)"
 
-msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
+msgid ""
+"Configure keyboard layout, speaking of typed characters, words or command "
+"keys"
 msgstr ""
-"விசைப்பலகையை அமைவடிவமாக்குக, அல்லது  தட்டச்சிடப்பட்ட வரியுருக்களையோ, சொற்களையோ கட்டுப்பாடு விசைகளையோ பேசுக"
+"விசைப்பலகையை அமைவடிவமாக்குக, அல்லது  தட்டச்சிடப்பட்ட வரியுருக்களையோ, சொற்களையோ "
+"கட்டுப்பாடு விசைகளையோ பேசுக"
 
 #. Translators: The label for the menu item to open Mouse Settings dialog.
 msgid "&Mouse settings..."
 msgstr "சொடுக்கி அமைப்புகள்... (&M)"
 
 msgid "Change reporting of mouse shape and object under mouse"
-msgstr "சொடுக்கிக் குறிமுள்ளின் உருவ மாற்றத்தையும், சொடுக்கியின் கீழிருக்கும் பொருளையும் அறிவிக்கும்"
+msgstr ""
+"சொடுக்கிக் குறிமுள்ளின் உருவ மாற்றத்தையும், சொடுக்கியின் கீழிருக்கும் பொருளையும் அறிவிக்கும்"
 
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
@@ -5626,10 +5777,11 @@ msgid "&Input composition settings..."
 msgstr "உள்ளீடு இயற்றல் அமைப்புகள்... (&I)"
 
 msgid ""
-"Configure how NVDA reports input composition and candidate selection for certain languages"
+"Configure how NVDA reports input composition and candidate selection for "
+"certain languages"
 msgstr ""
-"சில மொழிகளுக்கான உள்ளீடு இயற்றலையும், பரிந்துரை எழுத்தின் தெரிவினையும் என்ழிடிஏ எவ்வாறு அறிவிக்கிறது என்பதை "
-"அமைவடிவமாக்குக"
+"சில மொழிகளுக்கான உள்ளீடு இயற்றலையும், பரிந்துரை எழுத்தின் தெரிவினையும் என்ழிடிஏ எவ்வாறு "
+"அறிவிக்கிறது என்பதை அமைவடிவமாக்குக"
 
 #. Translators: The label for the menu item to open Object Presentation dialog.
 msgid "&Object presentation..."
@@ -5656,7 +5808,9 @@ msgstr "ஆவண பண்புகளின் அமைப்புகளை 
 msgid "&Default dictionary..."
 msgstr "இயல்பகரமுதலி... (&D)"
 
-msgid "A dialog where you can set default dictionary by adding dictionary entries to the list"
+msgid ""
+"A dialog where you can set default dictionary by adding dictionary entries "
+"to the list"
 msgstr "பட்டியலில் அகரமுதலிகளை சேர்த்து, இயல்பகரமுதலியை அமைக்கும் உரையாடல்..."
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
@@ -5664,16 +5818,20 @@ msgid "&Voice dictionary..."
 msgstr "குரல் அகரமுதலி... (&V)"
 
 msgid ""
-"A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
-msgstr "பட்டியலில் அகரமுதலிகளை சேர்த்து, குரல்களின் தனிப்பட்ட அகரமுதலியை அமைக்கும் உரையாடல்..."
+"A dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
+msgstr ""
+"பட்டியலில் அகரமுதலிகளை சேர்த்து, குரல்களின் தனிப்பட்ட அகரமுதலியை அமைக்கும் உரையாடல்..."
 
 #. Translators: The label for the menu item to open Temporary speech dictionary dialog.
 msgid "&Temporary dictionary..."
 msgstr "தற்காலிக அகரமுதலி... (&T)"
 
 msgid ""
-"A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
-msgstr "தொகு பெட்டியில்  அகரமுதலிகளை சேர்த்து, தற்காலிக அகரமுதலியை அமைக்கும் உரையாடல்..."
+"A dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
+msgstr ""
+"தொகு பெட்டியில்  அகரமுதலிகளை சேர்த்து, தற்காலிக அகரமுதலியை அமைக்கும் உரையாடல்..."
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
@@ -5718,6 +5876,14 @@ msgstr "என்விடிஏவை நிறுவுக... (&I)"
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
 msgstr "உட்பொருத்திகளை மறுயேற்றம் செய்க (&R)"
+
+#. Translators: The label for the Tools submenu in NVDA menu.
+msgid "Tools"
+msgstr "கருவிகள் (&T)"
+
+#. Translators: The label of a menu item to open NVDA user guide.
+msgid "&User Guide"
+msgstr "பயனர் வழிகாட்டி (&U)"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
@@ -5793,20 +5959,24 @@ msgstr "என்விடிஏவை விட்டு வெளியேற�
 
 msgid ""
 "Welcome to NVDA!\n"
-"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other "
-"keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the NVDA key.\n"
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys.\n"
+"By default, the numpad insert and main insert keys may both be used as the "
+"NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
-"From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA "
+"functions.\n"
 msgstr ""
 "என்விடிஏவிற்கு வருக!\n"
-"என்விடிஏவைக் கட்டுப்படுத்த, பிற விசைகளை அழுத்தும்பொழுது என்விடிஏ விசையையும் அழுத்த வேண்டும்.\n"
-"இயல்பில், நீட்டிக்கப்பட்ட செருகு விசை, எண் திட்டு செருகு விசை ஆகிய இரு விசைகளும் என்விடிஏ விசைகளாகும்.\n"
+"என்விடிஏவைக் கட்டுப்படுத்த, பிற விசைகளை அழுத்தும்பொழுது என்விடிஏ விசையையும் அழுத்த "
+"வேண்டும்.\n"
+"இயல்பில், நீட்டிக்கப்பட்ட செருகு விசை, எண் திட்டு செருகு விசை ஆகிய இரு விசைகளும் "
+"என்விடிஏ விசைகளாகும்.\n"
 "முகப்பெழுத்து பூட்டு விசையை என்விடிஏ விசையாக மாற்ற என்விடிஏவை அமைவடிவமாக்கலாம்.\n"
 "என்விடிஏ பட்டியலை இயக்க, எத்தருணத்திலும் NVDA+n விசையை அழுத்தவும்.\n"
-"இப்பட்டியலிலிருந்து என்விடிஏவை அமைவடிவமாக்கலாம், உதவி பெறலாம், என்விடிஏவின் பிற பயன்பாடுகளை "
-"பயன்படுத்தலாம்.\n"
+"இப்பட்டியலிலிருந்து என்விடிஏவை அமைவடிவமாக்கலாம், உதவி பெறலாம், என்விடிஏவின் பிற "
+"பயன்பாடுகளை பயன்படுத்தலாம்.\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 msgid "Welcome to NVDA"
@@ -5851,11 +6021,11 @@ msgstr "தொடர்ந்து தற்காலிகமாக இயங�
 
 #. Translators: A message in the exit Dialog shown when all add-ons are disabled.
 msgid ""
-"All add-ons are now disabled. They will be re-enabled on the next restart unless you choose to "
-"disable them again."
+"All add-ons are now disabled. They will be re-enabled on the next restart "
+"unless you choose to disable them again."
 msgstr ""
-"எல்லா கூட்டுறுப்புகளும் இப்பொழுது செயலிழந்துள்ளன. கூட்டுறுப்புகளை மீண்டும் செயலிழக்கச்செய்ய தாங்கள் "
-"விரும்பவில்லையென்றால், அடுத்த மறுதுவக்கத்தில் அவைகள் செயற்படுத்தப்படும். "
+"எல்லா கூட்டுறுப்புகளும் இப்பொழுது செயலிழந்துள்ளன. கூட்டுறுப்புகளை மீண்டும் செயலிழக்கச்செய்ய "
+"தாங்கள் விரும்பவில்லையென்றால், அடுத்த மறுதுவக்கத்தில் அவைகள் செயற்படுத்தப்படும். "
 
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
@@ -5884,7 +6054,8 @@ msgstr "கூட்டுறுப்பு மேலாளர்"
 #. Translators: A message in the add-ons manager shown when all add-ons are disabled.
 msgid "All add-ons are now disabled. To enable add-ons you must restart NVDA."
 msgstr ""
-"எல்லா கூட்டுறுப்புகளும் இப்பொழுது செயலிழந்துள்ளன. அவைகளைச் செயற்படுத்த தாங்கள் என்விடிஏவை மறுதுவக்க வேண்டும். "
+"எல்லா கூட்டுறுப்புகளும் இப்பொழுது செயலிழந்துள்ளன. அவைகளைச் செயற்படுத்த தாங்கள் என்விடிஏவை "
+"மறுதுவக்க வேண்டும். "
 
 #. Translators: the label for the installed addons list in the addons manager.
 msgid "Installed Add-ons"
@@ -5939,17 +6110,22 @@ msgstr "என்விடிஏ கூட்டுறுப்புத் த�
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #, python-format
-msgid "Failed to open add-on package file at %s - missing file or invalid file format"
-msgstr "%s கூட்டுறுப்பு தொகுப்பினை திறப்பதில் தோல்வி - இல்லாத கோப்பு அல்லது ஏற்க முடியாத வடிவூட்டம்"
+msgid ""
+"Failed to open add-on package file at %s - missing file or invalid file "
+"format"
+msgstr ""
+"%s கூட்டுறுப்பு தொகுப்பினை திறப்பதில் தோல்வி - இல்லாத கோப்பு அல்லது ஏற்க முடியாத "
+"வடிவூட்டம்"
 
 #. Translators: A message asking the user if they really wish to install an addon.
 msgid ""
-"Are you sure you want to install this add-on? Only install add-ons from trusted sources.\n"
+"Are you sure you want to install this add-on? Only install add-ons from "
+"trusted sources.\n"
 "Addon: {summary} {version}\n"
 "Author: {author}"
 msgstr ""
-"இக்கூட்டுறுப்பைத் தாங்கள் கட்டாயம் நிறுவ வேண்டுமா? நம்பத் தகுந்த வட்டாரங்களிலிருந்துப் பெறப்படும் கூட்டுறுப்புகளை "
-"மட்டுமே நிறுவுங்கள்.\n"
+"இக்கூட்டுறுப்பைத் தாங்கள் கட்டாயம் நிறுவ வேண்டுமா? நம்பத் தகுந்த வட்டாரங்களிலிருந்துப் "
+"பெறப்படும் கூட்டுறுப்புகளை மட்டுமே நிறுவுங்கள்.\n"
 "கூட்டுறுப்பு: {summary} {version}\n"
 "படைப்பாளர்: {author}"
 
@@ -5959,8 +6135,10 @@ msgid "Add-on Installation"
 msgstr "கூட்டுறுப்பு நிறுவுதல்"
 
 #. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
-msgid "A version of this add-on is already installed. Would you like to update it?"
-msgstr "கூட்டுறுப்பின் ஒரு பதிப்பு ஏற்கெனவே நிறுவப்பட்டுள்ளது. இதை இற்றைப்படுத்த விரும்புகிறீர்களா?"
+msgid ""
+"A version of this add-on is already installed. Would you like to update it?"
+msgstr ""
+"கூட்டுறுப்பின் ஒரு பதிப்பு ஏற்கெனவே நிறுவப்பட்டுள்ளது. இதை இற்றைப்படுத்த விரும்புகிறீர்களா?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 msgid "Installing Add-on"
@@ -5976,7 +6154,8 @@ msgid "Failed to install add-on  from %s"
 msgstr "%s தொகுப்பில் இருக்கும் கூட்டுறுப்பின் நிறுவுதல் தோல்வியடைந்தது"
 
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
-msgstr "தெரிவு செய்யப்பட்டிருக்கும் கூட்டுறுப்பை என்விடிஏவிலிருந்து தாங்கள் கட்டாயம் நீக்க வேண்டுமா?"
+msgstr ""
+"தெரிவு செய்யப்பட்டிருக்கும் கூட்டுறுப்பை என்விடிஏவிலிருந்து தாங்கள் கட்டாயம் நீக்க வேண்டுமா?"
 
 msgid "Remove Add-on"
 msgstr "கூட்டுறுப்பை நீக்குக"
@@ -5999,11 +6178,11 @@ msgstr "ஓடிக் கொண்டிருக்கிறது"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
 msgid ""
-"Add-ons have been added or removed. You must restart NVDA for these changes to take effect. "
-"Would you like to restart now?"
+"Add-ons have been added or removed. You must restart NVDA for these changes "
+"to take effect. Would you like to restart now?"
 msgstr ""
-"கூட்டுறுப்புகளின் நிறுவு அல்லது நீக்கம் நிகழ்ந்துள்ளன. மாற்றங்களை செயலிற்கு கொண்டு வர என்விடிஏவை மறுதுவக்க "
-"வேண்டும். இப்பொழுதே மறுதுவக்க விரும்புகிறீர்களா?"
+"கூட்டுறுப்புகளின் நிறுவு அல்லது நீக்கம் நிகழ்ந்துள்ளன. மாற்றங்களை செயலிற்கு கொண்டு வர "
+"என்விடிஏவை மறுதுவக்க வேண்டும். இப்பொழுதே மறுதுவக்க விரும்புகிறீர்களா?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 msgid "Restart NVDA"
@@ -6133,8 +6312,11 @@ msgid "Say all"
 msgstr "எல்லாம் படிக்கவும்"
 
 #. Translators: An error displayed when saving configuration profile triggers fails.
-msgid "Error saving configuration profile triggers - probably read only file system."
-msgstr "அமைவடிவ தனியமைப்பு தூண்டுதல்களை சேமிப்பதில் பிழை - ஒருவேளை படிக்க மட்டுமேயான கோப்பாக இருக்கலாம்"
+msgid ""
+"Error saving configuration profile triggers - probably read only file system."
+msgstr ""
+"அமைவடிவ தனியமைப்பு தூண்டுதல்களை சேமிப்பதில் பிழை - ஒருவேளை படிக்க மட்டுமேயான கோப்பாக "
+"இருக்கலாம்"
 
 #. Translators: The title of the configuration profile triggers dialog.
 msgid "Profile Triggers"
@@ -6173,31 +6355,34 @@ msgstr "இத்தனியமைப்பை இதற்குப் பய�
 #. Translators: The confirmation prompt presented when creating a new configuration profile
 #. and the selected trigger is already associated.
 msgid ""
-"This trigger is already associated with another profile. If you continue, it will be removed "
-"from that profile and associated with this one.\n"
+"This trigger is already associated with another profile. If you continue, it "
+"will be removed from that profile and associated with this one.\n"
 "Are you sure you want to continue?"
 msgstr ""
-"இத்தூண்டுதல் மற்றொரு தனியமைப்புடன் இணைக்கப்பட்டுள்ளது. மேலும் தொடர்ந்தால் அத்தனியமைப்பிடமிருந்து தூண்டுதல் "
-"நீக்கப்பட்டு இத்தனியமைப்புடன் இணைக்கப்படும்.\n"
+"இத்தூண்டுதல் மற்றொரு தனியமைப்புடன் இணைக்கப்பட்டுள்ளது. மேலும் தொடர்ந்தால் "
+"அத்தனியமைப்பிடமிருந்து தூண்டுதல் நீக்கப்பட்டு இத்தனியமைப்புடன் இணைக்கப்படும்.\n"
 " தாங்கள் கட்டாயம் தொடர விரும்புகிறீர்களா? "
 
+#. Translators: The title of a warning dialog.
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 msgid "Warning"
 msgstr "எச்சரிக்கை"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
-msgstr "தனியமைப்பினை உருவாக்குவதில் பிழை - ஒருவேளை படிக்க மட்டுமேயான கோப்பாக இருக்கலாம்"
+msgstr ""
+"தனியமைப்பினை உருவாக்குவதில் பிழை - ஒருவேளை படிக்க மட்டுமேயான கோப்பாக இருக்கலாம்"
 
 #. Translators: The prompt asking the user whether they wish to
 #. manually activate a configuration profile that has just been created.
 msgid ""
-"To edit this profile, you will need to manually activate it. Once you have finished editing, "
-"you will need to manually deactivate it to resume normal usage.\n"
+"To edit this profile, you will need to manually activate it. Once you have "
+"finished editing, you will need to manually deactivate it to resume normal "
+"usage.\n"
 "Do you wish to manually activate it now?"
 msgstr ""
-"இத்தனியமைப்பைத் தொகுக்க, அதைக் கைமுறையில் இயக்க வேண்டும். தொகுத்தல் முடிந்தவுடன், இயல்பான பயன்பாட்டைத் தொடர, "
-"கைமுறை இயக்கத்தை நிறுத்த வேண்டும்.\n"
+"இத்தனியமைப்பைத் தொகுக்க, அதைக் கைமுறையில் இயக்க வேண்டும். தொகுத்தல் முடிந்தவுடன், இயல்பான "
+"பயன்பாட்டைத் தொடர, கைமுறை இயக்கத்தை நிறுத்த வேண்டும்.\n"
 "இப்பொழுதே கைமுறையில் இயக்க விரும்புகிறீர்களா?"
 
 #. Translators: The title of the confirmation dialog for manual activation of a created profile.
@@ -6214,7 +6399,8 @@ msgstr "என்விடிஏ நிறுவப்படுகிறது"
 
 #. Translators: The message displayed while NVDA is being updated.
 msgid "Please wait while your previous installation of NVDA is being updated."
-msgstr "தங்களுடைய முந்தைய என்விடிஏவின் படி இற்றைப்படுத்தப்படுகிறது, கருணைக்கூர்ந்து காத்திருக்கவும்"
+msgstr ""
+"தங்களுடைய முந்தைய என்விடிஏவின் படி இற்றைப்படுத்தப்படுகிறது, கருணைக்கூர்ந்து காத்திருக்கவும்"
 
 #. Translators: The message displayed while NVDA is being installed.
 msgid "Please wait while NVDA is being installed"
@@ -6222,13 +6408,13 @@ msgstr "என்விடிஏ நிறுவப்படுகிறது, 
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
 msgid ""
-"The installation is unable to remove or overwrite a file. Another copy of NVDA may be running "
-"on another logged-on user account. Please make sure all installed copies of NVDA are shut down "
-"and try the installation again."
+"The installation is unable to remove or overwrite a file. Another copy of "
+"NVDA may be running on another logged-on user account. Please make sure all "
+"installed copies of NVDA are shut down and try the installation again."
 msgstr ""
-"கோப்பினை நீக்கவோ, அழித்தெழுதவோ நிறுவுதலினால் இயலவில்லை. பிறிதொரு பயனர் கணக்கில் என்விடிஏவின் படி ஒன்று "
-"இயக்கப்பட்டுக் கொண்டிருக்கலாம். என்விடிஏவின் எல்லா படிகளும் மூடப்பட்டிருப்பதை உறுதி செய்துக் கொண்டு, நிறுவுதலை "
-"மீண்டும் முயற்சியுங்கள்."
+"கோப்பினை நீக்கவோ, அழித்தெழுதவோ நிறுவுதலினால் இயலவில்லை. பிறிதொரு பயனர் கணக்கில் "
+"என்விடிஏவின் படி ஒன்று இயக்கப்பட்டுக் கொண்டிருக்கலாம். என்விடிஏவின் எல்லா படிகளும் "
+"மூடப்பட்டிருப்பதை உறுதி செய்துக் கொண்டு, நிறுவுதலை மீண்டும் முயற்சியுங்கள்."
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
@@ -6236,8 +6422,12 @@ msgid "File in Use"
 msgstr "கோப்பு பயன்பாட்டில் உள்ளது"
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
-msgid "The installation of NVDA failed. Please check the Log Viewer for more information."
-msgstr "என்விடிஏ நிறுவுதல் தோல்வியடைந்தது. கூடுதல் தகவல்களுக்கு செயற்குறிப்பேட்டுத் தோற்றத்தைக் காணவும்."
+msgid ""
+"The installation of NVDA failed. Please check the Log Viewer for more "
+"information."
+msgstr ""
+"என்விடிஏ நிறுவுதல் தோல்வியடைந்தது. கூடுதல் தகவல்களுக்கு செயற்குறிப்பேட்டுத் தோற்றத்தைக் "
+"காணவும்."
 
 #. Translators: The message displayed when NVDA has been successfully installed.
 msgid "Successfully installed NVDA. "
@@ -6265,12 +6455,18 @@ msgid "To install NVDA to your hard drive, please press the Continue button."
 msgstr "என்விடிஏவை தங்களின் வன்தட்டில் நிறுவ, 'தொடர்க' பொத்தானை அழுத்தவும்."
 
 #. Translators: An informational message in the Install NVDA dialog.
-msgid "A previous copy of NVDA has been found on your system. This copy will be updated."
-msgstr "என்விடிஏவின் முந்தைய படி ஒன்று தங்களின் கணினியில் காணப்படுகிறது. அது இற்றைப்படுத்தப்படும்."
+msgid ""
+"A previous copy of NVDA has been found on your system. This copy will be "
+"updated."
+msgstr ""
+"என்விடிஏவின் முந்தைய படி ஒன்று தங்களின் கணினியில் காணப்படுகிறது. அது இற்றைப்படுத்தப்படும்."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
-msgid "The installation path for NVDA has changed. it will now  be installed in {path}"
-msgstr "என்விடிஏவின் நிறுவு வழித்தடம் மாறியுள்ளது. என்விடிஏ இனி இங்கே நிறுவப்படும்: {path}"
+msgid ""
+"The installation path for NVDA has changed. it will now  be installed in "
+"{path}"
+msgstr ""
+"என்விடிஏவின் நிறுவு வழித்தடம் மாறியுள்ளது. என்விடிஏ இனி இங்கே நிறுவப்படும்: {path}"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Use NVDA on the Windows &logon screen"
@@ -6284,7 +6480,8 @@ msgstr "தற்போதைய மேசைத்தள குறுக்க�
 #. If the shortcut key has been changed for this locale,
 #. this change must also be reflected here.
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
-msgstr "மேசைத்தள படவுருவையும், கட்டுப்பாடு+என்விடிஏ+n குறுக்கு விசையையும் உருவாக்குக (&D)"
+msgstr ""
+"மேசைத்தள படவுருவையும், கட்டுப்பாடு+என்விடிஏ+n குறுக்கு விசையையும் உருவாக்குக (&D)"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 msgid "Copy &portable configuration to current user account"
@@ -6294,17 +6491,34 @@ msgstr "பெயர்த்தகு அமைவடிவத்தை தற�
 msgid "&Continue"
 msgstr "தொடர்க (&C)"
 
+#. Translators: A warning presented when the user attempts to downgrade NVDA
+#. to an older version.
+msgid ""
+"You are attempting to install an earlier version of NVDA than the version "
+"currently installed. If you really wish to revert to an earlier version, you "
+"should first cancel this installation and completely uninstall NVDA before "
+"installing the earlier version."
+msgstr ""
+"என்விடிஏவின் முந்தைய பதிப்பை நிறுவ முற்படுகிறீர்கள். முந்தைய பதிப்பை தாங்கள் கட்டாயம் "
+"நிறுவ விரும்பினால், தற்போதைய என்விடிஏவின் பதிப்பை முழுமையாக நிறுவுநீக்கம் செய்த பின்னரே "
+"நிறுவ இயலும்."
+
+#. Translators: The label of a button to proceed with installation,
+#. even though this is not recommended.
+msgid "&Proceed with installation (not recommended)"
+msgstr "நிறுவுதலைத் தொடருங்கள் (இது பரிந்துரைக்கப்படவில்லை) (&P)"
+
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
 msgstr "பெயர்த்தகு என்விடிஏவை உருவாக்குக"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 msgid ""
-"To create a portable copy of NVDA, please select the path and other options and then press "
-"Continue"
+"To create a portable copy of NVDA, please select the path and other options "
+"and then press Continue"
 msgstr ""
-"என்விடிஏவின் பெயர்த்தகு படியை உருவாக்க, வழிதடத்தையும், பிற விருப்பத் தேர்வுகளையும் தெரிவு செய்த பின்னர், "
-"'தொடர்க' பொத்தானை அழுத்தவும்."
+"என்விடிஏவின் பெயர்த்தகு படியை உருவாக்க, வழிதடத்தையும், பிற விருப்பத் தேர்வுகளையும் "
+"தெரிவு செய்த பின்னர், 'தொடர்க' பொத்தானை அழுத்தவும்."
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
@@ -6414,7 +6628,8 @@ msgstr "வெளியேறும்பொழுது அமைவடிவ�
 
 #. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
 msgid "Sho&w exit options when exiting NVDA"
-msgstr "என்விடிஏவை விட்டு வெளியேறும்பொழுது வெளியேறுவதற்கான விருப்பத் தேர்வுகளைக் காட்டுக (&W)"
+msgstr ""
+"என்விடிஏவை விட்டு வெளியேறும்பொழுது வெளியேறுவதற்கான விருப்பத் தேர்வுகளைக் காட்டுக (&W)"
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -6429,16 +6644,19 @@ msgid "Log level"
 msgstr "செயற்குறிப்பேட்டுப் பதிவு நிலை"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
-msgid "Use NVDA on the Windows logon screen (requires administrator privileges)"
-msgstr "சாளர புகுபதிவு திரையில் என்விடிஏவை பயன்படுத்துக (இதற்கு நிர்வாகியின் சிறப்புரிமை தேவை) (&U)"
+msgid ""
+"Use NVDA on the Windows logon screen (requires administrator privileges)"
+msgstr ""
+"சாளர புகுபதிவு திரையில் என்விடிஏவை பயன்படுத்துக (இதற்கு நிர்வாகியின் சிறப்புரிமை "
+"தேவை) (&U)"
 
 #. Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
 msgid ""
-"Use currently saved settings on the logon and other secure screens (requires administrator "
-"privileges)"
+"Use currently saved settings on the logon and other secure screens (requires "
+"administrator privileges)"
 msgstr ""
-"சாளர புகுபதிவு, பிற பாதுகாப்பான திரைகளில் தற்போதைய அமைப்புகளைப் பயன்படுத்துக (இதற்கு நிர்வாகியின் "
-"சிறப்புரிமை தேவை) (&U)"
+"சாளர புகுபதிவு, பிற பாதுகாப்பான திரைகளில் தற்போதைய அமைப்புகளைப் பயன்படுத்துக (இதற்கு "
+"நிர்வாகியின் சிறப்புரிமை தேவை) (&U)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
@@ -6446,11 +6664,13 @@ msgstr "இற்றாக்கங்களுக்குத் தானா�
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
-"Add-ons were detected in your user settings directory. Copying these to the system profile "
-"could be a security risk. Do you still wish to copy your settings?"
+"Add-ons were detected in your user settings directory. Copying these to the "
+"system profile could be a security risk. Do you still wish to copy your "
+"settings?"
 msgstr ""
-"பயனர் அமைப்புகள் அடைவில் தங்களின் தனிப்பயனாக்கப்பட்ட உட்பொருத்திகள் காணப்படுகின்றன. இதை கணினியின் அமைப்பிற்குள் "
-"படியெடுப்பது பாதுகாப்பற்றதாகும். இருந்தாலும் தங்களின் அமைப்புகளை கணினிக்குள் படியெடுக்க விரும்புகிறீர்களா?"
+"பயனர் அமைப்புகள் அடைவில் தங்களின் தனிப்பயனாக்கப்பட்ட உட்பொருத்திகள் காணப்படுகின்றன. இதை "
+"கணினியின் அமைப்பிற்குள் படியெடுப்பது பாதுகாப்பற்றதாகும். இருந்தாலும் தங்களின் அமைப்புகளை "
+"கணினிக்குள் படியெடுக்க விரும்புகிறீர்களா?"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
@@ -6458,15 +6678,17 @@ msgstr "அமைப்புகள் படியெடுக்கப்ப�
 
 #. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
 msgid "Please wait while settings are copied to the system configuration."
-msgstr "கணினி அமைவடிவத்தில் அமைப்புகள் படியெடுக்கப் படுகின்றன, கருணைக்கூர்ந்துக் காத்திருக்கவும்; "
+msgstr ""
+"கணினி அமைவடிவத்தில் அமைப்புகள் படியெடுக்கப் படுகின்றன, கருணைக்கூர்ந்துக் காத்திருக்கவும்; "
 
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
 msgid ""
-"Unable to copy a file. Perhaps it is currently being used by another process or you have run "
-"out of disc space on the drive you are copying to."
+"Unable to copy a file. Perhaps it is currently being used by another process "
+"or you have run out of disc space on the drive you are copying to."
 msgstr ""
-"கோப்பினை படியெடுக்க இயலவில்லை. ஒருவேளை, அக்கோப்பு பிறிதொரு செயல்முறையால் பயன்படுத்தப்பட்டுக் கொண்டிருக்கலாம், "
-"அல்லது தாங்கள் படியை சேமிக்க விரும்பும் இயக்ககத்தில் இடம் போதாமல் இருக்கலாம்."
+"கோப்பினை படியெடுக்க இயலவில்லை. ஒருவேளை, அக்கோப்பு பிறிதொரு செயல்முறையால் "
+"பயன்படுத்தப்பட்டுக் கொண்டிருக்கலாம், அல்லது தாங்கள் படியை சேமிக்க விரும்பும் இயக்ககத்தில் இடம் "
+"போதாமல் இருக்கலாம்."
 
 #. Translators: the title of a retry cancel dialog when copying settings  fails
 msgid "Error Copying"
@@ -6495,13 +6717,14 @@ msgstr "பற்றாத சிறப்புரிமைகள்"
 
 #. Translators: The message displayed after NVDA interface language has been changed.
 msgid ""
-"For the new language to take effect, the configuration must be saved and NVDA must be "
-"restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a "
-"later time."
+"For the new language to take effect, the configuration must be saved and "
+"NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
+"manually save and exit at a later time."
 msgstr ""
-"புது மொழியை செயலிற்குக் கொண்டுவர, அமைவடிவத்தை சேமித்துவிட்டு என்விடிஏவை மறுதுவக்க வேண்டும். அமைவடிவத்தை "
-"சேமித்து என்விடிஏவை மறுதுவக்க, 'சரி' பொத்தானை அழுத்தவும்.  மற்றொரு  நேரம் தாங்களாகவே அமைவடிவத்தை சேமித்து "
-"என்விடிஏவை விட்டு வெளியேற, 'விலக்குக' பொத்தானை அழுத்தவும்."
+"புது மொழியை செயலிற்குக் கொண்டுவர, அமைவடிவத்தை சேமித்துவிட்டு என்விடிஏவை மறுதுவக்க "
+"வேண்டும். அமைவடிவத்தை சேமித்து என்விடிஏவை மறுதுவக்க, 'சரி' பொத்தானை அழுத்தவும்.  "
+"மற்றொரு  நேரம் தாங்களாகவே அமைவடிவத்தை சேமித்து என்விடிஏவை விட்டு வெளியேற, 'விலக்குக' "
+"பொத்தானை அழுத்தவும்."
 
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 msgid "Language Configuration Change"
@@ -6627,7 +6850,8 @@ msgstr "எல்லாம் படிக்கும்பொழுது ம�
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Beep if typing lowercase letters when caps lock is on"
-msgstr "முகப்பெழுத்து பூட்டப்பட்டிருக்கும்பொழுது கீழ்தட்டு விசையை அழுத்தினால் சிற்றொலியை எழுப்புக"
+msgstr ""
+"முகப்பெழுத்து பூட்டப்பட்டிருக்கும்பொழுது கீழ்தட்டு விசையை அழுத்தினால் சிற்றொலியை எழுப்புக"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -6722,7 +6946,9 @@ msgstr "தெரிவாகியுள்ள பரிந்துரை எ�
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Always include short character &description when announcing candidates"
-msgstr "பரிந்துரை எழுத்துகளை அறிவிக்கும்பொழுது, குறுகிய எழுத்து விளக்கங்களை எப்பொழுதும் சேர்த்துக் கொள்க (&D)"
+msgstr ""
+"பரிந்துரை எழுத்துகளை அறிவிக்கும்பொழுது, குறுகிய எழுத்து விளக்கங்களை எப்பொழுதும் "
+"சேர்த்துக் கொள்க (&D)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
@@ -6862,7 +7088,8 @@ msgstr "ஆவண வடிவூட்டம்"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "சுட்டிக்கு பிறகு ஏற்படும் வடிவூட்ட மாற்றங்களை அறிவிக்கவும் (இது தேக்கத்தை ஏற்படுத்தலாம்)"
+msgstr ""
+"சுட்டிக்கு பிறகு ஏற்படும் வடிவூட்ட மாற்றங்களை அறிவிக்கவும் (இது தேக்கத்தை ஏற்படுத்தலாம்)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7161,7 +7388,9 @@ msgstr "உள்ளீட்டுச் சைகையை உள்ளிட�
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
-msgstr "பயனர் வரையறுத்த சைகைகளை சேமிக்க இயலவில்லை - ஒருவேளை படிக்க மட்டுமேயான கோப்பாக இருக்கலாம்"
+msgstr ""
+"பயனர் வரையறுத்த சைகைகளை சேமிக்க இயலவில்லை - ஒருவேளை படிக்க மட்டுமேயான கோப்பாக "
+"இருக்கலாம்"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -7197,11 +7426,6 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "தற்போதைய திரையின் நிலை {x},{y} படவணுக்கள்"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-#, python-format
-msgid "%s landmark"
-msgstr "%s நிலக்குறி"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "புத்தாக்கப்பட்டது"
@@ -7209,14 +7433,6 @@ msgstr "புத்தாக்கப்பட்டது"
 #. Translators: Reported while loading a document.
 msgid "Loading document..."
 msgstr "ஆவணம் ஏற்றப்படுகிறது..."
-
-#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-msgid "No long description"
-msgstr "நெடுவிளக்கம் ஏதுமில்லை"
-
-#. Translators: the description for the activateLongDescription script on virtualBuffers.
-msgid "Shows the long description at this position if one is found."
-msgstr "இந்நிலையில் நெடுவிளக்கம் ஏதேனும் இருந்தால், அதை காண்பிக்கும்"
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -7231,9 +7447,12 @@ msgid "use screen layout off"
 msgstr "திரை வரைவைப் பயன்படுத்தாது "
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
-msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
+msgid ""
+"Toggles on and off if the screen layout is preserved while rendering the "
+"document content"
 msgstr ""
-"ஆவணத்தின் உள்ளடக்கங்களை வழங்கும்பொழுது, திரை வரைவு பாதுகாக்கப்பட்டிருந்தால், அதை இயக்கவோ, நிறுத்தவோ செய்கிறது"
+"ஆவணத்தின் உள்ளடக்கங்களை வழங்கும்பொழுது, திரை வரைவு பாதுகாக்கப்பட்டிருந்தால், அதை இயக்கவோ, "
+"நிறுத்தவோ செய்கிறது"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -7256,19 +7475,6 @@ msgstr "அட்டவணையின் அடுத்த நெடுவர�
 #. Translators: the description for the previous table column script on virtualBuffers.
 msgid "moves to the previous table column"
 msgstr "அட்டவணையின் முந்தைய நெடுவரிசைக்கு நகர்கிறது"
-
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
-msgid "Not in a container"
-msgstr "கொள்களத்தில் இல்லை"
-
-#. Translators: Description for the Move to start of container command in browse mode.
-msgid "Moves to the start of the container element, such as a list or table"
-msgstr "வரிசைப் பட்டியல், அட்டவணை போன்ற கொள்களத்தின் துவக்கத்திற்குச் செல்லும்"
-
-#. Translators: Description for the Move past end of container command in browse mode.
-msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "வரிசைப் பட்டியல், அட்டவணை போன்ற கொள்களத்தின் முடிவிற்கு அப்பால் செல்லும்"
 
 msgid "Taskbar"
 msgstr "பணிப்பட்டை"
@@ -7293,8 +7499,8 @@ msgstr "இயல்நிறம்"
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
 msgstr ""
-"விளக்கப்படங்கள், கருத்துரைகளடங்கிய சிறுகட்டங்கள், சூத்திரங்களடங்கிய சிறுகட்டங்கள் கொண்ட வரிசைப் பட்டியலை "
-"அளிக்கிறது"
+"விளக்கப்படங்கள், கருத்துரைகளடங்கிய சிறுகட்டங்கள், சூத்திரங்களடங்கிய சிறுகட்டங்கள் கொண்ட "
+"வரிசைப் பட்டியலை அளிக்கிறது"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -7320,10 +7526,11 @@ msgstr "{start} முதல் {end} வரை"
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"
+"Cannot set headers. Please enable reporting of table headers in Document "
+"Formatting Settings"
 msgstr ""
-"தலைப்புகளை அமைக்க இயலாது. ஆவண வடிவூட்டம் அமைப்புகளில் இருக்கும் அட்டவணை தலைப்புகளை அறிவிக்கும் வசதியை "
-"செயற்படுத்தவும்."
+"தலைப்புகளை அமைக்க இயலாது. ஆவண வடிவூட்டம் அமைப்புகளில் இருக்கும் அட்டவணை தலைப்புகளை "
+"அறிவிக்கும் வசதியை செயற்படுத்தவும்."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "Set {address} as start of column headers"
@@ -7342,13 +7549,14 @@ msgid "Cannot find {address}    in column headers"
 msgstr "நெடுவரிசை தலைப்புரையில் {address} காணப்படவில்லை"
 
 msgid ""
-"Pressing once will set this cell as the first column header for any cells lower and to the "
-"right of it within this region. Pressing twice will forget the current column header for this "
-"cell."
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this region. Pressing twice will forget "
+"the current column header for this cell."
 msgstr ""
-"ஒரு முறை அழுத்தினால், மண்டலத்தின் தற்போதைய சிறுகட்டத்திற்கு கீழும், வலப் புறமாகவும் காணப்படும் சிறுகட்டங்களுக்கு "
-"தற்போதைய சிறுகட்டத்தை முதல் நெடுவரிசை தலைப்புரையாக அமைக்கும். இரு முறை அழுத்தினால், இச்சிறுகட்டத்திற்கான "
-"தற்போதைய நெடுவரிசை தலைப்புரையை மறக்கும். "
+"ஒரு முறை அழுத்தினால், மண்டலத்தின் தற்போதைய சிறுகட்டத்திற்கு கீழும், வலப் புறமாகவும் "
+"காணப்படும் சிறுகட்டங்களுக்கு தற்போதைய சிறுகட்டத்தை முதல் நெடுவரிசை தலைப்புரையாக "
+"அமைக்கும். இரு முறை அழுத்தினால், இச்சிறுகட்டத்திற்கான தற்போதைய நெடுவரிசை தலைப்புரையை "
+"மறக்கும். "
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 msgid "Set {address} as start of row headers"
@@ -7367,12 +7575,14 @@ msgid "Cannot find {address}    in row headers"
 msgstr "கிடைவரிசை தலைப்புரையில் {address} காணப்படவில்லை"
 
 msgid ""
-"Pressing once will set this cell as the first row header for any cells lower and to the right "
-"of it within this region. Pressing twice will forget the current row header for this cell."
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this region. Pressing twice will forget the "
+"current row header for this cell."
 msgstr ""
-"ஒரு முறை அழுத்தினால், மண்டலத்தின் தற்போதைய சிறுகட்டத்திற்கு கீழும், வலப் புறமாகவும் காணப்படும் சிறுகட்டங்களுக்கு "
-"தற்போதைய சிறுகட்டத்தை முதல் கிடைவரிசை தலைப்புரையாக அமைக்கும். இரு முறை அழுத்தினால், இச்சிறுகட்டத்திற்கான "
-"தற்போதைய கிடைவரிசை தலைப்புரையை மறக்கும். "
+"ஒரு முறை அழுத்தினால், மண்டலத்தின் தற்போதைய சிறுகட்டத்திற்கு கீழும், வலப் புறமாகவும் "
+"காணப்படும் சிறுகட்டங்களுக்கு தற்போதைய சிறுகட்டத்தை முதல் கிடைவரிசை தலைப்புரையாக "
+"அமைக்கும். இரு முறை அழுத்தினால், இச்சிறுகட்டத்திற்கான தற்போதைய கிடைவரிசை தலைப்புரையை "
+"மறக்கும். "
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -7792,6 +8002,11 @@ msgstr "தொடர் ஏதும் வரையறுக்கப்பட�
 msgid "slice"
 msgstr "கூறு"
 
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "நெடுவரிசை"
+
 #. Translators: A data point in a line chart.
 msgid "data point"
 msgstr "தரவுப் புள்ளி "
@@ -7928,7 +8143,8 @@ msgstr "மதிப்பு {valueAxisData}"
 
 #. Translators: Details about a slice of a pie chart.
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
-msgid " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
+msgid ""
+" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
 msgstr "பின்னம் {fractionValue:.2f}  {pointCount}ல் {pointIndex} விழுக்காடு"
 
 #. Translators: Details about a segment of a chart.
@@ -7975,11 +8191,11 @@ msgstr "தலைப்பிடப்படாத விளக்கப்ப�
 
 #. Translators: Details about the chart area in a Microsoft Excel chart.
 msgid ""
-"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: {chartAreaTop}, left: "
-"{chartAreaLeft}"
+"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: "
+"{chartAreaTop}, left: {chartAreaLeft}"
 msgstr ""
-"விளக்கப்பட பகுதி, உயரம்: {chartAreaHeight}, அகலம்: {chartAreaWidth}, மேல்: {chartAreaTop}, இடது: "
-"{chartAreaLeft}"
+"விளக்கப்பட பகுதி, உயரம்: {chartAreaHeight}, அகலம்: {chartAreaWidth}, மேல்: "
+"{chartAreaTop}, இடது: {chartAreaLeft}"
 
 #. Translators: Indicates the chart area of a Microsoft Excel chart.
 msgid "Chart area "
@@ -7987,11 +8203,13 @@ msgstr "விளக்கப்படத்தின் பகுதி"
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
 msgid ""
-"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: {plotAreaInsideWidth:.0f}, "
-"inside top: {plotAreaInsideTop:.0f}, inside left: {plotAreaInsideLeft:.0f}"
+"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: "
+"{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
+"{plotAreaInsideLeft:.0f}"
 msgstr ""
-"வரைப் பகுதி, உள்பக்க உயரம்: {plotAreaInsideHeight:.0f}, உள்பக்க அகலம்: {plotAreaInsideWidth:.0f}, "
-"உள்பக்க மேல்: {plotAreaInsideTop:.0f}, உள்பக்க இடது: {plotAreaInsideLeft:.0f}"
+"வரைப் பகுதி, உள்பக்க உயரம்: {plotAreaInsideHeight:.0f}, உள்பக்க அகலம்: "
+"{plotAreaInsideWidth:.0f}, உள்பக்க மேல்: {plotAreaInsideTop:.0f}, உள்பக்க இடது: "
+"{plotAreaInsideLeft:.0f}"
 
 #. Translators: Indicates the plot area of a Microsoft Excel chart.
 msgid "Plot area "
@@ -8015,7 +8233,8 @@ msgstr "{seriesName} தொடருக்கான குறிவிளக்�
 #. For example, this might report "Legend key for series Temperature 1 of 2"
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
 msgid "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}"
-msgstr "{seriesName} தொடருக்கான குறிவிளக்கித் திறவுகோல், {seriesCount}ல் {seriesIndex}"
+msgstr ""
+"{seriesName} தொடருக்கான குறிவிளக்கித் திறவுகோல், {seriesCount}ல் {seriesIndex}"
 
 #. Translators: a Microsoft Word revision type (inserted content)
 msgid "insertion"
@@ -8128,7 +8347,8 @@ msgid "unknown date"
 msgstr "தெரியாத தேதி"
 
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "மீளாய்வு வகை {revisionType}, செய்தது {revisionAuthor}, தேதி {revisionDate}"
+msgstr ""
+"மீளாய்வு வகை {revisionType}, செய்தது {revisionAuthor}, தேதி {revisionDate}"
 
 #, python-format
 msgid "%g characters"
@@ -8142,61 +8362,72 @@ msgstr "%g புள்ளி்"
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
-"{rowNumber} கிடைவரிசையையும் {columnNumber} நெடுவரிசையையும், நெடுவரிசை தலைப்புரையின் துவக்கமாக "
-"அமைக்கவும்"
+"{rowNumber} கிடைவரிசையையும் {columnNumber} நெடுவரிசையையும், நெடுவரிசை "
+"தலைப்புரையின் துவக்கமாக அமைக்கவும்"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
-msgid "Already set row {rowNumber} column {columnNumber} as start of column headers"
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
-"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் ஏற்கெனவே நெடுவரிசை தலைப்புரையின் துவக்கமாக "
-"அமைக்கப்பட்டுள்ளது"
+"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் ஏற்கெனவே நெடுவரிசை "
+"தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
 msgstr ""
-"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் , நெடுவரிசை தலைப்புரையிலிருந்து நீக்கப்பட்டது"
+"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் , நெடுவரிசை "
+"தலைப்புரையிலிருந்து நீக்கப்பட்டது"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
-msgstr "{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும், நெடுவரிசை தலைப்புரையில் காணப்படவில்லை"
+msgstr ""
+"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும், நெடுவரிசை தலைப்புரையில் "
+"காணப்படவில்லை"
 
 msgid ""
-"Pressing once will set this cell as the first column header for any cells lower and to the "
-"right of it within this table. Pressing twice will forget the current column header for this "
-"cell."
+"Pressing once will set this cell as the first column header for any cells "
+"lower and to the right of it within this table. Pressing twice will forget "
+"the current column header for this cell."
 msgstr ""
-"ஒரு முறை அழுத்தினால், அட்டவணையின் தற்போதைய சிறுகட்டத்திற்கு கீழும், வலப் புறமாகவும் காணப்படும் "
-"சிறுகட்டங்களுக்கு தற்போதைய சிறுகட்டத்தை முதல் நெடுவரிசை தலைப்புரையாக அமைக்கும். இரு முறை அழுத்தினால், "
-"இச்சிறுகட்டத்திற்கான தற்போதைய நெடுவரிசை தலைப்புரையை மறக்கும். "
+"ஒரு முறை அழுத்தினால், அட்டவணையின் தற்போதைய சிறுகட்டத்திற்கு கீழும், வலப் புறமாகவும் "
+"காணப்படும் சிறுகட்டங்களுக்கு தற்போதைய சிறுகட்டத்தை முதல் நெடுவரிசை தலைப்புரையாக "
+"அமைக்கும். இரு முறை அழுத்தினால், இச்சிறுகட்டத்திற்கான தற்போதைய நெடுவரிசை தலைப்புரையை "
+"மறக்கும். "
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
-"{rowNumber} கிடைவரிசையையும் {columnNumber} நெடுவரிசையையும், கிடைவரிசை தலைப்புரையின் துவக்கமாக "
-"அமைக்கவும்"
+"{rowNumber} கிடைவரிசையையும் {columnNumber} நெடுவரிசையையும், கிடைவரிசை "
+"தலைப்புரையின் துவக்கமாக அமைக்கவும்"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
-msgid "Already set row {rowNumber} column {columnNumber} as start of row headers"
+msgid ""
+"Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
-"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் ஏற்கெனவே கிடைவரிசை தலைப்புரையின் துவக்கமாக "
-"அமைக்கப்பட்டுள்ளது"
+"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் ஏற்கெனவே கிடைவரிசை "
+"தலைப்புரையின் துவக்கமாக அமைக்கப்பட்டுள்ளது"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
 msgstr ""
-"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் , கிடைவரிசை தலைப்புரையிலிருந்து நீக்கப்பட்டது"
+"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும் , கிடைவரிசை "
+"தலைப்புரையிலிருந்து நீக்கப்பட்டது"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
-msgstr "{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும், கிடைவரிசை தலைப்புரையில் காணப்படவில்லை"
+msgstr ""
+"{rowNumber} கிடைவரிசையும், {columnNumber} நெடுவரிசையும், கிடைவரிசை தலைப்புரையில் "
+"காணப்படவில்லை"
 
 msgid ""
-"Pressing once will set this cell as the first row header for any cells lower and to the right "
-"of it within this table. Pressing twice will forget the current row header for this cell."
+"Pressing once will set this cell as the first row header for any cells lower "
+"and to the right of it within this table. Pressing twice will forget the "
+"current row header for this cell."
 msgstr ""
-"ஒரு முறை அழுத்தினால், அட்டவணையின் தற்போதைய சிறுகட்டத்திற்கு கீழும், வலப் புறமாகவும் காணப்படும் "
-"சிறுகட்டங்களுக்கு தற்போதைய சிறுகட்டத்தை முதல் கிடைவரிசை தலைப்புரையாக அமைக்கும். இரு முறை அழுத்தினால், "
-"இச்சிறுகட்டத்திற்கான தற்போதைய கிடைவரிசை தலைப்புரையை மறக்கும். "
+"ஒரு முறை அழுத்தினால், அட்டவணையின் தற்போதைய சிறுகட்டத்திற்கு கீழும், வலப் புறமாகவும் "
+"காணப்படும் சிறுகட்டங்களுக்கு தற்போதைய சிறுகட்டத்தை முதல் கிடைவரிசை தலைப்புரையாக "
+"அமைக்கும். இரு முறை அழுத்தினால், இச்சிறுகட்டத்திற்கான தற்போதைய கிடைவரிசை தலைப்புரையை "
+"மறக்கும். "
 
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "Bold on"
@@ -8327,7 +8558,9 @@ msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
 #~ msgid " trendline {} "
 #~ msgstr "போக்கு வரிசை {} "
 
-#~ msgid "Chart area height equals {}, width equals {}, top equals {}, left equals {}"
+#~ msgid ""
+#~ "Chart area height equals {}, width equals {}, top equals {}, left equals "
+#~ "{}"
 #~ msgstr "விளக்கப்படத்தின் பகுதி: உயரம் {}, அகலம் {}, மேல் {}, இடது {}"
 
 #~ msgid "equation"
@@ -8358,14 +8591,15 @@ msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
 #~ msgstr "நீலப் பச்சை"
 
 #~ msgid ""
-#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in order to make "
-#~ "it more intuitive and consistent.\n"
-#~ "If you use the laptop layout, please see the What's New document for more information."
+#~ "In NVDA 2013.1, the laptop keyboard layout has been completely redesigned "
+#~ "in order to make it more intuitive and consistent.\n"
+#~ "If you use the laptop layout, please see the What's New document for more "
+#~ "information."
 #~ msgstr ""
-#~ "என்விடிஏ 2013.1 பதிப்பில், மாற்றமில்லாமலும், தன்னிச்சையாக பயன்படுத்தவும், மடிக்கணினி விசைப் பலகை வரைவு "
-#~ "முழுவதுமாக மறுவடிவமாக்கப்பட்டுள்ளது.\n"
-#~ "மடிக்கணினி வரைவை தாங்கள் பயன்படுத்துவதாக இருந்தால், மேலும் தகவல்களுக்கு, 'புதிதாக என்ன?' என்கிற ஆவணத்தை "
-#~ "காணவும். "
+#~ "என்விடிஏ 2013.1 பதிப்பில், மாற்றமில்லாமலும், தன்னிச்சையாக பயன்படுத்தவும், மடிக்கணினி "
+#~ "விசைப் பலகை வரைவு முழுவதுமாக மறுவடிவமாக்கப்பட்டுள்ளது.\n"
+#~ "மடிக்கணினி வரைவை தாங்கள் பயன்படுத்துவதாக இருந்தால், மேலும் தகவல்களுக்கு, 'புதிதாக "
+#~ "என்ன?' என்கிற ஆவணத்தை காணவும். "
 
 #~ msgid "New Laptop Keyboard layout"
 #~ msgstr "புதிய மடிக்கணினி விசைப் பலகை வரைவு"
@@ -8406,7 +8640,8 @@ msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
 #~ msgid "No location information for screen"
 #~ msgstr "திரைக்கு எந்த இருப்பிடத் தகவலுமில்லை"
 
-#~ msgid "Reports the hight, width and position of the current navigator object"
+#~ msgid ""
+#~ "Reports the hight, width and position of the current navigator object"
 #~ msgstr "வழிகாட்டிப் பொருளின் உயரம், அகலம், நிலை ஆகியவைகளை அறிவிக்கும்"
 
 #~ msgid "Set column header row"
@@ -8416,21 +8651,21 @@ msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
 #~ msgstr "நெடுவரிசையின் கிடைவரிசைத் தலைப்பு துடைக்கப்பட்டது"
 
 #~ msgid ""
-#~ "Pressing once will set the current row as the row where column headers should be found. "
-#~ "Pressing twice clears the setting."
+#~ "Pressing once will set the current row as the row where column headers "
+#~ "should be found. Pressing twice clears the setting."
 #~ msgstr ""
-#~ "ஒருமுறை அழுத்தினால், தற்போதைய கிடைவரிசையை, நெடுவரிசையின் தலைப்புகள் இருக்க வேண்டிய கிடைவரிசையாக "
-#~ "அமைக்கும். இருமுறை அழுத்தினால், அமைப்புகள் நீக்கப்படும்."
+#~ "ஒருமுறை அழுத்தினால், தற்போதைய கிடைவரிசையை, நெடுவரிசையின் தலைப்புகள் இருக்க "
+#~ "வேண்டிய கிடைவரிசையாக அமைக்கும். இருமுறை அழுத்தினால், அமைப்புகள் நீக்கப்படும்."
 
 #~ msgid "Set row header column"
 #~ msgstr "கிடைவரிசையின் நெடுவரிசைத் தலைப்பு அமைக்கப்பட்டது"
 
 #~ msgid ""
-#~ "Pressing once will set the current column as the column where row headers should be found. "
-#~ "Pressing twice clears the setting."
+#~ "Pressing once will set the current column as the column where row headers "
+#~ "should be found. Pressing twice clears the setting."
 #~ msgstr ""
-#~ "ஒருமுறை அழுத்தினால், தற்போதைய நெடுவரிசையை, கிடைவரிசையின் தலைப்புகள் இருக்க வேண்டிய நெடுவரிசையாக "
-#~ "அமைக்கும். இருமுறை அழுத்தினால், அமைப்புகள் நீக்கப்படும்."
+#~ "ஒருமுறை அழுத்தினால், தற்போதைய நெடுவரிசையை, கிடைவரிசையின் தலைப்புகள் இருக்க "
+#~ "வேண்டிய நெடுவரிசையாக அமைக்கும். இருமுறை அழுத்தினால், அமைப்புகள் நீக்கப்படும்."
 
 #, fuzzy
 #~ msgid "%s through %s"
@@ -8441,14 +8676,14 @@ msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
 
 #~ msgid ""
 #~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config "
-#~ "file at a later stage to make corrections. More details about the errors can be found in "
-#~ "the log file.\n"
+#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
+#~ "edit your config file at a later stage to make corrections. More details "
+#~ "about the errors can be found in the log file.\n"
 #~ msgstr ""
 #~ "தங்களின் அமைவடிவ கோப்பில் பிழைகள் உள்ளன. \n"
-#~ "இப்பிழைகளை சரிசெய்ய 'சரி' பொத்தானை அழுத்தவும், அல்லது மற்றொரு நேரம் அமைவடிவ கோப்பினை தாங்களாகவே "
-#~ "திருத்தம் செய்ய 'விலக்குக' பொத்தானை அழுத்தவும். இப்பிழைகள் குறித்த கூடுதல் தகவல்களை செயற்குறிப்பேட்டு "
-#~ "பதிவினில் காணலாம்.\n"
+#~ "இப்பிழைகளை சரிசெய்ய 'சரி' பொத்தானை அழுத்தவும், அல்லது மற்றொரு நேரம் அமைவடிவ "
+#~ "கோப்பினை தாங்களாகவே திருத்தம் செய்ய 'விலக்குக' பொத்தானை அழுத்தவும். இப்பிழைகள் "
+#~ "குறித்த கூடுதல் தகவல்களை செயற்குறிப்பேட்டு பதிவினில் காணலாம்.\n"
 
 #~ msgid "No automatic comments."
 #~ msgstr "தன்னியக்க கருத்துரைகள் ஏதுமில்லை"
@@ -8475,14 +8710,16 @@ msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
 #~ msgstr "தட்டை மறுபரிசீலனை நிலையில் எப்பொருளுமில்லை"
 
 #~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the position of the review "
-#~ "cursor within flat review"
+#~ "Moves navigator object to the object represented by the text at the "
+#~ "position of the review cursor within flat review"
 #~ msgstr ""
-#~ "தட்டை மறுபரிசீலனை நிலையில், மறுபரிசீலனைச் சுட்டியின் இடத்திலிருக்கும் பொருளுக்கு படிநிதியாக விளங்கும் "
-#~ "உரைக்கு வழிகாட்டிப் பொருளை நகர்த்தும்"
+#~ "தட்டை மறுபரிசீலனை நிலையில், மறுபரிசீலனைச் சுட்டியின் இடத்திலிருக்கும் பொருளுக்கு "
+#~ "படிநிதியாக விளங்கும் உரைக்கு வழிகாட்டிப் பொருளை நகர்த்தும்"
 
 #~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "ஏற்கெனவே இயக்கத்திலுள்ள மற்றொரு என்விடிஏ அமைப்புகள் உரையாடலை கருணைக்கூர்ந்து முதலில் மூடுங்கள்"
+#~ msgstr ""
+#~ "ஏற்கெனவே இயக்கத்திலுள்ள மற்றொரு என்விடிஏ அமைப்புகள் உரையாடலை கருணைக்கூர்ந்து முதலில் "
+#~ "மூடுங்கள்"
 
 #~ msgid "Translation &table:"
 #~ msgstr "மொழிப்பெயர்ப்பு அட்டவணை (&T)"
@@ -8522,13 +8759,16 @@ msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
 #~ msgstr "%s, மொத்தம் %s"
 
 #~ msgid ""
-#~ "This add-on seems to already be installed. Please remove the existing add-on and try again."
+#~ "This add-on seems to already be installed. Please remove the existing add-"
+#~ "on and try again."
 #~ msgstr ""
-#~ "இக்கூட்டுறுப்பு ஏற்கெனவே நிறுவப்பட்டிருப்பதாகத் தோன்றுகிறது. நிறுவப்பட்டிருக்கும் கூட்டுறுப்பை நீக்கிவிட்டு "
-#~ "மீண்டும் முயற்சியுங்கள்."
+#~ "இக்கூட்டுறுப்பு ஏற்கெனவே நிறுவப்பட்டிருப்பதாகத் தோன்றுகிறது. நிறுவப்பட்டிருக்கும் "
+#~ "கூட்டுறுப்பை நீக்கிவிட்டு மீண்டும் முயற்சியுங்கள்."
 
 #~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr "தற்போதைய மாற்றங்களை நீக்கிவிட்டு, சேமித்து வைத்திருக்கும் என்விடிஏ அமைவடிவத்தை ஏற்றுகிறது"
+#~ msgstr ""
+#~ "தற்போதைய மாற்றங்களை நீக்கிவிட்டு, சேமித்து வைத்திருக்கும் என்விடிஏ அமைவடிவத்தை "
+#~ "ஏற்றுகிறது"
 
 #~ msgid "We need your help in order to continue to improve NVDA.\n"
 #~ msgstr "என்விடிஏவை தொடர்ந்து மேம்படுத்த, தங்களின் உதவி தேவைப்படுகிறது.\n"

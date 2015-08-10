@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2015.3 =
+Najważniejsze zmiany w tej wersji to wstępne wsparcie dla Windows 10; możliwość wyłączenia nawigacji pojedynczymi literami w trybie czytania (użyteczne dla niektórych aplikacji webowych); poprawki obsługi Internet Explorer; poprawki nieczytelnego tekstu wpisywanego w niektórych aplikacjach z włączonym brajlem.
 
 == Nowości ==
 - Błędy pisowni są oznajmiane w polach edycji Internet Explorer i innych kontrolkach MSHTML. (#4174)
@@ -13,16 +14,18 @@
 - W trybie czytania, można teraz włączać i wyłączać nawigację pojedynczymi literami, naciskając NVDA+shift+space. Gdy wyłączona, klawisze pojedynczych liter są przekazywane do aplikacji, co jest użyteczne dla niektórych aplikacji webowych takich jak Gmail, Twitter i Facebook. (#3203)
 - Nowe tablice brajlowskie: fiński sześciopunktowy, irlandzki stopień 1, irlandzki stopień 2, koreański stopień 1 (2006), koreański stopień 2 (2006). (#5137, #5074, #5097)
 - Obsługiwana klawiatura QWERTY w monitorach Papenmeier BRAILLEX Live Plus. (#5181)
+- Eksperymentalna obsługa Microsoft Edge - przeglądarki www i silnika przeglądania w Windows 10. (#5212)
 
 
 == Zmiany ==
 - Zaktualizowany translator brajlowski liblouis do  wersji 2.6.3. (#5137)
+- Przy próbie instalacji wcześniejszej niż zainstalowana obecnie wersji NVDA, pojawi się ostrzeżenie, że jest to niezalecane i że NVDA powinno zostać całkowicie odinstalowane przed kontynuowaniem. (#5037)
 
 
 == Poprawki błędów ==
 - W trybie czytania w Internet Explorer i innych kontrolkach MSHTML, szybka nawigacja po polach formularza nie uwzględnia elementów listy prezentacji. (#4204)
-- W Firefox, NVDA nie próbuje od teraz tworzyć opisu paneli zakładek ARIA opartego na całym tekście wewnątrz. (#4638)
-- W Internet Explorer i innych kontrolkach MSHTML, przejście do sekcji, artykułów lub okien dialogowych nie zgłasza od teraz całej zawartości kontenera jako nazwy. (#5021)
+- W Firefox, NVDA nie próbuje od teraz tworzyć opisu paneli zakładek ARIA opartego na całym tekście wewnątrz, gdy punkt uwagi jest przesuwany w zakładce. (#4638)
+- W Internet Explorer i innych kontrolkach MSHTML, przejście do sekcji, artykułów lub okien dialogowych nie zgłasza od teraz całej zawartości kontenera jako nazwy. (#5021, #5025)
 - Podczas używania monitorów brajlowskich Baum/HumanWare/APH z klawiaturą brajlowską, wprowadzanie brajla nie przestaje działać po naciśnięciu innego typu klawisza na monitorze. (#3541)
 - W Windows 10, nadmiarowe informacje nie są zgłaszane po naciśnięciu alt+tab lub alt+shift+tab, aby przełączyć pomiędzy aplikacjami. (#5116)
 - Wpisywany tekst nie jest od teraz nieczytelny podczas używania niektórych aplikacji takich jak Microsoft Outlook z monitorem brajlowskim. (#2953)
@@ -31,6 +34,11 @@
 - Nadmiarowe spacje nie są wyświetlane w brajlu pomiędzy lub za identyfikatorem kontrolek i formatowania. (#5043)
 - Gdy aplikacja wolno odpowiada i przełączysz się z tej aplikacji, NVDA jest bardziej responsywne w innych aplikacjach w większości sytuacji. (#3831)
 - Wyskakujące powiadomienia Windows 10 są teraz zgłaszane zgodnie z oczekiwaniami. (#5136)
+- Wartość pól kombi (UI Automation) jest zgłaszana po zmianie w polach, gdzie to wcześniej nie działało.
+- W trybie czytania w przeglądarkach www, użycie tabulatora zachowuje się zgodnie z oczekiwaniami po przejściu do dokumentu w ramce. (#5227)
+- Można wyjść z ekranu blokady Windows 10 przy użyciu ekranu dotykowego. (#5220)
+- W Windows 7 i nowszych, tekst nie jest już nieczytelny podczas wpisywania w niektórych aplikacjach takich jak Wordpad czy Skype, przy użyciu monitora brajlowskiego. (#4291)
+- Na ekranie startowym Windows 10, nie można od teraz czytać schowka, uzyskiwać dostępu do uruchomionych aplikacji przy użyciu kursora przeglądu, zmieniać konfiguracji NVDA, etc. (#5269)
 
 
 == Zmiany dla programistów ==

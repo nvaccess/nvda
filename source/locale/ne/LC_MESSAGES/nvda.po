@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr 2013.1:6039\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-15 19:09+1000\n"
-"PO-Revision-Date: 2015-07-16 21:13+0545\n"
+"POT-Creation-Date: 2015-08-06 19:09+1000\n"
+"PO-Revision-Date: 2015-08-08 08:01+0545\n"
 "Last-Translator: drishtibachak@gmail.com\n"
 "Language-Team: Him Prasad Gautam <drishtibachak@gmail.com>\n"
 "Language: ne\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.6\n"
+"X-Generator: Poedit 1.8.2\n"
 "प्रथम अनुवाद मिति: २०६९ साल असार १५ गते\n"
 "पुनरावलोकन मिति: २०७१ साल श्रावण १५ गते\n"
 "अनुवादक: हिम प्रसाद गौतम(नेपाल) <drishtibachak@gmail.com>\n"
@@ -573,7 +573,7 @@ msgstr "टाँक"
 #. Translators: Displayed in braille for an object which is a
 #. check box.
 msgid "chk"
-msgstr "टिक"
+msgstr "चिनो"
 
 #. Translators: Displayed in braille for an object which is a
 #. radio button.
@@ -583,7 +583,7 @@ msgstr "रेडियो टाँक"
 #. Translators: Displayed in braille for an object which is a
 #. combo box.
 msgid "cbo"
-msgstr "कम्बो बाकस"
+msgstr "संयोज्य बाकस"
 
 #. Translators: Displayed in braille for an object which is a
 #. link.
@@ -649,7 +649,7 @@ msgstr "हरफ"
 
 #. Translators: Displayed in braille when an object is clickable.
 msgid "clk"
-msgstr "टिक"
+msgstr "चिनो"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
@@ -758,7 +758,7 @@ msgstr "यो कागजातलाई समर्थन गर्दैन
 msgid "Lists various types of elements in this document"
 msgstr "यो कागजातमा बएका तत्त्वहरूको सूचि प्रस्तुत गर्छ ।"
 
-#. Translators: the description for the activatePosition script on virtualBuffers.
+#. Translators: the description for the activatePosition script on browseMode documents.
 msgid "activates the current object in the document"
 msgstr "कागजातमा भएका चालू वस्तुलाई सक्रिय बनाउ छ ।"
 
@@ -1068,35 +1068,35 @@ msgstr "पछाडि रेडियो टाँक छैन"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next combo box"
-msgstr "अगिल्लो कम्बो बाकसमा सर्छ ।"
+msgstr "अगिल्लो संयोज्य बाकसमा सर्छ ।"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next combo box"
-msgstr "अगाडि कम्बो बाकस छैन"
+msgstr "अगाडि संयोज्य बाकस छैन"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous combo box"
-msgstr "पछिल्लो कम्बो बाकसमा सर्छ"
+msgstr "पछिल्लो संयोज्य बाकसमा सर्छ"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous combo box"
-msgstr "पछाडि कम्बो बाकस छैन"
+msgstr "पछाडि संयोज्य बाकस छैन"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next check box"
-msgstr "अगिल्लो चेक बाकसमा सर्छ"
+msgstr "अगिल्लो चिनो बाकसमा सर्छ"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next check box"
-msgstr "अगाडि चेक बाकस छैन"
+msgstr "अगाडि चिनो बाकस छैन"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous check box"
-msgstr "पछिल्लो चेक बाकसमा सर्छ"
+msgstr "पछिल्लो चिनो बाकसमा सर्छ"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous check box"
-msgstr "पछाडि चेक बाकस छैन"
+msgstr "पछाडि चिनो बाकस छैन"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next graphic"
@@ -1232,6 +1232,43 @@ msgstr "&सक्रिय बनाउ"
 #. in the browse mode Elements List dialog.
 msgid "&Move to"
 msgstr "&प्रस्थान"
+
+#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
+#, python-format
+msgid "%s landmark"
+msgstr "%s कित्ता"
+
+#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "%s चयनित"
+
+#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
+msgid "No long description"
+msgstr "लामो विवरण छैन ।"
+
+#. Translators: the description for the activateLongDescription script on browseMode documents.
+msgid "Shows the long description at this position if one is found."
+msgstr "यदि फेला पर्योr भने यो अवस्थामा लामो विवरण देखाउँछ ।"
+
+#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
+#. But there is no container.
+msgid "Not in a container"
+msgstr "भाँडामा छैन"
+
+#. Translators: Description for the Move to start of container command in browse mode.
+msgid "Moves to the start of the container element, such as a list or table"
+msgstr "तालिका वा सूचि जस्ता तत्व हुने भाँडोको सुरुमा सर्छ, "
+
+#. Translators: a message reported when:
+#. Review cursor is at the bottom line of the current navigator object.
+#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
+msgid "bottom"
+msgstr "पुछार"
+
+#. Translators: Description for the Move past end of container command in browse mode.
+msgid "Moves past the end  of the container element, such as a list or table"
+msgstr "सुचि अथवा तालिका जस्ता विगतका एकाईका सामाग्रीको अन्तमा जान्छ ।, "
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1962,11 +1999,6 @@ msgctxt "color name"
 msgid "Yellow Green"
 msgstr "पहेँलो हरियो"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "%s चयनित"
-
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
@@ -1990,7 +2022,7 @@ msgstr "पाटी"
 
 #. Translators: The text used to identify check boxes such as select check box.
 msgid "check box"
-msgstr "चेक बाकस"
+msgstr "चिनो बाकस"
 
 #. Translators: The text used to identify radio buttons such as yes or no radio button.
 msgid "radio button"
@@ -2023,7 +2055,7 @@ msgstr "मेनु"
 
 #. Translators: Used to identify combo boxes such as file type combo box.
 msgid "combo box"
-msgstr "कम्बो बाकस"
+msgstr "संयोज्य बाकस"
 
 #. Translators: The word used for lists such as folder list.
 msgid "list"
@@ -2091,7 +2123,6 @@ msgid "cell"
 msgstr "कोसीका"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
-#. Translators: A column in a column chart.
 msgid "column"
 msgstr "महल"
 
@@ -2558,11 +2589,11 @@ msgstr "दबाइयो"
 
 #. Translators: This is presented when a check box is checked.
 msgid "checked"
-msgstr "टिक छ"
+msgstr "चिनो छ"
 
 #. Translators: This is presented when a three state check box is half checked.
 msgid "half checked"
-msgstr "अर्ध टिकयुक्त"
+msgstr "अर्ध चिनोयुक्त"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 msgid "read only"
@@ -2637,13 +2668,13 @@ msgstr "केन्द्रित योग्य"
 
 #. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
 msgid "clickable"
-msgstr "किटिक्क गर्ने"
+msgstr "किचिनो्क गर्ने"
 
 msgid "editable"
 msgstr "सम्पादन योग्य"
 
 msgid "checkable"
-msgstr "टिक लाउन मिल्ने "
+msgstr "चिनो लाउन मिल्ने "
 
 msgid "draggable"
 msgstr "घिसार्न मिल्ने"
@@ -2700,7 +2731,7 @@ msgstr "चयन रहीत"
 
 #. Translators: This is presented when a checkbox is not checked.
 msgid "not checked"
-msgstr "टिक छैन"
+msgstr "चिनो छैन"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
 msgid ""
@@ -2804,7 +2835,7 @@ msgid "Braille"
 msgstr "ब्रेल"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: The label for the Tools submenu in NVDA menu.
+msgctxt "script category"
 msgid "Tools"
 msgstr "औजारहरू"
 
@@ -2865,19 +2896,19 @@ msgstr "अनुप्रयोग कर्सर रहेको सक्र
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "left click"
-msgstr "वाञाँ टाँक किटिक्क "
+msgstr "वाञाँ टाँक किचिनो्क "
 
 #. Translators: Input help mode message for left mouse click command.
 msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "सुलसुले रहेको स्थानमा वाञाँ टाँक एक पटक किटिक्क पार्ने छ ।"
+msgstr "सुलसुले रहेको स्थानमा वाञाँ टाँक एक पटक किचिनो्क पार्ने छ ।"
 
 #. Translators: Reported when right mouse button is clicked.
 msgid "right click"
-msgstr "दायाँ टाँक किटिक्क"
+msgstr "दायाँ टाँक किचिनो्क"
 
 #. Translators: Input help mode message for right mouse click command.
 msgid "Clicks the right mouse button once at the current mouse position"
-msgstr "सुलसुले रहेको स्थानमा दायाँ टाँक एक पटक किटिक्क पार्ने छ "
+msgstr "सुलसुले रहेको स्थानमा दायाँ टाँक एक पटक किचिनो्क पार्ने छ "
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 msgid "left mouse button unlock"
@@ -3234,15 +3265,15 @@ msgstr "चोकौस सूचित अवस्था उल्टिन्
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
-msgstr "किटिक्क हुन्छ भने बताउदैन"
+msgstr "किचिनो्क हुन्छ भने बताउदैन"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable on"
-msgstr "किटिक्क हुन्छ भने बताउ"
+msgstr "किचिनो्क हुन्छ भने बताउ"
 
 #. Translators: Input help mode message for toggle report if clickable command.
 msgid "Toggles on and off reporting if clickable"
-msgstr "किटिक्क हुन्छ भने सूचित अवस्था उल्टिन्छ ।"
+msgstr "किचिनो्क हुन्छ भने सूचित अवस्था उल्टिन्छ ।"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -3421,12 +3452,6 @@ msgid ""
 msgstr ""
 "चालू समीक्षा कर्सर स्थित पङ्क्तिमा रहेको चालू विचरण वस्तुको बारेमा जानकारी दिन्छ । यदि यो कुञ्जी दुई पटक दबाएमा "
 "चालू पङ्क्तिको हिज्जे र तिन पटक दबाएमा वर्णको विवरण सहित चालू पङ्क्तिको हिज्जे बताउँछ ।"
-
-#. Translators: a message reported when:
-#. Review cursor is at the bottom line of the current navigator object.
-#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "पुछार"
 
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
@@ -3978,7 +4003,7 @@ msgstr "कागजातहरूको व्यवस्थापन"
 msgid "Commands Quick Reference"
 msgstr "द्रुत आदेश अनुसूची"
 
-#. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
+#. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
 msgstr "उपयोग निर्देशिका"
 
@@ -4620,29 +4645,64 @@ msgstr "नेत्रवाणी वाचकी दृश्यक"
 msgid "&Language"
 msgstr "&भाषा "
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Language"
+msgstr "भाषा"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Voice"
 msgstr "&आवाज"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Voice"
+msgstr "आवाज"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&ariant"
 msgstr "&स्वर"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Variant"
+msgstr "स्वर"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
 msgstr "&दर"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate"
+msgstr "दर"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "आय&तन"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Volume"
+msgstr "आयतन"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
 msgstr "&चर्कोपना"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Pitch"
+msgstr "चर्कोपना"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&उतार-चढाव"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Inflection"
+msgstr "उतार-चढाव"
 
 msgid "text mode"
 msgstr "पाठ मुद्रा"
@@ -5621,6 +5681,14 @@ msgstr "नेत्रवाणीलाई &भित्र्याउ "
 msgid "Reload plugins"
 msgstr "फेरि पङ्क्तिसित जोडि देउ"
 
+#. Translators: The label for the Tools submenu in NVDA menu.
+msgid "Tools"
+msgstr "औजारहरू"
+
+#. Translators: The label of a menu item to open NVDA user guide.
+msgid "&User Guide"
+msgstr "&उपयोग निर्देशिका"
+
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
 msgstr "द्रुत आदेशको &अनुसूची"
@@ -6083,6 +6151,7 @@ msgstr ""
 "आवद्ध हुने छ ।\n"
 "के यसै उतेजकलाई राख्ने हो?"
 
+#. Translators: The title of a warning dialog.
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 msgid "Warning"
 msgstr "चेतावनी"
@@ -6193,6 +6262,22 @@ msgstr "&फिरन्ते अभियोजन वर्तमान उ�
 #. Translators: The label of a button to continue with the operation.
 msgid "&Continue"
 msgstr "&निरन्तरता"
+
+#. Translators: A warning presented when the user attempts to downgrade NVDA
+#. to an older version.
+msgid ""
+"You are attempting to install an earlier version of NVDA than the version currently installed. If "
+"you really wish to revert to an earlier version, you should first cancel this installation and "
+"completely uninstall NVDA before installing the earlier version."
+msgstr ""
+"तपाइ हाल चलिरहेको नेत्रवाणीको संस्करण भन्दा पुरानो संस्करण भित्र्याउन खोज्दै हुनु हुन्छ । यदि तपाइइ पुरानो संस्करण नै "
+"राख्न चाहनु हुन्छ भने, तपाइले यो भित्र्याउने कार्यलाई रोकेर चालू नेत्रवाणीलाई पुरै हटाउनु पर्छ अनि त्यस पछि मात्र यो "
+"पुरानो संस्करणलाई भित्र्याउनु पर्ने हुन्छ ।"
+
+#. Translators: The label of a button to proceed with installation,
+#. even though this is not recommended.
+msgid "&Proceed with installation (not recommended)"
+msgstr "&भित्र्य्याउने कार्य आरम्भ गर्नु होस् । (सिफारिस गरिदैन)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -6867,7 +6952,7 @@ msgstr "&कङ्काल बताउ"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report if &clickable"
-msgstr "&किटिक्क हुन्छ भने बताउ"
+msgstr "&किचिनो्क हुन्छ भने बताउ"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -7091,11 +7176,6 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "{x},{y} मा"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-#, python-format
-msgid "%s landmark"
-msgstr "%s कित्ता"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "ताजा भयो"
@@ -7103,14 +7183,6 @@ msgstr "ताजा भयो"
 #. Translators: Reported while loading a document.
 msgid "Loading document..."
 msgstr "कागजातहरू पल्टाउँदै छु"
-
-#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-msgid "No long description"
-msgstr "लामो विवरण छैन ।"
-
-#. Translators: the description for the activateLongDescription script on virtualBuffers.
-msgid "Shows the long description at this position if one is found."
-msgstr "यदि फेला पर्योr भने यो अवस्थामा लामो विवरण देखाउँछ ।"
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -7149,19 +7221,6 @@ msgstr "तालिकाको अगिल्लो महलमा सर्
 #. Translators: the description for the previous table column script on virtualBuffers.
 msgid "moves to the previous table column"
 msgstr "तालिकाको पछिल्लो महलमा सर्छ ।"
-
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
-msgid "Not in a container"
-msgstr "भाँडामा छैन"
-
-#. Translators: Description for the Move to start of container command in browse mode.
-msgid "Moves to the start of the container element, such as a list or table"
-msgstr "तालिका वा सूचि जस्ता तत्व हुने भाँडोको सुरुमा सर्छ, "
-
-#. Translators: Description for the Move past end of container command in browse mode.
-msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "सुचि अथवा तालिका जस्ता विगतका एकाईका सामाग्रीको अन्तमा जान्छ ।, "
 
 msgid "Taskbar"
 msgstr "कार्य पट्टी"
@@ -7474,17 +7533,17 @@ msgstr "रेखा"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line with Markers"
-msgstr "चिनोयुक्त रेखा"
+msgstr "निसानीयुक्त रेखा"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line with Markers"
-msgstr "चिनो युक्त स्टाक रेखा"
+msgstr "निसानी युक्त स्टाक रेखा"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line with Markers"
-msgstr "१०० प्रतिशत चिनोयुक्त स्टाक रेखा"
+msgstr "१०० प्रतिशत निसानीयुक्त स्टाक रेखा"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7559,7 +7618,7 @@ msgstr "स्थल राडार"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Radar with Data Markers"
-msgstr "चिनो युक्त राडार"
+msgstr "निसानी युक्त राडार"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7614,7 +7673,7 @@ msgstr "छरपस्ट रेखाहरु"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Lines and No Data Markers"
-msgstr "छरपस्ट रेखाहरु र तथ्याङ्क चिनो हिनता"
+msgstr "छरपस्ट रेखाहरु र तथ्याङ्क निसानी हिनता"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7624,7 +7683,7 @@ msgstr "छरपस्ट मिलेका रेखाहरु"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Scatter with Smoothed Lines and No Data Markers"
-msgstr "चिल्ला फैलिएका रेखाहरु र तथ्याङ्क चिनो नभएको "
+msgstr "चिल्ला फैलिएका रेखाहरु र तथ्याङ्क निसानी नभएको "
 
 #. Translators: Message reporting the title and type of a chart.
 msgid "Chart title: {chartTitle}, type: {chartType}"
@@ -7677,6 +7736,11 @@ msgstr "कुनै श्रेणि परिभाषित छैन ।"
 #. Translators: A slice in a pie chart.
 msgid "slice"
 msgstr "चिरा"
+
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "स्तम्भ "
 
 #. Translators: A data point in a line chart.
 msgid "data point"
