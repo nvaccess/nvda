@@ -4,6 +4,8 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2015.3 =
+Les points forts de cette version incluent le support initial de Windows 10; la possibilité de désactiver la navigation par lettre en mode navigation (utile pour certainnes applications web); Des améliorations sous Internet Explorer; et des corrections de texte brouillé quand on tape dans certaines applications avec le braille actif.
+ 
 
 == Nouvelles Fonctionnalités ==
 - L'existence de fautes d'orthographe est annoncée dans les zones d'édition pour Internet Explorer et autres contrôles MSHTML. (#4174)
@@ -13,7 +15,13 @@ Quoi de Neuf dans NVDA
 - En mode navigation, vous pouvez maintenant activer ou désactiver la navigation par lettre unique en pressant NVDA+maj+espace. Quand elle est désactivée, les touches de lettres uniques sont passées à l'application, ce qui est utile pour quelques applications web comme Gmail, Twitter et Facebook. (#3203)
 - Nouvelles tables braille : Finnois 6 points, Irlandais intégral, Irlandais abrégé, Coréen intégral (2006), Coréen abrégé (2006). (#5137, #5074, #5097)
 - Le clavier QWERTY de l'afficheur braille Papenmeier BRAILLEX Live Plus est maintenant supporté. (#5181)
+- Support expérimental du navigateur web et moteur de navigation Microsoft Edge sous Windows 10. (#5212)
  
+
+== Changements ==
+ - Mise à jour du traducteur braille Liblouis à la version 2.6.3. (#5137)
+- Si vous essayez d'installer une version de NVDA plus ancienne que la version déjà installée, vous serez maintenant averti que ce n'est pas recommandé et que NVDA devrait être complètement désinstallé avant de procéder. (#5037)
+
  
 == Corrections de Bogues ==
 - En mode navigation sous Internet Explorer et autres contrôles MSHTML, la navigation rapide par champs de formulaire n'inclut plus incorrectement les éléments de listes de présentation. (#4204)
@@ -27,6 +35,11 @@ Quoi de Neuf dans NVDA
 - En braille, des espaces irrelevants ne sont plus affichés entre ou après des indicateurs de contrôles et de présentation. (#5043)
 - Quand une application répond lentement et que vous passez sur une autre fenêtre, NVDA est maintenant beaucoup plus réactif sur les autres applications dans la plupart des cas. (#3831)
 - Les notifications de Toast de Windows 10 sont maintenant annoncées comme prévu. (#5136)
+- La valeur est maintenant annoncée quand elle change dans certaines listes déroulantes (UI Automation) dans des cas où ce n'était pas le cas précédemment.
+- En mode navigation dans les navigateurs web, la tabulation fonctionne maintenant comme prévu après avoir tabulé vers un document cadre. (#5227)
+- L'écran de verrouillage de Windows 10 peut maintenant être quitté en utilisant un écran tactile. (#5220)
+- Sous Windows 7 et au-delà, le texte n'est plus mélangé quand on tape dans certaines applications comme Wordpad et Skype et qu'on utilise un afficheur braille. (#4291)
+- Sur l'écran de verrouillage de Windows 10 , il n'est plus possible de lire le presse-papiers, d'accéder aux applications en cours d'exécution avec le curseur de revue, de changer la configuration de NVDA, etc. (#5269)
 
 
 == Changements pour les Développeurs ==
