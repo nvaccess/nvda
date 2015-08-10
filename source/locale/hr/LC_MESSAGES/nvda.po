@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-15 19:09+1000\n"
-"PO-Revision-Date: 2015-07-24 19:00+0100\n"
+"POT-Creation-Date: 2015-08-06 19:09+1000\n"
+"PO-Revision-Date: 2015-08-06 19:43+0100\n"
 "Last-Translator: zvonimir stanečić <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -738,11 +738,11 @@ msgstr "mod pretraživanja"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
-msgstr ""
+msgstr "Brzo kretanje je isključeno"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
 msgid "Single letter navigation on"
-msgstr ""
+msgstr "Brzo kretanje je uključeno"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 msgid ""
@@ -750,6 +750,9 @@ msgid ""
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
 msgstr ""
+"Uključuje i isključuje brzo kretanje po dokumentu. kada je uključeno, tipke "
+"u načinu pregleda preskaću na raznovrsne djelove dokumenta na stranici. kada "
+"je isključeno, ove su tipke proslijeđene aplikaciji"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
@@ -759,7 +762,7 @@ msgstr "Nije podržano u ovom dokumentu"
 msgid "Lists various types of elements in this document"
 msgstr "prikazuje razne vrste elemenata u ovom dokumentu"
 
-#. Translators: the description for the activatePosition script on virtualBuffers.
+#. Translators: the description for the activatePosition script on browseMode documents.
 msgid "activates the current object in the document"
 msgstr "aktivira trenutni objekt u dokumentu"
 
@@ -1233,6 +1236,43 @@ msgstr "&Aktivirati"
 #. in the browse mode Elements List dialog.
 msgid "&Move to"
 msgstr "&Pomak na"
+
+#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
+#, python-format
+msgid "%s landmark"
+msgstr "%s orijentir"
+
+#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "odabrano %s"
+
+#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
+msgid "No long description"
+msgstr "Nema dugog opisa"
+
+#. Translators: the description for the activateLongDescription script on browseMode documents.
+msgid "Shows the long description at this position if one is found."
+msgstr "Pokazuje dugi opis na ovom položaju ako se pronađe."
+
+#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
+#. But there is no container.
+msgid "Not in a container"
+msgstr "Nije u sadržanom mjestu"
+
+#. Translators: Description for the Move to start of container command in browse mode.
+msgid "Moves to the start of the container element, such as a list or table"
+msgstr "Premiješta na početak sadržanog elementa, kao što je lista ili tablica"
+
+#. Translators: a message reported when:
+#. Review cursor is at the bottom line of the current navigator object.
+#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
+msgid "bottom"
+msgstr "dno"
+
+#. Translators: Description for the Move past end of container command in browse mode.
+msgid "Moves past the end  of the container element, such as a list or table"
+msgstr "Premiješta iza kraja sadržanog elementa, kao što je lista ili tablica"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1963,11 +2003,6 @@ msgctxt "color name"
 msgid "Yellow Green"
 msgstr "žuto zelena"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "odabrano %s"
-
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
@@ -2092,7 +2127,6 @@ msgid "cell"
 msgstr "ćelija"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
-#. Translators: A column in a column chart.
 msgid "column"
 msgstr "stupac"
 
@@ -2812,7 +2846,7 @@ msgid "Braille"
 msgstr "Brajica"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: The label for the Tools submenu in NVDA menu.
+msgctxt "script category"
 msgid "Tools"
 msgstr "Alati"
 
@@ -3473,12 +3507,6 @@ msgstr ""
 "pregled. Ukoliko se ova tipka pritisne dvaput, redak se slovka. Na treći "
 "pritisak, redak se slovka pomoću znakovnih opisa."
 
-#. Translators: a message reported when:
-#. Review cursor is at the bottom line of the current navigator object.
-#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "dno"
-
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
@@ -3581,7 +3609,7 @@ msgstr "način izgovora zvučni signali"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
 msgid "speech mode talk"
-msgstr "način izgovora govori"
+msgstr "način izgovora govor"
 
 #. Translators: Input help mode message for toggle speech mode command.
 msgid ""
@@ -3650,19 +3678,20 @@ msgstr ""
 #. Translators: Input help mode message for report current focus command.
 msgid "reports the object with focus. If pressed twice, spells the information"
 msgstr ""
+"Izvještava o objektu koji trenutno ima fokus. ako je pritisnuto dva put, "
+"slovka informaciju"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "Statusna linija nije pronađena"
 
 #. Translators: Input help mode message for report status line text command.
-#, fuzzy
 msgid ""
 "reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information"
 msgstr ""
 "čita trenutnu traku stanja aplikacije i premiješta kursor za navigaciju na "
-"istu"
+"istu. Ako je pritisnuto dva puta, slovka informaciju."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -4135,7 +4164,7 @@ msgstr "Dokumentacija"
 msgid "Commands Quick Reference"
 msgstr "Brzi ispis naredbi"
 
-#. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
+#. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
 msgstr "Vodič za korisnike"
 
@@ -4217,7 +4246,7 @@ msgstr "proizvoljna aplikacija 2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "backspace"
-msgstr "povratno brisanje"
+msgstr "bekspejs"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "caps lock"
@@ -4249,31 +4278,31 @@ msgstr "num enter"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "escape"
-msgstr "iskeip"
+msgstr "eskeip"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "page up"
-msgstr "stranica gore"
+msgstr "pejdž ap"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "page down"
-msgstr "stranica dolje"
+msgstr "peidž daun"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "end"
-msgstr "kraj"
+msgstr "end"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "home"
-msgstr "početak"
+msgstr "houm"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "delete"
-msgstr "brisanje"
+msgstr "dilít"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad delete"
-msgstr "num brisanje"
+msgstr "num dilít"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left arrow"
@@ -4781,29 +4810,64 @@ msgstr "NVDA Preglednik Govora"
 msgid "&Language"
 msgstr "&Jezik"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Language"
+msgstr "Jezik"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Voice"
 msgstr "&Glas"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Voice"
+msgstr "Glas"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&ariant"
 msgstr "V&rsta"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Variant"
+msgstr "Vrsta"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
 msgstr "&Brzina"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate"
+msgstr "Brzina"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "&Glasnoća"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Volume"
+msgstr "Glasnoća"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
 msgstr "&Visina"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Pitch"
+msgstr "Visina"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Modulacija"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Inflection"
+msgstr "Modulacija"
 
 msgid "text mode"
 msgstr "tekstualni mod"
@@ -5822,6 +5886,14 @@ msgstr "&Instaliraj NVDA..."
 msgid "Reload plugins"
 msgstr "Iznova učitaj dodatke"
 
+#. Translators: The label for the Tools submenu in NVDA menu.
+msgid "Tools"
+msgstr "Alati"
+
+#. Translators: The label of a menu item to open NVDA user guide.
+msgid "&User Guide"
+msgstr "Vodič za korisnike"
+
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
 msgstr "&Brzi ispis naredbi"
@@ -6302,6 +6374,7 @@ msgstr ""
 "uklonjen iz tog profila i povezan s ovim.\n"
 "Jeste li sigurni da želite nastaviti?"
 
+#. Translators: The title of a warning dialog.
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 msgid "Warning"
 msgstr "Upozorenje"
@@ -6431,6 +6504,24 @@ msgstr "Kopiraj konfiguraciju &prijenosne kopije u trenutni korisnički račun"
 #. Translators: The label of a button to continue with the operation.
 msgid "&Continue"
 msgstr "&Nastavi"
+
+#. Translators: A warning presented when the user attempts to downgrade NVDA
+#. to an older version.
+msgid ""
+"You are attempting to install an earlier version of NVDA than the version "
+"currently installed. If you really wish to revert to an earlier version, you "
+"should first cancel this installation and completely uninstall NVDA before "
+"installing the earlier version."
+msgstr ""
+"Pokušavate instalirati stariju inačicu  NVDA koja je starija od trenutno "
+"instalirane inačice. Ako doista želite povratiti stariju inačicu NVDA, "
+"trebali biste otkazati ovu instalaciju i ukloniti prethodnu inačicu prije "
+"instalacije nove inačice NVDA."
+
+#. Translators: The label of a button to proceed with installation,
+#. even though this is not recommended.
+msgid "&Proceed with installation (not recommended)"
+msgstr "Nastavi instalaciju (Ne preporučuje se)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -7347,11 +7438,6 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "na {x}, {y}"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-#, python-format
-msgid "%s landmark"
-msgstr "%s orijentir"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "osvježeno"
@@ -7359,14 +7445,6 @@ msgstr "osvježeno"
 #. Translators: Reported while loading a document.
 msgid "Loading document..."
 msgstr "Učitavanje dokumenta..."
-
-#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-msgid "No long description"
-msgstr "Nema dugog opisa"
-
-#. Translators: the description for the activateLongDescription script on virtualBuffers.
-msgid "Shows the long description at this position if one is found."
-msgstr "Pokazuje dugi opis na ovom položaju ako se pronađe."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -7409,19 +7487,6 @@ msgstr "premiješta na sljedeći stupac u tablici"
 #. Translators: the description for the previous table column script on virtualBuffers.
 msgid "moves to the previous table column"
 msgstr "premiješta na prethodni stupac u tablici"
-
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
-msgid "Not in a container"
-msgstr "Nije u sadržanom mjestu"
-
-#. Translators: Description for the Move to start of container command in browse mode.
-msgid "Moves to the start of the container element, such as a list or table"
-msgstr "Premiješta na početak sadržanog elementa, kao što je lista ili tablica"
-
-#. Translators: Description for the Move past end of container command in browse mode.
-msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "Premiješta iza kraja sadržanog elementa, kao što je lista ili tablica"
 
 msgid "Taskbar"
 msgstr "Traka zadataka"
@@ -7944,6 +8009,11 @@ msgstr "nema definiranih serija"
 #. Translators: A slice in a pie chart.
 msgid "slice"
 msgstr "komadić"
+
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "stupac"
 
 #. Translators: A data point in a line chart.
 msgid "data point"

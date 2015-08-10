@@ -56,7 +56,7 @@ Tämä koskee sekä alkuperäisiä että muokattuja ohjelmistokopioita ja kaikki
 Voit [tarkastella koko lisenssiä http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] saadaksesi lisätietoja.
 
 + Järjestelmävaatimukset +
-- Käyttöjärjestelmät: kaikki 32- ja 64-bittiset Windows XP:n, Windows Vistan, Windows 7:n ja Windows 8:n versiot (palvelinversiot mukaan lukien).
+- Käyttöjärjestelmät: kaikki 32- ja 64-bittiset Windows XP:n, Windows Vistan, Windows 7:n, Windows 8:n ja Windows 10:n versiot (palvelinversiot mukaan lukien).
  - 32-bittisessä Windows XP:ssä on oltava asennettuna Service Pack 2 tai uudempi.
  - Windows Server 2003:ssa on oltava asennettuna Service Pack 1 tai uudempi.
 - Muistia (RAM): 256 Mt tai enemmän
@@ -341,7 +341,7 @@ Huom: Numlockin on oltava pois käytöstä, jotta numeronäppäimistön näppäi
 
 ++ Tekstin tarkasteleminen ++[ReviewingText]
 NVDA:n avulla on mahdollista lukea [ruutua #ScreenReview], nykyistä [asiakirjaa #DocumentReview] tai nykyistä [objektia #ObjectReview] merkeittäin, sanoittain tai riveittäin.
-Tästä on eniten hyötyä paikoissa, joissa ei ole [järjestelmäkohdistinta #SystemCaret] (Windowsin komentokehote mukaan lukien).
+Tästä on eniten hyötyä paikoissa, joissa ei ole [järjestelmäkohdistinta #SystemCaret] (Windowsin komentokonsoli-ikkunat mukaan lukien).
 Voit käyttää tätä esim. valintaikkunassa olevan ilmoituksen lukemiseen.
 
 Kun siirrät tarkastelukohdistinta, järjestelmäkohdistin ei seuraa mukana, joten tekstin tarkastelu onnistuu muokkauskohtaa menettämättä.
@@ -1977,8 +1977,9 @@ Seuraavia malleja tuetaan:
 -
 
 Voit määrittää näytön käyttämän sarjaportin NVDA:n Pistekirjoitusasetukset-valintaikkunasta.
+
 Seuraavassa on näiden pistenäyttöjen näppäinmääritykset.
-Katso [EcoBraillen ohjeesta ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] kuvaukset näppäinten paikoista.
+Katso [EcoBraillen käyttöohjeesta ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] kuvaukset näppäinten paikoista.
 
 %kc:beginInclude
 || Nimi | Näppäin |
@@ -2062,9 +2063,9 @@ Seuraavat tilan ilmaisimet on myös määritetty:
 
 ++ Komentorivivalitsimet ++[CommandLineOptions]
 NVDA hyväksyy käynnistyessään yhden tai useamman toimintaansa vaikuttavan komentorivivalitsimen.
-Voit antaa kerralla niin monta valitsinta kuin tarvitset.
-Valitsimet voidaan antaa pikakuvakkeesta käynnistettäessä (syötetään kuvakkeen Ominaisuudet-valintaikkunassa olevaan Kohde:-kenttään), Suorita-valintaikkunasta (Käynnistä-valikko -> Suorita tai Windows+R) tai Windowsin komentokehotteesta.
-Valitsimet erotetaan NVDA:n ohjelmatiedoston nimestä ja toisistaan välilyönneillä.
+Voit käyttää kerralla niin montaa valitsinta kuin tarvitset.
+Valitsimet voidaan antaa pikakuvakkeesta käynnistettäessä (syötetään kuvakkeen Ominaisuudet-valintaikkunassa olevaan Kohde-kenttään), Suorita-valintaikkunasta (Käynnistä-valikko -> Suorita tai Windows+R) tai Windowsin komentokehotteesta.
+Valitsimet erotetaan NVDA:n ohjelmatiedoston nimestä ja toisistaan välilyönnillä.
 Esimerkiksi asennuksen aikana Työpöydälle luodussa pikakuvakkeessa on -r-valitsin, joka sulkee NVDA:n käynnissä olevan version ennen uuden käynnistämistä.
 Toinen hyödyllinen valitsin on --disable-addons, joka poistaa kaikki lisäosat käytöstä.
 Sen avulla voit selvittää, aiheuttaako jokin lisäosa ongelmia.
@@ -2073,7 +2074,7 @@ Voit esimerkiksi sulkea NVDA:n nykyisen version kirjoittamalla seuraavan komenno
 
 nvda -q
 
-Joistakin komentorivivalitsimista on sekä lyhyt että pitkä muoto, kun taas joistakin on vain pitkä muoto.
+Joistakin komentorivivalitsimista on sekä lyhyt että pitkä muoto, kun taas joistakin on vain pitkä.
 Voit yhdistellä lyhyitä valitsimia näin:
 | nvda -rm | Tämä sulkee NVDA:n nykyisen version ja käynnistää uuden poistaen samalla käynnistysäänet käytöstä jne. |
 | nvda -rm --disable-addons | Muuten sama kuin edellä, mutta poistaa myös lisäosat käytöstä. |

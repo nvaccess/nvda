@@ -4,6 +4,8 @@ Que hai de Novo no NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2015.3 =
+O subliñable nesta versión inclúe o apoio inicial para Windows 10; a capacidade de deshabilitar a navegación de unha soa letra no modo exploración (útil para algunhas aplicacións web); melloras no Internet Explorer; e correccións para texto ilexible ó se escrebir en certas aplicacións co braille habilitado.
+
 
 == Novas Características ==
 - A existencia de erros de ortografía anúnciase Nos campos editables para o Internet Explorer e outros controis MSHTML. (#4174)
@@ -13,16 +15,18 @@ Que hai de Novo no NVDA
 - No modo exploración, agora podes  activar e desactivar a navegación con unha soa letra premendo NVDA+shift+espazo. Cando se desactive, as teclas de unha soa letra pásanse á aplicación, o que é útil para algunhas aplicacións web como Gmail, Twitter e Facebook. (#3203)
 - Novas táboas de transcripción braille: Finés de 6 pontos, Irlandés grao 1, Irlandés grao 2, Coreán grao 1 (2006), Coreán grao 2 (2006). (#5137, #5074, #5097)
 - Agora sopórtase o teclado QWERTY na pantalla braille Papenmeier BRAILLEX Live Plus. (#5181)
+- Apoio Experimental para o navegador web Microsoft Edge e o motor de exploración web no Windows 10. (#5212)
 
 
 == Canbios ==
 - Actualizado o transcriptor braille liblouis a 2.6.3. (#5137)
+- Ó tentar instalar unha versión máis antiga do NVDA da que está instalada actualmente, agora avisaráseche de que esto non está recomendado e de que NVDA debería desinstalarse compretamente antes de proceder. (#5037)
 
 
 == Corrección de Erros ==
 - No modo exploración para  Internet Explorer e outros controis MSHTML, a navegación rápida por campos xa non inclúe incorrectamente elementos de listas presentacionais. (#4204)
-- En Firefox, NVDA xa non trata de crear unha descripción para pestanas de paneis ARIA baseados  en todo o texsto. (#4638)
-- En Internet Explorer e outros controis MSHTML, ó tabular por seccións, artículos ou diálogos  xa non anuncia todo o contido do contedor como o seu nome
+- No Firefox, NVDA xa non anuncia inapropriadamente o contido dun ARIA tab panel cando o foco se mova dentro del. (#4638)
+- No Internet Explorer e outros controis MSHTML, ó tabular dentro de seccións, artículos ou diálogos  xa non anuncia inapropriadamente todo o contido no contedor. (#5021, #5025)
 - Ó utilizar as pantallas braille Baum/HumanWare/APH cun teclado braille, a entrada braille xa non detén o seu funcionamento despois de premer outro tipo de tecla na pantalla. (#3541)
 - En Windows 10, agora xa non se anuncia información extrana ó se premer alt+tab ou alt+shift+tab para cambiar entre aplicacións. (#5116)
 - O texto excrito xa non é ilexible ó se utilizar certas aplicacións como Microsoft Outlook con unha pantalla braille. (#2953)
@@ -31,7 +35,11 @@ Que hai de Novo no NVDA
 - En braille, xa non se amosan extranos espazos en braille entre ou despois dos indicadores para controis e formato. (#5043)
 - Cando unha aplicación está respondendo lentamente e cambias dende esa aplicación, NVDA agora é moito máis  sensible en outras aplicacións en máis casos. (#3831)
 - As notificacións de Windows 10 Toast agora anúncianse como se esperaba. (#5136)
-
+- O valor agora anúnciase segundo se  cambie en certas caixas combinadas (UI Automation) onde esto non funcionaba ate o de agora.
+- No Modo exploración en navegadores web, ó tabular agora compórtase segundo se espera  despois de tabular a un marco de documento. (#5227)
+ - A pantalla de bloqueo do Windows 10 agora pode pecharse utilizando a pantalla tactil. (#5220)
+- No Windows 7 e posteriores, o texto xa non é ilexible ó se teclear en certas aplicacións como Wordpad e Skype cunha pantalla braille. (#4291)
+- Na pantalla de bloqueo do Windows 10, xa  non é posible ler o portapapeis, acesar a  aplicacións en execución co cursor de revisión, cambiar a configuración do NVDA, etc. (#5269)
 
 == Cambios para Desenvolvedores ==
 - Agora podes inxectar a entrada bruta dende un teclado de sistema que non se manexa nativamente polo Windows (ex.: un teclado QWERTY nunha pantalla braille) utilizando a nova función keyboardHandler.injectRawKeyboardInput. (#4576)

@@ -4,6 +4,9 @@
 %!includeconf: ../changes.t2tconf
 
 = 2015.3 =
+Highlights of this release include initial support for Windows 10; the ability to disable single letter navigation in browse mode (useful for some web apps); improvements in Internet Explorer; and fixes for garbled text when typing in certain applications with braille enabled.
+
+
 == Nove Značajke ==
 - Sada se izgovara postojanje pravopisnih pogrešaka u poljima za uređivanje u internet exploreru i drugim MSHTML kontrolama. (#4174)
 - Kada se pojave u tekstu, puno više matematičkih simbola je sada izgovoreno. (#3805)
@@ -12,10 +15,12 @@
 - U načinu pregleda sada možete uključivati brzo kretanje pomoću navigacijskih tipki pritiskom kombinacije tipaka NVDA+shift+razmak. Kada je Ova opcija isključena, navigacijske tipke za brzo kretanje počinju se prosljeđivati drugoj aplikaciji /programu, što je korisno za neke web aplikacije poput gmaila, twittera i Facebooka. (#3203)
 - Nove brajične tablice: Finski šestotočkasta brajica, irski puno pismo, irski kratkopis, korejsko puno pismo (2006), korejski kratkopis (2006). (#5137, #5074, #5097)
 - Sada je podržana qwerty tipkovnica na  Papenmeier BRAILLEX Live Plus brajičnom retku. (#5181)
+- Experimental support for the Microsoft Edge web browser and browsing engine in Windows 10. (#5212)
 
 
 == Izmjene ==
 - Nadograđen LibLouis brajični prevoditelj na inačicu 2.6.3. (#5137)
+- When attempting to install an earlier version of NVDA than is currently installed, you will now be warned that this is not recommended and that NVDA should be completely uninstalled before proceeding. (#5037)
 
 
 == Ispravke Grešaka ==
@@ -30,10 +35,15 @@
 - Pri prikazu brajice, više se ne prikazuju nepotrebni razmaci /bjeline /prazni prostori prije ili poslije oznaka za kontrole i oblikovanje teksta. (#5043)
 - Kada program reagira sporo, i kada se prebacujete sa tog programa, NVDA NVDA puno bolje reagira u drugim aplikacijama u većini slučajeva. (#3831)
 - Sada se izgovaraju pozadinske obavijesti u windowsima 10. (#5136)
+- The value is now reported as it changes in certain (UI Automation) combo boxes where this was not working previously.
+- In browse mode in web browsers, tabbing now behaves as expected after tabbing to a frame document. (#5227)
+- The Windows 10 lock screen can now be dismissed using a touch screen. (#5220)
+- In Windows 7 and later, text is no longer garbled when typing in certain applications such as Wordpad and Skype with a braille display. (#4291)
+- On the Windows 10 lock screen, it is no longer possible to read the clipboard, access running applications with the review cursor, change NVDA configuration, etc. (#5269)
 
 
 == Izmjene za razvojne programere ==
-Za više informacija, pogledajte dokument na engleskom jeziku.
+		Za više informacija, pogledajte dokument na engleskom jeziku.
 
 
 = 2015.2 =

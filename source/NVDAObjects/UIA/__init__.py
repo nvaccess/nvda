@@ -751,32 +751,15 @@ class UIA(Window):
 			itemIndex=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_PositionInSetPropertyId)
 		except COMError:
 			pass
-		if itemIndex==0:
-			try:
-				itemIndex=self.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemIndex_PropertyId)
-			except COMError:
-				pass
 		if itemIndex>0:
 			info['indexInGroup']=itemIndex
-		itemCount=0
-		try:
-			itemCount=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
-		except COMError:
-			pass
-		if itemCount==0:
-			parent=self.parent
-			parentCount=1
-			while parentCount<3 and isinstance(parent,UIA):
-				try:
-					itemCount=parent.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemCount_PropertyId)
-				except COMError:
-					pass
-				if itemCount>0:
-					break
-				parent=parent.parent
-				parentCount+=1
-		if itemCount>0:
-			info['similarItemsInGroup']=itemCount
+			itemCount=0
+			try:
+				itemCount=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
+			except COMError:
+				pass
+			if itemCount>0:
+				info['similarItemsInGroup']=itemCount
 		try:
 			level=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_LevelPropertyId)
 		except COMError:
@@ -843,6 +826,31 @@ class UIColumnHeader(UIA):
 
 class UIItem(UIA):
 	"""UIA list items in an Items View repeate the name as the value"""
+
+	def _get_positionInfo(self):
+		info={}
+		itemIndex=0
+		try:
+			itemIndex=self.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemIndex_PropertyId)
+		except COMError:
+			pass
+		if itemIndex>0:
+			info['indexInGroup']=itemIndex
+			itemCount=0
+			parent=self.parent
+			parentCount=1
+			while parentCount<3 and isinstance(parent,UIA):
+				try:
+					itemCount=parent.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemCount_PropertyId)
+				except COMError:
+					pass
+				if itemCount>0:
+					break
+				parent=parent.parent
+				parentCount+=1
+			if itemCount>0:
+				info['similarItemsInGroup']=itemCount
+		return info
 
 	def _get_value(self):
 		return ""
