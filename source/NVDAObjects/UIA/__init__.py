@@ -635,6 +635,17 @@ class UIA(Window):
 			return None
 		return self.correctAPIForRelation(UIA(UIAElement=lastChildElement))
 
+	def _get_children(self):
+		childrenCacheRequest=UIAHandler.handler.baseCacheRequest.clone()
+		childrenCacheRequest.TreeScope=UIAHandler.TreeScope_Children
+		cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
+		children=[]
+		for index in xrange(cachedChildren.length):
+			e=cachedChildren.getElement(index)
+			windowHandle=e.cachedNativeWindowHandle or self.windowHandle
+			children.append(self.correctAPIForRelation(UIA(windowHandle=windowHandle,UIAElement=e)))
+		return children
+
 	def _get_rowNumber(self):
 		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_GridItemRowPropertyId,True)
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
