@@ -861,6 +861,11 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 		else:
 			raise NotImplementedError
 
+	def _activatePosition(self, info=None):
+		if not info:
+			info=self.makeTextInfo(textInfos.POSITION_CARET)
+		info.activate()
+
 	def script_nextRow(self,gesture):
 		self.rootNVDAObject._moveInTable(row=True,forward=True)
 		braille.handler.handleCaretMove(self)
