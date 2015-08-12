@@ -585,6 +585,14 @@ class UIA(Window):
 			parentElement=None
 		if not parentElement:
 			return super(UIA,self).parent
+		if not parentElement.CachedNativeWindowHandle and not self.UIAElement.CachedNativeWindowHandle:
+			# Neither self or parent have a window handle themselves, so their nearest window handle will be the same.
+			# Cache this on the parent if cached on self, to avoid fetching it later.
+			try:
+				parentElement._nearestWindowHandle=self.UIAElement._nearestWindowHandle
+			except AttributeError:
+				# _nearestWindowHandle may not exist on self if self was instantiated given a windowHandle.
+				pass
 		return self.correctAPIForRelation(UIA(UIAElement=parentElement),relation="parent")
 
 	def _get_previous(self):

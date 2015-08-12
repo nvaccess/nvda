@@ -289,14 +289,20 @@ class UIAHandler(COMObject):
 		return v[0]
 
 	def getNearestWindowHandle(self,UIAElement):
+		if hasattr(UIAElement,"_nearestWindowHandle"):
+			# Called previously. Use cached result.
+			return UIAElement._nearestWindowHandle
 		try:
-			UIAElement=self.windowTreeWalker.NormalizeElementBuildCache(UIAElement,self.windowCacheRequest)
+			new=self.windowTreeWalker.NormalizeElementBuildCache(UIAElement,self.windowCacheRequest)
 		except COMError:
 			return None
 		try:
-			return UIAElement.cachedNativeWindowHandle
+			window=new.cachedNativeWindowHandle
 		except COMError:
-			return None
+			window=None
+		# Cache for future use to improve performance.
+		UIAElement._nearestWindowHandle=window
+		return window
 
 	def isNativeUIAElement(self,UIAElement):
 		#Due to issues dealing with UIA elements coming from the same process, we do not class these UIA elements as usable.
