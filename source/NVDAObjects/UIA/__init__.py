@@ -862,20 +862,18 @@ class UIItem(UIA):
 			pass
 		if itemIndex>0:
 			info['indexInGroup']=itemIndex
-			itemCount=0
-			parent=self.parent
-			parentCount=1
-			while parentCount<3 and isinstance(parent,UIA):
+			try:
+				e=self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_SelectionItemSelectionContainerPropertyId)
+				if e: e=e.QueryInterface(UIAHandler.IUIAutomationElement)
+			except COMError:
+				e=None
+			if e:
 				try:
-					itemCount=parent.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemCount_PropertyId)
+					itemCount=e.getCurrentPropertyValue(UIAHandler.handler.ItemCount_PropertyId)
 				except COMError:
-					pass
+					itemCount=0
 				if itemCount>0:
-					break
-				parent=parent.parent
-				parentCount+=1
-			if itemCount>0:
-				info['similarItemsInGroup']=itemCount
+					info['similarItemsInGroup']=itemCount
 		return info
 
 	def _get_value(self):
