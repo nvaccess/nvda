@@ -518,37 +518,44 @@ class UIA(Window):
 		except COMError:
 			return None
 
+	def _get_UIACachedStatesElement(self):
+		statesCacheRequest=UIAHandler.handler.clientObject.createCacheRequest()
+		for prop in (UIAHandler.UIA_HasKeyboardFocusPropertyId,UIAHandler.UIA_SelectionItemIsSelectedPropertyId,UIAHandler.UIA_IsDataValidForFormPropertyId,UIAHandler.UIA_IsRequiredForFormPropertyId,UIAHandler.UIA_ValueIsReadOnlyPropertyId,UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,UIAHandler.UIA_ToggleToggleStatePropertyId,UIAHandler.UIA_IsKeyboardFocusablePropertyId,UIAHandler.UIA_IsPasswordPropertyId,UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId):
+			statesCacheRequest.addProperty(prop)
+		return self.UIAElement.buildUpdatedCache(statesCacheRequest)
+
 	def _get_states(self):
 		states=set()
+		e=self.UIACachedStatesElement
 		try:
-			hasKeyboardFocus=self.UIAElement.currentHasKeyboardFocus
+			hasKeyboardFocus=e.cachedHasKeyboardFocus
 		except COMError:
 			hasKeyboardFocus=False
 		if hasKeyboardFocus:
 			states.add(controlTypes.STATE_FOCUSED)
-		if self.UIAElement.cachedIsKeyboardFocusable:
+		if e.cachedIsKeyboardFocusable:
 			states.add(controlTypes.STATE_FOCUSABLE)
-		if self.UIAElement.cachedIsPassword:
+		if e.cachedIsPassword:
 			states.add(controlTypes.STATE_PROTECTED)
 		# Don't fetch the role unless we must, but never fetch it more than once.
 		role=None
-		if self.UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId):
+		if e.getCachedPropertyValue(UIAHandler.UIA_IsSelectionItemPatternAvailablePropertyId):
 			role=self.role
 			states.add(controlTypes.STATE_CHECKABLE if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTABLE)
-			if self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId):
+			if e.getCachedPropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId):
 				states.add(controlTypes.STATE_CHECKED if role==controlTypes.ROLE_RADIOBUTTON else controlTypes.STATE_SELECTED)
 		try:
-			isDataValid=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_IsDataValidForFormPropertyId,True)
+			isDataValid=e.getCachedPropertyValueEx(UIAHandler.UIA_IsDataValidForFormPropertyId,True)
 		except COMError:
 			isDataValid=UIAHandler.handler.reservedNotSupportedValue
 		if not isDataValid:
 			states.add(controlTypes.STATE_INVALID_ENTRY)
-		if self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsRequiredForFormPropertyId):
+		if e.getCachedPropertyValue(UIAHandler.UIA_IsRequiredForFormPropertyId):
 			states.add(controlTypes.STATE_REQUIRED)
-		if self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_ValueIsReadOnlyPropertyId):
+		if e.getCachedPropertyValue(UIAHandler.UIA_ValueIsReadOnlyPropertyId):
 			states.add(controlTypes.STATE_READONLY)
 		try:
-			s=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,True)
+			s=e.getCachedPropertyValueEx(UIAHandler.UIA_ExpandCollapseExpandCollapseStatePropertyId,True)
 		except COMError:
 			s=UIAHandler.handler.reservedNotSupportedValue
 		if s!=UIAHandler.handler.reservedNotSupportedValue:
@@ -557,7 +564,7 @@ class UIA(Window):
 			elif s==UIAHandler.ExpandCollapseState_Expanded:
 				states.add(controlTypes.STATE_EXPANDED)
 		try:
-			s=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_ToggleToggleStatePropertyId,True)
+			s=e.getCachedPropertyValueEx(UIAHandler.UIA_ToggleToggleStatePropertyId,True)
 		except COMError:
 			s=UIAHandler.handler.reservedNotSupportedValue
 		if s!=UIAHandler.handler.reservedNotSupportedValue:
