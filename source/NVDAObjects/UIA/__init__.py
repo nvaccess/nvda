@@ -420,8 +420,8 @@ class UIA(Window):
 		except COMError:
 			return True
 
-	def _getUIAPattern(self,ID,interface):
-		punk=self.UIAElement.GetCurrentPattern(ID)
+	def _getUIAPattern(self,ID,interface,cache=False):
+		punk=self.UIAElement.GetCachedPattern(ID) if cache else self.UIAElement.GetCurrentPattern(ID) 
 		if punk:
 			return punk.QueryInterface(interface)
 
@@ -438,7 +438,7 @@ class UIA(Window):
 		return self.UIASelectionItemPattern
 
 	def _get_UIATextPattern(self):
-		self.UIATextPattern=self._getUIAPattern(UIAHandler.UIA_TextPatternId,UIAHandler.IUIAutomationTextPattern)
+		self.UIATextPattern=self._getUIAPattern(UIAHandler.UIA_TextPatternId,UIAHandler.IUIAutomationTextPattern,cache=True)
 		return self.UIATextPattern
 
 	def _get_UIALegacyIAccessiblePattern(self):
