@@ -4,6 +4,8 @@
 %!includeconf: ../changes.t2tconf
 
 = 2015.3 =
+De vigtigste nyheder i denne udgave omfatter indledende understøttelse af Windows 10, mulighed for at slå enkeltbogstavsnavigation fra i browse-tilstand (nyttigt i visse web-programmer), forbedringer i Internet Explorer og fejlrettelse af sammenrodet tekst under indtastning i visse applikationer med punktskrift slået til.
+
 
 == Nye funktioner ==
 - Eventuelle stavefejl bliver nu annonceret i redigerbare felter i Internet Explorer og andre MSHTML-kontroller. (#4174)
@@ -13,15 +15,17 @@
 - I Browse-tilstand kan du nu slå enkelttegnsnavigering til og fra ved at trykke på NVDA+Shift+Mellemrum. Når funktionen er slået fra, bliver disse tastetryk sendt videre til applikationen, hvilket kan være nyttigt i applikationer såsom Gmail, Twitter og Facebook.
 - Nye oversættelsestabeller til punkt: Finsk 6-punkt, Irsk niveau 1, Irsk niveau 2, koreansk niveau 1 (2006) og koreansk niveau 2 (2006). (#5137, #5074, #5097)
 - QWERTY-tastaturet på punktdisplayet Papenmeier BRAILLEX Live Plus er nu understøttet. (#5181)
+- Eksperimentel understøttelse af Microsoft Edge browseren og browser-engine i Windows 10. (#5212)
 
 
 == Ændringer ==
-- Liblouis punktskriftforkorter opdateret til version 2.6.3.
+- Liblouis punktskriftforkorter opdateret til version 2.6.3. (#5137)
+- Hvis du forsøger at installere en tidligere version af NVDA end den, der i øjeblikket er installeret, bliver du nu advaret om, at dette ikke er anbefalet, og at du afinstallere den nuværende version helt, inden du fortsøtter. (#5037)
 
 
 == Fejlrettelser ==
 - i browse-tilstand i Internet Explorer og andre MSHTML-kontroller vil hurtignavigering mellem formularfelter ikke længere fejlagtigt medtage listeemner, som bruges til præsentation. (#4204)
-- I Firefox prøver NVDA ikke længere på at oprette en beskrivelse for ARIA fanebladspaneler baseret på al teksten i panelet. (#4638)
+- I Firefox vil NVDA ikke længere fejlagtigt rapportere indholdet af et ARIA fanebladspanel, når det får fokus. (#4638)
 - I Internet Explorer og andre MSHTML-kontroller vil hele inholdet af en sektion, en artikel eller en dialog ikke længere blive annonceret som navn på objektet, når man tab'er ind i det. (#5021, #5025) 
 - Når du bruger punktdisplays fra Baum/HumanWare/APH med punkttastatur, vil indtastning i Braille ikke længere holde op med at fungere efter tryk på andre typer taster. (#3541)
 - i Windows 10 bliver overflødig information ikke længere annonceret, når man trykker på Alt+Tab eller Alt+Shift+Tab for at skifte mellem programmer. (#5116)
@@ -29,6 +33,13 @@
 - I browse-tilstand i Internet Explorer og andre MSHTML-kontroller bliver det korrekte indhold nu annonceret, når et element dukker op eller ændrer sig og øjeblikkelig kommer i fokus. (#5040)
 - I browse-tilstand i Microsoft Word vil enkelttegnsnavigering nu opdatere punktdisplay og gennemsynsmarkør som forventet. (#4968)
 - i punkt bliver der ikke længere vist overflødige mellemrum mellem og efter indikatorer for felter og formatering. (#5043)
+- Hvis et program er langsomt til at svare, og du skifter væk fra dette program, vil NVDA nu i de fleste tilfælde svare langt hurtigere i andre programmer. (#3831)
+- De såkaldte "toast notifikationer" i Windows 10 bliver nu annonceret som forventet. (#5136)
+- Værdien bliver nu annonceret, når den ændrer sig i visse (UI automation) combobokse, hvor dette ikke virkede tidligere.
+- i browse-tilstand i web-browsere vil Tab nu opføre sig som forventet efter man har tabbet til et frame-dokument. (#5227)
+- Låseskærmen i Windows 10 kan nu lukkes ved hjælp af en berøringsfølsom skærm. (#5220)
+- i Windows 7 og senere bliver teksten ikke længere rodet sammen, når man indtaster tekst i visse programmer, som f.eks. Wordpad og Skype med et punktdisplay. (#4291)
+- På låseskærmen i Windows 10 er det ikke længere muligt at læse udklipsholderen, tilgå kørende programmer med gennemsynsmarkøren, ændre indstillinger i NVDA o.s.v. (#5269)
 
 
 == Ændringer for udviklere ==
