@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-27 19:09+1000\n"
-"PO-Revision-Date: 2015-07-30 18:39+0100\n"
+"POT-Creation-Date: 2015-08-06 19:09+1000\n"
+"PO-Revision-Date: 2015-08-17 10:27+0100\n"
 "Last-Translator: Ondrej Rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -757,7 +757,7 @@ msgstr "Nie je podporovaný v tomto dokumente"
 msgid "Lists various types of elements in this document"
 msgstr "Zobrazí rôzne typy prvkov v tomto dokumente"
 
-#. Translators: the description for the activatePosition script on virtualBuffers.
+#. Translators: the description for the activatePosition script on browseMode documents.
 msgid "activates the current object in the document"
 msgstr "Aktivuje aktuálny objekt v dokumente."
 
@@ -1231,6 +1231,47 @@ msgstr "&Aktivovať"
 #. in the browse mode Elements List dialog.
 msgid "&Move to"
 msgstr "&Prejsť na"
+
+#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
+#, python-format
+msgid "%s landmark"
+msgstr "oblasť %s"
+
+#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "vybrané %s"
+
+#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
+msgid "No long description"
+msgstr "Bez dlhého popisu"
+
+#. Translators: the description for the activateLongDescription script on browseMode documents.
+msgid "Shows the long description at this position if one is found."
+msgstr "Zobrazí dlhý popis pre aktuálny prvok, ak existuje."
+
+#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
+#. But there is no container.
+msgid "Not in a container"
+msgstr "nepodporovaný prvok"
+
+#. Translators: Description for the Move to start of container command in browse mode.
+msgid "Moves to the start of the container element, such as a list or table"
+msgstr ""
+"Prejde na začiatok prvku, ktorý zoskupuje viaceré prvky rovnakého typu napr. "
+"na začiatok tabuľky alebo zoznamu."
+
+#. Translators: a message reported when:
+#. Review cursor is at the bottom line of the current navigator object.
+#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
+msgid "bottom"
+msgstr "spodok"
+
+#. Translators: Description for the Move past end of container command in browse mode.
+msgid "Moves past the end  of the container element, such as a list or table"
+msgstr ""
+"Prejde za prvok, ktorý zoskupuje viaceré prvky rovnakého typu napr. za "
+"tabuľku alebo zoznam."
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1961,11 +2002,6 @@ msgctxt "color name"
 msgid "Yellow Green"
 msgstr "Žltozelená"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "vybrané %s"
-
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
@@ -2090,7 +2126,6 @@ msgid "cell"
 msgstr "bunka"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
-#. Translators: A column in a column chart.
 msgid "column"
 msgstr "stĺpec"
 
@@ -2808,7 +2843,7 @@ msgid "Braille"
 msgstr "braille"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: The label for the Tools submenu in NVDA menu.
+msgctxt "script category"
 msgid "Tools"
 msgstr "Nástroje"
 
@@ -3464,12 +3499,6 @@ msgstr ""
 "bude vyhláskovaný. Stlačené tri krát za sebou vyhláskuje aktuálny riadok "
 "foneticky."
 
-#. Translators: a message reported when:
-#. Review cursor is at the bottom line of the current navigator object.
-#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "spodok"
-
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
@@ -4117,7 +4146,7 @@ msgstr "Dokumentácia"
 msgid "Commands Quick Reference"
 msgstr "Zoznam Príkazov"
 
-#. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
+#. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
 msgstr "Používateľská Príručka"
 
@@ -5841,6 +5870,14 @@ msgstr "&Inštalovať NVDA..."
 msgid "Reload plugins"
 msgstr "Znovu načítať pluginy"
 
+#. Translators: The label for the Tools submenu in NVDA menu.
+msgid "Tools"
+msgstr "Nástroje"
+
+#. Translators: The label of a menu item to open NVDA user guide.
+msgid "&User Guide"
+msgstr "Po&užívateľská Príručka"
+
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
 msgstr "Zoznam &Príkazov"
@@ -6318,6 +6355,7 @@ msgstr ""
 "profilu do tohto profilu.\n"
 "Naozaj chcete pokračovať?"
 
+#. Translators: The title of a warning dialog.
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 msgid "Warning"
 msgstr "Upozornenie"
@@ -6448,6 +6486,23 @@ msgstr ""
 #. Translators: The label of a button to continue with the operation.
 msgid "&Continue"
 msgstr "&Pokračovať"
+
+#. Translators: A warning presented when the user attempts to downgrade NVDA
+#. to an older version.
+msgid ""
+"You are attempting to install an earlier version of NVDA than the version "
+"currently installed. If you really wish to revert to an earlier version, you "
+"should first cancel this installation and completely uninstall NVDA before "
+"installing the earlier version."
+msgstr ""
+"Pokúšate sa nainštalovať staršiu verziu NVDA. Ak naozaj chcete používať "
+"staršiu verziu, mali by ste prerušiť túto inštaláciu, odinštalovať NVDA a "
+"apotom nainštalovať staršiu verziu."
+
+#. Translators: The label of a button to proceed with installation,
+#. even though this is not recommended.
+msgid "&Proceed with installation (not recommended)"
+msgstr "&Pokračovať (neodporúča sa)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -7360,11 +7415,6 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "na {x}, {y}"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-#, python-format
-msgid "%s landmark"
-msgstr "oblasť %s"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "Obnovené"
@@ -7372,14 +7422,6 @@ msgstr "Obnovené"
 #. Translators: Reported while loading a document.
 msgid "Loading document..."
 msgstr "Prebieha nahrávanie dokumentu..."
-
-#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-msgid "No long description"
-msgstr "Bez dlhého popisu"
-
-#. Translators: the description for the activateLongDescription script on virtualBuffers.
-msgid "Shows the long description at this position if one is found."
-msgstr "Zobrazí dlhý popis pre aktuálny prvok, ak existuje."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -7420,23 +7462,6 @@ msgstr "Prejde do nasledujúceho stĺpca tabuľky."
 #. Translators: the description for the previous table column script on virtualBuffers.
 msgid "moves to the previous table column"
 msgstr "Prejde do predchádzajúceho stĺpca tabuľky."
-
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
-msgid "Not in a container"
-msgstr "nepodporovaný prvok"
-
-#. Translators: Description for the Move to start of container command in browse mode.
-msgid "Moves to the start of the container element, such as a list or table"
-msgstr ""
-"Prejde na začiatok prvku, ktorý zoskupuje viaceré prvky rovnakého typu napr. "
-"na začiatok tabuľky alebo zoznamu."
-
-#. Translators: Description for the Move past end of container command in browse mode.
-msgid "Moves past the end  of the container element, such as a list or table"
-msgstr ""
-"Prejde za prvok, ktorý zoskupuje viaceré prvky rovnakého typu napr. za "
-"tabuľku alebo zoznam."
 
 msgid "Taskbar"
 msgstr "panel úloh"
@@ -7959,6 +7984,11 @@ msgstr "Nie sú nastavené žiadne rady."
 #. Translators: A slice in a pie chart.
 msgid "slice"
 msgstr "výsek"
+
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "Stĺpec"
 
 #. Translators: A data point in a line chart.
 msgid "data point"
