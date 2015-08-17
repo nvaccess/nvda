@@ -4,6 +4,8 @@
 %!includeconf: ../changes.t2tconf
 
 = 2015.3 =
+Schwerpunkte dieser Version sind anfängliche Unterstützung von Windows 10, die Möglichkeit Schnellnavigationstasten des Lese-Modus zu deaktivieren (sinvoll in bestimmten Internet-Anwendungen), Verbesserungen für den Internet Explorer sowie die Behebung von Fehlern, die beim schreiben in bestimmten Programmen zu verfälschtem Text geführt haben, wenn eine Braillezeile in Betrieb war.
+
 
 == neue Funktionen ==
 - In Eingabefeldern in Internet Explorer und anderen MSHTML-Dokumenten werden Rechtschreibfehler korrekt erkannt (#4174)
@@ -17,7 +19,7 @@
 
 == Änderungen ==
 - Liblouis auf Version 2.6.3 aktualisiert. (#5137)
-- Wenn Sie versuchen, eine frühere Version von NVDA über eine aktuelle Version zu installieren wird eine Warnung angezeigt. Dies wird nicht empfohlen. NVDA sollte vollständig deinstalliert werden, bevor Sie eine ältere Version installieren. (#5037)
+- Wenn Sie versuchen, eine ältere Version von NVDA über eine aktuelle Version zu installieren wird eine Warnung angezeigt. Dies wird nicht empfohlen. NVDA sollte vollständig deinstalliert werden, bevor Sie eine ältere Version installieren. (#5037)
 
 == Fehlerbehebungen ==
 - Wenn Sie die Schnellnavigationstasten verwenden, werden Listeneinträge ignoriert, die zu Gestaltungszwecken eingefügt wurden. (#4204)
@@ -35,13 +37,13 @@
 - Im Lesemodus verhält sich NVDA beim Navigieren wie erwartet, wenn Sie mit (Umschalt+)Tab in einem Rahmen navigieren. (#5227)
 - Der Sperrbildschirm von Windows 10 kann nun mittels Touchscreen erkundet und geschlossen werden. (#5220)
 - Wenn Sie in Windows 7 oder neuer Text in Eingabefelder von z. B. Wordpad oder Skype eingeben, während Sie eine Braillezeile verwenden, wird die Eingabe nicht mehr verfälscht. (#4291)
-- Im Sperrbildschirm von Windows 10 ist es nicht mehr möglich, auf laufende Anwendungen zuzugreifen oder die Konfiguration von NVDA zu ändern. (#5269)
+- Im Sperrbildschirm von Windows 10 ist es nicht mehr möglich mittels des NVDA-Cursors  auf laufende Anwendungen zuzugreifen oder die Konfiguration von NVDA zu ändern sowie die Zwischenablage auszulesen. (#5269)
 
 == Änderungen für Entwickler ==
 - Nun können auch Tastenanschläge von Tastaturen verarbeitet werden, die nicht vom Betriebssystem erkannt werden (wie z.B. Tastaturen von Braillezeilen). Verwenden Sie hierzu die neue Funktion  keyboardHandler.injectRawKeyboardInput. (#4576)
 - Mit der neuen Funktion eventHandler.requestEvents können nun Ereignisse abgearbeitet werden, die standardmäßig blockiert werden  Hierzu zählen Ereignisse von bestimmten Steuerelementen oder Ereignisse, die im Hintergrund ausgelöst werden. (#3831)
-- Anstelle eines einfachen i18name-Attributs enthält synthDriverHandler.SynthSetting nun sowohl displayNameWithAccelerator als auch displayName-Attribute. Hiermit wird verhindert, dass die Namen von Einstellungen im Synthesizer-Einstellungsring in einigen Sprachen mitsamt ihren hervorgehobenen Buchstaben angesagt werden (z.B. &Stimme, Ton&höhe, &Lautstärke usw).
- - Aus Gründen der Abwärtskompatibilität ist Displayname optional und wird von displaynamewithaccelerator abgeleitet. Wenn Sie jedoch planen, eine Einstellung sowohl in den Stimmeneinstellungen als auch im Synthesizer-Einstellungsring anzubieten, sollten Sie beide Attribute verwenden.
+- Anstelle eines einfachen i18name-Attributs enthält synthDriverHandler.SynthSetting nun sowohl displayNameWithAccelerator als auch displayName-Attribute. Hiermit wird verhindert, dass die Namen von Einstellungen im Sprachausgaben-Einstellungsring in einigen Sprachen mitsamt ihren hervorgehobenen Buchstaben angesagt werden (z.B. &Stimme, Ton&höhe, &Lautstärke usw).
+ - Aus Gründen der Abwärtskompatibilität ist Displayname optional und wird von displaynamewithaccelerator abgeleitet. Wenn Sie jedoch planen, eine Einstellung sowohl in den Stimmeneinstellungen als auch im Sprachausgaben-Einstellungsring anzubieten, sollten Sie beide Attribute verwenden.
  - Das Attribut i18name ist veraltet und wird in einer der nächsten Versionen entfernt.
 
 
