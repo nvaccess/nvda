@@ -9,6 +9,7 @@ import api
 import speech
 from NVDAObjects.UIA import UIA
 from NVDAObjects.UIA.edge import EdgeList
+from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 
 # Windows 10 Search UI suggestion list item
 class SuggestionListItem(UIA):
@@ -27,3 +28,10 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
 		if isinstance(obj,UIA) and obj.role==controlTypes.ROLE_LISTITEM and isinstance(obj.parent,EdgeList):
 			clsList.insert(0,SuggestionListItem)
+		elif isinstance(obj,IAccessible):
+			try:
+				# #5288: Never use ContentGenericClient, as this uses displayModel
+				# which will freeze if the process is suspended.
+				clsList.remove(ContentGenericClient)
+			except ValueError:
+				pass
