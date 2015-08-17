@@ -6,14 +6,14 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-08-06 19:09+1000\n"
-"PO-Revision-Date: 2015-08-06 16:13+0200\n"
+"PO-Revision-Date: 2015-08-10 18:46+0100\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.3\n"
+"X-Generator: Poedit 1.6.6\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -747,7 +747,11 @@ msgid ""
 "Toggles single letter navigation on and off. When on, single letter keys in "
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
-msgstr "Active ou désactive la navigation par une seule lettre"
+msgstr ""
+"Active ou désactive la navigation par une seule lettre. Quand cette fonction "
+"est activée en mode navigation, les touches mènent aux différents types "
+"d'éléments sur la page. Quand elle est désactivée, les touches sont passées "
+"à l'application"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
@@ -2622,7 +2626,7 @@ msgstr "lié"
 
 #. Translators: This is presented when the control menu item has a submenu.
 msgid "subMenu"
-msgstr "sous-menu"
+msgstr "sous-Menu"
 
 #. Translators: This is presented when a protected control or a document is encountered.
 msgid "protected"
@@ -2964,19 +2968,27 @@ msgstr "Pas de paramètres"
 
 #. Translators: Input help mode message for increase synth setting value command.
 msgid "Increases the currently active setting in the synth settings ring"
-msgstr "Augmente la valeur courante dans la liste des paramètres synthétiseur"
+msgstr ""
+"Augmente la valeur courante dans la liste des paramètres de la boucle "
+"synthétiseur"
 
 #. Translators: Input help mode message for decrease synth setting value command.
 msgid "Decreases the currently active setting in the synth settings ring"
-msgstr "Diminue la valeur courante dans la liste des paramètres synthétiseur"
+msgstr ""
+"Diminue la valeur courante dans la liste des paramètres de la boucle "
+"synthétiseur"
 
 #. Translators: Input help mode message for next synth setting command.
 msgid "Moves to the next available setting in the synth settings ring"
-msgstr "Va au paramètre suivant dans la liste des paramètres synthétiseur"
+msgstr ""
+"Va au paramètre suivant dans la liste des paramètres de la boucle "
+"synthétiseur"
 
 #. Translators: Input help mode message for previous synth setting command.
 msgid "Moves to the previous available setting in the synth settings ring"
-msgstr "Va au paramètre précédent dans la liste des paramètres synthétiseur"
+msgstr ""
+"Va au paramètre précédent dans la liste des paramètres de la boucle "
+"synthétiseur"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 msgid "speak typed characters off"
@@ -3138,27 +3150,27 @@ msgstr "Active ou désactive l'annonce du numéro de ligne"
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
 msgid "report line indentation off"
-msgstr "Annonce de l'indentation des lignes désactivée"
+msgstr "Annonce du retrait des lignes désactivée"
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
 msgid "report line indentation on"
-msgstr "Annonce de l'indentation des lignes activée"
+msgstr "Annonce du retrait des lignes activée"
 
 #. Translators: Input help mode message for toggle report line indentation command.
 msgid "Toggles on and off the reporting of line indentation"
-msgstr "Active ou désactive l'annonce de l'indentation des lignes"
+msgstr "Active ou désactive l'annonce du retrait des lignes"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
-msgstr "Annonce de l'indentation des paragraphes désactivée"
+msgstr "Annonce du retrait des paragraphes désactivée"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation on"
-msgstr "Annonce de l'indentation des paragraphes activée"
+msgstr "Annonce du retrait des paragraphes activée"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
-msgstr "Active ou désactive l'annonce de l'indentation des paragraphes"
+msgstr "Active ou désactive l'annonce du retrait des paragraphes"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
@@ -3766,7 +3778,7 @@ msgstr "suivi du curseur système par le curseur de revue activé"
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
-"Activer ou désactiver le suivi du curseur applicatif par le curseur de revue"
+"Activer ou désactiver le suivi du curseur applicatif par le curseur de revue."
 
 #. Translators: presented when toggled.
 msgid "focus moves navigator object off"
@@ -3821,22 +3833,22 @@ msgstr ""
 #. If there is an appModule for the current program, NVDA speaks the name of the module after presenting this message.
 #, python-format
 msgid "Currently running application is %s"
-msgstr "L'application en cours est %s."
+msgstr "L'application en cours d'exécution est %s."
 
 #. Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
 #. For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
 #. This message will not be presented if there is no module for the current program.
 #, python-format
 msgid " and currently loaded module is %s"
-msgstr "et le module en cours est %s"
+msgstr "et le module chargé est %s"
 
 #. Translators: Input help mode message for report current program name and app module name command.
 msgid ""
 "Speaks the filename of the active application along with the name of the "
 "currently loaded appModule"
 msgstr ""
-"Annoncer le nom de fichier de l'application en cours ainsi que le script en "
-"cours"
+"Annoncer le nom de fichier de l'application en cours ainsi que le module "
+"complémentaire chargé"
 
 #. Translators: Input help mode message for go to general settings dialog command.
 msgid "Shows the NVDA general settings dialog"
@@ -3896,7 +3908,8 @@ msgstr "Afficher le dialogue Dictionnaire temporaire de NVDA"
 
 #. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
 msgid "Shows the NVDA symbol pronunciation dialog"
-msgstr "Afficher le dialogue Prononciation des symboles de NVDA"
+msgstr ""
+"Afficher le dialogue Prononciation des symboles et ponctuations de NVDA"
 
 #. Translators: Input help mode message for go to input gestures dialog command.
 msgid "Shows the NVDA input gestures dialog"
@@ -3917,8 +3930,8 @@ msgstr ""
 #. Translators: Input help mode message for activate python console command.
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr ""
-"Activer la console Python de NVDA, essentiellement utile pour les "
-"développeurs"
+"Activer la console Python de NVDA, essentiellement utile pour le "
+"développement"
 
 #. Translators: Input help mode message for activate manage add-ons command.
 msgid ""
@@ -3942,7 +3955,7 @@ msgid ""
 "all the text that NVDA is currently speaking"
 msgstr ""
 "Active ou désactive la visionneuse de parole, une fenêtre flottante qui vous "
-"permet de voir le texte que NVDA est en train de prononcer"
+"permet de voir le texte que NVDA est en train d'énoncer"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
@@ -4106,7 +4119,7 @@ msgstr "Commence l'interaction avec le contenu mathématique"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
-msgstr "Touche du clavier du système émulé"
+msgstr "Touche du clavier du système émulées"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
@@ -4993,7 +5006,7 @@ msgstr "Erreur durant le Téléchargement de la mise à jour."
 #. Translators: The message presented when the update has been successfully downloaded
 #. and is about to be installed.
 msgid "Update downloaded. It will now be installed."
-msgstr "La mise à jour est téléchargée, elle va maintenant être installée."
+msgstr "La mise à jour est téléchargée. Elle va être installée maintenant."
 
 #. Translators: The title of the dialog displayed when the update is about to be installed.
 msgid "Install Update"
@@ -5237,11 +5250,11 @@ msgstr "non lu"
 
 #. Translators: for a high importance email
 msgid "high importance"
-msgstr "haute importance"
+msgstr "importance haute"
 
 #. Translators: For a low importance email
 msgid "low importance"
-msgstr "basse importance"
+msgstr "importance faible"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #, python-format
@@ -5863,7 +5876,7 @@ msgstr "&Installer NVDA..."
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
-msgstr "Rechargement des modules complémentaires"
+msgstr "Recharger les modules complémentaires"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
 msgid "Tools"
@@ -5957,12 +5970,12 @@ msgid ""
 "functions.\n"
 msgstr ""
 "La plupart des commandes de contrôle de NVDA nécessitent de tenir la touche "
-"NVDA enfoncée tout en pressant une autre touche.\n"
+"NVDA enfoncée tout en appuyant sur une autre touche.\n"
 "Par défaut, les touches insert du pavé numérique et du clavier principal "
 "sont définies comme touches NVDA.\n"
 "Vous pouvez aussi configurer NVDA pour qu'il utilise la touche de "
 "verrouillage majuscule comme touche NVDA.\n"
-"À tout moment, vous pouvez presser NVDA+n pour accéder au menu NVDA.\n"
+"À tout moment, vous pouvez appuyer sur NVDA+n pour accéder au menu NVDA.\n"
 "À partir de ce menu, vous pouvez configurer NVDA, obtenir de l'aide et "
 "accéder à d'autres fonctions de NVDA.\n"
 
@@ -6432,7 +6445,7 @@ msgstr "Votre version de NVDA a été mise à jour avec succès. "
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
 msgid "Please press OK to start the installed copy."
-msgstr "Veuillez appuyer sur OK pour démarrer la copie installée."
+msgstr "Veuillez appuyer sur OK pour lancer la copie installée."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
 msgid "Success"
@@ -6676,7 +6689,7 @@ msgstr "Copie des paramètres en cours"
 msgid "Please wait while settings are copied to the system configuration."
 msgstr ""
 "Veuillez patienter pendant que les paramètres sont copiés dans la "
-"configuration du système."
+"configuration système."
 
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
 msgid ""
@@ -7835,42 +7848,42 @@ msgstr "Camembert éclaté"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Pie of Pie"
-msgstr "Camembert de camemberts"
+msgstr "Camembert de Camembert"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Pyramid Bar"
-msgstr "Barre pyramidale groupée"
+msgstr "Barre Pyramidale Groupée"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Pyramid Bar"
-msgstr "Barre pyramidale empilée"
+msgstr "Barre Pyramidale Empilée"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Bar"
-msgstr "Barre pyramidale empilée 100 pour cent"
+msgstr "Barre Pyramidale Empilée 100 pour cent"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Pyramid Column"
-msgstr "Colonne pyramidale 3D"
+msgstr "Colonne Pyramidale 3D"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Pyramid Column"
-msgstr "Colonne pyramidale groupée"
+msgstr "Colonne Pyramidale Groupée"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Pyramid Column"
-msgstr "Colonne pyramidale empilée"
+msgstr "Colonne Pyramidale Empilée"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Column"
-msgstr "Colonne pyramidale empilée 100 pour cent"
+msgstr "Colonne Pyramidale Empilée 100 pour cent"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7880,32 +7893,32 @@ msgstr "Radar"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Filled Radar"
-msgstr "Radar rempli"
+msgstr "Radar Rempli"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Radar with Data Markers"
-msgstr "Radar avec marqueurs de données"
+msgstr "Radar avec Marqueurs de Données"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "High-Low-Close"
-msgstr "Max-min-clôture"
+msgstr "Max-Min-Clôture"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Open-High-Low-Close"
-msgstr "Ouvert-max-min-clôture"
+msgstr "Ouverture-Max-Min-Clôture"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-High-Low-Close"
-msgstr "Volume-max-min-Clôture"
+msgstr "Volume-Max-Min-Clôture"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Volume-Open-High-Low-Close"
-msgstr "Volume-ouvert-max-min-Clôture"
+msgstr "Volume-Ouvert-Max-Min-Clôture"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7920,7 +7933,7 @@ msgstr "Surface (vue du haut)"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Surface (Top View wireframe)"
-msgstr "Surface (contour vu du haut)"
+msgstr "Surface (Contour Vu du Haut)"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8184,7 +8197,7 @@ msgstr "courbe de tendance"
 
 #. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
 msgid " squared "
-msgstr "encadré"
+msgstr "encadré "
 
 #. Translators: Details about a chart title in Microsoft Excel.
 msgid "Chart title: {chartTitle}"
@@ -8218,7 +8231,7 @@ msgstr ""
 
 #. Translators: Indicates the plot area of a Microsoft Excel chart.
 msgid "Plot area "
-msgstr "Zone de traçage"
+msgstr "Zone de traçage "
 
 #. Translators: Indicates the legend in a Microsoft Excel chart.
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US

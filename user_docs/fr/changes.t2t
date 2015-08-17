@@ -4,7 +4,7 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2015.3 =
-Les points forts de cette version incluent le support initial de Windows 10; la possibilité de désactiver la navigation par lettre en mode navigation (utile pour certainnes applications web); Des améliorations sous Internet Explorer; et des corrections de texte brouillé quand on tape dans certaines applications avec le braille actif.
+Les points forts de cette version incluent le support initial de Windows 10 ; la possibilité de désactiver la navigation par lettre en mode navigation (utile pour certainnes applications web) ; Des améliorations sous Internet Explorer et des corrections de texte brouillé quand on tape dans certaines applications avec le braille actif.
  
 
 == Nouvelles Fonctionnalités ==
@@ -19,13 +19,13 @@ Les points forts de cette version incluent le support initial de Windows 10; la 
  
 
 == Changements ==
- - Mise à jour du traducteur braille Liblouis à la version 2.6.3. (#5137)
-- Si vous essayez d'installer une version de NVDA plus ancienne que la version déjà installée, vous serez maintenant averti que ce n'est pas recommandé et que NVDA devrait être complètement désinstallé avant de procéder. (#5037)
+- Mise à jour du traducteur braille Liblouis à la version 2.6.3. (#5137)
+- Si vous essayez d'installer une version de NVDA plus ancienne que la version déjà installée, vous serez maintenant averti que ce n'est pas recommandé et que NVDA devrait être complètement désinstallé avant de continuer. (#5037)
 
  
 == Corrections de Bogues ==
 - En mode navigation sous Internet Explorer et autres contrôles MSHTML, la navigation rapide par champs de formulaire n'inclut plus incorrectement les éléments de listes de présentation. (#4204)
-- Sous Firefox, NVDA n'essaie plus de créer une description pour les panneaux d'onglets ARIA basés  sur tout le texte contenu. (#4638)
+- Sous Firefox, NVDA n'essaie plus de créer une description pour les panneaux d'onglets ARIA basés sur tout le texte contenu. (#4638)
 - Sous Internet Explorer et autres contrôles MSHTML, tabuler dans des sections, articles ou dialogues n'annonce plus tout le contenu du conteneur comme étant son nom. (#5021, #5025)
 - Quand on utilise les terminaux braille Baum/HumanWare/APH avec un clavier braille, la saisie braille ne s'arrête plus de fonctionner après qu'on ait pressé un autre type de touche sur le terminal. (#3541)
 - Sous Windows 10, des information irrelevantes ne sont plus annoncées quand on presse alt+tab ou alt+maj+tab pour naviguer entre les applications. (#5116)
@@ -34,7 +34,7 @@ Les points forts de cette version incluent le support initial de Windows 10; la 
 - En mode navigation sous Microsoft Word, la navigation par lettre unique met maintenant à jour l'afficheur braille et le curseur de revue comme attendu. (#4968)
 - En braille, des espaces irrelevants ne sont plus affichés entre ou après des indicateurs de contrôles et de présentation. (#5043)
 - Quand une application répond lentement et que vous passez sur une autre fenêtre, NVDA est maintenant beaucoup plus réactif sur les autres applications dans la plupart des cas. (#3831)
-- Les notifications de Toast de Windows 10 sont maintenant annoncées comme prévu. (#5136)
+- Les notifications de Toast sous Windows 10 sont maintenant annoncées comme prévu. (#5136)
 - La valeur est maintenant annoncée quand elle change dans certaines listes déroulantes (UI Automation) dans des cas où ce n'était pas le cas précédemment.
 - En mode navigation dans les navigateurs web, la tabulation fonctionne maintenant comme prévu après avoir tabulé vers un document cadre. (#5227)
 - L'écran de verrouillage de Windows 10 peut maintenant être quitté en utilisant un écran tactile. (#5220)
@@ -85,7 +85,7 @@ Les points forts de cette version incluent la possibilité de lire les graphique
 == Changements pour les Développeurs ==
 - brailleInput.handler.sendChars(mychar) N'ignorera plus un caractère s'il est égal au caractère précédent en s'assurant que la touche enfoncée a été correctement relâchée.
 - Les scripts pour changer le mode de toucher honnoreront maintenant les nouvelles étiquettes ajoutée à touchHandler.touchModeLabels. (#4699)
-- Les modules complémentaires peuvent fournir leur propre implémentation de présentation mathématique. Voir le package mathPres  pour plus de détails. (#4509)
+- Les modules complémentaires peuvent fournir leur propre implémentation de présentation mathématique. Voir le package mathPres pour plus de détails. (#4509)
 - Des commandes de parole ont été implémentées pour insérer une pause entre les mots et pour changer la hauteur, le volume et le débit. Voir les commandes BreakCommand, PitchCommand, VolumeCommand et RateCommand dans le module speech. (#4674)
 - Il y a aussi speech.PhonemeCommand pour insérer une prononciation spécifique, mais l'implémentation courante supporte un nombre très limité de phonèmes.
 
@@ -122,8 +122,8 @@ Les points forts de cette version incluent la possibilité de lire les graphique
 - Dans Microsoft Excel, support du cas où les cellules d'en-tête de ligne et de colonne sont fusionnées. Ex : Si A1 et B1 sont fusionnées, B2 aura maintenant A1 et B1 annoncées comme en-tête de colonne, au lieu de rien. (#4617)
 - Lors de l'édition du contenu d'une boîte de texte dans Microsoft PowerPoint 2003, NVDA annoncera correctement le contenu de chaque ligne. Précédemment les lignes perdaient un caractère à chaque nouveau paragraphe. (#4619)
 - Tous les dialogues de NVDA sont maintenant centrés sur l'écran, améliorant la présentation visuelle et l'utilisation. (#3148)
-- Dans Skype de bureau, lors de la saisie d'un message d'introduction pour ajouter un contact, l'entrée et le déplacement dans le texte fonctionnent maintenant correctement. (#3661)
-- Quand le focus va à un nouvel élément dans les arborescences  de l'interface de développement d'Eclipse, si l'élément précédent est une case à cocher, il est maintenant correctemment annoncé. (#4586)
+- Dans Skype pour bureau, lors de la saisie d'un message d'introduction pour ajouter un contact, l'entrée et le déplacement dans le texte fonctionnent maintenant correctement. (#3661)
+- Quand le focus va à un nouvel élément dans les arborescences de l'interface de développement d'Eclipse, si l'élément précédent est une case à cocher, il est maintenant correctemment annoncé. (#4586)
 - Dans le dialogue de vérification orthographique de Microsoft Word, l'erreur suivante sera automatiquement annoncée quand la dernière a été corrigée ou ignorée via son raccourci clavier. (#1938)
 - Le texte à l'écran ne disparaît plus de NVDA dans les fenêtres telles que le terminal de Teraterm Pro quand elle défile. (#4229)
 - Le texte est à nouveau correctement lisible dans les fenêtres telles que le terminal de Tera Term Pro et les documents sous Balabolka. (#4229)
@@ -163,7 +163,7 @@ Les points forts de cette version incluent la possibilité de lire les graphique
 == Changements ==
 - Si vous vous déplacez vers un objet en mode navigation par objet et que cet objet est dans un document en mode revue de document, le mode de revue de document sera automatiquement activé. Précédemment, cela n'arrivait que si l'objet navigateur était déplacé à la suite d'un changement de focus. (#4369)
 - La liste des afficheurs braille et celle des synthétiseurs dans leurs dialogues de paramétrage respectifs sont maintenant triées dans l'ordre alphabétique à l'exception de "Pas de Braille" et "Pas de parole" qui se trouvent maintenant en fin de liste. (#2724)
-- Mise à jour du traducteur Braille Liblouis  à la version 2.6.0. (#4434, #3835)
+- Mise à jour du traducteur Braille Liblouis à la version 2.6.0. (#4434, #3835)
 - En mode navigation, l'appui sur e et maj+e pour naviguer entre les zones dédition inclut maintenant les listes déroulantes éditables. Ceci inclut la boîte de recherche dans la dernière version de Google Search. (#4436)
 - Un clic gauche sur l'icône NVDA dans la zone de notification ouvre maintenant le menu NVDA au lieu de ne rien faire. (#4459)
 
