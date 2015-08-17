@@ -72,6 +72,54 @@ xlCellTypeSameFormatConditions=-4173      # from enum XlCellType
 xlCellTypeSameValidation      =-4175      # from enum XlCellType
 xlCellTypeVisible             =12         # from enum XlCellType
 
+#Excel Cell Patterns
+xlPatternAutomatic           =-4105       # from enum XlPattern
+xlPatternChecker             =9           # from enum XlPattern
+xlPatternCrissCross          =16          # from enum XlPattern
+xlPatternDown                =-4121       # from enum XlPattern
+xlPatternGray16              =17          # from enum XlPattern
+xlPatternGray25              =-4124       # from enum XlPattern
+xlPatternGray50              =-4125       # from enum XlPattern
+xlPatternGray75              =-4126       # from enum XlPattern
+xlPatternGray8               =18          # from enum XlPattern
+xlPatternGrid                =15          # from enum XlPattern
+xlPatternHorizontal          =-4128       # from enum XlPattern
+xlPatternLightDown           =13          # from enum XlPattern
+xlPatternLightHorizontal     =11          # from enum XlPattern
+xlPatternLightUp             =14          # from enum XlPattern
+xlPatternLightVertical       =12          # from enum XlPattern
+xlPatternNone                =-4142       # from enum XlPattern
+xlPatternSemiGray75          =10          # from enum XlPattern
+xlPatternSolid               =1           # from enum XlPattern
+xlPatternUp                  =-4162       # from enum XlPattern
+xlPatternVertical            =-4166       # from enum XlPattern
+xlPatternLinearGradient      =4000
+xlPatternRectangularGradient =4001
+backgroundPatternLabels={
+xlPatternAutomatic:"automatic",
+xlPatternChecker:"checker",
+xlPatternCrissCross:"crisscross",
+xlPatternDown:"down",
+xlPatternGray16:"gray16",
+xlPatternGray25:"gray25",
+xlPatternGray50:"gray50",
+xlPatternGray75:"gray75",
+xlPatternGray8:"gray8",
+xlPatternGrid:"grid",
+xlPatternHorizontal:"horizontal",
+xlPatternLightDown:"light down",
+xlPatternLightHorizontal:"light horizontal",
+xlPatternLightUp:"light up",
+xlPatternLightVertical:"light vertical",
+xlPatternNone:"none",
+xlPatternSemiGray75:"semi gray75",
+xlPatternSolid:"solid",
+xlPatternUp:"up",
+xlPatternVertical:"vertical",
+xlPatternLinearGradient:"linear gradient",
+xlPatternRectangularGradient:"rectangular gradient",
+}
+
 re_RC=re.compile(r'R(?:\[(\d+)\])?C(?:\[(\d+)\])?')
 re_absRC=re.compile(r'^R(\d+)C(\d+)(?::R(\d+)C(\d+))?$')
 
@@ -787,7 +835,12 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		formatField=textInfos.FormatField()
-		fontObj=self.obj.excelCellObject.font
+		if (self.obj.excelCellObject.Application.Version > "12.0"):
+					cellObj=self.obj.excelCellObject.DisplayFormat
+					fontObj=self.obj.excelCellObject.DisplayFormat.font
+		else:
+            		cellObj=self.obj.excelCellObject
+            		fontObj=self.obj.excelCellObject.font
 		if formatConfig['reportAlignment']:
 			value=alignmentLabels.get(self.obj.excelCellObject.horizontalAlignment)
 			if value:
@@ -817,7 +870,12 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			except COMError:
 				pass
 			try:
-				formatField['background-color']=colors.RGB.fromCOLORREF(int(self.obj.excelCellObject.interior.color))
+				formatField['background-pattern']=backgroundPatternLabels.get(cellObj.Interior.Pattern)
+				if formatField['background-pattern']=="linear gradient" or formatField['background-pattern']=="rectangular gradient":
+					formatField['background-color']=(colors.RGB.fromCOLORREF(int(cellObj.Interior.Gradient.ColorStops(1).Color)))
+					formatField['background-colorTwo']=(colors.RGB.fromCOLORREF(int(cellObj.Interior.Gradient.ColorStops(2).Color)))
+				else:
+					formatField['background-color']=colors.RGB.fromCOLORREF(int(cellObj.interior.color))
 			except COMError:
 				pass
 		return formatField,(self._startOffset,self._endOffset)

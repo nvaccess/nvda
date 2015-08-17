@@ -1161,7 +1161,17 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		oldColor=attrsCache.get("color") if attrsCache is not None else None
 		backgroundColor=attrs.get("background-color")
 		oldBackgroundColor=attrsCache.get("background-color") if attrsCache is not None else None
-		if color and backgroundColor and color!=oldColor and backgroundColor!=oldBackgroundColor:
+		backgroundColorTwo=attrs.get("background-colorTwo")
+		oldBackgroundColorTwo=attrsCache.get("background-colorTwo") if attrsCache is not None else None
+		if color and backgroundColor and backgroundColorTwo and color!=oldColor and backgroundColor!=oldBackgroundColor and backgroundColorTwo!=oldBackgroundColorTwo:
+			# Translators: Reported when both the text and background colors change.
+			# {color} will be replaced with the text color.
+			# {backgroundColor} will be replaced with the background color.
+			textList.append(_("{color} on {backgroundColor} and {backgroundColorTwo}").format(
+				color=color.name if isinstance(color,colors.RGB) else unicode(color),
+				backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor),
+				backgroundColorTwo=backgroundColorTwo.name if isinstance(backgroundColorTwo,colors.RGB) else unicode(backgroundColorTwo)))
+		elif color and backgroundColor and color!=oldColor and backgroundColor!=oldBackgroundColor:
 			# Translators: Reported when both the text and background colors change.
 			# {color} will be replaced with the text color.
 			# {backgroundColor} will be replaced with the background color.
