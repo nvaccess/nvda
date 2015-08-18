@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-08-06 19:09+1000\n"
-"PO-Revision-Date: 2015-08-04 16:24+0800\n"
+"PO-Revision-Date: 2015-08-17 16:55+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -688,19 +688,19 @@ msgstr "{total} 之 {number}"
 #. %s is replaced with the level.
 #, python-format
 msgid "lv %s"
-msgstr "第 %s 級"
+msgstr "lv %s"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
 #, python-format
 msgid "r%s"
-msgstr "%s列"
+msgstr "r%s"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
 #, python-format
 msgid "c%s"
-msgstr "%s欄"
+msgstr "c%s"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
@@ -727,7 +727,7 @@ msgstr "點字 句點"
 #. Translators: Reported when braille space is pressed in input help mode.
 #. Translators: This is the name of a key on the keyboard.
 msgid "space"
-msgstr "點字 空格"
+msgstr "space"
 
 msgid "focus mode"
 msgstr "焦點模式"
@@ -2840,7 +2840,6 @@ msgid "Braille"
 msgstr "點字"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgctxt "script category"
 msgid "Tools"
 msgstr "工具"
@@ -5742,9 +5741,8 @@ msgid "Tools"
 msgstr "工具"
 
 #. Translators: The label of a menu item to open NVDA user guide.
-#, fuzzy
 msgid "&User Guide"
-msgstr "用戶指南"
+msgstr "用戶指南(&U)"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
@@ -6339,11 +6337,14 @@ msgid ""
 "should first cancel this installation and completely uninstall NVDA before "
 "installing the earlier version."
 msgstr ""
+"您正嘗試要安裝比目前使用中較舊的 NVDA 版本，如果這就是您想要返回使用的版本，"
+"您應先取消此安裝程序，接著將目前安裝的版本完全解安裝，然後才可再安裝較舊版的"
+"NVDA。"
 
 #. Translators: The label of a button to proceed with installation,
 #. even though this is not recommended.
 msgid "&Proceed with installation (not recommended)"
-msgstr ""
+msgstr "進行一個不建議的程式安裝 (&P)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -6463,7 +6464,7 @@ msgstr "關閉時儲存設定(&S)"
 
 #. Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for action).
 msgid "Sho&w exit options when exiting NVDA"
-msgstr "關閉NVDA時，顯示關閉後的選項(&w)"
+msgstr "關閉NVDA時顯示關閉選項(&W) "
 
 #. Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 msgid "&Play sounds when starting or exiting NVDA"
@@ -6895,7 +6896,7 @@ msgstr "當游標移至編輯區，自動啟動焦點模式"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Audio indication of focus and browse modes"
-msgstr "以音效提示模式切換"
+msgstr "以音效提示焦點模式和瀏覽模式的切換"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -7811,7 +7812,6 @@ msgid "slice"
 msgstr "扇區"
 
 #. Translators: A column in a column chart.
-#, fuzzy
 msgctxt "chart"
 msgid "column"
 msgstr "欄"

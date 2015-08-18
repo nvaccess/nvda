@@ -5,6 +5,52 @@
 
 Tradução por Rui Fontes, a partir da versão 2015.1, adaptação por Rui Batista e Rui Fontes da tradução brasileira nas versões anteriores.
 
+= 2015.3 =
+Os destaques desta versão incluem o suporte inicial ao Windows 10, a funcionalidade de poder desactivar a leitura rápida no modo de navegação,(útil para algumas aplicações web), vários melhoramentos no Internet Explorer e solucionado o problema da introdução de texto em certas aplicações com uma linha Braille ligada.
+
+
+== Novas Funcionalidades ==
+- A existência de erros ortográficos é anunciada em campos editáveis no Internet Explorer e outros controlos MSHTML. (#4174)
+- Muitos mais símbolos matemáticos unicode são lidos quando aparecem num texto. (#3805)
+- As sugestões de pesquisa no ecrã inicial do Windows 10 são anunciadas automaticamente. (#5049)
+- Suporte para as linhas EcoBraille 20, EcoBraille 40, EcoBraille 80 e EcoBraille Plus . (#4078)
+- Em modo de navegação, pode activar ou desactivar a Navegação por caracter pressionando NVDA+shift+espaço. Quando desactivada, as letras são passadas à aplicação, o que é útil em algumas aplicações web tais como GMail, Twitter e Facebook. (#3203)
+- Novas tabelas Braille: Finlandês 6 pontos, Irlandês grau 1, Irlandês grau 2, Coreano grau 1 (2006) e Coreano grau 2 (2006). (#5137, #5074, #5097)
+- O teclado QWERTY da linha Braille Papenmeier BRAILLEX Live Plus já é suportado. (#5181)
+- Suporte experimental para o navegador Microsoft Edge e respectivo motor de navegação no Windows 10. (#5212)
+
+
+== Alterações ==
+- Actualizado o liblouis braille translator para a versão 2.6.3. (#5137)
+- Ao tentar instalar uma versão do NVDA anterior à que está instalada, será avisado que isso não é recomendado e que o NVDA deve ser desinstalado antes de continuar. (#5037)
+
+
+== Correcção de falhas ==
+- No modo de navegação no Internet Explorer e outros controlos MSHTML, as teclas rápidas para campos de formulários já não incuem itens de listas de apresentação. (#4204)
+- No Firefox, o NVDA já não tenta criar uma descrição para ARIA tab panels baseada  em todo o texto do painel. (#4638)
+- No Internet Explorer e outros controlos MSHTML, pressionando Tab até uma secção, os artigos ou diálogos  já não são anunciado como se fossem o nome. (#5021, #5025) 
+- Ao usar linhas Braille Baum/HumanWare/APH com teclado Braille, a escrita Braille já não deixa de funcionar depois de pressionar uma tecla sem ser do teclado. (#3541)
+- No Windows 10, informação estranha já não é anunciada ao pressionar alt+tab ou alt+shift+tab para alternar entre aplicações. (#5116)
+- O texto introduzido já não fica baralhado ao escrever em aplicações como o Microsoft Outlook, ou no Windows 7 e seguintes, em aplicações como o WordPad, Skype, Windows Live Mail, etc, com umalinha Braille ligada. (#2953 e #4291(
+- Em Braille, já não são exibidos espaços estranhos entre, ou depois de, indicadores de controlos e formatação. (#5043)
+- Em modo de navegação, no Internet Explorer e noutros controlos MSHTML, o conteúdo correcto é anunciado quando um elemento aparexce ou é alterado, e é imediatamente focado. (#5040)
+- Em modo de navegação, no Microsoft Word, a navegação por caracter agora atualiza, como devido, a linha Braille e o cursor de revisão. (#4968)
+- Quando uma aplicação não está a responder, ou a responder com lentidão, e muda para outra aplicação, o NVDA, na maior parte dos casos, passa a responder mais normalmente. (#3831)
+- As notificações, Toast, do Windows 10 passam a ser anunciadas correctamente. (#5136)
+- Em algumas caixas combinadas, (UI Automation) o valor passa a ser anunciado sempre que é alterado.
+- Em modo de navegação nos navegadores  web, após atingir uma frame navegando com o Tab, a navegação por Tab continua a funcionar normalmente. (#5227)
+- O Ecrã de Bloqueio do Windows 10 pode ser disactivado usando o ecrã táctil. (#5220)
+- No Ecrã de Bloqueio do Windows 10, já não é possível ler a área de transferência, aceder às aplicações em execução com o cursor de revisão, alterar as configurações do NVDA, etc. (#5269)
+
+
+== Alterações para Desenvolvedores ==
+- Agora já pode injetar raw input a partir de um teclado que não seja nativamente controlado pelo Windows (e.g. um teclado QWERTY de uma linha Braille) usando a nova função keyboardHandler.injectRawKeyboardInput. (#4576)
+- Foi adicionado o eventHandler.requestEvents para obter eventos que, por predefinição, estão bloqueados; e.g. mostrar eventos de um controlo específico ou certos eventos mesmo que em segundo plano. (#3831)
+- Em vez de um único atributo i18nName, synthDriverHandler.SynthSetting tem agora em separado dois atributos, displayNameWithAccelerator e displayName para evitar o anúncio da tecla aceleradora no anel de configurações do sintetizador em alguns idiomas
+- Para retrocompatibilidade, no constructor, displayName é opcional e é derivado do displayNameWithAccelerator se não fornecido. Contudo, se pretender ter uma tecla aceleradora para uma configuração, ambos deverão ser fornecidos.
+- O atributo  i18nName está obsoleto e poderá ser removido numa versão futura.
+
+
 = 2015.2 =
 Os destaques desta versão incluem a possibilidade de ler gráficos no Microsoft Excel e suporte para leitura e navegação interactiva de conteúdo matemático no MathPlayer 4.
 

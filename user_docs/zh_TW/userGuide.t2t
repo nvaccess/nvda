@@ -1,5 +1,5 @@
 ﻿ NVDA_VERSION 用戶指南
-（最後更新日期：2015年7月22日）
+（最後更新日期：2015年8月10日）
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION 指令快速參考
@@ -17,7 +17,7 @@ NVDA 可提供視障者操作微軟視窗作業系統及其它應用程式。
 
 主要特色包括：
 - 支援多種熱門應用程式，包括網頁瀏覽器、郵件軟體、線上聊天軟體及Office套裝軟體。
-- 內建的語音合成器支援超過80種語言。
+- 內建的語音合成軟體支援超過80種語言。
 - 報讀文字格式。例如字型名稱、大小、樣式、拼字錯誤等。
 - 自動讀出鼠標所指的文字，並可透過聲音提示鼠標所在位置。
 - 支援多種點字顯示器，包括那些有點字輸入鍵盤的點字顯示器。
@@ -34,12 +34,12 @@ NVDA 可提供視障者操作微軟視窗作業系統及其它應用程式。
 讓世界上所有的人，不管使用何種語言，都可以無障礙的公平使用科技是極為重要的。
 NVDA 除了英文版外，目前已翻譯成47種語言，包括：南非荷蘭文、阿爾巴尼亞文、阿比西尼亞文、阿拉伯文、阿拉貢文、巴西文、葡萄牙文、保加利亞文、加泰隆語、哥倫比亞西班牙語、加太文、克羅埃西亞文、捷克文、丹麥文、荷蘭文、波斯文、芬蘭文、法文、加利西亞文、喬治亞文、德文、希伯來文、印度文、匈牙利文、冰島文、義大利文、日文、波蘭文、葡萄牙文、旁遮普語、羅馬尼亞文、俄文、塞爾維亞文、斯洛伐克文、斯洛維尼亞文、西班牙文、瑞典文、泰文、正體中文、簡體中文、土耳其文、烏克蘭文、越南文、阿比西尼亞文、韓文及尼泊爾文等。
 
-++ 語音合成器支援 ++
-除了提供前述多國文字訊息與使用者介面外，只要能取得到並安裝在電腦上，透過語音合成介面程式的選擇，NVDA 也提供使用者採用不同的語言及不同的語音合成器，以便可讀取文件或物件的內容。
+++ 語音合成軟體支援 ++
+除了提供前述多國文字訊息與使用者介面外，只要能取得到並安裝在電腦上，透過語音合成介面程式的選擇，NVDA 也提供使用者採用不同的語言及不同的語音合成軟體，以便可讀取文件或物件的內容。
 
-預設提供一個多語系的語音合成器 [eSpeak http://espeak.sourceforge.net/]，此為一自由開放原始碼的軟體。
+預設提供一個多語系的語音合成軟體 [eSpeak http://espeak.sourceforge.net/]，此為一自由開放原始碼的軟體。
 
-有關其它NVDA支援的語音合成器的資訊請參見 [支援的語音合成器 #SupportedSpeechSynths] 這個章節。
+有關其它NVDA支援的語音合成軟體的資訊請參見 [支援的語音合成軟體 #SupportedSpeechSynths] 這個章節。
 
 ++ 點字支援 ++
 對於擁有點字顯示器的使用者，NVDA 可將資訊以點字形式輸出到點顯器上。
@@ -48,15 +48,15 @@ NVDA 除了英文版外，目前已翻譯成47種語言，包括：南非荷蘭�
 NVDA 提供多語系，通常含括一級與二級點字碼、以及電腦點字。
 
 ++ 授權與著作權 ++
-NVDA 著作權2006-2013 是歸屬於所有參與的開發者。
+NVDA 著作權2006-2015 是歸屬於所有參與的開發者。
 
 NVDA受到「GNU 通用公共授權條款（第二版）」所保護。
 只要將此公開授權辦法隨附於軟體，您可以自由地以任何形式分享或改變此軟體，並將所有的原始碼提供給需要的人，這個規則適用於原始發佈的軟體或任何以此軟體修改之後發佈的軟體，以及所有採用此軟體內的程式碼所產生的軟體。
 更詳細的內容，請上網 [查看完整版授權辦法 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]。 
 
 
-+ 系統需求 +
-- 作業系統：32及64位元微軟Windows XP、Windows Vista、Windows 7及Windows 8（含伺服器作業系統）
++ 系統需求 + 
+- 作業系統：32及64位元微軟Windows XP、Windows Vista、Windows 7、Windows 8及Window 10（含伺服器作業系統）
 - 使用XP 32位元電腦，作業系統需要安裝SP 2或以上的等級；
 - 使用Windows 2003伺服器則需安裝SP 1或以上的等級。
 - RAM 記憶體：需要 256MB 以上
@@ -232,7 +232,7 @@ NVDA 功能表提供偏好設定、開啟說明檔、儲存或還原修改的設
 %kc:beginInclude
 || 名稱 | 桌電快速鍵 | 筆電快速鍵 | 觸控 | 說明 |
 | 停止報讀 | Ctrl | control | 雙指點選 | 立即停止報讀。 |
-| 暫停/繼續報讀 | Shift | shift | 無 | 立即暫停報讀，再按一次會從原來暫停的地方繼續報讀(若使用的語音合成器有支援的話)。 |
+| 暫停/繼續報讀 | Shift | shift | 無 | 立即暫停報讀，再按一次會從原來暫停的地方繼續報讀(若使用的語音合成軟體有支援的話)。 |
 | NVDA 功能表 | NVDA+n | NVDA+n | 雙指雙重點選 | 開啟 NVDA 功能表以存取偏好設定、工具及輔助說明等。 |
 | 切換語音模式 | NVDA+s | NVDA+s | 無 | 每按鍵一次，NVDA會在報讀、靜音及發出逼逼聲三個模式間依序循環切換。 |
 | 按鍵指令說明模式 | NVDA+1 | NVDA+1 | 無 | 在這個模式下，按下任何按鍵組合，即會報讀出相關的 NVDA 的按鍵名稱與功能說明。 |
@@ -502,8 +502,14 @@ NVDA 在預設狀況下，會自動切換到焦點模式。
 || 名稱 | 快速鍵 | 說明 |
 | 移動到清單或表格的開頭位置 | shift+, | 移動到清單或表格的開頭位置 |
 | 跳過此清單或表格 | , | 跳過此清單或表格  |
-%kc:endInclude
 
+
+%kc:endInclude
+Some web applications such as Gmail, Twitter and Facebook use single letters as shortcut keys.
+If you want to use these while still being able to use your cursor keys to read in browse mode, you can temporarily disable NVDA's single letter navigation keys.
+%kc:beginInclude
+To toggle single letter navigation on and off for the current document, press NVDA+shift+space.
+%kc:endInclude
 
 ++ 元件清單 ++
 
@@ -627,7 +633,7 @@ NVDA額外提供了一些應用程式專用的指令，可以更方便地執行�
 有一些設定也可以使用快速鍵，將在下列相關的章節中列出。
 
 請注意：在預設狀況下，並非所有的偏好設定對話方塊內的指令均可透過輸入手勢（如按鍵或觸控面板手勢等（來啟動。 
-如果您希望可以針對那些無法以快速鍵啟用的指令，利用手勢來啟用，可透過 [Input Gestures dialog #輸入手勢 ] 將其新增加入。
+如果您希望可以針對那些無法以快速鍵啟用的指令，利用手勢來啟用，可透過 [輸入手勢 #Input Gestures] 對話方塊的設定，將其新增加入。
 
 +++ 一般設定 (NVDA+Ctrl+g) +++
 「一般設定」對話方塊可以由「偏好設定」功能表開啟。
@@ -680,16 +686,16 @@ NVDA額外提供了一些應用程式專用的指令，可以更方便地執行�
 一旦您選擇了某一合成軟體，您可以按 「OK」，則 NVDA 會載入所選擇的合成軟體。
 假如在載入過程有任何錯誤發生，NVDA 將會顯示錯誤訊息，並且繼續使用先前的合成軟體。
 
-==== 語音合成器 ====
-這個選項允許您選擇您想要 NVDA 用來報讀的語音合成器。
+==== 語音合成軟體 ====
+這個選項允許您選擇您想要 NVDA 用來報讀的語音合成軟體。
 
-NVDA 可以支援的語音合成器清單，請參見[支援的語音合成器 #SupportedSpeechSynths] 一節。
+NVDA 可以支援的語音合成軟體清單，請參見[支援的語音合成軟體 #SupportedSpeechSynths] 一節。
 
 有一個特定選項一定會出現在清單中，那就是「沒有語音」。這個選項允許您在沒有語音輸出的情況下使用 NVDA。
 這可能對於想要使用點字的人或者有視力但只想使用檢視報讀器瀏覽的程式開發者有幫助。
 
 ==== 輸出裝置 ====
-這個選項可以讓您選擇 NVDA 語音合成器要使用的音效卡。
+這個選項可以讓您選擇 NVDA 語音合成軟體要使用的音效卡。
 
 +++ 語音設定 「NVDA+Ctrl+v」 +++[VoiceSettings]
 「語音設定」對話方塊是「偏好設定」功能表中的一個選項，您可以開啟它來做語音相關設定的變更。
@@ -719,7 +725,7 @@ NVDA 可以支援的語音合成器清單，請參見[支援的語音合成器 #
 這是一個以滑桿呈現的控制選項，其範圍介於 0% 至 100%，數字愈小音量愈小，反之愈大則報讀的音量愈大。
 
 ====語調====
-這是一個以滑桿呈現的控制選項，它是在某一音調下，允許調整語調的上下起伏。它僅適用於有提供此功能的語音合成器，目前僅有 eSpeak 有提供。
+這是一個以滑桿呈現的控制選項，它是在某一音調下，允許調整語調的上下起伏。它僅適用於有提供此功能的語音合成軟體，目前僅有 eSpeak 有提供。
 
 ==== 自動切換語言 ====
 當所閱讀的文件有使用語言標記，可利用此核取方塊決定是否即時自動切換調用對應的語言。
@@ -737,7 +743,7 @@ NVDA 可以支援的語音合成器清單，請參見[支援的語音合成器 #
 
 這個功能可讓您改變標點符號及其它特殊符號，以對應的文字表達方式，依選擇的等級報讀，
 例如，當讀出等級設為「全部」，則所有的符號遇到時，即以它所對應的文字將其報讀出來。
-這個設定的調整，適用於所有的語音合成器，而非僅針對目前作用中的語音。
+這個設定的調整，適用於所有的語音合成軟體，而非僅針對目前作用中的語音。
 
 ==== 處理字詞及符號報讀，信任使用的語音語言 ====
 此項預設是開啟，告訴 NVDA在處理字詞與符號時，信任所使用的語音合成語言。如果您發現 NVDA在報讀某些符號不正確或使用錯誤的語音時，您可以將此項功能關閉，改用預設的語音。 
@@ -761,9 +767,9 @@ NVDA 可以支援的語音合成器清單，請參見[支援的語音合成器 #
 
 例如在英文中 "a" 若當作單一字母與當作一個字，其讀法是不同的。
 啟用這個選項即可將這兩種狀況區別開來。
-多數的語音合成器均有支援此項功能。
+多數的語音合成軟體均有支援此項功能。
 通常這個選項應啟用。
-然而有些符合微軟 SAPI介面的語音合成器並沒做好，在此功能啟用時，會有不正確的報讀。
+然而有些符合微軟 SAPI介面的語音合成軟體並沒做好，在此功能啟用時，會有不正確的報讀。
 在這種狀況下，則此功能應停用。 
 
 +++ 快速語音設定 +++[SynthSettingsRing]
@@ -1078,7 +1084,7 @@ NVDA目前只支援電腦點字輸入，所以在此下拉方塊只呈現那些�
 若勾選此對話方塊，當利用方向鍵移至一個可編輯的文字方塊時，會自動切換至焦點模式，此時可在編輯游標處輸入字元或刪除字元。
 若以方向鍵移出此文字方塊，則又會自動切換成瀏覽模式。
  
-==== 以音效提示模式切換 ====
+==== 以音效提示焦點模式和瀏覽模式的切換 ====
 若勾選此控制項，當瀏覽網頁時，若有任何焦點模式與瀏覽模式的切換，NVDA將會發出特殊的音效，而不是以報讀的方式提示。
 
 ==== 將所有的非手勢指令失效 ====
@@ -1115,7 +1121,7 @@ NVDA目前只支援電腦點字輸入，所以在此下拉方塊只呈現那些�
 - 可點擊物件
 - 
 
-要在任何處切換以上這些控制項的設定，請透過 [Input Gestures dialog #輸入手勢] 來指派手勢指令。
+要在任何處切換以上這些控制項的設定，請透過 [ #輸入手勢 #Input Gestures dialog] 對話方塊來指派手勢指令。
 
 
 ==== 讀出游標經過後的格式變換 ====
@@ -1134,7 +1140,7 @@ NVDA 會偵測到編輯游標／瀏覽游標所在位置的格式，在某些情
 - 暫存字庫：僅對本次使用的 NVDA 發生效用，若關掉 NVDA再重新開啟後該字庫中新設的規則即告失效。
 -
 
-如果您想要在任何處以手勢啟動「語音字庫」對話方塊，您需要在 [Input Gestures dialog #輸入手勢 ] 來新增設定。
+如果您想要在任何處以手勢啟動「語音字庫」對話方塊，您需要在 [輸入手勢 #Input Gestures dialog] 對話方塊來新增設定。
 
 所有字庫的對話方塊都含有讀音處理的規則清單。
 這個對話方塊也包含新增、編輯與刪除的按鈕。
@@ -1246,7 +1252,7 @@ NVDA 提供的功能遠超過僅將該字串的讀音改變而已，您也可以
 如果您僅需手動啟用此新增的設定檔，此為預設選項，則選擇「手動」，否則選擇一個可啟用的項目。
 為方便起見，如果您沒有在「名稱」，這個文字方塊內輸入文字，則會自動填入選定的啟用項目的名稱，做為該組態檔的名稱。
 
-請見以下的「組態設定觸發」 [below #ConfigProfileTriggers]，以得知更多有關 [自動觸發]的資訊 
+請見以下的 [「組態設定觸發」 #ConfigProfileTriggers]，以得知更多有關 [自動觸發]的資訊 
 
 按「OK」按鈕即新增設定檔，並關閉其對話方塊，因此，您可開始進行編輯的動作。
 
@@ -1312,13 +1318,13 @@ NVDA 提供的功能遠超過僅將該字串的讀音改變而已，您也可以
 
 當開啟「檢視報讀」，它會持續更新並顯示目前報讀的文字，但當移動滑鼠點擊或將系統焦點移到此浮動視窗，則 NVDA 將停止更新，此時，您可很容易的選取或複製現有的內容。
 
-如果您想要在任何處切換開啟「檢視報讀」的手勢，您需要在 [Input Gestures dialog #輸入手勢 ] 來新增設定。
+如果您想要在任何處切換開啟「檢視報讀」的手勢，您需要在 [輸入手勢 #Input Gestures dialog] 對話方塊來新增設定。
 
 
 ++ 管理附加元件 ++
 NVDA 功能表的「工具」子功能表中，「管理附加元件」可讓您安裝或移除NVDA附加元件。
 
-此附加元件是由參與的開發社群人員所提供，它包括一些客製化的程式碼，有可能會更動NVDA的功能，甚至可提供額外的點字顯示器或語音合成器之支援。
+此附加元件是由參與的開發社群人員所提供，它包括一些客製化的程式碼，有可能會更動NVDA的功能，甚至可提供額外的點字顯示器或語音合成軟體之支援。
 「管理附加元件」包含了一個所有目前安裝於您的 NVDA 使用者設定之附加元件清單，清單中同時顯示的有附加元件的名稱、版次及作者。若要知道該附加元件更詳細的資訊，可點選「關於附加元件」按鈕。
 針對選取的附加元件，若有提供說明，則可按附加元件的「說明」按鈕。
 
@@ -1348,7 +1354,7 @@ NVDA 首先會詢問您是否確認要安裝附加元件。
 
 如果可找到有與這個外掛元件相類似的附加元件，最好的作法是將此外掛元件從您的設定檔中移除，然後再重新安裝其相類似的附加元件。
 
-若想要在任何處開啟「附加元件管理員」對話方塊，您需要在 [Input Gestures dialog #輸入手勢 ] 來新增設定。
+若想要在任何處開啟「附加元件管理員」對話方塊，您需要在 [輸入手勢 #Input Gestures dialog] 對話方塊來新增設定。
 
 
 ++ Python 主控台 ++
@@ -1358,13 +1364,13 @@ NVDA 首先會詢問您是否確認要安裝附加元件。
 ++ 重新載入外掛程式 ++
 此項目一旦啟用，可不需重新啟動 NVDA，就可重新載入應用程式模組及通用外掛程式，此功能對於程式開發人員很有助益。
 
-+ 支援的語音合成器 +[SupportedSpeechSynths]
-這一節的內容包含 NVDA 支援的語音合成器的相關資訊。
-NVDA支援了一個廣泛的語音合成器清單，包括免費的及商用的，您可上網購買和下載，所支援的語音合成器請參見「支援的語音合成器」 [http://www.nvda-project.org/wiki/ExtraVoices].
++ 支援的語音合成軟體 +[SupportedSpeechSynths]
+這一節的內容包含 NVDA 支援的語音合成軟體的相關資訊。
+NVDA支援了一個廣泛的語音合成軟體清單，包括免費的及商用的，您可上網購買和下載，所支援的語音合成軟體請參見「支援的語音合成軟體」 [http://www.nvda-project.org/wiki/ExtraVoices].
 
 ++ eSpeak ++
 [eSpeak http://espeak.sourceforge.net/] 
-eSpeak 語音合成器內建在 NVDA 中，並不需要安裝額外的驅動程式或者元件。
+eSpeak 語音合成軟體內建在 NVDA 中，並不需要安裝額外的驅動程式或者元件。
 
 NVDA 預設使用 eSpeak 。
 因為這個合成器是內建的，所以對於從 USB 隨身碟中或者 CD 上執行 NVDA，這個合成器會是一個很好的選擇。
@@ -1376,13 +1382,13 @@ NVDA 總共支援超過43種不同的語言，
 微軟 SAPI 4 是較早期的語音合成軟體的標準版本。
 您可以從許多公司或網站中購買或者免費下載遵循這個標準編寫的語音合成軟體。
 當使用 NVDA時，安裝在您的電腦上所有符合 SAPI 4 語音引擎提供的語音，都可透過 NVDA 功能表中的「語音設定」，或利用 「快速語音設定 #SynthSettingsRing」 來選用。
-若您已安裝 SAPI 4 語音合成軟體，但發現並沒有在  NVDA 的「語音合成器」清單中呈現，請安裝 SAPI 4.0 runtime binaries，此程式可從下列網址下載：http://activex.microsoft.com/activex/controls/sapi/spchapi.exe。
+若您已安裝 SAPI 4 語音合成軟體，但發現並沒有在  NVDA 的「語音合成軟體」清單中呈現，請安裝 SAPI 4.0 runtime binaries，此程式可從下列網址下載：http://activex.microsoft.com/activex/controls/sapi/spchapi.exe。
 
 
 ++ 微軟 SAPI5 (SAPI 5) ++
 SAPI 5 是微軟語音合成軟體的標準版本。
 您可以從許多公司或網站中購買或者免費下載那些遵循這個標準的語音合成軟體。您的系統中可能已預設安裝了至少一個 SAPI 5 的語音合成軟體。
-當 NVDA 選取這個語音合成器時，安裝在您的系統中的所有 SAPI 5.0 引擎提供的語音都可被使用，您可以從 NVDA 功能表中的「語音設定」， 或利用 「快速語音設定 #SynthSettingsRing」 來選用。
+當 NVDA 選取這個語音合成軟體時，安裝在您的系統中的所有 SAPI 5.0 引擎提供的語音都可被使用，您可以從 NVDA 功能表中的「語音設定」， 或利用 「快速語音設定 #SynthSettingsRing」 來選用。
 
 ++ 微軟 Speech Platform ++
 微軟 Speech Platform 提供了許多種語言的語音，多用於伺服器語音應用程式的開發。
@@ -1398,7 +1404,7 @@ SAPI 5 是微軟語音合成軟體的標準版本。
 -
  
 ++ Audiologic Tts3 ++
-這是一個專供義大利語的商務用語音合成器。
+這是一個專供義大利語的商務用語音合成軟體。
 您必須要先安裝它，才可以在 NVDA 上使用。
 若要了解更詳細的資訊，請瀏覽 Audiologic 網站 [www.audiologic.it http://www.audiologic.it] 。
 
@@ -1755,11 +1761,10 @@ The Seika Version 3, 4 and 5 (40 cells) and Seika80 (80 cells) braille displays 
 - BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus (USB and bluetooth)
 -
 
-若有安裝 BrxCom，NVDA就會使用BrxCom。
-BrxCom是一種工具，讓您可使用點字輸入並從報讀軟體獨立出來。 
+若已安裝了 BrxCom，NVDA就會使用BrxCom。
+BrxCom 能允許直接從點顯器上執行鍵盤輸入，而獨立於螢幕報讀軟體之外運作的一種工具。
 Papenmeier 開發的新版 BrxCom 將於近期推出，該款設備可與 NVDA 相容。
-Trio, BRAILLEX Live 20 及 Braillex Live 這幾款型號的點顯器可不需接用 BrxCom 工具，就可使用點字輸入。
-但 Live Plus 這個型號則需要有BrxCom 才可使用點字輸入。
+Trio and BRAILLEX Live此款產品是可以採鍵盤輸入的。
 
 多數的裝置有一個容易存取列 (eab)，以方便直覺式的快速操作，
 EAB 有四個方位可供移動，且每個方位均有二道開關，
@@ -1767,9 +1772,9 @@ EAB 有四個方位可供移動，且每個方位均有二道開關，
 
 C-系列及某些點顯器有2列路由按鍵，上一列是提供格式資訊，
 按住上列一個路由鍵並按下 EAB 可模擬其中一種開關狀態。
-The live series displays have one routing row only and the EAB has one step per direction.
-The second step may be emulated by pressing one of the routing keys and pressing the EAB in the corresponding direction.
-Pressing and holding the up, down, right and left keys (or EAB) causes the corresponding action to be repeated.
+live 系列僅有一個路由列，而 EAB 在每一方位僅可移動一個步驟。
+接下來的一個步驟可藉由按其中一個路由鍵及按所對應的方位之 EAB來模擬。
+按向上、下、左及右 （或 eab）鍵，以重覆產生相對應方位的動作。
 
  一般而言，以下的按鍵可適用於多數型號的點顯器上。
 || 名稱 | 按鍵 |
@@ -1962,6 +1967,42 @@ NVDA 支援 BrailleNote notetakers，請參閱網址[Humanware http://www.humanw
 
 
 
+++ EcoBraille 點顯器 ++
+NVDA支援EcoBraille點字顯示器，請參閱[ONCE http://www.once.es/].
+支援的機型種類如下表所示:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+您可以在 NVDA 的「點字設定」上依所使用連接埠的點顯器型號來設定。
+
+以下的按鍵是 EcoBraille 點顯器上的按鍵指令。
+請參見 [EcoBraille 文件說明ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] 以瞭解這些按鍵的位置。 
+
+
+%kc:beginInclude
+|| 名稱 | 按鍵 |
+| Scroll braille display back | T2 |
+| Scroll braille display forward | T4 |
+| Move braille display to previous line | T1 |
+| Move braille display to next line | T5 |
+| Route to braille cell | Routing |
+| Activate current navigator object | T3 |
+| Switch to next review mode | F1 |
+| Move to containing object | F2 |
+| Switch to previous review mode | F3 |
+| Move to previous object | F4 |
+| Report current object | F5 |
+| Move to next object | F6 |
+| Move to focus object | F7 |
+| Move to first contained object | F8 |
+| Move System focus or caret to current review position | F9 |
+| Report review cursor location | F0 |
+| Toggle braille tethered to | A |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] 是一個可以用來支援許多點字顯示器的應用程式。
 使用時，必須安裝BRLTTY視窗版本 （[BRLTTY for Windows http://brl.thefreecat.org/brltty/]）。
@@ -2063,7 +2104,7 @@ nvda -q
 
 ++ 符號讀音的進階自訂 ++
 您也可以在[標點符號/特殊符號讀音 #SymbolPronunciation]的對話方塊中，自訂那些標點及其他符號的讀音的特殊設定。
-例如，您可指定某一個符號，是否需要將其送到語音合成器，以便報讀時，引發停頓或音調改變，或是新增為一個自訂的符號。
+例如，您可指定某一個符號，是否需要將其送到語音合成軟體，以便報讀時，引發停頓或音調改變，或是新增為一個自訂的符號。
 要自行定義符號讀音，您需編輯 NVDA 使用者設定資料夾裡的符號讀音資訊檔案。
 此檔案的名稱為 symbols-xx.dic，其中 xx 為語言碼(language code)。
 此檔案的格式請參閱 NVDA Developer Guide裡的 Symbol Pronunciation 一節。此文件位於 [NVDA網站的developer Guide頁面 

@@ -16,6 +16,7 @@ complexSymbols:
 decimal point	(?<![^\d -])\,(?=\d)
 in-word '	(?<=[^\W_])['’]
 negative number	(?<!\w)-(?=[$£€¥.]?\d)
+thousands separator	(?<=\d)\.(?=\d{3})
 date separator	(?<=\d\d)\.(?=\d\d)
 
 symbols:
@@ -30,6 +31,7 @@ symbols:
 decimal point	
 in-word '	Apostroph
 negative number	Minus
+thousands separator	Punkt all norep
 date separator		none	always
 
 # Whitespace
