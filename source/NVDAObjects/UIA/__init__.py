@@ -9,7 +9,6 @@ from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
 import weakref
 import UIAHandler
-import aria
 import globalVars
 import eventHandler
 import controlTypes
@@ -336,6 +335,8 @@ class UIA(Window):
 				clsList.append(edge.EdgeHTMLRoot)
 			elif self.role==controlTypes.ROLE_LIST:
 				clsList.append(edge.EdgeList)
+			else:
+				clsList.append(edge.EdgeNode)
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.append(ProgressBar)
 		if UIAClassName=="ControlPanelLink":
@@ -498,12 +499,6 @@ class UIA(Window):
 			superRole=super(UIA,self).role
 			if superRole!=controlTypes.ROLE_WINDOW:
 				role=superRole
-		ariaRole=self.UIAElement.currentAriaRole
-		for ariaRole in ariaRole.split():
-			newRole=aria.ariaRolesToNVDARoles.get(ariaRole)
-			if newRole:
-				role=newRole
-				break
 		return role
 
 	def _get_description(self):
