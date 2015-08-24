@@ -1164,9 +1164,10 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		backgroundColorTwo=attrs.get("background-colorTwo")
 		oldBackgroundColorTwo=attrsCache.get("background-colorTwo") if attrsCache is not None else None
 		if color and backgroundColor and backgroundColorTwo and color!=oldColor and backgroundColor!=oldBackgroundColor and backgroundColorTwo!=oldBackgroundColorTwo:
-			# Translators: Reported when both the text and background colors change.
+			# Translators: Reported when both the text and the two background colors change .Two background colors are present when gradient pattern is applied to cell
 			# {color} will be replaced with the text color.
-			# {backgroundColor} will be replaced with the background color.
+			# {backgroundColor} will be replaced with the first background color.
+			# {backgroundColorTwo} will be replaced with the second background color.
 			textList.append(_("{color} on {backgroundColor} and {backgroundColorTwo}").format(
 				color=color.name if isinstance(color,colors.RGB) else unicode(color),
 				backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor),
