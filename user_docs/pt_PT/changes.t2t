@@ -44,7 +44,7 @@ Os destaques desta versão incluem o suporte inicial ao Windows 10, a funcionali
 
 
 == Alterações para Desenvolvedores ==
-- Agora já pode injetar raw input a partir de um teclado que não seja nativamente controlado pelo Windows (e.g. um teclado QWERTY de uma linha Braille) usando a nova função keyboardHandler.injectRawKeyboardInput. (#4576)
+- Agora já pode injectar raw input a partir de um teclado que não seja nativamente controlado pelo Windows (e.g. um teclado QWERTY de uma linha Braille) usando a nova função keyboardHandler.injectRawKeyboardInput. (#4576)
 - Foi adicionado o eventHandler.requestEvents para obter eventos que, por predefinição, estão bloqueados; e.g. mostrar eventos de um controlo específico ou certos eventos mesmo que em segundo plano. (#3831)
 - Em vez de um único atributo i18nName, synthDriverHandler.SynthSetting tem agora em separado dois atributos, displayNameWithAccelerator e displayName para evitar o anúncio da tecla aceleradora no anel de configurações do sintetizador em alguns idiomas
 - Para retrocompatibilidade, no constructor, displayName é opcional e é derivado do displayNameWithAccelerator se não fornecido. Contudo, se pretender ter uma tecla aceleradora para uma configuração, ambos deverão ser fornecidos.
