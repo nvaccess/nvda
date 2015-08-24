@@ -725,7 +725,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
 	# Translators: Input help mode message for report current navigator object command.
-	script_navigatorObject_current.__doc__=_("Reports the current navigator object. Pressing twice spells this information,and pressing three times Copies name and value of this  object to the clipboard")
+	script_navigatorObject_current.__doc__=_("Reports the current navigator object. Pressing twice spells this information, and pressing three times Copies name and value of this  object to the clipboard")
 	script_navigatorObject_current.category=SCRCAT_OBJECTNAVIGATION
 
 	def script_navigatorObject_currentDimensions(self,gesture):
