@@ -958,6 +958,23 @@ class ExcelCell(ExcelBase):
 			previous=None
 		if previous:
 			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=previous)
+		
+	def _get_description(self):
+		text="Input Message is "
+		try:
+			inputMessageTitle=self.excelCellObject.validation.inputTitle
+		except (COMError,NameError,AttributeError):
+			inputMessageTitle=None
+		try:
+			inputMessage=self.excelCellObject.validation.inputMessage
+		except (COMError,NameError,AttributeError):
+			inputMessage=None
+		if inputMessageTitle and inputMessage:
+			return text+inputMessageTitle+inputMessage
+		elif inputMessage:
+			return text+inputMessage
+		else:
+			return
 
 	def script_reportComment(self,gesture):
 		commentObj=self.excelCellObject.comment
