@@ -25,5 +25,5 @@ class SuggestionListItem(UIA):
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
-		if isinstance(obj,UIA) and obj.role==controlTypes.ROLE_LISTITEM and isinstance(obj.parent,EdgeList):
+		if isinstance(obj,UIA) and isinstance(obj.parent,EdgeList):
 			clsList.insert(0,SuggestionListItem)
