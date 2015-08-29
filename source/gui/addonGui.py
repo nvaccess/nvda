@@ -130,7 +130,7 @@ class AddonsDialog(wx.Dialog):
 					break
 			if prevAddon:
 				# Translators: A message asking if the user wishes to update a previously installed add-on with this one.
-				if gui.messageBox(_("A version of this add-on is already installed. Would you like to update it?"),
+				if gui.messageBox(_("A version of this add-on is already installed. Would you like to update it?\nCurrent version:{curversion}\nNew version:{newversion}").format(curversion=addon.manifest["version"], newversion=bundle.manifest["version"]),
 				# Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
 				_("Add-on Installation"),
 				wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
