@@ -434,6 +434,8 @@ def registerEaseOfAccess(installDir):
 				"nvda.exe")
 			_winreg.SetValueEx(appKey, "StartExe", None, _winreg.REG_SZ,
 				os.path.join(installDir, u"nvda.exe"))
+			_winreg.SetValueEx(appKey, "StartParams", None, _winreg.REG_SZ,
+				"--ease-of-access")
 			_winreg.SetValueEx(appKey, "TerminateOnDesktopSwitch", None,
 				_winreg.REG_DWORD, 0)
 		else:

@@ -80,6 +80,13 @@ parser.add_option('--no-sr-flag',action="store_false",dest='changeScreenReaderFl
 parser.add_option('--install',action="store_true",dest='install',default=False,help="Installs NVDA (starting the new copy after installation)")
 parser.add_option('--install-silent',action="store_true",dest='installSilent',default=False,help="Installs NVDA silently (does not start the new copy after installation).")
 parser.add_option('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
+# This option currently doesn't actually do anything.
+# It is passed by Ease of Access so that if someone downgrades without uninstalling (despite our discouragement),
+# the downgraded copy won't be started in non-secure mode on secure desktops.
+# (Older versions always required the --secure option to start in secure mode.)
+# If this occurs, the user will see an obscure error,
+# but that's far better than a major security hazzard.
+parser.add_option('--ease-of-access',action="store_true",dest='easeOfAccess',default=False,help="Started by Windows Ease of Access")
 (globalVars.appArgs,extraArgs)=parser.parse_args()
 
 def terminateRunningNVDA(window):
