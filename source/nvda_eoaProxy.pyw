@@ -48,7 +48,7 @@ def main():
 	if not process:
 		if isSecureDesktop():
 			import subprocess
-			subprocess.Popen((os.path.join(sys.prefix, "nvda.exe"),))
+			subprocess.Popen((os.path.join(sys.prefix, "nvda.exe"), "--ease-of-access"))
 		process = waitForNvdaStart()
 	if not process:
 		return

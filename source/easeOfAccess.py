@@ -7,16 +7,15 @@
 """Utilities for working with the Windows Ease of Access Center.
 """
 
-import sys
 import _winreg
 import ctypes
 import winUser
+from winVersion import winVersion
 
-winVer = sys.getwindowsversion()
 # Windows >= Vista
-isSupported = winVer.major >= 6
+isSupported = winVersion.major >= 6
 # Windows >= 8
-canConfigTerminateOnDesktopSwitch = isSupported and (winVer.major, winVer.minor) >= (6, 2)
+canConfigTerminateOnDesktopSwitch = isSupported and (winVersion.major, winVersion.minor) >= (6, 2)
 
 ROOT_KEY = r"Software\Microsoft\Windows NT\CurrentVersion\Accessibility"
 APP_KEY_NAME = "nvda_nvda_v1"
