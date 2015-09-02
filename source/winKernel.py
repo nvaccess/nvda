@@ -32,7 +32,7 @@ STARTF_USESTDHANDLES = 0x00000100
 STD_INPUT_HANDLE=-10
 STD_OUTPUT_HANDLE=-11
 STD_ERROR_HANDLE=-12
-LOCALE_USER_DEFAULT=0x800 
+LOCALE_USER_DEFAULT=0x0400
 DATE_LONGDATE=0x00000002 
 TIME_NOSECONDS=0x00000002
 
@@ -74,13 +74,35 @@ def GetSystemPowerStatus(sps):
 def getThreadLocale():
 	return kernel32.GetThreadLocale()
 
-def GetDateFormat(Locale,dwFlags,lpDate,lpFormat):
+class SYSTEMTIME(ctypes.Structure):
+	_fields_ = (
+		("wYear", WORD),
+		("wMonth", WORD),
+		("wDayOfWeek", WORD),
+		("wDay", WORD),
+		("wHour", WORD),
+		("wMinute", WORD),
+		("wSecond", WORD),
+		("wMilliseconds", WORD)
+	)
+
+def GetDateFormat(Locale,dwFlags,date,lpFormat):
+	if date is not None:
+		date=SYSTEMTIME(date.year,date.month,0,date.day,date.hour,date.minute,date.second,0)
+		lpDate=byref(date)
+	else:
+		lpDate=None
 	bufferLength=kernel32.GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, None, 0)
 	buf=ctypes.create_unicode_buffer("", bufferLength)
 	kernel32.GetDateFormatW(Locale, dwFlags, lpDate, lpFormat, buf, bufferLength)
 	return buf.value
 
-def GetTimeFormat(Locale,dwFlags,lpTime,lpFormat):
+def GetTimeFormat(Locale,dwFlags,date,lpFormat):
+	if date is not None:
+		date=SYSTEMTIME(date.year,date.month,0,date.day,date.hour,date.minute,date.second,0)
+		lpTime=byref(date)
+	else:
+		lpTime=None
 	bufferLength=kernel32.GetTimeFormatW(Locale,dwFlags,lpTime,lpFormat, None, 0)
 	buf=ctypes.create_unicode_buffer("", bufferLength)
 	kernel32.GetTimeFormatW(Locale,dwFlags,lpTime,lpFormat, buf, bufferLength)

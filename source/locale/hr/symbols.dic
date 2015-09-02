@@ -8,8 +8,9 @@
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
-decimal point	(?<=\d)\.(?=\d)
+decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])'
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -18,7 +19,7 @@ symbols:
 . sentence ending	točka	all	always
 ! sentence ending	uskličnik	all	always
 ? sentence ending	upitnik	all	always
-; phrase ending	točkazarez	most	always
+; phrase ending	točka zarez	most	always
 : phrase ending	dvotočka	most	always
 decimal point		none	always
 in-word '	izostavnik	all	norep
@@ -35,15 +36,15 @@ in-word '	izostavnik	all	norep
 # Standard punctuation/symbols
 !	uskličnik	all
 "	navodnik	most
-\#	ljestve	most
+\#	broj	most
 $	dolar	some
 £	funta	some
 €	euro	some
 %	posto	some
 &	trgovačko i	some
 '	izostavnik	all
-(	lijeva zagrada	most
-)	desna zagrada	most
+(	otvorena zagrada	most
+)	zatvorena zagrada	most
 *	zvjezdica	most
 +	plus	most
 ,	zarez	all	always
@@ -51,12 +52,12 @@ $	dolar	some
 .	točka	all
 /	kosa crta	some
 :	dvotočka	most
-;	točkazarez	most
+;	točka zarez	most
 <	manje od	most
 >	veće od	most
 =	jednako	most
 ?	upitnik	all
-@	manki	some
+@	et	some
 [	lijeva uglata	most
 ]	desna uglata	most
 "	navodnik	most
@@ -79,3 +80,72 @@ _	podcrtano	most
 —	em crtica	most
 ●	kružić	most
 ¨	diaeresis	most
+‎	s lijeva na desno
+‏	s desna na lijevo
+■	crni kvadrat	some
+▪	crni kvadrat	some
+◾	crni kvadrat	some
+◦	bijela točka	some
+➔	desna strelica	some
+§	sekcija	all
+°	stupanj	some
+«	španjolski navodnik otvoreni
+»	španjolski navodnik zatvoreni
+µ	mikro	some
+¹	na prvu	some
+²	na drugu	some
+³	na treću	some
+®	registrirano	some
+™	Trgovački znak	some
+©	Autorska prava	some
+±	Plus ili minus	most
+×	puta	most
+÷	podijeljeno	most
+←	lijeva strelica	some
+→	desna strelica	some
+✓	provjera	some
+#Mathematical Operators U+2200 to U+220F
+∀	Za svaki	none
+∁	Komplement skupa	none
+∂	Parcijalna derivacija	none
+∃	Postoji	none
+∄	Ne postoji	none
+∅	Prazan skup	none
+∆	Delta	none
+∇	Gradijan 	none
+∈	Element skupa	none
+∉	Nije element skupa	none
+∊	Mali element skupa	none
+∋	Sadrži	none
+∌	Ne sadrži	none
+∍	Sadrži (simbol manjih dimenzija)	none
+∎	Kraj dokaza	none
+∏	Produkt	none
+
+# Miscellaneous Mathematical Operators
+
+∑	Suma	none
+√	Drugi korijen	none
+∛	Treći korijen	none
+∜	Četvrti korijen	none
+∝	Je proporcionalno sa	none
+∞	Beskonačnost	none
+∟	Pravi kut	none
+∠	Kut	none
+∥	paraleno sa	none
+∦	Nije paralelno sa	none
+∧	Logičko i	none
+∨	Logičko ili	none
+∩	Presjek	none
+∪	Unija	none
+∫	integral	none
+∴	stoga, dakle	none
+∵	Zato što	none
+∶	Omjer	none
+∷	Je proporcionalno sa	none
+≤	Manje ili jednako	none
+≥	Veće ili jednako	none
+⊂	Podskup	none
+⊃	Nadskup	none
+⊆	Podskup	none
+⊇	Nadskup	none

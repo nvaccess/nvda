@@ -1,48 +1,55 @@
-﻿#locale/ar/symbols.dic
+﻿#locale/fa/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2012 NV Access Inc
+#Copyright (c) 2015 NVDA Persian (Farsi) contributors
 #This file is covered by the GNU General Public License.
+
 complexSymbols:
-؟ sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+# identifier	regexp
+# Sentence endings.
+؟ sentence ending	(?<=[^\s؟])\؟(?=[\"'”’)\s]|$)
+# Phrase endings.
+؛ phrase ending	(?<=[^\s؛])؛(?=\s|$)
+
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
 . sentence ending	نقطه
-! sentence ending	شگفتنما
-? sentence ending	پرسشنما
-؟ sentence ending	پرسشنما
-; phrase ending	نقطه‌درنگنما
-: phrase ending	دونقطه
-decimal point		نقطه‌ی دهک
-in-word '	apostrophe
+! sentence ending	علامتِ تعجب
+? sentence ending	Question
+؟ sentence ending	علامتِ سؤال	all	always
+؛ phrase ending	نقطه ویرگول	all	always
+; phrase ending	semicolon
+: phrase ending	دو‌نقطه
+decimal point	نقطه	none	never
+in-word '	tick
 negative number	منفی
 
 # Whitespace
-\0	تهی
-\t	تورفتگی
-\n	سر خط
-\f	بَرگه‌بُر
-\r	پایان خط
+\0	خالی
+\t	تب
+\n	سرِ خط
+\f	پایانِ صفحه
+\r	پایانِ خط
  	فاصله
- 	فاصله
+ 	فاصله بدونِ شکست
 
 # Standard punctuation/symbols
-!	شگفتنما
-"	گفتاوردنما
-\#	شماره‌نما
+!	علامتِ تعجب
+"	quote
+\#	شماره
 $	دلار
 £	پوند
-€	يورو
+€	یورو
 %	درصد
-&	and
-'	apostrophe
-(	قلاب‌باز
-)	قلاب‌بسته
+&	And
+'	tick
+(	پرانتز باز
+)	پرانتز بسته
 *	ستاره
 +	به علاوه
-,	cama
--	خط کوتاه
+,	Comma
+-	خطِ تیره
 .	نقطه
 /	اِسلَش
 :	دونقطه
@@ -50,17 +57,17 @@ $	دلار
 <	کوچکتر
 >	بزرگتر
 =	مساوی
-?	پرسشنما
-@	at
-[	کروشه‌باز
-]	کروشه‌بسته
-\\	back slash
-^	پیکان
+?	question
+@	At
+[	کروشه باز
+]	کروشه بسته
+\\	بک اِسلش
+^	Caret
 _	زیرخط
 `	graav
-{	آکولاد‌باز
-}	آکولاد‌بسته
-|	خط عمودی
+{	آکولاد باز
+}	آکولاد بسته
+|	خطِ عمودی
 ~	tilda
 
 # Other characters
@@ -68,29 +75,47 @@ _	زیرخط
 …	سه‌نقطه
 ...	سه‌نقطه
 	bullet
-“	گفتاورد‌نمای چپ
-”	گفتاوردنمای راست
+“	LeftQuote
+”	RightQuote
 –	en dash
 —	em dash
-●	circle
+●	دایره
 ¨	diaeresis
-■	چهارخانه‌ی سیاه
-➔	ناشناس
-→	ناشناس
-§	بخشنما
+■	مربعِ سیاه
+➔	فِلِشِ راست‌نمای سر‌پهن
+→	‌فِلِشِ راست‌نما
+←	‌فِلِشِ چپ‌نما
+§	بخش
 °	درجه
 ¹	۱ بالانویس
 ²	۲ بالانویس
 ³	۳  بالانویس
-±	مثبت منفی
-×	ضرب در
-÷	بخش بر
-✓	ناشناس
-✔	معلم
-٬	درنگ‌نما
+±	مثبت‌منفی
+×	ضرب‌در
+÷	تقسیم‌بر
+✓	تیک
+✔	تیکِ ضخیم
 
-# arabic symbols
-،	فاصلة	all	always
-؟	استفهام	all
-ـ	كاشيداْ	char
+# Persian symbols
+،	ویرگول	all	always
+؟	علامتِ سؤال	all	always
+؛	نقطه‌ویرگول	all	always
+«	گیومه باز	most	always
+»	گیومه بسته	most	always
+ـ	کشیده	char	norep
+ٔ	همزه‌ی بالا	char	norep
+٬	هزار‌گان	char	never
+٫	ممیز	none	never
+٪	درصد	none	never
+﷼	ریال	none	never
 
+# Unicode formatting symbols
+‎	نشانه چپ به راست	char	never
+‏	نشانه راست به چپ	char	never
+‍	نیم‌اتصال	char	never
+‌	نیم‌فاصله	char	never
+‪	چپ به راستِ توکار	char	never
+‫	راست به چپِ توکار	char	never
+‭	بازنویسیِ چپ به راست	char	never
+‮	 بازنویسیِ راست به چپ	char	never
+‬	پایانِ جهت	char	never

@@ -26,6 +26,7 @@ Import(
 TARGET_ARCH=env['TARGET_ARCH']
 debug=env['nvdaHelperDebugFlags']
 release=env['release']
+signExec=env['signExec'] if env['certFile'] else None
 
 #Some defines and includes for the environment
 env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${nvdaHelperLogLevel}'),('_WIN32_WINNT','_WIN32_WINNT_WINXP')])
@@ -36,13 +37,12 @@ env.Append(LINKFLAGS=['/incremental:no','/WX'])
 env.Append(LINKFLAGS='/release') #We always want a checksum in the header
 env.Append(MIDLFLAGS='/x64' if TARGET_ARCH=='x86_64' else '/win32')
 
-if 'noOptimize' in debug:
+if not release: 
 	env.Append(CCFLAGS=['/Od'])
 else:
 	env.Append(CCFLAGS='/O2')
-	if release:
-		env.Append(CCFLAGS='/GL')
-		env.Append(LINKFLAGS=['/LTCG'])
+	env.Append(CCFLAGS='/GL')
+	env.Append(LINKFLAGS=['/LTCG'])
 
 if 'debugCRT' in debug:
 	env.Append(CCFLAGS=['/MTd'])
@@ -53,9 +53,10 @@ else:
 if 'RTC' in debug:
 	env.Append(CCFLAGS=['/RTCsu'])
 
-if 'symbols' in debug:
-	env.Append(PDB='${TARGET}.pdb')
-	env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
+
+#We always want debug symbols
+env.Append(PDB='${TARGET}.pdb')
+env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
 
 Export('env')
 
@@ -66,50 +67,82 @@ if TARGET_ARCH=='x86':
 
 ia2RPCStubs=env.SConscript('ia2_sconscript')
 Export('ia2RPCStubs')
+if signExec:
+	env.AddPostAction(ia2RPCStubs[0],[signExec])
 env.Install(libInstallDir,ia2RPCStubs[0]) #proxy dll
 if TARGET_ARCH=='x86':
 	env.Install(sourceTypelibDir,ia2RPCStubs[1]) #typelib
 
+iSimpleDomRPCStubs=env.SConscript('ISimpleDOM_sconscript')
+if TARGET_ARCH=='x86':
+	env.Install(sourceTypelibDir,iSimpleDomRPCStubs[0]) #typelib
+
+mathPlayerRPCStubs=env.SConscript('mathPlayer_sconscript')
+if TARGET_ARCH=='x86':
+	env.Install(sourceTypelibDir,mathPlayerRPCStubs[0]) #typelib
+
 if TARGET_ARCH=='x86':
 	localLib=env.SConscript('local/sconscript')
 	Export('localLib')
+	if signExec:
+		env.AddPostAction(localLib[0],[signExec])
 	env.Install(libInstallDir,localLib)
 
 clientLib=env.SConscript('client/sconscript')
 Export('clientLib')
+if signExec:
+	env.AddPostAction(clientLib[0],[signExec])
 env.Install(clientInstallDir,clientLib)
 
 minHookLib=env.SConscript('minHook/sconscript')
 Export('minHookLib')
+if signExec:
+	env.AddPostAction(minHookLib[0],[signExec])
 env.Install(libInstallDir,minHookLib)
 
 remoteLib=env.SConscript('remote/sconscript')
 Export('remoteLib')
+if signExec:
+	env.AddPostAction(remoteLib[0],[signExec])
 env.Install(libInstallDir,remoteLib)
 
 if TARGET_ARCH=='x86_64':
 	remoteLoaderProgram=env.SConscript('remoteLoader/sconscript')
+	if signExec:
+		env.AddPostAction(remoteLoaderProgram,[signExec])
 	env.Install(libInstallDir,remoteLoaderProgram)
 
 vbufBaseStaticLib=env.SConscript('vbufBase/sconscript')
 Export('vbufBaseStaticLib')
 
 adobeAcrobatVBufBackend=env.SConscript('vbufBackends/adobeAcrobat/sconscript')
+if signExec:
+	env.AddPostAction(adobeAcrobatVBufBackend[0],[signExec])
 env.Install(libInstallDir,adobeAcrobatVBufBackend)
 
 adobeFlashVBufBackend=env.SConscript('vbufBackends/adobeFlash/sconscript')
+if signExec:
+	env.AddPostAction(adobeFlashVBufBackend[0],[signExec])
 env.Install(libInstallDir,adobeFlashVBufBackend)
 
 lotusNotesRichTextVBufBackend=env.SConscript('vbufBackends/lotusNotesRichText/sconscript')
+if signExec:
+	env.AddPostAction(lotusNotesRichTextVBufBackend[0],[signExec])
 env.Install(libInstallDir,lotusNotesRichTextVBufBackend)
 
 geckoVBufBackend=env.SConscript('vbufBackends/gecko_ia2/sconscript')
+if signExec:
+	env.AddPostAction(geckoVBufBackend[0],[signExec])
 env.Install(libInstallDir,geckoVBufBackend)
 
 mshtmlVBufBackend=env.SConscript('vbufBackends/mshtml/sconscript')
+if signExec:
+	env.AddPostAction(mshtmlVBufBackend[0],[signExec])
 env.Install(libInstallDir,mshtmlVBufBackend)
 
 webKitVBufBackend=env.SConscript('vbufBackends/webKit/sconscript')
+if signExec:
+	env.AddPostAction(webKitVBufBackend[0],[signExec])
 env.Install(libInstallDir,webKitVBufBackend)
 
 if TARGET_ARCH=='x86':

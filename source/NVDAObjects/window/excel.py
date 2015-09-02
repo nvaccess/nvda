@@ -1,6 +1,6 @@
 #NVDAObjects/excel.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2015 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -9,8 +9,11 @@ import comtypes.automation
 import wx
 import time
 import re
+import uuid
+import collections
 import oleacc
 import ui
+from tableUtils import HeaderCellInfo, HeaderCellTracker
 import config
 import textInfos
 import colors
@@ -24,12 +27,280 @@ import controlTypes
 from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
+import browseMode
+import ctypes
+
+xlCenter=-4108
+xlJustify=-4130
+xlLeft=-4131
+xlRight=-4152
+xlDistributed=-4117
+xlBottom=-4107
+xlTop=-4160
+xlCellWidthUnitToPixels = 7.5919335705812574139976275207592
+alignmentLabels={
+	xlCenter:"center",
+	xlJustify:"justify",
+	xlLeft:"left",
+	xlRight:"right",
+	xlDistributed:"distributed",
+	xlBottom:"botom",
+	xlTop:"top",
+	1:"default",
+}
 
 xlA1 = 1
 xlRC = 2
 xlUnderlineStyleNone=-4142
 
+#Excel cell types
+xlCellTypeAllFormatConditions =-4172      # from enum XlCellType
+xlCellTypeAllValidation       =-4174      # from enum XlCellType
+xlCellTypeBlanks              =4          # from enum XlCellType
+xlCellTypeComments            =-4144      # from enum XlCellType
+xlCellTypeConstants           =2          # from enum XlCellType
+xlCellTypeFormulas            =-4123      # from enum XlCellType
+xlCellTypeLastCell            =11         # from enum XlCellType
+xlCellTypeSameFormatConditions=-4173      # from enum XlCellType
+xlCellTypeSameValidation      =-4175      # from enum XlCellType
+xlCellTypeVisible             =12         # from enum XlCellType
+
 re_RC=re.compile(r'R(?:\[(\d+)\])?C(?:\[(\d+)\])?')
+re_absRC=re.compile(r'^R(\d+)C(\d+)(?::R(\d+)C(\d+))?$')
+
+class ExcelQuickNavItem(browseMode.QuickNavItem):
+
+	def __init__( self , nodeType , document , itemObject , itemCollection ):
+		self.excelItemObject = itemObject
+		self.excelItemCollection = itemCollection 
+		super( ExcelQuickNavItem ,self).__init__( nodeType , document )
+
+	def activate(self):
+		pass
+
+	def isChild(self,parent):
+		return False
+
+	def report(self,readUnit=None):
+		pass
+
+class ExcelChartQuickNavItem(ExcelQuickNavItem):
+
+	def __init__( self , nodeType , document , chartObject , chartCollection ):
+		self.chartIndex = chartObject.Index
+		if chartObject.Chart.HasTitle:
+
+			self.label = chartObject.Chart.ChartTitle.Text + " " + chartObject.TopLeftCell.address(False,False,1,False) + "-" + chartObject.BottomRightCell.address(False,False,1,False) 
+
+		else:
+
+			self.label = chartObject.Name + " " + chartObject.TopLeftCell.address(False,False,1,False) + "-" + chartObject.BottomRightCell.address(False,False,1,False) 
+
+		super( ExcelChartQuickNavItem ,self).__init__( nodeType , document , chartObject , chartCollection )
+
+	def __lt__(self,other):
+		return self.chartIndex < other.chartIndex
+
+	def moveTo(self):
+		try:
+			self.excelItemObject.Activate()
+
+			# After activate(), though the chart object is selected, 
+
+			# pressing arrow keys moves the object, rather than 
+
+			# let use go inside for sub-objects. Somehow 
+		# calling an COM function on a different object fixes that !
+
+			log.debugWarning( self.excelItemCollection.Count )
+
+		except(COMError):
+
+			pass
+		focus=api.getDesktopObject().objectWithFocus()
+		if not focus or not isinstance(focus,ExcelBase):
+			return
+		# Charts are not yet automatically detected with objectFromFocus, so therefore use selection
+		sel=focus._getSelection()
+		if not sel:
+			return
+		eventHandler.queueEvent("gainFocus",sel)
+
+
+	@property
+	def isAfterSelection(self):
+		activeCell = self.document.Application.ActiveCell
+		#log.debugWarning("active row: {} active column: {} current row: {} current column: {}".format ( activeCell.row , activeCell.column , self.excelCommentObject.row , self.excelCommentObject.column   ) )
+
+		if self.excelItemObject.TopLeftCell.row == activeCell.row:
+			if self.excelItemObject.TopLeftCell.column > activeCell.column:
+				return False
+		elif self.excelItemObject.TopLeftCell.row > activeCell.row:
+			return False
+		return True
+
+class ExcelRangeBasedQuickNavItem(ExcelQuickNavItem):
+
+	def __lt__(self,other):
+		if self.excelItemObject.row == other.excelItemObject.row:
+			return self.excelItemObject.column < other.excelItemObject.column
+		else:
+			return self.excelItemObject.row < other.excelItemObject.row
+
+	def moveTo(self):
+		self.excelItemObject.Activate()
+		eventHandler.queueEvent("gainFocus",api.getDesktopObject().objectWithFocus())
+
+	@property
+	def isAfterSelection(self):
+		activeCell = self.document.Application.ActiveCell
+		log.debugWarning("active row: {} active column: {} current row: {} current column: {}".format ( activeCell.row , activeCell.column , self.excelItemObject.row , self.excelItemObject.column   ) )
+
+		if self.excelItemObject.row == activeCell.row:
+			if self.excelItemObject.column > activeCell.column:
+				return False
+		elif self.excelItemObject.row > activeCell.row:
+			return False
+		return True
+
+class ExcelCommentQuickNavItem(ExcelRangeBasedQuickNavItem):
+
+	def __init__( self , nodeType , document , commentObject , commentCollection ):
+		self.label = commentObject.address(False,False,1,False) + " " + commentObject.Comment.Text()
+		super( ExcelCommentQuickNavItem , self).__init__( nodeType , document , commentObject , commentCollection )
+
+class ExcelFormulaQuickNavItem(ExcelRangeBasedQuickNavItem):
+
+	def __init__( self , nodeType , document , formulaObject , formulaCollection ):
+		self.label = formulaObject.address(False,False,1,False) + " " + formulaObject.Formula
+		super( ExcelFormulaQuickNavItem , self).__init__( nodeType , document , formulaObject , formulaCollection )
+
+class ExcelQuicknavIterator(object):
+	"""
+	Allows iterating over an MS excel collection (e.g. Comments, Formulas or charts) emitting L{QuickNavItem} objects.
+	"""
+
+	def __init__(self, itemType , document , direction , includeCurrent):
+		"""
+		See L{QuickNavItemIterator} for itemType, document and direction definitions.
+		@ param includeCurrent: if true then any item at the initial position will be also emitted rather than just further ones. 
+		"""
+		self.document=document
+		self.itemType=itemType
+		self.direction=direction if direction else "next"
+		self.includeCurrent=includeCurrent
+
+	def collectionFromWorksheet(self,worksheetObject):
+		"""
+		Fetches a Microsoft Excel collection object from a Microsoft excel worksheet object. E.g. charts, comments, or formula.
+		@param worksheetObject: a Microsoft excel worksheet object.
+		@return: a Microsoft excel collection object.
+		"""
+		raise NotImplementedError
+
+	def filter(self,item):
+		"""
+		Only allows certain items fom a collection to be emitted. E.g. a chart .
+		@param item: an item from a Microsoft excel collection (e.g. chart object).
+		@return True if this item should be allowd, false otherwise.
+		@rtype: bool
+		"""
+		return True
+
+	def iterate(self):
+		"""
+		returns a generator that emits L{QuickNavItem} objects for this collection.
+		"""
+		items=self.collectionFromWorksheet(self.document)
+		if not items:
+			return
+		if self.direction=="previous":
+			items=reversed(items)
+		for collectionItem in items:
+			item=self.quickNavItemClass(self.itemType,self.document,collectionItem , items )
+			if not self.filter(collectionItem):
+				continue
+			yield item
+
+class ChartExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
+	quickNavItemClass=ExcelChartQuickNavItem#: the QuickNavItem class that should be instanciated and emitted. 
+	def collectionFromWorksheet( self , worksheetObject ):
+		return worksheetObject.ChartObjects() 
+
+class CommentExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
+	quickNavItemClass=ExcelCommentQuickNavItem#: the QuickNavItem class that should be instanciated and emitted. 
+	def collectionFromWorksheet( self , worksheetObject ):
+		try:
+			return  worksheetObject.cells.SpecialCells( xlCellTypeComments )
+		except(COMError):
+
+			return None
+
+class FormulaExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
+	quickNavItemClass=ExcelFormulaQuickNavItem#: the QuickNavItem class that should be instanciated and emitted. 
+	def collectionFromWorksheet( self , worksheetObject ):
+		try:
+			return  worksheetObject.cells.SpecialCells( xlCellTypeFormulas )
+		except(COMError):
+
+			return None
+
+class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
+
+	needsReviewCursorTextInfoWrapper=False
+	passThrough=True
+
+	def _get_isAlive(self):
+		if not winUser.isWindow(self.rootNVDAObject.windowHandle):
+			return False
+		try:
+			return self.rootNVDAObject.excelWorksheetObject.name==self.rootNVDAObject.excelApplicationObject.activeSheet.name
+		except (COMError,AttributeError,NameError):
+			log.debugWarning("could not compair sheet names",exc_info=True)
+			return False
+
+
+	def __contains__(self,obj):
+		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle)
+
+
+
+	def _set_selection(self,info):
+		super(ExcelBrowseModeTreeInterceptor,self)._set_selection(info)
+		#review.handleCaretMove(info)
+
+	def _get_ElementsListDialog(self):
+		return ElementsListDialog
+
+	def _iterNodesByType(self,nodeType,direction="next",pos=None):
+		if nodeType=="chart":
+			return ChartExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
+		elif nodeType=="comment":
+			return CommentExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
+		elif nodeType=="formula":
+			return FormulaExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
+		else:
+			raise NotImplementedError
+
+	def script_elementsList(self,gesture):
+		super(ExcelBrowseModeTreeInterceptor,self).script_elementsList(gesture)
+	# Translators: the description for the elements list command in Microsoft Excel.
+	script_elementsList.__doc__ = _("Presents a list of charts, cells with comments and cells with formulas")
+	script_elementsList.ignoreTreeInterceptorPassThrough=True
+
+class ElementsListDialog(browseMode.ElementsListDialog):
+
+	ELEMENT_TYPES=(
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("chart", _("&Chart")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("comment", _("C&omment")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("formula", _("&Formula")),
+	)
 
 class ExcelBase(Window):
 	"""A base that all Excel NVDAObjects inherit from, which contains some useful methods."""
@@ -76,13 +347,26 @@ class ExcelBase(Window):
 			isMerged=selection.mergeCells
 		except (COMError,NameError):
 			isMerged=False
+
+		try:
+			numCells=selection.count
+		except (COMError,NameError):
+			numCells=0
+
+		isChartActive = True if self.excelWindowObject.ActiveChart else False
+		obj=None
 		if isMerged:
 			obj=ExcelMergedCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection.item(1))
-		elif selection.Count>1:
+		elif numCells>1:
 			obj=ExcelSelection(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelRangeObject=selection)
-		else:
+		elif numCells==1:
 			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
+		elif isChartActive:
+			selection = self.excelWindowObject.ActiveChart
+			import excelChart
+			obj=excelChart.ExcelChart(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelChartObject=selection)
 		return obj
+
 
 class Excel7Window(ExcelBase):
 	"""An overlay class for Window for the EXCEL7 window class, which simply bounces focus to the active excel cell."""
@@ -103,7 +387,155 @@ class Excel7Window(ExcelBase):
 
 class ExcelWorksheet(ExcelBase):
 
+
+	treeInterceptorClass=ExcelBrowseModeTreeInterceptor
+
 	role=controlTypes.ROLE_TABLE
+
+	def _get_excelApplicationObject(self):
+		self.excelApplicationObject=self.excelWorksheetObject.application
+		return self.excelApplicationObject
+
+	re_definedName=re.compile(ur'^((?P<sheet>\w+)!)?(?P<name>\w+)(\.(?P<minAddress>[a-zA-Z]+[0-9]+)?(\.(?P<maxAddress>[a-zA-Z]+[0-9]+)?(\..*)*)?)?$')
+
+	def populateHeaderCellTrackerFromNames(self,headerCellTracker):
+		sheetName=self.excelWorksheetObject.name
+		for x in self.excelWorksheetObject.parent.names:
+			fullName=x.name
+			nameMatch=self.re_definedName.match(fullName)
+			if not nameMatch:
+				continue
+			sheet=nameMatch.group('sheet')
+			if sheet and sheet!=sheetName:
+				continue
+			name=nameMatch.group('name').lower()
+			isColumnHeader=isRowHeader=False
+			if name.startswith('title'):
+				isColumnHeader=isRowHeader=True
+			elif name.startswith('columntitle'):
+				isColumnHeader=True
+			elif name.startswith('rowtitle'):
+				isRowHeader=True
+			else:
+				continue
+			try:
+				headerCell=x.refersToRange
+			except COMError:
+				continue
+			if headerCell.parent.name!=sheetName:
+				continue
+			minColumnNumber=maxColumnNumber=minRowNumber=maxRowNumber=None
+			minAddress=nameMatch.group('minAddress')
+			if minAddress:
+				try:
+					minCell=self.excelWorksheetObject.range(minAddress)
+				except COMError:
+					minCell=None
+				if minCell:
+					minRowNumber=minCell.row
+					minColumnNumber=minCell.column
+			maxAddress=nameMatch.group('maxAddress')
+			if maxAddress:
+				try:
+					maxCell=self.excelWorksheetObject.range(maxAddress)
+				except COMError:
+					maxCell=None
+				if maxCell:
+					maxRowNumber=maxCell.row
+					maxColumnNumber=maxCell.column
+			headerCellTracker.addHeaderCellInfo(rowNumber=headerCell.row,columnNumber=headerCell.column,rowSpan=headerCell.rows.count,colSpan=headerCell.columns.count,minRowNumber=minRowNumber,maxRowNumber=maxRowNumber,minColumnNumber=minColumnNumber,maxColumnNumber=maxColumnNumber,name=fullName,isColumnHeader=isColumnHeader,isRowHeader=isRowHeader)
+
+	def _get_headerCellTracker(self):
+		self.headerCellTracker=HeaderCellTracker()
+		self.populateHeaderCellTrackerFromNames(self.headerCellTracker)
+		return self.headerCellTracker
+
+	def setAsHeaderCell(self,cell,isColumnHeader=False,isRowHeader=False):
+		oldInfo=self.headerCellTracker.getHeaderCellInfoAt(cell.rowNumber,cell.columnNumber)
+		if oldInfo:
+			if isColumnHeader and not oldInfo.isColumnHeader:
+				oldInfo.isColumnHeader=True
+				oldInfo.rowSpan=cell.rowSpan
+			elif isRowHeader and not oldInfo.isRowHeader:
+				oldInfo.isRowHeader=True
+				oldInfo.colSpan=cell.colSpan
+			else:
+				return False
+			isColumnHeader=oldInfo.isColumnHeader
+			isRowHeader=oldInfo.isRowHeader
+		if isColumnHeader and isRowHeader:
+			name="Title_"
+		elif isRowHeader:
+			name="RowTitle_"
+		elif isColumnHeader:
+			name="ColumnTitle_"
+		else:
+			raise ValueError("One or both of isColumnHeader or isRowHeader must be True")
+		name+=uuid.uuid4().hex
+		if oldInfo:
+			self.excelWorksheetObject.parent.names(oldInfo.name).delete()
+			oldInfo.name=name
+		else:
+			self.headerCellTracker.addHeaderCellInfo(rowNumber=cell.rowNumber,columnNumber=cell.columnNumber,rowSpan=cell.rowSpan,colSpan=cell.colSpan,name=name,isColumnHeader=isColumnHeader,isRowHeader=isRowHeader)
+		self.excelWorksheetObject.parent.names.add(name,cell.excelRangeObject)
+		return True
+
+	def forgetHeaderCell(self,cell,isColumnHeader=False,isRowHeader=False):
+		if not isColumnHeader and not isRowHeader: 
+			return False
+		info=self.headerCellTracker.getHeaderCellInfoAt(cell.rowNumber,cell.columnNumber)
+		if not info:
+			return False
+		if isColumnHeader and info.isColumnHeader:
+			info.isColumnHeader=False
+		elif isRowHeader and info.isRowHeader:
+			info.isRowHeader=False
+		else:
+			return False
+		self.headerCellTracker.removeHeaderCellInfo(info)
+		self.excelWorksheetObject.parent.names(info.name).delete()
+		if info.isColumnHeader or info.isRowHeader:
+			self.setAsHeaderCell(cell,isColumnHeader=info.isColumnHeader,isRowHeader=info.isRowHeader)
+		return True
+
+	def fetchAssociatedHeaderCellText(self,cell,columnHeader=False):
+		# #4409: cell.currentRegion fails if the worksheet is protected.
+		try:
+			cellRegion=cell.excelCellObject.currentRegion
+		except COMError:
+			log.debugWarning("Possibly protected sheet")
+			return None
+		if cellRegion.count==1:
+			minRow=maxRow=minColumn=maxColumn=None
+		else:
+			rc=cellRegion.address(True,True,xlRC,False)
+			g=[int(x) for x in re_absRC.match(rc).groups()]
+			minRow,maxRow,minColumn,maxColumn=min(g[0],g[2]),max(g[0],g[2]),min(g[1],g[3]),max(g[1],g[3])
+		for info in self.headerCellTracker.iterPossibleHeaderCellInfosFor(cell.rowNumber,cell.columnNumber,minRowNumber=minRow,maxRowNumber=maxRow,minColumnNumber=minColumn,maxColumnNumber=maxColumn,columnHeader=columnHeader):
+			textList=[]
+			if columnHeader:
+				for headerRowNumber in xrange(info.rowNumber,info.rowNumber+info.rowSpan): 
+					headerCell=self.excelWorksheetObject.cells(headerRowNumber,cell.columnNumber)
+					# The header could be  merged cells. 
+					# if so, fetch text from the first in the merge as that always contains the content
+					try:
+						headerCell=headerCell.mergeArea.item(1)
+					except (COMError,NameError,AttributeError):
+						pass
+					textList.append(headerCell.text)
+			else:
+				for headerColumnNumber in xrange(info.columnNumber,info.columnNumber+info.colSpan): 
+					headerCell=self.excelWorksheetObject.cells(cell.rowNumber,headerColumnNumber)
+					# The header could be  merged cells. 
+					# if so, fetch text from the first in the merge as that always contains the content
+					try:
+						headerCell=headerCell.mergeArea.item(1)
+					except (COMError,NameError,AttributeError):
+						pass
+					textList.append(headerCell.text)
+			text=" ".join(textList)
+			if text:
+				return text
 
 	def __init__(self,windowHandle=None,excelWindowObject=None,excelWorksheetObject=None):
 		self.excelWindowObject=excelWindowObject
@@ -125,11 +557,10 @@ class ExcelWorksheet(ExcelBase):
 		return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=cell)
 
 	def script_changeSelection(self,gesture):
-		oldSelection=self._getSelection()
+		oldSelection=api.getFocusObject()
 		gesture.send()
 		import eventHandler
 		import time
-		import api
 		newSelection=None
 		curTime=startTime=time.time()
 		while (curTime-startTime)<=0.15:
@@ -145,6 +576,8 @@ class ExcelWorksheet(ExcelBase):
 			time.sleep(0.015)
 			curTime=time.time()
 		if newSelection:
+			if oldSelection.parent==newSelection.parent:
+				newSelection.parent=oldSelection.parent
 			eventHandler.executeEvent('gainFocus',newSelection)
 	script_changeSelection.canPropagate=True
 
@@ -177,6 +610,15 @@ class ExcelWorksheet(ExcelBase):
 		"kb:shift+control+end",
 		"kb:shift+space",
 		"kb:control+space",
+		"kb:pageUp",
+		"kb:pageDown",
+		"kb:shift+pageUp",
+		"kb:shift+pageDown",
+		"kb:alt+pageUp",
+		"kb:alt+pageDown",
+		"kb:alt+shift+pageUp",
+		"kb:alt+shift+pageDown",
+		"kb:control+shift+8",
 		"kb:control+pageUp",
 		"kb:control+pageDown",
 		"kb:control+a",
@@ -188,6 +630,13 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		formatField=textInfos.FormatField()
 		fontObj=self.obj.excelCellObject.font
+		if formatConfig['reportAlignment']:
+			value=alignmentLabels.get(self.obj.excelCellObject.horizontalAlignment)
+			if value:
+				formatField['text-align']=value
+			value=alignmentLabels.get(self.obj.excelCellObject.verticalAlignment)
+			if value:
+				formatField['vertical-align']=value
 		if formatConfig['reportFontName']:
 			formatField['font-name']=fontObj.name
 		if formatConfig['reportFontSize']:
@@ -197,6 +646,13 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			formatField['italic']=fontObj.italic
 			underline=fontObj.underline
 			formatField['underline']=False if underline is None or underline==xlUnderlineStyleNone else True
+		if formatConfig['reportStyle']:
+			try:
+				styleName=self.obj.excelCellObject.style.nameLocal
+			except COMError:
+				styleName=None
+			if styleName:
+				formatField['style']=styleName
 		if formatConfig['reportColor']:
 			try:
 				formatField['color']=colors.RGB.fromCOLORREF(int(fontObj.color))
@@ -210,24 +666,11 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 
 class ExcelCell(ExcelBase):
 
-	columnHeaderRows={}
-	rowHeaderColumns={}
-
 	def _get_columnHeaderText(self):
-		tableID=self.tableID
-		rowNumber=self.rowNumber
-		columnNumber=self.columnNumber
-		columnHeaderRow=self.columnHeaderRows.get(tableID) or None
-		if columnHeaderRow and rowNumber>columnHeaderRow:
-			return self.excelCellObject.parent.cells(columnHeaderRow,columnNumber).text
+		return self.parent.fetchAssociatedHeaderCellText(self,columnHeader=True)
 
 	def _get_rowHeaderText(self):
-		tableID=self.tableID
-		rowNumber=self.rowNumber
-		columnNumber=self.columnNumber
-		rowHeaderColumn=self.rowHeaderColumns.get(tableID) or None
-		if rowHeaderColumn and columnNumber>rowHeaderColumn:
-			return self.excelCellObject.parent.cells(rowNumber,rowHeaderColumn).text
+		return self.parent.fetchAssociatedHeaderCellText(self,columnHeader=False)
 
 	def script_openDropdown(self,gesture):
 		gesture.send()
@@ -251,39 +694,49 @@ class ExcelCell(ExcelBase):
 		d.parent=self
 		eventHandler.queueEvent("gainFocus",d)
 
-	def script_setColumnHeaderRow(self,gesture):
+	def script_setColumnHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		tableID=self.tableID
 		if not config.conf['documentFormatting']['reportTableHeaders']:
-			# Translators: a message reported in the SetColumnHeaderRow script for Excel.
+			# Translators: a message reported in the SetColumnHeader script for Excel.
 			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
 			return
 		if scriptCount==0:
-			self.columnHeaderRows[tableID]=self.rowNumber
-			# Translators: a message reported in the SetColumnHeaderRow script for Excel.
-			ui.message(_("Set column header row"))
-		elif scriptCount==1 and tableID in self.columnHeaderRows:
-			del self.columnHeaderRows[tableID]
-			# Translators: a message reported in the SetColumnHeaderRow script for Excel.
-			ui.message(_("Cleared column header row"))
-	script_setColumnHeaderRow.__doc__=_("Pressing once will set the current row as the row where column headers should be found. Pressing twice clears the setting.")
+			if self.parent.setAsHeaderCell(self,isColumnHeader=True,isRowHeader=False):
+				# Translators: a message reported in the SetColumnHeader script for Excel.
+				ui.message(_("Set {address} as start of column headers").format(address=self.cellCoordsText))
+			else:
+				# Translators: a message reported in the SetColumnHeader script for Excel.
+				ui.message(_("Already set {address} as start of column headers").format(address=self.cellCoordsText))
+		elif scriptCount==1:
+			if self.parent.forgetHeaderCell(self,isColumnHeader=True,isRowHeader=False):
+				# Translators: a message reported in the SetColumnHeader script for Excel.
+				ui.message(_("removed {address}    from column headers").format(address=self.cellCoordsText))
+			else:
+				# Translators: a message reported in the SetColumnHeader script for Excel.
+				ui.message(_("Cannot find {address}    in column headers").format(address=self.cellCoordsText))
+	script_setColumnHeader.__doc__=_("Pressing once will set this cell as the first column header for any cells lower and to the right of it within this region. Pressing twice will forget the current column header for this cell.")
 
-	def script_setRowHeaderColumn(self,gesture):
+	def script_setRowHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
-		tableID=self.tableID
 		if not config.conf['documentFormatting']['reportTableHeaders']:
-			# Translators: a message reported in the SetRowHeaderColumn script for Excel.
+			# Translators: a message reported in the SetRowHeader script for Excel.
 			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
 			return
 		if scriptCount==0:
-			self.rowHeaderColumns[tableID]=self.columnNumber
-			# Translators: a message reported in the SetRowHeaderColumn script for Excel.
-			ui.message(_("Set row header column"))
-		elif scriptCount==1 and tableID in self.rowHeaderColumns:
-			del self.rowHeaderColumns[tableID]
-			# Translators: a message reported in the SetRowHeaderColumn script for Excel.
-			ui.message(_("Cleared row header column"))
-	script_setRowHeaderColumn.__doc__=_("Pressing once will set the current column as the column where row headers should be found. Pressing twice clears the setting.")
+			if self.parent.setAsHeaderCell(self,isColumnHeader=False,isRowHeader=True):
+				# Translators: a message reported in the SetRowHeader script for Excel.
+				ui.message(_("Set {address} as start of row headers").format(address=self.cellCoordsText))
+			else:
+				# Translators: a message reported in the SetRowHeader script for Excel.
+				ui.message(_("Already set {address} as start of row headers").format(address=self.cellCoordsText))
+		elif scriptCount==1:
+			if self.parent.forgetHeaderCell(self,isColumnHeader=False,isRowHeader=True):
+				# Translators: a message reported in the SetRowHeader script for Excel.
+				ui.message(_("removed {address}    from row headers").format(address=self.cellCoordsText))
+			else:
+				# Translators: a message reported in the SetRowHeader script for Excel.
+				ui.message(_("Cannot find {address}    in row headers").format(address=self.cellCoordsText))
+	script_setRowHeader.__doc__=_("Pressing once will set this cell as the first row header for any cells lower and to the right of it within this region. Pressing twice will forget the current row header for this cell.")
 
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):
@@ -305,6 +758,9 @@ class ExcelCell(ExcelBase):
 		self.excelWindowObject=excelWindowObject
 		self.excelCellObject=excelCellObject
 		super(ExcelCell,self).__init__(windowHandle=windowHandle)
+
+	def _get_excelRangeObject(self):
+		return self.excelCellObject
 
 	def _get_role(self):
 		try:
@@ -332,14 +788,18 @@ class ExcelCell(ExcelBase):
 		return self.getCellAddress(self.excelCellObject)
 
 	def _get__rowAndColumnNumber(self):
-		rc=self.excelCellObject.address(False,False,xlRC,False)
-		return [int(x)+1 if x else 1 for x in re_RC.match(rc).groups()]
+		rc=self.excelCellObject.address(True,True,xlRC,False)
+		return [int(x) if x else 1 for x in re_absRC.match(rc).groups()]
 
 	def _get_rowNumber(self):
 		return self._rowAndColumnNumber[0]
 
+	rowSpan=1
+
 	def _get_columnNumber(self):
 		return self._rowAndColumnNumber[1]
+
+	colSpan=1
 
 	def _get_tableID(self):
 		address=self.excelCellObject.address(1,1,0,1)
@@ -366,11 +826,122 @@ class ExcelCell(ExcelBase):
 			comment=None
 		if comment:
 			states.add(controlTypes.STATE_HASCOMMENT)
+		if self._overlapInfo is not None:
+			if self._overlapInfo['obscuredFromRightBy'] > 0:
+				states.add(controlTypes.STATE_CROPPED)
+			if self._overlapInfo['obscuringRightBy'] > 0:
+				states.add(controlTypes.STATE_OVERFLOWING)
 		return states
+
+	def getCellWidthAndTextWidth(self):
+		#handle to Device Context
+		hDC = ctypes.windll.user32.GetDC(self.windowHandle)
+		tempDC = ctypes.windll.gdi32.CreateCompatibleDC(hDC)
+		ctypes.windll.user32.ReleaseDC(self.windowHandle, hDC)
+		#Compatible Bitmap for current Device Context
+		hBMP = ctypes.windll.gdi32.CreateCompatibleBitmap(tempDC, 1, 1)
+		#handle to the bitmap object
+		hOldBMP = ctypes.windll.gdi32.SelectObject(tempDC, hBMP)
+		#Pass Device Context and LOGPIXELSX, the horizontal resolution in pixels per unit inch
+		deviceCaps = ctypes.windll.gdi32.GetDeviceCaps(tempDC, 88)
+		#Fetching Font Size and Weight information
+		iFontSize = self.excelCellObject.Font.Size
+		iFontSize = 11 if iFontSize is None else int(iFontSize)
+		iFontSize = ctypes.c_int(iFontSize)
+		iFontSize = ctypes.windll.kernel32.MulDiv(iFontSize, deviceCaps, 72)
+		#Font  Weight for Bold FOnt is 700 and for normal font it's 400
+		iFontWeight = 700 if self.excelCellObject.Font.Bold else 400
+		#Fetching Font Name and style information
+		sFontName = self.excelCellObject.Font.Name
+		sFontItalic = self.excelCellObject.Font.Italic
+		sFontUnderline = True if self.excelCellObject.Font.Underline else False
+		sFontStrikeThrough = self.excelCellObject.Font.Strikethrough
+		#If FontSize is <0: The font mapper transforms this value into device units
+		#and matches its absolute value against the character height of the available fonts.
+		iFontHeight = iFontSize * -1
+		#If Font Width is 0, the font mapper chooses a closest match value.
+		iFontWidth = 0
+		iEscapement = 0
+		iOrientation = 0
+		#Default CharSet based on System Locale is chosen
+		iCharSet = 0
+		#Default font mapper behavior
+		iOutputPrecision = 0
+		#Default clipping behavior
+		iClipPrecision = 0
+		#Default Quality
+		iOutputQuality = 0
+		#Default Pitch and default font family
+		iPitchAndFamily = 0
+		#Create a font object with the correct size, weight and style
+		hFont = ctypes.windll.gdi32.CreateFontW(iFontHeight, iFontWidth, iEscapement, iOrientation, iFontWeight, sFontItalic, sFontUnderline, sFontStrikeThrough, iCharSet, iOutputPrecision, iClipPrecision, iOutputQuality, iPitchAndFamily, sFontName)
+		#Load the font into the device context, storing the original font object
+		hOldFont = ctypes.windll.gdi32.SelectObject(tempDC, hFont)
+		sText = self.excelCellObject.Text
+		textLength = len(sText)
+		class structText(ctypes.Structure):
+			_fields_ = [("width", ctypes.c_int), ("height",ctypes.c_int)]
+		StructText = structText()
+		getTextExtentPoint = ctypes.windll.gdi32.GetTextExtentPoint32W
+		getTextExtentPoint.argtypes = [ctypes.c_void_p, ctypes.c_wchar_p, ctypes.c_int, ctypes.POINTER(structText)]
+		getTextExtentPoint.restype = ctypes.c_int
+		sText = unicode(sText)
+		#Get the text dimensions
+		ctypes.windll.gdi32.GetTextExtentPoint32W(tempDC, sText, textLength,ctypes.byref(StructText))
+		#Restore the old Font Object
+		ctypes.windll.gdi32.SelectObject(tempDC, hOldFont)
+		#Delete the font object we created
+		ctypes.windll.gdi32.DeleteObject(hFont)
+		#Restore the old Bitmap Object
+		ctypes.windll.gdi32.SelectObject(tempDC, hOldBMP)
+		#Delete the temporary BitMap Object
+		ctypes.windll.gdi32.DeleteObject(hBMP)
+		#Release & Delete the device context
+		ctypes.windll.gdi32.DeleteDC(tempDC)
+		#Retrieve the text width
+		textWidth = StructText.width+5
+		cellWidth  = self.excelCellObject.ColumnWidth * xlCellWidthUnitToPixels	#Conversion factor to convert the cellwidth to pixels
+		return (cellWidth,textWidth)
+
+	def _get__overlapInfo(self):
+		(cellWidth, textWidth) = self.getCellWidthAndTextWidth()
+		isWrapText = self.excelCellObject.WrapText
+		isShrinkToFit = self.excelCellObject.ShrinkToFit
+		isMerged = self.excelWindowObject.Selection.MergeCells
+		try:
+			adjacentCell = self.excelCellObject.Offset(0,1)
+		except COMError:
+			# #5041: This cell is at the right edge.
+			# For our purposes, treat this as if there is an empty cell to the right.
+			isAdjacentCellEmpty = True
+		else:
+			isAdjacentCellEmpty = not adjacentCell.Text
+		info = {}
+		if isMerged:
+			columnCountInMergeArea = self.excelCellObject.MergeArea.Columns.Count
+			curCol = self.excelCellObject.Column
+			curRow = self.excelCellObject.Row
+			cellWidth = 0
+			for x in xrange(columnCountInMergeArea):
+				cellWidth += self.excelCellObject.Cells(curRow, curCol).ColumnWidth
+				curCol += 1
+			cellWidth = cellWidth * xlCellWidthUnitToPixels #Conversion factor to convert the cellwidth to pixels
+		if isWrapText or isShrinkToFit or textWidth <= cellWidth:
+			info = None
+		else:
+			if isAdjacentCellEmpty:
+				info['obscuringRightBy']= textWidth - cellWidth
+				info['obscuredFromRightBy'] = 0
+			else:
+				info['obscuredFromRightBy']= textWidth - cellWidth
+				info['obscuringRightBy'] = 0
+		self._overlapInfo = info
+		return self._overlapInfo
 
 	def _get_parent(self):
 		worksheet=self.excelCellObject.Worksheet
-		return ExcelWorksheet(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelWorksheetObject=worksheet)
+		self.parent=ExcelWorksheet(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelWorksheetObject=worksheet)
+		return self.parent
 
 	def _get_next(self):
 		try:
@@ -388,10 +959,40 @@ class ExcelCell(ExcelBase):
 		if previous:
 			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=previous)
 
+	def script_reportComment(self,gesture):
+		commentObj=self.excelCellObject.comment
+		text=commentObj.text() if commentObj else None
+		if text:
+			ui.message(text)
+		else:
+			# Translators: A message in Excel when there is no comment
+			ui.message(_("Not on a comment"))
+	# Translators: the description  for a script for Excel
+	script_reportComment.__doc__=_("Reports the comment on the current cell")
+
+	def script_editComment(self,gesture):
+		commentObj=self.excelCellObject.comment
+		d = wx.TextEntryDialog(gui.mainFrame, 
+			# Translators: Dialog text for 
+			_("Editing comment for cell {address}").format(address=self.cellCoordsText),
+			# Translators: Title of a dialog edit an Excel comment 
+			_("Comment"),
+			defaultValue=commentObj.text() if commentObj else u"",
+			style=wx.TE_MULTILINE|wx.OK|wx.CANCEL)
+		def callback(result):
+			if result == wx.ID_OK:
+				if commentObj:
+					commentObj.text(d.Value)
+				else:
+					self.excelCellObject.addComment(d.Value)
+		gui.runScriptModalDialog(d, callback)
+
 	__gestures = {
-		"kb:NVDA+shift+c": "setColumnHeaderRow",
-		"kb:NVDA+shift+r": "setRowHeaderColumn",
+		"kb:NVDA+shift+c": "setColumnHeader",
+		"kb:NVDA+shift+r": "setRowHeader",
+		"kb:shift+f2":"editComment",
 		"kb:alt+downArrow":"openDropdown",
+		"kb:NVDA+alt+c":"reportComment",
 	}
 
 class ExcelSelection(ExcelBase):
@@ -417,6 +1018,18 @@ class ExcelSelection(ExcelBase):
 	def _get_parent(self):
 		worksheet=self.excelRangeObject.Worksheet
 		return ExcelWorksheet(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelWorksheetObject=worksheet)
+
+	def _get_rowNumber(self):
+		return self.excelRangeObject.row
+
+	def _get_rowSpan(self):
+		return self.excelRangeObject.rows.count
+
+	def _get_columnNumber(self):
+		return self.excelRangeObject.column
+
+	def _get_colSpan(self):
+		return self.excelRangeObject.columns.count
 
 	#Its useful for an excel selection to be announced with reportSelection script
 	def makeTextInfo(self,position):
@@ -531,3 +1144,10 @@ class ExcelMergedCell(ExcelCell):
 
 	def _get_cellCoordsText(self):
 		return self.getCellAddress(self.excelCellObject.mergeArea)
+
+	def _get_rowSpan(self):
+		return self.excelCellObject.mergeArea.rows.count
+
+	def _get_colSpan(self):
+		return self.excelCellObject.mergeArea.columns.count
+

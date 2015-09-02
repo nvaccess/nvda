@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2011-2014 NV Access Limited
+#Copyright (C) 2011-2015 NV Access Limited, Joseph Lee
 
 from ctypes import *
 from ctypes.wintypes import *
@@ -69,11 +69,20 @@ def getInstallPath(noDefault=False):
 	except WindowsError:
 		return defaultInstallPath if not noDefault else None
 
-def isPreviousInstall():
-	path=getInstallPath(True)
-	if path and os.path.isdir(path):
-		return True
-	return False
+def comparePreviousInstall():
+	"""Returns 1 if the existing installation is newer than this running version,
+	0 if it is the same, -1 if it is older,
+	None if there is no existing installation.
+	"""
+	path = getInstallPath(True)
+	if not path or not os.path.isdir(path):
+		return None
+	try:
+		return cmp(
+			os.path.getmtime(os.path.join(path, "nvda_slave.exe")),
+			os.path.getmtime("nvda_slave.exe"))
+	except OSError:
+		return None
 
 def getDocFilePath(fileName,installDir):
 	rootPath=os.path.join(installDir,'documentation')
@@ -145,6 +154,12 @@ def removeOldProgramFiles(destPath):
 			else:
 				os.remove(fn)
 
+	# #4235: mpr.dll is a Windows system dll accidentally included with
+	# earlier versions of NVDA. Its presence causes problems in Windows Vista.
+	fn = os.path.join(destPath, "mpr.dll")
+	if os.path.isfile(fn):
+		tryRemoveFile(fn)
+
 uninstallerRegInfo={
 	"DisplayName":versionInfo.name,
 	"DisplayVersion":versionInfo.version,
@@ -176,7 +191,12 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 	NVDAExe=os.path.join(installDir,u"nvda.exe")
 	slaveExe=os.path.join(installDir,u"nvda_slave.exe")
 	if shouldCreateDesktopShortcut:
-		createShortcut(u"NVDA.lnk",targetPath=slaveExe,arguments="launchNVDA -r",hotkey="CTRL+ALT+N",workingDirectory=installDir,prependSpecialFolder="AllUsersDesktop")
+		# Translators: The shortcut key used to start NVDA.
+		# This should normally be left as is, but might be changed for some locales
+		# if the default key causes problems for the normal locale keyboard layout.
+		# The key must be formatted as described in this article:
+		# http://msdn.microsoft.com/en-us/library/3zb1shc6%28v=vs.84%29.aspx
+		createShortcut(u"NVDA.lnk",targetPath=slaveExe,arguments="launchNVDA -r",hotkey=_("CTRL+ALT+N"),workingDirectory=installDir,prependSpecialFolder="AllUsersDesktop")
 	createShortcut(os.path.join(startMenuFolder,"NVDA.lnk"),targetPath=NVDAExe,workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
 	# Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 	createShortcut(os.path.join(startMenuFolder,_("NVDA web site")+".lnk"),targetPath=versionInfo.url,prependSpecialFolder="AllUsersPrograms")
@@ -188,7 +208,7 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 	docFolder=os.path.join(startMenuFolder,_("Documentation"))
 	# Translators: The label of the Start Menu item to open the Commands Quick Reference document.
 	createShortcut(os.path.join(docFolder,_("Commands Quick Reference")+".lnk"),targetPath=getDocFilePath("keyCommands.html",installDir),prependSpecialFolder="AllUsersPrograms")
-	# Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
+	# Translators: A label for a shortcut in start menu to open NVDA user guide.
 	createShortcut(os.path.join(docFolder,_("User Guide")+".lnk"),targetPath=getDocFilePath("userGuide.html",installDir),prependSpecialFolder="AllUsersPrograms")
 	registerAddonFileAssociation(slaveExe)
 

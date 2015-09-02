@@ -103,6 +103,15 @@ def nvdaControllerInternal_displayModelTextChangeNotify(hwnd, left, top, right, 
 	displayModel.textChangeNotify(hwnd, left, top, right, bottom)
 	return 0
 
+@WINFUNCTYPE(c_long,c_long,c_long,c_long,c_long,c_long)
+def nvdaControllerInternal_drawFocusRectNotify(hwnd, left, top, right, bottom):
+	import eventHandler
+	from NVDAObjects.window import Window
+	focus=api.getFocusObject()
+	if isinstance(focus,Window) and hwnd==focus.windowHandle:
+		eventHandler.queueEvent("displayModel_drawFocusRectNotify",focus,rect=(left,top,right,bottom))
+	return 0;
+
 @WINFUNCTYPE(c_long,c_long,c_long,c_wchar_p)
 def nvdaControllerInternal_logMessage(level,pid,message):
 	if not log.isEnabledFor(level):
@@ -421,6 +430,7 @@ def initialize():
 		("nvdaControllerInternal_inputConversionModeUpdate",nvdaControllerInternal_inputConversionModeUpdate),
 		("nvdaControllerInternal_vbufChangeNotify",nvdaControllerInternal_vbufChangeNotify),
 		("nvdaControllerInternal_installAddonPackageFromPath",nvdaControllerInternal_installAddonPackageFromPath),
+		("nvdaControllerInternal_drawFocusRectNotify",nvdaControllerInternal_drawFocusRectNotify),
 	]:
 		try:
 			_setDllFuncPointer(localLib,"_%s"%name,func)
@@ -429,8 +439,8 @@ def initialize():
 			raise e
 	localLib.nvdaHelperLocal_initialize()
 	generateBeep=localLib.generateBeep
-	generateBeep.argtypes=[c_char_p,c_float,c_uint,c_ubyte,c_ubyte]
-	generateBeep.restype=c_uint
+	generateBeep.argtypes=[c_char_p,c_float,c_int,c_int,c_int]
+	generateBeep.restype=c_int
 	# Handle VBuf_getTextInRange's BSTR out parameter so that the BSTR will be freed automatically.
 	VBuf_getTextInRange = CFUNCTYPE(c_int, c_int, c_int, c_int, POINTER(BSTR), c_int)(
 		("VBuf_getTextInRange", localLib),

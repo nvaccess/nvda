@@ -52,13 +52,15 @@ tamilNumberDash	இணைக்கோடு	char	always
 $	டாலர்	all	norep
 £	pound	all	norep
 €	euro	all	norep
+¢	Cents	all	norep
+¥	Yen	all	norep
 %	விழுக்காடு	none
 &	மற்றும்	some
 '	ஒற்றை மேற்கோள்	all
-(	இட பிறை	most
-)	வல பிறை	most
-*	பெருக்கல்	most
-+	கூட்டல்	most
+(	இடப்பிறை	most
+)	வலப்பிறை	most
+*	பெருக்கல்	some
++	கூட்டல்	some
 ,	கால் புள்ளி	all	always
 -	இணைக்கோடு	most
 .	புள்ளி	some
@@ -67,7 +69,7 @@ $	டாலர்	all	norep
 ;	அரைப் புள்ளி	most
 <	குறைவு	most
 >	மிகுதி	most
-=	சமன்பாடு	most
+=	சமம்	some
 ?	கேள்வி?	all
 @	at	some
 [	இடப்பகரம்	most
@@ -76,8 +78,8 @@ $	டாலர்	all	norep
 ^	caret	most
 _	அடிக்கோடு	most
 `	graav	most
-{	இட கணம்	most
-}	வல கணம்	most
+{	இடகணம்	most
+}	வலகணம்	most
 |	செங்குத்து	most
 ~	tilda	most
 
@@ -97,6 +99,9 @@ _	அடிக்கோடு	most
 ‎	left to right mark	char
 ‏	right to left mark	char
 ■	கருஞ்சதுரம்	some
+▪	கருஞ்சதுரம்	some
+◾	கருஞ்சதுரம்	some
+◦	வெள்ளைத் தோட்டா	some
 ➔	வலதம்பு	some
 §	பிரிவு	all
 °	degrees	some
@@ -106,12 +111,13 @@ _	அடிக்கோடு	most
 ¹	மேலெழுத்து 1	some
 ²	மேலெழுத்து 2	some
 ³	மேலெழுத்து 3	some
-®	பதிவு	some
+®	பதிவு	none
 ™	வணிகம்	some
-©	பதிப்புரிமை	some
+©	பதிப்புரிமை	none
 ±	கூட்டல் கழித்தல்	most
 ×	தடவை	most
 ÷	வகுத்தல்	most
+←	இடதம்பு	some
 →	வலதம்பு	some
 ✓	தேர்வு	some
 ✔	தேர்வு	some
@@ -127,3 +133,9 @@ _	அடிக்கோடு	most
 ௷	வரவு	none
 ௸	மேலிருப்பது போல்	none
 ௺	எண்ணுரு	none
+ௐ	ஓம்	none
+
+# Other characters
+†	குத்துவாள்	most
+‡	இரட்டைக் குத்துவாள்	most
+₹	ரூபாய்	none

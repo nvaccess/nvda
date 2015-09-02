@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2013 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 
 """Keyboard support"""
 
@@ -75,7 +75,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	try:
 		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers, keyCounter, stickyNVDAModifier, stickyNVDAModifierLocked
 		# Injected keys should be ignored in some cases.
-		if ignoreInjected and injected:
+		if injected and (ignoreInjected or not config.conf['keyboard']['handleInjectedKeys']):
 			return True
 
 		keyCode = (vkCode, extended)
@@ -168,7 +168,8 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""
 	try:
 		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers
-		if ignoreInjected and injected:
+		# Injected keys should be ignored in some cases.
+		if injected and (ignoreInjected or not config.conf['keyboard']['handleInjectedKeys']):
 			return True
 
 		keyCode = (vkCode, extended)
@@ -310,6 +311,10 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		self.isExtended = isExtended
 		super(KeyboardInputGesture, self).__init__()
 
+	def _get_bypassInputHelp(self):
+		# #4226: Numlock must always be handled normally otherwise the Keyboard controller and Windows can get out of synk wih each other in regard to this key state.
+		return self.vkCode==winUser.VK_NUMLOCK
+
 	def _get_isNVDAModifierKey(self):
 		return isNVDAModifierKey(self.vkCode, self.isExtended)
 
@@ -382,14 +387,17 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			# This could be for an event such as gyroscope movement,
 			# so don't report it.
 			return False
-		# Aside from space, a key name of more than 1 character is a command.
+		return not self.isCharacter
+
+	def _get_isCharacter(self):
+		# Aside from space, a key name of more than 1 character is a potential command and therefore is not a character.
 		if self.vkCode != winUser.VK_SPACE and len(self.mainKeyName) > 1:
-			return True
-		# If this key has modifiers other than shift, it is a command; e.g. shift+f is text, but control+f is a command.
+			return False
+		# If this key has modifiers other than shift, it is a command and not a character; e.g. shift+f is a character, but control+f is a command.
 		modifiers = self.generalizedModifiers
 		if modifiers and (len(modifiers) > 1 or tuple(modifiers)[0][0] != winUser.VK_SHIFT):
-			return True
-		return False
+			return False
+		return True
 
 	def _get_speechEffectWhenExecuted(self):
 		if inputCore.manager.isInputHelpActive:
@@ -535,3 +543,38 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		return dispSource, "+".join(names)
 
 inputCore.registerGestureSource("kb", KeyboardInputGesture)
+
+def injectRawKeyboardInput(isPress, code, isExtended):
+	"""Injet raw input from a system keyboard that is not handled natively by Windows.
+	For example, this might be used for input from a QWERTY keyboard on a braille display.
+	NVDA will treat the key as if it had been pressed on a normal system keyboard.
+	If it is not handled by NVDA, it will be sent to the operating system.
+	@param isPress: Whether the key is being pressed.
+	@type isPress: bool
+	@param code: The scan code (PC set 1) of the key.
+	@type code: int
+	@param isExtended: Whether this is an extended key.
+	@type isExtended: bool
+	"""
+	mapScan = code
+	if isExtended:
+		# Change what we pass to MapVirtualKeyEx, but don't change what NVDA gets.
+		mapScan |= 0xE000
+	vkCode = winUser.user32.MapVirtualKeyExW(mapScan, winUser.MAPVK_VSC_TO_VK_EX, getInputHkl())
+	if isPress:
+		shouldSend = internal_keyDownEvent(vkCode, code, isExtended, False)
+	else:
+		shouldSend = internal_keyUpEvent(vkCode, code, isExtended, False)
+	if shouldSend:
+		flags = 0
+		if not isPress:
+			flags |= 2
+		if isExtended:
+			flags |= 1
+		global ignoreInjected
+		ignoreInjected = True
+		try:
+			winUser.keybd_event(vkCode, code, flags, None)
+			wx.Yield()
+		finally:
+			ignoreInjected = False

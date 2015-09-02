@@ -4,10 +4,11 @@
 #See the file COPYING for more details.
 
 import locale
-import sys
+import winVersion
 import comtypes.client
 import struct
 import ctypes
+from comtypes import COMError
 import pythoncom
 import win32clipboard
 import oleTypes
@@ -360,6 +361,11 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				text=ctypes.cast(buf,ctypes.c_wchar_p).value
 			else:
 				text=unicode(ctypes.cast(buf,ctypes.c_char_p).value, errors="replace", encoding=locale.getlocale()[1])
+			# #4095: Some protected richEdit controls do not hide their password characters.
+			# We do this specifically.
+			# Note that protected standard edit controls get characters hidden in _getStoryText.
+			if text and controlTypes.STATE_PROTECTED in self.obj.states:
+				text=u'*'*len(text)
 		else:
 			text=self._getStoryText()[start:end]
 		return text
@@ -372,7 +378,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				start=end
 				end=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,offset)
 			return (start,end)
-		elif sys.getwindowsversion().major<6: #Implementation of standard edit field wordbreak behaviour (only breaks on space)
+		elif winVersion.winVersion.major<6: #Implementation of standard edit field wordbreak behaviour (only breaks on space)
 			lineStart,lineEnd=self._getLineOffsets(offset)
 			if offset>=lineEnd:
 				return offset,offset+1
@@ -467,35 +473,10 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError
 
-	def _getCharFormat(self,range):
-		oldSel=self.obj.ITextSelectionObject.duplicate
-		if not (oldSel.start==range.start and oldSel.end==range.end):
-			self.obj.ITextSelectionObject.start=range.start
-			self.obj.ITextSelectionObject.end=range.end
-		if self.obj.isWindowUnicode:
-			charFormatStruct=CharFormat2WStruct
-		else:
-			charFormatStruct=CharFormat2AStruct
-		charFormat=charFormatStruct()
-		charFormat.cbSize=ctypes.sizeof(charFormatStruct)
-		processHandle=self.obj.processHandle
-		internalCharFormat=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charFormat),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		try:
-			winKernel.writeProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
-			watchdog.cancellableSendMessage(self.obj.windowHandle,EM_GETCHARFORMAT,SCF_SELECTION, internalCharFormat)
-			winKernel.readProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
-		finally:
-			winKernel.virtualFreeEx(processHandle,internalCharFormat,0,winKernel.MEM_RELEASE)
-		if not (oldSel.start==range.start and oldSel.end==range.end):
-			self.obj.ITextSelectionObject.start=oldSel.start
-			self.obj.ITextSelectionObject.end=oldSel.end
-		return charFormat
-
 	def _getFormatFieldAtRange(self,range,formatConfig):
 		formatField=textInfos.FormatField()
 		fontObj=None
 		paraFormatObj=None
-		charFormat=None
 		if formatConfig["reportAlignment"]:
 			if not paraFormatObj: paraFormatObj=range.para
 			alignment=paraFormatObj.alignment
@@ -526,8 +507,9 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			elif fontObj.subscript:
 				formatField["text-position"]="sub"
 		if formatConfig["reportLinks"]:
-			if charFormat is None: charFormat=self._getCharFormat(range)
-			formatField["link"]=bool(charFormat.dwEffects&CFM_LINK)
+			linkRange=range.Duplicate
+			linkRange.Collapse(comInterfaces.tom.tomStart)
+			formatField["link"]=linkRange.Expand(comInterfaces.tom.tomLink)>0
 		return formatField
 
 	def _expandFormatRange(self,range,formatConfig):
@@ -761,7 +743,8 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 
 	editAPIVersion=0
 	editAPIUnicode=True
-	useITextDocumentSupport=False
+	# #4291: Use ITextDocument in Windows 7 and later, as it's very slow in earlier versions.
+	useITextDocumentSupport=(winVersion.winVersion.major,winVersion.winVersion.minor)>=(6,1)
 	editValueUnit=textInfos.UNIT_LINE
 
 	def _get_TextInfo(self):
@@ -822,6 +805,18 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 
 class RichEdit(Edit):
 	editAPIVersion=1
+
+	def makeTextInfo(self,position):
+		if self.TextInfo is not ITextDocumentTextInfo:
+			return super(RichEdit,self).makeTextInfo(position)
+		# #4090: Sometimes ITextDocument support can fail (security restrictions in Outlook 2010)
+		# We then fall back to normal Edit support.
+		try:
+			return self.TextInfo(self,position)
+		except COMError:
+			log.debugWarning("Could not instanciate ITextDocumentTextInfo",exc_info=True)
+			self.TextInfo=EditTextInfo
+			return self.TextInfo(self,position)
 
 class RichEdit20(RichEdit):
 	editAPIVersion=2

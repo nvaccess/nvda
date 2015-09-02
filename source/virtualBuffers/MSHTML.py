@@ -6,7 +6,7 @@
 
 from comtypes import COMError
 import eventHandler
-from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
+from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import controlTypes
 import NVDAObjects.IAccessible.MSHTML
 import winUser
@@ -55,20 +55,8 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_CLICKABLE)
 		if attrs.get('HTMLAttrib::aria-required','false')=='true':
 			states.add(controlTypes.STATE_REQUIRED)
-		name=None
-		ariaLabelledBy=attrs.get('HTMLAttrib::aria-labelledBy')
-		if ariaLabelledBy:
-			try:
-				labelNode=self.obj.rootNVDAObject.HTMLNode.document.getElementById(ariaLabelledBy)
-			except (COMError,NameError):
-				labelNode=None
-			if labelNode:
-				try:
-					name=self.obj.makeTextInfo(NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=labelNode)).text
-				except:
-					pass
 		description=None
-		ariaDescribedBy=attrs.get('HTMLAttrib::aria-describedBy')
+		ariaDescribedBy=attrs.get('HTMLAttrib::aria-describedby')
 		if ariaDescribedBy:
 			try:
 				descNode=self.obj.rootNVDAObject.HTMLNode.document.getElementById(ariaDescribedBy)
@@ -129,8 +117,6 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			attrs["level"] = level
 		if landmark:
 			attrs["landmark"]=landmark
-		if name:
-			attrs["name"]=name
 		if description:
 			attrs["description"]=description
 		return super(MSHTMLTextInfo,self)._normalizeControlField(attrs)
@@ -141,6 +127,11 @@ class MSHTML(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(MSHTML,self).__init__(rootNVDAObject,backendName="mshtml")
+		# As virtualBuffers must be created at all times for MSHTML to support live regions,
+		# Force focus mode for anything other than a document (e.g. dialog, application)
+		if rootNVDAObject.role!=controlTypes.ROLE_DOCUMENT:
+			self.disableAutoPassThrough=True
+			self.passThrough=True
 
 	def _getInitialCaretPos(self):
 		initialPos = super(MSHTML,self)._getInitialCaretPos()
@@ -195,6 +186,12 @@ class MSHTML(VirtualBuffer):
 		root=self.rootNVDAObject
 		if not root:
 			return False
+		if not winUser.isWindow(root.windowHandle):
+			return False
+		if root.appModule.appName.startswith('wwahost') and not winUser.isDescendantWindow(winUser.getForegroundWindow(),root.windowHandle):
+			# #4572: When a wwahost hosted app is in the background it gets suspended and all COM calls freeze.
+			# Therefore we don't have enough info to say whether its dead or not. We assume it is alive until we can get a better answer.
+			return True
 		try:
 			if not root.IAccessibleRole:
 				# The root object is dead.
@@ -204,7 +201,7 @@ class MSHTML(VirtualBuffer):
 			# Otherwise, we'll keep querying it on every focus change and freezing.
 			return False
 		states=root.states
-		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_EDITABLE in states:
+		if controlTypes.STATE_EDITABLE in states:
 			return False
 		return True
 
@@ -229,11 +226,15 @@ class MSHTML(VirtualBuffer):
 		elif nodeType=="unvisitedLink":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_LINKED:[1],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_TRAVERSED:[None]}
 		elif nodeType=="formField":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_OUTLINE,oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]}
+			attrs=[
+				{"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_OUTLINE,oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]},
+				{"IHTMLDOMNode::nodeName":["SELECT"]},
+				{"HTMLAttrib::role":["listbox"]},
+			]
 		elif nodeType=="button":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON]}
 		elif nodeType=="edit":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT,oleacc.ROLE_SYSTEM_COMBOBOX],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1],"IHTMLElement::%s"%"isContentEditable":[1]}
 		elif nodeType=="radioButton":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_RADIOBUTTON],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="comboBox":
@@ -245,9 +246,9 @@ class MSHTML(VirtualBuffer):
 			if not config.conf["documentFormatting"]["includeLayoutTables"]:
 				attrs["table-layout"]=[None]
 		elif nodeType.startswith("heading") and nodeType[7:].isdigit():
-			attrs = {"IHTMLDOMNode::nodeName": ["H%s" % nodeType[7:]]}
+			attrs = [{"IHTMLDOMNode::nodeName": ["H%s" % nodeType[7:]]},{"HTMLAttrib::role":["heading"],"HTMLAttrib::aria-level":[nodeType[7:]]}]
 		elif nodeType == "heading":
-			attrs = {"IHTMLDOMNode::nodeName": ["H1", "H2", "H3", "H4", "H5", "H6"]}
+			attrs = [{"IHTMLDOMNode::nodeName": ["H1", "H2", "H3", "H4", "H5", "H6"]},{"HTMLAttrib::role":["heading"]}]
 		elif nodeType == "list":
 			attrs = {"IHTMLDOMNode::nodeName": ["UL","OL","DL"]}
 		elif nodeType == "listItem":
@@ -255,13 +256,17 @@ class MSHTML(VirtualBuffer):
 		elif nodeType == "blockQuote":
 			attrs = {"IHTMLDOMNode::nodeName": ["BLOCKQUOTE"]}
 		elif nodeType == "graphic":
-			attrs = {"IHTMLDOMNode::nodeName": ["IMG"]}
+			attrs = [{"IHTMLDOMNode::nodeName": ["IMG"]},{"HTMLAttrib::role":["img"]}]
 		elif nodeType == "frame":
 			attrs = {"IHTMLDOMNode::nodeName": ["FRAME","IFRAME"]}
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="landmark":
-			attrs={"HTMLAttrib::role":[VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]}
+			attrs = [
+				{"HTMLAttrib::role": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles if lr != "region"]},
+				{"HTMLAttrib::role": [VBufStorage_findMatch_word("region")],
+					"name": [VBufStorage_findMatch_notEmpty]}
+				]
 		elif nodeType == "embeddedObject":
 			attrs = {"IHTMLDOMNode::nodeName": ["OBJECT","EMBED","APPLET"]}
 		elif nodeType == "separator":
@@ -278,19 +283,27 @@ class MSHTML(VirtualBuffer):
 	def _activateNVDAObject(self,obj):
 		super(MSHTML,self)._activateNVDAObject(obj)
 		#If we activated a same-page link, then scroll to its anchor
-		if obj.HTMLNodeName=="A":
-			anchorName=getattr(obj.HTMLNode,'hash')
-			if not anchorName:
-				return 
-			obj=self._getNVDAObjectByAnchorName(anchorName[1:],HTMLDocument=obj.HTMLNode.document)
-			if not obj:
+		count=0
+		# #4134: The link may not always be the deepest node
+		while obj and count<3 and isinstance(obj,NVDAObjects.IAccessible.MSHTML.MSHTML):
+			if obj.HTMLNodeName=="A":
+				anchorName=getattr(obj.HTMLNode,'hash')
+				if not anchorName:
+					return 
+				obj=self._getNVDAObjectByAnchorName(anchorName[1:],HTMLDocument=obj.HTMLNode.document)
+				if not obj:
+					return
+				self._handleScrollTo(obj)
 				return
-			self._handleScrollTo(obj)
+			obj=obj.parent
+			count+=1
+
 
 	def _getNVDAObjectByAnchorName(self,name,HTMLDocument=None):
 		if not HTMLDocument:
 			HTMLDocument=self.rootNVDAObject.HTMLNode.document
-		HTMLNode=HTMLDocument.getElementById(name)
+		# #4134: could be name or ID, document.all.item supports both
+		HTMLNode=HTMLDocument.all.item(name)
 		if not HTMLNode:
 			log.debugWarning("GetElementById can't find node with ID %s"%name)
 			return None

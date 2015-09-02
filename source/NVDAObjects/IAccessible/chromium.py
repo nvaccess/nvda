@@ -28,6 +28,7 @@ class ChromeVBuf(GeckoVBuf):
 		return True
 
 class Document(IAccessible):
+	value = None
 
 	def _get_treeInterceptorClass(self):
 		states = self.states

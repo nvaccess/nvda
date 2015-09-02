@@ -1,10 +1,8 @@
 ﻿#locale/ko/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2012 NVDA Contributors
+#Copyright (c) 2012-2015 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
-complexSymbols:
-# identifier	regexp
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
@@ -13,9 +11,9 @@ complexSymbols:
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
-decimal point	(?<=\d)\.(?=\d)
+decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥]?\d)
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -53,8 +51,8 @@ $	달러	all	norep
 '	어퍼스트로피	all
 (	괄호열기	most
 )	괄호닫기	most
-*	star	most
-+	plus	most
+*	star	some
++	plus	some
 ,	콤마	all	always
 -	다시	most
 .	점	some
@@ -63,7 +61,7 @@ $	달러	all	norep
 ;	세미콜런	most
 <	less	most
 >	greater	most
-=	등호	most
+=	등호	some
 ?	물음표	all
 @	골뱅이	some
 [	대괄호열기	most
@@ -91,8 +89,10 @@ _	언더바	most
 ●	circle	most
 ¨	diaeresis	most
 ■	black square	some
+◦	white bullet	some
 ‎	left to right mark	char
 ‏	right to left mark	char
+←	left arrow	some
 ➔	right arrow	some
 §	section	all
 °	degrees	some
@@ -108,6 +108,7 @@ _	언더바	most
 ±	Plus or Minus	most
 ×	times	most
 ÷	divide by	most
+←	left arrow	some
 →	right arrow	some
 ✓	check	some
 ✔	check	some

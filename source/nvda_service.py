@@ -14,6 +14,7 @@ import os
 import time
 import subprocess
 import _winreg
+import winVersion
 
 CREATE_UNICODE_ENVIRONMENT=1024
 INFINITE = 0xffffffff
@@ -311,7 +312,7 @@ class NVDAService(win32serviceutil.ServiceFramework):
 	def SvcDoRun(self):
 		initDebug()
 		debug("service starting")
-		self.isWindowsXP = sys.getwindowsversion()[0:2] == (5, 1)
+		self.isWindowsXP = winVersion.winVersion[0:2] == (5, 1)
 		self.exitEvent = threading.Event()
 		self.initSession(windll.kernel32.WTSGetActiveConsoleSessionId())
 		self.exitEvent.wait()

@@ -54,6 +54,10 @@ class InputGesture(baseObject.AutoPropertyObject):
 	#: @type: bool
 	wasInSayAll=False
 
+	#: Indicates that while in Input Help Mode, this gesture should be handled as if Input Help mode was currently off.
+	#: @type: bool
+	bypassInputHelp=False
+
 	def _get_identifiers(self):
 		"""The identifier(s) which will be used in input gesture maps to represent this gesture.
 		These identifiers will be looked up in order until a match is found.
@@ -91,6 +95,10 @@ class InputGesture(baseObject.AutoPropertyObject):
 	#: Whether this gesture should be reported when reporting of command gestures is enabled.
 	#: @type: bool
 	shouldReportAsCommand = True
+
+	#: whether this gesture represents a character being typed (i.e. not a potential command)
+	#: @type bool
+	isCharacter=False
 
 	SPEECHEFFECT_CANCEL = "cancel"
 	SPEECHEFFECT_PAUSE = "pause"
@@ -426,6 +434,12 @@ class InputManager(baseObject.AutoPropertyObject):
 
 		gesture.reportExtra()
 
+		# #2953: if an intercepted command Script (script that sends a gesture) is queued
+		# then queue all following gestures (that don't have a script) with a fake script so that they remain in order.
+		if not script and scriptHandler._numIncompleteInterceptedCommandScripts:
+			script=lambda gesture: gesture.send()
+
+
 		if script:
 			scriptHandler.queueScript(script, gesture)
 			return
@@ -445,7 +459,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			self._captureFunc = None
 
 	def _inputHelpCaptor(self, gesture):
-		bypass = getattr(gesture.script, "bypassInputHelp", False)
+		bypass = gesture.bypassInputHelp or getattr(gesture.script, "bypassInputHelp", False)
 		queueHandler.queueFunction(queueHandler.eventQueue, self._handleInputHelp, gesture, onlyLog=bypass)
 		return bypass
 

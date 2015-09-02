@@ -3,25 +3,38 @@
 #Copyright (c) 2011 NV Access Inc
 #This file is covered by the GNU General Public License.
 
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	pont
-! sentence ending	felkiáltójel
-? sentence ending	kérdőjel
+. sentence ending	pont	all	always
+! sentence ending	felkiáltójel	all	always
+? sentence ending	kérdőjel	all	always
 ; phrase ending	pontosvessző
-: phrase ending	kettőspont
-decimal point	
-in-word '	aposztrof
-negative number	minusz
+: phrase ending	kettőspont	most	always
+decimal point		none	always
+in-word '	aposztrof	all	norep
+negative number	minusz	none	norep
 
 # Whitespace
-\0	üres
+\0	üres	# null
 \t	tab
 \n	újsor
-\f	oldaltörés
+\f	oldaltörés	none
 \r	sor vége	char
  	szóköz	char
  	szóköz (töretlen)	char	# no-break space
@@ -30,9 +43,11 @@ negative number	minusz
 !	felkiáltójel	all
 "	macskaköröm	most
 \#	kettőskereszt	most
-$	dollár	some
-£	font	some
-€	euro	some
+$	dollár	all	norep
+£	font	all	norep
+€	euro	all	norep
+¢	Cent	all	norep
+¥	Jen	all	norep
 %	százalék	some
 &	és	some
 '	aposztrof	all
@@ -44,11 +59,11 @@ $	dollár	some
 -	minusz	most
 .	pont	some
 /	per	some
-:	kettőspont	most
+:	kettőspont	most	norep
 ;	pontosvessző	most
 <	kisebb	most
 >	nagyobb	most
-=	egyenlő	most
+=	egyenlő	some
 ?	kérdőjel	all
 @	kukac	some
 [	nyitószögletes	most
@@ -66,6 +81,7 @@ _	aláhúzás	most
 •	listaelem	some
 …	pont pont pont	all	never	# Unicode harompont (egy karakter!!!)
 ...	pont pont pont	all	never	# harom normal ASCII pont egymas utan!!!
+	listaelem	some
 “	bal idézőjel	most
 ”	jobb idézőjel	most
 ‘	bal aposztrof	most
@@ -77,6 +93,9 @@ _	aláhúzás	most
 ‎	Balról jobbra jelölés	char
 ‏	Jobbról balra jelölés	char
 ■	fekete négyzet	some
+▪	fekete négyzet	some
+◾	fekete négyzet	some
+◦	Felsoroló üres karika	some
 ➔	jobbra nyíl	some
 §	szakasz	all
 °	fok	some
@@ -92,6 +111,53 @@ _	aláhúzás	most
 ±	Plusz vagy Minusz	most
 ×	szorozva	most
 ÷	osztva	most
+←	balra nyíl	some
 →	jobbra nyíl	some
 ✓	jelölés	some
 ✔	jelölés	some
+#Mathematical Operators U+2200 to U+220F
+
+∀	Minden 	none
+∁	Komplemens	none
+∂	Parciális derivált	none
+∃	Létezik	none
+∄	Nem létezik	none
+∅	Üres halmaz	none
+∆	INCREMENT	none
+∇	NABLA	none
+∈	Eleme	none
+∉	Nem eleme	none
+∊	SMALL ELEMENT OF	none
+∋	Magába foglalja	none
+∌	Nem foglalja magába	none
+∍	SMALL CONTAINS AS MEMBER	none
+∎	Bizonyítás vége	none
+∏	Produktum	none
+
+# Miscellaneous Mathematical Operators
+
+∑	Szumma	none
+√	Gyök	none
+∛	Köb gyök	none
+∜	Negyedik gyök	none
+∝	Arányul	none
+∞	Végtelen	none
+∟	skalárszorzat zár	none
+∠	Szög	none
+∥	Párhuzamos	none
+∦	Nem párhuzamos	none
+∧	És	none
+∨	Vagy	none
+∩	metszet	none
+∪	Unió	none
+∫	Integrál	none
+∴	Tehát	none
+∵	Mert	none
+∶	Arány	none
+∷	Arány	none
+≤	Kisebb egyenlő	none
+≥	Nagyobb egyenlő	none
+⊂	Részhalmaza	none
+⊃	Szuperhalmaza	none
+⊆	Részhalmaza vagy egyenlő	none
+⊇	Szuperhalmaza vagy egyenlő	none

@@ -28,6 +28,7 @@ import appModuleHandler
 import mouseHandler
 import controlTypes
 import keyboardHandler
+import core
 
 MAX_WINEVENTS=500
 MAX_WINEVENTS_PER_THREAD=10
@@ -75,16 +76,18 @@ class OrderedWinEventLimiter(object):
 		@type childID: integer
 		@param threadID: the threadID of the winEvent
 		@type threadID: integer
+		@return: C{True} if the event was added, C{False} if it was discarded.
+		@rtype: bool
 		"""
 		if eventID==winUser.EVENT_OBJECT_FOCUS:
 			if objectID in (winUser.OBJID_SYSMENU,winUser.OBJID_MENU) and childID==0:
 				# This is a focus event on a menu bar itself, which is just silly. Ignore it.
-				return
+				return False
 			#We do not need a focus event on an object if we already got a foreground event for it
 			if (winUser.EVENT_SYSTEM_FOREGROUND,window,objectID,childID,threadID) in self._focusEventCache:
-				return
+				return False
 			self._focusEventCache[(eventID,window,objectID,childID,threadID)]=next(self._eventCounter)
-			return
+			return True
 		elif eventID==winUser.EVENT_SYSTEM_FOREGROUND:
 			self._focusEventCache.pop((winUser.EVENT_OBJECT_FOCUS,window,objectID,childID,threadID),None)
 			self._focusEventCache[(eventID,window,objectID,childID,threadID)]=next(self._eventCounter)
@@ -92,16 +95,17 @@ class OrderedWinEventLimiter(object):
 			k=(winUser.EVENT_OBJECT_HIDE,window,objectID,childID,threadID)
 			if k in self._genericEventCache:
 				del self._genericEventCache[k]
-				return
+				return True
 		elif eventID==winUser.EVENT_OBJECT_HIDE:
 			k=(winUser.EVENT_OBJECT_SHOW,window,objectID,childID,threadID)
 			if k in self._genericEventCache:
 				del self._genericEventCache[k]
-				return
+				return True
 		elif eventID in MENU_EVENTIDS:
 			self._lastMenuEvent=(next(self._eventCounter),eventID,window,objectID,childID,threadID)
-			return
+			return True
 		self._genericEventCache[(eventID,window,objectID,childID,threadID)]=next(self._eventCounter)
+		return True
 
 	def flushEvents(self):
 		"""Returns a list of winEvents (tuples of eventID,window,objectID,childID) that have been added, though due to limiting, it will not necessarily be all the winEvents that were originally added. They are definitely garenteed to be in the correct order though.
@@ -135,6 +139,12 @@ winEventLimiter=OrderedWinEventLimiter()
 
 #A place to store live IAccessible NVDAObjects, that can be looked up by their window,objectID,childID event params.
 liveNVDAObjectTable=weakref.WeakValueDictionary()
+
+# #3831: Stuff related to deferring of events for foreground changes.
+# See pumpAll for details.
+MAX_FOREGROUND_DEFERS=2
+_deferUntilForegroundWindow = None
+_foregroundDefers = 0
 
 IAccessibleRolesToNVDARoles={
 	oleacc.ROLE_SYSTEM_WINDOW:controlTypes.ROLE_WINDOW,
@@ -192,7 +202,7 @@ IAccessibleRolesToNVDARoles={
 	oleacc.ROLE_SYSTEM_DIAL:controlTypes.ROLE_DIAL,
 	oleacc.ROLE_SYSTEM_DROPLIST:controlTypes.ROLE_DROPLIST,
 	oleacc.ROLE_SYSTEM_BUTTONMENU:controlTypes.ROLE_MENUBUTTON,
-	oleacc.ROLE_SYSTEM_EQUATION:controlTypes.ROLE_EQUATION,
+	oleacc.ROLE_SYSTEM_EQUATION:controlTypes.ROLE_MATH,
 	oleacc.ROLE_SYSTEM_GRIP:controlTypes.ROLE_GRIP,
 	oleacc.ROLE_SYSTEM_HOTKEYFIELD:controlTypes.ROLE_HOTKEYFIELD,
 	oleacc.ROLE_SYSTEM_INDICATOR:controlTypes.ROLE_INDICATOR,
@@ -351,8 +361,14 @@ def windowFromAccessibleObject(ia):
 		return 0
 
 def accessibleChildren(ia,startIndex,numChildren):
+	# #4091: AccessibleChildren can throw WindowsError (blocked by callee) e.g. Outlook 2010 Email setup and new profiles dialogs
+	try:
+		rawChildren=oleacc.AccessibleChildren(ia,startIndex,numChildren)
+	except (WindowsError,COMError):
+		log.debugWarning("AccessibleChildren failed",exc_info=True)
+		return []
 	children=[]
-	for child in oleacc.AccessibleChildren(ia,startIndex,numChildren):
+	for child in rawChildren:
 		if child is None:
 			# This is a bug in the server.
 			# Filtering these out here makes life easier for the caller.
@@ -557,15 +573,22 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			#Move up the ancestry to find the real mozilla Window and use that
 			if winUser.getClassName(window)=='MozillaDropShadowWindowClass':
 				return
-		#We never want to see foreground events for the Program Manager or Shell (task bar) 
-		if eventID==winUser.EVENT_SYSTEM_FOREGROUND and windowClassName in ("Progman","Shell_TrayWnd"):
-			return
+		if eventID==winUser.EVENT_SYSTEM_FOREGROUND:
+			#We never want to see foreground events for the Program Manager or Shell (task bar) 
+			if windowClassName in ("Progman","Shell_TrayWnd"):
+				return
+			# #3831: Event handling can be deferred if Windows takes a while to change the foreground window.
+			# See pumpAll for details.
+			global _deferUntilForegroundWindow,_foregroundDefers
+			_deferUntilForegroundWindow=window
+			_foregroundDefers=0
 		if windowClassName=="MSNHiddenWindowClass":
 			# HACK: Events get fired by this window in Windows Live Messenger 2009 when it starts.
 			# If we send a WM_NULL to this window at this point (which happens in accessibleObjectFromEvent), Messenger will silently exit (#677).
 			# Therefore, completely ignore these events, which is useless to us anyway.
 			return
-		winEventLimiter.addEvent(eventID,window,objectID,childID,threadID)
+		if winEventLimiter.addEvent(eventID,window,objectID,childID,threadID):
+			core.requestPump()
 	except:
 		log.error("winEventCallback", exc_info=True)
 
@@ -621,15 +644,10 @@ def processFocusWinEvent(window,objectID,childID,force=False):
 	# as this is a child control and the SDM MSAA events don't handle child controls.
 	if childID==0 and not windowClassName.startswith('bosa_sdm') and winUser.getClassName(winUser.getAncestor(window,winUser.GA_PARENT)).startswith('bosa_sdm'):
 		return False
-	rootWindow=winUser.getAncestor(window,winUser.GA_ROOT)
-	# If this window is not within the foreground window and this window or its root window is not a popup window, and this window's root window is not the highest in the z-order
-	if not winUser.isDescendantWindow(winUser.getForegroundWindow(),window) and not (winUser.getWindowStyle(window) & winUser.WS_POPUP or winUser.getWindowStyle(rootWindow)&winUser.WS_POPUP) and winUser.getPreviousWindow(rootWindow)!=0: 
-		# This is a focus event from a background window, so ignore it.
-		return False
 	#Notify appModuleHandler of this new foreground window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	#If Java access bridge is running, and this is a java window, then pass it to java and forget about it
-	if JABHandler.isRunning and JABHandler.isJavaWindow(window):
+	if childID==0 and objectID==winUser.OBJID_CLIENT and JABHandler.isRunning and JABHandler.isJavaWindow(window):
 		JABHandler.event_enterJavaWindow(window)
 		return True
 	#Convert the win event to an NVDA event
@@ -690,8 +708,7 @@ def processDesktopSwitchWinEvent(window,objectID,childID):
 	hDesk=windll.user32.OpenInputDesktop(0, False, 0)
 	if hDesk!=0:
 		windll.user32.CloseDesktop(hDesk)
-		import wx
-		wx.CallLater(200, _correctFocus)
+		core.callLater(200, _correctFocus)
 	else:
 		# Switching to a secure desktop.
 		# We don't receive key up events for any keys down before switching to a secure desktop,
@@ -741,9 +758,9 @@ def processForegroundWinEvent(window,objectID,childID):
 	return True
 
 def processShowWinEvent(window,objectID,childID):
-	className=winUser.getClassName(window)
-	#For now we only support 'show' event for tooltips, IMM candidates and notification bars  as otherwize we get flooded
-	if className in ("Frame Notification Bar","tooltips_class32","mscandui21.candidate","mscandui40.candidate","MSCandUIWindow_Candidate") and objectID==winUser.OBJID_CLIENT:
+	# eventHandler.shouldAcceptEvent only accepts show events for a few specific cases.
+	# Narrow this further to only accept events for clients or custom objects.
+	if objectID==winUser.OBJID_CLIENT or objectID>0:
 		NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_SHOW,window,objectID,childID)
 		if NVDAEvent:
 			eventHandler.queueEvent(*NVDAEvent)
@@ -790,8 +807,7 @@ def processFakeFocusWinEvent(eventID, window, objectID, childID):
 	"""
 	# A suitable event for faking the focus has been received with no focus event, so we probably need to find the focus and fake it.
 	# However, it is possible that the focus event has simply been delayed, so wait a bit and only do it if the focus hasn't changed yet.
-	import wx
-	wx.CallLater(50, _fakeFocus, api.getFocusObject())
+	core.callLater(50, _fakeFocus, api.getFocusObject())
 
 def _fakeFocus(oldFocus):
 	if oldFocus is not api.getFocusObject():
@@ -821,12 +837,31 @@ def initialize():
 			log.error("initialize: could not register callback for event %s (%s)"%(eventType,winEventIDsToNVDAEventNames[eventType]))
 
 def pumpAll():
+	global _deferUntilForegroundWindow,_foregroundDefers
+	if _deferUntilForegroundWindow:
+		# #3831: Sometimes, a foreground event is fired,
+		# but GetForegroundWindow() takes a short while to return this new foreground.
+		if _foregroundDefers<MAX_FOREGROUND_DEFERS and winUser.getForegroundWindow()!=_deferUntilForegroundWindow:
+			# Wait a core cycle before handling events to give the foreground window time to update.
+			core.requestPump()
+			_foregroundDefers+=1
+			return
+		else:
+			# Either the foreground window is now correct
+			# or we've already had the maximum number of defers.
+			# (Sometimes, foreground events are fired even when the foreground hasn't actually changed.)
+			_deferUntilForegroundWindow=None
+
 	#Receive all the winEvents from the limiter for this cycle
 	winEvents=winEventLimiter.flushEvents()
 	focusWinEvents=[]
 	validFocus=False
 	fakeFocusEvent=None
 	for winEvent in winEvents[0-MAX_WINEVENTS:]:
+		# #4001: Ideally, we'd call shouldAcceptEvent in winEventCallback,
+		# but this causes focus issues when starting applications.
+		if not eventHandler.shouldAcceptEvent(winEventIDsToNVDAEventNames[winEvent[0]], windowHandle=winEvent[1]):
+			continue
 		#We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one 
 		if winEvent[0] in (winUser.EVENT_OBJECT_FOCUS,winUser.EVENT_SYSTEM_FOREGROUND):
 			focusWinEvents.append(winEvent)

@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
 #URL: http://www.nvda-project.org/
-#Copyright 2010 James Teh <jamie@jantrid.net>.
+#Copyright 2010-2014 NV Access Limited.
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -14,6 +14,7 @@
 
 import sys
 import os
+import time
 import _winreg
 from glob import glob
 
@@ -68,7 +69,7 @@ vars.Add(PathVariable("certFile", "The certificate file with which to sign execu
 vars.Add("certPassword", "The password for the private key in the signing certificate", "")
 vars.Add("certTimestampServer", "The URL of the timestamping server to use to timestamp authenticode signatures", "")
 vars.Add(PathVariable("outputDir", "The directory where the final built archives and such will be placed", "output",PathVariable.PathIsDirCreate))
-vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'symbols', ["symbols","debugCRT","RTC","noOptimize"]))
+vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'none', ["debugCRT","RTC"]))
 vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in xrange(60)]))
 
 #Base environment for this and sub sconscripts
@@ -112,12 +113,35 @@ outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot
 outputDir=Dir(env['outputDir'])
 devDocsOutputDir=outputDir.Dir('devDocs')
 
+# An action to sign an executable with certFile.
+signExecCmd = ["signtool", "sign", "/f", certFile]
+if certPassword:
+	signExecCmd.extend(("/p", certPassword))
+if certTimestampServer:
+	signExecCmd.extend(("/t", certTimestampServer))
+def signExec(target,source,env):
+	print [str(x) for x in target]
+	#sys.exit(1)
+	# #3795: signtool can quite commonly fail with timestamping, so allow it to try up to 3 times with a 1 second delay between each try. 
+	res=0
+	for count in xrange(3):
+		res=env.Execute([signExecCmd+[target[0].abspath]])
+		if not res:
+			return 0 # success
+		time.sleep(1)
+	return res # failed
+#Export via scons environment so other libraries can be signed
+env['signExec']=signExec
+
 #architecture-specific environments
 archTools=['default','windowsSdk','midl','msrpc']
 env32=env.Clone(TARGET_ARCH='x86',tools=archTools)
 env64=env.Clone(TARGET_ARCH='x86_64',tools=archTools)
-env=env32
+# Hack around odd bug where some tool [after] msvc states that static and shared objects are different
+env32['STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME'] = 1
+env64['STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME'] = 1
 
+env=env32
 
 #Fill sourceDir with anything provided for it by miscDeps
 env.recursiveCopy(sourceDir,Dir('miscdeps/source'))
@@ -126,7 +150,7 @@ env.SConscript('source/comInterfaces_sconscript',exports=['env'])
 
 #Process nvdaHelper scons files
 env32.SConscript('nvdaHelper/archBuild_sconscript',exports={'env':env32,'clientInstallDir':clientDir.Dir('x86'),'libInstallDir':sourceLibDir},variant_dir='build/x86')
-env64.SConscript('nvdaHelper/archBuild_sconscript',exports={'env':env64,'clientInstallDir':clientDir.Dir('x86_64'),'libInstallDir':sourceLibDir64},variant_dir='build/x86_64')
+env64.SConscript('nvdaHelper/archBuild_sconscript',exports={'env':env64,'clientInstallDir':clientDir.Dir('x64'),'libInstallDir':sourceLibDir64},variant_dir='build/x86_64')
 
 #Allow all NVDA's gettext po files to be compiled in source/locale
 for po in env.Glob(sourceDir.path+'/locale/*/lc_messages/*.po'):
@@ -195,8 +219,8 @@ def NVDADistGenerator(target, source, env, for_signature):
 	if env.get("uiAccess"):
 		buildCmd.append("--enable-uiAccess")
 	if certFile:
-		for prog in "nvda_noUIAccess", "nvda_uiAccess", "nvda_slave", "nvda_service", "nvda_eoaProxy":
-			action.append(signExec[:-1] + [os.path.join(target[0].path, "%s.exe" % prog)])
+		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "nvda_service.exe", "nvda_eoaProxy.exe":
+			action.append(lambda target,source,env, progByVal=prog: signExec([target[0].File(progByVal)],source,env))
 
 	for ext in "", "c", "o":
 		action.append(Delete(buildVersionFn + ext))
@@ -247,14 +271,6 @@ def ZipArchiveAction(target, source, env):
 
 env["BUILDERS"]["ZipArchive"] = Builder(action=ZipArchiveAction)
 
-# An action to sign an executable with certFile.
-signExec = ["signtool", "sign", "/f", certFile]
-if certPassword:
-	signExec.extend(("/p", certPassword))
-if certTimestampServer:
-	signExec.extend(("/t", certTimestampServer))
-signExec.append("$TARGET")
-
 uninstFile=File("dist/uninstall.exe")
 uninstGen = env.Command(File("uninstaller/uninstGen.exe"), "uninstaller/uninst.nsi",
 	[[makensis, "/V2",
@@ -299,6 +315,8 @@ def makePot(target, source, env):
 			"--foreign-user",
 			"--add-comments=Translators:",
 			"--keyword=pgettext:1c,2",
+			# Needed because xgettext doesn't recognise the .pyw extension.
+			"--language=python",
 		] + [os.path.relpath(str(f), str(sourceDir)) for f in source]
 	]) != 0:
 		raise RuntimeError("xgettext failed")
@@ -341,7 +359,7 @@ env.Clean('devDocs', [devGuide, devDocs_nvda])
 pot = env.Command(outputDir.File("%s.pot" % outFilePrefix),
 	# Don't use sourceDir as the source, as this depends on comInterfaces and nvdaHelper.
 	# We only depend on the Python files.
-	[f for pattern in ("*.py", r"*\*.py", r"*\*\*.py") for f in env.Glob(os.path.join(sourceDir.path, pattern))],
+	[f for pattern in ("*.py", "*.pyw", r"*\*.py", r"*\*\*.py") for f in env.Glob(os.path.join(sourceDir.path, pattern))],
 	makePot)
 
 env.Alias("pot", pot)

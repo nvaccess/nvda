@@ -39,6 +39,9 @@ class EditableText(ScriptableObject):
 	#: Whether to fire caretMovementFailed events when the caret doesn't move in response to a caret movement key.
 	shouldFireCaretMovementFailedEvents = False
 
+	#: Whether or not to announce text found before the caret on a new line (e.g. auto numbering)
+	announceNewLineText=True
+
 	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=0.03):
 		"""
 		Waits for the caret to move, for a timeout to elapse, or for a new focus event or script to be queued.
@@ -99,6 +102,43 @@ class EditableText(ScriptableObject):
 			eventHandler.executeEvent("caretMovementFailed", self, gesture=gesture)
 		self._caretScriptPostMovedHelper(unit,gesture,newInfo)
 
+	def script_caret_newLine(self,gesture):
+		try:
+			info=self.makeTextInfo(textInfos.POSITION_CARET)
+		except:
+			gesture.send()
+			return
+		bookmark=info.bookmark
+		gesture.send()
+		caretMoved,newInfo=self._hasCaretMoved(bookmark) 
+		if not caretMoved or not newInfo:
+			return
+		# newInfo.copy should be good enough here, but in MS Word we get strange results.
+		try:
+			lineInfo=self.makeTextInfo(textInfos.POSITION_CARET)
+		except (RuntimeError,NotImplementedError):
+			return
+		lineInfo.expand(textInfos.UNIT_LINE)
+		lineInfo.setEndPoint(newInfo,"endToStart")
+		if lineInfo.isCollapsed:
+			lineInfo.expand(textInfos.UNIT_CHARACTER)
+			onlyInitial=True
+		else:
+			onlyInitial=False
+		speech.speakTextInfo(lineInfo,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET,onlyInitialFields=onlyInitial,suppressBlanks=True)
+
+	def _caretMoveBySentenceHelper(self, gesture, direction):
+		if isScriptWaiting():
+			return
+		try:
+			info=self.makeTextInfo(textInfos.POSITION_CARET)
+			info.move(textInfos.UNIT_SENTENCE, direction)
+			info.updateCaret()
+			self._caretScriptPostMovedHelper(textInfos.UNIT_SENTENCE,gesture,info)
+		except:
+			gesture.send()
+			return
+
 	def script_caret_moveByLine(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_LINE)
 	script_caret_moveByLine.resumeSayAllMode=sayAllHandler.CURSOR_CARET
@@ -113,6 +153,13 @@ class EditableText(ScriptableObject):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH)
 	script_caret_moveByParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
+	def script_caret_previousSentence(self,gesture):
+		self._caretMoveBySentenceHelper(gesture, -1)
+	script_caret_previousSentence.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+
+	def script_caret_nextSentence(self,gesture):
+		self._caretMoveBySentenceHelper(gesture, 1)
+	script_caret_nextSentence.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
 	def _backspaceScriptHelper(self,unit,gesture):
 		try:
@@ -168,6 +215,8 @@ class EditableText(ScriptableObject):
 		"kb:control+rightArrow": "caret_moveByWord",
 		"kb:control+upArrow": "caret_moveByParagraph",
 		"kb:control+downArrow": "caret_moveByParagraph",
+		"kb:alt+upArrow": "caret_previousSentence",
+		"kb:alt+downArrow": "caret_nextSentence",
 		"kb:home": "caret_moveByCharacter",
 		"kb:end": "caret_moveByCharacter",
 		"kb:control+home": "caret_moveByLine",

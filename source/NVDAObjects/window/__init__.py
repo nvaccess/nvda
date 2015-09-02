@@ -56,6 +56,13 @@ class WindowProcessHandleContainer(object):
 	def __del__(self):
 		winKernel.closeHandle(self.processHandle)
 
+# We want to work with physical points.
+try:
+	# Windows >= Vista
+	_windowFromPoint = ctypes.windll.user32.WindowFromPhysicalPoint
+except AttributeError:
+	_windowFromPoint = ctypes.windll.user32.WindowFromPoint
+
 class Window(NVDAObject):
 	"""
 An NVDAObject for a window
@@ -107,7 +114,7 @@ An NVDAObject for a window
 			from .edit import Edit as newCls
 		elif windowClassName=="RichEdit":
 			from .edit import RichEdit as newCls
-		elif windowClassName=="RichEdit20":
+		elif windowClassName in ("RichEdit20","REComboBox20W"):
 			from .edit import RichEdit20 as newCls
 		elif windowClassName=="RICHEDIT50W":
 			from .edit import RichEdit50 as newCls
@@ -119,6 +126,8 @@ An NVDAObject for a window
 			from .winConsole import WinConsole as newCls
 		elif windowClassName=="_WwG":
 			from .winword import WordDocument as newCls
+		elif windowClassName in ("_WwN","_WwO"):
+			from .winword import WordDocument_WwN as newCls
 		elif windowClassName=="EXCEL7":
 			from .excel import Excel7Window as newCls
 		if newCls:
@@ -146,7 +155,7 @@ An NVDAObject for a window
 				threadInfo=winUser.getGUIThreadInfo(threadID)
 				if threadInfo.hwndFocus: windowHandle=threadInfo.hwndFocus
 		elif isinstance(relation,tuple):
-			windowHandle=ctypes.windll.user32.WindowFromPoint(ctypes.wintypes.POINT(relation[0],relation[1]))
+			windowHandle=_windowFromPoint(ctypes.wintypes.POINT(relation[0],relation[1]))
 		if not windowHandle:
 			return False
 		kwargs['windowHandle']=windowHandle
@@ -435,4 +444,6 @@ windowClassMap={
 	"TRxRichEdit":"RichEdit20",
 	"ScintillaWindowImpl":"Scintilla",
 	"RICHEDIT60W_WLXPRIVATE":"RICHEDIT50W",
+	"TNumEdit":"Edit",
+	"TAccessibleRichEdit":"RichEdit20",
 }

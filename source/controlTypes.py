@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2007-2012 NV Access Limited
+#Copyright (C) 2007-2014 NV Access Limited
 
 ROLE_UNKNOWN=0
 ROLE_WINDOW=1
@@ -106,7 +106,8 @@ ROLE_DROPLIST=100
 ROLE_SPLITBUTTON=101
 ROLE_MENUBUTTON=102
 ROLE_DROPDOWNBUTTONGRID=103
-ROLE_EQUATION=104
+ROLE_MATH=104
+ROLE_EQUATION=ROLE_MATH # Deprecated; for backwards compatibility.
 ROLE_GRIP=105
 ROLE_HOTKEYFIELD=106
 ROLE_INDICATOR=107
@@ -186,6 +187,9 @@ STATE_HASLONGDESC=0x400000000
 STATE_PINNED=0x800000000
 STATE_HASFORMULA=0x1000000000 #Mostly for spreadsheets
 STATE_HASCOMMENT=0X2000000000
+STATE_OBSCURED=0x4000000000
+STATE_CROPPED=0x8000000000
+STATE_OVERFLOWING=0x10000000000
 
 roleLabels={
 	# Translators: The word for an unknown control type.
@@ -399,8 +403,8 @@ roleLabels={
 	ROLE_MENUBUTTON:_("menu button"),
 	# Translators: Reported for a button which expands a grid when it is pressed.
 	ROLE_DROPDOWNBUTTONGRID:_("drop down button grid"),
-	# Translators: Identifies an equation.
-	ROLE_EQUATION:_("equation"),
+	# Translators: Identifies mathematical content.
+	ROLE_MATH:_("math"),
 	# Translators: Identifies a grip control.
 	ROLE_GRIP:_("grip"),
 	# Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as assigning shortcut for icons on the desktop).
@@ -546,6 +550,12 @@ stateLabels={
 	STATE_HASFORMULA:_("has formula"),
 	# Translators: a state that denotes the existance of a comment.
 	STATE_HASCOMMENT:_("has comment"),
+	# Translators: a state that denotes that the object is covered partially or fully by another object
+	STATE_OBSCURED:_("obscured"),
+	# Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the allocated/available space
+	STATE_CROPPED:_("cropped"),
+	# Translators: a state that denotes that the object(text) is overflowing into the adjacent space
+	STATE_OVERFLOWING:_("overflowing"),
 }
 
 negativeStateLabels={
@@ -615,7 +625,7 @@ def processPositiveStates(role, states, reason, positiveStates):
 		# Combo boxes inherently have a popup, so don't report it.
 		positiveStates.discard(STATE_HASPOPUP)
 	import config
-	if not config.conf['documentFormatting']['reportClickable'] or role in (ROLE_LINK, ROLE_BUTTON, ROLE_CHECKBOX, ROLE_RADIOBUTTON, ROLE_TOGGLEBUTTON, ROLE_MENUITEM, ROLE_TAB, ROLE_SLIDER, ROLE_DOCUMENT):
+	if not config.conf['documentFormatting']['reportClickable'] or role in (ROLE_LINK, ROLE_BUTTON, ROLE_CHECKBOX, ROLE_RADIOBUTTON, ROLE_TOGGLEBUTTON, ROLE_MENUITEM, ROLE_TAB, ROLE_SLIDER, ROLE_DOCUMENT, ROLE_CHECKMENUITEM, ROLE_RADIOMENUITEM):
 		# This control is clearly clickable according to its role,
 		# or reporting clickable just isn't useful,
 		# or the user has explicitly requested no reporting clickable

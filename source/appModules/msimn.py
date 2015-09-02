@@ -14,6 +14,14 @@ from keyboardHandler import KeyboardInputGesture
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible import IAccessible, sysListView32
 import watchdog
+from NVDAObjects.behaviors import _FakeTableCell
+
+messageListImageLabels={
+	# Translators: This Outlook Express message has an attachment
+	8:_("has attachment"),
+	# Translators: this Outlook Express message is flagged
+	34:_("flagged"),
+}
 
 #Labels for the header fields of an email, by control ID
 envelopeNames={
@@ -88,6 +96,14 @@ class MessageRuleListItem(sysListView32.ListItem):
 		return states
 
 class MessageListItem(sysListView32.ListItem):
+
+	def _getColumnContent(self,column):
+		content=super(MessageListItem,self)._getColumnContent(column)
+		if not content:
+			imageID=self._getColumnImageID(column)
+			if imageID>0:
+				content=messageListImageLabels.get(imageID,"")
+		return content
 
 	def _get_isUnread(self):
 		info=displayModel.DisplayModelTextInfo(self,textInfos.POSITION_FIRST)

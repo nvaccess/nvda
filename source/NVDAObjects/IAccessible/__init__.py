@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
+#Copyright (C) 2006-2015 NVDA Contributors
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -30,7 +30,7 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
-from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer
+from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
@@ -410,6 +410,9 @@ the NVDAObject for IAccessible
 		# Some special cases.
 		if windowClassName=="Frame Notification Bar" and role==oleacc.ROLE_SYSTEM_CLIENT:
 			clsList.append(IEFrameNotificationBar)
+		elif self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and windowClassName in ("_WwN","_WwO") and self.windowControlID==18:
+			from winword import SpellCheckErrorField
+			clsList.append(SpellCheckErrorField)
 		elif windowClassName=="DirectUIHWND" and role==oleacc.ROLE_SYSTEM_TOOLBAR:
 			parentWindow=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
 			if parentWindow and winUser.getClassName(parentWindow)=="Frame Notification Bar":
@@ -463,6 +466,9 @@ the NVDAObject for IAccessible
 			from .msOffice import BrokenMsoCommandBar
 			if BrokenMsoCommandBar.appliesTo(self):
 				clsList.append(BrokenMsoCommandBar)
+			if role==oleacc.ROLE_SYSTEM_TOOLBAR:
+				from .msOffice import MsoCommandBarToolBar
+				clsList.append(MsoCommandBarToolBar)
 		if windowClassName.startswith("Internet Explorer_"):
 			from . import MSHTML
 			MSHTML.findExtraIAccessibleOverlayClasses(self, clsList)
@@ -505,14 +511,15 @@ the NVDAObject for IAccessible
 
 		clsList.append(IAccessible)
 
-
-		if self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0:
+		if self.event_objectID==winUser.OBJID_CLIENT and self.event_childID==0 and not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
 			# This is the main (client) area of the window, so we can use other classes at the window level.
+			# #3872: However, don't do this for IAccessible2 because
+			# IA2 supersedes window level APIs and might conflict with them.
 			super(IAccessible,self).findOverlayClasses(clsList)
 			#Generic client IAccessibles with no children should be classed as content and should use displayModel 
 			if clsList[0]==IAccessible and len(clsList)==3 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_CLIENT and self.childCount==0:
 				clsList.insert(0,ContentGenericClient)
- 
+
 	def __init__(self,windowHandle=None,IAccessibleObject=None,IAccessibleChildID=None,event_windowHandle=None,event_objectID=None,event_childID=None):
 		"""
 @param pacc: a pointer to an IAccessible object
@@ -690,16 +697,6 @@ the NVDAObject for IAccessible
 			res=self.IAccessibleObject.accName(self.IAccessibleChildID)
 		except COMError:
 			res=None
-		if not res and hasattr(self,'IAccessibleTextObject'):
-			try:
-				res=self.makeTextInfo(textInfos.POSITION_CARET).text
-				if res:
-					return
-			except (NotImplementedError, RuntimeError):
-				try:
-					res=self.makeTextInfo(textInfos.POSITION_ALL).text
-				except (NotImplementedError, RuntimeError):
-					res=None
 		return res if isinstance(res,basestring) and not res.isspace() else None
 
 	def _get_value(self):
@@ -920,7 +917,7 @@ the NVDAObject for IAccessible
 				#Hack around bad MSAA implementations that deliberately skip the window root IAccessible in the ancestry (Skype, iTunes)
 				if parentObj.windowHandle!=self.windowHandle and self.IAccessibleRole!=oleacc.ROLE_SYSTEM_WINDOW and winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)==parentObj.windowHandle:
 					windowObj=Window(windowHandle=self.windowHandle)
-					if windowObj and windowObj.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW and windowObj.parent==parentObj:
+					if windowObj and isinstance(windowObj,IAccessible) and windowObj.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW and windowObj.parent==parentObj:
 						return windowObj
 			return self.correctAPIForRelation(parentObj,relation="parent") or super(IAccessible,self).parent
 		return super(IAccessible,self).parent
@@ -1289,35 +1286,42 @@ the NVDAObject for IAccessible
 		super(IAccessible, self).event_caret()
 		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_CARET:
 			return
+		# This is a nasty hack to make Mozilla rich text editing at least partially usable.
+		if not hasattr(self,'IAccessibleTextObject'):
+			return
+		if controlTypes.STATE_EDITABLE not in self.states:
+			return
 		focusObject=api.getFocusObject()
-		if self!=focusObject and not self.treeInterceptor and hasattr(self,'IAccessibleTextObject'):
-			inDocument=None
-			for ancestor in reversed(api.getFocusAncestors()+[focusObject]):
-				if ancestor.role==controlTypes.ROLE_DOCUMENT:
-					inDocument=ancestor
-					break
-			if not inDocument:
-				return
-			parent=self
-			caretInDocument=False
-			while parent:
-				if parent==inDocument:
-					caretInDocument=True
-					break
-				parent=parent.parent
-			if not caretInDocument:
-				return
-			try:
-				info=self.makeTextInfo(textInfos.POSITION_CARET)
-			except RuntimeError:
-				return
-			info.expand(textInfos.UNIT_CHARACTER)
-			try:
-				char=ord(info.text)
-			except TypeError:
-				char=0
-			if char!=0xfffc:
-				IAccessibleHandler.processFocusNVDAEvent(self)
+		if not isinstance(focusObject,IAccessible):
+			# This can happen during input composition.
+			# The composition object must remain focused.
+			return
+		if self==focusObject:
+			return
+		# Mozilla doesn't focus most objects inside an editable area.
+		# Therefore, we need to fake focus so our caret stuff works.
+		# First, determine whether this is inside a focused editable area.
+		shouldFocus=False
+		obj=self
+		while obj:
+			states=obj.states
+			if controlTypes.STATE_EDITABLE not in states:
+				break
+			if controlTypes.STATE_FOCUSED in states:
+				shouldFocus=True
+				break
+			obj=obj.parent
+		if not shouldFocus:
+			return
+		# If the caret is on an embedded object character, this isn't useful.
+		try:
+			info=self.makeTextInfo(textInfos.POSITION_CARET)
+		except RuntimeError:
+			return
+		info.expand(textInfos.UNIT_CHARACTER)
+		if info.text==u'\uFFFC':
+			return
+		eventHandler.executeEvent("gainFocus",self)
 
 	def _get_groupName(self):
 		return None
@@ -1428,6 +1432,17 @@ the NVDAObject for IAccessible
 				ret = "exception: %s" % e
 			info.append("IAccessible2 attributes: %s" % ret)
 		return info
+
+	def _get_language(self):
+		try:
+			ia2Locale = self.IAccessibleObject.locale
+		except (AttributeError, COMError):
+			return None
+		if ia2Locale.language and ia2Locale.country:
+			return "%s_%s" % (ia2Locale.language, ia2Locale.country)
+		elif ia2Locale.language:
+			return ia2Locale.language
+		return None
 
 class ContentGenericClient(IAccessible):
 
@@ -1566,15 +1581,6 @@ class OutlineItem(IAccessible):
 			int(val)
 		except (ValueError, TypeError):
 			return val
-
-class Tooltip(IAccessible):
-
-	def event_show(self):
-		# TODO: Abstract this somehow.
-		if (config.conf["presentation"]["reportTooltips"] and (self.IAccessibleRole==oleacc.ROLE_SYSTEM_TOOLTIP)) or (config.conf["presentation"]["reportHelpBalloons"] and (self.IAccessibleRole==oleacc.ROLE_SYSTEM_HELPBALLOON)):
-			speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
-			# TODO: Don't use getBrailleTextForProperties directly.
-			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
 
 class List(IAccessible):
 
@@ -1737,8 +1743,8 @@ _staticMap={
 	("Static",oleacc.ROLE_SYSTEM_STATICTEXT):"StaticText",
 	("msctls_statusbar32",oleacc.ROLE_SYSTEM_STATICTEXT):"StaticText",
 	(None,oleacc.ROLE_SYSTEM_PUSHBUTTON):"Button",
-	("tooltips_class32",oleacc.ROLE_SYSTEM_TOOLTIP):"Tooltip",
-	("tooltips_class32",oleacc.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
+	("tooltips_class32",oleacc.ROLE_SYSTEM_TOOLTIP):"ToolTip",
+	("tooltips_class32",oleacc.ROLE_SYSTEM_HELPBALLOON):"Notification",
 	(None,oleacc.ROLE_SYSTEM_DIALOG):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_ALERT):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_PROPERTYPAGE):"Dialog",
@@ -1799,7 +1805,6 @@ _staticMap={
 	("Shell DocObject View",oleacc.ROLE_SYSTEM_CLIENT):"ShellDocObjectView",
 	("listview",oleacc.ROLE_SYSTEM_CLIENT):"ListviewPane",
 	("NUIDialog",oleacc.ROLE_SYSTEM_CLIENT):"NUIDialogClient",
-	("_WwN",oleacc.ROLE_SYSTEM_TEXT):"winword.SpellCheckErrorField",
-	("_WwO",oleacc.ROLE_SYSTEM_TEXT):"winword.SpellCheckErrorField",
 	("_WwB",oleacc.ROLE_SYSTEM_CLIENT):"winword.ProtectedDocumentPane",
+    ("MsoCommandBar",oleacc.ROLE_SYSTEM_LISTITEM):"msOffice.CommandBarListItem",
 }

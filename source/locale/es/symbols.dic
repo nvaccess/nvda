@@ -16,9 +16,9 @@ complexSymbols:
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 
 # Others
-decimal point	(?<=\d)\.(?=\d)
+decimal point	(?<![^\d -])\.(?=\d)
 in-word -	(?<=[^\W_])[-]
-negative number	(?<!\w)-(?=[$£€¥]?\d)
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
 symbols:
@@ -61,8 +61,8 @@ $	dólar	all	norep
 '	apóstrofo	all
 (	abrir paréntesis	most
 )	cerrar paréntesis	most
-*	asterisco	most
-+	más	most
+*	asterisco	some
++	más	some
 ,	coma	all	always
 -	guión	most
 .	punto	some
@@ -71,7 +71,7 @@ $	dólar	all	norep
 ;	punto y coma	most
 <	menor que	most
 >	mayor que	most
-=	igual	most
+=	igual	some
 ?	cerrar interrogación	all
 @	arroba	some
 [	abrir corchete	most
@@ -103,6 +103,9 @@ _	subrayado	most
 ‎	marca de izquierda a derecha	char
 ‏	marca de derecha a izquierda	char
 ■	Barra vertical cortada	some
+▪	Barra vertical cortada	some
+◾	Barra vertical cortada	some
+◦	Viñeta blanca	some
 ➔	flecha a la derecha	some
 §	Sección	most
 °	grados	some
@@ -118,6 +121,54 @@ _	subrayado	most
 ±	Más o menos	most
 ×	multiplicado por	most
 ÷	dividido por	most
+←	Flecha izquierda	some
 →	Flecha derecha	some
 ✓	marcado	some
 ✔	marcado	some
+
+#Mathematical Operators U+2200 to U+220F
+
+∀	Por Todos 	none
+∁	Complemento	none
+∂	Derivativa Parcial	none
+∃	Existe	none
+∄	No Existe	none
+∅	Conjunto Vacío	none
+∆	INCREMENTO	none
+∇	NABLA	none
+∈	Pertenece a	none
+∉	No Pertenece a	none
+∊	Elemento pequeño de	none
+∋	Contiene como Miembro a	none
+∌	No contiene como Miembro a	none
+∍	Contiene como Miembro Pequeño a	none
+∎	Fin de Prueba	none
+∏	N-Producto Aritmético	none
+
+# Miscellaneous Mathematical Operators
+
+∑	N-Suma Aritmética	none
+√	Raíz Cuadrada	none
+∛	Raíz Cúbica	none
+∜	Raíz Cuadrática	none
+∝	Proporcional a	none
+∞	Infinito	none
+∟	Ángulo Derecho	none
+∠	Ángulo	none
+∥	Paralelo A	none
+∦	No Paralelo A	none
+∧	Y Lógico	none
+∨	O Lógico	none
+∩	Intersección	none
+∪	Unión	none
+∫	Integral	none
+∴	Por Tanto	none
+∵	Porrque	none
+∶	RATIO	none
+∷	Proporción	none
+≤	Menor o Igual a	none
+≥	Mayhor o Igual A	none
+⊂	Subconjunto De	none
+⊃	Superconjunto de 	none
+⊆	Subconjunto de O Igual A	none
+⊇	Superconjunto de O Igual A	none

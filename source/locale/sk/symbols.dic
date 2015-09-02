@@ -1,4 +1,4 @@
-﻿#locale/sk/symbols.dic
+#locale/sk/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (c) 2011-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
@@ -6,8 +6,8 @@
 complexSymbols:
 # identifier	regexp
 # Others
-decimal point	(?<=\d)\,(?=\d)
-negative number	(?<!\w)-(?=[$£€¥]?\d)
+decimal point	(?<![^\d -])\.(?=\d)
+negative number	(?<!\w)-(?=[$┬úÔéČ┬ą.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -46,8 +46,8 @@ $	dolár	all	norep
 '	apostrof	all
 (	zátvorka	most
 )	zatvoriť	most
-*	hviezda	most
-+	plus	most
+*	hviezda	some
++	plus	some
 ,	čiarka	all	always
 -	spojovník	most
 .	bodka	some
@@ -56,7 +56,7 @@ $	dolár	all	norep
 ;	bodkočiarka	most
 <	menší	most
 >	väčší	most
-=	rovná sa	most
+=	rovná sa	some
 ?	otáznik	all
 @	zavináč	some
 [	hranatá zátvorka	most
@@ -88,6 +88,9 @@ _	podčiarkovník	most
 ‎	znak z ľava do prava 	char
 ‏	znak z prava do ľava	char
 ■	čierny štvorec	some
+â–Ş	čierny štvorec	some
+â—ľ	čierny štvorec	some
+â—¦	biela odrážka	some
 ➔	šípka vpravo	some
 §	paragraf	all
 °	stupňov	some
@@ -103,6 +106,7 @@ _	podčiarkovník	most
 ±	plus mínus	most
 ×	krát	most
 ÷	deleno	most
+←	šípka vľavo	some
 →	šípka vpravo	some
 ✓	začiarknutie	some
 ✔	tučné začiarknutie	some

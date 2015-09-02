@@ -39,8 +39,6 @@ typedef MH_STATUS(WINAPI *MH_Uninitialize_funcType)();
 typedef MH_STATUS(WINAPI *MH_CreateHook_funcType)(void*,void*,void**);
 typedef MH_STATUS(WINAPI *MH_EnableHook_funcType)(void*);
 typedef MH_STATUS(WINAPI *MH_DisableHook_funcType)(void*);
-typedef MH_STATUS(*MH_EnableAllHooks_funcType)();
-typedef MH_STATUS(*MH_DisableAllHooks_funcType)();
 
 #define defMHFP(funcName) funcName##_funcType funcName##_fp=NULL
 
@@ -55,8 +53,8 @@ typedef MH_STATUS(*MH_DisableAllHooks_funcType)();
 defMHFP(MH_Initialize);
 defMHFP(MH_Uninitialize);
 defMHFP(MH_CreateHook);
-defMHFP(MH_EnableAllHooks);
-defMHFP(MH_DisableAllHooks);
+defMHFP(MH_EnableHook);
+defMHFP(MH_DisableHook);
 
  bool apiHook_initialize() {
 	LOG_DEBUG("calling MH_Initialize");
@@ -71,8 +69,8 @@ defMHFP(MH_DisableAllHooks);
 	setMHFP(MH_Initialize);
 	setMHFP(MH_Uninitialize);
 	setMHFP(MH_CreateHook);
-	setMHFP(MH_EnableAllHooks);
-	setMHFP(MH_DisableAllHooks);
+	setMHFP(MH_EnableHook);
+	setMHFP(MH_DisableHook);
 	if(error_setNHFP) {
 		LOG_ERROR(L"Error setting minHook function pointers");
 		FreeLibrary(minhookLibHandle);
@@ -124,7 +122,7 @@ bool apiHook_enableHooks() {
 		LOG_ERROR(L"apiHooks not initialized");
 		return false;
 	}
-	res=MH_EnableAllHooks_fp();
+	res=MH_EnableHook_fp(MH_ALL_HOOKS);
 	nhAssert(res==MH_OK);
 	return TRUE;
 }
@@ -137,7 +135,7 @@ bool apiHook_terminate() {
 		LOG_ERROR(L"apiHooks not initialized");
 		return false;
 	}
-	res=MH_DisableAllHooks_fp();
+	res=MH_DisableHook_fp(MH_ALL_HOOKS);
 	nhAssert(res==MH_OK);
 	g_hookedFunctions.clear();
 	//Give enough time for all hook functions to complete.

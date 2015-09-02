@@ -11,11 +11,19 @@ import winUser
 import api
 from . import IAccessible, getNVDAObjectFromEvent
 import eventHandler
+import re
 
 """Miscellaneous support for Microsoft Office applications.
 """
 
 class SDM(IAccessible):
+
+	def _get_shouldAllowIAccessibleFocusEvent(self):
+		# #4199: Some SDM controls can incorrectly firefocus when they are not focused
+		# E.g. File recovery pane, clipboard manager pane
+		if winUser.getGUIThreadInfo(0).hwndFocus!=self.windowHandle:
+			return False
+		return super(SDM,self).shouldAllowIAccessibleFocusEvent
 
 	def _get_name(self):
 		name=super(SDM,self).name
@@ -38,7 +46,7 @@ class SDM(IAccessible):
 	def _get_SDMChild(self):
 		if controlTypes.STATE_FOCUSED in self.states:
 			hwndFocus=winUser.getGUIThreadInfo(0).hwndFocus
-			if hwndFocus and hwndFocus!=self.windowHandle and not winUser.getClassName(hwndFocus).startswith('bosa_sdm'):
+			if hwndFocus and hwndFocus!=self.windowHandle and winUser.isDescendantWindow(self.windowHandle,hwndFocus) and not winUser.getClassName(hwndFocus).startswith('bosa_sdm'):
 				obj=getNVDAObjectFromEvent(hwndFocus,winUser.OBJID_CLIENT,0)
 				if not obj: return None
 				if getattr(obj,'parentSDMCanOverrideName',True):
@@ -50,6 +58,24 @@ class MSOUNISTAT(IAccessible):
 
 	def _get_role(self):
 		return controlTypes.ROLE_STATICTEXT
+
+class MsoCommandBarToolBar(IAccessible):
+
+	def _get_isPresentableFocusAncestor(self):
+		# #4096: Many single controls are  wrapped in their own SmoCommandBar toolbar.
+		# Therefore suppress reporting of these toolbars in focus ancestry if they only have one child.
+		if self.childCount==1:
+			return False
+		return super(MsoCommandBarToolBar,self).isPresentableFocusAncestor
+
+	def _get_name(self):
+		name=super(MsoCommandBarToolBar,self).name
+		# #3407: overly verbose and programmatic toolbar label
+		if name and name.startswith('MSO Generic Control Container'):
+			name=u""
+		return name
+
+	description=None
 
 class BrokenMsoCommandBar(IAccessible):
 	"""Work around broken IAccessible implementation for Microsoft Office XP-2003 toolbars.
@@ -79,6 +105,36 @@ class BrokenMsoCommandBar(IAccessible):
 		if name == "MSO Generic Control Container":
 			return None
 		return name
+
+class CommandBarListItem(IAccessible):
+	"""A list item in an MSO commandbar, that may be part of a color palet."""
+
+	COMPILED_RE = re.compile(r'RGB\(\d+, \d+, \d+\)',re.I)
+	def _get_rgbNameAndMatch(self):
+		name = super(CommandBarListItem,self).name
+		if self.COMPILED_RE.match(name):
+			matchRGB = True
+		else:
+			matchRGB = False
+		return name, matchRGB
+
+	def _get_name(self):
+		name, matchRGB = self.rgbNameAndMatch
+		if matchRGB:
+			import colors
+			return colors.RGB.fromString(name).name
+		else:
+			return name
+
+	def _get_description(self):
+		name, matchRGB = self.rgbNameAndMatch
+		if matchRGB:
+			import colors
+			rgb=colors.RGB.fromString(name)
+			# Translators: a color, broken down into its RGB red, green, blue parts.
+			return _("RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}").format(rgb=colors.RGB.fromString(name))
+		else:
+			return super(CommandBarListItem,self).description
 
 class SDMSymbols(SDM):
 

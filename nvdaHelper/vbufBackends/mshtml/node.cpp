@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2015 NVDA contributers.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -20,6 +20,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <mshtmdid.h>
 #include <common/log.h>
 #include "mshtml.h"
+#include <remote/nvdaController.h>
 #include "node.h"
 
 using namespace std;
@@ -121,6 +122,13 @@ class CDispatchChangeSink : public IDispatch {
 	HRESULT STDMETHODCALLTYPE IDispatch::Invoke(DISPID  dispIdMember, REFIID  riid, LCID  lcid, WORD  wFlags, DISPPARAMS FAR*  pDispParams, VARIANT FAR*  pVarResult, EXCEPINFO FAR*  pExcepInfo, unsigned int FAR*  puArgErr) {
 		if(dispIdMember==DISPID_EVMETH_ONPROPERTYCHANGE||dispIdMember==DISPID_EVMETH_ONLOAD) {
 			this->storageNode->backend->invalidateSubtree(this->storageNode);
+			// Force the update to happen with no delay if we happen to be in a live region
+			if(this->storageNode->ariaLiveNode&&this->storageNode->ariaLiveNode!=this->storageNode&&!this->storageNode->ariaLiveIsBusy&&(this->storageNode->ariaLiveIsTextRelevant||this->storageNode->ariaLiveIsAdditionsRelevant)) {
+				this->storageNode->backend->forceUpdate();
+			}
+			return S_OK;
+		} else if(dispIdMember==DISPID_EVMETH_ONFOCUS) {
+			this->storageNode->backend->forceUpdate();
 			return S_OK;
 		}
 		return E_FAIL;
@@ -255,6 +263,11 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 		}
 		if(invalidNode) {
 			this->storageNode->backend->invalidateSubtree(invalidNode);
+			MshtmlVBufStorage_controlFieldNode_t* invalidMshtmlNode=(MshtmlVBufStorage_controlFieldNode_t*)invalidNode;
+			// Force the update to happen with no delay if we happen to be in a live region
+			if(invalidMshtmlNode->ariaLiveNode&&invalidMshtmlNode->ariaLiveNode!=invalidMshtmlNode&&!invalidMshtmlNode->ariaLiveIsBusy&&(invalidMshtmlNode->ariaLiveIsTextRelevant||invalidMshtmlNode->ariaLiveIsAdditionsRelevant)) {
+				this->storageNode->backend->forceUpdate();
+			}
 		}
 		LOG_DEBUG(L"notify done, returning S_OK");
 		return S_OK;
@@ -262,10 +275,11 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 
 };
 
-MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, IHTMLDOMNode* pHTMLDOMNode,const wstring& lang): VBufStorage_controlFieldNode_t(docHandle,ID,isBlock), language(lang) {
+MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, bool isRootNode, IHTMLDOMNode* pHTMLDOMNode,const wstring& lang): VBufStorage_controlFieldNode_t(docHandle,ID,isBlock), language(lang) {
 	nhAssert(backend);
 	nhAssert(pHTMLDOMNode);
 	this->backend=backend;
+	this->isRootNode=isRootNode;
 	pHTMLDOMNode->AddRef();
 	this->pHTMLDOMNode=pHTMLDOMNode;
 	this->propChangeSink=NULL;
@@ -280,7 +294,7 @@ MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int d
 	} else {
 		propChangeSink->Release();
 	}
-	if(nodeName!=NULL&&(_wcsicmp(nodeName,L"body")==0||_wcsicmp(nodeName,L"frameset")==0)) {
+	if(this->isRootNode||(nodeName!=NULL&&(_wcsicmp(nodeName,L"body")==0||_wcsicmp(nodeName,L"frameset")==0))) {
 		IHTMLDOMNode2* pHTMLDOMNode2=NULL;
 		pHTMLDOMNode->QueryInterface(IID_IHTMLDOMNode2,(void**)&pHTMLDOMNode2);
 		if(pHTMLDOMNode2) {
@@ -334,4 +348,132 @@ MshtmlVBufStorage_controlFieldNode_t::~MshtmlVBufStorage_controlFieldNode_t() {
 		this->pMarkupContainer2->Release();
 		this->pHTMLChangeSink->Release();
 	}
+}
+
+void MshtmlVBufStorage_controlFieldNode_t::preProcessLiveRegion(const MshtmlVBufStorage_controlFieldNode_t* parent, const std::map<std::wstring,std::wstring>& attribsMap) {
+	 auto i=attribsMap.find(L"HTMLAttrib::aria-live");
+	if(i!=attribsMap.end()&&!i->second.empty()) {
+		this->ariaLiveNode=((i->second.compare(L"polite")==0)||(i->second.compare(L"assertive")==0))?this:NULL;
+	} else {
+		this->ariaLiveNode=parent?parent->ariaLiveNode:NULL;
+	}
+	i=attribsMap.find(L"HTMLAttrib::aria-relevant");
+	if(i!=attribsMap.end()&&!i->second.empty()) {
+		if(i->second.compare(L"all")==0) {
+			this->ariaLiveIsTextRelevant=true;
+			this->ariaLiveIsAdditionsRelevant=true;
+		} else {
+			this->ariaLiveIsTextRelevant=i->second.find(L"text")!=wstring::npos;
+			this->ariaLiveIsAdditionsRelevant=i->second.find(L"additions")!=wstring::npos;
+		}
+	} else {
+		this->ariaLiveIsTextRelevant=parent?parent->ariaLiveIsTextRelevant:true;
+		this->ariaLiveIsAdditionsRelevant=parent?parent->ariaLiveIsAdditionsRelevant:true;
+	}
+	i=attribsMap.find(L"HTMLAttrib::aria-busy");
+	if(i!=attribsMap.end()&&!i->second.empty()) {
+		this->ariaLiveIsBusy=i->second.compare(L"true")==0;
+	} else {
+		this->ariaLiveIsBusy=parent?parent->ariaLiveIsBusy:false;
+	}
+	i=attribsMap.find(L"HTMLAttrib::aria-atomic");
+	if(i!=attribsMap.end()&&!i->second.empty()) {
+		this->ariaLiveAtomicNode=(i->second.compare(L"true")==0)?this:NULL;
+	} else {
+		this->ariaLiveAtomicNode=parent?parent->ariaLiveAtomicNode:NULL;
+	}
+	//LOG_INFO(L"preProcessLiveRegion: ariaLiveNode "<<ariaLiveNode<<L", ariaLiveIsTextRelevant "<<ariaLiveIsTextRelevant<<L", ariaLiveIsAdditionsRelevant "<<ariaLiveIsAdditionsRelevant<<L", ariaLiveIsBusy "<<ariaLiveIsBusy<<L", ariaLiveAtomicNode "<<ariaLiveAtomicNode);
+}
+
+void MshtmlVBufStorage_controlFieldNode_t::reportLiveText(wstring& text) {
+	for(auto c: text) {
+		if(!iswspace(c)) {
+			nvdaController_speakText(text.c_str());
+			break;
+		}
+	}
+}
+
+bool isNodeInLiveRegion(VBufStorage_fieldNode_t* node) {
+	if(!node) return false;
+	if(node->getFirstChild()) {
+		return ((MshtmlVBufStorage_controlFieldNode_t*)node)->ariaLiveNode!=NULL;
+	}
+	return true;
+}
+
+void MshtmlVBufStorage_controlFieldNode_t::reportLiveAddition() {
+	wstring text; //=(this->ariaLiveAtomicNode==this)?L"atomic: ":L"additions: ";
+	this->getTextInRange(0,this->getLength(),text,false,isNodeInLiveRegion);
+	this->reportLiveText(text);
+}
+
+void MshtmlVBufStorage_controlFieldNode_t::postProcessLiveRegion(VBufStorage_controlFieldNode_t* oldNode, set<VBufStorage_controlFieldNode_t*>& atomicNodes) {
+	//LOG_INFO(L"preProcessLiveRegion: ariaLiveNode "<<ariaLiveNode<<L", ariaLiveIsTextRelevant "<<ariaLiveIsTextRelevant<<L", ariaLiveIsAdditionsRelevant "<<ariaLiveIsAdditionsRelevant<<L", ariaLiveIsBusy "<<ariaLiveIsBusy<<L", ariaLiveAtomicNode "<<ariaLiveAtomicNode);
+	if(!this->ariaLiveNode||this->ariaLiveIsBusy) return;
+	bool reportNode=!oldNode&&this->ariaLiveIsAdditionsRelevant&&this->ariaLiveNode!=this;
+	wstring newChildrenText;
+	if(!reportNode&&oldNode&&ariaLiveIsTextRelevant) {
+		// Find the first new text child
+		VBufStorage_fieldNode_t* newStart=this->getFirstChild();
+		VBufStorage_fieldNode_t* oldStart=oldNode->getFirstChild();
+		while(newStart&&oldStart) {
+			if(newStart->getLength()==0||newStart->getFirstChild()) {
+				newStart=newStart->getNext();
+				continue;
+			}
+			if(oldStart->getLength()==0||oldStart->getFirstChild()) {
+				oldStart=oldStart->getNext();
+				continue;
+			}
+			if(((VBufStorage_textFieldNode_t*)oldStart)->text.compare(((VBufStorage_textFieldNode_t*)newStart)->text)!=0) {
+				break;
+			}
+			oldStart=oldStart->getNext();
+			newStart=newStart->getNext();
+		}
+		// Find the last new text child
+		VBufStorage_fieldNode_t* newEnd=this->getLastChild();
+		VBufStorage_fieldNode_t* oldEnd=oldNode->getLastChild();
+		while(newEnd&&oldEnd) {
+			if(newEnd->getLength()==0||newEnd->getLastChild()) {
+				newEnd=newEnd->getPrevious();
+				continue;
+			}
+			if(oldEnd->getLength()==0||oldEnd->getLastChild()) {
+				oldEnd=oldEnd->getPrevious();
+				continue;
+			}
+			if(((VBufStorage_textFieldNode_t*)oldEnd)->text.compare(((VBufStorage_textFieldNode_t*)newEnd)->text)!=0) {
+				break;
+			}
+			oldEnd=oldEnd->getPrevious();
+			newEnd=newEnd->getPrevious();
+		}
+		// Collect all the text between the first and last new text children.
+		while(newStart) {
+			if(newStart->getLength()>0&&!newStart->getFirstChild()) {
+				newStart->getTextInRange(0,newStart->getLength(),newChildrenText,false);
+			}
+			if(newStart==newEnd) break;
+			newStart=newStart->getNext();
+		}
+	}
+	if(!reportNode&&newChildrenText.empty()) return;
+	if(this->ariaLiveAtomicNode) {
+		atomicNodes.insert(this->ariaLiveAtomicNode);
+		newChildrenText=L"";
+		reportNode=false;
+	} else if(reportNode) {
+		this->reportLiveAddition();
+	} else if(!newChildrenText.empty()) {
+		this->reportLiveText(newChildrenText);
+	}
+}
+
+void MshtmlVBufStorage_controlFieldNode_t::generateAttributesForMarkupOpeningTag(wstring& text, int startOffset, int endOffset) {
+	VBufStorage_controlFieldNode_t::generateAttributesForMarkupOpeningTag(text, startOffset, endOffset);
+	wostringstream s;
+	s << L"language=\"" << language << L"\" ";
+	text += s.str();
 }

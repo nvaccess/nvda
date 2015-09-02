@@ -13,9 +13,9 @@ complexSymbols:
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
-decimal point	(?<=\d)\.(?=\d)
+decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’'"'”'-]
-negative number	(?<!\w)-(?=[$£€¥]?\d)
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -53,8 +53,8 @@ $	dolar	all	norep
 '	apostrof	all
 (	açparantez	most
 )	kapaparantez	most
-*	yıldız	most
-+	artı	most
+*	yıldız	some
++	artı	some
 ├	artı	most
 ┤	artı	most
 ┴	artı	most
@@ -76,7 +76,7 @@ $	dolar	all	norep
 ►	büyüktür	most
 ♂	büyüktür	most
 ♂	büyüktür	most
-=	eşittir	most
+=	eşittir	some
 ═	eşittir	most
 ?	soru	all
 @	et	some
@@ -112,6 +112,9 @@ _	alt çizgi	most
 ���	soldan sağa işareti	char
 ���	sağdan sola işareti	char
 ■	siyah boşluk	some
+▪	siyah boşluk	some
+◾	siyah boşluk	some
+◦	beyaz madde imi	some
 ➔	Sağ ok	some
 ¡	ters ünlem	most
 ¦	kırık çizgi	most

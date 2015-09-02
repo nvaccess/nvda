@@ -17,13 +17,13 @@ NVDA omogoča slepim in osebam s preostankom vida dostop in interakcijo z operac
 
 Glavni poudarki so:
 - Podpora za pogosto uporabljene programe vključno z internetnimi brskalniki, programi za e-pošto, programi za neposredno klepetanje in pisarniškimi zbirkami
-- Vgrajena govorna sinteza, ki podpira več kot 43 jezikov
+- Vgrajena govorna sinteza, ki podpira več kot 80 jezikov
 - Poročanje o postavitvi besedila, kjer je to mogoče; na primer velikost in ime pisave, slogovne in črkovne nepravilnosti
 - Samodejno obvestilo o besedilu pod miško in zvočna indikacija o položaju miške, če to želite
 - Podpora za precejšnje število brajevih vrstic vključno s podporo vnosa računalniške brajice za vrstice, ki vsebujejo brajevo tipkovnico
 - Možno uporabljati preko USB ključka ali drugega prenosljivega medija brez namestitve v računalnik
 - Govorna podpora ob namestitvi v sistem
-- Prevedeno v 44 jezikov
+- Prevedeno v 47 jezikov
 - Podpora za aktualne Windows operacijske sisteme tako 32-bitne kot 64-bitne
 - Možno poganjati na Windows prijavnem zaslonu in drugih "varnih" namizjih
 - Podpora za več vmesnikov za prilagoditev na primer Microsoft Active Accessibility, Java Access Bridge, IAccessible2 in UI Automation (le-ta je podprt v Windows 7 in novejših)
@@ -31,8 +31,8 @@ Glavni poudarki so:
 - 
 
 ++ Internacionalizacija ++
-Pomembno je, da imajo ljudje, ne glede kateri jezik govorijo, enak dostop do tehnologije.
-Poleg Angleščine je NVDA prevedena v 44 jezikov vključno z: Afrikanščino, Albanščino, Amhariščino, Arabščino, Aragonščino, Bolgarščino, Brazilsko Portugalščino, Češčino, Danščino, Finščino, Francoščino, Galicijščino, Grščino, Gruzijščino, Hebrejščino, Hindujščino, Hrvaščino, Islandščino, Irščino, Italijanščino, Japonščino, Korejščino, Madžarščino, Nepalščino, Nemščino, Nizozemščino, Norveščino, Perziščino, Poljščino, Portugalščino, Romunščino, Ruščino, Slovaščino, Slovenščino, Srbščino, Španščino, Švedščino, Tamilščino, Tajščino, Tradicionalno in Poenostavljeno Kitajščino, Turščino, Ukrajinščino in Vietnamščino.
+Pomembno je, da imajo ljudje, ne glede na to, kateri jezik govorijo, enak dostop do tehnologije.
+Poleg Angleščine je NVDA prevedena v 47 jezikov vključno z: Afrikanščino, Albanščino, Amhariščino, Arabščino, Aragonščino, Bolgarščino, Brazilsko Portugalščino, Češčino, Danščino, Finščino, Francoščino, Galicijščino, Grščino, Gruzijščino, Hebrejščino, Hindujščino, Hrvaščino, Islandščino, Irščino, Italijanščino, Japonščino, Katalonščino, Korejščino, Madžarščino, Nepalščino, Nemščino, Nizozemščino, Norveščino, Perziščino, Poljščino, Portugalščino, Punjabi, Romunščino, Ruščino, Slovaščino, Slovenščino, Srbščino, Španščino, Španščino (Kolumbija), Švedščino, Tamilščino, Tajščino, Tradicionalno in Poenostavljeno Kitajščino, Turščino, Ukrajinščino in Vietnamščino.
 
 ++ Podpora Govorni sintezi ++
 Ločeno od podajanja sporočil in vmesnika v naštetih jezikih NVDA omogoča uporabnici/ku, da bere vsebino v kateremkoli jeziku tako dolgo, dokler ima na računalniku nameščeno govorno sintezo za izbran jezik.
@@ -56,9 +56,9 @@ To se nanaša tako na pristno izdajo, kot spremenjene kopije tega programa in tu
 Več podrobnosti je na voljo [na strani z besedilom licence. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Sistemske Zahteve +
-- Operacijski Sistemi: vse 32-bitne in 64-bitne različice sistema Windows XP, Viste, 7 in 8 (vključno s Strežniškimi različicami)
-- V 32-bitni različici sistema Windows XP mora biti nameščen vsaj drugi paket popravkov (SP2) za uporabo z NVDA.
-- V 32-bitni različici sistema Windows Server 2003 mora biti nameščen vsaj prvi paket popravkov (SP1) za uporabo z NVDA.
+- Operacijski Sistemi: vse 32-bitne in 64-bitne različice sistema Windows XP, Viste, 7, 8 in 10 (vključno s Strežniškimi različicami)
+ - V 32-bitni različici sistema Windows XP mora biti nameščen vsaj drugi paket popravkov (SP2) za uporabo z NVDA.
+ - V 32-bitni različici sistema Windows Server 2003 mora biti nameščen vsaj prvi paket popravkov (SP1) za uporabo z NVDA.
 - Pomnilnik: 256 MB RAMa ali več
 - Procesorska hitrost: 1,0  GHz ali hitrejši
 - Približno 50 MB prostora na disku
@@ -84,7 +84,7 @@ Poganjanje z medija, ki je samo za branje, trenutno ni podprto.
 Možno je uporabiti tudi začasno kopijo (na primer za demonstracijske prikaze), čeprav je pot zagona NVDA v tem načinu precej dolga.
 
 ++ Omejitve Začasne in Prenosljive Kopije ++
-Ločeno od tega, da se NVDA ne more samodejno zagnati med in ali po prijavi, imata prenosljiva in začasna kopija še naslednje omejitve:
+Ločeno od tega, da se NVDA ne more samodejno zagnati pred in/ali po prijavi, imata prenosljiva in začasna kopija še naslednje omejitve:
 - Nezmožnost biti v interakciji s programi, ki tečejo s skrbniškimi pravicami, dokler seveda tudi NVDA sama ne teče z istimi pravicami (ni priporočljivo).
 - Nezmožnost branja zaslonov Nadzora Uporabniškega računa (NURR), ko se poskuša zagnati program s skrbniškimi pravicami.
 - Windows 8: nezmožnost podpirati vnos preko zaslona na dotik.
@@ -105,9 +105,9 @@ Pritisk na gumb V redu na tej točki bo ponovno zagnal na novo nameščeno kopij
 Ta možnost omogoča, da se lahko NVDA samodejno zažene medtem, ko ste na prijavnem zaslonu, še preden morate vnesti geslo za prijavo v sistem.
 To vključuje tudi NUR nadzor in druge "varne" zaslone.
 
-+++ Ustvari Bližnjico na Namizju (ctrl+alt+n) +++
++++ Ustvari Bližnjico na Namizju (ctrl+alt+a) +++
 Ta možnost omogoča izbiro, če želite, da mora NVDA ustvariti bližnjico na namizju za zagon NVDA.
-Ta bližnjica, če jo boste ustvarili, bo ustvarila tudi kombinacijo bližnjičnih tipk za zagon control+alt+n. S to kombinacijo tipk boste potem lahko NVDA zagnali, kadarkoli boste želeli.
+Ta bližnjica, če jo boste ustvarili, bo ustvarila tudi kombinacijo bližnjičnih tipk za zagon control+alt+a. S to kombinacijo tipk boste potem lahko NVDA zagnali, kadarkoli boste želeli.
 
 +++ Preslikaj Prenosljivo Konfiguracijo na Trenuten Uporabniški Račun +++
 Ta možnost vam omogoča izbiro ali mora ali pa ne NVDA preslikati trenutno uporabniško konfiguracijo v uporabi v konfiguracijo trenutno prijavljenega uporabnika za nameščeno kopijo NVDA.
@@ -129,8 +129,9 @@ Pritisnite V redu, da zaprete to pogovorno okno.
 + Kako začeti z NVDA +
 
 ++ Zagon NVDA ++
-Če ste namestili NVDA z namestitvenega paketa, potem je zagon NVDA preprost. Zaženete ga lahko s pritiskom kombinacije tipk control+alt+n ali pa z izbiro NVDA menija v Start meniju, kjer razprete seznam vseh nameščenih programov.
+Če ste namestili NVDA z namestitvenega paketa, potem je zagon NVDA preprost. Zaženete ga lahko s pritiskom kombinacije tipk control+alt+a ali pa z izbiro NVDA menija v Start meniju, kjer razprete seznam vseh nameščenih programov.
 Kot dodatno možnost lahko uporabite pogovorno okno Zaženi, kjer vnesete NVDA in pritisnete Enter.
+Lahko uporabite tudi [možnosti v ukazni vrstici, #CommandLineOptions] ki vam omogočajo ponovni zagon NVDA (-r), izhod iz NVDA (-q), onemogočanje dodatkov (--disable-addons), in drugo.
 
 Za zagon prenosljive kopije pojdite v imenik, kjer ste ustvarili prenosljivo kopijo NVDA in pritisnite Enter nad NVDA.exe ali to ikono dvakrat kliknite.
 
@@ -155,19 +156,17 @@ Večina NVDA-posebnih tipkovničnih ukazov sestoji iz pritiska posebne tipke ime
 Posebna izjema pri tem so ukazi za pregledovanje besedila na običajni razporeditvi tipk, ki uporabljajo samo tipke na številskem delu tipkovnice, Obstajajo pa tudi druge izjeme.
 
 NVDA se lahko nastavi tako, da se uporablja Glavni Insert, številski Insert, lahko pa tudi Capslock kot prikrojevalna NVDA tipka.
-
 Privzeto velja, da sta tako številski kot Glavni Insert prikrojevalni NVDA tipki.
 
 Če želite, da se ena od prikrojevalnih NVDA tipk obnaša kot je prvotno predvideno (npr. želite vključiti tipko Capslock, ko je Capslock nastavljena kot prikrojevalna tipka NVDA), potem izbrano tipko pritisnite dvakrat v hitrem zaporedju.
 
 +++ Postavitve Tipkovnice +++
-Trenutno NVDA prihaja z dvema paketoma tipkovničnih ukazov.
-Obstaja postavitev za običajne tipkovnice (s številskim delom) in postavitev za prenosnike.
+Trenutno NVDA prihaja z dvema paketoma tipkovničnih ukazov, ki jih poznamo pod pojmom postavitev tipkovnice, kjer obstaja postavitev za običajne tipkovnice (s številskim delom) in postavitev za prenosnike.
 Privzeto je NVDA nastavljena tako, da uporablja običajno postavitev tipk. Vedno pa lahko zamenjate postavitev tipk v Nastavitvah Tipkovnice, ki jih najdete pod Nastavitvami v NVDA meniju.
 
 Običajna postavitev se močno zanaša na številski del tipkovnice, kjer je Numlock izključen.
-Čeprav večina prenosnikov nima fizičnega številskega dela, nekateri prenosniki lahko tega oponašajo tako, da držite tipko FN in pritiskate črke in številke na desnem delu tipkovnice (7 8 9 u i o j k l itn).
-Če vaš prenosnik ne more tega narediti ali vam ne omogoča izklopa številk na številskem delu, potem morda želite preklopiti na postavitev prenosnik namesto običajne postavitve.
+Čeprav večina prenosnikov nima fizičnega številskega dela, nekateri prenosniki lahko tega oponašajo tako, da držite tipko FN in pritiskate črke in številke na desnem delu tipkovnice (7, 8, 9, u, i, o, j, k, l, itn).
+Če vaš prenosnik ne more tega narediti ali vam ne omogoča izklopa številk na številskem delu, potem boste morda želeli preklopiti na postavitev prenosnik namesto običajne postavitve.
 
 ++ NVDA Kretnje Dotika ++
 Če poganjate NVDA na napravi z zaslonom na dotik na operacijskem sistemu Windows 8 ali novejšem, lahko NVDA nadzirate tudi neposredno preko zaslona na dotik.
@@ -270,7 +269,7 @@ Tu je nekaj ukazov, ki so uporabni pri krmarjenju sistemskega žarišča:
 | Sporoči trenutni položaj žarišča | NVDA+tab | NVDA+tab | naznani trenutni predmet ali kontrolnik, ki je v žarišču. Dvojni pritisk bo informacijo črkoval |
 | Sporoči naslov | NVDA+t | NVDA+t | Poroča o naslovu trenutno aktivnega okna. Dvojni pritisk bo črkoval to informacijo. Trojni pritisk bo informacijo preslikal v odložišče |
 | Beri aktivno okno | NVDA+b | NVDA+b | prebere kontrolnike v trenutno aktivnem oknu(uporabno pri obrazcih) |
-| Poročaj o Vrstici Stanja | NVDA+end | NVDA+shift+end | Poroča o vrstici stanja, če jo NVDA najde. Ta ukaz tudi premakne predmet krmarjenja na ta položaj |
+| Poročaj o Vrstici Stanja | NVDA+end | NVDA+shift+end | Poroča o vrstici stanja, če jo NVDA najde. Ta ukaz tudi premakne predmet krmarjenja na ta položaj. Dvojni pritisk informacijo črkuje. |
 %kc:endInclude
 
 ++ Krmarjenje s Sistemsko Kazalko ++[SystemCaret]
@@ -286,6 +285,8 @@ NVDA vas oskrbuje z naslednjimi ukazi glede na sistemsko kazalko:
 | Izgovori vse | NVDA+Puščica dol | NVDA+a | Začne brati od trenutnega položaja sistemske kazalke, se premikajoč tako kot sistemska kazalka |
 | Preberi trenutno vrstico | NVDA+Puščica gor | NVDA+l | Prebere vrstico, kjer je trenutno postavljena sistemska kazalka. Dvojni pritisk vrstico črkuje. |
 | Preberi trenutno besedilno označbo | NVDA+Shift+Puščica gor | NVDA+shift+s | Prebere vsako besedilo, ki je trenutno označeno |
+| Naslednji stavek | alt+puščica dol | alt+puščica dol | Premakne kazalko na naslednji stavek in ga izgovori. (trenutno na voljo samo v Microsoft Wordu in Outlooku) |
+| Predhodni stavek | alt+puščica gor | alt+puščica gor | Premakne kazalko na predhodni stavek in ga izgovori. (trenutno na voljo samo v Microsoft Wordu in Outlooku) |
 
 
 Ko se nahajate v tabeli, so na voljo tudi sledeči ukazi:
@@ -333,7 +334,7 @@ Za pomik po predmetih, uporabite naslednje ukaze:
 | Premakni se na predmet v žarišču | NVDA+številski delMinus | NVDA+vračalka | brez | Premik na predmet, ki vsebuje trenutno sistemsko žarišče ter postavi pregledno utripalko na položaj sistemske kazalke, če se prikazuje |
 | Sproži trenutni predmet krmarjenja | NVDA+številski delEnter | NVDA+enter | dvojni tap | Sproži trenuten predmet krmarjenja (podobno kot pri klikih z miško ali pritisku preslednice, ko vsebuje sistemsko žarišče) |
 | Premakni Sistemsko žarišče ali kazalko na trenuten položaj pregleda | NVDA+shift+številski delMinus | NVDA+shift+vračalka | brez | enojni pritisk Premakne Sistemsko žarišče na trenutni predmet krmarjenja, dvojni pritisk premakne sistemsko kazalko na položaj pregledne utripalke |
-| Sporoči dimenzijo predmeta krmarjenja | NVDA+številski delBriši | NVDA+Briši | brez | Sporoča dimenzije trenutnega predmeta krmarjenja, ki jih zaseda na zaslonu v odstotkih, (vključno z razdaljo od levega in zgornjega roba zaslona ter njegovo višino in širino) |
+| Sporoči položaj pregledne utripalke | NVDA+številski delBriši | NVDA+Briši | brez | Sporoča položaj besedila ali predmeta nad pregledno utripalko. To lahko vključuje na primer odstotke preostanka dokumenta (odstotke razdalje od trenutnega položaja utripalke do konca dokumenta), razdaljo od roba strani ali ali točen položaj na zaslonu. Dvojni pritisk lahko oskrbi dodatne podrobnosti. |
 %kc:endInclude
 
 Opozarjamo, da mora biti številski del izključen za pravilno delovanje tipk na tem delu.
@@ -441,7 +442,8 @@ Te dodatne značilnosti NVDA so privzeto izključene.
 
 + Brskalniško Delovanje +
 Kompleksne dokumente samo za branje, kot so spletne strani, v NVDA obravnavamo s pomočjo Brskalniškega delovanja.
-To vključuje dokumente v Mozilli Firefox, Microsoftovem Internet Explorerju, Google Chrome-u, Adobe Reader-ju in Adobe Flash-u.
+To vključuje dokumente v Mozilli Firefox, Microsoftovem Internet Explorerju, Mozilli Thunderbirdu,  HTML sporočila v Googlovem Chromu, Microsoftovem Outlooku, Adobe Readerju in Adobe Flashu.
+Brskalniško delovanje je opcijsko na voljo tudi v Microsoftovem Wordu.
 
 V brskalniškem delovanju je vsebina dokumenta na voljo v ravninski predstavitvi, tako da lahko uporabljate tipke za krmarjenje z utripalko podobno, kot če bi bili v navadnem besedilnem dokumentu.
 Vsi NVDA ukazi za [sistemsko kazalko #SystemCaret] bodo delovali v tem delovanju; npr. izgovori vse, sporoči oblikovanje, ukazi za pomikanje po tabeli, in drugi.
@@ -460,7 +462,7 @@ Vedno lahko vsilite delovanje žarišča, tako bo na voljo in bo učinkoval, dok
 || Ime | Tipka | Opis |
 | Stikalo za preklop med brskalniškim delovanjem in delovanjem žarišča | NVDA+preslednica | Preklaplja med brskalniškim delovanjem in delovanjem žarišča |
 | Izhod iz delovanja žarišča | escape | Preklopi nazaj v brskalniško delovanje, če se je prej samodejno vklopilo delovanje žarišča |
-| Osveži dokument v brskalniškem delovanju | NVDA+f5 | Ponovno naloži vsebino trenutnega dokumenta (uporabno, ko izgleda, da se del vsebine dokumenta ne prikazuje) |
+| Osveži dokument v brskalniškem delovanju | NVDA+f5 | Ponovno naloži vsebino trenutnega dokumenta (uporabno, ko izgleda, da se del vsebine dokumenta ne prikazuje; v Microsoft Outlooku in Microsoft Wordu ni uporabno) |
 | Najdi | NVDA+control+f | Dvigne pogovorno okno v katerem lahko natipkate besedilo, ki ga želite najti v dokumentu |
 | Najdi naslednje | NVDA+f3 | Najde naslednji kos besedila v dokumentu, ki ste ga že iskali |
 | Najdi predhodno | NVDA+shift+f3 | Najde predhodni kos besedila v dokumentu, ki ste ga že iskali |
@@ -470,6 +472,7 @@ Vedno lahko vsilite delovanje žarišča, tako bo na voljo in bo učinkoval, dok
 
 ++ Enočrkovno Krmarjenje ++
 Ko ste v brskalniškem delovanju, vas lahko NVDA oskrbi za hitrejše krmarjenje z enoznakovnimi ukazi za preskoke na različna polja v dokumentu.
+Opozorilo: Ni nujno, da vsi našteti ukazi delujejo v vseh programih, saj niso podprti.
 
 %kc:beginInclude
 Sledeče tipke samostojno preskakujejo na naslednji mogoč element, medtem, ko z dodatkom tipke Shift pritisk teh tipk povzroči preskok na predhodni mogoč element:
@@ -494,21 +497,29 @@ Sledeče tipke samostojno preskakujejo na naslednji mogoč element, medtem, ko z
 - d: mejnik
 - o: vdelan predmet
 - 1 to 6: naslovi od 1 do 6 (vsak zase)
+- a: zabeležka (komentar, uredniški popravek itd.)
 -
 Za premik na začetek ali konec vsebinskih elementov, kot so seznami in tabele:
 || Ime | Tipka | Opis |
-| Pomik na začetek vsebine | shift+comma | Pomakne se na začetek vsebine (tabela, seznam in drugo) z ozirom na to, kje je trenutni položaj kazalke |
-| Pomik na konec vsebine | comma | Premakne se na konec vsebine (seznam, tabela, in drugo.) z ozirom na to, kje je trenutni položaj kazalke |
+| Pomik na začetek vsebnika | shift+comma | Pomakne se na začetek vsebine (v tabeli, seznamu in drugo) z ozirom na to, kje je trenutni položaj kazalke |
+| Pomik na konec vsebnika | comma | Premakne se na konec vsebine (v tabeli, seznamu in drugo) z ozirom na to, kje je trenutni položaj kazalke |
+
+%kc:endInclude
+Nekatere spletne aplikacije, kot so Gmail, Facebook in Twitter, uporabljajo posamezne črke kot bližnjične tipke.
+Če to želite uporabljati medtem, ko so tipke za premik utripalke še vedno na voljo za branje v brskalniškem delovanju, lahko začasno onemogočite NVDA posamezne črke za krmarjenje.
+%kc:beginInclude
+Pritisnite NVDA+Shift+Preslednico, če želite vključiti in/ali izključiti enočrkovno krmarjenje v trenutnem dokumentu.
 %kc:endInclude
 
 ++ Seznam Elementov ++
-Seznam elementov vam oskrbuje dostop do seznama recimo povezav, naslovov ali mejnikov v dokumentu.
-Radio gumbi vam omogočajo preklapljanje med temi tremi tipi informacij.
+Seznam elementov vam oskrbuje dostop do seznama različnih tipov elementov, ki so del dokumenta določenega programa.
+V brskalniku na primer, se v tem seznamu razvrstijo naslovi, mejniki in povezave.
+Radijski gumbi vam omogočajo preklapljanje med različnimi tipi elementov.
 Pogovorno okno je opremljeno tudi s poljem za urejanje, kar vam omogoča filtracijo elementov v seznamu, da lažje najdete željen element na strani.
 Ko enkrat najdete pravi element, lahko izbirate med gumboma v pogovornem oknu, s katerima se premaknete na izbran element ali pa ga sprožite, odvisno od izbire gumba.
 %kc:beginInclude
 || Ime | Tipka | Opis |
-| seznam elementov v brskalniškem delovanju | NVDA+f7 | V ospredje postavi Seznam elementov, ki vsebuje povezave, naslove in mejnike trenutnega dokumenta |
+| seznam elementov v brskalniškem delovanju | NVDA+f7 | V ospredje postavi Seznam elementov, ki so del trenutnega dokumenta |
 %kc:endInclude
 
 ++ Vdelani Predmeti ++
@@ -522,14 +533,60 @@ Za vrnitev na stran, ki vsebuje ta predmet, je na voljo naslednji ukaz:
 | Pomik v dokument z brskalniškim delovanjem | NVDA+control+preslednica | Premakne žarišče iz predmeta v dokument, ki ga vsebuje |
 %kc:endInclude
 
++ Branje Matematične Vsebine +
+Z uporabo MathPlayerja 4 iz podjetja Design Science NVDA lahko prebira in interaktivno krmari po podprti matematični vsebini.
+To pomeni, da mora biti MathPlayer 4 nameščen na vaš računalnik.
+MathPlayer je na voljo kot brezplačen prenos s: http://www.dessci.com/en/products/mathplayer/
+
+NVDA podpira naslednje tipe matematične vsebine:
+- MathML v Mozilli Firefox in Internet Explorerju.
+- Design Science MathType v Microsoftovem Wordu and PowerPointu.
+- MathML V Adobovem Readerju. Opozarjamo, da to še ni uraden standard, tako trenutno ni na voljo nobenega primernega programa, kjer bi se lahko ustvarila taka vsebina.
+-
+
+Ko boste prebirali dokument, bo NVDA izgovorila vsako podprto matematično vsebino, kjer se bo prikazala.
+Če uporabljate brajevo vrstico, se bo ta vsebina pokazala tudi na vrstici.
+
+++ Interaktivno Krmarjenje ++
+Če v glavnem delate z zvokom, boste v večini primerov želeli preučiti izraz v manjših kosih namesto, da bi ga slišali v celoti naenkrat.
+
+Če ste v brskalniškem delovanju, lahko to naredite tako, da premaknete utripalko na matematično vsebino in pritisnete Enter.
+
+Če niste v brskalniškem delovanju:
++ premaknite pregledno utripalko na matematično vsebino
+Privzeto pregledna utripalka sledi sistemski kazalki tako, da boste običajno lahko uporabili sistemsko kazalko za premik na želeno vsebino.
++ Nato izvedite naslednji ukaz:
++
+
+%kc:beginInclude
+|| Ime | Tipka | Opis |
+| Interakcija z matematično vsebino | NVDA+alt+m | Začne interakcijo z matematično vsebino. |
+%kc:endInclude
+
+V tem trenutku lahko uporabljate ukaze MathPlayerja, kot so puščice za raziskovanje izraza.
+Na primer lahko se premikate po izrazu s puščicama levo in desno, del izraza, kot je, recimo, ulomek, pa lahko približate s puščico dol.	
+Prosimo, da nadaljne informacije poiščete v dokumentaciji MathPlayerja.
+
+Ko se boste želeli vrniti v dokument, preprosto pritisnite tipko Escape.
+
 + Posebni NVDA Ukazi za Programe +
-NVDA pozna posebej prirejene ukaze za nekatere programe, da omogoči lažjo izvedbo nekaterih opravil ali pa za oskrbo dostopa do funkcionalnosti, ki drugače niso dostopne uporabnikom bralnikov zaslonov.
+NVDA pozna posebej prirejene ukaze za nekatere programe, da omogoči lažjo izvedbo nekaterih opravil ali pa za oskrbo dostopa do funkcionalnosti, ki drugače niso dostopne uporabnikom bralnikov zaslona.
+
+++ Microsoft Word ++
+%kc:beginInclude
+|| Ime | Tipka | Opis |
+| Sporoči trenutni komentar | NVDA+Alt+c | Sporoči besedilo komentarja nad trenutnim položajem Pregledne Utripalke. | 
+| Postavi glave stolpca | NVDA+shift+c | Enojni pritisk pove NVDA, da je to prva celica z glavo v vrstici, ki vsebuje glave stolpca; ta bi morala biti samodejno naznanjena, ko se bomo premikali po stolpcih pod to vrstico. Dvojni pritisk bo zbrisal to nastavitev. | 
+| Postavi glave vrstice | NVDA+shift+r | Enojni pritisk pove NVDA, da je to prva celica z glavo v stolpcu, ki vsebuje glave vrstice; ta bi morala biti samodejno naznanjena, ko se bomo premikali po vrsticah za tem stolpcem. Dvojni pritisk bo zbrisal to nastavitev. | 
+%kc:endInclude
 
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Ime | Tipka | Opis |
-| Postavi glave stolpca | NVDA+shift+c | Enojni pritisk pove NVDA, da je to vrstica, ki vsebuje glave stolpca. Tako jih mora NVDA samodejno naznaniti, ko se premikamo med njimi v spodnjih vrsticah. Dvojni pritisk bo brisal trenutno nastavitev. | 
-| Postavi glave vrstice | NVDA+shift+r | Enojni pritisk pove NVDA, da je to stolpec, ki vsebuje glave vrstice. Tako jih mora NVDA samodejno naznaniti, ko se premikamo med njimi v drugih stolpcih. Dvojni pritisk bo brisal trenutno nastavitev. | 
+| Postavi glave stolpca | NVDA+shift+c | Enojni pritisk pove NVDA, da je to prva celica v vrstici, ki vsebuje glave stolpca. Tako jih mora NVDA samodejno naznaniti, ko se premikamo med njimi v spodnjih vrsticah. Dvojni pritisk bo brisal trenutno nastavitev. |
+| Postavi glave vrstice | NVDA+shift+r | Enojni pritisk pove NVDA, da je to prva celica v stolpcu, ki vsebuje glave vrstice. Tako jih mora NVDA samodejno naznaniti, ko se premikamo med njimi v drugih stolpcih. Dvojni pritisk bo brisal trenutno nastavitev. |
+| Sporoči komentar | NVDA+alt+c | Sporoči comentar nad trenutno celico, če obstaja. |
+| pogovorno okno Seznama Elementov | NVDA+f7 | odpre pogovorno okno Seznama Elementov prikazujoč grafikone, celice s komentarji ali celice s formulami. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -559,6 +616,13 @@ Opozorilo: Bližnjica poročaj o preostanku časa dela samo s privzetim oblikova
 | Sporočaj opombe za prevajalce | control+shift+a | Sporoča katerokoli sporočilo namenjeno prevajalcem. |
 %kc:endInclude
 
+++ Skype ++
+%kc:beginInclude
+Ko smo v pogovoru:
+|| Ime | Tipka | Opis |
+| Preglej sporočilo | NVDA+control+1-0 | Sporoči zadnje sporočilo in nanj premakne pregledno utripalko, odvisno od številke, ki ste jo pritisnili; npr. NVDA+control+2 prebere predzadnje sporočilo. |
+%kc:endInclude
+
 + Nastavljanje NVDA +
 
 ++ Nastavitve ++
@@ -567,6 +631,9 @@ Večino nastavitev v NVDA lahko spreminjate skozi pogovorna okna, do katerih dos
 V vsakem pogovornem oknu za nastavitve pritisnite gumb V redu, da uveljavite spremembe, ki ste jih naredili.
 Za razveljavitev ali preklic narejenih sprememb pritisnite gumb Prekliči ali tipko Escape.
 Nekaj nastavitev lahko spreminjate preko bližnjičnih tipk. Ustrezne sledijo v sledečih razdelkih.
+
+Opozarjamo, da privzeto niso vsa pogovorna okna dostopna prek kretenj vnosa (bližnjičnih tipk, dotikabilnih gest itd).
+Če želite dostopati do pogovornih oken, ki nimajo določenih bližnjičnih tipk, uporabite [pogovorno okno Kretenj Vnosa, #InputGestures] da boste lahko določili bližnjico takemu pogovornemu oknu.
 
 +++ Splošne Nastavitve (NVDA+control+g) +++
 Pogovorno okno Splošnih nastavitev se nahaja v meniju NVDA nastavitev.
@@ -584,9 +651,13 @@ Pritisnite V redu in NVDA se bo ponovno naložila.
 ==== Shrani Konfiguracijo ob Izhodu ====
 Ta možnost v obliki izbirnika, ko je izbrana, pove NVDA, da naj ob izhodu trenutno konfiguracijo samodejno shrani.
 
-==== Opozori pred izhodom iz NVDA ====
-Ta možnost kot izbirnik omogoča, da izberete, ali naj, ali pa naj se pogovorno okno opozorila ob izhodu ne prikaže; ta vas sprašuje, če res želite zapreti NVDA.
-Ko je možnost izbrana, se bo prikazalo pogovorno okno z vprašanjem o zaprtju NVDA, ko boste poskušali zapreti NVDA.
+==== Prikaži izhodne možnosti ob izhodu iz NVDA ====
+Ta možnost je izbirnik, ki vam omogoča izbiro prikaza pogovornega okna ob izhodu iz NVDA, ki vas sprašuje, katero dejanje naj se izvede.
+Če boste to možnost izbrali, se bo ob izhodu prikazalo pogovorno okno z vprašanjem, kaj želite storiti. Ali želite zapreti NVDA, jo želite ponovno zagnati ali jo želite ponovno zagnati z onemogočenimi dodatki.
+Ko ta možnost ni izbrana, se bo NVDA po ukazu nemudoma izključila.
+
+==== Predvajaj zvok ob zagonu in izhodu iz NVDA ====
+Ta možnost je izbirnik, ki pove NVDA, naj, ali pa ne, predvaja zvok ob zagonu NVDA in izhodu iz nje.
 
 ==== Nivo beleženja ====
 To je spustni meni, ki vam dovoljuje izbiro, koliko bo NVDA beležila, med tem, ko bo v uporabi.
@@ -654,15 +725,16 @@ Deluje preko drsnika od 0 do 100, kjer 0 pomeni najnižji ton in 100 najvišji.
 To je drsnik od 0 do 100, kjer je 0 najtišje govorjenje in 100 najglasnejše.
 
 ==== Glasovna modulacija ====
-Ta možnost je v obliki drsnika od 0 do 100 kjer 0 pomeni najmanjšo možno modulacijo (spreminjanje višine med govorom) in 100 najvišjo možno modulacijo. Trenutno to možnost podpira samo Espeak.
+Ta možnost je v obliki drsnika od 0 do 100 kjer 0 pomeni najmanjšo možno modulacijo (spreminjanje višine med govorom) in 100 najvišjo možno modulacijo. Trenutno to možnost podpira samo ESpeak.
 
 ==== Samodejna menjava Jezika ====
-Ta izbirnik vklaplja stikalo ali naj NVDA samodejno zamenja jezik govorne sinteze med branjem, če je v besedilu, ki ga prebirate, jezikovna zastavica.
+Ta izbirnik vklaplja stikalo samodejne zamenjave jezika govorne sinteze med branjem, če je v besedilu, ki ga prebirate, jezikovna zastavica, ki označuje jezik besedila.
 Ta možnost je privzeto vključena.
-Trenutno samodejno menjavo jezika podpira samo Espeak.
+Trenutno samodejno menjavo jezika podpira samo ESpeak.
 
 ==== Samodejna menjava Narečja ====
-Če je samodejna menjava jezika vključena, vam ta možnost omogoča vklop stikala za samodejni preklop med narečji istega jezika in ne samo menjavo med jeziki. Na primer, če berete z glasom ameriške Angleščine, v dokumentu pa je zastavica, da je del besedila v britanski Angleščini, potem bo sinteza preklopila med naglasi.
+Ta možnost omogoča, če je izbrana, da sinteza menja tudi narečje ne samo jezika.
+To pomeni sledeče, da bo govorna sinteza dokument prebrala z britanskim naglasom, čeprav je prednastavljen jezik Ameriška Angleščina. Vse to seveda zavisi od zastavic, s katerimi je opremljen dokument.
 Ta možnost je privzeto izključena.
 
 %kc:setting
@@ -672,6 +744,10 @@ Tipka: NVDA+p
 To vam omogoča izbiro vrednost naglaševanja in izgovorjave drugih simbolov, ki morajo biti brani kot besede.
 Ko je vrednost v tem spustnem meniju nastavljena na vse, potem se bodo vsi simboli brali z besedami.
 Ta možnost vpliva na vse sinteze in ne samo na tisto, ki je trenutno v uporabi.
+
+==== Zaupaj jeziku osebe med obdelovanjem simbolov in znakov ====
+Ta možnost, ki je privzeto vključena, pove NVDA, naj se pri obdelovanju znakov in simbolov zanaša na jezik osebe (slovar govorne sinteze preglasi slovar vgrajen v NVDA).
+Če ugotovite, da NVDA napačno izgovarja posamezno ločilo v nekem jeziku ob nastavitvi glasu ali govorne sinteze v celoti, potem lahko to možnost izključite, da NVDA vsilite uporabo globalnih jezikovnih nastavitev.
 
 ==== Sprememba višine glasu ob velikih črkah v odstotkih ====
 To vnosno polje omogoča vnos vrednosti razlike v tonu glasu, za katero se bo glas zvišal, ko bo sinteza izgovarjala veliko črko.
@@ -688,7 +764,7 @@ Podobno kot pri funkciji izgovori "velika" pred velikimi črkami, je ta funkcija
 
 ==== Uporabljaj funkcijo črkovanja, če je podprta ====[VoiceSpellingFunctionality]
 Nekatere besede sestavlja samo ena črka, toda njihova izgovorjava je različna glede na to ali se znak izgovarja kot samostojna enota (kot pri črkovanju) ali izgovorjavi besede.
-Na primer v Angleščini je "a" tako znak kot beseda.
+Na primer v Angleščini je "a" tako znak kot beseda. Ker je tako, se to tudi različno izgovarja.
 Ta možnost omogoča govorni sintezi ločevanje med tema dvema dogodkoma, če to govorna sinteza podpira.
 Večina sintez to podpira.
 
@@ -768,6 +844,18 @@ To pomeni, da vam ni potrebno pomikati naprave vsakič v novo vrstico, če tudi 
 To zna olajšati branje večjih količin besedila.
 Ta možnost je privzeto onemogočena.
 
+==== Prepreči deljenje besed, ko je to mogoče ====
+Če je ta možnost vključena, se beseda, ki sega čez meje brajeve vrstice, ne bo presekala.
+Namesto tega bo na koncu vrstice nekaj praznega prostora.
+Ko se boste po besedilu sprehajali z vrstico, boste tako lahko imeli možnost prebrati celotno besedo.
+To se včasih v Angleščini imenuje tudi "Word wrap".
+Opozarjamo, da se mora beseda vseeno prelomiti, če je sama po sebi daljša daljša (če obsega več znakov), kot pa je število vseh celic na vrstici.
+
+Če je ta možnost izključena, se bo na vrstici prikazalo toliko besede, kot je mogoče, ostalo se bo odrezalo.
+Ko se boste z vrstico premaknili, boste lahko prebrali ostanek besede.
+
+Vključitev te možnosti vam bo verjetno olajšala branje, vendar boste na splošno morali vrstico večkrat premikati.
+
 +++ Nastavitve Tipkovnice (NVDA+control+k) +++
 To pogovorno okno se nahaja v nastavitvah pod "Nastavitve tipkovnice...".
 Vsebuje naslednje možnosti:
@@ -810,15 +898,19 @@ Ko je ta zmožnost omogočena, bo NVDA naznanila vse besede, ki jih boste tipkal
 Če je vključeno, precej ukazov za krmarjenje (kot so hitre tipke za krmarjenje v brskalniškem delovanju ali premik po vrstici in odstavku) ne bodo zaustavile branja celotnega besedila, na mesto tega bo NVDA preskočila na nov položaj in od tam nadaljevala z branjem.
 
 ==== Oddaj Zvočni Signal, ko se Pišejo Male Črke  in je Capslock Vključen ====
-Če je to omogočeno, se bo zaslišal opozorilni zvočni signal, ko boste tipkali s Shiftom, ko bo Capslock vključen.
+Če je to omogočeno, se bo zaslišal opozorilni zvočni signal, ko boste tipkali s Shiftom ob tem, ko bo Capslock vključen.
 V splošnem je tipkanje besed z veliko začetnico, ko je Capslock vključen, nenamerno in se običajno zgodi zaradi tega, ker se spregleda, da je Capslock vključen.
-Tako je velikokrat v pomoč, da smo glede tega opozorjeni.
+Tako nam opozorilo velikokrat pomaga in prepreči morebitno napačno črkovanje.
 
 %%fixMe: %kc:setting
 ==== Izgovarjaj Tipke ob Prožitvi Ukazov ====
 Tipka: NVDA+4
 
 Ko je to omogočeno, NVDA naznani vse pritiske na tipkovnici, ki niso nujno povezani s pisanjem črk. To vključuje pritiske kombinacij tipk na primer Control+črka.
+
+==== Obravnavaj pritiske tipk s strani drugih programov ====
+Ta možnost omogoča uporabniku, nadzor nad tem, kako NVDA obravnava pritiske tipk, ki jih prožijo drugi programi, kot so tipkovnice na zaslonu ali programi za prepoznavo govora. Če je možnost vključena, potem to vpliva na delovanje NVDA.
+Ta možnost je ob namestitvi NVDA privzeto vključena, toda nekateri uporabniki jo bodo morda morali izključiti. Taki so uporabniki, ki tipkajo v Vietnamščini, saj ta možnost povzroča napačne vnose v programu Unikey typing.
 
 +++ Nastavitve Miške (NVDA+control+m) +++[MouseSettings]
 Pogovorno okno nastavitev miške se nahaja v meniju Nastavitve pod "Nastavitve miške...".
@@ -843,6 +935,8 @@ Možnosti so znak, beseda, vrstica in odstavek.
 
 ==== Zaigraj avdio koordinate, ko se miška premika ====
 Izbira te možnosti naroča NVDA naj oddaja piske, ko se miška premika, tako da uporabnik lahko ugotavlja kje je miška v odnosu na zaslonski položaj.
+Višji ton pomeni, da je miška višje na zaslonu.
+Bolj, kot je miška na levi ali desni strani zaslona, bolj izrazit bo zvok na levi ali desni strani ob predpostavki, da ima uporabnik stereo zvočnike ali slušalke.
 
 ==== Svetloba nadzira jakost zvočnih piskov ====
 Če je možnost "Zaigraj avdio koordinate, ko se miška premika" izbrana, potem to pomeni, da se jakost zvoka piskov nadzira. Jakost zvoka je odvisna od svetlosti zaslona pod miškinim kazalcem.
@@ -864,7 +958,7 @@ Tipka: NVDA+6
 
 Ko je možnost vključena, se bo pregledna utripalka samodejno premaknila na položaj sistemske kazalke vsakič, ko se bo kazalka premaknila.
 
-==== Sledi miški ====
+==== Sledi miškini utripalki ====
 Ko možnost vključite, bo pregledna utripalka sledila vsem premikom miške.
 
 ==== Delovanje Enostavnega Pregleda ====
@@ -927,29 +1021,29 @@ Opozarjamo, da zaradi tega, ker se metode vnosa zelo razlikujejo po značilnosti
 
 ==== Samodejno sporoči vse kandidate na voljo ====
 Ta možnost, ki je privzeto vključena, vam omogoča izbiro ali naj NVDA samodejno sporoča vse vidne kandidate na seznamu kandidatov, ko se prikaže, ali na strani, ki je bila spremenjena.
+Uporabno je, če imamo to možnost vključeno za slikovne metode vnosov, kot je nova kitajska ChangJie ali Boshiami, saj lahko samodejno slišimo vse simbole in njihove številke in tako lahko izberemo pravega.
+Vendar za fonetične metode vnosov, kot je nova kitajska fonetika, je verjetno NVDA bolj uporabna, ko je ta možnost izključena saj bodo vsi simboli zveneli enako. Tako bo treba uporabljati puščice za krmarjenje po seznamu simbolov in njihovih opisih, da bomo dobili več informacij o posameznem kandidatu.
 
+==== Naznani Izbranega Kandidata ====
+Ta možnost, ki je privzeto vključena, vam omogoča izbiro ali naj NVDA naznani kandidata, ko se pojavi seznam kandidatov ali takrat, ko se spremeni izbira.
+Za metode vnosa, ker se izbira lahko spremeni s puščicami, kot je nova kitajska fonetika, je to potrebno, ampak za druge metode vnosa je bolje, da je ta možnost izključena.
+Opozarjamo, čeprav je ta možnost izključena, se bo pregledna utripalka še vedno postavila na izbranega kandidata, kar vam bo omogočilo, da uporabite krmarjenje predmeta ali pregleda da boste ročno prebrali tega kandidata ali pa ostale na seznamu.
 
+==== Vedno vključi kratek opis kandidatov ====
+Ta možnost, ki je privzeto vključena, vam omogoča izbiro ali vas mora NVDA oskrbeti s kratkim opisom vsakega znaka v kandidatu, ko je izbran ali pa naj bo samodejno prebran, ko se pojavi seznam kandidatov.
+Opozarjamo, da na prevode, kot je kitajski, ta možnost ne vpliva na naznanitev dodatnih opisov znaka. 
+Ta možnost je uporabna predvsem pri korejskih in japonskih metodah vnosa.
 
+==== Poročaj o spremembah na nizu branja ====
+Nekatere metode vnosa, kot je nova kitajska fonetika in nova ChangJie, imajo niz branja (včasih poznan kot predskladenjski niz).
+S to možnostjo lahko izbirate med tem, ali mora NVDA naznaniti nove znake, ki jih tipkate v ta niz branja.
+Ta možnost je privzeto vključena.
+Opozarjamo, da nekatere starejše metode vnosa, kot je kitajska ChangJie, verjetno ne uporabljajo niza branja za zadržanje predskladenjskih znakov. na mesto tega uporabljajo skladnjo niza neposredno.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+==== Poročaj o spremembah v skladnji niza ====
+Po branju ali, ko so bili predskladenjski podatki združeni v ustrezen slikovni simbol, večina metod vnosa postavi ta simbol v skladnjo niza kot začasen prostor skupaj z ostalimi združenimi simboli preden se končno vstavijo v dokument.
+Ta možnost vam omogoča izbiro ali mora NVDA poročati o novih simbolih, ko se pojavijo v skladnji niza.
+Ta možnost je privzeto vključena.
 
 +++ Nastavitve Brskalniškega Delovanja (NVDA+control+b) +++
 Pogovorno okno nastavitev brskalniškega delovanja lahko najdete v nastavitvah pod "Brskalniško delovanje...".
@@ -973,7 +1067,7 @@ Ta možnost vklaplja samodejno branje, ko se stran naloži v brskalniško delova
 Privzeto je ta možnost vključena.
 
 ==== Vključi tabele namenjene oblikovanju ====
-Ta možnost določa, kako NVDA obravnava tabele, ki so namenjenje predvsem postavitvi oblikovanja.
+Ta možnost določa, kako NVDA obravnava tabele, ki so namenjene predvsem postavitvi oblikovanja.
 Ko jo vključite, bo NVDA obravnavala te tabele kot normalne tabele na način, kot je določeno v [Nastavitvah Oblikovanja Dokumenta #DocumentFormattingSettings] in se na nje umesti s pomočjo hitrih tipk za krmarjenje.
 Ko je izključena, NVDA o teh tabelah niti ne bo poročala, niti se na nje ne bo umeščala s hitrim krmarjenjem.
 Vseeno pa bo vsebina tabel še vedno na voljo kot normalno besedilo.
@@ -993,6 +1087,10 @@ Na primer, ko se premikate s puščicami po spletni strani in vstopite na polje 
 ==== Zvočna indikacija delovanja Žarišča in Brskalniškega delovanja ====
 Če je ta možnost izbrana, bo NVDA oddajala posebne zvoke ob preklopu med brskalniškim delovanjem in delovanjem žarišča namesto govornega obvestila o spremembi.
 
+==== Onemogoči vpliv kretenj, ki niso ukazi, na dokument ====
+Ta možnost, ki je privzeto vključena, vam omogoča izbiro ali naj kretnje (pritiski tipk), ki niso ukazi NVDA, niti to niso splošni ukazi, ne vplivajo na dokument.
+Na primer, v primeru, ko je možnost vključena, pritisk črke j ne bo vplival na dokument, čeprav to niti ni ukaz NVDA, niti ni to splošen ukaz v programu.
+
 +++ Nastavitve Oblikovanja Dokumentov (NVDA+control+d) +++[DocumentFormattingSettings]
 To pogovorno okno se nahaja v meniju Nastavitev pod "Oblikovanje Dokumentov...".
 
@@ -1000,19 +1098,20 @@ Večina izbirnikov v tem pogovornem oknu določa, kako poročati o tipih oblikov
 Na primer, ko izberete izbirnik ime pisave, bo vedno, ko se boste premaknili na besedilo z drugačno pisavo od prejšnje, NVDA sporočila ime pisave v uporabi.
 
 V NVDA lahko nastavite poročanje za:
-- ime Pisave
-- velikost Pisave
-- lastnosti Pisave
-- poravnavo Besedila
+- Ime Pisave
+- Velikost Pisave
+- Lastnosti Pisave
+- Poravnavo Besedila
 - Barve
-- uredniške popravke
-- slog Besedila
+- Uredniške popravke
+- Slog Besedila
 - Napake v črkovanju
-- številke Strani
-- številko Vrstice
-- zamike Vrstice
+- Številke Strani
+- Številke Vrstice
+- Zamike Vrstice
+- Zamike odstavka (viseči zamik, zamik prve vrstice...)
 - Tabele
-- glave in čela Tabel
+- Glave in čela Tabel (glave vrstic in stolpcev)
 - Koordinate celic v tabelah
 - Povezave
 - Naslove
@@ -1020,7 +1119,10 @@ V NVDA lahko nastavite poročanje za:
 - Citate
 - Mejnike
 - Okvirje
-- 
+- Ko je nekaj klikljivo
+-
+
+Za preklapljanje stanja teh nastavitev od kjerkoli, prosimo, dodelite lastne kretnje vnosa prek [pogovornega okna Kretenj Vnosa. #InputGestures].
 
 ==== Naznani spremembe oblikovanja za utripalko ====
 Če je izbrana, ta nastavitev pove NVDA, naj poskuša zaznati vse spremembe v oblikovanju na vrstici, kot jo trenutno izgovarja, če tudi to lahko zniža učinkovitost NVDA.
@@ -1030,148 +1132,164 @@ Privzeto bo NVDA zaznavala spremembe na položaju pregledne utripalke/sistemske 
 Omogočite to možnost v programih, kot je Microsoft Word med postopkom postavitve besedila, kjer je oblikovanje pomembno.
 
 +++ Slovarji govora +++
+Meni slovarjev govora, ki se nahaja v Nastavitvah, vsebuje pogovorna okna, ki vam omogočajo upravljanje, kako NVDA izgovarja različne besede ali fraze.
+Trenutno obstajajo trije različni slovarji govora.
+Ti so:
+- Privzet: Pravila v tem slovarju vplivajo na vsak izgovor v NVDA.
+- Glas: Pravila v tem slovarju vplivajo na govorno sintezo, ki je trenutno v uporabi.
+- Začasen: Pravila v tem slovarju vplivajo na ves govor v NVDA, toda to velja samo za trenutno sejo. Ta pravila so začasna in bodo izgubljena, ko se NVDA ponovno zažene.
+-
 
+ Z uporabo [pogovornega okna Kretenj Vnosa #InputGestures] morate dodeliti lastne kretnje, če želite odpreti katerokoli pogovorno okno teh slovarjev od kjerkoli.
 
+Vsa pogovorna okna slovarjev vsebujejo seznam pravil, ki se uporabljajo procesiranje govora.
+Pogovorno okno vsebuje tudi gumbe Dodaj, Uredi in Odstrani.
 
+Če želite dodati novo pravilo v slovar, pritisnite gumb Dodaj, izpolnite polja, ki se prikažejo v pogovornem oknu, nato pritisnite V redu.
+Tako boste svoje pravilo videli v seznamu pravil.
+Toda zaradi zavarovanja, da se je pravilo resnično shranilo, se prepričajte, da ste pritisnili V redu za izhod iz vseh pogovornih oken slovarjev, ko ste končali z dodajanjem in urejanjem pravil.
 
+Pravila NVDA govornega slovarja vam omogočajo spreminjanje enega niza znakov v drugega.
+Preprost primer tega je lahko vaša želja, da NVDA izgovori "žaba" namesto "ptič", vedno, ko naleti na ta niz.
+V pogovornem oknu dodajanja pravila je najlažja pot, da to storite tako, da vnesete ptič v polje vzorca in v polje zanenjave vnesete besedo žaba.
+Kadar želite vnesti opis pravila, lahko storite tudi to tako, da vnesete opis v polje komentarja (nekaj takega kot: menja ptiča v žabo).
 
+Toda Slovarji govora v NVDA zmorejo še več kot preprosto zamenjavo besed.
+Pogovorno okno dodajanja pravila vsebuje tudi izbirnik, s katerim lahko izbirate ali naj bo vaše pravilo občutljivo na velike črke ali ne. To pomeni, da NVDA pravilo obravnava drugače takrat, ko je beseda zapisana z velikimi črkami kot takrat, ko je beseda zapisana z malimi.
+Privzeto NVDA ni občutljiva na velike črke.
 
+Na koncu vam set radijskih gumbov omogoča, da NVDA sporočite ali naj se vzorec uporablja kjerkoli, ali naj se vzorec uporablja samo takrat, ko je to cela beseda ali naj se vzorec obravnava kot "regularen izraz".
+Nastavitev cele besede pomeni, da bo vzorec kot zamenjava v uporabi samo takrat, ko vzorec ne bo del daljše besede. To pomeni, da se vzorec ne sme neposredno dotikati drugih znakov z izjemo alfanumeričnih znakov ali črtic. Drugače povedano, pred in za vzorcem mora biti presledek.
+Tako prejšnji primer zamenjave vzorca "ptič" v besedo "žaba" ne bo pokazal nobenih rezultatov ob določitvi, da se vzorec nanaša na celotno besedo, če bomo govorili o "ptičjem" ali "ptičih".
 
+Regularni izraz je vzorec, ki vsebuje posebne simbole, ki omogočajo zapis več kot enega znaka istočasno, ali zapis samo števil, črk in podobno. To je samo nekaj primerov.
+Regularnih izrazov ta uporabniški vodič ne pokriva, ker obstaja precej vodičev v spletu, kjer je na voljo več informacij.
 
++++ Izgovorjava ločil/simbolov +++[SymbolPronunciation]
+To pogovorno okno vam omogoča menjavo zgovornosti, kar pomeni, kdaj se določen simbol izgovori. Lahko pa določite tudi, kaj naj se izgovori namesto imena simbola.
 
+Jezik, čigar izgovorjavo se trenutna ureja, je prikazan v naslovu pogovornega okna.
+Opozarjamo, da se to pogovorno okno zanaša na "Zaupaj jeziku osebe za procesiranje simbolov in znakov", možnost, ki se nahaja v [pogovornem oknu Nastavitev Glasu #VoiceSettings]; tako NVDA uporablja jezik osebe namesto globalne nastavitve za jezik, ko to možnost omogočite.
 
+Za menjavo simbola, ga najprej izberite s seznama simbolov.
+Polje zamenjave vam omogoča spremembo besedila, ki naj se izgovori ob simbolu.
+Z uporabo polja za nivoje določite najnižji nivo, kjer se mora simbol izgovoriti.
 
+Če želite dodati nov simbol, pritisnite gumb Dodaj.
+V pogovorno okno, ki se prikaže, vnesite željeni simbol in pritisnite gumb V redu.
+Nato, kot velja za druge simbole, vnesite zamenjavo in najnižji nivo izgovorjave.
 
+Simbol, ki ste ga prej dodali, lahko odstranite tako, da pritisnete gumb Odstrani.
 
+Ko zaključite z delom, pritisnite V redu, da spremembe shranite ali Prekliči, če želite spremembe zavreči.
 
++++ Kretnje Vnosa +++[InputGestures]
+V tem pogovornem oknu lahko prilagajate kretnje vnosa, kot so tipke na tipkovnici, gumbi na brajevi vrstici, in podobno ukazom za NVDA.
 
+Pokažejo se samo tisti ukazi, ki so bili na voljo tik preden ste odprli to pogovorno okno.
+Na primer, če želite spremeniti kretnje vnosa, ki se nanašajo na brskalniško delovanje, morate odpreti pogovorno okno kretenj vnosa med tem, ko ste v brskalniškem delovanju.
 
+To pogovorno okno vsebuje drevo, kjer so razvrščeni NVDA ukazi, ki so na voljo ločeni po kategorijah.
+Ukaze lahko presejete (filtrirate) tudi tako, da vnesete eno ali več besed imena ukaza v za to namenjeno vnosno polje. Vrstni red besed ni pomemben.
+Vsaka kretnja, ki se nanaša na ukaz je razvrščena pod ukazom.
 
+Če želite dodati kretnjo vnosa posameznemu ukazu, izberite ukaz in pritisnite gumb Dodaj.
+Nato izvedite kretnjo, za katero želite, da je povezana s tem ukazom; npr. pritisk tipke na tipkovnici ali gumba na brajevi vrstici.
+Pogosto se kretnja lahko interpretira na več načinov.
+Na primer, ko pritisnete tipko na tipkovnici, lahko določite, da se določi samo za to obliko tipkovnice npr. Prenosnik ali Namizje (običajna razporeditev), lahko pa določite, da kretnja velja za vse postavitve tipkovnice.
+V takem primeru se bo prikazal meni, kjer boste lahko izbrali ustrezno možnost.
 
+Za odstranitev kretnje vnosa s posameznega ukaza, izberite kretnjo in pritisnite gumb Odstrani.
 
+Ko zaključite z delom, pritisnite gumb V redu, da shranite spremembe ali gumb Prekliči, če spremembe želite zavreči.
 
+++ Shranjevanje in ponovno Nalaganje konfiguracije ++
+Privzeto bo NVDA samodejno shranila vaše nastavitve ob izhodu.
+Vendar to lahko spremenite v splošnih možnostih pod Nastavitvami.
+Če želite kadarkoli ročno shraniti nastavitve, izberite element Shrani konfiguracijo v glavnem meniju NVDA (Nastavitve)
 
+Če kadarkoli naredite napako pri vaših nastavitvah in želite, da se NVDA povrne na zadnje shranjeno stanje, izberite element "Vrni na zadnjo shranjeno konfiguracijo" v glavnem meniju NVDA.
+Lahko pa vedno ponastavite NVDA na tovarniške nastavitve z izbiro elementa Ponastavi na tovarniško konfiguracijo, ki se prav tako nahaja v meniju NVDA.
 
+Naslednji NVDA ukazi so tudi na voljo:
+%kc:beginInclude
+|| ime | Običajna razporeditev | razporeditev Prenosnik | Opis |
+| Shrani konfiguracijo | NVDA+control+c | NVDA+control+c | Shrani vašo zadnjo konfiguracijo tako, da ni izgubljena, ko zapustite NVDA. |
+| Povrni konfiguracijo | NVDA+control+r | NVDA+control+r | Enojni pritisk povrne na stanje zadnje shranjene konfiguracije. Trojni pritisk povrne stanje konfiguracije na tovarniško. |
+%kc:endInclude
 
+++ Profili Konfiguracije ++
+Včasih želite različne nastavitve za različne situacije.
+Na primer, da želite, da NVDA poroča o zamikih (imate to možnost vključeno) medtem, ko urejate ali da je vključeno poročanje o lastnostih pisave, ko dokument oblikujete.
+To vam NVDA omogoča skozi uporabo Profilov Konfiguracije.
 
+Profil konfiguracije vsebuje samo tiste nastavitve, ki so se spremenile med tem, ko je bil profil v urejanju.
+V profilih konfiguracije se lahko spremenijo skoraj vse nastavitve razen tistih pod Splošnimi nastavitvami, ki vplivajo na delovanje NVDA v celoti.
 
+Profili konfiguracije se lahko aktivirajo ročno.
+Lahko pa se aktivirajo tudi samodejno glede na prožilec. Prožilec je lahko prehod v izbrano ačlikacijo.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
++++ Osnovno Upravljanje +++
+S profili konfiguracije lahko upravljate z izbiro Profilov Konfiguracije v meniju NVDA.
+To lahko storite tudi z uporabo sledečega ukaza na tipkovnici:
+%kc:beginInclude
+- NVDA+control+p: Pokaži pogovorno okno Profilov Konfiguracije..
+-
+%kc:endInclude
+
+Prva možnost nadzora je seznam profilov na voljo, med katerimi lahko izbirate.
+Ko odprete pogovorno okno, je izbran profil, ki ga pravkar urejate.
+Dodatne informacije se pokažejo ob aktivnem profilu. Tako lahko ugotovimo, ali je profil aktiviran ročno, preko prožilca in/ali je v stanju urejanja.
+
+Če želite preimenovati ali izbrisati profil, Izberite ustrezen gumb (Odstrani/Preimenuj).
+
+Pritisnite gumb Zapri, da zaprete to pogovorno okno.
+
++++ Ustvarjanje Profila +++
+Če želite ustvariti nov profil, pritisnite gumb Novo.
+
+V pogovornem oknu za nov profil, lahko določite ime novega profila.
+Lahko izberete tudi, kako naj se ta profil uporablja.
+Če ta profil želite aktivirati ročno, izberite ročna aktivacija (privzeta možnost).
+Drugače izberite prožilec, ki bo samodejno aktiviral izbran profil.
+Zaradi udobnejšega delovanja, če polje z imenom pustite prazno, ga bo izpolnil izbran prožilec, ki aktivira profil.
+Glejte [spodaj #ConfigProfileTriggers], če želite dobiti več informacij o prožilcih profilov.
+
+Pritisk gumba V redu bo zaprl pogovorno okno profilov konfiguracije in ustvaril profil z izbranimi značilnostmi.
+
++++ Ročna aktivacija +++[ConfigProfileManual]
+Profil ročno aktivirate tako, da ga izberete in pritisnete gumb Sproži.
+Ko je profil enkrat aktiviran, ga še vedno lahko preglasijo profili s prožilci, vendar bodo nastavitve tega profila prevladale nad tistimi iz profila s prožilcem.
+Na primer, če profil sproži trenuten program in je poročanje povezav omogočeno v tem profilu, vendar je ista nastavitev v profilu, ki se ročno aktivira izključena, NVDA ne bo sporočala povezav.
+Toda, če zamenjate glas v profilu na prožilec in tega niste nikoli storili v profilu, ki se aktivira ročno, bo NVDA upoštevala nastavitev profila na prožilec.
+Vsaka nastavitev, ki jo boste spremenili, se bo shranila v profilu, ki ga aktivirate ročno.
+Za deaktivacijo ročno aktiviranega profila, ga izberite v seznamu pogovornega okna Konfiguracije profilov in pritisnite gumb Ročno deaktiviraj.
+
++++ Prožilci +++[ConfigProfileTriggers]
+Pritisk gumba Prožilci v pogovornem oknu Konfiguracije profilov vam omogoča spreminjanje profilov, ki se morajo aktivirati ob različnih dogodkih. To pomeni, da se aktivirajo različni prožilci.
+
+Seznam prožilcev prikazuje seznam prožilcev, ki so trenutno na voljo. Večinoma so to sledeči:
+- Trenuten program: Ta prožilec aktivira profil, ko se odpre program, ki teče takoj za NVDA nastavitvami. To pomeni, da se prožilec veže na program, s katerega ste odprli nastavitve NVDA. Pozor, Če želite nastaviti prožilec za izbran program, mora program teči v ospredju.
+- Preberi vse: Ta prožilec je vezan na ukaz Preberi vse.
+-
+
+Za spremembo profila, ki naj se navezuje na posamezen prožilec, ki ga samodejno aktivira, izberite prožilec in potem izberite še odgovarjajoč profil iz seznama.
+Lahko izberete tudi (Normalno konfiguracijo), če želite, naj profili ne bodo v uporabi.
+
+Pritisnite gumb Zapri, da se vrnete v glavno pogovorno okno Konfiguracije profilov.
+
++++ Urejanje Profila +++
+Če uporabljate ročno aktiviran profil, bo vsaka nastavitev, ki jo boste spremenili, v ta profil.
+Drugače bo nastavitev shranjena v zadnji samodejno aktiviran profil.
+Na primer, če ste profil povezali s prožilcem Beležnice, in potem Beležnico odprete ali se premaknete vanjo, se bo vsaka sprememba nastavitev shranila v ta profil.
+Če za posamezno situacijo ne obstaja niti profil z ročno aktivacijo niti profil s prožilcem, se bo vsaka sprememba nastavitev shranila v Normalno konfiguracijo.
+
+Za urejanje profila, ki je povezan s prožilcem "Preberi vse", morate [ročno aktivirati #ConfigProfileManual] ta profil.
+
++++ Začasno Onemogočanje Prožilcev +++
+Včasih je uporabno, če lahko začasno onemogočimo vse prožilce.
+Tak primer se pojavi, ko želite urejati profil, ki se aktivira ročno ali Normalno konfiguracijo brez motenj profilov na prožilcu.
+To storite s potrditvijo izbirnika Začasno onemogoči vse prožilce v pogovornem oknu Konfiguracije profilov.
 
 ++ Mesta datotek z Nastavitvami ++
 Prenosljive različice NVDA hranijo vse nastavitve, druge aplikacijske module in druge gonilnike v imeniku z imenom userConfig, ki se nahaja v imeniku NVDA.
@@ -1201,16 +1319,19 @@ Za videče razvijalce ali za tiste, ki predstavljajo NVDA videči publiki, je na
 Ko je prikazovalnik govora omogočen, se stalno posodablja, da vam pokaže besedilo, ki se pravkar izgovarja.
 Kakorkoli, če kliknete ali postavite žarišče znotraj prikazovalnika, bo NVDA začasno prenehala posodabljati besedilo, tako da ga boste lažje izbrali ali preslikali.
 
+Za vklapljanje in izklapljanje Prikazovalnika Govora od kjer koli, prosimo, dodelite lastno kretnjo z uporabo [pogovornega okna Kretenj Vnosa. #InputGestures].
+
 ++ Upravitelj Dodatkov ++
 Upravitelj dodatkov dostopen preko izbire Orodij v meniju NVDA vam omogoča namestitev in odstranitev paketov z dodatki za NVDA.
 Te dodatke je oskrbela skupnost in vsebujejo prilagojeno kodo, ki lahko doda ali spremeni značilnosti v NVDA ali celo doda podporo večim brajevim vrsticam ali govornim sintezam.
 
 Upravitelj dodatkov vsebuje seznam, ki prikazuje vse dodatke trenutno nameščene v vaši NVDA uporabniški konfiguraciji.
-Ime paketa, njegova različica in avtorji se pokažejo ob vsakem paketu, ostale informacije, kot je opis in URL so vidne ob izbiri dodatka in pritisku gumba O dodatku.
+Ime paketa, njegova različica in avtorji se pokažejo ob vsakem paketu, ostale informacije, kot je opis in URL pa so vidne ob izbiri dodatka in pritisku gumba O dodatku.
+Če je pomoč za izbran dodatek na voljo, lahko do nje dostopate tako, da pritisnete gumb Pomoč ob izbranem dodatku.
 
 Za brskanje in prenos dodatkov, ki so na voljo na spletu, pritisnite gumb Pridobi dodatke.
 Ta gumb odpre [stran z dodatki za NVDA http://addons.nvda-project.org/].
-Če je NVDA nameščena v vaš računalnik, lahko dodatek odprete neposredno iz brskalnika in tako pričnete potek namestitve opisane spodaj.
+Če je NVDA nameščena v vaš računalnik in v njem tudi teče v času nameščanja dodatka, lahko dodatek odprete neposredno iz brskalnika za začetek poteka namestitve, kot je opisano spodaj.
 V nasprotnem primeru shranite paket z dodatkom in sledite spodnjim navodilom.
 
 Za dodatek, ki ste ga že prej posedovali, pritisnite gumb Namesti.
@@ -1234,6 +1355,8 @@ V preteklosti je bilo mogoče razširiti zmožnosti NVDA s preslikavo posamezneg
 Čeprav ta različica NVDA še vedno le-te lahko naloži, ti ne bodo prikazani v Upravitelju dodatkov.
 Najbolje je, da te datoteke odstranite iz vaše konfiguracije in namestite ustrezen dodatek, če je na voljo.
 
+Za dostop do Upravitelja dodatkov od kjerkoli, prosimo, dodelite lastno kretnjo z uporabo [pogovornega okna Kretenj Vnosa. #InputGestures].
+
 ++ Python Konzola ++
 NVDA Python konzola, ki se nahaja v Orodjih menija NVDA, je orodje za razvijalce, ki je uporabno za razhroščevanje, splošno inšpekcijo NVDA notranjosti ali inšpekcijo hierarhije dostopnosti v programu.
 Več informacij, prosimo, poiščite v Vodiču za Razvijalce (v Angleščini), ki se nahaja v [Razvojnem oddelku na spletnem mestu NVDA http://community.nvda-project.org/wiki/Development].
@@ -1242,3 +1365,406 @@ Več informacij, prosimo, poiščite v Vodiču za Razvijalce (v Angleščini), k
 Ta element, ko ga sprožite, ponovno naloži aplikacijske module in globalne vtičnike brez potrebe po ponovnem zagonu NVDA, kar je lahko uporabno za razvijalce.
 
 + Podprte Govorne Sinteze +[SupportedSpeechSynths]
+Ta razdelek vsebuje informacije o govornih sintezah, ki jih podpira NVDA.
+Še bolj razširjen seznam tako brezplačnih kot plačljivih govornih sintez, ki jih lahko kupite in prenesete za uporabo z NVDA, je na voljo na strani [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+
+++ eSpeak ++
+Govorna sinteza [eSpeak http://espeak.sourceforge.net/] je vgrajena neposredno v NVDA in ne potrebuje namestitve posebnih gonilnikov ali drugih komponent.
+NVDA privzeto začne uporabljati eSpeak.
+Ker je ta sinteza vgrajena v NVDA, je to čudovita izbira, ko NVDA poganjamo z USB ključka na drugih sistemih.
+
+Vsak glas, ki prihaja z eSpeakom, govori svoj jezik.
+Trenutno eSpeak podpira 43 različnih jezikov.
+
+Na voljo je tudi precej oseb, med katerimi lahko izbirate, da imitirajo zvoke različnih glasov.
+
+++ Microsoft Speech API različice 4 (SAPI 4) ++
+SAPI 4 je starejši Microsoftov standard za programske govorne sinteze.
+Veliko govornih sintez, ki ustrezajo temu standardu, je na voljo brezplačno za posedovanje ali prenos prek različnih družb ali spletnih mest.
+Ko uporabljate to sintezo z NVDA, bodo na voljo vsi glasovi (dostopni prek [pogovornega okna Nastavitev glasu #VoiceSettings] ali prek [Kroga Nastavitev Sinteze #SynthSettingsRing]) iz vseh pogonov, ki jih je NVDA našla na vašem sistemu.
+
+Če imate v sistemu nameščene sinteze različice SAPI 4, vendar se ne pokažejo v seznamu NVDA glasov, prosimo, namestite knjižnico SAPI 4.0 runtime binaries, na voljo na http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+
+++ Microsoft Speech API različice 5 (SAPI 5) ++
+SAPI 5 je trenuten Microsoftov standard za programske govorne sinteze.
+Veliko govornih sintez, ki je združljivih s tem standardom, je na voljo brezplačno za posedovanje ali prenos prek različnih družb ali spletnih mest, čeprav bo vaš sistem verjetno že imel prednameščeno vsaj eno tako sintezo.
+Ko uporabljate to sintezo z NVDA, bodo na voljo vsi glasovi (dostopni prek [pogovornega okna Nastavitev glasu #VoiceSettings] ali prek [Kroga Nastavitev Sinteze #SynthSettingsRing]) iz vseh pogonov, ki jih je NVDA našla na vašem sistemu.
+
+++ Microsoft Speech Platform ++
+Microsoft Speech Platform (Microsoftova govorna platforma) oskrbuje glasove za precejšnje število jezikov, ki se običajno uporabljajo tekom razvoja govornih aplikacij, ki temeljijo na strežniški podpori.
+Ti glasovi pa se lahko uporabljajo tudi z NVDA.
+
+Za uporabo teh glasov boste morali v sistem namestiti ti dve komponenti:
+- Microsoft Speech Platform - Runtime (Različica 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Runtime Languages (Različica 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+ - Ta stran vsebuje veliko število datotek, ki se dotikajo tako govorne prepoznave (speech recognition), kot pretvorbe besedila v govor - BVG (Text to Speech).
+ Izberite datoteke, ki vsebujejo podatke za BVG, ki ustrezajo vašim izbranim jezikom/glasovom.
+ Na primer, datoteka MSSpeech_TTS_en-US_ZiraPro.msi je glas, ki govori ameriško Angleščino.
+ -
+-
+
+++ Audiologic Tts3 ++
+To je plačljiva govorna sinteza namenjena predvsem za italijanski jezik
+Govorna sinteza mora v sistemu že biti nameščena, če jo želite uporabljati z NVDA.
+Za več informacij, prosimo, obiščite spletno mesto Audiologic na www.audiologic.it.
+
+Ta govorna sinteza ne podpira  [funkcije črkovanja #VoiceSpellingFunctionality].
+
+++ Nuance Vocalizer za NVDA ++
+Nuance Vocalizer je plačljiva visokokakovostna glasovna sinteza, ki so jo razvili v podjetju Nuance Communications, Inc. Posebej za NVDA pa so jo prilagodili v podjetju Tiflotecnia, Lda.
+Vsebuje več kot 50 glasov, ki jih lahko namestite govoreč več kot 30 jezikov.
+Vse komponente sinteze in glasovi so pakirani kot NVDA dodatek, kar omogoča polno uporabo tudi v prenosljivi kopiji NVDA.
+
+Več informacij o Nuance Vocalizerju za NVDA in kako ga kupiti lahko dobite na njegovem spletnem mestu [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
+Del izkupička od prodaje tega izdelka se donira NV Access za financiranje nadaljnjega razvoja NVDA.
+
++ Podprte Brajeve Vrstice +[SupportedBrailleDisplays]
+Ta razdelek vsebuje informacije o brajevih vrsticah, ki jih podpira NVDA.
+
+++ Freedom Scientific Focus/PAC Mate Series ++
+Vse Focus in PAC Mate vrstice iz [podjetja Freedom Scientific, http://www.freedomscientific.com/] so podprte, ko so na računalnik priključene prek USB ali bluetooth povezave.
+V sistemu boste morali imeti nameščene gonilnike za Freedom Scientific rajeve vrstice.
+Če jih še nimate, jih lahko pridobite s http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+Čeprav ta stran omenja samo Focus Blue vrstico, gonilniki podpirajo vse Freedom Scientific Focus in Pacmate vrstice.
+Če na vašem sistemu tečejo 64-bitna Okna in so gonilniki že bili nameščeni ob namestitvi drugega bralnika zaslona, boste verjetno gonilnike morali še vedno namestiti s te povezave, saj se datoteke, ki jih potrebuje NVDA, morda niso namestile ob drugem bralniku zaslona.
+
+Privzeto NVDA zna samodejno zaznati in s s temi vrsticami tudi povezati prek USB ali bluetooth povezave.
+Vseeno pa lahko ob konfiguraciji vrstice eksplicitno določite "USB" ali "bluetooth" vrata, da omejite tip povezave v uporabi.
+To je lahko uporabno ob tem, ko želite Focus vrstico priključiti na računalnik in jo povezati z NVDA prek bluetooth povezave, vseeno pa jo želite polniti prek USB vhoda, ko je tako priključena v sistem.
+
+Sledeče prirejene tipke predstavljajo naslednje NVDA ukaze za to vrstico.
+Prosimo, poglejte si dokumentacijo vrstice za točen opis posamezne tipke in njenega položaja.
+%kc:beginInclude
+|| Ime | Tipka |
+| Pomakni brajevo vrstico nazaj | topRouting1 (prva celica na vrstici) |
+| Pomakni brajevo vrstico naprej | topRouting20/40/80 (zadnja celica na vrstici) |
+| pomakni brajevo vrstico nazaj | leftAdvanceBar |
+| Pomakni brajevo vrstico naprej | rightAdvanceBar |
+| stikalo brajeve navezave na | leftGDFButton+rightGDFButton |
+| Stikalo leve wiz wheel action | leftWizWheelPress |
+|  Pomik nazaj z uporabo leve wiz wheel action | leftWizWheelUp |
+| Pomik naprej z uporabo leve wiz wheel action | leftWizWheelDown |
+| Stikalo desne wiz wheel action | rightWizWheelPress |
+| Pomik nazaj z uporabo desne wiz wheel action | rightWizWheelUp |
+| Pomik naprej z uporabo desne wiz wheel action | rightWizWheelDown |
+| Usmeri na brajevo celico | routing |
+| tipka vračalka | dot7 |
+| tipka enter | dot8 |
+| tipka shift+tab | brailleSpaceBar+dot1+dot2 |
+| tipka tab | brailleSpaceBar+dot4+dot5 |
+| tipka puščicaGor | brailleSpaceBar+dot1 |
+| tipka puščicaDol | brailleSpaceBar+dot4 |
+| tipka control+puščicaLevo | brailleSpaceBar+dot2 |
+| tipka control+puščicaDesno | brailleSpaceBar+dot5 |
+| tipka puščicaLevo | brailleSpaceBar+dot3 |
+| tipka puščicaDesno | brailleSpaceBar+dot6 |
+| tipka home | brailleSpaceBar+dot1+dot3 |
+| tipka end | brailleSpaceBar+dot4+dot6 |
+| tipka control+home | brailleSpaceBar+dot1+dot2+dot3 |
+| tipka control+end | brailleSpaceBar+dot4+dot5+dot6 |
+| tipka alt | brailleSpaceBar+dot1+dot3+dot4 |
+| tipka alt+tab | brailleSpaceBar+dot2+dot3+dot4+dot5 |
+| tipka escape | brailleSpaceBar+dot1+dot5 |
+| tipka windows | brailleSpaceBar+dot2+dot4+dot5+dot6 |
+| tipka space | brailleSpaceBar |
+| tipka windows+d (minimiranje vseh programov) | brailleSpaceBar+dot1+dot2+dot3+dot4+dot5+dot6 |
+| Sporoči Trenutno Vrstico | brailleSpaceBar+dot1+dot4 |
+| meni NVDA | brailleSpaceBar+dot1+dot3+dot4+dot5 |
+
+Za novejše modele Focus, ki posedujejo rocker bar tipke (focus 40, focus 80 and focus blue):
+|| Ime | Tipka |
+| Premakni brajevo vrstico v prejšnjo vrstico | leftRockerBarUp, rightRockerBarUp |
+| Premakni brajevo vrstico v naslednjo vrstico | leftRockerBarDown, rightRockerBarDown |
+
+Samo za Focus 80:
+|| Ime | Tipka |
+| Pomakni brajevo vrstico nazaj | leftBumperBarUp, rightBumperBarUp |
+| Pomakni brajevo vrstico naprej | leftBumperBarDown, rightBumperBarDown |
+%kc:endInclude
+
+++ Optelec ALVA BC640/680 ++
+Tako ALVA BC640 kot BC680 brajeva vrstica iz [podjetja Optelec http://www.optelec.com/] sta podprti, ko se na računalnik priključita prek USB ali bluetooth povezave.
+Za uporabo teh vrstic ne potrebujete nobenih posebnih gonilnikov, ki bi morali biti nameščeni v sistem.
+Potrebno je samo, da se vrstica prključi in nastavi NVDA.
+
+Modeli teh vrstic z brajevo tipkovnico pretvarjajo brajeve vnose v besedilo sami.
+Tako nastavitev vnosne tabele v NVDA ne prihaja v poštev in tako ni relevantna.
+
+Sledeče tipke so pripete k naslednjim ukazom v NVDA.
+Prosimo, preglejte dokumentacijo vrstice, da boste vedeli, kje se posamezna tipka nahaja.
+%kc:beginInclude
+|| Ime | Tipka |
+| Pomakni brajevo vrstico nazaj | t1 |
+| Premakni brajevo vrstico v prejšnjo vrstico | t2 |
+| Premakni brajevo vrstico v naslednjo vrstico | t4 |
+| Pomakni brajevo vrstico naprej | t5 |
+| Usmeri na brajevo celico | routing |
+| tipka shift+tab | sp1 |
+| tipka alt | sp2 |
+| tipka escape | sp3 |
+| tipka tab | sp4 |
+| tipka puščicaGor | spUp |
+| tipka puščicaDol | spDown |
+| tipka puščicaLevo | spLeft |
+| tipka puščicaDesno | spRight |
+| tipka enter | spEnter |
+| Meni NVDA | sp1+sp3 |
+| tipka windows+d (minimiranje vseh programov) | sp1+sp4 |
+| tipka windows | sp2+sp3 |
+| tipka alt+tab | sp2+sp4 |
+%kc:endInclude
+
+++ Vrstice Handy Tech ++
+NVDA podpira vse vrstice [podjetja Handy Tech, http://www.handytech.de/] ko so priključene na računalnik prek USB ali bluetooth povezave.
+V primeru uporabe starejših vrstic, boste morali gonilnike zanje prenesti in namestiti v sistem s spletnega mesta Handy Tech.
+
+Brajev vnos za vrstice Handy Tech še ni podprt.
+
+Sledeče tipke so ukazi za vrstice Handy Tech ob uporabi z NVDA.
+Prosimo, glejte dokumentacijo vrstice, da boste vedeli, kje senahaja katera tipka.
+%kc:beginInclude
+|| Ime | Tipka |
+| Pomakni brajevo vrstico nazaj | left, up |
+| Pomakni brajevo vrstico naprej | right, down |
+| Premakni brajevo vrstico v prejšnjo vrstico | b4 |
+| Premakni brajevo vrstico v naslednjo vrstico | b5 |
+| Usmeri na brajevo celico | routing |
+| tipka shift+tab | esc |
+| tipka alt | b2+b4+b5 |
+| tipka escape | b4+b6 |
+| tipka tab | enter |
+| tipka enter | esc+enter |
+| tipka puščicaGor | leftSpace |
+| tipka puščicaDol | rightSpace |
+| Meni NVDA | b2+b4+b5+b6 |
+| Handy Tech konfiguracija | b4+b8 |
+%kc:endInclude
+
+++ MDV Lilli ++
+Lilli brajeva vrstica na voljo s [MDV http://www.mdvbologna.it/] je podprta.
+Za uporabo te vrstice vam ni potrebno namestiti posebnih gonilnikov.
+Potrebno je samo vrstico priključiti in konfigurirati NVDA.
+
+Sledeče tipke so prirejene za uporabo te vrstice z NVDA.
+Prosimo, poglejte si dokumentacijo za opis položaja tipk.
+%kc:beginInclude
+|| Ime | Tipka |
+| Pomakni brajevo vrstico nazaj | LF |
+| Pomakni brajevo vrstico naprej | RG |
+| Premakni brajevo vrstico v prejšnjo vrstico | UP |
+| Premakni brajevo vrstico v naslednjo vrstico | DN |
+| Usmeri na brajevo celico | route |
+| tipka shift+tab | SLF |
+| tipka tab | SRG |
+| tipka alt+tab | SDN |
+| tipka alt+shift+tab | SUP |
+%kc:endInclude
+
+++ Brajeve Vrstice Baum/Humanware/APH ++
+Precej [Baumovih http://www.baum.de/cms/en/], [HumanWarovih http://www.humanware.com/] in [APH http://www.aph.org/] vrstic je podprtih, ko jih priključimo prek USB ali bluetooth povezave.
+To vključuje:
+- Baum: SuperVario, PocketVario
+- HumanWare: Brailliant, BrailleConnect
+- APH: Refreshabraille
+-
+Verjetno dela še nekaj drugih vrstic izdelovalca Baum, vendar niso bile testirane.
+
+Če boste vrstice priljučili prek USB povezave, boste morali najprej namestiti gonilnik, ki ga je oskrbel izdelovalec.
+Za pravilno delovanje APH Refreshabraille mora biti delovanje USB nastavljeno na serijski način.
+
+Sledeče tipke so prirejene za delovanje skupaj z NVDA.
+Prosimo, poglejte si dokumentacijo vrstice za točen opis položaja posamezne tipke.
+%kc:beginInclude
+|| Ime | Tipka |
+| Pomakni brajevo vrstico nazaj | d2 |
+| Pomakni brajevo vrstico naprej | d5 |
+| Premakni brajevo vrstico v prejšnjo vrstico | d1 |
+| Premakni brajevo vrstico v naslednjo vrstico | d3 |
+| Usmeri na brajevo celico | routing |
+
+Velja za vrstice, ki imajo krmilno palčko:
+|| Ime | Tipka |
+| Tipka puščicaGor | up |
+| tipka puščicaDol | down |
+| tipka puščicaLevo | left |
+| tipka puščicaDesno | right |
+| tipka enter | select |
+%kc:endInclude
+
+++ hedo ProfiLine USB ++
+Hedo ProfiLine USB iz [podjetja hedo Reha-Technik http://www.hedo.de/] je podprta.
+Najprej morate namestiti USB gonilnik, ki ga je oskrbel izdelovalec.
+
+Sledeče tipke so prirejene za delovanje z NVDA.
+Prosimo, poglejte si dokumentacijo vrstice, za opis položaja posamezne tipke.
+%kc:beginInclude
+|| Ime | Tipka |
+| Pomakni brajevo vrstico nazaj | K1 |
+| Pomakni brajevo vrstico naprej | K3 |
+| Premakni brajevo vrstico v prejšnjo vrstico | B2 |
+| Premakni brajevo vrstico v naslednjo vrstico | B5 |
+| Usmeri na brajevo celico | routing |
+| Stikalo zamenjave brajevega načina | K2 |
+| Preberi vse | B6 |
+%kc:endInclude
+
+++ hedo MobilLine USB ++
+Hedo MobilLine USB iz [podjetja hedo Reha-Technik http://www.hedo.de/] je podprta.
+Najprej morate za uprabo te vrstice namestiti gonilnik, ki ga je oskrbel izdelovalec.
+
+Sledeče tipke so prirejene za delovanje z NVDA.
+Prosimo, oglejte si dokumentacijo za točen opis položaja posamezne tipke.
+%kc:beginInclude
+|| Ime | Tipka |
+| Pomakni brajevo vrstico nazaj | K1 |
+| Pomakni brajevo vrstico naprej | K3 |
+| Premakni brajevo vrstico v prejšnjo vrstico | B2 |
+| Premakni brajevo vrstico v naslednjo vrstico | B5 |
+| Usmeri na brajevo celico | routing |
+| Stikalo zamenjave brajevega načina | K2 |
+| Preberi vse | B6 |
+%kc:endInclude
+
+++ HumanWare Brailliant BI/B Series ++
+Brailliant BI in B seriji vrstic iz podjetja [HumanWare http://www.humanware.com/], vključno z BI 32, BI 40 in B 80, sta podprti, ko jih rpiključimo prek USB ali bluetooth povezave.
+Če jih v sistem želite priključiti prek USB povezave, morate najprej namestiti gonilnik, ki ga je oskrbel izdelovalec.
+
+Sledeče tipke so prirejene za delovanje z NVDA.
+Prosimo, poglejte si dokumentacijo vrstice za opis točnega položaja posamezne tipke.
+%kc:beginInclude
+|| Ime | Tipka |
+| Pomakni brajevo vrstico nazaj | left |
+| Pomakni brajevo vrstico naprej | right |
+| Premakni brajevo vrstico v prejšnjo vrstico | up |
+| Premakni brajevo vrstico v naslednjo vrstico | down |
+| Usmeri na brajevo celico | routing |
+| stikalo brajeve navezave z | up+down |
+| tipka puščicaGor | space+dot1 |
+| tipka puščicaDol | space+dot4 |
+| tipka puščicaLevo | space+dot3 |
+| tipka puščicaDesno | space+dot6 |
+| Neni NVDA | c1+c3+c4+c5 (command n) |
+| tipka shift+tab | space+dot1+dot3 |
+| tipka tab | space+dot4+dot6 |
+| tipka alt | space+dot1+dot3+dot4 (space+m) |
+| tipka escape | space+dot1+dot5 (space+e) |
+| tipka enter | dot8 |
+| tipka windows+d (minimiranje vseh programov) | c1+c4+c5 (command d) |
+| tipka windows | space+dot3+dot4 |
+| tipka alt+tab | space+dot2+dot3+dot4+dot5 (space+t) |
+| Preberi vse | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
+++ BRLTTY ++
+[BRLTTY http://mielke.cc/brltty/] je program neodvisen od NVDA, ki pa ga vseeno lahko uporabimo zaradi podpore večjega števila brajevih vrstic.
+Če ga želite uporabljati, morate namestiti [BRLTTY za Windows http://brl.thefreecat.org/brltty/].
+K sebi morate prenesti in namestiti zadnji namestitveni paket, ki se imenuje nekako tako brltty-win-4.2-2.exe. Številke so lahko različne.
+Ko boste nastavljali vrstico in vrata, ki jih boste uporabljali, posebno pozornost namenite navodilom še posebej, če uporabljate vrstico na USB vratih hkrati pa so gonilniki proizvajalca te vrstice že nameščeni v sistem.
+
+Za vrstice, ki imajo brajevo tipkovnico, BRLTTY sam upravlja brajev vnos.
+Tako nastavitev vnosne brajeve tabele v NVDA ni relevantna.
+
+Sledeči ukazi so BRLTTY ukazi, ki jih razume NVDA.
+Prosimo, poglejte [BRLTTY dokumentacijo tabele tipk http://mielke.cc/brltty/doc/KeyTables/] for information about how BRLTTY commands are mapped to controls on braille displays.
+%kc:beginInclude
+|| Ime | BRLTTY command |
+| Pomakni brajevo vrstico nazaj | fwinlt (go left one window) |
+| Pomakni brajevo vrstico naprej | fwinrt (go right one window) |
+| Premakni brajevo vrstico eno vrstico nazaj (v prejšnjo vrstico) | lnup (go up one line) |
+| Premakni brajevo vrstico eno vrstico naprej (v naslednjo vrstico) | lndn (go down one line) |
+| usmeri na brajevo celico | route (bring cursor to character) |
+%kc:endInclude
+
++ Brajeve okrajšave stanja in tipov kontrolnika +
+Zaradi največjega možnega števila prikaza informacij na brajevi vrstici so v NVDA definirane okrajšave za indikacijo različnih tipov kontrolnikov in njihovih stanj.
+
+|| Okrajšava | Tip kontrolnika |
+| gmb | gumb |
+| sps | spustni seznam |
+| izb | izbirnik |
+| pok | pogovorno okno |
+| pub | polje za urejanje besedila |
+| gra | grafika |
+| sN | n številka stolpca v tabeli, npr. s1, s2. |
+| vN | n številka vrstice v tabeli, npr. v1, v2. |
+| nN | naslov na nivoju n, npr. n1, n2. |
+| pvz | povezava |
+| szm | seznam |
+| opvz | obiskana povezava |
+| mni | meni |
+| mnivrs | menijska vrstica |
+| rgmb | radijski gumb |
+| tb | tabela |
+| dp | drevesni pogled |
+| nv N | element v hierarhiji drevesnega pogleda na nivoju N|
+| ``-----`` | ločnica |
+
+Definirani so tudi sledeči indikatorji stanj kontrolnikov:
+|| Okrajšava | Stanje kontrolnika |
+| ... | se prikaže, ko predmet podpira samodokončanje |
+| ( ) | se prikaže ob predmetu (npr. izbirniku), ki ni izbran |
+| (x) | se prikaže ob predmetu (npr. izbirniku), ko je ta izbran |
+| (-) | se prikaže ob predmetu (npr. izbirniku), ki je delno izbran |
+| - | se prikaže, ko je predmet (npr. element v drevesnem pogledu) možno stisniti |
+| + | se prikaže, ko je predmet (npr. element v drevesnem pogledu) možno razpreti |
+| klk | se prikaže ob predmetu, na katerega je možno klikniti |
+| sb | se prikaže, ko je predmet (npr. polje za urejanje besedila) samo za branje |
+| ozn | se prikaže, ko je predmet označen |
+| podmni | se prikaže ob predmetu s pojavnim oknom (običajno pod-meni) |
+
++ Napredne Vsebine +
+
+++ Možnosti Ukazne Vrstice ++[CommandLineOptions]
+NVDA lahko sprejme več dodatnih možnosti ob zagonu, ki potem vplivajo na njeno delovanje.
+Uporabite lahko toliko možnosti, kot jih potrebujete.
+Te možnosti se lahko uporabijo ob zagonu NVDA prek bližnjice (v lastnostih bližnjice), v pogovornem oknu Zaženi (meni start -> Zaženi ali Windows+r) ali v ukazni konzoli Oken.
+Možnosti morajo biti ločene od imena izvršljive datoteke NVDA in drugih možnosti s presledki.
+Na primer, bližnjico, ki jo ustvari NVDA med namestitvijo, NVDA ustvari z izbrano možnostjo -r, ki pove NVDA, naj trenutno kopijo same sebe zapre, preden se znova zažene.
+Druga uporabna možnost je --disable-addons, ki naroča NVDA, naj zaustavi vse dodatke, ki so v uporabi.
+To vam omogoči, da ugotovite, če je težavo povzročil dodatek in da se program obnovi po resni težavi, ki jo je dodatek povzročil.
+
+Kot primer uporabe teh možnosti lahko v pogovornem oknu Zaženi zaprete trenutno kopijo NVDA z vnosom naslednje vsebine v polje pogovornega okna:
+
+nvda -q
+
+Nekatere možnosti ukazne vrstice (stikala) poznajo tako kratko kot dolgo obliko, druga pa imajo samo dolgo obliko poimenovanja.
+Tiste, ki imajo tudi kratko obliko, lahko med sebojno kombinirate na naslednji način
+| nvda -rm | To bo zaprlo trenutno kopijo NVDA, ki teče in NVDA zagnalo z onemogočenimi zvočnimi opozorili ipd. |
+| nvda -rm --disable-addons | Enako kot zgoraj, vendar bodo zraven onemogočeni tudi dodatki. |
+
+
+Nekatere možnosti ukazne vrstice sprejemajo tudi dodatne parametre; npr. kako podrobno naj se piše dnevnik, ali pot do uporabnikove konfiguracijske mape ali imenika.
+Ti parametri se morajo nahajati za možnostjo in morajo biti ločeni od možnosti s presledkom, ko se uporablja kratka različica možnosti ali s simbolom = (enačajem), ko se uporablja daljša različica; npr.:
+| nvda -l 10 | Pove naj se NVDA zažene z nastavitvijo zapisovanja v dnevnik na nivoju razhroščevanja. |
+| nvda --log-file=c:\nvda.log | Pove NVDA, naj dnevnik zapiše v  c:\nvda.log |
+| nvda --log-level=20 -f c:\nvda.log | Pove NVDA, naj se zažene tako, da bo nivo zapisovanja v dnevnik na nivoju informacij in naj dnevnik zapiše v c:\nvda.log |
+
+NVDA pozna naslednje možnosti ukazne vrstice:
+|| Kratka | Dolga | Opis |
+| -h | --help | Pokaže pomoč ukazne vrstice in Izhod |
+| -q | --quit | Zapre kopijo NVDA v pomnilniku (zaključi z izvajanjem trenutne kopije NVDA). |
+| -r | --replace | Zaključi z izvajanjem trenutne kopije NVDA in zažene novo. |
+| -k | --check-running | Sporoča, če je NVDA v pogonu. To sporoča z uporabo izhodne kode. Nič (0) pomeni, da teče in ena (1) pomeni, da NVDA ni v pogonu. |
+| -f LOGFILENAME | --log-file=LOGFILENAME | Datoteka, kjer se morajo beležiti dogodki, ki se zapisujejo v dnevnik. |
+| -l LOGLEVEL | --log-level=LOGLEVEL | Najnižji nivo beleženja sporočil v dnevnik (razhroščevanje 10, info 20, opozorilo, 30, napaka 40, kritično 50). Privzeta vrednost je nastavljena na opozorilo. |
+| -c CONFIGPATH | --config-path=CONFIGPATH | Prostor, kjer so shranjene vse nastavitve za NVDA. |
+| -m | --minimal | Brez zvokov, brez vmesnika, brez sporočila po zagunu ipd. |
+| -s | --secure | Varni način (Onemogočena konzola Pythona) |
+| None | --disable-addons | Dodatki nimajo vpliva na NVDA. Isto, kot če v NVDA dodatkov ne bi bilo. |
+| None | --no-sr-flag  | Ne zamenjaj stanja globalne sistemske zastavice za bralnik zaslona. |
+| None | --install | Namesti NVDA (na novo nameščeno kopijo NVDA tudi zažene). |
+| None | --install-silent | Tiho namesti NVDA (na novo nameščene kopije NVDA ne zažene). |
+
+++ Napredno Nastavljanje Izgovorjave Simbolov ++
+V NVDA je možno nastaviti izgovorjavo ločil in drugih simbolov glede na to, kaj omogočajo možnosti v pogovornem oknu [Izgovorjave ločil/simbolov. #SymbolPronunciation]
+Na primer vi lahko določite, kako naj se symbol za vrstico pošlje k sintezi (npr. naj sinteza naredi premor ali naj uporabi modulacijo glasu.), lahko pa dodate tudi nove, druge simbole, ki niso vključeni v NVDA.
+
+Če želite to storiti, morate urediti datoteko, kjer so shranjene informacije o izgovorjavi simbolov v vašem imeniku z NVDA nastavitvami.
+Datoteka se imenuje symbols-xx.dic, kjer  xx predstavlja kodo jezika.
+Oblika te datoteke je dokumentirana v razdelku izgovorjave simbolov v navodilih za razvijalce, ki so dostopna v [razdelku namenjenemu razvijalcem NVDA spletišča.  http://community.nvda-project.org/wiki/Development]
+Vseeno pa je uporabnikom onemogočeno definiranje kompleksnih simbolov.
+
++ Druge Informacije +
+Če potrebujete več informacij ali pomoč pri uporabi NVDA, prosimo, obiščite spletno mesto NVDA na NVDA_URL.
+Tu boste našli drugo dokumentacijo, tako kot tehnično podporo in vire, ki jih je prispevala skupnost.
+Na spletnem mestu so tudi informacije in viri, ki se dotikajo razvoja za NVDA.

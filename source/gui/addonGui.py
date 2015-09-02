@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2013 NV Access Limited, Beqa Gozalishvili
+#Copyright (C) 2012-2014 NV Access Limited, Beqa Gozalishvili
 
 import os
 import wx
@@ -11,6 +11,7 @@ import languageHandler
 import gui
 from logHandler import log
 import addonHandler
+import globalVars
 
 class AddonsDialog(wx.Dialog):
 	_instance = None
@@ -29,6 +30,10 @@ class AddonsDialog(wx.Dialog):
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		entriesSizer=wx.BoxSizer(wx.VERTICAL)
+		if globalVars.appArgs.disableAddons:
+			# Translators: A message in the add-ons manager shown when all add-ons are disabled.
+			addonsDisabledLabel=wx.StaticText(self,-1,label=_("All add-ons are now disabled. To enable add-ons you must restart NVDA."))
+			mainSizer.Add(addonsDisabledLabel)
 		# Translators: the label for the installed addons list in the addons manager.
 		entriesLabel=wx.StaticText(self,-1,label=_("Installed Add-ons"))
 		entriesSizer.Add(entriesLabel)
@@ -50,6 +55,11 @@ class AddonsDialog(wx.Dialog):
 		self.aboutButton.Disable()
 		self.aboutButton.Bind(wx.EVT_BUTTON,self.onAbout)
 		entryButtonsSizer.Add(self.aboutButton)
+		# Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
+		self.helpButton=wx.Button(self,label=_("Add-on &help"))
+		self.helpButton.Disable()
+		self.helpButton.Bind(wx.EVT_BUTTON,self.onHelp)
+		entryButtonsSizer.Add(self.helpButton)
 		# Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 		self.addButton=wx.Button(self,label=_("&Install..."))
 		self.addButton.Bind(wx.EVT_BUTTON,self.OnAddClick)
@@ -77,6 +87,7 @@ class AddonsDialog(wx.Dialog):
 		self.SetSizer(mainSizer)
 		self.refreshAddonsList()
 		self.addonsList.SetFocus()
+		self.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
 
 	def OnAddClick(self,evt):
 		# Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
@@ -146,7 +157,10 @@ class AddonsDialog(wx.Dialog):
 				del progressDialog
 		finally:
 			if closeAfter:
-				self.onClose(None)
+				# #4460: If we do this immediately, wx seems to drop the WM_QUIT sent if the user chooses to restart.
+				# This seems to have something to do with the wx.ProgressDialog.
+				# The CallLater seems to work around this.
+				wx.CallLater(1, self.Close)
 
 	def OnRemoveClick(self,evt):
 		index=self.addonsList.GetFirstSelected()
@@ -165,6 +179,9 @@ class AddonsDialog(wx.Dialog):
 		elif addon.isPendingRemove:
 			# Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 			return _("remove")
+		elif globalVars.appArgs.disableAddons:
+			# Translators: The status shown for an addon when its currently suspended do to addons been disabled.
+			return _("suspended")
 		else:
 			# Translators: The status shown for an addon when its currently running in NVDA.
 			return _("running")
@@ -186,12 +203,14 @@ class AddonsDialog(wx.Dialog):
 			self.addonsList.SetItemState(activeIndex,wx.LIST_STATE_FOCUSED,wx.LIST_STATE_FOCUSED)
 		else:
 			self.aboutButton.Disable()
+			self.helpButton.Disable()
 			self.removeButton.Disable()
 
 	def onListItemSelected(self, evt):
 		index=evt.GetIndex()
 		addon=self.curAddons[index] if index>=0 else None
 		self.aboutButton.Enable(addon is not None and not addon.isPendingRemove)
+		self.helpButton.Enable(bool(addon is not None and not addon.isPendingRemove and addon.getDocFilePath()))
 		self.removeButton.Enable(addon is not None and not addon.isPendingRemove)
 
 	def onClose(self,evt):
@@ -221,6 +240,13 @@ Description: {description}
 		# Translators: title for the Addon Information dialog
 		title=_("Add-on Information")
 		gui.messageBox(message, title, wx.OK)
+
+	def onHelp(self, evt):
+		index = self.addonsList.GetFirstSelected()
+		if index < 0:
+			return
+		path = self.curAddons[index].getDocFilePath()
+		os.startfile(path)
 
 	def OnGetAddonsClick(self,evt):
 		ADDONS_URL = "http://addons.nvda-project.org"

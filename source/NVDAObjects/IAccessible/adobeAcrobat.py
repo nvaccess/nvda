@@ -1,3 +1,9 @@
+#braille.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2008-2014 NV Access Limited
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 import api
 import controlTypes
 import eventHandler
@@ -27,7 +33,8 @@ stdNamesToRoles = {
 	"P": controlTypes.ROLE_PARAGRAPH,
 	"H": controlTypes.ROLE_HEADING,
 	# H1 to H6 handled separately
-	# Span, Quote, Note, Reference, BibEntry, Code, Figure, Formula
+	# Span, Quote, Note, Reference, BibEntry, Code, Figure
+	"Formula": controlTypes.ROLE_MATH,
 	"Form": controlTypes.ROLE_FORM,
 }
 
@@ -96,6 +103,40 @@ class AcrobatNode(IAccessible):
 		if self.windowHandle == other.windowHandle and self.accID and other.accID:
 			return self.accID == other.accID
 		return super(AcrobatNode, self)._isEqual(other)
+
+	def _getNodeMathMl(self, node):
+		tag = node.GetTagName()
+		yield "<%s" % tag
+		# Output relevant attributes.
+		if tag == "mfenced":
+			for attr in "open", "close", "separators":
+				val = node.GetAttribute(attr, "XML-1.00")
+				if val:
+					yield ' %s="%s"' % (attr, val)
+		yield ">"
+		val = node.GetValue()
+		if val:
+			yield val
+		else:
+			for childNum in xrange(node.GetChildCount()):
+				try:
+					subNode = node.GetChild(childNum).QueryInterface(IPDDomElement)
+				except COMError:
+					continue
+				for sub in self._getNodeMathMl(subNode):
+					yield sub
+		yield "</%s>" % tag
+
+	def _get_mathMl(self):
+		# There could be other stuff before the math element. Ug.
+		for childNum in xrange(self.pdDomNode.GetChildCount()):
+			try:
+				child = self.pdDomNode.GetChild(childNum).QueryInterface(IPDDomElement)
+			except COMError:
+				continue
+			if child.GetTagName() == "math":
+				return "".join(self._getNodeMathMl(child))
+		raise LookupError
 
 class RootNode(AcrobatNode):
 	shouldAllowIAccessibleFocusEvent = True

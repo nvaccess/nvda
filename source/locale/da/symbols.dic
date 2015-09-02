@@ -21,7 +21,7 @@ symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	punktum	all	always
+. sentence ending	punkt	all	always
 ! sentence ending	udråbstegn	all	always
 ? sentence ending	spørgsmålstegn	all	always
 ; phrase ending	semikolon	most	always
@@ -31,7 +31,7 @@ in-word '	apostrof	all	norep
 negative number	minus	none	norep
 
 # Whitespace
-\0	tegn	# null
+\0	blank	# null
 \t	tab
 \n	linjeskift	char
 \f	sideskift	none
@@ -46,8 +46,10 @@ negative number	minus	none	norep
 $	dollar	all	norep
 £	pund	all	norep
 €	euro	all	norep
+¢	Cents	all	norep
+¥	Yen	all	norep
 %	procent	some
-&	og tegn	some
+&	og	some
 '	apostrof	all
 (	venstre parentes	most
 )	højre parentes	most
@@ -64,8 +66,8 @@ $	dollar	all	norep
 =	lig med	most
 ?	spørgsmålstegn	all
 @	snabel a	some
-[	venstre kantet parentes	most
-]	højre kantet parentes	most
+[	venstre klamme	most
+]	højre klamme	most
 \\	omvendt skråstreg	most
 ^	accent circonflex	most
 _	understregning	most
@@ -78,34 +80,84 @@ _	understregning	most
 # Other characters
 •	punkttegn	some
 …	prik prik prik	all	always
-...	punktum punktum punktum	all	always
+...	prik prik prik	all	always
 	punkttegn	some
-“ anførselstegn begynder	most
-”	anførselstegn slutter	most
+“ anførselstegn begynd	most
+”	anførselstegn slut	most
 ‘	venstre apostrof	most
 ’	højre apostrof	most
-–	en dash	most
-—	em dash	most
-●	circle	most
-¨	diaeresis	most
+–	tankestreg	most
+—	tankestreg	most
+●	cirkel	most
+¨	tremmer	most
 ‎	venstre mod højre tegn
 ‏	højre mod venstre tegn
-■	black square	some
-➔	right arrow	some
-§	section	all
-°	degrees	some
+■	sort firkant	some
+▪	sort firkant	some
+◾	sort firkant	some
+◦	hvidt punkttegn	some
+➔	højre pil	some
+§	paragraf	all
+°	grader	some
 «	double left pointing angle bracket
 »	double right pointing angle bracket
 µ	my	some
 ¹	i første	some
 ²	i anden	some
 ³	i tredje	some
-®	registreret varemærke	some
-™	Registreret varemærke	some
+®	registreret	some
+™	varemærke	some
 ©	Copyright	some
 ±	Plus eller Minus	most
 ×	gange	most
-÷	divide by	most
-→	højre pil arrow	some
+÷	divideret med	most
+←	venstre pil	some
+→	højre pil	some
 ✓	check	some
 ✔	check	some
+#Mathematical Operators U+2200 to U+220F
+
+∀	For Alle 	none
+∁	Complementær	none
+∂	Delvis afledning	none
+∃	Der eksisterer	none
+∄	Der eksisterer ikke	none
+∅	Tom mængde	none
+∆	Forøget	none
+∇	NABLA	none
+∈	Er element i	none
+∉	Er ikke element i	none
+∊	Lille er element i	none
+∋	Indeholder som element	none
+∌	Indeholder ikke som element	none
+∍	Lille indeholder som element	none
+∎	Slut på bevis	none
+∏	n-ært produkt	none
+
+# Miscellaneous Mathematical Operators
+
+∑	n-ær summering	none
+√	Kvadratrod	none
+∛	Kubikrod	none
+∜	Fjerde-rod	none
+∝	Proportionel med	none
+∞	Uendeligt	none
+∟	Ret vinkel	none
+∠	Vinkel	none
+∥	Parallel med	none
+∦	Ikke parallel med	none
+∧	Logisk og	none
+∨	Logisk eller	none
+∩	Fællesmængde	none
+∪	foreningsmængde	none
+∫	INTEGRAL	none
+∴	Derfor	none
+∵	Fordi	none
+∶	Forhold	none
+∷	Poportion	none
+≤	Mindre end eller lig med	none
+≥	Større end eller lig med	none
+⊂	Delmængde af	none
+⊃	Indeholder som delmængde	none
+⊆	Delmængde af eller lig med	none
+⊇	Indeholder eller er lig med	none

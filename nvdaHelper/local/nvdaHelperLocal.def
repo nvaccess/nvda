@@ -1,7 +1,7 @@
 EXPORTS
 	createRemoteBindingHandle
 	cancellableSendMessageTimeout
-	cancelSendMessage
+	cancelCallEvent
 	_notifySendMessageCancelled
 	nvdaHelperLocal_initialize
 	nvdaHelperLocal_terminate
@@ -9,9 +9,11 @@ EXPORTS
 	nvdaInProcUtils_registerNVDAProcess
 	nvdaInProcUtils_unregisterNVDAProcess
 	nvdaInProcUtils_sysListView32_getGroupInfo
+	nvdaInProcUtils_dumpOnCrash
 	nvdaInProcUtils_getActiveObject
 	nvdaInProcUtils_winword_expandToLine
 	nvdaInProcUtils_winword_getTextInRange
+	nvdaInProcUtils_winword_moveByLine
 	VBuf_createBuffer
 	VBuf_destroyBuffer
 	VBuf_findNodeByAttributes
@@ -38,11 +40,14 @@ EXPORTS
 	_nvdaControllerInternal_logMessage
 	_nvdaControllerInternal_typedCharacterNotify
 	_nvdaControllerInternal_installAddonPackageFromPath
+	_nvdaControllerInternal_drawFocusRectNotify
 	_nvdaController_brailleMessage
 	_nvdaController_cancelSpeech
 	_nvdaController_speakText
 	_nvdaControllerInternal_vbufChangeNotify
 	displayModel_getWindowTextInRect
+	displayModel_getFocusRect
+	displayModel_getCaretRect
 	displayModel_requestTextChangeNotificationsForWindow
 	calculateWordOffsets
 	findWindowWithClassInThread

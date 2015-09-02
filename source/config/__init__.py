@@ -61,6 +61,7 @@ confspec = ConfigObj(StringIO(
 	language = string(default="Windows")
 	saveConfigurationOnExit = boolean(default=True)
 	askToExit = boolean(default=true)
+	playStartAndExitSounds = boolean(default=true)
 	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
 	loggingLevel = string(default="INFO")
 	showWelcomeDialogAtStartup = boolean(default=true)
@@ -70,6 +71,7 @@ confspec = ConfigObj(StringIO(
 	# The synthesiser to use
 	synth = string(default=auto)
 	symbolLevel = integer(default=100)
+	trustVoiceLanguage = boolean(default=true)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 	outputDevice = string(default=default)
 	autoLanguageSwitching = boolean(default=true)
@@ -140,6 +142,7 @@ confspec = ConfigObj(StringIO(
 	speechInterruptForCharacters = boolean(default=true)
 	speechInterruptForEnter = boolean(default=true)
 	allowSkimReadingInSayAll = boolean(default=False)
+	handleInjectedKeys= boolean(default=true)
 
 [virtualBuffers]
 	maxLineLength = integer(default=100)
@@ -149,6 +152,7 @@ confspec = ConfigObj(StringIO(
 	autoPassThroughOnCaretMove = boolean(default=false)
 	passThroughAudioIndication = boolean(default=true)
 	autoSayAllOnPageLoad = boolean(default=true)
+	trapNonCommandGestures = boolean(default=true)
 
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
@@ -165,6 +169,7 @@ confspec = ConfigObj(StringIO(
 	reportPage = boolean(default=true)
 	reportLineNumber = boolean(default=False)
 	reportLineIndentation = boolean(default=False)
+	reportParagraphIndentation = boolean(default=False)
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)
 	reportTableHeaders = boolean(default=True)
@@ -441,6 +446,8 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	@param subdir: The subdirectory to be used, C{None} for the name of C{module}.
 	@type subdir: str
 	"""
+	if globalVars.appArgs.disableAddons:
+		return
 	if not subdir:
 		subdir = module.__name__
 	# Python 2.x doesn't properly handle unicode import paths, so convert them.

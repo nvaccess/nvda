@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #NVDAObjects/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-20012 NVDA Contributors
+#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -28,6 +29,8 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	"""A default TextInfo which is used to enable text review of information about widgets that don't support text content.
 	The L{NVDAObject.basicText} attribute is used as the text to expose.
 	"""
+
+	locationText=None
 
 	def _get_unit_mouseChunk(self):
 		return textInfos.UNIT_STORY
@@ -75,7 +78,9 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			clsList.append(APIClass)
 		# Allow app modules to choose overlay classes.
 		appModule=obj.appModule
-		if appModule and "chooseNVDAObjectOverlayClasses" in appModule.__class__.__dict__:
+		# optimisation: The base implementation of chooseNVDAObjectOverlayClasses does nothing,
+		# so only call this method if it's been overridden.
+		if appModule and not hasattr(appModule.chooseNVDAObjectOverlayClasses, "_isBase"):
 			appModule.chooseNVDAObjectOverlayClasses(obj, clsList)
 		# Allow global plugins to choose overlay classes.
 		for plugin in globalPluginHandler.runningPlugins:
@@ -386,6 +391,10 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		return ""
 
+	def _get_controllerFor(self):
+		"""Retreaves the object/s that this object controls."""
+		return []
+
 	def _get_actionCount(self):
 		"""Retreaves the number of actions supported by this object."""
 		return 0
@@ -435,6 +444,21 @@ class NVDAObject(baseObject.ScriptableObject):
 		@rtype: tuple of int
 		"""
 		raise NotImplementedError
+
+	def _get_locationText(self):
+		"""A message that explains the location of the object in friendly terms."""
+		location=self.location
+		if not location:
+			return None
+		(left,top,width,height)=location
+		deskLocation=api.getDesktopObject().location
+		(deskLeft,deskTop,deskWidth,deskHeight)=deskLocation
+		percentFromLeft=(float(left-deskLeft)/deskWidth)*100
+		percentFromTop=(float(top-deskTop)/deskHeight)*100
+		percentWidth=(float(width)/deskWidth)*100
+		percentHeight=(float(height)/deskHeight)*100
+		# Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
+		return _("Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of screen, height is {height:.1f} per cent of screen").format(left=percentFromLeft,top=percentFromTop,width=percentWidth,height=percentHeight)
 
 	def _get_parent(self):
 		"""Retreaves this object's parent (the object that contains this object).
@@ -584,7 +608,7 @@ class NVDAObject(baseObject.ScriptableObject):
 			text=self.makeTextInfo(textInfos.POSITION_ALL).text
 			return self.presType_content if text and not text.isspace() else self.presType_layout
 
-		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_TITLEBAR,controlTypes.ROLE_LABEL):
+		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION, controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_TITLEBAR, controlTypes.ROLE_LABEL, controlTypes.ROLE_WHITESPACE):
 			return self.presType_layout
 		name = self.name
 		description = self.description
@@ -1023,3 +1047,15 @@ This code is executed if a gain focus event is received by this object.
 	# Don't cache sleepMode, as it is derived from a property which might change
 	# and we want the changed value immediately.
 	_cache_sleepMode = False
+
+	def _get_mathMl(self):
+		"""Obtain the MathML markup for an object containing math content.
+		This will only be called (and thus only needs to be implemented) for
+		objects with a role of L{controlTypes.ROLE_MATH}.
+		@raise LookupError: If MathML can't be retrieved for this object.
+		"""
+		raise NotImplementedError
+
+	#: The language/locale of this object.
+	#: @type: basestring
+	language = None

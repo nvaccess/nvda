@@ -1,6 +1,6 @@
 #versionInfo.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2013 NV Access Limited
+#Copyright (C) 2006-2015 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -27,9 +27,11 @@ def _updateVersionFromVCS():
 	except:
 		pass
 
+# ticket:3763#comment:19: name must be str, not unicode.
+# Otherwise, py2exe will break.
 name="NVDA"
 longName=_("NonVisual Desktop Access")
-version="2014.1dev"
+version="2015.4dev"
 publisher="unknown"
 updateVersionType=None
 try:
@@ -38,7 +40,7 @@ except ImportError:
 	_updateVersionFromVCS()
 description=_("A free and open source screen reader for Microsoft Windows")
 url="http://www.nvaccess.org/"
-copyrightYears="2006-2013"
+copyrightYears="2006-2015"
 copyright=_("Copyright (C) {years} NVDA Contributors").format(
 	years=copyrightYears)
 aboutMessage=_(u"""{longName} ({name})

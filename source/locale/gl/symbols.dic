@@ -16,9 +16,9 @@ complexSymbols:
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 
 # Others
-decimal point	(?<=\d)\.(?=\d)
+decimal point	(?<![^\d -])\.(?=\d)
 in-word -	(?<=[^\W_])[-]
-negative number	(?<!\w)-(?=[$£€¥]?\d)
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
 symbols:
@@ -61,8 +61,8 @@ $	dólar	all	norep
 '	apóstrofo	all
 (	abrir paréntese	most
 )	pechar paréntese	most
-*	asterisco	most
-+	máis	most
+*	asterisco	some
++	máis	some
 ,	coma	all	always
 -	guión	most
 .	ponto	some
@@ -71,7 +71,7 @@ $	dólar	all	norep
 ;	ponto e coma	most
 <	menor que	most
 >	maior que	most
-=	igual	most
+=	igual	some
 ?	pechar interrogación	all
 @	arroba	some
 [	abrir corchete	most
@@ -103,7 +103,10 @@ _	subliñado	most
 ‎	marca de esquerda a dereita	char
 ‏	marca de dereita a esquerda	char
 ■	Barra vertical cortada	some
-➔	flecha á derecha	some
+▪	Barra vertical cortada	some
+◾	Barra vertical cortada	some
+◦	Viñeta branca	some
+➔	flecha á dereita	some
 §	Sección	most
 °	grados	some
 «	Abrir Comiñas angulares
@@ -118,6 +121,54 @@ _	subliñado	most
 ±	Máis ou menos	most
 ×	multiplicado por	most
 ÷	dividido por	most
+←	Flecha esquerda	some
 →	Flecha dereita	some
 ✓	marcado	some
 ✔	marcado	some
+
+#Mathematical Operators U+2200 to U+220F
++
+∀	Por Todos 	none
+∁	Complemento	none
+∂	Derivativa Parcial	none
+∃	Existe	none
+∄	Non Existe	none
+∅	Conxunto Valdeiro	none
+∆	INCREMENTO	none
+∇	NABLA	none
+∈	Pertence a	none
+∉	Non Pertence a	none
+∊	Elemento pequeno de	none
+∋	Contén como Membro a	none
+∌	Non contén como Membro a	none
+∍	Contén como Membro Pequeno a	none
+∎	Fin de Proba	none
+∏	N-Produto Aritmético	none
+
+# Miscellaneous Mathematical Operators
+
+∑	N-Suma Aritmética	none
+√	Raíz Cadrada	none
+∛	Raíz Cúbica	none
+∜	Raíz Cuadrática	none
+∝	Proporcioal a	none
+∞	Infinito	none
+∟	Ángulo Dereito	none
+∠	Ángulo	none
+∥	Paralelo A	none
+∦	Non Paralelo A	none
+∧	E Lóxico	none
+∨	Ou Lóxico	none
+∩	Intersección	none
+∪	Unión	none
+∫	Integral	none
+∴	Por Tanto	none
+∵	Porrque	none
+∶	RATIO	none
+∷	Proporción	none
+≤	Menor ou Igual a	none
+≥	Maior ou Igual A	none
+⊂	Subconxunto De	none
+⊃	Superconxunto de 	none
+⊆	Subconxunto de Ou Igual A	none
+⊇	Superconxunto de Ou Igual A	none
