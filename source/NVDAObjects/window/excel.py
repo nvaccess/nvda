@@ -960,7 +960,6 @@ class ExcelCell(ExcelBase):
 			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=previous)
 		
 	def _get_description(self):
-		text="Input Message is "
 		try:
 			inputMessageTitle=self.excelCellObject.validation.inputTitle
 		except (COMError,NameError,AttributeError):
@@ -969,12 +968,12 @@ class ExcelCell(ExcelBase):
 			inputMessage=self.excelCellObject.validation.inputMessage
 		except (COMError,NameError,AttributeError):
 			inputMessage=None
-		if inputMessageTitle and inputMessage:
-			return text+inputMessageTitle+inputMessage
+		if inputMessage and inputMessageTitle:
+			return _("Input Message is {title} {message}").format( title = inputMessageTitle , message = inputMessage)
 		elif inputMessage:
-			return text+inputMessage
+			return _("Input Message is {message}").format( message = inputMessage)
 		else:
-			return
+			return None
 
 	def script_reportComment(self,gesture):
 		commentObj=self.excelCellObject.comment
