@@ -161,8 +161,11 @@ def showInstallGui():
 			# Translators: The label of a button to proceed with installation,
 			# even though this is not recommended.
 			label=_("&Proceed with installation (not recommended)"))
+		sizer.Add(item)
 		item = wx.Button(d, id=wx.ID_CANCEL)
+		sizer.Add(item)
 		item.SetFocus()
+		mainSizer.Add(sizer)
 		d.Sizer = mainSizer
 		mainSizer.Fit(d)
 		d.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
