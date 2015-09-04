@@ -1648,6 +1648,9 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,reason=None,uni
 		linePrefix=attrs.get("line-prefix")
 		if linePrefix:
 			textList.append(linePrefix)
+		listLevel=attrs.get("list-level")
+		if listLevel and listLevel > 0:
+			textList.append("level %s" % listLevel)
 	if attrsCache is not None:
 		attrsCache.clear()
 		attrsCache.update(attrs)

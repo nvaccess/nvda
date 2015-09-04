@@ -540,6 +540,10 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 							appendCharToXML(listString[i],tempText,true);
 						}
 						formatAttribsStream<<L"line-prefix=\""<<tempText<<L"\" ";
+						long listLevel = -1;
+						if(_com_dispatch_raw_propget(pDispatchListFormat,wdDISPID_LISTFORMAT_LISTLEVELNUMBER,VT_I4,&listLevel)==S_OK) {
+							formatAttribsStream<<L"list-level=\""<<listLevel<<L"\" ";
+						}
 					}
 				}
 				SysFreeString(listString);
