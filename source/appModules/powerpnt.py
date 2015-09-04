@@ -856,6 +856,7 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 			bulletText=getBulletText(b)
 			if bulletText:
 				formatField['line-prefix']=bulletText
+				formatField['list-level']=curRun.IndentLevel
 		font=curRun.font
 		if formatConfig['reportFontName']:
 			formatField['font-name']=font.name
