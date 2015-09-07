@@ -1,0 +1,77 @@
+Import([
+	'env',
+	'sourceDir',
+	'espeakRepo',
+])
+
+wxLibPath=Dir("#include/wxmsw/lib/vc_dll")
+wxDllSuffix="_vc120.dll"
+wxIncludePath=Dir("#include/wxmsw/include")
+
+env=env.Clone()
+env.Append(CPPPATH=[wxIncludePath,wxLibPath.Dir('mswu')])
+env.Append(LIBPATH=wxLibPath)
+env.Append(CPPDEFINES=['_ESPEAKEDIT','WXUSINGDLL','__WXMSW__','_UNICODE','WIN32','_WINDOWS'])
+
+
+tempSrcDir=Dir('src')
+
+wxLibNames=['wxbase30u','wxmsw30u_core','wxmsw30u_adv','wxmsw30u_html']
+
+espeakEdit=env.Program(
+	target='espeakEdit',
+	srcdir=tempSrcDir.name,
+	source=[
+		"compiledata.cpp",
+		"compiledict.cpp",
+		"debug.cpp",
+		"dictionary.cpp",
+		"espeak_command.cpp",
+		"espeakedit.cpp",
+		"event.cpp",
+		"extras.cpp",
+		"fifo.cpp",
+		"formantdlg.cpp",
+		"intonation.cpp",
+		"klatt.cpp",
+		#"mbrowrap.cpp",
+		"menus.cpp",
+		"numbers.cpp",
+		"options.cpp",
+		"phonemelist.cpp",
+		"prosodydisplay.cpp",
+		"readclause.cpp",
+		"setlengths.cpp",
+		"speak_lib.cpp",
+		"spect.cpp",
+		"spectdisplay.cpp",
+		"spectseq.cpp",
+		"synthdata.cpp",
+		"synthesize.cpp",
+		"synth_mbrola.cpp",
+		"translate.cpp",
+		"transldlg.cpp",
+		"tr_languages.cpp",
+		"voicedlg.cpp",
+		"voices.cpp",
+		"vowelchart.cpp",
+		"wave.cpp",
+		"wavegen.cpp",
+		"sonic.cpp",
+	],
+	LIBS=['advapi32']+wxLibNames,
+)
+
+#make a temp copy of src, but using the windows espeakEdit version of speech.h
+for f in env.Glob(espeakRepo.abspath+'/src/*'):
+	if f.name.lower()=="speech.h":
+		continue
+	env.Command(tempSrcDir.File(f.name),f,Copy('$TARGET','$SOURCE'))
+env.Command(tempSrcDir.File("espeakedit_speech.h"),espeakRepo.File('platforms/windows/espeakedit/src/speech.h'),Copy('$TARGET','$SOURCE'))
+
+for libName in wxLibNames:
+	dllName=libName+wxDllSuffix
+	dllCopy=env.Command(File(dllName),wxLibPath.File(dllName),Copy('$TARGET','$SOURCE'))
+	env.Depends(espeakEdit,dllCopy)
+
+Return(['espeakEdit'])

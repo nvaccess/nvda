@@ -8,10 +8,20 @@ import ctypes
 from glob import glob
 
 env=env.Clone()
-env.Append(CPPDEFINES='/DLIBRARY')
+env.Append(CCFLAGS='/W0')
 #Whole-program optimization causes eSpeak to distort and worble with its Klatt4 voice
 #Therefore specifically force it off
 env.Append(CCFLAGS='/GL-')
+
+espeakRepo=Dir("#include/espeak")
+
+if  os.path.exists(Dir("#include/wxmsw").abspath):
+	espeakEdit=env.SConscript('espeakEdit/sconscript',exports=['env','espeakRepo'])[0]
+else:
+	espeakEdit=File("#miscDeps/tools/espeakEdit.exe")
+
+env=env.Clone()
+env.Append(CPPDEFINES=[('BUILDING_DLL',1),'LIBRARY'])
 
 def _compilePhonemeAndDictData_buildEmitter(target,source,env):
 	dictSources=env.Flatten([env.Glob(source[0].abspath+'\\*_%s'%ext) for ext in ('rules','list','listx','extra')])
@@ -28,7 +38,7 @@ def _compilePhonemeAndDictData_buildEmitter(target,source,env):
 
 env['BUILDERS']['compileEspeakPhonemeAndDictData']=Builder(
 	action=[
-		[File("#miscDeps/tools/espeakedit.exe"),"--compile"]
+		[espeakEdit,"--compile"]
 	],
 	emitter=_compilePhonemeAndDictData_buildEmitter,
 )
@@ -45,13 +55,6 @@ class espeak_VOICE(ctypes.Structure):
 		('score',ctypes.c_int),
 		('spare',ctypes.c_void_p),
 	]
-
-espeakRepo=Dir("#include/espeak")
-
-env=env.Clone()
-env.Append(CCFLAGS='/W0')
-env.Append(CPPDEFINES=[('BUILDING_DLL',1)])
-env.Prepend(CPPPATH=espeakRepo.Dir('platforms/windows/windows_dll/src'))
 
 def espeak_compileDict_action(target,source,env):
 	# We want the eSpeak dll to be freed after each dictionary.
@@ -117,6 +120,7 @@ espeakLib=env.SharedLibrary(
 
 #Compile phoneme data
 tempPhonemeAndDictDataFiles=env.compileEspeakPhonemeAndDictData(espeakRepo.Dir('espeak-data'),[espeakRepo.Dir('dictsource'),espeakRepo.Dir('phsource')],ENV={'ESPEAK_DATA_PATH':espeakRepo.abspath})
+env.Depends(tempPhonemeAndDictDataFiles,espeakEdit)
 phonemeAndDictDataFiles=[env.Command(espeakDataDir.File(f.name),f,Copy('$TARGET','$SOURCE')) for f in tempPhonemeAndDictDataFiles]
 #Ensure these don't try to get built in paralell
 for f in phonemeAndDictDataFiles:
