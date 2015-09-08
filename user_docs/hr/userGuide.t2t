@@ -56,7 +56,7 @@ Ovo se primjenjuje na originalni i izmjenjeni softver, kao i na rad koji je iz t
 Za više pojedinosti, možete [pogledati cijelu licencu. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Zahtjevi Sustava +
-- Operacijski sustavi: sve 32-bitne i 64-bitne inačice Windows XP, Windows Vista, Windows 7 i Windows 8 (uključujući Poslužiteljske operacijske sustave)
+- Operacijski sustavi: sve 32-bitne i 64-bitne inačice Windows XP, Windows Vista, Windows 7, Windows10, i Windows 8 (uključujući Poslužiteljske operacijske sustave)
  - Za Windows XP 32-bitni operacijski sustav, NVDA zahtjeva Servisni paket 2 ili viši.
  - Za Windows Server 2003, NVDA zahtjeva Servisni paket 1 ili viši.
 - Memorija: 256 mb ili više RAM-a
@@ -269,7 +269,7 @@ Postoji nekoliko tipkovničkih prečaca koji su korisni za kretanje po objektima
 | Izvijesti o trenutnom fokusu | NVDA+tab | NVDA+tab | Obavještava o objektuk oji je trenutno u fokusu. Kad pritisnete dvaput, slovkat će izgovoreno |
 | Izvijesti o naslovu | NVDA+t | NVDA+t | Izvještava o naslovu trenutnog prozora. Kad pritisnete dvaput, NVDA će slovkati izgovoreno. Kad pritisnete triput kopirat ćete naslov u međuspremnik. |
 | Pročitaj trenutni prozor | NVDA+b | NVDA+b | čita sve kontrole u trenutno aktivnom prozoru (korisno za dijaloške okvire) |
-| Pročitaj traku stanja | NVDA+end | NVDA+shift+end | Čita traku stanja ako je NVDA pronađe. Također pomiće objekt navigatora na tu lokaciju |
+| čitaj statusnu traku | NVDA+end | NVDA+shift+end | ČIta traku stanja ako ju NVDA pronađe. također premješta objekt navigacije na tu lokaciju. Kada se pritisne dvaput, informacija na statusnoj traci bit će slovkana |
 %kc:endInclude
 
 ++ Kretanje pomoću kursora sustava ++[SystemCaret]
@@ -503,6 +503,12 @@ Da biste se prebacivali na početak ili kraj sadržaja popisa kao što su popisi
 || Naziv | Prečac | opis |
 | premjesti se na početak sadržaja | shift+zarez | pomiče se na početak sadržaja (popisa, tablice, itd.) gdje je kursor pozicioniran |
 | Pomakni se na kraj sadržaja | zarez | Pomiče na kraj sadržaja (popisa, tablice, itd.) gdje je kursor pozicioniran |
+
+%kc:endInclude
+Neke web aplikacije poput  Gmaila, Twittera i Facebooka koriste jednoslovne tipkovničke prećace.
+Ako ih želite koristiti istovremeno sa kursorskim tipkama kako biste mogli nesmetano čitati sadržaj web stranice, možete onemogućiti nvda brzo kretanje po dokumentu.
+%kc:beginInclude
+Da biste isključili ili uključili brzo kretanje za trenutni dokument, pritisnite NVDA+shift+razmaknica.
 %kc:endInclude
 
 ++ Lista elemenata ++
@@ -1756,10 +1762,9 @@ Sljedeći brajični retci su podržani:
 -
 
 Ako je BrxCom instaliran, NVDA će koristiti BrxCom.
-BrxCom je alat koji vam omogućuje korištenje unosa brajičnih znakova s brajičnog retka neovisno od čitača ekrana.
+BrxCom je alat koji omogućuje unos sa tipkovnice odvojen od čitača ekrana.
 Papenmeier će uskoro objaviti novu inačicu programa BrxCom koja će raditi sa NVDA čitačem zaslona.  
-Unos brajičnih znakova je moguć kada koristite Trio, BRAILLEX Live 20 i Braillex Live uređaje bez BrxCom programa.
-Unos brajičnih znakova također je moguć uz pomoć Live Plus model, ali samo uz pomoć BrxCom programa.
+Unos znakova sa tipkovnice brajičnog retka moguć je koristeći Trio i BRAILLEX Live modele brajičnih redaka..
 
 Većina uređaja ima tipku Easy Access Bar (EAB) koja omogućuje brzo i intuitivno rukovanje.
 EAB može biti premještan u četiri smjera gdje u glavnom svaki smjer ima dva preklopnika.
@@ -1960,6 +1965,41 @@ Molimo pogledajte vaše BrailleNote upute za upotrebu da biste znali gdje su smj
 | Windows tipka | razmak+točkica2+točkica4+točkica5+točkica6 (razmak+w) |
 | Alt | razmak+točkica1+točkica3+točkica4 (razmak+m) |
 | Uključi/isključi pomoč pri unosu | razmak+točkica2+točkica3+točkica6 (razmak+spušteno h) |
+%kc:endInclude
+
+++ EcoBraille ++
+NVDA podržava EcoBraille brajične retke koje proizvodi [ONCE http://www.once.es/].
+Slijedeći modeli su podržani:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+U NVDA možete podesiti priključak na koji će brajični redak biti prikljućen, u brajičnim postavkama.
+
+Slijede Dodjele tipaka za EcoBraille brajične retke.
+Molimo pogledajte [EcoBraille korisničko uputstvo ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] Za opis i smještaj tipaka na vašem brajičnom retku.
+
+%kc:beginInclude
+|| Naziv | Tipka |
+| Pomakni brajični redak nazad za red | T2 |
+| Pomakni brajični redak napred za jedan red | T4 |
+| Pomakni brajični redak na prethodnu liniju teksta | T1 |
+| Pomakni brajični redak na slijedeću liniju teksta | T5 |
+| Usmjeri se na brajičnu ćeliju | Routing |
+| Aktiviraj trenutni objekt navigacije | T3 |
+| Prebaci se na slijedeći način pregleda | F1 |
+| Pomakni se na prijašnji objekt sadržaja | F2 |
+| Pomakni se na prethodni način pregleda | F3 |
+| Pomakni se na prethodni objekt | F4 |
+| Čitaj trenutni objekt | F5 |
+| Prebaci se na slijedeći objekt | F6 |
+| Premjesti na objekt koji ima fokus | F7 |
+| Premjesti se na prvi nadređeni objekt | F8 |
+| Premjesti fokus sustava i kursor na trenutnu poziciju | F9 |
+| Izvjesti o poziciji preglednog kursora | F0 |
+| Ukljući /iskljući brajicu povezanu na | A |
 %kc:endInclude
 
 ++ BRLTTY ++

@@ -4,6 +4,9 @@
 %!includeconf: ../changes.t2tconf
 
 = 2015.3 =
+Novosti u ovoj inačici uključuju početnu podršku za windows 10 operacijski sustav; mogućnost onemogučavanja brzog kretanja u načinu pregleda (korisno za neke web aplikacije); unapređenja u internet exploreru; i popravke grešaka tzv. izmješanog teksta prilikom upisivanja znakova koristeći neke aplikacije sa uključenom brajicom.
+
+
 == Nove Značajke ==
 - Sada se izgovara postojanje pravopisnih pogrešaka u poljima za uređivanje u internet exploreru i drugim MSHTML kontrolama. (#4174)
 - Kada se pojave u tekstu, puno više matematičkih simbola je sada izgovoreno. (#3805)
@@ -12,10 +15,12 @@
 - U načinu pregleda sada možete uključivati brzo kretanje pomoću navigacijskih tipki pritiskom kombinacije tipaka NVDA+shift+razmak. Kada je Ova opcija isključena, navigacijske tipke za brzo kretanje počinju se prosljeđivati drugoj aplikaciji /programu, što je korisno za neke web aplikacije poput gmaila, twittera i Facebooka. (#3203)
 - Nove brajične tablice: Finski šestotočkasta brajica, irski puno pismo, irski kratkopis, korejsko puno pismo (2006), korejski kratkopis (2006). (#5137, #5074, #5097)
 - Sada je podržana qwerty tipkovnica na  Papenmeier BRAILLEX Live Plus brajičnom retku. (#5181)
+- Eksperimentalna podrška za Microsoft Edge web preglednik i pregledački mehanizam u Windowsima 10. (#5212)
 
 
 == Izmjene ==
 - Nadograđen LibLouis brajični prevoditelj na inačicu 2.6.3. (#5137)
+- Prilikom pokušaja instalacije starije inačice NVDA od one koja je trenutno instalirana, sada ćete biti upozoreni da to nije preporučljivo, i da biste trebali ukloniti prethodnu inačicu NVDA prije nastavka instalacije starije inačice. (#5037)
 
 
 == Ispravke Grešaka ==
@@ -30,10 +35,15 @@
 - Pri prikazu brajice, više se ne prikazuju nepotrebni razmaci /bjeline /prazni prostori prije ili poslije oznaka za kontrole i oblikovanje teksta. (#5043)
 - Kada program reagira sporo, i kada se prebacujete sa tog programa, NVDA NVDA puno bolje reagira u drugim aplikacijama u većini slučajeva. (#3831)
 - Sada se izgovaraju pozadinske obavijesti u windowsima 10. (#5136)
+- Sada se izgovara vrijednost koja se mijenja  u nekim (UI Automation) odabirnim okvirima gdje to prije nije radilo.
+- u načinu pregleda u internetskim preglednicima, pritiskanje taba se sada ponaša kako je to očekivano poslije tabanja do okvira dokumenta. (#5227)
+- windows 10 zaslon zaključavanja može se zatvoriti koristeći zaslon osjetljiv na dodir. (#5220)
+- U windowsima 7 i novijim, tekst više nije izmješan kada upisujete tekst u većini aplikacija poput Wordpada i Skypea sa brajičnim retkom. (#4291)
+- Na windows 10 zaslonu zaključavanja, više nije moguće čitanje međuspremnika, pristup pokrenutim programima uz pomoć preglednog kursora, izmjena nvda konfiguracije, itd. (#5269)
 
 
 == Izmjene za razvojne programere ==
-Za više informacija, pogledajte dokument na engleskom jeziku.
+		Za više informacija, pogledajte dokument na engleskom jeziku.
 
 
 = 2015.2 =

@@ -102,6 +102,7 @@ class CursorManager(baseObject.ScriptableObject):
 
 	def _set_selection(self, info):
 		info.updateSelection()
+		review.handleCaretMove(info)
 		braille.handler.handleCaretMove(self)
 
 	def _caretMovementScriptHelper(self,gesture,unit,direction=None,posConstant=textInfos.POSITION_SELECTION,posUnit=None,posUnitEnd=False,extraDetail=False,handleSymbols=False):
@@ -353,10 +354,12 @@ class _ReviewCursorManagerTextInfo(textInfos.TextInfo):
 	"""
 
 	def updateCaret(self):
-		self.obj.selection = self
+		info=self.copy()
+		info.collapse()
+		self.obj._selection = info
 
 	def updateSelection(self):
-		self.obj.selection = self
+		self.obj._selection = self.copy()
 
 class ReviewCursorManager(CursorManager):
 	"""
@@ -373,17 +376,9 @@ class ReviewCursorManager(CursorManager):
 
 	def makeTextInfo(self, position):
 		if position == textInfos.POSITION_SELECTION:
-			return self.selection
+			return self._selection.copy()
 		elif position == textInfos.POSITION_CARET:
-			sel = self.selection
+			sel = self._selection.copy()
 			sel.collapse()
 			return sel
 		return super(ReviewCursorManager, self).makeTextInfo(position)
-
-	def _get_selection(self):
-		return self._selection.copy()
-
-	def _set_selection(self, info):
-		self._selection = info.copy()
-		review.handleCaretMove(info)
-		braille.handler.handleCaretMove(self)

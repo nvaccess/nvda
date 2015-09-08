@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-15 19:09+1000\n"
-"PO-Revision-Date: 2015-07-16 13:01-0800\n"
-"Last-Translator: Dong hui Park <hi@aheu.org>\n"
+"POT-Creation-Date: 2015-08-06 19:09+1000\n"
+"PO-Revision-Date: 2015-08-08 15:36-0800\n"
+"Last-Translator: Joseph Lee <joseph.lee22590@gmail,com>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
 "Language: ko_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.6.5\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -738,11 +738,11 @@ msgstr "브라우즈 모드"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
-msgstr ""
+msgstr "척 글자 명령 해제"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
 msgid "Single letter navigation on"
-msgstr ""
+msgstr "첫 글자 명령 사용"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 msgid ""
@@ -750,6 +750,8 @@ msgid ""
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
 msgstr ""
+"첫 글자 명령 사용을 토글합니다. 첫 글자 명령 사용시 여러 페이지 요소로 이동"
+"할 수 있고 첫 글자 명령 해제시 웹 앱에서 명령을 처리합니다"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
@@ -759,7 +761,7 @@ msgstr "본 요소를 지원하지 않는 문서임"
 msgid "Lists various types of elements in this document"
 msgstr "문서에 포함된 여러 요소를 보여줍니다"
 
-#. Translators: the description for the activatePosition script on virtualBuffers.
+#. Translators: the description for the activatePosition script on browseMode documents.
 msgid "activates the current object in the document"
 msgstr "현재 문서에서 포커스된 객체를 실행합니다."
 
@@ -1234,6 +1236,43 @@ msgstr "바로가기 (&A)"
 #. in the browse mode Elements List dialog.
 msgid "&Move to"
 msgstr "커서 이동 (&M)"
+
+#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
+#, python-format
+msgid "%s landmark"
+msgstr "%s 랜드마크"
+
+#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "%s 선택됨"
+
+#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
+msgid "No long description"
+msgstr "상세 설명 없음"
+
+#. Translators: the description for the activateLongDescription script on browseMode documents.
+msgid "Shows the long description at this position if one is found."
+msgstr "현 위치에 상세 설명이 있다면 그 내용을 보여줍니다."
+
+#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
+#. But there is no container.
+msgid "Not in a container"
+msgstr "컨테이너 요소 아님"
+
+#. Translators: Description for the Move to start of container command in browse mode.
+msgid "Moves to the start of the container element, such as a list or table"
+msgstr "케럿이 위치한 컨테이너 요소(목록, 표 등)의 맨 앞으로 이동합니다. "
+
+#. Translators: a message reported when:
+#. Review cursor is at the bottom line of the current navigator object.
+#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
+msgid "bottom"
+msgstr "밑"
+
+#. Translators: Description for the Move past end of container command in browse mode.
+msgid "Moves past the end  of the container element, such as a list or table"
+msgstr "케럿이 위치한 컨테이너 요소(목록, 표 등)의 맨 끝으로 이동합니다. "
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1964,11 +2003,6 @@ msgctxt "color name"
 msgid "Yellow Green"
 msgstr "연두색"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "%s 선택됨"
-
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
@@ -2093,7 +2127,6 @@ msgid "cell"
 msgstr "셀"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
-#. Translators: A column in a column chart.
 msgid "column"
 msgstr "열"
 
@@ -2810,9 +2843,9 @@ msgid "Braille"
 msgstr "점자 출력"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: The label for the Tools submenu in NVDA menu.
+msgctxt "script category"
 msgid "Tools"
-msgstr "도구 (&T)"
+msgstr "도구"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: a touch screen gesture
@@ -3464,12 +3497,6 @@ msgstr ""
 "리뷰커서가 위치한 현재 화면 탐색 객체의 줄을 읽습니다. 이 키를 두번 누르면 "
 "이 줄을 한글자씩 읽게 됩니다. "
 
-#. Translators: a message reported when:
-#. Review cursor is at the bottom line of the current navigator object.
-#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "밑"
-
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
@@ -3554,7 +3581,7 @@ msgstr ""
 
 #. Translators: A speech mode which disables speech output.
 msgid "speech mode off"
-msgstr "음성 출력 모드: 출력 않함"
+msgstr "음성 출력 모드: 출력 안함"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
 msgid "speech mode beeps"
@@ -4084,7 +4111,7 @@ msgstr "설명서"
 msgid "Commands Quick Reference"
 msgstr "기능키 목록"
 
-#. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
+#. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
 msgstr "사용 설명서 (&U)"
 
@@ -4729,29 +4756,64 @@ msgstr "NVDA 음성 출력 뷰어"
 msgid "&Language"
 msgstr "언어 (&L)"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Language"
+msgstr "언어"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Voice"
 msgstr "보이스 (&V)"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Voice"
+msgstr "보이스"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&ariant"
 msgstr "보이스 버전 (&A)"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Variant"
+msgstr "보이스 버전"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
 msgstr "음성 속도 (&R)"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate"
+msgstr "음성 속도"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "음성 크기 (&O)"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Volume"
+msgstr "음성 크기"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
 msgstr "음성 높이 (&P)"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Pitch"
+msgstr "음성 높이"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "억양 (&I)"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Inflection"
+msgstr "억양"
 
 msgid "text mode"
 msgstr "텍스트 모드"
@@ -5761,6 +5823,14 @@ msgstr "NVDA 설치 (&I)..."
 msgid "Reload plugins"
 msgstr "플러그인 재등록 (&R)"
 
+#. Translators: The label for the Tools submenu in NVDA menu.
+msgid "Tools"
+msgstr "도구 (&T)"
+
+#. Translators: The label of a menu item to open NVDA user guide.
+msgid "&User Guide"
+msgstr "사용 설명서 (&U)"
+
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
 msgstr "NVDA 기능키 목록 (&Q)"
@@ -6237,6 +6307,7 @@ msgstr ""
 "니다.\n"
 "계속하시겠습니까?"
 
+#. Translators: The title of a warning dialog.
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 msgid "Warning"
 msgstr "경고"
@@ -6359,6 +6430,22 @@ msgstr "휴대용 버전 환경을 현재 사용자 개정에 복사 (&P)"
 #. Translators: The label of a button to continue with the operation.
 msgid "&Continue"
 msgstr "계속 (&C)"
+
+#. Translators: A warning presented when the user attempts to downgrade NVDA
+#. to an older version.
+msgid ""
+"You are attempting to install an earlier version of NVDA than the version "
+"currently installed. If you really wish to revert to an earlier version, you "
+"should first cancel this installation and completely uninstall NVDA before "
+"installing the earlier version."
+msgstr ""
+"현재 설치된 버전보다 이전 버전을 설치하려고 합니다. 만약 이전 버전을 설치하려"
+"면 현재 설치된 버전을 제거하신 후 이전 버전을 설치하십시오."
+
+#. Translators: The label of a button to proceed with installation,
+#. even though this is not recommended.
+msgid "&Proceed with installation (not recommended)"
+msgstr "계속 설치 (권장 않함) (&P)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -7274,11 +7361,6 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr " {x}, {y}"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-#, python-format
-msgid "%s landmark"
-msgstr "%s 랜드마크"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "새로 고침"
@@ -7286,14 +7368,6 @@ msgstr "새로 고침"
 #. Translators: Reported while loading a document.
 msgid "Loading document..."
 msgstr "문서 여는중..."
-
-#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-msgid "No long description"
-msgstr "상세 설명 없음"
-
-#. Translators: the description for the activateLongDescription script on virtualBuffers.
-msgid "Shows the long description at this position if one is found."
-msgstr "현 위치에 상세 설명이 있다면 그 내용을 보여줍니다."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -7334,19 +7408,6 @@ msgstr "다음 테이블 열로 이동합니다"
 #. Translators: the description for the previous table column script on virtualBuffers.
 msgid "moves to the previous table column"
 msgstr "이전 테이블 열로 이동합니다"
-
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
-msgid "Not in a container"
-msgstr "컨테이너 요소 아님"
-
-#. Translators: Description for the Move to start of container command in browse mode.
-msgid "Moves to the start of the container element, such as a list or table"
-msgstr "케럿이 위치한 컨테이너 요소(목록, 표 등)의 맨 앞으로 이동합니다. "
-
-#. Translators: Description for the Move past end of container command in browse mode.
-msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "케럿이 위치한 컨테이너 요소(목록, 표 등)의 맨 끝으로 이동합니다. "
 
 msgid "Taskbar"
 msgstr "작업 표시줄"
@@ -7867,6 +7928,11 @@ msgstr ""
 #. Translators: A slice in a pie chart.
 msgid "slice"
 msgstr "조각"
+
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "열"
 
 #. Translators: A data point in a line chart.
 msgid "data point"

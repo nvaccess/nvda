@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2011-2012 NV Access Limited
+#Copyright (C) 2011-2015 NV Access Limited, Joseph Lee
 
 from ctypes import *
 from ctypes.wintypes import *
@@ -68,11 +68,20 @@ def getInstallPath(noDefault=False):
 	except WindowsError:
 		return defaultInstallPath if not noDefault else None
 
-def isPreviousInstall():
-	path=getInstallPath(True)
-	if path and os.path.isdir(path):
-		return True
-	return False
+def comparePreviousInstall():
+	"""Returns 1 if the existing installation is newer than this running version,
+	0 if it is the same, -1 if it is older,
+	None if there is no existing installation.
+	"""
+	path = getInstallPath(True)
+	if not path or not os.path.isdir(path):
+		return None
+	try:
+		return cmp(
+			os.path.getmtime(os.path.join(path, "nvda_slave.exe")),
+			os.path.getmtime("nvda_slave.exe"))
+	except OSError:
+		return None
 
 def getDocFilePath(fileName,installDir):
 	rootPath=os.path.join(installDir,'documentation')
@@ -195,7 +204,7 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 	docFolder=os.path.join(startMenuFolder,_("Documentation"))
 	# Translators: The label of the Start Menu item to open the Commands Quick Reference document.
 	createShortcut(os.path.join(docFolder,_("Commands Quick Reference")+".lnk"),targetPath=getDocFilePath("keyCommands.html",installDir),prependSpecialFolder="AllUsersPrograms")
-	# Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
+	# Translators: A label for a shortcut in start menu to open NVDA user guide.
 	createShortcut(os.path.join(docFolder,_("User Guide")+".lnk"),targetPath=getDocFilePath("userGuide.html",installDir),prependSpecialFolder="AllUsersPrograms")
 	registerAddonFileAssociation(slaveExe)
 

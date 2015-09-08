@@ -10,11 +10,22 @@
 import appModuleHandler
 import controlTypes
 from textInfos import DocumentWithPageTurns
-from NVDAObjects.UIA import UIA
+from NVDAObjects.UIA import UIA, UIATextInfo
 from keyboardHandler import KeyboardInputGesture
 import UIAHandler
 
+class BookContentTextInfo(UIATextInfo):
+	# #5264: Adobe Digital editions classes ranges expanded to character as degenerate.
+	# Therefore we must force UIATextInfo to still fetch formatting and text for these ranges.
+	allowGetFormatFieldsAndTextOnDegenerateUIARanges=True
+
 class BookContent(DocumentWithPageTurns, UIA):
+
+	def _get_TextInfo(self):
+		TextInfo=super(BookContent,self).TextInfo
+		if TextInfo is UIATextInfo:
+			TextInfo=BookContentTextInfo
+		return TextInfo
 
 	def turnPage(self, previous=False):
 		try:

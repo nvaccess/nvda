@@ -8,6 +8,8 @@ import controlTypes
 import api
 import speech
 from NVDAObjects.UIA import UIA
+from NVDAObjects.UIA.edge import EdgeList
+from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 
 # Windows 10 Search UI suggestion list item
 class SuggestionListItem(UIA):
@@ -16,7 +18,7 @@ class SuggestionListItem(UIA):
 
 	def event_UIA_elementSelected(self):
 		focusControllerFor=api.getFocusObject().controllerFor
-		if len(focusControllerFor)>0 and focusControllerFor[0].appModule is self.appModule:
+		if len(focusControllerFor)>0 and focusControllerFor[0].appModule is self.appModule and self.name:
 			speech.cancelSpeech()
 			api.setNavigatorObject(self)
 			self.reportFocus()
@@ -24,5 +26,12 @@ class SuggestionListItem(UIA):
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
-		if isinstance(obj,UIA) and obj.role==controlTypes.ROLE_DATAITEM and isinstance(obj.parent,UIA) and obj.parent.role==controlTypes.ROLE_LIST:
+		if isinstance(obj,UIA) and obj.role==controlTypes.ROLE_LISTITEM and isinstance(obj.parent,EdgeList):
 			clsList.insert(0,SuggestionListItem)
+		elif isinstance(obj,IAccessible):
+			try:
+				# #5288: Never use ContentGenericClient, as this uses displayModel
+				# which will freeze if the process is suspended.
+				clsList.remove(ContentGenericClient)
+			except ValueError:
+				pass

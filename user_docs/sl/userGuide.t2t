@@ -56,7 +56,7 @@ To se nanaša tako na pristno izdajo, kot spremenjene kopije tega programa in tu
 Več podrobnosti je na voljo [na strani z besedilom licence. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Sistemske Zahteve +
-- Operacijski Sistemi: vse 32-bitne in 64-bitne različice sistema Windows XP, Viste, 7 in 8 (vključno s Strežniškimi različicami)
+- Operacijski Sistemi: vse 32-bitne in 64-bitne različice sistema Windows XP, Viste, 7, 8 in 10 (vključno s Strežniškimi različicami)
  - V 32-bitni različici sistema Windows XP mora biti nameščen vsaj drugi paket popravkov (SP2) za uporabo z NVDA.
  - V 32-bitni različici sistema Windows Server 2003 mora biti nameščen vsaj prvi paket popravkov (SP1) za uporabo z NVDA.
 - Pomnilnik: 256 MB RAMa ali več
@@ -269,7 +269,7 @@ Tu je nekaj ukazov, ki so uporabni pri krmarjenju sistemskega žarišča:
 | Sporoči trenutni položaj žarišča | NVDA+tab | NVDA+tab | naznani trenutni predmet ali kontrolnik, ki je v žarišču. Dvojni pritisk bo informacijo črkoval |
 | Sporoči naslov | NVDA+t | NVDA+t | Poroča o naslovu trenutno aktivnega okna. Dvojni pritisk bo črkoval to informacijo. Trojni pritisk bo informacijo preslikal v odložišče |
 | Beri aktivno okno | NVDA+b | NVDA+b | prebere kontrolnike v trenutno aktivnem oknu(uporabno pri obrazcih) |
-| Poročaj o Vrstici Stanja | NVDA+end | NVDA+shift+end | Poroča o vrstici stanja, če jo NVDA najde. Ta ukaz tudi premakne predmet krmarjenja na ta položaj |
+| Poročaj o Vrstici Stanja | NVDA+end | NVDA+shift+end | Poroča o vrstici stanja, če jo NVDA najde. Ta ukaz tudi premakne predmet krmarjenja na ta položaj. Dvojni pritisk informacijo črkuje. |
 %kc:endInclude
 
 ++ Krmarjenje s Sistemsko Kazalko ++[SystemCaret]
@@ -285,8 +285,8 @@ NVDA vas oskrbuje z naslednjimi ukazi glede na sistemsko kazalko:
 | Izgovori vse | NVDA+Puščica dol | NVDA+a | Začne brati od trenutnega položaja sistemske kazalke, se premikajoč tako kot sistemska kazalka |
 | Preberi trenutno vrstico | NVDA+Puščica gor | NVDA+l | Prebere vrstico, kjer je trenutno postavljena sistemska kazalka. Dvojni pritisk vrstico črkuje. |
 | Preberi trenutno besedilno označbo | NVDA+Shift+Puščica gor | NVDA+shift+s | Prebere vsako besedilo, ki je trenutno označeno |
-| Naslednji stavek | alt+puščica dol | alt+puščica dol | Premakne kazalko na naslednji stavek in ga izgovori. (trenutno na voljo samo v Microsoft Wordu) |
-| Predhodni stavek | alt+puščica gor | alt+puščica gor | Premakne kazalko na predhodni stavek in ga izgovori. (trenutno na voljo samo v Microsoft Wordu) |
+| Naslednji stavek | alt+puščica dol | alt+puščica dol | Premakne kazalko na naslednji stavek in ga izgovori. (trenutno na voljo samo v Microsoft Wordu in Outlooku) |
+| Predhodni stavek | alt+puščica gor | alt+puščica gor | Premakne kazalko na predhodni stavek in ga izgovori. (trenutno na voljo samo v Microsoft Wordu in Outlooku) |
 
 
 Ko se nahajate v tabeli, so na voljo tudi sledeči ukazi:
@@ -503,6 +503,12 @@ Za premik na začetek ali konec vsebinskih elementov, kot so seznami in tabele:
 || Ime | Tipka | Opis |
 | Pomik na začetek vsebnika | shift+comma | Pomakne se na začetek vsebine (v tabeli, seznamu in drugo) z ozirom na to, kje je trenutni položaj kazalke |
 | Pomik na konec vsebnika | comma | Premakne se na konec vsebine (v tabeli, seznamu in drugo) z ozirom na to, kje je trenutni položaj kazalke |
+
+%kc:endInclude
+Nekatere spletne aplikacije, kot so Gmail, Facebook in Twitter, uporabljajo posamezne črke kot bližnjične tipke.
+Če to želite uporabljati medtem, ko so tipke za premik utripalke še vedno na voljo za branje v brskalniškem delovanju, lahko začasno onemogočite NVDA posamezne črke za krmarjenje.
+%kc:beginInclude
+Pritisnite NVDA+Shift+Preslednico, če želite vključiti in/ali izključiti enočrkovno krmarjenje v trenutnem dokumentu.
 %kc:endInclude
 
 ++ Seznam Elementov ++
