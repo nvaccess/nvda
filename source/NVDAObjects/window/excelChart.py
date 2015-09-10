@@ -27,6 +27,7 @@ import math
 from NVDAObjects import NVDAObject
 import string
 import weakref
+import api
 
 
 #ChartEvents definition
