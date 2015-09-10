@@ -1360,9 +1360,11 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		linePrefix=attrs.get("line-prefix")
 		if linePrefix:
 			textList.append(linePrefix)
-		listLevel=attrs.get("list-level")
-		if listLevel and listLevel > 0:
-			textList.append("level %s" % listLevel)
+			listLevel=attrs.get("list-level")
+			if listLevel and listLevel > 0:
+				# Translators: report nesting level of lists ( e.g. in word / powerpoint bullets )
+				txt = _("level {level}").format(level=listLevel)
+				textList.append(txt)
 	if attrsCache is not None:
 		attrsCache.clear()
 		attrsCache.update(attrs)
