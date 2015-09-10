@@ -989,7 +989,6 @@ class ExcelCell(ExcelBase):
 		gui.runScriptModalDialog(d, callback)
 
 	def reportFocus(self):
-		super(ExcelCell,self).reportFocus()
 		# #4878: Excel specific code for speaking format changes on the focused object.
 		info=self.makeTextInfo(textInfos.POSITION_FIRST)
 		info.expand(textInfos.UNIT_CHARACTER)
@@ -1003,6 +1002,7 @@ class ExcelCell(ExcelBase):
 		text=speech.getFormatFieldSpeech(formatField,attrsCache=self.parent._formatFieldSpeechCache,formatConfig=formatConfig) if formatField else None
 		if text:
 			speech.speakText(text)
+		super(ExcelCell,self).reportFocus()
 
 	__gestures = {
 		"kb:NVDA+shift+c": "setColumnHeader",
