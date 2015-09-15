@@ -73,7 +73,7 @@ def isSystemDLL(pathname):
 	if dll in ("msvcp71.dll", "msvcp90.dll", "gdiplus.dll","mfc71.dll", "mfc90.dll"):
 		# These dlls don't exist on many systems, so make sure they're included.
 		return 0
-	elif dll.startswith("api-ms-win-") or dll in ("powrprof.dll", "mpr.dll"):
+	elif dll.startswith("api-ms-win-") or dll in ("powrprof.dll", "mpr.dll", "crypt32.dll"):
 		# These are definitely system dlls available on all systems and must be excluded.
 		# Including them can cause serious problems when a binary build is run on a different version of Windows.
 		return 1
