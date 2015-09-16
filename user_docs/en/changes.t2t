@@ -5,10 +5,16 @@
 
 = 2015.4 =
 
+== New Features ==
+- NVDA now appears in the Ease of Access Center in Windows 8 and later. (#308)
+
+
 == Bug Fixes ==
 - Major performance improvements when navigating the Outlook 2010/2013 message list. (#5268)
 - In a chart in Microsoft Excel, navigating with certain keys (such as changing sheets with control+pageUp and control+pageDown) now works correctly. (#5336)
 - Fixed the visual appearance of the buttons in the warning dialog which is displayed when you attempt to downgrade NVDA. (#5325)
+- In Windows 8 and later, NVDA now starts a lot earlier when configured to start after logging on to Windows. (#308)
+ - If you enabled this using a previous version of NVDA, you will need to disable it and enable it again in the General Settings dialog for the change to take effect.
 
 
 = 2015.3 =
