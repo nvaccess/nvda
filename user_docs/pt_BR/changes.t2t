@@ -7,6 +7,8 @@
 Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 
 = 2015.3 =
+Os destaques desta versão incluem o suporte inicial ao Windows 10; a possibilidade de desativar a navegação por caractere no modo de navegação, (útil para algumas aplicações web); melhorias no Internet Explorer; e correção do problema na inserção de texto em certas aplicações com uma linha Braille conectada.
+
 
 == Novas características ==
 - A existência de erros ortográficos é anunciada em campos de edição para o Internet Explorer e outros controls MSHTML. (#4174)
@@ -16,12 +18,13 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 - No modo de navegação, você agora pode alternar a ativação da navegação por caracteres pressionando NVDA+shift+espaço. Quando desativada, as teclas de navegação são passadas para o aplicativo, o que é útil para alguns aplicativos web como Gmail, Twitter e Facebook. (#3203)
 - Novas tabelas de tradução braille: Finlandês 6 pontos, Irlandês grau 1, Irlandês grau 2, Coreano grau 1 (2006), Coreano grau 2 (2006). (#5137, #5074, #5097)
 - O teclado QWERTY da linha braille Papenmeier BRAILLEX Live Plus agora é suportado. (#5181)
+- Suporte experimental para o navegador Microsoft Edge e seu motor de navegação no Windows 10. (#5212)
+- Novo idioma: Kannada.
 
 
 == Alterações ==
 - Atualizado o transcritor braille liblouis para a versão 2.6.3. (#5137)
-
-
+- Ao tenpar instalar uma versão do NVDA anterior à que encontra-se instalada, você agora será alertado de que tal não é recomendado e de que o NVDA deve ser completamente desinstalado antes de o fazer. (#5037)
 
 
 = 2015.2 =
@@ -420,8 +423,8 @@ Alguns itens ou termos desta seção não serão traduzidos, uma vez que são de
 - O Zend Eclipse PHP Developer Tools agora funciona da mesma forma que o Eclipse. (#3353)
 - No Internet Explorer, voltou a não ser necessário pressionar tab para interagir com um objeto embutido (como o conteúdo Flash) depois de pressionar Enter nele. (#3364)
 - Ao editar textos no Microsoft PowerPoint, a última linha não é mais anunciada como a linha acima se a linha final estiver em branco. (#3403)
-- No Microsoft PowerPoint, os objetos não são mais falados em dobro às vezes quando você os seleciona ou escolhe editá-los. (#3394)
-- O NVDA não faz mais o Adobe Reader encerrar ou congelar em certos documentos PDF mal-feitos que contém linhas fora de tabelas. (#3399)
+- No Microsoft PowerPoint, os objetos não são mais anunciados em dobro às vezes quando você os seleciona ou escolhe editá-los. (#3394)
+- O NVDA já não faz o Adobe Reader encerrar ou congelar em certos documentos PDF mal construídos que contém linhas fora de tabelas. (#3399)
 - O NVDA agora detecta corretamente o próximo slaide com foco ao apagar um slaide no visualizador de miniaturas do Microsoft PowerPoint. (#3415)
 
 
