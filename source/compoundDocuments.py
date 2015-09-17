@@ -159,17 +159,6 @@ class CompoundTextInfo(textInfos.TextInfo):
 	def __ne__(self, other):
 		return not self == other
 
-	def _getInitialControlFields(self):
-		fields = []
-		rootObj = self.obj
-		obj = self._startObj
-		while obj and obj != rootObj:
-			field = self._getControlFieldForObject(obj)
-			if field:
-				fields.insert(0, textInfos.FieldCommand("controlStart", field))
-			obj = obj.parent
-		return fields
-
 class TreeCompoundTextInfo(CompoundTextInfo):
 	#: Units contained within a single TextInfo.
 	SINGLE_TEXTINFO_UNITS = (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD, textInfos.UNIT_LINE, textInfos.UNIT_SENTENCE, textInfos.UNIT_PARAGRAPH)
@@ -249,7 +238,15 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 		return text.count(u"\uFFFC")
 
 	def getTextWithFields(self, formatConfig=None):
-		fields = self._getInitialControlFields()
+		# Get the initial control fields.
+		fields = []
+		rootObj = self.obj.rootNVDAObject
+		obj = self._startObj
+		while obj and obj != rootObj:
+			field = self._getControlFieldForObject(obj)
+			if field:
+				fields.insert(0, textInfos.FieldCommand("controlStart", field))
+			obj = obj.parent
 
 		embedIndex = None
 		for ti in self._getTextInfos():
