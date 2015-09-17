@@ -102,7 +102,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				caretTi, caretObj = self._findContentDescendant(obj, textInfos.POSITION_CARET)
 			except LookupError:
 				raise RuntimeError("No caret")
-			if caretObj.IA2Attributes.get("display") == "inline" and caretTi.compareEndPoints(_makeRawTextInfo(caretObj, textInfos.POSITION_ALL), "startToEnd") == 0:
+			if caretObj is not obj and caretObj.IA2Attributes.get("display") == "inline" and caretTi.compareEndPoints(_makeRawTextInfo(caretObj, textInfos.POSITION_ALL), "startToEnd") == 0:
 				# The caret is at the end of an inline object.
 				# This will report "blank", but we want to report the character just after the caret.
 				try:
@@ -159,7 +159,9 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			raise LookupError("Object has no text descendants")
 		if position == self.POSITION_SELECTION_END:
 			descendantOffset.value += 1
-		obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(obj.windowHandle,winUser.OBJID_CLIENT,descendantID.value)
+		# optimisation: If the target obj is the same as the origin, don't make a new instance.
+		if descendantID.value != obj.IA2UniqueID:
+			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(obj.windowHandle,winUser.OBJID_CLIENT,descendantID.value)
 		# optimisation: Passing an Offsets position checks nCharacters, which is an extra call we don't need.
 		ti=_makeRawTextInfo(obj,textInfos.POSITION_FIRST)
 		ti._startOffset=ti._endOffset=descendantOffset.value
