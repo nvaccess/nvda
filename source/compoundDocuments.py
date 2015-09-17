@@ -35,6 +35,17 @@ class CompoundTextInfo(textInfos.TextInfo):
 			except LookupError:
 				pass
 
+		if (self._end.isCollapsed and self._endObj != self._startObj
+				and self._end.compareEndPoints(self._makeRawTextInfo(self._endObj, textInfos.POSITION_ALL), "startToStart") == 0):
+			# End is at the start of its object.
+			# This is equivalent to the end of the previous content.
+			# Aside from being pointless, we don't want a collapsed end object, as this will cause bogus control fields to be emitted.
+			try:
+				self._end, self._endObj = self._findNextContent(self._endObj, moveBack=True)
+				self._end.move(textInfos.UNIT_OFFSET, 1)
+			except LookupError:
+				pass
+
 		if self._startObj == self._endObj:
 			# There should only be a single TextInfo and it should cover the entire range.
 			self._start.setEndPoint(self._end, "endToEnd")
