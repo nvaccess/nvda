@@ -240,25 +240,33 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 	def _get_text(self):
 		return "".join(ti.text for ti in self._getTextInfos())
 
+	def _getFirstEmbedIndex(self, info):
+		if info._startOffset == 0:
+			return 0
+		# Get the number of embeds before the start.
+		# The index is 0 based, so this is the index of the first embed after start.
+		text = info._getTextRange(0, info._startOffset)
+		return text.count(u"\uFFFC")
+
 	def getTextWithFields(self, formatConfig=None):
 		fields = self._getInitialControlFields()
 
+		embedIndex = None
 		for ti in self._getTextInfos():
-			fieldStart = 0
-			for field in ti.getTextWithFields(formatConfig=formatConfig):
+			for field in ti._iterTextWithEmbeddedObjects(True, formatConfig=formatConfig):
 				if isinstance(field, basestring):
-					textLength = len(field)
-					for chunk in self._iterTextWithEmbeddedObjects(field, ti, fieldStart, textLength=textLength):
-						if isinstance(chunk, basestring):
-							fields.append(chunk)
-						else:
-							controlField = self._getControlFieldForObject(chunk, ignoreEditableText=False)
-							controlField["alwaysReportName"] = True
-							fields.extend((textInfos.FieldCommand("controlStart", controlField),
-								u"\uFFFC",
-								textInfos.FieldCommand("controlEnd", None)))
-					fieldStart += textLength
-
+					fields.append(field)
+				elif isinstance(field, int): # Embedded object
+					if embedIndex is None:
+						embedIndex = self._getFirstEmbedIndex(ti)
+					else:
+						embedIndex += 1
+					field = ti.obj.getChild(embedIndex)
+					controlField = self._getControlFieldForObject(field, ignoreEditableText=False)
+					controlField["alwaysReportName"] = True
+					fields.extend((textInfos.FieldCommand("controlStart", controlField),
+						u"\uFFFC",
+						textInfos.FieldCommand("controlEnd", None)))
 				else:
 					fields.append(field)
 		return fields
