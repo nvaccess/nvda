@@ -233,6 +233,10 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 
 		# Get the fields for start.
 		fields += list(self._iterRecursiveText(self._start, controlStack, formatConfig))
+		if not fields:
+			# We're not getting anything, so the object must be dead.
+			# (We already handled collapsed above.)
+			return fields
 		obj = self._startObj
 		while fields[-1] is not None:
 			# The end hasn't yet been reached, which means it isn't a descendant of obj.
