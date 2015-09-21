@@ -116,6 +116,32 @@ localizedKeyLabels = {
 	# Translators: This is the name of a key on the keyboard.
 	'numpadplus': _("numpad plus"),
 	# Translators: This is the name of a key on the keyboard.
+	'numpaddecimal': _("numpad decimal"),
+	# Translators: This is the name of a key on the keyboard.
+	'numpadinsert': _("numpad insert"),
+	# Translators: This is the name of a key on the keyboard.
+	'numlocknumpad0': _("numLock numpad 0"),
+	# Translators: This is the name of a key on the keyboard.
+	'numlocknumpad1': _("numLock numpad 1"),
+	# Translators: This is the name of a key on the keyboard.
+	'numlocknumpad2': _("numLock numpad 2"),
+	# Translators: This is the name of a key on the keyboard.
+	'numlocknumpad3': _("numLock numpad 3"),
+	# Translators: This is the name of a key on the keyboard.
+	'numlocknumpad4': _("numLock numpad 4"),
+	# Translators: This is the name of a key on the keyboard.
+	'numlocknumpad5': _("numLock numpad 5"),
+	# Translators: This is the name of a key on the keyboard.
+	'numlocknumpad6': _("numLock numpad 6"),
+	# Translators: This is the name of a key on the keyboard.
+	'numlocknumpad7': _("numLock numpad 7"),
+	# Translators: This is the name of a key on the keyboard.
+	'numlocknumpad8': _("numLock numpad 8"),
+	# Translators: This is the name of a key on the keyboard.
+	'numlocknumpad9': _("numLock numpad 9"),
+	# Translators: This is the name of a key on the keyboard.
+	'insert': _("insert"),
+	# Translators: This is the name of a key on the keyboard.
 	'leftcontrol': _("left control"),
 	# Translators: This is the name of a key on the keyboard.
 	'rightcontrol': _("right control"),
