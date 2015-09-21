@@ -142,6 +142,18 @@ SPEECH_SYMBOL_LEVELS = CONFIGURABLE_SPEECH_SYMBOL_LEVELS + (SYMLVL_CHAR,)
 SYMPRES_NEVER = 0
 SYMPRES_ALWAYS = 1
 SYMPRES_NOREP = 2
+SPEECH_SYMBOL_PRESERVE_LABELS = {
+	# Translators: An option for when a symbol itself will be sent to the synthesizer.
+	# See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+	SYMPRES_NEVER: pgettext("symbolPreserve", "never"),
+	# Translators: An option for when a symbol itself will be sent to the synthesizer.
+	# See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+	SYMPRES_ALWAYS: pgettext("symbolPreserve", "always"),
+	# Translators: An option for when a symbol itself will be sent to the synthesizer.
+	# See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+	SYMPRES_NOREP: pgettext("symbolPreserve", "only below symbol's level"),
+}
+SPEECH_SYMBOL_PRESERVES = (SYMPRES_NEVER, SYMPRES_ALWAYS, SYMPRES_NOREP)
 
 class SpeechSymbol(object):
 	__slots__ = ("identifier", "pattern", "replacement", "level", "preserve", "displayName")
