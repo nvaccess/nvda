@@ -307,8 +307,9 @@ class WordDocumentRevisionQuickNavItem(WordDocumentCollectionQuickNavItem):
 		revisionType=wdRevisionTypeLabels.get(self.collectionItem.type)
 		author=self.collectionItem.author or ""
 		date=self.collectionItem.date
+		description=self.collectionItem.formatDescription or ""
 		text=(self.collectionItem.range.text or "")[:100]
-		return _(u"{revisionType}: {text} by {author} on {date}").format(revisionType=revisionType,author=author,text=text,date=date)
+		return _(u"{revisionType} {description}: {text} by {author} on {date}").format(revisionType=revisionType,author=author,text=text,date=date,description=description)
 
 class WinWordCollectionQuicknavIterator(object):
 	"""
