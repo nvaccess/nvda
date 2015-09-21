@@ -1058,6 +1058,11 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.revisionsCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
+		self.emphasisCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report e&mphasis"))
+		self.emphasisCheckBox.SetValue(config.conf["documentFormatting"]["reportEmphasis"])
+		settingsSizer.Add(self.emphasisCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.styleCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report st&yle"))
 		self.styleCheckBox.SetValue(config.conf["documentFormatting"]["reportStyle"])
 		settingsSizer.Add(self.styleCheckBox,border=10,flag=wx.BOTTOM)
@@ -1148,6 +1153,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportFontAttributes"]=self.fontAttrsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportColor"]=self.colorCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportRevisions"]=self.revisionsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportEmphasis"]=self.emphasisCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportAlignment"]=self.alignmentCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportStyle"]=self.styleCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportSpellingErrors"]=self.spellingErrorsCheckBox.IsChecked()
