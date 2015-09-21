@@ -56,7 +56,7 @@ Dit is van toepassing voor zowel originele als aangepaste kopieën van de softwa
 Voor verdere bijzonderheden kan men de volledige licentie bekijken op: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Systeemvereisten +
-- Besturingssysteem: alle 32-bit en 64-bit versies van Windows XP, Windows  Vista, Windows 7 en Windows 8 (inclusief Server besturingssystemen). 
+- Besturingssysteem: alle 32-bit en 64-bit versies van Windows XP, Windows  Vista, Windows 7, Windows 8 en Windows 10 (inclusief Server besturingssystemen). 
 - Voor Windows XP 32-bit heeft NVDA Service Pack 2 of hoger nodig.
 - Voor Windows Server 2003 heeft NVDA Service Pack 1 of hoger nodig.
 - Geheugen: 256 MB RAM of meer.
@@ -273,7 +273,7 @@ Enkele toetscommando’s die van pas komen bij het verplaatsen van de systeemfoc
 | Huidige focus melden | NVDA+tab | NVDA+tab | laat horen welk object of besturingselement momenteel is gefocusseerd. Bij tweemaal indrukken wordt informatie gespeld |
 | Titel/naam melden | NVDA+t | NVDA+t | Laat horen hoe het momenteel actieve venster heet. Bij tweemaal indrukken wordt de informatie gespeld. Bij driemaal indrukken wordt deze naar het klembord gekopieerd. |
 | Actieve venster voorlezen | NVDA+b | NVDA+b | Leest de inhoud (knoppen, uitklapnenu’s,selectievakjes, etc.) voor. Handig voor dialoogvensters |
-| Statusbalk voorlezen | NVDA+End | NVDA+Shift+End | Leest de statusbalk als NVDA deze kan vinden. Het navigator object wordt ook naar de statusbalk verplaatst. |
+| Statusbalk voorlezen | NVDA+End | NVDA+Shift+End | Leest de statusbalk als NVDA deze kan vinden. Het navigator object wordt ook naar de statusbalk verplaatst. Bij tweemaal indrukken wordt de informatie gespeld. |
 %kc:endInclude
 
 ++ Navigeren met de systeemcursor ++[SystemCaret]
@@ -289,8 +289,8 @@ U kunt de volgende NVDA-toetscommando’s gebruiken om met de textcursor te navi
 | Alles voorlezen | NVDA+pijl omlaag | NVDA+a | Voorlezen starten vanaf de huidige positie van de tekstcursor die tijdens het lezen wordt verplaatst. |
 | Deze regel lezen | NVDA+pijl omhoog | NVDA+l | Hiermee wordt de regel waarin de tekstcursor zich momenteel bevindt voorgelezen. Bij tweemaal drukken wordt regel gespeld. |
 | Geselecteerde tekst lezen | NVDA+Shift+pijl omhoog | NVDA+Shift+s | Hiermee wordt geselecteerde tekst voorgelezen. |
-| Volgende zin | alt+Pijl omlaag | alt+Pijl omlaag | Verplaatst cursor naar volgende zin en meldt deze (alleen ondersteund in Microsoft Word). |
-| Vorige zin | alt+Pijl omhoog | Alt+Pijl omhoog | Verplaatst cursor naar vorige zin en meldt deze (alleen ondersteund in Microsoft Word). |
+| Volgende zin | alt+Pijl omlaag | alt+Pijl omlaag | Verplaatst cursor naar volgende zin en meldt deze (alleen ondersteund in Microsoft Word en Outlook). |
+| Vorige zin | alt+Pijl omhoog | Alt+Pijl omhoog | Verplaatst cursor naar vorige zin en meldt deze (alleen ondersteund in Microsoft Word en Outlook ). |
 
 Binnen een tabel kunt u ook de volgende toetscommando’s gebruiken:
 || Naam | Toets | Beschrijving |
@@ -505,7 +505,13 @@ Om naar het eerstvolgende element te springen gebruikt u uitsluitend één van d
 Gebruik de volgende toetscombinaties om naar het begin resp. het einde van containerobjecten (lijsten tabellen e.d.) te springen:
 || Naam | Toetscombinatie | Beschrijving |
 | naar begin van containerobject springen | Shift+komma | Verplaatst de systeemcursor naar begin van het containerobject (lijst, tabel etc.) |
-| achter het containerobject springen | komma | Verplaatst de systeemcursor achter het containerobject (lijst, tabel etc.) |
+| achter het containerobject springen | komma | Verplaatst de systeemcursor achter het containerobject (lijst, tabel etc.) waar de cursor zich bevindt. |
+
+%kc:endInclude
+Webapplicaties zoals Gmail, Twitter en Facebook kunnen met lettertoetsnavigatie worden geactiveerd.
+Als u hiermee wilt werken terwijl u ook   uw cursortoetsen wilt kunnen gebruiken voor het lezen in bladermodus,  kunt u de lettertoetsnavigatie in NVDA tijdelijk uitschakelen.
+%kc:beginInclude
+Om de lettertoetsnavigatie voor het huidige document in of uit te schakelen drukt u op de NVDA-toets + de spatiebalk.
 %kc:endInclude
 
 ++ De lijst met elementen ++
@@ -1758,10 +1764,9 @@ De volgende brailleleesregels worden ondersteund:
 -
 
 Als BrxCom is geïnstalleerd, zal NVDA BrxCom gebruiken.
-BrxCom is een hulpprogramma waarmee u de Braille-invoer onafhankelijk van een schermlezer kunt gebruiken.
-Door de firma Papenmeier zal spoedig een nieuwe versie van BrxCom die voor NVDA geschikt is, worden uitgebracht. 
-Met de Braillex Trio Live 20 en Braillex Live-toestellen is brailleïnvoer mogelijk  zonder BrxCom.
-Brailleinvoer is ook mogelijk met het Live Plus-model, maar alleen met BrxCom.
+BrxCom is een hulpprogramma waarmee invoer met de toetsen van de leesregel mogelijk is zonder tussenkomst van een schermlezer.
+Er zal binnenkort een nieuwe versie van BrxCom door Papenmeier worden uitgebracht die werkt met NVDA.
+Toetsinvoer  is mogelijk met de modellen Trio en BRAILLEX Live.
 
 De meeste leesregels hebben een gebruiksvriendelijke navigatiebalk (EAB = Easy Access Bar, waarmee intuïtief en snel gewerkt kan worden.
 De navigatiebalk kan in vier richtingen bewogen worden waarbij er als regel twee schakelpunten per richting zijn.
@@ -1895,8 +1900,10 @@ BRAILLEX Tiny:
 | Navigatorobject naar voorafgaand Object verplaatsen | r1+left |
 | Navigatorobject naar volgende Object verplaatsen | r1+right |
 | Documentopmaak weergeven | reportf |
+| Titelweergeven | l1+omhoog |
+| Statusbalk weergeven | l2+omlaag |
 
-BRAILLEX 2D Screen:
+BRAILLEX 2D Scherm:
 || Naam | Toets |
 | Teken onder cursor voorlezen | l1 |
 | Huidige navigatorobject activeren | l2 |
@@ -1956,6 +1963,41 @@ Raadpleeg de documentatie bij de  BrailleNote voor informatie over de positie va
 | Windows-toets | spatie+punt2+punt4+punt5+punt6 (spatie+w) |
 | Alt | spatie+punt1+punt3+punt4 (spatie+m) |
 | Invoerhulp in-/uitschakelen | spatie+punt2+punt3+punt6 (spatie+kleine h) |
+%kc:endInclude
+
+++ EcoBraille ++
+NVDA biedt ondersteuning voor EcoBraille-leesregels  van [ONCE http://www.once.es/].
+De volgende modellen worden ondersteund:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+In NVDA, kunt u  in het dialoogvenster Braille (, menu Opties, ) de seriële poort instellen waarmee de leesregel wordt verbonden
+
+Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van toepassing: 
+(Raadpleeg de [EcoBraille documentatie ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] waar beschreven wordt waar de toetsen zich bevinden.)
+
+%kc:beginInclude
+|| Naam | Toets |
+| brailleleesregel terugscrollen | T2 |
+| brailleleesregel vooruitscrollen | T4 |
+| brailleleesregel naar vorige regel verplaatsen | T1 |
+| brailleleesregel naar volgende regel verplaatsen | T5 |
+| Naar braillecel gaan | Routing |
+| Huidige navigatorobject activeren | T3 |
+| Naar volgende leesmodus overschakelen | F1 |
+| Naar containerobject gaan | F2 |
+| Naar vorige leesmodus overschakelen | F3 |
+| Naar vorig object gaan | F4 |
+| Huidig object melden | F5 |
+| Naar volgend object gaan | F6 |
+| Naar gefocuseerd object gaan | F7 |
+| Naar eerste “contained” object gaan | F8 |
+| Systeemfocus of invoegcursor naar huidige leespositie verplaatsen | F9 |
+| Leescursorpositie melden | F0 |
+| Wisselknop “braille tethered to” | A |
 %kc:endInclude
 
 ++ BRLTTY ++

@@ -391,6 +391,10 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		return ""
 
+	def _get_controllerFor(self):
+		"""Retreaves the object/s that this object controls."""
+		return []
+
 	def _get_actionCount(self):
 		"""Retreaves the number of actions supported by this object."""
 		return 0

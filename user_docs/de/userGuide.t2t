@@ -56,7 +56,7 @@ Dies bezieht sich sowohl auf das Original sowie auch auf modifizierte Kopieen di
 Für weitere Informationen können Sie entweder die [englischsprachige http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] Lizenz oder die inoffizielle [deutsche http://www.gnu.de/documents/gpl-2.0.de.html] Übersetzung lesen. Die englische Originalversion besitzt nach wie vor die offizielle Rechtsgültigkeit.
 
 + Systemvoraussetzungen +
-- Betriebssystem: Microsoft Windows XP, Windows Vista, Windows 7 und Windows 8 (alle 32-/64-Bit-Versionen, inkl. Server-Betriebssysteme).
+- Betriebssystem: Microsoft Windows XP, Windows Vista, Windows 7,Windows 8 und Windows 10 (alle 32-/64-Bit-Versionen, inkl. Server-Betriebssysteme).
  - Für Windows XP wird mindestens Service Pack 2 benötigt.
  - Für Windows Server 2003 wird mindestens Service Pack 1 benötigt.
 - Speicher: Mindestens 256 Megabyte RAM oder mehr.
@@ -269,7 +269,7 @@ Einige nützliche Tastenkombinationen zum Navigieren mit dem Systemfokus sind:
 | Aktuellen Fokus ansagen | NVDA+Tabulatortaste | NVDA+Tabulatortaste | Spricht das aktuell fokussierte Objekt. Bei zweimal Drücken werden die Informationen buchstabiert. |
 | Titelleiste ansagen | NVDA+T | NVDA+T | Liest die Titelleiste der aktuellen Anwendung vor. Bei zweimal Drücken, werden die Informationen buchstabiert. Bei drei Mal wird der Text in die Zwischenablage kopiert. Diese Information wird auch in Braille angezeigt. |
 | Aktives Fenster vorlesen | NVDA+B | NVDA+B | Liest alle Steuerelemente im aktiven Fenster vor (hilfreich für Dialogfelder). |
-| Statuszeile lesen | NVDA+ende | NVDA+umschalt+Ende | Liest die Statuszeile vor, falls eine gefunden wird und platziert den NVDA-Cursor darauf. Die Statuszeile wird auch in Braille angezeigt. |
+| Statuszeile ausgeben | NVDA+ende | NVDA+umschalt+Ende | gibt die Statuszeile aus, falls eine gefunden wird und platziert den NVDA-Cursor darauf. Wenn Sie diese Tastenkombination zweimal drücken, wird die Statuszeile buchstabiert. |
 %kc:endInclude
 
 ++ Mit dem System-Cursor navigieren ++[SystemCaret]
@@ -285,8 +285,8 @@ Folgende Tastenkombinationen stehen im Zusammenhang mit dem System-Cursor zur Ve
 | Alles ansagen | NVDA+Pfeil nach unten | NVDA+A | Liest von der aktuellen Position des Systemcursors bis zum Textende und bewegt dabei den System-Cursor mit. |
 | Aktuelle Zeile lesen | NVDA+Pfeil nach oben | NVDA+L | Liest die Zeile, auf der sich der Systemcursor befindet. Wird diese Tastenkombination zweimal gedrückt, wird die Zeile buchstabiert. |
 | Markierten Text lesen | NVDA+Umschalt+Pfeil nach oben | NVDA+Umschalt+S | liest den markierten Text, sofern vorhanden. |
-| nächsten Satz lesen | Alt+Pfeiltaste nach unten | Alt+Pfeiltaste nach unten | Bewegt die Schreibmarke zum nächsten Satz und gibt diesen aus. (nur in Microsoft Word unterstützt) |
-| vorherigen Satz lesen | Alt+Pfeiltaste nach oben | Alt+Pfeiltaste nach oben | Bewegt die Schreibmarke zum vorherigen Satz und gibt diesen aus. (nur in Microsoft Word unterstützt) |
+| nächsten Satz lesen | Alt+Pfeiltaste nach unten | Alt+Pfeiltaste nach unten | Bewegt die Schreibmarke zum nächsten Satz und gibt diesen aus. (nur in Microsoft Word und Outlook unterstützt) |
+| vorherigen Satz lesen | Alt+Pfeiltaste nach oben | Alt+Pfeiltaste nach oben | Bewegt die Schreibmarke zum vorherigen Satz und gibt diesen aus. (nur in Microsoft Word und Outlook unterstützt) |
 
 
 Für die Navigation in Tabellen stehen folgende Tastenkombinationen zur Verfügung:
@@ -503,6 +503,12 @@ Verwenden Sie folgende Tastenkombinationen, um zum Beginn Bzw. zum Ende eines Co
 || Name | Tastenkombination | Beschreibung |
 | zum Beginn des Containerobjekts springen | Umschalt+Komma | Bewegt den Systemcursor zum Beginn des Containerobjekts (Liste, Tabelle, etc.) auf welchem sich der Cursor befindet. |
 | Hinter das Containerobjekt springen | Komma | bewegt den Systemcursor hinter das Containerobjekt (Liste, Tabelle, etc.) auf welchem sich der Cursor befindet. |
+
+%kc:endInclude
+Einige Web-Anwendungen verwenden einzelne Buchstaben als Tastenkürzel. Hierzu zählen Twitter, Gmail und Facebook.
+Um in solchen Web-Anwendungen deren eigene Kurztasten zu verwenden und dennoch mit den Pfeiltasten durch die Web-Anwendung navigieren zu können, können Sie die Schnellnavigation von NVDA ein- oder ausschalten.
+%kc:beginInclude
+Drücken Sie NVDA+Umschalt+Leertaste, um die Schnellnavigation im aktuellen Dokument ein- oder auszuschalten.
 %kc:endInclude
 
 ++ Die Liste der Elemente ++
@@ -1756,10 +1762,9 @@ Folgende Braillezeilen werden unterstützt:
 -
 
 Falls BrxCom installiert ist, wird es benutzt.
-BrxCom ist ein Programm, welches unabhängig von Screenreadern Brailleeingabe ermöglicht. 
+BrxCom ist ein Programm, welches  Brailleeingabe unabhängig von Screenreadern ermöglicht. 
 Eine neue Version von BrxCom, welche mit NVDA läuft wird in Kürze von der Firma Papenmeier veröffentlicht.
-Bei den Braillezeilen Braillex Trio, Braillex Live 20 und Braillex Live ist Braille-Eingabe jedoch auch ohne BrxCom möglich.
-Die Braille-Eingabe funktioniert auch mit dem Modell Live plus, jedoch nur mit BRXCom.
+Die Braille-Eingabe ist bei den Modellen Trio und Braillex Live verfügbar.
 
 Die meisten Braillezeilen besitzen eine Navigationsleiste (EAB), welche eine intuitive und schnelle Bedienung ermöglicht.
 Die Navigationsleiste kann in vier Richtungen bewegt werden, wobei sie in der Regel zwei Schalterstellungen je Richtung hat.
@@ -1960,6 +1965,41 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo sich die entspr
 | Windows-Taste | Leertaste+Punkt2+Punkt4+Punkt5+Punkt6 (Leertaste+w) |
 | Alt | Leertaste+Punkt1+Punkt3+Punkt4 (Leertaste+m) |
 | Eingabehilfe ein-/ausschalten | Leertaste+Punkt2+Punkt3+Punkt6 (Leertaste+tief gestelltes h) |
+%kc:endInclude
+
+++ EcoBraille ++
+NVDa unterstützt die Ecobraille von  [ONCE http://www.once.es/].
+die folgenden Modelle werden unterstützt:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+In den Braille-Einstellungen von NvDA können Sie den Anschluss festlegen, mit dem die Braillezeile verbunden ist.
+
+Folgende Tasten(Kombinationen) sind bei Verwendung der Ecobraille-Modelle verfügbar:
+Bitte sehen Sie in der [Dokumentation zur Ecobraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] nach, um zu erfahren, wo die entsprechenden Tasten zu finden sind.
+
+%kc:beginInclude
+|| Name | Taste |
+| Braillezeile zurückscrollen | T2 |
+| Braillezeile vorwärtsscrollen | T4 |
+| Braillezeile zur vorigen Zeile bewegen | T1 |
+| Braillezeile zur nächsten Zeile scrollen | T5 |
+| Cursor zum ausgewählten Braillemodul bewegen | Routing |
+| aktuelles Navigatorobjekt aktivieren | T3 |
+| zum nächsten Darstellungsmodus wechseln | F1 |
+| zum übergeordneten Objekt bewegen | F2 |
+| zum vorigen Darstellungsmodus wechseln | F3 |
+| zum vorigen Objekt bewegen | F4 |
+| aktuelles Objekt ausgeben | F5 |
+| zum nächsten Objekt bewegen | F6 |
+| zum Fokus bewegen | F7 |
+| zum ersten untergeordneten Objekt bewegen | F8 |
+| Systemfokus Bzw. Cursor zum aktuellen Navigatorobjekt bewegen | F9 |
+| Position des NVDA-Cursors angeben | F0 |
+| Kopplung der Braillezeile umschalten | A |
 %kc:endInclude
 
 ++ BRLTTY ++

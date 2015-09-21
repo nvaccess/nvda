@@ -219,7 +219,7 @@ def NVDADistGenerator(target, source, env, for_signature):
 	if env.get("uiAccess"):
 		buildCmd.append("--enable-uiAccess")
 	if certFile:
-		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "nvda_service.exe":
+		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "nvda_service.exe", "nvda_eoaProxy.exe":
 			action.append(lambda target,source,env, progByVal=prog: signExec([target[0].File(progByVal)],source,env))
 
 	for ext in "", "c", "o":

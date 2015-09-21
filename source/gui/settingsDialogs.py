@@ -186,13 +186,13 @@ class GeneralSettingsDialog(SettingsDialog):
 		# Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 		self.startOnLogonScreenCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("Use NVDA on the Windows logon screen (requires administrator privileges)"))
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
-		if globalVars.appArgs.secure or not config.isServiceInstalled():
+		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
 			self.startOnLogonScreenCheckBox.Disable()
 		settingsSizer.Add(self.startOnLogonScreenCheckBox)
 		# Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
 		self.copySettingsButton= wx.Button(self, wx.ID_ANY, label=_("Use currently saved settings on the logon and other secure screens (requires administrator privileges)"))
 		self.copySettingsButton.Bind(wx.EVT_BUTTON,self.onCopySettings)
-		if globalVars.appArgs.secure or not config.isServiceInstalled():
+		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
 			self.copySettingsButton.Disable()
 		settingsSizer.Add(self.copySettingsButton)
 		if updateCheck:
@@ -211,7 +211,7 @@ class GeneralSettingsDialog(SettingsDialog):
 			if len(os.listdir(os.path.join(globalVars.appArgs.configPath,packageType)))>0:
 				if gui.messageBox(
 					# Translators: A message to warn the user when attempting to copy current settings to system settings.
-					_("Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"),
+					_("Add-ons were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"),
 					# Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 					_("Warning"),wx.YES|wx.NO|wx.ICON_WARNING,self
 				)==wx.NO:
@@ -419,7 +419,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		@rtype: L{wx.BoxSizer}
 		"""
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.i18nName)
+		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.displayNameWithAccelerator)
 		slider=VoiceSettingsSlider(self,wx.ID_ANY,minValue=0,maxValue=100,name="%s:"%setting.i18nName)
 		setattr(self,"%sSlider"%setting.name,slider)
 		slider.Bind(wx.EVT_SLIDER,SynthSettingChanger(setting))
@@ -435,7 +435,7 @@ class VoiceSettingsDialog(SettingsDialog):
 	def makeStringSettingControl(self,setting):
 		"""Same as L{makeSettingControl} but for string settings. Returns sizer with label and combobox."""
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
-		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.i18nName)
+		label=wx.StaticText(self,wx.ID_ANY,label="%s:"%setting.displayNameWithAccelerator)
 		synth=getSynth()
 		setattr(self,"_%ss"%setting.name,getattr(synth,"available%ss"%setting.name.capitalize()).values())
 		l=getattr(self,"_%ss"%setting.name)###
@@ -457,7 +457,7 @@ class VoiceSettingsDialog(SettingsDialog):
 
 	def makeBooleanSettingControl(self,setting):
 		"""Same as L{makeSettingControl} but for boolean settings. Returns checkbox."""
-		checkbox=wx.CheckBox(self,wx.ID_ANY,label=setting.i18nName)
+		checkbox=wx.CheckBox(self,wx.ID_ANY,label=setting.displayNameWithAccelerator)
 		setattr(self,"%sCheckbox"%setting.name,checkbox)
 		checkbox.Bind(wx.EVT_CHECKBOX,
 			lambda evt: setattr(getSynth(),setting.name,evt.IsChecked()))

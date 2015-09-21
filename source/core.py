@@ -71,16 +71,18 @@ def restart(disableAddons=False):
 	import winUser
 	import shellapi
 	options=[]
-	try:
-		sys.argv.index('-r')
-	except:
+	if "-r" not in sys.argv:
 		options.append("-r")
 	try:
-		sys.argv.pop(sys.argv.index('--disable-addons'))
-	except:
+		sys.argv.remove('--disable-addons')
+	except ValueError:
 		pass
 	if disableAddons:
 		options.append('--disable-addons')
+	try:
+		sys.argv.remove("--ease-of-access")
+	except ValueError:
+		pass
 	shellapi.ShellExecute(None, None,
 		sys.executable.decode("mbcs"),
 		subprocess.list2cmdline(sys.argv + options).decode("mbcs"),
@@ -371,7 +373,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	app.MainLoop()
 
 	log.info("Exiting")
-	messageWindow.destroy()
 	if updateCheck:
 		_terminate(updateCheck)
 
@@ -413,6 +414,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			nvwave.playWaveFile("waves\\exit.wav",async=False)
 		except:
 			pass
+	# #5189: Destroy the message window as late as possible
+	# so new instances of NVDA can find this one even if it freezes during exit.
+	messageWindow.destroy()
 	log.debug("core done")
 
 def _terminate(module, name=None):

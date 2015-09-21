@@ -15,6 +15,7 @@ from logHandler import log
 import inputCore
 import brailleInput
 import struct
+import keyboardHandler
 
 try:
 	import ftdi2
@@ -528,7 +529,13 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			self.id=brl_join_keys(brl_decode_key_names_repeat(driver))
 			return
 
-		if driver._baud != 1 and keys[0] == 'L' and not ((ord(keys[3])-48) >>3):
+		if driver._baud != 1 and keys[0] == 'L':
+			if ((ord(keys[3]) -48) >>3):
+				scancode=ord(keys[5])-48 << 4| ord(keys[6])-48
+				press = not ord(keys[4]) & 1
+				ext = bool(ord(keys[4]) & 2)
+				keyboardHandler.injectRawKeyboardInput(press,scancode,ext)
+				return
 			#get dots
 			z  = ord('0')
 			b = ord(keys[4])-z

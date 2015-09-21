@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-08 19:04+1000\n"
-"PO-Revision-Date: 2015-05-18 12:41+0200\n"
+"POT-Creation-Date: 2015-08-25 19:09+1000\n"
+"PO-Revision-Date: 2015-08-28 11:08+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -261,6 +261,12 @@ msgid "Ethiopic grade 1"
 msgstr "etiopia, taso 1"
 
 #. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Finnish 6 dot"
+msgstr "suomi, 6 pistettä"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Finnish 8 dot computer braille"
 msgstr "suomi, 8 pisteen tietokonemerkistö"
 
@@ -288,6 +294,16 @@ msgstr "ranska (Kanada), taso 1"
 #. braille settings dialog.
 msgid "French (Canada) grade 2"
 msgstr "ranska (Kanada), taso 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 1"
+msgstr "iiri, taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 2"
+msgstr "iiri, taso 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -343,6 +359,16 @@ msgstr "italia, 8 pisteen tietokonemerkistö"
 #. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "kannada, taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 1 (2006)"
+msgstr "korea, taso 1 (2006)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 2 (2006)"
+msgstr "korea, taso 2 (2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -707,6 +733,25 @@ msgstr "vuorovaikutustila"
 msgid "browse mode"
 msgstr "selaustila"
 
+#. Translators: Reported when single letter navigation in browse mode is turned off.
+msgid "Single letter navigation off"
+msgstr "Pikanavigointi pois"
+
+#. Translators: Reported when single letter navigation in browse mode is turned on.
+msgid "Single letter navigation on"
+msgstr "Pikanavigointi käytössä"
+
+#. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
+msgid ""
+"Toggles single letter navigation on and off. When on, single letter keys in "
+"browse mode jump to various kinds of elements on the page. When off, these "
+"keys are passed to the application"
+msgstr ""
+"Ottaa käyttöön pikanavigointinäppäimet tai poistaa ne käytöstä. Kun "
+"näppäimet ovat käytössä, määrättyjen kirjainten painaminen selaustilassa "
+"siirtää sivulla oleviin eri tyyppisiin elementteihin. Kun ne eivät ole "
+"käytössä, niiden painallukset välitetään suoraan sovellukselle."
+
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
 msgstr "Ei tueta tässä asiakirjassa"
@@ -715,7 +760,7 @@ msgstr "Ei tueta tässä asiakirjassa"
 msgid "Lists various types of elements in this document"
 msgstr "Näyttää listan tämän asiakirjan elementeistä."
 
-#. Translators: the description for the activatePosition script on virtualBuffers.
+#. Translators: the description for the activatePosition script on browseMode documents.
 msgid "activates the current object in the document"
 msgstr "Aktivoi asiakirjassa kohdalla olevan objektin"
 
@@ -1190,6 +1235,44 @@ msgstr "&Avaa"
 msgid "&Move to"
 msgstr "&Siirry"
 
+#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
+#, python-format
+msgid "%s landmark"
+msgstr "%s kiintopiste"
+
+#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "valittu %s"
+
+#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
+msgid "No long description"
+msgstr "Ei pitkää kuvausta"
+
+#. Translators: the description for the activateLongDescription script on browseMode documents.
+msgid "Shows the long description at this position if one is found."
+msgstr ""
+"Näyttää nykyisestä kohdasta pitkän kuvauksen, mikäli sellainen on saatavilla."
+
+#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
+#. But there is no container.
+msgid "Not in a container"
+msgstr "Ei säilöelementissä"
+
+#. Translators: Description for the Move to start of container command in browse mode.
+msgid "Moves to the start of the container element, such as a list or table"
+msgstr "Siirtää säilöelementin, kuten listan tai taulukon, alkuun."
+
+#. Translators: a message reported when:
+#. Review cursor is at the bottom line of the current navigator object.
+#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
+msgid "bottom"
+msgstr "alareuna"
+
+#. Translators: Description for the Move past end of container command in browse mode.
+msgid "Moves past the end  of the container element, such as a list or table"
+msgstr "Siirtää säilöelementin, kuten listan tai taulukon, loppuun."
+
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
@@ -1412,7 +1495,7 @@ msgstr "tummanvioletti"
 #. Translators: the color Deep Pink (RGB 255, 20, 147) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Deep Pink"
-msgstr "syvänvaaleanpunainen"
+msgstr "syvänpinkki"
 
 #. Translators: the color Deep Sky Blue (RGB 0, 191, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1492,7 +1575,7 @@ msgstr "Meloninvaaleanpunainen"
 #. Translators: the color Hot Pink (RGB 255, 105, 180) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Hot Pink"
-msgstr "kuumanvaaleanpunainen"
+msgstr "kuumanpinkki"
 
 #. Translators: the color Indian Red (RGB 205, 92, 92) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1567,7 +1650,7 @@ msgstr "vaaleanharmaa"
 #. Translators: the color Light Pink (RGB 255, 182, 193) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Pink"
-msgstr "vaaleanvaaleanpunainen"
+msgstr "vaaleanpinkki"
 
 #. Translators: the color Light Salmon (RGB 255, 160, 122) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1767,7 +1850,7 @@ msgstr "peru"
 #. Translators: the color Pink (RGB 255, 192, 203) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Pink"
-msgstr "vaaleanpunainen"
+msgstr "pinkki"
 
 #. Translators: the color Plum (RGB 221, 160, 221) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1919,11 +2002,6 @@ msgctxt "color name"
 msgid "Yellow Green"
 msgstr "keltavihreä"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "valittu %s"
-
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
@@ -2048,7 +2126,6 @@ msgid "cell"
 msgstr "solu"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
-#. Translators: A column in a column chart.
 msgid "column"
 msgstr "sarake"
 
@@ -2767,7 +2844,7 @@ msgid "Braille"
 msgstr "Pistekirjoitus"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: The label for the Tools submenu in NVDA menu.
+msgctxt "script category"
 msgid "Tools"
 msgstr "Työkalut"
 
@@ -2778,7 +2855,7 @@ msgstr "Kosketusnäyttö"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "System focus"
-msgstr "Järjestelmäkohdistus"
+msgstr "Järjestelmän kohdistus"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "System status"
@@ -3303,12 +3380,12 @@ msgstr "%s kopioitu leikepöydälle"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
 msgstr ""
-"Ilmoittaa nykyisen navigointiobjektin. Kahdesti painettaessa se tavataan ja "
-"kolmesti painettaessaobjektin nimi ja arvo kopioidaan leikepöydälle"
+"Ilmoittaa nykyisen navigointiobjektin. Kahdesti painettaessa tiedot tavataan "
+"ja kolmesti painettaessa objektin nimi ja arvo kopioidaan leikepöydälle."
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
@@ -3433,12 +3510,6 @@ msgstr ""
 "Lukee nykyisen navigointiobjektin rivin, jolla tarkastelukohdistin on. Jos "
 "tätä komentoa painetaan kahdesti, rivi tavataan. Kolmesti painettaessa se "
 "tavataan merkkikuvauksia käyttäen."
-
-#. Translators: a message reported when:
-#. Review cursor is at the bottom line of the current navigator object.
-#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "alareuna"
 
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid ""
@@ -3608,18 +3679,20 @@ msgstr ""
 "Lukee asiakirjan muotoilutiedot tarkastelukohdistimen nykyisestä sijainnista"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus"
-msgstr "ilmoittaa objektin, jossa kohdistus on"
+msgid "reports the object with focus. If pressed twice, spells the information"
+msgstr "Lukee aktiivisen objektin. Kahdesti painettaessa tiedot tavataan."
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "Tilariviä ei löydy"
 
 #. Translators: Input help mode message for report status line text command.
-msgid "reads the current application status bar and moves the navigator to it"
+msgid ""
+"reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information"
 msgstr ""
 "Lukee nykyisen sovelluksen tilarivin ja siirtää navigointiobjektin sen "
-"kohdalle"
+"kohdalle. Kahdesti painettaessa tiedot tavataan."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -4089,7 +4162,7 @@ msgstr "Ohjeet"
 msgid "Commands Quick Reference"
 msgstr "Komentojen pikaopas"
 
-#. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
+#. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
 msgstr "Käyttöopas"
 
@@ -4735,29 +4808,64 @@ msgstr "Puheen tarkastelu"
 msgid "&Language"
 msgstr "Kie&li:"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Language"
+msgstr "Kieli"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Voice"
 msgstr "&Puheääni:"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Voice"
+msgstr "Puheääni"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&ariant"
 msgstr "&Muunnelma:"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Variant"
+msgstr "Muunnelma"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
 msgstr "&Nopeus:"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate"
+msgstr "Nopeus"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "&Voimakkuus:"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Volume"
+msgstr "Voimakkuus"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
 msgstr "&Korkeus:"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Pitch"
+msgstr "Korkeus"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Sävy:"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Inflection"
+msgstr "Sävy"
 
 msgid "text mode"
 msgstr "tekstitila"
@@ -5517,6 +5625,8 @@ msgstr "Baum/HumanWare/APH"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
 msgid "Serial: {portName}"
 msgstr "Sarja: {portName}"
 
@@ -5527,6 +5637,10 @@ msgstr "HumanWare BrailleNote"
 #. Translators: The name of a series of braille displays.
 msgid "HumanWare Brailliant BI/B series"
 msgstr "HumanWare Brailliant BI/B"
+
+#. Translators: The name of a braille display.
+msgid "EcoBraille displays"
+msgstr "EcoBraille"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -5771,6 +5885,14 @@ msgstr "&Asenna NVDA..."
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
 msgstr "Lataa l&iitännäiset uudelleen"
+
+#. Translators: The label for the Tools submenu in NVDA menu.
+msgid "Tools"
+msgstr "T&yökalut"
+
+#. Translators: The label of a menu item to open NVDA user guide.
+msgid "&User Guide"
+msgstr "&Käyttöopas"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
@@ -6249,6 +6371,7 @@ msgstr ""
 "oleva liitos poistetaan ja käynnistin liitetään tähän profiiliin.\n"
 "Haluatko varmasti jatkaa?"
 
+#. Translators: The title of a warning dialog.
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 msgid "Warning"
 msgstr "Varoitus"
@@ -6370,6 +6493,24 @@ msgstr "Kopioi &massamuistiversion asetukset nykyiseen käyttäjätiliin"
 #. Translators: The label of a button to continue with the operation.
 msgid "&Continue"
 msgstr "&Jatka"
+
+#. Translators: A warning presented when the user attempts to downgrade NVDA
+#. to an older version.
+msgid ""
+"You are attempting to install an earlier version of NVDA than the version "
+"currently installed. If you really wish to revert to an earlier version, you "
+"should first cancel this installation and completely uninstall NVDA before "
+"installing the earlier version."
+msgstr ""
+"Yrität asentaa NVDA:n versiota, joka on vanhempi kuin tällä hetkellä "
+"asennettuna oleva. Mikäli haluat varmasti palata aiempaan versioon, sinun on "
+"ensin peruutettava tämä asennus ja poistettava NVDA kokonaan ennen aiemman "
+"version asentamista."
+
+#. Translators: The label of a button to proceed with installation,
+#. even though this is not recommended.
+msgid "&Proceed with installation (not recommended)"
+msgstr "&Jatka asennusta (ei suositella)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -6526,13 +6667,13 @@ msgstr "Tarkista &päivitykset automaattisesti"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
-"Custom plugins were detected in your user settings directory. Copying these "
-"to the system profile could be a security risk. Do you still wish to copy "
-"your settings?"
+"Add-ons were detected in your user settings directory. Copying these to the "
+"system profile could be a security risk. Do you still wish to copy your "
+"settings?"
 msgstr ""
-"Asetushakemistossa havaittiin liitännäisiä. Niiden kopioiminen "
+"Asetushakemistossasi havaittiin lisäosia. Niiden kopioiminen "
 "järjestelmäprofiiliin saattaa olla tietoturvariski. Haluatko silti kopioida "
-"asetukset?"
+"asetuksesi?"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
@@ -6771,7 +6912,7 @@ msgstr "Tarkastelukohdistimen asetukset"
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Follow system &focus"
-msgstr "Seuraa järjestelmä&kohdistusta"
+msgstr "Seuraa järjestelmän &kohdistusta"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
@@ -7283,11 +7424,6 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "kohdassa {x}, {y}"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-#, python-format
-msgid "%s landmark"
-msgstr "%s kiintopiste"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "Päivitetty"
@@ -7295,15 +7431,6 @@ msgstr "Päivitetty"
 #. Translators: Reported while loading a document.
 msgid "Loading document..."
 msgstr "Ladataan asiakirjaa..."
-
-#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-msgid "No long description"
-msgstr "Ei pitkää kuvausta"
-
-#. Translators: the description for the activateLongDescription script on virtualBuffers.
-msgid "Shows the long description at this position if one is found."
-msgstr ""
-"Näyttää nykyisestä kohdasta pitkän kuvauksen, mikäli sellainen on saatavilla."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -7346,19 +7473,6 @@ msgstr "siirtää seuraavaan taulukon sarakkeeseen"
 #. Translators: the description for the previous table column script on virtualBuffers.
 msgid "moves to the previous table column"
 msgstr "siirtää edelliseen taulukon sarakkeeseen"
-
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
-msgid "Not in a container"
-msgstr "Ei säilöelementissä"
-
-#. Translators: Description for the Move to start of container command in browse mode.
-msgid "Moves to the start of the container element, such as a list or table"
-msgstr "Siirtää säilöelementin, kuten listan tai taulukon, alkuun."
-
-#. Translators: Description for the Move past end of container command in browse mode.
-msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "Siirtää säilöelementin, kuten listan tai taulukon, loppuun."
 
 msgid "Taskbar"
 msgstr "Tehtäväpalkki"
@@ -7883,6 +7997,11 @@ msgstr "Sarjoja ei määritetty."
 msgid "slice"
 msgstr "sektori"
 
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "pylväs"
+
 #. Translators: A data point in a line chart.
 msgid "data point"
 msgstr "arvopiste"
@@ -8240,18 +8359,19 @@ msgstr "%g pistettä"
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
-"Määritä rivi {rowNumber} sarake {columnNumber} sarakeotsikoiden alkukohdaksi"
+"Määritä rivi {rowNumber} ja sarake {columnNumber} sarakeotsikoiden "
+"alkukohdaksi"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of column headers"
 msgstr ""
-"Rivi {rowNumber} sarake {columnNumber} on jo määritetty sarakeotsikoiden "
+"Rivi {rowNumber} ja sarake {columnNumber} on jo määritetty sarakeotsikoiden "
 "alkukohdaksi"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Removed row {rowNumber} column {columnNumber}  from column headers"
-msgstr "Rivi {rowNumber} sarake {columnNumber} poistettu sarakeotsikoista"
+msgstr "Rivi {rowNumber} ja sarake {columnNumber} poistettu sarakeotsikoista"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 msgid "Cannot find row {rowNumber} column {columnNumber}  in column headers"
@@ -8269,18 +8389,19 @@ msgstr ""
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "Määritä {rowNumber} sarake {columnNumber} riviotsikoiden alkukohdaksi"
+msgstr ""
+"Määritä rivi {rowNumber} ja sarake {columnNumber} riviotsikoiden alkukohdaksi"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid ""
 "Already set row {rowNumber} column {columnNumber} as start of row headers"
 msgstr ""
-"Rivi {rowNumber} sarake {columnNumber} on jo määritetty riviotsikoiden "
+"Rivi {rowNumber} ja sarake {columnNumber} on jo määritetty riviotsikoiden "
 "alkukohdaksi"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid "Removed row {rowNumber} column {columnNumber}  from row headers"
-msgstr "Rivi {rowNumber} sarake {columnNumber} poistettu riviotsikoista"
+msgstr "Rivi {rowNumber} ja sarake {columnNumber} poistettu riviotsikoista"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 msgid "Cannot find row {rowNumber} column {columnNumber}  in row headers"
@@ -8396,6 +8517,9 @@ msgstr "HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "reports the object with focus"
+#~ msgstr "ilmoittaa objektin, jossa kohdistus on"
 
 #~ msgid "%s"
 #~ msgstr "%s"

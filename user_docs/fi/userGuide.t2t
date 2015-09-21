@@ -56,7 +56,7 @@ Tämä koskee sekä alkuperäisiä että muokattuja ohjelmistokopioita ja kaikki
 Voit [tarkastella koko lisenssiä http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] saadaksesi lisätietoja.
 
 + Järjestelmävaatimukset +
-- Käyttöjärjestelmät: kaikki 32- ja 64-bittiset Windows XP:n, Windows Vistan, Windows 7:n ja Windows 8:n versiot (palvelinversiot mukaan lukien).
+- Käyttöjärjestelmät: kaikki 32- ja 64-bittiset Windows XP:n, Windows Vistan, Windows 7:n, Windows 8:n ja Windows 10:n versiot (palvelinversiot mukaan lukien).
  - 32-bittisessä Windows XP:ssä on oltava asennettuna Service Pack 2 tai uudempi.
  - Windows Server 2003:ssa on oltava asennettuna Service Pack 1 tai uudempi.
 - Muistia (RAM): 256 Mt tai enemmän
@@ -191,7 +191,7 @@ Yhtäaikaa kahdella sormella napauttaminen tarkoittaa napauttamista kahdella sor
 Mikäli sama napautus suoritetaan kerran tai useammin nopeasti peräkkäin, NVDA käsittelee sitä moninapautuseleenä.
 Kahdesti napauttamisesta on seurauksena kaksoisnapautus.
 Kolmesti napauttamisesta seuraa kolmoisnapautus jne.
-Nämä moninapautuseleet tunnistavat myös, montaako sormea käytettiin, joten sellaiset eleet kuin kolmoisnapautus kahdella sormella tai napautus neljällä sormella jne ovat mahdollisia.
+Nämä moninapautuseleet tunnistavat myös, montako sormea käytettiin, joten sellaiset eleet kuin kolmoisnapautus kahdella sormella tai napautus neljällä sormella jne ovat mahdollisia.
  
 ==== Pyyhkäisyt ====
 Liu'uta sormea nopeasti näytöllä.
@@ -260,16 +260,16 @@ Objekti on yksittäinen kohde, kuten tekstikatkelma, painike, valintaruutu, liuk
 Järjestelmäkohdistus, tunnetaan myös yksinkertaisesti kohdistuksena, on [objekti #Objects], joka vastaanottaa näppäimistön näppäinpainallukset.
 Jos esimerkiksi kirjoitetaan muokattavaan tekstikenttään, kohdistus on kyseisessä kentässä.
 
-Yleisin tapa liikkua NVDA:lla Windowsissa on käyttää tavallisia näppäinkomentoja, kuten sarkain ja Shift+sarkain eteen- ja taaksepäin säädinten välillä liikkumiseen, painamalla Alt valikkoriville siirtymiseen, käyttämällä nuolinäppäimiä valikoissa liikkumiseen ja Alt+sarkain avointen sovellusten välillä siirtymiseen.
+Yleisin tapa liikkua NVDA:lla Windowsissa on käyttää tavallisia näppäinkomentoja, kuten Sarkain ja Shift+Sarkain eteen- ja taaksepäin säädinten välillä liikkumiseen, painamalla Alt valikkoriville siirtymiseen, käyttämällä nuolinäppäimiä valikoissa liikkumiseen ja Alt+Sarkain avointen sovellusten välillä siirtymiseen.
 Näin tehtäessä NVDA kertoo tietoja objektista, jossa kohdistus on, kuten nimen, tyypin, tilan, arvon, kuvauksen, pikanäppäimen ja sijainnin.
 
 Joitakin hyödyllisiä näppäinkomentoja kohdistuksella navigoitaessa:
 %kc:beginInclude
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
-| Lue nykyinen kohdistus | NVDA+sarkain | NVDA+sarkain | Kertoo nykyisen objektin tai säätimen, jossa järjestelmän kohdistus on. Kahdesti painettaessa tiedot tavataan. |
+| Lue nykyinen kohdistus | NVDA+Sarkain | NVDA+Sarkain | Kertoo nykyisen objektin tai säätimen, jossa järjestelmän kohdistus on. Kahdesti painettaessa tiedot tavataan. |
 | Lue ikkunan otsikko | NVDA+T | NVDA+T | Lukee aktiivisen ikkunan otsikon. Kahdesti painettaessa otsikko tavataan ja kolmesti painettaessa se kopioidaan leikepöydälle. |
 | Lue aktiivinen ikkuna | NVDA+B | NVDA+B | Lukee kaikki aktiivisen ikkunan säätimet (hyödyllinen valintaikkunoissa). |
-| Lue tilarivi | NVDA+End | NVDA+Shift+End | Lukee tilarivin, mikäli NVDA löytää sen, ja siirtää lisäksi navigointiobjektin sen kohdalle. |
+| Lue tilarivi | NVDA+End | NVDA+Shift+End | Lukee tilarivin, mikäli NVDA löytää sen, ja siirtää lisäksi navigointiobjektin sen kohdalle. Kahdesti painettaessa tiedot tavataan. |
 %kc:endInclude
 
 ++ Järjestelmäkohdistimella liikkuminen ++[SystemCaret]
@@ -285,8 +285,8 @@ NVDA:ssa on seuraavat järjestelmäkohdistimeen liittyvät näppäinkomennot:
 | Lue kaikki | NVDA+alanuoli | NVDA+A | Alkaa lukemaan järjestelmäkohdistimen nykyisestä sijainnista lähtien siirtäen samalla sitä. |
 | Lue nykyinen rivi | NVDA+ylänuoli | NVDA+L | Lukee järjestelmäkohdistimen kohdalla olevan rivin. Kahdesti painettaessa se tavataan. |
 | Lue valittu teksti | NVDA+Shift+ylänuoli | NVDA+Shift+S | Lukee kaiken valittuna olevan tekstin. |
-| Seuraava virke | Alt+alanuoli | Alt+alanuoli | Siirtää kohdistimen seuraavaan virkkeeseen ja lukee sen. (tuetaan vain Microsoft Wordissa) |
-| Edellinen virke | Alt+ylänuoli | Alt+ylänuoli | Siirtää kohdistimen edelliseen virkkeeseen ja lukee sen. (tuetaan vain Microsoft Wordissa) |
+| Seuraava virke | Alt+alanuoli | Alt+alanuoli | Siirtää kohdistimen seuraavaan virkkeeseen ja lukee sen. (tuetaan vain Microsoft Wordissa ja Outlookissa) |
+| Edellinen virke | Alt+ylänuoli | Alt+ylänuoli | Siirtää kohdistimen edelliseen virkkeeseen ja lukee sen. (tuetaan vain Microsoft Wordissa ja Outlookissa) |
 
 
 Taulukoissa ovat käytettävissä lisäksi seuraavat näppäinkomennot:
@@ -331,9 +331,9 @@ Käytä seuraavia komentoja objekteittain liikkumiseen:
 | Siirrä edelliseen objektiin | NVDA+numeronäppäimistön 4 | NVDA+Shift+vasen nuoli | Pyyhkäisy vasemmalle (objektitila) | Siirtää nykyistä navigointiobjektia edeltävään objektiin. |
 | Siirrä seuraavaan objektiin | NVDA+numeronäppäimistön 6 | NVDA+Shift+oikea nuoli | Pyyhkäisy oikealle (objektitila) | Siirtää nykyisen navigointiobjektin jälkeiseen objektiin. |
 | Siirrä ensimmäiseen sisältöobjektiin | NVDA+numeronäppäimistön 2 | NVDA+Shift+alanuoli | Pyyhkäisy alas (objektitila) | Siirtää ensimmäiseen navigointiobjektin sisällä olevaan objektiin. |
-| Siirrä kohdistusobjektiin | NVDA+numeronäppäimistön miinus | NVDA+askelpalautin | Ei mitään | Siirtää objektiin, jossa järjestelmän kohdistus on tällä hetkellä ja sijoittaa tarkastelukohdistimen järjestelmäkohdistimen kohdalle, mikäli se on näkyvissä. |
+| Siirrä aktiiviseen objektiin | NVDA+numeronäppäimistön miinus | NVDA+askelpalautin | Ei mitään | Siirtää objektiin, jossa järjestelmän kohdistus on tällä hetkellä ja sijoittaa tarkastelukohdistimen järjestelmäkohdistimen kohdalle, mikäli se on näkyvissä. |
 | Aktivoi nykyinen navigointiobjekti | NVDA+numeronäppäimistön Enter | NVDA+Enter | Kaksoisnapautus | Aktivoi nykyisen navigointiobjektin (vastaa hiiren napsauttamista tai välilyönnin painamista, kun järjestelmän kohdistus on siinä). |
-| Siirrä järjestelmäkohdistus tai -kohdistin tarkastelukohtaan | NVDA+Shift+numeronäppäimistön miinus | NVDA+Shift+askelpalautin | Ei mitään | Siirtää kerran painettaessa järjestelmän kohdistuksen nykyiseen navigointiobjektiin, kahdesti painettaessa siirtää järjestelmäkohdistimen  tarkastelukohdistimen kohdalle. |
+| Siirrä järjestelmän kohdistus tai -kohdistin tarkastelukohtaan | NVDA+Shift+numeronäppäimistön miinus | NVDA+Shift+askelpalautin | Ei mitään | Siirtää kerran painettaessa järjestelmän kohdistuksen nykyiseen navigointiobjektiin, kahdesti painettaessa siirtää järjestelmäkohdistimen  tarkastelukohdistimen kohdalle. |
 | Lue tarkastelukohdistimen sijainti | NVDA+numeronäppäimistön delete | NVDA+delete | Ei mitään | Kertoo tietoja tarkastelukohdistimen kohdalla olevan tekstin tai objektin sijainnista. Näitä tietoja voivat olla esim. prosenttimäärä asiakirjasta, etäisyys sivun reunasta tai tarkka sijainti ruudulla. Kahdesti painettaessa kerrotaan lisätietoja. |
 %kc:endInclude
 
@@ -341,7 +341,7 @@ Huom: Numlockin on oltava pois käytöstä, jotta numeronäppäimistön näppäi
 
 ++ Tekstin tarkasteleminen ++[ReviewingText]
 NVDA:n avulla on mahdollista lukea [ruutua #ScreenReview], nykyistä [asiakirjaa #DocumentReview] tai nykyistä [objektia #ObjectReview] merkeittäin, sanoittain tai riveittäin.
-Tästä on eniten hyötyä paikoissa, joissa ei ole [järjestelmäkohdistinta #SystemCaret] (Windowsin komentokehote mukaan lukien).
+Tästä on eniten hyötyä paikoissa, joissa ei ole [järjestelmäkohdistinta #SystemCaret] (Windowsin komentokonsoli-ikkunat mukaan lukien).
 Voit käyttää tätä esim. valintaikkunassa olevan ilmoituksen lukemiseen.
 
 Kun siirrät tarkastelukohdistinta, järjestelmäkohdistin ei seuraa mukana, joten tekstin tarkastelu onnistuu muokkauskohtaa menettämättä.
@@ -503,6 +503,12 @@ Säilöelementtien, kuten listojen ja taulukoiden alkuun tai loppuun siirtymisee
 || Nimi | Näppäinkomento | Kuvaus |
 | Siirrä säilöelementin alkuun | Shift+pilkku | Siirtää sen säilöelementin alkuun, jonka kohdalla kohdistin on (lista, taulukko jne). |
 | Siirrä säilöelementin loppuun | pilkku | Siirtää sen säilöelementin loppuun, jonka kohdalla kohdistin on (lista, taulukko jne). |
+
+%kc:endInclude
+Joissakin uusissa verkkopohjaisissa sovelluksissa, kuten Gmail, Twitter ja Facebook, käytetään yksikirjaimisia pikanäppäimiä.
+Mikäli haluat samaan aikaan käyttää sekä niitä että nuolinäppäimiä selaustilassa lukemiseen, voit poistaa tilapäisesti käytöstä NVDA:n pikanavigointinäppäimet.
+%kc:beginInclude
+Ota pikanavigointinäppäimet käyttöön tai poista ne käytöstä nykyisessä asiakirjassa painamalla NVDA+Shift+välilyönti.
 %kc:endInclude
 
 ++ Elementtilista ++
@@ -941,7 +947,7 @@ Löytyy Asetukset-valikon kohdasta "Tarkastelukohdistin...".
 Tämä valintaikkuna sisältää seuraavat asetukset:
 
 %kc:setting
-==== Seuraa järjestelmäkohdistusta ====
+==== Seuraa järjestelmän kohdistusta ====
 Näppäinkomento: NVDA+7
 
 Kun tämä asetus on käytössä, tarkastelukohdistin sijoitetaan aina samaan objektiin kuin nykyinen järjestelmän kohdistus sen muuttuessa.
@@ -950,7 +956,7 @@ Kun tämä asetus on käytössä, tarkastelukohdistin sijoitetaan aina samaan ob
 ==== Seuraa järjestelmäkohdistinta ====
 Pikanäppäin: NVDA+6
 
-Kun tämä asetus on käytössä, tarkastelukohdistin siirretään automaattisesti järjestelmäkohdistimen kohdalle joka kerta sen liikkuessa.
+Kun tämä asetus on käytössä, tarkastelukohdistin siirretään automaattisesti järjestelmäkohdistimen kohdalle aina sen liikkuessa.
 
 ==== Seuraa hiirikohdistinta ====
 Kun tämä asetus on käytössä, tarkastelukohdistin seuraa hiirtä sen liikkuessa.
@@ -1444,7 +1450,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
 | Askelpalautin-näppäin | piste 7 |
 | Enter-näppäin | piste 8 |
-| Shift+sarkain-näppäinyhdistelmä | välilyönti+pisteet 1 ja 2 |
+| Shift+Sarkain-näppäinyhdistelmä | välilyönti+pisteet 1 ja 2 |
 | Sarkain-näppäin | välilyönti+pisteet 4 ja 5 |
 | ylänuolinäppäin | välilyönti+piste 1 |
 | alanuolinäppäin | välilyönti+piste 4 |
@@ -1457,7 +1463,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Control+Home-näppäinyhdistelmä | välilyönti+pisteet 1, 2 ja 3 |
 | Control+End-näppäinyhdistelmä | välilyönti+pisteet 4, 5 ja 6 |
 | Alt-näppäin | välilyönti+pisteet 1, 3 ja 4 |
-| Alt+sarkain-näppäinyhdistelmä | välilyönti+pisteet 2, 3, 4 ja 5 |
+| Alt+Sarkain-näppäinyhdistelmä | välilyönti+pisteet 2, 3, 4 ja 5 |
 | Esc-näppäin | välilyönti+pisteet 1 ja 5 |
 | Windows-näppäin | välilyönti+pisteet 2, 4, 5 ja 6 |
 | välilyöntinäppäin | välilyönti |
@@ -1493,7 +1499,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä pistenäyttö seuraavalle riville | t4 |
 | Vieritä pistenäyttöä eteenpäin | t5 |
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
-| Shift+sarkain-näppäinyhdistelmä | sp1 |
+| Shift+Sarkain-näppäinyhdistelmä | sp1 |
 | Alt-näppäin | sp2 |
 | Esc-näppäin | sp3 |
 | Sarkain-näppäin | sp4 |
@@ -1505,7 +1511,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | NVDA-valikko | sp1+sp3 |
 | Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | sp1+sp4 |
 | Windows-näppäin | sp2+sp3 |
-| Alt+sarkain-näppäinyhdistelmä | sp2+sp4 |
+| Alt+Sarkain-näppäinyhdistelmä | sp2+sp4 |
 %kc:endInclude
 
 ++ Handy Tech ++
@@ -1523,10 +1529,10 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä pistenäyttö edelliselle riville | b4 |
 | Siirrä pistenäyttö seuraavalle riville | b5 |
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
-| Shift+sarkain-näppäinyhdistelmä | esc |
+| Shift+Sarkain-näppäinyhdistelmä | esc |
 | Alt-näppäin | b2+b4+b5 |
 | Esc-näppäin | b4+b6 |
-| sarkain-näppäin | enter |
+| Sarkain-näppäin | enter |
 | Enter-näppäin | esc+enter |
 | ylänuolinäppäin | vasen väli |
 | alanuolinäppäin | oikea väli |
@@ -1548,10 +1554,10 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä pistenäyttö edelliselle riville | UP |
 | Siirrä pistenäyttö seuraavalle riville | DN |
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
-| Shift+sarkain-näppäinyhdistelmä | SLF |
-| sarkain-näppäin | SRG |
-| Alt+sarkain-näppäinyhdistelmä | SDN |
-| Alt+Shift+sarkain-näppäinyhdistelmä | SUP |
+| Shift+Sarkain-näppäinyhdistelmä | SLF |
+| Sarkain-näppäin | SRG |
+| Alt+Sarkain-näppäinyhdistelmä | SDN |
+| Alt+Shift+Sarkain-näppäinyhdistelmä | SUP |
 %kc:endInclude
 
 ++ Baum/Humanware/APH ++
@@ -1638,14 +1644,14 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | vasen nuolinäppäin | välilyönti+piste 3 |
 | oikea nuolinäppäin | välilyönti+piste 6 |
 | NVDA-valikko | c1, c3, c4 ja c5 (komento n) |
-| Shift+sarkain-näppäinyhdistelmä | välilyönti+pisteet 1 ja 3 |
-| sarkain-näppäin | välilyönti+pisteet 4 ja 6 |
+| Shift+Sarkain-näppäinyhdistelmä | välilyönti+pisteet 1 ja 3 |
+| Sarkain-näppäin | välilyönti+pisteet 4 ja 6 |
 | Alt-näppäin | välilyönti+pisteet 1, 3 ja 4 (välilyönti+m) |
 | Esc-näppäin | välilyönti+pisteet 1 ja 5 (välilyönti+e) |
 | Enter-näppäin | piste 8 |
 | Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | c1, c4 ja c5 (komento d) |
 | Windows-näppäin | välilyönti+pisteet 3 ja 4 |
-| Alt+sarkain-näppäinyhdistelmä | välilyönti+pisteet 2, 3, 4 ja 5 (välilyönti+t) |
+| Alt+Sarkain-näppäinyhdistelmä | välilyönti+pisteet 2, 3, 4 ja 5 (välilyönti+t) |
 | Lue kaikki | c1, c2, c3, c4, c5 ja c6 |
 %kc:endInclude
 
@@ -1665,7 +1671,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä pistenäyttö edelliselle riville | vasemmanpuoleinen vieritä ylös |
 | Siirrä pistenäyttö seuraavalle riville | oikeanpuoleinen vieritä ylös |
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
-| Shift+sarkain-näppäinyhdistelmä | pisteet 1 ja 2+välilyönti |
+| Shift+Sarkain-näppäinyhdistelmä | pisteet 1 ja 2+välilyönti |
 | Alt-näppäin | pisteet 1, 3 ja 4+välilyönti |
 | Esc-näppäin | pisteet 1 ja 5+välilyönti |
 | Sarkain-näppäin | pisteet 4 ja 5+välilyönti |
@@ -1674,8 +1680,8 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | ylänuolinäppäin | piste 1+välilyönti |
 | alanuolinäppäin | piste 4+välilyönti |
 | Capslock-näppäin | pisteet 1, 3 ja 6+välilyönti |
-| Shift+Alt+sarkain-näppäinyhdistelmä | advance2+advance3+advance1 |
-| Alt+sarkain-näppäinyhdistelmä | advance2+advance3 |
+| Shift+Alt+Sarkain-näppäinyhdistelmä | advance2+advance3+advance1 |
+| Alt+Sarkain-näppäinyhdistelmä | advance2+advance3 |
 | End-näppäin | pisteet 4 ja 6+välilyönti |
 | Control+End-näppäinyhdistelmä | pisteet 4, 5 ja 6+välilyönti |
 | Home-näppäin | pisteet 1 ja 3+välilyönti |
@@ -1741,8 +1747,8 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Vaihda Pistenäyttö seuraa -asetusta | b5 |
 | Lue kaikki | b6 |
 | Sarkain-näppäin | b1 |
-| Shift+sarkain-näppäinyhdistelmä | b2 |
-| Alt+sarkain-näppäinyhdistelmä | b1+b2 |
+| Shift+Sarkain-näppäinyhdistelmä | b2 |
+| Alt+Sarkain-näppäinyhdistelmä | b1+b2 |
 | NVDA-valikko | vasen+oikea |
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
 %kc:endInclude
@@ -1756,10 +1762,9 @@ Seuraavia pistenäyttöjä tuetaan:
 -
 
 NVDA käyttää BrxComia, mikäli se on asennettu.
-BrxCom on työkalu, joka mahdollistaa pistesyötön käyttämisen itsenäisesti ruudunlukuohjelmasta riippumatta.
+BrxCom on työkalu, joka mahdollistaa pistenäytön näppäimistösyötteen toimimisen itsenäisesti ruudunlukuohjelmasta riippumatta.
 Papenmeier julkaisee piakkoin tästä työkalusta NVDA:n kanssa toimivan version.
-Trio-, BRAILLEX Live 20- ja Braillex Live -laitteissa pistesyöttö on tosin mahdollista myös ilman BrxComia.
-Pistesyöttö on mahdollista myös Live Plus -mallissa, mutta vain BrxComin avulla.
+Pistekirjoituksen syöttäminen on mahdollista Trio- ja BRAILLEX Live -malleissa.
 
 Useimmissa laitteissa on intuitiivisen ja nopean käytön mahdollistava helppokäyttönäppäin (EAB).
 Sitä voidaan siirtää neljään suuntaan, joissa kussakin on yleensä kaksi kytkintä.
@@ -1828,7 +1833,7 @@ Molemmat sisemmät näppäimet on liitetty välilyöntiin.
 | Control-näppäin | lt ja piste 2 |
 | Alt-näppäin | lt ja piste 3 |
 | Control+Esc-näppäinyhdistelmä | välilyönti+pisteet 1, 2, 3, 4, 5 ja 6 |
-| sarkain-näppäin | välilyönti+pisteet 3 ja 7 |
+| Sarkain-näppäin | välilyönti+pisteet 3 ja 7 |
 %kc:endInclude 
 
 ++ Papenmeier BRAILLEX (vanhat mallit) ++
@@ -1895,6 +1900,8 @@ BRAILLEX Tiny:
 | Siirrä edelliseen objektiin | r1+left |
 | Siirrä seuraavaan objektiin | r1+right |
 | Lue tekstin muotoilutiedot | reportf |
+| Lue ikkunan otsikko | l1+up |
+| Lue tilarivi | l2+down |
 
 BRAILLEX 2D Screen:
 || Nimi | Näppäinkomento |
@@ -1954,10 +1961,45 @@ Katso laitteen käyttöohjeesta tarkat kuvaukset näppäinten paikoista.
 | Enter-näppäin | välilyönti+piste8 |
 | Askelpalautin-näppäin | välilyönti+piste7 |
 | Sarkain-näppäin | välilyönti+piste2+piste3+piste4+piste5 (välilyönti+t) |
-| Shift+sarkain-näppäinyhdistelmä | välilyönti+piste1+piste2+piste5+piste6 |
+| Shift+Sarkain-näppäinyhdistelmä | välilyönti+piste1+piste2+piste5+piste6 |
 | Windows-näppäin | välilyönti+piste2+piste4+piste5+piste6 (välilyönti+w) |
 | Alt-näppäin | välilyönti+piste1+piste3+piste4 (välilyönti+m) |
 | Ota syöteohje käyttöön tai poista se käytöstä | välilyönti+piste2+piste3+piste6 (välilyönti+alempi h) |
+%kc:endInclude
+
+++ EcoBraille ++
+NVDA tukee [ONCEn http://www.once.es/] EcoBraille-pistenäyttöjä.
+Seuraavia malleja tuetaan:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+Voit määrittää näytön käyttämän sarjaportin NVDA:n Pistekirjoitusasetukset-valintaikkunasta.
+
+Seuraavassa on näiden pistenäyttöjen näppäinmääritykset.
+Katso [EcoBraillen käyttöohjeesta ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] kuvaukset näppäinten paikoista.
+
+%kc:beginInclude
+|| Nimi | Näppäin |
+| Vieritä pistenäyttöä taaksepäin | T2 |
+| Vieritä pistenäyttöä eteenpäin | T4 |
+| Siirrä pistenäyttö edelliselle riville | T1 |
+| Siirrä pistenäyttö seuraavalle riville | T5 |
+| Siirrä pistesoluun | Kosketuskohdistinnäppäimet |
+| Aktivoi nykyinen navigointiobjekti | T3 |
+| Vaihda seuraavaan tarkastelutilaan | F1 |
+| Siirrä säilöobjektiin | F2 |
+| Vaihda edelliseen tarkastelutilaan | F3 |
+| Siirrä edelliseen objektiin | F4 |
+| Lue nykyinen objekti | F5 |
+| Siirrä seuraavaan objektiin | F6 |
+| Siirrä aktiiviseen objektiin | F7 |
+| Siirrä ensimmäiseen sisältöobjektiin | F8 |
+| Siirrä järjestelmän kohdistus tai -kohdistin nykyiseen tarkastelukohtaan | F9 |
+| Lue tarkastelukohdistimen sijainti | F0 |
+| Vaihda Pistenäyttö seuraa -asetusta | A |
 %kc:endInclude
 
 ++ BRLTTY ++
@@ -1980,7 +2022,7 @@ Katso [BRLTTY:n näppäintaulukoiden ohjetta http://mielke.cc/brltty/doc/KeyTabl
 | siirrä pistesoluun | kosketuskohdistinnäppäimet (siirrä kohdistin merkin kohdalle) |
 %kc:endInclude
 
-+ Säädintyyppien ja tilojen lyhenteet pistenäytöllä +
++ Säädintyyppien ja -tilojen lyhenteet pistenäytöllä +
 Jotta pistenäytölle sopisi mahdollisimman paljon tietoa, seuraavat lyhenteet on määritetty ilmaisemaan säätimen tyyppiä ja tilaa.
 
 || Lyhenne | Säätimen tyyppi |
@@ -2021,9 +2063,9 @@ Seuraavat tilan ilmaisimet on myös määritetty:
 
 ++ Komentorivivalitsimet ++[CommandLineOptions]
 NVDA hyväksyy käynnistyessään yhden tai useamman toimintaansa vaikuttavan komentorivivalitsimen.
-Voit antaa kerralla niin monta valitsinta kuin tarvitset.
-Valitsimet voidaan antaa pikakuvakkeesta käynnistettäessä (syötetään kuvakkeen Ominaisuudet-valintaikkunassa olevaan Kohde:-kenttään), Suorita-valintaikkunasta (Käynnistä-valikko -> Suorita tai Windows+R) tai Windowsin komentokehotteesta.
-Valitsimet erotetaan NVDA:n ohjelmatiedoston nimestä ja toisistaan välilyönneillä.
+Voit käyttää kerralla niin monta valitsinta kuin tarvitset.
+Valitsimet voidaan antaa pikakuvakkeesta käynnistettäessä (syötetään kuvakkeen Ominaisuudet-valintaikkunassa olevaan Kohde-kenttään), Suorita-valintaikkunasta (Käynnistä-valikko -> Suorita tai Windows+R) tai Windowsin komentokehotteesta.
+Valitsimet erotetaan NVDA:n ohjelmatiedoston nimestä ja toisistaan välilyönnillä.
 Esimerkiksi asennuksen aikana Työpöydälle luodussa pikakuvakkeessa on -r-valitsin, joka sulkee NVDA:n käynnissä olevan version ennen uuden käynnistämistä.
 Toinen hyödyllinen valitsin on --disable-addons, joka poistaa kaikki lisäosat käytöstä.
 Sen avulla voit selvittää, aiheuttaako jokin lisäosa ongelmia.
@@ -2032,7 +2074,7 @@ Voit esimerkiksi sulkea NVDA:n nykyisen version kirjoittamalla seuraavan komenno
 
 nvda -q
 
-Joistakin komentorivivalitsimista on sekä lyhyt että pitkä muoto, kun taas joistakin on vain pitkä muoto.
+Joistakin komentorivivalitsimista on sekä lyhyt että pitkä muoto, kun taas joistakin on vain pitkä.
 Voit yhdistellä lyhyitä valitsimia näin:
 | nvda -rm | Tämä sulkee NVDA:n nykyisen version ja käynnistää uuden poistaen samalla käynnistysäänet käytöstä jne. |
 | nvda -rm --disable-addons | Muuten sama kuin edellä, mutta poistaa myös lisäosat käytöstä. |

@@ -56,7 +56,7 @@ Questo si applica a copie originali e modificate del software ed a qualsiasi pro
 Per maggiori informazioni è possibile [Leggere l'intera licenza. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Requisiti di sistema +
-- Sistemi operativi: tutte le versioni a 32 e 64 bit dei Sistemi Windows XP, Windows Vista e Windows 7 (Incluse le edizioni Server).
+- Sistemi operativi: tutte le versioni a 32 e 64 bit dei Sistemi Windows XP, Windows Vista,  Windows 7, Windows8 e Windows10 (Incluse le edizioni Server).
  - Per Windows XP 32-bit, NVDA richiede Service Pack 2 o superiore.
  - Per Windows Server 2003, NVDA richiede Service Pack 1 o superiore.
 - Memoria: 256 mb di Ram o superiore
@@ -269,7 +269,7 @@ Esistono alcuni comandi da tastiera utili per seguire il focus:
 | Legge il focus | NVDA+tab | NVDA+tab | Annuncia l'oggetto o il controllo attualmente focalizzato. Premendo la combinazione due volte ne verrà fatto lo spelling  |
 | Legge il Titolo | NVDA+t | NVDA+t | Legge il titolo della finestra attiva in quel momento. Premendo la combinazione due volte ne verrà fatto lo spelling. Premendo per tre volte il contenuto verrà copiato negli appunti. |
 | Legge la Finestra Attiva | NVDA+b | NVDA+b | Legge il contenuto della finestra in primo piano (utile nelle finestre di dialogo). |
-| Legge la barra di stato | NVDA+fine | NVDA+shift+fine | Legge la barra di stato sempre che NVDA sia in grado di individuarne una. Inoltre sposta in quella posizione il navigatore ad oggetti |
+| Legge la barra di stato | NVDA+fine | NVDA+shift+fine | Legge la barra di stato sempre che NVDA sia in grado di individuarne una. Inoltre sposta in quella posizione il navigatore ad oggetti. Una doppia pressione provocherà lo spelling delle informazioni |
 %kc:endInclude
 
 ++ Esplorare con il cursore di sistema ++[SystemCaret]
@@ -285,9 +285,8 @@ NVDA fornisce i seguenti comandi quando si lavora con il cursore di sistema:
 | Dire Tutto | NVDA+Freccia Giù | NVDA+a | Inizia a leggere dalla posizione del cursore di sistema sino alla fine del documento, spostando il cursore man mano che la lettura continua |
 | Legge Riga Corrente | NVDA+freccia su | NVDA+l | Legge la riga sulla quale si trova il cursore di sistema. Premendo la combinazione due volte viene effettuato lo spelling della riga. |
 | Legge Selezione corrente | NVDA+Shift+freccia su | NVDA+shift+s | Legge il testo selezionato ammesso che ve ne sia uno. |
-| frase successiva | alt+freccia Giù | alt+freccia Giù | Sposta il cursore sulla frase successiva e la legge. (Supportato solo in Microsoft Word) |
-| frase precedente | alt+freccia Su | alt+freccia Su | Sposta il cursore sulla frase precedente e la legge. (Supportato solo in Microsoft Word) |
-
+| frase successiva | alt+freccia Giù | alt+freccia Giù | Sposta il cursore sulla frase successiva e la legge. (Supportato solo in Microsoft Word e Outlook) |
+| frase precedente | alt+freccia Su | alt+freccia Su | Sposta il cursore sulla frase precedente e la legge. (Supportato solo in Microsoft Word e Outlook) |
 
 
 Se ci si trova all'interno di una tabella, sono disponibili i seguenti comandi:
@@ -504,6 +503,12 @@ Per spostarsi all'inizio e alla fine degli elementi contenuti in elenchi e tabel
 || Nome | Tasto | Descrizione |
 | Spostarsi all'inizio del contenitore | punto e virgola | Si sposta al primo elemento presente negli elenchi o nelle tabelle, e vi posiziona il cursore |
 | Spostarsi alla fine del contenitore | virgola | Si sposta all'ultimo elemento presente negli elenchi o nelle tabelle, e vi posiziona il cursore |
+
+%kc:endInclude
+Alcune applicazioni web come Gmail, Twitter e Facebook utilizzano lettere singole come tasti di scelta rapida.
+Se si desidera utilizzare questi tasti e allo stesso tempo essere in grado di muoversi con le frecce in modalità navigazione, è possibile disabilitare temporaneamente la modalità di navigazione a lettere singole di NVDA.
+%kc:beginInclude
+Per attivare o disattivare la navigazione a lettere singole per il documento corrente, premere NVDA + shift + spazio.
 %kc:endInclude
 
 ++ Lista degli elementi ++
@@ -581,6 +586,7 @@ NVDA fornisce alcuni comandi per certe applicazioni in modo da facilitare gli ut
 | Imposta intestazioni colonna | NVDA+shift+c | Imposta il riconoscimento dell'intestazione colonna per la prima cella, consentendo la lettura automatica delle intestazioni successive. La doppia pressione cancellerà tale impostazione. |
 | Imposta intestazioni riga | NVDA+shift+r | Imposta il riconoscimento dell'intestazione riga per la prima cella, consentendo la lettura automatica delle intestazioni successive. La doppia pressione cancellerà tale impostazione. |
 | Legge commento | NVDA+alt+c | Legge il commento sulla cella corrente se esiste. |
+| Lista elementi | NVDA+f7 | Apre la finestra di dialogo Lista Elementi, che visualizza grafici, celle con commenti, o celle con formule. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -1758,8 +1764,7 @@ Sono supportati i seguenti display braille:
 Se BrxCom è installato, NVDA lo utilizzerà.
 BrxCom è un utility che permette di gestire la scrittura tramite i tasti braille indipendentemente dallo screen reader in uso.
 Verrà realizzata presto da Papenmeier una nuova versione di BrXcom che funzioni con NVDA 
-In ogni caso, la scrittura tramite tastiera sarà sempre disponibile per i dispositivi Trio, BRAILLEX Live 20 e Braillex Live anche senza la presenza di BrxCom.
-La scrittura con tastiera è possibile anche con il modello Live Plus, ma soltanto con Brxcom.
+La scrittura tramite i tasti braille è disponibile per i modelli Trio e Braillex live.
 
 La maggior parte dei dispositivi è dotata di una barra di navigazione facilitata (EAB) che permette di svolgere le operazioni in una modalità molto più rapida ed intuitiva..
 Questa barra può essere spostata in quattro direzioni e ciascuna direzione ha due posizioni.
@@ -1895,6 +1900,8 @@ BRAILLEX Tiny:
 | Spostarsi all'oggetto precedente | r1+left |
 | Spostarsi all'oggetto successivo  | r1+right |
 | Annuncia formattazione testo | reportf |
+| Leggi titolo | l1+up |
+| Leggi barra di stato | l2+down |
 
 BRAILLEX 2D Screen:
 || Nome | Tasto |
@@ -1959,6 +1966,41 @@ Si prega di consultare la documentazione del BrailleNote per informazioni su dov
 | Tasto Alt | spazio+punto1+punto3+punto4 (spazio+m) |
 | Commuta aiuto immissione | spazio+punto2+punto3+punto6 (spazio+h abbassata) |
 %kc:endInclude
+
+++ EcoBraille ++
+NVDA supporta i Display Braille EcoBraille prodotti da [ONCE http://www.once.es/].
+Sono supportati i seguenti modelli:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+In NVDA, è possibile impostare la porta seriale a cui il display braille è collegato nella finestra di dialogo Impostazioni Braille.
+
+Di seguito sono riportati i tasti assegnati per il display EcoBraille.
+Si prega di consultare la [documentazione EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] per una descrizione sulla posizione dei tasti.
+
+%kc:beginInclude
+|| Nome | Tasto |
+| Scorrimento indietro | T2 |
+| Scorrimento avanti  | T4 |
+| Spostarsi alla riga precedente | T1 |
+| Spostarsi alla riga successiva | T5 |
+| Route to braille cell | Routing |
+| Attivare oggetto corrente | T3 |
+| Modalità revisione successiva | F1 |
+| Spostarsi all'oggetto contenitore | F2 |
+| Modalità revisione precedente | F3 |
+| Spostarsi all'oggetto precedente | F4 |
+| Annunciare oggetto corrente | F5 |
+| Spostarsi all'oggetto successivo | F6 |
+| Spostarsi all'oggetto che ha il focus | F7 |
+| Spostarsi al primo oggetto contenuto | F8 |
+| Spostare il cursore di sistema alla posizione corrente del cursore di controllo | F9 |
+| Leggi la posizione del cursore di controllo | F0 |
+| Commuta inseguimento braille | A |
++%kc:endInclude
 
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] è un programma a parte del quale è possibile avvalersi per avere supporto per molte altre barre braille. 

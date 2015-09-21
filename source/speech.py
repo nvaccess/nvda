@@ -38,7 +38,7 @@ isPaused=False
 curWordChars=[]
 
 #Set containing locale codes for languages supporting conjunct characters
-LANGS_WITH_CONJUNCT_CHARS = {'hi', 'as', 'bn', 'gu', 'kn', 'kok', 'ml', 'mni', 'mr', 'pa', 'te', 'ur'}
+LANGS_WITH_CONJUNCT_CHARS = {'hi', 'as', 'bn', 'gu', 'kn', 'kok', 'ml', 'mni', 'mr', 'pa', 'te', 'ur', 'ta'}
 # The REASON_* constants in this module are deprecated and will be removed in a future release.
 # Use controlTypes.REASON_* instead.
 from controlTypes import REASON_FOCUS, REASON_FOCUSENTERED, REASON_MOUSE, REASON_QUERY, REASON_CHANGE, REASON_MESSAGE, REASON_SAYALL, REASON_CARET, REASON_ONLYCACHE
@@ -1057,7 +1057,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 
 	# Determine what text to speak.
 	# Special cases
-	if speakEntry and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
+	if speakEntry and childControlCount and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
 		# List.
 		# Translators: Speaks number of items in a list (example output: list with 5 items).
 		return roleText+" "+_("with %s items")%childControlCount

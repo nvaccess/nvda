@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-08 19:04+1000\n"
+"POT-Creation-Date: 2015-08-25 19:09+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Bernd Dorer <bdorer@mailbox.org>\n"
 "Language-Team: \n"
@@ -11,9 +11,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8beta3\n"
+"X-Generator: Poedit 1.8.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../../nvda_quellen/nvda\n"
+"X-Poedit-SearchPath-0: .\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -261,6 +263,12 @@ msgid "Ethiopic grade 1"
 msgstr "Äthiopische Vollschrift"
 
 #. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Finnish 6 dot"
+msgstr "finnisch (6 Punkte)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Finnish 8 dot computer braille"
 msgstr "Finnisches 8-Punkt-Computerbraille"
 
@@ -288,6 +296,16 @@ msgstr "Französische Vollschrift (Kanada)"
 #. braille settings dialog.
 msgid "French (Canada) grade 2"
 msgstr "Französische Kurzschrift (Kanada)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 1"
+msgstr "Irische Vollschrift"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 2"
+msgstr "Irische Kurzschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -343,6 +361,16 @@ msgstr "Italienisches 8-Punkt-Computerbraille"
 #. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "Kannadische Vollschrift"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 1 (2006)"
+msgstr "Koreanische Vollschrift (2006)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 2 (2006)"
+msgstr "Koreanische Kurzschrift (2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -707,6 +735,26 @@ msgstr "Fokusmodus"
 msgid "browse mode"
 msgstr "Lesemodus"
 
+#. Translators: Reported when single letter navigation in browse mode is turned off.
+msgid "Single letter navigation off"
+msgstr "Schnellnavigation aus"
+
+#. Translators: Reported when single letter navigation in browse mode is turned on.
+msgid "Single letter navigation on"
+msgstr "Schnellnavigation ein"
+
+#. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
+msgid ""
+"Toggles single letter navigation on and off. When on, single letter keys in "
+"browse mode jump to various kinds of elements on the page. When off, these "
+"keys are passed to the application"
+msgstr ""
+"schaltet die Schnellnavigation ein oder aus. bei eingeschalteter "
+"Schnellnavigation werden eingegebene Zeichen verwendet, um zu bestimmten "
+"Elementen auf einer Webseite zu springen. Bei ausgeschalteter "
+"Schnellnavigation werden die eingegebenen Zeichen direkt an die Web-"
+"anwendung weitergereicht."
+
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
 msgstr "wird in diesem Dokument nicht unterstützt"
@@ -715,7 +763,7 @@ msgstr "wird in diesem Dokument nicht unterstützt"
 msgid "Lists various types of elements in this document"
 msgstr "zeigt eine Liste mit Elementen im aktuellen Dokument an."
 
-#. Translators: the description for the activatePosition script on virtualBuffers.
+#. Translators: the description for the activatePosition script on browseMode documents.
 msgid "activates the current object in the document"
 msgstr "Aktiviert das aktuelle Objekt im Dokument."
 
@@ -1189,6 +1237,46 @@ msgstr "&aktivieren"
 #. in the browse mode Elements List dialog.
 msgid "&Move to"
 msgstr "&Wechseln zu"
+
+#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
+#, python-format
+msgid "%s landmark"
+msgstr "Sprungmarke %s"
+
+#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "%s markiert"
+
+#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
+msgid "No long description"
+msgstr "Keine ausführliche Beschreibung."
+
+#. Translators: the description for the activateLongDescription script on browseMode documents.
+msgid "Shows the long description at this position if one is found."
+msgstr "Zeigt die ausführliche Beschreibung, fals diese vorhanden ist."
+
+#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
+#. But there is no container.
+msgid "Not in a container"
+msgstr "nicht in einem Container"
+
+#. Translators: Description for the Move to start of container command in browse mode.
+msgid "Moves to the start of the container element, such as a list or table"
+msgstr ""
+"Bewegt den Systemcursor an den Beginn des Containerobjekts (Listen, "
+"Tabellen, etc.)."
+
+#. Translators: a message reported when:
+#. Review cursor is at the bottom line of the current navigator object.
+#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
+msgid "bottom"
+msgstr "unten"
+
+#. Translators: Description for the Move past end of container command in browse mode.
+msgid "Moves past the end  of the container element, such as a list or table"
+msgstr ""
+"bewegt den Systemcursor hinter das Containerobjekt (Listen, Tabellen, etc.)"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1919,11 +2007,6 @@ msgctxt "color name"
 msgid "Yellow Green"
 msgstr "Gelb-Grün"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "%s markiert"
-
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
@@ -2051,7 +2134,6 @@ msgid "cell"
 msgstr "Zelle"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
-#. Translators: A column in a column chart.
 msgid "column"
 msgstr "Spalte"
 
@@ -2772,9 +2854,9 @@ msgid "Braille"
 msgstr "Braille"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: The label for the Tools submenu in NVDA menu.
+msgctxt "script category"
 msgid "Tools"
-msgstr "E&xtras"
+msgstr "Extras"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: a touch screen gesture
@@ -3305,13 +3387,13 @@ msgstr "%s in die Zwischenablage kopiert."
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
 msgstr ""
-"Liest die Informationen zum aktuellen Objekt vor oder wenn die "
-"Tastenkombination drei Mal gedrückt wird, werden die Informationen in die "
-"Zwischenablage kopiert."
+"Liest die Informationen zum aktuellen Objekt vor, bei zweimaligem drücken "
+"werden die Informationen buchstabiert,  wenn die Tastenkombination drei Mal "
+"gedrückt wird, werden die Informationen in die Zwischenablage kopiert."
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
@@ -3435,12 +3517,6 @@ msgid ""
 msgstr ""
 "Liest die aktuelle Zeile des Navigator-Objekts vor, auf der der NVDA-Cursor "
 "steht. Bei zweimaligem Drücken wir die Zeile buchstabiert."
-
-#. Translators: a message reported when:
-#. Review cursor is at the bottom line of the current navigator object.
-#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "unten"
 
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid ""
@@ -3609,16 +3685,22 @@ msgstr ""
 "Formatierungsinformationen zur aktuellen Cursor-Position im Dokument ansagen"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus"
-msgstr "Spricht das fokussierte Objekt."
+msgid "reports the object with focus. If pressed twice, spells the information"
+msgstr ""
+"Gibt das Objekt aus, das den Fokus besitzt. Bei zweimaligem Drücken wird die "
+"Information buchstabiert"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "Keine Statuszeile vorhanden."
 
 #. Translators: Input help mode message for report status line text command.
-msgid "reads the current application status bar and moves the navigator to it"
-msgstr "Liest die Statuszeile der Anwendung und bewegt den Navigator dort hin."
+msgid ""
+"reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information"
+msgstr ""
+"Liest die Statuszeile der Anwendung und bewegt den Navigator dort hin. bei "
+"zweimaligem Drücken wird die Statuszeile buchstabiert"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -4090,7 +4172,7 @@ msgstr "Dokumentation"
 msgid "Commands Quick Reference"
 msgstr "Befehlsreferenz"
 
-#. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
+#. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
 msgstr "Benutzerhandbuch"
 
@@ -4748,29 +4830,64 @@ msgstr "NVDA-Sprachbetrachter"
 msgid "&Language"
 msgstr "&Sprache"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Language"
+msgstr "Sprache"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Voice"
 msgstr "&Stimme"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Voice"
+msgstr "Stimme"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&ariant"
 msgstr "V&ariante"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Variant"
+msgstr "Variante"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
 msgstr "&Geschwindigkeit"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate"
+msgstr "Geschwindigkeit"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "&Lautstärke"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Volume"
+msgstr "Lautstärke"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
 msgstr "Stimm&höhe"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Pitch"
+msgstr "Stimmhöhe"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Betonung"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Inflection"
+msgstr "Betonung"
 
 msgid "text mode"
 msgstr "Textmodus"
@@ -5545,6 +5662,8 @@ msgstr "Baum / HumanWare / APH Braillezeilen"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
 msgid "Serial: {portName}"
 msgstr "seriell: {portName}"
 
@@ -5555,6 +5674,10 @@ msgstr "HumanWare BrailleNote"
 #. Translators: The name of a series of braille displays.
 msgid "HumanWare Brailliant BI/B series"
 msgstr "HumanWare Brailliant Serie BI/B"
+
+#. Translators: The name of a braille display.
+msgid "EcoBraille displays"
+msgstr "Eco-Braillezeilen"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -5808,6 +5931,14 @@ msgstr "NVDA &installieren"
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
 msgstr "Plugins &neu laden"
+
+#. Translators: The label for the Tools submenu in NVDA menu.
+msgid "Tools"
+msgstr "E&xtras"
+
+#. Translators: The label of a menu item to open NVDA user guide.
+msgid "&User Guide"
+msgstr "Benutzer&handbuch"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
@@ -6293,6 +6424,7 @@ msgstr ""
 "fortfahren, wird der Auslöser mit diesem Profil verknüpft.\n"
 "Sind Sie sicher, dass Sie fortfahren möchten?"
 
+#. Translators: The title of a warning dialog.
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 msgid "Warning"
 msgstr "Warnung"
@@ -6426,6 +6558,24 @@ msgstr ""
 #. Translators: The label of a button to continue with the operation.
 msgid "&Continue"
 msgstr "&Fortfahren"
+
+#. Translators: A warning presented when the user attempts to downgrade NVDA
+#. to an older version.
+msgid ""
+"You are attempting to install an earlier version of NVDA than the version "
+"currently installed. If you really wish to revert to an earlier version, you "
+"should first cancel this installation and completely uninstall NVDA before "
+"installing the earlier version."
+msgstr ""
+"Sie sind im Begriff, eine ältere Version von NVDA zu installieren. Wenn Sie "
+"diese Version tatsächlich installieren wollen, sollten Sie zunächst die "
+"bereits instalierte Version von NVDA über die Systemsteuerung "
+"deinstallieren, bevor Sie die Installation dieser Version fortsetzen."
+
+#. Translators: The label of a button to proceed with installation,
+#. even though this is not recommended.
+msgid "&Proceed with installation (not recommended)"
+msgstr "Installation &fortsetzen (nicht empfohlen)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -6586,14 +6736,13 @@ msgstr "Automatisch nach &Aktualisierungen suchen"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
-"Custom plugins were detected in your user settings directory. Copying these "
-"to the system profile could be a security risk. Do you still wish to copy "
-"your settings?"
+"Add-ons were detected in your user settings directory. Copying these to the "
+"system profile could be a security risk. Do you still wish to copy your "
+"settings?"
 msgstr ""
-"Benutzerdefinierte Plugins wurden im Verzeichnis Ihrer persönlichen "
-"Einstellungen gefunden. Diese in das Systemprofil zu kopieren könnte ein "
-"sicherheitsrisiko darstellen. Möchten Sie Ihre Einstellungen trotzdem "
-"kopieren?"
+"In Ihrem Benutzerprofil wurden NVDA-Erweiterungen gefunden. Es stellt ein "
+"Sicherheitsrisiko dar, diese Erweiterungen ins Systemprofil zu kopieren. "
+"Möchten Sie Ihre Einstellungen trotzdem kopieren?"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
@@ -7353,11 +7502,6 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "bei {x},{y}"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-#, python-format
-msgid "%s landmark"
-msgstr "Sprungmarke %s"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "aktualisiert"
@@ -7365,14 +7509,6 @@ msgstr "aktualisiert"
 #. Translators: Reported while loading a document.
 msgid "Loading document..."
 msgstr "Dokument wird geladen..."
-
-#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-msgid "No long description"
-msgstr "Keine ausführliche Beschreibung."
-
-#. Translators: the description for the activateLongDescription script on virtualBuffers.
-msgid "Shows the long description at this position if one is found."
-msgstr "Zeigt die ausführliche Beschreibung, fals diese vorhanden ist."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -7415,22 +7551,6 @@ msgstr "springt zur nächsten Tabellenspalte"
 #. Translators: the description for the previous table column script on virtualBuffers.
 msgid "moves to the previous table column"
 msgstr "springt zur vorigen Tabellenspalte"
-
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
-msgid "Not in a container"
-msgstr "nicht in einem Container"
-
-#. Translators: Description for the Move to start of container command in browse mode.
-msgid "Moves to the start of the container element, such as a list or table"
-msgstr ""
-"Bewegt den Systemcursor an den Beginn des Containerobjekts (Listen, "
-"Tabellen, etc.)."
-
-#. Translators: Description for the Move past end of container command in browse mode.
-msgid "Moves past the end  of the container element, such as a list or table"
-msgstr ""
-"bewegt den Systemcursor hinter das Containerobjekt (Listen, Tabellen, etc.)"
 
 msgid "Taskbar"
 msgstr "Taskleiste"
@@ -7965,6 +8085,11 @@ msgstr "Keine Sehrien definiert."
 msgid "slice"
 msgstr "Segment"
 
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "Spalte"
+
 #. Translators: A data point in a line chart.
 msgid "data point"
 msgstr "Datenpunkt"
@@ -8489,6 +8614,9 @@ msgstr "HIMS Braille Sense/Braille EDGE Serien"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "reports the object with focus"
+#~ msgstr "Spricht das fokussierte Objekt."
 
 #~ msgid "%s"
 #~ msgstr "%s"

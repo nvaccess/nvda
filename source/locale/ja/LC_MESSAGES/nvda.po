@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-08 19:04+1000\n"
-"PO-Revision-Date: 2015-05-15 12:50+0900\n"
+"POT-Creation-Date: 2015-08-25 19:09+1000\n"
+"PO-Revision-Date: 2015-09-15 20:56+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -262,6 +262,12 @@ msgid "Ethiopic grade 1"
 msgstr "エチオピア語1級点字"
 
 #. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Finnish 6 dot"
+msgstr "フィンランド語6点点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Finnish 8 dot computer braille"
 msgstr "フィンランド語8点コンピューター点字"
 
@@ -289,6 +295,16 @@ msgstr "カナダフランス語1級点字"
 #. braille settings dialog.
 msgid "French (Canada) grade 2"
 msgstr "カナダフランス語2級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 1"
+msgstr "アイルランド語1級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 2"
+msgstr "アイルランド語1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -344,6 +360,16 @@ msgstr "イタリア語8点コンピューター点字"
 #. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "カンナダ語1級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 1 (2006)"
+msgstr "韓国語1級点字(2006)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 2 (2006)"
+msgstr "韓国語2級点字(2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -708,6 +734,23 @@ msgstr "フォーカスモード"
 msgid "browse mode"
 msgstr "ブラウズモード"
 
+#. Translators: Reported when single letter navigation in browse mode is turned off.
+msgid "Single letter navigation off"
+msgstr "英字キーを入力に使用"
+
+#. Translators: Reported when single letter navigation in browse mode is turned on.
+msgid "Single letter navigation on"
+msgstr "1文字ナビゲーションを使用"
+
+#. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
+msgid ""
+"Toggles single letter navigation on and off. When on, single letter keys in "
+"browse mode jump to various kinds of elements on the page. When off, these "
+"keys are passed to the application"
+msgstr ""
+"ブラウズモードでの1文字ナビゲーションの切り替え。1文字のキーによってページ内"
+"の各要素にジャンプ、または矢印キーだけを移動に使用"
+
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
 msgstr "使用できません"
@@ -716,7 +759,7 @@ msgstr "使用できません"
 msgid "Lists various types of elements in this document"
 msgstr "ドキュメントの中の種類ごとの要素リスト"
 
-#. Translators: the description for the activatePosition script on virtualBuffers.
+#. Translators: the description for the activatePosition script on browseMode documents.
 msgid "activates the current object in the document"
 msgstr "ドキュメント内の現在のオブジェクトを開く"
 
@@ -1191,6 +1234,43 @@ msgstr "アクティブ化(&A)"
 msgid "&Move to"
 msgstr "移動(&M)"
 
+#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
+#, python-format
+msgid "%s landmark"
+msgstr "%s ランドマーク"
+
+#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "%s 選択"
+
+#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
+msgid "No long description"
+msgstr "詳細説明なし"
+
+#. Translators: the description for the activateLongDescription script on browseMode documents.
+msgid "Shows the long description at this position if one is found."
+msgstr "詳細説明がある場合に表示"
+
+#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
+#. But there is no container.
+msgid "Not in a container"
+msgstr "コンテナ内ではありません"
+
+#. Translators: Description for the Move to start of container command in browse mode.
+msgid "Moves to the start of the container element, such as a list or table"
+msgstr "リストやテーブルなどコンテナ要素の最初に移動"
+
+#. Translators: a message reported when:
+#. Review cursor is at the bottom line of the current navigator object.
+#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
+msgid "bottom"
+msgstr "下の端"
+
+#. Translators: Description for the Move past end of container command in browse mode.
+msgid "Moves past the end  of the container element, such as a list or table"
+msgstr "リストやテーブルなどコンテナ要素の最後に移動"
+
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
@@ -1223,707 +1303,702 @@ msgstr "不明な色"
 #. Translators: the color Alice Blue (RGB 240, 248, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Alice Blue"
-msgstr "アリス ブルー"
+msgstr "アリスブルーの色"
 
 #. Translators: the color Antique White (RGB 250, 235, 215) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Antique White"
-msgstr "アンティーク ホワイト"
+msgstr "アンティークホワイトの色"
 
 #. Translators: the color Aqua (RGB 0, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Aqua"
-msgstr "アクア 色"
+msgstr "アクアの色"
 
 #. Translators: the color Aquamarine (RGB 127, 255, 212) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Aquamarine"
-msgstr "アクアマリン 色"
+msgstr "アクアマリンの色"
 
 #. Translators: the color Azure (RGB 240, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Azure"
-msgstr "アジュール 色"
+msgstr "アジュールの色"
 
 #. Translators: the color Beige (RGB 245, 245, 220) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Beige"
-msgstr "ベージュ 色"
+msgstr "ベージュの色"
 
 #. Translators: the color Bisque (RGB 255, 228, 196) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Bisque"
-msgstr "ビスク 色"
+msgstr "ビスクの色"
 
 #. Translators: the color Black (RGB 0, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Black"
-msgstr "ブラック"
+msgstr "ブラックの色"
 
 #. Translators: the color Blanched Almond (RGB 255, 235, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Blanched Almond"
-msgstr "ブランチド アーモンド 色"
+msgstr "ブランチドアーモンドの色"
 
 #. Translators: the color Blue (RGB 0, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Blue"
-msgstr "ブルー"
+msgstr "ブルーの色"
 
 #. Translators: the color Blue Violet (RGB 138, 43, 226) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Blue Violet"
-msgstr "ブルー バイオレット 色"
+msgstr "ブルーバイオレットの色"
 
 #. Translators: the color Brown (RGB 165, 42, 42) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Brown"
-msgstr "ブラウン"
+msgstr "ブラウンの色"
 
 #. Translators: the color Burly Wood (RGB 222, 184, 135) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Burly Wood"
-msgstr "バーリー ウッド 色"
+msgstr "バーリーウッドの色"
 
 #. Translators: the color Cadet Blue (RGB 95, 158, 160) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Cadet Blue"
-msgstr "カデット ブルー"
+msgstr "カデットブルーの色"
 
 #. Translators: the color Chartreuse (RGB 127, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Chartreuse"
-msgstr "シャルトリューズ 色"
+msgstr "シャルトリューズの色"
 
 #. Translators: the color Chocolate (RGB 210, 105, 30) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Chocolate"
-msgstr "チョコレート 色"
+msgstr "チョコレートの色"
 
 #. Translators: the color Coral (RGB 255, 127, 80) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Coral"
-msgstr "コラール 色"
+msgstr "コラールの色"
 
 #. Translators: the color Cornflower Blue (RGB 100, 149, 237) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Cornflower Blue"
-msgstr "コーンフラワー ブルー"
+msgstr "コーンフラワーブルーの色"
 
 #. Translators: the color Cornsilk (RGB 255, 248, 220) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Cornsilk"
-msgstr "コーンシルク 色"
+msgstr "コーンシルクの色"
 
 #. Translators: the color Crimson (RGB 220, 20, 60) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Crimson"
-msgstr "クリムゾン 色"
+msgstr "クリムゾンの色"
 
 #. Translators: the color Cyan (RGB 0, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Cyan"
-msgstr "シアン 色"
+msgstr "シアンの色"
 
 #. Translators: the color Dark Blue (RGB 0, 0, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Blue"
-msgstr "暗いブルー"
+msgstr "暗いブルーの色"
 
 #. Translators: the color Dark Cyan (RGB 0, 139, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Cyan"
-msgstr "暗いシアン 色"
+msgstr "暗いシアンの色"
 
 #. Translators: the color Dark Goldenrod (RGB 184, 134, 11) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Goldenrod"
-msgstr "暗いゴールデンロッド 色"
+msgstr "暗いゴールデンロッドの色"
 
 #. Translators: the color Dark Gray (RGB 169, 169, 169) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Gray"
-msgstr "暗いグレイ"
+msgstr "暗いグレイの色"
 
 #. Translators: the color Dark Green (RGB 0, 100, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Green"
-msgstr "暗いグリーン"
+msgstr "暗いグリーンの色"
 
 #. Translators: the color Dark Khaki (RGB 189, 183, 107) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Khaki"
-msgstr "暗いカーキ 色"
+msgstr "暗いカーキの色"
 
 #. Translators: the color Dark Magenta (RGB 139, 0, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Magenta"
-msgstr "暗いマゼンタ 色"
+msgstr "暗いマゼンタの色"
 
 #. Translators: the color Dark Olive Green (RGB 85, 107, 47) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Olive Green"
-msgstr "暗いオリーブ グリーン"
+msgstr "暗いオリーブグリーンの色"
 
 #. Translators: the color Dark Orange (RGB 255, 140, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Orange"
-msgstr "暗いオレンジ 色"
+msgstr "暗いオレンジの色"
 
 #. Translators: the color Dark Orchid (RGB 153, 50, 204) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Orchid"
-msgstr "暗いオーキッド 色"
+msgstr "暗いオーキッドの色"
 
 #. Translators: the color Dark Red (RGB 139, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Red"
-msgstr "暗いレッド"
+msgstr "暗いレッドの色"
 
 #. Translators: the color Dark Salmon (RGB 233, 150, 122) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Salmon"
-msgstr "暗いサーモン 色"
+msgstr "暗いサーモンの色"
 
 #. Translators: the color Dark Sea Green (RGB 143, 188, 143) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Sea Green"
-msgstr "暗いシー グリーン"
+msgstr "暗いシーグリーンの色"
 
 #. Translators: the color Dark Slate Blue (RGB 72, 61, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Slate Blue"
-msgstr "暗いスレート ブルー"
+msgstr "暗いスレートブルーの色"
 
 #. Translators: the color Dark Slate Gray (RGB 47, 79, 79) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Slate Gray"
-msgstr "暗いスレート グレイ"
+msgstr "暗いスレートグレイの色"
 
 #. Translators: the color Dark Turquoise (RGB 0, 206, 209) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Turquoise"
-msgstr "暗いターコイズ 色"
+msgstr "暗いターコイズの色"
 
 #. Translators: the color Dark Violet (RGB 148, 0, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Violet"
-msgstr "暗いバイオレット 色"
+msgstr "暗いバイオレットの色"
 
 #. Translators: the color Deep Pink (RGB 255, 20, 147) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Deep Pink"
-msgstr "濃いピンク"
+msgstr "濃いピンクの色"
 
 #. Translators: the color Deep Sky Blue (RGB 0, 191, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Deep Sky Blue"
-msgstr "濃いスカイ ブルー"
+msgstr "濃いスカイブルーの色"
 
 #. Translators: the color Dim Gray (RGB 105, 105, 105) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dim Gray"
-msgstr "ディム グレイ 色"
+msgstr "ディムグレイの色"
 
 #. Translators: the color Dodger Blue (RGB 30, 144, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dodger Blue"
-msgstr "ドジャー ブルー"
+msgstr "ドジャーブルーの色"
 
 #. Translators: the color Fire Brick (RGB 178, 34, 34) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Fire Brick"
-msgstr "ファイヤー ブリック 色"
+msgstr "ファイヤーブリックの色"
 
 #. Translators: the color Floral White (RGB 255, 250, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Floral White"
-msgstr "フローラル ホワイト"
+msgstr "フローラルホワイトの色"
 
 #. Translators: the color Forest Green (RGB 34, 139, 34) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Forest Green"
-msgstr "フォレスト グリーン"
+msgstr "フォレストグリーンの色"
 
 #. Translators: the color Fuchsia (RGB 255, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Fuchsia"
-msgstr "フクシア 色"
+msgstr "フクシアの色"
 
 #. Translators: the color Gainsboro (RGB 220, 220, 220) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Gainsboro"
-msgstr "ゲインズボロ 色"
+msgstr "ゲインズボロの色"
 
 #. Translators: the color Ghost White (RGB 248, 248, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Ghost White"
-msgstr "ゴースト ホワイト"
+msgstr "ゴーストホワイトの色"
 
 #. Translators: the color Gold (RGB 255, 215, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Gold"
-msgstr "ゴールド"
+msgstr "ゴールドの色"
 
 #. Translators: the color Goldenrod (RGB 218, 165, 32) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Goldenrod"
-msgstr "ゴールデンロッド 色"
+msgstr "ゴールデンロッドの色"
 
 #. Translators: the color Gray (RGB 128, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Gray"
-msgstr "グレイ"
+msgstr "グレイの色"
 
 #. Translators: the color Green (RGB 0, 128, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Green"
-msgstr "グリーン"
+msgstr "グリーンの色"
 
 #. Translators: the color Green Yellow (RGB 173, 255, 47) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Green Yellow"
-msgstr "グリーン イエロー"
+msgstr "グリーンイエローの色"
 
 #. Translators: the color Honeydew (RGB 240, 255, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Honeydew"
-msgstr "ハネデュー 色"
+msgstr "ハネデューの色"
 
 #. Translators: the color Hot Pink (RGB 255, 105, 180) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Hot Pink"
-msgstr "ホット ピンク"
+msgstr "ホットピンクの色"
 
 #. Translators: the color Indian Red (RGB 205, 92, 92) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Indian Red"
-msgstr "インディアン レッド"
+msgstr "インディアンレッドの色"
 
 #. Translators: the color Indigo (RGB 75, 0, 130) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Indigo"
-msgstr "インディゴ 色"
+msgstr "インディゴの色"
 
 #. Translators: the color Ivory (RGB 255, 255, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Ivory"
-msgstr "アイボリー 色"
+msgstr "アイボリーの色"
 
 #. Translators: the color Khaki (RGB 240, 230, 140) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Khaki"
-msgstr "カーキ 色"
+msgstr "カーキの色"
 
 #. Translators: the color Lavender (RGB 230, 230, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Lavender"
-msgstr "ラベンダー 色"
+msgstr "ラベンダーの色"
 
 #. Translators: the color Lavender Blush (RGB 255, 240, 245) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Lavender Blush"
-msgstr "ラベンダー ブラッシュ 色"
+msgstr "ラベンダーブラッシュの色"
 
 #. Translators: the color Lawn Green (RGB 124, 252, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Lawn Green"
-msgstr "ローン グリーン"
+msgstr "ローングリーンの色"
 
 #. Translators: the color Lemon Chiffon (RGB 255, 250, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Lemon Chiffon"
-msgstr "レモン シフォン 色"
+msgstr "レモンシフォンの色"
 
 #. Translators: the color Light Blue (RGB 173, 216, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Blue"
-msgstr "薄いブルー"
+msgstr "薄いブルーの色"
 
 #. Translators: the color Light Coral (RGB 240, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Coral"
-msgstr "薄いコラール 色"
+msgstr "薄いコラールの色"
 
 #. Translators: the color Light Cyan (RGB 224, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Cyan"
-msgstr "薄いシアン 色"
+msgstr "薄いシアンの色"
 
 #. Translators: the color Light Goldenrod Yellow (RGB 250, 250, 210) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Goldenrod Yellow"
-msgstr "薄いゴールデンロッド イエロー"
+msgstr "薄いゴールデンロッドイエローの色"
 
 #. Translators: the color Light Green (RGB 144, 238, 144) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Green"
-msgstr "薄いグリーン"
+msgstr "薄いグリーンの色"
 
 #. Translators: the color Light Grey (RGB 211, 211, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Grey"
-msgstr "薄いグレイ"
+msgstr "薄いグレイの色"
 
 #. Translators: the color Light Pink (RGB 255, 182, 193) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Pink"
-msgstr "薄いピンク"
+msgstr "薄いピンクの色"
 
 #. Translators: the color Light Salmon (RGB 255, 160, 122) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Salmon"
-msgstr "薄いサーモン 色"
+msgstr "薄いサーモンの色"
 
 #. Translators: the color Light Sea Green (RGB 32, 178, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Sea Green"
-msgstr "薄いシー グリーン"
+msgstr "薄いシーグリーンの色"
 
 #. Translators: the color Light Sky Blue (RGB 135, 206, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Sky Blue"
-msgstr "薄いスカイ ブルー"
+msgstr "薄いスカイブルーの色"
 
 #. Translators: the color Light Slate Gray (RGB 119, 136, 153) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Slate Gray"
-msgstr "薄いスレート グレイ"
+msgstr "薄いスレートグレイの色"
 
 #. Translators: the color Light Steel Blue (RGB 176, 196, 222) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Steel Blue"
-msgstr "薄いスチール ブルー"
+msgstr "薄いスチールブルーの色"
 
 #. Translators: the color Light Yellow (RGB 255, 255, 224) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Yellow"
-msgstr "薄いイエロー"
+msgstr "薄いイエローの色"
 
 #. Translators: the color Lime (RGB 0, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Lime"
-msgstr "ライム 色"
+msgstr "ライムの色"
 
 #. Translators: the color Lime Green (RGB 50, 205, 50) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Lime Green"
-msgstr "ライム グリーン"
+msgstr "ライムグリーンの色"
 
 #. Translators: the color Linen (RGB 250, 240, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Linen"
-msgstr "リネン 色"
+msgstr "リネンの色"
 
 #. Translators: the color Magenta (RGB 255, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Magenta"
-msgstr "マゼンタ 色"
+msgstr "マゼンタの色"
 
 #. Translators: the color Maroon (RGB 128, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Maroon"
-msgstr "マルーン 色"
+msgstr "マルーンの色"
 
 #. Translators: the color Medium Aquamarine (RGB 102, 205, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Medium Aquamarine"
-msgstr "ミディアム アクアマリン 色"
+msgstr "ミディアムアクアマリンの色"
 
 #. Translators: the color Medium Blue (RGB 0, 0, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Medium Blue"
-msgstr "ミディアム ブルー"
+msgstr "ミディアムブルーの色"
 
 #. Translators: the color Medium Orchid (RGB 186, 85, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Medium Orchid"
-msgstr "ミディアム オーキッド 色"
+msgstr "ミディアムオーキッドの色"
 
 #. Translators: the color Medium Purple (RGB 147, 112, 219) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Medium Purple"
-msgstr "ミディアム パープル"
+msgstr "ミディアムパープルの色"
 
 #. Translators: the color Medium Sea Green (RGB 60, 179, 113) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Medium Sea Green"
-msgstr "ミディアム シー グリーン"
+msgstr "ミディアムシーグリーンの色"
 
 #. Translators: the color Medium Slate Blue (RGB 123, 104, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Medium Slate Blue"
-msgstr "ミディアム スレート ブルー"
+msgstr "ミディアムスレートブルーの色"
 
 #. Translators: the color Medium Spring Green (RGB 0, 250, 154) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Medium Spring Green"
-msgstr "ミディアム スプリング グリーン"
+msgstr "ミディアムスプリンググリーンの色"
 
 #. Translators: the color Medium Turquoise (RGB 72, 209, 204) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Medium Turquoise"
-msgstr "ミディアム ターコイズ 色"
+msgstr "ミディアムターコイズの色"
 
 #. Translators: the color Medium Violet Red (RGB 199, 21, 133) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Medium Violet Red"
-msgstr "ミディアム バイオレット レッド"
+msgstr "ミディアムバイオレットレッドの色"
 
 #. Translators: the color Midnight Blue (RGB 25, 25, 112) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Midnight Blue"
-msgstr "ミッドナイト ブルー"
+msgstr "ミッドナイトブルーの色"
 
 #. Translators: the color Mint Cream (RGB 245, 255, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Mint Cream"
-msgstr "ミント クリーム 色"
+msgstr "ミントクリームの色"
 
 #. Translators: the color Misty Rose (RGB 255, 228, 225) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Misty Rose"
-msgstr "ミスティー ローズ 色"
+msgstr "ミスティーローズの色"
 
 #. Translators: the color Moccasin (RGB 255, 228, 181) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Moccasin"
-msgstr "モカシン 色"
+msgstr "モカシンの色"
 
 #. Translators: the color Navajo White (RGB 255, 222, 173) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Navajo White"
-msgstr "ナバホ ホワイト"
+msgstr "ナバホホワイトの色"
 
 #. Translators: the color Navy (RGB 0, 0, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Navy"
-msgstr "ネイビー 色"
+msgstr "ネイビーの色"
 
 #. Translators: the color Old Lace (RGB 253, 245, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Old Lace"
-msgstr "オールド レース 色"
+msgstr "オールドレースの色"
 
 #. Translators: the color Olive (RGB 128, 128, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Olive"
-msgstr "オリーブ 色"
+msgstr "オリーブの色"
 
 #. Translators: the color Olive Drab (RGB 107, 142, 35) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Olive Drab"
-msgstr "オリーブ ドラブ 色"
+msgstr "オリーブドラブの色"
 
 #. Translators: the color Orange (RGB 255, 165, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Orange"
-msgstr "オレンジ 色"
+msgstr "オレンジの色"
 
 #. Translators: the color Orange Red (RGB 255, 69, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Orange Red"
-msgstr "オレンジ レッド"
+msgstr "オレンジレッドの色"
 
 #. Translators: the color Orchid (RGB 218, 112, 214) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Orchid"
-msgstr "オーキッド 色"
+msgstr "オーキッドの色"
 
 #. Translators: the color Pale Goldenrod (RGB 238, 232, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Pale Goldenrod"
-msgstr "ペール ゴールデンロッド 色"
+msgstr "ペールゴールデンロッドの色"
 
 #. Translators: the color Pale Green (RGB 152, 251, 152) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Pale Green"
-msgstr "ペール グリーン"
+msgstr "ペールグリーンの色"
 
 #. Translators: the color Pale Turquoise (RGB 175, 238, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Pale Turquoise"
-msgstr "ペール ターコイズ 色"
+msgstr "ペールターコイズの色"
 
 #. Translators: the color Pale Violet Red (RGB 219, 112, 147) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Pale Violet Red"
-msgstr "ペール バイオレット レッド"
+msgstr "ペールバイオレットレッドの色"
 
 #. Translators: the color Papaya Whip (RGB 255, 239, 213) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Papaya Whip"
-msgstr "パパイヤ ホイップ 色"
+msgstr "パパイヤホイップの色"
 
 #. Translators: the color Peach Puff (RGB 255, 218, 185) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Peach Puff"
-msgstr "ピーチ パフ 色"
+msgstr "ピーチパフの色"
 
 #. Translators: the color Peru (RGB 205, 133, 63) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Peru"
-msgstr "ペルー 色"
+msgstr "ペルーの色"
 
 #. Translators: the color Pink (RGB 255, 192, 203) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Pink"
-msgstr "ピンク"
+msgstr "ピンクの色"
 
 #. Translators: the color Plum (RGB 221, 160, 221) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Plum"
-msgstr "プラム 色"
+msgstr "プラムの色"
 
 #. Translators: the color Powder Blue (RGB 176, 224, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Powder Blue"
-msgstr "パウダー ブルー"
+msgstr "パウダーブルーの色"
 
 #. Translators: the color Purple (RGB 128, 0, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Purple"
-msgstr "パープル"
+msgstr "パープルの色"
 
 #. Translators: the color Red (RGB 255, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Red"
-msgstr "レッド"
+msgstr "レッドの色"
 
 #. Translators: the color Rosy Brown (RGB 188, 143, 143) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Rosy Brown"
-msgstr "ロージー ブラウン"
+msgstr "ロージーブラウンの色"
 
 #. Translators: the color Royal Blue (RGB 65, 105, 225) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Royal Blue"
-msgstr "ロイヤル ブルー"
+msgstr "ロイヤルブルーの色"
 
 #. Translators: the color Saddle Brown (RGB 139, 69, 19) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Saddle Brown"
-msgstr "サドル ブラウン"
+msgstr "サドルブラウンの色"
 
 #. Translators: the color Salmon (RGB 250, 128, 114) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Salmon"
-msgstr "サーモン 色"
+msgstr "サーモンの色"
 
 #. Translators: the color Sandy Brown (RGB 244, 164, 96) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Sandy Brown"
-msgstr "サンディー ブラウン"
+msgstr "サンディーブラウンの色"
 
 #. Translators: the color Sea Green (RGB 46, 139, 87) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Sea Green"
-msgstr "シー グリーン"
+msgstr "シーグリーンの色"
 
 #. Translators: the color Seashell (RGB 255, 245, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Seashell"
-msgstr "シーシェル 色"
+msgstr "シーシェルの色"
 
 #. Translators: the color Sienna (RGB 160, 82, 45) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Sienna"
-msgstr "シェンナ 色"
+msgstr "シェンナの色"
 
 #. Translators: the color Silver (RGB 192, 192, 192) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Silver"
-msgstr "シルバー"
+msgstr "シルバーの色"
 
 #. Translators: the color Sky Blue (RGB 135, 206, 235) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Sky Blue"
-msgstr "スカイ ブルー"
+msgstr "スカイブルーの色"
 
 #. Translators: the color Slate Blue (RGB 106, 90, 205) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Slate Blue"
-msgstr "スレート ブルー"
+msgstr "スレートブルーの色"
 
 #. Translators: the color Slate Gray (RGB 112, 128, 144) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Slate Gray"
-msgstr "スレート グレイ"
+msgstr "スレートグレイの色"
 
 #. Translators: the color Snow (RGB 255, 250, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Snow"
-msgstr "スノー 色"
+msgstr "スノーの色"
 
 #. Translators: the color Spring Green (RGB 0, 255, 127) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Spring Green"
-msgstr "スプリング グリーン"
+msgstr "スプリンググリーンの色"
 
 #. Translators: the color Steel Blue (RGB 70, 130, 180) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Steel Blue"
-msgstr "スチール ブルー"
+msgstr "スチールブルーの色"
 
 #. Translators: the color Tan (RGB 210, 180, 140) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Tan"
-msgstr "タン 色"
+msgstr "タンの色"
 
 #. Translators: the color Teal (RGB 0, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Teal"
-msgstr "ティール 色"
+msgstr "ティールの色"
 
 #. Translators: the color Thistle (RGB 216, 191, 216) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Thistle"
-msgstr "シスル 色"
+msgstr "シスルの色"
 
 #. Translators: the color Tomato (RGB 255, 99, 71) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Tomato"
-msgstr "トマト 色"
+msgstr "トマトの色"
 
 #. Translators: the color Turquoise (RGB 64, 224, 208) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Turquoise"
-msgstr "ターコイズ 色"
+msgstr "ターコイズの色"
 
 #. Translators: the color Violet (RGB 238, 130, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Violet"
-msgstr "バイオレット 色"
+msgstr "バイオレットの色"
 
 #. Translators: the color Wheat (RGB 245, 222, 179) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Wheat"
-msgstr "ウィート 色"
+msgstr "ウィートの色"
 
 #. Translators: the color White (RGB 255, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "White"
-msgstr "ホワイト"
+msgstr "ホワイトの色"
 
 #. Translators: the color White Smoke (RGB 245, 245, 245) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "White Smoke"
-msgstr "ホワイト スモーク 色"
+msgstr "ホワイトスモークの色"
 
 #. Translators: the color Yellow (RGB 255, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Yellow"
-msgstr "イエロー"
+msgstr "イエローの色"
 
 #. Translators: the color Yellow Green (RGB 154, 205, 50) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Yellow Green"
-msgstr "イエロー グリーン"
-
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "%s 選択"
+msgstr "イエローグリーンの色"
 
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
@@ -2049,7 +2124,6 @@ msgid "cell"
 msgstr "セル"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
-#. Translators: A column in a column chart.
 msgid "column"
 msgstr "列"
 
@@ -2565,7 +2639,7 @@ msgstr "消滅"
 
 #. Translators: This is presented when an invalid entry has been made.
 msgid "invalid entry"
-msgstr "無効なエントリー"
+msgstr "正しくない入力内容"
 
 msgid "modal"
 msgstr "モーダル"
@@ -2764,7 +2838,7 @@ msgid "Braille"
 msgstr "点字"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: The label for the Tools submenu in NVDA menu.
+msgctxt "script category"
 msgid "Tools"
 msgstr "ツール"
 
@@ -2803,7 +2877,7 @@ msgid ""
 "keyboard will tell you what script is associated with that input, if any."
 msgstr ""
 "入力ヘルプモードの切り替え。開始するとキーを押すなどの入力と関連付けられた機"
-"能を通知"
+"能を報告"
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 msgid "Sleep mode off"
@@ -2822,7 +2896,7 @@ msgid ""
 "Reports the current line under the application cursor. Pressing this key "
 "twice will spell the current line"
 msgstr ""
-"アプリケーションカーソルのある現在行の通知。2回押すと現在の行のスペルの通知"
+"アプリケーションカーソルのある現在行の報告。2回押すと現在の行のスペルの報告"
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "left click"
@@ -2869,14 +2943,14 @@ msgid ""
 "Announces the current selection in edit controls and documents. If there is "
 "no selection it says so."
 msgstr ""
-"編集領域やドキュメントの選択中テキストの通知。選択中テキストがなければ選択な"
-"しと通知"
+"編集領域やドキュメントの選択中テキストの報告。選択中テキストがなければ選択な"
+"しと報告"
 
 #. Translators: Input help mode message for report date and time command.
 msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
-msgstr "1回押すと現在時刻を通知、2回押すと現在の日付を通知"
+msgstr "1回押すと現在時刻を報告、2回押すと現在の日付を報告"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
 msgid "No settings"
@@ -2938,279 +3012,279 @@ msgstr "コマンドキーの読み上げの切り替え"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
-msgstr "フォント名の通知をしない"
+msgstr "フォント名を報告しない"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name on"
-msgstr "フォント名の通知をする"
+msgstr "フォント名を報告する"
 
 #. Translators: Input help mode message for toggle report font name command.
 msgid "Toggles on and off the reporting of font changes"
-msgstr "フォント名の通知の切り替え"
+msgstr "フォント名の報告の切り替え"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size off"
-msgstr "フォントサイズの通知をしない"
+msgstr "フォントサイズを報告しない"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size on"
-msgstr "フォントサイズの通知をする"
+msgstr "フォントサイズを報告する"
 
 #. Translators: Input help mode message for toggle report font size command.
 msgid "Toggles on and off the reporting of font size changes"
-msgstr "フォントサイズの通知の切り替え"
+msgstr "フォントサイズの報告の切り替え"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes off"
-msgstr "フォント属性の通知をしない"
+msgstr "フォント属性を報告しない"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes on"
-msgstr "フォント属性の通知をする"
+msgstr "フォント属性を報告する"
 
 #. Translators: Input help mode message for toggle report font attributes command.
 msgid "Toggles on and off the reporting of font attributes"
-msgstr "フォント属性の通知の切り替え"
+msgstr "フォント属性の報告の切り替え"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
-msgstr "校閲者による更新の通知をしない"
+msgstr "校閲者による更新を報告しない"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions on"
-msgstr "校閲者による更新の通知をする"
+msgstr "校閲者による更新を報告する"
 
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
-msgstr "校閲者による更新の通知の切り替え"
+msgstr "校閲者による更新の報告の切り替え"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
-msgstr "色の通知をしない"
+msgstr "色を報告しない"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors on"
-msgstr "色の通知をする"
+msgstr "色を報告する"
 
 #. Translators: Input help mode message for toggle report colors command.
 msgid "Toggles on and off the reporting of colors"
-msgstr "色の通知の切り替え"
+msgstr "色の報告の切り替え"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment off"
-msgstr "配置の通知をしない"
+msgstr "配置を報告しない"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment on"
-msgstr "配置の通知をする"
+msgstr "配置を報告する"
 
 #. Translators: Input help mode message for toggle report alignment command.
 msgid "Toggles on and off the reporting of text alignment"
-msgstr "配置の通知の切り替え"
+msgstr "配置の報告の切り替え"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style off"
-msgstr "スタイルの通知をしない"
+msgstr "スタイルを報告しない"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style on"
-msgstr "スタイルの通知をする"
+msgstr "スタイルを報告する"
 
 #. Translators: Input help mode message for toggle report style command.
 msgid "Toggles on and off the reporting of style changes"
-msgstr "スタイルの通知の切り替え"
+msgstr "スタイルの報告の切り替え"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
-msgstr "スペルエラーの通知をしない"
+msgstr "スペルエラーを報告しない"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors on"
-msgstr "スペルエラーの通知をする"
+msgstr "スペルエラーを報告する"
 
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
-msgstr "スペルエラーの通知の切り替え"
+msgstr "スペルエラーの報告の切り替え"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
-msgstr "ページ番号の通知をしない"
+msgstr "ページ番号を報告しない"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages on"
-msgstr "ページ番号の通知をする"
+msgstr "ページ番号を報告する"
 
 #. Translators: Input help mode message for toggle report pages command.
 msgid "Toggles on and off the reporting of pages"
-msgstr "ページ番号の通知の切り替え"
+msgstr "ページ番号の報告の切り替え"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
-msgstr "行番号の通知をしない"
+msgstr "行番号を報告しない"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers on"
-msgstr "行番号の通知をする"
+msgstr "行番号を報告する"
 
 #. Translators: Input help mode message for toggle report line numbers command.
 msgid "Toggles on and off the reporting of line numbers"
-msgstr "行番号の通知の切り替え"
+msgstr "行番号の報告の切り替え"
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
 msgid "report line indentation off"
-msgstr "行インデントの通知をしない"
+msgstr "行インデントを報告しない"
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
 msgid "report line indentation on"
-msgstr "行インデントの通知をする"
+msgstr "行インデントを報告する"
 
 #. Translators: Input help mode message for toggle report line indentation command.
 msgid "Toggles on and off the reporting of line indentation"
-msgstr "行インデントの通知の切り替え"
+msgstr "行インデントの報告の切り替え"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
-msgstr "段落インデントの通知をしない"
+msgstr "段落インデントを報告しない"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation on"
-msgstr "段落インデントの通知をする"
+msgstr "段落インデントを報告する"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
-msgstr "段落インデントの通知の切り替え"
+msgstr "段落インデントの報告の切り替え"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
-msgstr "テーブルの通知をしない"
+msgstr "テーブルを報告しない"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables on"
-msgstr "テーブルの通知をする"
+msgstr "テーブルを報告する"
 
 #. Translators: Input help mode message for toggle report tables command.
 msgid "Toggles on and off the reporting of tables"
-msgstr "テーブルの通知の切り替え"
+msgstr "テーブルの報告の切り替え"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers off"
-msgstr "テーブルの行列見出しの通知をしない"
+msgstr "テーブルの行列見出しを報告しない"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers on"
-msgstr "テーブルの行列見出しの通知をする"
+msgstr "テーブルの行列見出しを報告する"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
 msgid "Toggles on and off the reporting of table row and column headers"
-msgstr "テーブルの行列見出しの通知の切り替え"
+msgstr "テーブルの行列見出しの報告の切り替え"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
-msgstr "テーブルのセル番地の通知をしない"
+msgstr "テーブルのセル番地を報告しない"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates on"
-msgstr "テーブルのセル番地の通知をする"
+msgstr "テーブルのセル番地を報告する"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
-msgstr "テーブルのセル番地の通知の切り替え"
+msgstr "テーブルのセル番地の報告の切り替え"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
-msgstr "リンクの通知をしない"
+msgstr "リンクを報告しない"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links on"
-msgstr "リンクの通知をする"
+msgstr "リンクを報告する"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
-msgstr "リンクの通知の切り替え"
+msgstr "リンクの報告の切り替え"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
-msgstr "コメントの通知をしない"
+msgstr "コメントを報告しない"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments on"
-msgstr "コメントの通知をする"
+msgstr "コメントを報告する"
 
 #. Translators: Input help mode message for toggle report comments command.
 msgid "Toggles on and off the reporting of comments"
-msgstr "コメントの通知の切り替え"
+msgstr "コメントの報告の切り替え"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists off"
-msgstr "リストの通知をしない"
+msgstr "リストを報告しない"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists on"
-msgstr "リストの通知をする"
+msgstr "リストを報告する"
 
 #. Translators: Input help mode message for toggle report lists command.
 msgid "Toggles on and off the reporting of lists"
-msgstr "リストの通知の切り替え"
+msgstr "リストの報告の切り替え"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings off"
-msgstr "見出しの通知をしない"
+msgstr "見出しを報告しない"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings on"
-msgstr "見出しの通知をする"
+msgstr "見出しを報告する"
 
 #. Translators: Input help mode message for toggle report headings command.
 msgid "Toggles on and off the reporting of headings"
-msgstr "見出しの通知の切り替え"
+msgstr "見出しの報告の切り替え"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
-msgstr "引用の通知をしない"
+msgstr "引用を報告しない"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes on"
-msgstr "引用の通知をする"
+msgstr "引用を報告する"
 
 #. Translators: Input help mode message for toggle report block quotes command.
 msgid "Toggles on and off the reporting of block quotes"
-msgstr "引用の通知の切り替え"
+msgstr "引用の報告の切り替え"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks off"
-msgstr "ランドマークの通知をしない"
+msgstr "ランドマークを報告しない"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks on"
-msgstr "ランドマークの通知をする"
+msgstr "ランドマークを報告する"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
-msgstr "ランドマークの通知の切り替え"
+msgstr "ランドマークの報告の切り替え"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
-msgstr "フレームの通知をしない"
+msgstr "フレームを報告しない"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames on"
-msgstr "フレームの通知をする"
+msgstr "フレームを報告する"
 
 #. Translators: Input help mode message for toggle report frames command.
 msgid "Toggles on and off the reporting of frames"
-msgstr "フレームの通知の切り替え"
+msgstr "フレームの報告の切り替え"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
-msgstr "クリック可能の通知をしない"
+msgstr "クリック可能を報告しない"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable on"
-msgstr "クリック可能の通知をする"
+msgstr "クリック可能を報告する"
 
 #. Translators: Input help mode message for toggle report if clickable command.
 msgid "Toggles on and off reporting if clickable"
-msgstr "クリック可能の通知の切り替え"
+msgstr "クリック可能の報告の切り替え"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -3279,11 +3353,11 @@ msgstr "%sをクリップボードにコピーしました"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
 msgstr ""
-"現在のナビゲーターオブジェクトの通知、2回押すとスペルの読み上げ、3回押すとオ"
+"現在のナビゲーターオブジェクトの報告、2回押すとスペルの読み上げ、3回押すとオ"
 "ブジェクトの名前と内容をクリップボードにコピー"
 
 #. Translators: message when there is no location information for the review cursor
@@ -3295,8 +3369,8 @@ msgid ""
 "Reports information about the location of the text or object at the review "
 "cursor. Pressing twice may provide further detail."
 msgstr ""
-"レビューカーソルのテキストやオブジェクトの位置の通知。2回押すと詳細な情報の通"
-"知。"
+"レビューカーソルのテキストやオブジェクトの位置の報告。2回押すと詳細な情報の報"
+"告。"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 msgid "move to focus"
@@ -3380,7 +3454,7 @@ msgstr "現在のナビゲーターオブジェクトの既定の動作の実行
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 msgid "top"
-msgstr "トップ"
+msgstr "上の端"
 
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
@@ -3403,14 +3477,8 @@ msgid ""
 "situated. If this key is pressed twice, the current line will be spelled. "
 "Pressing three times will spell the line using character descriptions."
 msgstr ""
-"現在レビューカーソルのあるナビゲーターオブジェクトの行の通知。2回押すと現在の"
-"行のスペルを通知。3回押すと文字説明で行を通知"
-
-#. Translators: a message reported when:
-#. Review cursor is at the bottom line of the current navigator object.
-#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "ボトム"
+"現在レビューカーソルのあるナビゲーターオブジェクトの行の報告。2回押すと現在の"
+"行のスペルを報告。3回押すと文字説明で行を報告"
 
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid ""
@@ -3440,8 +3508,8 @@ msgid ""
 "situated. Pressing twice spells the word. Pressing three times spells the "
 "word using character descriptions"
 msgstr ""
-"現在レビューカーソルのあるナビゲーターオブジェクトの単語の通知。2回押すと単語"
-"のスペルを通知。3回押すと文字説明で単語を通知"
+"現在レビューカーソルのあるナビゲーターオブジェクトの単語の報告。2回押すと単語"
+"のスペルを報告。3回押すと文字説明で単語を報告"
 
 #. Translators: Input help mode message for move review cursor to next word command.
 msgid ""
@@ -3451,7 +3519,7 @@ msgstr ""
 "レビューカーソルを現在のナビゲーターオブジェクトの次の単語に移動して読み上げ"
 
 msgid "left"
-msgstr "左"
+msgstr "左の端"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
 msgid ""
@@ -3474,11 +3542,11 @@ msgid ""
 "character. Pressing three times reports the numeric value of the character "
 "in decimal and hexadecimal"
 msgstr ""
-"現在レビューカーソルのあるナビゲーターオブジェクトの文字の通知。2回押すと文字"
-"説明を通知。3回押すと文字コードを10進と16進で通知"
+"現在レビューカーソルのあるナビゲーターオブジェクトの文字の報告。2回押すと文字"
+"を説明。3回押すと文字コードを10進と16進で報告"
 
 msgid "right"
-msgstr "右"
+msgstr "右の端"
 
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
@@ -3499,7 +3567,7 @@ msgstr "読み上げなし"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
 msgid "speech mode beeps"
-msgstr "ビープで通知"
+msgstr "ビープ"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
 msgid "speech mode talk"
@@ -3517,7 +3585,7 @@ msgstr ""
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
-msgstr "フォーカスを、次に一番近いフォーカスのある仮想バッファーに移動"
+msgstr "フォーカスを一番近くのドキュメントに移動"
 
 #. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
 msgid ""
@@ -3558,33 +3626,35 @@ msgstr "書式情報なし"
 msgid ""
 "Reports formatting info for the current review cursor position within a "
 "document"
-msgstr "ドキュメント内の現在のレビューカーソル位置の書式情報の通知"
+msgstr "ドキュメント内の現在のレビューカーソル位置の書式情報の報告"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus"
-msgstr "フォーカスのあるオブジェクトの通知"
+msgid "reports the object with focus. If pressed twice, spells the information"
+msgstr "フォーカスのあるオブジェクトの報告。2回押すとスペルを報告"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
-msgstr "ステータス行がみつかりません"
+msgstr "ステータスバーがみつかりません"
 
 #. Translators: Input help mode message for report status line text command.
-msgid "reads the current application status bar and moves the navigator to it"
+msgid ""
+"reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information"
 msgstr ""
-"現在のアプリケーションのステータス情報を読み上げ、ナビゲーターオブジェクトを"
-"移動"
+"アプリのステータスバーを読み上げてナビゲーターオブジェクトを移動。2回押すとス"
+"ペルを報告"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
-msgstr "マウスカーソル移動時の情報通知しない"
+msgstr "マウスカーソル移動を報告しない"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking on"
-msgstr "マウスカーソル移動時の情報通知する"
+msgstr "マウスカーソル移動を報告する"
 
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
-msgstr "マウスカーソル移動時の情報通知の切り替え"
+msgstr "マウスカーソル移動の報告の切り替え"
 
 #. Translators: Reported when there is no title text for current program or window.
 msgid "no title"
@@ -3596,12 +3666,12 @@ msgid ""
 "pressed twice, spells the title. If pressed three times, copies the title to "
 "the clipboard"
 msgstr ""
-"現在のアプリケーションまたは最前面のウインドウのタイトルを通知。2回押すと、タ"
+"現在のアプリケーションまたは最前面のウインドウのタイトルを報告。2回押すと、タ"
 "イトルをスペル読み。3回押すとタイトルをクリップボードにコピー"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 msgid "speaks the current foreground object"
-msgstr "現在前面に表示中のオブジェクト名を通知"
+msgstr "現在前面に表示中のオブジェクト名を報告"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
@@ -3621,35 +3691,35 @@ msgstr "プログレスバー更新を読み上げ"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
 msgid "beep for progress bar updates"
-msgstr "プログレスバー更新をビープ音で通知"
+msgstr "プログレスバー更新をビープ音で報告"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
 msgid "beep and speak progress bar updates"
-msgstr "プログレスバー更新をビープ音と読み上げで通知"
+msgstr "プログレスバー更新をビープ音で報告して読み上げ"
 
 #. Translators: Input help mode message for toggle progress bar output command.
 msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
 msgstr ""
-"プログレスバーの通知を、ビープ音、読み上げ、ビープ音と読み上げ、なし、の順に"
+"プログレスバーの報告を、ビープ音、読み上げ、ビープ音と読み上げ、なし、の順に"
 "切り替え"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes off"
-msgstr "動的コンテンツの変化を通知しない"
+msgstr "動的コンテンツの変化を報告しない"
 
 #. Translators: presented when the present dynamic changes is toggled.
 msgid "report dynamic content changes on"
-msgstr "動的コンテンツの変化を通知する"
+msgstr "動的コンテンツの変化を報告する"
 
 #. Translators: Input help mode message for toggle dynamic content changes command.
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
 msgstr ""
-"DOSウインドウ上に書き込まれた新しいテキストのような、動的コンテンツの変化の通"
-"知を切り替え"
+"DOSウインドウ上に書き込まれた新しいテキストのような、動的コンテンツの変化の報"
+"告を切り替え"
 
 #. Translators: presented when toggled.
 msgid "caret moves review cursor off"
@@ -3696,7 +3766,7 @@ msgstr "残り{hours:d}時間{minutes:d}分"
 
 #. Translators: Input help mode message for report battery status command.
 msgid "reports battery status and time remaining if AC is not plugged in"
-msgstr "電源に接続していない時にバッテリー残量と残り時間を通知"
+msgstr "電源に接続していない時にバッテリー残量と残り時間を報告"
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
 msgid "Pass next key through"
@@ -3858,7 +3928,7 @@ msgstr "クリップボードには大きなテキスト情報が含まれてい
 
 #. Translators: Input help mode message for report clipboard text command.
 msgid "Reports the text on the Windows clipboard"
-msgstr "クリップボードテキストの通知"
+msgstr "クリップボードテキストの報告"
 
 #. Translators: Indicates start of review cursor text to be copied to clipboard.
 msgid "Start marked"
@@ -3957,13 +4027,13 @@ msgstr "タッチモードの切り替え"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid "Reports the object and content directly under your finger"
-msgstr "指で触っているオブジェクトやコンテンツの通知"
+msgstr "指で触っているオブジェクトやコンテンツの報告"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Reports the new object or content under your finger if different to where "
 "your finger was last"
-msgstr "指で触っているオブジェクトやコンテンツが変化したときに通知"
+msgstr "指で触っているオブジェクトやコンテンツが変化したときに報告"
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
@@ -4018,7 +4088,7 @@ msgstr "説明"
 msgid "Commands Quick Reference"
 msgstr "NVDA コマンド一覧表"
 
-#. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
+#. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
 msgstr "NVDA ユーザーガイド"
 
@@ -4385,7 +4455,7 @@ msgstr "システムキーボード上の%sを押す機能をエミュレート"
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
-msgstr "クーギョー"
+msgstr "ブランク"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
@@ -4662,29 +4732,64 @@ msgstr "NVDAスピーチビューワー"
 msgid "&Language"
 msgstr "言語(&L)"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Language"
+msgstr "言語"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Voice"
 msgstr "音声(&V)"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Voice"
+msgstr "音声"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&ariant"
 msgstr "声色(&A)"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Variant"
+msgstr "声色"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
 msgstr "速さ(&R)"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate"
+msgstr "速さ"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "音量(&O)"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Volume"
+msgstr "音量"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
 msgstr "高さ(&P)"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Pitch"
+msgstr "高さ"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "抑揚(&I)"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Inflection"
+msgstr "抑揚"
 
 msgid "text mode"
 msgstr "テキストモード"
@@ -4994,7 +5099,7 @@ msgstr "何も再生されていません"
 
 #. Translators: The description of an NVDA command for Foobar 2000.
 msgid "Reports the remaining time of the currently playing track, if any"
-msgstr "もし何か再生されている場合は、現在再生中のトラックの残り時間を通知"
+msgstr "もし何か再生されている場合は、現在再生中のトラックの残り時間を報告"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 msgid "No message yet"
@@ -5129,7 +5234,7 @@ msgstr "翻訳者への注記ウインドウが見つかりません。"
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any notes for translators"
-msgstr "翻訳者への注記の通知"
+msgstr "翻訳者への注記の報告"
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
@@ -5144,7 +5249,7 @@ msgstr "コメントなし"
 
 #. Translators: The description of an NVDA command for Poedit.
 msgid "Reports any comments in the comments window"
-msgstr "コメントウインドウのすべてのコメントの通知"
+msgstr "コメントウインドウのすべてのコメントの報告"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 msgid "Title placeholder"
@@ -5348,7 +5453,7 @@ msgid ""
 "This does not change what is visible on-screen, but only what the user can "
 "read with NVDA"
 msgstr ""
-"発表者ノートの通知とスライド内容の通知を切り替えます。画面表示は変化しませ"
+"発表者ノートの報告とスライド内容の報告を切り替えます。画面表示は変化しませ"
 "ん。NVDAで読む内容だけを切り替えます。"
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
@@ -5380,7 +5485,7 @@ msgid "Skype"
 msgstr "Skype"
 
 msgid "Reports and moves the review cursor to a recent message"
-msgstr "チャット履歴の通知とレビューカーソルの移動"
+msgstr "チャット履歴の報告とレビューカーソルの移動"
 
 #. Translators: Indicates that a contact stopped typing.
 msgid "Typing stopped"
@@ -5436,6 +5541,8 @@ msgstr "Baum/HumanWare/APHの点字ディスプレイ"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
 msgid "Serial: {portName}"
 msgstr "シリアルポート: {portName}"
 
@@ -5446,6 +5553,10 @@ msgstr "HumanWareブレイルノート"
 #. Translators: The name of a series of braille displays.
 msgid "HumanWare Brailliant BI/B series"
 msgstr "HumanWare社のBrailliant BI/Bシリーズ"
+
+#. Translators: The name of a braille display.
+msgid "EcoBraille displays"
+msgstr "EcoBraille ディスプレイ"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -5480,7 +5591,7 @@ msgstr "Papenmeier ブレイレックスの新型機種"
 
 #. Translators: Describes action of routing buttons on a braille display.
 msgid "Route to and report formatting"
-msgstr "タッチカーソルと書式の通知"
+msgstr "タッチカーソルと書式の報告"
 
 #. Translators: Names of braille displays.
 msgid "Papenmeier BRAILLEX older models"
@@ -5573,7 +5684,7 @@ msgid "&Mouse settings..."
 msgstr "マウス設定(&M)..."
 
 msgid "Change reporting of mouse shape and object under mouse"
-msgstr "マウスカーソル形状の変更やマウスカーソル位置のオブジェクトの通知"
+msgstr "マウスカーソル形状の変更やマウスカーソル位置のオブジェクトの報告"
 
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
@@ -5589,14 +5700,14 @@ msgstr "入力メソッド設定(&I)..."
 msgid ""
 "Configure how NVDA reports input composition and candidate selection for "
 "certain languages"
-msgstr "NVDAが特定の言語で入力メソッドの候補選択を通知する方法を設定します"
+msgstr "NVDAが特定の言語で入力メソッドの候補選択を報告する方法を設定します"
 
 #. Translators: The label for the menu item to open Object Presentation dialog.
 msgid "&Object presentation..."
 msgstr "オブジェクト表示(&O)..."
 
 msgid "Change reporting of objects"
-msgstr "オブジェクトの通知方法の変更"
+msgstr "オブジェクトの報告の方法の変更"
 
 #. Translators: The label for the menu item to open Browse Mode settings dialog.
 msgid "&Browse mode..."
@@ -5683,6 +5794,14 @@ msgstr "NVDAのインストール(&I)..."
 msgid "Reload plugins"
 msgstr "プラグインの再読み込み(&R)"
 
+#. Translators: The label for the Tools submenu in NVDA menu.
+msgid "Tools"
+msgstr "ツール(&T)"
+
+#. Translators: The label of a menu item to open NVDA user guide.
+msgid "&User Guide"
+msgstr "ユーザーガイド(&U)"
+
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
 msgstr "コマンド一覧表(&Q)"
@@ -5727,7 +5846,7 @@ msgid "&Revert to saved configuration"
 msgstr "前回保存された設定に戻す(&R)"
 
 msgid "Reset all settings to saved state"
-msgstr "すべての設定情報を保存されている設定に戻す"
+msgstr "前回保存された設定に戻す"
 
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
@@ -5742,7 +5861,7 @@ msgid "&Save configuration"
 msgstr "設定情報の保存(&S)"
 
 msgid "Write the current configuration to nvda.ini"
-msgstr "現在の設定情報をnvda.iniに書き込む"
+msgstr "設定情報を保存する"
 
 #. Translators: The label for the menu item to open donate page.
 msgid "Donate"
@@ -6156,6 +6275,7 @@ msgstr ""
 "の関連付けが削除され、このプロファイルと関連付けされます。\n"
 "継続しますか？"
 
+#. Translators: The title of a warning dialog.
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 msgid "Warning"
 msgstr "警告"
@@ -6192,7 +6312,7 @@ msgstr "NVDAをインストール中"
 
 #. Translators: The message displayed while NVDA is being updated.
 msgid "Please wait while your previous installation of NVDA is being updated."
-msgstr "インストール済みのNVDAが更新されるまでお待ちください。"
+msgstr "NVDAが更新されるまでお待ちください。"
 
 #. Translators: The message displayed while NVDA is being installed.
 msgid "Please wait while NVDA is being installed"
@@ -6226,12 +6346,12 @@ msgstr "NVDAのインストールは成功しました。"
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 msgid "Successfully updated your installation of NVDA. "
-msgstr "インストール済みのNVDAの更新が終了しました。"
+msgstr "NVDAが更新されました。"
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
 msgid "Please press OK to start the installed copy."
-msgstr "インストールされたNVDAを実行するためにOKを押してください。"
+msgstr "インストールされたNVDAを実行するにはOKを押してください。"
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
 msgid "Success"
@@ -6243,15 +6363,14 @@ msgstr "NVDAのインストール"
 
 #. Translators: An informational message in the Install NVDA dialog.
 msgid "To install NVDA to your hard drive, please press the Continue button."
-msgstr "NVDAをハードディスクにインストールするには継続を押してください。"
+msgstr "NVDAをインストールするには継続を押してください。"
 
 #. Translators: An informational message in the Install NVDA dialog.
 msgid ""
 "A previous copy of NVDA has been found on your system. This copy will be "
 "updated."
 msgstr ""
-"システムに前のバージョンのNVDAがみつかりました。このNVDAはアップデートされま"
-"す。"
+"前のバージョンのNVDAがインストールされています。このNVDAは更新されます。"
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
 msgid ""
@@ -6282,6 +6401,25 @@ msgstr "ポータブル版の設定を現在のユーザーアカウントにコ
 #. Translators: The label of a button to continue with the operation.
 msgid "&Continue"
 msgstr "継続(&C)"
+
+#. Translators: A warning presented when the user attempts to downgrade NVDA
+#. to an older version.
+msgid ""
+"You are attempting to install an earlier version of NVDA than the version "
+"currently installed. If you really wish to revert to an earlier version, you "
+"should first cancel this installation and completely uninstall NVDA before "
+"installing the earlier version."
+msgstr ""
+"現在インストールされているNVDAよりも前のバージョンのNVDAをインストールしよう"
+"としています。\n"
+"前のバージョンに戻したい場合は、このインストールをキャンセルしてください。\n"
+"まず現在のNVDAをアンインストールして、それから前のバージョンのNVDAをインス"
+"トールし直してください。"
+
+#. Translators: The label of a button to proceed with installation,
+#. even though this is not recommended.
+msgid "&Proceed with installation (not recommended)"
+msgstr "インストールを継続（非推奨）(&P)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -6430,13 +6568,13 @@ msgstr ""
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
-msgstr "自動的に確認してNVDAを更新(&U)"
+msgstr "NVDAの更新を自動的に確認(&U)"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
-"Custom plugins were detected in your user settings directory. Copying these "
-"to the system profile could be a security risk. Do you still wish to copy "
-"your settings?"
+"Add-ons were detected in your user settings directory. Copying these to the "
+"system profile could be a security risk. Do you still wish to copy your "
+"settings?"
 msgstr ""
 "ユーザー設定フォルダーにアドオンがみつかりました。これらをシステムプロファイ"
 "ルにコピーすることは、セキュリティ上のリスクとなる可能性があります。本当に設"
@@ -6464,7 +6602,7 @@ msgstr "コピーエラー"
 
 #. Translators: The message displayed when errors were found while trying to copy current configuration to system settings.
 msgid "Error copying NVDA user settings"
-msgstr "NVDAのユーザー設定をコピー中にエラーが発生しました"
+msgstr "NVDAのユーザー設定のコピー中にエラーが発生しました"
 
 #. Translators: The message displayed when copying configuration to system settings was successful.
 msgid "Successfully copied NVDA user settings"
@@ -6640,12 +6778,12 @@ msgstr "マウス設定"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "Report mouse &shape changes"
-msgstr "マウスカーソル形状の変化の通知(&S)"
+msgstr "マウスカーソル形状の変化の報告(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "Enable mouse &tracking"
-msgstr "マウスカーソル位置のテキストの通知(&T)"
+msgstr "マウスカーソル位置のテキストの報告(&T)"
 
 #. Translators: This is the label for a combobox in the
 #. mouse settings dialog.
@@ -6659,17 +6797,17 @@ msgstr "テキストの読み上げ範囲"
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "Report &role when mouse enters object"
-msgstr "マウスカーソル位置の要素の種類の通知(&R)"
+msgstr "マウスカーソル位置の要素の種類の報告(&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "&Play audio coordinates when mouse moves"
-msgstr "マウスカーソルの座標をビープ音で通知(&P)"
+msgstr "マウスカーソルの座標をビープ音で報告(&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "&Brightness controls audio coordinates volume"
-msgstr "マウスカーソル位置の明るさをビープ音の音量で通知(&B)"
+msgstr "マウスカーソル位置の明るさをビープ音の音量で報告(&B)"
 
 #. Translators: This is the label for the review cursor settings dialog.
 msgid "Review Cursor Settings"
@@ -6702,27 +6840,27 @@ msgstr "入力メソッド設定"
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Automatically report all available &candidates"
-msgstr "候補リストの自動通知(&C)"
+msgstr "候補リストを自動的に報告(&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Announce &selected candidate"
-msgstr "選択した候補の通知(&S)"
+msgstr "選択した候補の報告(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Always include short character &description when announcing candidates"
-msgstr "候補の通知で文字を説明(&D)"
+msgstr "候補の報告で文字を説明(&D)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Report changes to the &reading string"
-msgstr "読み文字の通知(&R)"
+msgstr "読み文字の報告(&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Report changes to the &composition string"
-msgstr "コンポジションの更新の通知(&C)"
+msgstr "コンポジションの更新の報告(&C)"
 
 #. Translators: This is the label for the object presentation dialog.
 msgid "Object Presentation"
@@ -6749,22 +6887,22 @@ msgstr "ビープ音と読み上げ"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report &tooltips"
-msgstr "ツールチップ情報の通知(&T)"
+msgstr "ツールチップ情報の報告(&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report &help balloons"
-msgstr "バルーン情報の通知(&H)"
+msgstr "バルーン情報の報告(&H)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report object shortcut &keys"
-msgstr "オブジェクトのショートカットキーの通知(&K)"
+msgstr "オブジェクトのショートカットキーの報告(&K)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report object &position information"
-msgstr "オブジェクト位置情報の通知(&P)"
+msgstr "オブジェクト位置情報の報告(&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -6774,7 +6912,7 @@ msgstr "オブジェクトの位置を推測(&P)"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report object &descriptions"
-msgstr "オブジェクトの説明の通知(&D)"
+msgstr "オブジェクトの説明の報告(&D)"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
@@ -6789,12 +6927,12 @@ msgstr "プログレスバー出力"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
-msgstr "バックグラウンドのプログレスバーの更新の通知"
+msgstr "バックグラウンドのプログレスバーの更新の報告"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report dynamic &content changes"
-msgstr "動的コンテンツの変化の通知(&C)"
+msgstr "動的コンテンツの変化の報告(&C)"
 
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
@@ -6838,7 +6976,7 @@ msgstr "キャレットの移動を追跡する自動フォーカスモード"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Audio indication of focus and browse modes"
-msgstr "フォーカスモードとブラウズモードの切替を音で通知"
+msgstr "フォーカスモードとブラウズモードの切替を音で報告"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -6852,118 +6990,118 @@ msgstr "書式情報"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "カーソル移動後に書式変化の通知（動作が遅くなります）(&A)"
+msgstr "カーソル移動後に書式の変化を報告(&A)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &font name"
-msgstr "フォント名の通知(&F)"
+msgstr "フォント名の報告(&F)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report font &size"
-msgstr "フォントサイズの通知(&S)"
+msgstr "フォントサイズの報告(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report font attri&butes"
-msgstr "フォント属性の通知(&B)"
+msgstr "フォント属性の報告(&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &alignment"
-msgstr "配置の通知(&A)"
+msgstr "配置の報告(&A)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &colors"
-msgstr "色の通知(&C)"
+msgstr "色の報告(&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &editor revisions"
-msgstr "校閲者による更新の通知(&E)"
+msgstr "校閲者による更新の報告(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report st&yle"
-msgstr "スタイルの通知(&Y)"
+msgstr "スタイルの報告(&Y)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report spelling e&rrors"
-msgstr "スペルエラーの通知(&R)"
+msgstr "スペルエラーの報告(&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &pages"
-msgstr "ページ番号の通知(&P)"
+msgstr "ページ番号の報告(&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report line &numbers"
-msgstr "行番号の通知(&N)"
+msgstr "行番号の報告(&N)"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
 #.
 msgid "Report l&ine indentation"
-msgstr "行インデントの通知(&I)"
+msgstr "行インデントの報告(&I)"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "Report &paragraph indentation"
-msgstr "段落インデントの通知(&P)"
+msgstr "段落インデントの報告(&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &tables"
-msgstr "テーブルの通知(&T)"
+msgstr "テーブルの報告(&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report table row/column h&eaders"
-msgstr "テーブルの行/列見出しの通知(&E)"
+msgstr "テーブルの行列見出しの報告(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report table cell c&oordinates"
-msgstr "テーブルのセル番地の通知(&O)"
+msgstr "テーブルのセル番地の報告(&O)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report lin&ks"
-msgstr "リンクの通知(&K)"
+msgstr "リンクの報告(&K)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &headings"
-msgstr "見出しの通知(&H)"
+msgstr "見出しの報告(&H)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &lists"
-msgstr "リストの通知(&L)"
+msgstr "リストの報告(&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report block &quotes"
-msgstr "引用の通知(&Q)"
+msgstr "引用の報告(&Q)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report lan&dmarks"
-msgstr "ランドマークの通知(&D)"
+msgstr "ランドマークの報告(&D)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report fra&mes"
-msgstr "フレームの通知(&M)"
+msgstr "フレームの報告(&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report if &clickable"
-msgstr "クリック可能の通知(&C)"
+msgstr "クリック可能の報告(&C)"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -7189,11 +7327,6 @@ msgstr "{curPercent:.0f}パーセント"
 msgid "at {x}, {y}"
 msgstr "位置 {x}, {y}"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-#, python-format
-msgid "%s landmark"
-msgstr "%s ランドマーク"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "更新完了"
@@ -7201,14 +7334,6 @@ msgstr "更新完了"
 #. Translators: Reported while loading a document.
 msgid "Loading document..."
 msgstr "ドキュメントを読み込み中..."
-
-#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-msgid "No long description"
-msgstr "詳細説明なし"
-
-#. Translators: the description for the activateLongDescription script on virtualBuffers.
-msgid "Shows the long description at this position if one is found."
-msgstr "詳細説明がある場合に表示"
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -7227,8 +7352,8 @@ msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
 msgstr ""
-"ドキュメントコンテンツのレンダリング中に、可能であれば画面レイアウトのOnまた"
-"はOffを切り替えます"
+"ドキュメントコンテンツのレンダリング中に、可能であれば画面レイアウトを使用す"
+"るか使わないかを切り替え"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -7251,19 +7376,6 @@ msgstr "次のテーブル列へ移動"
 #. Translators: the description for the previous table column script on virtualBuffers.
 msgid "moves to the previous table column"
 msgstr "前のテーブル列へ移動"
-
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
-msgid "Not in a container"
-msgstr "コンテナ内ではありません"
-
-#. Translators: Description for the Move to start of container command in browse mode.
-msgid "Moves to the start of the container element, such as a list or table"
-msgstr "リストやテーブルなどコンテナ要素の最初に移動"
-
-#. Translators: Description for the Move past end of container command in browse mode.
-msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "リストやテーブルなどコンテナ要素の最後に移動"
 
 msgid "Taskbar"
 msgstr "タスクバー"
@@ -7316,7 +7428,8 @@ msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
 msgstr ""
-"見出しを設定できません。書式設定でテーブルの見出し通知を有効にしてください。"
+"行列見出しを設定できません。書式情報でテーブルの行列見出しの報告を有効にして"
+"ください。"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 msgid "Set {address} as start of column headers"
@@ -7372,7 +7485,7 @@ msgstr "コメントなし"
 
 #. Translators: the description  for a script for Excel
 msgid "Reports the comment on the current cell"
-msgstr "現在のセルのコメントの通知"
+msgstr "現在のセルのコメントの報告"
 
 #. Translators: Dialog text for
 msgid "Editing comment for cell {address}"
@@ -7385,67 +7498,67 @@ msgstr "{firstAddress} {firstContent} から {lastAddress} {lastContent}"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Area"
-msgstr "3D面"
+msgstr "3次元の面"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Area"
-msgstr "3D積み上げ面"
+msgstr "3次元の積み上げ面"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Area"
-msgstr "100%積み上げ面"
+msgstr "100パーセント積み上げ面"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Bar"
-msgstr "3D集合横棒"
+msgstr "3次元の集合横棒"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Bar"
-msgstr "3D積み上げ横棒"
+msgstr "3次元の積み上げ横棒"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Bar"
-msgstr "3D 100%積み上げ横棒"
+msgstr "3次元の100パーセント積み上げ横棒"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Column"
-msgstr "3D縦棒"
+msgstr "3次元の縦棒"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Column"
-msgstr "3D集合縦棒"
+msgstr "3次元の集合縦棒"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Column"
-msgstr "3D積み上げ縦棒"
+msgstr "3次元の積み上げ縦棒"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Column"
-msgstr "3D 100%積み上げ縦棒"
+msgstr "3次元の100パーセント積み上げ縦棒"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Line"
-msgstr "3D折れ線"
+msgstr "3次元の折れ線"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Pie"
-msgstr "3D円"
+msgstr "3次元の円"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded 3D Pie"
-msgstr "分割円"
+msgstr "分割された3次元の円"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7500,7 +7613,7 @@ msgstr "積み上げ縦棒"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Column"
-msgstr "100%積み上げ縦棒"
+msgstr "100パーセント積み上げ縦棒"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
@@ -7515,12 +7628,12 @@ msgstr "積み上げ円錐横棒"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cone Bar"
-msgstr "100%積み上げ円錐横棒"
+msgstr "100パーセント積み上げ円錐横棒"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cone Column"
-msgstr "3D円錐縦棒"
+msgstr "3次元の円錐縦棒"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
@@ -7535,7 +7648,7 @@ msgstr "積み上げ円錐縦棒"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cone Column"
-msgstr "100%積み上げ円錐縦棒"
+msgstr "100パーセント積み上げ円錐縦棒"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
@@ -7550,17 +7663,17 @@ msgstr "積み上げ円柱横棒"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cylinder Bar"
-msgstr "100%積み上げ円柱横棒"
+msgstr "100パーセント積み上げ円柱横棒"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cylinder Column"
-msgstr "3D円柱縦棒"
+msgstr "3次元の円柱縦棒"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cylinder Column"
-msgstr "100%積み上げ円柱縦棒"
+msgstr "100パーセント積み上げ円柱縦棒"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7590,7 +7703,7 @@ msgstr "マーカー付き積み上げ折れ線"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line with Markers"
-msgstr "マーカー付き100%積み上げ折れ線"
+msgstr "マーカー付き100パーセント積み上げ折れ線"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7600,7 +7713,7 @@ msgstr "積み上げ折れ線"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line"
-msgstr "100%積み上げ折れ線"
+msgstr "100パーセント積み上げ折れ線"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7630,12 +7743,12 @@ msgstr "積み上げピラミッド横棒"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Bar"
-msgstr "100%積み上げピラミッド横棒"
+msgstr "100パーセント積み上げピラミッド横棒"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Pyramid Column"
-msgstr "3Dピラミッド縦棒"
+msgstr "3次元のピラミッド縦棒"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
@@ -7650,7 +7763,7 @@ msgstr "積み上げピラミッド縦棒"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Column"
-msgstr "100%積み上げピラミッド縦棒"
+msgstr "100パーセント積み上げピラミッド縦棒"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7690,7 +7803,7 @@ msgstr "株価チャート(出来高-始値-高値-安値-終値)"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface"
-msgstr "3D面"
+msgstr "3次元の面"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7705,7 +7818,7 @@ msgstr "面 上から見たワイヤーフレーム"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Surface (wireframe)"
-msgstr "3D面 ワイヤーフレーム"
+msgstr "3次元の面 ワイヤーフレーム"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7784,6 +7897,11 @@ msgstr "系列が定義されていません"
 msgid "slice"
 msgstr "スライス"
 
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "列"
+
 #. Translators: A data point in a line chart.
 msgid "data point"
 msgstr "データポイント"
@@ -7793,7 +7911,7 @@ msgid "item"
 msgstr "項目"
 
 msgid "Series color: {colorName} "
-msgstr "系列の色 {colorName}"
+msgstr "系列の色 {colorName} "
 
 #. Translators: A type of element in a Microsoft Excel chart.
 msgid "Display Unit Label"
@@ -7886,7 +8004,7 @@ msgstr "系列 {seriesName} {seriesIndex}の{seriesCount}"
 
 #. Translators: For line charts, indicates no change from the previous data point on the left
 msgid "no change from point {previousIndex}, "
-msgstr "ポイント{previousIndex}から変化なし"
+msgstr "ポイント{previousIndex}から変化なし "
 
 #. Translators: For line charts, indicates an increase from the previous data point on the left
 msgid "Increased by {incrementValue} from point {previousIndex}, "
@@ -7894,18 +8012,18 @@ msgstr "ポイント{previousIndex}から{incrementValue}増加 "
 
 #. Translators: For line charts, indicates a decrease from the previous data point on the left
 msgid "decreased by {decrementValue} from point {previousIndex}, "
-msgstr "ポイント{previousIndex}から{decrementValue}減少"
+msgstr "ポイント{previousIndex}から{decrementValue}減少 "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
 msgid "{categoryAxisTitle} {categoryAxisData}: "
-msgstr "{categoryAxisTitle} {categoryAxisData}"
+msgstr "{categoryAxisTitle} {categoryAxisData} "
 
 #. Translators: Specifies the category of a data point.
 #. {categoryAxisData} will be replaced with the category itself; e.g. "January".
 msgid "Category {categoryAxisData}: "
-msgstr "項目{categoryAxisData}"
+msgstr "項目 {categoryAxisData} "
 
 #. Translators: Specifies the value of a data point.
 #. {valueAxisTitle} will be replaced with the title of the value axis; e.g. "Amount".
@@ -7922,7 +8040,7 @@ msgstr "値 {valueAxisData}"
 #. For example, this might report "fraction 25.25 percent slice 1 of 5"
 msgid ""
 " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}"
-msgstr "{fractionValue:.2f}パーセントのスライス {pointIndex}の{pointCount}"
+msgstr " {fractionValue:.2f}パーセントのスライス {pointIndex}の{pointCount}"
 
 #. Translators: Details about a segment of a chart.
 #. For example, this might report "column 1 of 5"
@@ -7956,7 +8074,7 @@ msgstr "近似曲線"
 
 #. Translators: Describes the squared symbol used in the label for a trendline in a Microsoft Excel chart.
 msgid " squared "
-msgstr " 四角形"
+msgstr " 四角形 "
 
 #. Translators: Details about a chart title in Microsoft Excel.
 msgid "Chart title: {chartTitle}"
@@ -7976,7 +8094,7 @@ msgstr ""
 
 #. Translators: Indicates the chart area of a Microsoft Excel chart.
 msgid "Chart area "
-msgstr "グラフエリア"
+msgstr "グラフエリア "
 
 #. Translators: Details about the plot area of a Microsoft Excel chart.
 msgid ""
@@ -7990,7 +8108,7 @@ msgstr ""
 
 #. Translators: Indicates the plot area of a Microsoft Excel chart.
 msgid "Plot area "
-msgstr "プロットエリア"
+msgstr "プロットエリア "
 
 #. Translators: Indicates the legend in a Microsoft Excel chart.
 #. See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
@@ -8263,7 +8381,7 @@ msgstr "コメントなし"
 
 #. Translators: a description for a script
 msgid "Reports the text of the comment where the System caret is located."
-msgstr "キャレット位置のコメントの通知"
+msgstr "キャレット位置のコメントの報告"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
