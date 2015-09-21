@@ -777,16 +777,6 @@ Tries to force this object to take the focus.
 		"""
 		raise NotImplementedError
 
-	def _get_embeddingTextInfo(self):
-		"""Retrieve the parent text range which embeds this object.
-		The returned text range will have its start positioned on the embedded object character associated with this object.
-		That is, calling L{textInfos.TextInfo.getEmbeddedObject}() on the returned text range will return this object.
-		@return: The text range for the embedded object character associated with this object or C{None} if this is not an embedded object.
-		@rtype: L{textInfos.TextInfo}
-		@raise NotImplementedError: If not supported.
-		"""
-		raise NotImplementedError
-
 	def _get_isPresentableFocusAncestor(self):
 		"""Determine if this object should be presented to the user in the focus ancestry.
 		@return: C{True} if it should be presented in the focus ancestry, C{False} if not.

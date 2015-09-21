@@ -300,7 +300,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			self._startOffset=0
 			self._endOffset=self._getStoryLength()
 		elif isinstance(position,Offsets):
-			self._startOffset=max(min(position.startOffset,self._getStoryLength()-1),0)
+			self._startOffset=max(min(position.startOffset,self._getStoryLength()),0)
 			self._endOffset=max(min(position.endOffset,self._getStoryLength()),0)
 		else:
 			raise NotImplementedError("position: %s not supported"%position)
@@ -321,6 +321,8 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			offsetsFunc=self._getReadingChunkOffsets
 		elif unit==textInfos.UNIT_STORY:
 			return 0,self._getStoryLength()
+		elif unit==textInfos.UNIT_OFFSET:
+			return offset,offset+1
 		else:
 			raise ValueError("unknown unit: %s"%unit)
 		return offsetsFunc(offset)

@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner
+#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner
 
 from collections import namedtuple
 from ctypes import c_short
@@ -15,7 +15,10 @@ import eventHandler
 import controlTypes
 from . import IAccessible, Dialog, WindowRoot
 from logHandler import log
+import textInfos.offsets
 from NVDAObjects.behaviors import RowWithFakeNavigation
+from . import IA2TextTextInfo
+from .ia2TextMozilla import MozillaCompoundTextInfo
 
 class Mozilla(IAccessible):
 
@@ -63,6 +66,15 @@ class Mozilla(IAccessible):
 			if level:
 				info['level']=level
 		return info
+
+	def __contains__(self, obj):
+		if not isinstance(obj, Mozilla):
+			return False
+		try:
+			self.IAccessibleObject.accChild(obj.IA2UniqueID)
+			return True
+		except COMError:
+			return False
 
 class Gecko1_9(Mozilla):
 
@@ -172,6 +184,9 @@ class TextLeaf(Mozilla):
 class Application(Document):
 	shouldCreateTreeInterceptor = False
 
+class BlockQuote(Mozilla):
+	role = controlTypes.ROLE_BLOCKQUOTE
+
 class Math(Mozilla):
 
 	def _get_mathMl(self):
@@ -193,6 +208,9 @@ class Math(Mozilla):
 			attrs = ""
 		return "<math%s>%s</math>" % (attrs, node.innerHTML)
 
+class Editor(Mozilla):
+	TextInfo = MozillaCompoundTextInfo
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Mozilla object.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
@@ -202,6 +220,11 @@ def findExtraOverlayClasses(obj, clsList):
 		return
 
 	iaRole = obj.IAccessibleRole
+	try:
+		ia2States = obj.IAccessibleObject.states
+	except COMError:
+		ia2States = 0
+
 	cls = None
 	if iaRole == oleacc.ROLE_SYSTEM_APPLICATION:
 		try:
@@ -215,19 +238,19 @@ def findExtraOverlayClasses(obj, clsList):
 		# Text leaves are never focusable.
 		# Not unavailable excludes disabled editable text fields (which also aren't focusable).
 		if not (iaStates & oleacc.STATE_SYSTEM_FOCUSABLE or iaStates & oleacc.STATE_SYSTEM_UNAVAILABLE):
-			try:
-				ia2States = obj.IAccessibleObject.states
-			except COMError:
-				ia2States = 0
 			# This excludes a non-focusable @role="textbox".
 			if not (ia2States & IAccessibleHandler.IA2_STATE_EDITABLE):
 				cls = TextLeaf
+	elif iaRole == IAccessibleHandler.IA2_ROLE_SECTION and obj.IA2Attributes.get("tag", None) == "blockquote":
+		cls = BlockQuote
 	if not cls:
 		cls = _IAccessibleRolesToOverlayClasses.get(iaRole)
 	if cls:
 		clsList.append(cls)
 
-	if iaRole == oleacc.ROLE_SYSTEM_ROW:
+	if cls is not TextLeaf and ia2States & IAccessibleHandler.IA2_STATE_EDITABLE and obj.IAccessibleStates & oleacc.STATE_SYSTEM_FOCUSABLE:
+		clsList.append(Editor)
+	elif iaRole == oleacc.ROLE_SYSTEM_ROW:
 		clsList.append(RowWithFakeNavigation)
 	elif iaRole == oleacc.ROLE_SYSTEM_LISTITEM and hasattr(obj.parent, "IAccessibleTableObject"):
 		clsList.append(RowWithFakeNavigation)
