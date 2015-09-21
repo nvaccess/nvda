@@ -35,7 +35,7 @@ class CompoundTextInfo(textInfos.TextInfo):
 				pass
 
 		if (self._end.isCollapsed and self._endObj != self._startObj
-				and self._end.compareEndPoints(self._makeRawTextInfo(self._endObj, textInfos.POSITION_ALL), "startToStart") == 0):
+				and self._end.compareEndPoints(self._makeRawTextInfo(self._endObj, textInfos.POSITION_FIRST), "startToStart") == 0):
 			# End is at the start of its object.
 			# This is equivalent to the end of the previous content.
 			# Aside from being pointless, we don't want a collapsed end object, as this will cause bogus control fields to be emitted.
@@ -54,7 +54,7 @@ class CompoundTextInfo(textInfos.TextInfo):
 			# start needs to cover the rest of the text to the end of its object.
 			self._start.setEndPoint(self._makeRawTextInfo(self._startObj, textInfos.POSITION_ALL), "endToEnd")
 			# end needs to cover the rest of the text to the start of its object.
-			self._end.setEndPoint(self._makeRawTextInfo(self._endObj, textInfos.POSITION_ALL), "startToStart")
+			self._end.setEndPoint(self._makeRawTextInfo(self._endObj, textInfos.POSITION_FIRST), "startToStart")
 
 	def setEndPoint(self, other, which):
 		if which == "startToStart":
