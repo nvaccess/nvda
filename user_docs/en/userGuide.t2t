@@ -1172,12 +1172,23 @@ The language for which symbol pronunciation is being edited will be shown in the
 Note that this dialog respects the "Trust voice's language for processing symbols and characters" option found in the [Voice Settings dialog #VoiceSettings]; i.e. it uses the voice language rather than the NVDA global language setting when this option is enabled.
 
 To change a symbol, first select it in the Symbols list.
-The Replacement field allows you to change the text that should be spoken in place of this symbol.
-Using the Level field, you can adjust the lowest symbol level at which this symbol should be spoken.
+
+- The Replacement field allows you to change the text that should be spoken in place of this symbol.
+- Using the Level field, you can adjust the lowest symbol level at which this symbol should be spoken.
+- The Send actual symbol to synthesizer field specifies when the symbol itself (in contrast to its replacement) should be sent to the synthesizer.
+This is useful if the symbol causes the synthesizer to pause or change the inflection of the voice.
+For example, a comma causes the synthesizer to pause.
+There are three options:
+ - never: Never send the actual symbol to the synthesizer.
+ - always: Always send the actual symbol to the synthesizer.
+ - only below symbols' level: Send the actual symbol only if the configured speech symbol level is lower than the level set for this symbol.
+ For example, you might use this so that a symbol will have its replacement spoken at higher levels without pausing, while still being indicated with a pause at lower levels.
+ -
+-
 
 You can add new symbols by pressing the Add button.
 In the dialog that appears, enter the symbol and press the OK button.
-Then, change the replacement and level for the new symbol as you would for other symbols.
+Then, change the fields for the new symbol as you would for other symbols.
 
 You can remove a symbol you previously added by pressing the Remove button.
 
@@ -2100,15 +2111,6 @@ Following are the command line options for NVDA:
 | None | --no-sr-flag  | Don't change the global system screen reader flag |
 | None | --install | Installs NVDA (starting the newly installed copy) |
 | None | --install-silent | Silently installs NVDA (does not start the newly installed copy) |
-
-++ Advanced Customization of Symbol Pronunciation ++
-It is possible to customize the pronunciation of punctuation and other symbols beyond what can be done using the [Punctuation/symbol pronunciation #SymbolPronunciation] dialog.
-For example, you can specify whether the raw symbol should be sent to the synthesizer (e.g. to cause a pause or change in inflection) and you can add custom symbols.
-
-To do this, you must edit the symbol pronunciation information file in your NVDA user configuration directory.
-The file is called symbols-xx.dic, where xx is the language code.
-The format of this file is documented in the Symbol Pronunciation section of the NVDA Developer Guide, which is available from [the Development section of the NVDA web site http://community.nvda-project.org/wiki/Development].
-However, it is not possible for users to define complex symbols.
 
 + Further Information +
 If you require further information or assistance regarding NVDA, please visit the NVDA web site at NVDA_URL.
