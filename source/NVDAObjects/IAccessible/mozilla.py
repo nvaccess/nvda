@@ -113,8 +113,7 @@ class Document(Mozilla):
 		ver=getGeckoVersion(self)
 		if (not ver or ver.full.startswith('1.9')) and self.windowClassName!="MozillaContentWindowClass":
 			return super(Document,self).treeInterceptorClass
-		states = self.states
-		if controlTypes.STATE_EDITABLE not in states:
+		if controlTypes.STATE_EDITABLE not in self.states:
 			import virtualBuffers.gecko_ia2
 			if ver and ver.major < 14:
 				return virtualBuffers.gecko_ia2.Gecko_ia2Pre14
@@ -123,8 +122,7 @@ class Document(Mozilla):
 		return super(Document,self).treeInterceptorClass
 
 	def _get_shouldCreateTreeInterceptor(self):
-		states = self.states
-		return controlTypes.STATE_READONLY in states or controlTypes.STATE_EDITABLE in states
+		return controlTypes.STATE_READONLY in self.states
 
 class EmbeddedObject(Mozilla):
 
