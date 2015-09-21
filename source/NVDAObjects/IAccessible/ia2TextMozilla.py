@@ -38,9 +38,6 @@ def _getRawTextInfo(obj):
 		return NVDAObjectTextInfo
 	return IA2TextTextInfo
 
-def _makeRawTextInfo(obj, position):
-	return _getRawTextInfo(obj)(obj, position)
-
 def _getEmbedded(obj, offset):
 	if not hasattr(obj, "IAccessibleTextObject"):
 		return obj.getChild(offset)
@@ -55,25 +52,7 @@ def _getEmbedded(obj, offset):
 		pass
 	return None
 
-def _getEmbedding(obj):
-	# optimisation: Passing an Offsets position checks nCharacters, which is an extra call we don't need.
-	info = _makeRawTextInfo(obj.parent, textInfos.POSITION_FIRST)
-	if isinstance(info, FakeEmbeddingTextInfo):
-		info._startOffset = obj.indexInParent
-		info._endOffset = info._startOffset + 1
-		return info
-	try:
-		hl = obj.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleHyperlink)
-		hlOffset = hl.startIndex
-		info._startOffset = hlOffset
-		info._endOffset = hlOffset + 1
-		return info
-	except COMError:
-		pass
-	return None
-
 class MozillaCompoundTextInfo(CompoundTextInfo):
-	_makeRawTextInfo = staticmethod(_makeRawTextInfo)
 
 	def __init__(self, obj, position):
 		super(MozillaCompoundTextInfo, self).__init__(obj, position)
@@ -102,7 +81,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				caretTi, caretObj = self._findContentDescendant(obj, textInfos.POSITION_CARET)
 			except LookupError:
 				raise RuntimeError("No caret")
-			if caretObj is not obj and caretObj.IA2Attributes.get("display") == "inline" and caretTi.compareEndPoints(_makeRawTextInfo(caretObj, textInfos.POSITION_ALL), "startToEnd") == 0:
+			if caretObj is not obj and caretObj.IA2Attributes.get("display") == "inline" and caretTi.compareEndPoints(self._makeRawTextInfo(caretObj, textInfos.POSITION_ALL), "startToEnd") == 0:
 				# The caret is at the end of an inline object.
 				# This will report "blank", but we want to report the character just after the caret.
 				try:
@@ -116,7 +95,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			# so start from the caret for better performance/tolerance of server brokenness.
 			tempTi, tempObj = self._findContentDescendant(obj, textInfos.POSITION_CARET)
 			try:
-				tempTi = _makeRawTextInfo(tempObj, position)
+				tempTi = self._makeRawTextInfo(tempObj, position)
 			except RuntimeError:
 				# The caret is just before this object.
 				# There is never a selection in this case.
@@ -126,7 +105,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 					# No selection, but perhaps the caret is at the start of the next/previous object.
 					# This happens when you, for example, press shift+rightArrow at the end of a block.
 					# Try from the root.
-					rootTi = _makeRawTextInfo(obj, position)
+					rootTi = self._makeRawTextInfo(obj, position)
 					if not rootTi.isCollapsed:
 						# There is definitely a selection.
 						tempTi, tempObj = rootTi, obj
@@ -138,6 +117,26 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				self._start, self._startObj, self._end, self._endObj = self._findUnitEndpoints(tempTi, position)
 		else:
 			raise NotImplementedError
+
+	def _makeRawTextInfo(self, obj, position):
+		return _getRawTextInfo(obj)(obj, position)
+
+	def _getEmbedding(self, obj):
+		# optimisation: Passing an Offsets position checks nCharacters, which is an extra call we don't need.
+		info = self._makeRawTextInfo(obj.parent, textInfos.POSITION_FIRST)
+		if isinstance(info, FakeEmbeddingTextInfo):
+			info._startOffset = obj.indexInParent
+			info._endOffset = info._startOffset + 1
+			return info
+		try:
+			hl = obj.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleHyperlink)
+			hlOffset = hl.startIndex
+			info._startOffset = hlOffset
+			info._endOffset = hlOffset + 1
+			return info
+		except COMError:
+			pass
+		return None
 
 	POSITION_SELECTION_START = 3
 	POSITION_SELECTION_END = 4
@@ -163,7 +162,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		if descendantID.value != obj.IA2UniqueID:
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(obj.windowHandle,winUser.OBJID_CLIENT,descendantID.value)
 		# optimisation: Passing an Offsets position checks nCharacters, which is an extra call we don't need.
-		ti=_makeRawTextInfo(obj,textInfos.POSITION_FIRST)
+		ti=self._makeRawTextInfo(obj,textInfos.POSITION_FIRST)
 		ti._startOffset=ti._endOffset=descendantOffset.value
 		return ti,obj
 
@@ -190,7 +189,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				if _getRawTextInfo(embedded) is NVDAObjectTextInfo: # No text
 					yield embedded.basicText
 				else:
-					for subItem in self._iterRecursiveText(_makeRawTextInfo(embedded, textInfos.POSITION_ALL), controlStack, formatConfig):
+					for subItem in self._iterRecursiveText(self._makeRawTextInfo(embedded, textInfos.POSITION_ALL), controlStack, formatConfig):
 						yield subItem
 						if subItem is None:
 							return
@@ -228,7 +227,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 						cannotBeStart = True
 					fields.insert(0, textInfos.FieldCommand("controlStart", field))
 				controlStack.insert(0, field)
-				ti = _getEmbedding(obj)
+				ti = self._getEmbedding(obj)
 				obj = ti.obj
 		else:
 			controlStack = None
@@ -249,12 +248,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 					# This object had a control field.
 					field["_endOfNode"] = True
 					fields.append(textInfos.FieldCommand("controlEnd", None))
-			ti = _getEmbedding(obj)
+			ti = self._getEmbedding(obj)
 			obj = ti.obj
 			if ti.move(textInfos.UNIT_OFFSET, 1) == 0:
 				# There's no more text in this object.
 				continue
-			ti.setEndPoint(_makeRawTextInfo(obj, textInfos.POSITION_ALL), "endToEnd")
+			ti.setEndPoint(self._makeRawTextInfo(obj, textInfos.POSITION_ALL), "endToEnd")
 			fields.extend(self._iterRecursiveText(ti, controlStack, formatConfig))
 		del fields[-1]
 
@@ -266,12 +265,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				field = controlStack.pop()
 				if field:
 					fields.append(textInfos.FieldCommand("controlEnd", None))
-					if ti.compareEndPoints(_makeRawTextInfo(obj, textInfos.POSITION_ALL), "endToEnd") == 0:
+					if ti.compareEndPoints(self._makeRawTextInfo(obj, textInfos.POSITION_ALL), "endToEnd") == 0:
 						field["_endOfNode"] = True
 					else:
 						# We're not at the end of this object, which also means we're not at the end of any ancestors.
 						break
-				ti = _getEmbedding(obj)
+				ti = self._getEmbedding(obj)
 				obj = ti.obj
 
 		return fields
@@ -290,14 +289,14 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		# Walk up the hierarchy until we find the start and end points.
 		while True:
 			if unit == textInfos.POSITION_SELECTION:
-				expandTi = _makeRawTextInfo(obj, unit)
+				expandTi = self._makeRawTextInfo(obj, unit)
 			else:
 				expandTi = baseTi.copy()
 				expandTi.expand(unit)
 				if expandTi.isCollapsed:
 					# This shouldn't happen, but can due to server implementation bugs; e.g. MozillaBug:1149415.
 					expandTi.expand(textInfos.UNIT_OFFSET)
-			allTi = _makeRawTextInfo(obj, textInfos.POSITION_ALL)
+			allTi = self._makeRawTextInfo(obj, textInfos.POSITION_ALL)
 
 			if not start and findStart and expandTi.compareEndPoints(allTi, "startToStart") != 0:
 				# The unit definitely starts within this object.
@@ -335,7 +334,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				# We're at the root. Don't go any further.
 				embedTi = None
 			else:
-				embedTi = _getEmbedding(obj)
+				embedTi = self._getEmbedding(obj)
 				if isinstance(embedTi, FakeEmbeddingTextInfo):
 					# hack: Selection in Mozilla table/table rows is broken (MozillaBug:1169238), so just ignore it.
 					embedTi = None
@@ -379,7 +378,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 					pass
 				else:
 					if unit == textInfos.POSITION_SELECTION:
-						start = _makeRawTextInfo(startObj, unit)
+						start = self._makeRawTextInfo(startObj, unit)
 					else:
 						start.expand(unit)
 			if not findEnd:
@@ -394,7 +393,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 					pass
 				else:
 					if unit == textInfos.POSITION_SELECTION:
-						end = _makeRawTextInfo(endObj, unit)
+						end = self._makeRawTextInfo(endObj, unit)
 					else:
 						end.expand(unit)
 			if not findStart:
@@ -435,7 +434,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			if obj == self.obj:
 				# We're at the root. Don't go any further.
 				raise LookupError
-			ti = _getEmbedding(obj)
+			ti = self._getEmbedding(obj)
 			if not ti:
 				raise LookupError
 			obj = ti.obj
@@ -461,7 +460,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			moveTi = self._end
 			moveObj = self._endObj
 			moveTi.collapse(end=True)
-			if moveTi.compareEndPoints(_makeRawTextInfo(moveObj, textInfos.POSITION_ALL), "endToEnd") == 0:
+			if moveTi.compareEndPoints(self._makeRawTextInfo(moveObj, textInfos.POSITION_ALL), "endToEnd") == 0:
 				# We're at the end of the object, so move to the start of the next.
 				try:
 					moveTi, moveObj = self._findNextContent(moveObj)
@@ -486,7 +485,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			if not moveBack:
 				# Collapse to the start of the next unit.
 				moveTi.collapse(end=True)
-				if moveTi.compareEndPoints(_makeRawTextInfo(moveObj, textInfos.POSITION_ALL), "endToEnd") == 0:
+				if moveTi.compareEndPoints(self._makeRawTextInfo(moveObj, textInfos.POSITION_ALL), "endToEnd") == 0:
 					# We're at the end of the object.
 					if remainingMovement == 1 and endPoint == "end":
 						# We've moved the required number of units.
@@ -531,7 +530,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			if obj == self.obj:
 				# We're at the root. Don't go any further.
 				break
-			ti = _getEmbedding(obj)
+			ti = self._getEmbedding(obj)
 			if not ti:
 				break
 			obj = ti.obj
