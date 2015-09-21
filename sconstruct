@@ -179,6 +179,7 @@ for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
 	env.Depends(htmlFile,t2tBuildConf)
 #And also build the developer guide -- which must be moved at some point
 htmlFile=env.txt2tags('developerGuide.t2t')
+env.Depends(htmlFile,t2tBuildConf)
 env.SideEffect('_txt2tags',htmlFile)
 devGuide=env.Command(devDocsOutputDir.File('developerGuide.html'),htmlFile,Move('$TARGET','$SOURCE'))
 env.Alias("developerGuide",devGuide)
