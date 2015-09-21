@@ -199,6 +199,7 @@ UNIT_CELL="cell"
 UNIT_SCREEN="screen"
 UNIT_STORY="story"
 UNIT_READINGCHUNK="readingChunk"
+UNIT_OFFSET="offset"
 
 unitLabels={
 	UNIT_CHARACTER:_("character"),
@@ -429,17 +430,6 @@ class TextInfo(baseObject.AutoPropertyObject):
 		# Import late to avoid circular import.
 		import braille
 		return braille.getControlFieldBraille(self, field, ancestors, reportStart, formatConfig)
-
-	def getEmbeddedObject(self, offset=0):
-		"""Retrieve the embedded object associated with a particular embedded object character.
-		Where a text implementation allows other objects to be embedded in the text, embedded objects are represented by an embedded object character (\uFFFC).
-		When these characters are encountered, this method can be used to retrieve the associated embedded object.
-		@param offset: The offset of the embedded object character in question relative to the start of this instance.
-		@type offset: int
-		@return: The embedded object.
-		@rtype: L{NVDAObjects.NVDAObject}
-		"""
-		raise NotImplementedError
 
 	def activate(self):
 		"""Activate this position.
