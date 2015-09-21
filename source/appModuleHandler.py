@@ -138,6 +138,8 @@ def cleanup():
 		if deadMod in set(o.appModule for o in api.getFocusAncestors()+[api.getFocusObject()] if o and o.appModule):
 			if hasattr(deadMod,'event_appLoseFocus'):
 				deadMod.event_appLoseFocus()
+		import eventHandler
+		eventHandler.handleAppTerminate(deadMod)
 		try:
 			deadMod.terminate()
 		except:

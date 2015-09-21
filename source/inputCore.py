@@ -434,6 +434,12 @@ class InputManager(baseObject.AutoPropertyObject):
 
 		gesture.reportExtra()
 
+		# #2953: if an intercepted command Script (script that sends a gesture) is queued
+		# then queue all following gestures (that don't have a script) with a fake script so that they remain in order.
+		if not script and scriptHandler._numIncompleteInterceptedCommandScripts:
+			script=lambda gesture: gesture.send()
+
+
 		if script:
 			scriptHandler.queueScript(script, gesture)
 			return

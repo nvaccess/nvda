@@ -3,20 +3,78 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2015.2 =
+= 2015.3 =
+Najważniejsze zmiany w tej wersji to wstępne wsparcie dla Windows 10; możliwość wyłączenia nawigacji pojedynczymi literami w trybie czytania (użyteczne dla niektórych aplikacji webowych); poprawki obsługi Internet Explorer; poprawki nieczytelnego tekstu wpisywanego w niektórych aplikacjach z włączonym brajlem.
 
 == Nowości ==
-- W Microsoft Word możliwe jest przechodzenie w przód i wstecz po zdaniach przy użyciu odpowiednio alt+strzałka w dół i alt+strzałka w górę. (#3288)
+- Błędy pisowni są oznajmiane w polach edycji Internet Explorer i innych kontrolkach MSHTML. (#4174)
+- Dużo więcej symboli matematycznych unikodu jest odczytywane w tekstach. (#3805)
+- Sugestie wyszukiwania na ekranie startowym Windows 10 są automatycznie zgłaszane (#5049)
+- Obsługa monitorów brajlowskich EcoBraille 20, EcoBraille 40, EcoBraille 80 i EcoBraille Plus. (#4078)
+- W trybie czytania, można teraz włączać i wyłączać nawigację pojedynczymi literami, naciskając NVDA+shift+space. Gdy wyłączona, klawisze pojedynczych liter są przekazywane do aplikacji, co jest użyteczne dla niektórych aplikacji webowych takich jak Gmail, Twitter i Facebook. (#3203)
+- Nowe tablice brajlowskie: fiński sześciopunktowy, irlandzki stopień 1, irlandzki stopień 2, koreański stopień 1 (2006), koreański stopień 2 (2006). (#5137, #5074, #5097)
+- Obsługiwana klawiatura QWERTY w monitorach Papenmeier BRAILLEX Live Plus. (#5181)
+- Eksperymentalna obsługa Microsoft Edge - przeglądarki www i silnika przeglądania w Windows 10. (#5212)
+
+
+== Zmiany ==
+- Zaktualizowany translator brajlowski liblouis do  wersji 2.6.3. (#5137)
+- Przy próbie instalacji wcześniejszej niż zainstalowana obecnie wersji NVDA, pojawi się ostrzeżenie, że jest to niezalecane i że NVDA powinno zostać całkowicie odinstalowane przed kontynuowaniem. (#5037)
+
+
+== Poprawki błędów ==
+- W trybie czytania w Internet Explorer i innych kontrolkach MSHTML, szybka nawigacja po polach formularza nie uwzględnia elementów listy prezentacji. (#4204)
+- W Firefox, NVDA nie próbuje od teraz tworzyć opisu paneli zakładek ARIA opartego na całym tekście wewnątrz, gdy punkt uwagi jest przesuwany w zakładce. (#4638)
+- W Internet Explorer i innych kontrolkach MSHTML, przejście do sekcji, artykułów lub okien dialogowych nie zgłasza od teraz całej zawartości kontenera jako nazwy. (#5021, #5025)
+- Podczas używania monitorów brajlowskich Baum/HumanWare/APH z klawiaturą brajlowską, wprowadzanie brajla nie przestaje działać po naciśnięciu innego typu klawisza na monitorze. (#3541)
+- W Windows 10, nadmiarowe informacje nie są zgłaszane po naciśnięciu alt+tab lub alt+shift+tab, aby przełączyć pomiędzy aplikacjami. (#5116)
+- Wpisywany tekst nie jest od teraz nieczytelny podczas używania niektórych aplikacji takich jak Microsoft Outlook z monitorem brajlowskim. (#2953)
+- W trybie czytania Internet Explorer i innych kontrolkach MSHTML, prawidłowa treść jest teraz odczytywana, gdy pojawia się lub zmienia element i przywołuje natychmiastowo punkt uwagi. (#5040)
+- W trybie czytania w Microsoft Word, nawigacja literami aktualizuje monitor brajlowski i kursor przeglądu zgodnie z oczekiwaniami. (#4968)
+- Nadmiarowe spacje nie są wyświetlane w brajlu pomiędzy lub za identyfikatorem kontrolek i formatowania. (#5043)
+- Gdy aplikacja wolno odpowiada i przełączysz się z tej aplikacji, NVDA jest bardziej responsywne w innych aplikacjach w większości sytuacji. (#3831)
+- Wyskakujące powiadomienia Windows 10 są teraz zgłaszane zgodnie z oczekiwaniami. (#5136)
+- Wartość pól kombi (UI Automation) jest zgłaszana po zmianie w polach, gdzie to wcześniej nie działało.
+- W trybie czytania w przeglądarkach www, użycie tabulatora zachowuje się zgodnie z oczekiwaniami po przejściu do dokumentu w ramce. (#5227)
+- Można wyjść z ekranu blokady Windows 10 przy użyciu ekranu dotykowego. (#5220)
+- W Windows 7 i nowszych, tekst nie jest już nieczytelny podczas wpisywania w niektórych aplikacjach takich jak Wordpad czy Skype, przy użyciu monitora brajlowskiego. (#4291)
+- Na ekranie startowym Windows 10, nie można od teraz czytać schowka, uzyskiwać dostępu do uruchomionych aplikacji przy użyciu kursora przeglądu, zmieniać konfiguracji NVDA, etc. (#5269)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+
+
+= 2015.2 =
+Najważniejsze zmiany w tej wersji to możliwość odczytywania wykresów w Microsoft Excel oraz wsparcie dla nawigacji i odczytu treści matematycznej.
+
+== Nowości ==
+- W Microsoft Word i Outlook możliwe jest przechodzenie w przód i wstecz po zdaniach przy użyciu odpowiednio alt+strzałka w dół i alt+strzałka w górę. (#3288)
+- Nowe tablice brajlowskie dla kilku języków indyjskich. (#4778)
+- W Microsoft Excel, NVDA zgłasza, gdy komórka jest przepełniona lub zawiera przyciętą treść. (#3040)
+- Microsoft Excel: Lista elementów (NVDA+f7), pozwalająca wyświetlić wykresy, komentarze i formuły. (#1987)
+- Obsługa odczytu wykresów w Microsoft Excel: wybierz wykres używając listy elementów (NVDA+f7), a następnie przy użyciu klawiszy strzałek można przejść do wszystkich punktów danych. (#1987)
+- Używając MathPlayer 4 od Design Science, NVDA może odczytywać i interaktywnie nawigować w treści matematycznej w przeglądarkach internetowych oraz  Microsoft Word i PowerPoint. Więcej szczegółów zawiera rozdział "Czytanie treści matematycznej" w podręczniku użytkownika. (#4673)
+- Możliwe jest obecnie przypisywanie zdarzeń wejścia (skrótów klawiszowych, gestów dotykowych, etc.) dla wszystkich okien ustawień NVDA i opcji formatowania dokumentów, używając polecenia "Zdarzenia wejścia". (#4898)
 
 
 == Zmiany ==
 - W oknie formatowania dokumentów NVDA, zmienione zostały skróty klawiszowe do zgłaszania list, linków, numerów linii i nazw czcionek (nie dotyczy polskiej wersji językowej). (#4650)
 - W oknie ustawień myszy NVDA, dodano skróty klawiszowe sygnalizowania dźwiękiem położenia myszy oraz "głośność dźwięku myszy zależy od jasności obrazu" (w polskiej wersji językowej, skróty te istniały już wcześniej). (#4916)
+- Znacząco poprawione oznajmianie nazw kolorów. (#4984)
+- Zaktualizowany translator brajlowski liblouis do  wersji 2.6.2. (#4777)
 
 
 == Poprawki błędów ==
 - Opisy znaków są teraz poprawnie obsługiwane dla złożonych znaków w kilku indyjskich językach. (#4582)
-- Nowe tablice brajlowskie dla kilku języków indyjskich. (#4778)
+- Jeśli opcja "Ufaj językowi głosu przetwarzając znaki i symbole" jest włączona, okno interpunkcji/wymowy prawidłowo używa języka głosu. Ponadto język, którego wymowa jest edytowana,jest wyświetlany w tytule okna. (#4930)
+- W Internet Explorer i innych kontrolkach MSHTML, wpisywane znaki nie są od teraz nieprawidłowo oznajmiane w rozwijanych polach edycyjnych takich jak pole wyszukiwania na stronie domowej Google. (#4976)
+- Podczas wybierania koloru w aplikacjach Microsoft Office, odczytywane są nazwy kolorów. (#3045)
+- Brajl dla języka duńskiego teraz działa ponownie. (#4986)
+- pageUp / pageDown mogą być znów używane do przełączania slajdów w pokazie slajdów PowerPoint . (#4850)
+- W Skype dla pulpitu 7.2 i nowszych, powiadomienia o wpisywaniu są odczytywane i zostały rozwiązane problemy występujące po wyjściu punktu uwagi z konwersacji. (#4972)
+- Poprawione problemy z wpisywaniem niektórych znaków interpunkcji i symboli, takich jak nawiasy, do pola filtru w oknie dialogowym zdarzeń wejścia. (#5060)
+- W Internet Explorer i innych kontrolkach MSHTML, naciśnięcie g lub shift+g by nawigować po grafikach, uwzględnia teraz elementy oznaczone jako obrazki dla potrzeb dostępności (tj. rola ARIA img). (#5062)
 
 
 == Zmiany dla programistów ==

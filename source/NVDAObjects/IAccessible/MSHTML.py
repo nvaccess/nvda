@@ -14,6 +14,7 @@ import ctypes.wintypes
 import contextlib
 import winUser
 import oleacc
+import UIAHandler
 import IAccessibleHandler
 import aria
 from keyboardHandler import KeyboardInputGesture
@@ -25,8 +26,45 @@ from . import IAccessible
 from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
 from .. import InvalidNVDAObject
 from ..window import Window
+from NVDAObjects.UIA import UIA, UIATextInfo
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
+
+class UIAMSHTMLTextInfo(UIATextInfo):
+
+	# #4174: MSHTML's UIAutomation implementation does not handle the insertion point at the end of the control correcly.
+	# Therefore get around it by detecting when the TextInfo is instanciated on it, and ensure that expand and move do the expected thing.
+	
+	_atEndOfStory=False
+
+	def __init__(self,obj,position,_rangeObj=None):
+		super(UIAMSHTMLTextInfo,self).__init__(obj,position,_rangeObj)
+		if position==textInfos.POSITION_CARET:
+			tempRange=self._rangeObj.clone()
+			tempRange.ExpandToEnclosingUnit(UIAHandler.TextUnit_Character)
+			if self._rangeObj.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)>0:
+				self._atEndOfStory=True
+
+	def copy(self):
+		info=super(UIAMSHTMLTextInfo,self).copy()
+		info._atEndOfStory=self._atEndOfStory
+		return info
+
+	def expand(self,unit):
+		if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and self._atEndOfStory:
+			return
+		self._atEndOfStory=False
+		return super(UIAMSHTMLTextInfo,self).expand(unit)
+
+	def move(self,unit,direction,endPoint=None):
+		if direction==0:
+			return 0
+		if self._atEndOfStory and direction<0:
+			direction+=1
+		self._atEndOfStory=False
+		if direction==0:
+			return -1
+		return super(UIAMSHTMLTextInfo,self).move(unit,direction,endPoint=endPoint)
 
 class HTMLAttribCache(object):
 
@@ -56,6 +94,7 @@ nodeNamesToNVDARoles={
 	"A":controlTypes.ROLE_LINK,
 	"LABEL":controlTypes.ROLE_LABEL,
 	"#text":controlTypes.ROLE_STATICTEXT,
+	"#TEXT":controlTypes.ROLE_STATICTEXT,
 	"H1":controlTypes.ROLE_HEADING,
 	"H2":controlTypes.ROLE_HEADING,
 	"H3":controlTypes.ROLE_HEADING,
@@ -82,6 +121,9 @@ nodeNamesToNVDARoles={
 	"OPTION":controlTypes.ROLE_LISTITEM,
 	"BLOCKQUOTE":controlTypes.ROLE_BLOCKQUOTE,
 	"MATH":controlTypes.ROLE_MATH,
+	"NAV":controlTypes.ROLE_SECTION,
+	"SECTION":controlTypes.ROLE_SECTION,
+	"ARTICLE":controlTypes.ROLE_DOCUMENT,
 }
 
 def getZoomFactorsFromHTMLDocument(HTMLDocument):
@@ -335,6 +377,21 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 
 class MSHTML(IAccessible):
 
+	def _get__UIAControl(self):
+		if UIAHandler.handler and self.role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_FOCUSED in self.states:
+			e=UIAHandler.handler.clientObject.getFocusedElementBuildCache(UIAHandler.handler.baseCacheRequest)
+			obj=UIA(UIAElement=e)
+			if isinstance(obj,EditableTextWithoutAutoSelectDetection):
+				obj.parent=self.parent
+				obj.TextInfo=UIAMSHTMLTextInfo
+				self._UIAControl=obj
+				return obj
+
+	def makeTextInfo(self,position):
+		if self._UIAControl:
+			return self._UIAControl.makeTextInfo(position)
+		return super(MSHTML,self).makeTextInfo(position)
+
 	HTMLNodeNameNavSkipList=['#comment','SCRIPT','HEAD','HTML','PARAM','STYLE']
 	HTMLNodeNameEmbedList=['OBJECT','EMBED','APPLET','FRAME','IFRAME']
 
@@ -350,7 +407,7 @@ class MSHTML(IAccessible):
 
 	def event_caret(self):
 		if self._ignoreCaretEvents: return
-		if self.TextInfo is not MSHTMLTextInfo:
+		if self.TextInfo is not MSHTMLTextInfo and not self._UIAControl:
 			return
 		try:
 			newCaretBookmark=self.makeTextInfo(textInfos.POSITION_CARET).bookmark
@@ -413,7 +470,7 @@ class MSHTML(IAccessible):
 		return True
 
 	def findOverlayClasses(self,clsList):
-		if self.TextInfo == MSHTMLTextInfo:
+		if self.TextInfo == MSHTMLTextInfo or self._UIAControl:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
 		nodeName = self.HTMLNodeName
 		if nodeName:
@@ -583,7 +640,7 @@ class MSHTML(IAccessible):
 		if (
 			self.HTMLNodeHasAncestorIAccessible or
 			#IE inappropriately generates the name from descendants on some controls
-			self.IAccessibleRole in (oleacc.ROLE_SYSTEM_MENUBAR,oleacc.ROLE_SYSTEM_TOOLBAR,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TABLE,oleacc.ROLE_SYSTEM_DOCUMENT) or
+			self.IAccessibleRole in (oleacc.ROLE_SYSTEM_MENUBAR,oleacc.ROLE_SYSTEM_TOOLBAR,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TABLE,oleacc.ROLE_SYSTEM_DOCUMENT,oleacc.ROLE_SYSTEM_DIALOG) or
 			#Adding an ARIA landmark or unknown role to a DIV or NAV node makes an IAccessible with role_system_grouping and a name calculated from descendants.
 			# This name should also be ignored, but check NVDA's role, not accRole as its possible that NVDA chose a better role
 			# E.g. row (#2780)
@@ -650,8 +707,8 @@ class MSHTML(IAccessible):
 			if nodeName:
 				if nodeName in ("OBJECT","EMBED","APPLET"):
 					return controlTypes.ROLE_EMBEDDEDOBJECT
-				if self.HTMLNodeHasAncestorIAccessible or nodeName in ("BODY","FRAMESET","FRAME","IFRAME","LABEL"):
-					return nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_TEXTFRAME)
+				if self.HTMLNodeHasAncestorIAccessible or nodeName in ("BODY","FRAMESET","FRAME","IFRAME","LABEL","NAV","SECTION","ARTICLE"):
+					return nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_SECTION)
 		if self.IAccessibleChildID>0:
 			states=super(MSHTML,self).states
 			if controlTypes.STATE_LINKED in states:
@@ -876,7 +933,10 @@ class MSHTML(IAccessible):
 
 	def _get_HTMLNodeUniqueNumber(self):
 		if not hasattr(self,'_HTMLNodeUniqueNumber'):
-			self._HTMLNodeUniqueNumber=self.HTMLNode.uniqueNumber
+			try:
+				self._HTMLNodeUniqueNumber=self.HTMLNode.uniqueNumber
+			except COMError:
+				return None
 		return self._HTMLNodeUniqueNumber
 
 	def _get_HTMLNodeName(self):

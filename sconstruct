@@ -179,6 +179,7 @@ for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
 	env.Depends(htmlFile,t2tBuildConf)
 #And also build the developer guide -- which must be moved at some point
 htmlFile=env.txt2tags('developerGuide.t2t')
+env.Depends(htmlFile,t2tBuildConf)
 env.SideEffect('_txt2tags',htmlFile)
 devGuide=env.Command(devDocsOutputDir.File('developerGuide.html'),htmlFile,Move('$TARGET','$SOURCE'))
 env.Alias("developerGuide",devGuide)
@@ -219,7 +220,7 @@ def NVDADistGenerator(target, source, env, for_signature):
 	if env.get("uiAccess"):
 		buildCmd.append("--enable-uiAccess")
 	if certFile:
-		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "nvda_service.exe":
+		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "nvda_service.exe", "nvda_eoaProxy.exe":
 			action.append(lambda target,source,env, progByVal=prog: signExec([target[0].File(progByVal)],source,env))
 
 	for ext in "", "c", "o":

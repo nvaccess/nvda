@@ -56,7 +56,7 @@ Questo si applica a copie originali e modificate del software ed a qualsiasi pro
 Per maggiori informazioni è possibile [Leggere l'intera licenza. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Requisiti di sistema +
-- Sistemi operativi: tutte le versioni a 32 e 64 bit dei Sistemi Windows XP, Windows Vista e Windows 7 (Incluse le edizioni Server).
+- Sistemi operativi: tutte le versioni a 32 e 64 bit dei Sistemi Windows XP, Windows Vista,  Windows 7, Windows8 e Windows10 (Incluse le edizioni Server).
  - Per Windows XP 32-bit, NVDA richiede Service Pack 2 o superiore.
  - Per Windows Server 2003, NVDA richiede Service Pack 1 o superiore.
 - Memoria: 256 mb di Ram o superiore
@@ -269,7 +269,7 @@ Esistono alcuni comandi da tastiera utili per seguire il focus:
 | Legge il focus | NVDA+tab | NVDA+tab | Annuncia l'oggetto o il controllo attualmente focalizzato. Premendo la combinazione due volte ne verrà fatto lo spelling  |
 | Legge il Titolo | NVDA+t | NVDA+t | Legge il titolo della finestra attiva in quel momento. Premendo la combinazione due volte ne verrà fatto lo spelling. Premendo per tre volte il contenuto verrà copiato negli appunti. |
 | Legge la Finestra Attiva | NVDA+b | NVDA+b | Legge il contenuto della finestra in primo piano (utile nelle finestre di dialogo). |
-| Legge la barra di stato | NVDA+fine | NVDA+shift+fine | Legge la barra di stato sempre che NVDA sia in grado di individuarne una. Inoltre sposta in quella posizione il navigatore ad oggetti |
+| Legge la barra di stato | NVDA+fine | NVDA+shift+fine | Legge la barra di stato sempre che NVDA sia in grado di individuarne una. Inoltre sposta in quella posizione il navigatore ad oggetti. Una doppia pressione provocherà lo spelling delle informazioni |
 %kc:endInclude
 
 ++ Esplorare con il cursore di sistema ++[SystemCaret]
@@ -285,6 +285,8 @@ NVDA fornisce i seguenti comandi quando si lavora con il cursore di sistema:
 | Dire Tutto | NVDA+Freccia Giù | NVDA+a | Inizia a leggere dalla posizione del cursore di sistema sino alla fine del documento, spostando il cursore man mano che la lettura continua |
 | Legge Riga Corrente | NVDA+freccia su | NVDA+l | Legge la riga sulla quale si trova il cursore di sistema. Premendo la combinazione due volte viene effettuato lo spelling della riga. |
 | Legge Selezione corrente | NVDA+Shift+freccia su | NVDA+shift+s | Legge il testo selezionato ammesso che ve ne sia uno. |
+| frase successiva | alt+freccia Giù | alt+freccia Giù | Sposta il cursore sulla frase successiva e la legge. (Supportato solo in Microsoft Word e Outlook) |
+| frase precedente | alt+freccia Su | alt+freccia Su | Sposta il cursore sulla frase precedente e la legge. (Supportato solo in Microsoft Word e Outlook) |
 
 
 Se ci si trova all'interno di una tabella, sono disponibili i seguenti comandi:
@@ -440,7 +442,7 @@ Sebbene un mouse o un trackpad risultino la maniera migliore per esplorare lo sc
 
 + Modalità navigazione +
 NVDA si serve della modalità navigazione per presentare all'utente documenti complessi di sola lettura, come ad esempio le pagine web.
-Essa viene utilizzata nei doccumenti di Mozilla Firefox, Microsoft Internet Explorer, messaggi html in Microsoft Outlook, Google Chrome, Adobe Reader e Adobe Flash.
+Essa viene utilizzata nei doccumenti di Mozilla Firefox, Microsoft Internet Explorer, messaggi html in Microsoft Outlook, Mozilla Thunderbird, Google Chrome, Adobe Reader e Adobe Flash.
 Inoltre, la modalità navigazione risulta disponibile anche per la gestione dei documenti in Microsoft Word.
 
 Nella modalità navigazione, il contenuto del documento è reso disponibile tramite una rappresentazione lineare, che può essere esplorata con i comuni tasti dedicati al cursore, come se si trattasse di un normale documento.
@@ -495,21 +497,29 @@ I seguenti tasti premuti da soli portano al campo successivo, tenendo premuto Sh
 - d: Sezione
 - o: oggetto incorporato
 - numeri da 1 a 6: intestazioni da 1 a 6
+- a: annotazioni (commenti, revisioni degli autori, etc.)
 -
 Per spostarsi all'inizio e alla fine degli elementi contenuti in elenchi e tabelle,:
 || Nome | Tasto | Descrizione |
 | Spostarsi all'inizio del contenitore | punto e virgola | Si sposta al primo elemento presente negli elenchi o nelle tabelle, e vi posiziona il cursore |
 | Spostarsi alla fine del contenitore | virgola | Si sposta all'ultimo elemento presente negli elenchi o nelle tabelle, e vi posiziona il cursore |
+
+%kc:endInclude
+Alcune applicazioni web come Gmail, Twitter e Facebook utilizzano lettere singole come tasti di scelta rapida.
+Se si desidera utilizzare questi tasti e allo stesso tempo essere in grado di muoversi con le frecce in modalità navigazione, è possibile disabilitare temporaneamente la modalità di navigazione a lettere singole di NVDA.
+%kc:beginInclude
+Per attivare o disattivare la navigazione a lettere singole per il documento corrente, premere NVDA + shift + spazio.
 %kc:endInclude
 
 ++ Lista degli elementi ++
-La lista degli elementi consente l'accesso all'elenco dei links, delle intestazioni o delle sezioni presenti nella pagina web. 
-I pulsanti radio permettono di ciclare tra questi tre tipi di informazioni.
+La lista degli elementi consente l'accesso ad un elenco di vari tipi di elementi presenti sul documento, a seconda dell'applicazione in uso.
+Per esempio, in una pagina web potremmo trovare un elenco dei link, delle intestazioni o delle sezioni presenti nel documento.
+I pulsanti radio permettono di ciclare tra questi tipi di informazioni.
 è presente anche un campo editazione, utile a filtrare tale lista per permettere una ricerca più rapida.
 Una volta selezionato l'elemento, si possono utilizzare i bottoni che si trovano nella finestra di dialogo, per spostarvisi o attivarlo.
 %kc:beginInclude
 || Nome | Tasto | Descrizione |
-| Elenco elementi modalità navigazione | NVDA+f7 | Apre la finestra dell'elenco elementi contenente links, intestazioni e sezioni della modalità navigazione |
+| Elenco elementi modalità navigazione | NVDA+f7 | Elenca vari tipi di elementi presenti nel documento corrente |
 %kc:endInclude
 
 ++ Oggetti incorporati ++
@@ -522,6 +532,42 @@ Se risulterà accessibile, premere il tasto tab o comunque muoversi all'interno 
 || Nome | Tasto | Descrizione |
 | Ritornare alla modalità navigazione | NVDA+control+spazio | Sposta il focus dall'oggetto incorporato alla modalità navigazione |
 %kc:endInclude
+
++ Lettura della matematica +
+NVDA è in grado di leggere ed interagire con la matematica nei contenuti che fanno uso del software MathPlayer4, prodotto da Design Science.
+Ciò richiede che MathPlayer4 sia installato sul computer.
+MathPlayer può essere scaricato gratuitamente dal seguente sito web: http://www.dessci.com/en/products/mathplayer/
+
+NVDA supporta la matematica nei seguenti formati:
+- MathML in Mozilla Firefox e Microsoft Internet Explorer.
+- Il tipo Design Science  in Microsoft Word e PowerPoint.
+- MathML in Adobe Reader. (Si noti che questo non è ancora uno standard ufficiale, per cui attualmente non esiste per il pubblico un software disponibile che possa produrre questo contenuto).
+-
+
+Durante la lettura di un documento, NVDA sarà in grado di leggere qualsiasi contenuto di tipo matematico supportato.
+Se si utilizza un display braille, verrà visualizzato regolarmente anche in Braille.
+
+++ Esplorazione interattiva ++
+Nel caso in cui si stia lavorando con la sintesi vocale, potrebbe essere molto più comodo ascoltare un'espressione riducendola in piccoli segmenti, piuttosto che doversi ascoltare tutto il contenuto in una sola volta.
+
+Se ci si trova in modalità navigazione, sarà sufficiente spostare il cursore di controllo dove inizia la parte matematica e premere semplicemente invio.
+
+Se non ci si trova in modalità navigazione:
++ Spostare il cursore di controllo in un contenuto di tipo matematico.
++ Da impostazioni predefinite, il cursore di controllo segue il cursore di sistema, sicché sarà sufficiente muoversi col cursore standard alla posizione desiderata.
++Poi, utilizzare il comando seguente:
++
+
+%kc:beginInclude
+|| Nome | Tasto | Descrizione |
+| Interagire con matematica | NVDA+alt+m | Inizia l'interazione con contenuto di tipo matematico. |
+%kc:endInclude
+
+A questo punto, è possibile utilizzare i comandi MathPlayer come i tasti freccia per esplorare l'espressione.
+Ad esempio, ci si potrà spostare attraverso l'espressione con i tasti freccia sinistra e destra, per poi evidenziare una parte dell'espressione, come una frazione utilizzando il tasto freccia verso il basso.
+Si prega di consultare la documentazione di MathPlayer per ulteriori informazioni.
+
+Quando si desidera tornare al documento, è sufficiente premere il tasto Esc.
 
 + Comandi specifici di NVDA per le applicazioni +
 NVDA fornisce alcuni comandi per certe applicazioni in modo da facilitare gli utenti nello svolgimento di operazioni che, altrimenti, risulterebbero molto complesse e poco accessibili.
@@ -540,6 +586,7 @@ NVDA fornisce alcuni comandi per certe applicazioni in modo da facilitare gli ut
 | Imposta intestazioni colonna | NVDA+shift+c | Imposta il riconoscimento dell'intestazione colonna per la prima cella, consentendo la lettura automatica delle intestazioni successive. La doppia pressione cancellerà tale impostazione. |
 | Imposta intestazioni riga | NVDA+shift+r | Imposta il riconoscimento dell'intestazione riga per la prima cella, consentendo la lettura automatica delle intestazioni successive. La doppia pressione cancellerà tale impostazione. |
 | Legge commento | NVDA+alt+c | Legge il commento sulla cella corrente se esiste. |
+| Lista elementi | NVDA+f7 | Apre la finestra di dialogo Lista Elementi, che visualizza grafici, celle con commenti, o celle con formule. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -584,6 +631,9 @@ La maggior parte delle impostazioni possono essere modificate accedendo alle rel
 In tutte le finestre di dialogo di NVDA, premere il tasto OK per accettare i cambiamenti effettuati.
 Per annullare invece premere il bottone Annulla o il tasto Esc.
 Alcune impostazioni possono anche essere cambiate utilizzando dei tasti rapidi, che verranno elencati nella sezione successiva.
+
+Si noti che da impostazioni predefinite, non è possibile accedere a tutte le finestre delle preferenze utilizzando Gesti e tasti di immissione (ad esempio tasti rapidi, gesti col touchScreen, etc).
+Se si desidera accedere alle finestre di dialogo che non dispongono di tasti di scelta rapida dedicati, servirsi della finestra [tasti e gesti di immissione #InputGestures] per aggiungere gesti personalizzati a quella finestra. 
 
 +++ Impostazioni generali (NVDA+control+g) +++
 La finestra di dialogo inerente le impostazioni generali si trova nel menu preferenze. 
@@ -790,9 +840,21 @@ Questa impostazione permette di decidere se il display braille seguirà il focus
 ====Lettura per paragrafi====
 Se attivata, il braille verrà visualizzato per paragrafi invece che per righe.
 Inoltre, i comandi per spostarsi alla riga precedente/successiva andranno al paragrafo precedente/successivo.
-Questo significa che non sarà necessario utilizzare lo scrolling ogni volta quando ci si trova alla fine di una riga.
+Questo significa che non sarà necessario utilizzare lo scrolling ogni volta che ci si trova alla fine di una riga.
 La lettura dovrebbe risultare più fluente in presenza di grosse porzioni di testo.
 L'opzione risulta disabilitata da impostazioni predefinite.
+
+==== Evita di spezzare le parole se possibile ====
+Se abilitata, l'opzione farà in modo che parole troppo grandi non vengano spezzate su due righe del display braille.
+Invece, vi sarà un po' di spazio vuoto verso la fine della barra.
+Quando si sposterà il display alla riga successiva, sarà possibile leggere la parola per intero.
+Talvolta questa funzione è chiamata a capo automatico.
+Si noti che nel caso in cui la parola sia troppo grande per starci sul display, verrà per forza divisa.
+
+Se invece la funzione è disabilitata, verrà mostrato il più possibile della parola, mentre il rimanente finirà sulla riga successiva.
+Scorrendo il display, sarà possibile leggere il resto della parola.
+
+L'attivazione di questa funzione permetterà una lettura molto più fluida, ma richiederà di scorrere il display braille molto più spesso.
 
 +++ Impostazioni Tastiera (NVDA+control+k) +++
 Questa finestra di dialogo si trova nel menu preferenze, sotto la voce "impostazioni tastiera...". 
@@ -1057,9 +1119,12 @@ Ad esempio, se attiviamo la casella di controllo "Leggi il nome del font", NVDA 
 - Blocchi tra virgolette
 - Sezioni
 - Frame
+- Quando qualcosa è cliccabile
 -
    
-==== Leggi i cambiamenti di formattazione dopo il cursore ====
+Per modificare queste impostazioni da qualsiasi luogo ci si trovi, servirsi della finestra [tasti e gesti di immissione #InputGestures] ed assegnare un gesto o tasto rapido personalizzato per quella funzione.
+   
+      ==== Leggi i cambiamenti di formattazione dopo il cursore ====
 Se abilitata, questa impostazione istruisce NVDA a intercettare tutti i cambiamenti di formattazione in una riga e a leggerli, anche se questo porerà ad un rallentamento nelle prestazioni di NVDA.
 
 Da impostazioni predefinite, NVDA ricava le informazioni di formattazione dalla posizione del cursore di sistema / cursore di controllo, ed in alcune circostanze può riuscire ad intercettare i cambiamenti di formattazione nell'intera riga, a patto che questo non vada a  causare un rallentamento dello Screen Reader.
@@ -1074,6 +1139,8 @@ Essi sono:
 - voce: Le regole di questo tipo di dizionario hanno effetto esclusivamente sulla voce in uso.
 - Temporaneo: Le regole in questo dizionario hanno effetto in qualsiasi circostanza, ma soltanto per la sessione corrente di NVDA. Tali regole andranno perse non appena NVDA verrà chiuso o riavviato.
 -
+
+Per aprire questi dizionari da qualsiasi luogo ci si trovi, servirsi della finestra [tasti e gesti di immissione #InputGestures] ed assegnare un gesto o tasto rapido personalizzato per quella funzione.
 
 Tutte le finestre di dialogo contengono un elenco di regole che verrà utilizzato per processare il parlato. 
 L'interfaccia comprende anche i bottoni aggiungi, modifica e rimuovi.
@@ -1101,6 +1168,9 @@ Si consiglia di cercare in rete tutorials che ne spieghino l'uso.
 +++ Livello di punteggiatura/simboli +++
 Questa finestra di dialogo permette di modificare il modo ed il livello in cui i segni di punteggiatura e altri simboli vengono annunciati.
 
+Nel titolo della finestra verrà visualizzata anche la lingua per la quale si sta modificando la pronuncia dei simboli.
+Si noti che questa finestra di dialogo rispetta le impostazioni dell'opzione "Considera attendibile la lingua della voce  corrente nel processare caratteri e simboli", situata nelle [Impostazioni della Voce #VoiceSettings]; per esempio, verrà utilizzata la lingua della voce piuttosto che la lingua generale di NVDA, quando questa opzione è attiva.
+
 Per modificare un simbolo, dapprima selezionarlo nell'elenco simboli.
 Il campo "voce in sostituzione" permette di cambiare il testo che deve essere pronunciato in corrispondenza di quel simbolo.
 Utilizzando il campo "livello", è possibile stabilire il livello più basso dal quale il simbolo dovrà essere annunciato.
@@ -1113,7 +1183,7 @@ Sarà sempre possibile eliminare un simbolo aggiunto in precedenza tramite il pu
 
 Una volta terminate le modifiche, premere il pulsante OK per salvare i cambiamenti oppure il bottone Annulla per annullare l'operazione.
 
-+++ Tasti e gesti di immissione +++
++++ Tasti e gesti di immissione +++[InputGestures]
 In questa finestra di dialogo, è possibile personalizzare i gesti di immissione quali tasti della tastiera, pulsanti di un display braille, etc, per i comandi di NVDA.
 
 è importante notare che saranno mostrati e quindi applicabili soltanto i comandi appartenenti all'applicazione che si stava usando prima di aprire questa finestra di dialogo.
@@ -1244,10 +1314,12 @@ Queste azioni sono disponibili dal menu Log del visualizzatore.
 Per sviluppatori vedenti di programmi o persone che stanno dimostrando le funzionalità di NVDA ad un'utenza vedente, è disponibile una finestra che mostra tutto il testo che NVDA manda alla sintesi vocale.
 
 Per abilitare il visualizzatore sintesi vocale, attivare la voce apposita che si trova nel menu strumenti di NVDA.
-Disabilitare tale voce di menu per disattivare tale caratteristica.
+Disabilitare la voce di menu per disattivare tale caratteristica.
 
 Mentre il visualizzatore sintesi vocale è attivo, il contenuto della finestra si aggiornerà in tempo reale per mostrare di continuo le informazioni che NVDA invia al sintetizzatore.
 Comunque, se si clicca o si focalizza la finestra, NVDA fermerà temporaneamente l'aggiornamento di modo da permettere la selezione del testo e l'eventuale copia dello stesso.
+
+Per abilitare/disabilitare il visualizzatore sintesi vocale da qualsiasi punto ci si trovi, servirsi della finestra [tasti e gesti di immissione #InputGestures] ed assegnare un gesto o tasto rapido personalizzato per quella funzione.
 
 ++ Gestore componenti aggiuntivi ++
 Il gestore di componenti aggiuntivi, accessibile selezionando "gestisci componenti aggiuntivi" dal menu strumenti di NVDA, permette di installare e disinstallare questo tipo di pacchetti. 
@@ -1282,6 +1354,8 @@ Se sono stati installati o rimossi dei componenti, NVDA chiederà di potersi ria
 In passato è stato possibile aumentare le funzionalità di NVDA copiando driver e plugin individuali nella propria cartella contenente le configurazioni utente. 
 Sebbene questa versione di NVDA sia ancora in grado di caricarli, essi non saranno visualizzati nel gestore componenti aggiuntivi. 
 Si consiglia di rimuovere questi file dalla propria configurazione e installare il componente aggiuntivo corrispondente se disponibile. 
+
+Per accedere al gestore componenti aggiuntivi da qualsiasi punto ci si trovi, servirsi della finestra [tasti e gesti di immissione #InputGestures] ed assegnare un gesto o tasto rapido personalizzato per quella funzione.
 
 ++ Console Python ++
 La Console Python di NVDA, situata nel menu strumenti, è uno strumento per sviluppatori che risulta utile in fase di debug, di diagnosi delle funzioni interne di NVDA o di analisi della gerarchia degli oggetti accessibili presenti in un'applicazione.
@@ -1349,8 +1423,8 @@ Questa sezione contiene informazioni sulle barre braille supportate da NVDA.
 
 ++ Freedom Scientific Serie Focus/PAC Mate ++
 Sono supportati Tutti i Display Braille Focus e Pac Mate prodotti da [Freedom Scientific http://www.freedomscientific.com/], sia USB che Bluetooth.
-per un corretto funzionamento è necessario avere installati nel proprio sistema i drivers per display Braille Freedom Scientific.
-Nel caso non si sia in possesso di tali drivers, è possibile scaricarli dall'indirizzo http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+per un corretto funzionamento è necessario avere installati nel proprio sistema i driver per display Braille Freedom Scientific.
+Nel caso non si sia in possesso di tali driver, è possibile scaricarli dall'indirizzo http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Sebbene nella pagina sia nominata solo la barra Focus Blue, il driver funzionerà per tutti i modelli Freedom.
 Da notare che se nel proprio sistema si sta utilizzando una versione di Windows a 64 bit e i driver sono già stati installati da un altro screen reader, è probabile che sia necessario installare comunque il pacchetto, in quanto difficilmente quello screen reader avrà installato tutti i file utilizzati da NVDA.
 
@@ -1690,8 +1764,7 @@ Sono supportati i seguenti display braille:
 Se BrxCom è installato, NVDA lo utilizzerà.
 BrxCom è un utility che permette di gestire la scrittura tramite i tasti braille indipendentemente dallo screen reader in uso.
 Verrà realizzata presto da Papenmeier una nuova versione di BrXcom che funzioni con NVDA 
-In ogni caso, la scrittura tramite tastiera sarà sempre disponibile per i dispositivi Trio, BRAILLEX Live 20 e Braillex Live anche senza la presenza di BrxCom.
-La scrittura con tastiera è possibile anche con il modello Live Plus, ma soltanto con Brxcom.
+La scrittura tramite i tasti braille è disponibile per i modelli Trio e Braillex live.
 
 La maggior parte dei dispositivi è dotata di una barra di navigazione facilitata (EAB) che permette di svolgere le operazioni in una modalità molto più rapida ed intuitiva..
 Questa barra può essere spostata in quattro direzioni e ciascuna direzione ha due posizioni.
@@ -1728,6 +1801,7 @@ Seguono i comandi per i Display Papenmeier associati con NVDA:
 | Route to braille cell | routing |
 | Annuncia il carattere attuale sul cursore di controllo | l1 |
 | Attiva l'oggetto corrente | l2 |
+| Commuta inseguimento Braille | r2 |
 | Annuncia Titolo | l1+up |
 | Annuncia barra di stato | l2+down |
 | Spostarsi all'oggetto contenitore | up2 |
@@ -1826,6 +1900,8 @@ BRAILLEX Tiny:
 | Spostarsi all'oggetto precedente | r1+left |
 | Spostarsi all'oggetto successivo  | r1+right |
 | Annuncia formattazione testo | reportf |
+| Leggi titolo | l1+up |
+| Leggi barra di stato | l2+down |
 
 BRAILLEX 2D Screen:
 || Nome | Tasto |
@@ -1890,6 +1966,41 @@ Si prega di consultare la documentazione del BrailleNote per informazioni su dov
 | Tasto Alt | spazio+punto1+punto3+punto4 (spazio+m) |
 | Commuta aiuto immissione | spazio+punto2+punto3+punto6 (spazio+h abbassata) |
 %kc:endInclude
+
+++ EcoBraille ++
+NVDA supporta i Display Braille EcoBraille prodotti da [ONCE http://www.once.es/].
+Sono supportati i seguenti modelli:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+In NVDA, è possibile impostare la porta seriale a cui il display braille è collegato nella finestra di dialogo Impostazioni Braille.
+
+Di seguito sono riportati i tasti assegnati per il display EcoBraille.
+Si prega di consultare la [documentazione EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] per una descrizione sulla posizione dei tasti.
+
+%kc:beginInclude
+|| Nome | Tasto |
+| Scorrimento indietro | T2 |
+| Scorrimento avanti  | T4 |
+| Spostarsi alla riga precedente | T1 |
+| Spostarsi alla riga successiva | T5 |
+| Route to braille cell | Routing |
+| Attivare oggetto corrente | T3 |
+| Modalità revisione successiva | F1 |
+| Spostarsi all'oggetto contenitore | F2 |
+| Modalità revisione precedente | F3 |
+| Spostarsi all'oggetto precedente | F4 |
+| Annunciare oggetto corrente | F5 |
+| Spostarsi all'oggetto successivo | F6 |
+| Spostarsi all'oggetto che ha il focus | F7 |
+| Spostarsi al primo oggetto contenuto | F8 |
+| Spostare il cursore di sistema alla posizione corrente del cursore di controllo | F9 |
+| Leggi la posizione del cursore di controllo | F0 |
+| Commuta inseguimento braille | A |
++%kc:endInclude
 
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] è un programma a parte del quale è possibile avvalersi per avere supporto per molte altre barre braille. 

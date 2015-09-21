@@ -106,8 +106,11 @@ TABLES = (
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("ethio-g1.ctb", _("Ethiopic grade 1"), False),
-	# braille settings dialog.
 	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("fi.utb", _("Finnish 6 dot"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("fi-fi-8dot.ctb", _("Finnish 8 dot computer braille"), True),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
@@ -124,6 +127,12 @@ TABLES = (
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("Fr-Ca-g2.ctb", _("French (Canada) grade 2"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("ga-g1.utb", _("Irish grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("ga-g2.ctb", _("Irish grade 2"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("gu-in-g1.utb", _("Gujarati grade 1"), False),
@@ -157,6 +166,12 @@ TABLES = (
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("ka-in-g1.utb", _("Kannada grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("ko-2006-g1.ctb", _("Korean grade 1 (2006)"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("ko-2006-g2.ctb", _("Korean grade 2 (2006)"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("ko-g1.ctb", _("Korean grade 1"), False),
@@ -743,17 +758,14 @@ class TextInfoRegion(Region):
 			typeform |= louis.underline
 		return typeform
 
-	def _addFieldText(self, text):
-		# Separate this field text from the rest of the text.
+	def _addFieldText(self, text, contentPos):
 		if self.rawText:
-			text = " %s " % text
-		else:
-			text += " "
+			# Separate this field text from the rest of the text.
+			text = " " + text
 		self.rawText += text
 		textLen = len(text)
 		self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
-		# Map this field text to the start of the field's content.
-		self._rawToContentPos.extend((self._currentContentPos,) * textLen)
+		self._rawToContentPos.extend((contentPos,) * textLen)
 
 	def _addTextWithFields(self, info, formatConfig, isSelection=False):
 		shouldMoveCursorToFirstContent = not isSelection and self.cursorPos is not None
@@ -763,6 +775,12 @@ class TextInfoRegion(Region):
 			if isinstance(command, basestring):
 				if not command:
 					continue
+				if self._endsWithField:
+					# The last item added was a field,
+					# so add a space before the content.
+					self.rawText += " "
+					self.rawTextTypeforms.append(louis.plain_text)
+					self._rawToContentPos.append(self._currentContentPos)
 				if isSelection and self._selectionStart is None:
 					# This is where the content begins.
 					self._selectionStart = len(self.rawText)
@@ -772,13 +790,15 @@ class TextInfoRegion(Region):
 					self.cursorPos = len(self.rawText)
 					shouldMoveCursorToFirstContent = False
 				self.rawText += command
-				self.rawTextTypeforms.extend((typeform,) * len(command))
-				endPos = self._currentContentPos + len(command)
+				commandLen = len(command)
+				self.rawTextTypeforms.extend((typeform,) * commandLen)
+				endPos = self._currentContentPos + commandLen
 				self._rawToContentPos.extend(xrange(self._currentContentPos, endPos))
 				self._currentContentPos = endPos
 				if isSelection:
 					# The last time this is set will be the end of the content.
 					self._selectionEnd = len(self.rawText)
+				self._endsWithField = False
 			elif isinstance(command, textInfos.FieldCommand):
 				cmd = command.command
 				field = command.field
@@ -787,13 +807,14 @@ class TextInfoRegion(Region):
 					text = getFormatFieldBraille(field)
 					if not text:
 						continue
-					self._addFieldText(text)
+					# Map this field text to the start of the field's content.
+					self._addFieldText(text, self._currentContentPos)
 				elif cmd == "controlStart":
-					# Place this field on a stack so we can access it for controlEnd.
 					if self._skipFieldsNotAtStartOfNode and not field.get("_startOfNode"):
 						text = None
 					else:
 						text = info.getControlFieldBraille(field, ctrlFields, True, formatConfig)
+					# Place this field on a stack so we can access it for controlEnd.
 					ctrlFields.append(field)
 					if not text:
 						continue
@@ -804,23 +825,21 @@ class TextInfoRegion(Region):
 						if fieldStart > 0:
 							# There'll be a space before the field text.
 							fieldStart += 1
-						if shouldMoveCursorToFirstContent:
-							shouldMoveCursorToFirstContent = False
-							self.cursorPos = fieldStart
-						elif isSelection and self._selectionStart is None:
+						if isSelection and self._selectionStart is None:
 							self._selectionStart = fieldStart
-					self._addFieldText(text)
+						elif shouldMoveCursorToFirstContent:
+							self.cursorPos = fieldStart
+							shouldMoveCursorToFirstContent = False
+					# Map this field text to the start of the field's content.
+					self._addFieldText(text, self._currentContentPos)
 				elif cmd == "controlEnd":
 					field = ctrlFields.pop()
 					text = info.getControlFieldBraille(field, ctrlFields, False, formatConfig)
 					if not text:
 						continue
-					# Separate this field text from the rest of the text.
-					self.rawText += " %s " % text
-					textLen = len(text)
-					self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
 					# Map this field text to the end of the field's content.
-					self._rawToContentPos.extend((self._currentContentPos - 1,) * textLen)
+					self._addFieldText(text, self._currentContentPos - 1)
+				self._endsWithField = True
 		if isSelection and self._selectionStart is None:
 			# There is no selection. This is a cursor.
 			self.cursorPos = len(self.rawText)
@@ -857,6 +876,7 @@ class TextInfoRegion(Region):
 		self._currentContentPos = 0
 		self._selectionStart = self._selectionEnd = None
 		self._skipFieldsNotAtStartOfNode = False
+		self._endsWithField = False
 
 		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the reading unit.
 		# Therefore, grab the reading unit in three parts.
@@ -871,12 +891,24 @@ class TextInfoRegion(Region):
 		chunk.setEndPoint(readingInfo, "endToEnd")
 		chunk.setEndPoint(sel, "startToEnd")
 		self._addTextWithFields(chunk, formatConfig)
-		# Strip line ending characters, but add a space in case the cursor is at the end of the reading unit.
-		self.rawText = self.rawText.rstrip("\r\n\0\v\f") + " "
-		self._rawToContentPos.append(self._currentContentPos)
+		# Strip line ending characters.
+		self.rawText = self.rawText.rstrip("\r\n\0\v\f")
 		rawTextLen = len(self.rawText)
-		del self.rawTextTypeforms[rawTextLen - 1:]
-		self.rawTextTypeforms.append(louis.plain_text)
+		if rawTextLen < len(self._rawToContentPos):
+			# The stripped text is shorter than the original.
+			self._currentContentPos = self._rawToContentPos[rawTextLen]
+			del self.rawTextTypeforms[rawTextLen:]
+			# Trimming _rawToContentPos doesn't matter,
+			# because we'll only ever ask for indexes valid in rawText.
+			#del self._rawToContentPos[rawTextLen:]
+		if rawTextLen == 0 or not self._endsWithField:
+			# There is no text left after stripping line ending characters,
+			# or the last item added can be navigated with a cursor.
+			# Add a space in case the cursor is at the end of the reading unit.
+			self.rawText += " "
+			rawTextLen += 1
+			self.rawTextTypeforms.append(louis.plain_text)
+			self._rawToContentPos.append(self._currentContentPos)
 		if self.cursorPos is not None and self.cursorPos >= rawTextLen:
 			self.cursorPos = rawTextLen - 1
 

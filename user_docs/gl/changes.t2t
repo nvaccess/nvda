@@ -3,25 +3,97 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.4 =
+
+== Corrección de fallos ==
+- Grandes melloras de rendemento ó navegar pola barra de mensaxes en Outlook 2010/2013. (#5268)
+- Nun gráfico en Microsoft Excel, ó navegar con certas teclas (como ó cambiar de folla con control+rePáx e control+avPáx) agora funciona correctamente. (#5336)
+- Correxida a forma visual dos botóns no diálogo de advertencia que se amosa cando tentas actualizar NVDA a unha versión anterior. (#5325)
+
+
+= 2015.3 =
+O subliñable nesta versión inclúe o apoio inicial para Windows 10; a capacidade de deshabilitar a navegación de unha soa letra no modo exploración (útil para algunhas aplicacións web); melloras no Internet Explorer; e correccións para texto ilexible ó se escrebir en certas aplicacións co braille habilitado.
+
+
 == Novas Características ==
-- Agora é posible moverse cara adiante ou atrás por frases no Microsoft Word con alt+flecha abaixo e alt+flecha arriba respectivamente. (#3288)
+- A existencia de erros de ortografía anúnciase Nos campos editables para o Internet Explorer e outros controis MSHTML. (#4174)
+- Agora fálanse moitos más  símbolos matemáticos unicode  cando aparezan  no texto. (#3805)
+- Agora anúnciase automáticamente a procura de suxerencias na pantalla de inicio do Windows 10 (#5049)
+- Soporte para as pantallas braille EcoBraille 20, EcoBraille 40, EcoBraille 80 e EcoBraille Plus. (#4078)
+- No modo exploración, agora podes  activar e desactivar a navegación con unha soa letra premendo NVDA+shift+espazo. Cando se desactive, as teclas de unha soa letra pásanse á aplicación, o que é útil para algunhas aplicacións web como Gmail, Twitter e Facebook. (#3203)
+- Novas táboas de transcripción braille: Finés de 6 pontos, Irlandés grao 1, Irlandés grao 2, Coreán grao 1 (2006), Coreán grao 2 (2006). (#5137, #5074, #5097)
+- Agora sopórtase o teclado QWERTY na pantalla braille Papenmeier BRAILLEX Live Plus. (#5181)
+- Apoio Experimental para o navegador web Microsoft Edge e o motor de exploración web no Windows 10. (#5212)
+- Nova lingua: Canadá.
+
+== Canbios ==
+- Actualizado o transcriptor braille liblouis a 2.6.3. (#5137)
+- Ó tentar instalar unha versión máis antiga do NVDA da que está instalada actualmente, agora avisaráseche de que esto non está recomendado e de que NVDA debería desinstalarse compretamente antes de proceder. (#5037)
+
+
+== Corrección de Erros ==
+- No modo exploración para  Internet Explorer e outros controis MSHTML, a navegación rápida por campos xa non inclúe incorrectamente elementos de listas presentacionais. (#4204)
+- No Firefox, NVDA xa non anuncia inapropriadamente o contido dun ARIA tab panel cando o foco se mova dentro del. (#4638)
+- No Internet Explorer e outros controis MSHTML, ó tabular dentro de seccións, artículos ou diálogos  xa non anuncia inapropriadamente todo o contido no contedor. (#5021, #5025)
+- Ó utilizar as pantallas braille Baum/HumanWare/APH cun teclado braille, a entrada braille xa non detén o seu funcionamento despois de premer outro tipo de tecla na pantalla. (#3541)
+- En Windows 10, agora xa non se anuncia información extrana ó se premer alt+tab ou alt+shift+tab para cambiar entre aplicacións. (#5116)
+- O texto excrito xa non é ilexible ó se utilizar certas aplicacións como Microsoft Outlook con unha pantalla braille. (#2953)
+- No modo exploración en Internet Explorer e outros controis MSHTML, agora anúnciase o contido correcto cando un elemento aparece ou cambia e enfócase inmediatamente. (#5040)
+- No modo exploración en Microsoft Word, a navegación con unha soa tecla agora actualízase na pantalla braille e o cursor de revisión seguúndo se esperaba. (#4968)
+- En braille, xa non se amosan extranos espazos en braille entre ou despois dos indicadores para controis e formato. (#5043)
+- Cando unha aplicación está respondendo lentamente e cambias dende esa aplicación, NVDA agora é moito máis  sensible en outras aplicacións en máis casos. (#3831)
+- As notificacións de Windows 10 Toast agora anúncianse como se esperaba. (#5136)
+- O valor agora anúnciase segundo se  cambie en certas caixas combinadas (UI Automation) onde esto non funcionaba ate o de agora.
+- No Modo exploración en navegadores web, ó tabular agora compórtase segundo se espera  despois de tabular a un marco de documento. (#5227)
+- A pantalla de bloqueo do Windows 10 agora pode pecharse utilizando a pantalla tactil. (#5220)
+- No Windows 7 e posteriores, o texto xa non é ilexible ó se teclear en certas aplicacións como Wordpad e Skype cunha pantalla braille. (#4291)
+- Na pantalla de bloqueo do Windows 10, xa  non é posible ler o portapapeis, acesar a  aplicacións en execución co cursor de revisión, cambiar a configuración do NVDA, etc. (#5269)
+
+
+== Cambios para Desenvolvedores ==
+- Agora podes inxectar a entrada bruta dende un teclado de sistema que non se manexa nativamente polo Windows (ex.: un teclado QWERTY nunha pantalla braille) utilizando a nova función keyboardHandler.injectRawKeyboardInput . (#4576)
+- Engadiuse eventHandler.requestEvents para solicitar eventos particulares que estean bloqueados por defecto; ex.: amosa eventos dende un control específico ou certos eventos aínda que estean de fondo. (#3831)
+- En lugar dun só atributo i18nName, synthDriverHandler.SynthSetting agora ten os atributos  displayNameWithAccelerator e displayName separados para evitar o anunciado do acelerador no grupo de opcións do sintetizador nalgunhas linguas.
+ - Por compatibilidade con versións anteriores, no constructor, displayName é opcional e deribarase de displayNameWithAccelerator se non se proporciona. Con todo, se tentas ter un acelerador para unha opción, deberían proporcionarse ámbolos dous.
+ - O atributo i18nName está obsoleto e poderá eliminarse en unha versión futura.
+
+
+= 2015.2 =
+O subliñable desta  versión inclúe a capacidade de ler gráficos en  Microsoft Excel e o apoio para a lectura e a navegación interactiva de contido matemático.
+
+== Novas Características ==
+- Agora é posible moverse cara adiante ou atrás por frases no Microsoft Word e Outlook con alt+flecha abaixo e alt+flecha arriba respectivamente. (#3288)
 - Novas táboas de transcripción braille para varias linguas da India. (#4778)
+- No Microsoft Excel, NVDA agora anuncia cando unha celda ten contido desbordante ou cortado. (#3040)
+- No Microsoft Excel, agora podes utilizar a Lista de Elementos (NVDA+f7) para permitir o listado de gráficos, comentarios e fórmulas. (#1987)
+- Apoio para a lectura de gráficos en Microsoft Excel. Para utilizar esto, selecciona o gráfico utilizando a Lista de Elementos (NVDA+f7) e logo utiliza as teclas de cursor para moverte entre os pontos de datos. (#1987)
+- Utilizando MathPlayer 4 from Design Science, NVDA agora pode ler e navegar interactivamente polo contido matemático nos navegadores web e en Microsoft Word e PowerPoint. Mira a sección "Lendo Contido Matemático" na Guía do Usuario para detalles. (#4673)
+- Agora é posible asignar xestos de entrada (ordes de teclado, xestos táctiles, etc.) Para todos os diálogos de preferencias do NVDA e opcións de formato de documento utilizando o diálogo Xestos de Entrada. (#4898)
 
 
 == Cambios ==
 - No diálogo de formateado de documentos do NVDA, os atallos de teclado para Anunciar listas, Anunciar ligas, Anunciar números de Líña e Anunciar Nome da fonte cambiáronse. (#4650)
 - No diálogo Opcións do Rato do NVDA, engadíronse atallos de teclado para Reproducir son cando se move o rato e O brilo controla o volume do audio das coordenadas. (#4916)
+- Melloras significativas no anunciado de nomes de cor. (#4984)
+- Actualizado o transcriptor braille liblouis a 2.6.2. (#4777)
 
 
 == Corrección de Fallas ==
 - As descripcións de carácter agora manéxanse correctamente para conxuntos de carácteres en certas linguas da India. (#4582)
-
+- Se a opción "Confiar na Lingua da Voz ó Procesar Caracteres e Símbolos" está activada, o diálogo Pronunciación de Pontoación/Símbolos  agora utiliza correctamente a lingua da voz. Tamén, a lingua para a que a pronunciación estea sendo editada amósase no título do diálogo. (#4930)
+- En Internet Explorer e outros controis MSHTML, os caracteres tecleados xa non se anuncian inapropriadamente en caixas combinadas editables como o campo de búsqueda de Google na páxina de inicio de Google. (#4976)
+- Ó seleccionar cores en aplicacións de Microsoft Office, os nomes de cor agora anúncianse. (#3045)
+- A saída braille en Danés agora funciona de novo. (#4986)
+- AvPáx/rePáx poden utilizarse de novo para cambiar diapositivas dentro dunha presentación de diapositivas de PowerPoint. (#4850)
+- En Skype para Escritorio 7.2 e posteriores, as notificacións de tecleo agora anúncianse e correxíronse os problemas imediatamente despois de mover o foco fora dunha conversa. (#4972)
+- Correxidos problemas ó teclear certos símbolos de pontoación como parénteses dentro do campo de filtrado no diálogo Xestos de Entrada. (#5060)
+- En Internet Explorer e outros controis MSHTML, ó premer g ou shift+g para navegar por gráficos agora inclúense elementos marcados como imaxes para propósitos de accesibilidade (por exemplo ARIA role img). (#5062)
 
 == Cambios para Desenvolvedores ==
 - brailleInput.handler.sendChars(mychar) xa non filtrará un carácter se é igual ó carácter anterior, asegurándose que a tecla enviada  se liberou correctamente.
-
-
-= 2015.2 =
+- Os scripts para cambiar os modos táctiles agora cumplen cas novas etiquetas engadidas a touchHandler.touchModeLabels. (#4699)
+- Implementáronse ordes de voz para insertar unha ruptura entre palabras e para cambiar o ton, volume e velocidade. Mira BreakCommand, PitchCommand, VolumeCommand e RateCommand no módulo speech. (#4674)
+ - Tamén hai speech.PhonemeCommand para insertar pronunciacións específicas, pero as implementacións actuais só soportan un número moi limitado de fonemas.
 
 
 = 2015.1 =

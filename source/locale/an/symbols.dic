@@ -5,9 +5,6 @@
 # Traduciu por Jorgtum
 # Softaragonés
 
-symbols:
-# identifier	replacement[[	level][	preserve]][	# display name]
-
 complexSymbols:
 # identifier	regexp
 # Sentence endings.
@@ -21,9 +18,9 @@ complexSymbols:
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 
 # Others
-decimal point	(?<=\d)\.(?=\d)
+decimal point	(?<![^\d -])\.(?=\d)
 in-word -	(?<=[^\W_])[-]
-negative number	(?<!\w)-(?=[$£€¥]?\d)
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
 symbols:
@@ -33,8 +30,8 @@ symbols:
 . sentence ending	punto	all	always
 ! sentence ending	zarrar exclamación	all	always
 ? sentence ending	zarrar interrogación	all	always
-... sentence ending	PUNTOS SUSPENSIVOS	all	always	
-… sentence ending	PUNTOS SUSPENSIVOS	all	always	
+... sentence ending	PUNTOS SUSPENSIVOS	all	always
+… sentence ending	PUNTOS SUSPENSIVOS	all	always
 ; phrase ending	punto y coma	most	always
 : phrase ending	dos puntos	most	always
 decimal point		none	always
@@ -80,9 +77,6 @@ $	dólar	all	norep
 =	igual	most
 ≈	Quasi igual que	most
 ≠	No igual que	most
-√	Radiz quadrada	most
-∛	Radiz cubica	most
-∞	infinito	most
 ?	zarrar interrogación	all
 @	arroba	some
 ´	accento agudo	some
@@ -112,20 +106,19 @@ _	guión baixo	most
 	vinyeta	some
 “	ubrir cometas	most
 ”	zarrar cometas	most
-‘	apostrofo	most
-’	apostrofo	most
-⁃	Guión de vinyeta	most
+‘	ubrir apostrofo	most
+’	zarrar apostrofo	most
+⁃	guión de vinyeta	most
 –	guión curto	most
 —	guión largo	most
 ●	cerclo	most
 ¨	dieresi	most
-‎	marca de cucha a dreita	char
-‏	marca de dreita a cucha	char
+‎	marca de cucha ta dreita	char
+‏	marca de dreita ta cucha	char
 ■	Barra vertical tallada	some
 ▪	vinyeta negra	some
 ◾	quadro negro	some
 ◦	vinyeta blanca	some
-←	flecha enta la cucha	some
 ➔	flecha enta la dreita	some
 §	Sección	most
 °	graus	some
@@ -133,12 +126,12 @@ _	guión baixo	most
 »	zarrar cometas angulars
 µ	micro	some
 ¹	1 sobreescrito	some
-²	ta lo quadrau	some
-³	ta lo cubo	some
+²	t'o quadrau	some
+³	t'o cubo	some
 ®	rechistrau	some
 ™	Marca rechistrada	some
 ©	copyright	some	norep
-±	alto u baixo	most
+±	más menos	most
 †	Cruz	most
 ‡	Dople cruz	most
 ƒ	Florín	most
@@ -147,9 +140,57 @@ _	guión baixo	most
 ß	Beta	most
 ¼	Quart	most
 ½	Meyo	most
-¾	Tres quarts	most
+¾	Tres quartz	most
 ×	multiplicau por	most
 ÷	dividiu por	most
+←	flecha enta la cucha	some
 →	Flecha enta la dreita	some
-✓	Marcau	some
-✔	Marcau	some
+✓	marcau	some
+✔	marcau	some
+
+#Mathematical Operators U+2200 to U+220F
+
+∀	ta tot	none
+∁	complemento	none
+∂	derivativa parcial	none
+∃	existe	none
+∄	no existe	none
+∅	conchunto laso	none
+∆	incremento	none
+∇	Nabla	none
+∈	perteneix	none
+∉	no perteneix	none
+∊	elemento chico de	none
+∋	contién como miembro	none
+∌	no contién como miembro	none
+∍	contién chico como miembro	none
+∎	fin de preba	none
+∏	producto aritmetico	none
+
+# Miscellaneous Mathematical Operators
+
+∑	suma aritmetica	none
+√	radiz quadrada	none
+∛	radiz cubica	none
+∜	radiz quatrena	none
+∝	proporcional a	none
+∞	infinito	none
+∟	anglo dreito	none
+∠	anglo	none
+∥	paralelo a	none
+∦	no paralelo a	none
+∧	y lochico	none
+∨	u lochico	none
+∩	intersección	none
+∪	chunión	none
+∫	integral	none
+∴	por tanto	none
+∵	porque	none
+∶	ratio	none
+∷	proporción	none
+≤	menor u igual que	none
+≥	mayor u igual que	none
+⊂	subconchunto de	none
+⊃	Sobreconchunto de	none
+⊆	subconchunto de u igual que	none
+⊇	sobreconchunto de u igual que	none

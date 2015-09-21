@@ -3,24 +3,94 @@ Qué bi ha de Nuevo en o NVDA
 
 %!includeconf: ../changes.t2tconf
 
-= 2015.2 =
+= 2015.4 =
+
+
+= 2015.3 =
+O resinyable d'ista versión inclui refirme inicial t'o Windows 10, a capacidat ta desenchegar a navegación d'una sola letra en o modo de navegación (util ta bellas aplicacions web), milloras en l'Internet Explorer y apanyos ta texto ilechible en escribir en qualques aplicacions con o braille enchegau.
 
 == Nuevas Caracteristicas ==
-- Agora ye posible mover-se-ne enta devant u enta dezaga por as frases en o Microsoft Word con alt+flecha abaixo y alt+flecha alto respectivament. (#3288)
-- Nuevas tablas de transcripción braille ta quantos idiomas Indicos. (#4778)
+- A existencia d'errors d'ortografía s'anuncia en os campos editables ta l'Internet Explorer y atros controls MSHTML. (#4174)
+- Agora se leye muitos más simbolos matematicos unicode en que amaneixen en os textos. (#3805)
+- As sucherencias de busca en a pantalla d'inicio d'o Windows 10 s'anuncia automaticament. (#5049)
+- Refirme t'as linias braille EcoBraille 20, EcoBraille 40, EcoBraille 80 y EcoBraille Plus. (#4078)
+- En o modo de navegación agora puetz enchegar y desenchegar a navegación d'una sola letra  pretando NVDA+mayus+espacio. Quan siga desenchegada as teclas d'una letra se pasan ta l'aplicación que ye util ta bellas aplicacions web tals como lo Gmail, o Twitter y o Facebook. (#3203)
+- Nuevas tablas de transcripción braille; finlandés de 6 puntos, irlandés grau 1, irlandés grau 2, coreán grau 1 (2006), coreán grau 2 (2006). (#5137, #5074, #5097)
+- Agora se suporta o teclau QWERTY en a linia braille Papenmeier BRAILLEX Live Plus. (#5181)
+- Refirme experimental t'o navegador web Microsoft Edge y o motor de buscas en o Windows 10. (#5212)
+- Nuevo idioma: Canadá.
 
 
 == Cambeos ==
-- En o dialogo de formatiau de documentos d'o NVDA os alcorces de teclau t'anunciar as listas, anunciar os vinclos, anunciar os numeros de Línea y anunciar o Nombre d'a fuent se ha cambiau. (#4650)
-- En o dialogo Opcions d'o churi d'o NVDA se ha adhibiu alcorces de teclau ta reproducir as coordenadas d'audio en que se mueve o churi y o brilo controla o volumen d'as coordenadas d'audio. (#4916)
+- Esviellau o transcriptor braille liblouis ta 2.6.3. (#5137)
+- Quan mires d'instalar una versión más viella d'o NVDA que l'actualment  instalada, agora te s'alvertirá que ixo no ye recommendau y que o NVDA habrá de desinstalar-se de raso antis de no i proceder. (#5037)
+
+
+== Corrección d'errors ==
+- En o modo de navegación ta l'Internet Explorer y atros controls MSHTML, a navegación rapeda por campos de formularios ya no inclui incorrectament elementos de listas presentacionals. (#4204)
+- En o Firefox o NVDA ya no anuncia inapropiadament o conteniu d'o panel de pestanyas ARIA en que o foco se'n mueve t'adintro d'ell. (#4638)
+- En l'Internet Explorer y atros controls MSHTML en tabular enta seccions, articlos u dialogos  ya no s'anuncia inapropiadament tot o conteniu d'o contenedor. (#5021, #5025) 
+- En fer servir linias braille Baum, HumanWare u APH con un teclau braille a dentrada braille ya no deixa de funcionar dimpués de pretar unatra mena de tecla en a linia. (#3541)
+- En o Windows 10 ya no s'anuncia información rariza en pretar alt+tabulador u alt+mayus+tabulador ta cambiar entre aplicacions. (#5116)
+- O texto escrito ya no ye ilechible en fer servir qualques aplicacions tals como lo Microsoft Outlook con una linia braille. (#2953)
+- En o modo de navegación en l'Internet Explorer y atros controls MSHTML agora s'anuncia o conteniu correcto malas que un elemento amaneix u cambia y s'enfoca inmediatament. (#5040)
+- En o modo de navegación en o Microsoft Word a navegación d'una sola letra agora esviella la linia braille y o cursor de revisión  como s'aspera. (#4968)
+- En o braille ya no s'amuestran espacios rarizos entre u dimpués d'os indicadors ta controls y formato. (#5043)
+- Quan una aplicación ye respondendo lentament y cambias difuera d'ixa aplicación o NVDA responde muito millor en atras aplicacions en a mayoría d'os casos. (#3831)
+- Agora s'anuncia as notificacions rustidas d'o Windows 10 como s'aspera. (#5136)
+- Agora s'anuncia la valor malas que cambia en bells quadros combinaus (UI Automation) án ixo anteriorment no i marchaba.
+- En o modo de navegación en os navegadors web agora o tabular se comporta como s'aspera dimpués de tabular ta un documento de bastida. (#5227)
+- A pantalla de bloqueyo d'o Windows 10 agora se puet despachar fendo servir una pantalla tactil. (#5220)
+En o Windows 7 y posteriors o texto ya no ye ilechible en escribir en qualques aplicacions tals como lo Wordpad y o Skype con una linia braille.
+- En a pantalla de bloqueyo d'o Windows 10 ya no ye posible leyer o portafuellas, accedir t'as aplicacions en marcha con o cursor de revisión, cambiar a configuración d'o NVDA, etc. (#5269)
+
+
+== Cambeos ta desembolicadors ==
+- Agora puetz xaringar a dentrada pura dende un teclau de sistema que no se maneye nativament en o Windows (p.eix. Un teclau QWERTY en una linia braille) fendo servir a nueva función keyboardHandler.injectRawKeyboardInput. (#4576)
+- S'ha adhibiu eventHandler.requestEvents ta solicitar eventos particulars que son blocaus por defecto; p.eix. amostrar os eventos dende un control especifico u qualques eventos siempre que se siga en o fundo. (#3831)
+- En cuenta d'un solo atributo i18nName, synthDriverHandler.SynthSetting agora tien os atributos  displayNameWithAccelerator y displayName deseparaus ta privar l'anuncio de l'accelerador en l'aniello  d'opcions d'o sintetizador en qualques idiomas.
+ - Por compatibilidat con versions anteriors, en o constructor displayName ye opcional y se deribará de displayNameWithAccelerator si no se proporciona. Sin d'embargo si miras de tener un accelerador ta una opción en habría de proporcionar-sen totz dos.
+ - L'atributo i18nName ye obsoleto y se podría eliminar en bella versión futura.
+
+
+= 2015.2 =
+O resinyable d'ista  versión inclui a capacidat de leyer graficos en  o Microsoft Excel y l'emparo t'a lectura y t'a navegación interactiva de conteniu matematico.
+
+== Nuevas Caracteristicas ==
+- Agora ye posible mover-se-ne enta devant u enta dezaga por as frases en o Microsoft Word y l'Outlook con alt+flecha abaixo y alt+flecha alto respectivament. (#3288)
+- Nuevas tablas de transcripción braille ta quantos idiomas Indicos. (#4778)
+- En o Microsoft Excel o NVDA agora anuncia quan una celda tien conteniu desbordant u tallau. (#3040)
+- En o Microsoft Excel agora puetz fer servir a lista d'elementos (NVDA+f7) ta permitir un listau de graficos, comentarios y formulas. (#1987)
+- Suporte ta leyer graficos en o Microsoft Excel. Ta fer servir ixo Selecciona o grafico fendo servir a lista d'elementos (NVDA+f7) y allora fe servir as teclas de flecha ta mover-te-ne entre os puntos de datos. (#1987)
+- Fendo servir o MathPlayer 4 de Design Science, o NVDA agora puet leyer y navegar interactivament por conteniu matematico en os navegadors web y en o Microsoft Word y PowerPoint. Mira-te a sección "Leyer conteniu mathematico" en a Guida de l'usuario  ta detalles. (#4673)
+- Agora ye posible asignar cenyos de dentrada (comandos de teclau, cenyos tactils, etc.) Ta totz os dialogos de preferencias d'o NVDA y as opcions de formatiau de documentos fendo servir o dialogo de Cenyos de Dentrada. (#4898)
+
+
+== Cambeos ==
+- En o dialogo de formatiau de documentos d'o NVDA os alcorces de teclau t'anunciar as listas, anunciar os vinclos, anunciar os numeros de Línea y anunciar o Nombre d'a fuent s'ha cambiau. (#4650)
+- En o dialogo Opcions d'o churi d'o NVDA s'ha adhibiu alcorces de teclau ta reproducir as coordenadas d'audio en que se mueve o churi y o brilo controla o volumen d'as coordenadas d'audio. (#4916)
+- S'ha amillorau significativament l'anunciau d'os nombres d'as colors. (#4984)
+- Esviellau o transcriptor braille liblouis ta 2.6.2. (#4777)
 
 
 == Corrección d'errors ==
 - As descripcions d'os caracters agora se maneyan correctament t'os conchuntos de caracters en qualques idiomas Indicos. (#4582)
+- Si a opción "Confidar en l'idioma d'a voz en procesar caracters y simbolos" ye activada, o dialogo de pronuncia de puntuación y simbolos  agora fa servir correctament l'idioma d'a voz. Tamién l'idioma  que a suya pronuncia se ye editando s'amuestra en o titol d'o dialogo. (#4930)
+-En l'Internet Explorer y atros controls MSHTML os caracters tipaus ya no s'anuncian inapropiadament en os quadros combinaus editables tals como o campo de busca de Google en a pachina prencipal d'o Google. (#4976)
+- En que se seleccionan colors en as aplicacions d'o Microsoft Office agora s'anuncian os nombres d'as colors. (#3045)
+- A salida braille en danés agora marcha de nuevas. (#4986)
+- l'avPach y o RePach se pueden fer servir unatra vegada ta cambiar as diapositivas adintro d'una presentación d'o PowerPoint. (#4850)
+- En o Skype ta escritorio 7.2 y superior, as notificacions d'escritura agora s'anuncian y s'han apanyau os problemas inmediatament dimpués de mover o foco ta difuera d'una conversa. (#4972)
+- S'han apanyau problemas en escribir qualques puntuacións y simbolos tals como gafetz en o campo de tresmín en o dialogo de cenyos de dentrada. (#5060)
+- En l'Internet Explorer y atros controls MSHTML, pretar g u mayus+g ta navegar ta graficos agora inclui os elementos marcaus como imachens ta propositos d'accesibilidat (p.eix. ARIA role img). (#5062)
 
 
 == Cambeos ta desembolicadors ==
-- brailleInput.handler.sendChars(mychar) ya no tresminará un caracter si ye igual que o caracter anterior, guarenciando-se que a tecla ninviada  s'ha liberau correctament.
+- brailleInput.handler.sendChars(mychar) ya no tresminará un caracter si ye igual que o caracter anterior guarenciando-se que a tecla ninviada  s'ha liberau correctament. (#4139)
+- Os scripts ta cambiar os modos tactils agora cumplen con as nuevas etiquetas adhibidas ta touchHandler.touchModeLabels. (#4699)
+- Os complementos pueden furnir as suyas propias implementacions de presentación matematica. Mira-te o paquet mathPres ta detalles. (#4509)
+- S'han implementau comandos de fabla  ta ficar una crebadura entre parolas y ta cambiar o ton, volumen y velocidat. Mira-te BreakCommand, PitchCommand, VolumeCommand y RateCommand en o modulo d'a fabla. (#4674)
+ - Bi ha tamién speech.PhonemeCommand ta ficar pronuncias especificas, pero  as implementacions actuals no suportan que un numero muito limitau de fonemas.
 
 
 = 2015.1 =

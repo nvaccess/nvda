@@ -56,9 +56,9 @@ Dies bezieht sich sowohl auf das Original sowie auch auf modifizierte Kopieen di
 Für weitere Informationen können Sie entweder die [englischsprachige http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] Lizenz oder die inoffizielle [deutsche http://www.gnu.de/documents/gpl-2.0.de.html] Übersetzung lesen. Die englische Originalversion besitzt nach wie vor die offizielle Rechtsgültigkeit.
 
 + Systemvoraussetzungen +
-- Betriebssystem: Microsoft Windows XP, Windows Vista, Windows 7 und Windows 8 (alle 32-/64-Bit-Versionen, inkl. Server-Betriebssysteme).
-  - Für Windows XP wird mindestens Service Pack 2 benötigt.
-  - Für Windows Server 2003 wird mindestens Service Pack 1 benötigt.
+- Betriebssystem: Microsoft Windows XP, Windows Vista, Windows 7,Windows 8 und Windows 10 (alle 32-/64-Bit-Versionen, inkl. Server-Betriebssysteme).
+ - Für Windows XP wird mindestens Service Pack 2 benötigt.
+ - Für Windows Server 2003 wird mindestens Service Pack 1 benötigt.
 - Speicher: Mindestens 256 Megabyte RAM oder mehr.
 - Prozessorgeschwindigkeit: 1,0 Gigahertz oder schneller.
 - Mindestens 50 Megabyte Festplattenspeicher.
@@ -100,7 +100,7 @@ Wenn Sie auf den Schalter "Fortfahren" klicken, wird die Installation gestartet.
 Es gibt allerdings noch weitere Optionen. Diese werden weiter unten beschrieben.
 Nach dem Abschluss der Installation erscheint eine Meldung, die sie über den erfolgreichen Abschluss der Installation informiert.
 Wenn Sie hier "OK" wählen, wird die soeben installierte Kopie von NVDA gestartet.
- 
+
 +++ NVDA bei der Windows-Anmeldung starten +++
 Mit dieser Option können Sie entscheiden, ob NVDA beim Erscheinen des Windows-anmeldebildschirms gestartet werden soll, bevor Sie ein Passwort eingegeben haben.
 dies betrifft auch die Benutzerkontensteuerung und andere Sicherheitsbildschirme.
@@ -121,7 +121,7 @@ Wenn Sie den Eingangsdialog bereits geschlossen haben oder grade eine fest insta
 In dem erscheinenden Dialog können Sie das Verzeichnis angeben, in dem die portable Version erstellt werden soll.
 Dies kann ein Ordner auf einer Festplatte, einem USB-Stick oder einem anderen transportablen Medium sein.
 Des Weiteren können Sie entscheiden, ob die Benutzerspezifischen Konfigurationsdateien und Plugins der aktuell laufenden NVDA-Instanz in die portable Version übernommen werden sollen. 
-Diese Option ist nur verfügbar, wenn die portable Version von einer installierten Version erstellt wird - nicht jedoch beim Ausführen einer heruntergeladenen Version.
+ Diese Option ist nur verfügbar, wenn die portable Version von einer installierten Version erstellt wird - nicht jedoch beim Ausführen einer heruntergeladenen Version.
 Wenn Sie auf "Fortfahren" klicken, wird die portable Version erstellt.
 Nach Abschluss des Vorgangs erscheint eine Meldung, die sie über die Erfolgreiche Erstellung der portablen Version informiert.
 Klicken Sie auf "OK", um den Dialog zu schließen.
@@ -269,7 +269,7 @@ Einige nützliche Tastenkombinationen zum Navigieren mit dem Systemfokus sind:
 | Aktuellen Fokus ansagen | NVDA+Tabulatortaste | NVDA+Tabulatortaste | Spricht das aktuell fokussierte Objekt. Bei zweimal Drücken werden die Informationen buchstabiert. |
 | Titelleiste ansagen | NVDA+T | NVDA+T | Liest die Titelleiste der aktuellen Anwendung vor. Bei zweimal Drücken, werden die Informationen buchstabiert. Bei drei Mal wird der Text in die Zwischenablage kopiert. Diese Information wird auch in Braille angezeigt. |
 | Aktives Fenster vorlesen | NVDA+B | NVDA+B | Liest alle Steuerelemente im aktiven Fenster vor (hilfreich für Dialogfelder). |
-| Statuszeile lesen | NVDA+ende | NVDA+umschalt+Ende | Liest die Statuszeile vor, falls eine gefunden wird und platziert den NVDA-Cursor darauf. Die Statuszeile wird auch in Braille angezeigt. |
+| Statuszeile ausgeben | NVDA+ende | NVDA+umschalt+Ende | gibt die Statuszeile aus, falls eine gefunden wird und platziert den NVDA-Cursor darauf. Wenn Sie diese Tastenkombination zweimal drücken, wird die Statuszeile buchstabiert. |
 %kc:endInclude
 
 ++ Mit dem System-Cursor navigieren ++[SystemCaret]
@@ -285,6 +285,8 @@ Folgende Tastenkombinationen stehen im Zusammenhang mit dem System-Cursor zur Ve
 | Alles ansagen | NVDA+Pfeil nach unten | NVDA+A | Liest von der aktuellen Position des Systemcursors bis zum Textende und bewegt dabei den System-Cursor mit. |
 | Aktuelle Zeile lesen | NVDA+Pfeil nach oben | NVDA+L | Liest die Zeile, auf der sich der Systemcursor befindet. Wird diese Tastenkombination zweimal gedrückt, wird die Zeile buchstabiert. |
 | Markierten Text lesen | NVDA+Umschalt+Pfeil nach oben | NVDA+Umschalt+S | liest den markierten Text, sofern vorhanden. |
+| nächsten Satz lesen | Alt+Pfeiltaste nach unten | Alt+Pfeiltaste nach unten | Bewegt die Schreibmarke zum nächsten Satz und gibt diesen aus. (nur in Microsoft Word und Outlook unterstützt) |
+| vorherigen Satz lesen | Alt+Pfeiltaste nach oben | Alt+Pfeiltaste nach oben | Bewegt die Schreibmarke zum vorherigen Satz und gibt diesen aus. (nur in Microsoft Word und Outlook unterstützt) |
 
 
 Für die Navigation in Tabellen stehen folgende Tastenkombinationen zur Verfügung:
@@ -440,7 +442,7 @@ Zum Navigieren mit der Maus sollte eine richtige Maus oder eine Mauskugel benutz
 
 + Lese-Modus +
 Umfangreiche schreibgeschützte Dokumente - wie beispielsweise Webseiten - werden in NVDA im so genannten Lese-Modus dargestellt. 
-Dies betrifft Dokumente in Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader und Adobe Flash sowie HTML-Nachrichten in Microsoft Outlook. 
+Dies betrifft Dokumente in Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, Google Chrome, Adobe Reader und Adobe Flash sowie HTML-Nachrichten in Microsoft Outlook. 
 Der Lese-Modus ist optional in Microsoft Word-Dokumenten verfügbar. 
 
 Im Lese-Modus wird der Inhalt von Dokumenten in einer strukturierten Dokument-ähnlichen Form dargestellt, so dass sie sich mit den Pfeiltasten durch das Dokument bewegen können.
@@ -495,21 +497,29 @@ Folgende Befehle springen ohne Umschalttaste gedrückt zum nächsten Element; zu
 - D: Sprungmarke
 - O: Eingebettetes Objekt
 - 1 bis 6: Überschrift erster bis sechster Ordnung
+- A: Anmerkung: Kommentar, Dokumentänderung
 -
 Verwenden Sie folgende Tastenkombinationen, um zum Beginn Bzw. zum Ende eines Containerobjekts (Listen Tabellen o.ä.) zu springen:
 || Name | Tastenkombination | Beschreibung |
 | zum Beginn des Containerobjekts springen | Umschalt+Komma | Bewegt den Systemcursor zum Beginn des Containerobjekts (Liste, Tabelle, etc.) auf welchem sich der Cursor befindet. |
 | Hinter das Containerobjekt springen | Komma | bewegt den Systemcursor hinter das Containerobjekt (Liste, Tabelle, etc.) auf welchem sich der Cursor befindet. |
+
+%kc:endInclude
+Einige Web-Anwendungen verwenden einzelne Buchstaben als Tastenkürzel. Hierzu zählen Twitter, Gmail und Facebook.
+Um in solchen Web-Anwendungen deren eigene Kurztasten zu verwenden und dennoch mit den Pfeiltasten durch die Web-Anwendung navigieren zu können, können Sie die Schnellnavigation von NVDA ein- oder ausschalten.
+%kc:beginInclude
+Drücken Sie NVDA+Umschalt+Leertaste, um die Schnellnavigation im aktuellen Dokument ein- oder auszuschalten.
 %kc:endInclude
 
 ++ Die Liste der Elemente ++
-Die Liste der Elemente stellt eine Zugriffsmöglichkeit auf Seiten, die Links, Überschriften oder Sprungmarken enthalten, dar.
-Mit den Auswahlschaltern können Sie zwischen diesen drei Informationstypen umschalten.
+Mit Hilfe der Elementliste können Sie - abhängig von der aktiven Anwendung - auf verschiedene Elemente im aktuellen Dokument zugreifen.
+In Webbrowsern können Sie hierbei auf links, Überschriften oder Sprungmarken zugreifen.
+Mit dem Auswahlschalter können Sie zwischen den unterschiedlichen Elementtypen umschalten.
 Mit dem Eingabefeld können Sie auch die Einträge filtern, um sich die Suche auf der seite zu erleichtern.
 Wenn Sie einmal einen Eintrag ausgewählt haben, können Sie mit den Schaltflächen im Dialog Entweder den Eintrag aktivieren oder zu diesem gelangen.
 %kc:beginInclude
 || Name | Tastenkombination | Beschreibung |
-| Liste der Elemente des Lesemodus | NVDA+F7 | Zeigt eine Auflistung aller Elemente an, die Links, Überschriften sowie ARIA-Sprungmarken aus dem aktuellen Dokument beinhalten. |
+| Liste der Elemente des Lesemodus | NVDA+F7 | Zeigt eine Liste bestimmter Elemente im aktuellen Dokument an. |
 %kc:endInclude
 
 ++ Eingebettete Objekte ++
@@ -522,6 +532,42 @@ Es gibt eine Tastenkombination, um in die Originalansicht der Seite zurückzukeh
 || Name | Tastenkombination | Beschreibung |
 | Zum Inhalt des Lesemodus zurückkehren | NVDA+STRG+Leertaste | Verlässt den Fokus des eingebetteten Objekts und kehrt in den Lesemodus zurück. |
 %kc:endInclude
+
++ Lesen mathematischer Inhalte +
+Sie können Mathplayer 4 von Design Science verwenden, um mit NVDA in mathematischen Inhalten zu navigieren.
+Hierfür ist die Installation von Mathplayer 4 notwendig.
+Mathplayer kann hier heruntergeladen werden: http://www.dessci.com/en/products/mathplayer/
+
+NVDA unterstützt die folgende mathematischen Inhalte:
+- MathML in Mozilla Firefox und Microsoft Internet Explorer.
+- Design Science MathType in Microsoft Word und PowerPoint.
+- MathML in Adobe Reader. Beachten Sie, dass Mathml noch kein offizieller Standard ist, deshalb gibt es noch keine öffentlich verfügbare Software, um solche Inhalte zu erzeugen.
+-
+
+Wenn Sie ein Dokument lesen, das mathematischen Inhalt enthält, liest NVDA diesen vor, sofern dieser von NVDA unterstützt wird.
+Falls Sie eine Braillezeile verwenden, wird es auch in Braille ausgegeben.
+
+++ Interaktive Navigation ++
+Wenn Sie NVDA hauptsächlich mit einer sprachausgabe verwenden, können Sie einen mathematischen Ausdruck in Segmente unterteilt abfragen, anstatt ihn in einem Stück angesagt zu bekommen.
+
+Wenn sie sich momentan im lese-modus befinden, können Sie den Cursor auf den Ausdruck stellen und die Eingabetaste drücken.
+
+Wenn Sie sich nicht im lesemodus befinden, gehen Sie folgendermaßen vor:
++ Bewegen Sie den nVDA-Cursor auf den mathematischen Ausdruck
+Standardmäßig ist der NVDA-Cursor an den Systemcursor gekoppelt. Sie können Also die Standard-Navigationstasten verwenden, um den NVDA-Cursor auf den mathematischen Inhaltzu bewegen.
++ Führen Sie anschließend den folgenden Befehl aus:
++
+
+%kc:beginInclude
+|| Name | Tastenkombination | Beschreibung |
+| in mathematischen Inhalten navigieren | NVDA+alt+m | beginnt die Navigation in mathematischen Inhalten |
+%kc:endInclude
+
+Jetzt können Sie mathplayer-Tastenkombinationen (z. B. Pfeiltasten) verwenden, um innerhalb des Ausdrucks zu navigieren.
+Verwenden Sie beispielsweise die Pfeiltasten links und rechts, um zwischen den Teilen eines Ausdrucks zu navigieren. Um in einen Teilausdruck abzusteigen, verwenden Sie die Pfeiltaste nach unten.
+Weiter Informationen hierzu finden Sie in der Dokumentation zu mathplayer.
+
+Um die Navigation im Ausdruck zu beenden, drücken Sie esc.
 
 + Anwendungsspezifische Befehle für NVDA +
 Für bestimmte Anwendungen stellt NVDA zusätzliche Tastenkombinationen bereit - etwa um bestimmte Aufgaben zu vereinfachen oder um Informationen zugänglich zu machen, die normalerweise für Anwender von Bildschirmleseprogrammen unerreichbar wären. 
@@ -540,6 +586,7 @@ Für bestimmte Anwendungen stellt NVDA zusätzliche Tastenkombinationen bereit -
 | Spaltenüberschriften festlegen | NVDA+Umschalt+c | Wenn Sie diese Tastenkombination einmal drücken, teilen Sie NVDA mit, dass Sie sich auf derjenigen Zeile befinden, die die Spaltenüberschriften enthält. Diese Spaltenüberschriften werden dann automatisch gelesen, sobald Sie unterhalb dieser Zeile navigieren. Zweimaliges Drücken dieser Tastenkombination löscht diese Zuweisung wieder. | 
 | Zeilenbeschriftungen festlegen | NVDA+Umschalt+r | Wenn Sie diese Tastenkombination einmal drücken, teilen Sie NVDA mit, dass Sie sich auf derjenigen Spalte befinden, die die Beschriftungen für die Zeilen enthält. Diese Beschriftungen werden automatisch gelesen, wenn Sie außerhalb dieser Spalte navigieren. Zweimaliges Drücken dieser Tastenkombination löscht diese Zuweisung. | 
 | Kommentar anzeigen | NVDA+alt+c | Zeigt den Kommentar der aktuellen Zelle an, sofern vorhanden. |
+| Elementliste | NVDA+f7 | Öffnet einen Dialog mit einer Elementliste. Hier werden Ihnen Diagramme, Zellen mit Kommentaren, oder Zellen mit Formeln angezeigt. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -584,6 +631,9 @@ Die meisten NVDA-Einstellungen können durch Dialoge vorgenommen werden, welche 
 In allen Einstellungsdialogen können Sie den "OK"-Schalter drücken, um die Einstellungen zu übernehmen.
 Um Einstellungen zu verwerfen, drücken sie den "abbrechen"-Schalter oder die Taste Escape.
 Einige Einstellungen können auch durch Kurztasten geändert werden. Diese Kurztasten werden in den entsprechenden Abschnitten aufgelistet.
+
+Beachten Sie, dass standardmäßig nicht alle Einstellungsdialoge mittels Tastenkombination, Berührungsgesten, etc.  aufgerufen werden können. 
+Falls Sie Dialoge öffnen wollen, die nicht über zugewiesene Tastenkombinationen verfügen, können Sie den [dialog Eingaben #InputGestures] verwenden, um eigene Tastenkombinationen zuzuweisen.
 
 +++ Allgemeine Einstellungen (NVDA+STRG+G) +++
 Sie finden die allgemeinen Einstellungen im Menü Einstellungen.
@@ -758,10 +808,10 @@ Sehen Sie im Abschnitt "[unterstützte Braillezeilen #SupportedBrailleDisplays]"
 
 ==== Ausgabetabelle ====
 Die nächste Option ist die Auswahlliste der Braille-Tabellen.
- In diesem Kombinationsfeld finden Sie Brailletabellen für verschiedene Sprachen, Braille-Standards und Kurzschriften.
- Die ausgewählteTabelle wird zur Umwandlung von Text in Braille verwendet, um diesen auf Ihrer Braillezeile darzustellen.
+In diesem Kombinationsfeld finden Sie Brailletabellen für verschiedene Sprachen, Braille-Standards und Kurzschriften.
+Die ausgewählteTabelle wird zur Umwandlung von Text in Braille verwendet, um diesen auf Ihrer Braillezeile darzustellen.
 Zwischen den Braille-Tabellen bewegen Sie sich mit den Pfeiltasten.
- 
+
 ==== Eingabetabelle ====
 Entsprechend der vorherigen Option, finden Sie hier das Kombinationsfeld für die Braille-Eingabetabellen.
 Bei Verwendung von Braillezeilen mit Brailletastatur wird die hier ausgewählte Tabelle zur Umwandlung von Braille nach Text verwendet.
@@ -794,10 +844,17 @@ Dies bedeutet, dass sie die Braillezeile nicht am ende jeder Zeile weiterscrolle
 Dies erlaubt Ihnen ein flüssigeres lesen größerer Textmengen.
 Diese Option ist standardmäßig deaktiviert.
 
-==== Wortumbruch aktivieren ====
-Bei Wortumbruch trennt NVDA ein Wort nicht, das für die Darstellung auf der Braillezeile zu lang ist. Wenn Sie dann auf den nächsten Bereich weiterbewegen,
-können Sie das Wort im ganzen lesen. Wenn Wortumbruch ausgeschaltet ist, zeigt NVDA so viel wie möglich vom Wort an, aber ein Teil kann abgeschnitten sein.
-NVDA zeigt dann den Rest des Wortes im nächsten Bereich an. 
+==== Wenn möglich, verhindere das umbrechen von Wörtern ====
+Wenn diese Option aktiviert ist, trennt NVDA ein Wort nicht, das für die Darstellung auf der Braillezeile zu lang ist.
+Stattdessen bleibt der verbliebene Platz lehr.
+Wenn Sie dann auf den nächsten Bereich weiterbewegen, können Sie das Wort im ganzen lesen.
+Dies wird manchmal auch als Wortumbruch bezeichnet.
+Bitte beachten Sie: Zu lange Wörter müssen trotzdem getrennt werden, um auf der Braillezeile angezeigt werden zu können.
+
+Wenn diese Option ausgeschaltet ist, zeigt NVDA so viel wie möglich vom Wort an, aber ein Teil kann abgeschnitten sein.
+NVDA zeigt dann den Rest des Wortes im nächsten Bereich an.
+
+Das einschalten dieser Option kann Ihnen ein flüssigeres Lesen ermöglichen, bewirkt aber, dass Sie die Braillezeile öfter weiterschalten müssen.
 
 +++ Tastatureinstellungen (NVDA+STRG+K) +++
 Dieses Dialogfeld finden Sie im Menü Einstellungen unter Tastatureinstellungen.
@@ -839,7 +896,7 @@ Ist diese Option aktiviert, so wird die Sprache jedesmal unterbrochen, wenn Sie 
 
 ==== Navigation während "alles lesen" erlauben ====
 Wenn diese Option aktiviert ist, Unterbrechen Navigationsbefehle nun nicht mehr den Lesevorgang beim Lesen eines Dokuments mit NVDA+Pfeil Ab. Hierzu gehören sowohl die Schnellnavigationstasten als auch die Befehle zum Navigieren zwischen Zeilen und Absätzen. Diese Option ist standardmäßig deaktiviert.
- 
+
 ==== Signaltöne beim Eingeben von Kleinbuchstaben abspielen, wenn die Dauergroßschreibung aktiv ist ====
 Wenn aktiviert, hören Sie einen Warnton, wenn Sie einen Buchstaben mit der Umschalttaste drücken, während die Dauergroßschreibung eingeschaltet ist.
 Es ist generell nicht gebräuchlich, Buchstaben mittels der Umschalttaste groß zu schreiben, während die Dauergroßschreibung aktiviert ist und geschieht meistens nur deshalb, weil man nicht erkennt, dass die Dauergroßschreibung aktiv ist.
@@ -856,21 +913,22 @@ Mit dieser Option legen Sie fest, ob per Software emulierte Tastendrücke von NV
 Diese Option ist zwar standardmäßig aktiviert, dennoch kann es sinnvoll sein, sie in bestimmten Fällen zu deaktivieren. Wenn Sie zum Beispiel mit Hilfe der Software Unikey vietnamesische Zeichen eingeben wollen, kann dies zu falsch erkannten Zeichen führen, wenn die Option eingeschaltet ist.
 
 +++ Mauseinstellungen (NVDA+STRG+M) +++[MouseSettings]
-
+Sie finden diesen Dialog im Menü Einstellungen unter Mauseinstellungen.
 Dieser Dialog enthält die folgenden Optionen:
 
 ==== Form des Mauszeigers ansagen ====
-Dieses Kontrollfeld legt fest, ob NVDA bei Änderung des Mauszeigers die Form mit ansagen soll. Die Form des Mauszeigers ändert sich, wenn sich dieser Beispielsweise in einem Eingabefeld befindet, oder wenn etwas geladen wird.
+Dieses Kontrollfeld legt fest, ob NVDA bei Änderung des Mauszeigers die Form mit ansagen soll.
+In Windows ändert sich die Form des Mauszeigers, wenn sich dieser Beispielsweise in einem Eingabefeld befindet, oder wenn etwas geladen wird.
 
 %kc:setting
 ==== Mausverfolgung einschalten ====
 Tastenkombination: NVDA+M
 
-
-Dieses Kontrollfeld weist NVDA an, den Text unter dem Mauszeiger vorzulesen. Das erleichtert Ihnen das Auffinden von Informationen am Bildschirm, wenn Sie mit der Maus über das Feld wandern.
+Dieses Kontrollfeld weist NVDA an, den Text unter dem Mauszeiger vorzulesen. Das erleichtert Ihnen das Auffinden von Informationen am Bildschirm, wenn Sie mittels der Maus den Mauszeiger über den Bildschirm bewegen..
 
 ==== Auflösung der Texteinheit ====
-Wenn die vorherige Option bereits aktiviert ist, können Sie beim darüber Wandern mit der Maus die Ansage der Textmenge festlegen. Sie können dabei zwischen Zeichen, Wort, Zeile oder Satz auswählen.
+Wenn die vorherige Option aktiviert ist, können Sie festlegen, wieviel Text angesagt wird, während Sie die Maus bewegen.
+Sie können dabei zwischen Zeichen, Wort, Zeile oder Satz auswählen.
 
 ==== Objekttyp unter dem Mauszeiger ansagen ====
 Wenn diese Option aktiviert ist, sagt NVDA den Typ an, sobald sich der Mauszeiger auf dem Objekt befindet,.
@@ -880,11 +938,9 @@ Das Aktivieren dieser Option bewirkt, dass NVDA die Position des Mauszeigers dur
 Je näher sich der Mauszeiger am oberen Bildschirmrand befindet, desto höher ist der Signalton.
 Richtig ausgerichtete Stereolautsprecher oder Kopfhörer vorausgesetzt, wird der Signalton um so mehr links oder rechts abgespielt, je weiter links bzw. rechts sich der Mauszeiger bewegt.
 
-
 ==== Lautstärke der Audiokoordinaten durch Helligkeit kontrollieren ====
 Wenn die Option "Audiokoordinaten bei Mausbewegungen wiedergeben" und diese Option aktiviert sind, passt NVDA die Lautstärke der Signaltöne an die Helligkeit unter dem Mauszeiger an.
-
-Diese Option kann unter Windows Vista bei transparenten Fenstern zu Problemen führen; daher ist diese Option standardmäßig deaktiviert.
+Diese Option ist standardmäßig deaktiviert.
 
 +++ Einstellungen des NVDA-Cursors +++
 
@@ -909,7 +965,7 @@ Wenn eingeschaltet, verfolgt der NVDA-Cursor bei Bewegungen die Maus.
 Bei eingeschaltetem Modus filtert NVDA nicht wichtige Objekte aus der Hierarchie der navigierbaren Objekte heraus. Dabei werden z.B. unsichtbare Objekte und Objekte, welche nur zu Gestaltungszwecken eingebaut wurden, übersprungen.
 
 +++ Einstellungen zur Objektdarstellung (NVDA+STRG+O) +++
-
+Zu finden im Menü Einstellungen unter Objektpräsentation.
 Dieses Dialogfeld enthält die folgenden Optionen:
 
 ==== Minihilfen (Tooltipps) ansagen ====
@@ -959,7 +1015,9 @@ Tastenkombination: NVDA+5
 Schaltet die Ansage von neuen Inhalten in bestimmten Programmen wie Terminals und Chatprogramme ein bzw. aus.
 
 +++ Einstellungen für Eingabemethoden +++
-Mit diesem Dialog können Sie steuern, wie NVDA Zeichen asiatischer sprachen wiedergibt, wenn Sie sie eingeben. dies betrifft sowohl IME als auch die Textdienste.
+Sie finden diesen Menüpunkt im Menü Einstellungen.
+Mit diesem Dialog können Sie steuern, wie NVDA die Eingabe von Zeichen asiatischer sprachen wiedergibt. dies betrifft sowohl IME als auch die Textdienste.
+Hinweis: Eingabemethoden variieren sehr in der Verfügbarkeit von Funktionen sowie in der Informationsweitergabe. Somit müssen diese Optionen für die jeweils verwendete Eingabemethode festgelegt werden, um die bestmögliche Effizienz beim tippen zu erhalten.
 
 ==== automatisch alle verfügbaren Kandidaten ausgeben ====
 Diese option, die standardmäßig aktiviert ist, legt fest, ob automatisch eine Liste aller sichtbaren Kandidaten wiedergegeben wird.
@@ -975,7 +1033,7 @@ Auch wenn Sie diese Option deaktiviert haben, wird der NVDA-Cursor auf den ausge
 Mit dieser Option, die standardmäßig aktiviert ist, können Sie festlegen, ob NVDA eine kurze Beschreibung für einen Kandidaten ausgeben soll - entweder wenn Sie ihn auswählen oder wenn nVDA die Liste der Kandidaten ausgibt, sobald sie erscheint.
 In manchen Sprachräumen - wie etwa im chinesischen, hat diese Option jedoch keinen Einfluss auf die Ausgabe von Beschreibungen für Kandidaten.
 Diese Option ist lediglich für japanische und koreanische Eingabemethoden sinnvoll.
- 
+
 ==== Report changes to the reading string ====
 Einige Eingabemethoden wie z.B. Chinese New Phonetic und New ChangJie besitzen einen "reading string (auch als "precomposition string" bezeichnet).
 Mit dieser Option teilen Sie NVDA mit, ob neue Zeichen, die in diese Zeichenketten eingegeben werden, zurückgemeldet werden sollen.
@@ -1002,9 +1060,11 @@ Wenn gleich der Lesemodus keine wirklichen Seiten hat, können Sie jedoch hier f
 ==== Bildschirmlayout verwenden ====
 Tastenkombination: NVDA+V
 
-Diese Option legt fest, wie der Inhalt einer Seite in den Lesemodus übernommen werden soll.
-Wenn die Option aktiviert ist, bekommen Sie die Ansicht exakt so, wie sie am Bildschirm erscheint.
-Wenn die Option deaktiviert ist, werden alle Elemente wie beispielsweise Links im Textverlauf in einer neuen Zeile dargestellt.
+Diese Option legt fest, wie der Inhalt einer Seite in den Lesemodus übernommen werden soll. Wenn die Option aktiviert ist, bekommen Sie die Ansicht exakt so, wie sie am Bildschirm erscheint. Wenn die Option deaktiviert ist, werden alle Elemente wie beispielsweise Links im Textverlauf in einer neuen Zeile dargestellt.
+
+==== Automatisch alles lesen nach Aufruf einer Internetseite ====
+Diese Option steuert, ob dokumente automatisch gelesen werden sollen, sobald sie vollständig geladen sind. 
+Diese Option ist standardmäßig aktiviert.
 
 ==== Layout-Tabellen einbeziehen ====
 Mit dieser Option können Sie bestimmen, wie NVDA mit Tabellen umgeht, die nur zu Gestaltungszwecken verwendet werden.
@@ -1012,10 +1072,6 @@ Wenn die Option aktiviert ist, wird NVDA solche Tabellen auf der Grundlage der  
 Anderenfalls werden Layout-Tabellen weder angezeigt noch über die Schnellnavigationstasten zugänglich gemacht.
 Der Inhalt der Tabellen wird aber dennoch normal angezeigt.
 Die Option ist standardmäßig deaktiviert.
-
-==== Automatisch alles lesen nach Aufruf einer Internetseite ====
-Diese Option steuert, ob dokumente automatisch gelesen werden sollen, sobald sie vollständig geladen sind. 
-Diese Option ist standardmäßig aktiviert.
 
 ==== Ansagen für Elemente konfigurieren ====
 Bitte beachten Sie die Optionen im Dialog[Einstellungen für die Dokumentformatierungen #DocumentFormattingSettings], um festzulegen, welche Elemente wie Links, Überschriften und Tabellen beim Navigieren angesagt werden sollen.
@@ -1039,6 +1095,7 @@ Wenn die Option aktiviert ist, wird beispielsweise der Buchstabe "j" vom Dokumen
 Die Einstellungen zu den Dokumentformatierungen finden Sie im Menü "Einstellungen" oder Sie erreichen sie auch mit der Tastenkombination "NVDA+STRG+D".
 
 Mit den meisten Kontrollfeldern in diesem Dialogfenster steuern Sie die Ansage der Formatierungen, die Sie während des Navigierens in einem Dokument angesagt bekommen möchten. Zum Beispiel soll der Name der Schriftart angesagt werden oder die Schriftgröße. Aktivieren Sie dazu die entsprechenden Kontrollfelder und bei jeder auftretenden Änderung im Text des Dokuments werden diese Informationen von NVDA jedes Mal angesagt.
+Wenn Sie z. B. das Kontrollkästchen ""Schriftartennamen ansagen"" aktivieren und anschließend in einem Text navigieren, wird NVDA jedes mal den Namen der Schriftart ansagen, sobald sich die Schriftart ändert.
 
 Konfigurieren können Sie die Meldungen von:
 - Schriftartennamen
@@ -1046,7 +1103,7 @@ Konfigurieren können Sie die Meldungen von:
 - Schriftattribute
 - Ausrichtung
 - Farben
-- Editor-Revisionen
+- Dokumentänderungen
 - Layout
 - Rechtschreibfehler
 - Seitenwechsel
@@ -1062,7 +1119,10 @@ Konfigurieren können Sie die Meldungen von:
 - Zitatblöcke
 - Sprungmarken
 - Rahmen
+- anklickbare Elemente
 -
+
+Um diese Einstellungen überall ändern zu können, verwenden Sie bitte den [dialog Eingaben #InputGestures] um eigene Tastenkombinationen hinzuzufügen.
 
 ==== Änderungen der Formatierungen hinter dem Cursor ansagen ====
 Diese Einstellung veranlasst NVDA dazu, ALLE Änderungen in den Formatierungen innerhalb einer Zeile anzusagen, wenn sie eingeschaltet ist. Das kann sehr leistungsintensiv sein.
@@ -1072,53 +1132,48 @@ Standardmäßig erkennt NVDA die Formatierung an der Position des System-Cursors
 Schalten Sie diese Option nur dann ein, wenn beim Lesen in einem Microsoft Word-Dokument die Ansage notwendig ist.
 
 +++ Aussprachewörterbücher +++
-
-In diesem Menü  können Sie die Aussprache eines Wortes bzw. Wortteile oder auch ganze Phrasen verwalten.
-
+Im Menü Einstellungen finden Sie den Eintrag Aussprachewörterbücher. Dieses Menü enthält Dialoge mit deren Hilfe Sie festlegen können, wie NVDA einzelne Wörter oder Satzteile ausspricht.
 Derzeit gibt es drei unterschiedliche Formen der Aussprachewörterbücher:
-
+Diese sind:
 - Standard: Regeln in diesem Wörterbuch haben Einfluss auf alle Aussprachen in NVDA.
 - Stimme: Regeln in diesem Wörterbuch haben Einfluss auf die momentan verwendete Stimme der Sprachausgabe in NVDA.
-- Vorläufig: Regeln in diesem Wörterbuch haben nur temporären Einfluss auf alle Stimmen in NVDA (gilt nur für diese Sitzung). Beim nächsten NeuStart von NVDA sind diese nicht mehr vorhanden.
+- temporär: Regeln in diesem Wörterbuch haben nur vorläufigen Einfluss auf alle Stimmen in NVDA (gilt nur für diese Sitzung). Beim nächsten NeuStart von NVDA sind diese nicht mehr vorhanden.
 -
 
-Alle Wörterbücher enthalten eine Liste von Sprachregeln, welche verwendet werden, um die Sprache zu verbessern. Die Dialogfelder enthalten die folgenden Schaltflächen: "Hinzufügen", "Bearbeiten" und "Entfernen".
+Sie müssen den Dialogen eigene Tastenkombinationen zuweisen, falls Sie die Wörterbücher per Tastenkürzel aufrufen wollen. Verwenden Sie hierzu den [dialog Eingaben #InputGestures].
 
-Mit der Schaltfläche "Hinzufügen" erstellen Sie eine neue Regel im Wörterbuch. Anschließend geben Sie die entsprechenden Text in die Felder ein und klicken abschließend auf "OK".
+Alle Wörterbücher enthalten eine Liste von Sprachregeln, welche verwendet werden, um die Sprache zu verbessern.
+Die Dialogfelder enthalten die folgenden Schaltflächen: "Hinzufügen", "Bearbeiten" und "Entfernen".
+
+Mit der Schaltfläche "Hinzufügen" erstellen Sie eine neue Regel im Wörterbuch. Anschließend füllen Sie die entsprechenden Felder aus und klicken abschließend auf "OK".
 Sie sehen nun die neu hinzugefügte Regel in der Regelliste.
 Um sicherzustellen, dass die neu hinzugefügten oder bearbeiteten Regeln auch tatsächlich gespeichert bleiben, klicken Sie einmal auf die "OK"-Schaltfläche, um damit auch das Dialogfeld der Wörterbücher zu schließen.
 
 Mit den Regeln für die Aussprachewörterbücher von NVDA können Sie eine Zeichenkette in eine andere ändern.
-Ein einfaches Beispiel wäre, wenn Sie möchten, dass NVDA bei dem Wort "Frosch" jedes Mal "Vogel" sagen soll.
-
-Im Bereich "Regel hinzufügen" ist der einfachste Weg, Sie geben im Eingabefeld bei "Muster" das Wort "Frosch" (ohne Anführungszeichen) ein und im Eingabefeld bei "Ersetzen durch" das Wort "Vogel" (ohne Anführungszeichen) ein.
-Im Eingabefeld für die Beschreibung können Sie auch zum Beispiel "Anpassen des Wortes Frosch durch Vogel" mit angeben.
+Ein einfaches Beispiel wäre, wenn Sie möchten, dass NVDA bei dem Wort "Frosch" jedes Mal "Vogel" sagt.
+Der einfachste Weg um dies zu erreichen ist wie folgt: Im Dialog "Wörterbucheintrag hinzufügen" geben Sie im Eingabefeld bei "Muster" das Wort "Frosch" (ohne Anführungszeichen) ein und im Eingabefeld bei "Ersetzen durch" das Wort "Vogel" (ohne Anführungszeichen) ein.
+Im Eingabefeld für die Beschreibung können Sie auch zum Beispiel "Anpassen des Wortes Frosch durch Vogel" mit angeben.	
 
 Die leistungsstarken Aussprachewörterbücher können weit aus mehr, als nur Wörter ersetzen.
 Ferner enthält dieses Dialogfeld auch eine Option zur Berücksichtigung der Groß- und Kleinschreibung des Musters.
 Standardmäßig ignoriert NVDA die Groß- und Kleinschreibung.
 
 Schließlich enthält der Dialog auch noch 3 Auswahlschalter, welche festlegen,  ob die betreffende Regel überall, nur auf ganze Wörter angewendet oder ob reguläre Ausdrücke berücksichtigt werden.
-Wenn Sie das Muster auf "ganze Wörter" anwenden lassen, hat dies zur Folge, dass die Übersetzung nur angewandt wird, wenn das Wort nicht Teil eines längeren Wortes ist. 
-Dies bedeutet, dass kein Sonderzeichen wie ein Unterstrich direkt vor und/oder hinter dem Muster stehen darf. Satzzeichen sind hiervon ausgenommen.
+Wenn Sie das Muster auf "ganze Wörter" anwenden lassen, hat dies zur Folge, dass die Übersetzung nur angewandt wird, wenn das Wort nicht Teil eines längeren Wortes ist. Dies bedeutet, dass kein Sonderzeichen wie ein Unterstrich direkt vor und/oder hinter dem Muster stehen darf. Satzzeichen sind hiervon ausgenommen.
 Wenn Sie also das Wort "Vogel" wie im vorherigen Beispiel durch "Frosch" ersetzen und den Auswahlschalter auf "ganze Wörter setzen, wird die Regel nicht auf "Singvogel" oder "Vogelhaus" zutreffen.
 
 Ein regulärer Ausdruck ist ein Muster, welches spezielle Sümbole enthält. Dies erlaubt Ihnen, dass das Muster auf Zahlen oder Buchstaben generell oder auf mehrere Zeichen zur gleichen Zeit zutrift 
 Reguläre Ausdrücke werden hier nicht behandelt. Weiterführende Beispiele und Erklärungen hierzu finden Sie im [Kapitel über reguläre ausdrücke in der Dokumentation zu python 2.7 (in englisch) http://docs.python.org/library/re.html]
 
++++ Der Dialog "Aussprache von Symbolen und Satzzeichen- " +++[SymbolPronunciation]
+In diesem Dialog können Sie die Aussprache von Satz-, bzw. Sonderzeichen verändern und festlegen, ab welcher Symbolebene  dieses angesagt werden soll. 
 
-+++ Der Dialog "Aussprache von Symbolen und Satzzeichen- " +++
-In diesem Dialog können Sie die Aussprache von Satzzeichen bzw. Sonderzeichen verändern. Um die aussprache eines Sonderzeichens zu verändern, wählen Sie es in der Liste aus.
-Der Dialog besteht aus den folgenden Elementen:
+Die Sprache, in der die Aussprache von Sonderzeichen geändert wird, wird im Dialogtitel angezeigt.
+Außerdem wird die Option "beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen" aus den  [Stimmeneinstellungen #VoiceSettings] berücksichtigt; beispielsweise wird hierbei die Sprache der eingestellten Stimme anstelle der nvda-Sprache verwendet.
 
-==== Das Listenfeld "Sonderzeichen" ====
-Hier werden alle Sonderzeichen und Satzzeichen angezeigt, die in der sprachspezifischen Datei "Symbols.dic" hinterlegt bzw. von den Standardeinstellungen für englisch vererbt wurden. Sie sehen hier den Namen eines jeden Sonderzeichens, die auszusprechenden ersatzwörter und die Stufe, ab der die Ersetzung sich auswirkt.
-
-==== Das Eingabefeld "Ersetzen durch" ====
-Hier kann ein Ersatzwort für das im Listenfeld ausgewählte Sonderzeichen eingetragen werden.
-
-==== Das Kombinationsfeld "Stufe" ====
-In diesem Kombinationsfeld kann eingestellt werden, ab welcher Stufe die Satzzeichen und die Sonderzeichen eine Ersetzung greifen soll.
+Um die aussprache eines Sonderzeichens zu verändern, wählen Sie es in der Liste der Symbole aus.
+Das Eingabefeld "Ersetzen durch" erlaubt Ihnen, den Text zu ändern, der an Stelle des Symbols angesagt wird.
+im Kombinationsfeld "Stufe" kann eingestellt werden, ab welcher Stufe Satz- und Sonderzeichen angesagt werden sollen..
 
 Um Symbole hinzuzufügen, benutzen Sie den Schalter hinzufügen.
 Geben Sie im erscheinenden Dialog das Symbol ein und drücken Sie den Schalter OK.
@@ -1128,8 +1183,7 @@ Geben Sie im erscheinenden Dialog das Symbol ein und drücken Sie den Schalter O
 
 Wenn Sie fertig sind, bestätigen Sie die Änderungen mit "ok" oder verwerfen Sie diese mittels "abbrechen".
 
-
-+++ Eingaben +++
++++ Eingaben +++[InputGestures]
 In diesem Dialog können Sie Eingaben (Tastenkombinationen, Tasten an einer Braillezeile, Aktionen an einem Touchscreen) an NVDA-Befehle zuweisen.
 
 Es werden nur unmittelbar zuweisbare Befehle angezeigt.
@@ -1150,9 +1204,8 @@ Um die Änderungen zu übernehmen, drücken Sie "ok" oder drücken Sie "abbreche
 
 
 ++ laden und speichern der Konfiguration ++
-Standardmäßig speichert NVDA die Einstellungen automatisch. 
+Standardmäßig speichert NVDA die Einstellungen automatisch beim beenden.
 Sie können dies jedoch im Einstellungsmenü in den allgemeinen Optionen ändern.
-
 Über "Konfiguration speichern" können Sie im NVDA-Menü die Konfiguration manuell speichern.
 
 Wenn Ihnen einmal ein Fehler bei der Konfiguration unterlaufen ist, können Sie über den Eintrag "Gespeicherte Konfiguration zurücksetzen" im NVDA-Menü diese wieder herstellen.
@@ -1184,8 +1237,9 @@ Dieser Dialog ist auch über eine Tastenkombination erreichbar:
 -
 %kc:endInclude
 
-Wenn Sie den Dialog öffnen, wird Ihnen eine Liste der vorhandenen Profile angezeigt und das aktive Profil ausgewählt.
-Außerdem werden Ihnen noch zusätzliche Informationen angezeigt wie z. B. die eingestellte Aktivierungsmethode (manuell oder per Trigger) oder der Bearbeitungsstatus.
+Das ehrste Element in diesem Fenster ist die Profil-Liste, in der Sie eins aus den vorhandenen Profilen auswählen können.
+Wenn Sie den Dialog öffnen ist das aktive Profil ausgewählt.
+Außerdem werden Ihnen noch zusätzliche Informationen angezeigt wie z. B. die eingestellte Aktivierungsmethode (manuell oder per Auslöser) oder der Bearbeitungsstatus.
 
 Über die Schalter "Umbenennen" oder "Löschen" können Sie ein Profil umbenennen oder löschen.
 
@@ -1197,29 +1251,29 @@ Um ein neues Profil zu erstellen, klicken Sie auf den Schalter "Neu".
 Über den erscheinenden Dialog können Sie einen Namen für das Profil vergeben.
 Außerdem können Sie bestimmen, wie dieses Profil verwendet werden soll.
 Wenn Sie vorhaben, das Profil manuell zu aktivieren, wählen Sie "Manuelle Aktivierung" aus.
-Wählen Sie anderenfalls einen Trigger aus, durch den das Profil automatisch aktiviert werden soll.
-Wenn Sie keinen Namen vergeben und einen Trigger auswählen, wird automatisch ein passender name für das Profil eingetragen.
-Weitere Informationen über die Trigger-Funktion finden Sie  [weiter unten #ConfigProfileTriggers].
+Wählen Sie anderenfalls einen Auslöser aus, durch den das Profil automatisch aktiviert werden soll.
+Wenn Sie keinen Namen vergeben und einen Auslöser auswählen, wird automatisch ein passender name für das Profil eingetragen.
+Weitere Informationen über die Funktion von Auslösern finden Sie  [weiter unten #ConfigProfileTriggers].
 
 Wenn Sie den Dialog mit OK schließen, wird das Profil erstellt und der Dialog Konfigurationsprofile geschlossen, so dass Sie das Profil bearbeiten können.
 
 +++ Manuelle Aktivierung +++[ConfigProfileManual]
 Sie können ein Konfigurationsprofil manuell aktivieren, indem Sie den Schalter "Manuell aktivieren" verwenden.
-Wenn Sie einmal ein Profil manuell aktiviert haben, sind die Triggers für automatisch aktivierte profile zwar weiterhin aktiv, Einstellungen in manuell aktivierten Profilen haben jedoch Vorrang.
+Wenn Sie einmal ein Profil manuell aktiviert haben, sind die Auslöser für automatisch aktivierte profile zwar weiterhin aktiv, Einstellungen in manuell aktivierten Profilen haben jedoch Vorrang.
 Beispiel 1: Gegeben sei ein automatisch aktiviertes Profil für die aktuelle Anwendung, in dem die Ansage von Links aktiviert ist. Außerdem sei ein manuell aktiviertes Profil gegeben, in dem die Ansage von Links deaktiviert ist. In diesem Fall werden Links nicht angesagt.
 Beispiel 2: Sie haben in einem automatisch aktivierten Profil für die aktuelle Anwendung die Stimmeneinstellungen geändert. In einem manuell aktivierten (und momentan aktiven) Profil haben Sie die Stimmeneinstellungen jedoch noch nie aufgerufen. In diesem Fall wird die Stimme ausgelöst durch das automatisch aktivierte Profil geändert.
 Jegliche Einstellungen, die Sie ab sofort ändern, werden im manuell aktivierten Profil gespeichert.
 Um ein manuell aktiviertes Profil wieder zu deaktivieren, klicken Sie auf den Schalter "Manuell deaktivieren".
 
-+++ Die Triggers +++[ConfigProfileTriggers]
-Mit diesem Schalter können Sie einen Trigger bestimmen, über den ein Profil automatisch aktiviert werden soll.
++++ Die Auslöser +++[ConfigProfileTriggers]
+Mit diesem Schalter können Sie einen Auslöser bestimmen, über den ein Profil automatisch aktiviert werden soll.
 
-Folgende Trigger stehen zur Verfügung:
+Folgende Auslöser stehen zur Verfügung:
 - Aktuelle Anwendung; wird ausgelöst, wenn Sie in die aktuelle Anwendung wechseln
 - Alles lesen; wird ausgelöst, sobald Sie den Befehl "Alles ansagen" verwenden.
 -
 
-Um das Profil zu bestimmen, das durch einen bestimmten Trigger aktiviert werden soll, wählen Sie zunächst den Trigger und anschließend das Profil aus.
+Um das Profil zu bestimmen, das durch einen bestimmten Auslöser aktiviert werden soll, wählen Sie zunächst den Auslöser und anschließend das Profil aus.
 Wenn Sie nicht möchten, dass ein bestimmtes Profil ausgewählt wird, wählen Sie "Standardkonfiguration" aus.
 
 Über den Schalter "Schließen" können Sie den Konfigurationsprofil-Dialog schließen.
@@ -1230,40 +1284,42 @@ Anderenfalls werden alle Einstellungen in jenem Profil gespeichert, das zuletztd
 Wenn Sie beispielsweise ein Profil für den Editor erstellt haben und sich momentan im Editor befinden, werden alle Einstellungen in diesem Profil gespeichert.
 Wenn Sie weder ein manuell aktiviertes noch ein durch einen Auslöser aktiviertes Profil erstellt haben, werden alle einstellungen in der Standardkonfiguration gespeichert.
 
-Um ein Profil zu bearbeiten, das an den Trigger "Alles ansagen" gekoppelt ist, müssen Sie dieses Profil zuvor [Manuell aktivieren #ConfigProfileManual].
+Um ein Profil zu bearbeiten, das an den Auslöser "Alles ansagen" gekoppelt ist, müssen Sie dieses Profil zuvor [Manuell aktivieren #ConfigProfileManual].
 
-+++ Trigger vorübergehend abschalten +++
-Wenn Sie ein manuell aktiviertes Profil bearbeiten wollen oder wenn Sie die Standardkonfiguration bearbeiten möchten, ohne von automatisch aktivierten Profilen gestört zu werden, können Sie über dieses Kontrollfeld alle Triggers temporär deaktivieren.
++++ Auslöser vorübergehend abschalten +++
+Manchmal ist es hilfreich, temporär alle Auslöser zu deaktivieren.
+ Ein Beispiel: Sie möchten ein manuell aktiviertes Profil bearbeiten oder die Standardkonfiguration bearbeiten, ohne von automatisch aktivierten Profilen gestört zu werden.
+Dies erreichen Sie über die Option "Alle Auslöser temporär deaktivieren" im Dialog Konfigurationsprofile."
 
 ++ Speicherorte für Konfigurationsdateien ++
 In der portablen Version von NVDA werden sämtliche Einstellungen, die benutzerdefinierten Anwendungsmodule und die angepassten Treiber im Ordner "userConfig" unterhalb des Stammordners von NVDA abgelegt.
 
 Bei den installierten Versionen von NVDA werden sämtliche Einstellungen, die benutzerdefinierten Anwendungsmodule und die angepassten Treiber in einem speziellen Ordner in dem Ordner des angemeldeten Benutzers in dessen Windows-Profil abgelegt.
-Das bedeutet, dass jeder Benutzer im System so seine individuellen Einstellungen verwalten kann. Um an den Ordner mit seiner jeweiligen Konfiguration über das Startmenü zu gelangen, gehen Sie auf "Programme -> NVDA -> Verzeichnis der Benutzereinstellungen durchsuchen...".
+Dies bedeutet, dass jeder Benutzer im System so seine individuellen Einstellungen verwalten kann.
+Um an das Einstellungsverzeichnis einer installierten Version von NVDA zu gelangen, öffnen Sie das Startmenü und gehen auf "Programme -> NVDA -> Verzeichnis der Benutzereinstellungen durchsuchen...".
 
-Die Einstellungen von NVDA für das Anmeldefenster oder wenn die Benutzerkontensteuerung aktiv ist, werden im Ordner "systemConfig" im Installationsordner von NVDA abgelegt.
-
+Die Einstellungen von NVDA für das Anmeldefenster und die Sicherheitsabfragen der Benutzerkontensteuerung werden im Ordner "systemConfig" im Installationsordner von NVDA abgelegt.
 Für gewöhnlich sollte diese Konfiguration unberührt bleiben!
 Um NVDA im Anmeldebildschirm und auch in den Sicherheitsmeldungen der Benutzerkontensteuerung anzupassen, legen Sie ihre gewünschten NVDA-Einstellungen fest, während Sie angemeldet sind, speichern Sie die Konfiguration und verwenden Sie den Schalter "Aktuell gespeicherte Einstellungen im Anmeldebildschirm und bei Sicherheitsmeldungen verwenden (erfordert Administrationsberechtigungen!)", den Sie in den allgemeinen Einstellungen finden.
 
-
-
-+ Die Extra-Tools +
++ Extras +
 
 ++ Der Protokollbetrachter ++
 Den Protokollbetrachter finden Sie im NVDA-Menü unter "Extras". Dieses Werkzeug gibt Ihnen die Möglichkeit, alles was seit dem Start von NVDA intern abläuft, einzusehen.
 
 Den Protokollinhalt können Sie auch abspeichern oder den Betrachter aktualisieren, so dass lediglich die Einträge angezeigt werden, die seit dem Aufruf des Protokollbetrachters aufgelistet sind.
-
-Diese Optionen sind entsprechend im Menü des Betrachters verfügbar.
+Diese Optionen sind entsprechend im Menü "Protokoll" des Betrachters verfügbar.
 
 ++ Der Sprachbetrachter ++
 Für sehende Softwareentwickler oder für diejenigen, die NVDA anderen Sehenden vorführen möchten, ist ein freischwebendes Fenster verfügbar, dass Ihnen anzeigt, was alles von NVDA gegenwärtig gesprochen wird.
 
-Den Sprachbetrachter können Sie im NVDA-Menü unter "Extras einschalten und auch wieder ausschalten.
+Um den Sprachbetrachter einzuschalten, aktivieren Sie den Eintrag Sprachbetrachter, welchen Sie im Menü Extras des NVDA-Menü's finden.
+Deaktivieren Sie den Menüpunkt, um ihn wieder auszuschalten.
 
 Während der Sprachbetrachter eingeschaltet ist, aktualisiert sich sogleich der Text beim Sprechen.
 Wenn Sie in das Fenster des Betrachters klicken, unterbricht NVDA augenblicklich die weitere Aktualisierung der gesprochenen Textdarstellungen, so dass Sie nun die entsprechenden Einträge markieren und in die Zwischenablage kopieren können.
+
+Um den Sprachbetrachter per Tastenkombination ein- bzw. auszuschalten, müssen Sie diesem mittels des []Dialog Eingaben #InputGestures] eine eigene Tastenkombination zuweisen.
 
 ++ Erweiterungen verwalten ++
 Der Dialog "Erweiterungen verwalten", den Sie über das Untermenü Extras im NVDA-Menü erreichen, erlaubt Ihnen, Erweiterungspakete für NVDA zu installieren und zu deinstallieren. 
@@ -1275,7 +1331,7 @@ Falls für diese Erweiterung eine Hilfedatei verfügbar ist, können Sie diese m
 
 Um weitere Erweiterungen herunterzuladen und zu installieren, klicken Sie auf den Schalter "Erweiterungen herunterladen...".
 Hiermit wird die Webseite für NVDA-Erweiterungen http://addons.nvda-project.org geöffnet.
-Falls Sie NVDA installiert haben, können Sie Erweiterungen direkt vom Browser aus installieren.
+Falls NVDA installiert ist und gerade verwendet wird, können Sie Erweiterungen direkt vom Browser aus installieren.
 Anderenfalls müssen Sie die Erweiterung speichern und wie unten beschrieben vorgehen, um eine Erweiterung zu installieren.
 
 Um eine Erweiterung zu installieren, klicken Sie auf den Schalter "Installieren...".
@@ -1292,20 +1348,21 @@ Sie werden gefragt, ob Sie dies wirklich wünschen.
 Genau wie beim Installieren von Erweiterungen muss NVDA auch hier neu gestartet werden, damit die Erweiterung tatsächlich entfernt wird.
 Solange Sie den Neustart von NVDA nicht durchführen, wird im Erweiterungs-Manager in der Spalte "Status" der Zustand "Entfernen" angezeigt.
 
-Die Erweiterungsverwaltung enthält außerdem noch den Schalter "schließen", um den Dialog zu schließen. Wenn Sie diesen Schalter zu einem Zeitpunkt drücken, da noch Erweiterungen installiert oder entfernt werden müssen, werden Sie gefragt, ob NVDA neu gestartet werden soll, damit die Änderungen wirksam werden.
+Die Erweiterungsverwaltung enthält außerdem noch den Schalter "schließen", um den Dialog zu schließen.
+Wenn Sie diesen Schalter zu einem Zeitpunkt drücken, jedoch Erweiterungen installiert oder entfernt werden müssen, werden Sie gefragt, ob NVDA neu gestartet werden soll, damit die Änderungen wirksam werden.
 
 In früheren NVDA-Versionen war es möglich, den Funktionsumfang durch Plug-ins, Anwendungsmodule oder Treiber zu erweitern, indem diese in das benutzerspezifische Konfigurationsverzeichnis kopiert wurden. 
 Auch wenn NVDA solche Module immer noch lädt, werden diese nicht im Erweiterungs-Manager angezeigt. 
 Es ist daher zu empfehlen, derartig «untergeschobene» Dateien zu entfernen und eine passende Erweiterung zu installieren, sofern verfügbar.
 
-++ Die Python-Konsole ++
+Um denDialog Erweiterungen verwalten per Tastenkombination aufrufen zu können, müssen Sie diesem eine Tastenkombination zuweisen. Verwenden Sie hierzu den [Dialog Eingaben #InputGestures]
+
+++ Python-Konsole ++
 Die in NVDA integrierte Python-Konsole ist im NVDA-Menü unter "Extras" zu finden. Sie ist ein nützliches Entwicklungswerkzeug zum beheben von Fehlern, zum allgemeinen Überprüfen der internen Komponente in NVDA sowie zur Überprüfung der Hierarchie der Zugänglichkeit einer Anwendung.
 Für weitere Informationen sehen Sie sich bitte den [Teilbereich "Entwicklung" auf der englischen Website http://community.nvda-project.org/wiki/Development] an.
 
 ++ Plugins erneut laden ++
 Dieser Eintrag, einmal aktiviert, lädt alle Anwendungsmodule sowie globale Plugins neu ohne, dass NVDA extra neu gestartet wird.
-
-
 
 + Unterstützte Sprachausgaben +[SupportedSpeechSynths]
 Dieser Bereich beinhaltet Informationen über die in NVDA unterstützten Sprachausgaben.
@@ -1322,30 +1379,29 @@ Somit werden rund 43 unterschiedliche Sprachen unterstützt.
 Es gibt auch eine Vielzahl von Varianten, womit der Klang der Stimme geändert werden kann.
 
 ++ Microsoft Speech API Version 4 (SAPI 4.0) ++
-Die SAPI 4 ist ein älterer Microsoft-Standard für Softwaresprachausgaben.
-Viele Sprachausgaben, die noch diesem Standard entsprechen, können käuflich oder kostenlos von verschiedenen Firmen und Webseiten erworben oder heruntergeladen werden.
-Ihr System wird möglicherweise nicht mehr eine SAPI4-Stimme vorinstalliert haben.
-Wenn Sie diese Sprachausgaben mit NVDA dennoch benutzen möchten und im Dialog [Stimmeneinstellung #VoiceSettings] oder dem [Einstellungsring der Sprachausgaben #SynthSettingsRing] all diese Stimmen von der Engine der SAPI 4 aufgelistet bekommen möchten, benötigen Sie die entsprechende Engine. Download zur Nachinstallation hier: http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+SAPI 4 ist ein älterer Microsoft-Standard für Softwaresprachausgaben.
+Viele Sprachausgaben, die noch diesem Standard entsprechen, können von verschiedenen Firmen käuflich erworben oder von Internetseiten kostenlos heruntergeladen werden.
+Wenn Sie diese Sprachausgabe mit NVDA verwenden, werden die installierten Sapi4-Stimmen aller Hersteller in einer Liste angezeigt. Dies gilt für den Dialog [Stimmeneinstellungen #VoiceSettings] sowie für den [Sprachausgaben-Einstellungsring #SynthSettingsRing].
+
+Falls Sie SAPI4-Stimmen installiert haben, die Sprachausgabe jedoch nicht in der Liste der Sprachausgaben zu finden ist, installieren Sie bitte die Sapi4-Engine, die Sie [hier #http://activex.microsoft.com/activex/controls/sapi/spchapi.exe] herunterladen können.
 
 ++ Microsoft Speech API Version 5 (SAPI 5.x) ++
-Die SAPI 5 ist ein Microsoft-Standard für Softwaresprachausgaben.
-Viele Sprachausgaben, die diesem Standard entsprechen, können käuflich oder kostenlos von verschiedenen Firmen und Webseiten erworben oder heruntergeladen werden.
-Ihr System wird wahrscheinlich bereits mindestens eine SAPI5-Stimme vorinstalliert haben.
-Wenn Sie diese Sprachausgaben mit NVDA benutzen möchten, werden im Dialog [Stimmeneinstellung #VoiceSettings] oder dem [Einstellungsring der Sprachausgaben #SynthSettingsRing] all diese Stimmen von der Engine der SAPI 5 aufgelistet,
-die auf Ihrem System gefunden werden können.
+SAPI 5 ist ein Microsoft-Standard für Softwaresprachausgaben.
+Viele Sprachausgaben, die diesem Standard entsprechen, können von verschiedenen Firmen käuflich erworben oder von Internetseiten kostenlos  heruntergeladen werden. Ihr System wird wahrscheinlich bereits mindestens eine SAPI5-Stimme vorinstalliert haben.
+Wenn Sie diese Sprachausgaben mit NVDA benutzen möchten, werden im Dialog [Stimmeneinstellung #VoiceSettings] oder dem [Einstellungsring der Sprachausgaben #SynthSettingsRing] alle Stimmen von der SAPI5-Engine aufgelistet, die auf Ihrem System gefunden werden können.
 
 ++ Microsoft Speech Platform ++
-Die "Microsoft Speech Platform" stellt Stimmen für viele Sprachen zur Verfügung, welche normalerweise in der Entwicklung für serverbasierte Sprachanwendungen zum Einsatz kommen. Diese Stimmen können auch in NVDA eingebunden werden.
+Die "Microsoft Speech Platform" stellt Stimmen für viele Sprachen zur Verfügung, welche normalerweise in der Entwicklung für serverbasierte Sprachanwendungen zum Einsatz kommen.
+Diese Stimmen können auch in NVDA eingebunden werden.
 
 Um diese Stimmen verwenden zu können, müssen Sie folgende 2 Komponenten installieren:
 - Microsoft Speech Platform - Server Runtime (Version 11), x86: http://www.microsoft.com/download/en/details.aspx?id=27225
-- Microsoft Speech Platform - Server Runtime Languages (Version 11), x86: http://www.microsoft.com/download/en/details.aspx?id=27224
+- Microsoft Speech Platform - Server Runtime Sprachen (Version 11), x86: http://www.microsoft.com/download/en/details.aspx?id=27224
+ - Diese Webseite enthält viele Dateien für Sprachein- und Ausgabe.
+ Suchen Sie sich die tts-Dateien passend zu der von Ihnen gewünschten Sprache heraus.
+ Beispiel: Die Datei MSSpeech_TTS_de-DE_Hedda.msi ist eine deutsche Stimme.
+ -
 -
-
-Diese Webseite enthält viele Dateien für Sprachein- und Ausgabe.
-Suchen Sie sich die tts-Dateien passend zu der von Ihnen gewünschten Sprache heraus.
-Beispiel: Die Datei MSSpeech_TTS_de-DE_Hedda.msi ist eine deutsche Stimme.
-
 
 ++ AudioLogic TTS 3 ++
 Dies ist eine kommerzielle Sprachausgabe speziell für die italienische Sprache.
@@ -1353,7 +1409,6 @@ Um sie in NVDA nutzen zu können, müssen sie die Sprachausgabe auf Ihrem System
 Für weitere Informationenbesuchen Sie bitte die AudioLogic-Website unter http://www.audiologic.it/.
 
 Diese Sprachausgabe unterstützt die [Buchstabierfunktionalität #VoiceSpellingFunctionality] nicht.
-
 
 ++ Nuance Vocalizer für NVDA ++
 Nuance Vocalizer ist eine kommerzielle, hochwertige Sprachausgabe, die von Nuance Communications, Inc. entwickelt und von Tiflotecnia, Lda. als NVDA-Erweiterung verpackt wurde.
@@ -1363,14 +1418,13 @@ Alle Komponenten von Vocalizer sowie alle Stimmen liegen als NVDA-Erweiterungen 
 Weitere Informationen über Vocalizer und dessen Installation finden Sie auf der Webseite des Händlers unter [http://www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
 Ein Teil des Erlöses aus dem Verkauf von Vocalizer fließt als Spende an NV Access, um die Weiterentwicklung von NVDA zu fördern.
 
-
 + Unterstützte Braillezeilen +[SupportedBrailleDisplays]
 Dieser Bereich beinhaltet Informationen über Braillezeilen, die mit NVDA betrieben werden können.
 
 ++ Die Focus/PAC-Mate-Serien von FreedomScientific ++
 Die Braillezeilen Focus 40 Blue und alle PAC-Mate-Zeilen von der amerikanischen Firma [FreedomScientific http://www.freedomscientific.com/] werden unterstützt.
 Die Treiber für die Braillezeilen von FreedomScientific müssen auf Ihrem System vorab installiert sein.
-Falls Sie sie noch nicht installiert haben, können Sie sie von der Website [hier http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp] herunterladen.
+Falls Sie sie noch nicht installiert haben, können Sie die Treiber von der Website [hier http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp] herunterladen.
 Obwohl auf dieser Seite nur Treiber für die Focus 40 Blue aufgeführt sind, werden die Treiber für alle Braillezeilen gleichermaßen von FreedomScientific unterstützt.
 Wenn Sie eine 64-Bit-Version von windows einsetzen und die Treiber bereits von einem anderen screenreader installiert wurden, müssen Sie wahrscheinlich trotzdem die Treiber von diesem Link installieren, weil die Dateien, die NVDA benötigt wahrscheinlich nicht von dem anderen Screenreader installiert wurden.
 
@@ -1460,11 +1514,9 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 | Alt+Tabulatortaste | Sp2+Sp4 |
 %kc:endInclude
 
-
 ++ HandyTech-Braillezeilen ++
 Alle Braillezeilen der Firma [HandyTech GmbH http://www.handytech.de/] werden von NVDA via USB und BlueTooth unterstützt.
 Für einige USB-Zeilen werden die Treiber auf Ihrem System für den USB-Port von HandyTech benötigt.
-Ferner können Sie die Universaltreiber [hier ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe] herunterladen.
 
 Die Eingabe von Braille-Zeichen wird noch nicht unterstützt.
 
@@ -1488,7 +1540,6 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 | HandyTech-Konfiguration | B4+B8 |
 %kc:endInclude
 
-
 ++ MDV Lilli ++
 Die Lilli-Braillezeile von der italienischen Firma [MDV http://www.mdvbologna.it/] wird unterstützt.
 Sie benötigen keine installierten Treiber, um diese Zeile verwenden zu können.
@@ -1509,7 +1560,6 @@ Bitte lesen sie in der Dokumentation zu ihrer Braillezeile nach, wo die entsprec
 | Alt+Umschalt+Tabulatortaste | SUP |
 %kc:endInclude
 
-
 ++ Braillezeilen von Baum/HumanWare/APH ++
 einige  [Baum http://www.baum.de/], [HumanWare http://www.humanware.de/] und [APH http://www.aph.org/]-Braillezeilen werden unterstützt, sofern sie per USB oder Bluetooth mit dem Rechner verbunden werden.
 dies sind u. a.:
@@ -1517,7 +1567,6 @@ dies sind u. a.:
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
-
 Einige andere Baum-Zeilen könnten ebenfalls funktionieren, dies wurde allerdings noch nicht getestet.
 
 Falls die Braillezeile über USB angeschlossen wird, müssen Sie zuerst den Zeilentreiber des Herstellers installieren.
@@ -1542,7 +1591,6 @@ Für Braillezeilen, die einen Joystick besitzen:
 | Eingabetaste | Auswahl |
 %kc:endInclude
 
-
 ++ Hedo Profiline USB ++
 Die Profiline USB der Firma [Hedo Reha-Technik  http://www.hedo.de/] werden unterstützt.
 Zuerst müssen Sie den USB-Treiber des Herstellers installieren.
@@ -1560,7 +1608,6 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Alles ansagen | B6 |
 %kc:endInclude
 
-
 ++ Hedo MobilLine USB ++
 Die MobilLine USB der Firma [Hedo Reha-Technik http://www.hedo.de/] werden unterstützt.
 Zuerst müssen Sie den USB-Treiber des Herstellers installieren.
@@ -1577,7 +1624,6 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Kopplung der Braillezeile umschalten | K2 |
 | Alles ansagen | B6 |
 %kc:endInclude
-
 
 ++ HumanWare Brailliant BI/B-Serie ++
 Die Braillezeilen der Serien BI und bB von  [HumanWare http://www.humanware.de/], so u.a.  die BI 32, BI 40 und B 80, werden unterstützt, sofern sie via USB oder Bluetooth verbunden sind.
@@ -1608,7 +1654,6 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Alt+Tabulatortaste | Leertaste+Punkt2+Punkt3+Punkt4+Punkt5 (Leertaste+T) |
 | Alles ansagen | C1+C2+C3+C4+C5+C6 |
 %kc:endInclude
-
 
 ++ HIMS Braille Sense/Braille EDGE Serie ++
 NVDA unterstützt die Braillezeilenmodelle Braile Sense und Braille Edge von [Hims http://www.hims-inc.com/], wahlweise mit USB- oder Bluetooth-Anbindung. 
@@ -1673,7 +1718,6 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Windows+D | Punkt1+Punkt4+Punkt5+F1 |
 %kc:endInclude
 
-
 ++ HIMS SyncBraille ++
 NVDA unterstützt das Braillezeilenmodell Braillesync von  [HIMS http://www.hims-inc.com/].
 Sie müssen den USB-treiber von HIMS installieren, damit diese Braillezeile funktioniert.
@@ -1687,11 +1731,9 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Cursor zum Braillemodul ziehen | Routingtaste |
 %kc:endInclude
 
-
-++ Seika ++
-Die Braillezeilen der Seika Versionen 3, 4 und 5 mit je 40 Modulen und die
-Seika 80 mit 80 Modulen werden unterstützt. Information zu diesen Zeilen
-erhalten Sie auf [[http://www.seika-braille.com]]
+++ Seika-Braillezeilen ++
+Die Braillezeilen der Seika Versionen 3, 4 und 5 mit je 40 Modulen und die Seika 80 mit 80 Modulen der Firma [Nippon Telesoft #http://www.nippontelesoft.com/]werden unterstützt.
+Informationen zu diesen Zeilen erhalten Sie auf [[http://www.seika-braille.com]]
 Zuerst müssen Sie den USB-Treiber des Herstellers von der mitgelieferten CD-ROM installieren.
 
 Die folgenden Tastenkonbinationen für diese Braillezeile sind in NVDA verfügbar:
@@ -1711,7 +1753,7 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Cursor zum Braille-Modul bewegen | Routingtaste |
 %kc:endInclude
 
-++ Papenmeier ++
+++ Papenmeier Braillex (neuere Modelle) ++
 Folgende Braillezeilen werden unterstützt:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2D80s, EL 70s, EL 66s (USB)
@@ -1720,10 +1762,9 @@ Folgende Braillezeilen werden unterstützt:
 -
 
 Falls BrxCom installiert ist, wird es benutzt.
-BrxCom ist ein Programm, welches unabhängig von Screenreadern Brailleeingabe ermöglicht. 
+BrxCom ist ein Programm, welches  Brailleeingabe unabhängig von Screenreadern ermöglicht. 
 Eine neue Version von BrxCom, welche mit NVDA läuft wird in Kürze von der Firma Papenmeier veröffentlicht.
-Bei den Braillezeilen Braillex Trio, Braillex Live 20 und Braillex Live ist Braille-Eingabe jedoch auch ohne BrxCom möglich.
-Die Braille-Eingabe funktioniert auch mit dem Modell Live plus, jedoch nur mit BRXCom.
+Die Braille-Eingabe ist bei den Modellen Trio und Braillex Live verfügbar.
 
 Die meisten Braillezeilen besitzen eine Navigationsleiste (EAB), welche eine intuitive und schnelle Bedienung ermöglicht.
 Die Navigationsleiste kann in vier Richtungen bewegt werden, wobei sie in der Regel zwei Schalterstellungen je Richtung hat.
@@ -1733,7 +1774,7 @@ Die Zeilen der C-Serie und einige weitere verfügen über eine doppelte Routingr
 Die zweite Schalterstellung der Navigationsleiste wird bei der C-Serie ausgelöst, indem eine Taste der oberen Routing Reihe gedrückt gehalten und gleichzeitig die EAB betätigt wird.
 Die Live-Serien sind nur mit einer Routing-Reihe ausgestattet, die EAB hat in alle Richtungen nur eine Schalterposition.
 Die zweite Schalterstellung kann mittels Routing+EAB in die entsprechende Richtung emuliert werden
- Längeres Drücken von Auf, Ab, Links, Rechts, EAB löst die zugehörige Aktion mehrfach aus.
+Längeres Drücken von Auf, Ab, Links, Rechts, EAB löst die zugehörige Aktion mehrfach aus.
 
 Die folgenden Schalter gibt es auf der Braillezeile:
 || Name | Taste |
@@ -1750,7 +1791,7 @@ Die folgenden Schalter gibt es auf der Braillezeile:
 | Ab | Navigationsleiste einmal nach unten |
 | Ab2 | Navigationsleiste zweimal nach unten |
 
-Folgende Tastenkombinationen sind bei Papenmeier-Braillezeilen verfügbar:
+Folgende Tastenkombinationen sind bei Papenmeier-Braillezeilen in Kombination mit NVDA verfügbar:
 %kc:beginInclude
 || Name | Taste |
 | Braillezeile zurückscrollen | Links |
@@ -1760,7 +1801,7 @@ Folgende Tastenkombinationen sind bei Papenmeier-Braillezeilen verfügbar:
 | Cursor zum Braille-Modul ziehen | Routingtaste |
 | Liest das Zeichen unter dem Cursor vor | L1 |
 | Führt die Standardaktion aus | L2 |
-| Koppelt Braillezeile wahlweise an Fokus oder Anzeige | R2 |
+| Koppelt Braillezeile wahweise an Fokus oder Anzeige | R2 |
 | Liest die Titelzeile des aktiven Fensters vor | L1+Auf |
 | Liest die Statusleiste des aktiven Fensters vor | L2+Ab |
 | Bewegt das Navigator-Objekt zum übergeordneten Objekt | Auf2 |
@@ -1777,9 +1818,9 @@ Dies sind von links nach rechts:
 - Leertaste
 - Nach rechts springen (RT)
 -
-
 Die Taste RT wird momentan noch nicht verwendet.
 Die inneren Tasten sind als Leertasten belegt.
+
 %kc:beginInclude
 || Name | Taste |
 | Rücktaste | Punkt7 |
@@ -1795,15 +1836,13 @@ Die inneren Tasten sind als Leertasten belegt.
 | Tab | Leertaste+Punkte 3 7 |
 %kc:endInclude 
 
-++ Papenmeier Braille BRAILLEX älterer Modelle ++
+++ Papenmeier BRAILLEX ältere Modelle ++
 Die folgenden Braillezeilen werden unterstützt:
 - BRAILLEX EL 80, EL 2D-80, EL 40 P
 - BRAILLEX Tiny, 2D Screen
 -
 
-
-=== Allgemeines ===
-Bedenken Sie, dass diese Braillezeilen nur seriell angeschlossen werden können.
+Beachten Sie, dass diese Braillezeilen nur seriell angeschlossen werden können.
 Hierfür müssen Sie in den Braile-Einstellungen von NVDA den Anschluss angeben, mit dem die Braillezeile verbunden ist.
 
 Einige dieser Braillezeilenmodelle besitzen eine Navigationsleiste, die eine schnelle und intuitive Bedienung ermöglicht.
@@ -1830,43 +1869,26 @@ Im Allgemeinen gibt es auf allen Braillezeilen die folgenden Tasten:
 Die folgenden Befehle sind in NVDA verfügbar:
 
 %kc:beginInclude
-
-
-=== Geräte mit Navigationsleiste ===
+Geräte mit Navigationsleiste
 || Name | Taste |
 | Braillezeile zurückscrollen | Links |
 | Braillezeile vorwärtsscrollen | Rechts |
 | Braillezeile zur vorherigen Zeile bewegen | Auf |
 | Braillezeile zur nächsten Zeile bewegen | Ab |
 | Cursor zum ausgewählten Braille-Modul bewegen | Routingtaste |
-| Aktuelles Zeichen am NVDA-Cursor angeben | L1 |
+| Aktuelles Zeichen am NVDA-Cursor ausgeben | L1 |
 | Aktuelles Navigator-Objekt aktivieren | L2 |
-| Zwischen Flächenmodus und Objektnavigation umschalten | R1 |
 | Titelzeile ausgeben | L1+Auf |
 | Statuszeile ausgeben | L2+Ab |
 | Zum übergeordneten Objekt springen | Auf2 |
 | Zum ersten untergeordneten Objekt springen | Ab2 |
 | Zum vorherigen objekt bewegen | Links2 |
 | Zum nächsten Objekt bewegen | Rechts2 |
-| Textformatierungen angeben | Obere Routingreihe |
+| Textformatierungen ausgeben | Obere Routingreihe |
 
-
-=== BRAILLEX Tiny ===
-Bei der Braillex Tiny sind die von NVDA zurückgegebenen Tastennamen wie folgt den Daumentasten zugeordnet:
-|| Name | Daumentaste |
-| L1 | FN - Funktion |
-| L2 | C - Cursor |
-| Links | LR - Lesen rückwärts |
-| Auf | O - Oben |
-| R2 | H - Home |
-| Ab | U - Unten |
-| Rechts | LV - Lesen vorwärts |
-| R1 | B - Braille |
-| Attribut | A - Attribute |
-
-Folgende NVDA-Befehle sind für diese Braillezeile verfügbar:
+BRAILLEX Tiny
 || Name | Taste |
-| Aktuelles Zeichen am NVDA-Cursor angeben | L1 |
+| Aktuelles Zeichen am NVDA-Cursor ausgeben | L1 |
 | Aktuelles Navigator-Objekt aktivieren | L2 |
 | Braillezeile zurückscrollen | Links |
 | Braillezeile vorwärtsscrollen | Rechts |
@@ -1881,16 +1903,14 @@ Folgende NVDA-Befehle sind für diese Braillezeile verfügbar:
 | Titelzeile der aktuellen Anwendung anzeigen | L1+Auf |
 | Statuszeile anzeigen | L2+Ab |
 
-
-=== BRAILLEX 2D Screen ===
+BRAILLEX 2D Screen
 || Name | Taste |
-| Aktuelles Zeichen am NVDA-Cursor angeben | L1 |
+| Aktuelles Zeichen am NVDA-Cursor ausgeben | L1 |
 | Aktuelles Navigator-Objekt aktivieren | L2 |
 | Kopplung der Braillezeile konfigurieren | R2 |
 | Textformatierungen angeben | ReportF |
 | Braillezeile zur vorherigen Zeile bewegen | Auf |
 | Braillezeile zurückscrollen | Links |
-| Zwischen Flächenmodus und Objektnavigation umschalten | R1 |
 | Braillezeile vorwärtsscrollen | Rechts |
 | Braillezeile zur nächsten Zeile bewegen | Ab |
 | Zum nächsten Objekt bewegen | Links2 |
@@ -1898,8 +1918,6 @@ Folgende NVDA-Befehle sind für diese Braillezeile verfügbar:
 | Zum ersten untergeordneten Objekt bewegen | Ab2 |
 | Zum vorherigen Objekt bewegen | Rechts2 |
 %kc:endInclude
-
-
 
 ++ HumanWare BrailleNote ++
 NVDA unterstützt die BrailleNote-Modelle von [HumanWare http://www.humanware.com] sofern diese als Braillezeilen betrieben werden.
@@ -1949,6 +1967,41 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo sich die entspr
 | Eingabehilfe ein-/ausschalten | Leertaste+Punkt2+Punkt3+Punkt6 (Leertaste+tief gestelltes h) |
 %kc:endInclude
 
+++ EcoBraille ++
+NVDa unterstützt die Ecobraille von  [ONCE http://www.once.es/].
+die folgenden Modelle werden unterstützt:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+In den Braille-Einstellungen von NvDA können Sie den Anschluss festlegen, mit dem die Braillezeile verbunden ist.
+
+Folgende Tasten(Kombinationen) sind bei Verwendung der Ecobraille-Modelle verfügbar:
+Bitte sehen Sie in der [Dokumentation zur Ecobraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] nach, um zu erfahren, wo die entsprechenden Tasten zu finden sind.
+
+%kc:beginInclude
+|| Name | Taste |
+| Braillezeile zurückscrollen | T2 |
+| Braillezeile vorwärtsscrollen | T4 |
+| Braillezeile zur vorigen Zeile bewegen | T1 |
+| Braillezeile zur nächsten Zeile scrollen | T5 |
+| Cursor zum ausgewählten Braillemodul bewegen | Routing |
+| aktuelles Navigatorobjekt aktivieren | T3 |
+| zum nächsten Darstellungsmodus wechseln | F1 |
+| zum übergeordneten Objekt bewegen | F2 |
+| zum vorigen Darstellungsmodus wechseln | F3 |
+| zum vorigen Objekt bewegen | F4 |
+| aktuelles Objekt ausgeben | F5 |
+| zum nächsten Objekt bewegen | F6 |
+| zum Fokus bewegen | F7 |
+| zum ersten untergeordneten Objekt bewegen | F8 |
+| Systemfokus Bzw. Cursor zum aktuellen Navigatorobjekt bewegen | F9 |
+| Position des NVDA-Cursors angeben | F0 |
+| Kopplung der Braillezeile umschalten | A |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] ist ein separates Programm, mit dem Sie viele weitere Braillezeilen ansteuern können.
 Wenn Sie dies vorhaben, installieren Sie [BRLTTY für Windows http://brl.thefreecat.org/brltty/].
@@ -1959,7 +2012,7 @@ Bei Braillezeilen, die eine eigene Braille-Tastatur besitzen, arbeitet BRLTTY di
 Die Einstellung der Braille-Eingabetabelle innerhalb von NVDA ist daher wirkungslos.
 
 Folgende BRLTTY-Befehle wurden an NVDA zugewiesen.
-Bitte lesen Sie hierzu die [BRLTTY-Dokumentation für Tastaturtabellen http://mielke.cc/brltty/doc/drivers/] für Informationen darüber, wie BRLTTY-Befehle an Braillezeilentasten zugewiesen werden.
+Bitte lesen Sie hierzu die [BRLTTY-Dokumentation für Tastaturtabellen http://mielke.cc/brltty/doc/KeyTables/] für Informationen darüber, wie BRLTTY-Befehle an Braillezeilentasten zugewiesen werden.
 %kc:beginInclude
 || Name | BRLTTY-Befehl |
 | Braillezeile zurückscrollen | fwinlt (eine Zeilenlänge nach links bewegen) |
@@ -1969,9 +2022,9 @@ Bitte lesen Sie hierzu die [BRLTTY-Dokumentation für Tastaturtabellen http://mi
 | Cursor zum Braille-Modul ziehen | Routingtaste (Cursor zum Zeichen bewegen) |
 %kc:endInclude
 
-
 + Abkürzungen für Steuerelementtypen und Statusanzeigen in Braille +
 Damit möglichst viele Daten auf der Braillezeile Platz finden, wurden folgende Abkürzungen für Steuerelementtypen und Statusanzeigen festgelegt.
+
 || Abkürzung | Steuerelementtyp |
 | sltr | Schalter |
 | akl | Konbinationsfeld |
@@ -2006,17 +2059,7 @@ Für die folgenden Statusanzeigen wurden ebenfalls Abkürzungen festgelegt:
 | mrk | Wird angezeigt, wenn ein Objekt ausgewählt ist. |
 | #> | Wird angezeigt, wenn ein Objekt ein Untermenü besitzt. |
 
-
 + Erweiterte Themen +
-
-++ Erweiterte Anpassung der Aussprache von Satz- und Sonderzeichen ++
-Es gibt über den [Dialog zur Aussprache von Satz- und Sonderzeichen #SymbolPronunciation] hinaus noch weitere Möglichkeiten, die Aussprache von Satzzeichen zu beeinflussen. Sie können beispielsweise veranlassen, das bestimmte Zeichen unverarbeitet an die Sprachausgabe weitergegeben werden, um die Betonung zu beeinflussen oder Sie können weitere benutzerdefinierte Symbole hinzufügen.
-
-Hierfür müssen Sie die Symboldefinitionsdatei bearbeiten, die sich im Konfigurationsverzeichnis von NVDA des in Windows angemeldeten Benutzers befindet. 
-Der Name der Datei hat das Format "symbols-xx.dic", wobei xx der zweistellige Sprachencode ist.
-Das Format der Datei ist im Entwicklerhandbuch dokumentiert, welches Sie in englischer Sprache im [Abschnitt für Entwickler auf der NVDA-Webseite http://community.nvda-project.org/wiki/Development] finden können.
-Hinweis: Es ist Anwendern jedoch nicht möglich, komplexe Symbole zu definieren.
-
 
 ++ Befehlszeilenoptionen ++[CommandLineOptions]
 Mit Hilfe von Befehlszeilenoptionen können Sie das Verhalten von NVDA beeinflussen.
@@ -2029,19 +2072,15 @@ So können Sie beispielsweise feststellen, ob ein Problem durch eine bestimmte E
 
 Mit dem folgenden Befehl können Sie über den Dialog "ausführen" eine laufende Instanz von NVDA beenden:
 
-```
 nvda -q
-```
 
-Einige Befehlszeilenoptionen besitzen eine kurze und eine Lange Form.
+Einige Befehlszeilenoptionen besitzen eine kurze und eine Lange Form und widerum einige nur eine lange Form..
 Die Kurzformen mehrerer Optionen können beispielsweise wie folgt kombiniert werden:
 | nvda -rm | Dieser Aufruf wird die laufende Instanz von NVDA beenden und eine neue instanz mit deaktivierten Klängen starten. |
 | nvda -rm --disable-addons | Siehe oben; zusätzlich werden alle Erweiterungen deaktiviert |
 
 Einige Optionen akzeptieren zusätzliche Parameter, mit denen Sie z. B. den Umfang der Protokollierung oder den Namen einer Konfigurationsdatei angeben können.
-Die Parameter müssen durch ein Leerzeichen von der Option getrennt angegeben werden, wenn Sie die Kurzform verwenden. Wenn Sie die Langform benutzen, müssen Sie den Parameter mit einem Gleichheitszeichen von der Option trennen.
-
-Beispiele:
+Die Parameter müssen durch ein Leerzeichen von der Option getrennt angegeben werden, wenn Sie die Kurzform verwenden. Wenn Sie die Langform benutzen, müssen Sie den Parameter mit einem Gleichheitszeichen von der Option trennen. Beispiele:
 | nvda -l 10 | Startet NVDA mit der Protokollierungsstufe "Fehlerkorrektur" |
 | nvda --log-file=c:\nvda.log |  Speichert das Protokoll in der Datei c:\nvda.log |
 | nvda --log-level=20 -f c:\nvda.log | Legt die Protokollierungsstufe "Informationen" fest und speichert das Protokoll in der datei c:\nvda.log |
@@ -2062,15 +2101,21 @@ Folgende Kommandozeilenoptionen werden akzeptiert:
 | Keine | --install | Installiert NVDA ohne Ausgabe von Rückmeldungen und startet die neu installierte Version. |
 | keine | --install-silent | Installiert NVDA ohne Ausgabe von Rückmeldungen, startet die Version aber nicht. |
 
+++ Erweiterte Anpassung der Aussprache von Satz- und Sonderzeichen ++
+Es gibt über den [Dialog zur Aussprache von Satz- und Sonderzeichen #SymbolPronunciation] hinaus noch weitere Möglichkeiten, die Aussprache von Satzzeichen zu beeinflussen.
+Sie können beispielsweise veranlassen, das bestimmte Zeichen unverarbeitet an die Sprachausgabe weitergegeben werden, um die Betonung zu beeinflussen oder Sie können weitere benutzerdefinierte Symbole hinzufügen.
+
+Hierfür müssen Sie die Symboldefinitionsdatei bearbeiten, die sich im Konfigurationsverzeichnis von NVDA des in Windows angemeldeten Benutzers befindet. 
+Der Name der Datei hat das Format "symbols-xx.dic", wobei xx der zweistellige Sprachencode ist.
+Das Format der Datei ist im Entwicklerhandbuch dokumentiert, welches Sie in englischer Sprache im [Abschnitt für Entwickler auf der NVDA-Webseite http://community.nvda-project.org/wiki/Development] finden können.
+Hinweis: Es ist Anwendern jedoch nicht möglich, komplexe Symbole zu definieren.
 
 + Weitere Informationen +
-Wenn Sie mehr Informationen oder Hilfe bezüglich NVDA benötigen, besuchen Sie bitte die Homepage unter NVDA_URL.
+Wenn Sie mehr Informationen oder Hilfe bezüglich NVDA benötigen, besuchen Sie bitte die englische Internetseite unter NVDA_URL.
 Dort finden Sie u. a. neben der Community und dem Technischen Support auch die zusätzlichen Dokumentationen.
-
 Diese Seite stellt auch die Informationen zur Weiterentwicklung von NVDA bereit.
 
 + Anhang +
-
 
 ++ Hinweise zu Java ++
 Da es sich bei NVDA um eine 32-Bit-Anwendung handelt, müssen auch 32-Bit-Versionen der Java-Laufzeitumgebung (Java Runtime Enviroment) installiert werden. Seit Java 7 Update 6 ist die Zugänglichkeitsschnittstelle (Access Bridge) fester Bestandteil von Java und muss lediglich aktiviert werden, nachdem die Installation von Java abgeschlossen ist.

@@ -1,97 +1,126 @@
-﻿complexSymbols:
+﻿#locale/uk/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011-2012 NVDA Contributors
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
 # identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
 decimal point	(?<=\d)\,(?=\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 # Complex symbols
-. sentence ending	крапка	# . в кінці речення
-! sentence ending	знак оклику	# ! в кінці речення
-? sentence ending	знак питання	# ? в кінці речення
-; phrase ending	крапка з комою	# ; в кінці фрази
-: phrase ending	двокрапка	# : в кінці фрази
-decimal point	кома	# десятковий дріб
+. sentence ending	крапка	all	always
+! sentence ending	знак оклику	all	always
+? sentence ending	знак питання	all	always
+; phrase ending	крапка з комою	most	always
+: phrase ending	двокрапка	most	always
+decimal point	кома	none	always
+in-word '	апостроф	all	norep
+negative number	відъємне число	none	norep
 
 # Whitespace
-\0	чисто
+\0	порожньо	char	# null
 \t	таб
-\n	переведення рядка
-\f	розрив сторінки
-\r	повернення каретки
- 	пробіл
- 	пробіл	# нерозривний пробіл
-in-word '	апостроф
-negative number	мінус
+\n	переведення рядка	char
+\f	розрив сторінки	none
+\r	повернення каретки	char
+ 	пробіл	char
+ 	нерозривний пробіл	char	# нерозривний пробіл
 
 # Standard punctuation/symbols
-!	знак оклику
-"	лапки
-\#	номер
-$	долар
-£	фунт
-€	євро
-%	відсоток
-&	амперсанд
-'	апостроф
-(	ліва дужка
-)	права дужка
-*	зірочка
-+	плюс
-,	кома
--	мінус
-.	крапка
-/	слеш
-:	двокрапка
-;	крапка з комою
-<	менше
->	більше
-=	дорівнює
-?	знак питання
-@	песик
-[	ліва квадратна дужка
-]	права квадратна дужка
-\\	бекслеш
-^	дашок
-_	підкреслення
-`	зворотній апостроф
-{	ліва фігурна дужка
-}	права фігурна дужка
-|	вертикальна риска
+!	знак оклику	all
+"	лапки	most
+\#	решітка	most
+№	номер	most
+$	долар	all	norep
+£	фунт	all	norep
+¢	центи	all	norep
+€	євро	all	norep
+¥	єна	all	norep
+%	відсоток	some
+&	амперсанд	some
+'	апостроф	all
+(	ліва дужка	most
+)	права дужка	most
+*	зірочка	some
++	плюс	some
+,	кома	all	always
+-	мінус	most
+.	крапка	some
+/	слеш	some
+:	двокрапка	most	norep
+;	крапка з комою	most
+<	менше	most
+>	більше	most
+=	дорівнює	some
+?	знак питання	all
+@	песик	some
+[	ліва квадратна дужка	most
+]	права квадратна дужка	most
+\\	бекслеш	most
+^	дашок	most
+_	підкреслення	most
+`	зворотний апостроф	most
+{	ліва фігурна дужка	most
+}	права фігурна дужка	most
+|	вертикальна риска	most
 ~	тільда
 
 # Other characters
-•	маркер
-…	три крапки
-	маркер
-“	ліва лапка
-”	права лапка
-–	тире
-—	тире
-●	кружок
-...	три крапки
-‘	лівий апостроф
-’	правий апостроф
-¨	диєрезис
-№	номер	most
-‎	зліва направо
-‏	справа наліво
-°	градус
-µ	мікро
-®	зареєстрована торгова марка
-™	торгова марка
-©	Авторське право
+•	маркер	some
+…	три крапки	all	always
+...	три крапки	all	always
+	маркер	some
+“	ліва лапка	most
+”	права лапка	most
+‘	лівий апостроф	most
+’	правий апостроф	most
+–	коротке тире	most
+—	довге тире	most
+●	кружок	most
+¨	диєрезис	most
+‎	зліва направо	char
+‏	справа наліво	char
+■	чорний квадрат	some
+▪	чорний квадрат	some
+◾	чорний квадрат	some
+◦	білий маркер	some
+➔	стрілка вправо	some
+§	секція	all
+°	градус	some
 «	відкрита лапка
 »	закрита лапка
-&	амперсанд
-negative number	від'ємне число
-¢	Центи
-¥	Єна
-■	чорний квадрат
-➔	стрілка вправо
-§	секція
-±	плюс мінус
-×	множення
-÷	поділено
-→	стрілка вправо
-✓	позначка
-✔	позначка
+µ	мікро	some
+¹	у першому степені	some
+²	в другому степені	some
+³	у третьому степені	some
+®	зареєстрована торгова марка	some
+™	торгова марка	some
+©	Авторське право	some
+±	плюс чи мінус	most
+−	мінус	some
+×	помножити	most
+÷	поділити	most
+≈	приблизно дорівнює	some
+≠	не дорівнює	some
+≤	менше або дорівнює	some
+≥	більше або дорівнює	some
+√	квадратний корінь	some
+∫	інтеграл
+←	стрілка вліво	some
+→	стрілка вправо	some
+✓	позначка	some
+✔	позначка	some
+₴	гривня	some
+∞	знак безкінечності	some
+圓	юань	some
+₽	російський рубль	some
