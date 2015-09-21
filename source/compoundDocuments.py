@@ -4,12 +4,11 @@
 #See the file COPYING for more details.
 #Copyright (C) 2010-2013 NV Access Limited
 
-import itertools
 import winUser
 import textInfos
 import controlTypes
 import eventHandler
-from NVDAObjects import NVDAObject, NVDAObjectTextInfo
+from NVDAObjects import NVDAObject
 from editableText import EditableText
 from treeInterceptorHandler import DocumentTreeInterceptor
 import speech
@@ -408,8 +407,7 @@ class CompoundDocument(EditableText, DocumentTreeInterceptor):
 		return eventHandler.lastQueuedFocusObject
 
 	def event_treeInterceptor_gainFocus(self):
-		# Don't use speakObject because this may speak the text using the object's TextInfo.
-		speech.speakObjectProperties(self.rootNVDAObject, name=True, description=True, role=True, states=True, reason=controlTypes.REASON_FOCUS)
+		speech.speakObject(self.rootNVDAObject, reason=controlTypes.REASON_FOCUS)
 		try:
 			info = self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except RuntimeError:
@@ -426,10 +424,7 @@ class CompoundDocument(EditableText, DocumentTreeInterceptor):
 	def event_caret(self, obj, nextHandler):
 		self.detectPossibleSelectionChange()
 		braille.handler.handleCaretMove(self)
-		try:
-			caret = self.makeTextInfo(textInfos.POSITION_CARET)
-		except RuntimeError:
-			return
+		caret = self.makeTextInfo(textInfos.POSITION_CARET)
 		review.handleCaretMove(caret)
 
 	def event_gainFocus(self, obj, nextHandler):
