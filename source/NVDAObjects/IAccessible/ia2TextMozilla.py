@@ -173,7 +173,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		else:
 			end = False
 
-		for item in ti._iterTextWithEmbeddedObjects(bool(controlStack), formatConfig=formatConfig):
+		for item in ti._iterTextWithEmbeddedObjects(controlStack is not None, formatConfig=formatConfig):
 			if item is None:
 				yield u""
 			elif isinstance(item, basestring):
