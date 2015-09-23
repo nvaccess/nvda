@@ -158,9 +158,16 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			raise LookupError("Object has no text descendants")
 		if position == self.POSITION_SELECTION_END:
 			descendantOffset.value += 1
-		# optimisation: If the target obj is the same as the origin, don't make a new instance.
-		if descendantID.value != obj.IA2UniqueID:
+		# optimisation: If we already have the target obj, don't make a new instance.
+		for cached in obj, getattr(self.obj, "_lastCaretObj", None):
+			if cached and descendantID.value == cached.IA2UniqueID:
+				obj = cached
+				break
+		else:
 			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(obj.windowHandle,winUser.OBJID_CLIENT,descendantID.value)
+		if position == textInfos.POSITION_CARET:
+			# Cache for later use.
+			self.obj._lastCaretObj = obj
 		# optimisation: Passing an Offsets position checks nCharacters, which is an extra call we don't need.
 		ti=self._makeRawTextInfo(obj,textInfos.POSITION_FIRST)
 		ti._startOffset=ti._endOffset=descendantOffset.value
