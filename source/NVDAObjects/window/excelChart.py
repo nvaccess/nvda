@@ -27,6 +27,7 @@ import math
 from NVDAObjects import NVDAObject
 import string
 import weakref
+import api
 
 
 #ChartEvents definition
@@ -590,7 +591,7 @@ class ExcelChartElementBase(Window):
 			text=_("slice")
 		elif chartType in (xl3DColumn, xl3DColumnClustered, xl3DColumnStacked, xl3DColumnStacked100, xlColumnClustered, xlColumnStacked100, xlColumnStacked):
 			# Translators: A column in a column chart.
-			text=_("column")
+			text=pgettext('chart','column')
 		elif chartType in (xl3DLine, xlLine, xlLineMarkers, xlLineMarkersStacked, xlLineMarkersStacked100, xlLineStacked, xlLineStacked100):
 			# Translators: A data point in a line chart.
 			text=_("data point")

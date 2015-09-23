@@ -8,6 +8,7 @@ from logHandler import log
 import baseObject
 import api
 import review
+import textInfos
 import config
 import braille
 
@@ -141,3 +142,68 @@ class DocumentTreeInterceptor(TreeInterceptor):
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
 
+class RootProxyTextInfo(textInfos.TextInfo):
+
+	def __init__(self,obj,position,_rangeObj=None):
+		super(RootProxyTextInfo,self).__init__(obj,position)
+		self.innerTextInfo=self.InnerTextInfoClass(obj.rootNVDAObject,position,_rangeObj=_rangeObj)
+
+	def _get_InnerTextInfoClass(self):
+		return self.obj.rootNVDAObject.TextInfo
+
+	def copy(self):
+		return self.__class__(self.obj,None,_rangeObj=self.innerTextInfo._rangeObj)
+
+	def _get__rangeObj(self):
+		return self.innerTextInfo._rangeObj
+
+	def _set__rangeObj(self,r):
+		self.innerTextInfo._rangeObj=r
+
+	def find(self,text,caseSensitive=False,reverse=False):
+		return self.innerTextInfo.find(text,caseSensitive,reverse)
+
+	def activate(self):
+		return self.innerTextInfo.activate()
+
+	def compareEndPoints(self,other,which):
+		return self.innerTextInfo.compareEndPoints(other.innerTextInfo,which)
+
+	def setEndPoint(self,other,which):
+		return self.innerTextInfo.setEndPoint(other.innerTextInfo,which)
+
+	def _get_isCollapsed(self):
+		return self.innerTextInfo.isCollapsed
+
+	def collapse(self,end=False):
+		return self.innerTextInfo.collapse(end=end)
+
+	def move(self,unit,direction,endPoint=None):
+		return self.innerTextInfo.move(unit,direction,endPoint=endPoint)
+
+	def _get_bookmark(self):
+		return self.innerTextInfo.bookmark
+
+	def updateCaret(self):
+		return self.innerTextInfo.updateCaret()
+
+	def updateSelection(self):
+		return self.innerTextInfo.updateSelection()
+
+	def _get_text(self):
+		return self.innerTextInfo.text
+
+	def getTextWithFields(self,formatConfig=None):
+		return self.innerTextInfo.getTextWithFields(formatConfig=formatConfig)
+
+	def expand(self,unit):
+		return self.innerTextInfo.expand(unit)
+
+	def getMathMl(self, field):
+		return self.innerTextInfo.getMathMl(field)
+
+	def _get_NVDAObjectAtStart(self):
+		return self.innerTextInfo.NVDAObjectAtStart
+
+	def _get_focusableNVDAObjectAtStart(self):
+		return self.innerTextInfo.focusableNVDAObjectAtStart

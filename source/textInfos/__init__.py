@@ -308,7 +308,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@return: C{True} if the objects overlap, C{False} if not.
 		@rtype: bool
 		"""
-		return self.compareEndPoints(other, "endToStart") > 0 and other.compareEndPoints(self, "endToStart") > 0
+		return self.compareEndPoints(other,"startToStart") == 0 or (self.compareEndPoints(other, "endToStart") > 0 and other.compareEndPoints(self, "endToStart") > 0)
 
 	def setEndPoint(self,other,which):
 		"""Sets one end of this range to one end of another range.

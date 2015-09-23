@@ -3,19 +3,60 @@ Qué hay de Nuevo en NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.4 =
+
+== Corrección de fallos ==
+- Grandes mejoras de rendimiento al navegar por la barra de mensajes en Outlook 2010/2013. (#5268)
+- En un gráfico en Microsoft Excel, al navegar con ciertas teclas (tales como al cambiar de hoja con control+rePág y control+avPág) ahora funciona correctamente. (#5336)
+- Corregida la apariencia visual de los botones en el diálogo de advertencia que se muestra cuando intentas actualizar NVDA a una versión anterior. (#5325)
+
+
 = 2015.3 =
+Lo reseñable en esta versión incluye el apoyo inicial para Windows 10; la capacidad de deshabilitar la navegación de una sola letra en modo exploración (útil para algunas aplicaciones web); mejoras en Internet Explorer; y correcciones para texto ilegible al escribir en ciertas aplicaciones con el braille habilitado.
+
 
 == Nuevas Características ==
 - La existencia de errores de ortografía se  anuncia en campos editables para Internet Explorer y otros controles MSHTML. (#4174)
 - Ahora se verbalizan muchos más  símbolos matemáticos unicode  cuando aparezcan  en el texto. (#3805)
 - Ahora se anuncia automáticamente Buscar sugerencias en la pantalla de inicio de Windows 10 (#5049)
+- Soporte para las pantallas braille EcoBraille 20, EcoBraille 40, EcoBraille 80 y EcoBraille Plus. (#4078)
+- En modo exploración, ahora puedes  activar y desactivar la navegación con una sola letra pulsando NVDA+shift+espacio. Cuando se desactive, las teclas de una sola letra se pasan a la aplicación, lo cuál es útil para algunas aplicaciones web tales como Gmail, Twitter y Facebook. (#3203)
+- Nuevas tablas de transcripción braille: Finlandés de 6 puntos, Irlandés grado 1, Irlandés grado 2, Coreano grado 1 (2006), Coreano grado 2 (2006). (#5137, #5074, #5097)
+- Ahora se soporta el teclado QWERTY en la pantalla braille Papenmeier BRAILLEX Live Plus. (#5181)
+- Apoyo Experimental para el navegador web Microsoft Edge y el motor de exploración web en Windows 10. (#5212)
+- Nuevo idioma: Canadá.
+
+
+== Canbios ==
+- Actualizado el transcriptor braille liblouis a 2.6.3. (#5137)
+- Al intentar instalar una versión más antigua de NVDA de la que está instalada actualmente, ahora se te avisará de que esto no está recomendado y de que NVDA debería desinstalarse completamente antes de proceder. (#5037)
 
 
 == Corrección de Errores ==
 - En modo exploración para  Internet Explorer y otros controles MSHTML, la navegación rápida por campos ya no incluye incorrectamente elementos de listas presentacionales. (#4204)
-- En Firefox, NVDA ya no trata de crear una descripción para pestañas de paneles ARIA basados  en todo el texsto. (#4638)
-- En Internet Explorer y otros controles MSHTML, al tabular por secciones, artículos o diálogos  ya no anuncia todo el contenido del contenedor como su nombre. (#5021, #5025) 
+- En Firefox, NVDA ya no anuncia inapropiadamente el contenido de un ARIA tab panel cuando el foco se mueva dentro de él. (#4638)
+- En Internet Explorer y otros controles MSHTML, al tabular dentro de secciones, artículos o diálogos  ya no anuncia inapropiadamente todo el contenido en el contenedor. (#5021, #5025)
 - Al utilizar las pantallas braille Baum/HumanWare/APH con un teclado braille, la entrada braille ya no detiene su funcionamiento después de pulsar otro tipo de tecla en la pantalla. (#3541)
+- En Windows 10, ahora ya no se anuncia información extraña al pulsar alt+tab o alt+shift+tab para cambiar entre aplicaciones. (#5116)
+- El texto excrito ya no es ilegible al utilizar ciertas aplicaciones tales como Microsoft Outlook con una pantalla braille. (#2953)
+- En modo exploración en Internet Explorer y otros controles MSHTML, ahora se anuncia el contenido correcto cuando un elemento aparece o cambia y se enfoca inmediatamente. (#5040)
+- En modo exploración en Microsoft Word, la navegación con una sola tecla ahora se actualiza en la pantalla braille y el cursor de revisión según se esperaba. (#4968)
+- En braille, ya no se muestran extraños espacios en braille entre o después de los indicadores para controles y formato. (#5043)
+- Cuando una aplicación está respondiendo lentamente y cambias desde esa aplicación, NVDA ahora es mucho más  sensible en otras aplicaciones en más casos. (#3831)
+- Las notificaciones de Windows 10 Toast ahora se anuncian como se esperaba. (#5136)
+- El valor ahora se anuncia según cambie en ciertos cuadros combinados (UI Automation) donde esto no funcionaba anteriormente.
+- En Modo exploración en navegadores web, al tabular ahora se comporta según se espera  después de tabular a un marco de documento. (#5227)
+ - La pantalla de bloqueo de Windows 10 ahora puede cerrarse utilizando la pantalla táctil. (#5220)
+- En Windows 7 y posteriores, el texto ya no es ilegible al teclear en ciertas aplicaciones tales como Wordpad y Skype con una pantalla braille. (#4291)
+- En la pantalla de bloqueo de Windows 10, ya  no es posible leer el portapapeles, acceder a  aplicaciones en ejecución con el cursor de revisión, cambiar la configuración de NVDA, etc. (#5269)
+
+
+== Cambios para Desarrolladores ==
+- Ahora puedes inyectar la entrada bruta desde un teclado de sistema que no se maneja nativamente por Windows (ej.: un teclado QWERTY en una pantalla braille) utilizando la nueva función keyboardHandler.injectRawKeyboardInput . (#4576)
+- Se ha añadido eventHandler.requestEvents para solicitar eventos particulares que estén bloqueados por omisión; ej.: muestra eventos desde un control específico o ciertos eventos aunque estén en segundo plano. (#3831)
+- En lugar de un sólo atributo i18nName, synthDriverHandler.SynthSetting ahora tiene los atributos  displayNameWithAccelerator y displayName separados para evitar el anuncio del acelerador en el grupo de opciones del sintetizador en algunos idiomas.
+  - Por compatibilidad con versiones anteriores, en el constructor, displayName es opcional y se deribará de displayNameWithAccelerator si no se proporciona. Sin embargo, si intentas tener un acelerador para una opción, deberían proporcionarse ambos.
+  - El atributo i18nName está obsoleto y se podrá eliminar en una versión futura.
 
 
 = 2015.2 =
@@ -272,7 +313,7 @@ Lo reseñable en esta versión  incluye el modo exploración para documentos en 
 - En modo exploración, las etiquetas de controles tales como enlaces y botones ahora se procesan correctamente cuando la etiqueta se haya reemplazado por el autor con fines de accesibilidad (específicamente, la utilización de aria-label o de aria-labelledby). (#1354)
 - En modo exploración  en Internet Explorer, el texto contenido dentro de un elemento marcado como presentación (aria-presentation) ya no se ignora inapropiadamente. (#4031)
 - Ahora es posible de nuevo teclear texto en vietnamita utilizando el programa Unikey. Para hacer esto, desmarca la casilla de verificación Manejar teclas desde otras aplicaciones, añadido al diálogo Opciones de Teclado de NVDA. (#4043) 
-- En modo exploración, los elementos de menú verificables y de opción se anuncian como controles en lugar de como texto se puede hacer clic. (#4092)
+- En modo exploración, los elementos de menú verificables y de opción se anuncian como controles en lugar de como texto admite clic. (#4092)
 - NVDA ya no cambia incorrectamente desde modo foco a modo exploración cuando está enfocado un elemento de menú de opción o verificable. (#4092)
 - En Microsoft PowerPoint con Verbalizar palabras al escribir habilitado, los carácteres eliminados con retroceso ya no se anuncian como parte de la palabra escrita. (#3231)
 - En los diálogos de opciones de Microsoft Office 2010, las etiquetas de los cuadros combinados se anuncian correctamente. (#4056)
@@ -1644,5 +1685,6 @@ Lo más resaltable de esta versión incluye el soporte para ediciones de 64 bit 
 - NVDA ahora pregunta si debería guardar la configuración y reiniciar si el usuario ha cambiado el idioma en el diálogo Opciones de Interface de Usuario. NVDA debe ser reiniciado para que el cambio de idioma tenga un efecto completo.
 - Si un sintetizador no puede ser cargado, cuando se lo selecciona desde el diálogo Sintetizadores, Un cuadro de mensaje alerta al usuario del hecho.
 - Cuando se carga un sintetizador por primera vez, NVDA permite al sintetizador elegir la voz más conveniente, los parámetros de velocidad y tono, en lugar de forzarlo a dejarlo como piense que está bien. Esto corrige un problema donde los sintetizadores sapi4 Eloquence y Viavoice comienzan a hablar de un modo bastante rápido para una primera vez.
+
 
 

@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2011-2012 NV Access Limited
+#Copyright (C) 2011-2015 NV Access Limited, Joseph Lee
 
 from ctypes import *
 from ctypes.wintypes import *
@@ -20,6 +20,7 @@ import config
 import versionInfo
 from logHandler import log
 import addonHandler
+import easeOfAccess
 
 _wsh=None
 def _getWSH():
@@ -68,11 +69,20 @@ def getInstallPath(noDefault=False):
 	except WindowsError:
 		return defaultInstallPath if not noDefault else None
 
-def isPreviousInstall():
-	path=getInstallPath(True)
-	if path and os.path.isdir(path):
-		return True
-	return False
+def comparePreviousInstall():
+	"""Returns 1 if the existing installation is newer than this running version,
+	0 if it is the same, -1 if it is older,
+	None if there is no existing installation.
+	"""
+	path = getInstallPath(True)
+	if not path or not os.path.isdir(path):
+		return None
+	try:
+		return cmp(
+			os.path.getmtime(os.path.join(path, "nvda_slave.exe")),
+			os.path.getmtime("nvda_slave.exe"))
+	except OSError:
+		return None
 
 def getDocFilePath(fileName,installDir):
 	rootPath=os.path.join(installDir,'documentation')
@@ -170,11 +180,14 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 		_winreg.SetValueEx(k,"",None,_winreg.REG_SZ,os.path.join(installDir,"nvda.exe"))
 	with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\nvda",0,_winreg.KEY_WRITE) as k:
 		_winreg.SetValueEx(k,"startMenuFolder",None,_winreg.REG_SZ,startMenuFolder)
-		if startOnLogonScreen is not None:
-			_winreg.SetValueEx(k,"startOnLogonScreen",None,_winreg.REG_DWORD,int(startOnLogonScreen))
-	import nvda_service
-	nvda_service.installService(installDir)
-	nvda_service.startService()
+	if easeOfAccess.isSupported:
+		registerEaseOfAccess(installDir)
+	else:
+		import nvda_service
+		nvda_service.installService(installDir)
+		nvda_service.startService()
+	if startOnLogonScreen is not None:
+		config._setStartOnLogonScreen(startOnLogonScreen)
 	NVDAExe=os.path.join(installDir,u"nvda.exe")
 	slaveExe=os.path.join(installDir,u"nvda_slave.exe")
 	if shouldCreateDesktopShortcut:
@@ -195,7 +208,7 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 	docFolder=os.path.join(startMenuFolder,_("Documentation"))
 	# Translators: The label of the Start Menu item to open the Commands Quick Reference document.
 	createShortcut(os.path.join(docFolder,_("Commands Quick Reference")+".lnk"),targetPath=getDocFilePath("keyCommands.html",installDir),prependSpecialFolder="AllUsersPrograms")
-	# Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
+	# Translators: A label for a shortcut in start menu to open NVDA user guide.
 	createShortcut(os.path.join(docFolder,_("User Guide")+".lnk"),targetPath=getDocFilePath("userGuide.html",installDir),prependSpecialFolder="AllUsersPrograms")
 	registerAddonFileAssociation(slaveExe)
 
@@ -215,6 +228,13 @@ def unregisterInstallation(keepDesktopShortcut=False):
 		nvda_service.removeService()
 	except:
 		pass
+	if easeOfAccess.isSupported:
+		try:
+			_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE, easeOfAccess.APP_KEY_PATH,
+				_winreg.KEY_WOW64_64KEY)
+			easeOfAccess.setAutoStart(_winreg.HKEY_LOCAL_MACHINE, False)
+		except WindowsError:
+			pass
 	wsh=_getWSH()
 	desktopPath=os.path.join(wsh.SpecialFolders("AllUsersDesktop"),"NVDA.lnk")
 	if not keepDesktopShortcut and os.path.isfile(desktopPath):
@@ -397,3 +417,33 @@ def createPortableCopy(destPath,shouldCopyUserConfig=True):
 	tryCopyFile(os.path.join(destPath,"nvda_noUIAccess.exe"),os.path.join(destPath,"nvda.exe"))
 	if shouldCopyUserConfig:
 		copyUserConfig(os.path.join(destPath,'userConfig'))
+
+def registerEaseOfAccess(installDir):
+	with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE, easeOfAccess.APP_KEY_PATH, 0,
+			_winreg.KEY_ALL_ACCESS | _winreg.KEY_WOW64_64KEY) as appKey:
+		_winreg.SetValueEx(appKey, "ApplicationName", None, _winreg.REG_SZ,
+			versionInfo.name)
+		_winreg.SetValueEx(appKey, "Description", None, _winreg.REG_SZ,
+			versionInfo.longName)
+		if easeOfAccess.canConfigTerminateOnDesktopSwitch:
+			_winreg.SetValueEx(appKey, "Profile", None, _winreg.REG_SZ,
+				'<HCIModel><Accommodation type="severe vision"/></HCIModel>')
+			_winreg.SetValueEx(appKey, "SimpleProfile", None, _winreg.REG_SZ,
+				"screenreader")
+			_winreg.SetValueEx(appKey, "ATExe", None, _winreg.REG_SZ,
+				"nvda.exe")
+			_winreg.SetValueEx(appKey, "StartExe", None, _winreg.REG_SZ,
+				os.path.join(installDir, u"nvda.exe"))
+			_winreg.SetValueEx(appKey, "StartParams", None, _winreg.REG_SZ,
+				"--ease-of-access")
+			_winreg.SetValueEx(appKey, "TerminateOnDesktopSwitch", None,
+				_winreg.REG_DWORD, 0)
+		else:
+			# We don't want NVDA to appear in EoA because
+			# starting NVDA from there won't work in this case.
+			# We can do this by not setting Profile and SimpleProfile.
+			# NVDA can still change the EoA logon settings.
+			_winreg.SetValueEx(appKey, "ATExe", None, _winreg.REG_SZ,
+				"nvda_eoaProxy.exe")
+			_winreg.SetValueEx(appKey, "StartExe", None, _winreg.REG_SZ,
+				os.path.join(installDir, u"nvda_eoaProxy.exe"))

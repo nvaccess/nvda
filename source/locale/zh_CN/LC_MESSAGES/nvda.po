@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-08 19:04+1000\n"
-"PO-Revision-Date: 2015-06-04 21:42+0800\n"
+"POT-Creation-Date: 2015-08-25 19:09+1000\n"
+"PO-Revision-Date: 2015-08-30 21:33+0800\n"
 "Last-Translator: 雪岭冰龙 <vgjh2005@gmail.com>\n"
 "Language-Team: Simplified Chinese translate team <vgjh2005@gmail.com>\n"
 "Language: zh_CN\n"
@@ -260,6 +260,12 @@ msgid "Ethiopic grade 1"
 msgstr "埃塞俄比亚语一级点字"
 
 #. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Finnish 6 dot"
+msgstr "丹麦语6点点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Finnish 8 dot computer braille"
 msgstr "芬兰语八点电脑点字"
 
@@ -287,6 +293,16 @@ msgstr "法语（加拿大） 一级点字"
 #. braille settings dialog.
 msgid "French (Canada) grade 2"
 msgstr "法语（加拿大）  二级点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 1"
+msgstr "爱尔兰语一级点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 2"
+msgstr "爱尔兰语二级点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -342,6 +358,16 @@ msgstr "意大利语八点电脑点字"
 #. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "卡纳达语一级点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 1 (2006)"
+msgstr "韩语一级点字(2006)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 2 (2006)"
+msgstr "韩语二级点字(2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -706,6 +732,23 @@ msgstr "焦点模式"
 msgid "browse mode"
 msgstr "浏览模式"
 
+#. Translators: Reported when single letter navigation in browse mode is turned off.
+msgid "Single letter navigation off"
+msgstr "单键导航关"
+
+#. Translators: Reported when single letter navigation in browse mode is turned on.
+msgid "Single letter navigation on"
+msgstr "单键导航开"
+
+#. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
+msgid ""
+"Toggles single letter navigation on and off. When on, single letter keys in "
+"browse mode jump to various kinds of elements on the page. When off, these "
+"keys are passed to the application"
+msgstr ""
+"切换单键导航的开关，如果打开，具有单键导航功能的案件可以在页面上的许多种元素"
+"间跳转，如果关闭，这些案件事件则会直接传递到应用程序"
+
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
 msgstr "在此文档不支持"
@@ -714,7 +757,7 @@ msgstr "在此文档不支持"
 msgid "Lists various types of elements in this document"
 msgstr "在此文档中列举了各种类型的元素。"
 
-#. Translators: the description for the activatePosition script on virtualBuffers.
+#. Translators: the description for the activatePosition script on browseMode documents.
 msgid "activates the current object in the document"
 msgstr "激活文档中的当前对象"
 
@@ -1189,6 +1232,43 @@ msgstr "激活(&A)"
 msgid "&Move to"
 msgstr "移动到(&M)"
 
+#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
+#, python-format
+msgid "%s landmark"
+msgstr "%s 路标"
+
+#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "%s，已选择"
+
+#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
+msgid "No long description"
+msgstr "无长描述"
+
+#. Translators: the description for the activateLongDescription script on browseMode documents.
+msgid "Shows the long description at this position if one is found."
+msgstr "显示所指位置的对象的长描述（如果能找到）。"
+
+#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
+#. But there is no container.
+msgid "Not in a container"
+msgstr "不在容器中"
+
+#. Translators: Description for the Move to start of container command in browse mode.
+msgid "Moves to the start of the container element, such as a list or table"
+msgstr "移到元素的开始处，例如列表或表格。"
+
+#. Translators: a message reported when:
+#. Review cursor is at the bottom line of the current navigator object.
+#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
+msgid "bottom"
+msgstr "底部"
+
+#. Translators: Description for the Move past end of container command in browse mode.
+msgid "Moves past the end  of the container element, such as a list or table"
+msgstr "移到元素的结尾处，例如列表或表格。"
+
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
@@ -1254,7 +1334,6 @@ msgid "Bisque"
 msgstr "(浓汤)"
 
 #. Translators: the color Black (RGB 0, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
 msgctxt "color name"
 msgid "Black"
 msgstr "黑色"
@@ -1445,7 +1524,6 @@ msgid "Forest Green"
 msgstr "森林绿"
 
 #. Translators: the color Fuchsia (RGB 255, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
 msgctxt "color name"
 msgid "Fuchsia"
 msgstr "紫红色"
@@ -1476,7 +1554,6 @@ msgid "Gray"
 msgstr "灰色"
 
 #. Translators: the color Green (RGB 0, 128, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
 msgctxt "color name"
 msgid "Green"
 msgstr "绿色"
@@ -1562,7 +1639,6 @@ msgid "Light Green"
 msgstr "浅绿色"
 
 #. Translators: the color Light Grey (RGB 211, 211, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
 msgctxt "color name"
 msgid "Light Grey"
 msgstr "浅灰色"
@@ -1708,7 +1784,6 @@ msgid "Old Lace"
 msgstr "旧布黄"
 
 #. Translators: the color Olive (RGB 128, 128, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
 msgctxt "color name"
 msgid "Olive"
 msgstr "橄榄绿"
@@ -1784,7 +1859,6 @@ msgid "Powder Blue"
 msgstr "浅灰蓝"
 
 #. Translators: the color Purple (RGB 128, 0, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
 msgctxt "color name"
 msgid "Purple"
 msgstr "紫色"
@@ -1905,7 +1979,6 @@ msgid "Wheat"
 msgstr "麦色"
 
 #. Translators: the color White (RGB 255, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
 msgctxt "color name"
 msgid "White"
 msgstr "白色"
@@ -1924,11 +1997,6 @@ msgstr "黄色 "
 msgctxt "color name"
 msgid "Yellow Green"
 msgstr "黄绿色"
-
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "%s，已选择"
 
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
@@ -2054,7 +2122,6 @@ msgid "cell"
 msgstr "单元格"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
-#. Translators: A column in a column chart.
 msgid "column"
 msgstr "列"
 
@@ -2654,9 +2721,8 @@ msgid "cropped"
 msgstr "修剪"
 
 #. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
-#, fuzzy
 msgid "overflowing"
-msgstr "停住"
+msgstr "溢出"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -2770,7 +2836,7 @@ msgid "Braille"
 msgstr "盲文"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: The label for the Tools submenu in NVDA menu.
+msgctxt "script category"
 msgid "Tools"
 msgstr "工具"
 
@@ -2792,7 +2858,6 @@ msgid "Input"
 msgstr "输入"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "Document formatting"
 msgstr "文档格式"
 
@@ -3280,12 +3345,12 @@ msgstr "%s 已复制到剪贴板"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
 msgstr ""
-"朗读当前查看对象的信息，连按两次拼读该信息，连按三次则拷贝该对象的名称以及属"
-"性的值到剪贴板。"
+"朗读当前查看的对象，连按两次拼读该信息，连按三次则拷贝该对象的名称和值到剪贴"
+"板。"
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
@@ -3397,12 +3462,6 @@ msgid ""
 "Pressing three times will spell the line using character descriptions."
 msgstr ""
 "读出浏览光标正在查看的对象的当前行；连按两次拼读该行；连按三次竹字描述该行。"
-
-#. Translators: a message reported when:
-#. Review cursor is at the bottom line of the current navigator object.
-#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "底部"
 
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid ""
@@ -3544,16 +3603,18 @@ msgid ""
 msgstr "读出当前文档中浏览光标所在位置的格式信息"
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus"
-msgstr "读出当前焦点的对象"
+msgid "reports the object with focus. If pressed twice, spells the information"
+msgstr "朗读有焦点的对象，连按两次拼读信息"
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "没有状态栏"
 
 #. Translators: Input help mode message for report status line text command.
-msgid "reads the current application status bar and moves the navigator to it"
-msgstr "读出当前应用程序的状态栏，并将浏览光标移至该处。"
+msgid ""
+"reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information"
+msgstr "读出当前应用程序的状态栏，并将浏览光标移至该处，连按两次拼读该信息"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -3717,9 +3778,8 @@ msgid "Shows the NVDA voice settings dialog"
 msgstr "打开 NVDA “语音设置”对话框"
 
 #. Translators: Input help mode message for go to braille settings dialog command.
-#, fuzzy
 msgid "Shows the NVDA braille settings dialog"
-msgstr "打开 NVDA “常规设置”对话框"
+msgstr "打开 NVDA “点显器设置”对话框"
 
 #. Translators: Input help mode message for go to keyboard settings dialog command.
 msgid "Shows the NVDA keyboard settings dialog"
@@ -3730,14 +3790,12 @@ msgid "Shows the NVDA mouse settings dialog"
 msgstr "打开 NVDA “鼠标设置”对话框"
 
 #. Translators: Input help mode message for go to review cursor settings dialog command.
-#, fuzzy
 msgid "Shows the NVDA review cursor settings dialog"
-msgstr "打开 NVDA “语音设置”对话框"
+msgstr "打开 NVDA “对象查看设置”对话框"
 
 #. Translators: Input help mode message for go to input composition dialog.
-#, fuzzy
 msgid "Shows the NVDA input composition settings dialog"
-msgstr "打开 NVDA “鼠标设置”对话框"
+msgstr "打开 NVDA “输入设置”对话框"
 
 #. Translators: Input help mode message for go to object presentation dialog command.
 msgid "Shows the NVDA object presentation settings dialog"
@@ -3752,29 +3810,24 @@ msgid "Shows the NVDA document formatting settings dialog"
 msgstr "打开 NVDA “文档格式设置”对话框"
 
 #. Translators: Input help mode message for opening default dictionary dialog.
-#, fuzzy
 msgid "Shows the NVDA default dictionary dialog"
-msgstr "打开 NVDA “常规设置”对话框"
+msgstr "打开 NVDA“默认字典”对话框"
 
 #. Translators: Input help mode message for opening voice-specific dictionary dialog.
-#, fuzzy
 msgid "Shows the NVDA voice-specific dictionary dialog"
-msgstr "打开 NVDA “语音设置”对话框"
+msgstr "打开 NVDA “合成器字典”对话框"
 
 #. Translators: Input help mode message for opening temporary dictionary.
-#, fuzzy
 msgid "Shows the NVDA temporary dictionary dialog"
-msgstr "打开 NVDA “键盘设置”对话框"
+msgstr "打开 NVDA “临时字典”对话框"
 
 #. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
-#, fuzzy
 msgid "Shows the NVDA symbol pronunciation dialog"
-msgstr "打开 NVDA “语音合成器”对话框"
+msgstr "打开 NVDA “标点符号”对话框"
 
 #. Translators: Input help mode message for go to input gestures dialog command.
-#, fuzzy
 msgid "Shows the NVDA input gestures dialog"
-msgstr "打开 NVDA “语音合成器”对话框"
+msgstr "打开 NVDA “输入手势”对话框"
 
 #. Translators: Input help mode message for save current configuration command.
 msgid "Saves the current NVDA configuration"
@@ -3999,7 +4052,7 @@ msgstr "文档"
 msgid "Commands Quick Reference"
 msgstr "热键快速参考"
 
-#. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
+#. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
 msgstr "用户指南(&U)"
 
@@ -4643,29 +4696,64 @@ msgstr "NVDA 朗读查看器"
 msgid "&Language"
 msgstr "语言(&L)"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Language"
+msgstr "语言"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Voice"
 msgstr "语音(&V)"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Voice"
+msgstr "语音"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&ariant"
 msgstr "变声(&A)"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Variant"
+msgstr "变声"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
 msgstr "速度(&R)"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate"
+msgstr "速度"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "音量(&O)"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Volume"
+msgstr "音量"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
 msgstr "音调(&P)"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Pitch"
+msgstr "音调"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "声调(&I)"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Inflection"
+msgstr "声调"
 
 msgid "text mode"
 msgstr "文本模式"
@@ -5409,6 +5497,8 @@ msgstr "Baum/HumanWare/APH 点显器"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
 msgid "Serial: {portName}"
 msgstr "系列: {portName}"
 
@@ -5419,6 +5509,10 @@ msgstr "HumanWare BrailleNote"
 #. Translators: The name of a series of braille displays.
 msgid "HumanWare Brailliant BI/B series"
 msgstr "HumanWare Brailliant BI/B 系列"
+
+#. Translators: The name of a braille display.
+msgid "EcoBraille displays"
+msgstr "EcoBraille displays"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -5652,6 +5746,14 @@ msgstr "安装 NVDA(&I)"
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
 msgstr "重载插件(&R)"
+
+#. Translators: The label for the Tools submenu in NVDA menu.
+msgid "Tools"
+msgstr "工具"
+
+#. Translators: The label of a menu item to open NVDA user guide.
+msgid "&User Guide"
+msgstr "用戶指南(&U)"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
@@ -6116,6 +6218,7 @@ msgstr ""
 "此关联已经与其他配置连接。如果您继续，旧的配置连接将被此连接替换。\n"
 "\v您希望继续吗？"
 
+#. Translators: The title of a warning dialog.
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 msgid "Warning"
 msgstr "警告"
@@ -6234,6 +6337,22 @@ msgstr "拷贝便携版的设置到当前用户的配置文件夹(&P)"
 #. Translators: The label of a button to continue with the operation.
 msgid "&Continue"
 msgstr "继续(&C)"
+
+#. Translators: A warning presented when the user attempts to downgrade NVDA
+#. to an older version.
+msgid ""
+"You are attempting to install an earlier version of NVDA than the version "
+"currently installed. If you really wish to revert to an earlier version, you "
+"should first cancel this installation and completely uninstall NVDA before "
+"installing the earlier version."
+msgstr ""
+"您正在视图安装一个比现有的版本还要早的 NVDA 版本，如果您真的想恢复到这个版"
+"本，那么请先取消安装进程，在完全卸载当前版本之后再次进行安装进程"
+
+#. Translators: The label of a button to proceed with installation,
+#. even though this is not recommended.
+msgid "&Proceed with installation (not recommended)"
+msgstr "继续安装（不建议）(&P)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -6384,12 +6503,12 @@ msgstr "自动检查更新(&U)"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
-"Custom plugins were detected in your user settings directory. Copying these "
-"to the system profile could be a security risk. Do you still wish to copy "
-"your settings?"
+"Add-ons were detected in your user settings directory. Copying these to the "
+"system profile could be a security risk. Do you still wish to copy your "
+"settings?"
 msgstr ""
-"NVDA 可检测用户配置目录中存在的插件，拷贝此设置到系统配置目录内可能要面临风"
-"险，您仍要复制此设置吗？"
+"NVDA 可检测用户配置目录中存在的插件，拷贝此设置到系统配置目录内可能要面临安全"
+"风险，您仍要复制此设置吗？"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
@@ -6491,7 +6610,7 @@ msgstr "标点符号级别(&L)："
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog (if checked, text will be read using the voice for the language of the text).
 msgid "Trust voice's language when processing characters and symbols"
-msgstr "处理字符和标点时托管语音的语言(&T)"
+msgstr "处理字符和标点时信任语音的语言(&T)"
 
 #. Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 msgid "Capital pitch change percentage"
@@ -7133,11 +7252,6 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "像素坐标 {x}， {y}"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-#, python-format
-msgid "%s landmark"
-msgstr "%s 路标"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "已刷新"
@@ -7145,14 +7259,6 @@ msgstr "已刷新"
 #. Translators: Reported while loading a document.
 msgid "Loading document..."
 msgstr "正在加载文档..."
-
-#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-msgid "No long description"
-msgstr "无长描述"
-
-#. Translators: the description for the activateLongDescription script on virtualBuffers.
-msgid "Shows the long description at this position if one is found."
-msgstr "显示所指位置的对象的长描述（如果能找到）。"
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -7194,25 +7300,12 @@ msgstr "移到表格的下一列"
 msgid "moves to the previous table column"
 msgstr "移到表格内的上一列"
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
-msgid "Not in a container"
-msgstr "不在容器中"
-
-#. Translators: Description for the Move to start of container command in browse mode.
-msgid "Moves to the start of the container element, such as a list or table"
-msgstr "移到元素的开始处，例如列表或表格。"
-
-#. Translators: Description for the Move past end of container command in browse mode.
-msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "移到元素的结尾处，例如列表或表格。"
-
 msgid "Taskbar"
 msgstr "任务栏"
 
 #. Translators: a color, broken down into its RGB red, green, blue parts.
 msgid "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
-msgstr ""
+msgstr "RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}"
 
 #, python-format
 msgid "%s items"
@@ -7725,6 +7818,11 @@ msgstr "没有定义系列。"
 msgid "slice"
 msgstr "扇区"
 
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "列"
+
 #. Translators: A data point in a line chart.
 msgid "data point"
 msgstr "数据点"
@@ -7817,9 +7915,8 @@ msgid "Y Error Bars"
 msgstr "Y误差线"
 
 #. Translators: A type of element in a Microsoft Excel chart.
-#, fuzzy
 msgid "Shape"
-msgstr "形状"
+msgstr "主石形状"
 
 #. Translators: Details about a series in a chart.
 #. For example, this might report "foo series 1 of 2"
@@ -7926,7 +8023,7 @@ msgid ""
 "{plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: "
 "{plotAreaInsideLeft:.0f}"
 msgstr ""
-"区域面积，内高：{plotAreaInsideHeight:.0f，内宽：{plotAreaInsideWidth:.0f}内"
+"区域面积，内高：{plotAreaInsideHeight:.0f}，内宽：{plotAreaInsideWidth:.0f}内"
 "鼎边： {plotAreaInsideTop:.0f}，内左边：{plotAreaInsideLeft:.0f}"
 
 #. Translators: Indicates the plot area of a Microsoft Excel chart.
@@ -8225,6 +8322,9 @@ msgstr "HIMS Braille Sense/Braille EDGE 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "reports the object with focus"
+#~ msgstr "读出当前焦点的对象"
 
 #, fuzzy
 #~ msgid "%s"
