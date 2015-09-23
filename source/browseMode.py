@@ -8,6 +8,7 @@ import collections
 import winsound
 import time
 import wx
+import keyboardHandler
 import queueHandler
 from logHandler import log
 import review
@@ -27,6 +28,7 @@ import braille
 import speech
 import sayAllHandler
 import treeInterceptorHandler
+import core
 import inputCore
 import api
 from NVDAObjects import NVDAObject
@@ -935,6 +937,9 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		reportPassThrough(self)
 		braille.handler.handleGainFocus(self)
 
+	def event_treeInterceptor_loseFocus(self):
+		self._cancelPendingSetFocusToObj()
+
 	def event_caret(self, obj, nextHandler):
 		if self.passThrough:
 			nextHandler()
@@ -978,7 +983,35 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		else:
 			self._activateNVDAObject(obj)
 
+	def _cancelPendingSetFocusToObj(self):
+		callObj=self._requestSetFocusToObj_callObj
+		if callObj:
+			self._requestSetFocusToObj_callObj=None
+			callObj.Stop()
+
+	setFocusDelayLength=0.2 #: length in seconds NVDA should wait to set focus to an object after the browse mode selection is moved.
+	setFocusIgnoreEventLength=0.1 #: Length in seconds  of how long NVDA should ignore new gainFocus events for in browse mode after setting focus to an object due to the browse mode selection moving.
+	_requestSetFocusToObj_callObj=None
+	_lastSetFocusTime=0
+	_lastSetFocusKeyCount=0
+	def _requestSetFocusToObj(self,obj,reason):
+		def callback(self,obj,reason):
+			if not eventHandler.isPendingEvents("gainFocus") and  obj != api.getFocusObject():
+				obj.setFocus()
+				self._lastSetFocusRequestTime=time.time()
+				self._lastSetFocusKeyCount=keyboardHandler.keyCounter
+				self.passThrough=self.shouldPassThrough(obj,reason=reason)
+				# Queue the reporting of pass through mode so that it will be spoken after the actual content.
+				queueHandler.queueFunction(queueHandler.eventQueue, reportPassThrough, self)
+		self._requestSetFocusToObj_callObj=core.callLater(self.setFocusDelayLength*1000,callback,self,obj,reason)
+
+	def _get__shouldIgnoreGainFocusEvent(self):
+		if keyboardHandler.keyCounter==self._lastSetFocusKeyCount or (time.time()-(self._lastSetFocusTime+self.setFocusDelayLength))<0: 
+			return True
+		return False
+
 	def _set_selection(self, info, reason=controlTypes.REASON_CARET):
+		self._cancelPendingSetFocusToObj()
 		super(BrowseModeDocumentTreeInterceptor, self)._set_selection(info)
 		if isScriptWaiting() or not info.isCollapsed:
 			return
@@ -994,23 +1027,23 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 			focusObj = api.getFocusObject()
 			if focusObj==self.rootNVDAObject:
 				return
+			self.passThrough=self.shouldPassThrough(focusObj,reason=reason)
+			# Queue the reporting of pass through mode so that it will be spoken after the actual content.
+			queueHandler.queueFunction(queueHandler.eventQueue, reportPassThrough, self)
 		else:
 			self._lastCaretMoveWasFocus = False
-			focusObj=info.focusableNVDAObjectAtStart
 			obj=info.NVDAObjectAtStart
 			if not obj:
 				log.debugWarning("Invalid NVDAObjectAtStart")
 				return
 			if obj==self.rootNVDAObject:
 				return
-			if focusObj and not eventHandler.isPendingEvents("gainFocus") and focusObj!=self.rootNVDAObject and focusObj != api.getFocusObject() and self._shouldSetFocusToObj(focusObj):
-				focusObj.setFocus()
+			focusObj=info.focusableNVDAObjectAtStart
+			if focusObj!=self.rootNVDAObject and self._shouldSetFocusToObj(focusObj):
+				self._requestSetFocusToObj(focusObj,reason)
 			obj.scrollIntoView()
 			if self.programmaticScrollMayFireEvent:
 				self._lastProgrammaticScrollTime = time.time()
-		self.passThrough=self.shouldPassThrough(focusObj,reason=reason)
-		# Queue the reporting of pass through mode so that it will be spoken after the actual content.
-		queueHandler.queueFunction(queueHandler.eventQueue, reportPassThrough, self)
 
 	def _shouldSetFocusToObj(self, obj):
 		"""Determine whether an object should receive focus.
@@ -1216,6 +1249,8 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 			# and this was the last non-root node with focus, so ignore this focus event.
 			# Otherwise, if the user switches away and back to this document, the cursor will jump to this node.
 			# This is not ideal if the user was positioned over a node which cannot receive focus.
+			return
+		if self._shouldIgnoreGainFocusEvent:
 			return
 		if obj==self.rootNVDAObject:
 			if self.passThrough:
