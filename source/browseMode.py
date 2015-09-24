@@ -182,7 +182,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 	@property
 	def isAfterSelection(self):
 		caret=self.document.makeTextInfo(textInfos.POSITION_CARET)
-		return self.textInfo.compareEndPoints(caret, "startToStart") <= 0
+		return self.textInfo.compareEndPoints(caret, "startToStart") > 0
 
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	scriptCategory = inputCore.SCRCAT_BROWSEMODE
@@ -640,6 +640,7 @@ class ElementsListDialog(wx.Dialog):
 		self._initialElement = None
 
 		parentElements = []
+		isAfterSelection=False
 		for item in self.document._iterNodesByType(elType):
 			# Find the parent element, if any.
 			for parent in reversed(parentElements):
@@ -656,14 +657,16 @@ class ElementsListDialog(wx.Dialog):
 			element=self.Element(item,parent)
 			self._elements.append(element)
 
-			if item.isAfterSelection:
-				# The element immediately preceding or overlapping the caret should be the initially selected element.
-				# This element immediately follows the caret, so we want the previous element.
-				try:
-					self._initialElement = self._elements[-1]
-				except IndexError:
-					# No previous element.
-					pass
+			if not isAfterSelection:
+				isAfterSelection=item.isAfterSelection
+				if not isAfterSelection:
+					# The element immediately preceding or overlapping the caret should be the initially selected element.
+					# Since we have not yet passed the selection, use this as the initial element. 
+					try:
+						self._initialElement = self._elements[-1]
+					except IndexError:
+						# No previous element.
+						pass
 
 			# This could be the parent of a subsequent element, so add it to the parents stack.
 			parentElements.append(element)
