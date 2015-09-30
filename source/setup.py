@@ -227,6 +227,7 @@ setup(
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
 		("louis/tables",glob("louis/tables/*"))
+		(".", ['message.html' ])
 	] + (
 		getLocaleDataFiles()
 		+ getRecursiveDataFiles("synthDrivers", "synthDrivers",
