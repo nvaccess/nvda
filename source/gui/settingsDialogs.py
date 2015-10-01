@@ -1574,8 +1574,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.levelList.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
 		sizer.Add(self.levelList)
 		changeSizer.Add(sizer)
-		settingsSizer.Add(changeSizer)
-		entryButtonsSizer=wx.BoxSizer(wx.HORIZONTAL)
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
 		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Send actual symbol to synthesizer")))
 		symbolPreserveLabels = characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS
