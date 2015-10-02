@@ -8,7 +8,6 @@ import collections
 import winsound
 import time
 import wx
-import keyboardHandler
 import queueHandler
 from logHandler import log
 import review
@@ -993,22 +992,18 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 	setFocusIgnoreEventLength=0.1 #: Length in seconds  of how long NVDA should ignore new gainFocus events for in browse mode after setting focus to an object due to the browse mode selection moving.
 	_requestSetFocusToObj_callObj=None
 	_lastSetFocusTime=0
-	_lastSetFocusKeyCount=0
 	def _requestSetFocusToObj(self,obj,reason):
 		def callback(self,obj,reason):
 			if not eventHandler.isPendingEvents("gainFocus") and  obj != api.getFocusObject():
 				obj.setFocus()
-				self._lastSetFocusRequestTime=time.time()
-				self._lastSetFocusKeyCount=keyboardHandler.keyCounter
+				self._lastSetFocusTime=time.time()
 				self.passThrough=self.shouldPassThrough(obj,reason=reason)
 				# Queue the reporting of pass through mode so that it will be spoken after the actual content.
 				queueHandler.queueFunction(queueHandler.eventQueue, reportPassThrough, self)
 		self._requestSetFocusToObj_callObj=core.callLater(self.setFocusDelayLength*1000,callback,self,obj,reason)
 
 	def _get__shouldIgnoreGainFocusEvent(self):
-		if keyboardHandler.keyCounter==self._lastSetFocusKeyCount or (time.time()-(self._lastSetFocusTime+self.setFocusDelayLength))<0: 
-			return True
-		return False
+		return (time.time()-(self._lastSetFocusTime+self.setFocusDelayLength))<0
 
 	def _set_selection(self, info, reason=controlTypes.REASON_CARET):
 		self._cancelPendingSetFocusToObj()
@@ -1250,8 +1245,6 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 			# Otherwise, if the user switches away and back to this document, the cursor will jump to this node.
 			# This is not ideal if the user was positioned over a node which cannot receive focus.
 			return
-		if self._shouldIgnoreGainFocusEvent:
-			return
 		if obj==self.rootNVDAObject:
 			if self.passThrough:
 				return nextHandler()
@@ -1259,6 +1252,8 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		if not self.passThrough and self._shouldIgnoreFocus(obj):
 			return
 		self._lastFocusObj=obj
+		if self._shouldIgnoreGainFocusEvent:
+			return
 
 		try:
 			focusInfo = self.makeTextInfo(obj)
