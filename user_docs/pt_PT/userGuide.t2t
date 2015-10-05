@@ -56,7 +56,7 @@ Isto aplica-se a todas as cópias, originais e modificadas, deste software, bem 
 Para mais detalhes, pode [ver a licença completa. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Requisitos Do Sistema +
-- Sistemas Operativos: Todas as versões 32-bit e 64-bit do Windows XP, Windows Vista, Windows 7 e Windows 8 (incluindo as versões Server 2003 e 2008).
+- Sistemas Operativos: Todas as versões 32-bit e 64-bit do Windows XP, Windows Vista, Windows 7, Windows 8  e Windows 10 (incluindo as versões Server 2003 e 2008).
 - Para Windows XP 32-bit, o NVDA requer o Service Pack 2 ou superior.
 - Para Windows Server 2003, o NVDA requer o Service Pack 1 ou superior.
 - Memória: 256 MB ou mais de RAM
@@ -269,7 +269,7 @@ Existem alguns comandos de teclado úteis quando se move com o foco do sistema:
 | Anunciar o foco actual | NVDA+tab | NVDA+tab | Anuncia o objecto actual ou o controlo que tem o cursor do sistema. Ao pressionar duas vezes, soletrará a informação |
 | Anunciar o título | NVDA+t | NVDA+t | Anuncia o título da janela actualmente em execução. Ao pressionar duas vezes, soletrará a informação. Se pressionar três vezes, copiará o conteúdo para a área de transferência |
 | Ler a janela activa | NVDA+b | NVDA+b | Lê todos os controlos na janela actual em execução (útil para diálogos) |
-| Anunciar a Barra de Estado | NVDA+end | NVDA+shift+end | Lê a Barra de Estado, se o NVDA a encontrar. Também move o objecto de navegação para esta localização |
+| Anunciar a Barra de Estado | NVDA+end | NVDA+shift+end | Lê a Barra de Estado, se o NVDA a encontrar. Também move o objecto de navegação para esta localização. Se pressionar duas vezes soletra a informação. |
 %kc:endInclude
 
 ++ Navegar com o Cursor do Sistema ++[SystemCaret]
@@ -391,7 +391,7 @@ Os comandos seguintes alternam entre os modos de revisão:
  | Muda para o modo de revisão seguinte | NVDA+7 do bloco numérico | NVDA+pageUp | Varrer com dois dedos para cima | Muda para o modo de revisão seguinte disponível |
 | Muda para o modo de revisão anterior | NVDA+1 do bloco numérico | NVDA+pageDown | Varrer com dois dedos para baixo | Muda para o modo de revisão anterior disponível |
  %kc:endInclude
- 
+
 +++ Revisão de objecto +++[ObjectReview]
 No modo de revisão de objecto, poderá rever apenas o conteúdo do [objecto de navegação #ObjectNavigation] actual.
 Para objectos básicos como campos de edição ou controlos de texto simples, isto será, geralmente, o seu conteúdo textual.
@@ -503,6 +503,12 @@ Para se mover para o início ou fim de elementos contentores como listas ou tabe
 || Nome | Comando de Teclado | Descrição |
 | Mover para o início do contentor  | shift+vírgula | Move para o início do contentor (lista, tabela etc) onde o cursor está posicionado |
 | Mover para depois do fim do contentor | Vírgula | Move para  depois do fim do contentor (lista, tabela etc) onde o cursor está posicionado |
+
+%kc:endInclude
+Algumas aplicações web como GMail, Twitter e Facebook usam letras como atalhos.
+Se quiser usar esses atalhos, mantendo a possibilidade de usar as teclas de cursor para ler em modo de navegação, pode, temporariamente, desactivar a navegação por caracter do NVDA.
+%kc:beginInclude
+Para activar e desactivar a navegação por caracter para o documento actual, pressione NVDA+shift+espaço.
 %kc:endInclude
 
 ++ A Lista de Elementos ++
@@ -552,7 +558,7 @@ Por padrão, o cursor de revisão segue o cursor de inserção, portanto, normal
 Depois, active o seguinte comando:
 
 %kc:beginInclude
-|| Nome | Tecla | Descrição |
+|| Nome | Comando de Teclado | Descrição |
 | Interagir com conteúdo matemático | NVDA+alt+m | Inicia a interação com o conteúdo matemático. |
 %kc:endInclude
 
@@ -567,7 +573,7 @@ O NVDA fornece comandos de teclado adicionais para algumas aplicações, que rea
 
 ++ Microsoft Word ++
 %kc:beginInclude
-|| Nome | Tecla | Descrição |
+|| Nome | Comando de Teclado | Descrição |
 | Anuncia o comentário actual | NVDA+Alt+c | Anuncia o texto do comentário na posição actual do cursor do sistema. |
 | Definir cabeçalhos de coluna | NVDA+shift+c | Premindo uma vez, indica ao NVDA que esta é a primeira célula de cabeçalho na linha que contém os cabeçalhos de coluna, que deverão ser automaticamente anunciados ao mover-se entre colunas abaixo desta linha. Premindo duas vezes irá apagar a definição. | 
 | Definir cabeçalhos de linha | NVDA+shift+r | Premindo uma vez, indica ao NVDA que esta é a primeira  célula de cabeçalho na coluna que contem os cabeçalhos de linha, que deverão ser automaticamente anunciados  ao mover-se entre linhas  após esta coluna. Premindo duas vezes apagará a definição. |  
@@ -575,7 +581,7 @@ O NVDA fornece comandos de teclado adicionais para algumas aplicações, que rea
 
 ++ Microsoft Excel ++
 %kc:beginInclude
-|| Nome | Tecla | Descrição |
+|| Nome | Comando de Teclado | Descrição |
 | Definir cabeçalhos de coluna | NVDA+shift+c | Pressionar uma vez informa o NVDA de que esta linha contém os cabeçalhos de coluna, que deverão ser automaticamente anunciados ao mover-se entre colunas abaixo desta linha. Pressionar duas vezes apagará esta definição. | 
 | Definir cabeçalhos de linha | NVDA+shift+r | Pressionar uma vez, Informa o NVDA de que esta coluna  contêm os cabeçalhos de linha, que deverão ser automaticamente anunciados ao mover-se por linhas à direita desta coluna. Pressionar duas vezes, apagará a definição. | 
 | Anunciar comentário | NVDA+alt+c | Anuncia o comentário na célula actual, se existir. |
@@ -888,7 +894,7 @@ Quando activada, esta opção causará a interrupção da voz, sempre que for in
 Quando activada, esta opção causará a interrupção da voz, sempre que pressionar a tecla Enter. Está activada por padrão.
 
 ==== Permitir leitura rápida durante a leitura contínua ====
-Se activada, alguns comandos de navegação (tais como os comandos de caractere para navegação rápida em modo de navegação ou mover-se por linha ou parágrafo) não páram a leitura mas movem a posição de leitura para a nova posição, sendo a leitura continuada a partir desse ponto.
+Se activada, alguns comandos de navegação, (tais como os comandos de Navegação por caracter em modo de navegação ou mover-se por linha ou parágrafo) não páram a leitura mas movem a posição de leitura para a nova posição, sendo a leitura continuada a partir desse ponto.
 
 ==== Reproduzir beeps, se ao escrever letras minúsculas o caps lock estiver activado ====
 Quando activada, será ouvido um som de aviso, se uma letra for pressionada com a tecla shift, enquanto o caps lock estiver ligado.
@@ -1748,10 +1754,10 @@ São suportadas as seguintes linhas braille:
 -
 
 Se estiver instalado o BrxCom, o NVDA usará o BrxCom.
-O BrxCom é uma ferramenta que lhe permite usar  a entrada de braille, independentemente do leitor de ecrã.
+O BrxCom é uma ferramenta que permite a introdução de texto pelo teclado da linha Braille independentemente do leitor de ecrã.
 Uma nova versão do BrxCom, que funcionará com o NVDA, será brevemente lançada pela Papenmeier.
 É possível utilizar o teclado Braille das Braillex Trio, BRAILLEX Live 20 and Braillex Live, sem o BrxCom.
-É possível utilizar o teclado da Braillex Live Plus, mas apenas com o BrxCom.
+É possível utilizar o teclado da Brailex Trio e da Braillex Live Plus.
 
 A maioria dos dispositivos têm uma barra de acesso fácil, EAB - Easy access bar, que permite  a operação intuitiva e rápida.
 A EAB pode ser movida em quatro direcções, em que cada direcção tem, geralmente, dois interruptores.
@@ -1780,7 +1786,7 @@ Geralmente, estão disponíveis as seguintes teclas, nestas linhas braille:
 
 Seguem-se as associações de comandos da Papenmeier para o NVDA:
 %kc:beginInclude
-|| Nome | Tecla |
+|| Nome | Tecla de atalho |
 | Deslocar a linha braille para trás | left |
 | Deslocar a linha braille para a frente | right |
 | Mover a linha braille para a linha anterior | up |
@@ -1788,8 +1794,8 @@ Seguem-se as associações de comandos da Papenmeier para o NVDA:
 | Encaminhar para a célula braille | routing |
 | Anuncia o caracter actual em revisão | l1 |
 | Activa o objecto de navegação actual | l2 |
-| Anuncia o título | l1+up |
 | Alternar Braille fixado para | r2 |
+| Anuncia o título | l1+up |
 | Anuncia a barra de estado | l2+down |
 | Move para o objecto que contem | up2 |
 | Move para o primeiro objecto contido | dn2 |
@@ -1809,7 +1815,7 @@ Actualmente a right thumb key não está a ser usada.
 Ambas as teclas interiores estão definidas para Espaço.
 
 %kc:beginInclude
-|| Nome | Tecla |
+|| Nome | Tecla de atalho |
 | Tecla backspace | ponto 7 |
 | Tecla enter | ponto 8 |
 | Tecla escape | espaço mais  ponto 7 |
@@ -1865,6 +1871,7 @@ Dispositivos com EAB
 | Encaminhar para a célula braille | routing |
 | Anuncia o caracter actual em revisão | l1 |
 | Activa o objecto de navegação actual | l2 |
+| Alternar Braille fixado para | r2 |
 | Anuncia o título | l1+up |
 | Anuncia a barra de estado | l2+down |
 | Move para o objecto que contem | up2 |
@@ -1881,12 +1888,14 @@ BRAILLEX Tiny:
 | Move a linha braille para a linha seguinte | dn |
 | Anuncia o caracter actual em revisão | l1 |
 | Activa o objecto de navegação actual | l2 |
-| Alternar Braille fixado para | r2 |
+| Alternar "Braille fixado para" | r2 |
 | Move para o objecto que contem | r1+up |
 | Move para o primeiro objecto contido | r1+dn |
 | Move para o objecto anterior | r1+left |
 | Move para o objecto seguinte | r1+right |
 | Anuncia a formatação do texto | reportf |
+| Anuncia o título | l1+up |
+| Anuncia a barra de estado | l2+down |
 
 BRAILLEX 2D Screen:
 || Nome | Tecla de atalho |
@@ -1950,6 +1959,42 @@ Por favor consulte a documentação do BrailleNote para saber a localização da
 | Tecla Windows | espaço+ponto 2+ponto 4+ponto 5+ponto 6 (espaço+w) |
 | Tecla Alt | espaço+ponto 1+ponto 3+ponto 4 (espaço+m) |
 | Alternar o modo de ajuda de entrada | espaço+ponto 2+ponto 3+ponto 6 (espaço+h rebaixado) |
+%kc:endInclude
+
+++ EcoBraille ++
+O NVDA suporta as linhas Braille EcoBraille da [ONCE http://www.once.es/].
+Os modelos seguintes são suportados:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+
+No NVDA, pode configurar a que porta série a linha está ligada no diálogo Definições de Braille.
+
+Seguem-se as associações de comandos para as linhas EcoBraille 
+Por favor consulte a documentação [EcoBraille em ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] para uma descrição da localização das teclas.
+
+%kc:beginInclude
+|| Nome | Tecla de atalho |
+| Deslocar a linha braille para trás | T2 |
+| Deslocar a linha braille para a frente | T4 |
+| Mover a linha braille para a linha anterior | T1 |
+| Mover a linha braille para a linha seguinte | T5 |
+| Encaminhar para a célula braille | Routing |
+| Activar o objecto de navegação actual | T3 |
+| Mudar para o modo de revisão seguinte | F1 |
+| Mover para o objecto que contem | F2 |
+| Mudar para o modo de revisão anterior | F3 |
+| Mover para o objecto anterior | F4 |
+| Anunciar o objecto actual | F5 |
+| Mover para o objecto seguinte | F6 |
+| Mover para o objecto em foco | F7 |
+| Mover para o primeiro objecto contido | F8 |
+| Mover o foco do sistema ou o cursor para o objecto actual da revisão| | F9 |
+| Anunciar localização do cursor de revisão | F0 |
+| Alternar "Braille fixado para" | A |
 %kc:endInclude
 
 ++ BRLTTY ++

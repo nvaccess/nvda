@@ -258,14 +258,23 @@ class ExcelSheetQuickNavItem(ExcelQuickNavItem):
 
 	def moveTo(self):
 		self.sheetObject.Activate()
-		
+		eventHandler.queueEvent("gainFocus",api.getDesktopObject().objectWithFocus())
+
 	def rename(self,newName):
 		self.sheetObject.Name=newName
 		self.label=newName
-		
+
 	@property
 	def isRenameAllowed(self):
 		return True
+
+	@property
+	def isAfterSelection(self):
+		activeSheet = self.document.Application.ActiveSheet
+		if self.sheetObject.Index <= activeSheet.Index:
+			return False
+		else:
+			return True
 
 class SheetsExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 	"""
@@ -274,13 +283,13 @@ class SheetsExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 	quickNavItemClass=ExcelSheetQuickNavItem#: the QuickNavItem class that should be instantiated and emitted. 
 	def collectionFromWorksheet( self , worksheetObject ):
 		try:
-			sheetsCollection = []
-			for sheet in worksheetObject.Application.ActiveWorkbook.Worksheets:
-				if sheet.Visible==xlSheetVisible:
-					sheetsCollection.append(sheet)				
-			return  sheetsCollection
+			return worksheetObject.Application.ActiveWorkbook.Worksheets
 		except(COMError):
 			return None
+
+	def filter(self,sheet):
+		if sheet.Visible==xlSheetVisible:
+			return True
 
 class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 

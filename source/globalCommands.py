@@ -62,7 +62,7 @@ SCRCAT_CONFIG = _("Configuration")
 SCRCAT_BRAILLE = _("Braille")
 #: Script category for tools commands.
 # Translators: The name of a category of NVDA commands.
-SCRCAT_TOOLS = _("Tools")
+SCRCAT_TOOLS = pgettext('script category', 'Tools')
 #: Script category for touch commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_TOUCH = _("Touch screen")
@@ -725,7 +725,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
 	# Translators: Input help mode message for report current navigator object command.
-	script_navigatorObject_current.__doc__=_("Reports the current navigator object. Pressing twice spells this information,and pressing three times Copies name and value of this  object to the clipboard")
+	script_navigatorObject_current.__doc__=_("Reports the current navigator object. Pressing twice spells this information, and pressing three times Copies name and value of this  object to the clipboard")
 	script_navigatorObject_current.category=SCRCAT_OBJECTNAVIGATION
 
 	def script_navigatorObject_currentDimensions(self,gesture):
@@ -1148,7 +1148,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		# Toggle browse mode pass-through.
 		vbuf.passThrough = not vbuf.passThrough
-		if isinstance(vbuf,virtualBuffers.VirtualBuffer):
+		if isinstance(vbuf,browseMode.BrowseModeDocumentTreeInterceptor):
 			# If we are enabling pass-through, the user has explicitly chosen to do so, so disable auto-pass-through.
 			# If we're disabling pass-through, re-enable auto-pass-through.
 			vbuf.disableAutoPassThrough = vbuf.passThrough

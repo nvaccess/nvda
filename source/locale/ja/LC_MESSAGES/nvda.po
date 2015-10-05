@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-01 19:09+1000\n"
-"PO-Revision-Date: 2015-07-02 23:23+0900\n"
+"POT-Creation-Date: 2015-08-25 19:09+1000\n"
+"PO-Revision-Date: 2015-09-15 20:56+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -262,6 +262,12 @@ msgid "Ethiopic grade 1"
 msgstr "エチオピア語1級点字"
 
 #. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Finnish 6 dot"
+msgstr "フィンランド語6点点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Finnish 8 dot computer braille"
 msgstr "フィンランド語8点コンピューター点字"
 
@@ -289,6 +295,16 @@ msgstr "カナダフランス語1級点字"
 #. braille settings dialog.
 msgid "French (Canada) grade 2"
 msgstr "カナダフランス語2級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 1"
+msgstr "アイルランド語1級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 2"
+msgstr "アイルランド語1級点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -344,6 +360,16 @@ msgstr "イタリア語8点コンピューター点字"
 #. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "カンナダ語1級点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 1 (2006)"
+msgstr "韓国語1級点字(2006)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 2 (2006)"
+msgstr "韓国語2級点字(2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -708,6 +734,23 @@ msgstr "フォーカスモード"
 msgid "browse mode"
 msgstr "ブラウズモード"
 
+#. Translators: Reported when single letter navigation in browse mode is turned off.
+msgid "Single letter navigation off"
+msgstr "英字キーを入力に使用"
+
+#. Translators: Reported when single letter navigation in browse mode is turned on.
+msgid "Single letter navigation on"
+msgstr "1文字ナビゲーションを使用"
+
+#. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
+msgid ""
+"Toggles single letter navigation on and off. When on, single letter keys in "
+"browse mode jump to various kinds of elements on the page. When off, these "
+"keys are passed to the application"
+msgstr ""
+"ブラウズモードでの1文字ナビゲーションの切り替え。1文字のキーによってページ内"
+"の各要素にジャンプ、または矢印キーだけを移動に使用"
+
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
 msgstr "使用できません"
@@ -716,7 +759,7 @@ msgstr "使用できません"
 msgid "Lists various types of elements in this document"
 msgstr "ドキュメントの中の種類ごとの要素リスト"
 
-#. Translators: the description for the activatePosition script on virtualBuffers.
+#. Translators: the description for the activatePosition script on browseMode documents.
 msgid "activates the current object in the document"
 msgstr "ドキュメント内の現在のオブジェクトを開く"
 
@@ -1190,6 +1233,43 @@ msgstr "アクティブ化(&A)"
 #. in the browse mode Elements List dialog.
 msgid "&Move to"
 msgstr "移動(&M)"
+
+#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
+#, python-format
+msgid "%s landmark"
+msgstr "%s ランドマーク"
+
+#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "%s 選択"
+
+#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
+msgid "No long description"
+msgstr "詳細説明なし"
+
+#. Translators: the description for the activateLongDescription script on browseMode documents.
+msgid "Shows the long description at this position if one is found."
+msgstr "詳細説明がある場合に表示"
+
+#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
+#. But there is no container.
+msgid "Not in a container"
+msgstr "コンテナ内ではありません"
+
+#. Translators: Description for the Move to start of container command in browse mode.
+msgid "Moves to the start of the container element, such as a list or table"
+msgstr "リストやテーブルなどコンテナ要素の最初に移動"
+
+#. Translators: a message reported when:
+#. Review cursor is at the bottom line of the current navigator object.
+#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
+msgid "bottom"
+msgstr "下の端"
+
+#. Translators: Description for the Move past end of container command in browse mode.
+msgid "Moves past the end  of the container element, such as a list or table"
+msgstr "リストやテーブルなどコンテナ要素の最後に移動"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1920,11 +2000,6 @@ msgctxt "color name"
 msgid "Yellow Green"
 msgstr "イエローグリーンの色"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "%s 選択"
-
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
@@ -2049,7 +2124,6 @@ msgid "cell"
 msgstr "セル"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
-#. Translators: A column in a column chart.
 msgid "column"
 msgstr "列"
 
@@ -2764,7 +2838,7 @@ msgid "Braille"
 msgstr "点字"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: The label for the Tools submenu in NVDA menu.
+msgctxt "script category"
 msgid "Tools"
 msgstr "ツール"
 
@@ -3279,9 +3353,9 @@ msgstr "%sをクリップボードにコピーしました"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
 msgstr ""
 "現在のナビゲーターオブジェクトの報告、2回押すとスペルの読み上げ、3回押すとオ"
 "ブジェクトの名前と内容をクリップボードにコピー"
@@ -3380,7 +3454,7 @@ msgstr "現在のナビゲーターオブジェクトの既定の動作の実行
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
 msgid "top"
-msgstr "トップ"
+msgstr "上の端"
 
 #. Translators: Input help mode message for move review cursor to top line command.
 msgid ""
@@ -3405,12 +3479,6 @@ msgid ""
 msgstr ""
 "現在レビューカーソルのあるナビゲーターオブジェクトの行の報告。2回押すと現在の"
 "行のスペルを報告。3回押すと文字説明で行を報告"
-
-#. Translators: a message reported when:
-#. Review cursor is at the bottom line of the current navigator object.
-#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "ボトム"
 
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid ""
@@ -3451,7 +3519,7 @@ msgstr ""
 "レビューカーソルを現在のナビゲーターオブジェクトの次の単語に移動して読み上げ"
 
 msgid "left"
-msgstr "左"
+msgstr "左の端"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
 msgid ""
@@ -3478,7 +3546,7 @@ msgstr ""
 "を説明。3回押すと文字コードを10進と16進で報告"
 
 msgid "right"
-msgstr "右"
+msgstr "右の端"
 
 #. Translators: Input help mode message for move review cursor to next character command.
 msgid ""
@@ -4020,7 +4088,7 @@ msgstr "説明"
 msgid "Commands Quick Reference"
 msgstr "NVDA コマンド一覧表"
 
-#. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
+#. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
 msgstr "NVDA ユーザーガイド"
 
@@ -4387,7 +4455,7 @@ msgstr "システムキーボード上の%sを押す機能をエミュレート"
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
-msgstr "クーギョー"
+msgstr "ブランク"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
@@ -4664,29 +4732,64 @@ msgstr "NVDAスピーチビューワー"
 msgid "&Language"
 msgstr "言語(&L)"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Language"
+msgstr "言語"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Voice"
 msgstr "音声(&V)"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Voice"
+msgstr "音声"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&ariant"
 msgstr "声色(&A)"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Variant"
+msgstr "声色"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
 msgstr "速さ(&R)"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate"
+msgstr "速さ"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "音量(&O)"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Volume"
+msgstr "音量"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
 msgstr "高さ(&P)"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Pitch"
+msgstr "高さ"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "抑揚(&I)"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Inflection"
+msgstr "抑揚"
 
 msgid "text mode"
 msgstr "テキストモード"
@@ -5438,6 +5541,8 @@ msgstr "Baum/HumanWare/APHの点字ディスプレイ"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
 msgid "Serial: {portName}"
 msgstr "シリアルポート: {portName}"
 
@@ -5448,6 +5553,10 @@ msgstr "HumanWareブレイルノート"
 #. Translators: The name of a series of braille displays.
 msgid "HumanWare Brailliant BI/B series"
 msgstr "HumanWare社のBrailliant BI/Bシリーズ"
+
+#. Translators: The name of a braille display.
+msgid "EcoBraille displays"
+msgstr "EcoBraille ディスプレイ"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -5685,6 +5794,14 @@ msgstr "NVDAのインストール(&I)..."
 msgid "Reload plugins"
 msgstr "プラグインの再読み込み(&R)"
 
+#. Translators: The label for the Tools submenu in NVDA menu.
+msgid "Tools"
+msgstr "ツール(&T)"
+
+#. Translators: The label of a menu item to open NVDA user guide.
+msgid "&User Guide"
+msgstr "ユーザーガイド(&U)"
+
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
 msgstr "コマンド一覧表(&Q)"
@@ -5729,7 +5846,7 @@ msgid "&Revert to saved configuration"
 msgstr "前回保存された設定に戻す(&R)"
 
 msgid "Reset all settings to saved state"
-msgstr "すべての設定情報を保存されている設定に戻す"
+msgstr "前回保存された設定に戻す"
 
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
@@ -5744,7 +5861,7 @@ msgid "&Save configuration"
 msgstr "設定情報の保存(&S)"
 
 msgid "Write the current configuration to nvda.ini"
-msgstr "現在の設定情報をnvda.iniに書き込む"
+msgstr "設定情報を保存する"
 
 #. Translators: The label for the menu item to open donate page.
 msgid "Donate"
@@ -6158,6 +6275,7 @@ msgstr ""
 "の関連付けが削除され、このプロファイルと関連付けされます。\n"
 "継続しますか？"
 
+#. Translators: The title of a warning dialog.
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 msgid "Warning"
 msgstr "警告"
@@ -6194,7 +6312,7 @@ msgstr "NVDAをインストール中"
 
 #. Translators: The message displayed while NVDA is being updated.
 msgid "Please wait while your previous installation of NVDA is being updated."
-msgstr "インストール済みのNVDAが更新されるまでお待ちください。"
+msgstr "NVDAが更新されるまでお待ちください。"
 
 #. Translators: The message displayed while NVDA is being installed.
 msgid "Please wait while NVDA is being installed"
@@ -6228,12 +6346,12 @@ msgstr "NVDAのインストールは成功しました。"
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 msgid "Successfully updated your installation of NVDA. "
-msgstr "インストール済みのNVDAの更新が終了しました。"
+msgstr "NVDAが更新されました。"
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
 msgid "Please press OK to start the installed copy."
-msgstr "インストールされたNVDAを実行するためにOKを押してください。"
+msgstr "インストールされたNVDAを実行するにはOKを押してください。"
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
 msgid "Success"
@@ -6245,15 +6363,14 @@ msgstr "NVDAのインストール"
 
 #. Translators: An informational message in the Install NVDA dialog.
 msgid "To install NVDA to your hard drive, please press the Continue button."
-msgstr "NVDAをハードディスクにインストールするには継続を押してください。"
+msgstr "NVDAをインストールするには継続を押してください。"
 
 #. Translators: An informational message in the Install NVDA dialog.
 msgid ""
 "A previous copy of NVDA has been found on your system. This copy will be "
 "updated."
 msgstr ""
-"システムに前のバージョンのNVDAがみつかりました。このNVDAはアップデートされま"
-"す。"
+"前のバージョンのNVDAがインストールされています。このNVDAは更新されます。"
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
 msgid ""
@@ -6284,6 +6401,25 @@ msgstr "ポータブル版の設定を現在のユーザーアカウントにコ
 #. Translators: The label of a button to continue with the operation.
 msgid "&Continue"
 msgstr "継続(&C)"
+
+#. Translators: A warning presented when the user attempts to downgrade NVDA
+#. to an older version.
+msgid ""
+"You are attempting to install an earlier version of NVDA than the version "
+"currently installed. If you really wish to revert to an earlier version, you "
+"should first cancel this installation and completely uninstall NVDA before "
+"installing the earlier version."
+msgstr ""
+"現在インストールされているNVDAよりも前のバージョンのNVDAをインストールしよう"
+"としています。\n"
+"前のバージョンに戻したい場合は、このインストールをキャンセルしてください。\n"
+"まず現在のNVDAをアンインストールして、それから前のバージョンのNVDAをインス"
+"トールし直してください。"
+
+#. Translators: The label of a button to proceed with installation,
+#. even though this is not recommended.
+msgid "&Proceed with installation (not recommended)"
+msgstr "インストールを継続（非推奨）(&P)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -6432,7 +6568,7 @@ msgstr ""
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 msgid "Automatically check for &updates to NVDA"
-msgstr "自動的に確認してNVDAを更新(&U)"
+msgstr "NVDAの更新を自動的に確認(&U)"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
@@ -6466,7 +6602,7 @@ msgstr "コピーエラー"
 
 #. Translators: The message displayed when errors were found while trying to copy current configuration to system settings.
 msgid "Error copying NVDA user settings"
-msgstr "NVDAのユーザー設定をコピー中にエラーが発生しました"
+msgstr "NVDAのユーザー設定のコピー中にエラーが発生しました"
 
 #. Translators: The message displayed when copying configuration to system settings was successful.
 msgid "Successfully copied NVDA user settings"
@@ -7191,11 +7327,6 @@ msgstr "{curPercent:.0f}パーセント"
 msgid "at {x}, {y}"
 msgstr "位置 {x}, {y}"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-#, python-format
-msgid "%s landmark"
-msgstr "%s ランドマーク"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "更新完了"
@@ -7203,14 +7334,6 @@ msgstr "更新完了"
 #. Translators: Reported while loading a document.
 msgid "Loading document..."
 msgstr "ドキュメントを読み込み中..."
-
-#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-msgid "No long description"
-msgstr "詳細説明なし"
-
-#. Translators: the description for the activateLongDescription script on virtualBuffers.
-msgid "Shows the long description at this position if one is found."
-msgstr "詳細説明がある場合に表示"
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -7230,7 +7353,7 @@ msgid ""
 "document content"
 msgstr ""
 "ドキュメントコンテンツのレンダリング中に、可能であれば画面レイアウトを使用す"
-"るか使わないかを切り替えます"
+"るか使わないかを切り替え"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not within a table.
@@ -7253,19 +7376,6 @@ msgstr "次のテーブル列へ移動"
 #. Translators: the description for the previous table column script on virtualBuffers.
 msgid "moves to the previous table column"
 msgstr "前のテーブル列へ移動"
-
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
-msgid "Not in a container"
-msgstr "コンテナ内ではありません"
-
-#. Translators: Description for the Move to start of container command in browse mode.
-msgid "Moves to the start of the container element, such as a list or table"
-msgstr "リストやテーブルなどコンテナ要素の最初に移動"
-
-#. Translators: Description for the Move past end of container command in browse mode.
-msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "リストやテーブルなどコンテナ要素の最後に移動"
 
 msgid "Taskbar"
 msgstr "タスクバー"
@@ -7786,6 +7896,11 @@ msgstr "系列が定義されていません"
 #. Translators: A slice in a pie chart.
 msgid "slice"
 msgstr "スライス"
+
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "列"
 
 #. Translators: A data point in a line chart.
 msgid "data point"
