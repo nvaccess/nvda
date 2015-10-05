@@ -247,12 +247,13 @@ class FormulaExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 			return None
 
 class ExcelSheetQuickNavItem(ExcelQuickNavItem):
+
 	def __init__( self , nodeType , document , sheetObject , sheetCollection ):
 		self.label = sheetObject.Name
 		self.sheetIndex = sheetObject.Index
 		self.sheetObject = sheetObject
 		super( ExcelSheetQuickNavItem , self).__init__( nodeType , document , sheetObject , sheetCollection )
-	
+
 	def __lt__(self,other):
 		return self.sheetIndex < other.sheetIndex
 
@@ -351,7 +352,6 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("sheet", _("&Sheet")),
-		
 	)
 
 class ExcelBase(Window):

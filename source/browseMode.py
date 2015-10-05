@@ -131,13 +131,13 @@ class QuickNavItem(object):
 		Activates this item's position. E.g. follows a link, presses a button etc.
 		"""
 		raise NotImplementedError
-		
+
 	def rename(self,newName):
 		"""
 		Renames this item with the new name.
 		"""
 		raise NotImplementedError
-	
+
 	@property
 	def isRenameAllowed(self):
 		return False
@@ -750,7 +750,7 @@ class ElementsListDialog(wx.Dialog):
 				button.ProcessEvent(evt)
 			else:
 				wx.Bell()
-				
+
 		elif key == wx.WXK_F2:
 			item=self.tree.GetSelection()
 			selectedItemType=self.tree.GetItemPyData(item).item
@@ -774,13 +774,13 @@ class ElementsListDialog(wx.Dialog):
 			else:
 				self._searchCallLater = wx.CallLater(1000, self._clearSearchText)
 			self.search(self._searchText)
-			
+
 	def onTreeLabelEditBegin(self,evt):
 		item=self.tree.GetSelection()
 		selectedItemType = self.tree.GetItemPyData(item).item
 		if not selectedItemType.isRenameAllowed:
 			evt.Veto()
-	
+
 	def onTreeLabelEditEnd(self,evt):
 			selectedItemNewName=evt.GetLabel()
 			item=self.tree.GetSelection()
