@@ -958,7 +958,7 @@ class ExcelCell(ExcelBase):
 			previous=None
 		if previous:
 			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=previous)
-		
+
 	def _get_description(self):
 		try:
 			inputMessageTitle=self.excelCellObject.validation.inputTitle
@@ -969,7 +969,7 @@ class ExcelCell(ExcelBase):
 		except (COMError,NameError,AttributeError):
 			inputMessage=None
 		if inputMessage and inputMessageTitle:
-			return _("Input Message is {title} {message}").format( title = inputMessageTitle , message = inputMessage)
+			return _("Input Message is {title}: {message}").format( title = inputMessageTitle , message = inputMessage)
 		elif inputMessage:
 			return _("Input Message is {message}").format( message = inputMessage)
 		else:
