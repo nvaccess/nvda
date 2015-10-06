@@ -25,7 +25,8 @@
 - In Windows 8 and later, NVDA now starts a lot earlier when configured to start after logging on to Windows. (#308)
  - If you enabled this using a previous version of NVDA, you will need to disable it and enable it again in the General Settings dialog for the change to take effect.
 - Performance enhansements for UI Automation including  File Explorer and Task Viewer. (#5293)
-
+- NVDA now correctly switches to focus mode when tabbing to read-only ARIA grid controls in Browse Mode for Mozilla Firefox and other Gecko-based controls. (#5118)
+ 
 
 = 2015.3 =
 Highlights of this release include initial support for Windows 10; the ability to disable single letter navigation in browse mode (useful for some web apps); improvements in Internet Explorer; and fixes for garbled text when typing in certain applications with braille enabled.

@@ -1056,7 +1056,10 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		# Menus sometimes get focus due to menuStart events even though they don't report as focused/focusable.
 		if not obj.isFocusable and controlTypes.STATE_FOCUSED not in states and role != controlTypes.ROLE_POPUPMENU:
 			return False
-		if controlTypes.STATE_READONLY in states and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX):
+		# many controls that are read-only should not switch to passThrough. 
+		# However, certain controls such as combo boxes and readonly edits are read-only but still interactive.
+		# #5118: read-only ARIA grids should also be allowed (focusable table cells, rows and headers).
+		if controlTypes.STATE_READONLY in states and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_TABLEROW, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER):
 			return False
 		if reason == controlTypes.REASON_CARET:
 			return role == controlTypes.ROLE_EDITABLETEXT or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)
