@@ -344,6 +344,20 @@ class GlobalCommands(ScriptableObject):
 	script_toggleReportRevisions.__doc__=_("Toggles on and off the reporting of revisions")
 	script_toggleReportRevisions.category=SCRCAT_DOCUMENTFORMATTING
 
+	def script_toggleReportEmphasis(self,gesture):
+		if config.conf["documentFormatting"]["reportEmphasis"]:
+			# Translators: The message announced when toggling the report emphasis document formatting setting.
+			state = _("report emphasis off")
+			config.conf["documentFormatting"]["reportEmphasis"]=False
+		else:
+			# Translators: The message announced when toggling the report emphasis document formatting setting.
+			state = _("report emphasis on")
+			config.conf["documentFormatting"]["reportEmphasis"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report emphasis command.
+	script_toggleReportEmphasis.__doc__=_("Toggles on and off the reporting of emphasis")
+	script_toggleReportEmphasis.category=SCRCAT_DOCUMENTFORMATTING
+
 	def script_toggleReportColor(self,gesture):
 		if config.conf["documentFormatting"]["reportColor"]:
 			# Translators: The message announced when toggling the report colors document formatting setting.
@@ -1182,7 +1196,7 @@ class GlobalCommands(ScriptableObject):
 	def script_reportFormatting(self,gesture):
 		formatConfig={
 			"detectFormatAfterCursor":False,
-			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,
+			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,"reportEmphasis":False,
 			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
 			"reportPage":False,"reportLineNumber":False,"reportParagraphIndentation":True,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
