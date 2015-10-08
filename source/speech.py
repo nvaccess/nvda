@@ -1405,6 +1405,8 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		linePrefix=attrs.get("line-prefix")
 		if linePrefix:
 			textList.append(linePrefix)
+	breakpoint=attrs.get("breakpoint")
+	if breakpoint: textList.append(breakpoint)
 	if attrsCache is not None:
 		attrsCache.clear()
 		attrsCache.update(attrs)
