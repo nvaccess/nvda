@@ -95,29 +95,74 @@ xlPatternUp                  =-4162       # from enum XlPattern
 xlPatternVertical            =-4166       # from enum XlPattern
 xlPatternLinearGradient      =4000
 xlPatternRectangularGradient =4001
+
 backgroundPatternLabels={
-xlPatternAutomatic:"automatic",
-xlPatternChecker:"checker",
-xlPatternCrissCross:"crisscross",
-xlPatternDown:"down",
-xlPatternGray16:"gray16",
-xlPatternGray25:"gray25",
-xlPatternGray50:"gray50",
-xlPatternGray75:"gray75",
-xlPatternGray8:"gray8",
-xlPatternGrid:"grid",
-xlPatternHorizontal:"horizontal",
-xlPatternLightDown:"light down",
-xlPatternLightHorizontal:"light horizontal",
-xlPatternLightUp:"light up",
-xlPatternLightVertical:"light vertical",
-xlPatternNone:"none",
-xlPatternSemiGray75:"semi gray75",
-xlPatternSolid:"solid",
-xlPatternUp:"up",
-xlPatternVertical:"vertical",
-xlPatternLinearGradient:"linear gradient",
-xlPatternRectangularGradient:"rectangular gradient",
+	# See https://msdn.microsoft.com/en-us/library/microsoft.office.interop.excel.xlpattern.aspx
+						
+	# Translators: A type of background pattern in Microsoft Excel. 
+	#Excel controls the pattern.
+	xlPatternAutomatic:_("automatic"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	# Checkerboard
+	xlPatternChecker:_("checker"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	# Criss-cross lines
+	xlPatternCrissCross:_("crisscross"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	# Dark diagonal lines running from the upper left to the lower right
+	xlPatternDown:_("down"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	# 16% gray
+	xlPatternGray16:_("gray16"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	# 25% gray
+	xlPatternGray25:_("gray25"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	# 50% gray
+	xlPatternGray50:_("gray50"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	# 75% gray
+	xlPatternGray75:_("gray75"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	# 8% gray
+	xlPatternGray8:_("gray8"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	# Grid
+	xlPatternGrid:_("grid"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	# Dark horizontal lines
+	xlPatternHorizontal:_("horizontal"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	# Light diagonal lines running from the upper left to the lower right
+	xlPatternLightDown:_("light down"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	# Light horizontal lines
+	xlPatternLightHorizontal:_("light horizontal"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	# Light diagonal lines running from the lower left to the upper right
+	xlPatternLightUp:_("light up"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	# Light vertical bars
+	xlPatternLightVertical:_("light vertical"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	# No pattern
+	xlPatternNone:_("none"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	# 75% dark moire
+	xlPatternSemiGray75:_("semi gray75"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	# Solid color
+	xlPatternSolid:_("solid"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	# Dark diagonal lines running from the lower left to the upper right
+	xlPatternUp:_("up"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	# Dark vertical bars
+	xlPatternVertical:_("vertical"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	xlPatternLinearGradient:_("linear gradient"),
+	# Translators: A type of background pattern in Microsoft Excel. 
+	xlPatternRectangularGradient:_("rectangular gradient"),
 }
 
 re_RC=re.compile(r'R(?:\[(\d+)\])?C(?:\[(\d+)\])?')
