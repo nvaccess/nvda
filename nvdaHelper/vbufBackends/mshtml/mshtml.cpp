@@ -418,11 +418,11 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 		VariantInit(&tempVar);\
 		tempAttrObj->get_nodeValue(&tempVar);\
 		if(tempVar.vt==VT_BSTR&&tempVar.bstrVal&&(allowEmpty||SysStringLen(tempVar.bstrVal)>0)) {\
-			attribsMap[L"HTMLAttrib::"##attribName]=tempVar.bstrVal;\
+			attribsMap[L"HTMLAttrib::" attribName]=tempVar.bstrVal;\
 		} else if(tempVar.vt==VT_I2||tempVar.vt==VT_I4) {\
 			wostringstream* s=new wostringstream;\
 			(*s)<<((tempVar.vt==VT_I2)?tempVar.iVal:tempVar.lVal);\
-			attribsMap[L"HTMLAttrib::"##attribName]=s->str();\
+			attribsMap[L"HTMLAttrib::" attribName]=s->str();\
 			delete s;\
 		}\
 		VariantClear(&tempVar);\
