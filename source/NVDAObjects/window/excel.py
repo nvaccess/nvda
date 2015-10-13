@@ -882,10 +882,10 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 		formatField=textInfos.FormatField()
 		if (self.obj.excelCellObject.Application.Version > "12.0"):
 					cellObj=self.obj.excelCellObject.DisplayFormat
-					fontObj=self.obj.excelCellObject.DisplayFormat.font
+					fontObj=cellObj.font
 		else:
             		cellObj=self.obj.excelCellObject
-            		fontObj=self.obj.excelCellObject.font
+            		fontObj=cellObj.font
 		if formatConfig['reportAlignment']:
 			value=alignmentLabels.get(self.obj.excelCellObject.horizontalAlignment)
 			if value:

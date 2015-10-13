@@ -1163,6 +1163,8 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		oldBackgroundColor=attrsCache.get("background-color") if attrsCache is not None else None
 		backgroundColorTwo=attrs.get("background-colorTwo")
 		oldBackgroundColorTwo=attrsCache.get("background-colorTwo") if attrsCache is not None else None
+		backgroundPattern=attrs.get("background-pattern")
+		oldBackgroundPattern=attrsCache.get("background-pattern") if attrsCache is not None else None
 		if color and backgroundColor and backgroundColorTwo and color!=oldColor and backgroundColor!=oldBackgroundColor and backgroundColorTwo!=oldBackgroundColorTwo:
 			# Translators: Reported when both the text and the two background colors change .Two background colors are present when gradient pattern is applied to cell
 			# {color} will be replaced with the text color.
@@ -1187,6 +1189,8 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 			# Translators: Reported when the background color changes (but not the text color).
 			# {backgroundColor} will be replaced with the background color.
 			textList.append(_("{backgroundColor} background").format(backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)))
+		if backgroundPattern and backgroundPattern!=oldBackgroundPattern and backgroundPattern!= "none":
+			textList.append(_("{pattern} background pattern").format(pattern=backgroundPattern))
 	if  formatConfig["reportLineNumber"]:
 		lineNumber=attrs.get("line-number")
 		oldLineNumber=attrsCache.get("line-number") if attrsCache is not None else None
