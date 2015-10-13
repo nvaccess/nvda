@@ -34,7 +34,7 @@ IAccessible* IAccessibleFromIdentifier(int docHandle, int ID) {
 	IAccessible* pacc=NULL;
 	VARIANT varChild;
 	LOG_DEBUG(L"Calling AccessibleObjectFromEvent");
-	if((res=AccessibleObjectFromEvent((HWND)docHandle,OBJID_CLIENT,ID,&pacc,&varChild))!=S_OK) {
+	if((res=AccessibleObjectFromEvent((HWND)UlongToHandle(docHandle),OBJID_CLIENT,ID,&pacc,&varChild))!=S_OK) {
 		LOG_DEBUG(L"AccessibleObjectFromEvent returned "<<res);
 		return NULL;
 	}
@@ -762,12 +762,12 @@ void CALLBACK AdobeAcrobatVBufBackend_t::renderThread_winEventProcHook(HWINEVENT
 
 	LOG_DEBUG(L"winEvent for window "<<hwnd);
 
-	int docHandle=(int)hwnd;
+	int docHandle=HandleToUlong(hwnd);
 	int ID=(objectID>0)?objectID:childID;
 	VBufBackend_t* backend=NULL;
 	LOG_DEBUG(L"Searching for backend in collection of "<<runningBackends.size()<<L" running backends");
 	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();++i) {
-		HWND rootWindow=(HWND)((*i)->rootDocHandle);
+		HWND rootWindow=(HWND)UlongToHandle((*i)->rootDocHandle);
 		LOG_DEBUG(L"Comparing backend's root window "<<rootWindow<<L" with window "<<hwnd);
 		if(rootWindow==hwnd) {
 			backend=(*i);
