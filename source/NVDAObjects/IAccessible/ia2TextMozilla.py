@@ -157,6 +157,8 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			# No descendant.
 			raise LookupError("Object has no text descendants")
 		if position == self.POSITION_SELECTION_END:
+			# As we descend, we need the last offset (not the exclusive end offset),
+			# but we want the exclusive end as the final result.
 			descendantOffset.value += 1
 		# optimisation: If we already have the target obj, don't make a new instance.
 		for cached in obj, getattr(self.obj, "_lastCaretObj", None):
