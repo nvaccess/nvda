@@ -195,7 +195,9 @@ bool findContentDescendant(IAccessible2* pacc2, long what, long* descendantID, l
 				break;
 			case FINDCONTENTDESCENDANT_LAST:
 				paccText->get_nCharacters(&offset);
-				--offset;
+				// If there is no text, last is still valid but should just use 0.
+				if (offset > 0)
+					--offset;
 				break;
 			case FINDCONTENTDESCENDANT_SELECTIONSTART:
 			case FINDCONTENTDESCENDANT_SELECTIONEND:
