@@ -188,28 +188,28 @@ bool findContentDescendant(IAccessible2* pacc2, long what, long* descendantID, l
 		long offset=-1;
 		switch(what) {
 			case FINDCONTENTDESCENDANT_FIRST:
-			offset=0;
-			break;
-		case FINDCONTENTDESCENDANT_CARET:
-			paccText->get_caretOffset(&offset);
-			break;
-		case FINDCONTENTDESCENDANT_LAST:
-			paccText->get_nCharacters(&offset);
-			--offset;
-			break;
+				offset=0;
+				break;
+			case FINDCONTENTDESCENDANT_CARET:
+				paccText->get_caretOffset(&offset);
+				break;
+			case FINDCONTENTDESCENDANT_LAST:
+				paccText->get_nCharacters(&offset);
+				--offset;
+				break;
 			case FINDCONTENTDESCENDANT_SELECTIONSTART:
 			case FINDCONTENTDESCENDANT_SELECTIONEND:
-			long nSelections=0;
-			paccText->get_nSelections(&nSelections);
-			if(nSelections==0) {
-				offset=-1;
-			} else {
-				long startOffset=0;
-				long endOffset=0;
-				paccText->get_selection(0,&startOffset,&endOffset);
-				offset=(what==FINDCONTENTDESCENDANT_SELECTIONSTART)?startOffset:endOffset-1;
-			}
-			break;
+				long nSelections=0;
+				paccText->get_nSelections(&nSelections);
+				if(nSelections==0) {
+					offset=-1;
+				} else {
+					long startOffset=0;
+					long endOffset=0;
+					paccText->get_selection(0,&startOffset,&endOffset);
+					offset=(what==FINDCONTENTDESCENDANT_SELECTIONSTART)?startOffset:endOffset-1;
+				}
+				break;
 		}
 		paccText->Release();
 		if(offset==-1) return false; 
