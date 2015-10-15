@@ -29,6 +29,7 @@ from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
 import browseMode
+import inputCore
 import ctypes
 
 xlCenter=-4108
@@ -38,6 +39,10 @@ xlRight=-4152
 xlDistributed=-4117
 xlBottom=-4107
 xlTop=-4160
+xlDown=-4121
+xlToLeft=-4159
+xlToRight=-4161
+xlUp=-4162
 xlCellWidthUnitToPixels = 7.5919335705812574139976275207592
 alignmentLabels={
 	xlCenter:"center",
@@ -260,10 +265,87 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 			log.debugWarning("could not compair sheet names",exc_info=True)
 			return False
 
+	def navigationHelper(self,direction):
+		excelWindowObject=self.rootNVDAObject.excelWindowObject
+		cellPosition = excelWindowObject.activeCell
+		try:
+			if   direction == "left":
+				cellPosition = cellPosition.Offset(0,-1)
+			elif direction == "right":
+				cellPosition = cellPosition.Offset(0,1)
+			elif direction == "up":
+				cellPosition = cellPosition.Offset(-1,0)
+			elif direction == "down":
+				cellPosition = cellPosition.Offset(1,0)
+			#Start-of-Column
+			elif direction == "startcol":
+				cellPosition = cellPosition.end(xlUp)
+			#Start-of-Row
+			elif direction == "startrow":
+				cellPosition = cellPosition.end(xlToLeft)
+			#End-of-Row
+			elif direction == "endrow":
+				cellPosition = cellPosition.end(xlToRight)
+			#End-of-Column
+			elif direction == "endcol":
+				cellPosition = cellPosition.end(xlDown)
+			else:
+				return
+		except COMError:
+			pass
+
+		try:
+			isMerged=cellPosition.mergeCells
+		except (COMError,NameError):
+			isMerged=False
+		if isMerged:
+			cellPosition=cellPosition.MergeArea(1)
+			obj=ExcelMergedCell(windowHandle=self.rootNVDAObject.windowHandle,excelWindowObject=excelWindowObject,excelCellObject=cellPosition)
+		else:
+			obj=ExcelCell(windowHandle=self.rootNVDAObject.windowHandle,excelWindowObject=excelWindowObject,excelCellObject=cellPosition)
+		cellPosition.Select()
+		cellPosition.Activate()
+		eventHandler.executeEvent('gainFocus',obj)
+    
+	def script_moveLeft(self,gesture):
+		self.navigationHelper("left")
+
+	def script_moveRight(self,gesture):
+		self.navigationHelper("right")
+
+	def script_moveUp(self,gesture):
+		self.navigationHelper("up")
+
+	def script_moveDown(self,gesture):
+		self.navigationHelper("down")
+
+	def script_startOfColumn(self,gesture):
+		self.navigationHelper("startcol")
+
+	def script_startOfRow(self,gesture):
+		self.navigationHelper("startrow")
+
+	def script_endOfRow(self,gesture):
+		self.navigationHelper("endrow")
+
+	def script_endOfColumn(self,gesture):
+		self.navigationHelper("endcol")
+
+	def script_activatePosition(self,gesture):
+		excelApplicationObject = self.rootNVDAObject.excelWorksheetObject.Application
+		if excelApplicationObject.ActiveSheet.ProtectContents and excelRangeObject.Locked:
+			# Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+			ui.message(_("This cell is non-editable"))
+			return
+		# Toggle browse mode pass-through.
+		self.passThrough = True
+		browseMode.reportPassThrough(self)
+	# Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
+	script_activatePosition.__doc__=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.")
+	script_activatePosition.category=inputCore.SCRCAT_BROWSEMODE
 
 	def __contains__(self,obj):
 		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle)
-
 
 
 	def _set_selection(self,info):
@@ -288,6 +370,20 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 	# Translators: the description for the elements list command in Microsoft Excel.
 	script_elementsList.__doc__ = _("Presents a list of charts, cells with comments and cells with formulas")
 	script_elementsList.ignoreTreeInterceptorPassThrough=True
+
+	__gestures = {
+		"kb:upArrow": "moveUp",
+		"kb:downArrow":"moveDown",
+		"kb:leftArrow":"moveLeft",
+		"kb:rightArrow":"moveRight",
+		"kb:control+upArrow":"startOfColumn",
+		"kb:control+downArrow":"endOfColumn",
+		"kb:control+leftArrow":"startOfRow",
+		"kb:control+rightArrow":"endOfRow",
+		"kb:enter": "activatePosition",
+		"kb(desktop):numpadEnter":"activatePosition",
+		"kb:space": "activatePosition",
+	}
 
 class ElementsListDialog(browseMode.ElementsListDialog):
 
@@ -832,6 +928,8 @@ class ExcelCell(ExcelBase):
 				states.add(controlTypes.STATE_CROPPED)
 			if self._overlapInfo['obscuringRightBy'] > 0:
 				states.add(controlTypes.STATE_OVERFLOWING)
+		if self.treeInterceptor and not self.treeInterceptor.passThrough and self.excelWindowObject.ActiveSheet.ProtectContents and self.excelCellObject.Locked:
+			states.add(controlTypes.STATE_PROTECTED)
 		return states
 
 	def getCellWidthAndTextWidth(self):
