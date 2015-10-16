@@ -333,7 +333,7 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 
 	def script_activatePosition(self,gesture):
 		excelApplicationObject = self.rootNVDAObject.excelWorksheetObject.Application
-		if excelApplicationObject.ActiveSheet.ProtectContents and excelRangeObject.Locked:
+		if excelApplicationObject.ActiveSheet.ProtectContents and excelApplicationObject.activeCell.Locked:
 			# Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 			ui.message(_("This cell is non-editable"))
 			return
@@ -347,6 +347,8 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 	def __contains__(self,obj):
 		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle)
 
+	def _get_selection(self):
+		return self.rootNVDAObject._getSelection()
 
 	def _set_selection(self,info):
 		super(ExcelBrowseModeTreeInterceptor,self)._set_selection(info)
@@ -653,6 +655,12 @@ class ExcelWorksheet(ExcelBase):
 		cell=self.excelWorksheetObject.cells(1,1)
 		return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=cell)
 
+	def _get_states(self):
+		states=super(ExcelWorksheet,self).states
+		if self.excelWorksheetObject.ProtectContents:
+			states.add(controlTypes.STATE_PROTECTED)
+		return states
+
 	def script_changeSelection(self,gesture):
 		oldSelection=api.getFocusObject()
 		gesture.send()
@@ -928,8 +936,8 @@ class ExcelCell(ExcelBase):
 				states.add(controlTypes.STATE_CROPPED)
 			if self._overlapInfo['obscuringRightBy'] > 0:
 				states.add(controlTypes.STATE_OVERFLOWING)
-		if self.treeInterceptor and not self.treeInterceptor.passThrough and self.excelWindowObject.ActiveSheet.ProtectContents and self.excelCellObject.Locked:
-			states.add(controlTypes.STATE_PROTECTED)
+		if self.excelWindowObject.ActiveSheet.ProtectContents and (not self.excelCellObject.Locked):
+			states.add(controlTypes.STATE_UNLOCKED)
 		return states
 
 	def getCellWidthAndTextWidth(self):
