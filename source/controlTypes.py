@@ -190,6 +190,7 @@ STATE_HASCOMMENT=0X2000000000
 STATE_OBSCURED=0x4000000000
 STATE_CROPPED=0x8000000000
 STATE_OVERFLOWING=0x10000000000
+STATE_UNLOCKED=0x20000000000
 
 roleLabels={
 	# Translators: The word for an unknown control type.
@@ -556,6 +557,8 @@ stateLabels={
 	STATE_CROPPED:_("cropped"),
 	# Translators: a state that denotes that the object(text) is overflowing into the adjacent space
 	STATE_OVERFLOWING:_("overflowing"),
+	# Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet). 
+	STATE_UNLOCKED:_("unlocked"),
 }
 
 negativeStateLabels={
