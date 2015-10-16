@@ -727,10 +727,13 @@ This option is a slider which goes from 0 to 100, (0 being the lowest volume and
 ==== Inflection ====
 This option is a slider that lets you choose how much inflection (rise and fall in pitch) the synthesizer should use to speak with. (The only synthesizer that provides this option at the present time is eSpeak).
 
-==== Automatic Language switching ====
-This checkbox allows you to toggle whether NVDA should switch speech synthesizer languages automatically if the text being read specifies its language.
+==== Automatic Language switching ====[AutoLanguageSwitching]
+This checkbox allows you to toggle whether NVDA should switch speech synthesizer languages automatically.
 This option is enabled by default.
-Currently only the eSpeak synthesizer supports automatic language switching.
+In-built support for automatic language switching is only available for eSpeak, though some speech synthesizer add-ons may support it.
+
+If the author specified the language of the text, NVDA will use this information.
+Otherwise, NVDA will attempt to [automatically detect the language of the text #LanguageDetection].
 
 ==== Automatic Dialect switching ====
 This checkbox allows you to toggle whether or not dialect changes should be made, rather than just actual language changes.
@@ -1201,6 +1204,30 @@ For example, if you pressed a key on the keyboard, you may wish it to be specifi
 In this case, a menu will appear allowing you to select the desired option.
 
 To remove a gesture from a command, select the gesture and press the Remove button.
+
+When you are finished making changes, press the OK button to save them or the Cancel button to discard them.
+
++++ Language Detection +++[LanguageDetection]
+If [automatic language switching #AutoLanguageSwitching] is enabled, NVDA will attempt to automatically detect the language of text if the text being read does not specify the language.
+This dialog allows you to choose the prefered languages to be used for automatic language detection.
+
+Sometimes, it is not possible for NVDA to determine the exact language for a section of text.
+For example, English and German both use the Latin script, so NVDA is not able to differentiate these languages.
+In these cases, NVDA chooses a language using the following order:
+- If there is a language that might be appropriate for the text in the configured list of preferred languages, NVDA chooses the first appropriate language from this list.
+- Otherwise, if the language used for NVDA's messages (as configured in General Settings) might be appropriate for the text, this language will be chosen.
+- Finally, if a language still hasn't been chosen, NVDA will use in-built information to try to choose an appropriate language.
+-
+
+The Preferred languages list specifies the preferred languages for automatic language detection from highest to lowest priority.
+
+To increase the priority of a language, select the language and press the Move up button.
+To decrease the priority of a language, select the language and press the Move down button.
+
+To add a language to the list, press the Add button.
+Then, select the language in the dialog that appears and press the OK button.
+
+To remove a language, select it and press the Remove button.
 
 When you are finished making changes, press the OK button to save them or the Cancel button to discard them.
 
