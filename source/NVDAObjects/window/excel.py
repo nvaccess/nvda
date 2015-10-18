@@ -39,6 +39,7 @@ xlDistributed=-4117
 xlBottom=-4107
 xlTop=-4160
 xlCellWidthUnitToPixels = 7.5919335705812574139976275207592
+xlSheetVisible=-1
 alignmentLabels={
 	xlCenter:"center",
 	xlJustify:"justify",
@@ -246,6 +247,52 @@ class FormulaExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 
 			return None
 
+class ExcelSheetQuickNavItem(ExcelQuickNavItem):
+
+	def __init__( self , nodeType , document , sheetObject , sheetCollection ):
+		self.label = sheetObject.Name
+		self.sheetIndex = sheetObject.Index
+		self.sheetObject = sheetObject
+		super( ExcelSheetQuickNavItem , self).__init__( nodeType , document , sheetObject , sheetCollection )
+
+	def __lt__(self,other):
+		return self.sheetIndex < other.sheetIndex
+
+	def moveTo(self):
+		self.sheetObject.Activate()
+		eventHandler.queueEvent("gainFocus",api.getDesktopObject().objectWithFocus())
+
+	def rename(self,newName):
+		self.sheetObject.Name=newName
+		self.label=newName
+
+	@property
+	def isRenameAllowed(self):
+		return True
+
+	@property
+	def isAfterSelection(self):
+		activeSheet = self.document.Application.ActiveSheet
+		if self.sheetObject.Index <= activeSheet.Index:
+			return False
+		else:
+			return True
+
+class SheetsExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
+	"""
+	Allows iterating over an MS excel Sheets collection emitting L{QuickNavItem} object.
+	"""
+	quickNavItemClass=ExcelSheetQuickNavItem#: the QuickNavItem class that should be instantiated and emitted. 
+	def collectionFromWorksheet( self , worksheetObject ):
+		try:
+			return worksheetObject.Application.ActiveWorkbook.Worksheets
+		except(COMError):
+			return None
+
+	def filter(self,sheet):
+		if sheet.Visible==xlSheetVisible:
+			return True
+
 class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 
 	needsReviewCursorTextInfoWrapper=False
@@ -257,7 +304,7 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 		try:
 			return self.rootNVDAObject.excelWorksheetObject.name==self.rootNVDAObject.excelApplicationObject.activeSheet.name
 		except (COMError,AttributeError,NameError):
-			log.debugWarning("could not compair sheet names",exc_info=True)
+			log.debugWarning("could not compare sheet names",exc_info=True)
 			return False
 
 
@@ -280,6 +327,8 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 			return CommentExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
 		elif nodeType=="formula":
 			return FormulaExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
+		elif nodeType=="sheet":
+			return SheetsExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
 		else:
 			raise NotImplementedError
 
@@ -301,6 +350,9 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("formula", _("&Formula")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("sheet", _("&Sheet")),
 	)
 
 class ExcelBase(Window):

@@ -132,6 +132,16 @@ class QuickNavItem(object):
 		"""
 		raise NotImplementedError
 
+	def rename(self,newName):
+		"""
+		Renames this item with the new name.
+		"""
+		raise NotImplementedError
+
+	@property
+	def isRenameAllowed(self):
+		return False
+
 class TextInfoQuickNavItem(QuickNavItem):
 	""" Represents a quick nav item in a browse mode document who's positions are represented by a L{textInfos.TextInfo}. """
 
@@ -581,9 +591,11 @@ class ElementsListDialog(wx.Dialog):
 		child.Bind(wx.EVT_RADIOBOX, self.onElementTypeChange)
 		mainSizer.Add(child,proportion=1)
 
-		self.tree = wx.TreeCtrl(self, wx.ID_ANY, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE)
+		self.tree = wx.TreeCtrl(self, wx.ID_ANY, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE | wx.TR_EDIT_LABELS)
 		self.tree.Bind(wx.EVT_SET_FOCUS, self.onTreeSetFocus)
 		self.tree.Bind(wx.EVT_CHAR, self.onTreeChar)
+		self.tree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT, self.onTreeLabelEditBegin)
+		self.tree.Bind(wx.EVT_TREE_END_LABEL_EDIT, self.onTreeLabelEditEnd)
 		self.treeRoot = self.tree.AddRoot("root")
 		mainSizer.Add(self.tree,proportion=7,flag=wx.EXPAND)
 
@@ -739,6 +751,12 @@ class ElementsListDialog(wx.Dialog):
 			else:
 				wx.Bell()
 
+		elif key == wx.WXK_F2:
+			item=self.tree.GetSelection()
+			selectedItemType=self.tree.GetItemPyData(item).item
+			self.tree.EditLabel(item)
+			evt.Skip()
+
 		elif key >= wx.WXK_START or key == wx.WXK_BACK:
 			# Non-printable character.
 			self._searchText = ""
@@ -756,6 +774,18 @@ class ElementsListDialog(wx.Dialog):
 			else:
 				self._searchCallLater = wx.CallLater(1000, self._clearSearchText)
 			self.search(self._searchText)
+
+	def onTreeLabelEditBegin(self,evt):
+		item=self.tree.GetSelection()
+		selectedItemType = self.tree.GetItemPyData(item).item
+		if not selectedItemType.isRenameAllowed:
+			evt.Veto()
+
+	def onTreeLabelEditEnd(self,evt):
+			selectedItemNewName=evt.GetLabel()
+			item=self.tree.GetSelection()
+			selectedItemType = self.tree.GetItemPyData(item).item
+			selectedItemType.rename(selectedItemNewName)
 
 	def _clearSearchText(self):
 		self._searchText = ""
