@@ -1742,8 +1742,8 @@ class GlobalCommands(ScriptableObject):
 			api.setNavigatorObject(newObject)
 			speech.speakObject(newObject,reason=controlTypes.REASON_FOCUS)
 		else:
-			# Translators: a message when there is no next object when navigating
-			ui.message(_("no next"))
+			# Translators: a message when there is no previous object when navigating
+			ui.message(_("no previous"))
 	# Translators: Input help mode message for a touchscreen gesture.
 	script_navigatorObject_previousInFlow.__doc__=_("Moves to the previous object in a flattened view of the object navigation hierarchy")
 	script_navigatorObject_previousInFlow.category=SCRCAT_OBJECTNAVIGATION
