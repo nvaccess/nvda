@@ -12,7 +12,7 @@
 - The existance of inserted and deleted text is now reported in Browse Mode for Internet Explorer and other MSHTML controls, if NVDA's Report Editor Revisions option is enabled. (#4920)
 - When viewing track changes in NVDA's Elements List for Microsoft Word, more information such as what formatting properties were changed is now displayed. (#4920)
 - Microsoft Excel: listing and renaming of sheets is now possible from NVDA's Elements List (NVDA+f7). (#4630, #4414)
- 
+
 
 == Changes ==
 - The Report Editor Revisions option in NVDA's Document formatting settings dialog is now turned on by default. (#4920)
@@ -27,7 +27,8 @@
  - If you enabled this using a previous version of NVDA, you will need to disable it and enable it again in the General Settings dialog for the change to take effect.
 - Performance enhansements for UI Automation including  File Explorer and Task Viewer. (#5293)
 - NVDA now correctly switches to focus mode when tabbing to read-only ARIA grid controls in Browse Mode for Mozilla Firefox and other Gecko-based controls. (#5118)
- 
+- NVDA now correctly reports "no previous" instead of "no next" when there are no more objects when flicking left on a touch screen.
+
 
 = 2015.3 =
 Highlights of this release include initial support for Windows 10; the ability to disable single letter navigation in browse mode (useful for some web apps); improvements in Internet Explorer; and fixes for garbled text when typing in certain applications with braille enabled.
