@@ -1546,6 +1546,9 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.symbolsList.InsertColumn(1, _("Replacement"), width=150)
 		# Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
 		self.symbolsList.InsertColumn(2, _("Level"), width=60)
+		# Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+		# See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+		self.symbolsList.InsertColumn(3, _("Preserve"), width=60)
 		for symbol in symbols:
 			item = self.symbolsList.Append((symbol.displayName,))
 			self.updateListItem(item, symbol)
@@ -1571,6 +1574,15 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.levelList.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
 		sizer.Add(self.levelList)
 		changeSizer.Add(sizer)
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Send actual symbol to synthesizer")))
+		symbolPreserveLabels = characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS
+		self.preserveList = wx.Choice(self, wx.ID_ANY,choices=[
+			symbolPreserveLabels[mode] for mode in characterProcessing.SPEECH_SYMBOL_PRESERVES])
+		self.preserveList.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
+		sizer.Add(self.preserveList)
+		changeSizer.Add(sizer)
 		settingsSizer.Add(changeSizer)
 		entryButtonsSizer=wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
@@ -1592,6 +1604,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 	def updateListItem(self, item, symbol):
 		self.symbolsList.SetStringItem(item, 1, symbol.replacement)
 		self.symbolsList.SetStringItem(item, 2, characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[symbol.level])
+		self.symbolsList.SetStringItem(item, 3, characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS[symbol.preserve])
 
 	def onSymbolEdited(self, evt):
 		if self.editingItem is None:
@@ -1601,6 +1614,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		symbol = self.symbols[item]
 		symbol.replacement = self.replacementEdit.Value
 		symbol.level = characterProcessing.SPEECH_SYMBOL_LEVELS[self.levelList.Selection]
+		symbol.preserve = characterProcessing.SPEECH_SYMBOL_PRESERVES[self.preserveList.Selection]
 		self.updateListItem(item, symbol)
 
 	def onListItemFocused(self, evt):
@@ -1610,6 +1624,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.editingItem = item
 		self.replacementEdit.Value = symbol.replacement
 		self.levelList.Selection = characterProcessing.SPEECH_SYMBOL_LEVELS.index(symbol.level)
+		self.preserveList.Selection = characterProcessing.SPEECH_SYMBOL_PRESERVES.index(symbol.preserve)
 		self.removeButton.Enabled = not self.symbolProcessor.isBuiltin(symbol.identifier)
 
 	def onListChar(self, evt):
@@ -1647,6 +1662,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		addedSymbol.displayName = identifier
 		addedSymbol.replacement = ""
 		addedSymbol.level = characterProcessing.SYMLVL_ALL
+		addedSymbol.preserve = characterProcessing.SYMPRES_NEVER
 		self.symbols.append(addedSymbol)
 		item = self.symbolsList.Append((addedSymbol.displayName,))
 		self.updateListItem(item, addedSymbol)
