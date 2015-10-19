@@ -246,7 +246,7 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 				speechSequence.append(IndexCommand(index))
 			if autoLangSwitching:
 				import languageDetection
-				detectedCharacters = languageDetection.detectLanguage(char)
+				detectedCharacters = languageDetection.detectLanguage(char, locale)
 				speechSequence.extend( detectedCharacters )
 			else:
 				speechSequence.append(char)
