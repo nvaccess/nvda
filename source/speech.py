@@ -192,6 +192,11 @@ def getCharDescListFromText(text,locale):
 		subText = text[:i]
 		charDesc = characterProcessing.getCharacterDescription(locale,subText)
 		if charDesc or i==1:
+			if not charDesc:
+				# #5375: We're down to a single character (i == 1) and we don't have a description.
+				# Try converting to lower case.
+				# This provides for upper case English characters (which only have lower case descriptions).
+				charDesc = characterProcessing.getCharacterDescription(locale,subText.lower())
 			charDescList.append((subText,charDesc))
 			text = text[i:]
 			i = len(text)
