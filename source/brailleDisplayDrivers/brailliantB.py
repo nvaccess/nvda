@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012-2013 NV Access Limited
+#Copyright (C) 2012-2015 NV Access Limited
 
 import os
 import time
@@ -111,6 +111,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			except serial.SerialException:
 				continue
 			# This will cause the number of cells to be returned.
+			self._sendMessage(MSG_INIT)
+			# #5406: With the new USB driver, the first command is ignored after a reconnection.
+			# Worse, if we don't receive a reply,
+			# _handleResponses freezes for some reason despite the timeout.
+			# Send the init message again just in case.
 			self._sendMessage(MSG_INIT)
 			self._handleResponses(wait=True)
 			if not self.numCells:
