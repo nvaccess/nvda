@@ -128,7 +128,8 @@ def getLanguageDescription(language ):
 	return label
 
 def getScriptIDFromLangID(langID ):
-	return langIDToScriptID.get (langID )
+	# Strip the dialect (if any).
+	return langIDToScriptID.get (langID.split("_", 1)[0])
 
 class ScriptChangeCommand(SpeechCommand):
 	"""A command to switch the script during script detection ."""
@@ -173,18 +174,21 @@ def detectLanguage(text, preferredLanguage =None):
 	"""splits a string if there are multiple languages in it. uses detectScript
 	@param text: the text string
 	@type text: string
-	@param preferredLanguage: the preferred language for a script 
-	@type languageToBeIgnored: string or None
+	@param preferredLanguage: The preferred language if it is appropriate
+	@type preferredLanguage: string or None
 	@return: sequence of language commands and text
 	@rtype: list"""
 	sequenceWithLanguage= []
 	tempSequence = detectScript(text)
-	scriptIDForPreferredLanguage = getScriptIDFromLangID( preferredLanguage )
+	if preferredLanguage:
+		scriptIDForPreferredLanguage = getScriptIDFromLangID( preferredLanguage )
+	else:
+		scriptIDForPreferredLanguage = None
 	for index in xrange(len(tempSequence )):
 		item= tempSequence [index]
 		if isinstance(item,ScriptChangeCommand):
 			# check if priority language for a script is available, if yes, add that language instead of language from priority list
-			if preferredLanguage and (item.scriptCode == scriptIDForPreferredLanguage): 
+			if scriptIDForPreferredLanguage and (item.scriptCode == scriptIDForPreferredLanguage):
 				if index == 0: continue # if it is first item and same as the priority language, language code is already added.
 				languageCode = preferredLanguage 
 			else:
