@@ -19,6 +19,8 @@
 - The Report Editor Revisions option in NVDA's Document formatting settings dialog is now turned on by default. (#4920)
 - When moving by character in Microsoft Word with NVDA's Report Editor Revisions option enabled, less information is now reported for track changes, which makes navigation more efficient. To view the extra information, use the Elements List. (#4920)
 - Updated liblouis braille translator to 2.6.4. (#5341)
+- Several symbols (including basic mathematical symbols) have been moved to level some so that they are spoken by default. (#3799)
+- If the synthesizer supports it, speech should now pause for parentheses and the en dash (–). (#3799)
 
 
 == Bug Fixes ==
