@@ -86,11 +86,8 @@ BLUETOOTH_NAMES = (
 	"Refreshabraille",
 	"VarioConnect",
 	"BrailleConnect",
-	"Pronto! 18 ",
-	"Pronto! 40 ",
-	"VarioUltra20 ",
-	"VarioUltra32 ",
-	"VarioUltra40 ",
+	"Pronto!",
+	"VarioUltra",
 )
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
