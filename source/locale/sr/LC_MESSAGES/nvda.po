@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 19:09+1000\n"
+"POT-Creation-Date: 2015-10-08 19:11+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Janko Valenćik <jankoval@gmail.com>\n"
 "Language-Team: NVDA Serbian translation\n"
@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.2\n"
+"X-Generator: Poedit 1.7.4\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -3080,6 +3080,21 @@ msgstr "uključen izgovor revizije"
 msgid "Toggles on and off the reporting of revisions"
 msgstr "Uključuje i isključuje izgovor revizija"
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+#, fuzzy
+msgid "report emphasis off"
+msgstr "isključen izgovor stranica"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+#, fuzzy
+msgid "report emphasis on"
+msgstr "uključen izgovor stranica"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+#, fuzzy
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "Uključuje i isključuje izgovor stranica"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "isključen izgovor boja"
@@ -4381,6 +4396,58 @@ msgid "numpad plus"
 msgstr "numerički taster plus"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "taster decimalni zarez na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "taster za umetanje na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "taster 0 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "taster 1 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "taster 2 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "taster 3 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "taster 4 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "taster 5 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "taster 6 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "taster 7 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "taster 8 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "taster 9 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "taster za umetanje"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "levi kontrol "
 
@@ -4644,14 +4711,62 @@ msgstr "{backgroundColor} pozadina"
 msgid "line %s"
 msgstr "red %s"
 
+#. Translators: Reported when text is marked as having been inserted
+#, fuzzy
+msgid "inserted"
+msgstr "taster za umetanje"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+#, fuzzy
+msgid "not inserted"
+msgstr "nije izabrano"
+
+#. Translators: Reported when text is marked as having been deleted
+#, fuzzy
+msgid "deleted"
+msgstr "brisanje"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+#, fuzzy
+msgid "not deleted"
+msgstr "nije izabrano"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "redigovano %s"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "neredigovano"
+#, fuzzy, python-format
+msgid "no revised %s"
+msgstr "redigovano %s"
+
+#. Translators: Reported when text is marked
+#, fuzzy
+msgid "marked"
+msgstr "Početak označen"
+
+#. Translators: Reported when text is no longer marked
+#, fuzzy
+msgid "not marked"
+msgstr "Početak označen"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr ""
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+#, fuzzy
+msgid "not strong"
+msgstr "nije naglašeno"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr ""
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr ""
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -7116,6 +7231,12 @@ msgstr "Prijavi ure&đivačke revizije"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+#, fuzzy
+msgid "Report e&mphasis"
+msgstr "Prijavi &stranice"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "Prijavi st&il"
 
@@ -8328,17 +8449,9 @@ msgstr "Okvir za tekst"
 msgid "comment: {text} by {author} on {date}"
 msgstr "komentar: {text} napisao {author} na dan {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} napisao {author} na dan {date}"
-
-msgid "unknown author"
-msgstr "nepoznat autor"
-
-msgid "unknown date"
-msgstr "nepoznat datum"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} od {revisionAuthor} na dan {revisionDate}"
+#, fuzzy
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text} napisao {author} na dan {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8512,6 +8625,18 @@ msgstr "HIMS Braille Sense/Braille EDGE serije"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "unrevised"
+#~ msgstr "neredigovano"
+
+#~ msgid "unknown author"
+#~ msgstr "nepoznat autor"
+
+#~ msgid "unknown date"
+#~ msgstr "nepoznat datum"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType} od {revisionAuthor} na dan {revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "prikazuje objekat u fokusu"
