@@ -5,9 +5,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-06 19:09+1000\n"
-"PO-Revision-Date: 2015-08-10 18:46+0100\n"
-"Last-Translator: Michel Such <michel.such@free.fr>\n"
+"POT-Creation-Date: 2015-10-08 19:11+1000\n"
+"PO-Revision-Date: 2015-10-15 18:39+0100\n"
+"Last-Translator: Bachir BENANOU <ben_bach@yahoo.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
@@ -324,7 +324,7 @@ msgstr "Hébreu Braille informatique 8 points"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Hindi grade 1"
-msgstr "Hindi intégral"
+msgstr "Hindou intégral"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2724,7 +2724,7 @@ msgstr "obscurci"
 
 #. Translators: a state that denotes that the object(text) is cropped as it couldn't be accommodated in the allocated/available space
 msgid "cropped"
-msgstr "Tondu"
+msgstr "tondu"
 
 #. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
 msgid "overflowing"
@@ -3076,6 +3076,18 @@ msgstr "annonce des révisions activée"
 msgid "Toggles on and off the reporting of revisions"
 msgstr "Active ou désactive l'annonce des révisions"
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "Annonce de l'emphase désactivée"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "Annonce de l'emphase activée"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "Active ou désactive l'annonce de l'emphase"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "Annonce des couleurs désactivée"
@@ -3335,8 +3347,8 @@ msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
 msgstr ""
-"Amener l'objet navigateur à l'objet actuellement sous le pointeur de la "
-"souris et le lire"
+"Amène l'objet navigateur à l'objet actuellement sous le pointeur de la "
+"souris et le lit"
 
 #. Translators: reported when there are no other available review modes for this object
 msgid "No next review mode"
@@ -3359,8 +3371,8 @@ msgid ""
 "Switches to the previous review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"Passer au mode de revue précédent (ex. objet, document ou écran) et placer "
-"la position de revue au point de l'objet de navigation"
+"Passe au mode de revue précédent (ex. objet, document ou écran) et place la "
+"position de revue au point de l'objet de navigation"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -3374,9 +3386,9 @@ msgstr "%s copié dans le presse-papiers"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
 msgstr ""
 "Annnonce l'objet navigateur courant. Deux appuis épellent l'information, "
 "trois appuis copient le nom et le contenu de l'objet dans le presse-papier"
@@ -3390,7 +3402,7 @@ msgid ""
 "Reports information about the location of the text or object at the review "
 "cursor. Pressing twice may provide further detail."
 msgstr ""
-"Annoncer des informations concernant la position du texte ou de l'objet sous "
+"Annonce des informations concernant la position du texte ou de l'objet sous "
 "le curseur de revue. Un double appui fournit éventuellement des détails "
 "supplémentaires."
 
@@ -3403,7 +3415,7 @@ msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
-"Amener l'objet navigateur au focus courant et le curseur de revue au curseur "
+"Amène l'objet navigateur au focus courant et le curseur de revue au curseur "
 "système si possible"
 
 #. Translators: Reported when:
@@ -3501,7 +3513,7 @@ msgid ""
 "situated. If this key is pressed twice, the current line will be spelled. "
 "Pressing three times will spell the line using character descriptions."
 msgstr ""
-"Annoncer la ligne de l'objet navigateur courant sur laquelle se trouve le "
+"Annonce la ligne de l'objet navigateur courant sur laquelle se trouve le "
 "curseur de revue. Un double appui épelle la ligne, un triple appui l'épelle "
 "en code international."
 
@@ -3641,7 +3653,7 @@ msgstr "Quitter NVDA !"
 
 #. Translators: Input help mode message for show NVDA menu command.
 msgid "Shows the NVDA menu"
-msgstr "Afficher le menu NVDA"
+msgstr "Affiche le menu NVDA"
 
 #. Translators: Input help mode message for say all in review cursor command.
 msgid ""
@@ -3709,13 +3721,13 @@ msgid ""
 "pressed twice, spells the title. If pressed three times, copies the title to "
 "the clipboard"
 msgstr ""
-"Annoncer le titre de l'application en cours ou de la fenêtre en avant-plan. "
+"Annonce le titre de l'application en cours ou de la fenêtre en avant-plan. "
 "Deux appuis épelle le titre, trois appuis copie le titre dans le presse-"
 "papier."
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 msgid "speaks the current foreground object"
-msgstr "Dire l'objet en avant-plan"
+msgstr "Dit l'objet en avant-plan"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 msgid ""
@@ -3813,7 +3825,7 @@ msgstr "Temps restant {hours:d} heures et {minutes:d} minutes"
 #. Translators: Input help mode message for report battery status command.
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr ""
-"Annoncer l'état de la batterie et le temps restant si l'adaptateur secteur "
+"Annonce l'état de la batterie et le temps restant si l'adaptateur secteur "
 "n'est pas connecté"
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
@@ -3840,7 +3852,7 @@ msgstr "L'application en cours d'exécution est %s."
 #. This message will not be presented if there is no module for the current program.
 #, python-format
 msgid " and currently loaded module is %s"
-msgstr "et le module chargé est %s"
+msgstr " et le module chargé est %s"
 
 #. Translators: Input help mode message for report current program name and app module name command.
 msgid ""
@@ -4382,6 +4394,58 @@ msgid "numpad plus"
 msgstr "pavNum plus"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "pavNum point décimal"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "pavNum insertion"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "pavnum verrouillé 0"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "pavnum verrouillé 1"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "pavnum verrouillé 2"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "pavnum verrouillé 3"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "pavnum verrouillé 4"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "pavnum verrouillé 5"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "pavnum verrouillé 6"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "pavnum verrouillé 7"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "pavnum verrouillé 8"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "pavnum verrouillé 9"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "insertion"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "contrôle gauche"
 
@@ -4645,14 +4709,55 @@ msgstr "arrière-plan {backgroundColor}"
 msgid "line %s"
 msgstr "ligne %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "inséré"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "non inséré"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "effacé"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "non effacé"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "révisé %s"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "non révisé"
+#, python-format
+msgid "no revised %s"
+msgstr "non révisé %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "marqué"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "non marqué"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "gras"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "non fort"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "en emphase"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "non en emphase"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -7139,6 +7244,11 @@ msgstr "annoncer les révisions de l'&éditeur"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "annoncer l'e&mphase"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "annoncer le st&yle"
 
@@ -8357,17 +8467,8 @@ msgstr "cadre de texte"
 msgid "comment: {text} by {author} on {date}"
 msgstr "commentaire : {text} par {author} le {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType} : {text} par {author} le {date}"
-
-msgid "unknown author"
-msgstr "auteur inconnu"
-
-msgid "unknown date"
-msgstr "date inconnue"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} par {revisionAuthor} le {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description} : {text} par {author} le {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8545,6 +8646,18 @@ msgstr "HIMS Braille séries Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "unrevised"
+#~ msgstr "non révisé"
+
+#~ msgid "unknown author"
+#~ msgstr "auteur inconnu"
+
+#~ msgid "unknown date"
+#~ msgstr "date inconnue"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType} par {revisionAuthor} le {revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "Annoncer l'objet en focus"

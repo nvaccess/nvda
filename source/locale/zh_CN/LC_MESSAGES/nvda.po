@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 19:09+1000\n"
-"PO-Revision-Date: 2015-08-30 21:33+0800\n"
+"POT-Creation-Date: 2015-10-08 19:11+1000\n"
+"PO-Revision-Date: 2015-09-24 14:36+0800\n"
 "Last-Translator: 雪岭冰龙 <vgjh2005@gmail.com>\n"
 "Language-Team: Simplified Chinese translate team <vgjh2005@gmail.com>\n"
 "Language: zh_CN\n"
@@ -3051,6 +3051,18 @@ msgstr "朗读编辑者修订开"
 msgid "Toggles on and off the reporting of revisions"
 msgstr "切换编辑者修订朗读的开关"
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "朗读标注关"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "朗读标注开"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "切换标注朗读的开关"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "朗读颜色关"
@@ -4277,6 +4289,58 @@ msgid "numpad plus"
 msgstr "数字键盘 加号"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "小键盘点"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "小键盘插入"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "小键盘0"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "小键盘1"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "小键盘2"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "小键盘3"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "小键盘4"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "小键盘5"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "小键盘6"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "小键盘7"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "小键盘8"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "小键盘9"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "插入"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "左 control"
 
@@ -4538,14 +4602,55 @@ msgstr "背景顏色：{backgroundColor}"
 msgid "line %s"
 msgstr "行%s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "已插入"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "不插入"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "已删除"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "不删除"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "%s已修订"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "未修订"
+#, python-format
+msgid "no revised %s"
+msgstr "不修订 %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "已标记"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "不标记"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "显眼"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "不显眼"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "以强调"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "不强调"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -5418,7 +5523,7 @@ msgstr "幻灯片显示注视 - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
 msgid "Slide show - {slideName}"
-msgstr "当前查看的幻灯片：{slideName}"
+msgstr "{slideName} - 幻灯片"
 
 #. Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
 msgid "Slide Show - complete"
@@ -6951,6 +7056,11 @@ msgstr "朗读编辑者修订(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "朗读标注(&M)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "朗读文本样式(&Y)"
 
@@ -8151,17 +8261,8 @@ msgstr "文本框"
 msgid "comment: {text} by {author} on {date}"
 msgstr "评论: 由 {author} 在 {date} {text} "
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: 由 {author} 在 {date} {text} "
-
-msgid "unknown author"
-msgstr "未知作者"
-
-msgid "unknown date"
-msgstr "未知日期"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "由{revisionAuthor}在{revisionDate}进行的{revisionType}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text} by {author} on {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8322,6 +8423,39 @@ msgstr "HIMS Braille Sense/Braille EDGE 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "unrevised"
+#~ msgstr "未修订"
+
+#~ msgid "{revisionType}: {text} by {author} on {date}"
+#~ msgstr "{revisionType}: 由 {author} 在 {date} {text} "
+
+#~ msgid "unknown author"
+#~ msgstr "未知作者"
+
+#~ msgid "unknown date"
+#~ msgstr "未知日期"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "由{revisionAuthor}在{revisionDate}进行的{revisionType}"
+
+#~ msgctxt "symbolPreserve"
+#~ msgid "never"
+#~ msgstr "从不"
+
+#~ msgctxt "symbolPreserve"
+#~ msgid "always"
+#~ msgstr "总是"
+
+#~ msgctxt "symbolPreserve"
+#~ msgid "only below symbol's level"
+#~ msgstr "仅标点符号级别低于"
+
+#~ msgid "Preserve"
+#~ msgstr "传递"
+
+#~ msgid "&Send actual symbol to synthesizer"
+#~ msgstr "发送标点本身到合成器(&S)"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "读出当前焦点的对象"

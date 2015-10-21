@@ -268,8 +268,9 @@ class ExcelSheetQuickNavItem(ExcelQuickNavItem):
 		eventHandler.queueEvent("gainFocus",api.getDesktopObject().objectWithFocus())
 
 	def rename(self,newName):
-		self.sheetObject.Name=newName
-		self.label=newName
+		if newName and newName!=self.label:
+			self.sheetObject.Name=newName
+			self.label=newName
 
 	@property
 	def isRenameAllowed(self):

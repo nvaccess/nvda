@@ -757,9 +757,10 @@ class ElementsListDialog(wx.Dialog):
 
 		elif key == wx.WXK_F2:
 			item=self.tree.GetSelection()
-			selectedItemType=self.tree.GetItemPyData(item).item
-			self.tree.EditLabel(item)
-			evt.Skip()
+			if item:
+				selectedItemType=self.tree.GetItemPyData(item).item
+				self.tree.EditLabel(item)
+				evt.Skip()
 
 		elif key >= wx.WXK_START or key == wx.WXK_BACK:
 			# Non-printable character.

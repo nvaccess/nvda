@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 19:09+1000\n"
-"PO-Revision-Date: 2015-08-28 14:55+0330\n"
+"POT-Creation-Date: 2015-10-08 19:11+1000\n"
+"PO-Revision-Date: 2015-10-16 14:33+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@freelists.org>\n"
 "Language: fa\n"
@@ -3069,6 +3069,18 @@ msgstr "بازبینی‌ها گزارش میشوند."
 msgid "Toggles on and off the reporting of revisions"
 msgstr "گزارش شدنِ بازبینی‌ها را فعال یا غیرِ فعال میکند."
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "اعلامِ تأکید، خاموش"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "اعلامِ تأکید، روشن"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "اعلامِ تأکید را فعال یا غیر فعال میکند."
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "رنگ‌ها گزارش نمیشوند."
@@ -4357,6 +4369,58 @@ msgid "numpad plus"
 msgstr "علامتِ بعلاوه در صفحه کلیدِ اعداد"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "ممیز در صفحه‌کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "اینْسِرت در صفحه‌کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "صفر در صفحه‌کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "1 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "2 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "3 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "۴ در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "5 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "6 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "7 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "8 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "9 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "اینْسِرت"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "کنترلِ چپ"
 
@@ -4620,14 +4684,55 @@ msgstr "پس‌زمینه‌ی {backgroundColor} رنگ"
 msgid "line %s"
 msgstr "خطِّ %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "درج‌شده"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "درج‌نشده"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "حذف‌شده"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "حذف‌نشده"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "%s بازنگری شد"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "برای بازبینی نشانه‌گذاری شد"
+#, python-format
+msgid "no revised %s"
+msgstr "%s بازبینی‌نشده"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "نشانه‌گذاری‌شده"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "نشانه‌گذاری‌نشده"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "مهم"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "غیرِ مهم"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "تاکید‌شده"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "تاکید‌نشده"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -7083,6 +7188,11 @@ msgstr "گزارش کردنِ بازبینی‌های &ویراستار"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "اعلامِ ت&اکید"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "گزارش کردنِ &سبْک"
 
@@ -8290,17 +8400,8 @@ msgstr "قابِ متنی"
 msgid "comment: {text} by {author} on {date}"
 msgstr "توضیح: {text} توسطِ {author} به تاریخِ {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} توسطِ {author} به تاریخِ {date}"
-
-msgid "unknown author"
-msgstr "نویسنده‌ی ناشناس"
-
-msgid "unknown date"
-msgstr "تاریخِ نامشخص"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} توسط {revisionAuthor} در تاریخِ {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text} توسطِ {author} در {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8468,6 +8569,18 @@ msgstr "از سِری نمایشگرهای HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "unrevised"
+#~ msgstr "برای بازبینی نشانه‌گذاری شد"
+
+#~ msgid "unknown author"
+#~ msgstr "نویسنده‌ی ناشناس"
+
+#~ msgid "unknown date"
+#~ msgstr "تاریخِ نامشخص"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType} توسط {revisionAuthor} در تاریخِ {revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "شیئی را که در تیر‌رَسِ صفحه کلید قرار دارد گزارش میدهد"

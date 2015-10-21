@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr 2013.1:6039\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 19:09+1000\n"
-"PO-Revision-Date: 2015-08-29 09:25+0545\n"
+"POT-Creation-Date: 2015-10-08 19:11+1000\n"
+"PO-Revision-Date: 2015-10-17 17:28+0545\n"
 "Last-Translator: drishtibachak@gmail.com\n"
 "Language-Team: Him Prasad Gautam <drishtibachak@gmail.com>\n"
 "Language: ne\n"
@@ -3040,6 +3040,18 @@ msgstr "प्रतिवेदन संसोधन बताउछ ।"
 msgid "Toggles on and off the reporting of revisions"
 msgstr "संसोधन सूचित अवस्था उल्टिन्छ ।"
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "जोड दिइएको कुरा नबताउ"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "जोड दिइएको कुरा बताउ"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "जोड दिइएको कुरा बताउने अवस्थालाई उल्टाउँछ ।"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "रङ्ग बताउदैन"
@@ -4191,6 +4203,58 @@ msgid "numpad plus"
 msgstr "numpad जोड"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "numpad decimal"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "numpad Insert"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "numLock numpad 0"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "numLock numpad 1"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "numLock numpad 2"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "numLock numpad 3"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "numLock numpad 4"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "numLock numpad 5"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "numLock numpad 6"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "numLock numpad 7"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "numLock numpad 8"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "numLock numpad 9"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "Insert"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "वाञाँ Control"
 
@@ -4450,14 +4514,55 @@ msgstr "{backgroundColor} पृष्ठभूमि"
 msgid "line %s"
 msgstr "पङ्ति %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "थपिएको"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "न थपिएको"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "मेटिएको"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "न मेटिएको"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "संसोधित %s"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "असंसोधित"
+#, python-format
+msgid "no revised %s"
+msgstr "%s को कुनै संसोधन छैन ।"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "निसानीयुक्त"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "निसानीहिन"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "बलियो"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "बलियो होइन"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "जोड दिइएको"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "जोड न दिइएको"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -6815,6 +6920,11 @@ msgstr "प्रतिवेदन &सम्पादन संसोधन"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "जोड दिइएको कुरा &बताउ"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "&शैली बताउ"
 
@@ -8003,17 +8113,8 @@ msgstr "पाठ फ्रेम"
 msgid "comment: {text} by {author} on {date}"
 msgstr "टिप्पणी: {author} द्वरा मिति {date} मा लिखीत {text} "
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {author} द्वरा मिति {date} मा लिखीत {text} "
-
-msgid "unknown author"
-msgstr "अज्ञात लेखक"
-
-msgid "unknown date"
-msgstr "अज्ञात मिति"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionAuthor} द्वारा {revisionDate} मा गरिएको {revisionType}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text} {author} द्वारा {date} मा "
 
 #, python-format
 msgid "%g characters"
@@ -8171,3 +8272,15 @@ msgstr "HIMS ब्रेल चेतना/ब्रेल किनारा 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "unrevised"
+#~ msgstr "असंसोधित"
+
+#~ msgid "unknown author"
+#~ msgstr "अज्ञात लेखक"
+
+#~ msgid "unknown date"
+#~ msgstr "अज्ञात मिति"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionAuthor} द्वारा {revisionDate} मा गरिएको {revisionType}"

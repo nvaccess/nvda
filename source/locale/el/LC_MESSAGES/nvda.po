@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 19:09+1000\n"
-"PO-Revision-Date: 2015-09-05 18:59+0200\n"
+"POT-Creation-Date: 2015-10-08 19:11+1000\n"
+"PO-Revision-Date: 2015-10-14 19:56+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -3099,6 +3099,19 @@ msgid "Toggles on and off the reporting of revisions"
 msgstr ""
 "Ενεργοποιεί και απενεργοποιεί την αναφορά των αναθεωρήσεων του συντάκτη"
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "απενεργοποίηση αναφοράς έμφασης"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "ενεργοποίηση αναφοράς έμφασης"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr ""
+"εναλλάσσει μεταξύ της ενεργοποίησης και της απενεργοποίησης της έμφασης"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "απενεργοποίηση αναφοράς χρωμάτων"
@@ -4437,6 +4450,58 @@ msgid "numpad plus"
 msgstr "αριθμητικό συν"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "αριθμητικό κόμμα"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "αριθμητικό insert"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "αριθμητικό 0"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "αριθμητικό 1"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "αριθμητικό 2"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "αριθμητικό 3"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "αριθμητικό 4"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "αριθμητικό 5"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "αριθμητικό 6"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "αριθμητικό 7"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "αριθμητικό 8"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "αριθμητικό 9"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "insert"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "αριστερό control"
 
@@ -4702,14 +4767,55 @@ msgstr "χρώμα υποβάθρου {backgroundColor}"
 msgid "line %s"
 msgstr "γραμμή %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "εισηγμένο"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "μη εισηγμένο"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "διαγραμμένο"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "μη διαγραμμένο"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "αναθεωρημένο %s"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "μη αναθεωρημένο"
+#, python-format
+msgid "no revised %s"
+msgstr "μη αναθεωρημένο %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "επισημασμένο"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "μη επισημασμένο"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "έντονο"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "όχι έντονο"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "με έμφαση"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "χωρίς έμφαση"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -7223,6 +7329,11 @@ msgstr "Αναφορά αναθεωρήσεων &συντάκτη"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "Αναφορά έ&μφασης"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "Αναφορά &στυλ"
 
@@ -8446,17 +8557,8 @@ msgstr "Πλαίσιο κειμένου"
 msgid "comment: {text} by {author} on {date}"
 msgstr "σχόλιο: {text} από {author} στις {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} από {author} στις {date}"
-
-msgid "unknown author"
-msgstr "άγνωστος συγγραφέας"
-
-msgid "unknown date"
-msgstr "άγνωστη ημερομηνία"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} από {revisionAuthor} στις {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text} από {author} στις {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8639,6 +8741,18 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "unrevised"
+#~ msgstr "μη αναθεωρημένο"
+
+#~ msgid "unknown author"
+#~ msgstr "άγνωστος συγγραφέας"
+
+#~ msgid "unknown date"
+#~ msgstr "άγνωστη ημερομηνία"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType} από {revisionAuthor} στις {revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "αναφέρει το αντικείμενο με εστίαση"
