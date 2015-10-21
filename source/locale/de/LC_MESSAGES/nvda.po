@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 19:09+1000\n"
+"POT-Creation-Date: 2015-10-08 19:11+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Bernd Dorer <bdorer@mailbox.org>\n"
 "Language-Team: \n"
@@ -11,7 +11,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 1.8.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../nvda_quellen/nvda\n"
@@ -3088,6 +3088,18 @@ msgstr "Dokumentänderungen ausgeben"
 msgid "Toggles on and off the reporting of revisions"
 msgstr "Schaltet die Ansage von Änderungen im Dokument ein oder aus."
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "betonten Text nicht ansagen"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "betonten Text ansagen"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "schaltet die Ansage von betontem Text an oder aus"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "Farben nicht ansagen"
@@ -4400,6 +4412,58 @@ msgid "numpad plus"
 msgstr "Nummernblock Plus"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "Nummernblock Komma"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "Nummernblock Einfg"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "Nummernblock 0"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "Nummernblock 1"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "Nummernblock 2"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "Nummernblock 3"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "Nummernblock 4"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "Nummernblock 5"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "Nummernblock 6"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "Nummernblock 7"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "Nummernblock 8"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "Nummernblock 9"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "Einfg"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "Linke Steuerungs-Taste"
 
@@ -4670,14 +4734,55 @@ msgstr "Hintergrund {backgroundColor}"
 msgid "line %s"
 msgstr "Zeile %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "Eingefügt"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "nicht eingefügt"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "gelöscht"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "nicht gelöscht"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "geändert (%s)"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "nicht geändertAnzeige"
+#, python-format
+msgid "no revised %s"
+msgstr "nicht geändert (%s)"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "markiert"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "nicht markiert"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "stark betont"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "nicht stark betont"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "betont"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "nicht betont"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -7199,6 +7304,11 @@ msgstr "&Dokumentänderungen ausgeben"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "betonten Text ansagen"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "La&yout ansagen"
 
@@ -7391,7 +7501,7 @@ msgstr "&absatzweise lesen"
 
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"
-msgstr "Wenn möglich, verhindere das umbrechen von Wörtern"
+msgstr "Wenn möglich, &Wortumbruch verhindern"
 
 #, python-format
 msgid "Could not load the %s display."
@@ -8422,17 +8532,8 @@ msgstr "Textrahmen"
 msgid "comment: {text} by {author} on {date}"
 msgstr "Kommentar: {text} von {author} am {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} von {author} am {date}"
-
-msgid "unknown author"
-msgstr "Unbekannter Autor"
-
-msgid "unknown date"
-msgstr "Unbekanntes Datum"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} von {revisionAuthor} am {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text} von {author} am {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8614,6 +8715,18 @@ msgstr "HIMS Braille Sense/Braille EDGE Serien"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "unrevised"
+#~ msgstr "nicht geändertAnzeige"
+
+#~ msgid "unknown author"
+#~ msgstr "Unbekannter Autor"
+
+#~ msgid "unknown date"
+#~ msgstr "Unbekanntes Datum"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType} von {revisionAuthor} am {revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "Spricht das fokussierte Objekt."
