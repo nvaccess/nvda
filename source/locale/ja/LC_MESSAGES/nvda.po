@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 19:09+1000\n"
-"PO-Revision-Date: 2015-09-15 20:56+0900\n"
+"POT-Creation-Date: 2015-10-08 19:11+1000\n"
+"PO-Revision-Date: 2015-10-13 23:03+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -3058,6 +3058,18 @@ msgstr "校閲者による更新を報告する"
 msgid "Toggles on and off the reporting of revisions"
 msgstr "校閲者による更新の報告の切り替え"
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "強調を報告しない"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "強調を報告する"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "強調の報告の切り替え"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "色を報告しない"
@@ -4313,6 +4325,58 @@ msgid "numpad plus"
 msgstr "テンキープラス"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "テンキーピリオド"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "テンキーインサート"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "ナムロック テンキー0"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "ナムロック テンキー1"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "ナムロック テンキー2"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "ナムロック テンキー3"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "ナムロック テンキー4"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "ナムロック テンキー5"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "ナムロック テンキー6"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "ナムロック テンキー7"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "ナムロック テンキー8"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "ナムロック テンキー9"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "インサート"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "左コントロール"
 
@@ -4574,14 +4638,55 @@ msgstr "{backgroundColor}の背景"
 msgid "line %s"
 msgstr "行%s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "追加マークあり"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "追加マークなし"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "削除マークあり"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "削除マークなし"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "変更 %s"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "未変更"
+#, python-format
+msgid "no revised %s"
+msgstr "変更なし %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "マークあり"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "マークなし"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "重要性あり"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "重要性なし"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "強調あり"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "強調なし"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -7024,6 +7129,11 @@ msgstr "校閲者による更新の報告(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "強調などのマークの報告(&M)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "スタイルの報告(&Y)"
 
@@ -8231,17 +8341,8 @@ msgstr "テキストフレーム"
 msgid "comment: {text} by {author} on {date}"
 msgstr "コメント {text} 更新者 {author} 更新日 {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType} {text} 更新者 {author} 更新日 {date}"
-
-msgid "unknown author"
-msgstr "著者不明"
-
-msgid "unknown date"
-msgstr "日付不明"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} 更新者 {revisionAuthor} 更新日 {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description} {text} 更新者 {author} 更新日 {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8403,3 +8504,15 @@ msgstr "HIMS社製 Braille Sense/Braille EDGE シリーズ"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS社製 SyncBraille"
+
+#~ msgid "unrevised"
+#~ msgstr "未変更"
+
+#~ msgid "unknown author"
+#~ msgstr "著者不明"
+
+#~ msgid "unknown date"
+#~ msgstr "日付不明"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType} 更新者 {revisionAuthor} 更新日 {revisionDate}"

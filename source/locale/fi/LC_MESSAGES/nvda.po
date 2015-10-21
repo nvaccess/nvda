@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 19:09+1000\n"
-"PO-Revision-Date: 2015-08-28 11:08+0200\n"
+"POT-Creation-Date: 2015-10-08 19:11+1000\n"
+"PO-Revision-Date: 2015-10-08 21:15+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -3077,6 +3077,18 @@ msgstr "muokkausten lukeminen käytössä"
 msgid "Toggles on and off the reporting of revisions"
 msgstr "Ottaa käyttöön muokkausten lukemisen tai poistaa sen käytöstä"
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "korostuksen ilmoittaminen pois"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "korostuksen ilmoittaminen käytössä"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "Ottaa käyttöön korostuksen ilmoittamisen tai poistaa sen käytöstä."
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "värien lukeminen pois"
@@ -4387,6 +4399,58 @@ msgid "numpad plus"
 msgstr "numeronäppäimistön plus"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "numeronäppäimistön pilkku"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "numeronäppäimistön insert"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "numlock numeronäppäimistön 0"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "numlock numeronäppäimistön 1"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "numlock numeronäppäimistön 2"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "numlock numeronäppäimistön 3"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "numlock numeronäppäimistön 4"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "numlock numeronäppäimistön 5"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "numlock numeronäppäimistön 6"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "numlock numeronäppäimistön 7"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "numlock numeronäppäimistön 8"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "numlock numeronäppäimistön 9"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "insert"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "vasen control"
 
@@ -4650,14 +4714,55 @@ msgstr "{backgroundColor} tausta"
 msgid "line %s"
 msgstr "rivi %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "lisätty"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "ei lisätty"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "poistettu"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "ei poistettu"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
-msgstr "muutettu %s"
+msgstr "muokattu %s"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "ei muutettu"
+#, python-format
+msgid "no revised %s"
+msgstr "ei muokattu %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "merkitty"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "ei merkitty"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "voimakkaasti korostettu"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "ei voimakasta korostusta"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "korostettu"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "ei korostusta"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -7121,6 +7226,11 @@ msgstr "Lue &muokkaajan muokkaukset"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "Ilmoita k&orostus"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "Lue t&yylimääreet"
 
@@ -8333,19 +8443,9 @@ msgstr "Tekstikehys"
 msgid "comment: {text} by {author} on {date}"
 msgstr "kommentti: {text}, muokkaaja: {author}, päiväys: {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text}, muokkaaja: {author}, päiväys: {date}"
-
-msgid "unknown author"
-msgstr "tuntematon muokkaaja"
-
-msgid "unknown date"
-msgstr "tuntematon päiväys"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr ""
-"Muokkaus: {revisionType}, muokkaaja: {revisionAuthor}, päiväys: "
-"{revisionDate}"
+"{revisionType}, {description}: {text}, muokkaaja: {author}, päiväys: {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8517,6 +8617,20 @@ msgstr "HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "unrevised"
+#~ msgstr "ei muutettu"
+
+#~ msgid "unknown author"
+#~ msgstr "tuntematon muokkaaja"
+
+#~ msgid "unknown date"
+#~ msgstr "tuntematon päiväys"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr ""
+#~ "Muokkaus: {revisionType}, muokkaaja: {revisionAuthor}, päiväys: "
+#~ "{revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "ilmoittaa objektin, jossa kohdistus on"

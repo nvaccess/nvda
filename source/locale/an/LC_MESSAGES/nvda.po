@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 19:09+1000\n"
+"POT-Creation-Date: 2015-10-08 19:11+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jorge Pérez Pérez <jorgtum@gmail.com>\n"
 "Language-Team: Softaragonés\n"
@@ -11,7 +11,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8\n"
+"X-Generator: Poedit 1.8.5\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -3076,6 +3076,18 @@ msgstr "Anunciar as revisions enchegau"
 msgid "Toggles on and off the reporting of revisions"
 msgstr "Enchega y desenchega l'anunciau d'as revisions"
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "anunciar o enfasi desenchegau"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "anunciar o enfasi enchegau"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "Enchega y desenchega l'anunciau d'o enfasi"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "Anunciar as colors desenchegau"
@@ -4392,6 +4404,58 @@ msgid "numpad plus"
 msgstr "mas d'o teclau numerico"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "decimal d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "insert d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "Bloqueyo numerico + 0 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "Bloqueyo numerico + 1 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "Bloqueyo numerico + 2 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "Bloqueyo numerico + 3 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "Bloqueyo numerico + 4 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "Bloqueyo numerico + 5 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "Bloqueyo numerico + 6 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "Bloqueyo numerico + 7 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "Bloqueyo numerico + 8 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "Bloqueyo numerico + 9 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "insert"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "Control cucha"
 
@@ -4655,14 +4719,55 @@ msgstr "{backgroundColor} de fondo"
 msgid "line %s"
 msgstr "linia %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "ficau"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "sin ficar"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "borrau"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "sin borrar"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "revisau %s"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "sin revisar"
+#, python-format
+msgid "no revised %s"
+msgstr "sin revisar %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "marcau"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "sin marcar"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "remarcau"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "sin remarcar"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "enfatizau"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "sin enfatizar"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -7142,6 +7247,11 @@ msgstr "Anunciar as revisions de l'&editor"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "Anunciar o e&nfasi"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "Anunciar o &estilo"
 
@@ -8356,17 +8466,8 @@ msgstr "Bastida de texto"
 msgid "comment: {text} by {author} on {date}"
 msgstr "comentario: {text} por {author} a {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} por {author} a {date}"
-
-msgid "unknown author"
-msgstr "autor desconoixiu"
-
-msgid "unknown date"
-msgstr "calendata desconoixida"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} por {revisionAuthor} en {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text} por {author} el {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8546,6 +8647,18 @@ msgstr "Serie d'a HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "unrevised"
+#~ msgstr "sin revisar"
+
+#~ msgid "unknown author"
+#~ msgstr "autor desconoixiu"
+
+#~ msgid "unknown date"
+#~ msgstr "calendata desconoixida"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType} por {revisionAuthor} en {revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "anuncia l'obchecto con o foco"

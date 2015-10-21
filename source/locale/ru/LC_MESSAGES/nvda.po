@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 19:09+1000\n"
-"PO-Revision-Date: 2015-09-16 23:01+0800\n"
+"POT-Creation-Date: 2015-10-08 19:11+1000\n"
+"PO-Revision-Date: 2015-10-18 11:26+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -735,11 +735,11 @@ msgstr "Режим обзора"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
-msgstr "Однобуквенная навигация выключена"
+msgstr "Быстрая навигация выключена"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
 msgid "Single letter navigation on"
-msgstr "Однобуквенная навигация включена"
+msgstr "Быстрая навигация включена"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 msgid ""
@@ -747,10 +747,10 @@ msgid ""
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
 msgstr ""
-"Включает или выключает однобуквенную навигацию. Если включено, то в режиме "
-"обзора клавиши однобуквенной навигации осуществляют переход к различным "
-"типам элементов на странице. Если выключено, то эти клавиши передаются "
-"приложению."
+"Включает и выключает быструю навигацию. Если включено, то в режиме обзора "
+"клавиши быстрой навигации осуществляют перемещение по различным типам "
+"элементов на странице. Если выключено, то эти клавиши передаются "
+"непосредственно приложению."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
@@ -2956,15 +2956,13 @@ msgid ""
 "no selection it says so."
 msgstr ""
 "Читает выделенный текст в документе или редактируемом элементе управления. "
-"При отсутствии выделения, также, сообщает об этом."
+"При отсутствии выделения, сообщает об этом."
 
 #. Translators: Input help mode message for report date and time command.
 msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
-msgstr ""
-"Если нажато один раз, читает текущее время. Если нажато дважды, читает "
-"текущую дату"
+msgstr "Сообщает текущее время. Если нажато дважды, сообщает текущую дату"
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
 msgid "No settings"
@@ -3071,6 +3069,18 @@ msgstr "чтение ревизий редактора включено"
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
 msgstr "Включает и выключает объявление ревизий редактора"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "чтение акцентирования выключено"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "чтение акцентирования включено"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "Включает и выключает объявление акцентирования"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3396,8 +3406,8 @@ msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
-"Устанавливает навигатор на объект в фокусе и просмотровый курсор в позицию "
-"каретки в этом объекте, если это возможно."
+"Устанавливает навигатор на объект в системном фокусе и просмотровый курсор в "
+"позицию каретки в этом объекте, если это возможно."
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3418,8 +3428,8 @@ msgid ""
 "Pressed once Sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
-"Перемещает системный фокус на объект навигатора. При двойном нажатии, "
-"перемещает системную каретку в позицию просмотрового курсора"
+"Устанавливает системный фокус на объект навигатора. При двойном нажатии, "
+"устанавливает системную каретку в позицию просмотрового курсора"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
@@ -4380,6 +4390,58 @@ msgid "numpad plus"
 msgstr "плюс на цифровом блоке"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "десятичный разделитель"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "insert на цифровом блоке"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "0"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "1"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "2"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "3"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "4"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "5"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "6"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "7"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "8"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "9"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "insert"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "левый control"
 
@@ -4646,14 +4708,55 @@ msgstr "фоновый {backgroundColor}"
 msgid "line %s"
 msgstr "Строка %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "вставленный"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "не вставленный"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "удалённый"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "не удалённый"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "Проверено %s"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "Не проверено"
+#, python-format
+msgid "no revised %s"
+msgstr "no revised %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "отмеченный"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "не отмеченный"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "сильно акцентированно"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "не сильно акцентированно"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "акцентированно"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "не акцентированно"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -6839,12 +6942,12 @@ msgstr "Использовать обычный Insert как клавишу-м�
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speak typed &characters"
-msgstr "Читать &Символы при вводе"
+msgstr "Читать &символы при вводе"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speak typed &words"
-msgstr "Читать &Слова при вводе"
+msgstr "Читать &слова при вводе"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -6859,17 +6962,17 @@ msgstr "Прерывание речи для клавиши Enter"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Allow skim &reading in Say All"
-msgstr "Разрешить беглое &чтение в режиме \"Читать всё\""
+msgstr "Разрешить беглое &чтение в режиме непрерывного чтения"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Beep if typing lowercase letters when caps lock is on"
-msgstr "Звуковой сигнал при наборе маленьких букв в режиме caps lock"
+msgstr "Звуковой сигнал при наборе строчных букв в режиме CapsLock"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speak command &keys"
-msgstr "Читать &Командные клавиши"
+msgstr "Читать &командные клавиши"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -7132,6 +7235,11 @@ msgstr "Читать &цвета"
 #. document formatting settings dialog.
 msgid "Report &editor revisions"
 msgstr "Читать &ревизии редактора"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "Читать а&кцентирование"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -8359,17 +8467,8 @@ msgstr "Текстовый фрейм"
 msgid "comment: {text} by {author} on {date}"
 msgstr "комментарий: {text} {author} в {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} {author} в {date}"
-
-msgid "unknown author"
-msgstr "Неизвестный автор"
-
-msgid "unknown date"
-msgstr "неизвестная дата"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} просмотрено {revisionAuthor} в {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text} by {author} on {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8546,3 +8645,15 @@ msgstr "HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "unrevised"
+#~ msgstr "Не проверено"
+
+#~ msgid "unknown author"
+#~ msgstr "Неизвестный автор"
+
+#~ msgid "unknown date"
+#~ msgstr "неизвестная дата"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType} просмотрено {revisionAuthor} в {revisionDate}"

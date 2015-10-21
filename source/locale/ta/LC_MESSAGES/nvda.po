@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 19:09+1000\n"
-"PO-Revision-Date: 2015-09-01 19:22+0530\n"
+"POT-Creation-Date: 2015-10-08 19:11+1000\n"
+"PO-Revision-Date: 2015-10-18 19:33+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -3070,6 +3070,18 @@ msgstr "மீளாய்வுகளை அறிவிக்கும்"
 msgid "Toggles on and off the reporting of revisions"
 msgstr "மீளாய்வுகளை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "வலியுறுத்தலை அறிவிக்காது "
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "வலியுறுத்தலை அறிவிக்கும்"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "வலியுறுத்தலை அறிவிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "நிரங்களை அறிவிக்காது"
@@ -4373,6 +4385,58 @@ msgid "numpad plus"
 msgstr "எண் திட்டு கூட்டல்"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "எண் பூட்டு எண் திட்டு புள்ளி"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "எண் திட்டு செருகு"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "எண் பூட்டு எண் திட்டு 0"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "எண் பூட்டு எண் திட்டு 1"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "எண் பூட்டு எண் திட்டு 2"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "எண் பூட்டு எண் திட்டு 3"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "எண் பூட்டு எண் திட்டு 4"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "எண் பூட்டு எண் திட்டு 5"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "எண் பூட்டு எண் திட்டு 6"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "எண் பூட்டு எண் திட்டு 7"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "எண் பூட்டு எண் திட்டு 8"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "எண் பூட்டு எண் திட்டு 9"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "செருகு"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "இடது கட்டுப்பாடு"
 
@@ -4636,14 +4700,55 @@ msgstr "பின்னணி {backgroundColor}"
 msgid "line %s"
 msgstr "வரி %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "செருகப்பட்டது"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "செருகப்படாதது"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "அழிக்கப்பட்டது"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "அழிக்கப்படாதது"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "மீளாய்வு செய்யப்பட்டது %s "
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "மீளாய்வு செய்யப்படாதது"
+#, python-format
+msgid "no revised %s"
+msgstr "மீளாய்வு செய்யப்படாதது %s "
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "குறிக்கப்பட்டது"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "குறிக்கப்படாதது"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "வலுவூட்டப்பட்டது"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "வலுவூட்டப்படாதது"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "வலியுறுத்தப்பட்டது"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "வலியுறுத்தப்படாதது"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -7123,6 +7228,11 @@ msgstr "தொகுப்பாளர் மீளாய்வுகளை அ�
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "வலியுறுத்தலை அறிவிக்கவும் (&M)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "பாங்கினை அறிவிக்கவும் (&Y)"
 
@@ -8337,18 +8447,8 @@ msgstr "உரைச் சட்டகம்"
 msgid "comment: {text} by {author} on {date}"
 msgstr "கருத்துரை: {text}, படைப்பாளர்: {author}, தேதி: {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: உரை: {text}, படைப்பாளர்: {author}, தேதி: {date}"
-
-msgid "unknown author"
-msgstr "தெரியாத படைப்பாளர்"
-
-msgid "unknown date"
-msgstr "தெரியாத தேதி"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr ""
-"மீளாய்வு வகை {revisionType}, செய்தது {revisionAuthor}, தேதி {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text}, படைப்பாளர் {author}, தேதி {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8530,6 +8630,19 @@ msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிர
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
+
+#~ msgid "unrevised"
+#~ msgstr "மீளாய்வு செய்யப்படாதது"
+
+#~ msgid "unknown author"
+#~ msgstr "தெரியாத படைப்பாளர்"
+
+#~ msgid "unknown date"
+#~ msgstr "தெரியாத தேதி"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr ""
+#~ "மீளாய்வு வகை {revisionType}, செய்தது {revisionAuthor}, தேதி {revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "குவிமையத்தைக் கொண்ட பொருளை அறிவிக்கும்"
