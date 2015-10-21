@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-06 19:09+1000\n"
-"PO-Revision-Date: 2015-08-17 16:55+0800\n"
+"POT-Creation-Date: 2015-10-08 19:11+1000\n"
+"PO-Revision-Date: 2015-09-30 16:06+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -3055,6 +3055,21 @@ msgstr "讀出編修版次開"
 msgid "Toggles on and off the reporting of revisions"
 msgstr "切換讀出編修版次的開關"
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+#, fuzzy
+msgid "report emphasis off"
+msgstr "讀出頁碼關"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+#, fuzzy
+msgid "report emphasis on"
+msgstr "讀出頁碼開"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+#, fuzzy
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "切換讀出頁碼的開關"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "讀出色彩關"
@@ -3345,9 +3360,9 @@ msgstr "%s已複製到剪貼簿"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
 msgstr "讀出目前瀏覽物件，連按兩下拼讀物件名稱，連按三下複製物件名稱到剪貼簿"
 
 #. Translators: message when there is no location information for the review cursor
@@ -4266,6 +4281,58 @@ msgid "numpad plus"
 msgstr "數字鍵盤加號"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "數字鍵盤 小數點"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "數字鍵盤 insert"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "數字鍵盤零"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "數字鍵盤一"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "數字鍵盤二"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "數字鍵盤三"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "數字鍵盤四"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "數字鍵盤五"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "數字鍵盤六"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "數字鍵盤七"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "數字鍵盤八"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "數字鍵盤九"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "insert"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "左邊 control"
 
@@ -4527,14 +4594,62 @@ msgstr "背景色為{backgroundColor}"
 msgid "line %s"
 msgstr "第%s行"
 
+#. Translators: Reported when text is marked as having been inserted
+#, fuzzy
+msgid "inserted"
+msgstr "insert"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+#, fuzzy
+msgid "not inserted"
+msgstr "沒選取"
+
+#. Translators: Reported when text is marked as having been deleted
+#, fuzzy
+msgid "deleted"
+msgstr "delete"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+#, fuzzy
+msgid "not deleted"
+msgstr "沒選取"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "修訂%s"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "未修訂"
+#, fuzzy, python-format
+msgid "no revised %s"
+msgstr "修訂%s"
+
+#. Translators: Reported when text is marked
+#, fuzzy
+msgid "marked"
+msgstr "開始位置已標記"
+
+#. Translators: Reported when text is no longer marked
+#, fuzzy
+msgid "not marked"
+msgstr "開始位置已標記"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr ""
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+#, fuzzy
+msgid "not strong"
+msgstr "沒 %s"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr ""
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr ""
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -6944,6 +7059,12 @@ msgstr "讀出編修版次(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+#, fuzzy
+msgid "Report e&mphasis"
+msgstr "讀出頁碼(&P)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "讀出文字樣式(&Y)"
 
@@ -8147,17 +8268,9 @@ msgstr "文字框"
 msgid "comment: {text} by {author} on {date}"
 msgstr "註解: 由 {author} 於 {date} 加註的 {text}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
+#, fuzzy
+msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType}: {text} 由 {author} 於 {date} 修訂"
-
-msgid "unknown author"
-msgstr "未知的作者"
-
-msgid "unknown date"
-msgstr "未知的日期"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType}由{revisionAuthor}修訂於{revisionDate}"
 
 #, python-format
 msgid "%g characters"
@@ -8319,6 +8432,18 @@ msgstr "HIMS Braille Sense/Braille EDGE 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "unrevised"
+#~ msgstr "未修訂"
+
+#~ msgid "unknown author"
+#~ msgstr "未知的作者"
+
+#~ msgid "unknown date"
+#~ msgstr "未知的日期"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType}由{revisionAuthor}修訂於{revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "讀出焦點物件"
