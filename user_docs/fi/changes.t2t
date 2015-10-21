@@ -5,10 +5,26 @@
 
 = 2015.4 =
 
+== Uudet ominaisuudet ==
+- NVDA näkyy nyt Windows 8:n ja uudempien käyttöjärjestelmien Helppokäyttökeskuksessa. (#308)
+- Kun soluja siirretään Excelissä, muotoilumuutokset ilmoitetaan nyt automaattisesti, mikäli asianmukaiset asetukset on otettu käyttöön NVDA:n Asiakirjojen muotoiluasetukset -valintaikkunassa. (#4878)
+- NVDA:n Asiakirjojen muotoiluasetukset -valintaikkunaan on lisätty Ilmoita korostus -asetus. Tämän asetuksen avulla, joka on oletusarvoisesti käytössä, NVDA ilmoittaa automaattisesti asiakirjojen korostetun tekstin. Tätä tuetaan toistaiseksi vain em- ja strong-tageille selaustilassa Internet Explorerissa ja muissa MSHTML-säätimissä. (#4920)
+- Lisätty ja poistettu teksti ilmoitetaan nyt selaustilassa Internet Explorerissa ja muissa MSHTML-säätimissä, jos NVDA:n Lue muokkaajan muokkaukset -asetus on käytössä. (#4920)
+- Kun jäljitettäviä muutoksia katsotaan Microsoft Wordissa NVDA:n elementtilistassa, tietoja näytetään nyt enemmän, kuten esim. muutetut muotoilut. (#4920)
+
+
+== Muutokset ==
+- NVDA:n Asiakirjojen muotoiluasetukset -valintaikkunan Lue muokkaajan muokkaukset -asetus on nyt oletusarvoisesti käytössä. (#4920)
+- Kun Microsoft Wordissa liikutaan merkki kerrallaan NVDA:n Lue muokkaajan muokkaukset -asetuksen ollessa käytössä, tietoja luetaan nyt vähemmän muutoksia jäljitettäessä, mikä tekee tekstissä liikkumisesta tehokkaampaa. Käytä elementtilistaa lisätietojen näyttämiseen. (#4920)
+
 == Korjatut ohjelmavirheet ==
-- Suorituskykyä parannettu merkittävästi Outlook 2010:n/2013:n viestiluettelossa liikuttaessa. (#5268)
+- Suorituskykyä paranneltu merkittävästi Outlook 2010:n/2013:n viestiluettelossa liikuttaessa. (#5268)
 - Tietyillä näppäimillä liikkuminen (kuten laskentataulukon vaihtaminen Control+Page up- ja Control+Page down -näppäimillä) toimii nyt oikein Microsoft Excel -kaavioissa. (#5336)
 - Korjattu painikkeiden visuaalinen ulkoasu varoitusvalintaikkunassa, joka näytetään yritettäessä päivittää NVDA:ta alaspäin. (#5325)
+- Kun NVDA on määritetty käynnistymään Windowsiin kirjautumisen jälkeen, se käynnistyy nyt paljon aiemmin Windows 8:ssa ja uudemmissa käyttöjärjestelmissä. (#308)
+ - Jos olet ottanut tämän asetuksen käyttöön aiemmassa NVDA:n versiossa, sinun on poistettava se käytöstä ja otettava sitten uudelleen käyttöön Yleiset asetukset -valintaikkunassa, jotta muutos tulee voimaan.
+- UI Automation -rajapinnan suorituskykyä paranneltu mm. Resurssienhallinnassa ja Tehtävienhallinnassa. (#5293)
+- NVDA siirtyy nyt asianmukaisesti vuorovaikutustilaan liikuttaessa selaustilassa Sarkain-näppäimellä vain luku -tyyppisiin ARIA-ruudukkosäätimiin Mozilla Firefoxissa ja muissa Gecko-pohjaisissa sovelluksissa. (#5118)
 
 
 = 2015.3 =
