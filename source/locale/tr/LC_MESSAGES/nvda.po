@@ -2,16 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-06 19:09+1000\n"
-"PO-Revision-Date: 2015-08-20 21:07+0300\n"
+"POT-Creation-Date: 2015-10-08 19:11+1000\n"
+"PO-Revision-Date: 2015-10-12 21:07+0300\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 1.8.5\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Bookmarks: -1,967,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -3058,6 +3059,18 @@ msgstr "Editör revizyonlarını bildir"
 msgid "Toggles on and off the reporting of revisions"
 msgstr "Editör revizyonlarının bildirimini açıp kapatır"
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "Vurguyu bildirme"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "Vurguyu bildir"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "Vurgunun bildirimini açıp kapatır"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "Renkleri bildirme"
@@ -3352,9 +3365,9 @@ msgstr "%s panoya Kopyalandı"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
 msgstr ""
 "Nesne sunucusunun üzerinde bulunduğu nesneyi söyler. İki kez basılırsa, "
 "bilgi kodlanır. üç kez basılırsa nesnenin adı ve değeri panoya kopyalanır."
@@ -4335,6 +4348,58 @@ msgid "numpad plus"
 msgstr "numaratör artı"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "numaratör virgül"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "numaratör insört"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr ""
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "numaratör 1"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "numaratör 2"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "numaratör 3"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "numaratör 4"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "numaratör 5"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "numaratör 6"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "numaratör 7"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "numaratör 8"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "numaratör 9"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "insört"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "sol Kontrol"
 
@@ -4598,14 +4663,55 @@ msgstr ", arka plan rengi {backgroundColor}"
 msgid "line %s"
 msgstr "satır %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "eklenmiş"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "Eklenmemiş"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "silinmiş"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "Silinmemiş"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "%s değiştirildi"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "değiştirilmemiş"
+#, python-format
+msgid "no revised %s"
+msgstr "%s revize edilmemiş"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "işaretli"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "işaretlenmemişBaşlangıç işareti"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr ""
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "Güçlü değil"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr ""
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr ""
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -7075,6 +7181,11 @@ msgstr "&Editör revizyonlarını bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "&Vurguyu bildir"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "stilleri bildir"
 
@@ -8279,17 +8390,9 @@ msgstr "metin çerçevesi"
 msgid "comment: {text} by {author} on {date}"
 msgstr "Açıklama: {text} {author} tarafından, {date} tarihinde"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} {author} tarafından, {date} tarihinde"
-
-msgid "unknown author"
-msgstr "bilinmeyen yazar"
-
-msgid "unknown date"
-msgstr "Bilinmeyen tarih"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} {revisionAuthor} tarafından {revisionDate} tarihinde"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr ""
+"{revisionType} {description}: {text} {author} tarafından {date} tarihinde"
 
 #, python-format
 msgid "%g characters"
@@ -8457,6 +8560,18 @@ msgstr "HIMS Braille Sense/Braille EDGE serisi"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "unrevised"
+#~ msgstr "değiştirilmemiş"
+
+#~ msgid "unknown author"
+#~ msgstr "bilinmeyen yazar"
+
+#~ msgid "unknown date"
+#~ msgstr "Bilinmeyen tarih"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType} {revisionAuthor} tarafından {revisionDate} tarihinde"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "Odaktaki nesneyi söyler"

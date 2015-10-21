@@ -3,6 +3,31 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.4 =
+
+== New Features ==
+- NVDA now appears in the Ease of Access Center in Windows 8 and later. (#308)
+- When moving around cells in Excel, formatting changes are now automatically reported if the appropriate options are turned on in NVDA's Document Formatting Settings dialog. (#4878)
+- A Report Emphasis option has been added to NVDA's Document formatting settings dialog. On by default, this option allows NVDA to automatically report the existance of emphasised text in documents. So far this is only supported for em and strong tags in Browse Mode for Internet Explorer and other MSHTML controls. (#4920)
+- The existance of inserted and deleted text is now reported in Browse Mode for Internet Explorer and other MSHTML controls, if NVDA's Report Editor Revisions option is enabled. (#4920)
+- When viewing track changes in NVDA's Elements List for Microsoft Word, more information such as what formatting properties were changed is now displayed. (#4920)
+
+
+== Changes ==
+- The Report Editor Revisions option in NVDA's Document formatting settings dialog is now turned on by default. (#4920)
+- When moving by character in Microsoft Word with NVDA's Report Editor Revisions option enabled, less information is now reported for track changes, which makes navigation more efficient. To view the extra information, use the Elements List. (#4920)
+
+
+== Bug Fixes ==
+- Major performance improvements when navigating the Outlook 2010/2013 message list. (#5268)
+- In a chart in Microsoft Excel, navigating with certain keys (such as changing sheets with control+pageUp and control+pageDown) now works correctly. (#5336)
+- Fixed the visual appearance of the buttons in the warning dialog which is displayed when you attempt to downgrade NVDA. (#5325)
+- In Windows 8 and later, NVDA now starts a lot earlier when configured to start after logging on to Windows. (#308)
+ - If you enabled this using a previous version of NVDA, you will need to disable it and enable it again in the General Settings dialog for the change to take effect.
+- Performance enhansements for UI Automation including  File Explorer and Task Viewer. (#5293)
+- NVDA now correctly switches to focus mode when tabbing to read-only ARIA grid controls in Browse Mode for Mozilla Firefox and other Gecko-based controls. (#5118)
+ 
+
 = 2015.3 =
 Highlights of this release include initial support for Windows 10; the ability to disable single letter navigation in browse mode (useful for some web apps); improvements in Internet Explorer; and fixes for garbled text when typing in certain applications with braille enabled.
 
@@ -16,6 +41,7 @@ Highlights of this release include initial support for Windows 10; the ability t
 - New braille translation tables: Finnish 6 dot, Irish grade 1, Irish grade 2, Korean grade 1 (2006), Korean grade 2 (2006). (#5137, #5074, #5097)
 - The QWERTY keyboard on the Papenmeier BRAILLEX Live Plus braille display is now supported. (#5181)
 - Experimental support for the Microsoft Edge web browser and browsing engine in Windows 10. (#5212)
+- New language: Kannada.
 
 
 == Changes ==
