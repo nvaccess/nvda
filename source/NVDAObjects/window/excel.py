@@ -1012,6 +1012,22 @@ class ExcelCell(ExcelBase):
 		if previous:
 			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=previous)
 
+	def _get_description(self):
+		try:
+			inputMessageTitle=self.excelCellObject.validation.inputTitle
+		except (COMError,NameError,AttributeError):
+			inputMessageTitle=None
+		try:
+			inputMessage=self.excelCellObject.validation.inputMessage
+		except (COMError,NameError,AttributeError):
+			inputMessage=None
+		if inputMessage and inputMessageTitle:
+			return _("Input Message is {title}: {message}").format( title = inputMessageTitle , message = inputMessage)
+		elif inputMessage:
+			return _("Input Message is {message}").format( message = inputMessage)
+		else:
+			return None
+
 	def script_reportComment(self,gesture):
 		commentObj=self.excelCellObject.comment
 		text=commentObj.text() if commentObj else None
