@@ -652,6 +652,8 @@ def processPositiveStates(role, states, reason, positiveStates):
 		# The user doesn't usually care if a menu item is expanded or collapsed.
 		positiveStates.discard(STATE_COLLAPSED)
 		positiveStates.discard(STATE_EXPANDED)
+	if STATE_FOCUSABLE not in states:
+		positiveStates.discard(STATE_EDITABLE)
 	return positiveStates
 
 def processNegativeStates(role, states, reason, negativeStates):
