@@ -87,7 +87,7 @@ class ControlField(Field):
 			role in (controlTypes.ROLE_BLOCKQUOTE, controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME, controlTypes.ROLE_TOOLBAR, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU, controlTypes.ROLE_TABLE)
 			or (role == controlTypes.ROLE_EDITABLETEXT and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states) and controlTypes.STATE_MULTILINE in states)
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states)
-			or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)
+			or (controlTypes.STATE_FOCUSABLE in states and controlTypes.STATE_EDITABLE in states)
 		):
 			return self.PRESCAT_CONTAINER
 
