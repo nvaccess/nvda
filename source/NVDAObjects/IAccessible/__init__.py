@@ -392,14 +392,7 @@ the NVDAObject for IAccessible
 			clsList.insert(0, FocusableUnfocusableContainer)
 
 		if hasattr(self, "IAccessibleTextObject"):
-			if role==oleacc.ROLE_SYSTEM_TEXT:
-				isEditable=True
-			else:
-				try:
-					isEditable=bool(self.IAccessibleObject.states&IAccessibleHandler.IA2_STATE_EDITABLE)
-				except COMError:
-					isEditable=False
-			if isEditable:
+			if role==oleacc.ROLE_SYSTEM_TEXT or self.IA2States&IAccessibleHandler.IA2_STATE_EDITABLE:
 				clsList.append(EditableTextWithAutoSelectDetection)
 
 		# Use window class name and role to search for a class match in our static map.
@@ -816,11 +809,7 @@ the NVDAObject for IAccessible
 		if not hasattr(self.IAccessibleObject,'states'):
 			# Not an IA2 object.
 			return states
-		try:
-			IAccessible2States=self.IAccessibleObject.states
-		except COMError:
-			log.debugWarning("could not get IAccessible2 states",exc_info=True)
-			IAccessible2States=IAccessibleHandler.IA2_STATE_DEFUNCT
+		IAccessible2States=self.IA2States
 		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessible2States) if IAccessibleHandler.IAccessible2StatesToNVDAStates.has_key(x))
 		try:
 			IA2Attribs=self.IA2Attributes
@@ -1428,6 +1417,15 @@ the NVDAObject for IAccessible
 	# We forceably cache this forever, so we don't need temporary caching.
 	# Temporary caching breaks because the cache isn't initialised when this is first called.
 	_cache_IA2WindowHandle = False
+
+	def _get_IA2States(self):
+		if not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2):
+			return 0
+		try:
+			return self.IAccessibleObject.states
+		except COMError:
+			log.debugWarning("could not get IAccessible2 states", exc_info=True)
+			return IAccessibleHandler.IA2_STATE_DEFUNCT
 
 class ContentGenericClient(IAccessible):
 
