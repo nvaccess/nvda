@@ -1427,6 +1427,15 @@ the NVDAObject for IAccessible
 			log.debugWarning("could not get IAccessible2 states", exc_info=True)
 			return IAccessibleHandler.IA2_STATE_DEFUNCT
 
+	def __contains__(self, obj):
+		if not isinstance(obj, IAccessible) or not isinstance(obj.IAccessibleObject, IAccessibleHandler.IAccessible2):
+			return False
+		try:
+			self.IAccessibleObject.accChild(obj.IA2UniqueID)
+			return True
+		except COMError:
+			return False
+
 class ContentGenericClient(IAccessible):
 
 	TextInfo=displayModel.DisplayModelTextInfo
