@@ -220,10 +220,6 @@ def findExtraOverlayClasses(obj, clsList):
 		return
 
 	iaRole = obj.IAccessibleRole
-	try:
-		ia2States = obj.IAccessibleObject.states
-	except COMError:
-		ia2States = 0
 
 	cls = None
 	if iaRole == oleacc.ROLE_SYSTEM_APPLICATION:
@@ -239,7 +235,7 @@ def findExtraOverlayClasses(obj, clsList):
 		# Not unavailable excludes disabled editable text fields (which also aren't focusable).
 		if not (iaStates & oleacc.STATE_SYSTEM_FOCUSABLE or iaStates & oleacc.STATE_SYSTEM_UNAVAILABLE):
 			# This excludes a non-focusable @role="textbox".
-			if not (ia2States & IAccessibleHandler.IA2_STATE_EDITABLE):
+			if not (obj.IA2States & IAccessibleHandler.IA2_STATE_EDITABLE):
 				cls = TextLeaf
 	elif iaRole == IAccessibleHandler.IA2_ROLE_SECTION and obj.IA2Attributes.get("tag", None) == "blockquote":
 		cls = BlockQuote
@@ -248,7 +244,7 @@ def findExtraOverlayClasses(obj, clsList):
 	if cls:
 		clsList.append(cls)
 
-	if cls is not TextLeaf and ia2States & IAccessibleHandler.IA2_STATE_EDITABLE and obj.IAccessibleStates & oleacc.STATE_SYSTEM_FOCUSABLE:
+	if cls is not TextLeaf and obj.IA2States & IAccessibleHandler.IA2_STATE_EDITABLE and obj.IAccessibleStates & oleacc.STATE_SYSTEM_FOCUSABLE:
 		clsList.append(Editor)
 	elif iaRole == oleacc.ROLE_SYSTEM_ROW:
 		clsList.append(RowWithFakeNavigation)
