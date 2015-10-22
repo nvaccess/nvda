@@ -556,7 +556,7 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 				if  len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
 				# Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
-				speakSelectionMessage(_("selecting %s"),text)
+				speakSelectionMessage(_("%s selected"),text)
 		elif len(selectedTextList)>0:
 			text=newInfo.text
 			if len(text)==1:
@@ -569,16 +569,17 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 				if  len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
 				# Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
-				speakSelectionMessage(_("unselecting %s"),text)
+				speakSelectionMessage(_("%s unselected"),text)
 		elif len(unselectedTextList)>0:
-			# Translators: Reported when selection is removed.
-			speakMessage(_("selection removed"))
 			if not newInfo.isCollapsed:
 				text=newInfo.text
 				if len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
 				# Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-				speakSelectionMessage(_("selected %s"),text)
+				speakSelectionMessage(_("%s selected instead"),text)
+			else:
+				# Translators: Reported when selection is removed.
+				speakMessage(_("selection removed"))
 
 def speakTypedCharacters(ch):
 	global curWordChars;
