@@ -1355,10 +1355,27 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		@return: C{True} if L{obj} is within an application, C{False} otherwise.
 		@rtype: bool
 		"""
+		objs = []
 		while obj and obj != self.rootNVDAObject:
+			inApp = getattr(obj, "_inApp", None)
+			if inApp is not None:
+				# We found a cached result.
+				# Cache it on the descendants we just walked over.
+				for obj in objs:
+					obj._inApp = inApp
+				return inApp
+			objs.append(obj)
 			if obj.role in self.APPLICATION_ROLES:
+				# Cache on descendants.
+				for obj in objs:
+					obj._inApp = True
 				return True
-			obj = obj.parent
+			container = obj.container
+			obj.container = container
+			obj = container
+		# Cache on descendants.
+		for obj in objs:
+			obj._inApp = False
 		return False
 
 	def _get_documentConstantIdentifier(self):
