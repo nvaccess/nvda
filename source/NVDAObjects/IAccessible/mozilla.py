@@ -22,8 +22,6 @@ from . import ia2Web
 
 class Mozilla(ia2Web.Ia2Web):
 
-	IAccessibleTableUsesTableCellIndexAttrib=True
-
 	def _get_parent(self):
 		#Special code to support Mozilla node_child_of relation (for comboboxes)
 		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVRELATION_NODE_CHILD_OF)
