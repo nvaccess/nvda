@@ -165,13 +165,28 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 
 class Notification(NVDAObjects.behaviors.Notification):
 	role = controlTypes.ROLE_ALERT
+	_lastWindow = None
+	_lastChildCount = None
 
 	def _get_name(self):
-		return " ".join(child.name for child in self.children)
+		startIndex = 0
+		if self.event_objectID == 99999:
+			# This is an event indicating an update.
+			if self.windowHandle == self._lastWindow:
+				# Another notification is being added to an already visible window.
+				# Just report the added notification.
+				startIndex = self._lastChildCount
+		return " ".join(child.name for child in self.children[startIndex:])
+
+	def event_reorder(self):
+		self.event_alert()
+		Notification._lastWindow = self.windowHandle
+		Notification._lastChildCount = self.childCount
 
 	def event_show(self):
-		# There is a delay before the content of the notification is ready.
-		wx.CallLater(500, self.event_alert)
+		# Show gets fired when the window is created, but it isn't ready yet, so this isn't useful.
+		# We rely on reorder instead.
+		pass
 
 class TypingIndicator(NVDAObjects.IAccessible.IAccessible):
 
@@ -228,7 +243,7 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, Conversation)
 		elif wClass == "TChatContentControl" and role == controlTypes.ROLE_LIST:
 			clsList.insert(0, ChatOutputList)
-		elif wClass == "TTrayAlert" and role == controlTypes.ROLE_WINDOW:
+		elif isinstance(obj, NVDAObjects.IAccessible.IAccessible) and wClass == "TTrayAlert" and obj.IAccessibleChildID == 0:
 			clsList.insert(0, Notification)
 		elif (wClass, role) in TYPING_INDICATOR_MATCH:
 			clsList.insert(0, TypingIndicator)
