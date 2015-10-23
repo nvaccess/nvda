@@ -7,6 +7,7 @@ import itertools
 import collections
 import winsound
 import time
+import weakref
 import wx
 import queueHandler
 from logHandler import log
@@ -1355,11 +1356,34 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		@return: C{True} if L{obj} is within an application, C{False} otherwise.
 		@rtype: bool
 		"""
+		# We cache the result for each object we walk.
+		# There can be browse mode documents within other documents and the result might be different between these,
+		# so the cache must be maintained on the TreeInterceptor rather than the object itself.
+		try:
+			cache = self._isInAppCache
+		except AttributeError:
+			# Create this lazily, as this method isn't used by all browse mode implementations.
+			cache = self._isInAppCache = weakref.WeakKeyDictionary()
+		objs = []
+		def doResult(result):
+			# Cache this on descendants we've walked over.
+			for obj in objs:
+				cache[obj] = result
+			return result
+
 		while obj and obj != self.rootNVDAObject:
+			inApp = cache.get(obj)
+			if inApp is not None:
+				# We found a cached result.
+				return doResult(inApp)
+			objs.append(obj)
 			if obj.role in self.APPLICATION_ROLES:
-				return True
-			obj = obj.parent
-		return False
+				return doResult(True)
+			# Cache container.
+			container = obj.container
+			obj.container = container
+			obj = container
+		return doResult(False)
 
 	def _get_documentConstantIdentifier(self):
 		"""Get the constant identifier for this document.
