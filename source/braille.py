@@ -361,7 +361,7 @@ CURSOR_SHAPES = (
 	# Translators: The description of a cursor shape.
 	(0xFF, _("All dots")),
 )
-SELECTION_SHAPE = 0xC0
+SELECTION_SHAPE = 0xC0 #: Dots 7 and 8
 
 def NVDAObjectHasUsefulText(obj):
 	import displayModel
@@ -928,7 +928,7 @@ class TextInfoRegion(Region):
 		super(TextInfoRegion, self).update()
 
 		if self._selectionStart is not None:
-			# Mark the selection with dots 7 and 8.
+			# Mark the selection.
 			if self._selectionEnd >= len(self.rawText):
 				brailleSelEnd = len(self.brailleCells)
 			else:
