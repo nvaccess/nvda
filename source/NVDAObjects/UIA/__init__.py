@@ -642,6 +642,9 @@ class UIA(Window):
 		childrenCacheRequest.TreeScope=UIAHandler.TreeScope_Children
 		cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
 		children=[]
+		if not cachedChildren:
+			# GetCachedChildren returns null if there are no children.
+			return children
 		for index in xrange(cachedChildren.length):
 			e=cachedChildren.getElement(index)
 			windowHandle=e.cachedNativeWindowHandle or self.windowHandle
