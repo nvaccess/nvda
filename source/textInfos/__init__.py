@@ -87,7 +87,7 @@ class ControlField(Field):
 			role in (controlTypes.ROLE_BLOCKQUOTE, controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME, controlTypes.ROLE_TOOLBAR, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU, controlTypes.ROLE_TABLE)
 			or (role == controlTypes.ROLE_EDITABLETEXT and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states) and controlTypes.STATE_MULTILINE in states)
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states)
-			or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)
+			or (controlTypes.STATE_FOCUSABLE in states and controlTypes.STATE_EDITABLE in states)
 		):
 			return self.PRESCAT_CONTAINER
 
@@ -199,6 +199,7 @@ UNIT_CELL="cell"
 UNIT_SCREEN="screen"
 UNIT_STORY="story"
 UNIT_READINGCHUNK="readingChunk"
+UNIT_OFFSET="offset"
 
 unitLabels={
 	UNIT_CHARACTER:_("character"),
@@ -429,17 +430,6 @@ class TextInfo(baseObject.AutoPropertyObject):
 		# Import late to avoid circular import.
 		import braille
 		return braille.getControlFieldBraille(self, field, ancestors, reportStart, formatConfig)
-
-	def getEmbeddedObject(self, offset=0):
-		"""Retrieve the embedded object associated with a particular embedded object character.
-		Where a text implementation allows other objects to be embedded in the text, embedded objects are represented by an embedded object character (\uFFFC).
-		When these characters are encountered, this method can be used to retrieve the associated embedded object.
-		@param offset: The offset of the embedded object character in question relative to the start of this instance.
-		@type offset: int
-		@return: The embedded object.
-		@rtype: L{NVDAObjects.NVDAObject}
-		"""
-		raise NotImplementedError
 
 	def activate(self):
 		"""Activate this position.
