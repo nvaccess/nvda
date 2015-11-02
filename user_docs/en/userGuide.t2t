@@ -1,4 +1,5 @@
 NVDA NVDA_VERSION User Guide
+NVDA NVDA_VERSION User Guide
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -569,24 +570,87 @@ Please see the MathPlayer documentation for further information.
 
 When you wish to return to the document, simply press the escape key.
 
-+ Application Specific NVDA Commands +
-NVDA provides its own extra commands for some applications to make certain tasks easier or to provide access to functionality which is not otherwise accessible to screen reader users.
++ Application Specific Features +
+NVDA provides its own extra features  for some applications to make certain tasks easier or to provide access to functionality which is not otherwise accessible to screen reader users.
 
 ++ Microsoft Word ++
+
++++ Automatic Column and Row Header Reading +++
+NVDA is able to automatically announce appropriate row and column headers when navigating around tables in Microsoft Word.
+This firstly requires that the Report Table row / column headers option In NVDA's Document Formatting dialog be turned on.
+Secondly, NVDA needs to know which row or column contains the headers in any given table.
+After moving to the first cell in the column or row containing the headers, use one of the following commands:
 %kc:beginInclude
 || Name | Key | Description |
-| Report current comment | NVDA+Alt+c | Reports the text of the comment at the position of the System Caret. | 
-| Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. | 
-| Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. | 
+| Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. |
+| Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. |
 %kc:endInclude
+These settings will be stored in the document as bookmarks compatible with other Screen Readers such as Jaws.
+This means that users of other screen readers who open this document at a later date will automatically  have the row and column headers already set.
+
++++ Browse Mode in Microsoft Word +++
+Similar to the web, Browse mode can be used in Microsoft Word to allow you to use features such as Quick navigation and the Elements List.
+%kc:beginInclude
+To toggle Browse mode on and off in Microsoft Word, press NVDA+space.
+%kc:endInclude
+For further information about Browse mode and Quick Navigation, see the [Browse Mode section #BrowseMode].
+
+++++ The Elements List ++++
+%kc:beginInclude
+While in Browse mode in Microsoft Word, you can access the Elements List by pressing NVDA+f7.
+%kc:endInclude
+The Elements List can list headings, links and annotations (which includes comments and track changes).
+
++++ Reporting Comments +++
+%kc:beginInclude
+To report any comments at the current caret position, press NVDA+alt+c.
+%kc:endInclude
+All comments for the document, along with other tracked changes, can also be listed in the NVDA Elements List  when selecting Annotations as the type.
 
 ++ Microsoft Excel ++
+
++++ Automatic Column and Row Header Reading +++
+NVDA is able to automatically announce appropriate row and column headers when navigating around Excel worksheets.
+This firstly requires that the Report Table row / column headers option In NVDA's Document Formatting dialog be turned on.
+Secondly, NVDA needs to know which row or column contains the headers.
+After moving to the first cell in the column or row containing the headers, use one of the following commands:
 %kc:beginInclude
 || Name | Key | Description |
-| Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. | 
-| Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. | 
-| Report comment | NVDA+alt+c | Reports the comment on the current cell if any. |
-| Elements List dialog | NVDA+f7 | opens the Elements List dialog showing charts, cells with comments, cells with formulas, or sheets. |
+| Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. |
+| Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. |
+%kc:endInclude
+These settings will be stored in the workbook as defined name ranges compatible with other Screen Readers such as Jaws.
+This means that users of other screen readers who open this workbook at a later date will automatically  have the row and column headers already set. 
+
++++ The Elements List +++
+Similar to the web, NVDA has an Elements List for Microsoft Excel that allows you to list and access several different types of information.
+%kc:beginInclude
+To access the Elements List in Excel, press NVDA+f7.
+%kc:endInclude
+The various types of information available in the Elements List are:
+- Chart: This lists all charts in the workbook. 
+Selecting a chart and pressing enter or the Move to button focuses the chart for navigating and reading with the arrow keys.
+- Comment: This lists all cells in the workbook containing comments. 
+The cell address along with its comments are shown for each cell. 
+Pressing Enter or the Move To button when on a listed comment will move directly to that cell.
+- Formula: This lists all cells in the workbook containing a formula. 
+The cell address along with its formula are shown for each cell.
+Pressing Enter or the Move To button on a listed formula will move directly to that cell. 
+- Sheet: This lists all sheets in the workbook. 
+Pressing f2 when on a listed sheet allows you to rename the sheet. 
+Pressing Enter or the Move To button while on the listed sheet will switch to that sheet.
+-
+
++++ Reporting Comments +++
+%kc:beginInclude
+To report any comments for the currently focused cell, press NVDA+alt+c.
+%kc:endInclude
+All comments for the Workbook can also be listed in the NVDA Elements List.
+
++++ Reading Protected Cells +++
+If a workbook has been protected, it may not be possible to move focus to particular cells that have been locked for editing.
+%kc:beginInclude
+To allow moving to locked cells, switch to Browse Mode by pressing NVDA+space, and then use standard Excel movement commands such as the arrow keys to move around all cells on the current worksheet.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -2067,7 +2131,7 @@ In order to fit as much information as possible on a braille display, The folowi
 || Abbreviation | Control type |
 | btn | button |
 | cbo | combo box |
-| chk | check box |
+| chk | checkbox |
 | dlg | dialog |
 | edt | editable text field |
 | gra | graphic |
@@ -2088,9 +2152,9 @@ In order to fit as much information as possible on a braille display, The folowi
 The following state indicators are also defined:
 || Abbreviation | Control state |
 | ... | displayed when an object supports autocompletion |
-| ( ) | displayed when an object (e.g. a check box) is not checked |
-| (x) | displayed when an object (e.g. a check box) is checked |
-| (-) | displayed when an object (e.g. a check box) is half checked |
+| ( ) | displayed when an object (e.g. a checkbox) is not checked |
+| (x) | displayed when an object (e.g. a checkbox) is checked |
+| (-) | displayed when an object (e.g. a checkbox) is half checked |
 | - | displayed when an object (e.g. a tree view item) is collapsible |
 | + | displayed when an object (e.g. a tree view item) is Expandable |
 | clk | displayed when an object is clickable |

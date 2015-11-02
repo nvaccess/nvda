@@ -26,6 +26,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "nvdaInProcUtils.h"
 #include "IA2Support.h"
 
+#define APPLICATION_USER_MODEL_ID_MAX_LENGTH 131
+typedef LONG(WINAPI *GetCurrentApplicationUserModelId_funcType)(UINT32*,PWSTR);
 typedef ULONG(*LPFNDLLCANUNLOADNOW)();
 
 #pragma data_seg(".ia2SupportShared")
@@ -60,6 +62,7 @@ DWORD IA2UIThreadID=0;
 HANDLE IA2UIThreadUninstalledEvent=NULL;
 UINT wm_uninstallIA2Support=0;
 bool isIA2Initialized=FALSE;
+bool isIA2SupportDisabled=false;
 
 bool installIA2Support() {
 	LPFNGETCLASSOBJECT IA2Dll_DllGetClassObject;
@@ -142,8 +145,29 @@ LRESULT CALLBACK IA2Support_uninstallerHook(int code, WPARAM wParam, LPARAM lPar
 }
 
 void IA2Support_inProcess_initialize() {
-	if (isIA2Installed)
+	if (isIA2Installed||isIA2SupportDisabled)
 		return;
+	// #5417: disable IAccessible2 support for suspendable processes to work around a deadlock in NVDAHelperRemote (specifically seen in Win10 searchUI)
+	HMODULE kernel32Handle=LoadLibrary(L"kernel32.dll");
+	if(!kernel32Handle) {
+		LOG_ERROR(L"Can't load kernel32.dll");
+		return; 
+	}
+	GetCurrentApplicationUserModelId_funcType GetCurrentApplicationUserModelId_fp=(GetCurrentApplicationUserModelId_funcType)GetProcAddress(kernel32Handle,"GetCurrentApplicationUserModelId");
+	if(GetCurrentApplicationUserModelId_fp) {
+		UINT32 bufSize=APPLICATION_USER_MODEL_ID_MAX_LENGTH+1;
+		wchar_t* buf=(wchar_t*)malloc(bufSize*sizeof(wchar_t));
+		LONG res=GetCurrentApplicationUserModelId_fp(&bufSize,buf);
+		if(res==ERROR_SUCCESS) {
+			isIA2SupportDisabled=true;
+			LOG_DEBUGWARNING(L"disabling IA2 support");
+		} else if(res==ERROR_INSUFFICIENT_BUFFER) {
+			LOG_ERROR(L"string not long enough");
+		}
+		free(buf);
+	}
+	FreeLibrary(kernel32Handle);
+	if(isIA2SupportDisabled) return;
 	// Try to install IA2 support on focus/foreground changes.
 	// This hook will be unregistered by the callback once IA2 support is successfully installed.
 	registerWinEventHook(IA2Support_winEventProcHook);
