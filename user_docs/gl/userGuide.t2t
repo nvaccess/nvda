@@ -540,7 +540,7 @@ MathPlayer está dispoñible como unha descarga gratuita dende: http://www.dessc
 
 NVDA soporta os seguintes tipos de contidos matemáticos:
 - MathML en Mozilla Firefox e Microsoft Internet Explorer.
-- Design Science MathType en Microsoft Word e PowerPoint.
+- Design Science MathType en Microsoft Word e PowerPoint. MathType necesita estares instalado para que esto funcione. A versión trial é suficiente.
 - MathML en Adobe Reader. Ten en conta que esto non é un estándar official aínda, así que non hai actualmente software dispoñible para o público que poda producir este contido.
 -
 
@@ -586,7 +586,7 @@ NVDA proporciona as súas proprias ordes extra para algunhas aplicacións para f
 | Fixar cabeceira de columnas | NVDA+shift+c | Ó premer esto unha vez dille ó NVDA que é a primeira celda de cabeceira da fila que contén as cabeceiras de columna, que debería ser anunciado automáticamente cando te despraces entre as columnas por embaixo desta fila. Premendo dúas veces eliminarase a opción. | 
 | Fixar cabeceira de filas | NVDA+shift+r | Ó premer esto unha vez dille ó NVDA que é a primeira celda da cabeceira da columna que contén as cabeceiras de fila, que debería ser anunciado automáticamente cando te despraces entre as filas despois desta columna. Premendo dúas veces eliminarás a opción. | 
 | Anunciar comentario | NVDA+alt+c | Anuncia o comentario na celda actual se o hai. |%kc:endInclude
-| Diálogo Lista de Elementos | NVDA+f7 | abre o diálogo Lista de Elementos amosando gráficos, celdas con comentarios, ou celdas con fórmulas. |
+| Diálogo Lista de Elementos | NVDA+f7 | abre o diálogo Lista de Elementos amosando gráficos, celdas con comentarios, celdas con fórmulas ou follas. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -1104,7 +1104,7 @@ Podes configurar o anunciado de:
 - Alineamento do texto
 - Cores
 - Revisións do editor
-- Destacar
+- Énfase
 - Estilo do texto
 - Erros de ortografía
 - Números de páxina
@@ -1173,12 +1173,23 @@ A lingua cuxa pronuncia de símbolo vai a seren editada amosarase No título do 
 Ten en conta que este diálogo respeta a opción "Confiar na lingua da voz ó procesar símbolos e caracteres" que se atopa no [diálogo Opcións de Voz #VoiceSettings]; é dicir, utiliza a lingua da voz en lugar da opción da lingua global do NVDA cando esta opción estea habilitada.
 
 Para cambiar un símbolo, primeiro selecciónao na lísta de Símbolos.
-O campo Reemplazar permíteche cambiar o texto que debería falarse en lugar deste símbolo.
-Utilizando o campo Nivel, podes axustar o nivel máis baixo do símbolo ó cal este símbolo debería falarse.
+
+- O campo Reemplazar permíteche cambiar o texto que debería falarse en lugar deste símbolo.
+- Utilizando o campo Nivel, podes axustar o nivel máis baixo do símbolo ó cal este símbolo debería falarse.
+- O campo Enviar símbolo actual ó sintetizador especifica cando o proprio símbolo (en contraposición co seu reemplazamento) debería enviarse ó sintetizador.
+Esto é útil se o símbolo causa que o sintetizador faga unha pausa ou cambie a entoación da voz.
+Por exemplo, unha coma causa que o sintetizador faga unha pausa.
+Hai tres opcións:
+ - nunca: nunca envía o símbolo actual ó sintetizador.
+ - Sempre: envía sempre o símbolo actual ó sintetizador.
+ - só baixo Nível dos símbolos: Envía o símbolo actual só se o nível de voz do símbolo configurado é máis baixo que o nível posto por este símbolo.
+ Por exemplo, poderías utilizar esto tal que un símbolo terá o seu reemplazamento falado en níveis máis altos sen pausar, mentres aínda estea indicado cunha pausa nos níveis máis baixos.
+ -
+-
 
 Podes engadir símbolos novos premendo o botón Engadir.
 No diálogo que apareza, introduce o símbolo e preme o botón Aceptar.
-Entón, cambia o reemplazo e o nível para o símbolo novo como o farías para outros símbolos.
+Entón, cambia os campos para o símbolo novo como o farías para outros símbolos.
 
 Podes eliminar un símbolo que engadiches anteriormente premendo o botón Eliminar.
 
@@ -2101,15 +2112,6 @@ Seguidamente van as opcións de liña de ordes para o NVDA:
 | None | --no-sr-flag  | Non cambia a bandeira global do sistema do lector de pantalla |
 | None | --install | Instálase o NVDA comezando a nova copia instalada |
 | None | --install-silent | Instala en silenzo NVDA (Non comeza a nova copia instalada) |
-
-++ Persoalización Avanzada da Pronuncia de Símbolos ++
-É posible persoalizar a pronunciación da pontoación e outros símbolos máis aló do que pode facerse utilizando o [diálogo Pronunciación de Pontoación e símbolos #SymbolPronunciation].
-Por exemplo, podes especificar se o símbolo dibuxado debería enviarse ó sintetizador (ex. para causar unha pausa ou cambio na entoación) e podes engadir símbolos persoalizados. 
-
-Para facer esto, debes editar o ficheiro de información de pronunciación de símbolos no teu directorio de configuración de usuario do NVDA.
-O ficheiro chámase symbols-xx.dic, onde xx é o código de lingua.
-O formato deste ficheiro documentóuse na sección Symbol Pronunciation da Guía de Desenrolo do NVDA, que está dispoñible dende [a Sección Desenvolvemento do sitio web do NVDA http://community.nvda-project.org/wiki/Development].
-Polo tanto, non é posible para os usuarios definir símbolos comprexos. 
 
 + Información Adicional +
 Se requires información adicional ou asistencia referente ó NVDA, por favor visita o sitio Web de NVDA en NVDA_URL.
