@@ -582,14 +582,14 @@ Secondly, NVDA needs to know which row or column contains the headers in any giv
 After moving to the first cell in the column or row containing the headers, use one of the following commands:
 %kc:beginInclude
 || Name | Key | Description |
-| Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. | 
-| Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. | 
+| Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. |
+| Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. |
 %kc:endInclude
-These settings will be stored in the document as bookmarks, compatible with other Screen Readers such as Jaws, meaning that other screen reader users who open this document at a later date will automatically  have the row and column headers already set. 
+These settings will be stored in the document as bookmarks compatible with other Screen Readers such as Jaws.
+This means that users of other screen readers who open this document at a later date will automatically  have the row and column headers already set.
 
 +++ Browse Mode in Microsoft Word +++
-
-Similar to the web, Browse mode can be used in Microsoft Word to allow you to use features such as Quick navigation, and the Elements List.
+Similar to the web, Browse mode can be used in Microsoft Word to allow you to use features such as Quick navigation and the Elements List.
 %kc:beginInclude
 To toggle Browse mode on and off in Microsoft Word, press NVDA+space.
 %kc:endInclude
@@ -605,8 +605,8 @@ The Elements List can list headings, links and annotations (which includes comme
 %kc:beginInclude
 To report any comments at the current caret position, press NVDA+alt+c.
 %kc:endInclude
- All comments for the document  along with other track changes can also be listed in the NVDA Elements List  when selecting Annotations as the type.
- 
+All comments for the document, along with other tracked changes, can also be listed in the NVDA Elements List  when selecting Annotations as the type.
+
 ++ Microsoft Excel ++
 
 +++ Automatic Column and Row Header Reading +++
@@ -616,14 +616,14 @@ Secondly, NVDA needs to know which row or column contains the headers.
 After moving to the first cell in the column or row containing the headers, use one of the following commands:
 %kc:beginInclude
 || Name | Key | Description |
-| Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. | 
-| Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. | 
+| Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. |
+| Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. |
 %kc:endInclude
-These settings will be stored in the workbook as defined name ranges, compatible with other Screen Readers such as Jaws, meaning that other screen reader users who open this workbook at a later date will automatically  have the row and column headers already set. 
+These settings will be stored in the workbook as defined name ranges compatible with other Screen Readers such as Jaws.
+This means that users of other screen readers who open this workbook at a later date will automatically  have the row and column headers already set. 
 
 +++ The Elements List +++
-
-Similar to on the web, NVDA has an Elements List for Microsoft Excel, that allows you to list and access several different types of information.
+Similar to the web, NVDA has an Elements List for Microsoft Excel that allows you to list and access several different types of information.
 %kc:beginInclude
 To access the Elements List in Excel, press NVDA+f7.
 %kc:endInclude
@@ -652,7 +652,6 @@ If a workbook has been protected, it may not be possible to move focus to partic
 %kc:beginInclude
 To allow moving to locked cells, switch to Browse Mode by pressing NVDA+space, and then use standard Excel movement commands such as the arrow keys to move around all cells on the current worksheet.
 %kc:endInclude
-
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
