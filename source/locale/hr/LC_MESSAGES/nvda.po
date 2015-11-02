@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-08 19:11+1000\n"
-"PO-Revision-Date: 2015-10-08 17:42+0100\n"
+"POT-Creation-Date: 2015-10-22 19:12+1000\n"
+"PO-Revision-Date: 2015-10-31 20:30+0100\n"
 "Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -1298,6 +1298,24 @@ msgstr "sve"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "znak"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "nikad"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "uvijek"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "samo ispod razine simbola"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -4093,6 +4111,10 @@ msgid ""
 msgstr ""
 "Premiješta na sljedeći objekt u fiksnom pregledu hijerarhije navigacije "
 "objekta"
+
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "Nema prethodnog"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -7472,6 +7494,11 @@ msgstr "Simbol"
 msgid "Level"
 msgstr "Razina"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "sačuvaj"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "Promjena simbola"
@@ -7479,6 +7506,10 @@ msgstr "Promjena simbola"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "&Razina"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "&Pošalji trenutni simbol govornij jedinici"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7637,6 +7668,11 @@ msgstr "&komentar"
 msgid "&Formula"
 msgstr "&Formula"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "&radni list"
+
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
 msgstr "od {start} do {end}"
@@ -7701,6 +7737,12 @@ msgstr ""
 "Kada se pritisne jednom, ova ćelija će se postaviti kao prvo zaglavlje "
 "redaka za svaku ćeliju niže i desno od nje unutar ove regije. Kada se "
 "pritisne dvaput, zaboravit će se trenutno zaglavlje redaka za ovu ćeliju."
+
+msgid "Input Message is {title}: {message}"
+msgstr "ulazna poruka je {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "Ulazna poruka je {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"

@@ -11,11 +11,17 @@ Qué bi ha de Nuevo en o NVDA
 - S'ha adhibiu una opción t'anunciar o enfasi en o dialogo d'opcions de Formatiau de Documentos d'o NVDA. Enchegada por defecto, ixa opción permit a lo NVDA anunciar automaticament a existencia de texto enfatizau en os documentos. Por agora no ye suportau que t'as etiquetas em y strong en o modo de navegación ta l'Internet Explorer y atros controls MSHTML. (#4920)
 - A existencia de texto ficau y borrau s'anuncia agora en o modo de navegación ta l'Internet Explorer y atros controls MSHTML, si a opción d'o NVDA d'anunciar as revisións de l'editor ye activada. (#4920)
 - En veyer o seguimiento  de cambeos en a lista d'elementos d'o NVDA t'o Microsoft Word agora s'amuestra más información tal como qué propiedatz d'o formato han cambiau. (#4920)
+- Microsoft Excel: Agora ye posible listar y renombrar as fuellas dende a lista d'elementos d'o NVDA (NVDA+f7). (#4630, #4414)
+- Agora ye posible configurar si os simbolos reals se ninvian t'o sintetizador d'a fabla (p.eix. ta causar una aturada u cambeo en a entonación) en o dialogo de pronuncia de simbolos. (#5234)
+- En o Microsoft Excel o NVDA agora anuncia qualsiquier mensache de dentrada establiu por l'autor d'a fuella en as celdas. (#5051)
 
 
 == Cambeos ==
 - A opción d'anunciar as Revisions de l'editor en o dialogo d'opcions de formatiau de documentos d'o NVDA agora s'enchega por defecto. (#4920)
 - En mover-se-ne por os caracters en o Microsoft Word con a opción d'anunciar as revisions de l'editor d'o NVDA enchegada agora s'anuncia menos información  t'os cambeos de seguimiento, o que fa más eficient a navegación. Ta veyer a información extra fe servir a lista d'elementos. (#4920)
+- Esviellau o transcriptor braille liblouis ta 2.6.4. (#5341)
+- Quantos simbolos (incluindo simbolos matematicos basicos) se son movius t'o libel beluna ta que se leigan por defecto. (#3799)
+- Si o sintetizador lo suporta, agora a fabla habría de pausar-se t'os parenthesis y o guión curto (–). (#3799)
 
 
 == Corrección d'errors ==
@@ -26,6 +32,7 @@ Qué bi ha de Nuevo en o NVDA
  - Si activés ixo fendo servir una versión anterior d'o NVDA amenistarás desactivar-lo y activar-lo de nuevas en o dialogo d'opcions chenerals ta que o cambeo tienga efecto.
 - Milloras de rendimiento ta l'UI Automation incluindo explorador de fichers y visor de fainas. (#5293)
 - O NVDA agora cambia correctament t'o modo de foco en que se tabula ta controls read-only ARIA grid en o modo de navegación t'o Mozilla Firefox y atros controls basaus en Gecko. (#5118)
+- O NVDA agora anuncia correctament "no bi ha anterior" en cuenta de "no bi ha siguient" quan no bi ha más obchectos en  cluxir t'a cucha en una pantalla tactil.
 
 
 = 2015.3 =

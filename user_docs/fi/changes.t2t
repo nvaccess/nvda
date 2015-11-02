@@ -6,16 +6,24 @@
 = 2015.4 =
 
 == Uudet ominaisuudet ==
-- NVDA näkyy nyt Windows 8:n ja uudempien käyttöjärjestelmien Helppokäyttökeskuksessa. (#308)
+- NVDA näkyy nyt Windows 8:n ja uudempien Helppokäyttökeskuksessa. (#308)
 - Kun soluja siirretään Excelissä, muotoilumuutokset ilmoitetaan nyt automaattisesti, mikäli asianmukaiset asetukset on otettu käyttöön NVDA:n Asiakirjojen muotoiluasetukset -valintaikkunassa. (#4878)
 - NVDA:n Asiakirjojen muotoiluasetukset -valintaikkunaan on lisätty Ilmoita korostus -asetus. Tämän asetuksen avulla, joka on oletusarvoisesti käytössä, NVDA ilmoittaa automaattisesti asiakirjojen korostetun tekstin. Tätä tuetaan toistaiseksi vain em- ja strong-tageille selaustilassa Internet Explorerissa ja muissa MSHTML-säätimissä. (#4920)
 - Lisätty ja poistettu teksti ilmoitetaan nyt selaustilassa Internet Explorerissa ja muissa MSHTML-säätimissä, jos NVDA:n Lue muokkaajan muokkaukset -asetus on käytössä. (#4920)
 - Kun jäljitettäviä muutoksia katsotaan Microsoft Wordissa NVDA:n elementtilistassa, tietoja näytetään nyt enemmän, kuten esim. muutetut muotoilut. (#4920)
+- Microsoft Excel: laskentataulukoiden näyttäminen ja uudelleennimeäminen on nyt mahdollista NVDA:n Elementtilistasta (NVDA+F7). (#4630, #4414)
+- Symboleiden puhuminen -valintaikkunassa on nyt mahdollista määrittää, lähetetäänkö todelliset merkit syntetisaattoreille (esim. tauon pitämiseksi tai äänensävyn muuttamiseksi). (#5234)
+- NVDA lukee nyt Microsoft Excelissä laskentataulukon tekijän soluihin määrittämät syöttöilmoitukset. (#5051)
 
 
 == Muutokset ==
 - NVDA:n Asiakirjojen muotoiluasetukset -valintaikkunan Lue muokkaajan muokkaukset -asetus on nyt oletusarvoisesti käytössä. (#4920)
 - Kun Microsoft Wordissa liikutaan merkki kerrallaan NVDA:n Lue muokkaajan muokkaukset -asetuksen ollessa käytössä, tietoja luetaan nyt vähemmän muutoksia jäljitettäessä, mikä tekee tekstissä liikkumisesta tehokkaampaa. Käytä elementtilistaa lisätietojen näyttämiseen. (#4920)
+- Liblouis-pistekirjoituskääntäjä päivitetty versioksi 2.6.4. (#5341)
+
+- Useat symbolit (matemaattiset perusmerkit mukaan lukien) on siirretty jotain-tasolle, jotta ne puhutaan oletusarvoisesti. (#3799)
+- Puheessa pitäisi nyt kuulua tauko alku- ja loppusulkujen sekä lyhyen ajatusviivan (–) kohdalla, mikäli syntetisaattori tukee sitä. (#3799)
+
 
 == Korjatut ohjelmavirheet ==
 - Suorituskykyä paranneltu merkittävästi Outlook 2010:n/2013:n viestiluettelossa liikuttaessa. (#5268)
@@ -24,7 +32,8 @@
 - Kun NVDA on määritetty käynnistymään Windowsiin kirjautumisen jälkeen, se käynnistyy nyt paljon aiemmin Windows 8:ssa ja uudemmissa käyttöjärjestelmissä. (#308)
  - Jos olet ottanut tämän asetuksen käyttöön aiemmassa NVDA:n versiossa, sinun on poistettava se käytöstä ja otettava sitten uudelleen käyttöön Yleiset asetukset -valintaikkunassa, jotta muutos tulee voimaan.
 - UI Automation -rajapinnan suorituskykyä paranneltu mm. Resurssienhallinnassa ja Tehtävienhallinnassa. (#5293)
-- NVDA siirtyy nyt asianmukaisesti vuorovaikutustilaan liikuttaessa selaustilassa Sarkain-näppäimellä vain luku -tyyppisiin ARIA-ruudukkosäätimiin Mozilla Firefoxissa ja muissa Gecko-pohjaisissa sovelluksissa. (#5118)
+- NVDA siirtyy nyt asianmukaisesti vuorovaikutustilaan liikuttaessa selaustilassa Sarkain-näppäimellä vain luku -tyyppisten ARIA-ruudukkosäädinten kohdalle Mozilla Firefoxissa ja muissa Gecko-pohjaisissa sovelluksissa. (#5118)
+- NVDA ilmoittaa nyt asianmukaisesti "ei edellistä" virheellisen "ei seuraavaa" sijaan, kun objekteja ei ole enempää pyyhkäistäessä vasemmalle kosketusnäytöllä.
 
 
 = 2015.3 =
@@ -146,7 +155,7 @@ Tämän version keskeisimpiä ominaisuuksia ovat mm. selaustila Microsoft Word -
 - Kun Microsoft PowerPoint 2003:ssa muokataan tekstikentän sisältöä, NVDA lukee nyt oikein joka rivin sisällön. Aiemmin riveiltä jäi pois yksi merkki lisää aina jokaista uutta kappaletta kohti. (#4619)
 - Kaikki NVDA:n valintaikkunat ovat nyt näytöllä keskitettyinä, mikä parantaa visuaalista ulkoasua ja käytettävyyttä. (#3148)
 - Kun Skypen työpöytäversiossa kontaktia lisättäessä kirjoitetaan esittelyviestiä, kirjoittaminen ja tekstissä liikkuminen toimii nyt oikein. (#3661)
-- Jos Eclipse-kehitysympäristön puunäkymissä aiemmin aktiivisena ollut kohde on valintaruutu, sitä ei enää virheellisesti lueta kohdistuksen siirtyessä uuteen kohtaan. (#4586)
+- Jos Eclipse-kehitysympäristön puunäkymissä aiemmin aktiivisena ollut kohde on valintaruutu, sitä ei enää virheellisesti lueta kohdistuksen siirtyessä uuteen kohteeseen. (#4586)
 - Seuraava väärin kirjoitettu sana luetaan automaattisesti Microsoft Wordin kieliasun tarkistuksen valintaikkunassa, kun edellistä sanaa muutetaan tai kun se ohitetaan pikanäppäintä käyttäen. (#1938)
 - Tekstin lukeminen onnistuu taas moitteettomasti esim. Tera Term Pro:n pääteikkunassa ja Balabolkan asiakirjoissa. (#4229)
 - Kun tekstiä muokataan Internet Explorerissa ja muissa MSHTML-asiakirjoissa kehyksessä oltaessa, kohdistus palaa nyt asianmukaisesti muokattavana olevaan asiakirjaan viimeisteltäessä korean ja muiden itäaasialaisten kielten syöttämistä. (#4045)
@@ -193,7 +202,7 @@ Tämän version keskeisimpiä ominaisuuksia ovat mm. selaustila Microsoft Word -
 
 == Korjatut ohjelmavirheet ==
 - Kun kohdistus siirretään takaisin selaustila-asiakirjaan (esim. siirtymällä Alt+sarkain-näppäinyhdistelmällä jo avoimelle verkkosivulle), tarkastelukohdistin sijoitetaan oikein näennäiskohdistimen kohdalle aktiivisen säätimen (esim. lähellä olevan linkin) sijasta. (#4369)
-- Tarkastelukohdistin seuraa asianmukaisesti näennäiskohdistinta PowerPoint-diaesityksissä. (#4370)
+- Tarkastelukohdistin seuraa nyt asianmukaisesti näennäiskohdistinta PowerPoint-diaesityksissä. (#4370)
 - Aktiivisen alueen uusi sisältö luetaan Mozilla Firefoxissa ja muissa Gecko-pohjaisissa selaimissa, vaikka sisällöllä on käyttökelpoinen ARIA-live-määre, joka eroaa ylemmän tason aktiivisen alueen määreestä. Esim. assertive-määreellä merkitty sisältö lisätään polite-määreellä merkittyyn aktiiviseen alueeseen. (#4169).
 - Tapaukset, joissa asiakirjan sisällä on toinen asiakirja, eivät enää estä osan sisällön käyttöä (tarkemmin sanottuna sisäkkäisiä kehyksiä) Internet Explorerissa ja muissa MSHTML-säätimissä. (#4418)
 - NVDA ei enää kaadu yritettäessä käyttää joissakin tapauksissa Handy Tech -pistenäyttöä. (#3709)

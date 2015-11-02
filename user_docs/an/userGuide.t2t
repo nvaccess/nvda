@@ -540,7 +540,7 @@ O MathPlayer ye disponible como una descarga de baldes dende: http://www.dessci.
 
 O NVDA suporta as siguients menas de conteniu matematico:
 - MathML en o Mozilla Firefox y o Microsoft Internet Explorer.
-- Design Science MathType en o Microsoft Word y PowerPoint.
+- Design Science MathType en o Microsoft Word y PowerPoint. O MathType ameniste estar instalau ta que isto marche. A versión de preba en ye prou.
 - MathML en l'Adobe Reader. Nota que isto no ye un estandar oficial encara, allora no bi ha actualment software disponible publicament que pueda producir iste conteniu.
 -
 
@@ -586,7 +586,7 @@ O NVDA proporciona as suyas propias ordens extra ta qualques aplicacions ta fer 
 | Configurar a ringlera de capiters de columna | NVDA+mayus+c | Pretando isto una vegada diz a lo NVDA que ista ye a ringlera que contién capiters de columna, que habrían d'anunciar-se automaticament quan te'n muevas entre columnas por ista ringlera. Pretando-ne dos vegadas limpiará a opción. | 
 | Configurar a columna de capiters de ringlera | NVDA+mayus+r | Pretando isto una vegada  diz a lo NVDA que ista ye a columna que contién capiters de ringlera, que s'habrían d'anunciar automaticament  quan te'n muevas entre ringleras dimpués d'ista columna. Pretando-ne dos vegadas limpiará la opción. | 
 | Anunciar o comentario | NVDA+alt+c | Anuncia o comentario en a celda actual si bi'n ha belún. |
-| Dialogo de lista d'elementos | NVDA+f7 | Ubre o dialogo d'a lista d'elementos amostrando graficos, celdas con comentarios, u celdas con formulas. |
+| Dialogo de lista d'elementos | NVDA+f7 | Ubre o dialogo d'a lista d'elementos amostrando graficos, celdas con comentarios, celdas con formulas u fuellas. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -1173,12 +1173,23 @@ L'idioma que se ye editando a suya pronuncia  de simbolos s'amostrará en o tito
 Nota que iste dialogo respeta la opción "Confidar en l'idioma d'a voz en procesar caracters y simbolos" trobada en o [dialogo d'opcions d'a voz #VoiceSettings]; p.eix. Se fa servir l'idioma d'a voz en cuenta d'a opción d'idioma global d'o NVDA quan ista opción ye activada.
 
 Ta cambiar un simbolo, en primeras selecciona-lo en a lísta de Simbolos.
-O campo Reemplazar te permite cambiar o texto que habría de verbalizarse en cuenta d'iste simbolo.
-Fendo servir o campo libel, puetz achustar o libel mas baixo d'o simbolo ta como iste simbolo habría de charrar-se.
+
+- O campo Reemplazar te permite cambiar o texto que habría de charrar-se en cuenta d'iste simbolo.
+- Fendo servir o campo libel, puetz achustar o libel mas baixo d'o simbolo ta como iste simbolo habría de charrar-se.
+- O campo ninviar o simbolo real t'o sintetizador especifica quan habría de ninviar-se t'o sintetizador o simbolo (en contraste con a suya substitución) .
+Ixo ye util si o simbolo causa que o sintetizador se pause u cambie a entonación d'a voz.
+Por eixemplo una coma causa que o sintetizador se pause.
+Bi'n ha tres opcions:
+- nunca: Nunca no ninviar o simbolo real t'o sintetizador.
+ - siempre: Ninviar siempre o simbolo real t'o sintetizador.
+ - nomás por baixo  d'o libel d'os simbolos: Ninviar o simbolo real nomás si o libel de simbolos d'a fabla configurauye mas baixo que no lo libel establiu por iste simbolo.
+ Por eixemplo, podrías fer servir ixo ta que un simbolo tienga a suya substitución charrada en os libels mas altos sin pausar-se-ne mientras agún ye indicada con una pausa en os libels más baixos.
+ -
+-
 
 Puetz adhibir simbolos nuevos pretando lo botón Adhibir.
 En o dialogo que amaneixca introduz o simbolo y preta o botón Acceptar.
-Allora cambea o reemplazo y o libel t'o simbolo nuevo como lo ferías t'atros simbolos.
+Allora cambea os campos t'o simbolo nuevo como lo ferías t'atros simbolos.
 
 Puetz eliminar un simbolo que adhibiés anteriorment pretando lo botón Eliminar.
 
@@ -2102,16 +2113,7 @@ As siguients son as opcions d'a linia de comandos d'o NVDA:
 | Garra | --install | Instala o NVDA (rancando a copia recient instalada) |
 | Garra | --install-silent | Instala o NVDA silenciosament (no ranca la copia recient instalada) |
 
-++ Personalización Abanzada de Pronuncia de Simbolos ++
-Ye posible personalizar a pronuncia d'a puntuación y atros simbolos dillá d'o que puet fer-se emplegando o [dialogo Pronuncia de Puntuación y simbolos #SymbolPronunciation].
-Por eixemplo, puetz especificar si o simbolo dibuixau habría de ninviar-se t'o sintetizador (p. eix. ta causar una pausa u cambeo en a entonación) y puetz adhibir simbolos personalizaus. 
-
-Ta fer isto, has d'editar o fichero d'información de pronuncia de simbolos en o tuyo directorio de configuración d'usuario d'o NVDA.
-O fichero se diz symbols-xx.dic, an xx ye o codigo d'idioma.
-O formato d'iste fichero se documentó en a sección Symbol Pronunciation d'a Guida de Desembolique d'o NVDA, que ye disponible dende [a sección de Desembolique d'a pachina web d'o NVDA http://community.nvda-project.org/wiki/development].
-Por tanto, no ye posible t'os usuarios definir simbolos complexos. 
-
 + Información Adicional +
-Si requieres d'información adicional u asistencia respective a lo NVDA, por favor visita o puesto Web d'o NVDA en NVDA_URL.
+Si requiers d'información adicional u asistencia respective a lo NVDA, por favor visita o puesto Web d'o NVDA en NVDA_URL.
 Aquí puetz trobar documentación adicional, asinas como suporte tecnico y recursos d'a comunidat.
 Iste Puesto tamién proporciona información y recursos concernients a o desembolique d'o NVDA.

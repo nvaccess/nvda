@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 19:09+1000\n"
-"PO-Revision-Date: 2015-08-29 06:58+0200\n"
-"Last-Translator: Leonard de Ruijter <alderuijter@gmail.com>\n"
+"POT-Creation-Date: 2015-10-22 19:12+1000\n"
+"PO-Revision-Date: 2015-10-27 22:03+0100\n"
+"Last-Translator: Bart Simons <bart@bartsimons.be>\n"
 "Language-Team: Dutch <nvda-nl@googlegroups.com> (http://www.transifex.net/"
 "projects/p/nvda/language/nl/)\n"
 "Language: nl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.2\n"
+"X-Generator: Poedit 1.7.6\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1301,6 +1301,25 @@ msgstr "alle"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "karakter"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr ""
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr ""
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+#, fuzzy
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "symboolniveau %s"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -3079,6 +3098,18 @@ msgid "Toggles on and off the reporting of revisions"
 msgstr ""
 "Schakelt het uitspreken van aangebrachte wijzigingen in de tekst in en uit"
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "Nadruk niet melden"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "Nadruk melden"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "Schakelt het uitspreken van nadruk in en uit"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "kleuren niet melden"
@@ -4087,6 +4118,10 @@ msgstr ""
 "Gaat naar het volgende object in een platte weergave van de object navigatie "
 "hiërarchie"
 
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "Geen vorig"
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
@@ -4394,6 +4429,58 @@ msgid "numpad plus"
 msgstr "plus"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr ""
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr ""
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "numLock numpad 0"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "numLock numpad 1"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "numLock numpad 2"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "numLock numpad 3"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "numLock numpad 4"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "numLock numpad 5"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "numLock numpad 6"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "numLock numpad 7"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "numLock numpad 8"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "numLock numpad 9"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "invoegen"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "linker ctrl"
 
@@ -4657,14 +4744,55 @@ msgstr "achtergrond {backgroundColor}"
 msgid "line %s"
 msgstr "regel %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "ingevoegd"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "niet ingevoegd"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "Verwijderd"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "niet verwijderd"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "gewijzigd %s"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "niet gewijzigd"
+#, fuzzy, python-format
+msgid "no revised %s"
+msgstr "gewijzigd %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "Gemarkeerd"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "Niet gemarkeerd"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "vet"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "niet vet"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "benadrukt"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "Niet benadrukt"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -7148,6 +7276,11 @@ msgstr "Aangebrachte &wijzigingen in de tekst melden "
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "&Nadruk melden"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "&Stijl melden"
 
@@ -7375,6 +7508,11 @@ msgstr "Symbool"
 msgid "Level"
 msgstr "Niveau"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr ""
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "Symbool aanpassen"
@@ -7382,6 +7520,10 @@ msgstr "Symbool aanpassen"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "&Niveau"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr ""
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7541,6 +7683,11 @@ msgstr "&Opmerking"
 msgid "&Formula"
 msgstr "&Formule"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr ""
+
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
 msgstr "{start} tot en met {end}"
@@ -7605,6 +7752,12 @@ msgstr ""
 "Eenmaal drukken, stelt deze cel in als eerste rijhoofding voor alle cellen "
 "eronder en rechts ervan, binnen dit gebied. Tweemaal drukken vergeet de "
 "huidige rijhoofding voor deze cel."
+
+msgid "Input Message is {title}: {message}"
+msgstr ""
+
+msgid "Input Message is {message}"
+msgstr ""
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -8360,17 +8513,8 @@ msgstr "Tekstkader"
 msgid "comment: {text} by {author} on {date}"
 msgstr "opmerking: {text} door {author} op {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} door {author} op {date}"
-
-msgid "unknown author"
-msgstr "auteur onbekend"
-
-msgid "unknown date"
-msgstr "Datum onbekend"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} door {revisionAuthor} op {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text} door {author} op {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8542,6 +8686,18 @@ msgstr "HIMS Braille Sense/Braille EDGE serie"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "unrevised"
+#~ msgstr "niet gewijzigd"
+
+#~ msgid "unknown author"
+#~ msgstr "auteur onbekend"
+
+#~ msgid "unknown date"
+#~ msgstr "Datum onbekend"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType} door {revisionAuthor} op {revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "Geeft het object weer dat de focus heeft"

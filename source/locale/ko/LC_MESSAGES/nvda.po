@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 19:09+1000\n"
-"PO-Revision-Date: 2015-08-27 08:56-0800\n"
+"POT-Creation-Date: 2015-10-22 19:12+1000\n"
+"PO-Revision-Date: 2015-10-25 19:45-0800\n"
 "Last-Translator: Joseph Lee <joseph.lee22590@gmail,com>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -1298,6 +1298,25 @@ msgstr "모두"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "글자"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr ""
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr ""
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+#, fuzzy
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "기호 발음: %s"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -3071,6 +3090,18 @@ msgstr "문서 변경 추적 알림"
 msgid "Toggles on and off the reporting of revisions"
 msgstr "문서 변경 알림을 토글합니다"
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "텍스트 강조 알림 해제"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "텍스트 강조 알림 선택"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "텍스트 강조 알림을 토글합니다"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "문자 색깔 알림 해제"
@@ -4030,6 +4061,12 @@ msgid ""
 "hierarchy"
 msgstr "다음 갯체로 이동합니다. "
 
+# Reads, "no previous screen object."
+#. Translators: a message when there is no previous object when navigating
+#, fuzzy
+msgid "no previous"
+msgstr "이전 객체 없음"
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
@@ -4336,6 +4373,58 @@ msgid "numpad plus"
 msgstr "num패드 plus"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "numpad decimal"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "numpad insert"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "numLock numpad 0"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "numLock numpad 1"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "numLock numpad 2"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "numLock numpad 3"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "numLock numpad 4"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "numLock numpad 5"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "numLock numpad 6"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "numLock numpad 7"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "numLock numpad 8"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "numLock numpad 9"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "insert"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "왼쪽 control"
 
@@ -4598,14 +4687,55 @@ msgstr "{backgroundColor} 배경 색상"
 msgid "line %s"
 msgstr "줄 %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "삽입됨"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "삽입 않됨"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "삭제됨"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "삭제 않됨"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "내용 변경: %s됨"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "내용 변경 않됨"
+#, python-format
+msgid "no revised %s"
+msgstr "내용 변경: %s 않됩"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "마크됨"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "마크 없음시작 마크 설정됨"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "strong"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "strong 없음"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "강조됨"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "강조 없음"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -7057,6 +7187,11 @@ msgstr "문서 변경 추적 알림 (&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "텍스트 강조 알림 (&M)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "글꼴 스타일 알림 (&Y)"
 
@@ -7286,6 +7421,11 @@ msgstr "기호"
 msgid "Level"
 msgstr "레벨"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr ""
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "기호 변경"
@@ -7293,6 +7433,10 @@ msgstr "기호 변경"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "레벨 (&L)"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr ""
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7448,6 +7592,11 @@ msgstr "주석 (&O)"
 msgid "&Formula"
 msgstr "수식 (&F)"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "&Sheet"
+
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
 msgstr "{start} - {end}"
@@ -7510,6 +7659,12 @@ msgid ""
 msgstr ""
 "한번 누르면 특정 셀을 본 구역내의 및 또는 우측 셀의 행 머릿말 셀로 지정합니"
 "다. 두번 누르면 이 설정을 해제합니다."
+
+msgid "Input Message is {title}: {message}"
+msgstr ""
+
+msgid "Input Message is {message}"
+msgstr ""
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -8261,17 +8416,8 @@ msgstr "텍스트 프레임"
 msgid "comment: {text} by {author} on {date}"
 msgstr "주석: {text}; 저자: {author}; 날짜: {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType}: {text}; 저자: {author}; 날짜: {date}"
-
-msgid "unknown author"
-msgstr "글쓴이 알 수 없음"
-
-msgid "unknown date"
-msgstr "날짜 알 수 없음"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "리비전: {revisionType}; 저자: {revisionAuthor}; 날짜: {revisionDate}"
 
 #, python-format
 msgid "%g characters"
@@ -8433,6 +8579,19 @@ msgstr "HIMS 한소네/브레일 에지"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
+
+#~ msgid "unrevised"
+#~ msgstr "내용 변경 않됨"
+
+#~ msgid "unknown author"
+#~ msgstr "글쓴이 알 수 없음"
+
+#~ msgid "unknown date"
+#~ msgstr "날짜 알 수 없음"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr ""
+#~ "리비전: {revisionType}; 저자: {revisionAuthor}; 날짜: {revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "포커스된 객체를 알려줍니다."

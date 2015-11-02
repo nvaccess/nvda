@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-08 19:11+1000\n"
-"PO-Revision-Date: 2015-10-08 21:15+0200\n"
+"POT-Creation-Date: 2015-10-22 19:12+1000\n"
+"PO-Revision-Date: 2015-10-23 10:16+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -1297,6 +1297,24 @@ msgstr "kaikki"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "merkki"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "ei koskaan"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "aina"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "vain jos symbolitaso on alempi"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -4092,6 +4110,10 @@ msgid ""
 "hierarchy"
 msgstr ""
 "Siirtää seuraavaan objektiin objektinavigointihierarkian kokonaisnäkymässä"
+
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "Ei edellistä"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -7458,13 +7480,22 @@ msgstr "Symboli"
 msgid "Level"
 msgstr "Taso"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "Säilytä"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "Muuta symbolia"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
-msgstr "&Taso"
+msgstr "T&aso"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "&Lähetä todellinen merkki syntetisaattorille"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7624,6 +7655,11 @@ msgstr "K&ommentti"
 msgid "&Formula"
 msgstr "K&aava"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "T&aulukko"
+
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
 msgstr "väliltä {start} ja {end}"
@@ -7688,6 +7724,12 @@ msgstr ""
 "Kerran painaminen määrittää tämän solun ensimmäiseksi riviotsikoksi sen ala- "
 "ja oikealla puolella oleville soluille nykyisellä alueella. Kahdesti "
 "painaminen nollaa solun nykyisen riviotsikon."
+
+msgid "Input Message is {title}: {message}"
+msgstr "Syöttöilmoitus on {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "Syöttöilmoitus on {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"

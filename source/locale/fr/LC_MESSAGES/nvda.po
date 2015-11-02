@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-08 19:11+1000\n"
-"PO-Revision-Date: 2015-10-15 18:39+0100\n"
+"POT-Creation-Date: 2015-10-22 19:12+1000\n"
+"PO-Revision-Date: 2015-10-22 18:03+0200\n"
 "Last-Translator: Bachir BENANOU <ben_bach@yahoo.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.6\n"
+"X-Generator: Poedit 1.8.5\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -1299,6 +1299,24 @@ msgstr "tous"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "caractère"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "jamais"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "toujours"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "seulement au-dessous du niveau de symbole"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -4086,6 +4104,10 @@ msgid ""
 msgstr ""
 "Aller à l'objet suivant dans une représentation à plat de la hiérarchie de "
 "l'objet de navigation"
+
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "Pas de précédent"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -7476,6 +7498,11 @@ msgstr "Symbole"
 msgid "Level"
 msgstr "Niveau"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "Préserver"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "Changer le symbole"
@@ -7483,6 +7510,10 @@ msgstr "Changer le symbole"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "&Niveau"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "~&Envoyer le symbole réel au synthétiseur"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7643,6 +7674,11 @@ msgstr "C&ommentaire"
 msgid "&Formula"
 msgstr "&Formule"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "&Feuille"
+
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
 msgstr "{start} à {end}"
@@ -7708,6 +7744,12 @@ msgstr ""
 "Un appui définira cette cellule comme premier titre de ligne pour toutes les "
 "cellules situées en dessous et à droite dans cette région. Deux appuis "
 "supprimeront le titre de ligne en cours pour cette cellule."
+
+msgid "Input Message is {title}: {message}"
+msgstr "Le Message d'Entrée est {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "Le Message d'Entrée est {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-08 19:11+1000\n"
+"POT-Creation-Date: 2015-10-22 19:12+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jorge Pérez Pérez <jorgtum@gmail.com>\n"
 "Language-Team: Softaragonés\n"
@@ -1297,6 +1297,24 @@ msgstr "toda"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "caracter"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "nunca"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "siempre"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "nomás por baixo d'o libel d'os simbol'os"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -4096,6 +4114,10 @@ msgid ""
 msgstr ""
 "Se'n mueve t'o siguient obchecto en una anvista plana d'a hierarquía de "
 "navegación d'obchectos"
+
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "no bi ha anterior"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -7479,6 +7501,11 @@ msgstr "Simbolo"
 msgid "Level"
 msgstr "Libel"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "preservar"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "Cambiar o simbolo"
@@ -7486,6 +7513,10 @@ msgstr "Cambiar o simbolo"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "&Libel"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "Ninviar o &simbolo real t'o sintetizador"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7645,6 +7676,11 @@ msgstr "C&omentario"
 msgid "&Formula"
 msgstr "&Formula"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "&Fuella"
+
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
 msgstr "{start} dica {end}"
@@ -7709,6 +7745,12 @@ msgstr ""
 "Pretar-ne una vegada establirá ista celda como o primer capitero de ringlera "
 "ta cualsiquier celda abaixo y ta la dreita d'ella adintro d'ista rechión. "
 "Pretar-ne dos vegadas ixublidará o capitero de ringlera actual ta ista celda."
+
+msgid "Input Message is {title}: {message}"
+msgstr "O mensache de dentrada ye {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "O mensache de dentrada ye {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"

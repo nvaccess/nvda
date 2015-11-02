@@ -540,7 +540,7 @@ Se on ladattavissa ilmaiseksi osoitteesta http://www.dessci.com/en/products/math
 
 NVDA tukee seuraavia matemaattisia sisältöjä:
 - MathML Mozilla Firefoxissa ja Microsoft Internet Explorerissa.
-- Design Science MathType Microsoft Wordissa ja PowerPointissa.
+- Design Science MathType Microsoft Wordissa ja PowerPointissa. MathTypen on oltava asennettuna, jotta tämä toimii. Kokeiluversio riittää.
 - MathML Adobe Readerissa. HUOM: Tämä ei ole vielä virallinen standardi, joten tätä sisältöä tuottavaa ohjelmistoa ei ole julkisesti saatavilla.
 -
 
@@ -586,7 +586,7 @@ NVDA:ssa on joillekin sovelluksille omia lisäkomentoja tiettyjen tehtävien hel
 | Määritä sarakeotsikot | NVDA+Shift+C | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen solu on ensimmäinen otsikkosolu rivillä, joka sisältää sarakeotsikoita, jotka luetaan automaattisesti liikuttaessa sarakkeiden välillä kyseisen rivin alapuolella. Kahdesti painaminen nollaa tämän asetuksen. | 
 | Määritä riviotsikot | NVDA+Shift+R | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen solu on ensimmäinen otsikkosolu sarakkeessa, joka sisältää riviotsikoita, jotka luetaan automaattisesti liikuttaessa rivien välillä kyseisen sarakkeen oikealla puolella. Kahdesti painaminen nollaa tämän asetuksen. | 
 | Lue kommentti | NVDA+Alt+C | Lukee nykyisessä solussa olevan kommentin. Jos kommenttia ei ole, siitä ilmoitetaan. |
-| Elementtilista-valintaikkuna | NVDA+F7 | Avaa Elementtilista-valintaikkunan, joka näyttää kaaviot sekä kommentteja tai kaavoja sisältävät solut. |
+| Elementtilista-valintaikkuna | NVDA+F7 | Avaa Elementtilista-valintaikkunan, joka näyttää kaaviot, kommentteja ja kaavoja sisältävät solut, tai laskentataulukot. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -1173,12 +1173,23 @@ Kieli, jonka symboleiden puhumista muokataan, näytetään valintaikkunan otsiko
 HUOM: Tässä noudatetaan  [Puheäänen asetukset -valintaikkunan #VoiceSettings] "Käytä puheäänen kieltä merkkejä ja symboleita käsiteltäessä" -asetusta, ts. kun asetus on käytössä, puheäänen kieltä käytetään NVDA:n kielen sijaan.
 
 Symbolia muutetaan valitsemalla se Symbolit-listasta.
-Korvaava teksti -kentässä voit muuttaa tekstiä, joka puhutaan kyseisen symbolin sijasta.
-Taso-yhdistelmäruudussa voit säätää alimman tason, jolla symboli puhutaan.
+
+- Korvaava teksti -muokkauskentässä voit muuttaa tekstiä, joka puhutaan kyseisen symbolin sijasta.
+- Taso-yhdistelmäruudusta voit säätää alimman tason, jolla symboli puhutaan.
+- Lähetä todellinen merkki syntetisaattorille -yhdistelmäruudusta voidaan määrittää, milloin itse symboli (vastakohtana sen korvaavalle tekstille) lähetetään syntetisaattorille.
+Tästä on hyötyä, jos symboli saa syntetisaattorin pitämään tauon tai muuttamaan äänensävyä.
+Esimerkiksi pilkku saa syntetisaattorin pitämään tauon.
+Vaihtoehtoja on kolme:
+ - ei koskaan: Älä koskaan lähetä todellista merkkiä syntetisaattorille.
+ - aina: Lähetä aina todellinen merkki syntetisaattorille.
+ - vain jos symbolitaso on alempi: Lähetä todellinen merkki vain, jos määritetty puheen symbolitaso on alempi kuin kyseiselle symbolille määritetty.
+Voit käyttää tätä esim. siten, että symbolin korvaava teksti puhutaan korkeammilla tasoilla ilman taukoja, mutta alemmilla tasoilla tauot kuitenkin kuuluvat.
+ -
+-
 
 Lisää uusia symboleita painamalla Lisää-painiketta.
 Kirjoita symboli avautuvaan valintaikkunaan ja paina OK.
-Muuta tämän jälkeen sen korvaava teksti ja taso kuten muillekin symboleille.
+Muuta sitten korvaava teksti- ja taso haluamiksesi kuten muillekin symboleille.
 
 Poista aiemmin lisäämäsi symboli painamalla Poista-painiketta.
 
@@ -2095,21 +2106,12 @@ Seuraavassa on lista NVDA:n komentorivivalitsimista:
 | -f LOKITIEDOSTO | --log-file=LOKITIEDOSTO | Tiedosto, johon lokiviestit tallennetaan. |
 | -l LOKITASO | --log-level=LOKITASO | Alin taso, jonka ilmoitukset tallennetaan lokiin (10 = virheenkorjaus, 20 = tiedot, 30 = varoitus, 40 = virhe, 50 = kriittinen). Oletustasona on varoitus. |
 | -c ASETUSPOLKU | --config-path=ASETUSPOLKU | Hakemistopolku, johon kaikki NVDA:n asetukset tallennetaan. |
-| -m | --minimal | Ei ääniä, ei käyttöliittymää, ei käynnistysilmoitusta jne. |
+| -m | --minimal | Ei ääniä, käyttöliittymää, käynnistysilmoitusta jne. |
 | -s | --secure | Suojattu tila (poistaa käytöstä Python-konsolin). |
 | Ei mitään | --disable-addons | Poistaa lisäosat käytöstä. |
 | Ei mitään | --no-sr-flag | Ei muuta järjestelmänlaajuista ruudunlukuohjelmalippua. |
 | Ei mitään | --install | Asentaa NVDA:n ja käynnistää asennetun kopion. |
 | Ei mitään | --install-silent | Asentaa NVDA:n ilman kehotteita ja asennetun kopion käynnistämistä. |
-
-++ Symboleiden puhumisen lisämukauttaminen ++
-Välimerkkien ja muiden symboleiden lukutapaa voidaan mukauttaa enemmänkin kuin mitä [Välimerkkien ja symboleiden puhuminen #SymbolPronunciation] -valintaikkunassa on mahdollista.
-Voidaan esimerkiksi määrittää, lähetetäänkö symboli syntetisaattorille sellaisenaan (esim. tauon tai äänensävyn muutoksen aikaansaamiseksi) ja lisätä omia symboleita.
-
-Tämä tehdään muokkaamalla NVDA:n käyttäjän asetushakemistossa olevaa symbolitiedostoa.
-Tiedosto on nimeltään symbols-xx.dic, jossa xx on kielikoodi.
-Tiedoston muoto on dokumentoitu Symbol pronunciation -kappaleessa kehittäjän oppaassa, joka on luettavissa [NVDA:n verkkosivuston Development-osiossa http://community.nvda-project.org/wiki/Development].
-Monimutkaisten symboleiden määrittäminen ei ole kuitenkaan mahdollista.
 
 + Lisätietoja +
 Mikäli tarvitset lisätietoja tai neuvoja NVDA:han liittyen, käy  sen verkkosivustolla osoitteessa NVDA_URL.

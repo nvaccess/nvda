@@ -540,7 +540,7 @@ MathPlayer uygulamasını aşağıdan ücretsiz olarak indirebilirsiniz: http://
 
 NVDA supports the following types of mathematical content:
 - MathML in Mozilla Firefox and Microsoft Internet Explorer.
-- Design Science MathType in Microsoft Word and PowerPoint.
+- Design Science MathType in Microsoft Word and PowerPoint. MathType needs to be installed in order for this to work. The trial version is sufficient..
 - MathML in Adobe Reader. Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
 -
 
@@ -586,7 +586,7 @@ NVDA çeşitli işlemlerin yapılmasını kolaylaştırmak ya da ekran okuyucu k
 | Sütun başlıklarını ayarla | NVDA+shift+c | Bir kez basıldığında mevcut satır sütun başlığı olarak ayarlanır ve sütunlar arasında dolaşılırken ayarlanan satırdaki bilgi otomatik olarak seslendirilir. İki kez basıldığında ayar sıfırlanır. | 
 | Satır başlıklarını ayarla | NVDA+shift+r | Bir kez basıldığında mevcut sütun satır başlığı olarak ayarlanır ve satırlar arasında dolaşılırken ayarlanan sütundaki bilgi otomatik olarak seslendirilir. İki kez basıldığında ayar sıfırlanır. | 
 | Açıklamayı oku | NVDA+Alt+c | Varsa imlecin bulunduğu hücredeki açıklamayı okur. | 
-| Öge listesi iletişim kutusu | NVDA+f7 | Grafik, açıklama içeren hücreler ve formül barındıran hücrelerden oluşan ögeleri listeleyen iletişim kutusunu açar. |
+| Öge listesi iletişim kutusu | NVDA+f7 | Grafik, açıklama içeren hücreler ve formül barındıran hücre ve sayfalardan oluşan ögeleri listeleyen iletişim kutusunu açar. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -1173,8 +1173,19 @@ Noktalama/imla telaffuzu iletişim kutusunun başlığında, düzenlemenin hangi
 Bu iletişim kutusunun , [Ses ayarları iletişim kutusunda #VoiceSettings] bulunan "Karakter ve sembolleri işlerken sentezleyici ve sesin diline güven" ayarını dikkate alacağını not edin; yani, bu seçenek işaretliyse, NVDA dili yerine seçili sentezleyicinin dili dikkate alınır.
 
 Önce semboller listesinden değişiklik yapmak istediğiniz sembol/işareti bulun.
+
 Olarak değiştir alanı, NVDA'nın sözkonusu işaretle karşılaştığında ne demesi gerektiğini belirlemenizi sağlar.
 Düzey alanı ise, işaretin seslendirilmesini istediğiniz en düşük imla seslendirme düzeyini belirlemenize imkan verir.
+- Sentezleyiciye asıl sembolü gönder alanı sembol için belirlenen seslendirme değeri yerine sentezleyiciye sembolün kendisinin gönderilmesini sağlar.
+Bu, sembolün sentezleyicinin duraksamasına ya da tonlamayı değiştirmesine neden olan bir sembol olması halinde faydalı olabilir.
+Örneğin, virgül işareti sentezleyicinin duraksamasına yol açar.
+Üç seçenek bulunmaktadır:
+ - hiçbir zaman: Asıl sembolü hiçbir zaman sentezleyiciye gönderme.
+ - her zaman: Asıl sembolü her zaman sentezleyiciye gönder.
+ - Yalnızca noktalama / imla seslendirme düzeyinin altındaysa: Asıl sembolü sentezleyiciye, noktalama / imla seslendirme seviyesi buradakinden daha düşük seviyede ayarlanmışsa gönder.
+ Örneğin, noktalama / imla seslendirme düzeyinden yüksek olarak ayarlanması halinde sembolün olarak değiştir alanındaki ifade kullanılarak seslendirilmesini, aksi halde bu sembolün sentezleyicinin konuşmasında duraksamaya neden olması sonucunda bu sembolün varlığının belirtilmesini sağlayabilirsiniz.
+ -
+-
 
 Ekle düğmesine basarak yeni işaretler ekleyebilirsiniz.
 Açılacak iletişim kutusunda, işareti girin ve tamam düğmesine basın.

@@ -11,11 +11,17 @@
 - A Report Emphasis option has been added to NVDA's Document formatting settings dialog. On by default, this option allows NVDA to automatically report the existance of emphasised text in documents. So far this is only supported for em and strong tags in Browse Mode for Internet Explorer and other MSHTML controls. (#4920)
 - The existance of inserted and deleted text is now reported in Browse Mode for Internet Explorer and other MSHTML controls, if NVDA's Report Editor Revisions option is enabled. (#4920)
 - When viewing track changes in NVDA's Elements List for Microsoft Word, more information such as what formatting properties were changed is now displayed. (#4920)
+- Microsoft Excel: listing and renaming of sheets is now possible from NVDA's Elements List (NVDA+f7). (#4630, #4414)
+- It is now possible to configure whether actual symbols are sent to speech synthesizers (e.g. to cause a pause or change in inflection) in the Symbol Pronunciation dialog. (#5234)
+- In Microsoft Excel, NVDA now reports any input messages set by the sheet author on cells. (#5051)
 
 
 == Changes ==
 - The Report Editor Revisions option in NVDA's Document formatting settings dialog is now turned on by default. (#4920)
 - When moving by character in Microsoft Word with NVDA's Report Editor Revisions option enabled, less information is now reported for track changes, which makes navigation more efficient. To view the extra information, use the Elements List. (#4920)
+- Updated liblouis braille translator to 2.6.4. (#5341)
+- Several symbols (including basic mathematical symbols) have been moved to level some so that they are spoken by default. (#3799)
+- If the synthesizer supports it, speech should now pause for parentheses and the en dash (–). (#3799)
 
 
 == Bug Fixes ==
@@ -24,17 +30,18 @@
 - Fixed the visual appearance of the buttons in the warning dialog which is displayed when you attempt to downgrade NVDA. (#5325)
 - In Windows 8 and later, NVDA now starts a lot earlier when configured to start after logging on to Windows. (#308)
  - If you enabled this using a previous version of NVDA, you will need to disable it and enable it again in the General Settings dialog for the change to take effect.
-- Performance enhansements for UI Automation including  File Explorer and Task Viewer. (#5293)
+- Performance enhancements for UI Automation including  File Explorer and Task Viewer. (#5293)
 - NVDA now correctly switches to focus mode when tabbing to read-only ARIA grid controls in Browse Mode for Mozilla Firefox and other Gecko-based controls. (#5118)
- 
+- NVDA now correctly reports "no previous" instead of "no next" when there are no more objects when flicking left on a touch screen.
+
 
 = 2015.3 =
 Highlights of this release include initial support for Windows 10; the ability to disable single letter navigation in browse mode (useful for some web apps); improvements in Internet Explorer; and fixes for garbled text when typing in certain applications with braille enabled.
 
 
 == New Features ==
-- The existance of spelling errors is announced in editable fields for Internet Explorer and other MSHTML controls. (#4174)
-- Many more unicode math symbols are now spoken when they appear in text. (#3805)
+- The existence of spelling errors is announced in editable fields for Internet Explorer and other MSHTML controls. (#4174)
+- Many more Unicode math symbols are now spoken when they appear in text. (#3805)
 - Search suggestions in the Windows 10 start screen are automatically reported. (#5049)
 - Support for the EcoBraille 20, EcoBraille 40, EcoBraille 80 and EcoBraille Plus braille displays. (#4078)
 - In browse mode, you can now toggle single letter navigation on and off by pressing NVDA+shift+space. When off, single letter keys are passed to the application, which is useful for some web applications such as Gmail, Twitter and Facebook. (#3203)
@@ -149,7 +156,7 @@ Highlights of this release include browse mode for documents in Microsoft Word a
 - When editing the content of a text box in Microsoft PowerPoint 2003, NVDA will correctly report the content of each line. Previously, in each paragraph, lines would increasingly be off by one character. (#4619)
 - All of NVDA's dialogs are now centred on the screen, improving visual presentation and usability. (#3148)
 - In Skype for desktop, when entering an introductory message to add a contact, entering and moving through the text now works correctly. (#3661)
-- When focus moves to a new itemn in tree views in the Eclipse IDE, if the previously focused item is a check box, it is no longer incorrectly announced. (#4586)
+- When focus moves to a new item in tree views in the Eclipse IDE, if the previously focused item is a check box, it is no longer incorrectly announced. (#4586)
 - In the Microsoft Word spell check dialog, the next error will be automatically reported when the last one has been changed or ignored using respective shortcut keys. (#1938)
 - Text can again be read correctly in places such as Tera Term Pro's terminal window and documents in Balabolka. (#4229)
 - Focus now correctly returns to the document being edited When finishing input composition of text in Korean and other east Asian languages while editing within a frame in Internet Explorer and other MSHTML documents. (#4045)
@@ -190,13 +197,13 @@ Highlights of this release include browse mode for documents in Microsoft Word a
 - If an object you have moved to with object navigation is inside a browse mode document, but the object you were on previously was not, the review mode is automatically set to document. Previously, this only happened if the navigator object was moved due to the focus changing. (#4369)
 - The Braille display and Synthesizer lists in the respective settings dialogs are now alphabetically sorted except for No braille/No speech, which are now at the bottom. (#2724)
 - Updated liblouis braille translator to 2.6.0. (#4434, #3835)
-- In browse mode, pressing e and shift+e to navigate to edit fields now includes editable combo boxes. This includes the search box in the latest versionn of Google Search. (#4436)
+- In browse mode, pressing e and shift+e to navigate to edit fields now includes editable combo boxes. This includes the search box in the latest version of Google Search. (#4436)
 - Clicking the NVDA icon in the Notification Area with the left mouse button now opens the NVDA menu instead of doing nothing. (#4459)
 
 
 == Bug Fixes ==
 - When moving focus back to a browse mode document (e.g. alt+tabbing to an already opened web page), the review cursor is properly positioned at the virtual caret, rather than the focused control (e.g. a nearby link). (#4369)
-- In Powerpoint slide shows, the review cursor correctly follows the virtual caret. (#4370)
+- In PowerPoint slide shows, the review cursor correctly follows the virtual caret. (#4370)
 - In Mozilla Firefox and other Gecko-based browsers, new content within a live region will be announced even if the new content has a usable ARIA live type different to the parent live region; e.g. when content marked as assertive is added to a live region marked as polite. (#4169)
 - In Internet Explorer and other MSHTML controls, some cases where a document is contained within another document no longer prevent the user from accessing some of the content (specifically, framesets inside framesets). (#4418)
 - NVDA no longer crashes when attempting to use a Handy Tech braille display in some cases. (#3709)

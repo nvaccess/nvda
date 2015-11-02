@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-08 19:11+1000\n"
-"PO-Revision-Date: 2015-10-18 11:26+0800\n"
+"POT-Creation-Date: 2015-10-22 19:12+1000\n"
+"PO-Revision-Date: 2015-10-26 12:42+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -1297,6 +1297,24 @@ msgstr "Все"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "Символ"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "Никогда"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "Всегда"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "Только если уровень символа ниже уровня пунктуации"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -4076,6 +4094,10 @@ msgid ""
 msgstr ""
 "Переходит к следующему объекту иерархии объектной навигации в режиме "
 "просмотра экрана"
+
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "нет предыдущего"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -7470,6 +7492,11 @@ msgstr "Символ"
 msgid "Level"
 msgstr "Уровень"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "Передавать синтезатору"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "Изменить символ"
@@ -7477,6 +7504,10 @@ msgstr "Изменить символ"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "&Уровень"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "Передавать &фактический символ на синтезатор"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7633,6 +7664,11 @@ msgstr "&Комментарии"
 msgid "&Formula"
 msgstr "&Формулы"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "&Лист"
+
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
 msgstr "{start} по {end}"
@@ -7700,6 +7736,12 @@ msgstr ""
 "Одиночное нажатие указывает NVDA, что этот столбец содержит заголовки для "
 "строк, которые автоматически читаются при перемещении по строкам за этим "
 "столбцом. Двойное нажатие сбрасывает установку."
+
+msgid "Input Message is {title}: {message}"
+msgstr "Сообщение для ввода {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "Сообщение для ввода {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
