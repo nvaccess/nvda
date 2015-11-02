@@ -6,16 +6,22 @@ Qué hay de Nuevo en NVDA
 = 2015.4 =
 
 == Nuevas Características ==
-- NVDA ahora aparece en el Centro de Acceso Fácil en Windows 8 y posterior. (#308)
+- NVDA ahora aparece en el Centro de Accesibilidad en Windows 8 y posterior. (#308)
 - Al moverse por celdas en Excel, los cambios de formato ahora se anuncian automáticamente si se activaron las opciones apropiadas en las opciones del diálogo Formato de Documento de NVDA. (#4878)
-- Se ha añadido una opción Anunciar Destacado al diálogo Opciones de Formato de Documento de NVDA. Activada por omisión, esta opción permite a NVDA anunciar automáticamente la existencia de texto destacado en documentos. Hasta ahora sólo está soportado para las etiquetas em y strong en modo exploración para Internet Explorer y otros controles MSHTML. (#4920)
+- Se ha añadido una opción Anunciar Énfasis al diálogo Opciones de Formato de Documento de NVDA. Activada por omisión, esta opción permite a NVDA anunciar automáticamente la existencia de texto destacado en documentos. Hasta ahora sólo está soportado para las etiquetas em y strong en modo exploración para Internet Explorer y otros controles MSHTML. (#4920)
 - La existencia de texto insertado y eliminado ahora se anuncia en modo exploración para Internet Explorer y otros controles MSHTML, si la opción Anunciar Revisión del Editor de NVDA está activada. (#4920)
 - Al ver seguimiento de cambios en la lista de elementos de NVDA para Microsoft Word, ahora se muestra más información tal como qué propiedades de formato se cambiaron. (#4920)
+- Microsoft Excel: ahora es posible listar y renombrar hojas desde la Lista de Elementos de NVDA (NVDA+f7). (#4630, #4414)
+- Ahora es posible configurar si los símbolos actuales se envían a los sintetizadores de voz (ej.: para causar una pausa o para cambiar la entonación) en el diálogo Pronunciación de Símbolos. (#5234)
+- En Microsoft Excel, NVDA ahora anuncia cualquier mensaje de entrada puesto por el autor de la hoja en las celdas. (#5051)
 
 
 == Cambios ==
 - La opción Anunciar Revisiones del Editor en el diálogo Opciones de Formato de documento de NVDA ahora se activa por omisión. (#4920)
 - Al moverse por carácteres en Microsoft Word con la opción de NVDA Anunciar Vevisiones del Editor, ahora se anuncia menos información para seguimiento de cambios, lo cual hace la navegación más eficiente. To view the extra information, use the Elements List. (#4920)
+- Actualizado el transcriptor braille liblouis translator  a 2.6.4. (#5341)
+- Varios símbolos (incluyendo símbolos básicos matemáticos) se han movido al nivel some tal que sean verbalizados por omisión. (#3799)
+- Si el sintetizador lo soporta, la voz ahora debería pausar para los paréntesis y el guión final (–). (#3799)
 
 
 == Corrección de fallos ==
@@ -26,6 +32,7 @@ Qué hay de Nuevo en NVDA
  - Si habilitaste esto utilizando una versión anterior  de NVDA, necesitarás deshabilitarlo y habilitarlo de nuevo en el diálogo  Opciones Generales para que el cambio tenga efecto.
 - Mejoras de rendimiento para UI Automation incluyendo Explorador de Archivos y Visualizador de Tareas. (#5293)
 - NVDA ahora cambia correctamente a modo foco cuando se tabula a controles read-only ARIA grid en modo Exploración para Mozilla Firefox y otros controles basados en Gecko. (#5118)
+- NVDA ahora anuncia correctamente "no hay anterior" en lugar de "no hay siguiente" cuando no hay más objetos al hacerse clic izquierdo en una pantalla táctil.
 
 
 = 2015.3 =

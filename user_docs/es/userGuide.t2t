@@ -540,7 +540,7 @@ MathPlayer está disponible como una descarga gratuita desde: http://www.dessci.
 
 NVDA soporta los siguientes tipos de contenidos matemáticos:
 - MathML en Mozilla Firefox y Microsoft Internet Explorer.
-- Design Science MathType en Microsoft Word y PowerPoint.
+- Design Science MathType en Microsoft Word y PowerPoint. MathType necesita estar instalado para que esto funcione. La versión trial es suficiente.
 - MathML en Adobe Reader. Ten en cuenta que esto no es un estándar official aún, así que no hay actualmente software disponible al público que pueda producir este contenido.
 -
 
@@ -586,7 +586,7 @@ NVDA proporciona sus propias órdenes extra para algunas aplicaciones para hacer
 | Fijar encabezado de columnas | NVDA+shift+c | Al pulsar esto una vez le dice a NVDA que es la primera celda de encabezado de la fila que contiene los encabezados de columna, que debería ser anunciado automáticamente cuando te desplaces entre las columnas por debajo de esta fila. Pulsando dos veces se eliminará la opción. | 
 | Fijar encabezado de filas | NVDA+shift+r | Al pulsar esto una vez le dice a NVDA que es la primera celda del encabezado de la columna que contiene los encabezados de fila, que debería ser anunciado automáticamente cuando te desplaces entre las filas después de esta columna. Pulsando dos veces eliminarás la opción. | 
 | Anunciar comentario | NVDA+alt+c | Anuncia el comentario en la celda actual si lo hay. |
-| Diálogo Lista de Elementos | NVDA+f7 | abre el diálogo Lista de Elementos mostrando gráficos, celdas con comentarios, o celdas con fórmulas. |
+| Diálogo Lista de Elementos | NVDA+f7 | abre el diálogo Lista de Elementos mostrando gráficos, celdas con comentarios, celdas con fórmulas u Hojas. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -1104,7 +1104,7 @@ Puedes configurar el anunciado de:
 - Alineación del texto
 - Colores
 - Revisiones del editor
-- Destacar
+- Énfasis
 - Estilo del texto
 - Errores de ortografía
 - Números de página
@@ -1173,12 +1173,23 @@ El idioma cuya pronunciación de símbolo vaya a ser editada se mostrará en el 
 Ten en cuenta que este diálogo respeta la opción "Confiar en el Idioma de la voz al procesar símbolos y caracteres" que se encuentra en el [diálogo Opciones de Voz #VoiceSettings]; es decir, utiliza el idioma de la voz en lugar de la opción del idioma global de NVDA cuando esta opción esté habilitada.
 
 Para cambiar un símbolo, primero selecciónalo en la lísta de Símbolos.
-El campo Reemplazar te permite cambiar el texto que debería verbalizarse en lugar de este símbolo.
-Utilizando el campo Nivel, puedes ajustar el nivel más bajo del símbolo al cual este símbolo debería verbalizarse.
+
+- El campo Reemplazar te permite cambiar el texto que debería verbalizarse en lugar de este símbolo.
+- Utilizando el campo Nivel, puedes ajustar el nivel más bajo del símbolo al cual este símbolo debería verbalizarse.
+- El campo Enviar símbolo actual al sintetizador especifica cuando el propio símbolo (en contraposición con su reemplazo) debería enviarse al sintetizador.
+Esto es útil si el símbolo causa que el sintetizador haga una pausa o cambie la entonación de la voz.
+Por ejemplo, una coma causa que el sintetizador haga una pausa.
+Hay tres opciones:
+ - nunca: nunca envía el símbolo actual al sintetizador.
+ - Siempre: envía siempre el símbolo actual al sintetizador.
+ - sólo bajo Nivel de los símbolos: Envía el símbolo actual sólo si el nivel de voz de símbolo configurado es más bajo que el nivel puesto por este símbolo.
+ Por ejemplo, podrías utilizar esto tal que un símbolo tendrá su reemplazo verbalizado en niveles más altos sin pausar, mientras todavía esté indicado con una pausa en los niveles más bajos.
+ -
+-
 
 Puedes añadir símbolos nuevos pulsando el botón Añadir.
 En el diálogo que aparezca, introduce el símbolo y pulsa el botón Aceptar.
-Entonces, cambia el reemplazo y el nivel para el símbolo nuevo como lo harías para otros símbolos.
+Entonces, cambia los campos para el símbolo nuevo como lo harías para otros símbolos.
 
 Puedes eliminar un símbolo que añadiste anteriormente pulsando el botón Eliminar.
 
@@ -2101,15 +2112,6 @@ Seguidamente van las opciones de línea de órdenes para NVDA:
 | None | --no-sr-flag  | No cambia la bandera global de sistema del lector de pantalla |
 | None | --install | Se instala NVDA iniciando la nueva copia instalada |
 | None | --install-silent | Instala en silencio NVDA (No inicia la nueva copia instalada) |
-
-++ Personalización Avanzada de Pronunciación de Símbolos ++
-Es posible personalizar la pronunciación de la puntuación y otros símbolos más allá de lo que puede hacerse utilizando el [diálogo Pronunciación de Puntuación y símbolos #SymbolPronunciation].
-Por ejemplo, puedes especificar si el símbolo dibujado debería enviarse al sintetizador (ej. para causar una pausa o cambio en la entonación) y puedes añadir símbolos personalizados. 
-
-Para hacer esto, debes editar el fichero de información de pronunciación de símbolos en tu directorio de configuración de usuario de NVDA.
-El fichero se llama symbols-xx.dic, donde xx es el código de idioma.
-El formato de este fichero se documentó en la sección Symbol Pronunciation de la Guía de Desarrollo de NVDA, que está disponible desde [la sección de Desarrollo de la página web de NVDA http://community.nvda-project.org/wiki/Development].
-Por lo tanto, no es posible para los usuarios definir símbolos complejos. 
 
 + Información Adicional +
 Si requieres de información adicional o asistencia con respecto a NVDA, por favor visita el sitio Web de NVDA en NVDA_URL.
