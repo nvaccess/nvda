@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-08 19:11+1000\n"
-"PO-Revision-Date: 2015-10-13 23:03+0900\n"
+"POT-Creation-Date: 2015-10-22 19:12+1000\n"
+"PO-Revision-Date: 2015-10-24 15:08+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -1295,6 +1295,24 @@ msgstr "すべて読み上げ"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "文字"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "送らない"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "必ず送る"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "読み置換しない場合に送る"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -4021,6 +4039,10 @@ msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
 msgstr "オブジェクトナビゲーション階層のフラットビューで次のオブジェクトに移動"
+
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "前のオブジェクトなし"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -7361,6 +7383,11 @@ msgstr "記号"
 msgid "Level"
 msgstr "最低読み上げレベル"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "音声エンジンに記号を送る"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "読み方を変更"
@@ -7368,6 +7395,10 @@ msgstr "読み方を変更"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "最低読み上げレベル(&L)"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "音声エンジンに記号を送る(&S)"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7526,6 +7557,11 @@ msgstr "コメント(&O)"
 msgid "&Formula"
 msgstr "数式(&F)"
 
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "シート(&S)"
+
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
 msgstr "{start} から {end}"
@@ -7588,6 +7624,12 @@ msgid ""
 msgstr ""
 "1回押すと現在のセルとその下のセルを行見出しに設定。2回押すと行見出しの設定を"
 "クリア"
+
+msgid "Input Message is {title}: {message}"
+msgstr "入力メッセージ {title} {message}"
+
+msgid "Input Message is {message}"
+msgstr "入力メッセージ {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -8504,15 +8546,3 @@ msgstr "HIMS社製 Braille Sense/Braille EDGE シリーズ"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS社製 SyncBraille"
-
-#~ msgid "unrevised"
-#~ msgstr "未変更"
-
-#~ msgid "unknown author"
-#~ msgstr "著者不明"
-
-#~ msgid "unknown date"
-#~ msgstr "日付不明"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType} 更新者 {revisionAuthor} 更新日 {revisionDate}"
