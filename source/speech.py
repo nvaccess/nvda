@@ -238,18 +238,12 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 			count = len(char)
 			index=count+1
 			log.io("Speaking character %r"%char)
-			autoLangSwitching = config.conf['speech']['autoLanguageSwitching']
-			speechSequence=[LangChangeCommand(locale)] if autoLangSwitching else []
+			speechSequence=[LangChangeCommand(locale)] if config.conf['speech']['autoLanguageSwitching'] else []
 			if len(char) == 1 and synthConfig["useSpellingFunctionality"]:
 				speechSequence.append(CharacterModeCommand(True))
 			if index is not None:
 				speechSequence.append(IndexCommand(index))
-			if autoLangSwitching:
-				import languageDetection
-				detectedCharacters = languageDetection.detectLanguage(char, locale)
-				speechSequence.extend( detectedCharacters )
-			else:
-				speechSequence.append(char)
+			speechSequence.append(char)
 			synth.speak(speechSequence)
 			if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
 				synth.pitch=oldPitch
@@ -485,12 +479,7 @@ def speak(speechSequence,symbolLevel=None):
 			if autoLanguageSwitching and curLanguage!=prevLanguage:
 				speechSequence.append(LangChangeCommand(curLanguage))
 				prevLanguage=curLanguage
-			if autoLanguageSwitching:
-				import languageDetection
-				detectedLanguageSequence = languageDetection.detectLanguage(item , prevLanguage)
-				speechSequence.extend(detectedLanguageSequence )
-			else:
-				speechSequence.append(item)
+			speechSequence.append(item)
 		else:
 			speechSequence.append(item)
 	if not speechSequence:

@@ -206,9 +206,6 @@ confspec = ConfigObj(StringIO(
 
 [upgrade]
 	newLaptopKeyboardLayout = boolean(default=false)
-
-[languageDetection]
-	preferredLanguages = string_list
 """
 ), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"

@@ -173,8 +173,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		languageHandler.setLanguage(lang)
 	except:
 		log.warning("Could not set language to %s"%lang)
-	import languageDetection
-	languageDetection.initialize()
 	import versionInfo
 	log.info("NVDA version %s" % versionInfo.version)
 	log.info("Using Windows version %s" % winVersion.winVersionText)

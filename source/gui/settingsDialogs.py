@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #settingsDialogs.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter, Dinesh Kaushal
+#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -33,7 +33,6 @@ try:
 except RuntimeError:
 	updateCheck = None
 import inputCore
-import languageDetection
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -1883,98 +1882,3 @@ class InputGesturesDialog(SettingsDialog):
 					_("Error"), wx.OK | wx.ICON_ERROR)
 
 		super(InputGesturesDialog, self).onOk(evt)
-
-class LanguageDetectionDialog(SettingsDialog):
-	# Translators: The title of the Language Detection dialog where the user can configure automatic language detection.
-	title = _("Language Detection")
-
-	def makeSettings(self, settingsSizer):
-		settingsSizer.Add(wx.StaticText(self,
-			# Translators: A message in the Language Detection dialog informing that Automatic language switching must be enabled.
-			label=_("Automatic language detection only occurs when Automatic language switching is enabled in Voice Settings.")))
-		self.languageListChanged = False
-		languageSizer=wx.BoxSizer(wx.HORIZONTAL)
-		# Translators: The label for the list of preferred languages in the Language Detection dialog.
-		languageLabel=wx.StaticText(self,-1,label=_("&Preferred languages:"))
-		languageSizer.Add(languageLabel)
-		languageListID=wx.NewId()
-		self.languageNames = list(languageDetection.languagePriorityListSpec)
-		self.languageList=wx.ListBox(self,languageListID,choices=[x[2] for x in self.languageNames])
-		if self.languageNames:
-			self.languageList.SetSelection(0)
-		languageSizer.Add(self.languageList)
-		settingsSizer.Add(languageSizer,border=10,flag=wx.BOTTOM)
-		moveUpButtonID=wx.NewId()
-		# Translators: The label for a button in the Language Detection dialog to increase the priority of a language.
-		moveUpButton=wx.Button(self,moveUpButtonID,_("Move &up"),wx.DefaultPosition)
-		self.Bind(wx.EVT_BUTTON,self.OnMoveUp,id=moveUpButtonID)
-		settingsSizer.Add(moveUpButton)
-		moveDownButtonID=wx.NewId()
-		# Translators: The label for a button in the Language Detection dialog to decrease the priority of a language.
-		moveDownButton=wx.Button(self,moveDownButtonID,_("move &down"),wx.DefaultPosition)
-		self.Bind(wx.EVT_BUTTON,self.OnMoveDown,id=moveDownButtonID)
-		settingsSizer.Add(moveDownButton)
-		addButtonID=wx.NewId()
-		# Translators: The label for a button in the Language Detection dialog to add a new language.
-		addButton=wx.Button(self,addButtonID,_("&Add"),wx.DefaultPosition)
-		self.Bind(wx.EVT_BUTTON,self.OnAdd,id=addButtonID)
-		settingsSizer.Add(addButton)
-		removeButtonID=wx.NewId()
-		# Translators: The label for a button in the Language Detection dialog to remove a language.
-		removeButton=wx.Button(self,removeButtonID,_("&Remove"),wx.DefaultPosition)
-		self.Bind(wx.EVT_BUTTON,self.OnRemove,id=removeButtonID)
-		settingsSizer.Add(removeButton)
-
-	def postInit(self):
-		self.languageList.SetFocus()
-
-	def OnMoveUp(self,evt):
-		if not self.languageNames:
-			return
-		listIndex = self.languageList.GetSelection()
-		if listIndex == 0: return
-		tempItem = self.languageNames.pop( self.languageList.GetSelection() )
-		self.languageNames.insert(listIndex -1, tempItem )
-		self.updateList(listIndex-1)
-
-	def OnMoveDown(self,evt):
-		listIndex = self.languageList.GetSelection()
-		if listIndex >= len(self.languageNames) - 1: return
-		tempItem = self.languageNames.pop( self.languageList.GetSelection() )
-		self.languageNames.insert(listIndex + 1, tempItem )
-		self.updateList(listIndex+1)
-
-	def OnAdd(self,evt):
-		#while adding new languages we filter out existing languages in the prefered language list
-		ignoreLanguages = {x[0] for x in self.languageNames}
-		languageList = languageDetection.getLanguagesWithDescriptions(ignoreLanguages)
-		dialog = wx.SingleChoiceDialog(None,
-			# Translators: The title of a dialog to choose a language.
-			_("Language"),
-			# Translators: The caption of a dialog to add a language to the preferred list of languages for auto language detection.
-			_("Choose language to be added to prefered languages"),
-			choices=[x[1] for x in languageList])
-		if dialog.ShowModal() == wx.ID_OK:
-			languageTuple = languageList[ dialog.GetSelection() ][0] , languageDetection.getScriptIDFromLangID( languageList[ dialog.GetSelection() ][0] ) , languageList[ dialog.GetSelection() ][1] 
-			self.languageNames.insert(0, languageTuple )
-			self.updateList()
-		dialog.Destroy()
-
-	def OnRemove(self,evt):
-		if not self.languageNames:
-			return
-		self.languageNames.pop( self.languageList.GetSelection() )
-		self.updateList(self.languageList.GetSelection())
-
-	def onOk(self, evt):
-		if self.languageListChanged: 
-			languageList = [item[0] for item in self.languageNames]
-			config.conf["languageDetection"]["preferredLanguages"] = languageList
-			languageDetection.updateLanguagePriorityFromConfig()
-		super( LanguageDetectionDialog , self).onOk(evt)
-
-	def updateList(self,currentSelection=0):
-		self.languageList.Clear()
-		self.languageList.AppendItems([x[2] for x in self.languageNames])
-		self.languageList.SetSelection(currentSelection)
-		self.languageListChanged = True
