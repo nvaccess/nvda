@@ -241,6 +241,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		"""
 		return iter(())
 
+	def _iterNotLinkBlock(self, direction="next", pos=None):
+		raise NotImplementedError
+
 	def _quickNavScript(self,gesture, itemType, direction, errorMessage, readUnit):
 		if itemType=="notLinkBlock":
 			iterFactory=self._iterNotLinkBlock
