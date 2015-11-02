@@ -540,7 +540,7 @@ MathPlayer est disponible en téléchargement gratuit sur : http://www.dessci.co
 
 NVDA supporte les types de contenu mathématiques suivants :
 - MathML sous Mozilla Firefox et Microsoft Internet Explorer.
-- Design Science MathType sous Microsoft Word et PowerPoint.
+- Design Science MathType sous Microsoft Word et PowerPoint. MathType doit être installé pour que cela fonctionne. La version de démonstration est suffisante.
 - MathML sous Adobe Reader. Notez que ceci n'est pas un standard officiel, ce qui fait qu'actuellement, il n'existe pas de logiciels grand public pouvant produire ce contenu.
 -
 
@@ -586,7 +586,7 @@ NVDA fournit ses propres commandes additionnelles dans quelques applications pou
 | Définir les titres de colonnes | NVDA+maj+c | Appuyer une fois indique à NVDA que cette cellule est la première de la ligne contenant les titres de colonnes, qui devraient être annoncés automatiquement en navigant entre les colonnes sous cette ligne. Appuyer deux fois permet d'effacer le paramétrage. | 
 | Définir les titres de lignes | NVDA+maj+r | Appuyer une fois indique à NVDA que cette cellule est la première de la colonne contenant les titres de lignes, qui devraient être annoncés automatiquement en navigant entre les lignes après cette colonne. Appuyer deux fois permet d'effacer le paramétrage. | 
 | Annonce du commentaire | NVDA+alt+c | Annonce le commentaire sur la cellule courante s'il y en a un. |
-| Liste d'éléments dialog | NVDA+f7 | ouvre le dialogue de la liste d'éléments présentant les graphiques, les cellules avec commentaires, ou les cellules avec formules. |
+| Liste d'éléments dialog | NVDA+f7 | ouvre le dialogue de la liste d'éléments présentant les graphiques, les cellules avec commentaires, les cellules avec formules ou les feuilles. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -1173,12 +1173,23 @@ La langue pour laquelle la prononciation des symboles est en cours d'édition se
 Notez que ce dialogue tient compte de l'option "Se baser sur la langue de la voix pour le traitement des caractères et symboles" qui se trouve dans le dialogue [Paramètres vocaux #VoiceSettings];. Il utilise la langue de la voix plutôt que les paramètres vocaux globaux de NVDA quand cette option est activée.
 
 Pour modifier un symbole, sélectionnez-le d'abord dans la liste de symboles.
-Le champ "Remplacement" vous permet de modifier le texte qui doit être prononcé à la place de ce symbole.
-En utilisant le champ "Niveau", vous pouvez ajuster le niveau minimum auquel ce symbole doit être annoncé.
+
+- Le champ "Remplacement" vous permet de modifier le texte qui doit être prononcé à la place de ce symbole.
+- En utilisant le champ "Niveau", vous pouvez ajuster le niveau minimum auquel ce symbole doit être annoncé.
+- Le champ "Envoyer le symbole réel au synthétiseur" spécifie quand le symbole lui-même (au lieu de son remplacement) devrait être envoyé au synthétiseur.
+Ceci est utile si le symbole force le synthétiseur à marquer une pause ou modifie l'inflexion de la voix. 
+Par exemple, une virgule force le synthétiseur à marquer une pause.
+Il y a trois options :
+ - jamais : Ne jamais envoyer le symbole réel au synthétiseur.
+ - toujours : Toujours envoyer le symbole réel au synthétiseur.
+ - seulement au-dessous du niveau du symbole : N'envoyer le symbole réel que si le niveau de symboles configuré est inférieur au niveau assigné à ce symbole.
+ Par exemple, vous pourriez utiliser cela pour qu'un symbole ait son remplacement annoncés à hauts niveaux sans marquer de pause, tout en étant indiqué par une pause aux niveaux inférieurs.
+ -
+-
 
 Vous pouvez ajouter de nouveaux symboles en pressant le bouton Ajouter.
 Dans le dialogue qui apparaît, saisissez le symbole et pressez le bouton OK.
-Puis, changez le remplacement et le niveau pour le nouveau symbole comme vous le feriez pour les autres symboles.
+Puis, changez les champs pour le nouveau symbole comme vous le feriez pour les autres symboles.
 
 Vous pouvez supprimer un symbole précédemment ajouté en pressant le bouton Supprimer.
 
@@ -2101,15 +2112,6 @@ Voici les options de ligne de commande de NVDA :
 | Aucune | --no-sr-flag  | Ne change pas l'indicateur système global de revue d'écran |
 | Aucune | --install | Installe NVDA (en démarrant la copie nouvellement installée) |
 | Aucune | --install-silent | Installe NVDA silencieusement (sans démarrer la copie nouvellement installée) |
-
-++ Personnalisation avancée de la prononciation des symboles ++
-Il est possible de personnaliser la prononciation des ponctuations et autres symboles au-delà de ce que permet le dialogue ["Prononciation des symboles et ponctuations" #SymbolPronunciation].
-Par exemple, vous pouvez indiquer si un symbole particulier doit être envoyé au synthétiseur pour créer une pause ou modifier une inflexion et vous pouvez ajouter vos propres symboles.
-
-Pour faire cela, vous devez éditer le fichier contenant les informations de prononciation des symboles dans votre répertoire utilisateur NVDA.
-Le fichier s'appelle symbols-xx.dic où xx est le code de la langue.
-Le format de ce fichier est documenté dans la section "Prononciation des Symboles" du guide de développement NVDA disponible dans [la section Développement du site NVDA http://community.nvda-project.org/wiki/Development].
-Cependant, l'utilisateur ne peut pas définir de symboles complexes.
 
 + Informations complémentaires +
 Si vous avez besoin d'informations complémentaires ou d'aide concernant l'utilisation de NVDA, veuillez visiter le site NVDA à NVDA_URL.
