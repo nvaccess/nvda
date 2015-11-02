@@ -579,17 +579,17 @@ NVDA beschikt over een aantal applicatie-specifieke commando's om het gebruik va
 %kc:beginInclude
 || Naam | Toets | Beschrijving |
 | Actuele opmerkingen melden | NVDA+Alt+c | Meldt tekst van opmerking op de plaats van de systeemcursor  | 
-|| Kolomhoofdingen instellen | NVDA+shift+c | Door eenmaal indrukken weet NVDA dat dit de eerste hoofdingcel is in de rij waar de kolomhoofdingen in staan die automatisch moeten worden gemeld bij het gaan van kolom naar kolom in de rijen eronder. Door tweemaal drukken wordt de instelling opgeheven. | 
-| Rijhoofdingen instellen | NVDA+shift+r | Door eenmaal indrukken weet NVDA dat dit de eerste hoofdingcel is in de kolom waar de rijhoofdingen in staan die automatisch moeten worden gemeld bij het gaan van rij naar rij na deze kolom. Door tweemaal drukken wordt de instelling opgeheven. | 
+|| Kolomhoofden instellen | NVDA+shift+c | Door eenmaal indrukken weet NVDA dat dit de eerste cel is in de rij waar de kolomhoofden in staan die automatisch moeten worden gemeld bij het gaan van kolom naar kolom in de rijen eronder. Door tweemaal drukken wordt de instelling opgeheven. | 
+| Rijhoofden instellen | NVDA+shift+r | Door eenmaal indrukken weet NVDA dat dit de eerste cel is in de kolom waar de rijhoofden in staan die automatisch moeten worden gemeld bij het gaan van rij naar rij na deze kolom. Door tweemaal drukken wordt de instelling opgeheven. | 
 %kc:endInclude
 
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Naam | Toets | Beschrijving |
-| Kolomhoofdingen instellen | NVDA+shift+c | Door eenmaal indrukken weet NVDA dat dit de eerste hoofdingcel is in de rij waar de kolomhoofdingen in staan die automatisch moeten worden gemeld bij het gaan van kolom naar kolom in de rijen eronder. Door tweemaal drukken wordt de instelling opgeheven. | 
-| Rijhoofdingen instellen | NVDA+shift+r | Door eenmaal indrukken weet NVDA dat dit de eerste hoofdingcel is in de kolom waar de rijhoofdingen in staan die automatisch moeten worden gemeld bij het gaan van rij naar rij na deze kolom. Door tweemaal drukken wordt de instelling opgeheven. |
+| Kolomhoofden instellen | NVDA+shift+c | Door eenmaal indrukken weet NVDA dat dit de eerste cel is in de rij waar de kolomhoofden in staan die automatisch moeten worden gemeld bij het gaan van kolom naar kolom in de rijen eronder. Door tweemaal drukken wordt de instelling opgeheven. | 
+| Rijhoofden instellen | NVDA+shift+r | Door eenmaal indrukken weet NVDA dat dit de eerste cel is in de kolom waar de rijhoofden in staan die automatisch moeten worden gemeld bij het gaan van rij naar rij na deze kolom. Door tweemaal drukken wordt de instelling opgeheven. |
 | Opmerking(en) melden | NVDA+alt+c | Meldt eventuele opmerkingen bij de actuele cel. |
-| Dialoogvenster Lijst met elementen | NVDA+f7 | opent het bijbehorende dialoogvenster  dat overzichten, cellen met opmerkingen, of cellen met berekeningen toont. |
+| Dialoogvenster Lijst met elementen | NVDA+f7 | opent het bijbehorende dialoogvenster  dat overzichten, cellen met opmerkingen, cellen met formules, of werkbladen  toont. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -1174,13 +1174,27 @@ In dit dialoogvenster kan men de wijze waarop interpunctie en symbolen worden ge
 De taal waarop de bewerking van de uitspraak van symbolen betrekking heeft, wordt in de titelbalk van het dialoogvenster getoond.
 Merk op dat voor de verwerking van symbolen en karakters hier wordt uitgegaan van de taal die als “vertrouwd” is ingesteld in het menu Opties onder Stem in het dialoogvenster steminstellingen [Voice Settings dialog #VoiceSettings];. Dit houdt in dat, wanneer deze optie is ingeschakeld, de stemtaal wordt gebruikt in plaats van   de algemene taalinstelling van NVDA.
 
-Selecteer een symbool uit de symbolenlijst om het aan te passen.
-Het veld "vervangen door" stelt u in staat om de uitspraak van het symbool aan te passen.
-Het niveau veld bepaalt het minimumniveau waarop dit symbool wordt uitgesproken.
+Selecteer eerst een symbool uit de symbolenlijst als u een symbool wilt  aanpassen.
+
+- In het veld "Vervangen door" kunt u de aangepaste tekst invoeren die uitgesproken moet
+worden in plaats van  dit symbool.
+- In het keuzevak Niveau kunt u het laagste niveau opgeven waarop dit symbool moet worden uitgesproken
+- Het veld "Het eigenlijke symbool naar synthesizer sturen" specifieert wanneer  het symbool zelf (in tegenstelling tot de vervanging ervan naar de synthesizer moet worden gestuurd.
+Dit is nuttig alss het symbool de synthesizer even laat stoppen of als het de buiging van de stem verandert.
+Een komma, bij voorbeeld, zorgt ervoor dat er een kort pauzemoment is in de spraakuitvoer
+Er zijn drie opties:
+ - nooit: Nooit het eigenlijke symbool naar de synthesizer sturen.
+ - altijd: Altijd het eigenlijke symbool naar de synthesizer sturen.
+ - Alleen onder symboolniveau: Het eigenlijke symbool alleen sturen als het ingesteldespraaksymboolniveau lager is dan het voor dit symbool opgegeven niveau. 
+U kunt deze optie bij voorbeeld gebruiken om ervoor te zorgen dat een symbool wordt uitgesproken met de vervangende vorm voor de hogere niveaus zonder dat er pauzes optreden terwijl op de lagere niveaus steeds een pauze wordt aangegeven.
+ -
+-
 
 U kunt nieuwe symbolen toevoegen door op de knop toevoegen te drukken
-In het dialoogvenster dat verschijnt voert u  het symbool in en vervolgens  drukt u op  de OK-knop.
-Pas daarna de vervanging  en het niveau voor het nieuwe symbool aan zoals u dat ook doet  bij andere symboolen.
+In het dialoogvenster dat verschijnt voert u  het symbool in en vervolgens  drukt u op  de 
+OK-knop.
+Pas daarna de velden aan voor het nieuwe symbool zoals u dat voor andere symbolen zou doen.
+
 
 U kunt een eerder ingevoerd symbool verwijderen door op de knop Verwijderen te drukken.
 
