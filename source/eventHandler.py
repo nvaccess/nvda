@@ -237,6 +237,7 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 			"Frame Notification Bar", # notification bars
 			"tooltips_class32", # tooltips
 			"mscandui21.candidate", "mscandui40.candidate", "MSCandUIWindow_Candidate", # IMM candidates
+			"TTrayAlert", # 5405: Skype
 		)
 	if eventName == "reorder":
 		# Prevent another flood risk.

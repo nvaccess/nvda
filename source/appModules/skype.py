@@ -170,23 +170,28 @@ class Notification(NVDAObjects.behaviors.Notification):
 
 	def _get_name(self):
 		startIndex = 0
-		if self.event_objectID == 99999:
-			# This is an event indicating an update.
+		if self.event_objectID is not None:
+			# This is for an event.
 			if self.windowHandle == self._lastWindow:
 				# Another notification is being added to an already visible window.
 				# Just report the added notification.
 				startIndex = self._lastChildCount
 		return " ".join(child.name for child in self.children[startIndex:])
 
-	def event_reorder(self):
-		self.event_alert()
+	def event_alert(self):
+		if self.name:
+			# There is new content.
+			super(Notification, self).event_alert()
 		Notification._lastWindow = self.windowHandle
 		Notification._lastChildCount = self.childCount
 
-	def event_show(self):
-		# Show gets fired when the window is created, but it isn't ready yet, so this isn't useful.
-		# We rely on reorder instead.
-		pass
+	# #5405: Some notifications (e.g. if you click once on the System Tray icon) only fire a show event.
+	# These are ready as soon as the event is fired.
+	event_show = event_alert
+	# #5405: Most notifications fire show, but aren't ready at this point.
+	# They then fire reorder when they're ready.
+	# #4841: They also fire reorder if another notification is later added to the same window.
+	event_reorder = event_alert
 
 class TypingIndicator(NVDAObjects.IAccessible.IAccessible):
 
