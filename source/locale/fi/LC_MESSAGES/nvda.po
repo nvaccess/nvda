@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 19:12+1000\n"
-"PO-Revision-Date: 2015-10-23 10:16+0200\n"
+"POT-Creation-Date: 2015-11-02 17:08+1000\n"
+"PO-Revision-Date: 2015-11-05 12:34+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -2349,7 +2349,7 @@ msgstr "pääte"
 
 #. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in addition to text; encountered on webpages and NvDA log viewer).
 msgid "rich edit"
-msgstr "muokattava"
+msgstr "muokattava, tukee muotoiluja"
 
 #. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
 msgid "ruler"
@@ -2745,6 +2745,10 @@ msgstr "rajattu"
 #. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
 msgid "overflowing"
 msgstr "ylivuoto"
+
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "lukitsematon"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -4633,15 +4637,20 @@ msgstr "ei sisennystä"
 msgid "%d characters"
 msgstr "%d merkkiä"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "valitaan %s"
+msgid "%s selected"
+msgstr "%s valittu"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "ei valita %s"
+msgid "%s unselected"
+msgstr "%s ei valittu"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s valittu sen sijaan"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -6129,7 +6138,7 @@ msgstr "Käytä Caps Lockia  NVDA-näppäimenä"
 #. Translators: The label of a check box in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
-msgstr "Käynnistä NVDA &automaattisesti sisäänkirjautumisen jälkeen"
+msgstr "Käynnistä &automaattisesti sisäänkirjautumisen jälkeen"
 
 #. Translators: This is a label for a checkbox in welcome dialog to show welcome dialog at startup.
 msgid "Show this dialog when NVDA starts"
@@ -7635,6 +7644,10 @@ msgstr "Työpöytä"
 msgid "default color"
 msgstr "oletusväri"
 
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "Tätä solua ei voi muokata"
+
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
 msgstr ""
@@ -8659,6 +8672,12 @@ msgstr "HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "selecting %s"
+#~ msgstr "valitaan %s"
+
+#~ msgid "unselecting %s"
+#~ msgstr "ei valita %s"
 
 #~ msgid "unrevised"
 #~ msgstr "ei muutettu"
