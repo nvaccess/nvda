@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 19:12+1000\n"
-"PO-Revision-Date: 2015-10-27 08:39+0100\n"
+"POT-Creation-Date: 2015-11-02 17:08+1000\n"
+"PO-Revision-Date: 2015-11-02 14:03+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS <http://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
@@ -2745,6 +2745,10 @@ msgstr "oříznuto"
 msgid "overflowing"
 msgstr "přetečeno"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "odemčeno"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "nevybráno"
@@ -4603,15 +4607,20 @@ msgstr "bez odsazení"
 msgid "%d characters"
 msgstr "%d znaků"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "vybráno %s"
+msgid "%s selected"
+msgstr "%s vybráno"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "nevybráno %s"
+msgid "%s unselected"
+msgstr "%s nevybráno"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s vybráno"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -7598,6 +7607,10 @@ msgstr "Plocha"
 msgid "default color"
 msgstr "výchozí barva"
 
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "Tuto buňku nelze upravit"
+
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
 msgstr "Představuje seznam grafů, buněk s komentáři a buněk se vzorci"
@@ -8614,6 +8627,12 @@ msgstr "Braillské řádky HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "selecting %s"
+#~ msgstr "vybráno %s"
+
+#~ msgid "unselecting %s"
+#~ msgstr "nevybráno %s"
 
 #~ msgid "unrevised"
 #~ msgstr "nezměněno"
