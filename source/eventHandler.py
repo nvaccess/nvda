@@ -237,8 +237,11 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 			"Frame Notification Bar", # notification bars
 			"tooltips_class32", # tooltips
 			"mscandui21.candidate", "mscandui40.candidate", "MSCandUIWindow_Candidate", # IMM candidates
-			"TTrayAlert", # #4741: Skype
+			"TTrayAlert", # 5405: Skype
 		)
+	if eventName == "reorder":
+		# Prevent another flood risk.
+		return winUser.getClassName(windowHandle) == "TTrayAlert" # #4841: Skype
 	if eventName == "alert" and winUser.getClassName(winUser.getAncestor(windowHandle, winUser.GA_PARENT)) == "ToastChildWindowClass":
 		# Toast notifications.
 		return True
