@@ -1,4 +1,5 @@
 ﻿Guía do Usuario do NVDA NVDA_VERSION
+Guía do Usuario do NVDA NVDA_VERSION
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -569,24 +570,87 @@ Por favor consulta a documentación do MathPlayer para información adicional.
 
 Cando desexes voltar ó documento, simplemente preme a tecla escape.
 
-+ Ordes de NVDA Específicas para Aplicación +
-NVDA proporciona as súas proprias ordes extra para algunhas aplicacións para facer máis sinxelas certas tarefas ou para proporcionar acceso a funcionalidade que de outra maneira non está accesible para os usuarios do lector de pantalla.
++ Características Específicas para Aplicación +
+NVDA proporciona as súas proprias características extra para algunhas aplicacións para facer máis sinxelas certas tarefas ou para proporcionar acceso a funcionalidade que de outra maneira non está accesible para os usuarios do lector de pantalla.
 
 ++ Microsoft Word ++
+
++++ Lectura Automática de Cabeceiras de Columna e Fila +++
+NVDA poderá anunciar automáticamente  a cabeceira apropriada de fila e columna ó navegar a través de táboas en Microsoft Word.
+Esto require primeiro que a opción Anunciar  Cabeceiras de Filas e columnas no diálogo de NVDA Formateado de Documentos estea activada.
+En segundo lugar, NVDA necesita saber que fila ou columna contén a cabeceira en calquera táboa dada.
+Despois de moverse á primeira celda na columna ou fila que conteña as cabeceiras, utiliza unha das ordes seguintes:
 %kc:beginInclude
 || Nome | Tecla | Descripción |
-| Anunciar comentario actual | NVDA+Alt+c | Anuncia o texto do comentario na posición do Cursor do Sistema. | 
-| Fixar cabeceira de columnas | NVDA+shift+c | Premendo esto unha vez di ó NVDA que esta é a primeira celda de cabeceira na fila que contén cabeceiras de columna, que debería ser anunciada automáticamente ó moverte entre columnas baixo esta fila. Premendo dúas veces quitará esta opción. | 
-| Fixar cabeceira de filas | NVDA+shift+r | Pulsando esto unha vez di ó NVDA que esta é a primeira celda de cabeceira na columna que contén cabeceiras de fila, que debería ser anunciado automáticamente cando se desplaza entre as filas despois desta columna. Premendo dúas veces eliminará esta opción. | 
+| Fixar cabeceiras de columna | NVDA+shift+c | Premendo esto unha vez di ó NVDA que esta é a primeira celda de cabeceira na fila que contén cabeceira de columna, que debería seren anunciada automáticamente ó se mover entre columnas por enbaixo desta fila. Premendo dúas veces eliminarás a opción. | 
+| Fixar cabeceiras de fila | NVDA+shift+r | Premendo esto unha vez dis ó NVDA que esta é a primeira celda de cabeceira na columna que contén cabeceiras de fila, a que debería aunuciarse automáticamente ó se mover entre filas despois desta columna. Premendo dúas veces eliminarás a opción. | 
 %kc:endInclude
+Estas opcións gardaranse no documento como marcadores, compatibles con outros lectores de pantalla coma Jaws.
+Esto significa que outros usuarios de lectores de pantalla que abran este documento máis tarde terán automáticamente as cabeceiras de fila e columna xa postos. 
 
++++ Modo Exploración en Microsoft Word +++
+De xeito similar á web, o modo exploración pode usarse en Microsoft Word para permitirche utilizar características coma navegación rápida e a Lista de Elementos.
+%kc:beginInclude
+Para activar ou desactivar o modo Exploración en Microsoft Word, preme NVDA+espazo.
+%kc:endInclude
+Para información adicional acerca do modo Exploración e a Navegación Rápida, consulta a [sección Modo Exploración #BrowseMode].
+
+++++ A Lista de Elementos ++++
+%kc:beginInclude
+Mentres se estea no modo Exploración en Microsoft Word, podes acceder á Lista de Elementos premendo NVDA+f7.
+%kc:endInclude
+A Lista de Elementos pode listar cabeceiras, ligas e anotacións (as que inclúen comentarios e seguemento de cambios).
+
++++ Anunciado de Comentarios +++
+%kc:beginInclude
+Para anunciar calquera comentario na posición actual do cursor de edición, preme NVDA+alt+c.
+%kc:endInclude
+ Todos os comentarios para o documento con outro seguemento de cambios tamén poden listarse na Lista de Elementos do NVDA ó seleccionar Anotacións segundo se teclea.
+ 
 ++ Microsoft Excel ++
+
++++ Lectura Automática de Cabeceira de Columna e fila +++
+NVDA poderá anunciar automáticamente as cabeceiras apropriadas de fila e columna ó navegar a través das follas de cálculo de Excel.
+Primeiramente esto require que a opción Anunciar Cabeceiras de Fila e Columna de táboa no diálogo de NVDA Formateado de documentos estea activado.
+En segundo lugar, NVDA necesita saber que fila ou columna contén as cabeceiras.
+Despois de moverse á primeira celda na columna ou fila que conteña as cabeceiras, usa unha das seguintes ordes:
 %kc:beginInclude
 || Nome | Tecla | Descripción |
 | Fixar cabeceira de columnas | NVDA+shift+c | Ó premer esto unha vez dille ó NVDA que é a primeira celda de cabeceira da fila que contén as cabeceiras de columna, que debería ser anunciado automáticamente cando te despraces entre as columnas por embaixo desta fila. Premendo dúas veces eliminarase a opción. | 
 | Fixar cabeceira de filas | NVDA+shift+r | Ó premer esto unha vez dille ó NVDA que é a primeira celda da cabeceira da columna que contén as cabeceiras de fila, que debería ser anunciado automáticamente cando te despraces entre as filas despois desta columna. Premendo dúas veces eliminarás a opción. | 
-| Anunciar comentario | NVDA+alt+c | Anuncia o comentario na celda actual se o hai. |%kc:endInclude
-| Diálogo Lista de Elementos | NVDA+f7 | abre o diálogo Lista de Elementos amosando gráficos, celdas con comentarios, celdas con fórmulas ou follas. |
+%kc:endInclude
+Estas opcións gardaranse no libro de traballo como rangos de nomes definidos, compatibles con outros lectores de pantalla coma Jaws.
+Esto significa que outros usuarios de lectores de pantalla que abran este libro de traballo máis tarde terán automáticamente as cabeceiras de fila e columna xa postos. 
+
++++ A Lista de Elementos +++
+De xeito similar á web, NVDA ten unha Lista de Elementos para Microsoft Excel, que che permite listar e aceder a varios tipos diferentes de información.
+%kc:beginInclude
+Para aceder á Lista de Elementos en Excel, preme NVDA+f7.
+%kc:endInclude
+Os diversos tipos de información dispoñible na Lista de Elementos son:
+- Gráfico: esto lista todos os gráficos no libro de traballo.
+Seleccionando un gráfico e premendo Intro ou o botón Mover A enfoca o gráfico para navegar e ler cas teclas de cursor.
+- Comentario: esto lista todas as celdas no libro de traballo que conteñan comentarios. 
+O enderezo da celda xunto cos seus comentarios amósase para cada celda. 
+Premendo Intro ou o botón Mover a cando se estea sobre un comentario listado moverase directamente a esa celda.
+- Fórmula: esto lista todas as celdas no libro de traballo que conteñan unha fórmula. 
+O enderezo da celda xunto ca súa fórmula amósase para cada celda.
+Premendo Intro ou o botón Mover A sobre unha fórmula listada moverase directamente a esa celda. 
+- Folla: esto lista todas as follas no libro de traballo. 
+Premendo f2 cando se estea sobre unha folla listada permíteche renomear a folla. 
+Premendo Intro ou o botón Mover A mentres se estea sobre a folla listada cambiará a esa folla.
+-
+
++++ Anunciando Comentarios +++
+%kc:beginInclude
+Para anunciar calquera comentario para a celda actualmente enfocada, preme NVDA+alt+c.
+%kc:endInclude
+Todos os comentarios para o libro de traballo tamén poden listarse na Lista de Elementos de NVDA.
+
++++ Lendo Celdas Protexidas +++
+Se un libro de traballo foi protexido, podería non seren posible mover o foco a celdas en particular que foran bloqueadas para edición.
+%kc:beginInclude
+Para permitir o movemento a celdas bloqueadas, cambia a modo Exploración premendo NVDA+espazo, e entón usa as ordes estándar de movemento de Excel  como as teclas de cursor para moverte por todas as celdas na folla de cálculo actual.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -1575,7 +1639,7 @@ Por favor mira a documentación da liña para descripcións de onde poden atopar
 ++ Liñas braille Baum/Humanware/APH ++
 Varias liñas braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] e [APH http://www.aph.org/] están soportadas cando se conectan a traverso do USB ou do bluetooth.
 Estas inclúen:
-- Baum: SuperVario, PocketVario
+- Baum: SuperVario, PocketVario, VarioUltra (só Bluetooth), Pronto! (Só Bluetooth)
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
