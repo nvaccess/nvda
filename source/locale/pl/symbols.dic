@@ -42,17 +42,18 @@ negative number	minus	none	norep
 # Standard punctuation/symbols
 !	wykrzyknik	all
 "	cudzysłów	most
-\#	hash	most
+\#	hash	some
 $	dolar	all	norep
 £	funt	all	norep
 €	euro	some
 ¢	Centy	all	norep
 ¥	Jen	all	norep
+₹	rupia	some	norep
 %	procent	some
 &	and	some
 '	apostrof	all
-(	lewy nawias	most
-)	prawy nawias	most
+(	lewy nawias	most	always
+)	prawy nawias	most	always
 *	gwiazdka	some
 +	plus	some
 ,	przecinek	all	always
@@ -61,8 +62,8 @@ $	dolar	all	norep
 /	slesz	some
 :	dwukropek	most	norep
 ;	średnik	most
-<	mniejsze	most
->	więkrze	most
+<	mniejsze	some
+>	więkrze	some
 =	równe	some
 ?	pytajnik	all
 @	małpa	some
@@ -86,7 +87,7 @@ _	podkreślacz	most
 ”	prawy cudzysłów	most
 ‘	lewy apostrof	most
 ’	prawy apostrof	most
-–	półpauza	most
+–	półpauza	most	always
 —	myślnik	most
 ●	kółko	most
 ¨	diereza	most
@@ -108,9 +109,9 @@ _	podkreślacz	most
 ®	zarejestrowany	some
 ™	znak handlowy	some
 ©	Znak praw autorskich	some
-±	Plus Minus	most
-×	razy	most
-÷	dzielenie	most
+±	Plus Minus	some
+×	razy	some
+÷	dzielenie	some
 ←	strzałka w lewo	some
 →	strzałka w prawo	some
 ✓	check	some
