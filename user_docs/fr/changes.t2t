@@ -4,6 +4,7 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2015.4 =
+Les points forts de cette version incluent des améliorations de performances sous Windows 10; l'inclusion dans les options d'accessibilité sous Windows 8 et au-delà; des amélioration sous Microsoft Excel, incluant la possibilité de lister et renommer les feuilles et l'accès aux cellules verrouillées dans les feuilles protégées; et le support de l'édition du texte enrichi sous Mozilla Firefox, Google Chrome et Mozilla Thunderbird.
 
 == Nouvelles Fonctionnalités ==
 - NVDA apparaît maintenant dans les Options d'Ergonomie sous Windows 8 et au-delà. (#308)
@@ -14,6 +15,11 @@ Quoi de Neuf dans NVDA
 - Microsoft Excel : lister et renommer les feuilles est maintenant possible depuis la liste d'éléments de NVDA (NVDA+f7). (#4630, #4414)
 - Il est maintenant possible de configurer si un symbole réel doit être envoyé au synthétiseur (ex. pour créer une pause ou un changement d'inflection) dans le dialogue de prononciation des symboles. (#5234)
 - Sous Microsoft Excel, NVDA annonce maintenant tout message d'entrée défini par l'auteur de la feuille sur les cellules. (#5051)
+- Support des terminaux Baum Pronto! V4 et VarioUltra connectés en Bluetooth. (#3717)
+- Support de l'édition du texte enrichi dans les applications Mozilla telles que Google Docs avec le support braille activé dans Mozilla Firefox et la composition HTML sous Mozilla Thunderbird. (#1668)
+- Support de l'édition du texte enrichi sous Google Chrome et les navigateurs basés sur Chrome tels que Google Docs avec le support braille activé. (#2634)
+ - Ceci requiert Chrome version 47 ou au-delà.
+- En mode navigation sous Microsoft Excel, on peut naviguer vers les cellules verrouillées dans les feuilles protégées. (#4952)
 
 
 == Changements ==
@@ -22,6 +28,7 @@ Quoi de Neuf dans NVDA
 - Le traducteur braille liblouis a été mis à jour à la version 2.6.4. (#5341)
 - Plusieurs symboles (incluant les symboles mathématiques de base) ont été déplacés au niveau "quelques-uns" pour qu'ils soient annoncés par défaut. (#3799)
 - Si le synthétiseur le supporte, la parole devrait maintenant marquer une pause pour les parenthèses et le tiret demi cadratin (–). (#3799)
+- Quand on sélectionne du texte, le texte est annoncé avant l'indication de sélection et non après. (#1707)
 
 
 == Corrections de Bogues ==
@@ -29,11 +36,21 @@ Quoi de Neuf dans NVDA
 - Dans un graphique sous Microsoft Excel, la navigation avec certaines touches (comme changer de feuille avec contrôle+pagePrec et contrôle+pageSuiv) fonctionne maintenant correctement. (#5336)
 - Correction de l'apparence visuelle  des boutons dans le dialogue d'avertissement qui est affiché quand on essaie d'installer une version inférieure de NVDA. (#5325)
 - Sous Windows 8 et au-delà, NVDA démarre maintenant beaucoup plus tôt quand il est configuré pour démarrer après la connexion à Windows. (#308)
- - Si vous avez configuré cela avec une version précédente de NVDA, vous devrez le désactiver puis le réactiver dans le dialogue Paramètres Généraux pour que le changement prenne effet.
+ - Si vous avez configuré cela avec une version précédente de NVDA, vous devrez le désactiver puis le réactiver dans le dialogue Paramètres Généraux pour que le changement prenne effet. Suivez cette procédure :
+  + Ouvrez le dialogue "Paramètres Généraux".
+  + Décochez la case "Démarrer NVDA automatiquement après ma connexion à Windows".
+  + Pressez le bouton OK.
+  + Ouvrez de nouveau le dialogue "Paramètres Généraux".
+  + Cochez la case "Démarrer NVDA automatiquement après ma connexion à Windows".
+  + Pressez le bouton OK.
 - Améliorations de performances pour UI Automation incluant  l'Explorateur de fichiers et la barre des tâches. (#5293)
 - Améliorations de performance pour UI Automation incluant  l'Explorateur de fichier et la barre des tâches. (#5293)
 - NVDA passe maintenant correctement en mode formulaire quand on tabule vers des contrôles ARIA grid en lecture seule en mode navigation pour Mozilla Firefox et autres contrôles basés sur Gecko. (#5118)
 - NVDA annonce maintenant correctement "Pas de précédent" au lieu de "pas de suivant" quand il n'y a plus d'objet quand on glisse à gauche sur un écran tactile.
+- Correction des problèmes apparaissant à la frappe de plusieurs mots dans la zone de filtre dans le dialogue "Gestes de commandes". (#5426)
+- NVDA ne se bloque plus parfois quand on se reconnecte à un terminal braille HumanWare Brailliant BI/B series via USB. (#5406)
+- Dans les langues comportant des caractères conjoints, la description de caractère fonctionne maintenant comme prévu pour les caractères anglais en majuscule. (#5375)
+- NVDA ne devrait plus se bloquer occasionnellement à l'affichage du menu Démarrer de Windows 10. (#5417)
 
 
 = 2015.3 =
