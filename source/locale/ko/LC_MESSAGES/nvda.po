@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 19:12+1000\n"
-"PO-Revision-Date: 2015-10-25 19:45-0800\n"
-"Last-Translator: Joseph Lee <joseph.lee22590@gmail,com>\n"
+"POT-Creation-Date: 2015-11-02 17:08+1000\n"
+"PO-Revision-Date: 2015-11-08 10:11-0800\n"
+"Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
 "Language: ko_US\n"
@@ -1303,20 +1303,19 @@ msgstr "글자"
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
 msgctxt "symbolPreserve"
 msgid "never"
-msgstr ""
+msgstr "처리 않함"
 
 #. Translators: An option for when a symbol itself will be sent to the synthesizer.
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
 msgctxt "symbolPreserve"
 msgid "always"
-msgstr ""
+msgstr "처리함"
 
 #. Translators: An option for when a symbol itself will be sent to the synthesizer.
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
-#, fuzzy
 msgctxt "symbolPreserve"
 msgid "only below symbol's level"
-msgstr "기호 발음: %s"
+msgstr "기호 레벨 이하일때 처리"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -2748,6 +2747,10 @@ msgstr ""
 msgid "overflowing"
 msgstr "겹침"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "잠금 해제됨"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "선택 안됨"
@@ -4063,7 +4066,6 @@ msgstr "다음 갯체로 이동합니다. "
 
 # Reads, "no previous screen object."
 #. Translators: a message when there is no previous object when navigating
-#, fuzzy
 msgid "no previous"
 msgstr "이전 객체 없음"
 
@@ -4234,7 +4236,7 @@ msgstr "backspace"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "caps lock"
-msgstr "caps럭"
+msgstr "caps lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "ctrl"
@@ -4254,11 +4256,11 @@ msgstr "windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "enter"
-msgstr "엔터"
+msgstr "enter"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad enter"
-msgstr "num패드 enter"
+msgstr "숫자 키패드 enter"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "escape"
@@ -4286,7 +4288,7 @@ msgstr "딜리트"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad delete"
-msgstr "num패드 delete"
+msgstr "숫자 키패드 delete"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left arrow"
@@ -4310,7 +4312,7 @@ msgstr "메뉴"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "num lock"
-msgstr "num럭"
+msgstr "num lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "print screen"
@@ -4322,103 +4324,103 @@ msgstr "scroll럭"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 4"
-msgstr "num패드 4"
+msgstr "숫자 키패드 4"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 6"
-msgstr "num패드 6"
+msgstr "숫자 키패드 6"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 8"
-msgstr "num패드 8"
+msgstr "숫자 키패드 8"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 2"
-msgstr "num패드 2"
+msgstr "숫자 키패드 2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 9"
-msgstr "num패드 9"
+msgstr "숫자 키패드 9"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 3"
-msgstr "num패드 3"
+msgstr "숫자 키패드 3"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 1"
-msgstr "num패드 1"
+msgstr "숫자 키패드 1"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 7"
-msgstr "num패드 7"
+msgstr "숫자 키패드 7"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 5"
-msgstr "num패드 5"
+msgstr "숫자 키패드 5"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad divide"
-msgstr "num패드 divide"
+msgstr "숫자 키패드 /"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad multiply"
-msgstr "num패드 multiply"
+msgstr "숫자 키패드 *"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad minus"
-msgstr "num패드 minus"
+msgstr "숫자 키패드 -"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad plus"
-msgstr "num패드 plus"
+msgstr "숫자 키패드 +"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad decimal"
-msgstr "numpad decimal"
+msgstr "숫자 키패드 ."
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad insert"
-msgstr "numpad insert"
+msgstr "숫자 키패드 insert"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 0"
-msgstr "numLock numpad 0"
+msgstr "numLock 숫자 키패드 0"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 1"
-msgstr "numLock numpad 1"
+msgstr "numLock 숫자 키패드 1"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 2"
-msgstr "numLock numpad 2"
+msgstr "numLock 숫자 키패드 2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 3"
-msgstr "numLock numpad 3"
+msgstr "numLock 숫자 키패드 3"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 4"
-msgstr "numLock numpad 4"
+msgstr "numLock 숫자 키패드 4"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 5"
-msgstr "numLock numpad 5"
+msgstr "numLock 숫자 키패드 5"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 6"
-msgstr "numLock numpad 6"
+msgstr "numLock 숫자 키패드 6"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 7"
-msgstr "numLock numpad 7"
+msgstr "numLock 숫자 키패드 7"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 8"
-msgstr "numLock numpad 8"
+msgstr "numLock 숫자 키패드 8"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 9"
-msgstr "numLock numpad 9"
+msgstr "numLock 숫자 키패드 9"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "insert"
@@ -4584,15 +4586,20 @@ msgstr "들여쓰기 없음"
 msgid "%d characters"
 msgstr "글자수: %d"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "%s 선택"
+msgid "%s selected"
+msgstr "%s 선택됨"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
+msgid "%s unselected"
 msgstr "%s 선택 해제"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s 선택됨"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -5773,7 +5780,7 @@ msgstr "환경 저장됨"
 
 #. Translators: Message shown when current configuration cannot be saved such as when running NVDA from a CD.
 msgid "Could not save configuration - probably read only file system"
-msgstr "황경 파일 저장 실패 - 일기 전용 파일시스템일 수 있음"
+msgstr "환경 파일 저장 실패 - 읽기 전용 파일 시스템일 수 있음"
 
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
@@ -6390,7 +6397,7 @@ msgstr "모두 읽기시 적용"
 #. Translators: An error displayed when saving configuration profile triggers fails.
 msgid ""
 "Error saving configuration profile triggers - probably read only file system."
-msgstr "프로필 엑션 저장 실패 - 일기 전용 파일시스템일 수 있습니다."
+msgstr "프로필 엑션 저장 실패 - 읽기 전용 파일 시스템일 수 있습니다."
 
 #. Translators: The title of the configuration profile triggers dialog.
 msgid "Profile Triggers"
@@ -6444,7 +6451,7 @@ msgstr "경고"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
-msgstr "프로필 생성 실패 - 일기 전용 파일시스템일 수 있음"
+msgstr "프로필 생성 실패 - 읽기 전용 파일 시스템일 수 있음"
 
 #. Translators: The prompt asking the user whether they wish to
 #. manually activate a configuration profile that has just been created.
@@ -7424,7 +7431,7 @@ msgstr "레벨"
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
 msgid "Preserve"
-msgstr ""
+msgstr "엔진에서 처리"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
@@ -7436,7 +7443,7 @@ msgstr "레벨 (&L)"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
 msgid "&Send actual symbol to synthesizer"
-msgstr ""
+msgstr "기호 자체를 음성 엔진에서 처리 (&S)"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7469,7 +7476,7 @@ msgstr "단축키를 입력하십시오:"
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
-msgstr "사용자 단축키 설정 저장 실패 - 일기 전용 파일시스템일 수 있음"
+msgstr "사용자 단축키 설정 저장 실패 - 읽기 전용 파일 시스템일 수 있음"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -7573,6 +7580,10 @@ msgstr "바탕 화면"
 msgid "default color"
 msgstr "기본 색상"
 
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "읽기 전용 셀"
+
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
 msgstr "차트, 주석 또는 공식이 있는 셀 목록을 보여줍니다"
@@ -7661,10 +7672,10 @@ msgstr ""
 "다. 두번 누르면 이 설정을 해제합니다."
 
 msgid "Input Message is {title}: {message}"
-msgstr ""
+msgstr "입력 메시지: {title}: {message}"
 
 msgid "Input Message is {message}"
-msgstr ""
+msgstr "입력 메시지: {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -8579,6 +8590,12 @@ msgstr "HIMS 한소네/브레일 에지"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
+
+#~ msgid "selecting %s"
+#~ msgstr "%s 선택"
+
+#~ msgid "unselecting %s"
+#~ msgstr "%s 선택 해제"
 
 #~ msgid "unrevised"
 #~ msgstr "내용 변경 않됨"

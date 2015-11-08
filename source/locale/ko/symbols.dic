@@ -40,17 +40,18 @@ negative number	마이너스	none	norep
 # Standard punctuation/symbols
 !	느낌표	all
 "	따옴표	most
-\#	샵	most
+\#	샵	some
 $	달러	all	norep
 ￡	전각파운드	all	norep
 €	euro	all	norep
 ￠	쎈트	all	norep
 ￥	전각엔화표	all	norep
+₹	루피	some	norep
 %	percent	some
 &	and	some
 '	어퍼스트로피	all
-(	괄호열기	most
-)	괄호닫기	most
+(	괄호열기	most	always
+)	괄호닫기	most	always
 *	star	some
 +	plus	some
 ,	콤마	all	always
@@ -59,8 +60,8 @@ $	달러	all	norep
 /	슬래시	some
 :	콜런	most	norep
 ;	세미콜런	most
-<	less	most
->	greater	most
+<	less	some
+>	greater	some
 =	등호	some
 ?	물음표	all
 @	골뱅이	some
@@ -84,7 +85,7 @@ _	언더바	most
 ”	큰따옴표 닫기	most
 ‘	작은따옴표 열기	most
 ’	작은따옴표 닫기	most
-–	en dash	most
+–	en dash	most	always
 —	em dash	most
 ●	검정 동그라미 	most
 ¨	diaeresis	most
@@ -105,13 +106,60 @@ _	언더바	most
 ®	등록기호	some
 ™	트레이드마크	some
 ©	저작권 기호	some
-±	플러스마이너스	most
-×	곱하기	most
-÷	나누기	most
+±	플러스마이너스	some
+×	곱하기	some
+÷	나누기	some
 ←	왼쪽 화살표	some
 →	오른쪽 화살표	some
 ✓	check	some
 ✔	check	some
+
+#Mathematical Operators U+2200 to U+220F
+
+∀	모든 기호 	 	none
+∁	여집합 기호		none
+∂	Partial Derivative	none
+∃	존재하다 	none
+∄	존재하지 않는다 	none
+∅	공집합 기호	none
+∆	증분 기호		none
+∇	나블라 기호		none
+∈	속한다 	none
+∉	속하지 않는다 	none
+∊	속한다 작은 기호		none
+∋	원소로 하다 	none
+∌	원소로 하지 않는다 	none
+∍	원소로 하다 작은 기호		none
+∎	증명의 끝 기호		none
+∏	N-ARY PRODUCT	none
+
+# Miscellaneous Mathematical Operators
+
+∑	N-ARY SUMMATION	none
+√	제곱근 기호	none
+∛	세제곱근 기호	none
+∜	네제곱근 기호	none
+∝	비례하다 기호	none
+∞	무한대 기호	none
+∟	직각 기호	none
+∠	각 기호	none
+∥	평행하다 기호	none
+∦	평행하지 않다 기호	none
+∧	논리곱 기호	none
+∨	논리합 기호	none
+∩	교집합 기호	none
+∪	합집합 기호	none
+∫	적분 기호	none
+∴	그럼으로 기호	none
+∵	왜냐하면 기호	none
+∶	비율 기호	none
+∷	비례 기호	none
+≤	보다 작다 또는 이퀄 기호	none
+≥	보다 크다 또는 이퀄 기호	none
+⊂	포함된다 기호	none
+⊃	포함한다 기호	none
+⊆	포함된다 또는 이퀄 기호	none
+⊇	포함한다 또는 이퀄 기호	none
 
 #Char names:
 ㄱ	기역	none
