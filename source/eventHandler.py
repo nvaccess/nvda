@@ -245,9 +245,11 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 	if eventName == "alert" and winUser.getClassName(winUser.getAncestor(windowHandle, winUser.GA_PARENT)) == "ToastChildWindowClass":
 		# Toast notifications.
 		return True
-	if windowHandle == winUser.getDesktopWindow():
-		# #3897: We fire some events such as switchEnd and menuEnd on the desktop window
-		# because the original window is now invalid.
+	if eventName in ("menuEnd", "switchEnd", "desktopSwitch"):
+		# #5302, #5462: These events can be fired on the desktop window
+		# or windows that would otherwise be blocked.
+		# Platform API handlers will translate these events to focus events anyway,
+		# so we must allow them here.
 		return True
 
 	fg = winUser.getForegroundWindow()
