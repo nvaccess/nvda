@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 19:12+1000\n"
-"PO-Revision-Date: 2015-10-24 10:50+0530\n"
+"POT-Creation-Date: 2015-11-02 17:08+1000\n"
+"PO-Revision-Date: 2015-11-08 13:13+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -2402,7 +2402,7 @@ msgstr "வரியுரு"
 
 #. Translators: Identifies a chart (commonly seen on some websites and in some Office documents).
 msgid "chart"
-msgstr "விளக்க அட்டவணை"
+msgstr "விளக்கப்படம்"
 
 #. Translators: Identifies a cursor object.
 msgid "cursor"
@@ -2743,6 +2743,10 @@ msgstr "வெட்டப்பட்டது"
 #. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
 msgid "overflowing"
 msgstr "பொங்கி வழிகிறது"
+
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "பூட்டப்படாதது"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -4613,15 +4617,20 @@ msgstr "ஓரச் சீர்மையில்லை"
 msgid "%d characters"
 msgstr "%d வரியுருக்கள்"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "%s தெரிவாகியது "
+msgid "%s selected"
+msgstr "%s தெரிவாகியது"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "%s தெரிவு நீக்கப்பட்டது "
+msgid "%s unselected"
+msgstr "%s தெரிவு நீக்கப்பட்டது"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s மாற்றாகத் தெரிவாகியது"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -6362,12 +6371,12 @@ msgstr "எல்லாத் தூண்டுதல்களையும் �
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
 msgid "(normal configuration)"
-msgstr "(இயல்பான அமைவடிவம்)"
+msgstr "(இயல் அமைவடிவம்)"
 
 #. Translators: Reported for a profile which is being edited
 #. in the Configuration Profiles dialog.
 msgid "editing"
-msgstr "தொகுத்தல்"
+msgstr "தொகுக்கப்படுகிறது"
 
 #. Translators: Reported for a profile which has been manually activated
 #. in the Configuration Profiles dialog.
@@ -7631,6 +7640,10 @@ msgstr "மேசைத்தளம்"
 msgid "default color"
 msgstr "இயல்நிறம்"
 
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "இச்சிறுகட்டம் தொகுக்கப்பட இயலாதது"
+
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
 msgstr ""
@@ -8666,6 +8679,12 @@ msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிர
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "ஹிம்ஸ் சிங்க் பிரெயில்"
+
+#~ msgid "selecting %s"
+#~ msgstr "%s தெரிவாகியது "
+
+#~ msgid "unselecting %s"
+#~ msgstr "%s தெரிவு நீக்கப்பட்டது "
 
 #~ msgid "unrevised"
 #~ msgstr "திருத்தப்படாதது"

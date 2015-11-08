@@ -4,6 +4,7 @@ Que hai de Novo no NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2015.4 =
+O subliñable nesta versión inclúe melloras de rendemento en Windows 10; a inclusión no Centro de Accesibilidade en Windows 8 e posterior; melloras para Microsoft Excel, incluindo o listado e o renomeado de follas e o aceso a celdas bloqueadas en follas con protección; e apoio para a edición de texto enriquecido en Mozilla Firefox, Google Chrome e Mozilla Thunderbird.
 
 == Novas Características ==
 - NVDA agora aparece no Centro de Accesibilidade en Windows 8 e posterior. (#308)
@@ -14,6 +15,11 @@ Que hai de Novo no NVDA
 - Microsoft Excel: agora é posible listar e renomear follas dende a Lista de Elementos do NVDA (NVDA+f7). (#4630, #4414)
 - Agora é posible configurar se os símbolos actuais se envían ós sintetizadores de voz (ex.: para causar unha pausa ou para cambiar a entoación) no diálogo Pronunciación de Símbolos. (#5234)
 - En Microsoft Excel, NVDA agora anuncia calquera mensaxe de entrada posto polo autor da folla nas celdas. (#5051)
+- Apoio para as pantallas braille Baum Pronto! V4 e VarioUltra cando se conecten a través do Bluetooth. (#3717)
+- Apoio para a edición de texto enriquecido en aplicacións de Mozilla como Google Docs co apoio ó braille habilitado en Mozilla Firefox e composición HTML en Mozilla Thunderbird. (#1668)
+- Apoio para edición ou texto enriquecido en Google Chrome e navegadores baseados en Chrome como Google Docs co apoio braille habilitado. (#2634)
+ - Esto require de Chrome versión 47 ou posterior.
+- No modo exploración en Microsoft Excel, podes navegar a celdas bloqueadas en follas protexidas. (#4952)
 
 
 == Cambios ==
@@ -22,16 +28,28 @@ Que hai de Novo no NVDA
 - Actualizado o transcriptor braille liblouis translator  a 2.6.4. (#5341)
 - Varios símbolos (incluindo símbolos básicos matemáticos) movéronse ó nível some tal que sexan falados por omisión. (#3799)
 - Se o sintetizador o soporta, a voz agora debería se pausar para os parénteses e o guión final (–). (#3799)
+- Ó se selecionar texto, o texto anúnciase antes da indicación da selección en lugar de despois. (#1707)
+
 
 == Corrección de fallos ==
 - Grandes melloras de rendemento ó navegar pola barra de mensaxes en Outlook 2010/2013. (#5268)
 - Nun gráfico en Microsoft Excel, ó navegar con certas teclas (como ó cambiar de folla con control+rePáx e control+avPáx) agora funciona correctamente. (#5336)
 - Correxida a forma visual dos botóns no diálogo de advertencia que se amosa cando tentas actualizar NVDA a unha versión anterior. (#5325)
 - En Windows 8 e posterior, NVDA agora arranca moito máis rápido cando se configurou para iniciarse despois de autentificarse en Windows. (#308)
- - Se habilitaches esto utilizando unha versión anterior  do NVDA, necesitarás deshabilitalo e habilitalo de novo no diálogo  Opcións Xerais para que o cambio teña efecto.
+ - Se habilitaches esto utilizando unha versión anterior  do NVDA, necesitarás deshabilitalo e habilitalo de novo no diálogo  Opcións Xerais para que o cambio teña efecto. Segue este procedemento:
+  + Abre o diálogo Opcións Xerais.
+  + Desmarca a caixa de verificación Iniciar Automáticamente NVDA Despois de Autentificarse en Windows.
+  + Preme o botón Aceptar.
+  + Abre o diálogo Opcións Xerais de novo.
+  + Marca a caixa de verificación Iniciar Automáticamente NVDA Despois de Autentificarse en Windows.
+  + Preme o botón Aceptar.
 - Melloras de rendemento para UI Automation incluindo Explorador de Arquivos e Visualizador de Tarefas. (#5293)
 - NVDA agora cambia correctamente a modo foco cando se tabula a controis read-only ARIA grid en modo Exploración para Mozilla Firefox e outros controis baseados en Gecko. (#5118)
 - NVDA agora anuncia correctamente "non hai anterior" en lugar de "non hai seguinte" cando non hai máis obxectos ó facerse clic esquerdo nunha pantalla tactil.
+- Correxidos problemas ó se teclear varias palabras dentro do campo filtro no diálogo Xestos de Entrada. (#5426)
+- NVDA xa non se colga nalgúns casos cando se reconecta a unha pantalla HumanWare Brailliant BI/B series a través do USB. (#5406)
+- En linguas con caracteres conxunción, as descripcións de carácter agora funciona como debera para mayúsculas de caracteres en inglés. (#5375)
+- NVDA xa non debería colgarse ocasionalmente ó despregar o Menú de Inicio en Windows 10. (#5417)
 
 
 = 2015.3 =

@@ -5,6 +5,56 @@
 
 Tradução por Rui Fontes, a partir da versão 2015.1, adaptação por Rui Batista e Rui Fontes da tradução brasileira nas versões anteriores.
 
+= 2015.4 =
+Os destaques desta versão incluem melhorias da performance em Windows 10, inclusão do NVDA no Centro de Facilidades de Acesso  no Windows 8 e superiores, Melhorias no suporte ao Microsoft Excel, incluindo listagem e renomeação de folhas e acesso a células bloqueadas em folhas protegidas, e suporte na edição de conteúdo rich text em Mozilla Firefox, Google Chrome e Mozilla Thunderbird.
+
+== Novas Funcionalidades ==
+- O NVDA já aparece no Centro de Facilidades de Acesso no Windows 8 e seguintes (#308)
+- Ao mover-se entre células no Excel, as alterações de formatação são automaticamente anunciadas, se as opções apropriadas estiverem activadas no diálogo "Formatação de documentos" do NVDA (#4878)
+- Foi adicionada a opção "Anunciar ênfase" ao diálogo "Formatação de documentos" do NVDA. Activada por padrão, esta opção permite ao NVDA anunciar a existência de texto emfatisado em documentos. Para já, é apenas suportado para etiquetas "em" e "strong" no Modo de navegação  para Internet Explorer e outros controlos MSHTML. (#4920)
+- A existência de texto inserido  e apagado é anunciado no modo de navegação no Internet Explorer e outros controlos MSHTML, se a opção  "Anunciar revisões do editor" do NVDA estiver activada. (#4920)
+- Na lista de elementos do NVDA, para o Microsoft Word, mais informação é mostrada, como as propriedades de formatação que foram alteradas. (#4920)
+- Microsoft Excel: Já é possível listar e renomear folhas na lista de elementos do NVDA (NVDA+f7). (#4630, #4414)
+- Agora o NVDA anuncia, no Microsoft Excel, qualquer mensagem de entrada definida pelo autor para a célula. (#5051)
+- No modo de navegação no Microsoft Excel, pode navegar para células bloqueadas em folhas protegidas. (#4952)
+
+- Agora é possível configurar se os próprios símbolos são enviados ao sintetizador (e.g. para provocar uma pausa ou mudança de inflexão) no diálogo Pronúncia de pontuação/símbolo. (#5234)
+- Suporte para as linhas Braille Baum Pronto! V4 e VarioUltra quando ligadas por Bluetooth. (#3717)
+- Suporte para a edição de rich text  em aplicações Mozilla, tais como Documentos Google, com o suporte Braille activado no Mozilla Firefox e na composição em HTML no Mozilla Thunderbird. (#1668)
+- Suporte para a edição de rich text em Google Chrome e outros navegadores baseados no Chrome, tais como Documentos do Google com o suporte Braille activado. (#2634)
+ - Requer Chrome versão 47 ou superior.
+
+
+== Alterações ==
+- A opção  "Anunciar revisões do editor" do diálogo "Formatação de Documentos" do NVDA vem agora marcada por predefinição. (#4920)
+- Ao mover-se por caractere, no Microsoft Word, com a opção "Anunciar revisões do editor" do NVDA activada, é anunciada menos informação das revisões, o que torna a navegação mais eficiente. Para ver mais informação, use a Lista de Elementos. (#4920)
+- Actualizado o liblouis braille translator para a versão 2.6.4. (#5341)
+- Vários símbolos (incluindo símbolos matemáticos básicos) foram movidos para o nível Algum, para que sejam falados por padrão. (#3799)
+- Se o sintetizador supurtar, a voz deve passar a fazer uma pausa para parênteses e travessão (–). (#3799)
+- Ao seleccionar texto, o texto é anunciado antes da indicação de selecção, em vez de o ser depois. (#1707)
+
+
+== Correcção de falhas ==
+- Grande melhoria na resposta durante a navegação na lista de mensagens do Outlook 2010/2013. (#5268)
+- Num gráfico do Microsoft Excel, a navegação com certos comandos, como os de mudança de folha, (control+pageUp e control+pageDown) agora funciona correctamente. (#5336)
+- Corrigida a aparência visual dos botões no diálogo que é mostrado ao tentar fazer um downgrade do NVDA. (#5325)
+- No Windows 8 e seguintes, o NVDA arranca muito mais cedo quando configurado para iniciar após o início de sessão. (#308)
+ - Se activou esta opção com uma versão anterior do NVDA, terá que a desactivar e reactivar novamente em Preferências, opções derais, para que as alterações tenham efeito:
+  - Abra a caixa de diálogo Definições Gerais;
+  - Desmarque a opção Iniciar o NVDA automaticamente depois de iniciar sessão no Windows;
+  -  Pressione o botão OK;
+  -  Abra novamente a caixa de diálogo Definições Gerais;
+  - Marque a opção Iniciar o NVDA automaticamente depois de iniciar sessão no Windows;
+  - Pressione o botão OK.
+- Melhoria na performance com a UI Automation, o que se reflecte no Explorador de Ficheiros e Gestor de Tarefas. (#5293)
+- O NVDA já alterna correctamente para o modo de  foco, quando após um Tab entra em controlos de grelha read-only ARIA apenas de leitura no modo de navegação no Mozilla Firefox e outros controlos baseados em Gecko. (#5118)
+- O NVDA agora anuncia correctamente Sem anterior" em vez de "Sem próximo" quando não há mais objectos quando se varre para a esquerda num ecrã táctil.
+- Corrigido o problema ao escrever múltiplas palavras no campo Filtro no diálogo Comandos. (#5426)
+- O NVDA já não pára ao religar a uma linha Braille HumanWare Brailliant BI/B series via USB. (#5406)
+- Em idiomas com caracteres conjuntos, a descrição dos caracteres já funciona como devido para letras maiúsculas inglesas. (#5375)
+- O NVDA já não deve parar ocasionalmente ao abrir o menu Iniciar no Windows 10. (#5417)
+ 
+
 = 2015.3 =
 Os destaques desta versão incluem o suporte inicial ao Windows 10, a funcionalidade de poder desactivar a leitura rápida no modo de navegação,(útil para algumas aplicações web), vários melhoramentos no Internet Explorer e solucionado o problema da introdução de texto em certas aplicações com uma linha Braille ligada.
 

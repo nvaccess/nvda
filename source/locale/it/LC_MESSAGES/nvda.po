@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-08 19:11+1000\n"
-"PO-Revision-Date: 2015-09-28 09:54+0100\n"
+"POT-Creation-Date: 2015-11-02 17:08+1000\n"
+"PO-Revision-Date: 2015-11-04 14:53+0100\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -1295,6 +1295,24 @@ msgstr "Tutta"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "Carattere"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "mai"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "sempre"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "Solo al di sotto del livello del simbolo"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -2726,6 +2744,10 @@ msgstr "Ritagliato"
 msgid "overflowing"
 msgstr "Sporgente"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "non protetta"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "non selezionato"
@@ -3077,19 +3099,16 @@ msgid "Toggles on and off the reporting of revisions"
 msgstr "Attiva o disattiva la lettura delle revisioni"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
-#, fuzzy
 msgid "report emphasis off"
-msgstr "Leggi Pagine Disattivato"
+msgstr "Leggi testo enfatizzato disattivato"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
-#, fuzzy
 msgid "report emphasis on"
-msgstr "Leggi Pagine Attivato"
+msgstr "Leggi testo enfatizzato attivato"
 
 #. Translators: Input help mode message for toggle report emphasis command.
-#, fuzzy
 msgid "Toggles on and off the reporting of emphasis"
-msgstr "Attiva o disattiva la lettura delle pagine"
+msgstr "Attiva o disattiva la lettura del testo enfatizzato"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -4093,6 +4112,10 @@ msgid ""
 "hierarchy"
 msgstr "Va all'oggetto successivo nella gerarchia navigazione oggetti"
 
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "Primo"
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
@@ -4610,15 +4633,20 @@ msgstr "Nessun rientro"
 msgid "%d characters"
 msgstr "%d caratteri"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "Seleziono %s"
+msgid "%s selected"
+msgstr "%s selezionato"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "Deseleziono %s"
+msgid "%s unselected"
+msgstr "%s non selezionato"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "adesso selezionato %s"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4714,24 +4742,20 @@ msgid "line %s"
 msgstr "Riga %s"
 
 #. Translators: Reported when text is marked as having been inserted
-#, fuzzy
 msgid "inserted"
-msgstr "Insert"
+msgstr "inserito"
 
 #. Translators: Reported when text is no longer marked as having been inserted.
-#, fuzzy
 msgid "not inserted"
-msgstr "non selezionato"
+msgstr "non inserito"
 
 #. Translators: Reported when text is marked as having been deleted
-#, fuzzy
 msgid "deleted"
-msgstr "Cancella"
+msgstr "cancellato"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
-#, fuzzy
 msgid "not deleted"
-msgstr "non selezionato"
+msgstr "non cancellato"
 
 #. Translators: Reported when text is revised.
 #, python-format
@@ -4739,36 +4763,33 @@ msgid "revised %s"
 msgstr "%s revisionato"
 
 #. Translators: Reported when text is not revised.
-#, fuzzy, python-format
+#, python-format
 msgid "no revised %s"
-msgstr "%s revisionato"
+msgstr "%s non ha revisioni"
 
 #. Translators: Reported when text is marked
-#, fuzzy
 msgid "marked"
-msgstr "Marcatore del punto di i inizio"
+msgstr "Marcato"
 
 #. Translators: Reported when text is no longer marked
-#, fuzzy
 msgid "not marked"
-msgstr "Marcatore del punto di i inizio"
+msgstr "Non marcato"
 
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
-msgstr ""
+msgstr "evidenziato"
 
 #. Translators: Reported when text is no longer marked as strong (e.g. bold)
-#, fuzzy
 msgid "not strong"
-msgstr "Non %s"
+msgstr "non evidenziato"
 
 #. Translators: Reported when text is marked as emphasised
 msgid "emphasised"
-msgstr ""
+msgstr "enfatizzato"
 
 #. Translators: Reported when text is no longer marked as emphasised
 msgid "not emphasised"
-msgstr ""
+msgstr "non enfatizzato"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -7259,9 +7280,8 @@ msgstr "Leggi le revisioni"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#, fuzzy
 msgid "Report e&mphasis"
-msgstr "Leggi le &pagine"
+msgstr "Leggi testo enfatizzato"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7492,6 +7512,11 @@ msgstr "Simbolo"
 msgid "Level"
 msgstr "Livello"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "conserva"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "Cambia simbolo"
@@ -7499,6 +7524,10 @@ msgstr "Cambia simbolo"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "&Livello"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "Manda il &simbolo corrente al sintetizzatore"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7637,6 +7666,10 @@ msgstr "Desktop"
 msgid "default color"
 msgstr "Colore predefinito"
 
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "Questa cella non è modificabile"
+
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
 msgstr "Presenta un elenco di grafici, celle con commenti e celle con formule"
@@ -7655,6 +7688,11 @@ msgstr "C&ommento"
 #. in the browse mode Elements List dialog.
 msgid "&Formula"
 msgstr "&Formula"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "Foglio"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7722,6 +7760,12 @@ msgstr ""
 "Premuto una volta questa cella verrà impostata come la prima "
 "dell'intestazione riga per tutte le celle più a destra e più in basso in "
 "questa regione. Una doppia pressione rimuoverà l'impostazione."
+
+msgid "Input Message is {title}: {message}"
+msgstr "Il messaggio immesso è  {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "Il messaggio immesso è {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -8477,9 +8521,8 @@ msgstr "Frame testo"
 msgid "comment: {text} by {author} on {date}"
 msgstr "commento: {text} di {author} del {date}"
 
-#, fuzzy
 msgid "{revisionType} {description}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} di {author} del {date}"
+msgstr "{revisionType} {description}: {text} di {author} in data {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8656,6 +8699,12 @@ msgstr "HIMS serie Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "selecting %s"
+#~ msgstr "Seleziono %s"
+
+#~ msgid "unselecting %s"
+#~ msgstr "Deseleziono %s"
 
 #~ msgid "unrevised"
 #~ msgstr "Non revisionato"

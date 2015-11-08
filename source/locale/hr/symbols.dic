@@ -36,7 +36,7 @@ in-word '	izostavnik	all	norep
 # Standard punctuation/symbols
 !	uskličnik	all
 "	navodnik	most
-\#	broj	most
+\#	broj	some
 $	dolar	some
 £	funta	some
 €	euro	some
@@ -46,8 +46,8 @@ $	dolar	some
 %	posto	some
 &	trgovačko i	some
 '	izostavnik	all
-(	otvorena zagrada	most
-)	zatvorena zagrada	most
+(	otvorena zagrada	most	always
+)	zatvorena zagrada	most	always
 *	zvjezdica	most
 +	plus	most
 ,	zarez	all	always
@@ -56,8 +56,8 @@ $	dolar	some
 /	kosa crta	some
 :	dvotočka	most
 ;	točka zarez	most
-<	manje od	most
->	veće od	most
+<	manje od	some
+>	veće od	some
 =	jednako	most
 ?	upitnik	all
 @	et	some
@@ -79,7 +79,7 @@ _	podcrtano	most
 	oznaka	some
 “	lijevi navodnik	most
 ”	desni navodnik	most
-–	en crtica	most
+–	en crtica	most	always
 —	em crtica	most
 ●	kružić	most
 ¨	diaeresis	most

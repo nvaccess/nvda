@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 19:12+1000\n"
+"POT-Creation-Date: 2015-11-02 17:08+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jorge Pérez Pérez <jorgtum@gmail.com>\n"
 "Language-Team: Softaragonés\n"
@@ -2746,6 +2746,10 @@ msgstr "retallau"
 msgid "overflowing"
 msgstr "esvolastriando"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "desbloquiau"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "no trigau"
@@ -3168,7 +3172,7 @@ msgstr "Enchega y desenchega l'anunciau d'as pachinas"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
-msgstr "Anunciar os numeros de linia desenchegau"
+msgstr "Anunciar os numers de linia desenchegau"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers on"
@@ -4638,15 +4642,20 @@ msgstr "no bi ha garra sangría"
 msgid "%d characters"
 msgstr "%d caracters"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "Seleccionando %s"
+msgid "%s selected"
+msgstr "%s seleccionau"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "deseleccionando %s"
+msgid "%s unselected"
+msgstr "%s deseleccionau"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s seleccionau en cuenta"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -7656,6 +7665,10 @@ msgstr "Escritorio"
 msgid "default color"
 msgstr "color predeterminada"
 
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "Ista celda no ye editable"
+
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
 msgstr ""
@@ -8689,6 +8702,12 @@ msgstr "Serie d'a HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "selecting %s"
+#~ msgstr "Seleccionando %s"
+
+#~ msgid "unselecting %s"
+#~ msgstr "deseleccionando %s"
 
 #~ msgid "unrevised"
 #~ msgstr "sin revisar"

@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2015.4 =
+Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. suorituskyvyn parannukset Windows 10:ssä, sisällyttäminen Windows 8:n ja uudempien Helppokäyttökeskukseen, parannukset Microsoft Exceliin (mukaan lukien laskentataulukoiden näyttäminen ja uudelleennimeäminen Elementtilistassa) sekä pääsy suojattujen laskentataulukoiden lukittuihin soluihin, ja muotoiluja tukevan tekstin muokkaaminen Mozilla Firefoxissa, Google Chromessa ja Mozilla Thunderbirdissä.
 
 == Uudet ominaisuudet ==
 - NVDA näkyy nyt Windows 8:n ja uudempien Helppokäyttökeskuksessa. (#308)
@@ -14,6 +15,11 @@
 - Microsoft Excel: laskentataulukoiden näyttäminen ja uudelleennimeäminen on nyt mahdollista NVDA:n Elementtilistasta (NVDA+F7). (#4630, #4414)
 - Symboleiden puhuminen -valintaikkunassa on nyt mahdollista määrittää, lähetetäänkö todelliset merkit syntetisaattoreille (esim. tauon pitämiseksi tai äänensävyn muuttamiseksi). (#5234)
 - NVDA lukee nyt Microsoft Excelissä laskentataulukon tekijän soluihin määrittämät syöttöilmoitukset. (#5051)
+- Tuki Baum Pronto! V4- ja VarioUltra -pistenäytöille bluetoothin kautta kytkettäessä. (#3717)
+- Tuki muotoilut mahdollistavan tekstin muokkaamiselle Mozilla-sovelluksissa, kuten Firefoxissa Google Docsille pistenäyttötuen ollessa käytössä sekä Thunderbirdissä HTML-viestien luomiselle. (#1668)
+- Tuki muotoilut mahdollistavan tekstin muokkaamiselle Google Chromessa ja muissa Chrome-pohjaisissa selaimissa esim. Google Docsia käytettäessä pistenäyttötuen ollessa käytössä. (#2634)
+ - Tämä edellyttää Chromen versiota 47 tai uudempaa.
+- Microsoft Excelissä on nyt mahdollista siirtyä selaustilassa suojattujen laskentataulukoiden lukittuihin soluihin. (#4952)
 
 
 == Muutokset ==
@@ -22,18 +28,29 @@
 - Liblouis-pistekirjoituskääntäjä päivitetty versioksi 2.6.4. (#5341)
 
 - Useat symbolit (matemaattiset perusmerkit mukaan lukien) on siirretty jotain-tasolle, jotta ne puhutaan oletusarvoisesti. (#3799)
-- Puheessa pitäisi nyt kuulua tauko alku- ja loppusulkujen sekä lyhyen ajatusviivan (–) kohdalla, mikäli syntetisaattori tukee sitä. (#3799)
+- Puheessa pitäisi nyt kuulua tauko alku- ja loppusulkujen sekä lyhyen ajatusviivan (–) kohdalla, mikäli syntetisaattori tukee tätä ominaisuutta. (#3799)
+- Valittua tekstiä ei enää lueta valinnan ilmaisemisen jälkeen, vaan sitä ennen. (#1707)
 
 
 == Korjatut ohjelmavirheet ==
 - Suorituskykyä paranneltu merkittävästi Outlook 2010:n/2013:n viestiluettelossa liikuttaessa. (#5268)
 - Tietyillä näppäimillä liikkuminen (kuten laskentataulukon vaihtaminen Control+Page up- ja Control+Page down -näppäimillä) toimii nyt oikein Microsoft Excel -kaavioissa. (#5336)
 - Korjattu painikkeiden visuaalinen ulkoasu varoitusvalintaikkunassa, joka näytetään yritettäessä päivittää NVDA:ta alaspäin. (#5325)
-- Kun NVDA on määritetty käynnistymään Windowsiin kirjautumisen jälkeen, se käynnistyy nyt paljon aiemmin Windows 8:ssa ja uudemmissa käyttöjärjestelmissä. (#308)
- - Jos olet ottanut tämän asetuksen käyttöön aiemmassa NVDA:n versiossa, sinun on poistettava se käytöstä ja otettava sitten uudelleen käyttöön Yleiset asetukset -valintaikkunassa, jotta muutos tulee voimaan.
+- Kun NVDA on määritetty käynnistymään Windowsiin kirjautumisen jälkeen, se käynnistyy nyt paljon aiemmin Windows 8:ssa ja uudemmissa. (#308)
+ - Jos olet ottanut tämän asetuksen käyttöön aiemmassa NVDA:n versiossa, sinun on poistettava se käytöstä ja otettava sitten uudelleen käyttöön Yleiset asetukset -valintaikkunassa, jotta muutos tulee voimaan. Tee seuraavasti:
+  + Avaa Yleiset asetukset -valintaikkuna.
+  + Poista valinta Käynnistä automaattisesti sisäänkirjautumisen jälkeen -valintaruudusta.
+  + Paina OK-painiketta.
+  + Avaa Yleiset asetukset -valintaikkuna uudestaan.
+  + Valitse Käynnistä automaattisesti sisäänkirjautumisen jälkeen -valintaruutu.
+  + Paina OK-painiketta.
 - UI Automation -rajapinnan suorituskykyä paranneltu mm. Resurssienhallinnassa ja Tehtävienhallinnassa. (#5293)
 - NVDA siirtyy nyt asianmukaisesti vuorovaikutustilaan liikuttaessa selaustilassa Sarkain-näppäimellä vain luku -tyyppisten ARIA-ruudukkosäädinten kohdalle Mozilla Firefoxissa ja muissa Gecko-pohjaisissa sovelluksissa. (#5118)
 - NVDA ilmoittaa nyt asianmukaisesti "ei edellistä" virheellisen "ei seuraavaa" sijaan, kun objekteja ei ole enempää pyyhkäistäessä vasemmalle kosketusnäytöllä.
+- Korjattu ongelmia, joita ilmeni kirjoitettaessa useita sanoja Syöte-eleet-valintaikkunan Suodata-muokkauskenttään. (#5426)
+- NVDA ei jää enää jumiin joissakin tilanteissa yhdistettäessä uudelleen HumanWare Brailliant BI/B -pistenäyttöä USB:n kautta. (#5406)
+- Merkkikuvaukset toimivat nyt odotetusti latinalaisille suuraakkosille kielissä, joissa käytetään yhdistelmämerkkejä. (#5375)
+- NVDA:n ei pitäisi enää jäädä välillä jumiin Windows 10:n Käynnistä-valikkoa avattaessa. (#5417)
 
 
 = 2015.3 =

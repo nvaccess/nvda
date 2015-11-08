@@ -1,4 +1,5 @@
 ﻿Manual do Utilizador do NVDA NVDA_VERSION
+Manual do Utilizador do NVDA NVDA_VERSION
 Traduzido por: Ângelo Abrantes, Diogo Costa, Elton Lopes, Rui Batista e Rui Fontes
 
 %!includeconf: ../userGuide.t2tconf
@@ -32,8 +33,7 @@ As características principais são:
 
 ++ Internacionalização ++
 É importante que os indivíduos tenham o mesmo acesso às tecnologias, em qualquer parte do mundo, independentemente do idioma que falem.
-Para além do Inglês, o NVDA está traduzido em 47 idiomas, incluindo: Africânder, Albanês, Alemão, Amárico, Árabe, Aragonês, Búlgaro, Castelhano (Espanha e Colômbia), Catalão, Checo, Chinês Tradicional e simplificado, Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Farsi, Finlandês, Francês, Galego, Grego, Georgiano, Hebraico, Holandês, Húngaro, Indiano, Islandês, Irlandês, Italiano, Japonês, Nepalês, Norueguês, Polaco, Português (Portugal e Brasil), Punjabi, Romeno, Russo, Sérvio, Sueco, Tailandês, Tamil, Turco, Ucraniano e Vietnamita.
-
+					
 ++ Suporte de Sintetizadores de Voz ++
 Para além de fornecer as mensagens e interface em diversos idiomas, o NVDA também pode permitir ao utilizador a leitura em qualquer idioma, desde  que tenha um sintetizador de voz, que o possa falar.
 
@@ -540,7 +540,7 @@ O MathPlayer está disponível como download gratuito em http://www.dessci.com/e
 
 O NVDA suporta os seguintes tipos de conteúdo matemático:
 - MathML no Mozilla Firefox e Microsoft Internet Explorer.
-- Design Science MathType no Microsoft Word e PowerPoint.
+- Design Science MathType no Microsoft Word e PowerPoint. O MathType tem que estar instalado para que isto funcione. A versão Trial é suficiente.
 - MathML no Adobe Reader. Note que este ainda não é um padrão oficial, portanto ainda não está disponível nenhum software que produza este conteúdo.
 -
 
@@ -568,24 +568,87 @@ Por favor, consulte a documentação do MathPlayer para mais informações.
 
 Quando quiser voltar à leitura do documento, simplesmente pressione Escape.
 
- + Comandos Específicos do NVDA para Aplicações +
-O NVDA fornece comandos de teclado adicionais para algumas aplicações, que realizam determinadas tarefas ou que dão acesso a funcionalidades que não são acessíveis, de outra forma, aos utilizadores de leitores de ecrã.
+ + Funcionalidades Específicas para Aplicações +
+O NVDA fornece funcionalidades adicionais para algumas aplicações, que realizam determinadas tarefas ou que dão acesso a funcionalidades que não são acessíveis, de outra forma, aos utilizadores de leitores de ecrã.
 
 ++ Microsoft Word ++
+
++++ Leitura Automática de Títulos de Coluna e Linha +++
+O NVDA é capaz de anunciar automaticamente os títulos de linha e coluna ao navegar por tabelas no Microsoft Word.
+Para isso é necessário que, em primeiro lugar, a opção "Anunciar títulos da linha/coluna da tabela" no diálogo  "Formatação de Documentos" esteja marcada.
+Depois, o NVDA precisa saber que linha e couluna contém os títulos na tabela.
+Após mover-se para a primeira célula da coluna ou linha contendo os títulos, use um dos seguintes comandos:
 %kc:beginInclude
 || Nome | Comando de Teclado | Descrição |
 | Anuncia o comentário actual | NVDA+Alt+c | Anuncia o texto do comentário na posição actual do cursor do sistema. |
 | Definir cabeçalhos de coluna | NVDA+shift+c | Premindo uma vez, indica ao NVDA que esta é a primeira célula de cabeçalho na linha que contém os cabeçalhos de coluna, que deverão ser automaticamente anunciados ao mover-se entre colunas abaixo desta linha. Premindo duas vezes irá apagar a definição. | 
 | Definir cabeçalhos de linha | NVDA+shift+r | Premindo uma vez, indica ao NVDA que esta é a primeira  célula de cabeçalho na coluna que contem os cabeçalhos de linha, que deverão ser automaticamente anunciados  ao mover-se entre linhas  após esta coluna. Premindo duas vezes apagará a definição. |  
 %kc:endInclude
+Estas definições serão guardadas no documento como Marcas, sendo assim compatíveis com outros leitores de ecrã, como o Jaws.
+Assim abrindo o documento com qualquer leitor de ecrã os títulos de linha e coluna já estarão definidos.
+
++++ Modo de Navegação no Microsoft Word +++
+Similarmente ao que acontece nos navegadores web, o Modo de Navegação pode ser usado no Microsoft Word, para poder usar funcionalidades como a Navegação rápida e a Lista de elementos
+%kc:beginInclude
+Para alternar entre o Modo de Navegação activado ou desactivado no Microsoft Word, pressione NVDA+Espaço.
+%kc:endInclude
+Para mais informações consulte a secção [Modo de Navegação e Navegação rápida, #BrowseMode].
+ 
+++++ A lista de Elementos ++++
+%kc:beginInclude
+Em Modo de Navegação no Microsoft Word, pode invocar a Lista de Elementos pressionando NVDA+f7.
+%kc:endInclude
+A Lista de Elementos pode apresentar títulos, links e anotações, (o que inclui comentários e registo de alterações).
+
++++ Anúncio de Comentários +++
+%kc:beginInclude
+Para anunciar quaisquer comentários na posição actual docursor de inserção, pressione NVDA+alt+c.
+%kc:endInclude
+ Todos os comentários ao documento, em conjunto com outros registos de alterações, podem também ser listados na Lista de Elementos do NVDA, seleccionando Anotações como Tipo.
 
 ++ Microsoft Excel ++
+
++++ Leitura Automática de Títulos de Coluna e Linha +++
+O NVDA é capaz de anunciar automaticamente os títulos de linha e coluna ao navegar por folhas do Microsoft Excel.
+Para isso é necessário que, em primeiro lugar, a opção "Anunciar títulos da linha/coluna da tabela" no diálogo  "Formatação de Documentos" esteja marcada.
+Depois, o NVDA precisa saber que linha e couluna contém os títulos na tabela.
+Após mover-se para a primeira célula da coluna ou linha contendo os títulos, use um dos seguintes comandos:
 %kc:beginInclude
 || Nome | Comando de Teclado | Descrição |
 | Definir cabeçalhos de coluna | NVDA+shift+c | Pressionar uma vez informa o NVDA de que esta linha contém os cabeçalhos de coluna, que deverão ser automaticamente anunciados ao mover-se entre colunas abaixo desta linha. Pressionar duas vezes apagará esta definição. | 
-| Definir cabeçalhos de linha | NVDA+shift+r | Pressionar uma vez, Informa o NVDA de que esta coluna  contêm os cabeçalhos de linha, que deverão ser automaticamente anunciados ao mover-se por linhas à direita desta coluna. Pressionar duas vezes, apagará a definição. | 
-| Anunciar comentário | NVDA+alt+c | Anuncia o comentário na célula actual, se existir. |
-| Lista de Elementos | NVDA+f7 | Abre o diálogo Lista de Elementos mostrando gráficos, células com comentários ou células com fórmulas. |
+| Definir cabeçalhos de linha | NVDA+shift+r | Pressionar uma vez, Informa o NVDA de que esta coluna  contêm os cabeçalhos de linha, que deverão ser automaticamente anunciados ao mover-se por linhas à direita desta coluna. Pressionar duas vezes, apagará a definição. |
+%kc:endInclude
+Estas definições serão guardadas no documento como Nomes de regiões definidas, sendo assim compatíveis com outros leitores de ecrã, como o Jaws, e assim abrindo o documento com outro leitor de ecrã os títulos de linha e coluna já estarão definidos.
+
+++++ A lista de Elementos ++++
+Tal como no conteúdo Web, o NVDA proporciona no Excel uma Lista de Elementos que permite aceder a vários tipos de informações.
+%kc:beginInclude
+Para aceder à Lista de Elementos no Microsoft Excel, pressione NVDA+f7.
+%kc:endInclude
+Os vários tipos de informações disponíveis na Lista de Elementos são:
+- Gráficos: Lista todos os gráficos existentes em todo o livro.
+Seleccionando um gráfico e pressionando enter ou o botão "Mover Para", foca o gráfico para navegação e leitura com as setas.
+- Comentários: Lista todas as células no livro aberto que contenham comentários. 
+Para cada célula é mostrado o endereço e o comentário. 
+Pressionando Enter ou o botão "Mover para" num dos comentários listados, move directamente para essa célula.
+- Fórmulas: Lista todas as células no livro aberto que contenham fórmulas.
+Para cada célula é mostrado o endereço e a fórmula. 
+Pressionando Enter ou o botão "Mover para" numa das fórmulas listadas, move directamente para essa célula
+- Folhas: Lista todas as folhas do livro aberto. 
+Pressionando f2 numa folha listada permitirá renomear a folha.
+Pressionando Enter ou o botão "Mover Para" numa das folhas listadas, muda-se para essa folha.
+-
+
+++++ Anunciar Comentários +++
++%kc:beginInclude
+Para anunciar qualquer comentárionuma célula, pressionar NVDA+alt+c
+%kc:endInclude
+Todos os comentários para o livro aberto podem ser listados na Lista de Elementos do NVDA.
+
++++ Leitura de Células Protegidas +++
+Se um livro, ou folha, foi protegido, pode não ser possível mover o foco para algumas células que foram bloqueadas para edição.
+%kc:beginInclude
+Para permitir a navegação para células que foram bloqueadas, alterne para o Modo de Navegação pressionando NVDA+space, e use os comandos normais para o Excel, , como as setas, para se mover por toda a folha.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -627,8 +690,8 @@ Numa conversa:
 ++ Preferências ++
 %kc:settingsSection: || Nome | Tecla de Atalho de Desktop | Tecla de Atalho de Laptop | Descrição |
 A maioria das definições do NVDA podem ser alteradas através da utilização de caixas de diálogo, acedidas através do sub-menu Preferências do Menu do NVDA.
-Em todas as caixas de diálogo de definições do NVDA, pressione o botão OK para confirmar as alterações que tenha feito.
-Para cancelar as alterações, pressione o botão Cancelar ou a tecla Escape.
+Em todas as caixas de diálogo de definições do NVDA, pressione o botão "OK" para confirmar as alterações que tenha feito.
+Para cancelar as alterações, pressione o botão "Cancelar" ou a tecla Escape.
 Algumas definições também podem ser alteradas através da utilização de comandos de teclado, que estão listados, quando relevante, nas secções abaixo.
 
 Note que por padrão, nem todos os diálogos de definições podem ser acedidos por comandos (comandos de teclado, comandos de toque, etc.).
@@ -872,8 +935,8 @@ Se esta caixa de verificação estiver marcada, a tecla Insert do bloco numéric
 Se esta caixa de verificação estiver marcada, a tecla Insert do bloco intermédio (que se encontra normalmente acima das setas, perto do Home e End) pode ser usada como uma tecla modificadora do NVDA.
 
 Se nenhuma tecla for seleccionada como tecla NVDA, poderá ser impossível aceder a algumas funções do NVDA.
-Por isso, o diálogo Definições do Teclado mostrará uma mensagem de erro se todas as teclas estiverem desmarcadas ao pressionar o botão Ok.
-Após fechar a mensagem de erro, tem de seleccionar pelo menos uma tecla antes de pressionar Ok para fechar o diálogo convenientemente.
+Por isso, o diálogo Definições do Teclado mostrará uma mensagem de erro se todas as teclas estiverem desmarcadas ao pressionar o botão "Ok".
+Após fechar a mensagem de erro, tem de seleccionar pelo menos uma tecla antes de pressionar "Ok" para fechar o diálogo convenientemente.
 
 %kc:setting
 ==== Anunciar Caracteres Escritos ====
@@ -1103,6 +1166,7 @@ Pode configurar o anúncio de:
 - Alinhamento de texto
 - Cores
 - Revisões do editor
+- Ênfase
 - Estilo de texto
 - Erros ortográficos
 - Números de página
@@ -1140,9 +1204,9 @@ Os três tipos são:
 Todos os diálogos do dicionário contêm uma lista de regras, que serão utilizadas para processar o texto.
 O diálogo contém também os botões Adicionar, Editar e Remover.
 
-Para adicionar uma nova regra ao dicionário, pressione o botão Adicionar, preencha os campos que aparecem na caixa de diálogo e pressione OK.
+Para adicionar uma nova regra ao dicionário, pressione o botão "Adicionar", preencha os campos que aparecem na caixa de diálogo e pressione OK.
 Verá então a sua nova regra na lista de regras.
-Porém, Para se assegurar que a sua regra é guardada, verifique que clica no botão OK, para sair completamente do diálogo do dicionário, quando acabar de adicionar/editar regras. 
+Porém, Para se assegurar que a sua regra é guardada, verifique que clica no botão "OK", para sair completamente do diálogo do dicionário, quando acabar de adicionar/editar regras. 
 
 As regras para os dicionários de voz do NVDA permitem-lhe alterar uma sequência de caracteres por outra.
 Um exemplo simples passaria por ter o NVDA a anunciar a palavra "sapo", cada vez que tivesse de dizer a palavra "pássaro".
@@ -1167,16 +1231,27 @@ O idioma para o qual a pronúncia de símbolos está a ser editada será mostrad
 Note que este diálogo respeita a opção "Usar o idioma da voz ao processar caracteres e símbolos" encontrada no diálogo [Definições da Voz #VoiceSettings], ou seja,  usa o idioma da voz em vez da definição global do idioma do NVDA, quando esta opção está marcada.
 
 Para mudar um símbolo, seleccione-o, primeiro, na lista de símbolos.
-O campo de substituição permite-lhe mudar o texto que deverá ser falado no lugar deste símbolo.
-Usando o campo nível, pode ajustar o nível mais baixo em que o símbolo deve ser anunciado.
 
-Pode adicionar novos símbolos pressionando o botão Adicionar.
-No diálogo que se abre, introduza o símbolo e pressione o botão OK.
-Em seguida, introduza o texto Substituir por e defina o nível para o novo símbolo, como faria para outros símbolos.
+- O campo "Substituir por" permite-lhe alterar o texto que deve ser falado em vez do símbolo.
+- Usando o campo "Nível" pode definir o nível a partir do qual o símbolo deve ser falado.
+- O campo "Enviar o próprio símbolo ao sintetizador" determina quando o próprio símbolo, em vez do texto substituto, deve ser enviado ao sintetizador.
+Isto é útil se o símbolo forçar o sintetizador a uma pausa ou a uma mudança de entoação na voz.
+Por exemplo, uma vírgula força o sintetizador a fazer uma pausa.
+Existem três opções:
+ - nunca: Nunca enviar o próprio símbolo ao sintetizador.
+ - Sempre: Enviar sempre o próprio símbolo ao sintetizador.
+ - apenas abaixo do nível de símbolos: Enviar o próprio símbolo apenas se o "Nível de pontuação/símbolo:" estiver definido para um nível inferior ao nível do símbolo.
+ Por exemplo, pode usar esta função para que um determinado símbolo tenha o seu texto substituto falado, sem pausas, em níveis elevados, enquanto é indicado por uma pausa em níveis mais baixos.
+ -
+-
 
-Pode remover um símbolo que tenha adicionado anteriormente, pressionando o botão Remover.
+Pode adicionar novos símbolos pressionando o botão "Adicionar".
+No diálogo que se abre, introduza o símbolo e pressione o botão "OK".
+Em seguida, altere os campos para o novo símbolo como faria para outros símbolos.
 
-Quando tiver terminado, pressione o butão OK, para guardar as suas modificações, ou o butão Cancelar, para as descartar.
+Pode remover um símbolo que tenha adicionado anteriormente, pressionando o botão "Remover".
+
+Quando tiver terminado, pressione o butão "OK", para guardar as suas modificações, ou o butão Cancelar, para as descartar.
 
 +++ Comandos +++
 Nesta caixa de diálogo, pode personalizar os comandos, (quer do teclado, quer dos controlos de uma linha Braille, etc.) que serão usados pelo NVDA.
@@ -1188,13 +1263,13 @@ A estrutura hierárquica deste diálogo lista todos os comandos do NVDA aplicáv
 Pode filtrá-los, introduzindo uma ou mais palavras do nome do comando na caixa de edição Filtrar por em qualquer ordem.
 Qualquer tecla ou gesto associado a um comando é listado dentro do ramo desse comando.
 
-Para adicionar uma tecla ou um gesto a um comando, seleccione o comando e pressione o botão Adicionar.
+Para adicionar uma tecla ou um gesto a um comando, seleccione o comando e pressione o botão "Adicionar".
 Depois pressione a tecla, conjunto de teclas, ou execute o gesto que quer associar, por exemplo,  pressione uma tecla no teclado ou um controlo na linha Braille.
 Muitas vezes, um comando pode ser interpretado de mais de uma maneira.
 Por exemplo, se pressionar uma tecla no teclado, pode querer que seja específico do actual esquema de teclado (por exemplo, desktop ou laptop) ou pode querer que seja aplicável a todos os esquemas.
 Neste caso, aparecerá um  menu que permite seleccionar a opção desejada.
 
-Para remover uma tecla ou gesto de um comando, seleccione-a e pressione o botão Remover.
+Para remover uma tecla ou gesto de um comando, seleccione-a e pressione o botão "Remover".
 
 Quando tiver terminado, pressione o butão OK, para guardar as suas modificações, ou o butão Cancelar, para as descartar.
 
@@ -1236,14 +1311,14 @@ O primeiro controlo neste diálogo é a lista de perfis, na qual pode selecciona
 Quando abre o diálogo, fica seleccionado o perfil que será editado.
 É mostrada informação adicional para o perfil activo, indicando se foi activado manualmente, accionado e/ou se está a ser editado.
 
-Para renomear ou eliminar um perfil, pressione, respectivamente, o botão Mudar o nome ou Eliminar,.
+Para renomear ou eliminar um perfil, pressione, respectivamente, o botão "Mudar o nome" ou "Eliminar",.
 
-Pressione o botão Fechar para fechar o diálogo.
+Pressione o botão "Fechar" para fechar o diálogo.
 
 +++ Criar um Perfil +++
-Para criar um perfil, pressione o botão Novo.
+Para criar um perfil, pressione o botão "Novo".
 
-No diálogo Novo perfil, pode introduzir o nome para o perfil.
+No diálogo "Novo perfil", pode introduzir o nome para o perfil.
 Também pode seleccionar como é que este perfil deve ser activado.
 Se apenas quiser activar este perfil manualmente, seleccione Activação manual, que é a opção por padrão.
 Caso contrário, seleccione um Accionador que fará activar este perfil automaticamente.
@@ -1556,7 +1631,9 @@ Por favor consulte a documentação desta linha braille para obter a descrição
 São suportadas várias linhas braille da [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] e [APH http://www.aph.org/] quando conectadas via USB ou bluetooth.
 Incluem-se:
 - Baum: SuperVario, PocketVario
+- Baum: SuperVario, PocketVario, VarioUltra (apenas porBluetooth), Pronto! (apenas por Bluetooth)
 - HumanWare: Brailliant, BrailleConnect
+- APH: Refreshabraille
 -
 Outras linhas braille fabricadas pela Baum poderão igualmente funcionar, porém tal não foi testado.
 

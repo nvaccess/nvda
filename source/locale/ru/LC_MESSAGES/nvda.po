@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 19:12+1000\n"
-"PO-Revision-Date: 2015-10-26 12:42+0800\n"
+"POT-Creation-Date: 2015-11-02 17:08+1000\n"
+"PO-Revision-Date: 2015-11-04 00:46+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -1314,7 +1314,7 @@ msgstr "Всегда"
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
 msgctxt "symbolPreserve"
 msgid "only below symbol's level"
-msgstr "Только если уровень символа ниже уровня пунктуации"
+msgstr "Если уровень пунктуации ниже уровня символа"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -2748,6 +2748,10 @@ msgstr "обрезано"
 #. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
 msgid "overflowing"
 msgstr "переполнено"
+
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "разблокировано"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -4627,15 +4631,20 @@ msgstr "нет отступа"
 msgid "%d characters"
 msgstr "%d символов"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "Выделено %s"
+msgid "%s selected"
+msgstr "%s выделено"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "Не выделено %s"
+msgid "%s unselected"
+msgstr "%s не выделено"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s выделено взамен"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -7645,6 +7654,10 @@ msgstr "Рабочий стол"
 msgid "default color"
 msgstr "цвет по умолчанию"
 
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "Эта ячейка нередактируемая"
+
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
 msgstr "Вызывает список диаграмм, ячеек с комментариями и ячеек с формулами"
@@ -7667,7 +7680,7 @@ msgstr "&Формулы"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Sheet"
-msgstr "&Лист"
+msgstr "&Листы"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -8687,6 +8700,12 @@ msgstr "HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "selecting %s"
+#~ msgstr "Выделено %s"
+
+#~ msgid "unselecting %s"
+#~ msgstr "Не выделено %s"
 
 #~ msgid "unrevised"
 #~ msgstr "Не проверено"
