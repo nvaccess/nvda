@@ -1,4 +1,5 @@
 ﻿Guida de l'Usuario d'o NVDA NVDA_VERSION
+Guida de l'Usuario d'o NVDA NVDA_VERSION
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -569,24 +570,87 @@ Por favor mira-te a documentación d'o MathPlayer ta más información.
 
 Quan deseyes tornar t'o documento, simplament preta la tecla escape.
 
-+ Ordens d'o NVDA Especificas t'aplicacións +
-O NVDA proporciona as suyas propias ordens extra ta qualques aplicacions ta fer mas facils bells quefers u ta proporcionar acceso a funcionalidat que d'unatro modo no ye accesible t'os usuarios d'un lector de pantalla.
++ Caracteristicas Especificas t'aplicacións +
+O NVDA proporciona as suyas propias caracteristicas extra ta qualques aplicacions ta fer mas facils bells quefers u ta proporcionar acceso ta funcionalidat que d'unatro modo no ye accesible t'os usuarios d'un lector de pantalla.
 
 ++ Microsoft Word ++
+
++++ Lectura automatica de capiters de columna y ringlera +++
+O NVDA ye capable d'anunciar automaticament os capiters de ringlera y columna apropiaus en navegar por as tablas en o Microsoft Word.
+Ixo requier en primeras que a opción d'anunciar os capiters de ringlera y columna de tabla en o dialogo de formatiau de documentos d'o NVDA siga enchegada.
+En segundas o NVDA amenista conoixer qué ringlera u columna contién os capiters en una tabla dada.
+Dimpués de mover-te-ne t'a primera celda en a columna u ringlera que contién os capiters, fe servir un d'os siguients comandos:
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| Anunciar o comentario actual | NVDA+Alt+c | Anuncia o texto d'o comentario en a posición d'o Cursor d'o Sistema. | 
-| Fixar o capitero de columnas | NVDA+mayus+c | Pretando isto una vegada diz a lo NVDA que ista ye a primera celda de capitero en a ringlera que contién capiters de columna, que habría d'estar anunciada automaticament en mover-te-ne entre columnas baixo ista ringlera. Pretando-ne dos vegadas sacará ista opción. | 
-| Fixar o capitero de ringleras | NVDA+mayus+r | Pretando isto una vegada diz a lo NVDA que ista ye a primera celda de capitero en a columna que contién capiters de ringlera, que habría d'estar anunciau automaticament quan te'n desplaces entre as ringleras dimpués d'ista columna. Pretando-ne dos vegadas eliminará ista opción. | 
+| Establir o capitero de columna | NVDA+mayus+c | Pretando isto una vegada diz a lo NVDA que ista ye a primera celda de capitero en a ringlera que contién capiters de columna, que habría d'estar anunciada automaticament en mover-te-ne entre columnas baixo ista ringlera. Pretando-ne dos vegadas sacará ista opción. | 
+| Establir o capitero de ringlera | NVDA+mayus+r | Pretando isto una vegada diz a lo NVDA que ista ye a primera celda de capitero en a columna que contién capiters de ringlera, que habría d'estar anunciau automaticament quan te'n desplaces entre as ringleras dimpués d'ista columna. Pretando-ne dos vegadas eliminará ista opción. | 
 %kc:endInclude
+Ixas opcions s'almagazenarán en o documento como marcapachinas compatibles con atros lectos de pantalla como lo Jaws.
+Ixo significa que usuarios d'atros lectors de pantalla qui ubran ixe documento en una calendata posterior tendrán automaticament os capiters de ringlera y columna ya establius.
+
++++ Modo de navegación en o Microsoft Word +++
+Igual como en a web, o modo de navegación se puet fer servir en o Microsoft Word ta permitir-te fer servir caracteristicas tals como a navegación rapeda y a lista d'elementos.
+%kc:beginInclude
+T'activar u desactivar o modo de navegación en o Microsoft Word, preta NVDA+espacio.
+%kc:endInclude
+Ta información detallada sobre o modo de navegación y a navegación rapeda, mira-te a [sección d'o modo de navegación #BrowseMode].
+
+++++ A lista d'elementos ++++
+%kc:beginInclude
+Mientras yes en o modo de navegación en o Microsoft Word puetz accedir t'a lista d'elementos pretando NVDA+f7.
+%kc:endInclude
+A lista d'elementos puet listar capiters, vinclos y anotacions (que inclui comentarios y cambeos de seguimiento).
+
++++ Anunciau  de Comentarios +++
+%kc:beginInclude
+T'anunciar qualsiquier comentario en a posición actual d'o puntero preta NVDA+alt+c.
+%kc:endInclude
+Totz os comentarios d'o documento de conchunta con o seguimiento d'atros cambeos tamién se pueden listar en a lista d'elementos d'o NVDA  en seleccionar anotacions como a mena.
 
 ++ Microsoft Excel ++
+
++++ Lectura automatica de capiters de columna y ringlera +++
+O NVDA ye capable d'anunciar automaticament os capiters de ringlera y columna apropiaus en navegar por as tablas en o Microsoft Excel.
+Ixo requier en primeras que a opción d'anunciar os capiters de ringlera y columna de tabla en o dialogo de formatiau de documentos d'o NVDA siga enchegada.
+En segundas o NVDA amenista conoixer qué ringlera u columna contién os capiters en una tabla dada.
+Dimpués de mover-te-ne t'a primera celda en a columna u ringlera que contién os capiters, fe servir un d'os siguients comandos:
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| Configurar a ringlera de capiters de columna | NVDA+mayus+c | Pretando isto una vegada diz a lo NVDA que ista ye a ringlera que contién capiters de columna, que habrían d'anunciar-se automaticament quan te'n muevas entre columnas por ista ringlera. Pretando-ne dos vegadas limpiará a opción. | 
-| Configurar a columna de capiters de ringlera | NVDA+mayus+r | Pretando isto una vegada  diz a lo NVDA que ista ye a columna que contién capiters de ringlera, que s'habrían d'anunciar automaticament  quan te'n muevas entre ringleras dimpués d'ista columna. Pretando-ne dos vegadas limpiará la opción. | 
-| Anunciar o comentario | NVDA+alt+c | Anuncia o comentario en a celda actual si bi'n ha belún. |
-| Dialogo de lista d'elementos | NVDA+f7 | Ubre o dialogo d'a lista d'elementos amostrando graficos, celdas con comentarios, celdas con formulas u fuellas. |
+| Establir a ringlera de capiters de columna | NVDA+mayus+c | Pretando isto una vegada diz a lo NVDA que ista ye a ringlera que contién capiters de columna, que habrían d'anunciar-se automaticament quan te'n muevas entre columnas por ista ringlera. Pretando-ne dos vegadas limpiará a opción. | 
+| Establir a columna de capiters de ringlera | NVDA+mayus+r | Pretando isto una vegada  diz a lo NVDA que ista ye a columna que contién capiters de ringlera, que s'habrían d'anunciar automaticament  quan te'n muevas entre ringleras dimpués d'ista columna. Pretando-ne dos vegadas limpiará la opción. | 
+%kc:endInclude
+Ixas opcions s'almagazenarán en o libro de treballo como rangos de nombre definius compatibles con atros lectors de pantalla como lo Jaws.
+Ixo significa que atros usuarios de lectors de pantalla qui ubran ixe libro de treballo en una calendata posterior tendrán automaticament os capiters de ringlera y columna ya establius. 
+
++++ A lista d'elementos +++
+Igual como en a  web, o NVDA tien una lista d'elementos t'o Microsoft Excel que te permit  listar y accedir ta quantas menas diferents d'información.
+%kc:beginInclude
+T'accedir t'a lista d'elementos en l'Excel preta NVDA+f7.
+%kc:endInclude
+As diferents menas d'información disponibles en a lista d'elementos son:
+- Graficos: Isto lista totz os graficos en o libro de treballo. 
+Seleccionando un grafico y pretando l'intro u o botón mover ta enfoca o grafico ta navegar y leyer-lo con as teclas de flecha.
+- Comentarios: Isto lista todas as celdas en o libro de treballo que contienen comentarios. 
+S'amuestra l'adreza d'a celda de conchunta con os suyos comentarios ta cada celda. 
+Pretando l'intro u lo botón mover ta en estar en un comentario listau se'n moverá dreitament t'a ixa celda.
+- Formula: Isto lista todas as celdas en o libro de treballo que contienen una formula. 
+S'amuestra l'adreza d'a celda de conchunta con a suya formula ta cada celda.
+Pretando l'intro u lo botón mover ta en una formula listada se'n moverá dreitament t'a ixa celda. 
+- Fuella: Isto lista todas as fuellas en o libro de treballo. 
++Pretar f2 en estar en una fuella listada te permit renombrar a fuella. 
+Pretando l'intro u lo botón mover ta en estar en a fuella listada seleccionará ista fuella.
+-
+
++++ Anunciau de Comentarios +++
+%kc:beginInclude
+T'anunciar qualsiquier comentario t'a celda actualment enfocada preta NVDA+alt+c.
+%kc:endInclude
+Totz os comentarios d'o libro de treballo puet listar-se tamién en a lista d'lelementos d'o NVDA.
+
++++ Leyer as celdas protechidas +++
+Si un libro de treballo fuó protechiu, puet estar imposible mover o foco t'a celdas particulars que fuoron blocadas ta edición.
+%kc:beginInclude
+Ta permitir mover-se-ne ta celdas blocadas cambea t'o modo de navegación pretando NVDA+espacio y allora fe servir os comandos estandar de movimiento de l'Excel como as teclas de flecha ta por todas as flechas en a fuella de treballo actual.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -1575,7 +1639,7 @@ Porfavor mira a documentación d'a linia ta descripcions de do se pueden trobar 
 ++ Linias braille Baum/Humanware/APH ++
 Quantas linias braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] y [APH http://www.aph.org/] son suportadas quan se connectan a traviés de l'USB u d'o bluetooth.
 Istas incluyen:
-- Baum: SuperVario, PocketVario
+- Baum: SuperVario, PocketVario, VarioUltra (nomás Bluetooth), Pronto! (nomás Bluetooth)
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
