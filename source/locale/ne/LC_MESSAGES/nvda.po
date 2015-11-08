@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr 2013.1:6039\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 19:12+1000\n"
-"PO-Revision-Date: 2015-10-31 17:38+0545\n"
+"POT-Creation-Date: 2015-11-02 17:08+1000\n"
+"PO-Revision-Date: 2015-11-03 19:06+0545\n"
 "Last-Translator: drishtibachak@gmail.com\n"
 "Language-Team: Him Prasad Gautam <drishtibachak@gmail.com>\n"
 "Language: ne\n"
@@ -2743,6 +2743,10 @@ msgstr "छाँटिएको"
 msgid "overflowing"
 msgstr "पोखिएको"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "चाबी नभएको"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "अचयनीत"
@@ -4470,15 +4474,20 @@ msgstr "किनारा छैन"
 msgid "%d characters"
 msgstr "%d वर्ण"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "%s रोजियो"
+msgid "%s selected"
+msgstr "%s चयनीत"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "%s चुनिएन"
+msgid "%s unselected"
+msgstr "%s को चयन हट्यो"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s लाई पो चयन गरियो ।"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -7383,6 +7392,10 @@ msgstr "डेस्कटप"
 msgid "default color"
 msgstr "निर्धारित रङ्ग"
 
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "यो कोशिका सम्पादन योग्य छैन ।"
+
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
 msgstr "चार्टको सूची, टिप्पणी एवम् सूत्रयुक्त कोशिका प्रस्तुत गर्छ"
@@ -8379,6 +8392,12 @@ msgstr "HIMS ब्रेल चेतना/ब्रेल किनारा 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "selecting %s"
+#~ msgstr "%s रोजियो"
+
+#~ msgid "unselecting %s"
+#~ msgstr "%s चुनिएन"
 
 #~ msgid "unrevised"
 #~ msgstr "असंसोधित"
