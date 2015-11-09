@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-08 19:11+1000\n"
-"PO-Revision-Date: 2015-10-09 02:07+0100\n"
+"POT-Creation-Date: 2015-11-02 17:08+1000\n"
+"PO-Revision-Date: 2015-11-02 14:03+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS <http://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
@@ -1296,6 +1296,24 @@ msgstr "všechna"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "znak"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "nikdy"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "vždy"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "jen pod úrovní znaku"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -2727,6 +2745,10 @@ msgstr "oříznuto"
 msgid "overflowing"
 msgstr "přetečeno"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "odemčeno"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "nevybráno"
@@ -4063,6 +4085,10 @@ msgid ""
 msgstr ""
 "Přejde na další objekt v plošném zobrazení hierarchie objektové navigace"
 
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "nenalezen"
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
@@ -4581,15 +4607,20 @@ msgstr "bez odsazení"
 msgid "%d characters"
 msgstr "%d znaků"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "vybráno %s"
+msgid "%s selected"
+msgstr "%s vybráno"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "nevybráno %s"
+msgid "%s unselected"
+msgstr "%s nevybráno"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s vybráno"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -7424,6 +7455,11 @@ msgstr "Znak"
 msgid "Level"
 msgstr "Úroveň"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "Zachovat"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "Výslovnost znaku"
@@ -7431,6 +7467,10 @@ msgstr "Výslovnost znaku"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "&Úroveň"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "&Aktuální znak se řídí hlasovým výstupem"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7567,6 +7607,10 @@ msgstr "Plocha"
 msgid "default color"
 msgstr "výchozí barva"
 
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "Tuto buňku nelze upravit"
+
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
 msgstr "Představuje seznam grafů, buněk s komentáři a buněk se vzorci"
@@ -7585,6 +7629,11 @@ msgstr "K&omentář"
 #. in the browse mode Elements List dialog.
 msgid "&Formula"
 msgstr "&Vzorec"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "&List"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7648,6 +7697,12 @@ msgid ""
 msgstr ""
 "Stiskne-li se jednou, nastaví se tato buňka jako první záhlaví řádků pro "
 "buňky níže a vpravo v této oblasti. Dvojitým stiskem se toto nastavení zruší."
+
+msgid "Input Message is {title}: {message}"
+msgstr "Vstupní zpráva je {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "Vstupní zpráva je {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -8572,6 +8627,12 @@ msgstr "Braillské řádky HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "selecting %s"
+#~ msgstr "vybráno %s"
+
+#~ msgid "unselecting %s"
+#~ msgstr "nevybráno %s"
 
 #~ msgid "unrevised"
 #~ msgstr "nezměněno"

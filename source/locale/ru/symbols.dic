@@ -3,20 +3,6 @@
 #Copyright (c) 2011-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
-complexSymbols:
-# identifier	regexp
-# Sentence endings.
-. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
-! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
-? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-# Phrase endings.
-; phrase ending	(?<=[^\s;]);(?=\s|$)
-: phrase ending	(?<=[^\s:]):(?=\s|$)
-# Others
-decimal point	(?<![^\d -])\.(?=\d)
-in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥.]?\d)
-
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
@@ -42,18 +28,21 @@ negative number	минус	none	norep
 # Standard punctuation/symbols
 !	восклицательный знак	all
 "	кавычка	most
-\#	решётка	most
+\#	решётка	some
 $	доллар	all	norep
 £	фунт	all	norep
 €	евро	all	norep
-¢	Центы	all	norep
-¥	Ена	all	norep
-₹	Индийская рупия	some	norep
+¢	центы	all	norep
+¥	ена	all	norep
+₹	индийская рупия	some	norep
+₽	российский рубль	some
+₴	украинская гривна	some
+圓	китайский юань	some
 %	процент	some
 &	амперсант	some
 '	апостроф	all
-(	левая круглая	most
-)	правая круглая	most
+(	левая круглая	most	always
+)	правая круглая	most	always
 *	звёздочка	some
 +	плюс	some
 ,	запятая	all	always
@@ -62,15 +51,15 @@ $	доллар	all	norep
 /	косая черта	some
 :	двоеточие	most	norep
 ;	точка с запятой	most
-<	меньше	most
->	больше	most
+<	меньше	some
+>	больше	some
 =	равно	some
 ?	вопросительный знак	all
 @	собачка	some
 [	левая квадратная	most
 ]	правая квадратная	most
 \\	обратная косая черта	most
-^	крыжка	most
+^	крышка	most
 _	подчёркивание	most
 `	обратный апостроф	most
 {	левая фигурная	most
@@ -87,7 +76,7 @@ _	подчёркивание	most
 ”	правая кавычка	most
 ‘	левая одиночная кавычка	most
 ’	правая одиночная кавычка	most
-–	дефис	most
+–	дефис	most	always
 —	длинное тире	most
 ●	кружок	most
 ¨	дириезис	most
@@ -109,10 +98,10 @@ _	подчёркивание	most
 ®	зарегистрировано	some
 ™	Торговая марка	some
 ©	Авторское право	some
-±	Плюс или Минус	most
+±	Плюс или Минус	some
 −	минус	some
-×	умножить	most
-÷	поделить на	most
+×	умножить	some
+÷	поделить на	some
 ≈	приблизительно равно	some
 ≠	не равно	some
 ≪	много меньше	some
@@ -122,8 +111,7 @@ _	подчёркивание	most
 ✓	отметка	some
 ✔	отметка	some
 №	номер	some
-₽	Российский рубль	some
-圓	китайский юань	some
+
 #Mathematical Operators U+2200 to U+220F
 
 ∀	для всех	none

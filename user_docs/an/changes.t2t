@@ -4,6 +4,7 @@ Qué bi ha de Nuevo en o NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2015.4 =
+O resinyable d'ista versión inclui milloras de rendimiento en o Windows 10, a inclusión en o centro d'accesibilidat en o Windows 8 y superiors, milloras t'o Microsoft Excel incluindo lo listau y renombramiento de fuellas y l'acceso ta celdas blocadas en fuellas protechidas y suporte t'a edición de texto rico en o Mozilla Firefox, o Google Chrome y o Mozilla Thunderbird.
 
 == Nuevas Caracteristicas ==
 - O NVDA agora amaneix en o centro d'accesibilidat en o Windows 8 y superiors. (#308)
@@ -11,11 +12,23 @@ Qué bi ha de Nuevo en o NVDA
 - S'ha adhibiu una opción t'anunciar o enfasi en o dialogo d'opcions de Formatiau de Documentos d'o NVDA. Enchegada por defecto, ixa opción permit a lo NVDA anunciar automaticament a existencia de texto enfatizau en os documentos. Por agora no ye suportau que t'as etiquetas em y strong en o modo de navegación ta l'Internet Explorer y atros controls MSHTML. (#4920)
 - A existencia de texto ficau y borrau s'anuncia agora en o modo de navegación ta l'Internet Explorer y atros controls MSHTML, si a opción d'o NVDA d'anunciar as revisións de l'editor ye activada. (#4920)
 - En veyer o seguimiento  de cambeos en a lista d'elementos d'o NVDA t'o Microsoft Word agora s'amuestra más información tal como qué propiedatz d'o formato han cambiau. (#4920)
+- Microsoft Excel: Agora ye posible listar y renombrar as fuellas dende a lista d'elementos d'o NVDA (NVDA+f7). (#4630, #4414)
+- Agora ye posible configurar si os simbolos reals se ninvian t'o sintetizador d'a fabla (p.eix. ta causar una aturada u cambeo en a entonación) en o dialogo de pronuncia de simbolos. (#5234)
+- En o Microsoft Excel o NVDA agora anuncia qualsiquier mensache de dentrada establiu por l'autor d'a fuella en as celdas. (#5051)
+- Suporte t'as linias braille Baum Pronto! V4 y VarioUltra quan se connectan a traviés d'o Bluetooth. (#3717)
+- Suporte t'a edición de texto rico en as aplicacions de Mozilla tals como lo Google Docs con o suporte braille activau en o Mozilla Firefox y a composición HTML en o Mozilla Thunderbird. (#1668)
+- Suporte t'a edición de texto rico en o Google Chrome y os navegadors basaus en o Chrome tals como lo Google Docs con o suporte braille activau. (#2634)
+ - Ixo requier a versión 47 d'o Chrome u superior.
+- En o modo de navegación en o Microsoft Excel puetz navegar ta celdas blocadas en fuellas protechidas. (#4952)
 
 
 == Cambeos ==
 - A opción d'anunciar as Revisions de l'editor en o dialogo d'opcions de formatiau de documentos d'o NVDA agora s'enchega por defecto. (#4920)
 - En mover-se-ne por os caracters en o Microsoft Word con a opción d'anunciar as revisions de l'editor d'o NVDA enchegada agora s'anuncia menos información  t'os cambeos de seguimiento, o que fa más eficient a navegación. Ta veyer a información extra fe servir a lista d'elementos. (#4920)
+- Esviellau o transcriptor braille liblouis ta 2.6.4. (#5341)
+- Quantos simbolos (incluindo simbolos matematicos basicos) se son movius t'o libel beluna ta que se leigan por defecto. (#3799)
+- Si o sintetizador lo suporta, agora a fabla habría de pausar-se t'os parenthesis y o guión curto (–). (#3799)
+- En seleccionar texto, o texto s'anuncia antis que no a indicación de selección en cuentas de dimpués. (#1707)
 
 
 == Corrección d'errors ==
@@ -23,9 +36,20 @@ Qué bi ha de Nuevo en o NVDA
 - En un grafico en o Microsoft Excel, en navegar con qualques teclas (tals como cambiar de fuella con control+rePach y control+avPach) agora marcha correctament. (#5336)
 - Apanyada l'aparencia visual d'os botons en o dialogo d'alvertencia que s'amuestra quan miras de baixar de versión o NVDA. (#5325)
 - En o Windows 8 y superiors o NVDA agora ranca a saber-lo más rapedo quan ye configurau ta rancar dimpués d'encetar a sesión en o Windows. (#308)
- - Si activés ixo fendo servir una versión anterior d'o NVDA amenistarás desactivar-lo y activar-lo de nuevas en o dialogo d'opcions chenerals ta que o cambeo tienga efecto.
+ - Si activés ixo fendo servir una versión anterior d'o NVDA amenistarás desactivar-lo y activar-lo de nuevas ta que o cambeo tienga efecto. Sigue o siguient procedimiento:
+  + Ubre o dialogo d'opcions chenerals.
+  + Desmarca la caixeta encetar o NVDA automaticament dimpués d'autentificar-se en Windows.
+  + Preta o botón d'acceptar.
+  + Ubre o dialogo d'opcions chenerals unatra vegada.
+  + Marca la caixeta encetar o NVDA automaticament dimpués d'autentificar-se en Windows.
+  + Preta o botón d'acceptar.
 - Milloras de rendimiento ta l'UI Automation incluindo explorador de fichers y visor de fainas. (#5293)
 - O NVDA agora cambia correctament t'o modo de foco en que se tabula ta controls read-only ARIA grid en o modo de navegación t'o Mozilla Firefox y atros controls basaus en Gecko. (#5118)
+- O NVDA agora anuncia correctament "no bi ha anterior" en cuenta de "no bi ha siguient" quan no bi ha más obchectos en  fer un truquet ent'a cucha en una pantalla tactil.
+- Apanyaus problemas en escribir qualques parolas en o campo de tresmín en o dialogo de cenyos de dentrada. (#5426)
+- O NVDA ya no se conchela en bells casos en reconnectar-se-ne a una linia HumanWare Brailliant BI/B series a traviés de l'USB. (#5406)
+- En idiomas con caracters conchuntos as descripcions de caracters agora marchan como s'asperaba ta caracters angleses en mayuscla. (#5375)
+- O NVDA ya no habría de conchelar-se ocasionalment en desplegar o menú d'inicio en o Windows 10. (#5417)
 
 
 = 2015.3 =

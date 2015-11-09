@@ -50,7 +50,7 @@ dates /	 	all	always
 # Standard punctuation/symbols
 !	cerrar exclamación	all
 "	comillas	most
-\#	signo de número	most
+\#	signo de número	some
 $	dólar	all	norep
 £	libras	all	norep
 €	euros	all	norep
@@ -60,8 +60,8 @@ $	dólar	all	norep
 %	porciento	some
 &	anpersán	some
 '	apóstrofo	all
-(	abrir paréntesis	most
-)	cerrar paréntesis	most
+(	abrir paréntesis	most	always
+)	cerrar paréntesis	most	always
 *	asterisco	some
 +	más	some
 ,	coma	all	always
@@ -70,8 +70,8 @@ $	dólar	all	norep
 /	barra 	some
 :	dos puntos	most	norep
 ;	punto y coma	most
-<	menor que	most
->	mayor que	most
+<	menor que	some
+>	mayor que	some
 =	igual	some
 ?	cerrar interrogación	all
 @	arroba	some
@@ -97,7 +97,7 @@ _	subrayado	most
 ”	cerrar comillas	most
 ‘	apóstrofo	most
 ’	apóstrofo	most
-–	guión	most
+–	guión	most	always
 —	guión	most
 ●	círculo	most
 ¨	diéresis	most
@@ -119,9 +119,9 @@ _	subrayado	most
 ®	registrado	some
 ™	Marca registrada	some
 ©	copyright	some	norep
-±	Más o menos	most
-×	multiplicado por	most
-÷	dividido por	most
+±	Más o menos	some
+×	multiplicado por	some
+÷	dividido por	some
 ←	Flecha izquierda	some
 →	Flecha derecha	some
 ✓	marcado	some

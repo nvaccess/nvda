@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-08 19:11+1000\n"
-"PO-Revision-Date: 2015-10-13 23:03+0900\n"
+"POT-Creation-Date: 2015-11-02 17:08+1000\n"
+"PO-Revision-Date: 2015-11-03 21:18+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -1295,6 +1295,24 @@ msgstr "すべて読み上げ"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "文字"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "送らない"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "必ず送る"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "読み置換しない場合に送る"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -2726,6 +2744,10 @@ msgstr "クロップ"
 msgid "overflowing"
 msgstr "オーバーフロー"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "ロック解除"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "選択なし"
@@ -2889,14 +2911,13 @@ msgstr "スリープモード開始"
 
 #. Translators: Input help mode message for toggle sleep mode command.
 msgid "Toggles  sleep mode on and off for  the active application."
-msgstr "アクティブなアプリケーションに対するスリープモードの切り替え"
+msgstr "アクティブなアプリに対するスリープモードの切り替え"
 
 #. Translators: Input help mode message for report current line command.
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
 "twice will spell the current line"
-msgstr ""
-"アプリケーションカーソルのある現在行の報告。2回押すと現在の行のスペルの報告"
+msgstr "カーソルのある現在行の報告。2回押すと現在の行のスペルの報告"
 
 #. Translators: Reported when left mouse button is clicked.
 msgid "left click"
@@ -3607,8 +3628,8 @@ msgid ""
 "cursor, quick navigation keys, etc."
 msgstr ""
 "ブラウズモードとフォーカスモードの切り替え。フォーカスモードでは押されたキー"
-"は直接アプリケーションに渡されアプリケーションを操作できる。ブラウズモードで"
-"はカーソルキーでページ内の移動や一文字ナビゲーションが可能"
+"は直接アプリに渡されアプリを操作できる。ブラウズモードではカーソルキーでペー"
+"ジ内の移動や一文字ナビゲーションが可能"
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
@@ -3678,8 +3699,8 @@ msgid ""
 "pressed twice, spells the title. If pressed three times, copies the title to "
 "the clipboard"
 msgstr ""
-"現在のアプリケーションまたは最前面のウインドウのタイトルを報告。2回押すと、タ"
-"イトルをスペル読み。3回押すとタイトルをクリップボードにコピー"
+"現在のアプリまたは最前面のウインドウのタイトルを報告。2回押すと、タイトルをス"
+"ペル読み。3回押すとタイトルをクリップボードにコピー"
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 msgid "speaks the current foreground object"
@@ -3788,14 +3809,14 @@ msgstr "次に押したキーを直接渡す"
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
-msgstr "次のキー入力をNVDAではなくアプリケーションに渡す"
+msgstr "次のキー入力をNVDAではなくアプリに渡す"
 
 #. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
 #. If there is an appModule for the current program, NVDA speaks the name of the module after presenting this message.
 #, python-format
 msgid "Currently running application is %s"
-msgstr "現在動作中のアプリケーションは%s"
+msgstr "現在動作中のアプリは%s"
 
 #. Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
 #. For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
@@ -3809,8 +3830,8 @@ msgid ""
 "Speaks the filename of the active application along with the name of the "
 "currently loaded appModule"
 msgstr ""
-"現在起動中のアプリケーションのファイル名を読み込まれているappモジュールの名前"
-"とともに読み上げ"
+"現在起動中のアプリのファイル名を読み込まれているアプリモジュールの名前ととも"
+"に読み上げ"
 
 #. Translators: Input help mode message for go to general settings dialog command.
 msgid "Shows the NVDA general settings dialog"
@@ -4022,6 +4043,10 @@ msgid ""
 "hierarchy"
 msgstr "オブジェクトナビゲーション階層のフラットビューで次のオブジェクトに移動"
 
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "前のオブジェクトなし"
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
@@ -4186,7 +4211,7 @@ msgstr "バックスペース"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "caps lock"
-msgstr "caps lock"
+msgstr "キャプスロック"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "ctrl"
@@ -4194,7 +4219,7 @@ msgstr "コントロール"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "alt"
-msgstr "Alt"
+msgstr "オルト"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "shift"
@@ -4262,7 +4287,7 @@ msgstr "アプリケーション"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "num lock"
-msgstr "num lock"
+msgstr "ナムロック"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "print screen"
@@ -4398,11 +4423,11 @@ msgstr "右シフト"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left alt"
-msgstr "左Alt"
+msgstr "左オルト"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right alt"
-msgstr "右Alt"
+msgstr "右オルト"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "right windows"
@@ -4535,15 +4560,20 @@ msgstr "インデントなし"
 msgid "%d characters"
 msgstr "%d文字"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
+msgid "%s selected"
 msgstr "%s 選択"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "%s 選択解除"
+msgid "%s unselected"
+msgstr "%s 選択なし"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s 新しい選択"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -6322,7 +6352,7 @@ msgstr "プロファイルの名前変更のエラーです。"
 #. %s is replaced by the application executable name.
 #, python-format
 msgid "Current application (%s)"
-msgstr "現在のアプリケーション (%s)"
+msgstr "現在のアプリ (%s)"
 
 #. Translators: Displayed for the configuration profile trigger for say all.
 msgid "Say all"
@@ -6343,7 +6373,7 @@ msgstr "プロファイルのトリガー"
 #. %s is replaced by the application executable name.
 #, python-format
 msgid "%s application"
-msgstr "%s アプリケーション"
+msgstr "%s アプリ"
 
 #. Translators: The label of the triggers list in the Configuration Profile Triggers dialog.
 msgid "Triggers"
@@ -6870,7 +6900,7 @@ msgstr "コマンドキーの読み上げ(&K)"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Handle keys from other &applications"
-msgstr "外部アプリケーションからの文字入力(&A)"
+msgstr "外部アプリからの文字入力(&A)"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
@@ -7361,6 +7391,11 @@ msgstr "記号"
 msgid "Level"
 msgstr "最低読み上げレベル"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "音声エンジンに記号を送る"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "読み方を変更"
@@ -7368,6 +7403,10 @@ msgstr "読み方を変更"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "最低読み上げレベル(&L)"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "音声エンジンに記号を送る(&S)"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7507,6 +7546,10 @@ msgstr "デスクトップ"
 msgid "default color"
 msgstr "標準色"
 
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "このセルは編集できません"
+
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
 msgstr "グラフ、コメント、数式のリストを表示"
@@ -7525,6 +7568,11 @@ msgstr "コメント(&O)"
 #. in the browse mode Elements List dialog.
 msgid "&Formula"
 msgstr "数式(&F)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "シート(&S)"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7588,6 +7636,12 @@ msgid ""
 msgstr ""
 "1回押すと現在のセルとその下のセルを行見出しに設定。2回押すと行見出しの設定を"
 "クリア"
+
+msgid "Input Message is {title}: {message}"
+msgstr "入力メッセージ {title} {message}"
+
+msgid "Input Message is {message}"
+msgstr "入力メッセージ {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -8505,14 +8559,8 @@ msgstr "HIMS社製 Braille Sense/Braille EDGE シリーズ"
 msgid "HIMS SyncBraille"
 msgstr "HIMS社製 SyncBraille"
 
-#~ msgid "unrevised"
-#~ msgstr "未変更"
+#~ msgid "selecting %s"
+#~ msgstr "%s 選択"
 
-#~ msgid "unknown author"
-#~ msgstr "著者不明"
-
-#~ msgid "unknown date"
-#~ msgstr "日付不明"
-
-#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-#~ msgstr "{revisionType} 更新者 {revisionAuthor} 更新日 {revisionDate}"
+#~ msgid "unselecting %s"
+#~ msgstr "%s 選択解除"
