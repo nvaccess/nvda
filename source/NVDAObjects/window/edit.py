@@ -515,21 +515,21 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			fgColor=fontObj.foreColor
 			if fgColor==comInterfaces.tom.tomAutoColor:
 				# Translators: The default color of text when a color has not been set by the author. 
-				formatField['color']=_("Default color")
+				formatField['color']=_("default color")
 			elif fgColor&0xff000000:
 				# The color is a palet index (we don't know the palet)
-				# Translators: The color of text cannot be detected. 
-				formatField['color']=_("Unknown color")
+				# #5474: Translatable string backed out until after 2015.4 freeze.
+				pass
 			else:
 				formatField["color"]=colors.RGB.fromCOLORREF(fgColor)
 			bkColor=fontObj.backColor
 			if bkColor==comInterfaces.tom.tomAutoColor:
 				# Translators: The default background color  when a color has not been set by the author. 
-				formatField['background-color']=_("Default color")
+				formatField['background-color']=_("default color")
 			elif bkColor&0xff000000:
 				# The color is a palet index (we don't know the palet)
-				# Translators: The background color cannot be detected. 
-				formatField['background-color']=_("Unknown color")
+				# #5474: Translatable string backed out until after 2015.4 freeze.
+				pass
 			else:
 				formatField["background-color"]=colors.RGB.fromCOLORREF(bkColor)
 		return formatField
