@@ -1710,7 +1710,7 @@ class GlobalCommands(ScriptableObject):
 				braille.handler.mainBuffer.scrollTo(region, region.brailleSelectionStart)
 			braille.handler.mainBuffer.updateDisplay()
 	# Translators: Input help mode message for a braille command.
-	script_braille_toFocus.__doc__= _("Move braille to the focus object and the cursor or caret within it, if possible")
+	script_braille_toFocus.__doc__= _("Moves the braille display to the current focus")
 	script_braille_toFocus.category=SCRCAT_BRAILLE
 
 	def script_reloadPlugins(self, gesture):
