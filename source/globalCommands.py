@@ -1706,6 +1706,8 @@ class GlobalCommands(ScriptableObject):
 			braille.handler.mainBuffer.focus(region)
 			if region.brailleCursorPos is not None:
 				braille.handler.mainBuffer.scrollTo(region, region.brailleCursorPos)
+			elif region.brailleSelectionStart is not None:
+				braille.handler.mainBuffer.scrollTo(region, region.brailleSelectionStart)
 			braille.handler.mainBuffer.updateDisplay()
 	# Translators: Input help mode message for a braille command.
 	script_braille_toFocus.__doc__= _("Move braille to the focus object and the cursor or caret within it, if possible")
