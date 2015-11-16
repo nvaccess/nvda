@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-08 19:11+1000\n"
-"PO-Revision-Date: 2015-09-30 16:06+0800\n"
+"POT-Creation-Date: 2015-11-10 10:22+1000\n"
+"PO-Revision-Date: 2015-11-11 17:44+0800\n"
 "Last-Translator: 王建立 <wangjanli@gmail.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "Language: zh_TW\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 1.8.6\n"
 "X-Poedit-Bookmarks: 127,-1,122,121,-1,606,650,117,123,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -1182,19 +1182,19 @@ msgstr "沒有前一個嵌入式物件了"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next annotation"
-msgstr "移到後一個註解"
+msgstr "移到後一個標記"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next annotation"
-msgstr "沒有後一個註解了"
+msgstr "沒有後一個標記了"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous annotation"
-msgstr "移到前一個註解"
+msgstr "移到前一個標記"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous annotation"
-msgstr "沒有前一個註解了"
+msgstr "沒有前一個標記了"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -1296,6 +1296,24 @@ msgstr "全部"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "字元"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "永不"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "總是"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "僅當低於符號設定等級"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -2728,6 +2746,10 @@ msgstr "裁切掉"
 msgid "overflowing"
 msgstr "超載了"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "沒有鎖住"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "沒選取"
@@ -3009,11 +3031,11 @@ msgstr "切換讀出指令鍵的開關"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name off"
-msgstr "讀出字體名稱關"
+msgstr "讀出字體名稱 關"
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 msgid "report font name on"
-msgstr "讀出字體名稱開"
+msgstr "讀出字體名稱 開"
 
 #. Translators: Input help mode message for toggle report font name command.
 msgid "Toggles on and off the reporting of font changes"
@@ -3021,11 +3043,11 @@ msgstr "切換讀出字體名稱的開關"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size off"
-msgstr "讀出字體大小關"
+msgstr "讀出字體大小 關"
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 msgid "report font size on"
-msgstr "讀出字體大小關"
+msgstr "讀出字體大小 關"
 
 #. Translators: Input help mode message for toggle report font size command.
 msgid "Toggles on and off the reporting of font size changes"
@@ -3033,11 +3055,11 @@ msgstr "切換讀出字體大小的開關"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes off"
-msgstr "讀出字體屬性關"
+msgstr "讀出字體屬性 關"
 
 #. Translators: The message announced when toggling the report font attributes document formatting setting.
 msgid "report font attributes on"
-msgstr "讀出字體屬性開"
+msgstr "讀出字體屬性 開"
 
 #. Translators: Input help mode message for toggle report font attributes command.
 msgid "Toggles on and off the reporting of font attributes"
@@ -3045,30 +3067,27 @@ msgstr "切換讀出字體屬性的開關"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions off"
-msgstr "讀出編修版次關"
+msgstr "讀出修訂 關"
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 msgid "report revisions on"
-msgstr "讀出編修版次開"
+msgstr "讀出修訂 開"
 
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
-msgstr "切換讀出編修版次的開關"
+msgstr "切換讀出修訂的開關"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
-#, fuzzy
 msgid "report emphasis off"
-msgstr "讀出頁碼關"
+msgstr "讀出強調 關"
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
-#, fuzzy
 msgid "report emphasis on"
-msgstr "讀出頁碼開"
+msgstr "讀出強調 開"
 
 #. Translators: Input help mode message for toggle report emphasis command.
-#, fuzzy
 msgid "Toggles on and off the reporting of emphasis"
-msgstr "切換讀出頁碼的開關"
+msgstr "切換讀出強調的開關"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3076,7 +3095,7 @@ msgstr "讀出色彩關"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors on"
-msgstr "讀出色彩開"
+msgstr "讀出色彩 開"
 
 #. Translators: Input help mode message for toggle report colors command.
 msgid "Toggles on and off the reporting of colors"
@@ -3084,11 +3103,11 @@ msgstr "切換讀出色彩的開關"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment off"
-msgstr "讀出對齊方式關"
+msgstr "讀出對齊方式 關"
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 msgid "report alignment on"
-msgstr "讀出對齊方式開"
+msgstr "讀出對齊方式 開"
 
 #. Translators: Input help mode message for toggle report alignment command.
 msgid "Toggles on and off the reporting of text alignment"
@@ -3096,11 +3115,11 @@ msgstr "切換讀出對齊方式的開關"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style off"
-msgstr "讀出文字樣式關"
+msgstr "讀出文字樣式 關"
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 msgid "report style on"
-msgstr "讀出文字樣式關"
+msgstr "讀出文字樣式 關"
 
 #. Translators: Input help mode message for toggle report style command.
 msgid "Toggles on and off the reporting of style changes"
@@ -3108,11 +3127,11 @@ msgstr "切換讀出樣式的開關"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors off"
-msgstr "讀出拼錯字關"
+msgstr "讀出拼錯字 關"
 
 #. Translators: The message announced when toggling the report spelling errors document formatting setting.
 msgid "report spelling errors on"
-msgstr "讀出拼錯字開"
+msgstr "讀出拼錯字 開"
 
 #. Translators: Input help mode message for toggle report spelling errors command.
 msgid "Toggles on and off the reporting of spelling errors"
@@ -3120,11 +3139,11 @@ msgstr "切換讀出拼錯字的開關"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages off"
-msgstr "讀出頁碼關"
+msgstr "讀出頁碼 關"
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 msgid "report pages on"
-msgstr "讀出頁碼開"
+msgstr "讀出頁碼 開"
 
 #. Translators: Input help mode message for toggle report pages command.
 msgid "Toggles on and off the reporting of pages"
@@ -3132,11 +3151,11 @@ msgstr "切換讀出頁碼的開關"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
-msgstr "讀出第幾行關"
+msgstr "讀出第幾行 關"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers on"
-msgstr "讀出第幾行開"
+msgstr "讀出第幾行 開"
 
 #. Translators: Input help mode message for toggle report line numbers command.
 msgid "Toggles on and off the reporting of line numbers"
@@ -3144,11 +3163,11 @@ msgstr "切換讀出第幾行的開關"
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
 msgid "report line indentation off"
-msgstr "讀出行縮排關"
+msgstr "讀出行縮排 關"
 
 #. Translators: The message announced when toggling the report line indentation document formatting setting.
 msgid "report line indentation on"
-msgstr "讀出行縮排開"
+msgstr "讀出行縮排 開"
 
 #. Translators: Input help mode message for toggle report line indentation command.
 msgid "Toggles on and off the reporting of line indentation"
@@ -3156,11 +3175,11 @@ msgstr "切換讀出行縮排的開關"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation off"
-msgstr "讀出段落縮排關"
+msgstr "讀出段落縮排 關"
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 msgid "report paragraph indentation on"
-msgstr "讀出段落縮排開"
+msgstr "讀出段落縮排 開"
 
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 msgid "Toggles on and off the reporting of paragraph indentation"
@@ -3168,11 +3187,11 @@ msgstr "切換讀出段落縮排的開關"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables off"
-msgstr "讀出表格關"
+msgstr "讀出表格 關"
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 msgid "report tables on"
-msgstr "讀出表格開"
+msgstr "讀出表格 開"
 
 #. Translators: Input help mode message for toggle report tables command.
 msgid "Toggles on and off the reporting of tables"
@@ -3180,11 +3199,11 @@ msgstr "切換讀出表格的開關"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers off"
-msgstr "讀出表格的列及欄標題關"
+msgstr "讀出表格的列及欄標題 關"
 
 #. Translators: The message announced when toggling the report table row/column headers document formatting setting.
 msgid "report table row and column headers on"
-msgstr "讀出表格的列及欄標題開"
+msgstr "讀出表格的列及欄標題 開"
 
 #. Translators: Input help mode message for toggle report table row/column headers command.
 msgid "Toggles on and off the reporting of table row and column headers"
@@ -3192,11 +3211,11 @@ msgstr "切換讀出表格的列及欄標題的開關"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates off"
-msgstr "讀出表格儲存格的座標關"
+msgstr "讀出表格儲存格的座標 關"
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 msgid "report table cell coordinates on"
-msgstr "讀出表格儲存格的座標開"
+msgstr "讀出表格儲存格的座標 開"
 
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 msgid "Toggles on and off the reporting of table cell coordinates"
@@ -3204,11 +3223,11 @@ msgstr "切換讀出表格儲存格的座標的開關"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links off"
-msgstr "讀出連結關"
+msgstr "讀出連結 關"
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 msgid "report links on"
-msgstr "讀出連結開"
+msgstr "讀出連結 開"
 
 #. Translators: Input help mode message for toggle report links command.
 msgid "Toggles on and off the reporting of links"
@@ -3216,11 +3235,11 @@ msgstr "切換讀出連結的開關"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments off"
-msgstr "讀出註解關"
+msgstr "讀出註解 關"
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 msgid "report comments on"
-msgstr "讀出註解開"
+msgstr "讀出註解 開"
 
 #. Translators: Input help mode message for toggle report comments command.
 msgid "Toggles on and off the reporting of comments"
@@ -3228,11 +3247,11 @@ msgstr "切換讀出註解的開關"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists off"
-msgstr "讀出清單"
+msgstr "讀出清單 關"
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 msgid "report lists on"
-msgstr "讀出清單"
+msgstr "讀出清單 開"
 
 #. Translators: Input help mode message for toggle report lists command.
 msgid "Toggles on and off the reporting of lists"
@@ -3240,11 +3259,11 @@ msgstr "切換讀出清單的開關"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings off"
-msgstr "讀出標題關"
+msgstr "讀出標題 關"
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 msgid "report headings on"
-msgstr "讀出標題開"
+msgstr "讀出標題 開"
 
 #. Translators: Input help mode message for toggle report headings command.
 msgid "Toggles on and off the reporting of headings"
@@ -3252,11 +3271,11 @@ msgstr "切換讀出標題的開關"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes off"
-msgstr "讀出引述關"
+msgstr "讀出引述 關"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 msgid "report block quotes on"
-msgstr "讀出引述開"
+msgstr "讀出引述 開"
 
 #. Translators: Input help mode message for toggle report block quotes command.
 msgid "Toggles on and off the reporting of block quotes"
@@ -3264,11 +3283,11 @@ msgstr "切換讀出引述的開關"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks off"
-msgstr "讀出地標"
+msgstr "讀出地標 關"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks on"
-msgstr "讀出地標"
+msgstr "讀出地標 開"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
@@ -3276,11 +3295,11 @@ msgstr "切換讀出地標的開關"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
-msgstr "讀出頁框關"
+msgstr "讀出頁框 關"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames on"
-msgstr "讀出頁框開"
+msgstr "讀出頁框 開"
 
 #. Translators: Input help mode message for toggle report frames command.
 msgid "Toggles on and off the reporting of frames"
@@ -3288,11 +3307,11 @@ msgstr "切換讀出頁框的開關"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
-msgstr "讀出可點擊關"
+msgstr "讀出可點擊 關"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable on"
-msgstr "讀出可點擊開"
+msgstr "讀出可點擊 開"
 
 #. Translators: Input help mode message for toggle report if clickable command.
 msgid "Toggles on and off reporting if clickable"
@@ -3978,6 +3997,10 @@ msgid ""
 "hierarchy"
 msgstr "將瀏覽游標移到並讀出後一個項目"
 
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "沒有前一個物件了"
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
@@ -4491,15 +4514,20 @@ msgstr "沒有縮排"
 msgid "%d characters"
 msgstr "%d個字元"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "%s選取  "
+msgid "%s selected"
+msgstr "%s  已選取"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "%s沒選取"
+msgid "%s unselected"
+msgstr "%s 沒有選取"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s 變更選取"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4595,24 +4623,20 @@ msgid "line %s"
 msgstr "第%s行"
 
 #. Translators: Reported when text is marked as having been inserted
-#, fuzzy
 msgid "inserted"
-msgstr "insert"
+msgstr "已新增"
 
 #. Translators: Reported when text is no longer marked as having been inserted.
-#, fuzzy
 msgid "not inserted"
-msgstr "沒選取"
+msgstr "沒有新增"
 
 #. Translators: Reported when text is marked as having been deleted
-#, fuzzy
 msgid "deleted"
-msgstr "delete"
+msgstr "已刪除"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
-#, fuzzy
 msgid "not deleted"
-msgstr "沒選取"
+msgstr "沒有刪除"
 
 #. Translators: Reported when text is revised.
 #, python-format
@@ -4620,36 +4644,33 @@ msgid "revised %s"
 msgstr "修訂%s"
 
 #. Translators: Reported when text is not revised.
-#, fuzzy, python-format
+#, python-format
 msgid "no revised %s"
-msgstr "修訂%s"
+msgstr "沒有修訂 (%s)"
 
 #. Translators: Reported when text is marked
-#, fuzzy
 msgid "marked"
-msgstr "開始位置已標記"
+msgstr "已標記"
 
 #. Translators: Reported when text is no longer marked
-#, fuzzy
 msgid "not marked"
-msgstr "開始位置已標記"
+msgstr "沒有標記"
 
 #. Translators: Reported when text is marked as strong (e.g. bold)
 msgid "strong"
-msgstr ""
+msgstr "粗體強調"
 
 #. Translators: Reported when text is no longer marked as strong (e.g. bold)
-#, fuzzy
 msgid "not strong"
-msgstr "沒 %s"
+msgstr "沒有粗體強調"
 
 #. Translators: Reported when text is marked as emphasised
 msgid "emphasised"
-msgstr ""
+msgstr "斜體強調"
 
 #. Translators: Reported when text is no longer marked as emphasised
 msgid "not emphasised"
-msgstr ""
+msgstr "沒有斜體強調"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -7055,13 +7076,12 @@ msgstr "讀出色彩(&C)"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &editor revisions"
-msgstr "讀出編修版次(&E)"
+msgstr "讀出修訂(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#, fuzzy
 msgid "Report e&mphasis"
-msgstr "讀出頁碼(&P)"
+msgstr "讀出強調(&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7292,6 +7312,11 @@ msgstr "符號"
 msgid "Level"
 msgstr "等級"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "保留狀態"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "變更符號讀法 "
@@ -7299,6 +7324,10 @@ msgstr "變更符號讀法 "
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "等級(&L)"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "送出實際的符號到語音合成 (&S)"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7431,8 +7460,14 @@ msgstr "啟用"
 msgid "Desktop"
 msgstr "桌面"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "預設色彩"
+
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "這個儲存格不可編輯"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
@@ -7451,7 +7486,12 @@ msgstr "註解 (&O)"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Formula"
-msgstr "有公式 (&F)"
+msgstr "公式 (&F)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "工作表(&S)"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7513,6 +7553,12 @@ msgid ""
 msgstr ""
 "按一下設定此儲存格為其右側及以下儲存格所形成的區域之列標題。 連續按二下即清除"
 "此設定。"
+
+msgid "Input Message is {title}: {message}"
+msgstr "輸入訊息是 {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "輸入訊息是 {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -8268,9 +8314,8 @@ msgstr "文字框"
 msgid "comment: {text} by {author} on {date}"
 msgstr "註解: 由 {author} 於 {date} 加註的 {text}"
 
-#, fuzzy
 msgid "{revisionType} {description}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} 由 {author} 於 {date} 修訂"
+msgstr "{revisionType} {description}: {text} 由 {author} 於 {date} 修訂"
 
 #, python-format
 msgid "%g characters"
@@ -8423,7 +8468,7 @@ msgstr "表格的邊緣了"
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "&Annotations"
-msgstr "(&A) 註解"
+msgstr "(&A) 標記"
 
 #. Translators: The name of a series of braille displays.
 msgid "HIMS Braille Sense/Braille EDGE series"
@@ -8432,6 +8477,20 @@ msgstr "HIMS Braille Sense/Braille EDGE 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "預設色彩"
+
+#, fuzzy
+#~ msgid "Unknown color"
+#~ msgstr "未知的色彩"
+
+#~ msgid "selecting %s"
+#~ msgstr "%s選取  "
+
+#~ msgid "unselecting %s"
+#~ msgstr "%s沒選取"
 
 #~ msgid "unrevised"
 #~ msgstr "未修訂"
