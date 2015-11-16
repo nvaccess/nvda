@@ -3,6 +3,60 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.4 =
+De vigtigste nyheder i denne udgave omfatter forbedret understøttelse af Windows 10, medtagelse i tilgængelighedscenteret i Windows 8 og senere, forbedringer i Microsoft Excel, som omfatter visning af ark på en liste, omdøbning og adgang til låste celler i beskyttede ark, samt understøttelse af redigering af "rich text" i Mozilla Firefox, Google Chrome og Mozilla Thunderbird.
+
+== Nye funktioner ==
+- NVDA bliver nu vist i tilgængelighedscentret i Windows 8 og senere. (#308)
+- Mens man flytter rundt mellem celler i Excel, bliver ændringer i formateringen nu annonceret automatisk, hvis de relevante indstillinger er slået til i NVDAs dialog for dokumentformateringsindstillinger. (#4878)
+En indstilling til annoncering af fremhævelse er blevet tilføjet til NVDAs dialog til dokumentformateringsindstillinger. Når den er slået til, hvilket den er som standard, kan NVDA automatisk annoncere fremhævet tekst i dokumenter. I øjeblikket understøttes kun "fremhævet" og "kraftig" i 	browse-tilstand i Internet explorer og andre MSHTML-kontroller. (#4920)
+- Indsat og slettet tekst bliver nu annonceret i browse-tilstand i Internet Explorer og andre MSHTML-kontroller, hvis NVDAs indstilling for annoncering af ændringer er slået til. (#4920)
+- i NVDAs "Vis ændringer"-liste for Microsoft word bliver der nu vist flere informationer, så som ændringer i formatering. (#4920)
+- Microsoft Excel:  Det er nu muligt at få vist en liste over regneark og omdøbe dem i NVDAs elementliste (NVDA+F7). (#4630, #4414)
+- Det er nu muligt at indstille, om symboler skal sendes videre til talesyntesen (f.eks. for at skabe en pause eller en ændring i tonelejet) i dialogen "Udtale af symboler". (#5234)
+- I Microsoft Excel vil NVDA nu annoncere input-meddelelser, som er indstillet på celler af forfatteren til regnearket. (#5051)
+- Understøttelse af Baum Pronto! V4 og VarioUltra braille displays forbundet via Bluetooth. (#3717)
+- Understøttelse af redigering af rich text i Mozilla applicationer som Google Docs med braille-understøttelse slået til i Mozilla Firefox og HTML-komposition i Mozilla Thunderbird. (#1668)
+- Understøttelse af redigering af rich text i Google Chrome og Chrome-baserede browsere som Google Docs med braille support slået til. (#2634)
+ - Dette kræver Chrome version 47 eller senere.
+- I gennemsynstilstand i Microsoft Excel kan du nu navigere til låste celler i beskyttede ark. (#4952)
+
+
+== Ændringer ==
+- Indstillingen for at annoncere ændringer i NVDAs dialog for dokumentformateringsindstillinger er nu slå til som standard. (#4920)
+- Når du flytter et tegn ad gangen i Microsoft Word med annoncering af ændringer slået til, vil færre oplysninger nu blive annonceret, hvilket gør navigationen mere effektiv. Hvis du vil høre de ekstra oplysninger, skal du bruge elementlisten. (#4920)
+- opdateret  liblouis braille-opversætter til version 2.6.4. (#5341)
+- En del symboler, herunder basale matematiske symboler, er blevet flyttet til niveauet "nogle", så de som standard bliver udtalt. (#3799)
+Hvis talesyntesen understøtter det, skulle der nu komme ophold i talen for parenteser og tankestreg (–). (#3799)
+- Når man vælger tekst, bliver teksten nu læst før indikationen af, at den er blevet valgt i stedet for efter. (#1707)
+
+
+== Fejlrettelser ==
+Store performance-forbedringer ved navigation i mlisten over meddelelser i Outlook 2010 og 2013(#5268)
+I diagrammer i Microsoft Excel virker navigation med visse taster, f.eks. bladring i ark (Ctrl+PageUp og Ctrl-pagdDown) nu correct. (#5336)
+Rettet udseendet af knapper i den advarselsdialog, som bliver vist, hvis man forsøger at nedgradere NVDA.
+I Windows 8 og senere starter NVDA nu meget tidligere, når programmet er konfigureret til at starte efter log-on til Windows. (#308)
+ - Hvis du har slået dette til i en tidligere version af NVDA, skal du slå det fra og til igen for at få ændringen til at virke. Du kan følge denne fremgangsmåde:
+  + Åben dialogen Generelle indstillinger.
+  + Fjern krydset fra checkboksen "Automatisk start af NVDA, når jeg er logget på Windows.
+  + Tryk på OK-knappen.
+  + Åbn dialogen Generelle indstillinger igen.
+  + Sæt kryds i checkboksen "Automatisk start af NVDA, når jeg er logget på Windows.
+  + Tryk på OK-knappen.
+- Performance-forbedringer for UI Automation i bl.a. Stifinder og Joblisten. (#5293)
+- NVDA skifter nu korrekt til fokustilstand, når man tab'er til skrivebeskyttede ARIA grid kontroller i Browse-tilstand i Mozilla Firefox og andre Gecko-baserede kontroller. (#5118)
+- NVDA siger nu korrekt "ingen forrige" i stedet for "ingen næste", når der ikke er flere objekter, og man svirper mod venstre på en touch-skærm. 
+- Løst problem med at skrive flere ord i filter-feltet i dialogen Input-bevægelser. (#5426)
+- NVDA fryser ikke længere i nogle tilfælde, når man genopretter forbindelse til et HumanWare Brailliant BI/B series display via USB. (#5406)
+- På sprog med sammenhængende tegn virker tegnbeskrivelse nu som forventet for store engelske bogstaver. (#5375)
+- NVDA skulle nu ikke længere fryse ved nogle lejligheder, når man åbner startmenuen i Windows 10. (#5417)
+- i Skype for Desktop bliver en meddelse, der bliver vist, før en tidligere meddelelse forsvinder, nu annonceret. (#4841)
+- Meddelelser bliver nu korrekt annonceret i Skype for Desktop 7.12 og senere. (#5405)
+- NVDA annoncerer nu fokus korrekt, når man går ud af kontekst-menuen i programmer som f.eks. Jart. (#5302)
+- i Windows 7 og senere bliver farver nu igen annonceret i programmer som f.eks. Wordpad. (#5352)
+- Under redigering i Microsoft PowerPoint vil et tryk på Enter nu annoncere automatisk indsat tekst som f.eks. bullit eller et nummer. (#5360)
+
+
 = 2015.3 =
 De vigtigste nyheder i denne udgave omfatter indledende understøttelse af Windows 10, mulighed for at slå enkeltbogstavsnavigation fra i browse-tilstand (nyttigt i visse web-programmer), forbedringer i Internet Explorer og fejlrettelse af sammenrodet tekst under indtastning i visse applikationer med punktskrift slået til.
 
