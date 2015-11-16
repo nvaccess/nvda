@@ -461,7 +461,7 @@ Adicionalmente, pode alternar manualmente forçando o modo de foco, sendo que as
 || Nome | Tecla | Descrição |
 | Alternar Modo de Foco e Navegação | NVDA+espaço | Alterna entre o modo de foco e o modo de navegação |
 | Sair do modo de foco | escape | Volta para o modo de navegação se o modo de foco foi anteriormente ativado automaticamente |
-| Atualizar Documento no Modo de Navegação | NVDA+f5 | Recarrega o conteúdo do documento atual (muito útil se lhe falta determinado conteúdo.  Not available in Microsoft Word and Outlook. Não disponível no Microsoft Word e Outlook.) |) | ) |
+| Atualizar Documento no Modo de Navegação | NVDA+f5 | Recarrega o conteúdo do documento atual (muito útil se lhe falta determinado conteúdo. Não disponível no Microsoft Word e Outlook.) |
 | Procurar | NVDA+control+f | Abre um diálogo onde você pode digitar algum texto para procurar no documento atual |
 | Procurar seguinte | NVDA+f3 | Procura pela próxima ocorrência de texto já procurada no documento |
 | Procurar anterior | NVDA+shift+f3 | Procura pela ocorrência de texto anterior  já procurada no documento |
@@ -537,12 +537,12 @@ O mesmo encontra-se disponível para download gratuito em: http://www.dessci.com
 
 O NVDA suporta os seguintes tipos de conteúdo matemático:
 - MathML no Mozilla Firefox e Microsoft Internet Explorer.
-- Design Science MathType no Microsoft Word e PowerPoint.
+- Design Science MathType no Microsoft Word e PowerPoint. O MathType precisa estar instalado para que tal seja possível. A versão trial é suficiente.
 - MathML no Adobe Reader. Note que este ainda não é um standard oficial, então atualmente não existe um software disponível publicamente que  possa produzir esse conteúdo.
 -
 
 Ao ler um documento, o NVDA irá falar qualquer conteúdo matemático suportado onde este ocorra.
-Caso você esteja usando uma linha braille, tal conteúdo também será exiido em braille.
+Caso você esteja usando uma linha braille, tal conteúdo também será exibido em braille.
 
 ++ Navegação Interativa ++
 Se você está trabalhando primariamente com voz, na maioria dos casos, irá provavelmente querer examinar a expressão em segmentos menores, ao invés de lê-la toda de uma só vez.
@@ -571,21 +571,84 @@ O NVDA fornece seus próprios comandos adicionais para alguns aplicativos, com v
 
 ++ Microsoft Word ++
 
++++ Leitura Automática dos Cabeçalhos das Linhas e Colunas +++
+O NVDA pode anunciar automaticamente os cabeçalhos apropriados para as linhas e colunas quando se está navegando por tabelas no Microsoft Word.
+Para isso, é necessário  que primeiro a opção Anunciar os cabeçalhos de linhas e colunas das tabelas esteja habilitada no Diáloggo de Formatação de Documentos do NVDA.
+Além disso, o NVDA precisa ser informado sobre qual linha ou coluna contém os cabeçalhos em qualquer tabela determinada
+Depois de mover-se para a primeira célula da coluna ou linha que contém os cabeçalhos, use um dos seguintes comandos:
+
 %kc:beginInclude
 || Nome | Tecla | Descrição |
-| Anunciar comentário atual | NVDA+alt+c | Anuncia o texto do comentário na posição do cursor do sistema.
 | Selecionar os cabeçalhos das colunas | NVDA+shift+c | Pressionado uma vez, informa ao NVDA que esta é a linha que contém os cabeçalhos das colunas, os quais deverão ser anunciados automaticamente ao mover-se entre colunas abaixo dessa linha. Ao pressionar duas vezes, limpará a configuração. |
 | Selecionar os cabeçalhos das linhas | NVDA+shift+r | Pressionando-se uma vez, informa ao NVDA que esta é a coluna que contém os cabeçalhos das linhas, os quais deverão ser anunciados  automaticamente ao mover-se entre linhas dentro desta coluna. Pressione duas vezes e limpará a configuração. |
 %kc:endInclude
+Essas configurações serão armazenadas no documento como marcadores compatíveis com outros leitores de telas como o Jaws.
+Issso significa que os usuários de outros leitores de telas que abrirem este documento posteriormente terão os cabeçalhos das linhas e colunas definidos automaticamente.
+
++++ Modo de Navegação no Microsoft Word +++
+Assim como na web, o Modo de navegação pode ser usado no Microsoft Word, permitindo-lhe usar recursos tais como a navegação rápida e a Lista de Elementos.
+%kc:beginInclude
+Para alternar a ativação do Modo de navegação no Microsoft Word, pressione NVDA+espaço.
+%kc:endInclude
+Para mais informações sobre o Modo de navegação e a Navegação Rápida, consulte a seção [Modo de Navegação #BrowseMode].
+
+++++ A Lista de Elementos ++++
+%kc:beginInclude
+Estando em modo de navegação no Microsoft Word, você pode  acessar a Lista de Elementos pressionando NVDA+f7.
+%kc:endInclude
+A Lista de Elementos pode listar cabeçalhos, links e anotações (o que inclui comentários e revisões de editores).
+
++++ Anunciar Comentários +++
+%kc:beginInclude
+Para anunciar quaisquer comentários na posição atual do cursor do sistema, pressione NVDA+alt+c.
+%kc:endInclude
+Todos os comentários para o documento, além de outras revisões de editores, podem também ser listadas na Lista de Elementos do NVDA ao selecionar Anotações como tipo de elemento.
 
 ++ Microsoft Excel ++
+
++++ Leitura Automática dos Cabeçalhos das Linhas e Colunas +++
+O NVDA pode anunciar automaticamente os cabeçalhos apropriados para as linhas e colunas quando se está navegando por folhas de cálculo no Microsoft Excel.
+Para isso, é necessário  que primeiro a opção Anunciar os cabeçalhos de linhas e colunas das tabelas esteja habilitada no Diáloggo de Formatação de Documentos do NVDA.
+Além disso, o NVDA precisa ser informado sobre qual linha ou coluna contém os cabeçalhos.
+Depois de mover-se para a primeira célula da coluna ou linha que contém os cabeçalhos, use um dos seguintes comandos:
 
 %kc:beginInclude
 || Nome | Tecla | Descrição |
 | Selecionar os cabeçalhos das colunas | NVDA+shift+c | Pressionado uma vez, informa ao NVDA que esta é a linha que contém os cabeçalhos das colunas, os quais deverão ser anunciados automaticamente ao mover-se entre colunas abaixo dessa linha. Ao pressionar duas vezes, limpará a configuração. |
 | Selecionar os cabeçalhos das linhas | NVDA+shift+r | Pressionando-se uma vez, informa ao NVDA que esta é a coluna que contém os cabeçalhos das linhas, os quais deverão ser anunciados  automaticamente ao mover-se entre linhas dentro desta coluna. Pressione duas vezes e limpará a configuração. |
-| Anunciar comentário | NVDA+alt+c | Anuncia o comentário na célula atual, caso haja algum. |
-| Lista de Elementos | NVDA+f7 | abre o Diálogo da Lista de Elementos, contendo gráficos, células com comentários, ou células com fórmulas. |
+%kc:endInclude
+Essas configurações serão armazenadas na folha de cálculo com nomes de variáveis compatíveis com outros leitores de telas como o Jaws.
+Issso significa que os usuários de outros leitores de telas que abrirem esta planilha posteriormente terão os cabeçalhos das linhas e colunas definidos automaticamente.
+
++++ A Lista de Elementos +++
+De modo similar à web, o NVDA possui uma Lista de Elementos para o Microsoft Excel que lhe permite listar e acessar vários tipos diferentes de informação.
+%kc:beginInclude
+Para acessar a Lista de Elementos no Microsoft Excel, pressione NVDA+f7.
+%kc:endInclude
+Os vários tipos de informação disponíveis na Lista de Elementos são:
+- Gráfico: Isso lista todos os gráficos na folha de cálculo. 
+Selecionando um gráficco e pressionando enter ou o botão Mover para, coloca-se o gráfico sob o foco para navegar e ler com as setas.
+- Comentário: Isso lista todas as células da folha de cálculo que contenham comentários. 
+O endereço da célula além de seus comentários são mostrados para cada célula. 
+Estando num comentário de célula selecionado e pressionando enter ou o botão Mover para, moverá diretamente para aquela célula.
+- Fórmula: Isso lista todas as células da folha de cálculo que contém uma fórmula. 
+O endereço da célula além de sua fórmula são mostrados para cada célula. 
+Estando numa fórmula selecionada e pressionando enter ou o botão Mover para, moverá diretamente para aquela célula.
+- Planilha: Isso lista todas as planilhas na folha de cálculo. 
+Estando numa planilha selecionada e pressionando f2, permite-lhe renomeá-la. 
+Estando numa planilha selecionada e pressionando enter ou o botão Mover para, irá mover para aquela planilha.
+-
+
++++ Anunciar Comentários +++
+%kc:beginInclude
+Para anunciar quaisquer  comentários na célula atualmente sob o foco, pressione NVDA+alt+c.
+%kc:endInclude
+Todos os comentários para a folha de cálculo também podem ser listados na Lista de Elementos do NVDA.
+
++++ Lendo Células Protegidas +++
+Caso uma folha de cálculos tenha sido protegida, poderá não ser possível mover o foco para as  células em particular que foram bloqueadas para edição.
+%kc:beginInclude
+Para ser possível mover-se para células bloqueadas, alterne para o Modo de Navegação pressionando NVDA+espaço, em seguida use os comandos  de movimentto padrões do Excel, tais como as setas, para mover-se por todas as células da planilha.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -1076,6 +1139,7 @@ Por exemplo, se marcar a caixa de seleção para informar o nome da fonte a medi
 - Alinhamento
 - Cores
 - Revisões de editores
+- Ênfase
 - Estilo
 - Erros Ortográficos
 - Número das Páginas
@@ -1142,10 +1206,30 @@ Expressões regulares não são explicadas neste guia do usuário, mas existem m
 
 Esse diálogo permite-lhe mudar o modo como a pontuação e outros sinais serão anunciados, bem como em que grau de sinais eles serão falados.
 
+O idioma para o qual a pronúncia do sinal está sendo  editada será mostrado no título do diálogo.
+Note que esse diálogo respeita a opção "Usar o idioma da voz ao processar caracteres e símbolos" encontrada no [Diálogo de Opções de Voz #VoiceSettings]; isto é, ele usa o idioma da voz ao invés de usar o  idioma da configuração geral do NVDA quando esta opção está habilitada.
+
 Para mudar um sinal, selecione-o na lista de sinais.
   O campo de substituição permite que você altere o texto que será falado no lugar do sinal.
-  Através do campo grau você poderá definir o grau de sinais no qual este será falado.
+  Através do campo grau você poderá definir o grau de sinais mais baixo no qual este será falado.
   
+  - O campo Enviar o real símbolo para o sintetizador especifica quando o próprio símbolo (contrariamente a seu substituto) deve ser enviado para o sintetizador.
+Isso é útil quando o símbolo faz com que o sintetizador emita pausa ou altere a inflecção da voz.
+Por exemplo, uma vírgula provoca pausa no sintetizador.
+Existem 3 opções:
+ - nunca: Nunca envia o real símbolo para o sintetizador.
+ - sempre: Sempre envia o real símbolo para o sintetizador.
+ - somente abaixo do nível de símbolos: envia o real símbolo apenas se o grau configurado estiver abaixo do  grau definido para esse símbolo.
+ Por exemplo, você pode usá-lo de modo que um símbolo tenha seu substituto falado em graus mais altos sem pausar, enquanto continua sendo indicado com uma pausa em graus mais baixos.
+ -
+-
+
+Você pode adicionar novos símbolos pressionando o botão Adicionar.
+No diálogo que aparece, insira o símbolo e pressione o botão OK.
+Em seguida, altere os campos para o novo símbolo  como você faria  para outros sinais.
+
+é possível remover um símbolo adicionado anteriormente pressionando o botão Remover.
+
 Após finalizar, pressione ok para salvar as alterações ou cancelar  caso queira descartá-las.
 
 +++ Gestos de Entrada +++
@@ -1531,7 +1615,7 @@ Por favor consulte a documentação da mesma para obter descrições de onde ess
 Várias linhas braille da [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] são suportadas quando conectadas via USB ou bluetooth.
 
  Entre elas estão:
-- Baum: SuperVario, PocketVario
+- Baum: SuperVario, PocketVario, VarioUltra (apenas via bluetooth), Pronto! (apenas via bluetooth)
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -

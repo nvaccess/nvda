@@ -12,11 +12,23 @@
 - Eine neue Option zum Ansagen von betontem Text hinzugefügt. Dies betrifft momentan nur die html-Tags em und strong im Internet Explorer und anderen MSHTML-Elementen. (#4920)
 - Falls die Ansage von Dokumentänderungen in den Einstellungen für Dokumentformatierungen aktiviert ist, werden nun auch eingefügte und gelöschte Textpassagen ausgegeben. Dies betrifft momentan den Internet Explorer und  mshtml-Dokumente. (#4920)
 - Wenn Sie sich mit Hilfe der Elementliste Dokumentänderungen anzeigen lassen, werden jetzt mehr Infos angezeigt. (#4920)
+- Sie können in Microsoft Excel nun die Elementliste (nvda+f7) verwenden, um Tabellenblätter aufzulisten oder umzubenennen. (#4630, #4414)
+- Sie können im Dialog für die Aussprache von Symbolen und Sonderzeichen festlegen, ob Symbole unbehandelt an die Sprachausgabe gesendet werden sollen (z.B. um eine Sprechpause zu erzwingen). (#5234)
+- In Microsoft Excel, NVDA now reports any input messages set by the sheet author on cells. (#5051)
+- Support for the Baum Pronto! V4 and VarioUltra braille displays when connected via Bluetooth. (#3717)
+- Support for editing of rich text in Mozilla applications such as Google Docs with braille support enabled in Mozilla Firefox and HTML composition in Mozilla Thunderbird. (#1668)
+- Support for editing of rich text in Google Chrome and Chrome-based browsers such as Google Docs with braille support enabled. (#2634)
+ - This requires Chrome version 47 or later.
+- In browse mode in Microsoft Excel, you can navigate to locked cells in protected sheets. (#4952)
 
 
 == Änderungen ==
 - Die Option "Dokumentänderungen ausgeben " in den Einstellungen für Dokumentformatierungen ist nun standardmäßig aktiviert. (#4920)
 - Beim Zeichenweisen Navigieren in Word-Dokumenten werden nun weniger Informationen angezeigt, sofern die Option zum Verfolgen von Änderungen aktiviert ist. Dies erlaubt eine flüssigere Navigation. Um mehr Informationen über Änderungen im Dokument zu erhalten, verwenden Sie die elementliste. (#4920)
+- Updated liblouis braille translator to 2.6.4. (#5341)
+- Several symbols (including basic mathematical symbols) have been moved to level some so that they are spoken by default. (#3799)
+- If the synthesizer supports it, speech should now pause for parentheses and the en dash (–). (#3799)
+- When selecting text, the text is reported before the indication of selection instead of after. (#1707)
 
 
 == Fehlerbehebungen ==
@@ -27,6 +39,11 @@
  - Wenn die Option zum Start nach der Anmeldung bereits aktiviert war, müssen Sie sie in den allgemeinen Einstellungen aus- und wieder einschalten, damit die Änderungen wirksam werden
 - Leistungsverbesserungen für UI Automation einschließlich Windows-Explorer und Task-Manager. (#5293) 
 - NVDA schaltet nun korrekt in den Fokusmodus um, wenn Sie sich mit Tab auf schreibgeschützte Aria-Elemente bewegen. Dies betrifft Firefox und andere Gecko-Anwendungen. (#5118)
+- NVDA now correctly reports "no previous" instead of "no next" when there are no more objects when flicking left on a touch screen.
+- Fixed problems when typing multiple words into the filter field in the Input Gestures dialog. (#5426)
+- NVDA no longer freezes in some cases when reconnecting to a HumanWare Brailliant BI/B series display via USB. (#5406)
+- In languages with conjunct characters, character descriptions now work as expected for upper case English characters. (#5375)
+- NVDA should no longer occasionally freeze when bringing up the Start Menu in Windows 10. (#5417)
 
 = 2015.3 =
 Schwerpunkte dieser Version sind anfängliche Unterstützung von Windows 10, die Möglichkeit Schnellnavigationstasten des Lese-Modus zu deaktivieren (sinnvoll in bestimmten Internet-Anwendungen), Verbesserungen für den Internet Explorer sowie die Behebung von Fehlern, die beim schreiben in bestimmten Programmen zu verfälschtem Text geführt haben, wenn eine Braillezeile in Betrieb war.

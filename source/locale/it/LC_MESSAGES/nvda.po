@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-02 17:08+1000\n"
-"PO-Revision-Date: 2015-11-04 14:53+0100\n"
+"POT-Creation-Date: 2015-11-10 10:22+1000\n"
+"PO-Revision-Date: 2015-11-10 10:47+0100\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -1312,7 +1312,7 @@ msgstr "sempre"
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
 msgctxt "symbolPreserve"
 msgid "only below symbol's level"
-msgstr "Solo al di sotto del livello del simbolo"
+msgstr "Solo al di sotto livello simboli"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -4646,7 +4646,7 @@ msgstr "%s non selezionato"
 #. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
 #, python-format
 msgid "%s selected instead"
-msgstr "adesso selezionato %s"
+msgstr "%s ora selezionato"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4825,7 +4825,7 @@ msgstr "Non sottolineato"
 #. i.e. not superscript or subscript.
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
-msgstr "Sottolineato"
+msgstr "Testo normale"
 
 #. Translators: Reported when text is left-aligned.
 msgid "align left"
@@ -4863,7 +4863,7 @@ msgstr "Nessun rientro a sinistra"
 
 #. Translators: the label for paragraph format right indent
 msgid "right indent"
-msgstr "Rientro di destra"
+msgstr "Rientro a destra"
 
 #. Translators: the message when there is no paragraph format right indent
 msgid "no right indent"
@@ -4899,7 +4899,7 @@ msgstr "allineato in basso verticalmente"
 
 #. Translators: Reported when text is vertically aligned on the baseline.
 msgid "vertical align baseline"
-msgstr "allineato verticalmente con la baseline"
+msgstr "allineato verticalmente con il testo normale"
 
 #. Translators: Reported when text is vertically justified.
 msgid "vertical align justified"
@@ -7527,7 +7527,7 @@ msgstr "&Livello"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
 msgid "&Send actual symbol to synthesizer"
-msgstr "Manda il &simbolo corrente al sintetizzatore"
+msgstr "Invia il &simbolo corrente al sintetizzatore"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7663,6 +7663,8 @@ msgstr "invoke"
 msgid "Desktop"
 msgstr "Desktop"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "Colore predefinito"
 
@@ -8699,6 +8701,14 @@ msgstr "HIMS serie Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "Colore predefinito"
+
+#, fuzzy
+#~ msgid "Unknown color"
+#~ msgstr "Colore sconosciuto"
 
 #~ msgid "selecting %s"
 #~ msgstr "Seleziono %s"
