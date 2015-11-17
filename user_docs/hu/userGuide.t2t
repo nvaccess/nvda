@@ -56,7 +56,7 @@ vagy nézze meg a szoftverhez mellékelt Copying.txt fájlt.
 
 + Rendszerkövetelmények +
 
-- Operációs rendszerek: a Windows XP, Windows Vista, Windows 7, és Windows 8  bármely verziója (beleértve a szerver operációs rendszereket is)
+- Operációs rendszerek: 32 és 64 bites Windows XP, Windows Vista, Windows 7,  Windows 8, és Windows 10 bármely verziója (beleértve a szerver operációs rendszereket is)
 - Windows XP 32-bit esetén az NVDA igényli a Szerviz csomag 2 vagy újabb meglétét.
 - Windows Server 2003 esetén az NVDA igényli a Szerviz csomag 1 vagy újabb meglétét.
 - Memória: 256 mb vagy több
@@ -549,26 +549,91 @@ Amennyiben szeretne visszatérni a fődokumentumba, nyomja meg az escape billent
 Az NVDA néhány alkalmazásban saját billentyűparanccsal rendelkezik, melyek megkönnyítik a szoftverek akadálymentes használatát.
 
 ++ Microsoft Word ++
-%kc:beginInclude
-|| Név | Billentyűparancs | Leírás |
-| Aktuális megjegyzés bemondása | NVDA+Alt+c | Bemondja a rendszerkurzornál található megjegyzés szövegét. | 
-| Oszlopfejlécek beállítása | NVDA+shift+c | Egyszer megnyomva az NVDA-nak megadható, hogy a táblázatnak ez a sora tartalmazza az oszlopfejléceket, így az NVDA ezeket automatikusan felolvassa, ha az alatta lévő sorokban oszlopról oszlopra lépünk. Kétszer gyorsan megnyomva törli ezt a beállítást. | 
-| Sorfejlécek beállítása | NVDA+shift+r | Egyszer megnyomva az NVDA-nak megadható, hogy a táblázatnak ez az oszlopa tartalmazza a sorfejléceket, így az NVDA ezeket automatikusan felolvassa, ha az utána álló oszlopokban sorról sorra lépünk. Kétszer gyorsan megnyomva törli ezt a beállítást. | 
-%kc:endInclude
 
-++ Microsoft Excel ++
++++ Automatikus sor- és oszlopfejléc bemondás +++
+Az NVDA képes automatikusan bemondani a megfelelő sor- és oszlopfejléceket miközben a táblázatokban navigál a Microsoft Wordben.
+Ehhez először is A táblázat sor/oszlop fejléceinek bemondása opciónak bekapcsolt állapotban kell lennie az NVDA Dokumentum formázás párbeszédablakán.
+Másodszor az NVDA-nak tudnia kell, hogy az adott táblázatban mely sorok és oszlopok tartalmazzák a fejléceket.
+A fejléceket tartalmazó sor vagy oszlop első celláján állva alkalmazhatók az alábbi parancsok:
 %kc:beginInclude
 || Funkció | Billentyűparancs | Leírás |
-| Oszlopfejek beállítása | NVDA+shift+c | Egyszer megnyomva az NVDA-nak megadható, hogy a táblázatnak ez a sora tartalmazza az oszlopfejléceket, így az NVDA ezeket automatikusan felolvassa, ha az alatta lévő sorokban oszlopról oszlopra lépünk. Kétszer gyorsan megnyomva törli ezt a beállítást. | 
-| Sorfejek beállítása | NVDA+shift+r | Egyszer megnyomva az NVDA-nak megadható, hogy a táblázatnak ez az oszlopa tartalmazza a sorfejléceket, így az NVDA ezeket automatikusan felolvassa, ha az utána álló oszlopokban sorról sorra lépünk. Kétszer gyorsan megnyomva törli ezt a beállítást. | 
-| Megjegyzés bemondása | NVDA+alt+c | Bemondja az aktuális cellához tartozó megjegyzést, amennyiben létezik. |
-| Elemek listája | NVDA+f7 | Megnyitja az elemek listáját, ahol  elérhetőek  a diagramok,   képletek és a megjegyzések. |
+| Oszlopfejlécek beállítása | NVDA+shift+c | Egyszeri lenyomás után az NVDA ezt a cellát tekinti az oszlopfejléceket tartalmazó sor első cellájának. Ezeket az oszlopfejléceket fogja automatikusan bemondani e sor alatt az oszlopok közti navigáció során. Kétszeri lenyomása törli a beállítást. |
+| Sorfejlécek beállítása | NVDA+shift+r | Egyszeri lenyomás után az NVDA ezt a cellát tekinti a sorfejléceket tartalmazó oszlop első cellájának. Ezeket a sorfejléceket fogja automatikusan bemondani ezen oszloptól jobbra található  sorok közti navigáció során. Kétszeri lenyomása törli a beállítást. |
+%kc:endInclude
+Ezek a beállítások könyvjelzőként mentésre kerülnek a dokumentumban, és kompatibilisek a többi képernyőolvasóval, így a Jaws-zal is.
+Ez azt jelenti, hogy az így beállított sor- és oszlopfejlécek más képernyőolvasók felhasználói számára is használhatók lesznek, bármikor, amikor a későbbiekben megnyitják a dokumentumot.
+
++++ Böngészőmód a Microsoft Wordben +++
+A Microsoft Word is használható böngészőmódban, így elérhetővé válnak az olyan funkciók, mint a gyorsnavigáció, vagy az Elemlista.
+%kc:beginInclude
+A böngészőmód be- és kikapcsolásához használja az NVDA+szóköz billentyűparancsot.
+%kc:endInclude
+A böngészőmódról és a gyorsnavigációról bővebb információkat talál a [Böngészőmódról szóló fejezetben #BrowseMode].
+
+++++ Az Elemlista ++++
+%kc:beginInclude
+Böngészőmódban  a Microsoft Wordben elérhető az Elemlista  az NVDA+f7 billentyűparancs használatával.
+%kc:endInclude
+Az Elemlistában listázva vannak a címsorok, hivatkozások, és a mellékszövegek (megjegyzések és szerkesztői változások).
+
++++ Megjegyzések bemondása +++
+%kc:beginInclude
+A kurzor aktuális pozíciójában elérhető megjegyzések bemondásához használja az NVDA+alt+c billentyűparancsot.
+%kc:endInclude
+A dokumentumban található összes megjegyzés és szerkesztői változás elérhető az Elemlistából, amennyiben a mellékszövegeket választja a típusok közül.
+
+++ Microsoft Excel ++
+
++++ Automatikus sor- és oszlopfejléc bemondás +++
+Az NVDA képes automatikusan bemondani a megfelelő sor- és oszlopfejléceket miközben munkalapokon navigál a Microsoft Excelben.
+Ehhez először is A táblázat sor/oszlop fejléceinek bemondása opciónak bekapcsolt állapotban kell lennie az NVDA Dokumentum formázás párbeszédablakán.
+Másodszor az NVDA-nak tudnia kell, hogy az adott táblázatban mely sorok és oszlopok tartalmazzák a fejléceket.
+A fejléceket tartalmazó sor vagy oszlop első celláján állva alkalmazhatók az alábbi parancsok:
+%kc:beginInclude
+|| Funkció | Billentyűparancs | Leírás |
+| Oszlopfejlécek beállítása | NVDA+shift+c | Egyszeri lenyomás után az NVDA ezt a cellát tekinti az oszlopfejléceket tartalmazó sor első cellájának. Ezeket az oszlopfejléceket fogja automatikusan bemondani e sor alatt az oszlopok közti navigáció során. Kétszeri lenyomása törli a beállítást. |
+| Sorfejlécek beállítása | NVDA+shift+r | Egyszeri lenyomás után az NVDA ezt a cellát tekinti a sorfejléceket tartalmazó oszlop első cellájának. Ezeket a sorfejléceket fogja automatikusan bemondani ezen oszloptól jobbra található  sorok közti navigáció során. Kétszeri lenyomása törli a beállítást. |
+%kc:endInclude
+Ezek a beállítások definiált névtartományokként mentésre kerülnek a munkafüzetben, és kompatibilisek a többi képernyőolvasóval, így a Jaws-zal is.
+Ez azt jelenti, hogy az így beállított sor- és oszlopfejlécek más képernyőolvasók felhasználói számára is használhatók lesznek, bármikor, amikor a későbbiekben megnyitják a munkafüzetet.
+
+
++++ Az Elemlista +++
+Böngészőmódban a Microsoft Excelben is elérhetővé válik egy elemlista, ahol különböző típusú információk listázhatók és kezelhetők.
+%kc:beginInclude
+Az elemlista megnyitásához használja az NVDA+f7 billentyűparancsot.
+%kc:endInclude
+Az alábbi típusú elemek érhetőek el az elemlistából:
+- Diagram: Kilistázza a munkafüzet összes diagramját. 
+A kiválasztott diagram elemei közt az enter billentyű lenyomása, vagy az Ugrás gomb aktiválása után lehet navigálni a nyílbillentyűk segítségével.
+- Megjegyzés: Kilistázza a munkafüzet összes megjegyzéssel ellátott celláját.
+A cellák címe a megjegyzéssel együtt szerepel a listában.
+Az Enter billentyű lenyomásával, vagy az Ugrás gomb aktiválásával lehet a kiválasztott cellára navigálni.
+- Képlet: Kilistázza a munkafüzet összes képletet tartalmazó celláját.
+A cellák címe a képlettel együtt szerepel a listában.
+Az enter billentyű lenyomásával, vagy az Ugrás gomb aktiválásával lehet a kiválasztott cellára navigálni.
+- Munkalap: Kilistázza a munkafüzet összes munkalapját.
+Egy kiválasztott munkalapot az F2 billentyű lenyomása után át lehet nevezni.
+Az enter billentyű lenyomásával, vagy az Ugrás gomb aktiválásával lehet a kiválasztott munkalapra navigálni.
+
+
++++ Megjegyzések bemondása +++
+%kc:beginInclude
+A fókuszban lévő cellához tartozó megjegyzések meghallgatásához használja a az NVDA+alt+c billentyűparancsot.
+%kc:endInclude
+A munkafüzethez tartozó összes megjegyzés elérhető az elemlistából.
+
+
++++ Zárolt cellák olvasása +++
+Ha egy munkafüzet védett, akkor nem lehet a zárolt, tehát nem szerkeszthető celláira navigálni.
+%kc:beginInclude
+A zárolt cellák eléréséhez böngészőmódra kell váltani az NVDA+szóköz billentyűparancs segítségével, akkor már az Excel szokásos navigációs parancsaival is felolvastathatók.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
-|| Név | Billentyűparancs | Leírás |
-| Váltás a beszélő jegyzeteinek olvasására | control+shift+s | Vált a beszélő jegyzetei és az aktuális fólia tartalma között. A képernyő tartalma nem változik, de a felhasználó felolvastathatja az NVDA-val a megjelenő jegyzeteket.  | 
+|| Funkció | Billentyűparancs | Leírás |
+| Az előadó jegyzeteire váltás | control+shift+s | Diavetítés közben ez a parancs vált egy adott diához tartozó előadói jegyzetek bemondása, és a dia tartalmának bemondása közt. Ez a parancs csak az NVDA által bemondott információkra van hatással, nem befolyásolja a képernyőn megjelenő tartalmat. | 
 %kc:endInclude
 
 ++ Skype ++
@@ -1068,6 +1133,7 @@ Be lehet állítani a:
 - színek jelzése,
 - szövegigazítás,
 - szerkesztői változások jelzése,
+- Kiemelések jelzése,
 - helyesírási hibák,
 - oldalszámok,
 - Sorszámok,
@@ -1115,6 +1181,15 @@ Hozzáadhat új írásjelet is a Hozzáad gomb megnyomásával.
 A megjelenő ablakban írja be a hozzáadni kívánt írásjelet, majd nyomja meg az Ok gombot. A párbeszédpanel bezáródása után van lehetősége megadni a hozzá tartozó behelyettesítendő szöveget, és beállítani az írásjel szintjét is.
 
 A hozzáadott írásjelet eltávolíthatja az Eltávolítás gombbal.
+
+Az aktuális szimbólum kiküldése a beszédszintetizátornak kombinált listamező azt határozza meg, hogy a jelet saját magát küldje ki az NVDA a beszédszintetizátornak (és ne annak helyettesítő kifejezését). Ez például akkor hasznos, ha a jel a szintetizátort arra utasítja, hogy tartson szünetet, vagy változtassa meg a hanglejtést (hajlítást). Például a beszédszintetizátor a vessző hatására szünetet tart. 
+
+Három beállítási lehetőség közül választhatunk: 
+- Soha: soha ne küldje ki az aktuális szimbólumot (írásjelet) a beszédszintetizátornak. 
+- Mindig: Mindig küldje ki az aktuális jelet a beszédszintetizátornak. 
+- Csak, ha a jel egyedi szintje alatt van: Csak akkor küldi ki a szintetizátornak az aktuális jelet, ha az írásjelszint beállítása alacsonyabb szintű, mint amilyen a jelhez tartozó egyedi beállítás. 
+
+Például ezt arra használhatjuk, hogy egy magasabb szinten az írásjel helyettesítő kifejezését mondja és beszéljen folytonosan, alacsonyabb szinten ne mondja ki az írásjel helyettesítő kifejezését és tartson szünetet. 
 
 +++ Beviteli parancsok +++
 
@@ -1373,7 +1448,7 @@ Az alábbiakban felsoroljuk azokat a kijelzőn lévő parancsbillentyűket (és 
 ++ Baum/Humanware/APH Braille kijelzők ++
 Néhány [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] és [APH http://www.aph.org/] kijelzővel az NVDA képes együttműködni, ha ezek usb vagy bluetooth kapcsolódással csatlakoznak a számítógéphez.
 A következőket tartalmazzák:
-- Baum: SuperVario, PocketVario
+- Baum: SuperVario, PocketVario, VarioUltra (csak Bluetooth), Pronto! (csak Bluetooth)
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -

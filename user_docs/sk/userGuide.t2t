@@ -1,4 +1,5 @@
-NVDA NVDA_VERSION  Používateľská príručka
+NVDA NVDA_VERSION Používateľská príručka
+NVDA NVDA_VERSION Používateľská príručka
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -540,7 +541,7 @@ MathPlayer si môžete zdarma stiahnuť z tejto adresy: http://www.dessci.com/en
 
 NVDA podporuje tieto typy matematického obsahu:
 - MathML v prehliadačoch Mozila firefox a Microsoft Internet Explorer.
-- Matematický obsah od Design Science integrovaný v Microsoft Word a Microsoft Powerpoint.
+- Matematický obsah od Design Science integrovaný v Microsoft Word a Microsoft Powerpoint. Musíte však nainštalovať MathType, skúšobná verzia je postačujúca.
 - MathML v dokumentoch programu Adobe reader. Toto však zatiaľ nie je oficiálny štandard, preto neexistuje software, ktorý by vedel takéto dokumenty vyrobiť.
 -
 
@@ -569,24 +570,87 @@ Zoznam klávesových skratiek nájdete v návode k programu MathPlayer.
 
 Ak príklad dočítate a chcete sa vrátiť, stlačte Escape.
 
-+ Príkazy NVDA špecifické pre aplikácie +
++ Vylepšenia pre aplikácie +
 NVDA pre niektoré aplikácie implementuje svoje vlastné príkazy, čím buď umožňuje ľahšie vykonávať niektoré úlohy, alebo sprístupňuje časti aplikácií, ktoré nie sú inak prístupné používateľom odkázaným na čítač obrazovky.
 
 ++ Microsoft Word ++
+
++++ Automatické  čítanie hlavičiek stĺpcov a riadkov +++
+NVDA vám môže automaticky oznamovať  hlavičky riadkov a stĺpcov pri čítaní tabuliek v programe MS Word.
+Najprv Musíte mať začiarknuté "Oznamovať hlavičky riadkov / stĺpcov tabuľky" v nastaveniach čítania textu.
+Následne musíte určiť, ktorý riadok alebo stĺpec má NVDA považovať za hlavičku.
+Keď sa nastavíte na prvý riadok alebo stĺpec a chcete ho nastaviť ako hlavičku, použite tieto príkazy:
 %kc:beginInclude
 || Názov | Klávesová skratka | popis |
-| Prečítaj komentár | NVDA+Alt+c | prečíta komentár pod systémovým kurzorom. | 
 | Nastaviť hlavičky stĺpcov | NVDA+shift+c | Ak stlačíte raz, NVDA bude vybratý stĺpec a nasledujúce stĺpce považovať za hlavičku tabuľky a bude ich oznamovať pri pohybe v nasledujúcich riadkoch. Nastavenie zrušíte dvojitým stlačením. | 
-| Nastaviť hlavičky riadkov | NVDA+shift+r | Ak stlačíte raz, NVDA bude vybratý stĺpec a stĺpce pod ním považovať za hlavičku tabuľky a bude ich oznamovať pri pohybe v stĺpcoch medzi riadkami. Nastavenie zrušíte dvojitým stlačením. |
+| Nastaviť hlavičky riadkov | NVDA+shift+r | Ak stlačíte raz, NVDA bude vybratý stĺpec  a stĺpce   pod ním považovať za hlavičku tabuľky a bude ich oznamovať pri pohybe v stĺpcoch medzi riadkami. Nastavenie zrušíte dvojitým stlačením. |
 %kc:endInclude
+Tieto nastavenia sa natrvalo uložia do dokumentu tak, aby im porozumeli aj iné čítače obrazovky (napríklad JAWS).
+Ak  neskôr dokument otvorí používateľ, ktorý používa iný čítač obrazovky, bude mať už správne nastavené hlavičky v tabuľkáh.
+
++++ Režim prehliadania v programe Microsoft Word +++
+Podobne ako na internete, aj v programe MS Word môžete aktivovať režim prehliadania. V režime prehliadania potom funguje ráchla navigácia a zoznam prvkov.
+%kc:beginInclude
+Režim prehliadania v programe Microsoft Word zapnete a vypnete skratkou nvda+medzera.
+%kc:endInclude
+Viac informácií nájdete v kapitole  [Režim prehliadania #BrowseMode].
+
+++++ Zoznam prvkov ++++
+%kc:beginInclude
+Ak máte aktívny režim prehliadania v programe Microsoft Word, zoznam prvkov vyvoláte skratkou NVDA+F7.
+%kc:endInclude
+V zozname prvkov môžete prezerať nadpisy, odkazy, komentáre a revízie dokumentu.
+
++++ Čítanie komentárov +++
+%kc:beginInclude
+Ak si chcete prečítať komentár, na ktorom je systémový fokus, stlačte NVDA+alt+c.
+%kc:endInclude
+Všetky komentáre spolu s revíziami si môžete prezerať aj v zozname prvkov, ak vyberiete ako prvok komentáre a zmeny.
 
 ++ Microsoft Excel ++
+
++++ Automatické  čítanie hlavičiek stĺpcov a riadkov +++
+NVDA vám môže automaticky oznamovať  hlavičky riadkov a stĺpcov pri čítaní  tabuliek v programe MS Excel.
+Najprv Musíte mať začiarknuté "Oznamovať hlavičky riadkov / stĺpcov tabuľky" v nastaveniach čítania textu.
+Následne musíte určiť, ktorý riadok alebo stĺpec má NVDA považovať za hlavičku.
+Keď sa nastavíte na prvý riadok alebo stĺpec a chcete ho nastaviť ako hlavičku, použite tieto príkazy:
 %kc:beginInclude
 || Názov | Klávesová skratka | Popis |
 | Nastaviť hlavičky stĺpcov | NVDA+shift+c | Ak stlačíte raz, NVDA bude vybratý stĺpec a nasledujúce stĺpce považovať za hlavičku tabuľky a bude ich oznamovať pri pohybe v nasledujúcich riadkoch. Nastavenie zrušíte dvojitým stlačením. | 
 | Nastaviť hlavičky riadkov | NVDA+shift+r | Ak stlačíte raz, NVDA bude vybratý stĺpec a stĺpce pod ním považovať za hlavičku tabuľky a bude ich oznamovať pri pohybe v stĺpcoch medzi riadkami. Nastavenie zrušíte dvojitým stlačením. |
-| prečítaj komentár | NVDA+alt+c | Ak aktuálna bunka obsahuje komentár, prečíta ho. |
-| Zoznam prvkov | NVDA+f7 | otvorí dialóg so zoznamov prvkov, v ktorom môžete vybrať zoznam grafov, buniek s komentárom alebo buniek so vzorcami. |
+%kc:endInclude
+Tieto nastavenia sa natrvalo uložia do dokumentu tak, aby im porozumeli aj iné čítače obrazovky (napríklad JAWS).
+Ak  neskôr dokument otvorí používateľ, ktorý používa iný čítač obrazovky, bude mať už správne nastavené hlavičky v tabuľkáh.
+
++++ Zoznam prvkov +++
+Podobne ako na internete, aj v programe MS Excel môžete používaž zoznam prvkov a takto sa dostať k viacerým informáciám.
+%kc:beginInclude
+Zoznam prvkov v programe MS Excel vyvoláte skratkou NVDA+F7.
+%kc:endInclude
+V zozname prvkov si môžete zobraziť tieto časti dokumentu:
+- Grafy: Zobrazuje všetky grafy v dokumente.
+Keď vyberiete graf, stlačíte na ňom enter, alebo aktivujete tlačidlo "prejsť na", fokus sa presunie na požadovaný graf. V grafe sa potom pohybujte šípkami.
+- Komentár: Zobrazí všetky bunky, ktoré obsahujú komentár.
+NVDA pre každú bunku prečíta jej súradnice a text komentára.
+Ak stlačíte enter, alebo aktivujete tlačidlo prejsť na, fokus sa presunie na vybratú bunku.
+- Vzore: Zobrazí všetky bunky, ktoré obsahujú vzorec.
+NVDA pre každú bunku prečíta jej súradnice a vzorec.
+Ak stlačíte enter, alebo aktivujete tlačidlo prejsť na, fokus sa presunie na vybratú bunku.
+- Hárok: Zobrazí zoznam hárkov v dokumente.
+Klávesom F2 môžete premenovať vybratý hárok.
+Klávesom enter, alebo  aktivovaním tlačidla "prejsť na" sa presuniete na požadovaný hárok.
+-
+
++++ Čítanie komentárov +++
+%kc:beginInclude
+Ak si chcete prečítať komentár pre aktuálnu bunku, stlačte NVDA+alt+c.
+%kc:endInclude
+Všetky komentáre  si môžete prezerať aj v zozname prvkov.
+
++++ Čítanie chránených buniek +++
+Ak je dokument programu MS Excel hránený, môžete mať problém prečítať niektoré bunky, ktoré sú chránené proti úpravám.
+%kc:beginInclude
+Ak si chcete prezerať aj chránené bunky, najprv aktivujte režim prehliadania skratkou NVDA+medzera. Následne použite na prezeranie tabuľky štandardné príkazy (napríkald šípky).
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -1104,6 +1168,7 @@ Takto môžete nastaviť:
 - Zarovnanie textu
 - Farby
 - sledovanie zmien
+- zvýraznenie
 - Štýl textu
 - Pravopisné chyby
 - Číslovanie strán
@@ -1172,12 +1237,23 @@ V názve okna sa zobrazuje jazyk, ktorého symboly upravujete.
 Tento dialóg rešpektuje nastavenie "pri spracovaní textu sa riadiť hlasovým výstupom", ktoré je v dialógu [Nastavenia hlasu #VoiceSettings]. Ak je toto políčko začiarknuté, urpavujete nastavenie pre jazyk hlasu a nie jazyk NVDA.
 
 Ak si želáte upraviť symbol, musíte ho najprv vybrať v zozname symbolov.
-Do poľa nahradiť s môžete vpísať text, ktorý sa má vysloviť vždy, keď bude NVDA čítať tento symbol.
-Zmenou výberu v zozname úrovní môžete určiť najnižšiu úroveň, na ktorej bude symbol oznamovaný.
+
+- Do poľa nahradiť s môžete vpísať text, ktorý sa má vysloviť vždy, keď bude NVDA čítať tento symbol.
+- Zmenou výberu v zozname úrovní môžete určiť najnižšiu úroveň, na ktorej bude symbol oznamovaný.
+- V zozname "ponechať pôvodný symbol na spracovanie hlasovému výstupu" určíte, kedy má NVDA ponechať pôvodný symbol na spracovanie pre halsový výstup. toto sa netýka textu, ktorý ste zvolili v editačnom poli Nahradiť s.
+Toto je užitočné vtedy, ak hlasový výstup dokáže pri symbole urobiť prestávku alebo zmeniť intonáciu.
+Mnohé syntézy reči napríklad dokážu urobiť pauzu, ak narazia v texte na čiarku.
+Máte tri možnosti:
+ - nikdy: Symbol sa neodošle na spracovanie hlasovému výstupu.
+ - Vždy: NVDa bude vždy symbol posielať na spracovanie hlasovému výstupu.
+ - Od zadanej úrovne: Symbol sa odošle na spracovanie len vtedy, ak je aktuálna úroveň interpunkcie nižšia, ako je nastavená úroveň pre tento symbol.
+Takto môžete rozhodnúť, že symbol nahradíte nejakým textom pri úrovni interpunkcie všetko, ale pri úrovni nič, bude symbol odoslaný na spracovanie hlasovému výstupu. Ten ho nahradí pauzou, takže nestratíte prehľad.
+ -
+-
 
 Nový symbol môžete pridať tak, že stlačíte tlačidlo pridať.
 v dialógu, ktorý sa otvorí, vložte nový symbol a stlačte tlačidlo OK.
-Následne nastavte nahradenie a úroveň interpunkcie tak, ako pri ostatných symboloch.
+Následne nastavte parametre tak, ako pri ostatných symboloch.
 
 Symboly, ktoré ste pridali, môžete odstrániť aktivovaním tlačidla odstrániť.
 
@@ -1563,7 +1639,7 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 ++ Zobrazovače Baum/Humanware/APH ++
 Podporované sú niektoré riadky od [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] a [APH http://www.aph.org/] pripojené cez USB alebo bluetooth.
 Toto zahŕňa:
-- Baum: SuperVario, PocketVario
+- Baum: SuperVario, PocketVario, VarioUltra (len cez Bluetooth), Pronto! (len cez Bluetooth)
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
@@ -2100,15 +2176,6 @@ NVDA v súčasnosti podporuje tieto parametre:
 | nie je | --no-sr-flag  | Nezmení predvolené označenie čítača obrazovky v systéme |
 | Nie je | --install | Nainštaluje nvda a spustí nainštalovanú kópiu |
 | nie je | --install-silent | Nainštaluje NVDA s predvolenými parametrami bez používateľského rozhrania, ale nespustí nainštalovanú kópiu|
-
-++ Zmena vyslovovania symbolov pre pokročilých ++
-Pomocou dialógu [Výslovnosť interpunkčných a špeciálnych symbolov #SymbolPronunciation] je možné prispôsobiť vyslovovanie interpunkčných alebo iných špeciálnych znakov. Okrem toho je možné tabuľku symbolov upravovať ručne, čo prináša širšie možnosti.
-Napríklad je možné vybrať, či sa hlasovému výstupu bude posielať aj pôvodný symbol, či sa má vykonať pauza, alebo zmena v intonácii a podobne. Tiež je možné pridať ďalšie vlastné symboly.
-
-Tieto zmeny je potrebné zapisovať ručne do súboru s nastaveniami symbolov v priečinku s ostatnými súbormi nastavení NVDA.
-Súbor je nazvaný symbols-xx.dic, kde xx je kód jazyka.
-Formát tohoto súboru je zdokumentovaný v príručke pre vývojárov, ktorú je možné získať zo stránky NVDA v časti [vývoj (anglicky) http://community.nvda-project.org/wiki/Development].
-Používatelia ale nemôžu pridávať vlastné komplexné symboly.
 
 + Ako získať viac informácií +
 Ak hľadáte ďalšie informácie o NVDA, o jeho vývoji, alebo hľadáte pomoc, navštívte stránku projektu na adrese NVDA_URL.

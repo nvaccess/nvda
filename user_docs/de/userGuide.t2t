@@ -540,7 +540,7 @@ Mathplayer kann hier heruntergeladen werden: http://www.dessci.com/en/products/m
 
 NVDA unterstützt die folgende mathematischen Inhalte:
 - MathML in Mozilla Firefox und Microsoft Internet Explorer.
-- Design Science MathType in Microsoft Word und PowerPoint.
+- Design Science MathType in Microsoft Word und PowerPoint. Mathtype muss installiert sein. Die Testversion ist hierfür ausreichend.
 - MathML in Adobe Reader. Beachten Sie, dass Mathml noch kein offizieller Standard ist, deshalb gibt es noch keine öffentlich verfügbare Software, um solche Inhalte zu erzeugen.
 -
 
@@ -569,25 +569,81 @@ Weiter Informationen hierzu finden Sie in der Dokumentation zu mathplayer.
 
 Um die Navigation im Ausdruck zu beenden, drücken Sie esc.
 
-+ Anwendungsspezifische Befehle für NVDA +
-Für bestimmte Anwendungen stellt NVDA zusätzliche Tastenkombinationen bereit - etwa um bestimmte Aufgaben zu vereinfachen oder um Informationen zugänglich zu machen, die normalerweise für Anwender von Bildschirmleseprogrammen unerreichbar wären. 
++ anwendungsspezifische Funktionen +
+nvda stellt für bestimmte Anwendungen zusätzliche Funktionen bereit, die nicht anderweitig zugänglich sind.
 
 ++ Microsoft Word ++
+
++++ automatisches Lesen von Zeilen- und Spaltenüberschriften +++
+Wenn Sie in Microsoft Word in einer Tabelle navigieren, ist NVDA in der Lage, automatisch die Zeilen- und Spaltenüberschriften zu lesen.
+Hierfür muss die Option "Spalten- und Reihenüberschriften von Tabellen ansagen" in den Einstellungen für Dokumentformatierungen aktiviert sein.
+Zum zweiten muss NVDA die Reihen Bzw. Spalten mit den Überschriften kennen. 
+Verwenden Sie einen der folgenden Befehle, nachdem Sie sich in die Zelle mit der Reihen- Bzw. Spaltenüberschrift bewegt haben:
 %kc:beginInclude
 || Name | Tastenkombination | Beschreibung |
-| aktuellen Kommentar anzeigen | NVDA+Alt+c | Zeigt den Kommentar an, der an der aktuellen Position des Systemcursors hinterlegt ist. | 
 | Spaltenüberschriften festlegen | NVDA+Umschalt+c | Wenn Sie diese Tastenkombination einmal drücken, legen sie die aktuelle Tabellenzeile als Spaltenüberschriften fest. Drücken Sie die Tastenkombination zweimal, um die Zuweisung zu löschen. | 
 | Zeilenbeschriftung festlegen | NVDA+Umschalt+r | Wenn Sie diese Tastenkombination einmal drücken, wird die aktuelle Spalte als Zeilenbeschriftung festgelegt. Drücken Sie die Tastenkonbination zweimal, um die Zuweisung zu löschen. | 
 %kc:endInclude
 
++++ Lesemodus in Microsoft Word +++
+
+Ähnlich wie im Web können Sie in Microsoft Word Lesemodusfunktionen wie die Elementliste oder die Schnellnavigation nutzen. 
+%kc:beginInclude
+Um den lesemodus in Microsoft Word ein- oder auszuschalten, drücken Sie nvda+Leertaste.
+%kc:endInclude
+Weitere Information zum Lesemodus und zur Schnellnavigation finden Sie im [Abschnitt über den lesemodus #BrowseMode].
+ 
+++++ die Elementliste ++++
+%kc:beginInclude
+Wenn Sie sich in Microsoft Word im Lesemodus befinden, können Sie mit der Tastenkombination nvda+f7 auf die Elementliste zugreifen.
+%kc:endInclude
+Die Elementliste enthält Überschriften, Links und Anmerkungen (einschließlich nachverfolgbarer Änderungen)
+
++++ Ausgeben von Kommentaren +++
+%kc:beginInclude
+Verwenden Sie die Tastenkombination nvda+alt+c, um sich einen Kommentar an der aktuellen Cursofposition anzeigen zu lassen, sofern vorhanden.
+%kc:endInclude
+Alle Kommentare des aktuellen Dokuments sind außerdem in der Elementliste aufgeführt, wenn Sie als Elementtyp "Anmerkungen" auswählen.
+ 
+
 ++ Microsoft Excel ++
+
++++ automatisches lesen von Zeilen- und Spaltenüberschriften +++
+Wenn Sie in Microsoft Excel in einer Tabelle navigieren, ist NVDA in der Lage, automatisch die Zeilen- und Spaltenüberschriften zu lesen.
+Hierfür muss die Option "Spalten- und Reihenüberschriften von Tabellen ansagen" in den Einstellungen für Dokumentformatierungen aktiviert sein.
+Zum zweiten muss NVDA die Reihen Bzw. Spalten mit den Überschriften kennen. 
+Verwenden Sie einen der folgenden Befehle, nachdem Sie sich in die Zelle mit der Reihen- Bzw. Spaltenüberschrift bewegt haben:
+
 %kc:beginInclude
 || Name | Tastenkombination | Beschreibung |
 | Spaltenüberschriften festlegen | NVDA+Umschalt+c | Wenn Sie diese Tastenkombination einmal drücken, teilen Sie NVDA mit, dass Sie sich auf derjenigen Zeile befinden, die die Spaltenüberschriften enthält. Diese Spaltenüberschriften werden dann automatisch gelesen, sobald Sie unterhalb dieser Zeile navigieren. Zweimaliges Drücken dieser Tastenkombination löscht diese Zuweisung wieder. | 
 | Zeilenbeschriftungen festlegen | NVDA+Umschalt+r | Wenn Sie diese Tastenkombination einmal drücken, teilen Sie NVDA mit, dass Sie sich auf derjenigen Spalte befinden, die die Beschriftungen für die Zeilen enthält. Diese Beschriftungen werden automatisch gelesen, wenn Sie außerhalb dieser Spalte navigieren. Zweimaliges Drücken dieser Tastenkombination löscht diese Zuweisung. | 
-| Kommentar anzeigen | NVDA+alt+c | Zeigt den Kommentar der aktuellen Zelle an, sofern vorhanden. |
-| Elementliste | NVDA+f7 | Öffnet einen Dialog mit einer Elementliste. Hier werden Ihnen Diagramme, Zellen mit Kommentaren, Zellen mit Formeln oder Tabellenblätter angezeigt. |
 %kc:endInclude
+
+
+++++ die Elementliste ++++
+%kc:beginInclude
+Verwenden Sie die Tastenkombination nvda+f7, um auf die Elementliste zuzugreifen.
+%kc:endInclude
+Die Elementliste enthält Elemente der folgenden Typen:
+- Diagramme: listet alle Diagramme in der Arbeitsmappe auf. Nachdem Sie ein Diagramm ausgewählt haben, können Sie sich mit Hilfe der Pfeiltasten durch dessen Inhalt bewegen.
+- Kommentare: listet alle Zellen auf, die Kommentare enthalten. Es wird die Zellenadresse nebst Kommentar angezeigt. Wenn Sie innerhalb der Liste den Schalter "wechseln zu" oder die Eingabetaste drücken, wird der Fokus auf die entsprechende Zelle verschoben.
+- Formeln: listet alle Zellen in der Arbeitsmappe auf, die eine Formel enthalten. Es wird die Zellenadresse nebst Formel angezeigt. Wenn Sie innerhalb der Liste den Schalter "wechseln zu" oder die Eingabetaste drücken, wird der Fokus auf die entsprechende Zelle verschoben.
+- Tabellenblätter: listet alle Tabellenblätter in der Arbeitsmappe auf.  Drückn Sie auf einem der aufgelisteten Tabellenblätter F2, um es umzubenennen, Drücken Sie auf einem Tabellenblatt die Eingabetaste oder den Schalter "wechseln zu", um es zu öffnen.
+-
+
++++ Ausgeben von Kommentaren +++
+%kc:beginInclude
+Verwenden Sie die Tastenkombination nvda+alt+c, um sich einen Kommentar der aktuellen Zelle anzeigen zu lassen, sofern vorhanden.
+%kc:endInclude
+Alle Kommentare der Arbeitsmappe sind außerdem in der Elementliste aufgeführt, wenn Sie als Elementtyp "Kommentare" auswählen.
+
++++ ausgeben geschützter Zellen +++
+Wenn ein Excel-Arbeitsblatt geschützt wurde, können manche Zellen für eine Bearbeitung gesperrt sein. Solche Zellen sind dann normalerweise nicht zugänglich.
+%kc:beginInclude
+Um auf gesperrte Zellen zuzugreifen, wechseln Sie zunächst mit nvda+Leertaste in den Lesemodus und navigieren Sie anschließend mit den Standard-Excel-Tastenkombinationen wie z.B. den Pfeiltasten zu den gewünschten Zellen.
+%kc:endInclude
+
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -1172,13 +1228,19 @@ In diesem Dialog können Sie die Aussprache von Satz-, beziehungsweise Sonderzei
 Die Sprache, in der die Aussprache von Sonderzeichen geändert wird, wird im Dialogtitel angezeigt.
 Außerdem wird die Option "beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen" aus den  [Stimmeneinstellungen #VoiceSettings] berücksichtigt; beispielsweise wird hierbei die Sprache der eingestellten Stimme anstelle der nvda-Sprache verwendet.
 
+
 Um die aussprache eines Sonderzeichens zu verändern, wählen Sie es in der Liste der Symbole aus.
-Das Eingabefeld "Ersetzen durch" erlaubt Ihnen, den Text zu ändern, der an Stelle des Symbols angesagt wird.
-im Kombinationsfeld "Stufe" kann eingestellt werden, ab welcher Stufe Satz- und Sonderzeichen angesagt werden sollen..
+
+- Das Eingabefeld "Ersetzen durch" erlaubt Ihnen, den Text zu ändern, der an Stelle des Symbols angesagt wird.
+- im Kombinationsfeld "Stufe" kann eingestellt werden, ab welcher Stufe Satz- und Sonderzeichen angesagt werden sollen..
+- Im Konbinationsfeld "aktuelles Symbol an Sprachausgabe senden" kann eingestellt werden, ob das Symbol anstelle seines Ersatztextes an die Sprachausgabe gesendet werden soll. Diese Option kann nützlich sein, um Sprachpausen zu erzwingen. Dieses Konbinationsfeld enthält drei Optionen:
+ - niemals: das Sonderzeichen wird niemals an die Sprachausgabe gesendet.
+ - immer: Das Symbol wird immer an die Sprachausgabe gesendet.
+ - nur unterhalb der Symbolebene: Das Sonderzeichen wird nur an die Sprachausgabe gesendet, wenn die momentan eingestellte Symbolebene niedriger ist, als im Konbinationsfeld "Stufe" (siehe oben)
 
 Um Symbole hinzuzufügen, benutzen Sie den Schalter hinzufügen.
 Geben Sie im erscheinenden Dialog das Symbol ein und drücken Sie den Schalter OK.
-Ändern sie anschließend den Ersatztext und die Symbolebene nach Ihren Wünschen, wie Sie es bei den anderen Sümbolen machen würden.
+Ändern sie anschließend die anderen Optionen nach Ihren Wünschen, wie Sie es bei den anderen Sümbolen machen würden.
 
 Über den Schalter "entfernen" können Sie ein Symbol wieder löschen.
 

@@ -2,10 +2,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: master-11331\n"
+"Project-Id-Version: master-11581\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-06 19:09+1000\n"
-"PO-Revision-Date: 2015-08-07 11:53+0800\n"
+"POT-Creation-Date: 2015-11-11 14:35+1000\n"
+"PO-Revision-Date: 2015-11-13 15:03+0800\n"
 "Last-Translator: Eric Yip <cyeric20@yahoo.com.hk>\n"
 "Language-Team: Eric Yip@ HKBU <cyeric20@yahoo.com.hk>\n"
 "Language: zh_HK\n"
@@ -1296,6 +1296,24 @@ msgstr "報讀全部標點"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "標點報讀程度"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "永不"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "總是"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "僅低於符號等級"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -2727,6 +2745,10 @@ msgstr "已裁撤"
 msgid "overflowing"
 msgstr "過多"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "沒鎖"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "沒選取"
@@ -3054,6 +3076,18 @@ msgstr "讀出編修檔版本"
 msgid "Toggles on and off the reporting of revisions"
 msgstr "切換是否讀出編修檔版本"
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "不讀出強調"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "讀出強調"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "切換是否讀出強調"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "不讀出顏色("
@@ -3344,9 +3378,9 @@ msgstr "%s已複製到剪貼簿"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
 msgstr ""
 "讀出目前瀏覽物件的資訊，連按兩次拼讀出該資訊，連按三次則把物件名稱和值複製到"
 "剪貼簿"
@@ -3977,6 +4011,10 @@ msgid ""
 "hierarchy"
 msgstr "移到並讀出下一個物件"
 
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "沒有前一個了"
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
@@ -4280,6 +4318,58 @@ msgid "numpad plus"
 msgstr "數字鍵盤加號"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "數字鍵盤小數點"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "數字鍵盤 insert"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "數字鍵盤零"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "數字鍵盤一"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "數字鍵盤二"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "數字鍵盤三"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "數字鍵盤四"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "數字鍵盤五"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "數字鍵盤六"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "數字鍵盤七"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "數字鍵盤八"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "數字鍵盤九"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "insert"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "左邊 control"
 
@@ -4439,15 +4529,20 @@ msgstr "沒有縮排"
 msgid "%d characters"
 msgstr "%d 個字元"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "%s  選取"
+msgid "%s selected"
+msgstr "%s 選取"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
+msgid "%s unselected"
 msgstr "%s 沒選取"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s 更新選取"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4542,14 +4637,55 @@ msgstr "{backgroundColor}為底色"
 msgid "line %s"
 msgstr "第 %s 行"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "已新增"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "沒新增"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "已刪除"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "沒刪除"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "修訂 %s"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "沒修訂"
+#, python-format
+msgid "no revised %s"
+msgstr "沒修訂 %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "標記"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "沒標記"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "顯眼"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "沒顯眼"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "強調"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "不強調"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -6957,6 +7093,11 @@ msgstr "報出編修檔版本(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "讀出強調(&M)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "報出文字樣式(&Y)"
 
@@ -7184,6 +7325,11 @@ msgstr "符號"
 msgid "Level"
 msgstr "報讀等級"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "傳送"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "變更符號"
@@ -7191,6 +7337,10 @@ msgstr "變更符號"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "報讀等級(&L)"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "傳送原來符號到語音合成(&S)"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7323,8 +7473,14 @@ msgstr "啟用"
 msgid "Desktop"
 msgstr "桌面"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "預設顏色"
+
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "儲存格不可編輯"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
@@ -7344,6 +7500,11 @@ msgstr "註解(&o)"
 #. in the browse mode Elements List dialog.
 msgid "&Formula"
 msgstr "公式(&F)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "工作表(&S)"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7401,6 +7562,12 @@ msgid ""
 "and to the right of it within this region. Pressing twice will forget the "
 "current row header for this cell."
 msgstr "按一次把目前儲存格設為列標題，連按兩次清除目前儲存格的列標題設定。"
+
+msgid "Input Message is {title}: {message}"
+msgstr "輸入訊息是 {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "輸入訊息是 {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -8155,17 +8322,8 @@ msgstr "文字框架"
 msgid "comment: {text} by {author} on {date}"
 msgstr "註解: {text} 由 {author} 在 {date} 加註"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} 由 {author} 在 {date} 加註"
-
-msgid "unknown author"
-msgstr "未知的作者"
-
-msgid "unknown date"
-msgstr "未知的日期"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} 作者 {revisionAuthor} 日期 {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text} 由 {author} 於 {date} 修訂"
 
 #, python-format
 msgid "%g characters"
@@ -8323,6 +8481,24 @@ msgstr "HIMS Braille Sense/Braille EDGE 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "selecting %s"
+#~ msgstr "%s  選取"
+
+#~ msgid "unselecting %s"
+#~ msgstr "%s 沒選取"
+
+#~ msgid "unrevised"
+#~ msgstr "沒修訂"
+
+#~ msgid "unknown author"
+#~ msgstr "未知的作者"
+
+#~ msgid "unknown date"
+#~ msgstr "未知的日期"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType} 作者 {revisionAuthor} 日期 {revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "讀出目前焦點的物件"

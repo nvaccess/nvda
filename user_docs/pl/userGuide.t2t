@@ -1,4 +1,5 @@
 ﻿Podręcznik Użytkownika - NVDA NVDA_VERSION
+Podręcznik Użytkownika - NVDA NVDA_VERSION
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -540,7 +541,7 @@ MathPlayer jest bezpłatnie dostępny do pobrania z : http://www.dessci.com/en/p
 
 NVDA obsługuje następujące rodzaje treści matematycznej:
 - MathML w Mozilla Firefox i Microsoft Internet Explorer.
-- Design Science MathType w Microsoft Word and PowerPoint.
+- Design Science MathType w Microsoft Word and PowerPoint. Aby to działało, MathType musi być zainstalowany. Wersja próbna jest wystarczająca.
 - MathML w Adobe Reader. Nie jest to jeszcze oficjalny standard, nie istnieje publicznie dostępne oprogramowanie mogące wytwarzać taką treść.
 -
 
@@ -569,24 +570,87 @@ Więcej informacji zawiera dokumentacja MathPlayer.
 
 Aby powrócić do dokumentu, naciśnij klawisz escape.
 
-+ Polecenia specyficzne dla aplikacji +
-NVDA udostępnia polecenia dla niektórych aplikacji aby uczynić niektóre zadania łatwiejszymi lób udostępnić daną funkcjonalność.
++ Funkcje specyficzne dla aplikacji +
+NVDA udostępnia dodatkowe funkcje dla niektórych aplikacji, aby uczynić niektóre zadania łatwiejszymi, lób udostępnić daną funkcjonalność, która w innym przypadku byłaby niedostępna dla użytkownika oprogramowania czytającego ekran.
 
 ++ Microsoft Word ++
+
++++ Automatyczny odczyt nagłówków kolumn i wierszy +++
+NVDA może automatycznie odczytywać odpowiedni nagłówek wiersza i kolumny podczas nawigacji wewnątrz tabel w Microsoft Word.
+Wymaga to po pierwsze włączenia odczytywania nagłówków tabel w ustawieniach formatowania dokumentów NVDA.
+Po drugie, NVDA musi wiedzieć, która linia lub kolumna zawiera nagłówki.
+Po przejściu do pierwszej komórki wiersza lub kolumny zawierającej nagłówki, użyj poniższych komend:
 %kc:beginInclude
 || Polecenie | Klawisz | Opis |
-| Odczytaj bieżący komentarz | NVDA+Alt+c | Odczytuje tekst komentarza na pozycji kursora systemowego. | 
 | Ustaw nagłówki kolumny | NVDA+shift+c | Jednokrotne naciśnięcie informuje NVDA, że jest to pierwsza komórka nagłówkowa w wierszu zawierającym nagłówki kolumny, która powinna być automatycznie odczytywana, gdy przechodzimy między kolumnami poniżej tego wiersza. Dwukrotne naciśnięcie anuluje ustawienie. | 
 | Ustaw nagłówki wiersza | NVDA+shift+r | Jednokrotne naciśnięcie informuje NVDA, że jest to pierwsza komórka nagłówkowa w kolumnie zawierającej nagłówki wiersza, która powinna być automatycznie odczytywana podczas przechodzenia po wierszach za tą kolumną. Dwukrotne naciśnięcie anuluje ustawienie. | 
 %kc:endInclude
+Te ustawienia zostaną zapisane w dokumencie jako zakładki, kompatybilne z innymi programami czytania ekranu np. Jaws. 
+Oznacza to, że inni użytkownicy programów czytających ekran, będą automatycznie mieli te nagłówki ustawione, po otwarciu danego dokumentu później. 
 
++++ Tryb czytania w Microsoft Word +++
+Podobnie jak do stron internetowych, tryb czytania może być używany w Microsoft Word, co pozwala używać funkcji takich jak szybka nawigacja i lista elementów.
+%kc:beginInclude
+Aby włączyć lub wyłączyć tryb czytania w Microsoft Word, naciśnij NVDA+space.
+%kc:endInclude
+Więcej informacji o trybie czytania i szybkiej nawigacji , znajduje się w rozdziale [Tryb czytania #BrowseMode].
+
+++++ Lista elementów ++++
+%kc:beginInclude
+W trybie czytania w Microsoft Word, możesz uzyskać dostęp do listy elementów naciskając NVDA+f7.
+%kc:endInclude
+Lista elementów wyświetla nagłówki, linki i adnotacje (zawierające komentarze i śledzenie zmian).
+
++++ Zgłaszanie komentarzy +++
+%kc:beginInclude
+Aby odczytać komentarz na pozycji kursora, naciśnij NVDA+alt+c.
+%kc:endInclude
+ Wszystkie komentarze dokumentu oraz inne zmiany, mogą być wymienione na liście elementów NVDA po wybraniu adnotacji jako typu.
+ 
 ++ Microsoft Excel ++
+
++++ Automatyczny odczyt nagłówków kolumn i wierszy +++
+NVDA może automatycznie odczytywać odpowiedni nagłówek wiersza i kolumny podczas nawigacji wewnątrz arkuszy w Microsoft Excel.
+Wymaga to po pierwsze włączenia odczytywania nagłówków tabel w ustawieniach formatowania dokumentów NVDA.
+Po drugie, NVDA musi wiedzieć, która linia lub kolumna zawiera nagłówki.
+Po przejściu do pierwszej komórki wiersza lub kolumny zawierającej nagłówki, użyj poniższych komend:
 %kc:beginInclude
 || Działanie | Skrót klawiszowy | Opis |
 | Ustaw nagłówki kolumny | NVDA+shift+c | Jednokrotne naciśnięcie informuje NVDA, że jest to pierwsza komórka nagłówkowa w wierszu zawierającym nagłówki kolumny, która powinna być automatycznie odczytywana, gdy przechodzimy między kolumnami poniżej tego wiersza. Dwukrotne naciśnięcie anuluje ustawienie. | 
 | Ustaw nagłówki wiersza | NVDA+shift+r | Jednokrotne naciśnięcie informuje NVDA, że jest to pierwsza komórka nagłówkowa w kolumnie zawierającej nagłówki wiersza, która powinna być automatycznie odczytywana podczas przechodzenia po wierszach za tą kolumną. Dwukrotne naciśnięcie anuluje ustawienie. | 
-| Odczytaj bieżący komentarz | NVDA+Alt+c | Odczytuje tekst komentarza bieżącej komórki jeśli jest ustawiony. | 
-| Okno listy elementów | NVDA+f7 | Otwiera okno listy elementów umożliwiające wyświetlenie wykresów, komórek z komentarzami, lub komórek z formułami. |
+%kc:endInclude
+Te ustawienia zostaną zapisane w skoroszycie jako nazwane zakresy, kompatybilne z innymi programami czytającymi takimi jak Jaws.
+ Oznacza to, że inni użytkownicy oprogramowania czytającego ekran, którzy później otworzą ten skoroszyt, będą mieli te nagłówki już ustawione. 
+
++++ Lista elementów +++
+Podobnie jak na stronach internetowych, NVDA posiada listę elementów dla Microsoft Excel, która pozwala wyświetlić i uzyskać dostęp do kilku różnych typów informacji.
+%kc:beginInclude
+Aby otworzyć listę elementów w Excel, naciśnij NVDA+f7.
+%kc:endInclude
+Różne typy informacji na liście elementów to:
+- Wykres: wymienia wszystkie wykresy w skoroszycie. 
+Wybranie wykresu i naciśnięcie Enter lub przycisku "idź do" przeniesie punkt uwagi do tego wykresu, umożliwiając nawigację i odczyt strzałkami.
+- komentarz: wszystkie komórki w skoroszycie zawierające komentarze. 
+Są wyświetlanea dres komórki i jej komentarze. 
+Naciśnięcie Enter lub przycisku idź do, przeniesie punkt uwagi do wybranej komórki.
+- Formuła: Wymienia wszystkie komórki w skoroszycie, które zawierają formułę. 
+Wyświetlany jest adres komórki, oraz zawarta w niej formuła.
+Naciśnięcie Enter lub przycisku idź do, przeniesie punkt uwagi do wybranej komórki.
+- Arkusz: wyświetla wszystkie arkusze w skoroszycie. 
+Naciśnięcie F2 na liście arkuszy pozwala zmienić nazwę arkusza. 
+Naciśnięcie Enter lub przycisku idź do, przeniesie punkt uwagi do wybranego arkusza.
+-
+
++++ Zgłaszanie komentarzy +++
+%kc:beginInclude
+Aby odczytać komentarz zaznaczonej komórki, naciśnij NVDA+alt+c.
+%kc:endInclude
+ Wszystkie komentarze skoroszytu mogą być wymienione na liście elementów NVDA.
+
++++ Odczyt zablokowanych komórek +++
+Jeśli skoroszyt został zabezpieczony, może nie być możliwe przejście do niektórych komórek, które zostały zablokowane do edycji.
+%kc:beginInclude
+Aby przejść do zablokowanych komórek, przejdź do trybu czytania naciskając NVDA+space, a następnie użyj standardowych klawiszy Excel takich jak klawisze strzałek, aby przechodzić po wszystkich komórkach w aktualnym arkuszu.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -1103,10 +1167,11 @@ Możemy w ten sposób skonfigurować odczytywanie:
 - Atrybutów czcionki
 - Wyrównania tekstu
 - Kolorów
-- zmian edycyjnych
+- Zmian edycyjnych
+- Podkreślenia
 - Stylu tekstu
 - Błędów pisowni
-- numerów stron
+- Numerów stron
 - Numerów linii
 - Wcięć
 - Wcięć akapitu (np. wysunięcie, wcięcie pierwszej linii)
@@ -1116,8 +1181,8 @@ Możemy w ten sposób skonfigurować odczytywanie:
 - Linków
 - Nagłówków
 - List
-- cytatów
-- punktów orientacyjnych
+- Cytatów
+- Punktów orientacyjnych
 - Ramek
 - Gdy coś jest klikalne
 -
@@ -1172,12 +1237,23 @@ Język, którego wymowa jest edytowana, będzie wyświetlony w tytule okna dialo
 Uwaga: to okno uwzględnia opcję "Ufaj językowi głosu przetwarzając znaki i symbole" znajdującą się w [Oknie ustawień głosu #VoiceSettings]; tj. gdy ta opcja jest włączona, używa języka głosu zamiast globalnego języka NVDA.
 
 Aby zmienić symbol, najpierw zaznacz go na liście. 
-Pole zamień określa w jaki sposób znak jest wypowiadany. 
-Używając listy poziom, można regulować najniższy poziom interpunkcji, na którym dany znak będzie wypowiadany. 
+
+- Pole zamień określa tekst, który powinien być wypowiadany zamiast tego znaku. 
+- Używając listy poziom, można regulować najniższy poziom interpunkcji, na którym dany znak będzie wypowiadany. 
+- Pole wyślij rzeczywisty symbol do syntezatora określa, czy sam symbol (w przeciwieństwie do jego zastępnika) powinien zostać wysłany do syntezatora.
+Jest to przydatne, jeśli symbol powoduje pauzę w odczycie, albo zmianę intonacji głosu.
+Dla przykładu przecinek powoduje krótką pauzę syntezatora.
+Istnieją trzy opcje:
+ - Nigdy: Nigdy nie wysyłaj rzeczywistego symbolu do syntezatora.
+ - zawsze: zawsze wysyłaj rzeczywisty symbol do syntezatora.
+ - tylko poniżej poziomu symbolu: wyślij rzeczywisty symbol tylko wtedy, gdy poziom interpunkcji jest niższy niż poziom symbolu.
+ Można tego użyć, aby symbol miał tekstowy odpowiednik wypowiadany na wyższych poziomach interpunkcji bez powodowania pauzy, a był identyfikowany pauzą na niższych poziomach.
+ -
+-
 
 Możesz dodać nowe symbole po naciśnięciu przycisku "Dodaj".
 W okienku, które się pojawi, wprowadź symbol i naciśnij Ok.
-Następnie zmodyfikuj zastępnik i poziom, tak jak przy innych symbolach.
+Następnie zmodyfikuj pozostałe pola, tak jak przy innych symbolach.
 
 Możesz usunąć symbol, naciskając przycisk "Usuń".
 
@@ -1563,7 +1639,7 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia:
 ++ Monitory brajlowskie Baum/Humanware/APH ++
 Kilka monitorów firm [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] i [APH http://www.aph.org/] jest obsługiwanych przez USB i bluetooth.
 Wśród nich:
-- Baum: SuperVario, PocketVario
+- Baum: SuperVario, PocketVario, VarioUltra (tylko Bluetooth), Pronto! (tylko Bluetooth)
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
@@ -2100,15 +2176,6 @@ Poniżej wymieniono wszystkie opcje linii poleceń dla NVDA:
 | None | --no-sr-flag  | Nie zmieniaj globalnej flagi systemowej czytnika ekranu |
 | None | --install | Po cichu instaluje NVDA i uruchamia zainstalowaną kopię |
 | Brak | --install-silent | Po cichu instaluje NVDA (nie uruchamia zainstalowanej kopii) |
-
-++ Zaawansowana edycja wymowy symboli ++
-Możliwa jest  edycja wymowy symboli wykraczająca poza to, co daje okno dialogowe [Wymowa znaków i symboli #SymbolPronunciation]. 
-Przykładowo, NVDA może przepuścić znak wprost do syntezatora. Możemy w ten sposób wywołać pałzę czy zmianę modulacji. Możesz też zdefiniować własne symbole.
-
-Aby tego dokonać, musisz wyedytować plik symboli wymowy znajdujący się w folderze konfiguracji użytkownika NVDA.
-Plik nazywa się symbols-xx.dic, gdzie xx jest kodem języka.
-Format tego pliku jest opisany w rozdziale "Symbol Pronunciation" podręcznika dla twórców NVDA , znajdującego się w [sekcji Development na stronie NVDA http://community.nvda-project.org/wiki/Development].
-Nie jest możliwe dla użytkowników definiowanie skomplikowanych symboli.
 
 + Dodatkowe Informacje +
 Jeśli potrzebujesz dodatkowych informacji lub pomocy odnośnie NVDA znajdziesz ją na stronie internetowej NVDA NVDA_URL.

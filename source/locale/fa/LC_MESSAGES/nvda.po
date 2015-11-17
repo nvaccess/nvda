@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-08 19:11+1000\n"
-"PO-Revision-Date: 2015-10-16 14:33+0330\n"
+"POT-Creation-Date: 2015-11-10 10:22+1000\n"
+"PO-Revision-Date: 2015-11-15 22:25+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@freelists.org>\n"
 "Language: fa\n"
@@ -1294,6 +1294,24 @@ msgstr "همه"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "نویسه"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "هرگز"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "همیشه"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "تنها پایین‌تر از سطحِ نشانه"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -2726,6 +2744,10 @@ msgstr "حذف‌شده"
 msgid "overflowing"
 msgstr "اضافی"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "قفل‌نشده"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "انتخاب نشده"
@@ -4064,6 +4086,10 @@ msgid ""
 "hierarchy"
 msgstr "از نظرِ رتبه بندی در پِیمایِشِ اشیاء، به شیءِ بعدی در یک نمای هم‌رتبه می‌رود."
 
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "شیءِ قبلی‌ای نیست"
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
@@ -4581,15 +4607,20 @@ msgstr "بدونِ تورفتگی"
 msgid "%d characters"
 msgstr "%d نویسه"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "انتخاب کردنِ %s"
+msgid "%s selected"
+msgstr "%s انتخاب شد"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "انتخاب نکردنِ %s"
+msgid "%s unselected"
+msgstr "%s انتخاب نشد"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s به جایش انتخاب شد"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -7422,6 +7453,11 @@ msgstr "نشانه"
 msgid "Level"
 msgstr "سطح"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "ارسالِ خودِ نشانه"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "تغییرِ نشانه"
@@ -7429,6 +7465,10 @@ msgstr "تغییرِ نشانه"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "&سطح"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "&ارسالِ نشانه‌ی حقیقی به موتورِ سخن‌گو"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7565,8 +7605,14 @@ msgstr "فراخوانی"
 msgid "Desktop"
 msgstr "میزِ کار"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "رنگِ پیش‌فرض"
+
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "این خانه غیرِ قابلِ ویرایش است"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
@@ -7587,6 +7633,11 @@ msgstr "ت&وضیح"
 #. in the browse mode Elements List dialog.
 msgid "&Formula"
 msgstr "&فرمول"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "&برگه"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7652,6 +7703,12 @@ msgstr ""
 "با یک بار فشردن، این خانه به عنوانِ سر‌سطرِ نخست برای خانه های پایینتر و سمتِ "
 "راستِ آن که در این ناحیه قرار دارند تنظیم میشود. با دو بار فشردن، از سر‌سطرِ "
 "جاری یا این خانه صرفِ نظر میشود."
+
+msgid "Input Message is {title}: {message}"
+msgstr "پیام ورودی عبارت است از  {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "پیام ورودی عبارت است از {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -8569,6 +8626,20 @@ msgstr "از سِری نمایشگرهای HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "رنگِ پیش‌فرض"
+
+#, fuzzy
+#~ msgid "Unknown color"
+#~ msgstr "رنگِ نامشخص"
+
+#~ msgid "selecting %s"
+#~ msgstr "انتخاب کردنِ %s"
+
+#~ msgid "unselecting %s"
+#~ msgstr "انتخاب نکردنِ %s"
 
 #~ msgid "unrevised"
 #~ msgstr "برای بازبینی نشانه‌گذاری شد"
