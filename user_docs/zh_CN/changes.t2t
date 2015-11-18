@@ -1,37 +1,124 @@
-﻿NVDA 最近更新
+﻿What's New in NVDA
 
 
 %!includeconf: ../changes.t2tconf
 
-= 2015.1 =
-此次发布的重要更新包括 Microsoft Word 和 outlook 的浏览模式支持，Skype 桌面版支持的少量提升及 Microsoft Explorer 支持的显著提升。
+= 2015.3 =
+此次更新的亮点包括对 Windows10的初步支持，允许停用浏览模式的单键导航（对于某些  web 程序很有用），增强对 Internet Explorer 的支持，在点字输出打开的前提下输出乱码的解决。
+
 
 == 新特性 ==
-- 您可以使用“标点符号读音”对话框新增标点。 (#4354)
-- 在“输入手势”对话框，您可以使用“过滤关键字”筛选您需要查看的触摸手势。 (#4458)
-- NVDA 现在可以自动的朗读 mintty 的新文本。 (#4588)
-- 浏览模式的查找对话框中增加了区分大小写的选项。 (#4584)
-- 在word 中，现在可以使用“NVDA+空格”切换到浏览模式后使用h等进行元素跳转，也可以使用“NVDA+F7”进行元素筛选。 (#2975)
-- 提升对 Outlook 2007 及其后版本中的 HTML 消息浏览模式自动切换的支持，如果没有自动切换则可以使用“NVDA+空格”强行切换。 (#2975)
-- 由作者使用 Microsoft Word 的表格属性指定的列标题行现在可以正常的识别为标题。 (#4510)
- - 如果列表被合并，列标题不能正常识别，您还可以手动使用“NVDA+Shift+C”设置列标题行。
-- 支持 Skype 桌面版的通知自动朗读。 (#4741)
-- 在 Skype 桌面版中，您可以使用“NVDA+control+1到0”朗读最近的第x条消息。 (#3210)
-- 在 Skype 桌面版的绘画框中，输入状态可以自动读出。 (#3506)
-- 现在您可以使用命令行对 NVDA 进行静默安装，这种方式安装之后不会启动新安装的 NVDA 副本，参数是 --install-silent。 (#4206)
-- 支持 Papenmeier BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus 点显器 (#4614)
+- 在 internet explorer 或其他 MSHTML 控件的可编辑输入框的拼写错误朗读支持 (#4174)
+- • 现在可以读出文本中更多的 unicode 数学符号。 (#3805)
+- • 自动读出 Windows 10 开始屏幕中的搜索建议。 (#5049)
+- 对 EcoBraille 20、 EcoBraille 40、 EcoBraille 80 和 EcoBraille + 盲文显示器的支持。 (#4078)
+- • 在浏览模式中，你现在可以按 NVDA + shift + 空格键打开和关闭单键导航。关闭时，单个字母键会直接传递给应用程序，这对于 Gmail、 Twitter 和 Facebook 等一些 web 应用程序很有用。 (#3203)
+- 新的盲文翻译表: 芬兰 6 点点字、 爱尔兰1级点字、 爱尔兰2级点字、 韩语1 级点字(2006)，韩语2级点字 (2006)。 (#5137， #5074， #5097) (2006). (#5137, #5074, #5097)
+- 支持Papenmeier BRAILLEX Live Plus 点显器的QWERTY全键盘。 (#5181)
+- 对 Windows 10 edge浏览器及edge浏览引擎的实验性支持。 (#5212)
 
 
 == 更改 ==
-- 在文档格式设置的“读出拼写错误”选项增加了快速键“r”。 (#793)
-- NVDA 现在使用语音语言来对文字和标点的朗读进行处理，此选项与自动语言切换的开关没有关联，如果您想取消这个特性可以通过取消选中“处理文字和标点时信任语音的语言”复选框。 (#4210)
-- 对 Newfon 合成器的支持被移除，因为它已经变成了一个插件。 (#3184)
-- NVDA 仅支持 Skype 7桌面版以上的版本，低版本不再支持。 (#4218)
-- NVDA 升级的下载变得更加安全，文件信息由 HTTPS 协议传输，且在文件下载完成后会进行 hash 校验。 (#4716)
-- ESpeak已经被升级到了 1.48.04 (#4325)
+- 升级 liblouis braille translator 为 2.6.3。 (#5137)
+- 当你试图安装比当前安装的 NVDA 更早的版本，你现在会收到警告，不建议这样做，应该完全卸载之前安装的 NVDA 。 (#5037)
 
 
-== Bug 修复（此部分请查看测试版升级日志） ==
+== Bug 修复 ==
+-  在 Internet Explorer 和其他 MSHTML 控件 的浏览模式中，使用表单导航时不再错误的识别仅用作装饰的列表项目。 (#4204)
+- 在 Firefox， NVDA 不会在焦点移动到 ARIA tab 面板的时错误的读出内容。 (#4638)
+- 在 Internet Explorer 和其他 MSHTML controls中，切换到区域、控件或对话框不会再错误的读出整个对话框的内容。 (#5021, #5025)
+- 修复-Baum/HumanWare/APH 所有按键松开之后还输出a0的问题 (#3541)
+- 移除使用 alt+tab键进行窗口切换时读出的冗余信息。 (#5116)
+- 修复-在outlook启用盲文输出后键入会有乱码的bug (#2953)
+- Internet Explorer 或 其他MSHTML 控件，新增或修改了元素后焦点会被及时刷新，相应内容也会被读出 (#5040)
+- 修复-word下进行单键导航时点显器不刷新 (#4968)
+- 控件或格式指示器之间或前后的多余空格不再用盲文显示。 (#5043)
+- 提高 NVDA 在低响应程序的反应速度。 (#3831)
+- Windows 10 Toast notifications 可以正常朗读 (#5136)
+- 某些 UIA 组合框值发生改变之后无朗读的修复。
+- 在 web 浏览器的浏览模式中， 切换到 frame文档后的tab键动作可以如预期的工作 (#5227)
+- windows10 锁定屏幕可以使用触摸屏跳出。 (#5220)
+- 修复 windows7 或其后版本系统中某些文本编辑软件下盲文输出乱码。 (#4291)
+- 无法在 windows 10 的锁屏界面读取剪贴板、使用浏览光标访问程序或更改 NVDA 配置。 (#5269)
+
+
+== Changes for Developers ==
+- You can now inject raw input from a system keyboard that is not handled natively by Windows (e.g. a QWERTY keyboard on a braille display) using the new keyboardHandler.injectRawKeyboardInput function. (#4576)
+- eventHandler.requestEvents has been added to request particular events that are blocked by default; e.g. show events from a specific control or certain events even when in the background. (#3831)
+- Rather than a single i18nName attribute, synthDriverHandler.SynthSetting now has separate displayNameWithAccelerator and displayName attributes to avoid reporting of the accelerator in the synth settings ring in some languages.
+ - For backwards compatibility, in the constructor, displayName is optional and will be derived from displayNameWithAccelerator if not provided. However, if you intend to have an accelerator for a setting, both should be provided.
+ - The i18nName attribute is deprecated and may be removed in a future release.
+
+
+= 2015.2 =
+Highlights of this release include the ability to read charts in Microsoft Excel and support for reading and interactive navigation of mathematical content.
+
+== New Features ==
+- Moving forward and backward by sentence in Microsoft Word and Outlook is now possible with alt+downArrow and alt+upArrow respectively. (#3288)
+- New braille translation tables for several Indian languages. (#4778)
+- In Microsoft Excel, NVDA now reports when a cell has overflowing or cropped content. (#3040)
+- In Microsoft Excel, you can now use the Elements List (NVDA+f7) to allow listing of charts, comments and formulas. (#1987)
+- Support for reading charts in Microsoft Excel. To use this, select the chart using the Elements List (NVDA+f7) and then use the arrow keys to move between the data points. (#1987)
+- Using MathPlayer 4 from Design Science, NVDA can now read and interactively navigate mathematical content in web browsers and in Microsoft Word and PowerPoint. See the "Reading Mathematical Content" section in the User Guide for details. (#4673)
+- It is now possible to assign input gestures (keyboard commands, touch gestures, etc.) for all NVDA preferences dialogs and document formatting options using the Input Gestures dialog. (#4898)
+
+
+== Changes ==
+- In NVDA's Document Formatting dialog, the keyboard shortcuts for Report lists, Report links, Report line numbers and Report font name have been changed. (#4650)
+- In NVDA's Mouse Settings dialog, keyboard shortcuts have been added for play audio coordinates when mouse moves and brightness controls audio coordinates volume. (#4916)
+- Significantly improved reporting of color names. (#4984)
+- Updated liblouis braille translator to 2.6.2. (#4777)
+
+
+== Bug Fixes ==
+- Character descriptions are now handled correctly for conjunct characters in certain Indian languages. (#4582)
+- If the "Trust voice's language when processing characters and symbols" option is enabled, the Punctuation/Symbol pronunciation dialog now correctly uses the voice language. Also, the language for which pronunciation is being edited is shown in the dialog's title. (#4930)
+- In Internet Explorer and other MSHTML controls, typed characters are no longer inappropriately announced in editable combo boxes such as the Google search field on the Google home page. (#4976)
+- When selecting colors in Microsoft Office applications, color names are now reported. (#3045)
+- Danish braille output now works again. (#4986)
+- PageUp/pageDown can again be used to change slides within a PowerPoint slide show. (#4850)
+- In Skype for Desktop 7.2 and later, typing notifications are now reported and problems immediately after moving focus out of a conversation have been fixed. (#4972)
+- Fixed problems when typing certain punctuation/symbols such as brackets into the filter field in the Input Gestures dialog. (#5060)
+- In Internet Explorer and other MSHTML controls, pressing g or shift+g to navigate to graphics now includes elements marked as images for accessibility purposes (i.e. ARIA role img). (#5062)
+
+
+== Changes for Developers ==
+- brailleInput.handler.sendChars(mychar) will no longer filter out a character if it is equal to the previous character by ensuring that the key sent is correctly released. (#4139)
+- Scripts for changing touch modes will now honor new labeles added to touchHandler.touchModeLabels. (#4699)
+- Add-ons can provide their own math presentation implementations. See the mathPres package for details. (#4509)
+- Speech commands have been implemented to insert a break between words and to change the pitch, volume and rate. See BreakCommand, PitchCommand, VolumeCommand and RateCommand in the speech module. (#4674)
+ - There is also speech.PhonemeCommand to insert specific pronunciation, but the current implementations only support a very limited number of phonemes.
+
+
+= 2015.1 =
+Highlights of this release include browse mode for documents in Microsoft Word and Outlook; major enhancements to support for Skype for Desktop; and significant fixes for Microsoft Internet Explorer.
+
+== New Features ==
+- You can now add new symbols in the Symbol Pronunciation dialog. (#4354)
+- In the Input Gestures dialog, you can use the new "Filter by" field to show only gestures containing specific words. (#4458)
+- NVDA now automatically reports new text in mintty. (#4588)
+- In the browse mode Find dialog, there is now an option to perform a case sensitive search. (#4584)
+- Quick navigation (pressing h to move by heading, etc.) and Elements List (NVDA+f7) are now available in Microsoft Word documents by turning on browse mode with NVDA+space. (#2975)
+- Reading HTML messages in Microsoft Outlook 2007 and later has been majorly improved as Browse mode is automatically enabled for these messages. If browse mode is not enabled in some rare situations, you can force it on with NVDA+space. (#2975)
+- Table column headers in Microsoft word are automatically reported for tables where a header row has been explicitly specified by the author via Microsoft word's table properties. (#4510)
+ - However, For tables where rows have been merged, this will not work automatically. In this situation, you can still set column headers manually in NVDA with NVDA+shift+c.
+- In Skype for Desktop, notifications are now reported. (#4741)
+- In Skype for Desktop, you can now report and review recent messages using NVDA+control+1 through NVDA+control+0; e.g. NVDA+control+1 for the most recent message and NVDA+control+0 for the tenth most recent. (#3210)
+- In a conversation in Skype for Desktop, NVDA now reports when a contact is typing. (#3506)
+- NVDA can now be installed silently via the command line without starting the installed copy after installation. To do this, use the --install-silent option. (#4206)
+- Support for the Papenmeier BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus braille displays. (#4614)
+
+
+== Changes ==
+- In NVDA's Document Formatting settings dialog, the option to report spelling errors now has a shortcut key (alt+r). (#793)
+- NVDA will now use the synthesizer/voice's language for character and symbol processing (including punctuation/symbol names), regardless of whether automatic language switching is turned on. To turn off this feature so that NVDA again uses its interface language, uncheck the new option in Voice settings called Trust Voice's language when processing characters and symbols. (#4210)
+- Support for the Newfon synthesizer has been removed. Newfon is now available as an NVDA add-on. (#3184)
+- Skype for Desktop 7 or later is now required for use with NVDA; earlier versions are not supported. (#4218)
+- Downloading of NVDA updates is now more secure. (Specifically, the update information is retrieved via https and the hash of the file is verified after it is downloaded.) (#4716)
+- eSpeak has been upgraded to version 1.48.04 (#4325)
+
+
+== Bug Fixes ==
 - In Microsoft Excel, merged row and column header cells are now handled correctly. For example, if A1 and B1 are merged, then B2 will now have A1 and B1 reported as its column header rather than nothing at all. (#4617)
 - When editing the content of a text box in Microsoft PowerPoint 2003, NVDA will correctly report the content of each line. Previously, in each paragraph, lines would increasingly be off by one character. (#4619)
 - All of NVDA's dialogs are now centred on the screen, improving visual presentation and usability. (#3148)
@@ -66,39 +153,39 @@
 
 = 2014.4 =
 
-== 新特性 ==
-- 新的语言支持：哥伦比亚西班牙语，旁遮普与。
-- 现在，可以使用 NVDA 退出对话框设置“重新启动”、“重新启动并停用插件”。 (#4057)
- - NVDA 也可以使用命令行选项 --disable-addons 来禁用插件。
-- 在语音字典中，可以为来源字符定义只匹配整个单词，也就是说，不再匹配长单词的一部分。 (#1704)
+== New Features ==
+- New languages: Colombian Spanish, Punjabi.
+- It is now possible to restart NVDA or restart NVDA with add-ons disabled from NVDA's exit dialog. (#4057)
+ - NVDA can also be started with add-ons disabled by using the --disable-addons command line option.
+- In speech dictionaries, it is now possible to specify that a pattern should only match if it is a whole word; i.e. it does not occur as part of a larger word. (#1704)
 
 
-== 更改 ==
-- 如果您使用浏览光标浏览到一个包含在浏览模式文档的对象时，而您上次移动到的对象却并不包含在浏览模式文档中，此时，浏览模式将被设置为文档。以前，仅当浏览光标导致焦点移动后，模式才会被重置。 (#4369)
-- 点显器、合成器各自的设置对话框中，除了“无点显器”和“无合成器”选项之外的其他元素都按照字母顺序排列，而这两个选项将被放在列表底部。 (#2724)
-- 升级 liblouis 盲文翻译器为2.6.0。 (#4434, #3835)
-- 在浏览模式中，按“shift+e或e”键浏览编辑框时包含可编辑组合框，这会包含最新版本的 google 搜索框。 (#4436)
-- 现在，左键单机通知区域的 NVDA 图标将弹出 NVDA 菜单，而不是什么都不做。 (#4459)
+== Changes ==
+- If an object you have moved to with object navigation is inside a browse mode document, but the object you were on previously was not, the review mode is automatically set to document. Previously, this only happened if the navigator object was moved due to the focus changing. (#4369)
+- The Braille display and Synthesizer lists in the respective settings dialogs are now alphabetically sorted except for No braille/No speech, which are now at the bottom. (#2724)
+- Updated liblouis braille translator to 2.6.0. (#4434, #3835)
+- In browse mode, pressing e and shift+e to navigate to edit fields now includes editable combo boxes. This includes the search box in the latest versionn of Google Search. (#4436)
+- Clicking the NVDA icon in the Notification Area with the left mouse button now opens the NVDA menu instead of doing nothing. (#4459)
 
 
-== Bug 修复 ==
-- 当焦点返回浏览模式文档（如使用alt+tab切换到一个已经打开的网页），焦点将被定位在上次浏览的字符上，而不是焦点临近的控件（如最近的链接）。 (#4369)
-- 在 Powerpoint 幻灯片展示时，浏览光标可正确的跟随虚拟输入焦点。 (#4370)
-- 在 Mozilla Firefox 和其他 基于 Gecko 的浏览器中， 活动区域的新内容将被读出，即使新的活动区域拥有可用的、与上级活动的区域不同的 ARIA 活动类型， 如为标记为 polite 的活动区域添加标记为 assertive  的内容。 (#4169)
-- 在 Internet Explorer 和其他 MSHTML 控件， 在一个文档包含于另外一个文档时的某些情况下，不会妨碍用户访问被嵌套文档的内容（特别是被嵌套在 frameset 的 frameset）。 (#4418)
-- NVDA 不会在当您视图使用 Handy Tech 点显器时崩溃。 (#3709)
-- 在 Windows Vista 中， 当使用 NVDA 桌面图标或使用其快捷键启动 NVDA 的时候，虚假的 “输入点未找到”的对话框将不再显示。 (#4235)
-- 最新版本的 Eclipse 中的某些对话框包含的编辑控件存在的一些问题被修复。 (#3872)
-- 在 Outlook 2010中，在“约会地点”和“会议要求”移动输入焦点时可以正常的工作。 (#4126)
-- 在一个活动区域中，被标记为 不活动（如aria-live="off"）的内容现在可被正确的忽略。 (#4405)
-- 当朗读包含名称的状态栏文本时，名称可以被状态栏文本的第一个单词正确拆分。 (#4430)
-- 在密码输入框启用“朗读输入单词”时，密码将不会被以单词的形式读出。 (#4402)
-- 在 Microsoft Outlook 消息列表中，消息项目将不会无意义的读出“数据项目”。 (#4439)
-- 当在 Eclipse IDE 的代码编辑控件中选择文本时， 将不会在每次选择发生变化时读出全部选择的内容。 (#2314)
-- 变种版本的 Eclipse（ 如Spring 工具套装和被包含在Android 开发工具的捆绑版本）现在可正确的识别为Eclipse 并可正确的控制。 (#4360, #4454)
--  在 Internet Explorer 和其他 MSHTML 控件（还包括某些 windows 8 应用程序） 的高DPI 显示器下或文档大小被更改时，鼠标导航和触摸浏览将变得更加准确。 (#3494) 
-- 在 Internet Explorer 和其他 MSHTML 控件  使用鼠标导航或触摸浏览时，按钮的更多标签将被读出。 (#4173)
-- 当使用带有 BrxCom 的 Papenmeier BRAILLEX 点显器时，   点显器上的按键现在可正常的工作。 (#4614)
+== Bug Fixes ==
+- When moving focus back to a browse mode document (e.g. alt+tabbing to an already opened web page), the review cursor is properly positioned at the virtual caret, rather than the focused control (e.g. a nearby link). (#4369)
+- In Powerpoint slide shows, the review cursor correctly follows the virtual caret. (#4370)
+- In Mozilla Firefox and other Gecko-based browsers, new content within a live region will be announced even if the new content has a usable ARIA live type different to the parent live region; e.g. when content marked as assertive is added to a live region marked as polite. (#4169)
+- In Internet Explorer and other MSHTML controls, some cases where a document is contained within another document no longer prevent the user from accessing some of the content (specifically, framesets inside framesets). (#4418)
+- NVDA no longer crashes when attempting to use a Handy Tech braille display in some cases. (#3709)
+- In Windows Vista, a spurious "Entry Point Not Found" dialog is no longer displayed in several cases such as when starting NVDA from the Desktop shortcut or via the shortcut key. (#4235)
+- Serious problems with editable text controls in dialogs in recent versions of Eclipse have been fixed. (#3872)
+- In Outlook 2010, moving the caret now works as expected in the location field of appointments and meeting requests. (#4126)
+- Inside a live region, content which is marked as not being live (e.g. aria-live="off") is now correctly ignored. (#4405)
+- When reporting the text of a status bar that has a name, the name is now correctly separated from the first word of the status bar text. (#4430)
+- In password entry fields with speaking of typed words enabled, multiple asterisks are no longer pointlessly reported when beginning new words. (#4402)
+- In the Microsoft Outlook message list, items are no longer pointlessly announced as Data Items. (#4439)
+- When selecting text in the code editing control in the Eclipse IDE, the entire selection is no longer announced every time the selection changes. (#2314)
+- Various versions of Eclipse, such as Spring Tool Suite and the version included in the Android Developer Tools bundle, are now recognised as Eclipse and handled appropriately. (#4360, #4454)
+- Mouse tracking and touch exploration in Internet Explorer and other MSHTML controls (including many Windows 8 applications) is now much more accurate  on high DPI displays or when document zoom is changed. (#3494) 
+- Mouse tracking and touch exploration in Internet Explorer and other MSHTML controls will now announce the label of more buttons. (#4173)
+- When using a Papenmeier BRAILLEX braille display with BrxCom, keys on the display now work as expected. (#4614)
 
 
 == Changes for Developers ==
@@ -109,93 +196,93 @@
 
 = 2014.3 =
 
-== 新特性 ==
-- 启动或退出 NVDA 时播放的声音，可以通过“常规设置”对话框的新选项进行停用。 (#834)
-- 插件带有的帮助可以在“插件管理器”中进行访问 (#2694)
-- 支持 Microsoft Outlook2007以上版本的日历 (#2943) 包括:
- - 使用光标键在日历中移动时朗读当前时间。
- - 如果选择的时间以包含在日程中，做出提示。
- - 使用 tab 键 移动时朗读选中的约会。
- - 智能日期过滤，仅在选择的约会或时间与上次选择的不同时读出日期。
-- 增强对 Microsoft Outlook 2010和以上版本的收件箱及其他消息列表的支持 (#3834) 包括：
- - 通过关闭“文档格式设置”对话框的“朗读行列标题”选项，可忽略对行列标题的朗读(如发件人、主题等)。
- - 允许使用表格导航命令(control + alt + 光标键)在单独的列之间移动。
-- Microsoft word: 如果内嵌图形没有设置内部文本， NVDA 会通过朗读作者设置的图形标题来代替。 (#4193)
-- Microsoft Word: NVDA 可以使用朗读格式命令“NVDA+f”组合键读出段落缩进，您也可以通过启用“文档格式设置”对话框的新选项“朗读段落缩进”使其自动读出。 (#4165)
-- 当您在可编辑文档或文本编辑框按下“回车”键时，朗读自动插入的文本（如新的项目符号、数字和表格标记）。 (#4185)
-- Microsoft word: 按下“NVDA+alt+c”将朗读光标所在的注释文本。 (#3528)
-- 提高 Microsoft Excel 的行列标题自动朗读之匙 (#3568) 包括：
- - 支持识别标题单元的 Excel 自定义名称范围(与 JAWS 屏幕阅读器兼容)
- - 使用命令“设置列标题”(NVDA+shift+c)和“设置行标题”(NVDA+shift+r)进行的设置现在存储在工作表内，因而，下次打开此表格时仍旧可用，且与其他支持自定义名称范围方案的屏幕阅读器兼容。
- - 在每个表格中还可多次使用此命令，为不同的区域设置不同的标题。
-- 支持 Microsoft Word 的自动行列标题朗读 (#3110) 包括:
- - 支持识别标题单元的 Microsoft Word 标记(与 JAWS 屏幕阅读器兼容)
- - 当在表格的第一个标题单元时，“设置列标题”(NVDA+shift+c)和“设置行标题”(NVDA+shift+r)命令允许您告诉 NVDA，这些标题应该被自动的读出。设置存储在文档之内，因而，在下次打开此文档时他们仍旧可用，且可用于支持此标记方案的屏幕阅读器。
-- Microsoft Word: 按下“tab”键时读出与页面左边界的距离。 (#1353)
-- Microsoft Word: 为大多数可用的格式快捷键提供语音和盲文反馈(如粗体、斜体、下划线、对齐、大纲级别、超级脚本、子脚本和字体大小)。 (#1353)
-- Microsoft Excel: 如果选择的单元包含注释，可使用“NVDA+alt+c”读出。 (#2920)
-- Microsoft Excel: 在使用 Excel 快捷键“shift+f2”进入评论编辑模式时，提供一个 NVDA 定制的对话框来编辑选择单元的评论。
-- Microsoft Excel: 为更多的移动选择命令提供语音和点字反馈 (#4211) 包括:
- - 垂直页面移动 (上翻页和下翻页);
- - 水平页面移动 (alt+上翻页和 alt+下翻页);
- - 扩展选择(上面的按键加上shift);
- - 选择当前区域 (control+shift+8)。
-- Microsoft Excel: 单元格的垂直对齐和水平对齐方式现在可以使用格式朗读命令“NVDA+f”进行朗读，或通过启用“文档格式设置”的“朗读对齐方式”选项自动的读出。 (#4212)
-- Microsoft Excel: 单元格的文本样式现在可以使用格式朗读命令“NVDA+f”进行朗读，或通过启用“文档格式设置”的“朗读文本样式”选项自动的读出。 (#4213)
-- Microsoft PowerPoint: 现在，使用光标键在幻灯片的形状对象中移动时，其当前位置可朗读 (#4214) 包括:
- - 形状对象与幻灯片边界的距离现在可被朗读。
- - 如果形状对象覆盖着其他的形状或者当前形状对象被其他形状覆盖，覆盖距离和覆盖形状都会被读出。
- - 在不希望移动形状的任何时候，可按下位置信息朗读命令“NVDA+数字键盘删除键”读出上述信息。
- - 当选定一个形状对象，如果它被其他形状覆盖，NVDA 会提示“被覆盖”。
-- 朗读位置的命令(NVDA+f)在特定的一些场景下拥有着更加丰富的内容。 (#4219)
- - 使用浏览模式浏览标准的编辑区域时，光标的位置（如位置所在内容的百分比和屏幕坐标）都将被读出。
- - 在 Powerpoint 演示的形状对象中，形状对象与幻灯片或其他形状的位置信息将被读出。
- - 连按两次此命令将针对整个控件再度执行先前的动作，读出位置信息。
-- 新的语言，加泰罗尼亚语。
+== New Features ==
+- The sounds played when NVDA starts and exits can be disabled via a new option in the General Settings dialog. (#834)
+- Help for add-ons can be accessed from the Add-ons Manager for add-ons which support this. (#2694)
+- Support for the Calendar in Microsoft Outlook 2007 and above (#2943) including:
+ - Announcement of the current time when moving around with the arrow keys.
+ - Indication if the selected time is within any appointments.
+ - announcement of the selected appointment when pressing tab.
+ - Smart filtering of the date so as to only announce the date if the new selected time or appointment is on a different day to the last.
+- Enhanced support for the Inbox and other message lists in Microsoft Outlook 2010 and above (#3834) including:
+ - The ability to silence column headers (from, subject, etc.) by turning off the Report Table row and column headers option in Document Formatting settings.
+ - The ability to use table navigation commands (control + alt + arrows) to move through the individual columns. 
+- Microsoft word: If an inline image has no alternative text set, NVDA will instead report the title of the image if the author has provided one. (#4193)
+- Microsoft Word: NVDA can now report paragraph indenting with  the report formatting command (NVDA+f). It can also be reported automatically when the new Report Paragraph indenting option is enabled in Document Formatting settings. (#4165)
+- Report automatically inserted text such as a new bullet, number or tab indent when pressing enter in editable documents and text fields. (#4185)
+- Microsoft word: Pressing NVDA+alt+c will report  the text of a comment if the cursor is within one. (#3528)
+- Improved support for automatic column and row header reading in Microsoft Excel (#3568) including:
+ - Support of Excel defined name ranges to identify header cells (compatible with Jaws screen reader) .
+ - The set column header (NVDA+shift+c) and set row header (NVDA+shift+r) commands now store the settings in the worksheet so that they are available the next time the sheet is opened, and will be available to other screen readers that support the defined name range scheme.
+ - These commands can also now be used multiple times per sheet to set different headers for different regions.
+- Support for automatic column and row header reading in Microsoft Word (#3110) including:
+ - Support of Microsoft Word bookmarks to identify header cells (compatible with Jaws screen reader).
+ -  set column header (NVDA+shift+c) and set row header (NVDA+shift+r) commands  while on the first header cell in a table allow you to tell NVDA that these headers should be reported automatically.  Settings are stored in the document so that they are available the next time the document is opened, and will be available to other screen readers that support the bookmark scheme.
+- Microsoft Word: Report the distance from the left edge of the page when the tab key is pressed. (#1353)
+- Microsoft Word: provide feedback in speech and braille for most available formatting shortcut keys (bold, italic, underline, alignment, outline level, superscript, subscript and font size). (#1353)
+- Microsoft Excel: If the selected cell contains comments, they can be now reported by pressing NVDA+alt+c. (#2920)
+- Microsoft Excel: Provide an NVDA-specific dialog to edit the comments on the currently selected cell when pressing Excel's shift+f2 command to enter comment editing mode. (#2920)
+- Microsoft Excel: speech and braille feedback for many more selection movement shortcuts (#4211) including:
+ - Vertical page movement (pageUp and pageDown);
+ - Horizontal page movement (alt+pageUp and alt+pageDown);
+ - Extend selection (the above keys with Shift added); and
+ - Selecting the current region (control+shift+8).
+- Microsoft Excel: The vertical and horizontal  alignment for cells can now be reported with the report formatting command (NVDA+f). It can also be reported automatically if the Report alignment option in Document Formatting settings is enabled. (#4212)
+- Microsoft Excel: The style of a cell can now be reported with the report formatting command (NVDA+f). It can also be reported automatically if the Report Style option in Document formatting settings is enabled. (#4213)
+- Microsoft PowerPoint: when moving shapes around a slide with the arrow keys, the shape's current location is now reported (#4214) including:
+ - The distance between the shape and each of the  slide edges is reported.
+ - If the shape covers or is covered by another shape, then the distance overlapped and the overlapped shape are reported.
+ - To report this information at any time without moving a shape, press the report location command (NVDA+delete).
+ - When selecting a shape, if it is covered by another shape, NVDA will report that it is obscured.
+- The report location command (NVDA+delete) is more context specific in some situations. (#4219)
+ - In standard edit fields and browse mode, the cursor position as a percentage through the content and its screen coordinates are reported.
+ - On shapes in PowerPoint Presentations, position of the shape relative to the slide and other shapes is reported.
+ - Pressing this command twice will produce the previous behaviour of reporting the location information for the entire control.
+- New language: Catalan.
 
 
-== 更改 ==
-- 更新 liblouis 盲文翻译器到2.5.4. (#4103)
+== Changes ==
+- Updated liblouis braille translator to 2.5.4. (#4103)
 
 
-== 错误修复 ==
-- Google Chrome 和基于其开发的浏览器，，警告或对话框的当前文本块(如突出文本)不会再被重复朗读。 (#4066)
-- 在 Mozilla 应用程序使用浏览模式，在按钮等控件上按下回车不会再发生某些时候，点击控件失败（或点击了错误的控件）的情况。 (#4106)
-- 在浏览 iTunes 时不在朗读无用信息。 (#4128)
-- 在 iTunes 的当前列表（如音乐播放列表），使用对象导航浏览下一个项目的命令可以正常工作。 (#4129)
-- HTML 元素现在被当成标题，因为 WAI ARIA 标记已经被包含在浏览模式元素列表和 Internet Explorer 的快捷键导航。 (#4140)
-- 在最近版本的 Internet Explorer 的浏览文档中，跟随到同页面链接现在将可正确的移动和朗读目标位置。 (#4134)
-- Microsoft Outlook 2010 和以上版本: 所有安全对话框(如“新建配置文件”对话框、“邮件设置”对话框)的可访问性都得到了提高。 (#4090, #4091, #4095)
-- Microsoft Outlook: 在当前对话框浏览时，命令工具栏的无用提示信息减少。 (#4096, #3407)
-- Microsoft word: 切换到表格中的空白单元时，不会再错误的提示为“离开表格”。 (#4151)
-- Microsoft Word: 表格外的第一个字符（包含着新的空白航）不会被错误地认为属于此表格。 (#4152)
-- Microsoft Word 2010 拼写检查对话框: 实际的拼写错误单词将被朗读，而不仅仅是不恰当的朗读第一个黑体单词。 (#3431)
-- 在 Internet Explorer ，切换或使用单键浏览找到表单时朗读出其标签（特别是 HTML 元素已经定义好标签的情况）。 (#4170)
-- Microsoft Word: 注释的存在和位置将读的更加准确。 (#3528)
-- 浏览某些对话框时，通过不在读出某些对用户无用的特别的控件容器工具栏的方式，提高对 Microsoft Office 产品(word、OutLook、Excel等)的支持。 (#4198) 
-- 任务窗格（如文件恢复器、剪贴板管理器）不会再发生偶然丢失焦点的情况，这个情况会发生在打开某些程序时（如Word、Excel等），用户再也无需切换到其他窗口后返回才能使用文档或电子表格。 (#4199)
-- 在系统语言被设置成塞尔维亚语（拉丁）时，NVDA 不会发生无法运行在最新的 Windows 操作系统的情况。 (#4203)
-- 现在，在打开“帮助模式”的情况下，按下数字键盘切换可以正常的切换状态，而不是强制键盘和系统保持在一种状态。 (#4226)
-- 在 Chrome 切换标签时，文档标题将再次可以正常的朗读，这种情况不会发生在 NVDA2014.2。 (#4222)
-- 在使用 Chrome 或基于 Chrome 所开发的浏览器，在朗读文档时文档的 URL 将不会被朗读。 (#4223)
-- 当在选择“无合成器”时进行全文朗读，内容将可完全读完，而不会再发生在读完某些行之后自动停止的情况。 (#4225) 
-- Microsoft Outlook的签名对话框: 签名编辑区域将具有完全的可访问性，允许完全的鼠标导航和格式检测。 (#3833)
-- Microsoft Word: 当朗读表格单元的第一行或最后一行时，不会发生读出整个列表的情况。 (#3421)
-- 在朗读输入字词打开时，词语不会再被某些印第安语的符号打断。 (#4254)
-- GoldWave 的数字可编辑文本区域现在可以正确获取。 (#670)
-- Microsoft Word: 当使用 control+下光标或control加上光标进行段落跳转时，无需在通过按下两次该键来略过项目列表和数字列表。 (#3290)
+== Bug Fixes ==
+- In Google Chrome and Chrome-based browsers, certain chunks of text (such as those with emphasis) are no longer repeated when reporting the text of an alert or dialog. (#4066)
+- In browse mode in Mozilla applications, pressing enter on a button, etc. no longer fails to activate it (or activates the wrong control) in certain cases such as the buttons at the top of Facebook. (#4106)
+- Useless information is no longer announced when tabbing in iTunes. (#4128)
+- In certain lists in iTunes such as the Music list, moving to the next item using object navigation now works correctly. (#4129)
+- HTML elements considered headings because of WAI ARIA markup are now included in the Browse mode Elements list and quick navigation for Internet Explorer documents. (#4140)
+- Following same-page links in recent versions of Internet Explorer now correctly moves to and reports the destination position in browse mode  documents. (#4134)
+- Microsoft Outlook 2010 and above: Overall access to secure dialogs such as the New profiles and mail setup dialogs has been improved. (#4090, #4091, #4095)
+- Microsoft Outlook: Useless verbosity has been decreased in command toolbars when navigating through  certain dialogs. (#4096, #3407)
+- Microsoft word: Tabbing to a blank cell in a table no longer incorrectly announces exiting the table. (#4151)
+- Microsoft Word: The first character past the end of a table (including a new blank line) is no longer incorrectly considered to be inside the table. (#4152)
+- Microsoft Word 2010 spell check dialog: The actual misspelled word is reported rather than  inappropriately reporting just the first bold word. (#3431)
+- In browse mode in Internet Explorer and other MSHTML controls, tabbing or using single letter navigation to move to form fields again reports the label in many cases where it didn't (specifically, where HTML label elements are used). (#4170)
+- Microsoft Word: Reporting the existance and placement of comments is more accurate. (#3528)
+- Navigation of certain dialogs in MS Office products such as Word, Excel and Outlook has been improved by no longer reporting particular control container toolbars which are not useful to the user. (#4198) 
+- Task panes such as clipboard manager or File recovery no longer accidentilly seem to gain focus when opening an application such as Microsoft Word or Excel, which was sometimes causing the user to have to switch away from and back to the application to use the document or spreadsheet.  (#4199)
+- NVDA no longer fails to run on recent Windows Operating Systems if the user's Windows language is set to Serbian (Latin). (#4203)
+- Pressing numlock while in input help mode now correctly toggles numlock, rather than causing the keyboard and the Operating System to become out of sync in regards to the state of this key. (#4226)
+- In Google Chrome, the title of the document is again reported when switching tabs. In NVDA 2014.2, this did not occur in some cases. (#4222)
+- In Google Chrome and Chrome-based browsers, the URL of the document is no longer reported when reporting the document. (#4223)
+- When running say all with the No speech synthesizer selected (useful for automated testing), say all will now complete instead of stopping after the first few lines. (#4225)
+- Microsoft Outlook's Signature dialog: The Signature editing field is now accessible, allowing for full cursor tracking and format detection. (#3833)
+- Microsoft Word: When reading the last line of a table cell, the entire table cell is no longer read. (#3421)
+- Microsoft Word: When reading the first or last line of a table of contents, the entire table of contents is no longer read. (#3421)
+- When speaking typed words and in some other cases, words are no longer incorrectly broken at marks such as vowel signs and virama in Indic languages. (#4254)
+- Numeric editable text fields in GoldWave are now handled correctly. (#670)
+- Microsoft Word: when moving by paragraph with control+downArrow / control+upArrow, it is no longer necessary to press them twice if moving through bulleted or numbered lists. (#3290)
 
 
-== 针对开发者的更改 ==
-- NVDA 现在拥有统一的插件文档支持，详情请查阅开发文档的插件帮助章节。 (#2694)
-- 当为 scriptableObject 和 gesture 提供 gesture绑定时，允许为脚本设定关键字为空，取消了许多基本类的绑定。 (#4240)
-- 现在，您可以为某些启动快捷键会造成问题的地区修改启动 NVDA 的快捷键。 (#2209)
-- 此功能通过 gettext 实现。
-- 请注意，在安装 NVDA 对话框，设置启动快捷方式的快捷键如果被更改，也应当在帮助文档中体现。
+== Changes for Developers ==
+- NVDA now has unified support for add-on documentation. See the Add-on Documentation section of the Developer Guide for details. (#2694)
+- When providing gesture bindings on a ScriptableObject via __gestures, it is now possible to provide the None keyword as the script. This unbinds the gesture in any base classes. (#4240)
+- It is now possible to change the shortcut key used to start NVDA for locales where the normal shortcut causes problems. (#2209)
+ - This is done via gettext.
+ - Note that the text for the Create desktop shortcut option in the Install NVDA dialog, as well as the shortcut key in the User Guide, must also be updated.
 
 
 = 2014.2 =
-
 
 == New Features ==
 - Announcement of text selection is now possible in some custom edit fields where display information is used. (#770)
