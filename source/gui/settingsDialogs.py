@@ -186,13 +186,13 @@ class GeneralSettingsDialog(SettingsDialog):
 		# Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 		self.startOnLogonScreenCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("Use NVDA on the Windows logon screen (requires administrator privileges)"))
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
-		if globalVars.appArgs.secure or not config.isServiceInstalled():
+		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
 			self.startOnLogonScreenCheckBox.Disable()
 		settingsSizer.Add(self.startOnLogonScreenCheckBox)
 		# Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
 		self.copySettingsButton= wx.Button(self, wx.ID_ANY, label=_("Use currently saved settings on the logon and other secure screens (requires administrator privileges)"))
 		self.copySettingsButton.Bind(wx.EVT_BUTTON,self.onCopySettings)
-		if globalVars.appArgs.secure or not config.isServiceInstalled():
+		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
 			self.copySettingsButton.Disable()
 		settingsSizer.Add(self.copySettingsButton)
 		if updateCheck:
@@ -1058,6 +1058,11 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.revisionsCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
+		self.emphasisCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report e&mphasis"))
+		self.emphasisCheckBox.SetValue(config.conf["documentFormatting"]["reportEmphasis"])
+		settingsSizer.Add(self.emphasisCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.styleCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report st&yle"))
 		self.styleCheckBox.SetValue(config.conf["documentFormatting"]["reportStyle"])
 		settingsSizer.Add(self.styleCheckBox,border=10,flag=wx.BOTTOM)
@@ -1148,6 +1153,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportFontAttributes"]=self.fontAttrsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportColor"]=self.colorCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportRevisions"]=self.revisionsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportEmphasis"]=self.emphasisCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportAlignment"]=self.alignmentCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportStyle"]=self.styleCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportSpellingErrors"]=self.spellingErrorsCheckBox.IsChecked()

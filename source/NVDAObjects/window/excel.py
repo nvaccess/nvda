@@ -13,6 +13,7 @@ import uuid
 import collections
 import oleacc
 import ui
+import speech
 from tableUtils import HeaderCellInfo, HeaderCellTracker
 import config
 import textInfos
@@ -986,6 +987,22 @@ class ExcelCell(ExcelBase):
 				else:
 					self.excelCellObject.addComment(d.Value)
 		gui.runScriptModalDialog(d, callback)
+
+	def reportFocus(self):
+		# #4878: Excel specific code for speaking format changes on the focused object.
+		info=self.makeTextInfo(textInfos.POSITION_FIRST)
+		info.expand(textInfos.UNIT_CHARACTER)
+		formatField=textInfos.FormatField()
+		formatConfig=config.conf['documentFormatting']
+		for field in info.getTextWithFields(formatConfig):
+			if isinstance(field,textInfos.FieldCommand) and isinstance(field.field,textInfos.FormatField):
+				formatField.update(field.field)
+		if not hasattr(self.parent,'_formatFieldSpeechCache'):
+			self.parent._formatFieldSpeechCache={}
+		text=speech.getFormatFieldSpeech(formatField,attrsCache=self.parent._formatFieldSpeechCache,formatConfig=formatConfig) if formatField else None
+		if text:
+			speech.speakText(text)
+		super(ExcelCell,self).reportFocus()
 
 	__gestures = {
 		"kb:NVDA+shift+c": "setColumnHeader",

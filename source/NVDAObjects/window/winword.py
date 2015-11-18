@@ -324,8 +324,9 @@ class WordDocumentRevisionQuickNavItem(WordDocumentCollectionQuickNavItem):
 		revisionType=wdRevisionTypeLabels.get(self.collectionItem.type)
 		author=self.collectionItem.author or ""
 		date=self.collectionItem.date
+		description=self.collectionItem.formatDescription or ""
 		text=(self.collectionItem.range.text or "")[:100]
-		return _(u"{revisionType}: {text} by {author} on {date}").format(revisionType=revisionType,author=author,text=text,date=date)
+		return _(u"{revisionType} {description}: {text} by {author} on {date}").format(revisionType=revisionType,author=author,text=text,date=date,description=description)
 
 class WinWordCollectionQuicknavIterator(object):
 	"""
@@ -610,20 +611,13 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		_startOffset=int(field.pop('_startOffset'))
 		_endOffset=int(field.pop('_endOffset'))
 		revisionType=int(field.pop('wdRevisionType',0))
-		revisionLabel=wdRevisionTypeLabels.get(revisionType,None)
-		if revisionLabel:
-			if extraDetail:
-				try:
-					r=self.obj.WinwordSelectionObject.range
-					r.setRange(_startOffset,_endOffset)
-					rev=r.revisions.item(1)
-					author=rev.author
-					date=rev.date
-				except COMError:
-					author=_("unknown author")
-					date=_("unknown date")
-				field['revision']=_("{revisionType} by {revisionAuthor} on {revisionDate}").format(revisionType=revisionLabel,revisionAuthor=author,revisionDate=date)
-			else:
+		if revisionType==wdRevisionInsert:
+			field['revision-insertion']=True
+		elif revisionType==wdRevisionDelete:
+			field['revision-deletion']=True
+		elif revisionType:
+			revisionLabel=wdRevisionTypeLabels.get(revisionType,None)
+			if revisionLabel:
 				field['revision']=revisionLabel
 		color=field.pop('color',None)
 		if color is not None:
