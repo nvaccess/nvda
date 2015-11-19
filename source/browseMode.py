@@ -688,6 +688,7 @@ class ElementsListDialog(wx.Dialog):
 			parentElements.append(element)
 
 		# Start with no filtering.
+		self.filterEdit.ChangeValue("")
 		self.filter("", newElementType=True)
 
 	def filter(self, filterText, newElementType=False):
