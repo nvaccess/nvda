@@ -36,7 +36,7 @@ class FindDialog(wx.Dialog):
 
 		findSizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: Dialog text for NvDA's find command.
-		textToFind = wx.StaticText(self, wx.ID_ANY, label=_("Type the text you wish to find"))
+		textToFind = wx.StaticText(self, wx.ID_ANY, label=_("Type the text you wish to find:"))
 		findSizer.Add(textToFind)
 		self.findTextField = wx.TextCtrl(self, wx.ID_ANY)
 		self.findTextField.SetValue(text)
@@ -137,7 +137,7 @@ class CursorManager(baseObject.ScriptableObject):
 			info.move(textInfos.UNIT_LINE,1,endPoint="end")
 			speech.speakTextInfo(info,reason=controlTypes.REASON_CARET)
 		else:
-			wx.CallAfter(gui.messageBox,_('text "%s" not found')%text,_("Find Error"),wx.OK|wx.ICON_ERROR)
+			wx.CallAfter(gui.messageBox,_('Text "%s" not found:')%text,_("Find Error"),wx.OK|wx.ICON_ERROR)
 		CursorManager._lastFindText=text
 
 	def script_find(self,gesture):
