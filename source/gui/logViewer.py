@@ -59,11 +59,11 @@ class LogViewer(wx.Frame):
 	"""The NVDA log viewer GUI.
 	"""
 
-	_lastFindText=""
-	_findCaseSensitive=False
-	_findRegEx=False
-
 	def __init__(self, parent):
+		self._lastFindText=""
+		self._findCaseSensitive=False
+		self._findRegEx=False
+
 		# Translators: The title of the NVDA log viewer window.
 		super(LogViewer, self).__init__(parent, wx.ID_ANY, _("NVDA Log Viewer"))
 		self.Bind(wx.EVT_ACTIVATE, self.onActivate)
