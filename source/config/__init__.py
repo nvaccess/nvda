@@ -83,6 +83,10 @@ confspec = ConfigObj(StringIO(
 		beepForCapitals = boolean(default=false)
 		useSpellingFunctionality = boolean(default=true)
 
+# Audio settings
+[audio]
+	audioDuckingMode = integer(default=1)
+
 # Braille settings
 [braille]
 	display = string(default=noBraille)

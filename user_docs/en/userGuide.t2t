@@ -761,6 +761,16 @@ This may be useful for someone who wishes to only use NVDA with Braille, or perh
 ==== Output device ====
 This option allows you to choose the sound card that NVDA should instruct the selected synthesizer to speak through.
 
+%kc:setting
+==== Audio Ducking Mode ====
+Key: NVDA+shift+d
+
+On Windows 8 and above, this option allows you to choose if NVDA should lower the volume of other applications while NVDA is speaking, or all the time while NVDA is running.
+- No Ducking: NVDA will never lower the volume of other audio. 
+- Duck when outputting speech and sounds: NVDA will only lower the volume of other audio when NVDA is speaking or playing sounds. This may not work for all synthesizers. 
+- Always duck: NVDA will keep the volume of other audio lower the whole time NVDA is running.
+
+
 +++ Voice Settings (NVDA+control+v) +++[VoiceSettings]
 The Voice Settings dialog, found in the Preferences menu, contains options that let you change the sound of the speech.
 For a quicker alternative way of controlling speech parameters from anywhere, please see the [Synth Settings Ring #SynthSettingsRing] section.
