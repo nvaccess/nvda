@@ -597,7 +597,11 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 						&&_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_RANGE,VT_DISPATCH,&pDispatchParagraphRange)==S_OK&&pDispatchParagraphRange\
 						&&_com_dispatch_raw_propget(pDispatchParagraphRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal==startOffset\
 					) {
-						formatAttribsStream<<L"line-prefix=\""<<listString<<L"\" ";
+						wstring tempText;
+						for(int i=0;listString[i]!=L'\0';++i) {
+							appendCharToXML(listString[i],tempText,true);
+						}
+						formatAttribsStream<<L"line-prefix=\""<<tempText<<L"\" ";
 					}
 				}
 				SysFreeString(listString);
