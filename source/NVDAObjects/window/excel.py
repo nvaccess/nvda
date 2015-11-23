@@ -420,7 +420,7 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 	def script_elementsList(self,gesture):
 		super(ExcelBrowseModeTreeInterceptor,self).script_elementsList(gesture)
 	# Translators: the description for the elements list command in Microsoft Excel.
-	script_elementsList.__doc__ = _("Presents a list of charts, cells with comments and cells with formulas")
+	script_elementsList.__doc__ = _("Lists various types of elements in this spreadsheet")
 	script_elementsList.ignoreTreeInterceptorPassThrough=True
 
 	__gestures = {
