@@ -239,7 +239,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 
 	if nvwave.isAudioDuckingSupported():
 		# the GUI mainloop must be running for this to work so delay it
-		wx.CallAfter(nvwave.WavePlayer.setAudioDuckingMode,config.conf['audio']['audioDuckingMode'])
+		wx.CallAfter(nvwave.WavePlayer.initAudioDucking,config.conf['audio']['audioDuckingMode'])
 
 	# #3763: In wxPython 3, the class name of frame windows changed from wxWindowClassNR to wxWindowNR.
 	# NVDA uses the main frame to check for and quit another instance of NVDA.

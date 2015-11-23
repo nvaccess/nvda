@@ -118,10 +118,11 @@ class WavePlayer(object):
 	#: A lock to prevent WaveOut* functions from being called simultaneously, as this can cause problems even if they are for different HWAVEOUTs.
 	_global_waveout_lock = threading.RLock()	
 
-	_audioDuckingMode=AUDIODUCKINGMODE_NONE
+	_audioDuckingMode=0
 	_global_priorityRefCount=0 #class variable, not instance
 	_global_priorityRefCountLock = threading.RLock()
 	_priorityRequested=False
+
 
 	@classmethod
 	def _global_setPriority(self,switch):
@@ -131,7 +132,15 @@ class WavePlayer(object):
 			if switch:
 				oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_PRIORITY_AUDIO_ACTIVE|ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK,ANRUS_PRIORITY_AUDIO_ACTIVE|ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK)
 			else:
-				oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_PRIORITY_AUDIO_ACTIVE|ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK,0)
+				oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_PRIORITY_AUDIO_ACTIVE|ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK,ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK)
+
+	@classmethod
+	def initAudioDucking(cls,initialMode):
+		with WavePlayer._global_priorityRefCountLock:
+			import gui
+			ATWindow=gui.mainFrame.GetHandle()
+			oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_PRIORITY_AUDIO_ACTIVE|ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK,ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK)
+		cls.setAudioDuckingMode(initialMode)
 
 	@classmethod
 	def setAudioDuckingMode(cls,mode):
