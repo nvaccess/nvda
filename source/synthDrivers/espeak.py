@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #synthDrivers/espeak.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2007-2013 NV Access Limited, Peter Vágner
+#Copyright (C) 2007-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -50,17 +50,39 @@ class SynthDriver(SynthDriver):
 	def _get_language(self):
 		return self._language
 
+	PROSODY_ATTRS = {
+		speech.PitchCommand: "pitch",
+		speech.VolumeCommand: "volume",
+		speech.RateCommand: "rate",
+	}
+
+	IPA_TO_ESPEAK = {
+		u"θ": u"T",
+		u"s": u"s",
+		u"ˈ": u"'",
+	}
+
+	def _processText(self, text):
+		text = unicode(text)
+		# We need to make several replacements.
+		return text.translate({
+			0x1: None, # used for embedded commands
+			0x3C: u"&lt;", # <: because of XML
+			0x3E: u"&gt;", # >: because of XML
+			0x5B: u" [", # [: [[ indicates phonemes
+		})
+
 	def speak(self,speechSequence):
 		defaultLanguage=self._language
 		textList=[]
 		langChanged=False
+		prosody={}
+		# We output malformed XML, as we might close an outer tag after opening an inner one; e.g.
+		# <voice><prosody></voice></prosody>.
+		# However, eSpeak doesn't seem to mind.
 		for item in speechSequence:
 			if isinstance(item,basestring):
-				s=unicode(item)
-				# Replace \01, as this is used for embedded commands.
-				#Also replace < and > as espeak handles xml
-				s=s.translate({ord(u'\01'):None,ord(u'<'):u'&lt;',ord(u'>'):u'&gt;'})
-				textList.append(s)
+				textList.append(self._processText(item))
 			elif isinstance(item,speech.IndexCommand):
 				textList.append("<mark name=\"%d\" />"%item.index)
 			elif isinstance(item,speech.CharacterModeCommand):
@@ -70,12 +92,47 @@ class SynthDriver(SynthDriver):
 					textList.append("</voice>")
 				textList.append("<voice xml:lang=\"%s\">"%(item.lang if item.lang else defaultLanguage).replace('_','-'))
 				langChanged=True
+			elif isinstance(item,speech.BreakCommand):
+				textList.append('<break time="%dms" />' % item.time)
+			elif type(item) in self.PROSODY_ATTRS:
+				if prosody:
+					# Close previous prosody tag.
+					textList.append("</prosody>")
+				attr=self.PROSODY_ATTRS[type(item)]
+				if item.multiplier==1:
+					# Returning to normal.
+					try:
+						del prosody[attr]
+					except KeyError:
+						pass
+				else:
+					prosody[attr]=int(item.multiplier* 100)
+				if not prosody:
+					continue
+				textList.append("<prosody")
+				for attr,val in prosody.iteritems():
+					textList.append(' %s="%d%%"'%(attr,val))
+				textList.append(">")
+			elif isinstance(item,speech.PhonemeCommand):
+				# We can't use unicode.translate because we want to reject unknown characters.
+				try:
+					phonemes="".join([self.IPA_TO_ESPEAK[char] for char in item.ipa])
+					# There needs to be a space after the phoneme command.
+					# Otherwise, eSpeak will announce a subsequent SSML tag instead of processing it.
+					textList.append(u"[[%s]] "%phonemes)
+				except KeyError:
+					log.debugWarning("Unknown character in IPA string: %s"%item.ipa)
+					if item.text:
+						textList.append(self._processText(item.text))
 			elif isinstance(item,speech.SpeechCommand):
 				log.debugWarning("Unsupported speech command: %s"%item)
 			else:
 				log.error("Unknown speech: %s"%item)
+		# Close any open tags.
 		if langChanged:
 			textList.append("</voice>")
+		if prosody:
+			textList.append("</prosody>")
 		text=u"".join(textList)
 		_espeak.speak(text)
 

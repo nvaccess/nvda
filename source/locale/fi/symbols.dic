@@ -5,7 +5,8 @@
 
 complexSymbols:
 # identifier	regexp
-decimal point	(?<=\d)\,(?=\d)
+decimal point	(?<![^\d -])\,(?=\d)
+negative number	(?<!\w)-(?=[$£€¥,]?\d)
 percent	(?<=\d)\ ?\%(?!\w)
 dates	(((0?[1-9]|[12]\d|3[01])[\.](0?[13578]|1[02])[\.]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.](0?[13456789]|1[012])[\.]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.]0?2[\.]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.]0?2[\.]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))
 euro	^(0|(([1-9]{1}|[1-9]{1}[0-9]{1}|[1-9]{1}[0-9]{2}){1}(\ [0-9]{3}){0,})),(([0-9]{2})|\-\-)([\ ]{1})(€){1}$
@@ -49,8 +50,8 @@ $	dollari	all	norep
 %	prosentti	some
 &	et	some
 '	heitto	all
-(	alkusulku	most
-)	loppusulku	most
+(	alkusulku	most	always
+)	loppusulku	most	always
 *	tähti	some
 +	plus	some
 ,	pilkku	all	always
@@ -59,8 +60,8 @@ $	dollari	all	norep
 /	kautta	some
 :	kaksoispiste	most
 ;	puolipiste	most
-<	pienempi	most
->	suurempi	most
+<	pienempi	some
+>	suurempi	some
 =	yhtä suuri	some
 ?	kysymys	all
 @	ät	some
@@ -84,7 +85,7 @@ _	alaviiva	most
 ”	kokolainaus	most
 ‘	käänteinen puolilainaus	most
 ’	heitto	most
-–	lyhyt ajatusviiva	most
+–	lyhyt ajatusviiva	most	always
 —	pitkä ajatusviiva	most
 ­	pehmeä tavuviiva	most
 ●	tähti	some
@@ -108,6 +109,9 @@ _	alaviiva	most
 ♣	musta risti most
 ♦	musta ruutu	most
 ★	musta tähti	most
+▪	musta neliö	some
+◾	musta neliö	some
+◦	valkoinen luettelomerkki	some
 ■	musta neliö	most
 ➔	nuoli oikealle	most
 ¡	käänteinen huuto	most
@@ -133,7 +137,7 @@ _	alaviiva	most
 §	pykälä	some
 ¶	kappale	most
 ¯	viiva aksentti	most
-÷	jaettuna	most
+÷	jaettuna	some
 ×	kertaa	some
 ✓	valintamerkki	most
 ✔	valintamerkki	most
@@ -141,28 +145,27 @@ _	alaviiva	most
 ¢	sentti	all	norep
 ¤	valuuttamerkki	some
 ≠	eri suuri kuin	some
-∞	ääretön	most
-√	neliöjuuri	some
 ½	yksi kahdesosa	some
 ⅔	kaksi kolmasosaa	some
 ⅓	yksi kolmasosa	some
 ¾	kolme neljäsosaa	some
 ¼	yksi neljäsosa	some
 ¬	negaatio	some
-±	plus miinus	most
+±	plus miinus	some
 ₨	rupia	some
+₹	rupia	some
 ™	tavaramerkki	most
 ®	rekisteröity tavaramerkki	most
 ©	copyright	some
 ¥	jeni	all	norep
 Α	iso alfa	some
-Β	iso beetta	some
+Β	iso beeta	some
 Γ	iso gamma	some
 Δ	iso delta	some
 Ε	iso epsilon	most
-Ζ	iso zeetta	most
-Η	iso eetta	most
-Θ	iso theetta	most
+Ζ	iso zeeta	most
+Η	iso eeta	most
+Θ	iso theeta	most
 Ι	iso joota	most
 Κ	iso kappa	most
 Λ	iso lambda	most
@@ -180,13 +183,13 @@ _	alaviiva	most
 Ψ	iso psii	most
 Ω	iso omega	most
 α	alfa	some
-β	beetta	some
+β	beeta	some
 γ	gamma	some
 δ	delta	some
 ε	epsilon	most
-ζ	zeetta	most
-η	eetta	most
-θ	theetta	most
+ζ	zeeta	most
+η	eeta	most
+θ	theeta	most
 ι	joota	most
 κ	kappa	most
 λ	lambda	most
@@ -209,3 +212,48 @@ _	alaviiva	most
 ♩	neljäsosanuotti	most
 ♪	kahdeksasosanuotti	most
 ♫	varrellinen kahdeksasosanuotti	most
+
+# Mathematical Operators U+2200 to U+220F
+∀	kaikilla 	none
+∁	komplementti	none
+∂	osittaisderivaatta	none
+∃	on olemassa	none
+∄	ei ole olemassa	none
+∅	tyhjä joukko	none
+∆	lisäys	none
+∇	nabla	none
+∈	kuuluu joukkoon	none
+∉	ei kuulu joukkoon	none
+∊	pieni osa	none
+∋	sisältää jäsenenä	none
+∌	ei sisällä jäsenenä	none
+∍	pieni sisältää jäsenenä	none
+∎	todistuksen loppu	none
+∏	tulo yli	none
+
+# Miscellaneous Mathematical Operators
+∑	summa yli	none
+√	neliöjuuri	none
+∛	kuutiojuuri	none
+∜	neljäs juuri	none
+∝	on verrannollinen	none
+∞	ääretön	none
+∟	loppukulma	none
+∠	kulma	none
+∥	samansuuntainen kuin	none
+∦	erisuuntainen kuin	none
+∧	looginen konjuktio	none
+∨	looginen disjunktio	none
+∩	leikkaa	none
+∪	joukko-opillinen yhdiste	none
+∫	määräämätön integraali	none
+∴	siksi	none
+∵	koska	none
+∶	kerroin	none
+∷	verranto	none
+≤	on pienempi tai yhtäsuuri kuin	none
+≥	on suurempi tai yhtäsuuri kuin	none
+⊂	on osajoukko	none
+⊃	implikaatio	none
+⊆	on alijoukko tai yhtäsuuri kuin	none
+⊇	on ylijoukko tai yhtäsuuri kuin	none

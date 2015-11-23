@@ -1,29 +1,30 @@
-﻿NVDA NVDA_VERSION Guia d'usuari
+﻿NVDA NVDA_VERSION Guia d'usuari 
 
 
 %!includeconf: ../userGuide.t2tconf
 %!includeconf: locale.t2tconf
 %kc:title: NVDA NVDA_VERSION Ordres Referència ràpida
-%kc:includeconf: locale.t2tconf
+
 = Sumari =[toc]
 %%toc
+
 + Introducció +
 NonVisual Desktop Access (NVDA) és un lector de pantalla de codi obert gratuït per al sistema operatiu Microsoft Windows.
 NVDA permet a les persones cegues i amb dificultats de visió accedir als ordinadors que funcionen amb Windows amb el mateix esforç que a una persona amb visió gràcies a un feedback amb veu sintètica i braille.
 NVDA ha estat desenvolupat per en_[NV Access http://www.nvaccess.org/], amb contribucions de la comunitat.
 
 ++ Característiques generals ++
-NVDA permet a les persones cegues i amb baixa visió accedir i interaccionar amb el sistema operatiu Windows i amb múltiples aplicacions de tercers.
+NVDA permet a les persones cegues i amb dificultat de visió accedir i interaccionar amb el sistema operatiu Windows i amb múltiples aplicacions de tercers.
 
 En són aspectes destacables:
 - NVDA és compatible amb aplicacions comunes com navegadors web, clients de correu electrònic, programes de xat, i paquets d'ofimàtica
-- NVDA incorpora un sintetitzador de veu amb suport per a 43 idiomes
+- NVDA incorpora un sintetitzador de veu amb suport per a més de 80 idiomes
 - Si el programa dóna informació sobre el format del text, NVDA n'informa i anuncia la família tipogràfica, el cos, l'estil i avisa d'errors ortogràfics
 - NVDA avisa automàticament del text que es troba sota el ratolí i opcionalment indica la posició del ratolí per so
 - NVDA és compatible amb moltes línies braille, i també accepta entrades en braille d'ordinador per a aquelles línies braille que tenen teclat
 - NVDA pot executar-se totalment des d'un llapis USB o altres suports portables, sense requerir instal·lació
 - L'instal·lador de NVDA és amb veu i fàcil d'usar
-- NVDA s'ha traduït a 44 idiomes
+- NVDA s'ha traduït a 47 idiomes
 - NVDA és compatible amb els sistemes operatius Windows moderns, tant amb les versions de 32 bits com les de 64 bits
 - NVDA funciona a la pantalla d'entrada de Windows i en altres pantalles de seguretat
 - NVDA és compatible amb interfícies d'accessibilitat comunes com Microsoft Active Accessibility, Java Access Bridge, IAccessible2 o UI Automation (NVDA només és compatible amb UI Automation a partir de Windows 7)
@@ -31,8 +32,8 @@ En són aspectes destacables:
 -
 
 ++ Internacionalització ++
-és important que les persones d'arreu del món, parlin la llengua que parlin, tinguin accés equitatiu a la tecnologia.
-A banda d'oferir-se en anglès, NVDA s'ha traduït a 44 idiomes més, entre ells: afrikaans, albanès, amhàric, àrab, aragonès, alemany, búlgar, coreà, croata, danès, eslovac, eslovè, espanyol, finès, francès, gallec, georgià, grec, hebreu, hindi, holandès, hongarès, irlandès, islandès, italià, japonès, nepalès, noruec, persa, polonès, portuguès, portuguès de Brasil, romanès, rus, serbi, suec, tailandès, tàmil, txec, turc, ucraïnès, vietnamita i xinès tradicional i simplificat.
+és important que les persones d'arreu del món, parlin l'idioma que parlin, tinguin accés equitatiu a la tecnologia.
+A banda d'oferir-se en anglès, NVDA s'ha traduït a 47 idiomes més, entre ells: afrikaans, albanès, alemany, amhàric, àrab, aragonès, búlgar, català, coreà, croata, danès, eslovac, eslovè, espanyol, espanyol de Colòmbia,  farsi, finès, francès, gallec, georgià, grec, hebreu, hindi, holandès, hongarès, irlandès, islandès, italià, japonès, nepalès, noruec, persa, polonès, portuguès, portuguès de Brasil, punjabi, romanès, rus, serbi, suec, tailandès, tàmil, txec, turc, ucraïnès, vietnamita i xinès tradicional i simplificat.
 
 ++ Compatibilitat amb sintetitzadors de veu ++
 A banda de facilitar els missatges i la interfície en múltiples idiomes, NVDA permet que l'usuari llegeixi el contingut en qualsevol idioma, sempre i quan tingui un sintetitzador de veu en aquell idioma.
@@ -42,7 +43,7 @@ NVDA incorpora en_[eSpeak http://espeak.sourceforge.net/], un sintetitzador de v
 Pots trobar informació sobre altres sintetitzadors de veu compatibles amb NVDA a la secció [Sintetitzadors de veu compatibles #SupportedSpeechSynths].
 
 ++ Compatibilitat amb dispositius braille ++
-Per als usuaris que posseeixen una línia braille, NVDA pot mostrar la seva informació en braille. 
+Per als usuaris que posseeixen un terminal braille, NVDA pot mostrar la seva informació en braille. 
 Consulta la secció [Línies braille compatibles #SupportedBrailleDisplays] per obtenir informació sobre les línies braille compatibles.
 
 NVDA és compatible amb els codis braille de molts idiomes, tant amb les versions compactes com amb les versions no compactes dels codis.
@@ -56,7 +57,7 @@ Aquest permís afecta tant la còpia original d'aquest programari com les modifi
 Si en vols saber més, pots en_[veure la llicència completa. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Requisits de sistema +
-- Sistemes operatius: totes les versions de 32 bits i de 64 bits de Windows XP, Windows Vista, Windows 7 i Windows 8 (inclosos els sistemes operatius de servidor)
+- Sistemes operatius: totes les versions de 32 bits i de 64 bits de Windows XP, Windows Vista, Windows 7, Windows 8 i Windows 10 (inclosos els sistemes operatius de servidor)
  - Per a Windows XP de 32 bits, cal el Service Pack 2 o superior.
  - Per a Windows Server 2003, cal el Service Pack 1 o superior.
 - Memòria RAM: 256 MB o més
@@ -81,7 +82,7 @@ La versió portable permet fer una instal·lació completa posteriorment en qual
 Si el que vols és copiar NVDA en un suport d'emmagatzematge només de lectura, el més aconsellable és que copiïs el fitxer descarregat.
 Actualment NVDA no permet executar la versió portable des d'un suport només de lectura.
 
-Una altra opció és fer servir la versió temporal de NVDA (per ex. amb finalitats demostratives), però iniciar NVDA d'aquesta manera cada vegada pot suposar molt de temps.
+Una altra opció és fer servir la versió temporal de NVDA (per exemple amb finalitats demostratives), però iniciar NVDA d'aquesta manera cada vegada pot suposar molt de temps.
 
 ++ Restriccions en les versions portable i temporal ++
 A banda de no poder iniciar-se automàticament durant o després de l'inici de sessió, les versions portables i temporals de NVDA tenen es restriccions següents:
@@ -106,11 +107,11 @@ Aquesta opció et permet triar si vols que NVDA s'iniciï automàticament a l'in
 Això també inclou controls UAC i altres pantalles de seguretat.
 
 +++ Crear una drecera d'escriptori (Ctrl+Alt+n) +++
-Aquesta opció et permet triar si vols crear una drecera d'escriptori per iniciar NVDA.
-Si crees la drecera, tindrà associada la combinació de tecles Control+Alt+n que et permetrà iniciar NVDA en qualsevol moment quan premis aquestes tecles.
+Aquesta opció et permet triar si vols crear una drecera d'escriptori per iniciar NVDA. 
+Si crees la drecera, tindrà associada la combinació de tecles Ctrl+Alt+n que et permetrà iniciar NVDA en qualsevol moment quan premis aquestes tecles.
 
 +++ Copiar la configuració de la versió portable al compte d'usuari actual +++
-Aquesta opció et permet triar si NVDA ha de copiar la configuració de NVDA que s'està executant en aquell moment a la configuració de l'usuari actual, per la versió instal·lada de NVDA.
+Aquesta opció et permet triar si NVDA ha de copiar la configuració de NVDA que s'està executant en aquell moment a la configuració de l'usuari actual, per la versió instal·lada de NVDA. 
 Aquesta opció no copiarà la configuració a altres usuaris del sistema ni a la configuració de sistema per a l'inici de sessió de Windows ni per a altres pantalles de seguretat.
 Aquesta opció només apareix quan es fa la instal·lació a partir d'una versió portable, i no apareix quan es fa la instal·lació des del paquet d'instal·lació.
 
@@ -129,8 +130,9 @@ Si prems D'acord el diàleg desapareixerà.
 + Introducció a NVDA +
 
 ++ Iniciar NVDA ++
-Si has instal·lat NVDA amb l'instal·lador, iniciar NVDA és tan senzill com prémer Control+Alt+n, o seleccionar NVDA al menú NVDA a Programes del Menú Inici.
+Si has instal·lat NVDA amb l'instal·lador, iniciar NVDA és tan senzill com prémer Ctrl+Alt+n, o seleccionar NVDA al menú NVDA a Programes del Menú d'inici.
 També pots iniciar el programa si escrius NVDA al diàleg Executa de Windows i prems Retorn.
+També pots executar algunes [opcions de línia de comandes #CommandLineOptions] que et permeten reiniciar NVDA (-r), sortir (-q), desactivar extensions (--disable-addions), i altres.
 
 Per iniciar la versió portable, vés a la carpeta on has descomprimit NVDA, i prem Retorn o fes doble clic a nvda.exe.
 
@@ -139,7 +141,7 @@ Si el teu ordinador és molt lent, o executes NVDA des d'un llapis USB o des d'u
 Si requereix un temps més llarg, NVDA hauria de dir "NVDA s'està carregant. Un moment..."
 
 Si no sents res d'això, o si sents el so d'error de Windows, o un conjunt de tons descendents, significa que NVDA té un error, i caldria informar del problema als desenvolupadors.
-Revisa al web de NVDA com fer-ho.
+Mira com fer-ho al web de NVDA .
 
 Quan NVDA comença per primer cop, el programa et saluda amb un quadre de diàleg que dóna informació bàsica sobre la tecla modificadora de NVDA i el menú NVDA.
 (Consulta les seccions següents sobre aquests temes.)
@@ -152,17 +154,15 @@ La tercera casella permet controlar si aquest diàleg de benvinguda ha d'aparèi
 
 +++ Tecla modificadora de NVDA +++
 La majoria d'ordres de teclat específiques de NVDA es basen en prémer una tecla concreta anomenada tecla modificadora de NVDA i prémer alhora una o més tecles addicionals.
-Una excepció remarcable a aquest funcionament són les ordres de revisió de text en els teclats d'ordinadors de sobretaula que usen només el teclat numèric, però existeixen altres ordres que no fan ús de la tecla modificadora.
+Una excepció remarcable a aquest funcionament són les ordres de revisió de text en la disposició de teclat de sobretaula que usen només el teclat numèric, però existeixen altres ordres que no fan ús de la tecla modificadora.
 
 Es pot configurar NVDA per tal que la tecla modificadora de NVDA sigui la tecla d'inserció del teclat numèric, la tecla d'inserció del teclat estès, o la tecla Bloqueig de majúscules.
-
 De forma predeterminada, tant la tecla d'inserció del teclat numèric, com la tecla d'inserció del teclat estès, funcionen com a tecles modificadores de NVDA.
 
 Si vols que una de les tecles modificadores de NVDA realitzi la seva funció original (per exemple si vols activar el Bloqueig de majúscules mentre la tecla Bloqueig de majúscules funciona com a tecla modificadora de NVDA), pots prémer la tecla ràpidament dos cops.
 
 +++ Disposicions de teclat +++
-NVDA s'ofereix actualment amb dos conjunts d'ordres de teclat.
-Existeix una disposició de teclat per a ordinadors de sobretaula i una disposició de teclat per a ordinadors portàtils.
+NVDA s'ofereix actualment amb dos conjunts d'ordres de teclat (anomenats disposicions de teclat): una disposició de teclat per a ordinadors de sobretaula i una disposició de teclat per a ordinadors portàtils.
 De forma predeterminada, NVDA està configurat per usar el teclat d'ordinadors de sobretaula, però pots canviar al teclat per a ordinadors portàtils a la Configuració de teclat, que es troba a Preferències al menú NVDA.
 
 La disposició de teclat de sobretaula fa un ús extensiu del teclat numèric (amb el bloqueig del teclat numèric desactivat).
@@ -171,7 +171,7 @@ Si el teu portàtil no té aquesta funció, o no et permet desactivar el bloquei
 
 ++ Gestos tàctils de NVDA ++
 Si executes NVDA en un ordinador amb pantalla tàctil, a Windows 8 o una versió posterior, pots controlar NVDA directament des de la pantalla tàctil.
-Mentre s'executi NVDA, totes les entrades tàctils aniran directament a NVDA.
+Mentre s'executi NVDA, totes les entrades tàctils aniran directament a NVDA. 
 En conseqüència, les accions que normalment es poden fer sense NVDA no funcionaran.
 
 +++ Exploració de la pantalla +++
@@ -181,7 +181,7 @@ Pots mantenir el dit a la pantalla i moure'l amunt i avall per llegir altres con
 
 +++ Gestos tàctils +++
 Quan més endavant es descriguin les ordres de NVDA, sovint s'indicarà quin gest tàctil s'usa per activar aquella ordre amb la pantalla tàctil.
-A continuació trobaràs algunes instruccions sobre com fer els diferents gestos tàctils.
+A continuació pots trobar algunes instruccions sobre com fer els diferents gestos tàctils.
 
 ==== Tocs ====
 Toca la pantalla ràpidament amb un o més dits.
@@ -192,7 +192,7 @@ Tocar amb dos dits alhora és un toc de dos dits, i així successivament.
 Si el mateix toc es fa una o més vegades ràpidament, NVDA entendrà l'acció com un gest multitoc.
 Tocar dues vegades s'entendrà com un toc doble.
 Tocar tres vegades s'entendrà com un toc triple, i així successivament.
-Els gestos multitocs evidentment reconeixen quants dits s'han usat, per això és possible indicar gestos com toc triple amb dos dits, toc amb quatre dits, etc.
+Els gestos multitocs evidentment reconeixen quants dits s'han usat, per això és possible indicar gestos com toc triple amb dos dits, toc amb quatre dits, etc. 
 
 ==== Moviments ràpids ====
 Arrossega ràpidament el teu dit al llarg de la pantalla.
@@ -204,7 +204,7 @@ Per això, són possibles gestos com moviments ràpids amb dos dits, moviment r�
 
 +++ Modes tàctils +++
 Com que hi ha més ordres de NVDA que gestos tàctils disponibles, NVDA ofereix diferents modes tàctils, cadascun amb un subconjunt d'ordres, entre els quals pots alternar.
-Els dos modes tàctils són el mode textual i el mode objecte.
+Els dos modes tàctils són el mode textual i el mode objecte. 
 Algunes ordres de NVDA llistades en aquest document poden tenir un mode tàctil indicat entre parèntesi després del gest tàctil.
 Per exemple, moviment ràpid amunt (mode de text) significa que l'ordre s'executarà si fas el moviment ràpid cap amunt però només en el mode de text.
 Si l'ordre no indica cap mode tàctil, funcionarà en ambdós modes.
@@ -232,11 +232,11 @@ Quan aparegui el menú, pots usar les tecles de fletxa per navegar pel menú, i 
 ++ Ordres bàsiques NVDA ++
 %kc:beginInclude
 || Nom | Tecla en teclat de sobretaula | Tecla en teclat de portàtil | Gest | Descripció |
-| Parar veu | Ctrl | Ctrl | Toc amb dos dits | Para la veu instantàniament fins que es torna a moure el cursor o el ratolí |
+| Parar veu | Ctrl | Ctrl | Toc amb dos dits | Para la veu instantàniament |
 | Pausar veu | Maj | Maj | cap | Para la veu instantàniament. En prémer-la de nou tornarà a parlar a partir del punt on s'ha aturat (si el sintetitzador de veu usat és compatible amb la pausa de veu) |
-| Menú NVDA | NVDA+n | NVDA+n | Toc doble amb dos dits | Fa aparèixer el menú NVDA que et permet accedir a les preferències, eines i ajuda etc |
+| Menú NVDA | NVDA+n | NVDA+n | Toc doble amb dos dits | Fa aparèixer el menú NVDA que et permet accedir a les preferències, eines, ajuda etc |
 | Commutar Mode de so | NVDA+s | NVDA+s | cap | Canvia el mode de so entre parla, emissió de xiulets i desactivat |
-| Commutar Mode d'ajuda d'entrada | NVDA+1 | NVDA+1 | cap | En aquest mode prémer una tecla informarà sobre la tecla premuda i descriurà l'ordre de NVDA que té associada |
+| Commuta el mode d'ajuda d'entrada | NVDA+1 | NVDA+1 | cap | En aquest mode prémer una tecla informarà sobre la tecla premuda i descriurà l'ordre de NVDA que té associada |
 | Sortir de NVDA | NVDA+q | NVDA+q | cap | Tanca NVDA |
 | Enviar la següent tecla directament | NVDA+f2 | NVDA+f2 | Cap | Indica a NVDA que la següent tecla s'ha d'enviar directament a l'aplicació activa, fins i tot si aquesta tecla s'entendria normalment com a una ordre NVDA |
 | Activa i desactiva el mode de suspensió | NVDA+Maj+s | NVDA+Maj+z | cap | El mode de suspensió desactiva totes les ordres de NVDA i la sortida de veu i/o braille per a l'aplicació actual. Aquesta funció és útil a les aplicacions que ja disposen de veu pròpia o de funcions de lector de pantalla. Per desactivar el mode de veu premeu de nou l'ordre |
@@ -245,9 +245,9 @@ Quan aparegui el menú, pots usar les tecles de fletxa per navegar pel menú, i 
 ++ Informació del sistema ++
 %kc:beginInclude
 || Nom | tecla | Descripció |
-| Informar del dia i hora | NVDA+f12 | Prémer una vegada informa de l'hora, prémer dues vegades informa de la data |
+| Informa del dia i hora | NVDA+f12 | Prémer una vegada informa de l'hora, prémer dues vegades informa de la data |
 | Informar de l'estat de la bateria | NVDA+Maj+b | Informa de l'estat de la bateria, és a dir, si hi ha corrent elèctrica o el percentatge de càrrega actual |
-| Informar del text del porta-retalls | NVDA+c | Informa del text del porta-retalls si n'hi ha. |
+| Informa del text del porta-retalls | NVDA+c | Informa del text del porta-retalls si n'hi ha. |
 %kc:endInclude
 
 + Navegació amb NVDA +
@@ -270,7 +270,7 @@ Hi ha algunes ordres de teclat que són útils per moure's amb el focus de siste
 | Informa del focus actual | NVDA+Tab | NVDA+Tab | Anuncia l'objecte o control actual que rep el focus del sistema. Si prems dos cops lletreja el nom |
 | Informa del títol | NVDA+t | NVDA+t | Informa del títol de la finestra activa actual. Si prems dos cops l'ordre lletreja el títol. Si prems tres cops l'ordre copiarà el títol al porta-retalls |
 | Llegeix la finestra activa | NVDA+b | NVDA+b | Llegeix tots els controls de la finestra activa actualment (útil per a diàlegs) |
-| Informa de la barra d'estat | NVDA+FI | NVDA+Maj+FI | Informa de la barra d'estat si NVDA n'ha trobat una. També mou l'objecte de navegació a aquesta ubicació |
+| Informa de la barra d'estat | NVDA+FI | NVDA+Maj+FI | Informa de la barra d'estat si NVDA n'ha trobat una. També mou l'objecte de navegació a aquesta ubicació. Si prems dos cops lletreja el nom |
 %kc:endInclude
 
 ++ Navegació amb el cursor del sistema ++[SystemCaret]
@@ -286,6 +286,8 @@ NVDA ofereix les següents ordres de teclat relacionades amb el cursor del siste
 | Verbalitza-ho tot | NVDA+fletxa avall | NVDA+a | Comença a llegir des de la posició actual del cursor del sistema, i es mou a mesura que avança |
 | Llegeix la línia actual | NVDA+fletxa amunt | NVDA+l | Llegeix la línia en què es troba el cursor del sistema. Si prems dos cops lletreja la línia |
 | Llegeix la selecció de text actual | NVDA+Majúscules+fletxa amunt | NVDA+Maj+s | Llegeix qualsevol text seleccionat en aquell moment |
+| Frase següent | Alt+fletxa avall | Alt+fletxa avall | Mou el cursor del sistema a la frase següent i l'anuncia. (compatible només amb Microsoft Word i Outlook)
+| Frase anterior | Alt+fletxa amunt | Alt+fletxa amunt | Mou el cursor del sistema a la frase anterior i l'anuncia. (compatible només amb Microsoft Word i Outlook)
 
 
 Quan et trobes dins d'una taula, les següents ordres de teclat també estan disponibles:
@@ -441,10 +443,11 @@ Tot i que cal usar un ratolí físic o un ratolí tàctil per navegar amb el rat
 
 + Mode de navegació +
 NVDA navega pels documents complexos només de lectura, com ara pàgines web, amb el mode de navegació.
-Així es llegeixen els documents de Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader i Adobe Flash.
+Així es llegeixen els documents de Mozilla Firefox, Microsoft Internet Explorer, missatges HTML de Microsoft Outlook, Google Chrome, Adobe Reader i Adobe Flash.
+El mode de navegació, opcionalment, també està disponible per als documents Microsoft Word.
 
 En mode de navegació, el contingut del document s'ofereix en una representació plana que es pot navegar amb les tecles de cursor com si fos un document de text normal.
-Totes les ordres de teclat de NVDA del [cursor del sistema #SystemCaret] funcionaran en aquest mode; per ex. verbalitza-ho tot, informa del format, ordres de navegació per taules, etc.
+Totes les ordres de teclat de NVDA del [cursor del sistema #SystemCaret] funcionaran en aquest mode; per exemple verbalitza-ho tot, informa del format, ordres de navegació per taules, etc.
 Mentre et vas movent, NVDA informa del text i també si aquest és un enllaç, un encapçalament, etc.
 
 Algunes vegades, en aquests documents, et caldrà interaccionar directament amb controls.
@@ -460,7 +463,7 @@ A més, pots forçar el mode de focus manualment, que romandrà actiu fins que d
 || Nom | Tecla | Descripció |
 | Canvia de modes entre navegació i focus | NVDA+Barra espaiadora | Canvia entre el mode de focus i el mode de navegació |
 | Surt del mode de focus | Tecla d'escapada | Retorna al mode de navegació si el mode de focus s'ha activat automàticament |
-| Actualitza el document en navegació | NVDA+f5 | Recarrega el contingut del document actual (útil si sembla que falti part del contingut del document) |
+| Actualitza el document en navegació | NVDA+f5 | Recarrega el contingut del document actual (útil si sembla que falti part del contingut del document. No disponible a Microsoft Word i a Outlook.) |
 | Busca | NVDA+Ctrl+f | Obre un diàleg en el qual pots escriure un text per buscar-lo al document |
 | Busca següent | NVDA+f3 | Troba l'ocurrència següent en el document del text que has buscat prèviament |
 | Busca anterior | NVDA+Maj+f3 | Troba l'anterior ocurrència en el document del text que has buscat prèviament |
@@ -470,6 +473,7 @@ A més, pots forçar el mode de focus manualment, que romandrà actiu fins que d
 
 ++ Navegació amb una sola lletra ++
 Quan et trobes en mode de navegació, per facilitar una navegació més ràpida, NVDA ofereix algunes tecles d'una sola lletra per saltar a certs camps del document.
+Cal tenir en compte que no totes aquestes ordres actúen en tots els tipus de documents.
 
 %kc:beginInclude
 Les següents tecles, per sí soles, salten a l'element posterior disponible, i si hi afegeixes la tecla de Majúscules, salten a l'element anterior:
@@ -493,22 +497,30 @@ Les següents tecles, per sí soles, salten a l'element posterior disponible, i 
 - g: gràfic
 - d: marca estructural
 - o: objecte incrustat
-- 1 to 6: encapçalaments de nivells 1 a 6 respectivament
+- 1 to 6: encapçalaments de nivells 1 a 6 respectivament.
+ -a: nota (comentari, revisió de l'editor, etc.)
 -
 Per moure's a l'inici o al final dels elements contenidors com les llistes o taules:
 || Nom | Tecla | Descripció |
 | Mou al principi del contenidor | Majúscules+coma | Mou al principi del contenidor (llista, taula, etc.) on està posicionat el cursor del sistema |
 | Mou més enllà del final del contenidor | coma | Mou més enllà del final del contenidor (llista, taula, etc.) on està posicionat el cursor del sistema |
+
+%kc:endInclude 
+Algunes aplicacions web com Gmail, Twitter i Facebook usen lletres com a dreceres de teclat. 
+Si vols usar-les mentre fas servir les tecles de cursor en el mode de navegació, pots deshabilitar temporalment les tecles de navegació per lletra de NVDA. 
+%kc:beginInclude 
+Per activar i desactivar la navegació per lletra en el document actual, prem NVDA+Maj+espai. 
 %kc:endInclude
 
 ++ Llista d'elements ++
-La llista d'elements dóna accés a la llista d'enllaços, la llista d'encapçalaments o la llista de marques estructurals existents en el document.
+La llista d'elements dóna accés a la llista d'enllaços, la llista d'encapçalaments o la llista de marques estructurals existents en el document. 
+Per exemple, en els navegadors web, la llista d'enllaços poden ser enllaços, encapçalaments o regions.
 Els botons d’opció et permeten canviar entre aquests tres tipus d’informació.
-Al diàleg també hi ha un camp d'edició que et permet filtrar la llista per ajudar-te a buscar dins la pàgina un element en particular.
+Al diàleg també hi ha un camp editable que et permet filtrar la llista per ajudar-te a buscar dins la pàgina un element en particular.
 Un cop has triat un element, pots usar els botons del diàleg per moure't o activar l'element triat.
 %kc:beginInclude
 || Nom | Tecla | Descripció |
-| Llista d'elements en mode de navegació | NVDA+f7 | Mostra la llista d'elements que conté els enllaços, encapçalaments o marques estructurals del document actual |
+| Llista d'elements en mode de navegació | NVDA+f7 | Mostra els diferents tipus d'elements existents en el document actual |
 %kc:endInclude
 
 ++ Objectes incrustats ++
@@ -520,7 +532,43 @@ NVDA disposa d'una ordre de teclat per tornar a la pàgina original, que conté 
 %kc:beginInclude
 || Nom | Tecla | Descripció |
 | Mou al document contenidor en mode de navegació | NVDA+Ctrl+Barra espaiadora | Desplaça el focus fora de l'objecte incrustat actual i el mou al document que el conté |
-%kc:endInclude
+%kc:endInclude 
+
++ Lectura de contingut matemàtic +
+Amb MathPlayer 4 de Design Science, NVDA pot llegir i navegar de forma interactiva el contingut matemàtic compatible.
+Això requereix que MathPlayer 4 estigui instal.lat a l'ordinador.
+MathPlayer es pot descarregar gratuïtament de: http://www.dessci.com/en/products/mathplayer/
+
+NVDA és compatible amb els següents tipus de contingut matemàtic:
+- MathML a Mozilla Firefox i a Microsoft Internet Explorer.
+- Design Science MathType a Microsoft Word i PowerPoint. 
+- MathML a Adobe reader. Has de tenir en compte que això no és un estàndar oficial encara, i actualment no hi ha cap programari disponible públicament que pugui produir aquest contingut.
+- 
+
+Mentre llegeix un document, NVDA verbalitzarà qualsevol contingut matemàtic compatible allà on aquest aparegui. 
+Si uses un terminal braille, el contingut també es mostrarà a la línia braille.
+
+++ Navegació interactiva ++
+Si treballes principalment amb veu, en molts casos, segurament voldràs examinar l'expressió matemàtica en segments més petits, en comptes de sentir-la tota de cop.
+
+Si estàs en el mode de navegació, pots fer-ho movent el cursor sobre el contingut matemàtic i prement Retorn.
+
+Si no estàs en el mode de navegació:
++ mou el cursor de revisió al contingut matemàtic.
+Per defecte, el cursor de revisió segueix el cursor de sistema, per tant pots usar el cursor de sistema per moure't al contingut desitjat.
++ Llavors, activa la següent comanda: 
++
+
+%kc:beginInclude
+|| Nom | Tecla | Descripció | 
+| Interactúa amb contingut matemàtic | NVDA+Alt+m | Inicia la interacció amb el contingut matemàtic. |
+%kc:endInclude 
+
+En aquest punt, pots usar les comandes de MathPlayer, com les tecles de fletxa, per explorar l'expressió.
+Per exemple, pots moure't al llarg de l'expressió amb les tecles de fletxa esquerra i dreta i ampliar una porció de l'expressió, com una fracció, amb la fletxa avall.
+Mira la documentació de MathPlayer per a més informació. 
+
+Quan vulguis tornar al document, simplement prem la tecla Escapada.
 
 + ordres de NVDA específiques d'aplicacions +
 NVDA disposa d'algunes ordres pròpies addicionals per a algunes aplicacions, per facilitar algunes tasques o per donar accés a funcionalitats que altrament no serien accessibles als usuaris de lectors de pantalla.
@@ -528,29 +576,30 @@ NVDA disposa d'algunes ordres pròpies addicionals per a algunes aplicacions, pe
 ++ Microsoft Word ++
 %kc:beginInclude
 || Nom | Tecla | Descripció |
-| Informa del comentari actual | NVDA+Alt+c | Informa del text del comentari que es troba a la posició del cursor del sistema | 
-| Estableix com a encapçalament de columna | NVDA+Maj+c | Si prems aquestes tecles un cop, li estàs indicant a NVDA que aquesta és la primera cel·la d’encapçalament de la fila que conté encapçalaments de columna, i així ho hauria d'anunciar automàticament quan et mous per les columnes sota aquesta fila. Si prems dos cops, deixa de ser l’encapçalament | 
-| Estableix com a encapçalament de fila | NVDA+Maj+r | Si prems aquestes tecles un cop, li estàs indicant a NVDA que aquesta és la primera cel·la d’encapçalament de la columna que conté encapçalaments de fila, i així ho hauria d'anunciar automàticament quan et mous per les files sota aquesta columna. Si prems dos cops, deixa de ser l’encapçalament | 
+| Informa del comentari actual | NVDA+Alt+c | Informa del text del comentari que es troba a la posició del cursor del sistema. | 
+| Estableix com a encapçalament de columna | NVDA+Maj+c | Si prems aquestes tecles un cop, li estàs indicant a NVDA que aquesta és la primera cel·la d’encapçalament de la fila que conté encapçalaments de columna, i així ho hauria d'anunciar automàticament quan et mous entre les columnes sota aquesta fila. Si prems dos cops, deixa de ser l’encapçalament. | 
+| Estableix com a encapçalament de fila | NVDA+Maj+r | Si prems aquestes tecles un cop, li estàs indicant a NVDA que aquesta és la primera cel·la d’encapçalament de la columna que conté encapçalaments de fila, i així ho hauria d'anunciar automàticament quan et mous entre les files sota aquesta columna. Si prems dos cops, deixa de ser l’encapçalament. | 
 %kc:endInclude
 
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Nom | Tecla | Descripció |
-| Estableix com a encapçalament de columna | NVDA+Maj+c | Si prems aquestes tecles un cop, li estàs indicant a NVDA que aquesta és la primera cel·la d’encapçalament de la fila que conté encapçalaments de columna, i així ho hauria d'anunciar automàticament quan et mous entre les columnes sota aquesta fila. Si prems dos cops, deixa de ser l’encapçalament | 
-| Estableix com a encapçalament de fila | NVDA+Maj+r | Si prems aquestes tecles un cop, li estàs indicant a NVDA que aquesta és la primera cel·la d’encapçalament de la columna que conté encapçalaments de fila, i així ho hauria d'anunciar automàticament quan et mous entre les files sota aquesta columna. Si prems dos cops, deixa de ser l’encapçalament | 
+| Estableix com a encapçalament de columna | NVDA+Maj+c | Si prems aquestes tecles un cop, li estàs indicant a NVDA que aquesta és la primera cel·la d’encapçalament de la fila que conté encapçalaments de columna, i així ho hauria d'anunciar automàticament quan et mous entre les columnes sota aquesta fila. Si prems dos cops, deixa de ser l’encapçalament. | 
+| Estableix com a encapçalament de fila | NVDA+Maj+r | Si prems aquestes tecles un cop, li estàs indicant a NVDA que aquesta és la primera cel·la d’encapçalament de la columna que conté encapçalaments de fila, i així ho hauria d'anunciar automàticament quan et mous entre les files sota aquesta columna. Si prems dos cops, deixa de ser l’encapçalament. | 
 | Informa del comentari actual | NVDA+Alt+c | Informa del text del comentari de la cel·la actual, si és que n'hi ha. | 
+|Diàleg de llista d'elements | NVDA+f7| Obre el Diàleg de llista d'elements i mostra gràfics, cel·les amb comentaris o cel·les amb fòrmules. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
 || Nom | Tecla | Descripció |
-| Notes de l'orador/Presentació | Ctrl+Maj+s | En mode presentació de diapositives, aquesta ordre saltarà entre les notes de l'orador d'una diapositiva i el contingut de la diapositiva. Això afecta només a allò que llegeix NVDA, no al que es mostra en pantalla | 
+| Notes de l'orador/Presentació | Ctrl+Maj+s | En mode presentació de diapositives, aquesta ordre saltarà entre les notes de l'orador d'una diapositiva i el contingut de la diapositiva. Això afecta només a allò que llegeix NVDA, no al que es mostra en pantalla. | 
 %kc:endInclude
 
 ++ foobar2000 ++
 %kc:beginInclude
 || Nom | Tecla | Descripció |
-| Informa del temps restant | Ctrl+Maj+r | Informa del temps restant de la pista que està sonant actualment, si és que n'hi ha |
+| Informa del temps restant | Ctrl+Maj+r | Informa del temps restant de la pista que està sonant actualment, si és que n'hi ha. |
 %kc:endInclude
 
 Atenció: La drecera de teclat per informar del temps restant només funciona per a la cadena de format estàndard a la línia d'estat de foobar's.
@@ -558,14 +607,21 @@ Atenció: La drecera de teclat per informar del temps restant només funciona pe
 ++ Miranda IM ++
 %kc:beginInclude
 || Nom | Tecla | Descripció |
-| Informa del missatge recent | NVDA+Ctrl+1-4 | Informa d'un dels missatges recents, segons el número premut; per ex. NVDA+Ctrl+2 llegeix el segon missatge més recent |
+| Informa del missatge recent | NVDA+Ctrl+1-4 | Informa d'un dels missatges recents, segons el número premut; per exemple NVDA+control+2 llegeix el segon missatge més recent. |
 %kc:endInclude
 
 ++ Poedit ++
 %kc:beginInclude
 || Nom | Tecla | Descripció |
-| Informa de la finestra de comentaris | Ctrl+Maj+c | Informa dels comentaris existents a la finestra de comentaris |
-| Informa de notes per als traductors | Ctrl+Maj+a | Informa de totes les notes per als traductors |
+| Informa de la finestra de comentaris | Ctrl+Maj+c | Informa dels comentaris existents a la finestra de comentaris. |
+| Informa de notes per als traductors | Ctrl+Maj+a | Informa de totes les notes per als traductors. |
+%kc:endInclude
+
+++ Skype ++
+%kc:beginInclude
+Mentre converses:
+|| Nom | Tecla | Descripció |
+| Revisa el missatge | NVDA+control+1-0 | Mou el cursor de revisió a un missatge recent i n'informa, segons el número indicat; per exemple NVDA+control+2 llegeix el segon missatge més recent. |
 %kc:endInclude
 
 + Configuració de NVDA +
@@ -575,7 +631,10 @@ Atenció: La drecera de teclat per informar del temps restant només funciona pe
 La majoria d'opcions de NVDA es poden canviar des dels quadres de diàleg que es troben al submenú Preferències del menú NVDA.
 A tots els quadres de diàleg de configuració de NVDA, prem el botó D'acord per acceptar els canvis que hagis fet.
 Per cancel·lar els canvis, prem el botó Cancel·la o la tecla d'escapada.
-Algunes configuracions també es poden canviar amb tecles de drecera, les més rellevants es llisten a continuació.
+Algunes configuracions també es poden canviar amb tecles de drecera, les més rellevants es llisten a continuació. 
+
+Tingues en compte que per defecte, no tots els diàlegs de preferències poden ser accedits amb gestos d'entrada (comandes de teclat, gestos de toc, etc.).
+Si vols accedir a diàlegs que encara no tenen dreceres de teclat, usa el [Diàleg de gestos d'entrada #InputGestures] per assignar-los gestos personalitzats.
 
 +++ Configuració general (NVDA+Ctrl+g) +++
 El quadre de diàleg de configuració general es troba al menú de Preferències.
@@ -593,9 +652,10 @@ Prem D'acord, i NVDA es reiniciarà.
 ==== Desa la configuració en sortir ====
 Aquesta opció és una casella de selecció, que quan està activada, indica a NVDA que ha de desar automàticament la configuració en sortir de NVDA.
 
-==== Avisa abans de sortir de NVDA ====
-Aquesta opció és una casella de selecció que et permet triar si vols que aparegui un diàleg cada cop que surtis de NVDA que et preguntarà si realment vols sortir.
-Si l'opció està activada quan provis de sortir de NVDA t'apareixerà un diàleg en què se'l preguntarà si realment vols sortir.
+==== Mostra les opcions de sortida quan surts de NVDA ====
+Aquesta opció és una casella de selecció que et permet triar si vols que aparegui un diàleg cada cop que surtis de NVDA que et preguntarà quina acció vols fer.
+Si l'opció està activada quan provis de sortir de NVDA t'apareixerà un diàleg en què se'l preguntarà si vols sortir, reiniciar o reiniciar sense extensions.
+Si l'opció està desactivada, NVDA sortirà immediatament.
 
 ==== Emet un so en entrar o sortir de NVDA ====
 Aquesta opció és una casella de selecció, que quan està activada, indica a NVDA que emeti un so en començar o en sortir.
@@ -613,7 +673,7 @@ Aquesta opció només està disponible a la versió instal·lada de NVDA.
 Si entres a Windows amb usuari i contrasenya, en activar aquesta opció NVDA s'iniciarà automàticament a l'inici de sessió de Windows.
 Aquesta opció només està disponible a la versió instal·lada de NVDA.
 
-==== Utilitza els paràmetres desats a la pantalla d'inici de sessió i a altres pantalles de seguretat ====
+==== Utilitza la configuració desada a la pantalla d'inici de sessió i a altres pantalles de seguretat ====
 Prement aquest botó es copia la configuració d'usuari desada al directori de configuració de sistema de NVDA, per tal que NVDA la faci servir en executar-se a l'inici de sessió de Windows, Control de comptes d'usuari (UAC) i altres pantalles de seguretat de Windows.
 Per assegurar que tota la configuració es transfereix, assegura't primer de desar la teva configuració amb Ctrl+NVDA+c o desa la configuració des del menú NVDA.
 Aquesta opció només està disponible a la versió instal·lada de NVDA.
@@ -669,12 +729,13 @@ Aquesta opció és un control lliscant que va de 0 a 100, essent 0 el volum més
 Aquesta opció és un control lliscant que et permet triar amb quanta inflexió (pujades i baixades de to) parlarà el sintetitzador. (L'únic sintetitzador que ofereix aquesta opció actualment és eSpeak.)
 
 ==== Canvi d'idioma automàtic ====
-Aquesta casella de selecció et permet triar si vols que NVDA canviï o no l'idioma de síntesi de veu automàticament, quan el text llegit tingui indicació d'idioma.
+Aquesta casella de selecció et permet triar si vols que NVDA canviï  l'idioma de síntesi de veu automàticament, quan el text llegit tingui indicació d'idioma.
 Per defecte aquesta opció està activada.
 Actualment, eSpeak és l'únic sintetitzador que ofereix el canvi automàtic d'idioma.
 
 ==== Canvi de dialecte automàtic ====
-Si el canvi automàtic d'idioma està activat, aquesta casella de selecció et permet triar si vols que NVDA canviï no només d'idioma sinó també de dialecte. Per exemple, si estàs llegint amb una veu d'anglès d'Estats Units, el document indica que un text està escrit en anglès britànic i aquesta opció està activada, el sintetitzador canviarà l'accent.
+Aquesta casella de selecció et permet triar si vols que NVDA faci canvis de dialecte, en comptes de canvis d'idioma.
+Per exemple, si estàs llegint amb una veu d'anglès d'Estats Units però el document indica que un text està escrit en anglès britànic, el sintetitzador canviarà l'accent si aquesta opció està activada.
 Per defecte aquesta opció està desactivada.
 
 %kc:setting
@@ -684,6 +745,10 @@ Tecla: NVDA+p
 Aquesta opció et permet escollir quanta puntuació i quants símbols es verbalitzaran com a paraules.
 Per exemple, si està configurat com a tots, tots els símbols es verbalitzaran com a paraules.
 Aquesta opció afectarà a tots els sintetitzadors, no només al sintetitzador actiu actualment.
+
+==== Confia en l'idioma de la veu per processar símbols i caràcters ====
+Aquesta opció, activada per defecte, indica a NVDA si l'idioma de la veu és fiable quan es processen símbols i caràcters.
+Si trobes que NVDA llegeix la puntuació en l'idioma incorrecte en un sintetitzador o veu en particular, potser desitges desactivar aquesta opció i, per contra, forçar NVDA a usar la seva configuració general d'idioma. 
 
 ==== Percentatge de canvi de to a les majúscules ====
 Aquest camp d'edició et permet indicar quant vols que canviï el to de la veu quan pronunciï una majúscula.
@@ -700,7 +765,7 @@ Aquesta opció, com l'opció "Digues Maj abans de les majúscules", és útil pe
 
 ==== Utilitza la funcionalitat de lletrejar si s'admet l'opció ====[VoiceSpellingFunctionality]
 Algunes paraules estan formades per un únic caràcter, però sonen diferent si el caràcter es pronuncia com a caràcter individual (lletrejant) o com a paraula.
-Per exemple, en anglès, "a" és alhora una lletra i una paraula.
+Per exemple, en anglès, "a" és alhora una lletra i una paraula, i es pronuncia diferent en cada cas.
 Aquesta opció permet que el sintetitzador diferenciï aquests casos, sempre i quan el sintetitzador ho permeti.
 La majoria de sintetitzadors ho permeten.
 
@@ -726,7 +791,7 @@ La primera opció que et trobaràs al diàleg Configuració de braille és un qu
 Segons els controladors de línies braille disponibles en el teu sistema, se t'oferiran diverses opcions.
 Mou-te per les opcions amb les tecles de fletxa.
 
-L'opció "Sense Braille" significa que no usaràs braille.
+L'opció "Sense braille" significa que no usaràs braille.
 
 Per obtenir més informació sobre les línies braille compatibles, consulta la secció [Línies braille compatibles #SupportedBrailleDisplays].
 
@@ -750,7 +815,7 @@ Pots moure't entre els diferents conjunts de codis braille de la llista amb les 
 
 ==== Taula d'entrada ====
 Complementària a l'opció prèvia, la següent opció que trobaràs és el quadre combinat de codis braille d'entrada.
-El codi triat s'usarà per traduir a text el braille introduït al teclat Perkins de la línia braille.
+El codi triat s'usarà per traduir a text el braille introduït al teclat Perkins del terminal braille.
 Actualment NVDA només és compatible amb l'entrada de braille d'ordinador, i per tant només es mostraran conjunts de codis braille de 8 punts.
 Pots moure't entre els diferents conjunts de codis braille de la llista amb les tecles de fletxa.
 
@@ -776,9 +841,21 @@ Aquesta opció et permet escollir si la línia braille seguirà el focus de sist
 ==== Llegeix per paràgrafs ====
 Si aquesta opció està activada, el codi braille es mostrarà per paràgrafs en comptes de per línies.
 Les ordres de línia anterior i posterior, es mouran també per paràgrafs.
-Això significa que no caldrà desplaçar la pantalla braille al final de cada línia fins i tot si a la línia braille hi cap més text.
+Això significa que no caldrà desplaçar el terminal braille al final de cada línia fins i tot si al terminal braille hi cap més text.
 Això permet una lectura més fluida de textos llargs.
-Aquesta opció, per defecte, està desactivada.
+Aquesta opció, per defecte, està desactivada. 
+
+==== Evita tallar paraules quan sigui possible ====
+Si aquesta opció està activada, una paraula que és massa llarga per caber al final de la línia braille no es tallarà.
+Sinó que, hi haurà alguns espais blancs al final de la línia.
+Quan desplacis la línia, podràs llegir la paraula sencera.
+Això s'anomena a vegades "ajust de línia"
+Tingues en compte que si la paraula és massa llarga per caber a la línia ella sola, la paraula s'haurà de tallar.
+
+Si aquesta opció està desactivada, es mostrarà tantes lletres de la paraula com sigui possible, però la resta es tallarà.
+Quan desplacis la línia, podràs llegir la resta de la paraula.
+
+Activar aquesta funció permet una lectura més fluïda, però segurament també et requerirà que desplacis la línia més sovint.
 
 +++ Configuració de teclat (NVDA+Ctrl+k) +++
 Aquest quadre de diàleg es troba al menú Preferències, a l'opció "Configuració de teclat...".
@@ -833,7 +910,7 @@ Tecla: NVDA+4
 Quan aquesta opció està activada, NVDA anunciarà totes les tecles escrites en el teclat que no corresponguin a lletres. Això inclou combinacions de tecles com Ctrl i una altra lletra.
 
 ==== Gestiona les tecles d'altres aplicacions ====
-Aquesta opció permet a l'usuari controlar si NVDA ha de processar les tecles escrites per altres aplicacions com ara teclats de pantalla o programari de reconeixement de parla.
+Aquesta opció permet a l'usuari controlar si NVDA ha de processar les tecles escrites per altres aplicacions com ara teclats de pantalla o programari de reconeixement de parla. 
 Aquesta opció per defecte està activada, però alguns usuaris potser la voldran desactivar, per exemple els usuaris que escriuen vietnamita amb el programari d'escriptura Unikey, ja que provocaria una entrada incorrecta de caràcters.
 
 +++ Configuració del ratolí (NVDA+Ctrl+m) +++[MouseSettings]
@@ -851,7 +928,7 @@ Tecla: NVDA+m
 Quan està activat, NVDA anunciarà el text que es troba sota el punter del ratolí mentre el desplaces amunt i avall de la pantalla. Això et permet trobar coses a la pantalla amb el moviment del ratolí, en comptes de trobar-les a través de la navegació d'objectes.
 
 ==== Unitat de resolució de text ====
-Si s'ha configurat NVDA perquè anunciï el text sota el ratolí mentre el mous, aquesta opció et permet escollir quant de text es verbalitza cada cop.
+Si s'ha configurat NVDA perquè anunciï el text sota el ratolí mentre el mous, aquesta opció et permet escollir quant text es verbalitza cada cop.
 Les opcions són una lletra, una paraula, una línia o un paràgraf.
 
 ==== Anuncia el rol quan el ratolí entri dins l'objecte ====
@@ -859,6 +936,8 @@ Si aquesta casella de selecció està activada, NVDA anunciarà el rol (tipus) d
 
 ==== Emet les coordenades per àudio quan el ratolí es mou ====
 Activar aquesta casella de selecció fa que NVDA emeti un xiulet quan el ratolí es mou, de tal manera que l'usuari pot deduir on es troba el ratolí respecte a les dimensions de la pantalla.
+Com més amunt de la pantalla es trobi el ratolí, més agut sonarà el xiulet.
+Com més a l'esquerra o a la dreta de la pantalla es trobi el ratolí, més allunyat a l'esquerra o a la dreta sonarà el so (sempre i quan l'usuari tingui altaveus estèreo o auriculars).
 
 ==== La brillantor controla el volum de l'àudio ====
 Si la casella "Emet les coordenades per àudio quan el ratolí es mou" està activada, activar la casella de brillantor significa que el grau de brillantor de la pantalla sota el ratolí marcarà el volum de les coordenades per so.
@@ -884,14 +963,15 @@ Quan aquesta opció està activada, cada cop que el cursor de sistema es mou, es
 Quan aquesta opció està activada, el cursor de revisió seguirà els moviments del ratolí.
 
 ==== Mode de revisió simple ====
-Quan aquesta opció està activada, NVDA filtrarà la jerarquia dels objectes que es poden navegar per excloure aquells objectes que no són d'interès per a l'usuari, per exemple, filtrarà els objectes invisibles o els objectes que tenen una funció exclusivament de disposició.
+
+Quan aquesta opció està activada, NVDA filtrarà la jerarquia dels objectes que es poden navegar per excloure aquells objectes que no són d'interès per a l'usuari,  per exemple, filtrarà els objectes invisibles o els objectes que tenen una funció exclusivament de disposició.
 
 +++ Configuració de la presentació d'objectes (NVDA+Ctrl+o) +++
-Es troba al menú Preferències a l'opció "Presentació d'objectes...".
+Es troba al menú Preferències de NVDA a l'opció "Presentació d'objectes...".
 Aquest quadre de diàleg conté les opcions següents:
 
 ==== Informa dels indicadors de funció ====
-Casella de selecció que quan està activada indica a NVDA que ha d'informar dels indicadors de funció que vagin apareixent.
+Si aquesta casella de selecció està activada, NVDA anuncia els indicadors de funció que vagin apareixent.
 Moltes finestres i controls mostren un breu missatge (o indicador de funció) quan hi passes per sobre amb el punter de ratolí, o a vegades quan hi mous el focus.
 
 ==== Informa dels indicadors de funció d'ajuda ====
@@ -903,7 +983,7 @@ Quan aquesta casella de selecció està activada, NVDA en informar de l'objecte 
 Per exemple el menú de fitxers en una barra de menús pot tenir associada la tecla de drecera Alt+f.
 
 ==== Informa de la posició de l'objecte ====
-Aquesta opció et permet escollir si vols conèixer la posició d'un objecte (per ex. 1 de 4) quan t'hi desplaces amb el focus o amb la navegació d'objectes.
+Aquesta opció et permet escollir si vols conèixer la posició d'un objecte (per exemple 1 de 4) quan t'hi desplaces amb el focus o amb la navegació d'objectes.
 
 ==== Endevina la informació de posició de l'objecte quan no estigui disponible ====
 Si Informa de la posició de l'objecte està activada, aquesta altra opció permet que NVDA endevini la posició d'un objecte o control en particular quan la seva ubicació no està disponible per cap altra via.
@@ -937,7 +1017,7 @@ Tecla: NVDA+5
 Commuta l'anunci de nou contingut en alguns objectes concrets com ara terminals o el control d'història en els programes de xat.
 
 +++ Configuració de la composició d'entrada +++
-El diàleg Configuració de la composició d'entrada es troba al menú Preferències.
+El diàleg Configuració de la composició d'entrada es troba al menú Preferències de NVDA.
 Aquest diàleg et permet controlar com NVDA notifica l'entrada de caràcters asiàtics, amb mètodes d'entrada com per exemple IME o Text Service.
 Tingues en compte que com que els mètodes d'entrada poden variar substancialment segons les funcions disponibles i segons com ofereixen la informació, segurament caldrà configurar aquestes opcions de forma diferent per a cada mètode d'entrada per gaudir d'una experiència d'escriptura eficient.
 
@@ -968,9 +1048,9 @@ Aquesta opció et permet escollir si NVDA ha d'informar de nous símbols a mesur
 Aquesta opció està activada per defecte.
 
 +++ Configuració del mode de navegació (NVDA+Ctrl+b) +++
-El diàleg Configuració del mode de navegació es pot trobar al menú Preferències, a l'opció "Mode de navegació...".
+El diàleg Configuració del mode de navegació es pot trobar al menú Preferències de NVDA, a l'opció "Mode de navegació...".
 
-El diàleg conté les següents opcions:
+El diàleg inclou les següents opcions:
 
 ==== Nombre màxim de caràcters en una línia ====
 Aquest camp estableix la llargada màxima de la línia en mode de navegació (en caràcters).
@@ -1009,8 +1089,12 @@ Per exemple, si et desplaces amb la fletxa avall en una pàgina web i vas a para
 ==== Indicació audible del mode de focus i de navegació ====
 Si aquesta opció està activada, NVDA emetrà sons especials quan canviï entre el mode de navegació i el mode de focus, en comptes de verbalitzar el canvi.
 
+=== Impedeix que els gestos que no són instruccions arribin al document ===
+Aquesta opció està activada per defecte i et permet triar si els gestos (com premer les tecles) que no estiguin associats a una ordre NVDA i que no es consideren ordres de teclat en general, no arribin al document on actualment tens el focus. 
+Com a exemple, si aquesta opció està activada i prems la lletra j, s'impedirà que arribi al document ja que no és una ordre de navegació ràpida ni, segurament, és una ordre de l'aplicació.
+
 +++ Configuració del format del document (NVDA+Ctrl+d) +++[DocumentFormattingSettings]
-Aquest quadre de diàleg es troba al menú Preferències, a l'opció "Formatació de documents"
+Aquest quadre de diàleg es troba al menú Preferències de NVDA, a l'opció "Formatació de documents"
 
 La majoria de caselles de selecció en aquest diàleg serveixen per configurar el tipus de format sobre el qual vols rebre informació a mesura que mous el cursor amunt i avall dels documents.
 Per exemple, si selecciones la casella de selecció del nom del tipus de lletra, cada cop que et desplacis a un text amb un tipus de lletra diferent, NVDA anunciarà el nom del tipus de lletra.
@@ -1023,23 +1107,26 @@ Pots configurar si vols que s'informi de:
 - Colors
 - Revisions de l'editor
 - Estil
-- Errors d'ortogràfics
+- Errors ortogràfics
 - Números de pàgina
 - Número de la línia
 - Sagnat de la línia
-- Sagnat del paràgraf (per ex. sagnat francès, sagnat de la primera línia)
+- Sagnat del paràgraf (per exemple sagnat francès, sagnat de la primera línia)
 - Taules
-- Capçaleres de fila/columna
+- Capçaleres de fila/columna en una taula
 - Coordenades de la cel·la de taula
 - Enllaços
 - Encapçalaments
 - Llistes
 - Blocs de cites
 - Regions
-- Marcs
--
+- Marcs 
+- Quan algun objecte és clicable
+- 
 
-==== Anuncia canvis de format després del cursor ====
+Per activar aquestes configuracions des de qualsevol punt, si-et-plau assigna'ls gestos amb el [Diàleg de gestos d'entrada #InputGestures].
+
+==== Anuncia els canvis de format després del cursor ====
 Si està activada, aquesta configuració indica a NVDA que ha de detectar tots els canvis de format en una línia a mesura que la verbalitza, encara que en fer-ho baixi el rendiment de NVDA.
 
 De forma predeterminada, NVDA detectarà el format a la posició del cursor del sistema/cursor de revisió, i en alguns casos pot detectar el format de la resta de la línia, sempre i quan això no baixi el seu rendiment.
@@ -1047,13 +1134,15 @@ De forma predeterminada, NVDA detectarà el format a la posició del cursor del 
 Activa aquesta opció si estàs corregint documents en aplicacions com Microsoft Word, en què el format és important.
 
 +++ Diccionaris de veu +++
-El menú de diccionaris de veu (que es troba al menú Preferències) conté diàlegs que et permeten gestionar com pronunciarà NVDA algunes paraules o frases concretes.
+El menú de diccionaris de veu (que es troba al menú Preferències de NVDA) conté diàlegs que et permeten gestionar com pronunciarà NVDA algunes paraules o frases concretes.
 Actualment, existeixen tres tipus de diccionaris de veu.
 Són:
 - Diccionari per defecte: les regles d'aquest diccionari afecten tota la pronúncia de NVDA
 - Diccionari de veus: les regles d'aquest diccionari afecten la pronúncia de la veu del sintetitzador en ús.
 - Diccionari temporal: les regles d'aquest diccionari afecten tota la pronúncia de NVDA, però només durant la sessió actual. Aquestes regles són temporals i es perdran si es reinicia NVDA.
--
+- 
+
+Cal que assignis gestos personalitzats amb el [Diàleg de gestos d'entrada #Inputgestures] si vols obrir aquests diàlegs de diccionaris des de qualsevol punt.
 
 Tots els diàlegs de diccionari contenen una llista de regles que s'usaran per processar la veu.
 Aquest diàleg, a més, conté els botons Afegeix, Edita o Elimina.
@@ -1070,16 +1159,29 @@ Potser també vols escriure una descripció de la regla en el camp Comentari (al
 Els diccionaris de pronúncia de NVDA permeten fer moltes més coses que simples canvis de paraula.
 El diàleg Afegeix regla conté també una casella de selecció per indicar si vols que la regla tingui en compte les majúscules (això vol dir que NVDA tindrà en compte si les lletres són majúscules o minúscules.
 De forma predeterminada NVDA no en fa cas).
-Una altra casella de selecció et permet indicar si el patró és una "Expressió regular".
+
+Finalment, un conjunt de botons d'opció et permet indicar a NVDA si el patró ha de coincidir amb qualsevol text, només amb paraules completes o si s'ha de tractar com a "expressió regular".
+Si indiques que el patró ha de coincidir només amb paraules completes vol dir que el text no es reemplaçarà si el patró es dóna en una paraula més llarga; per ex. si un caràcter (no numèric ni guió de subratllat ni espai) ve abans o després immediatament del patró. 
+Així, en l'anterior exemple de reemplaçar la paraula "ocell" per la paraula "granota", quan s'indica com a paraula sencera, no farà el canvi a les paraules "ocells" o "ocellaire".
+
 Una expressió regular és un patró que conté uns símbols especials que et permeten, per exemple, identificar un o més caràcters a la vegada, identificar només números, o només lletres, entre d'altres.
 En aquesta guia d'usuari no es tracten les expressions regulars, però al web pots trobar molts programes d'aprenentatge que et poden oferir més informació.
 
 +++ Pronúncia de la puntuació i dels símbols +++[SymbolPronunciation]
-Aquest diàleg et permet canviar la manera en què es pronuncien la puntuació i altres símbols, així com el nivell de verbalització dels símbols.
+Aquest diàleg et permet canviar la manera en què es pronuncien la puntuació i altres símbols, així com el nivell de verbalització dels símbols. 
+
+L'idioma del qual s'està editant la pronunciació del símbols es mostrarà en el títol del diàleg.
+Tingues en compte que el diàleg respecta l'opció "Confia en l'idioma de la veu per processar els símbols i els caràcters" del [Diàleg de configuració de veus #VoiceSettings]; és a dir, usa l'idioma de la veu abans que el llenguatge global configurat per NVDA quan aquesta 
 
 Per canviar un símbol, primer l'has de seleccionar a la llista de símbols.
 El camp Reemplaçament et permet canviar el text que es verbalitzarà en comptes del símbol.
 Si uses el camp Nivell, pots ajustar el nivell més baix en el qual el símbol es verbalitzarà.
+
+Pots afegir nous símbols prement el botó Afegir.
+En el diàleg que apareix, entra el símbol i prem el botó D'acord.
+Llavors, canvia el reemplaçament i el nivell per al nou símbol tal i com ho faries per altres símbols.
+
+Pots eliminar un símbol que has afegit prèviament, si prems el botó Eliminar.
 
 Quan hagis acabat, prem el botó D'acord per desar els canvis fets o el botó Cancel·la per descartar-los.
 
@@ -1090,6 +1192,7 @@ Només es mostren les ordres que són aplicables immediatament abans que el dià
 Per exemple, si vols personalitzar les ordres relacionades amb el mode de navegació, has d'obrir el diàleg Gestos d'entrada mentre et trobes en mode de navegació.
 
 L'arbre d'aquest diàleg llista totes les ordres NVDA aplicables agrupades per categoria.
+Pots filtrar les ordres introduint una o més paraules del nom de l'ordre, dins el Filtre amb la caixa d'edició.
 Qualsevol gest associat amb una ordre es llista sota la ordre.
 
 Per afegir un gest d'entrada a una ordre, selecciona l'ordre i prem el botó Afegeix.
@@ -1114,7 +1217,7 @@ Les següents ordres de teclat també són útils:
 %kc:beginInclude
 || Nom | Tecla en teclat de sobretaula | Tecla en teclat de portàtil | Descripció |
 | Desa la configuració | NVDA+Ctrl+c | NVDA+Ctrl+c | Desa la teva configuració actual per tal que no es perdi quan surtis de NVDA |
-| Refés la configuració | NVDA+Ctrl+r | NVDA+Ctrl+r | Si prems un cop recuperes la darrera configuració desada. Si prems tres cops recuperes la configuració de fàbrica |
+| Refés la configuració | NVDA+Ctrl+r | NVDA+Ctrl+r | Si prems un cop recuperes la darrera configuració desada. Si prems tres cops recuperes la configuració de fàbrica. |
 %kc:endInclude
 
 ++ Perfils de configuració ++
@@ -1216,19 +1319,21 @@ Per activar el Visor de veu, selecciona l'element de menú "Visor de veu" a Eine
 Desselecciona el menú per desactivar-lo.
 
 Mentre està activat el Visor de veu, aquest s'actualitza constantment per mostrar el text verbalitzat actual.
-De totes maneres, si cliques o mous el focus al Visor, NVDA aturarà momentàniament l'actualització del text, per tal de permetre't seleccionar-ne o copiar-ne fàcilment el contingut.
+De totes maneres, si cliques o mous el focus al Visor, NVDA aturarà momentàniament l'actualització del text, per tal de permetre't seleccionar-ne o copiar-ne fàcilment el contingut. 
+
+Per activar el visor de veu des de qualsevol punt, assigna un gest d'entrada amb el [Diàleg de gestos d'entrada #InputGestures].
 
 ++ Gestor de complements ++
 El Gestor de complements, al qual s'accedeix seleccionant Gestiona els complements sota Eines en el menú NVDA, et permet instal·lar o desinstal·lar paquets addicionals a NVDA.
 Aquests paquets els ofereix la comunitat i contenen codi que pot afegir o canviar funcionalitats de NVDA o fins i tot oferir compatibilitat amb línies braille o sintetitzadors de veu addicionals.
 
-El Gestor de complements conté una llista que mostra els complements instal·lats a la configuració d'usuari activa.
+El Gestor de complements conté una llista que mostra els complements instal·lats a la configuració d'usuari activa. 
 Per cada complement es mostra el nom del paquet, la versió i l'autor, però es pot veure més informació com la descripció i URL si se selecciona el complement i es prem el botó Sobre el complement.
 Si hi ha ajuda disponible per al complement seleccionat, pots accedir-hi prement el botó d'ajuda del complement.
 
 Per navegar i descarregar els complements disponibles a la web, prem el botó Descarrega complements.
 Aquest botó obre la en_[pàgina de complements de NVDA http://addons.nvda-project.org/].
-Si NVDA està instal·lat al teu sistema, pots obrir el complement directament des del navegador per iniciar el procés d'instal·lació tal i com es descriu a continuació.
+Si NVDA està instal·lat i executant-se al teu sistema, pots obrir el complement directament des del navegador per iniciar el procés d'instal·lació tal i com es descriu a continuació.
 Altrament, desa el paquet del complement i segueix les instruccions de més avall.
 
 Per instal·lar un complement obtingut prèviament, prem el botó Instal·la.
@@ -1237,7 +1342,7 @@ Un cop prems Obre, el procés d'instal·lació s'iniciarà.
 
 Quan s'instal·la un complement, NVDA en primer lloc et preguntarà si realment el vols instal·lar.
 Com que no hi ha restriccions a la funcionalitat dels complements dins NVDA, i en teoria pot incloure accedir a les teves dades personals o fins i tot al sistema sencer si tens una versió instal·lada de NVDA, és molt important que només instal·lis NVDA de fonts de confiança.
-Un cop has instal·lat el complement, cal reiniciar NVDA perquè el complement funcioni.
+Un cop has instal·lat el complement, cal reiniciar NVDA perquè el complement funcioni. 
 Mentre no reiniciïs, aquest complement apareixerà amb l'estat "instal·lat" a la llista dels complements.
 
 Per desinstal·lar un complement, selecciona'l de la llista i prem el botó Elimina.
@@ -1250,7 +1355,9 @@ Si has instal·lat o desinstal·lat complements, NVDA et preguntarà primer si v
 
 Antigament era possible augmentar les funcionalitats de NVDA copiant connectors i controladors individuals a la carpeta de configuració del teu usuari NVDA.
 Tot i que aquesta versió de NVDA encara podrà carregar-los, no es mostraran dins del Gestor de complements.
-Val més, doncs, eliminar aquests fitxers de la teva configuració i instal·lar el complement apropiat si n'hi ha un de disponible.
+Val més, doncs, eliminar aquests fitxers de la teva configuració i instal·lar el complement apropiat si n'hi ha un de disponible. 
+
+Per accedir al Gestor de complements des de qualsevol punt, assigna-li un gest personalitzat amb el [Diàleg de gestos d'entrada #InputGestures].
 
 ++ Consola Python ++
 La consola Python de NVDA, ubicada sota el menú Eines dins el menú NVDA, és una eina de desenvolupament que resulta útil per a la depuració, inspecció general de l'interior de NVDA o inspecció de la jerarquia d'accessibilitat d'una aplicació.
@@ -1294,7 +1401,7 @@ Per poder-les utilitzar, caldrà instal·lar dos components:
 - Microsoft Speech Platform - Runtime Languages (Versió 11): en_[http://www.microsoft.com/download/en/details.aspx?id=27224 http://www.microsoft.com/download/en/details.aspx?id=27224]
  - Aquesta pàgina conté molts fitxers, tant de reconeixement de veu com de text a veu.
  Tria els fitxers que incloguin les dades TTS per als idiomes/veus que desitgis.
- A tall d'exemple, el fitxer MSSpeech_TTS_en-US_ZiraPro.msi és una veu anglesa d'EUA.
+ A tall d'exemple, el fitxer MSSpeech_TTS_en-US_ZiraPro.msi és una veu anglesa d'EUA. veu anglesa.
  -
 -
 
@@ -1305,14 +1412,8 @@ Per a més informació, pots visitar la web d'Audiologic a www.audiologic.it.
 
 Aquest sintetitzador no permet la [funció de lletrejar #VoiceSpellingFunctionality].
 
-++ Newfon ++
-Newfon és un sintetitzador comercial gratuït creat per Sergey Shishmintzev, que inclou els idiomes rus i ucraïnès.
-Per obtenir-lo, visita la secció de descàrregues de la web de la comunitat russa de NVDA: ru_[http://ru.nvda-community.org/?page_id=10 http://ru.nvda-community.org/?page_id=10]
-
-Aquest sintetitzador no permet la [funció de lletrejar #VoiceSpellingFunctionality].
-
 ++ Nuance Vocalizer para NVDA ++
-Nuance Vocalizer és un sintetitzador de veu comercial i d'alta qualitat, desenvolupat per Nuance Communications, Inc., compilat expressament per a NVDA, per part de Tiflotecnia, Lda.
+Nuance Vocalizer és un sintetitzador comercial amb una veu d'alta qualitat, desenvolupat per Nuance Communications, Inc. i compilat expressament per a NVDA 
 Conté més de 50 veus instal·lables, i inclou més de 30 idiomes.
 Tots els components i veus del sintetitzador s'agrupen en paquets de complements, totalment funcionals en versions portables de NVDA.
 
@@ -1324,8 +1425,8 @@ Aquesta secció conté informació sobre les línies braille compatibles amb NVD
 
 ++ Series Focus/PAC Mate de Freedom Scientific ++
 Totes les línies Focus i PAC Mate de en_[Freedom Scientific http://www.freedomscientific.com/] són compatibles amb NVDA si es connecten per USB o Bluetooth.
-Cal tenir instal·lats a l'ordinador els controladors de línies braille de Freedom Scientific.
-Si encara no els tens, pots obtenir-los de en_[http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp].
+Cal tenir instal·lats a l'ordinador els controladors dels terminals braille de Freedom Scientific.
+Si encara no els tens, pots obtenir-los de en_[http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp].
 Tot i que aquesta pàgina només parla de la línia braille Focus Blue, els controladors funcionen amb totes les línies Focus i PAC Mate de Freedom Scientific.
 Si treballes amb un sistema Windows de 64 bits i ja s'han instal·lat els controladors per a un altre lector de pantalla, segurament hauràs d'instal·lar-los des d'aquest l'enllaç, ja que segurament l'altre lector de pantalla no ha instal·lat els fitxers que NVDA necessita. 
 
@@ -1337,10 +1438,10 @@ A continuació pots trobar les assignacions de tecles per a aquesta línia amb N
 Consulta la documentació de línia per obtenir la descripció d'on es troben aquestes tecles.
 %kc:beginInclude
 || Nom | Tecla |
-| Desplaça la línia braille enrere | sensorSuperior1 (primera cel·la a la pantalla) |
-| Desplaça la línia braille endavant | sensorSuperior20/40/80 (darrera cel·la a la pantalla) |
-| Desplaça la línia braille enrere | barra avançar esquerra |
-| Desplaça la línia braille endavant | barra avançar esquerra |
+| Desplaça el terminal braille enrere | sensorSuperior1 (primera cel·la a la pantalla) |
+| Desplaça el terminal braille endavant | sensorSuperior20/40/80 (darrera cel·la a la pantalla) |
+| Desplaça el terminal braille enrere | barra avançar esquerra |
+| Desplaça el terminal braille endavant | barra avançar esquerra |
 | Commuta el seguiment de braille a | botó GDFB esquerre+botó GDFB dret |
 | Commuta a roda esquerra | prémer roda esquerra |
 | Mou enrere fent servir la roda esquerra | roda esquerra amunt |
@@ -1374,19 +1475,19 @@ Consulta la documentació de línia per obtenir la descripció d'on es troben aq
 
 Per a models de Focus més nous que contenen tecles de barra balancí (focus 40, focus 80 i focus blue):
 || Nom | Tecla |
-| Mou la pantalla braille a la línia anterior | balancí esquerra amunt, balancí dret amunt |
-| Mou la pantalla braille a la línia següent | balancí esquerra avall, balancí dret avall |
+| Mou el terminal braille a la línia anterior | balancí esquerra amunt, balancí dret amunt |
+| Mou el terminal braille a la línia següent | balancí esquerra avall, balancí dret avall |
 
 Només per a Focus 80:
 || Nom | Tecla |
-| Desplaçar pantalla braille enrere | barra frontal esquerra amunt, barra frontal dreta amunt |
-| Desplaçar pantalla braille endavant | barra frontal esquerra avall, barra frontal dreta avall |
+| Desplaça el terminal braille enrere | barra frontal esquerra amunt, barra frontal dreta amunt |
+| Desplaça el terminal braille endavant | barra frontal esquerra avall, barra frontal dreta avall |
 %kc:endInclude
 
 ++ Optelec ALVA BC640/680 ++
 Els models ALVA BC640 i BC680 d'en_[Optelec http://www.optelec.com/] són compatibles si estan connectats via USB o Bluetooth.
 No necessites tenir instal·lat cap controlador específic per usar aquestes línies braille.
-Simplement connecta la línia i configura NVDA per usar-la.
+Simplement connecta el terminal i configura NVDA per usar-lo.
 
 Tot i que aquestes línies tenen un teclat braille, elles soles gestionen la traducció de Braille a text.
 Per això, no és rellevant la configuració de la taula d'entrada braille a NVDA.
@@ -1395,19 +1496,19 @@ A continuació pots trobar les assignacions de tecles per a aquesta línia amb N
 Consulta la documentació de línia per obtenir la descripció d'on es troben aquestes tecles.
 %kc:beginInclude
 || Nom | Tecla |
-| Desplaça la pantalla braille enrere | t1 |
-| Mou la pantalla braille a la línia anterior | t2 |
-| Mou la pantalla braille a la línia següent | t4 |
-| Desplaça la pantalla braille endavant | t5 |
-| Salta a la cel·la braille | sensor |
+| Desplaça el terminal braille enrere | t1 |
+| Mou el terminal braille a la línia anterior | t2 |
+| Mou el terminal braille a la línia següent | t4 |
+| Desplaça el terminal braille endavant | t5 |
+| Guia fins a la cel·la braille | sensor |
 | Majúscules+Tab tecla | espai1 |
 | Tecla Alt | espai2 |
 | Tecla d'escapada | espai3 |
-| Tab tecla | espai4 |
+| Tecla tab | espai4 |
 | Tecla fletxa amunt | espaiAmunt |
 | Tecla fletxa avall | espaiAvall |
 | Tecla fletxa esquerra | espaiEsquerra |
-| Tecla fletxa dreta | espaiDreta |
+| Tecla Fletxa dreta | espaiDreta |
 | Tecla Retorn | espaiRetorn |
 | Menú NVDA | espai1+espai3 |
 | Windows+d (minimitza totes les aplicacions) | espai1+espai4 |
@@ -1417,19 +1518,19 @@ Consulta la documentació de línia per obtenir la descripció d'on es troben aq
 
 ++ Handy Tech Displays ++
 NVDA és compatible amb totes les línies braille de de_[Handy Tech http://www.handytech.de/] quan aquestes es connecten via USB o Bluetooth.
-Per a línies USB més antigues, caldrà que instal·lis els controladors USB de Handy Tech al teu sistema. L'entrada de braille encara no és compatible.
+Per a línies USB més antigues, caldrà que instal·lis els controladors USB de Handy Tech al teu sistema. 
 
-L'entrada Braille encara no és compatible.
+L'entrada de braille encara no és compatible.
 
 A continuació pots trobar les assignacions de tecles per a aquesta línia amb NVDA.
 Consulta la documentació de línia per obtenir la descripció d'on es troben aquestes tecles.
 %kc:beginInclude
 || Nom | Tecla |
-| Desplaça la pantalla braille enrere | esquerra, amunt |
-| Desplaça la pantalla braille endavant | dreta, avall |
-| Mou la pantalla braille a la línia anterior | b4 |
-| Mou la pantalla braille a la línia següent | b5 |
-| Salta a la cel·la braille | sensor |
+| Desplaça el terminal braille enrere | esquerra, amunt |
+| Desplaça el terminal braille endavant | dreta, avall |
+| Mou el terminal braille a la línia anterior | b4 |
+| Mou el terminal braille a la línia següent | b5 |
+| Guia fins a la cel·la braille | sensor |
 | Tecla Majúscules+Tab | Tecla d'escapada |
 | Tecla Alt | b2+b4+b5 |
 | Tecla d'escapada | b4+b6 |
@@ -1450,11 +1551,11 @@ A continuació pots trobar les assignacions de tecles per a aquesta línia amb N
 Consulta la documentació de línia per obtenir la descripció d'on es troben aquestes tecles.
 %kc:beginInclude
 || Nom | Tecla |
-| Desplaça la pantalla braille enrere | LF |
-| Desplaça la pantalla braille endavant | RG |
-| Mou la pantalla braille a la línia anterior | UP |
-| Mou la pantalla braille a la línia següent | DN |
-| Salta a la cel·la braille | sensor |
+| Desplaça el terminal braille enrere | LF |
+| Desplaça el terminal braille endavant | RG |
+| Mou el terminal braille a la línia anterior | UP |
+| Mou el terminal braille a la línia següent | DN |
+| Guia fins a la cel·la braille | sensor |
 | Tecla Majúscules+Tab | SLF |
 | Tecla Tab | SRG |
 | Tecla Alt+Tab | SDN |
@@ -1477,11 +1578,11 @@ A continuació pots trobar les assignacions de tecles per a aquesta línia amb N
 Consulta la documentació de línia per obtenir la descripció d'on es troben aquestes tecles.
 %kc:beginInclude
 || Nom | Tecla |
-| Desplaça la pantalla braille enrere | d2 |
-| Desplaça la pantalla braille endavant | d5 |
-| Mou la pantalla braille a la línia anterior | d1 |
-| Mou la pantalla braille a la línia següent | d3 |
-| Salta a la cel·la braille | sensor |
+| Desplaça el terminal braille enrere | d2 |
+| Desplaça el terminal braille endavant | d5 |
+| Mou el terminal braille a la línia anterior | d1 |
+| Mou el terminal braille a la línia següent | d3 |
+| Guia fins a la cel·la braille | sensor |
 
 Per a les línies que disposen d'un joystick:
 || Nom | Tecla |
@@ -1500,11 +1601,11 @@ A continuació pots trobar les assignacions de tecles per a aquesta línia amb N
 Consulta la documentació de línia per obtenir la descripció d'on es troben aquestes tecles.
 %kc:beginInclude
 || Nom | Tecla |
-| Desplaça la pantalla braille enrere | K1 |
-| Desplaça la pantalla braille endavant | K3 |
-| Mou la pantalla braille a la línia anterior | B2 |
-| Mou la pantalla braille a la línia següent | B5 |
-| Salta a la cel·la braille | sensor |
+| Desplaça el terminal braille enrere | K1 |
+| Desplaça el terminal braille endavant | K3 |
+| Mou el terminal braille a la línia anterior | B2 |
+| Mou el terminal braille a la línia següent | B5 |
+| Guia fins a la cel·la braille | sensor |
 | Commuta el seguiment de braille a | K2 |
 | Verbalitza-ho tot | B6 |
 %kc:endInclude
@@ -1517,11 +1618,11 @@ A continuació pots trobar les assignacions de tecles per a aquesta línia amb N
 Consulta la documentació de línia per obtenir la descripció d'on es troben aquestes tecles.
 %kc:beginInclude
 || Nom | Tecla |
-| Desplaça la pantalla braille enrere | K1 |
-| Desplaça la pantalla braille endavant | K3 |
-| Mou la pantalla braille a la línia anterior | B2 |
-| Mou la pantalla braille a la línia següent | B5 |
-| Salta a la cel·la braille | sensor |
+| Desplaça el terminal braille enrere | K1 |
+| Desplaça el terminal braille endavant | K3 |
+| Mou el terminal braille a la línia anterior | B2 |
+| Mou el terminal braille a la línia següent | B5 |
+| Guia fins a la cel·la braille | sensor |
 | Commuta el seguiment de braille a | K2 |
 | Verbalitza-ho tot | B6 |
 %kc:endInclude
@@ -1534,11 +1635,11 @@ A continuació pots trobar les assignacions de tecles per a aquesta línia amb N
 Consulta la documentació de línia per obtenir la descripció d'on es troben aquestes tecles.
 %kc:beginInclude
 || Nom | Tecla |
-| Desplaça la pantalla braille enrere | esquerra |
-| Desplaça la pantalla braille endavant | dreta |
-| Mou la pantalla braille a la línia anterior | amunt |
-| Mou la pantalla braille a la línia següent | avall |
-| Salta a la cel·la braille | sensor |
+| Desplaça el terminal braille enrere | esquerra |
+| Desplaça el terminal braille endavant | dreta |
+| Mou el terminal braille a la línia anterior | amunt |
+| Mou el terminal braille a la línia següent | avall |
+| Guia fins a la cel·la braille | sensor |
 | Commuta el seguiment de braille a | amunt+avall |
 | Tecla Fletxa amunt | Espai+punt1 |
 | Tecla Fletxa avall | Espai+punt4 |
@@ -1567,11 +1668,11 @@ A continuació pots trobar les assignacions de tecles per a aquestes línies a N
 Consulta la documentació de línia per obtenir la descripció d'on es troben aquestes tecles.
 %kc:beginInclude
 || Nom | Tecla |
-| Desplaça la pantalla braille enrere | barra de desplaçament esquerra avall |
-| Desplaça la pantalla braille endavant | barra de desplaçament dreta avall |
-| Mou la pantalla braille a la línia anterior | barra de desplaçament esquerra amunt |
-| Mou la pantalla braille a la línia següent | barra de desplaçament dreta amunt |
-| Salta a la cel·la braille | sensor |
+| Desplaça el terminal braille enrere | barra de desplaçament esquerra avall |
+| Desplaça el terminal braille endavant | barra de desplaçament dreta avall |
+| Mou el terminal braille a la línia anterior | barra de desplaçament esquerra amunt |
+| Mou el terminal braille a la línia següent | barra de desplaçament dreta amunt |
+| Guia fins a la cel·la braille | sensor |
 | Majúscules+tecla Tab | punt1+punt2+Espai |
 | Tecla Alt | punt1+punt3+punt4+Espai |
 | Tecla d'escapada | punt1+punt5+Espai |
@@ -1627,9 +1728,9 @@ A continuació pots trobar les assignacions de tecles per a aquesta línia amb N
 Consulta la documentació de línia per obtenir la descripció d'on es troben aquestes tecles.
 %kc:beginInclude
 || Nom | Tecla |
-| Desplaça la pantalla braille enrere | barra de desplaçament esquerra avall |
-| Desplaça la pantalla braille endavant | barra de desplaçament dreta avall |
-| Salta a la cel·la braille | sensor |
+| Desplaça el terminal braille enrere | barra de desplaçament esquerra avall |
+| Desplaça el terminal braille endavant | barra de desplaçament dreta avall |
+| Guia fins a la cel·la braille | sensor |
 %kc:endInclude
 
 ++ Seika Braille Displays ++
@@ -1641,37 +1742,40 @@ A continuació pots trobar les assignacions de tecles per a aquesta línia amb N
 Consulta la documentació de línia per obtenir la descripció d'on es troben aquestes tecles.
 %kc:beginInclude
 || Nom | Tecla |
-| Desplaça la pantalla braille enrere | esquerra |
-| Desplaça la pantalla braille endavant | dreta |
-| Mou la pantalla braille a la línia anterior | b3 |
-| Mou la pantalla braille a la línia següent | b4 |
+| Desplaça el terminal braille enrere | esquerra |
+| Desplaça el terminal braille endavant | dreta |
+| Mou el terminal braille a la línia anterior | b3 |
+| Mou el terminal braille a la línia següent | b4 |
 | Commuta el seguiment de braille a | b5 |
 | Verbalitza-ho tot | b6 |
 | Tecla Tab | b1 |
 | Tecla Majúscules+Tab | b2 |
 | Tecla Alt+Tab | b1+b2 |
 | Menú NVDA | esquerra+dreta |
-| Salta a la cel·la braille | sensor |
+| Guia fins a la cel·la braille | sensor |
 %kc:endInclude
 
 ++ Models més actuals de Papenmeier BRAILLEX ++
-Les següents línies braille són compatibles:
+Les següents línies braille són compatibles: 
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
 - BRAILLEX Trio (USB i Bluetooth)
--
+- BRAILLEX Live 20, BRAILLEX Live i BRAILLEX Live Plus (USB i bluetooth) 
+- 
 
 Si BrxCom està instal·lat, NVDA el farà servir.
 BrxCom és una eina que et permet fer servir l'entrada braille de forma independent d'un lector de pantalla.
 Papenmeier distribuirà aviat una nova versió de BrxCom que treballa amb NVDA.
-De totes maneres, sense BrxCom l'entrada de braille també és possible amb el dispositiu de Trio.
+L'entrada de braille també és possible amb el dispositiu de Trio, i amb els dispositius BRAILLEX Live.
 
 La majoria de dispositius tenen una Barra d'Accés Ràpid (EAB) que permet operar-les ràpidament i intuitiva.
-La EAB es pot moure en quatre direccions i cada direcció sol tenir dos commutadors.
-La c-series és la única excepció a aquesta regla.
+L'EAB es pot moure en quatre direccions i cada direcció sol tenir dos commutadors.
+Les sèries C i Live són les úniques excepcions a aquesta regla.
 
-Les c-series i altres línies braille tenen dues files de sensors, de les quals la superior es fa servir per donar informació de format.
-Si mantens premuda una de les tecles del sensor superior i prems alhora EAB en els dispositius de les c-series emules l'estat del segon interruptor.
+Les sèries C i altres línies braille tenen dues files de sensors, la superior de les quals es fa servir per donar informació de format.
+Si mantens premuda una de les tecles dels sensors superior i prems alhora la EAB en els dispositius de les sèries C emules l'estat del segon commutador.
+Les pantalles de les sèries Live tenen només una fila de sensors i la EAB té un commutador per direcció.
+El segon commutador es pot emular prement un dels sensors i prement la EAB de la direcció corresponent.
 Mantenir premudes les tecles amunt, avall, dreta o esquerra (o EAB) fa que l'acció corresponent es repeteixi.
 
 Generalment, les següents tecles es troben disponibles en aquestes línies braille:
@@ -1689,18 +1793,19 @@ Generalment, les següents tecles es troben disponibles en aquestes línies brai
 | avall | 1 pas avall |
 | avall2 | 2 passos avall |
 
-A continuació pots trobar les assignacions d'ordres Papenmeier a NVDA:
+A continuació pots trobar les ordres assignades a NVDA dins Papenmeier:
 %kc:beginInclude
 || Nom | Tecla |
-| Desplaça la pantalla braille enrere | esquerra |
-| Desplaça la pantalla braille endavant | dreta |
-| Mou la pantalla braille a la línia anterior | amunt |
-| Mou la pantalla braille a la línia següent | avall |
-| Salta a la cel·la braille | sensor |
-| Informa del caràcter actualment en revisió | l1 |
-| Activa l'objecte de navegació actual | l2 |
-| Informa del títol | l1+amunt |
-| Informa de la Barra d'estat | l2+avall |
+| Desplaça el terminal braille enrere | esquerra |
+| Desplaça el terminal braille endavant | dreta |
+| Mou el terminal braille a la línia anterior | amunt |
+| Mou el terminal braille a la línia següent | avall |
+| Guia fins a la cel·la braille | sensor |
+| Informa del caràcter actual en revisió | esquerra1 |
+| Activa l'objecte de navegació actual | esquerra2 |
+| Commuta el seguiment de braille a | dreta2 |
+| Informa del títol | esquerra1+amunt |
+| Informa de la Barra d'estat | esquerra2+avall |
 | Mou a objecte contenidor | amunt2 |
 | Mou al primer objecte contingut | avall2 |
 | Mou a l'objecte anterior | esquerra2 |
@@ -1727,17 +1832,16 @@ Les tecles interiors es mapegen amb l'espai.
 | Tecla Fletxa esquerra | Espai amb punt 1 |
 | Tecla Fletxa dreta | Espai amb punt 4 |
 | Tecla Fletxa avall | Espai amb punt 5 |
-| Tecla Ctrl | lt+punt2 |
-| Tecla Alt | lt+punt3 |
+| Tecla Ctrl | polze esquerra+punt2 |
+| Tecla Alt | polze esquerra+punt3 |
 | Tecla Ctrl+Tecla d'escapada | Espai amb punt 1 2 3 4 5 6 |
 | Tecla Tab | Espai amb punt 3 7 |
 %kc:endInclude 
 
 ++ Models anteriors de Papenmeier Braille BRAILLEX ++
-Les següents línies braille són compatibles:
+Les següents línies braille són compatibles: 
 - BRAILLEX EL 80, EL 2D-80, EL 40 P
 - BRAILLEX Tiny, 2D Screen
--
 
 Tingues en compte que aquestes línies només es poden connectar per port sèrie.
 Per això, has de seleccionar el port al qual està connectada la línia després de seleccionar aquest controlador al diàleg Configuració de braille.
@@ -1745,7 +1849,7 @@ Per això, has de seleccionar el port al qual està connectada la línia despré
 Alguns d'aquests dispositius tenen una Barra de fàcil accés (EAB) que permet interaccionar de forma intuïtiva i ràpida.
 L'EAB es pot moure en quatre direccions i cada direcció sol tenir dos interruptors.
 Mantenint premudes la tecla amunt, avall, dreta o esquerra (o EAB) fa que l'acció corresponent es repeteixi.
-Els dispositius més antics no tenen una EAB, i cal usar les tecles frontals.
+Els dispositius més antics no tenen una EAB,  i cal usar les tecles frontals.
 
 Generalment, les següents tecles estan disponibles en les línies braille:
 
@@ -1768,15 +1872,15 @@ A continuació pots trobar les ordres assignades a NVDA dins Papenmeier:
 %kc:beginInclude
 Dispositius amb EAB:
 || Nom | Tecla |
-| Desplaça la pantalla braille enrere | esquerra |
-| Desplaça la pantalla braille endavant | dreta |
-| Mou la pantalla braille a la línia anterior | amunt |
-| Mou la pantalla braille a la línia següent | avall |
-| Salta a la cel·la braille | sensor |
-| Informa del caràcter actual en revisió | l1 |
-| Activa l'objecte de navegació actual | l2 |
-| Informa del títol | l1amunt |
-| Informa de la barra d'estat | l2avall |
+| Desplaça el terminal braille enrere | esquerra |
+| Desplaça el terminal braille endavant | dreta |
+| Mou el terminal braille a la línia anterior | amunt |
+| Mou el terminal braille a la línia següent | avall |
+| Guia fins a la cel·la braille | sensor |
+| Informa del caràcter actual en revisió | esquerra1 |
+| Activa l'objecte de navegació actual | esquerra2 |
+| Informa del títol | esquerra1amunt |
+| Informa de la barra d'estat | esquerra2avall |
 | Mou a objecte contenidor | amunt2 |
 | Mou al primer objecte contingut | avall2 |
 | Mou a l'objecte següent | dreta2 |
@@ -1785,29 +1889,31 @@ Dispositius amb EAB:
 
 BRAILLEX Tiny:
 || Nom | Tecla |
-| Informa del caràcter actual en revisió | l1 |
-| Activa l'objecte de navegació actual | l2 |
-| Desplaça la pantalla braille enrere | esquerra |
-| Desplaça la pantalla braille endavant | dreta |
-| Mou la pantalla braille a la línia anterior | amunt |
-| Mou la pantalla braille a la línia següent | avall |
-| Commuta el seguiment de braille a | r2 |
-| Mou a objecte contenidor | r1+amunt|
-| Mou al primer objecte contingut | r1+avall |
-| Mou a l'objecte anterior | r1+esquerra |
-| Mou a l'objecte següent | r1+dreta |
-| Informa del format del text | reportf |
+| Informa del caràcter actual en revisió | esquerra1 |
+| Activa l'objecte de navegació actual | esquerra2 |
+| Desplaça el terminal braille enrere | esquerra |
+| Desplaça el terminal braille endavant | dreta |
+| Mou el terminal braille a la línia anterior | amunt |
+| Mou el terminal braille a la línia següent | avall |
+| Commuta el seguiment de braille a | dreta2 |
+| Mou a objecte contenidor | dreta1+amunt|
+| Mou al primer objecte contingut | dreta1+avall |
+| Mou a l'objecte anterior | dreta1+esquerra |
+| Mou a l'objecte següent | dreta1+dreta |
+| Informa del format del text | reportf | 
+| Informa del títol | esquerra1+amunt |
+| Informa de la barra d'estat | esquerra2+avall|
 
 BRAILLEX 2D Screen:
 || Nom | Tecla |
-| Informa del caràcter actual en revisió | l1 |
-| Activa l'objecte de navegació actual | l2 |
-| Commuta el seguiment de braille a | r2 |
+| Informa del caràcter actual en revisió | esquerra1 |
+| Activa l'objecte de navegació actual | esquerra2 |
+| Commuta el seguiment de braille a | dreta2 |
 | Informa del format del text | reportf |
-| Mou la pantalla braille a la línia anterior | amunt |
-| Desplaça la pantalla braille enrere | esquerra |
-| Desplaça la pantalla braille endavant | dreta |
-| Mou la pantalla braille a la línia següent | avall |
+| Mou el terminal braille a la línia anterior | amunt |
+| Desplaça el terminal braille enrere | esquerra |
+| Desplaça el terminal braille endavant | dreta |
+| Mou el terminal braille a la línia següent | avall |
 | Mou a l'objecte següent | esquerra2 |
 | Mou a l'objecte contenidor | amunt2 |
 | Mou al primer objecte contingut | avall2 |
@@ -1836,11 +1942,11 @@ Revisa la documentació de la teva BrailleNote per saber on trobar aquestes tecl
 
 %kc:beginInclude
 || Nom | Tecla |
-| Desplaça la pantalla Braille enrere | enrere |
-| Desplaça la pantalla braille endavant | avançament |
-| Mou la pantalla braille a la línia anterior | anterior |
-| Mou la pantalla braille a la línia següent | següent |
-| Salta a la cel·la braille | sensor |
+| Desplaça el terminal Braille enrere | enrere |
+| Desplaça el terminal braille endavant | avançament |
+| Mou el terminal braille a la línia anterior | anterior |
+| Mou el terminal braille a la línia següent | següent |
+| Guia fins a la cel·la braille | sensor |
 | Commuta el seguiment de braille a | anterior+següent |
 | Tecla Fletxa amunt | Espai+punt1 |
 | Tecla Fletxa avall | Espai+punt4 |
@@ -1860,7 +1966,42 @@ Revisa la documentació de la teva BrailleNote per saber on trobar aquestes tecl
 | Tecla Windows | Espai+punt2+punt4+punt5+punt6 (Espai+w) |
 | Tecla Alt | Espai+punt1+punt3+punt4 (Espai+m) |
 | Commuta ajuda d'entrada | Espai+punt2+punt3+punt6 (Espai+h minúscula) |
-%kc:endInclude
+%kc:endInclude 
+
+++ EcoBraille ++
+NVDA és compatible amb les línies EcoBraille segons [ONCE http://www.once.es]
+Els següents models són compatibles:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+A NVDA, pots configurar el port sèrie en el que està connectada la línia braille al Diàleg de configuració de braille. 
+
+A continuació trobaràs les assignacions de tecles per a les línies EcoBraille.
+Mira la [documentació EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] en la que es descriu on trobar aquestes tecles.
+
+%kc:beginInclude
+|| Nom | Tecla |
+| Desplaça el terminal braille enrere | T2 |
+| Desplaça el terminal braille endavant | T4|
+| Mou el terminal braille a la línia anterior | T1 |
+| Mou el terminal braille a la línia següent | T5 |
+| Guia fins a la cel·la braille | sensor |
+| Activa l'objecte de navegació actual | T3 |
+| Canvia al mode de navegació següent | F1 |
+| Mou a l'objecte contenidor | F2 | 
+| Canvia al mode de navegació anterior | F3 |
+| Canvia a l'objecte anterior | F4 |
+| Informa de l'objecte actual | F5 |
+| Mou al següent objecte | F6 |
+| Mou a l'objecte amb el focus | F7 |
+| Mou al primer objecte contingut | F8 |
+| Mou el focus del sistema o de cursor a la posició actual de revisió | F9 | 
+| Informa de la posició actual del cursor | F0 |
+| Commuta el seguiment de braille a | A |
+%kc:endInclude 
 
 ++ BRLTTY ++
 en_[BRLTTY http://mielke.cc/brltty/] és un programa independent que es pot usar per complementar moltes línies braille.
@@ -1872,24 +2013,101 @@ Per a les línies que disposen de teclat braille, BRLTTY gestiona l'entrada brai
 Per això, no és rellevant la configuració de la taula d'entrada Braille a NVDA.
 
 A continuació pots trobar les ordres que les BRLTTY assignen a NVDA.
-Revisa la en_[Documentació dels jocs de tecles BRLTTY http://mielke.cc/brltty/doc/drivers/] per conèixer com es mapejen les ordres BRLTTY amb els controls a les línies Braille.
+Revisa la en_[Documentació dels jocs de tecles BRLTTY http://mielke.cc/brltty/doc/KeyTables/] per conèixer com es mapegen les ordres BRLTTY amb els controls a les línies braille.
 %kc:beginInclude
 || Nom | ordre BRLTTY |
-| Desplaça la pantalla braille enrere | fwinlt (vés enrere una finestra) |
-| Desplaça la pantalla braille endavant | fwinrt (vés endavant una finestra) |
-| Mou la pantalla braille a la línia anterior | lnup (vés amunt una línia) |
-| Mou la pantalla braille a la línia següent | lndn (vés avall una línia) |
-| Salta a la cel·la braille | sensor (porta el cursor al caràcter) |
+| Desplaça el terminal braille enrere | fwinlt (vés enrere una finestra) |
+| Desplaça el terminal braille endavant | fwinrt (vés endavant una finestra) |
+| Mou el terminal braille a la línia anterior | lnup (vés amunt una línia) |
+| Mou el terminal braille a la línia següent | lndn (vés avall una línia) |
+| Guia fins a la cel·la braille | sensor (porta el cursor al caràcter) |
 %kc:endInclude
 
+++ Tipus de control Braille i abreviatures d'estat +
+Per tal d'encabir tanta informació com sigui possible en un terminal Braille, les següents abreviatures s'han definit per indicar tipus de control i estat.
+
+|| Abreviatura | Tipus de control |
+| btn | botó |
+| cbo | quadre combinat |
+| chk | casella de verificació |
+| dlg | diàleg |
+| edt | camp de text editable |
+| gra | gràfic |
+| cN | columna número n de la taula, per ex. c1, c2. |
+| rN | fila número n de la taula, per exemple r1, r2. |
+| hN | encapçalament de nivell, per exemple h1, h2. |
+| lnk | enllaç |
+| lst | llista |
+| vlnk | enllaç visitat |
+| mnu | menú |
+| mnubar | barra de menú |
+| rbtn | botó d'opció |
+| tb | taula |
+| tv | vista en arbre |
+| lv N | l'element de la vista en arbre té el nivell jeràrquic N|
+| ``-----`` | separador |
+
+Els següents indicadors d'estat també s'han definit:
+|| Abreviatura | Estat de control |
+| ... | es mostra quan un objecte permet autocompletat |
+| ( ) | es mostra quan un objecte (per exemple una casella de verificació) no està seleccionat |
+| (x) | es mostra quan un objecte (per exemple una casella de verificació) està seleccionat |
+| (-) | es mostra quan un objecte (per exemple una casella de verificació) està seleccionat a mitges |
+| - | es mostra quan un objecte (per exemple un element en una llista d'arbre) es pot plegar |
+| + | es mostra quan un objecte (per exemple un element en una llista d'arbre) es pot desplegar |
+| clk | es mostra quan un objecte es pot clicar |
+| ro | es mostra quan un objecte (per exemple un camp de text editable) és de només lectura |
+| sel | es mostra quan un objecte està seleccionat |
+| submnu | es mostra quan un objecte té una finestra popup (normalment un submenú) |
+
 + Temes avançats +
+
+++ Opcions de la línia de comandes ++[CommandLineOptions]
+En iniciar NVDA es poden indicar una o més opcions que n'alteren el funcionament.
+Pots indicar tantes opcions com necessitis.
+Aquestes opcions poden indicar-se en iniciar NVDA des d'una drecera de teclat (a les propietats de dreceres), des del diàleg d'Executar (Menú d'Inici -> Executar o Windows+r) o des de la consòla de comandes Windows.
+Cal indicar les opcions després del nom del fitxer executable NVDA separades per espais.
+Per exemple, la drecera de sobretaula que crea NVDA durant la instal.lació té l'opció -r, la qual indica a NVDA que tanqui la còpia en execució abans d'iniciar la nova.
+Una altra opció molt útil és --disable-addons (desactiva extensions), que indica a NVDA que aturi totes les extensions actualment en execució. 
+Això et permet determinar si és una extensió la que causa un problema i refer-te d'alguns problemes seriosos causats per extensions.
+
+Com a exemple, pots sortir de la còpia en curs de NVDA introduint la següent comanda en el diàleg d'Execució:
+
+nvda -q
+
+Algunes de les opcions de la línia de comandes tenen una versió curta i una llarga, mentre que altres només tenen una versió llarga.
+Per aquelles que tenen una versió curta, pots combinar-les com:
+| nvda -rm | Aquesta comanda sortirà de la còpia en curs i iniciarà una nova còpia amb els sons d'inici desactivats, etc. |
+| nvda -rm --disable-addons | Igual que abans, però amb les extensions desactivades |
+
+Algunes de les opcions de la línia de comandes accepten paràmetres addicionals; per exemple el nivell de detall del registre  de log o el camí a la carpeta de configuració de l'usuari.
+Aquests paràmetres s'han de situar després de l'opció, separats de l'opció per un espai si s'usa la versió curta o per un signe igual (=) quan s'usa la versió llarga; per exemple:
+| nvda -l 10 | Indica a NVDA d'iniciar-se amb un nivell de registre de log de debug |
+| nvda --log-file=c:\nvda.log |  Indica a NVDA d'escriure el registre de log a c:\nvda.log |
+| nvda --log-level=20 -f c:\nvda.log | Indica a NVDA d'iniciar-se amb un nivell de registre de log de informació i d'escriure el registre a c:\nvda.log |
+
+A continuació es mostren les opcions de la línia de comandes de NVDA:
+|| Curta | LLarga | Descripció |
+| -h | --help | mostra l'ajuda de la línia de comandes i surt |
+| -q | --quit | Surt de la còpia de NVDA en execució |
+| -r | --replace | Surt de la còpia de NVDA en execució i inicia aquesta |
+| -k | --check-running | Informa sobre si NVDA s'està executant amb un codi de sortida; 0 si s'està executant, 1 si no s'està executant |
+| -f LOGFILENAME | --log-file=LOGFILENAME | El fitxer on els missatges del registre de log s'hauran d'escriure |
+| -l LOGLEVEL | --log-level=LOGLEVEL | El nivell més baix dels missatges registrats (debug 10, informació 20, avís 30, error 40, crítics 50), el nivell per defecte és 'avís' |
+| -c CONFIGPATH | --config-path=CONFIGPATH | La carpeta en la que la configuració de NVDA es guarda |
+| -m | --minimal | Sense so, sense interfície, sense missatge d'inici etc |
+| -s | --secure | Mode segur (amb la cònsola Python desactivada) |
+| cap | --disable-addons | Les extensions no tindran efecte |
+| cap | --no-sr-flag  | No canviïs el flag de lectors de pantalla del sistema global |
+| cap | --install | Instal·la NVDA (i inicia la còpia nova instal·lada) |
+| cap | --install-silent | Instal·la NVDA en silenci (i no inicia la còpia nova instal·lada) |
 
 ++ Personalització avançada de la pronúncia de símbols ++
 Es pot personalitzar la pronúncia de la puntuació i d'altres símbols més enllà del qual permet el diàleg [Pronúncia de la puntuació i dels símbols #SymbolPronunciation].
 Per exemple, pots especificar si el símbol original s'ha d'enviar al sintetitzador (per ex. per provocar una pausa o canvi en la inflexió) i pots afegir símbols personalitzats.
 
 Per fer-ho, has d'editar el fitxer d'informació sobre la pronúncia de símbols a la carpeta de la teva configuració d'usuari NVDA.
-El fitxer s'anomena symbols-xx.dic, i xx és el codi del llenguatge.
+El fitxer s'anomena symbols-xx.dic, i xx és el codi de l'idioma.
 El format d'aquest fitxer es documenta a la secció Pronúncia de símbols a la guia de desenvolupadors NVDA, que pots trobar en anglès a la en_[secció per a desenvolupadors del lloc web de NVDA http://community.nvda-project.org/wiki/Development].
 De totes maneres, els usuaris no poden definir símbols complexos.
 
@@ -1897,4 +2115,3 @@ De totes maneres, els usuaris no poden definir símbols complexos.
 Si et cal més informació o assistència en pel que fa a NVDA, visita el lloc web NVDA a NVDA_URL.
 Allà, podràs trobar documentació addicional, així com suport tècnic i recursos de la comunitat.
 El lloc web ofereix també informació i recursos sobre el desenvolupament de NVDA.
-

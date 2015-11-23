@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #gui/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2013 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed
+#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -37,7 +37,7 @@ except RuntimeError:
 ### Constants
 NVDA_PATH = os.getcwdu()
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
-DONATE_URL = "http://www.nvaccess.org/wiki/Donate"
+DONATE_URL = "http://www.nvaccess.org/donate/"
 
 ### Globals
 mainFrame = None
@@ -96,15 +96,17 @@ class MainFrame(wx.Frame):
 		#: The focus ancestors before the last popup or C{None} if unknown.
 		#: @type: list of L{NVDAObject}
 		self.prevFocusAncestors = None
-		# This makes Windows return to the previous foreground window and also seems to allow NVDA to be brought to the foreground.
-		self.Show()
-		self.Hide()
-		if winUser.isWindowVisible(self.Handle):
-			# HACK: Work around a wx bug where Hide() doesn't actually hide the window,
-			# but IsShown() returns False and Hide() again doesn't fix it.
-			# This seems to happen if the call takes too long.
+		# If NVDA has the uiAccess privilege, it can always set the foreground window.
+		if not config.hasUiAccess():
+			# This makes Windows return to the previous foreground window and also seems to allow NVDA to be brought to the foreground.
 			self.Show()
 			self.Hide()
+			if winUser.isWindowVisible(self.Handle):
+				# HACK: Work around a wx bug where Hide() doesn't actually hide the window,
+				# but IsShown() returns False and Hide() again doesn't fix it.
+				# This seems to happen if the call takes too long.
+				self.Show()
+				self.Hide()
 
 	def Destroy(self):
 		self.sysTrayIcon.Destroy()
@@ -293,11 +295,8 @@ class MainFrame(wx.Frame):
 	def onInstallCommand(self, evt):
 		if isInMessageBox:
 			return
-		self.prePopup()
-		from gui.installerGui import InstallerDialog
-		import installer
-		InstallerDialog(self).Show()
-		self.postPopup()
+		from gui import installerGui
+		installerGui.showInstallGui()
 
 	def onConfigProfilesCommand(self, evt):
 		if isInMessageBox:
@@ -403,7 +402,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 
 		menu_help = self.helpMenu = wx.Menu()
 		if not globalVars.appArgs.secure:
-			item = menu_help.Append(wx.ID_ANY, _("User Guide"))
+			# Translators: The label of a menu item to open NVDA user guide.
+			item = menu_help.Append(wx.ID_ANY, _("&User Guide"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("userGuide.html")), item)
 			# Translators: The label of a menu item to open the Commands Quick Reference document.
 			item = menu_help.Append(wx.ID_ANY, _("Commands &Quick Reference"))
@@ -478,12 +478,24 @@ class SysTrayIcon(wx.TaskBarIcon):
 
 def initialize():
 	global mainFrame
+	if mainFrame:
+		raise RuntimeError("GUI already initialized")
 	mainFrame = MainFrame()
 	wx.GetApp().SetTopWindow(mainFrame)
 
 def terminate():
 	global mainFrame
-	mainFrame.Destroy()
+	# This is called after the main loop exits because WM_QUIT exits the main loop
+	# without destroying all objects correctly and we need to support WM_QUIT.
+	# Therefore, any request to exit should exit the main loop.
+	wx.CallAfter(mainFrame.Destroy)
+	# #4460: We need another iteration of the main loop
+	# so that everything (especially the TaskBarIcon) is cleaned up properly.
+	# ProcessPendingEvents doesn't seem to work, but MainLoop does.
+	# Because the top window gets destroyed,
+	# MainLoop thankfully returns pretty quickly.
+	wx.GetApp().MainLoop()
+	mainFrame = None
 
 def showGui():
  	wx.CallAfter(mainFrame.showGui)
@@ -590,8 +602,8 @@ class WelcomeDialog(wx.Dialog):
 		try:
 			config.conf.save()
 		except:
-			pass
-		self.Close()
+			log.debugWarning("could not save",exc_info=True)
+		self.EndModal(wx.ID_OK)
 
 	@classmethod
 	def run(cls):
@@ -794,6 +806,10 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 		if pbConf["progressBarOutputMode"] in ("speak", "both") and self._speechCounter == 0:
 			# Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 			speech.speakMessage(_("Please wait"))
+
+	def IsActive(self):
+		#4714: In wxPython 3, ProgressDialog.IsActive always seems to return False.
+		return winUser.isDescendantWindow(winUser.getForegroundWindow(), self.Handle)
 
 	def done(self):
 		self.timer.Stop()

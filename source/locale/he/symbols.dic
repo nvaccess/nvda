@@ -1,100 +1,117 @@
-﻿#locale/he/symbols.dic
+﻿#locale/en/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2012 NVDA Contributors
+#Copyright (c) 2011-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
-#Provided by Misgav Shem-tov - www.shemtov.tel
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<![^\d -])\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	נקודה
-! sentence ending	סימן קריאה
-? sentence ending	סימן שאלה
-; phrase ending	נקודה פסיק
-: phrase ending	נקודותיים
-in-word '	גֵרֵשְ
-negative number	מינוס
+. sentence ending	dot	all	always
+! sentence ending	bang	all	always
+? sentence ending	question	all	always
+; phrase ending	semi	most	always
+: phrase ending	colon	most	always
+decimal point		none	always
+in-word '	tick	all	norep
+negative number	minus	none	norep
 
 # Whitespace
-\0	ריק
-\t	טאב
-\n	סימן שורה
-\f	הפסקת עמוד
-\r	סימן חזור
- 	רווח
- 	רווח
+\0	blank	char	# null
+\t	tab
+\n	line feed	char
+\f	page break	none
+\r	carriage return	char
+ 	space	char
+ 	space	char	# no-break space
 
 # Standard punctuation/symbols
-!	סימן קריאה
-"	מרכאות
-\#	סולמית
-$	דולר
-£	פאונד
-€	יורו
-¢	סנטס
-¥	ין
-%	אחוז
-&	and
-'	גֵרֵשְ
-(	סוגריים שמאליים
-)	סוגריים ימניים
-*	כוכבית
-+	פלוס
-,	פסיק
--	מקף
-.	נקודה
-/	לוכסן
-:	נקודתיים
-;	נקודתיים פסיק
-<	קטן מ
->	גדול מ
-=	שָוֵה
-?	סימן שאלה
-@	שטרודל
-[	סוגריים מרובעים שמאליים
-]	סוגריים מרובעים ימניים
-\\	לוכסן הפוך
-^	caret
-_	קו תחתון
-`	גֵרֵשְ
-{	סוגריים מסולסלים ימניים
-}	סוגריים מסולסלים ימניים
-|	שורה
-~	תילדה
+!	bang	all
+"	quote	most
+\#	number	most
+$	dollar	all	norep
+£	pound	all	norep
+€	euro	all	norep
+¢	Cents	all	norep
+¥	Yen	all	norep
+%	percent	some
+&	and	some
+'	tick	all
+(	left paren	most
+)	right paren	most
+*	star	some
++	plus	some
+,	comma	all	always
+-	dash	most
+.	dot	some
+/	slash	some
+:	colon	most	norep
+;	semi	most
+<	less	most
+>	greater	most
+=	equals	some
+?	question	all
+@	at	some
+[	left bracket	most
+]	right bracket	most
+\\	backslash	most
+^	caret	most
+_	line	most
+`	graav	most
+{	left brace	most
+}	right brace	most
+|	bar	most
+~	tilda	most
 
 # Other characters
-•	רשומה
-…	שלוש נקודות
-...	נקודה נקודה נקודה
-	רשומה
-“	מרכאות שמאליות
-”	מרכאות ימניות
-‘	גרש שמאלי
-’	גרש ימני
-–	en dash
-—	em dash
-●	מעגל
-¨	diaeresis
-‎	סימן משמאל לימין
-‏	סימן מימין לשמאל
-■	מרובע שחור
-➔	חץ ימינה
-§	איזור
-°	מעלות
-«	סוגריים מרובעים שמאליים כפולים
-»	סוגריים מרובעים ימניים כפולים
-µ	מיקרו
-¹	superscript 1
-²	superscript 2
-³	superscript 3
-®	סימן רשום
-™	טרייד מארק
-©	קופי רייט
-±	פחות או יותר
-×	כפול
-÷	חלקי
-→	חץ ימני
-✓	check
-✔	check
-
+•	bullet	some
+…	dot dot dot	all	always
+...	dot dot dot	all	always
+	bullet	some
+“	left quote	most
+”	right quote	most
+‘	left tick	most
+’	right tick	most
+–	en dash	most
+—	em dash	most
+●	circle	most
+¨	diaeresis	most
+‎	left to right mark	char
+‏	right to left mark	char
+■	black square	some
+▪	black square	some
+◾	black square	some
+◦	white bullet	some
+➔	right arrow	some
+§	section	all
+°	degrees	some
+«	double left pointing angle bracket
+»	double right pointing angle bracket
+µ	micro	some
+¹	superscript 1	some
+²	superscript 2	some
+³	superscript 3	some
+®	registered	some
+™	Trademark	some
+©	Copyright	some
+±	Plus or Minus	most
+×	times	most
+÷	divide by	most
+←	left arrow	some
+→	right arrow	some
+✓	check	some
+✔	check	some

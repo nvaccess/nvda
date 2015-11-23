@@ -12,6 +12,8 @@ import winKernel
 import comHelper
 import winUser
 from logHandler import log
+import textInfos
+import braille
 import appModuleHandler
 import eventHandler
 import UIAHandler
@@ -22,6 +24,7 @@ import speech
 import ui
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
+from NVDAObjects.window.winword import WordDocument, WordDocumentTreeInterceptor
 from NVDAObjects.IAccessible.MSHTML import MSHTML
 from NVDAObjects.behaviors import RowWithFakeNavigation
 from NVDAObjects.UIA import UIA
@@ -129,6 +132,8 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0,UIAGridRow)
 		if not isinstance(obj,IAccessible):
 			return
+		if WordDocument in clsList:
+			clsList.insert(0,OutlookWordDocument)
 		role=obj.role
 		windowClassName=obj.windowClassName
 		states=obj.states
@@ -405,16 +410,32 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			if messageClass=="IPM.Schedule.Meeting.Request":
 				# Translators: the email is a meeting request
 				textList.append(_("meeting request"))
-		for child in self.children:
-			if isinstance(child,UIAGridRow) or child.role==controlTypes.ROLE_GRAPHIC or not child.name:
-				continue
-			text=None
-			if config.conf['documentFormatting']['reportTableHeaders'] and child.columnHeaderText:
-				text=u"{header} {name}".format(header=child.columnHeaderText,name=child.name)
+		childrenCacheRequest=UIAHandler.handler.baseCacheRequest.clone()
+		childrenCacheRequest.addProperty(UIAHandler.UIA_NamePropertyId)
+		childrenCacheRequest.addProperty(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId)
+		childrenCacheRequest.TreeScope=UIAHandler.TreeScope_Children
+		childrenCacheRequest.treeFilter=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_TextControlTypeId)
+		cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
+		for index in xrange(cachedChildren.length):
+			e=cachedChildren.getElement(index)
+			name=e.cachedName
+			columnHeaderTextList=[]
+			if name and config.conf['documentFormatting']['reportTableHeaders']:
+				columnHeaderItems=e.getCachedPropertyValueEx(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId,True)
 			else:
-				text=child.name
+				columnHeaderItems=None
+			if columnHeaderItems:
+				columnHeaderItems=columnHeaderItems.QueryInterface(UIAHandler.IUIAutomationElementArray)
+				for index in xrange(columnHeaderItems.length):
+					columnHeaderItem=columnHeaderItems.getElement(index)
+					columnHeaderTextList.append(columnHeaderItem.currentName)
+			columnHeaderText=" ".join(columnHeaderTextList)
+			if columnHeaderText:
+				text=u"{header} {name}".format(header=columnHeaderText,name=name)
+			else:
+				text=name
 			if text:
-				text+=","
+				text=text+u","
 				textList.append(text)
 		return " ".join(textList)
 
@@ -441,3 +462,47 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 	def setFocus(self):
 		super(UIAGridRow,self).setFocus()
 		eventHandler.queueEvent("gainFocus",self)
+
+class MailViewerTreeInterceptor(WordDocumentTreeInterceptor):
+	"""A BrowseMode treeInterceptor specifically for readonly emails, where tab and shift+tab are safe and we know will not edit the document."""
+
+	def script_tab(self,gesture):
+		bookmark=self.rootNVDAObject.makeTextInfo(textInfos.POSITION_SELECTION).bookmark
+		gesture.send()
+		info,caretMoved=self.rootNVDAObject._hasCaretMoved(bookmark)
+		if not caretMoved:
+			return
+		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		inTable=info._rangeObj.tables.count>0
+		isCollapsed=info.isCollapsed
+		if inTable and isCollapsed:
+			info.expand(textInfos.UNIT_CELL)
+			isCollapsed=False
+		if not isCollapsed:
+			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+		braille.handler.handleCaretMove(self)
+
+	__gestures={
+		"kb:tab":"tab",
+		"kb:shift+tab":"tab",
+	}
+
+class OutlookWordDocument(WordDocument):
+
+	def _get_isReadonlyViewer(self):
+		# #2975: The only way we know an email is read-only is if the underlying email has been sent.
+		try:
+			return self.appModule.nativeOm.activeInspector().currentItem.sent
+		except (COMError,NameError,AttributeError):
+			return False
+
+	def _get_treeInterceptorClass(self):
+		if self.isReadonlyViewer:
+			return MailViewerTreeInterceptor
+		return super(OutlookWordDocument,self).treeInterceptorClass
+
+	def _get_shouldCreateTreeInterceptor(self):
+		return self.isReadonlyViewer
+
+	def _get_role(self):
+		return controlTypes.ROLE_DOCUMENT if self.isReadonlyViewer else super(OutlookWordDocument,self).role

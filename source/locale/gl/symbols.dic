@@ -16,9 +16,9 @@ complexSymbols:
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 
 # Others
-decimal point	(?<=\d)\.(?=\d)
+decimal point	(?<![^\d -])\.(?=\d)
 in-word -	(?<=[^\W_])[-]
-negative number	(?<!\w)-(?=[$£€¥]?\d)
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
 symbols:
@@ -50,17 +50,18 @@ dates /	 	all	always
 # Standard punctuation/symbols
 !	pechar admiración	all
 "	comiñas	most
-\#	signo de número	most
+\#	signo de número	some
 $	dólar	all	norep
 £	libras	all	norep
 €	euros	all	norep
 ¢	Centavos	all	norep
 ¥	Yen	all	norep
+₹	Rupia	some	norep
 %	porcento	some
 &	anpersán	some
 '	apóstrofo	all
-(	abrir paréntese	most
-)	pechar paréntese	most
+(	abrir paréntese	most	always
+)	pechar paréntese	most	always
 *	asterisco	some
 +	máis	some
 ,	coma	all	always
@@ -69,8 +70,8 @@ $	dólar	all	norep
 /	barra 	some
 :	dous pontos	most	norep
 ;	ponto e coma	most
-<	menor que	most
->	maior que	most
+<	menor que	some
+>	maior que	some
 =	igual	some
 ?	pechar interrogación	all
 @	arroba	some
@@ -96,14 +97,17 @@ _	subliñado	most
 ”	pechar comiñas	most
 ‘	apóstrofo	most
 ’	apóstrofo	most
-–	guión	most
+–	guión	most	always
 —	guión	most
 ●	círculo	most
 ¨	diérese	most
 ‎	marca de esquerda a dereita	char
 ‏	marca de dereita a esquerda	char
 ■	Barra vertical cortada	some
-➔	flecha á derecha	some
+▪	Barra vertical cortada	some
+◾	Barra vertical cortada	some
+◦	Viñeta branca	some
+➔	flecha á dereita	some
 §	Sección	most
 °	grados	some
 «	Abrir Comiñas angulares
@@ -115,10 +119,57 @@ _	subliñado	most
 ®	rexistrado	some
 ™	Marca rexistrada	some
 ©	copyright	some	norep
-±	Máis ou menos	most
-×	multiplicado por	most
-÷	dividido por	most
+±	Máis ou menos	some
+×	multiplicado por	some
+÷	dividido por	some
 ←	Flecha esquerda	some
 →	Flecha dereita	some
 ✓	marcado	some
 ✔	marcado	some
+
+#Mathematical Operators U+2200 to U+220F
++
+∀	Por Todos 	none
+∁	Complemento	none
+∂	Derivativa Parcial	none
+∃	Existe	none
+∄	Non Existe	none
+∅	Conxunto Valdeiro	none
+∆	INCREMENTO	none
+∇	NABLA	none
+∈	Pertence a	none
+∉	Non Pertence a	none
+∊	Elemento pequeno de	none
+∋	Contén como Membro a	none
+∌	Non contén como Membro a	none
+∍	Contén como Membro Pequeno a	none
+∎	Fin de Proba	none
+∏	N-Produto Aritmético	none
+
+# Miscellaneous Mathematical Operators
+
+∑	N-Suma Aritmética	none
+√	Raíz Cadrada	none
+∛	Raíz Cúbica	none
+∜	Raíz Cuadrática	none
+∝	Proporcioal a	none
+∞	Infinito	none
+∟	Ángulo Dereito	none
+∠	Ángulo	none
+∥	Paralelo A	none
+∦	Non Paralelo A	none
+∧	E Lóxico	none
+∨	Ou Lóxico	none
+∩	Intersección	none
+∪	Unión	none
+∫	Integral	none
+∴	Por Tanto	none
+∵	Porrque	none
+∶	RATIO	none
+∷	Proporción	none
+≤	Menor ou Igual a	none
+≥	Maior ou Igual A	none
+⊂	Subconxunto De	none
+⊃	Superconxunto de 	none
+⊆	Subconxunto de Ou Igual A	none
+⊇	Superconxunto de Ou Igual A	none

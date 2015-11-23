@@ -16,6 +16,7 @@ import ctypes
 import ctypes.wintypes
 import os
 import sys
+import winVersion
 import pkgutil
 import threading
 import tempfile
@@ -137,6 +138,8 @@ def cleanup():
 		if deadMod in set(o.appModule for o in api.getFocusAncestors()+[api.getFocusObject()] if o and o.appModule):
 			if hasattr(deadMod,'event_appLoseFocus'):
 				deadMod.event_appLoseFocus()
+		import eventHandler
+		eventHandler.handleAppTerminate(deadMod)
 		try:
 			deadMod.terminate()
 		except:
@@ -300,7 +303,7 @@ class AppModule(baseObject.ScriptableObject):
 		#: The application name.
 		#: @type: str
 		self.appName=appName
-		if sys.getwindowsversion().major > 5:
+		if winVersion.winVersion.major > 5:
 			self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
 		else:
 			self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION|winKernel.PROCESS_VM_READ,False,processID)
@@ -314,7 +317,7 @@ class AppModule(baseObject.ScriptableObject):
 		if not self.processHandle:
 			raise RuntimeError("processHandle is 0")
 		# Choose the right function to use to get the executable file name
-		if sys.getwindowsversion().major > 5:
+		if winVersion.winVersion.major > 5:
 			# For Windows Vista and higher, use QueryFullProcessImageName function
 			GetModuleFileName = ctypes.windll.Kernel32.QueryFullProcessImageNameW
 		else:
@@ -392,6 +395,8 @@ class AppModule(baseObject.ScriptableObject):
 		@param clsList: The list of classes, which will be modified by this method if appropriate.
 		@type clsList: list of L{NVDAObjects.NVDAObject}
 		"""
+	# optimisation: Make it easy to detect that this hasn't been overridden.
+	chooseNVDAObjectOverlayClasses._isBase = True
 
 	def _get_is64BitProcess(self):
 		"""Whether the underlying process is a 64 bit process.

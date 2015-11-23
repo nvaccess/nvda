@@ -77,8 +77,16 @@ parser.add_option('-m','--minimal',action="store_true",dest='minimal',default=Fa
 parser.add_option('-s','--secure',action="store_true",dest='secure',default=False,help="Secure mode (disable Python console)")
 parser.add_option('--disable-addons',action="store_true",dest='disableAddons',default=False,help="Disable all add-ons")
 parser.add_option('--no-sr-flag',action="store_false",dest='changeScreenReaderFlag',default=True,help="Don't change the global system screen reader flag")
-parser.add_option('--install',action="store_true",dest='install',default=False,help="Silently installs NVDA")
+parser.add_option('--install',action="store_true",dest='install',default=False,help="Installs NVDA (starting the new copy after installation)")
+parser.add_option('--install-silent',action="store_true",dest='installSilent',default=False,help="Installs NVDA silently (does not start the new copy after installation).")
 parser.add_option('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
+# This option currently doesn't actually do anything.
+# It is passed by Ease of Access so that if someone downgrades without uninstalling (despite our discouragement),
+# the downgraded copy won't be started in non-secure mode on secure desktops.
+# (Older versions always required the --secure option to start in secure mode.)
+# If this occurs, the user will see an obscure error,
+# but that's far better than a major security hazzard.
+parser.add_option('--ease-of-access',action="store_true",dest='easeOfAccess',default=False,help="Started by Windows Ease of Access")
 (globalVars.appArgs,extraArgs)=parser.parse_args()
 
 def terminateRunningNVDA(window):
@@ -125,23 +133,36 @@ elif globalVars.appArgs.check_running:
 	sys.exit(1)
 
 UOI_NAME = 2
-def getInputDesktopName():
-	desktop = ctypes.windll.user32.OpenInputDesktop(0, False, 0)
+def getDesktopName():
+	desktop = ctypes.windll.user32.GetThreadDesktop(ctypes.windll.kernel32.GetCurrentThreadId())
 	name = ctypes.create_unicode_buffer(256)
 	ctypes.windll.user32.GetUserObjectInformationW(desktop, UOI_NAME, ctypes.byref(name), ctypes.sizeof(name), None)
-	ctypes.windll.user32.CloseDesktop(desktop)
 	return name.value
 
 #Ensure multiple instances are not fully started by using a mutex
 ERROR_ALREADY_EXISTS=0XB7
-desktopName=getInputDesktopName()
+desktopName=getDesktopName()
 mutex=ctypes.windll.kernel32.CreateMutexW(None,True,u"Local\\NVDA_%s"%desktopName)
 if not mutex or ctypes.windll.kernel32.GetLastError()==ERROR_ALREADY_EXISTS:
 	if mutex: ctypes.windll.kernel32.CloseHandle(mutex)
 	sys.exit(1)
 
+isSecureDesktop = desktopName == "Winlogon"
+if isSecureDesktop:
+	import _winreg
+	try:
+		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, ur"SOFTWARE\NVDA")
+		if not _winreg.QueryValueEx(k, u"serviceDebug")[0]:
+			globalVars.appArgs.secure = True
+	except WindowsError:
+		globalVars.appArgs.secure = True
+	globalVars.appArgs.changeScreenReaderFlag = False
+	globalVars.appArgs.minimal = True
+	globalVars.appArgs.configPath = os.path.join(sys.prefix, "systemConfig")
+
 #os.environ['PYCHECKER']="--limit 10000 -q --changetypes"
 #import pychecker.checker
+
 #Initial logging and logging code
 
 logLevel=globalVars.appArgs.logLevel
@@ -161,6 +182,9 @@ except AttributeError:
 	pass
 # Make this the last application to be shut down and don't display a retry dialog box.
 winKernel.SetProcessShutdownParameters(0x100, winKernel.SHUTDOWN_NORETRY)
+if not isSecureDesktop:
+	import easeOfAccess
+	easeOfAccess.notify(3)
 try:
 	import core
 	core.main()
@@ -168,6 +192,8 @@ except:
 	log.critical("core failure",exc_info=True)
 	sys.exit(1)
 finally:
+	if not isSecureDesktop:
+		easeOfAccess.notify(2)
 	if globalVars.appArgs.changeScreenReaderFlag:
 		winUser.setSystemScreenReaderFlag(False)
 	ctypes.windll.kernel32.CloseHandle(mutex)

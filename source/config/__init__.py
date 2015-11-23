@@ -16,6 +16,8 @@ from validate import Validator
 from logHandler import log
 import shlobj
 import baseObject
+import easeOfAccess
+import winKernel
 
 def validateConfig(configObj,validator,validationResult=None,keyList=None):
 	"""
@@ -69,6 +71,7 @@ confspec = ConfigObj(StringIO(
 	# The synthesiser to use
 	synth = string(default=auto)
 	symbolLevel = integer(default=100)
+	trustVoiceLanguage = boolean(default=true)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 	outputDevice = string(default=default)
 	autoLanguageSwitching = boolean(default=true)
@@ -153,6 +156,7 @@ confspec = ConfigObj(StringIO(
 	autoPassThroughOnCaretMove = boolean(default=false)
 	passThroughAudioIndication = boolean(default=true)
 	autoSayAllOnPageLoad = boolean(default=true)
+	trapNonCommandGestures = boolean(default=true)
 
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
@@ -161,7 +165,8 @@ confspec = ConfigObj(StringIO(
 	reportFontName = boolean(default=false)
 	reportFontSize = boolean(default=false)
 	reportFontAttributes = boolean(default=false)
-	reportRevisions = boolean(default=false)
+	reportRevisions = boolean(default=true)
+	reportEmphasis = boolean(default=true)
 	reportColor = boolean(default=False)
 	reportAlignment = boolean(default=false)
 	reportStyle = boolean(default=false)
@@ -294,6 +299,9 @@ def initConfigPath(configPath=None):
 RUN_REGKEY = ur"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 
 def getStartAfterLogon():
+	if (easeOfAccess.isSupported and easeOfAccess.canConfigTerminateOnDesktopSwitch
+			and easeOfAccess.willAutoStart(_winreg.HKEY_CURRENT_USER)):
+		return True
 	try:
 		k = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, RUN_REGKEY)
 		val = _winreg.QueryValueEx(k, u"nvda")[0]
@@ -304,11 +312,23 @@ def getStartAfterLogon():
 def setStartAfterLogon(enable):
 	if getStartAfterLogon() == enable:
 		return
+	if easeOfAccess.isSupported and easeOfAccess.canConfigTerminateOnDesktopSwitch:
+		easeOfAccess.setAutoStart(_winreg.HKEY_CURRENT_USER, enable)
+		if enable:
+			return
+		# We're disabling, so ensure the run key is cleared,
+		# as it might have been set by an old version.
+		run = False
+	else:
+		run = enable
 	k = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, RUN_REGKEY, 0, _winreg.KEY_WRITE)
-	if enable:
+	if run:
 		_winreg.SetValueEx(k, u"nvda", None, _winreg.REG_SZ, sys.argv[0])
 	else:
-		_winreg.DeleteValue(k, u"nvda")
+		try:
+			_winreg.DeleteValue(k, u"nvda")
+		except WindowsError:
+			pass
 
 SERVICE_FILENAME = u"nvda_service.exe"
 
@@ -322,10 +342,12 @@ def isServiceInstalled():
 	except (WindowsError, OSError):
 		return False
 
+def canStartOnSecureScreens():
+	return isInstalledCopy() and (easeOfAccess.isSupported or isServiceInstalled())
+
 def execElevated(path, params=None, wait=False,handleAlreadyElevated=False):
 	import subprocess
 	import shellapi
-	import winKernel
 	import winUser
 	if params is not None:
 		params = subprocess.list2cmdline(params)
@@ -353,6 +375,8 @@ SLAVE_FILENAME = u"nvda_slave.exe"
 NVDA_REGKEY = ur"SOFTWARE\NVDA"
 
 def getStartOnLogonScreen():
+	if easeOfAccess.isSupported and easeOfAccess.willAutoStart(_winreg.HKEY_LOCAL_MACHINE):
+		return True
 	try:
 		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
 		return bool(_winreg.QueryValueEx(k, u"startOnLogonScreen")[0])
@@ -360,8 +384,13 @@ def getStartOnLogonScreen():
 		return False
 
 def _setStartOnLogonScreen(enable):
-	k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY, 0, _winreg.KEY_WRITE)
-	_winreg.SetValueEx(k, u"startOnLogonScreen", None, _winreg.REG_DWORD, int(enable))
+	if easeOfAccess.isSupported:
+		# The installer will have migrated service config to EoA if appropriate,
+		# so we only need to deal with EoA here.
+		easeOfAccess.setAutoStart(_winreg.HKEY_LOCAL_MACHINE, enable)
+	else:
+		k = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY, 0, _winreg.KEY_WRITE)
+		_winreg.SetValueEx(k, u"startOnLogonScreen", None, _winreg.REG_DWORD, int(enable))
 
 def setSystemConfigToCurrentConfig():
 	fromPath=os.path.abspath(globalVars.appArgs.configPath)
@@ -1117,3 +1146,17 @@ class ProfileTrigger(object):
 
 	def __exit__(self, excType, excVal, traceback):
 		self.exit()
+
+TokenUIAccess = 26
+def hasUiAccess():
+	token = ctypes.wintypes.HANDLE()
+	ctypes.windll.advapi32.OpenProcessToken(ctypes.windll.kernel32.GetCurrentProcess(),
+		winKernel.MAXIMUM_ALLOWED, ctypes.byref(token))
+	try:
+		val = ctypes.wintypes.DWORD()
+		ctypes.windll.advapi32.GetTokenInformation(token, TokenUIAccess,
+			ctypes.byref(val), ctypes.sizeof(ctypes.wintypes.DWORD),
+			ctypes.byref(ctypes.wintypes.DWORD()))
+		return bool(val.value)
+	finally:
+		ctypes.windll.kernel32.CloseHandle(token)

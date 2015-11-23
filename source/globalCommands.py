@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2012 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista
+#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee, Leonard de Ruijter
 
 import time
 import itertools
@@ -30,6 +30,7 @@ import winUser
 import appModuleHandler
 import winKernel
 import treeInterceptorHandler
+import browseMode
 import scriptHandler
 import ui
 import braille
@@ -39,10 +40,10 @@ import virtualBuffers
 import characterProcessing
 from baseObject import ScriptableObject
 
-#: Script category for text review  commands.
+#: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_TEXTREVIEW = _("Text review")
-#: Script category for Object navigation   commands.
+#: Script category for Object navigation commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_OBJECTNAVIGATION = _("Object navigation")
 #: Script category for system caret commands.
@@ -51,7 +52,7 @@ SCRCAT_SYSTEMCARET = _("System caret")
 #: Script category for mouse commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_MOUSE = _("Mouse")
-#: Script category for mouse commands.
+#: Script category for speech commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_SPEECH = _("Speech")
 #: Script category for configuration dialogs commands.
@@ -62,19 +63,22 @@ SCRCAT_CONFIG = _("Configuration")
 SCRCAT_BRAILLE = _("Braille")
 #: Script category for tools commands.
 # Translators: The name of a category of NVDA commands.
-SCRCAT_TOOLS = _("Tools")
+SCRCAT_TOOLS = pgettext('script category', 'Tools')
 #: Script category for touch commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_TOUCH = _("Touch screen")
 #: Script category for focus commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_FOCUS = _("System focus")
-#: Script category for system status  commands.
+#: Script category for system status commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_SYSTEM = _("System status")
-#: Script category for input  commands.
+#: Script category for input commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_INPUT = _("Input")
+#: Script category for document formatting commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_DOCUMENTFORMATTING = _("Document formatting")
 
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
@@ -107,7 +111,6 @@ class GlobalCommands(ScriptableObject):
 	script_toggleInputHelp.__doc__=_("Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any.")
 	script_toggleInputHelp.category=SCRCAT_INPUT
 
-
 	def script_toggleCurrentAppSleepMode(self,gesture):
 		curFocus=api.getFocusObject()
 		curApp=curFocus.appModule
@@ -128,7 +131,7 @@ class GlobalCommands(ScriptableObject):
 	def script_reportCurrentLine(self,gesture):
 		obj=api.getFocusObject()
 		treeInterceptor=obj.treeInterceptor
-		if hasattr(treeInterceptor,'TextInfo') and not treeInterceptor.passThrough:
+		if isinstance(treeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor) and not treeInterceptor.passThrough:
 			obj=treeInterceptor
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_CARET)
@@ -190,7 +193,7 @@ class GlobalCommands(ScriptableObject):
 	def script_reportCurrentSelection(self,gesture):
 		obj=api.getFocusObject()
 		treeInterceptor=obj.treeInterceptor
-		if hasattr(treeInterceptor,'TextInfo') and not treeInterceptor.passThrough:
+		if isinstance(treeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor) and not treeInterceptor.passThrough:
 			obj=treeInterceptor
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -300,6 +303,342 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for toggle speak command keys command.
 	script_toggleSpeakCommandKeys.__doc__=_("Toggles on and off the speaking of typed keys, that are not specifically characters")
 	script_toggleSpeakCommandKeys.category=SCRCAT_SPEECH
+
+	def script_toggleReportFontName(self,gesture):
+		if config.conf["documentFormatting"]["reportFontName"]:
+			# Translators: The message announced when toggling the report font name document formatting setting.
+			state = _("report font name off")
+			config.conf["documentFormatting"]["reportFontName"]=False
+		else:
+			# Translators: The message announced when toggling the report font name document formatting setting.
+			state = _("report font name on")
+			config.conf["documentFormatting"]["reportFontName"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report font name command.
+	script_toggleReportFontName.__doc__=_("Toggles on and off the reporting of font changes")
+	script_toggleReportFontName.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportFontSize(self,gesture):
+		if config.conf["documentFormatting"]["reportFontSize"]:
+			# Translators: The message announced when toggling the report font size document formatting setting.
+			state = _("report font size off")
+			config.conf["documentFormatting"]["reportFontSize"]=False
+		else:
+			# Translators: The message announced when toggling the report font size document formatting setting.
+			state = _("report font size on")
+			config.conf["documentFormatting"]["reportFontSize"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report font size command.
+	script_toggleReportFontSize.__doc__=_("Toggles on and off the reporting of font size changes")
+	script_toggleReportFontSize.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportFontAttributes(self,gesture):
+		if config.conf["documentFormatting"]["reportFontAttributes"]:
+			# Translators: The message announced when toggling the report font attributes document formatting setting.
+			state = _("report font attributes off")
+			config.conf["documentFormatting"]["reportFontAttributes"]=False
+		else:
+			# Translators: The message announced when toggling the report font attributes document formatting setting.
+			state = _("report font attributes on")
+			config.conf["documentFormatting"]["reportFontAttributes"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report font attributes command.
+	script_toggleReportFontAttributes.__doc__=_("Toggles on and off the reporting of font attributes")
+	script_toggleReportFontAttributes.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportRevisions(self,gesture):
+		if config.conf["documentFormatting"]["reportRevisions"]:
+			# Translators: The message announced when toggling the report revisions document formatting setting.
+			state = _("report revisions off")
+			config.conf["documentFormatting"]["reportRevisions"]=False
+		else:
+			# Translators: The message announced when toggling the report revisions document formatting setting.
+			state = _("report revisions on")
+			config.conf["documentFormatting"]["reportRevisions"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report revisions command.
+	script_toggleReportRevisions.__doc__=_("Toggles on and off the reporting of revisions")
+	script_toggleReportRevisions.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportEmphasis(self,gesture):
+		if config.conf["documentFormatting"]["reportEmphasis"]:
+			# Translators: The message announced when toggling the report emphasis document formatting setting.
+			state = _("report emphasis off")
+			config.conf["documentFormatting"]["reportEmphasis"]=False
+		else:
+			# Translators: The message announced when toggling the report emphasis document formatting setting.
+			state = _("report emphasis on")
+			config.conf["documentFormatting"]["reportEmphasis"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report emphasis command.
+	script_toggleReportEmphasis.__doc__=_("Toggles on and off the reporting of emphasis")
+	script_toggleReportEmphasis.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportColor(self,gesture):
+		if config.conf["documentFormatting"]["reportColor"]:
+			# Translators: The message announced when toggling the report colors document formatting setting.
+			state = _("report colors off")
+			config.conf["documentFormatting"]["reportColor"]=False
+		else:
+			# Translators: The message announced when toggling the report colors document formatting setting.
+			state = _("report colors on")
+			config.conf["documentFormatting"]["reportColor"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report colors command.
+	script_toggleReportColor.__doc__=_("Toggles on and off the reporting of colors")
+	script_toggleReportColor.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportAlignment(self,gesture):
+		if config.conf["documentFormatting"]["reportAlignment"]:
+			# Translators: The message announced when toggling the report alignment document formatting setting.
+			state = _("report alignment off")
+			config.conf["documentFormatting"]["reportAlignment"]=False
+		else:
+			# Translators: The message announced when toggling the report alignment document formatting setting.
+			state = _("report alignment on")
+			config.conf["documentFormatting"]["reportAlignment"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report alignment command.
+	script_toggleReportAlignment.__doc__=_("Toggles on and off the reporting of text alignment")
+	script_toggleReportAlignment.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportStyle(self,gesture):
+		if config.conf["documentFormatting"]["reportStyle"]:
+			# Translators: The message announced when toggling the report style document formatting setting.
+			state = _("report style off")
+			config.conf["documentFormatting"]["reportStyle"]=False
+		else:
+			# Translators: The message announced when toggling the report style document formatting setting.
+			state = _("report style on")
+			config.conf["documentFormatting"]["reportStyle"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report style command.
+	script_toggleReportStyle.__doc__=_("Toggles on and off the reporting of style changes")
+	script_toggleReportStyle.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportSpellingErrors(self,gesture):
+		if config.conf["documentFormatting"]["reportSpellingErrors"]:
+			# Translators: The message announced when toggling the report spelling errors document formatting setting.
+			state = _("report spelling errors off")
+			config.conf["documentFormatting"]["reportSpellingErrors"]=False
+		else:
+			# Translators: The message announced when toggling the report spelling errors document formatting setting.
+			state = _("report spelling errors on")
+			config.conf["documentFormatting"]["reportSpellingErrors"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report spelling errors command.
+	script_toggleReportSpellingErrors.__doc__=_("Toggles on and off the reporting of spelling errors")
+	script_toggleReportSpellingErrors.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportPage(self,gesture):
+		if config.conf["documentFormatting"]["reportPage"]:
+			# Translators: The message announced when toggling the report pages document formatting setting.
+			state = _("report pages off")
+			config.conf["documentFormatting"]["reportPage"]=False
+		else:
+			# Translators: The message announced when toggling the report pages document formatting setting.
+			state = _("report pages on")
+			config.conf["documentFormatting"]["reportPage"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report pages command.
+	script_toggleReportPage.__doc__=_("Toggles on and off the reporting of pages")
+	script_toggleReportPage.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportLineNumber(self,gesture):
+		if config.conf["documentFormatting"]["reportLineNumber"]:
+			# Translators: The message announced when toggling the report line numbers document formatting setting.
+			state = _("report line numbers off")
+			config.conf["documentFormatting"]["reportLineNumber"]=False
+		else:
+			# Translators: The message announced when toggling the report line numbers document formatting setting.
+			state = _("report line numbers on")
+			config.conf["documentFormatting"]["reportLineNumber"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report line numbers command.
+	script_toggleReportLineNumber.__doc__=_("Toggles on and off the reporting of line numbers")
+	script_toggleReportLineNumber.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportLineIndentation(self,gesture):
+		if config.conf["documentFormatting"]["reportLineIndentation"]:
+			# Translators: The message announced when toggling the report line indentation document formatting setting.
+			state = _("report line indentation off")
+			config.conf["documentFormatting"]["reportLineIndentation"]=False
+		else:
+			# Translators: The message announced when toggling the report line indentation document formatting setting.
+			state = _("report line indentation on")
+			config.conf["documentFormatting"]["reportLineIndentation"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report line indentation command.
+	script_toggleReportLineIndentation.__doc__=_("Toggles on and off the reporting of line indentation")
+	script_toggleReportLineIndentation.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportParagraphIndentation(self,gesture):
+		if config.conf["documentFormatting"]["reportParagraphIndentation"]:
+			# Translators: The message announced when toggling the report paragraph indentation document formatting setting.
+			state = _("report paragraph indentation off")
+			config.conf["documentFormatting"]["reportParagraphIndentation"]=False
+		else:
+			# Translators: The message announced when toggling the report paragraph indentation document formatting setting.
+			state = _("report paragraph indentation on")
+			config.conf["documentFormatting"]["reportParagraphIndentation"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report paragraph indentation command.
+	script_toggleReportParagraphIndentation.__doc__=_("Toggles on and off the reporting of paragraph indentation")
+	script_toggleReportParagraphIndentation.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportTables(self,gesture):
+		if config.conf["documentFormatting"]["reportTables"]:
+			# Translators: The message announced when toggling the report tables document formatting setting.
+			state = _("report tables off")
+			config.conf["documentFormatting"]["reportTables"]=False
+		else:
+			# Translators: The message announced when toggling the report tables document formatting setting.
+			state = _("report tables on")
+			config.conf["documentFormatting"]["reportTables"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report tables command.
+	script_toggleReportTables.__doc__=_("Toggles on and off the reporting of tables")
+	script_toggleReportTables.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportTableHeaders(self,gesture):
+		if config.conf["documentFormatting"]["reportTableHeaders"]:
+			# Translators: The message announced when toggling the report table row/column headers document formatting setting.
+			state = _("report table row and column headers off")
+			config.conf["documentFormatting"]["reportTableHeaders"]=False
+		else:
+			# Translators: The message announced when toggling the report table row/column headers document formatting setting.
+			state = _("report table row and column headers on")
+			config.conf["documentFormatting"]["reportTableHeaders"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report table row/column headers command.
+	script_toggleReportTableHeaders.__doc__=_("Toggles on and off the reporting of table row and column headers")
+	script_toggleReportTableHeaders.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportTableCellCoords(self,gesture):
+		if config.conf["documentFormatting"]["reportTableCellCoords"]:
+			# Translators: The message announced when toggling the report table cell coordinates document formatting setting.
+			state = _("report table cell coordinates off")
+			config.conf["documentFormatting"]["reportTableCellCoords"]=False
+		else:
+			# Translators: The message announced when toggling the report table cell coordinates document formatting setting.
+			state = _("report table cell coordinates on")
+			config.conf["documentFormatting"]["reportTableCellCoords"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report table cell coordinates command.
+	script_toggleReportTableCellCoords.__doc__=_("Toggles on and off the reporting of table cell coordinates")
+	script_toggleReportTableCellCoords.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportLinks(self,gesture):
+		if config.conf["documentFormatting"]["reportLinks"]:
+			# Translators: The message announced when toggling the report links document formatting setting.
+			state = _("report links off")
+			config.conf["documentFormatting"]["reportLinks"]=False
+		else:
+			# Translators: The message announced when toggling the report links document formatting setting.
+			state = _("report links on")
+			config.conf["documentFormatting"]["reportLinks"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report links command.
+	script_toggleReportLinks.__doc__=_("Toggles on and off the reporting of links")
+	script_toggleReportLinks.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportComments(self,gesture):
+		if config.conf["documentFormatting"]["reportComments"]:
+			# Translators: The message announced when toggling the report comments document formatting setting.
+			state = _("report comments off")
+			config.conf["documentFormatting"]["reportComments"]=False
+		else:
+			# Translators: The message announced when toggling the report comments document formatting setting.
+			state = _("report comments on")
+			config.conf["documentFormatting"]["reportComments"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report comments command.
+	script_toggleReportComments.__doc__=_("Toggles on and off the reporting of comments")
+	script_toggleReportComments.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportLists(self,gesture):
+		if config.conf["documentFormatting"]["reportLists"]:
+			# Translators: The message announced when toggling the report lists document formatting setting.
+			state = _("report lists off")
+			config.conf["documentFormatting"]["reportLists"]=False
+		else:
+			# Translators: The message announced when toggling the report lists document formatting setting.
+			state = _("report lists on")
+			config.conf["documentFormatting"]["reportLists"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report lists command.
+	script_toggleReportLists.__doc__=_("Toggles on and off the reporting of lists")
+	script_toggleReportLists.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportHeadings(self,gesture):
+		if config.conf["documentFormatting"]["reportHeadings"]:
+			# Translators: The message announced when toggling the report headings document formatting setting.
+			state = _("report headings off")
+			config.conf["documentFormatting"]["reportHeadings"]=False
+		else:
+			# Translators: The message announced when toggling the report headings document formatting setting.
+			state = _("report headings on")
+			config.conf["documentFormatting"]["reportHeadings"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report headings command.
+	script_toggleReportHeadings.__doc__=_("Toggles on and off the reporting of headings")
+	script_toggleReportHeadings.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportBlockQuotes(self,gesture):
+		if config.conf["documentFormatting"]["reportBlockQuotes"]:
+			# Translators: The message announced when toggling the report block quotes document formatting setting.
+			state = _("report block quotes off")
+			config.conf["documentFormatting"]["reportBlockQuotes"]=False
+		else:
+			# Translators: The message announced when toggling the report block quotes document formatting setting.
+			state = _("report block quotes on")
+			config.conf["documentFormatting"]["reportBlockQuotes"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report block quotes command.
+	script_toggleReportBlockQuotes.__doc__=_("Toggles on and off the reporting of block quotes")
+	script_toggleReportBlockQuotes.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportLandmarks(self,gesture):
+		if config.conf["documentFormatting"]["reportLandmarks"]:
+			# Translators: The message announced when toggling the report landmarks document formatting setting.
+			state = _("report landmarks off")
+			config.conf["documentFormatting"]["reportLandmarks"]=False
+		else:
+			# Translators: The message announced when toggling the report landmarks document formatting setting.
+			state = _("report landmarks on")
+			config.conf["documentFormatting"]["reportLandmarks"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report landmarks command.
+	script_toggleReportLandmarks.__doc__=_("Toggles on and off the reporting of landmarks")
+	script_toggleReportLandmarks.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportFrames(self,gesture):
+		if config.conf["documentFormatting"]["reportFrames"]:
+			# Translators: The message announced when toggling the report frames document formatting setting.
+			state = _("report frames off")
+			config.conf["documentFormatting"]["reportFrames"]=False
+		else:
+			# Translators: The message announced when toggling the report frames document formatting setting.
+			state = _("report frames on")
+			config.conf["documentFormatting"]["reportFrames"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report frames command.
+	script_toggleReportFrames.__doc__=_("Toggles on and off the reporting of frames")
+	script_toggleReportFrames.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportClickable(self,gesture):
+		if config.conf["documentFormatting"]["reportClickable"]:
+			# Translators: The message announced when toggling the report if clickable document formatting setting.
+			state = _("report if clickable off")
+			config.conf["documentFormatting"]["reportClickable"]=False
+		else:
+			# Translators: The message announced when toggling the report if clickable document formatting setting.
+			state = _("report if clickable on")
+			config.conf["documentFormatting"]["reportClickable"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report if clickable command.
+	script_toggleReportClickable.__doc__=_("Toggles on and off reporting if clickable")
+	script_toggleReportClickable.category=SCRCAT_DOCUMENTFORMATTING
 
 	def script_cycleSpeechSymbolLevel(self,gesture):
 		curLevel = config.conf["speech"]["symbolLevel"]
@@ -416,7 +755,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
 	# Translators: Input help mode message for report current navigator object command.
-	script_navigatorObject_current.__doc__=_("Reports the current navigator object. Pressing twice spells this information,and pressing three times Copies name and value of this  object to the clipboard")
+	script_navigatorObject_current.__doc__=_("Reports the current navigator object. Pressing twice spells this information, and pressing three times Copies name and value of this  object to the clipboard")
 	script_navigatorObject_current.category=SCRCAT_OBJECTNAVIGATION
 
 	def script_navigatorObject_currentDimensions(self,gesture):
@@ -828,16 +1167,22 @@ class GlobalCommands(ScriptableObject):
 			if focus in ti:
 				# Update the focus, as it will have cached that there is no tree interceptor.
 				focus.treeInterceptor = ti
+				# If we just happened to create a browse mode TreeInterceptor
+				# Then ensure that browse mode is reported here. From the users point of view, browse mode was turned on.
+				if isinstance(ti,browseMode.BrowseModeTreeInterceptor) and not ti.passThrough:
+					browseMode.reportPassThrough(ti,False)
+					braille.handler.handleGainFocus(ti)
 			return
 
-		if not isinstance(vbuf, virtualBuffers.VirtualBuffer):
+		if not isinstance(vbuf, browseMode.BrowseModeTreeInterceptor):
 			return
-		# Toggle virtual buffer pass-through.
+		# Toggle browse mode pass-through.
 		vbuf.passThrough = not vbuf.passThrough
-		# If we are enabling pass-through, the user has explicitly chosen to do so, so disable auto-pass-through.
-		# If we're disabling pass-through, re-enable auto-pass-through.
-		vbuf.disableAutoPassThrough = vbuf.passThrough
-		virtualBuffers.reportPassThrough(vbuf)
+		if isinstance(vbuf,browseMode.BrowseModeDocumentTreeInterceptor):
+			# If we are enabling pass-through, the user has explicitly chosen to do so, so disable auto-pass-through.
+			# If we're disabling pass-through, re-enable auto-pass-through.
+			vbuf.disableAutoPassThrough = vbuf.passThrough
+		browseMode.reportPassThrough(vbuf)
 	# Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
 	script_toggleVirtualBufferPassThrough.__doc__=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.")
 	script_toggleVirtualBufferPassThrough.category=inputCore.SCRCAT_BROWSEMODE
@@ -867,7 +1212,7 @@ class GlobalCommands(ScriptableObject):
 	def script_reportFormatting(self,gesture):
 		formatConfig={
 			"detectFormatAfterCursor":False,
-			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,
+			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,"reportEmphasis":False,
 			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
 			"reportPage":False,"reportLineNumber":False,"reportParagraphIndentation":True,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
@@ -912,7 +1257,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			speech.speakMessage(_("no focus"))
 	# Translators: Input help mode message for report current focus command.
-	script_reportCurrentFocus.__doc__ = _("reports the object with focus")
+	script_reportCurrentFocus.__doc__ = _("reports the object with focus. If pressed twice, spells the information")
 	script_reportCurrentFocus.category=SCRCAT_FOCUS
 
 	def script_reportStatusLine(self,gesture):
@@ -941,7 +1286,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			speech.speakSpelling(text)
 	# Translators: Input help mode message for report status line text command.
-	script_reportStatusLine.__doc__ = _("reads the current application status bar and moves the navigator to it")
+	script_reportStatusLine.__doc__ = _("reads the current application status bar and moves the navigator to it. If pressed twice, spells the information")
 	script_reportStatusLine.category=SCRCAT_FOCUS
 
 	def script_toggleMouseTracking(self,gesture):
@@ -1121,7 +1466,6 @@ class GlobalCommands(ScriptableObject):
 	script_activateGeneralSettingsDialog.__doc__ = _("Shows the NVDA general settings dialog")
 	script_activateGeneralSettingsDialog.category=SCRCAT_CONFIG
 
-
 	def script_activateSynthesizerDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onSynthesizerCommand, None)
 	# Translators: Input help mode message for go to synthesizer dialog command.
@@ -1134,6 +1478,12 @@ class GlobalCommands(ScriptableObject):
 	script_activateVoiceDialog.__doc__ = _("Shows the NVDA voice settings dialog")
 	script_activateVoiceDialog.category=SCRCAT_CONFIG
 
+	def script_activateBrailleSettingsDialog(self, gesture):
+		wx.CallAfter(gui.mainFrame.onBrailleCommand, None)
+	# Translators: Input help mode message for go to braille settings dialog command.
+	script_activateBrailleSettingsDialog.__doc__ = _("Shows the NVDA braille settings dialog")
+	script_activateBrailleSettingsDialog.category=SCRCAT_CONFIG
+
 	def script_activateKeyboardSettingsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onKeyboardSettingsCommand, None)
 	# Translators: Input help mode message for go to keyboard settings dialog command.
@@ -1145,6 +1495,18 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for go to mouse settings dialog command.
 	script_activateMouseSettingsDialog.__doc__ = _("Shows the NVDA mouse settings dialog")
 	script_activateMouseSettingsDialog.category=SCRCAT_CONFIG
+
+	def script_activateReviewCursorDialog(self, gesture):
+		wx.CallAfter(gui.mainFrame.onReviewCursorCommand, None)
+	# Translators: Input help mode message for go to review cursor settings dialog command.
+	script_activateReviewCursorDialog.__doc__ = _("Shows the NVDA review cursor settings dialog")
+	script_activateReviewCursorDialog.category=SCRCAT_CONFIG
+
+	def script_activateInputCompositionDialog(self, gesture):
+		wx.CallAfter(gui.mainFrame.onInputCompositionCommand, None)
+	# Translators: Input help mode message for go to input composition dialog.
+	script_activateInputCompositionDialog.__doc__ = _("Shows the NVDA input composition settings dialog")
+	script_activateInputCompositionDialog.category=SCRCAT_CONFIG
 
 	def script_activateObjectPresentationDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame. onObjectPresentationCommand, None)
@@ -1163,6 +1525,36 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for go to document formatting dialog command.
 	script_activateDocumentFormattingDialog.__doc__ = _("Shows the NVDA document formatting settings dialog")
 	script_activateDocumentFormattingDialog.category=SCRCAT_CONFIG
+
+	def script_activateDefaultDictionaryDialog(self, gesture):
+		wx.CallAfter(gui.mainFrame.onDefaultDictionaryCommand, None)
+	# Translators: Input help mode message for opening default dictionary dialog.
+	script_activateDefaultDictionaryDialog.__doc__ = _("Shows the NVDA default dictionary dialog")
+	script_activateDefaultDictionaryDialog.category=SCRCAT_CONFIG
+
+	def script_activateVoiceDictionaryDialog(self, gesture):
+		wx.CallAfter(gui.mainFrame.onVoiceDictionaryCommand, None)
+	# Translators: Input help mode message for opening voice-specific dictionary dialog.
+	script_activateVoiceDictionaryDialog.__doc__ = _("Shows the NVDA voice-specific dictionary dialog")
+	script_activateVoiceDictionaryDialog.category=SCRCAT_CONFIG
+
+	def script_activateTemporaryDictionaryDialog(self, gesture):
+		wx.CallAfter(gui.mainFrame.onTemporaryDictionaryCommand, None)
+	# Translators: Input help mode message for opening temporary dictionary.
+	script_activateTemporaryDictionaryDialog.__doc__ = _("Shows the NVDA temporary dictionary dialog")
+	script_activateTemporaryDictionaryDialog.category=SCRCAT_CONFIG
+
+	def script_activateSpeechSymbolsDialog(self, gesture):
+		wx.CallAfter(gui.mainFrame.onSpeechSymbolsCommand, None)
+	# Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
+	script_activateSpeechSymbolsDialog.__doc__ = _("Shows the NVDA symbol pronunciation dialog")
+	script_activateSpeechSymbolsDialog.category=SCRCAT_CONFIG
+
+	def script_activateInputGesturesDialog(self, gesture):
+		wx.CallAfter(gui.mainFrame.onInputGesturesCommand, None)
+	# Translators: Input help mode message for go to input gestures dialog command.
+	script_activateInputGesturesDialog.__doc__ = _("Shows the NVDA input gestures dialog")
+	script_activateInputGesturesDialog.category=SCRCAT_CONFIG
 
 	def script_saveConfiguration(self,gesture):
 		wx.CallAfter(gui.mainFrame.onSaveConfigurationCommand, None)
@@ -1191,6 +1583,28 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for activate python console command.
 	script_activatePythonConsole.__doc__ = _("Activates the NVDA Python Console, primarily useful for development")
 	script_activatePythonConsole.category=SCRCAT_TOOLS
+
+	def script_activateAddonsManager(self,gesture):
+		wx.CallAfter(gui.mainFrame.onAddonsManagerCommand, None)
+		# Translators: Input help mode message for activate manage add-ons command.
+	script_activateAddonsManager.__doc__ = _("Activates the NVDA Add-ons Manager to install and uninstall add-on packages for NVDA")
+	script_activateAddonsManager.category=SCRCAT_TOOLS
+
+	def script_toggleSpeechViewer(self,gesture):
+		if gui.speechViewer.isActive:
+			# Translators: The message announced when disabling speech viewer.
+			state = _("speech viewer disabled")
+			gui.speechViewer.deactivate()
+			gui.mainFrame.sysTrayIcon.menu_tools_toggleSpeechViewer.Check(False)
+		else:
+			# Translators: The message announced when enabling speech viewer.
+			state = _("speech viewer enabled")
+			gui.speechViewer.activate()
+			gui.mainFrame.sysTrayIcon.menu_tools_toggleSpeechViewer.Check(True)
+		ui.message(state)
+		# Translators: Input help mode message for toggle speech viewer command.
+	script_toggleSpeechViewer.__doc__ = _("Toggles the NVDA Speech viewer, a floating window that allows you to view all the text that NVDA is currently speaking")
+	script_toggleSpeechViewer.category=SCRCAT_TOOLS
 
 	def script_braille_toggleTether(self, gesture):
 		if braille.handler.tether == braille.handler.TETHER_FOCUS:
@@ -1344,8 +1758,8 @@ class GlobalCommands(ScriptableObject):
 			api.setNavigatorObject(newObject)
 			speech.speakObject(newObject,reason=controlTypes.REASON_FOCUS)
 		else:
-			# Translators: a message when there is no next object when navigating
-			ui.message(_("no next"))
+			# Translators: a message when there is no previous object when navigating
+			ui.message(_("no previous"))
 	# Translators: Input help mode message for a touchscreen gesture.
 	script_navigatorObject_previousInFlow.__doc__=_("Moves to the previous object in a flattened view of the object navigation hierarchy")
 	script_navigatorObject_previousInFlow.category=SCRCAT_OBJECTNAVIGATION
@@ -1356,8 +1770,12 @@ class GlobalCommands(ScriptableObject):
 		index=(index+1)%len(touchHandler.availableTouchModes)
 		newMode=touchHandler.availableTouchModes[index]
 		touchHandler.handler._curTouchMode=newMode
-		# Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
-		ui.message(_("%s mode")%newMode)
+		try:
+			newModeLabel=touchHandler.touchModeLabels[newMode]
+		except KeyError:
+			# Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
+			newModeLabel=_("%s mode")%newMode
+		ui.message(newModeLabel)
 	# Translators: Input help mode message for a touchscreen gesture.
 	script_touch_changeMode.__doc__=_("cycles between available touch modes")
 	script_touch_changeMode.category=SCRCAT_TOUCH
@@ -1387,7 +1805,27 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onConfigProfilesCommand, None)
 	# Translators: Describes the command to open the Configuration Profiles dialog.
 	script_activateConfigProfilesDialog.__doc__ = _("Shows the NVDA Configuration Profiles dialog")
-	
+	script_activateConfigProfilesDialog.category=SCRCAT_CONFIG
+
+	def script_interactWithMath(self, gesture):
+		import mathPres
+		mathMl = mathPres.getMathMlFromTextInfo(api.getReviewPosition())
+		if not mathMl:
+			obj = api.getNavigatorObject()
+			if obj.role == controlTypes.ROLE_MATH:
+				try:
+					mathMl = obj.mathMl
+				except (NotImplementedError, LookupError):
+					mathMl = None
+		if not mathMl:
+			# Translators: Reported when the user attempts math interaction
+			# with something that isn't math.
+			ui.message(_("Not math"))
+			return
+		mathPres.interactWithMathMl(mathMl)
+	# Translators: Describes a command.
+	script_interactWithMath.__doc__ = _("Begins interaction with math content")
+
 	__gestures = {
 		# Basic
 		"kb:NVDA+n": "showGui",
@@ -1566,6 +2004,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+control+z": "activatePythonConsole",
 		"kb:NVDA+control+f3": "reloadPlugins",
 		"kb(desktop):NVDA+control+f2": "test_navigatorDisplayModelText",
+		"kb:NVDA+alt+m": "interactWithMath",
 	}
 
 #: The single global commands instance.

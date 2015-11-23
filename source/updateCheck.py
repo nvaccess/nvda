@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012 NV Access Limited
+#Copyright (C) 2012-2015 NV Access Limited
 
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
@@ -15,22 +15,26 @@ import versionInfo
 if not versionInfo.updateVersionType:
 	raise RuntimeError("No update version type, update checking not supported")
 
-import sys
+import winVersion
 import os
 import threading
 import time
 import cPickle
 import urllib
 import tempfile
+import hashlib
+import ctypes.wintypes
+import ssl
 import wx
 import languageHandler
 import gui
 from logHandler import log
 import config
 import shellapi
+import winUser
 
 #: The URL to use for update checks.
-CHECK_URL = "http://www.nvda-project.org/updateCheck"
+CHECK_URL = "https://www.nvaccess.org/nvdaUpdateCheck"
 #: The time to wait between checks.
 CHECK_INTERVAL = 86400 # 1 day
 #: The time to wait before retrying a failed check.
@@ -55,17 +59,27 @@ def checkForUpdate(auto=False):
 	@rtype: dict
 	@raise RuntimeError: If there is an error checking for an update.
 	"""
-	winVer = sys.getwindowsversion()
 	params = {
 		"autoCheck": auto,
 		"version": versionInfo.version,
 		"versionType": versionInfo.updateVersionType,
-		"osVersion": "{v.major}.{v.minor}.{v.build} {v.service_pack}".format(v=winVer),
+		"osVersion": winVersion.winVersionText,
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
 		"language": languageHandler.getLanguage(),
 		"installed": config.isInstalledCopy(),
 	}
-	res = urllib.urlopen("%s?%s" % (CHECK_URL, urllib.urlencode(params)))
+	url = "%s?%s" % (CHECK_URL, urllib.urlencode(params))
+	try:
+		res = urllib.urlopen(url)
+	except IOError as e:
+		if isinstance(e.strerror, ssl.SSLError) and e.strerror.reason == "CERTIFICATE_VERIFY_FAILED":
+			# #4803: Windows fetches trusted root certificates on demand.
+			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
+			_updateWindowsRootCertificates()
+			# and then retry the update check.
+			res = urllib.urlopen(url)
+		else:
+			raise
 	if res.code != 200:
 		raise RuntimeError("Checking for update failed with code %d" % res.code)
 	info = {}
@@ -182,6 +196,7 @@ class UpdateResultDialog(wx.Dialog):
 		if updateInfo:
 			self.isInstalled = config.isInstalledCopy()
 			self.urls = updateInfo["launcherUrl"].split(" ")
+			self.fileHash = updateInfo.get("launcherHash")
 			# Translators: A message indicating that an updated version of NVDA is available.
 			# {version} will be replaced with the version; e.g. 2011.3.
 			message = _("NVDA version {version} is available.").format(**updateInfo)
@@ -227,7 +242,7 @@ class UpdateResultDialog(wx.Dialog):
 
 	def _download(self):
 		if self.isInstalled:
-			UpdateDownloader(self.urls).start()
+			UpdateDownloader(self.urls, fileHash=self.fileHash).start()
 		else:
 			os.startfile(self.urls[0])
 		self.Destroy()
@@ -242,13 +257,16 @@ class UpdateDownloader(object):
 	To use, call L{start} on an instance.
 	"""
 
-	def __init__(self, urls):
+	def __init__(self, urls, fileHash=None):
 		"""Constructor.
 		@param urls: URLs to try for the update file.
 		@type urls: list of str
+		@param fileHash: The SHA-1 hash of the file as a hex string.
+		@type fileHash: basestring
 		"""
 		self.urls = urls
 		self.destPath = tempfile.mktemp(prefix="nvda_update_", suffix=".exe")
+		self.fileHash = fileHash
 
 	def start(self):
 		"""Start the download.
@@ -312,6 +330,8 @@ class UpdateDownloader(object):
 		remote.fp._sock.settimeout(120)
 		size = int(remote.headers["content-length"])
 		local = file(self.destPath, "wb")
+		if self.fileHash:
+			hasher = hashlib.sha1()
 		self._guiExec(self._downloadReport, 0, size)
 		read = 0
 		chunk=DOWNLOAD_BLOCK_SIZE
@@ -327,9 +347,13 @@ class UpdateDownloader(object):
 			if self._shouldCancel:
 				return
 			local.write(block)
+			if self.fileHash:
+				hasher.update(block)
 			self._guiExec(self._downloadReport, read, size)
 		if read < size:
 			raise RuntimeError("Content too short")
+		if self.fileHash and hasher.hexdigest() != self.fileHash:
+			raise RuntimeError("Content has incorrect file hash")
 		self._guiExec(self._downloadReport, read, size)
 
 	def _downloadReport(self, read, size):
@@ -369,10 +393,11 @@ class UpdateDownloader(object):
 			_("Install Update"))
 		state["removeFile"] = self.destPath
 		saveState()
+		# #4475: ensure that the new process shows its first window, by providing SW_SHOWNORMAL
 		shellapi.ShellExecute(None, None,
 			self.destPath.decode("mbcs"),
 			u"--install -m",
-			None, 0)
+			None, winUser.SW_SHOWNORMAL)
 
 class DonateRequestDialog(wx.Dialog):
 	# Translators: The message requesting donations from users.
@@ -458,3 +483,47 @@ def terminate():
 	if autoChecker:
 		autoChecker.terminate()
 		autoChecker = None
+
+# These structs are only complete enough to achieve what we need.
+class CERT_USAGE_MATCH(ctypes.Structure):
+	_fields_ = (
+		("dwType", ctypes.wintypes.DWORD),
+		# CERT_ENHKEY_USAGE struct
+		("cUsageIdentifier", ctypes.wintypes.DWORD),
+		("rgpszUsageIdentifier", ctypes.c_void_p), # LPSTR *
+	)
+
+class CERT_CHAIN_PARA(ctypes.Structure):
+	_fields_ = (
+		("cbSize", ctypes.wintypes.DWORD),
+		("RequestedUsage", CERT_USAGE_MATCH),
+		("RequestedIssuancePolicy", CERT_USAGE_MATCH),
+		("dwUrlRetrievalTimeout", ctypes.wintypes.DWORD),
+		("fCheckRevocationFreshnessTime", ctypes.wintypes.BOOL),
+		("dwRevocationFreshnessTime", ctypes.wintypes.DWORD),
+		("pftCacheResync", ctypes.c_void_p), # LPFILETIME
+		("pStrongSignPara", ctypes.c_void_p), # PCCERT_STRONG_SIGN_PARA
+		("dwStrongSignFlags", ctypes.wintypes.DWORD),
+	)
+
+def _updateWindowsRootCertificates():
+	crypt = ctypes.windll.crypt32
+	# Get the server certificate.
+	sslCont = ssl._create_unverified_context()
+	u = urllib.urlopen("https://www.nvaccess.org/nvdaUpdateCheck", context=sslCont)
+	cert = u.fp._sock.getpeercert(True)
+	u.close()
+	# Convert to a form usable by Windows.
+	certCont = crypt.CertCreateCertificateContext(
+		0x00000001, # X509_ASN_ENCODING
+		cert,
+		len(cert))
+	# Ask Windows to build a certificate chain, thus triggering a root certificate update.
+	chainCont = ctypes.c_void_p()
+	crypt.CertGetCertificateChain(None, certCont, None, None,
+		ctypes.byref(CERT_CHAIN_PARA(cbSize=ctypes.sizeof(CERT_CHAIN_PARA),
+			RequestedUsage=CERT_USAGE_MATCH())),
+		0, None,
+		ctypes.byref(chainCont))
+	crypt.CertFreeCertificateChain(chainCont)
+	crypt.CertFreeCertificateContext(certCont)

@@ -14,6 +14,7 @@ import os
 import time
 import subprocess
 import _winreg
+import winVersion
 
 CREATE_UNICODE_ENVIRONMENT=1024
 INFINITE = 0xffffffff
@@ -158,10 +159,7 @@ def nvdaLauncher():
 def startNVDA(desktop):
 	token=duplicateTokenPrimary(getOwnToken())
 	windll.advapi32.SetTokenInformation(token,TokenUIAccess,byref(c_ulong(1)),sizeof(c_ulong))
-	args = [desktop, token, nvdaExec, "-m", "-c", nvdaSystemConfigDir, "--no-sr-flag"]
-	if not isDebug:
-		args.append("--secure")
-	return executeProcess(*args)
+	return executeProcess(desktop, token, nvdaExec)
 
 def exitNVDA(desktop):
 	token=duplicateTokenPrimary(getOwnToken())
@@ -314,7 +312,7 @@ class NVDAService(win32serviceutil.ServiceFramework):
 	def SvcDoRun(self):
 		initDebug()
 		debug("service starting")
-		self.isWindowsXP = sys.getwindowsversion()[0:2] == (5, 1)
+		self.isWindowsXP = winVersion.winVersion[0:2] == (5, 1)
 		self.exitEvent = threading.Event()
 		self.initSession(windll.kernel32.WTSGetActiveConsoleSessionId())
 		self.exitEvent.wait()

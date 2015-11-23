@@ -173,7 +173,7 @@ def _speak(text):
 	global isSpeaking
 	uniqueID=c_int()
 	isSpeaking = True
-	flags = espeakCHARS_WCHAR | espeakSSML 
+	flags = espeakCHARS_WCHAR | espeakSSML | espeakPHONEMES
 	return espeakDLL.espeak_Synth(text,0,0,0,0,flags,byref(uniqueID),0)
 
 def speak(text):

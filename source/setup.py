@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #setup.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner
+#Copyright (C) 2006-2015 NV Access Limited, Peter Vágner, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -54,6 +54,8 @@ MAIN_MANIFEST_EXTRA = r"""
 		<supportedOS Id="{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}"/>
 		<!-- Windows 8.1 -->
 		<supportedOS Id="{1f676c76-80e1-4239-95bb-83d0f6d0da78}"/>
+		<!-- Windows 10 -->
+		<supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}"/>
 	</application> 
 </compatibility>
 """
@@ -71,7 +73,7 @@ def isSystemDLL(pathname):
 	if dll in ("msvcp71.dll", "msvcp90.dll", "gdiplus.dll","mfc71.dll", "mfc90.dll"):
 		# These dlls don't exist on many systems, so make sure they're included.
 		return 0
-	elif dll.startswith("api-ms-win-") or dll in ("powrprof.dll", "mpr.dll"):
+	elif dll.startswith("api-ms-win-") or dll in ("powrprof.dll", "mpr.dll", "crypt32.dll"):
 		# These are definitely system dlls available on all systems and must be excluded.
 		# Including them can cause serious problems when a binary build is run on a different version of Windows.
 		return 1
@@ -104,6 +106,9 @@ class py2exe(build_exe.py2exe):
 			target["dest_base"] = "nvda_uiAccess"
 			target["uac_info"] = (target["uac_info"][0], True)
 			dist.windows.insert(1, target)
+			# nvda_eoaProxy should have uiAccess.
+			target = dist.windows[3]
+			target["uac_info"] = (target["uac_info"][0], True)
 
 		build_exe.py2exe.run(self)
 
@@ -116,11 +121,23 @@ class py2exe(build_exe.py2exe):
 		return mfest, rid
 
 def getLocaleDataFiles():
-	NVDALocaleFiles=[(os.path.dirname(f), (f,)) for f in glob("locale/*/LC_MESSAGES/*.mo")+glob("locale/*/*.dic")]
 	wxDir=wx.__path__[0]
-	wxLocaleFiles=[(os.path.dirname(f)[len(wxDir)+1:], (f,)) for f in glob(wxDir+"/locale/*/LC_MESSAGES/*.mo")]
+	localeMoFiles=set()
+	for f in glob("locale/*/LC_MESSAGES"):
+		localeMoFiles.add((f, (os.path.join(f,"nvda.mo"),)))
+		wxMoFile=os.path.join(wxDir,f,"wxstd.mo")
+		if os.path.isfile(wxMoFile):
+			localeMoFiles.add((f,(wxMoFile,))) 
+		lang=os.path.split(os.path.split(f)[0])[1]
+		if '_' in lang:
+				lang=lang.split('_')[0]
+				f=os.path.join('locale',lang,'lc_messages')
+				wxMoFile=os.path.join(wxDir,f,"wxstd.mo")
+				if os.path.isfile(wxMoFile):
+					localeMoFiles.add((f,(wxMoFile,))) 
+	localeDicFiles=[(os.path.dirname(f), (f,)) for f in glob("locale/*/*.dic")]
 	NVDALocaleGestureMaps=[(os.path.dirname(f), (f,)) for f in glob("locale/*/gestures.ini")]
-	return NVDALocaleFiles+wxLocaleFiles+NVDALocaleGestureMaps
+	return list(localeMoFiles)+localeDicFiles+NVDALocaleGestureMaps
 
 def getRecursiveDataFiles(dest,source,excludes=()):
 	rulesList=[]
@@ -166,6 +183,17 @@ setup(
 			"icon_resources": [(1,"images/nvda.ico")],
 			"version": "0.0.0.0",
 			"description": name,
+			"product_version": version,
+			"copyright": copyright,
+			"company_name": publisher,
+		},
+		{
+			"script": "nvda_eoaProxy.pyw",
+			# uiAccess will be enabled at runtime if appropriate.
+			"uac_info": ("asInvoker", False),
+			"icon_resources": [(1,"images/nvda.ico")],
+			"version": "0.0.0.0",
+			"description": "NVDA Ease of Access proxy",
 			"product_version": version,
 			"copyright": copyright,
 			"company_name": publisher,

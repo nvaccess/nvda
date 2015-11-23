@@ -3,6 +3,186 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.4 =
+Prednosti tejto verzie zahŕňajú vylepšenú podporu pre windows 10; zaradenie NVDA do centra zjednodušenia od systému Windows 8; vylepšenú podporu pre MS Excel (možnosť zobraziť zoznam hárkov, premenovať hárky,  možnosť čítať chránené bunky v chránených dokumentoch); podporu pre úpravu Rich text polí v programoch Mozilla Firefox, Google Chrome a Mozilla Thunderbird.
+
+== Nové vlastnosti ==
+- Od verzie Windows 8 sa NVDA zobrazuje v centre zjednodšenia. (#308)
+- Pri pohybe v dokumentoch programu MS Excel, NVDA správne oznamuje zmeny  formátovania, ak je začiarknuté oznamovanie formátovania v nastaveniach čítania textu. (#4878)
+- NVDA dokáže odteraz oznamovať, ak je text zvýraznený. Predvolene je táto možnosť začiarknutá a nájdete ju v nastaveniach čítania textu. V súčasnosti NVDA hlási prítomnosť formátovacích značiek em a strong v režime prehliadania v prehliadači MS Internet Explorer a iných MSHTML prvkoch. (#4920)
+- Ak je začiarknuté oznamovanie zmien, NVDA oznamuje vložený a odstránený text v režime prehliadania v prehliadači Internet Explorer a iných MSHTML prvkoch. (#4920)
+- Ak si zobrazíte zoznam zmien v zozname Prvkov v dokumente MS Word, NVDA podrobnejšie oznamuje konkrétne zmeny, napríklad uvádza zmeny vo formátovaní. (#4920)
+- MS Excel: V zozname prvkov (NVDA+F7) si môžete zobraziť zoznam hárkov a  klávesom  F2 môžete  hárok premenovať. (#4630, #4414)
+- Odteraz môžete rozhodnúť, či sa majú konkrétne symboly posielať na spracovanie hlasovému výstupu (ktorý môže urobiť pauzu alebo zmeniť intonáciu). Nastavenie vykonáte v dialógu Výslovnosť interpunkčných a špeciálnych symbolov. (#5234)
+- V dokumentoch MS Excel NVDA oznamuje vstupné správy, ktoré vložil autor dokumentu. (#5051)
+- Podpora pre brailovské riadky Baum Pronto! V4 a VarioUltra, pripojené cez Bluetooth. (#3717)
+- Podpora pre prácu s rich text v Mozilla aplikáciách. V Mozille Firefox môžete pracovať s Google dokumentami, podporované je aj zobrazovanie na brailovských riadkoch. V programe Thunderbird NVDA podporuje vytváranie správ vo formáte HTML. (#1668)
+- Podpora pre prácu s rich text v prehliadači Google Chrome a prehliadačoch postavených na Chrome. Zahŕňa aj prácu s Google Dokumentami, podporované je aj zobrazovanie na brailovskom riadku. (#2634)
+ - Toto funguje od verzie Chrome 47.
+- V chránených dokumentoch MS Excel môžete čítať aj chránené bunky. Stačí ak aktivujete režim prehliadania. (#4952)
+
+
+== Zmeny ==
+- Možnosť Oznamovať zmeny v nastaveniach čítania textu je predvolené začiarknutá. (#4920)
+- Ak je začiarknuté oznamovanie zmien, NVDA pri pohybe po znakoch v dokumentoch MS Word oznamuje len stručnú informáciu o zmenách, aby bola navigácia v dokumente rýchlejšia. Podrobnosti o zmenách si môžete prečítať v zozname prvkov. (#4920)
+- Prekladová tabuľka  liblouis  aktualizovaná na verziu 2.6.4. (#5341)
+- Niektoré interpunkčné znaky (vrátane základných matematických symbolov) sú  predvolene nastavené na úroveň "niektorá interpunkcia", takže ich NVDA predvolene prečíta. (#3799)
+- Hlasový výstup by mal urobiť pauzu pri zátvorkáchznakoch a znaku pomlčka (–). Týka sa len hlasových výstupov, ktoré to podporujú. (#3799)
+- Ak označíte text, NVDA najprv prečíta text a až potom stav. (#1707)
+
+
+== opravy ==
+- Výrazné zlepšenie pri navigácii v zozname správ v programe Outlook 2010/2013. (#5268)
+- pri prezeraní  grafov v dokumente MS Excel, je opäť možné použiť niektoré klávesové skratky (napríklad ctrl+strana hore ctrl+strana dole pre zmenu hárkov). (#5336)
+- Upravený vzhľad dialógu, ktorý sa zobrazí, ak sa pokúsite prejsť na staršiu verziu NVDA. (#5325)
+- NVDA sa po štarte systému od verzie Windows 8 spúšťa rýchlejšie. (#308)
+ - Ak ste mali doposiaľ aktívne spúšťanie NVDA po štarte systému, musíte možnosť deaktivovať a znovu aktivovať, aby sa prejavili zmeny:
+  + Otvorte menu NVDA > možnosti > všeobecné nastavenia.
+  + odčiarknite začiarkávacie pole Automaticky spustiť NVDA po prihlásení do Windows.
+  + Aktivujte tlačidlo OK.
+    + Znovu otvorte menu NVDA > možnosti > všeobecné nastavenia.
+  + začiarknitečiarknite začiarkávacie pole Automaticky spustiť NVDA po prihlásení do Windows.
+  + Aktivujte tlačidlo OK.
+- Zlepšená odozva v správcovy úloh a v programe Windows Explorer. (#5293)
+- NVDA odteraz správne aktivuje režim fokusu, ak sa tabulátorom presuniete do grid prvku iba na čítanie.Toto sa týka režimu prehliadania  v prehliadači Mozilla Firefox a Gecko prehliadačoch. (#5118)
+- Pri švihnutí doľava na dotykovej obrazovke NVDA správne povie "žiadny predchádzajúci" a nie "žiadny nasledujúci objekt".
+- Opravená chyba, ktorá vznikala pri písaní viacerých slov do poľa filter v okne Klávesové skratky. (#5426)
+- NVDA viac bezdôvodne nezamrzne pri pokuse o znovu pripojenie k riadku HumanWare Brailliant BI/B cez USB. (#5406)
+- V jazykoch s kombinovanými znakmi, správne fungujú špeciálne symboly písané veľkými písmenami v Anglickom jazyku. (#5375)
+- NVDA viac nezamrzne pri pokuse vyvolať ponuku štart v systéme Windows 10. (#5417)
+- V aplikácii skype pre desktop sa nestrácajú notifikácie, ak je zobrazené upozornenie a zobrazí sa nové upozornenie. (#4841)
+- Upozornenia sú spravne oznamované v programe Skype pre desktop od verzie 7.12. (#5405)
+- NVDA správne oznamuje fokus, ak zatvoríte kontextové  menu v niektorých aplikáciách, ako napríklad Jarte. (#5302)
+- NVDA správne oznamuje farby v niektorých aplikáciách, ako napríkald Wordpad (týka sa systému Windows od verzie 7). (#5352)
+- Ak stlačíte enter pri úprave snímky v programe MS Powerpoint, NVDA správne oznamuje vložený text s odrážkou alebo správnym číslovaním. (#5360)
+
+
+= 2015.3 =
+Prednosti tejto verzie zahŕňajú základnú podporu prostredia systému Windows 10, možnosť vypnúť jednoznakové príkazy rýchlej navigácie v režime prehliadania (užitočné pre niektoré web aplikácie), vylepšenia pri práci v programe Internet explorer, a oprava problému, keď počas písania so zapnutou podporov braillu bol do vstupného prvku zapisovaný skomolený text.
+
+
+== Nové vlastnosti ==
+- NVDA odteraz oznamuje pravopisné chyby v editačných prvkoch v prehliadači Internet Explorer a ostatných MSHTML prvkoch. (#4174)
+- NVDA dokáže rozpoznať oveľa viac matematických symbolov v kódovaní unicode. (#3805)
+- Návrhy sú automaticky oznamované pri vyhľadávaní v ponuke štart v systéme Windows 10. (#5049)
+- Podpora pre brailovské riadky EcoBraille 20, EcoBraille 40, EcoBraille 80 a EcoBraille Plus. (#4078)
+- V režime prehliadania môžete skratkou nvda+shift+medzera vypnúť rýchlu navigáciu. Pri vypnutej rýchlej navigácii sú písmená posielané do aktívneho okna. Toto je užitočné pri niektorých aplikáciách, ako Facebook, Gmail a Twitter. (#3203)
+- Nové brailovské prekladové tabuľky: Fínsky 6-bodový plnopis, Írsky plnopis a skradkopis, Kórejský plnopis a skradkopis (2006). (#5137, #5074, #5097)
+- pridaná podpora pre QWERTY klávesnicu na riadku Papenmeier BRAILLEX Live Plus. (#5181)
+- Experimentálna podpora pre webový prehliadač Microsoft Edge a technológiu prehliadania v systéme Windows 10. (#5212)
+
+
+== Zmeny ==
+- Brailovský Prekladač liblouis aktualizovaný na verziu 2.6.3. (#5137)
+- Ak sa pokúsite nainštalovať staršiu verziu NVDA ako verziu, ktorú máte práve nainštalovanú, NVDA upozorní na fakt, že tento postup nie je odporúčaný a ak chcete nainštalovať staršiu verziu NVDA, mali by ste najprv NVDA úplne odinštalovať. (#5037)
+
+
+== Opravy ==
+- Pri prechode po formulárových prvkoch v prehliadači Internet Explorer a ostatných MSHTML prvkoch viac nie sú oznamované položky v zoznamoch. (#4204)
+- Ak stránka obsahuje ARIA tab panel, pri použití prehliadača mozilla Firefox NVDA viac nevytvára popis k tomuto prvku obsahujúci text všetkých vnorených prvkov v panely. (#4638)
+- V prehliadači Internet explorer a ostatných MSHTML prvkoch sa po prechode tabulátorom do sekcie, článku alebo dialógu, neprečíta celý obsah prvku ako jeho názov. (#5021, #5025) 
+- ak používate brailovskú klávesnicu na riadkoch Baum/HumanWare/APH, písanie funguje aj po stlačení funkčných a iných klávesov. (#3541)
+- V systéme Windows 10 nie sú viac oznamované zbytočné informácie po stlačení skratiek alt+tab alebo alt+shift+tab. (#5116)
+- Ak používate brailovský riadok, NVDA viac nespôsobuje skomolenie textu pri písaní v aplikáciách ako Microsoft Outlook. (#2953)
+- V prehliadači Internet Explorer a ostatných MSHTML prvkoch sú správne oznamované prvky, ktoré sa zmenili alebo objavili a súčasne nadobudli fokus. (#5040)
+- pri použití rýchlej navigácie v programe MS Word sa brailovský kurzor a prezerací kurzor presúvajú na správne miesto. (#4968)
+- Na brailovských riadkoch sa viac nezobrazujú nadbytočné medzeri medzi znakmi pre prvky a znakmi pre formátovanie. (#5043)
+- Ak nejaká aplikácia pracuje pomaly a opustíte ju, NVDA by mal pracovať rýchlejšie. (#3831)
+- odteraz sú správne čítané Dlaždicové notifikácie v systéme Windows 10. (#5136)
+- V niektorých zoznamových rámikoch (UI automation) doteraz nefungovalo oznamovanie novej hodnoty po zmene.
+- V režime prehliadania v prehliadačoch webových stránok sa navigácia tabulátorom správa korektne aj po prechode do dokumente v samostatnom ráme. (#5227)
+- Zamikacou obrazovkou v systéme Windows 10 je možné prejsť pomocou dotykovej obrazovky. (#5220)
+- V systéme Windows 7 alebo novšom, NVDA pri písaní do niektorých editačných polí napr. v aplikáciách Wordpad, Skype a zapnutom brailly nespôsobuje skomolenie textu. (#4291)
+- Na zamknutej obrazovke v systéme Windows 10 nie je viac možné čítať obbsah schránky, prezerať aplikácie prezeracím kurzorom, meniť nastavenia NVDA a podobne. (#5269)
+
+
+= 2015.2 =
+Prednosti tejto verzie zahŕňajú podporu pre čítanie grafov v dokumentoch MS Excel a tiež podporu pre čítanie a prácu s matematickými výrazmi.
+
+== Nové vlastnosti ==
+- V dokumentoch programu MS Word môžete čítať po vetách skratkami alt+šípka hore a dole. (#3288)
+- Nové prekladové brailovské tabuky pre viacero Indických jazykov. (#4778)
+- NVDA v tabuľkách MS Excel hlási, ak je obsah bunky orezaný alebo preteká do vedľajšej bunky. (#3040)
+- V Programe MS Excel môžete odteraz vyvolať dialóg zoznam prvkov (NVDA+f7) a zobraziť si tak zoznam grafov, buniek s komentárom a buniek so vzorcami. (#1987)
+- Podpora pre čítanie grafov v Dokumentoch MS Excel od verzie 2007. Najprv nájdite požadovaný graf cez zoznam prvkov (NVDA+F7) a potom čítajte dátové položky grafu šípkami. (#1987)
+- S použitím programu  MathPlayer 4 od  Design Science je možné čítať  matematický obsah  vo webových prehliadačoch a v  programoch Microsoft Word a PowerPoint. Pozrite časť "Čítanie matematického obsahu" v používateľskej príručke. (#4673)
+- V dialógu Klávesové skratky odteraz môžete nastaviť skratky a dotykové gestá pre všetky dialógy s nastaveniami a pre možnosti v dialógu nastavenia čítania textu. (#4898)
+
+
+== Zmeny ==
+- Zreorganizované klávesové skratky v dialógu nastavenia čítania textu (v Slovenskej lokalizácii opravené situácie, keď dve nastavenia mali rovnakú skratku a niektoré nemali žiadnu). (#4650)
+- V dialógu nastavenia myši pribudli skratky pre nastavenia "signalizovať polohu myši počas posúvania" a "úroveň jasu ovplyvňuje hlasitosť  signalizácie". (#4916)
+- Významne prepracované oznamovanie farieb. (#4984)
+- Prekladová tabuľka  liblouis aktualizovaná na verziu 2.6.2. (#4777)
+
+
+== Opravy ==
+- Popisy spojitých symbolov v niektorých indických jazykoch sú odteraz správne spracované. (#4582)
+- Ak je začiarknuté "pri spracovaní textu sa riadiť hlasovým výstupom", v dialógu sa správne použije jazyk hlasového výstupu. V názve okna je tiež zobrazená informácia o aktuálnom jazyku. (#4930)
+- V prehliadači  Internet Explorer a  ďalších  MSHTML prvkoch nie sú viac zbytočne  oznamované napísané znaky, ak píšete do editovateľného zoznamového rámika, napríklad na domovskej stránke Google. (#4976)
+- NVDA odteraz oznamuje farby pri nastavovaní farby v programe MS Word. (#3045)
+- Zobrazovanie brailovského textu v Dánčine  opäť funguje. (#4986)
+- V MS powerpointe opäť fungujú klávesy strana hore a strana dole na prepínanie snímok. (#4850)
+- V programe   Skype (Desktop) od verzie 7.2 , fungujú oznámenia ak osoba píše a boli odstránené problémy, ktoré nastali ak fokus opustil okno konverzácie. (#4972)
+- Opravená chyba, ktorá sa vyskytla, ak ste v dialógu klávesové skratky do editačného poľa filter napísali nejaký symbol, napríklad zátvorky. (#5060)
+- V prehliadači  Internet Explorer a ďalších  MSHTML prvkoch skratka G a shift+g naviguje aj po obrázkoch určených pre lepšiu prístupnosť (ARIA role img). (#5062)
+
+
+= 2015.1 =
+Prednosti tejto verzie zahŕňajú podporu pre režim prehliadania v dokumentoch programu Microsoft Word a Outlook, veľké vylepšenia podpori pre Desktopovú verziu programu Skype a významné opravy pre Microsoft Internet Explorer.
+
+== Nové vlastnosti ==
+- V dialógu Výslovnosť interpunkčných a špeciálnych symbolov môžete odteraz pridávať vlastné symboly. (#4354)
+- V dialógu klávesové skratky pribudlo editačné pole "filtrovať". Po napísaní reťazca do tohto poľa sa zobrazia len funkcie, ktoré obsahujú zadaný reťazec. (#4458)
+- NVDA odteraz automaticky oznamuje nový text v programe mintty. (#4588)
+- V dialógu hľadať v režime prehliadania pribudla možnosť rozlišovať veľké a malé písmená. (#4584)
+- skratky rýchlej navigácie (napríklad h pre nadpisy) a zoznam prvkov (nvda+F7) sú odteraz dostupné v dokumentoch programu Microsoft Word. Pre ich funkčnosť musíte aktivovať režim prehliadania skratkou nvda+medzera. (#2975)
+- Vylepšená podpora pre čítanie HTML správ v programe MS Outlook od verzie 2007. Pri otvorení správy sa automaticky aktivuje režim prehliadania. Ak sa tak vo vínimočných situáciách nestane, môžete ho aktivovať skratkou nvda+medzera. (#2975)
+- Hlavičky stĺpcov v tabuľkách programu Microsoft word sú automaticky oznamované, ak autor tabuľky nastavil hlavičku tabuľky vo vlastnostiach tabuľky. (#4510)
+ - Avšak toto nefunguje, ak boli riadky tabuľky zlúčené. V takom prípade musíte hlavičky nastaviť ručne skratkou NVDA+shift+c.
+- V aplikácii Skype (verzia desktop) sú automaticky oznamované upozornenia. (#4741)
+- V programe Skype (desktop) môžete na čítanie posledných desiatich správ použiť skratky nvda+ctrl+1 až nvda+ctrl+0, pričom nvda+ctrl+1 prečíta najnovšiu správu a NVDA+ctrl+0 prečíta desiatu správu od konca konverzácie. (#3210)
+- V okne konverzácie programu skype (desktop) NVDA oznamuje, ak osoba píše alebo prestane písať. (#3506)
+ - NVDA je odteraz možné nainštalovať cez príkazový riadok bez používateľského rozhrania tak, že sa po inštalácii NVDA nespustí. Použite parameter --install-silent. (#4206)
+- Pridaná podpora pre riadky Papenmeier BRAILLEX Live 20, BRAILLEX Live a BRAILLEX Live Plus. (#4614)
+
+
+== Zmeny ==
+- V nastaveniach čítania textu bola pridaná skratka pre oznamovanie pravopisných chýb - alt+c (V anglickej lokalizácii je to skratka alt+r). (#793)
+- NVDA odteraz nespracúva interpunkcie a špeciálne symboly a prenecháva ich spracovanie na použitý hlasový výstup nezávisle od toho, či máte alebo nemáte začiarknutú automatickú zmenu jazyka. Ak potrebujete, aby symboly boli spracované priamo cez NVDA, v nastaveniach hlasu odčiarknite novú položku "pri spracovaní textu sa riadiť jazykom hlasového výstupu". (#4210)
+- Podpora pre hlasový výstup Newfon bola odstránená. Newfon môžete ale naďalej používať ako doplnok. (#3184)
+- NVDA odteraz podporuje Desktop verziu programu Skype 7 a novšie. Staršie verzie viac nie sú podporované. (#4218)
+- Sťahovanie aktualizácií NVDA je odteraz bezpečnejšie. Dostupnosť novej verzie sa overuje cez HTTPS protokol a po stiahnutí sa overuje kontrolný súčet súboru. (#4716)
+- Hlasový výstup eSpeak bol aktualizovaný na verziu 1.48.04 (#4325)
+
+
+== Opravy ==
+- hlavičky pre zlúčené bunky v tabuľkách MS Excel sú odteraz oznamované správne. Ak napríklad zlúčite bunky A1 a B1, bunka B2 bude oznamovať A1 a B1 ako svoju hlavičku. (#4617)
+- Pri editácii textu v MS powerpointe 2003, NVDA správne oznamuje text v riadkoch. Doteraz bol v každom odseku v textovom poli kurzor nesprávne posunutý o jeden znak. (#4619)
+- Všetky dialógy NVDA sú odteraz vycentrované na obrazovke tak, aby boli dobre použiteľné aj pre vidiacich používateľov. (#3148)
+- pri pridávaní nového kontaktu a vkladaní úvodnej správy v programe Skype (desktop) NVDA správne číta obsah editačného poľa. (#3661)
+- ak sa fokus v programe Eclipse IDE presunie na novú položku v strome a predchádzajúca položka bola začiarkávacie pole, NVDA viac túto položku neoznamuje. (#4586)
+- V dialógu kontrola pravopisu v programe MS Word je automaticky oznámená ďalšia chyba, ak aktuálna chyba bola opravená alebo zmenená pomocou klávesových skratiek. (#1938)
+- Opäť je možné správne čítať text v termináli programu Tera Term Pro a v dokumentoch v programe Balabolka. (#4229)
+- Pri písaní v Kórejčine a iných východoázijských jazykoch sa po vybratí vhodného návrhu fokus vráti späť do dokumentu, ak bol editovaný text v rámiku v programe Internet Explorer alebo dokument MSHTML. (#4045)
+- Ak vkladáte klávesovú skratku v dialógu klávesové skratky a namiesto vybratia správneho rozloženia stlačíte Escape, zavrie sa len menu a nie celý dialóg. (#3617)
+- Po odstránení doplnku a reštarte NVDA sa odstráni aj priečinok doplnku. Doposiaľ bolo nutné NVDA reštartovať až dvakrát. (#3461)
+- Odstránené mnohé problémy v podpore pre Skype (desktop), verzia 7. (#4218)
+- Ak odošlete správu v Programe Skype (desktop), NVDA správu prečíta len raz. (#3616)
+- VSkype (desktop) by už NVDA nemalo náhle nekontrolovateľne čítať celú konverzáciu alebo veľké množstvo správ. (#4644)
+- Opravená chyba, pri ktorej NVDA ignorovalo miestne a jazykové nastavenia a nesprávne oznamovalo čas a dátum. (#2987)
+- NVDA viac neoznamuje nezmyselný text v popisoch obrázkov (napríklad pri spravovaní skupín Google) (toto sa dialo pri obrázkoch kódovaných ako base64). (#4793)
+- NVDA viac po pár sekundách nezamrzne, ak opustíte aplikáciu Windows Store. (#4572)
+- NVDA odteraz rešpektuje aria-atomic prvky pri zobrazení stránky v prehliadači Mozilla firefox aj v prípadoch, ak sa atomic prvok zmení. Doposiaľ boli ovplyvnené len vnorené prvky. (#4794)
+- V programe Internet Explorer alebo v iných MSHTML prvkoch zobrazených v režime prehliadania NVDA správne oznamuje zmeny a live oblasti v Aria aplikáciách. (#4798)
+- V programe Internet explorer a MSHTML prvkoch NVDA neoznamuje celú live oblasť stránky, ktorá sa zmenila, ale len konkrétnu zmenu. (#4800)
+- V programe Internet Explorer a v iných MSHTML prvkoch obsah uvedený ako aria-labelledby nahrádza pôvodný obsah, ak je to potrebné. (#4575)
+- pri kontrole pravopisu v programe MS Outlook 2013 NVDA oznamuje slovo, v ktorom je pravopisná chyba. (#4848)
+- V programe Internet Explorer a iných MSHTML prvkoch NVDA nečíta obsah označený atribútom visibility:hidden. (#4839, #3776)
+- V programe Internet Explorer a iných MSHTML prvkoch atribút Title v prvkoch formulára nemá vyššiu preferenciu, ako iné atribúty. (#4491)
+- V programe Internet Explorer a iných MSHTML prvkoch nie sú problémy so získaním fokusu niektorých prvkov, ak je použitý atribút aria-activedescendant. (#4667)
+
+
 = 2014.4 =
 
 == Nové vlastnosti ==
@@ -37,6 +217,8 @@
 - rôzne verzie Eclipse, ako napríklad Spring Tool Suite a verzia zahrnutá v balíku pre vývojárov Android aplikácií, sú správne rozpoznané ako Eclipse. (#4360, #4454)
 - sledovanie myši a prezeranie pomocou dotykov v prehliadači Internet Explorer, v MSHTML prvkoch a vo viacerých aplikáciách v systéme Windows 8 je odteraz presnejšie na obrazovkách s veľkým rozlíšením, alebo pri zmene zväčšenia dokumentu. (#3494)
 - Sledovanie kurzora myši a prezeranie na dotykovej obrazovke v prehliadači Internet Explorer a v MSHTML prvkoch oznamuje popisy k viacerým tlačidlám. (#4173)
+- Ak používate brailovský riadok Papenmeier BRAILLEX cez BrxCom, tlačidlá na ovládanie odteraz fungujú správne. (#4614)
+
 
 = 2014.3 =
 

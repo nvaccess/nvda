@@ -168,7 +168,8 @@ class EditableTextWithAutoSelectDetection(EditableText):
 
 	def event_caret(self):
 		super(EditableText, self).event_caret()
-		self.detectPossibleSelectionChange()
+		if self is api.getFocusObject():
+			self.detectPossibleSelectionChange()
 
 	def event_textChange(self):
 		self.hasContentChangedSinceLastSelection = True
@@ -603,3 +604,31 @@ class FocusableUnfocusableContainer(NVDAObject):
 			if obj.isFocusable:
 				obj.setFocus()
 				break
+
+class ToolTip(NVDAObject):
+	"""Provides information about an item over which the user is hovering a cursor.
+	The object should fire a show event when it appears.
+	"""
+	role = controlTypes.ROLE_TOOLTIP
+
+	def event_show(self):
+		if not config.conf["presentation"]["reportTooltips"]:
+			return
+		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
+		# Ideally, we wouldn't use getBrailleTextForProperties directly.
+		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
+
+class Notification(NVDAObject):
+	"""Informs the user of non-critical information that does not require immediate action.
+	This is primarily for notifications displayed in the system notification area.
+	The object should fire a alert or show event when the user should be notified.
+	"""
+
+	def event_alert(self):
+		if not config.conf["presentation"]["reportHelpBalloons"]:
+			return
+		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
+		# Ideally, we wouldn't use getBrailleTextForProperties directly.
+		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
+
+	event_show = event_alert

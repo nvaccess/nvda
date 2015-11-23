@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2012 NV Access Limited
+#Copyright (C) 2006-2014 NV Access Limited
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -31,10 +31,13 @@ class ControlField(Field):
 
 	#: This field is usually a single line item; e.g. a link or heading.
 	PRESCAT_SINGLELINE = "singleLine"
-	#: This field is a marker; e.g. a separator or table cell.
+	#: This field is a marker; e.g. a separator or footnote.
 	PRESCAT_MARKER = "marker"
 	#: This field is a container, usually multi-line.
 	PRESCAT_CONTAINER = "container"
+	#: This field is a section of a larger container which is adjacent to another similar section;
+	#: e.g. a table cell.
+	PRESCAT_CELL = "cell"
 	#: This field is just for layout.
 	PRESCAT_LAYOUT = None
 
@@ -76,13 +79,15 @@ class ControlField(Field):
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 		):
 			return self.PRESCAT_SINGLELINE
-		elif role in (controlTypes.ROLE_SEPARATOR, controlTypes.ROLE_FOOTNOTE, controlTypes.ROLE_ENDNOTE, controlTypes.ROLE_EMBEDDEDOBJECT, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG):
+		elif role in (controlTypes.ROLE_SEPARATOR, controlTypes.ROLE_FOOTNOTE, controlTypes.ROLE_ENDNOTE, controlTypes.ROLE_EMBEDDEDOBJECT, controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG, controlTypes.ROLE_MATH):
 			return self.PRESCAT_MARKER
+		elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
+			return self.PRESCAT_CELL
 		elif (
 			role in (controlTypes.ROLE_BLOCKQUOTE, controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME, controlTypes.ROLE_TOOLBAR, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU, controlTypes.ROLE_TABLE)
 			or (role == controlTypes.ROLE_EDITABLETEXT and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states) and controlTypes.STATE_MULTILINE in states)
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states)
-			or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)
+			or (controlTypes.STATE_FOCUSABLE in states and controlTypes.STATE_EDITABLE in states)
 		):
 			return self.PRESCAT_CONTAINER
 
@@ -194,6 +199,7 @@ UNIT_CELL="cell"
 UNIT_SCREEN="screen"
 UNIT_STORY="story"
 UNIT_READINGCHUNK="readingChunk"
+UNIT_OFFSET="offset"
 
 unitLabels={
 	UNIT_CHARACTER:_("character"),
@@ -303,7 +309,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@return: C{True} if the objects overlap, C{False} if not.
 		@rtype: bool
 		"""
-		return self.compareEndPoints(other, "endToStart") > 0 and other.compareEndPoints(self, "endToStart") > 0
+		return self.compareEndPoints(other,"startToStart") == 0 or (self.compareEndPoints(other, "endToStart") > 0 and other.compareEndPoints(self, "endToStart") > 0)
 
 	def setEndPoint(self,other,which):
 		"""Sets one end of this range to one end of another range.
@@ -423,18 +429,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
 		# Import late to avoid circular import.
 		import braille
-		return braille.getControlFieldBraille(field, ancestors, reportStart, formatConfig)
-
-	def getEmbeddedObject(self, offset=0):
-		"""Retrieve the embedded object associated with a particular embedded object character.
-		Where a text implementation allows other objects to be embedded in the text, embedded objects are represented by an embedded object character (\uFFFC).
-		When these characters are encountered, this method can be used to retrieve the associated embedded object.
-		@param offset: The offset of the embedded object character in question relative to the start of this instance.
-		@type offset: int
-		@return: The embedded object.
-		@rtype: L{NVDAObjects.NVDAObject}
-		"""
-		raise NotImplementedError
+		return braille.getControlFieldBraille(self, field, ancestors, reportStart, formatConfig)
 
 	def activate(self):
 		"""Activate this position.
@@ -450,6 +445,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
 		winUser.setCursorPos(oldX,oldY)
+
+	def getMathMl(self, field):
+		"""Get MathML for a math control field.
+		This will only be called for control fields with a role of L{controlTypes.ROLE_MATH}.
+		@raise LookupError: If MathML can't be retrieved for this field.
+		"""
+		raise NotImplementedError
 
 RE_EOL = re.compile("\r\n|[\n\r]")
 def convertToCrlf(text):

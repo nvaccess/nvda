@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2013 NV Access Limited
+#Copyright (C) 2010-2015 NV Access Limited
 
 import time
 from collections import OrderedDict
@@ -28,6 +28,7 @@ BAUM_COMMUNICATION_CHANNEL = "\x16"
 BAUM_POWERDOWN = "\x17"
 BAUM_ROUTING_KEYS = "\x22"
 BAUM_DISPLAY_KEYS = "\x24"
+BAUM_ROUTING_KEY = "\x27"
 BAUM_BRAILLE_KEYS = "\x33"
 BAUM_JOYSTICK_KEYS = "\x34"
 BAUM_DEVICE_ID = "\x84"
@@ -38,6 +39,7 @@ BAUM_RSP_LENGTHS = {
 	BAUM_POWERDOWN: 1,
 	BAUM_COMMUNICATION_CHANNEL: 1,
 	BAUM_DISPLAY_KEYS: 1,
+	BAUM_ROUTING_KEY: 1,
 	BAUM_BRAILLE_KEYS: 2,
 	BAUM_JOYSTICK_KEYS: 1,
 	BAUM_DEVICE_ID: 16,
@@ -46,6 +48,7 @@ BAUM_RSP_LENGTHS = {
 
 KEY_NAMES = {
 	BAUM_ROUTING_KEYS: None,
+	BAUM_ROUTING_KEY: None,
 	BAUM_DISPLAY_KEYS: ("d1", "d2", "d3", "d4", "d5", "d6"),
 	BAUM_BRAILLE_KEYS: ("b9", "b10", "b11", None, "c1", "c2", "c3", "c4", # byte 1
 		"b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8"), # byte 2
@@ -83,6 +86,8 @@ BLUETOOTH_NAMES = (
 	"Refreshabraille",
 	"VarioConnect",
 	"BrailleConnect",
+	"Pronto!",
+	"VarioUltra",
 )
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
@@ -149,19 +154,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._ser = serial.Serial(port, baudrate=BAUD_RATE, timeout=TIMEOUT, writeTimeout=TIMEOUT)
 			except serial.SerialException:
 				continue
-			# This will cause the number of cells to be returned.
-			self._sendRequest(BAUM_DISPLAY_DATA)
+			# If the protocol is already on, sending protocol on won't return anything.
+			# First ensure it's off.
+			self._sendRequest(BAUM_PROTOCOL_ONOFF, False)
+			# This will cause the device id, serial number and number of cells to be returned.
+			self._sendRequest(BAUM_PROTOCOL_ONOFF, True)
 			# Send again in case the display misses the first one.
-			self._sendRequest(BAUM_DISPLAY_DATA)
-			# We just sent less bytes than we should,
-			# so we need to send another request in order for the display to know the previous request is finished.
-			self._sendRequest(BAUM_DEVICE_ID)
+			self._sendRequest(BAUM_PROTOCOL_ONOFF, True)
 			self._handleResponses(wait=True)
+			if not self.numCells or not self._deviceID:
+				# An expected response hasn't arrived yet, so wait for it.
+				self._handleResponses(wait=True)
 			if self.numCells:
 				# A display responded.
-				if not self._deviceID:
-					# Bah. The response to our device ID query hasn't arrived yet, so wait for it.
-					self._handleResponses(wait=True)
 				log.info("Found {device} connected via {type} ({port})".format(
 					device=self._deviceID, type=portType, port=port))
 				break
@@ -227,8 +232,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if command == BAUM_CELL_COUNT:
 			self.numCells = ord(arg)
 		elif command == BAUM_DEVICE_ID:
-			self._deviceID = arg
-
+			if arg == "Refreshabraille ":
+				# For most Baum devices, the argument is 16 bytes,
+				# but it is 18 bytes for the Refreshabraille.
+				arg += self._ser.read(2)
+			# Short ids can be padded with either nulls or spaces.
+			self._deviceID = arg.rstrip("\0 ")
 		elif command in KEY_NAMES:
 			arg = sum(ord(byte) << offset * 8 for offset, byte in enumerate(arg))
 			if arg < self._keysDown.get(command, 0):
@@ -246,7 +255,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				# Press.
 				# This begins a new key combination.
 				self._ignoreKeyReleases = False
-			self._keysDown[command] = arg
+			if arg > 0:
+				self._keysDown[command] = arg
+			elif command in self._keysDown:
+				# All keys in this group have been released.
+				# #3541: Remove this group so it doesn't count as a group with keys down.
+				del self._keysDown[command]
 
 		elif command == BAUM_POWERDOWN:
 			log.debug("Power down")
@@ -296,6 +310,9 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 						self.routingIndex = index
 						names.add("routing")
 						break
+			elif group == BAUM_ROUTING_KEY:
+				self.routingIndex = groupKeysDown - 1
+				names.add("routing")
 			else:
 				for index, name in enumerate(KEY_NAMES[group]):
 					if groupKeysDown & (1 << index):

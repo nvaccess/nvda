@@ -1,42 +1,49 @@
 ﻿#locale/fa/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2014 NVDA Farsi contributors
+#Copyright (c) 2015 NVDA Persian (Farsi) contributors
 #This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+؟ sentence ending	(?<=[^\s؟])\؟(?=[\"'”’)\s]|$)
+# Phrase endings.
+؛ phrase ending	(?<=[^\s؛])؛(?=\s|$)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	نقطه	all	always
-! sentence ending	تعجب	all	always
-? sentence ending	Question	all	always
-؟ sentence ending	سؤال	all	always
-؛ phrase ending		نقطه ویرگول	all	always
-; phrase ending	semicolon	all	always
+. sentence ending	نقطه
+! sentence ending	علامتِ تعجب
+? sentence ending	Question
+؟ sentence ending	علامتِ سؤال	all	always
+؛ phrase ending	نقطه ویرگول	all	always
+; phrase ending	semicolon
 : phrase ending	دو‌نقطه
-decimal point		ممیز
-in-word '	apostrophe
+decimal point	نقطه	none	never
+in-word '	tick
 negative number	منفی
 
 # Whitespace
 \0	خالی
 \t	تب
 \n	سرِ خط
-\f	بَرگه بُر
+\f	پایانِ صفحه
 \r	پایانِ خط
  	فاصله
  	فاصله بدونِ شکست
 
 # Standard punctuation/symbols
-!	تعجب
-"	نقلِ قول
+!	علامتِ تعجب
+"	quote
 \#	شماره
 $	دلار
 £	پوند
-€	يورو
+€	یورو
 %	درصد
 &	And
-'	Apostrophe
+'	tick
 (	پرانتز باز
 )	پرانتز بسته
 *	ستاره
@@ -55,7 +62,7 @@ $	دلار
 [	کروشه باز
 ]	کروشه بسته
 \\	بک اِسلش
-^	Circumflex
+^	Caret
 _	زیرخط
 `	graav
 {	آکولاد باز
@@ -68,15 +75,16 @@ _	زیرخط
 …	سه‌نقطه
 ...	سه‌نقطه
 	bullet
-“	آغازِ نقلِ قول
-”	پایانِ نقلِ قول
+“	LeftQuote
+”	RightQuote
 –	en dash
 —	em dash
 ●	دایره
 ¨	diaeresis
-■	مربعِ سیاه	char
-➔	فِلِشِ سر‌پهن	char
-→	‌فِلِشِ راست‌نما	char
+■	مربعِ سیاه
+➔	فِلِشِ راست‌نمای سر‌پهن
+→	‌فِلِشِ راست‌نما
+←	‌فِلِشِ چپ‌نما
 §	بخش
 °	درجه
 ¹	۱ بالانویس
@@ -85,21 +93,23 @@ _	زیرخط
 ±	مثبت‌منفی
 ×	ضرب‌در
 ÷	تقسیم‌بر
-✓	تیکِ ضخیم
-✔	تیک
-٬	هزار‌گان
-٫	ممیز	none
-٪	درصد	some
+✓	تیک
+✔	تیکِ ضخیم
 
 # Persian symbols
 ،	ویرگول	all	always
-؟	سؤال	all	always
-ـ	کشیده	char	always
+؟	علامتِ سؤال	all	always
+؛	نقطه‌ویرگول	all	always
 «	گیومه باز	most	always
 »	گیومه بسته	most	always
-ٔ	همزه‌ی بالا	char	always
+ـ	کشیده	char	norep
+ٔ	همزه‌ی بالا	char	norep
+٬	هزار‌گان	char	never
+٫	ممیز	none	never
+٪	درصد	none	never
+﷼	ریال	none	never
 
-# Unicode Formating symbols
+# Unicode formatting symbols
 ‎	نشانه چپ به راست	char	never
 ‏	نشانه راست به چپ	char	never
 ‍	نیم‌اتصال	char	never
@@ -109,4 +119,3 @@ _	زیرخط
 ‭	بازنویسیِ چپ به راست	char	never
 ‮	 بازنویسیِ راست به چپ	char	never
 ‬	پایانِ جهت	char	never
-

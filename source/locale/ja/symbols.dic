@@ -59,7 +59,7 @@ negative number	マイナス	none	norep
 # Standard punctuation/symbols	
 !	カンタンフ	some
 "	コーテーション	some
-\#	シャープ	some
+\#	シャープ
 $	ドル	none
 ＄	ドル	none
 €	ユーロ	none
@@ -70,22 +70,23 @@ $	ドル	none
 ¥	エン	none
 \\	エン	none
 ￥	エン	none
+₹	ルピー	some	norep
 %	パーセント	some
 &	アンド	some
 '	シングル	some
-(	カッコ	most
-)	カッコトジ	most
+(	カッコ
+)	カッコトジ
 *	アスタリスク	some
-+	プラス	some
++	プラス
 ,	コンマ	-	never
 -	マイナス	some
 .	ピリオド	some
 /	スラッシュ	some
 :	コロン	some	norep
 ;	セミコロン	some
-<	ショーナリ	some
->	ダイナリ	some
-=	イコール	some
+<	ショーナリ
+>	ダイナリ
+=	イコール
 ?	クエスチョン	some
 @	アット	some
 [	ダイカッコ	most
@@ -99,11 +100,12 @@ _	アンダーライン	some
 ~	チルダ	some
 
 # Other characters
-•	バレット	most
+•	ビュレット	most
 ...	ドットドットドット
-	バレット
-◦	バレット
-▪	バレット
+	ビュレット
+◦	シロビュレット
+▪	ビュレット
+◾	クロシカク
 –	エンダッシュ
 —	エムダッシュ
 ‎	ヒダリカラミギマーク	char
@@ -191,11 +193,11 @@ _	アンダーライン	some
 』	ニジューカギトジ	most
 【	クロカッコ	most
 】	クロカッコトジ	most
-＋	プラス	some
-－	マイナス	some
-±	プラスマイナス	some
-×	カケル	some
-÷	ワル	some
+＋	プラス
+－	マイナス
+±	プラスマイナス
+×	カケル
+÷	ワル
 ＝	イコール	some
 ≠	ノットイコール	all
 ＜	ショーナリ	some
@@ -236,6 +238,23 @@ _	アンダーライン	some
 ↑	ウエ ヤジルシ	some
 ↓	シタ ヤジルシ	some
 〓	ゲタ	some
+∄	ソンザイノ ヒテイ
+∌	フクムノ ヒテイ
+∎	ショウメイ シュウリョウ
+≤	ショーナリイコール
+∛	3ジョウコン
+∜	4ジョウコン
+∷	プロポーション
+∆	インクリメント
+∊	チイサイ ゾクスル
+∶	レイショ
+∏	エヌコウ プロダクト
+∦	タテヘイコーノ ヒテイ
+∁	コンプリメント
+∅	クウシュウゴウ
+∉	ゾクスルノ ヒテイ
+∍	チイサイ モトトシテ フクム
+≥	ダイナリイコール
 ∈	ゾクスル	all
 ∋	フクム	all
 ⊆	ブブン シューゴー	all
@@ -494,3 +513,77 @@ _	アンダーライン	some
 ♡	ハート	most
 ♢	ダイヤ	most
 ♣	クラブ	most
+
+◯	オオキナマル	some
+☓	ナナメジュージ	some
+
+䪼	セツ	none
+䯒	コー	none
+俠	キョー	none
+呃	アク	none
+嘈	ソー	none
+噦	エツ	none
+噯	アイ	none
+嚨	ロー	none
+囊	ノー	none
+搐	チク	none
+攢	サン	none
+暍	エツ	none
+欬	ガイ	none
+涿	タク	none
+滎	エイ	none
+濇	ショク	none
+濼	レキ	none
+瀆	トク	none
+炷	シュ	none
+焠	サイ	none
+燾	トー	none
+牖	ユー	none
+璇	セン	none
+璣	キ	none
+痤	ザ	none
+痹	ヒ	none
+瘀	オ	none
+瘂	ア	none
+瘈	ケイ	none
+瘙	ソー	none
+瘭	ヒョー	none
+癃	リュー	none
+癤	セツ	none
+皶	サ	none
+砭	ヘン	none
+窠	カ	none
+糙	ソー	none
+胦	ヨー	none
+脖	ボツ	none
+脘	カン	none
+腠	ソー	none
+腧	ユ	none
+膻	ダン	none
+臊	ソー	none
+臏	ヒン	none
+芤	コー	none
+芩	キン	none
+薏	ヨク	none
+蟜	キョー	none
+譆	キ	none
+譩	イ	none
+跗	フ	none
+蹻	キョー	none
+軀	ク	none
+邈	バク	none
+郄	ゲキ	none
+鈹	ヒ	none
+鍉	テイ	none
+鑱	ザン	none
+鞕	コウ	none
+頄	キュー	none
+頰	キョー	none
+顖	シン	none
+顙	ソー	none
+飧	ソン	none
+饞	ザン	none
+髁	カ	none
+髃	グー	none
+髆	ハク	none
+髎	リョー	none

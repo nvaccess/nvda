@@ -445,4 +445,5 @@ windowClassMap={
 	"ScintillaWindowImpl":"Scintilla",
 	"RICHEDIT60W_WLXPRIVATE":"RICHEDIT50W",
 	"TNumEdit":"Edit",
+	"TAccessibleRichEdit":"RichEdit20",
 }

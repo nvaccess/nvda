@@ -15,8 +15,10 @@ complexSymbols:
 ; phrase ending	((?<=[^\s;]);(?=[\"'”’);\s]|$)|(?<=[^\s;]\s);(?=[\"'”’);\s]|$))
 : phrase ending	((?<=[^\s:]):(?=[\"'”’);\s]|$)|(?<=[^\s:]\s):(?=[\"'”’);\s]|$))
 # Others
-decimal point	(?<=\d)\,(?=\d)
+decimal point	(?<![^\d -])\,(?=\d)
+in-word '	(?<=[^\W_])['’]
 in-word -	(?<=[^\W_])[-]
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
 dates .	((?<=\b\d\d)\.(?=\d\d.(\d{2}|\d{4})\b))|((?<=\b\d\d.\d\d)\.(?=(\d{2}|\d{4})\b))
 dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
@@ -60,6 +62,7 @@ $	dollar
 €	euro
 ¢	Centimes
 ¥	Yen
+₹	roupi	some	norep
 %	pour cent
 &	et commercial	some	norep
 '	apostrophe
@@ -107,6 +110,9 @@ _	souligné
 ‎	gauche à droite
 ‏	droite à gauche
 ■	carré noir
+▪	carré noir
+◾	carré noir
+◦	puce blanche
 ➔	flèche droite
 §	section
 °	degré	some	norep
@@ -134,6 +140,52 @@ _	souligné
 	flèche droite	some
 ↑	flèche haut	some
 ↓	flèche bas	some
+#Opérateurs Mathématiques U+2200 to U+220F
+
+∀	pour tout 
+∁	complément
+∂	différencielle partielle
+∃	il existe
+∄	il n'existe pas de
+∅	ensemble vide
+∆	incrément
+∇	NABLA
+∈	élément de
+∉	pas un élément de
+∊	petit élément de
+∋	contient comme membre
+∌	ne contient pas comme membre	none
+∍	petit contient comme membre
+∎	fin de preuve
+∏	produit n-aire
+
+# Opérateurs Mathématiques Divers
+
+∑	somme n-aire
+√	racine carrée
+∛	racine cubique
+∜	racine quatrième
+∝	proportionnel à
+∞	infini
+∟	angle droit
+∠	angle
+∥	parallèle à
+∦	non parallèle à
+∧	et logique
+∨	ou logique
+∩	intersection
+∪	union
+∫	intégrale
+∴	ainsi
+∵	parce que
+∶	RATIO
+∷	PROPORTION
+≤	inférieur ou égal à
+≥	supérieur ou égal à
+⊂	sous-ensemble de
+⊃	sur ensemble de
+⊆	est inclus dans ou est égal à
+⊇	contient ou est égal à
 
 # Fixes for some synthesizers
 ô	o circonflexe	char	norep

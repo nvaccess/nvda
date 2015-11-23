@@ -38,6 +38,8 @@ sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),lo
 COM_INTERFACES = {
 	"UIAutomationClient.py": ('{944de083-8fb8-45cf-bcb7-c477acb2f897}',1,0),
 	"IAccessible2Lib.py": "typelibs/ia2.tlb",
+	"ISimpleDOM.py": "typelibs/ISimpleDOMNode.tlb",
+	"mathPlayer.py": "typelibs/mathPlayerDLL.tlb",
 	#"Accessibility.py": ('{1EA4DBF0-3C3B-11CF-810C-00AA00389B71}',1,0),
 	"tom.py": ('{8CC497C9-A1DF-11CE-8098-00AA0047BE5D}',1,0),
 	"SpeechLib.py": ('{C866CA3A-32F7-11D2-9602-00C04F8EE628}',5,0),

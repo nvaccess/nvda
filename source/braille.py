@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2012 NV Access Limited
+#Copyright (C) 2008-2014 NV Access Limited
 
 import itertools
 import os
@@ -33,6 +33,12 @@ TABLES = (
 	("ar-fa.utb", _("Farsi grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("as-in-g1.utb", _("Assamese grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("be-in-g1.utb", _("Bengali grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("bg.ctb", _("Bulgarian 8 dot computer braille"), True),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
@@ -45,10 +51,16 @@ TABLES = (
 	("cz-cz-g1.utb", _("Czech grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("da-dk-g1.utb", _("Danish grade 1"), False),
+	("da-dk-g16.utb", _("Danish 6 dot grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("da-dk-g2.ctb", _("Danish grade 2"), False),
+	("da-dk-g18.utb", _("Danish 8 dot grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("da-dk-g26.ctb", _("Danish 6 dot grade 2"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("da-dk-g28.ctb", _("Danish 8 dot grade 2"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("de-de-comp8.ctb", _("German 8 dot computer braille"), True),
@@ -94,15 +106,12 @@ TABLES = (
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("ethio-g1.ctb", _("Ethiopic grade 1"), False),
-	# braille settings dialog.
 	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("fi.utb", _("Finnish 6 dot"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("fi-fi-8dot.ctb", _("Finnish 8 dot computer braille"), True),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("fr-ca-g1.utb", _("French (Canada) grade 1"), False),
-	# Translators: The name of a braille table displayed in the
-	# braille settings dialog.
-	("Fr-Ca-g2.ctb", _("French (Canada) grade 2"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("fr-bfu-comp6.utb", _("French (unified) 6 dot computer braille"), False),
@@ -112,6 +121,21 @@ TABLES = (
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("fr-bfu-g2.ctb", _("French (unified) Grade 2"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("fr-ca-g1.utb", _("French (Canada) grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("Fr-Ca-g2.ctb", _("French (Canada) grade 2"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("ga-g1.utb", _("Irish grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("ga-g2.ctb", _("Irish grade 2"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("gu-in-g1.utb", _("Gujarati grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("gr-gr-g1.utb", _("Greek (Greece) grade 1"), False),
@@ -141,19 +165,40 @@ TABLES = (
 	("it-it-comp8.utb", _("Italian 8 dot computer braille"), True),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("ka-in-g1.utb", _("Kannada grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("ko-2006-g1.ctb", _("Korean grade 1 (2006)"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("ko-2006-g2.ctb", _("Korean grade 2 (2006)"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("ko-g1.ctb", _("Korean grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("ko-g2.ctb", _("Korean grade 2"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("ks-in-g1.utb", _("Kashmiri grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("Lv-Lv-g1.utb", _("Latvian grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("nl-be-g1.utb", _("Dutch (Belgium) grade 1"), False),
+	("ml-in-g1.utb", _("Malayalam grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("Nl-Nl-g1.utb", _("Dutch (netherlands) grade 1"), False),
+	("mn-in-g1.utb", _("Manipuri grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("mr-in-g1.utb", _("Marathi grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("nl-BE-g1.ctb", _("Dutch (Belgium) grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("nl-NL-g1.ctb", _("Dutch (Netherlands) grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("no-no.ctb", _("Norwegian 8 dot computer braille"), True),
@@ -171,6 +216,12 @@ TABLES = (
 	("No-No-g3.ctb", _("Norwegian grade 3"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("np-in-g1.utb", _("Nepali grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("or-in-g1.utb", _("Oriya grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("Pl-Pl-g1.utb", _("Polish grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
@@ -183,16 +234,22 @@ TABLES = (
 	("Pt-Pt-g2.ctb", _("Portuguese grade 2"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("pu-in-g1.utb", _("Punjabi grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("ru-compbrl.ctb", _("Russian braille for computer code"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("ru-ru-g1.utb", _("Russian grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("sa-in-g1.utb", _("Sanskrit grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("Se-Se-g1.utb", _("Swedish grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("sk-sk-g1.utb", _("Slovak"), False),
+	("sk-sk-g1.utb", _("Slovak grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("sl-si-g1.utb", _("Slovene grade 1"), False),
@@ -202,6 +259,9 @@ TABLES = (
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("ta-ta-g1.ctb", _("Tamil grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("te-in-g1.utb", _("Telegu grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("tr.ctb", _("Turkish grade 1"), False),
@@ -537,7 +597,8 @@ class NVDAObjectRegion(Region):
 	def update(self):
 		obj = self.obj
 		presConfig = config.conf["presentation"]
-		text = getBrailleTextForProperties(name=obj.name, role=obj.role,
+		role = obj.role
+		text = getBrailleTextForProperties(name=obj.name, role=role,
 			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
 			states=obj.states,
 			description=obj.description if presConfig["reportObjectDescriptions"] else None,
@@ -545,6 +606,15 @@ class NVDAObjectRegion(Region):
 			positionInfo=obj.positionInfo if presConfig["reportObjectPositionInformation"] else None,
 			cellCoordsText=obj.cellCoordsText if config.conf["documentFormatting"]["reportTableCellCoords"] else None,
 		)
+		if role == controlTypes.ROLE_MATH:
+			import mathPres
+			mathPres.ensureInit()
+			if mathPres.brailleProvider:
+				try:
+					text += " " + mathPres.brailleProvider.getBrailleForMathMl(
+						obj.mathMl)
+				except (NotImplementedError, LookupError):
+					pass
 		self.rawText = text + self.appendText
 		super(NVDAObjectRegion, self).update()
 
@@ -554,8 +624,10 @@ class NVDAObjectRegion(Region):
 		except NotImplementedError:
 			pass
 
-def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
+def getControlFieldBraille(info, field, ancestors, reportStart, formatConfig):
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
+	# Cache this for later use.
+	field._presCat = presCat
 	if reportStart:
 		# If this is a container, only report it if this is the start of the node.
 		if presCat == field.PRESCAT_CONTAINER and not field.get("_startOfNode"):
@@ -591,7 +663,11 @@ def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
 		return getBrailleTextForProperties(**props)
 
 	elif reportStart:
-		props = {"role": role, "states": states,"value":value}
+		props = {
+			# Don't report the role for math here.
+			# However, we still need to pass it (hence "_role").
+			"_role" if role == controlTypes.ROLE_MATH else "role": role,
+			"states": states,"value":value}
 		if config.conf["presentation"]["reportKeyboardShortcuts"]:
 			kbShortcut = field.get("keyboardShortcut")
 			if kbShortcut:
@@ -599,7 +675,19 @@ def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
 		level = field.get("level")
 		if level:
 			props["positionInfo"] = {"level": level}
-		return getBrailleTextForProperties(**props)
+		text = getBrailleTextForProperties(**props)
+		if role == controlTypes.ROLE_MATH:
+			import mathPres
+			mathPres.ensureInit()
+			if mathPres.brailleProvider:
+				try:
+					if text:
+						text += " "
+					text += mathPres.brailleProvider.getBrailleForMathMl(
+						info.getMathMl(field))
+				except (NotImplementedError, LookupError):
+					pass
+		return text
 	else:
 		# Translators: Displayed in braille at the end of a control field such as a list or table.
 		# %s is replaced with the control's role.
@@ -670,17 +758,14 @@ class TextInfoRegion(Region):
 			typeform |= louis.underline
 		return typeform
 
-	def _addFieldText(self, text):
-		# Separate this field text from the rest of the text.
+	def _addFieldText(self, text, contentPos):
 		if self.rawText:
-			text = " %s " % text
-		else:
-			text += " "
+			# Separate this field text from the rest of the text.
+			text = " " + text
 		self.rawText += text
 		textLen = len(text)
 		self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
-		# Map this field text to the start of the field's content.
-		self._rawToContentPos.extend((self._currentContentPos,) * textLen)
+		self._rawToContentPos.extend((contentPos,) * textLen)
 
 	def _addTextWithFields(self, info, formatConfig, isSelection=False):
 		shouldMoveCursorToFirstContent = not isSelection and self.cursorPos is not None
@@ -690,6 +775,12 @@ class TextInfoRegion(Region):
 			if isinstance(command, basestring):
 				if not command:
 					continue
+				if self._endsWithField:
+					# The last item added was a field,
+					# so add a space before the content.
+					self.rawText += " "
+					self.rawTextTypeforms.append(louis.plain_text)
+					self._rawToContentPos.append(self._currentContentPos)
 				if isSelection and self._selectionStart is None:
 					# This is where the content begins.
 					self._selectionStart = len(self.rawText)
@@ -699,13 +790,15 @@ class TextInfoRegion(Region):
 					self.cursorPos = len(self.rawText)
 					shouldMoveCursorToFirstContent = False
 				self.rawText += command
-				self.rawTextTypeforms.extend((typeform,) * len(command))
-				endPos = self._currentContentPos + len(command)
+				commandLen = len(command)
+				self.rawTextTypeforms.extend((typeform,) * commandLen)
+				endPos = self._currentContentPos + commandLen
 				self._rawToContentPos.extend(xrange(self._currentContentPos, endPos))
 				self._currentContentPos = endPos
 				if isSelection:
 					# The last time this is set will be the end of the content.
 					self._selectionEnd = len(self.rawText)
+				self._endsWithField = False
 			elif isinstance(command, textInfos.FieldCommand):
 				cmd = command.command
 				field = command.field
@@ -714,28 +807,39 @@ class TextInfoRegion(Region):
 					text = getFormatFieldBraille(field)
 					if not text:
 						continue
-					self._addFieldText(text)
+					# Map this field text to the start of the field's content.
+					self._addFieldText(text, self._currentContentPos)
 				elif cmd == "controlStart":
-					# Place this field on a stack so we can access it for controlEnd.
 					if self._skipFieldsNotAtStartOfNode and not field.get("_startOfNode"):
 						text = None
 					else:
 						text = info.getControlFieldBraille(field, ctrlFields, True, formatConfig)
+					# Place this field on a stack so we can access it for controlEnd.
 					ctrlFields.append(field)
 					if not text:
 						continue
-					self._addFieldText(text)
+					if getattr(field, "_presCat") == field.PRESCAT_MARKER:
+						# In this case, the field text is what the user cares about,
+						# not the actual content.
+						fieldStart = len(self.rawText)
+						if fieldStart > 0:
+							# There'll be a space before the field text.
+							fieldStart += 1
+						if isSelection and self._selectionStart is None:
+							self._selectionStart = fieldStart
+						elif shouldMoveCursorToFirstContent:
+							self.cursorPos = fieldStart
+							shouldMoveCursorToFirstContent = False
+					# Map this field text to the start of the field's content.
+					self._addFieldText(text, self._currentContentPos)
 				elif cmd == "controlEnd":
 					field = ctrlFields.pop()
-					text = getControlFieldBraille(field, ctrlFields, False, formatConfig)
+					text = info.getControlFieldBraille(field, ctrlFields, False, formatConfig)
 					if not text:
 						continue
-					# Separate this field text from the rest of the text.
-					self.rawText += " %s " % text
-					textLen = len(text)
-					self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
 					# Map this field text to the end of the field's content.
-					self._rawToContentPos.extend((self._currentContentPos - 1,) * textLen)
+					self._addFieldText(text, self._currentContentPos - 1)
+				self._endsWithField = True
 		if isSelection and self._selectionStart is None:
 			# There is no selection. This is a cursor.
 			self.cursorPos = len(self.rawText)
@@ -772,6 +876,7 @@ class TextInfoRegion(Region):
 		self._currentContentPos = 0
 		self._selectionStart = self._selectionEnd = None
 		self._skipFieldsNotAtStartOfNode = False
+		self._endsWithField = False
 
 		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the reading unit.
 		# Therefore, grab the reading unit in three parts.
@@ -786,12 +891,24 @@ class TextInfoRegion(Region):
 		chunk.setEndPoint(readingInfo, "endToEnd")
 		chunk.setEndPoint(sel, "startToEnd")
 		self._addTextWithFields(chunk, formatConfig)
-		# Strip line ending characters, but add a space in case the cursor is at the end of the reading unit.
-		self.rawText = self.rawText.rstrip("\r\n\0\v\f") + " "
-		self._rawToContentPos.append(self._currentContentPos)
+		# Strip line ending characters.
+		self.rawText = self.rawText.rstrip("\r\n\0\v\f")
 		rawTextLen = len(self.rawText)
-		del self.rawTextTypeforms[rawTextLen - 1:]
-		self.rawTextTypeforms.append(louis.plain_text)
+		if rawTextLen < len(self._rawToContentPos):
+			# The stripped text is shorter than the original.
+			self._currentContentPos = self._rawToContentPos[rawTextLen]
+			del self.rawTextTypeforms[rawTextLen:]
+			# Trimming _rawToContentPos doesn't matter,
+			# because we'll only ever ask for indexes valid in rawText.
+			#del self._rawToContentPos[rawTextLen:]
+		if rawTextLen == 0 or not self._endsWithField:
+			# There is no text left after stripping line ending characters,
+			# or the last item added can be navigated with a cursor.
+			# Add a space in case the cursor is at the end of the reading unit.
+			self.rawText += " "
+			rawTextLen += 1
+			self.rawTextTypeforms.append(louis.plain_text)
+			self._rawToContentPos.append(self._currentContentPos)
 		if self.cursorPos is not None and self.cursorPos >= rawTextLen:
 			self.cursorPos = rawTextLen - 1
 
@@ -1177,6 +1294,17 @@ def getFocusContextRegions(obj, oldFocusRegions=None):
 	_cachedFocusAncestorsEnd = ancestorsEnd
 
 def getFocusRegions(obj, review=False):
+	# Allow objects to override normal behaviour.
+	try:
+		regions = obj.getBrailleRegions(review=review)
+	except (AttributeError, NotImplementedError):
+		pass
+	else:
+		for region in regions:
+			region.update()
+			yield region
+		return
+
 	# Late import to avoid circular import.
 	from treeInterceptorHandler import TreeInterceptor
 	from cursorManager import CursorManager

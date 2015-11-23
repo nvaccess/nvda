@@ -17,7 +17,7 @@ from logHandler import log
 import gui
 import tones
 
-def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,silent=False):
+def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,silent=False,startAfterInstall=True):
 	progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
 		# Translators: The title of the dialog presented while NVDA is being updated.
 		_("Updating NVDA") if isUpdate
@@ -45,7 +45,7 @@ def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,sil
 		# Translators: the title of a retry cancel dialog when NVDA installation fails
 		title=_("File in Use")
 		if winUser.MessageBox(None,message,title,winUser.MB_RETRYCANCEL)==winUser.IDRETRY:
-			return doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,silent)
+			return doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,silent,startAfterInstall)
 	if res!=0:
 		log.error("Installation failed: %s"%res)
 		# Translators: The message displayed when an error occurs during installation of NVDA.
@@ -65,19 +65,23 @@ def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,sil
 		gui.messageBox(msg+_("Please press OK to start the installed copy."),
 			# Translators: The title of a dialog presented to indicate a successful operation.
 			_("Success"))
-	shellapi.ShellExecute(None, None,
-		os.path.join(installer.defaultInstallPath,'nvda.exe'),
-		u"-r",
-		None, 0)
+	if startAfterInstall:
+		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL  
+		shellapi.ShellExecute(None, None,
+			os.path.join(installer.defaultInstallPath,'nvda.exe'),
+			u"-r",
+			None, winUser.SW_SHOWNORMAL)
+	else:
+		wx.GetApp().ExitMainLoop()
 
-def doSilentInstall():
-	prevInstall=installer.isPreviousInstall()
-	doInstall(installer.isDesktopShortcutInstalled() if prevInstall else True,config.getStartOnLogonScreen() if prevInstall else True,False,prevInstall,True)
+def doSilentInstall(startAfterInstall=True):
+	prevInstall=installer.comparePreviousInstall() is not None
+	doInstall(installer.isDesktopShortcutInstalled() if prevInstall else True,config.getStartOnLogonScreen() if prevInstall else True,False,prevInstall,silent=True,startAfterInstall=startAfterInstall)
 
 class InstallerDialog(wx.Dialog):
 
-	def __init__(self, parent):
-		self.isUpdate=installer.isPreviousInstall()
+	def __init__(self, parent, isUpdate):
+		self.isUpdate=isUpdate
 		# Translators: The title of the Install NVDA dialog.
 		super(InstallerDialog, self).__init__(parent, title=_("Install NVDA"))
 		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -137,6 +141,40 @@ class InstallerDialog(wx.Dialog):
 
 	def onCancel(self, evt):
 		self.Destroy()
+
+def showInstallGui():
+	gui.mainFrame.prePopup()
+	previous = installer.comparePreviousInstall()
+	if previous > 0:
+		# The existing installation is newer, which means this will be a downgrade.
+		# Translators: The title of a warning dialog.
+		d = wx.Dialog(gui.mainFrame, title=_("Warning"))
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		item = wx.StaticText(d,
+			# Translators: A warning presented when the user attempts to downgrade NVDA
+			# to an older version.
+			label=_("You are attempting to install an earlier version of NVDA than the version currently installed. "
+			"If you really wish to revert to an earlier version, you should first cancel this installation and completely uninstall NVDA before installing the earlier version."))
+		mainSizer.Add(item)
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		item = wx.Button(d, id=wx.ID_OK,
+			# Translators: The label of a button to proceed with installation,
+			# even though this is not recommended.
+			label=_("&Proceed with installation (not recommended)"))
+		sizer.Add(item)
+		item = wx.Button(d, id=wx.ID_CANCEL)
+		sizer.Add(item)
+		item.SetFocus()
+		mainSizer.Add(sizer)
+		d.Sizer = mainSizer
+		mainSizer.Fit(d)
+		d.Center(wx.BOTH | wx.CENTER_ON_SCREEN)
+		with d:
+			if d.ShowModal() == wx.ID_CANCEL:
+				gui.mainFrame.postPopup()
+				return
+	InstallerDialog(gui.mainFrame, previous is not None).Show()
+	gui.mainFrame.postPopup()
 
 class PortableCreaterDialog(wx.Dialog):
 

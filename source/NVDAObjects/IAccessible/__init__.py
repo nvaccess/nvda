@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
+#Copyright (C) 2006-2015 NVDA Contributors
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -30,7 +30,7 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
-from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer
+from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
@@ -233,9 +233,13 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		except COMError:
 			pass
 		try:
-			return self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_WORD)[0:2]
+			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_WORD)
 		except COMError:
 			return super(IA2TextTextInfo,self)._getWordOffsets(offset)
+		if start>offset or offset>end:
+			# HACK: Work around buggy implementations which return a range that does not include offset.
+			return offset,offset+1
+		return start,end
 
 	def _getLineOffsets(self,offset):
 		try:
@@ -276,31 +280,41 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _lineNumFromOffset(self,offset):
 		return -1
 
-	def getEmbeddedObject(self, offset=0):
-		offset += self._startOffset
-
-		# Mozilla uses IAccessibleHypertext to facilitate quick retrieval of embedded objects.
-		try:
-			ht = self.obj.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext)
-			hi = ht.hyperlinkIndex(offset)
-			if hi != -1:
-				hl = ht.hyperlink(hi)
-				return IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0)
-		except COMError:
-			pass
-
-		# Otherwise, we need to count the embedded objects to determine which child to use.
-		# This could possibly be optimised by caching.
-		text = self._getTextRange(0, offset + 1)
-		childIndex = text.count(u"\uFFFC")
-		if childIndex == 0:
-			raise LookupError
-		try:
-			return IAccessible(IAccessibleObject=IAccessibleHandler.accChild(self.obj.IAccessibleObject, childIndex)[0], IAccessibleChildID=0)
-		except COMError:
-			pass
-
-		raise LookupError
+	def _iterTextWithEmbeddedObjects(self, withFields, formatConfig=None):
+		"""Iterate through the text, splitting at embedded object characters.
+		Where an embedded object character occurs, its offset is provided.
+		@param withFields: Whether to output control/format fields.
+		@type withFields: bool
+		@param formatConfig: Document formatting configuration.
+		@return: A generator of fields, text strings and numeric offsets of embedded object characters.
+		"""
+		if withFields:
+			items = self.getTextWithFields(formatConfig=formatConfig)
+		else:
+			items = [self.text]
+		offset = self._startOffset
+		for item in items:
+			if not isinstance(item, basestring):
+				# This is a field.
+				yield item
+				continue
+			itemLen = len(item)
+			# The text consists of smaller chunks of text interspersed with embedded object characters.
+			chunkStart = 0
+			while chunkStart < itemLen:
+				# Find the next embedded object character.
+				try:
+					chunkEnd = item.index(u"\uFFFC", chunkStart)
+				except ValueError:
+					# This is the last chunk of text.
+					yield item[chunkStart:]
+					break
+				if chunkStart != chunkEnd:
+					yield item[chunkStart:chunkEnd]
+				# We've hit an embedded object character, so yield its offset.
+				yield offset + chunkEnd
+				chunkStart = chunkEnd + 1
+			offset += itemLen
 
 class IAccessible(Window):
 	"""
@@ -378,14 +392,7 @@ the NVDAObject for IAccessible
 			clsList.insert(0, FocusableUnfocusableContainer)
 
 		if hasattr(self, "IAccessibleTextObject"):
-			if role==oleacc.ROLE_SYSTEM_TEXT:
-				isEditable=True
-			else:
-				try:
-					isEditable=bool(self.IAccessibleObject.states&IAccessibleHandler.IA2_STATE_EDITABLE)
-				except COMError:
-					isEditable=False
-			if isEditable:
+			if role==oleacc.ROLE_SYSTEM_TEXT or self.IA2States&IAccessibleHandler.IA2_STATE_EDITABLE:
 				clsList.append(EditableTextWithAutoSelectDetection)
 
 		# Use window class name and role to search for a class match in our static map.
@@ -531,12 +538,12 @@ the NVDAObject for IAccessible
 @param objectID: the objectID for the IAccessible Object, if known
 @type objectID: int
 """
+		self.IAccessibleObject=IAccessibleObject
+		self.IAccessibleChildID=IAccessibleChildID
+
 		# Try every trick in the book to get the window handle if we don't have it.
 		if not windowHandle and isinstance(IAccessibleObject,IAccessibleHandler.IAccessible2):
-			try:
-				windowHandle=IAccessibleObject.windowHandle
-			except COMError, e:
-				log.debugWarning("IAccessible2::windowHandle failed: %s" % e)
+			windowHandle=self.IA2WindowHandle
 			#Mozilla Gecko: we can never use a MozillaWindowClass window for Gecko 1.9
 			tempWindow=windowHandle
 			while tempWindow and winUser.getClassName(tempWindow)=="MozillaWindowClass":
@@ -584,8 +591,6 @@ the NVDAObject for IAccessible
 			else:
 				event_childID=IAccessibleChildID
 
-		self.IAccessibleObject=IAccessibleObject
-		self.IAccessibleChildID=IAccessibleChildID
 		self.event_windowHandle=event_windowHandle
 		self.event_objectID=event_objectID
 		self.event_childID=event_childID
@@ -643,24 +648,21 @@ the NVDAObject for IAccessible
 			return False
 		if self.IAccessibleObject==other.IAccessibleObject: 
 			return True
-		try:
-			if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2) and isinstance(other.IAccessibleObject,IAccessibleHandler.IAccessible2):
-				# These are both IAccessible2 objects, so we can test unique ID.
-				# Unique ID is only guaranteed to be unique within a given window, so we must check window handle as well.
-				selfIA2Window=self.IAccessibleObject.windowHandle
-				selfIA2ID=self.IA2UniqueID
-				otherIA2Window=other.IAccessibleObject.windowHandle
-				otherIA2ID=other.IA2UniqueID
-				if selfIA2Window!=otherIA2Window:
-					# The window handles are different, so these are definitely different windows.
-					return False
-				# At this point, we know that the window handles are equal.
-				if selfIA2Window and (selfIA2ID or otherIA2ID):
-					# The window handles are valid and one of the objects has a valid unique ID.
-					# Therefore, we can safely determine equality or inequality based on unique ID.
-					return selfIA2ID==otherIA2ID
-		except COMError:
-			pass
+		if isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2) and isinstance(other.IAccessibleObject,IAccessibleHandler.IAccessible2):
+			# These are both IAccessible2 objects, so we can test unique ID.
+			# Unique ID is only guaranteed to be unique within a given window, so we must check window handle as well.
+			selfIA2Window=self.IA2WindowHandle
+			selfIA2ID=self.IA2UniqueID
+			otherIA2Window=other.IA2WindowHandle
+			otherIA2ID=other.IA2UniqueID
+			if selfIA2Window!=otherIA2Window:
+				# The window handles are different, so these are definitely different windows.
+				return False
+			# At this point, we know that the window handles are equal.
+			if selfIA2Window and (selfIA2ID or otherIA2ID):
+				# The window handles are valid and one of the objects has a valid unique ID.
+				# Therefore, we can safely determine equality or inequality based on unique ID.
+				return selfIA2ID==otherIA2ID
 		if self.event_windowHandle is not None and other.event_windowHandle is not None and self.event_windowHandle!=other.event_windowHandle:
 			return False
 		if self.event_objectID is not None and other.event_objectID is not None and self.event_objectID!=other.event_objectID:
@@ -807,11 +809,7 @@ the NVDAObject for IAccessible
 		if not hasattr(self.IAccessibleObject,'states'):
 			# Not an IA2 object.
 			return states
-		try:
-			IAccessible2States=self.IAccessibleObject.states
-		except COMError:
-			log.debugWarning("could not get IAccessible2 states",exc_info=True)
-			IAccessible2States=IAccessibleHandler.IA2_STATE_DEFUNCT
+		IAccessible2States=self.IA2States
 		states=states|set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in (y for y in (1<<z for z in xrange(32)) if y&IAccessible2States) if IAccessibleHandler.IAccessible2StatesToNVDAStates.has_key(x))
 		try:
 			IA2Attribs=self.IA2Attributes
@@ -1249,17 +1247,6 @@ the NVDAObject for IAccessible
 	def _get_flowsFrom(self):
 		return self._getIA2RelationFirstTarget(IAccessibleHandler.IA2_RELATION_FLOWS_FROM)
 
-	def _get_embeddingTextInfo(self):
-		if not hasattr(self, "IAccessibleTextObject"):
-			raise NotImplementedError
-		try:
-			hl = self.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHyperlink)
-			hlOffset = hl.startIndex
-			return self.parent.makeTextInfo(textInfos.offsets.Offsets(hlOffset, hlOffset + 1))
-		except COMError:
-			pass
-		return None
-
 	def event_valueChange(self):
 		if isinstance(self, EditableTextWithAutoSelectDetection):
 			self.hasContentChangedSinceLastSelection = True
@@ -1283,45 +1270,14 @@ the NVDAObject for IAccessible
 				speech.speakObject(child, reason=controlTypes.REASON_FOCUS)
 
 	def event_caret(self):
+		focus = api.getFocusObject()
+		if self is not focus and hasattr(self, "IAccessibleTextObject"):
+			import compoundDocuments
+			if issubclass(focus.TextInfo, compoundDocuments.CompoundTextInfo) and self in focus:
+				# This object is part of the focused compound text editor, so notify it.
+				focus.event_caret()
+				return
 		super(IAccessible, self).event_caret()
-		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_CARET:
-			return
-		# This is a nasty hack to make Mozilla rich text editing at least partially usable.
-		if not hasattr(self,'IAccessibleTextObject'):
-			return
-		if controlTypes.STATE_EDITABLE not in self.states:
-			return
-		focusObject=api.getFocusObject()
-		if not isinstance(focusObject,IAccessible):
-			# This can happen during input composition.
-			# The composition object must remain focused.
-			return
-		if self==focusObject:
-			return
-		# Mozilla doesn't focus most objects inside an editable area.
-		# Therefore, we need to fake focus so our caret stuff works.
-		# First, determine whether this is inside a focused editable area.
-		shouldFocus=False
-		obj=self
-		while obj:
-			states=obj.states
-			if controlTypes.STATE_EDITABLE not in states:
-				break
-			if controlTypes.STATE_FOCUSED in states:
-				shouldFocus=True
-				break
-			obj=obj.parent
-		if not shouldFocus:
-			return
-		# If the caret is on an embedded object character, this isn't useful.
-		try:
-			info=self.makeTextInfo(textInfos.POSITION_CARET)
-		except RuntimeError:
-			return
-		info.expand(textInfos.UNIT_CHARACTER)
-		if info.text==u'\uFFFC':
-			return
-		eventHandler.executeEvent("gainFocus",self)
 
 	def _get_groupName(self):
 		return None
@@ -1432,6 +1388,53 @@ the NVDAObject for IAccessible
 				ret = "exception: %s" % e
 			info.append("IAccessible2 attributes: %s" % ret)
 		return info
+
+	def _get_language(self):
+		try:
+			ia2Locale = self.IAccessibleObject.locale
+		except (AttributeError, COMError):
+			return None
+		if ia2Locale.language and ia2Locale.country:
+			return "%s_%s" % (ia2Locale.language, ia2Locale.country)
+		elif ia2Locale.language:
+			return ia2Locale.language
+		return None
+
+	def _get_iaHypertext(self):
+		ht = self.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext)
+		self.iaHypertext = ht # Cache forever.
+		return ht
+
+	def _get_IA2WindowHandle(self):
+		window = None
+		if isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2):
+			try:
+				window = self.IAccessibleObject.windowHandle
+			except COMError as e:
+				log.debugWarning("IAccessible2::windowHandle failed: %s" % e)
+		self.IA2WindowHandle = window # Cache forever.
+		return window
+	# We forceably cache this forever, so we don't need temporary caching.
+	# Temporary caching breaks because the cache isn't initialised when this is first called.
+	_cache_IA2WindowHandle = False
+
+	def _get_IA2States(self):
+		if not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2):
+			return 0
+		try:
+			return self.IAccessibleObject.states
+		except COMError:
+			log.debugWarning("could not get IAccessible2 states", exc_info=True)
+			return IAccessibleHandler.IA2_STATE_DEFUNCT
+
+	def __contains__(self, obj):
+		if not isinstance(obj, IAccessible) or not isinstance(obj.IAccessibleObject, IAccessibleHandler.IAccessible2):
+			return False
+		try:
+			self.IAccessibleObject.accChild(obj.IA2UniqueID)
+			return True
+		except COMError:
+			return False
 
 class ContentGenericClient(IAccessible):
 
@@ -1570,15 +1573,6 @@ class OutlineItem(IAccessible):
 			int(val)
 		except (ValueError, TypeError):
 			return val
-
-class Tooltip(IAccessible):
-
-	def event_show(self):
-		# TODO: Abstract this somehow.
-		if (config.conf["presentation"]["reportTooltips"] and (self.IAccessibleRole==oleacc.ROLE_SYSTEM_TOOLTIP)) or (config.conf["presentation"]["reportHelpBalloons"] and (self.IAccessibleRole==oleacc.ROLE_SYSTEM_HELPBALLOON)):
-			speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
-			# TODO: Don't use getBrailleTextForProperties directly.
-			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
 
 class List(IAccessible):
 
@@ -1741,8 +1735,8 @@ _staticMap={
 	("Static",oleacc.ROLE_SYSTEM_STATICTEXT):"StaticText",
 	("msctls_statusbar32",oleacc.ROLE_SYSTEM_STATICTEXT):"StaticText",
 	(None,oleacc.ROLE_SYSTEM_PUSHBUTTON):"Button",
-	("tooltips_class32",oleacc.ROLE_SYSTEM_TOOLTIP):"Tooltip",
-	("tooltips_class32",oleacc.ROLE_SYSTEM_HELPBALLOON):"Tooltip",
+	("tooltips_class32",oleacc.ROLE_SYSTEM_TOOLTIP):"ToolTip",
+	("tooltips_class32",oleacc.ROLE_SYSTEM_HELPBALLOON):"Notification",
 	(None,oleacc.ROLE_SYSTEM_DIALOG):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_ALERT):"Dialog",
 	(None,oleacc.ROLE_SYSTEM_PROPERTYPAGE):"Dialog",
@@ -1804,4 +1798,5 @@ _staticMap={
 	("listview",oleacc.ROLE_SYSTEM_CLIENT):"ListviewPane",
 	("NUIDialog",oleacc.ROLE_SYSTEM_CLIENT):"NUIDialogClient",
 	("_WwB",oleacc.ROLE_SYSTEM_CLIENT):"winword.ProtectedDocumentPane",
+    ("MsoCommandBar",oleacc.ROLE_SYSTEM_LISTITEM):"msOffice.CommandBarListItem",
 }

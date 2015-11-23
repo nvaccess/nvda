@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #core.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner
+#Copyright (C) 2006-2015 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -18,6 +18,7 @@ comtypes.gen.__path__.append(comInterfaces.__path__[0])
 import comtypesMonkeyPatches
 
 import sys
+import winVersion
 import thread
 import nvwave
 import os
@@ -58,9 +59,6 @@ def doStartupDialogs():
 		gui.messageBox(_("Your gesture map file contains errors.\n"
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
-	if not config.conf["upgrade"]["newLaptopKeyboardLayout"]:
-		from gui import upgradeAlerts
-		upgradeAlerts.NewLaptopKeyboardLayout.run()
 
 def restart(disableAddons=False):
 	"""Restarts NVDA by starting a new copy with -r."""
@@ -70,22 +68,27 @@ def restart(disableAddons=False):
 		wx.GetApp().ExitMainLoop()
 		return
 	import subprocess
+	import winUser
 	import shellapi
 	options=[]
-	try:
-		sys.argv.index('-r')
-	except:
+	if "-r" not in sys.argv:
 		options.append("-r")
 	try:
-		sys.argv.pop(sys.argv.index('--disable-addons'))
-	except:
+		sys.argv.remove('--disable-addons')
+	except ValueError:
 		pass
 	if disableAddons:
 		options.append('--disable-addons')
+	try:
+		sys.argv.remove("--ease-of-access")
+	except ValueError:
+		pass
 	shellapi.ShellExecute(None, None,
 		sys.executable.decode("mbcs"),
 		subprocess.list2cmdline(sys.argv + options).decode("mbcs"),
-		None, 0)
+		None,
+		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
+		winUser.SW_SHOWNORMAL)
 
 def resetConfiguration(factoryDefaults=False):
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
@@ -177,7 +180,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		log.warning("Could not set language to %s"%lang)
 	import versionInfo
 	log.info("NVDA version %s" % versionInfo.version)
-	log.info("Using Windows version %r" % (sys.getwindowsversion(),))
+	log.info("Using Windows version %s" % winVersion.winVersionText)
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
 	# Set a reasonable timeout for any socket connections NVDA makes.
@@ -233,22 +236,36 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("Initializing GUI")
 	import gui
 	gui.initialize()
+
 	if nvwave.isAudioDuckingSupported():
 		# the GUI mainloop must be running for this to work so delay it
 		wx.CallAfter(nvwave.WavePlayer.setAudioDuckingMode,config.conf['audio']['audioDuckingMode'])
+
+	# #3763: In wxPython 3, the class name of frame windows changed from wxWindowClassNR to wxWindowNR.
+	# NVDA uses the main frame to check for and quit another instance of NVDA.
+	# To remain compatible with older versions of NVDA, create our own wxWindowClassNR.
+	# We don't need to do anything else because wx handles WM_QUIT for all windows.
+	import windowUtils
+	class MessageWindow(windowUtils.CustomWindow):
+		className = u"wxWindowClassNR"
+	messageWindow = MessageWindow(unicode(versionInfo.name))
+
 	# initialize wxpython localization support
 	locale = wx.Locale()
 	lang=languageHandler.getLanguage()
-	if '_' in lang:
-		wxLang=lang.split('_')[0]
-	else:
-		wxLang=lang
+	wxLang=locale.FindLanguageInfo(lang)
+	if not wxLang and '_' in lang:
+		wxLang=locale.FindLanguageInfo(lang.split('_')[0])
 	if hasattr(sys,'frozen'):
 		locale.AddCatalogLookupPathPrefix(os.path.join(os.getcwdu(),"locale"))
-	try:
-		locale.Init(lang,wxLang)
-	except:
-		pass
+	if wxLang:
+		try:
+			locale.Init(wxLang.Language)
+		except:
+			log.error("Failed to initialize wx locale",exc_info=True)
+	else:
+		log.debugWarning("wx does not support language %s" % lang)
+
 	import api
 	import winUser
 	import NVDAObjects.window
@@ -297,10 +314,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import globalPluginHandler
 	log.debug("Initializing global plugin handler")
 	globalPluginHandler.initialize()
-	if globalVars.appArgs.install:
+	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import wx
 		import gui.installerGui
-		wx.CallAfter(gui.installerGui.doSilentInstall)
+		wx.CallAfter(gui.installerGui.doSilentInstall,startAfterInstall=not globalVars.appArgs.installSilent)
 	elif not globalVars.appArgs.minimal:
 		try:
 			# Translators: This is shown on a braille display (if one is connected) when NVDA starts.
@@ -406,6 +423,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 			nvwave.playWaveFile("waves\\exit.wav",async=False)
 		except:
 			pass
+	# #5189: Destroy the message window as late as possible
+	# so new instances of NVDA can find this one even if it freezes during exit.
+	messageWindow.destroy()
 	log.debug("core done")
 
 def _terminate(module, name=None):

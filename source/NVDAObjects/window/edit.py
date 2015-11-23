@@ -4,7 +4,7 @@
 #See the file COPYING for more details.
 
 import locale
-import sys
+import winVersion
 import comtypes.client
 import struct
 import ctypes
@@ -378,7 +378,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				start=end
 				end=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_FINDWORDBREAK,WB_MOVEWORDRIGHT,offset)
 			return (start,end)
-		elif sys.getwindowsversion().major<6: #Implementation of standard edit field wordbreak behaviour (only breaks on space)
+		elif winVersion.winVersion.major<6: #Implementation of standard edit field wordbreak behaviour (only breaks on space)
 			lineStart,lineEnd=self._getLineOffsets(offset)
 			if offset>=lineEnd:
 				return offset,offset+1
@@ -473,35 +473,10 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError
 
-	def _getCharFormat(self,range):
-		oldSel=self.obj.ITextSelectionObject.duplicate
-		if not (oldSel.start==range.start and oldSel.end==range.end):
-			self.obj.ITextSelectionObject.start=range.start
-			self.obj.ITextSelectionObject.end=range.end
-		if self.obj.isWindowUnicode:
-			charFormatStruct=CharFormat2WStruct
-		else:
-			charFormatStruct=CharFormat2AStruct
-		charFormat=charFormatStruct()
-		charFormat.cbSize=ctypes.sizeof(charFormatStruct)
-		processHandle=self.obj.processHandle
-		internalCharFormat=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(charFormat),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		try:
-			winKernel.writeProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
-			watchdog.cancellableSendMessage(self.obj.windowHandle,EM_GETCHARFORMAT,SCF_SELECTION, internalCharFormat)
-			winKernel.readProcessMemory(processHandle,internalCharFormat,ctypes.byref(charFormat),ctypes.sizeof(charFormat),None)
-		finally:
-			winKernel.virtualFreeEx(processHandle,internalCharFormat,0,winKernel.MEM_RELEASE)
-		if not (oldSel.start==range.start and oldSel.end==range.end):
-			self.obj.ITextSelectionObject.start=oldSel.start
-			self.obj.ITextSelectionObject.end=oldSel.end
-		return charFormat
-
 	def _getFormatFieldAtRange(self,range,formatConfig):
 		formatField=textInfos.FormatField()
 		fontObj=None
 		paraFormatObj=None
-		charFormat=None
 		if formatConfig["reportAlignment"]:
 			if not paraFormatObj: paraFormatObj=range.para
 			alignment=paraFormatObj.alignment
@@ -532,8 +507,31 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			elif fontObj.subscript:
 				formatField["text-position"]="sub"
 		if formatConfig["reportLinks"]:
-			if charFormat is None: charFormat=self._getCharFormat(range)
-			formatField["link"]=bool(charFormat.dwEffects&CFM_LINK)
+			linkRange=range.Duplicate
+			linkRange.Collapse(comInterfaces.tom.tomStart)
+			formatField["link"]=linkRange.Expand(comInterfaces.tom.tomLink)>0
+		if formatConfig["reportColor"]:
+			if not fontObj: fontObj=range.font
+			fgColor=fontObj.foreColor
+			if fgColor==comInterfaces.tom.tomAutoColor:
+				# Translators: The default color of text when a color has not been set by the author. 
+				formatField['color']=_("default color")
+			elif fgColor&0xff000000:
+				# The color is a palet index (we don't know the palet)
+				# #5474: Translatable string backed out until after 2015.4 freeze.
+				pass
+			else:
+				formatField["color"]=colors.RGB.fromCOLORREF(fgColor)
+			bkColor=fontObj.backColor
+			if bkColor==comInterfaces.tom.tomAutoColor:
+				# Translators: The default background color  when a color has not been set by the author. 
+				formatField['background-color']=_("default color")
+			elif bkColor&0xff000000:
+				# The color is a palet index (we don't know the palet)
+				# #5474: Translatable string backed out until after 2015.4 freeze.
+				pass
+			else:
+				formatField["background-color"]=colors.RGB.fromCOLORREF(bkColor)
 		return formatField
 
 	def _expandFormatRange(self,range,formatConfig):
@@ -767,7 +765,8 @@ class Edit(EditableTextWithAutoSelectDetection, Window):
 
 	editAPIVersion=0
 	editAPIUnicode=True
-	useITextDocumentSupport=False
+	# #4291: Use ITextDocument in Windows 7 and later, as it's very slow in earlier versions.
+	useITextDocumentSupport=(winVersion.winVersion.major,winVersion.winVersion.minor)>=(6,1)
 	editValueUnit=textInfos.UNIT_LINE
 
 	def _get_TextInfo(self):

@@ -13,33 +13,35 @@ complexSymbols:
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
-decimal point	(?<=\d)\,(?=\d)
+decimal point	(?<![^\d -])\,(?=\d)
 in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥]?\d)
+negative number	(?<!\w)-(?=[$£€¥.]?\d)
+thousands separator	(?<=\d)\.(?=\d{3})
 date separator	(?<=\d\d)\.(?=\d\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	Punkt	all	always
-! sentence ending	Ausrufezeichen	all	always
-? sentence ending	Fragezeichen	all	always
-; phrase ending	Semikolon	most	always
-: phrase ending	Doppelpunkt	most	always
-decimal point		none	always
-in-word '	Apostroph	all	norep
-negative number	Minus	none	norep
+. sentence ending	Punkt
+! sentence ending	Ausrufezeichen
+? sentence ending	Fragezeichen
+; phrase ending	Semikolon
+: phrase ending	Doppelpunkt
+decimal point	
+in-word '	Apostroph
+negative number	Minus
+thousands separator	Punkt	all	norep
 date separator		none	always
 
 # Whitespace
-\0	Leer	char	# null
+\0	Leer	# null
 \t	Tab
-\n	Zeilenumbruch	char
-\f	Seitenumbruch	none
-\r	Neue Zeile	char
- 	Leerzeichen	char
- 	Geschütztes Leerzeichen	char	# no-break space
+\n	Zeilenumbruch
+\f	Seitenumbruch
+\r	Neue Zeile
+ 	Leerzeichen
+ 	Geschütztes Leerzeichen	# geschütztes Leerzeichen
 
 # Standard punctuation/symbols
 !	Ausrufezeichen
@@ -84,8 +86,9 @@ _	Unterstrich
 …	Punkt Punkt Punkt
 ...	Punkt Punkt Punkt
 	Aufzählungszeichen
-“	Typografisches Anführungszeichen oben
-„	Typografisches Anführungszeichen unten
+“	Typografisches Anführungszeichen oben links
+”	Typografisches Anführungszeichen oben rechts
+„	Typografisches Anführungszeichen unten rechts
 ‘	Apostroph links
 ’	Apostroph rechts
 –	Strich
@@ -94,12 +97,15 @@ _	Unterstrich
 ¨	Trema
 ‎	Pfeil von links nach rechts
 ‏	Pfeil von rechts nach links
-■	Schwarzes Quadrat
+■	großes Schwarzes ausgefülltes Quadrat
+▪	schwarzes Quadrat
+◾	schwarzes Quadrat
+◦	weißes Aufzählungszeichen
 ➔	Großer rechtsweisender Pfeil
 §	Paragraf
 °	Grad
-«	Doppelt gewinkelte Klammer auf
-»	Doppelt gewinkelte Klammer zu
+«	Doppelte gewinkelte Klammer auf
+»	Doppelte gewinkelte Klammer zu
 µ	Mü
 ¹	Hochgestellte 1
 ²	Hochgestellte 2
@@ -114,3 +120,50 @@ _	Unterstrich
 →	Pfeil nach rechts
 ✓	Häkchen
 ✔	Fettes Häkchen
+℃	Grad Celsius	some
+#Mathematical Operators U+2200 to U+220F
+
+∀	For All 	none
+∁	Complement	none
+∂	Partial Derivative	none
+∃	There exists	none
+∄	There Does Not Exist	none
+∅	EMPTY SET	none
+∆	INCREMENT	none
+∇	NABLA	none
+∈	ELEMENT OF	none
+∉	NOT AN ELEMENT OF	none
+∊	SMALL ELEMENT OF	none
+∋	CONTAINS AS MEMBER	none
+∌	DOES NOT CONTAIN AS MEMBER	none
+∍	SMALL CONTAINS AS MEMBER	none
+∎	END OF PROOF	none
+∏	N-ARY PRODUCT	none
+
+# verschiedene mathematische Operatoren
+
+∑	N-ARY SUMMATION	none
+√	Quadratwurzel	none
+∛	Kubikwurzel	none
+∜	vierte Wurzel	none
+∝	PROPORTIONAL zu	none
+∞	unendlich	none
+∟	rechter Winkel	none
+∠	Winkel	none
+∥	PARALLEL zu	none
+∦	nicht parallel zu	none
+∧	LOGICAL AND	none
+∨	LOGICAL OR	none
+∩	INTERSECTION	none
+∪	UNION	none
+∫	INTEGRAL	none
+∴	THEREFORE	none
+∵	BECAUSE	none
+∶	RATIO	none
+∷	PROPORTION	none
+≤	kleiner gleich	none
+≥	größer gleich	none
+⊂	Untermenge von	none
+⊃	übergeordnete Menge von	none
+⊆	SUBSET OF OR EQUAL TO	none
+⊇	SUPERSET OF OR EQUAL TO	none

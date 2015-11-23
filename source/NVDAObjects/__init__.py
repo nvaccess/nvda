@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #NVDAObjects/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-20012 NVDA Contributors
+#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -77,7 +78,9 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			clsList.append(APIClass)
 		# Allow app modules to choose overlay classes.
 		appModule=obj.appModule
-		if appModule and "chooseNVDAObjectOverlayClasses" in appModule.__class__.__dict__:
+		# optimisation: The base implementation of chooseNVDAObjectOverlayClasses does nothing,
+		# so only call this method if it's been overridden.
+		if appModule and not hasattr(appModule.chooseNVDAObjectOverlayClasses, "_isBase"):
 			appModule.chooseNVDAObjectOverlayClasses(obj, clsList)
 		# Allow global plugins to choose overlay classes.
 		for plugin in globalPluginHandler.runningPlugins:
@@ -388,6 +391,10 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		return ""
 
+	def _get_controllerFor(self):
+		"""Retreaves the object/s that this object controls."""
+		return []
+
 	def _get_actionCount(self):
 		"""Retreaves the number of actions supported by this object."""
 		return 0
@@ -464,8 +471,11 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		Exactly like parent, however another object at this same sibling level may be retreaved first (e.g. a groupbox). Mostly used when presenting context such as focus ancestry.
 		"""
-		return self.parent
- 
+		# Cache parent.
+		parent = self.parent
+		self.parent = parent
+		return parent
+
 	def _get_next(self):
 		"""Retreaves the object directly after this object with the same parent.
 		@return: the next object if it exists else None.
@@ -770,16 +780,6 @@ Tries to force this object to take the focus.
 		"""
 		raise NotImplementedError
 
-	def _get_embeddingTextInfo(self):
-		"""Retrieve the parent text range which embeds this object.
-		The returned text range will have its start positioned on the embedded object character associated with this object.
-		That is, calling L{textInfos.TextInfo.getEmbeddedObject}() on the returned text range will return this object.
-		@return: The text range for the embedded object character associated with this object or C{None} if this is not an embedded object.
-		@rtype: L{textInfos.TextInfo}
-		@raise NotImplementedError: If not supported.
-		"""
-		raise NotImplementedError
-
 	def _get_isPresentableFocusAncestor(self):
 		"""Determine if this object should be presented to the user in the focus ancestry.
 		@return: C{True} if it should be presented in the focus ancestry, C{False} if not.
@@ -1040,3 +1040,15 @@ This code is executed if a gain focus event is received by this object.
 	# Don't cache sleepMode, as it is derived from a property which might change
 	# and we want the changed value immediately.
 	_cache_sleepMode = False
+
+	def _get_mathMl(self):
+		"""Obtain the MathML markup for an object containing math content.
+		This will only be called (and thus only needs to be implemented) for
+		objects with a role of L{controlTypes.ROLE_MATH}.
+		@raise LookupError: If MathML can't be retrieved for this object.
+		"""
+		raise NotImplementedError
+
+	#: The language/locale of this object.
+	#: @type: basestring
+	language = None

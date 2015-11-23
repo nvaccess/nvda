@@ -1,0 +1,199 @@
+﻿Nyheder i NVDA
+
+
+%!includeconf: ../changes.t2tconf
+
+= 2015.4 =
+De vigtigste nyheder i denne udgave omfatter forbedret understøttelse af Windows 10, medtagelse i tilgængelighedscenteret i Windows 8 og senere, forbedringer i Microsoft Excel, som omfatter visning af ark på en liste, omdøbning og adgang til låste celler i beskyttede ark, samt understøttelse af redigering af "rich text" i Mozilla Firefox, Google Chrome og Mozilla Thunderbird.
+
+== Nye funktioner ==
+- NVDA bliver nu vist i tilgængelighedscentret i Windows 8 og senere. (#308)
+- Mens man flytter rundt mellem celler i Excel, bliver ændringer i formateringen nu annonceret automatisk, hvis de relevante indstillinger er slået til i NVDAs dialog for dokumentformateringsindstillinger. (#4878)
+En indstilling til annoncering af fremhævelse er blevet tilføjet til NVDAs dialog til dokumentformateringsindstillinger. Når den er slået til, hvilket den er som standard, kan NVDA automatisk annoncere fremhævet tekst i dokumenter. I øjeblikket understøttes kun "fremhævet" og "kraftig" i 	browse-tilstand i Internet explorer og andre MSHTML-kontroller. (#4920)
+- Indsat og slettet tekst bliver nu annonceret i browse-tilstand i Internet Explorer og andre MSHTML-kontroller, hvis NVDAs indstilling for annoncering af ændringer er slået til. (#4920)
+- i NVDAs "Vis ændringer"-liste for Microsoft word bliver der nu vist flere informationer, så som ændringer i formatering. (#4920)
+- Microsoft Excel:  Det er nu muligt at få vist en liste over regneark og omdøbe dem i NVDAs elementliste (NVDA+F7). (#4630, #4414)
+- Det er nu muligt at indstille, om symboler skal sendes videre til talesyntesen (f.eks. for at skabe en pause eller en ændring i tonelejet) i dialogen "Udtale af symboler". (#5234)
+- I Microsoft Excel vil NVDA nu annoncere input-meddelelser, som er indstillet på celler af forfatteren til regnearket. (#5051)
+- Understøttelse af Baum Pronto! V4 og VarioUltra braille displays forbundet via Bluetooth. (#3717)
+- Understøttelse af redigering af rich text i Mozilla applicationer som Google Docs med braille-understøttelse slået til i Mozilla Firefox og HTML-komposition i Mozilla Thunderbird. (#1668)
+- Understøttelse af redigering af rich text i Google Chrome og Chrome-baserede browsere som Google Docs med braille support slået til. (#2634)
+ - Dette kræver Chrome version 47 eller senere.
+- I gennemsynstilstand i Microsoft Excel kan du nu navigere til låste celler i beskyttede ark. (#4952)
+
+
+== Ændringer ==
+- Indstillingen for at annoncere ændringer i NVDAs dialog for dokumentformateringsindstillinger er nu slå til som standard. (#4920)
+- Når du flytter et tegn ad gangen i Microsoft Word med annoncering af ændringer slået til, vil færre oplysninger nu blive annonceret, hvilket gør navigationen mere effektiv. Hvis du vil høre de ekstra oplysninger, skal du bruge elementlisten. (#4920)
+- opdateret  liblouis braille-opversætter til version 2.6.4. (#5341)
+- En del symboler, herunder basale matematiske symboler, er blevet flyttet til niveauet "nogle", så de som standard bliver udtalt. (#3799)
+Hvis talesyntesen understøtter det, skulle der nu komme ophold i talen for parenteser og tankestreg (–). (#3799)
+- Når man vælger tekst, bliver teksten nu læst før indikationen af, at den er blevet valgt i stedet for efter. (#1707)
+
+
+== Fejlrettelser ==
+Store performance-forbedringer ved navigation i mlisten over meddelelser i Outlook 2010 og 2013(#5268)
+I diagrammer i Microsoft Excel virker navigation med visse taster, f.eks. bladring i ark (Ctrl+PageUp og Ctrl-pagdDown) nu correct. (#5336)
+Rettet udseendet af knapper i den advarselsdialog, som bliver vist, hvis man forsøger at nedgradere NVDA.
+I Windows 8 og senere starter NVDA nu meget tidligere, når programmet er konfigureret til at starte efter log-on til Windows. (#308)
+ - Hvis du har slået dette til i en tidligere version af NVDA, skal du slå det fra og til igen for at få ændringen til at virke. Du kan følge denne fremgangsmåde:
+  + Åben dialogen Generelle indstillinger.
+  + Fjern krydset fra checkboksen "Automatisk start af NVDA, når jeg er logget på Windows.
+  + Tryk på OK-knappen.
+  + Åbn dialogen Generelle indstillinger igen.
+  + Sæt kryds i checkboksen "Automatisk start af NVDA, når jeg er logget på Windows.
+  + Tryk på OK-knappen.
+- Performance-forbedringer for UI Automation i bl.a. Stifinder og Joblisten. (#5293)
+- NVDA skifter nu korrekt til fokustilstand, når man tab'er til skrivebeskyttede ARIA grid kontroller i Browse-tilstand i Mozilla Firefox og andre Gecko-baserede kontroller. (#5118)
+- NVDA siger nu korrekt "ingen forrige" i stedet for "ingen næste", når der ikke er flere objekter, og man svirper mod venstre på en touch-skærm. 
+- Løst problem med at skrive flere ord i filter-feltet i dialogen Input-bevægelser. (#5426)
+- NVDA fryser ikke længere i nogle tilfælde, når man genopretter forbindelse til et HumanWare Brailliant BI/B series display via USB. (#5406)
+- På sprog med sammenhængende tegn virker tegnbeskrivelse nu som forventet for store engelske bogstaver. (#5375)
+- NVDA skulle nu ikke længere fryse ved nogle lejligheder, når man åbner startmenuen i Windows 10. (#5417)
+- i Skype for Desktop bliver en meddelse, der bliver vist, før en tidligere meddelelse forsvinder, nu annonceret. (#4841)
+- Meddelelser bliver nu korrekt annonceret i Skype for Desktop 7.12 og senere. (#5405)
+- NVDA annoncerer nu fokus korrekt, når man går ud af kontekst-menuen i programmer som f.eks. Jart. (#5302)
+- i Windows 7 og senere bliver farver nu igen annonceret i programmer som f.eks. Wordpad. (#5352)
+- Under redigering i Microsoft PowerPoint vil et tryk på Enter nu annoncere automatisk indsat tekst som f.eks. bullit eller et nummer. (#5360)
+
+
+= 2015.3 =
+De vigtigste nyheder i denne udgave omfatter indledende understøttelse af Windows 10, mulighed for at slå enkeltbogstavsnavigation fra i browse-tilstand (nyttigt i visse web-programmer), forbedringer i Internet Explorer og fejlrettelse af sammenrodet tekst under indtastning i visse applikationer med punktskrift slået til.
+
+
+== Nye funktioner ==
+- Eventuelle stavefejl bliver nu annonceret i redigerbare felter i Internet Explorer og andre MSHTML-kontroller. (#4174)
+- Mange flere Unicode matematik-symboler bliver udtalt, når de forekommer i tekst. (#3805)
+- Søgeforslag på startskærmen i Windows 10 bliver automatisk annonceret. (#5049)
+- Understøttelse af punktdisplays EcoBraille 20, EcoBraille 40, EcoBraille 80 and EcoBraille Plus. (#4078)
+- I Browse-tilstand kan du nu slå enkelttegnsnavigering til og fra ved at trykke på NVDA+Shift+Mellemrum. Når funktionen er slået fra, bliver disse tastetryk sendt videre til applikationen, hvilket kan være nyttigt i applikationer såsom Gmail, Twitter og Facebook.
+- Nye oversættelsestabeller til punkt: Finsk 6-punkt, Irsk niveau 1, Irsk niveau 2, koreansk niveau 1 (2006) og koreansk niveau 2 (2006). (#5137, #5074, #5097)
+- QWERTY-tastaturet på punktdisplayet Papenmeier BRAILLEX Live Plus er nu understøttet. (#5181)
+- Eksperimentel understøttelse af Microsoft Edge browseren og browser-engine i Windows 10. (#5212)
+
+
+== Ændringer ==
+- Liblouis punktskriftforkorter opdateret til version 2.6.3. (#5137)
+- Hvis du forsøger at installere en tidligere version af NVDA end den, der i øjeblikket er installeret, bliver du nu advaret om, at dette ikke er anbefalet, og at du afinstallere den nuværende version helt, inden du fortsøtter. (#5037)
+
+
+== Fejlrettelser ==
+- i browse-tilstand i Internet Explorer og andre MSHTML-kontroller vil hurtignavigering mellem formularfelter ikke længere fejlagtigt medtage listeemner, som bruges til præsentation. (#4204)
+- I Firefox vil NVDA ikke længere fejlagtigt rapportere indholdet af et ARIA fanebladspanel, når det får fokus. (#4638)
+- I Internet Explorer og andre MSHTML-kontroller vil hele inholdet af en sektion, en artikel eller en dialog ikke længere blive annonceret som navn på objektet, når man tab'er ind i det. (#5021, #5025) 
+- Når du bruger punktdisplays fra Baum/HumanWare/APH med punkttastatur, vil indtastning i Braille ikke længere holde op med at fungere efter tryk på andre typer taster. (#3541)
+- i Windows 10 bliver overflødig information ikke længere annonceret, når man trykker på Alt+Tab eller Alt+Shift+Tab for at skifte mellem programmer. (#5116)
+- Indtastet tekst bliver ikke længere rodet sammen under brug af visse programmer, såsom Microsoft Outlook, med et punktdisplay. (#2953)
+- I browse-tilstand i Internet Explorer og andre MSHTML-kontroller bliver det korrekte indhold nu annonceret, når et element dukker op eller ændrer sig og øjeblikkelig kommer i fokus. (#5040)
+- I browse-tilstand i Microsoft Word vil enkelttegnsnavigering nu opdatere punktdisplay og gennemsynsmarkør som forventet. (#4968)
+- i punkt bliver der ikke længere vist overflødige mellemrum mellem og efter indikatorer for felter og formatering. (#5043)
+- Hvis et program er langsomt til at svare, og du skifter væk fra dette program, vil NVDA nu i de fleste tilfælde svare langt hurtigere i andre programmer. (#3831)
+- De såkaldte "toast notifikationer" i Windows 10 bliver nu annonceret som forventet. (#5136)
+- Værdien bliver nu annonceret, når den ændrer sig i visse (UI automation) combobokse, hvor dette ikke virkede tidligere.
+- i browse-tilstand i web-browsere vil Tab nu opføre sig som forventet efter man har tabbet til et frame-dokument. (#5227)
+- Låseskærmen i Windows 10 kan nu lukkes ved hjælp af en berøringsfølsom skærm. (#5220)
+- i Windows 7 og senere bliver teksten ikke længere rodet sammen, når man indtaster tekst i visse programmer, som f.eks. Wordpad og Skype med et punktdisplay. (#4291)
+- På låseskærmen i Windows 10 er det ikke længere muligt at læse udklipsholderen, tilgå kørende programmer med gennemsynsmarkøren, ændre indstillinger i NVDA o.s.v. (#5269)
+
+
+== Ændringer for udviklere ==
+For nyheder relateret til udvikling se venligst det engelske "What's New"-dokument
+
+
+= 2015.2 =
+De vigtigste nyheder i denne udgave omfatter mulighed for læsning af diagrammer i Microsoft Excel og understøttelse af læsning og interaktiv navigering i matematisk indhold.
+
+== Nye funktioner ==
+- Du kan nu flytte frem og tilbage en sætning af gangen med tasterne Alt+Pil-ned og Alt+pil-op. (#3288)
+- Nye punktoversættelsestabeller for adskillige indiske sprog. (#4778)
+- I Microsoft Excel rapporterer NVDA nu, når en celle har for meget indhold, eller hvis det er blevet beskåret. (#3040)
+- I Microsoft Excel kan du nu bruge elementlisten (NVDA+F7) til at oprette en liste over diagrammer, kommentarer og formler. (#1987)
+- Understøttelse af læsning af diagrammer i Microsoft Excel. Hvis du vil bruge denne funktion, så vælg et diagram i elementlisten (NVDA+F7), og brug så piletasterne til at flytte mellem datapunkterne.
+- Ved hjælp af MathPlayer 4 fra Design Science kan NVDA nu læse og navigere interaktivt i matematisk indhold i web-browsere samt i Microsoft Word og PowerPoint. For detaljer se afsnittet om læsning af matematisk material i brugermanualen. (#4673)
+- Det er nu muligt at knytte inputbevægelser (tastaturkommandoer, bevægelser på skærmen o.s.v.) til alle indstillingsdialoger og indstillinger og indstillinger for dokumentformatering ved hjælp af dialogen Inputbevægelser. (#4898).
+
+
+== Ændringer ==
+- I NVDAs dialog til dokumentformatering er genvejstasterne til Annoncer lister, Annoncer links, Annoncer linjenumre og Annoncer navn på skrifttype blevet ændret. (#4650)
+- I NVDAs dialog til indstilling af mus er der nu tilføjet genvejstaster til punkterne "afspil lydkoordinater ved flytning af musen" og "Lysstyrke kontrollerer lydstyrke på lydkoordinater". (#4916)
+- Betydelig forbedring af annoncering navne på farver. (#4984)
+- Opdateret Braille-forkortelsesprogrammet Liblouis til version 2.6.2. (#4777)
+
+
+== Fejlrettelser ==
+- Tegnbeskrivelser for visse karakterer på indiske sprog bliver nu håndteret korrekt. (#4582)
+- Hvis punktet "Brug stemmens sprog til behandling af tegn og symboler" er slået til, vil dialogen til udtale af sætningstegn og symboler nu korrekt bruge stemmens sprog. Desuden bliver det sprog, man foretager ændringer for, nu vist i dialogens titel. (#4930)
+- I Internet Explorer og andre MSHTML kontroller bliver indtastede tegn  ikke længere forkert annonceret i edit-combo-bokse, såsom søgefeltet på Googles hjemmeside. (#4976)
+Når man vælger farver i Microsofts office-programmer, bliver navnene på farverne nu annonceret. (#3045)
+- Dansk Braille-output virker nu igen. (#4986)
+- Side-op/Side-ned kan igen bruges til at skifte dias i et dias-show i PowerPoint. (#4850)
+- In Skype for Desktop 7.2 og senere bliver indtastninger nu annonceret, og de problemer, der kunne opstå umiddelbart efter, man havfjernet fokus fra en samtale, er nu blevet løøst. (#4972)
+- Løst problemer ved indtastning af visse sætningstegn og symboler såsom kantede parenteser i filterfeltet i dialogen Inputbevægelser. (#5060)
+- i Internet Explorer og andre MSHTML kontroller vil tryk på g og Shift-g for at navigere til grafikelementer nu også omfatte elementer, som er afmærket som grafik af tilgængelighedsgrunde (d.v.s. ARIA role img). (#5062)
+
+
+== Nyheder for udviklere ==
+For nyheder relateret til udvikling se venligst det engelske "What's New"-dokument
+
+
+= 2015.1 =
+De vigtigste nyheder omfatter gennemsynstilstand for dokumenter i Microsoft Word og Outlook, store forbedringer i understøttelsen af Skype for Desktop samt bsssssssssssssetydelige fejlrettelser i Internet Explorer.
+
+== Nye funktioner ==
+- Du kan nu tilføje nye symboler i dialogen "Udtale af symboler". (#4354)
+- I dialogen Input-bevægelser kan du bruge det nye filtreringsfelt til kun at få vist kommandoer, der indeholder bestemte ord. (#4458)
+- NVDA annoncerer nu automatisk ny tekst i programmet mintty. (#4588)
+- I søgedialogen i gennemsynstilstand kan man nu søge specifikt efter store eller små bogstaver. (#4584)
+-Hurtignavigation (h for overskrift osv.) plus elementliste (NVDA+F7) kan nu også bruges i Microsoft Word. Tryk på NVDA+Mellemrum for at slå læsetilstand til. (#2975)
+- Læsning af HTML-meddelelser i Microsoft Outlook 2007 og højere er blevet kraftigt forbedret, da læsetilstand automatisk bliver slået til ved disse meddelelser. Hvis læsetilstand i sjældne situationer ikke bliver slået til automatisk, kan du slå den til med NVDA+Mellemrum. (#2975) 
+- I tabeller Microsoft Word bliver kolonneoverskrifter automatisk læst op i tabeller, hvor en række til overskrifter er blevet angivet ved hjælp af tabelegenskaberne i Microsoft Word. (#4510)
+- I tabeller, hvor rækker er blevet flettet/lagt sammen, virker dette imidlertid ikke automatisk. I denne situation kan du stadig indstille kolonneoverskrifterne manuelt i NVDA med NVDA+Shift+c.
+- I Skype for Desktop bliver notifikationer nu automatisk læst op. (#4741)
+- i Skype for Desktop kan du nu læse og gennemse de seneste meddelelser med NVDA+Ctrl-1-0, f.eks. NVDA+Ctrl+1 for den seneste meddelelse eller NVDA+Ctrl-0 for den tiendesidste meddelelse. (#3210)
+- under en samtale i Skype for Desktop gør NVDA nu opmærksom på, når en kontaktperson skriver noget. (#3506)
+- NVDA kan nu installeres "tavst" (uden dialoger) fra kommandolinjen uden at starte den installerede version bagefter. For at gøre dette skal du bruge kommandolinje-indstillingen --install-silent. (#4206)
+- Understøttelse af Papenmeier BRAILLEX Live 20, BRAILLEX Live og BRAILLEX Live Plus braille displays. (#4614)
+
+
+== Ændringer ==
+- i NVDAs dialogen til dokumentformateringsindstillinger er der nu kommet en genvejstast til annoncering af stavefejl (alt-r). (#793)
+- NVDA bruger nu talesyntesens eller stemmens sprog til behandling af tegn og symboler (herunder navne på specialtegn og symboler), uanset om automatisk sprogskift er slået til. Hvis du vil slå denne funktion fra, så NVDA igen bruger sit brugergrænsefladesprog, skal du slå den nye indstilling fra, som hedder Brug stemmens sprog til behandling af tegn og symboler. (#4210)
+Understøttelse af talesyntesen Newfon er blevet fjernet. Newfon er nu tilgængelig som et NVDA-tilføjelsesprogram. (#3184)
+Skype for Desktop version 7 eller senere er nu nødvendig til brug med NVDA. Tidligere versionunderstøttes ikke. (#4218)
+- Hentning af opdateringer til NVDA er nu mere sikker. Specifikt bliver oplysningerne om opdateringer nu hentet via https, og filens integritet bliver kontrolleret, når den er blevet hentet. (#4716)
+- eSpeak er blevet opgraderet til version 1.48.04 (#4325)
+
+
+== Fejlrettelser ==
+- Microsoft Excel, håndtering af tilfælde, hvor celler med række- eller kolonneoverskrifter bliver flettet. F.eks. hvis A1 og B1 bliver flettet, vil a2 nu få annonceret A1 og B1 som kolonneoverskrift i stedet for ingenting. (#4617)
+- Når man redigerer indholdet i en tekstboks i Microsoft PowerPoint 2003, bliver indholdet af hver linje nu annonceret korrekt. Tidligere ville hver linje have et tegn mere galt for hvert nyt afsnit. (#4619)
+- Alle dialoger i NVDA er nu centreret på skærmen af hensyn til den visuelle præsentation og brugervenlighed. (#3148)
+- Skype for desktop: Når man indtaster en præsentationsmeddelelse ved tilføjelse af en kontakt, virker indtastning og navigering i teksten nu korrekt. (#3661)
+- Eclipse IDE: Når fokus bliver flyttet til et nyt emne i en træoversigt, og det tidligere emne var en checkboks, bliver det nu annonceret korrekt. (#4586)
+- I stavekontrollen i Microsoft Word bliver den næste fejl nu annonceret, hvis den sidste fejl bliver ændret eller ignoreret ved hjælp af genvejstasten. (#1938)
+- Tekst kan igen læses korrekt i f.eks. Tera Term Pro's terminalvindue og dokumenter i Balabolka. (#4229)
+- Fokus kommer nu korrekt tilbage til det dokument, der bliver redigeret, når man fuldfører inputkomposition på koreansk og andre østasiatiske sprog, når man redigerer i en ramme i Internet Explorer eller andre SHTML-dokumenter. (#4045)
+- I dialogen Inputbevægelser, når man vælger et tastaturlayout for en tastaturkommando, som skal tilføjes, vil et tryk på Escape nu lukke menuen som forventet i stedet for at lukke dialogen. (#3617)
+- Når man fjerner et tilføjelsesprogram, bliver mappen til tilføjelsesprogrammet nu slettet korrekt, når man genstarter NVDA. Førhen skulle man genstarte NVDA to gange. (#3461)
+- Store problemer er blevet løst omkring brugen af Skype for Desktop 7. (#4218)
+- Når du sender en meddelelse i Skype for Desktop, bliver den ikke længere læst op to gange. (#3616)
+- I Skype for Desktop bør NVDA ikke længere en gang i mellem fejlagtigt læse en syndflod af meddelelser (måske oven i købet en hel samtale). (#4644)
+- Løste et problem, hvor NVDAs kommando for dato og tid en gang imellem ikke respektererede brugerens regionale indstillinger. (#2987)
+- I gennemsynstilstand bliver meningsløse tekster, som kan fylde flere linjer ikke længere læst op for nogle grafikelementer, f.eks. i Google Groups. (Dette forekom specifikt i forbindelse med grafik som var kodet i base64.) (#4793)
+- NVDA bør ikke længere fryse efter et par sekunder, Når man flytter fokus væk fra en Windows Store app, når den bliver sat på standby. (#4572)
+- I live regions i Mozilla Firefox bliver aria-atomic attributten nu respekteret, Selv når  atomic-elementet selv ændrer sig. Tidligere påvirkede dette kun underordnede elementer. (#4794)
+- Gennemsynstilstand vil afspejle opdateringer, og live regions vil blive annonceret for dokumenter i gennemsynstilstand inden i ARIA applikationer, som er indlejret i dokumenter i Internet Explorer eller andre MSHTML-kontroller. (#4798)
+- Når tekst bliver tilføjet eller ændret i Live regions i Internet Explorer eller andre MSHTML-kontroller, hvor forfatteren har specificeret, at teksten er relevant, bliver kun den nye eller ændrede tekst læst op, ikke hele teksten i det overordnede element. (#4800)
+- Indhold, som er indikeret af aria-labelledby-attributten i elementer i Internet Explorer og andre MSHTML-kontroller, erstatter nu korrekt det originale indhold, hvor dette er korrekt at gøre. (#4575)
+- Under stavekontrol i Microsoft Outlook 2013 bliver det forkert stavede ord nu læst op. (#4848)
+- I Internet Explorer og andre MSHTML controller bliver indholdet i usynlige elementer ikke længere fejlagtigt læst op i gennemsynstilstand. (#4839, #3776)
+- I Internet Explorer og andre MSHTML controller tager titel-attributten på formularfelter ikke længere fejlagtigt forrang over andre label-assosiationer. (#4491)
+- I Internet Explorer og andre MSHTML controller ignorerer NVDA ikke længere fokus på  elementer på grund af aria-activedescendant-attributten. (#4667)
+
+
+== Nyheder for udviklere ==
+For nyheder relateret til udvikling se venligst det engelske "What's New"-dokument
+
+
+= Tidligere versioner =
+For nyheder i ældre versioner se venligst det engelske "What's New"-dokument.

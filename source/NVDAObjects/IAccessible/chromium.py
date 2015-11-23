@@ -8,10 +8,12 @@
 """
 
 from comtypes import COMError
+import oleacc
 import controlTypes
+import IAccessibleHandler
 from NVDAObjects.IAccessible import IAccessible
 from virtualBuffers.gecko_ia2 import Gecko_ia2 as GeckoVBuf
-from NVDAObjects.behaviors import Dialog
+from . import ia2Web
 
 class ChromeVBuf(GeckoVBuf):
 
@@ -27,8 +29,7 @@ class ChromeVBuf(GeckoVBuf):
 			return False
 		return True
 
-class Document(IAccessible):
-	value = None
+class Document(ia2Web.Document):
 
 	def _get_treeInterceptorClass(self):
 		states = self.states
@@ -40,16 +41,5 @@ def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class(es) for Chromium objects.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
 	"""
-	role = obj.role
-	if role == controlTypes.ROLE_DOCUMENT:
-		clsList.append(Document)
-		return
-
-	if role == controlTypes.ROLE_DIALOG:
-		xmlRoles = obj.IA2Attributes.get("xml-roles", "").split(" ")
-		if "dialog" in xmlRoles:
-			# #2390: Don't try to calculate text for ARIA dialogs.
-			try:
-				clsList.remove(Dialog)
-			except ValueError:
-				pass
+	ia2Web.findExtraOverlayClasses(obj, clsList,
+		documentClass=Document)

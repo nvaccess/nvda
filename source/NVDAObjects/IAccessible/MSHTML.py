@@ -1,6 +1,6 @@
 #NVDAObjects/MSHTML.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2015 NV Access Limited, Aleksey Sadovoy
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -14,6 +14,7 @@ import ctypes.wintypes
 import contextlib
 import winUser
 import oleacc
+import UIAHandler
 import IAccessibleHandler
 import aria
 from keyboardHandler import KeyboardInputGesture
@@ -25,8 +26,45 @@ from . import IAccessible
 from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
 from .. import InvalidNVDAObject
 from ..window import Window
+from NVDAObjects.UIA import UIA, UIATextInfo
 
 IID_IHTMLElement=comtypes.GUID('{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}')
+
+class UIAMSHTMLTextInfo(UIATextInfo):
+
+	# #4174: MSHTML's UIAutomation implementation does not handle the insertion point at the end of the control correcly.
+	# Therefore get around it by detecting when the TextInfo is instanciated on it, and ensure that expand and move do the expected thing.
+	
+	_atEndOfStory=False
+
+	def __init__(self,obj,position,_rangeObj=None):
+		super(UIAMSHTMLTextInfo,self).__init__(obj,position,_rangeObj)
+		if position==textInfos.POSITION_CARET:
+			tempRange=self._rangeObj.clone()
+			tempRange.ExpandToEnclosingUnit(UIAHandler.TextUnit_Character)
+			if self._rangeObj.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)>0:
+				self._atEndOfStory=True
+
+	def copy(self):
+		info=super(UIAMSHTMLTextInfo,self).copy()
+		info._atEndOfStory=self._atEndOfStory
+		return info
+
+	def expand(self,unit):
+		if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and self._atEndOfStory:
+			return
+		self._atEndOfStory=False
+		return super(UIAMSHTMLTextInfo,self).expand(unit)
+
+	def move(self,unit,direction,endPoint=None):
+		if direction==0:
+			return 0
+		if self._atEndOfStory and direction<0:
+			direction+=1
+		self._atEndOfStory=False
+		if direction==0:
+			return -1
+		return super(UIAMSHTMLTextInfo,self).move(unit,direction,endPoint=endPoint)
 
 class HTMLAttribCache(object):
 
@@ -56,6 +94,7 @@ nodeNamesToNVDARoles={
 	"A":controlTypes.ROLE_LINK,
 	"LABEL":controlTypes.ROLE_LABEL,
 	"#text":controlTypes.ROLE_STATICTEXT,
+	"#TEXT":controlTypes.ROLE_STATICTEXT,
 	"H1":controlTypes.ROLE_HEADING,
 	"H2":controlTypes.ROLE_HEADING,
 	"H3":controlTypes.ROLE_HEADING,
@@ -81,6 +120,10 @@ nodeNamesToNVDARoles={
 	"FIELDSET":controlTypes.ROLE_GROUPING,
 	"OPTION":controlTypes.ROLE_LISTITEM,
 	"BLOCKQUOTE":controlTypes.ROLE_BLOCKQUOTE,
+	"MATH":controlTypes.ROLE_MATH,
+	"NAV":controlTypes.ROLE_SECTION,
+	"SECTION":controlTypes.ROLE_SECTION,
+	"ARTICLE":controlTypes.ROLE_DOCUMENT,
 }
 
 def getZoomFactorsFromHTMLDocument(HTMLDocument):
@@ -151,19 +194,23 @@ def locateHTMLElementByID(document,ID):
 	if not frames: #frames can be None in IE 10
 		return None
 	for frame in frames:
-		try:
-			pacc=IAccessibleFromHTMLNode(frame)
-		except NotImplementedError:
-			# #1569: It's not possible to get an IAccessible from frames marked with an ARIA role of presentation.
-			# In this case, just skip this frame.
+		childElement=getChildHTMLNodeFromFrame(frame)
+		if not childElement:
 			continue
-		res=IAccessibleHandler.accChild(pacc,1)
-		if not res: continue
-		childElement=HTMLNodeFromIAccessible(res[0])
-		if not childElement: continue
 		childElement=locateHTMLElementByID(childElement.document,ID)
 		if not childElement: continue
 		return childElement
+
+def getChildHTMLNodeFromFrame(frame):
+	try:
+		pacc=IAccessibleFromHTMLNode(frame)
+	except NotImplementedError:
+		# #1569: It's not possible to get an IAccessible from frames marked with an ARIA role of presentation.
+		# In this case, just skip this frame.
+		return
+	res=IAccessibleHandler.accChild(pacc,1)
+	if not res: return
+	return HTMLNodeFromIAccessible(res[0])
 
 class MSHTMLTextInfo(textInfos.TextInfo):
 
@@ -330,6 +377,21 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 
 class MSHTML(IAccessible):
 
+	def _get__UIAControl(self):
+		if UIAHandler.handler and self.role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_FOCUSED in self.states:
+			e=UIAHandler.handler.clientObject.getFocusedElementBuildCache(UIAHandler.handler.baseCacheRequest)
+			obj=UIA(UIAElement=e)
+			if isinstance(obj,EditableTextWithoutAutoSelectDetection):
+				obj.parent=self.parent
+				obj.TextInfo=UIAMSHTMLTextInfo
+				self._UIAControl=obj
+				return obj
+
+	def makeTextInfo(self,position):
+		if self._UIAControl:
+			return self._UIAControl.makeTextInfo(position)
+		return super(MSHTML,self).makeTextInfo(position)
+
 	HTMLNodeNameNavSkipList=['#comment','SCRIPT','HEAD','HTML','PARAM','STYLE']
 	HTMLNodeNameEmbedList=['OBJECT','EMBED','APPLET','FRAME','IFRAME']
 
@@ -345,7 +407,7 @@ class MSHTML(IAccessible):
 
 	def event_caret(self):
 		if self._ignoreCaretEvents: return
-		if self.TextInfo is not MSHTMLTextInfo:
+		if self.TextInfo is not MSHTMLTextInfo and not self._UIAControl:
 			return
 		try:
 			newCaretBookmark=self.makeTextInfo(textInfos.POSITION_CARET).bookmark
@@ -372,12 +434,23 @@ class MSHTML(IAccessible):
 			return False
 
 		if relation=="focus":
-			try:
-				HTMLNode=HTMLNode.document.activeElement
-				# The IAccessibleObject may be incorrect now, so let the constructor recalculate it.
-				del kwargs['IAccessibleObject']
-			except:
-				log.exception("Error getting activeElement")
+			# #4045: we must recurse into frames ourselves when fetching the active element of a document. 
+			while True:
+				try:
+					HTMLNode=HTMLNode.document.activeElement
+				except:
+					log.exception("Error getting activeElement")
+					break
+				nodeName=HTMLNode.nodeName or ""
+				if nodeName.lower() not in ("frame","iframe"):
+					# The IAccessibleObject may be incorrect now, so let the constructor recalculate it.
+					del kwargs['IAccessibleObject']
+					break
+				childElement=getChildHTMLNodeFromFrame(HTMLNode)
+				if not childElement:
+					break
+				HTMLNode=childElement
+			
 		elif isinstance(relation,tuple):
 			windowHandle=kwargs.get('windowHandle')
 			p=ctypes.wintypes.POINT(x=relation[0],y=relation[1])
@@ -397,7 +470,7 @@ class MSHTML(IAccessible):
 		return True
 
 	def findOverlayClasses(self,clsList):
-		if self.TextInfo == MSHTMLTextInfo:
+		if self.TextInfo == MSHTMLTextInfo or self._UIAControl:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
 		nodeName = self.HTMLNodeName
 		if nodeName:
@@ -414,6 +487,8 @@ class MSHTML(IAccessible):
 				clsList.append(Object)
 			elif nodeName=="FIELDSET":
 				clsList.append(Fieldset)
+			elif nodeName=="MATH":
+				clsList.append(Math)
 		clsList.append(MSHTML)
 		if not self.HTMLNodeHasAncestorIAccessible:
 			# The IAccessibleObject is for this node (not an ancestor), so IAccessible overlay classes are relevant.
@@ -532,12 +607,18 @@ class MSHTML(IAccessible):
 		ariaRole=self.HTMLAttributes['aria-role']
 		if ariaRole=="gridcell":
 			return True
-		return super(MSHTML,self).shouldAllowIAccessibleFocusEvent
+		res=super(MSHTML,self).shouldAllowIAccessibleFocusEvent
+		if not res:
+			# #4667: Internet Explorer 11 correctly fires focus events for aria-activeDescendant, but fails to set the focused state.
+			# Therefore check aria-activeDescendant manually and let the focus events through  in this case.
+			activeElement=self.HTMLNode.document.activeElement
+			if activeElement:
+				activeID=activeElement.getAttribute('aria-activedescendant')
+				if activeID and activeID==self.HTMLNode.ID:
+					res=True
+		return res
 
 	def _get_name(self):
-		ariaLabel=self.HTMLAttributes['aria-label']
-		if ariaLabel:
-			return ariaLabel
 		ariaLabelledBy=self.HTMLAttributes['aria-labelledBy']
 		if ariaLabelledBy:
 			try:
@@ -549,24 +630,27 @@ class MSHTML(IAccessible):
 					return labelNode.innerText
 				except (COMError,NameError):
 					pass
-		title=self.HTMLAttributes['title']
-		# #2121: MSHTML sometimes returns a node for the title attribute.
-		# This doesn't make any sense, so ignore it.
-		if title and isinstance(title,basestring):
-			return title
+		ariaLabel=self.HTMLAttributes['aria-label']
+		if ariaLabel:
+			return ariaLabel
 		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_TABLE:
 			summary=self.HTMLAttributes['summary']
 			if summary:
 				return summary
-		if self.HTMLNodeHasAncestorIAccessible:
-			return ""
-		#IE inappropriately generates the name from descendants on some controls
-		if self.IAccessibleRole in (oleacc.ROLE_SYSTEM_MENUBAR,oleacc.ROLE_SYSTEM_TOOLBAR,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TABLE,oleacc.ROLE_SYSTEM_DOCUMENT):
-			return ""
-		#Adding an ARIA landmark or unknown role to a DIV node makes an IAccessible with role_system_grouping and a name calculated from descendants.
-		# This name should also be ignored, but check NVDA's role, not accRole as its possible that NVDA chose a better role
-		# E.g. row (#2780)
-		if self.HTMLNodeName=="DIV" and self.role==controlTypes.ROLE_GROUPING:
+		if (
+			self.HTMLNodeHasAncestorIAccessible or
+			#IE inappropriately generates the name from descendants on some controls
+			self.IAccessibleRole in (oleacc.ROLE_SYSTEM_MENUBAR,oleacc.ROLE_SYSTEM_TOOLBAR,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TABLE,oleacc.ROLE_SYSTEM_DOCUMENT,oleacc.ROLE_SYSTEM_DIALOG) or
+			#Adding an ARIA landmark or unknown role to a DIV or NAV node makes an IAccessible with role_system_grouping and a name calculated from descendants.
+			# This name should also be ignored, but check NVDA's role, not accRole as its possible that NVDA chose a better role
+			# E.g. row (#2780)
+			(self.HTMLNodeName in ("DIV","NAV") and self.role==controlTypes.ROLE_GROUPING)
+		):
+			title=self.HTMLAttributes['title']
+			# #2121: MSHTML sometimes returns a node for the title attribute.
+			# This doesn't make any sense, so ignore it.
+			if title and isinstance(title,basestring):
+				return title
 			return ""
 		return super(MSHTML,self).name
 
@@ -578,7 +662,8 @@ class MSHTML(IAccessible):
 				value=""
 			return value
 		IARole=self.IAccessibleRole
-		if IARole in (oleacc.ROLE_SYSTEM_PANE,oleacc.ROLE_SYSTEM_TEXT):
+		# value is not useful on certain nodes that just expose a URL, or they  have other ways of getting their content (#4976 - editble combos).
+		if IARole in (oleacc.ROLE_SYSTEM_PANE,oleacc.ROLE_SYSTEM_TEXT) or (IARole==oleacc.ROLE_SYSTEM_COMBOBOX and controlTypes.STATE_EDITABLE in self.states):
 			return ""
 		else:
 			return super(MSHTML,self).value
@@ -622,8 +707,8 @@ class MSHTML(IAccessible):
 			if nodeName:
 				if nodeName in ("OBJECT","EMBED","APPLET"):
 					return controlTypes.ROLE_EMBEDDEDOBJECT
-				if self.HTMLNodeHasAncestorIAccessible or nodeName in ("BODY","FRAMESET","FRAME","IFRAME","LABEL"):
-					return nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_TEXTFRAME)
+				if self.HTMLNodeHasAncestorIAccessible or nodeName in ("BODY","FRAMESET","FRAME","IFRAME","LABEL","NAV","SECTION","ARTICLE"):
+					return nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_SECTION)
 		if self.IAccessibleChildID>0:
 			states=super(MSHTML,self).states
 			if controlTypes.STATE_LINKED in states:
@@ -848,7 +933,10 @@ class MSHTML(IAccessible):
 
 	def _get_HTMLNodeUniqueNumber(self):
 		if not hasattr(self,'_HTMLNodeUniqueNumber'):
-			self._HTMLNodeUniqueNumber=self.HTMLNode.uniqueNumber
+			try:
+				self._HTMLNodeUniqueNumber=self.HTMLNode.uniqueNumber
+			except COMError:
+				return None
 		return self._HTMLNodeUniqueNumber
 
 	def _get_HTMLNodeName(self):
@@ -871,6 +959,17 @@ class MSHTML(IAccessible):
 			ret = "exception: %s" % e
 		info.append("MSHTML nodeName: %s" % ret)
 		return info
+
+	def _get_language(self):
+		ti = self.treeInterceptor
+		if not ti:
+			# This is too slow to calculate without a buffer.
+			# This case should be pretty rare anyway.
+			return None
+		try:
+			return ti.getControlFieldForNVDAObject(self)["language"]
+		except LookupError:
+			return None
 
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.
@@ -972,6 +1071,16 @@ class RootClient(IAccessible):
 
 class MSAATextLeaf(IAccessible):
 	role=controlTypes.ROLE_STATICTEXT
+
+class Math(MSHTML):
+	role = controlTypes.ROLE_MATH
+
+	def _get_mathMl(self):
+		import mathPres
+		mathMl = mathPres.stripExtraneousXml(self.HTMLNode.outerHTML)
+		if not mathPres.getLanguageFromMath(mathMl) and self.language:
+			mathMl = mathPres.insertLanguageIntoMath(mathMl, self.language)
+		return mathMl
 
 def findExtraIAccessibleOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class for MSHTML objects.

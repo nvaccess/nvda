@@ -142,6 +142,18 @@ SPEECH_SYMBOL_LEVELS = CONFIGURABLE_SPEECH_SYMBOL_LEVELS + (SYMLVL_CHAR,)
 SYMPRES_NEVER = 0
 SYMPRES_ALWAYS = 1
 SYMPRES_NOREP = 2
+SPEECH_SYMBOL_PRESERVE_LABELS = {
+	# Translators: An option for when a symbol itself will be sent to the synthesizer.
+	# See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+	SYMPRES_NEVER: pgettext("symbolPreserve", "never"),
+	# Translators: An option for when a symbol itself will be sent to the synthesizer.
+	# See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+	SYMPRES_ALWAYS: pgettext("symbolPreserve", "always"),
+	# Translators: An option for when a symbol itself will be sent to the synthesizer.
+	# See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+	SYMPRES_NOREP: pgettext("symbolPreserve", "only below symbol's level"),
+}
+SPEECH_SYMBOL_PRESERVES = (SYMPRES_NEVER, SYMPRES_ALWAYS, SYMPRES_NOREP)
 
 class SpeechSymbol(object):
 	__slots__ = ("identifier", "pattern", "replacement", "level", "preserve", "displayName")
@@ -374,6 +386,7 @@ class SpeechSymbolProcessor(object):
 		# We need to merge symbol data from several sources.
 		sources = self.sources = []
 		builtin, user = self.localeSymbols.fetchLocaleData(locale,fallback=False)
+		self.builtinSources = [builtin]
 		self.userSymbols = user
 		sources.append(user)
 		sources.append(builtin)
@@ -381,7 +394,9 @@ class SpeechSymbolProcessor(object):
 		# Always use English as a base.
 		if locale != "en":
 			# Only the builtin data.
-			sources.append(self.localeSymbols.fetchLocaleData("en")[0])
+			enBaseSymbols = self.localeSymbols.fetchLocaleData("en")[0]
+			sources.append(enBaseSymbols)
+			self.builtinSources.append(enBaseSymbols)
 
 		# The computed symbol information from all sources.
 		symbols = self.computedSymbols = collections.OrderedDict()
@@ -524,7 +539,10 @@ class SpeechSymbolProcessor(object):
 		@rtype: bool
 		"""
 		identifier = newSymbol.identifier
-		oldSymbol = self.computedSymbols[identifier]
+		try:
+			oldSymbol = self.computedSymbols[identifier]
+		except KeyError:
+			oldSymbol = None
 		if oldSymbol is newSymbol:
 			return False
 		try:
@@ -533,19 +551,19 @@ class SpeechSymbolProcessor(object):
 			userSymbol = SpeechSymbol(identifier)
 
 		changed = False
-		if newSymbol.pattern != oldSymbol.pattern:
+		if oldSymbol and newSymbol.pattern != oldSymbol.pattern:
 			userSymbol.pattern = newSymbol.pattern
 			changed = True
-		if newSymbol.replacement != oldSymbol.replacement:
+		if not oldSymbol or newSymbol.replacement != oldSymbol.replacement:
 			userSymbol.replacement = newSymbol.replacement
 			changed = True
-		if newSymbol.level != oldSymbol.level:
+		if not oldSymbol or newSymbol.level != oldSymbol.level:
 			userSymbol.level = newSymbol.level
 			changed = True
-		if newSymbol.preserve != oldSymbol.preserve:
+		if not oldSymbol or newSymbol.preserve != oldSymbol.preserve:
 			userSymbol.preserve = newSymbol.preserve
 			changed = True
-		if newSymbol.displayName != oldSymbol.displayName:
+		if not oldSymbol or newSymbol.displayName != oldSymbol.displayName:
 			userSymbol.displayName = newSymbol.displayName
 			changed = True
 
@@ -555,6 +573,28 @@ class SpeechSymbolProcessor(object):
 		# Do this in case the symbol wasn't in userSymbols before.
 		self.userSymbols.symbols[identifier] = userSymbol
 		return True
+
+	def deleteSymbol(self, symbol):
+		"""Delete a user defined symbol.
+		If the symbol does not exist, this method simply does nothing.
+		These changes do not take effect until the symbol processor is reinitialised.
+		@param symbol: The symbol to delete.
+		@type symbol: L{SpeechSymbol}
+		"""
+		try:
+			del self.userSymbols.symbols[symbol.identifier]
+		except KeyError:
+			pass
+
+	def isBuiltin(self, symbolIdentifier):
+		"""Determine whether a symbol is built in.
+		@param symbolIdentifier: The identifier of the symbol in question.
+		@type symbolIdentifier: unicode
+		@return: C{True} if the symbol is built in,
+			C{False} if it was added by the user.
+		@rtype: bool
+		"""
+		return any(symbolIdentifier in source.symbols for source in self.builtinSources)
 
 _localeSpeechSymbolProcessors = LocaleDataMap(SpeechSymbolProcessor)
 

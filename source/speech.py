@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2012 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+#Copyright (C) 2006-2014 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 
 """High-level functions to speak information.
 """ 
@@ -37,6 +37,8 @@ beenCanceled=True
 isPaused=False
 curWordChars=[]
 
+#Set containing locale codes for languages supporting conjunct characters
+LANGS_WITH_CONJUNCT_CHARS = {'hi', 'as', 'bn', 'gu', 'kn', 'kok', 'ml', 'mni', 'mr', 'pa', 'te', 'ur', 'ta'}
 # The REASON_* constants in this module are deprecated and will be removed in a future release.
 # Use controlTypes.REASON_* instead.
 from controlTypes import REASON_FOCUS, REASON_FOCUSENTERED, REASON_MOUSE, REASON_QUERY, REASON_CHANGE, REASON_MESSAGE, REASON_SAYALL, REASON_CARET, REASON_ONLYCACHE
@@ -123,7 +125,7 @@ def speakMessage(text,index=None):
 
 def getCurrentLanguage():
 	try:
-		language=getSynth().language if config.conf['speech']['autoLanguageSwitching'] else None
+		language=getSynth().language if config.conf['speech']['trustVoiceLanguage'] else None
 	except NotImplementedError:
 		language=None
 	if language:
@@ -179,18 +181,50 @@ def speakSpelling(text,locale=None,useCharacterDescriptions=False):
 			return
 		queueHandler.registerGeneratorObject(_speakSpellingGenerator)
 
+def getCharDescListFromText(text,locale):
+	"""This method prepares a list, which contains character and its description for all characters the text is made up of, by checking the presence of character descriptions in characterDescriptions.dic of that locale for all possible combination of consecutive characters in the text.
+	This is done to take care of conjunct characters present in several languages such as Hindi, Urdu, etc.
+	"""
+	charDescList = []
+	charDesc=None
+	i = len(text)
+	while i:
+		subText = text[:i]
+		charDesc = characterProcessing.getCharacterDescription(locale,subText)
+		if charDesc or i==1:
+			if not charDesc:
+				# #5375: We're down to a single character (i == 1) and we don't have a description.
+				# Try converting to lower case.
+				# This provides for upper case English characters (which only have lower case descriptions).
+				charDesc = characterProcessing.getCharacterDescription(locale,subText.lower())
+			charDescList.append((subText,charDesc))
+			text = text[i:]
+			i = len(text)
+		else:
+			i = i - 1
+	return charDescList
+
 def _speakSpellingGen(text,locale,useCharacterDescriptions):
 	synth=getSynth()
 	synthConfig=config.conf["speech"][synth.name]
 	buf=[(text,locale,useCharacterDescriptions)]
 	for text,locale,useCharacterDescriptions in buf:
 		textLength=len(text)
-		for count,char in enumerate(text): 
+		count = 0
+		localeHasConjuncts = True if locale.split('_',1)[0] in LANGS_WITH_CONJUNCT_CHARS else False
+		charDescList = getCharDescListFromText(text,locale) if localeHasConjuncts else text
+		for item in charDescList:
+			if localeHasConjuncts:
+				# item is a tuple containing character and its description
+				char = item[0]
+				charDesc = item[1]
+			else:
+				# item is just a character.
+				char = item
+				if useCharacterDescriptions:
+					charDesc=characterProcessing.getCharacterDescription(locale,char.lower())
 			uppercase=char.isupper()
-			charDesc=None
-			if useCharacterDescriptions:
-				charDesc=characterProcessing.getCharacterDescription(locale,char.lower())
-			if charDesc:
+			if useCharacterDescriptions and charDesc:
 				#Consider changing to multiple synth speech calls
 				char=charDesc[0] if textLength>1 else u"\u3001".join(charDesc)
 			else:
@@ -201,6 +235,7 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 			if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
 				oldPitch=synthConfig["pitch"]
 				synth.pitch=max(0,min(oldPitch+synthConfig["capPitchChange"],100))
+			count = len(char)
 			index=count+1
 			log.io("Speaking character %r"%char)
 			speechSequence=[LangChangeCommand(locale)] if config.conf['speech']['autoLanguageSwitching'] else []
@@ -281,7 +316,8 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 
 def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
-	isEditable=(reason!=controlTypes.REASON_FOCUSENTERED and obj.TextInfo!=NVDAObjectTextInfo and (obj.role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
+	role=obj.role
+	isEditable=(reason!=controlTypes.REASON_FOCUSENTERED and obj.TextInfo!=NVDAObjectTextInfo and (role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
 	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True}
 
 	if reason==controlTypes.REASON_FOCUSENTERED:
@@ -319,7 +355,9 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 		allowProperties['value']=False
 
 	speakObjectProperties(obj,reason=reason,index=index,**allowProperties)
-	if reason!=controlTypes.REASON_ONLYCACHE and isEditable:
+	if reason==controlTypes.REASON_ONLYCACHE:
+		return
+	if isEditable:
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			if not info.isCollapsed:
@@ -331,6 +369,14 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 		except:
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
 			speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=controlTypes.REASON_CARET)
+	elif role==controlTypes.ROLE_MATH:
+		import mathPres
+		mathPres.ensureInit()
+		if mathPres.speechProvider:
+			try:
+				speak(mathPres.speechProvider.getSpeechForMathMl(obj.mathMl))
+			except (NotImplementedError, LookupError):
+				pass
 
 def speakText(text,index=None,reason=controlTypes.REASON_MESSAGE,symbolLevel=None):
 	"""Speaks some text.
@@ -444,12 +490,17 @@ def speak(speechSequence,symbolLevel=None):
 	if symbolLevel is None:
 		symbolLevel=config.conf["speech"]["symbolLevel"]
 	curLanguage=defaultLanguage
+	inCharacterMode=False
 	for index in xrange(len(speechSequence)):
 		item=speechSequence[index]
+		if isinstance(item,CharacterModeCommand):
+			inCharacterMode=item.state
 		if autoLanguageSwitching and isinstance(item,LangChangeCommand):
 			curLanguage=item.lang
 		if isinstance(item,basestring):
-			speechSequence[index]=processText(curLanguage,item,symbolLevel)+CHUNK_SEPARATOR
+			speechSequence[index]=processText(curLanguage,item,symbolLevel)
+			if not inCharacterMode:
+				speechSequence[index]+=CHUNK_SEPARATOR
 	getSynth().speak(speechSequence)
 
 def speakSelectionMessage(message,text):
@@ -509,8 +560,8 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 			for text in selectedTextList:
 				if  len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
-				# Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
-				speakSelectionMessage(_("selecting %s"),text)
+				# Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
+				speakSelectionMessage(_("%s selected"),text)
 		elif len(selectedTextList)>0:
 			text=newInfo.text
 			if len(text)==1:
@@ -522,17 +573,18 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 			for text in unselectedTextList:
 				if  len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
-				# Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
-				speakSelectionMessage(_("unselecting %s"),text)
+				# Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
+				speakSelectionMessage(_("%s unselected"),text)
 		elif len(unselectedTextList)>0:
-			# Translators: Reported when selection is removed.
-			speakMessage(_("selection removed"))
 			if not newInfo.isCollapsed:
 				text=newInfo.text
 				if len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
-				# Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-				speakSelectionMessage(_("selected %s"),text)
+				# Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+				speakSelectionMessage(_("%s selected instead"),text)
+			else:
+				# Translators: Reported when selection is removed.
+				speakMessage(_("selection removed"))
 
 def speakTypedCharacters(ch):
 	global curWordChars;
@@ -587,6 +639,16 @@ class SpeakTextInfoState(object):
 
 	def copy(self):
 		return self.__class__(self)
+
+def _speakTextInfo_addMath(speechSequence, info, field):
+	import mathPres
+	mathPres.ensureInit()
+	if not mathPres.speechProvider:
+		return
+	try:
+		speechSequence.extend(mathPres.speechProvider.getSpeechForMathMl(info.getMathMl(field)))
+	except (NotImplementedError, LookupError):
+		return
 
 def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlTypes.REASON_QUERY,index=None,onlyInitialFields=False,suppressBlanks=False):
 	if isinstance(useCache,SpeakTextInfoState):
@@ -672,7 +734,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		if not endingBlock and reason==controlTypes.REASON_SAYALL:
 			endingBlock=bool(int(controlFieldStackCache[count].get('isBlock',0)))
 	if endingBlock:
-		speechSequence.append(BreakCommand())
+		speechSequence.append(SpeakWithoutPausesBreakCommand())
 	# The TextInfo should be considered blank if we are only exiting fields (i.e. we aren't entering any new fields and there is no text).
 	isTextBlank=True
 
@@ -683,17 +745,25 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	#Get speech text for any fields that are in both controlFieldStacks, if extra detail is not requested
 	if not extraDetail:
 		for count in xrange(commonFieldCount):
-			text=info.getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"start_inControlFieldStack",formatConfig,extraDetail,reason=reason)
+			field=newControlFieldStack[count]
+			text=info.getControlFieldSpeech(field,newControlFieldStack[0:count],"start_inControlFieldStack",formatConfig,extraDetail,reason=reason)
 			if text:
 				speechSequence.append(text)
 				isTextBlank=False
+			if field.get("role")==controlTypes.ROLE_MATH:
+				isTextBlank=False
+				_speakTextInfo_addMath(speechSequence,info,field)
 
 	#Get speech text for any fields in the new controlFieldStack that are not in the old controlFieldStack
 	for count in xrange(commonFieldCount,len(newControlFieldStack)):
-		text=info.getControlFieldSpeech(newControlFieldStack[count],newControlFieldStack[0:count],"start_addedToControlFieldStack",formatConfig,extraDetail,reason=reason)
+		field=newControlFieldStack[count]
+		text=info.getControlFieldSpeech(field,newControlFieldStack[0:count],"start_addedToControlFieldStack",formatConfig,extraDetail,reason=reason)
 		if text:
 			speechSequence.append(text)
 			isTextBlank=False
+		if field.get("role")==controlTypes.ROLE_MATH:
+			isTextBlank=False
+			_speakTextInfo_addMath(speechSequence,info,field)
 		commonFieldCount+=1
 
 	#Fetch the text for format field attributes that have changed between what was previously cached, and this textInfo's initialFormatField.
@@ -770,6 +840,8 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 						relativeSpeechSequence.append(LangChangeCommand(None))
 						lastLanguage=None
 					relativeSpeechSequence.append(fieldText)
+				if command.command=="controlStart" and command.field.get("role")==controlTypes.ROLE_MATH:
+					_speakTextInfo_addMath(relativeSpeechSequence,info,command.field)
 				if autoLanguageSwitching and newLanguage!=lastLanguage:
 					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
 					lastLanguage=newLanguage
@@ -842,7 +914,7 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	rowNumber=propertyValues.get('rowNumber')
 	columnNumber=propertyValues.get('columnNumber')
 	includeTableCellCoords=propertyValues.get('includeTableCellCoords',True)
-	if speakRole and (reason not in (controlTypes.REASON_SAYALL,controlTypes.REASON_CARET,controlTypes.REASON_FOCUS) or not (name or value or cellCoordsText or rowNumber or columnNumber) or role not in controlTypes.silentRolesOnFocus):
+	if speakRole and (reason not in (controlTypes.REASON_SAYALL,controlTypes.REASON_CARET,controlTypes.REASON_FOCUS) or not (name or value or cellCoordsText or rowNumber or columnNumber) or role not in controlTypes.silentRolesOnFocus) and (role!=controlTypes.ROLE_MATH or reason not in (controlTypes.REASON_CARET,controlTypes.REASON_SAYALL)):
 		textList.append(controlTypes.roleLabels[role])
 	if value:
 		textList.append(value)
@@ -976,7 +1048,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		speakEntry=True
 		speakWithinForLine=True
 		speakExitForOther=True
-	elif presCat == attrs.PRESCAT_MARKER:
+	elif presCat in (attrs.PRESCAT_MARKER, attrs.PRESCAT_CELL):
 		speakEntry=True
 	elif presCat == attrs.PRESCAT_CONTAINER:
 		speakEntry=True
@@ -991,7 +1063,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 
 	# Determine what text to speak.
 	# Special cases
-	if speakEntry and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
+	if speakEntry and childControlCount and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
 		# List.
 		# Translators: Speaks number of items in a list (example output: list with 5 items).
 		return roleText+" "+_("with %s items")%childControlCount
@@ -1113,13 +1185,58 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 			text=_("line %s")%lineNumber
 			textList.append(text)
 	if  formatConfig["reportRevisions"]:
+		# Insertion
+		revision=attrs.get("revision-insertion")
+		oldRevision=attrsCache.get("revision-insertion") if attrsCache is not None else None
+		if (revision or oldRevision is not None) and revision!=oldRevision:
+			# Translators: Reported when text is marked as having been inserted
+			text=(_("inserted") if revision
+				# Translators: Reported when text is no longer marked as having been inserted.
+				else _("not inserted"))
+			textList.append(text)
+		revision=attrs.get("revision-deletion")
+		oldRevision=attrsCache.get("revision-deletion") if attrsCache is not None else None
+		if (revision or oldRevision is not None) and revision!=oldRevision:
+			# Translators: Reported when text is marked as having been deleted
+			text=(_("deleted") if revision
+				# Translators: Reported when text is no longer marked as having been  deleted.
+				else _("not deleted"))
+			textList.append(text)
 		revision=attrs.get("revision")
 		oldRevision=attrsCache.get("revision") if attrsCache is not None else None
 		if (revision or oldRevision is not None) and revision!=oldRevision:
 			# Translators: Reported when text is revised.
 			text=(_("revised %s"%revision) if revision
 				# Translators: Reported when text is not revised.
-				else _("unrevised"))
+				else _("no revised %s")%oldRevision)
+			textList.append(text)
+	if  formatConfig["reportEmphasis"]:
+		# marked text 
+		marked=attrs.get("marked")
+		oldMarked=attrsCache.get("marked") if attrsCache is not None else None
+		if (marked or oldMarked is not None) and marked!=oldMarked:
+			# Translators: Reported when text is marked
+			text=(_("marked") if marked
+				# Translators: Reported when text is no longer marked
+				else _("not marked"))
+			textList.append(text)
+		# strong text
+		strong=attrs.get("strong")
+		oldStrong=attrsCache.get("strong") if attrsCache is not None else None
+		if (strong or oldStrong is not None) and strong!=oldStrong:
+			# Translators: Reported when text is marked as strong (e.g. bold)
+			text=(_("strong") if strong
+				# Translators: Reported when text is no longer marked as strong (e.g. bold) 
+				else _("not strong"))
+			textList.append(text)
+		# emphasised text 
+		emphasised=attrs.get("emphasised")
+		oldEmphasised=attrsCache.get("emphasised") if attrsCache is not None else None
+		if (emphasised or oldEmphasised is not None) and emphasised!=oldEmphasised:
+			# Translators: Reported when text is marked as emphasised
+			text=(_("emphasised") if emphasised
+				# Translators: Reported when text is no longer marked as emphasised 
+				else _("not emphasised"))
 			textList.append(text)
 	if  formatConfig["reportFontAttributes"]:
 		bold=attrs.get("bold")
@@ -1337,7 +1454,7 @@ def speakWithoutPauses(speechSequence,detectBreaks=True):
 	if detectBreaks and speechSequence:
 		sequenceLen=len(speechSequence)
 		for index in xrange(sequenceLen):
-			if isinstance(speechSequence[index],BreakCommand):
+			if isinstance(speechSequence[index],SpeakWithoutPausesBreakCommand):
 				if index>0 and lastStartIndex<index:
 					speakWithoutPauses(speechSequence[lastStartIndex:index],detectBreaks=False)
 				speakWithoutPauses(None)
@@ -1441,5 +1558,91 @@ class LangChangeCommand(SpeechCommand):
 	def __repr__(self):
 		return "LangChangeCommand (%r)"%self.lang
 
-class BreakCommand(object):
-	"""Forces speakWithoutPauses to flush its buffer and therefore break the sentence at this point."""
+class SpeakWithoutPausesBreakCommand(SpeechCommand):
+	"""Forces speakWithoutPauses to flush its buffer and therefore break the sentence at this point.
+	This should only be used with the L{speakWithoutPauses} function.
+	This will be removed during processing.
+	"""
+
+class BreakCommand(SpeechCommand):
+	"""Insert a break between words.
+	"""
+
+	def __init__(self, time=0):
+		"""
+		@param time: The duration of the pause to be inserted in milliseconds.
+		@param time: int
+		"""
+		self.time = time
+
+	def __repr__(self):
+		return "BreakCommand(time=%d)" % self.time
+
+class PitchCommand(SpeechCommand):
+	"""Change the pitch of the voice.
+	"""
+
+	def __init__(self, multiplier=1):
+		"""
+		@param multiplier: The number by which to multiply the current pitch setting;
+			e.g. 0.5 is half, 1 returns to the current pitch setting.
+		@param multiplier: int/float
+		"""
+		self.multiplier = multiplier
+
+	def __repr__(self):
+		return "PitchCommand(multiplier=%g)" % self.multiplier
+
+class VolumeCommand(SpeechCommand):
+	"""Change the volume of the voice.
+	"""
+
+	def __init__(self, multiplier=1):
+		"""
+		@param multiplier: The number by which to multiply the current volume setting;
+			e.g. 0.5 is half, 1 returns to the current volume setting.
+		@param multiplier: int/float
+		"""
+		self.multiplier = multiplier
+
+	def __repr__(self):
+		return "VolumeCommand(multiplier=%g)" % self.multiplier
+
+class RateCommand(SpeechCommand):
+	"""Change the rate of the voice.
+	"""
+
+	def __init__(self, multiplier=1):
+		"""
+		@param multiplier: The number by which to multiply the current rate setting;
+			e.g. 0.5 is half, 1 returns to the current rate setting.
+		@param multiplier: int/float
+		"""
+		self.multiplier = multiplier
+
+	def __repr__(self):
+		return "RateCommand(multiplier=%g)" % self.multiplier
+
+class PhonemeCommand(SpeechCommand):
+	"""Insert a specific pronunciation.
+	This command accepts Unicode International Phonetic Alphabet (IPA) characters.
+	Note that this is not well supported by synthesizers.
+	"""
+
+	def __init__(self, ipa, text=None):
+		"""
+		@param ipa: Unicode IPA characters.
+		@type ipa: unicode
+		@param text: Text to speak if the synthesizer does not support
+			some or all of the specified IPA characters,
+			C{None} to ignore this command instead.
+		@type text: unicode
+		"""
+		self.ipa = ipa
+		self.text = text
+
+	def __repr__(self):
+		out = "PhonemeCommand(%r" % self.ipa
+		if self.text:
+			out += ", text=%r" % self.text
+		return out + ")"
