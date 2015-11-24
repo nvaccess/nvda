@@ -85,7 +85,7 @@ confspec = ConfigObj(StringIO(
 
 # Audio settings
 [audio]
-	audioDuckingMode = integer(default=1)
+	audioDuckingMode = integer(default=0)
 
 # Braille settings
 [braille]
