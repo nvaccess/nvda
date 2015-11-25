@@ -442,16 +442,16 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 	ELEMENT_TYPES=(
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("chart", _("&Chart")),
+		("chart", _("&Charts")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("comment", _("C&omment")),
+		("comment", _("C&omments")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("formula", _("&Formula")),
+		("formula", _("Fo&rmulas")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("sheet", _("&Sheet")),
+		("sheet", _("&Sheets")),
 	)
 
 class ExcelBase(Window):
