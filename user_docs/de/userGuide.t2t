@@ -35,14 +35,14 @@ Bei all den Menschen auf der Welt ist es wichtig, egal welche Sprache sie sprech
 NVDA wurde bislang in 47 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, amharisch, Arabisch, argonesisch, Brasilianisches Portugiesisch, Bulgarisch, Catalan, kolumbianisches Spanisch, Kroatisch, tschechisch, dänisch, Niederländisch, Farsi, Finnisch, Französisch, galizisch, Georgisch, griechisch, Deutsch, Hebräisch, Hindi, Ungarisch, irisch, Isländisch, Italienisch, Japanisch, koreanisch, nepalesisch, norwegisch, Polnisch, Portugiesisch, Punjabi, Rumänisch, Russisch, Serbisch, Slowakisch, slovenisch, Spanisch, Schwedisch, Tamil, Thai, Traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
 
 ++ Unterstützung von Sprachausgaben ++
-Zusätzlich zur Bereitstellung der Benutzeroberfläche in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern dieser eine Sprachausgabe für die betreffende Sprache verfügt.
+Zusätzlich zur Bereitstellung der Benutzeroberfläche in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern er eine Sprachausgabe für die betreffende Sprache besitzt.
 
-NVDA wird standardmäßig mit einer freien multilingualen Sprachausgabe, der [eSpeak http://espeak.sourceforge.net/download.html] ausgeliefert. 
+NVDA wird standardmäßig mit der freien multilingualen Sprachausgabe [eSpeak http://espeak.sourceforge.net/download.html] ausgeliefert. 
 
 Informationen über weitere Sprachausgaben, die NVDA unterstützt, können Sie im Abschnitt "[Unterstützte Sprachausgaben #SupportedSpeechSynths]" nachlesen.
 
-++ Unterstützung von Braille-Ausgabe ++
-Für Anwender, die eine eigene Braillezeile besitzen, kann NVDA die Informationen in Braille-Schrift ausgeben.
+++ Unterstützung von Brailleausgabe ++
+Für Anwender, die eine Braillezeile besitzen, kann NVDA die Informationen in Brailleschrift ausgeben.
 Für weitere Informationen schauen Sie bitte im Abschnitt "[Unterstützte Braillezeilen #SupportedBrailleDisplays]" nach.
 
 NVDA enthält Braille-Übersetzungstabellen für Computerbraille sowie für Voll- und Kurzschrift für viele Sprachen.
@@ -95,7 +95,7 @@ Abgesehen vom fehlenden automatischen Starten während und/oder nach der Anmeldu
 Wenn Sie NVDA direkt von einer heruntergeladenen Datei aus installieren wollen, drücken Sie einfach den Schalter "Installieren", sobald der Eingangsdialog erscheint.
 Falls Sie den Eingangsdialog bereits geschlossen haben oder NVDA von einer portablen Version aus installieren wollen, wählen Sie den Menüpunkt "NVDA installieren" aus dem Menü Extras.
 
-Der Installationsdialog, welcher erscheint, fragt noch einmal ab, ob Sie NVDA installieren wollen und informiert Sie darüber, ob eine frühere Version von NVDA aktualisiert wird.
+Der erschinende Installationsdialog fragt noch einmal ab, ob Sie NVDA installieren wollen und informiert Sie darüber, ob eine frühere Version von NVDA aktualisiert wird.
 Wenn Sie auf den Schalter "Fortfahren" klicken, wird die Installation gestartet.
 Es gibt allerdings noch weitere Optionen. Diese werden weiter unten beschrieben.
 Nach dem Abschluss der Installation erscheint eine Meldung, die sie über den erfolgreichen Abschluss der Installation informiert.
@@ -166,7 +166,7 @@ Voreingestellt ist das Tastaturschema Desktop. Sie können natürlich das Schema
 
 Das Desktop-Schema macht ausgiebig vom (ausgeschalteten) Nummernblock gebrauch.
 Obwohl die meisten Laptop-Tastaturen keinen physikalischen Nummernblock haben, kann dieser mit Hilfe der FN-Taste in Kombination mit den Tasten des rechten Tastenfeldes emuliert werden. Dies sind folgende Tasten: 7, 8, 9, u, i, o, j, k, l, etc.).
-Wenn Ihr Laptop dies nicht kann oder die Deaktivierung des Numlocks nicht unterstützt wird, können Sie an Stelle das Tastaturlayout auf Laptop umstellen.
+Wenn Ihr Laptop dazu nicht in der Lage ist oder die Deaktivierung von Numlock  nicht unterstützt wird, können Sie an Stelle das Tastaturlayout auf Laptop umstellen.
 
 ++ NVDA-Berührungsgesten ++
 Wenn Sie Windows 8 oder neuer nebst NVDA auf einem Gerät mit TouchScreen installiert haben, können Sie NVDA direkt mit dem TouchScreen steuern.
@@ -369,7 +369,7 @@ Die folgenden Tastenkombinationen zum Betrachten von Text sind verfügbar:
 | Zum Zeilenende springen | Umschalt+Nummerntaste 3 | NVDA+Ende | Keine | Zieht den NVDA-Cursor zum Zeilenende im Text. |
 | Alles ansagen | Nummerntaste Plus | NVDA+Umschalt+A | Nach unten streichen mit drei Fingern (Textmodus) | Liest von der aktuellen Cursor-Position des NVDA-Cursors den Text vor und bewegt ihn mit. |
 | Ab NVDA-Cursor kopieren | NVDA+F9 | NVDA+F9 | Keine | Startet von der aktuellen Cursor-Position den Kopiervorgang. Der Text wird nicht von NVDA kopiert, wenn Sie nicht festlegen, bis wohin kopiert werden soll. |
-| Bis NVDA-Cursor kopieren | NVDA+F10 | NVDA+F10 | Keine | Kopiert von der Position die vorhin (mit "ab NVDA-Cursor kopieren" festgelegt wurde) bis zur akttuellen Position des NVDA-Cursors. Nach dem Betätigen der Tastenkombination, wird der Text in die Zwischenablage kopiert. |
+| Bis NVDA-Cursor kopieren | NVDA+F10 | NVDA+F10 | Keine | Kopiert von der Position die zuvor (mit "ab NVDA-Cursor kopieren") festgelegt wurde bis zur akttuellen Position des NVDA-Cursors. Nach dem Betätigen der Tastenkombination, wird der Text in die Zwischenablage kopiert. |
 | Textformatierung ausgeben | NVDA+F | NVDA+F | Keine | Gibt die Formatierungen unter dem NVDA-Cursor aus. |
 %kc:endInclude
 
