@@ -21,6 +21,7 @@ import gui
 import globalVars
 from logHandler import log
 import nvwave
+import audioDucking
 import speechDictHandler
 import appModuleHandler
 import queueHandler
@@ -331,12 +332,12 @@ class SynthesizerDialog(SettingsDialog):
 		# Translators: This is a label for the audio ducking combo box in the Audio Settings dialog 
 		duckingListLabel=wx.StaticText(self,-1,label=_("Audio &Ducking mode:"))
 		duckingListID=wx.NewId()
-		self.duckingList=wx.Choice(self,duckingListID,choices=nvwave.audioDuckingModes)
+		self.duckingList=wx.Choice(self,duckingListID,choices=audioDucking.audioDuckingModes)
 		index=config.conf['audio']['audioDuckingMode']
 		self.duckingList.SetSelection(index)
 		duckingListSizer.Add(duckingListLabel)
 		duckingListSizer.Add(self.duckingList)
-		if not nvwave.isAudioDuckingSupported():
+		if not audioDucking.isAudioDuckingSupported():
 			self.duckingList.Disable()
 		settingsSizer.Add(duckingListSizer,border=10,flag=wx.BOTTOM)
 
@@ -352,10 +353,10 @@ class SynthesizerDialog(SettingsDialog):
 			# synthesizer.
 			gui.messageBox(_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING,self)
 			return 
-		if nvwave.isAudioDuckingSupported():
+		if audioDucking.isAudioDuckingSupported():
 			index=self.duckingList.GetSelection()
 			config.conf['audio']['audioDuckingMode']=index
-			nvwave.WavePlayer.setAudioDuckingMode(index)
+			audioDucking.setAudioDuckingMode(index)
 		super(SynthesizerDialog, self).onOk(evt)
 
 class SynthSettingChanger(object):

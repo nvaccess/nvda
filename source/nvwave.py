@@ -15,6 +15,7 @@ import wx
 import winKernel
 import wave
 import config
+import audioDucking
 from logHandler import log
 
 __all__ = (
@@ -22,22 +23,6 @@ __all__ = (
 )
 
 winmm = windll.winmm
-
-AUDIODUCKINGMODE_NONE=0
-AUDIODUCKINGMODE_OUTPUTTING=1
-AUDIODUCKINGMODE_ALWAYS=2
-
-audioDuckingModes=[
-	# Translators: an audio ducking mode for Windows 8 and up
-	_("No ducking"),
-	# Translators: an audio ducking mode for Windows 8 and up
-	_("Duck when outputting speech and sounds"),
-	# Translators: an audio ducking mode for Windows 8 and up
-	_("Always duck"),
-]
-
-ANRUS_PRIORITY_AUDIO_ACTIVE=4
-ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK=8
 
 HWAVEOUT = HANDLE
 LPHWAVEOUT = POINTER(HWAVEOUT)
@@ -108,9 +93,6 @@ for func in (
 ):
 	func.errcheck = _winmm_errcheck
 
-def isAudioDuckingSupported():
-	return config.isInstalledCopy() and hasattr(oledll.oleacc,'AccSetRunningUtilityState')
-
 class WavePlayer(object):
 	"""Synchronously play a stream of audio.
 	To use, construct an instance and feed it waveform audio using L{feed}.
@@ -118,72 +100,7 @@ class WavePlayer(object):
 	#: A lock to prevent WaveOut* functions from being called simultaneously, as this can cause problems even if they are for different HWAVEOUTs.
 	_global_waveout_lock = threading.RLock()	
 
-	_audioDuckingMode=0
-	_global_priorityRefCount=0 #class variable, not instance
-	_global_priorityRefCountLock = threading.RLock()
-	_priorityRequested=False
-
-
-	@classmethod
-	def _global_setPriority(self,switch):
-		with WavePlayer._global_priorityRefCountLock:
-			import gui
-			ATWindow=gui.mainFrame.GetHandle()
-			if switch:
-				oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_PRIORITY_AUDIO_ACTIVE|ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK,ANRUS_PRIORITY_AUDIO_ACTIVE|ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK)
-			else:
-				oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_PRIORITY_AUDIO_ACTIVE|ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK,ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK)
-
-	@classmethod
-	def initAudioDucking(cls,initialMode):
-		with WavePlayer._global_priorityRefCountLock:
-			import gui
-			ATWindow=gui.mainFrame.GetHandle()
-			oledll.oleacc.AccSetRunningUtilityState(ATWindow,ANRUS_PRIORITY_AUDIO_ACTIVE|ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK,ANRUS_PRIORITY_AUDIO_ACTIVE_NODUCK)
-		cls.setAudioDuckingMode(initialMode)
-
-	@classmethod
-	def setAudioDuckingMode(cls,mode):
-		if mode<0 or mode>=len(audioDuckingModes):
-			raise ValueError("%s is not an audio ducking mode")
-		with WavePlayer._global_priorityRefCountLock:
-			oldMode=WavePlayer._audioDuckingMode
-			WavePlayer._audioDuckingMode=mode
-			if oldMode==AUDIODUCKINGMODE_NONE and mode!=AUDIODUCKINGMODE_NONE and WavePlayer._global_priorityRefCount>0:
-				WavePlayer._global_setPriority(True)
-			elif oldMode!=AUDIODUCKINGMODE_NONE and mode==AUDIODUCKINGMODE_NONE and WavePlayer._global_priorityRefCount>0:
-				WavePlayer._global_setPriority(False)
-			if oldMode!=AUDIODUCKINGMODE_ALWAYS and mode==AUDIODUCKINGMODE_ALWAYS:
-				WavePlayer._global_requestPriority(True)
-			elif oldMode==AUDIODUCKINGMODE_ALWAYS and mode!=AUDIODUCKINGMODE_ALWAYS: 
-				WavePlayer._global_requestPriority(False)
-
-	@classmethod
-	def _global_requestPriority(cls,switch):
-		with WavePlayer._global_priorityRefCountLock:
-			if switch:
-				WavePlayer._global_priorityRefCount+=1
-				if WavePlayer._global_priorityRefCount==1 and WavePlayer._audioDuckingMode!=AUDIODUCKINGMODE_NONE:
-					WavePlayer._global_setPriority(True)
-					time.sleep(0.15)
-			else:
-				WavePlayer._global_priorityRefCount-=1
-				if WavePlayer._global_priorityRefCount==0 and WavePlayer._audioDuckingMode!=AUDIODUCKINGMODE_NONE:
-					WavePlayer._global_setPriority(False)
-
-	def _requestPriority(self,switch):
-		if self._audioDuckingMode==AUDIODUCKINGMODE_NONE:
-			return
-		with WavePlayer._global_priorityRefCountLock:
-			if switch==self._priorityRequested:
-				return
-			if switch:
-				WavePlayer._global_requestPriority(True)
-			else:
-				wx.CallLater(1000,WavePlayer._global_requestPriority,False)
-			self._priorityRequested=switch
-
-	def __init__(self, channels, samplesPerSec, bitsPerSample, outputDevice=WAVE_MAPPER, closeWhenIdle=True,wantPriority=True):
+	def __init__(self, channels, samplesPerSec, bitsPerSample, outputDevice=WAVE_MAPPER, closeWhenIdle=True,wantDucking=True):
 		"""Constructor.
 		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
 		@type channels: int
@@ -195,8 +112,8 @@ class WavePlayer(object):
 		@type outputDevice: int or basestring
 		@param closeWhenIdle: If C{True}, close the output device when no audio is being played.
 		@type closeWhenIdle: bool
-		@param wantPriority: if true then background audio will be ducked on Windows 8 and higher
-		@type wantPriority: bool
+		@param wantDucking: if true then background audio will be ducked on Windows 8 and higher
+		@type wantDucking: bool
 		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
 		@raise WindowsError: If there was an error opening the audio output device.
 		"""
@@ -206,10 +123,8 @@ class WavePlayer(object):
 		if isinstance(outputDevice, basestring):
 			outputDevice = outputDeviceNameToID(outputDevice, True)
 		self.outputDeviceID = outputDevice
-		if wantPriority and not isAudioDuckingSupported():
-			wantPriority=False
-		self._wantPriority=wantPriority
-		self._priorityRequested=False
+		self._wantDucking=wantDucking and audioDucking.isAudioDuckingSupported()
+		self._audioDucker=None
 		#: If C{True}, close the output device when no audio is being played.
 		#: @type: bool
 		self.closeWhenIdle = closeWhenIdle
@@ -249,7 +164,7 @@ class WavePlayer(object):
 		@type data: str
 		@raise WindowsError: If there was an error playing the audio.
 		"""
-		if self._wantPriority: self._requestPriority(True)
+		if self._wantDucking and not self._audioDucker: self._audioDucker=audioDucking.AudioDucker()
 		whdr = WAVEHDR()
 		whdr.lpData = data
 		whdr.dwBufferLength = len(data)
@@ -289,7 +204,7 @@ class WavePlayer(object):
 		@param switch: C{True} to pause playback, C{False} to unpause.
 		@type switch: bool
 		"""
-		if self._wantPriority: self._requestPriority(not switch)
+		if self._audioDucker: self._audioDucker.disabled=switch
 		with self._waveout_lock:
 			if not self._waveout:
 				return
@@ -313,7 +228,7 @@ class WavePlayer(object):
 					return
 				if self.closeWhenIdle:
 					self._close()
-		if self._wantPriority: self._requestPriority(False)
+		if self._audioDucker: self._audioDucker=None
 
 	def stop(self):
 		"""Stop playback.
@@ -413,7 +328,7 @@ def playWaveFile(fileName, async=True):
 	if f is None: raise RuntimeError("can not open file %s"%fileName)
 	if fileWavePlayer is not None:
 		fileWavePlayer.stop()
-	fileWavePlayer = WavePlayer(channels=f.getnchannels(), samplesPerSec=f.getframerate(),bitsPerSample=f.getsampwidth()*8, outputDevice=config.conf["speech"]["outputDevice"])
+	fileWavePlayer = WavePlayer(channels=f.getnchannels(), samplesPerSec=f.getframerate(),bitsPerSample=f.getsampwidth()*8, outputDevice=config.conf["speech"]["outputDevice"],wantDucking=False)
 	fileWavePlayer.feed(f.readframes(f.getnframes()))
 	if async:
 		if fileWavePlayerThread is not None:

@@ -513,6 +513,8 @@ class ConfigManager(object):
 		synthDriverHandler.handleConfigProfileSwitch()
 		import braille
 		braille.handler.handleConfigProfileSwitch()
+		import audioDucking
+		audioDucking.handleConfigProfileSwitch()
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
