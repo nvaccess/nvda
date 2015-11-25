@@ -688,8 +688,8 @@ class ElementsListDialog(wx.Dialog):
 			parentElements.append(element)
 
 		# Start with no filtering.
-		# This will fire an EVT_TEXT event on the filter text control.
-		self.filterEdit.Clear()
+		self.filterEdit.ChangeValue("")
+		self.filter("", newElementType=True)
 
 	def filter(self, filterText, newElementType=False):
 		# If this is a new element type, use the element nearest the cursor.
