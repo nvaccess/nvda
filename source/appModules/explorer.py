@@ -150,10 +150,7 @@ class StartButton(IAccessible):
 		# #5178: Selection announcement should be suppressed.
 		# Borrowed from Mozilla objects in NVDAObjects/IAccessible/Mozilla.py.
 		states = super(StartButton, self).states
-		try:
-			states.remove(controlTypes.STATE_SELECTED)
-		except KeyError:
-			pass
+		states.discard(controlTypes.STATE_SELECTED)
 		return states
 
 
