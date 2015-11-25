@@ -518,8 +518,8 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 				formatField['color']=_("default color")
 			elif fgColor&0xff000000:
 				# The color is a palet index (we don't know the palet)
-				# #5474: Translatable string backed out until after 2015.4 freeze.
-				pass
+				# Translators: The color of text cannot be detected. 
+				formatField['color']=_("Unknown color")
 			else:
 				formatField["color"]=colors.RGB.fromCOLORREF(fgColor)
 			bkColor=fontObj.backColor
@@ -528,8 +528,8 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 				formatField['background-color']=_("default color")
 			elif bkColor&0xff000000:
 				# The color is a palet index (we don't know the palet)
-				# #5474: Translatable string backed out until after 2015.4 freeze.
-				pass
+				# Translators: The background color cannot be detected. 
+				formatField['background-color']=_("Unknown color")
 			else:
 				formatField["background-color"]=colors.RGB.fromCOLORREF(bkColor)
 		return formatField
