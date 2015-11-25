@@ -8,7 +8,7 @@
 import time
 import itertools
 import tones
-import nvwave
+import audioDucking
 import touchHandler
 import keyboardHandler
 import mouseHandler
@@ -85,16 +85,16 @@ class GlobalCommands(ScriptableObject):
 	"""
 
 	def script_toggleAudioDuckingMode(self,gesture):
-		if not nvwave.isAudioDuckingSupported():
+		if not audioDucking.isAudioDuckingSupported():
 			# Translators: a message when audio ducking is not supported on this machine
 			ui.message(_("Audio ducking not supported"))
 			return
 		curMode=config.conf['audio']['audioDuckingMode']
-		numModes=len(nvwave.audioDuckingModes)
+		numModes=len(audioDucking.audioDuckingModes)
 		nextMode=(curMode+1)%numModes
-		nvwave.WavePlayer.setAudioDuckingMode(nextMode)
+		audioDucking.setAudioDuckingMode(nextMode)
 		config.conf['audio']['audioDuckingMode']=nextMode
-		nextLabel=nvwave.audioDuckingModes[nextMode]
+		nextLabel=audioDucking.audioDuckingModes[nextMode]
 		ui.message(nextLabel)
 	# Translators: input help message for toggleAudioDuckingMode script
 	script_toggleAudioDuckingMode.__doc__=_("Toggles whether NVDA's speech and sounds should duck other audio, or other audio should be ducked all the time, or audio should never be ducked")

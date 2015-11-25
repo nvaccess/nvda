@@ -21,6 +21,7 @@ import sys
 import winVersion
 import thread
 import nvwave
+import audioDucking
 import os
 import time
 import ctypes
@@ -98,9 +99,6 @@ def resetConfiguration(factoryDefaults=False):
 	import speech
 	import languageHandler
 	import inputCore
-	canAudioDuck=nvwave.isAudioDuckingSupported()
-	if canAudioDuck:
-		nvwave.WavePlayer.setAudioDuckingMode(nvwave.AUDIODUCKINGMODE_NONE)
 	log.debug("Terminating braille")
 	braille.terminate()
 	log.debug("terminating speech")
@@ -125,9 +123,10 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("Reloading user and locale input gesture maps")
 	inputCore.manager.loadUserGestureMap()
 	inputCore.manager.loadLocaleGestureMap()
+	if audioDucking.isAudioDuckingSupported():
+		audioDucking.handleConfigProfileSwitch()
 	log.info("Reverted to saved configuration")
-	if canAudioDuck:
-		nvwave.WavePlayer.setAudioDuckingMode(config.conf['audio']['audioDuckingMode'])
+	
 
 def _setInitialFocus():
 	"""Sets the initial focus if no focus event was received at startup.
@@ -237,9 +236,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import gui
 	gui.initialize()
 
-	if nvwave.isAudioDuckingSupported():
+	if audioDucking.isAudioDuckingSupported():
 		# the GUI mainloop must be running for this to work so delay it
-		wx.CallAfter(nvwave.WavePlayer.initAudioDucking,config.conf['audio']['audioDuckingMode'])
+		wx.CallAfter(audioDucking.initialize)
 
 	# #3763: In wxPython 3, the class name of frame windows changed from wxWindowClassNR to wxWindowNR.
 	# NVDA uses the main frame to check for and quit another instance of NVDA.
