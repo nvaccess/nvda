@@ -398,8 +398,8 @@ def getDisplayList():
 class Region(object):
 	"""A region of braille to be displayed.
 	Each portion of braille to be displayed is represented by a region.
-	The region is responsible for retrieving its text and cursor position, translating it into braille cells and handling cursor routing requests relative to its braille cells.
-	The L{BrailleBuffer} containing this region will call L{update} and expect that L{brailleCells} and L{brailleCursorPos} will be set appropriately.
+	The region is responsible for retrieving its text and the cursor and selection positions, translating it into braille cells and handling cursor routing requests relative to its braille cells.
+	The L{BrailleBuffer} containing this region will call L{update} and expect that L{brailleCells}, L{brailleCursorPos}, L{brailleSelectionStart} and L{brailleSelectionEnd} will be set appropriately.
 	L{routeTo} will be called to handle a cursor routing request.
 	"""
 
@@ -409,6 +409,12 @@ class Region(object):
 		#: The position of the cursor in L{rawText}, C{None} if the cursor is not in this region.
 		#: @type: int
 		self.cursorPos = None
+		#: The start of the selection in L{rawText} (inclusive), C{None} if there is no selection in this region.
+		#: @type: int
+		self.selectionStart = None
+		#: The end of the selection in L{rawText} (exclusive), C{None} if there is no selection in this region.
+		#: @type: int
+		self.selectionEnd = None
 		#: The translated braille representation of this region.
 		#: @type: [int, ...]
 		self.brailleCells = []
@@ -425,6 +431,12 @@ class Region(object):
 		#: The position of the cursor in L{brailleCells}, C{None} if the cursor is not in this region.
 		#: @type: int
 		self.brailleCursorPos = None
+		#: The position of the selection start in L{brailleCells}, C{None} if there is no selection in this region.
+		#: @type: int
+		self.brailleSelectionStart = None
+		#: The position of the selection end in L{brailleCells}, C{None} if there is no selection in this region.
+		#: @type: int
+		self.brailleSelectionEnd = None
 		#: Whether to hide all previous regions.
 		#: @type: bool
 		self.hidePreviousRegions = False
@@ -434,12 +446,12 @@ class Region(object):
 
 	def update(self):
 		"""Update this region.
-		Subclasses should extend this to update L{rawText} and L{cursorPos} if necessary.
+		Subclasses should extend this to update L{rawText}, L{cursorPos}, L{selectionStart} and L{selectionEnd} if necessary.
 		The base class method handles translation of L{rawText} into braille, placing the result in L{brailleCells}.
 		Typeform information from L{rawTextTypeforms} is used, if any.
 		L{rawToBraillePos} and L{brailleToRawPos} are updated according to the translation.
-		L{brailleCursorPos} is similarly updated based on L{cursorPos}.
-		@postcondition: L{brailleCells} and L{brailleCursorPos} are updated and ready for rendering.
+		L{brailleCursorPos}, L{brailleSelectionStart} and L{brailleSelectionEnd} are similarly updated based on L{cursorPos}, L{selectionStart} and L{selectionEnd}, respectively.
+		@postcondition: L{brailleCells}, L{brailleCursorPos}, L{brailleSelectionStart} and L{brailleSelectionEnd} are updated and ready for rendering.
 		"""
 		mode = louis.dotsIO | louis.pass1Only
 		if config.conf["braille"]["expandAtCursor"] and self.cursorPos is not None:
@@ -474,6 +486,19 @@ class Region(object):
 		else:
 			brailleCursorPos = None
 		self.brailleCursorPos = brailleCursorPos
+		if self.selectionStart is not None and self.selectionEnd is not None:
+			try:
+				# Mark the selection with dots 7 and 8.
+				self.brailleSelectionStart = self.rawToBraillePos[self.selectionStart]
+				if self.selectionEnd >= len(self.rawText):
+					brailleSelectionEnd = len(self.brailleCells)
+				else:
+					brailleSelectionEnd = self.rawToBraillePos[self.selectionEnd]
+				self.brailleSelectionEnd = self.rawToBraillePos[brailleSelectionEnd]
+				for pos in xrange(self.brailleSelectionStart, self.brailleSelectionEnd):
+					self.brailleCells[pos] |= DOT7 | DOT8
+			except IndexError:
+				pass
 
 	def routeTo(self, braillePos):
 		"""Handle a cursor routing request.
@@ -797,9 +822,9 @@ class TextInfoRegion(Region):
 					self.rawText += " "
 					self.rawTextTypeforms.append(louis.plain_text)
 					self._rawToContentPos.append(self._currentContentPos)
-				if isSelection and self._selectionStart is None:
+				if isSelection and self.selectionStart is None:
 					# This is where the content begins.
-					self._selectionStart = len(self.rawText)
+					self.selectionStart = len(self.rawText)
 				elif shouldMoveCursorToFirstContent:
 					# This is the first piece of content after the cursor.
 					# Position the cursor here, as it may currently be positioned on control field text.
@@ -813,7 +838,7 @@ class TextInfoRegion(Region):
 				self._currentContentPos = endPos
 				if isSelection:
 					# The last time this is set will be the end of the content.
-					self._selectionEnd = len(self.rawText)
+					self.selectionEnd = len(self.rawText)
 				self._endsWithField = False
 			elif isinstance(command, textInfos.FieldCommand):
 				cmd = command.command
@@ -841,8 +866,8 @@ class TextInfoRegion(Region):
 						if fieldStart > 0:
 							# There'll be a space before the field text.
 							fieldStart += 1
-						if isSelection and self._selectionStart is None:
-							self._selectionStart = fieldStart
+						if isSelection and self.selectionStart is None:
+							self.selectionStart = fieldStart
 						elif shouldMoveCursorToFirstContent:
 							self.cursorPos = fieldStart
 							shouldMoveCursorToFirstContent = False
@@ -856,7 +881,7 @@ class TextInfoRegion(Region):
 					# Map this field text to the end of the field's content.
 					self._addFieldText(text, self._currentContentPos - 1)
 				self._endsWithField = True
-		if isSelection and self._selectionStart is None:
+		if isSelection and self.selectionStart is None:
 			# There is no selection. This is a cursor.
 			self.cursorPos = len(self.rawText)
 		if not self._skipFieldsNotAtStartOfNode:
@@ -890,7 +915,7 @@ class TextInfoRegion(Region):
 		# Therefore, maintain a map of positions in the output to positions in the content.
 		self._rawToContentPos = []
 		self._currentContentPos = 0
-		self._selectionStart = self._selectionEnd = None
+		self.selectionStart = self.selectionEnd = None
 		self._skipFieldsNotAtStartOfNode = False
 		self._endsWithField = False
 
@@ -934,15 +959,6 @@ class TextInfoRegion(Region):
 		# If this is a multiline control, position it at the absolute left of the display when focused.
 		self.focusToHardLeft = self._isMultiline()
 		super(TextInfoRegion, self).update()
-
-		if self._selectionStart is not None:
-			# Mark the selection with dots 7 and 8.
-			if self._selectionEnd >= len(self.rawText):
-				brailleSelEnd = len(self.brailleCells)
-			else:
-				brailleSelEnd = self.rawToBraillePos[self._selectionEnd]
-			for pos in xrange(self.rawToBraillePos[self._selectionStart], brailleSelEnd):
-				self.brailleCells[pos] |= DOT7 | DOT8
 
 	def routeTo(self, braillePos):
 		if braillePos == self.brailleCursorPos:
@@ -1550,6 +1566,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.focus(region)
 		if region.brailleCursorPos is not None:
 			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
+		elif region.brailleSelectionStart is not None:
+			self.mainBuffer.scrollTo(region, region.brailleSelectionStart)
 		if self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
@@ -1583,6 +1601,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.mainBuffer.restoreWindow()
 		if region.brailleCursorPos is not None:
 			self.mainBuffer.scrollTo(region, region.brailleCursorPos)
+		elif region.brailleSelectionStart is not None:
+			self.mainBuffer.scrollTo(region, region.brailleSelectionStart)
 		if self.buffer is self.mainBuffer:
 			self.update()
 		elif self.buffer is self.messageBuffer and keyboardHandler.keyCounter>self._keyCountForLastMessage:
