@@ -704,7 +704,7 @@ The General settings dialog box is found in the Preferences menu.
 It contains the following options:
 
 ==== Language ====
-A combo box which allows you to select the language that NVDA's user interface and messages should be shown in.
+This is a combo box which allows you to select the language that NVDA's user interface and messages should be shown in.
 There are many languages, however the default option is "User Default, Windows".
 This option tells NVDA to use the language that Windows is currently set to.
 
@@ -712,7 +712,7 @@ Please note that NVDA must be restarted when changing the language.
 NVDA will ask you if you wish to restart if you do change the selection.
 Press OK, and NVDA will restart.
 
-==== Save Configuration on Exit ====
+==== Save configuration on exit ====
 This option is a checkbox that, when checked, tells NVDA to automatically save the current configuration when you exit NVDA.
 
 ==== Show exit options when exiting NVDA ====
@@ -732,13 +732,13 @@ However if you are wanting to provide information in a bug report, then it may b
 If this option is enabled, NVDA will start automatically as soon as you log on to Windows.
 This option is only available for installed copies of NVDA.
 
-==== Use NVDA on the windows Logon screen (requires administrative privileges) ====
+==== Use NVDA on the Windows Logon screen (requires administrator privileges) ====
 If you log on to Windows by providing a user name and password, then enabling this option will make NVDA start automatically at the logon screen when Windows starts.
 This option is only available for installed copies of NVDA.
 
-==== Use currently saved settings on the logon and other secure screens ====
+==== Use currently saved settings on the logon and other secure screens (requires administrator privileges) ====
 Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it when running on the logon, User Account Control (UAC) and other secure Windows screens.
-To make sure that all your settings are transfered, make sure to firstly save your configuration with control+NVDA+c or save configuration in the NVDA menu.
+To make sure that all your settings are transferred, make sure to save your configuration first with control+NVDA+c or Save configuration in the NVDA menu.
 This option is only available for installed copies of NVDA.
 
 ==== Automatically check for updates to NVDA ====
