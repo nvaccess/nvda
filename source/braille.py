@@ -222,6 +222,9 @@ TABLES = (
 	("or-in-g1.utb", _("Oriya grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("pl-pl-comp8.ctb", _("Polish 8 dot computer braille"), True),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("Pl-Pl-g1.utb", _("Polish grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
