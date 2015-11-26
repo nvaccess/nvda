@@ -487,6 +487,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		formatConfigFlags=sum(y for x,y in formatConfigFlagsMap.iteritems() if formatConfig.get(x,False))
 		if self.shouldIncludeLayoutTables:
 			formatConfigFlags+=formatConfigFlag_includeLayoutTables
+		if self.obj.ignoreEditorRevisions:
+			formatConfigFlags&=~formatConfigFlagsMap['reportRevisions']
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.documentWindowHandle,startOffset,endOffset,formatConfigFlags,ctypes.byref(text))
 		if res or not text:
 			log.debugWarning("winword_getTextInRange failed with %d"%res)
@@ -895,6 +897,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	treeInterceptorClass=WordDocumentTreeInterceptor
 	shouldCreateTreeInterceptor=False
 	TextInfo=WordDocumentTextInfo
+	ignoreEditorRevisions=False #: whether to not bothere fetching editor revisions for reporting
 
 	#: True if formatting should be ignored (text only) such as for spellCheck error field
 	ignoreFormatting=False
