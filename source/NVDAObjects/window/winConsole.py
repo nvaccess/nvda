@@ -8,6 +8,7 @@ import winConsoleHandler
 from . import Window
 from ..behaviors import Terminal, EditableTextWithoutAutoSelectDetection
 import api
+import core
 
 class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 	STABILIZE_DELAY = 0.03
@@ -53,3 +54,18 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 		# so the typedCharacter event is never fired for the backspace key.
 		# Call it here so that speak typed words works as expected.
 		self.event_typedCharacter(u"\b")
+
+	def script_close(self,gesture):
+		# #5343: New consoles in Windows 10 close with alt+f4 and take any processes attached with it (including NVDA).
+		# Therefore detach from the console temporarily while sending the gesture. 
+		winConsoleHandler.disconnectConsole()
+		gesture.send()
+		def reconnect():
+			if api.getFocusObject()==self:
+				winConsoleHandler.connectConsole(self)
+				self.startMonitoring()
+		core.callLater(200,reconnect)
+
+	__gestures={
+		"kb:alt+f4":"close",
+	}
