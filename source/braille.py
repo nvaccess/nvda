@@ -491,10 +491,9 @@ class Region(object):
 				# Mark the selection with dots 7 and 8.
 				self.brailleSelectionStart = self.rawToBraillePos[self.selectionStart]
 				if self.selectionEnd >= len(self.rawText):
-					brailleSelectionEnd = len(self.brailleCells)
+					self.brailleSelectionEnd = len(self.brailleCells)
 				else:
-					brailleSelectionEnd = self.rawToBraillePos[self.selectionEnd]
-				self.brailleSelectionEnd = self.rawToBraillePos[brailleSelectionEnd]
+					self.brailleSelectionEnd = self.rawToBraillePos[self.selectionEnd]
 				for pos in xrange(self.brailleSelectionStart, self.brailleSelectionEnd):
 					self.brailleCells[pos] |= DOT7 | DOT8
 			except IndexError:
