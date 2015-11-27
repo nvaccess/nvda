@@ -26,6 +26,7 @@
 - NVDA no longer silently exits when closing a Windows command console with alt+f4 in Windows 10. (#5343)
 - In the Elements List in browse mode, when you change the type of element, the Filter by field is now cleared. (#5511)
 - In editable text in Mozilla applications, moving the mouse again reads the appropriate line, word, etc. as expected instead of the entire content. (#5535)
+- When moving the mouse in editable text in Mozilla applications, reading no longer stops at elements such as links within the word or line being read. (#2160, #5535)
 
 
 = 2015.4 =
