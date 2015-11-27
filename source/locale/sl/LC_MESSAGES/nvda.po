@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5895\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 19:12+1000\n"
-"PO-Revision-Date: 2015-10-23 11:08+0100\n"
+"POT-Creation-Date: 2015-11-10 10:22+1000\n"
+"PO-Revision-Date: 2015-11-25 13:34+0100\n"
 "Last-Translator: jožef gregorc <jozko.gregorc@gmail.com>\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: sl\n"
@@ -2781,6 +2781,10 @@ msgstr "obrezano"
 msgid "overflowing"
 msgstr "plavajoče"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "odklenjeno"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "ni označeno"
@@ -4665,15 +4669,21 @@ msgstr "brez zamika"
 msgid "%d characters"
 msgstr "%d znakov"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "označevanje %s"
+msgid "%s selected"
+msgstr "%s označeno"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "odznačevanje %s"
+msgid "%s unselected"
+msgstr "%s ni označeno"
+
+# več po testu
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s izbrano"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -7029,7 +7039,7 @@ msgstr "Omogoči hitro &branje v načinu Izgovori Vse"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Beep if typing lowercase letters when caps lock is on"
-msgstr "Oddaj pisk, ko se pišejo male črke in je Caps log vključen"
+msgstr "Oddaj pisk, ko se pišejo male črke in je caps lock vključen"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -7692,8 +7702,14 @@ msgstr "kliči"
 msgid "Desktop"
 msgstr "Namizje"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "privzeta barva"
+
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "Ta celica ni namenjena urejanju"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
@@ -8740,18 +8756,17 @@ msgstr "HIMS Braille Sense/Braille EDGE serija"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
-#~ msgid "unlocked"
-#~ msgstr "odklenjeno"
+#~ msgid "Default color"
+#~ msgstr "Privzeta barva"
 
-#~ msgid "%s selected"
-#~ msgstr "%s označeno"
+#~ msgid "Unknown color"
+#~ msgstr "Neznana barva"
 
-#~ msgid "%s unselected"
-#~ msgstr "%s ni označeno"
+#~ msgid "selecting %s"
+#~ msgstr "označevanje %s"
 
-# več po testu
-#~ msgid "%s selected instead"
-#~ msgstr "%s izbrano"
+#~ msgid "unselecting %s"
+#~ msgstr "odznačevanje %s"
 
 #~ msgid "&Language detection..."
 #~ msgstr "&Jezikovna zaznava..."
@@ -8777,15 +8792,6 @@ msgstr "HIMS SyncBraille"
 
 #~ msgid "Choose language to be added to prefered languages"
 #~ msgstr "Izberite jezike, ki jih želite dodati med vaše priljubljene"
-
-#~ msgid "Default color"
-#~ msgstr "Privzeta barva"
-
-#~ msgid "Unknown color"
-#~ msgstr "Neznana barva"
-
-#~ msgid "This cell is non-editable"
-#~ msgstr "Ta celica ni namenjena urejanju"
 
 #~ msgid "unrevised"
 #~ msgstr "ni pregledano"

@@ -41,6 +41,9 @@ class BlockQuote(Ia2Web):
 class Editor(Ia2Web):
 	TextInfo = MozillaCompoundTextInfo
 
+class EditorChunk(Ia2Web):
+	beTransparentToMouse = True
+
 def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	"""Determine the most appropriate class if this is an IA2 web object.
 	This should be called after finding any classes for the specific web implementation.
@@ -64,8 +67,11 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 	if isApp or iaRole == oleacc.ROLE_SYSTEM_DOCUMENT:
 		clsList.append(documentClass)
 
-	if obj.IA2States & IAccessibleHandler.IA2_STATE_EDITABLE and obj.IAccessibleStates & oleacc.STATE_SYSTEM_FOCUSABLE:
-		clsList.append(Editor)
+	if obj.IA2States & IAccessibleHandler.IA2_STATE_EDITABLE:
+		if obj.IAccessibleStates & oleacc.STATE_SYSTEM_FOCUSABLE:
+			clsList.append(Editor)
+		else:
+			clsList.append(EditorChunk)
 
 	if iaRole in (oleacc.ROLE_SYSTEM_DIALOG,oleacc.ROLE_SYSTEM_PROPERTYPAGE):
 		xmlRoles = obj.IA2Attributes.get("xml-roles", "").split(" ")
