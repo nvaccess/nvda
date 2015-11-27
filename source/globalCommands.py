@@ -132,7 +132,7 @@ class GlobalCommands(ScriptableObject):
 
 	def script_leftMouseClick(self,gesture):
 		# Translators: Reported when left mouse button is clicked.
-		ui.message(_("left click"))
+		ui.message(_("Left click"))
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
 	# Translators: Input help mode message for left mouse click command.
@@ -141,7 +141,7 @@ class GlobalCommands(ScriptableObject):
 
 	def script_rightMouseClick(self,gesture):
 		# Translators: Reported when right mouse button is clicked.
-		ui.message(_("right click"))
+		ui.message(_("Right click"))
 		winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTDOWN,0,0,None,None)
 		winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTUP,0,0,None,None)
 	# Translators: Input help mode message for right mouse click command.
@@ -151,11 +151,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleLeftMouseButton(self,gesture):
 		if winUser.getKeyState(winUser.VK_LBUTTON)&32768:
 			# Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-			ui.message(_("left mouse button unlock"))
+			ui.message(_("Left mouse button unlock"))
 			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
 		else:
 			# Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-			ui.message(_("left mouse button lock"))
+			ui.message(_("Left mouse button lock"))
 			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
 	# Translators: Input help mode message for left mouse lock/unlock toggle command.
 	script_toggleLeftMouseButton.__doc__=_("Locks or unlocks the left mouse button")
@@ -164,11 +164,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleRightMouseButton(self,gesture):
 		if winUser.getKeyState(winUser.VK_RBUTTON)&32768:
 			# Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-			ui.message(_("right mouse button unlock"))
+			ui.message(_("Right mouse button unlock"))
 			winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTUP,0,0,None,None)
 		else:
 			# Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-			ui.message(_("right mouse button lock"))
+			ui.message(_("Right mouse button lock"))
 			winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTDOWN,0,0,None,None)
 	# Translators: Input help mode message for right mouse lock/unlock command.
 	script_toggleRightMouseButton.__doc__=_("Locks or unlocks the right mouse button")
@@ -636,7 +636,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Reported when the user cycles through speech symbol levels
 		# which determine what symbols are spoken.
 		# %s will be replaced with the symbol level; e.g. none, some, most and all.
-		ui.message(_("symbol level %s") % name)
+		ui.message(_("Symbol level %s") % name)
 	# Translators: Input help mode message for cycle speech symbol level command.
 	script_cycleSpeechSymbolLevel.__doc__=_("Cycles through speech symbol levels which determine what symbols are spoken")
 	script_cycleSpeechSymbolLevel.category=SCRCAT_SPEECH
@@ -655,7 +655,7 @@ class GlobalCommands(ScriptableObject):
 				(left,top,width,height)=obj.location
 			except:
 				# Translators: Reported when the object has no location for the mouse to move to it.
-				ui.message(_("object has no location"))
+				ui.message(_("Object has no location"))
 				return
 			x=left+(width/2)
 			y=top+(height/2)
@@ -708,7 +708,7 @@ class GlobalCommands(ScriptableObject):
 		if not isinstance(curObject,NVDAObject):
 			# Translators: Reported when the user tries to perform a command related to the navigator object
 			# but there is no current navigator object.
-			speech.speakMessage(_("no navigator object"))
+			speech.speakMessage(_("No navigator object"))
 			return
 		if scriptHandler.getLastScriptRepeatCount()>=1:
 			if curObject.TextInfo!=NVDAObjectTextInfo:
@@ -776,10 +776,10 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Reported when:
 			# 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 			# 2. Trying to move focus to navigator object but there is no focus.
-			speech.speakMessage(_("no focus"))
+			ui.message(_("No focus"))
 		if scriptHandler.getLastScriptRepeatCount()==0:
 			# Translators: Reported when attempting to move focus to navigator object.
-			ui.message(_("move focus"))
+			ui.message(_("Move focus"))
 			obj.setFocus()
 		else:
 			review=api.getReviewPosition()
@@ -787,19 +787,21 @@ class GlobalCommands(ScriptableObject):
 				review.updateCaret()
 			except NotImplementedError:
 				# Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
-				ui.message(_("no caret"))
+				ui.message(_("No caret"))
 				return
 			info=review.copy()
 			info.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(info,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move focus to current navigator object command.
-	script_navigatorObject_moveFocus.__doc__=_("Pressed once Sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor")
+	script_navigatorObject_moveFocus.__doc__=_("Pressed once sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor")
 	script_navigatorObject_moveFocus.category=SCRCAT_OBJECTNAVIGATION
 
 	def script_navigatorObject_parent(self,gesture):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
-			speech.speakMessage(_("no navigator object"))
+			# Translators: Reported when the user tries to perform a command related to the navigator object
+			# but there is no current navigator object.
+			ui.message(_("No navigator object"))
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simpleParent if simpleReviewMode else curObject.parent
@@ -808,7 +810,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
 		else:
 			# Translators: Reported when there is no containing (parent) object such as when focused on desktop.
-			speech.speakMessage(_("No containing object"))
+			ui.message(_("No containing object"))
 	# Translators: Input help mode message for move to parent object command.
 	script_navigatorObject_parent.__doc__=_("Moves the navigator object to the object containing it")
 	script_navigatorObject_parent.category=SCRCAT_OBJECTNAVIGATION
@@ -816,7 +818,9 @@ class GlobalCommands(ScriptableObject):
 	def script_navigatorObject_next(self,gesture):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
-			speech.speakMessage(_("no navigator object"))
+			# Translators: Reported when the user tries to perform a command related to the navigator object
+			# but there is no current navigator object.
+			ui.message(_("No navigator object"))
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simpleNext if simpleReviewMode else curObject.next
@@ -825,7 +829,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
 		else:
 			# Translators: Reported when there is no next object (current object is the last object).
-			speech.speakMessage(_("No next"))
+			ui.message(_("No next"))
 	# Translators: Input help mode message for move to next object command.
 	script_navigatorObject_next.__doc__=_("Moves the navigator object to the next object")
 	script_navigatorObject_next.category=SCRCAT_OBJECTNAVIGATION
@@ -833,7 +837,9 @@ class GlobalCommands(ScriptableObject):
 	def script_navigatorObject_previous(self,gesture):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
-			speech.speakMessage(_("no navigator object"))
+			# Translators: Reported when the user tries to perform a command related to the navigator object
+			# but there is no current navigator object.
+			ui.message(_("No navigator object"))
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simplePrevious if simpleReviewMode else curObject.previous
@@ -842,7 +848,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
 		else:
 			# Translators: Reported when there is no previous object (current object is the first object).
-			speech.speakMessage(_("No previous"))
+			ui.message(_("No previous"))
 	# Translators: Input help mode message for move to previous object command.
 	script_navigatorObject_previous.__doc__=_("Moves the navigator object to the previous object")
 	script_navigatorObject_previous.category=SCRCAT_OBJECTNAVIGATION
@@ -850,7 +856,9 @@ class GlobalCommands(ScriptableObject):
 	def script_navigatorObject_firstChild(self,gesture):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
-			speech.speakMessage(_("no navigator object"))
+			# Translators: Reported when the user tries to perform a command related to the navigator object
+			# but there is no current navigator object.
+			ui.message(_("No navigator object"))
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simpleFirstChild if simpleReviewMode else curObject.firstChild
@@ -859,7 +867,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
 		else:
 			# Translators: Reported when there is no contained (first child) object such as inside a document.
-			speech.speakMessage(_("No objects inside"))
+			ui.message(_("No objects inside"))
 	# Translators: Input help mode message for move to first child object command.
 	script_navigatorObject_firstChild.__doc__=_("Moves the navigator object to the first object inside it")
 	script_navigatorObject_firstChild.category=SCRCAT_OBJECTNAVIGATION
@@ -1239,9 +1247,9 @@ class GlobalCommands(ScriptableObject):
 			else:
 				speech.speakSpelling(focusObject.name)
 		else:
-			speech.speakMessage(_("no focus"))
+			speech.speakMessage(_("No focus"))
 	# Translators: Input help mode message for report current focus command.
-	script_reportCurrentFocus.__doc__ = _("reports the object with focus. If pressed twice, spells the information")
+	script_reportCurrentFocus.__doc__ = _("Reports the object with focus. If pressed twice, spells the information")
 	script_reportCurrentFocus.category=SCRCAT_FOCUS
 
 	def script_reportStatusLine(self,gesture):
@@ -1333,19 +1341,19 @@ class GlobalCommands(ScriptableObject):
 		if outputMode=="both":
 			outputMode="off"
 			# Translators: A mode where no progress bar updates are given.
-			ui.message(_("no progress bar updates"))
+			ui.message(_("No progress bar updates"))
 		elif outputMode=="off":
 			outputMode="speak"
 			# Translators: A mode where progress bar updates will be spoken.
-			ui.message(_("speak progress bar updates"))
+			ui.message(_("Speak progress bar updates"))
 		elif outputMode=="speak":
 			outputMode="beep"
 			# Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
-			ui.message(_("beep for progress bar updates"))
+			ui.message(_("Beep for progress bar updates"))
 		else:
 			outputMode="both"
 			# Translators: A mode where both speech and beeps will indicate progress bar updates.
-			ui.message(_("beep and speak progress bar updates"))
+			ui.message(_("Beep and speak progress bar updates"))
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=outputMode
 	# Translators: Input help mode message for toggle progress bar output command.
 	script_toggleProgressBarOutput.__doc__=_("Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates")
@@ -1404,7 +1412,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		if sps.BatteryFlag & NO_SYSTEM_BATTERY:
 			# Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
-			ui.message(_("no system battery"))
+			ui.message(_("No system battery"))
 			return
 		# Translators: This is presented to inform the user of the current battery percentage.
 		text = _("%d percent") % sps.BatteryLifePercent + " "
@@ -1725,7 +1733,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(newObject,reason=controlTypes.REASON_FOCUS)
 		else:
 			# Translators: a message when there is no next object when navigating
-			ui.message(_("no next"))
+			ui.message(_("No next"))
 	# Translators: Input help mode message for a touchscreen gesture.
 	script_navigatorObject_nextInFlow.__doc__=_("Moves to the next object in a flattened view of the object navigation hierarchy")
 	script_navigatorObject_nextInFlow.category=SCRCAT_OBJECTNAVIGATION
@@ -1743,7 +1751,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(newObject,reason=controlTypes.REASON_FOCUS)
 		else:
 			# Translators: a message when there is no previous object when navigating
-			ui.message(_("no previous"))
+			ui.message(_("No previous"))
 	# Translators: Input help mode message for a touchscreen gesture.
 	script_navigatorObject_previousInFlow.__doc__=_("Moves to the previous object in a flattened view of the object navigation hierarchy")
 	script_navigatorObject_previousInFlow.category=SCRCAT_OBJECTNAVIGATION

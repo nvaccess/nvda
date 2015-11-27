@@ -18,6 +18,7 @@ from logHandler import log
 import config
 import winInputHook
 import core
+import ui
 
 WM_MOUSEMOVE=0x0200
 WM_LBUTTONDOWN=0x0201
@@ -136,7 +137,7 @@ def pumpAll():
 		if mouseShapeChanged==10:
 			mouseShapeChanged=0
 			# Translators: Reported when mouse cursor shape changes (example output: edit cursor).
-			speech.speakMessage(_("%s cursor")%curMouseShape)
+			ui.message(_("%s cursor")%curMouseShape)
 		else:
 			mouseShapeChanged+=1
 

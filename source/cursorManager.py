@@ -22,6 +22,7 @@ import config
 import braille
 import controlTypes
 from inputCore import SCRCAT_BROWSEMODE
+import ui
 
 class FindDialog(wx.Dialog):
 	"""A dialog used to specify text to find in a cursor manager.
@@ -304,11 +305,11 @@ class CursorManager(baseObject.ScriptableObject):
 		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
 		if info.isCollapsed:
 			# Translators: Reported when there is no text selected (for copying).
-			speech.speakMessage(_("no selection"))
+			ui.message(_("No selection"))
 			return
 		if info.copyToClipboard():
 			# Translators: Message presented when text has been copied to clipboard.
-			speech.speakMessage(_("copied to clipboard"))
+			ui.message(_("Copied to clipboard"))
 
 	__gestures = {
 		"kb:pageUp": "moveByPage_back",
