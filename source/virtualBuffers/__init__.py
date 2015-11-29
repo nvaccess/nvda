@@ -612,7 +612,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		except LookupError:
 			# Translators: The message reported when a user attempts to use a table movement command
 			# but the cursor can't be moved in that direction because it is at the edge of the table.
-			ui.message(_("edge of table"))
+			ui.message(_("Edge of table"))
 			# Retrieve the cell on which we started.
 			info = next(self._iterTableCells(tableID, row=origRow, column=origCol))
 

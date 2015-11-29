@@ -1103,13 +1103,13 @@ class GlobalCommands(ScriptableObject):
 		newMode=(curMode+1)%3
 		if newMode==speech.speechMode_off:
 			# Translators: A speech mode which disables speech output.
-			name=_("speech mode off")
+			name=_("Speech mode off")
 		elif newMode==speech.speechMode_beeps:
 			# Translators: A speech mode which will cause NVDA to beep instead of speaking.
-			name=_("speech mode beeps")
+			name=_("Speech mode beeps")
 		elif newMode==speech.speechMode_talk:
 			# Translators: The normal speech mode; i.e. NVDA will talk as normal.
-			name=_("speech mode talk")
+			name=_("Speech mode talk")
 		speech.cancelSpeech()
 		ui.message(name)
 		speech.speechMode=newMode
@@ -1192,13 +1192,13 @@ class GlobalCommands(ScriptableObject):
 	def script_review_sayAll(self,gesture):
 		sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
 	# Translators: Input help mode message for say all in review cursor command.
-	script_review_sayAll.__doc__ = _("reads from the review cursor  up to end of current text, moving the review cursor as it goes")
+	script_review_sayAll.__doc__ = _("Reads from the review cursor up to end of current text, moving the review cursor as it goes")
 	script_review_sayAll.category=SCRCAT_TEXTREVIEW
 
 	def script_sayAll(self,gesture):
 		sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
 	# Translators: Input help mode message for say all with system caret command.
-	script_sayAll.__doc__ = _("reads from the system caret up to the end of the text, moving the caret as it goes")
+	script_sayAll.__doc__ = _("Reads from the system caret up to the end of the text, moving the caret as it goes")
 	script_sayAll.category=SCRCAT_SYSTEMCARET
 
 	def script_reportFormatting(self,gesture):
@@ -1278,7 +1278,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			speech.speakSpelling(text)
 	# Translators: Input help mode message for report status line text command.
-	script_reportStatusLine.__doc__ = _("reads the current application status bar and moves the navigator to it. If pressed twice, spells the information")
+	script_reportStatusLine.__doc__ = _("Reads the current application status bar and moves the navigator to it. If pressed twice, spells the information")
 	script_reportStatusLine.category=SCRCAT_FOCUS
 
 	def script_toggleMouseTracking(self,gesture):
@@ -1302,7 +1302,7 @@ class GlobalCommands(ScriptableObject):
 			title=obj.appModule.appName  if obj.appModule else None
 			if not isinstance(title,basestring) or not title or title.isspace():
 				# Translators: Reported when there is no title text for current program or window.
-				title=_("no title")
+				title=_("No title")
 		repeatCount=scriptHandler.getLastScriptRepeatCount()
 		if repeatCount==0:
 			ui.message(title)
@@ -1320,7 +1320,7 @@ class GlobalCommands(ScriptableObject):
 		if obj:
 			sayAllHandler.readObjects(obj)
 	# Translators: Input help mode message for read foreground object command (usually the foreground window).
-	script_speakForeground.__doc__ = _("speaks the current foreground object")
+	script_speakForeground.__doc__ = _("Speaks the current foreground object")
 	script_speakForeground.category=SCRCAT_FOCUS
 
 	def script_test_navigatorDisplayModelText(self,gesture):
@@ -1423,7 +1423,7 @@ class GlobalCommands(ScriptableObject):
 			text += _("{hours:d} hours and {minutes:d} minutes remaining") .format(hours=sps.BatteryLifeTime / 3600, minutes=(sps.BatteryLifeTime % 3600) / 60)
 		ui.message(text)
 	# Translators: Input help mode message for report battery status command.
-	script_say_battery_status.__doc__ = _("reports battery status and time remaining if AC is not plugged in")
+	script_say_battery_status.__doc__ = _("Reports battery status and time remaining if AC is not plugged in")
 	script_say_battery_status.category=SCRCAT_SYSTEM
 
 	def script_passNextKeyThrough(self,gesture):
@@ -1769,7 +1769,7 @@ class GlobalCommands(ScriptableObject):
 			newModeLabel=_("%s mode")%newMode
 		ui.message(newModeLabel)
 	# Translators: Input help mode message for a touchscreen gesture.
-	script_touch_changeMode.__doc__=_("cycles between available touch modes")
+	script_touch_changeMode.__doc__=_("Cycles between available touch modes")
 	script_touch_changeMode.category=SCRCAT_TOUCH
 
 
