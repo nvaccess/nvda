@@ -354,11 +354,11 @@ negativeStateLabels = {
 
 #: Cursor shapes
 CURSOR_SHAPES = (
-	# Translators: The description of a cursor shape.
+	# Translators: The description of a braille cursor shape.
 	(0xC0, _("Dots 7 and 8")),
-	# Translators: The description of a cursor shape.
+	# Translators: The description of a braille cursor shape.
 	(0x80, _("Dot 8")),
-	# Translators: The description of a cursor shape.
+	# Translators: The description of a braille cursor shape.
 	(0xFF, _("All dots")),
 )
 SELECTION_SHAPE = 0xC0 #: Dots 7 and 8

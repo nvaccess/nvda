@@ -889,13 +889,15 @@ If input is not supported on a display which does have a braille keyboard, this 
 This option allows the word that is under the cursor to be displayed in non-contracted computer braille.
 
 ==== Show Cursor ====
-This option allows the braille cursor to be turned on and off. It applies to all cursors including the selection indicator.
+This option allows the braille cursor to be turned on and off.
+It applies to the focus and review cursors, the selection indicator is not affected by this option.
 
 ==== Cursor Blink Rate (ms) ====
 This option is a numerical field that allows you to change the blink rate of the cursor in milliseconds.
 
 ==== Cursor Shape ====
-This option allows you to choose the shape of the braille cursor. Shapes are defined as dot patterns. The selection indicator is not affected by this option.
+This option allows you to choose the shape (dot pattern) of the braille cursor.
+The selection indicator is not affected by this option.
 
 ==== Message Timeout (sec) ====
 This option is a numerical field that controls how long NVDA messages are displayed on the braille display.
