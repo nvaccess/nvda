@@ -897,7 +897,15 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	treeInterceptorClass=WordDocumentTreeInterceptor
 	shouldCreateTreeInterceptor=False
 	TextInfo=WordDocumentTextInfo
-	ignoreEditorRevisions=False #: whether to not bothere fetching editor revisions for reporting
+
+	def _get_ignoreEditorRevisions(self):
+		try:
+			ignore=not self.WinwordWindowObject.view.showRevisionsAndComments
+		except COMError:
+			log.debugWarning("showRevisionsAndComments",exc_info=True)
+			ignore=False
+		self.ignoreEditorRevisions=ignore
+		return ignore
 
 	#: True if formatting should be ignored (text only) such as for spellCheck error field
 	ignoreFormatting=False
