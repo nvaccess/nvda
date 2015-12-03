@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5822\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-10 10:22+1000\n"
-"PO-Revision-Date: 2015-11-10 11:07+0200\n"
+"POT-Creation-Date: 2015-11-25 19:10+1000\n"
+"PO-Revision-Date: 2015-11-26 20:24+0200\n"
 "Last-Translator: Kostadin Kolev <k_kolev1985@mail.bg>\n"
 "Language-Team: Български <>\n"
 "Language: bg\n"
@@ -1319,7 +1319,7 @@ msgstr "Само под нивото на изговаряне на символ
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
-msgstr "непознат цвят"
+msgstr "Непознат цвят"
 
 #. Translators: the color Alice Blue (RGB 240, 248, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -2806,7 +2806,7 @@ msgstr "Зачитане на главни/малки"
 
 #, python-format
 msgid "text \"%s\" not found"
-msgstr "текстът \"%s\" не е намерен"
+msgstr "Текстът \"%s\" не е намерен"
 
 msgid "Find Error"
 msgstr "Грешка при търсене"
@@ -7653,13 +7653,18 @@ msgstr "Работен плот"
 msgid "default color"
 msgstr "цвят по подразбиране"
 
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "Непознат цвят"
+
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Тази клетка не може да бъде редактирана"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "Извежда списък с диаграмите, клетките с коментари и клетките с формули"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Извежда различни типове елементи, налични в тази електронна таблица."
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8688,13 +8693,14 @@ msgstr "HIMS Braille серии Sense и Braille EDGE "
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr ""
+#~ "Извежда списък с диаграмите, клетките с коментари и клетките с формули"
+
 #, fuzzy
 #~ msgid "Default color"
 #~ msgstr "цвят по подразбиране"
-
-#, fuzzy
-#~ msgid "Unknown color"
-#~ msgstr "непознат цвят"
 
 #~ msgid "selecting %s"
 #~ msgstr "Маркиране на %s"
