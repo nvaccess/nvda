@@ -670,6 +670,7 @@ def processNegativeStates(role, states, reason, negativeStates):
 	if reason == REASON_CHANGE:
 		# We want to speak this state only if it is changing to negative.
 		speakNegatives.add(STATE_DROPTARGET)
+		speakNegatives.add(STATE_PRESSED)
 		# We were given states which have changed to negative.
 		# Return only those supplied negative states which should be spoken;
 		# i.e. the states in both sets.
