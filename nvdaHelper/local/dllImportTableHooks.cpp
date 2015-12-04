@@ -110,3 +110,19 @@ BOOL DllImportTableHooks::unhookFunctions() {
 	this->hookedFunctions.clear();
 	return TRUE;
 }
+
+void* dllImportTableHooks_hookSingle(char* targetDll, char* importDll, char* funcName, void* newFunction) {
+	HMODULE targetHandle=LoadLibraryA(targetDll);
+	if(!targetHandle) return NULL;
+	DllImportTableHooks* hooks=new DllImportTableHooks(targetHandle);
+	hooks->requestFunctionHook(importDll,funcName,newFunction);
+	hooks->hookFunctions();
+	return (void*)hooks;
+}
+
+void dllImportTableHooks_unhookSingle(void* hook) {
+	DllImportTableHooks* hooks=(DllImportTableHooks*)hook;
+	hooks->unhookFunctions();
+	FreeLibrary(hooks->targetModule);
+	delete hooks;
+}
