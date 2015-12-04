@@ -192,6 +192,9 @@ TABLES = (
 	("mn-in-g1.utb", _("Manipuri grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("mn-MN.utb", _("Mongolian"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("mr-in-g1.utb", _("Marathi grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
