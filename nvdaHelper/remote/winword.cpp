@@ -89,6 +89,7 @@ using namespace std;
 #define wdDISPID_PARAGRAPHFORMAT_ALIGNMENT 101
 #define wdDISPID_RANGE_LISTFORMAT 68
 #define wdDISPID_LISTFORMAT_LISTSTRING 75
+#define wdDISPID_LISTFORMAT_LISTLEVELNUMBER 68
 #define wdDISPID_RANGE_PARAGRAPHS 59
 #define wdDISPID_PARAGRAPHS_ITEM 0
 #define wdDISPID_PARAGRAPH_RANGE 0
@@ -598,6 +599,9 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 						&&_com_dispatch_raw_propget(pDispatchParagraphRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal==startOffset\
 					) {
 						formatAttribsStream<<L"line-prefix=\""<<listString<<L"\" ";
+						long listLevel = -1;
+						_com_dispatch_raw_propget(pDispatchListFormat,wdDISPID_LISTFORMAT_LISTLEVELNUMBER,VT_I4,&listLevel);
+						formatAttribsStream<<L"list-level=\""<<listLevel<<L"\" ";
 					}
 				}
 				SysFreeString(listString);
