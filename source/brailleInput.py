@@ -4,7 +4,6 @@
 #See the file COPYING for more details.
 #Copyright (C) 2012-2013 NV Access Limited, Rui Batista
 
-import os.path
 import louis
 import braille
 import config
@@ -25,6 +24,7 @@ handler = None
 def initialize():
 	global handler
 	handler = BrailleInputHandler()
+	handler.setInputTable(config.conf["braille"]["inputTable"])
 	log.info("Braille input initialized")
 
 def terminate():
@@ -34,6 +34,22 @@ def terminate():
 class BrailleInputHandler(object):
 	"""Handles braille input.
 	"""
+
+	def __init__(self):
+		self.inputTableList = []
+
+	def setInputTable(self, table, isFallback=False):
+		tableList = braille._getTableList(table)
+		if not isFallback:
+			try:
+				louis.checkTable(tableList)
+			except:
+				log.error("Error compiling input tables", exc_info=True)
+				self.setInputTable("en-us-comp8.ctb", isFallback=True)
+				return False
+			config.conf["braille"]["inputTable"] = table
+		self.inputTableList = tableList
+		return True
 
 	def input(self, dots):
 		"""Handle one cell of braille input.
@@ -57,6 +73,9 @@ class BrailleInputHandler(object):
 				input.ii.ki.dwFlags = winUser.KEYEVENTF_UNICODE|direction
 				inputs.append(input)
 		winUser.SendInput(inputs)
+
+	def handleConfigProfileSwitch(self):
+		self.setInputTable(config.conf["braille"]["translationTable"])
 
 class BrailleInputGesture(inputCore.InputGesture):
 	"""Input (dots and/or space bar) from a braille keyboard.

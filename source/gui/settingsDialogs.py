@@ -25,6 +25,7 @@ import speechDictHandler
 import appModuleHandler
 import queueHandler
 import braille
+import brailleInput
 import core
 import keyboardHandler
 import characterProcessing
@@ -1463,7 +1464,7 @@ class BrailleSettingsDialog(SettingsDialog):
 			gui.messageBox(_("Could not load the %s translation table.")%table, _("Braille Table Error"), wx.OK|wx.ICON_WARNING, self)
 			return
 		table = self.inputTableNames[self.inputTableList.GetSelection()]
-		if not braille.handler.setInputTable(table):
+		if not brailleInput.handler.setInputTable(table):
 			gui.messageBox(_("Could not load the %s input table.")%table, _("Braille Table Error"), wx.OK|wx.ICON_WARNING, self)
 			return
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()

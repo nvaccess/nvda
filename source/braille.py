@@ -21,7 +21,7 @@ import inputCore
 
 #: The directory in which liblouis braille tables are located.
 TABLES_DIR = r"louis\tables"
-PATTERNS_TABLE = os.path.join(TABLES_DIR, "braille-patterns.cti")
+UNICODe_BRAILLE_TABLE = os.path.join(TABLES_DIR, "braille-patterns.cti")
 
 #: The braille table file names and information.
 tables = [
@@ -279,6 +279,15 @@ tables = [
 	# braille settings dialog.
 	("zh-tw.ctb", _("Chinese (Taiwan, Mandarin)"), False),
 ]
+
+def _getTablePath(table):
+	if not os.path.isabs(table):
+		# This is a stock table.
+		return os.path.join(TABLES_DIR, table)
+	return table
+
+def _getTableList(table):
+	return [_getTablePath(table), UNICODE_BRAILLE_TABLE]
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is an
@@ -1346,7 +1355,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self.display = None
 		self.displaySize = 0
 		self.translationTableList = []
-		self.inputTableList = []
 		self.mainBuffer = BrailleBuffer(self)
 		self.messageBuffer = BrailleBuffer(self)
 		self._messageCallLater = None
@@ -1425,17 +1433,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.setDisplayByName("noBraille", isFallback=True)
 			return False
 
-	def _getTablePath(self, table):
-		if not os.path.isabs(table):
-			# This is a stock table.
-			return os.path.join(TABLES_DIR, table)
-		return table
-
-	def _getTableList(self, table):
-		return [self._getTablePath(table), PATTERNS_TABLE]
-
 	def setTranslationTable(self, table, isFallback=False):
-		tableList = self._getTableList(table)
+		tableList = _getTableList(table)
 		if not isFallback:
 			try:
 				louis.checkTable(tableList)
@@ -1445,19 +1444,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				return False
 			config.conf["braille"]["translationTable"] = table
 		self.translationTableList = tableList
-		return True
-
-	def setInputTable(self, table, isFallback=False):
-		tableList = self._getTableList(table)
-		if not isFallback:
-			try:
-				louis.checkTable(tableList)
-			except:
-				log.error("Error compiling input tables", exc_info=True)
-				self.setInputTable("en-us-comp8.ctb", isFallback=True)
-				return False
-			config.conf["braille"]["inputTable"] = table
-		self.inputTableList = tableList
 		return True
 
 	def _updateDisplay(self):
@@ -1643,7 +1629,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if display != self.display.name:
 			self.setDisplayByName(display)
 		self.setTranslationTable(config.conf["braille"]["translationTable"])
-		self.setInputTable(config.conf["braille"]["inputTable"])
 
 def initialize():
 	global handler
@@ -1652,7 +1637,6 @@ def initialize():
 	handler = BrailleHandler()
 	handler.setDisplayByName(config.conf["braille"]["display"])
 	handler.setTranslationTable(config.conf["braille"]["translationTable"])
-	handler.setInputTable(config.conf["braille"]["inputTable"])
 
 	# Update the display to the current focus/review position.
 	if not handler.enabled or not api.getDesktopObject():
