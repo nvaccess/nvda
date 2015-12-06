@@ -21,7 +21,7 @@ import inputCore
 
 #: The directory in which liblouis braille tables are located.
 TABLES_DIR = r"louis\tables"
-UNICODe_BRAILLE_TABLE = os.path.join(TABLES_DIR, "braille-patterns.cti")
+UNICODE_BRAILLE_TABLE = os.path.join(TABLES_DIR, "braille-patterns.cti")
 
 #: The braille table file names and information.
 tables = [
