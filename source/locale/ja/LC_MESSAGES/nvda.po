@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-02 17:08+1000\n"
-"PO-Revision-Date: 2015-11-03 21:18+0900\n"
+"POT-Creation-Date: 2015-11-25 19:10+1000\n"
+"PO-Revision-Date: 2015-12-01 18:59+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -3711,7 +3711,7 @@ msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
 msgstr ""
-"現在のナビゲーターオブジェクトの情報を開発者向けに記録してログビューワーを開"
+"現在のナビゲーターオブジェクトの情報を開発者向けに記録してログビューアーを開"
 "く"
 
 #. Translators: A mode where no progress bar updates are given.
@@ -3919,17 +3919,17 @@ msgstr "アドオンマネージャーを開いてNVDAのアドオンの追加�
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
-msgstr "スピーチビューワー停止"
+msgstr "スピーチビューアー停止"
 
 #. Translators: The message announced when enabling speech viewer.
 msgid "speech viewer enabled"
-msgstr "スピーチビューワー開始"
+msgstr "スピーチビューアー開始"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
 "Toggles the NVDA Speech viewer, a floating window that allows you to view "
 "all the text that NVDA is currently speaking"
-msgstr "スピーチビューワーを開いてNVDAの音声をテキストで表示"
+msgstr "スピーチビューアーを開いてNVDAの音声をテキストで表示"
 
 #. Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 msgid "review"
@@ -4861,7 +4861,7 @@ msgid "table with {columnCount} columns and {rowCount} rows"
 msgstr "{columnCount}列{rowCount}行のテーブル"
 
 msgid "NVDA Speech Viewer"
-msgstr "NVDAスピーチビューワー"
+msgstr "NVDAスピーチビューアー"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Language"
@@ -5903,11 +5903,11 @@ msgstr "設定(&P)"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 msgid "View log"
-msgstr "ログを見る(&V)"
+msgstr "ログビューアー(&V)"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
-msgstr "スピーチビューワー(&S)"
+msgstr "スピーチビューアー(&S)"
 
 #. Translators: The label for the menu item to open NVDA Python Console.
 msgid "Python console"
@@ -5915,7 +5915,7 @@ msgstr "Pythonコンソール"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
 msgid "Manage &add-ons"
-msgstr "アドオンの管理(&A)"
+msgstr "アドオン マネージャー(&A)"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create Portable copy..."
@@ -6621,7 +6621,7 @@ msgstr "作成に成功しました。NVDAポータブル版の場所は %s で�
 
 #. Translators: The title of the NVDA log viewer window.
 msgid "NVDA Log Viewer"
-msgstr "NVDAログビューワー"
+msgstr "NVDAログビューアー"
 
 #. Translators: The label for a menu item in NVDA log viewer to refresh log messages.
 msgid "Refresh\tF5"
@@ -7543,16 +7543,23 @@ msgstr "呼び出し"
 msgid "Desktop"
 msgstr "デスクトップ"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "標準色"
+
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "不明な色"
 
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "このセルは編集できません"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "グラフ、コメント、数式のリストを表示"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "シートに含まれる各種の要素のリスト"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -8558,6 +8565,14 @@ msgstr "HIMS社製 Braille Sense/Braille EDGE シリーズ"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS社製 SyncBraille"
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr "グラフ、コメント、数式のリストを表示"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "標準色"
 
 #~ msgid "selecting %s"
 #~ msgstr "%s 選択"
