@@ -61,7 +61,7 @@ For reference, the following dependencies are included in Git submodules:
 * Adobe FlashAccessibility interface typelib
 * [txt2tags](http://txt2tags.sourceforge.net/), version 2.5
 * [MinHook](https://github.com/RaMMicHaeL/minhook), tagged version 1.2.2
-* [SCons](http://www.scons.org/), version 2.3.2
+* [SCons](http://www.scons.org/), version 2.4.1
 * brlapi Python bindings, version 0.5.7 or later, distributed with [BRLTTY for Windows](http://brl.thefreecat.org/brltty/), version 4.2-2
 * ALVA BC6 generic dll, version 3.0.4.1
 * lilli.dll, version 2.1.0.0
