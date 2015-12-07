@@ -15,11 +15,14 @@ AUDIODUCKINGMODE_OUTPUTTING=1
 AUDIODUCKINGMODE_ALWAYS=2
 
 audioDuckingModes=[
-	# Translators: an audio ducking mode for Windows 8 and up
+	# Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+	# See the Audio Ducking Mode section of the User Gide for details.
 	_("No ducking"),
-	# Translators: an audio ducking mode for Windows 8 and up
+	# Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+	# See the Audio Ducking Mode section of the User Gide for details.
 	_("Duck when outputting speech and sounds"),
-	# Translators: an audio ducking mode for Windows 8 and up
+	# Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+	# See the Audio Ducking Mode section of the User Gide for details.
 	_("Always duck"),
 ]
 
