@@ -32,13 +32,15 @@ HTMLDLG_MODELESS = 0x0040
 HTMLDLG_PRINT_TEMPLATE = 0x0080 
 HTMLDLG_VERIFY = 0x0100 
 
-def browseableMessage(message,title=None):
+def browseableMessage(message,title=None , isHtml=False):
 	"""Present a message to the user.
 	The message will be presented in an HTML document so that the user can read it with browse mode.
 	@param message: The message in either html or text.
 	@type message: str
 	@param title: The title for the message.
 	@type title: str
+	@param isHtml: Whether the message is html
+	@type isHtml: boolean
 	"""
 	htmlFileName  = os.path.realpath( 'message.html' )
 	if not os.path.isfile(htmlFileName ): 
@@ -48,7 +50,11 @@ def browseableMessage(message,title=None):
 	windll.urlmon.CreateURLMonikerEx(0, unicode( htmlFileName ) , byref(moniker), URL_MK_UNIFORM)
 	if not title:
 		title = _("NVDA Message")
-	dialogString = "{title};{message}".format( title=title , message=message ) 
+	if not isHtml:
+		isHtmlArgument = "false"
+	else:
+		isHtmlArgument = "true"
+	dialogString = "{isHtml};{title};{message}".format( isHtml = isHtmlArgument , title=title , message=message ) 
 	log.debugWarning("dialog String = {}".format( dialogString ) )
 	dialogArguements = automation.VARIANT( dialogString )
 	gui.mainFrame.prePopup() 

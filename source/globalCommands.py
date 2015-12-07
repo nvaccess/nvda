@@ -1203,20 +1203,30 @@ class GlobalCommands(ScriptableObject):
 		for field in info.getTextWithFields(formatConfig):
 			if isinstance(field,textInfos.FieldCommand) and isinstance(field.field,textInfos.FormatField):
 				formatField.update(field.field)
-		text=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig) if formatField else None
-		if text:
-			textList.append(text)
-
-		if not textList:
-			# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
-			ui.message(_("No formatting information"))
-			return
 
 		if scriptHandler.getLastScriptRepeatCount()==0:
+			text=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig) if formatField else None
+			if text:
+				textList.append(text)
+
+			if not textList:
+			# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
+				ui.message(_("No formatting information"))
+				return
+				
 			ui.message(" ".join(textList))
 		else:
+			text=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig , separator="\n") if formatField else None
+			if text:
+				textList.append(text)
+
+			if not textList:
+			# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
+				ui.message(_("No formatting information"))
+				return
+							
 			# Translators: title for font information dialog.
-			ui.browseableMessage( ("<P>%s</P>" %"</P><P>".join(textList) ) , _("font") )
+			ui.browseableMessage( ("\n".join(textList) ) , _("font") )
 	# Translators: Input help mode message for report formatting command.
 	script_reportFormatting.__doc__ = _("Reports formatting info for the current review cursor position within a document, pressing the keystroke twice presents the information in browse mode")
 	script_reportFormatting.category=SCRCAT_TEXTREVIEW

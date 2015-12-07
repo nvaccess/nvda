@@ -1,6 +1,5 @@
 
 <!doctype html>
-<!-- saved from url=(0016)http://localhost -->
 <HTML style="width : 350; height: 300">
 <HEAD>
 <TITLE></TITLE>
@@ -17,10 +16,15 @@ function windowOnLoad() {
 	var strArgs = window.dialogArguments;
 	var args = new Array();
 	if (strArgs)
-		args = strArgs.split(";",2);
-	if (args.length == 2){
-		document.title= args[0];
-		messageID.innerHTML= args[1];
+		args = strArgs.split(";",3);
+	if (args.length == 3){
+		document.title= args[1];
+		if ( args[0] == "true") {
+			messageID.innerHTML= args[2];
+		}
+		else if ( args[0] == "false") {
+			textID.innerText= args[2];
+		}
 	}
 } 
 //-->
@@ -28,5 +32,6 @@ function windowOnLoad() {
 </HEAD>
 <BODY tabindex='-1' id='main_body' LANGUAGE=javascript onload="return windowOnLoad()" onkeypress="return escapeKeyPress()" >
 <div id=messageID></div>
+<pre id=textID></pre>
 </body>
 </html>
