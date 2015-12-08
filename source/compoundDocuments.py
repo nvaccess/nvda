@@ -20,44 +20,30 @@ import review
 
 class CompoundTextInfo(textInfos.TextInfo):
 
-	def _getObjectPosition(self, obj):
-		indexes = []
-		rootObj = self.obj.rootNVDAObject
-		while obj and obj != rootObj:
-			indexes.insert(0, obj.indexInParent)
-			obj = obj.parent
-		return indexes
-
-	def compareEndPoints(self, other, which):
-		if which in ("startToStart", "startToEnd"):
-			selfTi = self._start
-			selfObj = self._startObj
-		else:
-			selfTi = self._end
-			selfObj = self._endObj
-		if which in ("startToStart", "endToStart"):
-			otherTi = other._start
-			otherObj = other._startObj
-		else:
-			otherTi = other._end
-			otherObj = other._endObj
-
-		if selfObj == otherObj:
-			# Same object, so just compare the two TextInfos normally.
-			return selfTi.compareEndPoints(otherTi, which)
-
-		# Different objects, so we have to compare the hierarchical positions of the objects.
-		return cmp(self._getObjectPosition(selfObj), other._getObjectPosition(otherObj))
+	def _makeRawTextInfo(self, obj, position):
+		return obj.makeTextInfo(position)
 
 	def _normalizeStartAndEnd(self):
-		if self._start.isCollapsed and self._startObj != self._endObj:
-			# The only time start will be collapsed when start and end aren't the same is if it is at the end of the object.
-			# This is equivalent to the start of the next object.
+		if (self._start.isCollapsed and self._startObj != self._endObj
+				and self._start.compareEndPoints(self._makeRawTextInfo(self._startObj, textInfos.POSITION_ALL), "endToEnd") == 0):
+			# Start it is at the end of its object.
+			# This is equivalent to the start of the next content.
 			# Aside from being pointless, we don't want a collapsed start object, as this will cause bogus control fields to be emitted.
-			obj = self._startObj.flowsTo
-			if obj:
-				self._startObj = obj
-				self._start = obj.makeTextInfo(textInfos.POSITION_FIRST)
+			try:
+				self._start, self._startObj = self._findNextContent(self._startObj)
+			except LookupError:
+				pass
+
+		if (self._end.isCollapsed and self._endObj != self._startObj
+				and self._end.compareEndPoints(self._makeRawTextInfo(self._endObj, textInfos.POSITION_FIRST), "startToStart") == 0):
+			# End is at the start of its object.
+			# This is equivalent to the end of the previous content.
+			# Aside from being pointless, we don't want a collapsed end object, as this will cause bogus control fields to be emitted.
+			try:
+				self._end, self._endObj = self._findNextContent(self._endObj, moveBack=True)
+				self._end.move(textInfos.UNIT_OFFSET, 1)
+			except LookupError:
+				pass
 
 		if self._startObj == self._endObj:
 			# There should only be a single TextInfo and it should cover the entire range.
@@ -66,9 +52,9 @@ class CompoundTextInfo(textInfos.TextInfo):
 			self._endObj = self._startObj
 		else:
 			# start needs to cover the rest of the text to the end of its object.
-			self._start.setEndPoint(self._startObj.makeTextInfo(textInfos.POSITION_ALL), "endToEnd")
+			self._start.setEndPoint(self._makeRawTextInfo(self._startObj, textInfos.POSITION_ALL), "endToEnd")
 			# end needs to cover the rest of the text to the start of its object.
-			self._end.setEndPoint(self._endObj.makeTextInfo(textInfos.POSITION_ALL), "startToStart")
+			self._end.setEndPoint(self._makeRawTextInfo(self._endObj, textInfos.POSITION_FIRST), "startToStart")
 
 	def setEndPoint(self, other, which):
 		if which == "startToStart":
@@ -91,16 +77,14 @@ class CompoundTextInfo(textInfos.TextInfo):
 
 	def collapse(self, end=False):
 		if end:
-			if self._end.compareEndPoints(self._endObj.makeTextInfo(textInfos.POSITION_ALL), "endToEnd") == 0:
+			if self._end.compareEndPoints(self._makeRawTextInfo(self._endObj, textInfos.POSITION_ALL), "endToEnd") == 0:
 				# The end TextInfo is at the end of its object.
-				# The end of this object is equivalent to the start of the next.
+				# The end of this object is equivalent to the start of the next content.
 				# As well as being silly, collapsing to the end of  this object causes say all to move the caret to the end of paragraphs.
-				# Therefore, collapse to the start of the next instead.
-				obj = self._endObj.flowsTo
-				if obj:
-					self._endObj = obj
-					self._end = obj.makeTextInfo(textInfos.POSITION_FIRST)
-				else:
+				# Therefore, collapse to the start of the next content instead.
+				try:
+					self._end, self._endObj = self._findNextContent(self._endObj)
+				except LookupError:
 					# There are no more objects, so just collapse to the end of this object.
 					self._end.collapse(end=True)
 			else:
@@ -136,14 +120,20 @@ class CompoundTextInfo(textInfos.TextInfo):
 	def _get_pointAtStart(self):
 		return self._start.pointAtStart
 
+	def _isObjectEditableText(self, obj):
+		return obj.role in (controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_EDITABLETEXT)
+
 	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
-		role = obj.role
-		if ignoreEditableText and role in (controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_EDITABLETEXT):
+		if ignoreEditableText and self._isObjectEditableText(obj):
 			# This is basically just a text node.
 			return None
-		field = textInfos.ControlField()
-		field["role"] = obj.role
+		role = obj.role
 		states = obj.states
+		if role == controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:
+			# Named link destination, not a link that can be activated.
+			return None
+		field = textInfos.ControlField()
+		field["role"] = role
 		# The user doesn't care about certain states, as they are obvious.
 		states.discard(controlTypes.STATE_EDITABLE)
 		states.discard(controlTypes.STATE_MULTILINE)
@@ -161,21 +151,6 @@ class CompoundTextInfo(textInfos.TextInfo):
 			field["table-rownumber"] = obj.rowNumber
 			field["table-columnnumber"] = obj.columnNumber
 		return field
-
-	def _iterTextWithEmbeddedObjects(self, text, ti, fieldStart, textLength=None):
-		if textLength is None:
-			textLength = len(text)
-		chunkStart = 0
-		while chunkStart < textLength:
-			try:
-				chunkEnd = text.index(u"\uFFFC", chunkStart)
-			except ValueError:
-				yield text[chunkStart:]
-				break
-			if chunkStart != chunkEnd:
-				yield text[chunkStart:chunkEnd]
-			yield ti.getEmbeddedObject(fieldStart + chunkEnd)
-			chunkStart = chunkEnd + 1
 
 	def __eq__(self, other):
 		return self._start == other._start and self._startObj == other._startObj and self._end == other._end and self._endObj == other._endObj
@@ -253,6 +228,14 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 	def _get_text(self):
 		return "".join(ti.text for ti in self._getTextInfos())
 
+	def _getFirstEmbedIndex(self, info):
+		if info._startOffset == 0:
+			return 0
+		# Get the number of embeds before the start.
+		# The index is 0 based, so this is the index of the first embed after start.
+		text = info._getTextRange(0, info._startOffset)
+		return text.count(u"\uFFFC")
+
 	def getTextWithFields(self, formatConfig=None):
 		# Get the initial control fields.
 		fields = []
@@ -264,25 +247,61 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 				fields.insert(0, textInfos.FieldCommand("controlStart", field))
 			obj = obj.parent
 
+		embedIndex = None
 		for ti in self._getTextInfos():
-			fieldStart = 0
-			for field in ti.getTextWithFields(formatConfig=formatConfig):
+			for field in ti._iterTextWithEmbeddedObjects(True, formatConfig=formatConfig):
 				if isinstance(field, basestring):
-					textLength = len(field)
-					for chunk in self._iterTextWithEmbeddedObjects(field, ti, fieldStart, textLength=textLength):
-						if isinstance(chunk, basestring):
-							fields.append(chunk)
-						else:
-							controlField = self._getControlFieldForObject(chunk, ignoreEditableText=False)
-							controlField["alwaysReportName"] = True
-							fields.extend((textInfos.FieldCommand("controlStart", controlField),
-								u"\uFFFC",
-								textInfos.FieldCommand("controlEnd", None)))
-					fieldStart += textLength
-
+					fields.append(field)
+				elif isinstance(field, int): # Embedded object
+					if embedIndex is None:
+						embedIndex = self._getFirstEmbedIndex(ti)
+					else:
+						embedIndex += 1
+					field = ti.obj.getChild(embedIndex)
+					controlField = self._getControlFieldForObject(field, ignoreEditableText=False)
+					controlField["alwaysReportName"] = True
+					fields.extend((textInfos.FieldCommand("controlStart", controlField),
+						u"\uFFFC",
+						textInfos.FieldCommand("controlEnd", None)))
 				else:
 					fields.append(field)
 		return fields
+
+	def _findNextContent(self, origin, moveBack=False):
+		obj = origin.flowsFrom if moveBack else origin.flowsTo
+		if not obj:
+			raise LookupError
+		ti = obj.makeTextInfo(textInfos.POSITION_LAST if moveBack else textInfos.POSITION_FIRST)
+		return ti, obj
+
+	def _getObjectPosition(self, obj):
+		indexes = []
+		rootObj = self.obj.rootNVDAObject
+		while obj and obj != rootObj:
+			indexes.insert(0, obj.indexInParent)
+			obj = obj.parent
+		return indexes
+
+	def compareEndPoints(self, other, which):
+		if which in ("startToStart", "startToEnd"):
+			selfTi = self._start
+			selfObj = self._startObj
+		else:
+			selfTi = self._end
+			selfObj = self._endObj
+		if which in ("startToStart", "endToStart"):
+			otherTi = other._start
+			otherObj = other._startObj
+		else:
+			otherTi = other._end
+			otherObj = other._endObj
+
+		if selfObj == otherObj:
+			# Same object, so just compare the two TextInfos normally.
+			return selfTi.compareEndPoints(otherTi, which)
+
+		# Different objects, so we have to compare the hierarchical positions of the objects.
+		return cmp(self._getObjectPosition(selfObj), other._getObjectPosition(otherObj))
 
 	def expand(self, unit):
 		if unit == textInfos.UNIT_READINGCHUNK:

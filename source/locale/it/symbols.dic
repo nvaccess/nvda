@@ -38,6 +38,7 @@ negative number	meno	none	norep
 \r	ritorno a capo	char
  	spazio	char
  	spazio	char	# no-break space
+\\_	\_	some	always	#Per tags Loquendo
 
 # Standard punctuation/symbols
 !	punto esclamativo	all
@@ -48,6 +49,7 @@ $	dollari	all	norep
 €	euro	all	norep
 ¢	Cents	all	norep
 ¥	Yen	all	norep
+₹	Rupia	some	norep
 %	percento	some	norep
 &	and	some	norep
 '	apostrofo	all
@@ -66,22 +68,21 @@ $	dollari	all	norep
 =	uguale	some	norep
 ?	punto di domanda	all
 @	chiocciola	some
-[	aperta parentesi quadra	most
-]	chiusa parentesi quadra	most
-\\_	\_	some	always	#Per tags Loquendo
+[	aperta quadra	most
+]	chiusa quadra	most
 \\	controbarra	most
 ^	accento circonflesso	most
 _	sottolineato	most
 `	accento grave	most
-{	aperta parentesi graffa	most
-}	chiusa parentesi graffa	most
+{	aperta graffa	most
+}	chiusa graffa	most
 |	barra verticale	most
 ~	tilde	most
 
 # Other characters
 •	puntato	some
-…	punto punto punto	some	always
-...	punto punto punto	some	always
+…	punto punto punto	all	always
+...	punto punto punto	all	always
 	puntato	some
 “	aperte virgolette	most
 ”	chiuse virgolette	most
@@ -99,13 +100,13 @@ _	sottolineato	most
 ◦	puntato	some
 ➔	freccia destra	some
 §	paragrafo	all
-°	gradi	all	always
+°	gradi	some
 «	aperte doppie virgolette
 »	chiuse doppie virgolette
 µ	micro	some
-¹	superscript 1	some
-²	superscript 2	some
-³	superscript 3	some
+¹	1 apice	some
+²	2 apice	some
+³	3 apice	some
 ®	registered	some
 ™	Trademark	some
 ©	Copyright	some
@@ -116,15 +117,52 @@ _	sottolineato	most
 →	freccia destra	some
 ✓	segno di spunta	some
 ✔	segno di spunta	some
-∃	esiste	some
-∈	appartenente a	some
-⊆	contenuto o uguale a	some
-≤	minore o uguale di	some
-≥	maggiore o uguale di	some
-≡	equivale	some
-∧	and	some
-∨	or	some
+#Mathematical Operators U+2200 to U+220F
+
+∀	per ogni 	none
+∁	Complemento	none
+∂	derivata parziale	none
+∃	esiste	none
+∄	non esiste	none
+∅	Insieme Vuoto	none
+∆	incremento	none
+∇	nabla	none
+∈	appartenente a	none
+∉	non appartiene	none
+∊	piccolo simbolo di appartenenza	none
+∋	contiene come membro	none
+∌	non contiene come membro	none
+∍	piccolo contiene come membro	none
+∎	fine della dimostrazione	none
+∏	prodotto n-ario	none
+
+# Miscellaneous Mathematical Operators
+
+∑	sommatoria n-aria	none
+√	radice quadrata	none
+∛	RADICE CUBICA	none
+∜	RADICE QUARTA	none
+∝	PROPORZIONALE A	none
+∞	INFINITO	none
+∟	ANGOLO RETTO	none
+∠	ANGOLO	none
+∥	PARALLELO A	none
+∦	NON PARALLELO A	none
+∧	AND LOGICO	none
+∨	OR LOGICO	none
+∩	INTERSEZIONE	none
+∪	UNIONE	none
+∫	INTEGRALE	none
+∴	IMPLICA	none
+∵	perché	none
+∶	STA A	none
+∷	PROPORZIONE	none
+≤	MINORE O UGUALE di	none
+≥	MAGGIORE O UGUALE di	none
+⊂	Sottoinsieme di	none
+⊃	sovrainsieme di	none
+⊆	Contenuto o uguale a	none
+⊇	sovrainsieme di o uguale a	none
 ¬	not	some
-⇒	implica	some
 ⟺	se e solo se	some
-	freccia destra	some
+

@@ -540,7 +540,7 @@ MathPlayer je na voljo kot brezplačen prenos s: http://www.dessci.com/en/produc
 
 NVDA podpira naslednje tipe matematične vsebine:
 - MathML v Mozilli Firefox in Internet Explorerju.
-- Design Science MathType v Microsoftovem Wordu and PowerPointu.
+- Design Science MathType v Microsoftovem Wordu and PowerPointu. Da bo ta funkcija pravilno delovala, morate v sistem namestiti tudi MathType. Omejena različica bo zadostovala.
 - MathML V Adobovem Readerju. Opozarjamo, da to še ni uraden standard, tako trenutno ni na voljo nobenega primernega programa, kjer bi se lahko ustvarila taka vsebina.
 -
 
@@ -586,7 +586,7 @@ NVDA pozna posebej prirejene ukaze za nekatere programe, da omogoči lažjo izve
 | Postavi glave stolpca | NVDA+shift+c | Enojni pritisk pove NVDA, da je to prva celica v vrstici, ki vsebuje glave stolpca. Tako jih mora NVDA samodejno naznaniti, ko se premikamo med njimi v spodnjih vrsticah. Dvojni pritisk bo brisal trenutno nastavitev. |
 | Postavi glave vrstice | NVDA+shift+r | Enojni pritisk pove NVDA, da je to prva celica v stolpcu, ki vsebuje glave vrstice. Tako jih mora NVDA samodejno naznaniti, ko se premikamo med njimi v drugih stolpcih. Dvojni pritisk bo brisal trenutno nastavitev. |
 | Sporoči komentar | NVDA+alt+c | Sporoči comentar nad trenutno celico, če obstaja. |
-| pogovorno okno Seznama Elementov | NVDA+f7 | odpre pogovorno okno Seznama Elementov prikazujoč grafikone, celice s komentarji ali celice s formulami. |
+| pogovorno okno Seznama Elementov | NVDA+f7 | odpre pogovorno okno Seznama Elementov prikazujoč grafikone, celice s komentarji, celice s formulami ali delovne liste. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -1104,6 +1104,7 @@ V NVDA lahko nastavite poročanje za:
 - Poravnavo Besedila
 - Barve
 - Uredniške popravke
+- Poudarke
 - Slog Besedila
 - Napake v črkovanju
 - Številke Strani
@@ -1172,12 +1173,23 @@ Jezik, čigar izgovorjavo se trenutna ureja, je prikazan v naslovu pogovornega o
 Opozarjamo, da se to pogovorno okno zanaša na "Zaupaj jeziku osebe za procesiranje simbolov in znakov", možnost, ki se nahaja v [pogovornem oknu Nastavitev Glasu #VoiceSettings]; tako NVDA uporablja jezik osebe namesto globalne nastavitve za jezik, ko to možnost omogočite.
 
 Za menjavo simbola, ga najprej izberite s seznama simbolov.
-Polje zamenjave vam omogoča spremembo besedila, ki naj se izgovori ob simbolu.
-Z uporabo polja za nivoje določite najnižji nivo, kjer se mora simbol izgovoriti.
+
+- Polje zamenjave vam omogoča spremembo besedila, ki naj se izgovori ob simbolu.
+- Z uporabo polja za nivoje določite najnižji nivo, kjer se mora simbol izgovoriti.
+- Spustni seznam "Pošlji aktualen simbol na sintezo" določa, kdaj bo NVDA obravnavo izgovorjave dotičnega simbola prepustila izbrani govorni sintezi (namesto podatkov iz polja Zamenjave.)
+To je uporabno takrat, ko je simbol vzrok premora, ki ga naredi sinteza, ali spremembe modulacije glasu pri osebi.
+Na primer vejica (,) je vzrok, za premor, ki ga naredi sinteza.
+Na voljo so 3 možnosti:
+ - nikoli: Nikoli ne pošlji trenutnega simbola na sintezo.
+ - vedno: Vedno pošlji aktualen simbol na sintezo.
+ - samo pod nivojem simbola: Pošlji aktualen simbol samo, ko je nivo simbola postavljen niže kot je nastavljen nivo posameznega simbola.
+ Na primer, to lahko uporabite tako, da se bo simbol izgovoril na višjih nivojih brez premorov, medtem, ko se bodo s premorom naznanili na nižjih nivojih.
+ -
+-
 
 Če želite dodati nov simbol, pritisnite gumb Dodaj.
 V pogovorno okno, ki se prikaže, vnesite željeni simbol in pritisnite gumb V redu.
-Nato, kot velja za druge simbole, vnesite zamenjavo in najnižji nivo izgovorjave.
+Nato, kot velja za druge simbole, izpolnite polja tega simbola.
 
 Simbol, ki ste ga prej dodali, lahko odstranite tako, da pritisnete gumb Odstrani.
 
@@ -1754,15 +1766,6 @@ NVDA pozna naslednje možnosti ukazne vrstice:
 | None | --no-sr-flag  | Ne zamenjaj stanja globalne sistemske zastavice za bralnik zaslona. |
 | None | --install | Namesti NVDA (na novo nameščeno kopijo NVDA tudi zažene). |
 | None | --install-silent | Tiho namesti NVDA (na novo nameščene kopije NVDA ne zažene). |
-
-++ Napredno Nastavljanje Izgovorjave Simbolov ++
-V NVDA je možno nastaviti izgovorjavo ločil in drugih simbolov glede na to, kaj omogočajo možnosti v pogovornem oknu [Izgovorjave ločil/simbolov. #SymbolPronunciation]
-Na primer vi lahko določite, kako naj se symbol za vrstico pošlje k sintezi (npr. naj sinteza naredi premor ali naj uporabi modulacijo glasu.), lahko pa dodate tudi nove, druge simbole, ki niso vključeni v NVDA.
-
-Če želite to storiti, morate urediti datoteko, kjer so shranjene informacije o izgovorjavi simbolov v vašem imeniku z NVDA nastavitvami.
-Datoteka se imenuje symbols-xx.dic, kjer  xx predstavlja kodo jezika.
-Oblika te datoteke je dokumentirana v razdelku izgovorjave simbolov v navodilih za razvijalce, ki so dostopna v [razdelku namenjenemu razvijalcem NVDA spletišča.  http://community.nvda-project.org/wiki/Development]
-Vseeno pa je uporabnikom onemogočeno definiranje kompleksnih simbolov.
 
 + Druge Informacije +
 Če potrebujete več informacij ali pomoč pri uporabi NVDA, prosimo, obiščite spletno mesto NVDA na NVDA_URL.

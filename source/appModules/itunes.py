@@ -1,3 +1,12 @@
+#appModules/itunes.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2009-2015 NV Access Limited
+
+"""App module for iTunes
+"""
+
 import appModuleHandler
 from comtypes import COMError
 import controlTypes
@@ -8,6 +17,7 @@ import treeInterceptorHandler
 import api
 import eventHandler
 import NVDAObjects.IAccessible
+from NVDAObjects.IAccessible import webKit
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -23,14 +33,18 @@ class AppModule(appModuleHandler.AppModule):
 				# iTunes seems to put some controls inside a button.
 				# Don't report this weirdness to the user.
 				obj.isPresentableFocusAncestor=False
+			elif obj.windowClassName=="iTunesWebViewControl" and obj.role==controlTypes.ROLE_DOCUMENT:
+				# This wrapper should never be seen by the user.
+				obj.shouldAllowIAccessibleFocusEvent = False
+				obj.presentationType = obj.presType_layout
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClassName=obj.windowClassName
 		role=obj.role
 		if windowClassName in ('iTunesList','iTunesSources','iTunesTrackList') and role in (controlTypes.ROLE_LISTITEM,controlTypes.ROLE_TREEVIEWITEM):
 			clsList.insert(0, ITunesItem)
-		elif windowClassName=="iTunesWebViewControl" and role==controlTypes.ROLE_DOCUMENT:
-			clsList.insert(0,WebKitWrapper)
+		elif webKit.Document in clsList:
+			clsList.insert(0, WebKitDocument)
 		elif windowClassName=="iTunes" and obj.IAccessibleRole==oleacc.ROLE_SYSTEM_CLIENT:
 			clsList.insert(0, TopLevelClient)
 
@@ -64,17 +78,14 @@ class ITunesItem(NVDAObjects.IAccessible.IAccessible):
 		# Thankfully, the list items don't.
 		return self.hasFocus
 
-class WebKitWrapper(NVDAObjects.IAccessible.IAccessible):
-	"""An iTunes wrapper around a WebKit document.
-	"""
-	# This wrapper should never be seen by the user.
-	shouldAllowIAccessibleFocusEvent = False
-	presentationType = NVDAObjects.IAccessible.IAccessible.presType_layout
+class WebKitDocument(webKit.Document):
 
 	def event_stateChange(self):
 		# iTunes has indicated that a page has died and been replaced by a new one.
+		# #5191: This is actually fired on the "iTunesWebViewControl" parent,
+		# but AccessibleObjectFromEvent on this window returns the WebKit document as of iTunes 12.
 		focus = api.getFocusObject()
-		if not winUser.isDescendantWindow(self.windowHandle, focus.windowHandle):
+		if self.windowHandle != focus.windowHandle:
 			return
 		# The new page has the same event params, so we must bypass NVDA's IAccessible caching.
 		obj = NVDAObjects.IAccessible.getNVDAObjectFromEvent(focus.windowHandle, winUser.OBJID_CLIENT, 0)

@@ -1,5 +1,6 @@
 ﻿Guía del Usuario de NVDA NVDA_VERSION
-	
+Guía del Usuario de NVDA NVDA_VERSION
+
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Referencia Rápida de Órdenes 
@@ -369,7 +370,7 @@ Las siguientes órdenes están disponibles para revisión de texto:
 | Mover al final de la línea en revisión | shift+3 teclado numérico | NVDA+fin | no | Mueve el cursor de revisión al final de la línea actual de texto |
 | Leer todo con revisión | Más teclado numérico | NVDA+shift+a | deslizar con 3 dedos abajo (modo texto) | Lee desde la posición actual del cursor de revisión, moviéndolo según baja |
 | copiar desde cursor de revisión | NVDA+f9 | NVDA+f9 | no | Comienza el copiado de texto desde la posición actual del cursor de revisión. La copia actual no se lleva a cabo hasta que digas a NVDA dónde copiar |
-| Copiar a cursor de revisión | NVDA+f10 | NVDA+f10 | no | Copia desde la posición del cursor de revisión actualmente fijada con Copiar desde cursor de revisión, a la actual posición del cursor de revisión.  Después de pulsar esta tecla, el texto se copiará al portapapeles de Windows |
+| Copiar a cursor de revisión | NVDA+f10 | NVDA+f10 | no | Copia desde la posición fijada anteriormente con Copiar desde cursor de revisión hasta e incluyendo la actual posición del cursor de revisión.  Después de pulsar esta tecla, el texto se copiará al portapapeles de Windows |
 | Anunciar formato del texto | NVDA+f | NVDA+f | no | Informa del formato del texto donde esté situado actualmente el cursor de revisión |
 %kc:endInclude
 
@@ -540,7 +541,7 @@ MathPlayer está disponible como una descarga gratuita desde: http://www.dessci.
 
 NVDA soporta los siguientes tipos de contenidos matemáticos:
 - MathML en Mozilla Firefox y Microsoft Internet Explorer.
-- Design Science MathType en Microsoft Word y PowerPoint.
+- Design Science MathType en Microsoft Word y PowerPoint. MathType necesita estar instalado para que esto funcione. La versión trial es suficiente.
 - MathML en Adobe Reader. Ten en cuenta que esto no es un estándar official aún, así que no hay actualmente software disponible al público que pueda producir este contenido.
 -
 
@@ -569,24 +570,87 @@ Por favor consulta la documentación de MathPlayer para información adicional.
 
 Cuando desees volver al documento, simplemente pulsa la tecla escape.
 
-+ Órdenes de NVDA Específicas para Aplicación +
-NVDA proporciona sus propias órdenes extra para algunas aplicaciones para hacer más fáciles ciertas tareas o para proporcionar acceso a funcionalidad que de otro modo no está accesible para los usuarios de lector de pantalla.
++ Características Específicas para Aplicación +
+NVDA proporciona sus propias características extra para algunas aplicaciones para hacer más fáciles ciertas tareas o para proporcionar acceso a funcionalidad que de otro modo no está accesible para los usuarios de lector de pantalla.
 
 ++ Microsoft Word ++
+
++++ Lectura Automática de Encabezados de Columna y Fila +++
+NVDA podrá anunciar automáticamente  el emcabezado apropiado de fila y columna al navegar a través de tablas en Microsoft Word.
+Esto requiere primero que la opción Anunciar  Encabezados de Filas y columnas en el diálogo de NVDA Formateado de Documentos esté activada.
+En segundo lugar, NVDA necesita saber qué fila o columna contiene el encabezado en cualquier tabla dada.
+Después de moverse a la primera celda en la columna o fila que contenga los encabezados, utiliza una de las órdenes siguientes:
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| Anunciar comentario actual | NVDA+Alt+c | Anuncia el texto del comentario en la posición del Cursor del Sistema. |
-| Fijar encabezado de columnas | NVDA+shift+c | Pulsando esto una vez dice a NVDA que esta es la primera celda de encabezado en la fila que contiene encabezados de columna, que debería ser anunciada automáticamente al moverte entre columnas bajo esta fila. Pulsando dos veces quitará esta opción. |
-| Fijar encabezado de filas | NVDA+shift+r | Pulsando esto una vez dice a NVDA que esta es la primera celda de encabezado en la columna que contiene encabezados de fila, que debería ser anunciado automáticamente cuando te desplaces entre las filas después de esta columna. Pulsando dos veces eliminará esta opción. |
+| Fijar encabezados de columna | NVDA+shift+c | Pulsando esto una vez dice a NVDA que esta es la primera celda de encabezado en la fila que contiene encabezado de columna, que debería ser anunciada automáticamente al moverse entre columnas por debajo de esta fila. Pulsando dos veces eliminarás la opción. | 
+| Fijar encabezados de fila | NVDA+shift+r | Pulsando esto una vez dices a NVDA que esta es la primera celda de encabezado en la columna que contiene encabezados de fila, la cual debería aunuciarse automáticamente al moverse entre filas después de esta columna. Pulsando dos veces eliminarás la opción. | 
 %kc:endInclude
+Estas opciones se almacenarán en el documento como marcadores compatibles con otros lectores de pantalla tales como Jaws.
+Esto significa que otros usuarios de lectores de pantalla que abran este documento más tarde tendrán automáticamente los encabezados de fila y columna ya puestos. 
 
++++ Modo Exploración en Microsoft Word +++
+De manera similar a la web, el modo exploración puede utilizarse en Microsoft Word para permitirte utilizar características tales como navegación rápida y la Lista de Elementos
+%kc:beginInclude
+Para activar o desactivar el modo Exploración en Microsoft Word, pulsa NVDA+espacio.
+%kc:endInclude
+Para información adicional acerca del modo Exploración y la Navegación Rápida, consulta la [sección Modo Exploración #BrowseMode].
+
+++++ La Lista de Elementos ++++
+%kc:beginInclude
+Mientras se esté en modo Exploración en Microsoft Word, puedes acceder a la Lista de Elementos pulsando NVDA+f7.
+%kc:endInclude
+La Lista de Elementos puede listar encabezados, enlaces y anotaciones (las cuales incluyen comentarios y seguimiento de cambios).
+
++++ Anunciado de Comentarios +++
+%kc:beginInclude
+Para anunciar cualquier comentario en la posición actual del cursor de edición, pulsa NVDA+alt+c.
+%kc:endInclude
+ Todos los comentarios para el documento con otro seguimiento de cambios también pueden listarse en la Lista de Elementos de NVDA al seleccionar Anotaciones según se teclea.
+ 
 ++ Microsoft Excel ++
+
++++ Lectura Automática de Encabezado de Columna y fila +++
+NVDA podrá anunciar automáticamente los encabezados apropiados de fila y columna al navegar a través de las hojas de cálculo de Excel.
+Primeramente esto requiere que la opción Anunciar Encabezados de Fila y Columna de tabla en el diálogo de NVDA Formateado de documentos esté activado.
+En segundo lugar, NVDA necesita saber cuál fila o columna contiene los encabezados.
+Después de moverse a la primera celda en la columna o fila que contenga los encabezados, utiliza una de las siguientes órdenes:
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
 | Fijar encabezado de columnas | NVDA+shift+c | Al pulsar esto una vez le dice a NVDA que es la primera celda de encabezado de la fila que contiene los encabezados de columna, que debería ser anunciado automáticamente cuando te desplaces entre las columnas por debajo de esta fila. Pulsando dos veces se eliminará la opción. | 
 | Fijar encabezado de filas | NVDA+shift+r | Al pulsar esto una vez le dice a NVDA que es la primera celda del encabezado de la columna que contiene los encabezados de fila, que debería ser anunciado automáticamente cuando te desplaces entre las filas después de esta columna. Pulsando dos veces eliminarás la opción. | 
-| Anunciar comentario | NVDA+alt+c | Anuncia el comentario en la celda actual si lo hay. |
-| Diálogo Lista de Elementos | NVDA+f7 | abre el diálogo Lista de Elementos mostrando gráficos, celdas con comentarios, o celdas con fórmulas. |
+%kc:endInclude
+Estas opciones se almacenarán en el libro de trabajo como rangos de nombres definidos, compatibles con otros lectores de pantalla tales como Jaws.
+Esto significa que otros usuarios de lectores de pantalla que abran este libro de trabajo más tarde tendrán automáticamente los encabezados de fila y columna ya puestos. 
+
++++ La Lista de Elementos +++
+De modo similar a la web, NVDA tiene una Lista de Elementos para Microsoft Excel, que te permite listar y acceder a varios tipos diferentes de información.
+%kc:beginInclude
+Para acceder a la Lista de Elementos en Excel, pulsa NVDA+f7.
+%kc:endInclude
+Los diversos tipos de información disponible en la Lista de Elementos son:
+- Gráfico: esto lista todos los gráficos en el libro de trabajo.
+Seleccionando un gráfico y pulsando intro o el botón Mover A enfoca el gráfico para navegar y leer con las teclas de cursor.
+- Comentario: esto lista todas las celdas en el libro de trabajo que contengan comentarios. 
+La dirección de la celda junto con sus comentarios se muestra para cada celda. 
+Pulsando Intro o el botón Mover a cuando se esté sobre un comentario listado se moverá directamente a esa celda.
+- Fórmula: esto lista todas las celdas en el libro de trabajo que contengan una fórmula. 
+La dirección de la celda junto con su fórmula se muestra para cada celda.
+Pulsando Intro o el botón Mover A sobre una fórmula listada se moverá directamente a esa celda. 
+- Hoja: esto lista todas las hojas en el libro de trabajo. 
+Pulsando f2 cuando se esté sobre una hoja listada te permite renombrar la hoja. 
+Pulsando Intro o el botón Mover A mientras se esté sobre la hoja listada cambiará a esa hoja.
+-
+
++++ Anunciando Comentarios +++
+%kc:beginInclude
+Para anunciar cualquier comentario para la celda actualmente enfocada, pulsa NVDA+alt+c.
+%kc:endInclude
+Todos los comentarios para el libro de trabajo también pueden listarse en la Lista de Elementos de NVDA.
+
++++ Leyendo Celdas Protegidas +++
+Si un libro de trabajo ha sido protegido, podría no ser posible mover el foco a celdas en particular que hayan sido bloqueadas para edición.
+%kc:beginInclude
+Para permitir el movimiento a celdas bloqueadas, cambia a modo Exploración pulsando NVDA+espacio, y entonces utiliza las órdenes estándar de movimiento de Excel  tales como las teclas de cursor para moverte por todas las celdas en la hoja de cálculo actual.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -640,7 +704,7 @@ El cuadro de diálogo Opciones Generales se encuentra en el menú Preferencias.
 Contiene las siguientes opciones:
 
 ==== Idioma ====
-Un cuadro combinado que te permite seleccionar el idioma en que debería mostrarse la interface de usuario y los mensajes de NVDA. 
+Este es un cuadro combinado que te permite seleccionar el idioma en que debería mostrarse la interface de usuario y los mensajes de NVDA. 
 Hay muchos idiomas, no obstante la última elección en la lista es llamada "Windows". 
 Esta elección dirá a NVDA que utilice el idioma en el que Windows esté actualmente ajustado. 
 
@@ -1104,6 +1168,7 @@ Puedes configurar el anunciado de:
 - Alineación del texto
 - Colores
 - Revisiones del editor
+- Énfasis
 - Estilo del texto
 - Errores de ortografía
 - Números de página
@@ -1119,7 +1184,7 @@ Puedes configurar el anunciado de:
 - Citas
 - Puntos de referencia
 - Marcos
-- Cuando se puede hacer clic en algo
+- Cuando algo admite clic
 -
 
 Para conmutar estas  opciones desde cualquier lugar, por favor asigna gestos personalizados utilizando el [diálogo Gestos de Entrada #InputGestures].
@@ -1172,12 +1237,23 @@ El idioma cuya pronunciación de símbolo vaya a ser editada se mostrará en el 
 Ten en cuenta que este diálogo respeta la opción "Confiar en el Idioma de la voz al procesar símbolos y caracteres" que se encuentra en el [diálogo Opciones de Voz #VoiceSettings]; es decir, utiliza el idioma de la voz en lugar de la opción del idioma global de NVDA cuando esta opción esté habilitada.
 
 Para cambiar un símbolo, primero selecciónalo en la lísta de Símbolos.
-El campo Reemplazar te permite cambiar el texto que debería verbalizarse en lugar de este símbolo.
-Utilizando el campo Nivel, puedes ajustar el nivel más bajo del símbolo al cual este símbolo debería verbalizarse.
+
+- El campo Reemplazar te permite cambiar el texto que debería verbalizarse en lugar de este símbolo.
+- Utilizando el campo Nivel, puedes ajustar el nivel más bajo del símbolo al cual este símbolo debería verbalizarse.
+- El campo Enviar símbolo actual al sintetizador especifica cuando el propio símbolo (en contraposición con su reemplazo) debería enviarse al sintetizador.
+Esto es útil si el símbolo causa que el sintetizador haga una pausa o cambie la entonación de la voz.
+Por ejemplo, una coma causa que el sintetizador haga una pausa.
+Hay tres opciones:
+ - nunca: nunca envía el símbolo actual al sintetizador.
+ - Siempre: envía siempre el símbolo actual al sintetizador.
+ - sólo bajo Nivel de los símbolos: Envía el símbolo actual sólo si el nivel de voz de símbolo configurado es más bajo que el nivel puesto por este símbolo.
+ Por ejemplo, podrías utilizar esto tal que un símbolo tendrá su reemplazo verbalizado en niveles más altos sin pausar, mientras todavía esté indicado con una pausa en los niveles más bajos.
+ -
+-
 
 Puedes añadir símbolos nuevos pulsando el botón Añadir.
 En el diálogo que aparezca, introduce el símbolo y pulsa el botón Aceptar.
-Entonces, cambia el reemplazo y el nivel para el símbolo nuevo como lo harías para otros símbolos.
+Entonces, cambia los campos para el símbolo nuevo como lo harías para otros símbolos.
 
 Puedes eliminar un símbolo que añadiste anteriormente pulsando el botón Eliminar.
 
@@ -1563,7 +1639,7 @@ Porfavor mira la documentación de la pantalla para descripciones de dónde se p
 ++ Pantallas braille Baum/Humanware/APH ++
 Varias pantallas braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] y [APH http://www.aph.org/] están soportadas cuando se conecten a través del USB o del bluetooth.
 Estas incluyen:
-- Baum: SuperVario, PocketVario
+- Baum: SuperVario, PocketVario, VarioUltra (sólo Bluetooth), Pronto! (Sólo Bluetooth)
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
@@ -2027,23 +2103,23 @@ Con el fin de tener la mayor cantidad de información posible en una pantalla br
 
 || Abreviatura | Tipo de Control |
 | bt | botón |
-| cbo | cuadro combinado |
+| cc | cuadro combinado |
 | cv | casilla de verificación |
 | dlg | diálogo |
 | ce | campo de texto editable |
 | gra | gráfico |
 | cN | número de columna de tabla n, ej.: c1, c2. |
-| rN | número de fila de tabla n, ej.: r1, r2. |
-| hN | encabezado de nivel n, ej.: h1, h2. |
+| fN | número de fila de tabla n, ej.: r1, r2. |
+| enN | encabezado de nivel n, ej.: h1, h2. |
 | enl | enlace |
 | lst | lista |
 | enlv | enlace visitado |
 | mn | menú |
-| mnbar | barra de menú |
-| btn | botón de opción |
+| bmn | barra de menú |
+| bto | botón de opción |
 | tb | tabla |
-| tv | vista en árbol |
-| lv N | un elemento de vista en árbol que tiene un nivel jerárquico N|
+| vár | vista en árbol |
+| nv N | un elemento de vista en árbol que tiene un nivel jerárquico N|
 | ``-----`` | separador |
 
 Los siguientes indicadores de estado  también están definidos:
@@ -2100,15 +2176,6 @@ Seguidamente van las opciones de línea de órdenes para NVDA:
 | None | --no-sr-flag  | No cambia la bandera global de sistema del lector de pantalla |
 | None | --install | Se instala NVDA iniciando la nueva copia instalada |
 | None | --install-silent | Instala en silencio NVDA (No inicia la nueva copia instalada) |
-
-++ Personalización Avanzada de Pronunciación de Símbolos ++
-Es posible personalizar la pronunciación de la puntuación y otros símbolos más allá de lo que puede hacerse utilizando el [diálogo Pronunciación de Puntuación y símbolos #SymbolPronunciation].
-Por ejemplo, puedes especificar si el símbolo dibujado debería enviarse al sintetizador (ej. para causar una pausa o cambio en la entonación) y puedes añadir símbolos personalizados. 
-
-Para hacer esto, debes editar el fichero de información de pronunciación de símbolos en tu directorio de configuración de usuario de NVDA.
-El fichero se llama symbols-xx.dic, donde xx es el código de idioma.
-El formato de este fichero se documentó en la sección Symbol Pronunciation de la Guía de Desarrollo de NVDA, que está disponible desde [la sección de Desarrollo de la página web de NVDA http://community.nvda-project.org/wiki/Development].
-Por lo tanto, no es posible para los usuarios definir símbolos complejos. 
 
 + Información Adicional +
 Si requieres de información adicional o asistencia con respecto a NVDA, por favor visita el sitio Web de NVDA en NVDA_URL.

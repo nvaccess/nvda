@@ -14,9 +14,22 @@ import UIAHandler
 import browseMode
 import treeInterceptorHandler
 import cursorManager
+import aria
 from . import UIA
 
-class EdgeList(UIA):
+class EdgeNode(UIA):
+
+	def _get_role(self):
+		role=super(EdgeNode,self).role
+		ariaRole=self.UIAElement.currentAriaRole
+		for ariaRole in ariaRole.split():
+			newRole=aria.ariaRolesToNVDARoles.get(ariaRole)
+			if newRole:
+				role=newRole
+				break
+		return role
+
+class EdgeList(EdgeNode):
 
 	# non-focusable lists are readonly lists (ensures correct NVDA presentation category)
 	def _get_states(self):
@@ -26,7 +39,7 @@ class EdgeList(UIA):
 		return states
 
 
-class EdgeHTMLRootContainer(UIA):
+class EdgeHTMLRootContainer(EdgeNode):
 
 	shouldAllowUIAFocusEvent=True
 
@@ -493,7 +506,7 @@ class EdgeHTMLTreeInterceptor(cursorManager.ReviewCursorManager,browseMode.Brows
 			return False
 		return True
 
-class EdgeHTMLRoot(UIA):
+class EdgeHTMLRoot(EdgeNode):
 
 	treeInterceptorClass=EdgeHTMLTreeInterceptor
 

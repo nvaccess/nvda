@@ -1,4 +1,5 @@
 ﻿NVDA NVDA_VERSION Kullanıcı Rehberi
+NVDA NVDA_VERSION Kullanıcı Rehberi
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -540,7 +541,7 @@ MathPlayer uygulamasını aşağıdan ücretsiz olarak indirebilirsiniz: http://
 
 NVDA supports the following types of mathematical content:
 - MathML in Mozilla Firefox and Microsoft Internet Explorer.
-- Design Science MathType in Microsoft Word and PowerPoint.
+- Design Science MathType in Microsoft Word and PowerPoint. MathType needs to be installed in order for this to work. The trial version is sufficient..
 - MathML in Adobe Reader. Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
 -
 
@@ -569,24 +570,87 @@ Please see the MathPlayer documentation for further information.
 
 When you wish to return to the document, simply press the escape key.
 
-+ Uygulamaya Özgü NVDA Komutları +
-NVDA çeşitli işlemlerin yapılmasını kolaylaştırmak ya da ekran okuyucu kullanıcıları için erişilebilir olmayan işlevleri onlar için de ulaşılabilir kılmak için bazı uygulamalara özgü özel komutlar sağlamaktadır.
++ Uygulamaya Özgü Özellikler +
+NVDA çeşitli işlemlerin yapılmasını kolaylaştırmak ya da ekran okuyucu kullanıcıları için erişilebilir olmayan işlevleri onlar için de ulaşılabilir kılmak için bazı uygulamalara özgü ek olanaklar sağlamaktadır.
 
 ++ Microsoft Word ++
+
++++ Otomatik Sütun ve Satır Başlığı Okuma +++
+NVDA Microsoft Word'de, tablolarda dolaşılırken otomatik olarak satır ve sütun başlıklarını seslendirebilir.
+Bu öncelikle, NVDA Belge formatları iletişim kutusundaki Tablo Satır ve sütun başlıklarını bildir onay kutusunun işaretli olmasını gerektirir.
+İkinci olarak, NVDA'nın, tabloda hangi satır ya da sütunun başlık bilgisini içerdiğini bilmesi gerekir.
+Tabloda satır ya da sütun başlık bilgisini içeren hücreye geldikten sonra, aşağıdaki tuşlardan birini kullanın:
 %kc:beginInclude
 || Ad | Kısayol | Açıklama |
-| Mevcut açıklamayı oku | NVDA+Alt+c | İmlecin bulunduğu konumdaki açıklamayı okur. | 
-| Sütun başlıklarını ayarla | NVDA+shift+c | Bir kez basıldığında mevcut satır sütun başlığı olarak ayarlanır ve sütunlar arasında dolaşılırken ayarlanan satırdaki bilgi otomatik olarak seslendirilir. İki kez basıldığında ayar sıfırlanır. | 
-| Satır başlıklarını ayarla | NVDA+shift+r | Bir kez basıldığında mevcut sütun satır başlığı olarak ayarlanır ve satırlar arasında dolaşılırken ayarlanan sütundaki bilgi otomatik olarak seslendirilir. İki kez basıldığında ayar sıfırlanır. | 
+| Sütun başlıklarını ayarla | NVDA+shift+c | Bir kez basıldığında mevcut satır sütun başlığı olarak ayarlanır ve bu satırın altındaki sütunlar arasında dolaşılırken ayarlanan satırdaki bilgi otomatik olarak seslendirilir. İki kez basıldığında ayar sıfırlanır. | 
+| Satır başlıklarını ayarla | NVDA+shift+r | Bir kez basıldığında mevcut sütun satır başlığı olarak ayarlanır ve sütunun sağındaki satırlar arasında dolaşılırken ayarlanan sütundaki bilgi otomatik olarak seslendirilir. İki kez basıldığında ayar sıfırlanır. | 
 %kc:endInclude
+Bu ayarlar, belge içinde yer imi olarak kaydedilir ve JAWS gibi başka ekran okuyucu yazılımlarla uyumludur.
+Dolayısıyla, belge daha sonra başka ekran okuyucular aktifken açıldığında da başlık bilgilerine ulaşılabilir. 
 
++++ Microsoft Word'de Tarama Kipi +++
+Webde olduğu gibi, Microsoft Word için de Tek Harf Dolaşımı ve Öğe Listesine ulaşmanız için tarama kipi özelliği kullanılabilir.
+%kc:beginInclude
+Microsoft Word'de Tarama kipini açıp kapamak için, NVDA+Aralık tuşunu kullanın.
+%kc:endInclude
+Tarama kipi ve tek harf dolaşımı hakkında daha fazla bilgi için, [Tarama Kipi bölümüne #BrowseMode] bakın.
+
+++++ Öğe Listesi ++++
+%kc:beginInclude
+Microsoft Word'de tarama kipindeyken, öğe listesine NVDA+F7 tuşlarına basarak ulaşabilirsiniz.
+%kc:endInclude
+Öğe Listesi başlıkları, bağlantıları ve (yorumlar ve belgede yapılmış değişiklikleri içeren) açıklamaları listeleyebilir.
+
++++ Yorumların Bildirimi +++
+%kc:beginInclude
+İmleç konumundaki açıklamayı okumak için, NVDA+alt+c tuşlarına basın.
+%kc:endInclude
+ Belgedeki tüm değişiklik ve yorumlar, tür bölümünden Açıklama seçeneği tercih edilerek NVDA Öğe Listesi iletişim kutusunda da listelenebilir.
+ 
 ++ Microsoft Excel ++
+
++++ Otomatik Sütun ve Satır Başlığı Okuma +++
+NVDA Microsoft Excel çalışma sayfalarında, tablolarda dolaşılırken otomatik olarak satır ve sütun başlıklarını seslendirebilir.
+Bu öncelikle, NVDA Belge formatları iletişim kutusundaki Tablo Satır ve sütun başlıklarını bildir onay kutusunun işaretli olmasını gerektirir.
+İkinci olarak, NVDA'nın, tabloda hangi satır ya da sütunun başlık bilgisini içerdiğini bilmesi gerekir.
+Satır ya da sütun başlık bilgisini içeren hücreye geldikten sonra, aşağıdaki tuşlardan birini kullanın:
 %kc:beginInclude
 || Ad | Kısayol Tuşu | Tarif |
-| Sütun başlıklarını ayarla | NVDA+shift+c | Bir kez basıldığında mevcut satır sütun başlığı olarak ayarlanır ve sütunlar arasında dolaşılırken ayarlanan satırdaki bilgi otomatik olarak seslendirilir. İki kez basıldığında ayar sıfırlanır. | 
-| Satır başlıklarını ayarla | NVDA+shift+r | Bir kez basıldığında mevcut sütun satır başlığı olarak ayarlanır ve satırlar arasında dolaşılırken ayarlanan sütundaki bilgi otomatik olarak seslendirilir. İki kez basıldığında ayar sıfırlanır. | 
-| Açıklamayı oku | NVDA+Alt+c | Varsa imlecin bulunduğu hücredeki açıklamayı okur. | 
-| Öge listesi iletişim kutusu | NVDA+f7 | Grafik, açıklama içeren hücreler ve formül barındıran hücrelerden oluşan ögeleri listeleyen iletişim kutusunu açar. |
+| Sütun başlıklarını ayarla | NVDA+shift+c | Bir kez basıldığında mevcut satır sütun başlığı olarak ayarlanır ve satırın altındaki sütunlar arasında dolaşılırken ayarlanan satırdaki bilgi otomatik olarak seslendirilir. İki kez basıldığında ayar sıfırlanır. | 
+| Satır başlıklarını ayarla | NVDA+shift+r | Bir kez basıldığında mevcut sütun satır başlığı olarak ayarlanır ve sütunun sağındaki satırlar arasında dolaşılırken ayarlanan sütundaki bilgi otomatik olarak seslendirilir. İki kez basıldığında ayar sıfırlanır. | 
+%kc:endInclude
+Bu ayarlar, çalışma kitabında tanımlı ad aralıkları olarak saklanacaktır  ve Jaws gibi diğer Ekran Okuyucular ile uyumludur.
+Dolayısıyla, daha sonraki bir tarihte bu çalışma kitabını açın diğer ekran okuyucu kullanıcıları için otomatik olarak satır ve sütun başlıkları önceden ayarlanmış olacaktır. 
+
++++ Öğe Listesi +++
+Web'de olduğu gibi, NVDA'nın Microsoft Excel için de, farklı bilgi tiplerini listeleyip ulaşmanızı sağlayan öğe listesi bulunmaktadır.
+%kc:beginInclude
+Excel'de öğe listesine ulaşmak için, NVDA+f7 tuşlarını kullanın.
+%kc:endInclude
+Öğe listesinde ulaşılabilecek farklı türdeki bilgiler şunlardır:
+- Grafik: Bu çalışma kitabındaki tüm grafikleri listeler. 
+Grafiği seçip üzerinde enter tuşuna ya da Git düğmesine basarsanız yön tuşlarıyla dolaşmanız ve okumanız için grafik üzerine odaklanmış olursunuz.
+- Açıklama: Bu çalışma kitabındaki açıklama içeren tüm hücreleri listeler. 
+Her hücre için adres bilgisiyle birlikte açıklaması gösterilir. 
+Listedeki açıklama üzerinde enter tuşuna ya da Git düğmesine basarsanız ilgili hücreye gidebilirsiniz.
+- Formül: Bu çalışma kitabındaki formül içeren tüm hücreleri listeler. 
+Her hücre için adres bilgisiyle birlikte formül gösterilir.
+Listelenmiş formüllerden birinin üzerinde enter tuşuna ya da Git düğmesine basarsanız ilgili hücreye gidebilirsiniz. 
+- Çalışma sayfası: Bu çalışma kitabındaki tüm sayfaları listeler. 
+Listeden seçtiğiniz bir sayfa üzerinde f2 tuşuna basarak sayfanın adını değiştirebilirsiniz. 
+Seçili sayfa üzerinde enter tuşuna ya da Git düğmesine basarak ilgili çalışma sayfasına ulaşabilirsiniz.
+-
+
++++ Açıklamaların Bİldirimi +++
+%kc:beginInclude
+Üzerinde bulunduğunuz hücreyle ilgili açıklamayı dinlemek için NVDA+alt+c tuşlarını kullanın.
+%kc:endInclude
+Tüm açıklamalar NVDA öğe listesinde de gösterilebilir.
+
++++ Korunmuş Hücreleri Okuma +++
+Bir çalışma kitabı korunuyorsa, düzenleme için kilitlenmiş hücrelere ulaşmak mümkün olmayabilir.
+%kc:beginInclude
+Kilitli hücrelere  ulaşılmasını mümkün kılmak için, NVDA+space ile Tarama Kipi'ne geçin ve sonra Standart Excel hareket komutlarını kullanın. Örneğin yön tuşları.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -1104,6 +1168,7 @@ Buradaki birçok onay kutusu belge içinde imleci hareket ettirirken hangi tür 
 - Metin hizzalaması
 - Renkler
 - editör değişiklikleri
+- Vurgu
 - Metin sitilleri
 - Yazım hataları
 - Sayfa numaraları
@@ -1172,8 +1237,19 @@ Noktalama/imla telaffuzu iletişim kutusunun başlığında, düzenlemenin hangi
 Bu iletişim kutusunun , [Ses ayarları iletişim kutusunda #VoiceSettings] bulunan "Karakter ve sembolleri işlerken sentezleyici ve sesin diline güven" ayarını dikkate alacağını not edin; yani, bu seçenek işaretliyse, NVDA dili yerine seçili sentezleyicinin dili dikkate alınır.
 
 Önce semboller listesinden değişiklik yapmak istediğiniz sembol/işareti bulun.
+
 Olarak değiştir alanı, NVDA'nın sözkonusu işaretle karşılaştığında ne demesi gerektiğini belirlemenizi sağlar.
 Düzey alanı ise, işaretin seslendirilmesini istediğiniz en düşük imla seslendirme düzeyini belirlemenize imkan verir.
+- Sentezleyiciye asıl sembolü gönder alanı sembol için belirlenen seslendirme değeri yerine sentezleyiciye sembolün kendisinin gönderilmesini sağlar.
+Bu, sembolün sentezleyicinin duraksamasına ya da tonlamayı değiştirmesine neden olan bir sembol olması halinde faydalı olabilir.
+Örneğin, virgül işareti sentezleyicinin duraksamasına yol açar.
+Üç seçenek bulunmaktadır:
+ - hiçbir zaman: Asıl sembolü hiçbir zaman sentezleyiciye gönderme.
+ - her zaman: Asıl sembolü her zaman sentezleyiciye gönder.
+ - Yalnızca noktalama / imla seslendirme düzeyinin altındaysa: Asıl sembolü sentezleyiciye, noktalama / imla seslendirme seviyesi buradakinden daha düşük seviyede ayarlanmışsa gönder.
+ Örneğin, noktalama / imla seslendirme düzeyinden yüksek olarak ayarlanması halinde sembolün olarak değiştir alanındaki ifade kullanılarak seslendirilmesini, aksi halde bu sembolün sentezleyicinin konuşmasında duraksamaya neden olması sonucunda bu sembolün varlığının belirtilmesini sağlayabilirsiniz.
+ -
+-
 
 Ekle düğmesine basarak yeni işaretler ekleyebilirsiniz.
 Açılacak iletişim kutusunda, işareti girin ve tamam düğmesine basın.
@@ -1563,7 +1639,7 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 ++ Baum/Humanware/APH Braille Ekranlar ++
 Birçok [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] ekran USB veya Bluetooth ile bağlandıklarında desteklenmektedir.
 Bunlardan bazıları şunlardır:
-- Baum: SuperVario, PocketVario
+- Baum: SuperVario, PocketVario, VarioUltra (Bluetooth only), Pronto! (Bluetooth only)
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -

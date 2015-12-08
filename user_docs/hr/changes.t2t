@@ -3,6 +3,61 @@
 
 %!includeconf: ../changes.t2tconf
 
+
+= 2015.4 =
+Novosti u ovoj inačici ukljućuju unaprjeđivanje performansi u windows 10; uključivanje u centar za olakšani pristup u windowsima 8 i novijim; unaprjeđenja za microsoft excel, ukljućujući popisivanje i preimenovanje radnih listova te pristup zaključanim ćelijama u zaštićenim radnim listovima; i podrška za uređivanje teksta u obogaćenog teksta u firefoxu, google chromeu i mozilli thunderbird.
+
+== nove značajke ==
+- NVDA se sada prikazuje u centru za olakšani pristup u windowsima8 i novijim. (#308)
+- kada se krećete po ćelijama u excelu, izmjene oblikovanja se sada čitaju ako su odgovarajuće opcije ukljućene u dijaloškom okviru oblikovanje dokumenta. (#4878)
+- Opcija izvijesti o isticanju je dodana u NVDA dijaloški okvir oblikovanje dokumenta. podrazumjevano ukljućena, omogućuje nvda  čitanje naglašenog teksta u dokumentima. To je podržano samo u internet exploreru. (#4920)
+- Postojanje umetnutog ili izbrisanog teksta sada se izvještava u načinu pregleda za Internet explorer ako je nvda opcija izvijesti o revizijama urednika uključena. (#4920)
+- Prilikom pregleda izmjena u nvda popisu elemenata za microsoft word, više informacija poput tog što je brisano ili označenois sada se prikazuje. (#4920)
+- Microsoft Excel: popisivanje i preimenovanje radnih listova je moguće iz nvda popisa elemenata (NVDA+f7). (#4630, #4414)
+- Sada je moguće podesiti hoće li se trenutni simbol slati govornoj jedinici (npr kako bi prouzročio pauzu - ili promijenio intonaciju) u dijaloškom okviru izgovor simbola. (#5234)
+- u microsoft excelu, NVDA izvještava bilo koju ulaznu poruku postavljenu na radni list koju je postavio autor na ćeliju. (#5051)
+- podrška za Baum Pronto! V4 i VarioUltra brajične retke preko bluetooth veze. (#3717)
+- podrška za uređivanje obogaćenog teksta u mozilla aplikacijama kao što su google dokumenti sa ukljućenom brajičnom podrškom u mozila firefoxu i i html sastavljanju u mozilla thunderbirdu. (#1668)
+- podrška za uređivanje obogaćenog teksta u google chrome i Chromepreglednicima baziranim na chromeu poput google docs sa ukljućenom brajičnom podrškom. (#2634)
+ - to zahtjeva chrome inačicu 47 i noviju.
+- U načinu pregleda u microsoft excelu, Možete se kretati po zakljućanim čelijama u zaštićenim radnim listovima. (#4952)
+
+
+== Izmjene ==
+- Opcija izvjesti o revizijama urednika u oblikovanju dokumenta sada je uključena zadano. (#4920)
+- Premještajući se po znakovima u microsoft wordu sa uključenom opcijom izvjesti o izmjenama urednika, manje se informacija izgovara za izmjene, što olakšava navigaciju i čini je bržom. Kako biste pogledali dodatne informacije, koristite listu izmjena. (#4920)
+- Nadograđen liblouis brajični prevoditelj na inačicu 2.6.4. (#5341)
+- neki simboli ukljućujući osnovne matematičke simbole, ) premješteni su na razinu ponešto kako bi se zadano izgovarali. (#3799)
+- Ako govorna jedinica to podržava, govor će biti zaustavljan za simbole zagrada i en dash (–). (#3799)
+- Kada se označava tekst, tekst je čitan prije obavjesti označavanja umjesto poslije. (#1707)
+
+
+== Ispravke grešaka ==
+- Drastično unaprjeđenje performansi pri navigaciji Outlook 2010/2013 popisa sa porukama. (#5268)
+- u grafu u microsoft excelu, kretanje uz pomoć nekih tipaka (poput promjena radnog lista uz pomoć kontrol+page up i kontrol+pageDown) sada ispravno funkcionira. (#5336)
+- Ispravljen vizualni izgled  gumbi u dijaloškom okviru upozorenja koji se prikazuje kada želite pregaziti stariju inačicu nvda novijom i obratno. (#5325)
+- U windowsima 8 i novijim, NVDA se pokreće puno ranije se kada se prijavljujete u windows. (#308)
+- ako ste to omogućili u prijašnjoj inačici nvda, trebate to ponovo iskljućiti i ukljućiti kako bi promjena stupila na snagu. Ispratite slijedeće korake:
+Otvorite dijaloški okvir opće postavke.
+odznačite odabirni okvir pokreni nvda poslije prijave u windows.
+Pritisnite gumb u redu.
+Ponovno otvorite dijaloški okvir opće postavke.
++ Odaberite odabirni okvir pokreni nvda prilikom prijave u windows .
++ Pritisnite ok gumb.
+- Unaprjeđenja performansi u ui automation uključujući eksplorer za datoteke i task manager. (#5293)
+- nvda sada korektno čita kada se dolazi tabom do aria grid kontrola samo za čitanje u načinu pregleda za mozilla firefox i drugim gecko-baziranim kontrolama. (#5118)
+- nvda sada korektno izvještava o  "nema prethodnog" umjesto "nema slijedećeg" kada ne postoji više objekata prilikom klizanja u lijevo na zaslonu osjetlijvom na dodir.
+- ispravljen problem pri pisanju više rijeći u polju za filtriranje u  dijaloškom okviru ulaznih gesti. (#5426)
+- NVDA se više ne smrzava u nekim slućajevima prilikom ponovnog spajanja na humanware BI/B series redak putem usb-a. (#5406)
+- u jezicima sa dvojnim znakovima, opisi znakova rade kako treba za engleska velika slova. (#5375)
+- nvda se više neće često smrzavati prilikom otvaranja windows 10 izbornika start. (#5417)
+- U Skypeu za radnu površinu, obavijesti koje su prikazane prije prethodne obavijesti se sada čitaju. (#4841)
+- sada se čitaju obavijesti u  Skypeu za radnu površinu 7.12 i novijim. (#5405)
+- NVDA sada ispravno čita fokusiranu stavku prilikom napuštanja kontekstnog izbornika u nekim aplikacijama poput Jart. (#5302)
+- U Windowsima 7 i novijim, boja se ponovo čita u većini aplikacija popud Wordpada. (#5352)
+- Prilikom uređivanja u  Microsoft PowerPointu, pritiskom entera nvda sada izgovara automatski unešen tekst popud  točkice ili broja. (#5360)
+
+
 = 2015.3 =
 Novosti u ovoj inačici uključuju početnu podršku za windows 10 operacijski sustav; mogućnost onemogučavanja brzog kretanja u načinu pregleda (korisno za neke web aplikacije); unapređenja u internet exploreru; i popravke grešaka tzv. izmješanog teksta prilikom upisivanja znakova koristeći neke aplikacije sa uključenom brajicom.
 
@@ -16,6 +71,7 @@ Novosti u ovoj inačici uključuju početnu podršku za windows 10 operacijski s
 - Nove brajične tablice: Finski šestotočkasta brajica, irski puno pismo, irski kratkopis, korejsko puno pismo (2006), korejski kratkopis (2006). (#5137, #5074, #5097)
 - Sada je podržana qwerty tipkovnica na  Papenmeier BRAILLEX Live Plus brajičnom retku. (#5181)
 - Eksperimentalna podrška za Microsoft Edge web preglednik i pregledački mehanizam u Windowsima 10. (#5212)
+- Novi jezik: Kanadaški.
 
 
 == Izmjene ==

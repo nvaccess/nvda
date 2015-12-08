@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-06 19:09+1000\n"
-"PO-Revision-Date: 2015-08-11 06:11+0800\n"
+"POT-Creation-Date: 2015-11-10 10:22+1000\n"
+"PO-Revision-Date: 2015-11-02 23:22+0800\n"
 "Last-Translator: 雪岭冰龙 <vgjh2005@gmail.com>\n"
 "Language-Team: Simplified Chinese translate team <vgjh2005@gmail.com>\n"
 "Language: zh_CN\n"
@@ -1293,6 +1293,24 @@ msgstr "全部"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "标点字符级别"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "从不"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "总是"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "仅标点符号级别低于"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -2628,7 +2646,7 @@ msgstr "受保护"
 
 #. Translators: This is presented when a required form field is encountered.
 msgid "required"
-msgstr "必须的"
+msgstr "必填"
 
 #. Translators: Reported when an object no longer exists in the user interface;
 #. i.e. it is dead and is no longer usable.
@@ -2723,6 +2741,10 @@ msgstr "修剪"
 #. Translators: a state that denotes that the object(text) is overflowing into the adjacent space
 msgid "overflowing"
 msgstr "溢出"
+
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "未锁定"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -3051,6 +3073,18 @@ msgstr "朗读编辑者修订开"
 msgid "Toggles on and off the reporting of revisions"
 msgstr "切换编辑者修订朗读的开关"
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "朗读标注关"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "朗读标注开"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "切换标注朗读的开关"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "朗读颜色关"
@@ -3345,12 +3379,12 @@ msgstr "%s 已复制到剪贴板"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
 msgstr ""
-"朗读当前查看对象的信息，连按两次拼读该信息，连按三次则拷贝该对象的名称以及属"
-"性的值到剪贴板。"
+"朗读当前查看的对象，连按两次拼读该信息，连按三次则拷贝该对象的名称和值到剪贴"
+"板。"
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
@@ -3395,7 +3429,7 @@ msgstr "按一次设置键盘焦点到浏览对象，按两次设置系统输入
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 msgid "No containing object"
-msgstr "没有包含对象"
+msgstr "没有父对象"
 
 #. Translators: Input help mode message for move to parent object command.
 msgid "Moves the navigator object to the object containing it"
@@ -3618,11 +3652,11 @@ msgstr "读出当前应用程序的状态栏，并将浏览光标移至该处，
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
-msgstr "鼠标导航关"
+msgstr "鼠标追踪关"
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking on"
-msgstr "鼠标导航开"
+msgstr "鼠标追踪开"
 
 #. Translators: Input help mode message for toggle mouse tracking command.
 msgid "Toggles the reporting of information as the mouse moves"
@@ -3815,7 +3849,7 @@ msgstr "打开 NVDA“默认字典”对话框"
 
 #. Translators: Input help mode message for opening voice-specific dictionary dialog.
 msgid "Shows the NVDA voice-specific dictionary dialog"
-msgstr "打开 NVDA “合成器字典”对话框"
+msgstr "打开 NVDA “语音字典”对话框"
 
 #. Translators: Input help mode message for opening temporary dictionary.
 msgid "Shows the NVDA temporary dictionary dialog"
@@ -3973,6 +4007,10 @@ msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
 msgstr "移动导航对象到此层级的下一个对象"
+
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "向前没有对象"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4277,6 +4315,58 @@ msgid "numpad plus"
 msgstr "数字键盘 加号"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "小键盘点"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "小键盘插入"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "小键盘0"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "小键盘1"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "小键盘2"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "小键盘3"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "小键盘4"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "小键盘5"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "小键盘6"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "小键盘7"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "小键盘8"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "小键盘9"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "插入"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "左 control"
 
@@ -4435,15 +4525,20 @@ msgstr "没有缩进"
 msgid "%d characters"
 msgstr "%d 个字符"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "%s，已选择"
+msgid "%s selected"
+msgstr "%s 已选择"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "%s，未选择"
+msgid "%s unselected"
+msgstr "%s 未选择"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s作为覆盖选择"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4538,14 +4633,55 @@ msgstr "背景顏色：{backgroundColor}"
 msgid "line %s"
 msgstr "行%s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "已插入"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "不插入"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "已删除"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "不删除"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "%s已修订"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "未修订"
+#, python-format
+msgid "no revised %s"
+msgstr "不修订 %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "已标记"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "不标记"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "显眼"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "不显眼"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "以强调"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "不强调"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -5418,7 +5554,7 @@ msgstr "幻灯片显示注视 - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
 msgid "Slide show - {slideName}"
-msgstr "当前查看的幻灯片：{slideName}"
+msgstr "{slideName} - 幻灯片"
 
 #. Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
 msgid "Slide Show - complete"
@@ -5588,7 +5724,7 @@ msgstr "默认字典"
 #. Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
 #, python-format
 msgid "Voice dictionary (%s)"
-msgstr "合成器字典(%s)"
+msgstr "语音字典(%s)"
 
 #. Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
 msgid "Temporary dictionary"
@@ -5687,12 +5823,12 @@ msgstr "“默认字典”对话框，可以添加和管理默认字典。"
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 msgid "&Voice dictionary..."
-msgstr "合成器字典(&V)..."
+msgstr "语音字典(&V)..."
 
 msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
-msgstr "“合成器字典”对话框，可以添加和管理合成器字典。"
+msgstr "“语音字典”对话框，可以添加和管理合成器字典。"
 
 #. Translators: The label for the menu item to open Temporary speech dictionary dialog.
 msgid "&Temporary dictionary..."
@@ -6951,6 +7087,11 @@ msgstr "朗读编辑者修订(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "朗读标注(&M)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "朗读文本样式(&Y)"
 
@@ -7178,6 +7319,11 @@ msgstr "符号"
 msgid "Level"
 msgstr "级别"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "传递"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "更改符号"
@@ -7185,6 +7331,10 @@ msgstr "更改符号"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "级别(&L)"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "发送标点本身到合成器(&S)"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7317,8 +7467,14 @@ msgstr "启用"
 msgid "Desktop"
 msgstr "桌面"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "默认颜色"
+
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "这个单元不可编辑"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
@@ -7338,6 +7494,11 @@ msgstr "注释(&O)"
 #. in the browse mode Elements List dialog.
 msgid "&Formula"
 msgstr "公式(&F)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "表格(&S)"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7399,6 +7560,12 @@ msgid ""
 msgstr ""
 "按一次设置此单元格为第一个行标题单元，包括其右方和下方的单元在内都属于此区"
 "域，连按两次清除此单元的行标题设置。"
+
+msgid "Input Message is {title}: {message}"
+msgstr "输入消息为{title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "输入的消息为{message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -8151,17 +8318,8 @@ msgstr "文本框"
 msgid "comment: {text} by {author} on {date}"
 msgstr "评论: 由 {author} 在 {date} {text} "
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: 由 {author} 在 {date} {text} "
-
-msgid "unknown author"
-msgstr "未知作者"
-
-msgid "unknown date"
-msgstr "未知日期"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "由{revisionAuthor}在{revisionDate}进行的{revisionType}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text} by {author} on {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8322,6 +8480,35 @@ msgstr "HIMS Braille Sense/Braille EDGE 系列"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "默认颜色"
+
+#, fuzzy
+#~ msgid "Unknown color"
+#~ msgstr "未知颜色"
+
+#~ msgid "selecting %s"
+#~ msgstr "%s，已选择"
+
+#~ msgid "unselecting %s"
+#~ msgstr "%s，未选择"
+
+#~ msgid "unrevised"
+#~ msgstr "未修订"
+
+#~ msgid "{revisionType}: {text} by {author} on {date}"
+#~ msgstr "{revisionType}: 由 {author} 在 {date} {text} "
+
+#~ msgid "unknown author"
+#~ msgstr "未知作者"
+
+#~ msgid "unknown date"
+#~ msgstr "未知日期"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "由{revisionAuthor}在{revisionDate}进行的{revisionType}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "读出当前焦点的对象"

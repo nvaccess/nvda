@@ -32,6 +32,7 @@ class MshtmlVBufStorage_controlFieldNode_t : public VBufStorage_controlFieldNode
 	DWORD HTMLChangeSinkCookey;
 	std::wstring language;
 	VBufStorage_controlFieldNode_t*  ariaLiveNode;
+	unsigned int formatState;
 	bool ariaLiveIsTextRelevant;
 	bool ariaLiveIsAdditionsRelevant;
 	bool ariaLiveIsBusy;

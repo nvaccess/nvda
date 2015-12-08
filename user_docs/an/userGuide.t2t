@@ -1,4 +1,5 @@
 ﻿Guida de l'Usuario d'o NVDA NVDA_VERSION
+Guida de l'Usuario d'o NVDA NVDA_VERSION
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -369,7 +370,7 @@ As siguients ordens son disponibles ta revisión de texto:
 | Mover-se-ne t'a fin d'a linia en revisión | mayus+3 teclau numerico | NVDA+mayus+u | no | Mueve o cursor de revisión t'a fin d'a linia actual de texto |
 | Leyer-lo tot con revisión | Mas teclau numerico | NVDA+mayus+Flecha abaixo | eslizar con 3 didos enta abaixo (modo de texto) | Leye dende a posición actual d'o cursor de revisión, movendo-lo seguntes baixa |
 | copiar dende o cursor de revisión | NVDA+f9 | NVDA+f9 | no | Prencipia o copiau de texto dende a posición actual d'o cursor de revisión. La copia actual no se leva a cabo dica que digas a NVDA do copiar-ne |
-| Copiar en o cursor de revisión | NVDA+f10 | NVDA+f10 | no | Copia dende a posición d'o cursor de revisión actualment fixada con Copiar dende cursor de revisión, l'en actual posición d'o cursor de revisión.  Dimpués de pretar ista tecla, o texto se copiará en o portafuellas de Windows |
+| Copiar en o cursor de revisión | NVDA+f10 | NVDA+f10 | no | Copia dende a posición previament  fixada con Copiar dende o cursor de revisión dica la posición actual d'o cursor de revisión incluindo-la.  Dimpués de pretar ista tecla o texto se copiará en o portafuellas d'o Windows |
 | Anunciar o formato d'o texto | NVDA+f | NVDA+f | no | Informa d'o formato d'o texto an siga situau actualment o cursor de revisión |
 %kc:endInclude
 
@@ -540,7 +541,7 @@ O MathPlayer ye disponible como una descarga de baldes dende: http://www.dessci.
 
 O NVDA suporta as siguients menas de conteniu matematico:
 - MathML en o Mozilla Firefox y o Microsoft Internet Explorer.
-- Design Science MathType en o Microsoft Word y PowerPoint.
+- Design Science MathType en o Microsoft Word y PowerPoint. O MathType ameniste estar instalau ta que isto marche. A versión de preba en ye prou.
 - MathML en l'Adobe Reader. Nota que isto no ye un estandar oficial encara, allora no bi ha actualment software disponible publicament que pueda producir iste conteniu.
 -
 
@@ -569,24 +570,87 @@ Por favor mira-te a documentación d'o MathPlayer ta más información.
 
 Quan deseyes tornar t'o documento, simplament preta la tecla escape.
 
-+ Ordens d'o NVDA Especificas t'aplicacións +
-O NVDA proporciona as suyas propias ordens extra ta qualques aplicacions ta fer mas facils bells quefers u ta proporcionar acceso a funcionalidat que d'unatro modo no ye accesible t'os usuarios d'un lector de pantalla.
++ Caracteristicas Especificas t'aplicacións +
+O NVDA proporciona as suyas propias caracteristicas extra ta qualques aplicacions ta fer mas facils bells quefers u ta proporcionar acceso ta funcionalidat que d'unatro modo no ye accesible t'os usuarios d'un lector de pantalla.
 
 ++ Microsoft Word ++
+
++++ Lectura automatica de capiters de columna y ringlera +++
+O NVDA ye capable d'anunciar automaticament os capiters de ringlera y columna apropiaus en navegar por as tablas en o Microsoft Word.
+Ixo requier en primeras que a opción d'anunciar os capiters de ringlera y columna de tabla en o dialogo de formatiau de documentos d'o NVDA siga enchegada.
+En segundas o NVDA amenista conoixer qué ringlera u columna contién os capiters en una tabla dada.
+Dimpués de mover-te-ne t'a primera celda en a columna u ringlera que contién os capiters, fe servir un d'os siguients comandos:
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| Anunciar o comentario actual | NVDA+Alt+c | Anuncia o texto d'o comentario en a posición d'o Cursor d'o Sistema. | 
-| Fixar o capitero de columnas | NVDA+mayus+c | Pretando isto una vegada diz a lo NVDA que ista ye a primera celda de capitero en a ringlera que contién capiters de columna, que habría d'estar anunciada automaticament en mover-te-ne entre columnas baixo ista ringlera. Pretando-ne dos vegadas sacará ista opción. | 
-| Fixar o capitero de ringleras | NVDA+mayus+r | Pretando isto una vegada diz a lo NVDA que ista ye a primera celda de capitero en a columna que contién capiters de ringlera, que habría d'estar anunciau automaticament quan te'n desplaces entre as ringleras dimpués d'ista columna. Pretando-ne dos vegadas eliminará ista opción. | 
+| Establir o capitero de columna | NVDA+mayus+c | Pretando isto una vegada diz a lo NVDA que ista ye a primera celda de capitero en a ringlera que contién capiters de columna, que habría d'estar anunciada automaticament en mover-te-ne entre columnas baixo ista ringlera. Pretando-ne dos vegadas sacará ista opción. | 
+| Establir o capitero de ringlera | NVDA+mayus+r | Pretando isto una vegada diz a lo NVDA que ista ye a primera celda de capitero en a columna que contién capiters de ringlera, que habría d'estar anunciau automaticament quan te'n desplaces entre as ringleras dimpués d'ista columna. Pretando-ne dos vegadas eliminará ista opción. | 
 %kc:endInclude
+Ixas opcions s'almagazenarán en o documento como marcapachinas compatibles con atros lectos de pantalla como lo Jaws.
+Ixo significa que usuarios d'atros lectors de pantalla qui ubran ixe documento en una calendata posterior tendrán automaticament os capiters de ringlera y columna ya establius.
+
++++ Modo de navegación en o Microsoft Word +++
+Igual como en a web, o modo de navegación se puet fer servir en o Microsoft Word ta permitir-te fer servir caracteristicas tals como a navegación rapeda y a lista d'elementos.
+%kc:beginInclude
+T'activar u desactivar o modo de navegación en o Microsoft Word, preta NVDA+espacio.
+%kc:endInclude
+Ta información detallada sobre o modo de navegación y a navegación rapeda, mira-te a [sección d'o modo de navegación #BrowseMode].
+
+++++ A lista d'elementos ++++
+%kc:beginInclude
+Mientras yes en o modo de navegación en o Microsoft Word puetz accedir t'a lista d'elementos pretando NVDA+f7.
+%kc:endInclude
+A lista d'elementos puet listar capiters, vinclos y anotacions (que inclui comentarios y cambeos de seguimiento).
+
++++ Anunciau  de Comentarios +++
+%kc:beginInclude
+T'anunciar qualsiquier comentario en a posición actual d'o puntero preta NVDA+alt+c.
+%kc:endInclude
+Totz os comentarios d'o documento de conchunta con o seguimiento d'atros cambeos tamién se pueden listar en a lista d'elementos d'o NVDA  en seleccionar anotacions como a mena.
 
 ++ Microsoft Excel ++
+
++++ Lectura automatica de capiters de columna y ringlera +++
+O NVDA ye capable d'anunciar automaticament os capiters de ringlera y columna apropiaus en navegar por as tablas en o Microsoft Excel.
+Ixo requier en primeras que a opción d'anunciar os capiters de ringlera y columna de tabla en o dialogo de formatiau de documentos d'o NVDA siga enchegada.
+En segundas o NVDA amenista conoixer qué ringlera u columna contién os capiters en una tabla dada.
+Dimpués de mover-te-ne t'a primera celda en a columna u ringlera que contién os capiters, fe servir un d'os siguients comandos:
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| Configurar a ringlera de capiters de columna | NVDA+mayus+c | Pretando isto una vegada diz a lo NVDA que ista ye a ringlera que contién capiters de columna, que habrían d'anunciar-se automaticament quan te'n muevas entre columnas por ista ringlera. Pretando-ne dos vegadas limpiará a opción. | 
-| Configurar a columna de capiters de ringlera | NVDA+mayus+r | Pretando isto una vegada  diz a lo NVDA que ista ye a columna que contién capiters de ringlera, que s'habrían d'anunciar automaticament  quan te'n muevas entre ringleras dimpués d'ista columna. Pretando-ne dos vegadas limpiará la opción. | 
-| Anunciar o comentario | NVDA+alt+c | Anuncia o comentario en a celda actual si bi'n ha belún. |
-| Dialogo de lista d'elementos | NVDA+f7 | Ubre o dialogo d'a lista d'elementos amostrando graficos, celdas con comentarios, u celdas con formulas. |
+| Establir a ringlera de capiters de columna | NVDA+mayus+c | Pretando isto una vegada diz a lo NVDA que ista ye a ringlera que contién capiters de columna, que habrían d'anunciar-se automaticament quan te'n muevas entre columnas por ista ringlera. Pretando-ne dos vegadas limpiará a opción. | 
+| Establir a columna de capiters de ringlera | NVDA+mayus+r | Pretando isto una vegada  diz a lo NVDA que ista ye a columna que contién capiters de ringlera, que s'habrían d'anunciar automaticament  quan te'n muevas entre ringleras dimpués d'ista columna. Pretando-ne dos vegadas limpiará la opción. | 
+%kc:endInclude
+Ixas opcions s'almagazenarán en o libro de treballo como rangos de nombre definius compatibles con atros lectors de pantalla como lo Jaws.
+Ixo significa que atros usuarios de lectors de pantalla qui ubran ixe libro de treballo en una calendata posterior tendrán automaticament os capiters de ringlera y columna ya establius. 
+
++++ A lista d'elementos +++
+Igual como en a  web, o NVDA tien una lista d'elementos t'o Microsoft Excel que te permit  listar y accedir ta quantas menas diferents d'información.
+%kc:beginInclude
+T'accedir t'a lista d'elementos en l'Excel preta NVDA+f7.
+%kc:endInclude
+As diferents menas d'información disponibles en a lista d'elementos son:
+- Graficos: Isto lista totz os graficos en o libro de treballo. 
+Seleccionando un grafico y pretando l'intro u o botón mover ta enfoca o grafico ta navegar y leyer-lo con as teclas de flecha.
+- Comentarios: Isto lista todas as celdas en o libro de treballo que contienen comentarios. 
+S'amuestra l'adreza d'a celda de conchunta con os suyos comentarios ta cada celda. 
+Pretando l'intro u lo botón mover ta en estar en un comentario listau se'n moverá dreitament t'a ixa celda.
+- Formula: Isto lista todas as celdas en o libro de treballo que contienen una formula. 
+S'amuestra l'adreza d'a celda de conchunta con a suya formula ta cada celda.
+Pretando l'intro u lo botón mover ta en una formula listada se'n moverá dreitament t'a ixa celda. 
+- Fuella: Isto lista todas as fuellas en o libro de treballo. 
++Pretar f2 en estar en una fuella listada te permit renombrar a fuella. 
+Pretando l'intro u lo botón mover ta en estar en a fuella listada seleccionará ista fuella.
+-
+
++++ Anunciau de Comentarios +++
+%kc:beginInclude
+T'anunciar qualsiquier comentario t'a celda actualment enfocada preta NVDA+alt+c.
+%kc:endInclude
+Totz os comentarios d'o libro de treballo puet listar-se tamién en a lista d'lelementos d'o NVDA.
+
++++ Leyer as celdas protechidas +++
+Si un libro de treballo fuó protechiu, puet estar imposible mover o foco t'a celdas particulars que fuoron blocadas ta edición.
+%kc:beginInclude
+Ta permitir mover-se-ne ta celdas blocadas cambea t'o modo de navegación pretando NVDA+espacio y allora fe servir os comandos estandar de movimiento de l'Excel como as teclas de flecha ta por todas as flechas en a fuella de treballo actual.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -931,7 +995,7 @@ Si o NVDA ye configurau t'anunciar o texto baixo lo churi seguntes lo muevas, is
 As opcions son caracter, parola, linia y paragrafo.
 
 ==== Anunciar o paper quan o churi dentre en l'Obchecto ====
-Si ista caixeta de verificación ye marcada, o NVDA anunciará o paper (mena) d'obchecto quan o churi se mueva adintro d'ell.
+Si ista caixeta de verificación ye marcada, o NVDA anunciará o paper (mena) d'obchecto en que o churi se mueva adintro d'ell.
 
 ==== Reproducir son quan se mueva o churi ====
 Marcando ista caixeta de verificación fas que o NVDA reproduzca chuflius quan o churi se mueva, asinas que l'usuario pueda resolver do ye o churi respective a las dimensions d'a pantalla.
@@ -1104,6 +1168,7 @@ Puetz configurar l'anunciau de:
 - Aliniación d'o texto
 - Colors
 - Revisions de l'editor
+- Enfasi
 - Estilo d'o texto
 - Errors d'ortografía
 - Numeros de pachina
@@ -1172,12 +1237,23 @@ L'idioma que se ye editando a suya pronuncia  de simbolos s'amostrará en o tito
 Nota que iste dialogo respeta la opción "Confidar en l'idioma d'a voz en procesar caracters y simbolos" trobada en o [dialogo d'opcions d'a voz #VoiceSettings]; p.eix. Se fa servir l'idioma d'a voz en cuenta d'a opción d'idioma global d'o NVDA quan ista opción ye activada.
 
 Ta cambiar un simbolo, en primeras selecciona-lo en a lísta de Simbolos.
-O campo Reemplazar te permite cambiar o texto que habría de verbalizarse en cuenta d'iste simbolo.
-Fendo servir o campo libel, puetz achustar o libel mas baixo d'o simbolo ta como iste simbolo habría de charrar-se.
+
+- O campo Reemplazar te permite cambiar o texto que habría de charrar-se en cuenta d'iste simbolo.
+- Fendo servir o campo libel, puetz achustar o libel mas baixo d'o simbolo ta como iste simbolo habría de charrar-se.
+- O campo ninviar o simbolo real t'o sintetizador especifica quan habría de ninviar-se t'o sintetizador o simbolo (en contraste con a suya substitución) .
+Ixo ye util si o simbolo causa que o sintetizador se pause u cambie a entonación d'a voz.
+Por eixemplo una coma causa que o sintetizador se pause.
+Bi'n ha tres opcions:
+- nunca: Nunca no ninviar o simbolo real t'o sintetizador.
+ - siempre: Ninviar siempre o simbolo real t'o sintetizador.
+ - nomás por baixo  d'o libel d'os simbolos: Ninviar o simbolo real nomás si o libel de simbolos d'a fabla configurauye mas baixo que no lo libel establiu por iste simbolo.
+ Por eixemplo, podrías fer servir ixo ta que un simbolo tienga a suya substitución charrada en os libels mas altos sin pausar-se-ne mientras agún ye indicada con una pausa en os libels más baixos.
+ -
+-
 
 Puetz adhibir simbolos nuevos pretando lo botón Adhibir.
 En o dialogo que amaneixca introduz o simbolo y preta o botón Acceptar.
-Allora cambea o reemplazo y o libel t'o simbolo nuevo como lo ferías t'atros simbolos.
+Allora cambea os campos t'o simbolo nuevo como lo ferías t'atros simbolos.
 
 Puetz eliminar un simbolo que adhibiés anteriorment pretando lo botón Eliminar.
 
@@ -1563,7 +1639,7 @@ Porfavor mira a documentación d'a linia ta descripcions de do se pueden trobar 
 ++ Linias braille Baum/Humanware/APH ++
 Quantas linias braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] y [APH http://www.aph.org/] son suportadas quan se connectan a traviés de l'USB u d'o bluetooth.
 Istas incluyen:
-- Baum: SuperVario, PocketVario
+- Baum: SuperVario, PocketVario, VarioUltra (nomás Bluetooth), Pronto! (nomás Bluetooth)
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
@@ -2101,16 +2177,7 @@ As siguients son as opcions d'a linia de comandos d'o NVDA:
 | Garra | --install | Instala o NVDA (rancando a copia recient instalada) |
 | Garra | --install-silent | Instala o NVDA silenciosament (no ranca la copia recient instalada) |
 
-++ Personalización Abanzada de Pronuncia de Simbolos ++
-Ye posible personalizar a pronuncia d'a puntuación y atros simbolos dillá d'o que puet fer-se emplegando o [dialogo Pronuncia de Puntuación y simbolos #SymbolPronunciation].
-Por eixemplo, puetz especificar si o simbolo dibuixau habría de ninviar-se t'o sintetizador (p. eix. ta causar una pausa u cambeo en a entonación) y puetz adhibir simbolos personalizaus. 
-
-Ta fer isto, has d'editar o fichero d'información de pronuncia de simbolos en o tuyo directorio de configuración d'usuario d'o NVDA.
-O fichero se diz symbols-xx.dic, an xx ye o codigo d'idioma.
-O formato d'iste fichero se documentó en a sección Symbol Pronunciation d'a Guida de Desembolique d'o NVDA, que ye disponible dende [a sección de Desembolique d'a pachina web d'o NVDA http://community.nvda-project.org/wiki/development].
-Por tanto, no ye posible t'os usuarios definir simbolos complexos. 
-
 + Información Adicional +
-Si requieres d'información adicional u asistencia respective a lo NVDA, por favor visita o puesto Web d'o NVDA en NVDA_URL.
+Si requiers d'información adicional u asistencia respective a lo NVDA, por favor visita o puesto Web d'o NVDA en NVDA_URL.
 Aquí puetz trobar documentación adicional, asinas como suporte tecnico y recursos d'a comunidat.
 Iste Puesto tamién proporciona información y recursos concernients a o desembolique d'o NVDA.

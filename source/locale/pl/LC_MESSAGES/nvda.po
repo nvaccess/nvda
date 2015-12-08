@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-06 19:09+1000\n"
-"PO-Revision-Date: 2015-08-08 12:50+0100\n"
+"POT-Creation-Date: 2015-11-10 10:22+1000\n"
+"PO-Revision-Date: 2015-11-03 20:16+0100\n"
 "Last-Translator: Grzegorz Zlotowicz <grzezlo@wp.pl>\n"
 "Language-Team:  <killer@tyflonet.com>\n"
 "Language: pl_PL\n"
@@ -1295,6 +1295,24 @@ msgstr "Wszystko"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "znak"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "nigdy"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "zawsze"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "tylko poniżej poziomu symbolu"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -2726,6 +2744,10 @@ msgstr "Przycięte"
 msgid "overflowing"
 msgstr "Przepełnienie"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "odblokowane"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "niezaznaczony"
@@ -3067,6 +3089,18 @@ msgstr "zgłaszaj zmiany edycyjne włączone"
 msgid "Toggles on and off the reporting of revisions"
 msgstr "Włącza i wyłącza zgłaszanie zmian edycyjnych"
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "odczytuj podkreślenie wyłączone"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "odczytuj podkreślenie włączone"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "Włącza i wyłącza odczytywanie podkreślenia"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "Sygnalizuj kolory wyłączone"
@@ -3365,13 +3399,12 @@ msgstr "%s skopiowano do schowka"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
 msgstr ""
-"Podaje bierzący obiekt nawigatora. Dwukrotne wciśnięcie literuję tę "
-"informację. Trzykrotne wciśnięcie kopiuje do schowka nazwę i zawartość "
-"obiektu"
+"Podaje bierzący obiekt nawigatora. Dwukrotne wciśnięcie literuje tę "
+"informację. Trzykrotne wciśnięcie kopiuje do schowka nazwę i wartość obiektu"
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
@@ -4057,6 +4090,10 @@ msgid ""
 msgstr ""
 "przenosi do następnego obiektu w spłaszczonym widoku hierarchii obiektów"
 
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "brak poprzedniego"
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
@@ -4361,6 +4398,58 @@ msgid "numpad plus"
 msgstr "szary plus"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "Numeryczna kropka"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "numeryczny insert"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "numLock numpad 0"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "numLock numeryczne 1"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "numLock numeryczne 2"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "numLock numeryczne 3"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "numLock numeryczne 4"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "numLock numeryczne 5"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "numLock numeryczne 6"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "numLock numeryczne 7"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "numLock numeryczne 8"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "numLock numeryczne 9"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "insert"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "lewy kontrol"
 
@@ -4521,15 +4610,20 @@ msgstr "brak wcięcia"
 msgid "%d characters"
 msgstr "%d znaków"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "zaznaczanie %s"
+msgid "%s selected"
+msgstr "%s zaznaczone"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "odznaczanie %s"
+msgid "%s unselected"
+msgstr "%s odznaczone"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s zaznaczone zamiast"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4624,14 +4718,55 @@ msgstr "w tle {backgroundColor}"
 msgid "line %s"
 msgstr "linia %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "wstawione"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "nie wstawiony"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "Usunięte"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "nie usunięte"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "zaktualizowane %s"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "nieaktualizowane"
+#, python-format
+msgid "no revised %s"
+msgstr "nie zmienione %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "zaznaczone"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "Nie zaznaczone"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "pogrubienie"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "nie pogrubione"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "podkreślenie"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "Bez podkreślenia"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -7083,6 +7218,11 @@ msgstr "zgłaszaj zmiany &edycyjne"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "Zgłaszaj po&dkreślenie"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "Informuj o st&ylach"
 
@@ -7310,6 +7450,11 @@ msgstr "symbol"
 msgid "Level"
 msgstr "Poziom"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "Zachowaj"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "zmień symbol"
@@ -7317,6 +7462,10 @@ msgstr "zmień symbol"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "&Poziom"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "&wyślij rzeczywisty symbol do syntezatora"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7453,8 +7602,14 @@ msgstr "wywołaj"
 msgid "Desktop"
 msgstr "Pulpit"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "kolor domyślny"
+
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "Ta komórka nie jest edytowalna"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
@@ -7474,6 +7629,11 @@ msgstr "&Komentarz"
 #. in the browse mode Elements List dialog.
 msgid "&Formula"
 msgstr "&Formuła"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "&Arkusz"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7539,6 +7699,12 @@ msgstr ""
 "Jednokrotne naciśnięcie ustawi tę komórkę jako pierwszy nagłówek wiersza dla "
 "wszystkich komórek poniżej i w prawo od niej w tym obszarze. Dwukrotne "
 "naciśnięcie anuluje ustawienie aktualnej komórki nagłówka."
+
+msgid "Input Message is {title}: {message}"
+msgstr "Wiadomość wprowadzania {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "Wiadomość wprowadzania {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -8292,17 +8458,8 @@ msgstr "ramka tekstowa"
 msgid "comment: {text} by {author} on {date}"
 msgstr "komentarz: {text} by {author} dnia {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} przez {author} dnia {date}"
-
-msgid "unknown author"
-msgstr "nieznany autor"
-
-msgid "unknown date"
-msgstr "nieznana data"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} przez {revisionAuthor} {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text} przez {author} dnia {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8480,6 +8637,32 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "kolor domyślny"
+
+#, fuzzy
+#~ msgid "Unknown color"
+#~ msgstr "nieznany kolor"
+
+#~ msgid "selecting %s"
+#~ msgstr "zaznaczanie %s"
+
+#~ msgid "unselecting %s"
+#~ msgstr "odznaczanie %s"
+
+#~ msgid "unrevised"
+#~ msgstr "nieaktualizowane"
+
+#~ msgid "unknown author"
+#~ msgstr "nieznany autor"
+
+#~ msgid "unknown date"
+#~ msgstr "nieznana data"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType} przez {revisionAuthor} {revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "odczytuje obiekt posiadający aktualnie punkt uwagi"

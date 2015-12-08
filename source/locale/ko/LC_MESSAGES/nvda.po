@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-06 19:09+1000\n"
-"PO-Revision-Date: 2015-08-08 15:36-0800\n"
-"Last-Translator: Joseph Lee <joseph.lee22590@gmail,com>\n"
+"POT-Creation-Date: 2015-11-25 19:10+1000\n"
+"PO-Revision-Date: 2015-12-01 21:13+0900\n"
+"Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
 "Language: ko_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.5\n"
+"X-Generator: Poedit 1.7.1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -1119,19 +1119,19 @@ msgstr "이전 그래픽 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next block quote"
-msgstr "다음 블럭퀕으로 이동합니다"
+msgstr "다음 인용문으로 이동합니다"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next block quote"
-msgstr "다음 블럭퀕 없음"
+msgstr "다음 인용문 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous block quote"
-msgstr "이전 블럭퀕으로 이동합니다."
+msgstr "이전 인용문으로 이동합니다."
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous block quote"
-msgstr "이전 블럭퀕 없음"
+msgstr "이전 인용문 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "skips forward past a block of links"
@@ -1214,18 +1214,18 @@ msgstr "랜드마크 (&D)"
 
 #. Translators: The title of the browse mode Elements List dialog.
 msgid "Elements List"
-msgstr "구성요소 목록"
+msgstr "요소 목록"
 
 #. Translators: The label of a group of radio buttons to select the type of element
 #. in the browse mode Elements List dialog.
 msgid "Type:"
-msgstr "구성요소"
+msgstr "유형"
 
 # Translation: "Find from elements list".
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
 msgid "&Filter by:"
-msgstr "특정 구성요소 이름 검색 (&F)"
+msgstr "특정 요소 이름 검색 (&F)"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
@@ -1299,6 +1299,24 @@ msgctxt "symbolLevel"
 msgid "character"
 msgstr "글자"
 
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "처리 않함"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "처리함"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "기호 레벨 이하일때 처리"
+
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
 msgstr "알 수 없는 색상"
@@ -1336,7 +1354,7 @@ msgstr "베이지"
 #. Translators: the color Bisque (RGB 255, 228, 196) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Bisque"
-msgstr ""
+msgstr "회분홍"
 
 #. Translators: the color Black (RGB 0, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1356,7 +1374,7 @@ msgstr "파랑"
 #. Translators: the color Blue Violet (RGB 138, 43, 226) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Blue Violet"
-msgstr ""
+msgstr "블루 바이올렛"
 
 #. Translators: the color Brown (RGB 165, 42, 42) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1376,12 +1394,12 @@ msgstr ""
 #. Translators: the color Chartreuse (RGB 127, 255, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Chartreuse"
-msgstr ""
+msgstr "흐린 연두"
 
 #. Translators: the color Chocolate (RGB 210, 105, 30) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Chocolate"
-msgstr ""
+msgstr "흑갈색"
 
 #. Translators: the color Coral (RGB 255, 127, 80) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1396,22 +1414,22 @@ msgstr ""
 #. Translators: the color Cornsilk (RGB 255, 248, 220) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Cornsilk"
-msgstr ""
+msgstr "콘실크"
 
 #. Translators: the color Crimson (RGB 220, 20, 60) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Crimson"
-msgstr "크림슨색"
+msgstr "진한빨강"
 
 #. Translators: the color Cyan (RGB 0, 255, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Cyan"
-msgstr "시안색"
+msgstr "밝은 파랑"
 
 #. Translators: the color Dark Blue (RGB 0, 0, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Blue"
-msgstr "군청색"
+msgstr "어두운 파랑"
 
 #. Translators: the color Dark Cyan (RGB 0, 139, 139) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1426,12 +1444,12 @@ msgstr ""
 #. Translators: the color Dark Gray (RGB 169, 169, 169) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Gray"
-msgstr ""
+msgstr "어두운 회색"
 
 #. Translators: the color Dark Green (RGB 0, 100, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Green"
-msgstr "짙은 녹색"
+msgstr "탁한 초록"
 
 #. Translators: the color Dark Khaki (RGB 189, 183, 107) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1446,7 +1464,7 @@ msgstr ""
 #. Translators: the color Dark Olive Green (RGB 85, 107, 47) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Olive Green"
-msgstr ""
+msgstr "어두운 초록"
 
 #. Translators: the color Dark Orange (RGB 255, 140, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1461,7 +1479,7 @@ msgstr ""
 #. Translators: the color Dark Red (RGB 139, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Red"
-msgstr "흐린 빨강"
+msgstr "탁한 빨강"
 
 #. Translators: the color Dark Salmon (RGB 233, 150, 122) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1491,12 +1509,12 @@ msgstr ""
 #. Translators: the color Dark Violet (RGB 148, 0, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Dark Violet"
-msgstr ""
+msgstr "어두운 보라"
 
 #. Translators: the color Deep Pink (RGB 255, 20, 147) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Deep Pink"
-msgstr ""
+msgstr "진한 분홍"
 
 #. Translators: the color Deep Sky Blue (RGB 0, 191, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1571,7 +1589,7 @@ msgstr "귤색"
 #. Translators: the color Honeydew (RGB 240, 255, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Honeydew"
-msgstr ""
+msgstr "밝은 빨간 주황"
 
 #. Translators: the color Hot Pink (RGB 255, 105, 180) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1591,7 +1609,7 @@ msgstr "남색"
 #. Translators: the color Ivory (RGB 255, 255, 240) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Ivory"
-msgstr "상아색"
+msgstr "흰 노랑"
 
 #. Translators: the color Khaki (RGB 240, 230, 140) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1601,7 +1619,7 @@ msgstr "카키색"
 #. Translators: the color Lavender (RGB 230, 230, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Lavender"
-msgstr ""
+msgstr "연한 보라"
 
 #. Translators: the color Lavender Blush (RGB 255, 240, 245) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1621,7 +1639,7 @@ msgstr ""
 #. Translators: the color Light Blue (RGB 173, 216, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Blue"
-msgstr "밝은 파란색"
+msgstr "흐린 파랑"
 
 #. Translators: the color Light Coral (RGB 240, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1641,7 +1659,7 @@ msgstr ""
 #. Translators: the color Light Green (RGB 144, 238, 144) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Green"
-msgstr "밝은 녹색"
+msgstr "흐린 초록"
 
 #. Translators: the color Light Grey (RGB 211, 211, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1651,7 +1669,7 @@ msgstr "밝은 회색"
 #. Translators: the color Light Pink (RGB 255, 182, 193) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Pink"
-msgstr "밝은 분홍색"
+msgstr "흐린 분홍"
 
 #. Translators: the color Light Salmon (RGB 255, 160, 122) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1701,7 +1719,7 @@ msgstr ""
 #. Translators: the color Magenta (RGB 255, 0, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Magenta"
-msgstr "마젠타색"
+msgstr "마젠타"
 
 #. Translators: the color Maroon (RGB 128, 0, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1756,7 +1774,7 @@ msgstr ""
 #. Translators: the color Midnight Blue (RGB 25, 25, 112) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Midnight Blue"
-msgstr ""
+msgstr "파란 검정"
 
 #. Translators: the color Mint Cream (RGB 245, 255, 250) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1811,7 +1829,7 @@ msgstr "다홍색"
 #. Translators: the color Orchid (RGB 218, 112, 214) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Orchid"
-msgstr ""
+msgstr "흐린 자줏빛 분홍"
 
 #. Translators: the color Pale Goldenrod (RGB 238, 232, 170) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1976,7 +1994,7 @@ msgstr ""
 #. Translators: the color Violet (RGB 238, 130, 238) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Violet"
-msgstr ""
+msgstr "바이올렛"
 
 #. Translators: the color Wheat (RGB 245, 222, 179) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -2001,7 +2019,7 @@ msgstr "노랑"
 #. Translators: the color Yellow Green (RGB 154, 205, 50) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Yellow Green"
-msgstr "연두색"
+msgstr "연두"
 
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
@@ -2729,6 +2747,10 @@ msgstr ""
 msgid "overflowing"
 msgstr "겹침"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "잠금 해제됨"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "선택 안됨"
@@ -3071,6 +3093,18 @@ msgstr "문서 변경 추적 알림"
 msgid "Toggles on and off the reporting of revisions"
 msgstr "문서 변경 알림을 토글합니다"
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "텍스트 강조 알림 해제"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "텍스트 강조 알림 선택"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "텍스트 강조 알림을 토글합니다"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "문자 색깔 알림 해제"
@@ -3365,9 +3399,9 @@ msgstr "%s 클립보드에 복사됨"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
 msgstr ""
 "현재 네비게이터 객체를 읽습니다. 두번 누르면 철자를 읽어 줍니다. 세번 누르면 "
 "객체의 이름과 값을 클립보드에 복사합니다. "
@@ -4030,6 +4064,11 @@ msgid ""
 "hierarchy"
 msgstr "다음 갯체로 이동합니다. "
 
+# Reads, "no previous screen object."
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "이전 객체 없음"
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
@@ -4197,7 +4236,7 @@ msgstr "backspace"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "caps lock"
-msgstr "caps럭"
+msgstr "caps lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "ctrl"
@@ -4217,11 +4256,11 @@ msgstr "windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "enter"
-msgstr "엔터"
+msgstr "enter"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad enter"
-msgstr "num패드 enter"
+msgstr "숫자 키패드 enter"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "escape"
@@ -4249,7 +4288,7 @@ msgstr "딜리트"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad delete"
-msgstr "num패드 delete"
+msgstr "숫자 키패드 delete"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left arrow"
@@ -4273,7 +4312,7 @@ msgstr "메뉴"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "num lock"
-msgstr "num럭"
+msgstr "num lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "print screen"
@@ -4285,55 +4324,107 @@ msgstr "scroll럭"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 4"
-msgstr "num패드 4"
+msgstr "숫자 키패드 4"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 6"
-msgstr "num패드 6"
+msgstr "숫자 키패드 6"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 8"
-msgstr "num패드 8"
+msgstr "숫자 키패드 8"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 2"
-msgstr "num패드 2"
+msgstr "숫자 키패드 2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 9"
-msgstr "num패드 9"
+msgstr "숫자 키패드 9"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 3"
-msgstr "num패드 3"
+msgstr "숫자 키패드 3"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 1"
-msgstr "num패드 1"
+msgstr "숫자 키패드 1"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 7"
-msgstr "num패드 7"
+msgstr "숫자 키패드 7"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 5"
-msgstr "num패드 5"
+msgstr "숫자 키패드 5"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad divide"
-msgstr "num패드 divide"
+msgstr "숫자 키패드 /"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad multiply"
-msgstr "num패드 multiply"
+msgstr "숫자 키패드 *"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad minus"
-msgstr "num패드 minus"
+msgstr "숫자 키패드 -"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad plus"
-msgstr "num패드 plus"
+msgstr "숫자 키패드 +"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "숫자 키패드 ."
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "숫자 키패드 insert"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "numLock 숫자 키패드 0"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "numLock 숫자 키패드 1"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "numLock 숫자 키패드 2"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "numLock 숫자 키패드 3"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "numLock 숫자 키패드 4"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "numLock 숫자 키패드 5"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "numLock 숫자 키패드 6"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "numLock 숫자 키패드 7"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "numLock 숫자 키패드 8"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "numLock 숫자 키패드 9"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "insert"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left control"
@@ -4391,13 +4482,13 @@ msgid "unknown %s"
 msgstr "%s 키 인식 불가"
 
 msgid "on"
-msgstr "on"
+msgstr "켬"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 msgid "off"
-msgstr "off"
+msgstr "끔"
 
 #. Translators: Used when describing keys on the system keyboard with a particular layout.
 #. %s is replaced with the layout name.
@@ -4495,15 +4586,20 @@ msgstr "들여쓰기 없음"
 msgid "%d characters"
 msgstr "글자수: %d"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "%s 선택"
+msgid "%s selected"
+msgstr "%s 선택됨"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
+msgid "%s unselected"
 msgstr "%s 선택 해제"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s 선택됨"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4598,14 +4694,55 @@ msgstr "{backgroundColor} 배경 색상"
 msgid "line %s"
 msgstr "줄 %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "삽입됨"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "삽입 않됨"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "삭제됨"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "삭제 않됨"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "내용 변경: %s됨"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "내용 변경 않됨"
+#, python-format
+msgid "no revised %s"
+msgstr "내용 변경: %s 않됩"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "마크됨"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "마크 없음시작 마크 설정됨"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "strong"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "strong 없음"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "강조됨"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "강조 없음"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -5643,7 +5780,7 @@ msgstr "환경 저장됨"
 
 #. Translators: Message shown when current configuration cannot be saved such as when running NVDA from a CD.
 msgid "Could not save configuration - probably read only file system"
-msgstr "황경 파일 저장 실패 - 일기 전용 파일시스템일 수 있음"
+msgstr "환경 파일 저장 실패 - 읽기 전용 파일 시스템일 수 있음"
 
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
@@ -6260,7 +6397,7 @@ msgstr "모두 읽기시 적용"
 #. Translators: An error displayed when saving configuration profile triggers fails.
 msgid ""
 "Error saving configuration profile triggers - probably read only file system."
-msgstr "프로필 엑션 저장 실패 - 일기 전용 파일시스템일 수 있습니다."
+msgstr "프로필 엑션 저장 실패 - 읽기 전용 파일 시스템일 수 있습니다."
 
 #. Translators: The title of the configuration profile triggers dialog.
 msgid "Profile Triggers"
@@ -6314,7 +6451,7 @@ msgstr "경고"
 
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
-msgstr "프로필 생성 실패 - 일기 전용 파일시스템일 수 있음"
+msgstr "프로필 생성 실패 - 읽기 전용 파일 시스템일 수 있음"
 
 #. Translators: The prompt asking the user whether they wish to
 #. manually activate a configuration profile that has just been created.
@@ -7057,6 +7194,11 @@ msgstr "문서 변경 추적 알림 (&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "텍스트 강조 알림 (&M)"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "글꼴 스타일 알림 (&Y)"
 
@@ -7286,6 +7428,11 @@ msgstr "기호"
 msgid "Level"
 msgstr "레벨"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "엔진에서 처리"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "기호 변경"
@@ -7293,6 +7440,10 @@ msgstr "기호 변경"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "레벨 (&L)"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "기호 자체를 음성 엔진에서 처리 (&S)"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7325,7 +7476,7 @@ msgstr "단축키를 입력하십시오:"
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
-msgstr "사용자 단축키 설정 저장 실패 - 일기 전용 파일시스템일 수 있음"
+msgstr "사용자 단축키 설정 저장 실패 - 읽기 전용 파일 시스템일 수 있음"
 
 #. Translators: Describes a command.
 msgid "Exit math interaction"
@@ -7426,12 +7577,23 @@ msgstr "적용"
 msgid "Desktop"
 msgstr "바탕 화면"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "기본 색상"
 
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "알 수 없는 색상"
+
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "읽기 전용 셀"
+
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "차트, 주석 또는 공식이 있는 셀 목록을 보여줍니다"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Spreadsheet에 포함된 여러 요소를 보여줍니다"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -7447,6 +7609,11 @@ msgstr "주석 (&O)"
 #. in the browse mode Elements List dialog.
 msgid "&Formula"
 msgstr "수식 (&F)"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "&Sheet"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7510,6 +7677,12 @@ msgid ""
 msgstr ""
 "한번 누르면 특정 셀을 본 구역내의 및 또는 우측 셀의 행 머릿말 셀로 지정합니"
 "다. 두번 누르면 이 설정을 해제합니다."
+
+msgid "Input Message is {title}: {message}"
+msgstr "입력 메시지: {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "입력 메시지: {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -8261,17 +8434,8 @@ msgstr "텍스트 프레임"
 msgid "comment: {text} by {author} on {date}"
 msgstr "주석: {text}; 저자: {author}; 날짜: {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType}: {text}; 저자: {author}; 날짜: {date}"
-
-msgid "unknown author"
-msgstr "글쓴이 알 수 없음"
-
-msgid "unknown date"
-msgstr "날짜 알 수 없음"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "리비전: {revisionType}; 저자: {revisionAuthor}; 날짜: {revisionDate}"
 
 #, python-format
 msgid "%g characters"
@@ -8433,6 +8597,33 @@ msgstr "HIMS 한소네/브레일 에지"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr "차트, 주석 또는 공식이 있는 셀 목록을 보여줍니다"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "기본 색상"
+
+#~ msgid "selecting %s"
+#~ msgstr "%s 선택"
+
+#~ msgid "unselecting %s"
+#~ msgstr "%s 선택 해제"
+
+#~ msgid "unrevised"
+#~ msgstr "내용 변경 않됨"
+
+#~ msgid "unknown author"
+#~ msgstr "글쓴이 알 수 없음"
+
+#~ msgid "unknown date"
+#~ msgstr "날짜 알 수 없음"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr ""
+#~ "리비전: {revisionType}; 저자: {revisionAuthor}; 날짜: {revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "포커스된 객체를 알려줍니다."

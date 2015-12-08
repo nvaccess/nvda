@@ -13,6 +13,7 @@ import uuid
 import collections
 import oleacc
 import ui
+import speech
 from tableUtils import HeaderCellInfo, HeaderCellTracker
 import config
 import textInfos
@@ -28,6 +29,7 @@ from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
 import browseMode
+import inputCore
 import ctypes
 
 xlCenter=-4108
@@ -37,7 +39,12 @@ xlRight=-4152
 xlDistributed=-4117
 xlBottom=-4107
 xlTop=-4160
+xlDown=-4121
+xlToLeft=-4159
+xlToRight=-4161
+xlUp=-4162
 xlCellWidthUnitToPixels = 7.5919335705812574139976275207592
+xlSheetVisible=-1
 alignmentLabels={
 	xlCenter:"center",
 	xlJustify:"justify",
@@ -245,6 +252,53 @@ class FormulaExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 
 			return None
 
+class ExcelSheetQuickNavItem(ExcelQuickNavItem):
+
+	def __init__( self , nodeType , document , sheetObject , sheetCollection ):
+		self.label = sheetObject.Name
+		self.sheetIndex = sheetObject.Index
+		self.sheetObject = sheetObject
+		super( ExcelSheetQuickNavItem , self).__init__( nodeType , document , sheetObject , sheetCollection )
+
+	def __lt__(self,other):
+		return self.sheetIndex < other.sheetIndex
+
+	def moveTo(self):
+		self.sheetObject.Activate()
+		eventHandler.queueEvent("gainFocus",api.getDesktopObject().objectWithFocus())
+
+	def rename(self,newName):
+		if newName and newName!=self.label:
+			self.sheetObject.Name=newName
+			self.label=newName
+
+	@property
+	def isRenameAllowed(self):
+		return True
+
+	@property
+	def isAfterSelection(self):
+		activeSheet = self.document.Application.ActiveSheet
+		if self.sheetObject.Index <= activeSheet.Index:
+			return False
+		else:
+			return True
+
+class SheetsExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
+	"""
+	Allows iterating over an MS excel Sheets collection emitting L{QuickNavItem} object.
+	"""
+	quickNavItemClass=ExcelSheetQuickNavItem#: the QuickNavItem class that should be instantiated and emitted. 
+	def collectionFromWorksheet( self , worksheetObject ):
+		try:
+			return worksheetObject.Application.ActiveWorkbook.Worksheets
+		except(COMError):
+			return None
+
+	def filter(self,sheet):
+		if sheet.Visible==xlSheetVisible:
+			return True
+
 class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 
 	needsReviewCursorTextInfoWrapper=False
@@ -256,14 +310,93 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 		try:
 			return self.rootNVDAObject.excelWorksheetObject.name==self.rootNVDAObject.excelApplicationObject.activeSheet.name
 		except (COMError,AttributeError,NameError):
-			log.debugWarning("could not compair sheet names",exc_info=True)
+			log.debugWarning("could not compare sheet names",exc_info=True)
 			return False
 
+	def navigationHelper(self,direction):
+		excelWindowObject=self.rootNVDAObject.excelWindowObject
+		cellPosition = excelWindowObject.activeCell
+		try:
+			if   direction == "left":
+				cellPosition = cellPosition.Offset(0,-1)
+			elif direction == "right":
+				cellPosition = cellPosition.Offset(0,1)
+			elif direction == "up":
+				cellPosition = cellPosition.Offset(-1,0)
+			elif direction == "down":
+				cellPosition = cellPosition.Offset(1,0)
+			#Start-of-Column
+			elif direction == "startcol":
+				cellPosition = cellPosition.end(xlUp)
+			#Start-of-Row
+			elif direction == "startrow":
+				cellPosition = cellPosition.end(xlToLeft)
+			#End-of-Row
+			elif direction == "endrow":
+				cellPosition = cellPosition.end(xlToRight)
+			#End-of-Column
+			elif direction == "endcol":
+				cellPosition = cellPosition.end(xlDown)
+			else:
+				return
+		except COMError:
+			pass
+
+		try:
+			isMerged=cellPosition.mergeCells
+		except (COMError,NameError):
+			isMerged=False
+		if isMerged:
+			cellPosition=cellPosition.MergeArea(1)
+			obj=ExcelMergedCell(windowHandle=self.rootNVDAObject.windowHandle,excelWindowObject=excelWindowObject,excelCellObject=cellPosition)
+		else:
+			obj=ExcelCell(windowHandle=self.rootNVDAObject.windowHandle,excelWindowObject=excelWindowObject,excelCellObject=cellPosition)
+		cellPosition.Select()
+		cellPosition.Activate()
+		eventHandler.executeEvent('gainFocus',obj)
+    
+	def script_moveLeft(self,gesture):
+		self.navigationHelper("left")
+
+	def script_moveRight(self,gesture):
+		self.navigationHelper("right")
+
+	def script_moveUp(self,gesture):
+		self.navigationHelper("up")
+
+	def script_moveDown(self,gesture):
+		self.navigationHelper("down")
+
+	def script_startOfColumn(self,gesture):
+		self.navigationHelper("startcol")
+
+	def script_startOfRow(self,gesture):
+		self.navigationHelper("startrow")
+
+	def script_endOfRow(self,gesture):
+		self.navigationHelper("endrow")
+
+	def script_endOfColumn(self,gesture):
+		self.navigationHelper("endcol")
+
+	def script_activatePosition(self,gesture):
+		excelApplicationObject = self.rootNVDAObject.excelWorksheetObject.Application
+		if excelApplicationObject.ActiveSheet.ProtectContents and excelApplicationObject.activeCell.Locked:
+			# Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+			ui.message(_("This cell is non-editable"))
+			return
+		# Toggle browse mode pass-through.
+		self.passThrough = True
+		browseMode.reportPassThrough(self)
+	# Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
+	script_activatePosition.__doc__=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.")
+	script_activatePosition.category=inputCore.SCRCAT_BROWSEMODE
 
 	def __contains__(self,obj):
 		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle)
 
-
+	def _get_selection(self):
+		return self.rootNVDAObject._getSelection()
 
 	def _set_selection(self,info):
 		super(ExcelBrowseModeTreeInterceptor,self)._set_selection(info)
@@ -279,14 +412,30 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 			return CommentExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
 		elif nodeType=="formula":
 			return FormulaExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
+		elif nodeType=="sheet":
+			return SheetsExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
 		else:
 			raise NotImplementedError
 
 	def script_elementsList(self,gesture):
 		super(ExcelBrowseModeTreeInterceptor,self).script_elementsList(gesture)
 	# Translators: the description for the elements list command in Microsoft Excel.
-	script_elementsList.__doc__ = _("Presents a list of charts, cells with comments and cells with formulas")
+	script_elementsList.__doc__ = _("Lists various types of elements in this spreadsheet")
 	script_elementsList.ignoreTreeInterceptorPassThrough=True
+
+	__gestures = {
+		"kb:upArrow": "moveUp",
+		"kb:downArrow":"moveDown",
+		"kb:leftArrow":"moveLeft",
+		"kb:rightArrow":"moveRight",
+		"kb:control+upArrow":"startOfColumn",
+		"kb:control+downArrow":"endOfColumn",
+		"kb:control+leftArrow":"startOfRow",
+		"kb:control+rightArrow":"endOfRow",
+		"kb:enter": "activatePosition",
+		"kb(desktop):numpadEnter":"activatePosition",
+		"kb:space": "activatePosition",
+	}
 
 class ElementsListDialog(browseMode.ElementsListDialog):
 
@@ -300,6 +449,9 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("formula", _("&Formula")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
+		("sheet", _("&Sheet")),
 	)
 
 class ExcelBase(Window):
@@ -555,6 +707,12 @@ class ExcelWorksheet(ExcelBase):
 	def _get_firstChild(self):
 		cell=self.excelWorksheetObject.cells(1,1)
 		return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=cell)
+
+	def _get_states(self):
+		states=super(ExcelWorksheet,self).states
+		if self.excelWorksheetObject.ProtectContents:
+			states.add(controlTypes.STATE_PROTECTED)
+		return states
 
 	def script_changeSelection(self,gesture):
 		oldSelection=api.getFocusObject()
@@ -831,6 +989,8 @@ class ExcelCell(ExcelBase):
 				states.add(controlTypes.STATE_CROPPED)
 			if self._overlapInfo['obscuringRightBy'] > 0:
 				states.add(controlTypes.STATE_OVERFLOWING)
+		if self.excelWindowObject.ActiveSheet.ProtectContents and (not self.excelCellObject.Locked):
+			states.add(controlTypes.STATE_UNLOCKED)
 		return states
 
 	def getCellWidthAndTextWidth(self):
@@ -959,6 +1119,22 @@ class ExcelCell(ExcelBase):
 		if previous:
 			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=previous)
 
+	def _get_description(self):
+		try:
+			inputMessageTitle=self.excelCellObject.validation.inputTitle
+		except (COMError,NameError,AttributeError):
+			inputMessageTitle=None
+		try:
+			inputMessage=self.excelCellObject.validation.inputMessage
+		except (COMError,NameError,AttributeError):
+			inputMessage=None
+		if inputMessage and inputMessageTitle:
+			return _("Input Message is {title}: {message}").format( title = inputMessageTitle , message = inputMessage)
+		elif inputMessage:
+			return _("Input Message is {message}").format( message = inputMessage)
+		else:
+			return None
+
 	def script_reportComment(self,gesture):
 		commentObj=self.excelCellObject.comment
 		text=commentObj.text() if commentObj else None
@@ -986,6 +1162,22 @@ class ExcelCell(ExcelBase):
 				else:
 					self.excelCellObject.addComment(d.Value)
 		gui.runScriptModalDialog(d, callback)
+
+	def reportFocus(self):
+		# #4878: Excel specific code for speaking format changes on the focused object.
+		info=self.makeTextInfo(textInfos.POSITION_FIRST)
+		info.expand(textInfos.UNIT_CHARACTER)
+		formatField=textInfos.FormatField()
+		formatConfig=config.conf['documentFormatting']
+		for field in info.getTextWithFields(formatConfig):
+			if isinstance(field,textInfos.FieldCommand) and isinstance(field.field,textInfos.FormatField):
+				formatField.update(field.field)
+		if not hasattr(self.parent,'_formatFieldSpeechCache'):
+			self.parent._formatFieldSpeechCache={}
+		text=speech.getFormatFieldSpeech(formatField,attrsCache=self.parent._formatFieldSpeechCache,formatConfig=formatConfig) if formatField else None
+		if text:
+			speech.speakText(text)
+		super(ExcelCell,self).reportFocus()
 
 	__gestures = {
 		"kb:NVDA+shift+c": "setColumnHeader",

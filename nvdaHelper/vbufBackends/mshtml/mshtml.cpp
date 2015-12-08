@@ -497,6 +497,9 @@ inline void fillTextFormatting_helper(IHTMLElement2* pHTMLElement2, VBufStorage_
 	if(parentNode&&!parentNode->language.empty()) {
 		node->addAttribute(L"language",parentNode->language);
 	}
+	wostringstream s;
+	s<<(parentNode->formatState);
+	node->addAttribute(L"formatState",s.str());
 	IHTMLCurrentStyle* pHTMLCurrentStyle=NULL;
 	if(pHTMLElement2->get_currentStyle(&pHTMLCurrentStyle)!=S_OK||!pHTMLCurrentStyle) {
 		LOG_DEBUG(L"Could not get IHTMLCurrentStyle");
@@ -742,6 +745,12 @@ wostringstream tempStringStream;
 	return tableInfo;
 }
 
+const unsigned int FORMATSTATE_INSERTED=1;
+const unsigned int FORMATSTATE_DELETED=2;
+const unsigned int FORMATSTATE_MARKED=4;
+const unsigned int FORMATSTATE_STRONG=8;
+const unsigned int FORMATSTATE_EMPH=16;
+
 VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, VBufStorage_controlFieldNode_t* oldNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfo, int* LIIndexPtr, bool ignoreInteractiveUnlabelledGraphics, bool allowPreformattedText, bool shouldSkipText, bool inNewSubtree,set<VBufStorage_controlFieldNode_t*>& atomicNodes) {
 	BSTR tempBSTR=NULL;
 	wostringstream tempStringStream;
@@ -862,8 +871,32 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		language=static_cast<MshtmlVBufStorage_controlFieldNode_t*>(parentNode)->language;
 	}
 
+	// get parent's formatState
+	unsigned int formatState=0;
+	if(parentNode) {
+		formatState=((MshtmlVBufStorage_controlFieldNode_t*)parentNode)->formatState;
+	} else if(oldNode&&oldNode->getParent()) {
+		formatState=((MshtmlVBufStorage_controlFieldNode_t*)(oldNode->getParent()))->formatState;
+	}
+if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
+		formatState|=FORMATSTATE_INSERTED;
+	}
+	if(!(formatState&FORMATSTATE_DELETED)&&nodeName.compare(L"DEL")==0) {
+		formatState|=FORMATSTATE_DELETED;
+	}
+	if(!(formatState&FORMATSTATE_MARKED)&&nodeName.compare(L"MARK")==0) {
+		formatState|=FORMATSTATE_MARKED;
+	}
+	if(!(formatState&FORMATSTATE_STRONG)&&nodeName.compare(L"STRONG")==0) {
+		formatState|=FORMATSTATE_STRONG;
+	}
+	if(!(formatState&FORMATSTATE_EMPH)&&nodeName.compare(L"EM")==0) {
+		formatState|=FORMATSTATE_EMPH;
+	}
+	
 	bool isDocRoot=!parentNode&&(!oldNode||!oldNode->getParent());
 	VBufStorage_controlFieldNode_t* node=new MshtmlVBufStorage_controlFieldNode_t(docHandle,ID,isBlock,this,isDocRoot,pHTMLDOMNode,language);
+	((MshtmlVBufStorage_controlFieldNode_t*)node)->formatState=formatState;
 	((MshtmlVBufStorage_controlFieldNode_t*)node)->preProcessLiveRegion((MshtmlVBufStorage_controlFieldNode_t*)(oldNode?oldNode->getParent():parentNode),attribsMap);
 	bool wasInNewSubtree=inNewSubtree;
 	if(!wasInNewSubtree&&!oldNode) {
@@ -989,6 +1022,13 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		|| nodeName == L"OBJECT" || nodeName == L"APPLET" || IARole == ROLE_SYSTEM_APPLICATION || IARole == ROLE_SYSTEM_DIALOG);
 	// True if the name definitely came from the author.
 	bool nameFromAuthor=false;
+
+	//Add opening quote for <Q> elements
+	if(nodeName.compare(L"Q")==0) {
+		VBufStorage_textFieldNode_t* textNode=buffer->addTextFieldNode(parentNode,previousNode,L"\x201c");
+		fillTextFormattingForNode(pHTMLDOMNode,textNode);
+		previousNode=textNode;
+	}
 
 	//Generate content for nodes
 	wstring contentString=L"";
@@ -1248,6 +1288,12 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	//Add all the collected attributes to the node
 	for(tempIter=attribsMap.begin();tempIter!=attribsMap.end();++tempIter) {
 		parentNode->addAttribute(tempIter->first,tempIter->second);
+	}
+
+	// Closing quote for <Q> elements
+	if(nodeName.compare(L"Q")==0) {
+		VBufStorage_textFieldNode_t* textNode=buffer->addTextFieldNode(parentNode,previousNode,L"\x201d");
+		fillTextFormattingForNode(pHTMLDOMNode,textNode);
 	}
 
 	// Report any live region update for this node

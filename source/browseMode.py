@@ -7,6 +7,7 @@ import itertools
 import collections
 import winsound
 import time
+import weakref
 import wx
 import queueHandler
 from logHandler import log
@@ -132,6 +133,16 @@ class QuickNavItem(object):
 		"""
 		raise NotImplementedError
 
+	def rename(self,newName):
+		"""
+		Renames this item with the new name.
+		"""
+		raise NotImplementedError
+
+	@property
+	def isRenameAllowed(self):
+		return False
+
 class TextInfoQuickNavItem(QuickNavItem):
 	""" Represents a quick nav item in a browse mode document who's positions are represented by a L{textInfos.TextInfo}. """
 
@@ -182,7 +193,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 	@property
 	def isAfterSelection(self):
 		caret=self.document.makeTextInfo(textInfos.POSITION_CARET)
-		return self.textInfo.compareEndPoints(caret, "startToStart") <= 0
+		return self.textInfo.compareEndPoints(caret, "startToStart") > 0
 
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	scriptCategory = inputCore.SCRCAT_BROWSEMODE
@@ -230,6 +241,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		@type pos: Usually an L{textInfos.TextInfo} 
 		"""
 		return iter(())
+
+	def _iterNotLinkBlock(self, direction="next", pos=None):
+		raise NotImplementedError
 
 	def _quickNavScript(self,gesture, itemType, direction, errorMessage, readUnit):
 		if itemType=="notLinkBlock":
@@ -581,9 +595,11 @@ class ElementsListDialog(wx.Dialog):
 		child.Bind(wx.EVT_RADIOBOX, self.onElementTypeChange)
 		mainSizer.Add(child,proportion=1)
 
-		self.tree = wx.TreeCtrl(self, wx.ID_ANY, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE)
+		self.tree = wx.TreeCtrl(self, wx.ID_ANY, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE | wx.TR_EDIT_LABELS)
 		self.tree.Bind(wx.EVT_SET_FOCUS, self.onTreeSetFocus)
 		self.tree.Bind(wx.EVT_CHAR, self.onTreeChar)
+		self.tree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT, self.onTreeLabelEditBegin)
+		self.tree.Bind(wx.EVT_TREE_END_LABEL_EDIT, self.onTreeLabelEditEnd)
 		self.treeRoot = self.tree.AddRoot("root")
 		mainSizer.Add(self.tree,proportion=7,flag=wx.EXPAND)
 
@@ -640,6 +656,7 @@ class ElementsListDialog(wx.Dialog):
 		self._initialElement = None
 
 		parentElements = []
+		isAfterSelection=False
 		for item in self.document._iterNodesByType(elType):
 			# Find the parent element, if any.
 			for parent in reversed(parentElements):
@@ -656,14 +673,16 @@ class ElementsListDialog(wx.Dialog):
 			element=self.Element(item,parent)
 			self._elements.append(element)
 
-			if item.isAfterSelection:
-				# The element immediately preceding or overlapping the caret should be the initially selected element.
-				# This element immediately follows the caret, so we want the previous element.
-				try:
-					self._initialElement = self._elements[-1]
-				except IndexError:
-					# No previous element.
-					pass
+			if not isAfterSelection:
+				isAfterSelection=item.isAfterSelection
+				if not isAfterSelection:
+					# The element immediately preceding or overlapping the caret should be the initially selected element.
+					# Since we have not yet passed the selection, use this as the initial element. 
+					try:
+						self._initialElement = self._elements[-1]
+					except IndexError:
+						# No previous element.
+						pass
 
 			# This could be the parent of a subsequent element, so add it to the parents stack.
 			parentElements.append(element)
@@ -736,6 +755,13 @@ class ElementsListDialog(wx.Dialog):
 			else:
 				wx.Bell()
 
+		elif key == wx.WXK_F2:
+			item=self.tree.GetSelection()
+			if item:
+				selectedItemType=self.tree.GetItemPyData(item).item
+				self.tree.EditLabel(item)
+				evt.Skip()
+
 		elif key >= wx.WXK_START or key == wx.WXK_BACK:
 			# Non-printable character.
 			self._searchText = ""
@@ -753,6 +779,18 @@ class ElementsListDialog(wx.Dialog):
 			else:
 				self._searchCallLater = wx.CallLater(1000, self._clearSearchText)
 			self.search(self._searchText)
+
+	def onTreeLabelEditBegin(self,evt):
+		item=self.tree.GetSelection()
+		selectedItemType = self.tree.GetItemPyData(item).item
+		if not selectedItemType.isRenameAllowed:
+			evt.Veto()
+
+	def onTreeLabelEditEnd(self,evt):
+			selectedItemNewName=evt.GetLabel()
+			item=self.tree.GetSelection()
+			selectedItemType = self.tree.GetItemPyData(item).item
+			selectedItemType.rename(selectedItemNewName)
 
 	def _clearSearchText(self):
 		self._searchText = ""
@@ -1053,13 +1091,16 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 			return False
 		states = obj.states
 		role = obj.role
+		if controlTypes.STATE_EDITABLE in states and controlTypes.STATE_UNAVAILABLE not in states:
+			return True
 		# Menus sometimes get focus due to menuStart events even though they don't report as focused/focusable.
 		if not obj.isFocusable and controlTypes.STATE_FOCUSED not in states and role != controlTypes.ROLE_POPUPMENU:
 			return False
-		if controlTypes.STATE_READONLY in states and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX):
+		# many controls that are read-only should not switch to passThrough. 
+		# However, certain controls such as combo boxes and readonly edits are read-only but still interactive.
+		# #5118: read-only ARIA grids should also be allowed (focusable table cells, rows and headers).
+		if controlTypes.STATE_READONLY in states and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_TABLEROW, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER):
 			return False
-		if reason == controlTypes.REASON_CARET:
-			return role == controlTypes.ROLE_EDITABLETEXT or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)
 		if reason == controlTypes.REASON_FOCUS and role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_TAB):
 			return True
 		if role in (controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_LIST, controlTypes.ROLE_SLIDER, controlTypes.ROLE_TABCONTROL, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_SPINBUTTON, controlTypes.ROLE_TABLEROW, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_CHECKMENUITEM, controlTypes.ROLE_RADIOMENUITEM) or controlTypes.STATE_EDITABLE in states:
@@ -1318,11 +1359,34 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 		@return: C{True} if L{obj} is within an application, C{False} otherwise.
 		@rtype: bool
 		"""
+		# We cache the result for each object we walk.
+		# There can be browse mode documents within other documents and the result might be different between these,
+		# so the cache must be maintained on the TreeInterceptor rather than the object itself.
+		try:
+			cache = self._isInAppCache
+		except AttributeError:
+			# Create this lazily, as this method isn't used by all browse mode implementations.
+			cache = self._isInAppCache = weakref.WeakKeyDictionary()
+		objs = []
+		def doResult(result):
+			# Cache this on descendants we've walked over.
+			for obj in objs:
+				cache[obj] = result
+			return result
+
 		while obj and obj != self.rootNVDAObject:
+			inApp = cache.get(obj)
+			if inApp is not None:
+				# We found a cached result.
+				return doResult(inApp)
+			objs.append(obj)
 			if obj.role in self.APPLICATION_ROLES:
-				return True
-			obj = obj.parent
-		return False
+				return doResult(True)
+			# Cache container.
+			container = obj.container
+			obj.container = container
+			obj = container
+		return doResult(False)
 
 	def _get_documentConstantIdentifier(self):
 		"""Get the constant identifier for this document.

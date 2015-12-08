@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-06 19:09+1000\n"
-"PO-Revision-Date: 2015-08-15 23:12+0330\n"
+"POT-Creation-Date: 2015-11-10 10:22+1000\n"
+"PO-Revision-Date: 2015-11-15 22:25+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@freelists.org>\n"
 "Language: fa\n"
@@ -1294,6 +1294,24 @@ msgstr "همه"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "نویسه"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "هرگز"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "همیشه"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "تنها پایین‌تر از سطحِ نشانه"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -2726,6 +2744,10 @@ msgstr "حذف‌شده"
 msgid "overflowing"
 msgstr "اضافی"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "قفل‌نشده"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "انتخاب نشده"
@@ -3069,6 +3091,18 @@ msgstr "بازبینی‌ها گزارش میشوند."
 msgid "Toggles on and off the reporting of revisions"
 msgstr "گزارش شدنِ بازبینی‌ها را فعال یا غیرِ فعال میکند."
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "اعلامِ تأکید، خاموش"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "اعلامِ تأکید، روشن"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "اعلامِ تأکید را فعال یا غیر فعال میکند."
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "رنگ‌ها گزارش نمیشوند."
@@ -3366,9 +3400,9 @@ msgstr "%s در کلیپ‌برد کپی شد."
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
 msgstr ""
 "شیءِ پِیمایِشگرِ جاری را اعلام میکند. با دو بار فشردن، این اطلاعات را هِجّی و با "
 "سه بار فشردن نام و مقدارِ این شیء را در کلیپ‌برد کپی میکند."
@@ -4052,6 +4086,10 @@ msgid ""
 "hierarchy"
 msgstr "از نظرِ رتبه بندی در پِیمایِشِ اشیاء، به شیءِ بعدی در یک نمای هم‌رتبه می‌رود."
 
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "شیءِ قبلی‌ای نیست"
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
@@ -4357,6 +4395,58 @@ msgid "numpad plus"
 msgstr "علامتِ بعلاوه در صفحه کلیدِ اعداد"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "ممیز در صفحه‌کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "اینْسِرت در صفحه‌کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "صفر در صفحه‌کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "1 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "2 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "3 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "۴ در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "5 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "6 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "7 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "8 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "9 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "اینْسِرت"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "کنترلِ چپ"
 
@@ -4517,15 +4607,20 @@ msgstr "بدونِ تورفتگی"
 msgid "%d characters"
 msgstr "%d نویسه"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "انتخاب کردنِ %s"
+msgid "%s selected"
+msgstr "%s انتخاب شد"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "انتخاب نکردنِ %s"
+msgid "%s unselected"
+msgstr "%s انتخاب نشد"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s به جایش انتخاب شد"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4620,14 +4715,55 @@ msgstr "پس‌زمینه‌ی {backgroundColor} رنگ"
 msgid "line %s"
 msgstr "خطِّ %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "درج‌شده"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "درج‌نشده"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "حذف‌شده"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "حذف‌نشده"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "%s بازنگری شد"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "برای بازبینی نشانه‌گذاری شد"
+#, python-format
+msgid "no revised %s"
+msgstr "%s بازبینی‌نشده"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "نشانه‌گذاری‌شده"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "نشانه‌گذاری‌نشده"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "مهم"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "غیرِ مهم"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "تاکید‌شده"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "تاکید‌نشده"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -7083,6 +7219,11 @@ msgstr "گزارش کردنِ بازبینی‌های &ویراستار"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "اعلامِ ت&اکید"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "گزارش کردنِ &سبْک"
 
@@ -7312,6 +7453,11 @@ msgstr "نشانه"
 msgid "Level"
 msgstr "سطح"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "ارسالِ خودِ نشانه"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "تغییرِ نشانه"
@@ -7319,6 +7465,10 @@ msgstr "تغییرِ نشانه"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "&سطح"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "&ارسالِ نشانه‌ی حقیقی به موتورِ سخن‌گو"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7455,8 +7605,14 @@ msgstr "فراخوانی"
 msgid "Desktop"
 msgstr "میزِ کار"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "رنگِ پیش‌فرض"
+
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "این خانه غیرِ قابلِ ویرایش است"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
@@ -7477,6 +7633,11 @@ msgstr "ت&وضیح"
 #. in the browse mode Elements List dialog.
 msgid "&Formula"
 msgstr "&فرمول"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "&برگه"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7542,6 +7703,12 @@ msgstr ""
 "با یک بار فشردن، این خانه به عنوانِ سر‌سطرِ نخست برای خانه های پایینتر و سمتِ "
 "راستِ آن که در این ناحیه قرار دارند تنظیم میشود. با دو بار فشردن، از سر‌سطرِ "
 "جاری یا این خانه صرفِ نظر میشود."
+
+msgid "Input Message is {title}: {message}"
+msgstr "پیام ورودی عبارت است از  {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "پیام ورودی عبارت است از {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -8290,17 +8457,8 @@ msgstr "قابِ متنی"
 msgid "comment: {text} by {author} on {date}"
 msgstr "توضیح: {text} توسطِ {author} به تاریخِ {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} توسطِ {author} به تاریخِ {date}"
-
-msgid "unknown author"
-msgstr "نویسنده‌ی ناشناس"
-
-msgid "unknown date"
-msgstr "تاریخِ نامشخص"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} توسط {revisionAuthor} در تاریخِ {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text} توسطِ {author} در {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8468,6 +8626,32 @@ msgstr "از سِری نمایشگرهای HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "رنگِ پیش‌فرض"
+
+#, fuzzy
+#~ msgid "Unknown color"
+#~ msgstr "رنگِ نامشخص"
+
+#~ msgid "selecting %s"
+#~ msgstr "انتخاب کردنِ %s"
+
+#~ msgid "unselecting %s"
+#~ msgstr "انتخاب نکردنِ %s"
+
+#~ msgid "unrevised"
+#~ msgstr "برای بازبینی نشانه‌گذاری شد"
+
+#~ msgid "unknown author"
+#~ msgstr "نویسنده‌ی ناشناس"
+
+#~ msgid "unknown date"
+#~ msgstr "تاریخِ نامشخص"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType} توسط {revisionAuthor} در تاریخِ {revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "شیئی را که در تیر‌رَسِ صفحه کلید قرار دارد گزارش میدهد"

@@ -3,6 +3,64 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.1 =
+
+
+= 2015.4 =
+Les points forts de cette version incluent des améliorations de performances sous Windows 10 ; l'inclusion dans les options d'accessibilité sous Windows 8 et au-delà; des amélioration sous Microsoft Excel, incluant la possibilité de lister et renommer les feuilles et l'accès aux cellules verrouillées dans les feuilles protégées; et le support de l'édition du texte enrichi sous Mozilla Firefox, Google Chrome et Mozilla Thunderbird.
+
+== Nouvelles Fonctionnalités ==
+- NVDA apparaît maintenant dans les Options d'Ergonomie sous Windows 8 et au-delà. (#308)
+- Quand on se déplace dans les cellules sous Excel, les changement de mise en forme sont maintenant annoncés automatiquement si les options appropriées sont activées dans le dialogue "Mise en forme des documents". (#4878)
+- Une option " Annoncer l'Emphase " a été ajoutée au dialogue " Mise en Forme des documents " de NVDA. Activée par défaut, cette option autorise NVDA à annoncer automatiquement l'existence de texte mis en emphase dans les documents. Pour l'instant ceci ne fonctionne que pour les balises em et strong en mode navigation pour Internet Explorer et autres contrôles MSHTML. (#4920)
+- L'existence de texte inséré ou effacé est maintenant annoncée en mode navigation pour Internet Explorer et autres contrôles MSHTML, si l'option "Annoncer les révisions de l'éditeur" de NVDA est activée. (#4920)
+- Quand, dans la liste d'éléments de NVDA sous Microsoft Word, des demandes de modification sont constatées, plus d'informations telles que la nature du changement des propriétés de formatage sont maintenant affichées. (#4920)
+- Microsoft Excel : lister et renommer les feuilles est maintenant possible depuis la liste d'éléments de NVDA (NVDA+f7). (#4630, #4414)
+- Il est maintenant possible de configurer si un symbole réel doit être envoyé au synthétiseur (ex. pour créer une pause ou un changement d'inflection) dans le dialogue de prononciation des symboles. (#5234)
+- Sous Microsoft Excel, NVDA annonce maintenant tout message d'entrée défini par l'auteur de la feuille sur les cellules. (#5051)
+- Support des terminaux Baum Pronto! V4 et VarioUltra connectés en Bluetooth. (#3717)
+- Support de l'édition du texte enrichi dans les applications Mozilla telles que Google Docs avec le support braille activé dans Mozilla Firefox et la composition HTML sous Mozilla Thunderbird. (#1668)
+- Support de l'édition du texte enrichi sous Google Chrome et les navigateurs basés sur Chrome tels que Google Docs avec le support braille activé. (#2634)
+ - Ceci requiert Chrome version 47 ou au-delà.
+- En mode navigation sous Microsoft Excel, on peut naviguer vers les cellules verrouillées dans les feuilles protégées. (#4952)
+
+
+== Changements ==
+- L'option " Annoncer les Révisions de l'Éditeur " dans le dialogue "Mise en forme des Documents" de NVDA est maintenant activée par défaut. (#4920)
+- Quand on se déplace par caractère sous Microsoft Word et que l'option "Annoncer les révisions de l'éditeur" de NVDA est activée, NVDA annonce maintenant moins d'informations concernant les demandes de modification, ce qui rend la navigation plus efficace. Pour voir les informations supplémentaires, utilisez la liste d'éléments. (#4920)
+- Le traducteur braille liblouis a été mis à jour à la version 2.6.4. (#5341)
+- Plusieurs symboles (incluant les symboles mathématiques de base) ont été déplacés au niveau "quelques-uns" pour qu'ils soient annoncés par défaut. (#3799)
+- Si le synthétiseur le supporte, la parole devrait maintenant marquer une pause pour les parenthèses et le tiret demi cadratin (–). (#3799)
+- Quand on sélectionne du texte, le texte est annoncé avant l'indication de sélection et non après. (#1707)
+
+
+== Corrections de Bogues ==
+- Améliorations majeures de performances quand on navigue dans la liste de messages d'Outlook 2010/2013. (#5268)
+- Dans un graphique sous Microsoft Excel, la navigation avec certaines touches (comme changer de feuille avec contrôle+pagePrec et contrôle+pageSuiv) fonctionne maintenant correctement. (#5336)
+- Correction de l'apparence visuelle  des boutons dans le dialogue d'avertissement qui est affiché quand on essaie d'installer une version inférieure de NVDA. (#5325)
+- Sous Windows 8 et au-delà, NVDA démarre maintenant beaucoup plus tôt quand il est configuré pour démarrer après la connexion à Windows. (#308)
+ - Si vous avez configuré cela avec une version précédente de NVDA, vous devrez le désactiver puis le réactiver dans le dialogue Paramètres Généraux pour que le changement prenne effet. Suivez cette procédure :
+  + Ouvrez le dialogue "Paramètres Généraux".
+  + Décochez la case "Démarrer NVDA automatiquement après ma connexion à Windows".
+  + Appuyez sur le bouton OK.
+  + Ouvrez de nouveau le dialogue "Paramètres Généraux".
+  + Cochez la case "Démarrer NVDA automatiquement après ma connexion à Windows".
+  + Appuyez sur le bouton OK.
+- Améliorations de performances pour UI Automation incluant  l'explorateur de fichiers et la barre des tâches. (#5293)
+- Améliorations de performance pour UI Automation incluant  l'Explorateur de fichier et la barre des tâches. (#5293)
+- NVDA passe maintenant correctement en mode formulaire quand on tabule vers des contrôles ARIA grid en lecture seule en mode navigation pour Mozilla Firefox et autres contrôles basés sur Gecko. (#5118)
+- NVDA annonce maintenant correctement " Pas de précédent " au lieu de " pas de suivant " quand il n'y a plus d'objet quand on glisse à gauche sur un écran tactile.
+- Correction des problèmes apparaissant à la frappe de plusieurs mots dans la zone de filtre dans le dialogue "Gestes de commandes". (#5426)
+- NVDA ne se bloque plus parfois quand on se reconnecte à un terminal braille HumanWare Brailliant BI/B series via USB. (#5406)
+- Dans les langues comportant des caractères conjoints, la description de caractère fonctionne maintenant comme prévu pour les caractères anglais en majuscule. (#5375)
+- NVDA ne devrait plus se bloquer occasionnellement à l'affichage du menu Démarrer de Windows 10. (#5417)
+- Dans Skype for Desktop, les notifications qui s'affichent avant qu'une notification précédente ne disparaisse sont maintenant annoncées. (#4841)
+- les notifications sont maintenant annoncées correctement dans Skype for Desktop 7.12 et au-delà. (#5405)
+- NVDA annonce maintenant correctement le focus quand on quitte un menu contextuel dans certaines applications comme Jart. (#5302)
+- Sous Windows 7 et au-delà, la couleur est de nouveau annoncée dans certaines applications comme Wordpad. (#5352)
+- En édition sous Microsoft PowerPoint, l'appui sur Entrer annonce maintenant automatiquement le texte entré tel qu'une puce ou un nombre. (#5360)
+
+
 = 2015.3 =
 Les points forts de cette version incluent le support initial de Windows 10 ; la possibilité de désactiver la navigation par lettre en mode navigation (utile pour certainnes applications web) ; Des améliorations sous Internet Explorer et des corrections de texte brouillé quand on tape dans certaines applications avec le braille actif.
  
@@ -16,6 +74,7 @@ Les points forts de cette version incluent le support initial de Windows 10 ; la
 - Nouvelles tables braille : Finnois 6 points, Irlandais intégral, Irlandais abrégé, Coréen intégral (2006), Coréen abrégé (2006). (#5137, #5074, #5097)
 - Le clavier QWERTY de l'afficheur braille Papenmeier BRAILLEX Live Plus est maintenant supporté. (#5181)
 - Support expérimental du navigateur web et moteur de navigation Microsoft Edge sous Windows 10. (#5212)
+- Nouvelle langue : Kannada.
  
 
 == Changements ==
@@ -72,7 +131,7 @@ Les points forts de cette version incluent la possibilité de lire les graphique
 
 == Corrections de Bogues ==
 - Les descriptions de caractère sont maintenant traitées correctement pour les caractères conjoints dans certaines langues Indiennes. (#4582)
-- Si l'option "Se baser sur la langue de la voix pour le traitement des caractères et symboles" est cochée, le dialogue Prononciation des symboles et ponctuations utilise maintenant correctement la langue de la voix. La langue dont la prononciation est éditée est aussi indiquée dans le titre du dialogue. (#4930)
+- Si l'option " Se baser sur la langue de la voix pour le traitement des caractères et symboles " est cochée, le dialogue Prononciation des symboles et ponctuations utilise maintenant correctement la langue de la voix. La langue dont la prononciation est éditée est aussi indiquée dans le titre du dialogue. (#4930)
 - Dans Internet Explorer et autres contrôles MSHTML, les caractères frappés ne sont plus annoncés de manière inappropriée dans les listes déroulantes éditables telles que le champ de recherche Google sur la page d'accueil de Google. (#4976)
 - Quand on sélectionne des couleurs dans les applications Microsoft Office, le nom des couleurs est maintenant annoncé. (#3045)
 - L'affichage du Braille Danois fonctionne à nouveau. (#4986)
@@ -1712,5 +1771,5 @@ ActiveVoice.ActiveVoice. Ces deux pilotes ont des problèmes, à vous de voir ce
 - Si une erreur est détectée quand on choisit une langue via le dialogue Langue de l'interface utilisateur, NVDA alerte l'utilisateur à ce sujet.
 - NVDA demande si la configuration doit être sauvegardée et s'il doit redémarrer lors du changement de langue sous le dialogue Langue de l'interface utilisateur. NVDA doit être relancé pour que les changements prennent effet.
 - Lorsqu'une synthèse vocale choisie par l'utilisateur ne peut pas être chargé par le moyen du dialogue Synthétiseur, NVDA affiche une alerte à cet effet.
-- Lors du chargement d'une synthèse vocale pour la première fois, NVDA permet que ce dernier choisisse les paramètres appropriés de sa voix, son débit et sa tonalité, au lieu de le forcer à utiliser des paramètres par défaut que le lecteur d'écran juge adéquats. Ceci résout un problème où Eloquence et IBM Viavoice Outloud Sapi 4 tendaient à parler vraiment trop rapidement de prime abord.
+- Lors du chargement d'une synthèse vocale pour la première fois, NVDA permet que ce dernier choisisse les paramètres appropriés de sa voix, son débit et sa hauteur, au lieu de le forcer à utiliser des paramètres par défaut que le lecteur d'écran juge adéquats. Ceci résout un problème où Eloquence et IBM Viavoice Outloud Sapi 4 tendaient à parler vraiment trop rapidement de prime abord.
 

@@ -3,6 +3,63 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.1 =
+
+
+= 2015.4 =
+O subliñable nesta versión inclúe melloras de rendemento en Windows 10; a inclusión no Centro de Accesibilidade en Windows 8 e posterior; melloras para Microsoft Excel, incluindo o listado e o renomeado de follas e o aceso a celdas bloqueadas en follas con protección; e apoio para a edición de texto enriquecido en Mozilla Firefox, Google Chrome e Mozilla Thunderbird.
+
+== Novas Características ==
+- NVDA agora aparece no Centro de Accesibilidade en Windows 8 e posterior. (#308)
+- Ó se mover por celdas en Excel, os cambios de formato agora anúncianse automáticamente se se activaron as opcións apropriadas nas opcións do diálogo Formato de Documento do NVDA. (#4878)
+- Engadiuse unha opción Anunciar Énfase ó diálogo Opcións de Formato de Documento do NVDA. Activada por omisión, esta opción permite ó NVDA anunciar automáticamente a existencia de texto destacado en documentos. Ate o de agora só está soportado para as etiquetas em e strong en modo exploración para Internet Explorer e outros controis MSHTML. (#4920)
+- A existencia de texto insertado e eliminado agora anúnciase en modo exploración para Internet Explorer e outros controis MSHTML, se a opción Anunciar Revisión do Editor do NVDA está activada. (#4920)
+- Ó ver seguemento de cambios na lista de elementos do NVDA para Microsoft Word, agora amósase máis información como que propiedades de formato se cambiaron. (#4920)
+- Microsoft Excel: agora é posible listar e renomear follas dende a Lista de Elementos do NVDA (NVDA+f7). (#4630, #4414)
+- Agora é posible configurar se os símbolos actuais se envían ós sintetizadores de voz (ex.: para causar unha pausa ou para cambiar a entoación) no diálogo Pronunciación de Símbolos. (#5234)
+- En Microsoft Excel, NVDA agora anuncia calquera mensaxe de entrada posto polo autor da folla nas celdas. (#5051)
+- Apoio para as pantallas braille Baum Pronto! V4 e VarioUltra cando se conecten a través do Bluetooth. (#3717)
+- Apoio para a edición de texto enriquecido en aplicacións de Mozilla como Google Docs co apoio ó braille habilitado en Mozilla Firefox e composición HTML en Mozilla Thunderbird. (#1668)
+- Apoio para edición ou texto enriquecido en Google Chrome e navegadores baseados en Chrome como Google Docs co apoio braille habilitado. (#2634)
+ - Esto require de Chrome versión 47 ou posterior.
+- No modo exploración en Microsoft Excel, podes navegar a celdas bloqueadas en follas protexidas. (#4952)
+
+
+== Cambios ==
+- A opción Anunciar Revisións do Editor no diálogo Opcións de Formato de documento do NVDA agora actívase por omisión. (#4920)
+- Ó moverse por carácteres no Microsoft Word ca opción do NVDA Anunciar Vevisións do Editor, agora anúnciase menos información para seguemento de cambios, o que fai a navegación máis eficiente. Para ver a información extra, usa a Lista de Elementos. (#4920)
+- Actualizado o transcriptor braille liblouis translator  a 2.6.4. (#5341)
+- Varios símbolos (incluindo símbolos básicos matemáticos) movéronse ó nível algunha tal que sexan falados por omisión. (#3799)
+- Se o sintetizador o soporta, a voz agora debería se pausar para os parénteses e o guión final (–). (#3799)
+- Ó se selecionar texto, o texto anúnciase antes da indicación da selección en lugar de despois. (#1707)
+
+
+== Corrección de fallos ==
+- Grandes melloras de rendemento ó navegar pola barra de mensaxes en Outlook 2010/2013. (#5268)
+- Nun gráfico en Microsoft Excel, ó navegar con certas teclas (como ó cambiar de folla con control+rePáx e control+avPáx) agora funciona correctamente. (#5336)
+- Correxida a forma visual dos botóns no diálogo de advertencia que se amosa cando tentas actualizar NVDA a unha versión anterior. (#5325)
+- En Windows 8 e posterior, NVDA agora arranca moito máis rápido cando se configurou para iniciarse despois de autentificarse en Windows. (#308)
+ - Se habilitaches esto utilizando unha versión anterior  do NVDA, necesitarás deshabilitalo e habilitalo de novo no diálogo  Opcións Xerais para que o cambio teña efecto. Segue este procedemento:
+  + Abre o diálogo Opcións Xerais.
+  + Desmarca a caixa de verificación Iniciar Automáticamente NVDA Despois de Autentificarse en Windows.
+  + Preme o botón Aceptar.
+  + Abre o diálogo Opcións Xerais de novo.
+  + Marca a caixa de verificación Iniciar Automáticamente NVDA Despois de Autentificarse en Windows.
+  + Preme o botón Aceptar.
+- Melloras de rendemento para UI Automation incluindo Explorador de Arquivos e Visualizador de Tarefas. (#5293)
+- NVDA agora cambia correctamente a modo foco cando se tabula a controis read-only ARIA grid en modo Exploración para Mozilla Firefox e outros controis baseados en Gecko. (#5118)
+- NVDA agora anuncia correctamente "non hai anterior" en lugar de "non hai seguinte" cando non hai máis obxectos ó facerse clic esquerdo nunha pantalla tactil.
+- Correxidos problemas ó se teclear varias palabras dentro do campo filtro no diálogo Xestos de Entrada. (#5426)
+- NVDA xa non se colga nalgúns casos cando se reconecta a unha pantalla HumanWare Brailliant BI/B series a través do USB. (#5406)
+- En linguas con caracteres conxunción, as descripcións de carácter agora funciona como debera para mayúsculas de caracteres en inglés. (#5375)
+- NVDA xa non debería colgarse ocasionalmente ó despregar o Menú de Inicio en Windows 10. (#5417)
+- En Skype para Escritorio, agora anúncianse as notificacións que se amosan antes de que unha notificación anterior desapareza. (#4841)
+- Agora anúncianse correctamente as notificacións no Skype para Escritorio 7.12 e posterior. (#5405)
+- NVDA agora anuncia correctamente o foco ó pechar un menú de contexto nalgunhas aplicacións coma Jart. (#5302)
+- En Windows 7 e posterior, anúnciase de novo a Cor en certas aplicacións coma Wordpad. (#5352)
+- Ó se editar en Microsoft PowerPoint, premendo intro agora anúnciase automáticamente o texto introducido como unha viñeta ou número. (#5360)
+
+
 = 2015.3 =
 O subliñable nesta versión inclúe o apoio inicial para Windows 10; a capacidade de deshabilitar a navegación de unha soa letra no modo exploración (útil para algunhas aplicacións web); melloras no Internet Explorer; e correccións para texto ilexible ó se escrebir en certas aplicacións co braille habilitado.
 
@@ -16,7 +73,7 @@ O subliñable nesta versión inclúe o apoio inicial para Windows 10; a capacida
 - Novas táboas de transcripción braille: Finés de 6 pontos, Irlandés grao 1, Irlandés grao 2, Coreán grao 1 (2006), Coreán grao 2 (2006). (#5137, #5074, #5097)
 - Agora sopórtase o teclado QWERTY na pantalla braille Papenmeier BRAILLEX Live Plus. (#5181)
 - Apoio Experimental para o navegador web Microsoft Edge e o motor de exploración web no Windows 10. (#5212)
-
+- Nova lingua: Canadá.
 
 == Canbios ==
 - Actualizado o transcriptor braille liblouis a 2.6.3. (#5137)
@@ -37,12 +94,14 @@ O subliñable nesta versión inclúe o apoio inicial para Windows 10; a capacida
 - As notificacións de Windows 10 Toast agora anúncianse como se esperaba. (#5136)
 - O valor agora anúnciase segundo se  cambie en certas caixas combinadas (UI Automation) onde esto non funcionaba ate o de agora.
 - No Modo exploración en navegadores web, ó tabular agora compórtase segundo se espera  despois de tabular a un marco de documento. (#5227)
- - A pantalla de bloqueo do Windows 10 agora pode pecharse utilizando a pantalla tactil. (#5220)
+- A pantalla de bloqueo do Windows 10 agora pode pecharse utilizando a pantalla tactil. (#5220)
 - No Windows 7 e posteriores, o texto xa non é ilexible ó se teclear en certas aplicacións como Wordpad e Skype cunha pantalla braille. (#4291)
 - Na pantalla de bloqueo do Windows 10, xa  non é posible ler o portapapeis, acesar a  aplicacións en execución co cursor de revisión, cambiar a configuración do NVDA, etc. (#5269)
 
+
 == Cambios para Desenvolvedores ==
 - Agora podes inxectar a entrada bruta dende un teclado de sistema que non se manexa nativamente polo Windows (ex.: un teclado QWERTY nunha pantalla braille) utilizando a nova función keyboardHandler.injectRawKeyboardInput . (#4576)
+- Engadiuse eventHandler.requestEvents para solicitar eventos particulares que estean bloqueados por defecto; ex.: amosa eventos dende un control específico ou certos eventos aínda que estean de fondo. (#3831)
 - En lugar dun só atributo i18nName, synthDriverHandler.SynthSetting agora ten os atributos  displayNameWithAccelerator e displayName separados para evitar o anunciado do acelerador no grupo de opcións do sintetizador nalgunhas linguas.
  - Por compatibilidade con versións anteriores, no constructor, displayName é opcional e deribarase de displayNameWithAccelerator se non se proporciona. Con todo, se tentas ter un acelerador para unha opción, deberían proporcionarse ámbolos dous.
  - O atributo i18nName está obsoleto e poderá eliminarse en unha versión futura.

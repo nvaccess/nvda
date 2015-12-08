@@ -37,7 +37,7 @@ except RuntimeError:
 ### Constants
 NVDA_PATH = os.getcwdu()
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
-DONATE_URL = "http://www.nvaccess.org/wiki/Donate"
+DONATE_URL = "http://www.nvaccess.org/donate/"
 
 ### Globals
 mainFrame = None
@@ -96,15 +96,17 @@ class MainFrame(wx.Frame):
 		#: The focus ancestors before the last popup or C{None} if unknown.
 		#: @type: list of L{NVDAObject}
 		self.prevFocusAncestors = None
-		# This makes Windows return to the previous foreground window and also seems to allow NVDA to be brought to the foreground.
-		self.Show()
-		self.Hide()
-		if winUser.isWindowVisible(self.Handle):
-			# HACK: Work around a wx bug where Hide() doesn't actually hide the window,
-			# but IsShown() returns False and Hide() again doesn't fix it.
-			# This seems to happen if the call takes too long.
+		# If NVDA has the uiAccess privilege, it can always set the foreground window.
+		if not config.hasUiAccess():
+			# This makes Windows return to the previous foreground window and also seems to allow NVDA to be brought to the foreground.
 			self.Show()
 			self.Hide()
+			if winUser.isWindowVisible(self.Handle):
+				# HACK: Work around a wx bug where Hide() doesn't actually hide the window,
+				# but IsShown() returns False and Hide() again doesn't fix it.
+				# This seems to happen if the call takes too long.
+				self.Show()
+				self.Hide()
 
 	def Destroy(self):
 		self.sysTrayIcon.Destroy()

@@ -237,14 +237,19 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 			"Frame Notification Bar", # notification bars
 			"tooltips_class32", # tooltips
 			"mscandui21.candidate", "mscandui40.candidate", "MSCandUIWindow_Candidate", # IMM candidates
-			"TTrayAlert", # #4741: Skype
+			"TTrayAlert", # 5405: Skype
 		)
+	if eventName == "reorder":
+		# Prevent another flood risk.
+		return winUser.getClassName(windowHandle) == "TTrayAlert" # #4841: Skype
 	if eventName == "alert" and winUser.getClassName(winUser.getAncestor(windowHandle, winUser.GA_PARENT)) == "ToastChildWindowClass":
 		# Toast notifications.
 		return True
-	if windowHandle == winUser.getDesktopWindow():
-		# #3897: We fire some events such as switchEnd and menuEnd on the desktop window
-		# because the original window is now invalid.
+	if eventName in ("menuEnd", "switchEnd", "desktopSwitch"):
+		# #5302, #5462: These events can be fired on the desktop window
+		# or windows that would otherwise be blocked.
+		# Platform API handlers will translate these events to focus events anyway,
+		# so we must allow them here.
 		return True
 
 	fg = winUser.getForegroundWindow()
