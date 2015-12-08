@@ -1170,10 +1170,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 			# {color} will be replaced with the text color.
 			# {backgroundColor} will be replaced with the first background color.
 			# {backgroundColorTwo} will be replaced with the second background color.
-			textList.append(_("{color} on {backgroundColor} to {backgroundColorTwo}").format(
-				color=color.name if isinstance(color,colors.RGB) else unicode(color),
-				backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor),
-				backgroundColorTwo=backgroundColorTwo.name if isinstance(backgroundColorTwo,colors.RGB) else unicode(backgroundColorTwo)))
+			textList.append(_("{color} on {backgroundColor} to {backgroundColorTwo}").format(color=color.name if isinstance(color,colors.RGB) else unicode(color),backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor),backgroundColorTwo=backgroundColorTwo.name if isinstance(backgroundColorTwo,colors.RGB) else unicode(backgroundColorTwo)))
 		elif color and backgroundColor and color!=oldColor and backgroundColor!=oldBackgroundColor:
 			# Translators: Reported when both the text and background colors change.
 			# {color} will be replaced with the text color.
@@ -1189,7 +1186,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 			# Translators: Reported when the background color changes (but not the text color).
 			# {backgroundColor} will be replaced with the background color.
 			textList.append(_("{backgroundColor} background").format(backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)))
-		if backgroundPattern and backgroundPattern!=oldBackgroundPattern and backgroundPattern!= "none":
+		if backgroundPattern and backgroundPattern!=oldBackgroundPattern:
 			textList.append(_("{pattern} background pattern").format(pattern=backgroundPattern))
 	if  formatConfig["reportLineNumber"]:
 		lineNumber=attrs.get("line-number")
