@@ -352,8 +352,16 @@ negativeStateLabels = {
 	controlTypes.STATE_CHECKED: _("( )"),
 }
 
-DOT7 = 64
-DOT8 = 128
+#: Cursor shapes
+CURSOR_SHAPES = (
+	# Translators: The description of a braille cursor shape.
+	(0xC0, _("Dots 7 and 8")),
+	# Translators: The description of a braille cursor shape.
+	(0x80, _("Dot 8")),
+	# Translators: The description of a braille cursor shape.
+	(0xFF, _("All dots")),
+)
+SELECTION_SHAPE = 0xC0 #: Dots 7 and 8
 
 def NVDAObjectHasUsefulText(obj):
 	import displayModel
@@ -920,13 +928,13 @@ class TextInfoRegion(Region):
 		super(TextInfoRegion, self).update()
 
 		if self._selectionStart is not None:
-			# Mark the selection with dots 7 and 8.
+			# Mark the selection.
 			if self._selectionEnd >= len(self.rawText):
 				brailleSelEnd = len(self.brailleCells)
 			else:
 				brailleSelEnd = self.rawToBraillePos[self._selectionEnd]
 			for pos in xrange(self.rawToBraillePos[self._selectionStart], brailleSelEnd):
-				self.brailleCells[pos] |= DOT7 | DOT8
+				self.brailleCells[pos] |= SELECTION_SHAPE
 
 	def routeTo(self, braillePos):
 		if braillePos == self.brailleCursorPos:
@@ -1344,8 +1352,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	TETHER_FOCUS = "focus"
 	TETHER_REVIEW = "review"
 
-	cursorShape = 0xc0
-
 	def __init__(self):
 		self.display = None
 		self.displaySize = 0
@@ -1431,10 +1437,12 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._cursorBlinkTimer:
 			self._cursorBlinkTimer.Stop()
 			self._cursorBlinkTimer = None
-		self._cursorBlinkUp = True
+		self._cursorBlinkUp = showCursor = config.conf["braille"]["showCursor"]
 		self._displayWithCursor()
+		if self._cursorPos is None or not showCursor:
+			return
 		blinkRate = config.conf["braille"]["cursorBlinkRate"]
-		if blinkRate and self._cursorPos is not None:
+		if blinkRate:
 			self._cursorBlinkTimer = wx.PyTimer(self._blink)
 			self._cursorBlinkTimer.Start(blinkRate)
 
@@ -1443,7 +1451,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		cells = list(self._cells)
 		if self._cursorPos is not None and self._cursorBlinkUp:
-			cells[self._cursorPos] |= self.cursorShape
+			cells[self._cursorPos] |= config.conf["braille"]["cursorShape"]
 		self.display.display(cells)
 
 	def _blink(self):
