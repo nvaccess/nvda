@@ -424,7 +424,7 @@ the NVDAObject for IAccessible
 			parentWindow=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
 			if parentWindow and winUser.getClassName(parentWindow)=="Frame Notification Bar":
 				clsList.append(IENotificationBar)
-		if windowClassName.lower().startswith('mscandui'):
+		if windowClassName.lower().startswith('mscandui') or windowClassName in ("Microsoft.IME.CandidateWindow.View","Microsoft.IME.UIManager.CandidateWindow.Host"):
 			import mscandui
 			mscandui.findExtraOverlayClasses(self,clsList)
 		elif windowClassName=="GeckoPluginWindow" and self.event_objectID==0 and self.IAccessibleChildID==0:
