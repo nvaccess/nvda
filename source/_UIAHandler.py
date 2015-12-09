@@ -44,6 +44,7 @@ goodUIAWindowClassNames=[
 ]
 
 badUIAWindowClassNames=[
+	"Microsoft.IME.CandidateWindow.View",
 	"SysTreeView32",
 	"WuDuiListView",
 	"ComboBox",
