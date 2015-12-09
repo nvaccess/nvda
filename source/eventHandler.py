@@ -251,6 +251,9 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		# Platform API handlers will translate these events to focus events anyway,
 		# so we must allow them here.
 		return True
+	if windowHandle == winUser.getDesktopWindow():
+		# #5595: Events for the cursor get mapped to the desktop window.
+		return True
 
 	fg = winUser.getForegroundWindow()
 	if (winUser.isDescendantWindow(fg, windowHandle)
