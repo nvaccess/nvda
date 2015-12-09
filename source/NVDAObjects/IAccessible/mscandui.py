@@ -212,10 +212,45 @@ class MSCandUIWindow(IAccessible):
 		item=MSCandUIWindow_candidateListItem(IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=3)
 		reportSelectedCandidate(item)
 
+class ModernCandidateUICandidateItem(BaseCandidateItem):
+
+	def _set_container(self,container):
+		self.parent=container
+
+	def _get_candidateCharacters(self):
+		return super(BaseCandidateItem,self).name
+
+	_candidateNumber=""
+
+	def _get_candidateNumber(self):
+		# The following property call sets candidateNumber
+		self.visibleCandidateItemsText
+		return self._candidateNumber
+
+	def _get_visibleCandidateItemsText(self):
+		textList=[]
+		index=1
+		for child in super(ModernCandidateUICandidateItem,self).parent.children:
+			if not isinstance(child,ModernCandidateUICandidateItem) or controlTypes.STATE_SELECTABLE not in child.states: continue
+			child.candidateNumber=index
+			textList.append(child.name)
+			if child.candidateCharacters==self.candidateCharacters:
+				self._candidateNumber=index
+			index+=1
+		if len(textList)<=1: return None
+		self.visibleCandidateItemsText=(u", ".join(textList))+u", "
+		return self.visibleCandidateItemsText
+
+	def event_stateChange(self):
+		if controlTypes.STATE_SELECTED in self.states:
+			reportSelectedCandidate(self)
+
 def findExtraOverlayClasses(obj,clsList):
 	windowClassName=obj.windowClassName
 	role=obj.IAccessibleRole
-	if windowClassName=="MSCandUIWindow_Candidate":
+	if windowClassName=="Microsoft.IME.CandidateWindow.View" and obj.role==controlTypes.ROLE_BUTTON:
+		clsList.append(ModernCandidateUICandidateItem)
+	elif windowClassName=="MSCandUIWindow_Candidate":
 		if role==oleacc.ROLE_SYSTEM_CLIENT:
 			clsList.append(MSCandUIWindow)
 		elif role==oleacc.ROLE_SYSTEM_LISTITEM:
