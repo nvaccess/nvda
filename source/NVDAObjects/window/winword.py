@@ -897,6 +897,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	treeInterceptorClass=WordDocumentTreeInterceptor
 	shouldCreateTreeInterceptor=False
 	TextInfo=WordDocumentTextInfo
+	ignoreEditorRevisions=False #: whether to not bothere fetching editor revisions for reporting
 
 	def _get_ignoreEditorRevisions(self):
 		try:

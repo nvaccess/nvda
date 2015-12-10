@@ -5,8 +5,13 @@
 
 = 2016.1 =
 
+== New Features ==
+- New braille translation table: Polish 8 dot computer braille. (#5537)
+
+
 == Changes ==
 - Reporting of emphasis is now disabled by default. (#4920)
+- In the Elements List dialog in Microsoft Excel, the shortcut for Formulas has been changed to alt+r so that it is different to the shortcut for the Filter field. (#5527)
 
 
 == Bug Fixes ==
@@ -14,6 +19,11 @@
 - In Internet Explorer and other MSHTML controls, moving to specific heading levels with single letter navigation now behaves as expected when the level of a heading is overridden for accessibility purposes (specifically, when aria-level overrides the level of an h tag). (#5434)
 - In Spotify, focus no longer frequently lands on "unknown" objects. (#5439)
 - Focus is now restored correctly when returning to Spotify from another application. (#5439)
+- When toggling between browse mode and focus mode, the mode is reported in braille as well as speech. (#5239)
+- The Start buttn on the Taskbar is no longer reported as a list and/or as selected in some versions of Windows. (#5178)
+- Messages such as "inserted" are no longer reported when composing messages in Microsoft Outlook. (#5486)
+- When using a braille display and text is selected on the current line (e.g. when searching in a text editor for text which occurs on the same line), the braille display will be scrolled if appropriate. (#5410)
+- NVDA no longer silently exits when closing a Windows command console with alt+f4 in Windows 10. (#5343)
 
 
 = 2015.4 =
