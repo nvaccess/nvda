@@ -3,6 +3,18 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.1 =
+
+== Änderungen ==
+- Die ansage betonter Texte ist nun standardmäßig ausgeschaltet. (#4920)
+
+
+== Fehlerbehebungen ==
+- In Itunes 12 wird das virtuelle Dokument korrekt aktualisiert, wenn eine Seite im itunes Store neu geladen wird. (#5191)
+- Die Schnellnavigation für Überschriften bestimmter Ordnung funktioniert nun auch dann korrekt, wenn die Ebene der Überschrift aus Gründen der Barrierefreiheit mittels Aria-level festgelegt wurde. Dies betrifft Internet Explorer und mshtml-Dokumente. (#5434)
+- in Spotify springt der Fokus nicht mehr regelmäßig auf unbekannte Objekte. (#5439)
+- Wenn Sie von einer anderen Anwendung aus zurück zu Spotify wechseln, wird der Fokus korrekt wiederhergestellt. (#5439)
+
 
 = 2015.4 =
 Schwerpunkte dieser Version sind u.a. Leistungsverbesserungen in Windows 10; Unterstützung für das Center für erleichterte Bedienung in Windows 8 und neuer; Verbesserungen an Microsoft Excel wie z.B. das Auflisten und umbenennen von Tabellenblättern und der Zugriff auf gesperrte zellen in geschützten Arbeitsblättern; sowie die Unterstützung erweiterter Eingabefelder in Mozilla Firefox, Google Chrome und Mozilla Thunderbird.
