@@ -56,7 +56,9 @@ def _requestDucking(switch):
 			_duckingRefCount+=1
 			if _duckingRefCount==1 and _audioDuckingMode!=AUDIODUCKINGMODE_NONE:
 				_setDuckingState(True)
-				time.sleep(0.15)
+				import NVDAHelper
+				if NVDAHelper.localLib.audioDucking_shouldDelay():
+					time.sleep(0.15)
 		else:
 			wx.CallLater(1000,_unduckRequestHelper)
 
