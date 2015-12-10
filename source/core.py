@@ -459,9 +459,13 @@ def callLater(delay, callable, *args, **kwargs):
 	This is currently a thin wrapper around C{wx.CallLater},
 	but this should be used instead for calls which aren't just for UI,
 	as it notifies watchdog appropriately.
+	This function can be safely called from any thread.
 	"""
 	import wx
-	return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
+	if thread.get_ident() == mainThreadId:
+		return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
+	else:
+		return wx.CallAfter(wx.CallLater,delay, _callLaterExec, callable, args, kwargs)
 
 def _callLaterExec(callable, args, kwargs):
 	import watchdog
