@@ -7,7 +7,6 @@
 import threading
 from ctypes import *
 import time
-import wx
 import config
 
 AUDIODUCKINGMODE_NONE=0
@@ -60,7 +59,8 @@ def _requestDucking(switch):
 				if NVDAHelper.localLib.audioDucking_shouldDelay():
 					time.sleep(0.15)
 		else:
-			wx.CallLater(1000,_unduckRequestHelper)
+			import core
+			core.callLater(1000,_unduckRequestHelper)
 
 def setAudioDuckingMode(mode):
 	global _audioDuckingMode, _duckingRefCount
