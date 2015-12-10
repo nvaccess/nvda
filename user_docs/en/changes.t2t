@@ -37,6 +37,7 @@
 - When a toggle button is focused, NVDA now reports when it is changed from pressed to not pressed. (#5441)
 - Reporting of mouse shape changes again works as expected. (#5595)
 - When speaking line indentation, non-breaking spaces are now treated as normal spaces. Previously, this could cause announcements such as "space space space" instead  of "3 space". (#5610)
+- When closing a modern Microsoft input method candidate list, focus is correctly restored to either the input composition or the underlying document. (#4145)
 
 
 == Changes for Developers ==
