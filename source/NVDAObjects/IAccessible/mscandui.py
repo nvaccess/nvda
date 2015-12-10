@@ -214,9 +214,6 @@ class MSCandUIWindow(IAccessible):
 
 class ModernCandidateUICandidateItem(BaseCandidateItem):
 
-	def _set_container(self,container):
-		self.parent=container
-
 	def _get_candidateCharacters(self):
 		return super(BaseCandidateItem,self).name
 
