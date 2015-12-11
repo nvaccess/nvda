@@ -184,9 +184,9 @@ class GlobalCommands(ScriptableObject):
 		except (RuntimeError, NotImplementedError):
 			info=None
 		if not info or info.isCollapsed:
-			speech.speakMessage(_("no selection"))
+			speech.speakMessage(_("No selection"))
 		else:
-			speech.speakMessage(_("selected %s")%info.text)
+			speech.speakMessage(_("Selected %s")%info.text)
 	# Translators: Input help mode message for report current selection command.
 	script_reportCurrentSelection.__doc__=_("Announces the current selection in edit controls and documents. If there is no selection it says so.")
 	script_reportCurrentSelection.category=SCRCAT_SYSTEMCARET
@@ -764,7 +764,7 @@ class GlobalCommands(ScriptableObject):
 			pos=obj.makeTextInfo(textInfos.POSITION_FIRST)
 		api.setReviewPosition(pos)
 		# Translators: Reported when attempting to move the navigator object to focus.
-		speech.speakMessage(_("move to focus"))
+		speech.speakMessage(_("Move to focus"))
 		speech.speakObject(obj,reason=controlTypes.REASON_FOCUS)
 	# Translators: Input help mode message for move navigator object to current focus command.
 	script_navigatorObject_toFocus.__doc__=_("Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible.")
@@ -910,7 +910,7 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
-		speech.speakMessage(_("top"))
+		speech.speakMessage(_("Top"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to top line command.
 	script_review_top.__doc__=_("Moves the review cursor to the top line of the current navigator object and speaks it")
@@ -922,7 +922,8 @@ class GlobalCommands(ScriptableObject):
 		info.collapse()
 		res=info.move(textInfos.UNIT_LINE,-1)
 		if res==0:
-			speech.speakMessage(_("top"))
+			# Translators: a message reported when review cursor is at the top line of the current navigator object.
+			speech.speakMessage(_("Top"))
 		else:
 			api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
@@ -950,7 +951,8 @@ class GlobalCommands(ScriptableObject):
 		info.collapse()
 		res=info.move(textInfos.UNIT_LINE,1)
 		if res==0:
-			speech.speakMessage(_("bottom"))
+			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+			speech.speakMessage(_("Bottom"))
 		else:
 			api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
@@ -964,7 +966,7 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_LAST)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
-		speech.speakMessage(_("bottom"))
+		speech.speakMessage(_("Bottom"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to bottom line command.
 	script_review_bottom.__doc__=_("Moves the review cursor to the bottom line of the current navigator object and speaks it")
@@ -977,7 +979,7 @@ class GlobalCommands(ScriptableObject):
 		res=info.move(textInfos.UNIT_WORD,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
-			speech.speakMessage(_("top"))
+			speech.speakMessage(_("Top"))
 		else:
 			api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_WORD)
@@ -1004,7 +1006,8 @@ class GlobalCommands(ScriptableObject):
 		info.collapse()
 		res=info.move(textInfos.UNIT_WORD,1)
 		if res==0:
-			speech.speakMessage(_("bottom"))
+			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
+			speech.speakMessage(_("Bottom"))
 		else:
 			api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_WORD)
@@ -1019,7 +1022,7 @@ class GlobalCommands(ScriptableObject):
 		info.collapse()
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
-		speech.speakMessage(_("left"))
+		speech.speakMessage(_("Left"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to start of current line command.
 	script_review_startOfLine.__doc__=_("Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it")
@@ -1033,7 +1036,8 @@ class GlobalCommands(ScriptableObject):
 		charInfo.collapse()
 		res=charInfo.move(textInfos.UNIT_CHARACTER,-1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"startToStart")<0:
-			speech.speakMessage(_("left"))
+			# Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
+			speech.speakMessage(_("Left"))
 			reviewInfo=api.getReviewPosition().copy()
 			reviewInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(reviewInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
@@ -1072,7 +1076,8 @@ class GlobalCommands(ScriptableObject):
 		charInfo.collapse()
 		res=charInfo.move(textInfos.UNIT_CHARACTER,1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"endToEnd")>=0:
-			speech.speakMessage(_("right"))
+			# Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
+			speech.speakMessage(_("Right"))
 			reviewInfo=api.getReviewPosition().copy()
 			reviewInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(reviewInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
@@ -1091,7 +1096,7 @@ class GlobalCommands(ScriptableObject):
 		info.move(textInfos.UNIT_CHARACTER,-1)
 		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
-		speech.speakMessage(_("right"))
+		speech.speakMessage(_("Right"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to end of current line command.
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
