@@ -46,9 +46,9 @@ def waveOutOpen(pWaveOutHandle,deviceID,wfx,callback,callbackInstance,flags):
 		res=e.winerror
 	if res==0 and pWaveOutHandle:
 		h=pWaveOutHandle.contents.value
-		d=_duckersByHandle.get(h,None)
-		if not d:
-			_duckersByHandle[h]=audioDucking.AudioDucker()
+		d=audioDucking.AudioDucker()
+		d.enable()
+		_duckersByHandle[h]=d
 	return res
 
 @WINFUNCTYPE(c_long,c_long)
