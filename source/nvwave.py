@@ -99,6 +99,7 @@ class WavePlayer(object):
 	"""
 	#: A lock to prevent WaveOut* functions from being called simultaneously, as this can cause problems even if they are for different HWAVEOUTs.
 	_global_waveout_lock = threading.RLock()	
+	_audioDucker=None
 
 	def __init__(self, channels, samplesPerSec, bitsPerSample, outputDevice=WAVE_MAPPER, closeWhenIdle=True,wantDucking=True):
 		"""Constructor.
@@ -123,8 +124,8 @@ class WavePlayer(object):
 		if isinstance(outputDevice, basestring):
 			outputDevice = outputDeviceNameToID(outputDevice, True)
 		self.outputDeviceID = outputDevice
-		self._wantDucking=wantDucking and audioDucking.isAudioDuckingSupported()
-		self._audioDucker=None
+		if wantDucking and audioDucking.isAudioDuckingSupported():
+			self._audioDucker=audioDucking.AudioDucker()
 		#: If C{True}, close the output device when no audio is being played.
 		#: @type: bool
 		self.closeWhenIdle = closeWhenIdle
@@ -164,7 +165,8 @@ class WavePlayer(object):
 		@type data: str
 		@raise WindowsError: If there was an error playing the audio.
 		"""
-		if self._wantDucking and not self._audioDucker: self._audioDucker=audioDucking.AudioDucker()
+		if self._audioDucker and not self._audioDucker.enable():
+			return
 		whdr = WAVEHDR()
 		whdr.lpData = data
 		whdr.dwBufferLength = len(data)
@@ -204,7 +206,11 @@ class WavePlayer(object):
 		@param switch: C{True} to pause playback, C{False} to unpause.
 		@type switch: bool
 		"""
-		if self._audioDucker: self._audioDucker.disabled=switch
+		if self._audioDucker and self._waveout:
+			if switch:
+				self._audioDucker.disable()
+			else:
+				self._audioDucker.enable()
 		with self._waveout_lock:
 			if not self._waveout:
 				return
@@ -228,11 +234,12 @@ class WavePlayer(object):
 					return
 				if self.closeWhenIdle:
 					self._close()
-		if self._audioDucker: self._audioDucker=None
+			if self._audioDucker: self._audioDucker.disable()
 
 	def stop(self):
 		"""Stop playback.
 		"""
+		if self._audioDucker: self._audioDucker.disable()
 		with self._waveout_lock:
 			if not self._waveout:
 				return
