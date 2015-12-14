@@ -487,7 +487,7 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		("sheet", _("&Sheet")),
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
-		("formField", _("formField")),
+		("formField", _("FormField")),
 	)
 
 class ExcelBase(Window):
@@ -1496,7 +1496,7 @@ class ExcelFormControl(ExcelWorksheet):
 		#perform Mouse Left-Click
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
-# 		eventHandler.queueEvent("gainFocus",self)
+		eventHandler.queueEvent("gainFocus",self)
 
 	__gestures= {
 				"kb:enter":"doAction",
@@ -1510,7 +1510,12 @@ class ExcelFormControlQuickNavItem(ExcelQuickNavItem):
 		super( ExcelFormControlQuickNavItem ,self).__init__( nodeType , document , formControlObject , formControlCollection )
 		self.formControlObjectIndex = formControlObject.ZOrderPosition
 		self.treeInterceptorObj=treeInterceptorObj
-		self.nvdaObj=ExcelFormControl(windowHandle=document.Application.Hwnd,excelWindowObject=document.Application.ActiveWindow,excelFormControlObject=formControlObject)
+		if formControlObject.formControlType==xlListBox:
+			self.nvdaObj=ExcelFormControlListBox(windowHandle=document.Application.Hwnd,excelWindowObject=document.Application.ActiveWindow,excelFormControlObject=formControlObject)
+# 		elif formControlObject.formControlType==xlGroupBox:
+# 			self.nvdaObj=ExcelFormControlComboBox(windowHandle=document.Application.Hwnd,excelWindowObject=document.Application.ActiveWindow,excelFormControlObject=formControlObject)
+		else:
+			self.nvdaObj=ExcelFormControl(windowHandle=document.Application.Hwnd,excelWindowObject=document.Application.ActiveWindow,excelFormControlObject=formControlObject)
 		self.treeInterceptorObj.currentNVDAObj=self.nvdaObj
 		if formControlObject.AlternativeText:
 			self.label = formControlObject.AlternativeText+" "+formControlObject.Name+" " + formControlObject.TopLeftCell.address(False,False,1,False) + "-" + formControlObject.BottomRightCell.address(False,False,1,False)
@@ -1591,3 +1596,50 @@ class ExcelFormControlQuicknavIterator(ExcelQuicknavIterator):
 				return False
 		else:
 			return True
+
+class ExcelFormControlListBox(ExcelFormControl):
+
+	def __init__(self,windowHandle=None,excelWindowObject=None,excelFormControlObject=None):
+		self.listRange=excelWindowObject.Application.ActiveSheet.Range(excelFormControlObject.ControlFormat.ListFillRange)
+		self.excelFormControlObject=excelFormControlObject
+		self.listSize=excelFormControlObject.ControlFormat.ListCount
+		try:
+			self.selectedItemIndex= excelFormControlObject.ControlFormat.ListIndex
+		except:
+			self.selectedItemIndex=0
+ 		super(ExcelFormControlListBox,self).__init__(windowHandle=windowHandle, excelWindowObject=excelWindowObject, excelFormControlObject=excelFormControlObject)
+
+	def isItemSelected(self,itemIndex):
+		if self.excelFormControlObject.OLEFormat.Object.Selected[itemIndex]==True:
+			return True
+		else:
+			return False
+
+	def script_moveUp(self, gesture):
+		if self.selectedItemIndex > 1:
+			self.selectedItemIndex= self.selectedItemIndex - 1
+			self.speakSelection(self.selectedItemIndex)
+
+	def script_moveDown(self, gesture):
+		if self.selectedItemIndex < self.listSize:
+			self.selectedItemIndex= self.selectedItemIndex + 1
+			self.speakSelection(self.selectedItemIndex)
+
+	def script_doAction(self,gesture):
+		self.excelFormControlObject.OLEFormat.Object.Selected[self.selectedItemIndex] = True
+		self.speakSelection(self.selectedItemIndex)
+	script_doAction.canPropagate=False
+
+	def speakSelection(self,itemIndex):
+		if self.isItemSelected(self.selectedItemIndex):
+			# Translators: A message in Excel an item in ListBox is selected
+			ui.message(_(str(self.excelFormControlObject.OLEFormat.Object.List(self.selectedItemIndex))+" selected"))
+		else:
+			ui.message(self.excelFormControlObject.OLEFormat.Object.List(self.selectedItemIndex))
+
+	
+	__gestures= {
+		"kb:alt+upArrow": "moveUp",
+		"kb:alt+downArrow":"moveDown",
+		"kb:alt+space":"doAction",
+	}
