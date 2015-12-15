@@ -228,7 +228,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			stream = StringIO(data)
 		else:
 			if data != ESCAPE:
-				log.debugWarning("Ignoring byte before escape: %r" % char)
+				log.debugWarning("Ignoring byte before escape: %r" % data)
 				return
 			# data only contained the escape. Read the rest from the device.
 			stream = self._dev
