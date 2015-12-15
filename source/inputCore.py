@@ -58,6 +58,10 @@ class InputGesture(baseObject.AutoPropertyObject):
 	#: @type: bool
 	bypassInputHelp=False
 
+	#: Indicates that this gesture should be reported in Input help mode. This would only be false for floodding Gestures like touch screen hovers.
+	#: @type: bool
+	reportInInputHelp=True
+
 	def _get_identifiers(self):
 		"""The identifier(s) which will be used in input gesture maps to represent this gesture.
 		These identifiers will be looked up in order until a match is found.
@@ -460,7 +464,7 @@ class InputManager(baseObject.AutoPropertyObject):
 
 	def _inputHelpCaptor(self, gesture):
 		bypass = gesture.bypassInputHelp or getattr(gesture.script, "bypassInputHelp", False)
-		queueHandler.queueFunction(queueHandler.eventQueue, self._handleInputHelp, gesture, onlyLog=bypass)
+		queueHandler.queueFunction(queueHandler.eventQueue, self._handleInputHelp, gesture, onlyLog=bypass or not gesture.reportInInputHelp)
 		return bypass
 
 	def _handleInputHelp(self, gesture, onlyLog=False):

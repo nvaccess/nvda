@@ -1816,13 +1816,13 @@ class GlobalCommands(ScriptableObject):
 
 
 	def script_touch_newExplore(self,gesture):
-		touchHandler.handler.screenExplorer.moveTo(gesture.tracker.x,gesture.tracker.y,new=True)
+		touchHandler.handler.screenExplorer.moveTo(gesture.x,gesture.y,new=True)
 	# Translators: Input help mode message for a touchscreen gesture.
 	script_touch_newExplore.__doc__=_("Reports the object and content directly under your finger")
 	script_touch_newExplore.category=SCRCAT_TOUCH
 
 	def script_touch_explore(self,gesture):
-		touchHandler.handler.screenExplorer.moveTo(gesture.tracker.x,gesture.tracker.y)
+		touchHandler.handler.screenExplorer.moveTo(gesture.x,gesture.y)
 	# Translators: Input help mode message for a touchscreen gesture.
 	script_touch_explore.__doc__=_("Reports the new object or content under your finger if different to where your finger was last")
 	script_touch_explore.category=SCRCAT_TOUCH
