@@ -2,13 +2,17 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2014 NV Access Limited
+#Copyright (C) 2008-2015 NV Access Limited
 
+import sys
 import itertools
 import os
 import pkgutil
+import ctypes.wintypes
+import threading
 import wx
 import louis
+import winKernel
 import keyboardHandler
 import baseObject
 import config
@@ -1390,6 +1394,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self.display:
 			self.display.terminate()
 			self.display = None
+		_BgThread.stop()
 
 	def _get_tether(self):
 		return config.conf["braille"]["tetherTo"]
@@ -1427,6 +1432,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				newDisplay = self.display
 				newDisplay.__init__(**kwargs)
 			else:
+				if newDisplay.isThreadSafe:
+					# Start the thread if it wasn't already.
+					_BgThread.start()
 				newDisplay = newDisplay(**kwargs)
 				if self.display:
 					try:
@@ -1456,13 +1464,28 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._cursorBlinkTimer = wx.PyTimer(self._blink)
 			self._cursorBlinkTimer.Start(blinkRate)
 
+	def _writeCells(self, cells):
+		if not self.display.isThreadSafe:
+			self.display.display(cells)
+			return
+		with _BgThread.queuedWriteLock:
+			alreadyQueued = _BgThread.queuedWrite
+			_BgThread.queuedWrite = cells
+		# If a write was already queued, we don't need to queue another;
+		# we just replace the data.
+		# This means that if multiple writes occur while an earlier write is still in progress,
+		# we skip all but the last.
+		if not alreadyQueued:
+			# Queue a call to the background thread.
+			_BgThread.queueApc(_BgThread.executor)
+
 	def _displayWithCursor(self):
 		if not self._cells:
 			return
 		cells = list(self._cells)
 		if self._cursorPos is not None and self._cursorBlinkUp:
 			cells[self._cursorPos] |= self.cursorShape
-		self.display.display(cells)
+		self._writeCells(cells)
 
 	def _blink(self):
 		self._cursorBlinkUp = not self._cursorBlinkUp
@@ -1632,6 +1655,60 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if display != self.display.name:
 			self.setDisplayByName(display)
 
+class _BgThread:
+	"""A singleton background thread used for background writes and raw braille display I/O.
+	"""
+
+	thread = None
+	exit = False
+	queuedWrite = None
+
+	@classmethod
+	def start(cls):
+		if cls.thread:
+			return
+		cls.queuedWriteLock = threading.Lock()
+		thread = cls.thread = threading.Thread(target=cls.func)
+		thread.daemon = True
+		thread.start()
+		cls.handle = ctypes.windll.kernel32.OpenThread(winKernel.THREAD_SET_CONTEXT, False, thread.ident)
+
+	@classmethod
+	def queueApc(cls, func):
+		ctypes.windll.kernel32.QueueUserAPC(func, cls.handle, 0)
+
+	@classmethod
+	def stop(cls):
+		if not cls.thread:
+			return
+		cls.exit = True
+		# Wake up the thread. It will exit when it sees exit is True.
+		cls.queueApc(cls.executor)
+		cls.thread.join()
+		cls.exit = False
+		winKernel.closeHandle(cls.handle)
+		cls.handle = None
+		cls.thread = None
+
+	@winKernel.PAPCFUNC
+	def executor(param):
+		if _BgThread.exit:
+			# func will see this and exit.
+			return
+		with _BgThread.queuedWriteLock:
+			data = _BgThread.queuedWrite
+			_BgThread.queuedWrite = None
+		if not data:
+			return
+		handler.display.display(data)
+
+	@classmethod
+	def func(cls):
+		while True:
+			ctypes.windll.kernel32.SleepEx(winKernel.INFINITE, True)
+			if cls.exit:
+				break
+
 def initialize():
 	global handler
 	config.addConfigDirsToPythonPackagePath(brailleDisplayDrivers)
@@ -1668,6 +1745,8 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	They should subclass L{BrailleDisplayGesture} and execute instances of those gestures using L{inputCore.manager.executeGesture}.
 	These gestures can be mapped in L{gestureMap}.
 	A driver can also inherit L{baseObject.ScriptableObject} to provide display specific scripts.
+
+	@see: L{hwIo} for raw serial and HID I/O.
 	"""
 	#: The name of the braille display; must be the original module file name.
 	#: @type: str
@@ -1675,6 +1754,14 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	#: A description of the braille display.
 	#: @type: str
 	description = ""
+	#: Whether this driver is thread-safe.
+	#: If it is, NVDA may initialize, terminate or call this driver  on any thread.
+	#: This allows NVDA to read from and write to the display in the background,
+	#: which means the rest of NVDA is not blocked while this occurs,
+	#: thus resulting in better performance.
+	#: This is also required to use the L{hwIo} module.
+	#: @type: bool
+	isThreadSafe = False
 
 	@classmethod
 	def check(cls):
