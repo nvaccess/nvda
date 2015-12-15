@@ -44,6 +44,12 @@
 - The new audioDucking.AudioDucker class allows code which outputs audio to indicate when background audio should be ducked. (#3830)
 - nvwave.WavePlayer's constructor now has a wantDucking keyword argument which specifies whether background audio should be ducked while audio is playing. (#3830)
  - When this is enabled (which is the default), it is essential that WavePlayer.idle be called when appropriate.
+- Enhanced I/O for braille displays: (#5609)
+ - Thread-safe braille display drivers can declare themselves as such using the BrailleDisplayDriver.isThreadSafe attribute. A driver must be thread-safe to benefit from the following features.
+ - Data is written to thread-safe braille display drivers in the background, thus improving performance.
+ - hwIo.Serial extends pyserial to call a callable when data is received instead of drivers having to poll.
+ - hwIo.Hid provides support for braille displays communicating via USB HID.
+ - hwPortUtils and hwIo can optionally provide detailed debug logging, including devices found and all data sent and received.
 
 
 = 2015.4 =

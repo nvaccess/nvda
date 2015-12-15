@@ -210,6 +210,9 @@ confspec = ConfigObj(StringIO(
 	reportReadingStringChanges = boolean(default=True)
 	reportCompositionStringChanges = boolean(default=True)
 
+[debugLog]
+	hwIo = boolean(default=false)
+
 [upgrade]
 	newLaptopKeyboardLayout = boolean(default=false)
 """
