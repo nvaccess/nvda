@@ -380,7 +380,7 @@ def listHidDevices(onlyAvailable=True):
 	"""List HID devices on the system.
 	@param onlyAvailable: Only return devices that are currently available.
 	@type onlyAvailable: bool
-	@return: Generates dicts including keys of hardwareID,
+	@return: Generates dicts including keys such as hardwareID,
 		usbID (in the form "VID_xxxx&PID_xxxx")
 		and devicePath.
 	@rtype: generator of dict
@@ -456,9 +456,13 @@ def listHidDevices(onlyAvailable=True):
 				if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
 					raise ctypes.WinError()
 			else:
-				yield {
-					"hardwareID": buf.value,
-					"usbID": buf.value.split("\\")[1].rsplit("&", 1)[0],
+				hwId = buf.value
+				info = {
+					"hardwareID": hwId,
 					"devicePath": idd.DevicePath}
+				hwId = hwId.split("\\", 1)[1]
+				if hwId.startswith("VID"):
+					info["usbID"] = hwId.rsplit("&", 1)[0]
+				yield info
 	finally:
 		SetupDiDestroyDeviceInfoList(g_hdi)
