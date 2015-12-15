@@ -39,7 +39,10 @@ winEventHookRegistry_t inProcess_registeredWinEventHooks;
 windowsHookRegistry_t inProcess_registeredCallWndProcWindowsHooks;
 windowsHookRegistry_t inProcess_registeredGetMessageWindowsHooks;
 
+UINT wm_execInWindow;
+
 void inProcess_initialize() {
+	wm_execInWindow=RegisterWindowMessage(L"nvdaHelper_execInWindow");
 	IA2Support_inProcess_initialize();
 	ia2LiveRegions_inProcess_initialize();
 	typedCharacter_inProcess_initialize();
@@ -127,6 +130,13 @@ LRESULT CALLBACK inProcess_callWndProcHook(int code, WPARAM wParam,LPARAM lParam
 	if(code<0) {
 		return CallNextHookEx(0,code,wParam,lParam);
 	}
+	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
+	if(pcwp->message==wm_execInWindow) {
+		execInWindow_funcType* func=(execInWindow_funcType*)(pcwp->wParam);
+		void* data=(void*)(pcwp->lParam);
+		if(func) (*func)(data);
+		return 0;
+	}
 	//Hookprocs may unregister or register hooks themselves, so we must copy the hookprocs before executing
 	windowsHookRegistry_t hookProcs=inProcess_registeredCallWndProcWindowsHooks;
 	for(windowsHookRegistry_t::iterator i=hookProcs.begin();i!=hookProcs.end();++i) {
@@ -144,4 +154,8 @@ void CALLBACK inProcess_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 	for(winEventHookRegistry_t::iterator i=hookProcs.begin();i!=hookProcs.end();++i) {
 		i->first(hookID, eventID, hwnd, objectID, childID, threadID, time);
 	}
+}
+
+void execInWindow(HWND hwnd, execInWindow_funcType func,void* data) {
+	SendMessage(hwnd,wm_execInWindow,(WPARAM)&func,(LPARAM)data);
 }

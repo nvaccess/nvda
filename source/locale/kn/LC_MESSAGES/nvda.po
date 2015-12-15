@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-10663,552b45f\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-20 19:09+1000\n"
-"PO-Revision-Date: 2015-07-20 15:24+0530\n"
-"Last-Translator: siddalingeshwar ingalagi <ingalagisiddu@gmail.com>\n"
-"Language-Team: Kannada\n"
+"POT-Creation-Date: 2015-10-08 19:11+1000\n"
+"PO-Revision-Date: 2015-09-30 12:11+0530\n"
+"Last-Translator: \n"
+"Language-Team: Kannada <ingalagisiddu@gmail.com>\n"
 "Language: kn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.1\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -358,12 +358,12 @@ msgstr "ಇಟಾಲಿಯನ್ 8 ಡಾಟ್ ಕಂಪ್ಯೂಟರ್ ಬ�
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Kannada grade 1"
-msgstr "ಕನ್ನಡ ವರ್ಗ 1"
+msgstr "ಕನ್ನಡ ವರ್ಗ ಒಂದು"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Korean grade 1 (2006)"
-msgstr "ಕೋರಿಯಾದ ಗ್ರೇಡ್ 1 (2006)"
+msgstr "ಕೋರಿಯಾದ ಗ್ರೇಡ್ ಒಂದು (2006)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -760,7 +760,7 @@ msgstr "ಈ ದಸ್ತಾವೇಜಿನಲ್ಲಿ ಬೆಂಬಲವಿ�
 msgid "Lists various types of elements in this document"
 msgstr "ಈ ಧಾಕಲೆಯಲ್ಲಿ ಪಟ್ಟಿಯ ರೂಪದಲ್ಲಿ ಬಹುವಿಧವಾದ  ಅಂಶಗಳನ್ನು  ತೋರುತ್ತದೆ"
 
-#. Translators: the description for the activatePosition script on virtualBuffers.
+#. Translators: the description for the activatePosition script on browseMode documents.
 msgid "activates the current object in the document"
 msgstr "ಪ್ರಸ್ತುತ ವಸ್ತುವನ್ನು ದಸ್ತಾವೇಜಿನಲ್ಲಿ ಸಕ್ರಿಯಗೊಳಿಸುತ್ತದೆ"
 
@@ -1234,6 +1234,43 @@ msgstr "& ಸಕ್ರಿಯಗೊಳಿಸು"
 #. in the browse mode Elements List dialog.
 msgid "&Move to"
 msgstr "&ಗೆ ಚಲಿಸು"
+
+#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
+#, python-format
+msgid "%s landmark"
+msgstr "%s ಹೆಗ್ಗುರುತು"
+
+#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "%s ಆಯ್ಕೆಗೊಂಡಿದೆ"
+
+#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
+msgid "No long description"
+msgstr "ದೀರ್ಘ  ವಿವರಣೆಯಿಲ್ಲ"
+
+#. Translators: the description for the activateLongDescription script on browseMode documents.
+msgid "Shows the long description at this position if one is found."
+msgstr "ಒಂದಾದರು ದೀರ್ಘ ವಿವರಣೆ ಸಿಕ್ಕಿದರೆ ಅದನ್ನು ಈ ಸ್ಥಿತಿಯಲ್ಲಿ ತೋರಿಸುತ್ತದೆ."
+
+#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
+#. But there is no container.
+msgid "Not in a container"
+msgstr "ಧಾರಕದಲ್ಲಿಲ್ಲ"
+
+#. Translators: Description for the Move to start of container command in browse mode.
+msgid "Moves to the start of the container element, such as a list or table"
+msgstr "ಪ್ರಾರಂಭದ ಧಾರಕ ಅಂಶಕ್ಕೆ ಚಲಿಸುತ್ತದೆ, ಅದು ಕೋಷ್ಟಕ ಅಥವ ಪಟ್ಟಿಯಾಗಿರಬಹುದು"
+
+#. Translators: a message reported when:
+#. Review cursor is at the bottom line of the current navigator object.
+#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
+msgid "bottom"
+msgstr "ಸಂಪೂರ್ಣ ಕೆಳಗೆ"
+
+#. Translators: Description for the Move past end of container command in browse mode.
+msgid "Moves past the end  of the container element, such as a list or table"
+msgstr "ಅಂತಿಮದ ಧಾರಕ ಅಂಶಕ್ಕೆ ಚಲಿಸುತ್ತದೆ, ಅದು ಕೋಷ್ಟಕ ಅಥವ ಪಟ್ಟಿಯಾಗಿರಬಹುದು"
 
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
@@ -1964,11 +2001,6 @@ msgctxt "color name"
 msgid "Yellow Green"
 msgstr "ಹಳದಿ ಹಸಿರು"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "%s ಆಯ್ಕೆಗೊಂಡಿದೆ"
-
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
@@ -2093,7 +2125,6 @@ msgid "cell"
 msgstr "ಸೆಲ್"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
-#. Translators: A column in a column chart.
 msgid "column"
 msgstr "ಅಂಕಣ"
 
@@ -2813,9 +2844,9 @@ msgid "Braille"
 msgstr "ಬ್ರೈಲ್"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: The label for the Tools submenu in NVDA menu.
+msgctxt "script category"
 msgid "Tools"
-msgstr "ಉಪಕರಣಗಳು"
+msgstr "ಉಪಕರಣಗಳು ಲಿಪಿ ಸ್ಕ್ರಿಪ್ಟ್"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: a touch screen gesture
@@ -3042,6 +3073,21 @@ msgstr "ಪರಿಶ್ಕರಣಗಳನ್ನು ಹೇಳುವುದು ಆ�
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
 msgstr "ಪರಿಶ್ಕರಗಳನ್ನು ಹೇಳುವುದು ಆಫ್ ಅಥವ ಆನಾಗುತ್ತದೆ"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+#, fuzzy
+msgid "report emphasis off"
+msgstr "ಪುಟಗಳನ್ನು ಹೇಳುವುದು ಆಫ್"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+#, fuzzy
+msgid "report emphasis on"
+msgstr "ಪುಟಗಳನ್ನು ಹೇಳುವುದು ಆನ್"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+#, fuzzy
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "ಪುಟಗಳನ್ನು ಹೇಳುವುದು ಆಫ್ ಅಥವ ಆನಾಗುತ್ತದೆ"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3339,11 +3385,11 @@ msgstr "%s ಅನ್ನು ಪಲಕಕ್ಕೆ ಪ್ರತಿಗೊಳಿಸ�
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
 msgstr ""
-"ಚಾಲ್ತಿಯಲ್ಲಿರುವ ಸಂಚಲಿತ ವಸ್ತುವನ್ನು ಪ್ರಕಟಿಸುತ್ತದೆ. ಇದನ್ನೇ ಎರಡು ಸಲ ಒತ್ತಿದರೆ ಮಾಹಿತಿಯಲ್ಲಿನ "
+"ಚಾಲ್ತಿಯಲ್ಲಿರುವ ಸಂಚಲಿತ ವಸ್ತುವನ್ನು ಪ್ರಕಟಿಸುತ್ತದೆ. ಇದನ್ನೇ ಎರಡು ಸಲ ಒತ್ತಿದರೆ, ಮಾಹಿತಿಯಲ್ಲಿನ "
 "ಅಕ್ಷರಗಳನ್ನು ಹೇಳುತ್ತದೆ, ತತಕ್ಷಣಕ್ಕೆ  ಮೂರು ಬಾರಿ ಒತ್ತಿದರೆ ವಸ್ತುವಿನ ಹೆಸರು ಮತ್ತು ಮೌಲ್ಯಗಳನ್ನು "
 "ಪಲಕಕ್ಕೆ ಪ್ರತಿಗೊಳಿಸುತ್ತದೆ"
 
@@ -3470,12 +3516,6 @@ msgstr ""
 "ಪರಿಶೀಲನಾ ಸೂಚಕವಿರುವ ಸ್ಥಳದಲ್ಲಿನ ಸಂಚಲಿತ ವಸ್ತುವಿನ ಸಾಲನ್ನು ಪ್ರಕಟಿಸುತ್ತದೆ. ಇದನ್ನು ಎರಡು ಸಲ "
 "ಒತ್ತಿದರೆ ಸಾಲಿನಲ್ಲಿರುವ ಅಕ್ಷರಗಳನ್ನು ಹೇಳುತ್ತದೆ. ಮೂರು ಸಲ ಒತ್ತಿದರೆ ಅಕ್ಷರಗಳ ವಿವರಣೆಯ ಮೂಲಕ "
 "ಅಕ್ಷರಗಳನ್ನು ಉಚ್ಚರಿಸುತ್ತದೆ."
-
-#. Translators: a message reported when:
-#. Review cursor is at the bottom line of the current navigator object.
-#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "ಸಂಪೂರ್ಣ ಕೆಳಗೆ"
 
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid ""
@@ -4124,7 +4164,7 @@ msgstr "ದಸ್ತಾವೇಜೀಕರಣ"
 msgid "Commands Quick Reference"
 msgstr "ಆಜ್ಞಾಪನೆಗಳ ತ್ವರಿತ ಉಲ್ಲೇಖ"
 
-#. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
+#. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
 msgstr "ಬಳಕೆದಾರರ ಕೈಪಿಡಿ"
 
@@ -4347,6 +4387,58 @@ msgstr "ಅಂಕಿ ಒತ್ತುಗೆ  ವ್ಯವಕಲನ"
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad plus"
 msgstr "ಅಂಕಿ ಒತ್ತುಗೆ  ಸಂಕಲನ"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "ಅಂಕಿ ಒತ್ತುಗೆ ದಶಮಾಂಶದ; "
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "ಅಂಕಿ ಒತ್ತಿಗೆ ಪ್ರವೇಶ"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "ಅಂಕಿ ಒತ್ತುಗೆ ಸೊನ್ನೆ"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "ಅಂಕಿ ಒತ್ತುಗೆ ಒಂದು"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "ಅಂಕಿ ಒತ್ತುಗೆ ಎರಡು"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "ಅಂಕಿ ಒತ್ತುಗೆ ಮೂರು"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "ಅಂಕಿ ಒತ್ತುಗೆ ನಾಲ್ಕು"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "ಅಂಕಿ ಒತ್ತುಗೆ ಐದು"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "ಅಂಕಿ ಒತ್ತುಗೆ ಆರು"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "ಅಂಕಿ ಒತ್ತುಗೆ ಏಳು"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "ಅಂಕಿ ಒತ್ತುಗೆ ಎಂಟು"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "ಅಂಕಿ ಒತ್ತುಗೆ ಒಂಬತ್ತು"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "ಸೇರ್ಪಡೆ"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left control"
@@ -4612,14 +4704,62 @@ msgstr "{backgroundColor} ಹಿನ್ನೆಲೆಗೆ"
 msgid "line %s"
 msgstr "ಸಾಲು %s "
 
+#. Translators: Reported when text is marked as having been inserted
+#, fuzzy
+msgid "inserted"
+msgstr "ಸೇರ್ಪಡೆ"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+#, fuzzy
+msgid "not inserted"
+msgstr "ಾಯ್ಕೆಯನ್ನು ಮಾಡಲಾಗಿಲ್ಲ"
+
+#. Translators: Reported when text is marked as having been deleted
+#, fuzzy
+msgid "deleted"
+msgstr "ಅಳಿಸು"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+#, fuzzy
+msgid "not deleted"
+msgstr "ಾಯ್ಕೆಯನ್ನು ಮಾಡಲಾಗಿಲ್ಲ"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "ಪರಿಶ್ಕರಿಸಿದ %s"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "ಪರಿಶ್ಕರಿಸದ"
+#, fuzzy, python-format
+msgid "no revised %s"
+msgstr "ಪರಿಶ್ಕರಿಸಿದ %s"
+
+#. Translators: Reported when text is marked
+#, fuzzy
+msgid "marked"
+msgstr "ಪ್ರಾರಂಭ ಗುರುತಾಗಿದೆ"
+
+#. Translators: Reported when text is no longer marked
+#, fuzzy
+msgid "not marked"
+msgstr "ಪ್ರಾರಂಭ ಗುರುತಾಗಿದೆ"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr ""
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+#, fuzzy
+msgid "not strong"
+msgstr "%s ಇಲ್ಲ"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr ""
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr ""
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -4770,29 +4910,64 @@ msgstr "ಎನ್ವೀಡೀಯೇ ಮಾತಿನ ದರ್ಶಕ"
 msgid "&Language"
 msgstr "&ಭಾಷೆ"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Language"
+msgstr "ಭಾಷೆ "
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Voice"
 msgstr "&ಧ್ವನಿ"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Voice"
+msgstr "ಧ್ವನಿ"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&ariant"
 msgstr "ವ್ಯ&ಕ್ತಿ"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Variant"
+msgstr "ವಿವಿಧರೀತಿಯ"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
 msgstr "&ಗತಿ"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate"
+msgstr "ಗತಿ"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "ಶ&ಬ್ದ"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Volume"
+msgstr "ಶಬ್ದ"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
 msgstr "&ಧ್ವನಿ ಮಟ್ಟ"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Pitch"
+msgstr "ಧ್ವನಿ ಮಟ್ಟ"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&ಧ್ವನಿತರಂಗ"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Inflection"
+msgstr "ಧ್ವನಿತರಂಗ"
 
 msgid "text mode"
 msgstr "ಪಠ್ಯ ವಿಧಾನ"
@@ -5806,6 +5981,14 @@ msgstr "&ಎನ್ವೀಡಿಯೇಯನ್ನು ಅನುಸ್ಥಾಪಿ�
 msgid "Reload plugins"
 msgstr "ಅನುವರ್ತಿಗಳನ್ನು ಮತ್ತೆ ಚಾಲನೆಗೊಳಿಸು"
 
+#. Translators: The label for the Tools submenu in NVDA menu.
+msgid "Tools"
+msgstr "ಉಪಕರಣಗಳು"
+
+#. Translators: The label of a menu item to open NVDA user guide.
+msgid "&User Guide"
+msgstr "&ಬಳಕೆದಾರರ ಕೈಪಿಡಿ"
+
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
 msgstr "ಆದೇಶಗಳು  ಮತ್ತು &ತ್ವರಿತ ಉಲ್ಲೇಖಗಳು"
@@ -6285,6 +6468,7 @@ msgstr ""
 "ನೀವು ಮುಂದುವರೆದರೆ ಇದನ್ನು ಆ ಕೋಶದಿಂದ ತೆಗೆದು ಹಾಕಿ ಇದರ ಜೊತೆ ಸೇರಿಸಲಾಗುತ್ತದೆ. "
 "ಮುಂದುವರಿಸಬೇಕೆ?"
 
+#. Translators: The title of a warning dialog.
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 msgid "Warning"
 msgstr "ಎಚ್ಚರಿಕೆ"
@@ -6409,6 +6593,24 @@ msgstr "ಚಾಲ್ತಿಯಲ್ಲಿರುವ ಬಳಕೆದಾರ ಖಾ�
 #. Translators: The label of a button to continue with the operation.
 msgid "&Continue"
 msgstr "&ಮುಂದುವರೆಸಿ"
+
+#. Translators: A warning presented when the user attempts to downgrade NVDA
+#. to an older version.
+msgid ""
+"You are attempting to install an earlier version of NVDA than the version "
+"currently installed. If you really wish to revert to an earlier version, you "
+"should first cancel this installation and completely uninstall NVDA before "
+"installing the earlier version."
+msgstr ""
+"ನೀವು ಪ್ರಸ್ತುತ ಅನುಸ್ಥಾಪಿಸಲಾದ ಆವೃತ್ತಿಯನ್ನು NVDAಯ ಮೊದಲಿನ ಆವೃತ್ತಿಯನ್ನು ಅನುಸ್ಥಾಪಿಸಲು "
+"ಪ್ರಯತ್ನಿಸುತ್ತಿರುವಿರಿ. ನೀವು ನಿಜವಾಗಿಯೂ ಹಿಂದಿನ ಆವೃತ್ತಿಯನ್ನು  ಅನುಸ್ಥಾಪಿಸಲು ಬಯಸಿದರೆ ಿ"
+"ದು ಹಿಂದಿರುಗುತ್ತವೆ , ನೀವು ಮೊದಲು ಈ ಅನುಸ್ಥಾಪನೆಯನ್ನು ರದ್ದು ಮತ್ತು ಸಂಪೂರ್ಣವಾಗಿ ಹಿಂದಿನ "
+"ಆವೃತ್ತಿಯನ್ನು ಅನುಸ್ಥಾಪಿಸಲು  ಮೊದಲು NVDA ಅನ್ಇನ್ಸ್ಟಾಲ್ ಮಾಡಬೇಕು."
+
+#. Translators: The label of a button to proceed with installation,
+#. even though this is not recommended.
+msgid "&Proceed with installation (not recommended)"
+msgstr "&ಅನುಸ್ಥಾಪನೆ ಮಾಡಲು ಮುಂದುವರಿಯಿರಿ (not recommended)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -7019,6 +7221,12 @@ msgstr "&ಸಂಪಾದಕತ್ವದ ಪರಿಶ್ಕರಣಗಳನ್ನ�
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+#, fuzzy
+msgid "Report e&mphasis"
+msgstr "&ಪುಟಗಳನ್ನು ಪ್ರಕಟಿಸಿ"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "&ಶೈಲಿಯನ್ನು ಪ್ರಕಟಿಸಿ"
 
@@ -7322,11 +7530,6 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "{x}, {y}ರಲ್ಲಿ"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-#, python-format
-msgid "%s landmark"
-msgstr "%s ಹೆಗ್ಗುರುತು"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "ಪುನಶ್ಚೇತನಗೊಳಿಸಲಾಗಿದೆ"
@@ -7334,14 +7537,6 @@ msgstr "ಪುನಶ್ಚೇತನಗೊಳಿಸಲಾಗಿದೆ"
 #. Translators: Reported while loading a document.
 msgid "Loading document..."
 msgstr "ದಸ್ತಾವೇಜು ಮೂಡುತ್ತಿದೆ..."
-
-#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-msgid "No long description"
-msgstr "ದೀರ್ಘ  ವಿವರಣೆಯಿಲ್ಲ"
-
-#. Translators: the description for the activateLongDescription script on virtualBuffers.
-msgid "Shows the long description at this position if one is found."
-msgstr "ಒಂದಾದರು ದೀರ್ಘ ವಿವರಣೆ ಸಿಕ್ಕಿದರೆ ಅದನ್ನು ಈ ಸ್ಥಿತಿಯಲ್ಲಿ ತೋರಿಸುತ್ತದೆ."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -7384,19 +7579,6 @@ msgstr "ಮುಂದಿನ ಕೋಷ್ಟಕದ ಅಂಕಣಕ್ಕೆ ಚಲ
 #. Translators: the description for the previous table column script on virtualBuffers.
 msgid "moves to the previous table column"
 msgstr "ಹಿಂದಿನ ಕೋಷ್ಟಕದ ಅಂಕಣಕ್ಕೆ ಚಲಿಸುತ್ತದೆ"
-
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
-msgid "Not in a container"
-msgstr "ಧಾರಕದಲ್ಲಿಲ್ಲ"
-
-#. Translators: Description for the Move to start of container command in browse mode.
-msgid "Moves to the start of the container element, such as a list or table"
-msgstr "ಪ್ರಾರಂಭದ ಧಾರಕ ಅಂಶಕ್ಕೆ ಚಲಿಸುತ್ತದೆ, ಅದು ಕೋಷ್ಟಕ ಅಥವ ಪಟ್ಟಿಯಾಗಿರಬಹುದು"
-
-#. Translators: Description for the Move past end of container command in browse mode.
-msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "ಅಂತಿಮದ ಧಾರಕ ಅಂಶಕ್ಕೆ ಚಲಿಸುತ್ತದೆ, ಅದು ಕೋಷ್ಟಕ ಅಥವ ಪಟ್ಟಿಯಾಗಿರಬಹುದು"
 
 msgid "Taskbar"
 msgstr "ಕಾರ್ಯಗಳ ಪಟ್ಟಿಕೆ"
@@ -7921,6 +8103,11 @@ msgstr "ಯಾವುದೇ ಸರಣಿ ವ್ಯಾಖ್ಯಾನಿಸಲ�
 msgid "slice"
 msgstr "ಚೂರುಮಾಡುವುದು"
 
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "ಅಂಕಣ ನಕ್ಷೆ"
+
 #. Translators: A data point in a line chart.
 msgid "data point"
 msgstr "ದತ್ತಾಂಶ ಸೂಚಿಸು"
@@ -8253,17 +8440,9 @@ msgstr "ಪಠ್ಯ ಚೌಕಟ್ಟು"
 msgid "comment: {text} by {author} on {date}"
 msgstr "ಪ್ರತಿಕ್ರಿಯೆ {text} {author} ರವರಿಂದ {date} ರಂದು"
 
-msgid "{revisionType}: {text} by {author} on {date}"
+#, fuzzy
+msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr "{revisionType}: {text} {author} ರವರಿಂದ {date} ರಂದು"
-
-msgid "unknown author"
-msgstr "ಅಪರಿಚಿತ ಲೇಖಕ"
-
-msgid "unknown date"
-msgstr "ಅಪರಿಚಿತ ತಾರೀಕು"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} {revisionAuthor} ರವರಿಂದ {revisionDate} ರಂದು"
 
 #, python-format
 msgid "%g characters"
@@ -8436,6 +8615,18 @@ msgstr "ಹಿಮ್ಸ್ ಬ್ರೈಲ್ ಸೆನ್ಸ್/ಬ್ರೈಲ
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "ಹಿಮ್ಸ್ ಸಿಂಕ್ ಬ್ರೈಲ್"
+
+#~ msgid "unrevised"
+#~ msgstr "ಪರಿಶ್ಕರಿಸದ"
+
+#~ msgid "unknown author"
+#~ msgstr "ಅಪರಿಚಿತ ಲೇಖಕ"
+
+#~ msgid "unknown date"
+#~ msgstr "ಅಪರಿಚಿತ ತಾರೀಕು"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType} {revisionAuthor} ರವರಿಂದ {revisionDate} ರಂದು"
 
 #~ msgid "%s"
 #~ msgstr "%s"

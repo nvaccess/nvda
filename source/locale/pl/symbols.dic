@@ -42,17 +42,18 @@ negative number	minus	none	norep
 # Standard punctuation/symbols
 !	wykrzyknik	all
 "	cudzysłów	most
-\#	hash	most
+\#	hash	some
 $	dolar	all	norep
 £	funt	all	norep
 €	euro	some
 ¢	Centy	all	norep
 ¥	Jen	all	norep
+₹	rupia	some	norep
 %	procent	some
 &	and	some
 '	apostrof	all
-(	lewy nawias	most
-)	prawy nawias	most
+(	lewy nawias	most	always
+)	prawy nawias	most	always
 *	gwiazdka	some
 +	plus	some
 ,	przecinek	all	always
@@ -61,8 +62,8 @@ $	dolar	all	norep
 /	slesz	some
 :	dwukropek	most	norep
 ;	średnik	most
-<	mniejsze	most
->	więkrze	most
+<	mniejsze	some
+>	więkrze	some
 =	równe	some
 ?	pytajnik	all
 @	małpa	some
@@ -86,7 +87,7 @@ _	podkreślacz	most
 ”	prawy cudzysłów	most
 ‘	lewy apostrof	most
 ’	prawy apostrof	most
-–	półpauza	most
+–	półpauza	most	always
 —	myślnik	most
 ●	kółko	most
 ¨	diereza	most
@@ -108,13 +109,59 @@ _	podkreślacz	most
 ®	zarejestrowany	some
 ™	znak handlowy	some
 ©	Znak praw autorskich	some
-±	Plus Minus	most
-×	razy	most
-÷	dzielenie	most
+±	Plus Minus	some
+×	razy	some
+÷	dzielenie	some
 ←	strzałka w lewo	some
 →	strzałka w prawo	some
 ✓	check	some
 ✔	check	some
+#Mathematical Operators U+2200 to U+220F
+
+∀	dla każdego	none
+∁	Dopełnienie	none
+∂	Pochodna cząstkowa	none
+∃	Istnieje	none
+∄	Nie istnieje	none
+∅	Zbiór pusty	none
+∆	Inkrementacja	none
+∇	NABLA	none
+∈	Element zbioru	none
+∉	nie element zbioru	none
+∊	Mały element zbioru	none
+∋	Zawiera jako element	none
+∌	Nie zawiera jako element	none
+∍	Mały zawiera jako element	none
+∎	Koniec dowodu	none
+∏	N-ty produkt	none
+
+# Miscellaneous Mathematical Operators
+
+∑	N-ta suma	none
+√	Pierwiastek kwadratowy	none
+∛	Pierwiastek sześcienny	none
+∜	Pierwiastek czwartego stopnia	none
+∝	Proporcjonalne do	none
+∞	Nieskończoność	none
+∟	Kąt prosty	none
+∠	Kąt	none
+∥	Równoległe do	none
+∦	Nierównoległe do	none
+∧	Logiczne i	none
+∨	Logiczne lub	none
+∩	Przecięcie	none
+∪	Część wspólna	none
+∫	Całka	none
+∴	Dlatego	none
+∵	Ponieważ	none
+∶	Stosunek	none
+∷	Proporcja	none
+≤	Mniejsze lub równe	none
+≥	Większe lub równe	none
+⊂	Podzbiór zbioru	none
+⊃	Nadzbiór zbioru	none
+⊆	podzbiór lub równość	none
+⊇	Nadzbiór lub równość	none
 ‰	promil	most
 ó	u kreska	char	always
 Ó	u kreska	char	always

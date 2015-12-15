@@ -192,6 +192,11 @@ def getCharDescListFromText(text,locale):
 		subText = text[:i]
 		charDesc = characterProcessing.getCharacterDescription(locale,subText)
 		if charDesc or i==1:
+			if not charDesc:
+				# #5375: We're down to a single character (i == 1) and we don't have a description.
+				# Try converting to lower case.
+				# This provides for upper case English characters (which only have lower case descriptions).
+				charDesc = characterProcessing.getCharacterDescription(locale,subText.lower())
 			charDescList.append((subText,charDesc))
 			text = text[i:]
 			i = len(text)
@@ -555,8 +560,8 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 			for text in selectedTextList:
 				if  len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
-				# Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
-				speakSelectionMessage(_("selecting %s"),text)
+				# Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
+				speakSelectionMessage(_("%s selected"),text)
 		elif len(selectedTextList)>0:
 			text=newInfo.text
 			if len(text)==1:
@@ -568,17 +573,18 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 			for text in unselectedTextList:
 				if  len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
-				# Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
-				speakSelectionMessage(_("unselecting %s"),text)
+				# Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
+				speakSelectionMessage(_("%s unselected"),text)
 		elif len(unselectedTextList)>0:
-			# Translators: Reported when selection is removed.
-			speakMessage(_("selection removed"))
 			if not newInfo.isCollapsed:
 				text=newInfo.text
 				if len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
-				# Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-				speakSelectionMessage(_("selected %s"),text)
+				# Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+				speakSelectionMessage(_("%s selected instead"),text)
+			else:
+				# Translators: Reported when selection is removed.
+				speakMessage(_("selection removed"))
 
 def speakTypedCharacters(ch):
 	global curWordChars;
@@ -1057,7 +1063,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 
 	# Determine what text to speak.
 	# Special cases
-	if speakEntry and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
+	if speakEntry and childControlCount and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
 		# List.
 		# Translators: Speaks number of items in a list (example output: list with 5 items).
 		return roleText+" "+_("with %s items")%childControlCount
@@ -1179,13 +1185,58 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 			text=_("line %s")%lineNumber
 			textList.append(text)
 	if  formatConfig["reportRevisions"]:
+		# Insertion
+		revision=attrs.get("revision-insertion")
+		oldRevision=attrsCache.get("revision-insertion") if attrsCache is not None else None
+		if (revision or oldRevision is not None) and revision!=oldRevision:
+			# Translators: Reported when text is marked as having been inserted
+			text=(_("inserted") if revision
+				# Translators: Reported when text is no longer marked as having been inserted.
+				else _("not inserted"))
+			textList.append(text)
+		revision=attrs.get("revision-deletion")
+		oldRevision=attrsCache.get("revision-deletion") if attrsCache is not None else None
+		if (revision or oldRevision is not None) and revision!=oldRevision:
+			# Translators: Reported when text is marked as having been deleted
+			text=(_("deleted") if revision
+				# Translators: Reported when text is no longer marked as having been  deleted.
+				else _("not deleted"))
+			textList.append(text)
 		revision=attrs.get("revision")
 		oldRevision=attrsCache.get("revision") if attrsCache is not None else None
 		if (revision or oldRevision is not None) and revision!=oldRevision:
 			# Translators: Reported when text is revised.
 			text=(_("revised %s"%revision) if revision
 				# Translators: Reported when text is not revised.
-				else _("unrevised"))
+				else _("no revised %s")%oldRevision)
+			textList.append(text)
+	if  formatConfig["reportEmphasis"]:
+		# marked text 
+		marked=attrs.get("marked")
+		oldMarked=attrsCache.get("marked") if attrsCache is not None else None
+		if (marked or oldMarked is not None) and marked!=oldMarked:
+			# Translators: Reported when text is marked
+			text=(_("marked") if marked
+				# Translators: Reported when text is no longer marked
+				else _("not marked"))
+			textList.append(text)
+		# strong text
+		strong=attrs.get("strong")
+		oldStrong=attrsCache.get("strong") if attrsCache is not None else None
+		if (strong or oldStrong is not None) and strong!=oldStrong:
+			# Translators: Reported when text is marked as strong (e.g. bold)
+			text=(_("strong") if strong
+				# Translators: Reported when text is no longer marked as strong (e.g. bold) 
+				else _("not strong"))
+			textList.append(text)
+		# emphasised text 
+		emphasised=attrs.get("emphasised")
+		oldEmphasised=attrsCache.get("emphasised") if attrsCache is not None else None
+		if (emphasised or oldEmphasised is not None) and emphasised!=oldEmphasised:
+			# Translators: Reported when text is marked as emphasised
+			text=(_("emphasised") if emphasised
+				# Translators: Reported when text is no longer marked as emphasised 
+				else _("not emphasised"))
 			textList.append(text)
 	if  formatConfig["reportFontAttributes"]:
 		bold=attrs.get("bold")

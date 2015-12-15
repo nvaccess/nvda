@@ -3,11 +3,109 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.4 =
+Najważniejsze zmiany w tej wersji to poprawki wydajności w Windows 10; obecność NVDA w centrum ułatwień dostępu Windows 8 i nowszych; zmiany w Microsoft Excel w tym lista i zmiana nazw arkuszy oraz dostęp do zablokowanych komórek w zabezpieczonych arkuszach;  obsługa edycji tekstu sformatowanego w Mozilla Firefox, Google Chrome i Mozilla Thunderbird.
+
+== Nowości ==
+- NVDA  pojawia się w Centrum ułatwień dostępu Windows 8 i nowszych. (#308)
+- Przy przemieszczaniu się między komórkami Excel, zmiany formatowania są teraz automatycznie zgłaszane, jeśli odpowiednie opcje są włączone w ustawieniach formatowania dokumentów NVDA. (#4878)
+- Opcja zgłaszania podkreślenia została dodana w ustawieniach formatowania dokumentów NVDA. Domyślnie włączona, pozwala automatycznie powiadamiać o istnieniu podkreślonego tekstu. Aktualnie działa to dla znaczników em i strong w trybie czytania w Internet Explorer i innych kontrolkach MSHTML. (#4920)
+- Istnienie wstawionego i usuniętego tekstu jest zgłaszane w trybie czytania w Internet Explorer i innych kontrolkach MSHTML, jeśli zgłaszanie zmian edycyjnych jest włączone w NVDA. (#4920)
+- Podczas przeglądania zmian edycyjnych na liście elementów NVDA w Microsoft Word, zgłaszane jest więcej informacji, takich jak informacje o zmienionych właściwościach formatowania. (#4920)
+- Microsoft Excel: wyświetlanie listy arkuszy i zmiana nazwy arkusza jest możliwe na liście elementów (NVDA+f7). (#4630, #4414)
+- Można teraz ustawić, czy symbole są przesyłane do syntezatorów mowy (np. aby spowodować pauzę lub zmianę intonacji) w ustawieniach wymowy symboli. (#5234)
+- Microsoft Excel: NVDA odczytuje wiadomości wprowadzania ustawione przez autora arkuszana komórkach. (#5051)
+- Obsługa monitorów brajlowskich Baum Pronto! V4 and VarioUltra połączonych przez bluetooth. (#3717)
+- Wsparcie edycji tekstu sformatowanego w aplikacjach Mozilla,  np. dokumenty Google z włączoną obsługą brajla w Firefox,   albo kompozycja HTML w Mozilla Thunderbird. (#1668)
+- Wsparcie edycji tekstu sformatowanego w Google Chrome i przeglądarkach bazujących na Chrome, np. Google Docs z włączoną obsługą brajla. (#2634)
+ - Wymagane Chrome wersja 47 lub nowsza.
+- W trybie przeglądania w Microsoft Excel, można przejść do zablokowanych komórek w zabezpieczonych arkuszach. (#4952)
+
+
+== Zmiany ==
+- W ustawieniach formatowania dokumentów, opcja zgłaszania zmian edycyjnych jest domyślnie włączona. (#4920)
+- Podczas przechodzenia po znaku w Microsoft Word przy włączonej opcji zgłaszania zmian edycyjnych w NVDA, mniej informacji o zmianach jest czytane, co czyni nawigację bardziej wydajną. Aby przejrzeć dodatkowe informacje, użyj listy elementów. (#4920)
+- Zaktualizowany translator brajlowski liblouis do  wersji 2.6.4. (#5341)
+- Kilka symboli (włączając w to podstawowe symbole matematyczne) zostało przeniesione na poziom niektóre, więc są odczytywane domyślnie. (#3799)
+- Pauzy powinny pojawiać się przy czytaniu znaków nawiasów i półpauzy (–) jeśli syntezator to obsługuje. (#3799)
+- Podczas zaznaczania tekstu, tekst jest odczytywany przed informacją o zaznaczaniu, zamiast po. (#1707)
+
+
+== Poprawki błędów ==
+- Poprawa wydajności podczas nawigowania na liście wiadomości Outlook 2010/2013. (#5268)
+- Na wykresie Microsoft Excel, działa teraz prawidłowo nawigacja niektórymi klawiszami (np. zmiana arkuszy przy użyciu control+pageUp i control+pageDown). (#5336)
+- Poprawiony wygląd przycisków w oknie ostrzeżenia przy cofaniu do starszej wersji NVDA. (#5325)
+- W Windows 8 i nowszych, jeśli włączone jest uruchamianie NVDA po zalogowaniu do Windows, NVDA uruchamia się dużo szybciej. (#308)
+ - Jeśli Automatyczne uruchamianie po zalogowaniu było włączone w starszej wersji NVDA, trzeba to wyłączyć i włączyć ponownie w ustawieniach ogólnych, aby zmiana stała się zauważalna. Wykonaj następujące czynności:
+  + Otwórz Ustawienia ogólne NVDA.
+  + Odznacz pole wyboru "Uruchom NVDA po zalogowaniu do Windows".
+  + Naciśnij przycisk OK.
+  + Ponownie otwórz Ustawienia ogólne NVDA.
+  + Zaznacz pole wyboru "Uruchom NVDA po zalogowaniu do Windows".
+  + Naciśnij przycisk OK.
+- Poprawki wydajności UI Automation, zauważalne w eksploratorze plików i podglądzie zadań. (#5293)
+- NVDA teraz prawidłowo przełącza się do trybu formularzypo przejściu tabem do kontrolki tylko do czytania typu grid ARIA w trybie czytania w Mozilla Firefox i innych kontrolkach bazujących na Gecko. (#5118)
+ - NVDA teraz prawidłowo czyta "brak poprzedniego" zamiast "brak następnego" gdy nie ma więcej obiektów podczas machania w lewo na ekranie dotykowym.
+- Rozwiązane problemy po wpisaniu kilku słów do pola filtru w oknie zdarzeń wejścia. (#5426)
+- NVDA nie zawiesza się w niektórych sytuacjach, podczas wznawiania połączenia przez USB z monitorami serii HumanWare Brailliant BI/B . (#5406)
+- W językach z połączonymi znakami, opisy znaków działają zgodnie z oczekiwaniem dla wielkich liter angielskich. (#5375)
+- NVDA nie powinien się teraz sporadycznie zawieszać przy otwieraniu menu start w Windows 10. (#5417)
+- W Skype dla pulpitu odczytywane są  powiadomienia wyświetlane zanim zniknie poprzednie powiadomienie. (#4841)
+- Powiadomienia są prawidłowo odczytywane w Skype dla pulpitu 7.12 i nowszych. (#5405)
+- NVDA prawidłowo odczytuje punkt uwagi po anulowaniu menu kontekstowego w takich aplikacjach jak Jart. (#5302)
+- W Windows 7 i nowszych, kolor jest ponownie prawidłowo zgłaszany w niektórych aplikacjach np. Wordpad. (#5352)
+- Podczas edycji w Microsoft PowerPoint, naciśnięcie enter  odczytuje tekst wprowadzony automatycznie, np. punktor albo numer. (#5360)
+
+
+= 2015.3 =
+Najważniejsze zmiany w tej wersji to wstępne wsparcie dla Windows 10; możliwość wyłączenia nawigacji pojedynczymi literami w trybie czytania (użyteczne dla niektórych aplikacji webowych); poprawki obsługi Internet Explorer; poprawki nieczytelnego tekstu wpisywanego w niektórych aplikacjach z włączonym brajlem.
+
+
+== Nowości ==
+- Błędy pisowni są oznajmiane w polach edycji Internet Explorer i innych kontrolkach MSHTML. (#4174)
+- Dużo więcej symboli matematycznych unikodu jest odczytywane w tekstach. (#3805)
+- Sugestie wyszukiwania na ekranie startowym Windows 10 są automatycznie zgłaszane (#5049)
+- Obsługa monitorów brajlowskich EcoBraille 20, EcoBraille 40, EcoBraille 80 i EcoBraille Plus. (#4078)
+- W trybie czytania, można teraz włączać i wyłączać nawigację pojedynczymi literami, naciskając NVDA+shift+space. Gdy wyłączona, klawisze pojedynczych liter są przekazywane do aplikacji, co jest użyteczne dla niektórych aplikacji webowych takich jak Gmail, Twitter i Facebook. (#3203)
+- Nowe tablice brajlowskie: fiński sześciopunktowy, irlandzki stopień 1, irlandzki stopień 2, koreański stopień 1 (2006), koreański stopień 2 (2006). (#5137, #5074, #5097)
+- Obsługiwana klawiatura QWERTY w monitorach Papenmeier BRAILLEX Live Plus. (#5181)
+- Eksperymentalna obsługa Microsoft Edge - przeglądarki www i silnika przeglądania w Windows 10. (#5212)
+- Nowy język: Kannada.
+
+
+== Zmiany ==
+- Zaktualizowany translator brajlowski liblouis do  wersji 2.6.3. (#5137)
+- Przy próbie instalacji wcześniejszej niż zainstalowana obecnie wersji NVDA, pojawi się ostrzeżenie, że jest to niezalecane i że NVDA powinno zostać całkowicie odinstalowane przed kontynuowaniem. (#5037)
+
+
+== Poprawki błędów ==
+- W trybie czytania w Internet Explorer i innych kontrolkach MSHTML, szybka nawigacja po polach formularza nie uwzględnia elementów listy prezentacji. (#4204)
+- W Firefox, NVDA nie próbuje od teraz tworzyć opisu paneli zakładek ARIA opartego na całym tekście wewnątrz, gdy punkt uwagi jest przesuwany w zakładce. (#4638)
+- W Internet Explorer i innych kontrolkach MSHTML, przejście do sekcji, artykułów lub okien dialogowych nie zgłasza od teraz całej zawartości kontenera jako nazwy. (#5021, #5025)
+- Podczas używania monitorów brajlowskich Baum/HumanWare/APH z klawiaturą brajlowską, wprowadzanie brajla nie przestaje działać po naciśnięciu innego typu klawisza na monitorze. (#3541)
+- W Windows 10, nadmiarowe informacje nie są zgłaszane po naciśnięciu alt+tab lub alt+shift+tab, aby przełączyć pomiędzy aplikacjami. (#5116)
+- Wpisywany tekst nie jest od teraz nieczytelny podczas używania niektórych aplikacji takich jak Microsoft Outlook z monitorem brajlowskim. (#2953)
+- W trybie czytania Internet Explorer i innych kontrolkach MSHTML, prawidłowa treść jest teraz odczytywana, gdy pojawia się lub zmienia element i przywołuje natychmiastowo punkt uwagi. (#5040)
+- W trybie czytania w Microsoft Word, nawigacja literami aktualizuje monitor brajlowski i kursor przeglądu zgodnie z oczekiwaniami. (#4968)
+- Nadmiarowe spacje nie są wyświetlane w brajlu pomiędzy lub za identyfikatorem kontrolek i formatowania. (#5043)
+- Gdy aplikacja wolno odpowiada i przełączysz się z tej aplikacji, NVDA jest bardziej responsywne w innych aplikacjach w większości sytuacji. (#3831)
+- Wyskakujące powiadomienia Windows 10 są teraz zgłaszane zgodnie z oczekiwaniami. (#5136)
+- Wartość pól kombi (UI Automation) jest zgłaszana po zmianie w polach, gdzie to wcześniej nie działało.
+- W trybie czytania w przeglądarkach www, użycie tabulatora zachowuje się zgodnie z oczekiwaniami po przejściu do dokumentu w ramce. (#5227)
+- Można wyjść z ekranu blokady Windows 10 przy użyciu ekranu dotykowego. (#5220)
+- W Windows 7 i nowszych, tekst nie jest już nieczytelny podczas wpisywania w niektórych aplikacjach takich jak Wordpad czy Skype, przy użyciu monitora brajlowskiego. (#4291)
+- Na ekranie startowym Windows 10, nie można od teraz czytać schowka, uzyskiwać dostępu do uruchomionych aplikacji przy użyciu kursora przeglądu, zmieniać konfiguracji NVDA, etc. (#5269)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+
+
 = 2015.2 =
 Najważniejsze zmiany w tej wersji to możliwość odczytywania wykresów w Microsoft Excel oraz wsparcie dla nawigacji i odczytu treści matematycznej.
 
 == Nowości ==
-- W Microsoft Word możliwe jest przechodzenie w przód i wstecz po zdaniach przy użyciu odpowiednio alt+strzałka w dół i alt+strzałka w górę. (#3288)
+- W Microsoft Word i Outlook możliwe jest przechodzenie w przód i wstecz po zdaniach przy użyciu odpowiednio alt+strzałka w dół i alt+strzałka w górę. (#3288)
 - Nowe tablice brajlowskie dla kilku języków indyjskich. (#4778)
 - W Microsoft Excel, NVDA zgłasza, gdy komórka jest przepełniona lub zawiera przyciętą treść. (#3040)
 - Microsoft Excel: Lista elementów (NVDA+f7), pozwalająca wyświetlić wykresy, komentarze i formuły. (#1987)

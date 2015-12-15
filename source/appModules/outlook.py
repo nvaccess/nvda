@@ -410,16 +410,32 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			if messageClass=="IPM.Schedule.Meeting.Request":
 				# Translators: the email is a meeting request
 				textList.append(_("meeting request"))
-		for child in self.children:
-			if isinstance(child,UIAGridRow) or child.role==controlTypes.ROLE_GRAPHIC or not child.name:
-				continue
-			text=None
-			if config.conf['documentFormatting']['reportTableHeaders'] and child.columnHeaderText:
-				text=u"{header} {name}".format(header=child.columnHeaderText,name=child.name)
+		childrenCacheRequest=UIAHandler.handler.baseCacheRequest.clone()
+		childrenCacheRequest.addProperty(UIAHandler.UIA_NamePropertyId)
+		childrenCacheRequest.addProperty(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId)
+		childrenCacheRequest.TreeScope=UIAHandler.TreeScope_Children
+		childrenCacheRequest.treeFilter=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_ControlTypePropertyId,UIAHandler.UIA_TextControlTypeId)
+		cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
+		for index in xrange(cachedChildren.length):
+			e=cachedChildren.getElement(index)
+			name=e.cachedName
+			columnHeaderTextList=[]
+			if name and config.conf['documentFormatting']['reportTableHeaders']:
+				columnHeaderItems=e.getCachedPropertyValueEx(UIAHandler.UIA_TableItemColumnHeaderItemsPropertyId,True)
 			else:
-				text=child.name
+				columnHeaderItems=None
+			if columnHeaderItems:
+				columnHeaderItems=columnHeaderItems.QueryInterface(UIAHandler.IUIAutomationElementArray)
+				for index in xrange(columnHeaderItems.length):
+					columnHeaderItem=columnHeaderItems.getElement(index)
+					columnHeaderTextList.append(columnHeaderItem.currentName)
+			columnHeaderText=" ".join(columnHeaderTextList)
+			if columnHeaderText:
+				text=u"{header} {name}".format(header=columnHeaderText,name=name)
+			else:
+				text=name
 			if text:
-				text+=","
+				text=text+u","
 				textList.append(text)
 		return " ".join(textList)
 
@@ -490,3 +506,5 @@ class OutlookWordDocument(WordDocument):
 
 	def _get_role(self):
 		return controlTypes.ROLE_DOCUMENT if self.isReadonlyViewer else super(OutlookWordDocument,self).role
+
+	ignoreEditorRevisions=True

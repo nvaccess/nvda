@@ -307,8 +307,9 @@ class WordDocumentRevisionQuickNavItem(WordDocumentCollectionQuickNavItem):
 		revisionType=wdRevisionTypeLabels.get(self.collectionItem.type)
 		author=self.collectionItem.author or ""
 		date=self.collectionItem.date
+		description=self.collectionItem.formatDescription or ""
 		text=(self.collectionItem.range.text or "")[:100]
-		return _(u"{revisionType}: {text} by {author} on {date}").format(revisionType=revisionType,author=author,text=text,date=date)
+		return _(u"{revisionType} {description}: {text} by {author} on {date}").format(revisionType=revisionType,author=author,text=text,date=date,description=description)
 
 class WinWordCollectionQuicknavIterator(object):
 	"""
@@ -487,6 +488,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		formatConfigFlags=sum(y for x,y in formatConfigFlagsMap.iteritems() if formatConfig.get(x,False))
 		if self.shouldIncludeLayoutTables:
 			formatConfigFlags+=formatConfigFlag_includeLayoutTables
+		if self.obj.ignoreEditorRevisions:
+			formatConfigFlags&=~formatConfigFlagsMap['reportRevisions']
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.documentWindowHandle,startOffset,endOffset,formatConfigFlags,ctypes.byref(text))
 		if res or not text:
 			log.debugWarning("winword_getTextInRange failed with %d"%res)
@@ -593,20 +596,13 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		_startOffset=int(field.pop('_startOffset'))
 		_endOffset=int(field.pop('_endOffset'))
 		revisionType=int(field.pop('wdRevisionType',0))
-		revisionLabel=wdRevisionTypeLabels.get(revisionType,None)
-		if revisionLabel:
-			if extraDetail:
-				try:
-					r=self.obj.WinwordSelectionObject.range
-					r.setRange(_startOffset,_endOffset)
-					rev=r.revisions.item(1)
-					author=rev.author
-					date=rev.date
-				except COMError:
-					author=_("unknown author")
-					date=_("unknown date")
-				field['revision']=_("{revisionType} by {revisionAuthor} on {revisionDate}").format(revisionType=revisionLabel,revisionAuthor=author,revisionDate=date)
-			else:
+		if revisionType==wdRevisionInsert:
+			field['revision-insertion']=True
+		elif revisionType==wdRevisionDelete:
+			field['revision-deletion']=True
+		elif revisionType:
+			revisionLabel=wdRevisionTypeLabels.get(revisionType,None)
+			if revisionLabel:
 				field['revision']=revisionLabel
 		color=field.pop('color',None)
 		if color is not None:
@@ -796,76 +792,27 @@ class WordDocumentTextInfoForTreeInterceptor(WordDocumentTextInfo):
 	def _get_shouldIncludeLayoutTables(self):
 		return config.conf['documentFormatting']['includeLayoutTables']
 
-class BrowseModeWordDocumentTextInfo(textInfos.TextInfo):
+class BrowseModeWordDocumentTextInfo(browseMode.BrowseModeDocumentTextInfo,treeInterceptorHandler.RootProxyTextInfo):
 
 	def __init__(self,obj,position,_rangeObj=None):
 		if isinstance(position,WordDocument):
 			position=textInfos.POSITION_CARET
-		super(BrowseModeWordDocumentTextInfo,self).__init__(obj,position)
-		self.innerTextInfo=WordDocumentTextInfoForTreeInterceptor(obj.rootNVDAObject,position,_rangeObj=_rangeObj)
+		super(BrowseModeWordDocumentTextInfo,self).__init__(obj,position,_rangeObj=_rangeObj)
 
-	def _get__rangeObj(self):
-		return self.innerTextInfo._rangeObj
+	InnerTextInfoClass=WordDocumentTextInfoForTreeInterceptor
 
-	def find(self,text,caseSensitive=False,reverse=False):
-		return self.innerTextInfo.find(text,caseSensitive,reverse)
+	def _get_focusableNVDAObjectAtStart(self):
+		return self.obj.rootNVDAObject
 
-	def copy(self):
-		return BrowseModeWordDocumentTextInfo(self.obj,None,_rangeObj=self.innerTextInfo._rangeObj)
-
-	def activate(self):
-		return self.innerTextInfo.activate()
-
-	def compareEndPoints(self,other,which):
-		return self.innerTextInfo.compareEndPoints(other.innerTextInfo,which)
-
-	def setEndPoint(self,other,which):
-		return self.innerTextInfo.setEndPoint(other.innerTextInfo,which)
-
-	def _get_isCollapsed(self):
-		return self.innerTextInfo.isCollapsed
-
-	def collapse(self,end=False):
-		return self.innerTextInfo.collapse(end=end)
-
-	def move(self,unit,direction,endPoint=None):
-		return self.innerTextInfo.move(unit,direction,endPoint=endPoint)
-
-	def _get_bookmark(self):
-		return self.innerTextInfo.bookmark
-
-	def updateCaret(self):
-		return self.innerTextInfo.updateCaret()
-
-	def updateSelection(self):
-		return self.innerTextInfo.updateSelection()
-
-	def _get_text(self):
-		return self.innerTextInfo.text
-
-	def getTextWithFields(self,formatConfig=None):
-		return self.innerTextInfo.getTextWithFields(formatConfig=formatConfig)
-
-	def expand(self,unit):
-		return self.innerTextInfo.expand(unit)
-
-	def getMathMl(self, field):
-		return self.innerTextInfo.getMathMl(field)
-
-class WordDocumentTreeInterceptor(CursorManager,browseMode.BrowseModeTreeInterceptor,treeInterceptorHandler.DocumentTreeInterceptor):
+class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 
 	TextInfo=BrowseModeWordDocumentTextInfo
-	needsReviewCursorTextInfoWrapper=False
 
 	def _get_isAlive(self):
 		return winUser.isWindow(self.rootNVDAObject.windowHandle)
 
 	def __contains__(self,obj):
 		return obj==self.rootNVDAObject
-
-	def _set_selection(self,info):
-		super(WordDocumentTreeInterceptor,self)._set_selection(info)
-		review.handleCaretMove(info)
 
 	def _get_ElementsListDialog(self):
 		return ElementsListDialog
@@ -911,9 +858,10 @@ class WordDocumentTreeInterceptor(CursorManager,browseMode.BrowseModeTreeInterce
 		else:
 			raise NotImplementedError
 
-	def event_gainFocus(self,obj,nextHandler):
-		obj.reportFocus()
-		braille.handler.handleGainFocus(self)
+	def _activatePosition(self, info=None):
+		if not info:
+			info=self.makeTextInfo(textInfos.POSITION_CARET)
+		info.activate()
 
 	def script_nextRow(self,gesture):
 		self.rootNVDAObject._moveInTable(row=True,forward=True)
@@ -950,6 +898,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	treeInterceptorClass=WordDocumentTreeInterceptor
 	shouldCreateTreeInterceptor=False
 	TextInfo=WordDocumentTextInfo
+	ignoreEditorRevisions=False #: whether to not bothere fetching editor revisions for reporting
 
 	#: True if formatting should be ignored (text only) such as for spellCheck error field
 	ignoreFormatting=False

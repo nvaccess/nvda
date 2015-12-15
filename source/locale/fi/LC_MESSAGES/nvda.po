@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-15 19:09+1000\n"
-"PO-Revision-Date: 2015-07-19 08:44+0200\n"
+"POT-Creation-Date: 2015-11-25 19:10+1000\n"
+"PO-Revision-Date: 2015-11-26 19:03+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -735,11 +735,11 @@ msgstr "selaustila"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
-msgstr "Navigointinäppäimet pois"
+msgstr "Pikanavigointi pois"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
 msgid "Single letter navigation on"
-msgstr "Navigointinäppäimet käytössä"
+msgstr "Pikanavigointi käytössä"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 msgid ""
@@ -747,9 +747,9 @@ msgid ""
 "browse mode jump to various kinds of elements on the page. When off, these "
 "keys are passed to the application"
 msgstr ""
-"Ottaa käyttöön navigointinäppäimet tai poistaa ne käytöstä. Kun ne ovat "
-"käytössä, määrättyjen kirjainten painaminen selaustilassa siirtää sivulla "
-"oleviin eri tyyppisiin elementteihin. Kun navigointinäppäimet eivät ole "
+"Ottaa käyttöön pikanavigointinäppäimet tai poistaa ne käytöstä. Kun "
+"näppäimet ovat käytössä, määrättyjen kirjainten painaminen selaustilassa "
+"siirtää sivulla oleviin eri tyyppisiin elementteihin. Kun ne eivät ole "
 "käytössä, niiden painallukset välitetään suoraan sovellukselle."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
@@ -760,7 +760,7 @@ msgstr "Ei tueta tässä asiakirjassa"
 msgid "Lists various types of elements in this document"
 msgstr "Näyttää listan tämän asiakirjan elementeistä."
 
-#. Translators: the description for the activatePosition script on virtualBuffers.
+#. Translators: the description for the activatePosition script on browseMode documents.
 msgid "activates the current object in the document"
 msgstr "Aktivoi asiakirjassa kohdalla olevan objektin"
 
@@ -1235,6 +1235,44 @@ msgstr "&Avaa"
 msgid "&Move to"
 msgstr "&Siirry"
 
+#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
+#, python-format
+msgid "%s landmark"
+msgstr "%s kiintopiste"
+
+#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "valittu %s"
+
+#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
+msgid "No long description"
+msgstr "Ei pitkää kuvausta"
+
+#. Translators: the description for the activateLongDescription script on browseMode documents.
+msgid "Shows the long description at this position if one is found."
+msgstr ""
+"Näyttää nykyisestä kohdasta pitkän kuvauksen, mikäli sellainen on saatavilla."
+
+#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
+#. But there is no container.
+msgid "Not in a container"
+msgstr "Ei säilöelementissä"
+
+#. Translators: Description for the Move to start of container command in browse mode.
+msgid "Moves to the start of the container element, such as a list or table"
+msgstr "Siirtää säilöelementin, kuten listan tai taulukon, alkuun."
+
+#. Translators: a message reported when:
+#. Review cursor is at the bottom line of the current navigator object.
+#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
+msgid "bottom"
+msgstr "alareuna"
+
+#. Translators: Description for the Move past end of container command in browse mode.
+msgid "Moves past the end  of the container element, such as a list or table"
+msgstr "Siirtää säilöelementin, kuten listan tai taulukon, loppuun."
+
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
@@ -1259,6 +1297,24 @@ msgstr "kaikki"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "merkki"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "ei koskaan"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "aina"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "vain jos symbolitaso on alempi"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -1457,7 +1513,7 @@ msgstr "tummanvioletti"
 #. Translators: the color Deep Pink (RGB 255, 20, 147) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Deep Pink"
-msgstr "syvänvaaleanpunainen"
+msgstr "syvänpinkki"
 
 #. Translators: the color Deep Sky Blue (RGB 0, 191, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1537,7 +1593,7 @@ msgstr "Meloninvaaleanpunainen"
 #. Translators: the color Hot Pink (RGB 255, 105, 180) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Hot Pink"
-msgstr "kuumanvaaleanpunainen"
+msgstr "kuumanpinkki"
 
 #. Translators: the color Indian Red (RGB 205, 92, 92) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1612,7 +1668,7 @@ msgstr "vaaleanharmaa"
 #. Translators: the color Light Pink (RGB 255, 182, 193) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Light Pink"
-msgstr "vaaleanvaaleanpunainen"
+msgstr "vaaleanpinkki"
 
 #. Translators: the color Light Salmon (RGB 255, 160, 122) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1812,7 +1868,7 @@ msgstr "peru"
 #. Translators: the color Pink (RGB 255, 192, 203) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
 msgid "Pink"
-msgstr "vaaleanpunainen"
+msgstr "pinkki"
 
 #. Translators: the color Plum (RGB 221, 160, 221) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -1964,11 +2020,6 @@ msgctxt "color name"
 msgid "Yellow Green"
 msgstr "keltavihreä"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "valittu %s"
-
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
@@ -2093,7 +2144,6 @@ msgid "cell"
 msgstr "solu"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
-#. Translators: A column in a column chart.
 msgid "column"
 msgstr "sarake"
 
@@ -2299,7 +2349,7 @@ msgstr "pääte"
 
 #. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in addition to text; encountered on webpages and NvDA log viewer).
 msgid "rich edit"
-msgstr "muokattava"
+msgstr "muokattava, tukee muotoiluja"
 
 #. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
 msgid "ruler"
@@ -2696,6 +2746,10 @@ msgstr "rajattu"
 msgid "overflowing"
 msgstr "ylivuoto"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "lukitsematon"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "ei valittu"
@@ -2812,7 +2866,7 @@ msgid "Braille"
 msgstr "Pistekirjoitus"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: The label for the Tools submenu in NVDA menu.
+msgctxt "script category"
 msgid "Tools"
 msgstr "Työkalut"
 
@@ -3044,6 +3098,18 @@ msgstr "muokkausten lukeminen käytössä"
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
 msgstr "Ottaa käyttöön muokkausten lukemisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "korostuksen ilmoittaminen pois"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "korostuksen ilmoittaminen käytössä"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "Ottaa käyttöön korostuksen ilmoittamisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3348,12 +3414,12 @@ msgstr "%s kopioitu leikepöydälle"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
 msgstr ""
-"Ilmoittaa nykyisen navigointiobjektin. Kahdesti painettaessa se tavataan ja "
-"kolmesti painettaessaobjektin nimi ja arvo kopioidaan leikepöydälle"
+"Ilmoittaa nykyisen navigointiobjektin. Kahdesti painettaessa tiedot tavataan "
+"ja kolmesti painettaessa objektin nimi ja arvo kopioidaan leikepöydälle."
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
@@ -3478,12 +3544,6 @@ msgstr ""
 "Lukee nykyisen navigointiobjektin rivin, jolla tarkastelukohdistin on. Jos "
 "tätä komentoa painetaan kahdesti, rivi tavataan. Kolmesti painettaessa se "
 "tavataan merkkikuvauksia käyttäen."
-
-#. Translators: a message reported when:
-#. Review cursor is at the bottom line of the current navigator object.
-#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "alareuna"
 
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid ""
@@ -4055,6 +4115,10 @@ msgid ""
 msgstr ""
 "Siirtää seuraavaan objektiin objektinavigointihierarkian kokonaisnäkymässä"
 
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "Ei edellistä"
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
@@ -4136,7 +4200,7 @@ msgstr "Ohjeet"
 msgid "Commands Quick Reference"
 msgstr "Komentojen pikaopas"
 
-#. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
+#. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
 msgstr "Käyttöopas"
 
@@ -4361,6 +4425,58 @@ msgid "numpad plus"
 msgstr "numeronäppäimistön plus"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "numeronäppäimistön pilkku"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "numeronäppäimistön insert"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "numlock numeronäppäimistön 0"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "numlock numeronäppäimistön 1"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "numlock numeronäppäimistön 2"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "numlock numeronäppäimistön 3"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "numlock numeronäppäimistön 4"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "numlock numeronäppäimistön 5"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "numlock numeronäppäimistön 6"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "numlock numeronäppäimistön 7"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "numlock numeronäppäimistön 8"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "numlock numeronäppäimistön 9"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "insert"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "vasen control"
 
@@ -4521,15 +4637,20 @@ msgstr "ei sisennystä"
 msgid "%d characters"
 msgstr "%d merkkiä"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "valitaan %s"
+msgid "%s selected"
+msgstr "%s valittu"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "ei valita %s"
+msgid "%s unselected"
+msgstr "%s ei valittu"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s valittu sen sijaan"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4624,14 +4745,55 @@ msgstr "{backgroundColor} tausta"
 msgid "line %s"
 msgstr "rivi %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "lisätty"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "ei lisätty"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "poistettu"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "ei poistettu"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
-msgstr "muutettu %s"
+msgstr "muokattu %s"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "ei muutettu"
+#, python-format
+msgid "no revised %s"
+msgstr "ei muokattu %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "merkitty"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "ei merkitty"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "voimakkaasti korostettu"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "ei voimakasta korostusta"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "korostettu"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "ei korostusta"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -4782,29 +4944,64 @@ msgstr "Puheen tarkastelu"
 msgid "&Language"
 msgstr "Kie&li:"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Language"
+msgstr "Kieli"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Voice"
 msgstr "&Puheääni:"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Voice"
+msgstr "Puheääni"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&ariant"
 msgstr "&Muunnelma:"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Variant"
+msgstr "Muunnelma"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
 msgstr "&Nopeus:"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate"
+msgstr "Nopeus"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "&Voimakkuus:"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Volume"
+msgstr "Voimakkuus"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
 msgstr "&Korkeus:"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Pitch"
+msgstr "Korkeus"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&Sävy:"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Inflection"
+msgstr "Sävy"
 
 msgid "text mode"
 msgstr "tekstitila"
@@ -5825,6 +6022,14 @@ msgstr "&Asenna NVDA..."
 msgid "Reload plugins"
 msgstr "Lataa l&iitännäiset uudelleen"
 
+#. Translators: The label for the Tools submenu in NVDA menu.
+msgid "Tools"
+msgstr "T&yökalut"
+
+#. Translators: The label of a menu item to open NVDA user guide.
+msgid "&User Guide"
+msgstr "&Käyttöopas"
+
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
 msgstr "Komentojen &pikaopas"
@@ -5933,7 +6138,7 @@ msgstr "Käytä Caps Lockia  NVDA-näppäimenä"
 #. Translators: The label of a check box in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
-msgstr "Käynnistä NVDA &automaattisesti sisäänkirjautumisen jälkeen"
+msgstr "Käynnistä &automaattisesti sisäänkirjautumisen jälkeen"
 
 #. Translators: This is a label for a checkbox in welcome dialog to show welcome dialog at startup.
 msgid "Show this dialog when NVDA starts"
@@ -6302,6 +6507,7 @@ msgstr ""
 "oleva liitos poistetaan ja käynnistin liitetään tähän profiiliin.\n"
 "Haluatko varmasti jatkaa?"
 
+#. Translators: The title of a warning dialog.
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 msgid "Warning"
 msgstr "Varoitus"
@@ -6423,6 +6629,24 @@ msgstr "Kopioi &massamuistiversion asetukset nykyiseen käyttäjätiliin"
 #. Translators: The label of a button to continue with the operation.
 msgid "&Continue"
 msgstr "&Jatka"
+
+#. Translators: A warning presented when the user attempts to downgrade NVDA
+#. to an older version.
+msgid ""
+"You are attempting to install an earlier version of NVDA than the version "
+"currently installed. If you really wish to revert to an earlier version, you "
+"should first cancel this installation and completely uninstall NVDA before "
+"installing the earlier version."
+msgstr ""
+"Yrität asentaa NVDA:n versiota, joka on vanhempi kuin tällä hetkellä "
+"asennettuna oleva. Mikäli haluat varmasti palata aiempaan versioon, sinun on "
+"ensin peruutettava tämä asennus ja poistettava NVDA kokonaan ennen aiemman "
+"version asentamista."
+
+#. Translators: The label of a button to proceed with installation,
+#. even though this is not recommended.
+msgid "&Proceed with installation (not recommended)"
+msgstr "&Jatka asennusta (ei suositella)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -7033,6 +7257,11 @@ msgstr "Lue &muokkaajan muokkaukset"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "Ilmoita k&orostus"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "Lue t&yylimääreet"
 
@@ -7260,13 +7489,22 @@ msgstr "Symboli"
 msgid "Level"
 msgstr "Taso"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "Säilytä"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "Muuta symbolia"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
-msgstr "&Taso"
+msgstr "T&aso"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "&Lähetä todellinen merkki syntetisaattorille"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7336,11 +7574,6 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "kohdassa {x}, {y}"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-#, python-format
-msgid "%s landmark"
-msgstr "%s kiintopiste"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "Päivitetty"
@@ -7348,15 +7581,6 @@ msgstr "Päivitetty"
 #. Translators: Reported while loading a document.
 msgid "Loading document..."
 msgstr "Ladataan asiakirjaa..."
-
-#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-msgid "No long description"
-msgstr "Ei pitkää kuvausta"
-
-#. Translators: the description for the activateLongDescription script on virtualBuffers.
-msgid "Shows the long description at this position if one is found."
-msgstr ""
-"Näyttää nykyisestä kohdasta pitkän kuvauksen, mikäli sellainen on saatavilla."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -7400,19 +7624,6 @@ msgstr "siirtää seuraavaan taulukon sarakkeeseen"
 msgid "moves to the previous table column"
 msgstr "siirtää edelliseen taulukon sarakkeeseen"
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
-msgid "Not in a container"
-msgstr "Ei säilöelementissä"
-
-#. Translators: Description for the Move to start of container command in browse mode.
-msgid "Moves to the start of the container element, such as a list or table"
-msgstr "Siirtää säilöelementin, kuten listan tai taulukon, alkuun."
-
-#. Translators: Description for the Move past end of container command in browse mode.
-msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "Siirtää säilöelementin, kuten listan tai taulukon, loppuun."
-
 msgid "Taskbar"
 msgstr "Tehtäväpalkki"
 
@@ -7430,13 +7641,23 @@ msgstr "avaa"
 msgid "Desktop"
 msgstr "Työpöytä"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "oletusväri"
 
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "Tuntematon väri"
+
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "Tätä solua ei voi muokata"
+
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr ""
-"Näyttää listan kaavioista sekä kommentteja ja kaavoja sisältävistä soluista"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Näyttää listan tämän laskentataulukon elementeistä."
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -7452,6 +7673,11 @@ msgstr "K&ommentti"
 #. in the browse mode Elements List dialog.
 msgid "&Formula"
 msgstr "K&aava"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "T&aulukko"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7517,6 +7743,12 @@ msgstr ""
 "Kerran painaminen määrittää tämän solun ensimmäiseksi riviotsikoksi sen ala- "
 "ja oikealla puolella oleville soluille nykyisellä alueella. Kahdesti "
 "painaminen nollaa solun nykyisen riviotsikon."
+
+msgid "Input Message is {title}: {message}"
+msgstr "Syöttöilmoitus on {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "Syöttöilmoitus on {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -7936,6 +8168,11 @@ msgstr "Sarjoja ei määritetty."
 msgid "slice"
 msgstr "sektori"
 
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "pylväs"
+
 #. Translators: A data point in a line chart.
 msgid "data point"
 msgstr "arvopiste"
@@ -8267,19 +8504,9 @@ msgstr "Tekstikehys"
 msgid "comment: {text} by {author} on {date}"
 msgstr "kommentti: {text}, muokkaaja: {author}, päiväys: {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text}, muokkaaja: {author}, päiväys: {date}"
-
-msgid "unknown author"
-msgstr "tuntematon muokkaaja"
-
-msgid "unknown date"
-msgstr "tuntematon päiväys"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr ""
-"Muokkaus: {revisionType}, muokkaaja: {revisionAuthor}, päiväys: "
-"{revisionDate}"
+"{revisionType}, {description}: {text}, muokkaaja: {author}, päiväys: {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8451,6 +8678,36 @@ msgstr "HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr ""
+#~ "Näyttää listan kaavioista sekä kommentteja ja kaavoja sisältävistä "
+#~ "soluista"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "oletusväri"
+
+#~ msgid "selecting %s"
+#~ msgstr "valitaan %s"
+
+#~ msgid "unselecting %s"
+#~ msgstr "ei valita %s"
+
+#~ msgid "unrevised"
+#~ msgstr "ei muutettu"
+
+#~ msgid "unknown author"
+#~ msgstr "tuntematon muokkaaja"
+
+#~ msgid "unknown date"
+#~ msgstr "tuntematon päiväys"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr ""
+#~ "Muokkaus: {revisionType}, muokkaaja: {revisionAuthor}, päiväys: "
+#~ "{revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "ilmoittaa objektin, jossa kohdistus on"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-08 19:04+1000\n"
-"PO-Revision-Date: 2015-05-28 04:25+0330\n"
+"POT-Creation-Date: 2015-11-10 10:22+1000\n"
+"PO-Revision-Date: 2015-11-15 22:25+0330\n"
 "Last-Translator: Mohammadreza Rashad <mohammadreza5712@gmail.com>\n"
 "Language-Team: NVDA Translation Team <nvda-translations@freelists.org>\n"
 "Language: fa\n"
@@ -260,6 +260,12 @@ msgid "Ethiopic grade 1"
 msgstr "اِتیوپیایی درجه‌ی 1"
 
 #. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Finnish 6 dot"
+msgstr "فنلاندیِ ۶ نقطه"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Finnish 8 dot computer braille"
 msgstr "فنلاندی بریلِ 8 نقطه‌ی رایانه"
 
@@ -287,6 +293,16 @@ msgstr "فرانسوی (کانادا) درجه‌ی 1"
 #. braille settings dialog.
 msgid "French (Canada) grade 2"
 msgstr "فرانسوی (کانادا) درجه‌ی 2"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 1"
+msgstr "ایرلندی درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Irish grade 2"
+msgstr "ایرلندی درجه‌ی ۲"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -342,6 +358,16 @@ msgstr "ايتاليايی بریلِ 8 نقطه‌ی رایانه"
 #. braille settings dialog.
 msgid "Kannada grade 1"
 msgstr "کانادا درجه‌ی 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 1 (2006)"
+msgstr "کره‌ای درجه‌ی 1 (۲۰۰۶)"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Korean grade 2 (2006)"
+msgstr "کره‌ای درجه‌ی ۲ (۲۰۰۶)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -706,6 +732,24 @@ msgstr "حالتِ فکوس"
 msgid "browse mode"
 msgstr "حالتِ مرور"
 
+#. Translators: Reported when single letter navigation in browse mode is turned off.
+msgid "Single letter navigation off"
+msgstr "پیمایشِ تک‌حرفی، خاموش."
+
+#. Translators: Reported when single letter navigation in browse mode is turned on.
+msgid "Single letter navigation on"
+msgstr "پیمایشِ تک‌حرفی، روشن."
+
+#. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
+msgid ""
+"Toggles single letter navigation on and off. When on, single letter keys in "
+"browse mode jump to various kinds of elements on the page. When off, these "
+"keys are passed to the application"
+msgstr ""
+"پیمایشِ تک‌حرفی را روشن یا خاموش میکند. وقتی روشن باشد، کلید‌های تک‌حرفی در حالت "
+"مرور، مکان‌نما را به گونه‌های مختلفی از سازه‌های موجود در صفحه‌ی پیشِ رو هدایت "
+"میکنند. وقتی خاموش باشد، کلید‌های یاد‌شده به برنامه‌ی پیشِ رو هدایت میشوند."
+
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 msgid "Not supported in this document"
 msgstr "در این سند پشتیبانی نمیشود"
@@ -714,7 +758,7 @@ msgstr "در این سند پشتیبانی نمیشود"
 msgid "Lists various types of elements in this document"
 msgstr "انواعِ گوناگونی از سازه‌های موجود در این سند را فهرست میکند."
 
-#. Translators: the description for the activatePosition script on virtualBuffers.
+#. Translators: the description for the activatePosition script on browseMode documents.
 msgid "activates the current object in the document"
 msgstr "شیءِ جاری را در سند فعال میکند."
 
@@ -1189,6 +1233,43 @@ msgstr "&فعال کردن"
 msgid "&Move to"
 msgstr "&رفتن به"
 
+#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
+#, python-format
+msgid "%s landmark"
+msgstr "بخشِ %s"
+
+#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "%s انتخاب شد"
+
+#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
+msgid "No long description"
+msgstr "توضیحِ طولانی ندارد"
+
+#. Translators: the description for the activateLongDescription script on browseMode documents.
+msgid "Shows the long description at this position if one is found."
+msgstr "توضیحِ طولانی را در این قسمت در صورتی که یافت شود نشان میدهد."
+
+#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
+#. But there is no container.
+msgid "Not in a container"
+msgstr "در هیچ دربرگیرنده ای نیستید."
+
+#. Translators: Description for the Move to start of container command in browse mode.
+msgid "Moves to the start of the container element, such as a list or table"
+msgstr "به آغازِ سازه‌ی دربرگیرنده، مانندِ فهرست یا جدول میبَرَد."
+
+#. Translators: a message reported when:
+#. Review cursor is at the bottom line of the current navigator object.
+#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
+msgid "bottom"
+msgstr "پایین"
+
+#. Translators: Description for the Move past end of container command in browse mode.
+msgid "Moves past the end  of the container element, such as a list or table"
+msgstr "به بعد از انتهای سازه‌ی دربرگیرنده، مانند لیست یا جدول میبَرَد."
+
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
@@ -1213,6 +1294,24 @@ msgstr "همه"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "نویسه"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "هرگز"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "همیشه"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "تنها پایین‌تر از سطحِ نشانه"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -1918,11 +2017,6 @@ msgctxt "color name"
 msgid "Yellow Green"
 msgstr "سبزِ لجنی"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "%s انتخاب شد"
-
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
@@ -2047,7 +2141,6 @@ msgid "cell"
 msgstr "خانه"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
-#. Translators: A column in a column chart.
 msgid "column"
 msgstr "ستون"
 
@@ -2651,6 +2744,10 @@ msgstr "حذف‌شده"
 msgid "overflowing"
 msgstr "اضافی"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "قفل‌نشده"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "انتخاب نشده"
@@ -2766,7 +2863,7 @@ msgid "Braille"
 msgstr "بریل"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: The label for the Tools submenu in NVDA menu.
+msgctxt "script category"
 msgid "Tools"
 msgstr "ابزار‌ها"
 
@@ -2993,6 +3090,18 @@ msgstr "بازبینی‌ها گزارش میشوند."
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
 msgstr "گزارش شدنِ بازبینی‌ها را فعال یا غیرِ فعال میکند."
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "اعلامِ تأکید، خاموش"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "اعلامِ تأکید، روشن"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "اعلامِ تأکید را فعال یا غیر فعال میکند."
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3291,9 +3400,9 @@ msgstr "%s در کلیپ‌برد کپی شد."
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
 msgstr ""
 "شیءِ پِیمایِشگرِ جاری را اعلام میکند. با دو بار فشردن، این اطلاعات را هِجّی و با "
 "سه بار فشردن نام و مقدارِ این شیء را در کلیپ‌برد کپی میکند."
@@ -3417,12 +3526,6 @@ msgstr ""
 "خطِّ فعلی را که مکاننمای بازبینی در آنجا قرار دارد میخوانَد. اگر این کلید دو "
 "بار فشرده شود، خطِّ جاری حرف به حرف خوانده میشود. اگر سه بار فشرده شود، به "
 "هنگام هِجّی کردن از کلماتی که معادل حروفِ الفبا قرارداد شده استفاده میشود."
-
-#. Translators: a message reported when:
-#. Review cursor is at the bottom line of the current navigator object.
-#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "پایین"
 
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid ""
@@ -3582,17 +3685,22 @@ msgstr ""
 "اطلاعاتِ قالب‌بَندیِ متن را برای مکاننمای بازبینی موجود در سند گزارش میکند."
 
 #. Translators: Input help mode message for report current focus command.
-msgid "reports the object with focus"
-msgstr "شیئی را که در تیر‌رَسِ صفحه کلید قرار دارد گزارش میدهد"
+msgid "reports the object with focus. If pressed twice, spells the information"
+msgstr ""
+"شیءِ دارای فکوس را اعلام میکند. اگر دو بار فشرده شود، اطلاعاتِ اعلام‌شده را هِجّی "
+"میکند."
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
 msgstr "هیچ خطِّ وضعیتی یافت نشد"
 
 #. Translators: Input help mode message for report status line text command.
-msgid "reads the current application status bar and moves the navigator to it"
+msgid ""
+"reads the current application status bar and moves the navigator to it. If "
+"pressed twice, spells the information"
 msgstr ""
-"نوارِ وضعیتِ برنامه‌ی جاری را میخوانَد و پِیمایِشگر را به محل قرارگیری آن میبَرَد."
+"نوارِ وضعیتِ برنامه‌ی جاری را میخوانَد و پِیمایِشگر را به محل قرارگیری آن میبَرَد. "
+"اگر دو بار فشرده شود، اطلاعات را هِجّی میکند."
 
 #. Translators: presented when the mouse tracking is toggled.
 msgid "Mouse tracking off"
@@ -3978,6 +4086,10 @@ msgid ""
 "hierarchy"
 msgstr "از نظرِ رتبه بندی در پِیمایِشِ اشیاء، به شیءِ بعدی در یک نمای هم‌رتبه می‌رود."
 
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "شیءِ قبلی‌ای نیست"
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
@@ -4058,7 +4170,7 @@ msgstr "سندهای راهنما"
 msgid "Commands Quick Reference"
 msgstr "راهنمای سریعِ فرمانها"
 
-#. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
+#. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
 msgstr "راهنمای کاربر"
 
@@ -4283,6 +4395,58 @@ msgid "numpad plus"
 msgstr "علامتِ بعلاوه در صفحه کلیدِ اعداد"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "ممیز در صفحه‌کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "اینْسِرت در صفحه‌کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "صفر در صفحه‌کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "1 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "2 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "3 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "۴ در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "5 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "6 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "7 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "8 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "9 در صفحه کلیدِ اعداد"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "اینْسِرت"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "کنترلِ چپ"
 
@@ -4443,15 +4607,20 @@ msgstr "بدونِ تورفتگی"
 msgid "%d characters"
 msgstr "%d نویسه"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "انتخاب کردنِ %s"
+msgid "%s selected"
+msgstr "%s انتخاب شد"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "انتخاب نکردنِ %s"
+msgid "%s unselected"
+msgstr "%s انتخاب نشد"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s به جایش انتخاب شد"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4546,14 +4715,55 @@ msgstr "پس‌زمینه‌ی {backgroundColor} رنگ"
 msgid "line %s"
 msgstr "خطِّ %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "درج‌شده"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "درج‌نشده"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "حذف‌شده"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "حذف‌نشده"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "%s بازنگری شد"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "برای بازبینی نشانه‌گذاری شد"
+#, python-format
+msgid "no revised %s"
+msgstr "%s بازبینی‌نشده"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "نشانه‌گذاری‌شده"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "نشانه‌گذاری‌نشده"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "مهم"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "غیرِ مهم"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "تاکید‌شده"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "تاکید‌نشده"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -4704,29 +4914,64 @@ msgstr "سخن‌نمای NVDA"
 msgid "&Language"
 msgstr "&زبان"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Language"
+msgstr "زبان"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Voice"
 msgstr "&صدا"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Voice"
+msgstr "صدا"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&ariant"
 msgstr "نوعِ &صدا"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Variant"
+msgstr "نوعِ صدا"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
 msgstr "&سرعت"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate"
+msgstr "سرعت"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "&حجمِ صدا"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Volume"
+msgstr "حجمِ صدا"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
 msgstr "&زیر و بمی"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Pitch"
+msgstr "زیر و بمی"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "&انعطافِ صدا"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Inflection"
+msgstr "انعطافِ صدا"
 
 msgid "text mode"
 msgstr "حالتِ متنی"
@@ -5482,6 +5727,8 @@ msgstr "نمایشگر‌های بریلِ Baum/HumanWare/APH"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
+#. Translators: Name of a serial communications port.
+#. Translators: Name of a serial communications port
 msgid "Serial: {portName}"
 msgstr "پورتِ سریال: {portName}"
 
@@ -5492,6 +5739,10 @@ msgstr "HumanWare BrailleNote"
 #. Translators: The name of a series of braille displays.
 msgid "HumanWare Brailliant BI/B series"
 msgstr "سِریِ HumanWare Brailliant BI/B"
+
+#. Translators: The name of a braille display.
+msgid "EcoBraille displays"
+msgstr "نمایشگرهای EcoBraille"
 
 #. Translators: Names of braille displays.
 msgid "Freedom Scientific Focus/PAC Mate series"
@@ -5735,6 +5986,14 @@ msgstr "&نصبِ NVDA"
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
 msgstr "بارگذاریِ مجددِ افزونه ها"
+
+#. Translators: The label for the Tools submenu in NVDA menu.
+msgid "Tools"
+msgstr "ابزار‌ها"
+
+#. Translators: The label of a menu item to open NVDA user guide.
+msgid "&User Guide"
+msgstr "راهنمای &کاربر"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
@@ -6213,6 +6472,7 @@ msgstr ""
 "قبلی حذف شده و به این گروه مربوط میشود.\n"
 "آیا برای ادامه اطمینان دارید؟"
 
+#. Translators: The title of a warning dialog.
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 msgid "Warning"
 msgstr "هشدار"
@@ -6333,6 +6593,23 @@ msgstr "کپیِ تنظیماتِ نسخه‌ی قابلِ &حمل در حساب
 #. Translators: The label of a button to continue with the operation.
 msgid "&Continue"
 msgstr "&ادامه"
+
+#. Translators: A warning presented when the user attempts to downgrade NVDA
+#. to an older version.
+msgid ""
+"You are attempting to install an earlier version of NVDA than the version "
+"currently installed. If you really wish to revert to an earlier version, you "
+"should first cancel this installation and completely uninstall NVDA before "
+"installing the earlier version."
+msgstr ""
+"شما قصد دارید نگارشی قدیمیتر از نگارشی که در حالِ حاضر نصب‌شده را از NVDA نصب "
+"کنید. اگر واقعا میخواهید به نگارش قدیمیتر برگردید، باید ابتدا عملیات نصب را "
+"لغو کرده، NVDA را بطور کامل حذف کنید، و سپس نگارشِ قدیمیتر را نصب کنید."
+
+#. Translators: The label of a button to proceed with installation,
+#. even though this is not recommended.
+msgid "&Proceed with installation (not recommended)"
+msgstr "&اقدام به نصب (توصیه نمیشود)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -6489,13 +6766,13 @@ msgstr "بررسیِ خودکارِ &به‌روزرسانیها برای NVDA"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 msgid ""
-"Custom plugins were detected in your user settings directory. Copying these "
-"to the system profile could be a security risk. Do you still wish to copy "
-"your settings?"
+"Add-ons were detected in your user settings directory. Copying these to the "
+"system profile could be a security risk. Do you still wish to copy your "
+"settings?"
 msgstr ""
-"افزونه های سفارشی در پوشه‌ی تنظیماتِ کاربریِ شما یافت شد. کپی کردنِ این افزونه "
-"ها در گروهِ تنظیماتِ سیستم میتواند خطرِ امنیتی به همراه داشته باشد. آیا هنوز "
-"میخواهید تنظیماتتان را کپی کنید؟"
+"افزونه‌هایی در پوشه‌ی تنظیماتِ کاربریِ شما یافت شدند. کپی کردنِ این افزونه ها در "
+"گروهِ تنظیماتِ سیستم میتواند خطرِ امنیتی به همراه داشته باشد. آیا هنوز میخواهید "
+"تنظیماتتان را کپی کنید؟"
 
 #. Translators: The title of the dialog presented while settings are being copied
 msgid "Copying Settings"
@@ -6942,6 +7219,11 @@ msgstr "گزارش کردنِ بازبینی‌های &ویراستار"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "اعلامِ ت&اکید"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "گزارش کردنِ &سبْک"
 
@@ -7171,6 +7453,11 @@ msgstr "نشانه"
 msgid "Level"
 msgstr "سطح"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "ارسالِ خودِ نشانه"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "تغییرِ نشانه"
@@ -7178,6 +7465,10 @@ msgstr "تغییرِ نشانه"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "&سطح"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "&ارسالِ نشانه‌ی حقیقی به موتورِ سخن‌گو"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7247,11 +7538,6 @@ msgstr "{curPercent:.0f}٪"
 msgid "at {x}, {y}"
 msgstr "در {x}, {y} پیکْسِل"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-#, python-format
-msgid "%s landmark"
-msgstr "بخشِ %s"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "صفحه نوسازی شد"
@@ -7259,14 +7545,6 @@ msgstr "صفحه نوسازی شد"
 #. Translators: Reported while loading a document.
 msgid "Loading document..."
 msgstr "در حالِ بارگذاریِ سند..."
-
-#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-msgid "No long description"
-msgstr "توضیحِ طولانی ندارد"
-
-#. Translators: the description for the activateLongDescription script on virtualBuffers.
-msgid "Shows the long description at this position if one is found."
-msgstr "توضیحِ طولانی را در این قسمت در صورتی که یافت شود نشان میدهد."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -7310,19 +7588,6 @@ msgstr "به ستونِ بَعدیِ جدول میبَرَد"
 msgid "moves to the previous table column"
 msgstr "به ستونِ قبلیِ جدول میبَرَد."
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
-msgid "Not in a container"
-msgstr "در هیچ دربرگیرنده ای نیستید."
-
-#. Translators: Description for the Move to start of container command in browse mode.
-msgid "Moves to the start of the container element, such as a list or table"
-msgstr "به آغازِ سازه‌ی دربرگیرنده، مانندِ فهرست یا جدول میبَرَد."
-
-#. Translators: Description for the Move past end of container command in browse mode.
-msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "به بعد از انتهای سازه‌ی دربرگیرنده، مانند لیست یا جدول میبَرَد."
-
 msgid "Taskbar"
 msgstr "نوارِ وظیفه"
 
@@ -7340,8 +7605,14 @@ msgstr "فراخوانی"
 msgid "Desktop"
 msgstr "میزِ کار"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "رنگِ پیش‌فرض"
+
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "این خانه غیرِ قابلِ ویرایش است"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
@@ -7362,6 +7633,11 @@ msgstr "ت&وضیح"
 #. in the browse mode Elements List dialog.
 msgid "&Formula"
 msgstr "&فرمول"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "&برگه"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7428,6 +7704,12 @@ msgstr ""
 "راستِ آن که در این ناحیه قرار دارند تنظیم میشود. با دو بار فشردن، از سر‌سطرِ "
 "جاری یا این خانه صرفِ نظر میشود."
 
+msgid "Input Message is {title}: {message}"
+msgstr "پیام ورودی عبارت است از  {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "پیام ورودی عبارت است از {message}"
+
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
 msgstr "توضیحی ندارد"
@@ -7447,252 +7729,252 @@ msgstr "از {firstAddress} {firstContent} تا {lastAddress} {lastContent}"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Area"
-msgstr "ناحیه‌ی سه‌بُعدی"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Area"
-msgstr "ناحیه‌ی انباشته‌ی سه‌بُعدی"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Area"
-msgstr "ناحیه‌ی صد‌درصد انباشته"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Bar"
-msgstr "میله‌ی خوشه‌ایِ سه‌بُعدی"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Bar"
-msgstr "میله‌ی انباشته‌ی سه‌بُعدی"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Bar"
-msgstr "میله‌ی صد‌درصد انباشته‌ی سه‌بُعدی"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Column"
-msgstr "ستونِ سه‌بُعدی"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Clustered Column"
-msgstr "ستونِ خوشه‌ایِ سه‌بُعدی"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Column"
-msgstr "ستونِ انباشته‌ی سه‌بُعدی"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Column"
-msgstr "ستونِ صد‌درصد انباشته‌ی سه‌بُعدی"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Line"
-msgstr "خطِّ سه‌بُعدی"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Pie"
-msgstr "دایره‌ی سه‌بُعدی"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded 3D Pie"
-msgstr "دایره‌ی انفجاریِ سه‌بُعدی"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Area"
-msgstr "ناحیه"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Area"
-msgstr "ناحیه‌ی انباشته"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Clustered Bar"
-msgstr "میله‌ای خوشه‌ای"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bar of Pie"
-msgstr "استوانه‌ی کلوچه‌ای"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Bar"
-msgstr "میله‌یِ انباشته"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Bar"
-msgstr "میله‌ی صد‌درصد انباشته"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bubble"
-msgstr "حبابی"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Bubble with 3D effects"
-msgstr "حبابِ دارای جلوه‌های سه‌بُعدی"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Clustered Column"
-msgstr "ستونِ خوشه‌ای"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Column"
-msgstr "ستونِ انباشته"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Column"
-msgstr "ستونِ صد‌درصد انباشته"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cone Bar"
-msgstr "مخروطیِ خوشه‌ای"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cone Bar"
-msgstr "مخروطیِ خوشه‌ایِ انباشته"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cone Bar"
-msgstr "مخروطیِ خوشه‌ای صد‌درصد انباشته"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cone Column"
-msgstr "ستونیِ مخروطیِ سه‌بُعدی"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cone Column"
-msgstr "ستونیِ مخروطیِ خوشه‌ای"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cone Column"
-msgstr "ستونِ مخروطیِ انباشته"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cone Column"
-msgstr "ستونِ مخروطیِ صد‌درصد انباشته."
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Cylinder Bar"
-msgstr "سیلندریِ خوشه‌ای"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Cylinder Bar"
-msgstr "سیلندریِ انباشته"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cylinder Bar"
-msgstr "سیلندریِ صد‌درصد انباشته"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "3D Cylinder Column"
-msgstr "ستونِ سیلندریِ سه‌بُعدی"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Cylinder Column"
-msgstr "ستونِ سیلندریِ صد‌درصد انباشته"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Doughnut"
-msgstr "حلقه‌ای"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded Doughnut"
-msgstr "حلقه‌ایِ انفجاری"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line"
-msgstr "خطّی"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line with Markers"
-msgstr "خطّیِ نشاندار"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line with Markers"
-msgstr "خطّیِ نشاندارِ انباشته"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line with Markers"
-msgstr "خطّیِ صد‌درصد انباشته‌ی نشاندار"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line"
-msgstr "خطّیِ انباشته"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line"
-msgstr "خطّیِ صد‌درصد انباشته"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Pie"
-msgstr "دایره‌ای"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Exploded Pie"
-msgstr "دایره‌ای انفجاری"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Pie of Pie"
-msgstr "دایره‌ایِ دایره"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Clustered Pyramid Bar"
-msgstr "هرمیِ خوشه‌ای"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "Stacked Pyramid Bar"
-msgstr "هرمیِ خوشه‌ایِ انباشته"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
 msgid "100 percent Stacked Pyramid Bar"
-msgstr "هرمیِ خوشه‌ایِ صد‌درصد انباشته"
+msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
@@ -7845,6 +8127,11 @@ msgstr ""
 #. Translators: A slice in a pie chart.
 msgid "slice"
 msgstr ""
+
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "ستون"
 
 #. Translators: A data point in a line chart.
 msgid "data point"
@@ -8170,17 +8457,8 @@ msgstr "قابِ متنی"
 msgid "comment: {text} by {author} on {date}"
 msgstr "توضیح: {text} توسطِ {author} به تاریخِ {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} توسطِ {author} به تاریخِ {date}"
-
-msgid "unknown author"
-msgstr "نویسنده‌ی ناشناس"
-
-msgid "unknown date"
-msgstr "تاریخِ نامشخص"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} توسط {revisionAuthor} در تاریخِ {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text} توسطِ {author} در {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8348,6 +8626,35 @@ msgstr "از سِری نمایشگرهای HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "رنگِ پیش‌فرض"
+
+#, fuzzy
+#~ msgid "Unknown color"
+#~ msgstr "رنگِ نامشخص"
+
+#~ msgid "selecting %s"
+#~ msgstr "انتخاب کردنِ %s"
+
+#~ msgid "unselecting %s"
+#~ msgstr "انتخاب نکردنِ %s"
+
+#~ msgid "unrevised"
+#~ msgstr "برای بازبینی نشانه‌گذاری شد"
+
+#~ msgid "unknown author"
+#~ msgstr "نویسنده‌ی ناشناس"
+
+#~ msgid "unknown date"
+#~ msgstr "تاریخِ نامشخص"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType} توسط {revisionAuthor} در تاریخِ {revisionDate}"
+
+#~ msgid "reports the object with focus"
+#~ msgstr "شیئی را که در تیر‌رَسِ صفحه کلید قرار دارد گزارش میدهد"
 
 #, fuzzy
 #~ msgid "%s"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA R3935\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-15 19:09+1000\n"
+"POT-Creation-Date: 2015-11-02 17:08+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Janko Valenćik <jankoval@gmail.com>\n"
 "Language-Team: NVDA Serbian translation\n"
@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.2\n"
+"X-Generator: Poedit 1.8.6\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -763,7 +763,7 @@ msgstr "nije podržano u ovom dokumentu"
 msgid "Lists various types of elements in this document"
 msgstr "Prikaži različite vrste elemenata u ovom dokumentu"
 
-#. Translators: the description for the activatePosition script on virtualBuffers.
+#. Translators: the description for the activatePosition script on browseMode documents.
 msgid "activates the current object in the document"
 msgstr "aktivira trenutni objekat u dokumentu"
 
@@ -1238,6 +1238,45 @@ msgstr "&Aktiviraj"
 msgid "&Move to"
 msgstr "&Premesti do"
 
+#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
+#, python-format
+msgid "%s landmark"
+msgstr "%s orjentir"
+
+#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
+#, python-format
+msgid "selected %s"
+msgstr "izabrano %s"
+
+#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
+msgid "No long description"
+msgstr "Nema dugog opisa"
+
+#. Translators: the description for the activateLongDescription script on browseMode documents.
+msgid "Shows the long description at this position if one is found."
+msgstr "Prikazuje dug opis na ovom mestu ako je pronađen."
+
+#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
+#. But there is no container.
+msgid "Not in a container"
+msgstr "Nije u kontejneru"
+
+#. Translators: Description for the Move to start of container command in browse mode.
+msgid "Moves to the start of the container element, such as a list or table"
+msgstr ""
+"Pomera se na početak kontejnerskog elementa, kao što je lista ili tabela."
+
+#. Translators: a message reported when:
+#. Review cursor is at the bottom line of the current navigator object.
+#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
+msgid "bottom"
+msgstr "dno"
+
+#. Translators: Description for the Move past end of container command in browse mode.
+msgid "Moves past the end  of the container element, such as a list or table"
+msgstr ""
+"Pomera se iza kraja kontejnerskog elementa, kao što je lista ili tabela"
+
 #. Translators: The level at which the given symbol will be spoken.
 msgctxt "symbolLevel"
 msgid "none"
@@ -1262,6 +1301,24 @@ msgstr "svi"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "slova"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "nikada"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "uvek"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "samo ispod nivoa simbola"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -1967,11 +2024,6 @@ msgctxt "color name"
 msgid "Yellow Green"
 msgstr "žuto zelena"
 
-#. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#, python-format
-msgid "selected %s"
-msgstr "izabrano %s"
-
 #. Translators: The word for an unknown control type.
 #. Translators: Reported when the type of a chart is not known.
 msgid "unknown"
@@ -2096,7 +2148,6 @@ msgid "cell"
 msgstr "ćelija"
 
 #. Translators: Identifies a column (a group of vertical cells in a table).
-#. Translators: A column in a column chart.
 msgid "column"
 msgstr "kolona"
 
@@ -2699,6 +2750,10 @@ msgstr "odsečeno"
 msgid "overflowing"
 msgstr "prelivajući"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "neotključano"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "nije izabrano"
@@ -2816,7 +2871,7 @@ msgid "Braille"
 msgstr "Braj"
 
 #. Translators: The name of a category of NVDA commands.
-#. Translators: The label for the Tools submenu in NVDA menu.
+msgctxt "script category"
 msgid "Tools"
 msgstr "Alati"
 
@@ -3046,6 +3101,18 @@ msgstr "uključen izgovor revizije"
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
 msgstr "Uključuje i isključuje izgovor revizija"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "isključena objava naglašenog"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "uključena objava naglašenog"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "Uključuje i isključuje objavu naglašenog"
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3345,12 +3412,13 @@ msgstr "%s kopirano u privremenu memoriju"
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
 msgstr ""
 "Prikazuje trenutni navigacioni objekat. Ako pritisnete dvaput sricaće ovu "
-"informaciju, ako pritisnete tri puta kopira ime u privremenu memoriju"
+"informaciju, ako pritisnete tri puta kopira vrednost ovog objekta u "
+"privremenu memoriju"
 
 #. Translators: message when there is no location information for the review cursor
 msgid "No location information"
@@ -3475,12 +3543,6 @@ msgstr ""
 "Prikazuje liniju trenutnog navigacionog objekta gde se nalazi pregledački "
 "kursor. Ako se taster dvaput pritisne, trenutna linija biće sricana. Ako se "
 "pritisne tri puta sricaće liniju koristeći opise karaktera."
-
-#. Translators: a message reported when:
-#. Review cursor is at the bottom line of the current navigator object.
-#. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-msgid "bottom"
-msgstr "dno"
 
 #. Translators: Input help mode message for move review cursor to next line command.
 msgid ""
@@ -4046,6 +4108,10 @@ msgstr ""
 "Prelazi na sledeći objekat u spljoštenom prikazu u hijerarhiji navigacionih "
 "objekata"
 
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "nema prethodnog"
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
@@ -4128,7 +4194,7 @@ msgstr "Dokumentacija"
 msgid "Commands Quick Reference"
 msgstr "Kratke napomene o komandama"
 
-#. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
+#. Translators: A label for a shortcut in start menu to open NVDA user guide.
 msgid "User Guide"
 msgstr "Korisničko uputstvo"
 
@@ -4353,6 +4419,58 @@ msgid "numpad plus"
 msgstr "numerički taster plus"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "taster decimalni zarez na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "taster za umetanje na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "taster 0 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "taster 1 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "taster 2 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "taster 3 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "taster 4 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "taster 5 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "taster 6 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "taster 7 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "taster 8 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "taster 9 na numeričkoj tastaturi"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "taster za umetanje"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "levi kontrol "
 
@@ -4513,15 +4631,20 @@ msgstr "nema uvlačenja"
 msgid "%d characters"
 msgstr "%d slova"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
+msgid "%s selected"
 msgstr "%s izabrano"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "nije izabrano %s"
+msgid "%s unselected"
+msgstr "%s neizabrano"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s izabrano umesto"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4616,14 +4739,55 @@ msgstr "{backgroundColor} pozadina"
 msgid "line %s"
 msgstr "red %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "umetnuto"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "nije umetnuto"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "obrisano"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "nije obrisano"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "redigovano %s"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "neredigovano"
+#, python-format
+msgid "no revised %s"
+msgstr "nije redigovano %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "obeleženo"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "nije obeleženo"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "podebljano"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "nije podebljano"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "naglašeno"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "nije naglašeno"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -4774,29 +4938,64 @@ msgstr "NVDA preglednik govora"
 msgid "&Language"
 msgstr "&Jezik"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Language"
+msgstr "&Jezik"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Voice"
+msgstr "&Glas"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Voice"
 msgstr "&Glas"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&ariant"
 msgstr "V&arijanta"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Variant"
+msgstr "&Varijanta"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Rate"
+msgstr "&Brzina"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Rate"
 msgstr "&Brzina"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "V&olume"
 msgstr "Jači&na"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Volume"
+msgstr "Jači&na"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
 msgstr "&Visina"
 
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Pitch"
+msgstr "V&isina"
+
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
 msgstr "Modulac&ija"
+
+#. Translators: Label for a setting in synth settings ring.
+msgctxt "synth setting"
+msgid "Inflection"
+msgstr "&Modulacija"
 
 msgid "text mode"
 msgstr "režim teksta"
@@ -5813,6 +6012,14 @@ msgstr "&Instaliraj NVDA..."
 msgid "Reload plugins"
 msgstr "Ponovo učitaj dodatke"
 
+#. Translators: The label for the Tools submenu in NVDA menu.
+msgid "Tools"
+msgstr "Alati"
+
+#. Translators: The label of a menu item to open NVDA user guide.
+msgid "&User Guide"
+msgstr "Korisničko uputstvo"
+
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
 msgstr "&Kratke napomene o komandama"
@@ -6290,6 +6497,7 @@ msgstr ""
 "iz tog profila i pridružen ovom.\n"
 "Da li ste sigurni da želite da nastavite?"
 
+#. Translators: The title of a warning dialog.
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 msgid "Warning"
 msgstr "Upozorenje"
@@ -6416,6 +6624,24 @@ msgstr "Kopiraj podešavanja iz &prenosne kopije u trenutni korisnični nalog"
 #. Translators: The label of a button to continue with the operation.
 msgid "&Continue"
 msgstr "Na&stavi"
+
+#. Translators: A warning presented when the user attempts to downgrade NVDA
+#. to an older version.
+msgid ""
+"You are attempting to install an earlier version of NVDA than the version "
+"currently installed. If you really wish to revert to an earlier version, you "
+"should first cancel this installation and completely uninstall NVDA before "
+"installing the earlier version."
+msgstr ""
+"Trenutno pokušavate da instalirate verziju NVDA stariju od one koja je već "
+"instalirana. Ako zaista želite da se vratite na stariju verziju, treba da "
+"zatvorite ovaj prozor i pre instalacije starije verzije, prvo potpuno "
+"uklonite trenutno instaliranu verziju NVDA."
+
+#. Translators: The label of a button to proceed with installation,
+#. even though this is not recommended.
+msgid "&Proceed with installation (not recommended)"
+msgstr "Nastavi sa &instalacijom (ne preporučuje se)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 msgid "Create Portable NVDA"
@@ -7026,6 +7252,11 @@ msgstr "Prijavi ure&đivačke revizije"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "Objavi &naglašavanje"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "Prijavi st&il"
 
@@ -7253,6 +7484,11 @@ msgstr "Simbol"
 msgid "Level"
 msgstr "Nivo"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "Zadrži"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "Promeni simbol"
@@ -7260,6 +7496,10 @@ msgstr "Promeni simbol"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "&Nivo"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "&Pošalji trenutni simbol do sintetizatora"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7329,11 +7569,6 @@ msgstr "{curPercent:.0f}%"
 msgid "at {x}, {y}"
 msgstr "u {x}, {y}"
 
-#. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-#, python-format
-msgid "%s landmark"
-msgstr "%s orjentir"
-
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
 msgid "Refreshed"
 msgstr "Osveženo"
@@ -7341,14 +7576,6 @@ msgstr "Osveženo"
 #. Translators: Reported while loading a document.
 msgid "Loading document..."
 msgstr "Učitavanje dokumenta..."
-
-#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-msgid "No long description"
-msgstr "Nema dugog opisa"
-
-#. Translators: the description for the activateLongDescription script on virtualBuffers.
-msgid "Shows the long description at this position if one is found."
-msgstr "Prikazuje dug opis na ovom mestu ako je pronađen."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
@@ -7392,21 +7619,6 @@ msgstr "premešta se u narednu kolonu tabele"
 msgid "moves to the previous table column"
 msgstr "premešta se u prethodnu kolonu tabele"
 
-#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
-#. But there is no container.
-msgid "Not in a container"
-msgstr "Nije u kontejneru"
-
-#. Translators: Description for the Move to start of container command in browse mode.
-msgid "Moves to the start of the container element, such as a list or table"
-msgstr ""
-"Pomera se na početak kontejnerskog elementa, kao što je lista ili tabela."
-
-#. Translators: Description for the Move past end of container command in browse mode.
-msgid "Moves past the end  of the container element, such as a list or table"
-msgstr ""
-"Pomera se iza kraja kontejnerskog elementa, kao što je lista ili tabela"
-
 msgid "Taskbar"
 msgstr "Programska traka"
 
@@ -7427,6 +7639,10 @@ msgstr "Radna površina"
 msgid "default color"
 msgstr "zadana boja"
 
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "Ova ćelija nije izmenjiva"
+
 #. Translators: the description for the elements list command in Microsoft Excel.
 msgid "Presents a list of charts, cells with comments and cells with formulas"
 msgstr ""
@@ -7446,6 +7662,11 @@ msgstr "K&omentar"
 #. in the browse mode Elements List dialog.
 msgid "&Formula"
 msgstr "&Formula"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "&Vrsta"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7511,6 +7732,12 @@ msgstr ""
 "Ako se pritisne jednom postaviće ćeliju kao prvo zaglavlje reda za sve "
 "ćelije koje su ispod i desno od ove regije. Ako se pritisne dva puta "
 "zaboraviće trenutno zaglavlje reda za ovu ćeliju."
+
+msgid "Input Message is {title}: {message}"
+msgstr "Ulazna poruka je {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "Ulazna poruka je {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -7930,6 +8157,11 @@ msgstr "Nema definisanih serija podataka."
 msgid "slice"
 msgstr "parče"
 
+#. Translators: A column in a column chart.
+msgctxt "chart"
+msgid "column"
+msgstr "Kolona"
+
 #. Translators: A data point in a line chart.
 msgid "data point"
 msgstr "tačka podataka"
@@ -8261,17 +8493,8 @@ msgstr "Okvir za tekst"
 msgid "comment: {text} by {author} on {date}"
 msgstr "komentar: {text} napisao {author} na dan {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} napisao {author} na dan {date}"
-
-msgid "unknown author"
-msgstr "nepoznat autor"
-
-msgid "unknown date"
-msgstr "nepoznat datum"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} od {revisionAuthor} na dan {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text} napisao {author} na dan {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8445,6 +8668,24 @@ msgstr "HIMS Braille Sense/Braille EDGE serije"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "selecting %s"
+#~ msgstr "%s izabrano"
+
+#~ msgid "unselecting %s"
+#~ msgstr "nije izabrano %s"
+
+#~ msgid "unrevised"
+#~ msgstr "neredigovano"
+
+#~ msgid "unknown author"
+#~ msgstr "nepoznat autor"
+
+#~ msgid "unknown date"
+#~ msgstr "nepoznat datum"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType} od {revisionAuthor} na dan {revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "prikazuje objekat u fokusu"

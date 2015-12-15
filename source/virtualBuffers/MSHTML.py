@@ -22,9 +22,27 @@ import aria
 import config
 import watchdog
 
+FORMATSTATE_INSERTED=1
+FORMATSTATE_DELETED=2
+FORMATSTATE_MARKED=4
+FORMATSTATE_STRONG=8
+FORMATSTATE_EMPH=16
+
 class MSHTMLTextInfo(VirtualBufferTextInfo):
 
 	def _normalizeFormatField(self, attrs):
+		formatState=attrs.get('formatState',"0")
+		formatState=int(formatState)
+		if formatState&FORMATSTATE_INSERTED:
+			attrs['revision-insertion']=True
+		if formatState&FORMATSTATE_DELETED:
+			attrs['revision-deletion']=True
+		if formatState&FORMATSTATE_MARKED:
+			attrs['marked']=True
+		if formatState&FORMATSTATE_STRONG:
+			attrs['strong']=True
+		if formatState&FORMATSTATE_EMPH:
+			attrs['emphasised']=True
 		language=attrs.get('language')
 		if language:
 			attrs['language']=languageHandler.normalizeLanguage(language)
@@ -246,7 +264,14 @@ class MSHTML(VirtualBuffer):
 			if not config.conf["documentFormatting"]["includeLayoutTables"]:
 				attrs["table-layout"]=[None]
 		elif nodeType.startswith("heading") and nodeType[7:].isdigit():
-			attrs = [{"IHTMLDOMNode::nodeName": ["H%s" % nodeType[7:]]},{"HTMLAttrib::role":["heading"],"HTMLAttrib::aria-level":[nodeType[7:]]}]
+			attrs = [
+				# the correct heading level tag, with no overriding aria-level.
+				{"IHTMLDOMNode::nodeName": ["H%s" % nodeType[7:]],"HTMLAttrib::aria-level":['0',None]},
+				# any tag with a role of heading, and the correct aria-level
+				{"HTMLAttrib::role":["heading"],"HTMLAttrib::aria-level":[nodeType[7:]]},
+				# Any heading level tag, with a correct overriding aria-level
+				{"IHTMLDOMNode::nodeName": ["H1", "H2", "H3", "H4", "H5", "H6"],"HTMLAttrib::aria-level":[nodeType[7:]]},
+			]
 		elif nodeType == "heading":
 			attrs = [{"IHTMLDOMNode::nodeName": ["H1", "H2", "H3", "H4", "H5", "H6"]},{"HTMLAttrib::role":["heading"]}]
 		elif nodeType == "list":

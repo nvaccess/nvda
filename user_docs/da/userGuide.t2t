@@ -1,4 +1,5 @@
-﻿ NVDA NVDA_VERSION brugervejledning
+﻿NVDA NVDA_VERSION brugervejledning
+NVDA NVDA_VERSION brugervejledning
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -56,7 +57,7 @@ Dette gælder både originale og modificerede kopier af softwaren, plus software
 For yderligere oplysninger, kan du [læse den fulde licens. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Systemkrav +
-- Operativsystemer: alle 32-bit og 64-bit versioner af Windows XP, Windows Vista, Windows 7 og Windows 8 (inkl. server-styresystemer).
+- Operativsystemer: alle 32-bit og 64-bit versioner af Windows XP, Windows Vista, Windows 7, Windows 8 og Windows 10 (inkl. server-styresystemer).
  - For Windows XP 32-bit kræver NVDA Service Pack 2 eller højere.
  - For Windows Server 2003 kræver NVDA Service Pack 1 eller højere.
 - Hukommelse: 256 MB eller mere RAM
@@ -506,7 +507,7 @@ Flyt til begyndelsen eller slutningen af overordnede elementer, fx. lister eller
 
 %kc:endInclude
 Nogle web-applikationer, som f.eks. Gmail, Twitter og Facebook, bruger bogstaver som genvejstaster.
-Hvis du gerne vil kunne bruge disse genvejstaster og stadig være i stand til at bruge markørtasterne til at læse i browse-tilstand, kan du midlertidigt slå NVDAs bogstavnavigering fra.
+Hvis du gerne vil kunne bruge disse genvejstaster og stadig være i stand til at bruge markørtasterne til at læse i browse-tilstand, kan du midlertidigt slå NVDAs enkelttegnsnavigering fra.
 %kc:beginInclude
 Du kan slå bogstavnavigering til og fra i det aktuelle dokument ved at trykke på NVDA+Shift+Mellemrum.
 %kc:endInclude
@@ -540,7 +541,7 @@ MathPlayer kan hentes gratis fra: http://www.dessci.com/en/products/mathplayer/
 
 NVDA understøtter følgende typer matematisk indhold:
 - MathML i Mozilla Firefox og Microsoft Internet Explorer.
-- Design Science MathType i Microsoft Word og PowerPoint.
+- Design Science MathType i Microsoft Word og PowerPoint. MathType skal være installeret, for at dette kan virke. Prøveversionen er tilstrækkelig.
 - MathML i Adobe Reader. Bemærk, at dette endnu ikke er en officiel standard, så der er i øjeblikket ingen offentligt tilgængelige programmer, som kan producere dette indhold.
 -
 
@@ -573,20 +574,83 @@ Når du vil tilbage til dokumentet, skal du simpelthen trykke på Escape-tasten.
 NVDA har sine egne ekstra kommandoer for nogle programmer. Dette er for at gøre nogle opgaver lettere, eller for at give adgang til funktionalitet som ellers ikke er tilgængelig for brugere af skærmlæsere.
 
 ++ Microsoft Word ++
+
++++ Automatisk læsning af overskrifter på kolonner og rækker +++
+NVDA kan læse de rigtige overskrifter på rækker og kolonner automatisk, mens du bevæger dig rundt i tabeller i Microsoft Word.
+Dette kræver for det første, at "Oplæs kolonne- og rækkeoverskrifter" er slået til i NVDAs dialog for dokumentformatering.
+For det andet skal NVDA have at vide, hvilken række eller kolonne der indeholder overskrifterne i en given tabel.
+Når du er placeret i den første celle i den række eller kolonne, som indeholder overskrifterne, kan du bruge følgende kommandoer:
 %kc:beginInclude
 || Navn | Tast | Beskrivelse |
-| Læs aktuelle kommentar | NVDA+Alt+c | Oplæser kommentarteksten til det sted, hvor markøren er placeret. | 
 | Indstil kolonneoverskrifter | NVDA+Shift+c | Tryk en gang for at fortælle NVDA, at dette er den første overskriftscelle i rækken med kolonneoverskrifter, som skal læses automatisk, når du bevæger dig mellem kolonner i rækkerne nedenunder. Tryk to gange for at nulstille denne indstilling. | 
 | Indstil rækkeoverskrifter | NVDA+Shift+r | Tryk en gang for at fortælle NVDA, at dette er den første overskriftscelle i kolonnen med rækkeoverskrifter, som skal læses automatisk, når du bevæger dig mellem rækker til højre for denne kolonne. Tryk to gange for at nulstille denne indstilling. | 
 %kc:endInclude
+Disse indstillinger bliver gemt i dokumentet som bogmærker, der er kompatible med andre skærmlæsere såsom JAWS.
+Dette betyder, at brugere af andre skærmlæsere, som senere åbner dette dokument, automatisk vil have fået indstillet overskrifterne på rækker og kolonner rigtigt.
+
++++ Gennemsynstilstand i Microsoft Word +++
+Ligesom på webbet kan gennemsynstilstand (browse-tilstand) bruges i Microsoft word til at give adgang til funktioner som hurtignavigation og elementlisten.
+%kc:beginInclude
+For at slå gennemsynstilstand til eller fra i Microsoft Word skal du trykke NVDA+space.
+%kc:endInclude
+For mere information om gennemsynstilstand og hurtignavigation se afsnittet om [Gennemsynstilstand #BrowseMode].
+
+++++ Elementlisten ++++
+%kc:beginInclude
+Mens du står i gennemsynstilstand i Microsoft Word, kan du komme til elementlisten ved at trykke NVDA+f7.
+%kc:endInclude
+Elementlisten kan vise overskrifter, links og annotationer, som omfatter kommentarer og sporing af ændringer.
+
++++ Annoncering af kommentarer +++
+%kc:beginInclude
+For at få oplæst en kommentar ved markørens position skal du trykke NVDA+alt+c.
+%kc:endInclude
+Alle kommentarer i dokumentet vil, sammen med andre sporede ændringer, desuden blive vist i NVDAs elementliste, når du vælger annotationer som type.
 
 ++ Microsoft Excel ++
+
++++ Automatisk læsning af overskrifter på kolonner og rækker +++
+NVDA kan læse de rigtige overskrifter på rækker og kolonner automatisk, mens du bevæger dig rundt i Excel-regneark.
+Dette kræver for det første, at "Oplæs kolonne- og rækkeoverskrifter" er slået til i NVDAs dialog for dokumentformatering.
+For det andet skal NVDA have at vide, hvilken række eller kolonne der indeholder overskrifterne.
+Når du er placeret i den første celle i den række eller kolonne, som indeholder overskrifterne, kan du bruge følgende kommandoer:
 %kc:beginInclude
 || Navn | Tast | Beskrivelse |
 | Indstil kolonneoverskrifter | NVDA+Shift+c | Tryk en gang for at fortælle NVDA, at dette er den første overskriftscelle i rækken med kolonneoverskrifter, som skal læses automatisk, når du bevæger dig mellem kolonner i rækkerne nedenunder. Tryk to gange for at nulstille denne indstilling. | 
 | Indstil rækkeoverskrifter | NVDA+Shift+r | Tryk en gang for at fortælle NVDA, at dette er den første overskriftscelle i kolonnen med rækkeoverskrifter, som skal læses automatisk, når du bevæger dig mellem rækker til højre for denne kolonne. Tryk to gange for at nulstille denne indstilling. | 
-| Læs kommentar | NVDA+Alt+c | Læser kommentaren til den aktuelle celle, hvis der er nogen. |
-| Elementliste | NVDA+F7 | Åbner elementlisten, som viser diagrammer, celler med kommentarer og celler med formler. |
+%kc:endInclude
+Disse indstillinger bliver gemt i projektmappen som definerede navneområder, og de er kompatible med andre særmlæsere, såsom JAWS.
+Det betyder, at brugere af andre skærmlæsere, som senere åbner denne projektmappe, automatisk vil få overskrifter på kolonner og rækker rigtigt sat.
+
++++ Elementlisten +++
+Ligesom på webbet har NVDA en elementliste til Microsoft Excel, hvor du kan få vist og få adgang til flere forskellige typer oplysninger.
+%kc:beginInclude
+For at komme til elementlisten i Excel skal du trykke NVDA+f7.
+%kc:endInclude
+De forskellige typer oplysninger, du kan se i elementlisten, er følgende:
+- Diagram: Viser alle diagrammer i projektmappen.
+Hvis du vælger et diagram og trykker på Enter eller knappen "Flyt til", får du diagrammet i fokus, så du kan bevæge dig rundt i det og læse det med piletasterne.
+- Kommentar: Viser en liste over alle celler i projektmappen, som indeholder kommentarer.
+For hver celle for du vist adressen og den tilhørende kommentar.
+Hvis du trykker på Enter eller "Flyt til"-knappen på en kommentar i listen, går du direkte til cellen.
+- Formel: Viser en liste med alle celler i projektmappen, som indeholder en formel.
+For hver celle bliver vist celleadressen og formlen.
+Hvis du trykker på Enter eller "Flyt til"-knappen på en formel i listen, kommer du direkte til cellen.
+- Ark: Viser en liste over alle ark i projektmappen.
+Du kan omdøbe et ark ved at trykke F2 på arket.
+Tryk på Enter eller "Flyt til"-knappen på et ark for at skifte til arket.
+-
+
++++ Annoncering af kommentarer +++
+%kc:beginInclude
+For at få oplæst en kommentar for den celle, som er i fokus, skal du trykke NVDA+alt+c.
+%kc:endInclude
+Du kan også få vist alle kommentarer i projektmappen i elementlisten.
+
++++ Læsning af beskyttede celler +++
+Hvis en projektmappe er blevet skrivebeskyttet, kan det være, det ikke er muligt at flytte fokus til de celler, der er låst for redigering.
+%kc:beginInclude
+For at kunne navigere til låste celler skal du skifte til gennemsynstilstand ved at trykke NVDA+Mellemrum og så bruge de almindelige flyttekommandoer i Excel, f.eks. piletasterne, til at bevæge dig rundt i alle cellerne i regnearket.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -1104,6 +1168,7 @@ Du kan tilpasse annoncering af:
 - Tekstjustering 
 - Farver
 - Ændringer
+- fremhævelse
 - Tekstens typografi 
 - Stavefejl 
 - Sidetal 
@@ -1172,12 +1237,23 @@ Det sprog, som du redigerer udtale af symboler for, bliver vist i dialogens tite
 Bemærk, at denne dialog følger indstillingen "Brug stemmens sprog til behandling af symboler og tegn", som kan findes i dialogen [Stemmeindstillinger #VoiceSettings]; D.v.s., den bruger den aktuelle stemmes sprog og ikke NVDA's globale sprog, når denne indstilling er slået til.
 
 For at ændre et symbol, skal du først vælge det i listen med symboler.
-I feltet erstatning, kan du skrive den tekst du vil have læst i stedet for det oprindelige symbol.
-I feltet niveau, kan du justere det laveste symbolniveau dette symbol skal udtales ved.
 
+- I feltet erstatning, kan du skrive den tekst du vil have læst i stedet for det oprindelige symbol.
+- I feltet niveau, kan du justere det laveste symbolniveau dette symbol skal udtales ved.
+- Med feltet "Send selve symbolet til talesyntese" kan du specificere, hvornår symbolet selv, i modsætning til erstatningsteksten, skal sendes til talesyntesen.
+Dette kan være nyttigt, hvis tegnet får talesyntesen til at holde en pause eller ændre på tonehøjden.
+F.eks., et komma kan få talesyntesen til at holde en pause.
+Der er tre muligheder:
+ - Aldrig: Send aldrig selve symbolet til talesyntesen.
+  - Altid: Send altid selve symbolet til talesyntesen.
+   - Kun under symbolets niveau: Send kun det aktuelle symbol, hvis det indstillede symbolniveau er lavere end symbolets niveau.
+    Du kan f.eks. bruge dette til at få erstatningsteksten for et symbol udtalt uden pause ved højtesymbolniveauer og stadig få indikeret symbolet ved hjælp af en pause på lavere niveauer.
+	 -
+	 -
+	 
 Du kan tilføje nye symboler ved at trykke på Tilføj-knappen.
 I den dialog, som fremkommer, skal du indtaste symbolet og trykke på Enter.
-Indtast så erstatningstekst og niveau for symbolet, præcist som med andre symboler.
+Du kan så  ændre felterne for det nye symbol, præcist som med andre symboler.
 
 Du kan fjerne et symbol, som du tidligere har tilføjet, ved at trykke på Fjern-knappen.
 
@@ -1563,7 +1639,7 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 ++ Baum/Humanware/APH Braille Displays ++
 Adskillige [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] samt [APH http://www.aph.org/] displays er understøttet hvis de kobles til via USB eller Bluetooth.
 Det omfatter:
-- Baum: SuperVario, PocketVario
+- Baum: SuperVario, PocketVario, VarioUltra (kun Bluetooth), Pronto! (kun Bluetooth)
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
@@ -2100,15 +2176,6 @@ De mulige kommandolinjeparametre til NVDA er følgende:
 | Ingen | --no-sr-flag  | Lad være med at ændre det globale skærmlæserflag |
 | Ingen | --install | Installerer NVDA og starter den nyinstallerede kopi |
 | Ingen | --install-silent | Tavs installation af NVDA (Starter ikke den nyinstallerede kopi) |
-
-++ Avanceret tilpasning af udtale af symboler ++
-Det er muligt at tilpasse udtale af sætningstegn, samt andre symboler udover det som du kan opnå ved brug af dialogen [Udtale af sætningstegn/symboler #SymbolPronunciation].
-Du kan for eksempel bestemme, om det rå symbol skal sendes til talesyntesen (fx. for at skabe en pause i talen eller ændre tonefald) og du kan tilføje brugerdefinerede symboler.
-
-For at gøre dette, skal du ændre filen med udtaler for symboler og sætningstegn. Den findes i den mappe, der indeholder brugerkonfigurationen til NVDA.
-Filen hedder symbols-xx.dic, hvor xx repræsentere sprogkoden.
-Formatet på denne fil er dokumenteret  i kapitlet Symbol Pronunciation, fundet i NVDAs udviklingsvejledning [the Development section of the NVDA web site NVDA_URLwiki/Development].
-Det er dog ikke muligt for brugere at definere komplekse symboler.
 
 + Yderligere information +
 Hvis du har brug for yderligere information eller hjælp til brugen af NVDA, besøg venligst NVDAs netsted NVDA_URL.

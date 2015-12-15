@@ -62,7 +62,7 @@ SCRCAT_CONFIG = _("Configuration")
 SCRCAT_BRAILLE = _("Braille")
 #: Script category for tools commands.
 # Translators: The name of a category of NVDA commands.
-SCRCAT_TOOLS = _("Tools")
+SCRCAT_TOOLS = pgettext('script category', 'Tools')
 #: Script category for touch commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_TOUCH = _("Touch screen")
@@ -343,6 +343,20 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for toggle report revisions command.
 	script_toggleReportRevisions.__doc__=_("Toggles on and off the reporting of revisions")
 	script_toggleReportRevisions.category=SCRCAT_DOCUMENTFORMATTING
+
+	def script_toggleReportEmphasis(self,gesture):
+		if config.conf["documentFormatting"]["reportEmphasis"]:
+			# Translators: The message announced when toggling the report emphasis document formatting setting.
+			state = _("report emphasis off")
+			config.conf["documentFormatting"]["reportEmphasis"]=False
+		else:
+			# Translators: The message announced when toggling the report emphasis document formatting setting.
+			state = _("report emphasis on")
+			config.conf["documentFormatting"]["reportEmphasis"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle report emphasis command.
+	script_toggleReportEmphasis.__doc__=_("Toggles on and off the reporting of emphasis")
+	script_toggleReportEmphasis.category=SCRCAT_DOCUMENTFORMATTING
 
 	def script_toggleReportColor(self,gesture):
 		if config.conf["documentFormatting"]["reportColor"]:
@@ -725,7 +739,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
 	# Translators: Input help mode message for report current navigator object command.
-	script_navigatorObject_current.__doc__=_("Reports the current navigator object. Pressing twice spells this information,and pressing three times Copies name and value of this  object to the clipboard")
+	script_navigatorObject_current.__doc__=_("Reports the current navigator object. Pressing twice spells this information, and pressing three times Copies name and value of this  object to the clipboard")
 	script_navigatorObject_current.category=SCRCAT_OBJECTNAVIGATION
 
 	def script_navigatorObject_currentDimensions(self,gesture):
@@ -1148,7 +1162,7 @@ class GlobalCommands(ScriptableObject):
 			return
 		# Toggle browse mode pass-through.
 		vbuf.passThrough = not vbuf.passThrough
-		if isinstance(vbuf,virtualBuffers.VirtualBuffer):
+		if isinstance(vbuf,browseMode.BrowseModeDocumentTreeInterceptor):
 			# If we are enabling pass-through, the user has explicitly chosen to do so, so disable auto-pass-through.
 			# If we're disabling pass-through, re-enable auto-pass-through.
 			vbuf.disableAutoPassThrough = vbuf.passThrough
@@ -1182,7 +1196,7 @@ class GlobalCommands(ScriptableObject):
 	def script_reportFormatting(self,gesture):
 		formatConfig={
 			"detectFormatAfterCursor":False,
-			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,
+			"reportFontName":True,"reportFontSize":True,"reportFontAttributes":True,"reportColor":True,"reportRevisions":False,"reportEmphasis":False,
 			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
 			"reportPage":False,"reportLineNumber":False,"reportParagraphIndentation":True,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
@@ -1728,8 +1742,8 @@ class GlobalCommands(ScriptableObject):
 			api.setNavigatorObject(newObject)
 			speech.speakObject(newObject,reason=controlTypes.REASON_FOCUS)
 		else:
-			# Translators: a message when there is no next object when navigating
-			ui.message(_("no next"))
+			# Translators: a message when there is no previous object when navigating
+			ui.message(_("no previous"))
 	# Translators: Input help mode message for a touchscreen gesture.
 	script_navigatorObject_previousInFlow.__doc__=_("Moves to the previous object in a flattened view of the object navigation hierarchy")
 	script_navigatorObject_previousInFlow.category=SCRCAT_OBJECTNAVIGATION

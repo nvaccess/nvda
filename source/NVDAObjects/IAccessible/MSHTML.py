@@ -37,8 +37,8 @@ class UIAMSHTMLTextInfo(UIATextInfo):
 	
 	_atEndOfStory=False
 
-	def __init__(self,obj,position):
-		super(UIAMSHTMLTextInfo,self).__init__(obj,position)
+	def __init__(self,obj,position,_rangeObj=None):
+		super(UIAMSHTMLTextInfo,self).__init__(obj,position,_rangeObj)
 		if position==textInfos.POSITION_CARET:
 			tempRange=self._rangeObj.clone()
 			tempRange.ExpandToEnclosingUnit(UIAHandler.TextUnit_Character)

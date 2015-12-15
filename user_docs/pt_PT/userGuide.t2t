@@ -1,4 +1,5 @@
 ﻿Manual do Utilizador do NVDA NVDA_VERSION
+Manual do Utilizador do NVDA NVDA_VERSION
 Traduzido por: Ângelo Abrantes, Diogo Costa, Elton Lopes, Rui Batista e Rui Fontes
 
 %!includeconf: ../userGuide.t2tconf
@@ -32,8 +33,7 @@ As características principais são:
 
 ++ Internacionalização ++
 É importante que os indivíduos tenham o mesmo acesso às tecnologias, em qualquer parte do mundo, independentemente do idioma que falem.
-Para além do Inglês, o NVDA está traduzido em 47 idiomas, incluindo: Africânder, Albanês, Alemão, Amárico, Árabe, Aragonês, Búlgaro, Castelhano (Espanha e Colômbia), Catalão, Checo, Chinês Tradicional e simplificado, Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Farsi, Finlandês, Francês, Galego, Grego, Georgiano, Hebraico, Holandês, Húngaro, Indiano, Islandês, Irlandês, Italiano, Japonês, Nepalês, Norueguês, Polaco, Português (Portugal e Brasil), Punjabi, Romeno, Russo, Sérvio, Sueco, Tailandês, Tamil, Turco, Ucraniano e Vietnamita.
-
+					
 ++ Suporte de Sintetizadores de Voz ++
 Para além de fornecer as mensagens e interface em diversos idiomas, o NVDA também pode permitir ao utilizador a leitura em qualquer idioma, desde  que tenha um sintetizador de voz, que o possa falar.
 
@@ -56,7 +56,7 @@ Isto aplica-se a todas as cópias, originais e modificadas, deste software, bem 
 Para mais detalhes, pode [ver a licença completa. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Requisitos Do Sistema +
-- Sistemas Operativos: Todas as versões 32-bit e 64-bit do Windows XP, Windows Vista, Windows 7 e Windows 8 (incluindo as versões Server 2003 e 2008).
+- Sistemas Operativos: Todas as versões 32-bit e 64-bit do Windows XP, Windows Vista, Windows 7, Windows 8  e Windows 10 (incluindo as versões Server 2003 e 2008).
 - Para Windows XP 32-bit, o NVDA requer o Service Pack 2 ou superior.
 - Para Windows Server 2003, o NVDA requer o Service Pack 1 ou superior.
 - Memória: 256 MB ou mais de RAM
@@ -269,7 +269,7 @@ Existem alguns comandos de teclado úteis quando se move com o foco do sistema:
 | Anunciar o foco actual | NVDA+tab | NVDA+tab | Anuncia o objecto actual ou o controlo que tem o cursor do sistema. Ao pressionar duas vezes, soletrará a informação |
 | Anunciar o título | NVDA+t | NVDA+t | Anuncia o título da janela actualmente em execução. Ao pressionar duas vezes, soletrará a informação. Se pressionar três vezes, copiará o conteúdo para a área de transferência |
 | Ler a janela activa | NVDA+b | NVDA+b | Lê todos os controlos na janela actual em execução (útil para diálogos) |
-| Anunciar a Barra de Estado | NVDA+end | NVDA+shift+end | Lê a Barra de Estado, se o NVDA a encontrar. Também move o objecto de navegação para esta localização |
+| Anunciar a Barra de Estado | NVDA+end | NVDA+shift+end | Lê a Barra de Estado, se o NVDA a encontrar. Também move o objecto de navegação para esta localização. Se pressionar duas vezes soletra a informação. |
 %kc:endInclude
 
 ++ Navegar com o Cursor do Sistema ++[SystemCaret]
@@ -391,7 +391,7 @@ Os comandos seguintes alternam entre os modos de revisão:
  | Muda para o modo de revisão seguinte | NVDA+7 do bloco numérico | NVDA+pageUp | Varrer com dois dedos para cima | Muda para o modo de revisão seguinte disponível |
 | Muda para o modo de revisão anterior | NVDA+1 do bloco numérico | NVDA+pageDown | Varrer com dois dedos para baixo | Muda para o modo de revisão anterior disponível |
  %kc:endInclude
- 
+
 +++ Revisão de objecto +++[ObjectReview]
 No modo de revisão de objecto, poderá rever apenas o conteúdo do [objecto de navegação #ObjectNavigation] actual.
 Para objectos básicos como campos de edição ou controlos de texto simples, isto será, geralmente, o seu conteúdo textual.
@@ -503,6 +503,12 @@ Para se mover para o início ou fim de elementos contentores como listas ou tabe
 || Nome | Comando de Teclado | Descrição |
 | Mover para o início do contentor  | shift+vírgula | Move para o início do contentor (lista, tabela etc) onde o cursor está posicionado |
 | Mover para depois do fim do contentor | Vírgula | Move para  depois do fim do contentor (lista, tabela etc) onde o cursor está posicionado |
+
+%kc:endInclude
+Algumas aplicações web como GMail, Twitter e Facebook usam letras como atalhos.
+Se quiser usar esses atalhos, mantendo a possibilidade de usar as teclas de cursor para ler em modo de navegação, pode, temporariamente, desactivar a navegação por caracter do NVDA.
+%kc:beginInclude
+Para activar e desactivar a navegação por caracter para o documento actual, pressione NVDA+shift+espaço.
 %kc:endInclude
 
 ++ A Lista de Elementos ++
@@ -534,7 +540,7 @@ O MathPlayer está disponível como download gratuito em http://www.dessci.com/e
 
 O NVDA suporta os seguintes tipos de conteúdo matemático:
 - MathML no Mozilla Firefox e Microsoft Internet Explorer.
-- Design Science MathType no Microsoft Word e PowerPoint.
+- Design Science MathType no Microsoft Word e PowerPoint. O MathType tem que estar instalado para que isto funcione. A versão Trial é suficiente.
 - MathML no Adobe Reader. Note que este ainda não é um padrão oficial, portanto ainda não está disponível nenhum software que produza este conteúdo.
 -
 
@@ -552,7 +558,7 @@ Por padrão, o cursor de revisão segue o cursor de inserção, portanto, normal
 Depois, active o seguinte comando:
 
 %kc:beginInclude
-|| Nome | Tecla | Descrição |
+|| Nome | Comando de Teclado | Descrição |
 | Interagir com conteúdo matemático | NVDA+alt+m | Inicia a interação com o conteúdo matemático. |
 %kc:endInclude
 
@@ -562,24 +568,87 @@ Por favor, consulte a documentação do MathPlayer para mais informações.
 
 Quando quiser voltar à leitura do documento, simplesmente pressione Escape.
 
- + Comandos Específicos do NVDA para Aplicações +
-O NVDA fornece comandos de teclado adicionais para algumas aplicações, que realizam determinadas tarefas ou que dão acesso a funcionalidades que não são acessíveis, de outra forma, aos utilizadores de leitores de ecrã.
+ + Funcionalidades Específicas para Aplicações +
+O NVDA fornece funcionalidades adicionais para algumas aplicações, que realizam determinadas tarefas ou que dão acesso a funcionalidades que não são acessíveis, de outra forma, aos utilizadores de leitores de ecrã.
 
 ++ Microsoft Word ++
+
++++ Leitura Automática de Títulos de Coluna e Linha +++
+O NVDA é capaz de anunciar automaticamente os títulos de linha e coluna ao navegar por tabelas no Microsoft Word.
+Para isso é necessário que, em primeiro lugar, a opção "Anunciar títulos da linha/coluna da tabela" no diálogo  "Formatação de Documentos" esteja marcada.
+Depois, o NVDA precisa saber que linha e couluna contém os títulos na tabela.
+Após mover-se para a primeira célula da coluna ou linha contendo os títulos, use um dos seguintes comandos:
 %kc:beginInclude
-|| Nome | Tecla | Descrição |
+|| Nome | Comando de Teclado | Descrição |
 | Anuncia o comentário actual | NVDA+Alt+c | Anuncia o texto do comentário na posição actual do cursor do sistema. |
 | Definir cabeçalhos de coluna | NVDA+shift+c | Premindo uma vez, indica ao NVDA que esta é a primeira célula de cabeçalho na linha que contém os cabeçalhos de coluna, que deverão ser automaticamente anunciados ao mover-se entre colunas abaixo desta linha. Premindo duas vezes irá apagar a definição. | 
 | Definir cabeçalhos de linha | NVDA+shift+r | Premindo uma vez, indica ao NVDA que esta é a primeira  célula de cabeçalho na coluna que contem os cabeçalhos de linha, que deverão ser automaticamente anunciados  ao mover-se entre linhas  após esta coluna. Premindo duas vezes apagará a definição. |  
 %kc:endInclude
+Estas definições serão guardadas no documento como Marcas, sendo assim compatíveis com outros leitores de ecrã, como o Jaws.
+Assim abrindo o documento com qualquer leitor de ecrã os títulos de linha e coluna já estarão definidos.
+
++++ Modo de Navegação no Microsoft Word +++
+Similarmente ao que acontece nos navegadores web, o Modo de Navegação pode ser usado no Microsoft Word, para poder usar funcionalidades como a Navegação rápida e a Lista de elementos
+%kc:beginInclude
+Para alternar entre o Modo de Navegação activado ou desactivado no Microsoft Word, pressione NVDA+Espaço.
+%kc:endInclude
+Para mais informações consulte a secção [Modo de Navegação e Navegação rápida, #BrowseMode].
+ 
+++++ A lista de Elementos ++++
+%kc:beginInclude
+Em Modo de Navegação no Microsoft Word, pode invocar a Lista de Elementos pressionando NVDA+f7.
+%kc:endInclude
+A Lista de Elementos pode apresentar títulos, links e anotações, (o que inclui comentários e registo de alterações).
+
++++ Anúncio de Comentários +++
+%kc:beginInclude
+Para anunciar quaisquer comentários na posição actual docursor de inserção, pressione NVDA+alt+c.
+%kc:endInclude
+ Todos os comentários ao documento, em conjunto com outros registos de alterações, podem também ser listados na Lista de Elementos do NVDA, seleccionando Anotações como Tipo.
 
 ++ Microsoft Excel ++
+
++++ Leitura Automática de Títulos de Coluna e Linha +++
+O NVDA é capaz de anunciar automaticamente os títulos de linha e coluna ao navegar por folhas do Microsoft Excel.
+Para isso é necessário que, em primeiro lugar, a opção "Anunciar títulos da linha/coluna da tabela" no diálogo  "Formatação de Documentos" esteja marcada.
+Depois, o NVDA precisa saber que linha e couluna contém os títulos na tabela.
+Após mover-se para a primeira célula da coluna ou linha contendo os títulos, use um dos seguintes comandos:
 %kc:beginInclude
-|| Nome | Tecla | Descrição |
+|| Nome | Comando de Teclado | Descrição |
 | Definir cabeçalhos de coluna | NVDA+shift+c | Pressionar uma vez informa o NVDA de que esta linha contém os cabeçalhos de coluna, que deverão ser automaticamente anunciados ao mover-se entre colunas abaixo desta linha. Pressionar duas vezes apagará esta definição. | 
-| Definir cabeçalhos de linha | NVDA+shift+r | Pressionar uma vez, Informa o NVDA de que esta coluna  contêm os cabeçalhos de linha, que deverão ser automaticamente anunciados ao mover-se por linhas à direita desta coluna. Pressionar duas vezes, apagará a definição. | 
-| Anunciar comentário | NVDA+alt+c | Anuncia o comentário na célula actual, se existir. |
-| Lista de Elementos | NVDA+f7 | Abre o diálogo Lista de Elementos mostrando gráficos, células com comentários ou células com fórmulas. |
+| Definir cabeçalhos de linha | NVDA+shift+r | Pressionar uma vez, Informa o NVDA de que esta coluna  contêm os cabeçalhos de linha, que deverão ser automaticamente anunciados ao mover-se por linhas à direita desta coluna. Pressionar duas vezes, apagará a definição. |
+%kc:endInclude
+Estas definições serão guardadas no documento como Nomes de regiões definidas, sendo assim compatíveis com outros leitores de ecrã, como o Jaws, e assim abrindo o documento com outro leitor de ecrã os títulos de linha e coluna já estarão definidos.
+
+++++ A lista de Elementos ++++
+Tal como no conteúdo Web, o NVDA proporciona no Excel uma Lista de Elementos que permite aceder a vários tipos de informações.
+%kc:beginInclude
+Para aceder à Lista de Elementos no Microsoft Excel, pressione NVDA+f7.
+%kc:endInclude
+Os vários tipos de informações disponíveis na Lista de Elementos são:
+- Gráficos: Lista todos os gráficos existentes em todo o livro.
+Seleccionando um gráfico e pressionando enter ou o botão "Mover Para", foca o gráfico para navegação e leitura com as setas.
+- Comentários: Lista todas as células no livro aberto que contenham comentários. 
+Para cada célula é mostrado o endereço e o comentário. 
+Pressionando Enter ou o botão "Mover para" num dos comentários listados, move directamente para essa célula.
+- Fórmulas: Lista todas as células no livro aberto que contenham fórmulas.
+Para cada célula é mostrado o endereço e a fórmula. 
+Pressionando Enter ou o botão "Mover para" numa das fórmulas listadas, move directamente para essa célula
+- Folhas: Lista todas as folhas do livro aberto. 
+Pressionando f2 numa folha listada permitirá renomear a folha.
+Pressionando Enter ou o botão "Mover Para" numa das folhas listadas, muda-se para essa folha.
+-
+
+++++ Anunciar Comentários +++
++%kc:beginInclude
+Para anunciar qualquer comentárionuma célula, pressionar NVDA+alt+c
+%kc:endInclude
+Todos os comentários para o livro aberto podem ser listados na Lista de Elementos do NVDA.
+
++++ Leitura de Células Protegidas +++
+Se um livro, ou folha, foi protegido, pode não ser possível mover o foco para algumas células que foram bloqueadas para edição.
+%kc:beginInclude
+Para permitir a navegação para células que foram bloqueadas, alterne para o Modo de Navegação pressionando NVDA+space, e use os comandos normais para o Excel, , como as setas, para se mover por toda a folha.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -621,8 +690,8 @@ Numa conversa:
 ++ Preferências ++
 %kc:settingsSection: || Nome | Tecla de Atalho de Desktop | Tecla de Atalho de Laptop | Descrição |
 A maioria das definições do NVDA podem ser alteradas através da utilização de caixas de diálogo, acedidas através do sub-menu Preferências do Menu do NVDA.
-Em todas as caixas de diálogo de definições do NVDA, pressione o botão OK para confirmar as alterações que tenha feito.
-Para cancelar as alterações, pressione o botão Cancelar ou a tecla Escape.
+Em todas as caixas de diálogo de definições do NVDA, pressione o botão "OK" para confirmar as alterações que tenha feito.
+Para cancelar as alterações, pressione o botão "Cancelar" ou a tecla Escape.
 Algumas definições também podem ser alteradas através da utilização de comandos de teclado, que estão listados, quando relevante, nas secções abaixo.
 
 Note que por padrão, nem todos os diálogos de definições podem ser acedidos por comandos (comandos de teclado, comandos de toque, etc.).
@@ -866,8 +935,8 @@ Se esta caixa de verificação estiver marcada, a tecla Insert do bloco numéric
 Se esta caixa de verificação estiver marcada, a tecla Insert do bloco intermédio (que se encontra normalmente acima das setas, perto do Home e End) pode ser usada como uma tecla modificadora do NVDA.
 
 Se nenhuma tecla for seleccionada como tecla NVDA, poderá ser impossível aceder a algumas funções do NVDA.
-Por isso, o diálogo Definições do Teclado mostrará uma mensagem de erro se todas as teclas estiverem desmarcadas ao pressionar o botão Ok.
-Após fechar a mensagem de erro, tem de seleccionar pelo menos uma tecla antes de pressionar Ok para fechar o diálogo convenientemente.
+Por isso, o diálogo Definições do Teclado mostrará uma mensagem de erro se todas as teclas estiverem desmarcadas ao pressionar o botão "Ok".
+Após fechar a mensagem de erro, tem de seleccionar pelo menos uma tecla antes de pressionar "Ok" para fechar o diálogo convenientemente.
 
 %kc:setting
 ==== Anunciar Caracteres Escritos ====
@@ -888,7 +957,7 @@ Quando activada, esta opção causará a interrupção da voz, sempre que for in
 Quando activada, esta opção causará a interrupção da voz, sempre que pressionar a tecla Enter. Está activada por padrão.
 
 ==== Permitir leitura rápida durante a leitura contínua ====
-Se activada, alguns comandos de navegação (tais como os comandos de caractere para navegação rápida em modo de navegação ou mover-se por linha ou parágrafo) não páram a leitura mas movem a posição de leitura para a nova posição, sendo a leitura continuada a partir desse ponto.
+Se activada, alguns comandos de navegação, (tais como os comandos de Navegação por caracter em modo de navegação ou mover-se por linha ou parágrafo) não páram a leitura mas movem a posição de leitura para a nova posição, sendo a leitura continuada a partir desse ponto.
 
 ==== Reproduzir beeps, se ao escrever letras minúsculas o caps lock estiver activado ====
 Quando activada, será ouvido um som de aviso, se uma letra for pressionada com a tecla shift, enquanto o caps lock estiver ligado.
@@ -1097,6 +1166,7 @@ Pode configurar o anúncio de:
 - Alinhamento de texto
 - Cores
 - Revisões do editor
+- Ênfase
 - Estilo de texto
 - Erros ortográficos
 - Números de página
@@ -1134,9 +1204,9 @@ Os três tipos são:
 Todos os diálogos do dicionário contêm uma lista de regras, que serão utilizadas para processar o texto.
 O diálogo contém também os botões Adicionar, Editar e Remover.
 
-Para adicionar uma nova regra ao dicionário, pressione o botão Adicionar, preencha os campos que aparecem na caixa de diálogo e pressione OK.
+Para adicionar uma nova regra ao dicionário, pressione o botão "Adicionar", preencha os campos que aparecem na caixa de diálogo e pressione OK.
 Verá então a sua nova regra na lista de regras.
-Porém, Para se assegurar que a sua regra é guardada, verifique que clica no botão OK, para sair completamente do diálogo do dicionário, quando acabar de adicionar/editar regras. 
+Porém, Para se assegurar que a sua regra é guardada, verifique que clica no botão "OK", para sair completamente do diálogo do dicionário, quando acabar de adicionar/editar regras. 
 
 As regras para os dicionários de voz do NVDA permitem-lhe alterar uma sequência de caracteres por outra.
 Um exemplo simples passaria por ter o NVDA a anunciar a palavra "sapo", cada vez que tivesse de dizer a palavra "pássaro".
@@ -1161,16 +1231,27 @@ O idioma para o qual a pronúncia de símbolos está a ser editada será mostrad
 Note que este diálogo respeita a opção "Usar o idioma da voz ao processar caracteres e símbolos" encontrada no diálogo [Definições da Voz #VoiceSettings], ou seja,  usa o idioma da voz em vez da definição global do idioma do NVDA, quando esta opção está marcada.
 
 Para mudar um símbolo, seleccione-o, primeiro, na lista de símbolos.
-O campo de substituição permite-lhe mudar o texto que deverá ser falado no lugar deste símbolo.
-Usando o campo nível, pode ajustar o nível mais baixo em que o símbolo deve ser anunciado.
 
-Pode adicionar novos símbolos pressionando o botão Adicionar.
-No diálogo que se abre, introduza o símbolo e pressione o botão OK.
-Em seguida, introduza o texto Substituir por e defina o nível para o novo símbolo, como faria para outros símbolos.
+- O campo "Substituir por" permite-lhe alterar o texto que deve ser falado em vez do símbolo.
+- Usando o campo "Nível" pode definir o nível a partir do qual o símbolo deve ser falado.
+- O campo "Enviar o próprio símbolo ao sintetizador" determina quando o próprio símbolo, em vez do texto substituto, deve ser enviado ao sintetizador.
+Isto é útil se o símbolo forçar o sintetizador a uma pausa ou a uma mudança de entoação na voz.
+Por exemplo, uma vírgula força o sintetizador a fazer uma pausa.
+Existem três opções:
+ - nunca: Nunca enviar o próprio símbolo ao sintetizador.
+ - Sempre: Enviar sempre o próprio símbolo ao sintetizador.
+ - apenas abaixo do nível de símbolos: Enviar o próprio símbolo apenas se o "Nível de pontuação/símbolo:" estiver definido para um nível inferior ao nível do símbolo.
+ Por exemplo, pode usar esta função para que um determinado símbolo tenha o seu texto substituto falado, sem pausas, em níveis elevados, enquanto é indicado por uma pausa em níveis mais baixos.
+ -
+-
 
-Pode remover um símbolo que tenha adicionado anteriormente, pressionando o botão Remover.
+Pode adicionar novos símbolos pressionando o botão "Adicionar".
+No diálogo que se abre, introduza o símbolo e pressione o botão "OK".
+Em seguida, altere os campos para o novo símbolo como faria para outros símbolos.
 
-Quando tiver terminado, pressione o butão OK, para guardar as suas modificações, ou o butão Cancelar, para as descartar.
+Pode remover um símbolo que tenha adicionado anteriormente, pressionando o botão "Remover".
+
+Quando tiver terminado, pressione o butão "OK", para guardar as suas modificações, ou o butão Cancelar, para as descartar.
 
 +++ Comandos +++
 Nesta caixa de diálogo, pode personalizar os comandos, (quer do teclado, quer dos controlos de uma linha Braille, etc.) que serão usados pelo NVDA.
@@ -1182,13 +1263,13 @@ A estrutura hierárquica deste diálogo lista todos os comandos do NVDA aplicáv
 Pode filtrá-los, introduzindo uma ou mais palavras do nome do comando na caixa de edição Filtrar por em qualquer ordem.
 Qualquer tecla ou gesto associado a um comando é listado dentro do ramo desse comando.
 
-Para adicionar uma tecla ou um gesto a um comando, seleccione o comando e pressione o botão Adicionar.
+Para adicionar uma tecla ou um gesto a um comando, seleccione o comando e pressione o botão "Adicionar".
 Depois pressione a tecla, conjunto de teclas, ou execute o gesto que quer associar, por exemplo,  pressione uma tecla no teclado ou um controlo na linha Braille.
 Muitas vezes, um comando pode ser interpretado de mais de uma maneira.
 Por exemplo, se pressionar uma tecla no teclado, pode querer que seja específico do actual esquema de teclado (por exemplo, desktop ou laptop) ou pode querer que seja aplicável a todos os esquemas.
 Neste caso, aparecerá um  menu que permite seleccionar a opção desejada.
 
-Para remover uma tecla ou gesto de um comando, seleccione-a e pressione o botão Remover.
+Para remover uma tecla ou gesto de um comando, seleccione-a e pressione o botão "Remover".
 
 Quando tiver terminado, pressione o butão OK, para guardar as suas modificações, ou o butão Cancelar, para as descartar.
 
@@ -1230,14 +1311,14 @@ O primeiro controlo neste diálogo é a lista de perfis, na qual pode selecciona
 Quando abre o diálogo, fica seleccionado o perfil que será editado.
 É mostrada informação adicional para o perfil activo, indicando se foi activado manualmente, accionado e/ou se está a ser editado.
 
-Para renomear ou eliminar um perfil, pressione, respectivamente, o botão Mudar o nome ou Eliminar,.
+Para renomear ou eliminar um perfil, pressione, respectivamente, o botão "Mudar o nome" ou "Eliminar",.
 
-Pressione o botão Fechar para fechar o diálogo.
+Pressione o botão "Fechar" para fechar o diálogo.
 
 +++ Criar um Perfil +++
-Para criar um perfil, pressione o botão Novo.
+Para criar um perfil, pressione o botão "Novo".
 
-No diálogo Novo perfil, pode introduzir o nome para o perfil.
+No diálogo "Novo perfil", pode introduzir o nome para o perfil.
 Também pode seleccionar como é que este perfil deve ser activado.
 Se apenas quiser activar este perfil manualmente, seleccione Activação manual, que é a opção por padrão.
 Caso contrário, seleccione um Accionador que fará activar este perfil automaticamente.
@@ -1550,7 +1631,9 @@ Por favor consulte a documentação desta linha braille para obter a descrição
 São suportadas várias linhas braille da [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] e [APH http://www.aph.org/] quando conectadas via USB ou bluetooth.
 Incluem-se:
 - Baum: SuperVario, PocketVario
+- Baum: SuperVario, PocketVario, VarioUltra (apenas porBluetooth), Pronto! (apenas por Bluetooth)
 - HumanWare: Brailliant, BrailleConnect
+- APH: Refreshabraille
 -
 Outras linhas braille fabricadas pela Baum poderão igualmente funcionar, porém tal não foi testado.
 
@@ -1748,10 +1831,10 @@ São suportadas as seguintes linhas braille:
 -
 
 Se estiver instalado o BrxCom, o NVDA usará o BrxCom.
-O BrxCom é uma ferramenta que lhe permite usar  a entrada de braille, independentemente do leitor de ecrã.
+O BrxCom é uma ferramenta que permite a introdução de texto pelo teclado da linha Braille independentemente do leitor de ecrã.
 Uma nova versão do BrxCom, que funcionará com o NVDA, será brevemente lançada pela Papenmeier.
 É possível utilizar o teclado Braille das Braillex Trio, BRAILLEX Live 20 and Braillex Live, sem o BrxCom.
-É possível utilizar o teclado da Braillex Live Plus, mas apenas com o BrxCom.
+É possível utilizar o teclado da Brailex Trio e da Braillex Live Plus.
 
 A maioria dos dispositivos têm uma barra de acesso fácil, EAB - Easy access bar, que permite  a operação intuitiva e rápida.
 A EAB pode ser movida em quatro direcções, em que cada direcção tem, geralmente, dois interruptores.
@@ -1780,7 +1863,7 @@ Geralmente, estão disponíveis as seguintes teclas, nestas linhas braille:
 
 Seguem-se as associações de comandos da Papenmeier para o NVDA:
 %kc:beginInclude
-|| Nome | Tecla |
+|| Nome | Tecla de atalho |
 | Deslocar a linha braille para trás | left |
 | Deslocar a linha braille para a frente | right |
 | Mover a linha braille para a linha anterior | up |
@@ -1788,8 +1871,8 @@ Seguem-se as associações de comandos da Papenmeier para o NVDA:
 | Encaminhar para a célula braille | routing |
 | Anuncia o caracter actual em revisão | l1 |
 | Activa o objecto de navegação actual | l2 |
-| Anuncia o título | l1+up |
 | Alternar Braille fixado para | r2 |
+| Anuncia o título | l1+up |
 | Anuncia a barra de estado | l2+down |
 | Move para o objecto que contem | up2 |
 | Move para o primeiro objecto contido | dn2 |
@@ -1809,7 +1892,7 @@ Actualmente a right thumb key não está a ser usada.
 Ambas as teclas interiores estão definidas para Espaço.
 
 %kc:beginInclude
-|| Nome | Tecla |
+|| Nome | Tecla de atalho |
 | Tecla backspace | ponto 7 |
 | Tecla enter | ponto 8 |
 | Tecla escape | espaço mais  ponto 7 |
@@ -1865,6 +1948,7 @@ Dispositivos com EAB
 | Encaminhar para a célula braille | routing |
 | Anuncia o caracter actual em revisão | l1 |
 | Activa o objecto de navegação actual | l2 |
+| Alternar Braille fixado para | r2 |
 | Anuncia o título | l1+up |
 | Anuncia a barra de estado | l2+down |
 | Move para o objecto que contem | up2 |
@@ -1881,12 +1965,14 @@ BRAILLEX Tiny:
 | Move a linha braille para a linha seguinte | dn |
 | Anuncia o caracter actual em revisão | l1 |
 | Activa o objecto de navegação actual | l2 |
-| Alternar Braille fixado para | r2 |
+| Alternar "Braille fixado para" | r2 |
 | Move para o objecto que contem | r1+up |
 | Move para o primeiro objecto contido | r1+dn |
 | Move para o objecto anterior | r1+left |
 | Move para o objecto seguinte | r1+right |
 | Anuncia a formatação do texto | reportf |
+| Anuncia o título | l1+up |
+| Anuncia a barra de estado | l2+down |
 
 BRAILLEX 2D Screen:
 || Nome | Tecla de atalho |
@@ -1950,6 +2036,42 @@ Por favor consulte a documentação do BrailleNote para saber a localização da
 | Tecla Windows | espaço+ponto 2+ponto 4+ponto 5+ponto 6 (espaço+w) |
 | Tecla Alt | espaço+ponto 1+ponto 3+ponto 4 (espaço+m) |
 | Alternar o modo de ajuda de entrada | espaço+ponto 2+ponto 3+ponto 6 (espaço+h rebaixado) |
+%kc:endInclude
+
+++ EcoBraille ++
+O NVDA suporta as linhas Braille EcoBraille da [ONCE http://www.once.es/].
+Os modelos seguintes são suportados:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+
+No NVDA, pode configurar a que porta série a linha está ligada no diálogo Definições de Braille.
+
+Seguem-se as associações de comandos para as linhas EcoBraille 
+Por favor consulte a documentação [EcoBraille em ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] para uma descrição da localização das teclas.
+
+%kc:beginInclude
+|| Nome | Tecla de atalho |
+| Deslocar a linha braille para trás | T2 |
+| Deslocar a linha braille para a frente | T4 |
+| Mover a linha braille para a linha anterior | T1 |
+| Mover a linha braille para a linha seguinte | T5 |
+| Encaminhar para a célula braille | Routing |
+| Activar o objecto de navegação actual | T3 |
+| Mudar para o modo de revisão seguinte | F1 |
+| Mover para o objecto que contem | F2 |
+| Mudar para o modo de revisão anterior | F3 |
+| Mover para o objecto anterior | F4 |
+| Anunciar o objecto actual | F5 |
+| Mover para o objecto seguinte | F6 |
+| Mover para o objecto em foco | F7 |
+| Mover para o primeiro objecto contido | F8 |
+| Mover o foco do sistema ou o cursor para o objecto actual da revisão| | F9 |
+| Anunciar localização do cursor de revisão | F0 |
+| Alternar "Braille fixado para" | A |
 %kc:endInclude
 
 ++ BRLTTY ++

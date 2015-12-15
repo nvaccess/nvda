@@ -1,6 +1,6 @@
 #appModules/explorer.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2015 NV Access Limited, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -14,7 +14,7 @@ import speech
 import eventHandler
 import mouseHandler
 from NVDAObjects.window import Window
-from NVDAObjects.IAccessible import sysListView32, IAccessible
+from NVDAObjects.IAccessible import sysListView32, IAccessible, List
 from NVDAObjects.UIA import UIA
 
 # Suppress incorrect Win 10 Task switching window focus
@@ -140,6 +140,20 @@ class ImmersiveLauncher(UIA):
 	#Ignore focus events on this object.
 	shouldAllowUIAFocusEvent=False
 
+
+class StartButton(IAccessible):
+	"""For Windows 8.1 and 10 RTM Start buttons to be recognized as proper buttons and to suppress selection announcement."""
+
+	role = controlTypes.ROLE_BUTTON
+
+	def _get_states(self):
+		# #5178: Selection announcement should be suppressed.
+		# Borrowed from Mozilla objects in NVDAObjects/IAccessible/Mozilla.py.
+		states = super(StartButton, self).states
+		states.discard(controlTypes.STATE_SELECTED)
+		return states
+
+
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
@@ -175,6 +189,12 @@ class AppModule(appModuleHandler.AppModule):
 			if toolbarParent and toolbarParent.windowClassName == "SysPager":
 				clsList.insert(0, NotificationArea)
 				return
+
+		# #5178: Start button in Windows 8.1 and 10 RTM should not have been a list in the first place.
+		if windowClass == "Start" and role in (controlTypes.ROLE_LIST, controlTypes.ROLE_BUTTON):
+			if role == controlTypes.ROLE_LIST:
+				clsList.remove(List)
+			clsList.insert(0, StartButton)
 
 		if isinstance(obj, UIA):
 			uiaClassName = obj.UIAElement.cachedClassName
@@ -227,9 +247,17 @@ class AppModule(appModuleHandler.AppModule):
 			obj.presentationType=obj.presType_layout
 
 	def event_gainFocus(self, obj, nextHandler):
-		if obj.windowClassName == "ToolbarWindow32" and obj.role == controlTypes.ROLE_MENUITEM and obj.parent.role == controlTypes.ROLE_MENUBAR and eventHandler.isPendingEvents("gainFocus"):
+		wClass = obj.windowClassName
+		if wClass == "ToolbarWindow32" and obj.role == controlTypes.ROLE_MENUITEM and obj.parent.role == controlTypes.ROLE_MENUBAR and eventHandler.isPendingEvents("gainFocus"):
 			# When exiting a menu, Explorer fires focus on the top level menu item before it returns to the previous focus.
 			# Unfortunately, this focus event always occurs in a subsequent cycle, so the event limiter doesn't eliminate it.
 			# Therefore, if there is a pending focus event, don't bother handling this event.
 			return
+
+		if wClass == "ForegroundStaging":
+			# #5116: The Windows 10 Task View fires foreground/focus on this weird invisible window before and after it appears.
+			# This causes NVDA to report "unknown", so ignore it.
+			# We can't do this using shouldAllowIAccessibleFocusEvent because this isn't checked for foreground.
+			return
+
 		nextHandler()

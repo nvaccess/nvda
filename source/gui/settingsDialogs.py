@@ -186,13 +186,13 @@ class GeneralSettingsDialog(SettingsDialog):
 		# Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 		self.startOnLogonScreenCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("Use NVDA on the Windows logon screen (requires administrator privileges)"))
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
-		if globalVars.appArgs.secure or not config.isServiceInstalled():
+		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
 			self.startOnLogonScreenCheckBox.Disable()
 		settingsSizer.Add(self.startOnLogonScreenCheckBox)
 		# Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
 		self.copySettingsButton= wx.Button(self, wx.ID_ANY, label=_("Use currently saved settings on the logon and other secure screens (requires administrator privileges)"))
 		self.copySettingsButton.Bind(wx.EVT_BUTTON,self.onCopySettings)
-		if globalVars.appArgs.secure or not config.isServiceInstalled():
+		if globalVars.appArgs.secure or not config.canStartOnSecureScreens():
 			self.copySettingsButton.Disable()
 		settingsSizer.Add(self.copySettingsButton)
 		if updateCheck:
@@ -1058,6 +1058,11 @@ class DocumentFormattingDialog(SettingsDialog):
 		settingsSizer.Add(self.revisionsCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings dialog.
+		self.emphasisCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report e&mphasis"))
+		self.emphasisCheckBox.SetValue(config.conf["documentFormatting"]["reportEmphasis"])
+		settingsSizer.Add(self.emphasisCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.styleCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report st&yle"))
 		self.styleCheckBox.SetValue(config.conf["documentFormatting"]["reportStyle"])
 		settingsSizer.Add(self.styleCheckBox,border=10,flag=wx.BOTTOM)
@@ -1148,6 +1153,7 @@ class DocumentFormattingDialog(SettingsDialog):
 		config.conf["documentFormatting"]["reportFontAttributes"]=self.fontAttrsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportColor"]=self.colorCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportRevisions"]=self.revisionsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportEmphasis"]=self.emphasisCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportAlignment"]=self.alignmentCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportStyle"]=self.styleCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportSpellingErrors"]=self.spellingErrorsCheckBox.IsChecked()
@@ -1540,6 +1546,9 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.symbolsList.InsertColumn(1, _("Replacement"), width=150)
 		# Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
 		self.symbolsList.InsertColumn(2, _("Level"), width=60)
+		# Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+		# See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+		self.symbolsList.InsertColumn(3, _("Preserve"), width=60)
 		for symbol in symbols:
 			item = self.symbolsList.Append((symbol.displayName,))
 			self.updateListItem(item, symbol)
@@ -1565,6 +1574,15 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.levelList.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
 		sizer.Add(self.levelList)
 		changeSizer.Add(sizer)
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Send actual symbol to synthesizer")))
+		symbolPreserveLabels = characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS
+		self.preserveList = wx.Choice(self, wx.ID_ANY,choices=[
+			symbolPreserveLabels[mode] for mode in characterProcessing.SPEECH_SYMBOL_PRESERVES])
+		self.preserveList.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
+		sizer.Add(self.preserveList)
+		changeSizer.Add(sizer)
 		settingsSizer.Add(changeSizer)
 		entryButtonsSizer=wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
@@ -1586,6 +1604,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 	def updateListItem(self, item, symbol):
 		self.symbolsList.SetStringItem(item, 1, symbol.replacement)
 		self.symbolsList.SetStringItem(item, 2, characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[symbol.level])
+		self.symbolsList.SetStringItem(item, 3, characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS[symbol.preserve])
 
 	def onSymbolEdited(self, evt):
 		if self.editingItem is None:
@@ -1595,6 +1614,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		symbol = self.symbols[item]
 		symbol.replacement = self.replacementEdit.Value
 		symbol.level = characterProcessing.SPEECH_SYMBOL_LEVELS[self.levelList.Selection]
+		symbol.preserve = characterProcessing.SPEECH_SYMBOL_PRESERVES[self.preserveList.Selection]
 		self.updateListItem(item, symbol)
 
 	def onListItemFocused(self, evt):
@@ -1604,6 +1624,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.editingItem = item
 		self.replacementEdit.Value = symbol.replacement
 		self.levelList.Selection = characterProcessing.SPEECH_SYMBOL_LEVELS.index(symbol.level)
+		self.preserveList.Selection = characterProcessing.SPEECH_SYMBOL_PRESERVES.index(symbol.preserve)
 		self.removeButton.Enabled = not self.symbolProcessor.isBuiltin(symbol.identifier)
 
 	def onListChar(self, evt):
@@ -1641,6 +1662,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		addedSymbol.displayName = identifier
 		addedSymbol.replacement = ""
 		addedSymbol.level = characterProcessing.SYMLVL_ALL
+		addedSymbol.preserve = characterProcessing.SYMPRES_NEVER
 		self.symbols.append(addedSymbol)
 		item = self.symbolsList.Append((addedSymbol.displayName,))
 		self.updateListItem(item, addedSymbol)
@@ -1719,8 +1741,9 @@ class InputGesturesDialog(SettingsDialog):
 		if filter:
 			#This regexp uses a positive lookahead (?=...) for every word in the filter, which just makes sure the word is present in the string to be tested without matching position or order.
 			# #5060: Escape the filter text to prevent unexpected matches and regexp errors.
+			# Because we're escaping, words must then be split on "\ ".
 			filter = re.escape(filter)
-			filterReg = re.compile(r'(?=.*?' + r')(?=.*?'.join(filter.split(' ')) + r')', re.U|re.IGNORECASE)
+			filterReg = re.compile(r'(?=.*?' + r')(?=.*?'.join(filter.split('\ ')) + r')', re.U|re.IGNORECASE)
 		for category in sorted(self.gestures):
 			treeCat = self.tree.AppendItem(self.treeRoot, category)
 			commands = self.gestures[category]
