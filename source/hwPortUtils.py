@@ -1,7 +1,7 @@
 #hwPortUtils.py
 #A part of NonVisual Desktop Access (NVDA)
-# Original serial scanner code from http://pyserial.svn.sourceforge.net/viewvc/*checkout*/pyserial/trunk/pyserial/examples/scanwin32.py
-# Modifications and enhancements by James Teh
+#Copyright (C) 2001-2015 Chris Liechti, NV Access Limited
+# Based on serial scanner code by Chris Liechti from https://raw.githubusercontent.com/pyserial/pyserial/81167536e796cc2e13aa16abd17a14634dc3aed1/pyserial/examples/scanwin32.py
 
 """Utilities for working with hardware connection ports.
 """
@@ -93,6 +93,8 @@ SetupDiGetDeviceRegistryProperty.restype = BOOL
 
 GUID_CLASS_COMPORT = GUID(0x86e0d1e0L, 0x8089, 0x11d0,
 	(ctypes.c_ubyte*8)(0x9c, 0xe4, 0x08, 0x00, 0x3e, 0x30, 0x1f, 0x73))
+GUID_DEVINTERFACE_USB_DEVICE = GUID(0xA5DCBF10, 0x6530, 0x11D2,
+	(0x90, 0x1F, 0x00, 0xC0, 0x4F, 0xB9, 0x51, 0xED))
 
 DIGCF_PRESENT = 2
 DIGCF_DEVICEINTERFACE = 16
@@ -110,7 +112,7 @@ def listComPorts(onlyAvailable=True):
 	@param onlyAvailable: Only return ports that are currently available.
 	@type onlyAvailable: bool
 	@return: Generates dicts including keys of port, friendlyName and hardwareID.
-	@rtype: generator of (str, str, str)
+	@rtype: generator of dict
 	"""
 	flags = DIGCF_DEVICEINTERFACE
 	if onlyAvailable:
@@ -295,3 +297,168 @@ def getWidcommBluetoothPortInfo(port):
 				name = winreg.QueryValueEx(itemKey, "BDName")[0]
 				return addr, name
 	raise LookupError
+
+def listUsbDevices(onlyAvailable=True):
+	"""List USB devices on the system.
+	@param onlyAvailable: Only return devices that are currently available.
+	@type onlyAvailable: bool
+	@return: The USB vendor and product IDs in the form "VID_xxxx&PID_xxxx"
+	@rtype: generator of unicode
+	"""
+	flags = DIGCF_DEVICEINTERFACE
+	if onlyAvailable:
+		flags |= DIGCF_PRESENT
+
+	buf = ctypes.create_unicode_buffer(1024)
+	g_hdi = SetupDiGetClassDevs(GUID_DEVINTERFACE_USB_DEVICE, None, NULL, flags)
+	try:
+		for dwIndex in xrange(256):
+			did = SP_DEVICE_INTERFACE_DATA()
+			did.cbSize = ctypes.sizeof(did)
+
+			if not SetupDiEnumDeviceInterfaces(
+				g_hdi,
+				None,
+				GUID_DEVINTERFACE_USB_DEVICE,
+				dwIndex,
+				ctypes.byref(did)
+			):
+				if ctypes.GetLastError() != ERROR_NO_MORE_ITEMS:
+					raise ctypes.WinError()
+				break
+
+			dwNeeded = DWORD()
+			# get the size
+			if not SetupDiGetDeviceInterfaceDetail(
+				g_hdi,
+				ctypes.byref(did),
+				None, 0, ctypes.byref(dwNeeded),
+				None
+			):
+				# Ignore ERROR_INSUFFICIENT_BUFFER
+				if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
+					raise ctypes.WinError()
+			# allocate buffer
+			class SP_DEVICE_INTERFACE_DETAIL_DATA_W(ctypes.Structure):
+				_fields_ = (
+					('cbSize', DWORD),
+					('DevicePath', WCHAR*(dwNeeded.value - ctypes.sizeof(DWORD))),
+				)
+				def __str__(self):
+					return "DevicePath:%s" % (self.DevicePath,)
+			idd = SP_DEVICE_INTERFACE_DETAIL_DATA_W()
+			idd.cbSize = SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W
+			devinfo = SP_DEVINFO_DATA()
+			devinfo.cbSize = ctypes.sizeof(devinfo)
+			if not SetupDiGetDeviceInterfaceDetail(
+				g_hdi,
+				ctypes.byref(did),
+				ctypes.byref(idd), dwNeeded, None,
+				ctypes.byref(devinfo)
+			):
+				raise ctypes.WinError()
+
+			# hardware ID
+			if not SetupDiGetDeviceRegistryProperty(
+				g_hdi,
+				ctypes.byref(devinfo),
+				SPDRP_HARDWAREID,
+				None,
+				ctypes.byref(buf), ctypes.sizeof(buf) - 1,
+				None
+			):
+				# Ignore ERROR_INSUFFICIENT_BUFFER
+				if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
+					raise ctypes.WinError()
+			else:
+				yield buf.value.split("\\", 1)[1].rsplit("&", 1)[0]
+	finally:
+		SetupDiDestroyDeviceInfoList(g_hdi)
+
+_hidGuid = None
+def listHidDevices(onlyAvailable=True):
+	"""List HID devices on the system.
+	@param onlyAvailable: Only return devices that are currently available.
+	@type onlyAvailable: bool
+	@return: Generates dicts including keys of hardwareID,
+		usbID (in the form "VID_xxxx&PID_xxxx")
+		and devicePath.
+	@rtype: generator of dict
+	"""
+	global _hidGuid
+	if not _hidGuid:
+		_hidGuid = GUID()
+		ctypes.windll.hid.HidD_GetHidGuid(ctypes.byref(_hidGuid))
+
+	flags = DIGCF_DEVICEINTERFACE
+	if onlyAvailable:
+		flags |= DIGCF_PRESENT
+
+	buf = ctypes.create_unicode_buffer(1024)
+	g_hdi = SetupDiGetClassDevs(_hidGuid, None, NULL, flags)
+	try:
+		for dwIndex in xrange(256):
+			did = SP_DEVICE_INTERFACE_DATA()
+			did.cbSize = ctypes.sizeof(did)
+
+			if not SetupDiEnumDeviceInterfaces(
+				g_hdi,
+				None,
+				_hidGuid,
+				dwIndex,
+				ctypes.byref(did)
+			):
+				if ctypes.GetLastError() != ERROR_NO_MORE_ITEMS:
+					raise ctypes.WinError()
+				break
+
+			dwNeeded = DWORD()
+			# get the size
+			if not SetupDiGetDeviceInterfaceDetail(
+				g_hdi,
+				ctypes.byref(did),
+				None, 0, ctypes.byref(dwNeeded),
+				None
+			):
+				# Ignore ERROR_INSUFFICIENT_BUFFER
+				if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
+					raise ctypes.WinError()
+			# allocate buffer
+			class SP_DEVICE_INTERFACE_DETAIL_DATA_W(ctypes.Structure):
+				_fields_ = (
+					('cbSize', DWORD),
+					('DevicePath', WCHAR*(dwNeeded.value - ctypes.sizeof(DWORD))),
+				)
+				def __str__(self):
+					return "DevicePath:%s" % (self.DevicePath,)
+			idd = SP_DEVICE_INTERFACE_DETAIL_DATA_W()
+			idd.cbSize = SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W
+			devinfo = SP_DEVINFO_DATA()
+			devinfo.cbSize = ctypes.sizeof(devinfo)
+			if not SetupDiGetDeviceInterfaceDetail(
+				g_hdi,
+				ctypes.byref(did),
+				ctypes.byref(idd), dwNeeded, None,
+				ctypes.byref(devinfo)
+			):
+				raise ctypes.WinError()
+
+			# hardware ID
+			if not SetupDiGetDeviceRegistryProperty(
+				g_hdi,
+				ctypes.byref(devinfo),
+				SPDRP_HARDWAREID,
+				None,
+				ctypes.byref(buf), ctypes.sizeof(buf) - 1,
+				None
+			):
+				# Ignore ERROR_INSUFFICIENT_BUFFER
+				if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
+					raise ctypes.WinError()
+			else:
+				yield {
+					"hardwareID": buf.value,
+					"usbID": buf.value.split("\\")[1].rsplit("&", 1)[0],
+					"devicePath": idd.DevicePath}
+	finally:
+		SetupDiDestroyDeviceInfoList(g_hdi)

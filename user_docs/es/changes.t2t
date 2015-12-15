@@ -5,6 +5,16 @@ Qué hay de Nuevo en NVDA
 
 = 2016.1 =
 
+== Cambios ==
+- El anunciado de émfasis ahora está deshabilitado por omisión. (#4920)
+
+
+== Corrección de Fallos ==
+- En iTunes 12, el modo exploración ahora se actualiza correctamente cuando se carga una página nueva en la iTunes Store. (#5191)
+- En Internet Explorer y otros controles  MSHTML, al moverse a los niveles de encabezados específicos con la navegación con una sola letra ahora se comporta como se esperaba cuando el nivel de un encabezado se ignora con propósitos de accesibilidad (específicamente, cuando aria-level hace caso omiso del nivel de una etiqueta h). (#5434)
+- En Spotify, el foco ya no aterriza frecuentemente en objetos "desconocido". (#5439)
+- El foco ahora se restaura correctamente al regresar a Spotify desde otra aplicación. (#5439)
+
 
 = 2015.4 =
 Lo subrayable en esta versión incluye mejoras de rendimiento en Windows 10; la inclusión en el Centro de Accesibilidad en Windows 8 y posterior; mejoras para Microsoft Excel, incluyendo el listado y el renombrado de hojas y el acceso a celdas bloqueadas en hojas con protección; y apoyo para la edición de texto enriquecido en Mozilla Firefox, Google Chrome y Mozilla Thunderbird.

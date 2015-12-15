@@ -5,6 +5,16 @@
 
 = 2016.1 =
 
+== Muutokset ==
+- Korostuksen ilmoittaminen ei ole nyt oletusarvoisesti käytössä. (#4920)
+
+
+== Korjatut ohjelmavirheet ==
+- Selaustila päivittyy nyt asianmukaisesti iTunes 12:ssa uuden sivun latautuessa iTunes Storessa. (#5191)
+- Tiettyihin otsikkotasoihin siirtyminen pikanavigointinäppäimillä toimii nyt odotetusti Internet Explorerissa ja muissa MSHTML-säätimissä, kun otsikon taso ohitetaan saavutettavuustarkoituksessa (erityisesti kun aria-level ohittaa h-tagin tason). (#5434)
+- Kohdistus ei enää siirry säännöllisesti Spotifyssa "tuntemattomiin" objekteihin. (#5439)
+- Kohdistus palautetaan nyt asianmukaisesti siirryttäessä toisesta sovelluksesta takaisin Spotifyhin. (#5439)
+
 
 = 2015.4 =
 Tämän version merkittävimpiä uusia ominaisuuksia ovat mm. suorituskyvyn parannukset Windows 10:ssä, sisällyttäminen Windows 8:n ja uudempien Helppokäyttökeskukseen, parannukset Microsoft Exceliin (mukaan lukien laskentataulukoiden näyttäminen ja uudelleennimeäminen Elementtilistassa) sekä pääsy suojattujen laskentataulukoiden lukittuihin soluihin, ja muotoiluja tukevan tekstin muokkaaminen Mozilla Firefoxissa, Google Chromessa ja Mozilla Thunderbirdissä.
