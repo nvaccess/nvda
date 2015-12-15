@@ -29,7 +29,7 @@ class IoBase(object):
 	"""
 
 	def __init__(self, fileHandle, onReceive, onReceiveSize=1):
-		"""Consructr.
+		"""Constructr.
 		@param fileHandle: A handle to an open I/O device opened for overlapped I/O.
 		@param onReceive: A callable taking the received data as its only argument.
 		@type onReceive: callable(str)
