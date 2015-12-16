@@ -53,8 +53,18 @@ class IoBase(object):
 		braille._BgThread.queueApc(init)
 
 	def waitForRead(self, timeout):
-		self._recvEvt.wait(timeout)
+		"""Wait for a chunk of data to be received and processed.
+		This will return after L{onReceive} has been called or when the timeout elapses.
+		@param timeout: The maximum time to wait in seconds.
+		@type timeout: int or float
+		@return: C{True} if received data was processed before the timeout,
+			C{False} if not.
+		@rtype: bool
+		"""
+		if not self._recvEvt.wait(timeout):
+			return False
 		self._recvEvt.clear()
+		return True
 
 	def write(self, data):
 		if not ctypes.windll.kernel32.WriteFile(self._file, data, len(data), None, byref(self._writeOl)):
