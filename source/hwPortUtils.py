@@ -371,7 +371,8 @@ def listUsbDevices(onlyAvailable=True):
 				if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
 					raise ctypes.WinError()
 			else:
-				yield buf.value.split("\\", 1)[1].rsplit("&", 1)[0]
+				# The string is of the form "usb\VID_xxxx&PID_xxxx&..."
+				yield buf.value[4:21] # VID_xxxx&PID_xxxx
 	finally:
 		SetupDiDestroyDeviceInfoList(g_hdi)
 
@@ -462,7 +463,7 @@ def listHidDevices(onlyAvailable=True):
 					"devicePath": idd.DevicePath}
 				hwId = hwId.split("\\", 1)[1]
 				if hwId.startswith("VID"):
-					info["usbID"] = hwId.rsplit("&", 1)[0]
+					info["usbID"] = hwId[:17] # VID_xxxx&PID_xxxx
 				yield info
 	finally:
 		SetupDiDestroyDeviceInfoList(g_hdi)
