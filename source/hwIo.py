@@ -64,8 +64,8 @@ class IoBase(object):
 			ctypes.windll.kernel32.GetOverlappedResult(self._file, byref(self._writeOl), byref(bytes), True)
 
 	def close(self):
-		ctypes.windll.kernel32.CancelIoEx(self._file, byref(self._readOl))
 		self._onReceive = None
+		ctypes.windll.kernel32.CancelIoEx(self._file, byref(self._readOl))
 
 	def __del__(self):
 		self.close()
@@ -77,7 +77,8 @@ class IoBase(object):
 		ctypes.windll.kernel32.ReadFileEx(self._file, self._readBuf, self._readSize, byref(self._readOl), self._ioDoneInst)
 
 	def _ioDone(self, error, bytes, overlapped):
-		if error == ERROR_OPERATION_ABORTED:
+		if not self._onReceive:
+			# close has been called.
 			self._ioDone = None
 			return
 		elif error != 0:
