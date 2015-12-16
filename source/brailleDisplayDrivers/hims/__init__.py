@@ -25,6 +25,7 @@ HIMS_CODE_DEVICES = {
 HIMS_BLUETOOTH_NAMES = (
 	"BrailleSense",
 	"BrailleEDGE",
+	"SmartBeetle",
 )
 
 #MAP OF KEYS
@@ -109,7 +110,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	"""
 	name = "hims"
 	# Translators: The name of a series of braille displays.
-	description = _("HIMS Braille Sense/Braille EDGE series")
+	description = _("HIMS Braille Sense/Braille EDGE/Smart Beetle series")
 
 	@classmethod
 	def check(cls):
