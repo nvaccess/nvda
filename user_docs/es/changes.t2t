@@ -5,8 +5,13 @@ Qué hay de Nuevo en NVDA
 
 = 2016.1 =
 
+== Nuevas Características ==
+- Nueva tabla de transcripción braille: braille polaco computerizado de 8 puntos. (#5537)
+
+
 == Cambios ==
 - El anunciado de émfasis ahora está deshabilitado por omisión. (#4920)
+- En el diálogo Lista de Elementos en Microsoft Excel, el atajo de teclado para Fórmulas ha sido cambiado a alt+r así es diferente al atajo de teclado para el Filtro de campos. (#5527)
 
 
 == Corrección de Fallos ==
@@ -14,6 +19,11 @@ Qué hay de Nuevo en NVDA
 - En Internet Explorer y otros controles  MSHTML, al moverse a los niveles de encabezados específicos con la navegación con una sola letra ahora se comporta como se esperaba cuando el nivel de un encabezado se ignora con propósitos de accesibilidad (específicamente, cuando aria-level hace caso omiso del nivel de una etiqueta h). (#5434)
 - En Spotify, el foco ya no aterriza frecuentemente en objetos "desconocido". (#5439)
 - El foco ahora se restaura correctamente al regresar a Spotify desde otra aplicación. (#5439)
+	- Al conmutar entre modo exploración y modo foco, el modo se anuncia en braille así como en voz. (#5239)
+	- El botón Inicio en la Barra de Tareas ya no se anuncia como una lista y/o como seleccionado en algunas versiones de Windows. (#5178)
+	- Mensajes tales como "insertado" ya no se anuncian cuando se creen correos en Microsoft Outlook. (#5486)
+	- Cuando se utiliza una pantalla braille y el texto se seleccione en la línea actual (ej.: al buscar en un editor de textos para texto que ocurra en la misma línea), la pantalla braille se desplazará si es apropiado. (#5410)
+	- NVDA ya no saldrá silenciosamente al cerrar una consola de órdenes de Windows con alt+f4 en Windows 10. (#5343)
 
 
 = 2015.4 =
