@@ -1,4 +1,4 @@
-#brailleIo.py
+#hwIo.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
@@ -19,9 +19,13 @@ from serial.win32 import OVERLAPPED, FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE,
 import winKernel
 import braille
 from logHandler import log
+import config
 
 LPOVERLAPPED_COMPLETION_ROUTINE = ctypes.WINFUNCTYPE(None, DWORD, DWORD, serial.win32.LPOVERLAPPED)
 ERROR_OPERATION_ABORTED = 995
+
+def _isDebug():
+	return config.conf["debugLog"]["hwIo"]
 
 class IoBase(object):
 	"""Base class for raw I/O.
@@ -53,10 +57,24 @@ class IoBase(object):
 		braille._BgThread.queueApc(init)
 
 	def waitForRead(self, timeout):
-		self._recvEvt.wait(timeout)
+		"""Wait for a chunk of data to be received and processed.
+		This will return after L{onReceive} has been called or when the timeout elapses.
+		@param timeout: The maximum time to wait in seconds.
+		@type timeout: int or float
+		@return: C{True} if received data was processed before the timeout,
+			C{False} if not.
+		@rtype: bool
+		"""
+		if not self._recvEvt.wait(timeout):
+			if _isDebug():
+				log.debug("Wait timed out")
+			return False
 		self._recvEvt.clear()
+		return True
 
 	def write(self, data):
+		if _isDebug():
+			log.debug("Write: %r" % data)
 		if not ctypes.windll.kernel32.WriteFile(self._file, data, len(data), None, byref(self._writeOl)):
 			if ctypes.GetLastError() != ERROR_IO_PENDING:
 				raise ctypes.WinError()
@@ -64,8 +82,10 @@ class IoBase(object):
 			ctypes.windll.kernel32.GetOverlappedResult(self._file, byref(self._writeOl), byref(bytes), True)
 
 	def close(self):
-		ctypes.windll.kernel32.CancelIoEx(self._file, byref(self._readOl))
+		if _isDebug():
+			log.debug("Closing")
 		self._onReceive = None
+		ctypes.windll.kernel32.CancelIoEx(self._file, byref(self._readOl))
 
 	def __del__(self):
 		self.close()
@@ -77,7 +97,8 @@ class IoBase(object):
 		ctypes.windll.kernel32.ReadFileEx(self._file, self._readBuf, self._readSize, byref(self._readOl), self._ioDoneInst)
 
 	def _ioDone(self, error, bytes, overlapped):
-		if error == ERROR_OPERATION_ABORTED:
+		if not self._onReceive:
+			# close has been called.
 			self._ioDone = None
 			return
 		elif error != 0:
@@ -91,6 +112,8 @@ class IoBase(object):
 		The base implementation just calls the onReceive callback provided to the constructor.
 		This can be extended to perform tasks before/after the callback.
 		"""
+		if _isDebug():
+			log.debug("Read: %r" % data)
 		try:
 			self._onReceive(data)
 		except:
@@ -111,14 +134,31 @@ class Serial(IoBase):
 		"""
 		onReceive = kwargs.pop("onReceive")
 		self._ser = None
-		self._ser = serial.Serial(*args, **kwargs)
+		if _isDebug():
+			port = args[0] if len(args) >= 1 else kwargs["port"]
+			log.debug("Opening port %s" % port)
+		try:
+			self._ser = serial.Serial(*args, **kwargs)
+		except Exception as e:
+			if _isDebug():
+				log.debug("Open failed: %s" % e)
+			raise
 		self._origTimeout = self._ser.timeout
 		# We don't want a timeout while we're waiting for data.
 		self._ser.timeout = None
-		self.read = self._ser.read
-		self.write = self._ser.write
 		self.inWaiting = self._ser.inWaiting
 		super(Serial, self).__init__(self._ser.hComPort, onReceive)
+
+	def read(self, size=1):
+		data = self._ser.read(size)
+		if _isDebug():
+			log.debug("Read: %r" % data)
+		return data
+
+	def write(self, data):
+		if _isDebug():
+			log.debug("Write: %r" % data)
+		self._ser.write(data)
 
 	def close(self):
 		if not self._ser:
@@ -164,9 +204,13 @@ class Hid(IoBase):
 		@param onReceive: A callable taking a received input report as its only argument.
 		@type onReceive: callable(str)
 		"""
+		if _isDebug():
+			log.debug("Opening device %s" % path)
 		handle = CreateFile(path, winKernel.GENERIC_READ | winKernel.GENERIC_WRITE,
 			0, None, winKernel.OPEN_EXISTING, FILE_FLAG_OVERLAPPED, None)
 		if handle == INVALID_HANDLE_VALUE:
+			if _isDebug():
+				log.debug("Open failed: %s" % ctypes.WinError())
 			raise ctypes.WinError()
 		self._writeOl = OVERLAPPED()
 		pd = ctypes.c_void_p()
@@ -176,6 +220,8 @@ class Hid(IoBase):
 		ctypes.windll.hid.HidP_GetCaps(pd, byref(caps))
 		ctypes.windll.hid.HidD_FreePreparsedData(pd)
 		# Reading any less than caps.InputReportByteLength is an error.
+		if _isDebug():
+			log.debug("Input report byte length: %d" % caps.InputReportByteLength)
 		super(Hid, self).__init__(handle, onReceive, onReceiveSize=caps.InputReportByteLength)
 
 	def close(self):

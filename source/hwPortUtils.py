@@ -11,6 +11,8 @@ import ctypes
 from ctypes.wintypes import BOOL, WCHAR, HWND, DWORD, ULONG, WORD
 import _winreg as winreg
 from winKernel import SYSTEMTIME
+import config
+from logHandler import log
 
 def ValidHandle(value):
 	if value == 0:
@@ -106,6 +108,9 @@ SPDRP_LOCATION_INFORMATION = 13
 ERROR_NO_MORE_ITEMS = 259
 DICS_FLAG_GLOBAL = 0x00000001
 DIREG_DEV = 0x00000001
+
+def _isDebug():
+	return config.conf["debugLog"]["hwIo"]
 
 def listComPorts(onlyAvailable=True):
 	"""List com ports on the system.
@@ -223,10 +228,14 @@ def listComPorts(onlyAvailable=True):
 			else:
 				entry["friendlyName"] = buf.value
 
+			if _isDebug():
+				log.debug("%r" % entry)
 			yield entry
 
 	finally:
 		SetupDiDestroyDeviceInfoList(g_hdi)
+	if _isDebug():
+		log.debug("Finished listing com ports")
 
 BLUETOOTH_MAX_NAME_SIZE = 248
 BTH_ADDR = BLUETOOTH_ADDRESS = ULONGLONG
@@ -371,9 +380,15 @@ def listUsbDevices(onlyAvailable=True):
 				if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
 					raise ctypes.WinError()
 			else:
-				yield buf.value.split("\\", 1)[1].rsplit("&", 1)[0]
+				# The string is of the form "usb\VID_xxxx&PID_xxxx&..."
+				usbId = buf.value[4:21] # VID_xxxx&PID_xxxx
+				if _isDebug():
+					log.debug("%r" % usbId)
+				yield usbId
 	finally:
 		SetupDiDestroyDeviceInfoList(g_hdi)
+	if _isDebug():
+		log.debug("Finished listing USB devices")
 
 _hidGuid = None
 def listHidDevices(onlyAvailable=True):
@@ -462,7 +477,11 @@ def listHidDevices(onlyAvailable=True):
 					"devicePath": idd.DevicePath}
 				hwId = hwId.split("\\", 1)[1]
 				if hwId.startswith("VID"):
-					info["usbID"] = hwId.rsplit("&", 1)[0]
+					info["usbID"] = hwId[:17] # VID_xxxx&PID_xxxx
+				if _isDebug():
+					log.debug("%r" % info)
 				yield info
 	finally:
 		SetupDiDestroyDeviceInfoList(g_hdi)
+	if _isDebug():
+		log.debug("Finished listing HID devices")
