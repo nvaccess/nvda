@@ -5,8 +5,13 @@
 
 = 2016.1 =
 
+== Uudet ominaisuudet ==
+- Uusi pistetaulukko: puolalainen 8 pisteen tietokonemerkistö. (#5537)
+
+
 == Muutokset ==
 - Korostuksen ilmoittaminen ei ole nyt oletusarvoisesti käytössä. (#4920)
+- Microsoft Excelissä käytettävän elementtilistan Kaavat-vaihtoehdon pikanäppäimeksi on NVDA:n englanninkielisessä käyttöliittymässä muutettu Alt+R, jotta se ei ole sama kuin Filter-muokkauskentällä. (#5527)
 
 
 == Korjatut ohjelmavirheet ==
@@ -14,6 +19,11 @@
 - Tiettyihin otsikkotasoihin siirtyminen pikanavigointinäppäimillä toimii nyt odotetusti Internet Explorerissa ja muissa MSHTML-säätimissä, kun otsikon taso ohitetaan saavutettavuustarkoituksessa (erityisesti kun aria-level ohittaa h-tagin tason). (#5434)
 - Kohdistus ei enää siirry säännöllisesti Spotifyssa "tuntemattomiin" objekteihin. (#5439)
 - Kohdistus palautetaan nyt asianmukaisesti siirryttäessä toisesta sovelluksesta takaisin Spotifyhin. (#5439)
+- Kun selaus- ja vuorovaikutustilojen välillä vaihdetaan, tila ilmoitetaan nyt puheen lisäksi myös pistekirjoituksella. (#5239)
+- Tehtäväpalkin Käynnistä-painiketta ei enää ilmoiteta listana ja/tai valituksi joissakin Windows-versioissa. (#5178)
+- Sellaisia ilmoituksia kuin esim. "lisätty" ei enää puhuta kirjoitettaessa viestejä Microsoft Outlookissa. (#5486)
+- Kun pistenäyttöä käytettäessä on tekstiä valittuna nykyisellä rivillä (esim. etsittäessä tekstieditorissa samalla rivillä esiintyvää tekstiä), pistenäyttöä vieritetään, mikäli se on tarpeen. (#5410)
+- NVDA ei enää sulkeudu äänettömästi komentokehotetta Alt+F4:llä suljettaessa Windows 10:ssä. (#5343)
 
 
 = 2015.4 =
