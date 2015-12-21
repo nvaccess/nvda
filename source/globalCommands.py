@@ -1225,10 +1225,10 @@ class GlobalCommands(ScriptableObject):
 				ui.message(_("No formatting information"))
 				return
 							
-			# Translators: title for font information dialog.
-			ui.browseableMessage( ("\n".join(textList) ) , _("font") )
+			# Translators: title for formatting information dialog.
+			ui.browseableMessage( ("\n".join(textList) ) , _("Formatting Information") )
 	# Translators: Input help mode message for report formatting command.
-	script_reportFormatting.__doc__ = _("Reports formatting info for the current review cursor position within a document, pressing the keystroke twice presents the information in browse mode")
+	script_reportFormatting.__doc__ = _("Reports formatting info for the current review cursor position within a document. If pressed twice, presents the information in browse mode")
 	script_reportFormatting.category=SCRCAT_TEXTREVIEW
 
 	def script_reportCurrentFocus(self,gesture):
