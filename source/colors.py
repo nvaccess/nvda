@@ -81,9 +81,9 @@ class RGB(namedtuple('RGB',('red','green','blue'))):
 			dh=abs(selfHSV[0]-possibleHSV[0])
 			if dh>0.5:
 				dh=1-dh
-			ds=abs(selfHSV[1]-possibleHSV[1])*0.5
-			dv=abs(selfHSV[2]-possibleHSV[2])*0.75
-			distance=math.sqrt((dh**2)+(ds**2)+(dv**2))
+			ds=abs(selfHSV[1]-possibleHSV[1])
+			dv=abs(selfHSV[2]-possibleHSV[2])
+			distance=math.sqrt(0.4*(dh**2)+0.1*(ds**2)+0.1*(dv**2))
 			if distance<longestDistance:
 				longestDistance=distance
 				closestName=possibleName
