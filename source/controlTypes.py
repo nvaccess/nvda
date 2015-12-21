@@ -579,6 +579,7 @@ silentRolesOnFocus={
 	ROLE_MENUITEM,
 	ROLE_CHECKMENUITEM,
 	ROLE_TREEVIEWITEM,
+	ROLE_STATICTEXT,
 }
 
 silentValuesForRoles={
