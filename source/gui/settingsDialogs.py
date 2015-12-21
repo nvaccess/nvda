@@ -1418,7 +1418,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		settingsSizer.Add(self.expandAtCursorCheckBox, border=10, flag=wx.BOTTOM)
 
 		# Translators: The label for a setting in braille settings to show the cursor.
-		self.showCursorCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("Show cursor"))
+		self.showCursorCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("&Show cursor"))
 		self.showCursorCheckBox.Bind(wx.EVT_CHECKBOX, self.onShowCursorChange)
 		self.showCursorCheckBox.SetValue(config.conf["braille"]["showCursor"])
 		settingsSizer.Add(self.showCursorCheckBox, border=10, flag=wx.BOTTOM)
@@ -1436,7 +1436,7 @@ class BrailleSettingsDialog(SettingsDialog):
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a setting in braille settings to select the cursor shape.
-		label = wx.StaticText(self, wx.ID_ANY, label=_("Cursor shape:"))
+		label = wx.StaticText(self, wx.ID_ANY, label=_("Cursor &shape:"))
 		self.cursorShapes = [s[0] for s in braille.CURSOR_SHAPES]
 		self.shapeList = wx.Choice(self, wx.ID_ANY, choices=[s[1] for s in braille.CURSOR_SHAPES])
 		try:
