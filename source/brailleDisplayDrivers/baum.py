@@ -83,8 +83,10 @@ USB_IDS_HID = {
 	"VID_0904&PID_6101", # VarioUltra 20
 	"VID_0904&PID_6103", # VarioUltra 32
 	"VID_0904&PID_6102", # VarioUltra 40
-	"VID_0904&PID_4007", # Pronto! 18
-	"VID_0904&PID_4008", # Pronto! 40
+	"VID_0904&PID_4004", # Pronto! 18 V3
+	"VID_0904&PID_4005", # Pronto! 40 V3
+	"VID_0904&PID_4007", # Pronto! 18 V4
+	"VID_0904&PID_4008", # Pronto! 40 V4
 }
 
 BLUETOOTH_NAMES = (

@@ -32,21 +32,26 @@ class IoBase(object):
 	This watches for data of a specified size and calls a callback when it is received.
 	"""
 
-	def __init__(self, fileHandle, onReceive, onReceiveSize=1):
+	def __init__(self, fileHandle, onReceive, onReceiveSize=1, writeSize=None):
 		"""Constructr.
 		@param fileHandle: A handle to an open I/O device opened for overlapped I/O.
 		@param onReceive: A callable taking the received data as its only argument.
 		@type onReceive: callable(str)
 		@param onReceiveSize: The size (in bytes) of the data with which to call C{onReceive}.
 		@type onReceiveSize: int
+		@param writeSize: The size of the buffer for writes,
+			C{None} to use the length of the data written.
+		@param writeSize: int or None
 		"""
 		self._file = fileHandle
 		self._onReceive = onReceive
 		self._readSize = onReceiveSize
+		self._writeSize = writeSize
 		self._readBuf = ctypes.create_string_buffer(onReceiveSize)
 		self._readOl = OVERLAPPED()
 		self._recvEvt = threading.Event()
 		self._ioDoneInst = LPOVERLAPPED_COMPLETION_ROUTINE(self._ioDone)
+		self._writeOl = OVERLAPPED()
 		# Do the initial read.
 		@winKernel.PAPCFUNC
 		def init(param):
@@ -75,8 +80,13 @@ class IoBase(object):
 	def write(self, data):
 		if _isDebug():
 			log.debug("Write: %r" % data)
-		if not ctypes.windll.kernel32.WriteFile(self._file, data, len(data), None, byref(self._writeOl)):
+		size = self._writeSize or len(data)
+		buf = ctypes.create_string_buffer(size)
+		buf.raw = data
+		if not ctypes.windll.kernel32.WriteFile(self._file, data, size, None, byref(self._writeOl)):
 			if ctypes.GetLastError() != ERROR_IO_PENDING:
+				if _isDebug():
+					log.debug("Write failed: %s" % ctypes.WinError())
 				raise ctypes.WinError()
 			bytes = DWORD()
 			ctypes.windll.kernel32.GetOverlappedResult(self._file, byref(self._writeOl), byref(bytes), True)
@@ -212,7 +222,6 @@ class Hid(IoBase):
 			if _isDebug():
 				log.debug("Open failed: %s" % ctypes.WinError())
 			raise ctypes.WinError()
-		self._writeOl = OVERLAPPED()
 		pd = ctypes.c_void_p()
 		if not ctypes.windll.hid.HidD_GetPreparsedData(handle, byref(pd)):
 			raise ctypes.WinError()
@@ -220,9 +229,13 @@ class Hid(IoBase):
 		ctypes.windll.hid.HidP_GetCaps(pd, byref(caps))
 		ctypes.windll.hid.HidD_FreePreparsedData(pd)
 		# Reading any less than caps.InputReportByteLength is an error.
+		# On Windows 7, writing any less than caps.OutputReportByteLength is also an error.
 		if _isDebug():
-			log.debug("Input report byte length: %d" % caps.InputReportByteLength)
-		super(Hid, self).__init__(handle, onReceive, onReceiveSize=caps.InputReportByteLength)
+			log.debug("Report byte lengths: input %d, output %d"
+				% (caps.InputReportByteLength, caps.OutputReportByteLength))
+		super(Hid, self).__init__(handle, onReceive,
+			onReceiveSize=caps.InputReportByteLength,
+			writeSize=caps.OutputReportByteLength)
 
 	def close(self):
 		super(Hid, self).close()
