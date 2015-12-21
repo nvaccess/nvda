@@ -408,11 +408,10 @@ def splitTextIndentation(text):
 	return RE_INDENTATION_SPLIT.match(text).groups()
 
 RE_INDENTATION_CONVERT = re.compile(r"(?P<char>\s)(?P=char)*", re.UNICODE)
-RE_NBSP_CONVERT = re.compile("\xa0", re.UNICODE)
 def getIndentationSpeech(indentation):
 	"""Retrieves the phrase to be spoken for a given string of indentation.
 	@param indentation: The string of indentation.
-	@type indentation: basestring
+	@type indentation: unicode
 	@return: The phrase to be spoken.
 	@rtype: unicode
 	"""
@@ -423,7 +422,7 @@ def getIndentationSpeech(indentation):
 		return _("no indent")
 
 	#The non-breaking space is semantically a space, so we replace it here.
-	indentation = RE_NBSP_CONVERT.sub(" ", indentation)
+	indentation = indentation.replace(u"\xa0", u" ")
 	res = []
 	locale=languageHandler.getLanguage()
 	for m in RE_INDENTATION_CONVERT.finditer(indentation):
