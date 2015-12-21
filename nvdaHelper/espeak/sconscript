@@ -31,7 +31,6 @@ env=env.Clone()
 env.Append(CCFLAGS='/GL-')
 
 env.Append(CCFLAGS='/W0')
-env.Append(CPPDEFINES=['__WIN32__',('snprintf','_snprintf')])
 env.Append(CPPPATH=['#nvdaHelper/espeak',espeakIncludeDir])
 
 def espeak_compilePhonemeData_buildEmitter(target,source,env):
