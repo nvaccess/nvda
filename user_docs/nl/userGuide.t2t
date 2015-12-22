@@ -630,15 +630,15 @@ Evenals voor op het Web heeft NVDA een Elementenlijst voor Microsoft Excel, waar
 Om toegank te krijgen tot de Elementenlijst in Excel, drukt u op NVDA+f7.
 %kc:endInclude
 De volgende types informatie zijn in de Elementenlijst beschikbaar
-- Grafiek: Voor het weergeven van alle grafieken in de werkmap
+- Grafieken: Voor het weergeven van alle grafieken in de werkmap
 Door een grafiek te selecteren en op enter of de knop Ga naar te  drukken krijgt de grafiek de focus voor navigatie en lezen met de pijltjestoetsen.
-- Opmerking: Voor het weergeven van cellen in de werkmap die opmerkingen  bevatten. 
+- Opmerkingen: Voor het weergeven van cellen in de werkmap die opmerkingen  bevatten. 
 Het celadres samen met de opmerkingen erin worden voor elke cel weergegeven. 
 Door op Enter of de knop Ga Naar  te drukken wanneer u op een weergegeven opmerking staat, gaat u direct naar die cel.
-- Formule: Voor het weergeven van alle cellen in de werkmap waar een formule in staat. 
+- Formules: Voor het weergeven van alle cellen in de werkmap waar een formule in staat. 
 Het celadres samen met bijbehorende formule worden voor elke cel getoond.
 Door op Enter of de knop Ga Naar te drukken wanneer u zich op een weergegeven formule bevindt,  gaat u direct naar die cel. 
-- Blad: Voor het weergeven van alle bladen in de werkmap. 
+- Bladen: Voor het weergeven van alle bladen in de werkmap. 
 Door f2 te drukken wanneer u zich op een weergegeven blad bevindt, kunt u de naam van het desbetreffende blad wijzigen. 
 Een druk op de Enter- of de Ga Naar-knop terwijl u zich op een weergegeven blad bevindt, brengt u naar dat blad.
 -
@@ -706,7 +706,7 @@ Het dialoogvenster met “Algemene instellingen” vindt u in het NVDA-menu onde
 U vindt hier de volgende onderdelen:
 
 ==== Taal ====
-In de vervolgkeuzelijst kiest u de taal van de gebruikersinterface en de meldingen van NVDA.
+Dit is een vervolgkeuzelijst waarmee u de taal van de gebruikersinterface en de meldingen van NVDA kunt kiezen. 
 Er is een groot aantal talen waaruit gekozen kan worden, maar de standaardinstelling is “User default, Windows”.
 Hiermee wordt bewerkstelligt dat NVDA de taal gebruikt die standaard op uw PC is ingesteld.
 
@@ -733,13 +733,13 @@ Als u evenwel informatie wilt doorgeven over mogelijke bugs van het programma ka
 Als u het selectievakje aanvinkt, zal NVDA automatisch worden gestart zodra u zich bij  Windows aanmeldt.
 Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet voor de draagbare versie.
 
-==== NVDA gebruiken bij Windows aanmelding(administratieve rechten vereist) ====
+==== NVDA gebruiken bij Windows aanmelding(administratorrechten vereist) ====
 Als u zich bij Windows aanmeldt met een gebruikersnaam en een wachtwoord, dan zal  NVDA samen met Windows bij aanmelding worden gestart. Hiervoor moet u het selectievakje inschakelen.
 Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet voor de draagbare versie.
 
-==== De momenteel opgeslagen instellingen gebruiken in het aanmeldvenster en andere beveiligde schermen ====
+==== De momenteel opgeslagen instellingen gebruiken in het aanmeldvenster en andere beveiligde schermen (administratorrechten vereist) ====
 Met deze knop kopieert u uw huidige opgeslagen configuratie naar de systeemconfiguratiemap van NVDA, zodat de instellingen worden gebruikt bij het aanmeldscherm, gebruikersaccountbeheerscherm (UAC) en andere beveiligde Windowsschermen.
-Om ervoor te zorgen dat alle instellingen worden overgezet, moet u erop letten dat uw configuratie is opgeslagen met control+NVDA+c, of Configuratie Opslaan in het NVDA-menu.
+Om ervoor te zorgen dat alle instellingen worden overgezet, moet u erop letten dat u eerst uw configuratie hebt opgeslagen met control+NVDA+c, of Configuratie Opslaan in het NVDA-menu.
 Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet voor de draagbare versie.
 
 ==== Automatisch controleren of updates beschikbaar zijn ====

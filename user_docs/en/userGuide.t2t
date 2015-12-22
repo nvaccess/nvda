@@ -56,12 +56,14 @@ This applies to both original and modified copies of this software, plus any der
 For further details, you can [view the full licence. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + System Requirements +
-- Operating Systems: all 32-bit and 64-bit versions of Windows XP, Windows Vista, Windows 7, Windows 8 and Windows 10 (including Server operating Systems)
+- Operating Systems: all 32-bit and 64-bit editions of Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 and Windows 10 (including Server operating Systems)
  - For Windows XP 32-bit, NVDA requires Service Pack 2 or higher.
  - For Windows Server 2003, NVDA requires Service Pack 1 or higher.
+ - For Windows Vista, NVDA requires Service Pack 2 and the [KB2763674 https://support.microsoft.com/en-us/kb/2763674] update.
+ Both of these should be installed if all available updates are applied via Windows Update.
 - Memory: 256 mb or more of RAM
 - Processor speed: 1.0 ghz or above
-- About 50 MB of storage space.
+- About 90 MB of storage space.
 -
 
 + Getting and Setting Up NVDA +
@@ -87,8 +89,8 @@ Using the temporary copy of NVDA is also an option (e.g. for demonstration purpo
 Apart from the  inability to automatically start during and/or after log-on, the portable and temporary copies of NVDA also have the following restrictions:
 - The inability to interact with applications running with administrative privileges, unless of course NVDA itself has been run also with these privileges (not recommended).
 - The inability to read User Account Control (UAC) screens when trying to start an application with administrative privileges.
-- Windows 8: the inability to support input from a touch screen.
-- Windows 8: the inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
+- Windows 8 and later: the inability to support input from a touch screen.
+- Windows 8 and later: the inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
 -
 
 ++ Installing NVDA ++
@@ -627,15 +629,15 @@ Similar to the web, NVDA has an Elements List for Microsoft Excel that allows yo
 To access the Elements List in Excel, press NVDA+f7.
 %kc:endInclude
 The various types of information available in the Elements List are:
-- Chart: This lists all charts in the workbook. 
+- Charts: This lists all charts in the workbook. 
 Selecting a chart and pressing enter or the Move to button focuses the chart for navigating and reading with the arrow keys.
-- Comment: This lists all cells in the workbook containing comments. 
+- Comments: This lists all cells in the workbook containing comments. 
 The cell address along with its comments are shown for each cell. 
 Pressing Enter or the Move To button when on a listed comment will move directly to that cell.
-- Formula: This lists all cells in the workbook containing a formula. 
+- Formulas: This lists all cells in the workbook containing a formula. 
 The cell address along with its formula are shown for each cell.
 Pressing Enter or the Move To button on a listed formula will move directly to that cell. 
-- Sheet: This lists all sheets in the workbook. 
+- Sheets: This lists all sheets in the workbook. 
 Pressing f2 when on a listed sheet allows you to rename the sheet. 
 Pressing Enter or the Move To button while on the listed sheet will switch to that sheet.
 -
@@ -887,8 +889,16 @@ If input is not supported on a display which does have a braille keyboard, this 
 ==== Expand to computer braille for the word at the cursor ====
 This option allows the word that is under the cursor to be displayed in non-contracted computer braille.
 
-==== Cursor Blink Rate ====
+==== Show Cursor ====
+This option allows the braille cursor to be turned on and off.
+It applies to the system caret and review cursor, but not to the selection indicator.
+
+==== Cursor Blink Rate (ms) ====
 This option is a numerical field that allows you to change the blink rate of the cursor in milliseconds.
+
+==== Cursor Shape ====
+This option allows you to choose the shape (dot pattern) of the braille cursor.
+The selection indicator is not affected by this option.
 
 ==== Message Timeout (sec) ====
 This option is a numerical field that controls how long NVDA messages are displayed on the braille display.

@@ -1,6 +1,6 @@
 #appModules/explorer.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2015 NV Access Limited, Joseph Lee
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -14,7 +14,7 @@ import speech
 import eventHandler
 import mouseHandler
 from NVDAObjects.window import Window
-from NVDAObjects.IAccessible import sysListView32, IAccessible
+from NVDAObjects.IAccessible import sysListView32, IAccessible, List
 from NVDAObjects.UIA import UIA
 
 # Suppress incorrect Win 10 Task switching window focus
@@ -140,6 +140,20 @@ class ImmersiveLauncher(UIA):
 	#Ignore focus events on this object.
 	shouldAllowUIAFocusEvent=False
 
+
+class StartButton(IAccessible):
+	"""For Windows 8.1 and 10 RTM Start buttons to be recognized as proper buttons and to suppress selection announcement."""
+
+	role = controlTypes.ROLE_BUTTON
+
+	def _get_states(self):
+		# #5178: Selection announcement should be suppressed.
+		# Borrowed from Mozilla objects in NVDAObjects/IAccessible/Mozilla.py.
+		states = super(StartButton, self).states
+		states.discard(controlTypes.STATE_SELECTED)
+		return states
+
+
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
@@ -175,6 +189,12 @@ class AppModule(appModuleHandler.AppModule):
 			if toolbarParent and toolbarParent.windowClassName == "SysPager":
 				clsList.insert(0, NotificationArea)
 				return
+
+		# #5178: Start button in Windows 8.1 and 10 RTM should not have been a list in the first place.
+		if windowClass == "Start" and role in (controlTypes.ROLE_LIST, controlTypes.ROLE_BUTTON):
+			if role == controlTypes.ROLE_LIST:
+				clsList.remove(List)
+			clsList.insert(0, StartButton)
 
 		if isinstance(obj, UIA):
 			uiaClassName = obj.UIAElement.cachedClassName
