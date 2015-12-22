@@ -36,9 +36,9 @@ def browseableMessage(message,title=None , isHtml=False):
 	"""Present a message to the user that can be read in browse mode.
 	The message will be presented in an HTML document.
 	@param message: The message in either html or text.
-	@type message: str
+	@type message: unicode
 	@param title: The title for the message.
-	@type title: str
+	@type title: unicode
 	@param isHtml: Whether the message is html
 	@type isHtml: boolean
 	"""
@@ -51,7 +51,7 @@ def browseableMessage(message,title=None , isHtml=False):
 		# Translators: The title for the dialog used to present general NVDA messages in browse mode.
 		title = _("NVDA Message")
 	isHtmlArgument = "true" if isHtml else "false"
-	dialogString = "{isHtml};{title};{message}".format( isHtml = isHtmlArgument , title=title , message=message ) 
+	dialogString = u"{isHtml};{title};{message}".format( isHtml = isHtmlArgument , title=title , message=message ) 
 	dialogArguements = automation.VARIANT( dialogString )
 	gui.mainFrame.prePopup() 
 	windll.mshtml.ShowHTMLDialogEx( gui.mainFrame.Handle , moniker , HTMLDLG_MODELESS , addressof( dialogArguements ) , unicode(DIALOG_OPTIONS ), None)
