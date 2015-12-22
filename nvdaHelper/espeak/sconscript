@@ -11,6 +11,7 @@ synthDriversDir=sourceDir.Dir('synthDrivers')
 espeakRepo=Dir("#include/espeak")
 espeakSrcDir=espeakRepo.Dir('src')
 espeakIncludeDir=espeakSrcDir.Dir('include/espeak-ng')
+sonicSrcDir=Dir("#include/sonic")
 
 class espeak_VOICE(ctypes.Structure):
 	_fields_=[
@@ -31,7 +32,7 @@ env=env.Clone()
 env.Append(CCFLAGS='/GL-')
 
 env.Append(CCFLAGS='/W0')
-env.Append(CPPPATH=['#nvdaHelper/espeak',espeakIncludeDir])
+env.Append(CPPPATH=['#nvdaHelper/espeak',espeakIncludeDir,sonicSrcDir])
 
 def espeak_compilePhonemeData_buildEmitter(target,source,env):
 	phSourceIgnores=['error_log','error_intonation','compile_prog_log','compile_report','envelopes.png']
@@ -83,6 +84,12 @@ def espeak_compileDict_buildAction(target,source,env):
 env.Install(espeakRepo.Dir('src/libespeak-ng'),'access.c')
 env.Install(espeakRepo.Dir('src'),'config.h')
 
+sonicLib=env.StaticLibrary(
+	target='sonic',
+	srcdir=sonicSrcDir.abspath,
+	source='sonic.c',
+)
+
 espeakLib=env.SharedLibrary(
 	target='espeak',
 	srcdir=espeakSrcDir.Dir('libespeak-ng').abspath,
@@ -105,11 +112,11 @@ espeakLib=env.SharedLibrary(
 		"debug.c",
 		"phonemelist.c",
 		"klatt.c",
-		"sonic.c",
 		"compiledata.c",
 		"compilembrola.c",
 		"ieee80.c",
 		"spect.c",
+		sonicLib,
 	],
 	LIBS=['advapi32'],
 )
