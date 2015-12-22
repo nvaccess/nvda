@@ -3,6 +3,29 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.1 =
+
+== Novas Características ==
+- Nova táboa de transcripción braille: braille polaco computerizado de 8 pontos. (#5537)
+
+
+== Cambios ==
+- O anunciado de émfasis agora está deshabilitado por omisión. (#4920)
+- No diálogo Lista de Elementos en Microsoft Excel, o atallo de teclado para Fórmulas foi cambiado a alt+r así é diferente ó atallo de teclado para o Filtro de campos. (#5527)
+
+
+== Corrección de Fallos ==
+- En iTunes 12, o modo exploración agora actualízase correctamente cando se carga unha páxina nova na iTunes Store. (#5191)
+- En Internet Explorer e outros controis  MSHTML, ó se mover ós níveis de cabeceiras específicas ca navegación cunha soa letra agora compórtase como se esperaba cando o nível dunha cabeceira se ignora con propósitos de accesibilidade (específicamente, cando aria-level non fai do nível dunha etiqueta h). (#5434)
+- En Spotify, o foco xa non aterriza de cotío en obxectos "descoñecido". (#5439)
+- O foco agora restáurase correctamente ó voltar ó Spotify dende outra aplicación. (#5439)
+- Ó se conmutar entre modo exploración e modo foco, o modo anúnciase en braille así como en voz. (#5239)
+- O botón Inicio na Barra de Tareas xa non se anuncia coma unha lista e/ou como selecionado nalgunhas versións de Windows. (#5178)
+- Mensaxes como "insertado" xa non se anuncian cando se creen correos en Microsoft Outlook. (#5486)
+- Cando se utiliza unha pantalla braille e o texto se selecione na liña actual (ex.: ó procurar nun editor de textos para texto que ocurra na mesma liña), a pantalla braille desprazarase se é apropriado. (#5410)
+- NVDA xa non sairá silenciosamente ó se pechar unha consola de ordes de Windows con alt+f4 en Windows 10. (#5343)
+
+
 = 2015.4 =
 O subliñable nesta versión inclúe melloras de rendemento en Windows 10; a inclusión no Centro de Accesibilidade en Windows 8 e posterior; melloras para Microsoft Excel, incluindo o listado e o renomeado de follas e o aceso a celdas bloqueadas en follas con protección; e apoio para a edición de texto enriquecido en Mozilla Firefox, Google Chrome e Mozilla Thunderbird.
 
@@ -24,9 +47,9 @@ O subliñable nesta versión inclúe melloras de rendemento en Windows 10; a inc
 
 == Cambios ==
 - A opción Anunciar Revisións do Editor no diálogo Opcións de Formato de documento do NVDA agora actívase por omisión. (#4920)
-- Ó moverse por carácteres no Microsoft Word ca opción do NVDA Anunciar Vevisións do Editor, agora anúnciase menos información para seguemento de cambios, o que fai a navegación máis eficiente. To view the extra information, use the Elements List. (#4920)
+- Ó moverse por carácteres no Microsoft Word ca opción do NVDA Anunciar Vevisións do Editor, agora anúnciase menos información para seguemento de cambios, o que fai a navegación máis eficiente. Para ver a información extra, usa a Lista de Elementos. (#4920)
 - Actualizado o transcriptor braille liblouis translator  a 2.6.4. (#5341)
-- Varios símbolos (incluindo símbolos básicos matemáticos) movéronse ó nível some tal que sexan falados por omisión. (#3799)
+- Varios símbolos (incluindo símbolos básicos matemáticos) movéronse ó nível algunha tal que sexan falados por omisión. (#3799)
 - Se o sintetizador o soporta, a voz agora debería se pausar para os parénteses e o guión final (–). (#3799)
 - Ó se selecionar texto, o texto anúnciase antes da indicación da selección en lugar de despois. (#1707)
 

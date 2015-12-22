@@ -79,19 +79,16 @@ def _prepareForFindByAttributes(attribs):
 			elif values[0] is VBufStorage_findMatch_notEmpty:
 				# There must be a value for this attribute.
 				optRegexp.append(r"(?:\\;|[^;])+;")
-			elif values[0] is None:
-				# There must be no value for this attribute.
-				optRegexp.append(r";")
 			elif isinstance(values[0], VBufStorage_findMatch_word):
 				# Assume all are word matches.
 				optRegexp.append(r"(?:\\;|[^;])*\b(?:")
 				optRegexp.append("|".join(escape(val) for val in values))
 				optRegexp.append(r")\b(?:\\;|[^;])*;")
 			else:
-				# Assume all are exact matches.
-				optRegexp.append("(?:")
-				optRegexp.append("|".join(escape(val) for val in values))
-				optRegexp.append(");")
+				# Assume all are exact matches or None (must not exist).
+				optRegexp.append("(?:" )
+				optRegexp.append("|".join((escape(val)+u';') if val is not None else u';' for val in values))
+				optRegexp.append(")")
 		regexp.append("".join(optRegexp))
 	return u" ".join(reqAttrs), u"|".join(regexp)
 

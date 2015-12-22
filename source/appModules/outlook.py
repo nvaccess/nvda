@@ -506,3 +506,5 @@ class OutlookWordDocument(WordDocument):
 
 	def _get_role(self):
 		return controlTypes.ROLE_DOCUMENT if self.isReadonlyViewer else super(OutlookWordDocument,self).role
+
+	ignoreEditorRevisions=True
