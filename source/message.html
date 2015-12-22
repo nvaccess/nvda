@@ -1,0 +1,37 @@
+
+<!doctype html>
+<HTML style="width : 350; height: 300">
+<HEAD>
+<TITLE></TITLE>
+<SCRIPT LANGUAGE=javascript>
+<!--
+function escapeKeyPress(e) {
+	e = e || window.event;
+	if(e.keyCode == 27){ // code for escape
+		window.close();
+	}
+};
+
+function windowOnLoad() {
+	var strArgs = window.dialogArguments;
+	var args = new Array();
+	if (strArgs)
+		args = strArgs.split(";",3);
+	if (args.length == 3){
+		document.title= args[1];
+		if ( args[0] == "true") {
+			messageID.innerHTML= args[2];
+		}
+		else if ( args[0] == "false") {
+			textID.innerText= args[2];
+		}
+	}
+} 
+//-->
+</SCRIPT>
+</HEAD>
+<BODY tabindex='-1' id='main_body' LANGUAGE=javascript onload="return windowOnLoad()" onkeypress="return escapeKeyPress()" >
+<div id=messageID></div>
+<pre id=textID></pre>
+</body>
+</html>
