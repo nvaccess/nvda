@@ -228,14 +228,49 @@ class Hid(IoBase):
 		caps = HIDP_CAPS()
 		ctypes.windll.hid.HidP_GetCaps(pd, byref(caps))
 		ctypes.windll.hid.HidD_FreePreparsedData(pd)
+		if _isDebug():
+			log.debug("Report byte lengths: input %d, output %d, feature %d"
+				% (caps.InputReportByteLength, caps.OutputReportByteLength,
+					caps.FeatureReportByteLength))
+		self._featureSize = caps.FeatureReportByteLength
 		# Reading any less than caps.InputReportByteLength is an error.
 		# On Windows 7, writing any less than caps.OutputReportByteLength is also an error.
-		if _isDebug():
-			log.debug("Report byte lengths: input %d, output %d"
-				% (caps.InputReportByteLength, caps.OutputReportByteLength))
 		super(Hid, self).__init__(handle, onReceive,
 			onReceiveSize=caps.InputReportByteLength,
 			writeSize=caps.OutputReportByteLength)
+
+	def getFeature(self, reportId):
+		"""Get a feature report from this device.
+		@param reportId: The report id.
+		@type reportId: str
+		@return: The report, including the report id.
+		@rtype: str
+		"""
+		buf = ctypes.create_string_buffer(self._featureSize)
+		buf[0] = reportId
+		if not ctypes.windll.hid.HidD_GetFeature(self._file, buf, self._featureSize):
+			if _isDebug():
+				log.debug("Get feature %r failed: %s"
+					% (reportId, ctypes.WinError()))
+			raise ctypes.WinError()
+		if _isDebug():
+			log.debug("Get feature: %r" % buf.raw)
+		return buf.raw
+
+	def setFeature(self, report):
+		"""Send a feature report to this device.
+		@param report: The report, including its id.
+		@type report: str
+		"""
+		length = len(report)
+		buf = ctypes.create_string_buffer(length)
+		buf.raw = report
+		if _isDebug():
+			log.debug("Set feature: %r" % report)
+		if not ctypes.windll.hid.HidD_SetFeature(self._file, buf, length):
+			if _isDebug():
+				log.debug("Set feature failed: %s" % ctypes.WinError())
+			raise ctypes.WinError()
 
 	def close(self):
 		super(Hid, self).close()
