@@ -211,8 +211,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				# Some displays don't support BAUM_PROTOCOL_ONOFF.
 				pass
 		finally:
-			# We absolutely must close the Serial object, as it does not have a destructor.
-			# If we don't, we won't be able to re-open it later.
+			# Make sure the device gets closed.
+			# If it doesn't, we may not be able to re-open it later.
 			self._dev.close()
 
 	def _sendRequest(self, command, arg=""):
