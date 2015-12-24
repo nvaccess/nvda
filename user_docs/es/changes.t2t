@@ -7,6 +7,7 @@ Qué hay de Nuevo en NVDA
 
 == Nuevas Características ==
 - Nueva tabla de transcripción braille: braille polaco computerizado de 8 puntos. (#5537)
+- Puedes desactivar el cursor braille y cambiar su forma utilizando las nuevas opciones Mostrar cursor y Forma del cursor en el diálogo Opciones de Braille. (#5198)
 
 
 == Cambios ==
@@ -19,11 +20,16 @@ Qué hay de Nuevo en NVDA
 - En Internet Explorer y otros controles  MSHTML, al moverse a los niveles de encabezados específicos con la navegación con una sola letra ahora se comporta como se esperaba cuando el nivel de un encabezado se ignora con propósitos de accesibilidad (específicamente, cuando aria-level hace caso omiso del nivel de una etiqueta h). (#5434)
 - En Spotify, el foco ya no aterriza frecuentemente en objetos "desconocido". (#5439)
 - El foco ahora se restaura correctamente al regresar a Spotify desde otra aplicación. (#5439)
-	- Al conmutar entre modo exploración y modo foco, el modo se anuncia en braille así como en voz. (#5239)
-	- El botón Inicio en la Barra de Tareas ya no se anuncia como una lista y/o como seleccionado en algunas versiones de Windows. (#5178)
-	- Mensajes tales como "insertado" ya no se anuncian cuando se creen correos en Microsoft Outlook. (#5486)
-	- Cuando se utiliza una pantalla braille y el texto se seleccione en la línea actual (ej.: al buscar en un editor de textos para texto que ocurra en la misma línea), la pantalla braille se desplazará si es apropiado. (#5410)
-	- NVDA ya no saldrá silenciosamente al cerrar una consola de órdenes de Windows con alt+f4 en Windows 10. (#5343)
+- Al conmutar entre modo exploración y modo foco, el modo se anuncia en braille así como en voz. (#5239)
+- El botón Inicio en la Barra de Tareas ya no se anuncia como una lista y/o como seleccionado en algunas versiones de Windows. (#5178)
+- Mensajes tales como "insertado" ya no se anuncian cuando se creen correos en Microsoft Outlook. (#5486)
+- Cuando se utiliza una pantalla braille y el texto se seleccione en la línea actual (ej.: al buscar en un editor de textos para texto que ocurra en la misma línea), la pantalla braille se desplazará si es apropiado. (#5410)
+- NVDA ya no saldrá silenciosamente al cerrar una consola de órdenes de Windows con alt+f4 en Windows 10. (#5343)
+- En la Lista de Elementos en modo exploración, cuando cambies el tipo de elemento, ahora se limpia el campo Filtrar por. (#5511)
+- En texto editable en aplicaciones de Mozilla, moviendo el ratón lee de nuevo la línea, la palabra, etc. apropiada como se esperaba en lugar de todo el contenido. (#5535)
+- Al mover el ratón en texto editable en aplicaciones de Mozilla, la lectura 		ya no se detiene en elementos tales como enlaces dentro de la palabra o línea que esté leyéndose. (#2160, #5535)
+- En Internet Explorer, el sitio web shoprite.com ahora puede leerse en modo exploración en lugar de anunciarlo como en blanco. (Específicamente, los atributos lang mal formados ahora se manejan graciosamente.) (#5569)
+- En Microsoft Word, el seguimiento de cambios tales como "insertado" ya no se anuncia cuando la marca de seguimiento de cambios no se muestra. (#5566)
 
 
 = 2015.4 =
