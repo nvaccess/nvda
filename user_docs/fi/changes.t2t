@@ -7,6 +7,7 @@
 
 == Uudet ominaisuudet ==
 - Uusi pistetaulukko: puolalainen 8 pisteen tietokonemerkistö. (#5537)
+- Voit poistaa pistekohdistimen käytöstä ja muuttaa sen muotoa uusia Pistekirjoitusasetukset-valintaikkunan Näytä kohdistin- ja Kohdistimen muoto -asetuksia käyttäen. (#5198)
 
 
 == Muutokset ==
@@ -23,7 +24,12 @@
 - Tehtäväpalkin Käynnistä-painiketta ei enää ilmoiteta listana ja/tai valituksi joissakin Windows-versioissa. (#5178)
 - Sellaisia ilmoituksia kuin esim. "lisätty" ei enää puhuta kirjoitettaessa viestejä Microsoft Outlookissa. (#5486)
 - Kun pistenäyttöä käytettäessä on tekstiä valittuna nykyisellä rivillä (esim. etsittäessä tekstieditorissa samalla rivillä esiintyvää tekstiä), pistenäyttöä vieritetään, mikäli se on tarpeen. (#5410)
-- NVDA ei enää sulkeudu äänettömästi komentokehotetta Alt+F4:llä suljettaessa Windows 10:ssä. (#5343)
+- NVDA ei enää sulkeudu hiljaisesti komentokehotetta Alt+F4:llä suljettaessa Windows 10:ssä. (#5343)
+- Kun elementtiä muutetaan selaustilan Elementtilistassa, Suodata-kenttä tyhjennetään. (#5511)
+- Hiiren liikuttaminen lukee odotetusti koko sisällön sijasta jälleen asianmukaisen rivin, sanan jne. Mozilla-sovellusten muokattavissa tekstikentissä. (#5535)
+- Lukeminen ei enää pysähdy sanan tai rivin sisällä olevien elementtien, kuten linkkien, kohdalla liikutettaessa hiirtä Mozilla-sovellusten muokattavissa tekstikentissä. (#2160, #5535)
+- Shoprite.com-verkkosivua on nyt mahdollista lukea selaustilassa Internet Explorerissa sen sijaan, että sivu ilmoitettaisiin tyhjäksi. (Erityisesti väärin muotoillut lang-määreet käsitellään nyt sulavasti.) (#5569)
+- Jäljitettäviä muutoksia, kuten lisäyksiä, ei enää ilmoiteta Microsoft Wordissa, kun niiden merkintöjä ei näytetä. (#5566)
 
 
 = 2015.4 =
