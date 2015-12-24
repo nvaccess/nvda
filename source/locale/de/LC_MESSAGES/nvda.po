@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-10 19:10+1000\n"
+"POT-Creation-Date: 2015-12-18 09:03+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: René Linke <rene.linke@hamburg.de>\n"
 "Language-Team: \n"
@@ -661,6 +661,18 @@ msgstr "klk"
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "[ ]"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "Punkte 7 und 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "Punkt 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Alle Punkte"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -4028,6 +4040,31 @@ msgstr "Braillezeile gekoppelt an %s"
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Koppelt die Braillezeile wahlweise an den Fokus oder an den NVDA-Cursor."
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Braille-Cursor aus"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Braille-Cursor ein"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Schaltet den Braille-Cursor ein oder aus."
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "Braille-Cursor ist ausgeschaltet."
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "Braille-Cursor %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Schaltet zwischen den cursor-Varianten um."
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -7519,9 +7556,17 @@ msgstr "&Eingabetabelle:"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "Aktuelles &Wort in Computerbraille ausschreiben"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "Show cursor"
+msgstr "Cursor anzeigen"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "&Cursorblinkfrequenz (in Millisekunden)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor shape:"
+msgstr "Cursorform:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"

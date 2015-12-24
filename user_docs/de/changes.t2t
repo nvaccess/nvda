@@ -7,6 +7,7 @@
 
 == neue Funktionen ==
 - neue Braille-Übersetzungstabelle: polnisches 8-Punkt-Computerbraille. (#5537)
+- Mit Hilfe zweier neuer Optionen im Braille-Einstellungsdialog kann nun die Form des Cursors auf der Braillezeile geändert Bzw. die Anzeige des Cursors ganz abgeschaltet werden. (#5198)
 
 
 == Änderungen ==
@@ -23,6 +24,11 @@
 - Wenn Sie in Microsoft Outlook Nachrichten schreiben, werden meldungen wie "eingefügt" nicht mehr angezeigt. (#5486)
 - Wenn Sie in einem Editorfenster Text markieren, wird die Braillezeile ggf. korrekt weitergescrollt. (#5410)
 - nvda wird nicht mehr abstürzen, wenn Sie eine Eingabeaufforderung in Windows 10 mit alt+f4 schließen. (#5343)
+- Wenn Sie in der Elementliste im Lesemodus den Elementtyp ändern, wird das Suchfeld automatisch geleert. (#5511)
+- Wenn Sie in Mozilla-Anwendungen die Maus auf ein Eingabefeld bewegen, wird nicht mehr der gesamte Feldinhalt gelesen, sondern (wie erwartet) das Wort, die Zeile etc. unter dem Mauszeiger. (#5535)
+- Wenn Sie in Mozilla-Anwendungen die Maus innerhalb von Eingabefeldern bewegen, wird das Lesen nicht bei Elementen unterbrochen, die sich innerhalb der zu lesenden Einheit (Wort, Zeile etc.) befinden. (#2160, #5535)
+- Wenn Sie die Webseite shoprite.com mit dem Internet Explorer aufsuchen, wird deren Inhalt nun erwartungsgemäß angezeigt. (Hierbei werden insbesondere ungültig gesetzte Sprachenauszeichnungen besser verarbeitet.) (#5569)
+- in Microsoft Word werden Änderungen am Dokument nur dann durch NVDA dargestellt, wenn sie auch tatsächlich im Dokument ausgezeichnet werden. Hierzu zählen beispielsweise Meldungen über eingefügten oder gelöschten Text. (#5566)
 
 
 = 2015.4 =
