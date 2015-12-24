@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr 2013.1:6039\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-10 19:10+1000\n"
-"PO-Revision-Date: 2015-12-11 16:59+0545\n"
+"POT-Creation-Date: 2015-12-17 19:09+1000\n"
+"PO-Revision-Date: 2015-12-18 10:50+0545\n"
 "Last-Translator: drishtibachak@gmail.com\n"
 "Language-Team: Him Prasad Gautam <drishtibachak@gmail.com>\n"
 "Language: ne\n"
@@ -659,6 +659,18 @@ msgstr "चिनो"
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "( )"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "७ र ८ थोप्लो"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "८ थोप्लो"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "सबै थोप्लो"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -3304,11 +3316,11 @@ msgstr "चोकौस सूचित अवस्था उल्टिन्
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
-msgstr "किचिनो्क हुन्छ भने बताउदैन"
+msgstr "किटिक्क  हुन्छ भने बताउदैन"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable on"
-msgstr "किचिनो्क हुन्छ भने बताउ"
+msgstr "किटिक्क हुन्छ भने बताउ"
 
 #. Translators: Input help mode message for toggle report if clickable command.
 msgid "Toggles on and off reporting if clickable"
@@ -3882,6 +3894,31 @@ msgstr "ब्रेललाई %s मा मिलाउ"
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "ब्रेलको tethering केन्द्रीयता र समीक्षा स्थान सित साटासाट हुन्छ ।"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "ब्रेल कर्सर बन्द"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "ब्रेल कर्सर खुल्यो"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "ब्रेल कर्सर लाईखोल्ने र बन्द गर्ने"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "ब्रेल कर्सर  बन्द गरियो"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "ब्रेल कर्सर  %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "ब्रेल कर्सरको आकारमा फन्को मार्छ "
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -7195,9 +7232,17 @@ msgstr "&लगानि तालिका"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "कर्सर मुनिको शब्द विस्तारित रुपमा &देखाउ "
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "Show cursor"
+msgstr "कर्सर देखाउ"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "कर्सर चम्किने दर (मिलि सेकेन्ड)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor shape:"
+msgstr "कर्सरको आकृति "
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
