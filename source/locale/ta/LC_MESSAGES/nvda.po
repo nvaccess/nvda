@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-10 19:10+1000\n"
-"PO-Revision-Date: 2015-12-12 10:55+0530\n"
+"POT-Creation-Date: 2015-12-17 19:09+1000\n"
+"PO-Revision-Date: 2015-12-20 13:07+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -658,6 +658,18 @@ msgstr "சொடு"
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "( )"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "புள்ளிகள் 7, 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "புள்ளி 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "எல்லா புள்ளிகளும்"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -2136,7 +2148,7 @@ msgstr "உருள் பட்டை"
 
 #. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
 msgid "status bar"
-msgstr "நிலைமைப் பட்டை"
+msgstr "நிலைப் பட்டை"
 
 #. Translators: Identifies a table such as ones used in various websites.
 msgid "table"
@@ -3706,14 +3718,14 @@ msgstr ""
 
 #. Translators: Reported when there is no status line for the current program or window.
 msgid "No status line found"
-msgstr "நிலைமைப்பட்டை காணப்படவில்லை"
+msgstr "நிலைக் கோடு காணப்படவில்லை"
 
 #. Translators: Input help mode message for report status line text command.
 msgid ""
 "reads the current application status bar and moves the navigator to it. If "
 "pressed twice, spells the information"
 msgstr ""
-"தற்போதைய பயன்பாட்டின் நிலைமைப்பட்டையைப் படித்து, வழிகாட்டியை அவிடத்திற்கு நகர்த்தும். இரு "
+"தற்போதைய பயன்பாட்டின் நிலைப்பட்டையைப் படித்து, வழிகாட்டியை அவிடத்திற்கு நகர்த்தும். இரு "
 "முறை அழுத்தினால், தகவலை எழுத்துகளாகப் படிக்கும். "
 
 #. Translators: presented when the mouse tracking is toggled.
@@ -3863,7 +3875,7 @@ msgstr ""
 #. If there is an appModule for the current program, NVDA speaks the name of the module after presenting this message.
 #, python-format
 msgid "Currently running application is %s"
-msgstr "தற்பொழுது செயற்பட்டுக்கொண்டிருக்கும் பயன்பாட்டின் பெயர் %s"
+msgstr "தற்பொழுது செயற்பட்டுக்கொண்டிருக்கும் பயன்பாட்டின் பெயர் %s, "
 
 #. Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
 #. For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
@@ -4002,6 +4014,31 @@ msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "பிரெயில் கட்டப்படுவதை குவிமையம், சீராய்வு, ஆகிய இரு நிலைகளுக்கிடையே மாற்றியமைக்கிறது"
 
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "பிரெயில் சுட்டி இயங்காது"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "பிரெயில் சுட்டி இயங்கும்"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "பிரெயில் சுட்டியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "பிரெயில் சுட்டி இயக்கத்தில் இல்லை"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "பிரெயில் சுட்டி %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "பிரெயில் சுட்டியின் வடிவங்களுக்கிடையே சுழல்கிறது"
+
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
 msgstr "பிடிப்புப்பலகையில் எவ்வுரையும் இல்லை"
@@ -4080,14 +4117,14 @@ msgstr "பிரெயில் விசைப் பலகை மூலம்
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
-msgstr "உட்பொருத்திகள் மறுஏற்றம் செய்யப்பட்டன"
+msgstr "உட்பொருத்திகள் மீளேற்றம் செய்யப்பட்டன"
 
 #. Translators: Input help mode message for reload plugins command.
 msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
 "Useful for developers"
 msgstr ""
-"என்விடிஏவை மறுதுவக்காமல், பயன்பாட்டு நிரற்கூறுகளையும், முழு உட்பொருத்திகளையும் மறுஏற்றம் "
+"என்விடிஏவை மறுதுவக்காமல், பயன்பாட்டு நிரற்கூறுகளையும், முழு உட்பொருத்திகளையும் மீளேற்றம் "
 "செய்கிறது. இது என்விடிஏ மேம்படுத்துநர்களுக்கு பயனுள்ளதாக இருக்கும்"
 
 #. Translators: a message when there is no next object when navigating
@@ -5786,7 +5823,7 @@ msgid "Handy Tech braille displays"
 msgstr "ஹேண்டி டெக் பிரெயில் காட்சியமைவுகள்"
 
 msgid "Show the Handy Tech driver configuration window."
-msgstr "Handy Tech இயக்கி அமைவடிவ சாளரத்தைக் காண்பிக்கவும்"
+msgstr "Handy Tech இயக்கி அமைவடிவ சாளரத்தைக் காட்டுக"
 
 #. Translators: Name of a braille display.
 msgid "MDV Lilli"
@@ -6010,7 +6047,7 @@ msgstr "என்விடிஏவை நிறுவுக... (&I)"
 
 #. Translators: The label for the menu item to reload plugins.
 msgid "Reload plugins"
-msgstr "உட்பொருத்திகளை மறுயேற்றம் செய்க (&R)"
+msgstr "உட்பொருத்திகளை மீளேற்றம் செய்க (&R)"
 
 #. Translators: The label for the Tools submenu in NVDA menu.
 msgid "Tools"
@@ -6164,7 +6201,7 @@ msgstr ""
 
 #. Translators: The label for actions list in the Exit dialog.
 msgid "What would you like to &do?"
-msgstr "தாங்கள் என்ன செய்ய விரும்புகிறீர்கள்? "
+msgstr "தாங்கள் என்ன செய்ய விரும்புகிறீர்கள்? (&D)"
 
 #. Translators: An option in the combo box to choose exit action.
 msgid "Exit"
@@ -6202,7 +6239,7 @@ msgstr "தொகுப்பு"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
 msgid "Status"
-msgstr "நிலைமை"
+msgstr "நிலை"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's version (example: version is 0.3).
 msgid "Version"
@@ -6218,7 +6255,7 @@ msgstr "கூட்டுறுப்புக் குறித்து... (
 
 #. Translators: The label for a button in Add-ons Manager dialog to show the help for the selected add-on.
 msgid "Add-on &help"
-msgstr "கூட்டுறுப்புதவி (&H)"
+msgstr "கூட்டுறுப்பு உதவி (&H)"
 
 #. Translators: The label for a button in Add-ons Manager dialog to install an add-on.
 msgid "&Install..."
@@ -7195,7 +7232,7 @@ msgstr "பக்கம் ஏற்றப்படும்பொழுது �
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Include l&ayout tables"
-msgstr "வரைவு அட்டவணைகளை சேர்த்துக் கொள்ளவும் (&A)"
+msgstr "வரைவு அட்டவணைகளை சேர்த்துக் கொள்க (&A)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -7404,7 +7441,7 @@ msgstr "தோற்றுரு வகை"
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label of a button to add a gesture in the Input Gestures dialog.
 msgid "&Add"
-msgstr "ஏற்றுக (&A)"
+msgstr "கூட்டுக (&A)"
 
 #. Translators: The label for a button in speech dictionaries dialog to edit existing entries.
 msgid "&Edit"
@@ -7412,7 +7449,7 @@ msgstr "தொகு (&E)"
 
 #. Translators: This is the label for the add dictionary entry dialog.
 msgid "Add Dictionary Entry"
-msgstr "அகரமுதலி உள்ளீட்டினை ஏற்றுக"
+msgstr "அகரமுதலி உள்ளீட்டினைக் கூட்டுக"
 
 #. Translators: This is the label for the braille settings dialog.
 msgid "Braille Settings"
@@ -7436,11 +7473,19 @@ msgstr "உள்ளீடு அட்டவணை (&I)"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr "சுட்டியினிடத்திலிருக்கும் சொல்லுக்கு கணினி பிரெயிலைக் காண்பிக்கவும் (&X)"
+msgstr "சுட்டியினிடத்திலிருக்கும் சொல்லை கணினி பிரெயிலுக்காக விரிவாக்குக (&X)"
+
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "Show cursor"
+msgstr "பிரெயில் சுட்டியைக் காட்டுக"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "சுட்டி இமைக்கும் விகிதம் (நுண்ணொடிகளில்)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor shape:"
+msgstr "பிரெயில் சுட்டியின் வடிவம்"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7467,7 +7512,7 @@ msgstr "பிரெயில் காட்சியமைவில் பி�
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
-msgstr "குறியெழுத்தினை ஏற்றவும்"
+msgstr "குறியெழுத்தினைக் கூட்டுக"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
 msgid "Symbol:"
@@ -7586,7 +7631,7 @@ msgstr "ஆவணம் ஏற்றப்படுகிறது..."
 
 #. Translators: the description for the refreshBuffer script on virtualBuffers.
 msgid "Refreshes the document content"
-msgstr "ஆவண உள்ளடக்கத்தை புத்தாக்கம் செய்கிறது"
+msgstr "ஆவண உள்ளடக்கத்தை புத்தாக்குகிறது"
 
 #. Translators: Presented when use screen layout option is toggled.
 msgid "use screen layout on"
