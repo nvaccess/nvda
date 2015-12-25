@@ -20,3 +20,13 @@ def message(text):
 	"""
 	speech.speakMessage(text)
 	braille.handler.message(text)
+
+def reviewMessage(text):
+	"""Present a message from review or object navigation to the user.
+	The message will always be presented in speech, and also in braille if it is tethered to review.
+	@param text: The text of the message.
+	@type text: str
+	"""
+	speech.speakMessage(text)
+	if braille.handler.tether == braille.handler.TETHER_REVIEW:
+		braille.handler.message(text)

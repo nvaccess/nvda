@@ -801,7 +801,7 @@ class GlobalCommands(ScriptableObject):
 		if not isinstance(curObject,NVDAObject):
 			# Translators: Reported when the user tries to perform a command related to the navigator object
 			# but there is no current navigator object.
-			ui.message(_("No navigator object"))
+			ui.reviewMessage(_("No navigator object"))
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simpleParent if simpleReviewMode else curObject.parent
@@ -810,7 +810,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
 		else:
 			# Translators: Reported when there is no containing (parent) object such as when focused on desktop.
-			ui.message(_("No containing object"))
+			ui.reviewMessage(_("No containing object"))
 	# Translators: Input help mode message for move to parent object command.
 	script_navigatorObject_parent.__doc__=_("Moves the navigator object to the object containing it")
 	script_navigatorObject_parent.category=SCRCAT_OBJECTNAVIGATION
@@ -820,7 +820,7 @@ class GlobalCommands(ScriptableObject):
 		if not isinstance(curObject,NVDAObject):
 			# Translators: Reported when the user tries to perform a command related to the navigator object
 			# but there is no current navigator object.
-			ui.message(_("No navigator object"))
+			ui.reviewMessage(_("No navigator object"))
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simpleNext if simpleReviewMode else curObject.next
@@ -829,7 +829,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
 		else:
 			# Translators: Reported when there is no next object (current object is the last object).
-			ui.message(_("No next"))
+			ui.reviewMessage(_("No next"))
 	# Translators: Input help mode message for move to next object command.
 	script_navigatorObject_next.__doc__=_("Moves the navigator object to the next object")
 	script_navigatorObject_next.category=SCRCAT_OBJECTNAVIGATION
@@ -839,7 +839,7 @@ class GlobalCommands(ScriptableObject):
 		if not isinstance(curObject,NVDAObject):
 			# Translators: Reported when the user tries to perform a command related to the navigator object
 			# but there is no current navigator object.
-			ui.message(_("No navigator object"))
+			ui.reviewMessage(_("No navigator object"))
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simplePrevious if simpleReviewMode else curObject.previous
@@ -848,7 +848,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
 		else:
 			# Translators: Reported when there is no previous object (current object is the first object).
-			ui.message(_("No previous"))
+			ui.reviewMessage(_("No previous"))
 	# Translators: Input help mode message for move to previous object command.
 	script_navigatorObject_previous.__doc__=_("Moves the navigator object to the previous object")
 	script_navigatorObject_previous.category=SCRCAT_OBJECTNAVIGATION
@@ -858,7 +858,7 @@ class GlobalCommands(ScriptableObject):
 		if not isinstance(curObject,NVDAObject):
 			# Translators: Reported when the user tries to perform a command related to the navigator object
 			# but there is no current navigator object.
-			ui.message(_("No navigator object"))
+			ui.reviewMessage(_("No navigator object"))
 			return
 		simpleReviewMode=config.conf["reviewCursor"]["simpleReviewMode"]
 		curObject=curObject.simpleFirstChild if simpleReviewMode else curObject.firstChild
@@ -867,7 +867,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
 		else:
 			# Translators: Reported when there is no contained (first child) object such as inside a document.
-			ui.message(_("No objects inside"))
+			ui.reviewMessage(_("No objects inside"))
 	# Translators: Input help mode message for move to first child object command.
 	script_navigatorObject_firstChild.__doc__=_("Moves the navigator object to the first object inside it")
 	script_navigatorObject_firstChild.category=SCRCAT_OBJECTNAVIGATION
@@ -880,7 +880,7 @@ class GlobalCommands(ScriptableObject):
 			pos.activate()
 			if isinstance(gesture,touchHandler.TouchInputGesture):
 				touchHandler.handler.notifyInteraction(pos.NVDAObjectAtStart)
-			ui.message(actionName)
+			ui.reviewMessage(actionName)
 			return
 		except NotImplementedError:
 			pass
@@ -895,13 +895,13 @@ class GlobalCommands(ScriptableObject):
 				obj.doAction()
 				if isinstance(gesture,touchHandler.TouchInputGesture):
 					touchHandler.handler.notifyInteraction(obj)
-				ui.message(realActionName)
+				ui.reviewMessage(realActionName)
 				return
 			except NotImplementedError:
 				pass
 			obj=obj.parent
 		# Translators: the message reported when there is no action to perform on the review position or navigator object.
-		ui.message(_("No action"))
+		ui.reviewMessage(_("No action"))
 	# Translators: Input help mode message for activate current object command.
 	script_review_activate.__doc__=_("Performs the default action on the current navigator object (example: presses it if it is a button).")
 	script_review_activate.category=SCRCAT_OBJECTNAVIGATION
@@ -923,7 +923,7 @@ class GlobalCommands(ScriptableObject):
 		res=info.move(textInfos.UNIT_LINE,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
-			speech.speakMessage(_("Top"))
+			ui.reviewMessage(_("Top"))
 		else:
 			api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
@@ -952,7 +952,7 @@ class GlobalCommands(ScriptableObject):
 		res=info.move(textInfos.UNIT_LINE,1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
-			speech.speakMessage(_("Bottom"))
+			ui.reviewMessage(_("Bottom"))
 		else:
 			api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
@@ -979,7 +979,7 @@ class GlobalCommands(ScriptableObject):
 		res=info.move(textInfos.UNIT_WORD,-1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
-			speech.speakMessage(_("Top"))
+			ui.reviewMessage(_("Top"))
 		else:
 			api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_WORD)
@@ -1007,7 +1007,7 @@ class GlobalCommands(ScriptableObject):
 		res=info.move(textInfos.UNIT_WORD,1)
 		if res==0:
 			# Translators: a message reported when review cursor is at the bottom line of the current navigator object.
-			speech.speakMessage(_("Bottom"))
+			ui.reviewMessage(_("Bottom"))
 		else:
 			api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_WORD)
@@ -1037,7 +1037,7 @@ class GlobalCommands(ScriptableObject):
 		res=charInfo.move(textInfos.UNIT_CHARACTER,-1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"startToStart")<0:
 			# Translators: a message reported when review cursor is at the leftmost character of the current navigator object's text.
-			speech.speakMessage(_("Left"))
+			ui.reviewMessage(_("Left"))
 			reviewInfo=api.getReviewPosition().copy()
 			reviewInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(reviewInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
@@ -1077,7 +1077,7 @@ class GlobalCommands(ScriptableObject):
 		res=charInfo.move(textInfos.UNIT_CHARACTER,1)
 		if res==0 or charInfo.compareEndPoints(lineInfo,"endToEnd")>=0:
 			# Translators: a message reported when review cursor is at the rightmost character of the current navigator object's text.
-			speech.speakMessage(_("Right"))
+			ui.reviewMessage(_("Right"))
 			reviewInfo=api.getReviewPosition().copy()
 			reviewInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(reviewInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
@@ -1125,7 +1125,7 @@ class GlobalCommands(ScriptableObject):
 	def script_moveToParentTreeInterceptor(self,gesture):
 		obj=api.getFocusObject()
 		parent=obj.parent
-		#Move up parents untill  the tree interceptor of the parent is different to the tree interceptor of the object.
+		#Move up parents untill the tree interceptor of the parent is different to the tree interceptor of the object.
 		#Note that this could include the situation where the parent has no tree interceptor but the object did.
 		while parent and parent.treeInterceptor==obj.treeInterceptor:
 			parent=parent.parent
@@ -1772,7 +1772,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(newObject,reason=controlTypes.REASON_FOCUS)
 		else:
 			# Translators: a message when there is no next object when navigating
-			ui.message(_("No next"))
+			ui.reviewMessage(_("No next"))
 	# Translators: Input help mode message for a touchscreen gesture.
 	script_navigatorObject_nextInFlow.__doc__=_("Moves to the next object in a flattened view of the object navigation hierarchy")
 	script_navigatorObject_nextInFlow.category=SCRCAT_OBJECTNAVIGATION
@@ -1790,7 +1790,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(newObject,reason=controlTypes.REASON_FOCUS)
 		else:
 			# Translators: a message when there is no previous object when navigating
-			ui.message(_("No previous"))
+			ui.reviewMessage(_("No previous"))
 	# Translators: Input help mode message for a touchscreen gesture.
 	script_navigatorObject_previousInFlow.__doc__=_("Moves to the previous object in a flattened view of the object navigation hierarchy")
 	script_navigatorObject_previousInFlow.category=SCRCAT_OBJECTNAVIGATION
