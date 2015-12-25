@@ -874,13 +874,13 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_activate(self,gesture):
 		# Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-		actionName=_("activate")
+		actionName=_("Activate")
 		pos=api.getReviewPosition()
 		try:
 			pos.activate()
 			if isinstance(gesture,touchHandler.TouchInputGesture):
 				touchHandler.handler.notifyInteraction(pos.NVDAObjectAtStart)
-			ui.reviewMessage(actionName)
+			ui.message(actionName)
 			return
 		except NotImplementedError:
 			pass
@@ -895,13 +895,13 @@ class GlobalCommands(ScriptableObject):
 				obj.doAction()
 				if isinstance(gesture,touchHandler.TouchInputGesture):
 					touchHandler.handler.notifyInteraction(obj)
-				ui.reviewMessage(realActionName)
+				ui.message(realActionName)
 				return
 			except NotImplementedError:
 				pass
 			obj=obj.parent
 		# Translators: the message reported when there is no action to perform on the review position or navigator object.
-		ui.reviewMessage(_("No action"))
+		ui.message(_("No action"))
 	# Translators: Input help mode message for activate current object command.
 	script_review_activate.__doc__=_("Performs the default action on the current navigator object (example: presses it if it is a button).")
 	script_review_activate.category=SCRCAT_OBJECTNAVIGATION
