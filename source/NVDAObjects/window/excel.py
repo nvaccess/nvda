@@ -445,6 +445,9 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 
 	def _activatePosition(self):
 		obj=self.currentNVDAObj
+		if isinstance(obj,ExcelFormControl):
+			self.passThrough = True
+			self.ignoreTreeInterceptorPassThrough=False
 		self._activateNVDAObject(obj)
 
 	def _activateNVDAObject(self,obj):
@@ -1512,8 +1515,8 @@ class ExcelFormControlQuickNavItem(ExcelQuickNavItem):
 		self.treeInterceptorObj=treeInterceptorObj
 		if formControlObject.formControlType==xlListBox:
 			self.nvdaObj=ExcelFormControlListBox(windowHandle=document.Application.Hwnd,excelWindowObject=document.Application.ActiveWindow,excelFormControlObject=formControlObject)
-# 		elif formControlObject.formControlType==xlGroupBox:
-# 			self.nvdaObj=ExcelFormControlComboBox(windowHandle=document.Application.Hwnd,excelWindowObject=document.Application.ActiveWindow,excelFormControlObject=formControlObject)
+		elif formControlObject.formControlType==xlDropDown:
+			self.nvdaObj=ExcelFormControlDropDown(windowHandle=document.Application.Hwnd,excelWindowObject=document.Application.ActiveWindow,excelFormControlObject=formControlObject)
 		else:
 			self.nvdaObj=ExcelFormControl(windowHandle=document.Application.Hwnd,excelWindowObject=document.Application.ActiveWindow,excelFormControlObject=formControlObject)
 		self.treeInterceptorObj.currentNVDAObj=self.nvdaObj
@@ -1600,7 +1603,6 @@ class ExcelFormControlQuicknavIterator(ExcelQuicknavIterator):
 class ExcelFormControlListBox(ExcelFormControl):
 
 	def __init__(self,windowHandle=None,excelWindowObject=None,excelFormControlObject=None):
-		self.listRange=excelWindowObject.Application.ActiveSheet.Range(excelFormControlObject.ControlFormat.ListFillRange)
 		self.excelFormControlObject=excelFormControlObject
 		self.listSize=excelFormControlObject.ControlFormat.ListCount
 		try:
@@ -1619,16 +1621,17 @@ class ExcelFormControlListBox(ExcelFormControl):
 		if self.selectedItemIndex > 1:
 			self.selectedItemIndex= self.selectedItemIndex - 1
 			self.speakSelection(self.selectedItemIndex)
+	script_moveUp.canPropagate=True
 
 	def script_moveDown(self, gesture):
 		if self.selectedItemIndex < self.listSize:
 			self.selectedItemIndex= self.selectedItemIndex + 1
 			self.speakSelection(self.selectedItemIndex)
+	script_moveDown.canPropagate=True
 
-	def script_doAction(self,gesture):
+	def doAction(self):
 		self.excelFormControlObject.OLEFormat.Object.Selected[self.selectedItemIndex] = True
 		self.speakSelection(self.selectedItemIndex)
-	script_doAction.canPropagate=False
 
 	def speakSelection(self,itemIndex):
 		if self.isItemSelected(self.selectedItemIndex):
@@ -1637,9 +1640,51 @@ class ExcelFormControlListBox(ExcelFormControl):
 		else:
 			ui.message(self.excelFormControlObject.OLEFormat.Object.List(self.selectedItemIndex))
 
-	
 	__gestures= {
-		"kb:alt+upArrow": "moveUp",
-		"kb:alt+downArrow":"moveDown",
-		"kb:alt+space":"doAction",
+		"kb(laptop):upArrow": "moveUp",
+		"kb:upArrow": "moveUp",
+		"kb(laptop):downArrow":"moveDown",
+		"kb:downArrow":"moveDown",
+	}
+
+class ExcelFormControlDropDown(ExcelFormControl):
+
+	def __init__(self,windowHandle=None,excelWindowObject=None,excelFormControlObject=None):
+		self.listRange=excelWindowObject.Application.ActiveSheet.Range(excelFormControlObject.ControlFormat.ListFillRange)
+		self.excelFormControlObject=excelFormControlObject
+		self.listSize=excelFormControlObject.ControlFormat.ListCount
+		try:
+			self.selectedItemIndex= excelFormControlObject.ControlFormat.ListIndex
+		except:
+			self.selectedItemIndex=0
+		super(ExcelFormControlDropDown,self).__init__(windowHandle=windowHandle, excelWindowObject=excelWindowObject, excelFormControlObject=excelFormControlObject)
+
+	def script_moveUp(self, gesture):
+		if self.selectedItemIndex > 1:
+			self.selectedItemIndex= self.selectedItemIndex - 1
+			self.speakSelection()
+	script_moveUp.canPropagate=True
+
+	def script_moveDown(self, gesture):
+		if self.selectedItemIndex < self.listSize:
+			self.selectedItemIndex= self.selectedItemIndex + 1
+			self.speakSelection()
+	script_moveDown.canPropagate=True
+
+	def doAction(self):
+		self.excelFormControlObject.OLEFormat.Object.Selected[self.selectedItemIndex] = True
+		self.speakSelection()
+
+	def speakSelection(self):
+		if self.excelFormControlObject.ControlFormat.Value == self.selectedItemIndex:
+			# Translators: A message in Excel an item in DropDown is selected
+			ui.message(_(str(self.excelFormControlObject.OLEFormat.Object.List(self.selectedItemIndex))+" selected"))
+		else:
+			ui.message(self.excelFormControlObject.OLEFormat.Object.List(self.selectedItemIndex))
+
+	__gestures= {
+		"kb(laptop):upArrow": "moveUp",
+		"kb:upArrow": "moveUp",
+		"kb(laptop):downArrow":"moveDown",
+		"kb:downArrow":"moveDown",
 	}
