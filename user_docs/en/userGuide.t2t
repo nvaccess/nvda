@@ -1,5 +1,4 @@
 NVDA NVDA_VERSION User Guide
-NVDA NVDA_VERSION User Guide
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -57,12 +56,14 @@ This applies to both original and modified copies of this software, plus any der
 For further details, you can [view the full licence. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + System Requirements +
-- Operating Systems: all 32-bit and 64-bit versions of Windows XP, Windows Vista, Windows 7, Windows 8 and Windows 10 (including Server operating Systems)
+- Operating Systems: all 32-bit and 64-bit editions of Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 and Windows 10 (including Server operating Systems)
  - For Windows XP 32-bit, NVDA requires Service Pack 2 or higher.
  - For Windows Server 2003, NVDA requires Service Pack 1 or higher.
+ - For Windows Vista, NVDA requires Service Pack 2 and the [KB2763674 https://support.microsoft.com/en-us/kb/2763674] update.
+ Both of these should be installed if all available updates are applied via Windows Update.
 - Memory: 256 mb or more of RAM
 - Processor speed: 1.0 ghz or above
-- About 50 MB of storage space.
+- About 90 MB of storage space.
 -
 
 + Getting and Setting Up NVDA +
@@ -88,8 +89,8 @@ Using the temporary copy of NVDA is also an option (e.g. for demonstration purpo
 Apart from the  inability to automatically start during and/or after log-on, the portable and temporary copies of NVDA also have the following restrictions:
 - The inability to interact with applications running with administrative privileges, unless of course NVDA itself has been run also with these privileges (not recommended).
 - The inability to read User Account Control (UAC) screens when trying to start an application with administrative privileges.
-- Windows 8: the inability to support input from a touch screen.
-- Windows 8: the inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
+- Windows 8 and later: the inability to support input from a touch screen.
+- Windows 8 and later: the inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
 -
 
 ++ Installing NVDA ++
@@ -370,7 +371,7 @@ The following commands are available for reviewing text:
 | Move to end of line in review | shift+numpad3 | NVDA+end | none | Moves the review cursor to the end of the current line of text |
 | Say all with review | numpadPlus | NVDA+shift+a | 3-finger flick down (text mode) | Reads from the current position of the review cursor, moving it as it goes |
 | Copy from review cursor | NVDA+f9 | NVDA+f9 | none | starts copying text from the current position of the review cursor. The actual copy is not performed until you tell NVDA where to copy to |
-| Copy to review cursor | NVDA+f10 | NVDA+f10 | none | Copies from the position of the review cursor currently set with Copy from review cursor, to the review cursor's current position. After pressing this key, the text will be copied to the Windows clipboard |
+| Copy to review cursor | NVDA+f10 | NVDA+f10 | none | Copies from the position previously set with Copy from review cursor up to and including the review cursor's current position. After pressing this key, the text will be copied to the Windows clipboard |
 | Report text formatting | NVDA+f | NVDA+f | none | Reports the formatting of the text where the review cursor is currently situated |
 %kc:endInclude
 
@@ -628,15 +629,15 @@ Similar to the web, NVDA has an Elements List for Microsoft Excel that allows yo
 To access the Elements List in Excel, press NVDA+f7.
 %kc:endInclude
 The various types of information available in the Elements List are:
-- Chart: This lists all charts in the workbook. 
+- Charts: This lists all charts in the workbook. 
 Selecting a chart and pressing enter or the Move to button focuses the chart for navigating and reading with the arrow keys.
-- Comment: This lists all cells in the workbook containing comments. 
+- Comments: This lists all cells in the workbook containing comments. 
 The cell address along with its comments are shown for each cell. 
 Pressing Enter or the Move To button when on a listed comment will move directly to that cell.
-- Formula: This lists all cells in the workbook containing a formula. 
+- Formulas: This lists all cells in the workbook containing a formula. 
 The cell address along with its formula are shown for each cell.
 Pressing Enter or the Move To button on a listed formula will move directly to that cell. 
-- Sheet: This lists all sheets in the workbook. 
+- Sheets: This lists all sheets in the workbook. 
 Pressing f2 when on a listed sheet allows you to rename the sheet. 
 Pressing Enter or the Move To button while on the listed sheet will switch to that sheet.
 -
@@ -704,7 +705,7 @@ The General settings dialog box is found in the Preferences menu.
 It contains the following options:
 
 ==== Language ====
-A combo box which allows you to select the language that NVDA's user interface and messages should be shown in.
+This is a combo box which allows you to select the language that NVDA's user interface and messages should be shown in.
 There are many languages, however the default option is "User Default, Windows".
 This option tells NVDA to use the language that Windows is currently set to.
 
@@ -712,7 +713,7 @@ Please note that NVDA must be restarted when changing the language.
 NVDA will ask you if you wish to restart if you do change the selection.
 Press OK, and NVDA will restart.
 
-==== Save Configuration on Exit ====
+==== Save configuration on exit ====
 This option is a checkbox that, when checked, tells NVDA to automatically save the current configuration when you exit NVDA.
 
 ==== Show exit options when exiting NVDA ====
@@ -732,13 +733,13 @@ However if you are wanting to provide information in a bug report, then it may b
 If this option is enabled, NVDA will start automatically as soon as you log on to Windows.
 This option is only available for installed copies of NVDA.
 
-==== Use NVDA on the windows Logon screen (requires administrative privileges) ====
+==== Use NVDA on the Windows Logon screen (requires administrator privileges) ====
 If you log on to Windows by providing a user name and password, then enabling this option will make NVDA start automatically at the logon screen when Windows starts.
 This option is only available for installed copies of NVDA.
 
-==== Use currently saved settings on the logon and other secure screens ====
+==== Use currently saved settings on the logon and other secure screens (requires administrator privileges) ====
 Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it when running on the logon, User Account Control (UAC) and other secure Windows screens.
-To make sure that all your settings are transfered, make sure to firstly save your configuration with control+NVDA+c or save configuration in the NVDA menu.
+To make sure that all your settings are transferred, make sure to save your configuration first with control+NVDA+c or Save configuration in the NVDA menu.
 This option is only available for installed copies of NVDA.
 
 ==== Automatically check for updates to NVDA ====
@@ -888,8 +889,16 @@ If input is not supported on a display which does have a braille keyboard, this 
 ==== Expand to computer braille for the word at the cursor ====
 This option allows the word that is under the cursor to be displayed in non-contracted computer braille.
 
-==== Cursor Blink Rate ====
+==== Show Cursor ====
+This option allows the braille cursor to be turned on and off.
+It applies to the system caret and review cursor, but not to the selection indicator.
+
+==== Cursor Blink Rate (ms) ====
 This option is a numerical field that allows you to change the blink rate of the cursor in milliseconds.
+
+==== Cursor Shape ====
+This option allows you to choose the shape (dot pattern) of the braille cursor.
+The selection indicator is not affected by this option.
 
 ==== Message Timeout (sec) ====
 This option is a numerical field that controls how long NVDA messages are displayed on the braille display.

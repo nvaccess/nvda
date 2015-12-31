@@ -41,11 +41,12 @@ $	dolár	all	norep
 €	euro	all	norep
 ¢	centov	all	norep
 ¥	jen	all	norep
+₹	Rupia	some	norep
 %	percento	some
 &	and	some
 '	apostrof	all
-(	zátvorka	most
-)	zatvoriť	most
+(	zátvorka	most	always
+)	zatvoriť	most	always
 *	hviezda	some
 +	plus	some
 ,	čiarka	all	always
@@ -54,14 +55,14 @@ $	dolár	all	norep
 /	lomka	some
 :	dvojbodka	most	norep
 ;	bodkočiarka	most
-<	menší	most
->	väčší	most
+<	menší	some
+>	väčší	some
 =	rovná sa	some
 ?	otáznik	all
 @	zavináč	some
 [	hranatá zátvorka	most
 ]	hranatá zatvoriť	most
-\\	opačná lomka	most
+\\	opačná lomka	some
 ^	vokáň	most
 _	podčiarkovník	most
 `	akcent	most
@@ -81,7 +82,7 @@ _	podčiarkovník	most
 ‘	horné jednoduché úvodzovky	most
 ”	dvojitá horná opačná úvodzovka	most
 ’	odsuvník	most
-–	pomlčka	most
+–	pomlčka	most	always
 —	dlhá pomlčka	most
 ●	čierny kruh	most
 ¨	prehláska	most
@@ -103,38 +104,56 @@ _	podčiarkovník	most
 ®	registrované	some
 ™	ochranná známka	some
 ©	kopirajt	some
-±	plus mínus	most
-×	krát	most
-÷	deleno	most
+±	plus mínus	some
+×	krát	some
+÷	deleno	some
 ←	šípka vľavo	some
 →	šípka vpravo	some
 ✓	začiarknutie	some
 ✔	tučné začiarknutie	some
-¡	obrátený výkričník	most
-¦	prerušená čiara	most
-ª	horný index a	most
-­	rozdeľovník	most
-´	dĺžeň	most
-·	bodka v prostriedku	most
-¸	cedila	most
-¿	obrátený otáznik	most
-‡	dvojkríž	most
-‣	odrážkatrojuholník	most
-‰	promile	most
-−	mínus	most
-¼	štvrtina	some
-½	polovica	most
-¾	tri štvrtiny	most
-⅓	tretina	most
-⅔	dve tretiny	most
-√	druhá odmocnina	most
-∛	tretia odmocnina	most
-∞	nekonečno	most
-≠	nerovná sa	most
-¬	logický zápor	most
-æ	otvorené e	char
-þ	sorn	some
-₨	rupia	all	norep
-¤	mena	all	norep
-ß	ostré s	char
-ə	šwa	most
+#Mathematical Operators U+2200 to U+220F
+
+∀	Pre všetky 	none
+∁	Doplnok	none
+∂	Parciálna derivácia	none
+∃	Existuje	none
+∄	Neexistuje	none
+∅	Prázdna množina	none
+∆	Prírastok	none
+∇	NABLA	none
+∈	Prvok množiny	none
+∉	Nie je prvok množiny	none
+∊	Malé prvok množiny	none
+∋	obsahuje člen	none
+∌	Neobsahuje člen	none
+∍	Malé obsahuje člen	none
+∎	Koniec dôkazu	none
+∏	N-ARY PRODUkT	none
+
+# Miscellaneous Mathematical Operators
+
+∑	N-ARY súčet	none
+√	druhá odmocnina	none
+∛	Tretia odmocnina	none
+∜	Štvrtá odmocnina	none
+∝	Úmerné	none
+∞	Nekonečno	none
+∟	Pravý uhol	none
+∠	Uhol	none
+∥	Rovnobežka	none
+∦	Nerovnobežka	none
+∧	Logické a	none
+∨	Logické alebo	none
+∩	Prienik	none
+∪	Zjednotenie	none
+∫	Integrál	none
+∴	Preto	none
+∵	Pretože	none
+∶	Pomer	none
+∷	Proporcia	none
+≤	menšie ako alebo rovné	none
+≥	Väčšie ako alebo rovné	none
+⊂	Vlastná podmnožina	none
+⊃	Vlastná nadmnožina	none
+⊆	podmnožina	none
+⊇	Nadmnožina	none

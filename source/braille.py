@@ -192,6 +192,9 @@ TABLES = (
 	("mn-in-g1.utb", _("Manipuri grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("mn-MN.utb", _("Mongolian"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("mr-in-g1.utb", _("Marathi grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
@@ -220,6 +223,9 @@ TABLES = (
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("or-in-g1.utb", _("Oriya grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("pl-pl-comp8.ctb", _("Polish 8 dot computer braille"), True),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("Pl-Pl-g1.utb", _("Polish grade 1"), False),
@@ -352,8 +358,16 @@ negativeStateLabels = {
 	controlTypes.STATE_CHECKED: _("( )"),
 }
 
-DOT7 = 64
-DOT8 = 128
+#: Cursor shapes
+CURSOR_SHAPES = (
+	# Translators: The description of a braille cursor shape.
+	(0xC0, _("Dots 7 and 8")),
+	# Translators: The description of a braille cursor shape.
+	(0x80, _("Dot 8")),
+	# Translators: The description of a braille cursor shape.
+	(0xFF, _("All dots")),
+)
+SELECTION_SHAPE = 0xC0 #: Dots 7 and 8
 
 def NVDAObjectHasUsefulText(obj):
 	import displayModel
@@ -488,15 +502,14 @@ class Region(object):
 		self.brailleCursorPos = brailleCursorPos
 		if self.selectionStart is not None and self.selectionEnd is not None:
 			try:
-				# Mark the selection with dots 7 and 8.
+				# Mark the selection.
 				self.brailleSelectionStart = self.rawToBraillePos[self.selectionStart]
 				if self.selectionEnd >= len(self.rawText):
-					brailleSelectionEnd = len(self.brailleCells)
+					self.brailleSelectionEnd = len(self.brailleCells)
 				else:
-					brailleSelectionEnd = self.rawToBraillePos[self.selectionEnd]
-				self.brailleSelectionEnd = self.rawToBraillePos[brailleSelectionEnd]
+					self.brailleSelectionEnd = self.rawToBraillePos[self.selectionEnd]
 				for pos in xrange(self.brailleSelectionStart, self.brailleSelectionEnd):
-					self.brailleCells[pos] |= DOT7 | DOT8
+					self.brailleCells[pos] |= SELECTION_SHAPE
 			except IndexError:
 				pass
 
@@ -1360,8 +1373,6 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	TETHER_FOCUS = "focus"
 	TETHER_REVIEW = "review"
 
-	cursorShape = 0xc0
-
 	def __init__(self):
 		self.display = None
 		self.displaySize = 0
@@ -1447,10 +1458,12 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if self._cursorBlinkTimer:
 			self._cursorBlinkTimer.Stop()
 			self._cursorBlinkTimer = None
-		self._cursorBlinkUp = True
+		self._cursorBlinkUp = showCursor = config.conf["braille"]["showCursor"]
 		self._displayWithCursor()
+		if self._cursorPos is None or not showCursor:
+			return
 		blinkRate = config.conf["braille"]["cursorBlinkRate"]
-		if blinkRate and self._cursorPos is not None:
+		if blinkRate:
 			self._cursorBlinkTimer = wx.PyTimer(self._blink)
 			self._cursorBlinkTimer.Start(blinkRate)
 
@@ -1459,7 +1472,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		cells = list(self._cells)
 		if self._cursorPos is not None and self._cursorBlinkUp:
-			cells[self._cursorPos] |= self.cursorShape
+			cells[self._cursorPos] |= config.conf["braille"]["cursorShape"]
 		self.display.display(cells)
 
 	def _blink(self):

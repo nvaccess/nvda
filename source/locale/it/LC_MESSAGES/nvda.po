@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-02 17:08+1000\n"
-"PO-Revision-Date: 2015-11-04 14:53+0100\n"
+"POT-Creation-Date: 2015-12-17 19:09+1000\n"
+"PO-Revision-Date: 2015-12-21 10:19+0100\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@gmail.com>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -449,6 +449,11 @@ msgstr "Oriya grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "Polacco Braille computer 8 punti"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Polish grade 1"
 msgstr "Polacco grado 1"
 
@@ -651,6 +656,18 @@ msgstr "clk"
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "( )"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "Punti 7 e 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "Punto 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Tutti i punti"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -1312,7 +1329,7 @@ msgstr "sempre"
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
 msgctxt "symbolPreserve"
 msgid "only below symbol's level"
-msgstr "Solo al di sotto del livello del simbolo"
+msgstr "Solo al di sotto livello simboli"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -4013,6 +4030,31 @@ msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Seleziona se il display braille segue il focus o il cursore di controllo"
 
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Cursore braille disattivo"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Cursore braille attivo"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Attiva o disattiva il cursore braille"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "Il cursore braille è disattivato"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "Cursore braille %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Passa tra le forme del cursore braille disponibili"
+
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
 msgstr "Nessun testo negli appunti"
@@ -4646,7 +4688,7 @@ msgstr "%s non selezionato"
 #. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
 #, python-format
 msgid "%s selected instead"
-msgstr "adesso selezionato %s"
+msgstr "%s ora selezionato"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4825,7 +4867,7 @@ msgstr "Non sottolineato"
 #. i.e. not superscript or subscript.
 #. Translators: a message when toggling formatting in Microsoft word
 msgid "baseline"
-msgstr "Sottolineato"
+msgstr "Testo normale"
 
 #. Translators: Reported when text is left-aligned.
 msgid "align left"
@@ -4863,7 +4905,7 @@ msgstr "Nessun rientro a sinistra"
 
 #. Translators: the label for paragraph format right indent
 msgid "right indent"
-msgstr "Rientro di destra"
+msgstr "Rientro a destra"
 
 #. Translators: the message when there is no paragraph format right indent
 msgid "no right indent"
@@ -4899,7 +4941,7 @@ msgstr "allineato in basso verticalmente"
 
 #. Translators: Reported when text is vertically aligned on the baseline.
 msgid "vertical align baseline"
-msgstr "allineato verticalmente con la baseline"
+msgstr "allineato verticalmente con il testo normale"
 
 #. Translators: Reported when text is vertically justified.
 msgid "vertical align justified"
@@ -7459,9 +7501,17 @@ msgstr "Tabella scrittura:"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "Espandi la parola sotto il cursore utilizzando il braille computer"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "Show cursor"
+msgstr "Mostra cursore"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "Velocita' lampeggio cursore  ms)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor shape:"
+msgstr "Forma del cursore"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7527,7 +7577,7 @@ msgstr "&Livello"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
 msgid "&Send actual symbol to synthesizer"
-msgstr "Manda il &simbolo corrente al sintetizzatore"
+msgstr "Invia il &simbolo corrente al sintetizzatore"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7663,36 +7713,43 @@ msgstr "invoke"
 msgid "Desktop"
 msgstr "Desktop"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "Colore predefinito"
+
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "Colore sconosciuto"
 
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Questa cella non è modificabile"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "Presenta un elenco di grafici, celle con commenti e celle con formule"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Elenca vari tipi di elementi in questo foglio elettronico"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
-msgstr "&Grafico"
+msgid "&Charts"
+msgstr "&Grafici"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
-msgstr "C&ommento"
+msgid "C&omments"
+msgstr "C&ommenti"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "&Formula"
+msgid "Fo&rmulas"
+msgstr "Fo&rmule"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
-msgstr "Foglio"
+msgid "&Sheets"
+msgstr "&Fogli"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -8699,6 +8756,15 @@ msgstr "HIMS serie Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr ""
+#~ "Presenta un elenco di grafici, celle con commenti e celle con formule"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "Colore predefinito"
 
 #~ msgid "selecting %s"
 #~ msgstr "Seleziono %s"

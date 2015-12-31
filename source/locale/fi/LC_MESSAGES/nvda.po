@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-02 17:08+1000\n"
-"PO-Revision-Date: 2015-11-05 12:34+0200\n"
+"POT-Creation-Date: 2015-12-17 19:09+1000\n"
+"PO-Revision-Date: 2015-12-18 07:29+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -452,6 +452,11 @@ msgstr "orija, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "puola, 8 pisteen tietokonemerkistö"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Polish grade 1"
 msgstr "puola, taso 1"
 
@@ -654,6 +659,18 @@ msgstr "nps"
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "( )"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "pisteet 7 ja 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "piste 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "kaikki pisteet"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -4014,6 +4031,31 @@ msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Muuttaa asetusta, joka saa pistenäytön seuraamaan joko kohdistusta tai "
 "tarkastelukohdistinta"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Pistekohdistin pois"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Pistekohdistin käytössä"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Ota pistekohdistin käyttöön tai poista se käytöstä"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "Pistekohdistin on poistettu käytöstä"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "Pistekohdistin %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Vaihda pistekohdistimen muotoa"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -7436,9 +7478,17 @@ msgstr "S&yöttötaulukko:"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Laajenna kohdistimen kohdalla oleva sana"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "Show cursor"
+msgstr "Näytä kohdistin"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "&Kohdistimen vilkkumisnopeus (ms):"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor shape:"
+msgstr "Kohdistimen muoto:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7641,37 +7691,43 @@ msgstr "avaa"
 msgid "Desktop"
 msgstr "Työpöytä"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "oletusväri"
+
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "Tuntematon väri"
 
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Tätä solua ei voi muokata"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr ""
-"Näyttää listan kaavioista sekä kommentteja ja kaavoja sisältävistä soluista"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Näyttää listan tämän laskentataulukon elementeistä."
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
-msgstr "&Kaavio"
+msgid "&Charts"
+msgstr "&Kaaviot"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
-msgstr "K&ommentti"
+msgid "C&omments"
+msgstr "K&ommentit"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "K&aava"
+msgid "Fo&rmulas"
+msgstr "K&aavat"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
-msgstr "T&aulukko"
+msgid "&Sheets"
+msgstr "&Laskentataulukot"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -8672,6 +8728,16 @@ msgstr "HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr ""
+#~ "Näyttää listan kaavioista sekä kommentteja ja kaavoja sisältävistä "
+#~ "soluista"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "oletusväri"
 
 #~ msgid "selecting %s"
 #~ msgstr "valitaan %s"

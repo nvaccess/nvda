@@ -1,5 +1,4 @@
 ﻿Guía do Usuario do NVDA NVDA_VERSION
-Guía do Usuario do NVDA NVDA_VERSION
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -370,7 +369,7 @@ As seguintes ordes están dispoñibles para revisión de texto:
 | Mover ó final da liña en revisión | shift+3 teclado numérico | NVDA+fin  | non | Move o cursor de revisión ó final da liña actual de texto |
 | Ler todo con revisión | Máis teclado numérico | NVDA+shift+a | deslizar con 3 dedos abaixo (modo texto) | Le dende a posición actual do cursor de revisión, movéndoo segundo baixa |
 | copiar dende cursor de revisión | NVDA+f9 | NVDA+f9 | non | Comeza o copiado de texto dende a posición actual do cursor de revisión. A copia actual non se leva a cabo ata que digas ó NVDA onde copiar |
-| Copiar a cursor de revisión | NVDA+f10 | NVDA+f10 | non | Copia dende a posición do cursor de revisión actualmente fixada con Copiar dende cursor de revisión, á actual posición do cursor de revisión.  Desppois de premer esta tecla, o texto copiarase ó portapapeis de Windows |
+| Copiar a cursor de revisión | NVDA+f10 | NVDA+f10 | non | Copia dende a posición fixada anteriormente con Copiar dende cursor de revisión ate e incluindo a actual posición do cursor de revisión.  Desppois de premer esta tecla, o texto copiarase ó portapapeis de Windows |
 | Anunciar formato do texto | NVDA+f | NVDA+f | non | Informa do formato do texto onde estea situado actualmente o cursor de revisión |
 %kc:endInclude
 
@@ -628,15 +627,15 @@ De xeito similar á web, NVDA ten unha Lista de Elementos para Microsoft Excel, 
 Para aceder á Lista de Elementos en Excel, preme NVDA+f7.
 %kc:endInclude
 Os diversos tipos de información dispoñible na Lista de Elementos son:
-- Gráfico: esto lista todos os gráficos no libro de traballo.
+- Gráficos: esto lista todos os gráficos no libro de traballo.
 Seleccionando un gráfico e premendo Intro ou o botón Mover A enfoca o gráfico para navegar e ler cas teclas de cursor.
-- Comentario: esto lista todas as celdas no libro de traballo que conteñan comentarios. 
+- Comentarios: esto lista todas as celdas no libro de traballo que conteñan comentarios. 
 O enderezo da celda xunto cos seus comentarios amósase para cada celda. 
 Premendo Intro ou o botón Mover a cando se estea sobre un comentario listado moverase directamente a esa celda.
-- Fórmula: esto lista todas as celdas no libro de traballo que conteñan unha fórmula. 
+- Fórmulas: esto lista todas as celdas no libro de traballo que conteñan unha fórmula. 
 O enderezo da celda xunto ca súa fórmula amósase para cada celda.
 Premendo Intro ou o botón Mover A sobre unha fórmula listada moverase directamente a esa celda. 
-- Folla: esto lista todas as follas no libro de traballo. 
+- Follas: esto lista todas as follas no libro de traballo. 
 Premendo f2 cando se estea sobre unha folla listada permíteche renomear a folla. 
 Premendo Intro ou o botón Mover A mentres se estea sobre a folla listada cambiará a esa folla.
 -
@@ -704,7 +703,7 @@ A caixa de diálogo Opcións Xerais atópase no menú Preferencias.
 Contén as seguintes opcións:
 
 ==== Lingua ====
-Unha caixa combinada que che permite seleccionar a lingua na que debería amosarse a interface do usuario e as mensaxes do NVDA. 
+Esta é unha caixa combinada que che permite seleccionar a lingua na que debería amosarse a interface do usuario e as mensaxes do NVDA. 
 Hai moitas linguas, nembargantes a derradeira elección na lista chámase "Windows". 
 Esta elección dirá ó NVDA que utilice a lingua na que Windows estea actualmente axustado. 
 
@@ -888,8 +887,16 @@ Se a entrada non se soporta nunha liña que teña un teclado braille, esto notif
 ==== Expandir a braille de ordenador para a palabra no cursor ====
 Esta opción permite á palabra que está baixo o cursor seren amosada en braille de ordenador non contraído.
 
-==== Velocidade de Parpadeo do Cursor ====
+==== Amosar Cursor ====
+Esta opción permite ó cursor braille activarse e desactivarse.
+Aplícase ó cursor do sistema e ó cursor de revisión, pero non ó indicador de seleción.
+
+==== Velocidade de Parpadeo do Cursor (ms) ====
 Esta opción é un campo numérico que che permite cambiar a velocidade de parpadeo do cursor en milésimas de segundo.
+
+==== Forma do Cursor ====
+Esta opción permíteche escoller a forma (patrón de pontos) do cursor braille.
+O indicador de seleción non está afectado por esta opción.
 
 ==== Duración da Mensaxe (en seg) ====
 Esta opción é un campo numérico que controla durante canto tempo se amosan as mensaxes do sistema na liña braille.
@@ -2103,23 +2110,23 @@ Co fin de ter a meirande cantidade de información posible nunha pantalla braill
 
 || Abreviatura | Tipo de Control |
 | bt | botón |
-| cbo | caixa combinada |
+| cc | caixa combinada |
 | cv | caixa de verificación |
 | dlg | diálogo |
 | ce | campo de texto editable |
 | gra | gráfico |
 | cN | número de columna de táboa n, ex.: c1, c2. |
-| rN | número de fila de táboa n, ex.: r1, r2. |
-| hN | cabeceira de nível n, ex.: h1, h2. |
-| enl | liga |
+| fN | número de fila de táboa n, ex.: r1, r2. |
+| cnN | cabeceira de nível n, ex.: h1, h2. |
+| li | liga |
 | lst | lista |
-| enlv | liga visitada |
+| liv | liga visitada |
 | mn | menú |
-| mnbar | barra de menú |
-| btn | botón de opción |
+| bmn | barra de menú |
+| bto | botón de opción |
 | tb | táboa |
-| tv | vista en árbore |
-| lv N | un elemento de vista en árbore que ten un nível xerárquico N|
+| vr | vista en árbore |
+| ln N | un elemento de vista en árbore que ten un nível xerárquico N|
 | ``-----`` | separador |
 
 Os seguintes indicadores de estado  tamén están definidos:

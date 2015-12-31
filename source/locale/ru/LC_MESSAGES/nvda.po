@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-02 17:08+1000\n"
-"PO-Revision-Date: 2015-11-04 00:46+0800\n"
-"Last-Translator: Kvark <kvark128@yandex.ru>\n"
+"POT-Creation-Date: 2015-12-17 19:09+1000\n"
+"PO-Revision-Date: 2015-12-20 12:32+0400\n"
+"Last-Translator: Ruslan Kolodyazhni <eye0@rambler.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 "Initial-Author: Dmitry Kaslin <dak1968@gmail.com>\n"
-"X-Generator: Poedit 1.6.11\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -452,6 +452,11 @@ msgstr "Ория (первая ступень)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "Польский восьмиточечный"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Polish grade 1"
 msgstr "Польский (первая ступень)"
 
@@ -655,6 +660,18 @@ msgstr "|щлк|"
 msgid "( )"
 msgstr "( )"
 
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "Точки 7 и 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "Точка 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Все точки"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -728,10 +745,10 @@ msgid "space"
 msgstr "Пробел"
 
 msgid "focus mode"
-msgstr "Режим редактирования"
+msgstr "режим редактирования"
 
 msgid "browse mode"
-msgstr "Режим обзора"
+msgstr "режим обзора"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -1314,7 +1331,7 @@ msgstr "Всегда"
 #. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
 msgctxt "symbolPreserve"
 msgid "only below symbol's level"
-msgstr "Если уровень пунктуации ниже уровня символа"
+msgstr "Только если уровень пунктуации ниже уровня символа"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -4000,6 +4017,31 @@ msgstr ""
 "Переключает привязку брайля между позицией системного фокуса и просмотрового "
 "курсора"
 
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Курсор брайля отключён"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Курсор брайля включён"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Включать и выключать курсор брайля"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "Курсор брайля выключен"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "Курсор брайля %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Переключает формы курсора брайля"
+
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
 msgstr "Нет текста"
@@ -4167,7 +4209,7 @@ msgstr "CTRL+ALT+N"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
-msgstr "Веб-сайт NVDA"
+msgstr "Web-сайт NVDA"
 
 #. Translators: A label for a shortcut item in start menu to uninstall NVDA from the computer.
 msgid "Uninstall NVDA"
@@ -6035,7 +6077,7 @@ msgid "What's &new"
 msgstr "Что &нового"
 
 msgid "NVDA &web site"
-msgstr "&Веб-сайт NVDA"
+msgstr "&Web-сайт NVDA"
 
 #. Translators: The label for the menu item to view NVDA License document.
 msgid "L&icense"
@@ -7448,9 +7490,17 @@ msgstr "вх&одная таблица брайля"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "Не использовать &краткопись для слова под курсором"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "Show cursor"
+msgstr "Показывать курсор"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "Скорость мигания курсора (мс)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor shape:"
+msgstr "Форма курсора:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7516,7 +7566,7 @@ msgstr "&Уровень"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
 msgid "&Send actual symbol to synthesizer"
-msgstr "Передавать &фактический символ на синтезатор"
+msgstr "Передавать &фактический символ на синтезатор:"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7651,35 +7701,42 @@ msgstr "Активировать"
 msgid "Desktop"
 msgstr "Рабочий стол"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "цвет по умолчанию"
+
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "Неизвестный цвет"
 
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Эта ячейка нередактируемая"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "Вызывает список диаграмм, ячеек с комментариями и ячеек с формулами"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Вызывает список элементов различного типа в этой таблице"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
+msgid "&Charts"
 msgstr "&Диаграммы"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
+msgid "C&omments"
 msgstr "&Комментарии"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "&Формулы"
+msgid "Fo&rmulas"
+msgstr "Фо&рмулы"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
+msgid "&Sheets"
 msgstr "&Листы"
 
 #. Translators: Used to express an address range in excel.
@@ -8700,6 +8757,14 @@ msgstr "HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr "Вызывает список диаграмм, ячеек с комментариями и ячеек с формулами"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "цвет по умолчанию"
 
 #~ msgid "selecting %s"
 #~ msgstr "Выделено %s"

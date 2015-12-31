@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-02 17:08+1000\n"
-"PO-Revision-Date: 2015-11-02 14:13+0200\n"
+"POT-Creation-Date: 2015-12-17 19:09+1000\n"
+"PO-Revision-Date: 2015-12-21 12:47+0200\n"
 "Last-Translator: Irene Nakas <irnakas@gmail.com>\n"
 "Language-Team: Gerasimos Xydas, Irene Nakas, Nikos Demetriou <access@e-"
 "rhetor.com, irnakas@gmail.com, nikosdemetriou@googlemail.com>\n"
@@ -457,6 +457,11 @@ msgstr "Όρια βαθμού 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "Πολωνικό οκτάστιγμο braille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Polish grade 1"
 msgstr "Πολωνικά βαθμού 1"
 
@@ -659,6 +664,18 @@ msgstr "clk"
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "( )"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "Κουκκίδες 7 και 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "Κουκκίδα 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Εξάστιγμο"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -4060,6 +4077,31 @@ msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Πραγματοποιεί εναλλαγή της πρόσδεσης του braille μεταξύ της θέσης εστίασης "
 "και θέσης επανεξέτασης"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Απενεργοποίηση δρομέα braille"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Ενεργοποίηση δρομέα braille"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Εναλλαγή δρομέα braille"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "Ο δρομέας braille έχει απενεργοποιηθεί"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "Δρομέας braille %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Εναλλαγή μεταξύ των σχημάτων δρομέα braille"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -7540,9 +7582,17 @@ msgid "E&xpand to computer braille for the word at the cursor"
 msgstr ""
 "&Επέκταση σε κώδικα υπολογιστών για τη λέξη στην οποία βρίσκεται ο δρομέας"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "Show cursor"
+msgstr "Εμφάνιση δρομέα"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "Ρυθμός εναλλαγής φωτεινότητας δρομέα (ms)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor shape:"
+msgstr "Σχήμα δρομέα"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7746,36 +7796,43 @@ msgstr "κλήση"
 msgid "Desktop"
 msgstr "Επιφάνεια Εργασίας"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "προεπιλεγμένο χρώμα"
+
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "Άγνωστο χρώμα"
 
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Μη δυνατή επεξεργασία κελιού"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "Παρουσιάζει μια λίστα γραφημάτων, κελιά με σχόλια και κελιά με τύπους"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Παραθέτει διαφόρους τύπους στοιχείων σε αυτό το φύλλο"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
-msgstr "&Διάγραμμα"
+msgid "&Charts"
+msgstr "&Διαγράμματα"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
-msgstr "Σ&χόλιο"
+msgid "C&omments"
+msgstr "Σ&χόλιας"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "&Τύπος"
+msgid "Fo&rmulas"
+msgstr "&Τύποι"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
-msgstr "&Φύλλο"
+msgid "&Sheets"
+msgstr "&Φύλλα"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -8796,6 +8853,15 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr ""
+#~ "Παρουσιάζει μια λίστα γραφημάτων, κελιά με σχόλια και κελιά με τύπους"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "προεπιλεγμένο χρώμα"
 
 #~ msgid "selecting %s"
 #~ msgstr "επιλογή %s"

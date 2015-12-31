@@ -42,17 +42,18 @@ negative number	minus	none	norep
 # Standard punctuation/symbols
 !	udråbstegn	all
 "	anførselstegn	most
-\#	nummertegn	most
+\#	nummertegn	some
 $	dollar	all	norep
 £	pund	all	norep
 €	euro	all	norep
 ¢	Cents	all	norep
 ¥	Yen	all	norep
+₹	Rupee	some	norep
 %	procent	some
 &	og	some
 '	apostrof	all
-(	venstre parentes	most
-)	højre parentes	most
+(	venstre parentes	most	always
+)	højre parentes	most	always
 *	stjerne	most
 +	plus	most
 ,	komma	all	always
@@ -61,8 +62,8 @@ $	dollar	all	norep
 /	skråstreg	some
 :	kolon	most	norep
 ;	semikolon	most
-<	mindre end	most
->	større end	most
+<	mindre end	some
+>	større end	some
 =	lig med	most
 ?	spørgsmålstegn	all
 @	snabel a	some
@@ -86,7 +87,7 @@ _	understregning	most
 ”	anførselstegn slut	most
 ‘	venstre apostrof	most
 ’	højre apostrof	most
-–	tankestreg	most
+–	tankestreg	most	always
 —	tankestreg	most
 ●	cirkel	most
 ¨	tremmer	most
@@ -108,9 +109,9 @@ _	understregning	most
 ®	registreret	some
 ™	varemærke	some
 ©	Copyright	some
-±	Plus eller Minus	most
-×	gange	most
-÷	divideret med	most
+±	Plus eller Minus	some
+×	gange	some
+÷	divideret med	some
 ←	venstre pil	some
 →	højre pil	some
 ✓	check	some

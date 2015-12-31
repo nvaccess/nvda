@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-02 17:08+1000\n"
-"PO-Revision-Date: 2015-11-02 14:03+0100\n"
+"POT-Creation-Date: 2015-12-17 19:09+1000\n"
+"PO-Revision-Date: 2015-12-17 16:17+0100\n"
 "Last-Translator: Martina <letochova@seznam.cz>\n"
 "Language-Team: CS <http://cz.nvda-community.org/>\n"
 "Language: cs_CZ\n"
@@ -453,6 +453,11 @@ msgstr "Urijský plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "Polské 8-bodové počítačové písmo"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Polish grade 1"
 msgstr "Polský plnopis"
 
@@ -655,6 +660,18 @@ msgstr "klk"
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "( )"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "Body 7 a 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "Bod 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Všechny body"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -3986,6 +4003,31 @@ msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Přepíná propojení braillského kurzoru mezi pozicí systémového fokusu nebo "
 "čtecího kurzoru"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Braillský kurzor vypnut"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Braillský kurzor zapnut"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Zapíná a vypíná braillský kurzor"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "Braillský kurzor je vypnut"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "Braillský kurzor %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Přepíná mezi tvary braillského kurzoru"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -7402,9 +7444,17 @@ msgstr "Vstupní tabulka:"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Slovo, na kterém je kurzor, zobrazit počítačovým braillovým písmem"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "Show cursor"
+msgstr "Zobrazit kurzor"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "&Rychlost blikání kurzoru v milisekundách"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor shape:"
+msgstr "Tvar kurzoru"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7604,36 +7654,43 @@ msgstr "propojeno"
 msgid "Desktop"
 msgstr "Plocha"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "výchozí barva"
+
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "Neznámá barva"
 
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Tuto buňku nelze upravit"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "Představuje seznam grafů, buněk s komentáři a buněk se vzorci"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Uvádí různé typy prvků v této tabulce"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
-msgstr "&Graf"
+msgid "&Charts"
+msgstr "&Grafy"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
-msgstr "K&omentář"
+msgid "C&omments"
+msgstr "K&omentáře"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "&Vzorec"
+msgid "Fo&rmulas"
+msgstr "&Vzorce"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
-msgstr "&List"
+msgid "&Sheets"
+msgstr "&Listy"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -8627,6 +8684,14 @@ msgstr "Braillské řádky HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr "Představuje seznam grafů, buněk s komentáři a buněk se vzorci"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "výchozí barva"
 
 #~ msgid "selecting %s"
 #~ msgstr "vybráno %s"

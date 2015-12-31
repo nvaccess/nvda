@@ -1,4 +1,5 @@
 ﻿NVDA NVDA_VERSION 用户指南
+NVDA NVDA_VERSION 用户指南
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -285,8 +286,8 @@ NVDA 提供下列与系统输入焦点相关的快捷命令：
 | 全文朗读 | NVDA+下光标 | NVDA+a | 从系统输入焦点的当前位置开始朗读，焦点会随着朗读的内容移动。 |
 | 朗读当前航 | NVDA+上光标 | NVDA+l | 朗读系统输入焦点所在的行，连按两次拼读该行。 |
 | 朗读当前选择的文本 | NVDA+Shift+上光标 | NVDA+shift+s | 朗读当前选择的所有文本 |
-| 下一个句子 | alt+下光标 | alt+下光标 | 移动系统焦点到下一个句子（仅在 word 和 Outlook 中受到支持）。 |
-| 上一个句子 | alt+上光标 | alt+上光标 | 移动系统焦点到上一个句子（仅在 word 和 Outlook 中受到支持）。 |
+| 下一个句子 | alt+下光标 | alt+下光标 | 移动系统焦点到下一个句子仅在 word 和 Outlook 中受到支持。 |
+| 上一个句子 | alt+上光标 | alt+上光标 | 移动系统焦点到上一个句子仅在 word 和 Outlook 中受到支持。 |
 
 
 当处于一个列表之内时，下面的键盘命令也是可用的：
@@ -541,8 +542,8 @@ MathPlayer可免费从 http://www.dessci.com/en/products/mathplayer/ 处下载�
 
 NVDA 支持下列类型的数学内容：
 - Mozilla Firefox 和 Microsoft Internet Explorer 的 MathML。
-- Microsoft Word 和 PowerPoint 中的 Design Science MathType  
-- Adobe Reader 的 MathML。请注意，这仍不是一个官方标准，所以目前还没有通用的软件版本可以制作这些内容。
+- Microsoft Word 和 PowerPoint 中的 Design Science MathType 。您必须安装 MathType 才可使本功能得以正常运作，该软件的适用版本已经发行。
+- Adobe Reader 的 MathML。请注意，这仍不是一个官方标准，所以目前还没有可用的公开软件制作这些内容。
 -
 
 当阅读一个文档时， NVDA 将会把所有支持的数学内容读出来。
@@ -571,24 +572,90 @@ NVDA 支持下列类型的数学内容：
 当您希望返回到文档时，简单的按下“esc”键即可。"
 
 + 特定应用程序的 NVDA命令 +
-NVDA 为某些特定的程序提供了自家额外的命令，提供了通常无法使用屏幕阅读器进行访问的功能的访问并使得某些特定任务的执行变得更加轻松。
+NVDA 为某些特定的程序提供了自家的额外特性，让某些任务变得更加容易，还令某些其他屏幕阅读器用户无法访问的功能可用。
 
 ++ Microsoft Word ++
+
++++ 自动行列标题朗读 +++
+NVDA 可在您使用 Microsoft Word 浏览表格时自动读出恰当的行列标题。
+这一特性首先要求启用 NVDA “文档格式”对话框的“朗读行列标题”选项。
+其次，NVDA 需要知道，在给定的表格里，哪一行或哪一列包含正确的行列标题。
+在移动到包含标题的行或者列的第一个单元后，可使用下面任一命令：
 %kc:beginInclude
 || 名称 | 按键 | 描述 |
-| 朗读当前注释 | NVDA+Alt+c | 朗读输入焦点所在单元的注释文本。 | 
 | 设置列标题 | NVDA+shift+c | 按一次，告诉 NVDA，这是包含列标题的行的第一个标题单元，当在其下方的列之间切换时，自动读出那一行的列标题，连按两次清除设置。 |
 | 设置行标题 | NVDA+shift+r | 按一次，告诉 NVDA，这是包含行标题的列的第一个标题单元，当在其右方的行之间切换时，自动读出那一列的行标题，连按两次清除设置。 |
+%kc:endInclude
+此设置将会以书签的形式存储在文档，能与其他屏幕阅读器如JAWS兼容。
+这样意味着，屏幕阅读器用户在后期打开这个文档时，使用其他屏幕阅读器也同样拥有设置好的行列标题。
+
++++ Microsoft Word 的浏览模式 +++
+
+与 web 页面相似，您可在 Microsoft Word 中使用浏览模式的特性，诸如快速导航、元素列表等。
+%kc:beginInclude
+要想在 Microsoft Word 切换浏览模式的开关，可使用 NVDA+空格键。
+%kc:endInclude
+更多有关于浏览模式和快速导航的信息，请查看[浏览模式章节 #BrowseMode]。
+
+++++ 元素列表 ++++
+%kc:beginInclude
+当处于 Microsoft Word 的浏览模式时，您可以通过按下“NVDA+F7”访问元素列表。
+%kc:endInclude
+元素列表可以列举标题、链接和批注(可能包含注解和修改跟踪记录)。
+
++++ 朗读注释 +++
+%kc:beginInclude
+ 按下“NVDA+alt+c”可以查看系统输入焦点所在处的任何注释。
+%kc:endInclude
+ 文档的所有注释都可以在元素列表中进行查看，只要把类型选择为“标注”即可。
+ 
+++ Microsoft Excel ++
+
++++ 自动行列标题朗读 +++
+NVDA 可在您浏览 Excel 工作表时自动读出恰当的行列标题。
+这一特性首先要求启用 NVDA “文档格式”对话框的“朗读行列标题”选项。
+其次，NVDA 需要知道，在给定的工作表里，哪一行或哪一列包含正确的行列标题。
+在移动到包含标题的行或者列的第一个单元后，可使用下面任一命令：
+%kc:beginInclude
+|| 名称 | 按键 | 描述 |
+| 设置列标题 | NVDA+shift+c | 按一次，告诉 NVDA，这是包含列标题的行的第一个标题单元，当在其下方的列之间切换时，自动读出那一行的列标题，连按两次清除设置。 |
+| 设置行标题 | NVDA+shift+r | 按一次，告诉 NVDA，这是包含行标题的列的第一个标题单元，当在其右方的行之间切换时，自动读出那一列的行标题，连按两次清除设置。 |
+%kc:endInclude
+此设置将会以定名为 ranges 的形式存储在文档当中，能与其他屏幕阅读器如JAWS兼容。
+这样意味着，屏幕阅读器用户在后期打开这个工作部时，使用其他屏幕阅读器也同样拥有设置好的行列标题。
+
++++ 元素列表 +++
+
+与 web 相似，NVDA 也有为 Microsoft Excel 开发的元素列表，在此允许您列举和访问一些种类的信息。
+%kc:beginInclude
+要想访问 Excel 的元素列表，请按下“NVDA+F7”
+%kc:endInclude
+可在元素列表下访问的信息种类有：
+- 图表： 这里列举了工作表的所有图表。
+使用光标键选择一个图表后按下“回车键”或点击“移动到”按钮可聚焦到所选的图表。
+- 这里列举了所有包含注释的单元格。
+单元格地址和其所属的注释都会被显示在这里。
+按下“回车键”或点击“移动到”按钮可以直接移动到所选注释的单元格内。
+- 公式：这里列举了工作表中所有包含公式的单元格。
+单元格地址和其所属的公式都会被显示在这里。
+按下“回车键”或点击“移动到”按钮可以直接移动到所选公式的单元格内。
+- 表格：这里列举了工作表中所有的表格。
+在所列表格中按下“F2”可重命名该表格。
+按下“回车键”或点击“移动到”按钮可以直接移动到所选的表格中。
+-
+
++++ 朗读注释 +++
+%kc:beginInclude
+要想朗读当前聚焦单元的所有注释，请按下“NVDA+alt+C”。
+%kc:endInclude
+所有工作部的注释也可以在元素列表中访问
+
++++ 朗读受保护的单元 +++
+如果工作部已经被保护了起来，移动焦点到特定单元也许将变得不可能。
+%kc:beginInclude
+要想允许锁定单元移动，可使用“NVDA+空格键”切换到浏览模式后，使用标准的 Excel 移动命令如光标键可在当前工作表的所有单元中移动。
 %kc:endInclude
 
-++ Microsoft Excel ++
-%kc:beginInclude
-|| 名称 | 按键 | 描述 |
-| 设置列标题 | NVDA+shift+c | 按一次，告诉 NVDA，这是包含列标题的行的第一个标题单元，当在其下方的列之间切换时，自动读出那一行的列标题，连按两次清除设置。 |
-| 设置行标题 | NVDA+shift+r | 按一次，告诉 NVDA，这是包含行标题的列的第一个标题单元，当在其右方的行之间切换时，自动读出那一列的行标题，连按两次清除设置。 |
-| 朗读注释 | NVDA+Alt+c | 朗读输入焦点所在单元的注释文本(如果有的话)。 | 
-| 元素列表对话框 | NVDA+f7 | 打开元素列表对话框，显示图表、带评论的单元格或带公式的单元格。 |
-%kc:endInclude
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
@@ -748,7 +815,7 @@ NVDA 支持的合成器列表可以在[支持的语音合成器 #SupportedSpeech
 
 ==== 处理字符和标点时信任语音的语言 ====
 默认启用，该选项告诉 NVDA 在处理字符和标点时当前语音语言是否可信。
-如果您发现 NVDA 在使用特定的合成器或声音读出某标点时使用了错误的语言，您可能希望把它关闭并强制 NVDA 使用其自身的本地设置来代替语音语言（译者注：对于vocalizer和vocalizer express的语音库而言此设置无效）。
+如果您发现 NVDA 在使用特定的合成器或声音读出某标点时使用了错误的语言，您可能希望把它关闭并强制 NVDA 使用其自身的本地设置来代替语音语言译者注：对于vocalizer和vocalizer express的语音库而言此设置无效。
 
 ==== 大写时音高变化的百分比 ====
 这是一个编辑框，允许您定义在遇到大写字母时，语音语调变化的数值。
@@ -1105,6 +1172,7 @@ NVDA现在只支持电脑盲文点字的输入，因此，只有八点点字表�
 - 对齐方式
 - 颜色
 - 编辑者修订
+- 强调
 - 文本样式
 - 拼写错误
 - 页码
@@ -1173,12 +1241,23 @@ NVDA 的语音字典比之单词替换更为强大。
 请注意，此对话框依照可在[语音设置对话框 #VoiceSettings]中找到的选项“处理字符和标点时信任语音语言”而定，极如果此选项被选中，将使用语音语言代替 NVDA 本地语言设置。
 
 要想修改某个标点，请在标点列表选择它。
-“替换文本”编辑区域允许您定义用来替换此标点的文本。
-使用“标点符号级别”区域，您可以为希望读出的标点指定更低的级别。
 
+- “替换文本”编辑区域允许您定义用来替换此标点的文本。
+- 使用“标点符号级别”区域，您可以为希望读出的标点指定更低的级别。
+- “发送实际标点到合成器”区域定义核实把标点自身而不是替换文本传送到合成器。
+这对于让合成器读取该标点时的语调或停顿发生改变非常有用。
+例如，一个逗号可以让合成器暂停。
+这里有三个选项：
+ - 从不：从不发送标点到合成器。
+ - 总是:总是发送标点符号本身到合成器。
+ - 仅当低于标点自身的级别时传送： 仅当配置的标点级别低于为标点设置的级别时，传送标点本身到合成器。
+ 例如，您可能可以用它来让标点在处于比自身级别更高时不暂停且拥有替换文本，而在比自身级别低时暂停。
+ -
+-
+ 
 您可以通过点击“添加”按钮增加新的符号。
 在出现的对话框输入标点名称并点击“确定”按钮。
-然后，修改新标点或其他标点的替换文本和等级。
+然后，像您修改其他标点一样的修改新标点每个区域的值。
 
 您可以点击“删除”按钮移除您先前添加的符号。
 
@@ -1367,7 +1446,7 @@ NVDA Python 控制台可以再 NVDA 的“工具”菜单找到，他是一个�
 
 + 支持的语音合成气 +[SupportedSpeechSynths]
 此章节包含 NVDA 支持的合成器的信息。
-要想查看更多您可以购买或下载的、可用于 NVDA 的免费或商业语音合成器的列表，请查看页面[http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices](译者注：中文相关的教程和资讯，也可访问：[NVDA中文站 http://www.nvdacn.com/]获取)。
+要想查看更多您可以购买或下载的、可用于 NVDA 的免费或商业语音合成器的列表，请查看页面[http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices](译者注：更多的语音合成器资源也可访问：[NVDA语音合成器集中下载 http://www.nvdacn.com/vd/]页获取)。
 
 ++ eSpeak ++
 [eSpeak http://espeak.sourceforge.net/] 语音合成气预装在 NVDA 之中，不需要安装特别的驱动或者组件。
@@ -1564,7 +1643,7 @@ Please see the display's documentation for descriptions of where these keys can 
 ++ Baum/Humanware/APH Braille Displays ++
 Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] displays are supported when connected via USB or bluetooth.
 These include:
-- Baum: SuperVario, PocketVario
+- Baum: SuperVario, PocketVario, VarioUltra (Bluetooth only), Pronto! (Bluetooth only)
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
@@ -2031,7 +2110,7 @@ In order to fit as much information as possible on a braille display, The folowi
 || Abbreviation | Control type |
 | btn | button |
 | cbo | combo box |
-| chk | check box |
+| chk | checkbox |
 | dlg | dialog |
 | edt | editable text field |
 | gra | graphic |
@@ -2052,9 +2131,9 @@ In order to fit as much information as possible on a braille display, The folowi
 The following state indicators are also defined:
 || Abbreviation | Control state |
 | ... | displayed when an object supports autocompletion |
-| ( ) | displayed when an object (e.g. a check box) is not checked |
-| (x) | displayed when an object (e.g. a check box) is checked |
-| (-) | displayed when an object (e.g. a check box) is half checked |
+| ( ) | displayed when an object (e.g. a checkbox) is not checked |
+| (x) | displayed when an object (e.g. a checkbox) is checked |
+| (-) | displayed when an object (e.g. a checkbox) is half checked |
 | - | displayed when an object (e.g. a tree view item) is collapsible |
 | + | displayed when an object (e.g. a tree view item) is Expandable |
 | clk | displayed when an object is clickable |
@@ -2103,15 +2182,6 @@ nvda -q
 | None | --no-sr-flag  | 不修改全局系统屏幕阅读器的标志。 |
 | None | --install | 安装 NVDA(启动最新安装的副本)。 |
 | None | --install-silent | 静默安装 NVDA(不启动最新安装的副本)。 |
-
-++ 标点符号读音的高级定制 ++
-直接定义标点符号的读音是允许的，此外，使用[标点符号读音 #SymbolPronunciation]对话框也能完成相同的事情。
-例如，您可以定义是否输出元标点至合成器( 如造成停顿或改变声调)并添加普通标点。
-
-要想这么做，您必须编辑 NVDA 用户配置文件家的标点符号读音信息文件。
-标点文件放在xx(语言文件夹)的“symbols.dic”。
-文件的格式被写载 NVDA 开发文档的 Symbol Pronunciation 章节，开发文档被放至在[NVDA 官方网站的开发区域 http://community.nvda-project.org/wiki/Development]。
-然而，用户无法定义复合标点。
 
 + 更多信息 +
  如果您希望获得更多信息或关于 NVDA 的帮助，可通过 NVDA_URL 访问 NVDA 官方网站。

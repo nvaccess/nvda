@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-02 17:08+1000\n"
-"PO-Revision-Date: 2015-11-02 10:07+0100\n"
+"POT-Creation-Date: 2015-12-17 19:09+1000\n"
+"PO-Revision-Date: 2015-12-17 18:52+0100\n"
 "Last-Translator: Jorge Pérez Pérez <jorgtum@gmail.com>\n"
 "Language-Team: equipo de traducción al español de NVDA <oprisniki@gmail."
 "com>\n"
@@ -452,6 +452,11 @@ msgstr "Oriya grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "Braille computerizado polaco de 8 puntos"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Polish grade 1"
 msgstr "Polaco grado 1"
 
@@ -583,7 +588,7 @@ msgstr "bto"
 #. Translators: Displayed in braille for an object which is a
 #. combo box.
 msgid "cbo"
-msgstr "cco"
+msgstr "cc"
 
 #. Translators: Displayed in braille for an object which is a
 #. link.
@@ -598,12 +603,12 @@ msgstr "dlg"
 #. Translators: Displayed in braille for an object which is a
 #. tree view.
 msgid "tv"
-msgstr "árb"
+msgstr "vár"
 
 #. Translators: Displayed in braille for an object which is a
 #. table.
 msgid "tb"
-msgstr "pes"
+msgstr "tb"
 
 #. Translators: Displayed in braille for an object which is a
 #. separator.
@@ -655,11 +660,23 @@ msgstr "clc"
 msgid "( )"
 msgstr "( )"
 
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "Puntos 7 y 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "Punto 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Todos los puntos"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
 msgid "h%s"
-msgstr "n%s"
+msgstr "en%s"
 
 #. Translators: Displayed in braille for a link which has been visited.
 msgid "vlnk"
@@ -4027,6 +4044,31 @@ msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Activar o desactivar el seguimiento de braille entre el foco y la posición "
 "de revisión"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Cursor braille desactivado"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "cursor braille activado"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Activa o desactiva el cursor braille"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "El cursor braille está desactivado"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "Cursor braille %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Rota a través de las formas del cursor braille"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -7471,9 +7513,17 @@ msgstr "Tabla de &Entrada:"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Expandir a braille computerizado para la palabra en el cursor"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "Show cursor"
+msgstr "Mostrar cursor"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "Velocidad del parpadeo del cursor (en MS)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor shape:"
+msgstr "Forma del cursor:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7676,37 +7726,43 @@ msgstr "invocar"
 msgid "Desktop"
 msgstr "Escritorio"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "color predeterminado"
+
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "Color desconocido"
 
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Esta celda no es editable"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr ""
-"Presenta una lista de gráficos, celdas con comentarios y celdas con fórmulas"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Lista varios tipos de elementos en esta hoja de cálculo"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
+msgid "&Charts"
 msgstr "&gráfico"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
-msgstr "&Comentario"
+msgid "C&omments"
+msgstr "&Comentarios"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "&Fórmula"
+msgid "Fo&rmulas"
+msgstr "&Fórmulas"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
-msgstr "&Hoja"
+msgid "&Sheets"
+msgstr "&Hojas"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -8721,6 +8777,16 @@ msgstr "Serie de la HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr ""
+#~ "Presenta una lista de gráficos, celdas con comentarios y celdas con "
+#~ "fórmulas"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "color predeterminado"
 
 #~ msgid "selecting %s"
 #~ msgstr "seleccionando %s"

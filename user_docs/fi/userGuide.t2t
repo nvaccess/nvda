@@ -627,15 +627,15 @@ Samoin kuin verkkosivuilla, myös Microsoft Exceliä varten on elementtilista, j
 Elementtilista avataan painamalla NVDA+F7.
 %kc:endInclude
 Elementtilistassa ovat saatavilla seuraavat tiedot:
-- Kaavio: Tämä näyttää listan kaikista työkirjassa olevista kaavioista.
+- Kaaviot: Tämä näyttää listan kaikista työkirjassa olevista kaavioista.
 Kaavion valitseminen ja Enterin tai Siirry-painikkeen painaminen siirtää kohdistuksen kyseiseen kaavioon, jolloin sitä on mahdollista selata ja lukea nuolinäppäimillä.
-- Kommentti: Tämä näyttää listan kaikista työkirjassa olevista soluista, joissa on kommentti.
+- Kommentit: Tämä näyttää listan kaikista työkirjassa olevista soluista, joissa on kommentti.
 Jokaisesta solusta näytetään osoitteen ohella sen sisältämät kommentit.
 Enterin tai Siirry-painikkeen painaminen listassa olevan kommentin kohdalla siirtää suoraan kyseiseen soluun.
-- Kaava: Tämä näyttää listan kaikista työkirjassa olevista soluista, joissa on kaava.
+- Kaavat: Tämä näyttää listan kaikista työkirjassa olevista soluista, joissa on kaava.
 Jokaisesta solusta näytetään osoitteen ohella sen sisältämät kaavat.
 Enterin tai Siirry-painikkeen painaminen listassa olevan kaavan kohdalla siirtää suoraan kyseiseen soluun.
-- Taulukko: Tämä näyttää listan kaikista työkirjassa olevista laskentataulukoista.
+- Laskentataulukot: Tämä näyttää listan kaikista työkirjassa olevista laskentataulukoista.
 Voit nimetä laskentataulukon uudelleen painamalla listassa sen kohdalla F2.
 Enterin tai Siirry-painikkeen painaminen jonkin listassa olevan laskentataulukon kohdalla siirtää kyseiseen taulukkoon.
 -
@@ -703,7 +703,7 @@ Yleiset asetukset -valintaikkuna löytyy Asetukset-valikosta.
 Se sisältää seuraavat asetukset:
 
 ==== Kieli ====
-Yhdistelmäruutu, josta voidaan valita kieli, jolla NVDA:n käyttöliittymä ja ilmoitukset näytetään.
+Tämä on yhdistelmäruutu, josta voidaan valita kieli, jolla NVDA:n käyttöliittymä ja ilmoitukset näytetään.
 Kieliä on useita.
 Oletusarvoisesti on valittuna vaihtoehto "Windows", mikä tarkoittaa, että NVDA käyttää Windowsin maakohtaisissa asetuksissa määritettyä kieltä.
 
@@ -735,12 +735,12 @@ Asetus on käytettävissä vain NVDA:n asennetuissa versioissa.
 Jos Windowsiin kirjaudutaan käyttäjänimellä ja salasanalla, tämä asetus saa NVDA:n käynnistymään automaattisesti kirjautumisikkunassa aina käyttöjärjestelmän käynnistyessä.
 Asetus on käytettävissä vain NVDA:n asennetuissa versioissa.
 
-==== Käytä nykyisiä tallennettuja asetuksia kirjautumisikkunassa ja muissa suojatuissa ruuduissa ====
+==== Käytä nykyisiä tallennettuja asetuksia kirjautumisikkunassa ja muissa suojatuissa ruuduissa (edellyttää järjestelmänvalvojan oikeuksia) ====
 Tämän painikkeen painaminen kopioi nykyiset tallennetut asetukset NVDA:n järjestelmäasetusten hakemistoon, jotta niitä käytetään kirjautumisikkunassa ja käyttäjätilien valvonnan sekä muissa suojatuissa ruuduissa.
 Asetusten siirtäminen voidaan varmistaa tallentamalla ne ensin painamalla Control+NVDA+C tai valitsemalla NVDA-valikosta Tallenna asetukset.
 Tämä painike on käytettävissä vain NVDA:n asennetuissa versioissa.
 
-==== Automaattinen päivitysten tarkistaminen ====
+==== Tarkista päivitykset automaattisesti ====
 Jos tämä asetus on käytössä, NVDA etsii automaattisesti uusia versioita ja ilmoittaa, kun päivitys on saatavilla.
 Päivitysten manuaalinen tarkistaminen on myös mahdollista valitsemalla Tarkista päivitykset -vaihtoehto NVDA-valikosta Ohje-valikon alta.
 
@@ -887,8 +887,16 @@ Mikäli pistenäppäimistön sisältävä pistenäyttö ei tue syöttöä, siit�
 ==== Laajenna kohdistimen kohdalla oleva sana ====
 Kun tämä asetus on käytössä, kohdistimen alla oleva sana näytetääntavallisella tietokonemerkistöllä.
 
-==== Kohdistimen vilkkumisnopeus ====
-Tällä asetuksella voidaan muuttaa kohdistimen vilkkumisnopeutta millisekunteina.
+==== Näytä kohdistin ====
+Tällä asetuksella voidaan ottaa pistekohdistin käyttöön tai poistaa se käytöstä.
+Asetus vaikuttaa järjestelmä- ja tarkastelukohdistimeen, mutta ei valinnanilmaisimeen.
+
+==== Kohdistimen vilkkumisnopeus (ms) ====
+Tällä asetuksella voit muuttaa kohdistimen vilkkumisnopeutta millisekunteina.
+
+==== Kohdistimen muoto ====
+Tällä asetuksella voit valita pistekohdistimen muodon (käytettävät pisteet).
+Asetus ei vaikuta valinnanilmaisimeen.
 
 ==== Ilmoitusten aikakatkaisu (sek) ====
 Tämä asetus säätää sitä, kuinka kauan NVDA:n ilmoitukset näkyvät pistenäytöllä.

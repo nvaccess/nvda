@@ -35,14 +35,14 @@ Bei all den Menschen auf der Welt ist es wichtig, egal welche Sprache sie sprech
 NVDA wurde bislang in 47 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, amharisch, Arabisch, argonesisch, Brasilianisches Portugiesisch, Bulgarisch, Catalan, kolumbianisches Spanisch, Kroatisch, tschechisch, dänisch, Niederländisch, Farsi, Finnisch, Französisch, galizisch, Georgisch, griechisch, Deutsch, Hebräisch, Hindi, Ungarisch, irisch, Isländisch, Italienisch, Japanisch, koreanisch, nepalesisch, norwegisch, Polnisch, Portugiesisch, Punjabi, Rumänisch, Russisch, Serbisch, Slowakisch, slovenisch, Spanisch, Schwedisch, Tamil, Thai, Traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
 
 ++ Unterstützung von Sprachausgaben ++
-Zusätzlich zur Bereitstellung der Benutzeroberfläche in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern dieser eine Sprachausgabe für die betreffende Sprache verfügt.
+Zusätzlich zur Bereitstellung der Benutzeroberfläche in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern er eine Sprachausgabe für die betreffende Sprache besitzt.
 
-NVDA wird standardmäßig mit einer freien multilingualen Sprachausgabe, der [eSpeak http://espeak.sourceforge.net/download.html] ausgeliefert. 
+NVDA wird standardmäßig mit der freien multilingualen Sprachausgabe [eSpeak http://espeak.sourceforge.net/download.html] ausgeliefert. 
 
 Informationen über weitere Sprachausgaben, die NVDA unterstützt, können Sie im Abschnitt "[Unterstützte Sprachausgaben #SupportedSpeechSynths]" nachlesen.
 
-++ Unterstützung von Braille-Ausgabe ++
-Für Anwender, die eine eigene Braillezeile besitzen, kann NVDA die Informationen in Braille-Schrift ausgeben.
+++ Unterstützung von Brailleausgabe ++
+Für Anwender, die eine Braillezeile besitzen, kann NVDA die Informationen in Brailleschrift ausgeben.
 Für weitere Informationen schauen Sie bitte im Abschnitt "[Unterstützte Braillezeilen #SupportedBrailleDisplays]" nach.
 
 NVDA enthält Braille-Übersetzungstabellen für Computerbraille sowie für Voll- und Kurzschrift für viele Sprachen.
@@ -95,7 +95,7 @@ Abgesehen vom fehlenden automatischen Starten während und/oder nach der Anmeldu
 Wenn Sie NVDA direkt von einer heruntergeladenen Datei aus installieren wollen, drücken Sie einfach den Schalter "Installieren", sobald der Eingangsdialog erscheint.
 Falls Sie den Eingangsdialog bereits geschlossen haben oder NVDA von einer portablen Version aus installieren wollen, wählen Sie den Menüpunkt "NVDA installieren" aus dem Menü Extras.
 
-Der Installationsdialog, welcher erscheint, fragt noch einmal ab, ob Sie NVDA installieren wollen und informiert Sie darüber, ob eine frühere Version von NVDA aktualisiert wird.
+Der erschinende Installationsdialog fragt noch einmal ab, ob Sie NVDA installieren wollen und informiert Sie darüber, ob eine frühere Version von NVDA aktualisiert wird.
 Wenn Sie auf den Schalter "Fortfahren" klicken, wird die Installation gestartet.
 Es gibt allerdings noch weitere Optionen. Diese werden weiter unten beschrieben.
 Nach dem Abschluss der Installation erscheint eine Meldung, die sie über den erfolgreichen Abschluss der Installation informiert.
@@ -166,7 +166,7 @@ Voreingestellt ist das Tastaturschema Desktop. Sie können natürlich das Schema
 
 Das Desktop-Schema macht ausgiebig vom (ausgeschalteten) Nummernblock gebrauch.
 Obwohl die meisten Laptop-Tastaturen keinen physikalischen Nummernblock haben, kann dieser mit Hilfe der FN-Taste in Kombination mit den Tasten des rechten Tastenfeldes emuliert werden. Dies sind folgende Tasten: 7, 8, 9, u, i, o, j, k, l, etc.).
-Wenn Ihr Laptop dies nicht kann oder die Deaktivierung des Numlocks nicht unterstützt wird, können Sie an Stelle das Tastaturlayout auf Laptop umstellen.
+Wenn Ihr Laptop dazu nicht in der Lage ist oder die Deaktivierung von Numlock  nicht unterstützt wird, können Sie an Stelle das Tastaturlayout auf Laptop umstellen.
 
 ++ NVDA-Berührungsgesten ++
 Wenn Sie Windows 8 oder neuer nebst NVDA auf einem Gerät mit TouchScreen installiert haben, können Sie NVDA direkt mit dem TouchScreen steuern.
@@ -369,7 +369,7 @@ Die folgenden Tastenkombinationen zum Betrachten von Text sind verfügbar:
 | Zum Zeilenende springen | Umschalt+Nummerntaste 3 | NVDA+Ende | Keine | Zieht den NVDA-Cursor zum Zeilenende im Text. |
 | Alles ansagen | Nummerntaste Plus | NVDA+Umschalt+A | Nach unten streichen mit drei Fingern (Textmodus) | Liest von der aktuellen Cursor-Position des NVDA-Cursors den Text vor und bewegt ihn mit. |
 | Ab NVDA-Cursor kopieren | NVDA+F9 | NVDA+F9 | Keine | Startet von der aktuellen Cursor-Position den Kopiervorgang. Der Text wird nicht von NVDA kopiert, wenn Sie nicht festlegen, bis wohin kopiert werden soll. |
-| Bis NVDA-Cursor kopieren | NVDA+F10 | NVDA+F10 | Keine | Kopiert von der Position die vorhin (mit "ab NVDA-Cursor kopieren" festgelegt wurde) bis zur akttuellen Position des NVDA-Cursors. Nach dem Betätigen der Tastenkombination, wird der Text in die Zwischenablage kopiert. |
+| Bis NVDA-Cursor kopieren | NVDA+F10 | NVDA+F10 | Keine | Kopiert von der Position die zuvor (mit "ab NVDA-Cursor kopieren") festgelegt wurde bis einschließlich akttuellen Position des NVDA-Cursors. Nach dem Betätigen der Tastenkombination wird der Text in die Zwischenablage kopiert. |
 | Textformatierung ausgeben | NVDA+F | NVDA+F | Keine | Gibt die Formatierungen unter dem NVDA-Cursor aus. |
 %kc:endInclude
 
@@ -540,7 +540,7 @@ Mathplayer kann hier heruntergeladen werden: http://www.dessci.com/en/products/m
 
 NVDA unterstützt die folgende mathematischen Inhalte:
 - MathML in Mozilla Firefox und Microsoft Internet Explorer.
-- Design Science MathType in Microsoft Word und PowerPoint.
+- Design Science MathType in Microsoft Word und PowerPoint. Mathtype muss installiert sein. Die Testversion ist hierfür ausreichend.
 - MathML in Adobe Reader. Beachten Sie, dass Mathml noch kein offizieller Standard ist, deshalb gibt es noch keine öffentlich verfügbare Software, um solche Inhalte zu erzeugen.
 -
 
@@ -569,24 +569,87 @@ Weiter Informationen hierzu finden Sie in der Dokumentation zu mathplayer.
 
 Um die Navigation im Ausdruck zu beenden, drücken Sie esc.
 
-+ Anwendungsspezifische Befehle für NVDA +
-Für bestimmte Anwendungen stellt NVDA zusätzliche Tastenkombinationen bereit - etwa um bestimmte Aufgaben zu vereinfachen oder um Informationen zugänglich zu machen, die normalerweise für Anwender von Bildschirmleseprogrammen unerreichbar wären. 
++ anwendungsspezifische Funktionen +
+nvda stellt für bestimmte Anwendungen zusätzliche Funktionen bereit, um bestimmte Aufgaben zu erleichtern oder um Zugriff auf Funktionalität bereitzustellen, die sonst nicht zugänglich wäre.
 
 ++ Microsoft Word ++
-%kc:beginInclude
-|| Name | Tastenkombination | Beschreibung |
-| aktuellen Kommentar anzeigen | NVDA+Alt+c | Zeigt den Kommentar an, der an der aktuellen Position des Systemcursors hinterlegt ist. | 
-| Spaltenüberschriften festlegen | NVDA+Umschalt+c | Wenn Sie diese Tastenkombination einmal drücken, legen sie die aktuelle Tabellenzeile als Spaltenüberschriften fest. Drücken Sie die Tastenkombination zweimal, um die Zuweisung zu löschen. | 
-| Zeilenbeschriftung festlegen | NVDA+Umschalt+r | Wenn Sie diese Tastenkombination einmal drücken, wird die aktuelle Spalte als Zeilenbeschriftung festgelegt. Drücken Sie die Tastenkonbination zweimal, um die Zuweisung zu löschen. | 
-%kc:endInclude
 
-++ Microsoft Excel ++
++++ automatisches Lesen von Zeilen- und Spaltenüberschriften +++
+Wenn Sie in Microsoft Word in einer Tabelle navigieren, ist NVDA in der Lage, automatisch die Zeilen- und Spaltenüberschriften zu lesen.
+Hierfür muss die Option "Spalten- und Reihenüberschriften von Tabellen ansagen" in den Einstellungen für Dokumentformatierungen aktiviert sein.
+Zum zweiten muss NVDA die Reihen Bzw. Spalten mit den Überschriften kennen. 
+Verwenden Sie einen der folgenden Befehle, nachdem Sie sich in die ehrste Zelle mit der Reihen- Bzw. Spaltenüberschrift bewegt haben:
 %kc:beginInclude
 || Name | Tastenkombination | Beschreibung |
-| Spaltenüberschriften festlegen | NVDA+Umschalt+c | Wenn Sie diese Tastenkombination einmal drücken, teilen Sie NVDA mit, dass Sie sich auf derjenigen Zeile befinden, die die Spaltenüberschriften enthält. Diese Spaltenüberschriften werden dann automatisch gelesen, sobald Sie unterhalb dieser Zeile navigieren. Zweimaliges Drücken dieser Tastenkombination löscht diese Zuweisung wieder. | 
-| Zeilenbeschriftungen festlegen | NVDA+Umschalt+r | Wenn Sie diese Tastenkombination einmal drücken, teilen Sie NVDA mit, dass Sie sich auf derjenigen Spalte befinden, die die Beschriftungen für die Zeilen enthält. Diese Beschriftungen werden automatisch gelesen, wenn Sie außerhalb dieser Spalte navigieren. Zweimaliges Drücken dieser Tastenkombination löscht diese Zuweisung. | 
-| Kommentar anzeigen | NVDA+alt+c | Zeigt den Kommentar der aktuellen Zelle an, sofern vorhanden. |
-| Elementliste | NVDA+f7 | Öffnet einen Dialog mit einer Elementliste. Hier werden Ihnen Diagramme, Zellen mit Kommentaren, Zellen mit Formeln oder Tabellenblätter angezeigt. |
+| Spaltenüberschriften festlegen | NVDA+Umschalt+c | Wenn Sie diese Tastenkombination einmal drücken, legen sie die aktuelle Tabellenzelle als ehrste Zelle mit Spaltenüberschriften fest. Diese Spaltenüberschriften werden dann automatisch gelesen, sobald Sie unterhalb dieser Zeile navigieren. Zweimaliges Drücken dieser Tastenkombination löscht diese Zuweisung wieder. || 
+| Zeilenüberschriften festlegen | NVDA+Umschalt+r | Wenn Sie diese Tastenkombination einmal drücken, wird die aktuelle Tabellenzelle als ehrste Zelle mit Zeilenbeschriftung festgelegt. Diese Spaltenüberschriften werden dann automatisch gelesen, sobald Sie unterhalb dieser Zeile navigieren. Zweimaliges Drücken dieser Tastenkombination löscht diese Zuweisung wieder. || 
+%kc:endInclude
+Diese Zuweisungen werden im Dokument als Lesezeichen gesetzt. Dies ist kompatibel zu anderen Bildschirmlesern wie JAWS.
+Dies bedeutet, dass auch andere Anwender von Bildschirmlesern, die dieses Dokument zu einem späteren Zeitpunkt öffnen, die Spalten- und Zeilenüberschriften gesetzt haben.
+
++++ Lesemodus in Microsoft Word +++
+Ähnlich wie im Netz können Sie in Microsoft Word den Lesemodus sowie die Elementliste oder die Schnellnavigation nutzen. 
+%kc:beginInclude
+Um den lesemodus in Microsoft Word ein- oder auszuschalten, drücken Sie nvda+Leertaste.
+%kc:endInclude
+Weitere Informationen zum Lesemodus und zur Schnellnavigation finden Sie im [Abschnitt über den lesemodus #BrowseMode].
+ 
+++++ die Elementliste ++++
+%kc:beginInclude
+Wenn Sie sich in Microsoft Word im Lesemodus befinden, können Sie mit der Tastenkombination nvda+f7 auf die Elementliste zugreifen.
+%kc:endInclude
+Die Elementliste enthält Überschriften, Links und Anmerkungen (einschließlich nachverfolgbarer Änderungen)
+
++++ Ausgeben von Kommentaren +++
+%kc:beginInclude
+Verwenden Sie die Tastenkombination nvda+alt+c, um sich einen Kommentar an der aktuellen Cursorposition anzeigen zu lassen, sofern vorhanden.
+%kc:endInclude
+Alle Kommentare des aktuellen Dokuments sind außerdem in der Elementliste aufgeführt, wenn Sie als Elementtyp "Anmerkungen" auswählen.
+ 
+++ Microsoft Excel ++
+
++++ automatisches lesen von Zeilen- und Spaltenüberschriften +++
+Wenn Sie in Microsoft Excel in einer Tabelle navigieren, ist NVDA in der Lage, automatisch die Zeilen- und Spaltenüberschriften zu lesen.
+Hierfür muss die Option "Spalten- und Reihenüberschriften von Tabellen ansagen" in den Einstellungen für Dokumentformatierungen aktiviert sein.
+Zum zweiten muss NVDA die Reihen Bzw. Spalten mit den Überschriften kennen. 
+Verwenden Sie einen der folgenden Befehle, nachdem Sie sich in die ehrste Zelle mit der Reihen- Bzw. Spaltenüberschrift bewegt haben:
+%kc:beginInclude
+|| Name | Tastenkombination | Beschreibung |
+| Spaltenüberschriften festlegen | NVDA+Umschalt+c | Wenn Sie diese Tastenkombination einmal drücken, legen sie die aktuelle Tabellenzelle als ehrste Zelle mit Spaltenüberschriften fest. Diese Spaltenüberschriften werden dann automatisch gelesen, sobald Sie unterhalb dieser Zeile navigieren. Zweimaliges Drücken dieser Tastenkombination löscht diese Zuweisung wieder. || 
+| Zeilenüberschriften festlegen | NVDA+Umschalt+r | Wenn Sie diese Tastenkombination einmal drücken, wird die aktuelle Tabellenzelle als ehrste Zelle mit Zeilenbeschriftung festgelegt. Diese Spaltenüberschriften werden dann automatisch gelesen, sobald Sie unterhalb dieser Zeile navigieren. Zweimaliges Drücken dieser Tastenkombination löscht diese Zuweisung wieder. || 
+%kc:endInclude
+Diese Zuweisungen werden in der Arbeitsmappe als  definierte Namensbereiche gesetzt. Dies ist kompatibel zu anderen Bildschirmlesern wie JAWS.
+Dies bedeutet, dass auch andere Anwender von Bildschirmlesern, die dieses Dokument zu einem späteren Zeitpunkt öffnen, die Spalten- und Zeilenüberschriften gesetzt haben.
+
++++ die Elementliste +++
+Ähnlich wie im Netz können Sie in Microsoft Excel die Elementliste nutzen, um verschiedene Informationen aufzulisten und um auf diese zuzugreifen.
+%kc:beginInclude
+Verwenden Sie die Tastenkombination nvda+f7, um auf die Elementliste zuzugreifen.
+%kc:endInclude
+Die Elementliste enthält Elemente der folgenden Typen:
+- Diagramme: listet alle Diagramme in der Arbeitsmappe auf.
+Nachdem Sie ein Diagramm mit Eingabe oder dem Schalter wechseln zu ausgewählt haben, können Sie sich mit Hilfe der Pfeiltasten durch dessen Inhalt bewegen.
+- Kommentare: listet alle Zellen auf, die Kommentare enthalten.
+Es wird die Zellenadresse nebst Kommentar angezeigt.
+Wenn Sie innerhalb der Liste den Schalter "wechseln zu" oder die Eingabetaste drücken, wird der Fokus auf die entsprechende Zelle verschoben.
+- Formeln: listet alle Zellen in der Arbeitsmappe auf, die eine Formel enthalten.
+Es wird die Zellenadresse nebst Formel angezeigt.
+Wenn Sie innerhalb der Liste den Schalter "wechseln zu" oder die Eingabetaste drücken, wird der Fokus auf die entsprechende Zelle verschoben.
+- Tabellenblätter: listet alle Tabellenblätter in der Arbeitsmappe auf. 
+Drücken Sie auf einem der aufgelisteten Tabellenblätter F2, um es umzubenennen.
+Drücken Sie auf einem Tabellenblatt die Eingabetaste oder den Schalter "wechseln zu", um es zu öffnen.
+-
+
++++ Ausgeben von Kommentaren +++
+%kc:beginInclude
+Verwenden Sie die Tastenkombination nvda+alt+c, um sich einen Kommentar der aktuellen Zelle anzeigen zu lassen, sofern vorhanden.
+%kc:endInclude
+Alle Kommentare der Arbeitsmappe sind außerdem in der Elementliste aufgeführt, wenn Sie als Elementtyp "Kommentare" auswählen.
+
++++ ausgeben geschützter Zellen +++
+Wenn ein Excel-Arbeitsblatt geschützt wurde, können manche Zellen für eine Bearbeitung gesperrt sein. Solche Zellen sind dann normalerweise nicht zugänglich.
+%kc:beginInclude
+Um auf gesperrte Zellen zuzugreifen, wechseln Sie zunächst mit nvda+Leertaste in den Lesemodus und navigieren Sie anschließend mit den Standard-Excel-Tastenkombinationen wie z.B. den Pfeiltasten zu den gewünschten Zellen.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -824,8 +887,16 @@ Sollte die Eingabe auf einer Braillezeile mit Brailletastatur nicht unterstützt
 ==== Aktuelles Wort in Computerbraille ausschreiben ====
 Diese Option legt fest, ob das Wort, welches sich unter dem Cursor befindet, in Computerbraille dargestellt werden soll oder nicht.
 
+==== Cursor anzeigen ====
+Mit Hilfe dieser Option können Sie die Anzeige des Cursors in Braille ein- und ausschalten.
+Dies betrifft den System- und den NVDA-Cursor, nicht jedoch die Kennzeichnung von markiertem Text.
+
 ==== Cursor-Blinkfrequenz ====
 Diese Option ist ein numerisches Feld, in dem sich die Cursor-Blinkfrequenz in Millisekunden anpassen lässt.
+
+==== Cursorform ====
+Mit Hilfe dieser option können Sie die Form (das Punktmuster) des Cursors auf der Braillezeile einstellen.
+Die Kennzeichnung für markierten Text ist von dieser Option nicht betroffen.
 
 ==== Anzeigedauer für Meldungen (in Sekunden) ====
 Dieses numerische Eingabefeld legt fest, wie lange Meldungen von NVDA auf der Braillezeile angezeigt werden sollen. Wenn eine Meldung erscheint, kann diese durch Drücken einer Routingtaste geschlossen werden. Durch Drücken einer Navigationstaste kann die anzeigedauer einer Meldung verlängert werden.
@@ -1173,12 +1244,23 @@ Die Sprache, in der die Aussprache von Sonderzeichen geändert wird, wird im Dia
 Außerdem wird die Option "beim Sprechen von Zeichen und Symbolen die Sprache der Stimme berücksichtigen" aus den  [Stimmeneinstellungen #VoiceSettings] berücksichtigt; beispielsweise wird hierbei die Sprache der eingestellten Stimme anstelle der nvda-Sprache verwendet.
 
 Um die aussprache eines Sonderzeichens zu verändern, wählen Sie es in der Liste der Symbole aus.
-Das Eingabefeld "Ersetzen durch" erlaubt Ihnen, den Text zu ändern, der an Stelle des Symbols angesagt wird.
-im Kombinationsfeld "Stufe" kann eingestellt werden, ab welcher Stufe Satz- und Sonderzeichen angesagt werden sollen..
+
+- Das Eingabefeld "Ersetzen durch" erlaubt Ihnen, den Text zu ändern, der an Stelle des Symbols angesagt wird.
+- im Kombinationsfeld "Stufe" kann eingestellt werden, ab welcher Stufe Satz- und Sonderzeichen angesagt werden sollen..
+- Im Konbinationsfeld "aktuelles Symbol an Sprachausgabe senden" kann eingestellt werden, ob das Symbol anstelle seines Ersatztextes an die Sprachausgabe gesendet werden soll.
+Dies ist nützlich, wenn das Symbol die Sprachausgabe zu einer Pause oder einer anderen Betonung bringen soll.
+Beispielsweise pausiert die Sprachausgabe nach einem Komma.
+Dieses Konbinationsfeld enthält drei Optionen:
+ - niemals: das Sonderzeichen wird niemals an die Sprachausgabe gesendet.
+ - immer: Das Symbol wird immer an die Sprachausgabe gesendet.
+ - nur unterhalb der Symbolebene: Das Sonderzeichen wird nur an die Sprachausgabe gesendet, wenn die momentan eingestellte Symbolebene niedriger ist, als im Konbinationsfeld "Stufe" (siehe oben)
+ Beispielsweise kann ein Symbol bei einer höheren Stufe ohne Pausierung gesprochen werden, während die Sprachausgabe bei einer niedrigeren Stufe pausiert.
+ -
+-
 
 Um Symbole hinzuzufügen, benutzen Sie den Schalter hinzufügen.
 Geben Sie im erscheinenden Dialog das Symbol ein und drücken Sie den Schalter OK.
-Ändern sie anschließend den Ersatztext und die Symbolebene nach Ihren Wünschen, wie Sie es bei den anderen Sümbolen machen würden.
+Ändern sie anschließend die anderen Optionen nach Ihren Wünschen, wie Sie es bei den anderen Sümbolen machen würden.
 
 Über den Schalter "entfernen" können Sie ein Symbol wieder löschen.
 
@@ -2101,15 +2183,6 @@ Folgende Kommandozeilenoptionen werden akzeptiert:
 | Keine | --no-sr-flag | Keine Mitteilung in Windows über einen installierten Screenreader. |
 | Keine | --install | Installiert NVDA ohne Ausgabe von Rückmeldungen und startet die neu installierte Version. |
 | keine | --install-silent | Installiert NVDA ohne Ausgabe von Rückmeldungen, startet die Version aber nicht. |
-
-++ Erweiterte Anpassung der Aussprache von Satz- und Sonderzeichen ++
-Es gibt über den [Dialog zur Aussprache von Satz- und Sonderzeichen #SymbolPronunciation] hinaus noch weitere Möglichkeiten, die Aussprache von Satzzeichen zu beeinflussen.
-Sie können beispielsweise veranlassen, das bestimmte Zeichen unverarbeitet an die Sprachausgabe weitergegeben werden, um die Betonung zu beeinflussen oder Sie können weitere benutzerdefinierte Symbole hinzufügen.
-
-Hierfür müssen Sie die Symboldefinitionsdatei bearbeiten, die sich im Konfigurationsverzeichnis von NVDA des in Windows angemeldeten Benutzers befindet. 
-Der Name der Datei hat das Format "symbols-xx.dic", wobei xx der zweistellige Sprachencode ist.
-Das Format der Datei ist im Entwicklerhandbuch dokumentiert, welches Sie in englischer Sprache im [Abschnitt für Entwickler auf der NVDA-Webseite http://community.nvda-project.org/wiki/Development] finden können.
-Hinweis: Es ist Anwendern jedoch nicht möglich, komplexe Symbole zu definieren.
 
 + Weitere Informationen +
 Wenn Sie mehr Informationen oder Hilfe bezüglich NVDA benötigen, besuchen Sie bitte die englische Internetseite unter NVDA_URL.

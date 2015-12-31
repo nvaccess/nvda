@@ -1,5 +1,4 @@
 Guide de l'utilisateur de NVDA NVDA_VERSION
-Guide de l'utilisateur de NVDA NVDA_VERSION
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -370,7 +369,7 @@ Vous disposez des commandes suivantes pour explorer du texte :
 | Aller en fin de ligne en revue | maj+pavnum3 | NVDA+fin | Aucun | Amène le curseur de revue à la fin de la ligne courante |
 | Dire tout en revue | pavnumPlus | NVDA+maj+a | Glisser vers le bas 3 doigts (mode texte) | Lit en partant de la position du curseur de revue, celui-ci suivant la lecture |
 | Copier à partir du curseur de revue | NVDA+f9 | NVDA+f9 | Aucun | Commence à copier le texte depuis la position du curseur de revue. La copie ne s'effectue pas tant qu'on n'a pas indiqué la fin du texte à copier |
-| Copier jusqu'au curseur de revue | NVDA+f10 | NVDA+f10 | Aucun | Copie depuis la position du curseur de revue préalablement définie par "copier à partir du curseur de revue" jusqu'à la position actuelle du curseur de revue. Après l'appui sur cette touche, le texte est copié dans le presse-papiers de Windows. |
+| Copier jusqu'au curseur de revue | NVDA+f10 | NVDA+f10 | Aucun | Copie depuis la position préalablement définie par "copier à partir du curseur de revue" jusqu'à la position actuelle du curseur de revue. Après l'appui sur cette touche, le texte est copié dans le presse-papiers de Windows. |
 | Annonce du formatage du texte | NVDA+f | NVDA+f | Aucun | Annonce le formatage du texte à la position du curseur de revue |
 %kc:endInclude
 
@@ -628,15 +627,15 @@ Comme sur le web, NVDA a une liste d'éléments pour Microsoft Excel permettant 
 Pour accéder à la liste d'éléments sous Excel, pressez NVDA+f7.
 %kc:endInclude
 Les différents types d'informations disponibles dans la liste d'éléments sont :
-- Diagramme : Ceci liste tous les diagrammes dans le classeur. 
+- Diagrammes : Ceci liste tous les diagrammes dans le classeur. 
 Sélectionner un diagramme et presser la touche Entrer ou le bouton "Aller à" amène le focus au diagramme pour naviguer et lire avec les flèches.
-- Commentaire : Ceci liste toutes les cellules du classeur contenant des commentaires. 
+- Commentaires : Ceci liste toutes les cellules du classeur contenant des commentaires. 
 L'adresse de la cellule et ses commentaires sont présentés pour chaque cellule. 
 Presser sur la touche Entrer ou le bouton Aller à  sur un commentaire de la liste vous amènera directement à cette cellule.
-- Formule : Ceci liste toutes les cellules du classeur contenant une formule. 
+- Formules : Ceci liste toutes les cellules du classeur contenant une formule. 
 L'adresse de la cellule et sa formule sont présentés pour chaque cellule. 
 Presser sur la touche Entrer ou le bouton Aller à  sur une formule de la liste vous amènera directement à cette cellule.
-- feuille : Ceci liste toutes les feuilles du classeur. 
+- feuilles : Ceci liste toutes les feuilles du classeur. 
 L'appui sur f2 sur une feuille de la liste vous permet de renommer cette feuille. 
 Presser sur la touche Entrer ou le bouton Aller à  sur une feuille de la liste vous amènera directement à cette feuille.
 -
@@ -802,7 +801,7 @@ Par exemple, un texte peut être en Anglais Américain et comporter des passages
 Par défaut, cette option est désactivée.
 
 %kc:setting
-==== Niveau des symboles et ponctuations ====
+==== Niveau des ponctuations et symboles ====
 Raccourci clavier : NVDA+p
 
 Ceci vous permet de choisir la quantité de ponctuations et autres symboles qui seront prononcés.
@@ -888,8 +887,16 @@ Si la saisie n'est pas supportée par un afficheur qui dispose d'un clavier Perk
 ==== Afficher le mot sous le curseur en braille informatique ==== 
 Cette option permet d'afficher le mot sous le curseur en intégral.
 
+==== Montrer le Curseur ====
+Cette option permet d'activer ou de désactiver l'affichage du curseur braille.
+Elle s'applique au curseur système et au curseur de revue, mais pas à l'indicateur de sélection.
+
 ==== Vitesse de clignotement du curseur (ms) ====
 Cette option est un champ numérique qui vous permet de modifier la vitesse de clignotement du curseur en millisecondes.
+ 
+==== Forme du Curseur ====
+Cette option vous permet de choisir la forme du curseur braille.
+L'indicateur de sélection n'est pas affecté par cette option.
 
 ==== Durée d'affichage des messages (s) ====
 Cette option est un champ numérique qui contrôle la durée en secondes d'affichage des messages système sur le terminal braille.
@@ -1230,7 +1237,7 @@ Ainsi, en utilisant l'exemple précédent de remplacement du mot "oiseau" par le
 Une expression régulière est un modèle contenant des symboles particuliers vous permettant de trouver une correspondance sur plus d'un caractère à la fois, ou seulement sur les lettres ou les chiffres etc. 
 Les expressions régulières ne sont pas expliquées dans ce manuel, mais on trouve, sur le web, beaucoup de tutoriels qui vous donneront plus d'informations.
 
-+++ Prononciation des symboles et ponctuations +++[SymbolPronunciation]
++++ Prononciation des ponctuations et symboles +++[SymbolPronunciation]
 Ce dialogue vous permet de modifier la façon dont les ponctuations et autres symboles sont prononcés ainsi que le niveau de symbole auquel ils sont annoncés.
 
 La langue pour laquelle la prononciation des symboles est en cours d'édition sera indiquée dans le titre du dialogue.

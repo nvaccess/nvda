@@ -31,7 +31,7 @@ def _updateVersionFromVCS():
 # Otherwise, py2exe will break.
 name="NVDA"
 longName=_("NonVisual Desktop Access")
-version="2015.4dev"
+version="2016.1dev"
 publisher="unknown"
 updateVersionType=None
 try:
