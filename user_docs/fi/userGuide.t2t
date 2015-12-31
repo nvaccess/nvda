@@ -56,12 +56,14 @@ Tämä koskee sekä alkuperäisiä että muokattuja ohjelmistokopioita ja kaikki
 Voit [tarkastella koko lisenssiä http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] saadaksesi lisätietoja.
 
 + Järjestelmävaatimukset +
-- Käyttöjärjestelmät: kaikki 32- ja 64-bittiset Windows XP:n, Windows Vistan, Windows 7:n, Windows 8:n ja Windows 10:n versiot (palvelinversiot mukaan lukien).
+- Käyttöjärjestelmät: kaikki 32- ja 64-bittiset Windows XP:n, Windows Vistan, Windows 7:n, Windows 8:n, Windows 8.1:n ja Windows 10:n versiot (palvelinversiot mukaan lukien).
  - 32-bittisessä Windows XP:ssä on oltava asennettuna Service Pack 2 tai uudempi.
  - Windows Server 2003:ssa on oltava asennettuna Service Pack 1 tai uudempi.
+ - Windows Vistassa NVDA tarvitsee toimiakseen Service Pack 2:n sekä [KB2763674 https://support.microsoft.com/en-us/kb/2763674]-päivityksen.
+Nämä molemmat tulisi asentaa, mikäli kaikkien käytettävissä olevien päivitysten asentamiseen käytetään Windows Updatea.
 - Muistia (RAM): 256 Mt tai enemmän
 - Suoritin: 1 GHz tai nopeampi
-- Levytilaa n. 50 Mt.
+- Levytilaa n. 90 Mt.
 -
 
 + NVDA:n hankkiminen ja asentaminen +
@@ -87,8 +89,8 @@ Vaihtoehtona on myös NVDA:n tilapäisversion käyttäminen (esimerkiksi esittel
 Sen lisäksi, ettei automaattinen käynnistys toimi kirjautumisen aikana ja/tai sen jälkeen, on NVDA:n massamuisti- ja tilapäisversioissa myös seuraavia rajoituksia:
 - Vuorovaikutus järjestelmänvalvojan oikeuksin käynnissä olevien sovellusten kanssa ei ole mahdollista ellei NVDA:ta itseään ole käynnistetty samoilla oikeuksilla (ei suositella).
 - Käyttäjätilien valvonnan kehotteiden lukeminen ei ole mahdollista yritettäessä käynnistää sovellusta järjestelmänvalvojan oikeuksin.
-- Windows 8: kosketusnäyttösyötteiden käyttäminen ei ole mahdollista.
-- Windows 8: selaustila ja kirjoitettujen merkkien puhuminen eivät toimi Windows-kaupasta ladatuissa sovelluksissa.
+- Windows 8 ja uudemmat käyttöjärjestelmät: kosketusnäyttösyötteiden käyttäminen ei ole mahdollista.
+- Windows 8 ja uudemmat käyttöjärjestelmät: selaustila ja kirjoitettujen merkkien puhuminen eivät toimi Windows-kaupasta ladatuissa sovelluksissa.
 -
 
 ++ Asentaminen ++

@@ -1,5 +1,4 @@
 NVDA NVDA_VERSION Vodič za korisnike
-NVDA NVDA_VERSION Vodič za korisnike
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -370,7 +369,7 @@ Sljedeći prečaci su dostupne za pregled teksta:
 | Pomakni se na kraj retka u pregledu | shift+num3 | NVDA+end | nema | pomiče pregledni kursor na kraj u trenutnom retku teksta |
 | Izgovori sve pomoću pregleda | numPlus | NVDA+shift+a | klizni sa tri prsta prema dolje (tekstualni način) | Čita od trenutne pozicije preglednog kursora, pomičući se s pomićanjem kursora |
 | Kopiraj s preglednog kursora | NVDA+f9 | NVDA+f9 | nema | započinje kopiranje teksta od trenutne pozicije preglednog kursora. U tom se trenutku kopiranje ne izvodi sve dok ne kažemo  NVDA gdje to treba kopirati |
-| kopiraj na pregledni kursor | NVDA+f10 | NVDA+f10 | nema | Copies from the position previously set with Copy from review cursor up to and including the review cursor's current position. After pressing this key, the text will be copied to the Windows clipboard |
+| kopiraj na pregledni kursor | NVDA+f10 | NVDA+f10 | nema | kopira od prethodne pozicije postavljene uz pomoć koprečaca kopiraj sa preglednog kursora do  trenutne pozicije preglednog kursora. poslije pritiska ove kombinacije tipaka, tekst će biti kopiran u međuspremnik |
 | Izvijesti o oblikovanju teksta | NVDA+f | NVDA+f | nema | izgovara oblikovanje teksta gdje se pregledni kursor nalazi |
 %kc:endInclude
 
@@ -630,13 +629,13 @@ kako biste pristupili popisu elemenata u excelu, pritisnite NVDA+f7.
 Razne vrste informacija u popisu elemenata u excelu jesu:
 - Grafovi: Ovo popisuje sve grafove u radnoj knjizi. 
 Označujući graf ili pritišćući enter na gumbu pomakni na, fokusira graf spreman za čitanje uz pomoć strelica.
-- komentar: Ovo popisuje sve ćelije u radnoj knjizi koje sadrže komentare. 
+- komentari: Ovo popisuje sve ćelije u radnoj knjizi koje sadrže komentare. 
 Adresa ćelije sa pripadajućim komentarom je prikazana. 
 Kada pritisnete enter ili gumb premjesti na kada se nalazite na popisanom komentaru premješta izravno na tu ćeliju.
-- formula: Ovo popisuje sve ćelije u radnoj knjizi koje sadrže formulu. 
+- formule: Ovo popisuje sve ćelije u radnoj knjizi koje sadrže formulu. 
 Adresa ćelije skupa sa formulom je čitana.
 Pritišćući enter ili gumb premjesti na će premjestiti izravno na ovu ćeliju. 
-- radni list: ovo popisuje sve radne listove u  radnoj knjizi. 
+- radni listovi: ovo popisuje sve radne listove u  radnoj knjizi. 
 Pritišćući f2 na odabranom radnom listu omogućuje preimenovanje radnog lista. 
 Pritišćući enter ili gumb premjesti na kada se nalazite na označenoj ćeliji Premješta na taj radni list.
 -

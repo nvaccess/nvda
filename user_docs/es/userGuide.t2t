@@ -56,12 +56,14 @@ Esto se aplica al original y a las copias modificadas del programa, más cualqui
 Para más detalles, puedes [ver la licencia completa.  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Requerimientos del Sistema +
-- Sistemas Operativos: todas las versiones de 32 y 64 bits de Windows XP, Windows Vista, Windows 7, Windows 8 y Windows 10 (incluyendo sistemas operativos servidor).
+- Sistemas Operativos: todas las versiones de 32 y 64 bits de Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 y Windows 10 (incluyendo sistemas operativos servidor).
 - Para Windows XP 32 bits, NVDA requiere el Service Pack 2 o superior.
  - Para Windows Server 2003, NVDA requiere el Service Pack 1 o superior.
+ - Para Windows Vista, NVDA requiere del Service Pack 2 y la actualización [KB2763674 https://support.microsoft.com/en-us/kb/2763674].
+ Ambos deberían instalarse si todas las actualizaciones disponibles se aplicaron a través de Windows Update.
 - Memoria: 256 mb o más de RAM
 - Velocidad de Procesador: 1.0 ghz o superior
-- Aproximadamente 50 MB de espacio de almacenamiento.
+- Aproximadamente 90 MB de espacio de almacenamiento.
 -
 
 + Obteniendo e Instalando NVDA +
@@ -87,8 +89,8 @@ Utilizar la copia temporal de NVDA es también una opción, ej.: con propósitos
 Además de la incapacidad de iniciarse automáticamente durante y/o después de la autentificación, las copias portable y temporal de NVDA también tienen las siguientes restricciones:
 - La incapacidad para interactuar con aplicaciones que se ejecuten con privilegios de administrador, al menos que, por supuesto, el mismo NVDA también haya sido ejecutado con estos privilegios (no es recomendable).
 - La incapacidad de leer las pantallas del Control de Cuentas de Usuario (UAC) cuando trate de iniciar una aplicación con privilegios de administrador.
-- Windows 8: la incapacidad para soportar la entrada desde una pantalla táctil.
-- Windows 8: la incapacidad de proporcionar características tales como modo exploración y verbalización de caracteres al escribir en Windows Store apps.
+- Windows 8 y superior: la incapacidad para soportar la entrada desde una pantalla táctil.
+- Windows 8 y superior: la incapacidad de proporcionar características tales como modo exploración y verbalización de caracteres al escribir en Windows Store apps.
 
 
 ++ Instalando NVDA ++

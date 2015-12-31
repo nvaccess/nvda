@@ -3,6 +3,35 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.1 =
+
+== Nove značajke ==
+- Nove brajične tablice: poljska kompjutorska brajica, mongolski. (#5537, #5574)
+- Možete isključiti brajični pokazivač i izmjeniti njegov oblik koristeći novu opcije prikaži brajični pokazivač i promjeni izgled kursora u dijaloškom okviru brajične postavke. (#5198)
+
+
+== Izmjene ==
+- Sada je zadano isključeno izgovaranje isticanja. (#4920)
+- u listi elemenata  u Microsoft excelu, prečac za formule promjenjen je na alt+r tako da je sada različit od prečaca od polja filter (ne važi za hrvatski prijevod). (#5527)
+- nadograđen liblouis brajični prevoditelj na inačicu 2.6.5. (#5574)
+
+
+== ispravke grešaka ==
+- In iTunes 12, browse mode now updates correctly when a new page loads in the iTunes Store. (#5191)
+- In Internet Explorer and other MSHTML controls, moving to specific heading levels with single letter navigation now behaves as expected when the level of a heading is overridden for accessibility purposes (specifically, when aria-level overrides the level of an h tag). (#5434)
+- In Spotify, focus no longer frequently lands on "unknown" objects. (#5439)
+- Focus is now restored correctly when returning to Spotify from another application. (#5439)
+- When toggling between browse mode and focus mode, the mode is reported in braille as well as speech. (#5239)
+- The Start buttn on the Taskbar is no longer reported as a list and/or as selected in some versions of Windows. (#5178)
+- Messages such as "inserted" are no longer reported when composing messages in Microsoft Outlook. (#5486)
+- When using a braille display and text is selected on the current line (e.g. when searching in a text editor for text which occurs on the same line), the braille display will be scrolled if appropriate. (#5410)
+- NVDA no longer silently exits when closing a Windows command console with alt+f4 in Windows 10. (#5343)
+- In the Elements List in browse mode, when you change the type of element, the Filter by field is now cleared. (#5511)
+- In editable text in Mozilla applications, moving the mouse again reads the appropriate line, word, etc. as expected instead of the entire content. (#5535)
+- When moving the mouse in editable text in Mozilla applications, reading no longer stops at elements such as links within the word or line being read. (#2160, #5535)
+- In Internet Explorer, the shoprite.com website can now be read in browse mode instead of reporting as blank. (Specifically, malformed lang attributes are now handled gracefully.) (#5569)
+- In Microsoft Word, tracked changes such as "inserted" are no longer reported when track changes markup is not displayed. (#5566)
+
 
 = 2015.4 =
 Novosti u ovoj inačici ukljućuju unaprjeđivanje performansi u windows 10; uključivanje u centar za olakšani pristup u windowsima 8 i novijim; unaprjeđenja za microsoft excel, ukljućujući popisivanje i preimenovanje radnih listova te pristup zaključanim ćelijama u zaštićenim radnim listovima; i podrška za uređivanje teksta u obogaćenog teksta u firefoxu, google chromeu i mozilli thunderbird.
