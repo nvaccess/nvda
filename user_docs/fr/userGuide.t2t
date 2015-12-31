@@ -56,12 +56,14 @@ Ceci s'applique aussi bien à la version originale qu'aux copies modifiées de c
 Pour plus de détails, vous pouvez [lire l'intégralité de la licence http://www.gnu.org/licenses/gpl.html].
 
 + Configuration système requise +
-- Systèmes d'exploitation : toutes les variantes, 32 ou 64 bits, de Windows XP, Windows Vista, Windows 7, Windows 8 et Windows 10 (y compris les versions serveur).
+- Systèmes d'exploitation : toutes les variantes, 32 ou 64 bits, de Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 et Windows 10 (y compris les versions serveur).
  - Pour Windows XP 32 bits, NVDA requiert le service pack 2 ou plus récent.
  - Pour Windows Server 2003, NVDA requiert le service pack 1 ou plus récent.
+ - Pour Windows Vista, NVDA requiert le Service Pack 2 et la mise à jour [KB2763674 https://support.microsoft.com/en-us/kb/2763674].
+ Les deux devraient être installés si toutes les mises à jours disponibles ont été appliquées via Windows Update.
 - Mémoire : 256 Mo de RAM ou plus.
 - Vitesse processeur : 1.0 GHz ou plus.
-- Environ 50 MO d'espace disque.
+- Environ 90 MO d'espace disque.
 -
 
 + Se procurer et installer NVDA +
@@ -87,8 +89,8 @@ Utiliser la version temporaire de NVDA est aussi une option, par exemple pour un
 Outre l'impossibilité de démarrer automatiquement pendant ou après l'ouverture de session, les versions portables et temporaires de NVDA ont également les restrictions suivantes :
 - Impossible d'interagir avec les applications démarrées avec les privilèges administrateur, sauf bien sûr si NVDA a été démarré avec ces privilèges (non recommandé) ;
 - Impossible de lire les écrans de contrôle de compte utilisateur (UAC) lorsque l'on tente de démarrer une application avec les privilèges administrateur ;
-- Windows 8 : impossible d'utiliser un écran tactile comme support d'entrée ;
-- Windows 8 : fonctionnalités impossibles comme le mode navigation ou l'annonce des caractères saisis dans les applications du Windows Store.
+- Windows 8 et au-delà : impossible d'utiliser un écran tactile comme support d'entrée ;
+- Windows 8 et au-delà : fonctionnalités impossibles comme le mode navigation ou l'annonce des caractères saisis dans les applications du Windows Store.
 -
 
 ++ Installer NVDA ++
