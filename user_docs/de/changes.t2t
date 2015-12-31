@@ -6,13 +6,14 @@
 = 2016.1 =
 
 == neue Funktionen ==
-- neue Braille-Übersetzungstabelle: polnisches 8-Punkt-Computerbraille. (#5537)
+- neue Braille-Übersetzungstabellen: polnisches 8-Punkt-Computerbraille, mongolisch. (#5537 #5574)
 - Mit Hilfe zweier neuer Optionen im Braille-Einstellungsdialog kann nun die Form des Cursors auf der Braillezeile geändert Bzw. die Anzeige des Cursors ganz abgeschaltet werden. (#5198)
 
 
 == Änderungen ==
 - Die ansage betonter Texte ist nun standardmäßig ausgeschaltet. (#4920)
 - Die Tastenkombination für den Auswahlschalter "Formel" in der Elementliste von Excel wurde in alt+r geändert. Jetzt kollidiert sie nicht mehr mit alt+f für das Suchfeld. (#5527)
+- Liblouis Braille-Übersetzer auf 2.6.5 aktualisiert. (#5574)
 
 == Fehlerbehebungen ==
 - In Itunes 12 wird der Lese-Modus  korrekt aktualisiert, wenn eine Seite im itunes Store neu geladen wird. (#5191)
@@ -28,7 +29,7 @@
 - Wenn Sie in Mozilla-Anwendungen die Maus auf ein Eingabefeld bewegen, wird nicht mehr der gesamte Feldinhalt gelesen, sondern (wie erwartet) das Wort, die Zeile etc. unter dem Mauszeiger. (#5535)
 - Wenn Sie in Mozilla-Anwendungen die Maus innerhalb von Eingabefeldern bewegen, wird das Lesen nicht bei Elementen unterbrochen, die sich innerhalb der zu lesenden Einheit (Wort, Zeile etc.) befinden. (#2160, #5535)
 - Wenn Sie die Webseite shoprite.com mit dem Internet Explorer aufsuchen, wird deren Inhalt nun erwartungsgemäß angezeigt. (Hierbei werden insbesondere ungültig gesetzte Sprachenauszeichnungen besser verarbeitet.) (#5569)
-- in Microsoft Word werden Änderungen am Dokument nur dann durch NVDA dargestellt, wenn sie auch tatsächlich im Dokument ausgezeichnet werden. Hierzu zählen beispielsweise Meldungen über eingefügten oder gelöschten Text. (#5566)
+- in Microsoft Word werden Änderungen am Dokument nur dann durch NVDA mitgeteilt, wenn sie auch tatsächlich im Dokument ausgezeichnet werden. Hierzu zählen beispielsweise Meldungen über eingefügten oder gelöschten Text. (#5566)
 
 
 = 2015.4 =

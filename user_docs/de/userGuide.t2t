@@ -56,12 +56,14 @@ Dies bezieht sich sowohl auf das Original sowie auch auf modifizierte Kopieen di
 Für weitere Informationen können Sie entweder die [englischsprachige http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] Lizenz oder die inoffizielle [deutsche http://www.gnu.de/documents/gpl-2.0.de.html] Übersetzung lesen. Die englische Originalversion besitzt nach wie vor die offizielle Rechtsgültigkeit.
 
 + Systemvoraussetzungen +
-- Betriebssystem: Microsoft Windows XP, Windows Vista, Windows 7,Windows 8 und Windows 10 (alle 32-/64-Bit-Versionen, inkl. Server-Betriebssysteme).
- - Für Windows XP wird mindestens Service Pack 2 benötigt.
+- Betriebssystem: Microsoft Windows XP, Windows Vista, Windows 7,Windows 8, Windows 8.1 und Windows 10 (alle 32-/64-Bit-Versionen, inkl. Server-Betriebssysteme).
+  - Für Windows XP wird mindestens Service Pack 2 benötigt.
  - Für Windows Server 2003 wird mindestens Service Pack 1 benötigt.
+ - Für Windows Vista benötigt NVDA das Service Pack 2 und das Update [KB2763674 https://support.microsoft.com/en-us/kb/2763674].
+ Beides sollte bereits installiert sein, sofern Sie alle Aktualisierungen mittels Windows Update installiert haben.
 - Speicher: Mindestens 256 Megabyte RAM oder mehr.
 - Prozessorgeschwindigkeit: 1,0 Gigahertz oder schneller.
-- Mindestens 50 Megabyte Festplattenspeicher.
+- Mindestens 90 Megabyte Festplattenspeicher.
 -
 
 + NVDA beziehen und einrichten +
@@ -86,9 +88,9 @@ Die Ausführung der temporären Version kann zum Beispiel für demonstrationszwe
 ++ Einschränkungen der portablen und temporären Version von NVDA ++
 Abgesehen vom fehlenden automatischen Starten während und/oder nach der Anmeldung besitzen portable und temporäre Versionen von NVDA folgende Einschränkungen:
 - NVDA kann nicht auf Anwendungen zugreifen, die mit Administratorrechten ausgeführt werden; eine Ausnahme stellt hier der Fall dar, dass NVDA ebenfalls mit Administratorrechten ausgeführt wird. Dies wird jedoch nicht empfohlen.
-- Die Dialoge der Benutzerkontensteuerung können nicht ausgelesen werden.
-- TouchScreens werden unter Windows 8 nicht unterstützt.
-- Windows 8: In Windows-Store-Anwendungen funktioniert der Lesemodus nicht. Gleiches gilt auch für die Ansage eingegebener Zeichen.
+- Die Dialoge der Benutzerkontensteuerung können nicht ausgelesen werden, wenn Sie bspw. ein Programm mit administrativen Rechten ausführen möchten.
+- TouchScreens werden unter Windows 8 und neuer nicht unterstützt.
+- Windows 8 und neuer: In Windows-Store-Anwendungen funktioniert der Lesemodus nicht. Gleiches gilt auch für die Ansage eingegebener Zeichen.
 -
 
 ++ NVDA installieren ++
