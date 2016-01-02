@@ -7,6 +7,10 @@ import os
 import ctypes
 from glob import glob
 
+class AutoFreeCDLL(ctypes.CDLL):
+	def __del__(self):
+		ctypes.windll.kernel32.FreeLibrary(self._handle)
+
 synthDriversDir=sourceDir.Dir('synthDrivers')
 espeakRepo=Dir("#include/espeak")
 espeakSrcDir=espeakRepo.Dir('src')
@@ -48,13 +52,11 @@ def espeak_compilePhonemeData_buildAction(target,source,env):
 	# This is because it writes to stderr but doesn't flush it.
 	# Unfortunately, there's no way we can flush it or use a different stream
 	# because our eSpeak statically links the CRT.
-	espeak=ctypes.cdll.LoadLibrary(espeakLib[0].abspath)
-	sr=espeak.espeak_Initialize(0,0,espeakRepo.abspath,0x8000)
+	espeak=AutoFreeCDLL(espeakLib[0].abspath)
+	espeak.espeak_ng_InitializePath(espeakRepo.abspath)
 	espeak.espeak_ng_CompileIntonation(None)
-	espeak.espeak_ng_CompilePhonemeData(sr,None)
+	espeak.espeak_ng_CompilePhonemeData(22050,None)
 	espeak.espeak_Terminate()
-	# ctypes doesn't ever unload dlls.
-	ctypes.windll.kernel32.FreeLibrary(espeak._handle)
 
 env['BUILDERS']['espeak_compilePhonemeData']=Builder(action=env.Action(espeak_compilePhonemeData_buildAction,"Compiling phoneme data"),emitter=espeak_compilePhonemeData_buildEmitter)
 
@@ -63,7 +65,7 @@ def espeak_compileDict_buildAction(target,source,env):
 	# This is because it writes to stderr but doesn't flush it.
 	# Unfortunately, there's no way we can flush it or use a different stream
 	# because our eSpeak statically links the CRT.
-	espeak=ctypes.cdll.LoadLibrary(espeakLib[0].abspath)
+	espeak=AutoFreeCDLL(espeakLib[0].abspath)
 	espeak.espeak_Initialize(0,0,target[0].Dir('..').abspath,0x8000)
 	try:
 		lang=source[0].name.split('_')[0]
@@ -77,8 +79,6 @@ def espeak_compileDict_buildAction(target,source,env):
 			return
 	finally:
 		espeak.espeak_Terminate()
-		# ctypes doesn't ever unload dlls.
-		ctypes.windll.kernel32.FreeLibrary(espeak._handle)
 
 # Add some compatibility files specific to windows builds
 env.Install(espeakRepo.Dir('src/libespeak-ng'),'access.c')
