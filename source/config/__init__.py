@@ -510,7 +510,9 @@ class ConfigManager(object):
 		import synthDriverHandler
 		synthDriverHandler.handleConfigProfileSwitch()
 		import braille
+		import brailleInput
 		braille.handler.handleConfigProfileSwitch()
+		brailleInput.handler.handleConfigProfileSwitch()
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")

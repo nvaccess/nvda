@@ -21,9 +21,10 @@ import inputCore
 
 #: The directory in which liblouis braille tables are located.
 TABLES_DIR = r"louis\tables"
+UNICODE_BRAILLE_TABLE = os.path.join(TABLES_DIR, "braille-patterns.cti")
 
-#: The table file names and information.
-TABLES = (
+#: The braille table file names and information.
+tables = [
 	# (fileName, displayName, supportsInput),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
@@ -283,10 +284,16 @@ TABLES = (
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("zh-tw.ctb", _("Chinese (Taiwan, Mandarin)"), False),
-)
+]
 
-#: Braille tables that support input (only computer braille tables yet).
-INPUT_TABLES = tuple(t for t in TABLES if t[2])
+def _getTablePath(table):
+	if not os.path.isabs(table):
+		# This is a stock table.
+		return os.path.join(TABLES_DIR, table)
+	return table
+
+def _getTableList(table):
+	return [_getTablePath(table), UNICODE_BRAILLE_TABLE]
 
 roleLabels = {
 	# Translators: Displayed in braille for an object which is an
@@ -472,9 +479,7 @@ class Region(object):
 			mode |= louis.compbrlAtCursor
 		text=unicode(self.rawText).replace('\0','')
 		braille, self.brailleToRawPos, self.rawToBraillePos, brailleCursorPos = louis.translate(
-			[os.path.join(TABLES_DIR, config.conf["braille"]["translationTable"]),
-				"braille-patterns.cti"],
-			text,
+			handler.translationTableList, text,
 			# liblouis mutates typeform if it is a list.
 			typeform=tuple(self.rawTextTypeforms) if isinstance(self.rawTextTypeforms, list) else self.rawTextTypeforms,
 			mode=mode, cursorPos=self.cursorPos or 0)
@@ -1376,6 +1381,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def __init__(self):
 		self.display = None
 		self.displaySize = 0
+		self.translationTableList = []
 		self.mainBuffer = BrailleBuffer(self)
 		self.messageBuffer = BrailleBuffer(self)
 		self._messageCallLater = None
@@ -1453,6 +1459,19 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			log.error("Error initializing display driver", exc_info=True)
 			self.setDisplayByName("noBraille", isFallback=True)
 			return False
+
+	def setTranslationTable(self, table, isFallback=False):
+		tableList = _getTableList(table)
+		if not isFallback:
+			try:
+				louis.checkTable(tableList)
+			except:
+				log.error("Error compiling translation tables", exc_info=True)
+				self.setTranslationTable("en-us-comp8.ctb", isFallback=True)
+				return False
+			config.conf["braille"]["translationTable"] = table
+		self.translationTableList = tableList
+		return True
 
 	def _updateDisplay(self):
 		if self._cursorBlinkTimer:
@@ -1642,6 +1661,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		display = config.conf["braille"]["display"]
 		if display != self.display.name:
 			self.setDisplayByName(display)
+		self.setTranslationTable(config.conf["braille"]["translationTable"])
 
 def initialize():
 	global handler
@@ -1649,6 +1669,7 @@ def initialize():
 	log.info("Using liblouis version %s" % louis.version())
 	handler = BrailleHandler()
 	handler.setDisplayByName(config.conf["braille"]["display"])
+	handler.setTranslationTable(config.conf["braille"]["translationTable"])
 
 	# Update the display to the current focus/review position.
 	if not handler.enabled or not api.getDesktopObject():
