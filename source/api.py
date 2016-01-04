@@ -317,8 +317,15 @@ def getStatusBar():
 	if not location:
 		return None
 	left, top, width, height = location
-	bottom = top + height - 1
-	obj = getDesktopObject().objectFromPoint(left, bottom)
+	x=1
+	while x<12:
+		bottom = top + height - x
+		if left<0:
+			left=0
+		obj = getDesktopObject().objectFromPoint(left, bottom)
+		if obj and obj.role == controlTypes.ROLE_STATUSBAR:
+			break
+		x=x+2
 
 	# We may have landed in a child of the status bar, so search the ancestry for a status bar.
 	while obj and not obj.role == controlTypes.ROLE_STATUSBAR:

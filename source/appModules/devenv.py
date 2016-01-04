@@ -145,19 +145,6 @@ class AppModule(appModuleHandler.AppModule):
 		serviceProvider = self._getDTE().QueryInterface(comtypes.IServiceProvider)
 		self._textManager = serviceProvider.QueryService(SVsTextManager, IVsTextManager)
 		return self._textManager
-	
-	def script_reportStatusLine(self, gesture):
-		list = api.getForegroundObject().lastChild.children
-		statusBarText=""
-		for i in range(0,len(list)):
-			statusBarText+=list[i].name
-		ui.message(_("{statusBarText}").format(statusBarText=statusBarText))
-		 		
-	__gestures = {
-		"kb(desktop):NVDA+end": "reportStatusLine",
-		"kb(laptop):NVDA+shift+end": "reportStatusLine",
-		}
-
 
 class VsTextEditPaneTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _InformUnsupportedWindowType(self,type):
