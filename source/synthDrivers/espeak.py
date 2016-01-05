@@ -17,7 +17,7 @@ from logHandler import log
 
 class SynthDriver(SynthDriver):
 	name = "espeak"
-	description = "eSpeak"
+	description = "eSpeak NG"
 
 	supportedSettings=(
 		SynthDriver.VoiceSetting(),
