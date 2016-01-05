@@ -51,7 +51,7 @@ For reference, the following dependencies are included in Git submodules:
 * [comtypes](http://sourceforge.net/projects/comtypes/), version 0.6.2
 * [wxPython](http://www.wxpython.org/), version 3.0.2.0
 * [Python Windows Extensions](http://sourceforge.net/projects/pywin32/ ), build 218
-* [eSpeak](http://espeak.sourceforge.net/), version 1.48.04
+* [eSpeak NG](http://www.github.com/espeak-ng/espeak-ng/), Commit 0d0bb33
 * [IAccessible2](http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2), version 1.3
 * [ConfigObj](http://www.voidspace.org.uk/python/configobj.html), version 4.6.0
 * [liblouis](http://www.liblouis.org/), version 2.6.4
