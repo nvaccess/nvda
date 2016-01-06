@@ -9,6 +9,7 @@
 - New braille translation tables: Polish 8 dot computer braille, Mongolian. (#5537, #5574)
 - You can turn off the braille cursor and change its shape using the new Show cursor and Cursor shape options in the Braille Settings dialog. (#5198)
 - NVDA can now connect to a HIMS Smart Beetle braille display via Bluetooth. (#5607)
+- NVDA can optionally lower the volume of other sounds when installed on Windows 8 and later. This can be configured using the Audio ducking mode option in the NVDA General Settings dialog or by pressing NVDA+shift+d. (#3830, #5575)
 
 
 == Changes ==
@@ -36,6 +37,12 @@
 - When a toggle button is focused, NVDA now reports when it is changed from pressed to not pressed. (#5441)
 - Reporting of mouse shape changes again works as expected. (#5595)
 - When speaking line indentation, non-breaking spaces are now treated as normal spaces. Previously, this could cause announcements such as "space space space" instead  of "3 space". (#5610)
+
+
+== Changes for Developers ==
+- The new audioDucking.AudioDucker class allows code which outputs audio to indicate when background audio should be ducked. (#3830)
+- nvwave.WavePlayer's constructor now has a wantDucking keyword argument which specifies whether background audio should be ducked while audio is playing. (#3830)
+ - When this is enabled (which is the default), it is essential that WavePlayer.idle be called when appropriate.
 
 
 = 2015.4 =

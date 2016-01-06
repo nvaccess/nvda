@@ -10,9 +10,13 @@
 import threading
 from ctypes import *
 from ctypes.wintypes import *
+import time
+import wx
 import winKernel
 import wave
 import config
+import audioDucking
+from logHandler import log
 
 __all__ = (
 	"WavePlayer", "getOutputDeviceNames", "outputDeviceIDToName", "outputDeviceNameToID",
@@ -94,9 +98,10 @@ class WavePlayer(object):
 	To use, construct an instance and feed it waveform audio using L{feed}.
 	"""
 	#: A lock to prevent WaveOut* functions from being called simultaneously, as this can cause problems even if they are for different HWAVEOUTs.
-	_global_waveout_lock = threading.RLock()
+	_global_waveout_lock = threading.RLock()	
+	_audioDucker=None
 
-	def __init__(self, channels, samplesPerSec, bitsPerSample, outputDevice=WAVE_MAPPER, closeWhenIdle=True):
+	def __init__(self, channels, samplesPerSec, bitsPerSample, outputDevice=WAVE_MAPPER, closeWhenIdle=True,wantDucking=True):
 		"""Constructor.
 		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
 		@type channels: int
@@ -108,6 +113,8 @@ class WavePlayer(object):
 		@type outputDevice: int or basestring
 		@param closeWhenIdle: If C{True}, close the output device when no audio is being played.
 		@type closeWhenIdle: bool
+		@param wantDucking: if true then background audio will be ducked on Windows 8 and higher
+		@type wantDucking: bool
 		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
 		@raise WindowsError: If there was an error opening the audio output device.
 		"""
@@ -117,6 +124,8 @@ class WavePlayer(object):
 		if isinstance(outputDevice, basestring):
 			outputDevice = outputDeviceNameToID(outputDevice, True)
 		self.outputDeviceID = outputDevice
+		if wantDucking and audioDucking.isAudioDuckingSupported():
+			self._audioDucker=audioDucking.AudioDucker()
 		#: If C{True}, close the output device when no audio is being played.
 		#: @type: bool
 		self.closeWhenIdle = closeWhenIdle
@@ -156,6 +165,8 @@ class WavePlayer(object):
 		@type data: str
 		@raise WindowsError: If there was an error playing the audio.
 		"""
+		if self._audioDucker and not self._audioDucker.enable():
+			return
 		whdr = WAVEHDR()
 		whdr.lpData = data
 		whdr.dwBufferLength = len(data)
@@ -195,6 +206,11 @@ class WavePlayer(object):
 		@param switch: C{True} to pause playback, C{False} to unpause.
 		@type switch: bool
 		"""
+		if self._audioDucker and self._waveout:
+			if switch:
+				self._audioDucker.disable()
+			else:
+				self._audioDucker.enable()
 		with self._waveout_lock:
 			if not self._waveout:
 				return
@@ -218,10 +234,12 @@ class WavePlayer(object):
 					return
 				if self.closeWhenIdle:
 					self._close()
+			if self._audioDucker: self._audioDucker.disable()
 
 	def stop(self):
 		"""Stop playback.
 		"""
+		if self._audioDucker: self._audioDucker.disable()
 		with self._waveout_lock:
 			if not self._waveout:
 				return
@@ -317,7 +335,7 @@ def playWaveFile(fileName, async=True):
 	if f is None: raise RuntimeError("can not open file %s"%fileName)
 	if fileWavePlayer is not None:
 		fileWavePlayer.stop()
-	fileWavePlayer = WavePlayer(channels=f.getnchannels(), samplesPerSec=f.getframerate(),bitsPerSample=f.getsampwidth()*8, outputDevice=config.conf["speech"]["outputDevice"])
+	fileWavePlayer = WavePlayer(channels=f.getnchannels(), samplesPerSec=f.getframerate(),bitsPerSample=f.getsampwidth()*8, outputDevice=config.conf["speech"]["outputDevice"],wantDucking=False)
 	fileWavePlayer.feed(f.readframes(f.getnframes()))
 	if async:
 		if fileWavePlayerThread is not None:

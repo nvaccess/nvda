@@ -83,6 +83,10 @@ confspec = ConfigObj(StringIO(
 		beepForCapitals = boolean(default=false)
 		useSpellingFunctionality = boolean(default=true)
 
+# Audio settings
+[audio]
+	audioDuckingMode = integer(default=0)
+
 # Braille settings
 [braille]
 	display = string(default=noBraille)
@@ -511,6 +515,8 @@ class ConfigManager(object):
 		synthDriverHandler.handleConfigProfileSwitch()
 		import braille
 		braille.handler.handleConfigProfileSwitch()
+		import audioDucking
+		audioDucking.handleConfigProfileSwitch()
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
