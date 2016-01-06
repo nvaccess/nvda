@@ -33,7 +33,6 @@ UIA_PositionInSetPropertyId=30152
 UIA_SizeOfSetPropertyId=30153
 
 badUIAWindowClassNames=[
-	"Microsoft.IME.CandidateWindow.View",
 	"SysTreeView32",
 	"WuDuiListView",
 	"ComboBox",

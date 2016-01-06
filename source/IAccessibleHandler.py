@@ -566,9 +566,6 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 				window=tempWindow
 
 		windowClassName=winUser.getClassName(window)
-		# Modern IME candidate list windows fire menu events which confuse us and can't be used properly inconjunction with input composition support
-		if windowClassName=="Microsoft.IME.UIManager.CandidateWindow.Host" and eventID in MENU_EVENTIDS:
-			return
 		#At the moment we can't handle show, hide or reorder events on Mozilla Firefox Location bar,as there are just too many of them
 		#Ignore show, hide and reorder on MozillaDropShadowWindowClass windows.
 		if windowClassName.startswith('Mozilla') and eventID in (winUser.EVENT_OBJECT_SHOW,winUser.EVENT_OBJECT_HIDE,winUser.EVENT_OBJECT_REORDER) and childID<0:
@@ -781,8 +778,7 @@ def processDestroyWinEvent(window,objectID,childID):
 	# so can't use generic focus correction. (#2695)
 	focus=api.getFocusObject()
 	from NVDAObjects.IAccessible.mscandui import BaseCandidateItem
-	windowClassName=winUser.getClassName(window)
-	if childID==0 and isinstance(focus,BaseCandidateItem) and window==focus.windowHandle and not eventHandler.isPendingEvents("gainFocus"):
+	if objectID==0 and childID==0 and isinstance(focus,BaseCandidateItem) and window==focus.windowHandle and not eventHandler.isPendingEvents("gainFocus"):
 		obj=focus.container
 		if obj:
 			eventHandler.queueEvent("gainFocus",obj)
