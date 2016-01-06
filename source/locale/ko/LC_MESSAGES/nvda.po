@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-10 19:10+1000\n"
-"PO-Revision-Date: 2015-12-12 15:12-0800\n"
+"POT-Creation-Date: 2015-12-21 19:08+1000\n"
+"PO-Revision-Date: 2015-12-27 06:35+0900\n"
 "Last-Translator: Dong hui Park <hi@aheu.org>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.7.1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -405,6 +405,11 @@ msgstr "마니푸리어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "몽골리아어"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "마라타어 1종"
 
@@ -662,6 +667,18 @@ msgstr "clk"
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "( )"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "7-8점"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "8점"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "점자 셀 전체"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -2069,7 +2086,7 @@ msgstr "버튼"
 
 #. Translators: Text used to identify menu bar of a program.
 msgid "menu bar"
-msgstr "메뉴바"
+msgstr "메뉴표시줄"
 
 #. Translators: Used to identify a menu item such as an item in file menu.
 msgid "menu item"
@@ -2098,11 +2115,11 @@ msgstr "그래픽"
 
 #. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
 msgid "help balloon"
-msgstr "help balloon"
+msgstr "도움말 표시란"
 
 #. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
 msgid "tool tip"
-msgstr "툴팁"
+msgstr "도구 설명"
 
 #. Translators: Identifies a link in webpage documents.
 msgid "link"
@@ -2123,11 +2140,11 @@ msgstr "탭"
 
 #. Translators: Identifies a tab control such as webpage tabs in web browsers.
 msgid "tab control"
-msgstr "tab control"
+msgstr "탭 컨트롤"
 
 #. Translators: Identifies a slider such as volume slider.
 msgid "slider"
-msgstr "slider"
+msgstr "슬라이더"
 
 #. Translators: Identifies a progress bar such as NvDA update progress.
 msgid "progress bar"
@@ -2135,7 +2152,7 @@ msgstr "진행률 막대"
 
 #. Translators: Identifies a scroll bar.
 msgid "scroll bar"
-msgstr "스크롤바"
+msgstr "스크롤 막대"
 
 #. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
 msgid "status bar"
@@ -2163,7 +2180,7 @@ msgstr "프레임"
 
 #. Translators: Identifies a tool bar.
 msgid "tool bar"
-msgstr "툴바"
+msgstr "도구 모음"
 
 #. Translators: Identifies a column header in tables and spreadsheets.
 msgid "column header"
@@ -2175,7 +2192,7 @@ msgstr "행 머리말"
 
 #. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 msgid "drop down button"
-msgstr "펼침 버튼"
+msgstr "드롭다운 단추"
 
 #. Translators: Identifies an element.
 msgid "clock"
@@ -2241,7 +2258,7 @@ msgstr "문서"
 
 #. Translators: Identifies an animation in a document or a webpage.
 msgid "animation"
-msgstr "에니메이션"
+msgstr "애니메이션"
 
 #. Translators: Identifies an application in webpages.
 msgid "application"
@@ -2330,7 +2347,7 @@ msgstr "페이지"
 
 #. Translators: Identifies a radio menu item.
 msgid "radio menu item"
-msgstr "라디오 메뉴"
+msgstr "라디오 메뉴 항목"
 
 #. Translators: Identifies a layered pane.
 msgid "layered pane"
@@ -2371,7 +2388,7 @@ msgstr "section"
 
 #. Translators: Identifies a shape.
 msgid "shape"
-msgstr "shape"
+msgstr "도형"
 
 #. Translators: Identifies a split pane.
 msgid "split pane"
@@ -3972,6 +3989,31 @@ msgstr "점자와 %s 커서 연계됨"
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "점자디스플레이가 포커스 또는 리뷰 위치를 딸아갈 것인지 토글합니다. "
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "점자 커서 해제"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "점자 커서 출력"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "점자 커서를 토글합니다"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "점자 커서 꺼져있음"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "점자 커서 %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "점자 커서 모양을 토글합니다"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -7060,12 +7102,12 @@ msgstr "경고음 및 말하기"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report &tooltips"
-msgstr "툴팁 알림 (&T)"
+msgstr "도구 설명 알림 (&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report &help balloons"
-msgstr "풍선 도움말 알림 (&H)"
+msgstr "도움말 표시란 알림 (&H)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -7378,9 +7420,17 @@ msgstr "점자 입력 표기법 (&I)"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "커서 위치의 점자 단어 풀이 (&X)"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "&Show cursor"
+msgstr "점자 커서 출력 (&S)"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "커서 깜박이 시간 (ms) (&C)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "커서 모양: (&S)"
 
 # The translation literally reads, "message alert display time". Borrowed from
 # Braille Sense user guide.

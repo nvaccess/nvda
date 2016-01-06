@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-02 17:08+1000\n"
-"PO-Revision-Date: 2015-11-03 08:56+0100\n"
+"POT-Creation-Date: 2015-12-21 19:08+1000\n"
+"PO-Revision-Date: 2015-12-24 15:42+0100\n"
 "Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -405,6 +405,11 @@ msgstr "Manipuri Puno pismo"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "Mongolski"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "Marati puno pismo"
 
@@ -452,6 +457,11 @@ msgstr "Nepali puno pismo"
 #. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "Oriya puno pismo"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "poljska kompjutorska brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -657,6 +667,18 @@ msgstr "klik."
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "( )"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "sedma i osma točkica"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "osma točkica"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "svih osam točkica"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -4015,6 +4037,31 @@ msgstr "Brajica povezana na %s"
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Naizmjence uključi povezivanje brajice između položaja fokusa i pregleda"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "isključen brajični pokazivač"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "uključen brajični pokazivač"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "uključuje ili isključuje brajični pokazivać"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "brajični pokazivač je uključen"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "brajični pokazivač %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "prebacuje između oblika brajičnih pokazivača"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -7450,9 +7497,17 @@ msgstr "&Ulazna tablica:"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "Pr&oširi na kompjutorsku brajicu za riječ na položaju kursora"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "&Show cursor"
+msgstr "po&kaži pokazivač"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "Brzina titraja kursora (u milisekundama)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "&izgled pokazivača:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7655,36 +7710,43 @@ msgstr "pozovi"
 msgid "Desktop"
 msgstr "Radna površina"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "početna boja"
+
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "nepoznata boja"
 
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Ova se ćelija ne može urediti"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "Prikazuje popis grafova, ćelija sa komentarima i ćelija sa formulama"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "prikazuje razne vrste elemenata u ovoj radnoj knjizi"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
-msgstr "&graf"
+msgid "&Charts"
+msgstr "&grafovi"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
-msgstr "&komentar"
+msgid "C&omments"
+msgstr "&komentari"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "&Formula"
+msgid "Fo&rmulas"
+msgstr "&formule"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
-msgstr "&radni list"
+msgid "&Sheets"
+msgstr "&radni listovi"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -8682,6 +8744,15 @@ msgstr "HIMS Braille Sense/Braille EDGE serija"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr ""
+#~ "Prikazuje popis grafova, ćelija sa komentarima i ćelija sa formulama"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "početna boja"
 
 #~ msgid "selecting %s"
 #~ msgstr "odabir %s"

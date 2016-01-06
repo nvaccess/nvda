@@ -6,13 +6,15 @@ Quoi de Neuf dans NVDA
 = 2016.1 =
 
 == Nouvelles Fonctionnalités ==
-- Nouvelle table de conversion braille  : Polonais braille informatique 8 points. (#5537)
+- Nouvelle table de conversion braille  : Polonais braille informatique 8 points, Mongol. (#5537, #5574)
+- Vous pouvez désactiver le curseur braille et en changer la forme en utilisant les nouvelles options Montrer le curseur et Forme du curseur dans le dialogue Paramètres Braille. (#5198)
 
 
 == Changements ==
 - L'annonce de l'emphase est maintenant désactivée par défaut. (#4920)
 - Dans la liste d'éléments sous Microsoft Excel, le raccourci pour les formule a été changé en alt+r pour qu'il soit différent du raccourci pour le champ de filtre. (#5527)
-
+- Le traducteur braille liblouis a été mis à jour à la version 2.6.5. (#5574)
+ 
 
 == Corrections de Bogues ==
 - Sous iTunes 12, le mode navigation se met maintenant à jour correctement quand une nouvelle page est chargée dans l'iTunes Store. (#5191)
@@ -24,6 +26,11 @@ Quoi de Neuf dans NVDA
 - Des messages tels que "inséré" ne sont plus annoncés quand on compose des messages sous Microsoft Outlook. (#5486)
 - Quand on utilise un afficheur braille et que du texte est sélectionné sur la ligne courante (ex : quand on recherche dans un éditeur de texte un texte apparaissant sur la même ligne), l'afficheur braille défilera si nécessaire. (#5410)
 - NVDA ne s'arrête plus silencieusement quand on ferme une console de commandes Windows par alt+f4 sous Windows 10. (#5343)
+- Dans la liste d'éléments en mode navigation, quand on change de type d'élément, le champ de filtrage est maintenant remis à blanc. (#5511)
+- Dans le texte éditable des applications Mozilla, déplacer la souris lit à nouveau la ligne appropriée, le mot, etc. comme prévu au lieu de tout le contenu. (#5535)
+- Quand on déplace la souris dans un texte éditable d'une application Mozilla, la lecture ne s'arrête plus sur les éléments tels que les liens dans le mot ou la ligne en cours de lecture. (#2160, #5535)
+- Sous Internet Explorer, le site shoprite.com peut maintenant être lu en mode navigation et n'est plus annoncé comme vide. (Spécifiquement, les attributs lang malformés sont maintenant élégamment gérés.) (#5569)
+- Sous Microsoft Word, les demandes de modification telles que "inséré" ne sont plus annoncées quand l'indicateur de demandes de modification n'est pas affiché. (#5566)
 
 
 = 2015.4 =

@@ -8,12 +8,14 @@
 == New Features ==
 - New braille translation tables: Polish 8 dot computer braille, Mongolian. (#5537, #5574)
 - You can turn off the braille cursor and change its shape using the new Show cursor and Cursor shape options in the Braille Settings dialog. (#5198)
+- NVDA can now connect to a HIMS Smart Beetle braille display via Bluetooth. (#5607)
 
 
 == Changes ==
 - Reporting of emphasis is now disabled by default. (#4920)
 - In the Elements List dialog in Microsoft Excel, the shortcut for Formulas has been changed to alt+r so that it is different to the shortcut for the Filter field. (#5527)
 - Updated liblouis braille translator to 2.6.5. (#5574)
+- The word "text" is no longer reported when moving the focus or review cursor to text objects. (#5452)
 
 
 == Bug Fixes ==
@@ -31,6 +33,9 @@
 - When moving the mouse in editable text in Mozilla applications, reading no longer stops at elements such as links within the word or line being read. (#2160, #5535)
 - In Internet Explorer, the shoprite.com website can now be read in browse mode instead of reporting as blank. (Specifically, malformed lang attributes are now handled gracefully.) (#5569)
 - In Microsoft Word, tracked changes such as "inserted" are no longer reported when track changes markup is not displayed. (#5566)
+- When a toggle button is focused, NVDA now reports when it is changed from pressed to not pressed. (#5441)
+- Reporting of mouse shape changes again works as expected. (#5595)
+- When speaking line indentation, non-breaking spaces are now treated as normal spaces. Previously, this could cause announcements such as "space space space" instead  of "3 space". (#5610)
 
 
 = 2015.4 =
