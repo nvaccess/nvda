@@ -330,7 +330,7 @@ class SynthesizerDialog(SettingsDialog):
 		settingsSizer.Add(deviceListSizer,border=10,flag=wx.BOTTOM)
 		duckingListSizer=wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: This is a label for the audio ducking combo box in the Audio Settings dialog 
-		duckingListLabel=wx.StaticText(self,-1,label=_("Audio &Ducking mode:"))
+		duckingListLabel=wx.StaticText(self,-1,label=_("Audio &ducking mode:"))
 		duckingListID=wx.NewId()
 		self.duckingList=wx.Choice(self,duckingListID,choices=audioDucking.audioDuckingModes)
 		index=config.conf['audio']['audioDuckingMode']

@@ -84,7 +84,7 @@ class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
 	"""
 
-	def script_toggleAudioDuckingMode(self,gesture):
+	def script_cycleAudioDuckingMode(self,gesture):
 		if not audioDucking.isAudioDuckingSupported():
 			# Translators: a message when audio ducking is not supported on this machine
 			ui.message(_("Audio ducking not supported"))
@@ -96,8 +96,8 @@ class GlobalCommands(ScriptableObject):
 		config.conf['audio']['audioDuckingMode']=nextMode
 		nextLabel=audioDucking.audioDuckingModes[nextMode]
 		ui.message(nextLabel)
-	# Translators: input help message for toggleAudioDuckingMode script
-	script_toggleAudioDuckingMode.__doc__=_("Toggles whether NVDA's speech and sounds should duck other audio, or other audio should be ducked all the time, or audio should never be ducked")
+	# Translators: Describes the Cycle audio ducking mode command.
+	script_cycleAudioDuckingMode.__doc__=_("Cycles through audio ducking modes which determine when NVDA lowers the volume of other sounds")
 
 	def script_toggleInputHelp(self,gesture):
 		inputCore.manager.isInputHelpActive = not inputCore.manager.isInputHelpActive
@@ -2020,7 +2020,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+control+p": "activateConfigProfilesDialog",
 
 		# Settings
-		"kb:NVDA+shift+d":"toggleAudioDuckingMode",
+		"kb:NVDA+shift+d":"cycleAudioDuckingMode",
 		"kb:NVDA+2": "toggleSpeakTypedCharacters",
 		"kb:NVDA+3": "toggleSpeakTypedWords",
 		"kb:NVDA+4": "toggleSpeakCommandKeys",
