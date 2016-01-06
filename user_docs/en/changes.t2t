@@ -10,6 +10,8 @@
 - You can turn off the braille cursor and change its shape using the new Show cursor and Cursor shape options in the Braille Settings dialog. (#5198)
 - NVDA can now connect to a HIMS Smart Beetle braille display via Bluetooth. (#5607)
 - NVDA can optionally lower the volume of other sounds when installed on Windows 8 and later. This can be configured using the Audio ducking mode option in the NVDA General Settings dialog or by pressing NVDA+shift+d. (#3830, #5575)
+- Support for the APH Refreshabraille in HID mode and the Baum VarioUltra and Pronto! when connected via USB. (#5609)
+- Support for HumanWare Brailliant BI/B braille displays when the protocol is set to OpenBraille. (#5612)
 
 
 == Changes ==
@@ -37,12 +39,19 @@
 - When a toggle button is focused, NVDA now reports when it is changed from pressed to not pressed. (#5441)
 - Reporting of mouse shape changes again works as expected. (#5595)
 - When speaking line indentation, non-breaking spaces are now treated as normal spaces. Previously, this could cause announcements such as "space space space" instead  of "3 space". (#5610)
+- When closing a modern Microsoft input method candidate list, focus is correctly restored to either the input composition or the underlying document. (#4145)
 
 
 == Changes for Developers ==
 - The new audioDucking.AudioDucker class allows code which outputs audio to indicate when background audio should be ducked. (#3830)
 - nvwave.WavePlayer's constructor now has a wantDucking keyword argument which specifies whether background audio should be ducked while audio is playing. (#3830)
  - When this is enabled (which is the default), it is essential that WavePlayer.idle be called when appropriate.
+- Enhanced I/O for braille displays: (#5609)
+ - Thread-safe braille display drivers can declare themselves as such using the BrailleDisplayDriver.isThreadSafe attribute. A driver must be thread-safe to benefit from the following features.
+ - Data is written to thread-safe braille display drivers in the background, thus improving performance.
+ - hwIo.Serial extends pyserial to call a callable when data is received instead of drivers having to poll.
+ - hwIo.Hid provides support for braille displays communicating via USB HID.
+ - hwPortUtils and hwIo can optionally provide detailed debug logging, including devices found and all data sent and received.
 
 
 = 2015.4 =
