@@ -56,12 +56,14 @@ Ovo se primjenjuje na originalni i izmjenjeni softver, kao i na rad koji je iz t
 Za više pojedinosti, možete [pogledati cijelu licencu. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Zahtjevi Sustava +
-- Operacijski sustavi: sve 32-bitne i 64-bitne inačice Windows XP, Windows Vista, Windows 7, Windows10, i Windows 8 (uključujući Poslužiteljske operacijske sustave)
+- Operacijski sustavi: sve 32-bitne i 64-bitne inačice Windows XP, Windows Vista, Windows 7, Windows10, windows 8.1, i Windows 8 (uključujući Poslužiteljske operacijske sustave)
  - Za Windows XP 32-bitni operacijski sustav, NVDA zahtjeva Servisni paket 2 ili viši.
  - Za Windows Server 2003, NVDA zahtjeva Servisni paket 1 ili viši.
+- za windowse Vista, NVDA zahtjeva servisni paket 2 i [KB2763674 https://support.microsoft.com/en-us/kb/2763674] update.
+ Obje komponente moraju biti instalirane ako su sve nadogradnje preuzete preko windows update servisa.
 - Memorija: 256 mb ili više RAM-a
 - Brzina procesora: 1.0 ghz ili više
-- Oko 50 MB prostora na hard disku.
+- Oko 90 MB prostora na hard disku.
 -
 
 + Preuzimanje i postavljanje NVDA +
@@ -87,8 +89,8 @@ Korištenje privremene kopije također je moguće (npr. za potrebe prezentacije)
 Osim nemogućnosti automatskog pokretanja tokom i/ili nakon prijave, prijenosne i privremene kopije NVDA također imaju slijedeća ograničenja:
 - Nemogućnost korištenja aplikacija koje zahtijevaju administratorska prava, ako naravno sam NVDA nije pokrenut sa istim pravima (ne preporučuje se).
 - Nemogućnost čitanja zaslona kontrole korisničkog računa (UAC) kada se pokušava pokrenuti aplikacija sa administratorskim pravima.
-- Windows 8: nemogućnost podrške unosa za zaslone osjetljive na dodir.
-- Windows 8: Nemogućnost omogućavanja značajki kao što su to način pregleda i izgovor upisanih znakova u aplikacijama koje su kupljene u windows prodavaonici.
+- Windows 8 i noviji: nemogućnost unosa znakova sa zaslona osjetljivog na dodir.
+- Windows 8 i noviji: nemogućnost pružanja značajki poput načina pregleda i  izgovora znakova u aplikacijama kupljenim u windowsovoj trgovini.
 -
 
 ++ Instaliranje NVDA ++
@@ -879,16 +881,24 @@ Možete se kretati između brajičnih tablica koristeći kursorske tipke.
 Uz prethodnu opciju, pronači ćete opciju za promjenu ulazne tablice koja je odabirni okvir.
 Ova će se brajična tablica koristiti pri unosu znakova sa tipkovnice vašeg brajičnog retka.
 Trenutno će biti prikazane samo osmotočkaste brajične tablice, jer NVDA podržava samo unos s brajičnog retka koristeći osmotočkastu brajicu.
-
 Između brajičnih tablica pomićete se koristeći kursorske tipke.
+
 Imajte na umu da ovu opciju možete koristiti ako vaš brajični redak na sebi ima brajičnu tipkovnicu i ako upravljački program podržava unos preko iste.
 Ako unos sa brajičnog retka koji ima brajičnu tipkovnicu nije podržan, to će biti naznačeno u poglavlju [podržani brajični retci #SupportedBrailleDisplays].
 
 ==== Proširi na kompjutorsku brajicu za riječ na položaju kursora ====
 Ova opcija omogućuje prikaz riječi pod kursorom koristeći kompjutorsku brajicu.
 
-==== Brzina titraja kursora ====
-Ova je opcija brojčano polje za uređivanje koje omogućuje promjenu titraja kursora u milisekundama.
+==== Prikaži pokazivač ====
+Ova opcija omogućuje uključivanje/isključivanje brajičnog pokazivača.
+Ovo se primjenjuje za kursor sustava i pregledni kursor, ali ne i za indikator označenosti.
+
+==== Brzina titraja pokazivača (ms) ====
+ Ova je opcija brojčano polje koja vam omogućuje izmjenu brzine titraja pokazivača u milisekundama.
+
+==== Izgled pokazivača ====
+Ova vam opcija omogućuje promjenu izgleda (kombinacije točkica) brajičnog pokazivača.
+Indikator označenosti nije obuhvaćen ovom opcijom.
 
 ==== Stanka za poruke u sekundama ====
 Ovom se opcijom određuje koliko će dugo NVDA poruke biti prikazane na brajičnom retku.
