@@ -27,7 +27,7 @@ class FindDialog(wx.Dialog):
 	"""A dialog used to specify text to find in a cursor manager.
 	"""
 
-	def __init__(self, parent, cursorManager, text):
+	def __init__(self, parent, cursorManager, text, caseSensitivity):
 		# Translators: Title of a dialog to find text.
 		super(FindDialog, self).__init__(parent, wx.ID_ANY, _("Find"))
 		# Have a copy of the active cursor manager, as this is needed later for finding text.
@@ -44,7 +44,7 @@ class FindDialog(wx.Dialog):
 		mainSizer.Add(findSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		# Translators: An option in find dialog to perform case-sensitive search.
 		self.caseSensitiveCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Case &sensitive"))
-		self.caseSensitiveCheckBox.SetValue(False)
+		self.caseSensitiveCheckBox.SetValue(caseSensitivity)
 		mainSizer.Add(self.caseSensitiveCheckBox,border=10,flag=wx.BOTTOM)
 
 		mainSizer.AddSizer(self.CreateButtonSizer(wx.OK|wx.CANCEL))
@@ -143,7 +143,7 @@ class CursorManager(baseObject.ScriptableObject):
 		CursorManager._lastCaseSensitivity=caseSensitive
 
 	def script_find(self,gesture):
-		d = FindDialog(gui.mainFrame, self, self._lastFindText)
+		d = FindDialog(gui.mainFrame, self, self._lastFindText, self._lastCaseSensitivity)
 		gui.mainFrame.prePopup()
 		d.Show()
 		gui.mainFrame.postPopup()
