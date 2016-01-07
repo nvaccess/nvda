@@ -1,6 +1,6 @@
 #cursorManager.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2014 NVDA Contributors
+#Copyright (C) 2006-2016 NVDA Contributors
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -81,6 +81,7 @@ class CursorManager(baseObject.ScriptableObject):
 	scriptCategory=SCRCAT_BROWSEMODE
 
 	_lastFindText=""
+	_lastCaseSensitivity=False
 
 	def __init__(self, *args, **kwargs):
 		super(CursorManager, self).__init__(*args, **kwargs)
@@ -139,6 +140,7 @@ class CursorManager(baseObject.ScriptableObject):
 		else:
 			wx.CallAfter(gui.messageBox,_('text "%s" not found')%text,_("Find Error"),wx.OK|wx.ICON_ERROR)
 		CursorManager._lastFindText=text
+		CursorManager._lastCaseSensitivity=caseSensitive
 
 	def script_find(self,gesture):
 		d = FindDialog(gui.mainFrame, self, self._lastFindText)
@@ -152,7 +154,7 @@ class CursorManager(baseObject.ScriptableObject):
 		if not self._lastFindText:
 			self.script_find(gesture)
 			return
-		self.doFindText(self._lastFindText)
+		self.doFindText(self._lastFindText, caseSensitive = self._lastCaseSensitivity)
 	# Translators: Input help message for find next command.
 	script_findNext.__doc__ = _("find the next occurrence of the previously entered text string from the current cursor's position")
 
@@ -160,7 +162,7 @@ class CursorManager(baseObject.ScriptableObject):
 		if not self._lastFindText:
 			self.script_find(gesture)
 			return
-		self.doFindText(self._lastFindText,reverse=True)
+		self.doFindText(self._lastFindText,reverse=True, caseSensitive = self._lastCaseSensitivity)
 	# Translators: Input help message for find previous command.
 	script_findPrevious.__doc__ = _("find the previous occurrence of the previously entered text string from the current cursor's position")
 
