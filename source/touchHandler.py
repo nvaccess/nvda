@@ -150,17 +150,18 @@ class TouchInputGesture(inputCore.InputGesture):
 		self.y=tracker.y
 
 	def _get__rawIdentifiers(self):
-		ID=""
-		if self.preheldTracker:
-			ID+="%dfinger_hold+"%self.preheldTracker.numFingers
-		if self.tracker.numFingers>1:
-			ID+="%dfinger_"%self.tracker.numFingers
-		if self.tracker.actionCount>1:
-			ID+="%s_"%self.counterNames[min(self.tracker.actionCount,4)-1]
-		ID+=self.tracker.action
 		IDs=[]
-		IDs.append("TS(%s):%s"%(self.mode,ID))
-		IDs.append("ts:%s"%ID)
+		for includeHeldFingers in ([True,False] if self.preheldTracker else [False]):
+			ID=""
+			if self.preheldTracker:
+				ID+=("%dfinger_hold+"%self.preheldTracker.numFingers) if includeHeldFingers else "hold+"
+			if self.tracker.numFingers>1:
+				ID+="%dfinger_"%self.tracker.numFingers
+			if self.tracker.actionCount>1:
+				ID+="%s_"%self.counterNames[min(self.tracker.actionCount,4)-1]
+			ID+=self.tracker.action
+			IDs.append("TS(%s):%s"%(self.mode,ID))
+			IDs.append("ts:%s"%ID)
 		return IDs
 
 	def _get_logIdentifier(self):
