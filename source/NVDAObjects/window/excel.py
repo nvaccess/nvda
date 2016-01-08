@@ -445,7 +445,7 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 
 	def _activatePosition(self):
 		obj=self.currentNVDAObj
-		if isinstance(obj,ExcelFormControl):
+		if (isinstance(obj,ExcelFormControlListBox) or isinstance(obj,ExcelFormControlDropDown)):
 			self.passThrough = True
 			self.ignoreTreeInterceptorPassThrough=False
 		self._activateNVDAObject(obj)
@@ -1387,6 +1387,7 @@ class ExcelFormControl(ExcelWorksheet):
 		self.excelWindowObject=excelWindowObject
 		self.excelWorksheetObject=self.excelWindowObject.ActiveSheet
 		self.excelFormControlObject=excelFormControlObject
+		self._roleMap= {xlButtonControl:controlTypes.ROLE_BUTTON, xlCheckBox:controlTypes.ROLE_CHECKBOX, xlDropDown:controlTypes.ROLE_DROPDOWNBUTTON, xlEditBox:controlTypes.ROLE_EDITBOX, xlGroupBox:controlTypes.ROLE_BOX, xlLabel:controlTypes.ROLE_LABEL, xlListBox:controlTypes.ROLE_LISTBOX, xlOptionButton:controlTypes.ROLE_RADIOBUTTON, xlScrollBar:controlTypes.ROLE_SCROLLBAR, xlSpinner:controlTypes.ROLE_SPINBUTTON}
 		super(ExcelFormControl,self).__init__(windowHandle=windowHandle, excelWindowObject=self.excelWindowObject, excelWorksheetObject=self.excelWorksheetObject)
 
 	def _get_role(self):
@@ -1394,31 +1395,10 @@ class ExcelFormControl(ExcelWorksheet):
 			if self.excelFormControlObject.Type==msoFormControl:
 				formControlType=self.excelFormControlObject.FormControlType
 			else:
-				None
+				formControlType=None
 		except:
 			return None
-		if formControlType==xlButtonControl:
-			return controlTypes.ROLE_BUTTON
-		elif formControlType==xlCheckBox:
-			return controlTypes.ROLE_CHECKBOX
-		elif formControlType==xlDropDown:
-			return controlTypes.ROLE_DROPDOWNBUTTON
-		elif formControlType==xlEditBox:
-			return controlTypes.ROLE_EDITBOX
-		elif formControlType==xlGroupBox:
-			return controlTypes.ROLE_BOX
-		elif formControlType==xlLabel:
-			return controlTypes.ROLE_LABEL
-		elif formControlType==xlListBox:
-			return controlTypes.ROLE_LISTBOX
-		elif formControlType==xlOptionButton:
-			return controlTypes.ROLE_RADIOBUTTON
-		elif formControlType==xlScrollBar:
-			return controlTypes.ROLE_SCROLLBAR
-		elif formControlType==xlSpinner:
-			return controlTypes.ROLE_SPINBUTTON
-		else:
-			return None
+		return self._roleMap[formControlType]
 
 	def _get_states(self):
 		self.invalidateCache()
@@ -1604,7 +1584,10 @@ class ExcelFormControlListBox(ExcelFormControl):
 
 	def __init__(self,windowHandle=None,excelWindowObject=None,excelFormControlObject=None):
 		self.excelFormControlObject=excelFormControlObject
-		self.listSize=excelFormControlObject.ControlFormat.ListCount
+		try:
+			self.listSize=excelFormControlObject.ControlFormat.ListCount
+		except:
+			self.listSize=0
 		try:
 			self.selectedItemIndex= excelFormControlObject.ControlFormat.ListIndex
 		except:
@@ -1630,8 +1613,11 @@ class ExcelFormControlListBox(ExcelFormControl):
 	script_moveDown.canPropagate=True
 
 	def doAction(self):
-		self.excelFormControlObject.OLEFormat.Object.Selected[self.selectedItemIndex] = True
-		self.speakSelection(self.selectedItemIndex)
+		try:
+			self.excelFormControlObject.OLEFormat.Object.Selected[self.selectedItemIndex] = True
+			self.speakSelection(self.selectedItemIndex)
+		except:
+			pass
 
 	def speakSelection(self,itemIndex):
 		if self.isItemSelected(self.selectedItemIndex):
@@ -1650,11 +1636,14 @@ class ExcelFormControlListBox(ExcelFormControl):
 class ExcelFormControlDropDown(ExcelFormControl):
 
 	def __init__(self,windowHandle=None,excelWindowObject=None,excelFormControlObject=None):
-		self.listRange=excelWindowObject.Application.ActiveSheet.Range(excelFormControlObject.ControlFormat.ListFillRange)
+# 		self.listRange=excelWindowObject.Application.ActiveSheet.Range(excelFormControlObject.ControlFormat.ListFillRange)
 		self.excelFormControlObject=excelFormControlObject
-		self.listSize=excelFormControlObject.ControlFormat.ListCount
 		try:
-			self.selectedItemIndex= excelFormControlObject.ControlFormat.ListIndex
+			self.listSize=excelFormControlObject.ControlFormat.ListCount
+		except:
+			self.listSize=0
+		try:
+			self.selectedItemIndex=excelFormControlObject.ControlFormat.ListIndex
 		except:
 			self.selectedItemIndex=0
 		super(ExcelFormControlDropDown,self).__init__(windowHandle=windowHandle, excelWindowObject=excelWindowObject, excelFormControlObject=excelFormControlObject)
@@ -1672,8 +1661,11 @@ class ExcelFormControlDropDown(ExcelFormControl):
 	script_moveDown.canPropagate=True
 
 	def doAction(self):
-		self.excelFormControlObject.OLEFormat.Object.Selected[self.selectedItemIndex] = True
-		self.speakSelection()
+		try:
+			self.excelFormControlObject.OLEFormat.Object.Selected[self.selectedItemIndex] = True
+			self.speakSelection()
+		except:
+			pass
 
 	def speakSelection(self):
 		if self.excelFormControlObject.ControlFormat.Value == self.selectedItemIndex:
