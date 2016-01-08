@@ -171,8 +171,8 @@ class TouchInputGesture(inputCore.InputGesture):
 		for identifier in self._rawIdentifiers:
 			t,i=identifier.split(':')
 			# Force the ID in to Python set order so they are always comparable
-			i="+".join(set(i.split("+"))).lower()
-			identifiers.append("%s:%s"%(t,i))
+			i="+".join(set(i.split("+")))
+			identifiers.append("%s:%s"%(t.lower(),i.lower()))
 		return identifiers
 
 	RE_IDENTIFIER = re.compile(r"^ts(?:\((.+?)\))?:(.*)$")
