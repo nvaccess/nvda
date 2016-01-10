@@ -14,7 +14,7 @@ class AutoFreeCDLL(ctypes.CDLL):
 synthDriversDir=sourceDir.Dir('synthDrivers')
 espeakRepo=Dir("#include/espeak")
 espeakSrcDir=espeakRepo.Dir('src')
-espeakIncludeDir=espeakSrcDir.Dir('include/espeak-ng')
+espeakIncludeDir=espeakSrcDir.Dir('include')
 sonicSrcDir=Dir("#include/sonic")
 
 class espeak_VOICE(ctypes.Structure):
@@ -54,8 +54,8 @@ def espeak_compilePhonemeData_buildAction(target,source,env):
 	# because our eSpeak statically links the CRT.
 	espeak=AutoFreeCDLL(espeakLib[0].abspath)
 	espeak.espeak_ng_InitializePath(espeakRepo.abspath)
-	espeak.espeak_ng_CompileIntonation(None)
-	espeak.espeak_ng_CompilePhonemeData(22050,None)
+	espeak.espeak_ng_CompileIntonation(None,None)
+	espeak.espeak_ng_CompilePhonemeData(22050,None,None)
 	espeak.espeak_Terminate()
 
 env['BUILDERS']['espeak_compilePhonemeData']=Builder(action=env.Action(espeak_compilePhonemeData_buildAction,"Compiling phoneme data"),emitter=espeak_compilePhonemeData_buildEmitter)
@@ -74,7 +74,7 @@ def espeak_compileDict_buildAction(target,source,env):
 			print "espeak_compileDict_action: failed to switch to language %s"%lang
 			return 1
 		dictPath=os.path.split(source[0].abspath)[0]+'/'
-		if espeak.espeak_CompileDictionary(dictPath,None,0)!=0:
+		if espeak.espeak_ng_CompileDictionary(dictPath,None,0,None)!=0:
 			print "espeak_compileDict_action: failed to compile dictionary for  language %s"%lang
 			return
 	finally:
@@ -95,7 +95,7 @@ espeakLib=env.SharedLibrary(
 	srcdir=espeakSrcDir.Dir('libespeak-ng').abspath,
 	source=[
 		"access.c",
-		"speak_lib.c",
+		"speech.c",
 		"readclause.c",
 		"compiledict.c",
 		"dictionary.c",
@@ -115,6 +115,8 @@ espeakLib=env.SharedLibrary(
 		"compilembrola.c",
 		"ieee80.c",
 		"spect.c",
+		"espeak_api.c",
+		"error.c",
 		sonicLib,
 	],
 	LIBS=['advapi32'],
