@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA - R3939\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-08 19:11+1000\n"
+"POT-Creation-Date: 2015-12-25 19:08+1000\n"
 "PO-Revision-Date: 2015-12-30 17:12+0200\n"
 "Last-Translator: shmuel <shmuel_naaman@yahoo.com>\n"
 "Language-Team: Adi Kushnir, Avi Ashheer <ll@li.org>\n"
@@ -409,6 +409,11 @@ msgstr "מאניפורית שיטת ברייל 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr ""
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "מראתית שיטת ברייל 1"
 
@@ -456,6 +461,12 @@ msgstr "נפאלית שיטת ברייל 1"
 #. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "אוריה שיטת ברייל 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Polish 8 dot computer braille"
+msgstr "ספרדית 8 נקודות ברייל ממוחשב"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -663,6 +674,18 @@ msgstr "שעון"
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "( )"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr ""
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr ""
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr ""
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -1304,6 +1327,25 @@ msgstr "הכל Alt"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "תו"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr ""
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr ""
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+#, fuzzy
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "רמת סמלים %s"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -2743,6 +2785,11 @@ msgstr "נאסף"
 msgid "overflowing"
 msgstr "עובר את הגבול"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+#, fuzzy
+msgid "unlocked"
+msgstr "לא מסומן"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "לא נבחר"
@@ -3956,6 +4003,31 @@ msgstr "ברייל צמוד ל: %s"
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "Toggle tethering of braille between the focus and the review position"
 
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr ""
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr ""
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr ""
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr ""
+
+#. Translators: Reports which braille cursor shape is activated.
+#, fuzzy, python-format
+msgid "Braille cursor %s"
+msgstr "ברייל צמוד ל: %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr ""
+
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
 msgstr "אין טקסט בזיכרון הזמני"
@@ -4055,6 +4127,11 @@ msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
 msgstr "Moves the navigator object to the object containing it"
+
+#. Translators: a message when there is no previous object when navigating
+#, fuzzy
+msgid "no previous"
+msgstr "אין אובייקט קודם"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 #, fuzzy
@@ -4600,15 +4677,20 @@ msgstr "indent"
 msgid "%d characters"
 msgstr "%d אותיות"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
-#, python-format
-msgid "selecting %s"
-msgstr "בוחר %s"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
+#, fuzzy, python-format
+msgid "%s selected"
+msgstr "נבחר"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
-#, python-format
-msgid "unselecting %s"
-msgstr "מוריד את הבחירה מ%s"
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
+#, fuzzy, python-format
+msgid "%s unselected"
+msgstr "נבחר"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, fuzzy, python-format
+msgid "%s selected instead"
+msgstr "נבחר %s"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -7470,9 +7552,18 @@ msgstr "לא בטבלה"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "הרחב את המילה שעליה נמצא הסמן לברייל &ממוחשב"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+#, fuzzy
+msgid "&Show cursor"
+msgstr "סמן %s"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "מהירות הבהוב הסמן"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr ""
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7526,6 +7617,11 @@ msgstr "סמל"
 msgid "Level"
 msgstr "רמה"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr ""
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "שנה סמל"
@@ -7533,6 +7629,10 @@ msgstr "שנה סמל"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "&רמה"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr ""
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 #, fuzzy
@@ -7673,30 +7773,48 @@ msgstr "invoke"
 msgid "Desktop"
 msgstr "שולחן עבודה"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "צבע ברירת מחדל"
 
-#. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+#, fuzzy
+msgid "Unknown color"
+msgstr "צבע לא ידוע"
+
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
 msgstr ""
+
+#. Translators: the description for the elements list command in Microsoft Excel.
+#, fuzzy
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "רשימת הרכיבים השונים במסמך זה"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #, fuzzy
-msgid "&Chart"
+msgid "&Charts"
 msgstr "גיליון"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #, fuzzy
-msgid "C&omment"
+msgid "C&omments"
 msgstr "תיאור"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #, fuzzy
-msgid "&Formula"
+msgid "Fo&rmulas"
 msgstr "בעל נוסחה"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheets"
+msgstr ""
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7755,6 +7873,12 @@ msgid ""
 "Pressing once will set this cell as the first row header for any cells lower "
 "and to the right of it within this region. Pressing twice will forget the "
 "current row header for this cell."
+msgstr ""
+
+msgid "Input Message is {title}: {message}"
+msgstr ""
+
+msgid "Input Message is {message}"
 msgstr ""
 
 #. Translators: A message in Excel when there is no comment
@@ -8719,6 +8843,12 @@ msgstr ""
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr ""
+
+#~ msgid "selecting %s"
+#~ msgstr "בוחר %s"
+
+#~ msgid "unselecting %s"
+#~ msgstr "מוריד את הבחירה מ%s"
 
 #, fuzzy
 #~ msgid "unrevised"

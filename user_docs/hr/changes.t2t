@@ -17,20 +17,20 @@
 
 
 == ispravke grešaka ==
-- In iTunes 12, browse mode now updates correctly when a new page loads in the iTunes Store. (#5191)
-- In Internet Explorer and other MSHTML controls, moving to specific heading levels with single letter navigation now behaves as expected when the level of a heading is overridden for accessibility purposes (specifically, when aria-level overrides the level of an h tag). (#5434)
-- In Spotify, focus no longer frequently lands on "unknown" objects. (#5439)
-- Focus is now restored correctly when returning to Spotify from another application. (#5439)
-- When toggling between browse mode and focus mode, the mode is reported in braille as well as speech. (#5239)
-- The Start buttn on the Taskbar is no longer reported as a list and/or as selected in some versions of Windows. (#5178)
-- Messages such as "inserted" are no longer reported when composing messages in Microsoft Outlook. (#5486)
-- When using a braille display and text is selected on the current line (e.g. when searching in a text editor for text which occurs on the same line), the braille display will be scrolled if appropriate. (#5410)
-- NVDA no longer silently exits when closing a Windows command console with alt+f4 in Windows 10. (#5343)
-- In the Elements List in browse mode, when you change the type of element, the Filter by field is now cleared. (#5511)
-- In editable text in Mozilla applications, moving the mouse again reads the appropriate line, word, etc. as expected instead of the entire content. (#5535)
-- When moving the mouse in editable text in Mozilla applications, reading no longer stops at elements such as links within the word or line being read. (#2160, #5535)
-- In Internet Explorer, the shoprite.com website can now be read in browse mode instead of reporting as blank. (Specifically, malformed lang attributes are now handled gracefully.) (#5569)
-- In Microsoft Word, tracked changes such as "inserted" are no longer reported when track changes markup is not displayed. (#5566)
+- U iTunes inačici 12, način pregleda se ispravno osvježava kada se nova stranica otvara u Itunes trgovini. (#5191)
+- U Internet Exploreru i drugim MSHTML kontrolama, premještanje do specificirane razine naslova  sa jednoslovnom prečicom ponaša se kako je to očekivano kada je specificirana razina naslova za potrebe pristupačnosti (specifično, kada aria-level nadpisuje razinu h oznake). (#5434)
+- U Spotifyju, fokus se više često ne premještava na "nepoznati" objekt. (#5439)
+- Fokus je ispravno povraćen prilikom prebacivanja u drugu aplikaciju. (#5439)
+- Prilikom prebacivanja iz načina formulara u način pregleda, izmjena načina se izgovara i istovremeno prikazuje na brajičnom retku. (#5239)
+- Start gumb na traci zadataka više se ne izgovara kao popis  i/ili) ili kao označen u nekim inačicama sustava windows. (#5178)
+- Poruke poput "umetnuto" više se ne izgovaraju prilikom sastavljanja poruka u Microsoft Outlooku. (#5486)
+- Pri korištenju brajičnog retka kada je tekst označen na trenutnom retku (npr. prilikom traženja u uređivaću teksta za tekstom koji se pojavljuje u istom retku), brajični redak će se također pomaknuti ako je to potrebno. (#5410)
+- NVDA se više ne gasi podmuklo prilikom zatvaranja windows komandne konzole uz pomoć alt+f4 u windowsima 10. (#5343)
+- u popisu elemenata u načinu pregleda, prilikom izmjene vrste elementa, polje za filtriranje se sada automatski čisti. (#5511)
+- u tekstu koji se može uređivati u Mozilla aplikacijama, pomicanje miša ponovno čita potrebni redak, riječ, itd. Kao što se i očekuje umjesto čitanja cijelog sadržaja. (#5535)
+- prilikom pomicanja miša u poljima za uređivanje u mozilla aplikacijama, čitanje se ne zaustavlja na elementima poput linkova u riječi ili retku koji je čitan. (#2160, #5535)
+- U internet exploreru, shoprite.com web stranica može se ponovo čitati u načinu pregleda umjesto izgovaranja praznih redova. (točnije, lang atributi se korektno interpretiraju).) (#5569)
+- U Microsoft Wordu, lista promjena poput "umetnuto" više se ne izgovara ako oznaka izmjene nije prikazana. (#5566)
 
 
 = 2015.4 =
