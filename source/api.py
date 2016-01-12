@@ -319,10 +319,18 @@ def getStatusBar():
 	left, top, width, height = location
 	bottom = top + height - 1
 	obj = getDesktopObject().objectFromPoint(left, bottom)
-
 	# We may have landed in a child of the status bar, so search the ancestry for a status bar.
 	while obj and not obj.role == controlTypes.ROLE_STATUSBAR:
 		obj = obj.parent
+
+	# Try with less conservative x,y offsets to account for apps with custom status bars.
+	if obj is None:
+		bottom = top + height - 10
+		left = left + 40
+		obj = getDesktopObject().objectFromPoint(left, bottom)
+		# We may have landed in a child of the status bar, so search the ancestry for a status bar.
+		while obj and not obj.role == controlTypes.ROLE_STATUSBAR:
+			obj = obj.parent
 
 	return obj
 
