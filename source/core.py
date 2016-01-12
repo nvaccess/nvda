@@ -21,7 +21,6 @@ import sys
 import winVersion
 import thread
 import nvwave
-import audioDucking
 import os
 import time
 import ctypes
@@ -123,6 +122,7 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("Reloading user and locale input gesture maps")
 	inputCore.manager.loadUserGestureMap()
 	inputCore.manager.loadLocaleGestureMap()
+	import audioDucking
 	if audioDucking.isAudioDuckingSupported():
 		audioDucking.handleConfigProfileSwitch()
 	log.info("Reverted to saved configuration")
@@ -236,6 +236,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import gui
 	gui.initialize()
 
+	import audioDucking
 	if audioDucking.isAudioDuckingSupported():
 		# the GUI mainloop must be running for this to work so delay it
 		wx.CallAfter(audioDucking.initialize)
