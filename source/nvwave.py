@@ -15,7 +15,6 @@ import wx
 import winKernel
 import wave
 import config
-import audioDucking
 from logHandler import log
 
 __all__ = (
@@ -124,8 +123,10 @@ class WavePlayer(object):
 		if isinstance(outputDevice, basestring):
 			outputDevice = outputDeviceNameToID(outputDevice, True)
 		self.outputDeviceID = outputDevice
-		if wantDucking and audioDucking.isAudioDuckingSupported():
-			self._audioDucker=audioDucking.AudioDucker()
+		if wantDucking:
+			import audioDucking
+			if audioDucking.isAudioDuckingSupported():
+				self._audioDucker=audioDucking.AudioDucker()
 		#: If C{True}, close the output device when no audio is being played.
 		#: @type: bool
 		self.closeWhenIdle = closeWhenIdle
