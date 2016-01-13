@@ -1,5 +1,4 @@
 ﻿Guía del Usuario de NVDA NVDA_VERSION
-Guía del Usuario de NVDA NVDA_VERSION
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -57,12 +56,14 @@ Esto se aplica al original y a las copias modificadas del programa, más cualqui
 Para más detalles, puedes [ver la licencia completa.  http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Requerimientos del Sistema +
-- Sistemas Operativos: todas las versiones de 32 y 64 bits de Windows XP, Windows Vista, Windows 7, Windows 8 y Windows 10 (incluyendo sistemas operativos servidor).
+- Sistemas Operativos: todas las versiones de 32 y 64 bits de Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 y Windows 10 (incluyendo sistemas operativos servidor).
 - Para Windows XP 32 bits, NVDA requiere el Service Pack 2 o superior.
  - Para Windows Server 2003, NVDA requiere el Service Pack 1 o superior.
+ - Para Windows Vista, NVDA requiere del Service Pack 2 y la actualización [KB2763674 https://support.microsoft.com/en-us/kb/2763674].
+ Ambos deberían instalarse si todas las actualizaciones disponibles se aplicaron a través de Windows Update.
 - Memoria: 256 mb o más de RAM
 - Velocidad de Procesador: 1.0 ghz o superior
-- Aproximadamente 50 MB de espacio de almacenamiento.
+- Aproximadamente 90 MB de espacio de almacenamiento.
 -
 
 + Obteniendo e Instalando NVDA +
@@ -88,8 +89,8 @@ Utilizar la copia temporal de NVDA es también una opción, ej.: con propósitos
 Además de la incapacidad de iniciarse automáticamente durante y/o después de la autentificación, las copias portable y temporal de NVDA también tienen las siguientes restricciones:
 - La incapacidad para interactuar con aplicaciones que se ejecuten con privilegios de administrador, al menos que, por supuesto, el mismo NVDA también haya sido ejecutado con estos privilegios (no es recomendable).
 - La incapacidad de leer las pantallas del Control de Cuentas de Usuario (UAC) cuando trate de iniciar una aplicación con privilegios de administrador.
-- Windows 8: la incapacidad para soportar la entrada desde una pantalla táctil.
-- Windows 8: la incapacidad de proporcionar características tales como modo exploración y verbalización de caracteres al escribir en Windows Store apps.
+- Windows 8 y superior: la incapacidad para soportar la entrada desde una pantalla táctil.
+- Windows 8 y superior: la incapacidad de proporcionar características tales como modo exploración y verbalización de caracteres al escribir en Windows Store apps.
 
 
 ++ Instalando NVDA ++
@@ -628,15 +629,15 @@ De modo similar a la web, NVDA tiene una Lista de Elementos para Microsoft Excel
 Para acceder a la Lista de Elementos en Excel, pulsa NVDA+f7.
 %kc:endInclude
 Los diversos tipos de información disponible en la Lista de Elementos son:
-- Gráfico: esto lista todos los gráficos en el libro de trabajo.
+- Gráficos: esto lista todos los gráficos en el libro de trabajo.
 Seleccionando un gráfico y pulsando intro o el botón Mover A enfoca el gráfico para navegar y leer con las teclas de cursor.
-- Comentario: esto lista todas las celdas en el libro de trabajo que contengan comentarios. 
+- Comentarios: esto lista todas las celdas en el libro de trabajo que contengan comentarios. 
 La dirección de la celda junto con sus comentarios se muestra para cada celda. 
 Pulsando Intro o el botón Mover a cuando se esté sobre un comentario listado se moverá directamente a esa celda.
-- Fórmula: esto lista todas las celdas en el libro de trabajo que contengan una fórmula. 
+- Fórmulas: esto lista todas las celdas en el libro de trabajo que contengan una fórmula. 
 La dirección de la celda junto con su fórmula se muestra para cada celda.
 Pulsando Intro o el botón Mover A sobre una fórmula listada se moverá directamente a esa celda. 
-- Hoja: esto lista todas las hojas en el libro de trabajo. 
+- Hojas: esto lista todas las hojas en el libro de trabajo. 
 Pulsando f2 cuando se esté sobre una hoja listada te permite renombrar la hoja. 
 Pulsando Intro o el botón Mover A mientras se esté sobre la hoja listada cambiará a esa hoja.
 -
@@ -704,7 +705,7 @@ El cuadro de diálogo Opciones Generales se encuentra en el menú Preferencias.
 Contiene las siguientes opciones:
 
 ==== Idioma ====
-Un cuadro combinado que te permite seleccionar el idioma en que debería mostrarse la interface de usuario y los mensajes de NVDA. 
+Este es un cuadro combinado que te permite seleccionar el idioma en que debería mostrarse la interface de usuario y los mensajes de NVDA. 
 Hay muchos idiomas, no obstante la última elección en la lista es llamada "Windows". 
 Esta elección dirá a NVDA que utilice el idioma en el que Windows esté actualmente ajustado. 
 
@@ -888,8 +889,16 @@ Si la entrada no se soporta en una pantalla que tenga un teclado braille, esto s
  ==== Expandir a braille de ordenador para la palabra en el cursor ====
 Esta opción permite a la palabra que está bajo el cursor ser mostrada en braille de ordenador no contraído.
 
-==== Velocidad de Parpadeo del Cursor ====
+==== Mostrar Cursor ====
+Esta opción permite al cursor braille activarse y desactivarse.
+Se aplica al cursor del sistema y al cursor de revisión, pero no al indicador de selección.
+
+==== Velocidad de Parpadeo del Cursor (ms) ====
 Esta opción es un campo numérico que te permite cambiar la velocidad de parpadeo del cursor en milésimas de segundo.
+
+==== Forma del Cursor ====
+Esta opción te permite elegir la forma (patrón de puntos) del cursor braille.
+El indicador de selección no está afectado por esta opción.
 
 ==== Duración del Mensaje (en seg) ====
 Esta opción es un campo numérico que controla durante cuánto tiempo se muestran los mensajes del sistema en la pantalla braille.
@@ -2103,23 +2112,23 @@ Con el fin de tener la mayor cantidad de información posible en una pantalla br
 
 || Abreviatura | Tipo de Control |
 | bt | botón |
-| cbo | cuadro combinado |
+| cc | cuadro combinado |
 | cv | casilla de verificación |
 | dlg | diálogo |
 | ce | campo de texto editable |
 | gra | gráfico |
 | cN | número de columna de tabla n, ej.: c1, c2. |
-| rN | número de fila de tabla n, ej.: r1, r2. |
-| hN | encabezado de nivel n, ej.: h1, h2. |
+| fN | número de fila de tabla n, ej.: r1, r2. |
+| enN | encabezado de nivel n, ej.: h1, h2. |
 | enl | enlace |
 | lst | lista |
 | enlv | enlace visitado |
 | mn | menú |
-| mnbar | barra de menú |
-| btn | botón de opción |
+| bmn | barra de menú |
+| bto | botón de opción |
 | tb | tabla |
-| tv | vista en árbol |
-| lv N | un elemento de vista en árbol que tiene un nivel jerárquico N|
+| vár | vista en árbol |
+| nv N | un elemento de vista en árbol que tiene un nivel jerárquico N|
 | ``-----`` | separador |
 
 Los siguientes indicadores de estado  también están definidos:

@@ -8,6 +8,7 @@
 import time
 import itertools
 import tones
+import audioDucking
 import touchHandler
 import keyboardHandler
 import mouseHandler
@@ -82,6 +83,21 @@ SCRCAT_DOCUMENTFORMATTING = _("Document formatting")
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
 	"""
+
+	def script_cycleAudioDuckingMode(self,gesture):
+		if not audioDucking.isAudioDuckingSupported():
+			# Translators: a message when audio ducking is not supported on this machine
+			ui.message(_("Audio ducking not supported"))
+			return
+		curMode=config.conf['audio']['audioDuckingMode']
+		numModes=len(audioDucking.audioDuckingModes)
+		nextMode=(curMode+1)%numModes
+		audioDucking.setAudioDuckingMode(nextMode)
+		config.conf['audio']['audioDuckingMode']=nextMode
+		nextLabel=audioDucking.audioDuckingModes[nextMode]
+		ui.message(nextLabel)
+	# Translators: Describes the Cycle audio ducking mode command.
+	script_cycleAudioDuckingMode.__doc__=_("Cycles through audio ducking modes which determine when NVDA lowers the volume of other sounds")
 
 	def script_toggleInputHelp(self,gesture):
 		inputCore.manager.isInputHelpActive = not inputCore.manager.isInputHelpActive
@@ -1605,6 +1621,40 @@ class GlobalCommands(ScriptableObject):
 	script_braille_toggleTether.__doc__ = _("Toggle tethering of braille between the focus and the review position")
 	script_braille_toggleTether.category=SCRCAT_BRAILLE
 
+	def script_braille_toggleShowCursor(self, gesture):
+		if config.conf["braille"]["showCursor"]:
+			# Translators: The message announced when toggling the braille cursor.
+			state = _("Braille cursor off")
+			config.conf["braille"]["showCursor"]=False
+		else:
+			# Translators: The message announced when toggling the braille cursor.
+			state = _("Braille cursor on")
+			config.conf["braille"]["showCursor"]=True
+		ui.message(state)
+	# Translators: Input help mode message for toggle braille cursor command.
+	script_braille_toggleShowCursor.__doc__ = _("Toggle the braille cursor on and off")
+	script_braille_toggleShowCursor.category=SCRCAT_BRAILLE
+
+	def script_braille_cycleCursorShape(self, gesture):
+		if not config.conf["braille"]["showCursor"]:
+			# Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+			ui.message(_("Braille cursor is turned off"))
+			return
+		shapes = [s[0] for s in braille.CURSOR_SHAPES]
+		try:
+			index = shapes.index(config.conf["braille"]["cursorShape"]) + 1
+		except:
+			index = 1
+		if index >= len(braille.CURSOR_SHAPES):
+			index = 0
+		config.conf["braille"]["cursorShape"] = braille.CURSOR_SHAPES[index][0]
+		shapeMsg = braille.CURSOR_SHAPES[index][1]
+		# Translators: Reports which braille cursor shape is activated.
+		ui.message(_("Braille cursor %s") % shapeMsg)
+	# Translators: Input help mode message for cycle braille cursor shape command.
+	script_braille_cycleCursorShape.__doc__ = _("Cycle through the braille cursor shapes")
+	script_braille_cycleCursorShape.category=SCRCAT_BRAILLE
+
 	def script_reportClipboardText(self,gesture):
 		try:
 			text = api.getClipData()
@@ -1956,6 +2006,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+control+p": "activateConfigProfilesDialog",
 
 		# Settings
+		"kb:NVDA+shift+d":"cycleAudioDuckingMode",
 		"kb:NVDA+2": "toggleSpeakTypedCharacters",
 		"kb:NVDA+3": "toggleSpeakTypedWords",
 		"kb:NVDA+4": "toggleSpeakCommandKeys",

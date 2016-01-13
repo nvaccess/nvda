@@ -56,12 +56,14 @@ Dit is van toepassing voor zowel originele als aangepaste kopieën van de softwa
 Voor verdere bijzonderheden kan men de volledige licentie bekijken op: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Systeemvereisten +
-- Besturingssysteem: alle 32-bit en 64-bit versies van Windows XP, Windows  Vista, Windows 7, Windows 8 en Windows 10 (inclusief Server besturingssystemen). 
+- Besturingssysteem: alle 32-bit en 64-bit edities van Windows XP, Windows  Vista, Windows 7, Windows 8 en Windows 10 (inclusief Server besturingssystemen). 
 - Voor Windows XP 32-bit heeft NVDA Service Pack 2 of hoger nodig.
 - Voor Windows Server 2003 heeft NVDA Service Pack 1 of hoger nodig.
+- Voor Windows Vista heeft NVDA service pack 2 nodig alsmede update [KB2763674 https://support.microsoft.com/en-us/kb/2763674].
+- Deze moeten allebei worden geïnstalleerd als alle beschikbare updates zijn toegepast via Windows Update.
 - Geheugen: 256 MB RAM of meer.
 - Processorsnelheid: 1.0 ghz of hoger.
-- Opslagcapaciteit: ongeveer 50 MB vrije ruimte.
+- Opslagcapaciteit: ongeveer 90 MB vrije ruimte.
 -
 
 + NVDA downloaden en uitvoeren +
@@ -87,8 +89,8 @@ De tijdelijke kopie van NVDA gebruiken is ook een optie, bij voorbeeld om het pr
 Behalve dat bij gebruik van de draagbare of tijdelijke versie van NVDA het programma niet automatisch gestart kan worden tijdens en / of na aanmelding bij Windows, gelden bovendien de volgende beperkingen:
 - Werken met toepassingen die met beheerdersrechten worden uitgevoerd is niet mogelijk, tenzij NVDA ook met deze rechten wordt uitgevoerd natuurlijk, (niet aan te bevelen),
 - UAC-schermen (User Account Control) kunnen niet worden voorgelezen bij het starten van toepassingen die met beheerdersrechten worden uitgevoerd,
-- Windows 8: Geen ondersteuning voor invoer via het aanraakscherm,
-- Windows 8: Mogelijkheden zoals bladermodus en het uitspreken van getypte karakters bij apps uit de Windows Store zijn niet beschikbaar.
+- Windows 8 en later: Geen ondersteuning voor invoer via het aanraakscherm,
+- Windows 8 en later: Mogelijkheden zoals bladermodus en het uitspreken van getypte karakters bij apps uit de Windows Store zijn niet beschikbaar.
 -
 
 ++ NVDA installeren ++
@@ -630,15 +632,15 @@ Evenals voor op het Web heeft NVDA een Elementenlijst voor Microsoft Excel, waar
 Om toegank te krijgen tot de Elementenlijst in Excel, drukt u op NVDA+f7.
 %kc:endInclude
 De volgende types informatie zijn in de Elementenlijst beschikbaar
-- Grafiek: Voor het weergeven van alle grafieken in de werkmap
+- Grafieken: Voor het weergeven van alle grafieken in de werkmap
 Door een grafiek te selecteren en op enter of de knop Ga naar te  drukken krijgt de grafiek de focus voor navigatie en lezen met de pijltjestoetsen.
-- Opmerking: Voor het weergeven van cellen in de werkmap die opmerkingen  bevatten. 
+- Opmerkingen: Voor het weergeven van cellen in de werkmap die opmerkingen  bevatten. 
 Het celadres samen met de opmerkingen erin worden voor elke cel weergegeven. 
 Door op Enter of de knop Ga Naar  te drukken wanneer u op een weergegeven opmerking staat, gaat u direct naar die cel.
-- Formule: Voor het weergeven van alle cellen in de werkmap waar een formule in staat. 
+- Formules: Voor het weergeven van alle cellen in de werkmap waar een formule in staat. 
 Het celadres samen met bijbehorende formule worden voor elke cel getoond.
 Door op Enter of de knop Ga Naar te drukken wanneer u zich op een weergegeven formule bevindt,  gaat u direct naar die cel. 
-- Blad: Voor het weergeven van alle bladen in de werkmap. 
+- Bladen: Voor het weergeven van alle bladen in de werkmap. 
 Door f2 te drukken wanneer u zich op een weergegeven blad bevindt, kunt u de naam van het desbetreffende blad wijzigen. 
 Een druk op de Enter- of de Ga Naar-knop terwijl u zich op een weergegeven blad bevindt, brengt u naar dat blad.
 -
@@ -706,7 +708,7 @@ Het dialoogvenster met “Algemene instellingen” vindt u in het NVDA-menu onde
 U vindt hier de volgende onderdelen:
 
 ==== Taal ====
-In de vervolgkeuzelijst kiest u de taal van de gebruikersinterface en de meldingen van NVDA.
+Dit is een vervolgkeuzelijst waarmee u de taal van de gebruikersinterface en de meldingen van NVDA kunt kiezen. 
 Er is een groot aantal talen waaruit gekozen kan worden, maar de standaardinstelling is “User default, Windows”.
 Hiermee wordt bewerkstelligt dat NVDA de taal gebruikt die standaard op uw PC is ingesteld.
 
@@ -733,13 +735,13 @@ Als u evenwel informatie wilt doorgeven over mogelijke bugs van het programma ka
 Als u het selectievakje aanvinkt, zal NVDA automatisch worden gestart zodra u zich bij  Windows aanmeldt.
 Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet voor de draagbare versie.
 
-==== NVDA gebruiken bij Windows aanmelding(administratieve rechten vereist) ====
+==== NVDA gebruiken bij Windows aanmelding(administratorrechten vereist) ====
 Als u zich bij Windows aanmeldt met een gebruikersnaam en een wachtwoord, dan zal  NVDA samen met Windows bij aanmelding worden gestart. Hiervoor moet u het selectievakje inschakelen.
 Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet voor de draagbare versie.
 
-==== De momenteel opgeslagen instellingen gebruiken in het aanmeldvenster en andere beveiligde schermen ====
+==== De momenteel opgeslagen instellingen gebruiken in het aanmeldvenster en andere beveiligde schermen (administratorrechten vereist) ====
 Met deze knop kopieert u uw huidige opgeslagen configuratie naar de systeemconfiguratiemap van NVDA, zodat de instellingen worden gebruikt bij het aanmeldscherm, gebruikersaccountbeheerscherm (UAC) en andere beveiligde Windowsschermen.
-Om ervoor te zorgen dat alle instellingen worden overgezet, moet u erop letten dat uw configuratie is opgeslagen met control+NVDA+c, of Configuratie Opslaan in het NVDA-menu.
+Om ervoor te zorgen dat alle instellingen worden overgezet, moet u erop letten dat u eerst uw configuratie hebt opgeslagen met control+NVDA+c, of Configuratie Opslaan in het NVDA-menu.
 Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet voor de draagbare versie.
 
 ==== Automatisch controleren of updates beschikbaar zijn ====
@@ -885,8 +887,16 @@ Als invoer niet wordt ondersteund door een leesregel  die is uitgerust met een b
 ==== woord onder cursor uitbreiden naar computerbraille ====
 Door het selectievakje aan te vinken wordt het woord onder de cursor weergegeven in onverkort computerbraille.
 
+==== Cursor Tonen ====
+Met deze optie kunt u de braillecursor in- en uitschakelen.
+Deze mogelijkheid is beschikbaar voor de invoegcursor en de leescursor, maar niet voor de selectieaanwijzer.
+
 ==== Knippersnelheid cursor ====
 In het invoerveld kunt u een getal invoeren dat de knippersnelheid van de cursor bepaalt in milliseconden.
+
+==== Cursorvorm ====
+Met deze optie kunt u de vorm (puntenpatroon) van  de braillecursor kiezen.
+Deze optie heeft geen betrekking op de selectieaanwijzer.
 
 ==== Time-out voor berichten (sec.) ====
 In het invoerveld kunt u een getal invoeren waarmee u bepaalt hoe lang NVDA-berichten in het uitleesvenster worden weergegeven.

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr 2013.1:6039\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-02 17:08+1000\n"
-"PO-Revision-Date: 2015-11-03 19:06+0545\n"
+"POT-Creation-Date: 2015-12-21 19:08+1000\n"
+"PO-Revision-Date: 2015-12-24 20:18+0545\n"
 "Last-Translator: drishtibachak@gmail.com\n"
 "Language-Team: Him Prasad Gautam <drishtibachak@gmail.com>\n"
 "Language: ne\n"
@@ -402,6 +402,11 @@ msgstr "मणिपुरी श्रेणी १"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "मङ्गोलियन"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "मराठी श्रेणी १"
 
@@ -449,6 +454,11 @@ msgstr "नेपाली सेली श्रेणी १"
 #. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "ओरिया श्रेणी १"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "पोलिस ८ .कल्पयन्त्र ब्रेल"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -654,6 +664,18 @@ msgstr "चिनो"
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "( )"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "७ र ८ थोप्लो"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "८ थोप्लो"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "सबै थोप्लो"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -3299,11 +3321,11 @@ msgstr "चोकौस सूचित अवस्था उल्टिन्
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable off"
-msgstr "किचिनो्क हुन्छ भने बताउदैन"
+msgstr "किटिक्क  हुन्छ भने बताउदैन"
 
 #. Translators: The message announced when toggling the report if clickable document formatting setting.
 msgid "report if clickable on"
-msgstr "किचिनो्क हुन्छ भने बताउ"
+msgstr "किटिक्क हुन्छ भने बताउ"
 
 #. Translators: Input help mode message for toggle report if clickable command.
 msgid "Toggles on and off reporting if clickable"
@@ -3877,6 +3899,31 @@ msgstr "ब्रेललाई %s मा मिलाउ"
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "ब्रेलको tethering केन्द्रीयता र समीक्षा स्थान सित साटासाट हुन्छ ।"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "ब्रेल कर्सर बन्द"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "ब्रेल कर्सर खुल्यो"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "ब्रेल कर्सर लाईखोल्ने र बन्द गर्ने"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "ब्रेल कर्सर  बन्द गरियो"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "ब्रेल कर्सर  %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "ब्रेल कर्सरको आकारमा फन्को मार्छ "
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -7190,9 +7237,17 @@ msgstr "&लगानि तालिका"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "कर्सर मुनिको शब्द विस्तारित रुपमा &देखाउ "
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "&Show cursor"
+msgstr "&कर्सर देखाउ"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "कर्सर चम्किने दर (मिलि सेकेन्ड)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "कर्सर &आकार"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7389,35 +7444,42 @@ msgstr "आग्रह"
 msgid "Desktop"
 msgstr "डेस्कटप"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "निर्धारित रङ्ग"
+
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "अज्ञात रङ्ग"
 
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "यो कोशिका सम्पादन योग्य छैन ।"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "चार्टको सूची, टिप्पणी एवम् सूत्रयुक्त कोशिका प्रस्तुत गर्छ"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "यो पत्रकमा बएका तत्त्वहरूको सूचि प्रस्तुत गर्छ ।"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
+msgid "&Charts"
 msgstr "&चार्ट"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
+msgid "C&omments"
 msgstr "प्र&तिक्रिया"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
+msgid "Fo&rmulas"
 msgstr "&सूत्र"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
+msgid "&Sheets"
 msgstr "&पत्रक"
 
 #. Translators: Used to express an address range in excel.
@@ -8392,6 +8454,13 @@ msgstr "HIMS ब्रेल चेतना/ब्रेल किनारा 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr "चार्टको सूची, टिप्पणी एवम् सूत्रयुक्त कोशिका प्रस्तुत गर्छ"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "निर्धारित रङ्ग"
 
 #~ msgid "selecting %s"
 #~ msgstr "%s रोजियो"

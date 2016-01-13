@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5895\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-10 10:22+1000\n"
-"PO-Revision-Date: 2015-11-25 13:34+0100\n"
+"POT-Creation-Date: 2015-11-26 19:09+1000\n"
+"PO-Revision-Date: 2015-11-27 08:59+0100\n"
 "Last-Translator: jožef gregorc <jozko.gregorc@gmail.com>\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: sl\n"
@@ -124,6 +124,18 @@ msgstr "obrazec"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "območje"
+
+#. Translators: an audio ducking mode for Windows 8 and up
+msgid "No ducking"
+msgstr "Brez stišanja"
+
+#. Translators: an audio ducking mode for Windows 8 and up
+msgid "Duck when outputting speech and sounds"
+msgstr "Stišano, ko NVDA oddaja govor ali lastne zvočne signale"
+
+#. Translators: an audio ducking mode for Windows 8 and up
+msgid "Always duck"
+msgstr "Vedno stišano"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -449,6 +461,11 @@ msgstr "Nepalska razvrstitev 1"
 #. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "Orijska razvrstitev 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "Polska 8 pična računalniška brajica"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2929,6 +2946,19 @@ msgstr "Vnos"
 msgid "Document formatting"
 msgstr "Oblikovanje dokumenta"
 
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "Stišanje ostalih zvokov ni podprto"
+
+#. Translators: input help message for toggleAudioDuckingMode script
+msgid ""
+"Toggles whether NVDA's speech and sounds should duck other audio, or other "
+"audio should be ducked all the time, or audio should never be ducked"
+msgstr ""
+"Stikalo med možnostmi stišanja ostalih zvokov; medtem, ko NVDA govori ali "
+"oddaja svoje zvočne signale, ali pa naj bodo ostali zvoki vedno stišani, ali "
+"pa naj bo tako delovanje izključeno"
+
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
 msgstr "pomoč za vnose vključena"
@@ -4891,6 +4921,34 @@ msgstr "poravnava z razmiki znakov"
 msgid "align default"
 msgstr "privzeta poravnava"
 
+#. Translators: Reported when text is vertically top-aligned.
+msgid "vertical align top"
+msgstr "navpična poravnava po zgornjem robu"
+
+#. Translators: Reported when text is vertically middle aligned.
+msgid "vertical align middle"
+msgstr "navpična poravnava po sredini"
+
+#. Translators: Reported when text is vertically bottom-aligned.
+msgid "vertical align bottom"
+msgstr "navpična poravnava po spodnjem robu"
+
+#. Translators: Reported when text is vertically aligned on the baseline.
+msgid "vertical align baseline"
+msgstr "navpična poravnava po osnovnici"
+
+#. Translators: Reported when text is vertically justified.
+msgid "vertical align justified"
+msgstr "navpična obojestranska poravnava"
+
+#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
+msgid "vertical align distributed"
+msgstr "navpična poravnava z razmiki med znaki"
+
+#. Translators: Reported when text has reverted to default vertical alignment.
+msgid "vertical align default"
+msgstr "navpična privzeta poravnava"
+
 #. Translators: the label for paragraph format left indent
 msgid "left indent"
 msgstr "levi zamik"
@@ -4922,34 +4980,6 @@ msgstr "zamik v prvi vrstici"
 #. Translators: the message when there is no paragraph format first line indent
 msgid "no first line indent"
 msgstr "brez zamika v prvi vrstici"
-
-#. Translators: Reported when text is vertically top-aligned.
-msgid "vertical align top"
-msgstr "navpična poravnava po zgornjem robu"
-
-#. Translators: Reported when text is vertically middle aligned.
-msgid "vertical align middle"
-msgstr "navpična poravnava po sredini"
-
-#. Translators: Reported when text is vertically bottom-aligned.
-msgid "vertical align bottom"
-msgstr "navpična poravnava po spodnjem robu"
-
-#. Translators: Reported when text is vertically aligned on the baseline.
-msgid "vertical align baseline"
-msgstr "navpična poravnava po osnovnici"
-
-#. Translators: Reported when text is vertically justified.
-msgid "vertical align justified"
-msgstr "navpična obojestranska poravnava"
-
-#. Translators: Reported when text is vertically justified but with character spacing (For some Asian content).
-msgid "vertical align distributed"
-msgstr "navpična poravnava z razmiki med znaki"
-
-#. Translators: Reported when text has reverted to default vertical alignment.
-msgid "vertical align default"
-msgstr "navpična privzeta poravnava"
 
 #. Translators: Reported when text no longer contains a comment.
 msgid "out of comment"
@@ -6175,7 +6205,7 @@ msgstr "Možnosti"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Uporabljaj Capslock kot prikrojevalno tipko NVDA"
+msgstr "Uporabljaj CapsLock kot prikrojevalno tipko NVDA"
 
 #. Translators: The label of a check box in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
@@ -6932,6 +6962,10 @@ msgstr "&Sinteza:"
 #. headphones, etc.
 msgid "Output &device:"
 msgstr "Izhodna &naprava:"
+
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &Ducking mode:"
+msgstr "Delovanje stišanja ostalih &zvokov"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -7707,34 +7741,39 @@ msgstr "Namizje"
 msgid "default color"
 msgstr "privzeta barva"
 
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "Neznana barva"
+
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Ta celica ni namenjena urejanju"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "Prikazuje seznam grafikonov, celic s komentarji in celic s formulami."
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Razvršča različne tipe elementov v tej preglednici"
 
 # lahko tudi karta (iz priloženega ni razvidno kateri pomen je ustreznejši
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
-msgstr "&Grafikon"
+msgid "&Charts"
+msgstr "&Grafikoni"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
-msgstr "&Komentar"
+msgid "C&omments"
+msgstr "&Komentarji"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "&Formula"
+msgid "Fo&rmulas"
+msgstr "&Formule"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
-msgstr "&list"
+msgid "&Sheets"
+msgstr "&Listi"
 
 # več po testu
 #. Translators: Used to express an address range in excel.
@@ -8756,11 +8795,13 @@ msgstr "HIMS Braille Sense/Braille EDGE serija"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr ""
+#~ "Prikazuje seznam grafikonov, celic s komentarji in celic s formulami."
+
 #~ msgid "Default color"
 #~ msgstr "Privzeta barva"
-
-#~ msgid "Unknown color"
-#~ msgstr "Neznana barva"
 
 #~ msgid "selecting %s"
 #~ msgstr "označevanje %s"

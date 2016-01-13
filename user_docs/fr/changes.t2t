@@ -3,6 +3,36 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.1 =
+
+== Nouvelles Fonctionnalités ==
+- Nouvelle table de conversion braille  : Polonais braille informatique 8 points, Mongol. (#5537, #5574)
+- Vous pouvez désactiver le curseur braille et en changer la forme en utilisant les nouvelles options Montrer le curseur et Forme du curseur dans le dialogue Paramètres Braille. (#5198)
+
+
+== Changements ==
+- L'annonce de l'emphase est maintenant désactivée par défaut. (#4920)
+- Dans la liste d'éléments sous Microsoft Excel, le raccourci pour les formule a été changé en alt+r pour qu'il soit différent du raccourci pour le champ de filtre. (#5527)
+- Le traducteur braille liblouis a été mis à jour à la version 2.6.5. (#5574)
+ 
+
+== Corrections de Bogues ==
+- Sous iTunes 12, le mode navigation se met maintenant à jour correctement quand une nouvelle page est chargée dans l'iTunes Store. (#5191)
+- Sous Internet Explorer et autres contrôles MSHTML, aller à des titres de niveau spécifique en navigation par lettre fonctionne maintenant comme prévu quand le niveau d'un titre est masqué pour des raisons d'accessibilité (en particulier, quand aria-level masque le niveau d'un h tag). (#5434)
+- Sous Spotify, Le focus ne se positionne plus fréquemment sur des objets inconnus. (#5439)
+- Le focus est maintenant restauré correctement quand on revient dans Spotify depuis une autre application. (#5439)
+- Quand on bascule entre mode navigation et mode formulaire, le mode est indiqué en Braille aussi bien qu'en parole. (#5239)
+- Le bouton Démarrer sur la barre des tâches n'est plus annoncé comme une liste et/ou comme sélectionné dans certaines versions de Windows. (#5178)
+- Des messages tels que "inséré" ne sont plus annoncés quand on compose des messages sous Microsoft Outlook. (#5486)
+- Quand on utilise un afficheur braille et que du texte est sélectionné sur la ligne courante (ex : quand on recherche dans un éditeur de texte un texte apparaissant sur la même ligne), l'afficheur braille défilera si nécessaire. (#5410)
+- NVDA ne s'arrête plus silencieusement quand on ferme une console de commandes Windows par alt+f4 sous Windows 10. (#5343)
+- Dans la liste d'éléments en mode navigation, quand on change de type d'élément, le champ de filtrage est maintenant remis à blanc. (#5511)
+- Dans le texte éditable des applications Mozilla, déplacer la souris lit à nouveau la ligne appropriée, le mot, etc. comme prévu au lieu de tout le contenu. (#5535)
+- Quand on déplace la souris dans un texte éditable d'une application Mozilla, la lecture ne s'arrête plus sur les éléments tels que les liens dans le mot ou la ligne en cours de lecture. (#2160, #5535)
+- Sous Internet Explorer, le site shoprite.com peut maintenant être lu en mode navigation et n'est plus annoncé comme vide. (Spécifiquement, les attributs lang malformés sont maintenant élégamment gérés.) (#5569)
+- Sous Microsoft Word, les demandes de modification telles que "inséré" ne sont plus annoncées quand l'indicateur de demandes de modification n'est pas affiché. (#5566)
+
+
 = 2015.4 =
 Les points forts de cette version incluent des améliorations de performances sous Windows 10 ; l'inclusion dans les options d'accessibilité sous Windows 8 et au-delà; des amélioration sous Microsoft Excel, incluant la possibilité de lister et renommer les feuilles et l'accès aux cellules verrouillées dans les feuilles protégées; et le support de l'édition du texte enrichi sous Mozilla Firefox, Google Chrome et Mozilla Thunderbird.
 
@@ -39,10 +69,10 @@ Les points forts de cette version incluent des améliorations de performances so
  - Si vous avez configuré cela avec une version précédente de NVDA, vous devrez le désactiver puis le réactiver dans le dialogue Paramètres Généraux pour que le changement prenne effet. Suivez cette procédure :
   + Ouvrez le dialogue "Paramètres Généraux".
   + Décochez la case "Démarrer NVDA automatiquement après ma connexion à Windows".
-  + Pressez le bouton OK.
+  + Appuyez sur le bouton OK.
   + Ouvrez de nouveau le dialogue "Paramètres Généraux".
   + Cochez la case "Démarrer NVDA automatiquement après ma connexion à Windows".
-  + Pressez le bouton OK.
+  + Appuyez sur le bouton OK.
 - Améliorations de performances pour UI Automation incluant  l'explorateur de fichiers et la barre des tâches. (#5293)
 - Améliorations de performance pour UI Automation incluant  l'Explorateur de fichier et la barre des tâches. (#5293)
 - NVDA passe maintenant correctement en mode formulaire quand on tabule vers des contrôles ARIA grid en lecture seule en mode navigation pour Mozilla Firefox et autres contrôles basés sur Gecko. (#5118)

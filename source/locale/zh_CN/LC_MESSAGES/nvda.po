@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-10 10:22+1000\n"
-"PO-Revision-Date: 2015-11-02 23:22+0800\n"
+"POT-Creation-Date: 2015-12-21 19:08+1000\n"
+"PO-Revision-Date: 2015-12-26 09:55+0800\n"
 "Last-Translator: 雪岭冰龙 <vgjh2005@gmail.com>\n"
 "Language-Team: Simplified Chinese translate team <vgjh2005@gmail.com>\n"
 "Language: zh_CN\n"
@@ -401,6 +401,11 @@ msgstr "曼尼普尔语一级点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "蒙古语"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "马拉地语一级点字"
 
@@ -448,6 +453,11 @@ msgstr "尼泊尔语一级点字"
 #. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "奥里亚语一级点字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "波兰语八点电脑点字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -653,6 +663,18 @@ msgstr "可点击"
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "(未选中)"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "第7点和第8点"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "第8点"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "所有点位"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -3914,6 +3936,31 @@ msgstr "点字光标移到 %s"
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "将点字光标移到系统焦点或浏览光标"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "点字光标关"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "点字光标开"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "切换点字光标的开关"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "点字光标已关闭"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "点字光标 %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "在光标形状之间切换"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -7266,9 +7313,17 @@ msgstr "输入表（&I）："
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "将光标所在单词转换为电脑点字(&X)"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "&Show cursor"
+msgstr "显示光标位置(&S)"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "光标闪烁频率（以毫秒为单位）(&R)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "光标形状(&S)"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7472,32 +7527,37 @@ msgstr "桌面"
 msgid "default color"
 msgstr "默认颜色"
 
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "未知颜色"
+
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "这个单元不可编辑"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "显示一个图表，用以显示有公式的和带有评论的单元。"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "在此列表中列举了各种类型的元素。"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
+msgid "&Charts"
 msgstr "图表(&C)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
+msgid "C&omments"
 msgstr "注释(&O)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "公式(&F)"
+msgid "Fo&rmulas"
+msgstr "公式(&O)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
+msgid "&Sheets"
 msgstr "表格(&S)"
 
 #. Translators: Used to express an address range in excel.
@@ -8481,13 +8541,13 @@ msgstr "HIMS Braille Sense/Braille EDGE 系列"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr "显示一个图表，用以显示有公式的和带有评论的单元。"
+
 #, fuzzy
 #~ msgid "Default color"
 #~ msgstr "默认颜色"
-
-#, fuzzy
-#~ msgid "Unknown color"
-#~ msgstr "未知颜色"
 
 #~ msgid "selecting %s"
 #~ msgstr "%s，已选择"

@@ -1,5 +1,4 @@
 ﻿NVDA NVDA_VERSION brugervejledning
-NVDA NVDA_VERSION brugervejledning
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -57,12 +56,14 @@ Dette gælder både originale og modificerede kopier af softwaren, plus software
 For yderligere oplysninger, kan du [læse den fulde licens. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Systemkrav +
-- Operativsystemer: alle 32-bit og 64-bit versioner af Windows XP, Windows Vista, Windows 7, Windows 8 og Windows 10 (inkl. server-styresystemer).
+- Operativsystemer: alle 32-bit og 64-bit versioner af Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 og Windows 10 (inkl. server-styresystemer).
  - For Windows XP 32-bit kræver NVDA Service Pack 2 eller højere.
  - For Windows Server 2003 kræver NVDA Service Pack 1 eller højere.
-- Hukommelse: 256 MB eller mere RAM
+- For Windows Vista kræver NVDA Service Pack 2 og [KB2763674 https://support.microsoft.com/en-us/kb/2763674] opdatering.
+ begge disse skulle være installeret hvis alle tilgængelige opdateringer er anvendt via Windows update.
+ - Hukommelse: 256 MB eller mere RAM
 - Processor hastighed: 1,0 GHz eller højere
-- Omkring 50 MB lagerplads.
+- Omkring 90 MB lagerplads.
 -
 
 + Hente og opsætte NVDA +
@@ -88,7 +89,7 @@ Brug af den midlertidige kopi af NVDA er også en mulighed fx. hvis du har til h
 Udover den manglende evne til at starte på og efter logon-skærmen, har en flytbar eller midlertidig kopi af NVDA følgende begrænsninger:
 - manglende evne til at interagere med programmer der kører med administratorrettigheder, med mindre NVDA ligeledes kører med administratorrettigheder (anbefales ikke).
 - Manglende evne til at læse Kontrol af Brugerkonti (UAC) skærme når du forsøger at starte et program med administratorrettigheder.
-- Windows 8: Understøtter ikke input for touchscreen.
+- Windows 8 og senere: Understøtter ikke input for touchscreen.
 - Windows 8: NVDA er ikke i stand til at benytte funktioner såsom gennemsynstilstand, samt evnen til at udtale indtastede tegn i Windows Store apps.
 -
 
@@ -628,12 +629,12 @@ Ligesom på webbet har NVDA en elementliste til Microsoft Excel, hvor du kan få
 For at komme til elementlisten i Excel skal du trykke NVDA+f7.
 %kc:endInclude
 De forskellige typer oplysninger, du kan se i elementlisten, er følgende:
-- Diagram: Viser alle diagrammer i projektmappen.
+- Diagrammer: Viser alle diagrammer i projektmappen.
 Hvis du vælger et diagram og trykker på Enter eller knappen "Flyt til", får du diagrammet i fokus, så du kan bevæge dig rundt i det og læse det med piletasterne.
-- Kommentar: Viser en liste over alle celler i projektmappen, som indeholder kommentarer.
+- Kommentarer: Viser en liste over alle celler i projektmappen, som indeholder kommentarer.
 For hver celle for du vist adressen og den tilhørende kommentar.
 Hvis du trykker på Enter eller "Flyt til"-knappen på en kommentar i listen, går du direkte til cellen.
-- Formel: Viser en liste med alle celler i projektmappen, som indeholder en formel.
+- Formler: Viser en liste med alle celler i projektmappen, som indeholder en formel.
 For hver celle bliver vist celleadressen og formlen.
 Hvis du trykker på Enter eller "Flyt til"-knappen på en formel i listen, kommer du direkte til cellen.
 - Ark: Viser en liste over alle ark i projektmappen.
@@ -736,7 +737,7 @@ Denne funktion er kun tilgængelig i en installeret kopi af NVDA.
 Hvis du skal angive brugernavn og password for at logge på Windows, kan denne funktion slås til, og NVDA startes automatisk op på logonskærmen når Windows starter.
 Denne funktion er kun tilgængelig i en installeret kopi af NVDA.
 
-==== Benyt de aktuelt gemte indstillinger på logon- og andre beskyttede skærmbilleder ====
+==== Benyt de aktuelt gemte indstillinger på logon- og andre beskyttede skærmbilleder (kræver administratorrettigheder)====
 Aktivering af denne knap kopierer dine aktuelt gemte brugerindstillinger i NVDA til NVDA's systemkonfigurationsmappe, så NVDA vil bruge dem, når du befinder dig på logon, brugerkontokontrol (UAC) og andre beskyttede skærmbilleder.
 For at være sikker på at alle dine indstillinger bliver kopieret, skal du først gemme dine indstillinger med Ctrl+NVDA+c eller gem konfiguration in NVDA-menuen.
 Denne funktion er kun tilgængelig i en installeret kopi af NVDA.
@@ -888,8 +889,16 @@ Hvis indtastning ikke er understøttet af et punktdisplay med tilhørende tastat
 ==== Udvid ordet ved markøren til computer-Braille ====
 Med denne indstilling kan du få ordet under cursoren vist i uforkortet computerbraille.
 
-==== Blinkhastighed for markør ====
+==== Vis markør ====
+Denne indstillinger lader dig slå braille-markøren til og fra.
+Denne indstilling anvendes til brug af system- og læsemarkøren, men ikke udvælgelses-indikatoren.
+
+==== Blinkhastighed for markør (ms) ====
 Denne indstilling er et felt til indtastning af en talværdi. Her har du mulighed for at indtaste markørens blinkhastighed i millisekunder.
+
+==== Markørform ====
+Denne indstilling lader dig vælge formen (braille-mønstret) til brugen af din braille-markør.
+Udvælgelsesindikatoren påvirkes ikke af denne indstilling.
 
 ==== Besked vises i (sek) ====
 Denne indstilling er et felt til indtastning af en talværdi, som styrer, hvor længe NVDA-meddelelser vises på punktdisplayet.

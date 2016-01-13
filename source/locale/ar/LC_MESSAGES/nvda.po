@@ -4,15 +4,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-10703,53a09c4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-10 10:22+1000\n"
-"PO-Revision-Date: 2015-11-10 09:23+0300\n"
+"POT-Creation-Date: 2015-12-21 19:08+1000\n"
+"PO-Revision-Date: 2015-12-25 10:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.11\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-Bookmarks: -1,1664,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -402,6 +402,11 @@ msgstr "مانيبرى بدون اختصارات"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "مانغولي"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "مهاراتية بدون اختصارات"
 
@@ -449,6 +454,11 @@ msgstr "نيبالية بدون اختصارات"
 #. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "إوريا بدون اختصارات"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "بولندي حاسوب برايل 8 نقاط"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -654,6 +664,18 @@ msgstr "clk"
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "( )"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "النقاط 7 و 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "النقاط 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "كل النقاط"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -3938,6 +3960,31 @@ msgstr "إرفاق مؤشر الخط البارز %s"
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "التحول بين مؤشر الاستعراض للبرايل ومؤشر الاستمارات"
 
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "مؤشر البرايل تعطيل"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "مؤشر البرايل تشغيل"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "التبديل بين تشغيل وتعطيل مؤشر البرايل"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "مؤشر البرايل معطل"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "مؤشر البرايل %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "الانتقال بين أشكال مؤشر البرايل"
+
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
 msgstr "لا يوجد نص بالحافظة"
@@ -5177,8 +5224,8 @@ msgid ""
 "screen, height is {height:.1f} per cent of screen"
 msgstr ""
 "موقع الكائن على الشاشة {left:.1f} بالمائة من الحد الأيسر للشاشة, {top:.1f} "
-"بالمائة من الحد الأيمن للشاشة, العرض {width:.1f} بالمائة من الشاشة, "
-"والطول{height:.1f} بالمائة من الشاشة"
+"بالمائة من الحد الأيمن للشاشة, العرض {width:.1f} بالمائة من الشاشة, والطول"
+"{height:.1f} بالمائة من الشاشة"
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
@@ -7334,9 +7381,17 @@ msgstr "&جدول الإدخال:"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "مد الكلمة الحالية ب&شفرة برايل الحاسوبية"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "&Show cursor"
+msgstr "ظهور المؤشر"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "معدل ظهور المؤشر (ms)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "شكل المؤشر:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7542,33 +7597,38 @@ msgstr "سطح المكتب"
 msgid "default color"
 msgstr "اللون الافتراضي"
 
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "لون غير معروف"
+
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "هذه الخلية لا يمكن تحريرها"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "عرض قائمة بالمخططات, والخلايا ذات التعليقات والخلايا ذات الصيغ"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "سرد قائمة بالعناصر المختلفة الموجودة بورقة العمل"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
-msgstr "م&خطط"
+msgid "&Charts"
+msgstr "م&خططات"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
-msgstr "ت&عليق"
+msgid "C&omments"
+msgstr "ت&عليقات"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "&صيغة"
+msgid "Fo&rmulas"
+msgstr "&صيغ"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
-msgstr "و&رقة العمل"
+msgid "&Sheets"
+msgstr "أو&راق العمل"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -8560,13 +8620,13 @@ msgstr "HIMS Braille Sense/Braille EDGE series"
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr "عرض قائمة بالمخططات, والخلايا ذات التعليقات والخلايا ذات الصيغ"
+
 #, fuzzy
 #~ msgid "Default color"
 #~ msgstr "اللون الافتراضي"
-
-#, fuzzy
-#~ msgid "Unknown color"
-#~ msgstr "لون غير معروف"
 
 #~ msgid "selecting %s"
 #~ msgstr "تحديد %s"

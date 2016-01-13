@@ -1,21 +1,23 @@
 # Irish translation of NVDA
-# Copyright (C) 2006-2013 NVDA Contributors
+# Copyright (C) 2006-2015 NVDA Contributors
 #
-# Cearbhall O'Meadhra <cearbhall.omeadhra@blbc.ie>
+# Robbie Sinnott <robbiesin@gmail.com>
 # Kevin Scannell <kscanne@gmail.com>
+# Ronan McGuirk <ronan.p.mcguirk@gmail.com>
+# Cearbhall O'Meadhra <cearbhall.omeadhra@blbc.ie>
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA 2013.1-5975\n"
+"Project-Id-Version: NVDA 2016.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-02 17:08+1000\n"
-"PO-Revision-Date: 2015-11-05 21:19-0000\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2015-12-21 19:08+1000\n"
+"PO-Revision-Date: 2016-01-03 15:18+0000\n"
+"Last-Translator: Ronan McGuirk\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.8.6\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -406,6 +408,11 @@ msgstr "Fairsis, grád 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr ""
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 #, fuzzy
 msgid "Marathi grade 1"
 msgstr "Fairsis, grád 1"
@@ -455,6 +462,12 @@ msgstr "Neipeáilis , grád 1"
 #, fuzzy
 msgid "Oriya grade 1"
 msgstr "Seirbis, grád 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#, fuzzy
+msgid "Polish 8 dot computer braille"
+msgstr "Spáinnis, ríomhbhraille 8-ponc"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -661,6 +674,18 @@ msgstr "clc"
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "( )"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "pointe 7 agus 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "pointe 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "gach pointe"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -1471,10 +1496,9 @@ msgid "Dark Olive Green"
 msgstr "dúghlas"
 
 #. Translators: the color Dark Orange (RGB 255, 140, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
 msgctxt "color name"
 msgid "Dark Orange"
-msgstr "dúrua"
+msgstr "dúoráiste"
 
 #. Translators: the color Dark Orchid (RGB 153, 50, 204) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 #, fuzzy
@@ -1645,10 +1669,9 @@ msgid "Lemon Chiffon"
 msgstr ""
 
 #. Translators: the color Light Blue (RGB 173, 216, 230) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
 msgctxt "color name"
 msgid "Light Blue"
-msgstr "alt ar dheis"
+msgstr "gealghorm"
 
 #. Translators: the color Light Coral (RGB 240, 128, 128) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 #, fuzzy
@@ -1668,10 +1691,9 @@ msgid "Light Goldenrod Yellow"
 msgstr ""
 
 #. Translators: the color Light Green (RGB 144, 238, 144) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
 msgctxt "color name"
 msgid "Light Green"
-msgstr "fionnliath"
+msgstr "fionnghlas"
 
 #. Translators: the color Light Grey (RGB 211, 211, 211) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 #, fuzzy
@@ -1838,10 +1860,9 @@ msgid "Orange"
 msgstr "oráiste"
 
 #. Translators: the color Orange Red (RGB 255, 69, 0) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
-#, fuzzy
 msgctxt "color name"
 msgid "Orange Red"
-msgstr "oráiste"
+msgstr "deargoráiste"
 
 #. Translators: the color Orchid (RGB 218, 112, 214) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -3310,19 +3331,16 @@ msgid "Toggles on and off the reporting of headings"
 msgstr "Tuairiscigh nó ná tuairiscigh ceanntáisc"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-#, fuzzy
 msgid "report block quotes off"
-msgstr "Léigh ath&fhriotail eangaithe"
+msgstr "Ná tabhair tuairisc ar athfhriotail bloic"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
-#, fuzzy
 msgid "report block quotes on"
-msgstr "Léigh ath&fhriotail eangaithe"
+msgstr "Tabhair tuairisc ar athfhriotail bloic"
 
 #. Translators: Input help mode message for toggle report block quotes command.
-#, fuzzy
 msgid "Toggles on and off the reporting of block quotes"
-msgstr "Léigh nó ná léigh focail chlóscríofa"
+msgstr "Tabhair tuairisc, nó ná tabhair tuairisc ar athfhriotail bloic"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks off"
@@ -4038,6 +4056,31 @@ msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Scoránaigh ceangal braille idir an fócas agus an suíomh athbhreithnithe."
 
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Cúrsóir Bhraille stopaithe"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Cúrsóir Bhraille ar siúl"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Cuir nó ná cuir an cúrsóir Bhraille ar siúl."
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "Níl an cúrsóir Bhraille ar siúl."
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "cúrsóir Bhraille %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr ""
+
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
 msgstr "Níl aon téacs sa ghearrthaisce"
@@ -4462,7 +4505,7 @@ msgstr "enter (uimhircheap)"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 0"
-msgstr ""
+msgstr "0 ar eochaircheap uimhriúil le uimhirghlas"
 
 #. Translators: This is the name of a key on the keyboard.
 #, fuzzy
@@ -7496,9 +7539,18 @@ msgstr "Tábla &ionchurtha:"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Leathnaigh chun ríomhbhraille i gcomhair an fhocail ag an gcúrsóir"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+#, fuzzy
+msgid "&Show cursor"
+msgstr "cúrsóir"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "Ráta caochta an chursóra (ms)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "Cruth an chúrsóra"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7588,7 +7640,7 @@ msgstr "&Scag de réir:"
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
 msgid "{main} ({source})"
-msgstr ""
+msgstr "{main} ({source})"
 
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 msgid "Enter input gesture:"
@@ -7701,38 +7753,47 @@ msgstr "gair"
 msgid "Desktop"
 msgstr "Deasc"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "dath réamhshocraithe"
+
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+#, fuzzy
+msgid "Unknown color"
+msgstr "dath anaithnid"
 
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Ní féidir eagarthóireacht a dhéanamh ar an gcill seo."
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr ""
+#, fuzzy
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Saghas"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #, fuzzy
-msgid "&Chart"
+msgid "&Charts"
 msgstr "cairt"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #, fuzzy
-msgid "C&omment"
+msgid "C&omments"
 msgstr "Nóta"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #, fuzzy
-msgid "&Formula"
+msgid "Fo&rmulas"
 msgstr "foirmle ann"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
+msgid "&Sheets"
 msgstr ""
 
 #. Translators: Used to express an address range in excel.
@@ -7848,7 +7909,7 @@ msgstr ""
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Bar"
-msgstr ""
+msgstr "barra tríphlánach, cruachta 100%"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7864,17 +7925,17 @@ msgstr ""
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Stacked Column"
-msgstr ""
+msgstr "colún tríphlánach, cruachta"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D 100 percent Stacked Column"
-msgstr ""
+msgstr "colún tríphlánach, cruachta  100%"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "3D Line"
-msgstr ""
+msgstr "line tríphlánach"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7910,12 +7971,12 @@ msgstr "roghchlár inscoite"
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Bar"
-msgstr ""
+msgstr "barra cruachta"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Bar"
-msgstr ""
+msgstr "barra cruachta 100%"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -7934,14 +7995,13 @@ msgstr ""
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-#, fuzzy
 msgid "Stacked Column"
-msgstr "colún"
+msgstr "colún cruachta"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Column"
-msgstr ""
+msgstr "colún cruachta 100%"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
@@ -8017,7 +8077,7 @@ msgstr ""
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Line"
-msgstr ""
+msgstr "líne"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8037,12 +8097,12 @@ msgstr ""
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "Stacked Line"
-msgstr ""
+msgstr "line cruachta"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
 msgid "100 percent Stacked Line"
-msgstr ""
+msgstr "líne cruachta 100%"
 
 #. Translators: A type of chart in Microsoft Excel.
 #. See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
@@ -8231,7 +8291,6 @@ msgid "slice"
 msgstr ""
 
 #. Translators: A column in a column chart.
-#, fuzzy
 msgctxt "chart"
 msgid "column"
 msgstr "colún"
@@ -8745,6 +8804,10 @@ msgstr "Sraith HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "dath réamhshocraithe"
 
 #~ msgid "selecting %s"
 #~ msgstr "%s á roghnú"

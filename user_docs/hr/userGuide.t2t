@@ -1,5 +1,4 @@
 NVDA NVDA_VERSION Vodič za korisnike
-NVDA NVDA_VERSION Vodič za korisnike
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -57,12 +56,14 @@ Ovo se primjenjuje na originalni i izmjenjeni softver, kao i na rad koji je iz t
 Za više pojedinosti, možete [pogledati cijelu licencu. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Zahtjevi Sustava +
-- Operacijski sustavi: sve 32-bitne i 64-bitne inačice Windows XP, Windows Vista, Windows 7, Windows10, i Windows 8 (uključujući Poslužiteljske operacijske sustave)
+- Operacijski sustavi: sve 32-bitne i 64-bitne inačice Windows XP, Windows Vista, Windows 7, Windows10, windows 8.1, i Windows 8 (uključujući Poslužiteljske operacijske sustave)
  - Za Windows XP 32-bitni operacijski sustav, NVDA zahtjeva Servisni paket 2 ili viši.
  - Za Windows Server 2003, NVDA zahtjeva Servisni paket 1 ili viši.
+- za windowse Vista, NVDA zahtjeva servisni paket 2 i [KB2763674 https://support.microsoft.com/en-us/kb/2763674] update.
+ Obje komponente moraju biti instalirane ako su sve nadogradnje preuzete preko windows update servisa.
 - Memorija: 256 mb ili više RAM-a
 - Brzina procesora: 1.0 ghz ili više
-- Oko 50 MB prostora na hard disku.
+- Oko 90 MB prostora na hard disku.
 -
 
 + Preuzimanje i postavljanje NVDA +
@@ -88,8 +89,8 @@ Korištenje privremene kopije također je moguće (npr. za potrebe prezentacije)
 Osim nemogućnosti automatskog pokretanja tokom i/ili nakon prijave, prijenosne i privremene kopije NVDA također imaju slijedeća ograničenja:
 - Nemogućnost korištenja aplikacija koje zahtijevaju administratorska prava, ako naravno sam NVDA nije pokrenut sa istim pravima (ne preporučuje se).
 - Nemogućnost čitanja zaslona kontrole korisničkog računa (UAC) kada se pokušava pokrenuti aplikacija sa administratorskim pravima.
-- Windows 8: nemogućnost podrške unosa za zaslone osjetljive na dodir.
-- Windows 8: Nemogućnost omogućavanja značajki kao što su to način pregleda i izgovor upisanih znakova u aplikacijama koje su kupljene u windows prodavaonici.
+- Windows 8 i noviji: nemogućnost unosa znakova sa zaslona osjetljivog na dodir.
+- Windows 8 i noviji: nemogućnost pružanja značajki poput načina pregleda i  izgovora znakova u aplikacijama kupljenim u windowsovoj trgovini.
 -
 
 ++ Instaliranje NVDA ++
@@ -370,7 +371,7 @@ Sljedeći prečaci su dostupne za pregled teksta:
 | Pomakni se na kraj retka u pregledu | shift+num3 | NVDA+end | nema | pomiče pregledni kursor na kraj u trenutnom retku teksta |
 | Izgovori sve pomoću pregleda | numPlus | NVDA+shift+a | klizni sa tri prsta prema dolje (tekstualni način) | Čita od trenutne pozicije preglednog kursora, pomičući se s pomićanjem kursora |
 | Kopiraj s preglednog kursora | NVDA+f9 | NVDA+f9 | nema | započinje kopiranje teksta od trenutne pozicije preglednog kursora. U tom se trenutku kopiranje ne izvodi sve dok ne kažemo  NVDA gdje to treba kopirati |
-| Kopiraj na pregledni kursor | NVDA+f10 | NVDA+f10 | nema | kopira od mjesta gdje se pregledni kursor nalazi odnosno trenutno podešen sa kopiraj sa preglednog kursora, na trenutnu poziciju preglednog kursora. nakon pritiska te tipke, tekst će biti kopiran u međuspremnik |
+| kopiraj na pregledni kursor | NVDA+f10 | NVDA+f10 | nema | kopira od prethodne pozicije postavljene uz pomoć koprečaca kopiraj sa preglednog kursora do  trenutne pozicije preglednog kursora. poslije pritiska ove kombinacije tipaka, tekst će biti kopiran u međuspremnik |
 | Izvijesti o oblikovanju teksta | NVDA+f | NVDA+f | nema | izgovara oblikovanje teksta gdje se pregledni kursor nalazi |
 %kc:endInclude
 
@@ -630,13 +631,13 @@ kako biste pristupili popisu elemenata u excelu, pritisnite NVDA+f7.
 Razne vrste informacija u popisu elemenata u excelu jesu:
 - Grafovi: Ovo popisuje sve grafove u radnoj knjizi. 
 Označujući graf ili pritišćući enter na gumbu pomakni na, fokusira graf spreman za čitanje uz pomoć strelica.
-- komentar: Ovo popisuje sve ćelije u radnoj knjizi koje sadrže komentare. 
+- komentari: Ovo popisuje sve ćelije u radnoj knjizi koje sadrže komentare. 
 Adresa ćelije sa pripadajućim komentarom je prikazana. 
 Kada pritisnete enter ili gumb premjesti na kada se nalazite na popisanom komentaru premješta izravno na tu ćeliju.
-- formula: Ovo popisuje sve ćelije u radnoj knjizi koje sadrže formulu. 
+- formule: Ovo popisuje sve ćelije u radnoj knjizi koje sadrže formulu. 
 Adresa ćelije skupa sa formulom je čitana.
 Pritišćući enter ili gumb premjesti na će premjestiti izravno na ovu ćeliju. 
-- radni list: ovo popisuje sve radne listove u  radnoj knjizi. 
+- radni listovi: ovo popisuje sve radne listove u  radnoj knjizi. 
 Pritišćući f2 na odabranom radnom listu omogućuje preimenovanje radnog lista. 
 Pritišćući enter ili gumb premjesti na kada se nalazite na označenoj ćeliji Premješta na taj radni list.
 -
@@ -880,16 +881,24 @@ Možete se kretati između brajičnih tablica koristeći kursorske tipke.
 Uz prethodnu opciju, pronači ćete opciju za promjenu ulazne tablice koja je odabirni okvir.
 Ova će se brajična tablica koristiti pri unosu znakova sa tipkovnice vašeg brajičnog retka.
 Trenutno će biti prikazane samo osmotočkaste brajične tablice, jer NVDA podržava samo unos s brajičnog retka koristeći osmotočkastu brajicu.
-
 Između brajičnih tablica pomićete se koristeći kursorske tipke.
+
 Imajte na umu da ovu opciju možete koristiti ako vaš brajični redak na sebi ima brajičnu tipkovnicu i ako upravljački program podržava unos preko iste.
 Ako unos sa brajičnog retka koji ima brajičnu tipkovnicu nije podržan, to će biti naznačeno u poglavlju [podržani brajični retci #SupportedBrailleDisplays].
 
 ==== Proširi na kompjutorsku brajicu za riječ na položaju kursora ====
 Ova opcija omogućuje prikaz riječi pod kursorom koristeći kompjutorsku brajicu.
 
-==== Brzina titraja kursora ====
-Ova je opcija brojčano polje za uređivanje koje omogućuje promjenu titraja kursora u milisekundama.
+==== Prikaži pokazivač ====
+Ova opcija omogućuje uključivanje/isključivanje brajičnog pokazivača.
+Ovo se primjenjuje za kursor sustava i pregledni kursor, ali ne i za indikator označenosti.
+
+==== Brzina titraja pokazivača (ms) ====
+ Ova je opcija brojčano polje koja vam omogućuje izmjenu brzine titraja pokazivača u milisekundama.
+
+==== Izgled pokazivača ====
+Ova vam opcija omogućuje promjenu izgleda (kombinacije točkica) brajičnog pokazivača.
+Indikator označenosti nije obuhvaćen ovom opcijom.
 
 ==== Stanka za poruke u sekundama ====
 Ovom se opcijom određuje koliko će dugo NVDA poruke biti prikazane na brajičnom retku.
