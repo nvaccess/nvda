@@ -7,10 +7,8 @@
 import controlTypes
 import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible
-import speech
 import ui
 import api
-import sayAllHandler
 
 COMPLETION_DIALOG_LABEL = u"Press 'Ctrl+Space' to show Template Proposals "
 AUTOCOMPLETION_LIST_NAME = u"Autocompletion List"
@@ -23,16 +21,6 @@ class EclipseTextArea(IAccessible):
 		# instead of just the changed selection.
 		# Therefore, just drop this event.
 		pass
-
-class FloatingHelpDocument(IAccessible):
-
-	def script_returnToTextEditor(self, gesture):
-		pass
-
-	_gestures ={
-		"kb:escape": "returnToTextEditor",
-		"kb:enter": "returnToTextEditor",
-	}
 
 class AutocompletionListItem(IAccessible):
 
@@ -98,4 +86,3 @@ class AppModule(appModuleHandler.AppModule):
 			if obj.role == controlTypes.ROLE_LISTITEM and obj.parent.role == controlTypes.ROLE_LIST and obj.parent.name == AUTOCOMPLETION_LIST_NAME:
 				clsList.insert(0, AutocompletionListItem)
 		except: pass
-
