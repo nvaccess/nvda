@@ -8,12 +8,17 @@
 == neue Funktionen ==
 - neue Braille-Übersetzungstabellen: polnisches 8-Punkt-Computerbraille, mongolisch. (#5537 #5574)
 - Mit Hilfe zweier neuer Optionen im Braille-Einstellungsdialog kann nun die Form des Cursors auf der Braillezeile geändert Bzw. die Anzeige des Cursors ganz abgeschaltet werden. (#5198)
+- NVDA kann nun mittels Bluetooth mit HIMS Smart Beetle Braillezeilen kommunizieren. (#5607)
+- Ab Windows 8 und neuer kann NVDA die Lautstärke anderer Audio-Quellen optional reduzieren. Dies kann im Dialog Sprachausgabe mit der Option "Lautstärke anderer Audio-Quellen reduzieren" oder NVDA+Umschalt+d eingestellt werden. (#3830, #5575)
+- Unterstützung für folgende Braillezeilen: APH Refreshabraille im HID-Modus, Baum VarioUltra und Pronto! wenn diese mittels USB angeschlossen werden.  (#5609)
+- Unterstützung für HumanWare Brailliant BI/B-Braillezeilen bei ausgewähltem OpenBraille-Protokoll.  (#5612)
 
 
 == Änderungen ==
 - Die ansage betonter Texte ist nun standardmäßig ausgeschaltet. (#4920)
 - Die Tastenkombination für den Auswahlschalter "Formel" in der Elementliste von Excel wurde in alt+r geändert. Jetzt kollidiert sie nicht mehr mit alt+f für das Suchfeld. (#5527)
 - Liblouis Braille-Übersetzer auf 2.6.5 aktualisiert. (#5574)
+- Das Wort "Text" wird nun nicht länger ausgegeben, wenn der Fokus oder der NVDA-Cursor zu Text-Objekten bewegt wird. (#5452)
 
 == Fehlerbehebungen ==
 - In Itunes 12 wird der Lese-Modus  korrekt aktualisiert, wenn eine Seite im itunes Store neu geladen wird. (#5191)
@@ -30,7 +35,23 @@
 - Wenn Sie in Mozilla-Anwendungen die Maus innerhalb von Eingabefeldern bewegen, wird das Lesen nicht bei Elementen unterbrochen, die sich innerhalb der zu lesenden Einheit (Wort, Zeile etc.) befinden. (#2160, #5535)
 - Wenn Sie die Webseite shoprite.com mit dem Internet Explorer aufsuchen, wird deren Inhalt nun erwartungsgemäß angezeigt. (Hierbei werden insbesondere ungültig gesetzte Sprachenauszeichnungen besser verarbeitet.) (#5569)
 - in Microsoft Word werden Änderungen am Dokument nur dann durch NVDA mitgeteilt, wenn sie auch tatsächlich im Dokument ausgezeichnet werden. Hierzu zählen beispielsweise Meldungen über eingefügten oder gelöschten Text. (#5566)
+- Wenn ein Umschalter fokusiert wird, gibt NVDA aus, wenn dieser von gedrückt zu nicht gedrückt wechselt. (#5441)
+- Die Ansage bei Änderung der Form des Mauszeigers funktioniert nun ordnungsgemäß. (#5595)
+- Bei der Ansage von Zeileneinrückungen werden geschützte Leerzeichen nun wie normale Leerzeichen behandelt. Dies führte zuvor zu Ansagen wie "Leerzeichen Leerzeichen Lerzeichen" anstatt von 3 Leerzeichen. (#5610)
+- Beim Schließen der Kandidatenliste bei der Eingabe komplexer Sonderzeichen wird der Fokus korrekt wiederhergestellt. (#4145)
 
+
+== Änderungen für Entwickler == (en)
+- Sie können die neue Klasse audioDucking.audioDucker verwenden, wenn Sie beim Abspielen von Audiomaterial die Lautstärke anderer Audioquellen reduzieren wollen. (#3830)
+- Der Konstruktor von nvwave.WavePlayer besitzt nun ein Arguzment namens wantDucking, mit dessen Hilfe Sie angeben können, ob während der Wiedergabe die Lautstärke anderer Audioquellen reduziert werden soll. (#3830)
+ - Wenn die Funktion aktiviert ist (Standard), sollte zu gegebener Zeit WavePlayer.idle aufgerufen werden.
+- die Brailleausgabe wurde verbessert: (#5609)
+ - Thread-safe braille display drivers can declare themselves as such using the BrailleDisplayDriver.isThreadSafe attribute. A driver must be thread-safe to benefit from the following features.
+ - Data is written to thread-safe braille display drivers in the background, thus improving performance.
+ - hwIo.Serial extends pyserial to call a callable when data is received instead of drivers having to poll.
+ - hwIo.Hid provides support for braille displays communicating via USB HID.
+ - hwPortUtils and hwIo can optionally provide detailed debug logging, including devices found and all data sent and received.
+ 
 
 = 2015.4 =
 Schwerpunkte dieser Version sind u.a. Leistungsverbesserungen in Windows 10; Unterstützung für das Center für erleichterte Bedienung in Windows 8 und neuer; Verbesserungen an Microsoft Excel wie z.B. das Auflisten und umbenennen von Tabellenblättern und der Zugriff auf gesperrte zellen in geschützten Arbeitsblättern; sowie die Unterstützung erweiterter Eingabefelder in Mozilla Firefox, Google Chrome und Mozilla Thunderbird.
