@@ -8,12 +8,17 @@ Quoi de Neuf dans NVDA
 == Nouvelles Fonctionnalités ==
 - Nouvelle table de conversion braille  : Polonais braille informatique 8 points, Mongol. (#5537, #5574)
 - Vous pouvez désactiver le curseur braille et en changer la forme en utilisant les nouvelles options Montrer le curseur et Forme du curseur dans le dialogue Paramètres Braille. (#5198)
+- NVDA peut maintenant se connecter à un afficheur braille HIMS Smart Beetle via Bluetooth. (#5607)
+- NVDA peut optionnellement baisser le volume des autres sons quand il est installé sous Windows 8 et au-delà. Ceci peut être configuré en utilisant l'option Mode d'Atténuation Audio dans le dialogue Synthétiseur de NVDA ou en pressant NVDA+maj+d. (#3830, #5575)
+- Support de l'APH Refreshabraille en mode HID et des Baum VarioUltra et Pronto! connectés via USB. (#5609)
+- Support des afficheurs braille HumanWare Brailliant BI/B quand le protocole est réglé sur OpenBraille. (#5612)
 
 
 == Changements ==
 - L'annonce de l'emphase est maintenant désactivée par défaut. (#4920)
 - Dans la liste d'éléments sous Microsoft Excel, le raccourci pour les formule a été changé en alt+r pour qu'il soit différent du raccourci pour le champ de filtre. (#5527)
 - Le traducteur braille liblouis a été mis à jour à la version 2.6.5. (#5574)
+- Le mot "texte" n'est plus prononcé quand on amène le focus ou le curseur de revue sur des objets texte. (#5452)
  
 
 == Corrections de Bogues ==
@@ -31,7 +36,23 @@ Quoi de Neuf dans NVDA
 - Quand on déplace la souris dans un texte éditable d'une application Mozilla, la lecture ne s'arrête plus sur les éléments tels que les liens dans le mot ou la ligne en cours de lecture. (#2160, #5535)
 - Sous Internet Explorer, le site shoprite.com peut maintenant être lu en mode navigation et n'est plus annoncé comme vide. (Spécifiquement, les attributs lang malformés sont maintenant élégamment gérés.) (#5569)
 - Sous Microsoft Word, les demandes de modification telles que "inséré" ne sont plus annoncées quand l'indicateur de demandes de modification n'est pas affiché. (#5566)
+- Quand un bouton bascule est en focus, NVDA annonce maintenant quand il passe de enfoncé à non enfoncé. (#5441)
+- L'annonce des changements de forme de la souris fonctionne de nouveau comme prévu. (#5595)
+- durant l'annonce du retrait des lignes, les espaces insécables sont maintenant traités comme des espaces normaux. Avant, cela pouvait causer des annonces telles que "espace espace espace" au lieu de "3 espace". (#5610)
+- À la fermeture de la liste de candidats d'une méthode moderne de saisie Microsoft, le focus est rétabli correctement soit à la composition de saisie soit au document sous-jacent. (#4145)
 
+
+== Changements pour les Développeurs ==
+- La nouvelle classe audioDucking.AudioDucker permet au code qui produit l'audio d'indiquer quand l'audio en arrière-plan devrait être atténuée. (#3830)
+- Le constructeur de nvwave.WavePlayer possède maintenant un mot-clé argument wantDucking qui spécifie si l'audio en arrière-plan devrait être atténuée durant l'émission de l'audio. (#3830)
+ - Quand ceci est activé (ce qui est le défaut), il est essentiel que WavePlayer.idle soit appelé quand appproprié.
+- Entrées/sorties améliorées pour les afficheurs braille : (#5609)
+ - Les pilotes d'afficheurs braille Thread-safe peuvent se déclarer comme tels en utilisant l'attribut BrailleDisplayDriver.isThreadSafe. Un pilote doit être thread-safe pour bénéficier des fonctionnalités suivantes.
+ - Les données sont écrites dans les pilotes thread-safe en arrière-plan, améliorant ainsi les performances.
+ - hwIo.Serial étend pyserial pour appeler un appelable quand les données sont reçues au lieu que les pilotes aient à surveiller.
+ - hwIo.Hid fournit le support pour les afficheurs communiquant via USB HID.
+ - hwPortUtils et hwIo peuvent optionnellement fournir une journalisation détaillée de débogage, incluant les équipements trouvés et toutes les données envoyées et reçues.
+ 
 
 = 2015.4 =
 Les points forts de cette version incluent des améliorations de performances sous Windows 10 ; l'inclusion dans les options d'accessibilité sous Windows 8 et au-delà; des amélioration sous Microsoft Excel, incluant la possibilité de lister et renommer les feuilles et l'accès aux cellules verrouillées dans les feuilles protégées; et le support de l'édition du texte enrichi sous Mozilla Firefox, Google Chrome et Mozilla Thunderbird.
