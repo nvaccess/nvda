@@ -198,6 +198,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	scriptCategory = inputCore.SCRCAT_BROWSEMODE
 	disableAutoPassThrough = False
+	APPLICATION_ROLES = (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG)
 
 	def _get_currentNVDAObject(self):
 		raise NotImplementedError
@@ -1359,7 +1360,6 @@ class BrowseModeDocumentTreeInterceptor(cursorManager.CursorManager,BrowseModeTr
 
 		return False
 
-	APPLICATION_ROLES = (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG)
 	def _isNVDAObjectInApplication(self, obj):
 		"""Determine whether a given object is within an application.
 		The object is considered to be within an application if it or one of its ancestors has an application role.
