@@ -328,6 +328,10 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 	needsReviewCursorTextInfoWrapper=False
 	passThrough=True
 
+	def _get_currentNVDAObject(self):
+		obj=api.getFocusObject()
+		return obj if obj.treeInterceptor is self else None
+
 	def _get_isAlive(self):
 		if not winUser.isWindow(self.rootNVDAObject.windowHandle):
 			return False
@@ -403,7 +407,7 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 	def script_endOfColumn(self,gesture):
 		self.navigationHelper("endcol")
 
-	def script_activatePosition(self,gesture):
+	def oldscript_activatePosition(self,gesture):
 		excelApplicationObject = self.rootNVDAObject.excelWorksheetObject.Application
 		if excelApplicationObject.ActiveSheet.ProtectContents and excelApplicationObject.activeCell.Locked:
 			# Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
@@ -413,8 +417,8 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 		self.passThrough = True
 		browseMode.reportPassThrough(self)
 	# Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
-	script_activatePosition.__doc__=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.")
-	script_activatePosition.category=inputCore.SCRCAT_BROWSEMODE
+	oldscript_activatePosition.__doc__=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.")
+	oldscript_activatePosition.category=inputCore.SCRCAT_BROWSEMODE
 
 	def __contains__(self,obj):
 		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle)
@@ -443,16 +447,6 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 		else:
 			raise NotImplementedError
 
-	def _activatePosition(self):
-		obj=self.currentNVDAObj
-		if (isinstance(obj,ExcelFormControlListBox) or isinstance(obj,ExcelFormControlDropDown)):
-			self.passThrough = True
-			self.ignoreTreeInterceptorPassThrough=False
-		self._activateNVDAObject(obj)
-
-	def _activateNVDAObject(self,obj):
-		obj.doAction()
-
 	def script_elementsList(self,gesture):
 		super(ExcelBrowseModeTreeInterceptor,self).script_elementsList(gesture)
 	# Translators: the description for the elements list command in Microsoft Excel.
@@ -468,9 +462,6 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 		"kb:control+downArrow":"endOfColumn",
 		"kb:control+leftArrow":"startOfRow",
 		"kb:control+rightArrow":"endOfRow",
-		"kb:enter": "activatePosition",
-		"kb(desktop):numpadEnter":"activatePosition",
-		"kb:space": "activatePosition",
 	}
 
 class ElementsListDialog(browseMode.ElementsListDialog):
@@ -862,6 +853,9 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 		return formatField,(self._startOffset,self._endOffset)
 
 class ExcelCell(ExcelBase):
+
+	def doAction(self):
+		pass
 
 	def _get_columnHeaderText(self):
 		return self.parent.fetchAssociatedHeaderCellText(self,columnHeader=True)
@@ -1383,11 +1377,13 @@ class ExcelMergedCell(ExcelCell):
 		return self.excelCellObject.mergeArea.columns.count
 
 class ExcelFormControl(ExcelWorksheet):
+	isFocusable=True
+
 	def __init__(self,windowHandle=None,excelWindowObject=None,excelFormControlObject=None):
 		self.excelWindowObject=excelWindowObject
 		self.excelWorksheetObject=self.excelWindowObject.ActiveSheet
 		self.excelFormControlObject=excelFormControlObject
-		self._roleMap= {xlButtonControl:controlTypes.ROLE_BUTTON, xlCheckBox:controlTypes.ROLE_CHECKBOX, xlDropDown:controlTypes.ROLE_DROPDOWNBUTTON, xlEditBox:controlTypes.ROLE_EDITBOX, xlGroupBox:controlTypes.ROLE_BOX, xlLabel:controlTypes.ROLE_LABEL, xlListBox:controlTypes.ROLE_LISTBOX, xlOptionButton:controlTypes.ROLE_RADIOBUTTON, xlScrollBar:controlTypes.ROLE_SCROLLBAR, xlSpinner:controlTypes.ROLE_SPINBUTTON}
+		self._roleMap= {xlButtonControl:controlTypes.ROLE_BUTTON, xlCheckBox:controlTypes.ROLE_CHECKBOX, xlDropDown:controlTypes.ROLE_COMBOBOX, xlEditBox:controlTypes.ROLE_EDITBOX, xlGroupBox:controlTypes.ROLE_BOX, xlLabel:controlTypes.ROLE_LABEL, xlListBox:controlTypes.ROLE_LIST, xlOptionButton:controlTypes.ROLE_RADIOBUTTON, xlScrollBar:controlTypes.ROLE_SCROLLBAR, xlSpinner:controlTypes.ROLE_SPINBUTTON}
 		super(ExcelFormControl,self).__init__(windowHandle=windowHandle, excelWindowObject=self.excelWindowObject, excelWorksheetObject=self.excelWorksheetObject)
 
 	def _get_role(self):
@@ -1499,7 +1495,7 @@ class ExcelFormControlQuickNavItem(ExcelQuickNavItem):
 			self.nvdaObj=ExcelFormControlDropDown(windowHandle=document.Application.Hwnd,excelWindowObject=document.Application.ActiveWindow,excelFormControlObject=formControlObject)
 		else:
 			self.nvdaObj=ExcelFormControl(windowHandle=document.Application.Hwnd,excelWindowObject=document.Application.ActiveWindow,excelFormControlObject=formControlObject)
-		self.treeInterceptorObj.currentNVDAObj=self.nvdaObj
+		self.nvdaObj.treeInterceptor=self.treeInterceptorObj
 		if formControlObject.AlternativeText:
 			self.label = formControlObject.AlternativeText+" "+formControlObject.Name+" " + formControlObject.TopLeftCell.address(False,False,1,False) + "-" + formControlObject.BottomRightCell.address(False,False,1,False)
 		else:
@@ -1511,7 +1507,6 @@ class ExcelFormControlQuickNavItem(ExcelQuickNavItem):
     def moveTo(self):
 		self.excelItemObject.TopLeftCell.Select
 		self.excelItemObject.TopLeftCell.Activate()
-		self.nvdaObj.treeInterceptor=self.treeInterceptorObj
 		eventHandler.queueEvent("gainFocus",self.nvdaObj)
 
     @property
