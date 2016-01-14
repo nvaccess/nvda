@@ -762,6 +762,16 @@ Esto podería ser útil para alguén que desexe utilizar só NVDA con Braille, o
 ==== Dispositivo de Saída ====
 Esta opción permíteche elexir a tarxeta de son a través da que NVDA debería mandar falar ó sintetizador seleccionado.
 
+%kc:setting
+==== Modo de Atenuación do Audio ====
+Tecla: NVDA+shift+d
+
+En Windows 8 e superiores, esta opción permíteche escoller se NVDA debería baixar o volume doutras aplicacións mentres NVDA estea falando, ou todo o tempo mentres NVDA estea en execución.
+- Sen atenuación: NVDA nunca baixará o volume doutro audio. 
+- Atenuar cando saian voz e sons: NVDA só baixará o volume doutro audio cando NVDA estea falando ou reproducindo sons. Esto poderá non funcionar en todos os sintetizadores. 
+- Atenuar sempre: NVDA conservará o volume doutro audio máis baixo todo o tempo que NVDA estea en execución.
+-
+
 +++ Opcións de Voz (NVDA+control+v) +++[VoiceSettings]
 O diálogo Opcións de Voz, que se atopa no menú Preferencias, contén opcións que che permiten modificar o son da voz. 
 Para un xeito alternativo rápido de controlar os parámetros de voz dende calquer lugar, por favor mira a sección [Grupo de Opcións de Sintetizador #SynthSettingsRing].
@@ -1648,14 +1658,13 @@ Por favor mira a documentación da liña para descripcións de onde poden atopar
 ++ Liñas braille Baum/Humanware/APH ++
 Varias liñas braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] e [APH http://www.aph.org/] están soportadas cando se conectan a traverso do USB ou do bluetooth.
 Estas inclúen:
-- Baum: SuperVario, PocketVario, VarioUltra (só Bluetooth), Pronto! (Só Bluetooth)
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
 Algunhas outras liñas manufacturadas por Baum tamén poderían funcionar, aíndaque non foron probadas.
 
-Se conectas a traverso do USB, primeiro debes instalar os controladores USB proporcionados polo fabricante.
-Para a APH Refreshabraille, o modo USB debe axustarse a serie.
+Se conectas a través do USB outras pantallas diferentes a VarioUltra, Pronto! ou Refreshabraille co modo USB configurado a HID, primeiro debes instalar os controladores USB proporcionados polo fabricante.
 
 Seguidamente van as asignacións de teclas para esta liña co NVDA.
 Por favor mira a documentación da liña braille para descripcións de onde se poden atopar estas teclas.
@@ -1712,7 +1721,8 @@ Por favor mira a documentación da liña para descripcións de onde poden atopar
 
 ++ HumanWare Brailliant Series BI/B ++
 As liñas braille Brailliant series BI e B de [HumanWare http://www.humanware.com/], incluíndo BI 32, BI 40 e B 80, están soportadas cando se conectan a través do USB ou bluetooth.
-Se a conectas a través de USB, primeiro debes instalar os controladores USB proporcionados polo fabricante.
+Se a conectas a través de USB co protocolo configurado a HumanWare, primeiro debes instalar os controladores USB proporcionados polo fabricante.
+Non se requiren os controladores USB se o protocolo se configura a OpenBraille.
 
 Seguidamente van as asignacións de teclas para esta liña co NVDA.
 Por favor mira a documentación da liña para descripcións de onde poden atoparse estas teclas.
@@ -1740,12 +1750,10 @@ Por favor mira a documentación da liña para descripcións de onde poden atopar
 | Ler todo | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ Series da HIMS Braille Sense/Braille EDGE ++
-NVDA soporta as liñas Braille Sense e Braille EDGE de [Hims http://www.hims-inc.com/] cando se conectan a través do USB ou bluetooth. 
+++ Series da HIMS Braille Sense/Braille EDGE/Smart Beetle ++
+NVDA soporta as liñas Braille Sense, Braille EDGE e Smart Beetle de [Hims http://www.hims-inc.com/] cando se conectan a través do USB ou bluetooth. 
 Se se conectan a través do USB, necesitarás instalar os controladores USB de HIMS no sistema.
-Podes descargar éstos dende o Centro de Recursos de HIMS: http://www.hims-inc.com/resource-center/
-Nesta páxina, selecciona o dispositivo e descarga o controlador na sección Window-Eyes.
-Aíndaque  a sección só mencione a Window-Eyes, este é un controlador USB xeral que funcionará co NVDA tamén.
+Podes descargalos dende esta páxina: http://www.himsintl.com/?c=2/13&uid=2319
 
 Seguidamente van as asignacións de teclas para estas liñas co NVDA.
 Por favor mira a documentación das liñas para descripcións de onde poden atoparse estas teclas.
