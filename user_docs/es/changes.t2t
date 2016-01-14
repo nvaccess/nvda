@@ -8,11 +8,17 @@ Qué hay de Nuevo en NVDA
 == Nuevas Características ==
 - Nuevas tablas de transcripción braille: braille polaco computerizado de 8 puntos, mongol. (#5537), #5574) 
 - Puedes desactivar el cursor braille y cambiar su forma utilizando las nuevas opciones Mostrar cursor y Forma del cursor en el diálogo Opciones de Braille. (#5198)
+- NVDA ahora puede conectar con la pantalla braille HIMS Smart Beetle  a través de Bluetooth. (#5607)
+- NVDA puede bajar opcionalmente el volumen de otros sonidos cuando se instale en Windows 8 y posteriores. Esto puede configurarse utilizando la opción Modo de atenuación de audio en el diálogo Opciones Generales de NVDA o pulsando NVDA+shift+d. (#3830, #5575)
+- Soporte para la APH Refreshabraille en modo HID y para la Baum VarioUltra y Pronto! cuando se conecten a través de USB. (#5609)
+- Soporte para las pantallas braille HumanWare Brailliant BI/B cuando el protocolo se pone en OpenBraille. (#5612)
 
 
 == Cambios ==
 - El anunciado de émfasis ahora está deshabilitado por omisión. (#4920)
 - En el diálogo Lista de Elementos en Microsoft Excel, el atajo de teclado para Fórmulas ha sido cambiado a alt+r así es diferente al atajo de teclado para el Filtro de campos. (#5527)
+- Actualizado el transcriptor braille liblouis a 2.6.5. (#5574)
+- La palabra "texto" ya no se anuncia cuando se mueva el foco o el cursor de revisión a objetos de texto. (#5452)
 
 
 == Corrección de Fallos ==
@@ -30,6 +36,22 @@ Qué hay de Nuevo en NVDA
 - Al mover el ratón en texto editable en aplicaciones de Mozilla, la lectura 		ya no se detiene en elementos tales como enlaces dentro de la palabra o línea que esté leyéndose. (#2160, #5535)
 - En Internet Explorer, el sitio web shoprite.com ahora puede leerse en modo exploración en lugar de anunciarlo como en blanco. (Específicamente, los atributos lang mal formados ahora se manejan graciosamente.) (#5569)
 - En Microsoft Word, el seguimiento de cambios tales como "insertado" ya no se anuncia cuando la marca de seguimiento de cambios no se muestra. (#5566)
+- Cuando se enfoque un botón conmutable , NVDA ahora anuncia cuando se cambie de pulsado a no pulsado. (#5441)
+- El anunciado de la forma del ratón ahora funciona de nuevo como se esperaba. (#5595)
+- Al verbalizar el sangrado de línea, los espacios de no separación ahora son tratados como espacios normales. Anteriormente, esto podía causar anunciados tales como "espacio espacio espacio" en lugar de "3 espacios". (#5610)
+- Al cerrar una lista de métodos candidatos de entrada en Microsoft moderno, el foco se restaura correctamente o la composición de entrada o el documento subrayado. (#4145)
+ 
+ 
+== Cambios para Desarrolladores ==
+- La nueva clase audioDucking.AudioDucker permite código que saca audio para indicar dónde debería atenuarse el audio de fondo. (#3830)
+- El constructor del nvwave.WavePlayer ahora tiene la palabra clave wantDucking como argumento que especifica si el audio de fondo debería atenuarse mientras se reproduce audio. (#3830)
+ - Cuando esto esté habilitado (lo cual está predeterminado), es esencial que WavePlayer.idle se llame cuando sea apropiado.
+- Mejorada la Entrada/salida para pantallas braille: (#5609)
+ - Los controladores Thread-safe de pantallas braille pueden declararse como tales utilizando el atributo BrailleDisplayDriver.isThreadSafe. Un controlador thread-safe debe beneficiarse de las siguientes características.
+ - Los datos se escriben al controlador de pantallas braille thread-safe en segundo plano, mejorando así el rendimiento.
+ - hwIo.Serial extiende pyserial para llamar una llamada cuando los datos se reciban en lugar de que los controladores tengan que buscarlos.
+ - hwIo.Hid proporciona soporte para que las pantallas braille se comuniquen a través de USB HID.
+ - hwPortUtils y hwIo pueden proporcionar opcionalmente el registro detallado de depuración, incluyendo dispositivos encontrados y todos los datos enviados y recibidos.
 
 
 = 2015.4 =
