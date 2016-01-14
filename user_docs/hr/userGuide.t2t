@@ -762,6 +762,16 @@ To može biti korisno za nekoga tko želi koristiti NVDA samo uz pomoć brajičn
 ==== Izlazni uređaj ====
 Ova opcija omogućuje odabir zvučne kartice preko koje će NVDA prosljeđivati izlaznu govornu informaciju prema korisniku.
 
+%kc:setting
+==== način utišavanja zvuka ====
+Prečac: NVDA+shift+d
+
+Na Windows 8 i novijima, ova vam opcija omogućuje stišavanje ostalih zvukova  u bilo kojem drugom programu dok nvda govori, ili cijelo vrijeme kada je nvda pokrenut.
+- nema stišavanja: nvda nikada neće stišavati druge zvukove. 
+- stišavaj dok nvda govori: nvda će stišavati druge zvukove kada nvda govori ili reproducira zvukove. This may not work for all synthesizers. 
+- uvijek utišavaj: NVDA će zadržati glasnoću ostalih zvukova tišu cijelo vrijeme kada je nvda pokrenut.
+-
+
 +++ Glasovne postavke (NVDA+control+v) +++[VoiceSettings]
 Dijaloški okvir glasovne postavke, kojeg možete pronaći u izborniku postavke, sadrži opcije koje vam omogućuju promjenu postavki govora.
 Za brže mjenjanje glasovnih postavki s bilo kojeg mjesta pogledajte poglavlje  [postavke sintetizatora govora u obliku prstena #SynthSettingsRing].
@@ -1740,12 +1750,10 @@ Molimo pogledajte uputstvo za upotrebu ovih brajičnih redaka kako biste saznali
 | Reci sve | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE Serije ++
-NVDA podržava Braille Sense i Braille EDGE brajične retke tvrtke [Hims http://www.hims-inc.com/] kad su spojeni preko USB ili Bluetooth veze. 
+++ HIMS Braille Sense/Braille EDGE  smart beetle Serije ++
+NVDA podržava Braille Sense,  Braille EDGE i SMART BEETLE brajične retke tvrtke [Hims http://www.hims-inc.com/] kad su spojeni preko USB ili Bluetooth veze. 
 Ako brajični redak spajate putem USB, trebat ćete instalirati USB himsove upravljačke programe na vaš sustav.
-Možete ih preuzeti iz Himsovog resursnog centrana adresi: http://www.hims-inc.com/resource-center/
-Na toj stranici odaberite svoj uređaj i iz odjeljka "Window-Eyes", preuzmite upravljački program.
-Iako se u tom odjeljku spominje window-eyes, to je univerzalni USB upravljački program koji će također raditi sa NVDA čitačem zaslona.
+Možete ih preuzeti sa ove stranice: http://www.himsintl.com/?c=2/13&uid=2319
 
 Sljede dodijeljeni prečaci za ove brajične retke za NVDA.
 Molimo pogledajte uputstva za upotrebu brajičnih redaka kako biste saznali smještaj i opis tipaka na brajičnom retku.

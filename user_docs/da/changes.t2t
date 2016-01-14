@@ -8,12 +8,17 @@
 == Nye funktioner ==
 - Nye oversættelsestabeller til punkt: Polsk 8 punkt computer-braille, Mongolsk. (#5537, #5574)
 - Du kan slå braille-markøren fra og ændre dens form ved brug af den nye "Vis markør" og "Markørform" indstillinger i dialogen Braille-indstillinger. (#5198)
+- NVDA kan nu forbindes med et  HIMS Smart Beetle punktdisplay via Bluetooth. (#5607)
+- NVDA har nu mulighed for at dæmpe lyd hvis installeret på Windows 8 eller senere. Dette kan blive konfigureret ved brug af Lyddæmpning-tilstand indstillingen i dialogen Generelle Indstillinger, eller ved brug af kommandoen NVDA+Skift+D. (#3830, #5575)
+- Understøttelse for APH Refreshabraille i HID-tilstand og Baum VarioUltra og Pronto! når disse forbindes via USB. (#5609)
+- Understøttelse for HumanWare Brailliant BI/B punktdisplays når protokollen er sat til OpenBraille. (#5612)
 
 
 == Ændringer ==
 - Annoncéring af fremhævelse er som standard slået fra. (#4920)
 - Genvejstasten for formler i Microsoft Excel når dialogen elementliste benyttes er ændret til ALT+R således at der ikke dannes konflikter mellem genvejstasten for filtréringsfeltet. (#5527)
 - Opdaterede liblouis punktoversætter til 2.6.5. (#5574)
+- Ordet "tekst" er ikke længere annoncéret når fokus- eller læsemarkøren flyttes til et tekstobjekt. (#5452)
 
 
 == Fejlrettelser ==
@@ -31,6 +36,14 @@
 - Oplæsning vil ikke længere ophøre, når du bevæger musen i redigerbart tekst i Mozilla applikationer hvori elementer såsom links i det oplæste ord eller den oplæste linje fremkommer. (#2160, #5535)
 - shoprite.com hjemmesiden kan nu blive læst ved hjælp af Internet Explorer i stedet for at annoncére siden som blank. (Specifikt, misdannede lang attributter bliver nu håndteret mere elegant.) (#5569)
 - Spor ændringer i Microsoft Word som "indsat" vil ikke længere blive annoncéret, hvis fremhævning af spor ændringer ikke vises. (#5566)
+- Når der er bragt fokus til en skifteknap vil NVDA nu annoncérer når den skiftes fra trykket til ikke trykket. (#5441)
+- Annoncéring af ændringer af museformen virker nu som forventet. (#5595)
+- Når linjeindrykning udtales vil hårde mellemrum nu blive behandlet som normale mellemrum. Tidligere ville disse mellemrum blive annoncéres som  "mellemrum mellemrum mellemrum" i stedet for "3 mellemrum". (#5610)
+- Når en moderne indtastningsmetode kandidatliste i lukkes  vil fokus korret blive gendannet til enten inputkomposition eller det underlæggende dokument. (#4145)
+
+
+=== Ændringer for udviklere ===
+For nyheder relateret til udvikling se venligst det engelske "What's New"-dokument.
 
 
 = Tidligere versioner =

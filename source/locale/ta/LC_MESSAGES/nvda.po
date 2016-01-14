@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-21 19:08+1000\n"
-"PO-Revision-Date: 2015-12-25 10:53+0530\n"
+"POT-Creation-Date: 2016-01-06 19:08+1000\n"
+"PO-Revision-Date: 2016-01-09 20:06+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language: ta\n"
@@ -123,6 +123,21 @@ msgstr "படிவம்"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "மண்டலம்"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "No ducking"
+msgstr "பிற கேட்பொலிகளின் அளவை எப்பொழுதும் தாழ்த்தாது"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "பேசும்பொழுதும், ஒலியை எழுப்பும் பொழுதும், பிற கேட்பொலிகளின் அளவைத் தாழ்த்துக"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Always duck"
+msgstr "பிற கேட்பொலிகளின் அளவை எப்பொழுதும் தாழ்த்துக"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2911,6 +2926,18 @@ msgstr "உள்ளீடு"
 #. Translators: The name of a category of NVDA commands.
 msgid "Document formatting"
 msgstr "ஆவண வடிவூட்டம்"
+
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "பிற கேட்பொலிகளின் அளவைத் தாழ்த்தும் வசதிக்கு ஆதரவில்லை"
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+"பிற கேட்பொலிகளின் அளவை என்விடிஏ எப்பொழுதெல்லாம் தாழ்த்த வேண்டுமென்று தீர்மானிக்கும் பிற "
+"கேட்பொலிகளின் அளவைத் தாழ்த்தும் நிலைகளுக்கிடையே சுழல்கிறது "
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -6922,7 +6949,11 @@ msgstr "ஒலிப்பான் (&S):"
 #. of an output device are default soundcard, usb
 #. headphones, etc.
 msgid "Output &device:"
-msgstr "வெளியீடுக் கருவி (&D):"
+msgstr "வெளியீட்டுக் கருவி (&D):"
+
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "பிற கேட்பொலிகளின் அளவைத் தாழ்த்தும் நிலை (&D)"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -7076,12 +7107,12 @@ msgstr "சொடுக்கி ஒரு பொருளின் ஊடாக
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "&Play audio coordinates when mouse moves"
-msgstr "சொடுக்கி நகரும்பொழுது ஒலி இசைவுகளை இயக்குக (&P)"
+msgstr "சொடுக்கி நகரும்பொழுது கேட்பொலி இசைவுகளை இயக்குக (&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 msgid "&Brightness controls audio coordinates volume"
-msgstr "ஒலி இசைவுகலின் ஒலியளவை ஒளிர்வு கட்டுப்படுத்துகிறது (&B)"
+msgstr "கேட்பொலி இசைவுகலின் ஒலியளவை ஒளிர்வு கட்டுப்படுத்துகிறது (&B)"
 
 #. Translators: This is the label for the review cursor settings dialog.
 msgid "Review Cursor Settings"
@@ -7252,7 +7283,7 @@ msgstr "கணினிச் சுட்டிக்கான தன்னி�
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Audio indication of focus and browse modes"
-msgstr "குவிமைய நிலை, உலாவும் நிலைக்கான ஒலிச் சைகை"
+msgstr "குவிமைய நிலை, உலாவும் நிலை ஆகியவைகளுக்கு கேட்பொலிச் சைகையை எழுப்புக"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -7403,7 +7434,7 @@ msgstr "அகரமுதலி உள்ளீட்டினைத் தொ�
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 msgid "&Pattern"
-msgstr "தோற்றுரு (&P)"
+msgstr "வடிவவிதம் (&P)"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
 msgid "&Replacement"
@@ -7428,7 +7459,7 @@ msgstr "கருத்துரை"
 
 #. Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
 msgid "Pattern"
-msgstr "தோற்றுரு"
+msgstr "வடிவவிதம்"
 
 #. Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
 msgid "Replacement"
@@ -7440,7 +7471,7 @@ msgstr "எழுத்தின் வகை"
 
 #. Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression, matches whole words, or matches anywhere.
 msgid "Type"
-msgstr "தோற்றுரு வகை"
+msgstr "வகை"
 
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
@@ -8734,8 +8765,8 @@ msgid "&Annotations"
 msgstr "விளக்கவுரைகள் (&A)"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிரெயில் எட்ஜ் தொடர்"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "ஹிம்ஸ் பிரெயில் சென்ஸ்/பிரெயில் எட்ஜ்/ஸ்மார்ட் பீட்டில் தொடர்"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
