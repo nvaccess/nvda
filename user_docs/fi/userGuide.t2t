@@ -760,7 +760,17 @@ Eräs tässä listassa aina näkyvä vaihtoehto on "Ei puhetta", joka mahdollist
 Tästä voi olla hyötyä jollekulle, joka haluaa käyttää NVDA:ta pelkästään pistenäytön avulla tai näkeville kehittäjille, jotka käyttävät pelkkää Puheen tarkastelu -toimintoa.
  
 ==== Äänilaite ====
-Tästä voidaan valita, mitä äänikorttia NVDA:ssa valittuna olevan puhesyntetisaattorin tulisi käyttää.
+Tästä voit valita, mitä äänikorttia NVDA:ssa valittuna olevan puhesyntetisaattorin tulisi käyttää.
+
+%kc:setting
+==== Taustaäänen vaimennuksen tila ====
+Näppäinkomento: NVDA+Shift+D
+
+Tällä asetuksella voit Windows 8:ssa ja uudemmissa käyttöjärjestelmissä valita, alentaako NVDA muiden sovellusten äänenvoimakkuutta puhuessaan vai koko ajan käynnissä ollessaan.
+- Ei vaimennusta: NVDA ei koskaan alenna muiden äänien voimakkuutta.
+- Vaimenna puhuttaessa ja ääniä toistettaessa: NVDA alentaa muiden äänien voimakkuutta vain puhuessaan tai ääniä toistaessaan. Tämä ei ehkä toimi kaikilla puhesyntetisaattoreilla.
+- Vaimenna aina: NVDA alentaa muiden äänien voimakkuutta koko ajan käynnissä ollessaan.
+-
 
 +++ Puheäänen asetukset (NVDA+Control+V) +++[VoiceSettings]
 Puheäänen asetukset -valintaikkuna, joka avataan Asetukset-valikosta kohdasta "Puheääni...", sisältää asetuksia, joilla voidaan vaikuttaa siihen, miltä puhe kuulostaa.
@@ -1646,16 +1656,15 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:endInclude
 
 ++ Baum/Humanware/APH ++
-Useita [Baum http://www.baum.de/cms/en/]-, [HumanWare http://www.humanware.com/]- ja [APH http://www.aph.org/]-pistenäyttöjä tuetaan, kun ne kytketään tietokoneeseen USB-liitännällä tai bluetooth-yhteydellä.
+Useita [Baum http://www.baum.de/cms/en/]-, [HumanWare http://www.humanware.com/]- ja [APH http://www.aph.org/]-pistenäyttöjä tuetaan USB-liitäntää tai bluetoothia käytettäessä.
 Näitä ovat:
-- Baum: SuperVario, PocketVario, VarioUltra (vain bluetooth), Pronto! (vain bluetooth)
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
-Muutkin Baum:in valmistamat pistenäytöt voivat myös toimia, vaikkei tätä olekaan testattu.
+Muutkin Baum:in valmistamat pistenäytöt voivat toimia, vaikkei tätä olekaan testattu.
 
-Mikäli käytetään USB-liitäntää, on ensin asennettava valmistajan toimittamat USB-ajurit.
-APH Refreshabraille -pistenäytössä USB-tila on asetettava sarjaportiksi.
+Mikäli muut pistenäytöt kuin VarioUltra, Pronto! tai Refreshabraille liitetään tietokoneeseen USB:n kautta ja kun USB-tilaksi on määritetty HID, sinun on ensin asennettava valmistajan toimittamat ajurit.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -1711,8 +1720,9 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B ++
-[HumanWaren http://www.humanware.com/] Brailliant BI- ja B -sarjan pistenäyttöjä, mukaan lukien BI 32, BI 40 ja B 80, tuetaan, kun ne kytketään tietokoneeseen USB-liitännällä tai bluetooth-yhteydellä.
-USB-liitäntää käytettäessä on ensin asennettava valmistajan ajurit.
+[HumanWaren http://www.humanware.com/] Brailliant BI- ja B -sarjan pistenäyttöjä, BI 32, BI 40 ja B 80 mukaan lukien, tuetaan, kun ne kytketään tietokoneeseen USB-liitännällä tai bluetoothilla.
+Mikäli näyttö kytketään USB:n kautta ja kun protokollaksi on määritetty HumanWare, sinun on ensin asennettava valmistajan toimittamat USB-ajurit.
+Jos protokollaksi on määritetty OpenBraille, USB-ajureita ei tarvita.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -1740,11 +1750,11 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Lue kaikki | c1, c2, c3, c4, c5 ja c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE ++
-NVDA tukee [HIMSin http://www.hims-inc.com/] Braille Sense- ja Braille EDGE -pistenäyttöjä USB-liitäntää tai Bluetooth-yhteyttä käytettäessä.
-Mikäli käytetään USB-liitäntää, on tietokoneelle asennettava HIMSin ajurit.
-Voit ladata ne HIMSin resurssikeskuksesta: http://www.hims-inc.com/resource-center/
-Valitse tältä sivulta laitteesi ja lataa ajuri Window-Eyes-osiosta.
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle ++
+NVDA tukee [HIMSin http://www.hims-inc.com/] Braille Sense-, Braille EDGE- ja Smart Beetle -pistenäyttöjä USB-liitäntää tai Bluetooth-yhteyttä käytettäessä.
+USB-liitäntää käytettäessä tietokoneelle on asennettava HIMSin ajurit.
+Voit ladata ne täältä: http://www.himsintl.com/?c=2/13&uid=2319
+Valitse sivulta laitteesi ja lataa ajuri Window-Eyes-osiosta.
 Se on USB-yleisajuri, joka toimii myös NVDA:n kanssa, vaikka osiossa mainitaankin vain Window-Eyes.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
