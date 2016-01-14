@@ -10,8 +10,8 @@ from NVDAObjects.IAccessible import IAccessible
 import ui
 import api
 
-COMPLETION_DIALOG_LABEL = u"Press 'Ctrl+Space' to show Template Proposals "
-AUTOCOMPLETION_LIST_NAME = u"Autocompletion List"
+# Translators: This will be the name of the list that contains the autocompleter suggestions:
+AUTOCOMPLETION_LIST_NAME = _("Autocompletion List")
 
 class EclipseTextArea(IAccessible):
 
@@ -21,6 +21,11 @@ class EclipseTextArea(IAccessible):
 		# instead of just the changed selection.
 		# Therefore, just drop this event.
 		pass
+
+class AutocompletionListView(IAccessible):
+
+	def _get_name(self):
+		return AUTOCOMPLETION_LIST_NAME
 
 class AutocompletionListItem(IAccessible):
 
@@ -66,23 +71,34 @@ class AppModule(appModuleHandler.AppModule):
 
 	textEditor = None
 	selectedItem = None
-	floatingHelp = None
 
 	def event_NVDAObject_init(self, obj):
 		if obj.windowClassName == "SysTreeView32" and obj.role in (controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_CHECKBOX) and controlTypes.STATE_FOCUSED not in obj.states:
 			# Eclipse tree views seem to fire a focus event on the previously focused item before firing focus on the new item (EclipseBug:315339).
 			# Try to filter this out.
 			obj.shouldAllowIAccessibleFocusEvent = False
-		try:
-			if obj.role == controlTypes.ROLE_LIST and obj.parent.next.firstChild.name == COMPLETION_DIALOG_LABEL:
-				# Fixme: Just change the name of the object to allow the detection of children items.
-				obj.name = AUTOCOMPLETION_LIST_NAME
-		except: pass
+
+		# I don't know why this doesn't work properly:
+		# try:
+			# if obj.role == controlTypes.ROLE_LIST and obj.simpleParent.simpleParent == api.getDesktopObject():
+				# This is just to change the object's name:
+				# obj.name = AUTOCOMPLETION_LIST_NAME
+		# except:
+			# pass
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName == "SWT_Window0" and obj.role == controlTypes.ROLE_EDITABLETEXT:
 			clsList.insert(0, EclipseTextArea)
+
+		# This does, but freezes the script a lot:
+		# try:
+			# if obj.role == controlTypes.ROLE_LIST and obj.simpleParent.simpleParent == api.getDesktopObject():
+				# clsList.insert(0, AutocompletionListView)
+		# except:
+			# pass
+
 		try:
-			if obj.role == controlTypes.ROLE_LISTITEM and obj.parent.role == controlTypes.ROLE_LIST and obj.parent.name == AUTOCOMPLETION_LIST_NAME:
+			if obj.role == controlTypes.ROLE_LISTITEM and obj.simpleParent.simpleParent.simpleParent == api.getDesktopObject():
 				clsList.insert(0, AutocompletionListItem)
-		except: pass
+		except:
+			pass
