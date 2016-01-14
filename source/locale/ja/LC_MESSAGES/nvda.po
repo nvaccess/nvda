@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-21 19:08+1000\n"
-"PO-Revision-Date: 2015-12-26 14:59+0900\n"
+"POT-Creation-Date: 2016-01-06 19:08+1000\n"
+"PO-Revision-Date: 2016-01-10 17:36+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -125,6 +125,21 @@ msgstr "フォーム"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "範囲"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "No ducking"
+msgstr "ダッキングなし"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "音声とサウンドの出力時にダッキング"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Always duck"
+msgstr "常にダッキング"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2906,6 +2921,16 @@ msgstr "入力"
 #. Translators: The name of a category of NVDA commands.
 msgid "Document formatting"
 msgstr "書式情報"
+
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "音のダッキングはサポートされていません"
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr "音のダッキングの切替。NVDA以外のサウンドの音量を下げるかどうかを選択"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -6833,6 +6858,10 @@ msgstr "音声エンジン(&S)"
 msgid "Output &device:"
 msgstr "出力先デバイス(&D)"
 
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "音のダッキング(&D)"
+
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
@@ -8614,8 +8643,8 @@ msgid "&Annotations"
 msgstr "注釈(&A)"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS社製 Braille Sense/Braille EDGE シリーズ"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle シリーズ"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
