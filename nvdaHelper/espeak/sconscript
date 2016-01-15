@@ -80,10 +80,6 @@ def espeak_compileDict_buildAction(target,source,env):
 	finally:
 		espeak.espeak_Terminate()
 
-# Add some compatibility files specific to windows builds
-env.Install(espeakRepo.Dir('src/libespeak-ng'),'access.c')
-env.Install(espeakRepo.Dir('src'),'config.h')
-
 sonicLib=env.StaticLibrary(
 	target='sonic',
 	srcdir=sonicSrcDir.abspath,
@@ -94,7 +90,6 @@ espeakLib=env.SharedLibrary(
 	target='espeak',
 	srcdir=espeakSrcDir.Dir('libespeak-ng').abspath,
 	source=[
-		"access.c",
 		"speech.c",
 		"readclause.c",
 		"compiledict.c",
