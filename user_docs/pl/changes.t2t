@@ -3,6 +3,48 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.1 =
+
+== Nowości ==
+- Nowe tablice brajlowskie: polski 8-punktowy brajl komputerowy, mongolski. (#5537, #5574)
+- Można wyłączyć kursor brajlowski, albo zmienić jego kształt, używając nowych opcji pokazywania kursora i kształtu kursora, znajdujących się w oknie ustawień brajla. (#5198)
+- NVDA może się łączyć z monitorem brajlowskim HIMS Smart Beetle przez Bluetooth. (#5607)
+- NVDA może opcjonalnie zmniejszać głośność innych dźwięków, gdy zainstalowane na Windows 8 i nowszych. Może to być ustawione przy użyciu opcji trybu przyciszania audio w oknie ustawień ogólnych NVDA, lub przez naciśnięcie NVDA+shift+d. (#3830, #5575)
+- Wsparcie dla APH Refreshabraille w trybie HID, Baum VarioUltra i Pronto! połączonych przez USB. (#5609)
+- Wsparcie monitorów brajlowskich HumanWare Brailliant BI/B, gdy protokół jest ustawiony na OpenBraille. (#5612)
+
+
+== Zmiany ==
+- Zgłaszanie podkreślenia jest teraz domyślnie wyłączone. (#4920)
+- Zaktualizowany translator brajlowski liblouis do  wersji 2.6.5. (#5574)
+- Słowo "tekst" nie jest ogłaszane, gdy punkt uwagi, albo punkt przeglądu zostanie przesunięty na obiekt tekstowy. (#5452)
+
+
+== Poprawki błędów ==
+- W iTunes 12, tryb czytania jest prawidłowo aktualizowany, gdy nowa strona zostanie załadowana w iTunes Store. (#5191)
+- W Internet Explorer i innych kontrolkach MSHTML, przechodzenie do nagłówków określonego poziomu przy pomocy nawigacji pojedynczymi literami  teraz działa prawidłowo, gdy poziom nagłówka został nadpisany dla potrzeb dostępności (szczególnie, gdy aria-level nadpisuje poziom elementu h). (#5434)
+- W Spotify, rozwiązany problem częstego lądowania punktu uwagi na obiektach "nieznane". (#5439)
+- Punkt uwagi jest prawidłowo przywracany podczas powrotu do Spotify z innej aplikacji. (#5439)
+- Podczas przełączania trybu czytania i trybu formularzy, aktualny tryb jest zgłaszany brajlem i mową. (#5239)
+- Przycisk Start na pasku zadań nie jest od teraz zgłaszany jako lista lub jako zaznaczony w niektórych wersjach Windows. (#5178)
+- Komunikaty takie jak "wstawione" nie są od teraz zgłaszane podczas edycji wiadomości w Microsoft Outlook. (#5486)
+- Podczas używania monitora brajlowskiego, gdy tekst w bieżącej linii jest zaznaczony, (np. przy wyszukiwaniu w edytorze tekstu, gdy poszukiwany ciąg znajduje się w tej samej linii), wyświetlany na linijce tekst zostanie przesunięty, jeśli będzie to konieczne. (#5410)
+- NVDA od teraz nie zamyka się, gdy konsola wiersza poleceń Windows zostanie zamknięta klawiszami alt+f4 w Windows 10. (#5343)
+- Na liście elementów trybu czytania, gdy zmieniono typ elementu, pole filtra jest teraz czyszczone. (#5511)
+- W tekstach edytowalnych aplikacji Mozilla, przesuwanie myszy powoduje odczyt odpowiedniej linii, słowa, etc. zamiast całej treści. (#5535)
+- Podczas przesuwania myszy w tekstach edytowalnych aplikacji Mozilla, odczyt nie jest od teraz zatrzymywany na elementach takich jak linki, które znajdują się wewnątrz odczytywanego słowa, lub linii. (#2160, #5535)
+- W Internet Explorer, strona shoprite.com może być odczytywana w trybie czytania i nie jest zgłaszana jako pusta. (Nieprawidłowo zdefiniowane atrybuty lang są obsługiwane.) (#5569)
+- W Microsoft Word, śledzone zmiany takie jak "wstawione" nie są zgłaszane, gdy śledzenie zmian nie jest wyświetlane. (#5566)
+- Gdy punkt uwagi znajduje się na przycisku przełączającym, NVDA zgłasza, gdy zmieni się z wciśnięte na niewciśnięte. (#5441)
+- Ogłaszanie zmiany kształtu wskaźnika myszy ponownie działa zgodnie z oczekiwaniami. (#5595)
+- Przy odczytywaniu wcięcia linii, twarde spacje są traktowane jak normalne. Poprzednio mogło to powodować ogłaszanie "spacja spacja spacja" zamiast "3 spacja". (#5610)
+- Przy zamykaniu nowszej metody wprowadzania listy kandydatów, punkt uwagi prawidłowo wraca do pola kompozycji, lub dokumentu. (#4145)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html], aby je przeczytać.
+
+
 = 2015.4 =
 Najważniejsze zmiany w tej wersji to poprawki wydajności w Windows 10; obecność NVDA w centrum ułatwień dostępu Windows 8 i nowszych; zmiany w Microsoft Excel w tym lista i zmiana nazw arkuszy oraz dostęp do zablokowanych komórek w zabezpieczonych arkuszach;  obsługa edycji tekstu sformatowanego w Mozilla Firefox, Google Chrome i Mozilla Thunderbird.
 

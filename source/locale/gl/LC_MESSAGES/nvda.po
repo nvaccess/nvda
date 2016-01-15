@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-17 19:09+1000\n"
-"PO-Revision-Date: 2015-12-17 18:55+0100\n"
-"Last-Translator: Juan C. Buño <quetzatl@eresmas.net>\n"
+"POT-Creation-Date: 2016-01-06 19:08+1000\n"
+"PO-Revision-Date: 2016-01-07 18:13+0100\n"
+"Last-Translator: Juan C. Buño <oprisniki@gmail.com>\n"
 "Language-Team: Equipo de tradución ó Galego <oprisniki@gmail.com>\n"
 "Language: gl_ES\n"
 "MIME-Version: 1.0\n"
@@ -123,6 +123,21 @@ msgstr "formulário"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "rexión"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "No ducking"
+msgstr "Sen atenuación"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "Atenuar cando saian voz e sons"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Always duck"
+msgstr "Atenuar sempre"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -398,6 +413,11 @@ msgstr "Malayalam grao 1"
 #. braille settings dialog.
 msgid "Manipuri grade 1"
 msgstr "Manipuri grao 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Mongolian"
+msgstr "Mongol"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2907,6 +2927,18 @@ msgstr "Entrada"
 #. Translators: The name of a category of NVDA commands.
 msgid "Document formatting"
 msgstr "Formateado de Documentos"
+
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "Non se soporta a atenuación de audio"
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+"Navega polos modos de atenuación do audio que determinan cando NVDA baixa o "
+"volume doutros sons"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -6930,6 +6962,10 @@ msgstr "&Sintetizador"
 msgid "Output &device:"
 msgstr "&Dispositivo de saída"
 
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "Modo de &atenuación do Audio:"
+
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
@@ -7487,15 +7523,15 @@ msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Expandir a braille de ordenador para a palabra no cursor"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
-msgid "Show cursor"
-msgstr "Amosar cursor"
+msgid "&Show cursor"
+msgstr "&Amosar cursor"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "Velocidade de parpadeo do cursor (ms)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape.
-msgid "Cursor shape:"
+msgid "Cursor &shape:"
 msgstr "Forma do cursor:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
@@ -8735,8 +8771,8 @@ msgid "&Annotations"
 msgstr "&Anotacións"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "Series HIMS Braille Sense/Braille EDGE"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "Series das HIMS Braille Sense/Braille EDGE/Smart Beetle"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"

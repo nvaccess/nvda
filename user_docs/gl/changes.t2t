@@ -8,11 +8,17 @@ Que hai de Novo no NVDA
 == Novas Características ==
 - Novas táboas de transcripción braille: braille polaco computerizado de 8 pontos, mongol. (#5537), #5574)
 - Podes desactivar o cursor braille e cambiar a súa forma usando as novas opcións Amosar cursor e Forma do cursor no diálogo Opcións de Braille. (#5198)
+- NVDA agora pode conectar ca pantalla braille HIMS Smart Beetle  a través do Bluetooth. (#5607)
+- NVDA pode baixar opcionalmente o volume doutros sons cando se instale en Windows 8 e posteriores. Esto pode configurarse usando a opción Modo de atenuación do audio no diálogo Opcións Xerais do NVDA ou premendo NVDA+shift+d. (#3830, #5575)
+- Soporte para a APH Refreshabraille en modo HID e para a Baum VarioUltra e a Pronto! cando se conecten a través do USB. (#5609)
+- Soporte para as pantallas braille HumanWare Brailliant BI/B cando o protocolo se pon en OpenBraille. (#5612)
 
 
 == Cambios ==
 - O anunciado de émfasis agora está deshabilitado por omisión. (#4920)
 - No diálogo Lista de Elementos en Microsoft Excel, o atallo de teclado para Fórmulas foi cambiado a alt+r así é diferente ó atallo de teclado para o Filtro de campos. (#5527)
+- Actualizado o transcriptor braille liblouis a 2.6.5. (#5574)
+- A palabra "texto" xa non se anuncia cando se mova o foco ou o cursor de revisión a obxectos de texto. (#5452)
 
 
 == Corrección de Fallos ==
@@ -29,7 +35,23 @@ Que hai de Novo no NVDA
 - No texto editable en aplicacións de Mozilla, movendo o rato le de novo a liña, a palabra, etc. apropriada coma se esperaba en cambio de todo o contido. (#5535)
 - Ó se mover o rato en texto editable en aplicacións de Mozilla, a lectura 		xa non se detén en elementos coma ligas dentro da palabra ou liña que se estea a ler. (#2160, #5535)
 - En Internet Explorer, o sitio web shoprite.com agora pode lerse en modo exploración en lugar de anuncialo coma en branco. (Específicamente, os atributos lang mal formados agora manéllanse graciosamente.) (#5569)
-- En Microsoft Word, o seguemento de cambios como "insertado" xa non se anuncia cando a marca de seguemento de cambios non se amosa. (#5566)
+- No Microsoft Word, o seguemento de cambios como "insertado" xa non se anuncia cando a marca de seguemento de cambios non se amosa. (#5566)
+- Cando se enfoque un botón conmutable , NVDA agora anuncia cando se cambie de premedo a non premedo. (#5441)
+- O anunciado da forma do rato agora funciona novamente como se agardaba. (#5595)
+- Ó se falar a sangría de liña, os espazos de non separación agora trátanse como espazos normais. Con anterioridade, esto podía causar anunciamentos como "espazo espazo espazo" en lugar de "3 espazos". (#5610)
+- Ó se pechar unha lista de métodos candidatos de entrada no Microsoft moderno, o foco restáurase correctamente ou a composición de entrada ou o documento subrayado. (#4145)
+ 
+ 
+== Cambios para Desenvolvedores ==
+- A nova clase audioDucking.AudioDucker permite código que saca audio para indicar onde debería atenuarse o audio de fondo. (#3830)
+- O constructor do nvwave.WavePlayer agora ten a palabra chave wantDucking como argumento que especifica se o audio de fondo debería se atenuar mentres se reproduce audio. (#3830)
+ - Cando esto estea habilitado (o que está predeterminado), é esencial que WavePlayer.idle se chame cando sexa apropriado.
+- Mellorada a Entrada/saída para pantallas braille: (#5609)
+ - Os controladores Thread-safe de pantallas braille poden decrararse en si usando o atributo BrailleDisplayDriver.isThreadSafe. Un controlador thread-safe debe beneficiarse das seguintes características.
+ - Os datos escríbense ó controlador de pantallas braille thread-safe en segundo plano, mellorando así o rendemento.
+ - hwIo.Serial extende pyserial para chamar unha chamada cando os datos se reciban en lugar de que os controladores teñan que procuralos.
+ - hwIo.Hid proporciona soporte para que as pantallas braille se comuniquen a través do USB HID.
+ - hwPortUtils e hwIo poden proporcionar opcionalmente o rexistro detallado de depuración, incluindo dispositivos atopados e todos os datos enviados e recibidos.
 
 
 = 2015.4 =

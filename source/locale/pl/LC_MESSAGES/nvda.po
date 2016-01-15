@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-10 10:22+1000\n"
-"PO-Revision-Date: 2015-11-03 20:16+0100\n"
+"POT-Creation-Date: 2016-01-06 19:08+1000\n"
+"PO-Revision-Date: 2016-01-11 14:27+0100\n"
 "Last-Translator: Grzegorz Zlotowicz <grzezlo@wp.pl>\n"
 "Language-Team:  <killer@tyflonet.com>\n"
 "Language: pl_PL\n"
@@ -124,6 +124,21 @@ msgstr "formularz"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "obszar"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "No ducking"
+msgstr "Bez przyciszania"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "Przycisz podczas generowania mowy i dźwięku"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Always duck"
+msgstr "Zawsze przyciszaj"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -402,6 +417,11 @@ msgstr "Manipuri stopień 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "mongolski"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "Marathi stopień 1"
 
@@ -449,6 +469,11 @@ msgstr "Nepalski stopień 1"
 #. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "Orija stopień 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "Polski 8-punktowy brajl komputerowy"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -654,6 +679,18 @@ msgstr "clk"
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "( )"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "Punkty 7 i 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "Punkt 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Wszystkie punkty"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -2890,6 +2927,18 @@ msgstr "Wejście"
 msgid "Document formatting"
 msgstr "Formatowanie dokumentów"
 
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "Przyciszenie audio nie jest obsługiwane."
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+"Przełącza tryby wyciszenia audio, które określają, kiedy NVDA obniża "
+"głośność innych dźwięków"
+
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
 msgstr "Pomoc klawiatury włączone"
@@ -3991,6 +4040,31 @@ msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Przełącza powiązanie tekstu prezentowanego na monitorze brajlowskim pomiędzy "
 "punktem uwagi a punktem przeglądu"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Kursor brajlowski wyłączony"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Kursor brajlowski włączony"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Włącza i wyłącza kursor brajlowski"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "Kursor brajlowski jest wyłączony"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "Kursor brajlowski %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Przełącza kształt kursora brajlowskiego"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -6845,6 +6919,10 @@ msgstr "&Syntezator"
 msgid "Output &device:"
 msgstr "&Urządzenie wyjściowe"
 
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "Tryb &przyciszania audio:"
+
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
@@ -7397,9 +7475,17 @@ msgstr "tabela &wprowadzania:"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Rozwiń słowo pod kursorem do brajla komputerowego"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "&Show cursor"
+msgstr "&Pokaż kursor"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "&Tempo migania kursora (w milisekundach)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "&Kształt kursora:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7607,33 +7693,38 @@ msgstr "Pulpit"
 msgid "default color"
 msgstr "kolor domyślny"
 
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "Nieznany kolor"
+
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Ta komórka nie jest edytowalna"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "Zawiera listę wykresów, komórek z komentarzami i komórek z formułami"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Tworzy listę  różnych typów elementów w tym arkuszu."
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
-msgstr "&wykres"
+msgid "&Charts"
+msgstr "&wykresy"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
-msgstr "&Komentarz"
+msgid "C&omments"
+msgstr "K&omentarze"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "&Formuła"
+msgid "Fo&rmulas"
+msgstr "Fo&rmuły"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
-msgstr "&Arkusz"
+msgid "&Sheets"
+msgstr "&Arkusze"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -8631,20 +8722,21 @@ msgid "&Annotations"
 msgstr "&Adnotacje"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS Braille Sense/Braille EDGE series"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serie"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr ""
+#~ "Zawiera listę wykresów, komórek z komentarzami i komórek z formułami"
+
 #, fuzzy
 #~ msgid "Default color"
 #~ msgstr "kolor domyślny"
-
-#, fuzzy
-#~ msgid "Unknown color"
-#~ msgstr "nieznany kolor"
 
 #~ msgid "selecting %s"
 #~ msgstr "zaznaczanie %s"

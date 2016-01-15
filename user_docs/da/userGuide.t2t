@@ -43,7 +43,7 @@ Oplysninger om andre talesynteser som NVDA understøtter kan findes i afsnittet 
 
 ++ Understøttelse af punktskrift ++
 Brugere, som har et punktdisplay, kan med NVDA få tekst ud på punktskrift.
-Se venligst afsnittet [Understøttede punktdisplays #SupportedBrailleDisplays] for oplysninger om understøttede braille displays.
+Se venligst afsnittet [Understøttede punktdisplays #SupportedBrailleDisplays] for oplysninger om understøttede punktdisplays.
 
 NVDA understøtter punktskrift koder for mange sprog, herunder forkortet, fuldskrift og computer punkt koder for mange sprog.
 
@@ -203,7 +203,7 @@ Der er fire mulige svirpebevægelser du kan benytte, afhængige af retningen: Sv
 Ligesom tryk kan du benytte flere fingre for at udføre deforskellige bevægelser.
 Derfor er bevægelser som svirp op med to fingre og svirp til venstre med fire fingre mulige bevægelser.
 
-+++ Touch tilstande +++
++++ Touch-tilstande +++
 Eftersom der er mange flere NVDA-kommandoer tilgængelige end der er mulige bevægelser, har NVDA implementeret forskellige tilstande der gør det muligt for dig, at benytte dig af forskellige undergrupper af kommandoer.
 De to tilstande er teksttilstand og objekttilstand 
 Visse NVDA kommandoer fra listen i dette dokument kan have en touch-funktion anført i parentes efter touch-bevægelsen.
@@ -211,7 +211,7 @@ For eksempel, svirp op (teksttilstand) betyder at kommandoen vil blive udført h
 Hvis kommandoen ikke har en tilstand knyttet til den, virker den uafhængigt af hvilken tilstand NVDA befinder sig i.
 
 %kc:beginInclude
-For at skifte touch-tilstande, udfør et tryk med tre fingre.
+For at skifte touch-tilstand, udfør et tryk med tre fingre.
 %kc:endInclude
 
 ++ Tastaturhjælp ++
@@ -716,9 +716,9 @@ Tryk OK, hvorefter NVDA genstarter.
 ==== Gem konfiguration ved afslutning ====
 Denne indstilling er en tjekboks, der får NVDA til automatisk at gemme den aktuelle konfiguration ved afslutning, når den er slået til.
 
-==== Advar før NVDA afsluttes ====
-Denne indstillingsmulighed er en tjekboks, der giver mulighed for at vælge, hvorvidt en dialog skal fremkomme ved afslutning af NVDA med spørgsmålet om du virkelig ønsker at afslutte.
-Når den er slået til, fremkommer en dialog, når du forsøger at afslutte NVDA, hvor du skal tage stilling til, hvorvidt du ønsker at afslutte eller ej.
+==== Vis muligheder ved afslutning af NVDA ====
+Denne indstillingsmulighed er en check box, der giver mulighed for at vælge, hvorvidt en dialog skal fremkomme ved afslutning af NVDA med spørgsmålet om hvilken handling, du vil foretage dig.
+Når den er slået til, fremkommer en dialog, når du forsøger at afslutte NVDA, hvor du skal tage stilling til, hvorvidt du ønsker at afslutte, genstarte eller genstarte med tilføjelsesprogrammer deaktiverede.
 Når den er slået fra, bliver NVDA afsluttet med det samme.
 
 ==== Afspil lyd ved start og afslutning af NVDA ====
@@ -761,6 +761,16 @@ Dette kan være nyttigt for dem, der ønsker at bruge NVDA udelukkende med punkt
 
 ==== Output-enhed ====
 Denne valgmulighed brues til at bestemme, hvilket lydkort den aktuelt valgte talesyntese skal tale igennem.
+
+%kc:setting
+==== Lyddæmpningstilstand ====
+Tast: NVDA+skift+d
+
+Hvis du bruger Windows 8 eller derover lader denne indstilling dig vælge om NVDA skal sænke lydstyrken af andre applikationer når NVDA taler, eller om NVDA konstant skal sænke lydstyrken imens NVDA kører.
+- Ingen dæmpning: NVDA vil aldrig dæmpe lydstyrken af andre lydkilder. 
+- Dæmp når der udsendes tale og lyde: NVDA vil kun dæmpe lyden, hvis NVDA afspiller lyde eller taler. Dette virker muligvist ikke for alle talesynteser. 
+- Altid dæmp: NVDA vil sænke lyden fra alle andre lydkilder så længe NVDA kører.
+-
 
 +++ Stemmeindstillinger (NVDA+Ctrl+v) +++[VoiceSettings]
 Dialogen Stemmeindstillinger, som findes i menuen Indstillinger, rumer valgmuligheder til ændring af, hvordan talen lyder.
@@ -1648,14 +1658,13 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 ++ Baum/Humanware/APH Braille Displays ++
 Adskillige [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] samt [APH http://www.aph.org/] displays er understøttet hvis de kobles til via USB eller Bluetooth.
 Det omfatter:
-- Baum: SuperVario, PocketVario, VarioUltra (kun Bluetooth), Pronto! (kun Bluetooth)
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
 Nogle andre displays, som er  fremstillet af Baum, virker måske også, men dette er ikke testet.
 
-Hvis du ønsker at koble displayet til ved brug af USB, skal du først installere driveren fra leverandøren.
-Bruger du APH Refreshabraille, skal USB-tilstanden sættes til seriel.
+Hvis du ønsker at koble displayet til ved brug af USB udover VarioUltra, Pronto! eller Refreshabraille  med USB-tilstanden sat til HID, skal du først installere driveren fra leverandøren.
 
 Dette er tastekombinationerne til dette display til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
@@ -1712,7 +1721,8 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 
 ++ HumanWare Brailliant BI/B Series ++
 Brailliant BI og B serierne af punktdisplays fra [HumanWare http://www.humanware.com/], herunder BI 32, BI 40 og B 80, er understøttede når du kobler til via USB eller Bluetooth.
-Hvis du ønsker at koble displayet til ved brug af USB, skal du først installere driveren fra leverandøren.
+Hvis du ønsker at koble displayet til ved brug af USB med protokollen sat til HumanWare, skal du først installere driveren fra leverandøren.
+USB drivere kræves ikke, hvis protokollen er sat til OpenBraille.
 
 Dette er tastekombinationerne til dette display til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
@@ -1740,12 +1750,10 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | Sig alt | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE Series ++
-NVDA understøtter Braille Sense og Braille EDGE displays fra [Hims http://www.hims-inc.com/] hvis disse displays kobles til med USB eller Bluetooth. 
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle Series ++
+NVDA understøtter Braille Sense, Braille EDGE og Smart Beetle displays fra [Hims http://www.hims-inc.com/] hvis disse displays kobles til med USB eller Bluetooth. 
 Hvis du ønsker at koble displayet til ved brug af USB, skal du først installere driveren fra HIMS på dit system.
-Du kan hente disse drivere fra HIMS Resource Center: http://www.hims-inc.com/resource-center/
-På denne side skal du vælge din Braille-enhed og hente driveren i Sindo-Eyes-afsnittet.
-Selv om det kun er Window-Eyes, som bliver nævnt i dette afsnit, er der tale om en generel driver, som også virker med NVDA.
+Du kan hente disse fra denne side: http://www.himsintl.com/?c=2/13&uid=2319
 
 Tastekombinationerne til disse displays med NVDA er følgende.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
