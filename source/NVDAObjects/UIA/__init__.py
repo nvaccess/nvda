@@ -651,7 +651,7 @@ class UIA(Window):
 			cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
 		except COMError as e:
 			log.debugWarning("Could not fetch cached children from UIA element: %s"%e)
-			cachedChildren=None
+			return super(UIA,self).children
 		children=[]
 		if not cachedChildren:
 			# GetCachedChildren returns null if there are no children.
