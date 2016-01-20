@@ -788,6 +788,7 @@ class ExcelWorksheet(ExcelBase):
 		"kb:control+pageDown",
 		"kb:control+a",
 		"kb:control+v",
+		"kb:shift+f11",
 	)
 
 class ExcelCellTextInfo(NVDAObjectTextInfo):
