@@ -239,8 +239,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		@ type direction: string
 		@param pos: the position in the document from where to seart the search.
 		@type pos: Usually an L{textInfos.TextInfo} 
+		@raise NotImplementedError: This type is not supported by this BrowseMode implementation
 		"""
-		return iter(())
+		raise NotImplementedError
 
 	def _iterNotLinkBlock(self, direction="next", pos=None):
 		raise NotImplementedError
