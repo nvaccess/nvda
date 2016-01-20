@@ -1149,6 +1149,11 @@ class ExcelCell(ExcelBase):
 		except COMError:
 			level=None
 		if level==0:
+			try:
+				level=int(self.excelCellObject.columns[1].outlineLevel)-1
+			except COMError:
+				level=None
+		if level==0:
 			level=None
 		return {'level':level}
 
