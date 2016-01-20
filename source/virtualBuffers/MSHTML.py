@@ -280,6 +280,8 @@ class MSHTML(VirtualBuffer):
 			attrs = {"IHTMLDOMNode::nodeName": ["LI","DD","DT"]}
 		elif nodeType == "blockQuote":
 			attrs = {"IHTMLDOMNode::nodeName": ["BLOCKQUOTE"]}
+		elif nodeType == "annotation":
+			attrs = {"IHTMLDOMNode::nodeName": ["INS","DEL"]}
 		elif nodeType == "graphic":
 			attrs = [{"IHTMLDOMNode::nodeName": ["IMG"]},{"HTMLAttrib::role":["img"]}]
 		elif nodeType == "frame":

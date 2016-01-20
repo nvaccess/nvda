@@ -5,6 +5,10 @@
 
 = 2016.2 =
 
+== New Features ==
+- In browse mode in Internet Explorer and other MSHTML controls, using first letter navigation to move by annotation (a and shift+a) now moves to inserted and deleted text. (#5691)
+
+
 == Bug Fixes ==
 - In browse mode, when attempting to use single letter navigation to move to an element which isn't supported for the document, NVDA reports that this isn't supported rather than reporting that there is no element in that direction. (#5691)
 
