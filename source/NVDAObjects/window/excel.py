@@ -1124,6 +1124,15 @@ class ExcelCell(ExcelBase):
 		else:
 			return None
 
+	def _get_positionInfo(self):
+		try:
+			level=int(self.excelCellObject.rows[1].outlineLevel)-1
+		except COMError:
+			level=None
+		if level==0:
+			level=None
+		return {'level':level}
+
 	def script_reportComment(self,gesture):
 		commentObj=self.excelCellObject.comment
 		text=commentObj.text() if commentObj else None
