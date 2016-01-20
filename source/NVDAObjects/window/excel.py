@@ -957,8 +957,27 @@ class ExcelCell(ExcelBase):
 	def _get_name(self):
 		return self.excelCellObject.Text
 
+	def _getCurSummaryRowState(self):
+		try:
+			row=self.excelCellObject.rows[1]
+			if row.summary:
+				return controlTypes.STATE_EXPANDED if row.showDetail else controlTypes.STATE_COLLAPSED
+		except COMError:
+			pass
+
+	def _getCurSummaryColumnState(self):
+		try:
+			col=self.excelCellObject.columns[1]
+			if col.summary:
+				return controlTypes.STATE_EXPANDED if col.showDetail else controlTypes.STATE_COLLAPSED
+		except COMError:
+			pass
+
 	def _get_states(self):
 		states=super(ExcelCell,self).states
+		summaryCellState=self._getCurSummaryRowState() or self._getCurSummaryColumnState()
+		if summaryCellState:
+			states.add(summaryCellState)
 		if self.excelCellObject.HasFormula:
 			states.add(controlTypes.STATE_HASFORMULA)
 		try:
