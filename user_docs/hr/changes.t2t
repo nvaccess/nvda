@@ -3,6 +3,47 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2016.1 =
+
+== Nove značajke ==
+- Nove brajične tablice: poljska kompjutorska brajica, mongolski. (#5537, #5574)
+- Možete isključiti brajični pokazivač i izmjeniti njegov oblik koristeći novu opcije prikaži brajični pokazivač i promjeni izgled kursora u dijaloškom okviru brajične postavke. (#5198)
+- NVDA can now connect to a HIMS Smart Beetle braille display via Bluetooth. (#5607)
+
+
+== Izmjene ==
+- Sada je zadano isključeno izgovaranje isticanja. (#4920)
+- u listi elemenata  u Microsoft excelu, prečac za formule promjenjen je na alt+r tako da je sada različit od prečaca od polja filter (ne važi za hrvatski prijevod). (#5527)
+- nadograđen liblouis brajični prevoditelj na inačicu 2.6.5. (#5574)
+- The word "text" is no longer reported when moving the focus or review cursor to text objects. (#5452)
+
+
+== ispravke grešaka ==
+- U iTunes inačici 12, način pregleda se ispravno osvježava kada se nova stranica otvara u Itunes trgovini. (#5191)
+- U Internet Exploreru i drugim MSHTML kontrolama, premještanje do specificirane razine naslova  sa jednoslovnom prečicom ponaša se kako je to očekivano kada je specificirana razina naslova za potrebe pristupačnosti (specifično, kada aria-level nadpisuje razinu h oznake). (#5434)
+- U Spotifyju, fokus se više često ne premještava na "nepoznati" objekt. (#5439)
+- Fokus je ispravno povraćen prilikom prebacivanja u drugu aplikaciju. (#5439)
+- Prilikom prebacivanja iz načina formulara u način pregleda, izmjena načina se izgovara i istovremeno prikazuje na brajičnom retku. (#5239)
+- Start gumb na traci zadataka više se ne izgovara kao popis  i/ili) ili kao označen u nekim inačicama sustava windows. (#5178)
+- Poruke poput "umetnuto" više se ne izgovaraju prilikom sastavljanja poruka u Microsoft Outlooku. (#5486)
+- Pri korištenju brajičnog retka kada je tekst označen na trenutnom retku (npr. prilikom traženja u uređivaću teksta za tekstom koji se pojavljuje u istom retku), brajični redak će se također pomaknuti ako je to potrebno. (#5410)
+- NVDA se više ne gasi podmuklo prilikom zatvaranja windows komandne konzole uz pomoć alt+f4 u windowsima 10. (#5343)
+- u popisu elemenata u načinu pregleda, prilikom izmjene vrste elementa, polje za filtriranje se sada automatski čisti. (#5511)
+- u tekstu koji se može uređivati u Mozilla aplikacijama, pomicanje miša ponovno čita potrebni redak, riječ, itd. Kao što se i očekuje umjesto čitanja cijelog sadržaja. (#5535)
+- prilikom pomicanja miša u poljima za uređivanje u mozilla aplikacijama, čitanje se ne zaustavlja na elementima poput linkova u riječi ili retku koji je čitan. (#2160, #5535)
+- U internet exploreru, shoprite.com web stranica može se ponovo čitati u načinu pregleda umjesto izgovaranja praznih redova. (točnije, lang atributi se korektno interpretiraju).) (#5569)
+- U Microsoft Wordu, lista promjena poput "umetnuto" više se ne izgovara ako oznaka izmjene nije prikazana. (#5566)
+- When a toggle button is focused, NVDA now reports when it is changed from pressed to not pressed. (#5441)
+- Reporting of mouse shape changes again works as expected. (#5595)
+- When speaking line indentation, non-breaking spaces are now treated as normal spaces. Previously, this could cause announcements such as "space space space" instead  of "3 space". (#5610)
+- NVDA can optionally lower the volume of other sounds when installed on Windows 8 and later. This can be configured using the Audio ducking mode option in the NVDA Synthesizer dialog or by pressing NVDA+shift+d. (#3830, #5575)
+- When closing a modern Microsoft input method candidate list, focus is correctly restored to either the input composition or the underlying document. (#4145)
+- Support for HumanWare Brailliant BI/B braille displays when the protocol is set to OpenBraille. (#5612)
+
+
+== Izmjene za razvojne programere ==
+Ako želite pogledati izmjene za razvojne programere, molimo otvorite engleski dokument.
+
 
 = 2015.4 =
 Novosti u ovoj inačici ukljućuju unaprjeđivanje performansi u windows 10; uključivanje u centar za olakšani pristup u windowsima 8 i novijim; unaprjeđenja za microsoft excel, ukljućujući popisivanje i preimenovanje radnih listova te pristup zaključanim ćelijama u zaštićenim radnim listovima; i podrška za uređivanje teksta u obogaćenog teksta u firefoxu, google chromeu i mozilli thunderbird.

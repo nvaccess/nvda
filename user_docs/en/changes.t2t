@@ -8,12 +8,17 @@
 == New Features ==
 - New braille translation tables: Polish 8 dot computer braille, Mongolian. (#5537, #5574)
 - You can turn off the braille cursor and change its shape using the new Show cursor and Cursor shape options in the Braille Settings dialog. (#5198)
+- NVDA can now connect to a HIMS Smart Beetle braille display via Bluetooth. (#5607)
+- NVDA can optionally lower the volume of other sounds when installed on Windows 8 and later. This can be configured using the Audio ducking mode option in the NVDA Synthesizer dialog or by pressing NVDA+shift+d. (#3830, #5575)
+- Support for the APH Refreshabraille in HID mode and the Baum VarioUltra and Pronto! when connected via USB. (#5609)
+- Support for HumanWare Brailliant BI/B braille displays when the protocol is set to OpenBraille. (#5612)
 
 
 == Changes ==
 - Reporting of emphasis is now disabled by default. (#4920)
 - In the Elements List dialog in Microsoft Excel, the shortcut for Formulas has been changed to alt+r so that it is different to the shortcut for the Filter field. (#5527)
 - Updated liblouis braille translator to 2.6.5. (#5574)
+- The word "text" is no longer reported when moving the focus or review cursor to text objects. (#5452)
 
 
 == Bug Fixes ==
@@ -31,6 +36,23 @@
 - When moving the mouse in editable text in Mozilla applications, reading no longer stops at elements such as links within the word or line being read. (#2160, #5535)
 - In Internet Explorer, the shoprite.com website can now be read in browse mode instead of reporting as blank. (Specifically, malformed lang attributes are now handled gracefully.) (#5569)
 - In Microsoft Word, tracked changes such as "inserted" are no longer reported when track changes markup is not displayed. (#5566)
+- When a toggle button is focused, NVDA now reports when it is changed from pressed to not pressed. (#5441)
+- Reporting of mouse shape changes again works as expected. (#5595)
+- When speaking line indentation, non-breaking spaces are now treated as normal spaces. Previously, this could cause announcements such as "space space space" instead  of "3 space". (#5610)
+- When closing a modern Microsoft input method candidate list, focus is correctly restored to either the input composition or the underlying document. (#4145)
+- In Microsoft Office 2013 and later, when the ribbon is set to show only tabs, items in the ribbon are again reported as expected when a tab is activated. (#5504)
+
+
+== Changes for Developers ==
+- The new audioDucking.AudioDucker class allows code which outputs audio to indicate when background audio should be ducked. (#3830)
+- nvwave.WavePlayer's constructor now has a wantDucking keyword argument which specifies whether background audio should be ducked while audio is playing. (#3830)
+ - When this is enabled (which is the default), it is essential that WavePlayer.idle be called when appropriate.
+- Enhanced I/O for braille displays: (#5609)
+ - Thread-safe braille display drivers can declare themselves as such using the BrailleDisplayDriver.isThreadSafe attribute. A driver must be thread-safe to benefit from the following features.
+ - Data is written to thread-safe braille display drivers in the background, thus improving performance.
+ - hwIo.Serial extends pyserial to call a callable when data is received instead of drivers having to poll.
+ - hwIo.Hid provides support for braille displays communicating via USB HID.
+ - hwPortUtils and hwIo can optionally provide detailed debug logging, including devices found and all data sent and received.
 
 
 = 2015.4 =

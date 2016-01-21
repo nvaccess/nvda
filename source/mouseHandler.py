@@ -5,6 +5,7 @@
 #See the file COPYING for more details.
 
 import time
+import wx
 import tones
 import ctypes
 import winUser
@@ -31,18 +32,22 @@ WM_RBUTTONDBLCLK=0x0206
 curMousePos=(0,0)
 mouseMoved=False
 curMouseShape=""
-mouseShapeChanged=0
+_shapeTimer=None
 scrBmpObj=None
 #: The time (in seconds) at which the last mouse event occurred.
 #: @type: float
 lastMouseEventTime=0
 
+SHAPE_REPORT_DELAY = 100
 def updateMouseShape(name):
-	global curMouseShape, mouseShapeChanged
+	global curMouseShape
 	if not name or name==curMouseShape:
 		return
 	curMouseShape=name
-	mouseShapeChanged=1
+	if config.conf["mouse"]["reportMouseShapeChanges"]:
+		# Delay reporting to avoid unnecessary/excessive verbosity.
+		_shapeTimer.Stop()
+		_shapeTimer.Start(SHAPE_REPORT_DELAY, True)
 
 def playAudioCoordinates(x, y, screenWidth, screenHeight, detectBrightness=True,blurFactor=0):
 	minPitch=config.conf['mouse']['audioCoordinates_minPitch']
@@ -111,7 +116,7 @@ def executeMouseMoveEvent(x,y):
 #Register internal mouse event
 
 def initialize():
-	global curMousePos, scrBmpObj
+	global curMousePos, scrBmpObj, _shapeTimer
 	scrBmpObj=screenBitmap.ScreenBitmap(1,1)
 	(x,y)=winUser.getCursorPos()
 	desktopObject=api.getDesktopObject()
@@ -126,22 +131,22 @@ def initialize():
 	curMousePos=(x,y)
 	winInputHook.initialize()
 	winInputHook.setCallbacks(mouse=internal_mouseEvent)
+	_shapeTimer = wx.PyTimer(_reportShape)
+
+def _reportShape():
+	# Translators: Reported when mouse cursor shape changes (example output: edit cursor).
+	ui.message(_("%s cursor")%curMouseShape)
 
 def pumpAll():
-	global mouseMoved, curMousePos, mouseShapeChanged, curMouseShape
+	global mouseMoved, curMousePos
 	if mouseMoved:
 		mouseMoved=False
 		(x,y)=curMousePos
 		executeMouseMoveEvent(x,y)
-	if config.conf["mouse"]["reportMouseShapeChanges"] and mouseShapeChanged>0:
-		if mouseShapeChanged==10:
-			mouseShapeChanged=0
-			# Translators: Reported when mouse cursor shape changes (example output: edit cursor).
-			ui.message(_("%s cursor")%curMouseShape)
-		else:
-			mouseShapeChanged+=1
 
 def terminate():
-	global scrBmpObj
+	global scrBmpObj, _shapeTimer
 	scrBmpObj=None
 	winInputHook.terminate()
+	_shapeTimer.Stop()
+	_shapeTimer = None

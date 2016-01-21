@@ -8,7 +8,7 @@ Guide de l'utilisateur de NVDA NVDA_VERSION
 %%toc
 
 + Introduction +
-NonVisual Desktop Access (NVDA) est une revue d'écran gratuite et open-source pour le système d'exploitation Microsoft Windows.
+NonVisual Desktop Access (NVDA) est une revue d'écran gratuite et à source ouverte pour le système d'exploitation Microsoft Windows.
 En donnant des informations via une voix synthétique et le braille, il permet aux personnes aveugles ou malvoyantes d'accéder à un ordinateur sans coût additionnel par rapport à une personne voyante.
 NVDA est développé par [NV Access http://www.nvaccess.org/], avec des contributions de la communauté.
 
@@ -37,7 +37,7 @@ Il est important que chacun, partout dans le monde, quelle que soit sa langue, a
 ++ Support des synthèses vocales ++
 En plus de proposer ses messages et son interface en plusieurs langues, NVDA permet également à l'utilisateur de lire les contenus dans n'importe quelle langue, dans la mesure où il possède un synthétiseur parlant cette langue.
 
-NVDA est fourni avec [eSpeak http://espeak.sourceforge.net/], un synthétiseur de parole gratuit, open-source, multilingue.
+NVDA est fourni avec [eSpeak http://espeak.sourceforge.net/], un synthétiseur de parole gratuit, à source ouverte, multilingue.
 
 Pour des informations concernant les autres synthétiseurs de parole pris en charge par NVDA, reportez-vous à la section [Synthétiseurs de parole pris en charge #SupportedSpeechSynths].
 
@@ -56,12 +56,14 @@ Ceci s'applique aussi bien à la version originale qu'aux copies modifiées de c
 Pour plus de détails, vous pouvez [lire l'intégralité de la licence http://www.gnu.org/licenses/gpl.html].
 
 + Configuration système requise +
-- Systèmes d'exploitation : toutes les variantes, 32 ou 64 bits, de Windows XP, Windows Vista, Windows 7, Windows 8 et Windows 10 (y compris les versions serveur).
+- Systèmes d'exploitation : toutes les variantes, 32 ou 64 bits, de Windows XP, Windows Vista, Windows 7, Windows 8, Windows 8.1 et Windows 10 (y compris les versions serveur).
  - Pour Windows XP 32 bits, NVDA requiert le service pack 2 ou plus récent.
  - Pour Windows Server 2003, NVDA requiert le service pack 1 ou plus récent.
+ - Pour Windows Vista, NVDA requiert le Service Pack 2 et la mise à jour [KB2763674 https://support.microsoft.com/en-us/kb/2763674].
+ Les deux devraient être installés si toutes les mises à jours disponibles ont été appliquées via Windows Update.
 - Mémoire : 256 Mo de RAM ou plus.
 - Vitesse processeur : 1.0 GHz ou plus.
-- Environ 50 MO d'espace disque.
+- Environ 90 MO d'espace disque.
 -
 
 + Se procurer et installer NVDA +
@@ -87,8 +89,8 @@ Utiliser la version temporaire de NVDA est aussi une option, par exemple pour un
 Outre l'impossibilité de démarrer automatiquement pendant ou après l'ouverture de session, les versions portables et temporaires de NVDA ont également les restrictions suivantes :
 - Impossible d'interagir avec les applications démarrées avec les privilèges administrateur, sauf bien sûr si NVDA a été démarré avec ces privilèges (non recommandé) ;
 - Impossible de lire les écrans de contrôle de compte utilisateur (UAC) lorsque l'on tente de démarrer une application avec les privilèges administrateur ;
-- Windows 8 : impossible d'utiliser un écran tactile comme support d'entrée ;
-- Windows 8 : fonctionnalités impossibles comme le mode navigation ou l'annonce des caractères saisis dans les applications du Windows Store.
+- Windows 8 et au-delà : impossible d'utiliser un écran tactile comme support d'entrée ;
+- Windows 8 et au-delà : fonctionnalités impossibles comme le mode navigation ou l'annonce des caractères saisis dans les applications du Windows Store.
 -
 
 ++ Installer NVDA ++
@@ -760,6 +762,16 @@ Cela peut être utile pour quelqu'un qui veut utiliser NVDA seulement avec le br
 ==== Sortie audio ====
 Cette option vous permet de choisir la carte son qui sera utilisée par le synthétiseur que vous avez choisi.
 
+%kc:setting
+==== Mode d'Atténuation Audio ====
+Raccourci : NVDA+maj+d
+
+Sous Windows 8 et au-delà, cette option vous permet de choisir si NVDA doit baisser le volume des autres applications quand il parle, ou tout le temps quand il est en cours d'exécution.
+- Ne jamais atténuer : NVDA ne baissera jamais le volume des autres applications. 
+- Atténuer durant la parole : NVDA ne baissera le son des autres applications que quand il parle ou émet un son. Ceci peut ne pas fonctionner avec tous les synthétiseurs. 
+- Toujours atténuer : NVDA réduira le son des autres applications tout le long de son exécution.
+-
+
 +++ Paramètres vocaux (NVDA+contrôle+v) +++[VoiceSettings]
 Le dialogue "Paramètres vocaux" qui se trouve dans le menu "Préférences", contient des options vous permettant de changer le son de la voix.
 Pour une manière plus rapide de contrôler les paramètres vocaux depuis n'importe où, reportez-vous à la section [boucle des paramètres synthétiseur #SynthSettingsRing].
@@ -801,7 +813,7 @@ Par exemple, un texte peut être en Anglais Américain et comporter des passages
 Par défaut, cette option est désactivée.
 
 %kc:setting
-==== Niveau des symboles et ponctuations ====
+==== Niveau des ponctuations et symboles ====
 Raccourci clavier : NVDA+p
 
 Ceci vous permet de choisir la quantité de ponctuations et autres symboles qui seront prononcés.
@@ -887,8 +899,16 @@ Si la saisie n'est pas supportée par un afficheur qui dispose d'un clavier Perk
 ==== Afficher le mot sous le curseur en braille informatique ==== 
 Cette option permet d'afficher le mot sous le curseur en intégral.
 
+==== Montrer le Curseur ====
+Cette option permet d'activer ou de désactiver l'affichage du curseur braille.
+Elle s'applique au curseur système et au curseur de revue, mais pas à l'indicateur de sélection.
+
 ==== Vitesse de clignotement du curseur (ms) ====
 Cette option est un champ numérique qui vous permet de modifier la vitesse de clignotement du curseur en millisecondes.
+ 
+==== Forme du Curseur ====
+Cette option vous permet de choisir la forme du curseur braille.
+L'indicateur de sélection n'est pas affecté par cette option.
 
 ==== Durée d'affichage des messages (s) ====
 Cette option est un champ numérique qui contrôle la durée en secondes d'affichage des messages système sur le terminal braille.
@@ -1229,7 +1249,7 @@ Ainsi, en utilisant l'exemple précédent de remplacement du mot "oiseau" par le
 Une expression régulière est un modèle contenant des symboles particuliers vous permettant de trouver une correspondance sur plus d'un caractère à la fois, ou seulement sur les lettres ou les chiffres etc. 
 Les expressions régulières ne sont pas expliquées dans ce manuel, mais on trouve, sur le web, beaucoup de tutoriels qui vous donneront plus d'informations.
 
-+++ Prononciation des symboles et ponctuations +++[SymbolPronunciation]
++++ Prononciation des ponctuations et symboles +++[SymbolPronunciation]
 Ce dialogue vous permet de modifier la façon dont les ponctuations et autres symboles sont prononcés ainsi que le niveau de symbole auquel ils sont annoncés.
 
 La langue pour laquelle la prononciation des symboles est en cours d'édition sera indiquée dans le titre du dialogue.
@@ -1638,14 +1658,13 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 ++ Les terminaux Baum/Humanware/APH ++
 Plusieurs terminaux [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] et [APH http://www.aph.org/] sont pris en charge quand ils sont connectés via USB ou bluetooth.
 Les terminaux suivants sont pris en charge :
-- Baum: SuperVario, PocketVario, VarioUltra (seulement Bluetooth), Pronto! (seulement Bluetooth)
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, brailleConnect
 - APH: Refreshabraille
 -
 Il est possible que d'autres terminaux fabriqués par Baum fonctionnent, mais cela n'a pas été testé.
 
-Si le terminal est connecté en USB, vous devez d'abord installer les pilotes USB fournis par le constructeur.
-Pour le terminal APH Refreshabraille, le mode USB doit être mis à Série.
+Si vous connectez via USB des terminaux autres que les VarioUltra, Pronto! ou Refreshabraille avec le mode USB réglé sur HID, vous devrez d'abord installer les pilotes USB fournis par le constructeur.
 
 Voici les assignations de touches pour ces terminaux avec NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
@@ -1702,7 +1721,8 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 
 ++ HumanWare Séries Brailliant BI/B ++
 Les terminaux des séries Brailliant BI & B de [HumanWare http://www.humanware.com/], incluant le BI 32, BI40 et B 80 sont supportés quand ils sont connectés via USB ou bluetooth.
-S'ils sont connectés en USB, vous devez d'abord installer le pilote USB fourni par le constructeur.
+S'ils sont connectés en USB avec le protocole réglé sur HumanWare, vous devez d'abord installer le pilote USB fourni par le constructeur.
+Les pilotes USB ne sont pas nécessaires si le protocole est réglé sur OpenBraille.
 
 Voici les assignations de touches pour ce terminal sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
@@ -1730,12 +1750,10 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Dire tout | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS braille Sense/braille EDGE Series ++
-NVDA supporte les afficheurs braille braille Sense et braille EDGE de [Hims http://www.hims-inc.com/] quand ils sont connectés via USB ou bluetooth. 
-Si vous connectez votre afficheur braille par USB, vous devrez installer le driver USB de HIMS dans votre système.
-Vous pouvez le télécharger sur le centre de resources HIMS : http://www.hims-inc.com/resource-center/
-Sur cette page, sélectionnez votre appareil et téléchargez le pilote dans la section Window-Eyes.
-Bien que la section ne mentionne que Window-Eyes, il s'agit d'un pilote USB générique qui fonctionnera avec NVDA.
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle Series ++
+NVDA supporte les afficheurs braille braille Sense, braille EDGE et Smart Beetle de [Hims http://www.hims-inc.com/] quand ils sont connectés via USB ou bluetooth. 
+Si vous connectez votre afficheur braille par USB, vous devrez installer le pilote USB de HIMS sur votre système.
+Vous pouvez le télécharger sur cette page : http://www.himsintl.com/?c=2/13&uid=2319
 
 Voici les assignations de touches pour ce terminal sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
@@ -1795,7 +1813,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 
 ++ HIMS Syncbraille ++
 NVDA supporte l'afficheur braille Syncbraille de [HIMS http://www.hims-inc.com/].
-Vous devrez installer les drivers USB de HIMS.
+Vous devrez installer les pilotes USB de HIMS.
 
 Voici les assignations de touches pour ce terminal sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.

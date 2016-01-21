@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-10 19:10+1000\n"
-"PO-Revision-Date: 2015-12-13 07:35+0800\n"
+"POT-Creation-Date: 2016-01-06 19:08+1000\n"
+"PO-Revision-Date: 2016-01-19 11:54+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -124,6 +124,21 @@ msgstr "Форма"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "область"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "No ducking"
+msgstr "Не приглушать"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "Приглушать при выводе речи и звуков"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Always duck"
+msgstr "Всегда приглушать"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -402,6 +417,11 @@ msgstr "Манипури (первая ступень)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "Монгольский"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "Маратхи (первая ступень)"
 
@@ -659,6 +679,18 @@ msgstr "|щлк|"
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "( )"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "Точки 7 и 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "Точка 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Все точки"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -2397,7 +2429,7 @@ msgstr "Текстовый фрейм"
 
 #. Translators: Identifies a toggle button (a button used to toggle something).
 msgid "toggle button"
-msgstr "Кнопкапереключатель"
+msgstr "Кнопка-переключатель"
 
 msgid "border"
 msgstr "Рамка"
@@ -2897,6 +2929,18 @@ msgstr "Ввод"
 #. Translators: The name of a category of NVDA commands.
 msgid "Document formatting"
 msgstr "Форматирование документа"
+
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "Приглушение звука не поддерживается"
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+"Циклически переключает режимы приглушения звука, которые определяют, когда "
+"NVDA должна уменьшать громкость других звуков"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -3839,7 +3883,7 @@ msgstr "%d процент"
 
 #. Translators: This is presented when AC power is connected such as when recharging a laptop battery.
 msgid "AC power on"
-msgstr "подключено питание от электросети"
+msgstr "Питание от электросети"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
@@ -4004,6 +4048,31 @@ msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Переключает привязку брайля между позицией системного фокуса и просмотрового "
 "курсора"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Курсор брайля отключён"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Курсор брайля включён"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Включать и выключать курсор брайля"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "Курсор брайля выключен"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "Курсор брайля %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Переключает формы курсора брайля"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -4620,7 +4689,7 @@ msgstr "Эмулирует нажатие %s на клавиатуре"
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
-msgstr "чисто"
+msgstr "пусто"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
@@ -6899,6 +6968,10 @@ msgstr "&Синтезатор:"
 msgid "Output &device:"
 msgstr "&Устройство вывода:"
 
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "Режим &приглушения звука:"
+
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
@@ -7453,9 +7526,17 @@ msgstr "вх&одная таблица брайля"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "Не использовать &краткопись для слова под курсором"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "&Show cursor"
+msgstr "Показывать ку&рсор"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "Скорость мигания курсора (мс)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "&Форма курсора:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -8706,8 +8787,8 @@ msgid "&Annotations"
 msgstr "&Примечания"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS Braille Sense/Braille EDGE"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"

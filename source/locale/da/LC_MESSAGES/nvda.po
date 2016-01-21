@@ -5,16 +5,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-10 10:22+1000\n"
-"PO-Revision-Date: 2015-11-09 21:14+0100\n"
-"Last-Translator: Bue Vester-Andersen <bue@vester-andersen.dk>\n"
+"POT-Creation-Date: 2016-01-06 19:08+1000\n"
+"PO-Revision-Date: 2016-01-19 19:19-0500\n"
+"Last-Translator: Nicolai Svendsen <chojiro1990@gmail.com>\n"
 "Language-Team: Dansk <bue@vester-andersen.dk>\n"
 "Language: da_DK\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.8.6\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -99,7 +99,7 @@ msgstr "banner"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
 msgid "complementary"
-msgstr "ekstra"
+msgstr "komplementært"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
 msgid "content info"
@@ -125,6 +125,21 @@ msgstr "formular"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "område"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "No ducking"
+msgstr "Ingen lyddæmpning"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "Dæmp når der udsendes tale og lyde"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Always duck"
+msgstr "Altid dæmp"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -403,6 +418,11 @@ msgstr "Manipuri niveau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "Mongolsk"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "Marathi niveau 1"
 
@@ -450,6 +470,11 @@ msgstr "Nepali Niveau 1"
 #. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "Oriya Niveau 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "Polsk 8 punkt computer braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -656,6 +681,18 @@ msgstr "klk"
 msgid "( )"
 msgstr "( )"
 
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "Punkt 7 og 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "Punkt 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Alle punkter"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -732,7 +769,7 @@ msgid "focus mode"
 msgstr "fokustilstand"
 
 msgid "browse mode"
-msgstr "browse-tilstand"
+msgstr "gennemsynstilstand"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
 msgid "Single letter navigation off"
@@ -759,11 +796,11 @@ msgstr "Ikke understøttet i dette dokument"
 
 #. Translators: the description for the Elements List command in browse mode.
 msgid "Lists various types of elements in this document"
-msgstr "Liste over forskellige typer elementer i dette dokument"
+msgstr "Viser liste over forskellige typer elementer i dette dokument"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
 msgid "activates the current object in the document"
-msgstr "Aktiverer det aktuelle objekt i den virtuelle buffer"
+msgstr "Aktiverer det aktuelle objekt i dokumentet"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next heading"
@@ -907,7 +944,7 @@ msgstr "flytter til forrige link"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous link"
-msgstr "intetn forrige link"
+msgstr "intet forrige link"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next visited link"
@@ -963,7 +1000,7 @@ msgstr "flytter til næste liste"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next list"
-msgstr "inten næste liste"
+msgstr "ingen næste liste"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous list"
@@ -1015,7 +1052,7 @@ msgstr "intet næste editfelt"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous edit field"
-msgstr "flytter til forrigeeditfelt"
+msgstr "flytter til forrige editfelt"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous edit field"
@@ -1027,7 +1064,7 @@ msgstr "flytter til næste ramme"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next frame"
-msgstr "ingen næsteramme"
+msgstr "ingen næste ramme"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous frame"
@@ -1035,23 +1072,23 @@ msgstr "flytter til forrige ramme"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous frame"
-msgstr "ingen forrige blokcitate"
+msgstr "ingen forrige ramme"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next separator"
-msgstr "flytter til næste adskiller"
+msgstr "flytter til næste separator"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next separator"
-msgstr "ingen næste adskiller"
+msgstr "ingen næste separator"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous separator"
-msgstr "flytter til forrige adskiller"
+msgstr "flytter til forrige separator"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous separator"
-msgstr "ingen forrige adskiller"
+msgstr "ingen forrige separator"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next radio button"
@@ -1071,35 +1108,35 @@ msgstr "ingen forrige radioknap"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next combo box"
-msgstr "flytter til næste kombobox"
+msgstr "flytter til næste komboboks"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next combo box"
-msgstr "ingen næste kombobox"
+msgstr "ingen næste komboboks"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous combo box"
-msgstr "flytter til forrige kombobox"
+msgstr "flytter til forrige komboboks"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous combo box"
-msgstr "ingen forrigekombobox"
+msgstr "ingen forrige komboboks"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next check box"
-msgstr "flytter til næste tjekbox"
+msgstr "flytter til næste checkboks"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next check box"
-msgstr "ingen næste tjekbox"
+msgstr "ingen næste checkboks"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the previous check box"
-msgstr "flytter til forrige tjekbox"
+msgstr "flytter til forrige checkboks"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no previous check box"
-msgstr "ingen forrige tjekbox"
+msgstr "ingen forrige checkboks"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next graphic"
@@ -2039,7 +2076,7 @@ msgstr "titellinje"
 
 #. Translators: The word used for pane such as desktop pane.
 msgid "pane"
-msgstr "pane"
+msgstr "rude"
 
 #. Translators: The word used to denote a dialog box such as open dialog.
 msgid "dialog"
@@ -2080,7 +2117,7 @@ msgstr "menu"
 
 #. Translators: Used to identify combo boxes such as file type combo box.
 msgid "combo box"
-msgstr "combo box"
+msgstr "comboboks"
 
 #. Translators: The word used for lists such as folder list.
 msgid "list"
@@ -2117,11 +2154,11 @@ msgstr "emne i trævisning"
 #. Translators: The word presented for tabs in a tab enabled window.
 msgctxt "controlType"
 msgid "tab"
-msgstr "faneblad"
+msgstr "fane"
 
 #. Translators: Identifies a tab control such as webpage tabs in web browsers.
 msgid "tab control"
-msgstr "tab control"
+msgstr "Fanekontrolelement"
 
 #. Translators: Identifies a slider such as volume slider.
 msgid "slider"
@@ -2129,11 +2166,11 @@ msgstr "skyder"
 
 #. Translators: Identifies a progress bar such as NvDA update progress.
 msgid "progress bar"
-msgstr "behandlingslinje"
+msgstr "statuslinje"
 
 #. Translators: Identifies a scroll bar.
 msgid "scroll bar"
-msgstr "rulleskakt"
+msgstr "rullepanel"
 
 #. Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
 msgid "status bar"
@@ -2173,7 +2210,7 @@ msgstr "rækkeoverskrift"
 
 #. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 msgid "drop down button"
-msgstr "drop down button"
+msgstr "drop down knap"
 
 #. Translators: Identifies an element.
 msgid "clock"
@@ -2219,7 +2256,7 @@ msgstr "afsnit"
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
 #. See http://en.wikipedia.org/wiki/Block_quotation
 msgid "block quote"
-msgstr "block quote"
+msgstr "blokcitat"
 
 #. Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
 msgid "table header"
@@ -2227,7 +2264,7 @@ msgstr "tabeloverskrift"
 
 #. Translators: Identifies a table body (the main body of the table).
 msgid "table body"
-msgstr "tael indhold"
+msgstr "tabelindhold"
 
 #. Translators: Identifies a table footer (text placed at the end of the table).
 msgid "table footer"
@@ -2255,11 +2292,11 @@ msgstr "gruppering"
 
 #. Translators: Identifies a property page such as drive properties dialog.
 msgid "property page"
-msgstr "Egenskaber"
+msgstr "Egenskabsside"
 
 #. Translators: Identifies a canvas element on webpages (a box with some background color with some text drawn on the box, like a canvas).
 msgid "canvas"
-msgstr "canvas"
+msgstr "lærred"
 
 #. Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
 msgid "caption"
@@ -2279,7 +2316,7 @@ msgstr "ikon"
 
 #. Translators: Identifies a directory pane.
 msgid "directory pane"
-msgstr "mappe vindue"
+msgstr "mapperude"
 
 #. Translators: Identifies an embedded object such as flash content on webpages.
 msgid "embedded object"
@@ -2300,7 +2337,7 @@ msgstr "fodnote"
 #. Translators: Reported for an object which is a glass pane; i.e.
 #. a pane that is guaranteed to be on top of all panes beneath it.
 msgid "glass pane"
-msgstr "topvindue"
+msgstr "toprude"
 
 #. Translators: Identifies a header (usually text at top of documents or on tops of pages).
 msgid "header"
@@ -2308,7 +2345,7 @@ msgstr "sidehoved"
 
 #. Translators: Identifies an image map (a type of graphical link).
 msgid "image map"
-msgstr "image map"
+msgstr "billedkort"
 
 #. Translators: Identifies an input window.
 msgid "input window"
@@ -2316,7 +2353,7 @@ msgstr "intastningsvindue"
 
 #. Translators: Identifies a label.
 msgid "label"
-msgstr "label"
+msgstr "navn"
 
 #. Translators: Identifies a note field.
 msgid "note"
@@ -2332,15 +2369,15 @@ msgstr "radio menupunkt"
 
 #. Translators: Identifies a layered pane.
 msgid "layered pane"
-msgstr "lagdelt vindue"
+msgstr "lagdelt rude"
 
 #. Translators: Identifies a redundant object.
 msgid "redundant object"
-msgstr "redundant objekt"
+msgstr "overflødigt objekt"
 
 #. Translators: Identifies a root pane.
 msgid "root pane"
-msgstr "grundvindue"
+msgstr "grundrude"
 
 #. Translators: May be reported for an editable text object in a toolbar.
 #. This is deprecated and is not often (if ever) used.
@@ -2361,11 +2398,11 @@ msgstr "lineal"
 
 #. Translators: Identifies a scroll pane.
 msgid "scroll pane"
-msgstr "rullevindue"
+msgstr "rullerude"
 
 #. Translators: Identifies a section of text.
 msgid "section"
-msgstr "section"
+msgstr "sektion"
 
 #. Translators: Identifies a shape.
 msgid "shape"
@@ -2373,7 +2410,7 @@ msgstr "form"
 
 #. Translators: Identifies a split pane.
 msgid "split pane"
-msgstr "splitvindue"
+msgstr "splitrude"
 
 #. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
 #. which represents the portion of the entire data that the user can see.
@@ -2400,7 +2437,7 @@ msgstr "kant"
 
 #. Translators: Identifies a caret object.
 msgid "caret"
-msgstr "pil op"
+msgstr "caret"
 
 #. Translators: Identifies a character field (should not be confused with edit fields).
 msgid "character"
@@ -2424,7 +2461,7 @@ msgstr "drejeskive"
 
 #. Translators: Identifies a drop list.
 msgid "drop list"
-msgstr "drop list"
+msgstr "drop liste"
 
 #. Translators: Identifies a split button (a control which performs different actions when different parts are clicked).
 msgid "split button"
@@ -2448,11 +2485,11 @@ msgstr "Håndtag"
 
 #. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as assigning shortcut for icons on the desktop).
 msgid "hot key field"
-msgstr "hot key felt"
+msgstr "genvejstastfelt"
 
 #. Translators: Identifies an indicator control.
 msgid "indicator"
-msgstr "indicator"
+msgstr "indikator"
 
 #. Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
 msgid "spin button"
@@ -2464,7 +2501,7 @@ msgstr "lyd"
 
 #. Translators: Identifies a whitespace.
 msgid "white space"
-msgstr "white space"
+msgstr "hvidt mellemrum"
 
 #. Translators: Identifies a tree view button.
 msgid "tree view button"
@@ -2512,7 +2549,7 @@ msgstr "panel"
 
 #. Translators: Identifies a password field (a protected edit field for entering passwords such as when logging into web-based email sites).
 msgid "password edit"
-msgstr "password edit"
+msgstr "adgangskode edit"
 
 #. Translators: Identifies a font chooser.
 msgid "font chooser"
@@ -2681,7 +2718,7 @@ msgstr "vist som ikon"
 
 #. Translators: Presented when the current control is located off screen.
 msgid "off screen"
-msgstr "off screen"
+msgstr "ikke på skærm"
 
 #. Translators: Presented when the control allows selection such as text fields.
 msgid "selectable"
@@ -2699,7 +2736,7 @@ msgid "editable"
 msgstr "redigerbar"
 
 msgid "checkable"
-msgstr "kan checkes"
+msgstr "kan markeres"
 
 msgid "draggable"
 msgstr "kan trækkes"
@@ -2893,6 +2930,18 @@ msgstr "Indtastning"
 #. Translators: The name of a category of NVDA commands.
 msgid "Document formatting"
 msgstr "Dokumentformatering"
+
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "Lyddæmpning ikke understøttet."
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+"Skifter imellem lyddæmpningstilstande der bestemmer hvornår NVDA sænker "
+"lydstyrken af andre lydkilder"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -3305,15 +3354,15 @@ msgstr "Slår annoncering af blokcitater til og fra"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks off"
-msgstr "Annoncér landemærker fra"
+msgstr "Annoncér landmærker fra"
 
 #. Translators: The message announced when toggling the report landmarks document formatting setting.
 msgid "report landmarks on"
-msgstr "Annoncér landemærker til"
+msgstr "Annoncér landmærker til"
 
 #. Translators: Input help mode message for toggle report landmarks command.
 msgid "Toggles on and off the reporting of landmarks"
-msgstr "Slår annoncering af landemærker til og fra"
+msgstr "Slår annoncering af landmærker til og fra"
 
 #. Translators: The message announced when toggling the report frames document formatting setting.
 msgid "report frames off"
@@ -3663,10 +3712,10 @@ msgid ""
 "with a control. When in browse mode, you can navigate the document with the "
 "cursor, quick navigation keys, etc."
 msgstr ""
-"Skifter mellem fokustilstand og browse-tilstand. I fokustilstand bliver "
+"Skifter mellem gennemsynstilstand og fokustilstand. I fokustilstand bliver "
 "tastetrykkene sluppet igennem til applikationen, så du kan manipulere "
-"direkte med en kontrol. I browse- tilstand kan der navigeres i dokumentet "
-"med markøren, med genvejstaster o.s.v.."
+"direkte med en kontrol. I gennemsynstilstand kan der navigeres i dokumentet "
+"med markøren,  med genvejstaster osv."
 
 #. Translators: Input help mode message for quit NVDA command.
 msgid "Quits NVDA!"
@@ -3921,7 +3970,7 @@ msgstr "Åbner dialogboksen med NVDAs objektpræsentations-indstillinger"
 
 #. Translators: Input help mode message for go to browse mode dialog command.
 msgid "Shows the NVDA browse mode settings dialog"
-msgstr "Åbner dialogboksen med NVDAs browse-indstillinger"
+msgstr "Åbner dialogboksen med NVDAs indstillinger for gennemsynstilstand"
 
 #. Translators: Input help mode message for go to document formatting dialog command.
 msgid "Shows the NVDA document formatting settings dialog"
@@ -3974,11 +4023,11 @@ msgstr ""
 
 #. Translators: The message announced when disabling speech viewer.
 msgid "speech viewer disabled"
-msgstr "Talevisning fraTalevisning"
+msgstr "Talevisning fra"
 
 #. Translators: The message announced when enabling speech viewer.
 msgid "speech viewer enabled"
-msgstr "Talevisning tilTalevisning"
+msgstr "Talevisning til"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 msgid ""
@@ -4003,6 +4052,31 @@ msgstr "Braille følger %s"
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "Skifter imellem braille følger fokus og braille følger læsemarkør"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Punktmarkør fra"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Punktmarkør til"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Slå punktmarkøren til og fra"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "Punktmarkør slået fra"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "Punktmarkør %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Skifter mellem punktmarkørens tilgængelige forme"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -4160,7 +4234,7 @@ msgstr "Diverse"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Browse mode"
-msgstr "Browse-tilstand"
+msgstr "Gennemsynstilstand"
 
 #. Translators: The shortcut key used to start NVDA.
 #. This should normally be left as is, but might be changed for some locales
@@ -4977,7 +5051,7 @@ msgstr "Lydstyrke"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Pitch"
-msgstr "&Tonehøjde"
+msgstr "&Toneleje"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -4986,7 +5060,7 @@ msgstr "Toneleje"
 
 #. Translators: Label for a setting in voice settings dialog.
 msgid "&Inflection"
-msgstr "&Inflection"
+msgstr "&Udsving"
 
 #. Translators: Label for a setting in synth settings ring.
 msgctxt "synth setting"
@@ -5071,11 +5145,11 @@ msgstr "træk og slip"
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 msgid "Checking for Update"
-msgstr "Søger efter opdateringer..."
+msgstr "Søger efter opdatering"
 
 #. Translators: The progress message displayed while manually checking for an NVDA update.
 msgid "Checking for update"
-msgstr "Søger efter opdateringer..."
+msgstr "Søger efter opdatering"
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 msgid "Error checking for update."
@@ -5098,7 +5172,7 @@ msgstr "NVDA version {version} er tilgængelig."
 
 #. Translators: A message indicating that no update to NVDA is available.
 msgid "No update available."
-msgstr "Ingen opdateringer tilgængelige."
+msgstr "Ingen opdatering tilgængelig."
 
 #. Translators: The label of a button to download and install an NVDA update.
 msgid "Download and &install update"
@@ -5872,11 +5946,11 @@ msgstr "Vælg stemme, hastighed, pitch og lydstyrke."
 
 #. Translators: The label for the menu item to open Braille Settings dialog.
 msgid "B&raille settings..."
-msgstr "B&raille-indstillinger"
+msgstr "B&raille-indstillinger..."
 
 #. Translators: The label for the menu item to open Keyboard Settings dialog.
 msgid "&Keyboard settings..."
-msgstr "&Tastatur-indstillinger...."
+msgstr "&Tastatur-indstillinger..."
 
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
@@ -5887,14 +5961,14 @@ msgstr ""
 
 #. Translators: The label for the menu item to open Mouse Settings dialog.
 msgid "&Mouse settings..."
-msgstr "&Muse-indstillinger"
+msgstr "&Muse-indstillinger..."
 
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "Skift oplæsning af musens form samt objektet under musen."
 
 #. Translators: The label for the menu item to open Review Cursor dialog.
 msgid "Review &cursor..."
-msgstr "&læsemarkør"
+msgstr "&Læsemarkør..."
 
 msgid "Configure how and when the review cursor moves"
 msgstr "Indstil hvordan og hvornår læsemarkøren skal bevæge sig."
@@ -5912,14 +5986,14 @@ msgstr ""
 
 #. Translators: The label for the menu item to open Object Presentation dialog.
 msgid "&Object presentation..."
-msgstr "&Objekt-præsentation"
+msgstr "&Objekt-præsentation..."
 
 msgid "Change reporting of objects"
-msgstr "Skift oplæsning af objekter."
+msgstr "Skift oplæsning af objekter"
 
 #. Translators: The label for the menu item to open Browse Mode settings dialog.
 msgid "&Browse mode..."
-msgstr "&Browse-tilstand"
+msgstr "&Gennemsynstilstand..."
 
 msgid "Change virtual buffers specific settings"
 msgstr "Skift indstillinger, der har med virtuelle buffere at gøre."
@@ -5966,15 +6040,15 @@ msgstr ""
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 msgid "Speech &dictionaries"
-msgstr "Udtale & ordbøger"
+msgstr "&Udtale ordbøger"
 
 #. Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 msgid "&Punctuation/symbol pronunciation..."
-msgstr "Udtale af &sætningstegn ogsymboler..."
+msgstr "Udtale af &sætningstegn og symboler..."
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 msgid "I&nput gestures..."
-msgstr "I&nput-bevægelser"
+msgstr "I&nput-bevægelser..."
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
@@ -5998,7 +6072,7 @@ msgstr "Administrer &tilføjelsesprogrammer"
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create Portable copy..."
-msgstr "Opret en flytbar kopi...."
+msgstr "Opret en flytbar kopi..."
 
 #. Translators: The label for the menu item to install NVDA on the computer.
 msgid "&Install NVDA..."
@@ -6041,7 +6115,7 @@ msgstr "Ve&lkommen dialog"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
-msgstr "&Søg efter opdateringer..."
+msgstr "&Søg efter opdatering..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
 msgid "About..."
@@ -6065,14 +6139,14 @@ msgstr "Gendan alle indstillinger til gemt tilstand."
 #. Translators: The label for the menu item to reset settings to default settings.
 #. Here, default settings means settings that were there when the user first used NVDA.
 msgid "&Reset configuration to factory defaults"
-msgstr "&Gendan konfiguration til fabriksindstillingerne "
+msgstr "Gendan konfiguration til &fabriksindstillingerne"
 
 msgid "Reset all settings to default state"
-msgstr "Gendan alle indstillinger til standardtilstand."
+msgstr "Gendan alle indstillinger til standardtilstand"
 
 #. Translators: The label for the menu item to save current settings.
 msgid "&Save configuration"
-msgstr "&Gem konfiguration "
+msgstr "&Gem konfiguration"
 
 msgid "Write the current configuration to nvda.ini"
 msgstr "Skriv den aktuelle konfiguration til nvda.ini"
@@ -6881,6 +6955,10 @@ msgstr "&Talesyntese:"
 msgid "Output &device:"
 msgstr "Output &enhed:"
 
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "&Lyddæmpningstilstand"
+
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
@@ -7094,7 +7172,7 @@ msgstr "Oplæs ændringer i &kompositionsstrengen"
 
 #. Translators: This is the label for the object presentation dialog.
 msgid "Object Presentation"
-msgstr "Objektpræsentation"
+msgstr "Objekt-præsentation"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by speaking.
@@ -7157,7 +7235,7 @@ msgstr "Output for behandlingslinje"
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 msgid "Report background progress bars"
-msgstr "Oplæs baggrunds behandlingslinjer"
+msgstr "Oplæs behandlingslinjer i baggrunden"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -7166,7 +7244,7 @@ msgstr "Oplæs ændringer i dynamisk indhold. "
 
 #. Translators: This is the label for the browse mode settings dialog.
 msgid "Browse Mode"
-msgstr "Browse-tilstand"
+msgstr "Gennemsynstilstand"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
@@ -7186,12 +7264,12 @@ msgstr "Brug &skærmlayout (når det understøttes)"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Automatic &Say All on page load"
-msgstr "Automatisk &Sig Alt efter indlæsning af side "
+msgstr "Automatisk Sig Alt efter &indlæsning af side "
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Include l&ayout tables"
-msgstr "inkluder l&ayout-tabeller"
+msgstr "inkluder layout&tabeller"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -7206,7 +7284,7 @@ msgstr "Automatisk fokustilstand ved flytning af systemmarkør"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Audio indication of focus and browse modes"
-msgstr "Lydindikering af fokustilstand og browse-tilstand"
+msgstr "&Lydindikering af fokustilstand og gennemsynstilstand"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -7225,7 +7303,7 @@ msgstr "Oplæs ændringer i formatering efter markør (kan give forsinkelse)"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report &font name"
-msgstr "Oplæs &skrifttype"
+msgstr "Oplæs skrift&type"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7286,7 +7364,7 @@ msgstr "Oplæs &indrykning"
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will report paragraph indentation if available.
 msgid "Report &paragraph indentation"
-msgstr "Oplys om indrykning af &afsnit"
+msgstr "Oplys indrykning af &afsnit"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7301,7 +7379,7 @@ msgstr "Annoncér kolonne- og række&overskrifter i tabeller"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report table cell c&oordinates"
-msgstr "Annoncér celle&koordinater i tabeller"
+msgstr "Annoncér &celle&koordinater i tabeller"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7326,7 +7404,7 @@ msgstr "Annoncér blok&citater"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report lan&dmarks"
-msgstr "Annoncér lande&mærker"
+msgstr "Annoncér land&mærker"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -7336,7 +7414,7 @@ msgstr "Annoncér r&ammer"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Report if &clickable"
-msgstr "annoncer klikbart element"
+msgstr "annoncer klik&bart element"
 
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 msgid "&Anywhere"
@@ -7433,9 +7511,17 @@ msgstr "&input-tabel:"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "U&dvid ordet ved markøren til computer-braille"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "&Show cursor"
+msgstr "&Vis markør"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "markør-blinkhastighed (ms)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "Markør &form:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7643,33 +7729,37 @@ msgstr "Skrivebord"
 msgid "default color"
 msgstr "standardfarve"
 
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "Ukendt farve"
+
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "Denne celle kan ikke redigeres"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr ""
-"Giver en liste over diagrammer, celler med kommentarer og celler med formler"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Liste over forskellige typer elementer i dette ark"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
-msgstr "&Diagram"
+msgid "&Charts"
+msgstr "&Diagrammer"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
-msgstr "K&ommentar"
+msgid "C&omments"
+msgstr "K&ommentarer"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "&Formel"
+msgid "Fo&rmulas"
+msgstr "&Formler"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
+msgid "&Sheets"
 msgstr "&Ark"
 
 #. Translators: Used to express an address range in excel.
@@ -8665,20 +8755,22 @@ msgid "&Annotations"
 msgstr "&annotationer"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS Braille Sense/Braille EDGE series"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr ""
+#~ "Giver en liste over diagrammer, celler med kommentarer og celler med "
+#~ "formler"
+
 #, fuzzy
 #~ msgid "Default color"
 #~ msgstr "standardfarve"
-
-#, fuzzy
-#~ msgid "Unknown color"
-#~ msgstr "Ukendt farve"
 
 #~ msgid "selecting %s"
 #~ msgstr "%s valgt"

@@ -8,6 +8,7 @@
 import time
 import itertools
 import tones
+import audioDucking
 import touchHandler
 import keyboardHandler
 import mouseHandler
@@ -82,6 +83,21 @@ SCRCAT_DOCUMENTFORMATTING = _("Document formatting")
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
 	"""
+
+	def script_cycleAudioDuckingMode(self,gesture):
+		if not audioDucking.isAudioDuckingSupported():
+			# Translators: a message when audio ducking is not supported on this machine
+			ui.message(_("Audio ducking not supported"))
+			return
+		curMode=config.conf['audio']['audioDuckingMode']
+		numModes=len(audioDucking.audioDuckingModes)
+		nextMode=(curMode+1)%numModes
+		audioDucking.setAudioDuckingMode(nextMode)
+		config.conf['audio']['audioDuckingMode']=nextMode
+		nextLabel=audioDucking.audioDuckingModes[nextMode]
+		ui.message(nextLabel)
+	# Translators: Describes the Cycle audio ducking mode command.
+	script_cycleAudioDuckingMode.__doc__=_("Cycles through audio ducking modes which determine when NVDA lowers the volume of other sounds")
 
 	def script_toggleInputHelp(self,gesture):
 		inputCore.manager.isInputHelpActive = not inputCore.manager.isInputHelpActive
@@ -2003,6 +2019,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+control+p": "activateConfigProfilesDialog",
 
 		# Settings
+		"kb:NVDA+shift+d":"cycleAudioDuckingMode",
 		"kb:NVDA+2": "toggleSpeakTypedCharacters",
 		"kb:NVDA+3": "toggleSpeakTypedWords",
 		"kb:NVDA+4": "toggleSpeakCommandKeys",
