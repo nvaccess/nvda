@@ -418,11 +418,11 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 		VariantInit(&tempVar);\
 		tempAttrObj->get_nodeValue(&tempVar);\
 		if(tempVar.vt==VT_BSTR&&tempVar.bstrVal&&(allowEmpty||SysStringLen(tempVar.bstrVal)>0)) {\
-			attribsMap[L"HTMLAttrib::"##attribName]=tempVar.bstrVal;\
+			attribsMap[L"HTMLAttrib::" attribName]=tempVar.bstrVal;\
 		} else if(tempVar.vt==VT_I2||tempVar.vt==VT_I4) {\
 			wostringstream* s=new wostringstream;\
 			(*s)<<((tempVar.vt==VT_I2)?tempVar.iVal:tempVar.lVal);\
-			attribsMap[L"HTMLAttrib::"##attribName]=s->str();\
+			attribsMap[L"HTMLAttrib::" attribName]=s->str();\
 			delete s;\
 		}\
 		VariantClear(&tempVar);\
@@ -1312,7 +1312,7 @@ if(!(formatState&FORMATSTATE_INSERTED)&&nodeName.compare(L"INS")==0) {
 void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	LOG_DEBUG(L"Rendering from docHandle "<<docHandle<<L", ID "<<ID<<L", in to buffer at "<<buffer);
 	LOG_DEBUG(L"Getting document from window "<<docHandle);
-	LRESULT res=SendMessage((HWND)docHandle,WM_HTML_GETOBJECT,0,0);
+	LRESULT res=SendMessage((HWND)UlongToHandle(docHandle),WM_HTML_GETOBJECT,0,0);
 	if(res==0) {
 		LOG_DEBUG(L"Error getting document using WM_HTML_GETOBJECT");
 		return;

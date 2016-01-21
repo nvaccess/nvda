@@ -72,6 +72,7 @@ def generate(env):
 	d=fetchSDKVars(targetArch,'v7.1A')
 	if d:
 		env.Append(CPPDEFINES='_USING_V110_SDK71_')
+		env.Append(CCFLAGS='/wd4091') 
 		if targetArch.endswith('64'):
 			env.Append(LINKFLAGS=[env['LINKFLAGS'],'/SUBSYSTEM:WINDOWS,5.02'])
 		else:
@@ -79,12 +80,8 @@ def generate(env):
 			env.Append(CCFLAGS='/arch:IA32')
 			env.Append(LINKFLAGS=[env['LINKFLAGS'],'/SUBSYSTEM:WINDOWS,5.01'])
 	if not d:
-		d=fetchSDKVars(targetArch,'v7.1')
-	if not d:
-		d=fetchSDKVars(targetArch,'v7.0')
-	if not d:
 		common.debug("windowsSdk.py, Generate: No suitable SDK could be used")
-		raise RuntimeError("No usable Windows SDK found")
+		raise RuntimeError("Windows SDK 7.1A could not be found")
 	#msvc.generate(env)
 	for k, v in d.iteritems():
 		env.PrependENVPath(k,v,delete_existing=True)
