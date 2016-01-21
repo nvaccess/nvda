@@ -1,5 +1,5 @@
 ﻿Manual do Utilizador do NVDA NVDA_VERSION
-Manual do Utilizador do NVDA NVDA_VERSION
+
 Traduzido por: Ângelo Abrantes, Diogo Costa, Elton Lopes, Rui Batista e Rui Fontes
 
 %!includeconf: ../userGuide.t2tconf
@@ -59,9 +59,11 @@ Para mais detalhes, pode [ver a licença completa. http://www.gnu.org/licenses/o
 - Sistemas Operativos: Todas as versões 32-bit e 64-bit do Windows XP, Windows Vista, Windows 7, Windows 8  e Windows 10 (incluindo as versões Server 2003 e 2008).
 - Para Windows XP 32-bit, o NVDA requer o Service Pack 2 ou superior.
 - Para Windows Server 2003, o NVDA requer o Service Pack 1 ou superior.
+- Para Windows Vista, o NVDA requer o Service Pack 2 e a actualização [KB2763674 https://support.microsoft.com/en-us/kb/2763674].
+Ambos deverão estar instalados se todas as actualizações do Windows Update estiverem instaladas.
 - Memória: 256 MB ou mais de RAM
 - Velocidade do processador: 1.0 GHz ou superior
-- Aproximadamente 50 MB de espaço livre.
+- Aproximadamente 90 MB de espaço livre.
 -
 
 + Obter e Instalar O NVDA +
@@ -87,8 +89,8 @@ Usar a cópia temporária do NVDA é também uma opção (por exemplo, com a fin
 Para além da impossibilidade de arrancar automaticamente com o windows, as cópias portáteis e temporárias do NVDA têm também as seguintes restrições:
 - Impossibilidade de interagir com aplicações executadas com privilégios de administrador, a 	menos que o NVDA esteja também a ser executado com os mesmos privilégios, (o que não é recomendado).
 - Impossibilidade de ler as janelas do Controlo de Conta de Utilizador (UAC), ao tentar iniciar uma aplicação com privilégios de administrador.
-- Windows 8: Impossibilidade de suportar a utilização do ecrã táctil.
-- Windows 8: Impossibilidade de usar as funcionalidades de modo de navegação e de anunciar os caracteres escritos nas aplicações Windows Store.
+- Windows 8 e seguintes: Impossibilidade de suportar a utilização do ecrã táctil.
+- Windows 8 e seguintes: Impossibilidade de usar as funcionalidades de modo de navegação e de anunciar os caracteres escritos nas aplicações Windows Store.
 -
 
 ++ Instalar O NVDA ++
@@ -759,6 +761,13 @@ Isto pode ser útil para alguém que deseja utilizar o NVDA somente com Braille,
 ==== Dispositivo de Saída ====
 Esta opção permite-lhe escolher a placa de som que o NVDA indicará ao sintetizador seleccionado para usar.
 
++==== Modo de Diminuição do Volume (NVDA+shift+d) ====
+No Windows 8 e superiores, esta opção permite definir se o NVDA deve diminuir o volume das outras aplicações, enquanto o NVDA está a falar ou sempre que o NVDA está em execução.
+- Sem diminuição: O NVDA nunca ddiminuirá os sons de outros programas. 
+- Diminuir quando a emitir voz ou sons: O NVDA diminuirá os sons de outras aplicações quando estiver a falar ou a emitir sons. Isto pode não funcionar com todos os sintetizadores. 
+- Diminuir sempre: O NVDA diminuirá todos os sons de outros programas enquanto estiver em execução.
+-
+
 +++ Definições de Voz (NVDA+Ctrl+V) +++
 O diálogo das definições de voz, que se encontra no menu Preferências, contém opções que lhe permitem alterar o som da voz.
 Para uma alternativa mais rápida de controlar os parâmetros de voz, a partir de qualquer local, por favor, consulte a secção [Anel de Definições de Voz #SynthSettingsRing].
@@ -886,8 +895,16 @@ Se apesar de ter teclado Braille, a escrita Braille não for suportada pela linh
 ==== Expandir Para Braille De Computador Palavras Sobre O Cursor ====
 Esta opção permite que a palavra que está sob o cursor apareça em Braille de computador não contraído.
 
+==== Mostrar Cursor ====
+Esta opção permite activar ou desactivar o cursor braille.
+Aplica-se ao foco do sistema e ao cursor de revisão, mas não ao indicador de seleção.
+
 ==== Velocidade de intermitência do Cursor (ms)====
 Esta opção é um campo numérico que lhe permite alterar a velocidade de intermitência do cursor, em milésimos de segundo.
+
+==== Aparência do Cursor ====
+Esta opção permite escolher a aparência (esquema de pontos) do cursor Braille.
+O indicador de seleção não é afectado por esta opção.
 
 ==== Tempo de Permanência de Mensagens (seg) ====
 Esta definição é um campo numérico que controla durante quantos segundos são apresentadas as mensagens do sistema na linha Braille.
@@ -1630,15 +1647,13 @@ Por favor consulte a documentação desta linha braille para obter a descrição
 ++ Baum/Humanware/APH Braille Displays ++
 São suportadas várias linhas braille da [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] e [APH http://www.aph.org/] quando conectadas via USB ou bluetooth.
 Incluem-se:
-- Baum: SuperVario, PocketVario
-- Baum: SuperVario, PocketVario, VarioUltra (apenas porBluetooth), Pronto! (apenas por Bluetooth)
-- HumanWare: Brailliant, BrailleConnect
+- Baum: SuperVario, PocketVario, VarioUltra e Pronto!
+- HumanWare: Brailliant e BrailleConnect
 - APH: Refreshabraille
 -
 Outras linhas braille fabricadas pela Baum poderão igualmente funcionar, porém tal não foi testado.
 
-Se está a ligar a linha via USB, deverá, primeiro, instalar os drivers USB, fornecidos pelo fabricante.
-Para a APH Refreshabraille, o modo USB deverá ser configurado para Serial.
+Se está a ligar a linha via USB, excepto para as VarioUltra, Pronto! ou Refreshabraille with modo USB configurado para HID, deverá, primeiro, instalar os drivers USB, fornecidos pelo fabricante.
 
 Seguem-se as associações de teclas para estas linhas Braille com o NVDA.
 Por favor consulte a documentação da sua linhas Braille para obter a descrição de onde estas teclas podem ser encontradas.
@@ -1696,7 +1711,8 @@ Por favor consulte a documentação desta linha braille para obter a descrição
 
 ++ HumanWare Brailliant BI/B Series ++
 A série de linhas braille Brailliant BI and B da [HumanWare http://www.humanware.com/], incluindo the as 32, BI 40 e B 80, são suportadas quando conectadas via USB ou bluetooth.
-Ao conectar via USB, deverá instalar previamente os drivers fornecidos pelo fabricante.
+Se as ligar via USB, usando o protocolo Humaware, deverá instalar previamente os drivers fornecidos pelo fabricante.
+Os drivers USB não serão necessários se utilizar o protocolo OpenBraille.
 
 Seguem-se as associações de teclas para esta linha braille com o NVDA.
 Por favor consulte a documentação da sua linha braille para obter a descrição de onde estas teclas podem ser encontradas.
@@ -1724,8 +1740,8 @@ Por favor consulte a documentação da sua linha braille para obter a descriçã
 | Leitura contínua | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE Series ++
-O NVDA suporta as linhas Braille Sense e Braille EDGE da [Hims http://www.hims-inc.com/] quando conectadas via USB ou bluetooth. 
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle ++
+O NVDA suporta as linhas Braille Sense, Braille EDGE e Smart Beetle da [Hims http://www.hims-inc.com/] quando conectadas via USB ou bluetooth. 
 Se ligar a linha via USB, necessitará de instalar os drivers USB, da HIMS, no seu sistema.
 Pode fazer o download dos drivers do Centro de Recursos da HIMS, http://www.hims-inc.com/resource-center/
 Nesta página, seleccione o modelo e faça o download do driver na secção do Window-Eyes.
