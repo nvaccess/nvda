@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Russian translation NVDA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-21 19:08+1000\n"
-"PO-Revision-Date: 2015-12-24 22:38+0800\n"
+"POT-Creation-Date: 2016-01-06 19:08+1000\n"
+"PO-Revision-Date: 2016-01-19 11:54+0800\n"
 "Last-Translator: Kvark <kvark128@yandex.ru>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -124,6 +124,21 @@ msgstr "Форма"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "область"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "No ducking"
+msgstr "Не приглушать"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "Приглушать при выводе речи и звуков"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Always duck"
+msgstr "Всегда приглушать"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2414,7 +2429,7 @@ msgstr "Текстовый фрейм"
 
 #. Translators: Identifies a toggle button (a button used to toggle something).
 msgid "toggle button"
-msgstr "Кнопкапереключатель"
+msgstr "Кнопка-переключатель"
 
 msgid "border"
 msgstr "Рамка"
@@ -2914,6 +2929,18 @@ msgstr "Ввод"
 #. Translators: The name of a category of NVDA commands.
 msgid "Document formatting"
 msgstr "Форматирование документа"
+
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "Приглушение звука не поддерживается"
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+"Циклически переключает режимы приглушения звука, которые определяют, когда "
+"NVDA должна уменьшать громкость других звуков"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -3856,7 +3883,7 @@ msgstr "%d процент"
 
 #. Translators: This is presented when AC power is connected such as when recharging a laptop battery.
 msgid "AC power on"
-msgstr "подключено питание от электросети"
+msgstr "Питание от электросети"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
@@ -4662,7 +4689,7 @@ msgstr "Эмулирует нажатие %s на клавиатуре"
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 msgid "blank"
-msgstr "чисто"
+msgstr "пусто"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #, python-format
@@ -6941,6 +6968,10 @@ msgstr "&Синтезатор:"
 msgid "Output &device:"
 msgstr "&Устройство вывода:"
 
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "Режим &приглушения звука:"
+
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
@@ -8756,8 +8787,8 @@ msgid "&Annotations"
 msgstr "&Примечания"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS Braille Sense/Braille EDGE"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
