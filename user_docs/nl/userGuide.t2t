@@ -763,6 +763,16 @@ Dit kan nuttig zijn voor iemand die NVDA uitsluitend met braille wil gebruiken o
 
 ==== Uitvoerapparaat ====
 Hiermee kunt u de geluidskaart kiezen die NVDA moet aansturen voor de spraakuitvoer.
+
+%kc:setting
+==== Gedifferentieerde geluidsniveau-modus ====
+Toets: NVDA+shift+d
+
+Als u Windows 8 of  hoger gebruikt, kunt u, met deze optie bepalen of NVDA het volume van andere applicaties moet verlagen zodra en zolang NVDA aan het spreken  is of gedurende de hele tijd dat NVDA actief is.
+- Geluidsniveau niet verlagen: NVDA zal het volume van andere audiobronnen niet verlagen. 
+- Geluidsniveau verlagen bij uitvoer van spraak en geluiden: NVDA zal alleen het volume van andere audiobronnen verlagen wanneer  NVDA aan het spreken is of geluiden afspeelt. Mogelijk dat dit niet bij alle synthesizers werkt. 
+- Altijd geluidsniveau verlagen: NVDA zal het volume van andere audiobronnen  steeds op een lager niveau houden zolang NVDA actief is.
+-
  
 +++ Stem (NVDA+control+v) +++[VoiceSettings]
 Onder “Opties” in het NVDA-menu gaat u naar “Stem”  om instellingen aan te passen die te maken hebben met de gebruikte stem(men).
@@ -1650,16 +1660,15 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 %kc:endInclude
 
 ++ Brailleleesregels van Baum/HumanWare/APH ++
-Enkele brailleleesregels van [Baum http://www.baum.de/], [HumanWare http://www.humanware.de/] en [APH http://www.aph.org/] worden ondersteund, voor zover deze  via usb of Bluetooth verbonden worden.
+Verscheidene brailleleesregels van [Baum http://www.baum.de/], [HumanWare http://www.humanware.de/] en [APH http://www.aph.org/] worden ondersteund, voor zover deze  via usb of Bluetooth verbonden worden.
 dit geldt o.a. voor:
-- Baum: SuperVario, PocketVario, VarioUltra (Alleen Bluetooth), Pronto! (Alleen Bluetooth )
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
 Enkele andere Baum-leesregels zouden wellicht ook  kunnen werken, maar dit is nog niet getest.
 
-Als de leesregel  via een usb-kabel aangesloten wordt, moet u eerst de voor de leesregel bestemde driver van de fabrikant installeren.
-Bij de Aph Refreshabraille moet de usb-Modus op "serieel" gezet worden.
+Als u andere leesregels dan de  VarioUltra, Pronto! of Refreshabraille via USB aansluit waarbij de USB-modus op HID moet staan, moett u eerst de USB drivers installeren die door de fabrikant beschikbaar worden gesteld.
 
 Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
@@ -1716,7 +1725,8 @@ Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van to
 
 ++ HumanWare Brailliant BI/B-Serie ++
 De brailleleesregels uit de serie BI en B van  [HumanWare http://www.humanware.de/], waaronder  de BI 32, BI 40 en de B 80, worden ondersteund, voor zover ze via USB of bluetooth verbonden zijn.
-Als u de leesregels met een usb-kabel wilt aansluiten, moet u eerst de usb-driver van de fabrikant installeren.
+Als u de leesregels via usb, waarbij het protocol op HumanWare is ingesteld, wilt aansluiten, moet u eerst de usb-drivers van de fabrikant installeren.
+USB drivers zijn niet nodig als u van het OpenBraille protocol gebruik maakt.
 
 Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
