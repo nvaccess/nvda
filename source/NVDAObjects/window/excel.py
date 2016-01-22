@@ -294,7 +294,7 @@ class SheetsExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 	quickNavItemClass=ExcelSheetQuickNavItem#: the QuickNavItem class that should be instantiated and emitted. 
 	def collectionFromWorksheet( self , worksheetObject ):
 		try:
-			return worksheetObject.Application.ActiveWorkbook.Worksheets
+			return worksheetObject.Application.ActiveWorkbook.sheets
 		except(COMError):
 			return None
 
