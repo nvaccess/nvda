@@ -173,7 +173,8 @@ class ExcelRangeBasedQuickNavItem(ExcelQuickNavItem):
 class ExcelCommentQuickNavItem(ExcelRangeBasedQuickNavItem):
 
 	def __init__( self , nodeType , document , commentObject , commentCollection ):
-		self.label = commentObject.address(False,False,1,False) + " " + commentObject.Comment.Text()
+		self.comment=commentObject.comment
+		self.label = commentObject.address(False,False,1,False) + " " + (self.comment.Text() if self.comment else "")
 		super( ExcelCommentQuickNavItem , self).__init__( nodeType , document , commentObject , commentCollection )
 
 class ExcelFormulaQuickNavItem(ExcelRangeBasedQuickNavItem):
@@ -240,8 +241,10 @@ class CommentExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 		try:
 			return  worksheetObject.cells.SpecialCells( xlCellTypeComments )
 		except(COMError):
-
 			return None
+
+	def filter(self,item):
+		return item is not None and item.comment is not None
 
 class FormulaExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 	quickNavItemClass=ExcelFormulaQuickNavItem#: the QuickNavItem class that should be instanciated and emitted. 
