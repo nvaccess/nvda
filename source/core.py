@@ -122,7 +122,11 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("Reloading user and locale input gesture maps")
 	inputCore.manager.loadUserGestureMap()
 	inputCore.manager.loadLocaleGestureMap()
+	import audioDucking
+	if audioDucking.isAudioDuckingSupported():
+		audioDucking.handleConfigProfileSwitch()
 	log.info("Reverted to saved configuration")
+	
 
 def _setInitialFocus():
 	"""Sets the initial focus if no focus event was received at startup.
@@ -231,6 +235,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.debug("Initializing GUI")
 	import gui
 	gui.initialize()
+
+	import audioDucking
+	if audioDucking.isAudioDuckingSupported():
+		# the GUI mainloop must be running for this to work so delay it
+		wx.CallAfter(audioDucking.initialize)
 
 	# #3763: In wxPython 3, the class name of frame windows changed from wxWindowClassNR to wxWindowNR.
 	# NVDA uses the main frame to check for and quit another instance of NVDA.
@@ -451,9 +460,13 @@ def callLater(delay, callable, *args, **kwargs):
 	This is currently a thin wrapper around C{wx.CallLater},
 	but this should be used instead for calls which aren't just for UI,
 	as it notifies watchdog appropriately.
+	This function can be safely called from any thread.
 	"""
 	import wx
-	return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
+	if thread.get_ident() == mainThreadId:
+		return wx.CallLater(delay, _callLaterExec, callable, args, kwargs)
+	else:
+		return wx.CallAfter(wx.CallLater,delay, _callLaterExec, callable, args, kwargs)
 
 def _callLaterExec(callable, args, kwargs):
 	import watchdog

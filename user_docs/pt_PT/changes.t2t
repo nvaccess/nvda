@@ -3,7 +3,58 @@
 
 %!includeconf: ../changes.t2tconf
 
-Tradução por Rui Fontes, a partir da versão 2015.1, adaptação por Rui Batista e Rui Fontes da tradução brasileira nas versões anteriores.
+Tradução de Rui Fontes, a partir da versão 2015.1, adaptação por Rui Batista e Rui Fontes da tradução brasileira nas versões anteriores.
+
+= 2016.1 =
+
+== Novas Funcionalidades ==
+- Novas tabelas de conversão Braille: Polaco Braille informático 8 pontos e Mongol. (#5537, #5574)
+- O cursor Braille pode ser desativado ou alterada a sua aparência através das novas opções "Mostrar cursor" e "Aparência do cursor" nas Definições do Braille. (#5198)
+- O NVDA pode, opcionalmente, baixar o volume de outros sons, se instalado em Windows 8 ou superior. Esta opção pode ser configurada usando a nova opção "Modo de diminuição do volume" no menu do NVDA, Preferências, Sintetizador ou pressionando NVDA+shift+d. (#3830, #5575)
+- O NVDA já se pode ligar à linha Braille HIMS Smart Beetle via Bluetooth. (#5607)
+- Suporte as linhas Braille APH Refreshabraille, no modo HID, e às Baum VarioUltra e Pronto! quando ligadas via USB. (#5609)
+- Suporte às linhas Braille HumanWare Brailliant BI/B quando o protocolo está configurado para OpenBraille. (#5612)
+
+
+== Alterações ==
+- A opção "Anunciar ênfase" passa a estar desmarcada por padrão. (#4920)
+- Na "Lista de Elementos" do Microsoft Excel, a tecla de atalho para Fórmulas mudou para alt+r e para Folhas para Alt+L, para ser diferente do atalho do campo "Filtrar por". (#5527)
+- Actualizado o liblouis braille translator para a versão 2.6.5. (#5574)
+- A palavra "texto" já não é anunciada ao mover-se para o foco ou o cursor de revisão para um objecto texto. (#5452)
+
+
+== Correcção de falhas ==
+- No  iTunes 12, quando uma página da loja é carregada, o seu conteúdo já é atualizado corretamente no modo de navegação. (#5191)
+- No Internet Explorer e outros controlos MSHTML, mover-se para um título de nível específico, com a navegação rápida por caractere, passa a funcionar como esperado, mesmo que esse atributo, H tag, seja sobreposto, para efeitos de acessibilidade, pelo atributo aria-level. (#5434)
+- No Spotify, o foco já não é frequentemente associado a objecto desconhecido. (#5439)
+- Quando se volta ao Spotify, vindo de outra aplicação, o foco já é corretamente assumido. (#5439)
+- Ao alternar entre o modo de navegação e o modo de foco, o modo actual é anunciado em Braille e em voz. (#5239)
+- O botão Iniciar na barra de tarefas, já não é anunciado como lista e/ou seleccionado em algumas verrsões do Windows. (#5178)
+- Mensagens como "inserido" já não são anunciadas durante a composição de mensagens no Microsoft Outlook. (#5486)
+- Quando se está a usar uma linha Braille e é selecionado texto na linha actual, por exemplo, quando se localiza uma expressão que ocorre nessa mesma linha, mas mais à frente, a linha é movida para esse local. (#5410)
+- No Windows 10, o NVDA já não é desligado silenciosamente quando se fecha, com Alt+F4, uma janela de linha de comandos. (#5343)
+- Na Lista de Elementos no modo de navegação, quando se altera o tipo de elementos, o campo "Filtrar por:" é limpo. (#5511)
+- Nas áreas de texto editável das aplicações Mozilla, movendo o rato lê a porção de texto apropriada, em vez de ler o texto todo. (#5535)
+- Ao mover o rato num campo de texto editável duma aplicação Mozilla, a leitura já não pára em elementos como links incluídos no texto a ser lido. (#2160, #5535)
+- No Internet Explorer, a página shoprite.com já pode ser lida em modo de navegação. (Especificamente os atributos lang mal definidos são tratados apropriadamente.) (#5569)
+- No Microsoft Word, alterações rastreáveis como "inserido" já não são anunciadas se a sua marcação não for visível. (#5566)
+- Quando um botão de comutação é focado, agora o NVDA anuncia quando o seu estado  é alterado de pressionado para não pressionado. (#5441)
+- O anúncio da alteração da forma do rato voltou a funcionar como devido. (#5595)
+- Ao anunciar a indentação da linha, os espaços não separáveis são tratados como espaços normais. Antes, isto podia causar anúncios como "espaço espaço espaço" em vez de "3 espaços". (#5610)
+- Ao fechar uma lista de candidatos modern Microsoft input method, o foco é correctamente restaurado para a janela de composição ou para o documento. (#4145)
+
+
+== Alterações para Desenvolvedores ==
+- A nova classe audioDucking.AudioDucker permite ao código que emita áudio que indique quando outro áudio deva ser diminuido. (#3830)
+- Os nvwave.WavePlayer's constructor agora têm um wantDucking keyword argument que especifica se o audio de outras aplicações deve ser diminuido enquanto o seu áudio é reproduzido. (#3830)
+ - Quando isto é activado, o que é o padrão, é essencial que WavePlayer.idle seja chamado quando apropriado.
+- Melhorado o I/O para linhas Braille: (#5609)
+ - Os drivers de linhas Braille Thread-safe podem declarar-se eles próprios como tal usando o atributo BrailleDisplayDriver.isThreadSafe. Um driver deve ser thread-safe para benefeciar das seguintes funcionalidades:
+ - Os dados são escritos em fundo para os drivers Braille thread-safe, aumentando a performance;
+ - hwIo.Serial estende pyserial para chamar um chamável quando são recebiddos dados em vez de o driver ter de os captar.
+ - hwIo.Hid suporta que as linhas Braille comuniquem via USB HID.
+ - hwPortUtils e hwIo podem, opcionalmente, proporcionar logs detalhados incluindo dispositivos encontrados e todos os dados recebidos e enviados.
+
 
 = 2015.4 =
 Os destaques desta versão incluem melhorias da performance em Windows 10, inclusão do NVDA no Centro de Facilidades de Acesso  no Windows 8 e superiores, Melhorias no suporte ao Microsoft Excel, incluindo listagem e renomeação de folhas e acesso a células bloqueadas em folhas protegidas, e suporte na edição de conteúdo rich text em Mozilla Firefox, Google Chrome e Mozilla Thunderbird.
