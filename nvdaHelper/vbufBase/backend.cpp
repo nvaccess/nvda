@@ -35,6 +35,7 @@ VBufBackend_t::VBufBackend_t(int docHandleArg, int IDArg): renderThreadID(GetWin
 void VBufBackend_t::initialize() {
 	int renderThreadID=GetWindowThreadProcessId((HWND)UlongToHandle(rootDocHandle),NULL);
 	LOG_DEBUG(L"render threadID "<<renderThreadID);
+	registerWindowsHook(WH_CALLWNDPROC,destroy_callWndProcHook);
 	registerWindowsHook(WH_CALLWNDPROC,renderThread_callWndProcHook);
 	LOG_DEBUG(L"Registered hook, sending message...");
 	SendMessage((HWND)UlongToHandle(rootDocHandle),wmRenderThreadInitialize,(WPARAM)this,0);
@@ -47,6 +48,23 @@ void VBufBackend_t::forceUpdate() {
 	this->update();
 }
 
+
+LRESULT CALLBACK VBufBackend_t::destroy_callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
+	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
+	if((pcwp->message==WM_DESTROY)) {
+		LOG_DEBUG(L"WM_DESTROY for "<<(pcwp->hwnd));
+		// Copy the set, as it might be mutated by renderThread_terminate() during iteration.
+		VBufBackendSet_t backends=runningBackends;
+		for(VBufBackendSet_t::iterator i=backends.begin();i!=backends.end();++i) {
+			HWND backendHwnd=(HWND)UlongToHandle(((*i)->rootDocHandle));
+			if(pcwp->hwnd==backendHwnd) {
+				LOG_DEBUG(L"calling renderThread_terminate for WM_DESTROY");
+				(*i)->renderThread_terminate();
+			}
+		}
+	}
+	return 0;
+}
 
 LRESULT CALLBACK VBufBackend_t::renderThread_callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
 	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
@@ -232,6 +250,7 @@ void VBufBackend_t::terminate() {
 	} else {
 		LOG_DEBUG(L"render thread already terminated");
 	}
+	unregisterWindowsHook(WH_CALLWNDPROC,destroy_callWndProcHook);
 }
 
 void VBufBackend_t::destroy() {
