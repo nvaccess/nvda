@@ -10,6 +10,7 @@ EXPORTS
 	nvdaInProcUtils_unregisterNVDAProcess
 	nvdaInProcUtils_sysListView32_getGroupInfo
 	nvdaInProcUtils_dumpOnCrash
+	nvdaInProcUtils_IA2Text_findContentDescendant
 	nvdaInProcUtils_getActiveObject
 	nvdaInProcUtils_winword_expandToLine
 	nvdaInProcUtils_winword_getTextInRange
@@ -52,3 +53,6 @@ EXPORTS
 	calculateWordOffsets
 	findWindowWithClassInThread
 	registerUIAProperty
+	dllImportTableHooks_hookSingle
+	dllImportTableHooks_unhookSingle
+	audioDucking_shouldDelay

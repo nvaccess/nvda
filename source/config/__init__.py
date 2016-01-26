@@ -83,13 +83,19 @@ confspec = ConfigObj(StringIO(
 		beepForCapitals = boolean(default=false)
 		useSpellingFunctionality = boolean(default=true)
 
+# Audio settings
+[audio]
+	audioDuckingMode = integer(default=0)
+
 # Braille settings
 [braille]
 	display = string(default=noBraille)
 	translationTable = string(default=en-us-comp8.ctb)
 	inputTable = string(default=en-us-comp8.ctb)
 	expandAtCursor = boolean(default=true)
+	showCursor = boolean(default=true)
 	cursorBlinkRate = integer(default=500,min=0,max=2000)
+	cursorShape = integer(default=192,min=1,max=255)
 	messageTimeout = integer(default=4,min=0,max=20)
 	tetherTo = string(default="focus")
 	readByParagraph = boolean(default=false)
@@ -162,7 +168,7 @@ confspec = ConfigObj(StringIO(
 	reportFontSize = boolean(default=false)
 	reportFontAttributes = boolean(default=false)
 	reportRevisions = boolean(default=true)
-	reportEmphasis = boolean(default=true)
+	reportEmphasis = boolean(default=false)
 	reportColor = boolean(default=False)
 	reportAlignment = boolean(default=false)
 	reportStyle = boolean(default=false)
@@ -203,6 +209,9 @@ confspec = ConfigObj(StringIO(
 	alwaysIncludeShortCharacterDescriptionInCandidateName = boolean(default=True)
 	reportReadingStringChanges = boolean(default=True)
 	reportCompositionStringChanges = boolean(default=True)
+
+[debugLog]
+	hwIo = boolean(default=false)
 
 [upgrade]
 	newLaptopKeyboardLayout = boolean(default=false)
@@ -509,6 +518,8 @@ class ConfigManager(object):
 		synthDriverHandler.handleConfigProfileSwitch()
 		import braille
 		braille.handler.handleConfigProfileSwitch()
+		import audioDucking
+		audioDucking.handleConfigProfileSwitch()
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")

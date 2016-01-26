@@ -1,5 +1,6 @@
-﻿NVDA NVDA_VERSION Manuale Utente
-Ultimo Aggiornamento del manuale originale: 4 febbraio 2015, traduzione a cura di Simone Dal Maso e Gianluca Casalino
+﻿NVDA NVDA_VERSION Manuale utente
+NVDA NVDA_VERSION Manuale utente
+Ultimo Aggiornamento del manuale originale: 9 novembre 2015, traduzione a cura di Simone Dal Maso e Gianluca Casalino
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Guida rapida ai comandi 
@@ -540,7 +541,7 @@ MathPlayer può essere scaricato gratuitamente dal seguente sito web: http://www
 
 NVDA supporta la matematica nei seguenti formati:
 - MathML in Mozilla Firefox e Microsoft Internet Explorer.
-- Il tipo Design Science  in Microsoft Word e PowerPoint.
+- MathType Design Science  in Microsoft Word e PowerPoint. Si noti che MathType dev'essere installato affinché il supporto funzioni correttamente, è sufficiente anche la versione di prova.
 - MathML in Adobe Reader. (Si noti che questo non è ancora uno standard ufficiale, per cui attualmente non esiste per il pubblico un software disponibile che possa produrre questo contenuto).
 -
 
@@ -554,7 +555,7 @@ Se ci si trova in modalità navigazione, sarà sufficiente spostare il cursore d
 
 Se non ci si trova in modalità navigazione:
 + Spostare il cursore di controllo in un contenuto di tipo matematico.
-+ Da impostazioni predefinite, il cursore di controllo segue il cursore di sistema, sicché sarà sufficiente muoversi col cursore standard alla posizione desiderata.
+Da impostazioni predefinite, il cursore di controllo segue il cursore di sistema, sicché sarà sufficiente muoversi col cursore standard alla posizione desiderata.
 +Poi, utilizzare il comando seguente:
 +
 
@@ -569,24 +570,88 @@ Si prega di consultare la documentazione di MathPlayer per ulteriori informazion
 
 Quando si desidera tornare al documento, è sufficiente premere il tasto Esc.
 
-+ Comandi specifici di NVDA per le applicazioni +
-NVDA fornisce alcuni comandi per certe applicazioni in modo da facilitare gli utenti nello svolgimento di operazioni che, altrimenti, risulterebbero molto complesse e poco accessibili.
++ Funzioni speciali per le applicazioni +
+NVDA fornisce alcuni comandi o funzioni per certe applicazioni in modo da facilitare gli utenti nello svolgimento di operazioni che, altrimenti, risulterebbero molto complesse e poco accessibili.
 
 ++ Microsoft Word ++
+
++++ Lettura automatica delle intestazioni di riga e colonna+++
+NVDA è in grado di leggere automaticamente le intestazioni delle righe e delle colonne quando si esplora una tabella in Microsoft Word.
+Per far questo, per prima cosa è necessario che l'opzione "Leggi le intestazioni riga/colonna delle tabelle", situata nella finestra formattazione documento, sia attiva.
+In secondo luogo, NVDA ha bisogno di conoscere quale riga o colonna contenga le intestazioni, per ciascuna tabella.
+Dopo essersi spostati nella prima cella della colonna o della riga che contiene le intestazioni, utilizzare uno dei comandi sottostanti:
 %kc:beginInclude
 || Nome | Tasto | Descrizione |
-| Legge commento corrente | NVDA+Alt+c | Legge il testo del commento alla posizione del cursore di sistema. |
 | Imposta intestazioni colonna | NVDA+shift+c | Imposta il riconoscimento dell'intestazione colonna per la prima cella, consentendo la lettura automatica delle intestazioni successive. La doppia pressione cancellerà tale impostazione. |
 | Imposta intestazioni riga | NVDA+shift+r | Imposta il riconoscimento dell'intestazione riga per la prima cella, consentendo la lettura automatica delle intestazioni successive. La doppia pressione cancellerà tale impostazione. |
 %kc:endInclude
+Queste impostazioni saranno memorizzate nel documento come segnalibri, in un formato compatibile con altri screen reader, ad esempio Jaws.
+Ciò significa che se si utilizza un altro screen reader e si apre quel documento successivamente, le intestazioni di righe e colonne saranno già impostate.
+
+
++++ Modalità navigazione in Microsoft Word+++
+Allo stesso modo delle pagine web, la modalità navigazione può essere utilizzata in Microsoft Word per poter servirsi di funzioni quali la navigazione veloce con tasti rapidi o l'elenco elementi.
+%kc:beginInclude
+Per attivare o disattivare la modalità navigazione in Microsoft Word, servirsi della combinazione NVDA+spazio.
+%kc:endInclude
+Per ulteriori informazioni sulla modalità navigazione e sulla navigazione veloce, vedere la [sezione modalità Navigazione #BrowseMode].
+
+++++ L'elenco elementi ++++
+%kc:beginInclude
+Quando ci si trova in modalità navigazione in Microsoft Word, si può accedere all'elenco elementi tramite la combinazione di tasti NVDA+f7
+%kc:endInclude
+L'elenco degli elementi può elencare titoli, link e annotazioni (che comprende commenti e il tenere traccia delle modifiche).
+
++++ Leggere i commenti +++
+%kc:beginInclude
+Per far in modo che NVDA legga i commenti alla posizione corrente del cursore, premere NVDA+alt+c.
+%kc:endInclude
+Si noti che tutti i commenti del documento, oltre che lo storico delle modifiche, può essere raggiunto tramite l'elenco elementi, selezionando annotazioni nella casella tipo.
 
 ++ Microsoft Excel ++
+
++++ Lettura automatica delle intestazioni di riga e colonna+++
+NVDA è in grado di leggere automaticamente le intestazioni delle righe e delle colonne quando si esplora un foglio di lavoro in Microsoft Excel.
+Per far questo, per prima cosa è necessario che l'opzione "Leggi le intestazioni riga/colonna delle tabelle", situata nella finestra formattazione documento, sia attiva.
+In secondo luogo, NVDA ha bisogno di conoscere quale riga o colonna contenga le intestazioni.
+Dopo essersi spostati nella prima cella della colonna o della riga che contiene le intestazioni, utilizzare uno dei comandi sottostanti:
 %kc:beginInclude
 || Nome | Tasto | Descrizione |
 | Imposta intestazioni colonna | NVDA+shift+c | Imposta il riconoscimento dell'intestazione colonna per la prima cella, consentendo la lettura automatica delle intestazioni successive. La doppia pressione cancellerà tale impostazione. |
 | Imposta intestazioni riga | NVDA+shift+r | Imposta il riconoscimento dell'intestazione riga per la prima cella, consentendo la lettura automatica delle intestazioni successive. La doppia pressione cancellerà tale impostazione. |
-| Legge commento | NVDA+alt+c | Legge il commento sulla cella corrente se esiste. |
-| Lista elementi | NVDA+f7 | Apre la finestra di dialogo Lista Elementi, che visualizza grafici, celle con commenti, o celle con formule. |
+%kc:endInclude
+Queste impostazioni saranno memorizzate nel documento come segnalibri, in un formato compatibile con altri screen reader, ad esempio Jaws.
+Ciò significa che se si utilizza un altro screen reader e si apre quel foglio di lavoro successivamente, le intestazioni di righe e colonne saranno già impostate.
+
+++++ L'elenco elementi ++++
+Un po' come accade per le pagine web, NVDA è provvisto di un elenco elementi per Microsoft Excel che permette di accedere ad un molteplice numero di informazioni.
+%kc:beginInclude
+Per accedere all'elenco elementi in Microsoft Excel, utilizzare NVDA+f7.
+%kc:endInclude
+I vari tipi di informazioni disponibili nell'elenco  elementi sono:
+- Grafico: Elenca tutti i grafici nella cartella di lavoro.
+Selezionando un grafico e premendo invio o utilizzando il bottone Vai evidenzia il grafico per poter essere esplorato con i tasti freccia.
+- Commento: elenca tutte le celle della cartella di lavoro contenenti commenti.
+Per ciascuna cella sarà mostrato l'indirizzo e i relativi commenti.
+Premendo il tasto Invio o il pulsante Vai in presenza di un commento ci si sposterà a quella determinata cella.
+- Formula: Elenca tutte le celle della cartella di lavoro contenenti formule.
+Per ciascuna cella sarà mostrato l'indirizzo e le relative formule.
+Premendo il tasto Invio o il pulsante Vai in presenza di una formula ci si sposterà a quella determinata cella.
+- Foglio: Elenca tutti i fogli della cartella di lavoro.
+Premendo f2 nell'elenco dei fogli permette di rinominare il foglio selezionato.
+Premendo il tasto Invio o il pulsante Vai in presenza di un foglio ci si sposterà a quel determinato foglio.
+-
+
++++ Leggere i commenti +++
+%kc:beginInclude
+Per far in modo che NVDA legga i commenti della cella evidenziata, premere NVDA+alt+c.
+%kc:endInclude
+Si noti che tutti i commenti della cartella di lavoro possono essere raggiunti anche dall'elenco elementi.
+
++++ Lettura di celle protette +++
+Se una cartella di lavoro è stata protetta, potrebbe non essere possibile portare il focus in alcune celle che non possono essere modificate.
+%kc:beginInclude
+Per spostarsi in una cella protetta, spassare alla modalità navigazione premendo NVDA+Spazio, dopodiché utilizzare i comandi standard di Excel come le frecce per spostarsi tra le celle del foglio di lavoro.
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -1104,6 +1169,7 @@ Ad esempio, se attiviamo la casella di controllo "Leggi il nome del font", NVDA 
 - Allineamento testo
 - Colori
 - Revisioni
+- Testo enfatizzato
 - stile del testo
 - Errori ortografici
 - Numeri di pagina
@@ -1172,12 +1238,22 @@ Nel titolo della finestra verrà visualizzata anche la lingua per la quale si st
 Si noti che questa finestra di dialogo rispetta le impostazioni dell'opzione "Considera attendibile la lingua della voce  corrente nel processare caratteri e simboli", situata nelle [Impostazioni della Voce #VoiceSettings]; per esempio, verrà utilizzata la lingua della voce piuttosto che la lingua generale di NVDA, quando questa opzione è attiva.
 
 Per modificare un simbolo, dapprima selezionarlo nell'elenco simboli.
+
 Il campo "voce in sostituzione" permette di cambiare il testo che deve essere pronunciato in corrispondenza di quel simbolo.
 Utilizzando il campo "livello", è possibile stabilire il livello più basso dal quale il simbolo dovrà essere annunciato.
+Il campo invia questo simbolo al sintetizzatore specifica le condizioni per cui  lo stesso simbolo debba essere processato dalla sintesi vocale, non tenendo conto quindi del testo in sostituzione.
+Ciò risulta utile nel caso in cui il simbolo provochi una pausa o un'inflessione nella voce del sintetizzatore.
+Ad esempio, una virgola provoca una pausa nel sintetizzatore.
+Ci sono tre opzioni:
+ - Mai: il simbolo non sarà mai inviato al sintetizzatore.
+ - Sempre: il simbolo verrà sempre inviato al sintetizzatore.
+ - Soltanto al di sotto del livello simboli: invia il simbolo solo se il livello configurato per i simboli è al di sotto di quello settato per il simbolo attuale.
+ Ad esempio, si potrebbe fare in modo che il simbolo venga gestito con la propria sostituzione, quindi senza pause, per i livelli più alti, mentre verranno effettuate pause per i livelli inferiori.
+ -
 
 è possibile aggiungere un nuovo simbolo servendosi del pulsante Aggiungi.
 Nella finestra di dialogo che appare, inserire il simbolo e premere il pulsante Ok.
-Poi, modificare i campi "voce in sostituzione" e "livello" secondo le proprie esigenze.
+Poi, modificare i campi rimanenti secondo le proprie esigenze.
 
 Sarà sempre possibile eliminare un simbolo aggiunto in precedenza tramite il pulsante "Rimuovi".
 
@@ -1563,7 +1639,7 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 ++ Display Braille Baum/Humanware/APH  ++
 Molti Display Braille della [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] e [APH http://www.aph.org/] sono supportati sia tramite USB che Bluetooth.
 Essi includono:
-- Baum: SuperVario, PocketVario
+- Baum: SuperVario, PocketVario, VarioUltra (Solo Bluetooth), Pronto! (solo Bluetooth)
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
@@ -2101,14 +2177,6 @@ Ecco l'elenco dei parametri a riga di comando di NVDA:
 | None | --install | Installa NVDA (avviando la copia appena installata) |
 | None | --install | Silent Installa NVDA (non avviando la copia appena installata) |
 
-++ Personalizzazione avanzata dei simboli di punteggiatura ++
-in aggiunta a ciò che abbiamo visto nella [Finestra di dialogo Pronuncia Punteggiatura/Simboli #SymbolPronunciation], è possibile personalizzare la punteggiatura ed altri simboli in maniera diversa.
-Per esempio, è possibile specificare se inviare o meno un simbolo non processato al sintetizzatore, per modificare parametri come l'inflessione o provocare una pausa.
-
-Per far ciò, è necessario modificare il file contenente le informazioni sulla pronuncia dei simboli che si trova nella propria cartella di configurazione utente di NVDA 
-Il file si chiama symbols-xx.dic, dove xx costituisce il codice della lingua.
-Il formato di tale file è documentato nella guida per gli sviluppatori, sezione pronuncia/simboli, che si può leggere sul sito internazionale di NVDA http://community.nvda-project.org/wiki/Development].
-Comunque, non è possibile per gli utenti definire simboli troppo complessi.
  
 + Ulteriori Informazioni +
 Se si vogliono trovare maggiori informazioni o richiedere assistenza riguardo NVDA, si prega di visitare o il sito internazionale in lingua inglese su NVDA_URL, oppure quello relativo alla comunità italiana all'indirizzo www.nvda.it.

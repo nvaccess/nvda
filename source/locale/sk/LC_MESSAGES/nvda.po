@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-06 19:09+1000\n"
-"PO-Revision-Date: 2015-08-17 10:27+0100\n"
+"POT-Creation-Date: 2015-11-25 19:10+1000\n"
+"PO-Revision-Date: 2015-11-29 23:29+0100\n"
 "Last-Translator: Ondrej Rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -1297,6 +1297,24 @@ msgstr "Všetko"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "znak"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "nikdy"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "vždy"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "pod úroveň"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -2728,6 +2746,10 @@ msgstr "orezané"
 msgid "overflowing"
 msgstr "pretečené"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "odomknuté"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "nevybraté"
@@ -3065,6 +3087,18 @@ msgstr "sledovať zmeny"
 msgid "Toggles on and off the reporting of revisions"
 msgstr "Zapína alebo vypína oznamovanie zmien"
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "neoznamovať zvýraznenie"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "oznamovať zvýraznenie"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "Zapína alebo vypína oznamovanie zvýraznenia"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "neoznamovať farby"
@@ -3365,9 +3399,9 @@ msgstr "\"%s\" okopírované do schránky."
 
 #. Translators: Input help mode message for report current navigator object command.
 msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
+"Reports the current navigator object. Pressing twice spells this "
+"information, and pressing three times Copies name and value of this  object "
+"to the clipboard"
 msgstr ""
 "Oznamuje informácie o aktuálnom navigačnom objekte. Ak je stlačené 2 krát po "
 "sebe, vyhláskuje tieto informácie. Ak je stlačené 3 krát rýchlo po sebe, "
@@ -4067,6 +4101,10 @@ msgid ""
 "hierarchy"
 msgstr "Prejde na nasledujúci objekt v plošnom zobrazení v hierarchii objektov"
 
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "žiadny predchádzajúci objekt"
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
@@ -4371,6 +4409,58 @@ msgid "numpad plus"
 msgstr "numerické plus"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "numerická čiarka"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "Numerický insert"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "Numerická 0"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "numerická 1"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "numerická 2"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "numerická 3"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "numerická 4"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "numerická 5"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "numerická 6"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "numerická 7"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "numerická 8"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "numerická 9"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "Insert"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "ľavý kontrol"
 
@@ -4531,15 +4621,20 @@ msgstr "neodsadené"
 msgid "%d characters"
 msgstr "%d znakov"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "Vybrané %s"
+msgid "%s selected"
+msgstr "%s vybraté"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "Nevybrané %s"
+msgid "%s unselected"
+msgstr "%s nevybraté"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s namiesto pôvodného výberu"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4634,14 +4729,55 @@ msgstr "na {backgroundColor}"
 msgid "line %s"
 msgstr "Riadok %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "vložené"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "nie je vložené"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "odstránené"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "nie je odstránené"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "zmenené %s"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "bez zmien"
+#, python-format
+msgid "no revised %s"
+msgstr "bez zmien %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "označené"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "neoznačené"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "Silné"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "nie je silné"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "Zvýraznené"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "nie je zvýraznené"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -7112,6 +7248,11 @@ msgstr "Sledovať zm&eny"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "Oznamovať zv&ýraznenie"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "Oznamovať š&týl"
 
@@ -7339,6 +7480,11 @@ msgstr "Symbol"
 msgid "Level"
 msgstr "Úroveň"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "Uprednostniť"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "Zmeniť symbol"
@@ -7346,6 +7492,10 @@ msgstr "Zmeniť symbol"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "Ú&roveň"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "Ponechať pôvodný symbol na spracovanie &hlasovému výstupu"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7480,12 +7630,23 @@ msgstr "aktivovať"
 msgid "Desktop"
 msgstr "Pracovná plocha"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "Predvolená farba"
 
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "Neznáma farba"
+
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "Zamknutá bunka"
+
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "zobrazuje zoznam grafov, buniek s komentármi a buniek so vzorcami"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Zobrazí rôzne typy prvkov v tabuľke"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -7501,6 +7662,11 @@ msgstr "K&omentár"
 #. in the browse mode Elements List dialog.
 msgid "&Formula"
 msgstr "&Vzorec"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "&Hárok"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7566,6 +7732,12 @@ msgstr ""
 "Stlačené raz nastaví túto bunku ako prvý riadok hlavičky pre ostatné bunky, "
 "ktoré sú napravo a nižšie v tejto oblasti. Stlačené dvakrát odstráni "
 "informáciu o hlavičkách pre riadky."
+
+msgid "Input Message is {title}: {message}"
+msgstr "Vstupný text je {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "Vstupný text je {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -8320,17 +8492,8 @@ msgstr "Textový rámik"
 msgid "comment: {text} by {author} on {date}"
 msgstr "komentár: {text} od {author} dňa {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} od {author} dňa {date}"
-
-msgid "unknown author"
-msgstr "Neznámy autor"
-
-msgid "unknown date"
-msgstr "neznámy dátum"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} od {revisionAuthor} dňa {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text} od {author} dňa {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8507,6 +8670,32 @@ msgstr "HIMS Braille Sense/Séria Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr "zobrazuje zoznam grafov, buniek s komentármi a buniek so vzorcami"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "Predvolená farba"
+
+#~ msgid "selecting %s"
+#~ msgstr "Vybrané %s"
+
+#~ msgid "unselecting %s"
+#~ msgstr "Nevybrané %s"
+
+#~ msgid "unrevised"
+#~ msgstr "bez zmien"
+
+#~ msgid "unknown author"
+#~ msgstr "Neznámy autor"
+
+#~ msgid "unknown date"
+#~ msgstr "neznámy dátum"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType} od {revisionAuthor} dňa {revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "Oznámi objekt, ktorý má fokus."

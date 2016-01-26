@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2013 Gianluca Casalino, NV Access Limited
+#Copyright (C) 2010-2015 Gianluca Casalino, NV Access Limited
 
 from logHandler import log
 from ctypes import *
@@ -25,6 +25,7 @@ HIMS_CODE_DEVICES = {
 HIMS_BLUETOOTH_NAMES = (
 	"BrailleSense",
 	"BrailleEDGE",
+	"SmartBeetle",
 )
 
 #MAP OF KEYS
@@ -109,7 +110,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	"""
 	name = "hims"
 	# Translators: The name of a series of braille displays.
-	description = _("HIMS Braille Sense/Braille EDGE series")
+	description = _("HIMS Braille Sense/Braille EDGE/Smart Beetle series")
 
 	@classmethod
 	def check(cls):

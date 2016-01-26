@@ -37,7 +37,7 @@ except RuntimeError:
 ### Constants
 NVDA_PATH = os.getcwdu()
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
-DONATE_URL = "http://www.nvaccess.org/wiki/Donate"
+DONATE_URL = "http://www.nvaccess.org/donate/"
 
 ### Globals
 mainFrame = None

@@ -21,6 +21,7 @@ import gui
 import globalVars
 from logHandler import log
 import nvwave
+import audioDucking
 import speechDictHandler
 import appModuleHandler
 import queueHandler
@@ -327,6 +328,18 @@ class SynthesizerDialog(SettingsDialog):
 		deviceListSizer.Add(deviceListLabel)
 		deviceListSizer.Add(self.deviceList)
 		settingsSizer.Add(deviceListSizer,border=10,flag=wx.BOTTOM)
+		duckingListSizer=wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: This is a label for the audio ducking combo box in the Audio Settings dialog 
+		duckingListLabel=wx.StaticText(self,-1,label=_("Audio &ducking mode:"))
+		duckingListID=wx.NewId()
+		self.duckingList=wx.Choice(self,duckingListID,choices=audioDucking.audioDuckingModes)
+		index=config.conf['audio']['audioDuckingMode']
+		self.duckingList.SetSelection(index)
+		duckingListSizer.Add(duckingListLabel)
+		duckingListSizer.Add(self.duckingList)
+		if not audioDucking.isAudioDuckingSupported():
+			self.duckingList.Disable()
+		settingsSizer.Add(duckingListSizer,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
 		self.synthList.SetFocus()
@@ -340,6 +353,10 @@ class SynthesizerDialog(SettingsDialog):
 			# synthesizer.
 			gui.messageBox(_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING,self)
 			return 
+		if audioDucking.isAudioDuckingSupported():
+			index=self.duckingList.GetSelection()
+			config.conf['audio']['audioDuckingMode']=index
+			audioDucking.setAudioDuckingMode(index)
 		super(SynthesizerDialog, self).onOk(evt)
 
 class SynthSettingChanger(object):
@@ -1400,13 +1417,37 @@ class BrailleSettingsDialog(SettingsDialog):
 		self.expandAtCursorCheckBox.SetValue(config.conf["braille"]["expandAtCursor"])
 		settingsSizer.Add(self.expandAtCursorCheckBox, border=10, flag=wx.BOTTOM)
 
+		# Translators: The label for a setting in braille settings to show the cursor.
+		self.showCursorCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("&Show cursor"))
+		self.showCursorCheckBox.Bind(wx.EVT_CHECKBOX, self.onShowCursorChange)
+		self.showCursorCheckBox.SetValue(config.conf["braille"]["showCursor"])
+		settingsSizer.Add(self.showCursorCheckBox, border=10, flag=wx.BOTTOM)
+
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 		label = wx.StaticText(self, wx.ID_ANY, label=_("Cursor blink rate (ms)"))
 		sizer.Add(label)
 		self.cursorBlinkRateEdit = wx.TextCtrl(self, wx.ID_ANY)
 		self.cursorBlinkRateEdit.SetValue(str(config.conf["braille"]["cursorBlinkRate"]))
+		if not self.showCursorCheckBox.GetValue():
+			self.cursorBlinkRateEdit.Disable()
 		sizer.Add(self.cursorBlinkRateEdit)
+		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for a setting in braille settings to select the cursor shape.
+		label = wx.StaticText(self, wx.ID_ANY, label=_("Cursor &shape:"))
+		self.cursorShapes = [s[0] for s in braille.CURSOR_SHAPES]
+		self.shapeList = wx.Choice(self, wx.ID_ANY, choices=[s[1] for s in braille.CURSOR_SHAPES])
+		try:
+			selection = self.cursorShapes.index(config.conf["braille"]["cursorShape"])
+			self.shapeList.SetSelection(selection)
+		except:
+			pass
+		if not self.showCursorCheckBox.GetValue():
+			self.shapeList.Disable()
+		sizer.Add(label)
+		sizer.Add(self.shapeList)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -1459,12 +1500,14 @@ class BrailleSettingsDialog(SettingsDialog):
 		config.conf["braille"]["translationTable"] = self.tableNames[self.tableList.GetSelection()]
 		config.conf["braille"]["inputTable"] = self.inputTableNames[self.inputTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
+		config.conf["braille"]["showCursor"] = self.showCursorCheckBox.GetValue()
 		try:
 			val = int(self.cursorBlinkRateEdit.GetValue())
 		except (ValueError, TypeError):
 			val = None
 		if 0 <= val <= 2000:
 			config.conf["braille"]["cursorBlinkRate"] = val
+		config.conf["braille"]["cursorShape"] = self.cursorShapes[self.shapeList.GetSelection()]
 		try:
 			val = int(self.messageTimeoutEdit.GetValue())
 		except (ValueError, TypeError):
@@ -1500,6 +1543,10 @@ class BrailleSettingsDialog(SettingsDialog):
 		# If no port selection is possible or only automatic selection is available, disable the port selection control
 		enable = len(self.possiblePorts) > 0 and not (len(self.possiblePorts) == 1 and self.possiblePorts[0][0] == "auto")
 		self.portsList.Enable(enable)
+
+	def onShowCursorChange(self, evt):
+		self.cursorBlinkRateEdit.Enable(evt.IsChecked())
+		self.shapeList.Enable(evt.IsChecked())
 
 class AddSymbolDialog(wx.Dialog):
 
@@ -1546,6 +1593,9 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.symbolsList.InsertColumn(1, _("Replacement"), width=150)
 		# Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
 		self.symbolsList.InsertColumn(2, _("Level"), width=60)
+		# Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+		# See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+		self.symbolsList.InsertColumn(3, _("Preserve"), width=60)
 		for symbol in symbols:
 			item = self.symbolsList.Append((symbol.displayName,))
 			self.updateListItem(item, symbol)
@@ -1571,6 +1621,15 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.levelList.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
 		sizer.Add(self.levelList)
 		changeSizer.Add(sizer)
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Send actual symbol to synthesizer")))
+		symbolPreserveLabels = characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS
+		self.preserveList = wx.Choice(self, wx.ID_ANY,choices=[
+			symbolPreserveLabels[mode] for mode in characterProcessing.SPEECH_SYMBOL_PRESERVES])
+		self.preserveList.Bind(wx.EVT_KILL_FOCUS, self.onSymbolEdited)
+		sizer.Add(self.preserveList)
+		changeSizer.Add(sizer)
 		settingsSizer.Add(changeSizer)
 		entryButtonsSizer=wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
@@ -1592,6 +1651,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 	def updateListItem(self, item, symbol):
 		self.symbolsList.SetStringItem(item, 1, symbol.replacement)
 		self.symbolsList.SetStringItem(item, 2, characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[symbol.level])
+		self.symbolsList.SetStringItem(item, 3, characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS[symbol.preserve])
 
 	def onSymbolEdited(self, evt):
 		if self.editingItem is None:
@@ -1601,6 +1661,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		symbol = self.symbols[item]
 		symbol.replacement = self.replacementEdit.Value
 		symbol.level = characterProcessing.SPEECH_SYMBOL_LEVELS[self.levelList.Selection]
+		symbol.preserve = characterProcessing.SPEECH_SYMBOL_PRESERVES[self.preserveList.Selection]
 		self.updateListItem(item, symbol)
 
 	def onListItemFocused(self, evt):
@@ -1610,6 +1671,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.editingItem = item
 		self.replacementEdit.Value = symbol.replacement
 		self.levelList.Selection = characterProcessing.SPEECH_SYMBOL_LEVELS.index(symbol.level)
+		self.preserveList.Selection = characterProcessing.SPEECH_SYMBOL_PRESERVES.index(symbol.preserve)
 		self.removeButton.Enabled = not self.symbolProcessor.isBuiltin(symbol.identifier)
 
 	def onListChar(self, evt):
@@ -1647,6 +1709,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		addedSymbol.displayName = identifier
 		addedSymbol.replacement = ""
 		addedSymbol.level = characterProcessing.SYMLVL_ALL
+		addedSymbol.preserve = characterProcessing.SYMPRES_NEVER
 		self.symbols.append(addedSymbol)
 		item = self.symbolsList.Append((addedSymbol.displayName,))
 		self.updateListItem(item, addedSymbol)
@@ -1725,8 +1788,9 @@ class InputGesturesDialog(SettingsDialog):
 		if filter:
 			#This regexp uses a positive lookahead (?=...) for every word in the filter, which just makes sure the word is present in the string to be tested without matching position or order.
 			# #5060: Escape the filter text to prevent unexpected matches and regexp errors.
+			# Because we're escaping, words must then be split on "\ ".
 			filter = re.escape(filter)
-			filterReg = re.compile(r'(?=.*?' + r')(?=.*?'.join(filter.split(' ')) + r')', re.U|re.IGNORECASE)
+			filterReg = re.compile(r'(?=.*?' + r')(?=.*?'.join(filter.split('\ ')) + r')', re.U|re.IGNORECASE)
 		for category in sorted(self.gestures):
 			treeCat = self.tree.AppendItem(self.treeRoot, category)
 			commands = self.gestures[category]

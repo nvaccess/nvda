@@ -1,6 +1,6 @@
 #appModules/powerpnt.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2014 NV Access Limited
+#Copyright (C) 2012-2015 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -26,7 +26,7 @@ import eventHandler
 import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible, getNVDAObjectFromEvent
 from NVDAObjects.window import Window
-from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection
+from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection, EditableText
 import braille
 from cursorManager import ReviewCursorManager
 import controlTypes
@@ -908,6 +908,10 @@ class TextFrame(EditableTextWithoutAutoSelectDetection,PpObject):
 
 	def __init__(self,windowHandle=None,documentWindow=None,ppObject=None):
 		super(TextFrame,self).__init__(windowHandle=windowHandle,documentWindow=documentWindow,ppObject=ppObject)
+		# EditableText* wasn't added as an overlay,
+		# so initOverlayClass doesn't get called automatically.
+		# #5360: EditableText.initOverlayClass gives us announcement of new line text.
+		EditableText.initOverlayClass(self)
 		EditableTextWithoutAutoSelectDetection.initClass(self)
 
 	def _isEqual(self,other):
@@ -915,6 +919,7 @@ class TextFrame(EditableTextWithoutAutoSelectDetection,PpObject):
 
 	name=None
 	role=controlTypes.ROLE_EDITABLETEXT
+	states = {controlTypes.STATE_MULTILINE}
 
 	def _get_parent(self):
 		parent=self.ppObject.parent

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 19:09+1000\n"
-"PO-Revision-Date: 2015-08-28 11:08+0200\n"
+"POT-Creation-Date: 2016-01-06 19:08+1000\n"
+"PO-Revision-Date: 2016-01-14 16:43+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -124,6 +124,21 @@ msgstr "lomake"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "alue"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "No ducking"
+msgstr "Ei vaimennusta"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "Vaimenna puhuttaessa ja ääniä toistettaessa"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Always duck"
+msgstr "Vaimenna aina"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -402,6 +417,11 @@ msgstr "manipuri, taso 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "mongoli"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "marathi, taso 1"
 
@@ -449,6 +469,11 @@ msgstr "nepali, taso 1"
 #. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "orija, taso 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "puola, 8 pisteen tietokonemerkistö"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -654,6 +679,18 @@ msgstr "nps"
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "( )"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "pisteet 7 ja 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "piste 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "kaikki pisteet"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -1297,6 +1334,24 @@ msgstr "kaikki"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "merkki"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "ei koskaan"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "aina"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "vain jos symbolitaso on alempi"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -2331,7 +2386,7 @@ msgstr "pääte"
 
 #. Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in addition to text; encountered on webpages and NvDA log viewer).
 msgid "rich edit"
-msgstr "muokattava"
+msgstr "muokattava, tukee muotoiluja"
 
 #. Translators: Identifies a ruler object (commonly seen on some webpages and in some Office programs).
 msgid "ruler"
@@ -2728,6 +2783,10 @@ msgstr "rajattu"
 msgid "overflowing"
 msgstr "ylivuoto"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "lukitsematon"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "ei valittu"
@@ -2868,6 +2927,18 @@ msgstr "Syöttö"
 #. Translators: The name of a category of NVDA commands.
 msgid "Document formatting"
 msgstr "Asiakirjojen muotoilu"
+
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "Taustaäänien vaimennusta ei tueta"
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+"Vaihtaa taustaäänien vaimennustilaa, joka määrittää, milloin NVDA alentaa "
+"muiden äänien voimakkuutta."
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -3076,6 +3147,18 @@ msgstr "muokkausten lukeminen käytössä"
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
 msgstr "Ottaa käyttöön muokkausten lukemisen tai poistaa sen käytöstä"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "korostuksen ilmoittaminen pois"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "korostuksen ilmoittaminen käytössä"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "Ottaa käyttöön korostuksen ilmoittamisen tai poistaa sen käytöstä."
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -3981,6 +4064,31 @@ msgstr ""
 "Muuttaa asetusta, joka saa pistenäytön seuraamaan joko kohdistusta tai "
 "tarkastelukohdistinta"
 
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Pistekohdistin pois"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Pistekohdistin käytössä"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Ota pistekohdistin käyttöön tai poista se käytöstä"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "Pistekohdistin on poistettu käytöstä"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "Pistekohdistin %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Vaihda pistekohdistimen muotoa"
+
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
 msgstr "Leikepöydällä ei ole tekstiä"
@@ -4080,6 +4188,10 @@ msgid ""
 "hierarchy"
 msgstr ""
 "Siirtää seuraavaan objektiin objektinavigointihierarkian kokonaisnäkymässä"
+
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "Ei edellistä"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4387,6 +4499,58 @@ msgid "numpad plus"
 msgstr "numeronäppäimistön plus"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "numeronäppäimistön pilkku"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "numeronäppäimistön insert"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "numlock numeronäppäimistön 0"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "numlock numeronäppäimistön 1"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "numlock numeronäppäimistön 2"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "numlock numeronäppäimistön 3"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "numlock numeronäppäimistön 4"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "numlock numeronäppäimistön 5"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "numlock numeronäppäimistön 6"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "numlock numeronäppäimistön 7"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "numlock numeronäppäimistön 8"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "numlock numeronäppäimistön 9"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "insert"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "vasen control"
 
@@ -4547,15 +4711,20 @@ msgstr "ei sisennystä"
 msgid "%d characters"
 msgstr "%d merkkiä"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "valitaan %s"
+msgid "%s selected"
+msgstr "%s valittu"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "ei valita %s"
+msgid "%s unselected"
+msgstr "%s ei valittu"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s valittu sen sijaan"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4650,14 +4819,55 @@ msgstr "{backgroundColor} tausta"
 msgid "line %s"
 msgstr "rivi %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "lisätty"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "ei lisätty"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "poistettu"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "ei poistettu"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
-msgstr "muutettu %s"
+msgstr "muokattu %s"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "ei muutettu"
+#, python-format
+msgid "no revised %s"
+msgstr "ei muokattu %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "merkitty"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "ei merkitty"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "voimakkaasti korostettu"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "ei voimakasta korostusta"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "korostettu"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "ei korostusta"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -6002,7 +6212,7 @@ msgstr "Käytä Caps Lockia  NVDA-näppäimenä"
 #. Translators: The label of a check box in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 msgid "&Automatically start NVDA after I log on to Windows"
-msgstr "Käynnistä NVDA &automaattisesti sisäänkirjautumisen jälkeen"
+msgstr "Käynnistä &automaattisesti sisäänkirjautumisen jälkeen"
 
 #. Translators: This is a label for a checkbox in welcome dialog to show welcome dialog at startup.
 msgid "Show this dialog when NVDA starts"
@@ -6746,6 +6956,10 @@ msgstr "&Syntetisaattori:"
 msgid "Output &device:"
 msgstr "Ääni&laite:"
 
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "Taustaäänien va&imennuksen tila:"
+
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
@@ -7121,6 +7335,11 @@ msgstr "Lue &muokkaajan muokkaukset"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "Ilmoita k&orostus"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "Lue t&yylimääreet"
 
@@ -7295,9 +7514,17 @@ msgstr "S&yöttötaulukko:"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Laajenna kohdistimen kohdalla oleva sana"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "&Show cursor"
+msgstr "&Näytä kohdistin"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "&Kohdistimen vilkkumisnopeus (ms):"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "Kohdistimen m&uoto:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7348,13 +7575,22 @@ msgstr "Symboli"
 msgid "Level"
 msgstr "Taso"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "Säilytä"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "Muuta symbolia"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
-msgstr "&Taso"
+msgstr "T&aso"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "&Lähetä todellinen merkki syntetisaattorille"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7491,28 +7727,43 @@ msgstr "avaa"
 msgid "Desktop"
 msgstr "Työpöytä"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "oletusväri"
 
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "Tuntematon väri"
+
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "Tätä solua ei voi muokata"
+
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr ""
-"Näyttää listan kaavioista sekä kommentteja ja kaavoja sisältävistä soluista"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Näyttää listan tämän laskentataulukon elementeistä."
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
-msgstr "&Kaavio"
+msgid "&Charts"
+msgstr "&Kaaviot"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
-msgstr "K&ommentti"
+msgid "C&omments"
+msgstr "K&ommentit"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "K&aava"
+msgid "Fo&rmulas"
+msgstr "K&aavat"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheets"
+msgstr "&Laskentataulukot"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7578,6 +7829,12 @@ msgstr ""
 "Kerran painaminen määrittää tämän solun ensimmäiseksi riviotsikoksi sen ala- "
 "ja oikealla puolella oleville soluille nykyisellä alueella. Kahdesti "
 "painaminen nollaa solun nykyisen riviotsikon."
+
+msgid "Input Message is {title}: {message}"
+msgstr "Syöttöilmoitus on {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "Syöttöilmoitus on {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -8333,19 +8590,9 @@ msgstr "Tekstikehys"
 msgid "comment: {text} by {author} on {date}"
 msgstr "kommentti: {text}, muokkaaja: {author}, päiväys: {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text}, muokkaaja: {author}, päiväys: {date}"
-
-msgid "unknown author"
-msgstr "tuntematon muokkaaja"
-
-msgid "unknown date"
-msgstr "tuntematon päiväys"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
 msgstr ""
-"Muokkaus: {revisionType}, muokkaaja: {revisionAuthor}, päiväys: "
-"{revisionDate}"
+"{revisionType}, {description}: {text}, muokkaaja: {author}, päiväys: {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8511,12 +8758,42 @@ msgid "&Annotations"
 msgstr "&Selitteet"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS Braille Sense/Braille EDGE"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr ""
+#~ "Näyttää listan kaavioista sekä kommentteja ja kaavoja sisältävistä "
+#~ "soluista"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "oletusväri"
+
+#~ msgid "selecting %s"
+#~ msgstr "valitaan %s"
+
+#~ msgid "unselecting %s"
+#~ msgstr "ei valita %s"
+
+#~ msgid "unrevised"
+#~ msgstr "ei muutettu"
+
+#~ msgid "unknown author"
+#~ msgstr "tuntematon muokkaaja"
+
+#~ msgid "unknown date"
+#~ msgstr "tuntematon päiväys"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr ""
+#~ "Muokkaus: {revisionType}, muokkaaja: {revisionAuthor}, päiväys: "
+#~ "{revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "ilmoittaa objektin, jossa kohdistus on"

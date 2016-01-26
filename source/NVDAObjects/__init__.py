@@ -471,8 +471,11 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		Exactly like parent, however another object at this same sibling level may be retreaved first (e.g. a groupbox). Mostly used when presenting context such as focus ancestry.
 		"""
-		return self.parent
- 
+		# Cache parent.
+		parent = self.parent
+		self.parent = parent
+		return parent
+
 	def _get_next(self):
 		"""Retreaves the object directly after this object with the same parent.
 		@return: the next object if it exists else None.
@@ -774,16 +777,6 @@ Tries to force this object to take the focus.
 		@return: The object from which this object flows, C{None} if none.
 		@rtype: L{NVDAObject}
 		@raise NotImplementedError: If not supported by the underlying object.
-		"""
-		raise NotImplementedError
-
-	def _get_embeddingTextInfo(self):
-		"""Retrieve the parent text range which embeds this object.
-		The returned text range will have its start positioned on the embedded object character associated with this object.
-		That is, calling L{textInfos.TextInfo.getEmbeddedObject}() on the returned text range will return this object.
-		@return: The text range for the embedded object character associated with this object or C{None} if this is not an embedded object.
-		@rtype: L{textInfos.TextInfo}
-		@raise NotImplementedError: If not supported.
 		"""
 		raise NotImplementedError
 

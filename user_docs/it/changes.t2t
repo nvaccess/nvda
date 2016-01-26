@@ -3,6 +3,60 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2015.4 =
+Le principali migliorie presenti in questa versione si concentrano su un notevole incremento delle prestazioni in Windows10; nella possibilità di poter scegliere NVDA nel centro accessibilità a partire da Windows8 in poi; grossi miglioramenti in Microsoft Excel, con la possibilità di elencare e rinominare i fogli ed accedere al contenuto delle celle di sola lettura anche in documenti protetti; inoltre, supporto alla modifica per i campi rich text in Mozilla Firefox, Google Chrome e Mozilla Thunderbird.
+
+== Novità ==
+- NVDA compare nel centro accessibilità a partire da Windows8 in poi. (#308)
+- Se le opzioni di annuncio dei cambiamenti di formattazione sono attive, NVDA è in grado di riportarle quando ci si muove tra le celle in Excel. (#4878)
+- Una nuova opzione chiamata "leggi testo enfatizzato" è stata aggiunta alla finestra delle impostazioni di formattazione documento di NVDA. Per impostazione predefinita, questa opzione consente di segnalare automaticamente l'esistenza di testo enfatizzato nei documenti. Al momento, questo è supportato solo per i tag em e strong per Internet Explorer e altri controlli MSHTML. (#4920)
+- viene ora annunciato se del testo è inserito o cancellato  in modalità navigazione in Internet Explorer e nei controlli MSHTML, se l'opzione Leggi revisioni è attiva nella finestra formattazione documento. (#4920)
+- In Microsoft Word Quando si esaminano le modifiche nell'elenco elementi di NVDA, ora vengono fornite più informazioni, compresi quali cambiamenti alla formattazione sono stati effettuati durante le varie modifiche. (#4920)
+- Microsoft Excel: è ora possibile elencare e rinominare i fogli dall'elenco elementi di NVDA (NVDA+f7). (#4630, #4414)
+- è ora possibile stabilire se il simbolo attuale debba essere inviato al sintetizzatore, magari per ottenere una pausa o per un cambio di inflessione, nella finestra pronuncia punteggiatura/simboli. (#5234)
+- In Microsoft Excel, NVDA ora segnala gli eventuali messaggi di input stabiliti dall'autore del foglio nelle celle. (#5051)
+- Supporto per le barre braille Pronto! v4 e Vario Ultra, prodotte dalla Baum, quando connesse via Bluetooth. (#3717)
+- Supporto per la modifica di campi rich text in app quali Google Docs, quando si utilizza Mozilla Firefox e Mozilla Thunderbird e si utilizza un display braille. (#1668)
+- Supporto per la modifica di campi rich text in app quali Google Docs, quando si utilizza Google Chrome e si usa un display braille. (#2634)
+ - è richiesto Chrome dalla versione 47 in su.
+- In modalità navigazione in Microsoft Excel, è possibile esplorare le celle di sola lettura nei documenti protetti. (#4952)
+
+
+== Cambiamenti ==
+- L'opzione "leggi revisioni" presente nella finestra "formattazione documento" è ora attiva da  impostazioni predefinite. (#4920)
+- Quando ci si sposta per carattere in Microsoft Word e l'opzione annuncia revisioni è attiva, vengono fornite meno informazioni sulle varie modifiche per rendere più agevole la lettura. Per ascoltare ogni singolo dettaglio, servirsi dell'elenco elementi. (#4920)
+- Aggiornato liblouis braille translator a 2.6.4. (#5341)
+- Un gran numero di simboli, inclusi quelli per la matematica di base, sono stati spostati sul livello "qualcosa" di modo che essi vengano letti da impostazioni predefinite. (#3799)
+- Se la sintesi vocale lo supporta, verranno effettuate delle pause in concomitanza di parentesi e del trattino d'unione (–). (#3799)
+- Quando si seleziona del testo, il testo viene annunciato prima della parola "Selezionato". (#1707)
+
+
+== Bug corretti ==
+- Aumento delle prestazioni nella navigazione dell'elenco  messaggi in Outlook 2010/2013. (#5268)
+- In un grafico in Microsoft Excel, la navigazione con alcuni tasti come ctrl+pagina su/giù per cambiare foglio, ora funziona correttamente. (#5336)
+- Sistemato l'aspetto visivo dei pulsanti nella finestra di avviso che viene visualizzata quando si tenta di passare a una versione precedente di NVDA. (#5325)
+- In Windows 8 e versioni successive, NVDA ora si avvia  molto prima, quando configurato per l'avvio dopo l'accesso a Windows. (#308)
+ - Se ciò è stato attivato utilizzando una versione precedente di NVDA, sarà necessario disattivarlo e riattivarlo in modo che la modifica abbia effetto. Seguire questa procedura:
+  + Aprire la finestra di dialogo Impostazioni generali.
+  + Deselezionare la casella di controllo Avvia automaticamente NVDA dopo l'accesso a Windows.
+  + Premere il tasto OK.
+  + Aprire nuovamente la finestra di dialogo Impostazioni generali.
+  + Controllare la casella di controllo Avvia automaticamente NVDA dopo l'accesso a Windows.
+  + Premere il tasto OK.
+- Miglioramenti delle prestazioni per UI Automation, tra cui File Explorer e Task Viewer. (#5293) 
+- NVDA ora passa correttamente alla modalità focus quando si preme tab e ci si sposta in un controllo Aria di una griglia di sola lettura, per Mozilla Firefox e altri controlli Gecko. (#5118)
+- NVDA ora annuncia correttamente l'assenza di oggetti precedenti quando si esegue un flick sul touch screen. 
+- Risolto un problema nell'immissione di più parole nel campo filtro nella finestra gesti di Immissione. (#5426)
+- NVDA non si blocca più in alcuni casi quando connesso ad un display Braille Brailliant via USB. (#5406)
+- Nelle lingue con caratteri congiunti, le descrizioni degli stessi ora funziona correttamente anche con le lettere maiuscole inglesi. (#5375)
+- NVDA non si dovrebbe più bloccare all'apertura del menu avvio in Windows10. (#5417)
+- In Skype Desktop, vengono annunciate correttamente tutte le notifiche, anche quelle che scompaiono in presenza di altre. (#4841)
+- Le notifiche vengono annunciate correttamente anche in Skype 7.12 e successive. (#4841)
+- NVDA ora aggancia correttamente il focus quando si esce da un menu contestuale in alcune applicazioni come Jart. (#5302)
+- In Windows7 e successivi, vengono annunciati correttamente di nuovo i colori in alcune applicazioni come Wordpad.  (#5352)
+- Durante la modifica di una diapositiva in Microsoft Powerpoint, la pressione del tasto invio ora annuncia correttamente alcune tipologie di testo inserito come numeri o elenchi puntati. (#5360)
+
+
 = 2015.3 =
 Le principali migliorie presenti in questa versione si concentrano principalmente nel supporto iniziale a Windows10, nella possibilità di disattivare la navigazione a lettere singole utile in alcune applicazioni web, in una gestione migliorata di Internet Explorer e per finire nella risoluzione di alcuni problemi durante la scrittura in combinazione con i display braille.
 

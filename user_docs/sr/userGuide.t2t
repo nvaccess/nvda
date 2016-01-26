@@ -244,32 +244,32 @@ Kada se meni pojavi, koristite strelice da biste se kretali kroz opcije i Enter 
 ++ Prijavljivanje informacija o sistemu ++
 %kc:beginInclude
 || Ime | Komanda | Opis |
-| Report battery status | NVDA+shift+b | Reports the battery status i.e. whether AC power is in use or the current charge percentage. |
+| Izgovor stanja baterije | NVDA+Shift+B | Izgovara stanje baterije (npr. da li je punjač uključen, preostali procenat baterije). |
 | Izgovor vremena i datuma | NVDA+F12 | Ako se pritisne jednom, biće izgovoreno trenutno vreme. Ako se pritisne dva puta, biće izgovoren trenutni datum. |
 | Izgovor teksta u privremenoj memoriji | NVDA+C | Ako ste kopirali neki tekst u privremenu memoriju, pritiskom ove komande NVDA će izgovoriti taj tekst. |
 %kc:endInclude
 
-+ Navigating with NVDA +
-NVDA allows you to explore and navigate the system in several ways, including both normal interaction and review.
++ Navigacija sa NVDA +
+NVDA omogućava istraživanje i navigaciju kroz sistem na više načina, uključujući normalni režim, interakciju i pregled.
 
-++ Objects ++[Objects]
-Each Application and the operating system itself consist of many objects.
-An object is a single item such as a piece of text, button, checkbox, slider, list or editable text field.
+++ Objekti ++[Objects]
+Sve aplikacije, kao i sam operativni sistem, sastoje se od više objekata.
+Objekat je zasebna celina i to može biti, na primer, deo teksta, dugme, izborno polje, klizač, lista ili tekstualno polje za uređivanje.
 
-++ Navigating with the System Focus ++[SystemFocus]
-The system focus, also known simply as the focus, is the [object #Objects] which receives keys typed on the keyboard.
-For example, if you are typing into an editable text field, the editable text field has the focus.
+++ Navigacija sa sistemskim fokusom ++[SystemFocus]
+Sistemski fokus, takođe poznat i jednostavno kao fokus, jeste [objekat #Objects] koji prima sve što se pritisne na tastaturi.
+Na primer, ako kucate u tekstualnom polju, fokus je na tom polju.
 
-The Most common way of navigating around Windows with NVDA is to simply move the system focus using standard Windows keyboard commands, such as pressing tab and shift+tab to move forward and back between controls, pressing alt to get to the menu bar and then using the arrows to navigate menus, and using alt+tab to move between running applications.
-As you do this, NVDA will report information about the object with focus, such as its name, type, value, state, description, keyboard shortcut and positional information.
+Najčešći način navigacije u operativnom sistemu Windows je jednostavno pomeranje sistemskog fokusa korišćenjem standardnih Windows komandi, kao što su tabulator (tab) i Shift+Tab za pomeranje napred i nazad po kontrolama, korišćenje tastera Alt da bi se došlo do trake sa menijima, a zatim strelicama do željene stavke, ili kombinacija Alt+Tab za kretanje između pokrenutih aplikacija.
+Čim se nešto od navedenog (ili druge slične komande) izvrše, NVDA će izvestiti o fokusiranom objektu, pa ćete tako čuti naziv, tip, vrednost, status, opis, tastersku prečicu i informacije o poziciji.
 
-There are some key commands that are useful when moving with the System focus:
+Ima nekoliko komandi koje su jako korisne za pomeranje sistemskog fokusa:
 %kc:beginInclude
-|| Name | Desktop key | Laptop key | Description |
-| Report current focus | NVDA+tab | NVDA+tab | announces the current object or control that has the System focus. Pressing twice will spell the information |
-| Report title | NVDA+t | NVDA+t | Reports the title of the currently active window. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
-| Read active window | NVDA+b | NVDA+b | reads all the controls in the currently active window (useful for dialogs) |
-| Report Status Bar | NVDA+end | NVDA+shift+end | Reports the Status Bar if NVDA finds one. It also moves the navigator object to this location |
+|| Naziv | Desktop komanda | Laptop komanda | Opis |
+| Izgovori trenutni fokus | NVDA+Tab | NVDA+Tab | Izgovara trenutni objekat ili kontrolu na kojoj se nalazi sistemski fokus. Ako pritisnete dva puta, biće izgovoreno slovo po slovo. |
+| Izgovori naslov | NVDA+T | NVDA+T | Izgovara naslov trenutno aktivnog prozora. Ako pritisnete dva puta, biće izgovoreno slovo po slovo. Ako pritisnete tri puta, naslov će biti kopiran u privremenu memoriju. |
+| Izgovori trenutni prozor | NVDA+B | NVDA+B | Izgovara sve kontrole u trenutno aktivnom prozoru (korisno za dijaloge). |
+| Izgovori statusnu traku | NVDA+End | NVDA+Shift+End | Izgovara statusnu traku, ako je NVDA prepozna. Ovo takođe pomera fokus na tu lokaciju. Ako se pritisne dva puta, informacije će biti izgovorene slovo po slovo. |
 %kc:endInclude
 
 ++ Navigating with the System Caret ++[SystemCaret]
@@ -285,6 +285,8 @@ NVDA provides the following key commands in relation to the system caret:
 | Say all | NVDA+downArrow | NVDA+a | Starts reading from the current position of the system caret, moving it along as it goes |
 | Read current line | NVDA+upArrow | NVDA+l | Reads the line where the system caret is currently situated. Pressing twice spells the line. |
 | Read current text selection | NVDA+Shift+upArrow | NVDA+shift+s | Reads any currently selected text |
+| Next sentence | alt+downArrow | alt+downArrow | Moves the caret to the next sentence and announces it. (only supported in Microsoft Word and Outlook) |
+| Previous sentence | alt+upArrow | alt+upArrow | Moves the caret to the previous sentence and announces it. (only supported in Microsoft Word and Outlook) |
 
 
 When within a table, the following key commands are also available:
@@ -440,7 +442,7 @@ Although a physical mouse or trackpad should be used to navigate with the mouse,
 
 + Browse Mode +
 Complex read-only documents such as web pages are browsed in NVDA using browse mode.
-This includes documents in Mozilla Firefox, Microsoft Internet Explorer, HTML messages in Microsoft Outlook, Google Chrome, Adobe Reader and Adobe Flash.
+This includes documents in Mozilla Firefox, Microsoft Internet Explorer, Mozilla Thunderbird, HTML messages in Microsoft Outlook, Google Chrome, Adobe Reader and Adobe Flash.
 Browse mode is also optionally available for Microsoft Word documents.
 
 In browse mode, the content of the document is made available in a flat representation that can be navigated with the cursor keys as if it were a normal text document.
@@ -495,21 +497,29 @@ The following keys by themselves jump to the next available element, while addin
 - d: landmark
 - o: embedded object
 - 1 to 6: headings at levels 1 to 6 respectively
+- a: annotation (comment, editor revision, etc.)
 -
 To move to the beginning or end of containing elements such as lists and tables:
 || Name | Key | Description |
 | Move to start of container | shift+comma | Moves to the start of the container (list, table, etc.) where the caret is positioned |
 | Move past end of container | comma | Moves past the end of the container (list, table, etc.) where the caret is positioned |
+
+%kc:endInclude
+Some web applications such as Gmail, Twitter and Facebook use single letters as shortcut keys.
+If you want to use these while still being able to use your cursor keys to read in browse mode, you can temporarily disable NVDA's single letter navigation keys.
+%kc:beginInclude
+To toggle single letter navigation on and off for the current document, press NVDA+shift+space.
 %kc:endInclude
 
 ++ The Elements List ++
-The elements list provides access to a list of either links, headings or landmarks in the document.
-Radio buttons allow you to switch between these three types of information.
+The elements list provides access to a list of various types of elements in the document as appropriate for the application.
+For example, in web browsers, the elements list can list links, headings or landmarks.
+Radio buttons allow you to switch between the different types of elements.
 An edit field is also provided in the dialog which allows you to filter the list to help you search for a particular item on the page.
 Once you have chosen an item, you can use the provided buttons in the dialog to move to or activate that item.
 %kc:beginInclude
 || Name | Key | Description |
-| Browse mode elements list | NVDA+f7 | Brings up the Elements list which contains links, headings and landmarks from the current document |
+| Browse mode elements list | NVDA+f7 | Lists various types of elements in the current document |
 %kc:endInclude
 
 ++ Embedded Objects ++
@@ -522,6 +532,42 @@ A key command is provided to return to the original page containing the embedded
 || Name | Key | Description |
 | Move to containing browse mode document | NVDA+control+space | Moves the focus out of the current embedded object and into the document that contains it |
 %kc:endInclude
+
++ Reading Mathematical Content +
+Using MathPlayer 4 from Design Science, NVDA can read and interactively navigate supported mathematical content.
+This requires that MathPlayer 4 is installed on the computer.
+MathPlayer is available as a free download from: http://www.dessci.com/en/products/mathplayer/
+
+NVDA supports the following types of mathematical content:
+- MathML in Mozilla Firefox and Microsoft Internet Explorer.
+- Design Science MathType in Microsoft Word and PowerPoint.
+- MathML in Adobe Reader. Note that this is not an official standard yet, so there is currently no publicly available software that can produce this content.
+-
+
+When reading a document, NVDA will speak any supported mathematical content where it occurs.
+If you are using a braille display, it will also be displayed in braille.
+
+++ Interactive Navigation ++
+If you are working primarily with speech, in most cases, you will probably wish to examine the expression in smaller segments, rather than hearing the entire expression at once.
+
+If you are in browse mode, you can do this by moving the cursor to the mathematical content and pressing enter.
+
+If you are not in browse mode:
++ move the review cursor to the mathematical content.
+By default, the review cursor follows the system caret, so you can usually use the system caret to move to the desired content.
++ Then, activate the following command:
++
+
+%kc:beginInclude
+|| Name | Key | Description |
+| Interact with math content | NVDA+alt+m | Begins interaction with math content. |
+%kc:endInclude
+
+At this point, you can use MathPlayer commands such as the arrow keys to explore the expression.
+For example, you can move through the expression with the left and right arrow keys and zoom into a portion of the expression such as a fraction using the down arrow key.
+Please see the MathPlayer documentation for further information.
+
+When you wish to return to the document, simply press the escape key.
 
 + Application Specific NVDA Commands +
 NVDA provides its own extra commands for some applications to make certain tasks easier or to provide access to functionality which is not otherwise accessible to screen reader users.
@@ -540,6 +586,7 @@ NVDA provides its own extra commands for some applications to make certain tasks
 | Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. | 
 | Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. | 
 | Report comment | NVDA+alt+c | Reports the comment on the current cell if any. |
+| Elements List dialog | NVDA+f7 | opens the Elements List dialog showing charts, cells with comments, or cells with formulas. |
 %kc:endInclude
 
 ++ Microsoft PowerPoint ++
@@ -584,6 +631,9 @@ Most NVDA settings can be changed using dialog boxes accessed through the Prefer
 In all NVDA settings dialog boxes, press the OK button to accept any changes you have made.
 To cancel any changes, press the Cancel button or the escape key.
 Some settings can also be changed using shortcut keys, which are listed where relevant in the sections below.
+
+Note that by default, not all preferences dialogs can be accessed with input gestures (keyboard commands, touch gestures, etc.).
+If you wish to access dialogs which don't have dedicated shortcut keys, use the [Input Gestures dialog #InputGestures] to add custom gesture for that dialog.
 
 +++ General Settings (NVDA+control+g) +++
 The General settings dialog box is found in the Preferences menu.
@@ -794,6 +844,18 @@ This means that you do not have to scroll the display at the end of each line ev
 This may allow for more fluent reading of large amounts of text.
 It is disabled by default.
 
+==== Avoid splitting words when possible ====
+If this is enabled, a word which is too large to fit at the end of the braille display will not be split.
+Instead, there will be some blank space at the end of the display.
+When you scroll the display, you will be able to read the entire word.
+This is sometimes called "word wrap".
+Note that if the word is too large to fit on the display even by itself, the word must still be split.
+
+If this is disabled, as much of the word as possible will be displayed, but the rest will be cut off.
+When you scroll the display, you will then be able to read the rest of the word.
+
+Enabling this may allow for more fluent reading, but generally requires you to scroll the display more.
+
 +++ Keyboard Settings (NVDA+control+k) +++
 This dialog box is found in the Preferences menu, under "Keyboard settings...".
 It contains the following options:
@@ -869,7 +931,7 @@ If NVDA is set to announce the text under the mouse as you move it, this option 
 The options are character, word, line and paragraph.
 
 ==== Report role when mouse enters object ====
-If this checkbox is checked, NVDA will announce the role (type) of object as the mouse moves in side it.
+If this checkbox is checked, NVDA will announce the role (type) of object as the mouse moves inside it.
 
 ==== Play audio coordinates when mouse moves ====
 Checking this checkbox makes NVDA play beeps as the mouse moves, so that the user can work out where the mouse is in regards to the dimensions of the screen.
@@ -1042,6 +1104,7 @@ You can configure reporting of:
 - Text alignment
 - Colors
 - editor revisions
+- Emphasis
 - Text style
 - Spelling errors
 - Page numbers
@@ -1057,7 +1120,10 @@ You can configure reporting of:
 - Block quotes
 - Landmarks
 - Frames
+- When something is clickable
 -
+
+To toggle these settings from anywhere, please assign custom gestures using the [Input Gestures dialog #InputGestures].
 
 ==== Announce formatting changes after the cursor ====
 If enabled, this setting tells NVDA to try and detect all the formatting changes on a line as it speaks it, even if doing this may slow down NVDA's performance.
@@ -1074,6 +1140,8 @@ They are:
 - Voice: rules in this dictionary affect speech for the synthesizer voice currently being used.
 - Temporary: rules in this dictionary affect all speech in NVDA, but only for the current session. These rules are temporary and will be lost if NVDA is restarted.
 -
+
+You need to assign custom gestures using the [Input Gestures dialog #InputGestures] if you wish to open any of these dictionary dialogs from anywhere.
 
 All dictionary dialogs contain a list of rules which will be used for processing the speech.
 The dialog also contains Add, Edit and Remove buttons.
@@ -1101,6 +1169,9 @@ Regular expressions are not covered in this user guide, but there are many tutor
 +++ Punctuation/symbol pronunciation +++[SymbolPronunciation]
 This dialog allows you to change the way punctuation and other symbols are pronounced, as well as the symbol level at which they are spoken.
 
+The language for which symbol pronunciation is being edited will be shown in the dialog's title.
+Note that this dialog respects the "Trust voice's language for processing symbols and characters" option found in the [Voice Settings dialog #VoiceSettings]; i.e. it uses the voice language rather than the NVDA global language setting when this option is enabled.
+
 To change a symbol, first select it in the Symbols list.
 The Replacement field allows you to change the text that should be spoken in place of this symbol.
 Using the Level field, you can adjust the lowest symbol level at which this symbol should be spoken.
@@ -1113,7 +1184,7 @@ You can remove a symbol you previously added by pressing the Remove button.
 
 When you are finished, press the OK button to save your changes or the Cancel button to discard them.
 
-+++ Input Gestures +++
++++ Input Gestures +++[InputGestures]
 In this dialog, you can customize the input gestures (keys on the keyboard, buttons on a braille display, etc.) for NVDA commands.
 
 Only commands that are applicable immediately before the dialog is opened are shown.
@@ -1249,6 +1320,8 @@ Uncheck the menu item to disable it.
 While the speech viewer is enabled, it constantly updates to show you the most current text being spoken.
 However, if you click or focus inside the viewer, NVDA will temporarily stop updating the text, so that you are able to easily select or copy the existing content.
 
+To toggle the speech viewer from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
+
 ++ Add-ons Manager ++
 The Add-ons Manager, accessed by selecting Manage add-ons under Tools in the NVDA menu, allows you to install and uninstall add-on packages for NVDA.
 These packages are provided by the community and contain custom code that may add or change features in NVDA or even provide support for extra Braille displays or speech synthesizers.
@@ -1282,6 +1355,8 @@ If you have installed or removed add-ons, NVDA will first ask you if you wish to
 In the past it has been possible to extend NVDA's functionality by copying individual plugins and drivers in to your NVDA user Configuration directory.
 Although this version of NVDA  may still   load them, they will not be shown in the Add-on Manager.
 It is best to remove these files from your configuration and install  the appropriate add-on if one is available.
+
+To access the Add-ons Manager from anywhere, please assign a custom gesture using the [Input Gestures dialog #InputGestures].
 
 ++ Python Console ++
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
@@ -1350,7 +1425,7 @@ This section contains information about the Braille displays supported by NVDA.
 ++ Freedom Scientific Focus/PAC Mate Series ++
 All Focus and PAC Mate displays from [Freedom Scientific http://www.freedomscientific.com/] are supported when connected via USB or bluetooth.
 You will need the Freedom Scientific braille display drivers installed on your system.
-If you do not have them already, you can obtain them from http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
+If you do not have them already, you can obtain them from http://www2.freedomscientific.com/downloads/focus-40-blue/focus-40-14-blue-downloads.asp.
 Although this page only mentions the Focus Blue display, the drivers support all Freedom Scientific Focus and Pacmate displays.
 If your system is running 64 bit Windows and the drivers were already installed by another screen reader, you will probably still need to install the drivers from this link, as the files required by NVDA were probably not installed by the other screen reader.
 
@@ -1688,10 +1763,9 @@ The following Braille displays are supported:
 -
 
 If BrxCom is installed, NVDA will use BrxCom.
-BrxCom is a tool that allows you to use the Braille input independently from a screen reader.
+BrxCom is a tool that allows keyboard input from the braille display to function independently from a screen reader.
 A new version of BrxCom which works with NVDA will be released by Papenmeier soon.
-Braille input is possible with the Trio, BRAILLEX Live 20 and Braillex Live devices without BrxCom.
-Braille input is also possible with the Live Plus model, but with BrxCom only.
+Keyboard input is possible with the Trio and BRAILLEX Live models.
 
 Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
 The EAB can be moved in four directions where generally each direction has two switches.
@@ -1728,6 +1802,7 @@ Following are the Papenmeier command assignments for NVDA:
 | Route to braille cell | routing |
 | Report current character in review | l1 |
 | Activate current navigator object | l2 |
+| Toggle braille tethered to | r2 |
 | Report title | l1+up |
 | Report Status Bar | l2+down |
 | Move to containing object | up2 |
@@ -1826,6 +1901,8 @@ BRAILLEX Tiny:
 | Move to previous object | r1+left |
 | Move to next object | r1+right |
 | Report text formatting | reportf |
+| Report title | l1+up |
+| Report status bar | l2+down |
 
 BRAILLEX 2D Screen:
 || Name | Key |
@@ -1889,6 +1966,41 @@ Please check your BrailleNote's documentation to find where these keys are locat
 | Windows key | space+dot2+dot4+dot5+dot6 (space+w) |
 | Alt key | space+dot1+dot3+dot4 (space+m) |
 | Toggle input help | space+dot2+dot3+dot6 (space+lower h) |
+%kc:endInclude
+
+++ EcoBraille ++
+NVDA supports EcoBraille displays from [ONCE http://www.once.es/].
+The following models are supported:
+- EcoBraille 20
+- EcoBraille 40
+- EcoBraille 80
+- EcoBraille Plus
+-
+
+In NVDA, you can set the serial port to which the display is connected in the Braille Settings dialog.
+
+Following are the key assignments for EcoBraille displays.
+Please see the [EcoBraille documentation ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] for descriptions of where these keys can be found.
+
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | T2 |
+| Scroll braille display forward | T4 |
+| Move braille display to previous line | T1 |
+| Move braille display to next line | T5 |
+| Route to braille cell | Routing |
+| Activate current navigator object | T3 |
+| Switch to next review mode | F1 |
+| Move to containing object | F2 |
+| Switch to previous review mode | F3 |
+| Move to previous object | F4 |
+| Report current object | F5 |
+| Move to next object | F6 |
+| Move to focus object | F7 |
+| Move to first contained object | F8 |
+| Move System focus or caret to current review position | F9 |
+| Report review cursor location | F0 |
+| Toggle braille tethered to | A |
 %kc:endInclude
 
 ++ BRLTTY ++

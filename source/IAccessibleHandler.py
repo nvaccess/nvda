@@ -481,7 +481,7 @@ winUser.EVENT_OBJECT_DESTROY:"destroy",
 winUser.EVENT_OBJECT_DESCRIPTIONCHANGE:"descriptionChange",
 winUser.EVENT_OBJECT_LOCATIONCHANGE:"locationChange",
 winUser.EVENT_OBJECT_NAMECHANGE:"nameChange",
-#winUser.EVENT_OBJECT_REORDER:"reorder",
+winUser.EVENT_OBJECT_REORDER:"reorder",
 winUser.EVENT_OBJECT_SELECTION:"selection",
 winUser.EVENT_OBJECT_SELECTIONADD:"selectionAdd",
 winUser.EVENT_OBJECT_SELECTIONREMOVE:"selectionRemove",
@@ -779,7 +779,7 @@ def processDestroyWinEvent(window,objectID,childID):
 	focus=api.getFocusObject()
 	from NVDAObjects.IAccessible.mscandui import BaseCandidateItem
 	if objectID==0 and childID==0 and isinstance(focus,BaseCandidateItem) and window==focus.windowHandle and not eventHandler.isPendingEvents("gainFocus"):
-		obj=focus.parent
+		obj=focus.container
 		if obj:
 			eventHandler.queueEvent("gainFocus",obj)
 

@@ -7,27 +7,28 @@
 
 import time
 from collections import OrderedDict
-import wx
-import serial
+from cStringIO import StringIO
 import hwPortUtils
 import braille
 import inputCore
 from logHandler import log
 import brailleInput
+import hwIo
 
 TIMEOUT = 0.2
 BAUD_RATE = 19200
-READ_INTERVAL = 50
 
 ESCAPE = "\x1b"
 
 BAUM_DISPLAY_DATA = "\x01"
 BAUM_CELL_COUNT = "\x01"
+BAUM_REQUEST_INFO = "\x02"
 BAUM_PROTOCOL_ONOFF = "\x15"
 BAUM_COMMUNICATION_CHANNEL = "\x16"
 BAUM_POWERDOWN = "\x17"
 BAUM_ROUTING_KEYS = "\x22"
 BAUM_DISPLAY_KEYS = "\x24"
+BAUM_ROUTING_KEY = "\x27"
 BAUM_BRAILLE_KEYS = "\x33"
 BAUM_JOYSTICK_KEYS = "\x34"
 BAUM_DEVICE_ID = "\x84"
@@ -38,6 +39,7 @@ BAUM_RSP_LENGTHS = {
 	BAUM_POWERDOWN: 1,
 	BAUM_COMMUNICATION_CHANNEL: 1,
 	BAUM_DISPLAY_KEYS: 1,
+	BAUM_ROUTING_KEY: 1,
 	BAUM_BRAILLE_KEYS: 2,
 	BAUM_JOYSTICK_KEYS: 1,
 	BAUM_DEVICE_ID: 16,
@@ -46,13 +48,14 @@ BAUM_RSP_LENGTHS = {
 
 KEY_NAMES = {
 	BAUM_ROUTING_KEYS: None,
+	BAUM_ROUTING_KEY: None,
 	BAUM_DISPLAY_KEYS: ("d1", "d2", "d3", "d4", "d5", "d6"),
 	BAUM_BRAILLE_KEYS: ("b9", "b10", "b11", None, "c1", "c2", "c3", "c4", # byte 1
 		"b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8"), # byte 2
 	BAUM_JOYSTICK_KEYS: ("up", "left", "down", "right", "select"),
 }
 
-USB_IDS = frozenset((
+USB_IDS_SER = {
 	"VID_0403&PID_FE70", # Vario 40
 	"VID_0403&PID_FE71", # PocketVario
 	"VID_0403&PID_FE72", # SuperVario/Brailliant 40
@@ -73,7 +76,18 @@ USB_IDS = frozenset((
 	"VID_0904&PID_2015", # EcoVario 64
 	"VID_0904&PID_2016", # EcoVario 80
 	"VID_0904&PID_3000", # RefreshaBraille 18
-))
+}
+
+USB_IDS_HID = {
+	"VID_0904&PID_3001", # RefreshaBraille 18
+	"VID_0904&PID_6101", # VarioUltra 20
+	"VID_0904&PID_6103", # VarioUltra 32
+	"VID_0904&PID_6102", # VarioUltra 40
+	"VID_0904&PID_4004", # Pronto! 18 V3
+	"VID_0904&PID_4005", # Pronto! 40 V3
+	"VID_0904&PID_4007", # Pronto! 18 V4
+	"VID_0904&PID_4008", # Pronto! 40 V4
+}
 
 BLUETOOTH_NAMES = (
 	"Baum SuperVario",
@@ -83,12 +97,15 @@ BLUETOOTH_NAMES = (
 	"Refreshabraille",
 	"VarioConnect",
 	"BrailleConnect",
+	"Pronto!",
+	"VarioUltra",
 )
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "baum"
 	# Translators: Names of braille displays.
 	description = _("Baum/HumanWare/APH braille displays")
+	isThreadSafe = True
 
 	@classmethod
 	def check(cls):
@@ -110,18 +127,21 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def _getAutoPorts(cls, comPorts):
+		for portInfo in hwPortUtils.listHidDevices():
+			if portInfo.get("usbID") in USB_IDS_HID:
+				yield portInfo["devicePath"], "USB HID"
 		# Try bluetooth ports last.
 		for portInfo in sorted(comPorts, key=lambda item: "bluetoothName" in item):
 			port = portInfo["port"]
 			hwID = portInfo["hardwareID"]
 			if hwID.startswith(r"FTDIBUS\COMPORT"):
 				# USB.
-				portType = "USB"
+				portType = "USB serial"
 				try:
 					usbID = hwID.split("&", 1)[1]
 				except IndexError:
 					continue
-				if usbID not in USB_IDS:
+				if usbID not in USB_IDS_SER:
 					continue
 			elif "bluetoothName" in portInfo:
 				# Bluetooth.
@@ -145,92 +165,90 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		for port, portType in tryPorts:
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
+			self.isHid = portType == "USB HID"
 			try:
-				self._ser = serial.Serial(port, baudrate=BAUD_RATE, timeout=TIMEOUT, writeTimeout=TIMEOUT)
-			except serial.SerialException:
+				if self.isHid:
+					self._dev = hwIo.Hid(port, onReceive=self._onReceive)
+				else:
+					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._onReceive)
+			except EnvironmentError:
 				continue
-			# This will cause the number of cells to be returned.
-			self._sendRequest(BAUM_DISPLAY_DATA)
-			# Send again in case the display misses the first one.
-			self._sendRequest(BAUM_DISPLAY_DATA)
-			# We just sent less bytes than we should,
-			# so we need to send another request in order for the display to know the previous request is finished.
-			self._sendRequest(BAUM_DEVICE_ID)
-			self._handleResponses(wait=True)
+			if self.isHid:
+				# Some displays don't support BAUM_PROTOCOL_ONOFF.
+				self._sendRequest(BAUM_REQUEST_INFO, 0)
+			else:
+				# If the protocol is already on, sending protocol on won't return anything.
+				# First ensure it's off.
+				self._sendRequest(BAUM_PROTOCOL_ONOFF, False)
+				# This will cause the device id, serial number and number of cells to be returned.
+				self._sendRequest(BAUM_PROTOCOL_ONOFF, True)
+				# Send again in case the display misses the first one.
+				self._sendRequest(BAUM_PROTOCOL_ONOFF, True)
+			for i in xrange(3):
+				# An expected response hasn't arrived yet, so wait for it.
+				self._dev.waitForRead(TIMEOUT)
+				if self.numCells and self._deviceID:
+					break
 			if self.numCells:
 				# A display responded.
-				if not self._deviceID:
-					# Bah. The response to our device ID query hasn't arrived yet, so wait for it.
-					self._handleResponses(wait=True)
 				log.info("Found {device} connected via {type} ({port})".format(
 					device=self._deviceID, type=portType, port=port))
 				break
+			self._dev.close()
 
 		else:
 			raise RuntimeError("No Baum display found")
 
-		self._readTimer = wx.PyTimer(self._handleResponses)
-		self._readTimer.Start(READ_INTERVAL)
 		self._keysDown = {}
 		self._ignoreKeyReleases = False
 
 	def terminate(self):
 		try:
 			super(BrailleDisplayDriver, self).terminate()
-			self._readTimer.Stop()
-			self._readTimer = None
-			self._sendRequest(BAUM_PROTOCOL_ONOFF, False)
+			try:
+				self._sendRequest(BAUM_PROTOCOL_ONOFF, False)
+			except EnvironmentError:
+				# Some displays don't support BAUM_PROTOCOL_ONOFF.
+				pass
 		finally:
-			# We absolutely must close the Serial object, as it does not have a destructor.
-			# If we don't, we won't be able to re-open it later.
-			self._ser.close()
+			# Make sure the device gets closed.
+			# If it doesn't, we may not be able to re-open it later.
+			self._dev.close()
 
 	def _sendRequest(self, command, arg=""):
 		if isinstance(arg, (int, bool)):
 			arg = chr(arg)
-		self._ser.write("\x1b{command}{arg}".format(command=command,
-			arg=arg.replace(ESCAPE, ESCAPE * 2)))
+		if self.isHid:
+			self._dev.write(command + arg)
+		else:
+			self._dev.write("\x1b{command}{arg}".format(command=command,
+				arg=arg.replace(ESCAPE, ESCAPE * 2)))
 
-	def _handleResponses(self, wait=False):
-		while wait or self._ser.inWaiting():
-			command, arg = self._readPacket()
-			if command:
-				self._handleResponse(command, arg)
-			wait = False
-
-	def _readPacket(self):
-		# Find the escape.
-		chars = []
-		escapeFound = False
-		while True:
-			char = self._ser.read(1)
-			if char == ESCAPE:
-				escapeFound = True
-				break
-			else:
-				chars.append(char)
-			if not self._ser.inWaiting():
-				break
-		if chars:
-			log.debugWarning("Ignoring data before escape: %r" % "".join(chars))
-		if not escapeFound:
-			return None, None
-
-		command = self._ser.read(1)
+	def _onReceive(self, data):
+		if self.isHid:
+			# data contains the entire packet.
+			stream = StringIO(data)
+		else:
+			if data != ESCAPE:
+				log.debugWarning("Ignoring byte before escape: %r" % data)
+				return
+			# data only contained the escape. Read the rest from the device.
+			stream = self._dev
+		command = stream.read(1)
 		length = BAUM_RSP_LENGTHS.get(command, 0)
 		if command == BAUM_ROUTING_KEYS:
 			length = 10 if self.numCells > 40 else 5
-		arg = self._ser.read(length)
-		return command, arg
+		arg = stream.read(length)
+		if command == BAUM_DEVICE_ID and arg == "Refreshabraille ":
+			# For most Baum devices, the argument is 16 bytes,
+			# but it is 18 bytes for the Refreshabraille.
+			arg += stream.read(2)
+		self._handleResponse(command, arg)
 
 	def _handleResponse(self, command, arg):
 		if command == BAUM_CELL_COUNT:
 			self.numCells = ord(arg)
 		elif command == BAUM_DEVICE_ID:
-			if arg == "Refreshabraille ":
-				# For most Baum devices, the argument is 16 bytes,
-				# but it is 18 bytes for the Refreshabraille.
-				arg += self._ser.read(2)
 			# Short ids can be padded with either nulls or spaces.
 			self._deviceID = arg.rstrip("\0 ")
 		elif command in KEY_NAMES:
@@ -305,6 +323,9 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 						self.routingIndex = index
 						names.add("routing")
 						break
+			elif group == BAUM_ROUTING_KEY:
+				self.routingIndex = groupKeysDown - 1
+				names.add("routing")
 			else:
 				for index, name in enumerate(KEY_NAMES[group]):
 					if groupKeysDown & (1 << index):

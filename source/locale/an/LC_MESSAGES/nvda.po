@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 19:09+1000\n"
+"POT-Creation-Date: 2015-12-21 19:08+1000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jorge Pérez Pérez <jorgtum@gmail.com>\n"
 "Language-Team: Softaragonés\n"
@@ -11,7 +11,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8\n"
+"X-Generator: Poedit 1.8.5\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 msgid "Secure Desktop"
@@ -400,6 +400,11 @@ msgstr "Manipuri grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "Mongol"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "Maratí grau 1"
 
@@ -447,6 +452,11 @@ msgstr "Nepalí grau 1"
 #. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "Oriya grau 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "Braille polaco computerizau de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -653,6 +663,18 @@ msgstr "clc"
 msgid "( )"
 msgstr "( )"
 
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "Puntos 7 y 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "Punto 8"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "Totz os puntos"
+
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
 #, python-format
@@ -756,7 +778,7 @@ msgstr "No ye suportau en iste documento"
 
 #. Translators: the description for the Elements List command in browse mode.
 msgid "Lists various types of elements in this document"
-msgstr "Lista qualques menas de elementos en iste documento"
+msgstr "Lista qualques menas d'elementos en iste documento"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
 msgid "activates the current object in the document"
@@ -1297,6 +1319,24 @@ msgstr "toda"
 msgctxt "symbolLevel"
 msgid "character"
 msgstr "caracter"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "nunca"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "siempre"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "nomás por baixo d'o libel d'os simbol'os"
 
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
@@ -2728,6 +2768,10 @@ msgstr "retallau"
 msgid "overflowing"
 msgstr "esvolastriando"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "desbloquiau"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "no trigau"
@@ -3076,6 +3120,18 @@ msgstr "Anunciar as revisions enchegau"
 msgid "Toggles on and off the reporting of revisions"
 msgstr "Enchega y desenchega l'anunciau d'as revisions"
 
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "anunciar o enfasi desenchegau"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "anunciar o enfasi enchegau"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "Enchega y desenchega l'anunciau d'o enfasi"
+
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
 msgstr "Anunciar as colors desenchegau"
@@ -3138,7 +3194,7 @@ msgstr "Enchega y desenchega l'anunciau d'as pachinas"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers off"
-msgstr "Anunciar os numeros de linia desenchegau"
+msgstr "Anunciar os numers de linia desenchegau"
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 msgid "report line numbers on"
@@ -3984,6 +4040,31 @@ msgstr ""
 "Activar u desactivar o seguimiento de braille entre o foco y a posición de "
 "revisión"
 
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "Cursor braille desenchegau"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "Cursor braille enchegau"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "Enchega y desenchega o cursor braille"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "O cursor braille ye desenchegau"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "Cursor braille %s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "Ciclo por as formas d'o cursor braille"
+
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
 msgstr "No bi ha texto en o portafuellas"
@@ -4084,6 +4165,10 @@ msgid ""
 msgstr ""
 "Se'n mueve t'o siguient obchecto en una anvista plana d'a hierarquía de "
 "navegación d'obchectos"
+
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "no bi ha anterior"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
@@ -4392,6 +4477,58 @@ msgid "numpad plus"
 msgstr "mas d'o teclau numerico"
 
 #. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "decimal d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "insert d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "Bloqueyo numerico + 0 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "Bloqueyo numerico + 1 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "Bloqueyo numerico + 2 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "Bloqueyo numerico + 3 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "Bloqueyo numerico + 4 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "Bloqueyo numerico + 5 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "Bloqueyo numerico + 6 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "Bloqueyo numerico + 7 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "Bloqueyo numerico + 8 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "Bloqueyo numerico + 9 d'o teclau numerico"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "insert"
+
+#. Translators: This is the name of a key on the keyboard.
 msgid "left control"
 msgstr "Control cucha"
 
@@ -4552,15 +4689,20 @@ msgstr "no bi ha garra sangría"
 msgid "%d characters"
 msgstr "%d caracters"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "Seleccionando %s"
+msgid "%s selected"
+msgstr "%s seleccionau"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "deseleccionando %s"
+msgid "%s unselected"
+msgstr "%s deseleccionau"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s seleccionau en cuenta"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4655,14 +4797,55 @@ msgstr "{backgroundColor} de fondo"
 msgid "line %s"
 msgstr "linia %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "ficau"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "sin ficar"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "borrau"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "sin borrar"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "revisau %s"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "sin revisar"
+#, python-format
+msgid "no revised %s"
+msgstr "sin revisar %s"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "marcau"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "sin marcar"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "remarcau"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "sin remarcar"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "enfatizau"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "sin enfatizar"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -7142,6 +7325,11 @@ msgstr "Anunciar as revisions de l'&editor"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "Anunciar o e&nfasi"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "Anunciar o &estilo"
 
@@ -7316,9 +7504,17 @@ msgstr "Tabla de &dentrada"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Expandir ta braille computerizau t'a parola en o cursor"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "&Show cursor"
+msgstr "Amo&strar o cursor"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "Velocidat d'o parpadeyo d'o cursor (en MS)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "&Forma d'o cursor:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7369,6 +7565,11 @@ msgstr "Simbolo"
 msgid "Level"
 msgstr "Libel"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "preservar"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "Cambiar o simbolo"
@@ -7376,6 +7577,10 @@ msgstr "Cambiar o simbolo"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "&Libel"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "Ninviar o &simbolo real t'o sintetizador"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7512,28 +7717,43 @@ msgstr "invocar"
 msgid "Desktop"
 msgstr "Escritorio"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "color predeterminada"
 
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "Color desconoixida"
+
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "Ista celda no ye editable"
+
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr ""
-"Presienta una lista de graficos, celdas con comentarios y celdas con formulas"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Lista qualques menas d'elementos en ista fuella de calculo"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
-msgstr "Grafi&co"
+msgid "&Charts"
+msgstr "Grafi&cos"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
-msgstr "C&omentario"
+msgid "C&omments"
+msgstr "C&omentarios"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "&Formula"
+msgid "Fo&rmulas"
+msgstr "Fo&rmulas"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheets"
+msgstr "&Fuellas"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7599,6 +7819,12 @@ msgstr ""
 "Pretar-ne una vegada establirá ista celda como o primer capitero de ringlera "
 "ta cualsiquier celda abaixo y ta la dreita d'ella adintro d'ista rechión. "
 "Pretar-ne dos vegadas ixublidará o capitero de ringlera actual ta ista celda."
+
+msgid "Input Message is {title}: {message}"
+msgstr "O mensache de dentrada ye {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "O mensache de dentrada ye {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -8356,17 +8582,8 @@ msgstr "Bastida de texto"
 msgid "comment: {text} by {author} on {date}"
 msgstr "comentario: {text} por {author} a {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} por {author} a {date}"
-
-msgid "unknown author"
-msgstr "autor desconoixiu"
-
-msgid "unknown date"
-msgstr "calendata desconoixida"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} por {revisionAuthor} en {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text} por {author} el {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8546,6 +8763,34 @@ msgstr "Serie d'a HIMS Braille Sense/Braille EDGE"
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr ""
+#~ "Presienta una lista de graficos, celdas con comentarios y celdas con "
+#~ "formulas"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "color predeterminada"
+
+#~ msgid "selecting %s"
+#~ msgstr "Seleccionando %s"
+
+#~ msgid "unselecting %s"
+#~ msgstr "deseleccionando %s"
+
+#~ msgid "unrevised"
+#~ msgstr "sin revisar"
+
+#~ msgid "unknown author"
+#~ msgstr "autor desconoixiu"
+
+#~ msgid "unknown date"
+#~ msgstr "calendata desconoixida"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType} por {revisionAuthor} en {revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "anuncia l'obchecto con o foco"

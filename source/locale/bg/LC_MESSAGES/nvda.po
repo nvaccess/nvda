@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5822\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 19:09+1000\n"
-"PO-Revision-Date: 2015-08-28 09:57+0200\n"
+"POT-Creation-Date: 2015-11-25 19:10+1000\n"
+"PO-Revision-Date: 2015-11-26 20:24+0200\n"
 "Last-Translator: Kostadin Kolev <k_kolev1985@mail.bg>\n"
 "Language-Team: Български <>\n"
 "Language: bg\n"
@@ -1299,9 +1299,27 @@ msgctxt "symbolLevel"
 msgid "character"
 msgstr "знак"
 
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "never"
+msgstr "Никога"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "always"
+msgstr "Винаги"
+
+#. Translators: An option for when a symbol itself will be sent to the synthesizer.
+#. See the "Punctuation/symbol pronunciation" section of the User Guide for details.
+msgctxt "symbolPreserve"
+msgid "only below symbol's level"
+msgstr "Само под нивото на изговаряне на символа"
+
 #. Translators: Reported when text is written in unknown color.
 msgid "unknown color"
-msgstr "непознат цвят"
+msgstr "Непознат цвят"
 
 #. Translators: the color Alice Blue (RGB 240, 248, 255) from CSS color list at http://www.w3schools.com/cssref/css_colornames.asp
 msgctxt "color name"
@@ -2729,6 +2747,10 @@ msgstr "изрязано"
 msgid "overflowing"
 msgstr "Препълващо"
 
+#. Translators: a state that denotes that the object is unlocked (such as an unlocked cell in a protected Excel spreadsheet).
+msgid "unlocked"
+msgstr "Отключен"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "немаркиран"
@@ -2784,7 +2806,7 @@ msgstr "Зачитане на главни/малки"
 
 #, python-format
 msgid "text \"%s\" not found"
-msgstr "текстът \"%s\" не е намерен"
+msgstr "Текстът \"%s\" не е намерен"
 
 msgid "Find Error"
 msgstr "Грешка при търсене"
@@ -3072,6 +3094,18 @@ msgstr "Докладването на корекциите е включено"
 #. Translators: Input help mode message for toggle report revisions command.
 msgid "Toggles on and off the reporting of revisions"
 msgstr "Включва или изключва докладването на корекциите"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis off"
+msgstr "Докладването на открояването е изключено"
+
+#. Translators: The message announced when toggling the report emphasis document formatting setting.
+msgid "report emphasis on"
+msgstr "Докладването на открояването е включено"
+
+#. Translators: Input help mode message for toggle report emphasis command.
+msgid "Toggles on and off the reporting of emphasis"
+msgstr "Превключва докладването на открояването."
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 msgid "report colors off"
@@ -4075,6 +4109,10 @@ msgstr ""
 "Премества навигационния обект до следващия обект в равнинния изглед на "
 "обектната йерархична структура."
 
+#. Translators: a message when there is no previous object when navigating
+msgid "no previous"
+msgstr "Няма предишен"
+
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
@@ -4267,7 +4305,7 @@ msgstr "enter"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad enter"
-msgstr "NumPad enter"
+msgstr "Enter от цифровия блок"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "escape"
@@ -4295,7 +4333,7 @@ msgstr "delete"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad delete"
-msgstr "NumPad delete"
+msgstr "Delete от цифровия блок"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left arrow"
@@ -4331,55 +4369,107 @@ msgstr "Scroll Lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 4"
-msgstr "NumPad 4"
+msgstr "4 от цифровия блок"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 6"
-msgstr "NumPad 6"
+msgstr "6 от цифровия блок"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 8"
-msgstr "NumPad 8"
+msgstr "8 от цифровия блок"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 2"
-msgstr "NumPad 2"
+msgstr "2 от цифровия блок"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 9"
-msgstr "NumPad 9"
+msgstr "9 от цифровия блок"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 3"
-msgstr "NumPad 3"
+msgstr "3 от цифровия блок"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 1"
-msgstr "NumPad 1"
+msgstr "1 от цифровия блок"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 7"
-msgstr "NumPad 7"
+msgstr "7 от цифровия блок"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad 5"
-msgstr "NumPad5"
+msgstr "5 от цифровия блок"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad divide"
-msgstr "NumPad наклонена черта"
+msgstr "Наклонена черта от цифровия блок"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad multiply"
-msgstr "NumPad Звезда"
+msgstr "Звезда от цифровия блок"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad minus"
-msgstr "NumPad Минус"
+msgstr "Минус от цифровия блок"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numpad plus"
-msgstr "NumPad Плюс"
+msgstr "Плюс от цифровия блок"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad decimal"
+msgstr "Десетичен знак от цифровия блок"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numpad insert"
+msgstr "INSERT от цифровия блок"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 0"
+msgstr "0 от цифровия блок при включен NumLock"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 1"
+msgstr "1 от цифровия блок при включен NumLock"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 2"
+msgstr "2 от цифровия блок при включен NumLock"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 3"
+msgstr "3 от цифровия блок при включен NumLock"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 4"
+msgstr "4 от цифровия блок при включен NumLock"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 5"
+msgstr "5 от цифровия блок при включен NumLock"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 6"
+msgstr "6 от цифровия блок при включен NumLock"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 7"
+msgstr "7 от цифровия блок при включен NumLock"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 8"
+msgstr "8 от цифровия блок при включен NumLock"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "numLock numpad 9"
+msgstr "9 от цифровия блок при включен NumLock"
+
+#. Translators: This is the name of a key on the keyboard.
+msgid "insert"
+msgstr "INSERT"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "left control"
@@ -4542,15 +4632,20 @@ msgstr "няма отстъп"
 msgid "%d characters"
 msgstr "%d знака"
 
-#. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
+#. Translators: This is spoken while the user is in the process of selecting something, For example: "hello selected"
 #, python-format
-msgid "selecting %s"
-msgstr "Маркиране на %s"
+msgid "%s selected"
+msgstr "%s маркиран"
 
-#. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
+#. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
 #, python-format
-msgid "unselecting %s"
-msgstr "Отмаркиране на %s"
+msgid "%s unselected"
+msgstr "%s отмаркиран"
+
+#. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
+#, python-format
+msgid "%s selected instead"
+msgstr "%s е маркиран вместо това"
 
 #. Translators: Reported when selection is removed.
 msgid "selection removed"
@@ -4645,14 +4740,55 @@ msgstr "{backgroundColor} фон"
 msgid "line %s"
 msgstr "Ред %s"
 
+#. Translators: Reported when text is marked as having been inserted
+msgid "inserted"
+msgstr "Вмъкнат"
+
+#. Translators: Reported when text is no longer marked as having been inserted.
+msgid "not inserted"
+msgstr "Не е вмъкнат"
+
+#. Translators: Reported when text is marked as having been deleted
+msgid "deleted"
+msgstr "Изтрит"
+
+#. Translators: Reported when text is no longer marked as having been  deleted.
+msgid "not deleted"
+msgstr "неизтрит"
+
 #. Translators: Reported when text is revised.
 #, python-format
 msgid "revised %s"
 msgstr "променен %s"
 
 #. Translators: Reported when text is not revised.
-msgid "unrevised"
-msgstr "без промени"
+#, python-format
+msgid "no revised %s"
+msgstr "%s е без промени"
+
+#. Translators: Reported when text is marked
+msgid "marked"
+msgstr "Отбелязан"
+
+#. Translators: Reported when text is no longer marked
+msgid "not marked"
+msgstr "Неотбелязан"
+
+#. Translators: Reported when text is marked as strong (e.g. bold)
+msgid "strong"
+msgstr "Силно откроен"
+
+#. Translators: Reported when text is no longer marked as strong (e.g. bold)
+msgid "not strong"
+msgstr "Не е силно откроен"
+
+#. Translators: Reported when text is marked as emphasised
+msgid "emphasised"
+msgstr "Откроен"
+
+#. Translators: Reported when text is no longer marked as emphasised
+msgid "not emphasised"
+msgstr "Не е откроен"
 
 #. Translators: Reported when text is not bolded.
 msgid "no bold"
@@ -4669,12 +4805,12 @@ msgstr "не курсив"
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "strikethrough"
-msgstr "задраскан"
+msgstr "Зачеркнат"
 
 #. Translators: Reported when text is formatted without strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 msgid "no strikethrough"
-msgstr "не задраскан"
+msgstr "незачеркнат"
 
 #. Translators: Reported when text is underlined.
 msgid "underlined"
@@ -7128,6 +7264,11 @@ msgstr "Докладвай ко&рекциите на редактора"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
+msgid "Report e&mphasis"
+msgstr "Докладвай &открояването"
+
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
 msgid "Report st&yle"
 msgstr "Докладвай с&тила"
 
@@ -7355,6 +7496,11 @@ msgstr "Символ"
 msgid "Level"
 msgstr "Ниво"
 
+#. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
+#. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
+msgid "Preserve"
+msgstr "Запазване"
+
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 msgid "Change symbol"
 msgstr "Промени символа"
@@ -7362,6 +7508,10 @@ msgstr "Промени символа"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 msgid "&Level"
 msgstr "&Ниво"
+
+#. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
+msgid "&Send actual symbol to synthesizer"
+msgstr "&Подавай действителния символ към синтезатора"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 msgid "Re&move"
@@ -7498,12 +7648,23 @@ msgstr "извикване"
 msgid "Desktop"
 msgstr "Работен плот"
 
+#. Translators: The default color of text when a color has not been set by the author.
+#. Translators: The default background color  when a color has not been set by the author.
 msgid "default color"
 msgstr "цвят по подразбиране"
 
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "Непознат цвят"
+
+#. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
+msgid "This cell is non-editable"
+msgstr "Тази клетка не може да бъде редактирана"
+
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "Извежда списък с диаграмите, клетките с коментари и клетките с формули"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "Извежда различни типове елементи, налични в тази електронна таблица."
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -7519,6 +7680,11 @@ msgstr "&Коментари"
 #. in the browse mode Elements List dialog.
 msgid "&Formula"
 msgstr "&Формули"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+msgid "&Sheet"
+msgstr "&Листове"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
@@ -7584,6 +7750,12 @@ msgstr ""
 "Еднократно натискане ще зададе тази клетка като първа заглавна клетка за "
 "всички редове надолу и надясно от нея в този регион. Двукратно натискане ще "
 "занули текущите заглавия на редовете за тази клетка."
+
+msgid "Input Message is {title}: {message}"
+msgstr "Входното съобщение е {title}: {message}"
+
+msgid "Input Message is {message}"
+msgstr "Входното съобщение е {message}"
 
 #. Translators: A message in Excel when there is no comment
 msgid "Not on a comment"
@@ -8339,17 +8511,8 @@ msgstr "текстова рамка"
 msgid "comment: {text} by {author} on {date}"
 msgstr "Коментар: {text} от {author} на {date}"
 
-msgid "{revisionType}: {text} by {author} on {date}"
-msgstr "{revisionType}: {text} от {author} на {date}"
-
-msgid "unknown author"
-msgstr "непознат автор"
-
-msgid "unknown date"
-msgstr "неизвестна дата"
-
-msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr "{revisionType} от {revisionAuthor} на {revisionDate}"
+msgid "{revisionType} {description}: {text} by {author} on {date}"
+msgstr "{revisionType} {description}: {text} от {author} на {date}"
 
 #, python-format
 msgid "%g characters"
@@ -8529,6 +8692,33 @@ msgstr "HIMS Braille серии Sense и Braille EDGE "
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr ""
+#~ "Извежда списък с диаграмите, клетките с коментари и клетките с формули"
+
+#, fuzzy
+#~ msgid "Default color"
+#~ msgstr "цвят по подразбиране"
+
+#~ msgid "selecting %s"
+#~ msgstr "Маркиране на %s"
+
+#~ msgid "unselecting %s"
+#~ msgstr "Отмаркиране на %s"
+
+#~ msgid "unrevised"
+#~ msgstr "без промени"
+
+#~ msgid "unknown author"
+#~ msgstr "непознат автор"
+
+#~ msgid "unknown date"
+#~ msgstr "неизвестна дата"
+
+#~ msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
+#~ msgstr "{revisionType} от {revisionAuthor} на {revisionDate}"
 
 #~ msgid "reports the object with focus"
 #~ msgstr "Докладва обекта на фокус."
