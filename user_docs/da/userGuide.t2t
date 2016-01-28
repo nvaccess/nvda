@@ -1,4 +1,4 @@
-﻿NVDA NVDA_VERSION brugervejledning
+NVDA NVDA_VERSION brugervejledning
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -20,14 +20,14 @@ Af væsentlige funktioner kan nævnes:
 - Indbygget talesyntese der understøtter over 80 sprog
 - Rapportering af tekstformatering hvor det er muligt, såsom skrifttype og størrelse, typografi og stavefejl.
 - Læser automatisk teksten under musen op og kan angive musens position akustisk
-- Understøttelse af mange punktdisplays, herunder indtastning af computerbraille på punktdisplays med et punkttastatur
+- Understøttelse af mange punktdisplays, herunder indtastning af computer-braille på punktdisplays med et punkttastatur
 - Kan køre fra en USB-stik eller andet bærbart medie uden 	installation
 - Talende installation der er let at bruge
 - Oversat til 47 sprog
 - Understøttelse af moderne Windows operativsystemer herunder 32 og 64 bit varianter
 - Kan køre på Windows logon skærmen og andre beskyttede skærme
 - understøttelse af almindelige tilgængelighedsgrænseflader såsom Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation kun understøttet i Windows 7 og senere)
-- Understøtter Windows kommandoPrompt and konsol applikationer
+- Understøtter Windows kommandoPrompt og konsol applikationer
 -
 
 ++ Internationalisering ++
@@ -157,18 +157,18 @@ Den tredje lader dig styre, om denne Velkomstdialog boks skal vises hver gang NV
 De fleste NVDA-specifikke tastaturkommandoer består normalt af at trykke på en særlig tastt kaldet NVDA tasten, samtidig med en eller flere andre taster.
 Bemærkelsesværdige undtagelser herfra er tekstlæsekommandoerne i desktop-tastaturlayoutet, som kun består af tasterne i det numeriske tastatur alene, men der er også andre undtagelser.
 
-NVDA kan konfigureres således, at enten den numeriske Indsæt Udvidede Indsæt, eller capslock-tasten kan bruges som NVDA-tast.
-Som standard er både Numerisk Indsæt og udvidet Indsæt tasterne indstillet som NVDA-tast.
+NVDA kan konfigureres således, at enten den numeriske Insert Udvidede Insert, eller Caps Lock-tasten kan bruges som NVDA-tast.
+Som standard er både Numerisk Insert og udvidet Insert tasterne indstillet som NVDA-tast.
 
-Hvis du ønsker at få en af NVDA-tasterne til at brue dens oprindelige funktion (for eksempel, hvis du ønsker at tænde capslock, når du har valgt CapsLock til at være en NVDA tast) kan du trykke på tasten to gange i hurtig rækkefølge.
+Hvis du ønsker at få en af NVDA-tasterne til at brue dens oprindelige funktion (for eksempel, hvis du ønsker at tænde Caps Lock, når du har valgt Caps Lock til at være en NVDA tast) kan du trykke på tasten to gange i hurtig rækkefølge.
 
 +++ Tastatur-Layouts +++
-NVDA har i øjeblikket to sæt tastaturkommandoer eller tastatur-layouts:Desktop-layoutet og laptop-layoutet.
+NVDA har i øjeblikket to sæt tastaturkommandoer eller tastatur-layouts: Desktop-layoutet og laptop-layoutet.
 Som standard er NVDA sat til at bruge Desktop-layout, men du kan skifte til det bærbare layout i Tastaturindstillinger, under Indstillinger i NVDA-menuen.
 
-Desktop layout bruger i høj grad det numeriske tastatur (med numlock slået fra).
+Desktop layout bruger i høj grad det numeriske tastatur (med Num Lock slået fra).
 Selvom de fleste bærbare computere ikke har et fysisk numerisk tastatur, kan nogle bærbare computere efterligne et ved at holde Fn-tasten nede og trykke på bogstaver og tal på højre side af tastaturet (7 8 9 u i o j k l osv)..
-Hvis din bærbare computer ikke kan gøre brug af dette, eller ikke tillader dig at slå numlock fra, kan du skifte til det bærbare layout i stedet.
+Hvis din bærbare computer ikke kan gøre brug af dette, eller ikke tillader dig at slå Num Lock fra, kan du skifte til det bærbare layout i stedet.
 
 ++ NVDA Touch-bevægelser ++
 Hvis du kører NVDA på en enhed med touchskærm og Windows 8 eller nyere, kan du kontrollere NVDA direkte ved hjælp af den berøringsfølsomme skærm.
@@ -322,7 +322,7 @@ Når du navigerer til et objekt, kan du gennemse det ved at benytte [ kommandoer
 Som standard, flytter navigator objektet sammen med System fokus, men denne adfærd kan slås til og fra.
 
 Bemærk, at punkt følger [fokus #SystemFocus] og [systemmarkør #SystemCaret] som standardindstilling, i stedet for objekt navigation og tekstgennemsyn.
-Hvis du derimod ønsker at punkt skal følge objekt navigation og tekstgennemsyn, skal du [konfigurere punkt til at være tøjret til #BrailleTether] gennemsyn.
+Hvis du derimod ønsker at punkt skal følge objekt navigation og tekstgennemsyn, skal du [konfigurere punkt til at følge #BrailleTether] gennemsyn.
 
 For at navigere imellem objekter, skal du benytte følgende kommandoer:
 
@@ -339,7 +339,7 @@ For at navigere imellem objekter, skal du benytte følgende kommandoer:
 | Sig læsemarkørens position | NVDA+Numpad-del | NVDA+Del Ingen | Giver information om placeringen af teksten eller objektet ved læsemarkøren. Fx. procentdel af dokumentet, afstand fra venstre kant af siden eller den præcise position på skærmen. To tryk kan give flere detaljer. |
 %kc:endInclude
 
-Bemærk: For at det numeriske tastatur skal fungere korrekt, skal Numlock-tasten være slået fra.
+Bemærk: For at det numeriske tastatur skal fungere korrekt, skal Num Lock-tasten være slået fra.
 
 ++ Gennemsyn af tekst ++[ReviewingText]
 NVDA giver dig mulighed for at læse indholdet af [skærmen #ScreenReview], det aktuelle [dokument #DocumentReview] eller det aktuelle [object #ObjectReview] ved enten at flytte imellem tegn, ord eller linjer.
@@ -547,7 +547,7 @@ NVDA understøtter følgende typer matematisk indhold:
 -
 
 Når du læser et dokument, vil NVDA udtale understøttet matematisk indhold der, hvor det forekommer.
-Hvis du bruger et punktdisplay, vil det også blive vist i Braille.
+Hvis du bruger et punktdisplay, vil det også blive vist på punkt.
 
 ++ Interaktiv navigering ++
 Hvis du primært bruger tale, vil du sandsynligvis i de fleste tilfælde ønske at undersøge det matematiske udtryk i mindre bidder i stedet for at høre hele udtrykket på en gang.
@@ -857,11 +857,11 @@ Hvis du ønsker hurtigt at ændre taleindstillingerne uden først at skulle åbn
 | Formindsk den aktuelle taleindstilling | NVDA+Ctrl+Pil-ned | NVDA+Shift+Ctrl+Pil-ned | Formindsker den synteseindstilling, som du i øjeblikket er ved at ændre fx formindsker hastigheden, vælger den forrige stemme, formindsker lydstyrken |
 %kc:endInclude
 
-+++ Punkt-indstillinger +++
-Dialogboksen Punkt-indstillinger kan nås ved at åbne menuen Indstillinger og derefter gå til Punkt-indstillinger.
++++ Punktindstillinger +++
+Dialogboksen Punktindstillinger kan nås ved at åbne menuen Indstillinger og derefter gå til Punktindstillinger.
 
-==== Braille-display ====
-Den første valgmulighed du møder i indstillingsdialogen Braille er en komboboks, som hedder "braille-display".
+==== Punktdisplay ====
+Den første valgmulighed du møder i indstillingsdialogen Punktindstillinger er en komboboks, som hedder "Punktdisplay".
 Her finder du forskellige muligheder alt efter, hvilke punktdisplay-drivere der er tilgængelige på dit system.
 Brug piletasterne til at flytte imellem de forskellige valgmuligheder.
 
@@ -881,33 +881,33 @@ Denne indstilling er ikke tilgængelig, hvis dit display kun understøtter autom
 
 Se i dokumentationen for dit punktdisplay i afsnittet [Understøttede punktdisplays #SupportedBrailleDisplays] for at læse om de mulige tilkoblingsmuligheder og tilgængelige porte.
 
-==== Output-tabel ====
-Den næste indstilling, du kommer til i denne dialogboks, er komboboksen output-tabel.
+==== Oversættelsestabel ====
+Den næste indstilling, du kommer til i denne dialogboks, er komboboksen oversættelsestabel.
 I denne komboboks finder du punkttabeller for en lang række sprog, punktstandarder og forkortelsesniveauer.
 Den valgte tabel vil blive brugt til at oversætte punkt til visning på dit punktdisplay.
 Med piletasterne kan du flytte fra den ene punkttabel til den næste på listen.
 
-==== Input-tabel ====
-Komplementært til den foregående indstilling er Den næste indstilling komboboksen input-tabel.
+==== Indtastningstabel ====
+Komplementært til den foregående indstilling er Den næste indstilling komboboksen indtastningstabel.
 Den valgte tabel vil blive benyttet til at oversatte det, du indtaster på dit Perkins punkttastatur, til tekst.
-NVDA understøtter på nuværende tidspunkt kun 8-punkt computerbraille, så det er kun disse tabeller, der bliver vist.
+NVDA understøtter på nuværende tidspunkt kun 8-punkt computer-braille, så det er kun disse tabeller, der bliver vist.
 Med piletasterne kan du flytte fra den ene punkttabel til den næste på listen.
 
 Bemærk, at denne indstilling kun kan bruges, hvis dit punktdisplay har et Perkins punkttastatur og funktionen er understøttet af driveren til displayet.
 Hvis indtastning ikke er understøttet af et punktdisplay med tilhørende tastatur, vil dette være noteret i kapitlet [Understøttede Punktdisplays #SupportedBrailleDisplays].
 
 ==== Udvid ordet ved markøren til computer-Braille ====
-Med denne indstilling kan du få ordet under cursoren vist i uforkortet computerbraille.
+Med denne indstilling kan du få ordet under markøren vist i uforkortet computer-braille.
 
 ==== Vis markør ====
-Denne indstillinger lader dig slå braille-markøren til og fra.
+Denne indstilling lader dig slå punktmarkøren til og fra.
 Denne indstilling anvendes til brug af system- og læsemarkøren, men ikke udvælgelses-indikatoren.
 
 ==== Blinkhastighed for markør (ms) ====
 Denne indstilling er et felt til indtastning af en talværdi. Her har du mulighed for at indtaste markørens blinkhastighed i millisekunder.
 
 ==== Markørform ====
-Denne indstilling lader dig vælge formen (braille-mønstret) til brugen af din braille-markør.
+Denne indstilling lader dig vælge formen (punktmønstret) til brugen af din punktmarkør.
 Udvælgelsesindikatoren påvirkes ikke af denne indstilling.
 
 ==== Besked vises i (sek) ====
@@ -927,11 +927,11 @@ Det betyder, at du ikke behøver at rulle med displayet for enden af hver linje,
 Det kan give mulighed for en mere flydende læseoplevelse, når der er tale om store mængder tekst.
 Som standard er dette slået fra.
 
-==== Undgå at dele ord, når det er muligt ====
+==== Undgå at opdele ord hvis muligt ====
 Hvis denne indstilling er slået til, vil et ord, som er for langt til at være for enden af en punktlinje, ikke blive opdelt.
 I stedet vil der optræde nogle blanke tegn for enden af displayet.
 Når du ruller displayet videre, kan du læse hele ordet.
-Dette kaldes nogle gange for "ombrydning af ord"..
+Dette kaldes nogle gange for "ombrydning af ord".
 Bemærk, at hvis ordet er for langt til at være på displayet overhovedet, bliver det stadig opdelt.
 
 Hvis indstillingen er slået fra, vil så meget af ordet som muligt blive vist, men resten vil blive skåret væk.
@@ -939,15 +939,15 @@ Når du så ruller displayet videre, kan du læse resten af ordet.
 
 Hvis du slår denne indstilling til, kan det give en mere flydende læsning, men generelt medfører det, at du skal skifte linje på displayet hyppigere.
 
-+++ Tastatur-indstillinger (NVDA+Ctrl+k) +++
-Denne dialogboks findes i menuen Indstillinger under punktet Tastatur-indstillinger...".
++++ Tastaturindstillinger (NVDA+Ctrl+k) +++
+Denne dialogboks findes i menuen Indstillinger under punktet Tastaturindstillinger...".
 Den indeholder følgende indstillingsmuligheder:
 
 ==== Tastaturlayout ====
 Denne komboboks giver mulighed for at vælge, hvilken type tastaturlayout NVDA skal benytte. De 2 muligheder, der i øjeblikket er inkluderet i NVDA er Desktop og Laptop.
 
-==== Brug capslock som NVDA-tast ====
-Hvis denne checkboks er markeret, kan tasten CapsLock bruges som NVDA-tast.
+==== Brug Caps Lock som NVDA-tast ====
+Hvis denne checkboks er markeret, kan tasten Caps Lock bruges som NVDA-tast.
 
 ==== Brug udvidet Insert som NVDA-tast ====
 hvis denne checkboks er markeret, kan den udvidede Insert-tast (findes som regel oven over piletasterne, i nærheden af Home og End) bruges som NVDA-tast.
@@ -982,7 +982,7 @@ Hvis denne indstilling er slået til, vil en del navigationskommandoer ikke stop
 
 ==== Bip hvis der skrives med små bogstaver når Caps Lock er slået til ====
 Når denne indstilling er slået til, vil du høre et advarende bip, hvis et bogstav bliver indtastet med skift-tasten nede, mens Caps Lock er slået til.
-Generelt er det utilsigtet, hvis man skriver bogstaver med shift-tasten nede, mens Capslock er slået til. Sædvanligvis skyldes det, at man ikke er klar over, at Capslock er slået til.
+Generelt er det utilsigtet, hvis man skriver bogstaver med shift-tasten nede, mens Caps Lock er slået til. Sædvanligvis skyldes det, at man ikke er klar over, at Capslock er slået til.
 Derfor kan det være meget rart at blive advaret om det.
 
 %kc:setting
@@ -995,8 +995,8 @@ Når denne funktion er slået til, oplæser NVDA alle taster på tastaturet, der
 Med denne indstilling kan du vælge, om NVDA skal behandle tastetryk, der bliver genereret af andre programmer som fx. skærmtastaturer eller talegenkendelsesprogrammer. 
 Denne indstilling er slået til som standard, men nogle brugere vil måske foretrække at slå den fra, fx. hvis man skriver vietnamesisk med Unikey typing . I dette tilfælde kan det forårsage indtastning af forkerte bogstaver.
 
-+++ Indstillinger for musen (NVDA+Ctrl+m) +++[MouseSettings]
-Dialogen med indstillinger for musen findes i menuen "Indstillinger", under "Muse-indstillinger".
++++ Museindstillinger (NVDA+Ctrl+m) +++[MouseSettings]
+Dialogen med indstillinger for musen findes i menuen "Indstillinger", under "Museindstillinger".
 Den indeholder følgende indstillingsmuligheder:
 
 ==== Oplæs ændringer i musemarkørens form ====
@@ -1009,7 +1009,7 @@ Tast: NVDA+m
 
 Når denne funktion er slået til, oplæser NVDA den tekst, der i øjeblikket befinder sig under musemarkøren i takt med, at musemarkøren flyttes rundt på skærmen. Det giver mulighed for at finde ting på skærmen ved fysisk at bevæge musen, i stedet for at lede efter dem ved hjælp af objektnavigation.
 
-==== Tekstenhed for oplæsning ====
+==== Opløsning for tekstenhed ====
 Hvis NVDA er indstillet til at oplæse teksten under musen, når du flytter med den, giver denne indstilling mulighed for at bestemme præcist, hvor meget tekst der skal læses op.
 Indstillingsmulighederne er tegn, ord, linje og afsnit.
 
@@ -1044,11 +1044,11 @@ Når denne funktion er slået til, flyttes læsemarkøren automatisk til systemm
 ==== Følg musemarkør ====
 Når dette punkt er markeret, følger læsemarkøren musen, når musen flytter sig.
 
-==== Enkel læsetilstand ====
+==== Simpel læsetilstand ====
 Når denne funktion er slået til, vil NVDA filtrere de objekter, du kan navigere til. NVDA vil udelukke de objekter, som i almindelighed ikke er af interesse, fx. usynlige objekter eller objekter, som kun bruges til layoutformål.
 
 +++ Indstillinger for præsentation af objekter +++
-Findes i menuen Indstillinger under "Objekt-præsentation...".
+Findes i menuen Indstillinger under "Objektpræsentation...".
 Denne dialog indeholder følgende indstillingsmuligheder:
 
 ==== Oplæs værktøjstips ====
@@ -1098,8 +1098,8 @@ Tast: NVDA+5
 Skifter indstillingen for annoncering af nyt indhold, især objekter som terminalvinduer og historikfelter i chatprogrammer.
 
 +++ Indstillinger for inputkomposition +++
-Dialogen Indstillinger for inputkomposition kan du finde under menuen Indstillinger.
-Denne dialog lader dig styre, hvordan NVDA rapporterer input af asiatiske tegn, såsom med IME eller indtastningstmetoder med TextService .
+Dialogen Inputkompositionsindstillinger kan du finde under menuen Indstillinger.
+Denne dialog lader dig styre, hvordan NVDA rapporterer input af asiatiske tegn, såsom med IME eller indtastningstmetoder med TextService.
 Bemærk, at indtastningsmetoder kan variere meget med hensyn til tilgængelige funktioner, samt hvordan de formidler information. Det vil højst sandsynligt være nødvendigt at konfigurere disse indstillinger for hver indtastningsmetode, så du kan opnå den mest effektive oplevelse, når du skriver.
 
 ==== Annoncer automatisk alle tilgængelige kandidater ====
@@ -1133,7 +1133,7 @@ dialogboksen med indstillingerne for gennemsynstilstand findes i Indstillinger-m
 
 Dialogen indeholder følgende indstillinger:
 
-==== Antal tegn på én linje ====
+==== Maximum antal tegn på én linje ====
 Denne indstilling bestemmer længden på en linje i gennemsynstilstand (antal tegn).
 
 ==== Antal linjer pr. side ====
@@ -1200,7 +1200,7 @@ Du kan tilpasse annoncering af:
 - links
 - overskrifter 
 - lister
-- Lange citater
+- Blokcitater
 - Landmærker
 - Rammer
 - Når noget kan klikkes på (er klikbart)
@@ -1772,7 +1772,7 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 | backspace Tast | punkt7 |
 | Pil-op | punkt1+mellemrum |
 | Pil-ned | punkt4+mellemrum |
-| capslock | punkt1+punkt3+punkt6+mellemrum |
+| Caps Lock | punkt1+punkt3+punkt6+mellemrum |
 | shift+alt+tab Tast | advance2+advance3+advance1 |
 | alt+tab Tast | advance2+advance3 |
 | end Tast | punkt4+punkt6+mellemrum |
@@ -2069,7 +2069,7 @@ Følgende modeller er understøttet:
 - EcoBraille Plus
 -
 
-I NVDA kan du indstille, hvilken seriel port punktdisplayet er forbundet til, i dialogen Braille-indstillinger.
+I NVDA kan du indstille, hvilken seriel port punktdisplayet er forbundet til, i dialogen Punktindstillinger.
 
 Tastaturkommandoerne til Eco punktdisplays er som følger:
 Se venligst [dokumentationen til EcoBraille ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/] for en beskrivelse af, hvor disse taster er placeret.
@@ -2101,8 +2101,8 @@ For at kunne bruge det, skal du installere programmet [BRLTTY for Windows http:/
 Det anbefales, at du henter og installerer den seneste installationspakke, som fx. kan have navnet brltty-win-4.2-2.exe.
 Under konfigurationen af displayet og den port, der skal bruges, skal du følge instruktionerne nøje, især hvis du benytter et USB-display og allerede har installeret producentens drivere.
 
-BRLTTY håndtere selv indtastning i braille, hvis det tilkoblede punktdisplay har et punkttastatur.
-NVDAs indstilling for Braille-input-tabel  er derfor ikke relevant.
+BRLTTY håndtere selv indtastning på punkt, hvis det tilkoblede punktdisplay har et punkttastatur.
+NVDAs indstilling for oversættelsestabel er derfor ikke relevant.
 
 Dette er tastekombinationerne til BRLTTY til brug med NVDA.
 Se venligst [BRLTTY dokumentationen for tastekombinationer http://mielke.cc/brltty/doc/KeyTables/] for yderliger information om, hvordan BRLTTY kommandoer er indstillet til kontroller på diverse punktdisplays.

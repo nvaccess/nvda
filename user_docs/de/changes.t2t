@@ -39,9 +39,9 @@
 - Die Ansage bei Änderung der Form des Mauszeigers funktioniert nun ordnungsgemäß. (#5595)
 - Bei der Ansage von Zeileneinrückungen werden geschützte Leerzeichen nun wie normale Leerzeichen behandelt. Dies führte zuvor zu Ansagen wie "Leerzeichen Leerzeichen Lerzeichen" anstatt von 3 Leerzeichen. (#5610)
 - Beim Schließen der Kandidatenliste bei der Eingabe komplexer Sonderzeichen wird der Fokus korrekt wiederhergestellt. (#4145)
+- Wenn die Menübänder in Office 2013 und neuer so wingestellt werden, dass sie nur Registerkarten anzeigen, werden sie von NVDA wie erwartet dargestellt, wenn eine Registerkarte aktiviert wird. (#5504)
 
-
-== Änderungen für Entwickler == (en)
+== Änderungen für Entwickler ==
 - Sie können die neue Klasse audioDucking.audioDucker verwenden, wenn Sie beim Abspielen von Audiomaterial die Lautstärke anderer Audioquellen reduzieren wollen. (#3830)
 - Der Konstruktor von nvwave.WavePlayer besitzt nun ein Arguzment namens wantDucking, mit dessen Hilfe Sie angeben können, ob während der Wiedergabe die Lautstärke anderer Audioquellen reduziert werden soll. (#3830)
  - Wenn die Funktion aktiviert ist (Standard), sollte zu gegebener Zeit WavePlayer.idle aufgerufen werden.
