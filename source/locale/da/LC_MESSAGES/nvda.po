@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-06 19:08+1000\n"
-"PO-Revision-Date: 2016-01-19 19:19-0500\n"
+"PO-Revision-Date: 2016-01-22 22:22-0500\n"
 "Last-Translator: Nicolai Svendsen <chojiro1990@gmail.com>\n"
 "Language-Team: Dansk <bue@vester-andersen.dk>\n"
 "Language: da_DK\n"
@@ -194,7 +194,7 @@ msgstr "Dansk 8-punkt uforkortet"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 msgid "Danish 6 dot grade 2"
-msgstr "Dansk 6-punktforkortet"
+msgstr "Dansk 6-punkt forkortet"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -750,7 +750,7 @@ msgstr "Automatisk"
 
 #. Translators: Reported before braille input in input help mode.
 msgid "braille"
-msgstr "Braille"
+msgstr "Punkt"
 
 #. Translators: Reported when braille space is pressed with dots in input help mode.
 msgid "space with dot"
@@ -4047,11 +4047,11 @@ msgstr "fokus"
 #. Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
 #, python-format
 msgid "Braille tethered to %s"
-msgstr "Braille følger %s"
+msgstr "Punkt følger %s"
 
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
-msgstr "Skifter imellem braille følger fokus og braille følger læsemarkør"
+msgstr "Skifter imellem punkt  følger fokus og punkt følger læsemarkør"
 
 #. Translators: The message announced when toggling the braille cursor.
 msgid "Braille cursor off"
@@ -4153,7 +4153,7 @@ msgstr "Flytter punktdisplay til næste linje"
 
 #. Translators: Input help mode message for a braille command.
 msgid "Inputs braille dots via the braille keyboard"
-msgstr "Skriv Braille via Braille-tastaturet"
+msgstr "Skriv punkt via Punkttastaturet"
 
 #. Translators: Presented when plugins (app modules and global plugins) are reloaded.
 msgid "Plugins reloaded"
@@ -4350,7 +4350,7 @@ msgstr "slet bagud"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "caps lock"
-msgstr "capslock"
+msgstr "Caps Lock"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "ctrl"
@@ -4498,43 +4498,43 @@ msgstr "numerisk insert"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 0"
-msgstr "NumLock numerisk 0"
+msgstr "Num Lock numerisk 0"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 1"
-msgstr "numLock numerisk 1"
+msgstr "Num Lock numerisk 1"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 2"
-msgstr "numLock numerisk 2"
+msgstr "Num Lock numerisk 2"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 3"
-msgstr "numLock numerisk 3"
+msgstr "Num Lock numerisk 3"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 4"
-msgstr "numLock numerisk 4"
+msgstr "Num Lock numerisk 4"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 5"
-msgstr "numLock numerisk 5"
+msgstr "Num Lock numerisk 5"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 6"
-msgstr "numLock numerisk 6"
+msgstr "Num Lock numerisk 6"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 7"
-msgstr "numLock numerisk 7"
+msgstr "Num Lock numerisk 7"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 8"
-msgstr "numLock numerisk 8"
+msgstr "Num Lock numerisk 8"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "numLock numpad 9"
-msgstr "numLocknumerisk 9"
+msgstr "Num Lock numerisk 9"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "insert"
@@ -4574,7 +4574,7 @@ msgstr "højre windows"
 
 #. Translators: This is the name of a key on the keyboard.
 msgid "break"
-msgstr "sideskift"
+msgstr "pause"
 
 #. Translators: This is the name of a key on the keyboard.
 msgctxt "keyLabel"
@@ -4583,7 +4583,7 @@ msgstr "tab"
 
 #. Translators: One of the keyboard layouts for NVDA.
 msgid "desktop"
-msgstr "Skrivebord"
+msgstr "desktop"
 
 #. Translators: One of the keyboard layouts for NVDA.
 msgid "laptop"
@@ -5946,11 +5946,11 @@ msgstr "Vælg stemme, hastighed, pitch og lydstyrke."
 
 #. Translators: The label for the menu item to open Braille Settings dialog.
 msgid "B&raille settings..."
-msgstr "B&raille-indstillinger..."
+msgstr "&Punktindstillinger..."
 
 #. Translators: The label for the menu item to open Keyboard Settings dialog.
 msgid "&Keyboard settings..."
-msgstr "&Tastatur-indstillinger..."
+msgstr "&Tastaturindstillinger..."
 
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
@@ -5961,7 +5961,7 @@ msgstr ""
 
 #. Translators: The label for the menu item to open Mouse Settings dialog.
 msgid "&Mouse settings..."
-msgstr "&Muse-indstillinger..."
+msgstr "&Museindstillinger..."
 
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "Skift oplæsning af musens form samt objektet under musen."
@@ -5975,7 +5975,7 @@ msgstr "Indstil hvordan og hvornår læsemarkøren skal bevæge sig."
 
 #. Translators: The label for the menu item to open Input Composition Settings dialog.
 msgid "&Input composition settings..."
-msgstr "&Input kompositionsindstillinger..."
+msgstr "&Inputkompositionsindstillinger..."
 
 msgid ""
 "Configure how NVDA reports input composition and candidate selection for "
@@ -5986,7 +5986,7 @@ msgstr ""
 
 #. Translators: The label for the menu item to open Object Presentation dialog.
 msgid "&Object presentation..."
-msgstr "&Objekt-præsentation..."
+msgstr "&Objektpræsentation..."
 
 msgid "Change reporting of objects"
 msgstr "Skift oplæsning af objekter"
@@ -6000,25 +6000,24 @@ msgstr "Skift indstillinger, der har med virtuelle buffere at gøre."
 
 #. Translators: The label for the menu item to open Document Formatting settings dialog.
 msgid "Document &formatting..."
-msgstr "Dokument &formatering..."
+msgstr "Dokument&formatering..."
 
 msgid "Change settings of document properties"
 msgstr "Skift indstillinger af dokumentegenskaber."
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 msgid "&Default dictionary..."
-msgstr "&Standard-ordbog..."
+msgstr "&Standardordbog..."
 
 msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
 "to the list"
 msgstr ""
-"Dialog, hvor der kan angives en standard-ordbog ved at tilføje ord til "
-"listen."
+"Dialog, hvor der kan angives en standardordbog ved at tilføje ord til listen."
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 msgid "&Voice dictionary..."
-msgstr "&Stemme-ordbog..."
+msgstr "&Stemmeordbog..."
 
 msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
@@ -6178,7 +6177,7 @@ msgstr ""
 "nede, mens du trykker en anden tast.\n"
 "Du kan som standard enten bruge Insert på det numeriske tastatur eller den "
 "normale Insert-tast.\n"
-"Du kan også indstille NVDA til at benytte tasten CapsLock som NVDA-tast.\n"
+"Du kan også indstille NVDA til at benytte tasten Caps Lock som NVDA-tast.\n"
 "Tryk NVDA+n hvor som helst for at aktivere NVDA-menuen.\n"
 "Fra denne menu kan du konfigurere NVDA, få hjælp og få adgang til andre "
 "faciliteter i NVDA.\n"
@@ -6193,7 +6192,7 @@ msgstr "Indstillinger"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Brug CapsLock som NVDA-tast"
+msgstr "Brug Caps Lock som NVDA-tast"
 
 #. Translators: The label of a check box in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
@@ -7063,7 +7062,7 @@ msgstr "Tillad skimlæsning under sig alt"
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Beep if typing lowercase letters when caps lock is on"
-msgstr "Bip hvis der skrives med små bogstaver når capslock er slået til."
+msgstr "Bip hvis der skrives med små bogstaver når Caps Lock er slået til."
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -7124,12 +7123,12 @@ msgstr "Indstillinger for læsemarkør"
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Follow system &focus"
-msgstr "Følg system&markør"
+msgstr "Følg system&fokus"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 msgid "Follow System &Caret"
-msgstr "Følg systemmarkør"
+msgstr "Følg system&markør"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
@@ -7143,7 +7142,7 @@ msgstr "Simpel læsetilstand"
 
 #. Translators: This is the label for the Input Composition settings dialog.
 msgid "Input Composition Settings"
-msgstr "Indstillinger for udformning af input  "
+msgstr "Input-kompositionsindstillinger"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
@@ -7172,7 +7171,7 @@ msgstr "Oplæs ændringer i &kompositionsstrengen"
 
 #. Translators: This is the label for the object presentation dialog.
 msgid "Object Presentation"
-msgstr "Objekt-præsentation"
+msgstr "Objektpræsentation"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by speaking.
@@ -7489,11 +7488,11 @@ msgstr "Tilføj ordbogsord"
 
 #. Translators: This is the label for the braille settings dialog.
 msgid "Braille Settings"
-msgstr "Braille-indstillinger"
+msgstr "Punktindstillinger"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
 msgid "Braille &display:"
-msgstr "Braille&display"
+msgstr "Punkt&display"
 
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 msgid "&Port:"
@@ -7501,11 +7500,11 @@ msgstr "&Port:"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 msgid "&Output table:"
-msgstr "&Output-tabel:"
+msgstr "&Oversættelsestabel:"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 msgid "&Input table:"
-msgstr "&input-tabel:"
+msgstr "&Indtastningstabel:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 msgid "E&xpand to computer braille for the word at the cursor"
@@ -7521,7 +7520,7 @@ msgstr "markør-blinkhastighed (ms)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape.
 msgid "Cursor &shape:"
-msgstr "Markør &form:"
+msgstr "Markør&form:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7529,7 +7528,7 @@ msgstr "Besked vises i (sec)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 msgid "Braille tethered to:"
-msgstr "Braille følger:"
+msgstr "Punkt følger:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
@@ -7544,7 +7543,7 @@ msgid "Could not load the %s display."
 msgstr "Kunne ikke indlæse displayet %s."
 
 msgid "Braille Display Error"
-msgstr "Braille display fejl"
+msgstr "Punktdisplay-fejl"
 
 #. Translators: This is the label for the add symbol dialog.
 msgid "Add Symbol"
