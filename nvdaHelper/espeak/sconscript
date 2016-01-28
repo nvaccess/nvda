@@ -36,7 +36,7 @@ env=env.Clone()
 env.Append(CCFLAGS='/GL-')
 
 env.Append(CCFLAGS='/W0')
-env.Append(CPPPATH=['#nvdaHelper/espeak',espeakIncludeDir,sonicSrcDir])
+env.Append(CPPPATH=['#nvdaHelper/espeak',espeakIncludeDir,espeakIncludeDir.Dir('compat'),sonicSrcDir])
 
 def espeak_compilePhonemeData_buildEmitter(target,source,env):
 	phSourceIgnores=['error_log','error_intonation','compile_prog_log','compile_report','envelopes.png']
