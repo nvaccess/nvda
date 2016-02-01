@@ -36,7 +36,7 @@ env=env.Clone()
 env.Append(CCFLAGS='/GL-')
 
 env.Append(CCFLAGS='/W0')
-env.Append(CPPPATH=['#nvdaHelper/espeak',espeakIncludeDir,sonicSrcDir])
+env.Append(CPPPATH=['#nvdaHelper/espeak',espeakIncludeDir,espeakIncludeDir.Dir('compat'),sonicSrcDir])
 
 def espeak_compilePhonemeData_buildEmitter(target,source,env):
 	phSourceIgnores=['error_log','error_intonation','compile_prog_log','compile_report','envelopes.png']
@@ -124,7 +124,7 @@ env.Depends(phonemeData,espeakLib)
 env.Install(espeakRepo.Dir('dictsource'),env.Glob(os.path.join(espeakRepo.abspath,'dictsource','extra','*_*')))
 
 #Compile all dictionaries
-missingDicts=['mt','tn','tt']
+missingDicts=[] #'mt','tn','tt']
 dictSourcePath=espeakRepo.Dir('dictsource').abspath
 for f in env.Glob(os.path.join(dictSourcePath,'*_rules')):
 	lang=f.name.split('_')[0]
