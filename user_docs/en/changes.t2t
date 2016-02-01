@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2016.1 =
+Highlights of this release include the ability to optionally lower the volume of other sounds; improvements to braille output and braille display support; several significant fixes to Microsoft Office support; and fixes to browse mode in iTunes.
 
 == New Features ==
 - New braille translation tables: Polish 8 dot computer braille, Mongolian. (#5537, #5574)
@@ -43,9 +44,12 @@
 - In Microsoft Office 2013 and later, when the ribbon is set to show only tabs, items in the ribbon are again reported as expected when a tab is activated. (#5504)
 - Fixes and improvements to touch screen gesture detection and binding. (#5652)
 - Touch screen hovers are no longer reported in input help. (#5652)
-- NVDA no longer fails to list comments in the Elements List for Excel if a comment is  on a merged cell. (#5704)
-- In a very rare case, NVDA no longer fails to read sheet content in Excel with report row and column headers enabled (#5705)
-- In Google Chrome, navigating within an Input composition for east-asian characters no longer fails with an error. (#4080)
+- NVDA no longer fails to list comments in the Elements List for Microsoft Excel if a comment is  on a merged cell. (#5704)
+- In a very rare case, NVDA no longer fails to read sheet content in Microsoft Excel with reporting of row and column headers enabled. (#5705)
+- In Google Chrome, navigating within an Input composition when entering east Asian characters now works as expected. (#4080)
+- When searching Apple Music in iTunes, browse mode for the search results document is now updated as expected. (#5659)
+- In Microsoft Excel, pressing shift+f11 to create a new sheet now reports your new position instead of reporting nothing. (#5689)
+- Fixed problems with braille display output when entering Korean characters. (#5640)
 
 
 == Changes for Developers ==
