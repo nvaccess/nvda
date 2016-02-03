@@ -13,6 +13,7 @@
 == Bug Fixes ==
 - In browse mode, when attempting to use single letter navigation to move to an element which isn't supported for the document, NVDA reports that this isn't supported rather than reporting that there is no element in that direction. (#5691)
 - When listing sheets in the Elements List in Microsoft Excel, sheets containing only charts are now included. (#5698)
+- NVDA no longer reports extraneous information when switching windows in a Java application with multiple windows such as IntelliJ or Android Studio. (#5732)
 
 
 == Changes for Developers ==
