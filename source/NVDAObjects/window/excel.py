@@ -1405,8 +1405,9 @@ class ExcelFormControl(ExcelWorksheet):
 		return self._roleMap[formControlType]
 
 	def _get_states(self):
-		self.invalidateCache()
 		states=super(ExcelFormControl,self).states
+		if self is api.getFocusObject():
+			states.add(controlTypes.STATE_FOCUSED)
 		newState=None
 		if self.role==controlTypes.ROLE_RADIOBUTTON:
 			newState=controlTypes.STATE_CHECKED if self.excelFormControlObject.OLEFormat.Object.Value==checked else None
@@ -1483,7 +1484,8 @@ class ExcelFormControl(ExcelWorksheet):
 		#perform Mouse Left-Click
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
-		eventHandler.queueEvent("gainFocus",self)
+		self.invalidateCache()
+		wx.CallLater(100,eventHandler.executeEvent,"stateChange",self)
 
 	__gestures= {
 				"kb:enter":"doAction",
