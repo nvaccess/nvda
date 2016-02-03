@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-21 19:08+1000\n"
-"PO-Revision-Date: 2015-12-24 15:42+0100\n"
+"POT-Creation-Date: 2016-01-11 19:08+1000\n"
+"PO-Revision-Date: 2016-01-11 22:31+0100\n"
 "Last-Translator: zvonimir stanecic <zvonimirek222@yandex.com>\n"
 "Language-Team: Hr Mario Percinic<mario.percinic@gmail.com and Hrvoje "
 "Katic<hrvojekatic@gmail.com> <nvda_hr@googlegroups.com>\n"
@@ -127,6 +127,21 @@ msgstr "obrazac"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "regija"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "No ducking"
+msgstr "nema utišavanja"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "stišavaj prilikom izgovaranja ili zvukova nvda"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Always duck"
+msgstr "uvjek stišavaj"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2914,6 +2929,18 @@ msgstr "Unos"
 #. Translators: The name of a category of NVDA commands.
 msgid "Document formatting"
 msgstr "Oblikovanje dokumenta"
+
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "stišavanje zvuka nije podržano"
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+"Prebacuje se između načina stišavanja zvuka koji određuju kada će nvda "
+"stišavati druge okolne zvukove"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -6943,6 +6970,10 @@ msgstr "&Govorna jedinica"
 msgid "Output &device:"
 msgstr "Izlazni &uređaj"
 
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "način stišavanja zvuka"
+
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
@@ -8738,8 +8769,8 @@ msgid "&Annotations"
 msgstr "&zabilješke"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS Braille Sense/Braille EDGE serija"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serija"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"

@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2011 NV Access Inc
+Copyright 2011-2015 NV Access Limited
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -219,6 +219,7 @@ void CALLBACK WebKitVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK h
 	switch (eventID) {
 		case EVENT_OBJECT_VALUECHANGE:
 		case EVENT_OBJECT_STATECHANGE:
+		case EVENT_OBJECT_REORDER:
 			break;
 		default:
 			return;

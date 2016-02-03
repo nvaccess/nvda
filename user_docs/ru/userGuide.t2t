@@ -760,7 +760,17 @@ NVDA спросит вас, хотите ли вы перезапустить п
 Это может быть нужно тем пользователям, которые хотят использовать NVDA только с брайлем, или, вероятно, зрячим разработчикам, которым нужен в NVDA только просмотрщик речи.
 
 ==== Устройство вывода ====
-Эта опция позволяет вам выбрать звуковую карту, через которую NVDA должен осуществлять речевой вывод.
+Эта опция позволяет вам выбрать звуковую карту, через которую NVDA должна осуществлять речевой вывод.
+
+%kc:setting
+==== Режим приглушения звука ====
+Горячая клавиша: NVDA+shift+d
+
+В Windows 8 и более поздних версиях, эта опция позволяет вам выбрать, следует ли уменьшать громкость других приложений, когда NVDA говорит, или всё время, пока NVDA работает.
+- Не приглушать: NVDA никогда не будет приглушать громкость других звуков.
+- Приглушать при выводе речи и звуков: NVDA будет приглушать громкость других звуков, только если говорит или проигрывает свои звуки. Это может не работать для некоторых синтезаторов.
+- Всегда приглушать: NVDA будет приглушать громкость других звуков всё время, пока работает.
+-
 
 +++ Настройки голоса (NVDA+control+v) +++[VoiceSettings]
 Диалоговое окно "Настройки голоса", которое доступно через меню NVDA "Параметры > Голоса...", содержит опции, позволяющие менять различные параметры речи.
@@ -1648,14 +1658,13 @@ Please see the display's documentation for descriptions of where these keys can 
 ++ Baum/Humanware/APH Braille Displays ++
 Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] displays are supported when connected via USB or bluetooth.
 These include:
-- Baum: SuperVario, PocketVario, VarioUltra (Bluetooth only), Pronto! (Bluetooth only)
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
 Some other displays manufactured by Baum may also work, though this has not been tested.
 
-If connecting via USB, you must first install the USB drivers provided by the manufacturer.
-For the APH Refreshabraille, the USB mode must be set to serial.
+If connecting via USB to displays other than the VarioUltra, Pronto! or Refreshabraille with USB mode set to HID, you must first install the USB drivers provided by the manufacturer.
 
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -1712,7 +1721,8 @@ Please see the display's documentation for descriptions of where these keys can 
 
 ++ HumanWare Brailliant BI/B Series ++
 The Brailliant BI and B series of displays from [HumanWare http://www.humanware.com/], including the BI 32, BI 40 and B 80, are supported when connected via USB or bluetooth.
-If connecting via USB, you must first install the USB drivers provided by the manufacturer.
+If connecting via USB with the protocol set to HumanWare, you must first install the USB drivers provided by the manufacturer.
+USB drivers are not required if the protocol is set to OpenBraille.
 
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -1740,12 +1750,10 @@ Please see the display's documentation for descriptions of where these keys can 
 | Say all | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE Series ++
-NVDA supports Braille Sense and Braille EDGE displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle Series ++
+NVDA supports Braille Sense, Braille EDGE and Smart Beetle displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
 If connecting via USB, you will need to install the USB drivers from HIMS on your system.
-You can download these from the HIMS Resource Center: http://www.hims-inc.com/resource-center/
-On this page, select your device and download the driver in the Window-Eyes section.
-Although the section only mentions Window-Eyes, this is a general USB driver which will work with NVDA as well.
+You can download these from this page: http://www.himsintl.com/?c=2/13&uid=2319
 
 Following are the key assignments for these displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.

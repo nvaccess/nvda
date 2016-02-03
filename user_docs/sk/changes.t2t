@@ -6,6 +6,43 @@
 = 2016.1 =
 
 
+== Nové vlastnosti ==
+- Nové braillovské prekladové tabuľky: Mongolská a poľský 8-bodový počítačový kód. (#5537, #5574)
+- Odteraz môžete vypnúť brailovský kurzor, alebo zmeniť jeho tvar. Možnosti nájdete v Nastaveniach Braillu.. (#5198)
+- pridaná podpora pre riadok HIMS Smart Beetle cez Bluetooth. (#5607)
+- Pridaná možnosť stišovať zvuky ostatných aplikácií. Toto funguje od verzie Windows 8. Režimy stíšenia  nastavíte v dialógu hlasový výstup, alebo skratkou NVDA+shift+d. (#3830, #5575)
+- Pridaná podpora pre riadky APH Refreshabraille v režime USB HID a Baum VarioUltra a Pronto pripájané cez USB. (#5609)
+- Podpora pre riadky HumanWare Brailliant BI/B cez protokol OpenBraille. (#5612)
+
+
+== Zmeny ==
+- Oznamovanie zvýraznenia textu je predvolené vypnuté. (#4920)
+- V Zozname prvkov v programe  MS Excel sa zmenila skratka pre vzorce. Nová skratka je alt+r. (týka sa len anglickej verzie NVDA, v Slovenskej verzii je to stále alt+v). (#5527)
+- prekladová tabuľka Liblouis aktualizovaná na verziu 2.6.5. (#5574)
+- NVDA viac nehlási "text" pri prechode prezeracieho alebo systémového kurzora na textové objekty. (#5452)
+
+
+== Opravy ==
+- V programe iTunes 12 sa správne aktualizuje  okno v režime prehliadania, ak sa načíta nový obsah z Itunes obchodu. (#5191)
+- pri skoku na konkrétny nadpis pomocou rýchlej navigácie v prehliadači Internet Explorer  a ostatných MSHTML prvkoch sa NVDA správa správne aj v prípade, ak je úroveň nadpisu prepísaná z dôvodu prístupnosti (ak napríklad aria-level dostane prednosť pred úrovňou, ktorá je určená pomocou tagu H). (#5434)
+- Pri návrate do programu Spotify z inej aplikácie sa fokus nestratí na neznámom objekte. (#5439)
+- Prepínanie režimu fokusu a režimu prehliadania je oznamované aj na braillovskom riadku. (#5239)
+- Tlačidlo štart na panely úloh nie je viac oznamované ako vybraté, alebo ako oznam. Toto sa týkalo niektorých verzii systému Windows. (#5178)
+- V programe MS Outlook nie sú oznamované nadbytočné hlásenia, ako "vložené" a podobne. (#5486)
+- Ak používate braillovský riadok a označíte text na aktuálnom riadku (napríklad hľadáte výskyt nejakého slova a toto slovo sa na jednom riadku nachádza druhý krát), zobrazenie na riadku sa posunie, ak je to potrebné. (#5410)
+- NVDA sa viac nečakane nezatvorí, ak v Systéme Windows 10 zatvoríte príkazový riadok skratkou alt+f4. (#5343)
+- Ak v režime prehliadania v zozname prvkov zmeníte typ prvku, automaticky sa zmaže pole filter. (#5511)
+- V editačných poliach v Mozilla aplikáciách NVDA pri prechode myšou prečíta požadované slovo, riadok, odsek a nie obsah celého poľa. (#5535)
+- Pri pohybe myšou v editačných poliach v Mozilla aplikáciách sa čítanie nezastaví na odkazoch a iných prvkoch. (#2160, #5535)
+- odteraz je možné v programe Internet Explorer zobraziť stránku shoprite.com. Doposiaľ ju NVDA považovalo za prázdnu. (NVDA odteraz správne spracuje stránku aj v prípade, ak autor nesprávne používa atribút lang). (#5569)
+- NVDa neoznamuje zmeny v programe MS Word, ak nie sú zobrazené značky zmien. (#5566)
+- Ak je zobrazené prepínacie tlačidlo, NVDa správne hlási jeho stav. (#5441)
+- Opäť správne funguje oznamovanie tvaru kurzora myši. (#5595)
+- Ak je aktivované oznamovanie odsadenia riadkov, pevné medzery sú spracované ako normálne medzery. Doposiaľ v takom prípade NVDA čítalo "medzera medzera medzera" a nie "3 medzera". (#5610)
+- Po zatvorení moderného Microsoft Zoznamu s návrhmi, fokus sa správne vráti do okna so vstupným textom, alebo do dokumentu. (#4145)
+- Ak V Programe MS Office od verzie 2013 nastavíte ribbon ponuku tak, aby zobrazovala len záložky, NVDA správne oznamuje položky, ak je vybratá konkrétna záložka. (#5504)
+
+
 = 2015.4 =
 Prednosti tejto verzie zahŕňajú vylepšenú podporu pre windows 10; zaradenie NVDA do centra zjednodušenia od systému Windows 8; vylepšenú podporu pre MS Excel (možnosť zobraziť zoznam hárkov, premenovať hárky,  možnosť čítať chránené bunky v chránených dokumentoch); podporu pre úpravu Rich text polí v programoch Mozilla Firefox, Google Chrome a Mozilla Thunderbird.
 

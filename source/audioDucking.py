@@ -27,13 +27,13 @@ AUDIODUCKINGMODE_ALWAYS=2
 
 audioDuckingModes=[
 	# Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
-	# See the Audio Ducking Mode section of the User Gide for details.
+	# See the Audio Ducking Mode section of the User Guide for details.
 	_("No ducking"),
 	# Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
-	# See the Audio Ducking Mode section of the User Gide for details.
+	# See the Audio Ducking Mode section of the User Guide for details.
 	_("Duck when outputting speech and sounds"),
 	# Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
-	# See the Audio Ducking Mode section of the User Gide for details.
+	# See the Audio Ducking Mode section of the User Guide for details.
 	_("Always duck"),
 ]
 

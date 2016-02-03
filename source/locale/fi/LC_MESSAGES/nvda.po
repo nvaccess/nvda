@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-21 19:08+1000\n"
-"PO-Revision-Date: 2015-12-24 16:57+0200\n"
+"POT-Creation-Date: 2016-01-06 19:08+1000\n"
+"PO-Revision-Date: 2016-01-14 16:43+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "Language: fi\n"
@@ -124,6 +124,21 @@ msgstr "lomake"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "alue"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "No ducking"
+msgstr "Ei vaimennusta"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "Vaimenna puhuttaessa ja ääniä toistettaessa"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Always duck"
+msgstr "Vaimenna aina"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2912,6 +2927,18 @@ msgstr "Syöttö"
 #. Translators: The name of a category of NVDA commands.
 msgid "Document formatting"
 msgstr "Asiakirjojen muotoilu"
+
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "Taustaäänien vaimennusta ei tueta"
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+"Vaihtaa taustaäänien vaimennustilaa, joka määrittää, milloin NVDA alentaa "
+"muiden äänien voimakkuutta."
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -6929,6 +6956,10 @@ msgstr "&Syntetisaattori:"
 msgid "Output &device:"
 msgstr "Ääni&laite:"
 
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "Taustaäänien va&imennuksen tila:"
+
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
@@ -8727,8 +8758,8 @@ msgid "&Annotations"
 msgstr "&Selitteet"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS Braille Sense/Braille EDGE"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
