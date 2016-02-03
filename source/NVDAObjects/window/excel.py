@@ -1384,7 +1384,7 @@ class ExcelMergedCell(ExcelCell):
 	def _get_colSpan(self):
 		return self.excelCellObject.mergeArea.columns.count
 
-class ExcelFormControl(ExcelWorksheet):
+class ExcelFormControl(ExcelBase):
 	isFocusable=True
 
 	def __init__(self,windowHandle=None,excelWindowObject=None,excelFormControlObject=None):
@@ -1392,7 +1392,7 @@ class ExcelFormControl(ExcelWorksheet):
 		self.excelWorksheetObject=self.excelWindowObject.ActiveSheet
 		self.excelFormControlObject=excelFormControlObject
 		self._roleMap= {xlButtonControl:controlTypes.ROLE_BUTTON, xlCheckBox:controlTypes.ROLE_CHECKBOX, xlDropDown:controlTypes.ROLE_COMBOBOX, xlEditBox:controlTypes.ROLE_EDITBOX, xlGroupBox:controlTypes.ROLE_BOX, xlLabel:controlTypes.ROLE_LABEL, xlListBox:controlTypes.ROLE_LIST, xlOptionButton:controlTypes.ROLE_RADIOBUTTON, xlScrollBar:controlTypes.ROLE_SCROLLBAR, xlSpinner:controlTypes.ROLE_SPINBUTTON}
-		super(ExcelFormControl,self).__init__(windowHandle=windowHandle, excelWindowObject=self.excelWindowObject, excelWorksheetObject=self.excelWorksheetObject)
+		super(ExcelFormControl,self).__init__(windowHandle=windowHandle)
 
 	def _get_role(self):
 		try:
@@ -1680,8 +1680,6 @@ class ExcelFormControlDropDown(ExcelFormControl):
 			ui.message(self.excelFormControlObject.OLEFormat.Object.List(self.selectedItemIndex))
 
 	__gestures= {
-		"kb(laptop):upArrow": "moveUp",
 		"kb:upArrow": "moveUp",
-		"kb(laptop):downArrow":"moveDown",
 		"kb:downArrow":"moveDown",
 	}
