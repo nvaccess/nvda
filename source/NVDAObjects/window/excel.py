@@ -1656,28 +1656,20 @@ class ExcelFormControlDropDown(ExcelFormControl):
 	def script_moveUp(self, gesture):
 		if self.selectedItemIndex > 1:
 			self.selectedItemIndex= self.selectedItemIndex - 1
-			self.speakSelection()
+			self.excelFormControlObject.OLEFormat.Object.Selected[self.selectedItemIndex] = True
+			eventHandler.queueEvent("valueChange",self)
 	script_moveUp.canPropagate=True
 
 	def script_moveDown(self, gesture):
 		if self.selectedItemIndex < self.listSize:
 			self.selectedItemIndex= self.selectedItemIndex + 1
-			self.speakSelection()
+			self.excelFormControlObject.OLEFormat.Object.Selected[self.selectedItemIndex] = True
+			eventHandler.queueEvent("valueChange",self)
 	script_moveDown.canPropagate=True
 
-	def doAction(self):
-		try:
-			self.excelFormControlObject.OLEFormat.Object.Selected[self.selectedItemIndex] = True
-			self.speakSelection()
-		except:
-			pass
-
-	def speakSelection(self):
-		if self.excelFormControlObject.ControlFormat.Value == self.selectedItemIndex:
-			# Translators: A message in Excel an item in DropDown is selected
-			ui.message(_(str(self.excelFormControlObject.OLEFormat.Object.List(self.selectedItemIndex))+" selected"))
-		else:
-			ui.message(self.excelFormControlObject.OLEFormat.Object.List(self.selectedItemIndex))
+	def _get_value(self):
+		if self.selectedItemIndex < self.listSize:
+			return str(self.excelFormControlObject.OLEFormat.Object.List(self.selectedItemIndex))
 
 	__gestures= {
 		"kb:upArrow": "moveUp",
