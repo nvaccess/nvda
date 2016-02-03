@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-17 19:09+1000\n"
-"PO-Revision-Date: 2015-12-18 16:19+0100\n"
+"POT-Creation-Date: 2016-01-06 19:08+1000\n"
+"PO-Revision-Date: 2016-01-27 19:52+0100\n"
 "Last-Translator: Leonard de Ruijter <alderuijter@gmail.com>\n"
 "Language-Team: Dutch <nvda-nl@googlegroups.com> (http://www.transifex.net/"
 "projects/p/nvda/language/nl/)\n"
@@ -127,6 +127,21 @@ msgstr "formulier"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "gebied"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "No ducking"
+msgstr "Geen onderdrukking "
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "Onderdrukken bij spraak- en geluidsuitvoer"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Always duck"
+msgstr "Altijd onderdrukken"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -402,6 +417,11 @@ msgstr "Malayalam graad 1"
 #. braille settings dialog.
 msgid "Manipuri grade 1"
 msgstr "Manipuri graad 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Mongolian"
+msgstr "Mongools"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2913,6 +2933,18 @@ msgstr "Invoer"
 msgid "Document formatting"
 msgstr "Documentopmaak"
 
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "Audio onderdrukken niet ondersteund"
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+"Schakelt tussen audio-onderdrukkingsmodi die bepalen wanneer NVDA het volume "
+"van andere geluiden verlaagd"
+
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
 msgstr "Invoerhulp aan"
@@ -3369,7 +3401,7 @@ msgstr "symboolniveau %s"
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr ""
-"Loopt door de spraak symboolniveau's die bepalen welke symbolen worden "
+"Schakelt tussen de spraak symboolniveau's die bepalen welke symbolen worden "
 "uitgesproken"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
@@ -6945,6 +6977,10 @@ msgstr "&Synthesizer:"
 msgid "Output &device:"
 msgstr "&Uitvoerapparaat:"
 
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "Au&dio-onderdrukkingsmodus:"
+
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
@@ -7506,16 +7542,16 @@ msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "Naar &computerbraille uitbreiden voor het woord onder de cursor"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
-msgid "Show cursor"
-msgstr "Cursor weergeven"
+msgid "&Show cursor"
+msgstr "Cur&sor weergeven"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "&Knippersnelheid van de cursor (miliseconden)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape.
-msgid "Cursor shape:"
-msgstr "Cursorvorm:"
+msgid "Cursor &shape:"
+msgstr "Cursor&vorm:"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -8748,8 +8784,8 @@ msgid "&Annotations"
 msgstr "&Aantekeningen"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS Braille Sense/Braille EDGE serie"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle serie"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"

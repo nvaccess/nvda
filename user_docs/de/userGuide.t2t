@@ -57,10 +57,10 @@ Für weitere Informationen können Sie entweder die [englischsprachige http://ww
 
 + Systemvoraussetzungen +
 - Betriebssystem: Microsoft Windows XP, Windows Vista, Windows 7,Windows 8, Windows 8.1 und Windows 10 (alle 32-/64-Bit-Versionen, inkl. Server-Betriebssysteme).
-  - Für Windows XP wird mindestens Service Pack 2 benötigt.
+ - Für Windows XP wird mindestens Service Pack 2 benötigt.
  - Für Windows Server 2003 wird mindestens Service Pack 1 benötigt.
  - Für Windows Vista benötigt NVDA das Service Pack 2 und das Update [KB2763674 https://support.microsoft.com/en-us/kb/2763674].
- Beides sollte bereits installiert sein, sofern Sie alle Aktualisierungen mittels Windows Update installiert haben.
+  Beides sollte bereits installiert sein, sofern Sie alle Aktualisierungen mittels Windows Update installiert haben.
 - Speicher: Mindestens 256 Megabyte RAM oder mehr.
 - Prozessorgeschwindigkeit: 1,0 Gigahertz oder schneller.
 - Mindestens 90 Megabyte Festplattenspeicher.
@@ -761,6 +761,16 @@ Dieser ist für diejenigen interessant, die nur mit Braille-Unterstützung arbei
 
 ==== Ausgabegerät ====
 Mit dieser Option können Sie die Soundkarte auswählen, über die NVDA zu hören sein soll, falls Sie mehr als eine gleichzeitig nutzen.
+
+%kc:setting
+==== Lautstärke anderer Audioquellen reduzieren ====
+Tastenkombination: NVDA+Umschalt+d
+
+Unter Windows 8 und neuer legen Sie mit Hilfe dieser Option fest, ob NVDA die Lautstärke anderer Audio-Quellen reduzieren soll.
+- Nie: NVDA wird niemals die Lautstärke anderer Audio-Quellen reduzieren.
+- Beim Sprechen und Abspielen von nVDA-Klängen: NVDA reduziert die Lautstärke anderer Audio-Quelle nur, wenn NVDA spricht oder Klänge abspielt. Dies funktioniert möglicherweise nicht für alle Sprachausgaben.
+- Immer: NVDA reduziert die Lautstärke anderer Audio-Quellen so lange es läuft.
+-
 
 +++ Stimmeneinstellungen (NVDA+STRG+V) +++[VoiceSettings]
 Die Stimmeinstellungen, welche Sie im Menü Einstellungen finden, enthalten Optionen, mit deren Hilfe Sie den Klang der Sprache verändern können.
@@ -1648,14 +1658,13 @@ Bitte lesen sie in der Dokumentation zu ihrer Braillezeile nach, wo die entsprec
 ++ Braillezeilen von Baum/HumanWare/APH ++
 einige  [Baum http://www.baum.de/], [HumanWare http://www.humanware.de/] und [APH http://www.aph.org/]-Braillezeilen werden unterstützt, sofern sie per USB oder Bluetooth mit dem Rechner verbunden werden.
 dies sind u. a.:
-- Baum: SuperVario, PocketVario, VarioUltra (nur Bluetooth), Pronto! (nur Bluetooth)
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
 Einige andere Baum-Zeilen könnten ebenfalls funktionieren, dies wurde allerdings noch nicht getestet.
 
-Falls die Braillezeile über USB angeschlossen wird, müssen Sie zuerst den Zeilentreiber des Herstellers installieren.
-Bei der Aph Refreshabraille muss der usb-Modus auf "seriell" eingestellt werden.
+Wenn Sie die Braillezeile über USB angeschlossen und den Usb-Modus auf HID eingestellt haben, müssen Sie zunächst den vom Hersteller bereitgestellten Treiber installieren. Ausgenommen hiervon sind VarioUltra, Pronto! und Refreshabraille ausgenommen.
 
 Folgende Tastenzuweisungen sind in NVDA bei diesen Zeilen verfügbar:
 Bitte lesen Sie in der Dokumentation zu Ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.
@@ -1711,8 +1720,9 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B-Serie ++
-Die Braillezeilen der Serien BI und bB von  [HumanWare http://www.humanware.de/], so u.a.  die BI 32, BI 40 und B 80, werden unterstützt, sofern sie via USB oder Bluetooth verbunden sind.
-Wenn Sie die Zeile über USB anschließen wollen, müssen sie zunächst den USB-Treiber des herstellers installieren.
+Die Braillezeilen der Serien BI und B von  [HumanWare http://www.humanware.de/], so u.a.  die BI 32, BI 40 und B 80, werden unterstützt, sofern sie via USB oder Bluetooth verbunden sind.
+Wenn Sie die Zeile über USB anschließen wollen während das Übertragungsprotokoll HumanWare verwendet wird, müssen sie zunächst den USB-Treiber des herstellers installieren.
+VerwendenSie hingegen das Protokoll OpenBraille, wird kein USB-Treiber benötigt.
 
 Folgende Tastenkombinationen sind bei diesen Braillezeilen verfügbar
 Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.
@@ -1740,12 +1750,10 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Alles ansagen | C1+C2+C3+C4+C5+C6 |
 %kc:endInclude
 
-++ HIMS Braille Sense/Braille EDGE Serie ++
-NVDA unterstützt die Braillezeilenmodelle Braile Sense und Braille Edge von [Hims http://www.hims-inc.com/], wahlweise mit USB- oder Bluetooth-Anbindung. 
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle Serie ++
+NVDA unterstützt die Braillezeilenmodelle Braile Sense, Braille Edge und Smart Beetle von [Hims http://www.hims-inc.com/], wahlweise mit USB- oder Bluetooth-Anbindung. 
 Wenn Sie die Braillezeile per USB anschließen, müssen Sie noch den USB-Treiber von HIMS auf Ihrem System installieren.
-Sie können diesen Treiber im HIMS Resource Center unter folgender Adresse herunterladen: http://www.hims-inc.com/resource-center/
-Wählen Sie auf der erscheinenden Seite zunächst Ihr Gerät aus und laden Sie anschließend den Treiber aus dem Bereich "Window-Eyes" herunter.
-Auch wenn auf der Webseite ausschließlich Window-Eyes erwähnt wird, handelt es sich bei dem dort angebotenen Treiber um einen generischen USB-Treiber, der ebenfalls mit NVDA funktioniert.
+Sie können diese von folgender Seite herunterladen: http://www.himsintl.com/?c=2/13&uid=2319
 
 Folgende Tastenkombinationen sind im NVDA verfügbar:
 Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.

@@ -197,7 +197,8 @@ class ExcelRangeBasedQuickNavItem(ExcelQuickNavItem):
 class ExcelCommentQuickNavItem(ExcelRangeBasedQuickNavItem):
 
 	def __init__( self , nodeType , document , commentObject , commentCollection ):
-		self.label = commentObject.address(False,False,1,False) + " " + commentObject.Comment.Text()
+		self.comment=commentObject.comment
+		self.label = commentObject.address(False,False,1,False) + " " + (self.comment.Text() if self.comment else "")
 		super( ExcelCommentQuickNavItem , self).__init__( nodeType , document , commentObject , commentCollection )
 
 class ExcelFormulaQuickNavItem(ExcelRangeBasedQuickNavItem):
@@ -264,8 +265,10 @@ class CommentExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 		try:
 			return  worksheetObject.cells.SpecialCells( xlCellTypeComments )
 		except(COMError):
-
 			return None
+
+	def filter(self,item):
+		return item is not None and item.comment is not None
 
 class FormulaExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 	quickNavItemClass=ExcelFormulaQuickNavItem#: the QuickNavItem class that should be instanciated and emitted. 
@@ -691,7 +694,11 @@ class ExcelWorksheet(ExcelBase):
 			minRow=maxRow=minColumn=maxColumn=None
 		else:
 			rc=cellRegion.address(True,True,xlRC,False)
-			g=[int(x) for x in re_absRC.match(rc).groups()]
+			m=re_absRC.match(rc)
+			if not m:
+				log.debugWarning("address not in rc format: %s"%rc)
+				return None
+			g=[int(x) for x in m.groups()]
 			minRow,maxRow,minColumn,maxColumn=min(g[0],g[2]),max(g[0],g[2]),min(g[1],g[3]),max(g[1],g[3])
 		for info in self.headerCellTracker.iterPossibleHeaderCellInfosFor(cell.rowNumber,cell.columnNumber,minRowNumber=minRow,maxRowNumber=maxRow,minColumnNumber=minColumn,maxColumnNumber=maxColumn,columnHeader=columnHeader):
 			textList=[]
@@ -811,6 +818,7 @@ class ExcelWorksheet(ExcelBase):
 		"kb:control+pageDown",
 		"kb:control+a",
 		"kb:control+v",
+		"kb:shift+f11",
 	)
 
 class ExcelCellTextInfo(NVDAObjectTextInfo):

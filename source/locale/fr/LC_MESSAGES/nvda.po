@@ -5,15 +5,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:11331\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-21 19:08+1000\n"
-"PO-Revision-Date: 2015-12-24 15:32+0100\n"
+"POT-Creation-Date: 2016-01-06 19:08+1000\n"
+"PO-Revision-Date: 2016-01-08 15:22+0100\n"
 "Last-Translator: Bachir BENANOU <ben_bach@yahoo.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.5\n"
+"X-Generator: Poedit 1.6.6\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -125,6 +125,21 @@ msgstr "formulaire"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "région"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "No ducking"
+msgstr "Ne jamais atténuer"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr "Atténuer durant la parole"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Always duck"
+msgstr "Toujours atténuer"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2916,6 +2931,18 @@ msgstr "Entrée"
 msgid "Document formatting"
 msgstr "Mise en forme des documents"
 
+#. Translators: a message when audio ducking is not supported on this machine
+msgid "Audio ducking not supported"
+msgstr "Atténuation audio non supportée."
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+"Boucle des modes d'atténuation automatique qui détermine comment NVDA "
+"atténue le volume des autres sons"
+
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
 msgstr "aide à la saisie activée"
@@ -4941,7 +4968,7 @@ msgstr "alignement vertical du haut"
 
 #. Translators: Reported when text is vertically middle aligned.
 msgid "vertical align middle"
-msgstr "algnement vertical du milieu"
+msgstr "alignement vertical du milieu"
 
 #. Translators: Reported when text is vertically bottom-aligned.
 msgid "vertical align bottom"
@@ -5282,8 +5309,8 @@ msgstr ""
 "old-licenses/gpl-2.0.html\n"
 "\n"
 "{name} est développé par NV Access, une organisation à but non lucratif qui "
-"s'engage à soutenir et promouvoir les solutions libres et à source ouverte pour "
-"les personnes aveugles ou déficientes visuelles.\n"
+"s'engage à soutenir et promouvoir les solutions libres et à source ouverte "
+"pour les personnes aveugles ou déficientes visuelles.\n"
 "Si vous trouvez NVDA utile et voulez qu'il continue à s'améliorer, vous "
 "pouvez envisager de faire un don à NVAccess. Cela peut se faire en "
 "sélectionnant Faire un don dans le menu NVDA."
@@ -6943,6 +6970,10 @@ msgstr "&Synthétiseur :"
 #. headphones, etc.
 msgid "Output &device:"
 msgstr "Périphérique &de sortie :"
+
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr "Mode d'&atténuation audio"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -8762,8 +8793,8 @@ msgid "&Annotations"
 msgstr "&Annotations"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS Braille séries Sense/Braille EDGE"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "HIMS Braille séries Sense/Braille EDGE/Smart Beetle"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"

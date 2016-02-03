@@ -762,6 +762,16 @@ Cela peut être utile pour quelqu'un qui veut utiliser NVDA seulement avec le br
 ==== Sortie audio ====
 Cette option vous permet de choisir la carte son qui sera utilisée par le synthétiseur que vous avez choisi.
 
+%kc:setting
+==== Mode d'Atténuation Audio ====
+Raccourci : NVDA+maj+d
+
+Sous Windows 8 et au-delà, cette option vous permet de choisir si NVDA doit baisser le volume des autres applications quand il parle, ou tout le temps quand il est en cours d'exécution.
+- Ne jamais atténuer : NVDA ne baissera jamais le volume des autres applications. 
+- Atténuer durant la parole : NVDA ne baissera le son des autres applications que quand il parle ou émet un son. Ceci peut ne pas fonctionner avec tous les synthétiseurs. 
+- Toujours atténuer : NVDA réduira le son des autres applications tout le long de son exécution.
+-
+
 +++ Paramètres vocaux (NVDA+contrôle+v) +++[VoiceSettings]
 Le dialogue "Paramètres vocaux" qui se trouve dans le menu "Préférences", contient des options vous permettant de changer le son de la voix.
 Pour une manière plus rapide de contrôler les paramètres vocaux depuis n'importe où, reportez-vous à la section [boucle des paramètres synthétiseur #SynthSettingsRing].
@@ -1182,8 +1192,8 @@ On peut configurer les annonces suivantes :
 - fautes d'orthographe,
 - numéro de page,
 - numéro de ligne,
-- indentation de ligne,
-- Indentation de paragraphe (ex : indentation en cours, indentation de première ligne),
+- retrait de ligne,
+- retrait de paragraphe (ex : retrait en cours, retrait de première ligne),
 - tableaux,
 - titres des lignes et colonnes d'un tableau,
 - coordonnées des cellules d'un tableau,
@@ -1193,7 +1203,7 @@ On peut configurer les annonces suivantes :
 - citations,
 - régions,
 - cadres.
-- Quand quelque chose est cliquable
+- quand quelque chose est cliquable
 -
 
 Pour modifier ces paramètres de n'importe où, veuillez assigner un geste personnalisé en utilisant le [dialogue Gestes de Commandes #InputGestures].
@@ -1305,7 +1315,7 @@ Les touches de commandes suivantes sont également utiles :
 
 ++ Profils de configuration ++
 Parfois, vous souhaiteriez avoir des paramètres différents pour des situations différentes.
-Par exemple, vous pourriez avoir l'annonce d'indentation activée pendant que vous éditez ou l'annonce des attributs de la police activée pendant que vous corrigez.
+Par exemple, vous pourriez avoir l'annonce de retrait activée pendant que vous éditez ou l'annonce des attributs de la police activée pendant que vous corrigez.
 NVDA vous permet de faire cela en utilisant des profils de configuration.
 
 Un profil de configuration contient uniquement les paramètres qui sont modifiés alors que le profil est en cours d'édition.
@@ -1648,14 +1658,13 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 ++ Les terminaux Baum/Humanware/APH ++
 Plusieurs terminaux [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] et [APH http://www.aph.org/] sont pris en charge quand ils sont connectés via USB ou bluetooth.
 Les terminaux suivants sont pris en charge :
-- Baum: SuperVario, PocketVario, VarioUltra (seulement Bluetooth), Pronto! (seulement Bluetooth)
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, brailleConnect
 - APH: Refreshabraille
 -
 Il est possible que d'autres terminaux fabriqués par Baum fonctionnent, mais cela n'a pas été testé.
 
-Si le terminal est connecté en USB, vous devez d'abord installer les pilotes USB fournis par le constructeur.
-Pour le terminal APH Refreshabraille, le mode USB doit être mis à Série.
+Si vous connectez via USB des terminaux autres que les VarioUltra, Pronto! ou Refreshabraille avec le mode USB réglé sur HID, vous devrez d'abord installer les pilotes USB fournis par le constructeur.
 
 Voici les assignations de touches pour ces terminaux avec NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
@@ -1712,7 +1721,8 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 
 ++ HumanWare Séries Brailliant BI/B ++
 Les terminaux des séries Brailliant BI & B de [HumanWare http://www.humanware.com/], incluant le BI 32, BI40 et B 80 sont supportés quand ils sont connectés via USB ou bluetooth.
-S'ils sont connectés en USB, vous devez d'abord installer le pilote USB fourni par le constructeur.
+S'ils sont connectés en USB avec le protocole réglé sur HumanWare, vous devez d'abord installer le pilote USB fourni par le constructeur.
+Les pilotes USB ne sont pas nécessaires si le protocole est réglé sur OpenBraille.
 
 Voici les assignations de touches pour ce terminal sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
@@ -1740,12 +1750,10 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 | Dire tout | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ HIMS braille Sense/braille EDGE Series ++
-NVDA supporte les afficheurs braille braille Sense et braille EDGE de [Hims http://www.hims-inc.com/] quand ils sont connectés via USB ou bluetooth. 
-Si vous connectez votre afficheur braille par USB, vous devrez installer le driver USB de HIMS dans votre système.
-Vous pouvez le télécharger sur le centre de resources HIMS : http://www.hims-inc.com/resource-center/
-Sur cette page, sélectionnez votre appareil et téléchargez le pilote dans la section Window-Eyes.
-Bien que la section ne mentionne que Window-Eyes, il s'agit d'un pilote USB générique qui fonctionnera avec NVDA.
+++ HIMS Braille Sense/Braille EDGE/Smart Beetle Series ++
+NVDA supporte les afficheurs braille braille Sense, braille EDGE et Smart Beetle de [Hims http://www.hims-inc.com/] quand ils sont connectés via USB ou bluetooth. 
+Si vous connectez votre afficheur braille par USB, vous devrez installer le pilote USB de HIMS sur votre système.
+Vous pouvez le télécharger sur cette page : http://www.himsintl.com/?c=2/13&uid=2319
 
 Voici les assignations de touches pour ce terminal sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
@@ -1805,7 +1813,7 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ces t
 
 ++ HIMS Syncbraille ++
 NVDA supporte l'afficheur braille Syncbraille de [HIMS http://www.hims-inc.com/].
-Vous devrez installer les drivers USB de HIMS.
+Vous devrez installer les pilotes USB de HIMS.
 
 Voici les assignations de touches pour ce terminal sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.

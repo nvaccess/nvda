@@ -647,7 +647,11 @@ class UIA(Window):
 	def _get_children(self):
 		childrenCacheRequest=UIAHandler.handler.baseCacheRequest.clone()
 		childrenCacheRequest.TreeScope=UIAHandler.TreeScope_Children
-		cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
+		try:
+			cachedChildren=self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
+		except COMError as e:
+			log.debugWarning("Could not fetch cached children from UIA element: %s"%e)
+			return super(UIA,self).children
 		children=[]
 		if not cachedChildren:
 			# GetCachedChildren returns null if there are no children.

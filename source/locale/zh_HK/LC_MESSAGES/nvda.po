@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: master-11581\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-11 14:35+1000\n"
-"PO-Revision-Date: 2015-11-13 15:03+0800\n"
+"POT-Creation-Date: 2016-01-06 19:08+1000\n"
+"PO-Revision-Date: 2016-01-13 12:05+0800\n"
 "Last-Translator: Eric Yip <cyeric20@yahoo.com.hk>\n"
 "Language-Team: Eric Yip@ HKBU <cyeric20@yahoo.com.hk>\n"
 "Language: zh_HK\n"
@@ -126,6 +126,21 @@ msgstr "表單"
 #. Translators: Reported for a significant region, normally found on web pages.
 msgid "region"
 msgstr "區域"
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "No ducking"
+msgstr ""
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Duck when outputting speech and sounds"
+msgstr ""
+
+#. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
+#. See the Audio Ducking Mode section of the User Gide for details.
+msgid "Always duck"
+msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -404,6 +419,11 @@ msgstr "曼尼普爾語一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
+msgid "Mongolian"
+msgstr "蒙古語"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
 msgid "Marathi grade 1"
 msgstr "馬拉地語語一級點字"
 
@@ -451,6 +471,11 @@ msgstr "尼泊爾語一級點字"
 #. braille settings dialog.
 msgid "Oriya grade 1"
 msgstr "奧里亞語一級點字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+msgid "Polish 8 dot computer braille"
+msgstr "波蘭語八點電腦點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -656,6 +681,18 @@ msgstr "clk"
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 msgid "( )"
 msgstr "( )"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dots 7 and 8"
+msgstr "第 7 8 點"
+
+#. Translators: The description of a braille cursor shape.
+msgid "Dot 8"
+msgstr "第 8 點"
+
+#. Translators: The description of a braille cursor shape.
+msgid "All dots"
+msgstr "全凸點"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -2886,6 +2923,17 @@ msgstr "輸入"
 msgid "Document formatting"
 msgstr "文件格式"
 
+#. Translators: a message when audio ducking is not supported on this machine
+#, fuzzy
+msgid "Audio ducking not supported"
+msgstr "不支援署理算式"
+
+#. Translators: Describes the Cycle audio ducking mode command.
+msgid ""
+"Cycles through audio ducking modes which determine when NVDA lowers the "
+"volume of other sounds"
+msgstr ""
+
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
 msgstr "學習模式開始"
@@ -3918,6 +3966,31 @@ msgstr "點字游標移到%s"
 #. Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "切換把點字游標移到系統焦點或瀏覽游標"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor off"
+msgstr "點字游標關"
+
+#. Translators: The message announced when toggling the braille cursor.
+msgid "Braille cursor on"
+msgstr "點字游標開"
+
+#. Translators: Input help mode message for toggle braille cursor command.
+msgid "Toggle the braille cursor on and off"
+msgstr "切換開關點字游標"
+
+#. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
+msgid "Braille cursor is turned off"
+msgstr "點字游標已關閉"
+
+#. Translators: Reports which braille cursor shape is activated.
+#, python-format
+msgid "Braille cursor %s"
+msgstr "點字游標為%s"
+
+#. Translators: Input help mode message for cycle braille cursor shape command.
+msgid "Cycle through the braille cursor shapes"
+msgstr "循環切換點字游標型態"
 
 #. Translators: Presented when there is no text on the clipboard.
 msgid "There is no text on the clipboard"
@@ -6720,6 +6793,10 @@ msgstr "語音合成器(&S):"
 msgid "Output &device:"
 msgstr "輸出裝置(&D):"
 
+#. Translators: This is a label for the audio ducking combo box in the Audio Settings dialog
+msgid "Audio &ducking mode:"
+msgstr ""
+
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
@@ -7272,9 +7349,17 @@ msgstr "輸入轉換表(&I)"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "把游標之下的文字以完整電腦點字顯示(&X)"
 
+#. Translators: The label for a setting in braille settings to show the cursor.
+msgid "&Show cursor"
+msgstr "顯示游標(&S)"
+
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 msgid "Cursor blink rate (ms)"
 msgstr "游標閃示率 (以千分之一秒計)(&C)"
+
+#. Translators: The label for a setting in braille settings to select the cursor shape.
+msgid "Cursor &shape:"
+msgstr "游標形態(&S)"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 msgid "Message timeout (sec)"
@@ -7478,32 +7563,37 @@ msgstr "桌面"
 msgid "default color"
 msgstr "預設顏色"
 
+#. Translators: The color of text cannot be detected.
+#. Translators: The background color cannot be detected.
+msgid "Unknown color"
+msgstr "未知的顏色"
+
 #. Translators: the description for the Locked cells in excel Browse Mode, if focused for editing
 msgid "This cell is non-editable"
 msgstr "儲存格不可編輯"
 
 #. Translators: the description for the elements list command in Microsoft Excel.
-msgid "Presents a list of charts, cells with comments and cells with formulas"
-msgstr "列出圖表、有註解的儲存格和有公式的儲存格"
+msgid "Lists various types of elements in this spreadsheet"
+msgstr "列出此試算表各類的元件"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Chart"
+msgid "&Charts"
 msgstr "圖表(&C)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "C&omment"
+msgid "C&omments"
 msgstr "註解(&o)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Formula"
-msgstr "公式(&F)"
+msgid "Fo&rmulas"
+msgstr "公式(&R)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-msgid "&Sheet"
+msgid "&Sheets"
 msgstr "工作表(&S)"
 
 #. Translators: Used to express an address range in excel.
@@ -8475,12 +8565,16 @@ msgid "&Annotations"
 msgstr "註解(&A)"
 
 #. Translators: The name of a series of braille displays.
-msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS Braille Sense/Braille EDGE 系列"
+msgid "HIMS Braille Sense/Braille EDGE/Smart Beetle series"
+msgstr "HIMS Braille Sense/Braille EDGE/Smart Beetle 系列"
 
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
+
+#~ msgid ""
+#~ "Presents a list of charts, cells with comments and cells with formulas"
+#~ msgstr "列出圖表、有註解的儲存格和有公式的儲存格"
 
 #~ msgid "selecting %s"
 #~ msgstr "%s  選取"

@@ -163,6 +163,9 @@ def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,is
 		return 0
 	if not isinstance(focus,InputComposition):
 		parent=api.getDesktopObject().objectWithFocus()
+		# #5640: Although we want to use the most correct focus (I.e. OS, not NVDA), if they are the same, we definitely want to use the original instance, so that state such as auto selection is maintained.
+		if parent==focus:
+			parent=focus
 		curInputComposition=InputComposition(parent=parent)
 		oldSpeechMode=speech.speechMode
 		speech.speechMode=speech.speechMode_off

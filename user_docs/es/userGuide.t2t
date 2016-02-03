@@ -762,6 +762,16 @@ Esto podría ser útil para alguien que desee utilizar sólo NVDA con Braille, o
 ==== Dispositivo de Salida ====
 Esta opción te permite elegir la tarjeta de sonido a través de la que NVDA debería mandar hablar al sintetizador seleccionado.
 
+%kc:setting
+==== Modo de Atenuación de Audio ====
+Tecla: NVDA+shift+d
+
+En Windows 8 y superiores, esta opción te permite elegir si NVDA debería bajar el volumen de otras aplicaciones mientras NVDA esté hablando, o todo el tiempo mientras NVDA esté en ejecución.
+- Sin atenuación: NVDA nunca bajará el volumen de otro audio. 
+- Atenuar cuando salgan voz y sonidos: NVDA sólo bajará el volumen de otro audio cuando NVDA esté hablando o reproduciendo sonidos. Esto podrá no funcionar en todos los sintetizadores. 
+- Atenuar siempre: NVDA conservará el volumen de otro audio más bajo todo el tiempo que NVDA esté en ejecución.
+-
+
 +++ Opciones de Voz (NVDA+control+v) +++[VoiceSettings]
 El diálogo Opciones de Voz, que se encuentra en el menú Preferencias, contiene opciones que te permiten modificar el sonido de la voz. 
 Para una forma alternativa rápida de controlar los parámetros de voz desde cualquier lugar, por favor mira la sección [Grupo de Opciones de Sintetizador #SynthSettingsRing].
@@ -1648,17 +1658,16 @@ Porfavor mira la documentación de la pantalla para descripciones de dónde se p
 ++ Pantallas braille Baum/Humanware/APH ++
 Varias pantallas braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] y [APH http://www.aph.org/] están soportadas cuando se conecten a través del USB o del bluetooth.
 Estas incluyen:
-- Baum: SuperVario, PocketVario, VarioUltra (sólo Bluetooth), Pronto! (Sólo Bluetooth)
+- Baum: SuperVario, PocketVario, VarioUltra, Pronto!
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
 Algunas otras pantallas manufacturadas por Baum también podrían funcionar, aunque no han sido probadas.
 
-Si conectas a través de USB, primero debes instalar los controladores USB proporcionados por el fabricante.
-Para la APH Refreshabraille, el modo USB debe ajustarse a serie.
+Si conectas a través de USB otras pantallas diferentes a VarioUltra, Pronto! o Refreshabraille con el modo USB configurado a HID, primero debes instalar los controladores USB proporcionados por el fabricante.
 
 Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
-Por favor consulta la documentación de la pantalla braille para descriptciones de dónde se pueden encontrar estas teclas.
+Por favor consulta la documentación de la pantalla braille para descripciones de dónde se pueden encontrar estas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
 | Desplazar pantalla braille hacia atrás | d2 |
@@ -1712,7 +1721,8 @@ Por favor consulta la documentación de la pantalla para descripciones de dónde
 
 ++ HumanWare Brailliant Series BI/B ++
 Las pantallas braille Brailliant series BI y B de [HumanWare http://www.humanware.com/], incluyendo BI 32, BI 40 y B 80, están soportadas cuando se conectan a través del USB o bluetooth.
-Si la conectas a través de USB, primero debes instalar los controladores USB proporcionados por el fabricante.
+Si la conectas a través de USB con el protocolo configurado a HumanWare, primero debes instalar los controladores USB proporcionados por el fabricante.
+Los controladores USB no se requieren si el protocolo se configura a OpenBraille.
 
 Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
 Por favor conhsulta la documentación de la pantalla para descripciones de dónde pueden encontrarse estas teclas.
@@ -1740,12 +1750,10 @@ Por favor conhsulta la documentación de la pantalla para descripciones de dónd
 | Leer todo | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ Series de la HIMS Braille Sense/Braille EDGE ++
-NVDA soporta las pantallas Braille Sense y Braille EDGE de [Hims http://www.hims-inc.com/] cuando se conectan a través de USB o bluetooth. 
+++ Series de la HIMS Braille Sense/Braille EDGE/Smart Beetle ++
+NVDA soporta las pantallas Braille Sense, Braille EDGE y Smart Beetle de [Hims http://www.hims-inc.com/] cuando se conectan a través de USB o bluetooth. 
 Si se conectan a través de USB, necesitarás instalar los controladores USB de HIMS en el sistema.
-Puedes descargar éstos desde el Centro de Recursos de HIMS: http://www.hims-inc.com/resource-center/
-En esta página, selecciona el dispositivo y descarga el controlador en la sección Window-Eyes.
-Aunque la sección sólo mencione a Window-Eyes, este es un controlador USB general que funcionará con NVDA también.
+Puedes descargarlos desde esta página: http://www.himsintl.com/?c=2/13&uid=2319
 
 Seguidamente van las asignaciones de teclas para estas pantallas con NVDA.
 Por favor consulta la documentación de las pantallas para descripciones de dónde pueden encontrarse estas teclas.
