@@ -1,4 +1,4 @@
-#javaAccessBridgeHandler.py
+﻿#javaAccessBridgeHandler.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
@@ -282,7 +282,6 @@ if bridgeDll:
 #NVDA specific code
 
 isRunning=False
-vmIDsToWindowHandles={}
 internalFunctionQueue=Queue.Queue(1000)
 internalFunctionQueue.__name__="JABHandler.internalFunctionQueue"
 
@@ -297,16 +296,10 @@ class JABContext(object):
 			vmID=c_long()
 			accContext=JOBJECT64()
 			bridgeDll.getAccessibleContextFromHWND(hwnd,byref(vmID),byref(accContext))
-			#Record  this vm ID and window handle for later use with other objects
-			vmIDsToWindowHandles[vmID.value]=hwnd
 		elif vmID and not hwnd:
-			hwnd=vmIDsToWindowHandles.get(vmID)
-			if not hwnd:
-				topAC=bridgeDll.getTopLevelObject(vmID,accContext)
-				hwnd=bridgeDll.getHWNDFromAccessibleContext(vmID,topAC)
-				bridgeDll.releaseJavaObject(vmID,topAC)
-				#Record  this vm ID and window handle for later use with other objects
-				vmIDsToWindowHandles[vmID.value]=hwnd
+			topAC=bridgeDll.getTopLevelObject(vmID,accContext)
+			hwnd=bridgeDll.getHWNDFromAccessibleContext(vmID,topAC)
+			bridgeDll.releaseJavaObject(vmID,topAC)
 		self.hwnd=hwnd
 		self.vmID=vmID
 		self.accContext=accContext
@@ -642,7 +635,6 @@ def enterJavaWindow_helper(hwnd):
 		except:
 			return
 	vmID=vmID.value
-	vmIDsToWindowHandles[vmID]=hwnd
 	lastFocus=eventHandler.lastQueuedFocusObject
 	if isinstance(lastFocus,NVDAObjects.JAB.JAB) and lastFocus.windowHandle==hwnd:
 		return
