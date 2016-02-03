@@ -229,7 +229,10 @@ class JAB(Window):
 		return super(JAB,self).TextInfo
 
 	def _isEqual(self,other):
-		return super(JAB,self)._isEqual(other) and self.jabContext==other.jabContext
+		try:
+			return self.jabContext==other.jabContext
+		except:
+			return False
 
 	def _get_keyboardShortcut(self):
 		bindings=self.jabContext.getAccessibleKeyBindings()
