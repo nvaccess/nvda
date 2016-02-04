@@ -4,6 +4,7 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2016.1 =
+Les points forts de cette version incluent la possibilité de baisser optionnellement le volume des autres sources audio; des amélioration de l'affichage braille et du support des afficheurs braille;  plusieurs corrections significatives dans le support de Microsoft Office; et des corrections pour le mode navigation sous iTunes.
 
 == Nouvelles Fonctionnalités ==
 - Nouvelle table de conversion braille  : Polonais braille informatique 8 points, Mongol. (#5537, #5574)
@@ -41,6 +42,14 @@ Quoi de Neuf dans NVDA
 - durant l'annonce du retrait des lignes, les espaces insécables sont maintenant traités comme des espaces normaux. Avant, cela pouvait causer des annonces telles que "espace espace espace" au lieu de "3 espace". (#5610)
 - À la fermeture de la liste de candidats d'une méthode moderne de saisie Microsoft, le focus est rétabli correctement soit à la composition de saisie soit au document sous-jacent. (#4145)
 - Sous Microsoft Office 2013 et au-delà, quand le ruban est paramétré pour ne montrer que des onglets, les items dans le ruban sont de nouveau annoncés comme prévu quand un onglet est activé. (#5504)
+- Corections et améliorations dans la détection et l'assignation des gestes tactiles. (#5652)
+- Les survols d'écran tactile ne sont plus annoncés dans l'aide à la saisie. (#5652)
+- NVDA n'échoue plus à lister les commentaires dans la liste d'éléments d'Excel quand le commentaire est sur une cellule fusionnée. (#5704)
+- Dans certains cas très rares, NVDA n'échoue plus à lire le contenu d'une feuille sous Excel quand l'annonce des en-têtes de lignes et de colonnes est activée (#5705)
+- Sous Google Chrome, naviguer dans une composition de saisie pour des caractères est-asiatiques n'échoue plus avec une erreur. (#4080)
+- Quand on recherche Apple Music sous iTunes, le mode navigation du document de résultats de recherche est maintenant mis à jour comme prévu. (#5659)
+- Sous Microsoft Excel, l'appui sur maj+f11 pour créer une nouvelle feuille annonce maintenant votre nouvelle position au lieu de ne rien annoncer. (#5689)
+- Correction des problèmes d'affichage braille quand on saisit des caractères Coréens. (#5640)
 
 
 == Changements pour les Développeurs ==
@@ -53,8 +62,16 @@ Quoi de Neuf dans NVDA
  - hwIo.Serial étend pyserial pour appeler un appelable quand les données sont reçues au lieu que les pilotes aient à surveiller.
  - hwIo.Hid fournit le support pour les afficheurs communiquant via USB HID.
  - hwPortUtils et hwIo peuvent optionnellement fournir une journalisation détaillée de débogage, incluant les équipements trouvés et toutes les données envoyées et reçues.
- 
+- plusieurs nouvelles propriétés sont accessible depuis les gestes sur un écran tactile : (#5652)
+ - Les objets MultitouchTracker contiennent maintenant une propriété childTrackers qui contient les MultiTouchTrackers dont le tracker est composé. For example, 2 finger double tap has child trackers for two 2-finger taps. The 2-finger taps themselves have child trackers for two taps.
+ - Les objets MultiTouchTracker contiennent aussi maintenant la propriété rawSingleTouchTracker si le tracker est le résultat d'une tape, d'un glisser ou survol d'un seul doigt. Le SingleTouchTracker permet d'accéder à l'ID sous-jacent assigné au doigt par le système d'exploitation et de savoir si le doigt est toujours en contact
+ - Les TouchInputGestures ont maintenant des propriétés x et y, supprimant le besoin d'accéder au tracker pour des cas triviaux.
+ - Les TouchInputGesturs contiennent maintenant une propriété preheldTracker, qui est un objet MultitouchTracker représentant les autres doigts appuyés au moment où l'action a été exécutée.
+- Deux nouveaux gestes tactiles peuvent être émis : (#5652)
+ - Tapes et maintiens multiples (ex. tape et maintien double)
+ - Un identifiant généralisé avec le compte des doigts supprimé pour les maintiens (ex. maintien+survol pour 1finger_hold+hover).
 
+ 
 = 2015.4 =
 Les points forts de cette version incluent des améliorations de performances sous Windows 10 ; l'inclusion dans les options d'accessibilité sous Windows 8 et au-delà; des amélioration sous Microsoft Excel, incluant la possibilité de lister et renommer les feuilles et l'accès aux cellules verrouillées dans les feuilles protégées; et le support de l'édition du texte enrichi sous Mozilla Firefox, Google Chrome et Mozilla Thunderbird.
 
