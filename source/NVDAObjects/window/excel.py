@@ -32,6 +32,9 @@ import browseMode
 import inputCore
 import ctypes
 
+xlNone=-4142
+xlSimple=-4154
+xlExtended=3
 xlCenter=-4108
 xlJustify=-4130
 xlLeft=-4131
@@ -1287,12 +1290,15 @@ class ExcelDropdownItem(Window):
 	def _get_previous(self):
 		newIndex=self.index-1
 		if newIndex>=0:
-			return self.parent.children[newIndex]
+			return self.parent.getChildAtIndex(newIndex)
 
 	def _get_next(self):
 		newIndex=self.index+1
 		if newIndex<self.parent.childCount:
-			return self.parent.children[newIndex]
+			return self.parent.getChildAtIndex(newIndex)
+
+	def _get_treeInterceptor(self):
+		return self.parent.treeInterceptor
 
 	def _get_positionInfo(self):
 		return {'indexInGroup':self.index+1,'similarItemsInGroup':self.parent.childCount,}
@@ -1328,6 +1334,9 @@ class ExcelDropdown(Window):
 				children.append(obj)
 				index+=1
 		return children
+
+	def getChildAtIndex(self,index):
+		return self.children[index]
 
 	def _get_childCount(self):
 		return len(self.children)
@@ -1476,7 +1485,7 @@ class ExcelFormControl(ExcelBase):
 
 	def script_doAction(self,gesture):
 		self.doAction()
-	script_doAction.canPropagate=False
+	script_doAction.canPropagate=True
 
 	def doAction(self):
 		(x,y)=self._getFormControlScreenCoordinates()
@@ -1590,51 +1599,75 @@ class ExcelFormControlListBox(ExcelFormControl):
 	def __init__(self,windowHandle=None,excelWindowObject=None,excelFormControlObject=None):
 		self.excelFormControlObject=excelFormControlObject
 		try:
-			self.listSize=excelFormControlObject.ControlFormat.ListCount
+			self.listSize=int(excelFormControlObject.ControlFormat.ListCount)
 		except:
 			self.listSize=0
 		try:
-			self.selectedItemIndex= excelFormControlObject.ControlFormat.ListIndex
+			self.selectedItemIndex= int(excelFormControlObject.ControlFormat.ListIndex)
 		except:
 			self.selectedItemIndex=0
- 		super(ExcelFormControlListBox,self).__init__(windowHandle=windowHandle, excelWindowObject=excelWindowObject, excelFormControlObject=excelFormControlObject)
+		try:
+			self.isMultiSelectable= excelFormControlObject.ControlFormat.multiSelect!=xlNone
+		except:
+			self.isMultiSelectable=False
+		super(ExcelFormControlListBox,self).__init__(windowHandle=windowHandle, excelWindowObject=excelWindowObject, excelFormControlObject=excelFormControlObject)
 
-	def isItemSelected(self,itemIndex):
-		if self.excelFormControlObject.OLEFormat.Object.Selected[itemIndex]==True:
-			return True
-		else:
-			return False
+	def getChildAtIndex(self,index):
+		name=str(self.excelFormControlObject.OLEFormat.Object.List(index+1))
+		states=set([controlTypes.STATE_SELECTABLE])
+		if self.excelFormControlObject.OLEFormat.Object.Selected[index+1]==True:
+			states.add(controlTypes.STATE_SELECTED)
+		return ExcelDropdownItem(parent=self,name=name,states=states,index=index)
+
+	def _get_childCount(self):
+		return self.listSize
+
+	def _get_firstChild(self):
+		if self.listSize>0:
+			return self.getChildAtIndex(0)
+
+	def _get_lastChild(self):
+		if self.listSize>0:
+			return self.getChildAtIndex(self.listSize-1)
 
 	def script_moveUp(self, gesture):
 		if self.selectedItemIndex > 1:
 			self.selectedItemIndex= self.selectedItemIndex - 1
-			self.speakSelection(self.selectedItemIndex)
+			if not self.isMultiSelectable:
+				try:
+					self.excelFormControlObject.OLEFormat.Object.Selected[self.selectedItemIndex] = True
+				except:
+					pass
+			child=self.getChildAtIndex(self.selectedItemIndex-1)
+			if child:
+				eventHandler.queueEvent("gainFocus",child)
 	script_moveUp.canPropagate=True
 
 	def script_moveDown(self, gesture):
 		if self.selectedItemIndex < self.listSize:
 			self.selectedItemIndex= self.selectedItemIndex + 1
-			self.speakSelection(self.selectedItemIndex)
+			if not self.isMultiSelectable:
+				try:
+					self.excelFormControlObject.OLEFormat.Object.Selected[self.selectedItemIndex] = True
+				except:
+					pass
+			child=self.getChildAtIndex(self.selectedItemIndex-1)
+			if child:
+				eventHandler.queueEvent("gainFocus",child)
 	script_moveDown.canPropagate=True
 
 	def doAction(self):
-		try:
-			self.excelFormControlObject.OLEFormat.Object.Selected[self.selectedItemIndex] = True
-			self.speakSelection(self.selectedItemIndex)
-		except:
-			pass
-
-	def speakSelection(self,itemIndex):
-		if self.isItemSelected(self.selectedItemIndex):
-			# Translators: A message in Excel an item in ListBox is selected
-			ui.message(_(str(self.excelFormControlObject.OLEFormat.Object.List(self.selectedItemIndex))+" selected"))
-		else:
-			ui.message(self.excelFormControlObject.OLEFormat.Object.List(self.selectedItemIndex))
+		if self.isMultiSelectable:
+			try:
+				lb=self.excelFormControlObject.OLEFormat.Object
+				lb.Selected[self.selectedItemIndex] =not lb.Selected[self.selectedItemIndex] 
+			except:
+				return
+			child=self.getChildAtIndex(self.selectedItemIndex-1)
+			eventHandler.queueEvent("gainFocus",child)
 
 	__gestures= {
-		"kb(laptop):upArrow": "moveUp",
 		"kb:upArrow": "moveUp",
-		"kb(laptop):downArrow":"moveDown",
 		"kb:downArrow":"moveDown",
 	}
 
