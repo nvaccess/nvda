@@ -1396,9 +1396,8 @@ class ExcelMergedCell(ExcelCell):
 class ExcelFormControl(ExcelBase):
 	isFocusable=True
 
-	def __init__(self,windowHandle=None,excelWindowObject=None,excelFormControlObject=None):
-		self.excelWindowObject=excelWindowObject
-		self.excelWorksheetObject=self.excelWindowObject.ActiveSheet
+	def __init__(self,windowHandle=None,parent=None,excelFormControlObject=None):
+		self.parent=parent
 		self.excelFormControlObject=excelFormControlObject
 		self._roleMap= {xlButtonControl:controlTypes.ROLE_BUTTON, xlCheckBox:controlTypes.ROLE_CHECKBOX, xlDropDown:controlTypes.ROLE_COMBOBOX, xlEditBox:controlTypes.ROLE_EDITBOX, xlGroupBox:controlTypes.ROLE_BOX, xlLabel:controlTypes.ROLE_LABEL, xlListBox:controlTypes.ROLE_LIST, xlOptionButton:controlTypes.ROLE_RADIOBUTTON, xlScrollBar:controlTypes.ROLE_SCROLLBAR, xlSpinner:controlTypes.ROLE_SPINBUTTON}
 		super(ExcelFormControl,self).__init__(windowHandle=windowHandle)
@@ -1455,7 +1454,7 @@ class ExcelFormControl(ExcelBase):
 		bottomRightCellWidth=bottomRightAddress.Width
 		#bottom right cell's height in points
 		bottomRightCellHeight=bottomRightAddress.Height
-		self.excelApplicationObject=self.excelWorksheetObject.Application
+		self.excelApplicationObject=self.parent.excelWorksheetObject.Application
 		hDC = ctypes.windll.user32.GetDC(None)
 		#pixels per inch along screen width
 		px = ctypes.windll.gdi32.GetDeviceCaps(hDC, LOGPIXELSX)
@@ -1509,11 +1508,13 @@ class ExcelFormControlQuickNavItem(ExcelQuickNavItem):
 		self.formControlObjectIndex = formControlObject.ZOrderPosition
 		self.treeInterceptorObj=treeInterceptorObj
 		if formControlObject.formControlType==xlListBox:
-			self.nvdaObj=ExcelFormControlListBox(windowHandle=document.Application.Hwnd,excelWindowObject=document.Application.ActiveWindow,excelFormControlObject=formControlObject)
+			self.nvdaObj=ExcelFormControlListBox(windowHandle=document.Application.Hwnd,parent=treeInterceptorObj.rootNVDAObject,excelFormControlObject=formControlObject)
 		elif formControlObject.formControlType==xlDropDown:
-			self.nvdaObj=ExcelFormControlDropDown(windowHandle=document.Application.Hwnd,excelWindowObject=document.Application.ActiveWindow,excelFormControlObject=formControlObject)
+			self.nvdaObj=ExcelFormControlDropDown(windowHandle=document.Application.Hwnd,parent=treeInterceptorObj.rootNVDAObject,excelFormControlObject=formControlObject)
+		elif formControlObject.formControlType in (xlScrollBar,xlSpinner):
+			self.nvdaObj=ExcelFormControlScrollBar(windowHandle=document.Application.Hwnd,parent=treeInterceptorObj.rootNVDAObject,excelFormControlObject=formControlObject)
 		else:
-			self.nvdaObj=ExcelFormControl(windowHandle=document.Application.Hwnd,excelWindowObject=document.Application.ActiveWindow,excelFormControlObject=formControlObject)
+			self.nvdaObj=ExcelFormControl(windowHandle=document.Application.Hwnd,parent=treeInterceptorObj.rootNVDAObject,excelFormControlObject=formControlObject)
 		self.nvdaObj.treeInterceptor=self.treeInterceptorObj
 		if formControlObject.AlternativeText:
 			self.label = formControlObject.AlternativeText+" "+formControlObject.Name+" " + formControlObject.TopLeftCell.address(False,False,1,False) + "-" + formControlObject.BottomRightCell.address(False,False,1,False)
@@ -1596,8 +1597,8 @@ class ExcelFormControlQuicknavIterator(ExcelQuicknavIterator):
 
 class ExcelFormControlListBox(ExcelFormControl):
 
-	def __init__(self,windowHandle=None,excelWindowObject=None,excelFormControlObject=None):
-		self.excelFormControlObject=excelFormControlObject
+	def __init__(self,windowHandle=None,parent=None,excelFormControlObject=None):
+		super(ExcelFormControlListBox,self).__init__(windowHandle=windowHandle, parent=parent, excelFormControlObject=excelFormControlObject)
 		try:
 			self.listSize=int(excelFormControlObject.ControlFormat.ListCount)
 		except:
@@ -1610,7 +1611,6 @@ class ExcelFormControlListBox(ExcelFormControl):
 			self.isMultiSelectable= excelFormControlObject.ControlFormat.multiSelect!=xlNone
 		except:
 			self.isMultiSelectable=False
-		super(ExcelFormControlListBox,self).__init__(windowHandle=windowHandle, excelWindowObject=excelWindowObject, excelFormControlObject=excelFormControlObject)
 
 	def getChildAtIndex(self,index):
 		name=str(self.excelFormControlObject.OLEFormat.Object.List(index+1))
@@ -1673,9 +1673,8 @@ class ExcelFormControlListBox(ExcelFormControl):
 
 class ExcelFormControlDropDown(ExcelFormControl):
 
-	def __init__(self,windowHandle=None,excelWindowObject=None,excelFormControlObject=None):
-# 		self.listRange=excelWindowObject.Application.ActiveSheet.Range(excelFormControlObject.ControlFormat.ListFillRange)
-		self.excelFormControlObject=excelFormControlObject
+	def __init__(self,windowHandle=None,parent=None,excelFormControlObject=None):
+		super(ExcelFormControlDropDown,self).__init__(windowHandle=windowHandle, parent=parent, excelFormControlObject=excelFormControlObject)
 		try:
 			self.listSize=excelFormControlObject.ControlFormat.ListCount
 		except:
@@ -1684,7 +1683,6 @@ class ExcelFormControlDropDown(ExcelFormControl):
 			self.selectedItemIndex=excelFormControlObject.ControlFormat.ListIndex
 		except:
 			self.selectedItemIndex=0
-		super(ExcelFormControlDropDown,self).__init__(windowHandle=windowHandle, excelWindowObject=excelWindowObject, excelFormControlObject=excelFormControlObject)
 
 	def script_moveUp(self, gesture):
 		if self.selectedItemIndex > 1:
@@ -1707,4 +1705,62 @@ class ExcelFormControlDropDown(ExcelFormControl):
 	__gestures= {
 		"kb:upArrow": "moveUp",
 		"kb:downArrow":"moveDown",
+	}
+
+class ExcelFormControlScrollBar(ExcelFormControl):
+
+	def __init__(self,windowHandle=None,parent=None,excelFormControlObject=None):
+		super(ExcelFormControlScrollBar,self).__init__(windowHandle=windowHandle, parent=parent, excelFormControlObject=excelFormControlObject)
+		try:
+			self.minValue=excelFormControlObject.ControlFormat.min
+		except:
+			self.minValue=0
+		try:
+			self.maxValue=excelFormControlObject.ControlFormat.max
+		except:
+			self.maxValue=0
+		try:
+			self.smallChange=excelFormControlObject.ControlFormat.smallChange
+		except:
+			self.smallChange=0
+		try:
+			self.largeChange=excelFormControlObject.ControlFormat.largeChange
+		except:
+			self.largeChange=0
+
+	def _get_value(self):
+		try:
+			return str(self.excelFormControlObject.controlFormat.value)
+		except COMError:
+			return 0
+
+	def moveValue(self,up=False,large=False):
+		try:
+			curValue=self.excelFormControlObject.controlFormat.value
+		except COMError:
+			return
+		if up:
+			newValue=min(curValue+(self.largeChange if large else self.smallChange),self.maxValue)
+		else:
+			newValue=max(curValue-(self.largeChange if large else self.smallChange),self.minValue)
+		self.excelFormControlObject.controlFormat.value=newValue
+		eventHandler.queueEvent("valueChange",self)
+
+	def script_moveUpSmall(self,gesture):
+		self.moveValue(True,False)
+
+	def script_moveDownSmall(self,gesture):
+		self.moveValue(False,False)
+
+	def script_moveUpLarge(self,gesture):
+		self.moveValue(True,True)
+
+	def script_moveDownLarge(self,gesture):
+		self.moveValue(False,True)
+
+	__gestures={
+		"kb:upArrow":"moveUpSmall",
+		"kb:downArrow":"moveDownSmall",
+		"kb:pageUp":"moveUpLarge",
+		"kb:pageDown":"moveDownLarge",
 	}
