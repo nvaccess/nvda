@@ -4,6 +4,7 @@ Qué hay de Nuevo en NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2016.1 =
+Lo reseñable de esta versión incluye la capacidad de bajar opcionalmente el volumen de otros sonidos; mejoras de la salida braille y del soporte de pantallas braille; varias correcciones significativas para el soporte de Microsoft Office; y correcciones al modo exploración en çiTunes.
 
 == Nuevas Características ==
 - Nuevas tablas de transcripción braille: braille polaco computerizado de 8 puntos, mongol. (#5537), #5574) 
@@ -41,6 +42,14 @@ Qué hay de Nuevo en NVDA
 - Al verbalizar el sangrado de línea, los espacios de no separación ahora son tratados como espacios normales. Anteriormente, esto podía causar anunciados tales como "espacio espacio espacio" en lugar de "3 espacios". (#5610)
 - Al cerrar una lista de métodos candidatos de entrada en Microsoft moderno, el foco se restaura correctamente o la composición de entrada o el documento subrayado. (#4145)
 - En Microsoft Office 2013 y posteriores, cuando las cintas están configuradas para mostrar sólo pestañas, los elementos en la cinta se muestran de nuevo como se esperaba cuando se activa una pestaña. (#5504)
+- Correcciones y mejoras para el enlazado y la detección de gestos de pantalla táctil. (#5652)
+- Los Touch screen hovers ya no se anuncian en ayuda de entrada. (#5652)
+- NVDA ya no falla al listar comentarios en la Lista de Elementos para Microsoft Excel si un comentario está sobre una celda fusionada. (#5704)
+- En un caso muy poco común, NVDA ya no falla al leer el contenido de la hoja en Microsoft Excel con el anunciado de encabezados de fila y columna habilitado. (#5705)
+- En Google Chrome, al navegar dentro de una Composición de Entrada cuando se introducen carácteres del Este Asiático ahora funciona como se esperaba. (#4080)
+- Cuando se busca en Apple Music en iTunes, el modo exploración para el documento de resultados de la búsqueda ahora se actualiza como se esperaba. (#5659)
+- En Microsoft Excel, pulsando shift+f11 para crear una hoja nueva ahora anuncia tu nueva posición en lugar de no anunciar nada. (#5689)
+- Corregidos problemas con la salida de la pantalla braille cuando se introducen carácteres coreanos. (#5640)
  
  
 == Cambios para Desarrolladores ==
